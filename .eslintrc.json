@@ -1,0 +1,22 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "arrow-parens": ["error", "as-needed"],
+    "comma-dangle": "off",
+    "max-len": ["error", 79, {
+      "ignorePattern": " // eslint-disable-line "
+    }],
+    "no-underscore-dangle": "off",
+    "import/no-extraneous-dependencies": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-filename-extension": ["error", {
+      "extensions": [".js"]
+    }]
+  }
+}
