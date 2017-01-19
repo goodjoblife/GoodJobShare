@@ -6,6 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const config = require('./webpack.config.base');
 
 module.exports = merge.smart(config, {
+  devtool: 'eval',
   entry: './src/index',
   output: {
     path: path.join(__dirname, 'dist'),

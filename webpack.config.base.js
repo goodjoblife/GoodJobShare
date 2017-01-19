@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const simpleVars = require('postcss-simple-vars');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
   module: {
     loaders: [
       {
