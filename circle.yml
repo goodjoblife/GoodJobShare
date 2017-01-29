@@ -1,0 +1,17 @@
+machine:
+  node:
+    version: 6
+  services:
+    - docker
+
+test:
+  post:
+    - npm run build
+    - docker build -t goodjoblife/goodjobshare:$CIRCLE_SHA1 -f docker/Dockerfile .
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push goodjoblife/goodjobshare:$CIRCLE_SHA1
