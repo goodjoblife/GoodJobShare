@@ -1,5 +1,6 @@
 const autoprefixer = require('autoprefixer');
 const nested = require('postcss-nested');
+const stylelint = require('stylelint');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const simpleVars = require('postcss-simple-vars');
 
@@ -31,5 +32,6 @@ module.exports = {
     }),
     simpleVars,
     nested,
+    stylelint,
   ],
 };

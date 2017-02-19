@@ -47,10 +47,15 @@
     "remote-redux-devtools": "^0.5.5",
     "rimraf": "^2.5.4",
     "style-loader": "^0.13.1",
+    "stylelint": "^7.8.0",
+    "stylelint-config-standard": "^16.0.0",
+    "stylelint-order": "^0.3.0",
+    "url-loader": "^0.5.7",
     "webpack": "^1.13.3",
     "webpack-dashboard": "^0.2.0",
     "webpack-dev-middleware": "^1.8.4",
-    "webpack-hot-middleware": "^2.13.2"
+    "webpack-hot-middleware": "^2.13.2",
+    "webpack-merge": "^2.6.1"
   },
   "dependencies": {
     "path": "^0.12.7",
@@ -62,7 +67,6 @@
     "react-router-redux": "^4.0.7",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
-    "serve-favicon": "^2.3.2",
-    "webpack-merge": "^2.4.0"
+    "serve-favicon": "^2.3.2"
   }
 }
