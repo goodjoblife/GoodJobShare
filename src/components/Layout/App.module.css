@@ -1,0 +1,12 @@
+@value primary-font from "../common/variables.module.css";
+
+html,
+body {
+  font-family: primary-font;
+}
+
+.App {
+  a {
+    text-decoration: none;
+  }
+}

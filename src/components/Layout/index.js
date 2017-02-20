@@ -1,7 +1,12 @@
 import React, { PropTypes } from 'react';
 
+import styles from './App.module.css';
+import Header from './Header';
+
+
 const App = ({ children }) => (
-  <div>
+  <div className={styles.App}>
+    <Header />
     {children}
   </div>
 );
