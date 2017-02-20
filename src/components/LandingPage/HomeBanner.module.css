@@ -2,25 +2,25 @@
 
 .home_banner {
   display: flex;
-  height: 400px;
+  height: 500px;
   padding-top: 67px;
   align-items: center;
   background-color: banner-background-color;
 
   @media (max-width: 1280px) {
-    height: 340px;
+    height: 400px;
   }
 }
 
 .home_banner_img {
   > img {
-    width: 430px;
+    width: 500px;
     margin-left: 30px;
 
     @media (max-width: 1280px) {
-      width: 330px;
+      width: 400px;
       margin-top: 30px;
-      margin-left: 0;
+      margin-left: 50;
     }
   }
 
@@ -37,7 +37,7 @@
   > h1 {
     margin-bottom: 30px;
     font-size: 3em;
-    font-weight: 700;
+    font-weight: 500;
     letter-spacing: 0.02em;
   }
 
@@ -45,7 +45,7 @@
     margin-bottom: 20px;
     font-size: 1.2em;
     line-height: 1.4em;
-    font-weight: 400;
+    font-weight: 500;
   }
 
   > a {

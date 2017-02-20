@@ -1,0 +1,38 @@
+@value banner-background-color from "../common/variables.module.css";
+@value see-more-button-color from "../common/variables.module.css";
+
+.classroom_section {
+  margin: 50px 0;
+  text-align: center;
+
+  > h2 {
+    font-size: 2em;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+  }
+}
+
+.classroom_images_wrapper {
+  display: flex;
+  margin: 50px 0;
+  justify-content: space-between;
+}
+
+.classroom_image_item {
+  margin: 0 30px;
+  flex: 1;
+  background-color: banner-background-color;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  > img {
+    width: 100%;
+    object-fit: contain;
+  }
+}
