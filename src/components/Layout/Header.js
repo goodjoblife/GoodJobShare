@@ -7,7 +7,7 @@ import styles from './Header.module.css';
 
 
 const Header = () => (
-  <header className={cn(styles.headerWrapper, styles.wrapper_l)}>
+  <header className={cn(styles.headerWrapper, 'wrapper_l')}>
     <Link to="/">
       <Logo className={styles.header_logo} />
     </Link>

@@ -1,14 +1,17 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
+import HomeBanner from './HomeBanner';
+import styles from './LandingPage.module.css';
+
 
 const LandingPage = () => (
-  <div>
+  <main className={styles.site_main}>
     <Helmet
-      title='首頁'
+      title="首頁"
     />
-    this is Landing Page
-  </div>
+    <HomeBanner />
+  </main>
 );
 
 

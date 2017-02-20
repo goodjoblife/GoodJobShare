@@ -1,0 +1,59 @@
+@value banner-background-color from '../common/variables.module.css';
+
+.home_banner {
+  display: flex;
+  height: 400px;
+  padding-top: 67px;
+  align-items: center;
+  background-color: banner-background-color;
+
+  @media (max-width: 1280px) {
+    height: 340px;
+  }
+}
+
+.home_banner_img {
+  > img {
+    width: 430px;
+    margin-left: 30px;
+
+    @media (max-width: 1280px) {
+      width: 330px;
+      margin-top: 30px;
+      margin-left: 0;
+    }
+  }
+
+  @media (max-width: 1280px) {
+    flex: 1;
+  }
+}
+
+.home_banner_text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  > h1 {
+    margin-bottom: 30px;
+    font-size: 3em;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  > h3 {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    line-height: 1.4em;
+    font-weight: 400;
+  }
+
+  > a {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 1280px) {
+    height: 260px;
+    flex: 1;
+  }
+}

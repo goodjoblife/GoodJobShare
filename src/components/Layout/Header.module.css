@@ -4,16 +4,10 @@
   top: 0;
   left: 0;
   display: flex;
+  width: 100vw;
   justify-content: space-between;
   align-items: center;
   background-color: #000;
-
-  &.wrapper_l {
-    width: 100%;
-    max-width: 1260px;
-    padding: 0 60px;
-    margin: 0 auto;
-  }
 }
 
 .header_logo {
@@ -22,7 +16,6 @@
 
 .header_nav {
   display: flex;
-  padding-right: 5%;
   justify-content: space-between;
   align-items: center;
   flex: 1 0 auto;
