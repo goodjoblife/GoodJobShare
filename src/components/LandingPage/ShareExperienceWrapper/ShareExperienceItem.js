@@ -12,7 +12,6 @@ class ShareExperienceItem extends React.Component {
   };
 
   handleHover(isHover) {
-    console.log(isHover);
     this.setState({
       isHover,
     });

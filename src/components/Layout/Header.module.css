@@ -26,6 +26,8 @@
     margin: 0;
 
     .site_menu_item {
+      outline: 0;
+
       @media (min-width: 851px) {
         display: inline-block;
         margin-left: 20px;
