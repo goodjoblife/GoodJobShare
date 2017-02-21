@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 import SeeMoreButton from './SeeMoreButton';
 import homeBanner from '../images/home-banner.png';
-import styles from './Classroom.module.css';
+import styles from './Classrooms.module.css';
 
 
 const renderImages = images => (
@@ -15,12 +15,12 @@ const renderImages = images => (
   ))
 );
 
-const Classroom = () => {
-  const images = [homeBanner, homeBanner, homeBanner];
+const Classrooms = () => {
+  const images = [homeBanner, homeBanner, homeBanner]; // FIXME
 
   return (
-    <section className={cn(styles.classroom_section, 'wrapper_l')}>
-      <h2>勞動小教室</h2>
+    <section className={cn(styles.classrooms_section, 'wrapper_l')}>
+      <h2 className="subtitle">勞動小教室</h2>
       <div className={styles.classroom_images_wrapper}>
         {renderImages(images)}
       </div>
@@ -30,4 +30,4 @@ const Classroom = () => {
 };
 
 
-export default Classroom;
+export default Classrooms;

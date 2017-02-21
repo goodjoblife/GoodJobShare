@@ -4,9 +4,10 @@
   border: 0;
   border-radius: 30px;
   background-color: see-more-button-color;
+  cursor: pointer;
   outline: 0;
 
-  > a {
+  > span {
     color: #fff;
     font-size: 1.5em;
   }

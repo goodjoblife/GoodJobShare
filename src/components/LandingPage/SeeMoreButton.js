@@ -6,7 +6,7 @@ import styles from './SeeMoreButton.module.css';
 
 const SeeMoreButton = () => (
   <button className={styles.see_more_btn}>
-    <Link to="/">看更多</Link>
+    <span>看更多</span>
   </button>
 );
 
