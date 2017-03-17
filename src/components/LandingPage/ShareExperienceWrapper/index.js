@@ -6,8 +6,8 @@ import styles from './ShareExperienceWrapper.module.css';
 
 
 const ShareExperienceWrapper = () => (
-  <section className={cn(styles.share_experience_section, 'wrapper_l')}>
-    <h2 className="subtitle">現在就留下裡的資料吧！</h2>
+  <section className={cn(styles.share_experience_section, 'wrapperL')}>
+    <h2 className="headingStyle">現在就留下裡的資料吧！</h2>
     <div className={styles.share_experience_wrapper}>
       <ShareExperienceItem />
       <ShareExperienceItem />

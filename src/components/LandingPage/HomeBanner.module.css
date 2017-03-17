@@ -1,11 +1,11 @@
-@value banner-background-color from '../common/variables.module.css';
+@value main-yellow from '../common/variables.module.css';
 
 .home_banner {
   display: flex;
   height: 500px;
   padding-top: 67px;
   align-items: center;
-  background-color: banner-background-color;
+  background-color: main-yellow;
 
   @media (max-width: 1280px) {
     height: 400px;

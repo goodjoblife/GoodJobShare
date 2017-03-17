@@ -1,4 +1,37 @@
-@value primary-font: "Helvetica Neue", "Helvetica", "Arial", "PingFang TC", "微軟正黑體", "Microsoft JhengHei", sans-serif;
-@value header-background-color: #222;
-@value banner-background-color: #fcd406;
 @value see-more-button-color: #a2a2a2;
+
+/* ------------------------------------
+ *  Width and Height
+ * ------------------------------------ */
+@value inner-wrap-l: 1260px;
+@value inner-wrap-m: 900px;
+@value inner-wrap-s: 630px;
+
+@value page-gutter: 40px;
+@value page-gutter-s: 15px;
+
+/* ------------------------------------
+ *  Color
+ * ------------------------------------ */
+@value main-black: #222;
+@value main-yellow: #fcd406;
+@value yellow-light: #fffbe8;
+@value yellow-bar: #FCEEA7;
+@value yellow-bg: #f9eccd;
+@value main-orange: #ec7910;
+
+@value main-gray: #b4b4b4;
+@value gray-dark: #777;
+@value gray-light: #eeeeed;
+
+@value white-light: #f3f3f3;
+@value warning-red: #d50000;
+@value border-gray: #ededed;
+
+@value link-blue: #325bbd;
+
+
+/* ------------------------------------
+ *  Font
+ * ------------------------------------ */
+@value primary-font: "Helvetica Neue", "Helvetica", "Arial", "PingFang TC", "微軟正黑體", "Microsoft JhengHei", sans-serif;

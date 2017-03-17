@@ -5,7 +5,6 @@ import { Link } from 'react-router';
 import homeBanner from '../../images/home-banner.png';
 import styles from './ShareExperienceItem.module.css';
 
-
 class ShareExperienceItem extends React.Component {
   state = {
     isHover: false,

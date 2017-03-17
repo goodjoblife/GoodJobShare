@@ -1,4 +1,4 @@
-@value banner-background-color from "../../common/variables.module.css";
+@value main-yellow from "../../common/variables.module.css";
 
 .share_experience_item {
   display: flex;
@@ -42,7 +42,7 @@
     }
 
     &.isHover {
-      background: banner-background-color;
+      background: main-yellow;
     }
   }
 }

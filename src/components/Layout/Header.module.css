@@ -1,4 +1,4 @@
-@value header-background-color from "../common/variables.module.css";
+@value main-black from "../common/variables.module.css";
 
 .headerWrapper {
   position: fixed;
@@ -9,7 +9,7 @@
   width: 100vw;
   justify-content: space-between;
   align-items: center;
-  background-color: header-background-color;
+  background-color: main-black;
 }
 
 .header_logo {

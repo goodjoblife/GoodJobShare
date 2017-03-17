@@ -1,4 +1,4 @@
-@value banner-background-color from "../common/variables.module.css";
+@value main-yellow from "../common/variables.module.css";
 
 .footer {
   display: flex;
@@ -7,7 +7,7 @@
   padding-bottom: 15px;
   justify-content: space-between;
   align-items: center;
-  background-color: banner-background-color;
+  background-color: main-yellow;
 
   .footer_logo {
     fill: #000;

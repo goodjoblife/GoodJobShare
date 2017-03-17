@@ -1,12 +1,23 @@
-:global .wrapper_l {
-  box-sizing: border-box;
+@value inner-wrap-l, page-gutter, page-gutter-s from "../common/variables.module.css";
+
+:global .wrapperL {
   width: 100%;
-  padding: 0 60px;
-  margin: 0 auto;
+	max-width: inner-wrap-l;
+	padding: 0 60px;
+	margin: 0 auto;
+	@media (max-width: 850px) {
+		padding: 0 page-gutter;
+	}
+	@media (max-width: 550px) {
+		padding: 0 page-gutter-s;
+	}
 }
 
-:global .subtitle {
-  font-size: 2em;
-  font-weight: 400;
-  letter-spacing: 0.2em;
+:global .headingStyle {
+	font-size: 2.1em;
+	line-height: 1.25em;
+	letter-spacing: 0.03em;
+	@media (max-width: 850px) {
+		font-size: 1.8em;
+	}
 }

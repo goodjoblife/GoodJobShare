@@ -5,9 +5,8 @@ import { Link } from 'react-router';
 import homeBanner from '../images/home-banner.png';
 import styles from './HomeBanner.module.css';
 
-
 const HomeBanner = () => (
-  <section className={cn(styles.home_banner, 'wrapper_l')}>
+  <section className={cn(styles.home_banner, 'wrapperL')}>
     <div className={styles.home_banner_img}>
       <img src={homeBanner} alt="home-banner" />
     </div>
@@ -18,6 +17,5 @@ const HomeBanner = () => (
     </div>
   </section>
 );
-
 
 export default HomeBanner;

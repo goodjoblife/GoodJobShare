@@ -1,4 +1,4 @@
-@value banner-background-color from "../common/variables.module.css";
+@value main-yellow from "../common/variables.module.css";
 @value see-more-button-color from "../common/variables.module.css";
 
 .classrooms_section {
@@ -15,7 +15,7 @@
 .classroom_image_item {
   margin: 0 30px;
   flex: 1;
-  background-color: banner-background-color;
+  background-color: main-yellow;
 
   &:first-child {
     margin-left: 0;
