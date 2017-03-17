@@ -40,9 +40,9 @@ app.get('*', (req, res, next) => {
 
 app.listen(port, 'localhost', err => {
   if (err) {
-    console.log(err);
+    console.log(err);  //eslint-disable-line
     return;
   }
 
-  console.log(`Listening at http://localhost:${port}`);
+  console.log(`Listening at http://localhost:${port}`); //eslint-disable-line
 });
