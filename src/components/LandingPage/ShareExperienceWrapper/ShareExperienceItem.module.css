@@ -11,6 +11,10 @@
   &:hover {
     background-color: #fff;
     box-shadow: 0 0 10px 0 rgba(20%, 20%, 40%, 0.2);
+
+    .link {
+      background: main-yellow;
+    }
   }
 
   .image {
@@ -39,10 +43,6 @@
 
     > span {
       font-size: 1.5em;
-    }
-
-    &.isHover {
-      background: main-yellow;
     }
   }
 }
