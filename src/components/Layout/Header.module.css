@@ -1,0 +1,74 @@
+@value main-black from "../common/variables.module.css";
+
+.headerWrapper {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100vw;
+  justify-content: space-between;
+  align-items: center;
+  background-color: main-black;
+}
+
+.header_logo {
+  fill: #fff;
+}
+
+.header_nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 auto;
+
+  > ul {
+    margin: 0;
+
+    .site_menu_item {
+      outline: 0;
+
+      @media (min-width: 851px) {
+        display: inline-block;
+        margin-left: 20px;
+        line-height: 67px;
+
+        > a {
+          position: relative;
+          display: block;
+          height: 100%;
+          padding-left: 10px;
+          padding-right: 10px;
+          color: #fff;
+          font-size: 1em;
+          font-weight: 400;
+          letter-spacing: 0.08em;
+        }
+      }
+    }
+  }
+
+  .button_area {
+    display: flex;
+
+    > button {
+      flex: 1;
+      background-color: transparent;
+      color: #fff;
+      font-size: 1em;
+      cursor: pointer;
+      outline: 0;
+    }
+
+    .leave_data_btn {
+      padding: 10px 30px;
+      border: 1px solid #fff;
+      white-space: nowrap;
+    }
+
+    .login_btn {
+      padding: 0 20px;
+      border: 0;
+    }
+  }
+}

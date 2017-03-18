@@ -1,30 +1,23 @@
 const path = require('path');
+
 const webpack = require('webpack');
 const merge = require('webpack-merge');
+const stylelint = require('stylelint');
+const reporter = require('postcss-reporter');
+const nested = require('postcss-nested');
+const simpleVars = require('postcss-simple-vars');
 
 const config = require('./webpack.config.base');
 
+delete config.postcss;
+
 module.exports = merge.smart(config, {
   debug: true,
-  devtool: 'cheap-module-eval-source-map',
-  entry: [
-    'webpack-hot-middleware/client',
-    'react-hot-loader/patch',
-    './src/index',
-  ],
-  output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/',
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('development'),
-      },
-    }),
-  ],
+
+  devtool: 'eval',
+
+  entry: './src/index',
+
   module: {
     loaders: [
       {
@@ -34,7 +27,8 @@ module.exports = merge.smart(config, {
           'css-loader?sourceMap',
         ],
         include: [
-          path.resolve(__dirname, 'src')
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'node_modules', 'sweetalert')
         ],
       },
       {
@@ -48,4 +42,23 @@ module.exports = merge.smart(config, {
       },
     ],
   },
+
+  plugins: [
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      __DEV__: true,
+      'process.env': {
+        NODE_ENV: JSON.stringify('development'),
+      },
+    }),
+  ],
+
+  postcss: [
+    simpleVars,
+    nested,
+    stylelint,
+    reporter({
+      throwError: true,
+    }),
+  ],
 });

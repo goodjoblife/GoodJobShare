@@ -1,7 +1,7 @@
 const autoprefixer = require('autoprefixer');
 const nested = require('postcss-nested');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const simpleVars = require('postcss-simple-vars');
+
 
 module.exports = {
   module: {
@@ -12,9 +12,13 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        test: /\.(png|jpg|jpeg|gif)$/,
         loaders: ['url-loader?limit=20000'],
       },
+      {
+        test: /\.svg$/,
+        loader: 'babel!svg-react'
+      }
     ],
   },
 
@@ -29,7 +33,6 @@ module.exports = {
     autoprefixer({
       browsers: ['last 2 version', 'ie >= 10'],
     }),
-    simpleVars,
     nested,
   ],
 };

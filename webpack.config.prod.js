@@ -6,7 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const config = require('./webpack.config.base');
 
 module.exports = merge.smart(config, {
-  devtool: 'eval',
+  devtool: 'cheap-module-source-map',
   entry: './src/index',
   output: {
     path: path.join(__dirname, 'dist'),
@@ -35,6 +35,9 @@ module.exports = merge.smart(config, {
           'style-loader',
           'css-loader'
         ),
+        include: [
+          path.resolve(__dirname, 'src')
+        ],
       },
       {
         test: /\.module\.css$/,
@@ -42,6 +45,7 @@ module.exports = merge.smart(config, {
           'style-loader',
           'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' // eslint-disable-line max-len
         ),
+        exclude: /node_modules/,
       },
     ],
   },

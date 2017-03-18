@@ -12,6 +12,7 @@
     "max-len": ["error", 79, {
       "ignorePattern": " // eslint-disable-line "
     }],
+    "react/prefer-stateless-function": "off",
     "no-underscore-dangle": "off",
     "import/no-extraneous-dependencies": "off",
     "react/forbid-prop-types": "off",

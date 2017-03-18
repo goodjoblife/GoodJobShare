@@ -1,0 +1,42 @@
+@value main-yellow from "../common/variables.module.css";
+
+.footer {
+  display: flex;
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: main-yellow;
+
+  .footer_logo {
+    fill: #000;
+  }
+}
+
+.footer_container {
+  display: flex;
+  margin-left: 20px;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+
+  .copyright {
+    > p {
+      margin: 0;
+      font-size: 1.13em;
+      line-height: 1.5em;
+    }
+  }
+
+  .emoji {
+    display: flex;
+
+    > img {
+      width: 2vw;
+      border-radius: 50%;
+      margin-left: 30px;
+      flex: 1;
+    }
+  }
+}

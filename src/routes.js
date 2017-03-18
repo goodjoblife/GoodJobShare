@@ -1,21 +1,24 @@
 import React from 'react';
-import { Route } from 'react-router';
-import App from './containers/App';
+import { Route, IndexRoute } from 'react-router';
+import App from './containers/Layout';
 import * as containers from './containers';
 
 
 const {
-  CounterPage,
+  LandingPage,
   AnotherPage,
   NotFoundPage,
 } = containers;
 
-const createRoutes = () => (
-  <Route component={App}>
-    <Route path="/" component={CounterPage} />
+const routes = () => (
+  <Route
+    path="/"
+    component={App}
+  >
+    <IndexRoute component={LandingPage} />
     <Route path="/another" component={AnotherPage} />
     <Route path="*" component={NotFoundPage} />
   </Route>
 );
 
-export default createRoutes;
+export default routes;

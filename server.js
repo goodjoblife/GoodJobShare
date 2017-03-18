@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const webpack = require('webpack');
 const DashboardPlugin = require('webpack-dashboard/plugin');
+const favicon = require('serve-favicon');
 
 const config = require('./webpack.config.dev');
 
@@ -21,6 +22,10 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
+app.use(
+  favicon(path.join(__dirname, 'src', 'components', 'images', 'favicon.ico'))
+);
+
 app.get('*', (req, res, next) => {
   const filename = path.join(compiler.outputPath, 'index.html');
 
@@ -35,9 +40,9 @@ app.get('*', (req, res, next) => {
 
 app.listen(port, 'localhost', err => {
   if (err) {
-    console.log(err);
+    console.log(err);  //eslint-disable-line
     return;
   }
 
-  console.log(`Listening at http://localhost:${port}`);
+  console.log(`Listening at http://localhost:${port}`); //eslint-disable-line
 });
