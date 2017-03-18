@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 
 const Counter = ({
   increment, incrementIfOdd, decrement, counter,
 }) => (
   <p>
-    Clicked: {counter} times
+    Clicked: {counter.counter} times
     {' '}
     <button onClick={increment}>+</button>
     {' '}
@@ -19,7 +20,7 @@ Counter.propTypes = {
   increment: PropTypes.func.isRequired,
   incrementIfOdd: PropTypes.func.isRequired,
   decrement: PropTypes.func.isRequired,
-  counter: PropTypes.number.isRequired,
+  counter: ImmutablePropTypes.map.isRequired,
 };
 
 
