@@ -17,8 +17,8 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        loader: 'babel!svg-react'
-      }
+        loader: 'babel!svg-react',
+      },
     ],
   },
 
