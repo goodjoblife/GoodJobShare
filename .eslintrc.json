@@ -8,7 +8,7 @@
   },
   "rules": {
     "arrow-parens": ["error", "as-needed"],
-    "comma-dangle": "off",
+    "comma-dangle": ["error", "always-multiline"],
     "max-len": ["error", 79, {
       "ignorePattern": " // eslint-disable-line "
     }],
