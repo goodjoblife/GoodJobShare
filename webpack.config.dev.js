@@ -34,7 +34,7 @@ module.exports = merge.smart(config, {
           'css-loader?sourceMap',
         ],
         include: [
-          path.resolve(__dirname, 'src')
+          path.resolve(__dirname, 'src'),
         ],
       },
       {

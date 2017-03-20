@@ -36,7 +36,7 @@ module.exports = merge.smart(config, {
           'css-loader'
         ),
         include: [
-          path.resolve(__dirname, 'src')
+          path.resolve(__dirname, 'src'),
         ],
       },
       {
