@@ -1,7 +1,6 @@
 @value main-yellow from '../common/variables.module.css';
 
 .home_banner {
-  display: flex;
   height: 500px;
   padding-top: 67px;
   align-items: center;
@@ -9,6 +8,10 @@
 
   @media (max-width: 1280px) {
     height: 400px;
+  }
+
+  > div {
+    display: flex;
   }
 }
 

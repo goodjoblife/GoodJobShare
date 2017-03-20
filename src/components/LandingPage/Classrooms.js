@@ -19,12 +19,14 @@ const Classrooms = () => {
   const images = [homeBanner, homeBanner, homeBanner]; // FIXME
 
   return (
-    <section className={cn(styles.classrooms_section, 'wrapperL')}>
-      <h2 className="headingStyle">勞動小教室</h2>
-      <div className={styles.classroom_images_wrapper}>
-        {renderImages(images)}
-      </div>
-      <SeeMoreButton />
+    <section className={styles.classrooms_section}>
+      <div className="wrapperL">
+        <h2 className="headingStyle">勞動小教室</h2>
+        <div className={styles.classroom_images_wrapper}>
+          {renderImages(images)}
+        </div>
+        <SeeMoreButton />
+      </div>    
     </section>
   );
 };

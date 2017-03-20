@@ -7,7 +7,7 @@ import styles from './Footer.module.css';
 
 
 const Footer = () => (
-  <footer className={cn(styles.footer, 'wrapperL')}>
+  <footer className={styles.footer}>
     <Link to="/">
       <Logo className={styles.footer_logo} />
     </Link>
