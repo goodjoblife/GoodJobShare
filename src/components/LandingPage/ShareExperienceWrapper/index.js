@@ -1,9 +1,6 @@
 import React from 'react';
-import cn from 'classnames';
-
 import ShareExperienceItem from './ShareExperienceItem';
 import styles from './ShareExperienceWrapper.module.css';
-
 
 const ShareExperienceWrapper = () => (
   <section className={styles.share_experience_section}>
@@ -17,6 +14,5 @@ const ShareExperienceWrapper = () => (
     </div>
   </section>
 );
-
 
 export default ShareExperienceWrapper;

@@ -1,11 +1,8 @@
 import React from 'react';
-import cn from 'classnames';
 import { Link } from 'react-router';
-
 import SeeMoreButton from './SeeMoreButton';
 import homeBanner from '../images/home-banner.png';
 import styles from './Classrooms.module.css';
-
 
 const renderImages = images => (
   images.map((image, index) => (
@@ -26,10 +23,9 @@ const Classrooms = () => {
           {renderImages(images)}
         </div>
         <SeeMoreButton />
-      </div>    
+      </div>
     </section>
   );
 };
-
 
 export default Classrooms;

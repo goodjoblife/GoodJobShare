@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import cn from 'classnames';
-
 import Logo from '../images/logo.svg';
 import styles from './Footer.module.css';
 
