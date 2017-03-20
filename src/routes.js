@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './containers/Layout';
+import LaborLecture from './containers/LaborLecture';
 import * as containers from './containers';
 
 
@@ -16,6 +17,7 @@ const routes = () => (
     component={App}
   >
     <IndexRoute component={LandingPage} />
+    <Route path="/labor-lecture" component={LaborLecture} />
     <Route path="/another" component={AnotherPage} />
     <Route path="*" component={NotFoundPage} />
   </Route>

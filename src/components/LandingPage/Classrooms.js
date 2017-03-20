@@ -8,8 +8,8 @@ import styles from './Classrooms.module.css';
 
 
 const renderImages = images => (
-  images.map(image => (
-    <Link className={styles.classroom_image_item}>
+  images.map((image,i) => (
+    <Link key={i} className={styles.classroom_image_item}>
       <img src={image} alt={image} />
     </Link>
   ))
