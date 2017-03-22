@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-
 import homeBanner from '../../images/home-banner.png';
 import styles from './ShareExperienceItem.module.css';
 
