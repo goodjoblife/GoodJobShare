@@ -8,6 +8,7 @@ const style = {
     'margin-right': '26.5px',
     'margin-top': '36.5px',
     'margin-bottom': '36.5px',
+    'cursor': 'pointer',
 };
 
 const img_style = {
@@ -23,12 +24,13 @@ const title_style = {
     'font-size': '24px',
     'font-weight': 'bold',
     'line-height': '32px',
+    'text-align': 'left',
     'color': '#000000',
 };
 
 const Lecture = ({title, cover}) => (
-    <div style={style}>
-        { console.log(cover) || cover && <img src={cover} style={img_style} /> }
+    <div style={style} onClick={e => { alert('Link') }}>
+        {cover && <img src={cover} style={img_style} /> }
         <div style={title_style}>
             {title}
         </div>
