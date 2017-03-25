@@ -3,9 +3,8 @@ import {
   Map,
 } from 'immutable';
 
-import createReducer from '../utils/createReducer';
+import createReducer from 'utils/createReducer';
 import { INCREMENT_COUNTER, DECREMENT_COUNTER } from '../actions/counter';
-
 
 const preloadedState = Map({
   counter: 0,

@@ -19,5 +19,12 @@
     "react/jsx-filename-extension": ["error", {
       "extensions": [".js"]
     }]
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.config.base.js"
+      }
+    }
   }
 }
