@@ -1,0 +1,156 @@
+.desktop {
+    position: relative;
+    margin-top: 67px;
+    padding-top: 38px;
+    padding-bottom: 87px;
+}
+
+.header {
+    font-family: "Microsoft JhengHei";
+    font-weight: normal;
+    font-size: 36px;
+    text-align: center;
+    line-height: 41px;
+    letter-spacing: 2px;
+    color: #000000;
+}
+
+.content {
+    padding-bottom: 93px;
+    text-align: center;
+    max-width: 900px;
+    font-family: "Microsoft JhengHei";
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 24px;
+    color: #000000;
+    text-align: left;
+    margin: 0px auto;
+}
+
+.content_para {
+    font-family: "Microsoft JhengHei";
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 29px;
+    color: #000000;
+    white-space: pre-wrap;
+}
+
+.content_image {
+   width: 900px;
+   height: 640px;
+}
+
+.seperator {
+    box-sizing: border-box;
+    width: 900px;
+    height: 3px;
+    border: 1px solid #DADADA;
+    margin: 18px 0px;
+}
+
+.goodjob {
+    width: 97px;
+    height: 25px;
+    float:left;
+    display:inline-block;
+    font-family: "Microsoft JhengHei";
+    font-size: 16px;
+    line-height: 24px;
+    color: #333333;
+    display: flex;
+    align-items: center;
+}
+
+.goodjob_icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-color: yellow;
+    margin-right: 9px;
+}
+
+.goodjob_text:before {
+    content: '好';
+}
+
+.goodjob_count {
+}
+
+.share {
+    float: right;
+    font-family: "Microsoft JhengHei";
+    font-size: 16px;
+    line-height: 24px;
+    color: #333333;
+    display:inline-block;
+    margin: 0px 14px;
+}
+
+.share_icon {
+    width: 19px;
+    height: 14.97px;
+    display:inline-block;
+    margin: 0px 14px;
+}
+
+.pagers {
+    margin-top: '25px';
+}
+
+.pager_image {
+    display: inline-block;
+   box-sizing: border-box;
+   width: 288px;
+   height: 207px;
+   border: 8px solid black;
+   background-color: pink;
+}
+
+.pager_text {
+    width: 331px;
+    height: 24px;
+    font-family: "Microsoft JhengHei";
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 24px;
+    color: #000000;
+    margin-bottom: 16px;
+}
+
+.footer {
+    background-color: #FFFFFF;
+    padding-top: 128px;
+    padding-bottom: 98px;
+    font-family: "Microsoft JhengHei";
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 30px;
+    color: #000000;
+}
+
+.back {
+    position: absolute;
+    top: 33px;
+    left: 37px;
+    width: 77px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Microsoft JhengHei";
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 24px;
+    color: #969696;
+}
+
+.back:before {
+    background-color: gray;
+    display: inline-block;
+    width: 28px;
+    height: 21px;
+    margin-right: 11px;
+}
+

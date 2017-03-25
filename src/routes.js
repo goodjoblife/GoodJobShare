@@ -20,7 +20,7 @@ const routes = () => (
     <IndexRoute component={LandingPage} />
     <Route path="labor-lecture" component={({children}) => children}>
         <IndexRoute component={LectureMenu}/>
-        <Route path=":lecture" component={Lecture} />
+        <Route path=":lecture_id" component={Lecture} />
     </Route>
     <Route path="another" component={AnotherPage} />
     <Route path="*" component={NotFoundPage} />

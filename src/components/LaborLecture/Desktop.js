@@ -1,15 +1,11 @@
 import React from 'react';
-
-const style = {
-    'position': 'relative',
-    'margin-top': '67px',
-    'padding-top': '38px',
-    'text-align': 'center',
-};
+import styles from './Lecture.module.css';
 
 const Desktop = ({ children }) => (
-    <div style={style}>
-        {children}
+    <div style={{'text-align': 'center','width':'100%'}}>
+        <div className={styles.desktop}>
+            {children}
+        </div>
     </div>
 );
 

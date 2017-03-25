@@ -2,8 +2,9 @@ import { connect } from 'react-redux'
 
 import Lecture from '../components/LaborLecture'
 
-const mapStateToProps = (state, { params: { lecture } }) => ({
-    lecture,
+const mapStateToProps = (state, { params: { lecture_id } }) => ({
+    lecture_id,
+    title: '權益受損時的救濟方式',
     content:[
         {
             type: 'text',
