@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Lecture.module.css';
 
 const Pagers = () => (
-    <div className={styles.pages}>
+    <div className={styles.pagers}>
         <div style={{'float':'left','text-align':'left'}}>
             <div className={styles.pager_text}>
                 {'\u003C '}前一課
