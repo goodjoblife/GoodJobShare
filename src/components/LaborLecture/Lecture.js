@@ -29,8 +29,9 @@ const para_style = {
     'font-family': '"Microsoft JhengHei"',
     'font-size': '18px',
     'font-weight': 'bold',
-    'line-height': '24px',
+    'line-height': '29px',
     'color': '#000000',
+    'white-space': 'pre-wrap',
 };
 
 const img_style = {
@@ -112,14 +113,6 @@ export default class Lecture extends React.Component {
 
     render() {
         const title = "權益受損時的救濟方式";
-        const content = [
-            "「今天又要加班了⋯ 重點是，根本沒有加班費😭」",
-            "「主管要我們打卡下班後，再繼續加班耶😠」",
-            "「拜託，我們連個打卡機都沒有好不好👻」",
-            "", 
-            "【「雇主（好像）違法怎麼辦❓❗】 遇到職場上常見的各種違法現象，我們身為公司的一名小小螺絲釘，應該如何保護自己呢？ 　 第二堂勞動知識小教室，要教你如何 滿滿的 維護自身工作權益哦！",
-            "", 
-        ];
         return (
             <main>
                 <Helmet title="勞動小教室" />
@@ -132,18 +125,18 @@ export default class Lecture extends React.Component {
                         <div style={content_style}>
                             <p style={title_style}>{title}</p>
                             {
-                                content.map((line,i) => (
+                                this.props.content.map(({type, data},i) => (
                                     <p key={i} style={para_style}>
-                                        {line=='' && '\u00A0' || line}
+                                    {
+                                        type == 'text' && (
+                                            data=='' && '\u00A0' || data
+                                        ) || type == 'image' && (
+                                            <img style={img_style}/>
+                                        )
+                                    }
                                     </p>
                                 ))
                             }
-                            <p style={para_style}>
-                                <img style={img_style}/>
-                            </p>
-                            <p style={para_style}>
-                                <img style={img_style}/>
-                            </p>
                         </div>
                         <div style={{
                             'width': '97px',
