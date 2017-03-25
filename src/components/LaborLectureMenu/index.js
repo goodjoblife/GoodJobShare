@@ -5,23 +5,16 @@ import Desktop from './Desktop';
 import Columns from './Columns';
 import LectureEntry from './LectureEntry';
 
-const h3_style = {
-    'font-family': '"Microsoft JhengHei"',
-    'font-size': '36px',
-    'font-weight': 'normal',
-    'line-height': '41px',
-    'letter-spacing': '2px',
-    'color': '#000000',
-};
+import styles from './LectureMenu.module.css';
 
 const LaborLecture = ({ items }) => (
     <main>
         <Helmet title="勞動小教室" />
         <Desktop>
-            <h3 style={h3_style}>勞動小教室</h3>
+            <h3 className={styles.header}>勞動小教室</h3>
             <Columns
-            Item={LectureEntry}
-            items={items}
+                Item={LectureEntry}
+                items={items}
             />
         </Desktop>
     </main>

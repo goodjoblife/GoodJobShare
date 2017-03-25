@@ -1,15 +1,8 @@
 import React from 'react';
-
-const style = {
-    'position': 'relative',
-    'margin-top': '67px',
-    'padding-top': '38px',
-    'text-align': 'center',
-    'margin-bottom': '57.5px',
-};
+import styles from './LectureMenu.module.css';
 
 const Desktop = ({ children }) => (
-    <div style={style}>
+    <div className={styles.desktop}>
         {children}
     </div>
 );
