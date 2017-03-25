@@ -80,6 +80,31 @@ const footer_style = {
    'color': '#000000',
 };
 
+const back_style = {
+    'background-color': 'pink',
+    'position': 'absolute',
+    'top': '33px',
+    'left': '37px',
+    'width': '77px',
+    'height': '24px',
+    'display': 'flex',
+    'align-items': 'center',
+    'justify-content': 'center',
+    'font-family': '"Microsoft JhengHei"',
+    'font-size': '18px',
+    'font-weight': 'bold',
+    'line-height': '24px',
+    'color': '#969696',
+};
+
+const arrow_style = {
+    'background-color': 'gray',
+    'display': 'inline-block',
+    'width': '28px',
+    'height': '21px',
+    'margin-right': '11px',
+};
+
 export default class Lecture extends React.Component {
     constructor(props) {
         super(props);
@@ -99,6 +124,10 @@ export default class Lecture extends React.Component {
             <main>
                 <Helmet title="勞動小教室" />
                 <Desktop>
+                    <div style={back_style}>
+                        <span style={arrow_style} />
+                        返回
+                    </div>
                     <div style={style}>
                         <div style={content_style}>
                             <p style={title_style}>{title}</p>
