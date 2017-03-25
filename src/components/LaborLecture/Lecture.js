@@ -71,13 +71,14 @@ const pager_text_style = {
 };
 
 const footer_style = {
-   'padding-top': '128px',
-   'padding-bottom': '98px',
-   'font-family': '"Microsoft JhengHei"',
-   'font-size': '22px',
-   'font-weight': 'bold',
-   'line-height': '30px',
-   'color': '#000000',
+    'background-color': '#FFFFFF',
+    'padding-top': '128px',
+    'padding-bottom': '98px',
+    'font-family': '"Microsoft JhengHei"',
+    'font-size': '22px',
+    'font-weight': 'bold',
+    'line-height': '30px',
+    'color': '#000000',
 };
 
 const back_style = {
