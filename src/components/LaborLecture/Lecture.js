@@ -82,7 +82,6 @@ const footer_style = {
 };
 
 const back_style = {
-    'background-color': 'pink',
     'position': 'absolute',
     'top': '33px',
     'left': '37px',
@@ -155,8 +154,24 @@ export default class Lecture extends React.Component {
                             'font-size': '16px',
                             'line-height': '24px',
                             'color': '#333333',
+                            'display': 'flex',
+                            'align-items': 'center',
                         }}>
-                            好
+                            <span style={{
+                                'display': 'inline-block',
+                                'width': '24px',
+                                'height': '24px',
+                                'background-color': 'yellow',
+                                'margin-right': '9px',
+                            }}/>
+                            <span style={{
+                                'margin-right': '10px',
+                            }}>
+                                好
+                            </span>
+                            <span style={{}}>
+                                108
+                            </span>
                         </div>
                         <div style={{
                            'width': '7.73px',
