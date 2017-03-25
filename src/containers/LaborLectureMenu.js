@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import LaborLecture from '../../components/LaborLecture'
+import LaborLecture from '../components/LaborLectureMenu'
 
 const mapStateToProps = state => ({
     items: [

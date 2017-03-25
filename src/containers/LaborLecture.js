@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import Lecture from '../../components/LaborLecture/Lecture'
+import Lecture from '../components/LaborLecture'
 
 const mapStateToProps = (state, { params: { lecture } }) => ({
     lecture,

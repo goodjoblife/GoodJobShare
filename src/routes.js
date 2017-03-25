@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './containers/Layout';
-import LaborLecture from './containers/LaborLecture';
-import Lecture from './containers/LaborLecture/Lecture';
+import LectureMenu from './containers/LaborLectureMenu';
+import Lecture from './containers/LaborLecture';
 import * as containers from './containers';
 
 
@@ -19,7 +19,7 @@ const routes = () => (
   >
     <IndexRoute component={LandingPage} />
     <Route path="labor-lecture" component={({children}) => children}>
-        <IndexRoute component={LaborLecture}/>
+        <IndexRoute component={LectureMenu}/>
         <Route path=":lecture" component={Lecture} />
     </Route>
     <Route path="another" component={AnotherPage} />
