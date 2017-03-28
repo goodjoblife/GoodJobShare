@@ -1,24 +1,29 @@
-import React from 'react'
+import React from 'react';
 import styles from './LectureMenu.module.css';
 
 const Columns = ({
-    Item,
-    items,
+  Item,
+  items,
 }) => {
-    if(items.length % 3 != 0) {
-        for(let i=0;i<items.length%3;i++) {
-            items.push({title: ''});
-        }
+  if (items.length % 3 !== 0) {
+    for (let i = 0; i < items.length % 3; i += 1) {
+      items.push({ title: '' });
     }
-    return (
-        <div className={styles.columns}>
-        {
-            items.map((props, i) => (
-                <Item key={i} {...props} />
-            ))
-        }
-        </div>
-    );
-}
+  }
+  return (
+    <div className={styles.columns}>
+      {
+        items.map((props, i) => (
+          <Item key={i} {...props} />
+        ))
+      }
+    </div>
+  );
+};
+
+Columns.propTypes = {
+  Item: React.PropTypes.element,
+  items: React.PropTypes.array,
+};
 
 export default Columns;
