@@ -1,0 +1,30 @@
+@value main-yellow from "../common/variables.module.css";
+
+
+.wrapper {
+  margin-top: 67px;
+  padding-top: 40px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.link__container {
+  width: 825px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.link {
+  text-align: center;
+}
+
+.image {
+  width: 211px;
+  height: 211px;
+  margin-bottom: 34px;
+  background: main-yellow;
+}
