@@ -8,7 +8,9 @@ import Footer from './Footer';
 const App = ({ children }) => (
   <div className={styles.App}>
     <Header />
-    {children}
+    <div className={styles.content}>
+      {children}
+    </div>
     <Footer />
   </div>
 );
