@@ -1,17 +1,20 @@
 import React from 'react';
+import { IndexLink } from 'react-router';
 import styles from './LectureMenu.module.css';
 
 const Lecture = ({ title, cover }) => (
-  <button className={styles.lecture_entry} onClick={() => {}}>
-    {
+  <IndexLink to={'/labor-lecture/'+title}>
+    <div className={styles.lecture_entry}>
+      {
         cover && (
           <img alt={title} src={cover} className={styles.lecture_cover} />
         )
-    }
-    <div className={styles.lecture_title}>
-      {title}
+      }
+      <div className={styles.lecture_title}>
+        {title}
+      </div>
     </div>
-  </button>
+  </IndexLink>
 );
 
 Lecture.propTypes = {
