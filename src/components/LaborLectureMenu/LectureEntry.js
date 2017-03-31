@@ -3,7 +3,7 @@ import { IndexLink } from 'react-router';
 import styles from './LectureMenu.module.css';
 
 const Lecture = ({ title, cover }) => (
-  <IndexLink to={'/labor-lecture/'+title}>
+  <IndexLink to={`/labor-lecture/${title}`}>
     <div className={styles.lecture_entry}>
       {
         cover && (
