@@ -35,4 +35,10 @@ module.exports = {
     }),
     nested,
   ],
+  resolve: {
+    alias: {
+      common: `${__dirname}/src/components/common`,
+      utils: `${__dirname}/src/utils`,
+    },
+  },
 };

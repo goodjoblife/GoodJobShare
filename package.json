@@ -61,6 +61,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "eslint-import-resolver-webpack": "^0.8.1",
     "immutable": "^3.8.1",
     "path": "^0.12.7",
     "react": "^15.4.1",
