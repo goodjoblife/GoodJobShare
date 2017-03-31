@@ -1,24 +1,27 @@
-import React from 'react';
-import { Route, IndexRoute } from 'react-router';
 import App from './containers/Layout';
-import * as containers from './containers';
+import LandingPage from './containers/LandingPage';
 
-
-const {
-  LandingPage,
-  AnotherPage,
-  NotFoundPage,
-} = containers;
-
-const routes = () => (
-  <Route
-    path="/"
-    component={App}
-  >
-    <IndexRoute component={LandingPage} />
-    <Route path="/another" component={AnotherPage} />
-    <Route path="*" component={NotFoundPage} />
-  </Route>
-);
+const routes = () => ({
+  path: '/',
+  component: App,
+  indexRoute: {
+    component: LandingPage,
+  },
+  childRoutes: [{
+    path: 'another',
+    getComponent(nextState, cb) {
+      require.ensure([], require => {
+        cb(null, require('./containers/AnotherPage').default);
+      }, 'another');
+    },
+  }, {
+    path: '*',
+    getComponent(nextState, cb) {
+      require.ensure([], require => {
+        cb(null, require('./containers/NotFoundPage').default);
+      }, 'notFound');
+    },
+  }],
+});
 
 export default routes;

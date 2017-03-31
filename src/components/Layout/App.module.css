@@ -5,6 +5,13 @@
 .App {
 
 }
+@media (min-width: 851px) {
+	.content {
+		margin-top: 67px;
+	}
+}
+
+
 
 /* gloabl style start */
 body, html {
