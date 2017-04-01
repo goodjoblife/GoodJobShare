@@ -8,7 +8,7 @@
   },
   "rules": {
     "arrow-parens": ["error", "as-needed"],
-    "comma-dangle": "off",
+    "comma-dangle": ["error", "always-multiline"],
     "max-len": ["error", 79, {
       "ignorePattern": " // eslint-disable-line "
     }],
@@ -19,5 +19,12 @@
     "react/jsx-filename-extension": ["error", {
       "extensions": [".js"]
     }]
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.config.base.js"
+      }
+    }
   }
 }

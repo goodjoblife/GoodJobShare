@@ -1,13 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
-import cn from 'classnames';
-
 import Logo from '../images/logo.svg';
 import styles from './Footer.module.css';
 
 
 const Footer = () => (
-  <footer className={cn(styles.footer, 'wrapper_l')}>
+  <footer className={styles.footer}>
     <Link to="/">
       <Logo className={styles.footer_logo} />
     </Link>

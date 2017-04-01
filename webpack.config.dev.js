@@ -26,6 +26,13 @@ module.exports = merge.smart(config, {
     }),
   ],
   module: {
+    preLoaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: path.resolve(__dirname, 'node_modules'),
+        loaders: ['eslint-loader'],
+      },
+    ],
     loaders: [
       {
         test: /^((?!\.module).)*\.css$/,
@@ -34,7 +41,7 @@ module.exports = merge.smart(config, {
           'css-loader?sourceMap',
         ],
         include: [
-          path.resolve(__dirname, 'src')
+          path.resolve(__dirname, 'src'),
         ],
       },
       {

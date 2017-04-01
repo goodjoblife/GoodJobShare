@@ -10,7 +10,7 @@ module.exports = merge.smart(config, {
   entry: './src/index',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle-[chunkhash].js',
+    filename: '[name]-[chunkhash].js',
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
@@ -36,7 +36,7 @@ module.exports = merge.smart(config, {
           'css-loader'
         ),
         include: [
-          path.resolve(__dirname, 'src')
+          path.resolve(__dirname, 'src'),
         ],
       },
       {

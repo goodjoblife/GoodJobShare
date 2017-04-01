@@ -1,22 +1,25 @@
-@value header-background-color from "../common/variables.module.css";
+@value main-black from "../common/variables.module.css";
 
-.headerWrapper {
+.wrapper {
   position: fixed;
   z-index: 999;
   top: 0;
   left: 0;
-  display: flex;
-  width: 100vw;
-  justify-content: space-between;
-  align-items: center;
-  background-color: header-background-color;
+  right: 0;
+  background-color: main-black;
 }
 
-.header_logo {
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
   fill: #fff;
 }
 
-.header_nav {
+.nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,7 +28,7 @@
   > ul {
     margin: 0;
 
-    .site_menu_item {
+    .navItem {
       outline: 0;
 
       @media (min-width: 851px) {
@@ -48,7 +51,7 @@
     }
   }
 
-  .button_area {
+  .buttonArea {
     display: flex;
 
     > button {
@@ -60,14 +63,14 @@
       outline: 0;
     }
 
-    .leave_data_btn {
+    .leaveDataBtn {
       padding: 10px 30px;
       border: 1px solid #fff;
       white-space: nowrap;
     }
 
-    .login_btn {
-      padding: 0 20px;
+    .loginBtn {
+      padding-left: 20px;
       border: 0;
     }
   }

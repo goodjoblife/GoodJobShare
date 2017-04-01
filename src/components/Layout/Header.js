@@ -7,30 +7,32 @@ import styles from './Header.module.css';
 
 
 const Header = () => (
-  <header className={cn(styles.headerWrapper, 'wrapper_l')}>
-    <Link to="/">
-      <Logo className={styles.header_logo} />
-    </Link>
-    <nav className={styles.header_nav}>
-      <ul>
-        <li className={styles.site_menu_item}>
-          <Link to="/">薪資工時</Link>
-        </li>
-        <li className={styles.site_menu_item}>
-          <Link to="/">面試經驗</Link>
-        </li>
-        <li className={styles.site_menu_item}>
-          <Link to="/">工作經驗</Link>
-        </li>
-        <li className={styles.site_menu_item}>
-          <Link to="/">勞動小教室</Link>
-        </li>
-      </ul>
-      <div className={styles.button_area}>
-        <button className={styles.leave_data_btn}>留下資料</button>
-        <button className={styles.login_btn}>登入</button>
-      </div>
-    </nav>
+  <header className={styles.wrapper}>
+    <div className={cn(styles.inner, 'wrapperL')}>
+      <Link to="/">
+        <Logo className={styles.logo} />
+      </Link>
+      <nav className={styles.nav}>
+        <ul>
+          <li className={styles.navItem}>
+            <Link to="/">薪資工時</Link>
+          </li>
+          <li className={styles.navItem}>
+            <Link to="/">面試經驗</Link>
+          </li>
+          <li className={styles.navItem}>
+            <Link to="/">工作經驗</Link>
+          </li>
+          <li className={styles.navItem}>
+            <Link to="/">勞動小教室</Link>
+          </li>
+        </ul>
+        <div className={styles.buttonArea}>
+          <button className={styles.leaveDataBtn}>留下資料</button>
+          <button className={styles.loginBtn}>登入</button>
+        </div>
+      </nav>
+    </div>
   </header>
 );
 
