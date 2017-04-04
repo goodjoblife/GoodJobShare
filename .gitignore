@@ -4,3 +4,6 @@ node_modules
 .nyc_output
 coverage
 dist
+# webpack-isomorphic-tools
+/webpack-stats.json
+/webpack-assets.json

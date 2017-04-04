@@ -2,13 +2,21 @@ import React from 'react';
 import { render } from 'react-dom';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import { fromJS } from 'immutable';
 
 import Root from './containers/Root';
 import configureStore from './store/configureStore';
 
 import './index.css';
 
-const store = configureStore();
+const preloadedState = {};
+// TODO
+Object.keys(window.__data).forEach(key => {
+  preloadedState[key] = fromJS(window.__data[key]);
+});
+delete window.__data;
+
+const store = configureStore(preloadedState);
 const history = syncHistoryWithStore(browserHistory, store);
 const rootElement = document.getElementById('root');
 
