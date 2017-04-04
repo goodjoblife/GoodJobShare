@@ -8,6 +8,20 @@ const routes = () => ({
     component: LandingPage,
   },
   childRoutes: [{
+    path: 'experiences/search',
+    getComponent(nextState, cb) {
+      require.ensure([], require => {
+        cb(null, require('./containers/ExperienceSearchPage').default);
+      }, 'search');
+    },
+  }, {
+    path: 'experiences/:id',
+    getComponent(nextState, cb) {
+      require.ensure([], require => {
+        cb(null, require('./containers/ExperienceDetailPage').default);
+      }, 'detail');
+    },
+  }, {
     path: 'another',
     getComponent(nextState, cb) {
       require.ensure([], require => {

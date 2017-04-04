@@ -1,0 +1,62 @@
+@value main-yellow from "../common/variables.module.css";
+
+.formGroup {
+  position: relative;
+  margin-top: 20px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.radioCircle {
+  font-weight: 300;
+  font-size: 1em;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  /*@media (min-width: $above-desktop) {
+    &:hover {
+      color: $gray-dark;
+    }
+  }*/
+  .radioInput {
+    display: inline-block;
+    vertical-align: middle;
+    width: 18px;
+    height: 18px;
+    border-radius: 100%;
+    border: 1px solid #000;
+    position: relative;
+    &:before {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 100%;
+      background-color: main-yellow;
+      top: 4px;
+      left: 4px;
+      /* transition: transform .3s; */
+      transform: scale(0);
+    }
+  }
+  .radioText {
+    display: inline-block;
+    vertical-align: middle;
+    text-transform: capitalize;
+    padding-left: 10px;
+    transition: color .3s;
+    font-size: 1em;
+    font-weight: 400;
+  }
+}
+
+input[type="radio"]:checked + .radioCircle {
+  .radioInput {
+    border: 1px solid main-yellow;
+    &:before {
+      transform: scale(1);
+    }
+  }
+}
