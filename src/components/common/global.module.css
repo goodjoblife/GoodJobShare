@@ -21,3 +21,51 @@
 		font-size: 1.8em;
 	}
 }
+
+:global {
+  [class^="p-"] {
+    line-height: 1.5em;
+  }
+
+  [class^="heading-"], [class^="subheading-"], [class*="-bold"], .form-label {
+    font-weight: 700;
+    line-height: 2em;
+  }
+
+  .heading {
+    &-l {
+      font-weight: 400;
+      font-size: 2.2em;
+      letter-spacing: 0.08em;
+    }
+    &-m {
+      font-size: 1.6em;
+      letter-spacing: 0.1em;
+    }
+  }
+  .subheading {
+    &-l {
+      font-size: 1.4em;
+      letter-spacing: 0.1em;
+    }
+    &-m {
+      font-size: 1.3em;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  .p-l, .p-l-bold {
+    font-size: 1.1em;
+  }
+  .p-m, .p-m-bold {
+    font-size: 1em;
+  }
+  .p-s, .p-s-bold {
+    font-size: 0.9em;
+  }
+
+  .form-label {
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+  }
+}
