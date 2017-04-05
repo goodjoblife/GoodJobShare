@@ -23,48 +23,48 @@
 }
 
 :global {
-  [class^="p-"] {
+  [class^="pL"], [class^="pM"], [class^="pS"] {
     line-height: 1.5em;
   }
 
-  [class^="heading-"], [class^="subheading-"], [class*="-bold"], .form-label {
+  [class^="heading"], [class^="subheading"], [class*="Bold"], .formLabel {
     font-weight: 700;
     line-height: 2em;
   }
 
   .heading {
-    &-l {
+    &L {
       font-weight: 400;
       font-size: 2.2em;
       letter-spacing: 0.08em;
     }
-    &-m {
+    &M {
       font-size: 1.6em;
       letter-spacing: 0.1em;
     }
   }
   .subheading {
-    &-l {
+    &L {
       font-size: 1.4em;
       letter-spacing: 0.1em;
     }
-    &-m {
+    &M {
       font-size: 1.3em;
       letter-spacing: 0.05em;
     }
   }
 
-  .p-l, .p-l-bold {
+  .pL, .pLBold {
     font-size: 1.1em;
   }
-  .p-m, .p-m-bold {
+  .pM, .pMBold {
     font-size: 1em;
   }
-  .p-s, .p-s-bold {
+  .pS, .pSBold {
     font-size: 0.9em;
   }
 
-  .form-label {
+  .formLabel {
     font-size: 0.9em;
     letter-spacing: 0.1em;
   }

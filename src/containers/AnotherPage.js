@@ -4,38 +4,38 @@ import React from 'react';
 const AnotherPage = () => (
   <div>
     <h1>Hello World</h1>
-    <div className="heading-l">熱門分享 (heading-l)</div>
-    <div className="heading-l">熱門分享 (heading-l)</div>
+    <div className="headingL">熱門分享 (headingL)</div>
+    <div className="headingL">熱門分享 (headingL)</div>
 
-    <div className="heading-m">日月光半導體面試經驗分享 (heading-m)</div>
-    <div className="heading-m">日月光半導體面試經驗分享 (heading-m)</div>
+    <div className="headingM">日月光半導體面試經驗分享 (headingM)</div>
+    <div className="headingM">日月光半導體面試經驗分享 (headingM)</div>
 
-    <div className="subheading-l">日月光半導體面試經驗分享 (subheading-l)</div>
-    <div className="subheading-l">日月光半導體面試經驗分享 (subheading-l)</div>
+    <div className="subheadingL">日月光半導體面試經驗分享 (subheadingL)</div>
+    <div className="subheadingL">日月光半導體面試經驗分享 (subheadingL)</div>
 
-    <div className="subheading-m">在日月光待了6年 (subheading-m)</div>
-    <div className="subheading-m">在日月光待了6年 (subheading-m)</div>
+    <div className="subheadingM">在日月光待了6年 (subheadingM)</div>
+    <div className="subheadingM">在日月光待了6年 (subheadingM)</div>
 
-    <div className="p-l">留下工時或薪資 (p-l)</div>
-    <div className="p-l">留下工時或薪資 (p-l)</div>
+    <div className="pL">留下工時或薪資 (pL)</div>
+    <div className="pL">留下工時或薪資 (pL)</div>
 
-    <div className="p-m">第一間面試我的公司 (p-m)</div>
-    <div className="p-m">第一間面試我的公司 (p-m)</div>
+    <div className="pM">第一間面試我的公司 (pM)</div>
+    <div className="pM">第一間面試我的公司 (pM)</div>
 
-    <div className="p-s">第一間面試我的公司 (p-s)</div>
-    <div className="p-s">第一間面試我的公司 (p-s)</div>
+    <div className="pS">第一間面試我的公司 (pS)</div>
+    <div className="pS">第一間面試我的公司 (pS)</div>
 
-    <div className="p-l-bold">留下工時或薪資 (p-l-bold)</div>
-    <div className="p-l-bold">留下工時或薪資 (p-l-bold)</div>
+    <div className="pLBold">留下工時或薪資 (pLBold)</div>
+    <div className="pLBold">留下工時或薪資 (pLBold)</div>
 
-    <div className="p-m-bold">第一間面試我的公司 (p-m-bold)</div>
-    <div className="p-m-bold">第一間面試我的公司 (p-m-bold)</div>
+    <div className="pMBold">第一間面試我的公司 (pMBold)</div>
+    <div className="pMBold">第一間面試我的公司 (pMBold)</div>
 
-    <div className="p-s-bold">第一間面試我的公司 (p-s-bold)</div>
-    <div className="p-s-bold">第一間面試我的公司 (p-s-bold)</div>
+    <div className="pSBold">第一間面試我的公司 (pSBold)</div>
+    <div className="pSBold">第一間面試我的公司 (pSBold)</div>
 
-    <div className="form-label">公司/單位 或 統一編號 (form-label)</div>
-    <div className="form-label">公司/單位 或 統一編號 (form-label)</div>
+    <div className="formLabel">公司/單位 或 統一編號 (formLabel)</div>
+    <div className="formLabel">公司/單位 或 統一編號 (formLabel)</div>
   </div>
 );
 
