@@ -22,7 +22,7 @@ const Columns = ({
 };
 
 Columns.propTypes = {
-  Item: React.PropTypes.element,
+  Item: React.PropTypes.func,
   items: React.PropTypes.array,
 };
 
