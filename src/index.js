@@ -7,8 +7,6 @@ import { fromJS } from 'immutable';
 import Root from './containers/Root';
 import configureStore from './store/configureStore';
 
-import './index.css';
-
 const preloadedState = {};
 // TODO
 Object.keys(window.__data).forEach(key => {
