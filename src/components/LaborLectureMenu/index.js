@@ -30,11 +30,11 @@ class LaborLecture extends React.Component {
       ({ items: entries }) => {
         const items = entries.map(({
           sys: { id },
-          fields: { title, cover_photo },
+          fields: { title, cover_photo: { fields: { file: { url } } } },
         }) => ({
           id,
           title,
-          cover_photo,
+          cover_photo: url,
         }));
         this.setState({
           items,
