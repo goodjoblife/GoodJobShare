@@ -3,6 +3,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 
 import styles from './ExperienceSearch.module.css';
+import Search from '../images/search.svg';
 import TypeCheckbox from './TypeCheckbox';
 import IndustryRadio from './IndustryRadio';
 
@@ -65,7 +66,14 @@ const ExperienceSearch = ({
       </aside>
 
       <div className={styles.content}>
-        <div className={styles.searchbar}>searhbar</div>
+        <div className={styles.searchbar}>
+          <input type="text" placeholder="以職稱搜尋" />
+          <Search onClick={() => { console.log('test'); }} />
+          <div className={styles.keywordGroup}>
+            <span className={styles.keyword}>hello</span>
+            <span className={styles.keyword}>工程師</span>
+          </div>
+        </div>
         <div className={styles.info}>找到 5 筆與 &quot;日月光&quot; 相關的資料</div>
         <div className={styles.list}>main content</div>
       </div>
