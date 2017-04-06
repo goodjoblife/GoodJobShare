@@ -9,6 +9,24 @@ const routes = () => ({
     component: LandingPage,
   },
   childRoutes: [{
+    path: 'labor-lecture',
+    component: ({ children }) => children,
+    indexRoute: {
+      getComponent(nextState, cb) {
+        require.ensure([], require => {
+          cb(null, require('./containers/LaborLectureMenu').default);
+        }, 'labor-lecture-menu');
+      },
+    },
+    childRoutes: [{
+      path: ':lecture_id',
+      getComponent(nextState, cb) {
+        require.ensure([], require => {
+          cb(null, require('./containers/LaborLecture').default);
+        }, 'labor-lecture');
+      },
+    }],
+  }, {
     path: 'another',
     getComponent(nextState, cb) {
       require.ensure([], require => {
