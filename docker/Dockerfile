@@ -1,14 +1,13 @@
-FROM node:7.5.0
+FROM node:7
 
-RUN mkdir -p /app
+COPY . /app
+
 WORKDIR /app
+
+RUN yarn install && yarn run build && yarn cache clean
 
 ENV NODE_ENV=production PORT=3001
 
-COPY docker/server.js docker/package.json /app/
-COPY dist /app/dist
+EXPOSE 3001
 
-RUN npm install && npm cache clean
-
-CMD ["npm", "start"]
-
+CMD ["npm", "run", "start-production"]
