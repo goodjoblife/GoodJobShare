@@ -139,8 +139,7 @@
 }
 
 .back {
-    position: absolute;
-    top: -24px;
+    position: fixed;
     left: 37px;
     width: 77px;
     height: 24px;
