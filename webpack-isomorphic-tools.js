@@ -23,16 +23,22 @@ module.exports = {
     },
     style_modules: {
       extensions: ['css'],
-      filter(module, regex) {
-        // return WebpackIsomorphicToolsPlugin.style_loader_filter(module, regex, options, log); // eslint-disable-line max-len
+      filter(module, regex, options, log) {
+        if (options.development) {
+          return WebpackIsomorphicToolsPlugin.style_loader_filter(module, regex, options, log); // eslint-disable-line max-len
+        }
         return regex.test(module.name);
       },
-      path(module) {
-        // return WebpackIsomorphicToolsPlugin.style_loader_path_extractor(module, options, log); // eslint-disable-line max-len
+      path(module, options, log) {
+        if (options.development) {
+          return WebpackIsomorphicToolsPlugin.style_loader_path_extractor(module, options, log); // eslint-disable-line max-len
+        }
         return module.name;
       },
-      parser(module) {
-        // return WebpackIsomorphicToolsPlugin.css_modules_loader_parser(module, options, log); // eslint-disable-line max-len
+      parser(module, options, log) {
+        if (options.development) {
+          return WebpackIsomorphicToolsPlugin.css_modules_loader_parser(module, options, log); // eslint-disable-line max-len
+        }
         return module.source;
       },
     },

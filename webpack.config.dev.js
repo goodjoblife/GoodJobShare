@@ -1,6 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
+const WebpackIsomorphicToolsPlugin =
+  require('webpack-isomorphic-tools/plugin');
+const webpackIsomorphicTools = require('./webpack-isomorphic-tools');
 
 const config = require('./webpack.config.base');
 
@@ -24,6 +27,7 @@ module.exports = merge.smart(config, {
         NODE_ENV: JSON.stringify('development'),
       },
     }),
+    new WebpackIsomorphicToolsPlugin(webpackIsomorphicTools).development(),
   ],
   module: {
     preLoaders: [

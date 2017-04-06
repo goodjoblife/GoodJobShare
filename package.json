@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "lib/index.js",
   "scripts": {
-    "start": "webpack-dashboard -- node server.js",
+    "start": "webpack-dashboard -- node bin/server.js",
     "start-production": "cross-env NODE_ENV=production node bin/server.js",
     "clean": "rimraf lib dist coverage",
     "lint": "eslint src scripts *.js",

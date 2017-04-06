@@ -4,8 +4,25 @@ require('babel-register');
 const path = require('path');
 const project_base_path = path.resolve(__dirname, '..');
 
+function registerWebpackDevServer(app) {
+  const webpack = require('webpack');
+  const config = require('../webpack.config.dev');
+  const compiler = webpack(config);
+  const DashboardPlugin = require('webpack-dashboard/plugin');
+
+  compiler.apply(new DashboardPlugin());
+  app.use(require('webpack-dev-middleware')(compiler, {
+    publicPath: config.output.publicPath,
+  }));
+  app.use(require('webpack-hot-middleware')(compiler));
+}
+
 const express = require('express');
 const app = express();
+
+if (process.env.NODE_ENV !== 'production') {
+  registerWebpackDevServer(app)
+}
 
 const WebpackIsomorphicTools = require('webpack-isomorphic-tools');
 const webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack-isomorphic-tools'));
