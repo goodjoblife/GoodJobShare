@@ -28,7 +28,11 @@ class LaborLecture extends React.Component {
 
     client.getEntries().then(
       ({ items: entries }) => {
-        const items = entries.map(({ fields: { title, cover_photo } }) => ({
+        const items = entries.map(({
+          sys: { id },
+          fields: { title, cover_photo },
+        }) => ({
+          id,
           title,
           cover_photo,
         }));
