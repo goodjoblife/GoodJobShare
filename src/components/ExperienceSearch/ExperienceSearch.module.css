@@ -41,21 +41,19 @@
     padding: 60px 0 60px 60px;
 
     .searchbar {
+      .condition, .search {
+        display: table-cell;
+        vertical-align: top;
+      }
+      .condition {
+        padding-top: 7px;
+      }
       input[type=text] {
         border: 0;
         border-bottom: 1px solid black;
         background-color: transparent;
-        font-weight: 700;
-        font-size: 1.3em;
+        font-size: 1.2em;
         padding: 5px;
-
-        &::placeholder {
-          font-weight: 400;
-        }
-        &:focus {
-          border-bottom: 2px solid black;
-          padding-bottom: 4px;
-        }
       }
 
       .keywordGroup {

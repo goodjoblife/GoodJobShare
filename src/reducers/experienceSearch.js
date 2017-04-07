@@ -1,7 +1,8 @@
 import { Map } from 'immutable';
 
 import createReducer from 'utils/createReducer';
-import { SET_SORT, SET_TYPE, SET_INDUSTRY } from '../actions/experienceSearch';
+import { SET_SORT, SET_TYPE, SET_INDUSTRY,
+  SET_CONDITION } from '../actions/experienceSearch';
 
 const preloadedState = Map({
   sort: 'created_at',
@@ -9,6 +10,7 @@ const preloadedState = Map({
   work: false,
   salary: false,
   industry: 'all',
+  condition: 'job_title',
 });
 
 const experienceSearch = createReducer(preloadedState, {
@@ -18,6 +20,9 @@ const experienceSearch = createReducer(preloadedState, {
 
   [SET_INDUSTRY]: (state, action) =>
     state.update('industry', () => action.industry),
+
+  [SET_CONDITION]: (state, action) =>
+    state.update('condition', () => action.condition),
 });
 
 export default experienceSearch;

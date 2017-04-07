@@ -1,8 +1,15 @@
-@value main-yellow from "../common/variables.module.css";
+@value main-yellow from "../variables.module.css";
 
 .formGroup {
   position: relative;
-  margin-top: 20px;
+  
+  &.block {
+    margin-top: 20px;
+  }
+  &.inline {
+    margin-right: 30px;
+    display: inline-block;
+  }
 }
 
 input[type="radio"] {
