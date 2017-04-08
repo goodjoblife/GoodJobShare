@@ -6,7 +6,7 @@ const Counter = ({
   increment, incrementIfOdd, decrement, counter,
 }) => (
   <p>
-    Clicked: {counter.counter} times
+    Clicked: {counter.get('counter')} times
     {' '}
     <button onClick={increment}>+</button>
     {' '}

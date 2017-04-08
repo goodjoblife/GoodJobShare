@@ -5,7 +5,7 @@ import ExperienceSearch from '../components/ExperienceSearch';
 import * as ExperienceSearchActions from '../actions/experienceSearch';
 
 const mapStateToProps = state => ({
-  experienceSearch: state.experienceSearch,
+  experienceSearch: state.get('experienceSearch'),
 });
 
 const mapDispatchToProps = dispatch =>
