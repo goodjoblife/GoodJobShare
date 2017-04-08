@@ -14,9 +14,9 @@ export const decrement = () => ({
 
 export const incrementIfOdd = () =>
   (dispatch, getState) => {
-    const { counter } = getState();
+    const counter = getState().get('counter');
 
-    if (counter.counter % 2 === 0) {
+    if (counter.get('counter') % 2 === 0) {
       return;
     }
 

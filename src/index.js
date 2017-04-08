@@ -9,7 +9,11 @@ import configureStore from './store/configureStore';
 import './index.css';
 
 const store = configureStore();
-const history = syncHistoryWithStore(browserHistory, store);
+const history = syncHistoryWithStore(browserHistory, store, {
+  selectLocationState(state) {
+    return state.get('routing').toJS();
+  },
+});
 const rootElement = document.getElementById('root');
 
 let app;

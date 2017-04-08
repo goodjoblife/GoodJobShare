@@ -6,7 +6,7 @@ import * as CounterActions from '../actions/counter';
 
 
 const mapStateToProps = state => ({
-  counter: state.counter,
+  counter: state.get('counter'),
 });
 
 
