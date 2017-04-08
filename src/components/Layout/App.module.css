@@ -1,3 +1,4 @@
+@import "../common/reset.module.css";
 @import "../common/global.module.css";
 
 @value primary-font, white-light from "../common/variables.module.css";
