@@ -21,3 +21,51 @@
 		font-size: 1.8em;
 	}
 }
+
+:global {
+  [class^="pL"], [class^="pM"], [class^="pS"] {
+    line-height: 1.5em;
+  }
+
+  [class^="heading"], [class^="subheading"], [class*="Bold"], .formLabel {
+    font-weight: 700;
+    line-height: 2em;
+  }
+
+  .heading {
+    &L {
+      font-weight: 400;
+      font-size: 2.2em;
+      letter-spacing: 0.08em;
+    }
+    &M {
+      font-size: 1.6em;
+      letter-spacing: 0.1em;
+    }
+  }
+  .subheading {
+    &L {
+      font-size: 1.4em;
+      letter-spacing: 0.1em;
+    }
+    &M {
+      font-size: 1.3em;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  .pL, .pLBold {
+    font-size: 1.1em;
+  }
+  .pM, .pMBold {
+    font-size: 1em;
+  }
+  .pS, .pSBold {
+    font-size: 0.9em;
+  }
+
+  .formLabel {
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+  }
+}
