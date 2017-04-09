@@ -1,0 +1,38 @@
+version: 2
+jobs:
+    build:
+        working_directory: ~/app
+        docker:
+            - image: node
+        steps:
+            - checkout
+            - run:
+                name: Install Dependencies
+                command: yarn install
+            - run:
+                name: Lint and Unit test
+                command: npm test
+            - run:
+                name: Build
+                command: npm run build
+            - deploy:
+                name: Trigger Build For Master Branch
+                command: |
+                    if [ "${CIRCLE_BRANCH}" == "master" ]; then
+                        curl --user ${CIRCLE_API_TOKEN}: \
+                            --data build_parameters[CIRCLE_JOB]=deploy_docker \
+                            --data revision=$CIRCLE_SHA1 \
+                            https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH
+                    fi
+    deploy_docker:
+        working_directory: ~/app
+        docker:
+            - image: docker
+        steps:
+            - checkout
+            - setup_remote_docker
+            - run:
+                name: Build Docker Image
+                command: docker build -t goodjoblife/goodjobshare:$CIRCLE_SHA1 -f docker/Dockerfile .
+            - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+            - run: docker push goodjoblife/goodjobshare:$CIRCLE_SHA1
