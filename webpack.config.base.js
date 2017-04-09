@@ -1,6 +1,5 @@
 const autoprefixer = require('autoprefixer');
 const nested = require('postcss-nested');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = {
@@ -23,10 +22,6 @@ module.exports = {
   },
 
   plugins: [
-    new HtmlWebpackPlugin({
-      template: 'src/index.html',
-      inject: true,
-    }),
   ],
 
   postcss: [
