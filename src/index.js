@@ -10,7 +10,11 @@ import configureStore from './store/configureStore';
 const preloadedState = {};
 // TODO
 Object.keys(window.__data).forEach(key => {
-  preloadedState[key] = fromJS(window.__data[key]);
+  if (key === 'routing') {
+    preloadedState[key] = window.__data[key];
+  } else {
+    preloadedState[key] = fromJS(window.__data[key]);
+  }
 });
 delete window.__data;
 
