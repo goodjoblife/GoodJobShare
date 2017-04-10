@@ -9,14 +9,14 @@ const routes = () => ({
     component: LandingPage,
   },
   childRoutes: [{
-    path: 'labor-lecture',
+    path: 'labor-rights',
     getComponent(nextState, cb) {
       require.ensure([], require => {
         cb(null, require('./containers/LaborLectureMenu').default);
       }, 'labor-lecture-menu');
     },
   }, {
-    path: 'labor-lecture/:lecture_id',
+    path: 'labor-rights/:id',
     getComponent(nextState, cb) {
       require.ensure([], require => {
         cb(null, require('./containers/LaborLecture').default);

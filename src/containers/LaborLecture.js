@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 
 import Lecture from '../components/LaborLecture';
 
-const mapStateToProps = (state, { params: { lecture_id } }) => ({
-  lecture_id,
+const mapStateToProps = (state, { params: { id } }) => ({
+  lecture_id: id,
 });
 
 export default connect(mapStateToProps)(Lecture);
