@@ -10,22 +10,32 @@ const routes = () => ({
   },
   childRoutes: [{
     path: 'labor-lecture',
-    component: ({ children }) => children,
-    indexRoute: {
-      getComponent(nextState, cb) {
-        require.ensure([], require => {
-          cb(null, require('./containers/LaborLectureMenu').default);
-        }, 'labor-lecture-menu');
-      },
+    getComponent(nextState, cb) {
+      require.ensure([], require => {
+        cb(null, require('./containers/LaborLectureMenu').default);
+      }, 'labor-lecture-menu');
     },
-    childRoutes: [{
-      path: ':lecture_id',
-      getComponent(nextState, cb) {
-        require.ensure([], require => {
-          cb(null, require('./containers/LaborLecture').default);
-        }, 'labor-lecture');
-      },
-    }],
+  }, {
+    path: 'labor-lecture/:lecture_id',
+    getComponent(nextState, cb) {
+      require.ensure([], require => {
+        cb(null, require('./containers/LaborLecture').default);
+      }, 'labor-lecture');
+    },
+  }, {
+    path: 'experiences/search',
+    getComponent(nextState, cb) {
+      require.ensure([], require => {
+        cb(null, require('./containers/ExperienceSearchPage').default);
+      }, 'search');
+    },
+  }, {
+    path: 'experiences/:id',
+    getComponent(nextState, cb) {
+      require.ensure([], require => {
+        cb(null, require('./containers/ExperienceDetailPage').default);
+      }, 'detail');
+    },
   }, {
     path: 'another',
     getComponent(nextState, cb) {

@@ -2,6 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const WebpackIsomorphicToolsPlugin =
+  require('webpack-isomorphic-tools/plugin');
+const webpackIsomorphicTools = require('./webpack-isomorphic-tools');
 
 const config = require('./webpack.config.base');
 
@@ -11,6 +14,7 @@ module.exports = merge.smart(config, {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name]-[chunkhash].js',
+    publicPath: '/',
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
@@ -26,6 +30,7 @@ module.exports = merge.smart(config, {
       },
     }),
     new ExtractTextPlugin('style-[contenthash].css', { allChunks: true }),
+    new WebpackIsomorphicToolsPlugin(webpackIsomorphicTools),
   ],
   module: {
     loaders: [
