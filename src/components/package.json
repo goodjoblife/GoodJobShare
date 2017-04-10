@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "marked": "^0.3.6"
+  }
+}
