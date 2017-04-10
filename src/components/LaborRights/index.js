@@ -1,7 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import * as contentful from 'contentful';
-
 import Container from './Container';
 import BackButton from './BackButton';
 import Content from './Content';
@@ -50,27 +49,7 @@ class Lecture extends React.Component {
           <h3 className={`headingL ${styles.header}`}>
             {this.state.title}
           </h3>
-          <Content>
-            {
-              this.state.content.map(({ type, data }, i) => (
-                <p key={i} className={`pLBold ${styles.para}`}>
-                  {
-                    (
-                      type === 'text' && (
-                        (data === '' && '\u00A0') || data
-                      )
-                    ) || (
-                      type === 'image' && (
-                        <img
-                          className={styles.image}
-                          role="presentation"
-                        />
-                      )
-                    )
-                  }
-                </p>
-              ))
-            }
+          <Content content={this.state.content}>
             <Feedback />
             <Seperator />
             <Pagers />
