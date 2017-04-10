@@ -1,12 +1,13 @@
 .feedback {
   margin-top: 93px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .goodjob {
   width: 97px;
   height: 25px;
-  float:left;
-  display:inline-block;
   display: flex;
   align-items: center;
   &:before {
@@ -25,16 +26,12 @@
 }
 
 .share {
-  float: right;
-  display:inline-block;
   margin: 0px 14px;
   &:before {
     content: '分享';
     margin-right: 15px;
   }
-}
 
-.share {
   .icon {
     width: 20px;
     height: 20px;

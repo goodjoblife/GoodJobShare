@@ -12,7 +12,6 @@ const Feedback = () => (
       <div className={styles.icon}>f</div>
       <div className={styles.icon}>t</div>
     </div>
-    <div style={{ clear: 'both' }} />
   </div>
 );
 
