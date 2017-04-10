@@ -1,0 +1,7 @@
+.columns {
+    margin-top: 34px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+

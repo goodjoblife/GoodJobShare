@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './LectureMenu.module.css';
+import styles from './Columns.module.css';
 
 const Columns = ({
   Item,

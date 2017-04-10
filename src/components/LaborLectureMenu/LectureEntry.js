@@ -1,16 +1,16 @@
 import React from 'react';
 import { IndexLink } from 'react-router';
-import styles from './LectureMenu.module.css';
+import styles from './LectureEntry.module.css';
 
 const Lecture = ({ id, title, cover_photo: coverPhoto }) => (
   <IndexLink to={`/labor-lecture/${id}`}>
-    <div className={styles.lecture_entry}>
+    <div className={styles.lectureEntry}>
       {
         coverPhoto && (
-          <img alt={title} src={coverPhoto} className={styles.lecture_cover} />
+          <img alt={title} src={coverPhoto} className={styles.cover} />
         )
       }
-      <div className={`subheadingL ${styles.lecture_title}`}>
+      <div className={`subheadingL ${styles.title}`}>
         {title}
       </div>
     </div>

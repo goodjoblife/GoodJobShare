@@ -2,7 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import * as contentful from 'contentful';
 
-import Desktop from './Desktop';
+import Container from './Container';
 import Columns from './Columns';
 import LectureEntry from './LectureEntry';
 
@@ -45,13 +45,13 @@ class LaborLecture extends React.Component {
     return (
       <main>
         <Helmet title="勞動小教室" />
-        <Desktop>
+        <Container>
           <h3 className="headingL">勞動小教室</h3>
           <Columns
             Item={LectureEntry}
             items={this.state.items}
           />
-        </Desktop>
+        </Container>
       </main>
     );
   }

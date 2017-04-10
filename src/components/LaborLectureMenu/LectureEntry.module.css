@@ -1,0 +1,22 @@
+.lectureEntry {
+  width: 349px;
+  height: 300px;
+  flex: 0 0 auto;
+  margin-left: 26.5px;
+  margin-right: 26.5px;
+  margin-top: 36.5px;
+  margin-bottom: 36.5px;
+  cursor: pointer;
+
+  .cover {
+    width: 349px;
+    height: 249px;
+  }
+
+  .title {
+    margin-top: 19px;
+    width: 331px;
+    height: 32px;
+  }
+}
+
