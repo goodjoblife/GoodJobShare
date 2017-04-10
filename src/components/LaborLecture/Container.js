@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './Lecture.module.css';
+import styles from './Container.module.css';
 
 const Desktop = ({ children }) => (
-  <div className={styles.desktop}>
+  <div className={styles.container}>
     {children}
   </div>
 );

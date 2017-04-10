@@ -1,0 +1,18 @@
+.pagers {
+  margin-top: 63.5px;
+
+  .image {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 288px;
+    height: 207px;
+    border: 8px solid #FFFFFF;
+    background-color: pink;
+  }
+
+  .text {
+    width: 331px;
+    min-height: 24px;
+  }
+}
+

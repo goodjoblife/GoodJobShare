@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Lecture.module.css';
+import styles from './Content.module.css';
 
 const Content = ({ children }) => (
   <div className={styles.content}>

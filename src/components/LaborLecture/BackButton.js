@@ -1,6 +1,6 @@
 import React from 'react';
 import { IndexLink } from 'react-router';
-import styles from './Lecture.module.css';
+import styles from './BackButton.module.css';
 
 const BackButton = () => (
   <IndexLink to="/labor-lecture">

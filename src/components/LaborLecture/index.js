@@ -2,7 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import * as contentful from 'contentful';
 
-import Desktop from './Desktop';
+import Container from './Container';
 import BackButton from './BackButton';
 import Content from './Content';
 import Feedback from './Feedback';
@@ -10,7 +10,7 @@ import Pagers from './Pagers';
 import CallToAction from './CallToAction';
 import Seperator from './Seperator';
 
-import styles from './Lecture.module.css';
+import styles from './LaborLecture.module.css';
 
 class Lecture extends React.Component {
   constructor(props) {
@@ -45,7 +45,7 @@ class Lecture extends React.Component {
     return (
       <main>
         <Helmet title="勞動小教室" />
-        <Desktop>
+        <Container>
           <BackButton />
           <h3 className={`headingL ${styles.header}`}>
             {this.state.title}
@@ -53,7 +53,7 @@ class Lecture extends React.Component {
           <Content>
             {
               this.state.content.map(({ type, data }, i) => (
-                <p key={i} className={`pLBold ${styles.content_para}`}>
+                <p key={i} className={`pLBold ${styles.para}`}>
                   {
                     (
                       type === 'text' && (
@@ -62,7 +62,7 @@ class Lecture extends React.Component {
                     ) || (
                       type === 'image' && (
                         <img
-                          className={styles.content_image}
+                          className={styles.image}
                           role="presentation"
                         />
                       )
@@ -76,7 +76,7 @@ class Lecture extends React.Component {
             <Pagers />
           </Content>
           <CallToAction />
-        </Desktop>
+        </Container>
       </main>
     );
   }
