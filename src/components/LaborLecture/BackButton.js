@@ -4,7 +4,7 @@ import styles from './Lecture.module.css';
 
 const BackButton = () => (
   <IndexLink to="/labor-lecture">
-    <div className={styles.back}>
+    <div className={`pLBold ${styles.back}`}>
       返回
     </div>
   </IndexLink>

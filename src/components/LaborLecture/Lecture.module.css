@@ -4,33 +4,17 @@
 }
 
 .header {
-    font-family: "Microsoft JhengHei";
-    font-weight: normal;
-    font-size: 36px;
     text-align: center;
-    line-height: 41px;
-    letter-spacing: 2px;
-    color: #000000;
 }
 
 .content {
     max-width: 900px;
     text-align: left;
-    font-family: "Microsoft JhengHei";
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 24px;
-    color: #000000;
     margin: 0px auto;
     margin-top: 33px;
 }
 
 .content_para {
-    font-family: "Microsoft JhengHei";
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 29px;
-    color: #000000;
     white-space: pre-wrap;
 }
 
@@ -48,10 +32,6 @@
     height: 25px;
     float:left;
     display:inline-block;
-    font-family: "Microsoft JhengHei";
-    font-size: 16px;
-    line-height: 24px;
-    color: #333333;
     display: flex;
     align-items: center;
 }
@@ -72,10 +52,6 @@
 
 .share {
     float: right;
-    font-family: "Microsoft JhengHei";
-    font-size: 16px;
-    line-height: 24px;
-    color: #333333;
     display:inline-block;
     margin: 0px 14px;
 }
@@ -117,24 +93,14 @@
 
 .pager_text {
     width: 331px;
-    height: 24px;
-    font-family: "Microsoft JhengHei";
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 24px;
-    color: #000000;
+    min-height: 24px;
 }
 
-.footer {
+.call_to_action {
     margin-top: 83.5px;
     padding-top: 128px;
     padding-bottom: 98px;
-    font-family: "Microsoft JhengHei";
-    font-size: 22px;
-    font-weight: bold;
-    line-height: 30px;
     text-align: center;
-    color: #000000;
     background-color: #FFFFFF;
 }
 
@@ -146,10 +112,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Microsoft JhengHei";
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 24px;
     color: #969696;
 }
 

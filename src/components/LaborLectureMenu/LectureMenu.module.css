@@ -1,12 +1,3 @@
-.header {
-    font-family: "Microsoft JhengHei";
-    font-size: 36px;
-    font-weight: normal;
-    line-height: 41px;
-    letter-spacing: 2px;
-    color: #000000;
-}
-
 .desktop {
     position: relative;
     margin-top: 67px;
@@ -42,11 +33,5 @@
     margin-top: 19px;
     width: 331px;
     height: 32px;
-    font-family: "Microsoft JhengHei";
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 32px;
-    text-align: left;
-    color: #000000;
 }
 

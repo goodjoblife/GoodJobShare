@@ -10,7 +10,7 @@ const Lecture = ({ id, title, cover_photo: coverPhoto }) => (
           <img alt={title} src={coverPhoto} className={styles.lecture_cover} />
         )
       }
-      <div className={styles.lecture_title}>
+      <div className={`subheadingL ${styles.lecture_title}`}>
         {title}
       </div>
     </div>

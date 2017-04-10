@@ -9,6 +9,7 @@ import Feedback from './Feedback';
 import Pagers from './Pagers';
 import CallToAction from './CallToAction';
 import Seperator from './Seperator';
+
 import styles from './Lecture.module.css';
 
 class Lecture extends React.Component {
@@ -46,11 +47,13 @@ class Lecture extends React.Component {
         <Helmet title="勞動小教室" />
         <Desktop>
           <BackButton />
-          <h3 className={styles.header}>{this.state.title}</h3>
+          <h3 className={`headingL ${styles.header}`}>
+            {this.state.title}
+          </h3>
           <Content>
             {
               this.state.content.map(({ type, data }, i) => (
-                <p key={i} className={styles.content_para}>
+                <p key={i} className={`pLBold ${styles.content_para}`}>
                   {
                     (
                       type === 'text' && (
