@@ -10,7 +10,7 @@ import Pagers from './Pagers';
 import CallToAction from './CallToAction';
 import Seperator from './Seperator';
 
-import styles from './LaborLecture.module.css';
+import styles from './LaborRights.module.css';
 
 class Lecture extends React.Component {
   constructor(props) {

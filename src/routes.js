@@ -11,15 +11,15 @@ const routes = () => ({
     path: 'labor-rights',
     getComponent(nextState, cb) {
       require.ensure([], require => {
-        cb(null, require('./containers/LaborLectureMenu').default);
-      }, 'labor-lecture-menu');
+        cb(null, require('./containers/LaborRightsMenu').default);
+      }, 'labor-rights-menu');
     },
   }, {
     path: 'labor-rights/:id',
     getComponent(nextState, cb) {
       require.ensure([], require => {
-        cb(null, require('./containers/LaborLecture').default);
-      }, 'labor-lecture');
+        cb(null, require('./containers/LaborRights').default);
+      }, 'labor-rights');
     },
   }, {
     path: 'experiences/search',

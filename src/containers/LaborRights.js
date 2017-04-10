@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 
-import Lecture from '../components/LaborLecture';
+import LaborRights from '../components/LaborRights';
 
 const mapStateToProps = (state, { params: { id } }) => ({
   lecture_id: id,
 });
 
-export default connect(mapStateToProps)(Lecture);
+export default connect(mapStateToProps)(LaborRights);
