@@ -7,7 +7,7 @@ import BackButton from './BackButton';
 import Content from './Content';
 import Feedback from './Feedback';
 import Pagers from './Pagers';
-import Footer from './Footer';
+import CallToAction from './CallToAction';
 import Seperator from './Seperator';
 import styles from './Lecture.module.css';
 
@@ -72,7 +72,7 @@ class Lecture extends React.Component {
             <Seperator />
             <Pagers />
           </Content>
-          <Footer />
+          <CallToAction />
         </Desktop>
       </main>
     );
