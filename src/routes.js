@@ -1,5 +1,4 @@
 import App from './containers/Layout';
-
 import LandingPage from './containers/LandingPage';
 
 const routes = () => ({
