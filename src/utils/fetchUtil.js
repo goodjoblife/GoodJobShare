@@ -2,7 +2,7 @@ import 'whatwg-fetch';
 
 import { getToken } from 'utils/tokenUtil';
 
-const API_BASE_URL = process.env.APIHOST || '127.0.0.1:4001';
+const API_BASE_URL = process.env.APIHOST || 'http://127.0.0.1:12000';
 
 const headerBuilder = token => (
   token ?
@@ -39,6 +39,6 @@ const fetchUtil = endpoint => (method, body) =>
     `${API_BASE_URL}${endpoint}`,
     optionsBuilder(body)(method)
   )
-    .then(checkStatus);
+    .then(checkStatus());
 
 export default fetchUtil;
