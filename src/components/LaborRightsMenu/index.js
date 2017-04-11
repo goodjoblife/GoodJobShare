@@ -2,8 +2,8 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import * as contentful from 'contentful';
 
+import Columns from '../common/Columns';
 import Container from './Container';
-import Columns from './Columns';
 import LectureEntry from './LectureEntry';
 
 class LaborLecture extends React.Component {
