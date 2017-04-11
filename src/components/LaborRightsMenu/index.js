@@ -25,20 +25,19 @@ class LaborLecture extends React.Component {
     });
 
     client.getEntries().then(
-      ({ items: entries }) => {
-        const items = entries.map(({
-          sys: { id },
-          fields: { title, cover_photo: { fields: { file: { url } } } },
-        }) => ({
-          id,
-          title,
-          cover_photo: url,
-        }));
-        this.setState({
-          items,
-        });
-      }
-    ).catch(() => {});
+      ({ items }) => items.map(({
+        sys: { id },
+        fields: { title, cover_photo: { fields: { file: { url } } } },
+      }) => ({
+        id,
+        title,
+        cover_photo: url,
+      }))
+    ).then(items => {
+      this.setState({
+        items,
+      });
+    }).catch(() => {});
   }
 
   render() {
