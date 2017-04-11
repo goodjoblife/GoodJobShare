@@ -45,7 +45,7 @@ class LaborLecture extends React.Component {
       <main>
         <Helmet title="勞動小教室" />
         <Container>
-          <h3 className="headingL">勞動小教室</h3>
+          <p className="headingL">勞動小教室</p>
           <Columns
             Item={LectureEntry}
             items={this.state.items}

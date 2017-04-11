@@ -4,22 +4,17 @@ import styles from './Columns.module.css';
 const Columns = ({
   Item,
   items,
-}) => {
-  if (items.length % 3 !== 0) {
-    for (let i = 0; i < items.length % 3; i += 1) {
-      items.push({ title: '' });
-    }
-  }
-  return (
-    <div className={styles.columns}>
-      {
-        items.map((props, i) => (
+}) => (
+  <div className={styles.columns}>
+    {
+      items.map((props, i) => (
+        <div className={styles.column}>
           <Item key={i} {...props} />
-        ))
-      }
-    </div>
-  );
-};
+        </div>
+      ))
+    }
+  </div>
+);
 
 Columns.propTypes = {
   Item: React.PropTypes.node,
