@@ -31,7 +31,7 @@ class LaborLecture extends React.Component {
       }) => ({
         id,
         title,
-        cover_photo: url,
+        coverUrl: url,
       }))
     ).then(items => {
       this.setState({

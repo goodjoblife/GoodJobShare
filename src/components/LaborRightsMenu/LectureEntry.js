@@ -2,12 +2,12 @@ import React from 'react';
 import { IndexLink } from 'react-router';
 import styles from './LectureEntry.module.css';
 
-const Lecture = ({ id, title, cover_photo: coverPhoto }) => (
+const Lecture = ({ id, title, coverUrl }) => (
   <IndexLink to={`/labor-rights/${id}`}>
     <div className={styles.lectureEntry}>
       {
-        coverPhoto && (
-          <img alt={title} src={coverPhoto} className={styles.cover} />
+        coverUrl && (
+          <img alt={title} src={coverUrl} className={styles.cover} />
         )
       }
       <div className={`subheadingL ${styles.title}`}>
@@ -20,7 +20,7 @@ const Lecture = ({ id, title, cover_photo: coverPhoto }) => (
 Lecture.propTypes = {
   id: React.PropTypes.string,
   title: React.PropTypes.string,
-  cover_photo: React.PropTypes.string,
+  coverUrl: React.PropTypes.string,
 };
 
 export default Lecture;

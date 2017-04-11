@@ -31,7 +31,7 @@ class Lecture extends React.Component {
       accessToken: ACCESS_TOKEN,
     });
 
-    client.getEntry(this.props.lecture_id).then(
+    client.getEntry(this.props.id).then(
       ({ fields: { title, content } }) => {
         this.setState({
           title,
@@ -83,7 +83,7 @@ class Lecture extends React.Component {
 }
 
 Lecture.propTypes = {
-  lecture_id: React.PropTypes.string,
+  id: React.PropTypes.string,
 };
 
 export default Lecture;
