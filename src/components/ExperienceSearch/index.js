@@ -4,19 +4,19 @@ import Helmet from 'react-helmet';
 
 import styles from './ExperienceSearch.module.css';
 import Search from '../images/search.svg';
-import TypeCheckbox from './TypeCheckbox';
 import Alert from '../common/Alert';
 import Radio from '../common/form/Radio';
+import Checkbox from '../common/form/Checkbox';
 
 let cmpAlert;
 
 const ExperienceSearch = ({
-  setSort, setType, setIndustry, setCondition,
+  setSort, setSearchType, setIndustry, setCondition,
   experienceSearch,
 }) => (
   <main className="wrapperL">
     <Helmet title="面試‧工作經驗" />
-    <Alert ref={c => { cmpAlert = c; }} closeIn={0}>
+    <Alert ref={c => { cmpAlert = c; }}>
       <p>test</p>
     </Alert>
     <div className={styles.container}>
@@ -46,9 +46,10 @@ const ExperienceSearch = ({
             { label: '工作經驗', value: 'work' },
             { label: '薪時資料', value: 'salary' },
           ].map(o => (
-            <TypeCheckbox
-              key={o.value} label={o.label} value={o.value}
-              setType={setType} experienceSearch={experienceSearch}
+            <Checkbox
+              key={o.value} id={`searchType-${o.value}`}
+              label={o.label} value={o.value}
+              onChange={setSearchType} checked={experienceSearch.get(o.value)}
             />
           ))
         }
@@ -119,7 +120,7 @@ const ExperienceSearch = ({
 
 ExperienceSearch.propTypes = {
   setSort: PropTypes.func.isRequired,
-  setType: PropTypes.func.isRequired,
+  setSearchType: PropTypes.func.isRequired,
   setIndustry: PropTypes.func.isRequired,
   setCondition: PropTypes.func.isRequired,
   experienceSearch: ImmutablePropTypes.map.isRequired,
