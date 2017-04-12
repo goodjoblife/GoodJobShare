@@ -5,7 +5,10 @@ import Helmet from 'react-helmet';
 import styles from './ExperienceSearch.module.css';
 import Search from '../images/search.svg';
 import TypeCheckbox from './TypeCheckbox';
+import Alert from '../common/Alert';
 import Radio from '../common/form/Radio';
+
+let cmpAlert;
 
 const ExperienceSearch = ({
   setSort, setType, setIndustry, setCondition,
@@ -13,6 +16,9 @@ const ExperienceSearch = ({
 }) => (
   <main className="wrapperL">
     <Helmet title="面試‧工作經驗" />
+    <Alert ref={c => { cmpAlert = c; }} closeIn={0}>
+      <p>test</p>
+    </Alert>
     <div className={styles.container}>
       <aside>
         <button
@@ -93,7 +99,11 @@ const ExperienceSearch = ({
                   : '以職稱搜尋'
               }
             />
-            <Search onClick={() => { console.log('test'); }} />
+            <Search
+              onClick={() => {
+                cmpAlert.show();
+              }}
+            />
             <div className={styles.keywordGroup}>
               <span className={styles.keyword}>醫師</span>
               <span className={styles.keyword}>工程師</span>
