@@ -1,4 +1,4 @@
-import 'whatwg-fetch';
+import 'isomorphic-fetch';
 
 import { getToken } from 'utils/tokenUtil';
 
