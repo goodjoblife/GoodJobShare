@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import * as contentful from 'contentful';
+
 import Container from './Container';
 import BackButton from './BackButton';
 import Content from './Content';
@@ -16,7 +17,7 @@ class Lecture extends React.Component {
     super(props);
     this.state = {
       title: '',
-      content: [],
+      content: '',
     };
   }
 
@@ -62,7 +63,7 @@ class Lecture extends React.Component {
 }
 
 Lecture.propTypes = {
-  id: React.PropTypes.string,
+  id: React.PropTypes.string.isRequired,
 };
 
 export default Lecture;
