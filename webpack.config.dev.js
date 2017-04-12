@@ -14,7 +14,6 @@ module.exports = merge.smart(config, {
     'webpack-hot-middleware/client',
     'react-hot-loader/patch',
     './src/index',
-    'whatwg-fetch',
   ],
   output: {
     path: path.join(__dirname, 'dist'),

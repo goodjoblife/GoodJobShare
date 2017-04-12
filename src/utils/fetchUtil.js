@@ -13,6 +13,15 @@ const headerBuilder = token => (
   {}
 );
 
+const removeContentType = headers => {
+  const {
+    'Content-Type': contentType, // eslint-disable-line no-unused-vars
+    ...rest
+  } = headers;
+
+  return rest;
+};
+
 const optionsBuilder = body => method => (
   body ?
   {
@@ -22,7 +31,7 @@ const optionsBuilder = body => method => (
   } :
   {
     method: method.toUpperCase(),
-    headers: headerBuilder(getToken()),
+    headers: removeContentType(headerBuilder(getToken())),
   }
 );
 
