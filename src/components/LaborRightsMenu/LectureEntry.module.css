@@ -1,0 +1,23 @@
+.lectureEntry {
+  width: 100%;
+  height: 300px;
+  flex: 0 0 auto;
+  margin-bottom: 73px;
+  padding-left: 26.5px;
+  padding-right: 26.5px;
+  margin-top: 33px;
+  margin-bottom: 40px;
+  cursor: pointer;
+
+  .cover {
+    width: 100%;
+    height: 249px;
+  }
+
+  .title {
+    width: 100%;
+    margin-top: 19px;
+    text-align: left;
+  }
+}
+

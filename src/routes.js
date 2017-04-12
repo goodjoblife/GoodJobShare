@@ -8,6 +8,20 @@ const routes = () => ({
     component: LandingPage,
   },
   childRoutes: [{
+    path: 'labor-rights',
+    getComponent(nextState, cb) {
+      require.ensure([], require => {
+        cb(null, require('./containers/LaborRightsMenu').default);
+      }, 'labor-rights-menu');
+    },
+  }, {
+    path: 'labor-rights/:id',
+    getComponent(nextState, cb) {
+      require.ensure([], require => {
+        cb(null, require('./containers/LaborRights').default);
+      }, 'labor-rights');
+    },
+  }, {
     path: 'experiences/search',
     getComponent(nextState, cb) {
       require.ensure([], require => {
