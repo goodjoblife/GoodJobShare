@@ -17,7 +17,7 @@ class Lecture extends React.Component {
     super(props);
     this.state = {
       title: '',
-      content: '',
+      content: [],
     };
   }
 
@@ -50,7 +50,27 @@ class Lecture extends React.Component {
           <h3 className={`headingL ${styles.header}`}>
             {this.state.title}
           </h3>
-          <Content content={this.state.content}>
+          <Content>
+            {
+              this.state.content.map(({ type, data }, i) => (
+                <p key={i} className={`pLBold ${styles.para}`}>
+                  {
+                    (
+                      type === 'text' && (
+                        (data === '' && '\u00A0') || data
+                      )
+                    ) || (
+                      type === 'image' && (
+                        <img
+                          className={styles.image}
+                          role="presentation"
+                        />
+                      )
+                    )
+                  }
+                </p>
+              ))
+            }
             <Feedback />
             <Seperator />
             <Pagers />

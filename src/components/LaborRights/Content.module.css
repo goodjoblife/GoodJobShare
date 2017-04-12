@@ -1,39 +1,7 @@
 .content {
-  max-width: 900px;
-  text-align: left;
-  margin: 0px auto;
-  margin-top: 33px;
-}
-
-.md {
-  white-space: pre-wrap;
-
-  p {
-    font-size: 1em;
-  }
-
-  strong {
-    font-weight: bold;
-  }
-
-  ol {
-    list-style-type: decimal;
-    margin-left: 2em;
-    margin-top: -2em;
-    margin-bottom: -2em;
-
-    li {
-      margin-top: -0.5em;
-      margin-bottom: -0.5em;
-    }
-  }
-
-  img {
-    width: 100%;
-  }
-
-  a {
-    color: #4f6ab4;
-  }
+    max-width: 900px;
+    text-align: left;
+    margin: 0px auto;
+    margin-top: 33px;
 }
 
