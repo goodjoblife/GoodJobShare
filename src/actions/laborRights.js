@@ -1,6 +1,6 @@
-export const LOAD_LABOR_RIGHTS_LIST = 'LOAD_LABOR_RIGHTS_LIST';
+export const LOAD_LABOR_RIGHTS = 'LOAD_LABOR_RIGHTS';
 
-export const loadLaborRightsList = items => ({
-  type: LOAD_LABOR_RIGHTS_LIST,
+export const loadLaborRights = items => ({
+  type: LOAD_LABOR_RIGHTS,
   items,
 });
