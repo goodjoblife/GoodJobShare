@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { loadLaborRights } from '../actions/laborRights';
 import LaborRightsMenu from '../components/LaborRightsMenu';
-import fetchLaborRights from '../utils/fetchLaborRights';
 
 export default connect(
   state => ({
@@ -9,9 +8,7 @@ export default connect(
   }),
   dispatch => ({
     download: () => {
-      fetchLaborRights().then(items => {
-        dispatch(loadLaborRights(items));
-      }).catch(() => {});
+      dispatch(loadLaborRights());
     },
   })
 )(LaborRightsMenu);
