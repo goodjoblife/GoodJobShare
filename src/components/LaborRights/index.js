@@ -1,6 +1,5 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import * as contentful from 'contentful';
 
 import Container from './Container';
 import BackButton from './BackButton';
@@ -13,32 +12,8 @@ import Seperator from './Seperator';
 import styles from './LaborRights.module.css';
 
 class Lecture extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: '',
-      content: [],
-    };
-  }
-
   componentDidMount() {
-    const SPACE_ID = 'siutzcg6nl4g';
-    const ACCESS_TOKEN =
-      'ef08dee7812e4bbd8c9856776426ade160ea263c2972d19b381b29aae95e4c61';
-
-    const client = contentful.createClient({
-      space: SPACE_ID,
-      accessToken: ACCESS_TOKEN,
-    });
-
-    client.getEntry(this.props.id).then(
-      ({ fields: { title, content } }) => {
-        this.setState({
-          title,
-          content,
-        });
-      }
-    ).catch(() => {});
+    this.props.download();
   }
 
   render() {
@@ -48,11 +23,11 @@ class Lecture extends React.Component {
         <Container>
           <BackButton />
           <h3 className={`headingL ${styles.header}`}>
-            {this.state.title}
+            {this.props.item.title}
           </h3>
           <Content>
             {
-              this.state.content.map(({ type, data }, i) => (
+              this.props.item.content.map(({ type, data }, i) => (
                 <p key={i} className={`pLBold ${styles.para}`}>
                   {
                     (
