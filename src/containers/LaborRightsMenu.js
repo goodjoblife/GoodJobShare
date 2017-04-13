@@ -10,8 +10,7 @@ export default connect(
   dispatch => ({
     download: () => {
       const SPACE_ID = 'siutzcg6nl4g';
-      const ACCESS_TOKEN =
-        'ef08dee7812e4bbd8c9856776426ade160ea263c2972d19b381b29aae95e4c61';
+      const ACCESS_TOKEN = process.env.CONTENTFUL_TOKEN;
 
       const client = contentful.createClient({
         space: SPACE_ID,
