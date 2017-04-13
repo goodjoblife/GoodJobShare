@@ -1,9 +1,9 @@
 import React from 'react';
 import marked from 'marked';
-import styles from './Content.module.css';
+import styles from './Body.module.css';
 
-const Content = ({ content, children }) => (
-  <div className={styles.content}>
+const Body = ({ content, children }) => (
+  <div className={styles.body}>
     <pre
       className={`pL ${styles.md}`}
       dangerouslySetInnerHTML={{
@@ -14,9 +14,9 @@ const Content = ({ content, children }) => (
   </div>
 );
 
-Content.propTypes = {
+Body.propTypes = {
   content: React.PropTypes.string.isRequired,
   children: React.PropTypes.node,
 };
 
-export default Content;
+export default Body;

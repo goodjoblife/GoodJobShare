@@ -4,7 +4,7 @@ import * as contentful from 'contentful';
 
 import Container from './Container';
 import BackButton from './BackButton';
-import Content from './Content';
+import Body from './Body';
 import Feedback from './Feedback';
 import Pagers from './Pagers';
 import CallToAction from './CallToAction';
@@ -50,11 +50,11 @@ class Lecture extends React.Component {
           <h3 className={`headingL ${styles.header}`}>
             {this.state.title}
           </h3>
-          <Content content={this.state.content}>
+          <Body content={this.state.content}>
             <Feedback />
             <Seperator />
             <Pagers />
-          </Content>
+          </Body>
           <CallToAction />
         </Container>
       </main>
