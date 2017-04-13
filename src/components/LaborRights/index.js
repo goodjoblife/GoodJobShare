@@ -5,7 +5,7 @@ import * as contentful from 'contentful';
 import Container from './Container';
 import BackButton from './BackButton';
 import Body from './Body';
-import MarkDown from './MarkDown';
+import MarkdownParser from './MarkdownParser';
 import Feedback from './Feedback';
 import Pagers from './Pagers';
 import CallToAction from './CallToAction';
@@ -52,7 +52,7 @@ class Lecture extends React.Component {
             {this.state.title}
           </h3>
           <Body>
-            <MarkDown>{this.state.content}</MarkDown>
+            <MarkdownParser content={this.state.content} />
             <Feedback />
             <Seperator />
             <Pagers />
