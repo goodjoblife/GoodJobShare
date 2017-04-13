@@ -1,18 +1,18 @@
 import React from 'react';
 import marked from 'marked';
-import styles from './Content.module.css';
+import styles from './MarkDown.module.css';
 
-const Content = ({ children }) => (
+const MarkDown = ({ children }) => (
   <pre
-    className={`pL ${styles.content}`}
+    className={`pL ${styles.md}`}
     dangerouslySetInnerHTML={{
       __html: marked(children),
     }}
   />
 );
 
-Content.propTypes = {
+MarkDown.propTypes = {
   children: React.PropTypes.string.isRequired,
 };
 
-export default Content;
+export default MarkDown;
