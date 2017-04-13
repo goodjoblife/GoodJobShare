@@ -2,17 +2,17 @@ import React from 'react';
 import marked from 'marked';
 import styles from './Content.module.css';
 
-const Content = ({ content }) => (
+const Content = ({ children }) => (
   <pre
     className={`pL ${styles.content}`}
     dangerouslySetInnerHTML={{
-      __html: marked(content),
+      __html: marked(children),
     }}
   />
 );
 
 Content.propTypes = {
-  content: React.PropTypes.string.isRequired,
+  children: React.PropTypes.string.isRequired,
 };
 
 export default Content;

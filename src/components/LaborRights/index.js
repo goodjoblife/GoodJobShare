@@ -52,7 +52,7 @@ class Lecture extends React.Component {
             {this.state.title}
           </h3>
           <Body>
-            <Content content={this.state.content} />
+            <Content>{this.state.content}</Content>
             <Feedback />
             <Seperator />
             <Pagers />
