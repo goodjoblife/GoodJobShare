@@ -58,7 +58,8 @@ class Lecture extends React.Component {
 }
 
 Lecture.propTypes = {
-  id: React.PropTypes.string,
+  item: React.PropTypes.object.isRequired,
+  download: React.PropTypes.func.isRequired,
 };
 
 export default Lecture;
