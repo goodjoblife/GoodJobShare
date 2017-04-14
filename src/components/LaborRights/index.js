@@ -4,7 +4,8 @@ import * as contentful from 'contentful';
 
 import Container from './Container';
 import BackButton from './BackButton';
-import Content from './Content';
+import Body from './Body';
+import MarkdownParser from './MarkdownParser';
 import Feedback from './Feedback';
 import Pagers from './Pagers';
 import CallToAction from './CallToAction';
@@ -17,7 +18,7 @@ class Lecture extends React.Component {
     super(props);
     this.state = {
       title: '',
-      content: [],
+      content: '',
     };
   }
 
@@ -50,31 +51,12 @@ class Lecture extends React.Component {
           <h3 className={`headingL ${styles.header}`}>
             {this.state.title}
           </h3>
-          <Content>
-            {
-              this.state.content.map(({ type, data }, i) => (
-                <p key={i} className={`pLBold ${styles.para}`}>
-                  {
-                    (
-                      type === 'text' && (
-                        (data === '' && '\u00A0') || data
-                      )
-                    ) || (
-                      type === 'image' && (
-                        <img
-                          className={styles.image}
-                          role="presentation"
-                        />
-                      )
-                    )
-                  }
-                </p>
-              ))
-            }
+          <Body>
+            <MarkdownParser content={this.state.content} />
             <Feedback />
             <Seperator />
             <Pagers />
-          </Content>
+          </Body>
           <CallToAction />
         </Container>
       </main>
@@ -83,7 +65,7 @@ class Lecture extends React.Component {
 }
 
 Lecture.propTypes = {
-  id: React.PropTypes.string,
+  id: React.PropTypes.string.isRequired,
 };
 
 export default Lecture;
