@@ -23,28 +23,11 @@ class Lecture extends React.Component {
         <Container>
           <BackButton />
           <h3 className={`headingL ${styles.header}`}>
-            {this.props.item.title}
+            {this.props.title}
           </h3>
           <Content>
             {
-              this.props.item.content.map(({ type, data }, i) => (
-                <p key={i} className={`pLBold ${styles.para}`}>
-                  {
-                    (
-                      type === 'text' && (
-                        (data === '' && '\u00A0') || data
-                      )
-                    ) || (
-                      type === 'image' && (
-                        <img
-                          className={styles.image}
-                          role="presentation"
-                        />
-                      )
-                    )
-                  }
-                </p>
-              ))
+              this.props.content
             }
             <Feedback />
             <Seperator />
@@ -58,7 +41,8 @@ class Lecture extends React.Component {
 }
 
 Lecture.propTypes = {
-  item: React.PropTypes.object.isRequired,
+  title: React.PropTypes.string.isRequired,
+  content: React.PropTypes.string.isRequired,
   download: React.PropTypes.func.isRequired,
 };
 

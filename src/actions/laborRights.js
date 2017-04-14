@@ -19,10 +19,11 @@ export const loadLaborRights = () => dispatch => {
   return client.getEntries().then(({ items }) =>
     items.map(({
       sys: { id },
-      fields: { title, cover_photo: { fields: { file: { url } } } },
+      fields: { title, content, cover_photo: { fields: { file: { url } } } },
     }) => ({
       id,
       title,
+      content,
       coverUrl: url,
     }))
   ).then(items => {
