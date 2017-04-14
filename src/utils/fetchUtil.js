@@ -2,7 +2,7 @@ import 'isomorphic-fetch';
 
 import { getToken } from 'utils/tokenUtil';
 
-const API_BASE_URL = process.env.APIHOST || 'http://127.0.0.1:12000';
+const API_BASE_URL = process.env.API_HOST;
 
 const headerBuilder = token => (
   token ?

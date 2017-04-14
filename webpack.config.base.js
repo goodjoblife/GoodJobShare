@@ -1,6 +1,8 @@
 const autoprefixer = require('autoprefixer');
 const nested = require('postcss-nested');
+const webpack = require('webpack');
 
+const API_HOST = process.env.API_HOST || 'http://127.0.0.1:12000';
 
 module.exports = {
   module: {
@@ -22,6 +24,12 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('development'),
+        API_HOST: JSON.stringify(API_HOST),
+      },
+    }),
   ],
 
   postcss: [
