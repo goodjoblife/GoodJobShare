@@ -21,7 +21,7 @@ module.exports = merge.smart(config, {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
-        CONTENTFUL_TOKEN: JSON.stringify(''),
+        CONTENTFUL_TOKEN: JSON.stringify(process.env.CONTENTFUL_TOKEN),
       },
     }),
     new webpack.optimize.UglifyJsPlugin({
