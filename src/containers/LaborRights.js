@@ -4,8 +4,8 @@ import LaborRights from '../components/LaborRights';
 
 export default connect(
   (state, { params: { id } }) => {
-    const item = state.laborRights.get(id).toJS();
-    const { title, content } = item;
+    const item = state.laborRights.get(id);
+    const { title = '', content = '' } = (item && item.toJS()) || {};
     return {
       id,
       title,
