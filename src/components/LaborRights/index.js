@@ -31,7 +31,10 @@ class Lecture extends React.Component {
             }
             <Feedback />
             <Seperator />
-            <Pagers />
+            <Pagers
+              prev={this.props.prev}
+              next={this.props.next}
+            />
           </Content>
           <CallToAction />
         </Container>
@@ -43,6 +46,8 @@ class Lecture extends React.Component {
 Lecture.propTypes = {
   title: React.PropTypes.string.isRequired,
   content: React.PropTypes.string.isRequired,
+  prev: React.PropTypes.string,
+  next: React.PropTypes.string,
   download: React.PropTypes.func.isRequired,
 };
 

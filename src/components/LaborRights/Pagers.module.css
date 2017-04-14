@@ -5,6 +5,12 @@
   width: 100%;
 
   .pager {
+    visibility: hidden;
+
+    &.active {
+      visibility: visible;
+    }
+
     &.left {
       text-align: left;
     }
