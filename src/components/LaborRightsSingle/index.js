@@ -1,6 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { Map } from 'immutable';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import Container from './Container';
 import BackButton from './BackButton';
@@ -46,8 +46,8 @@ class LaborRightsSingle extends React.Component {
 LaborRightsSingle.propTypes = {
   title: React.PropTypes.string.isRequired,
   content: React.PropTypes.string.isRequired,
-  prev: React.PropTypes.instanceOf(Map),
-  next: React.PropTypes.instanceOf(Map),
+  prev: ImmutablePropTypes.map,
+  next: ImmutablePropTypes.map,
   loadLaborRights: React.PropTypes.func.isRequired,
 };
 
