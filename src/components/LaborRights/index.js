@@ -1,5 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import { Map } from 'immutable';
 
 import Container from './Container';
 import BackButton from './BackButton';
@@ -12,7 +13,7 @@ import Seperator from './Seperator';
 
 import styles from './LaborRights.module.css';
 
-class Lecture extends React.Component {
+class LaborRights extends React.Component {
   componentDidMount() {
     this.props.loadLaborRights();
   }
@@ -42,12 +43,12 @@ class Lecture extends React.Component {
   }
 }
 
-Lecture.propTypes = {
+LaborRights.propTypes = {
   title: React.PropTypes.string.isRequired,
   content: React.PropTypes.string.isRequired,
-  prev: React.PropTypes.string,
-  next: React.PropTypes.string,
+  prev: React.PropTypes.instanceOf(Map),
+  next: React.PropTypes.instanceOf(Map),
   loadLaborRights: React.PropTypes.func.isRequired,
 };
 
-export default Lecture;
+export default LaborRights;

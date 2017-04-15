@@ -9,8 +9,10 @@ export default connect(
     const content = state.laborRights.getIn([id, 'content'], '');
     const ids = state.laborRights.keySeq();
     const index = ids.indexOf(id);
-    const prev = index > 0 ? ids.get(index - 1) : undefined;
-    const next = index < ids.count() - 1 ? ids.get(index + 1) : undefined;
+    const prevId = index > 0 ? ids.get(index - 1) : undefined;
+    const nextId = index < ids.count() - 1 ? ids.get(index + 1) : undefined;
+    const prev = state.laborRights.get(prevId);
+    const next = state.laborRights.get(nextId);
     return {
       title,
       content,
