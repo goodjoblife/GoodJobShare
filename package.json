@@ -64,6 +64,7 @@
     "contentful": "^4.1.2",
     "eslint-import-resolver-webpack": "^0.8.1",
     "immutable": "^3.8.1",
+    "isomorphic-fetch": "^2.2.1",
     "marked": "^0.3.6",
     "path": "^0.12.7",
     "react": "^15.4.1",
