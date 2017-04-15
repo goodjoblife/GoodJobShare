@@ -11,9 +11,9 @@ import Pagers from './Pagers';
 import CallToAction from './CallToAction';
 import Seperator from './Seperator';
 
-import styles from './LaborRights.module.css';
+import styles from './LaborRightsSingle.module.css';
 
-class LaborRights extends React.Component {
+class LaborRightsSingle extends React.Component {
   componentDidMount() {
     this.props.loadLaborRights();
   }
@@ -43,7 +43,7 @@ class LaborRights extends React.Component {
   }
 }
 
-LaborRights.propTypes = {
+LaborRightsSingle.propTypes = {
   title: React.PropTypes.string.isRequired,
   content: React.PropTypes.string.isRequired,
   prev: React.PropTypes.instanceOf(Map),
@@ -51,4 +51,4 @@ LaborRights.propTypes = {
   loadLaborRights: React.PropTypes.func.isRequired,
 };
 
-export default LaborRights;
+export default LaborRightsSingle;

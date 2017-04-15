@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/laborRights';
-import LaborRights from '../components/LaborRights';
+import LaborRightsSingle from '../components/LaborRightsSingle';
 
 export default connect(
   (state, { params: { id } }) => {
@@ -21,4 +21,4 @@ export default connect(
     };
   },
   dispatch => bindActionCreators(actionCreators, dispatch),
-)(LaborRights);
+)(LaborRightsSingle);

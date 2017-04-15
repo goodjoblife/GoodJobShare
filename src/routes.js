@@ -18,8 +18,8 @@ const routes = () => ({
     path: 'labor-rights/:id',
     getComponent(nextState, cb) {
       require.ensure([], require => {
-        cb(null, require('./containers/LaborRights').default);
-      }, 'labor-rights');
+        cb(null, require('./containers/LaborRightsSingle').default);
+      }, 'labor-rights-single');
     },
   }, {
     path: 'experiences/search',
