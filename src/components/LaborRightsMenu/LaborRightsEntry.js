@@ -2,7 +2,7 @@ import React from 'react';
 import { IndexLink } from 'react-router';
 import styles from './LectureEntry.module.css';
 
-const Lecture = ({ id, title, coverUrl }) => (
+const LaborRightsEntry = ({ id, title, coverUrl }) => (
   <IndexLink to={`/labor-rights/${id}`}>
     <div className={styles.lectureEntry}>
       {
@@ -17,10 +17,10 @@ const Lecture = ({ id, title, coverUrl }) => (
   </IndexLink>
 );
 
-Lecture.propTypes = {
+LaborRightsEntry.propTypes = {
   id: React.PropTypes.string,
   title: React.PropTypes.string,
   coverUrl: React.PropTypes.string,
 };
 
-export default Lecture;
+export default LaborRightsEntry;

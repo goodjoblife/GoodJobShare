@@ -3,9 +3,9 @@ import Helmet from 'react-helmet';
 
 import Columns from '../common/Columns';
 import Container from './Container';
-import LectureEntry from './LectureEntry';
+import LaborRightsEntry from './LaborRightsEntry';
 
-class LaborLecture extends React.Component {
+class LaborRightsMenu extends React.Component {
   componentDidMount() {
     this.props.loadLaborRights();
   }
@@ -17,7 +17,7 @@ class LaborLecture extends React.Component {
         <Container>
           <p className="headingL">勞動小教室</p>
           <Columns
-            Item={LectureEntry}
+            Item={LaborRightsEntry}
             items={this.props.items}
           />
         </Container>
@@ -26,9 +26,9 @@ class LaborLecture extends React.Component {
   }
 }
 
-LaborLecture.propTypes = {
+LaborRightsMenu.propTypes = {
   items: React.PropTypes.array,
   loadLaborRights: React.PropTypes.func.isRequired,
 };
 
-export default LaborLecture;
+export default LaborRightsMenu;
