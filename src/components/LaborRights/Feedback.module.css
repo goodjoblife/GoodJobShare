@@ -1,0 +1,44 @@
+.feedback {
+  margin-top: 93px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.goodjob {
+  width: 97px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  &:before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-color: yellow;
+    margin-right: 9px;
+  }
+
+  .count:before {
+    content: '好';
+    margin-right: 10px;
+  }
+}
+
+.share {
+  margin: 0px 14px;
+  &:before {
+    content: '分享';
+    margin-right: 15px;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin: 0px 14px;
+    background-color: yellow;
+    text-align: center;
+  }
+}
+

@@ -1,0 +1,10 @@
+.columns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .column {
+      width: 33%;
+    }
+}
+

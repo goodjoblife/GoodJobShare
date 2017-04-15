@@ -1,0 +1,30 @@
+.pagers {
+  margin-top: 63.5px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .pager {
+    &.left {
+      text-align: left;
+    }
+
+    &.right {
+      text-align: right;
+    }
+
+    .image {
+      display: inline-block;
+      box-sizing: border-box;
+      width: 288px;
+      height: 207px;
+      border: 8px solid #FFFFFF;
+      background-color: pink;
+    }
+
+    .text {
+      min-height: 24px;
+    }
+  }
+}
+

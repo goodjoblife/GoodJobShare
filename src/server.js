@@ -46,20 +46,36 @@ export default (app, webpackIsomorphicTools) => {
         return;
       }
 
-      // TODO Do some preparation
+      function getReduxPromise() {
+        const { query, params } = renderProps;
+        const component = renderProps.components[renderProps.components.length - 1].WrappedComponent; // eslint-disable-line max-len
 
-      const assets = webpackIsomorphicTools.assets();
-      const component = (
-        <Provider store={store}>
-          <RouterContext {...renderProps} />
-        </Provider>
-      );
+        if (component && component.fetchData) {
+          return component.fetchData({ query, params, store, history });
+        }
 
-      const html = ReactDOMServer.renderToString(
-        <Html assets={assets} component={component} store={store} />
-      );
+        return Promise.resolve();
+      }
 
-      res.send(`<!doctype html>\n${html}`);
+      getReduxPromise().then(() => {
+        /*
+        做兩件事：
+        1. 準備 Component (很像 Root.js 做的事)
+        2. 準備 Template (Html Component)
+        */
+        const assets = webpackIsomorphicTools.assets();
+        const component = (
+          <Provider store={store}>
+            <RouterContext {...renderProps} />
+          </Provider>
+        );
+
+        const html = ReactDOMServer.renderToString(
+          <Html assets={assets} component={component} store={store} />
+        );
+
+        res.send(`<!doctype html>\n${html}`);
+      });
     });
   });
 };
