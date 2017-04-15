@@ -1,0 +1,12 @@
+@value yellow-bar from "../variables.module.css";
+
+.preview {
+  width: 100%;
+  background-color: #ddd;
+  padding: 10px 30px;
+
+  &.expand {
+    //padding: 30px 30px 10px 30px;
+    border-bottom: 1px solid yellow-bar;
+  }
+}

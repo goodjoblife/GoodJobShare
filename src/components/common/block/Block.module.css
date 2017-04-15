@@ -1,0 +1,6 @@
+@value border-gray from "../variables.module.css";
+
+.container {
+  background-color: white;
+  border: 2px solid border-gray;
+}
