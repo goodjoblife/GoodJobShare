@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { IndexLink } from 'react-router';
-import { Map } from 'immutable';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import styles from './Pagers.module.css';
 
 const Pagers = ({ prev, next }) => (
@@ -21,8 +21,8 @@ const Pagers = ({ prev, next }) => (
 );
 
 Pagers.propTypes = {
-  prev: React.PropTypes.instanceOf(Map),
-  next: React.PropTypes.instanceOf(Map),
+  prev: ImmutablePropTypes.map,
+  next: ImmutablePropTypes.map,
 };
 
 const Pager = ({ className, id, title, coverUrl, children }) => (
@@ -37,11 +37,11 @@ const Pager = ({ className, id, title, coverUrl, children }) => (
 );
 
 Pager.propTypes = {
-  className: React.PropTypes.string,
-  id: React.PropTypes.string,
-  title: React.PropTypes.string,
-  coverUrl: React.PropTypes.string,
-  children: React.PropTypes.node,
+  className: PropTypes.string,
+  id: PropTypes.string,
+  title: PropTypes.string,
+  coverUrl: PropTypes.string,
+  children: PropTypes.node,
 };
 
 export default Pagers;
