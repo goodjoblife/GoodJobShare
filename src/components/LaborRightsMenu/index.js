@@ -7,7 +7,7 @@ import LectureEntry from './LectureEntry';
 
 class LaborLecture extends React.Component {
   componentDidMount() {
-    this.props.download();
+    this.props.loadLaborRights();
   }
 
   render() {
@@ -28,7 +28,7 @@ class LaborLecture extends React.Component {
 
 LaborLecture.propTypes = {
   items: React.PropTypes.array,
-  download: React.PropTypes.func,
+  loadLaborRights: React.PropTypes.func.isRequired,
 };
 
 export default LaborLecture;

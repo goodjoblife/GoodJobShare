@@ -1,5 +1,6 @@
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { loadLaborRights } from '../actions/laborRights';
+import * as actionCreators from '../actions/laborRights';
 import LaborRights from '../components/LaborRights';
 
 export default connect(
@@ -17,9 +18,5 @@ export default connect(
       next,
     };
   },
-  dispatch => ({
-    download: () => {
-      dispatch(loadLaborRights());
-    },
-  })
+  dispatch => bindActionCreators(actionCreators, dispatch),
 )(LaborRights);

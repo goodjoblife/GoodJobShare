@@ -14,7 +14,7 @@ import styles from './LaborRights.module.css';
 
 class Lecture extends React.Component {
   componentDidMount() {
-    this.props.download();
+    this.props.loadLaborRights();
   }
 
   render() {
@@ -47,7 +47,7 @@ Lecture.propTypes = {
   content: React.PropTypes.string.isRequired,
   prev: React.PropTypes.string,
   next: React.PropTypes.string,
-  download: React.PropTypes.func.isRequired,
+  loadLaborRights: React.PropTypes.func.isRequired,
 };
 
 export default Lecture;
