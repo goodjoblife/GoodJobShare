@@ -2,16 +2,15 @@
   width: 100%;
   height: 300px;
   flex: 0 0 auto;
-  margin-bottom: 73px;
   padding-left: 26.5px;
   padding-right: 26.5px;
   margin-top: 33px;
-  margin-bottom: 40px;
+  margin-bottom: 73px;
   cursor: pointer;
 
   .cover {
-    width: 100%;
-    height: 249px;
+    width: 350px;
+    height: 250px;
   }
 
   .title {
