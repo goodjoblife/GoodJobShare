@@ -5,8 +5,8 @@ import LaborRights from '../components/LaborRights';
 
 export default connect(
   (state, { params: { id } }) => {
-    const title = state.laborRights.getIn([id, 'title'], '');
-    const content = state.laborRights.getIn([id, 'content'], '');
+    const title = state.laborRights.getIn([id, 'title']);
+    const content = state.laborRights.getIn([id, 'content']);
     const ids = state.laborRights.keySeq();
     const index = ids.indexOf(id);
     const prevId = index > 0 ? ids.get(index - 1) : undefined;
