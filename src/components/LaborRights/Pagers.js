@@ -25,7 +25,9 @@ Pagers.propTypes = {
   next: ImmutablePropTypes.map,
 };
 
-const Pager = ({ className, id, title, coverUrl, children }) => (
+const Pager = ({
+  className = '', id, title, coverUrl = '', children,
+}) => (
   <IndexLink to={`/labor-rights/${id}`}>
     <div className={`${styles.pager} ${className}`}>
       <div className={`pLBold ${styles.text}`}>
