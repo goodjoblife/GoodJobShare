@@ -5,9 +5,11 @@ import variables from 'common/variables.module.css';
 const InputTitle = ({ text, must }) => (
   <div>
     <p
+      className="pSBold"
       style={{
         display: 'inline-block',
         marginRight: '13px',
+        marginBottom: '7px',
       }}
     >
       {text}
