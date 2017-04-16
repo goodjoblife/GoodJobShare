@@ -26,7 +26,8 @@ module.exports = merge.smart(config, {
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
         CONTENTFUL_TOKEN: JSON.stringify(process.env.CONTENTFUL_TOKEN),
-        CONTENTFUL_LABOR_RIGHTS_SPACE: JSON.stringify(process.env.CONTENTFUL_LABOR_RIGHTS_SPACE),
+        CONTENTFUL_LABOR_RIGHTS_SPACE:
+          JSON.stringify(process.env.CONTENTFUL_LABOR_RIGHTS_SPACE),
       },
     }),
     new WebpackIsomorphicToolsPlugin(webpackIsomorphicTools).development(),
