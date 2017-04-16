@@ -9,5 +9,7 @@ const client = contentful.createClient({
 });
 
 export default {
-  fetchLaborRights: () => client.getEntries(),
+  fetchLaborRights: () => client.getEntries({
+    order: 'sys.createdAt',
+  }),
 };
