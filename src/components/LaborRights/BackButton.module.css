@@ -1,0 +1,20 @@
+.back {
+    position: fixed;
+    left: 37px;
+    width: 77px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #969696;
+}
+
+.back:before {
+    content: '';
+    background-color: gray;
+    display: inline-block;
+    width: 28px;
+    height: 21px;
+    margin-right: 11px;
+}
+
