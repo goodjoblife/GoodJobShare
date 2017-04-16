@@ -1,12 +1,50 @@
-@value yellow-bar from "../variables.module.css";
+@value yellow-bar, main-yellow, main-gray from "../variables.module.css";
 
 .preview {
   width: 100%;
-  background-color: #ddd;
-  padding: 10px 30px;
+  display: flex;
 
-  &.expand {
-    //padding: 30px 30px 10px 30px;
-    border-bottom: 1px solid yellow-bar;
+  .heading {
+    flex: 1;
+    padding: 10px 30px;
   }
+
+  .more {
+    width: 0;
+    &.expanded::after {
+      content: '－';
+    }
+    &::after {
+      display: inline-block;
+      text-align: center;
+      line-height: 40px;
+      content: '＋';
+      font-weight: 700;
+      margin-top: 5px;
+      margin-left: -20px;
+      background-color: #fff;
+      color: main-gray;
+      border: 1px solid main-gray;
+      border-radius: 50%;
+      height: 40px;
+      width: 40px;
+    }
+  }
+
+
+  &:hover {
+    color: main-yellow;
+    border-color: main-yellow;
+    //border-bottom: 1px solid yellow-bar;
+    .heading {
+      color: main-yellow;
+    }
+    .more {
+      &::after, &.expanded::after {
+        color: main-yellow;
+        border: 1px solid main-yellow;
+      }
+    }
+  }
+
 }
