@@ -1,4 +1,4 @@
-import fetchContentfulData from '../utils/fetch-contentful-data';
+import contentfulUtils from '../utils/contentfulUtils';
 
 export const SET_LABOR_RIGHTS = 'SET_LABOR_RIGHTS';
 
@@ -7,10 +7,8 @@ const setLaborRights = items => ({
   items,
 });
 
-export const loadLaborRights = () => dispatch => {
-  const space = 'siutzcg6nl4g';
-  const accessToken = process.env.CONTENTFUL_TOKEN;
-  return fetchContentfulData(space, accessToken).then(({ items }) =>
+export const loadLaborRights = () => dispatch =>
+  contentfulUtils.fetchLaborRights().then(({ items }) =>
     items.map(({
       sys: { id },
       fields: { title, content, cover_photo: { fields: { file: { url } } } },
@@ -23,4 +21,3 @@ export const loadLaborRights = () => dispatch => {
   ).then(items => {
     dispatch(setLaborRights(items));
   }).catch(() => {});
-};
