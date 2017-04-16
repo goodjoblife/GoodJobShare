@@ -1,5 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import Columns from '../common/Columns';
 import Container from './Container';
@@ -18,7 +19,7 @@ class LaborRightsMenu extends React.Component {
           <p className="headingL">勞動小教室</p>
           <Columns
             Item={LaborRightsEntry}
-            items={this.props.items}
+            items={this.props.items.toJS()}
           />
         </Container>
       </main>
@@ -27,7 +28,7 @@ class LaborRightsMenu extends React.Component {
 }
 
 LaborRightsMenu.propTypes = {
-  items: React.PropTypes.array,
+  items: ImmutablePropTypes.list.isRequired,
   loadLaborRights: React.PropTypes.func.isRequired,
 };
 

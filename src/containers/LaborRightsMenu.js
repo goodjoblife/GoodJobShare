@@ -5,7 +5,7 @@ import LaborRightsMenu from '../components/LaborRightsMenu';
 
 export default connect(
   state => ({
-    items: state.laborRights.valueSeq().toJS(),
+    items: state.laborRights.valueSeq(),
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )(LaborRightsMenu);
