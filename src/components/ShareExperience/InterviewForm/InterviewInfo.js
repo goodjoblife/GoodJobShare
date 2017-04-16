@@ -34,6 +34,7 @@ class InterviewInfo extends React.PureComponent {
     this.state = {
       companyName: '',
       interviewLocation: null,
+      jobObjective: '',
     };
   }
 
@@ -52,6 +53,7 @@ class InterviewInfo extends React.PureComponent {
         }}
       >
         <h1
+          className="pLBold"
           style={{
             marginBottom: '13px',
           }}
@@ -71,7 +73,7 @@ class InterviewInfo extends React.PureComponent {
             <TextInput
               placeholder="ＯＯ 股份有限公司"
               value={this.state.companyName}
-              onChange={this.handleState('companyName')}
+              onChange={e => this.handleState('companyName')(e.target.value)}
               isWarning={!checkWordingLength(10)(this.state.companyName)}
               warningWording="請輸入10個字以內"
             />
@@ -85,11 +87,44 @@ class InterviewInfo extends React.PureComponent {
               text="面試地區"
               must
             />
-            <Select
-              options={interviewLocationOptions}
-              value={this.state.interviewLocation}
-              onChange={this.handleState('interviewLocation')}
+            <div
+              style={{
+                width: '320px',
+              }}
+            >
+              <Select
+                options={interviewLocationOptions}
+                value={this.state.interviewLocation}
+                onChange={
+                  e => this.handleState('interviewLocation')(e.targe.value)
+                }
+              />
+            </div>
+          </div>
+          <div
+            style={{
+              marginBottom: '41px',
+            }}
+          >
+            <InputTitle
+              text="應徵職務"
+              must
             />
+            <div
+              style={{
+                width: '320px',
+              }}
+            >
+              <TextInput
+                placeholder="硬體工程師"
+                value={this.state.jobObjective}
+                onChange={
+                  e => this.handleState('jobObjective')(e.target.value)
+                }
+                isWarning={!checkWordingLength(10)(this.state.jobObjective)}
+                warningWording="請輸入10個字以內"
+              />
+            </div>
           </div>
         </div>
       </div>

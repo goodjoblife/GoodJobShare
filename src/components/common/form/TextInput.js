@@ -11,7 +11,7 @@ const TextInput = (
       placeholder={placeholder}
       className={isWarning ? styles.warning : styles.container}
       value={value}
-      onChange={e => onChange(e.target.value)}
+      onChange={onChange}
     />
     {
       warningWording ?

@@ -7,7 +7,11 @@ class InterviewForm extends React.PureComponent {
   render() {
     return (
       <div className={styles.container}>
-        <h1>面試經驗分享</h1>
+        <h1
+          className="headingL"
+        >
+          面試經驗分享
+        </h1>
         <InterviewInfo />
       </div>
     );
