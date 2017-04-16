@@ -28,14 +28,14 @@ Pagers.propTypes = {
 const Pager = ({
   className = '', id, title, coverUrl = '', children,
 }) => (
-  <IndexLink to={`/labor-rights/${id}`}>
-    <div className={`${styles.pager} ${className}`}>
+  <div className={`${styles.pager} ${className}`}>
+    <IndexLink to={`/labor-rights/${id}`}>
       <div className={`pLBold ${styles.text}`}>
         {children}
       </div>
       <img alt={title} src={coverUrl} className={styles.cover} />
-    </div>
-  </IndexLink>
+    </IndexLink>
+  </div>
 );
 
 Pager.propTypes = {
