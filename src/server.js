@@ -26,7 +26,7 @@ export default (app, webpackIsomorphicTools) => {
 
   app.use((req, res, next) => {
     const memoryHistory = createMemoryHistory(req.originalUrl);
-    const store = configureStore({}, memoryHistory);
+    const store = configureStore(undefined, memoryHistory);
     const history = syncHistoryWithStore(memoryHistory, store);
 
     const location = req.originalUrl;
