@@ -5,9 +5,7 @@ import LaborRightsMenu from '../components/LaborRightsMenu';
 
 export default connect(
   state => ({
-    items: state.laborRights.get('idList').map(id =>
-      state.laborRights.getIn(['dataMapById', id])
-    ),
+    items: state.laborRights.get('dataMapById').valueSeq(),
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )(LaborRightsMenu);
