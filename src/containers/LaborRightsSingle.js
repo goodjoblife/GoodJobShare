@@ -16,6 +16,8 @@ export default connect(
       item,
       prev,
       next,
+      status: state.laborRights.get('status'),
+      error: state.laborRights.get('error'),
     };
   },
   dispatch => bindActionCreators(actionCreators, dispatch),
