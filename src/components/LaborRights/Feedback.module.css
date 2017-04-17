@@ -15,8 +15,10 @@
     display: inline-block;
     width: 24px;
     height: 24px;
-    background-color: yellow;
     margin-right: 9px;
+    background-image: url('http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-check-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 
   .count:before {
@@ -37,8 +39,18 @@
     height: 20px;
     display: inline-block;
     margin: 0px 14px;
-    background-color: yellow;
-    text-align: center;
+
+    &.facebook {
+      background-image: url('http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-check-icon.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    &.twitter {
+      background-image: url('http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-check-icon.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
   }
 }
 

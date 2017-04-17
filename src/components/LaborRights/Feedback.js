@@ -9,8 +9,8 @@ const Feedback = () => (
       </span>
     </div>
     <div className={`pM ${styles.share}`}>
-      <div className={styles.icon}>f</div>
-      <div className={styles.icon}>t</div>
+      <div className={`${styles.icon} ${styles.facebook}`} />
+      <div className={`${styles.icon} ${styles.twitter}`} />
     </div>
   </div>
 );

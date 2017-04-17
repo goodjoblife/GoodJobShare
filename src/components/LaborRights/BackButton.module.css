@@ -11,10 +11,12 @@
 
 .back:before {
     content: '';
-    background-color: gray;
     display: inline-block;
     width: 28px;
     height: 21px;
     margin-right: 11px;
+    background-image: url('http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-check-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
