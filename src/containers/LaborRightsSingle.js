@@ -5,12 +5,6 @@ import LaborRightsSingle from '../components/LaborRightsSingle';
 
 export default connect(
   (state, { params: { id } }) => {
-    if (state.laborRights.size === 0) { // TODO
-      return {
-        title: '',
-        content: '',
-      };
-    }
     const title = state.laborRights.getIn(['dataMapById', id, 'title']);
     const content = state.laborRights.getIn(['dataMapById', id, 'content']);
     const ids = state.laborRights.get('idList');
