@@ -11,7 +11,7 @@ export const loadLaborRights = () => dispatch =>
   contentfulUtils.fetchLaborRights().then(({ items }) =>
     items.map(({
       sys: { id },
-      fields: { title, content, cover_photo: { fields: { file: { url } } } },
+      fields: { title, content, coverImage: { fields: { file: { url } } } },
     }) => ({
       id,
       title,
