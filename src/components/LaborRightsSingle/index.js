@@ -53,35 +53,33 @@ class LaborRightsSingle extends React.Component {
             </Container>
         }
         {
-          this.props.status === status.FETCHED && (
-            (
-              this.props.error &&
-                <Container>
-                  <h1 className={`headingL ${styles.header}`}>
-                    {this.props.error.toString()}
-                  </h1>
-                </Container>
-            ) || (
-              <Container>
-                <BackButton />
-                <h1 className={`headingL ${styles.header}`}>
-                  {title}
-                </h1>
-                <Body>
-                  <HidingText content={hidingText} />
-                  <Description content={description} />
-                  <MarkdownParser content={content} />
-                  <Feedback />
-                  <Seperator />
-                  <Pagers
-                    prev={this.props.prev}
-                    next={this.props.next}
-                  />
-                </Body>
-                <CallToAction />
-              </Container>
-            )
-          )
+          this.props.status === status.ERROR &&
+            <Container>
+              <h1 className={`headingL ${styles.header}`}>
+                {this.props.error.toString()}
+              </h1>
+            </Container>
+        }
+        {
+          this.props.status === status.FETCHED &&
+            <Container>
+              <BackButton />
+              <h1 className={`headingL ${styles.header}`}>
+                {title}
+              </h1>
+              <Body>
+                <HidingText content={hidingText} />
+                <Description content={description} />
+                <MarkdownParser content={content} />
+                <Feedback />
+                <Seperator />
+                <Pagers
+                  prev={this.props.prev}
+                  next={this.props.next}
+                />
+              </Body>
+              <CallToAction />
+            </Container>
         }
       </main>
     );

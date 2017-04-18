@@ -1,6 +1,6 @@
 import contentfulUtils from '../utils/contentfulUtils';
 
-export const FETCH_LABOR_RIGHTS = '@@laborRights/FETCH_LABOR_RIGHTS';
+export const SET_LABOR_RIGHTS_STATUS = '@@laborRights/SET_LABOR_RIGHTS_STATUS';
 export const SET_LABOR_RIGHTS = '@@laborRights/SET_LABOR_RIGHTS';
 
 export const status = {
@@ -14,14 +14,14 @@ const setLaborRights = items => ({
   items,
 });
 
-const fetchLaborRights = (done, err) => ({
-  type: FETCH_LABOR_RIGHTS,
-  done,
+const setLaborRightsStatus = (nextStatus, err) => ({
+  type: SET_LABOR_RIGHTS_STATUS,
+  nextStatus,
   err,
 });
 
 export const loadLaborRights = () => dispatch => {
-  dispatch(fetchLaborRights(false));
+  dispatch(setLaborRightsStatus(status.FETCHING));
   contentfulUtils.fetchLaborRights().then(({ items }) =>
     items.map(({
       sys: { id },
@@ -46,8 +46,8 @@ export const loadLaborRights = () => dispatch => {
     }))
   ).then(items => {
     dispatch(setLaborRights(items));
-    dispatch(fetchLaborRights(true));
+    dispatch(setLaborRightsStatus(status.FETCHED));
   }).catch(err => {
-    dispatch(fetchLaborRights(true, err));
+    dispatch(setLaborRightsStatus(status.ERROR, err));
   });
 };

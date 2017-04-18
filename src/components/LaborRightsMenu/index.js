@@ -25,24 +25,23 @@ class LaborRightsMenu extends React.Component {
             </Container>
         }
         {
-          this.props.status === status.FETCHED && (
-            (
-              this.props.error &&
-                <Container>
-                  <h1 className="headingL">
-                    {this.props.error.toString()}
-                  </h1>
-                </Container>
-            ) || (
+          this.props.status === status.ERROR &&
+            this.props.error &&
               <Container>
-                <h1 className="headingL">勞動小教室</h1>
-                <Columns
-                  Item={LaborRightsEntry}
-                  items={this.props.items.toJS()}
-                />
+                <h1 className="headingL">
+                  {this.props.error.toString()}
+                </h1>
               </Container>
-            )
-          )
+        }
+        {
+          this.props.status === status.FETCHED &&
+            <Container>
+              <h1 className="headingL">勞動小教室</h1>
+              <Columns
+                Item={LaborRightsEntry}
+                items={this.props.items.toJS()}
+              />
+            </Container>
         }
       </main>
     );
