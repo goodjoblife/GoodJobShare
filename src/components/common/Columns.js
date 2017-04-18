@@ -8,8 +8,8 @@ const Columns = ({
   <div className={styles.columns}>
     {
       items.map((props, i) => (
-        <div className={styles.column}>
-          <Item key={i} {...props} />
+        <div key={i} className={styles.column}>
+          <Item {...props} />
         </div>
       ))
     }
@@ -17,7 +17,7 @@ const Columns = ({
 );
 
 Columns.propTypes = {
-  Item: React.PropTypes.node,
+  Item: React.PropTypes.func,
   items: React.PropTypes.array,
 };
 

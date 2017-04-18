@@ -10,7 +10,9 @@ const config = require('./webpack.config.base');
 
 module.exports = merge.smart(config, {
   devtool: 'cheap-module-source-map',
-  entry: './src/index',
+  entry: [
+    './src/index',
+  ],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name]-[chunkhash].js',
