@@ -6,7 +6,7 @@ const MarkdownParser = ({ content }) => (
   <pre
     className={`pL ${styles.md}`}
     dangerouslySetInnerHTML={{
-      __html: marked(content),
+      __html: marked(content || ''),
     }}
   />
 );

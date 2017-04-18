@@ -5,6 +5,12 @@
   width: 100%;
 
   .pager {
+    visibility: hidden;
+
+    &.active {
+      visibility: visible;
+    }
+
     &.left {
       text-align: left;
     }
@@ -13,13 +19,12 @@
       text-align: right;
     }
 
-    .image {
+    .cover {
       display: inline-block;
       box-sizing: border-box;
       width: 288px;
       height: 207px;
       border: 8px solid #FFFFFF;
-      background-color: pink;
     }
 
     .text {
