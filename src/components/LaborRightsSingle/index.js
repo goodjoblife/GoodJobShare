@@ -18,7 +18,7 @@ import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
   componentDidMount() {
-    if (this.props.status === status.UNFETCHED) {
+    if (this.props.status !== status.FETCHED) {
       this.props.loadLaborRights();
     }
   }

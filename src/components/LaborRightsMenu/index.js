@@ -9,7 +9,7 @@ import LaborRightsEntry from './LaborRightsEntry';
 
 class LaborRightsMenu extends React.Component {
   componentDidMount() {
-    if (this.props.status === status.UNFETCHED) {
+    if (this.props.status !== status.FETCHED) {
       this.props.loadLaborRights();
     }
   }
