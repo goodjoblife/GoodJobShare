@@ -7,6 +7,7 @@ export const status = {
   UNFETCHED: 'UNFETCHED',
   FETCHED: 'FETCHED',
   FETCHING: 'FETCHING',
+  ERROR: 'ERROR',
 };
 
 const setLaborRights = items => ({
