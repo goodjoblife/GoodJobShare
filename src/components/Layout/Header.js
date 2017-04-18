@@ -21,7 +21,7 @@ const Header = () => (
             <Link to="/experiences/search">面試‧工作經驗</Link>
           </li>
           <li className={styles.navItem}>
-            <Link to="/">勞動小教室</Link>
+            <Link to="/labor-rights">勞動小教室</Link>
           </li>
         </ul>
         <div className={styles.buttonArea}>
