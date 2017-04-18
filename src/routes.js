@@ -1,7 +1,7 @@
 import App from './containers/Layout';
 import LandingPage from './containers/LandingPage';
 import LaborRightsMenu from './containers/LaborRightsMenu';
-import LaborRights from './containers/LaborRights';
+import LaborRightsSingle from './containers/LaborRightsSingle';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
 import ExperienceDetailPage from './containers/ExperienceDetailPage';
 import AnotherPage from './containers/AnotherPage';
@@ -25,7 +25,7 @@ const routes = () => ({
     */
   }, {
     path: 'labor-rights/:id',
-    component: LaborRights,
+    component: LaborRightsSingle,
     /*
     getComponent(nextState, cb) {
       require.ensure([], require => {
