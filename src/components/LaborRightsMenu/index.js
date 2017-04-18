@@ -14,9 +14,9 @@ class LaborRightsMenu extends React.Component {
   render() {
     return (
       <main>
-        <Helmet title="勞動小教室" />
+        <Helmet title="勞動小教室 | 工時薪資透明化運動" />
         <Container>
-          <p className="headingL">勞動小教室</p>
+          <h1 className="headingL">勞動小教室</h1>
           <Columns
             Item={LaborRightsEntry}
             items={this.props.items.toJS()}
