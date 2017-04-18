@@ -58,7 +58,7 @@ class LaborRightsSingle extends React.Component {
               this.props.error &&
                 <Container>
                   <h1 className={`headingL ${styles.header}`}>
-                    ERROR: {this.props.error.toString()}
+                    {this.props.error.toString()}
                   </h1>
                 </Container>
             ) || (

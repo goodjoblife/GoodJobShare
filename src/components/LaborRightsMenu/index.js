@@ -30,7 +30,7 @@ class LaborRightsMenu extends React.Component {
               this.props.error &&
                 <Container>
                   <h1 className="headingL">
-                    ERROR: {this.props.error.toString()}
+                    {this.props.error.toString()}
                   </h1>
                 </Container>
             ) || (
