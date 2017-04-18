@@ -27,7 +27,7 @@ class LaborRightsSingle extends React.Component {
       coverUrl,
     } = this.props.item ? this.props.item.toJS() : {};
     const {
-      seoTitle = title,
+      seoTitle = title || '',
       seoDescription,
       hidingText,
     } = this.props.item ? this.props.item.toJS() : {};
