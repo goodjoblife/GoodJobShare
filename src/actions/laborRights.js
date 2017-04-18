@@ -11,11 +11,13 @@ export const loadLaborRights = () => dispatch =>
   contentfulUtils.fetchLaborRights().then(({ items }) =>
     items.map(({
       sys: { id },
-      fields: { title, content, coverImage: { fields: { file: { url } } } },
+      fields: {
+        coverImage: { fields: { file: { url } } },
+        ...rest
+      },
     }) => ({
       id,
-      title,
-      content,
+      ...rest,
       coverUrl: url,
     }))
   ).then(items => {
