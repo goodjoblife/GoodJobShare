@@ -30,7 +30,7 @@ class LaborRightsMenu extends React.Component {
               this.props.error &&
                 <Container>
                   <h1 className="headingL">
-                    ERROR: {this.props.error}
+                    ERROR: {this.props.error.toString()}
                   </h1>
                 </Container>
             ) || (
@@ -53,7 +53,7 @@ LaborRightsMenu.propTypes = {
   items: ImmutablePropTypes.list.isRequired,
   loadLaborRights: React.PropTypes.func.isRequired,
   status: React.PropTypes.string.isRequired,
-  error: React.PropTypes.string,
+  error: React.PropTypes.object,
 };
 
 export default LaborRightsMenu;
