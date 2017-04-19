@@ -13,10 +13,14 @@ import Pagers from './Pagers';
 import CallToAction from './CallToAction';
 import Seperator from './Seperator';
 
-import { status } from '../../actions/laborRights';
+import { status, fetchLaborRights } from '../../actions/laborRights';
 import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
+  static fetchData({ store }) {
+    return store.dispatch(fetchLaborRights());
+  }
+
   componentDidMount() {
     if (this.props.status !== status.FETCHED) {
       this.props.fetchLaborRights();

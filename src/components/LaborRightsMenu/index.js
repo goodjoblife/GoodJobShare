@@ -2,12 +2,16 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { status } from '../../actions/laborRights';
+import { status, fetchLaborRights } from '../../actions/laborRights';
 import Columns from '../common/Columns';
 import Container from './Container';
 import LaborRightsEntry from './LaborRightsEntry';
 
 class LaborRightsMenu extends React.Component {
+  static fetchData({ store }) {
+    return store.dispatch(fetchLaborRights());
+  }
+
   componentDidMount() {
     if (this.props.status !== status.FETCHED) {
       this.props.fetchLaborRights();
