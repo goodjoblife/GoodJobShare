@@ -1,35 +1,56 @@
 import contentfulUtils from '../utils/contentfulUtils';
 
-export const SET_LABOR_RIGHTS = 'SET_LABOR_RIGHTS';
+export const SET_LABOR_RIGHTS_STATUS = '@@laborRights/SET_LABOR_RIGHTS_STATUS';
+export const SET_LABOR_RIGHTS = '@@laborRights/SET_LABOR_RIGHTS';
+
+export const status = {
+  UNFETCHED: 'UNFETCHED',
+  FETCHED: 'FETCHED',
+  FETCHING: 'FETCHING',
+  ERROR: 'ERROR',
+};
 
 const setLaborRights = items => ({
   type: SET_LABOR_RIGHTS,
   items,
 });
 
-export const loadLaborRights = () => dispatch =>
-  contentfulUtils.fetchLaborRights().then(({ items }) =>
-    items.map(({
-      sys: { id },
-      fields: {
+const setLaborRightsStatus = (nextStatus, err) => ({
+  type: SET_LABOR_RIGHTS_STATUS,
+  nextStatus,
+  err,
+});
+
+export const fetchLaborRights = () => dispatch =>
+  Promise.resolve(
+    dispatch(setLaborRightsStatus(status.FETCHING))
+  ).then(() =>
+    contentfulUtils.fetchLaborRights().then(({ items }) =>
+      items.map(({
+        sys: { id },
+        fields: {
+          title,
+          description,
+          content,
+          coverImage: { fields: { file: { url: coverUrl } } },
+          seoTitle,
+          seoDescription,
+          hidingText,
+        },
+      }) => ({
+        id,
         title,
         description,
         content,
-        coverImage: { fields: { file: { url: coverUrl } } },
+        coverUrl,
         seoTitle,
         seoDescription,
         hidingText,
-      },
-    }) => ({
-      id,
-      title,
-      description,
-      content,
-      coverUrl,
-      seoTitle,
-      seoDescription,
-      hidingText,
-    }))
-  ).then(items => {
-    dispatch(setLaborRights(items));
-  }).catch(() => {});
+      }))
+    ).then(items => {
+      dispatch(setLaborRights(items));
+      dispatch(setLaborRightsStatus(status.FETCHED));
+    }).catch(err => {
+      dispatch(setLaborRightsStatus(status.ERROR, err));
+    })
+  );
