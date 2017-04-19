@@ -12,13 +12,23 @@ export const loadLaborRights = () => dispatch =>
     items.map(({
       sys: { id },
       fields: {
-        coverImage: { fields: { file: { url } } },
-        ...rest
+        title,
+        description,
+        content,
+        coverImage: { fields: { file: { url: coverUrl } } },
+        seoTitle,
+        seoDescription,
+        hidingText,
       },
     }) => ({
       id,
-      ...rest,
-      coverUrl: url,
+      title,
+      description,
+      content,
+      coverUrl,
+      seoTitle,
+      seoDescription,
+      hidingText,
     }))
   ).then(items => {
     dispatch(setLaborRights(items));
