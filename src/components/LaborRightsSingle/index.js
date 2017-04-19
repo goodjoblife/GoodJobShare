@@ -5,6 +5,8 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Container from './Container';
 import BackButton from './BackButton';
 import Body from './Body';
+import HidingText from './HidingText';
+import Description from './Description';
 import MarkdownParser from './MarkdownParser';
 import Feedback from './Feedback';
 import Pagers from './Pagers';
@@ -19,16 +21,35 @@ class LaborRightsSingle extends React.Component {
   }
 
   render() {
+    const {
+      title,
+      description,
+      content,
+      coverUrl,
+    } = this.props.item ? this.props.item.toJS() : {};
+    const {
+      seoTitle = title || '',
+      seoDescription,
+      hidingText,
+    } = this.props.item ? this.props.item.toJS() : {};
     return (
       <main>
-        <Helmet title="勞動小教室" />
+        <Helmet
+          title={`${seoTitle} | 工時薪資透明化運動`}
+          meta={[
+            { name: 'description', content: seoDescription },
+            { property: 'og:image', content: coverUrl },
+          ]}
+        />
         <Container>
           <BackButton />
-          <h3 className={`headingL ${styles.header}`}>
-            {this.props.title}
-          </h3>
+          <h1 className={`headingL ${styles.header}`}>
+            {title}
+          </h1>
           <Body>
-            <MarkdownParser content={this.props.content} />
+            <HidingText content={hidingText} />
+            <Description content={description} />
+            <MarkdownParser content={content} />
             <Feedback />
             <Seperator />
             <Pagers
@@ -44,8 +65,7 @@ class LaborRightsSingle extends React.Component {
 }
 
 LaborRightsSingle.propTypes = {
-  title: React.PropTypes.string.isRequired,
-  content: React.PropTypes.string.isRequired,
+  item: ImmutablePropTypes.map,
   prev: ImmutablePropTypes.map,
   next: ImmutablePropTypes.map,
   loadLaborRights: React.PropTypes.func.isRequired,
