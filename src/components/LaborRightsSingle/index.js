@@ -6,6 +6,7 @@ import Container from './Container';
 import BackButton from './BackButton';
 import Body from './Body';
 import HidingText from './HidingText';
+import Description from './Description';
 import MarkdownParser from './MarkdownParser';
 import Feedback from './Feedback';
 import Pagers from './Pagers';
@@ -47,7 +48,7 @@ class LaborRightsSingle extends React.Component {
           </h1>
           <Body>
             <HidingText content={hidingText} />
-            <MarkdownParser content={description} />
+            <Description content={description} />
             <MarkdownParser content={content} />
             <Feedback />
             <Seperator />
