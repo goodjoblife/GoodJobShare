@@ -21,36 +21,34 @@ const setLaborRightsStatus = (nextStatus, err) => ({
   err,
 });
 
-export const fetchLaborRights = () => dispatch =>
-  Promise.resolve(
-    dispatch(setLaborRightsStatus(status.FETCHING))
-  ).then(() =>
-    contentfulUtils.fetchLaborRights().then(({ items }) =>
-      items.map(({
-        sys: { id },
-        fields: {
-          title,
-          description,
-          content,
-          coverImage: { fields: { file: { url: coverUrl } } },
-          seoTitle,
-          seoDescription,
-          hidingText,
-        },
-      }) => ({
-        id,
+export const fetchLaborRights = () => dispatch => {
+  dispatch(setLaborRightsStatus(status.FETCHING));
+  return contentfulUtils.fetchLaborRights().then(({ items }) =>
+    items.map(({
+      sys: { id },
+      fields: {
         title,
         description,
         content,
-        coverUrl,
+        coverImage: { fields: { file: { url: coverUrl } } },
         seoTitle,
         seoDescription,
         hidingText,
-      }))
-    ).then(items => {
-      dispatch(setLaborRights(items));
-      dispatch(setLaborRightsStatus(status.FETCHED));
-    }).catch(err => {
-      dispatch(setLaborRightsStatus(status.ERROR, err));
-    })
-  );
+      },
+    }) => ({
+      id,
+      title,
+      description,
+      content,
+      coverUrl,
+      seoTitle,
+      seoDescription,
+      hidingText,
+    }))
+  ).then(items => {
+    dispatch(setLaborRights(items));
+    dispatch(setLaborRightsStatus(status.FETCHED));
+  }).catch(err => {
+    dispatch(setLaborRightsStatus(status.ERROR, err));
+  });
+};
