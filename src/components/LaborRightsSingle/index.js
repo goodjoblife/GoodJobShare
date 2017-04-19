@@ -13,11 +13,14 @@ import Pagers from './Pagers';
 import CallToAction from './CallToAction';
 import Seperator from './Seperator';
 
+import { status } from '../../actions/laborRights';
 import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
   componentDidMount() {
-    this.props.loadLaborRights();
+    if (this.props.status !== status.FETCHED) {
+      this.props.fetchLaborRights();
+    }
   }
 
   render() {
@@ -41,24 +44,43 @@ class LaborRightsSingle extends React.Component {
             { property: 'og:image', content: coverUrl },
           ]}
         />
-        <Container>
-          <BackButton />
-          <h1 className={`headingL ${styles.header}`}>
-            {title}
-          </h1>
-          <Body>
-            <HidingText content={hidingText} />
-            <Description content={description} />
-            <MarkdownParser content={content} />
-            <Feedback />
-            <Seperator />
-            <Pagers
-              prev={this.props.prev}
-              next={this.props.next}
-            />
-          </Body>
-          <CallToAction />
-        </Container>
+        {
+          this.props.status === status.FETCHING &&
+            <Container>
+              <h1 className={`headingL ${styles.header}`}>
+                LOADING
+              </h1>
+            </Container>
+        }
+        {
+          this.props.status === status.ERROR &&
+            <Container>
+              <h1 className={`headingL ${styles.header}`}>
+                {this.props.error.toString()}
+              </h1>
+            </Container>
+        }
+        {
+          this.props.status === status.FETCHED &&
+            <Container>
+              <BackButton />
+              <h1 className={`headingL ${styles.header}`}>
+                {title}
+              </h1>
+              <Body>
+                <HidingText content={hidingText} />
+                <Description content={description} />
+                <MarkdownParser content={content} />
+                <Feedback />
+                <Seperator />
+                <Pagers
+                  prev={this.props.prev}
+                  next={this.props.next}
+                />
+              </Body>
+              <CallToAction />
+            </Container>
+        }
       </main>
     );
   }
@@ -68,7 +90,9 @@ LaborRightsSingle.propTypes = {
   item: ImmutablePropTypes.map,
   prev: ImmutablePropTypes.map,
   next: ImmutablePropTypes.map,
-  loadLaborRights: React.PropTypes.func.isRequired,
+  fetchLaborRights: React.PropTypes.func.isRequired,
+  status: React.PropTypes.string.isRequired,
+  error: React.PropTypes.object,
 };
 
 export default LaborRightsSingle;
