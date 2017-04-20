@@ -3,56 +3,61 @@ import {
   createStructuredSelector,
 } from 'reselect';
 
-export const getAllLaborRightsIdList = state =>
+const getAllLaborRightsIdList = state =>
   state.laborRights.get('idList');
 
-export const getAllLaborRightsMapById = state =>
+const getAllLaborRightsMapById = state =>
   state.laborRights.get('dataMapById');
 
-export const getAllLaborRights = createSelector(
+const getAllLaborRights = createSelector(
   getAllLaborRightsMapById,
   laborRightsMapById => laborRightsMapById.valueSeq().toList()
 );
 
-export const getId = (_, { id }) => id;
+export const getLaborRightsMenuProps = createStructuredSelector({
+  items: getAllLaborRights,
+});
 
-export const getSingleLaborRightsById = createSelector(
+const getId = (_, { params: { id } }) => id;
+
+const getSingleLaborRights = createSelector(
   getAllLaborRightsMapById,
   getId,
   (laborRightsMapById, id) => laborRightsMapById.get(id),
 );
 
-export const getIndexOfSingleLaborRightsId = createSelector(
+const getIndexOfSingleLaborRightsId = createSelector(
   getAllLaborRightsIdList,
   getId,
   (ids, id) => ids.indexOf(id),
 );
 
-export const getSingleLaborRightsPrevId = createSelector(
+const getSingleLaborRightsPrevId = createSelector(
   getAllLaborRightsIdList,
   getIndexOfSingleLaborRightsId,
   (ids, index) => (index > 0 ? ids.get(index - 1) : undefined)
 );
 
-export const getSingleLaborRightsPrevById = createSelector(
+const getSingleLaborRightsPrev = createSelector(
   getAllLaborRightsMapById,
   getSingleLaborRightsPrevId,
   (laborRightsMapById, prevId) => laborRightsMapById[prevId],
 );
 
-export const getSingleLaborRightsNextId = createSelector(
+const getSingleLaborRightsNextId = createSelector(
   getAllLaborRightsIdList,
   getIndexOfSingleLaborRightsId,
   (ids, index) => (index < ids.count() - 1 ? ids.get(index + 1) : undefined)
 );
 
-export const getSingleLaborRightsNextById = createSelector(
+const getSingleLaborRightsNext = createSelector(
   getAllLaborRightsMapById,
   getSingleLaborRightsNextId,
   (laborRightsMapById, nextId) => laborRightsMapById[nextId],
 );
 
-export const getSingleLaborRightsPrevAndNext = createStructuredSelector({
-  prev: getSingleLaborRightsPrevById,
-  next: getSingleLaborRightsNextById,
+export const getSingleLaborRightsProps = createStructuredSelector({
+  item: getSingleLaborRights,
+  prev: getSingleLaborRightsPrev,
+  next: getSingleLaborRightsNext,
 });
