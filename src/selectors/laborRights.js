@@ -37,7 +37,7 @@ export const getSingleLaborRightsPrevId = createSelector(
 export const getSingleLaborRightsPrevById = createSelector(
   getAllLaborRightsMapById,
   getSingleLaborRightsPrevId,
-  (laborRightsMapById, prevId) => laborRightsMapById[prevId],
+  (laborRightsMapById, prevId) => laborRightsMapById.get(prevId),
 );
 
 export const getSingleLaborRightsNextId = createSelector(
@@ -49,7 +49,7 @@ export const getSingleLaborRightsNextId = createSelector(
 export const getSingleLaborRightsNextById = createSelector(
   getAllLaborRightsMapById,
   getSingleLaborRightsNextId,
-  (laborRightsMapById, nextId) => laborRightsMapById[nextId],
+  (laborRightsMapById, nextId) => laborRightsMapById.get(nextId),
 );
 
 export const getSingleLaborRightsPrevAndNext = createStructuredSelector({
