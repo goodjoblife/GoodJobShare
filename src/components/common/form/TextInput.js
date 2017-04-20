@@ -5,11 +5,15 @@ import styles from './TextInput.module.css';
 const TextInput = (
   { value, placeholder, onChange, isWarning, warningWording }
 ) => (
-  <div>
+  <div
+    style={{
+      position: 'relative',
+    }}
+  >
     <input
       type="text"
       placeholder={placeholder}
-      className={isWarning ? styles.warning : styles.container}
+      className={isWarning ? styles.warning : styles.input}
       value={value}
       onChange={onChange}
     />

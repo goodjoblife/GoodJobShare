@@ -5,7 +5,7 @@ import variables from 'common/variables.module.css';
 const InputTitle = ({ text, must }) => (
   <div>
     <p
-      className="pSBold"
+      className="formLabel"
       style={{
         display: 'inline-block',
         marginRight: '13px',

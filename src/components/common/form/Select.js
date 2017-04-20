@@ -6,10 +6,6 @@ class Select extends React.PureComponent {
   render() {
     return (
       <div>
-        {/* <div
-          className={styles.select}
-        >
-        </div> */}
         <select
           className={styles.select}
           value={this.props.value || 'default'}

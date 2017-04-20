@@ -2,7 +2,7 @@
 @value border-gray from "../variables.module.css";
 @value warning-red from "../variables.module.css";
 
-.container {
+.input {
   width: 100%;
   padding: 12px 16px;
   border: 1px solid #BDBDBD;
@@ -17,7 +17,7 @@
 }
 
 .warning {
-  composes: container;
+  composes: input;
   border-color: warning-red;
 
   &:focus{
@@ -28,7 +28,9 @@
 .warning__text {
   color: warning-red;
   display: none;
-  margin-bottom: 7px;
+  position: absolute;
+  bottom: -7px;
+  transform: translateY(100%);
 }
 
 .isWarning {
