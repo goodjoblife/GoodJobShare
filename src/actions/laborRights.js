@@ -21,7 +21,10 @@ const setLaborRightsStatus = (nextStatus, err) => ({
   err,
 });
 
-export const fetchLaborRights = () => dispatch => {
+export const fetchLaborRights = () => (dispatch, getState) => {
+  if (getState().laborRights.get('status') === status.FETCHED) {
+    return Promise.resolve();
+  }
   dispatch(setLaborRightsStatus(status.FETCHING));
   return contentfulUtils.fetchLaborRights().then(({ items }) =>
     items.map(({

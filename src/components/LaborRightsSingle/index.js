@@ -22,9 +22,7 @@ class LaborRightsSingle extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.status !== status.FETCHED) {
-      this.props.fetchLaborRights();
-    }
+    this.props.fetchLaborRights();
   }
 
   render() {
