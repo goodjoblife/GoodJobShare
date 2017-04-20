@@ -11,6 +11,7 @@
     "testonly:watch": "npm run testonly -- --watch",
     "test": "npm run lint && npm run testonly",
     "test:cov": "npm run lint && npm run testonly -- --coverage",
+    "mocha": "mocha --compilers js:babel-core/register; exit 0",
     "build": "npm run clean && cross-env NODE_ENV=production webpack src/index.js --config webpack.config.prod.js"
   },
   "pre-commit": ["lint"],
