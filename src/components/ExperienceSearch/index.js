@@ -5,7 +5,8 @@ import Helmet from 'react-helmet';
 import styles from './ExperienceSearch.module.css';
 import Search from '../images/search.svg';
 import Alert from '../common/Alert';
-import Block from '../common/block/Block';
+import ExperienceBlock from './ExperienceBlock';
+import WorkingHourBlock from './WorkingHourBlock';
 import Radio from '../common/form/Radio';
 import Checkbox from '../common/form/Checkbox';
 
@@ -115,15 +116,8 @@ const ExperienceSearch = ({
         </div>
         <div className={styles.info}>找到 5 筆與 &quot;日月光&quot; 相關的資料</div>
         <br />
-        <Block>
-          <Block.Preview>
-            go
-          </Block.Preview>
-          <Block.Content>
-            content test
-          </Block.Content>
-        </Block>
-        <div className={styles.list}>main content</div>
+        <ExperienceBlock />
+        <WorkingHourBlock />
       </div>
     </div>
   </main>

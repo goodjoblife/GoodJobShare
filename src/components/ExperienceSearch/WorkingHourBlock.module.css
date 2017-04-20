@@ -1,12 +1,24 @@
-@value yellow-bar, main-yellow, main-gray from "../variables.module.css";
+@value yellow-bar, main-yellow, border-gray, main-gray, gray-dark from "../common/variables.module.css";
 
 .preview {
   width: 100%;
   display: flex;
+  align-items:center;
 
   .heading {
     flex: 1;
     padding: 10px 30px;
+    border-bottom: 2px solid white;
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    &.expanded {
+      border-bottom: 2px solid yellow-bar;
+    }
+
+    .hoursPerWeek {
+      color: gray-dark;
+    }
   }
 
   .more {
@@ -20,11 +32,10 @@
       line-height: 40px;
       content: '＋';
       font-weight: 700;
-      margin-top: 5px;
       margin-left: -20px;
       background-color: #fff;
       color: main-gray;
-      border: 1px solid main-gray;
+      border: 2px solid border-gray;
       border-radius: 50%;
       height: 40px;
       width: 40px;
@@ -42,9 +53,22 @@
     .more {
       &::after, &.expanded::after {
         color: main-yellow;
-        border: 1px solid main-yellow;
+        border: 2px solid main-yellow;
       }
     }
   }
 
+}
+
+.content {
+  padding: 10px 30px;
+  opacity: 0;
+  height: 0;
+  display: none;
+  transition: all .4s ease .4s;
+  &.expanded {
+    display: block;
+    opacity: 1;
+    height: auto;
+  }
 }
