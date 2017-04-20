@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../actions/laborRights';
 import LaborRightsSingle from '../components/LaborRightsSingle';
 import {
-  getSingleLaborRightsProps,
+  makeSingleLaborRightsProps,
 } from '../selectors/laborRights';
 
 export default connect(
-  getSingleLaborRightsProps,
+  makeSingleLaborRightsProps(),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )(LaborRightsSingle);

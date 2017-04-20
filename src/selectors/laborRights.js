@@ -14,9 +14,10 @@ const getAllLaborRights = createSelector(
   laborRightsMapById => laborRightsMapById.valueSeq().toList()
 );
 
-export const getLaborRightsMenuProps = createStructuredSelector({
-  items: getAllLaborRights,
-});
+export const makeLaborRightsMenuProps = () =>
+  createStructuredSelector({
+    items: getAllLaborRights,
+  });
 
 const getId = (_, { params: { id } }) => id;
 
@@ -56,8 +57,9 @@ const getSingleLaborRightsNext = createSelector(
   (laborRightsMapById, nextId) => laborRightsMapById.get(nextId),
 );
 
-export const getSingleLaborRightsProps = createStructuredSelector({
-  item: getSingleLaborRights,
-  prev: getSingleLaborRightsPrev,
-  next: getSingleLaborRightsNext,
-});
+export const makeSingleLaborRightsProps = () =>
+  createStructuredSelector({
+    item: getSingleLaborRights,
+    prev: getSingleLaborRightsPrev,
+    next: getSingleLaborRightsNext,
+  });
