@@ -3,8 +3,8 @@ import React, { PropTypes } from 'react';
 import Base from './Base';
 import Bubble from '../../images/bubble.svg';
 
-const Comment = ({ onClick, ...props }) => (
-  <Base {...props}>
+const Comment = ({ onClick, ...restProps }) => (
+  <Base {...restProps}>
     <Bubble onClick={onClick} />
   </Base>
 );

@@ -1,17 +1,12 @@
 import React, { PropTypes } from 'react';
 
 import Block from '../common/Block';
-
 import styles from './WorkingHourBlock.module.css';
 
 class WorkingHourBlock extends React.Component {
   static propTypes = {
     children: PropTypes.node,
   }
-
-  // static defaultProps = {
-  //   closeIn: 3000,
-  // }
 
   constructor() {
     super();
@@ -21,9 +16,6 @@ class WorkingHourBlock extends React.Component {
   }
 
   render() {
-    // const cnMore = this.state.isExpanded
-    //   ? `${styles.more} ${styles.expanded}`
-    //   : `${styles.more}`;
     let cnHeading;
     let cnMore;
     let cnContent;
@@ -37,22 +29,7 @@ class WorkingHourBlock extends React.Component {
       cnMore = styles.more;
       cnContent = styles.content;
     }
-    /*
-    return (
-      <button
-        className={styles.preview} onClick={() => {
-          this.setState({
-            isExpanded: !this.state.isExpanded,
-          });
-        }}
-      >
-        <div className={styles.heading}>
-          {this.props.children}
-        </div>
-        <div className={cnMore} />
-      </button>
-    );
-    */
+
     return (
       <Block>
         <button

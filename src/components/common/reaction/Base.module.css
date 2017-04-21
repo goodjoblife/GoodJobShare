@@ -1,4 +1,4 @@
-@value main-gray from "../variables.module.css";
+@value main-gray, main-yellow from "../variables.module.css";
 
 .container {
   color: main-gray;
@@ -9,8 +9,11 @@
     svg {
       cursor: pointer;
       fill: main-gray;
-      width: 1em;
-      height: 1em;
+      width: 1.1em;
+      height: 1.1em;
+      &.toggled {
+        fill: main-yellow;
+      }
     }
     &:first-child {
       margin-left: 0;
