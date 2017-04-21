@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Block from '../common/Block';
+import Comment from '../common/reaction/Comment';
 
 import styles from './ExperienceBlock.module.css';
 
@@ -28,7 +29,7 @@ class ExperienceBlock extends React.Component {
           <div className={`pM ${styles.content}`}>
             這個是面試內容，這個是面試內容，這個是面試內容，這個是面試內容，這個是面試內容。
           </div>
-          <div>like & commnet</div>
+          <Comment count={35} onClick={e => { console.log(e); }} />
         </div>
       </Block>
     );

@@ -6,11 +6,12 @@
   .createdDate, .content {
     color: gray-dark;
   }
-
-  .heading, .content {
+  .heading {
     padding: 10px 0;
   }
-
+  .content {
+    padding: 15px 0;
+  }
   .label {
     display: flex;
     div {

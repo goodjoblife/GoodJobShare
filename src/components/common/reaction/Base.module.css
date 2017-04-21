@@ -1,0 +1,19 @@
+@value main-gray from "../variables.module.css";
+
+.container {
+  color: main-gray;
+  display: flex;
+  align-items: center;
+  > div {
+    margin-left: 10px;
+    svg {
+      cursor: pointer;
+      fill: main-gray;
+      width: 1em;
+      height: 1em;
+    }
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
