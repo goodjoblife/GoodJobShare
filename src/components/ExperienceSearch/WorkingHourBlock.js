@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import cn from 'classnames';
 
 import Block from '../common/Block';
 import styles from './WorkingHourBlock.module.css';
@@ -16,20 +17,6 @@ class WorkingHourBlock extends React.Component {
   }
 
   render() {
-    let cnHeading;
-    let cnMore;
-    let cnContent;
-
-    if (this.state.isExpanded) {
-      cnHeading = `${styles.heading} ${styles.expanded}`;
-      cnMore = `${styles.more} ${styles.expanded}`;
-      cnContent = `${styles.content} ${styles.expanded}`;
-    } else {
-      cnHeading = `${styles.heading}`;
-      cnMore = styles.more;
-      cnContent = styles.content;
-    }
-
     return (
       <Block>
         <button
@@ -39,7 +26,12 @@ class WorkingHourBlock extends React.Component {
             });
           }}
         >
-          <div className={cnHeading}>
+          <div
+            className={cn(
+              styles.heading,
+              this.state.isExpanded ? styles.expanded : ''
+            )}
+          >
             {/* this.props.children */}
             <div className="subheadingL">日月光半導體製造股份有限公司</div>
             <div>
@@ -47,10 +39,20 @@ class WorkingHourBlock extends React.Component {
               <span className="pL">50.0 小時</span>
             </div>
           </div>
-          <div className={cnMore} />
+          <div
+            className={cn(
+              styles.more,
+              this.state.isExpanded ? styles.expanded : ''
+            )}
+          />
         </button>
 
-        <div className={cnContent}>
+        <div
+          className={cn(
+            styles.content,
+            this.state.isExpanded ? styles.expanded : ''
+          )}
+        >
           this is content
         </div>
       </Block>
