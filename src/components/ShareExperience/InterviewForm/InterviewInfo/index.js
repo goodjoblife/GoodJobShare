@@ -2,8 +2,6 @@ import React, { PropTypes } from 'react';
 
 import styles from './InterviewInfo.module.css';
 
-import InputTitle from '../../common/InputTitle';
-
 import CompanyQuery from './CompanyQuery';
 import Region from './Region';
 import JobTitle from './JobTitle';
@@ -11,10 +9,7 @@ import ExperienceInYear from './ExperienceInYear';
 import Education from './Education';
 import InterviewTime from './InterviewTime';
 import InterviewResult from './InterviewResult';
-
-import {
-  interviewResultMap,
-} from '../../common/optionMap';
+import Salary from './Salary';
 
 class InterviewInfo extends React.PureComponent {
   render() {
@@ -28,6 +23,8 @@ class InterviewInfo extends React.PureComponent {
       interviewTimeYear,
       interviewTimeMonth,
       interviewResult,
+      salaryType,
+      salaryAmount,
     } = this.props;
 
     return (
@@ -117,6 +114,18 @@ class InterviewInfo extends React.PureComponent {
               onChange={handleState('interviewResult')}
             />
           </div>
+          <div
+            style={{
+              marginBottom: '57px',
+            }}
+          >
+            <Salary
+              salaryType={salaryType}
+              salaryAmount={salaryAmount}
+              onSalaryType={handleState('salaryType')}
+              onSalaryAmount={handleState('salaryAmount')}
+            />
+          </div>
         </div>
       </div>
     );
@@ -148,6 +157,14 @@ InterviewInfo.propTypes = {
     PropTypes.number,
   ]),
   interviewResult: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  salaryType: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  salaryAmount: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
   ]),

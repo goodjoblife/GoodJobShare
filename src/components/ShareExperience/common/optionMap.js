@@ -88,3 +88,22 @@ export const interviewResultMap = [
     value: '其他',
   },
 ];
+
+export const salaryTypeOptions = [
+  {
+    label: '年薪',
+    value: 'year',
+  },
+  {
+    label: '月薪',
+    value: 'month',
+  },
+  {
+    label: '日薪',
+    value: 'day',
+  },
+  {
+    label: '時薪',
+    value: 'hour',
+  },
+];

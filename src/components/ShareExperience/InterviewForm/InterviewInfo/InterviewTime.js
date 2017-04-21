@@ -8,7 +8,7 @@ import {
 } from '../../common/optionMap';
 
 const InterviewTime = (
-  { 
+  {
     interviewTimeYear,
     interviewTimeMonth,
     onInterviewTimeYear,
