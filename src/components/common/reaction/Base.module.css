@@ -7,10 +7,12 @@
   > div {
     margin-left: 10px;
     svg {
-      cursor: pointer;
       fill: main-gray;
       width: 1.1em;
       height: 1.1em;
+      &.clickable {
+        cursor: pointer;
+      }
       &.toggled {
         fill: main-yellow;
       }

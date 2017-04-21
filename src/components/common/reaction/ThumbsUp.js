@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import cn from 'classnames';
 
 import Base from './Base';
 import Heart from '../../images/heart.svg';
@@ -8,7 +9,10 @@ const ThumbsUp = ({ onClick, toggled, ...restProps }) => (
   <Base {...restProps}>
     <Heart
       onClick={onClick}
-      className={toggled ? styles.toggled : ''}
+      className={cn(
+        toggled ? styles.toggled : '',
+        onClick ? styles.clickable : ''
+      )}
     />
   </Base>
 );

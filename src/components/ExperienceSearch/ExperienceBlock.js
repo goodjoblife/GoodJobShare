@@ -37,7 +37,7 @@ class ExperienceBlock extends React.Component {
 
           <div className={styles.reaction}>
             <ThumbsUp count={15} toggled onClick={e => { console.log(e); }} />
-            <Comment count={35} onClick={e => { console.log(e); }} />
+            <Comment count={35} />
           </div>
 
         </div>
