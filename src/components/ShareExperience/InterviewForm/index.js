@@ -48,6 +48,7 @@ class InterviewForm extends React.Component {
           education={this.state.education}
           interviewTimeYear={this.state.interviewTimeYear}
           interviewTimeMonth={this.state.interviewTimeMonth}
+          interviewResult={this.state.interviewResult}
         />
       </div>
     );

@@ -69,3 +69,22 @@ export const educationOptions = [
     value: 10,
   },
 ];
+
+export const interviewResultMap = [
+  {
+    label: '錄取',
+    value: '錄取',
+  },
+  {
+    label: '未錄取',
+    value: '未錄取',
+  },
+  {
+    label: '沒通知',
+    value: '沒通知',
+  },
+  {
+    label: '其他',
+    value: '其他',
+  },
+];
