@@ -11,7 +11,7 @@
     border-bottom: 2px solid white;
     display: flex;
     justify-content: space-between;
-    align-items:center;
+    align-items: center;
     &.expanded {
       border-bottom: 2px solid yellow-bar;
     }
@@ -70,5 +70,16 @@
     display: block;
     opacity: 1;
     height: auto;
+  }
+  .overtime {
+    display: flex;
+    > div {
+      flex: 1;
+      margin: 0 15px;
+    }
+  }
+  .unit {
+    text-align: right;
+    margin: 5px 15px 0 0;
   }
 }

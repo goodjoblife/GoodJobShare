@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import cn from 'classnames';
 
 import Block from '../common/Block';
+import OvertimeBlock from './OvertimeBlock';
+
 import styles from './WorkingHourBlock.module.css';
 
 class WorkingHourBlock extends React.Component {
@@ -53,7 +55,11 @@ class WorkingHourBlock extends React.Component {
             this.state.isExpanded ? styles.expanded : ''
           )}
         >
-          this is content
+          <div className={styles.overtime}>
+            <OvertimeBlock heading="加班有無加班費" />
+            <OvertimeBlock noData heading="加班有無補休" />
+          </div>
+          <div className={`pS ${styles.unit}`}>單位：資料筆數</div>
         </div>
       </Block>
     );

@@ -2,10 +2,14 @@ import React, { PropTypes } from 'react';
 
 import Base from './Base';
 import Bubble from '../../images/bubble.svg';
+import styles from './Base.module.css';
 
 const Comment = ({ onClick, ...restProps }) => (
   <Base {...restProps}>
-    <Bubble onClick={onClick} />
+    <Bubble
+      onClick={onClick}
+      className={onClick ? styles.clickable : ''}
+    />
   </Base>
 );
 
