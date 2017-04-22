@@ -2,18 +2,18 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { status, fetchLaborRights } from '../../actions/laborRights';
+import { status, fetchLaborRightsIfNeeded } from '../../actions/laborRights';
 import Columns from '../common/Columns';
 import Container from './Container';
 import LaborRightsEntry from './LaborRightsEntry';
 
 class LaborRightsMenu extends React.Component {
   static fetchData({ store }) {
-    return store.dispatch(fetchLaborRights());
+    return store.dispatch(fetchLaborRightsIfNeeded());
   }
 
   componentDidMount() {
-    this.props.fetchLaborRights();
+    this.props.fetchLaborRightsIfNeeded();
   }
 
   render() {
@@ -52,7 +52,7 @@ class LaborRightsMenu extends React.Component {
 
 LaborRightsMenu.propTypes = {
   items: ImmutablePropTypes.list.isRequired,
-  fetchLaborRights: React.PropTypes.func.isRequired,
+  fetchLaborRightsIfNeeded: React.PropTypes.func.isRequired,
   status: React.PropTypes.string.isRequired,
   error: React.PropTypes.object,
 };

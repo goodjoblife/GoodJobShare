@@ -13,16 +13,16 @@ import Pagers from './Pagers';
 import CallToAction from './CallToAction';
 import Seperator from './Seperator';
 
-import { status, fetchLaborRights } from '../../actions/laborRights';
+import { status, fetchLaborRightsIfNeeded } from '../../actions/laborRights';
 import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
   static fetchData({ store }) {
-    return store.dispatch(fetchLaborRights());
+    return store.dispatch(fetchLaborRightsIfNeeded());
   }
 
   componentDidMount() {
-    this.props.fetchLaborRights();
+    this.props.fetchLaborRightsIfNeeded();
   }
 
   render() {
@@ -92,7 +92,7 @@ LaborRightsSingle.propTypes = {
   item: ImmutablePropTypes.map,
   prev: ImmutablePropTypes.map,
   next: ImmutablePropTypes.map,
-  fetchLaborRights: React.PropTypes.func.isRequired,
+  fetchLaborRightsIfNeeded: React.PropTypes.func.isRequired,
   status: React.PropTypes.string.isRequired,
   error: React.PropTypes.object,
 };

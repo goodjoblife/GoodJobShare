@@ -21,7 +21,7 @@ const setLaborRightsStatus = (nextStatus, err) => ({
   err,
 });
 
-export const fetchLaborRights = () => (dispatch, getState) => {
+export const fetchLaborRightsIfNeeded = () => (dispatch, getState) => {
   if (getState().laborRights.get('status') === status.FETCHED) {
     return Promise.resolve();
   }
