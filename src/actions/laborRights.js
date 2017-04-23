@@ -13,19 +13,7 @@ const setAllLaborRightsMeta = items => ({
 export const loadAllLaborRightsMeta = () => dispatch =>
   contentfulUtils.fetchAllLaborRightsMeta().then(items => {
     dispatch(setAllLaborRightsMeta(items));
-  }).then(({ items }) =>
-    items.map(({
-      sys: { id },
-      fields: {
-        title,
-        coverImage: { fields: { file: { url: coverUrl } } },
-      },
-    }) => ({
-      id,
-      title,
-      coverUrl,
-    }))
-  ).catch(() => {});
+  }).catch(() => {});
 
 const setSingleLaborRights = (id, item) => ({
   type: SET_SINGLE_LABOR_RIGHTS,
@@ -38,26 +26,4 @@ export const loadSingleLaborRights = laborRightsId => dispatch =>
     if (items.length === 1) {
       dispatch(setSingleLaborRights(laborRightsId, items.pop()));
     }
-  }).then(({ items }) =>
-    items.map(({
-      sys: { id },
-      fields: {
-        title,
-        description,
-        content,
-        coverImage: { fields: { file: { url: coverUrl } } },
-        seoTitle,
-        seoDescription,
-        hidingText,
-      },
-    }) => ({
-      id,
-      title,
-      description,
-      content,
-      coverUrl,
-      seoTitle,
-      seoDescription,
-      hidingText,
-    }))
-  ).catch(() => {});
+  }).catch(() => {});
