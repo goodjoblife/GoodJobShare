@@ -1,0 +1,81 @@
+@value main-black, NAV_HEIGHT from "../../common/variables.module.css";
+
+.header {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: main-black;
+  height: NAV_HEIGHT;
+}
+
+.inner {
+  height: 100%;
+	transition: transform;
+	display: flex;
+	justify-content: space-between;
+}
+
+.logo {
+	flex: 0 0 150px;
+	> a {
+		display: block;
+	}
+	svg {
+    transform: scale(0.8) translateY(6px);
+		fill: #fff;
+		@media (max-width: 850px) {
+			width: 120px;
+			fill: #000;
+		}
+	}
+}
+
+.nav {
+	height: 100%;
+	flex: 1 0 auto;
+	display: flex;
+	justify-content: space-between;
+	@media (max-width: 850px) {
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity .3s;
+		background-color: #999;
+		position: fixed;
+		top: NAV_HEIGHT;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 99;
+		flex-direction: column;
+		&.is-open {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+}
+
+.buttonArea {
+  display: flex;
+
+  > button {
+    flex: 1;
+    background-color: transparent;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+    outline: 0;
+  }
+
+  .leaveDataBtn {
+    padding: 10px 30px;
+    border: 1px solid #fff;
+    white-space: nowrap;
+  }
+
+  .loginBtn {
+    padding-left: 20px;
+    border: 0;
+  }
+}
