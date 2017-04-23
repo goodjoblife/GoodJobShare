@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 import styles from './App.module.css';
-import Header from './Header/index';
+import Header from './Header';
 import Footer from './Footer';
 
 
