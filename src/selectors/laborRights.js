@@ -8,23 +8,24 @@ const getAllLaborRightsIdList = state =>
   state.laborRights.get('idList');
 
 const getAllLaborRightsMapById = state =>
-  state.laborRights.get('dataMapById');
+  state.laborRights.getIn(['dataMapById']);
 
-const getAllLaborRights = createSelector(
+const getAllLaborRightsData = createSelector(
   getAllLaborRightsMapById,
-  laborRightsMapById => laborRightsMapById.valueSeq().toList()
+  laborRightsMapById =>
+    laborRightsMapById.valueSeq().toList().map(entry => entry.get('data'))
 );
 
 export const laborRightsMenuProps = createStructuredSelector({
-  items: getAllLaborRights,
+  items: getAllLaborRightsData,
 });
 
 const getId = (_, { params: { id } }) => id;
 
-const getSingleLaborRights = createCachedSelector(
+const getSingleLaborRightsData = createCachedSelector(
   getAllLaborRightsMapById,
   getId,
-  (laborRightsMapById, id) => laborRightsMapById.get(id),
+  (laborRightsMapById, id) => laborRightsMapById.getIn([id, 'data']),
 )(getId);
 
 const getIndexOfSingleLaborRightsId = createCachedSelector(
@@ -39,7 +40,7 @@ const getSingleLaborRightsPrevId = createCachedSelector(
   (ids, index) => (index > 0 ? ids.get(index - 1) : undefined)
 )(getId);
 
-const getSingleLaborRightsPrev = createCachedSelector(
+const getSingleLaborRightsPrevData = createCachedSelector(
   getAllLaborRightsMapById,
   getSingleLaborRightsPrevId,
   (laborRightsMapById, prevId) => laborRightsMapById.get(prevId),
@@ -51,14 +52,14 @@ const getSingleLaborRightsNextId = createCachedSelector(
   (ids, index) => (index < ids.count() - 1 ? ids.get(index + 1) : undefined)
 )(getId);
 
-const getSingleLaborRightsNext = createCachedSelector(
+const getSingleLaborRightsNextData = createCachedSelector(
   getAllLaborRightsMapById,
   getSingleLaborRightsNextId,
   (laborRightsMapById, nextId) => laborRightsMapById.get(nextId),
 )(getId);
 
 export const singleLaborRightsProps = createStructuredSelector({
-  item: getSingleLaborRights,
-  prev: getSingleLaborRightsPrev,
-  next: getSingleLaborRightsNext,
+  item: getSingleLaborRightsData,
+  prev: getSingleLaborRightsPrevData,
+  next: getSingleLaborRightsNextData,
 });
