@@ -8,7 +8,7 @@ import LaborRightsEntry from './LaborRightsEntry';
 
 class LaborRightsMenu extends React.Component {
   componentDidMount() {
-    this.props.loadLaborRights();
+    this.props.loadAllLaborRightsMeta();
   }
 
   render() {
@@ -29,7 +29,7 @@ class LaborRightsMenu extends React.Component {
 
 LaborRightsMenu.propTypes = {
   items: ImmutablePropTypes.list.isRequired,
-  loadLaborRights: React.PropTypes.func.isRequired,
+  loadAllLaborRightsMeta: React.PropTypes.func.isRequired,
 };
 
 export default LaborRightsMenu;

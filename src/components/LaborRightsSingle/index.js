@@ -17,7 +17,9 @@ import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
   componentDidMount() {
-    this.props.loadLaborRights();
+    this.props.loadAllLaborRightsMeta().then(() =>
+      this.props.loadSingleLaborRights(this.props.params.id)
+    );
   }
 
   render() {
@@ -65,10 +67,12 @@ class LaborRightsSingle extends React.Component {
 }
 
 LaborRightsSingle.propTypes = {
+  params: React.PropTypes.object.isRequired,
   item: ImmutablePropTypes.map,
   prev: ImmutablePropTypes.map,
   next: ImmutablePropTypes.map,
-  loadLaborRights: React.PropTypes.func.isRequired,
+  loadAllLaborRightsMeta: React.PropTypes.func.isRequired,
+  loadSingleLaborRights: React.PropTypes.func.isRequired,
 };
 
 export default LaborRightsSingle;
