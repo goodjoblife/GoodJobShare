@@ -21,10 +21,7 @@ const setLaborRightsStatus = (nextStatus, err) => ({
   err,
 });
 
-export const fetchLaborRightsIfNeeded = () => (dispatch, getState) => {
-  if (getState().laborRights.get('status') === status.FETCHED) {
-    return Promise.resolve();
-  }
+export const fetchLaborRights = () => dispatch => {
   dispatch(setLaborRightsStatus(status.FETCHING));
   return contentfulUtils.fetchLaborRights().then(({ items }) =>
     items.map(({
@@ -54,4 +51,11 @@ export const fetchLaborRightsIfNeeded = () => (dispatch, getState) => {
   }).catch(err => {
     dispatch(setLaborRightsStatus(status.ERROR, err));
   });
+};
+
+export const fetchLaborRightsIfNeeded = () => (dispatch, getState) => {
+  if (getState().laborRights.get('status') === status.FETCHED) {
+    return Promise.resolve();
+  }
+  return dispatch(fetchLaborRights());
 };
