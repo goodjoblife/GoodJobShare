@@ -15,15 +15,45 @@ const Salary = (
     <InputTitle
       text="待遇"
     />
-    <Select
-      value={salaryType}
-      options={salaryTypeOptions}
-      onChange={e => onSalaryType(e.target.value)}
-    />
-    <TextInput
-      value={salaryAmount}
-      onChange={e => onSalaryAmount(e.target.value)}
-    />
+    <div
+      style={{
+        display: 'flex',
+      }}
+    >
+      <div
+        style={{
+          width: '107px',
+          marginRight: '18px',
+        }}
+      >
+        <Select
+          value={salaryType}
+          options={salaryTypeOptions}
+          onChange={e => onSalaryType(e.target.value)}
+        />
+      </div>
+      <div
+        style={{
+          width: '155px',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <TextInput
+          value={salaryAmount}
+          onChange={e => onSalaryAmount(e.target.value)}
+          placeholder="700,000"
+        />
+        <p
+          className="pS"
+          style={{
+            marginLeft: '12px',
+          }}
+        >
+          元
+        </p>
+      </div>
+    </div>
   </div>
 );
 

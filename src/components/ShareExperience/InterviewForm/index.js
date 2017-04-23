@@ -18,7 +18,7 @@ class InterviewForm extends React.Component {
       interviewTimeYear: null,
       interviewTimeMonth: null,
       interviewResult: null,
-      salaryType: null,
+      salaryType: 'month',
       salaryAmount: '',
       overallRating: 3,
     };
