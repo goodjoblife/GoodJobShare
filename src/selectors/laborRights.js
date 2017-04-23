@@ -16,7 +16,7 @@ const getAllLaborRightsData = createSelector(
     laborRightsMapById.valueSeq().toList().map(entry => entry.get('data'))
 );
 
-export const laborRightsMenuProps = createStructuredSelector({
+export const getLaborRightsMenuProps = createStructuredSelector({
   items: getAllLaborRightsData,
 });
 
@@ -58,7 +58,7 @@ const getSingleLaborRightsNextData = createCachedSelector(
   (laborRightsMapById, nextId) => laborRightsMapById.get(nextId),
 )(getId);
 
-export const singleLaborRightsProps = createStructuredSelector({
+export const getSingleLaborRightsProps = createStructuredSelector({
   item: getSingleLaborRightsData,
   prev: getSingleLaborRightsPrevData,
   next: getSingleLaborRightsNextData,
