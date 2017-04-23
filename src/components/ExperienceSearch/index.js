@@ -93,7 +93,7 @@ const ExperienceSearch = ({
                   : '以職稱搜尋'
               }
             />
-            <Search onClick={() => { console.log('test'); }} />
+            <Search onClick={() => {}} />
             <div className={styles.keywordGroup}>
               <span className={styles.keyword}>醫師</span>
               <span className={styles.keyword}>工程師</span>
