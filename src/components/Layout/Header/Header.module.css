@@ -1,4 +1,4 @@
-@value main-black, NAV_HEIGHT from "../../common/variables.module.css";
+@value main-yellow, NAV_HEIGHT from "../../common/variables.module.css";
 
 .header {
   position: fixed;
@@ -6,7 +6,7 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: main-black;
+  background-color: main-yellow;
   height: NAV_HEIGHT;
 }
 
@@ -18,13 +18,14 @@
 }
 
 .logo {
-	flex: 0 0 150px;
+	flex: 0 0 170px;
 	> a {
 		display: block;
 	}
 	svg {
     transform: scale(0.8) translateY(6px);
-		fill: #fff;
+    transform-origin: 0% 50%;
+		fill: #000;
 		@media (max-width: 850px) {
 			width: 120px;
 			fill: #000;

@@ -1,4 +1,4 @@
-@value gray, NAV_HEIGHT from "../../common/variables.module.css";
+@value gray-dark, NAV_HEIGHT from "../../common/variables.module.css";
 
 .menu {
 	@media (min-width: 851px) {
@@ -16,13 +16,13 @@
     position: relative;
     &:hover {
       > a {
-        color: gray;
+        color: gray-dark;
       }
     }
     > a {
       position: relative;
       display: block;
-      color: #fff;
+      color: #000;
       font-size: 1em;
       font-weight: 400;
       height: 100%;

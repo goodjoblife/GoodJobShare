@@ -13,10 +13,6 @@ const Header = () => (
       </Link>
       <nav className={styles.nav}>
         <SiteMenu />
-        <div className={styles.buttonArea}>
-          <button className={styles.leaveDataBtn}>留下資料</button>
-          <button className={styles.loginBtn}>登入</button>
-        </div>
       </nav>
     </div>
   </header>
