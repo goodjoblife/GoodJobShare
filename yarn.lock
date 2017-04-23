@@ -5184,6 +5184,10 @@ rc@~1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
 
+re-reselect@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/re-reselect/-/re-reselect-0.4.0.tgz#c2c740bdfe91d6c2a8f0910a984462840edbed7f"
+
 react-addons-test-utils@^15.4.1:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react-addons-test-utils/-/react-addons-test-utils-15.4.2.tgz#93bcaa718fcae7360d42e8fb1c09756cc36302a2"
