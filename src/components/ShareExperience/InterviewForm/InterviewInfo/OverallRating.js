@@ -5,6 +5,7 @@ import RateButton from 'common/button/RateButton';
 const OverallRating = ({ overallRating, onChange }) => (
   <div>
     <RateButton
+      max={5}
       rating={overallRating}
       onChange={onChange}
     />

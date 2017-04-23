@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react';
 
 import RateButtonElement from './RateButtonElement';
 
-const RateButton = ({ rating, onChange }) => (
+const RateButton = ({ max, rating, onChange }) => (
   <div>
     {rating}
     {
-      Array(5)
+      Array(max)
         .fill(null)
         .map((_, index) => index + 1)
         .map(ele =>
@@ -21,6 +21,7 @@ const RateButton = ({ rating, onChange }) => (
 );
 
 RateButton.propTypes = {
+  max: PropTypes.number,
   rating: PropTypes.number,
   onChange: PropTypes.func,
 };

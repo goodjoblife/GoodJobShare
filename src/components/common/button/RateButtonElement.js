@@ -10,7 +10,7 @@ const RateButtonElement = ({ active, onClick }) => (
     }}
     onClick={onClick}
   >
-    thumb
+    T
   </div>
 );
 
