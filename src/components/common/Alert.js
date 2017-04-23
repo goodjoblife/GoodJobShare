@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import styles from './Alert.module.css';
 import Close from '../images/x.svg';
 
-class Alert extends React.Component {
+class Alert extends Component {
   static propTypes = {
     children: PropTypes.node,
     closeIn: PropTypes.number,
