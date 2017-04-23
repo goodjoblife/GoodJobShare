@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
 import Table from '../common/table/Table';
-import Column from '../common/table/Column';
 import styles from './WorkingHourTable.module.css';
 
 class WorkingHourTable extends Component {
@@ -77,34 +76,48 @@ class WorkingHourTable extends Component {
 
     return (
       <Table data={data} primaryKey="_id">
-        <Column dataField="company.name">公司名稱</Column>
-        <Column dataField="job_title">職稱</Column>
+        <Table.Column dataField="company.name">
+          公司名稱
+        </Table.Column>
+
+        <Table.Column dataField="job_title">職稱</Table.Column>
         {/* <Column dataField="name">表訂 / 實際工時</Column> */}
-        <Column
+
+        <Table.Column
           dataField="week_work_time"
           dataFormatter={WorkingHourTable.getWorkingTime}
         >
           一週總工時
-        </Column>
-        <Column
+        </Table.Column>
+
+        <Table.Column
           dataField="overtime_frequency"
           dataFormatter={WorkingHourTable.getFrequency}
         >
           加班頻率
-        </Column>
+        </Table.Column>
         {/* <Column dataField="name">業界工作經歷</Column> */}
-        <Column dataField="salary" dataFormatter={WorkingHourTable.getSalary}>
+
+        <Table.Column
+          dataField="salary"
+          dataFormatter={WorkingHourTable.getSalary}
+        >
           薪資
-        </Column>
-        <Column
+        </Table.Column>
+
+        <Table.Column
           dataField="estimated_hourly_wage"
           dataFormatter={WorkingHourTable.getWage}
         >
           估計時薪
-        </Column>
-        <Column dataField="data_time" dataFormatter={WorkingHourTable.getDate}>
+        </Table.Column>
+
+        <Table.Column
+          dataField="data_time"
+          dataFormatter={WorkingHourTable.getDate}
+        >
           參考時間
-        </Column>
+        </Table.Column>
       </Table>
     );
   }

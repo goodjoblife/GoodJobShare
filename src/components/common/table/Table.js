@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-// import styles from './Table.module.css';
+import Column from './Column';
 
 class Table extends Component {
   static propTypes = {
@@ -8,6 +8,8 @@ class Table extends Component {
     primaryKey: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
   }
+
+  static Column = Column
 
   static getValue = (data, path) => {
     const parts = path.split('.');
