@@ -1,23 +1,29 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actionCreators from '../actions/laborRights';
+import * as actionCreators from '../actions/LaborRightsSingle';
 import LaborRightsSingle from '../components/LaborRightsSingle';
 
 export default connect(
-  (state, { params: { id } }) => {
-    const item = state.laborRights.getIn(['dataMapById', id]);
-    const ids = state.laborRights.get('idList');
-    const index = ids.indexOf(id);
+  (state, { params: { id: laborRightsId } }) => {
+    const data =
+      state.SingleLaborRights.getIn(['dataMapById', laborRightsId, 'data']);
+    const status =
+      state.SingleLaborRights.getIn(['dataMapById', laborRightsId, 'status']);
+    const error =
+      state.SingleLaborRights.getIn(['dataMapById', laborRightsId, 'error']);
+    const metaList = state.SingleLaborRights.get('metaList');
+    const ids = metaList.map(({ id }) => id);
+    const index = ids.indexOf(laborRightsId);
     const prevId = index > 0 ? ids.get(index - 1) : undefined;
     const nextId = index < ids.count() - 1 ? ids.get(index + 1) : undefined;
-    const prev = state.laborRights.getIn(['dataMapById', prevId]);
-    const next = state.laborRights.getIn(['dataMapById', nextId]);
+    const prev = metaList.get(prevId);
+    const next = metaList.get(nextId);
     return {
-      item,
+      data,
       prev,
       next,
-      status: state.laborRights.get('status'),
-      error: state.laborRights.get('error'),
+      status,
+      error,
     };
   },
   dispatch => bindActionCreators(actionCreators, dispatch),

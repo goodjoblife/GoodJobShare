@@ -2,18 +2,20 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { status, fetchLaborRightsIfNeeded } from '../../actions/laborRights';
+import {
+  fetchAllLaborRightsMetaIfNeeded,
+} from '../../actions/LaborRightsSingle';
 import Columns from '../common/Columns';
 import Container from './Container';
 import LaborRightsEntry from './LaborRightsEntry';
 
 class LaborRightsMenu extends React.Component {
   static fetchData({ store }) {
-    return store.dispatch(fetchLaborRightsIfNeeded());
+    return store.dispatch(fetchAllLaborRightsMetaIfNeeded());
   }
 
   componentDidMount() {
-    this.props.fetchLaborRightsIfNeeded();
+    this.props.fetchAllLaborRightsMetaIfNeeded();
   }
 
   render() {
@@ -41,7 +43,7 @@ class LaborRightsMenu extends React.Component {
               <h1 className="headingL">勞動小教室</h1>
               <Columns
                 Item={LaborRightsEntry}
-                items={this.props.items.toJS()}
+                items={this.props.metaList.toJS()}
               />
             </Container>
         }
@@ -51,8 +53,8 @@ class LaborRightsMenu extends React.Component {
 }
 
 LaborRightsMenu.propTypes = {
-  items: ImmutablePropTypes.list.isRequired,
-  fetchLaborRightsIfNeeded: React.PropTypes.func.isRequired,
+  metaList: ImmutablePropTypes.list.isRequired,
+  fetchAllLaborRightsMetaIfNeeded: React.PropTypes.func.isRequired,
   status: React.PropTypes.string.isRequired,
   error: React.PropTypes.instanceOf(Error),
 };
