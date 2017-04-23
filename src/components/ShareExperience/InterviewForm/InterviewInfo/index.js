@@ -10,6 +10,7 @@ import Education from './Education';
 import InterviewTime from './InterviewTime';
 import InterviewResult from './InterviewResult';
 import Salary from './Salary';
+import OverallRating from './OverallRating';
 
 class InterviewInfo extends React.PureComponent {
   render() {
@@ -25,6 +26,7 @@ class InterviewInfo extends React.PureComponent {
       interviewResult,
       salaryType,
       salaryAmount,
+      overallRating,
     } = this.props;
 
     return (
@@ -126,6 +128,12 @@ class InterviewInfo extends React.PureComponent {
               onSalaryAmount={handleState('salaryAmount')}
             />
           </div>
+          <div>
+            <OverallRating
+              overallRating={overallRating}
+              onChange={handleState('overallRating')}
+            />
+          </div>
         </div>
       </div>
     );
@@ -168,6 +176,7 @@ InterviewInfo.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
+  overallRating: PropTypes.number,
 };
 
 export default InterviewInfo;

@@ -20,7 +20,7 @@ class InterviewForm extends React.Component {
       interviewResult: null,
       salaryType: null,
       salaryAmount: '',
-      overallRating: null,
+      overallRating: 3,
     };
   }
 
@@ -51,6 +51,7 @@ class InterviewForm extends React.Component {
           interviewResult={this.state.interviewResult}
           salaryType={this.state.salaryType}
           salaryAmount={this.state.salaryAmount}
+          overallRating={this.state.overallRating}
         />
       </div>
     );
