@@ -4,6 +4,8 @@ import Select from 'common/form/Select';
 import TextInput from 'common/form/TextInput';
 import InputTitle from '../../common/InputTitle';
 
+import styles from './Salary.module.css';
+
 import {
   salaryTypeOptions,
 } from '../../common/optionMap';
@@ -36,7 +38,6 @@ const Salary = (
         style={{
           width: '155px',
           display: 'flex',
-          alignItems: 'center',
         }}
       >
         <TextInput
@@ -44,14 +45,27 @@ const Salary = (
           onChange={e => onSalaryAmount(e.target.value)}
           placeholder="700,000"
         />
-        <p
-          className="pS"
-          style={{
-            marginLeft: '12px',
-          }}
-        >
-          元
-        </p>
+        <div>
+          <p
+            className="pS"
+            style={{
+              marginLeft: '12px',
+              lineHeight: '44px',
+            }}
+          >
+            元
+          </p>
+        </div>
+      </div>
+      <div
+        className={styles.dialog}
+        style={{
+          width: '330px',
+          marginLeft: '74px',
+          padding: '10px',
+        }}
+      >
+        <p className="pS">薪資請以包含平常的薪資、分紅、年終、績效獎金等實質上獲得的價值去計算。</p>
       </div>
     </div>
   </div>

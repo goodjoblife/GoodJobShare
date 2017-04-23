@@ -1,0 +1,6 @@
+@value main-yellow from "common/variables.module.css";
+
+.dialog {
+  background: #FFFAE1;
+  border: 1px solid main-yellow;
+}
