@@ -15,9 +15,18 @@ import Seperator from './Seperator';
 
 import styles from './LaborRightsSingle.module.css';
 
+function scrollToTop() {
+  document.body.scrollTop = 0;
+}
+
 class LaborRightsSingle extends React.Component {
   componentDidMount() {
     this.props.loadLaborRights();
+    scrollToTop();
+  }
+
+  componentDidUpdate() {
+    scrollToTop();
   }
 
   render() {
