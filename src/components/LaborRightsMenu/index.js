@@ -54,7 +54,7 @@ LaborRightsMenu.propTypes = {
   items: ImmutablePropTypes.list.isRequired,
   fetchLaborRightsIfNeeded: React.PropTypes.func.isRequired,
   status: React.PropTypes.string.isRequired,
-  error: React.PropTypes.object,
+  error: React.PropTypes.instanceOf(Error),
 };
 
 export default LaborRightsMenu;
