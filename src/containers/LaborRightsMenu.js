@@ -8,6 +8,8 @@ export default connect(
     items: state.laborRights.get('idList').map(id =>
       state.laborRights.getIn(['dataMapById', id])
     ),
+    status: state.laborRights.get('status'),
+    error: state.laborRights.get('error'),
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )(LaborRightsMenu);
