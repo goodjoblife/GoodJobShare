@@ -31,16 +31,19 @@ const fetchAllLaborRightsMeta = () => dispatch => {
   return contentfulUtils.fetchLaborRights().then(metaList => {
     dispatch(setAllLaborRightsMeta(metaList));
     dispatch(setAllLaborRightsMetaStatus(status.FETCHED));
+    return true;
   }).catch(err => {
     dispatch(setAllLaborRightsMetaStatus(status.ERROR, err));
+    return false;
   });
 };
 
 export const fetchAllLaborRightsMetaIfNeeded = () => (dispatch, getState) => {
-  if (getState().LaborRightsSingle.get('metaList')) {
-    return Promise.resolve();
+  const metaList = getState().LaborRightsSingle.get('metaList');
+  if (!metaList) {
+    return dispatch(fetchAllLaborRightsMeta());
   }
-  return dispatch(fetchAllLaborRightsMeta());
+  return Promise.resolve(true);
 };
 
 const setSingleLaborRightsData = (id, data) => ({
@@ -60,8 +63,10 @@ const fetchSingleLaborRightsData = id => dispatch => {
   contentfulUtils.fetchSingleLaborRights(id).then(data => {
     dispatch(setSingleLaborRightsData(id, data));
     dispatch(setSingleLaborRightsDataStatus(id, status.FETCHED));
+    return true;
   }).catch(err => {
     dispatch(setSingleLaborRightsDataStatus(id, status.ERROR, err));
+    return false;
   });
 };
 
@@ -70,7 +75,7 @@ export const fetchSingleLaborRightsDataIfNeeded = id =>
     const data =
       getState().LaborRightsSingle.getIn(['dataMapById', id, 'data']);
     if (!data) {
-      return Promise.resolve();
+      return dispatch(fetchSingleLaborRightsData());
     }
-    return dispatch(fetchSingleLaborRightsData());
+    return Promise.resolve(true);
   };
