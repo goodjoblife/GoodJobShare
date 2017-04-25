@@ -1,7 +1,14 @@
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import ExperienceDetail from '../components/ExperienceDetail';
+import * as ExperienceDetailActions from '../actions/experienceDetail';
 
-const mapStateToProps = () => ({});
+const mapStateToProps = state => ({
+  experienceDetail: state.experienceDetail,
+});
 
-export default connect(mapStateToProps)(ExperienceDetail);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(ExperienceDetailActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExperienceDetail);
