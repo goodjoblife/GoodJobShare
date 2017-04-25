@@ -39,8 +39,8 @@ const fetchAllLaborRightsMeta = () => dispatch => {
 };
 
 export const fetchAllLaborRightsMetaIfNeeded = () => (dispatch, getState) => {
-  const metaList = getState().LaborRightsSingle.get('metaList');
-  if (!metaList) {
+  const metaListStatus = getState().LaborRightsSingle.get('metaListStatus');
+  if (metaListStatus === undefined) {
     return dispatch(fetchAllLaborRightsMeta());
   }
   return Promise.resolve(true);
@@ -72,9 +72,9 @@ const fetchSingleLaborRightsData = id => dispatch => {
 
 export const fetchSingleLaborRightsDataIfNeeded = id =>
   (dispatch, getState) => {
-    const data =
-      getState().LaborRightsSingle.getIn(['dataMapById', id, 'data']);
-    if (!data) {
+    const dataStatus =
+      getState().LaborRightsSingle.getIn(['dataMapById', id, 'status']);
+    if (dataStatus === undefined) {
       return dispatch(fetchSingleLaborRightsData());
     }
     return Promise.resolve(true);
