@@ -21,8 +21,8 @@ export default createReducer(preloadedState, {
     state.set('metaList', metaList),
   [SET_SINGLE_LABOR_RIGHTS_DATA_STATUS]: (state, { id, nextStatus, err }) =>
     state
-      .setIn(['dataMapById', id, 'status'], nextStatus)
-      .setIn(['dataMapById', id, 'error'], err),
+      .setIn(['dataMapById', id, 'dataStatus'], nextStatus)
+      .setIn(['dataMapById', id, 'dataError'], err),
   [SET_SINGLE_LABOR_RIGHTS_DATA]: (state, { id, data }) =>
     state.setIn(['dataMapById', id, 'data'], Map(data)),
 });
