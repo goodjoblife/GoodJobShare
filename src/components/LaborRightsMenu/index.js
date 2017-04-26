@@ -22,26 +22,17 @@ class LaborRightsMenu extends React.Component {
     return (
       <main className="wrapperL">
         <Helmet title="勞動小教室" />
-<<<<<<< HEAD
-        <Container>
-          <h1 className={cn(styles.heading, 'headingL')}>勞動小教室</h1>
-          <Columns
-            Item={LaborRightsEntry}
-            items={this.props.items.toJS()}
-          />
-        </Container>
-=======
         {
           this.props.status === status.FETCHING &&
             <Container>
-              <h1 className="headingL">LOADING</h1>
+              <h1 className={cn(styles.heading, 'headingL')}>LOADING</h1>
             </Container>
         }
         {
           this.props.status === status.ERROR &&
             this.props.error &&
               <Container>
-                <h1 className="headingL">
+                <h1 className={cn(styles.heading, 'headingL')}>
                   {this.props.error.toString()}
                 </h1>
               </Container>
@@ -49,14 +40,13 @@ class LaborRightsMenu extends React.Component {
         {
           this.props.status === status.FETCHED &&
             <Container>
-              <h1 className="headingL">勞動小教室</h1>
+              <h1 className={cn(styles.heading, 'headingL')}>勞動小教室</h1>
               <Columns
                 Item={LaborRightsEntry}
                 items={this.props.items.toJS()}
               />
             </Container>
         }
->>>>>>> upstream/master
       </main>
     );
   }

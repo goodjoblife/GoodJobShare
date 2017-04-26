@@ -102,16 +102,12 @@ const ExperienceSearch = ({
                   : '以職稱搜尋'
               }
             />
-<<<<<<< HEAD
-            <Search onClick={() => {}} />
-=======
             <Search
               onClick={() => {
                 console.log('oh oh');
                 cmpAlert.show();
               }}
             />
->>>>>>> upstream/master
             <div className={styles.keywordGroup}>
               <span className={styles.keyword}>醫師</span>
               <span className={styles.keyword}>工程師</span>
