@@ -1,4 +1,4 @@
-import { List, Map } from 'immutable';
+import { List, Map, fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 import {
   SET_ALL_LABOR_RIGHTS_META_STATUS,
@@ -17,5 +17,5 @@ export default createReducer(preloadedState, {
       .set('metaListStatus', nextStatus)
       .set('metaListError', err),
   [SET_ALL_LABOR_RIGHTS_META]: (state, { metaList }) =>
-    state.set('metaList', metaList),
+    state.set('metaList', fromJS(metaList)),
 });
