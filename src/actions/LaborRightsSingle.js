@@ -74,7 +74,7 @@ export const fetchSingleLaborRightsDataIfNeeded = id =>
         status.UNFETCHED
       );
     if (dataStatus === status.UNFETCHED) {
-      return dispatch(fetchSingleLaborRightsData());
+      return dispatch(fetchSingleLaborRightsData(id));
     }
     return Promise.resolve(true);
   };
