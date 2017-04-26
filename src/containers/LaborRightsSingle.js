@@ -5,31 +5,31 @@ import status from '../constants/status';
 import LaborRightsSingle from '../components/LaborRightsSingle';
 
 export default connect(
-  (state, { params: { id: laborRightsId } }) => {
+  (state, { params: { id } }) => {
     const data =
       state.LaborRightsSingle.getIn(
-        ['dataMapById', laborRightsId, 'data']
+        ['dataMapById', id, 'data']
       );
     const dataStatus =
       state.LaborRightsSingle.getIn(
-        ['dataMapById', laborRightsId, 'dataStatus'],
+        ['dataMapById', id, 'dataStatus'],
         status.UNFETCHED
        );
     const dataError =
       state.LaborRightsSingle.getIn(
-        ['dataMapById', laborRightsId, 'dataError']
+        ['dataMapById', id, 'dataError']
       );
     const metaList = state.LaborRightsSingle.get('metaList');
-    const ids = metaList.map(({ id }) => id);
-    const index = ids.indexOf(laborRightsId);
-    const prevId = index > 0 ? ids.get(index - 1) : undefined;
-    const nextId = index < ids.count() - 1 ? ids.get(index + 1) : undefined;
-    const prev = metaList.get(prevId);
-    const next = metaList.get(nextId);
+    const ids = metaList.map(meta => meta.get('id'));
+    const index = ids.indexOf(id);
+    const prevData =
+      metaList.get(index > 0 ? index - 1 : undefined);
+    const nextData =
+      metaList.get(index < ids.count() - 1 ? index + 1 : undefined);
     return {
       data,
-      prev,
-      next,
+      prev: prevData,
+      next: nextData,
       status: dataStatus,
       error: dataError,
     };
