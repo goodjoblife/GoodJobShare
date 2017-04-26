@@ -1,14 +1,29 @@
 import contentfulUtils from '../utils/contentfulUtils';
 
-export const SET_LABOR_RIGHTS = 'SET_LABOR_RIGHTS';
+export const SET_LABOR_RIGHTS_STATUS = '@@laborRights/SET_LABOR_RIGHTS_STATUS';
+export const SET_LABOR_RIGHTS = '@@laborRights/SET_LABOR_RIGHTS';
+
+export const status = {
+  UNFETCHED: 'UNFETCHED',
+  FETCHED: 'FETCHED',
+  FETCHING: 'FETCHING',
+  ERROR: 'ERROR',
+};
 
 const setLaborRights = items => ({
   type: SET_LABOR_RIGHTS,
   items,
 });
 
-export const loadLaborRights = () => dispatch =>
-  contentfulUtils.fetchLaborRights().then(({ items }) =>
+const setLaborRightsStatus = (nextStatus, err) => ({
+  type: SET_LABOR_RIGHTS_STATUS,
+  nextStatus,
+  err,
+});
+
+export const fetchLaborRights = () => dispatch => {
+  dispatch(setLaborRightsStatus(status.FETCHING));
+  return contentfulUtils.fetchLaborRights().then(({ items }) =>
     items.map(({
       sys: { id },
       fields: {
@@ -32,4 +47,15 @@ export const loadLaborRights = () => dispatch =>
     }))
   ).then(items => {
     dispatch(setLaborRights(items));
-  }).catch(() => {});
+    dispatch(setLaborRightsStatus(status.FETCHED));
+  }).catch(err => {
+    dispatch(setLaborRightsStatus(status.ERROR, err));
+  });
+};
+
+export const fetchLaborRightsIfNeeded = () => (dispatch, getState) => {
+  if (getState().laborRights.get('status') === status.FETCHED) {
+    return Promise.resolve();
+  }
+  return dispatch(fetchLaborRights());
+};

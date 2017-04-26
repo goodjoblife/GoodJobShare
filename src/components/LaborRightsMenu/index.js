@@ -3,20 +3,26 @@ import cn from 'classnames';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
+import { status, fetchLaborRightsIfNeeded } from '../../actions/laborRights';
 import Columns from '../common/Columns';
 import Container from './Container';
 import LaborRightsEntry from './LaborRightsEntry';
 import styles from './LaborRightsMenu.module.css';
 
 class LaborRightsMenu extends React.Component {
+  static fetchData({ store }) {
+    return store.dispatch(fetchLaborRightsIfNeeded());
+  }
+
   componentDidMount() {
-    this.props.loadLaborRights();
+    this.props.fetchLaborRightsIfNeeded();
   }
 
   render() {
     return (
       <main className="wrapperL">
         <Helmet title="勞動小教室" />
+<<<<<<< HEAD
         <Container>
           <h1 className={cn(styles.heading, 'headingL')}>勞動小教室</h1>
           <Columns
@@ -24,6 +30,33 @@ class LaborRightsMenu extends React.Component {
             items={this.props.items.toJS()}
           />
         </Container>
+=======
+        {
+          this.props.status === status.FETCHING &&
+            <Container>
+              <h1 className="headingL">LOADING</h1>
+            </Container>
+        }
+        {
+          this.props.status === status.ERROR &&
+            this.props.error &&
+              <Container>
+                <h1 className="headingL">
+                  {this.props.error.toString()}
+                </h1>
+              </Container>
+        }
+        {
+          this.props.status === status.FETCHED &&
+            <Container>
+              <h1 className="headingL">勞動小教室</h1>
+              <Columns
+                Item={LaborRightsEntry}
+                items={this.props.items.toJS()}
+              />
+            </Container>
+        }
+>>>>>>> upstream/master
       </main>
     );
   }
@@ -31,7 +64,9 @@ class LaborRightsMenu extends React.Component {
 
 LaborRightsMenu.propTypes = {
   items: ImmutablePropTypes.list.isRequired,
-  loadLaborRights: React.PropTypes.func.isRequired,
+  fetchLaborRightsIfNeeded: React.PropTypes.func.isRequired,
+  status: React.PropTypes.string.isRequired,
+  error: React.PropTypes.instanceOf(Error),
 };
 
 export default LaborRightsMenu;

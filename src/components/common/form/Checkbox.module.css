@@ -1,4 +1,4 @@
-@value main-yellow from "../common/variables.module.css";
+@value main-yellow from "../variables.module.css";
 
 .formGroup {
   position: relative;
@@ -22,13 +22,6 @@ input[type="checkbox"] + label {
     border: 1px solid #000;
     margin-right: 10px;
     transition: all .3s;
-    /*
-    @media (max-width: $below-tablet) {
-      width: 15px;
-      height: 15px;
-      margin-right: 5px;
-    }
-    */
   }
   .checkboxText {
     text-transform: capitalize;
@@ -36,12 +29,8 @@ input[type="checkbox"] + label {
     vertical-align: middle;
     font-size: 1em;
     font-weight: 400;
+    cursor: pointer;
   }
-  /*
-  .checkbox-text--bold {
-    @include heading-5;
-  }
-  */
 }
 
 .checkboxInput:before {
@@ -68,11 +57,5 @@ input[type="checkbox"]:checked + label {
     height: 12px;
     //border-color: #fff;
     transform: translate3d(-.1em,-.4em,0) rotate(15deg);
-    /*
-    @media (max-width: $below-tablet) {
-      width: 5px;
-      height: 8px;
-    }
-    */
   }
 }

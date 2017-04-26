@@ -1,0 +1,40 @@
+@value main-yellow, yellow-light from "./variables.module.css";
+
+.alert {
+  position: fixed;
+  z-index: 9999;
+  top: 56px;
+  left: 56px;
+  right: 56px;
+  padding-bottom: 35px;
+  background-color: yellow-light;
+  border: 1px solid main-yellow;
+  border-radius: 3px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .4s, visibility .4s;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .closeButton {
+    text-align: right;
+    padding: 15px 15px 0 0;
+    svg {
+      fill: #e8c119;
+      width: 20px;
+      height: 20px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .desc {
+    display: inline-block;
+    text-align: left;
+  }
+}
