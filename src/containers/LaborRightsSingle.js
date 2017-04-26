@@ -10,11 +10,12 @@ export default connect(
       state.SingleLaborRights.getIn(
         ['dataMapById', laborRightsId, 'data']
       );
-    const status =
+    const dataStatus =
       state.SingleLaborRights.getIn(
-        ['dataMapById', laborRightsId, 'dataStatus']
-      );
-    const error =
+        ['dataMapById', laborRightsId, 'dataStatus'],
+        status.UNFETCHED
+       );
+    const dataError =
       state.SingleLaborRights.getIn(
         ['dataMapById', laborRightsId, 'dataError']
       );
@@ -29,8 +30,8 @@ export default connect(
       data,
       prev,
       next,
-      status,
-      error,
+      status: dataStatus,
+      error: dataError,
     };
   },
   dispatch => bindActionCreators(actionCreators, dispatch),

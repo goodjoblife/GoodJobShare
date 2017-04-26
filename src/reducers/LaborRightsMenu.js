@@ -8,6 +8,7 @@ import status from '../constants/status';
 
 const preloadedState = Map({
   metaList: List(),
+  metaListStatus: status.UNFETCHED,
 });
 
 export default createReducer(preloadedState, {

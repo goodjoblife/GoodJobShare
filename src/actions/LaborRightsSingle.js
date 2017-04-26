@@ -35,7 +35,7 @@ const fetchAllLaborRightsMeta = () => dispatch => {
 
 export const fetchAllLaborRightsMetaIfNeeded = () => (dispatch, getState) => {
   const metaListStatus = getState().LaborRightsSingle.get('metaListStatus');
-  if (metaListStatus === undefined) {
+  if (metaListStatus === status.UNFETCHED) {
     return dispatch(fetchAllLaborRightsMeta());
   }
   return Promise.resolve(true);
@@ -68,8 +68,11 @@ const fetchSingleLaborRightsData = id => dispatch => {
 export const fetchSingleLaborRightsDataIfNeeded = id =>
   (dispatch, getState) => {
     const dataStatus =
-      getState().LaborRightsSingle.getIn(['dataMapById', id, 'status']);
-    if (dataStatus === undefined) {
+      getState().LaborRightsSingle.getIn(
+        ['dataMapById', id, 'status'],
+        status.UNFETCHED
+      );
+    if (dataStatus === status.UNFETCHED) {
       return dispatch(fetchSingleLaborRightsData());
     }
     return Promise.resolve(true);
