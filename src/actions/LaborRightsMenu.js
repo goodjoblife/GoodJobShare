@@ -19,7 +19,7 @@ const setAllLaborRightsMetaStatus = (nextStatus, err) => ({
 
 const fetchAllLaborRightsMeta = () => dispatch => {
   dispatch(setAllLaborRightsMetaStatus(status.FETCHING));
-  return contentfulUtils.fetchLaborRights().then(metaList => {
+  return contentfulUtils.fetchAllLaborRightsMeta().then(metaList => {
     dispatch(setAllLaborRightsMeta(metaList));
     dispatch(setAllLaborRightsMetaStatus(status.FETCHED));
     return true;
