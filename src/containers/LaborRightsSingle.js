@@ -1,6 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/LaborRightsSingle';
+import status from '../constants/status';
 import LaborRightsSingle from '../components/LaborRightsSingle';
 
 export default connect(

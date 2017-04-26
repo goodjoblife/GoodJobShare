@@ -4,6 +4,7 @@ import {
   SET_ALL_LABOR_RIGHTS_META_STATUS,
   SET_ALL_LABOR_RIGHTS_META,
 } from '../actions/LaborRightsSingle';
+import status from '../constants/status';
 
 const preloadedState = Map({
   metaList: List(),

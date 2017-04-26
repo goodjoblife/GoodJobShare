@@ -1,4 +1,5 @@
 import contentfulUtils from '../utils/contentfulUtils';
+import status from '../constants/status';
 
 export const SET_ALL_LABOR_RIGHTS_META =
     '@@LaborRightsSingle/SET_ALL_LABOR_RIGHTS_META';
@@ -8,12 +9,6 @@ export const SET_SINGLE_LABOR_RIGHTS_DATA =
     '@@LaborRightsSingle/SET_SINGLE_LABOR_RIGHTS_DATA';
 export const SET_SINGLE_LABOR_RIGHTS_DATA_STATUS =
     '@@LaborRightsSingle/SET_SINGLE_LABOR_RIGHTS_DATA_STATUS';
-
-export const status = {
-  FETCHED: 'FETCHED',
-  FETCHING: 'FETCHING',
-  ERROR: 'ERROR',
-};
 
 const setAllLaborRightsMeta = metaList => ({
   type: SET_ALL_LABOR_RIGHTS_META,

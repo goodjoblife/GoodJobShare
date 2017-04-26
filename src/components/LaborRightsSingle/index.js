@@ -16,6 +16,7 @@ import Seperator from './Seperator';
 import {
     fetchAllLaborRightsMetaIfNeeded,
 } from '../../actions/LaborRightsSingle';
+import status from '../../constants/status';
 import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
