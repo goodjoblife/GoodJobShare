@@ -47,10 +47,11 @@ const setSingleLaborRightsData = (id, data) => ({
   data,
 });
 
-const setSingleLaborRightsDataStatus = (id, data) => ({
+const setSingleLaborRightsDataStatus = (id, nextStatus, err) => ({
   type: SET_SINGLE_LABOR_RIGHTS_DATA_STATUS,
   id,
-  data,
+  nextStatus,
+  err,
 });
 
 const fetchSingleLaborRightsData = id => dispatch => {
