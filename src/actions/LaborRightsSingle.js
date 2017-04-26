@@ -26,10 +26,8 @@ const fetchAllLaborRightsMeta = () => dispatch => {
   return contentfulUtils.fetchAllLaborRightsMeta().then(metaList => {
     dispatch(setAllLaborRightsMeta(metaList));
     dispatch(setAllLaborRightsMetaStatus(status.FETCHED));
-    return true;
   }).catch(err => {
     dispatch(setAllLaborRightsMetaStatus(status.ERROR, err));
-    return false;
   });
 };
 
@@ -38,7 +36,7 @@ export const fetchAllLaborRightsMetaIfNeeded = () => (dispatch, getState) => {
   if (metaListStatus === status.UNFETCHED) {
     return dispatch(fetchAllLaborRightsMeta());
   }
-  return Promise.resolve(true);
+  return Promise.resolve();
 };
 
 const setSingleLaborRightsData = (id, data) => ({
@@ -59,10 +57,8 @@ const fetchSingleLaborRightsData = id => dispatch => {
   contentfulUtils.fetchSingleLaborRights(id).then(data => {
     dispatch(setSingleLaborRightsData(id, data));
     dispatch(setSingleLaborRightsDataStatus(id, status.FETCHED));
-    return true;
   }).catch(err => {
     dispatch(setSingleLaborRightsDataStatus(id, status.ERROR, err));
-    return false;
   });
 };
 
@@ -76,5 +72,5 @@ export const fetchSingleLaborRightsDataIfNeeded = id =>
     if (dataStatus === status.UNFETCHED) {
       return dispatch(fetchSingleLaborRightsData(id));
     }
-    return Promise.resolve(true);
+    return Promise.resolve();
   };

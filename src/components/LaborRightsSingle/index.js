@@ -25,18 +25,14 @@ class LaborRightsSingle extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchAllLaborRightsMetaIfNeeded().then(isOkay => {
-      if (isOkay) {
-        this.props.fetchSingleLaborRightsDataIfNeeded(this.props.params.id);
-      }
+    this.props.fetchAllLaborRightsMetaIfNeeded().then(() => {
+      this.props.fetchSingleLaborRightsDataIfNeeded(this.props.params.id);
     });
   }
 
   componentDidUpdate() {
-    this.props.fetchAllLaborRightsMetaIfNeeded().then(isOkay => {
-      if (isOkay) {
-        this.props.fetchSingleLaborRightsDataIfNeeded(this.props.params.id);
-      }
+    this.props.fetchAllLaborRightsMetaIfNeeded().then(() => {
+      this.props.fetchSingleLaborRightsDataIfNeeded(this.props.params.id);
     });
   }
 

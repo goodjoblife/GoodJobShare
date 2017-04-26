@@ -22,10 +22,8 @@ const fetchAllLaborRightsMeta = () => dispatch => {
   return contentfulUtils.fetchAllLaborRightsMeta().then(metaList => {
     dispatch(setAllLaborRightsMeta(metaList));
     dispatch(setAllLaborRightsMetaStatus(status.FETCHED));
-    return true;
   }).catch(err => {
     dispatch(setAllLaborRightsMetaStatus(status.ERROR, err));
-    return false;
   });
 };
 
@@ -34,5 +32,5 @@ export const fetchAllLaborRightsMetaIfNeeded = () => (dispatch, getState) => {
   if (metaListStatus === status.UNFETCHED) {
     return dispatch(fetchAllLaborRightsMeta());
   }
-  return Promise.resolve(true);
+  return Promise.resolve();
 };
