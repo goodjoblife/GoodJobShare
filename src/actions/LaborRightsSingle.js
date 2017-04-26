@@ -70,7 +70,7 @@ export const fetchSingleLaborRightsDataIfNeeded = id =>
   (dispatch, getState) => {
     const dataStatus =
       getState().LaborRightsSingle.getIn(
-        ['dataMapById', id, 'status'],
+        ['dataMapById', id, 'dataStatus'],
         status.UNFETCHED
       );
     if (dataStatus === status.UNFETCHED) {
