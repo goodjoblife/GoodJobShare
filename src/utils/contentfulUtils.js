@@ -28,6 +28,11 @@ export default {
   fetchSingleLaborRights: laborRightsId => client.getEntries({
     content_type: 'labor-lecture',
     'sys.id': laborRightsId,
+  }).then(({ items }) => {
+    if (items.length === 1) {
+      return items.pop();
+    }
+    throw new Error('Entry not found only unique');
   }).then(({
     sys: { id },
     fields: {
@@ -48,10 +53,5 @@ export default {
     seoTitle,
     seoDescription,
     hidingText,
-  })).then(items => {
-    if (items.length === 1) {
-      return items.pop();
-    }
-    throw new Error('Entry not found only unique');
-  }),
+  })),
 };
