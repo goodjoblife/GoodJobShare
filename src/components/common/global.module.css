@@ -56,27 +56,30 @@
 
   [class^="heading"], [class^="subheading"], [class*="Bold"], .formLabel {
     font-weight: 700;
-    line-height: 2em;
   }
 
   .heading {
     &L {
       font-weight: 400;
       font-size: 2.2em;
+      line-height: 1.4em;
       letter-spacing: 0.08em;
     }
     &M {
       font-size: 1.6em;
+      line-height: 1.4em;
       letter-spacing: 0.1em;
     }
   }
   .subheading {
     &L {
       font-size: 1.4em;
+      line-height: 1.4em;
       letter-spacing: 0.1em;
     }
     &M {
       font-size: 1.3em;
+      line-height: 1.4em;
       letter-spacing: 0.05em;
     }
   }

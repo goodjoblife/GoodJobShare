@@ -1,0 +1,49 @@
+@value gray-dark, NAV_HEIGHT from "../../common/variables.module.css";
+
+.menu {
+	@media (min-width: 851px) {
+    height: 100%;
+  }
+}
+
+
+.menuItem {
+  @media (min-width: 851px) {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: NAV_HEIGHT;
+    margin-left: 20px;
+    position: relative;
+    &:hover {
+      > a {
+        color: gray-dark;
+      }
+    }
+    > a {
+      position: relative;
+      display: block;
+      color: #000;
+      font-size: 1em;
+      font-weight: 400;
+      height: 100%;
+      letter-spacing: 0.08em;
+      padding-right: 10px;
+      padding-left: 10px;
+      transition: color .3s, background-color .3s;
+    }
+  }
+}
+
+
+@media (max-width: BELOW_SMALL) {
+  margin-top: 20px;
+  width: 100%;
+  .menuItem {
+    > a {
+      display: block;
+      font-size: 1.15em;
+      padding: 15px 20px;
+      text-align: center;
+    }
+  }
+}
