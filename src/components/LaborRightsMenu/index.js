@@ -4,7 +4,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import {
   fetchAllLaborRightsMetaIfNeeded,
-} from '../../actions/LaborRightsSingle';
+} from '../../actions/LaborRightsMenu';
 import status from '../../constants/status';
 import Columns from '../common/Columns';
 import Container from './Container';
