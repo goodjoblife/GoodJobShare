@@ -1,0 +1,30 @@
+.element{
+  display: inline-block;
+  width: 150px;
+  height: 45px;
+  text-align: center;
+  padding: 10px 50px;
+  box-sizing: border-box;
+  margin-right: 3px;
+}
+
+.last {
+  margin-right: 0;
+}
+
+.checked{
+  composes: element;
+  background: #606060;
+  color: white;
+}
+
+.unchecked{
+  composes: element;
+  background: #F0F0F0;
+  color: #333333;
+
+  &:hover{
+    background: #D8D8D8;
+    transition: background 0.2s;
+  }
+}

@@ -1,0 +1,38 @@
+@value main-yellow from "../variables.module.css";
+@value border-gray from "../variables.module.css";
+@value warning-red from "../variables.module.css";
+
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #BDBDBD;
+
+  &:focus{
+    border-color: main-yellow;
+  }
+
+  &::placeholder {
+    color: #C0C0C0;
+  }
+}
+
+.warning {
+  composes: input;
+  border-color: warning-red;
+
+  &:focus{
+    border-color: warning-red;
+  }
+}
+
+.warning__text {
+  color: warning-red;
+  display: none;
+  position: absolute;
+  bottom: -7px;
+  transform: translateY(100%);
+}
+
+.isWarning {
+  display: inherit;
+}

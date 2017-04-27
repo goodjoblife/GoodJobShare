@@ -18,7 +18,8 @@
     "react/forbid-prop-types": "off",
     "react/jsx-filename-extension": ["error", {
       "extensions": [".js"]
-    }]
+    }],
+    "jsx-a11y/no-static-element-interactions": "off"
   },
   "settings": {
     "import/resolver": {
