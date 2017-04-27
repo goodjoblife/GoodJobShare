@@ -15,13 +15,16 @@ import Seperator from './Seperator';
 
 import {
     fetchAllLaborRightsMetaIfNeeded,
+    fetchSingleLaborRightsDataIfNeeded,
 } from '../../actions/LaborRightsSingle';
 import status from '../../constants/status';
 import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
-  static fetchData({ store }) {
-    return store.dispatch(fetchAllLaborRightsMetaIfNeeded());
+  static fetchData({ store: { dispatch }, params: { id } }) {
+    return dispatch(fetchAllLaborRightsMetaIfNeeded()).then(() =>
+      dispatch(fetchSingleLaborRightsDataIfNeeded(id))
+    );
   }
 
   componentDidMount() {
