@@ -18,7 +18,7 @@ Object.keys(window.__data).forEach(key => {
 });
 delete window.__data;
 
-const store = configureStore(preloadedState);
+const store = configureStore(preloadedState, browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
 const rootElement = document.getElementById('root');
 
