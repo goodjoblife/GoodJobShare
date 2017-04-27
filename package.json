@@ -13,9 +13,7 @@
     "test:cov": "npm run lint && npm run testonly -- --coverage",
     "build": "npm run clean && cross-env NODE_ENV=production webpack src/index.js --config webpack.config.prod.js"
   },
-  "pre-commit": [
-    "lint"
-  ],
+  "pre-commit": ["lint"],
   "devDependencies": {
     "autoprefixer": "^6.5.3",
     "babel-cli": "^6.18.0",
