@@ -31,7 +31,6 @@ export default {
     if (items.length === 1) {
       return items.pop();
     }
-    // TODO fix format
     throw new Error('Entry not found only unique');
   }).then(({
     sys: { id },
