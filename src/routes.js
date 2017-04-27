@@ -8,6 +8,8 @@ import AnotherPage from './containers/AnotherPage';
 import NotFoundPage from './containers/NotFoundPage';
 
 import Entry from './components/ShareExperience/Entry';
+import ShareExperience
+from './components/ShareExperience';
 import InterviewFormContainer
 from './containers/ShareExperience/InterviewFormContainer';
 
@@ -64,11 +66,12 @@ const routes = () => ({
     },
     {
       path: 'share',
-      getComponent(nextState, cb) {
-        require.ensure([], require => {
-          cb(null, require('./components/ShareExperience').default);
-        }, 'ShareExperience');
-      },
+      // getComponent(nextState, cb) {
+      //   require.ensure([], require => {
+      //     cb(null, require('./components/ShareExperience').default);
+      //   }, 'ShareExperience');
+      // },
+      component: ShareExperience,
       indexRoute: {
         component: Entry,
       },
