@@ -71,6 +71,7 @@
     "marked": "^0.3.6",
     "path": "^0.12.7",
     "pre-commit": "^1.2.2",
+    "ramda": "^0.23.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-helmet": "^4.0.0",

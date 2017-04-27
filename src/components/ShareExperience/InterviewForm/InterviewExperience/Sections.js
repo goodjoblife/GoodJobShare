@@ -1,8 +1,29 @@
 import React, { PropTypes } from 'react';
 
-const Sections = () => (
+import SectionEle from './SectionEle';
+
+const Sections = ({ sections, removeSection }) => (
   <div>
-    Sections
+    {
+      sections.map(section =>
+        <div
+          key={section.id}
+          style={{
+            marginBottom: '40px',
+          }}
+        >
+          <SectionEle
+            subtitle={section.subtitle}
+            content={section.content}
+          />
+          <button
+            onClick={() => removeSection(section.id)}
+          >
+            -
+          </button>
+        </div>
+      )
+    }
   </div>
 );
 
@@ -12,9 +33,8 @@ Sections.propTypes = {
     subtitle: PropTypes.string,
     content: PropTypes.string,
   })),
-  appendSection: PropTypes.func,
   removeSection: PropTypes.func,
-  editSection: PropTypes.func,
+  // editSection: PropTypes.func,
 };
 
 export default Sections;

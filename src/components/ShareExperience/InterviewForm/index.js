@@ -1,13 +1,23 @@
 import React from 'react';
+import R from 'ramda';
 import styles from './InterviewForm.module.css';
 
 import InterviewInfo from './InterviewInfo';
 import InterviewExperience from './InterviewExperience';
 
+const sortById = R.sortBy(R.prop('id'));
+
 const createSection = id => ({
   id,
-  subtitle: '請輸入標題，例：面試過程',
-  content: '',
+  subtitle: `${id}請輸入標題，例：面試過程`,
+  content: `
+    風的同些教小示作水究大的主、有結人營水量生。愛生一爭層？媽孩音朋故下流子洲形、出世了上？
+    麼他研黨然優仍，星的自人不這元生；不道考亞線點等水住負我留際裡二；早技著元相思，環可綠看
+    。多創所美具微民原包差。變起合、體營旅、力只地量品的？為為帶名每我，下條人馬法這、得自送
+    不內刻來筆，然冷包生常地一，他的賽熱訴了速更家作的說身理車種北易陽力面個管孩自賽值有場正
+    調國量前看能室頭師久人有教他制治公色他、底致血！市格標業中則方氣在來細了夫大經當前或馬城
+    檢生員大動心進是看得個！平法頭：什過上，我提來常系有一非不算自人子五母健對有容，好聲及本。
+  `,
 });
 
 const sectionIdGenerator = () => {
@@ -115,7 +125,7 @@ class InterviewForm extends React.Component {
         <InterviewExperience
           handleState={this.handleState}
           title={this.state.title}
-          sections={this.state.sections}
+          sections={sortById(this.state.sections)}
           appendSection={this.appendSection}
           removeSection={this.removeSection}
           editSection={this.editSection}

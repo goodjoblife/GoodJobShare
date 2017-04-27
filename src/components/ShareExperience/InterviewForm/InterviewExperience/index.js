@@ -28,7 +28,12 @@ class InterviewExperience extends Component {
         >
           面試經驗
         </h1>
-        <div className={styles.form}>
+        <div
+          className={styles.form}
+          style={{
+            position: 'relative',
+          }}
+        >
           <div
             style={{
               marginBottom: '50px',
@@ -42,10 +47,19 @@ class InterviewExperience extends Component {
           <div>
             <Sections
               sections={sections}
-              appendSection={appendSection}
               removeSection={removeSection}
               editSection={editSection}
             />
+            <button
+              style={{
+                position: 'absolute',
+                left: 0,
+                transform: 'translateX(-50%)',
+              }}
+              onClick={appendSection}
+            >
+              +
+            </button>
           </div>
         </div>
       </div>
