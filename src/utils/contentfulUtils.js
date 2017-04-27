@@ -10,7 +10,7 @@ const client = contentful.createClient({
 });
 
 export default {
-  fetchAllLaborRightsMeta: () => client.getEntries({
+  fetchLaborRightsMetaList: () => client.getEntries({
     order: 'sys.createdAt',
     content_type: 'labor-lecture',
     select: 'fields.title,fields.coverImage',
@@ -25,7 +25,7 @@ export default {
     title,
     coverUrl,
   }))),
-  fetchSingleLaborRights: laborRightsId => client.getEntries({
+  fetchLaborRightsData: laborRightsId => client.getEntries({
     content_type: 'labor-lecture',
     'sys.id': laborRightsId,
   }).then(({ items }) => {

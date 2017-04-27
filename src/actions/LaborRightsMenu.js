@@ -1,36 +1,36 @@
 import contentfulUtils from '../utils/contentfulUtils';
 import status from '../constants/status';
 
-export const SET_ALL_LABOR_RIGHTS_META =
-    '@@LaborRightsMenu/SET_ALL_LABOR_RIGHTS_META';
-export const SET_ALL_LABOR_RIGHTS_META_STATUS =
-    '@@LaborRightsMenu/SET_ALL_LABOR_RIGHTS_META_STATUS';
+export const SET_META_LIST =
+    '@@LaborRightsMenu/SET_META_LIST';
+export const SET_META_LIST_STATUS =
+    '@@LaborRightsMenu/SET_META_LIST_STATUS';
 
-const setAllLaborRightsMeta = metaList => ({
-  type: SET_ALL_LABOR_RIGHTS_META,
+const setMetaList = metaList => ({
+  type: SET_META_LIST,
   metaList,
 });
 
-const setAllLaborRightsMetaStatus = (nextStatus, err) => ({
-  type: SET_ALL_LABOR_RIGHTS_META_STATUS,
+const setMetaListStatus = (nextStatus, err) => ({
+  type: SET_META_LIST_STATUS,
   nextStatus,
   err,
 });
 
-const fetchAllLaborRightsMeta = () => dispatch => {
-  dispatch(setAllLaborRightsMetaStatus(status.FETCHING));
-  return contentfulUtils.fetchAllLaborRightsMeta().then(metaList => {
-    dispatch(setAllLaborRightsMeta(metaList));
-    dispatch(setAllLaborRightsMetaStatus(status.FETCHED));
+const fetchMetaList = () => dispatch => {
+  dispatch(setMetaListStatus(status.FETCHING));
+  return contentfulUtils.fetchLaborRightsMetaList().then(metaList => {
+    dispatch(setMetaList(metaList));
+    dispatch(setMetaListStatus(status.FETCHED));
   }).catch(err => {
-    dispatch(setAllLaborRightsMetaStatus(status.ERROR, err));
+    dispatch(setMetaListStatus(status.ERROR, err));
   });
 };
 
-export const fetchAllLaborRightsMetaIfNeeded = () => (dispatch, getState) => {
+export const fetchMetaListIfNeeded = () => (dispatch, getState) => {
   const metaListStatus = getState().LaborRightsMenu.get('metaListStatus');
   if (metaListStatus === status.UNFETCHED) {
-    return dispatch(fetchAllLaborRightsMeta());
+    return dispatch(fetchMetaList());
   }
   return Promise.resolve();
 };

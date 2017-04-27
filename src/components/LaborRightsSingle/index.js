@@ -14,28 +14,28 @@ import CallToAction from './CallToAction';
 import Seperator from './Seperator';
 
 import {
-    fetchAllLaborRightsMetaIfNeeded,
-    fetchSingleLaborRightsDataIfNeeded,
+    fetchMetaListIfNeeded,
+    fetchDataIfNeeded,
 } from '../../actions/LaborRightsSingle';
 import status from '../../constants/status';
 import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
   static fetchData({ store: { dispatch }, params: { id } }) {
-    return dispatch(fetchAllLaborRightsMetaIfNeeded()).then(() =>
-      dispatch(fetchSingleLaborRightsDataIfNeeded(id))
+    return dispatch(fetchMetaListIfNeeded()).then(() =>
+      dispatch(fetchDataIfNeeded(id))
     );
   }
 
   componentDidMount() {
-    this.props.fetchAllLaborRightsMetaIfNeeded().then(() => {
-      this.props.fetchSingleLaborRightsDataIfNeeded(this.props.params.id);
+    this.props.fetchMetaListIfNeeded().then(() => {
+      this.props.fetchDataIfNeeded(this.props.params.id);
     });
   }
 
   componentDidUpdate() {
-    this.props.fetchAllLaborRightsMetaIfNeeded().then(() => {
-      this.props.fetchSingleLaborRightsDataIfNeeded(this.props.params.id);
+    this.props.fetchMetaListIfNeeded().then(() => {
+      this.props.fetchDataIfNeeded(this.props.params.id);
     });
   }
 
@@ -108,8 +108,8 @@ LaborRightsSingle.propTypes = {
   data: ImmutablePropTypes.map,
   prev: ImmutablePropTypes.map,
   next: ImmutablePropTypes.map,
-  fetchAllLaborRightsMetaIfNeeded: React.PropTypes.func.isRequired,
-  fetchSingleLaborRightsDataIfNeeded: React.PropTypes.func.isRequired,
+  fetchMetaListIfNeeded: React.PropTypes.func.isRequired,
+  fetchDataIfNeeded: React.PropTypes.func.isRequired,
   status: React.PropTypes.string.isRequired,
   error: React.PropTypes.instanceOf(Error),
 };
