@@ -23,7 +23,7 @@ const setMetaListStatus = (nextStatus, err) => ({
 
 const fetchMetaList = () => dispatch => {
   dispatch(setMetaListStatus(status.FETCHING));
-  return contentfulUtils.fetchLaborRigthsMetaList().then(metaList => {
+  return contentfulUtils.fetchLaborRightsMetaList().then(metaList => {
     dispatch(setMetaList(metaList));
     dispatch(setMetaListStatus(status.FETCHED));
   }).catch(err => {
