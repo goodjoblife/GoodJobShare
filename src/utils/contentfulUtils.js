@@ -12,8 +12,8 @@ const client = contentful.createClient({
 export default {
   fetchLaborRightsMetaList: () => client.getEntries({
     order: 'sys.createdAt',
-    content_type: 'labor-lecture',
-    select: 'fields.title,fields.coverImage',
+    content_type: 'lecturePost',
+    select: 'sys,fields.title,fields.coverImage',
   }).then(({ items }) => items.map(({
     sys: { id },
     fields: {
@@ -26,12 +26,12 @@ export default {
     coverUrl,
   }))),
   fetchLaborRightsData: laborRightsId => client.getEntries({
-    content_type: 'labor-lecture',
     'sys.id': laborRightsId,
   }).then(({ items }) => {
     if (items.length === 1) {
       return items.pop();
     }
+    // TODO fix format
     throw new Error('Entry not found only unique');
   }).then(({
     sys: { id },

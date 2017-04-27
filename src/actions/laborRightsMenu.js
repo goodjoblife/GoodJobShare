@@ -23,7 +23,8 @@ const fetchMetaList = () => dispatch => {
     dispatch(setMetaList(metaList));
     dispatch(setMetaListStatus(status.FETCHED));
   }).catch(err => {
-    dispatch(setMetaListStatus(status.ERROR, err));
+    const error = { status: err.response.status, message: err.response.data };
+    dispatch(setMetaListStatus(status.ERROR, error));
   });
 };
 

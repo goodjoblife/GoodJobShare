@@ -27,7 +27,8 @@ const fetchMetaList = () => dispatch => {
     dispatch(setMetaList(metaList));
     dispatch(setMetaListStatus(status.FETCHED));
   }).catch(err => {
-    dispatch(setMetaListStatus(status.ERROR, err));
+    const error = { status: err.response.status, message: err.response.data };
+    dispatch(setMetaListStatus(status.ERROR, error));
   });
 };
 
@@ -58,7 +59,8 @@ const fetchData = id => dispatch => {
     dispatch(setData(id, data));
     dispatch(setDataStatus(id, status.FETCHED));
   }).catch(err => {
-    dispatch(setDataStatus(id, status.ERROR, err));
+    const error = { status: err.response.status, message: err.response.data };
+    dispatch(setDataStatus(id, status.ERROR, error));
   });
 };
 
