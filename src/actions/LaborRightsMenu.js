@@ -28,7 +28,7 @@ const fetchMetaList = () => dispatch => {
 };
 
 export const fetchMetaListIfNeeded = () => (dispatch, getState) => {
-  const metaListStatus = getState().LaborRightsMenu.get('metaListStatus');
+  const metaListStatus = getState().laborRightsMenu.get('metaListStatus');
   if (metaListStatus === status.UNFETCHED) {
     return dispatch(fetchMetaList());
   }

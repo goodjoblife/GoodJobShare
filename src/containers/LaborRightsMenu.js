@@ -5,9 +5,9 @@ import LaborRightsMenu from '../components/LaborRightsMenu';
 
 export default connect(
   state => ({
-    metaList: state.LaborRightsMenu.get('metaList'),
-    status: state.LaborRightsMenu.get('metaListStatus'),
-    error: state.LaborRightsMenu.get('metaListError'),
+    metaList: state.laborRightsMenu.get('metaList'),
+    status: state.laborRightsMenu.get('metaListStatus'),
+    error: state.laborRightsMenu.get('metaListError'),
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )(LaborRightsMenu);

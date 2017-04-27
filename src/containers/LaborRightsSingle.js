@@ -7,19 +7,19 @@ import LaborRightsSingle from '../components/LaborRightsSingle';
 export default connect(
   (state, { params: { id } }) => {
     const data =
-      state.LaborRightsSingle.getIn(
+      state.laborRightsSingle.getIn(
         ['dataMapById', id, 'data']
       );
     const dataStatus =
-      state.LaborRightsSingle.getIn(
+      state.laborRightsSingle.getIn(
         ['dataMapById', id, 'dataStatus'],
         status.UNFETCHED
        );
     const dataError =
-      state.LaborRightsSingle.getIn(
+      state.laborRightsSingle.getIn(
         ['dataMapById', id, 'dataError']
       );
-    const metaList = state.LaborRightsSingle.get('metaList');
+    const metaList = state.laborRightsSingle.get('metaList');
     const ids = metaList.map(meta => meta.get('id'));
     const index = ids.indexOf(id);
     const prevData =
