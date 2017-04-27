@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './InterviewForm.module.css';
 
 import InterviewInfo from './InterviewInfo';
+import InterviewExperience from './InterviewExperience';
 
 class InterviewForm extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class InterviewForm extends React.Component {
       salaryType: 'month',
       salaryAmount: '',
       overallRating: 3,
+      title: '',
     };
   }
 
@@ -52,6 +54,10 @@ class InterviewForm extends React.Component {
           salaryType={this.state.salaryType}
           salaryAmount={this.state.salaryAmount}
           overallRating={this.state.overallRating}
+        />
+        <InterviewExperience
+          title={this.state.title}
+          handleState={this.handleState}
         />
       </div>
     );
