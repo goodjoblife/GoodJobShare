@@ -5,6 +5,7 @@ import styles from './MarkdownParser.module.css';
 const MarkdownParser = ({ content }) => (
   <pre
     className={`pL ${styles.md}`}
+    // eslint-disable-next-line react/no-danger
     dangerouslySetInnerHTML={{
       __html: marked(content || ''),
     }}

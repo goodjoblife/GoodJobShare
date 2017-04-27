@@ -1,0 +1,8 @@
+.select {
+  background: white;
+	border: 1px solid #BDBDBD;
+  width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 12px 14px;
+}

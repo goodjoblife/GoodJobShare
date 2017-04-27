@@ -1,0 +1,70 @@
+@value main-yellow from "../../common/variables.module.css";
+
+.footer {
+  background-color: main-yellow;
+  padding: 12px 0;
+}
+
+.inner {
+  display: flex;
+  @media (max-width: 850px) {
+    flex-direction: column;
+  }
+}
+
+.col1 {
+  flex: 0 0 70%;
+  display: flex;
+  @media (max-width: 850px) {
+    flex: 1 1 auto;
+  }
+  @media (max-width: 550px) {
+    flex-direction: column;
+  }
+}
+
+.col2 {
+  flex: 0 0 30%;
+  @media (max-width: 850px) {
+    flex: 1 1 auto;
+  }
+}
+
+.logo {
+  flex: 0 0 140px;
+  svg {
+    width: 120px;
+  }
+  @media (max-width: 550px) {
+    flex: 1 1 auto;
+  }
+}
+
+.content {
+  flex: 1 1 auto;
+  font-size: .85em;
+  line-height: 1.4em;
+  @media (max-width: 550px) {
+    flex: 1 1 auto;
+  }
+}
+
+.shareButtons {
+  text-align: right;
+  @media (max-width: 850px) {
+    text-align: left;
+  }
+}
+
+.shareItem {
+  display: inline-block;
+  margin: 0 15px;
+  @media (max-width: 850px) {
+    margin: 0 10px 0 0;
+  }
+  svg {
+    width: 34px;
+    height: 34px;
+    margin-top: 10px;
+  }
+}

@@ -1,0 +1,61 @@
+@value main-yellow, main-gray, gray-light from "../common/variables.module.css";
+
+@value blockHeight: 110px;
+
+.heading {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  svg {
+    fill: main-yellow;
+    width: 1.5em;
+    height: 1.5em;
+  }
+  span {
+    margin-left: 15px;
+  }
+}
+.noData {
+  height: blockHeight;
+  text-align: center;
+  line-height: blockHeight;
+  border: 2px dashed main-gray;
+}
+.data {
+  height: blockHeight;
+  background-color: gray-light;
+  display: flex;
+  align-items: center;
+
+  .positive {
+    flex: 7;
+  }
+  .negative {
+    flex: 3;
+  }
+  .spacer {
+    width: 40px;
+  }
+  .positive, .negative {
+    .stat {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      > div {
+        padding: 0 10px;
+      }
+    }
+  }
+  .positive {
+    .subStat {
+      margin: 5px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      > div {
+        padding: 0 5px;
+      }
+    }
+  }
+}

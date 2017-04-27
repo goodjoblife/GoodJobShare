@@ -1,0 +1,24 @@
+@value gray-dark from "../common/variables.module.css";
+
+.container {
+  padding: 30px;
+
+  .createdDate, .content {
+    color: gray-dark;
+  }
+  .heading {
+    padding: 10px 0;
+  }
+  .content {
+    padding: 15px 0;
+  }
+  .label, .reaction {
+    display: flex;
+    > div {
+      margin-left: 30px;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}

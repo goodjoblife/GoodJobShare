@@ -1,14 +1,14 @@
 @import "../common/reset.module.css";
 @import "../common/global.module.css";
 
-@value primary-font, white-light from "../common/variables.module.css";
+@value primary-font, white-light, NAV_HEIGHT from "../common/variables.module.css";
 
 .App {
 
 }
 @media (min-width: 851px) {
 	.content {
-		margin-top: 67px;
+		margin-top: NAV_HEIGHT;
 	}
 }
 

@@ -23,33 +23,63 @@
 }
 
 :global {
+  /* table */
+  table {
+    width: 100%;
+    table-layout: fixed;
+    background-color: #fff;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  th {
+    text-align: left;
+    font-size: .95em;
+    line-height: 1.2em;
+    letter-spacing: .05em;
+    color: #777;
+    padding: 30px 5px 10px;
+    border-bottom: 2px solid #ededed;
+    vertical-align: bottom;
+  }
+  td {
+    font-size: .95em;
+    line-height: 1.3em;
+    border-bottom: 1px solid #ededed;
+    padding: 12px 5px;
+  }
+
+
+  /* font */
   [class^="pL"], [class^="pM"], [class^="pS"] {
     line-height: 1.5em;
   }
 
   [class^="heading"], [class^="subheading"], [class*="Bold"], .formLabel {
     font-weight: 700;
-    line-height: 2em;
   }
 
   .heading {
     &L {
       font-weight: 400;
       font-size: 2.2em;
+      line-height: 1.4em;
       letter-spacing: 0.08em;
     }
     &M {
       font-size: 1.6em;
+      line-height: 1.4em;
       letter-spacing: 0.1em;
     }
   }
   .subheading {
     &L {
       font-size: 1.4em;
+      line-height: 1.4em;
       letter-spacing: 0.1em;
     }
     &M {
       font-size: 1.3em;
+      line-height: 1.4em;
       letter-spacing: 0.05em;
     }
   }
