@@ -1,15 +1,13 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actionCreators from '../actions/laborRights';
+import * as actionCreators from '../actions/laborRightsMenu';
 import LaborRightsMenu from '../components/LaborRightsMenu';
 
 export default connect(
   state => ({
-    items: state.laborRights.get('idList').map(id =>
-      state.laborRights.getIn(['dataMapById', id])
-    ),
-    status: state.laborRights.get('status'),
-    error: state.laborRights.get('error'),
+    metaList: state.laborRightsMenu.get('metaList'),
+    status: state.laborRightsMenu.get('metaListStatus'),
+    error: state.laborRightsMenu.get('metaListError'),
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )(LaborRightsMenu);

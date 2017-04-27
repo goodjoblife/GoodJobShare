@@ -3,7 +3,10 @@ import cn from 'classnames';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { status, fetchLaborRightsIfNeeded } from '../../actions/laborRights';
+import {
+  fetchMetaListIfNeeded,
+} from '../../actions/laborRightsMenu';
+import status from '../../constants/status';
 import Columns from '../common/Columns';
 import Container from './Container';
 import LaborRightsEntry from './LaborRightsEntry';
@@ -11,11 +14,11 @@ import styles from './LaborRightsMenu.module.css';
 
 class LaborRightsMenu extends React.Component {
   static fetchData({ store }) {
-    return store.dispatch(fetchLaborRightsIfNeeded());
+    return store.dispatch(fetchMetaListIfNeeded());
   }
 
   componentDidMount() {
-    this.props.fetchLaborRightsIfNeeded();
+    this.props.fetchMetaListIfNeeded();
   }
 
   render() {
@@ -43,7 +46,7 @@ class LaborRightsMenu extends React.Component {
               <h1 className={cn(styles.heading, 'headingL')}>勞動小教室</h1>
               <Columns
                 Item={LaborRightsEntry}
-                items={this.props.items.toJS()}
+                items={this.props.metaList.toJS()}
               />
             </Container>
         }
@@ -53,8 +56,8 @@ class LaborRightsMenu extends React.Component {
 }
 
 LaborRightsMenu.propTypes = {
-  items: ImmutablePropTypes.list.isRequired,
-  fetchLaborRightsIfNeeded: React.PropTypes.func.isRequired,
+  metaList: ImmutablePropTypes.list.isRequired,
+  fetchMetaListIfNeeded: React.PropTypes.func.isRequired,
   status: React.PropTypes.string.isRequired,
   error: React.PropTypes.instanceOf(Error),
 };

@@ -13,16 +13,30 @@ import Pagers from './Pagers';
 import CallToAction from './CallToAction';
 import Seperator from './Seperator';
 
-import { status, fetchLaborRightsIfNeeded } from '../../actions/laborRights';
+import {
+    fetchMetaListIfNeeded,
+    fetchDataIfNeeded,
+} from '../../actions/laborRightsSingle';
+import status from '../../constants/status';
 import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
-  static fetchData({ store }) {
-    return store.dispatch(fetchLaborRightsIfNeeded());
+  static fetchData({ store: { dispatch }, params: { id } }) {
+    return dispatch(fetchMetaListIfNeeded()).then(() =>
+      dispatch(fetchDataIfNeeded(id))
+    );
   }
 
   componentDidMount() {
-    this.props.fetchLaborRightsIfNeeded();
+    this.props.fetchMetaListIfNeeded().then(() => {
+      this.props.fetchDataIfNeeded(this.props.params.id);
+    });
+  }
+
+  componentDidUpdate() {
+    this.props.fetchMetaListIfNeeded().then(() => {
+      this.props.fetchDataIfNeeded(this.props.params.id);
+    });
   }
 
   render() {
@@ -31,12 +45,12 @@ class LaborRightsSingle extends React.Component {
       description,
       content,
       coverUrl,
-    } = this.props.item ? this.props.item.toJS() : {};
+    } = this.props.data ? this.props.data.toJS() : {};
     const {
       seoTitle = title || '',
       seoDescription,
       hidingText,
-    } = this.props.item ? this.props.item.toJS() : {};
+    } = this.props.data ? this.props.data.toJS() : {};
     return (
       <main>
         <Helmet
@@ -89,10 +103,12 @@ class LaborRightsSingle extends React.Component {
 }
 
 LaborRightsSingle.propTypes = {
-  item: ImmutablePropTypes.map,
+  params: React.PropTypes.object.isRequired,
+  data: ImmutablePropTypes.map,
   prev: ImmutablePropTypes.map,
   next: ImmutablePropTypes.map,
-  fetchLaborRightsIfNeeded: React.PropTypes.func.isRequired,
+  fetchMetaListIfNeeded: React.PropTypes.func.isRequired,
+  fetchDataIfNeeded: React.PropTypes.func.isRequired,
   status: React.PropTypes.string.isRequired,
   error: React.PropTypes.instanceOf(Error),
 };

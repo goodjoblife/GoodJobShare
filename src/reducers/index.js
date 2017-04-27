@@ -3,12 +3,14 @@ import { routerReducer as routing } from 'react-router-redux';
 
 import counter from './counter';
 import experienceSearch from './experienceSearch';
-import laborRights from './laborRights';
+import laborRightsSingle from './laborRightsSingle';
+import laborRightsMenu from './laborRightsMenu';
 
 const rootReducer = combineReducers({
   counter,
   experienceSearch,
-  laborRights,
+  laborRightsSingle,
+  laborRightsMenu,
   routing,
 });
 
