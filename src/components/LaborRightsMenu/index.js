@@ -24,8 +24,7 @@ class LaborRightsMenu extends React.Component {
       <main>
         <Helmet title="勞動小教室" />
         {
-          (this.props.status === status.UNFETCHED
-          || this.props.status === status.FETCHING) &&
+          this.props.status === status.FETCHING &&
             <Container>
               <h1 className="headingL">LOADING</h1>
             </Container>

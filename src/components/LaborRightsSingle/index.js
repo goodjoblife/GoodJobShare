@@ -61,8 +61,7 @@ class LaborRightsSingle extends React.Component {
           ]}
         />
         {
-          (this.props.status === status.UNFETCHED
-            || this.props.status === status.FETCHING) &&
+          this.props.status === status.FETCHING &&
             <Container>
               <h1 className={`headingL ${styles.header}`}>
                 LOADING
