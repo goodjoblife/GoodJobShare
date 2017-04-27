@@ -57,9 +57,11 @@ export default class Html extends Component {
         <body>
           <div
             id="root"
+            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: content }}
           />
           <script
+            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
               __html: `window.__data=${serialize(store.getState())};`,
             }}
