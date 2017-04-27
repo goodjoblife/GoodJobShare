@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actionCreators from '../actions/LaborRightsMenu';
+import * as actionCreators from '../actions/laborRightsMenu';
 import LaborRightsMenu from '../components/LaborRightsMenu';
 
 export default connect(

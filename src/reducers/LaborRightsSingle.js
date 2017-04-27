@@ -5,7 +5,7 @@ import {
   SET_META_LIST,
   SET_DATA_STATUS,
   SET_DATA,
-} from '../actions/LaborRightsSingle';
+} from '../actions/laborRightsSingle';
 import status from '../constants/status';
 
 const preloadedState = Map({

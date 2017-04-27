@@ -16,7 +16,7 @@ import Seperator from './Seperator';
 import {
     fetchMetaListIfNeeded,
     fetchDataIfNeeded,
-} from '../../actions/LaborRightsSingle';
+} from '../../actions/laborRightsSingle';
 import status from '../../constants/status';
 import styles from './LaborRightsSingle.module.css';
 

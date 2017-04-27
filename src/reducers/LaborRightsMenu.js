@@ -3,7 +3,7 @@ import createReducer from 'utils/createReducer';
 import {
   SET_META_LIST_STATUS,
   SET_META_LIST,
-} from '../actions/LaborRightsMenu';
+} from '../actions/laborRightsMenu';
 import status from '../constants/status';
 
 const preloadedState = Map({
