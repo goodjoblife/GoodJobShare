@@ -4,11 +4,31 @@ import styles from './InterviewForm.module.css';
 import InterviewInfo from './InterviewInfo';
 import InterviewExperience from './InterviewExperience';
 
+const createSection = id => ({
+  id,
+  subtitle: '請輸入標題，例：面試過程',
+  content: '',
+});
+
+const sectionIdGenerator = () => {
+  let id = -1;
+  return () => {
+    id += 1;
+    return id;
+  };
+};
+
+const sectionIdCounter = sectionIdGenerator();
+
+
 class InterviewForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.handleState = this.handleState.bind(this);
+    this.appendSection = this.appendSection.bind(this);
+    this.removeSection = this.removeSection.bind(this);
+    this.editSection = this.editSection.bind(this);
 
     this.state = {
       companyQuery: '',
@@ -23,6 +43,9 @@ class InterviewForm extends React.Component {
       salaryAmount: '',
       overallRating: 3,
       title: '',
+      sections: [
+        createSection(sectionIdCounter()),
+      ],
     };
   }
 
@@ -31,6 +54,40 @@ class InterviewForm extends React.Component {
       this.setState({
         [key]: value,
       });
+  }
+
+  appendSection() {
+    return this.setState(state => ({
+      sections: [
+        ...state.sections,
+        createSection(sectionIdCounter()),
+      ],
+    }));
+  }
+
+  removeSection(id) {
+    return this.setState(state => ({
+      sections: state.sections.filter(
+        section => section.id !== id
+      ),
+    }));
+  }
+
+  editSection(id) {
+    return key => value =>
+      this.setState(state => ({
+        sections: [
+          ...state.sections.filter(
+            section => section.id !== id
+          ),
+          {
+            ...state.sections.find(
+              section => section.id === id
+            ),
+            [key]: value,
+          },
+        ],
+      }));
   }
 
   render() {
@@ -56,8 +113,12 @@ class InterviewForm extends React.Component {
           overallRating={this.state.overallRating}
         />
         <InterviewExperience
-          title={this.state.title}
           handleState={this.handleState}
+          title={this.state.title}
+          sections={this.state.sections}
+          appendSection={this.appendSection}
+          removeSection={this.removeSection}
+          editSection={this.editSection}
         />
       </div>
     );

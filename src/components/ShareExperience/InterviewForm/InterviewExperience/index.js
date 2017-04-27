@@ -2,12 +2,17 @@ import React, { Component, PropTypes } from 'react';
 import styles from './InterviewExperience.module.css';
 
 import Title from './Title';
+import Sections from './Sections';
 
 class InterviewExperience extends Component {
   render() {
     const {
       handleState,
       title,
+      sections,
+      appendSection,
+      removeSection,
+      editSection,
     } = this.props;
     return (
       <div
@@ -34,6 +39,14 @@ class InterviewExperience extends Component {
               onChange={handleState('title')}
             />
           </div>
+          <div>
+            <Sections
+              sections={sections}
+              appendSection={appendSection}
+              removeSection={removeSection}
+              editSection={editSection}
+            />
+          </div>
         </div>
       </div>
     );
@@ -43,6 +56,14 @@ class InterviewExperience extends Component {
 InterviewExperience.propTypes = {
   handleState: PropTypes.func,
   title: PropTypes.string,
+  sections: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    subtitle: PropTypes.string,
+    content: PropTypes.string,
+  })),
+  appendSection: PropTypes.func,
+  removeSection: PropTypes.func,
+  editSection: PropTypes.func,
 };
 
 export default InterviewExperience;
