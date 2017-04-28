@@ -55,7 +55,7 @@ const setDataStatus = (id, nextStatus, err) => ({
 
 const fetchData = id => dispatch => {
   dispatch(setDataStatus(id, status.FETCHING));
-  contentfulUtils.fetchLaborRightsData(id).then(data => {
+  return contentfulUtils.fetchLaborRightsData(id).then(data => {
     dispatch(setData(id, data));
     dispatch(setDataStatus(id, status.FETCHED));
   }).catch(err => {
