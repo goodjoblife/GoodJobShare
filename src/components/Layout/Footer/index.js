@@ -1,9 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import { Link } from 'react-router';
-import Logo from 'common/icons/logo.svg';
-import GitHub from 'common/icons/GitHub.svg';
-import Facebook from 'common/icons/Facebook.svg';
+import i from 'common/icons';
 import styles from './Footer.module.css';
 
 const Footer = () => (
@@ -11,13 +8,13 @@ const Footer = () => (
     <div className={cn(styles.inner, 'wrapperL')}>
       <div className={styles.col1}>
         <div className={styles.logo}>
-          <Logo />
+          <i.GjLogo />
         </div>
         <div className={styles.content}>
           <p>Copyright©GoodJob.life team 2016</p>
           <p>
-            <Link to="/user-term">使用者條款</Link>
-            與<Link to="/privacy-policy">隱私權政策</Link>
+            <a href="/user-term">使用者條款</a>
+            與<a href="/privacy-policy">隱私權政策</a>
           </p>
         </div>
       </div>
@@ -28,14 +25,14 @@ const Footer = () => (
             className={styles.shareItem}
             title="github"
           >
-            <GitHub />
+            <i.Github />
           </a>
           <a
             href="https://github.com/goodjoblife"
             className={styles.shareItem}
             title="facebook"
           >
-            <Facebook />
+            <i.Facebook />
           </a>
         </div>
       </div>
