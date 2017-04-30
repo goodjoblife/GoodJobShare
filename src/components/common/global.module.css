@@ -1,8 +1,34 @@
-@value inner-wrap-l, page-gutter, page-gutter-s from "../common/variables.module.css";
+@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s from "../common/variables.module.css";
 
 :global .wrapperL {
   width: 100%;
 	max-width: inner-wrap-l;
+	padding: 0 60px;
+	margin: 0 auto;
+	@media (max-width: 850px) {
+		padding: 0 page-gutter;
+	}
+	@media (max-width: 550px) {
+		padding: 0 page-gutter-s;
+	}
+}
+
+:global .wrapperM {
+  width: 100%;
+	max-width: inner-wrap-m;
+	padding: 0 60px;
+	margin: 0 auto;
+	@media (max-width: 850px) {
+		padding: 0 page-gutter;
+	}
+	@media (max-width: 550px) {
+		padding: 0 page-gutter-s;
+	}
+}
+
+:global .wrapperS {
+  width: 100%;
+	max-width: inner-wrap-s;
 	padding: 0 60px;
 	margin: 0 auto;
 	@media (max-width: 850px) {

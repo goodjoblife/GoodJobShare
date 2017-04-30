@@ -2,23 +2,17 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import Container from './Container';
 import BackButton from './BackButton';
 import Body from './Body';
-import HidingText from './HidingText';
-import Description from './Description';
-import MarkdownParser from './MarkdownParser';
-import Feedback from './Feedback';
 import Pagers from './Pagers';
 import CallToAction from './CallToAction';
-import Seperator from './Seperator';
 
 import {
     fetchMetaListIfNeeded,
     fetchDataIfNeeded,
 } from '../../actions/laborRightsSingle';
 import status from '../../constants/status';
-import styles from './LaborRightsSingle.module.css';
+// import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
   static fetchData({ store: { dispatch }, params: { id } }) {
@@ -49,7 +43,7 @@ class LaborRightsSingle extends React.Component {
     const {
       seoTitle = title || '',
       seoDescription,
-      hidingText,
+      seoText,
     } = this.props.data ? this.props.data.toJS() : {};
     return (
       <main>
@@ -62,40 +56,28 @@ class LaborRightsSingle extends React.Component {
         />
         {
           this.props.status === status.FETCHING &&
-            <Container>
-              <h1 className={`headingL ${styles.header}`}>
-                LOADING
-              </h1>
-            </Container>
+            <div>LOADING</div>
         }
         {
           this.props.status === status.ERROR &&
-            <Container>
-              <h1 className={`headingL ${styles.header}`}>
-                {this.props.error.toString()}
-              </h1>
-            </Container>
+            <div>{this.props.error.toString()}</div>
         }
         {
           this.props.status === status.FETCHED &&
-            <Container>
+            <div>
               <BackButton />
-              <h1 className={`headingL ${styles.header}`}>
-                {title}
-              </h1>
-              <Body>
-                <HidingText content={hidingText} />
-                <Description content={description} />
-                <MarkdownParser content={content} />
-                <Feedback />
-                <Seperator />
-                <Pagers
-                  prev={this.props.prev}
-                  next={this.props.next}
-                />
-              </Body>
+              <Body
+                title={title}
+                seoText={seoText}
+                description={description}
+                content={content}
+              />
+              <Pagers
+                prev={this.props.prev}
+                next={this.props.next}
+              />
               <CallToAction />
-            </Container>
+            </div>
         }
       </main>
     );

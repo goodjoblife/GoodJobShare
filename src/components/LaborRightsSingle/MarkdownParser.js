@@ -3,8 +3,8 @@ import marked from 'marked';
 import styles from './MarkdownParser.module.css';
 
 const MarkdownParser = ({ content }) => (
-  <pre
-    className={`pL ${styles.md}`}
+  <div
+    className={styles.md}
     // eslint-disable-next-line react/no-danger
     dangerouslySetInnerHTML={{
       __html: marked(content || ''),

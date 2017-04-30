@@ -42,7 +42,7 @@ export default {
       coverImage: { fields: { file: { url: coverUrl } } },
       seoTitle,
       seoDescription,
-      hidingText,
+      seoText,
     },
   }) => ({
     id,
@@ -52,6 +52,6 @@ export default {
     coverUrl,
     seoTitle,
     seoDescription,
-    hidingText,
+    seoText,
   })),
 };
