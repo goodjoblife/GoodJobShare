@@ -1,18 +1,16 @@
 import React, { PropTypes } from 'react';
 import cn from 'classnames';
-import HidingText from './HidingText';
-import Description from './Description';
 import MarkdownParser from './MarkdownParser';
-import styles from './LaborRightsSingle.module.css';
+import styles from './Body.module.css';
 
 const Body = ({ title, seoText, description, content }) => (
   <div className="wrapperM">
     <h1 className={cn('headingL', styles.heading)}>
       {title}
     </h1>
-    <HidingText content={seoText} />
-    <Description content={description} />
+    <div className={cn('pLBold', styles.description)}>{description}</div>
     <MarkdownParser content={content} />
+    <div className={styles.seoText}>{seoText}</div>
   </div>
 );
 

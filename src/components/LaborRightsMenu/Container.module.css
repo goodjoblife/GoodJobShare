@@ -1,3 +1,5 @@
+@value PAGE_TOP from "common/variables.module.css";
+
 .container {
-  padding-top: 60px;
+  padding-top: PAGE_TOP;
 }

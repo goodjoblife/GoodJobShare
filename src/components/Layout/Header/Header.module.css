@@ -1,4 +1,4 @@
-@value main-yellow, NAV_HEIGHT from "../../common/variables.module.css";
+@value main-yellow, NAV_HEIGHT from "common/variables.module.css";
 
 .header {
   position: fixed;

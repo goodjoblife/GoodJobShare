@@ -1,4 +1,4 @@
-@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s from "../common/variables.module.css";
+@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s from "common/variables.module.css";
 
 :global .wrapperL {
   width: 100%;
@@ -76,10 +76,6 @@
 
 
   /* font */
-  [class^="pL"], [class^="pM"], [class^="pS"] {
-    line-height: 1.5em;
-  }
-
   [class^="heading"], [class^="subheading"], [class*="Bold"], .formLabel {
     font-weight: 700;
   }
@@ -112,12 +108,15 @@
 
   .pL, .pLBold {
     font-size: 1.1em;
+    line-height: 1.6em;
   }
   .pM, .pMBold {
     font-size: 1em;
+    line-height: 1.6em;
   }
   .pS, .pSBold {
     font-size: 0.9em;
+    line-height: 1.5em;
   }
 
   .formLabel {

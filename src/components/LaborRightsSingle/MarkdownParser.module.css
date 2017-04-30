@@ -1,32 +1,56 @@
+@value link-blue from "common/variables.module.css";
+
 .md {
-  white-space: pre-wrap;
-
   p {
-    font-size: 1em;
+    font-size: 1.1em;
+    line-height: 1.6em;
   }
 
-  strong {
-    font-weight: bold;
+  strong, bold {
+    font-weight: 700;
   }
 
-  ol {
-    list-style-type: decimal;
-    margin-left: 2em;
-    margin-top: -2em;
-    margin-bottom: -2em;
-
-    li {
-      margin-top: -0.5em;
-      margin-bottom: -0.5em;
+  ol, ul {
+    margin-left: 1.3em;
+    > li {
+      font-size: 1.1em;
+      list-style: decimal;
+      line-height: 1.5em;
     }
   }
 
+  ol > li {
+    list-style-type: decimal;
+  }
+
+  ul > li {
+    list-style-type: disc;
+  }
+
   img {
-    width: 100%;
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+
+  hr {
+    border: 0;
+    height: 0px;
+    background : none;
+    margin-top: 0px;
+    margin-bottom: 100px;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   a {
-    color: #4f6ab4;
+    color: link-blue;
+    border-bottom: 1px solid transparent;
+    transition: border .3s;
+    padding-bottom: 2px;
+    @media (min-width: 851px) {
+      &:hover {
+        border-bottom: 1px solid link-blue;
+      }
+    }
   }
 }
-
