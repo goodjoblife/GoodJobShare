@@ -1,6 +1,7 @@
 @value link-blue from "common/variables.module.css";
 
 .md {
+  /* pL */
   p {
     font-size: 1.1em;
     line-height: 1.6em;

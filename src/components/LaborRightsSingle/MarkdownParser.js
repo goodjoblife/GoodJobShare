@@ -7,13 +7,16 @@ const MarkdownParser = ({ content }) => (
     className={styles.md}
     // eslint-disable-next-line react/no-danger
     dangerouslySetInnerHTML={{
-      __html: marked(content || ''),
+      __html: marked(content),
     }}
   />
 );
 
 MarkdownParser.propTypes = {
   content: React.PropTypes.string.isRequired,
+};
+MarkdownParser.defaultProps = {
+  content: '',
 };
 
 export default MarkdownParser;

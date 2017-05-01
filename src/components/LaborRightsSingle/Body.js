@@ -5,12 +5,16 @@ import styles from './Body.module.css';
 
 const Body = ({ title, seoText, description, content }) => (
   <div className="wrapperM">
-    <h1 className={cn('headingL', styles.heading)}>
+    <h1 className={cn('headingLBold', styles.heading)}>
       {title}
     </h1>
-    <div className={cn('pLBold', styles.description)}>{description}</div>
+    <div className={cn('subheadingM', styles.description)}>
+      {description}
+    </div>
     <MarkdownParser content={content} />
-    <div className={styles.seoText}>{seoText}</div>
+    <div className={styles.seoText}>
+      {seoText}
+    </div>
   </div>
 );
 

@@ -2,9 +2,8 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import BackButton from './BackButton';
 import Body from './Body';
-import Pagers from './Pagers';
+import Footer from './Footer';
 import CallToAction from './CallToAction';
 
 import {
@@ -65,14 +64,13 @@ class LaborRightsSingle extends React.Component {
         {
           this.props.status === status.FETCHED &&
             <div>
-              <BackButton />
               <Body
                 title={title}
                 seoText={seoText}
                 description={description}
                 content={content}
               />
-              <Pagers
+              <Footer
                 prev={this.props.prev}
                 next={this.props.next}
               />

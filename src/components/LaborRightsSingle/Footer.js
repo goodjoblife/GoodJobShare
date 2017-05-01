@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { IndexLink } from 'react-router';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import styles from './Pagers.module.css';
+import styles from './Footer.module.css';
 
 const Pagers = ({ prev, next }) => (
   <div className={styles.pagers}>

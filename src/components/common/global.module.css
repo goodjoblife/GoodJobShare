@@ -76,34 +76,31 @@
 
 
   /* font */
-  [class^="heading"], [class^="subheading"], [class*="Bold"], .formLabel {
+  [class*="Bold"], .formLabel {
     font-weight: 700;
   }
 
-  .heading {
-    &L {
-      font-weight: 400;
-      font-size: 2.2em;
-      line-height: 1.4em;
-      letter-spacing: 0.08em;
-    }
-    &M {
-      font-size: 1.6em;
-      line-height: 1.4em;
-      letter-spacing: 0.1em;
-    }
+  .headingL, .headingLBold {
+    font-size: 2.1em;
+  	line-height: 1.25em;
+  	letter-spacing: 0.03em;
   }
-  .subheading {
-    &L {
-      font-size: 1.4em;
-      line-height: 1.4em;
-      letter-spacing: 0.1em;
-    }
-    &M {
-      font-size: 1.3em;
-      line-height: 1.4em;
-      letter-spacing: 0.05em;
-    }
+
+  .headingM, .headingMBold {
+    font-size: 1.6em;
+    line-height: 1.3em;
+    letter-spacing: 0.1em;
+  }
+
+  .subheadingL.subheadingLBold {
+    font-size: 1.4em;
+    line-height: 1.6em;
+    letter-spacing: 0.1em;
+  }
+
+  .subheadingM, .subheadingMBold {
+    font-size: 1.2em;
+    line-height: 1.6em;
   }
 
   .pL, .pLBold {

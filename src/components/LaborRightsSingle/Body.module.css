@@ -1,7 +1,6 @@
 @value PAGE_TOP from "common/variables.module.css";
 
 .heading {
-  text-align: center;
   padding-top: PAGE_TOP;
   margin-bottom: 30px;
 }
