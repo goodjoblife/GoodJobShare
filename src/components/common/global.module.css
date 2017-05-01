@@ -84,10 +84,13 @@
     letter-spacing: 0.1em;
   }
 
-  .subheadingL.subheadingLBold {
-    font-size: 1.4em;
-    line-height: 1.6em;
-    letter-spacing: 0.1em;
+  .subheadingL, .subheadingLBold {
+    font-size: 1.5em;
+    line-height: 1.5em;
+    letter-spacing: 0.05em;
+    @media (max-width: 550px) {
+      font-size: 1.4em;
+    }
   }
 
   .subheadingM, .subheadingMBold {
@@ -135,7 +138,7 @@
     @media (min-width: 851px) {
       &:hover {
         background-color: main-yellow;
-      }      
+      }
     }
   }
 }

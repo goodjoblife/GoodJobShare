@@ -1,20 +1,20 @@
 import React from 'react';
-import { IndexLink } from 'react-router';
+import cn from 'classnames';
+import { Link } from 'react-router';
 import styles from './LectureEntry.module.css';
 
 const LaborRightsEntry = ({ id, title, coverUrl }) => (
-  <IndexLink to={`/labor-rights/${id}`}>
-    <div className={styles.lectureEntry}>
-      {
-        coverUrl && (
-          <img alt={title} src={coverUrl} className={styles.cover} />
-        )
-      }
-      <div className={`subheadingL ${styles.title}`}>
-        {title}
-      </div>
+  <Link to={`/labor-rights/${id}`} className={styles.wrapper}>
+    {
+      coverUrl &&
+        <div className={styles.cover}>
+          <img alt={title} src={coverUrl} />
+        </div>
+    }
+    <div className={cn('subheadingLBold', styles.title)}>
+      {title}
     </div>
-  </IndexLink>
+  </Link>
 );
 
 LaborRightsEntry.propTypes = {
