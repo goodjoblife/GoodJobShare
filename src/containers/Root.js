@@ -7,7 +7,7 @@ import routes from '../routes';
 
 const Root = ({ store, history }) => (
   <Provider store={store}>
-    <Router history={history} routes={routes(store)} />
+    <Router onUpdate={() => window.scrollTo(0, 0)} history={history} routes={routes(store)} />
   </Provider>
 );
 

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 import styles from './SiteMenu.module.css';
 
 const Item = ({ to, text }) => (
@@ -17,7 +18,9 @@ const SiteMenu = () => (
     <Item to="/show" text="查看薪時" />
     <Item to="/#section-faq" text="常見問答" />
     <Item to="/about" text="關於我們" />
-    <Item to="/labor-rights" text="勞動小教室" />
+    <li className={styles.menuItem}>
+      <Link to="/labor-rights">勞動小教室</Link>
+    </li>
   </ul>
 );
 
