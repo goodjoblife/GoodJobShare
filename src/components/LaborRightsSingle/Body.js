@@ -12,9 +12,9 @@ const Body = ({ title, seoText, description, content }) => (
       {description}
     </div>
     <MarkdownParser content={content} />
-    <div className={styles.seoText}>
+    {seoText && <div className={styles.seoText}>
       {seoText}
-    </div>
+    </div>}
   </div>
 );
 
