@@ -9,11 +9,11 @@ const preloadedState = fromJS({
   experience: {},
 });
 
-const experienceSearch = createReducer(preloadedState, {
+const experienceDetail = createReducer(preloadedState, {
   [SET_EXPERIENCE]: (state, action) => {
     console.log(SET_EXPERIENCE);
     return state.update('experience', () => fromJS(action.experience));
   },
 });
 
-export default experienceSearch;
+export default experienceDetail;
