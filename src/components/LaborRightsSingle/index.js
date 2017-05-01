@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-
+import Loader from 'common/Loader';
 import Body from './Body';
 import Footer from './Footer';
 import CallToAction from './CallToAction';
@@ -52,10 +52,7 @@ class LaborRightsSingle extends React.Component {
             { property: 'og:image', content: coverUrl },
           ]}
         />
-        {
-          this.props.status === status.FETCHING &&
-            <div>LOADING</div>
-        }
+        {this.props.status === status.FETCHING && <Loader />}
         {
           this.props.status === status.ERROR &&
             <div>{this.props.error.toString()}</div>

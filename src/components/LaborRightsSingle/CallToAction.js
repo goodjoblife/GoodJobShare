@@ -6,7 +6,7 @@ const CallToAction = () => (
   <div className={styles.callToAction}>
     <div className={cn('wrapperM', styles.container)}>
       <div className={styles.image}>
-        <img src="http://placehold.it/227x163" alt="workers, !! should upload to S3 !!" />
+        <img src="" alt="workers, !! should upload to S3 !!" />
       </div>
       <div className={styles.content}>
         <h5 className={cn(styles.heading, 'headingM')}>

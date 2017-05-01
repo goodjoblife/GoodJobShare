@@ -6,12 +6,11 @@
 .App {
 
 }
-@media (min-width: 851px) {
-	.content {
-		margin-top: NAV_HEIGHT;
-	}
-}
 
+.content {
+	padding-top: NAV_HEIGHT;
+	min-height: 100vh;
+}
 
 
 /* gloabl style start */

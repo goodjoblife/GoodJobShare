@@ -4,7 +4,7 @@ import MarkdownParser from './MarkdownParser';
 import styles from './Body.module.css';
 
 const Body = ({ title, seoText, description, content }) => (
-  <div className="wrapperM">
+  <div className={cn('wrapperM', styles.body)}>
     <h1 className={cn('headingLBold', styles.heading)}>
       {title}
     </h1>

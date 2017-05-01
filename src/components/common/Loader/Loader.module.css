@@ -1,0 +1,27 @@
+@value main-yellow, yellow-bg from "common/variables.module.css";
+
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loader {
+  width: 56px;
+  height: 56px;
+  border: 8px solid yellow-bg;
+  border-top-color: main-yellow ;
+  border-radius: 50%;
+  animation: loader-rotate 1s linear infinite;
+  margin: -28px auto 0;
+}
+
+@keyframes loader-rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

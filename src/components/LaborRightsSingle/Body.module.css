@@ -1,7 +1,14 @@
-@value PAGE_TOP from "common/variables.module.css";
+@value PAGE_TOP, PAGE_TOP_S from "common/variables.module.css";
+
+.body {
+  padding-top: PAGE_TOP;
+  @media (max-width: 550px) {
+    padding-top: PAGE_TOP_S;
+  }
+}
 
 .heading {
-  padding-top: PAGE_TOP;
+
   margin-bottom: 30px;
 }
 
