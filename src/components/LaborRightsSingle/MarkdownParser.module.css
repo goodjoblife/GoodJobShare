@@ -41,6 +41,9 @@
     margin-bottom: 100px;
     margin-left: 0;
     margin-right: 0;
+    @media (max-width: 850px) {
+      margin-bottom: 60px;
+    }
   }
 
   a {

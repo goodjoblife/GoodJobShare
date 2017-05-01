@@ -1,54 +1,46 @@
-@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s from "common/variables.module.css";
-
-:global .wrapperL {
-  width: 100%;
-	max-width: inner-wrap-l;
-	padding: 0 60px;
-	margin: 0 auto;
-	@media (max-width: 850px) {
-		padding: 0 page-gutter;
-	}
-	@media (max-width: 550px) {
-		padding: 0 page-gutter-s;
-	}
-}
-
-:global .wrapperM {
-  width: 100%;
-	max-width: inner-wrap-m;
-	padding: 0 60px;
-	margin: 0 auto;
-	@media (max-width: 850px) {
-		padding: 0 page-gutter;
-	}
-	@media (max-width: 550px) {
-		padding: 0 page-gutter-s;
-	}
-}
-
-:global .wrapperS {
-  width: 100%;
-	max-width: inner-wrap-s;
-	padding: 0 60px;
-	margin: 0 auto;
-	@media (max-width: 850px) {
-		padding: 0 page-gutter;
-	}
-	@media (max-width: 550px) {
-		padding: 0 page-gutter-s;
-	}
-}
-
-:global .headingStyle {
-	font-size: 2.1em;
-	line-height: 1.25em;
-	letter-spacing: 0.03em;
-	@media (max-width: 850px) {
-		font-size: 1.8em;
-	}
-}
+@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, main-black, main-yellow from "common/variables.module.css";
 
 :global {
+  /* wrapper */
+  .wrapperL {
+    width: 100%;
+  	max-width: inner-wrap-l;
+  	padding: 0 60px;
+  	margin: 0 auto;
+  	@media (max-width: 850px) {
+  		padding: 0 page-gutter;
+  	}
+  	@media (max-width: 550px) {
+  		padding: 0 page-gutter-s;
+  	}
+  }
+
+  .wrapperM {
+    width: 100%;
+  	max-width: inner-wrap-m;
+  	padding: 0 60px;
+  	margin: 0 auto;
+  	@media (max-width: 850px) {
+  		padding: 0 page-gutter;
+  	}
+  	@media (max-width: 550px) {
+  		padding: 0 page-gutter-s;
+  	}
+  }
+
+  .wrapperS {
+    width: 100%;
+  	max-width: inner-wrap-s;
+  	padding: 0 60px;
+  	margin: 0 auto;
+  	@media (max-width: 850px) {
+  		padding: 0 page-gutter;
+  	}
+  	@media (max-width: 550px) {
+  		padding: 0 page-gutter-s;
+  	}
+  }
+
   /* table */
   table {
     width: 100%;
@@ -87,7 +79,7 @@
   }
 
   .headingM, .headingMBold {
-    font-size: 1.6em;
+    font-size: 1.75em;
     line-height: 1.3em;
     letter-spacing: 0.1em;
   }
@@ -119,5 +111,31 @@
   .formLabel {
     font-size: 0.9em;
     letter-spacing: 0.1em;
+  }
+
+  /*buttons*/
+  [class^="buttonCircle"] {
+    display: inline-flex;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    letter-spacing: 0.1em;
+    border-radius: 45px;
+    transition: background-color .3s;
+  }
+
+  .buttonCircleM {
+    padding: 0 40px;
+  }
+
+  .buttonBlack {
+    background-color: main-black;
+    color: #fff;
+    @media (min-width: 851px) {
+      &:hover {
+        background-color: main-yellow;
+      }      
+    }
   }
 }

@@ -39,6 +39,11 @@
   &:hover {
     background-color: #fff;
   }
+  @media (max-width: 850px) {
+    flex-basis: 33%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 }
 
 .prev {
@@ -50,6 +55,13 @@
   }
   .title {
     order: 2;
+  }
+  @media (max-width: 850px) {
+    padding-right: 10px;
+    &::before {
+      order: 2;
+      content: "上一課"
+    }
   }
 }
 
@@ -64,6 +76,13 @@
   .title {
     order: 1;
   }
+  @media (max-width: 850px) {
+    padding-left: 10px;
+    &::before {
+      order: 1;
+      content: "下一課"
+    }
+  }
 }
 
 .pager {
@@ -72,17 +91,30 @@
   flex-basis: 38%;
   display: flex;
   align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
   transition: background .3s;
   visibility: hidden;
   opacity: 0;
-  &:hover {
-    background-color: #fff;
+  @media (min-width: 851px) {
+    &:hover {
+      background-color: #fff;
+    }
+  }
+  @media (max-width: 850px) {
+    flex-basis: 33%;
   }
 }
 
 .active {
   visibility: visible;
   opacity: 1;
+}
+
+.title {
+  @media (max-width: 850px) {
+    display: none;
+  }
 }
 
 .icon {
@@ -92,4 +124,10 @@
   flex-shrink: 0;
   margin-right: 15px;
   margin-left: 15px;
+  @media (max-width: 850px) {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
 }

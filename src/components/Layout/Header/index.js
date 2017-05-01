@@ -7,7 +7,7 @@ import SiteMenu from './SiteMenu';
 const Header = () => (
   <header className={styles.header}>
     <div className={cn(styles.inner, 'wrapperL')}>
-      <a to="/" className={styles.logo}>
+      <a href="/" className={styles.logo} title="goodjob 工時薪資透明化運動">
         <i.GjLogo />
       </a>
       <nav className={styles.nav}>
