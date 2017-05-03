@@ -1,6 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import styles from './InterviewExperience.module.css';
 
+import {
+  interviewSectionSubtitleMapping,
+} from '../../common/mapping';
+
 import Title from './Title';
 import Sections from './Sections';
 
@@ -56,7 +60,7 @@ class InterviewExperience extends Component {
                 left: 0,
                 transform: 'translateX(-50%)',
               }}
-              onClick={appendSection}
+              onClick={() => appendSection(interviewSectionSubtitleMapping[0])}
             >
               +
             </button>
