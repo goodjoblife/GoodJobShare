@@ -50,7 +50,7 @@ LaborRightsMenu.propTypes = {
   metaList: ImmutablePropTypes.list.isRequired,
   fetchMetaListIfNeeded: React.PropTypes.func.isRequired,
   status: React.PropTypes.string.isRequired,
-  error: React.PropTypes.instanceOf(Error),
+  error: ImmutablePropTypes.map,
 };
 
 export default LaborRightsMenu;

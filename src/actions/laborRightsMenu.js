@@ -1,4 +1,4 @@
-import contentfulUtils from '../utils/contentfulUtils';
+import { fetchLaborRightsMetaList } from '../utils/contentfulUtils';
 import status from '../constants/status';
 
 export const SET_META_LIST =
@@ -19,12 +19,11 @@ const setMetaListStatus = (nextStatus, err) => ({
 
 const fetchMetaList = () => dispatch => {
   dispatch(setMetaListStatus(status.FETCHING));
-  return contentfulUtils.fetchLaborRightsMetaList().then(metaList => {
+  return fetchLaborRightsMetaList().then(metaList => {
     dispatch(setMetaList(metaList));
     dispatch(setMetaListStatus(status.FETCHED));
   }).catch(err => {
-    const error = { status: err.response.status, message: err.response.data };
-    dispatch(setMetaListStatus(status.ERROR, error));
+    dispatch(setMetaListStatus(status.ERROR, err));
   });
 };
 
