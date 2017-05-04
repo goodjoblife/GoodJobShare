@@ -19,7 +19,7 @@ const Body = ({ title, seoText, description, content }) => (
 );
 
 Body.propTypes = {
-  title: PropTypes.title,
+  title: PropTypes.string,
   seoText: PropTypes.string,
   description: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
