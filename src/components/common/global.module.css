@@ -1,4 +1,4 @@
-@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, main-black, main-yellow from "common/variables.module.css";
+@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, gray-dark, main-black, main-yellow from "common/variables.module.css";
 
 :global {
   /* wrapper */
@@ -41,6 +41,7 @@
   	}
   }
 
+
   /* table */
   table {
     width: 100%;
@@ -68,7 +69,7 @@
 
 
   /* font */
-  [class*="Bold"], .formLabel {
+  [class*="Bold"], .formLabel, .buttonSubmit {
     font-weight: 700;
   }
 
@@ -111,15 +112,16 @@
     line-height: 1.5em;
   }
 
-  .formLabel {
+  .formLabel, .buttonSubmit {
     font-size: 0.9em;
     letter-spacing: 0.1em;
   }
 
+
   /*buttons*/
   [class^="buttonCircle"] {
     display: inline-flex;
-    height: 45px;
+    /*height: 45px;*/
     align-items: center;
     justify-content: center;
     font-size: 1em;
@@ -128,8 +130,15 @@
     transition: background-color .3s;
   }
 
+  .buttonCircleL {
+    padding: 10px 50px;
+    font-size: 1.1em;
+    line-height: 1.5em;
+  }
   .buttonCircleM {
-    padding: 0 40px;
+    padding: 8px 40px;
+    font-size: 0.95em;
+    line-height: 1.4em;
   }
 
   .buttonBlack {
@@ -141,4 +150,42 @@
       }
     }
   }
+
+  .buttonGray {
+    background-color: gray-dark;
+    color: #fff;
+    @media (min-width: 851px) {
+      &:hover {
+        background-color: #424242;
+      }
+    }
+  }
+
+  .buttonHoverYellow {
+    background-color: transparent;
+    color: black;
+    @media (min-width: 851px) {
+      &:hover {
+        background-color: main-yellow;
+      }
+    }
+  }
+
+  .buttonSubmit {
+    background-color: #000;
+    border: none;
+    color: white;
+    padding: 15px 60px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color .3s;
+    @media (min-width: 851px) {
+      &:hover {
+        background-color: main-yellow;
+      }
+    }
+  }
+
 }

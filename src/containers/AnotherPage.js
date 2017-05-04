@@ -3,7 +3,16 @@ import React from 'react';
 
 const AnotherPage = () => (
   <div>
-    <h1>Hello World</h1>
+    <br /><br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button className="buttonCircleM buttonBlack">立即註冊</button>
+    <br /><br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button className="buttonCircleL buttonGray">看更多</button>
+    <br /><br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button className="buttonCircleL buttonHoverYellow">分享面試經驗</button>
+    <br /><br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button className="buttonSubmit">送出資料</button>
+    <br /><br />
+
     <div className="headingL">熱門分享 (headingL)</div>
     <div className="headingL">熱門分享 (headingL)</div>
 
