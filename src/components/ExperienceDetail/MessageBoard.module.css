@@ -1,0 +1,27 @@
+@value main-gray, gray-light from "../common/variables.module.css";
+
+.container {
+  width: 750px;
+  margin: 0 auto 50px;
+  hr {
+    border: 0;
+    border-top: 1px solid main-gray;
+    margin: 10px 0 20px 0;
+  }
+  textarea {
+    width: 100%;
+    padding: 20px;
+    border: 1px solid main-gray;
+  }
+  .termsOfService {
+    text-align: center;
+  }
+  .commentBlocks {
+    section {
+      &:first-child {
+        border-top: 1px solid main-gray;
+      }
+      border-bottom: 1px solid main-gray;
+    }
+  }
+}

@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 
 // import styles from './ExperienceDetail.module.css';
 import Article from './Article';
+import MessageBoard from './MessageBoard';
 
 class ExperienceDetail extends Component {
   componentDidMount() {
@@ -30,6 +31,7 @@ class ExperienceDetail extends Component {
         { /* 你可能還想看...  */}
 
         { /* 留言區塊  */}
+        <MessageBoard />
       </main>
     );
   }
