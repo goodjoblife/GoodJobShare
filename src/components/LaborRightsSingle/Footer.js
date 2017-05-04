@@ -5,7 +5,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import i from 'common/icons';
 import styles from './Footer.module.css';
 
-const Pagers = ({ prev, next }) => (
+const Footer = ({ prev, next }) => (
   <div className={cn(styles.footer, 'wrapperM')}>
     <div className={styles.share}>TODO: share button goes here</div>
     <div className={styles.pagers}>
@@ -31,7 +31,7 @@ const Pagers = ({ prev, next }) => (
   </div>
 );
 
-Pagers.propTypes = {
+Footer.propTypes = {
   prev: ImmutablePropTypes.map,
   next: ImmutablePropTypes.map,
 };
@@ -58,4 +58,4 @@ Pager.defaultProps = {
   title: 'hihihihihi',
 };
 
-export default Pagers;
+export default Footer;
