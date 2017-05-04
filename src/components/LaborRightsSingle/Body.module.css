@@ -1,6 +1,21 @@
+@value PAGE_TOP, PAGE_TOP_S from "common/variables.module.css";
+
 .body {
-  max-width: 900px;
-  text-align: left;
-  margin: 0px auto;
-  margin-top: 33px;
+  padding-top: PAGE_TOP;
+  @media (max-width: 550px) {
+    padding-top: PAGE_TOP_S;
+  }
+}
+
+.heading {
+
+  margin-bottom: 30px;
+}
+
+.description {
+  margin-bottom: 20px;
+}
+
+.seoText {
+  display: none;
 }

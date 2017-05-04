@@ -1,0 +1,133 @@
+@value border-gray, main-gray, gray-dark from "common/variables.module.css";
+
+.footer {
+  margin-top: 100px;
+}
+
+.share {
+  margin-bottom: 20px;
+}
+
+.pagers {
+  border-top: 1px solid border-gray;
+  border-bottom: 1px solid border-gray;
+  display: flex;
+}
+
+.back {
+  order: 2;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 24%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  border-left: 1px solid border-gray;
+  border-right: 1px solid border-gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: gray-dark;
+    svg {
+      margin-bottom: 15px;
+    }
+  }
+  transition: background .3s;
+  &:hover {
+    background-color: #fff;
+  }
+  @media (max-width: 850px) {
+    flex-basis: 33%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}
+
+.prev {
+  order: 1;
+  padding-right: 30px;
+  justify-content: flex-start;
+  .icon {
+    order: 1;
+  }
+  .title {
+    order: 2;
+  }
+  @media (max-width: 850px) {
+    padding-right: 10px;
+    &::before {
+      order: 2;
+      content: "上一課"
+    }
+  }
+}
+
+.next {
+  order: 3;
+  padding-left: 30px;
+  justify-content: flex-end;
+  .icon {
+    order: 2;
+    transform: rotate(180deg);
+  }
+  .title {
+    order: 1;
+  }
+  @media (max-width: 850px) {
+    padding-left: 10px;
+    &::before {
+      order: 1;
+      content: "下一課"
+    }
+  }
+}
+
+.pager {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 38%;
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  transition: background .3s;
+  visibility: hidden;
+  opacity: 0;
+  @media (min-width: 851px) {
+    &:hover {
+      background-color: #fff;
+    }
+  }
+  @media (max-width: 850px) {
+    flex-basis: 33%;
+  }
+}
+
+.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.title {
+  @media (max-width: 850px) {
+    display: none;
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: gray-dark;
+  flex-shrink: 0;
+  margin-right: 15px;
+  margin-left: 15px;
+  @media (max-width: 850px) {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+}

@@ -1,9 +1,40 @@
-.lectureEntry {
-
+.wrapper {
+  @media (min-width: 851px) {
+    &:hover .cover {
+      transform: translateY(-5px);
+      &::before {
+        opacity: .2;
+        transform: translateY(-10px) rotate(2deg) scale(1.05);
+      }
+      &::after {
+        opacity: .3;
+        transform: translateY(0px) rotate(-4deg) scale(1.05);
+      }
+    }
+  }
 }
 
 .cover {
-  box-shadow: 0 0 8px rgba(0,0,0,.2);
+  box-shadow: 0 0 8px rgba(0,0,0,.3);
+  position: relative;
+  transition: transform .3s;
+  &::before, &::after {
+    opacity: 0;
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #999;
+    transition: opacity, transform .3s;
+  }
+}
+
+.cover img {
+  position: relative;
+  z-index: 9;
 }
 
 .title {

@@ -1,28 +1,46 @@
-@value inner-wrap-l, page-gutter, page-gutter-s from "../common/variables.module.css";
-
-:global .wrapperL {
-  width: 100%;
-	max-width: inner-wrap-l;
-	padding: 0 60px;
-	margin: 0 auto;
-	@media (max-width: 850px) {
-		padding: 0 page-gutter;
-	}
-	@media (max-width: 550px) {
-		padding: 0 page-gutter-s;
-	}
-}
-
-:global .headingStyle {
-	font-size: 2.1em;
-	line-height: 1.25em;
-	letter-spacing: 0.03em;
-	@media (max-width: 850px) {
-		font-size: 1.8em;
-	}
-}
+@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, main-black, main-yellow from "common/variables.module.css";
 
 :global {
+  /* wrapper */
+  .wrapperL {
+    width: 100%;
+  	max-width: inner-wrap-l;
+  	padding: 0 60px;
+  	margin: 0 auto;
+  	@media (max-width: 850px) {
+  		padding: 0 page-gutter;
+  	}
+  	@media (max-width: 550px) {
+  		padding: 0 page-gutter-s;
+  	}
+  }
+
+  .wrapperM {
+    width: 100%;
+  	max-width: inner-wrap-m;
+  	padding: 0 60px;
+  	margin: 0 auto;
+  	@media (max-width: 850px) {
+  		padding: 0 page-gutter;
+  	}
+  	@media (max-width: 550px) {
+  		padding: 0 page-gutter-s;
+  	}
+  }
+
+  .wrapperS {
+    width: 100%;
+  	max-width: inner-wrap-s;
+  	padding: 0 60px;
+  	margin: 0 auto;
+  	@media (max-width: 850px) {
+  		padding: 0 page-gutter;
+  	}
+  	@media (max-width: 550px) {
+  		padding: 0 page-gutter-s;
+  	}
+  }
+
   /* table */
   table {
     width: 100%;
@@ -50,52 +68,77 @@
 
 
   /* font */
-  [class^="pL"], [class^="pM"], [class^="pS"] {
-    line-height: 1.5em;
-  }
-
-  [class^="heading"], [class^="subheading"], [class*="Bold"], .formLabel {
+  [class*="Bold"], .formLabel {
     font-weight: 700;
   }
 
-  .heading {
-    &L {
-      font-weight: 400;
-      font-size: 2.2em;
-      line-height: 1.4em;
-      letter-spacing: 0.08em;
-    }
-    &M {
-      font-size: 1.6em;
-      line-height: 1.4em;
-      letter-spacing: 0.1em;
+  .headingL, .headingLBold {
+    font-size: 2.1em;
+  	line-height: 1.25em;
+  	letter-spacing: 0.03em;
+  }
+
+  .headingM, .headingMBold {
+    font-size: 1.75em;
+    line-height: 1.3em;
+    letter-spacing: 0.1em;
+  }
+
+  .subheadingL, .subheadingLBold {
+    font-size: 1.5em;
+    line-height: 1.5em;
+    letter-spacing: 0.05em;
+    @media (max-width: 550px) {
+      font-size: 1.4em;
     }
   }
-  .subheading {
-    &L {
-      font-size: 1.4em;
-      line-height: 1.4em;
-      letter-spacing: 0.1em;
-    }
-    &M {
-      font-size: 1.3em;
-      line-height: 1.4em;
-      letter-spacing: 0.05em;
-    }
+
+  .subheadingM, .subheadingMBold {
+    font-size: 1.2em;
+    line-height: 1.6em;
   }
 
   .pL, .pLBold {
     font-size: 1.1em;
+    line-height: 1.6em;
   }
   .pM, .pMBold {
     font-size: 1em;
+    line-height: 1.6em;
   }
   .pS, .pSBold {
     font-size: 0.9em;
+    line-height: 1.5em;
   }
 
   .formLabel {
     font-size: 0.9em;
     letter-spacing: 0.1em;
+  }
+
+  /*buttons*/
+  [class^="buttonCircle"] {
+    display: inline-flex;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    letter-spacing: 0.1em;
+    border-radius: 45px;
+    transition: background-color .3s;
+  }
+
+  .buttonCircleM {
+    padding: 0 40px;
+  }
+
+  .buttonBlack {
+    background-color: main-black;
+    color: #fff;
+    @media (min-width: 851px) {
+      &:hover {
+        background-color: main-yellow;
+      }
+    }
   }
 }

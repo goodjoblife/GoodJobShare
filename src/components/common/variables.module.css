@@ -4,13 +4,15 @@
  *  Width and Height
  * ------------------------------------ */
 @value inner-wrap-l: 1260px;
-@value inner-wrap-m: 900px;
+@value inner-wrap-m: 960px;
 @value inner-wrap-s: 630px;
 
 @value page-gutter: 40px;
 @value page-gutter-s: 15px;
 
 @value NAV_HEIGHT: 54px;
+@value PAGE_TOP: 60px;
+@value PAGE_TOP_S: 30px;
 
 /* ------------------------------------
  *  Color
@@ -28,7 +30,7 @@
 
 @value white-light: #f9f9f9;
 @value warning-red: #d50000;
-@value border-gray: #ededed;
+@value border-gray: #cdcdcd;
 
 @value link-blue: #325bbd;
 
