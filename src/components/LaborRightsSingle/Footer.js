@@ -5,9 +5,19 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import i from 'common/icons';
 import styles from './Footer.module.css';
 
-const Footer = ({ prev, next }) => (
+const Footer = ({ id, prev, next }) => (
   <div className={cn(styles.footer, 'wrapperM')}>
-    <div className={styles.share}>TODO: share button goes here</div>
+    <div className={styles.share}>
+      <div
+        className="fb-like"
+        data-href={`https://www.goodjob.life/labor-rights/${id}`}
+        data-layout="button_count"
+        data-action="like"
+        data-size="large"
+        data-show-faces="false"
+        data-share="true"
+      />
+    </div>
     <div className={styles.pagers}>
       <Link to="/labor-rights" className={styles.back}>
         <div>
@@ -32,6 +42,7 @@ const Footer = ({ prev, next }) => (
 );
 
 Footer.propTypes = {
+  id: React.PropTypes.string.isRequired,
   prev: ImmutablePropTypes.map,
   next: ImmutablePropTypes.map,
 };

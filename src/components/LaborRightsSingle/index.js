@@ -33,6 +33,7 @@ class LaborRightsSingle extends React.Component {
 
   render() {
     const {
+      id,
       title,
       description,
       content,
@@ -49,6 +50,10 @@ class LaborRightsSingle extends React.Component {
           title={`${seoTitle} | 工時薪資透明化運動`}
           meta={[
             { name: 'description', content: seoDescription },
+            { property: 'og:url', content: `https://www.goodjob.life/labor-rights/${id}` },
+            { property: 'og:type', content: 'website' },
+            { property: 'og:title', content: seoTitle },
+            { property: 'og:description', content: seoDescription },
             { property: 'og:image', content: coverUrl },
           ]}
         />
@@ -67,6 +72,7 @@ class LaborRightsSingle extends React.Component {
                 content={content}
               />
               <Footer
+                id={id}
                 prev={this.props.prev}
                 next={this.props.next}
               />
