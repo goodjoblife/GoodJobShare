@@ -15,7 +15,7 @@ Item.propTypes = {
 const SiteMenu = () => (
   <ul className={styles.menu}>
     <Item to="/#section-form" text="開始參與" />
-    <Item to="/show" text="查看薪時" />
+    <Item to="/time-and-salary" text="查看薪時" />
     <Item to="/#section-faq" text="常見問答" />
     <Item to="/about" text="關於我們" />
     <li className={styles.menuItem}>
