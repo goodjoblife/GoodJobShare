@@ -86,7 +86,7 @@ LaborRightsSingle.propTypes = {
   fetchMetaListIfNeeded: React.PropTypes.func.isRequired,
   fetchDataIfNeeded: React.PropTypes.func.isRequired,
   status: React.PropTypes.string.isRequired,
-  error: React.PropTypes.instanceOf(Error),
+  error: ImmutablePropTypes.map,
 };
 
 export default LaborRightsSingle;
