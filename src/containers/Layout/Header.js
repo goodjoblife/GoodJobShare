@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Header from '../../components/Layout/Header';
-import * as HeaderButtonActions from '../../actions/headerButton';
+import * as HeaderActions from '../../actions/header';
 
 const mapStateToProps = state => ({
-  isNavOpen: state.headerButton.get('isOpen'),
+  isNavOpen: state.header.get('isNavOpen'),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(HeaderButtonActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(HeaderActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
