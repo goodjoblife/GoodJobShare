@@ -62,11 +62,11 @@ class InterviewExperience extends Component {
                 left: 0,
                 transform: 'translateX(-16px)',
               }}
-              onClick={() => console.log(appendSection)}
             >
               <ButtonAdd
                 options={interviewSectionSubtitleOptions}
                 custimizedValues={[interviewSectionSubtitleOptions[0].value]}
+                appendSection={appendSection}
               />
             </div>
           </div>

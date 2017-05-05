@@ -19,4 +19,8 @@
   border-color: #E5BA00;
   color: #E5BA00;
   font-weight: bold;
+
+  &:hover {
+    background-color: #FFFFFF;
+  }
 }

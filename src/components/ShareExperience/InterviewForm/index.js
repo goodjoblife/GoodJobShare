@@ -9,7 +9,7 @@ const sortById = R.sortBy(R.prop('id'));
 
 const createSection = id => (subtitle = '請輸入標題，例：面試過程') => ({
   id,
-  subtitle: `${id}${subtitle}`,
+  subtitle,
   content: `
     風的同些教小示作水究大的主、有結人營水量生。愛生一爭層？媽孩音朋故下流子洲形、出世了上？
     麼他研黨然優仍，星的自人不這元生；不道考亞線點等水住負我留際裡二；早技著元相思，環可綠看

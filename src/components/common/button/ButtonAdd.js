@@ -23,6 +23,7 @@ class ButtonAdd extends React.PureComponent {
       options,
       custimizedValues,
       disabledValues,
+      appendSection,
     } = this.props;
 
     const {
@@ -60,6 +61,10 @@ class ButtonAdd extends React.PureComponent {
                   text={ele.label}
                   custimized={custimizedValues.includes(ele.value)}
                   disabled={disabledValues.includes(ele.value)}
+                  onClick={() => {
+                    appendSection(ele.value);
+                    this.handleStage();
+                  }}
                 />
               </span>
             )
@@ -93,6 +98,7 @@ ButtonAdd.propTypes = {
       PropTypes.number,
     ]),
   })),
+  appendSection: PropTypes.func,
 };
 ButtonAdd.defaultProps = {
   custimizedValues: [],
