@@ -2,10 +2,19 @@ import React, { PropTypes } from 'react';
 
 const SectionEle = ({ subtitle, content }) => (
   <div>
-    <h3>{subtitle}</h3>
-    <div>
+    <p
+      className="pLBold"
+      style={{
+        marginBottom: '14px',
+      }}
+    >
+      {subtitle}
+    </p>
+    <p
+      className="pM"
+    >
       {content}
-    </div>
+    </p>
   </div>
 );
 
