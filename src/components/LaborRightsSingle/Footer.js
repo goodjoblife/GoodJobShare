@@ -55,7 +55,7 @@ Pager.propTypes = {
 };
 Pager.defaultProps = {
   className: '',
-  title: 'hihihihihi',
+  title: '',
 };
 
 export default Footer;
