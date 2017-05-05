@@ -1,4 +1,4 @@
-@value main-yellow, NAV_HEIGHT from "common/variables.module.css";
+@value main-yellow, yellow-light, NAV_HEIGHT from "common/variables.module.css";
 
 .header {
   position: fixed;
@@ -42,7 +42,7 @@
 		opacity: 0;
 		visibility: hidden;
 		transition: opacity .3s;
-		background-color: #999;
+		background-color: yellow-light; /* TODO: transparency=.95(F2) */
 		position: fixed;
 		top: NAV_HEIGHT;
 		left: 0;
@@ -50,7 +50,7 @@
 		height: 100%;
 		z-index: 99;
 		flex-direction: column;
-		&.is-open {
+		&.isNavOpen {
 			opacity: 1;
 			visibility: visible;
 		}

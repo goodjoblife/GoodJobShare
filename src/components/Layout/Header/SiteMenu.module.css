@@ -1,4 +1,4 @@
-@value gray-dark, NAV_HEIGHT from "common/variables.module.css";
+@value gray-dark, yellow-bg, NAV_HEIGHT from "common/variables.module.css";
 
 .menu {
 	@media (min-width: 851px) {
@@ -30,6 +30,20 @@
       padding-right: 10px;
       padding-left: 10px;
       transition: color .3s, background-color .3s;
+    }
+  }
+
+  @media (max-width: 850px) {
+    margin-top: 20px;
+    width: 100%;
+    > a {
+      display: block;
+      font-size: 1.15em;
+      padding: 15px 20px;
+      text-align: center;
+      &.isCurrent {
+        background-color: yellow-bg; /* TODO: transparency=.7(B3) */
+      }
     }
   }
 }

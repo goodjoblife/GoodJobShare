@@ -15,7 +15,7 @@ const Header = ({ isNavOpen, toggleHeaderButton }) => (
       <a href="/" className={styles.logo} title="goodjob 工時薪資透明化運動">
         <i.GjLogo />
       </a>
-      <nav className={styles.nav}>
+      <nav className={cn(styles.nav, { [styles.isNavOpen]: isNavOpen })}>
         <SiteMenu />
       </nav>
     </div>
