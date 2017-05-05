@@ -22,7 +22,7 @@
     width: 100%;
   }
 
-  &.is-open {
+  &.isNavOpen {
     &:before {
       transform: rotate(45deg) translate(4px, 8px);
     }
