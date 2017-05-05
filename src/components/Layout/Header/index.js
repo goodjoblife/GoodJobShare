@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import cn from 'classnames';
 import i from 'common/icons';
 import styles from './Header.module.css';
@@ -39,10 +39,5 @@ class Header extends React.Component {
     );
   }
 }
-
-Header.propTypes = {
-  isNavOpen: PropTypes.bool.isRequired,
-  toggleHeaderButton: PropTypes.func.isRequired,
-};
 
 export default Header;
