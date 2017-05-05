@@ -107,3 +107,30 @@ export const salaryTypeOptions = [
     value: 'hour',
   },
 ];
+
+export const interviewSectionSubtitleOptions = [
+  {
+    label: '自訂段落',
+    value: '自訂段落',
+  },
+  {
+    label: '面試過程',
+    value: '面試過程',
+  },
+  {
+    label: '面試時間',
+    value: '面試時間',
+  },
+  {
+    label: '公司管理制度',
+    value: '公司管理制度',
+  },
+  {
+    label: '公司環境',
+    value: '公司環境',
+  },
+  {
+    label: '公司前景發展',
+    value: '公司前景發展',
+  },
+];

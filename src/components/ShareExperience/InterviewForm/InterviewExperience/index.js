@@ -1,12 +1,14 @@
 import React, { Component, PropTypes } from 'react';
-import styles from './InterviewExperience.module.css';
+import ButtonAdd from 'common/button/ButtonAdd';
 
-import {
-  interviewSectionSubtitleMapping,
-} from '../../common/mapping';
+import styles from './InterviewExperience.module.css';
 
 import Title from './Title';
 import Sections from './Sections';
+
+import {
+  interviewSectionSubtitleOptions,
+} from '../../common/optionMap';
 
 class InterviewExperience extends Component {
   render() {
@@ -54,16 +56,19 @@ class InterviewExperience extends Component {
               removeSection={removeSection}
               editSection={editSection}
             />
-            <button
+            <div
               style={{
                 position: 'absolute',
                 left: 0,
-                transform: 'translateX(-50%)',
+                transform: 'translateX(-16px)',
               }}
-              onClick={() => appendSection(interviewSectionSubtitleMapping[0])}
+              onClick={() => console.log(appendSection)}
             >
-              +
-            </button>
+              <ButtonAdd
+                options={interviewSectionSubtitleOptions}
+                custimizedValues={[interviewSectionSubtitleOptions[0].value]}
+              />
+            </div>
           </div>
         </div>
       </div>
