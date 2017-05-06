@@ -16,12 +16,8 @@ const Sections = ({ sections, removeSection, editSection }) => (
             subtitle={section.subtitle}
             content={section.content}
             editSection={editSection(section.id)}
+            removeSection={() => removeSection(section.id)}
           />
-          <button
-            onClick={() => removeSection(section.id)}
-          >
-            -
-          </button>
         </div>
       )
     }

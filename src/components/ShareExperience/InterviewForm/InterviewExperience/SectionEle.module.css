@@ -2,10 +2,23 @@
 
 
 .container {
+  position: relative;
   border: 1px solid transparent;
   &:hover {
     border-color: main-yellow;
+
+    > .remove__btn {
+      visibility: visible;
+    }
   }
+}
+
+.remove__btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  visibility: hidden;
 }
 
 .textarea {
