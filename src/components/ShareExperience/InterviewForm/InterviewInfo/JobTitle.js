@@ -10,11 +10,11 @@ import {
 const JobTitle = ({ jobTitle, onChange }) => (
   <div>
     <InputTitle
-      text="公司/單位 或 統一編號"
+      text="應徵職稱"
       must
     />
     <TextInput
-      placeholder="ＯＯ 股份有限公司"
+      placeholder="硬體工程師"
       value={jobTitle}
       onChange={e => onChange(e.target.value)}
       isWarning={!checkWordingLength(10)(jobTitle)}

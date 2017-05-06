@@ -4,7 +4,6 @@ import RateButtonElement from './RateButtonElement';
 
 const RateButton = ({ max, rating, onChange }) => (
   <div>
-    {rating}
     {
       Array(max)
         .fill(null)
