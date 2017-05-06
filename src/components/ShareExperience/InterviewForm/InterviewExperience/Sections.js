@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 import SectionEle from './SectionEle';
 
-const Sections = ({ sections, removeSection }) => (
+const Sections = ({ sections, removeSection, editSection }) => (
   <div>
     {
       sections.map(section =>
@@ -15,6 +15,7 @@ const Sections = ({ sections, removeSection }) => (
           <SectionEle
             subtitle={section.subtitle}
             content={section.content}
+            editSection={editSection(section.id)}
           />
           <button
             onClick={() => removeSection(section.id)}
@@ -34,7 +35,7 @@ Sections.propTypes = {
     content: PropTypes.string,
   })),
   removeSection: PropTypes.func,
-  // editSection: PropTypes.func,
+  editSection: PropTypes.func,
 };
 
 export default Sections;
