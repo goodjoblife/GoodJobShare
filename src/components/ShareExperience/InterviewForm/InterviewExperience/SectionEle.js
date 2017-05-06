@@ -5,7 +5,15 @@ import AddButton from 'common/button/AddButton';
 
 import styles from './SectionEle.module.css';
 
-const SectionEle = ({ subtitle, content, editSection, removeSection }) => (
+export const SECTION_DEFAULT_TITLE = '請輸入標題，例：面試過程';
+
+const SectionEle = ({
+  subtitle,
+  content,
+  isSubtitleEditable,
+  editSection,
+  removeSection,
+}) => (
   <div
     className={styles.container}
   >
@@ -17,14 +25,25 @@ const SectionEle = ({ subtitle, content, editSection, removeSection }) => (
         onClick={removeSection}
       />
     </div>
-    <p
-      className="pLBold"
+    <div
       style={{
         marginBottom: '14px',
       }}
     >
-      {subtitle}
-    </p>
+      {
+        isSubtitleEditable ?
+          <input
+            value={subtitle}
+            onChange={e => editSection('subtitle')(e.target.value)}
+            placeholder={SECTION_DEFAULT_TITLE}
+            className={`pLBold ${styles.subtitle}`}
+          />
+          :
+          <p className="pLBold">
+            {subtitle}
+          </p>
+      }
+    </div>
     <Textarea
       useCacheForDOMMeasurements
       value={content}
@@ -47,6 +66,7 @@ const SectionEle = ({ subtitle, content, editSection, removeSection }) => (
 SectionEle.propTypes = {
   subtitle: PropTypes.string,
   content: PropTypes.string,
+  isSubtitleEditable: PropTypes.bool,
   editSection: PropTypes.func,
   removeSection: PropTypes.func,
 };

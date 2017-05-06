@@ -21,10 +21,20 @@
   visibility: hidden;
 }
 
+.subtitle {
+  width: 100%;
+  border: none;
+
+  &::placeholder {
+    color: #BDBDBD;
+  }
+}
+
 .textarea {
 
   &::placeholder {
     color: #C0C0C0;
     font-size: 1rem;
+    font-weight: normal;
   }
 }

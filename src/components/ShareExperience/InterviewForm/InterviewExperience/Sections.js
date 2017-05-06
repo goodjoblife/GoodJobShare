@@ -15,6 +15,7 @@ const Sections = ({ sections, removeSection, editSection }) => (
           <SectionEle
             subtitle={section.subtitle}
             content={section.content}
+            isSubtitleEditable={section.isSubtitleEditable}
             editSection={editSection(section.id)}
             removeSection={() => removeSection(section.id)}
           />
@@ -29,6 +30,7 @@ Sections.propTypes = {
     id: PropTypes.number,
     subtitle: PropTypes.string,
     content: PropTypes.string,
+    isSubtitleEditable: PropTypes.bool,
   })),
   removeSection: PropTypes.func,
   editSection: PropTypes.func,

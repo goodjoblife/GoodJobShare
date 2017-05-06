@@ -7,18 +7,18 @@ import InterviewExperience from './InterviewExperience';
 
 const sortById = R.sortBy(R.prop('id'));
 
-export const SECTION_DEFAULT_TITLE = '請輸入標題，例：面試過程';
-
 const createSection = id => subtitle => {
   const section = {
     id,
     subtitle,
     content: '',
+    isSubtitleEditable: false,
   };
   if (subtitle === '自訂段落' || !subtitle) {
     return {
       ...section,
-      subtitle: SECTION_DEFAULT_TITLE,
+      subtitle: '',
+      isSubtitleEditable: true,
     };
   }
   return section;
