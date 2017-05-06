@@ -5116,7 +5116,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.6:
+prop-types@^15.5.8:
   version "15.5.8"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.8.tgz#6b7b2e141083be38c8595aa51fc55775c7199394"
   dependencies:
@@ -5295,6 +5295,12 @@ react-side-effect@^1.1.0:
   dependencies:
     exenv "^1.2.1"
     shallowequal "^0.2.2"
+
+react-textarea-autosize@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-4.3.0.tgz#72be7d410c48c5ed9c2e912c000bce04a90889c1"
+  dependencies:
+    prop-types "^15.5.8"
 
 react@^15.4.1:
   version "15.4.2"
