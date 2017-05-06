@@ -24,7 +24,18 @@ const createSection = id => subtitle => {
   return section;
 };
 
-const sectionIdGenerator = () => {
+const createInterviewQa = id => (question = '') => ({
+  id,
+  question,
+  answer: '',
+});
+
+const createBlock = {
+  sections: createSection,
+  interviewQas: createInterviewQa,
+};
+
+const idGenerator = () => {
   let id = -1;
   return () => {
     id += 1;
@@ -32,7 +43,7 @@ const sectionIdGenerator = () => {
   };
 };
 
-const sectionIdCounter = sectionIdGenerator();
+const idCounter = idGenerator();
 
 const handleSection = R.compose(
   sortById,
@@ -45,11 +56,12 @@ class InterviewForm extends React.Component {
     super(props);
 
     this.handleState = this.handleState.bind(this);
-    this.appendSection = this.appendSection.bind(this);
-    this.removeSection = this.removeSection.bind(this);
-    this.editSection = this.editSection.bind(this);
+    this.appendBlock = this.appendBlock.bind(this);
+    this.removeBlock = this.removeBlock.bind(this);
+    this.editBlock = this.editBlock.bind(this);
 
-    const firstSectionId = sectionIdCounter();
+    const firstSectionId = idCounter();
+    const firstQaId = idCounter();
 
     this.state = {
       companyQuery: '',
@@ -65,7 +77,10 @@ class InterviewForm extends React.Component {
       overallRating: 3,
       title: '',
       sections: {
-        [firstSectionId]: createSection(firstSectionId)(),
+        [firstSectionId]: createBlock.sections(firstSectionId)(),
+      },
+      interviewQas: {
+        [firstQaId]: createBlock.interviewQas(firstQaId)(),
       },
     };
   }
@@ -77,29 +92,31 @@ class InterviewForm extends React.Component {
       });
   }
 
-  appendSection(subtitle) {
-    const sectionId = sectionIdCounter();
-    return this.setState(state => ({
-      sections: {
-        ...state.sections,
-        [sectionId]: createSection(sectionId)(subtitle),
-      },
+  appendBlock(blockKey) {
+    return subtitle => {
+      const id = idCounter();
+      return this.setState(state => ({
+        [blockKey]: {
+          ...state[blockKey],
+          [id]: createBlock.sections(id)(subtitle),
+        },
+      }));
+    };
+  }
+
+  removeBlock(blockKey) {
+    return id => this.setState(state => ({
+      [blockKey]: R.filter(block => block.id !== id)(state[blockKey]),
     }));
   }
 
-  removeSection(id) {
-    return this.setState(state => ({
-      sections: R.filter(section => section.id !== id)(state.sections),
-    }));
-  }
-
-  editSection(id) {
-    return key => value =>
+  editBlock(blockKey) {
+    return id => key => value =>
       this.setState(state => ({
-        sections: {
-          ...state.sections,
+        [blockKey]: {
+          ...state[blockKey],
           [id]: {
-            ...state.sections[id],
+            ...state[blockKey][id],
             [key]: value,
           },
         },
@@ -132,9 +149,9 @@ class InterviewForm extends React.Component {
           handleState={this.handleState}
           title={this.state.title}
           sections={handleSection(this.state.sections)}
-          appendSection={this.appendSection}
-          removeSection={this.removeSection}
-          editSection={this.editSection}
+          appendSection={this.appendBlock('sections')}
+          removeSection={this.removeBlock('sections')}
+          editSection={this.editBlock('sections')}
         />
       </div>
     );
