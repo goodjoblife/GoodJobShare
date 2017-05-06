@@ -1,6 +1,17 @@
+@value main-yellow from "../../../common/variables.module.css";
+
+
+.container {
+  border: 1px solid transparent;
+  &:hover {
+    border-color: main-yellow;
+  }
+}
+
 .textarea {
 
   &::placeholder {
     color: #C0C0C0;
+    font-size: 1rem;
   }
 }

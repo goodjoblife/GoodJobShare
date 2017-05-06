@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 
+import Cross from '../../images/x.svg';
 import styles from './AddButton.module.css';
 
 const AddButton = ({ isActive, onClick }) => (
@@ -7,7 +8,9 @@ const AddButton = ({ isActive, onClick }) => (
     className={isActive ? styles.active : styles.button}
     onClick={onClick}
   >
-    +
+    <Cross
+      className={isActive ? styles.cross__active : styles.cross}
+    />
   </button>
 );
 

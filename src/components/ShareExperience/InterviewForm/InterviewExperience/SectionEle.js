@@ -4,7 +4,9 @@ import Textarea from 'react-textarea-autosize';
 import styles from './SectionEle.module.css';
 
 const SectionEle = ({ subtitle, content, editSection }) => (
-  <div>
+  <div
+    className={styles.container}
+  >
     <p
       className="pLBold"
       style={{
