@@ -22,9 +22,9 @@ class InterviewExperience extends Component {
       removeSection,
       editSection,
       interviewQas,
-      // appendQa,
-      // removeQa,
-      // editQa,
+      appendQa,
+      removeQa,
+      editQa,
     } = this.props;
     return (
       <div
@@ -87,11 +87,13 @@ class InterviewExperience extends Component {
           />
           <div
             style={{
-              display: 'none',
+              position: 'relative',
             }}
           >
             <InterviewQas
               interviewQas={interviewQas}
+              editQa={editQa}
+              removeQa={removeQa}
             />
             <div
               style={{
@@ -100,7 +102,9 @@ class InterviewExperience extends Component {
                 transform: 'translateX(-65px)',
               }}
             >
-              <AddButton />
+              <AddButton
+                onClick={() => appendQa()}
+              />
             </div>
           </div>
         </div>
@@ -125,9 +129,9 @@ InterviewExperience.propTypes = {
     subtitle: PropTypes.string,
     content: PropTypes.string,
   })),
-  // appendQa: PropTypes.func,
-  // removeQa: PropTypes.func,
-  // editQa: PropTypes.func,
+  appendQa: PropTypes.func,
+  removeQa: PropTypes.func,
+  editQa: PropTypes.func,
 };
 
 export default InterviewExperience;

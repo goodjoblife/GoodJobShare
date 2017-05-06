@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 
-import interviewQa from './InterviewQa';
+import InterviewQa from './InterviewQa';
 
-const InterviewQas = ({ interviewQas }) => (
+const InterviewQas = ({ interviewQas, editQa, removeQa }) => (
   <div>
     {
       interviewQas.map(qa =>
@@ -12,9 +12,11 @@ const InterviewQas = ({ interviewQas }) => (
             marginBottom: '40px',
           }}
         >
-          <interviewQa
+          <InterviewQa
             question={qa.question}
             answer={qa.answer}
+            editQa={editQa(qa.id)}
+            removeQa={() => removeQa(qa.id)}
           />
         </div>
       )
@@ -28,6 +30,8 @@ InterviewQas.propTypes = {
     question: PropTypes.string,
     answer: PropTypes.string,
   })),
+  editQa: PropTypes.func,
+  removeQa: PropTypes.func,
 };
 
 export default InterviewQas;

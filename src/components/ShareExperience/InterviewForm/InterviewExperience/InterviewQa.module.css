@@ -1,5 +1,4 @@
-@value main-yellow from "../../../common/variables.module.css";
-
+@value main-yellow, main-orange from "../../../common/variables.module.css";
 
 .container {
   position: relative;
@@ -19,6 +18,21 @@
   right: 0;
   transform: translate(50%, -50%);
   visibility: hidden;
+}
+
+.property__title {
+  color: main-orange;
+  font-size: 1.25rem;
+  width: 30px;
+}
+
+.input {
+  color: #969696;
+  border: none;
+
+  &::placeholder {
+    color: #C0C0C0;
+  }
 }
 
 .textarea {
