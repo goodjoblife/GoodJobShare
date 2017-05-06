@@ -23,6 +23,11 @@ const sectionIdGenerator = () => {
 
 const sectionIdCounter = sectionIdGenerator();
 
+const handleSection = R.compose(
+  sortById,
+  R.map(ele => ele[1]),
+  R.toPairs
+);
 
 class InterviewForm extends React.Component {
   constructor(props) {
@@ -32,6 +37,8 @@ class InterviewForm extends React.Component {
     this.appendSection = this.appendSection.bind(this);
     this.removeSection = this.removeSection.bind(this);
     this.editSection = this.editSection.bind(this);
+
+    const firstSectionId = sectionIdCounter();
 
     this.state = {
       companyQuery: '',
@@ -46,9 +53,9 @@ class InterviewForm extends React.Component {
       salaryAmount: '',
       overallRating: 3,
       title: '',
-      sections: [
-        createSection(sectionIdCounter())(),
-      ],
+      sections: {
+        [firstSectionId]: createSection(firstSectionId)(),
+      },
     };
   }
 
@@ -60,36 +67,31 @@ class InterviewForm extends React.Component {
   }
 
   appendSection(subtitle) {
+    const sectionId = sectionIdCounter();
     return this.setState(state => ({
-      sections: [
+      sections: {
         ...state.sections,
-        createSection(sectionIdCounter())(subtitle),
-      ],
+        [sectionId]: createSection(sectionId)(subtitle),
+      },
     }));
   }
 
   removeSection(id) {
     return this.setState(state => ({
-      sections: state.sections.filter(
-        section => section.id !== id
-      ),
+      sections: R.filter(section => section.id !== id)(state.sections),
     }));
   }
 
   editSection(id) {
     return key => value =>
       this.setState(state => ({
-        sections: [
-          ...state.sections.filter(
-            section => section.id !== id
-          ),
-          {
-            ...state.sections.find(
-              section => section.id === id
-            ),
+        sections: {
+          ...state.sections,
+          [id]: {
+            ...state.sections[id],
             [key]: value,
           },
-        ],
+        },
       }));
   }
 
@@ -118,7 +120,7 @@ class InterviewForm extends React.Component {
         <InterviewExperience
           handleState={this.handleState}
           title={this.state.title}
-          sections={sortById(this.state.sections)}
+          sections={handleSection(this.state.sections)}
           appendSection={this.appendSection}
           removeSection={this.removeSection}
           editSection={this.editSection}
