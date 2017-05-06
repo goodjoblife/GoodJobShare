@@ -7,11 +7,22 @@ import InterviewExperience from './InterviewExperience';
 
 const sortById = R.sortBy(R.prop('id'));
 
-const createSection = id => (subtitle = '請輸入標題，例：面試過程') => ({
-  id,
-  subtitle,
-  content: '',
-});
+export const SECTION_DEFAULT_TITLE = '請輸入標題，例：面試過程';
+
+const createSection = id => subtitle => {
+  const section = {
+    id,
+    subtitle,
+    content: '',
+  };
+  if (subtitle === '自訂段落' || !subtitle) {
+    return {
+      ...section,
+      subtitle: SECTION_DEFAULT_TITLE,
+    };
+  }
+  return section;
+};
 
 const sectionIdGenerator = () => {
   let id = -1;
