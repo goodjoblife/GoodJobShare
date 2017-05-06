@@ -1,9 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import ButtonGroup from 'common/button/ButtonGroup';
+
 import InputTitle from '../../common/InputTitle';
 
-const InterviewSensitiveQuestions = ({ interviewSensitiveQuestions }) => (
+import {
+  interviewSensitiveQuestionsMap,
+} from '../../common/optionMap';
+
+const InterviewSensitiveQuestions = ({ interviewSensitiveQuestions, onChange }) => (
   <div>
     <div
       style={{
@@ -24,13 +30,11 @@ const InterviewSensitiveQuestions = ({ interviewSensitiveQuestions }) => (
       </p>
     </div>
     {
-      interviewSensitiveQuestions.map(ele =>
-        <div
-          key={ele}
-        >
-          {ele}
-        </div>
-      )
+      <ButtonGroup
+        value={interviewSensitiveQuestions}
+        options={interviewSensitiveQuestionsMap}
+        onChange={onChange}
+      />
     }
   </div>
 );
@@ -39,6 +43,7 @@ InterviewSensitiveQuestions.propTypes = {
   interviewSensitiveQuestions: PropTypes.arrayOf(
     PropTypes.string,
   ),
+  onChange: PropTypes.func,
 };
 
 export default InterviewSensitiveQuestions;

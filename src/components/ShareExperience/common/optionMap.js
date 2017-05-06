@@ -134,3 +134,22 @@ export const interviewSectionSubtitleOptions = [
     value: '公司前景發展',
   },
 ];
+
+export const interviewSensitiveQuestionsMap = [
+  {
+    label: '詢問家庭狀況',
+    value: '詢問家庭狀況',
+  },
+  {
+    label: '曾詢問婚姻狀況、生育計畫',
+    value: '曾詢問婚姻狀況、生育計畫',
+  },
+  {
+    label: '曾要求繳交身分證、保證金',
+    value: '曾要求繳交身分證、保證金',
+  },
+  {
+    label: '其他',
+    value: '其他',
+  },
+];

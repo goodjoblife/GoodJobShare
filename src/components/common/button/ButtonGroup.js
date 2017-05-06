@@ -1,24 +1,60 @@
 import React, { PropTypes } from 'react';
 
 import ButtonGroupElement from './ButtonGroupElement';
+import ButtonGroupMultiElement from './ButtonGroupMultiElement';
 
-// import styles from './ButtonGroup.module.css';
+const handleMultiSelect = values => value => {
+  if (values.includes(value)) {
+    return values.filter(v => v !== value);
+  }
+
+  return [
+    ...values,
+    value,
+  ];
+};
 
 class ButtonGroup extends React.PureComponent {
   render() {
+    const {
+      options,
+      value,
+      onChange,
+    } = this.props;
     return (
       <div>
         {
-          this.props.options.map((ele, index, options) => (
-            <ButtonGroupElement
-              key={ele.value}
-              value={ele.value}
-              checked={ele.value === this.props.value}
-              label={ele.label}
-              onChange={() => this.props.onChange(ele.value)}
-              last={options.length === index + 1}
-            />
-          ))
+          Array.isArray(value) ?
+            <div>
+              {
+                options.map((ele, index) => (
+                  <ButtonGroupMultiElement
+                    key={ele.value}
+                    value={ele.value}
+                    checked={value.includes(ele.value)}
+                    label={ele.label}
+                    onChange={() => onChange(
+                      handleMultiSelect(value)(ele.value)
+                    )}
+                    last={options.length === index + 1}
+                  />
+                ))
+              }
+            </div> :
+            <div>
+              {
+                options.map((ele, index) => (
+                  <ButtonGroupElement
+                    key={ele.value}
+                    value={ele.value}
+                    checked={ele.value === value}
+                    label={ele.label}
+                    onChange={() => onChange(ele.value)}
+                    last={options.length === index + 1}
+                  />
+                ))
+              }
+            </div>
         }
       </div>
     );
@@ -30,6 +66,11 @@ ButtonGroup.propTypes = {
     [
       PropTypes.string,
       PropTypes.number,
+      PropTypes.arrayOf(PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]
+      )),
     ]
   ),
   onChange: PropTypes.func,

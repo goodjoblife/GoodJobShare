@@ -122,6 +122,7 @@ class InterviewExperience extends Component {
           <div>
             <InterviewSensitiveQuestions
               interviewSensitiveQuestions={interviewSensitiveQuestions}
+              onChange={handleState('interviewSensitiveQuestions')}
             />
           </div>
         </div>

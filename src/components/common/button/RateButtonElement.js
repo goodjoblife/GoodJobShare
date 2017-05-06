@@ -26,7 +26,7 @@ const RateButtonElement = ({ hover, active, onClick }) => (
 );
 
 RateButtonElement.propTypes = {
-  hover: PropTypes.number,
+  hover: PropTypes.bool,
   active: PropTypes.bool,
   onClick: PropTypes.func,
 };
