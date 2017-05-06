@@ -51,6 +51,9 @@ const handleBlocks = R.compose(
   R.toPairs
 );
 
+const isBlockRemovable = blocks =>
+  R.length(R.keys(blocks)) > 1;
+
 class InterviewForm extends React.Component {
   constructor(props) {
     super(props);
@@ -105,9 +108,15 @@ class InterviewForm extends React.Component {
   }
 
   removeBlock(blockKey) {
-    return id => this.setState(state => ({
-      [blockKey]: R.filter(block => block.id !== id)(state[blockKey]),
-    }));
+    return id => this.setState(state => {
+      if (isBlockRemovable(state[blockKey])) {
+        return ({
+          [blockKey]: R.filter(block => block.id !== id)(state[blockKey]),
+        });
+      }
+
+      return null;
+    });
   }
 
   editBlock(blockKey) {
