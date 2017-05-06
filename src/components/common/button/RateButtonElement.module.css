@@ -1,0 +1,14 @@
+@value main-yellow from '../variables.module.css';
+
+.container {
+  color: #c5c5c5;
+}
+
+.hover {
+  color: #969696;
+}
+
+.active {
+  composes: container;
+  color: main-yellow;
+}
