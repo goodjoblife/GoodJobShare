@@ -12,6 +12,12 @@
   &:hover {
     background-color: #F6F6F6;
   }
+
+  &:disabled {
+    background: white;
+    color: #DCDCDC;
+    cursor: not-allowed;
+  }
 }
 
 .custimized {

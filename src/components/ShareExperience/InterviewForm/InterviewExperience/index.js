@@ -78,6 +78,7 @@ class InterviewExperience extends Component {
               <ButtonAdd
                 options={interviewSectionSubtitleOptions}
                 custimizedValues={[interviewSectionSubtitleOptions[0].value]}
+                disabledValues={sections.map(section => section.subtitle)}
                 appendBlock={appendSection}
               />
             </div>
