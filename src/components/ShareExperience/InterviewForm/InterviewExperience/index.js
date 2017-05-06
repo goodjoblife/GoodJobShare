@@ -83,6 +83,7 @@ class InterviewExperience extends Component {
           <hr
             style={{
               border: '1px solid #E7E7E7',
+              marginBottom: '35px',
             }}
           />
           <div
