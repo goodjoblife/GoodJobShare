@@ -45,7 +45,7 @@ const idGenerator = () => {
 
 const idCounter = idGenerator();
 
-const handleSection = R.compose(
+const handleBlocks = R.compose(
   sortById,
   R.map(ele => ele[1]),
   R.toPairs
@@ -148,10 +148,14 @@ class InterviewForm extends React.Component {
         <InterviewExperience
           handleState={this.handleState}
           title={this.state.title}
-          sections={handleSection(this.state.sections)}
+          sections={handleBlocks(this.state.sections)}
           appendSection={this.appendBlock('sections')}
           removeSection={this.removeBlock('sections')}
           editSection={this.editBlock('sections')}
+          interviewQas={handleBlocks(this.state.interviewQas)}
+          appendQa={this.appendBlock('interviewQas')}
+          removeQa={this.removeBlock('interviewQas')}
+          editQa={this.editBlock('interviewQas')}
         />
       </div>
     );

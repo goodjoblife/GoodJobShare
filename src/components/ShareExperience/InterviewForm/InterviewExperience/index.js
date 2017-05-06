@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import ButtonAdd from 'common/button/ButtonAdd';
+import AddButton from 'common/button/AddButton';
 
 import styles from './InterviewExperience.module.css';
 
 import Title from './Title';
 import Sections from './Sections';
+import InterviewQas from './InterviewQas';
 
 import {
   interviewSectionSubtitleOptions,
@@ -19,6 +21,10 @@ class InterviewExperience extends Component {
       appendSection,
       removeSection,
       editSection,
+      interviewQas,
+      // appendQa,
+      // removeQa,
+      // editQa,
     } = this.props;
     return (
       <div
@@ -36,9 +42,6 @@ class InterviewExperience extends Component {
         </h1>
         <div
           className={styles.form}
-          style={{
-            position: 'relative',
-          }}
         >
           <div
             style={{
@@ -50,7 +53,12 @@ class InterviewExperience extends Component {
               onChange={handleState('title')}
             />
           </div>
-          <div>
+          <div
+            style={{
+              position: 'relative',
+              marginBottom: '80px',
+            }}
+          >
             <Sections
               sections={sections}
               removeSection={removeSection}
@@ -60,14 +68,39 @@ class InterviewExperience extends Component {
               style={{
                 position: 'absolute',
                 left: 0,
-                transform: 'translateX(-16px)',
+                bottom: 0,
+                minWidth: '150%',
+                transform: 'translate(-65px, 100%)',
               }}
             >
               <ButtonAdd
                 options={interviewSectionSubtitleOptions}
                 custimizedValues={[interviewSectionSubtitleOptions[0].value]}
-                appendSection={appendSection}
+                appendBlock={appendSection}
               />
+            </div>
+          </div>
+          <hr
+            style={{
+              border: '1px solid #E7E7E7',
+            }}
+          />
+          <div
+            style={{
+              display: 'none',
+            }}
+          >
+            <InterviewQas
+              interviewQas={interviewQas}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                left: 0,
+                transform: 'translateX(-65px)',
+              }}
+            >
+              <AddButton />
             </div>
           </div>
         </div>
@@ -87,6 +120,14 @@ InterviewExperience.propTypes = {
   appendSection: PropTypes.func,
   removeSection: PropTypes.func,
   editSection: PropTypes.func,
+  interviewQas: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    subtitle: PropTypes.string,
+    content: PropTypes.string,
+  })),
+  // appendQa: PropTypes.func,
+  // removeQa: PropTypes.func,
+  // editQa: PropTypes.func,
 };
 
 export default InterviewExperience;
