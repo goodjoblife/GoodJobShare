@@ -85,6 +85,7 @@ class InterviewForm extends React.Component {
       interviewQas: {
         [firstQaId]: createBlock.interviewQas(firstQaId)(),
       },
+      interviewSensitiveQuestions: ['詢問家庭狀況'],
     };
   }
 
@@ -165,6 +166,7 @@ class InterviewForm extends React.Component {
           appendQa={this.appendBlock('interviewQas')}
           removeQa={this.removeBlock('interviewQas')}
           editQa={this.editBlock('interviewQas')}
+          interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
         />
       </div>
     );

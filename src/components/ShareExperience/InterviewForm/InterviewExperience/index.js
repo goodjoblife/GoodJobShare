@@ -7,6 +7,7 @@ import styles from './InterviewExperience.module.css';
 import Title from './Title';
 import Sections from './Sections';
 import InterviewQas from './InterviewQas';
+import InterviewSensitiveQuestions from './InterviewSensitiveQuestions';
 
 import {
   interviewSectionSubtitleOptions,
@@ -25,6 +26,7 @@ class InterviewExperience extends Component {
       appendQa,
       removeQa,
       editQa,
+      interviewSensitiveQuestions,
     } = this.props;
     return (
       <div
@@ -89,6 +91,7 @@ class InterviewExperience extends Component {
           <div
             style={{
               position: 'relative',
+              marginBottom: '80px',
             }}
           >
             <InterviewQas
@@ -100,13 +103,25 @@ class InterviewExperience extends Component {
               style={{
                 position: 'absolute',
                 left: 0,
-                transform: 'translateX(-65px)',
+                bottom: 0,
+                transform: 'translate(-65px, 100%)',
               }}
             >
               <AddButton
                 onClick={() => appendQa()}
               />
             </div>
+          </div>
+          <hr
+            style={{
+              border: '1px solid #E7E7E7',
+              marginBottom: '35px',
+            }}
+          />
+          <div>
+            <InterviewSensitiveQuestions
+              interviewSensitiveQuestions={interviewSensitiveQuestions}
+            />
           </div>
         </div>
       </div>
@@ -133,6 +148,9 @@ InterviewExperience.propTypes = {
   appendQa: PropTypes.func,
   removeQa: PropTypes.func,
   editQa: PropTypes.func,
+  interviewSensitiveQuestions: PropTypes.arrayOf(
+    PropTypes.string,
+  ),
 };
 
 export default InterviewExperience;
