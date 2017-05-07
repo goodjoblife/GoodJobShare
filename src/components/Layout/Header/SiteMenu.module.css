@@ -1,13 +1,18 @@
-@value gray-dark, NAV_HEIGHT from "common/variables.module.css";
+@value gray-dark, yellow-bg, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
 .menu {
 	@media (min-width: 851px) {
     height: 100%;
   }
+	@media (max-width: 850px) {
+		margin-top: 20px;
+    width: 100%;
+  }
 }
 
 
 .menuItem {
+	position: relative;
   @media (min-width: 851px) {
     display: inline-block;
     vertical-align: middle;
@@ -30,20 +35,37 @@
       padding-right: 10px;
       padding-left: 10px;
       transition: color .3s, background-color .3s;
+			&.isCurrent {
+        background-color: rgba(249, 236, 205, 0.4);
+      }
     }
   }
-}
 
-
-@media (max-width: BELOW_SMALL) {
-  margin-top: 20px;
-  width: 100%;
-  .menuItem {
+  @media (max-width: 850px) {
     > a {
       display: block;
       font-size: 1.15em;
       padding: 15px 20px;
       text-align: center;
+      &.isCurrent {
+        background-color: rgba(249, 236, 205, 0.7)
+      }
     }
   }
+}
+
+.newItem {
+	> a {
+		padding-right: 18px;
+	}
+}
+
+.new {
+	position: absolute;
+	top: 0;
+	right: -5px;
+	z-index: 2;
+	@media (max-width: 850px) {
+		right: 0;
+	}
 }

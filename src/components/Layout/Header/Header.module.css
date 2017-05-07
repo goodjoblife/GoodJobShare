@@ -1,4 +1,4 @@
-@value main-yellow, NAV_HEIGHT from "common/variables.module.css";
+@value main-yellow, yellow-light, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
 .header {
   position: fixed;
@@ -8,6 +8,12 @@
   right: 0;
   background-color: main-yellow;
   height: NAV_HEIGHT;
+  box-shadow: 0 0 8px rgba(0,0,0,.15);
+  @media (max-width: 850px) {
+    height: NAV_MOBILE_HEIGHT;
+    padding-top: 2px;
+    padding-bottom: 0;
+  }
 }
 
 .inner {
@@ -27,6 +33,7 @@
     transform-origin: 0% 50%;
 		fill: #000;
 		@media (max-width: 850px) {
+      transform: scale(1) translateY(0);
 			width: 120px;
 			fill: #000;
 		}
@@ -42,7 +49,7 @@
 		opacity: 0;
 		visibility: hidden;
 		transition: opacity .3s;
-		background-color: #999;
+		background-color: rgba(255,251,232,.95);
 		position: fixed;
 		top: NAV_HEIGHT;
 		left: 0;
@@ -50,10 +57,13 @@
 		height: 100%;
 		z-index: 99;
 		flex-direction: column;
-		&.is-open {
+		&.isNavOpen {
 			opacity: 1;
 			visibility: visible;
 		}
+    @media (max-width: 850px) {
+      top: NAV_MOBILE_HEIGHT;
+    }
 	}
 }
 
@@ -78,5 +88,42 @@
   .loginBtn {
     padding-left: 20px;
     border: 0;
+  }
+}
+
+.mHeaderButton {
+  @media (min-width: 851px) {
+    display: none;
+  }
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  display: block;
+  width: 72px;
+  transform: translate(0, 0);
+  padding: 9px 19px 0 19px;
+  &:before, &:after, span {
+    background: #000;
+    border-radius: 3px;
+    content: "";
+    display: block;
+    height: 2px;
+    margin: 6px 0;
+    transition: all .2s ease-out;
+    transform-origin: 50% 50%;
+    width: 100%;
+  }
+
+  &.isNavOpen {
+    &:before {
+      transform: rotate(45deg) translate(4px, 8px);
+    }
+    &:after {
+      transform: rotate(-45deg) translate(4px, -8px);
+    }
+    span {
+      opacity: 0;
+    }
   }
 }

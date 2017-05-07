@@ -1,7 +1,7 @@
 @import "../common/reset.module.css";
 @import "../common/global.module.css";
 
-@value primary-font, white-light, NAV_HEIGHT from "../common/variables.module.css";
+@value primary-font, white-light, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "../common/variables.module.css";
 
 .App {
 
@@ -10,6 +10,9 @@
 .content {
 	padding-top: NAV_HEIGHT;
 	min-height: 100vh;
+	@media (max-width: 850px) {
+		padding-top: NAV_MOBILE_HEIGHT;
+	}
 }
 
 

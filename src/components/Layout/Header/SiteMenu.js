@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
+import cn from 'classnames';
 import { Link } from 'react-router';
+import i from 'common/icons';
 import styles from './SiteMenu.module.css';
 
 const Item = ({ to, text }) => (
@@ -18,8 +20,9 @@ const SiteMenu = () => (
     <Item to="/time-and-salary" text="查看薪時" />
     <Item to="/#section-faq" text="常見問答" />
     <Item to="/about" text="關於我們" />
-    <li className={styles.menuItem}>
-      <Link to="/labor-rights">勞動小教室</Link>
+    <li className={cn(styles.menuItem, styles.newItem)}>
+      <i.New className={styles.new} />
+      <Link to="/labor-rights" activeClassName={styles.isCurrent}>勞動小教室</Link>
     </li>
   </ul>
 );
