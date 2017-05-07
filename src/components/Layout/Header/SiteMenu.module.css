@@ -12,6 +12,7 @@
 
 
 .menuItem {
+	position: relative;
   @media (min-width: 851px) {
     display: inline-block;
     vertical-align: middle;
@@ -51,4 +52,20 @@
       }
     }
   }
+}
+
+.newItem {
+	> a {
+		padding-right: 18px;
+	}
+}
+
+.new {
+	position: absolute;
+	top: 0;
+	right: -5px;
+	z-index: 2;
+	@media (max-width: 850px) {
+		right: 0;
+	}
 }
