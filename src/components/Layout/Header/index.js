@@ -11,11 +11,18 @@ class Header extends React.Component {
       isNavOpen: false,
     };
     this.toggleNav = this.toggleNav.bind(this);
+    this.closeNav = this.closeNav.bind(this);
   }
 
   toggleNav() {
     this.setState({
       isNavOpen: !this.state.isNavOpen,
+    });
+  }
+
+  closeNav() {
+    this.setState({
+      isNavOpen: false,
     });
   }
 
@@ -32,7 +39,10 @@ class Header extends React.Component {
               <i.GjLogo />
             </a>
           </div>
-          <nav className={cn(styles.nav, { [styles.isNavOpen]: this.state.isNavOpen })}>
+          <nav
+            className={cn(styles.nav, { [styles.isNavOpen]: this.state.isNavOpen })}
+            onClick={this.closeNav}
+          >
             <SiteMenu />
           </nav>
         </div>
