@@ -8,6 +8,7 @@
   right: 0;
   background-color: main-yellow;
   height: NAV_HEIGHT;
+  box-shadow: 0 0 8px rgba(0,0,0,.15);
   @media (max-width: 850px) {
     height: NAV_MOBILE_HEIGHT;
     padding-top: 2px;

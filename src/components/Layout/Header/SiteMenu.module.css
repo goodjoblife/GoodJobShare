@@ -35,7 +35,7 @@
       padding-left: 10px;
       transition: color .3s, background-color .3s;
 			&.isCurrent {
-        background-color: hsla(42,79%,89%,.7);
+        background-color: rgba(249, 236, 205, 0.4);
       }
     }
   }
@@ -47,7 +47,7 @@
       padding: 15px 20px;
       text-align: center;
       &.isCurrent {
-        background-color: hsla(42,79%,89%,.7);
+        background-color: rgba(249, 236, 205, 0.7)
       }
     }
   }
