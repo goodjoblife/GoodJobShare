@@ -1,4 +1,4 @@
-@value main-yellow, yellow-light, NAV_HEIGHT from "common/variables.module.css";
+@value main-yellow, yellow-light, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
 .header {
   position: fixed;
@@ -8,6 +8,11 @@
   right: 0;
   background-color: main-yellow;
   height: NAV_HEIGHT;
+  @media (max-width: 850px) {
+    height: NAV_MOBILE_HEIGHT;
+    padding-top: 2px;
+    padding-bottom: 0;
+  }
 }
 
 .inner {
@@ -27,6 +32,7 @@
     transform-origin: 0% 50%;
 		fill: #000;
 		@media (max-width: 850px) {
+      transform: scale(1) translateY(0);
 			width: 120px;
 			fill: #000;
 		}
@@ -42,7 +48,7 @@
 		opacity: 0;
 		visibility: hidden;
 		transition: opacity .3s;
-		background-color: yellow-light; /* TODO: transparency=.95(F2) */
+		background-color: rgba(255,251,232,.95);
 		position: fixed;
 		top: NAV_HEIGHT;
 		left: 0;
@@ -54,6 +60,9 @@
 			opacity: 1;
 			visibility: visible;
 		}
+    @media (max-width: 850px) {
+      top: NAV_MOBILE_HEIGHT;
+    }
 	}
 }
 
@@ -80,4 +89,3 @@
     border: 0;
   }
 }
-

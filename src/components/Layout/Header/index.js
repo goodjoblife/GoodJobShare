@@ -28,9 +28,11 @@ class Header extends React.Component {
             isNavOpen={this.state.isNavOpen}
             toggle={this.toggleNav}
           />
-          <a href="/" className={styles.logo} title="goodjob 工時薪資透明化運動">
-            <i.GjLogo />
-          </a>
+          <div className={styles.logo}>
+            <a href="/" title="goodjob 工時薪資透明化運動">
+              <i.GjLogo />
+            </a>
+          </div>
           <nav className={cn(styles.nav, { [styles.isNavOpen]: this.state.isNavOpen })}>
             <SiteMenu />
           </nav>
