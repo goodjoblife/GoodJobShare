@@ -1,3 +1,4 @@
+import { div } from 'react';
 import App from './containers/Layout';
 import LandingPage from './containers/LandingPage';
 import LaborRightsMenu from './containers/LaborRightsMenu';
@@ -22,7 +23,7 @@ const routes = () => ({
   childRoutes: [
     {
       path: 'labor-rights',
-      component: LaborRightsMenu,
+      component: div,
       /*
       getComponent(nextState, cb) {
         require.ensure([], require => {
@@ -30,17 +31,15 @@ const routes = () => ({
         }, 'labor-rights-menu');
       },
       */
-    },
-    {
-      path: 'labor-rights/:id',
-      component: LaborRightsSingle,
-      /*
-      getComponent(nextState, cb) {
-        require.ensure([], require => {
-          cb(null, require('./containers/LaborRightsSingle').default);
-        }, 'labor-rights-single');
+      indexRoute: {
+        component: LaborRightsMenu,
       },
-      */
+      childRoutes: [
+        {
+          path: ':id',
+          component: LaborRightsSingle,
+        },
+      ],
     },
     {
       path: 'experiences/search',
