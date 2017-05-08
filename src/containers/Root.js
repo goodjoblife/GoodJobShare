@@ -1,13 +1,18 @@
 import React, { PropTypes } from 'react';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
+import { applyRouterMiddleware, Router } from 'react-router';
+import { useScroll } from 'react-router-scroll';
 
 import routes from '../routes';
 
 
 const Root = ({ store, history }) => (
   <Provider store={store}>
-    <Router history={history} routes={routes(store)} />
+    <Router
+      history={history}
+      routes={routes(store)}
+      render={applyRouterMiddleware(useScroll())}
+    />
   </Provider>
 );
 
