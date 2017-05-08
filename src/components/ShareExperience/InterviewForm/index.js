@@ -77,7 +77,7 @@ class InterviewForm extends React.Component {
       interviewResult: null,
       salaryType: 'month',
       salaryAmount: '',
-      overallRating: 3,
+      overallRating: 0,
       title: '',
       sections: {
         [firstSectionId]: createBlock.sections(firstSectionId)(),

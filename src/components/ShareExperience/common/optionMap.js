@@ -153,3 +153,11 @@ export const interviewSensitiveQuestionsMap = [
     value: '其他',
   },
 ];
+
+export const overallRatingDialogMap = {
+  1: '差',
+  2: '普通',
+  3: '不錯啦～',
+  4: '很好！',
+  5: '大推！',
+};
