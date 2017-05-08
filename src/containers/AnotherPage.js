@@ -1,9 +1,22 @@
 import React from 'react';
 
+import Button from 'common/button/Button';
 
 const AnotherPage = () => (
-  <div>
-    <h1>Hello World</h1>
+  <div style={{ padding: 10 }}>
+    <Button circleSize="md" btnStyle="black" onClick={() => { console.log('test'); }}>
+      立即註冊
+    </Button>
+    <br /><br />
+    <Button circleSize="lg" btnStyle="gray">看更多</Button>
+    <br /><br />
+    <Button circleSize="lg" btnStyle="hoverYellow">分享面試經驗</Button>
+    <br /><br />
+    <Button btnStyle="submit">送出資料</Button>
+    <br /><br />
+    <Button btnStyle="back">返回列表</Button>
+    <br /><br />
+
     <div className="headingL">熱門分享 (headingL)</div>
     <div className="headingL">熱門分享 (headingL)</div>
 
