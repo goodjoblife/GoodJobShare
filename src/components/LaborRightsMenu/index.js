@@ -23,7 +23,17 @@ class LaborRightsMenu extends React.Component {
   render() {
     return (
       <main className={cn('wrapperL', styles.wrapper)}>
-        <Helmet title="勞動小教室" />
+        <Helmet
+          title={formatTitle('勞動小教室')}
+          meta={[
+            { property: 'og:url', content: formatCanonicalPath(`/labor-rights`) },
+            { property: 'og:type', content: 'website' },
+            { property: 'og:title', content: formatTitle('勞動小教室') },
+          ]}
+          link={[
+            { rel: 'canonical', href: formatCanonicalPath(`/labor-rights`) },
+          ]}
+        />
         {this.props.status === status.FETCHING && <Loader />}
         {
           this.props.status === status.ERROR && this.props.error &&
