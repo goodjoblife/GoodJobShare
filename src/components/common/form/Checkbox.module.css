@@ -2,60 +2,59 @@
 
 .formGroup {
   position: relative;
-  margin-top: 20px;
-}
 
-input[type="checkbox"] {
-  display: none;
-}
-
-input[type="checkbox"] + label {
-  display: inline-block;
-  align-items: center;
-  transition: color .3s;
-  .checkboxInput {
-    position: relative;
-    display: inline-block;
-    vertical-align: middle;
-    width: 20px;
-    height: 20px;
-    border: 1px solid #000;
-    margin-right: 10px;
-    transition: all .3s;
+  input[type="checkbox"] {
+    display: none;
   }
-  .checkboxText {
-    text-transform: capitalize;
+
+  input[type="checkbox"] + label {
     display: inline-block;
-    vertical-align: middle;
-    font-size: 1em;
-    font-weight: 400;
-    cursor: pointer;
-  }
-}
-
-.checkboxInput:before {
-  content: "";
-  position: absolute;
-  top: 6px;
-  left: 3px;
-  border-right: 2px solid transparent;
-  border-bottom: 2px solid transparent;
-}
-
-input[type="checkbox"]:checked + label {
-
-  .checkboxInput {
-    background-color: main-yellow;
-    border: 1px solid main-yellow;
+    align-items: center;
+    transition: color .3s;
+    .checkboxInput {
+      position: relative;
+      display: inline-block;
+      vertical-align: middle;
+      width: 20px;
+      height: 20px;
+      border: 1px solid #000;
+      margin-right: 10px;
+      transition: all .3s;
+    }
+    .checkboxText {
+      text-transform: capitalize;
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 1em;
+      font-weight: 400;
+      cursor: pointer;
+    }
   }
 
   .checkboxInput:before {
-    content: '✓';
-    //transform: rotate(15deg);
-    transform-origin: 0% 100%;
-    width: 6px;
-    height: 12px;
-    //border-color: #fff;
-    transform: translate3d(-.1em,-.4em,0) rotate(15deg);
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 3px;
+    border-right: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+  }
+
+  input[type="checkbox"]:checked + label {
+
+    .checkboxInput {
+      background-color: main-yellow;
+      border: 1px solid main-yellow;
+    }
+
+    .checkboxInput:before {
+      content: '✓';
+      //transform: rotate(15deg);
+      transform-origin: 0% 100%;
+      width: 6px;
+      height: 12px;
+      //border-color: #fff;
+      transform: translate3d(-.1em,-.4em,0) rotate(15deg);
+    }
   }
 }
