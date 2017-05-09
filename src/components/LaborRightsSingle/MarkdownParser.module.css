@@ -17,6 +17,14 @@
       font-size: 1.1em;
       list-style: decimal;
       line-height: 1.5em;
+      p {
+        font-size: inherit;
+        line-height: inherit;
+      }
+      li {
+        font-size: inherit;
+        line-height: inherit;
+      }
     }
   }
 
