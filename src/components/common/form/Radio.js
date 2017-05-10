@@ -1,11 +1,16 @@
 import React, { PropTypes } from 'react';
-// import ImmutablePropTypes from 'react-immutable-proptypes';
+import cn from 'classnames';
 
 import styles from './Radio.module.css';
 
-const Radio = ({ id, label, name, value, inline, checked, onChange }) => (
+const Radio = ({
+  id, label, name, value, inline, checked, margin, onChange,
+}) => (
   <div
-    className={`${styles.formGroup} ${inline ? styles.inline : styles.block}`}
+    className={cn(styles.formGroup, { [styles.inline]: inline })}
+    style={{
+      margin: margin || (inline ? Radio.marginInline : Radio.marginBlock),
+    }}
   >
     <input
       type="radio" id={id || `radio-${value}`}
@@ -22,6 +27,8 @@ const Radio = ({ id, label, name, value, inline, checked, onChange }) => (
   </div>
 );
 
+Radio.marginBlock = '20px 0 0 0';
+Radio.marginInline = '0 30px 0 0';
 Radio.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
@@ -29,6 +36,7 @@ Radio.propTypes = {
   value: PropTypes.string.isRequired,
   inline: PropTypes.bool,
   checked: PropTypes.bool.isRequired,
+  margin: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
