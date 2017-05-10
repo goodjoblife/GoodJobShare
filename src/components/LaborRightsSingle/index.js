@@ -2,6 +2,11 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Loader from 'common/Loader';
+import {
+  formatTitle,
+  formatCanonicalPath,
+  formatUrl,
+} from 'utils/helmetHelper';
 import Body from './Body';
 import Footer from './Footer';
 import CallToAction from './CallToAction';
@@ -33,6 +38,7 @@ class LaborRightsSingle extends React.Component {
 
   render() {
     const {
+      id,
       title,
       description,
       content,
@@ -46,10 +52,17 @@ class LaborRightsSingle extends React.Component {
     return (
       <main>
         <Helmet
-          title={`${seoTitle} | 工時薪資透明化運動`}
+          title={formatTitle(seoTitle)}
           meta={[
             { name: 'description', content: seoDescription },
-            { property: 'og:image', content: coverUrl },
+            { property: 'og:url', content: formatCanonicalPath(`/labor-rights/${id}`) },
+            { property: 'og:type', content: 'website' },
+            { property: 'og:title', content: formatTitle(seoTitle) },
+            { property: 'og:description', content: seoDescription },
+            { property: 'og:image', content: formatUrl(coverUrl) },
+          ]}
+          link={[
+            { rel: 'canonical', href: formatCanonicalPath(`/labor-rights/${id}`) },
           ]}
         />
         {this.props.status === status.FETCHING && <Loader />}
@@ -67,6 +80,7 @@ class LaborRightsSingle extends React.Component {
                 content={content}
               />
               <Footer
+                id={id}
                 prev={this.props.prev}
                 next={this.props.next}
               />

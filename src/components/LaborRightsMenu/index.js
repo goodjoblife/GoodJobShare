@@ -4,6 +4,10 @@ import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Loader from 'common/Loader';
 import {
+  formatTitle,
+  formatCanonicalPath,
+} from 'utils/helmetHelper';
+import {
   fetchMetaListIfNeeded,
 } from '../../actions/laborRightsMenu';
 import status from '../../constants/status';
@@ -23,7 +27,17 @@ class LaborRightsMenu extends React.Component {
   render() {
     return (
       <main className={cn('wrapperL', styles.wrapper)}>
-        <Helmet title="勞動小教室" />
+        <Helmet
+          title={formatTitle('勞動小教室')}
+          meta={[
+            { property: 'og:url', content: formatCanonicalPath('/labor-rights') },
+            { property: 'og:type', content: 'website' },
+            { property: 'og:title', content: formatTitle('勞動小教室') },
+          ]}
+          link={[
+            { rel: 'canonical', href: formatCanonicalPath('/labor-rights') },
+          ]}
+        />
         {this.props.status === status.FETCHING && <Loader />}
         {
           this.props.status === status.ERROR && this.props.error &&
