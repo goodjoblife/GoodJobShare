@@ -3,6 +3,7 @@ import cn from 'classnames';
 import { Link } from 'react-router';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import i from 'common/icons';
+import { formatCanonicalPath } from 'utils/helmetHelper';
 import styles from './Footer.module.css';
 
 const Footer = ({ id, prev, next }) => (
@@ -10,7 +11,7 @@ const Footer = ({ id, prev, next }) => (
     <div className={styles.share}>
       <div
         className="fb-like"
-        data-href={`https://www.goodjob.life/labor-rights/${id}`}
+        data-href={formatCanonicalPath(`/labor-rights/${id}`)}
         data-layout="button_count"
         data-action="like"
         data-size="large"
