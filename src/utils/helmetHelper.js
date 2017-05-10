@@ -1,7 +1,7 @@
 export const siteName = '工時薪資透明化運動';
 
 export const formatTitle = title =>
-  `${title} | 工時薪資透明化運動`;
+  `${title} | ${siteName}`;
 
 export const formatCanonicalPath = path =>
   `https://www.goodjob.life${path}`;
