@@ -15,7 +15,11 @@
   }
   .termsOfService {
     text-align: center;
+    button {
+      margin: 20px auto;
+    }
   }
+
   .commentBlocks {
     section {
       &:first-child {

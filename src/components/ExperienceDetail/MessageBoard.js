@@ -1,6 +1,7 @@
 import React from 'react';
 
-import Checkbox from '../common/form/Checkbox';
+import Button from 'common/button/Button';
+import Checkbox from 'common/form/Checkbox';
 import CommentBlock from './CommentBlock';
 
 import styles from './MessageBoard.module.css';
@@ -16,7 +17,7 @@ const MessageBoard = () => (
         label="我分享的是真實資訊，並且遵守中華民國法律以及本站使用者條款。"
         onChange={() => {}} checked={false}
       />
-      <button>發佈留言</button>
+      <Button btnStyle="submit">發佈留言</Button>
     </div>
     <div className={styles.commentBlocks}>
       <CommentBlock className={styles.test} />
