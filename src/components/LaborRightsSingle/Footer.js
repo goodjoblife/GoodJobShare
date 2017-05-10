@@ -3,21 +3,24 @@ import cn from 'classnames';
 import { Link } from 'react-router';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import i from 'common/icons';
+import FacebookWrapper from 'common/FacebookWrapper';
 import { formatCanonicalPath } from 'utils/helmetHelper';
 import styles from './Footer.module.css';
 
 const Footer = ({ id, prev, next }) => (
   <div className={cn(styles.footer, 'wrapperM')}>
     <div className={styles.share}>
-      <div
-        className="fb-like"
-        data-href={formatCanonicalPath(`/labor-rights/${id}`)}
-        data-layout="button_count"
-        data-action="like"
-        data-size="large"
-        data-show-faces="false"
-        data-share="true"
-      />
+      <FacebookWrapper appId="1750608541889151">
+        <div
+          className="fb-like"
+          data-href={formatCanonicalPath(`/labor-rights/${id}`)}
+          data-layout="button_count"
+          data-action="like"
+          data-size="large"
+          data-show-faces="false"
+          data-share="true"
+        />
+      </FacebookWrapper>
     </div>
     <div className={styles.pagers}>
       <Link to="/labor-rights" className={styles.back}>
