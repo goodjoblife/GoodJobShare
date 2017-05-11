@@ -1,6 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import i from 'common/icons';
+import FacebookProvider from 'common/FacebookProvider';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 
@@ -12,6 +13,7 @@ class Header extends React.Component {
     };
     this.toggleNav = this.toggleNav.bind(this);
     this.closeNav = this.closeNav.bind(this);
+    this.facebookReady = this.facebookReady.bind(this);
   }
 
   toggleNav() {
@@ -23,6 +25,13 @@ class Header extends React.Component {
   closeNav() {
     this.setState({
       isNavOpen: false,
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  facebookReady(FB) {
+    FB.getLoginStatus(response => {
+      console.log(response);
     });
   }
 
@@ -45,6 +54,7 @@ class Header extends React.Component {
           >
             <SiteMenu />
           </nav>
+          <FacebookProvider appId="1750608541889151" onReady={this.facebookReady} />
         </div>
       </header>
     );
