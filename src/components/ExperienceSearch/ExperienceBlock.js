@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Block from '../common/Block';
-import ThumbsUp from '../common/reaction/ThumbsUp';
-import Comment from '../common/reaction/Comment';
+import Block from 'common/Block';
+import ThumbsUp from 'common/reaction/ThumbsUp';
+import Comment from 'common/reaction/Comment';
 
 import styles from './ExperienceBlock.module.css';
 

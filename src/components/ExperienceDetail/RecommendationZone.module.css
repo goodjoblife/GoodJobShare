@@ -1,0 +1,15 @@
+/*@value main-gray, gray-light from "../common/variables.module.css";*/
+
+.container {
+  margin: 50px 0;
+  .recommendationZone {
+    display: flex;
+    > section {
+      flex: 1;
+      margin-right: 50px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

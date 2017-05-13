@@ -1,23 +1,23 @@
 @value gray-dark, main-gray from "../common/variables.module.css";
 
-section {
-  padding: 5px;
-  .heading {
-    .serialNo {
-      color: black;
-      margin: 0 10px 0 0;
-    }
-    color: main-gray;
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.heading {
+  padding: 5px 5px 0 5px;
+  .serialNo {
+    color: black;
+    margin: 0 10px 0 0;
   }
-  .comment {
-    color: gray-dark;
-  }
-  .reaction {
-    color: main-gray;
-    margin: 10px 0;
-  }
+  color: main-gray;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.comment {
+  padding: 0 5px;
+  color: gray-dark;
+}
+.reaction {
+  padding: 0 5px 5px 5px;
+  color: main-gray;
+  margin: 10px 0;
 }
