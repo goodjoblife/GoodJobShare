@@ -1,0 +1,27 @@
+@value link-blue from "common/variables.module.css";
+
+.heading {
+  text-align: center;
+}
+
+.inner {
+  background-color: #fff;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 50vh;
+  margin-top: 60px;
+}
+
+.link {
+  display: block;
+  text-align: center;
+  margin-top: 30px;
+  @media (min-width: 851px) {
+    &:hover {
+      color: link-blue;
+    }
+  }
+}

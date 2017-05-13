@@ -6,7 +6,7 @@ import LaborRightsSingle from './containers/LaborRightsSingle';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
 import ExperienceDetailPage from './containers/ExperienceDetailPage';
 import AnotherPage from './containers/AnotherPage';
-import NotFoundPage from './containers/NotFoundPage';
+import NotFound from './containers/NotFound';
 
 import Entry from './components/ShareExperience/Entry';
 import ShareExperience
@@ -94,11 +94,11 @@ const routes = () => ({
     },
     {
       path: '*',
-      component: NotFoundPage,
+      component: NotFound,
       /*
       getComponent(nextState, cb) {
         require.ensure([], require => {
-          cb(null, require('./containers/NotFoundPage').default);
+          cb(null, require('./containers/NotFound').default);
         }, 'notFound');
       },
       */
