@@ -21,8 +21,10 @@ const SiteMenu = () => (
     <Item to="/#section-faq" text="常見問答" />
     <Item to="/about" text="關於我們" />
     <li className={cn(styles.menuItem, styles.newItem)}>
-      <i.New className={styles.new} />
-      <Link to="/labor-rights" activeClassName={styles.isCurrent}>勞動小教室</Link>
+      <Link to="/labor-rights" activeClassName={styles.isCurrent}>
+        <i.New className={styles.new} />
+        勞動小教室
+      </Link>
     </li>
   </ul>
 );
