@@ -5,4 +5,3 @@ export { default as ExperienceSearchPage } from './ExperienceSearchPage';
 export { default as ExperienceDetailPage } from './ExperienceDetailPage';
 export { default as CounterPage } from './CounterPage';
 export { default as AnotherPage } from './AnotherPage';
-export { default as NotFound } from './NotFound';
