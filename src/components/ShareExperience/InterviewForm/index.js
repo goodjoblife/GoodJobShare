@@ -10,6 +10,44 @@ import InterviewExperience from './InterviewExperience';
 
 const sortById = R.sortBy(R.prop('id'));
 
+const getForm = state => {
+  const {
+    companyQuery,
+    region,
+    jobTitle,
+    experienceInYear,
+    education,
+    interviewTimeYear,
+    interviewTimeMonth,
+    interviewResult,
+    salaryType,
+    salaryAmount,
+    overallRating,
+    title,
+    sections,
+    interviewQas,
+    interviewSensitiveQuestions,
+  } = state;
+
+  return {
+    companyQuery,
+    region,
+    jobTitle,
+    experienceInYear,
+    education,
+    interviewTimeYear,
+    interviewTimeMonth,
+    interviewResult,
+    salaryType,
+    salaryAmount,
+    overallRating,
+    title,
+    sections,
+    interviewQas,
+    interviewSensitiveQuestions,
+  };
+};
+
 const createSection = id => subtitle => {
   const section = {
     id,
@@ -88,7 +126,7 @@ class InterviewForm extends React.Component {
       interviewQas: {
         [firstQaId]: createBlock.interviewQas(firstQaId)(),
       },
-      interviewSensitiveQuestions: ['詢問家庭狀況'],
+      interviewSensitiveQuestions: [],
     };
   }
 
@@ -171,7 +209,9 @@ class InterviewForm extends React.Component {
           editQa={this.editBlock('interviewQas')}
           interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
         />
-        <SubmitArea />
+        <SubmitArea
+          onSubmit={() => console.log(getForm(this.state))}
+        />
       </div>
     );
   }
