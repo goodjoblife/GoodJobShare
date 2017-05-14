@@ -5,7 +5,11 @@ import styles from './Select.module.css';
 class Select extends React.PureComponent {
   render() {
     return (
-      <div>
+      <div
+        style={{
+          position: 'relative',
+        }}
+      >
         <select
           className={styles.select}
           value={this.props.value || 'default'}
@@ -23,6 +27,18 @@ class Select extends React.PureComponent {
             )
           }
         </select>
+        <div
+          style={{
+            position: 'absolute',
+            top: '20px',
+            right: '15px',
+            width: 0,
+            height: 0,
+            borderStyle: 'solid',
+            borderWidth: '5px 4.5px 0 4.5px',
+            borderColor: 'black transparent transparent transparent',
+          }}
+        />
       </div>
     );
   }
