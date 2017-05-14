@@ -9,7 +9,7 @@ import {
 } from 'utils/helmetHelper';
 import Body from './Body';
 import Footer from './Footer';
-import NotFound from '../../containers/NotFound';
+import NotFound from '../common/NotFound';
 import CallToAction from './CallToAction';
 
 import {
