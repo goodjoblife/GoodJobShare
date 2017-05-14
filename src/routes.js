@@ -6,13 +6,13 @@ import LaborRightsSingle from './containers/LaborRightsSingle';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
 import ExperienceDetailPage from './containers/ExperienceDetailPage';
 import AnotherPage from './containers/AnotherPage';
+import NotFound from './components/common/NotFound';
 
 import Entry from './components/ShareExperience/Entry';
 import ShareExperience
 from './components/ShareExperience';
 import InterviewFormContainer
 from './containers/ShareExperience/InterviewFormContainer';
-import NotFound from './components/common/NotFound';
 
 const routes = () => ({
   path: '/',
