@@ -1,72 +1,76 @@
 export const regionOptions = [
-  {
-    label: '台北市',
-    value: 1,
-  },
-  {
-    label: '新北市',
-    value: 2,
-  },
-  {
-    label: '桃園縣',
-    value: 3,
-  },
-];
+  '彰化縣',
+  '嘉義市',
+  '嘉義縣',
+  '新竹市',
+  '新竹縣',
+  '花蓮縣',
+  '高雄市',
+  '基隆市',
+  '金門縣',
+  '連江縣',
+  '苗栗縣',
+  '南投縣',
+  '新北市',
+  '澎湖縣',
+  '屏東縣',
+  '臺中市',
+  '臺南市',
+  '臺北市',
+  '臺東縣',
+  '桃園市',
+  '宜蘭縣',
+  '雲林縣',
+].map(region => ({
+  label: region,
+  value: region,
+}));
 
-export const experienceInYearOptions = [
-  {
-    label: '無經驗',
-    value: 0,
-  },
-  {
-    label: '1',
-    value: 1,
-  },
-  {
-    label: '2',
-    value: 2,
-  },
-];
+export const experienceInYearOptions = Array(51).fill(0).map((_, index) => ({
+  label: index,
+  value: index,
+}));
+
 export const educationOptions = [
   {
     label: '大學',
-    value: 1,
+    value: '大學',
   },
   {
     label: '碩士',
-    value: 2,
+    value: '碩士',
   },
   {
     label: '博士',
-    value: 3,
+    value: '博士',
   },
   {
     label: '高職',
-    value: 4,
+    value: '高職',
   },
   {
     label: '五專',
-    value: 5,
+    value: '五專',
   },
   {
     label: '二專',
-    value: 6,
+    value: '二專',
   },
   {
     label: '二技',
-    value: 7,
+    value: '二技',
   },
   {
     label: '高中',
-    value: 8,
+    value: '高中',
   },
   {
     label: '國中',
-    value: 9,
+    value: '國中',
   },
   {
     label: '國小',
-    value: 10,
+    value: '國小',
   },
 ];
 
