@@ -1,5 +1,8 @@
 import React from 'react';
 import R from 'ramda';
+
+import SubmitArea from '../common/SubmitArea';
+
 import styles from './InterviewForm.module.css';
 
 import InterviewInfo from './InterviewInfo';
@@ -168,6 +171,7 @@ class InterviewForm extends React.Component {
           editQa={this.editBlock('interviewQas')}
           interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
         />
+        <SubmitArea />
       </div>
     );
   }

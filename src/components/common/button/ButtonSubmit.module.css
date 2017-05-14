@@ -1,0 +1,12 @@
+@value main-yellow from "common/variables.module.css";
+
+
+.container {
+  background: #000000;
+  color: #FFFFFF;
+  padding: 14px 68px;
+
+  &:hover {
+    background: main-yellow;
+  }
+}
