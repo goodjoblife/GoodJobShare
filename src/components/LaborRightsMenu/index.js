@@ -25,14 +25,15 @@ class LaborRightsMenu extends React.Component {
   }
 
   render() {
+    const title = '勞動知識小教室';
     return (
       <main className={cn('wrapperL', styles.wrapper)}>
         <Helmet
-          title={formatTitle('勞動小教室')}
+          title={formatTitle(title)}
           meta={[
             { property: 'og:url', content: formatCanonicalPath('/labor-rights') },
             { property: 'og:type', content: 'website' },
-            { property: 'og:title', content: formatTitle('勞動小教室') },
+            { property: 'og:title', content: formatTitle(title) },
           ]}
           link={[
             { rel: 'canonical', href: formatCanonicalPath('/labor-rights') },
@@ -48,7 +49,7 @@ class LaborRightsMenu extends React.Component {
         {
           this.props.status === status.FETCHED &&
             <div>
-              <h1 className={cn(styles.heading, 'headingL')}>勞動小教室</h1>
+              <h1 className={cn(styles.heading, 'headingL')}>{title}</h1>
               <Columns
                 Item={LaborRightsEntry}
                 items={this.props.metaList.toJS()}
