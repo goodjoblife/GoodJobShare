@@ -23,7 +23,7 @@ const SiteMenu = () => (
     <li className={cn(styles.menuItem, styles.newItem)}>
       <Link to="/labor-rights" activeClassName={styles.isCurrent}>
         <i.New className={styles.new} />
-        勞動小教室
+        勞動知識小教室
       </Link>
     </li>
   </ul>
