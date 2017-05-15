@@ -1,0 +1,16 @@
+@value border-gray from "common/variables.module.css";
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  > .badge {
+    border-radius: 3px;
+    border: 1px solid border-gray;
+    padding: 5px 15px;
+  }
+  > h1 {
+    margin-left: 40px;
+  }
+}

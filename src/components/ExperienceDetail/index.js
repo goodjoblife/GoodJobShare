@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 
-// import styles from './ExperienceDetail.module.css';
+import styles from './ExperienceDetail.module.css';
 import Article from './Article';
 import RecommendationZone from './RecommendationZone';
 import MessageBoard from './MessageBoard';
@@ -20,7 +20,10 @@ class ExperienceDetail extends Component {
         <Helmet
           title="面試‧工作經驗"
         />
-        <h1>面試‧工作經驗 (ID: {experience.get('_id')})</h1>
+        <div className={styles.heading}>
+          <span className={`${styles.badge} pM`}>面試</span>
+          <h1 className="headingL">日月光半導體製造股份有限公司 {experience.get('_id')}</h1>
+        </div>
 
         { /* 文章區塊  */}
         <Article />

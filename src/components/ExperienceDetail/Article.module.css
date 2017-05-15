@@ -1,0 +1,16 @@
+@value gray-light, border-gray from "common/variables.module.css";
+
+.container {
+  margin: 35px 0;
+  display: flex;
+  border: 1px solid border-gray;
+  > .side {
+    width: 345px;
+    background-color: gray-light;
+    padding: 45px 40px 45px 40px;
+  }
+  > .main {
+    flex: 1;
+    padding: 40px 65px 40px 65px;
+  }
+}
