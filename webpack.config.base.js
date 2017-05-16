@@ -2,9 +2,11 @@ const autoprefixer = require('autoprefixer');
 const nested = require('postcss-nested');
 const webpack = require('webpack');
 
-const API_HOST = process.env.API_HOST || 'http://127.0.0.1:12000';
-const CONTENTFUL_API_HOST = process.env.CONTENTFUL_API_HOST
-  || 'https://content-stage.goodjob.life';
+const {
+  API_HOST,
+  CONTENTFUL_API_HOST,
+  FACEBOOK_APP_ID,
+} = require('./src/config');
 
 module.exports = {
   module: {
@@ -30,6 +32,7 @@ module.exports = {
       'process.env': {
         API_HOST: JSON.stringify(API_HOST),
         CONTENTFUL_API_HOST: JSON.stringify(CONTENTFUL_API_HOST),
+        FACEBOOK_APP_ID: JSON.stringify(FACEBOOK_APP_ID),
       },
     }),
   ],

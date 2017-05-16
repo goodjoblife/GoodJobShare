@@ -4,6 +4,7 @@ import i from 'common/icons';
 import FacebookProvider from 'common/FacebookProvider';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
+import { FACEBOOK_APP_ID } from '../../../config';
 
 class Header extends React.Component {
   constructor(props) {
@@ -54,7 +55,7 @@ class Header extends React.Component {
           >
             <SiteMenu />
           </nav>
-          <FacebookProvider appId="1750608541889151" onReady={this.facebookReady} />
+          <FacebookProvider appId={FACEBOOK_APP_ID} onReady={this.facebookReady} />
         </div>
       </header>
     );

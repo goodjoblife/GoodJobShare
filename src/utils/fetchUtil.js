@@ -2,7 +2,7 @@ import 'isomorphic-fetch';
 
 import { getToken } from 'utils/tokenUtil';
 
-const API_BASE_URL = process.env.API_HOST;
+import { API_HOST } from '../config';
 
 const headerBuilder = token => (
   token ?
@@ -45,7 +45,7 @@ const checkStatus = handle401 => response => {
 
 const fetchUtil = endpoint => (method, body) =>
   fetch(
-    `${API_BASE_URL}${endpoint}`,
+    `${API_HOST}${endpoint}`,
     optionsBuilder(body)(method)
   )
     .then(checkStatus());
