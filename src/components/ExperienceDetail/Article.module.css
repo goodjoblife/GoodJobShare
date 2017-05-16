@@ -4,7 +4,7 @@
   margin: 35px 0;
   display: flex;
   border: 1px solid border-gray;
-  > .side {
+  > .aside {
     width: 345px;
     background-color: gray-light;
     padding: 45px 40px 45px 40px;

@@ -5,7 +5,7 @@ import QABlock from './QABlock';
 
 const Article = () => (
   <div className={styles.container}>
-    <div className={styles.side}>
+    <aside className={styles.aside}>
       <ul>
         <li>
           <div className="pM">面試地區</div>
@@ -48,7 +48,7 @@ const Article = () => (
           </div>
         </li>
       </ul>
-    </div>
+    </aside>
     <div className={styles.main}>
       <h2 className="headingMBold">日月光半導體面試經驗分享</h2>
       <SectionBlock />
