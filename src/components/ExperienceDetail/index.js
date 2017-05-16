@@ -21,7 +21,7 @@ class ExperienceDetail extends Component {
           title="面試‧工作經驗"
         />
         <div className={styles.heading}>
-          <span className={`${styles.badge} pM`}>面試</span>
+          <h2 className={`${styles.badge} pM`}>面試</h2>
           <h1 className="headingL">日月光半導體製造股份有限公司 {experience.get('_id')}</h1>
         </div>
 
