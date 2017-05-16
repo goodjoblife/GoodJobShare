@@ -9,6 +9,7 @@ import {
 } from 'utils/helmetHelper';
 import Body from './Body';
 import Footer from './Footer';
+import NotFound from '../common/NotFound';
 import CallToAction from './CallToAction';
 
 import {
@@ -67,8 +68,8 @@ class LaborRightsSingle extends React.Component {
         />
         {this.props.status === status.FETCHING && <Loader />}
         {
-          this.props.status === status.ERROR &&
-            <div>{this.props.error.toString()}</div>
+          this.props.status === status.ERROR && this.props.error.get('message') === 'Not found' &&
+            <NotFound />
         }
         {
           this.props.status === status.FETCHED &&

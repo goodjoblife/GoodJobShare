@@ -6,7 +6,7 @@ import LaborRightsSingle from './containers/LaborRightsSingle';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
 import ExperienceDetailPage from './containers/ExperienceDetailPage';
 import AnotherPage from './containers/AnotherPage';
-import NotFound from './containers/NotFound';
+import NotFound from './components/common/NotFound';
 
 import Entry from './components/ShareExperience/Entry';
 import ShareExperience
