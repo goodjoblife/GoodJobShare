@@ -28,7 +28,7 @@ const Footer = () => (
             <i.Github />
           </a>
           <a
-            href="https://github.com/goodjoblife"
+            href="https://www.facebook.com/goodjob.life"
             className={styles.shareItem}
             title="facebook"
           >
