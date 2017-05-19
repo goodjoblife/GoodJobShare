@@ -3,8 +3,9 @@ import React, { PropTypes } from 'react';
 import TextInput from 'common/form/TextInput';
 
 import {
-  checkWordingLength,
-} from '../../utils';
+  lteLength,
+} from 'utils/dataCheckUtil';
+
 import InputTitle from '../../common/InputTitle';
 
 const Title = ({ title, onChange }) => (
@@ -17,7 +18,7 @@ const Title = ({ title, onChange }) => (
       value={title}
       placeholder="ＯＯ 股份有限公司面試經驗分享"
       onChange={e => onChange(e.target.value)}
-      isWarning={!checkWordingLength(25)(title)}
+      isWarning={!lteLength(25)(title)}
       warningWording="請輸入25個字以內"
     />
   </div>

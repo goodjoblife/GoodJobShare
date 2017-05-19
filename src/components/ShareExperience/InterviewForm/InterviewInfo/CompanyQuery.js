@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 
+import {
+  lteLength,
+} from 'utils/dataCheckUtil';
+
 import TextInput from 'common/form/TextInput';
 import InputTitle from '../../common/InputTitle';
-
-import {
-  checkWordingLength,
-} from '../../utils';
 
 const CompanyQuery = ({ companyQuery, onChange }) => (
   <div>
@@ -17,7 +17,7 @@ const CompanyQuery = ({ companyQuery, onChange }) => (
       placeholder="ＯＯ 股份有限公司"
       value={companyQuery}
       onChange={e => onChange(e.target.value)}
-      isWarning={!checkWordingLength(10)(companyQuery)}
+      isWarning={!lteLength(10)(companyQuery)}
       warningWording="請輸入10個字以內"
     />
   </div>

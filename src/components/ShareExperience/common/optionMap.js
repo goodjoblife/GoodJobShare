@@ -154,7 +154,7 @@ export const interviewSensitiveQuestionsMap = [
   },
   {
     label: '其他',
-    value: '其他',
+    value: '',
   },
 ];
 

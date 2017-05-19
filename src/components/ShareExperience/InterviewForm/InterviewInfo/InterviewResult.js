@@ -2,15 +2,16 @@ import React, { PropTypes } from 'react';
 
 import ButtonGroup from 'common/button/ButtonGroup';
 import TextInput from 'common/form/TextInput';
-import InputTitle from '../../common/InputTitle';
 
+import {
+  lteLength,
+} from 'utils/dataCheckUtil';
+
+import InputTitle from '../../common/InputTitle';
 import {
   interviewResultMap,
 } from '../../common/optionMap';
 
-import {
-  checkWordingLength,
-} from '../../utils';
 
 const OTHER_VALUE = '';
 
@@ -52,7 +53,7 @@ const InterviewResult = ({ interviewResult, onChange }) => {
               value={interviewResult}
               placeholder="輸入面試結果"
               onChange={e => onChange(e.target.value)}
-              isWarning={!checkWordingLength(20)(interviewResult)}
+              isWarning={!lteLength(20)(interviewResult)}
               warningWording="請輸入20個字以內"
             />
           </section> :

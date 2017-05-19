@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 
 import TextInput from 'common/form/TextInput';
-import InputTitle from '../../common/InputTitle';
 
 import {
-  checkWordingLength,
-} from '../../utils';
+  lteLength,
+} from 'utils/dataCheckUtil';
+
+import InputTitle from '../../common/InputTitle';
 
 const JobTitle = ({ jobTitle, onChange }) => (
   <div>
@@ -17,7 +18,7 @@ const JobTitle = ({ jobTitle, onChange }) => (
       placeholder="硬體工程師"
       value={jobTitle}
       onChange={e => onChange(e.target.value)}
-      isWarning={!checkWordingLength(10)(jobTitle)}
+      isWarning={!lteLength(10)(jobTitle)}
       warningWording="請輸入10個字以內"
     />
   </div>
