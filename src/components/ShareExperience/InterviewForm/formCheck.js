@@ -8,6 +8,10 @@ import {
   gtLength,
 } from 'utils/dataCheckUtil';
 
+import {
+  ifThenLog,
+} from 'utils/debugUtil';
+
 export const companyQuery = R.allPass([
   notStrEmpty,
 ]);
@@ -20,9 +24,12 @@ export const jobTitle = R.allPass([
   notStrEmpty,
 ]);
 
-export const experienceInYear = R.allPass([
-  n => n >= 0,
-  n => n <= 50,
+export const experienceInYear = R.anyPass([
+  R.allPass([
+    n => n >= 0,
+    n => n <= 50,
+  ]),
+  n => n === null,
 ]);
 
 export const interviewTimeYear = R.allPass([
@@ -38,8 +45,11 @@ export const interviewResult = R.allPass([
   lteLength(10),
 ]);
 
-export const salaryAmount = R.allPass([
-  n => n >= 0,
+export const salaryAmount = R.anyPass([
+  R.allPass([
+    n => n >= 0,
+  ]),
+  n => n === '',
 ]);
 
 export const overallRating = R.allPass([
@@ -104,61 +114,81 @@ export const interviewQas = R.allPass([
   lteLength(30),
 ]);
 
-export const interviewSensitiveQuestions = R.allPass([
-  lteLength(20),
-  gtLength(0),
+export const interviewSensitiveQuestions = R.anyPass([
+  R.all(
+    R.allPass([
+      lteLength(20),
+      gtLength(0),
+    ]),
+  ),
+  n => n === [],
 ]);
+
+const ifFalseLog = ifThenLog(n => n === false);
 
 export const interviewFormCheck = R.allPass([
   R.compose(
+    ifFalseLog('companyQuery not pass'),
     companyQuery,
     R.prop('companyQuery')
   ),
   R.compose(
+    ifFalseLog('region not pass'),
     region,
     R.prop('region')
   ),
   R.compose(
+    ifFalseLog('jobTitle not pass'),
     jobTitle,
     R.prop('jobTitle')
   ),
   R.compose(
+    ifFalseLog('experienceInYear not pass'),
     experienceInYear,
     R.prop('experienceInYear')
   ),
   R.compose(
+    ifFalseLog('interviewTimeYear not pass'),
     interviewTimeYear,
     R.prop('interviewTimeYear')
   ),
   R.compose(
+    ifFalseLog('interviewTimeMonth not pass'),
     interviewTimeMonth,
     R.prop('interviewTimeMonth')
   ),
   R.compose(
+    ifFalseLog('interviewResult not pass'),
     t => notNullOrUndefined(t) && interviewResult(t),
     R.prop('interviewResult')
   ),
   R.compose(
+    ifFalseLog('salaryAmount not pass'),
     salaryAmount,
     R.prop('salaryAmount')
   ),
   R.compose(
+    ifFalseLog('overallRating not pass'),
     overallRating,
     R.prop('overallRating')
   ),
   R.compose(
+    ifFalseLog('title not pass'),
     title,
     R.prop('title')
   ),
   R.compose(
+    ifFalseLog('sections not pass'),
     sections,
     R.prop('sections')
   ),
   R.compose(
+    ifFalseLog('interviewQas not pass'),
     interviewQas,
     R.prop('interviewQas')
   ),
   R.compose(
+    ifFalseLog('interviewSensitiveQuestions not pass'),
     interviewSensitiveQuestions,
     R.prop('interviewSensitiveQuestions')
   ),
