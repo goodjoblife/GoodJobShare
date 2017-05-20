@@ -16,6 +16,12 @@
   "pre-commit": [
     "lint"
   ],
+  "jest": {
+    "moduleNameMapper": {
+      "common(.*)": "<rootDir/src/components/common$1",
+      "utils(.*)": "<rootDir>/src/utils$1"
+    }
+  },
   "devDependencies": {
     "autoprefixer": "^6.5.3",
     "babel-cli": "^6.18.0",
