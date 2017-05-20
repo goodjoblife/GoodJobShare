@@ -10,14 +10,12 @@ import WorkingHourBlock from './WorkingHourBlock';
 import Radio from '../common/form/Radio';
 import Checkbox from '../common/form/Checkbox';
 import { fetchExperiences } from '../../actions/experienceSearch';
-// import { fetchKeywordsAndExperiences } from '../../actions/experienceSearch';
 
 // let cmpAlert;
 
 class ExperienceSearch extends Component {
   static fetchData({ store: { dispatch } }) {
     return dispatch(fetchExperiences('sort', ''));
-    // return dispatch(fetchKeywordsAndExperiences());
   }
 
   static propTypes = {
@@ -27,25 +25,27 @@ class ExperienceSearch extends Component {
     // setSearchBy: PropTypes.func.isRequired,
     setKeyword: PropTypes.func.isRequired,
     fetchExperiences: PropTypes.func.isRequired,
-    // fetchKeywordsAndExperiences: PropTypes.func.isRequired,
+    fetchWorkings: PropTypes.func.isRequired,
     fetchKeywords: PropTypes.func.isRequired,
     experienceSearch: ImmutablePropTypes.map.isRequired,
   }
 
   constructor() {
     super();
-    this.fetchExperiencesWithSearchBy = this.fetchExperiencesWithSearchBy.bind(this);
+    this.fetchDataWithSearchBy = this.fetchDataWithSearchBy.bind(this);
     this.fetchExperiencesWithSort = this.fetchExperiencesWithSort.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchExperiences('sort', '');
-    // this.props.fetchKeywordsAndExperiences();
     this.props.fetchKeywords('');
   }
 
-  fetchExperiencesWithSearchBy(e) {
-    this.props.fetchExperiences('searchBy', e.target.innerHTML);
+  // fetchExperiencesWithSearchBy(e) {
+  fetchDataWithSearchBy(e) {
+    const val = e.target.innerHTML;
+    this.props.fetchExperiences('searchBy', val);
+    this.props.fetchWorkings(val);
   }
 
   fetchExperiencesWithSort(e) {
@@ -97,6 +97,7 @@ class ExperienceSearch extends Component {
                 <Checkbox
                   key={o.value} id={`searchType-${o.value}`}
                   label={o.label} value={o.value}
+                  disabled={o.value === 'salary' && !data.searchQuery}
                   onChange={setSearchType} checked={data[o.value]}
                 />
               ))
@@ -155,6 +156,7 @@ class ExperienceSearch extends Component {
                   onClick={() => {
                     // cmpAlert.show();
                     this.props.fetchExperiences('searchBy', data.keyword);
+                    this.props.fetchWorkings(data.keyword);
                   }}
                 />
                 <div className={styles.keywordGroup}>
@@ -162,7 +164,7 @@ class ExperienceSearch extends Component {
                     (data.keywords || []).map(o => (
                       <span
                         key={o} className={styles.keyword}
-                        onClick={this.fetchExperiencesWithSearchBy}
+                        onClick={this.fetchDataWithSearchBy}
                       >
                         {o}
                       </span>
@@ -180,11 +182,15 @@ class ExperienceSearch extends Component {
 
             {
               (data.experiences || []).map(o => (
-                <ExperienceBlock key={o._id} data={o} />
+                data[o.type] && <ExperienceBlock key={o._id} data={o} />
               ))
             }
 
-            <WorkingHourBlock />
+            {
+              data.salary && (data.workings || []).map((o, i) => (
+                <WorkingHourBlock key={o.company.id || i} data={o} />
+              ))
+            }
           </div>
         </div>
       </main>

@@ -9,7 +9,7 @@ import styles from './WorkingHourBlock.module.css';
 
 class WorkingHourBlock extends Component {
   static propTypes = {
-    children: PropTypes.node,
+    data: PropTypes.object.isRequired,
   }
 
   static hello = () => {
@@ -25,47 +25,8 @@ class WorkingHourBlock extends Component {
   }
 
   render() {
-    const mock = [{
-      company: {
-        id: '97176270',
-        name: '台灣大哥大股份有限公司',
-      },
-      created_at: '2017-04-20T15:38:39.321Z',
-      data_time: {
-        year: 2017,
-        month: 3,
-      },
-      estimated_hourly_wage: 389.00414937759336,
-      job_title: '資深工程師',
-      overtime_frequency: 0,
-      salary: {
-        type: 'year',
-        amount: 750000,
-      },
-      sector: '電子服務技術處',
-      week_work_time: 40,
-      _id: '58f8d5ffd5435b00049e4a18',
-    }, {
-      company: {
-        id: '17176270',
-        name: '測試有限公司',
-      },
-      created_at: '2017-04-20T15:38:39.321Z',
-      data_time: {
-        year: 2017,
-        month: 11,
-      },
-      estimated_hourly_wage: 201.999,
-      job_title: '資深工程師',
-      overtime_frequency: 1,
-      salary: {
-        type: 'month',
-        amount: 59000,
-      },
-      sector: '電子服務技術處',
-      week_work_time: 80,
-      _id: '18f8d5ffd5435b00049e4a18',
-    }];
+    const { data } = this.props;
+    const { average, company } = data;
 
     return (
       <Block>
@@ -82,11 +43,10 @@ class WorkingHourBlock extends Component {
               this.state.isExpanded ? styles.expanded : ''
             )}
           >
-            {/* this.props.children */}
-            <div className="subheadingL">日月光半導體製造股份有限公司</div>
+            <div className="subheadingL">{company.name}</div>
             <div>
               <span className={`pS ${styles.hoursPerWeek}`}>平均一週總工時: </span>
-              <span className="pL">50.0 小時</span>
+              <span className="pL">{average.week_work_time} 小時</span>
             </div>
           </div>
           <div
@@ -104,12 +64,12 @@ class WorkingHourBlock extends Component {
           )}
         >
           <div className={styles.overtime}>
-            <OvertimeBlock heading="加班有無加班費" />
-            <OvertimeBlock noData heading="加班有無補休" />
+            <OvertimeBlock heading="加班有無加班費" data={data.is_overtime_salary_legal_count} />
+            <OvertimeBlock heading="加班有無補休" data={data.has_compensatory_dayoff_count} />
           </div>
           <div className={`pS ${styles.unit}`}>單位：資料筆數</div>
 
-          <WorkingHourTable data={mock} />
+          <WorkingHourTable data={data.time_and_salary} />
         </div>
       </Block>
     );

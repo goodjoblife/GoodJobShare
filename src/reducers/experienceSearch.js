@@ -7,6 +7,7 @@ import {
   SET_INDUSTRY,
   SET_SEARCH_BY,
   SET_EXPERIENCES,
+  SET_WORKINGS,
   SET_KEYWORD,
   SET_KEYWORDS,
   SET_SEARCH_QUERY_AND_EXPERIENCES,
@@ -16,8 +17,8 @@ import {
 
 const preloadedState = Map({
   sort: 'created_at',
-  interview: false,
-  work: false,
+  interview: true,
+  work: true,
   salary: false,
   industry: 'all',
   searchBy: 'job_title',
@@ -26,6 +27,8 @@ const preloadedState = Map({
   keywords: [],
   experiences: [],
   experienceCount: 0,
+  workings: [],
+  // error: null,
 });
 
 const experienceSearch = createReducer(preloadedState, {
@@ -47,6 +50,9 @@ const experienceSearch = createReducer(preloadedState, {
     state.update('experiences', () => fromJS(action.experiences || []))
       .update('experienceCount', () => action.experienceCount),
 
+  [SET_WORKINGS]: (state, action) =>
+    state.update('workings', () => fromJS(action.workings || [])),
+
   [SET_KEYWORDS]: (state, action) =>
     state.update('searchBy', () => action.searchBy)
       .update('keywords', () => fromJS(action.keywords || [])),
@@ -55,6 +61,8 @@ const experienceSearch = createReducer(preloadedState, {
     state.update('sort', () => action.sort)
       .update('keyword', () => action.searchQuery)
       .update('searchQuery', () => action.searchQuery)
+      .update('workings', () => action.workings)
+      .update('salary', () => action.salary)
       .update('experienceCount', () => action.experienceCount)
       .update('experiences', () => fromJS(action.experiences || [])),
 

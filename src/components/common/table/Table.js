@@ -30,7 +30,7 @@ class Table extends Component {
     let record;
     let value;
 
-    data.forEach(d => {
+    data.forEach((d, i) => {
       record = [];
       children.forEach((col, idx) => {
         value = Table.getValue(d, col.props.dataField);
@@ -39,7 +39,7 @@ class Table extends Component {
         }
         record.push(<td key={idx}>{value}</td>);
       });
-      records.push(<tr key={d[primaryKey]}>{record}</tr>);
+      records.push(<tr key={d[primaryKey] || i}>{record}</tr>);
     });
 
     return (

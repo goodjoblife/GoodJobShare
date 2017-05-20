@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
+import cn from 'classnames';
 
 import styles from './Checkbox.module.css';
 
 const Checkbox = ({
-  id, name, label, value, checked, margin, onChange,
+  id, name, label, value, checked, disabled, margin, onChange,
 }) => (
   <div
-    className={styles.formGroup}
+    className={cn(styles.formGroup, { [styles.disabled]: disabled })}
     style={{ margin }}
   >
     <input
@@ -31,6 +32,7 @@ Checkbox.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   checked: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   margin: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
