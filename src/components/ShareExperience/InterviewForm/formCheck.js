@@ -5,6 +5,7 @@ import {
   notNullOrUndefined,
   gteLength,
   lteLength,
+  gtLength,
 } from 'utils/dataCheckUtil';
 
 export const companyQuery = R.allPass([
@@ -47,12 +48,14 @@ export const overallRating = R.allPass([
 ]);
 
 export const title = R.allPass([
+  gtLength(0),
   lteLength(25),
 ]);
 
 const sectionSubtitle = R.compose(
   R.allPass([
     lteLength(25),
+    gtLength(0),
   ]),
   R.prop('subtitle')
 );
@@ -60,20 +63,25 @@ const sectionSubtitle = R.compose(
 const sectionContent = R.compose(
   R.allPass([
     lteLength(5000),
+    gtLength(0),
   ]),
   R.prop('content')
 );
 
-const singleSection = section => R.allPass([
+export const singleSection = R.allPass([
   sectionSubtitle,
   sectionContent,
-])(section);
+]);
 
-export const sections = R.all(singleSection);
+export const sections = R.allPass([
+  R.all(singleSection),
+  gtLength(0),
+]);
 
 const interviewQaQuestion = R.compose(
   R.allPass([
     lteLength(250),
+    gtLength(0),
   ]),
   R.prop('question')
 );
@@ -81,22 +89,24 @@ const interviewQaQuestion = R.compose(
 const interviewQaAnswer = R.compose(
   R.allPass([
     lteLength(5000),
+    gtLength(0),
   ]),
   R.prop('answer')
 );
 
-const singleInterviewQa = qa => R.allPass([
+export const singleInterviewQa = R.allPass([
   interviewQaAnswer,
   interviewQaQuestion,
-])(qa);
+]);
 
 export const interviewQas = R.allPass([
-  lteLength(30),
   R.all(singleInterviewQa),
+  lteLength(30),
 ]);
 
 export const interviewSensitiveQuestions = R.allPass([
   lteLength(20),
+  gtLength(0),
 ]);
 
 export const interviewFormCheck = R.allPass([
