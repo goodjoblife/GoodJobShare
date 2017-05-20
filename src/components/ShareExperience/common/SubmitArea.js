@@ -65,6 +65,7 @@ class SubmitArea extends React.PureComponent {
           <ButtonSubmit
             text="送出資料"
             onClick={onSubmit}
+            disabled={!this.state.agree}
           />
         </div>
       </div>

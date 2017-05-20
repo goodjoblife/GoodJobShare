@@ -18,7 +18,7 @@
   ],
   "jest": {
     "moduleNameMapper": {
-      "common(.*)": "<rootDir/src/components/common$1",
+      "common(.*)": "<rootDir>/src/components/common$1",
       "utils(.*)": "<rootDir>/src/utils$1"
     }
   },

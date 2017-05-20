@@ -12,7 +12,10 @@ import {
   interviewFormCheck,
 } from './formCheck';
 
-const sortById = R.sortBy(R.prop('id'));
+import {
+  handleBlocks,
+  getInterviewForm,
+} from '../utils';
 
 const createSection = id => subtitle => {
   const section = {
@@ -52,51 +55,32 @@ const idGenerator = () => {
 
 const idCounter = idGenerator();
 
-const handleBlocks = R.compose(
-  sortById,
-  R.map(ele => ele[1]),
-  R.toPairs
-);
-
 const isBlockRemovable = blocks =>
   R.length(R.keys(blocks)) > 1;
 
-const getForm = state => {
-  const {
-    companyQuery,
-    region,
-    jobTitle,
-    experienceInYear,
-    education,
-    interviewTimeYear,
-    interviewTimeMonth,
-    interviewResult,
-    salaryType,
-    salaryAmount,
-    overallRating,
-    title,
-    sections,
-    interviewQas,
-    interviewSensitiveQuestions,
-  } = state;
+const firstSectionId = idCounter();
+const firstQaId = idCounter();
 
-  return {
-    companyQuery,
-    region,
-    jobTitle,
-    experienceInYear,
-    education,
-    interviewTimeYear,
-    interviewTimeMonth,
-    interviewResult,
-    salaryType,
-    salaryAmount,
-    overallRating,
-    title,
-    sections: handleBlocks(sections),
-    interviewQas: handleBlocks(interviewQas),
-    interviewSensitiveQuestions,
-  };
+const defaultForm = {
+  companyQuery: '',
+  region: null,
+  jobTitle: '',
+  experienceInYear: null,
+  education: null,
+  interviewTimeYear: null,
+  interviewTimeMonth: null,
+  interviewResult: null,
+  salaryType: 'month',
+  salaryAmount: '',
+  overallRating: 0,
+  title: '',
+  sections: {
+    [firstSectionId]: createBlock.sections(firstSectionId)(),
+  },
+  interviewQas: {
+    [firstQaId]: createBlock.interviewQas(firstQaId)(),
+  },
+  interviewSensitiveQuestions: [],
 };
 
 class InterviewForm extends React.Component {
@@ -108,29 +92,8 @@ class InterviewForm extends React.Component {
     this.removeBlock = this.removeBlock.bind(this);
     this.editBlock = this.editBlock.bind(this);
 
-    const firstSectionId = idCounter();
-    const firstQaId = idCounter();
-
     this.state = {
-      companyQuery: '',
-      region: null,
-      jobTitle: '',
-      experienceInYear: null,
-      education: null,
-      interviewTimeYear: null,
-      interviewTimeMonth: null,
-      interviewResult: null,
-      salaryType: 'month',
-      salaryAmount: '',
-      overallRating: 0,
-      title: '',
-      sections: {
-        [firstSectionId]: createBlock.sections(firstSectionId)(),
-      },
-      interviewQas: {
-        [firstQaId]: createBlock.interviewQas(firstQaId)(),
-      },
-      interviewSensitiveQuestions: [],
+      ...defaultForm,
     };
   }
 
@@ -215,11 +178,11 @@ class InterviewForm extends React.Component {
         />
         <SubmitArea
           onSubmit={() => {
-            if (interviewFormCheck(this.state)) {
-              return console.log(getForm(this.state));
+            if (interviewFormCheck(getInterviewForm(this.state))) {
+              return console.log(getInterviewForm(this.state));
             }
             console.error('not pass!');
-            return console.log(getForm(this.state));
+            return console.log(getInterviewForm(this.state));
           }}
         />
       </div>

@@ -18,7 +18,12 @@ import {
   singleInterviewQa,
   interviewQas,
   interviewSensitiveQuestions,
+  interviewFormCheck,
 } from './formCheck';
+
+import {
+  getInterviewForm,
+} from '../utils';
 
 
 describe('companyQuery test', () => {
@@ -244,5 +249,71 @@ describe('interviewSensitiveQuestions test', () => {
   test('string length not in (0, 20] should not pass', () => {
     expect(interviewSensitiveQuestions('abcdeabcdeabcdeabcdeabcdeabcde')).toBe(false);
     expect(interviewSensitiveQuestions('')).toBe(false);
+  });
+});
+
+describe('interviewFormCheck tests', () => {
+  const defaultForm = {
+    companyQuery: '',
+    region: null,
+    jobTitle: '',
+    experienceInYear: null,
+    education: null,
+    interviewTimeYear: null,
+    interviewTimeMonth: null,
+    interviewResult: null,
+    salaryType: 'month',
+    salaryAmount: '',
+    overallRating: 0,
+    title: '',
+    sections: {
+      1: {
+        subtitle: '',
+        content: '',
+      },
+    },
+    interviewQas: {
+      2: {
+        question: '',
+        answer: '',
+      },
+    },
+    interviewSensitiveQuestions: [],
+  };
+
+  const allFillForm = {
+    ...defaultForm,
+    companyQuery: '台積電',
+    region: '台北市',
+    jobTitle: '硬體工程師',
+    experienceInYear: 1,
+    education: '大學',
+    interviewTimeYear: 2015,
+    interviewTimeMonth: 1,
+    interviewResult: '錄取',
+    salaryType: 'month',
+    salaryAmount: 50000,
+    overallRating: 1,
+    title: '面試經驗',
+    sections: {
+      1: {
+        subtitle: 'test',
+        content: 'test',
+      },
+    },
+    interviewQas: {
+      2: {
+        question: 'test',
+        answer: 'test',
+      },
+    },
+    interviewSensitiveQuestions: ['曾詢問婚姻狀況、生育計畫'],
+  };
+  test('all fill and fit to rules should pass', () => {
+    expect(interviewFormCheck(getInterviewForm(allFillForm))).toBe(true);
+  });
+
+  test('defaultForm should not pass', () => {
+    expect(interviewFormCheck(getInterviewForm(defaultForm))).toBe(false);
   });
 });

@@ -1,4 +1,4 @@
-@value main-yellow from "common/variables.module.css";
+@value main-yellow, main-gray from "common/variables.module.css";
 
 
 .container {
@@ -8,5 +8,10 @@
 
   &:hover {
     background: main-yellow;
+  }
+
+  &:disabled {
+    background: main-gray;
+    cursor: not-allowed;
   }
 }
