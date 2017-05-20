@@ -8,45 +8,11 @@ import styles from './InterviewForm.module.css';
 import InterviewInfo from './InterviewInfo';
 import InterviewExperience from './InterviewExperience';
 
+import {
+  interviewFormCheck,
+} from './formCheck';
+
 const sortById = R.sortBy(R.prop('id'));
-
-const getForm = state => {
-  const {
-    companyQuery,
-    region,
-    jobTitle,
-    experienceInYear,
-    education,
-    interviewTimeYear,
-    interviewTimeMonth,
-    interviewResult,
-    salaryType,
-    salaryAmount,
-    overallRating,
-    title,
-    sections,
-    interviewQas,
-    interviewSensitiveQuestions,
-  } = state;
-
-  return {
-    companyQuery,
-    region,
-    jobTitle,
-    experienceInYear,
-    education,
-    interviewTimeYear,
-    interviewTimeMonth,
-    interviewResult,
-    salaryType,
-    salaryAmount,
-    overallRating,
-    title,
-    sections,
-    interviewQas,
-    interviewSensitiveQuestions,
-  };
-};
 
 const createSection = id => subtitle => {
   const section = {
@@ -94,6 +60,44 @@ const handleBlocks = R.compose(
 
 const isBlockRemovable = blocks =>
   R.length(R.keys(blocks)) > 1;
+
+const getForm = state => {
+  const {
+    companyQuery,
+    region,
+    jobTitle,
+    experienceInYear,
+    education,
+    interviewTimeYear,
+    interviewTimeMonth,
+    interviewResult,
+    salaryType,
+    salaryAmount,
+    overallRating,
+    title,
+    sections,
+    interviewQas,
+    interviewSensitiveQuestions,
+  } = state;
+
+  return {
+    companyQuery,
+    region,
+    jobTitle,
+    experienceInYear,
+    education,
+    interviewTimeYear,
+    interviewTimeMonth,
+    interviewResult,
+    salaryType,
+    salaryAmount,
+    overallRating,
+    title,
+    sections: handleBlocks(sections),
+    interviewQas: handleBlocks(interviewQas),
+    interviewSensitiveQuestions,
+  };
+};
 
 class InterviewForm extends React.Component {
   constructor(props) {
@@ -210,7 +214,13 @@ class InterviewForm extends React.Component {
           interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
         />
         <SubmitArea
-          onSubmit={() => console.log(getForm(this.state))}
+          onSubmit={() => {
+            if (interviewFormCheck(this.state)) {
+              return console.log(getForm(this.state));
+            }
+            console.error('not pass!');
+            return console.log(getForm(this.state));
+          }}
         />
       </div>
     );

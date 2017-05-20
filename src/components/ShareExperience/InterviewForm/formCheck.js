@@ -1,14 +1,14 @@
 import R from 'ramda';
 
 import {
-  isStrEmpty,
+  notStrEmpty,
   notNullOrUndefined,
   gteLength,
   lteLength,
 } from 'utils/dataCheckUtil';
 
 export const companyQuery = R.allPass([
-  isStrEmpty,
+  notStrEmpty,
 ]);
 
 export const region = R.allPass([
@@ -16,7 +16,7 @@ export const region = R.allPass([
 ]);
 
 export const jobTitle = R.allPass([
-  isStrEmpty,
+  notStrEmpty,
 ]);
 
 export const experienceInYear = R.allPass([
@@ -36,7 +36,6 @@ export const interviewResult = R.allPass([
   gteLength(0),
   lteLength(10),
 ]);
-
 
 export const salaryAmount = R.allPass([
   n => n >= 0,
@@ -98,4 +97,59 @@ export const interviewQas = R.allPass([
 
 export const interviewSensitiveQuestions = R.allPass([
   lteLength(20),
+]);
+
+export const interviewFormCheck = R.allPass([
+  R.compose(
+    companyQuery,
+    R.prop('companyQuery')
+  ),
+  R.compose(
+    region,
+    R.prop('region')
+  ),
+  R.compose(
+    jobTitle,
+    R.prop('jobTitle')
+  ),
+  R.compose(
+    experienceInYear,
+    R.prop('experienceInYear')
+  ),
+  R.compose(
+    interviewTimeYear,
+    R.prop('interviewTimeYear')
+  ),
+  R.compose(
+    interviewTimeMonth,
+    R.prop('interviewTimeMonth')
+  ),
+  R.compose(
+    t => notNullOrUndefined(t) && interviewResult(t),
+    R.prop('interviewResult')
+  ),
+  R.compose(
+    salaryAmount,
+    R.prop('salaryAmount')
+  ),
+  R.compose(
+    overallRating,
+    R.prop('overallRating')
+  ),
+  R.compose(
+    title,
+    R.prop('title')
+  ),
+  R.compose(
+    sections,
+    R.prop('sections')
+  ),
+  R.compose(
+    interviewQas,
+    R.prop('interviewQas')
+  ),
+  R.compose(
+    interviewSensitiveQuestions,
+    R.prop('interviewSensitiveQuestions')
+  ),
 ]);

@@ -3,9 +3,15 @@ import React, { PropTypes } from 'react';
 import Select from 'common/form/Select';
 import InputTitle from '../../common/InputTitle';
 
-import {
-  educationOptions,
-} from '../../common/optionMap';
+const monthMap = Array(12).fill(0).map((_, index) => ({
+  label: index + 1,
+  value: index + 1,
+}));
+
+const yearMap = Array(12).fill(0).map((_, index) => ({
+  label: new Date().getFullYear() - index,
+  value: new Date().getFullYear() - index,
+}));
 
 const InterviewTime = (
   {
@@ -38,10 +44,10 @@ const InterviewTime = (
           }}
         >
           <Select
-            options={educationOptions}
+            options={yearMap}
             value={interviewTimeYear}
             onChange={
-              e => onInterviewTimeYear(e.target.value)
+              e => onInterviewTimeYear(Number(e.target.value))
             }
           />
         </div>
@@ -63,10 +69,10 @@ const InterviewTime = (
           }}
         >
           <Select
-            options={educationOptions}
+            options={monthMap}
             value={interviewTimeMonth}
             onChange={
-              e => onInterviewTimeMonth(e.target.value)
+              e => onInterviewTimeMonth(Number(e.target.value))
             }
           />
         </div>
