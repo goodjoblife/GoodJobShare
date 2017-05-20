@@ -24,6 +24,7 @@ class SubmitArea extends React.PureComponent {
   render() {
     const {
       onSubmit,
+      submitable,
     } = this.props;
 
     const {
@@ -65,7 +66,7 @@ class SubmitArea extends React.PureComponent {
           <ButtonSubmit
             text="送出資料"
             onClick={onSubmit}
-            disabled={!this.state.agree}
+            disabled={!this.state.agree || !submitable}
           />
         </div>
       </div>
@@ -75,6 +76,7 @@ class SubmitArea extends React.PureComponent {
 
 SubmitArea.propTypes = {
   onSubmit: PropTypes.func,
+  submitable: PropTypes.bool,
 };
 
 export default SubmitArea;

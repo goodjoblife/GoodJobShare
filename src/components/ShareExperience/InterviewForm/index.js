@@ -184,6 +184,7 @@ class InterviewForm extends React.Component {
             console.error('not pass!');
             return console.log(getInterviewForm(this.state));
           }}
+          submitable={interviewFormCheck(getInterviewForm(this.state))}
         />
       </div>
     );
