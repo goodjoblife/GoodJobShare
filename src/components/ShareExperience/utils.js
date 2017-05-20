@@ -1,5 +1,9 @@
 import R from 'ramda';
 
+import {
+  transferKeyToSnakecase,
+} from 'utils/objectUtil';
+
 const sortById = R.sortBy(R.prop('id'));
 
 export const handleBlocks = R.compose(
@@ -82,3 +86,28 @@ export const getInterviewForm = R.compose(
   handleInterviewQas,
   propsInterviewForm
 );
+
+export const portInterviewFormToRequestFormat = interviewForm => {
+  let body = {
+    ...interviewForm,
+    interviewTime: {
+      year: interviewForm.interviewTimeYear,
+      month: interviewForm.interviewTimeMonth,
+    },
+    salary: {
+      type: interviewForm.salaryType,
+      amount: interviewForm.salaryAmount,
+    },
+  };
+
+  body = R.omit([
+    'interviewTimeYear',
+    'interviewTimeMonth',
+    'salaryType',
+    'salaryAmount',
+  ])(body);
+
+  body = transferKeyToSnakecase(body);
+
+  return body;
+};

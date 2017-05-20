@@ -9,12 +9,17 @@ import InterviewInfo from './InterviewInfo';
 import InterviewExperience from './InterviewExperience';
 
 import {
+  postInterviewExperience,
+} from '../../../apis/interviewExperiencesApi';
+
+import {
   interviewFormCheck,
 } from './formCheck';
 
 import {
   handleBlocks,
   getInterviewForm,
+  portInterviewFormToRequestFormat,
 } from '../utils';
 
 const createSection = id => subtitle => {
@@ -177,13 +182,7 @@ class InterviewForm extends React.Component {
           interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
         />
         <SubmitArea
-          onSubmit={() => {
-            if (interviewFormCheck(getInterviewForm(this.state))) {
-              return console.log(getInterviewForm(this.state));
-            }
-            console.error('not pass!');
-            return console.log(getInterviewForm(this.state));
-          }}
+          onSubmit={() => postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)))}
           submitable={interviewFormCheck(getInterviewForm(this.state))}
         />
       </div>
