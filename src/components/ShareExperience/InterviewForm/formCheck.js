@@ -116,10 +116,13 @@ export const interviewQas = R.allPass([
 
 export const interviewSensitiveQuestions = R.anyPass([
   R.all(
-    R.allPass([
-      lteLength(20),
-      gtLength(0),
-    ]),
+    R.compose(
+      R.allPass([
+        lteLength(20),
+        gtLength(0),
+      ]),
+      R.defaultTo('')
+    )
   ),
   n => n === [],
 ]);

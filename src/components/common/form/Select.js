@@ -12,7 +12,7 @@ class Select extends React.PureComponent {
       >
         <select
           className={styles.select}
-          value={this.props.value || 'default'}
+          value={this.props.value === null ? 'default' : this.props.value}
           onChange={e => this.props.onChange(e)}
         >
           <option value="default" disabled>{this.props.placeholder}</option>

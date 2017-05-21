@@ -33,6 +33,9 @@ const InterviewQa = ({ question, answer, editQa, removeQa }) => (
         value={question}
         onChange={e => editQa('question')(e.target.value)}
         className={`pM ${styles.input}`}
+        style={{
+          width: '100%',
+        }}
       />
     </div>
     <div
