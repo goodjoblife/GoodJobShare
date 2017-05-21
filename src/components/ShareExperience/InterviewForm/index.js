@@ -8,9 +8,9 @@ import styles from './InterviewForm.module.css';
 import InterviewInfo from './InterviewInfo';
 import InterviewExperience from './InterviewExperience';
 
-// import {
-//   postInterviewExperience,
-// } from '../../../apis/interviewExperiencesApi';
+import {
+  postInterviewExperience,
+} from '../../../apis/interviewExperiencesApi';
 
 import {
   interviewFormCheck,
@@ -182,7 +182,7 @@ class InterviewForm extends React.Component {
           interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
         />
         <SubmitArea
-          onSubmit={() => console.log(portInterviewFormToRequestFormat(getInterviewForm(this.state)))}
+          onSubmit={() => postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)))}
           submitable={interviewFormCheck(getInterviewForm(this.state))}
         />
       </div>
