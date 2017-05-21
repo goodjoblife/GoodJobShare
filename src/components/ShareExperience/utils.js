@@ -60,11 +60,13 @@ const filterEmptyInterviewQas = R.filter(
     R.compose(
       n => n !== 0,
       s => s.length,
+      R.defaultTo(''),
       R.prop('question')
     ),
     R.compose(
       n => n !== 0,
       s => s.length,
+      R.defaultTo(''),
       R.prop('answer')
     ),
   ])
