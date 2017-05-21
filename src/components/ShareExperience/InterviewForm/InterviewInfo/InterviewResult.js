@@ -49,7 +49,7 @@ const InterviewResult = ({ interviewResult, onChange }) => {
           >
             <TextInput
               value={interviewResult}
-              placeholder="輸入面試結果"
+              placeholder="輸入面試結果..."
               onChange={e => onChange(e.target.value)}
               isWarning={!formCheck.interviewResult(interviewResult)}
               warningWording="請輸入10個字以內"
