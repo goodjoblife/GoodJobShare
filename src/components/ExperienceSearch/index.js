@@ -32,7 +32,8 @@ class ExperienceSearch extends Component {
 
   constructor() {
     super();
-    this.fetchDataWithSearchBy = this.fetchDataWithSearchBy.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleKeywordClick = this.handleKeywordClick.bind(this);
     this.fetchExperiencesWithSort = this.fetchExperiencesWithSort.bind(this);
   }
 
@@ -41,9 +42,19 @@ class ExperienceSearch extends Component {
     this.props.fetchKeywords('');
   }
 
-  // fetchExperiencesWithSearchBy(e) {
-  fetchDataWithSearchBy(e) {
+  handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      const val = e.target.value;
+      this.fetchExperiencesAndWorkings(val);
+    }
+  }
+
+  handleKeywordClick(e) {
     const val = e.target.innerHTML;
+    this.fetchExperiencesAndWorkings(val);
+  }
+
+  fetchExperiencesAndWorkings(val) {
     this.props.fetchExperiences('searchBy', val);
     this.props.fetchWorkings(val);
   }
@@ -144,6 +155,7 @@ class ExperienceSearch extends Component {
               <div className={styles.search}>
                 <input
                   type="text"
+                  onKeyPress={this.handleKeyPress}
                   onChange={setKeyword}
                   value={data.keyword}
                   placeholder={
@@ -155,8 +167,8 @@ class ExperienceSearch extends Component {
                 <Search
                   onClick={() => {
                     // cmpAlert.show();
-                    this.props.fetchExperiences('searchBy', data.keyword);
-                    this.props.fetchWorkings(data.keyword);
+                    const val = data.keyword;
+                    this.fetchExperiencesAndWorkings(val);
                   }}
                 />
                 <div className={styles.keywordGroup}>
@@ -164,7 +176,7 @@ class ExperienceSearch extends Component {
                     (data.keywords || []).map(o => (
                       <span
                         key={o} className={styles.keyword}
-                        onClick={this.fetchDataWithSearchBy}
+                        onClick={this.handleKeywordClick}
                       >
                         {o}
                       </span>

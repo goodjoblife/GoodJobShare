@@ -58,24 +58,30 @@ const experienceSearch = createReducer(preloadedState, {
       .update('keywords', () => fromJS(action.keywords || [])),
 
   [SET_SORT_AND_EXPERIENCES]: (state, action) =>
-    state.update('sort', () => action.sort)
-      .update('keyword', () => action.searchQuery)
-      .update('searchQuery', () => action.searchQuery)
-      .update('workings', () => action.workings)
-      .update('salary', () => action.salary)
-      .update('experienceCount', () => action.experienceCount)
-      .update('experiences', () => fromJS(action.experiences || [])),
+    state.merge({
+      sort: action.sort,
+      keyword: action.searchQuery,
+      searchQuery: action.searchQuery,
+      workings: action.workings,
+      salary: action.salary,
+      experienceCount: action.experienceCount,
+      experiences: fromJS(action.experiences || []),
+    }),
 
   [SET_SEARCH_QUERY_AND_EXPERIENCES]: (state, action) =>
-    state.update('keyword', () => action.searchQuery)
-      .update('searchQuery', () => action.searchQuery)
-      .update('experienceCount', () => action.experienceCount)
-      .update('experiences', () => fromJS(action.experiences || [])),
+    state.merge({
+      keyword: action.searchQuery,
+      searchQuery: action.searchQuery,
+      experienceCount: action.experienceCount,
+      experiences: fromJS(action.experiences || []),
+    }),
 
   [SET_KEYWORDS_AND_EXPERIENCES]: (state, action) =>
-    state.update('keywords', () => fromJS(action.keywords || []))
-      .update('experienceCount', () => action.experienceCount)
-      .update('experiences', () => fromJS(action.experiences || [])),
+    state.merge({
+      keyword: fromJS(action.keywords || []),
+      experienceCount: action.experienceCount,
+      experiences: fromJS(action.experiences || []),
+    }),
 });
 
 export default experienceSearch;

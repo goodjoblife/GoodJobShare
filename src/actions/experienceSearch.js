@@ -43,8 +43,6 @@ export const fetchExperiences = (cond, val) => (dispatch, getState) => {
   const sort = val || data.sort;
   let url = '/experiences';
 
-  console.log('data==>', data, data.keyword);
-
   if (cond === 'searchBy') {
     url = `${url}?search_by=${data.searchBy}&search_query=${val}`;
   } else { // cond === 'sort'
