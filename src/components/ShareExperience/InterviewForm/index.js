@@ -20,6 +20,7 @@ import {
   handleBlocks,
   getInterviewForm,
   portInterviewFormToRequestFormat,
+  idGenerator,
 } from '../utils';
 
 const createSection = id => subtitle => {
@@ -48,14 +49,6 @@ const createInterviewQa = id => (question = '') => ({
 const createBlock = {
   sections: createSection,
   interviewQas: createInterviewQa,
-};
-
-const idGenerator = () => {
-  let id = -1;
-  return () => {
-    id += 1;
-    return id;
-  };
 };
 
 const idCounter = idGenerator();

@@ -113,3 +113,11 @@ export const portInterviewFormToRequestFormat = interviewForm => {
 
   return body;
 };
+
+export const idGenerator = () => {
+  let id = -1;
+  return () => {
+    id += 1;
+    return id;
+  };
+};
