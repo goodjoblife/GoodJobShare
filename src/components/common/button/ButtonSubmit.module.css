@@ -1,0 +1,17 @@
+@value main-yellow, main-gray from "common/variables.module.css";
+
+
+.container {
+  background: #000000;
+  color: #FFFFFF;
+  padding: 14px 68px;
+
+  &:hover {
+    background: main-yellow;
+  }
+
+  &:disabled {
+    background: main-gray;
+    cursor: not-allowed;
+  }
+}

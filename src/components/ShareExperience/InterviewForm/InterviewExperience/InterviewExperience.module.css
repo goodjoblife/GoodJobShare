@@ -1,0 +1,3 @@
+.form {
+    composes: form from '../InterviewInfo/InterviewInfo.module.css';
+}

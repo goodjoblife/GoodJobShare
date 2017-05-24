@@ -1,0 +1,35 @@
+@value diameter: 32px;
+
+.button {
+  width: diameter;
+  height: diameter;
+  text-align: center;
+  border-radius: diameter;
+  color: white;
+  background: #DFDFDF;
+
+  &:hover {
+    background: #D0D0D0;
+  }
+}
+
+.active {
+  composes: button;
+  background: #FCD406;
+
+  &:hover {
+    background: #FCD406;
+  }
+}
+
+.cross {
+  transform: rotate(45deg);
+  transition: transform 0.2s;
+  stroke: white;
+  fill: white;
+}
+
+.cross__active {
+  composes: cross;
+  transform: rotate(0);
+}

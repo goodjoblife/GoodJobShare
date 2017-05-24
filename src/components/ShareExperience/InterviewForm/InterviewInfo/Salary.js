@@ -44,6 +44,7 @@ const Salary = (
           value={salaryAmount}
           onChange={e => onSalaryAmount(e.target.value)}
           placeholder="700,000"
+          type="number"
         />
         <div>
           <p
@@ -65,7 +66,18 @@ const Salary = (
           padding: '10px',
         }}
       >
-        <p className="pS">薪資請以包含平常的薪資、分紅、年終、績效獎金等實質上獲得的價值去計算。</p>
+        <p className={styles.exclamation}>！</p>
+        <p className="pS">
+          薪資請以包含平常的
+          <b
+            style={{
+              fontWeight: '700',
+            }}
+          >
+            薪資、分紅、年終、績效獎金
+          </b>
+          等實質上獲得的價值去計算。
+        </p>
       </div>
     </div>
   </div>

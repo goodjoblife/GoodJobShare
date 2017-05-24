@@ -1,0 +1,32 @@
+.button {
+  padding: 0 16px;
+  height: 37px;
+  border: 1px solid #DCDCDC;
+  border-radius: 100px;
+  background: #FFFFFF;
+  font-size: 1rem;
+  font-weight: normal;
+  text-align: center;
+  color: #3D3D3D;
+
+  &:hover {
+    background-color: #F6F6F6;
+  }
+
+  &:disabled {
+    background: white;
+    color: #DCDCDC;
+    cursor: not-allowed;
+  }
+}
+
+.custimized {
+  composes: button;
+  border-color: #E5BA00;
+  color: #E5BA00;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #FFFFFF;
+  }
+}

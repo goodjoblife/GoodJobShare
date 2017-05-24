@@ -1,12 +1,23 @@
 import React, { PropTypes } from 'react';
-// import styles from './RateButtonElement.module.css';
+import styles from './RateButtonElement.module.css';
 
-const RateButtonElement = ({ active, onClick }) => (
+const handleClassName = hover => active => {
+  if (hover) {
+    return styles.hover;
+  }
+
+  if (active) {
+    return styles.active;
+  }
+
+  return styles.container;
+};
+
+const RateButtonElement = ({ hover, active, onClick }) => (
   <div
+    className={handleClassName(hover)(active)}
     style={{
-      display: 'inline-block',
-      color: active ? 'red' : 'black',
-      margin: '0 3px',
+      fontSize: '3rem',
     }}
     onClick={onClick}
   >
@@ -15,6 +26,7 @@ const RateButtonElement = ({ active, onClick }) => (
 );
 
 RateButtonElement.propTypes = {
+  hover: PropTypes.bool,
   active: PropTypes.bool,
   onClick: PropTypes.func,
 };

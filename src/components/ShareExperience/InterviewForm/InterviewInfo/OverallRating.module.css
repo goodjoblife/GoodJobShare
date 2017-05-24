@@ -2,15 +2,12 @@
 
 .dialog {
   display: flex;
+  justify-content: center;
   align-items: center;
+  margin-left: 28px;
+  height: 30px;
+  padding: 4px 7px;
   background: #FFFAE1;
   border: 1px solid main-yellow;
   border-radius: 3px;
-}
-
-.exclamation {
-  color: main-yellow;
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-right: 17px;
 }

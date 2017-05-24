@@ -8,25 +8,25 @@ import {
 
 import InputTitle from '../../common/InputTitle';
 
-const JobTitle = ({ jobTitle, onChange }) => (
+const Title = ({ title, onChange }) => (
   <div>
     <InputTitle
-      text="應徵職稱"
+      text="標題"
       must
     />
     <TextInput
-      placeholder="硬體工程師"
-      value={jobTitle}
+      value={title}
+      placeholder="ＯＯ 股份有限公司面試經驗分享"
       onChange={e => onChange(e.target.value)}
-      isWarning={!lteLength(10)(jobTitle)}
-      warningWording="請輸入10個字以內"
+      isWarning={!lteLength(25)(title)}
+      warningWording="請輸入25個字以內"
     />
   </div>
 );
 
-JobTitle.propTypes = {
-  jobTitle: PropTypes.string,
+Title.propTypes = {
+  title: PropTypes.string,
   onChange: PropTypes.func,
 };
 
-export default JobTitle;
+export default Title;
