@@ -1,7 +1,6 @@
 import 'isomorphic-fetch';
 
-const CONTENTFUL_API_HOST = process.env.CONTENTFUL_API_HOST
-  || 'https://content-stage.goodjob.life';
+import { CONTENTFUL_API_HOST } from '../config';
 
 export const fetchLaborRightsMetaList = () =>
   fetch(`${CONTENTFUL_API_HOST}/entries`)

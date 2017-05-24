@@ -6,11 +6,12 @@ import i from 'common/icons';
 import FacebookWrapper from 'common/FacebookWrapper';
 import { formatCanonicalPath } from 'utils/helmetHelper';
 import styles from './Footer.module.css';
+import { FACEBOOK_APP_ID } from '../../config';
 
 const Footer = ({ id, prev, next }) => (
   <div className={cn(styles.footer, 'wrapperM')}>
     <div className={styles.share}>
-      <FacebookWrapper appId="1750608541889151">
+      <FacebookWrapper appId={FACEBOOK_APP_ID}>
         <div
           className="fb-like"
           data-href={formatCanonicalPath(`/labor-rights/${id}`)}
