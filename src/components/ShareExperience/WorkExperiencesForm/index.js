@@ -3,8 +3,12 @@ import R from 'ramda';
 
 // import SubmitArea from '../common/SubmitArea';
 
+import WorkInfo from './WorkInfo';
+import WorkExperience from './WorkExperience';
+
 import {
   idGenerator,
+  handleBlocks,
 } from '../utils';
 
 import styles from './WorkExperiencesForm.module.css';
@@ -47,7 +51,7 @@ const defaultForm = {
   jobEndingTimeYear: null,
   jobEndingTimeMonth: null,
   salaryType: 'month',
-  salaryAmount: '',
+  salaryAmount: null,
   weekWorkTime: 40,
   recommendToOthers: null,
   overallRating: 0,
@@ -116,6 +120,23 @@ class WorkExperiencesForm extends React.Component {
   }
 
   render() {
+    const {
+      companyQuery,
+      region,
+      jobTitle,
+      experienceInYear,
+      education,
+      isCurrentlyEmployed,
+      jobEndingTimeYear,
+      jobEndingTimeMonth,
+      salaryType,
+      salaryAmount,
+      weekWorkTime,
+      recommendToOthers,
+      title,
+      sections,
+    } = this.state;
+
     return (
       <div className={styles.container}>
         <h1
@@ -123,6 +144,29 @@ class WorkExperiencesForm extends React.Component {
         >
           工作經驗分享
         </h1>
+        <WorkInfo
+          handleState={this.handleState}
+          companyQuery={companyQuery}
+          region={region}
+          jobTitle={jobTitle}
+          experienceInYear={experienceInYear}
+          education={education}
+          isCurrentlyEmployed={isCurrentlyEmployed}
+          jobEndingTimeYear={jobEndingTimeYear}
+          jobEndingTimeMonth={jobEndingTimeMonth}
+          salaryType={salaryType}
+          salaryAmount={salaryAmount}
+          weekWorkTime={weekWorkTime}
+          recommendToOthers={recommendToOthers}
+        />
+        <WorkExperience
+          handleState={this.handleState}
+          title={title}
+          sections={handleBlocks(sections)}
+          appendSection={this.appendBlock('sections')}
+          removeSection={this.removeBlock('sections')}
+          editSection={this.editBlock('sections')}
+        />
       </div>
     );
   }
