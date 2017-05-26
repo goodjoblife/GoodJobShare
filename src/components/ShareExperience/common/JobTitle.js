@@ -6,7 +6,7 @@ import {
   lteLength,
 } from 'utils/dataCheckUtil';
 
-import InputTitle from '../../common/InputTitle';
+import InputTitle from './InputTitle';
 
 const JobTitle = ({ jobTitle, onChange }) => (
   <div>

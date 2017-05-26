@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 
 import Select from 'common/form/Select';
-import InputTitle from '../../common/InputTitle';
+import InputTitle from './InputTitle';
 
 import {
   experienceInYearOptions,
-} from '../../common/optionMap';
+} from './optionMap';
 
 const ExperienceInYear = ({ experienceInYear, onChange }) => (
   <div>

@@ -4,14 +4,14 @@ import i from 'common/icons';
 import styles from '../../ShareExperience.module.css';
 
 import IconHeading from '../../common/IconHeading';
-import CompanyQuery from './CompanyQuery';
-import Region from './Region';
-import JobTitle from './JobTitle';
-import ExperienceInYear from './ExperienceInYear';
-import Education from './Education';
+import CompanyQuery from '../../common/CompanyQuery';
+import Region from '../../common/Region';
+import JobTitle from '../../common/JobTitle';
+import ExperienceInYear from '../../common/ExperienceInYear';
+import Education from '../../common/Education';
 import InterviewTime from './InterviewTime';
 import InterviewResult from './InterviewResult';
-import Salary from './Salary';
+import Salary from '../../common/Salary';
 import OverallRating from './OverallRating';
 
 class InterviewInfo extends React.PureComponent {
