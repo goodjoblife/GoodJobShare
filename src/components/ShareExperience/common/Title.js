@@ -6,9 +6,9 @@ import {
   lteLength,
 } from 'utils/dataCheckUtil';
 
-import InputTitle from '../../common/InputTitle';
+import InputTitle from './InputTitle';
 
-const Title = ({ title, onChange }) => (
+const Title = ({ title, onChange, placeholder }) => (
   <div>
     <InputTitle
       text="標題"
@@ -16,7 +16,7 @@ const Title = ({ title, onChange }) => (
     />
     <TextInput
       value={title}
-      placeholder="ＯＯ 股份有限公司面試經驗分享"
+      placeholder={placeholder}
       onChange={e => onChange(e.target.value)}
       isWarning={!lteLength(25)(title)}
       warningWording="請輸入25個字以內"
@@ -27,6 +27,7 @@ const Title = ({ title, onChange }) => (
 Title.propTypes = {
   title: PropTypes.string,
   onChange: PropTypes.func,
+  placeholder: PropTypes.string,
 };
 
 export default Title;

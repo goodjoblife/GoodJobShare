@@ -6,8 +6,8 @@ import i from 'common/icons';
 import styles from '../../ShareExperience.module.css';
 
 import IconHeading from '../../common/IconHeading';
-import Title from './Title';
-import Sections from './Sections';
+import Title from '../../common/Title';
+import Sections from '../../common/Sections';
 import InterviewQas from './InterviewQas';
 import InterviewSensitiveQuestions from './InterviewSensitiveQuestions';
 
@@ -48,6 +48,7 @@ class InterviewExperience extends Component {
             <Title
               title={title}
               onChange={handleState('title')}
+              placeholder="ＯＯ 股份有限公司面試經驗分享"
             />
           </div>
           <div

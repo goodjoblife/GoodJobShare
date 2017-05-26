@@ -65,6 +65,7 @@ class InterviewInfo extends React.PureComponent {
             }}
           >
             <JobTitle
+              inputTitle="應徵職稱"
               jobTitle={jobTitle}
               onChange={handleState('jobTitle')}
             />

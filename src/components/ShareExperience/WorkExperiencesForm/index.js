@@ -51,7 +51,7 @@ const defaultForm = {
   jobEndingTimeYear: null,
   jobEndingTimeMonth: null,
   salaryType: 'month',
-  salaryAmount: null,
+  salaryAmount: 0,
   weekWorkTime: 40,
   recommendToOthers: null,
   overallRating: 0,

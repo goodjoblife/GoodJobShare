@@ -69,7 +69,7 @@ const defaultForm = {
   interviewTimeMonth: null,
   interviewResult: null,
   salaryType: 'month',
-  salaryAmount: '',
+  salaryAmount: 0,
   overallRating: 0,
   title: '',
   sections: {
