@@ -44,6 +44,5 @@ if (module.hot) {
   });
 } else {
   app = <Root store={store} history={history} />;
+  render(app, rootElement);
 }
-
-render(app, rootElement);
