@@ -1,10 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { browserHistory } from 'react-router';
+import { browserHistory, match } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { fromJS } from 'immutable';
 
 import Root from './containers/Root';
+import createRoutes from './routes';
 import configureStore from './store/configureStore';
 
 const preloadedState = {};
@@ -22,6 +23,10 @@ const store = configureStore(preloadedState, browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
 const rootElement = document.getElementById('root');
 
+const { pathname, search, hash } = window.location;
+const location = `${pathname}${search}${hash}`;
+const routes = createRoutes();
+
 let app;
 
 if (module.hot) {
@@ -35,15 +40,22 @@ if (module.hot) {
   module.hot.accept('./containers/Root', () => {
     const NewRoot = require('./containers/Root').default; // eslint-disable-line global-require
 
-    render(
-      <AppContainer>
-        <NewRoot store={store} history={history} />
-      </AppContainer>,
-      rootElement
-    );
+    const { pathname, search, hash } = window.location; // eslint-disable-line
+    const location = `${pathname}${search}${hash}`; // eslint-disable-line
+
+    match({ location, routes }, () => {
+      render(
+        <AppContainer>
+          <NewRoot store={store} history={history} />
+        </AppContainer>,
+        rootElement
+      );
+    });
   });
 } else {
   app = <Root store={store} history={history} />;
 }
 
-render(app, rootElement);
+match({ location, routes }, () => {
+  render(app, rootElement);
+});
