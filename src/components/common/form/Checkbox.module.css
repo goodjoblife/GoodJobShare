@@ -1,4 +1,4 @@
-@value main-yellow from "../variables.module.css";
+@value main-yellow, main-gray from "../variables.module.css";
 
 .formGroup {
   position: relative;
@@ -20,6 +20,7 @@
       border: 1px solid #000;
       margin-right: 10px;
       transition: all .3s;
+      cursor: pointer;
     }
     .checkboxText {
       text-transform: capitalize;
@@ -55,6 +56,16 @@
       height: 12px;
       //border-color: #fff;
       transform: translate3d(-.1em,-.4em,0) rotate(15deg);
+    }
+  }
+
+  &.disabled {
+    pointer-events: none;
+    input[type="checkbox"] + label {
+      color: main-gray;
+      .checkboxInput {
+        border: 1px solid main-gray;
+      }
     }
   }
 }

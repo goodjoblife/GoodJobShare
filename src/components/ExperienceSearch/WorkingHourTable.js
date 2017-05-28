@@ -7,6 +7,15 @@ class WorkingHourTable extends Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
   }
+  static getTitle = (val, row) => (
+    <div>
+      {val}
+      {' '}
+      <span className={`pM ${styles.sector}`}>
+        {row.sector}
+      </span>
+    </div>
+  )
   static getWorkingTime = val => (
     <div
       className={styles.bar}
@@ -75,12 +84,13 @@ class WorkingHourTable extends Component {
     const { data } = this.props;
 
     return (
-      <Table data={data} primaryKey="_id">
-        <Table.Column dataField="company.name">
-          公司名稱
+      <Table data={data} primaryKey="created_at">
+        <Table.Column
+          dataField="job_title"
+          dataFormatter={WorkingHourTable.getTitle}
+        >
+          職稱
         </Table.Column>
-
-        <Table.Column dataField="job_title">職稱</Table.Column>
         {/* <Column dataField="name">表訂 / 實際工時</Column> */}
 
         <Table.Column

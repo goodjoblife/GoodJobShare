@@ -1,134 +1,213 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 
 import styles from './ExperienceSearch.module.css';
 import Search from '../images/search.svg';
-import Alert from '../common/Alert';
+// import Alert from '../common/Alert';
 import ExperienceBlock from './ExperienceBlock';
 import WorkingHourBlock from './WorkingHourBlock';
 import Radio from '../common/form/Radio';
 import Checkbox from '../common/form/Checkbox';
+import { fetchExperiences } from '../../actions/experienceSearch';
 
-let cmpAlert;
+// let cmpAlert;
 
-const ExperienceSearch = ({
-  setSort, setSearchType, setIndustry, setCondition,
-  experienceSearch,
-}) => (
-  <main className="wrapperL">
-    <Helmet title="面試‧工作經驗" />
-    <Alert ref={c => { cmpAlert = c; }}>
-      <p>test</p>
-    </Alert>
-    <div className={styles.container}>
-      <aside>
-        <button
-          className={experienceSearch.get('sort') === 'created_at'
-            ? `${styles.frontButton} ${styles.toggle}`
-            : styles.frontButton}
-          onClick={setSort} value="created_at"
-        >
-          最新
-        </button>
-        <button
-          className={experienceSearch.get('sort') === 'popularity'
-            ? `${styles.rearButton} ${styles.toggle}`
-            : styles.rearButton}
-          onClick={setSort} value="popularity"
-        >
-          熱門
-        </button>
+class ExperienceSearch extends Component {
+  static fetchData({ store: { dispatch } }) {
+    return dispatch(fetchExperiences('sort', ''));
+  }
 
-        <div className={styles.splitter} />
+  static propTypes = {
+    // setSort: PropTypes.func.isRequired,
+    setSearchType: PropTypes.func.isRequired,
+    // setIndustry: PropTypes.func.isRequired,
+    // setSearchBy: PropTypes.func.isRequired,
+    setKeyword: PropTypes.func.isRequired,
+    fetchExperiences: PropTypes.func.isRequired,
+    fetchWorkings: PropTypes.func.isRequired,
+    fetchKeywords: PropTypes.func.isRequired,
+    experienceSearch: ImmutablePropTypes.map.isRequired,
+  }
 
-        {
-          [
-            { label: '面試經驗', value: 'interview' },
-            { label: '工作經驗', value: 'work' },
-            { label: '薪時資料', value: 'salary' },
-          ].map(o => (
-            <Checkbox
-              key={o.value} id={`searchType-${o.value}`}
-              label={o.label} value={o.value}
-              onChange={setSearchType} checked={experienceSearch.get(o.value)}
-            />
-          ))
-        }
+  constructor() {
+    super();
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleKeywordClick = this.handleKeywordClick.bind(this);
+    this.fetchExperiencesWithSort = this.fetchExperiencesWithSort.bind(this);
+  }
 
-        <div className={styles.splitter} />
+  componentDidMount() {
+    this.props.fetchExperiences('sort', '');
+    this.props.fetchKeywords('');
+  }
 
-        {
-          [
-            { label: '全部', value: 'all' },
-            { label: '金融業', value: 'finance' },
-            { label: '製造業', value: 'manufacturing' },
-            { label: '運輸業', value: 'transportation' },
-            { label: '科技業', value: 'technology' },
-          ].map(o => (
-            <Radio
-              key={o.value} id={`industry-${o.value}`}
-              label={o.label} value={o.value}
-              onChange={setIndustry}
-              checked={experienceSearch.get('industry') === o.value}
-            />
-          ))
-        }
-      </aside>
+  handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      const val = e.target.value;
+      this.fetchExperiencesAndWorkings(val);
+    }
+  }
 
-      <div className={styles.content}>
-        <div className={styles.searchbar}>
-          <div className={styles.condition}>
+  handleKeywordClick(e) {
+    const val = e.target.innerHTML;
+    this.fetchExperiencesAndWorkings(val);
+  }
+
+  fetchExperiencesAndWorkings(val) {
+    this.props.fetchExperiences('searchBy', val);
+    this.props.fetchWorkings(val);
+  }
+
+  fetchExperiencesWithSort(e) {
+    this.props.fetchExperiences('sort', e.target.value);
+  }
+
+  render() {
+    const {
+      /* setSort, */ setSearchType, /* setIndustry, */ fetchKeywords, setKeyword,
+      experienceSearch,
+    } = this.props;
+    const data = experienceSearch.toJS();
+    console.log('-->', experienceSearch, data);
+    return (
+      <main className="wrapperL">
+        <Helmet title="面試‧工作經驗" />
+        {/*
+          <Alert ref={c => { cmpAlert = c; }}>
+            <p>test</p>
+          </Alert>
+        */}
+        <div className={styles.container}>
+          <aside>
+            <button
+              className={data.sort === 'created_at'
+                ? `${styles.frontButton} ${styles.toggle}`
+                : styles.frontButton}
+              onClick={this.fetchExperiencesWithSort} value="created_at"
+            >
+              最新
+            </button>
+            <button
+              className={data.sort === 'popularity'
+                ? `${styles.rearButton} ${styles.toggle}`
+                : styles.rearButton}
+              onClick={this.fetchExperiencesWithSort} value="popularity"
+            >
+              熱門
+            </button>
+
+            <div className={styles.splitter} />
+
             {
               [
-                { label: '公司', value: 'company' },
-                { label: '職稱', value: 'job_title' },
+                { label: '面試經驗', value: 'interview' },
+                { label: '工作經驗', value: 'work' },
+                { label: '薪時資料', value: 'salary' },
               ].map(o => (
-                <Radio
-                  key={o.value} id={`condition-${o.value}`}
-                  label={o.label} value={o.value} inline
-                  onChange={setCondition}
-                  checked={experienceSearch.get('condition') === o.value}
+                <Checkbox
+                  key={o.value} id={`searchType-${o.value}`}
+                  label={o.label} value={o.value}
+                  disabled={o.value === 'salary' && !data.searchQuery}
+                  onChange={setSearchType} checked={data[o.value]}
                 />
               ))
             }
-          </div>
-          <div className={styles.search}>
-            <input
-              type="text"
-              placeholder={
-                experienceSearch.get('condition') === 'company'
-                  ? '以公司搜尋'
-                  : '以職稱搜尋'
-              }
-            />
-            <Search
-              onClick={() => {
-                console.log('oh oh');
-                cmpAlert.show();
-              }}
-            />
-            <div className={styles.keywordGroup}>
-              <span className={styles.keyword}>醫師</span>
-              <span className={styles.keyword}>工程師</span>
+            {/*
+            <div className={styles.splitter} />
+
+            {
+              [
+                { label: '全部', value: 'all' },
+                { label: '金融業', value: 'finance' },
+                { label: '製造業', value: 'manufacturing' },
+                { label: '運輸業', value: 'transportation' },
+                { label: '科技業', value: 'technology' },
+              ].map(o => (
+                <Radio
+                  key={o.value} id={`industry-${o.value}`}
+                  label={o.label} value={o.value}
+                  onChange={setIndustry}
+                  checked={data.industry === o.value}
+                />
+              ))
+            }
+            */}
+          </aside>
+
+          <div className={styles.content}>
+            <div className={styles.searchbar}>
+              <div className={styles.condition}>
+                {
+                  [
+                    { label: '公司', value: 'company' },
+                    { label: '職稱', value: 'job_title' },
+                  ].map(o => (
+                    <Radio
+                      key={o.value} id={`condition-${o.value}`}
+                      label={o.label} value={o.value} inline
+                      onChange={fetchKeywords}
+                      checked={data.searchBy === o.value}
+                    />
+                  ))
+                }
+              </div>
+              <div className={styles.search}>
+                <input
+                  type="text"
+                  onKeyPress={this.handleKeyPress}
+                  onChange={setKeyword}
+                  value={data.keyword}
+                  placeholder={
+                    data.searchBy === 'company'
+                      ? '以公司搜尋'
+                      : '以職稱搜尋'
+                  }
+                />
+                <Search
+                  onClick={() => {
+                    // cmpAlert.show();
+                    const val = data.keyword;
+                    this.fetchExperiencesAndWorkings(val);
+                  }}
+                />
+                <div className={styles.keywordGroup}>
+                  {
+                    (data.keywords || []).map(o => (
+                      <span
+                        key={o} className={styles.keyword}
+                        onClick={this.handleKeywordClick}
+                      >
+                        {o}
+                      </span>
+                    ))
+                  }
+                </div>
+              </div>
             </div>
+            {data.searchQuery &&
+              <div className={styles.info}>
+                找到 {data.experienceCount} 筆與 &quot;{data.searchQuery}&quot; 相關的資料
+              </div>
+            }
+            <br />
+
+            {
+              (data.experiences || []).map(o => (
+                data[o.type] && <ExperienceBlock key={o._id} data={o} />
+              ))
+            }
+
+            {
+              data.salary && (data.workings || []).map((o, i) => (
+                <WorkingHourBlock key={o.company.id || i} data={o} />
+              ))
+            }
           </div>
         </div>
-        <div className={styles.info}>找到 5 筆與 &quot;日月光&quot; 相關的資料</div>
-        <br />
-        <ExperienceBlock />
-        <WorkingHourBlock />
-      </div>
-    </div>
-  </main>
-);
-
-ExperienceSearch.propTypes = {
-  setSort: PropTypes.func.isRequired,
-  setSearchType: PropTypes.func.isRequired,
-  setIndustry: PropTypes.func.isRequired,
-  setCondition: PropTypes.func.isRequired,
-  experienceSearch: ImmutablePropTypes.map.isRequired,
-};
+      </main>
+    );
+  }
+}
 
 export default ExperienceSearch;

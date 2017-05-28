@@ -4,16 +4,15 @@ import Heart from '../images/heart.svg';
 
 import styles from './OvertimeBlock.module.css';
 
-const OvertimeBlock = ({ heading, noData, noDataText }) => (
+const OvertimeBlock = ({ heading, data, noDataText }) => (
   <div>
     <div className={`pMBold ${styles.heading}`}>
       <Heart />
       <span>{heading}</span>
     </div>
     {
-      noData
-      ? <div className={`pM ${styles.noData}`}>{noDataText}</div>
-      : (<div className={`pMBold ${styles.data}`}>
+      data
+      ? (<div className={`pMBold ${styles.data}`}>
 
         <div className={styles.positive}>
           <div className={styles.stat}>
@@ -21,15 +20,15 @@ const OvertimeBlock = ({ heading, noData, noDataText }) => (
             <div className="pS">
               <div className={styles.subStat}>
                 <div>優於或符合勞基法</div>
-                <div>3</div>
+                <div>{data.yes || '-'}</div>
               </div>
               <div className={styles.subStat}>
                 <div>不符合勞基法</div>
-                <div>-</div>
+                <div>{data.no || '-'}</div>
               </div>
               <div className={styles.subStat}>
                 <div>不清楚是否符合勞基法</div>
-                <div>5</div>
+                <div>{data["don't know"] || '-'}</div>
               </div>
             </div>
           </div>
@@ -49,13 +48,14 @@ const OvertimeBlock = ({ heading, noData, noDataText }) => (
         </div>
 
       </div>)
+      : <div className={`pM ${styles.noData}`}>{noDataText}</div>
     }
   </div>
 );
 
 OvertimeBlock.propTypes = {
   heading: PropTypes.string,
-  noData: PropTypes.bool,
+  data: PropTypes.object,
   noDataText: PropTypes.string,
 };
 

@@ -1,43 +1,71 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import Block from 'common/Block';
 import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
+import { formatWithCommas } from '../../utils/numberUtil';
 
 import styles from './ExperienceBlock.module.css';
 
-class ExperienceBlock extends React.Component {
-  // static propTypes = {
-  //   children: PropTypes.node,
-  // }
+class ExperienceBlock extends Component {
+  static propTypes = {
+    data: PropTypes.object.isRequired,
+  }
 
   render() {
+    const { data } = this.props;
+    const expType = data.type === 'interview' ? '面試' : '工作';
+    const date = new Date(Date.parse(data.created_at));
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const { salary } = data;
+    const splitter = '　•　';
+    let salaryType;
+    let salaryAmount;
+
+    if (salary) {
+      switch (salary.type) {
+        case 'year':
+          salaryType = '年';
+          break;
+        case 'month':
+          salaryType = '月';
+          break;
+        case 'day':
+          salaryType = '日';
+          break;
+        default: // 'hour':
+          salaryType = '小時';
+      }
+      salaryAmount = formatWithCommas(salary.amount);
+    }
+
     return (
       <Block>
         <div className={styles.container}>
 
           <div className={`pS ${styles.createdDate}`}>
-            {'面試　•　2016 年 12 月'}
+            {`${expType}${splitter}${year} 年 ${month} 月`}
           </div>
 
-          <div className={`headingM ${styles.heading}`}>
-            日月光半導體面試經驗分享
+          <div className={`headingMBold ${styles.heading}`}>
+            {data.title}
           </div>
 
           <div className={`pSBold ${styles.label}`}>
-            <div>日月光半導體製造股份有限公司</div>
-            <div>專案工程師</div>
-            <div>台北市</div>
-            <div>34700/月</div>
+            <div>{data.company.name}</div>
+            <div>{data.job_title}</div>
+            <div>{data.region}</div>
+            {salary && <div>{`${salaryAmount} / ${salaryType}`}</div>}
           </div>
 
           <div className={`pM ${styles.content}`}>
-            這個是面試內容，這個是面試內容，這個是面試內容，這個是面試內容，這個是面試內容。
+            {data.preview}
           </div>
 
           <div className={styles.reaction}>
-            <ThumbsUp count={15} toggled onClick={e => { console.log(e); }} />
-            <Comment count={35} />
+            <ThumbsUp count={data.like_count} />
+            <Comment count={data.reply_count} />
           </div>
 
         </div>
