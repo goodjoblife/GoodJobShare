@@ -1,8 +1,20 @@
+import fetchUtil from '../utils/fetchUtil';
+import status from '../constants/status';
+
 export const SET_EXPERIENCE = '@@experienceDetail/SET_EXPERIENCE';
+export const SET_REPLY_STATUS = '@@experienceDetail/SET_REPLY_STATUS';
+export const SET_REPLIES = '@@experienceDetail/SET_REPLIES';
 
 export const setExperience = experience => ({
   type: SET_EXPERIENCE,
   experience,
+});
+
+export const setReplies = replies => ({
+  type: SET_REPLIES,
+  replyStatus: status.FETCHED,
+  replyError: null,
+  replies,
 });
 
 export const fetchExperience = _id =>
@@ -41,3 +53,48 @@ export const fetchExperience = _id =>
 
     dispatch(setExperience(experience));
   };
+
+export const fetchReplies = () => dispatch => {
+  const mock = [
+    {
+      _id: 'xxxxxx',
+      content: '我是留言內容',
+      like_count: 0,
+      report_count: 1,
+      liked: false,
+      created_at: '2016-03-10T00:00:00.000Z',
+      floor: 1,
+    },
+    {
+      _id: 'ooooo',
+      content: 'hihi',
+      like_count: 100,
+      report_count: 0,
+      liked: true,
+      created_at: '2016-03-11T00:00:00.000Z',
+      floor: 2,
+    },
+  ];
+
+  dispatch(setReplies(mock));
+};
+
+export const fetchReplies2 = id => dispatch => {
+  dispatch({
+    type: SET_REPLY_STATUS,
+    replyStatus: status.FETCHING,
+  });
+
+  return fetchUtil(`/experiences/${id}/replies`)('GET')
+    .then(result => {
+      dispatch(setReplies(result.replies));
+    })
+    .catch(error => {
+      dispatch({
+        type: SET_REPLIES,
+        replyStatus: status.ERROR,
+        replyError: error,
+        replies: [],
+      });
+    });
+};

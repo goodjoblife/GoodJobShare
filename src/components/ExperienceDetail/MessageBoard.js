@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import Button from 'common/button/Button';
 import Checkbox from 'common/form/Checkbox';
@@ -6,7 +6,7 @@ import CommentBlock from './CommentBlock';
 
 import styles from './MessageBoard.module.css';
 
-const MessageBoard = () => (
+const MessageBoard = ({ replies }) => (
   <div className={styles.container}>
     <div className="formLabel">共 3 則回應</div>
     <hr />
@@ -20,11 +20,15 @@ const MessageBoard = () => (
       <Button btnStyle="submit">發佈留言</Button>
     </div>
     <div className={styles.commentBlocks}>
-      <CommentBlock className={styles.test} />
-      <CommentBlock />
-      <CommentBlock />
+      {
+        (replies || []).map(o => <CommentBlock key={o._id} reply={o} />)
+      }
     </div>
   </div>
 );
+
+MessageBoard.propTypes = {
+  replies: PropTypes.array.isRequired,
+};
 
 export default MessageBoard;
