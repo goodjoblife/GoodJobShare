@@ -1,6 +1,7 @@
 import { Map, fromJS } from 'immutable';
 
 import createReducer from 'utils/createReducer';
+import status from '../constants/status';
 import {
   SET_SORT,
   SET_SEARCH_TYPE,
@@ -10,6 +11,7 @@ import {
   SET_WORKINGS,
   SET_KEYWORD,
   SET_KEYWORDS,
+  SET_LOADING_STATUS,
   SET_SEARCH_QUERY_AND_EXPERIENCES,
   SET_KEYWORDS_AND_EXPERIENCES,
   SET_SORT_AND_EXPERIENCES,
@@ -28,7 +30,8 @@ const preloadedState = Map({
   experiences: [],
   experienceCount: 0,
   workings: [],
-  // error: null,
+  loadingStatus: status.UNFETCHED,
+  error: null,
 });
 
 const experienceSearch = createReducer(preloadedState, {
@@ -46,19 +49,28 @@ const experienceSearch = createReducer(preloadedState, {
   [SET_KEYWORD]: (state, action) =>
     state.update('keyword', () => action.keyword),
 
+  [SET_LOADING_STATUS]: (state, action) =>
+    state.update('loadingStatus', () => action.loadingStatus),
+
   [SET_EXPERIENCES]: (state, action) =>
-    state.update('experiences', () => fromJS(action.experiences || []))
-      .update('experienceCount', () => action.experienceCount),
+    state.merge({
+      experiences: fromJS(action.experiences || []),
+      experienceCount: action.experienceCount,
+    }),
 
   [SET_WORKINGS]: (state, action) =>
     state.update('workings', () => fromJS(action.workings || [])),
 
   [SET_KEYWORDS]: (state, action) =>
-    state.update('searchBy', () => action.searchBy)
-      .update('keywords', () => fromJS(action.keywords || [])),
+    state.merge({
+      searchBy: action.searchBy,
+      keywords: fromJS(action.keywords || []),
+    }),
 
   [SET_SORT_AND_EXPERIENCES]: (state, action) =>
     state.merge({
+      loadingStatus: action.loadingStatus,
+      error: action.error,
       sort: action.sort,
       keyword: action.searchQuery,
       searchQuery: action.searchQuery,
@@ -70,6 +82,8 @@ const experienceSearch = createReducer(preloadedState, {
 
   [SET_SEARCH_QUERY_AND_EXPERIENCES]: (state, action) =>
     state.merge({
+      loadingStatus: action.loadingStatus,
+      error: action.error,
       keyword: action.searchQuery,
       searchQuery: action.searchQuery,
       experienceCount: action.experienceCount,

@@ -60,7 +60,7 @@ class ExperienceBlock extends Component {
           </div>
 
           <div className={`pM ${styles.content}`}>
-            {data.preview}
+            {data.preview} ... (閱讀更多)
           </div>
 
           <div className={styles.reaction}>

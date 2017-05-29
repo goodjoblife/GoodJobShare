@@ -1,15 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
+import Link from 'react-router/lib/Link';
 
+import Radio from 'common/form/Radio';
+import Checkbox from 'common/form/Checkbox';
+import Loader from 'common/Loader';
+// import Alert from 'common/Alert';
 import styles from './ExperienceSearch.module.css';
 import Search from '../images/search.svg';
-// import Alert from '../common/Alert';
 import ExperienceBlock from './ExperienceBlock';
 import WorkingHourBlock from './WorkingHourBlock';
-import Radio from '../common/form/Radio';
-import Checkbox from '../common/form/Checkbox';
 import { fetchExperiences } from '../../actions/experienceSearch';
+import status from '../../constants/status';
 
 // let cmpAlert;
 
@@ -185,6 +188,9 @@ class ExperienceSearch extends Component {
                 </div>
               </div>
             </div>
+
+            {data.loadingStatus === status.FETCHING && <Loader />}
+
             {data.searchQuery &&
               <div className={styles.info}>
                 找到 {data.experienceCount} 筆與 &quot;{data.searchQuery}&quot; 相關的資料
@@ -194,7 +200,11 @@ class ExperienceSearch extends Component {
 
             {
               (data.experiences || []).map(o => (
-                data[o.type] && <ExperienceBlock key={o._id} data={o} />
+                data[o.type] && (
+                  <Link key={o._id} to={`/experiences/${o._id}`}>
+                    <ExperienceBlock data={o} />
+                  </Link>
+                )
               ))
             }
 
