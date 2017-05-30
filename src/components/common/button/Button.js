@@ -4,7 +4,9 @@ import ArrowLeft from '../../images/arrow-left.svg';
 
 import styles from './Button.module.css';
 
-const Button = ({ circleSize, btnStyle, children, onClick }) => {
+const Button = ({
+  circleSize, btnStyle, disabled, children, onClick,
+}) => {
   let cnCircleSize = '';
   let cnBtnStyle;
 
@@ -37,6 +39,7 @@ const Button = ({ circleSize, btnStyle, children, onClick }) => {
   return (
     <button
       className={`${cnCircleSize} ${cnBtnStyle} ${styles.button}`}
+      disabled={disabled}
       onClick={onClick}
     >
       {btnStyle === 'back' && <ArrowLeft className={styles.arrowLeft} />}
@@ -48,6 +51,7 @@ const Button = ({ circleSize, btnStyle, children, onClick }) => {
 Button.propTypes = {
   circleSize: PropTypes.string,
   btnStyle: PropTypes.string,
+  disabled: PropTypes.bool,
   children: PropTypes.node,
   onClick: PropTypes.func,
 };

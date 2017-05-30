@@ -10,14 +10,36 @@ import MessageBoard from './MessageBoard';
 import status from '../../constants/status';
 
 class ExperienceDetail extends Component {
+  static propTypes = {
+    experienceDetail: ImmutablePropTypes.map.isRequired,
+    fetchExperience: React.PropTypes.func.isRequired,
+    fetchReplies: React.PropTypes.func.isRequired,
+    setTos: React.PropTypes.func.isRequired,
+    likeReply: React.PropTypes.func.isRequired,
+    setComment: React.PropTypes.func.isRequired,
+    submitComment: React.PropTypes.func.isRequired,
+    params: React.PropTypes.object.isRequired,
+  }
+
+  constructor() {
+    super();
+    this.submitComment = this.submitComment.bind(this);
+  }
+
   componentDidMount() {
     this.props.fetchExperience(this.props.params.id);
     this.props.fetchReplies(this.props.params.id);
   }
 
+  submitComment() {
+    const { experienceDetail } = this.props;
+    const data = experienceDetail.toJS();
+    this.props.submitComment(data.experience._id);
+  }
+
   render() {
     const {
-      experienceDetail,
+      experienceDetail, setTos, setComment, likeReply,
     } = this.props;
     const data = experienceDetail.toJS();
     const experience = data.experience;
@@ -46,18 +68,17 @@ class ExperienceDetail extends Component {
         {
           data.loadingStatus === status.FETCHING
           ? <Loader />
-          : <MessageBoard replies={data.replies} />
+          : <MessageBoard
+            replies={data.replies}
+            likeReply={likeReply}
+            tos={data.tos} setTos={setTos}
+            comment={data.comment} setComment={setComment}
+            submitComment={this.submitComment}
+          />
         }
       </main>
     );
   }
 }
-
-ExperienceDetail.propTypes = {
-  experienceDetail: ImmutablePropTypes.map.isRequired,
-  fetchExperience: React.PropTypes.func.isRequired,
-  fetchReplies: React.PropTypes.func.isRequired,
-  params: React.PropTypes.object.isRequired,
-};
 
 export default ExperienceDetail;
