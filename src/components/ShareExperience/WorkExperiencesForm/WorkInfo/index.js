@@ -9,6 +9,8 @@ import ExperienceInYear from '../../common/ExperienceInYear';
 import Education from '../../common/Education';
 import Salary from '../../common/Salary';
 
+import IsEmployed from './IsEmployed';
+
 class WorkInfo extends React.PureComponent {
   render() {
     const {
@@ -18,6 +20,9 @@ class WorkInfo extends React.PureComponent {
       jobTitle,
       experienceInYear,
       education,
+      isCurrentlyEmployed,
+      jobEndingTimeYear,
+      jobEndingTimeMonth,
       salaryType,
       salaryAmount,
     } = this.props;
@@ -90,6 +95,20 @@ class WorkInfo extends React.PureComponent {
           </div>
           <div
             style={{
+              marginBottom: '47px',
+            }}
+          >
+            <IsEmployed
+              isCurrentlyEmployed={isCurrentlyEmployed}
+              jobEndingTimeYear={jobEndingTimeYear}
+              jobEndingTimeMonth={jobEndingTimeMonth}
+              onIsCurrentlyEmployed={handleState('isCurrentlyEmployed')}
+              onJobEndingTimeYear={handleState('jobEndingTimeYear')}
+              onJobEndingTimeMonth={handleState('jobEndingTimeMonth')}
+            />
+          </div>
+          <div
+            style={{
               marginBottom: '57px',
             }}
           >
@@ -122,9 +141,9 @@ WorkInfo.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
-  // isCurrentlyEmployed: PropTypes.string,
-  // jobEndingTimeYear: PropTypes.number,
-  // jobEndingTimeMonth: PropTypes.number,
+  isCurrentlyEmployed: PropTypes.string,
+  jobEndingTimeYear: PropTypes.number,
+  jobEndingTimeMonth: PropTypes.number,
   salaryType: PropTypes.string,
   salaryAmount: PropTypes.number,
   // weekWorkTime: PropTypes.number,
