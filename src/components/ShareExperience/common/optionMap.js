@@ -177,3 +177,13 @@ export const isEmployedOptions = [
     value: 'no',
   },
 ];
+
+export const jobEndingTimeYearOptions = Array(11).fill(0).map((_, index) => ({
+  label: new Date().getFullYear() - index,
+  value: new Date().getFullYear() - index,
+}));
+
+export const jobEndingTimeMonthOptions = Array(12).fill(0).map((_, index) => ({
+  label: index,
+  value: index,
+}));
