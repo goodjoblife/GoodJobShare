@@ -5,6 +5,7 @@ import Loader from 'common/Loader';
 
 import styles from './ExperienceDetail.module.css';
 import Article from './Article';
+import ReactionZone from './ReactionZone';
 import RecommendationZone from './RecommendationZone';
 import MessageBoard from './MessageBoard';
 import status from '../../constants/status';
@@ -58,6 +59,7 @@ class ExperienceDetail extends Component {
         <Article />
 
         { /* 按讚，分享，檢舉區塊  */}
+        <ReactionZone />
 
         { /* 返回列表 */}
 

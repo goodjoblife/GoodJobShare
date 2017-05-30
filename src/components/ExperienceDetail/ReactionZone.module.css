@@ -1,0 +1,24 @@
+@value border-gray from "../common/variables.module.css";
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid border-gray;
+  border-top: 0;
+
+  .left {
+    display: flex;
+    > div {
+      padding: 10px 30px;
+      border-right: 1px solid border-gray;
+    }
+  }
+
+  .right {
+    display: flex;
+    > div {
+      padding: 10px 30px;
+    }
+  }
+}
