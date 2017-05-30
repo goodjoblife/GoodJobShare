@@ -165,3 +165,15 @@ export const overallRatingDialogMap = {
   4: '很好！',
   5: '大推！',
 };
+
+
+export const isEmployedOptions = [
+  {
+    label: '在職',
+    value: 'yes',
+  },
+  {
+    label: '已離職',
+    value: 'no',
+  },
+];
