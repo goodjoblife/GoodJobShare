@@ -5,6 +5,8 @@ import {
   makeId,
 } from 'utils/stringUtil';
 
+import styles from './RadioDefault.module.css';
+
 class RadioDefault extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -33,14 +35,26 @@ class RadioDefault extends React.PureComponent {
           checked={checked}
           value={value}
           onChange={e => onChange(e.target.value)}
+          style={{
+            display: 'none',
+          }}
+        />
+        <span
+          className={checked ? styles.checked : styles.unchecked}
         />
         <span
           style={{
             display: 'inline-block',
+            verticalAlign: 'middle',
             marginLeft: '6.5px',
           }}
         >
-          <p>
+          <p
+            style={{
+              color: '#333333',
+            }}
+            className="pM"
+          >
             {label}
           </p>
         </span>
