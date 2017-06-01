@@ -1,0 +1,19 @@
+.radio {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 20px 64px;
+  background: #F0F0F0;
+}
+
+.checked {
+  composes: radio;
+  background-color: #606060;
+}
+
+.unchecked {
+  composes: radio;
+
+  &:hover {
+    background: #D8D8D8;
+  }
+}

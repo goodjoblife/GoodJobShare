@@ -187,3 +187,18 @@ export const jobEndingTimeMonthOptions = Array(12).fill(0).map((_, index) => ({
   label: index,
   value: index,
 }));
+
+export const recommendToOthersOptions = [
+  {
+    label: '推',
+    value: 'yes',
+  },
+  {
+    label: '不推',
+    value: 'no',
+  },
+  {
+    label: '難說喔',
+    value: "don't know",
+  },
+];

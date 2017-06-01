@@ -10,6 +10,7 @@ import Education from '../../common/Education';
 import Salary from '../../common/Salary';
 
 import IsEmployed from './IsEmployed';
+import RecommendToOthers from './RecommendToOthers';
 
 class WorkInfo extends React.PureComponent {
   render() {
@@ -25,6 +26,7 @@ class WorkInfo extends React.PureComponent {
       jobEndingTimeMonth,
       salaryType,
       salaryAmount,
+      recommendToOthers,
     } = this.props;
 
     return (
@@ -119,6 +121,12 @@ class WorkInfo extends React.PureComponent {
               onSalaryAmount={handleState('salaryAmount')}
             />
           </div>
+          <div>
+            <RecommendToOthers
+              recommendToOthers={recommendToOthers}
+              onChange={handleState('recommendToOthers')}
+            />
+          </div>
         </div>
       </div>
     );
@@ -147,7 +155,7 @@ WorkInfo.propTypes = {
   salaryType: PropTypes.string,
   salaryAmount: PropTypes.number,
   // weekWorkTime: PropTypes.number,
-  // recommendToOthers: PropTypes.string,
+  recommendToOthers: PropTypes.string,
 };
 
 export default WorkInfo;
