@@ -17,3 +17,15 @@
     background: #D8D8D8;
   }
 }
+
+.content__checked {
+  > svg {
+    fill: white;
+  }
+}
+
+.content__unchecked {
+  > svg {
+      fill: black;
+    }
+}

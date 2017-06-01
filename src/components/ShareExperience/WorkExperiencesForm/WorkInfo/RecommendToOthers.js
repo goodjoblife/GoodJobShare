@@ -3,11 +3,28 @@ import PropTypes from 'prop-types';
 
 import ButtonGroupImage from 'common/button/ButtonGroupImage';
 
+import Cross from '../../../images/x.svg';
+
+
 import InputTitle from '../../common/InputTitle';
 
-import {
-  recommendToOthersOptions,
-} from '../../common/optionMap';
+const recommendToOthersOptions = [
+  {
+    label: '推',
+    value: 'yes',
+    icon: <Cross />,
+  },
+  {
+    label: '不推',
+    value: 'no',
+    icon: <Cross />,
+  },
+  {
+    label: '難說喔',
+    value: "don't know",
+    icon: <Cross />,
+  },
+];
 
 const RecommendToOthers = ({ recommendToOthers, onChange }) => (
   <div>

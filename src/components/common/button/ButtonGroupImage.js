@@ -15,12 +15,15 @@ class ButtonGroupImageEle extends React.PureComponent {
   }
 
   render() {
-    const { value, label, onChange, checked } = this.props;
+    const { value, label, onChange, checked, last, icon } = this.props;
     const id = `${this.id}-${value}`;
     return (
       <label
         htmlFor={id}
         className={checked ? styles.checked : styles.unchecked}
+        style={{
+          marginRight: last ? null : '3px',
+        }}
       >
         <input
           id={id}
@@ -36,12 +39,15 @@ class ButtonGroupImageEle extends React.PureComponent {
         <span
           style={{
             display: 'inline-block',
-            verticalAlign: 'middle',
+            textAlign: 'center',
           }}
+          className={checked ? styles.content__checked : styles.content__unchecked}
         >
+          {icon}
           <p
             style={{
               color: checked ? 'white' : '#333333',
+              marginTop: '12px',
             }}
             className="pM"
           >
@@ -68,6 +74,8 @@ ButtonGroupImageEle.propTypes = {
       PropTypes.number,
     ]
   ),
+  last: PropTypes.bool,
+  icon: PropTypes.node,
 };
 
 const ButtonGroupImage = ({ value, options, onChange }) => (
@@ -80,6 +88,7 @@ const ButtonGroupImage = ({ value, options, onChange }) => (
         onChange={onChange}
         checked={value === option.value}
         last={index === arr.length - 1}
+        icon={option.icon}
       />
     ))}
   </div>
@@ -107,6 +116,7 @@ ButtonGroupImage.propTypes = {
           PropTypes.number,
         ]
       ),
+      icon: PropTypes.node,
     }
   )),
 };
