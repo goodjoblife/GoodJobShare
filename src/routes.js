@@ -82,7 +82,7 @@ const routes = () => ({
           component: InterviewFormContainer,
         },
         {
-          path: 'work-experiences',
+          path: 'work_experiences',
           component: WorkExperiencesFormContainer,
         },
       ],

@@ -63,13 +63,13 @@ const IsEmployed = ({
       isCurrentlyEmployed === 'no' ?
         <div>
           <InputTitle
-            text="工作結束時間"
+            text="離職時間"
             must
           />
           <div
             style={{
               display: 'flex',
-              marginTop: '15px',
+              marginTop: '7px',
               alignItems: 'center',
             }}
           >
@@ -81,7 +81,7 @@ const IsEmployed = ({
             <p
               className="pS"
               style={{
-                margin: '0 10px',
+                margin: '0 35px 0 11px',
               }}
             >
               年
@@ -94,7 +94,7 @@ const IsEmployed = ({
             <p
               className="pS"
               style={{
-                margin: '0 10px',
+                margin: '0 35px 0 11px',
               }}
             >
               月
