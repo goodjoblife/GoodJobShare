@@ -185,6 +185,13 @@
       &:hover {
         background-color: main-yellow;
       }
+      &[disabled]:hover {
+        background-color: gray-dark;
+      }
+    }
+    &[disabled] {
+      background-color: gray-dark;
+      cursor: auto;
     }
   }
 

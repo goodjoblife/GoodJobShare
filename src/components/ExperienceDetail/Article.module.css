@@ -1,7 +1,7 @@
 @value gray-light, border-gray from "common/variables.module.css";
 
 .container {
-  margin: 35px 0;
+  margin: 35px 0 0 0;
   display: flex;
   border: 1px solid border-gray;
   > .aside {
