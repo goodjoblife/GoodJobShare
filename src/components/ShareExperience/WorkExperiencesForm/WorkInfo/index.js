@@ -166,7 +166,10 @@ WorkInfo.propTypes = {
   jobEndingTimeMonth: PropTypes.number,
   salaryType: PropTypes.string,
   salaryAmount: PropTypes.number,
-  weekWorkTime: PropTypes.number,
+  weekWorkTime: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
   recommendToOthers: PropTypes.string,
 };
 

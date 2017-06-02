@@ -1,7 +1,7 @@
 import React from 'react';
 import R from 'ramda';
 
-// import SubmitArea from '../common/SubmitArea';
+import SubmitArea from '../common/SubmitArea';
 
 import WorkInfo from './WorkInfo';
 import WorkExperience from './WorkExperience';
@@ -9,7 +9,12 @@ import WorkExperience from './WorkExperience';
 import {
   idGenerator,
   handleBlocks,
+  workExperiencesToBody,
 } from '../utils';
+
+import {
+  postWorkExperience,
+} from '../../../apis/workExperiencesApi';
 
 import styles from './WorkExperiencesForm.module.css';
 
@@ -166,6 +171,10 @@ class WorkExperiencesForm extends React.Component {
           appendSection={this.appendBlock('sections')}
           removeSection={this.removeBlock('sections')}
           editSection={this.editBlock('sections')}
+        />
+        <SubmitArea
+          onSubmit={() => postWorkExperience(workExperiencesToBody(this.state))}
+          submitable
         />
       </div>
     );
