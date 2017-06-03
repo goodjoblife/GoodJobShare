@@ -165,7 +165,10 @@ WorkInfo.propTypes = {
   jobEndingTimeYear: PropTypes.number,
   jobEndingTimeMonth: PropTypes.number,
   salaryType: PropTypes.string,
-  salaryAmount: PropTypes.number,
+  salaryAmount: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   weekWorkTime: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,

@@ -45,6 +45,7 @@ const Salary = (
           onChange={e => onSalaryAmount(e.target.value)}
           placeholder="700,000"
           type="number"
+          min={0}
         />
         <div>
           <p

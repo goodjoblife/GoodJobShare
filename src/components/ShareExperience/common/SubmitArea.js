@@ -40,12 +40,13 @@ class SubmitArea extends React.PureComponent {
           marginTop: '57px',
         }}
       >
-        <div
+        <label
           style={{
             display: 'flex',
             marginBottom: '28px',
             alignItems: 'center',
           }}
+          htmlFor="submitArea-checkbox"
         >
           <Checkbox
             margin={'0'}
@@ -53,6 +54,7 @@ class SubmitArea extends React.PureComponent {
             label={''}
             checked={agree}
             onChange={e => this.handleAgree(e.target.checked)}
+            id="submitArea-checkbox"
           />
           <p
             style={{
@@ -60,8 +62,8 @@ class SubmitArea extends React.PureComponent {
             }}
           >
             我分享的是真實資訊，並且遵守中華民國法律以及本站使用者條款。
-      </p>
-        </div>
+          </p>
+        </label>
         <div>
           <ButtonSubmit
             text="送出資料"

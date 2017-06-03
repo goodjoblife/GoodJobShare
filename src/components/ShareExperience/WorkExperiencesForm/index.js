@@ -10,11 +10,16 @@ import {
   idGenerator,
   handleBlocks,
   workExperiencesToBody,
+  propsWorkExperiencesForm,
 } from '../utils';
 
 import {
   postWorkExperience,
 } from '../../../apis/workExperiencesApi';
+
+import {
+  workExperiencesFormCheck,
+} from './formCheck';
 
 import styles from './WorkExperiencesForm.module.css';
 
@@ -53,8 +58,8 @@ const defaultForm = {
   experienceInYear: null,
   education: null,
   isCurrentlyEmployed: 'yes',
-  jobEndingTimeYear: null,
-  jobEndingTimeMonth: null,
+  jobEndingTimeYear: new Date().getFullYear(),
+  jobEndingTimeMonth: new Date().getMonth(),
   salaryType: 'month',
   salaryAmount: 0,
   weekWorkTime: '',
@@ -174,7 +179,7 @@ class WorkExperiencesForm extends React.Component {
         />
         <SubmitArea
           onSubmit={() => postWorkExperience(workExperiencesToBody(this.state))}
-          submitable
+          submitable={workExperiencesFormCheck(propsWorkExperiencesForm(this.state))}
         />
       </div>
     );

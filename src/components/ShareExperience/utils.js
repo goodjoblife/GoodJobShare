@@ -147,7 +147,7 @@ export const idGenerator = () => {
   };
 };
 
-const propsWorkExperiencesForm = state => {
+export const propsWorkExperiencesForm = state => {
   const {
     companyQuery,
     region,

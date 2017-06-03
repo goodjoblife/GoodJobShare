@@ -34,6 +34,8 @@ const WeekWorkTime = ({ weekWorkTime, onChange }) => (
             display: 'inline-block',
             marginRight: '12px',
           }}
+          max={168}
+          min={0}
         />
         <p
           className="pS"
