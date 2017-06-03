@@ -5,7 +5,6 @@ import ButtonGroupImage from 'common/button/ButtonGroupImage';
 
 import Cross from '../../../images/x.svg';
 
-
 import InputTitle from '../../common/InputTitle';
 
 const recommendToOthersOptions = [
@@ -17,11 +16,6 @@ const recommendToOthersOptions = [
   {
     label: '不推',
     value: 'no',
-    icon: <Cross />,
-  },
-  {
-    label: '難說喔',
-    value: "don't know",
     icon: <Cross />,
   },
 ];
