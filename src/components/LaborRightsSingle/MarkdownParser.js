@@ -2,6 +2,10 @@ import React from 'react';
 import marked from 'marked';
 import styles from './MarkdownParser.module.css';
 
+marked.setOptions({
+  breaks: true,
+});
+
 const MarkdownParser = ({ content }) => (
   <div
     className={styles.md}
