@@ -28,7 +28,6 @@ class ButtonGroupImageEle extends React.PureComponent {
         <input
           id={id}
           type="radio"
-          name={name}
           checked={checked}
           value={value}
           onChange={e => onChange(e.target.value)}
