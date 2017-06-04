@@ -64,7 +64,6 @@ const defaultForm = {
   salaryAmount: 0,
   weekWorkTime: '',
   recommendToOthers: null,
-  overallRating: 0,
   title: '',
   sections: {
     [firstSectionId]: createBlock.sections(firstSectionId)(),
