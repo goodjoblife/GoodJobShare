@@ -38,6 +38,18 @@ const AutoCompleteTextInput = (
         wrapperStyle={{
           display: 'block',
         }}
+        menuStyle={{
+          position: 'absolute',
+          zIndex: '99',
+          top: null,
+          bottom: 0,
+          left: 0,
+          transform: 'translateY(100%)',
+          border: '1px solid #fcd406',
+          maxHeight: '300px',
+          overflowY: 'scroll',
+          padding: '5px 0',
+        }}
         onSelect={onSelect}
       />
       {
