@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import TextInput from 'common/form/TextInput';
+import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput';
 import InputTitle from './InputTitle';
 
 const CompanyQuery = ({ companyQuery, onChange }) => (
@@ -9,10 +9,13 @@ const CompanyQuery = ({ companyQuery, onChange }) => (
       text="公司/單位 或 統一編號"
       must
     />
-    <TextInput
+    <AutoCompleteTextInput
       placeholder="ＯＯ 股份有限公司"
       value={companyQuery}
       onChange={e => onChange(e.target.value)}
+      renderItem={() => {}}
+      getItemValue={() => {}}
+      items={[]}
     />
   </div>
 );
