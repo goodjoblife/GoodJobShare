@@ -32,7 +32,11 @@ class Header extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   facebookReady(FB) {
     FB.getLoginStatus(response => {
-      console.log(response);
+      if (response.status === 'connected') {
+        this.props.setLogin(response.status, response.authResponse.accessToken);
+      } else if (response.status === 'not_authorized') {
+        this.props.setLogin(response.status);
+      }
     });
   }
 
@@ -61,6 +65,10 @@ class Header extends React.Component {
     );
   }
 }
+
+Header.propTypes = {
+  setLogin: React.PropTypes.func.isRequired,
+};
 
 const HeaderButton = ({ isNavOpen, toggle }) => (
   <div
