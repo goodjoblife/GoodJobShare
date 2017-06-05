@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
+import i from 'common/icons';
 
-import styles from './InterviewInfo.module.css';
+import styles from '../../ShareExperience.module.css';
 
+import IconHeading from '../../common/IconHeading';
 import CompanyQuery from './CompanyQuery';
 import Region from './Region';
 import JobTitle from './JobTitle';
@@ -35,15 +37,8 @@ class InterviewInfo extends React.PureComponent {
           marginTop: '30px',
         }}
       >
-        <h1
-          className="pLBold"
-          style={{
-            marginBottom: '13px',
-          }}
-        >
-          面試資訊
-        </h1>
-        <div className={styles.form}>
+        <IconHeading text="面試資訊" Icon={i.People} />
+        <div className={styles.block}>
           <div
             style={{
               marginBottom: '35px',

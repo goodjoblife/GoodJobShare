@@ -1,28 +1,16 @@
 import React, { PropTypes } from 'react';
+import cn from 'classnames';
+import i from 'common/icons';
 import styles from './RateButtonElement.module.css';
 
-const handleClassName = hover => active => {
-  if (hover) {
-    return styles.hover;
-  }
-
-  if (active) {
-    return styles.active;
-  }
-
-  return styles.container;
-};
-
 const RateButtonElement = ({ hover, active, onClick }) => (
-  <div
-    className={handleClassName(hover)(active)}
-    style={{
-      fontSize: '3rem',
-    }}
+  <i.Glike
+    className={cn(styles.container, {
+      [styles.hover]: hover,
+      [styles.active]: active,
+    })}
     onClick={onClick}
-  >
-    T
-  </div>
+  />
 );
 
 RateButtonElement.propTypes = {

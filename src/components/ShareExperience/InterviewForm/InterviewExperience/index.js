@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import ButtonAdd from 'common/button/ButtonAdd';
 import AddButton from 'common/button/AddButton';
+import i from 'common/icons';
 
-import styles from './InterviewExperience.module.css';
+import styles from '../../ShareExperience.module.css';
 
+import IconHeading from '../../common/IconHeading';
 import Title from './Title';
 import Sections from './Sections';
 import InterviewQas from './InterviewQas';
@@ -34,16 +36,9 @@ class InterviewExperience extends Component {
           marginTop: '59px',
         }}
       >
-        <h1
-          className="pLBold"
-          style={{
-            marginBottom: '13px',
-          }}
-        >
-          面試經驗
-        </h1>
+        <IconHeading text="面試經驗" Icon={i.Comment2} />
         <div
-          className={styles.form}
+          className={styles.block}
         >
           <div
             style={{
