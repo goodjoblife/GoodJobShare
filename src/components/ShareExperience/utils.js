@@ -15,6 +15,7 @@ export const handleBlocks = R.compose(
 const propsInterviewForm = state => {
   const {
     companyQuery,
+    companyId,
     region,
     jobTitle,
     experienceInYear,
@@ -33,6 +34,7 @@ const propsInterviewForm = state => {
 
   return {
     companyQuery,
+    companyId,
     region,
     jobTitle,
     experienceInYear,

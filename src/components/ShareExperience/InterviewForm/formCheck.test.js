@@ -255,6 +255,7 @@ describe('interviewSensitiveQuestions test', () => {
 describe('interviewFormCheck tests', () => {
   const defaultForm = {
     companyQuery: '',
+    companyId: '',
     region: null,
     jobTitle: '',
     experienceInYear: null,

@@ -14,6 +14,7 @@ const AutoCompleteTextInput = (
     renderItem,
     getItemValue,
     items,
+    onSelect,
   }
 ) => {
   const inputClassName = isWarning ? styles.warning : styles.input;
@@ -37,6 +38,7 @@ const AutoCompleteTextInput = (
         wrapperStyle={{
           display: 'block',
         }}
+        onSelect={onSelect}
       />
       {
         warningWording ?
@@ -66,6 +68,7 @@ AutoCompleteTextInput.propTypes = {
   renderItem: PropTypes.func,
   getItemValue: PropTypes.func,
   items: PropTypes.array,
+  onSelect: PropTypes.func,
 };
 
 AutoCompleteTextInput.defaultProps = {
