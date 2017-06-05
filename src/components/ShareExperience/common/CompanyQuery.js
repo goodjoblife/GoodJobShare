@@ -51,7 +51,8 @@ class CompanyQuery extends React.Component {
           onChange={(e, value) => {
             onChange(e.target.value);
             return getCompaniesSearch(value)
-              .then(r => (Array.isArray(r) ? this.handleAutocompleteItems(r) : this.handleAutocompleteItems([])));
+              .then(r => (Array.isArray(r) ? this.handleAutocompleteItems(r) : this.handleAutocompleteItems([])))
+              .catch(() => this.handleAutocompleteItems([]));
           }}
           onSelect={(value, item) => {
             this.handleAutocompleteItems([]);
