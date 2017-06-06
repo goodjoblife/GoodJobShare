@@ -3,6 +3,25 @@ import Autocomplete from 'react-autocomplete';
 
 import styles from './TextInput.module.css';
 
+const renderItem = (item, isHighlighted) => (
+  <div
+    key={item.value}
+    style={{
+      background: isHighlighted ? 'lightgray' : 'white',
+      padding: '5px 10px',
+    }}
+  >
+    <p
+      style={{
+        color: isHighlighted ? 'black' : '#222',
+      }}
+      className={isHighlighted ? 'pSBold' : 'pS'}
+    >
+      {item.label}
+    </p>
+  </div>
+);
+
 const AutoCompleteTextInput = (
   {
     value,
@@ -11,7 +30,6 @@ const AutoCompleteTextInput = (
     isWarning,
     warningWording,
     type,
-    renderItem,
     getItemValue,
     items,
     onSelect,
@@ -45,11 +63,12 @@ const AutoCompleteTextInput = (
           bottom: 0,
           left: 0,
           transform: 'translateY(100%)',
-          border: '1px solid #fcd406',
-          maxHeight: '300px',
+          border: '1px solid #b4b4b4',
+          maxHeight: '150px',
           overflowY: 'scroll',
           padding: '5px 0',
         }}
+        autoHighlight={false}
         onSelect={onSelect}
       />
       {
@@ -77,7 +96,6 @@ AutoCompleteTextInput.propTypes = {
   isWarning: PropTypes.bool,
   warningWording: PropTypes.string,
   type: PropTypes.string,
-  renderItem: PropTypes.func,
   getItemValue: PropTypes.func,
   items: PropTypes.array,
   onSelect: PropTypes.func,

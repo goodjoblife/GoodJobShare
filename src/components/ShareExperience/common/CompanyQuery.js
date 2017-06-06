@@ -6,8 +6,12 @@ import {
   getCompaniesSearch,
 } from '../../../apis/companySearchApi';
 
-const getItemValue = item =>
-  (Array.isArray(item.name) ? item.name[0] : item.name);
+const getItemValue = item => item.label;
+
+const mapToAutocompleteList = l => ({
+  label: Array.isArray(l.name) ? l.name[0] : l.name,
+  value: l.id,
+});
 
 class CompanyQuery extends React.Component {
   constructor(props) {
@@ -38,25 +42,17 @@ class CompanyQuery extends React.Component {
         <AutoCompleteTextInput
           placeholder="ＯＯ 股份有限公司"
           value={companyQuery}
-          renderItem={(item, isHighlighted) =>
-            <div
-              key={item.id}
-              style={{ background: isHighlighted ? 'lightgray' : 'white' }}
-            >
-              {item.name}
-            </div>
-          }
           getItemValue={getItemValue}
           items={autocompleteItems}
           onChange={(e, value) => {
             onChange(e.target.value);
             return getCompaniesSearch(value)
-              .then(r => (Array.isArray(r) ? this.handleAutocompleteItems(r) : this.handleAutocompleteItems([])))
+              .then(r => (Array.isArray(r) ? this.handleAutocompleteItems(r.map(mapToAutocompleteList)) : this.handleAutocompleteItems([])))
               .catch(() => this.handleAutocompleteItems([]));
           }}
           onSelect={(value, item) => {
             this.handleAutocompleteItems([]);
-            onCompanyId(item.id);
+            onCompanyId(item.value);
             return onChange(value);
           }}
         />
