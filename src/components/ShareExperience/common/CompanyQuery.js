@@ -1,6 +1,11 @@
 import React, { PropTypes } from 'react';
 
 import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput';
+
+import {
+  debounce,
+} from 'utils/streamUtils';
+
 import InputTitle from './InputTitle';
 import {
   getCompaniesSearch,
@@ -18,6 +23,23 @@ class CompanyQuery extends React.Component {
     super(props);
 
     this.handleAutocompleteItems = this.handleAutocompleteItems.bind(this);
+
+    const search = debounce(
+      (e, value) => {
+        if (value) {
+          return getCompaniesSearch(value)
+            .then(r => (Array.isArray(r) ? this.handleAutocompleteItems(r.map(mapToAutocompleteList)) : this.handleAutocompleteItems([])))
+            .catch(() => this.handleAutocompleteItems([]));
+        }
+        return this.handleAutocompleteItems([]);
+      }
+      , 800
+    );
+
+    this.handleOnChange = (e, value) => {
+      props.onChange(e.target.value);
+      return search(e, value);
+    };
 
     this.state = {
       autocompleteItems: [],
@@ -44,12 +66,7 @@ class CompanyQuery extends React.Component {
           value={companyQuery}
           getItemValue={getItemValue}
           items={autocompleteItems}
-          onChange={(e, value) => {
-            onChange(e.target.value);
-            return getCompaniesSearch(value)
-              .then(r => (Array.isArray(r) ? this.handleAutocompleteItems(r.map(mapToAutocompleteList)) : this.handleAutocompleteItems([])))
-              .catch(() => this.handleAutocompleteItems([]));
-          }}
+          onChange={this.handleOnChange}
           onSelect={(value, item) => {
             this.handleAutocompleteItems([]);
             onCompanyId(item.value);
