@@ -3,25 +3,25 @@ import R from 'ramda';
 
 import SubmitArea from '../common/SubmitArea';
 
-import styles from './InterviewForm.module.css';
-
-import InterviewInfo from './InterviewInfo';
-import InterviewExperience from './InterviewExperience';
+import WorkInfo from './WorkInfo';
+import WorkExperience from './WorkExperience';
 
 import {
-  postInterviewExperience,
-} from '../../../apis/interviewExperiencesApi';
+  idGenerator,
+  handleBlocks,
+  workExperiencesToBody,
+  propsWorkExperiencesForm,
+} from '../utils';
 
 import {
-  interviewFormCheck,
+  postWorkExperience,
+} from '../../../apis/workExperiencesApi';
+
+import {
+  workExperiencesFormCheck,
 } from './formCheck';
 
-import {
-  handleBlocks,
-  getInterviewForm,
-  portInterviewFormToRequestFormat,
-  idGenerator,
-} from '../utils';
+import styles from './WorkExperiencesForm.module.css';
 
 const createSection = id => subtitle => {
   const section = {
@@ -40,15 +40,8 @@ const createSection = id => subtitle => {
   return section;
 };
 
-const createInterviewQa = id => (question = '') => ({
-  id,
-  question,
-  answer: '',
-});
-
 const createBlock = {
   sections: createSection,
-  interviewQas: createInterviewQa,
 };
 
 const idCounter = idGenerator();
@@ -57,7 +50,6 @@ const isBlockRemovable = blocks =>
   R.length(R.keys(blocks)) > 1;
 
 const firstSectionId = idCounter();
-const firstQaId = idCounter();
 
 const defaultForm = {
   companyQuery: '',
@@ -65,23 +57,20 @@ const defaultForm = {
   jobTitle: '',
   experienceInYear: null,
   education: null,
-  interviewTimeYear: null,
-  interviewTimeMonth: null,
-  interviewResult: null,
+  isCurrentlyEmployed: 'yes',
+  jobEndingTimeYear: new Date().getFullYear(),
+  jobEndingTimeMonth: new Date().getMonth(),
   salaryType: 'month',
   salaryAmount: 0,
-  overallRating: 0,
+  weekWorkTime: '',
+  recommendToOthers: null,
   title: '',
   sections: {
     [firstSectionId]: createBlock.sections(firstSectionId)(),
   },
-  interviewQas: {
-    [firstQaId]: createBlock.interviewQas(firstQaId)(),
-  },
-  interviewSensitiveQuestions: [],
 };
 
-class InterviewForm extends React.Component {
+class WorkExperiencesForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -140,49 +129,60 @@ class InterviewForm extends React.Component {
   }
 
   render() {
+    const {
+      companyQuery,
+      region,
+      jobTitle,
+      experienceInYear,
+      education,
+      isCurrentlyEmployed,
+      jobEndingTimeYear,
+      jobEndingTimeMonth,
+      salaryType,
+      salaryAmount,
+      weekWorkTime,
+      recommendToOthers,
+      title,
+      sections,
+    } = this.state;
+
     return (
       <div className={styles.container}>
         <h1
           className="headingL"
         >
-          面試經驗分享
+          工作經驗分享
         </h1>
-        <InterviewInfo
+        <WorkInfo
           handleState={this.handleState}
-          companyQuery={this.state.companyQuery}
-          region={this.state.region}
-          jobTitle={this.state.jobTitle}
-          experienceInYear={this.state.experienceInYear}
-          education={this.state.education}
-          interviewTimeYear={this.state.interviewTimeYear}
-          interviewTimeMonth={this.state.interviewTimeMonth}
-          interviewResult={this.state.interviewResult}
-          salaryType={this.state.salaryType}
-          salaryAmount={this.state.salaryAmount}
-          overallRating={this.state.overallRating}
+          companyQuery={companyQuery}
+          region={region}
+          jobTitle={jobTitle}
+          experienceInYear={experienceInYear}
+          education={education}
+          isCurrentlyEmployed={isCurrentlyEmployed}
+          jobEndingTimeYear={jobEndingTimeYear}
+          jobEndingTimeMonth={jobEndingTimeMonth}
+          salaryType={salaryType}
+          salaryAmount={salaryAmount}
+          weekWorkTime={weekWorkTime}
+          recommendToOthers={recommendToOthers}
         />
-        <InterviewExperience
+        <WorkExperience
           handleState={this.handleState}
-          title={this.state.title}
-          sections={handleBlocks(this.state.sections)}
+          title={title}
+          sections={handleBlocks(sections)}
           appendSection={this.appendBlock('sections')}
           removeSection={this.removeBlock('sections')}
           editSection={this.editBlock('sections')}
-          interviewQas={handleBlocks(this.state.interviewQas)}
-          appendQa={this.appendBlock('interviewQas')}
-          removeQa={this.removeBlock('interviewQas')}
-          editQa={this.editBlock('interviewQas')}
-          interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
         />
         <SubmitArea
-          onSubmit={() => postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)))}
-          submitable={interviewFormCheck(getInterviewForm(this.state))}
+          onSubmit={() => postWorkExperience(workExperiencesToBody(this.state))}
+          submitable={workExperiencesFormCheck(propsWorkExperiencesForm(this.state))}
         />
       </div>
     );
   }
 }
 
-InterviewForm.propTypes = {};
-
-export default InterviewForm;
+export default WorkExperiencesForm;

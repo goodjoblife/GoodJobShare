@@ -1,20 +1,19 @@
 import React, { PropTypes } from 'react';
-import i from 'common/icons';
 
-import styles from '../../ShareExperience.module.css';
+import styles from './WorkInfo.module.css';
 
-import IconHeading from '../../common/IconHeading';
 import CompanyQuery from '../../common/CompanyQuery';
 import Region from '../../common/Region';
 import JobTitle from '../../common/JobTitle';
 import ExperienceInYear from '../../common/ExperienceInYear';
 import Education from '../../common/Education';
-import InterviewTime from './InterviewTime';
-import InterviewResult from './InterviewResult';
 import Salary from '../../common/Salary';
-import OverallRating from './OverallRating';
 
-class InterviewInfo extends React.PureComponent {
+import IsEmployed from './IsEmployed';
+import WeekWorkTime from './WeekWorkTime';
+import RecommendToOthers from './RecommendToOthers';
+
+class WorkInfo extends React.PureComponent {
   render() {
     const {
       handleState,
@@ -23,12 +22,13 @@ class InterviewInfo extends React.PureComponent {
       jobTitle,
       experienceInYear,
       education,
-      interviewTimeYear,
-      interviewTimeMonth,
-      interviewResult,
+      isCurrentlyEmployed,
+      jobEndingTimeYear,
+      jobEndingTimeMonth,
       salaryType,
       salaryAmount,
-      overallRating,
+      recommendToOthers,
+      weekWorkTime,
     } = this.props;
 
     return (
@@ -37,8 +37,15 @@ class InterviewInfo extends React.PureComponent {
           marginTop: '30px',
         }}
       >
-        <IconHeading text="面試資訊" Icon={i.People} />
-        <div className={styles.block}>
+        <h1
+          className="pLBold"
+          style={{
+            marginBottom: '13px',
+          }}
+        >
+          工作資訊
+        </h1>
+        <div className={styles.form}>
           <div
             style={{
               marginBottom: '35px',
@@ -65,7 +72,7 @@ class InterviewInfo extends React.PureComponent {
             }}
           >
             <JobTitle
-              inputTitle="應徵職稱"
+              inputTitle="職稱"
               jobTitle={jobTitle}
               onChange={handleState('jobTitle')}
             />
@@ -92,24 +99,16 @@ class InterviewInfo extends React.PureComponent {
           </div>
           <div
             style={{
-              marginBottom: '60px',
+              marginBottom: '47px',
             }}
           >
-            <InterviewTime
-              interviewTimeYear={interviewTimeYear}
-              interviewTimeMonth={interviewTimeMonth}
-              onInterviewTimeYear={handleState('interviewTimeYear')}
-              onInterviewTimeMonth={handleState('interviewTimeMonth')}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '53px',
-            }}
-          >
-            <InterviewResult
-              interviewResult={interviewResult}
-              onChange={handleState('interviewResult')}
+            <IsEmployed
+              isCurrentlyEmployed={isCurrentlyEmployed}
+              jobEndingTimeYear={jobEndingTimeYear}
+              jobEndingTimeMonth={jobEndingTimeMonth}
+              onIsCurrentlyEmployed={handleState('isCurrentlyEmployed')}
+              onJobEndingTimeYear={handleState('jobEndingTimeYear')}
+              onJobEndingTimeMonth={handleState('jobEndingTimeMonth')}
             />
           </div>
           <div
@@ -124,10 +123,20 @@ class InterviewInfo extends React.PureComponent {
               onSalaryAmount={handleState('salaryAmount')}
             />
           </div>
+          <div
+            style={{
+              marginBottom: '36px',
+            }}
+          >
+            <WeekWorkTime
+              weekWorkTime={weekWorkTime}
+              onChange={handleState('weekWorkTime')}
+            />
+          </div>
           <div>
-            <OverallRating
-              overallRating={overallRating}
-              onChange={handleState('overallRating')}
+            <RecommendToOthers
+              recommendToOthers={recommendToOthers}
+              onChange={handleState('recommendToOthers')}
             />
           </div>
         </div>
@@ -136,14 +145,14 @@ class InterviewInfo extends React.PureComponent {
   }
 }
 
-InterviewInfo.propTypes = {
+WorkInfo.propTypes = {
+  handleState: PropTypes.func,
   companyQuery: PropTypes.string,
   region: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
   ]),
   jobTitle: PropTypes.string,
-  handleState: PropTypes.func,
   experienceInYear: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -152,27 +161,19 @@ InterviewInfo.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
-  interviewTimeYear: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  interviewTimeMonth: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  interviewResult: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  salaryType: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  isCurrentlyEmployed: PropTypes.string,
+  jobEndingTimeYear: PropTypes.number,
+  jobEndingTimeMonth: PropTypes.number,
+  salaryType: PropTypes.string,
   salaryAmount: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
   ]),
-  overallRating: PropTypes.number,
+  weekWorkTime: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
+  recommendToOthers: PropTypes.string,
 };
 
-export default InterviewInfo;
+export default WorkInfo;

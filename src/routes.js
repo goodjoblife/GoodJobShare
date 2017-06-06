@@ -13,6 +13,8 @@ import ShareExperience
 from './components/ShareExperience';
 import InterviewFormContainer
 from './containers/ShareExperience/InterviewFormContainer';
+import WorkExperiencesFormContainer
+  from './containers/ShareExperience/WorkExperiencesFormContainer';
 
 const routes = () => ({
   path: '/',
@@ -78,6 +80,10 @@ const routes = () => ({
         {
           path: 'interview',
           component: InterviewFormContainer,
+        },
+        {
+          path: 'work-experiences',
+          component: WorkExperiencesFormContainer,
         },
       ],
     },

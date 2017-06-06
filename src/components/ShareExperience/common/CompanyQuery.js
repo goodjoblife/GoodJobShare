@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 import TextInput from 'common/form/TextInput';
-import InputTitle from '../../common/InputTitle';
+import InputTitle from './InputTitle';
 
 const CompanyQuery = ({ companyQuery, onChange }) => (
   <div>

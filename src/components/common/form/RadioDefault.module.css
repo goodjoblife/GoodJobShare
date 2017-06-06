@@ -1,0 +1,29 @@
+.radio {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 100%;
+  border: 1px solid #000;
+}
+
+.checked {
+  composes: radio;
+  &:before {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    background: #000;
+    top: 4px;
+    left: 4px;
+    /* transition: transform .3s; */
+    /*transform: scale(0);*/
+  }
+}
+
+.unchecked {
+  composes: radio;
+}

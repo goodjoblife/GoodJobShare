@@ -6,12 +6,12 @@ import {
   lteLength,
 } from 'utils/dataCheckUtil';
 
-import InputTitle from '../../common/InputTitle';
+import InputTitle from './InputTitle';
 
-const JobTitle = ({ jobTitle, onChange }) => (
+const JobTitle = ({ inputTitle, jobTitle, onChange }) => (
   <div>
     <InputTitle
-      text="應徵職稱"
+      text={inputTitle}
       must
     />
     <TextInput
@@ -25,6 +25,7 @@ const JobTitle = ({ jobTitle, onChange }) => (
 );
 
 JobTitle.propTypes = {
+  inputTitle: PropTypes.string,
   jobTitle: PropTypes.string,
   onChange: PropTypes.func,
 };

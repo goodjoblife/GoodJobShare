@@ -2,13 +2,13 @@ import React, { PropTypes } from 'react';
 
 import Select from 'common/form/Select';
 import TextInput from 'common/form/TextInput';
-import InputTitle from '../../common/InputTitle';
+import InputTitle from './InputTitle';
 
 import styles from './Salary.module.css';
 
 import {
   salaryTypeOptions,
-} from '../../common/optionMap';
+} from './optionMap';
 
 const Salary = (
   { salaryType, salaryAmount, onSalaryType, onSalaryAmount }
@@ -45,6 +45,7 @@ const Salary = (
           onChange={e => onSalaryAmount(e.target.value)}
           placeholder="700,000"
           type="number"
+          min={0}
         />
         <div>
           <p

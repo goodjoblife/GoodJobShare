@@ -165,3 +165,25 @@ export const overallRatingDialogMap = {
   4: '很好！',
   5: '大推！',
 };
+
+
+export const isEmployedOptions = [
+  {
+    label: '在職',
+    value: 'yes',
+  },
+  {
+    label: '已離職',
+    value: 'no',
+  },
+];
+
+export const jobEndingTimeYearOptions = Array(11).fill(0).map((_, index) => ({
+  label: new Date().getFullYear() - index,
+  value: new Date().getFullYear() - index,
+}));
+
+export const jobEndingTimeMonthOptions = Array(12).fill(0).map((_, index) => ({
+  label: index,
+  value: index,
+}));

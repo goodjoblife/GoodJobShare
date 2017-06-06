@@ -3,11 +3,12 @@ import React, { PropTypes } from 'react';
 import styles from './TextInput.module.css';
 
 const TextInput = (
-  { value, placeholder, onChange, isWarning, warningWording, type }
+  { value, placeholder, onChange, isWarning, warningWording, type, style, min, max }
 ) => (
   <div
     style={{
       position: 'relative',
+      ...style,
     }}
   >
     <input
@@ -16,6 +17,8 @@ const TextInput = (
       className={isWarning ? styles.warning : styles.input}
       value={value}
       onChange={onChange}
+      min={min}
+      max={max}
     />
     {
       warningWording ?
@@ -41,6 +44,9 @@ TextInput.propTypes = {
   isWarning: PropTypes.bool,
   warningWording: PropTypes.string,
   type: PropTypes.string,
+  style: PropTypes.object,
+  min: PropTypes.number,
+  max: PropTypes.number,
 };
 
 TextInput.defaultProps = {
