@@ -152,6 +152,7 @@ export const idGenerator = () => {
 export const propsWorkExperiencesForm = state => {
   const {
     companyQuery,
+    companyId,
     region,
     jobTitle,
     experienceInYear,
@@ -170,6 +171,7 @@ export const propsWorkExperiencesForm = state => {
 
   return {
     companyQuery,
+    companyId,
     region,
     jobTitle,
     experienceInYear,
