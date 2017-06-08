@@ -1,4 +1,4 @@
-@value gray-dark, yellow-bg, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
+@value main-yellow, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
 .menu {
 	@media (min-width: 851px) {
@@ -17,26 +17,24 @@
     display: inline-block;
     vertical-align: middle;
     line-height: NAV_HEIGHT;
-    margin-left: 20px;
     position: relative;
     &:hover {
       > a {
-        color: gray-dark;
+        color: main-yellow;
       }
     }
     > a {
       position: relative;
       display: block;
-      color: #000;
-      font-size: 1em;
-      font-weight: 400;
+      color: #fff;
+      font-size: .95em;
       height: 100%;
       letter-spacing: 0.08em;
-      padding-right: 10px;
-      padding-left: 10px;
+      padding-right: 16px;
+      padding-left: 16px;
       transition: color .3s, background-color .3s;
 			&.isCurrent {
-        background-color: rgba(249, 236, 205, 0.4);
+        background-color: rgba(255, 255, 255, 0.15);
       }
     }
   }
@@ -48,7 +46,7 @@
       padding: 15px 20px;
       text-align: center;
       &.isCurrent {
-        background-color: rgba(249, 236, 205, 0.7)
+        background-color: rgba(249, 236, 205, 0.7);
       }
     }
   }

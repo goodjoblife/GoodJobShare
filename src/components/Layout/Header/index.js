@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import cn from 'classnames';
 import i from 'common/icons';
 import FacebookProvider from 'common/FacebookProvider';
@@ -49,9 +50,9 @@ class Header extends React.Component {
             toggle={this.toggleNav}
           />
           <div className={styles.logo}>
-            <a href="/" title="goodjob 工時薪資透明化運動">
+            <Link to="/" title="goodjob 工時薪資透明化運動">
               <i.GjLogo />
-            </a>
+            </Link>
           </div>
           <nav
             className={cn(styles.nav, { [styles.isNavOpen]: this.state.isNavOpen })}
@@ -59,6 +60,11 @@ class Header extends React.Component {
           >
             <SiteMenu />
           </nav>
+          <div className={styles.buttonsArea}>
+            <Link to="/share" className={styles.leaveDataBtn}>
+              留下資料<i.ArrowGo />
+            </Link>
+          </div>
           <FacebookProvider appId={FACEBOOK_APP_ID} onReady={this.facebookReady} />
         </div>
       </header>

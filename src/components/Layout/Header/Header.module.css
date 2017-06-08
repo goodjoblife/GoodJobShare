@@ -1,4 +1,4 @@
-@value main-yellow, yellow-light, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
+@value main-black, yellow-light, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
 .header {
   position: fixed;
@@ -6,9 +6,10 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: main-yellow;
+  background-color: main-black;
   height: NAV_HEIGHT;
   box-shadow: 0 0 8px rgba(0,0,0,.15);
+
   @media (max-width: 850px) {
     height: NAV_MOBILE_HEIGHT;
     padding-top: 2px;
@@ -25,17 +26,20 @@
 
 .logo {
 	flex: 0 0 170px;
+
 	> a {
 		display: block;
 	}
+
 	svg {
     transform: scale(0.8) translateY(6px);
     transform-origin: 0% 50%;
-		fill: #000;
+		fill: #fff;
+
 		@media (max-width: 850px) {
       transform: scale(1) translateY(0);
 			width: 120px;
-			fill: #000;
+			fill: #fff;
 		}
 	}
 }
@@ -45,6 +49,7 @@
 	flex: 1 0 auto;
 	display: flex;
 	justify-content: space-between;
+
 	@media (max-width: 850px) {
 		opacity: 0;
 		visibility: hidden;
@@ -57,38 +62,55 @@
 		height: 100%;
 		z-index: 99;
 		flex-direction: column;
+
 		&.isNavOpen {
 			opacity: 1;
 			visibility: visible;
 		}
+
     @media (max-width: 850px) {
       top: NAV_MOBILE_HEIGHT;
     }
 	}
 }
 
-.buttonArea {
+.buttonsArea {
   display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  > button {
-    flex: 1;
-    background-color: transparent;
-    color: #fff;
-    font-size: 1em;
-    cursor: pointer;
-    outline: 0;
+.leaveDataBtn {
+  color: #fff;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding-right: 20px;
+  padding-left: 20px;
+  border: 1px solid #bbb;
+  font-size: .95em;
+  letter-spacing: 1px;
+  transition-property: background;
+  transition-duration: .3s;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: #fff;
+    margin-left: 8px;
   }
 
-  .leaveDataBtn {
-    padding: 10px 30px;
-    border: 1px solid #fff;
-    white-space: nowrap;
+  @media (min-width: 851px) {
+    &:hover {
+      background-color: rgba(255,255,255, .1);
+    }
   }
+}
 
-  .loginBtn {
-    padding-left: 20px;
-    border: 0;
-  }
+.loginBtn {
+  padding-left: 20px;
+  border: 0;
 }
 
 .mHeaderButton {
@@ -104,7 +126,7 @@
   transform: translate(0, 0);
   padding: 9px 19px 0 19px;
   &:before, &:after, span {
-    background: #000;
+    background: #fff;
     border-radius: 3px;
     content: "";
     display: block;

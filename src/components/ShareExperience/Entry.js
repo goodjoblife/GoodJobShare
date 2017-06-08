@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import styles from './Entry.module.css';
 
 
@@ -23,18 +24,18 @@ const Entry = () => (
         你要分享何種經驗？
       </h1>
       <div className={styles.link__container}>
-        <div className={styles.link}>
+        <a href="/time-and-salary/share" className={styles.link}>
           <div className={styles.image} />
           <p>留下工時或薪資</p>
-        </div>
-        <div className={styles.link}>
+        </a>
+        <Link to="/share/interview" className={styles.link}>
           <div className={styles.image} />
           <p>分享面試經驗</p>
-        </div>
-        <div className={styles.link}>
+        </Link>
+        <Link to="/share/work-experiences" className={styles.link}>
           <div className={styles.image} />
           <p>分享工作經驗</p>
-        </div>
+        </Link>
       </div>
     </div>
   </div>

@@ -1,4 +1,5 @@
 import Add from './Add';
+import ArrowGo from './ArrowGo';
 import ArrowLeft from './ArrowLeft';
 import Bad from './Bad';
 import Checked from './Checked';
@@ -25,6 +26,7 @@ import Warning from './Warning';
 
 const icons = {
   Add,
+  ArrowGo,
   ArrowLeft,
   Bad,
   Checked,
