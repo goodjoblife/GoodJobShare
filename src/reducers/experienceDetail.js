@@ -10,6 +10,8 @@ import {
 } from '../actions/experienceDetail';
 
 const preloadedState = fromJS({
+  experienceStatus: status.UNFETCHED,
+  experienceError: null,
   experience: {},
   tos: false,
   comment: '',

@@ -51,12 +51,20 @@ class ExperienceDetail extends Component {
           title="面試‧工作經驗"
         />
         <div className={styles.heading}>
-          <h2 className={`${styles.badge} pM`}>面試</h2>
-          <h1 className="headingL">日月光半導體製造股份有限公司 {experience._id}</h1>
+          <h2 className={`${styles.badge} pM`}>
+            {experience === 'work' ? '工作' : '面試'}
+          </h2>
+          <h1 className="headingL">
+            {experience && experience.company && (
+              typeof experience.company.name === 'string'
+              ? experience.company.name
+              : experience.company.name.join(' / ')
+            )}
+          </h1>
         </div>
 
         { /* 文章區塊  */}
-        <Article />
+        <Article experience={experience} />
 
         { /* 按讚，分享，檢舉區塊  */}
         <ReactionZone />
