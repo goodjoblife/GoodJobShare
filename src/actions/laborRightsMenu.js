@@ -1,35 +1,43 @@
 import { fetchLaborRightsMetaList } from '../utils/contentfulUtils';
-import status from '../constants/status';
 
 export const SET_META_LIST =
     '@@LaborRightsMenu/SET_META_LIST';
-export const SET_META_LIST_STATUS =
-    '@@LaborRightsMenu/SET_META_LIST_STATUS';
+export const SET_META_LIST_IS_FETCHING =
+    '@@LaborRightsMenu/SET_META_LIST_IS_FETCHING';
+export const SET_META_LIST_ERROR =
+    '@@LaborRightsMenu/SET_META_LIST_ERROR';
 
 const setMetaList = metaList => ({
   type: SET_META_LIST,
   metaList,
 });
 
-const setMetaListStatus = (nextStatus, err) => ({
-  type: SET_META_LIST_STATUS,
-  nextStatus,
-  err,
+const setMetaListIsFetching = isFetching => ({
+  type: SET_META_LIST_IS_FETCHING,
+  isFetching,
+});
+
+const setMetaListError = error => ({
+  type: SET_META_LIST_ERROR,
+  error,
 });
 
 const fetchMetaList = () => dispatch => {
-  dispatch(setMetaListStatus(status.FETCHING));
+  dispatch(setMetaListIsFetching(true));
   return fetchLaborRightsMetaList().then(metaList => {
     dispatch(setMetaList(metaList));
-    dispatch(setMetaListStatus(status.FETCHED));
   }).catch(err => {
-    dispatch(setMetaListStatus(status.ERROR, err));
+    dispatch(setMetaListError(err));
+  }).then(() => {
+    dispatch(setMetaListIsFetching(false));
   });
 };
 
 export const fetchMetaListIfNeeded = () => (dispatch, getState) => {
-  const metaListStatus = getState().laborRightsMenu.get('metaListStatus');
-  if (metaListStatus === status.UNFETCHED) {
+  const metaList = getState().laborRightsMenu.get('metaList');
+  const isFetching = getState().laborRightsMenu.get('metaListIsFetching');
+  const error = getState().laborRightsMenu.get('metaListError');
+  if (!metaList && !isFetching && !error) {
     return dispatch(fetchMetaList());
   }
   return Promise.resolve();
