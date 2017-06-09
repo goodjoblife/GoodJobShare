@@ -1,0 +1,37 @@
+.bold {
+  font-weight: 700;
+}
+
+.center {
+  text-align: center;
+}
+
+.headingL {
+  font-size: 2.25em;
+  line-height: 1.25em;
+  letter-spacing: 2px;
+
+  @media (max-width: 850px) {
+    font-size: 2em;
+  }
+}
+
+.headingM {
+  font-size: 1.75em;
+  line-height: 1.3em;
+  letter-spacing: 0.1em;
+}
+
+.subheadingL {
+  font-size: 1.5em;
+  line-height: 1.5em;
+  letter-spacing: 0.05em;
+  @media (max-width: 550px) {
+    font-size: 1.4em;
+  }
+}
+
+.subheadingM {
+  font-size: 1.2em;
+  line-height: 1.6em;
+}

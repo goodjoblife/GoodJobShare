@@ -23,6 +23,7 @@ import Plus from './Plus';
 import Thumbnails from './Thumbnails';
 import User from './User';
 import Warning from './Warning';
+import X from './X';
 
 const icons = {
   Add,
@@ -50,6 +51,7 @@ const icons = {
   Thumbnails,
   User,
   Warning,
+  X,
 };
 
 export default icons;

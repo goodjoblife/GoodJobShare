@@ -92,7 +92,7 @@ class InterviewInfo extends React.PureComponent {
           </div>
           <div
             style={{
-              marginBottom: '60px',
+              marginBottom: '64px',
             }}
           >
             <InterviewTime
