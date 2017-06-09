@@ -1,39 +1,49 @@
 import { fetchLaborRightsMetaList, fetchLaborRightsData } from '../utils/contentfulUtils';
-import status from '../constants/status';
 
 export const SET_META_LIST =
     '@@LaborRightsSingle/SET_META_LIST';
-export const SET_META_LIST_STATUS =
-    '@@LaborRightsSingle/SET_META_LIST_STATUS';
+export const SET_META_LIST_IS_FETCHING =
+    '@@LaborRightsSingle/SET_META_LIST_IS_FETCHING';
+export const SET_META_LIST_ERROR =
+    '@@LaborRightsSingle/SET_META_LIST_ERROR';
 export const SET_DATA =
     '@@LaborRightsSingle/SET_DATA';
-export const SET_DATA_STATUS =
-    '@@LaborRightsSingle/SET_DATA_STATUS';
+export const SET_DATA_IS_FETCHING =
+    '@@LaborRightsSingle/SET_DATA_IS_FETCHING';
+export const SET_DATA_ERROR =
+    '@@LaborRightsSingle/SET_DATA_ERROR';
 
 const setMetaList = metaList => ({
   type: SET_META_LIST,
   metaList,
 });
 
-const setMetaListStatus = (nextStatus, err) => ({
-  type: SET_META_LIST_STATUS,
-  nextStatus,
-  err,
+const setMetaListIsFetching = isFetching => ({
+  type: SET_META_LIST_IS_FETCHING,
+  isFetching,
+});
+
+const setMetaListError = error => ({
+  type: SET_META_LIST_ERROR,
+  error,
 });
 
 const fetchMetaList = () => dispatch => {
-  dispatch(setMetaListStatus(status.FETCHING));
+  dispatch(setMetaListIsFetching(true));
   return fetchLaborRightsMetaList().then(metaList => {
     dispatch(setMetaList(metaList));
-    dispatch(setMetaListStatus(status.FETCHED));
   }).catch(err => {
-    dispatch(setMetaListStatus(status.ERROR, err));
+    dispatch(setMetaListError(err));
+  }).then(() => {
+    dispatch(setMetaListIsFetching(false));
   });
 };
 
 export const fetchMetaListIfNeeded = () => (dispatch, getState) => {
-  const metaListStatus = getState().laborRightsSingle.get('metaListStatus');
-  if (metaListStatus === status.UNFETCHED) {
+  const metaList = getState().laborRightsSingle.get('metaList');
+  const isFetching = getState().laborRightsSingle.get('metaListIsFetching');
+  const error = getState().laborRightsSingle.get('metaListError');
+  if (!metaList && !isFetching && !error) {
     return dispatch(fetchMetaList());
   }
   return Promise.resolve();
@@ -45,31 +55,45 @@ const setData = (id, data) => ({
   data,
 });
 
-const setDataStatus = (id, nextStatus, err) => ({
-  type: SET_DATA_STATUS,
+const setDataIsFetching = (id, isFetching) => ({
+  type: SET_DATA_IS_FETCHING,
   id,
-  nextStatus,
-  err,
+  isFetching,
+});
+
+const setDataError = (id, error) => ({
+  type: SET_DATA_IS_FETCHING,
+  id,
+  error,
 });
 
 const fetchData = id => dispatch => {
-  dispatch(setDataStatus(id, status.FETCHING));
+  dispatch(setDataIsFetching(id, true));
   return fetchLaborRightsData(id).then(data => {
     dispatch(setData(id, data));
-    dispatch(setDataStatus(id, status.FETCHED));
   }).catch(err => {
-    dispatch(setDataStatus(id, status.ERROR, err));
+    dispatch(setDataError(id, err));
+  }).then(() => {
+    dispatch(setDataIsFetching(id, false));
   });
 };
 
 export const fetchDataIfNeeded = id =>
   (dispatch, getState) => {
-    const dataStatus =
+    const data =
       getState().laborRightsSingle.getIn(
-        ['dataMapById', id, 'dataStatus'],
-        status.UNFETCHED
+        ['dataMapById', id, 'data']
       );
-    if (dataStatus === status.UNFETCHED) {
+    const isFetching =
+      getState().laborRightsSingle.getIn(
+        ['dataMapById', id, 'isFetching'],
+        false
+      );
+    const error =
+      getState().laborRightsSingle.getIn(
+        ['dataMapById', id, 'dataError']
+      );
+    if (!data && !isFetching && !error) {
       return dispatch(fetchData(id));
     }
     return Promise.resolve();
