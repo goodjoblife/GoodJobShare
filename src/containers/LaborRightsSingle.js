@@ -1,7 +1,7 @@
+import { List } from 'immutable';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/laborRightsSingle';
-import status from '../constants/status';
 import LaborRightsSingle from '../components/LaborRightsSingle';
 
 export default connect(
@@ -10,16 +10,16 @@ export default connect(
       state.laborRightsSingle.getIn(
         ['dataMapById', id, 'data']
       );
-    const dataStatus =
+    const dataIsFetching =
       state.laborRightsSingle.getIn(
-        ['dataMapById', id, 'dataStatus'],
-        status.UNFETCHED
-       );
+        ['dataMapById', id, 'dataIsFetching'],
+        false
+      );
     const dataError =
       state.laborRightsSingle.getIn(
         ['dataMapById', id, 'dataError']
       );
-    const metaList = state.laborRightsSingle.get('metaList');
+    const metaList = state.laborRightsSingle.get('metaList', List());
     const ids = metaList.map(meta => meta.get('id'));
     const index = ids.indexOf(id);
     const prevData =
@@ -30,7 +30,7 @@ export default connect(
       data,
       prev: prevData,
       next: nextData,
-      status: dataStatus,
+      isFetching: dataIsFetching,
       error: dataError,
     };
   },

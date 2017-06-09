@@ -16,7 +16,6 @@ import {
     fetchMetaListIfNeeded,
     fetchDataIfNeeded,
 } from '../../actions/laborRightsSingle';
-import status from '../../constants/status';
 
 class LaborRightsSingle extends React.Component {
   static fetchData({ store: { dispatch }, params: { id } }) {
@@ -66,13 +65,15 @@ class LaborRightsSingle extends React.Component {
             { rel: 'canonical', href: formatCanonicalPath(`/labor-rights/${id}`) },
           ]}
         />
-        {this.props.status === status.FETCHING && <Loader />}
         {
-          this.props.status === status.ERROR && this.props.error.get('message') === 'Not found' &&
+          this.props.isFetching && <Loader />
+        }
+        {
+          !this.props.isFetching && this.props.error && this.props.error.get('message') === 'Not found' &&
             <NotFound />
         }
         {
-          this.props.status === status.FETCHED &&
+          !this.props.isFetching && !this.props.error && this.props.data &&
             <div>
               <Body
                 title={title}
@@ -100,7 +101,7 @@ LaborRightsSingle.propTypes = {
   next: ImmutablePropTypes.map,
   fetchMetaListIfNeeded: React.PropTypes.func.isRequired,
   fetchDataIfNeeded: React.PropTypes.func.isRequired,
-  status: React.PropTypes.string.isRequired,
+  isFetching: React.PropTypes.bool.isRequired,
   error: ImmutablePropTypes.map,
 };
 
