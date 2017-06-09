@@ -11,7 +11,6 @@ import {
 import {
   fetchMetaListIfNeeded,
 } from '../../actions/laborRightsMenu';
-import status from '../../constants/status';
 import Columns from '../common/Columns';
 import LaborRightsEntry from './LaborRightsEntry';
 import styles from './LaborRightsMenu.module.css';
@@ -46,15 +45,17 @@ class LaborRightsMenu extends React.Component {
             { rel: 'canonical', href: formatCanonicalPath('/labor-rights') },
           ]}
         />
-        {this.props.status === status.FETCHING && <Loader />}
         {
-          this.props.status === status.ERROR && this.props.error &&
+          this.props.isFetching && <Loader />
+        }
+        {
+          !this.props.isFetching && this.props.error &&
             <div className={cn(styles.heading, 'headingL')}>
               {this.props.error.toString()}
             </div>
         }
         {
-          this.props.status === status.FETCHED &&
+          !this.props.isFetching && !this.props.error && this.props.metaList &&
             <div>
               <h1 className={cn(styles.heading, 'headingL')}>{title}</h1>
               <Columns
@@ -71,7 +72,7 @@ class LaborRightsMenu extends React.Component {
 LaborRightsMenu.propTypes = {
   metaList: ImmutablePropTypes.list.isRequired,
   fetchMetaListIfNeeded: React.PropTypes.func.isRequired,
-  status: React.PropTypes.string.isRequired,
+  isFetching: React.PropTypes.bool.isRequired,
   error: ImmutablePropTypes.map,
 };
 
