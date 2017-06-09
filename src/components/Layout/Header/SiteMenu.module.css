@@ -4,6 +4,7 @@
 	@media (min-width: 851px) {
     height: 100%;
   }
+
 	@media (max-width: 850px) {
 		margin-top: 20px;
     width: 100%;
@@ -13,16 +14,19 @@
 
 .menuItem {
 	position: relative;
+
   @media (min-width: 851px) {
     display: inline-block;
     vertical-align: middle;
     line-height: NAV_HEIGHT;
     position: relative;
+
     &:hover {
       > a {
         color: main-yellow;
       }
     }
+
     > a {
       position: relative;
       display: block;
@@ -41,12 +45,16 @@
 
   @media (max-width: 850px) {
     > a {
+			color: #fff;
       display: block;
       font-size: 1.15em;
       padding: 15px 20px;
+			margin-top: 16px;
+			margin-bottom: 16px;
       text-align: center;
+
       &.isCurrent {
-        background-color: rgba(249, 236, 205, 0.7);
+        background-color: rgba(255, 255, 255, 0.15);
       }
     }
   }
@@ -63,6 +71,7 @@
 	top: 0;
 	right: -5px;
 	z-index: 2;
+
 	@media (max-width: 850px) {
 		right: 0;
 	}
