@@ -7,10 +7,13 @@
   > .aside {
     width: 345px;
     background-color: gray-light;
-    padding: 45px 40px 45px 40px;
+    padding: 40px 30px;
+    > ul > li {
+      margin-bottom: 20px;
+    }
   }
   > .main {
     flex: 1;
-    padding: 40px 65px 40px 65px;
+    padding: 40px 50px;
   }
 }

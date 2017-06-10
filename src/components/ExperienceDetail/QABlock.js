@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import styles from './QABlock.module.css';
 
-const QABlock = () => (
+const QABlock = ({ qa }) => (
   <section className={styles.container}>
     <div className={styles.question}>
       <div className={styles.q}>Q</div>
       <div className={`${styles.content} pMBold`}>
-        寫 func：print 出以下圖形<br />
-        *<br />
-        **
+        {qa.question}
       </div>
     </div>
     <div className={styles.answer}>
       <div className={styles.a}>A</div>
       <div className={`${styles.content} pM`}>
-        console.log();
+        {qa.answer}
       </div>
     </div>
   </section>
 );
+
+QABlock.propTypes = {
+  qa: PropTypes.object.isRequired,
+};
 
 export default QABlock;

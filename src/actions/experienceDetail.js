@@ -12,6 +12,8 @@ const getIndex = (ary, id) => ary.map(e => e._id).indexOf(id);
 
 export const setExperience = experience => ({
   type: SET_EXPERIENCE,
+  experienceStatus: status.FETCHED,
+  experienceError: null,
   experience,
 });
 
@@ -91,7 +93,27 @@ export const likeReply = o => (dispatch, getState) => {
     // });
 };
 
-export const fetchExperience = _id =>
+export const fetchExperience = id => dispatch => {
+  dispatch({
+    type: SET_EXPERIENCE,
+    replyStatus: status.FETCHING,
+  });
+
+  return fetchUtil(`/experiences/${id}`)('GET')
+    .then(result => {
+      dispatch(setExperience(result));
+    })
+    .catch(error => {
+      dispatch({
+        type: SET_EXPERIENCE,
+        experienceStatus: status.ERROR,
+        experienceError: error,
+        experience: {},
+      });
+    });
+};
+
+export const fetchExperienceMock = _id =>
   dispatch => {
     const experience = {
       _id,
