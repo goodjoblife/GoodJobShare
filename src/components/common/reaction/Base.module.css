@@ -4,21 +4,17 @@
   color: main-gray;
   display: flex;
   align-items: center;
-  > div {
-    margin-left: 10px;
-    svg {
-      fill: main-gray;
-      width: 1.1em;
-      height: 1.1em;
-      &.clickable {
-        cursor: pointer;
-      }
-      &.toggled {
-        fill: main-yellow;
-      }
+
+  svg {
+    fill: main-gray;
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    &.clickable {
+      cursor: pointer;
     }
-    &:first-child {
-      margin-left: 0;
+    &.toggled {
+      fill: main-yellow;
     }
   }
 }

@@ -27,7 +27,7 @@ P.propTypes = {
 P.defaultProps = {
   children: '',
   size: 'm',
-  Tag: 'p',
+  Tag: 'div',
   bold: false,
 };
 

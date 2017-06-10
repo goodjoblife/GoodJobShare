@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
 import cn from 'classnames';
 
+import i from 'common/icons';
 import Base from './Base';
-import Heart from '../../images/heart.svg';
 import styles from './Base.module.css';
 
 const ThumbsUp = ({ onClick, toggled, ...restProps }) => (
-  <Base {...restProps}>
-    <Heart
+  <Base {...restProps} style={{ marginRight: '24px' }}>
+    <i.Like
       onClick={onClick}
       className={cn(
         toggled ? styles.toggled : '',

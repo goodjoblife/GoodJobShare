@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
 
-import Heart from '../images/heart.svg';
+import i from 'common/icons';
 
 import styles from './OvertimeBlock.module.css';
 
 const OvertimeBlock = ({ heading, data, noDataText }) => (
   <div>
     <div className={`pMBold ${styles.heading}`}>
-      <Heart />
+      <i.X />
       <span>{heading}</span>
     </div>
     {
