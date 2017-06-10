@@ -1,16 +1,18 @@
 @value PAGE_TOP, PAGE_TOP_S from "common/variables.module.css";
 
-.wrapper {
+.pageTop {
   padding-top: PAGE_TOP;
   @media (max-width: 550px) {
     padding-top: PAGE_TOP_S;
   }
 }
 
-.heading {
-  text-align: center;
-  margin-bottom: 40px;
+.padding {
+  padding-top: 64px;
+  padding-bottom: 64px;
+
   @media (max-width: 550px) {
-    margin-bottom: 20px;
+    padding-top: 48px;
+    padding-bottom: 48px;
   }
 }

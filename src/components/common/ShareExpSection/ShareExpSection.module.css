@@ -74,6 +74,8 @@
 
 .image {
   display: inline-block;
+  max-width: 210px;
+  
   @media (max-width: 850px) {
     max-width: 140px;
   }

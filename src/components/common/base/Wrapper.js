@@ -4,28 +4,20 @@ import styles from './Wrapper.module.css';
 
 const sizeOptions = ['l', 'm', 's'];
 
-const Wrapper = ({ Tag, size, pageTop, padding, children, style, className }) => (
+const Wrapper = ({ Tag, size, children, className }) => (
   <Tag
-    className={cn(styles[size], className, {
-      [styles.pageTop]: pageTop,
-      [styles.padding]: padding,
-    })}
-    style={style}
+    className={cn(styles[size], className)}
   >
     {children}
   </Tag>
 );
 Wrapper.propTypes = {
+  Tag: PropTypes.string,
   children: PropTypes.node,
   size: PropTypes.oneOf(sizeOptions).isRequired,
-  pageTop: PropTypes.bool,
-  padding: PropTypes.bool,
-  Tag: PropTypes.string,
-  style: PropTypes.object,
   className: PropTypes.string,
 };
 Wrapper.defaultProps = {
-  children: '',
   size: 'l',
   Tag: 'div',
 };

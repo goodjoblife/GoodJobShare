@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import cn from 'classnames';
-import Wrapper from 'common/Wrapper';
+import { Wrapper } from 'common/base';
 import i from 'common/icons';
 import FacebookProvider from 'common/FacebookProvider';
 import styles from './Header.module.css';

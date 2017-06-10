@@ -1,12 +1,4 @@
-.bold {
-  font-weight: 700;
-}
-
-.center {
-  text-align: center;
-}
-
-.headingL {
+.l {
   font-size: 2.25em;
   line-height: 1.25em;
   letter-spacing: 2px;
@@ -16,22 +8,43 @@
   }
 }
 
-.headingM {
+.m {
   font-size: 1.75em;
   line-height: 1.3em;
   letter-spacing: 0.1em;
+
+  @media (max-width: 550px) {
+    font-size: 1.6em;
+  }
 }
 
-.subheadingL {
+.sl {
   font-size: 1.5em;
   line-height: 1.5em;
   letter-spacing: 0.05em;
+
   @media (max-width: 550px) {
     font-size: 1.4em;
   }
 }
 
-.subheadingM {
+.sm {
   font-size: 1.2em;
   line-height: 1.6em;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.center {
+  text-align: center;
+}
+
+.marginBottom {
+  margin-bottom: 40px;
+
+  @media (max-width: 550px) {
+    margin-bottom: 24px;
+  }
 }

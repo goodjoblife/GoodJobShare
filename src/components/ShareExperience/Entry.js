@@ -1,6 +1,6 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
-import Wrapper from 'common/Wrapper';
+import { Wrapper } from 'common/base';
 import ShareExpSection from 'common/ShareExpSection';
 import i from 'common/icons';
 import styles from './Entry.module.css';

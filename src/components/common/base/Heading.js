@@ -2,13 +2,14 @@ import React, { PropTypes } from 'react';
 import cn from 'classnames';
 import styles from './Heading.module.css';
 
-const sizeOptions = ['headingL', 'headingM', 'subheadingL', 'subheadingM'];
+const sizeOptions = ['l', 'm', 'sl', 'sm'];
 
-const Heading = ({ Tag, size, bold, center, children, style, className }) => (
+const Heading = ({ Tag, size, bold, center, marginBottom, children, style, className }) => (
   <Tag
     className={cn(styles[size], className, {
       [styles.bold]: bold,
       [styles.center]: center,
+      [styles.marginBottom]: marginBottom,
     })}
     style={style}
   >
@@ -21,6 +22,7 @@ Heading.propTypes = {
   Tag: PropTypes.string,
   bold: PropTypes.bool,
   center: PropTypes.bool,
+  marginBottom: PropTypes.bool,
   style: PropTypes.object,
   className: PropTypes.string,
 };
