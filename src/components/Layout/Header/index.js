@@ -3,10 +3,8 @@ import { Link } from 'react-router';
 import cn from 'classnames';
 import { Wrapper } from 'common/base';
 import i from 'common/icons';
-import FacebookProvider from 'common/FacebookProvider';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
-import { FACEBOOK_APP_ID } from '../../../config';
 
 class Header extends React.Component {
   constructor(props) {
@@ -17,6 +15,19 @@ class Header extends React.Component {
     this.toggleNav = this.toggleNav.bind(this);
     this.closeNav = this.closeNav.bind(this);
     this.facebookReady = this.facebookReady.bind(this);
+    this.login = this.login.bind(this);
+    if (this.props.FB) {
+      this.facebookReady(this.props.FB);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.FB !== this.props.FB) {
+      // FB instance changed
+      if (this.props.FB) {
+        this.facebookReady(this.props.FB);
+      }
+    }
   }
 
   toggleNav() {
@@ -42,6 +53,10 @@ class Header extends React.Component {
     });
   }
 
+  login() {
+    this.props.login(this.props.FB);
+  }
+
   render() {
     return (
       <header className={styles.header}>
@@ -61,12 +76,18 @@ class Header extends React.Component {
           >
             <SiteMenu />
             <div className={styles.buttonsArea}>
+              {
+                this.props.auth.get('status') !== 'connected' &&
+                <div className={styles.leaveDataBtn} onClick={this.login}>
+                  <div>登入<i.User /></div>
+                </div>
+              }
+
               <Link to="/share" className={styles.leaveDataBtn}>
                 留下資料<i.ArrowGo />
               </Link>
             </div>
           </nav>
-          <FacebookProvider appId={FACEBOOK_APP_ID} onReady={this.facebookReady} />
         </Wrapper>
       </header>
     );
@@ -74,7 +95,10 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
+  login: React.PropTypes.func.isRequired,
   setLogin: React.PropTypes.func.isRequired,
+  auth: React.PropTypes.object,
+  FB: React.PropTypes.object,
 };
 
 const HeaderButton = ({ isNavOpen, toggle }) => (

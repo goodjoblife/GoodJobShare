@@ -1,17 +1,18 @@
 import React, { Component, PropTypes } from 'react';
-import FacebookProvider from './FacebookProvider';
+import withFB from './withFB';
 
-export default class FacebookWrapper extends Component {
+class FacebookWrapper extends Component {
   constructor(props) {
     super(props);
+    this.container = null;
     this.handleContainer = this.handleContainer.bind(this);
-    this.handleFacebookReady = this.handleFacebookReady.bind(this);
   }
 
   // 讓 FB 重新 parse children
   componentDidUpdate() {
-    if (this.FB) {
-      this.FB.XFBML.parse(this.container);
+    // if FB instance
+    if (this.props.FB && this.container) {
+      this.props.FB.XFBML.parse(this.container);
     }
   }
 
@@ -19,25 +20,20 @@ export default class FacebookWrapper extends Component {
     this.container = container;
   }
 
-  handleFacebookReady(FB) {
-    this.FB = FB;
-    this.FB.XFBML.parse(this.container);
-  }
-
   render() {
-    const { appId, children } = this.props;
+    const { children } = this.props;
 
     return (
-      <FacebookProvider appId={appId} onReady={this.handleFacebookReady}>
-        <div ref={this.handleContainer}>
-          {children}
-        </div>
-      </FacebookProvider>
+      <div ref={this.handleContainer}>
+        {children}
+      </div>
     );
   }
 }
 
 FacebookWrapper.propTypes = {
-  appId: PropTypes.string.isRequired,
   children: PropTypes.node,
+  FB: React.PropTypes.object,
 };
+
+export default withFB(FacebookWrapper);
