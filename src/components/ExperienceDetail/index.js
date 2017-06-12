@@ -44,7 +44,6 @@ class ExperienceDetail extends Component {
     } = this.props;
     const data = experienceDetail.toJS();
     const experience = data.experience;
-    console.log('data', data);
     return (
       <main className="wrapperL">
         <Helmet
