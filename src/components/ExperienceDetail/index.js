@@ -9,6 +9,9 @@ import ReactionZone from './ReactionZone';
 import RecommendationZone from './RecommendationZone';
 import MessageBoard from './MessageBoard';
 import status from '../../constants/status';
+import {
+  fetchExperience,
+} from '../../actions/experienceDetail';
 
 class ExperienceDetail extends Component {
   static propTypes = {
@@ -22,13 +25,19 @@ class ExperienceDetail extends Component {
     params: React.PropTypes.object.isRequired,
   }
 
+  static fetchData({ store, params }) {
+    return store.dispatch(fetchExperience(params.id));
+  }
+
   constructor() {
     super();
     this.submitComment = this.submitComment.bind(this);
   }
 
   componentDidMount() {
-    this.props.fetchExperience(this.props.params.id);
+    if (this.props.experienceDetail.getIn(['experience', '_id']) !== this.props.params.id) {
+      this.props.fetchExperience(this.props.params.id);
+    }
     this.props.fetchReplies(this.props.params.id);
   }
 
