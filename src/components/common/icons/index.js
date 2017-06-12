@@ -1,4 +1,5 @@
 import Add from './Add';
+import ArrowGo from './ArrowGo';
 import ArrowLeft from './ArrowLeft';
 import Bad from './Bad';
 import Checked from './Checked';
@@ -22,9 +23,11 @@ import Plus from './Plus';
 import Thumbnails from './Thumbnails';
 import User from './User';
 import Warning from './Warning';
+import X from './X';
 
 const icons = {
   Add,
+  ArrowGo,
   ArrowLeft,
   Bad,
   Checked,
@@ -48,6 +51,7 @@ const icons = {
   Thumbnails,
   User,
   Warning,
+  X,
 };
 
 export default icons;

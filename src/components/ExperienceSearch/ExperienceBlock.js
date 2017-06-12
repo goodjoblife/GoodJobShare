@@ -1,25 +1,38 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 
-import Block from 'common/Block';
+import { Heading, P } from 'common/base';
+import i from 'common/icons';
 import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
 import { formatWithCommas } from '../../utils/numberUtil';
-
 import styles from './ExperienceBlock.module.css';
+
+const Label = ({ Icon, text }) => (
+  <div className={styles.label}>
+    <Icon />
+    <P Tag="span" size="m" bold>{text}</P>
+  </div>
+);
+Label.propTypes = {
+  Icon: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
+};
 
 class ExperienceBlock extends Component {
   static propTypes = {
+    to: PropTypes.string.isRequired,
     data: PropTypes.object.isRequired,
   }
 
   render() {
-    const { data } = this.props;
+    const { data, to } = this.props;
     const expType = data.type === 'interview' ? '面試' : '工作';
     const date = new Date(Date.parse(data.created_at));
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const { salary } = data;
-    const splitter = '　•　';
+    const splitter = ' ・ ';
     let salaryType;
     let salaryAmount;
 
@@ -41,35 +54,33 @@ class ExperienceBlock extends Component {
     }
 
     return (
-      <Block>
-        <div className={styles.container}>
-
-          <div className={`pS ${styles.createdDate}`}>
+      <Link to={to} className={styles.container}>
+        <section>
+          <P size="s">
             {`${expType}${splitter}${year} 年 ${month} 月`}
-          </div>
+          </P>
 
-          <div className={`headingMBold ${styles.heading}`}>
+          <Heading Tag="h2" size="sl" bold className={styles.heading}>
             {data.title}
+          </Heading>
+
+          <div className={styles.labels}>
+            <Label text={data.company.name} Icon={i.Company} />
+            <Label text={data.job_title} Icon={i.User} />
+            <Label text={data.region} Icon={i.Location} />
+            {salary && <Label text={`${salaryAmount} / ${salaryType}`} Icon={i.Coin} />}
           </div>
 
-          <div className={`pSBold ${styles.label}`}>
-            <div>{data.company.name}</div>
-            <div>{data.job_title}</div>
-            <div>{data.region}</div>
-            {salary && <div>{`${salaryAmount} / ${salaryType}`}</div>}
-          </div>
-
-          <div className={`pM ${styles.content}`}>
-            {data.preview} ... (閱讀更多)
-          </div>
+          <P size="m" className={styles.content}>
+            {data.preview} ... ... <span className={styles.more}>閱讀更多</span>
+          </P>
 
           <div className={styles.reaction}>
             <ThumbsUp count={data.like_count} />
             <Comment count={data.reply_count} />
           </div>
-
-        </div>
-      </Block>
+        </section>
+      </Link>
     );
   }
 }

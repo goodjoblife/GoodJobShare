@@ -3,8 +3,8 @@
 /* ------------------------------------
  *  Width and Height
  * ------------------------------------ */
-@value inner-wrap-l: 1260px;
-@value inner-wrap-m: 960px;
+@value inner-wrap-l: 1264px;
+@value inner-wrap-m: 964px;
 @value inner-wrap-s: 630px;
 
 @value page-gutter: 40px;
@@ -12,7 +12,7 @@
 
 @value NAV_HEIGHT: 54px;
 @value NAV_MOBILE_HEIGHT: 50px;
-@value PAGE_TOP: 60px;
+@value PAGE_TOP: 64px;
 @value PAGE_TOP_S: 30px;
 
 /* ------------------------------------

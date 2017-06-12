@@ -16,8 +16,8 @@ const renderCount = count => {
   return <div>{count}</div>;
 };
 
-const Base = ({ fontClass, children, label, count }) => (
-  <div className={`${fontClass || 'pS'} ${styles.container}`}>
+const Base = ({ fontClass, children, label, count, style }) => (
+  <div className={`${fontClass || 'pS'} ${styles.container}`} style={style}>
     <div>{children}</div>
     {renderLabel(label)}
     {renderCount(count)}
@@ -29,6 +29,7 @@ Base.propTypes = {
   children: PropTypes.node.isRequired,
   label: PropTypes.string,
   count: PropTypes.number,
+  style: PropTypes.object,
   // toggled: PropTypes.bool,
 };
 

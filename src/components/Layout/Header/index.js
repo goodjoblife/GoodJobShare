@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router';
 import cn from 'classnames';
+import { Wrapper } from 'common/base';
 import i from 'common/icons';
 import FacebookProvider from 'common/FacebookProvider';
 import styles from './Header.module.css';
@@ -43,24 +45,29 @@ class Header extends React.Component {
   render() {
     return (
       <header className={styles.header}>
-        <div className={cn(styles.inner, 'wrapperL')}>
+        <Wrapper size="l" className={styles.inner}>
           <HeaderButton
             isNavOpen={this.state.isNavOpen}
             toggle={this.toggleNav}
           />
           <div className={styles.logo}>
-            <a href="/" title="goodjob 工時薪資透明化運動">
+            <Link to="/" title="goodjob 工時薪資透明化運動" onClick={this.closeNav}>
               <i.GjLogo />
-            </a>
+            </Link>
           </div>
           <nav
             className={cn(styles.nav, { [styles.isNavOpen]: this.state.isNavOpen })}
             onClick={this.closeNav}
           >
             <SiteMenu />
+            <div className={styles.buttonsArea}>
+              <Link to="/share" className={styles.leaveDataBtn}>
+                留下資料<i.ArrowGo />
+              </Link>
+            </div>
           </nav>
           <FacebookProvider appId={FACEBOOK_APP_ID} onReady={this.facebookReady} />
-        </div>
+        </Wrapper>
       </header>
     );
   }

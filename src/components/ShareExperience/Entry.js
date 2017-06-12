@@ -1,42 +1,16 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
+import { Wrapper } from 'common/base';
+import ShareExpSection from 'common/ShareExpSection';
+import i from 'common/icons';
 import styles from './Entry.module.css';
 
-
 const Entry = () => (
-  <div className={styles.wrapper}>
-    <div
-      className={styles.container}
-    >
-      <p
-        style={{
-          marginBottom: '14px',
-        }}
-      >
-        留下資料
-      </p>
-      <h1
-        style={{
-          fontSize: '2.25em',
-          marginBottom: '81px',
-        }}
-      >
-        你要分享何種經驗？
-      </h1>
-      <div className={styles.link__container}>
-        <div className={styles.link}>
-          <div className={styles.image} />
-          <p>留下工時或薪資</p>
-        </div>
-        <div className={styles.link}>
-          <div className={styles.image} />
-          <p>分享面試經驗</p>
-        </div>
-        <div className={styles.link}>
-          <div className={styles.image} />
-          <p>分享工作經驗</p>
-        </div>
-      </div>
-    </div>
+  <div>
+    <Wrapper size="l" className={styles.wrapper}>
+      <button onClick={browserHistory.goBack} className={styles.closeBtn}><i.X /></button>
+    </Wrapper>
+    <ShareExpSection />
   </div>
 );
 

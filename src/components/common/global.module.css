@@ -5,7 +5,7 @@
   .wrapperL {
     width: 100%;
   	max-width: inner-wrap-l;
-  	padding: 0 60px;
+  	padding: 0 64px;
   	margin: 0 auto;
   	@media (max-width: 850px) {
   		padding: 0 page-gutter;
@@ -18,7 +18,7 @@
   .wrapperM {
     width: 100%;
   	max-width: inner-wrap-m;
-  	padding: 0 60px;
+  	padding: 0 64px;
   	margin: 0 auto;
   	@media (max-width: 850px) {
   		padding: 0 page-gutter;
@@ -31,7 +31,7 @@
   .wrapperS {
     width: 100%;
   	max-width: inner-wrap-s;
-  	padding: 0 60px;
+  	padding: 0 64px;
   	margin: 0 auto;
   	@media (max-width: 850px) {
   		padding: 0 page-gutter;
@@ -74,7 +74,7 @@
   }
 
   .headingL, .headingLBold {
-    font-size: 2.1em;
+    font-size: 2.25em;
   	line-height: 1.25em;
   	letter-spacing: 0.03em;
   }
@@ -175,7 +175,7 @@
     background-color: #000;
     border: none;
     color: white;
-    padding: 15px 60px;
+    padding: 15px 64px;
     text-align: center;
     text-decoration: none;
     display: inline-block;

@@ -12,7 +12,7 @@
 .column {
   flex: 0 0 calc((100% - gutter * 2) / 3);
   margin-right: gutter;
-  margin-bottom: 60px;
+  margin-bottom: 64px;
 
   &:nth-child(3n) {
     margin-right: 0;

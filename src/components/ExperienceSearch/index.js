@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
-import Link from 'react-router/lib/Link';
 
 import Radio from 'common/form/Radio';
 import Checkbox from 'common/form/Checkbox';
@@ -75,7 +74,7 @@ class ExperienceSearch extends Component {
     console.log('-->', experienceSearch, data);
     return (
       <main className="wrapperL">
-        <Helmet title="面試‧工作經驗" />
+        <Helmet title="面試 ‧ 工作經驗" />
         {/*
           <Alert ref={c => { cmpAlert = c; }}>
             <p>test</p>
@@ -201,9 +200,7 @@ class ExperienceSearch extends Component {
             {
               (data.experiences || []).map(o => (
                 data[o.type] && (
-                  <Link key={o._id} to={`/experiences/${o._id}`}>
-                    <ExperienceBlock data={o} />
-                  </Link>
+                  <ExperienceBlock key={o._id} to={`/experiences/${o._id}`} data={o} />
                 )
               ))
             }

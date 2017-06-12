@@ -1,30 +1,56 @@
-@value main-yellow from "../common/variables.module.css";
-
-
 .wrapper {
-  padding-top: 40px;
-  min-height: 700px;
+  position: relative;
 }
 
-.container {
+.closeBtn {
+  position: absolute;
+  top: 24px;
+  right: 0;
+  width: 70px;
+  height: 70px;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-}
+  flex-direction: column;
+  border-radius: 100%;
+  transition-property: background;
+  transition-duration: .3s;
 
-.link__container {
-  width: 825px;
-  display: flex;
-  justify-content: space-between;
-}
+  &::after {
+    content: "取消";
+    position: absolute;
+    bottom: -24px;
+    display: block;
+    text-align: center;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: .3s;
+  }
 
-.link {
-  text-align: center;
-}
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: #555;
 
-.image {
-  width: 211px;
-  height: 211px;
-  margin-bottom: 34px;
-  background: main-yellow;
+    @media (max-width: 850px) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  @media (min-width: 851px) {
+    &:hover {
+      background-color: #ebebeb;
+
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  @media (max-width: 850px) {
+    top: 0;
+    width: 64px;
+    height: 64px;
+  }
 }

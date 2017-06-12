@@ -1,24 +1,57 @@
-@value gray-dark from "../common/variables.module.css";
+@value gray-dark, link-blue from "../common/variables.module.css";
 
 .container {
-  padding: 30px;
+  display: block;
+  background-color: #fff;
+  padding: 24px;
+  box-shadow: 0 0 4px rgba(0,0,0, .15);
+  margin-bottom: 40px;
+  transition-property: background, box-shadow;
+  transition-duration: .3s;
 
-  .createdDate, .content {
-    color: gray-dark;
+  &:last-of-type {
+    margin-bottom: 0;
   }
-  .heading {
-    padding: 10px 0;
-  }
-  .content {
-    padding: 15px 0;
-  }
-  .label, .reaction {
-    display: flex;
-    > div {
-      margin-left: 30px;
-      &:first-child {
-        margin-left: 0;
-      }
+
+  @media (min-width: 851px) {
+    &:hover {
+      box-shadow: 1px 1px 11px rgba(0,0,0, .2);
     }
   }
+}
+
+.heading {
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+
+.labels {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.label {
+  margin-right: 24px;
+  display: flex;
+  align-items: center;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    fill: #C3C3C3;
+    margin-right: 8px;
+  }
+}
+
+.content {
+  margin-bottom: 16px;
+}
+
+.more {
+  color: link-blue;
+}
+
+.reaction {
+  display: flex;
+  align-items: center;
 }

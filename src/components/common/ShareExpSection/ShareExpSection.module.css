@@ -1,0 +1,82 @@
+@value main-yellow from "common/variables.module.css";
+
+.heading {
+  margin-bottom: 40px;
+
+  @media (max-width: 550px) {
+    margin-bottom: 24px;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 550px) {
+    flex-wrap: wrap;
+  }
+}
+
+.item {
+  flex: 1 1 calc(100% / 3);
+  margin-left: 40px;
+  margin-right: 40px;
+  padding: 40px;
+  text-align: center;
+  transition-property: background, box-shadow;
+  transition-duration: .3s;
+
+  @media (min-width: 851px) {
+    &:hover {
+      background-color: #fff;
+      box-shadow: 2px 0 11px rgba(0,0,0, .12);
+
+      .button {
+        background-color: main-yellow;
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  @media (max-width: 850px) {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 20px;
+  }
+
+  @media (max-width: 550px) {
+    flex: 0 0 50%;
+    padding: 8px;
+  }
+}
+
+.button {
+  margin-top: 24px;
+  height: 48px;
+  padding: 0 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition-property: background;
+  transition-duration: .3s;
+  border-radius: 48px;
+
+  @media (max-width: 850px) {
+    padding: 0;
+    margin-top: 8px;
+  }
+}
+
+.image {
+  display: inline-block;
+  max-width: 210px;
+  
+  @media (max-width: 850px) {
+    max-width: 140px;
+  }
+}

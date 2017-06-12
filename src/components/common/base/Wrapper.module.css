@@ -1,0 +1,66 @@
+@value PAGE_TOP, PAGE_TOP_S, inner-wrap-l, inner-wrap-m, inner-wrap-m-s, page-gutter, page-gutter-s from "common/variables.module.css";
+
+.l {
+  width: 100%;
+  max-width: inner-wrap-l;
+  padding-left: 64px;
+  padding-right: 64px;
+  margin: 0 auto;
+  @media (max-width: 850px) {
+    padding-left: page-gutter;
+    padding-right: page-gutter;
+  }
+  @media (max-width: 550px) {
+    padding-left: page-gutter-s;
+    padding-right: page-gutter-s;
+  }
+}
+
+.m {
+  width: 100%;
+  max-width: inner-wrap-m;
+  padding-right: 64px;
+  padding-left: 64px;
+  margin: 0 auto;
+  @media (max-width: 850px) {
+    padding-left: page-gutter;
+    padding-right: page-gutter;
+  }
+  @media (max-width: 550px) {
+    padding-left: page-gutter-s;
+    padding-right: page-gutter-s;
+  }
+}
+
+.s {
+  width: 100%;
+  max-width: inner-wrap-s;
+  padding-right: 64px;
+  padding-left: 64px;
+  margin: 0 auto;
+  @media (max-width: 850px) {
+    padding-left: page-gutter;
+    padding-right: page-gutter;
+  }
+  @media (max-width: 550px) {
+    padding-left: page-gutter-s;
+    padding-right: page-gutter-s;
+  }
+}
+
+.pageTop {
+  padding-top: PAGE_TOP;
+  @media (max-width: 550px) {
+    padding-top: PAGE_TOP_S;
+  }
+}
+
+.padding {
+  padding-top: 64px;
+  padding-bottom: 64px;
+
+  @media (max-width: 550px) {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+}
