@@ -59,7 +59,7 @@ class ExperienceDetail extends Component {
         />
         <div className={styles.heading}>
           <h2 className={`${styles.badge} pM`}>
-            {experience === 'work' ? '工作' : '面試'}
+            {experience.type === 'work' ? '工作' : '面試'}
           </h2>
           <h1 className="headingL">
             {experience && experience.company && (
