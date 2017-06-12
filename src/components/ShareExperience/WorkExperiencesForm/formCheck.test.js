@@ -154,6 +154,7 @@ describe('singleSection and sections tests', () => {
 describe('interviewFormCheck tests', () => {
   const defaultForm = {
     companyQuery: '',
+    companyId: '',
     region: null,
     jobTitle: '',
     experienceInYear: null,
@@ -182,6 +183,7 @@ describe('interviewFormCheck tests', () => {
     const form = {
       ...defaultForm,
       companyQuery: '台積電',
+      companyId: '1234',
       region: '台北市',
       jobTitle: '硬體工程師',
       experienceInYear: 1,

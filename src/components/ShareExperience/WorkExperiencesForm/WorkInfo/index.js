@@ -54,6 +54,7 @@ class WorkInfo extends React.PureComponent {
             <CompanyQuery
               companyQuery={companyQuery}
               onChange={handleState('companyQuery')}
+              onCompanyId={handleState('companyId')}
             />
           </div>
           <div

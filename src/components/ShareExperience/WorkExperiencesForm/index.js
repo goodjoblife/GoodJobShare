@@ -53,6 +53,7 @@ const firstSectionId = idCounter();
 
 const defaultForm = {
   companyQuery: '',
+  companyId: '',
   region: null,
   jobTitle: '',
   experienceInYear: null,
