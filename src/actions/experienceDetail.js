@@ -2,6 +2,7 @@ import fetchUtil from '../utils/fetchUtil';
 import status from '../constants/status';
 
 export const SET_EXPERIENCE = '@@experienceDetail/SET_EXPERIENCE';
+export const SET_EXPERIENCE_STATUS = '@@experienceDetail/SET_EXPERIENCE_STATUS';
 export const SET_TOS = '@@experienceDetail/SET_TOS';
 export const SET_COMMENT = '@@experienceDetail/SET_COMMENT';
 export const SET_REPLY_STATUS = '@@experienceDetail/SET_REPLY_STATUS';
@@ -95,8 +96,8 @@ export const likeReply = o => (dispatch, getState) => {
 
 export const fetchExperience = id => dispatch => {
   dispatch({
-    type: SET_EXPERIENCE,
-    replyStatus: status.FETCHING,
+    type: SET_EXPERIENCE_STATUS,
+    status: status.FETCHING,
   });
 
   return fetchUtil(`/experiences/${id}`)('GET')

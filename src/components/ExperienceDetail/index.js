@@ -32,6 +32,14 @@ class ExperienceDetail extends Component {
     this.props.fetchReplies(this.props.params.id);
   }
 
+  componentWillReceiveProps(nextProps) {
+    // if params.id changes due to route, we should refetch target experience
+    if (nextProps.params.id !== this.props.params.id) {
+      this.props.fetchExperience(nextProps.params.id);
+      this.props.fetchReplies(nextProps.params.id);
+    }
+  }
+
   submitComment() {
     const { experienceDetail } = this.props;
     const data = experienceDetail.toJS();
