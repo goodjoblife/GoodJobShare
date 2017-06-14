@@ -16,9 +16,10 @@ class Header extends React.Component {
     this.closeNav = this.closeNav.bind(this);
     this.login = this.login.bind(this);
 
-    const { getLoginStatus, FB } = this.props;
+    const { getLoginStatus, FB, getMe } = this.props;
 
     getLoginStatus(FB)
+      .then(() => getMe(FB))
       .catch(() => {});
   }
 
@@ -29,6 +30,12 @@ class Header extends React.Component {
 
       getLoginStatus(FB)
         .catch(() => {});
+    }
+
+    if (prevProps.auth.get('status') !== this.props.auth.get('status') &&
+      this.props.auth.get('status') === 'connected') {
+      const { getMe, FB } = this.props;
+      getMe(FB).catch(() => {});
     }
   }
 
@@ -75,6 +82,12 @@ class Header extends React.Component {
                   <div>登入<i.User /></div>
                 </div>
               }
+              {
+                this.props.auth.getIn(['user', 'name']) !== null &&
+                <div className={styles.leaveDataBtn} onClick={this.login}>
+                  <div>{this.props.auth.getIn(['user', 'name'])}<i.User /></div>
+                </div>
+              }
 
               <Link to="/share" className={styles.leaveDataBtn}>
                 留下資料<i.ArrowGo />
@@ -90,6 +103,7 @@ class Header extends React.Component {
 Header.propTypes = {
   login: React.PropTypes.func.isRequired,
   getLoginStatus: React.PropTypes.func.isRequired,
+  getMe: React.PropTypes.func.isRequired,
   auth: React.PropTypes.object,
   FB: React.PropTypes.object,
 };
