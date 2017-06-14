@@ -14,19 +14,21 @@ class Header extends React.Component {
     };
     this.toggleNav = this.toggleNav.bind(this);
     this.closeNav = this.closeNav.bind(this);
-    this.facebookReady = this.facebookReady.bind(this);
     this.login = this.login.bind(this);
-    if (this.props.FB) {
-      this.facebookReady(this.props.FB);
-    }
+
+    const { getLoginStatus, FB } = this.props;
+
+    getLoginStatus(FB)
+      .catch(() => {});
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.FB !== this.props.FB) {
       // FB instance changed
-      if (this.props.FB) {
-        this.facebookReady(this.props.FB);
-      }
+      const { getLoginStatus, FB } = this.props;
+
+      getLoginStatus(FB)
+        .catch(() => {});
     }
   }
 
@@ -42,19 +44,10 @@ class Header extends React.Component {
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  facebookReady(FB) {
-    FB.getLoginStatus(response => {
-      if (response.status === 'connected') {
-        this.props.setLogin(response.status, response.authResponse.accessToken);
-      } else if (response.status === 'not_authorized') {
-        this.props.setLogin(response.status);
-      }
-    });
-  }
-
   login() {
-    this.props.login(this.props.FB);
+    const { login, FB } = this.props;
+    login(FB)
+      .catch(() => {});
   }
 
   render() {
@@ -77,7 +70,7 @@ class Header extends React.Component {
             <SiteMenu />
             <div className={styles.buttonsArea}>
               {
-                this.props.auth.get('status') !== 'connected' &&
+                this.props.auth.getIn(['user', 'name']) === null &&
                 <div className={styles.leaveDataBtn} onClick={this.login}>
                   <div>登入<i.User /></div>
                 </div>
@@ -96,7 +89,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
   login: React.PropTypes.func.isRequired,
-  setLogin: React.PropTypes.func.isRequired,
+  getLoginStatus: React.PropTypes.func.isRequired,
   auth: React.PropTypes.object,
   FB: React.PropTypes.object,
 };
