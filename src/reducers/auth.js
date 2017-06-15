@@ -5,11 +5,14 @@ import {
 
 import createReducer from 'utils/createReducer';
 import { saveToken } from 'utils/tokenUtil';
-import { SET_LOGIN } from '../actions/auth';
+import { SET_LOGIN, SET_USER } from '../actions/auth';
 
 const preloadedState = fromJS({
   status: 'unknown',
   token: null,
+  user: {
+    name: null,
+  },
 });
 
 const auth = createReducer(preloadedState, {
@@ -19,6 +22,8 @@ const auth = createReducer(preloadedState, {
     }
     return state.set('status', status).set('token', token);
   },
+  [SET_USER]: (state, { name }) =>
+    state.setIn(['user', 'name'], name),
 });
 
 export default auth;

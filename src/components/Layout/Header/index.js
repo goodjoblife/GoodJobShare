@@ -3,10 +3,8 @@ import { Link } from 'react-router';
 import cn from 'classnames';
 import { Wrapper } from 'common/base';
 import i from 'common/icons';
-import FacebookProvider from 'common/FacebookProvider';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
-import { FACEBOOK_APP_ID } from '../../../config';
 
 class Header extends React.Component {
   constructor(props) {
@@ -16,7 +14,29 @@ class Header extends React.Component {
     };
     this.toggleNav = this.toggleNav.bind(this);
     this.closeNav = this.closeNav.bind(this);
-    this.facebookReady = this.facebookReady.bind(this);
+    this.login = this.login.bind(this);
+
+    const { getLoginStatus, FB, getMe } = this.props;
+
+    getLoginStatus(FB)
+      .then(() => getMe(FB))
+      .catch(() => {});
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.FB !== this.props.FB) {
+      // FB instance changed
+      const { getLoginStatus, FB } = this.props;
+
+      getLoginStatus(FB)
+        .catch(() => {});
+    }
+
+    if (prevProps.auth.get('status') !== this.props.auth.get('status') &&
+      this.props.auth.get('status') === 'connected') {
+      const { getMe, FB } = this.props;
+      getMe(FB).catch(() => {});
+    }
   }
 
   toggleNav() {
@@ -31,15 +51,10 @@ class Header extends React.Component {
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  facebookReady(FB) {
-    FB.getLoginStatus(response => {
-      if (response.status === 'connected') {
-        this.props.setLogin(response.status, response.authResponse.accessToken);
-      } else if (response.status === 'not_authorized') {
-        this.props.setLogin(response.status);
-      }
-    });
+  login() {
+    const { login, FB } = this.props;
+    login(FB)
+      .catch(() => {});
   }
 
   render() {
@@ -61,12 +76,24 @@ class Header extends React.Component {
           >
             <SiteMenu />
             <div className={styles.buttonsArea}>
+              {
+                this.props.auth.getIn(['user', 'name']) === null &&
+                <div className={styles.leaveDataBtn} onClick={this.login}>
+                  <div>登入<i.User /></div>
+                </div>
+              }
+              {
+                this.props.auth.getIn(['user', 'name']) !== null &&
+                <div className={styles.leaveDataBtn} onClick={this.login}>
+                  <div>{this.props.auth.getIn(['user', 'name'])}<i.User /></div>
+                </div>
+              }
+
               <Link to="/share" className={styles.leaveDataBtn}>
                 留下資料<i.ArrowGo />
               </Link>
             </div>
           </nav>
-          <FacebookProvider appId={FACEBOOK_APP_ID} onReady={this.facebookReady} />
         </Wrapper>
       </header>
     );
@@ -74,7 +101,11 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  setLogin: React.PropTypes.func.isRequired,
+  login: React.PropTypes.func.isRequired,
+  getLoginStatus: React.PropTypes.func.isRequired,
+  getMe: React.PropTypes.func.isRequired,
+  auth: React.PropTypes.object,
+  FB: React.PropTypes.object,
 };
 
 const HeaderButton = ({ isNavOpen, toggle }) => (
