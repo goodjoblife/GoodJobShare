@@ -1,17 +1,18 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import withFB from 'common/withFB';
 import InterviewForm from '../../components/ShareExperience/InterviewForm';
-import * as CounterActions from '../../actions/counter';
+import { login } from '../../actions/auth';
 
 
 const mapStateToProps = state => ({
-  counter: state.counter,
+  auth: state.auth,
 });
 
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(CounterActions, dispatch);
+  bindActionCreators({ login }, dispatch);
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(InterviewForm);
+export default connect(mapStateToProps, mapDispatchToProps)(withFB(InterviewForm));

@@ -1,5 +1,6 @@
 import React from 'react';
 import R from 'ramda';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import SubmitArea from '../common/SubmitArea';
 
@@ -90,6 +91,7 @@ class InterviewForm extends React.Component {
     this.appendBlock = this.appendBlock.bind(this);
     this.removeBlock = this.removeBlock.bind(this);
     this.editBlock = this.editBlock.bind(this);
+    this.submit = this.submit.bind(this);
 
     this.state = {
       ...defaultForm,
@@ -140,6 +142,31 @@ class InterviewForm extends React.Component {
       }));
   }
 
+  submit() {
+    let promise;
+    // get the current login status, if not, do login
+    if (this.props.auth.get('status') !== 'connected') {
+      promise = this.props.login(this.props.FB);
+    } else {
+      promise = Promise.resolve();
+    }
+
+    promise
+      .then(loginStatus => {
+        // a login promise will resolve loginStatus as one of 'not_authorized', 'connected', 'unknown'
+        // or reject with a reason if something wrong with FB SDK
+        if (loginStatus === 'connected') {
+          return postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
+        }
+        throw new Error('login fail');
+      })
+      .catch(error => {
+        // expected doing something if fail
+        console.log(error);
+      });
+      // expected doing something if success
+  }
+
   render() {
     return (
       <div className={styles.container}>
@@ -176,7 +203,7 @@ class InterviewForm extends React.Component {
           interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
         />
         <SubmitArea
-          onSubmit={() => postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)))}
+          onSubmit={() => this.submit()}
           submitable={interviewFormCheck(getInterviewForm(this.state))}
         />
       </div>
@@ -184,6 +211,10 @@ class InterviewForm extends React.Component {
   }
 }
 
-InterviewForm.propTypes = {};
+InterviewForm.propTypes = {
+  auth: ImmutablePropTypes.map,
+  login: React.PropTypes.func.isRequired,
+  FB: React.PropTypes.object,
+};
 
 export default InterviewForm;
