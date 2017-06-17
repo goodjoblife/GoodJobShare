@@ -86,7 +86,17 @@ const handleInterviewQas = interviewForm => {
   return data;
 };
 
+const handleInterviewExperienceInYear = interviewForm => {
+  let data;
+
+  if (!interviewForm.experienceInYear) {
+    data = R.omit(['experienceInYear'])(interviewForm);
+  }
+  return data;
+};
+
 export const getInterviewForm = R.compose(
+  handleInterviewExperienceInYear,
   handleInterviewQas,
   propsInterviewForm
 );
@@ -192,5 +202,6 @@ export const propsWorkExperiencesForm = state => {
 
 export const workExperiencesToBody = R.compose(
   portWorkExperiencesFormToRequestFormat,
+  handleInterviewExperienceInYear,
   propsWorkExperiencesForm
 );
