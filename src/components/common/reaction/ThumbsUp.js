@@ -6,7 +6,7 @@ import Base from './Base';
 import styles from './Base.module.css';
 
 const ThumbsUp = ({ onClick, toggled, ...restProps }) => (
-  <Base {...restProps} style={{ marginRight: '24px' }}>
+  <Base {...restProps}>
     <i.Like
       onClick={onClick}
       className={cn(

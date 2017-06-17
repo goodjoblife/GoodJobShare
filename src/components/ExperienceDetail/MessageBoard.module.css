@@ -2,7 +2,7 @@
 
 .container {
   width: 750px;
-  margin: 0 auto 50px;
+  margin: 50px auto;
   hr {
     border: 0;
     border-top: 1px solid main-gray;

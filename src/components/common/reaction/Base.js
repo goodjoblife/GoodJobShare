@@ -6,14 +6,14 @@ const renderLabel = label => {
   if (typeof label === 'undefined') {
     return null;
   }
-  return <div>{label}</div>;
+  return <div className={styles.label}>{label}</div>;
 };
 
 const renderCount = count => {
   if (typeof count === 'undefined') {
     return null;
   }
-  return <div>{count}</div>;
+  return <div className={styles.count}>{count}</div>;
 };
 
 const Base = ({ fontClass, children, label, count, style }) => (

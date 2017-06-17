@@ -50,6 +50,44 @@ export const submitComment = id => (dispatch, getState) => {
     // });
 };
 
+export const likeExperience = o => dispatch => {
+  if (o.liked) {
+    return fetchUtil(`/experiences/${o._id}/likes`)('DELETE')
+      .then(result => {
+        if (result.success) {
+          dispatch(setExperience(
+            Object.assign({}, o, {
+              liked: false,
+              like_count: o.like_count - 1,
+            })
+          ));
+          return;
+        }
+        dispatch(setExperience(o));
+      });
+      // .catch(error => {
+      //   dispatch(setExperience(o));
+      // });
+  }
+
+  return fetchUtil(`/experiences/${o._id}/likes`)('POST')
+    .then(result => {
+      if (result.success) {
+        dispatch(setExperience(
+          Object.assign({}, o, {
+            liked: true,
+            like_count: o.like_count + 1,
+          })
+        ));
+        return;
+      }
+      dispatch(setExperience(o));
+    });
+    // .catch(error => {
+    //   dispatch(setExperience(o));
+    // });
+};
+
 export const likeReply = o => (dispatch, getState) => {
   const data = getState().experienceDetail.toJS();
   const replies = data.replies;
@@ -67,6 +105,7 @@ export const likeReply = o => (dispatch, getState) => {
             }),
             ...replies.slice(index + 1),
           ]));
+          return;
         }
         dispatch(setReplies(replies));
       });
@@ -86,6 +125,7 @@ export const likeReply = o => (dispatch, getState) => {
           }),
           ...replies.slice(index + 1),
         ]));
+        return;
       }
       dispatch(setReplies(replies));
     });
@@ -114,38 +154,13 @@ export const fetchExperience = id => dispatch => {
     });
 };
 
-export const fetchReplies = () => dispatch => {
-  const mock = [
-    {
-      _id: 'xxxxxx',
-      content: '我是留言內容',
-      like_count: 0,
-      report_count: 1,
-      liked: false,
-      created_at: '2016-03-10T00:00:00.000Z',
-      floor: 1,
-    },
-    {
-      _id: 'ooooo',
-      content: 'hihi',
-      like_count: 100,
-      report_count: 0,
-      liked: true,
-      created_at: '2016-03-11T00:00:00.000Z',
-      floor: 2,
-    },
-  ];
-
-  dispatch(setReplies(mock));
-};
-
-export const fetchReplies2 = id => dispatch => {
+export const fetchReplies = id => dispatch => {
   dispatch({
     type: SET_REPLY_STATUS,
     replyStatus: status.FETCHING,
   });
 
-  return fetchUtil(`/experiences/${id}/replies`)('GET')
+  return fetchUtil(`/experiences/${id}/replies?start=0&limit=100`)('GET')
     .then(result => {
       dispatch(setReplies(result.replies));
     })

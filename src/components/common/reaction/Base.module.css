@@ -9,12 +9,15 @@
     fill: main-gray;
     width: 18px;
     height: 18px;
-    margin-right: 12px;
     &.clickable {
       cursor: pointer;
     }
     &.toggled {
       fill: main-yellow;
     }
+  }
+
+  .label, .count {
+    margin-left: 12px;
   }
 }
