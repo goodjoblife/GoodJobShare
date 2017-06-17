@@ -87,10 +87,10 @@ const handleInterviewQas = interviewForm => {
 };
 
 const handleInterviewExperienceInYear = interviewForm => {
-  let data;
+  let data = interviewForm;
 
   if (!interviewForm.experienceInYear) {
-    data = R.omit(['experienceInYear'])(interviewForm);
+    data = R.omit(['experienceInYear'])(data);
   }
   return data;
 };
