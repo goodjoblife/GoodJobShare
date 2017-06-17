@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import ButtonSubmit from 'common/button/ButtonSubmit';
 import Checkbox from 'common/form/Checkbox';
@@ -25,6 +26,9 @@ class SubmitArea extends React.PureComponent {
     const {
       onSubmit,
       submitable,
+      auth,
+      login,
+      FB,
     } = this.props;
 
     const {
@@ -67,8 +71,11 @@ class SubmitArea extends React.PureComponent {
         <div>
           <ButtonSubmit
             text="送出資料"
-            onClick={onSubmit}
+            onSubmit={onSubmit}
             disabled={!this.state.agree || !submitable}
+            auth={auth}
+            login={login}
+            FB={FB}
           />
         </div>
       </div>
@@ -79,6 +86,9 @@ class SubmitArea extends React.PureComponent {
 SubmitArea.propTypes = {
   onSubmit: PropTypes.func,
   submitable: PropTypes.bool,
+  auth: ImmutablePropTypes.map,
+  login: PropTypes.func.isRequired,
+  FB: PropTypes.object,
 };
 
 export default SubmitArea;

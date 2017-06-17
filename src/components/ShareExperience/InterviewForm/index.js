@@ -1,7 +1,7 @@
 import React from 'react';
 import R from 'ramda';
 
-import SubmitArea from '../common/SubmitArea';
+import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
 import styles from './InterviewForm.module.css';
 
