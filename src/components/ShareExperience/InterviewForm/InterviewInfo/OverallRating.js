@@ -2,7 +2,9 @@ import React, { PropTypes } from 'react';
 
 import RateButton from 'common/button/RateButton';
 
+import InputTitle from '../../common/InputTitle';
 import styles from './OverallRating.module.css';
+
 
 import {
   overallRatingDialogMap,
@@ -13,25 +15,37 @@ const handleRatingDialog = rating => (
 );
 
 const OverallRating = ({ overallRating, onChange }) => (
-  <div
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-    }}
-  >
-    <RateButton
-      max={5}
-      rating={overallRating}
-      onChange={onChange}
-    />
+  <div>
     <div
-      className={styles.dialog}
+      style={{
+        marginBottom: '20px',
+      }}
     >
-      <p
-        className="pS"
+      <InputTitle
+        text="整體面試滿意程度"
+        must
+      />
+    </div>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
+      <RateButton
+        max={5}
+        rating={overallRating}
+        onChange={onChange}
+      />
+      <div
+        className={styles.dialog}
       >
-        {handleRatingDialog(overallRating)}
-      </p>
+        <p
+          className="pS"
+        >
+          {handleRatingDialog(overallRating)}
+        </p>
+      </div>
     </div>
   </div>
 );
