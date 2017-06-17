@@ -15,21 +15,33 @@ const Article = ({ experience }) => (
         <InfoBlock label="應徵職稱">
           {experience.job_title}
         </InfoBlock>
-        <InfoBlock label="相關職務工作經驗">
-          {experience.experience_in_year} 年
-        </InfoBlock>
-        <InfoBlock label="最高學歷">
-          {experience.education}
-        </InfoBlock>
-        <InfoBlock label="面試時間">
-          {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
-        </InfoBlock>
+        {
+          experience.experience_in_year &&
+          <InfoBlock label="相關職務工作經驗">
+            {experience.experience_in_year} 年
+          </InfoBlock>
+        }
+        {
+          experience.education &&
+          <InfoBlock label="最高學歷">
+            {experience.education}
+          </InfoBlock>
+        }
+        {
+          experience.interview_time &&
+          <InfoBlock label="面試時間">
+            {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
+          </InfoBlock>
+        }
         <InfoBlock label="面試結果">
           {experience.interview_result}
         </InfoBlock>
-        <InfoBlock label="待遇">
-          {`${experience.salary.amount} / ${Article.getTimeUnit(experience.salary.type)}`}
-        </InfoBlock>
+        {
+          experience.salary &&
+          <InfoBlock label="待遇">
+            {`${experience.salary.amount} / ${Article.getTimeUnit(experience.salary.type)}`}
+          </InfoBlock>
+        }
         <InfoBlock label="面試整體滿意度">
           {experience.overall_rating}
         </InfoBlock>
@@ -47,30 +59,42 @@ const Article = ({ experience }) => (
 
       {experience.type === 'work' && (
       <ul>
-        <InfoBlock label="面試地區">
+        <InfoBlock label="工作地區">
           {experience.region}
         </InfoBlock>
         <InfoBlock label="應徵職稱">
           {experience.job_title}
         </InfoBlock>
-        <InfoBlock label="相關職務工作經驗">
-          {experience.experience_in_year}
-        </InfoBlock>
-        <InfoBlock label="最高學歷">
-          {experience.education}
-        </InfoBlock>
-        <InfoBlock label="面試時間">
-          {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
-        </InfoBlock>
-        <InfoBlock label="一週工時">
-          {experience.week_work_time}
-        </InfoBlock>
-        <InfoBlock label="待遇">
-          {`${experience.salary.amount} / ${Article.getTimeUnit(experience.salary.type)}`}
-        </InfoBlock>
-        <InfoBlock label="是否推薦此工作">
-          {experience.recommend_to_others === 'yes' ? '是' : '否'}
-        </InfoBlock>
+        {
+          experience.experience_in_year &&
+          <InfoBlock label="相關職務工作經驗">
+            {experience.experience_in_year} 年
+          </InfoBlock>
+        }
+        {
+          experience.education &&
+          <InfoBlock label="最高學歷">
+            {experience.education}
+          </InfoBlock>
+        }
+        {
+          experience.week_work_time &&
+          <InfoBlock label="一週工時">
+            {experience.week_work_time}
+          </InfoBlock>
+        }
+        {
+          experience.salary &&
+          <InfoBlock label="待遇">
+            {`${experience.salary.amount} / ${Article.getTimeUnit(experience.salary.type)}`}
+          </InfoBlock>
+        }
+        {
+          experience.recommend_to_others &&
+          <InfoBlock label="是否推薦此工作">
+            {experience.recommend_to_others === 'yes' ? '是' : '否'}
+          </InfoBlock>
+        }
       </ul>
       )}
     </aside>

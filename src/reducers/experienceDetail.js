@@ -3,6 +3,7 @@ import createReducer from 'utils/createReducer';
 import status from '../constants/status';
 import {
   SET_EXPERIENCE,
+  SET_EXPERIENCE_STATUS,
   SET_TOS,
   SET_COMMENT,
   SET_REPLY_STATUS,
@@ -21,10 +22,11 @@ const preloadedState = fromJS({
 });
 
 const experienceDetail = createReducer(preloadedState, {
-  [SET_EXPERIENCE]: (state, action) => {
-    console.log(SET_EXPERIENCE);
-    return state.update('experience', () => fromJS(action.experience));
-  },
+  [SET_EXPERIENCE]: (state, action) =>
+    state.update('experience', () => fromJS(action.experience)),
+
+  [SET_EXPERIENCE_STATUS]: (state, action) =>
+    state.update('experienceStatus', () => action.status),
 
   [SET_TOS]: state => state.update('tos', v => !v),
 

@@ -9,6 +9,9 @@ import ReactionZone from './ReactionZone';
 import RecommendationZone from './RecommendationZone';
 import MessageBoard from './MessageBoard';
 import status from '../../constants/status';
+import {
+  fetchExperience,
+} from '../../actions/experienceDetail';
 
 class ExperienceDetail extends Component {
   static propTypes = {
@@ -22,14 +25,28 @@ class ExperienceDetail extends Component {
     params: React.PropTypes.object.isRequired,
   }
 
+  static fetchData({ store, params }) {
+    return store.dispatch(fetchExperience(params.id));
+  }
+
   constructor() {
     super();
     this.submitComment = this.submitComment.bind(this);
   }
 
   componentDidMount() {
-    this.props.fetchExperience(this.props.params.id);
+    if (this.props.experienceDetail.getIn(['experience', '_id']) !== this.props.params.id) {
+      this.props.fetchExperience(this.props.params.id);
+    }
     this.props.fetchReplies(this.props.params.id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // if params.id changes due to route, we should refetch target experience
+    if (nextProps.params.id !== this.props.params.id) {
+      this.props.fetchExperience(nextProps.params.id);
+      this.props.fetchReplies(nextProps.params.id);
+    }
   }
 
   submitComment() {
@@ -44,7 +61,6 @@ class ExperienceDetail extends Component {
     } = this.props;
     const data = experienceDetail.toJS();
     const experience = data.experience;
-    console.log('data', data);
     return (
       <main className="wrapperL">
         <Helmet
@@ -52,7 +68,7 @@ class ExperienceDetail extends Component {
         />
         <div className={styles.heading}>
           <h2 className={`${styles.badge} pM`}>
-            {experience === 'work' ? '工作' : '面試'}
+            {experience.type === 'work' ? '工作' : '面試'}
           </h2>
           <h1 className="headingL">
             {experience && experience.company && (
