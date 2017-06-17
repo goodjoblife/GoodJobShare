@@ -8,7 +8,7 @@ import styles from './Entry.module.css';
 const Entry = () => (
   <div>
     <Wrapper size="l" className={styles.wrapper}>
-      <button onClick={browserHistory.goBack} className={styles.closeBtn}><i.X /></button>
+      <button onClick={() => browserHistory.goBack()} className={styles.closeBtn}><i.X /></button>
     </Wrapper>
     <ShareExpSection />
   </div>
