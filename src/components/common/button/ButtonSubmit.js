@@ -14,7 +14,7 @@ class ButtonSubmit extends React.PureComponent {
     this.login = this.login.bind(this);
   }
   login() {
-    this.props.login(this.props.FB)
+    return this.props.login(this.props.FB)
       .catch(error => {
         console.log(error);
       });
@@ -31,16 +31,33 @@ class ButtonSubmit extends React.PureComponent {
         >
           {text}
         </button> :
-        <button
-          className={styles.container}
-          onClick={() =>
-            this.login()
-              .then(onSubmit)
-          }
-          disabled={disabled}
-        >
-          {`以F認證，${text}`}
-        </button>
+        <div>
+          <button
+            className={styles.container}
+            onClick={() =>
+              this.login()
+                .then(onSubmit)
+            }
+            disabled={disabled}
+          >
+            {`以F認證，${text}`}
+          </button>
+          <div
+            style={{
+              textAlign: 'center',
+              marginTop: '21px',
+            }}
+          >
+            <p
+              className="pMbold"
+              style={{
+                color: '#C0C0C0',
+              }}
+            >
+              為什麼需要 Facebook 帳戶驗證？
+            </p>
+          </div>
+        </div>
     );
   }
 }
