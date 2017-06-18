@@ -26,10 +26,18 @@ export const regionOptions = [
   value: region,
 }));
 
-export const experienceInYearOptions = Array(51).fill(0).map((_, index) => ({
-  label: index,
-  value: index,
-}));
+export const experienceInYearOptions = Array(51).fill(0).map((_, index) => {
+  if (index === 0) {
+    return {
+      label: '小於一年',
+      value: index,
+    };
+  }
+  return {
+    label: index,
+    value: index,
+  };
+});
 
 export const educationOptions = [
   {
