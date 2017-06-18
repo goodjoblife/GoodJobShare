@@ -27,12 +27,26 @@ jobs:
     deploy_docker:
         working_directory: ~/app
         docker:
-            - image: docker
+            - image: buildpack-deps
         steps:
             - checkout
+            - run:
+                name: Install Docker client
+                command: |
+                    set -x
+                    VER="17.03.0-ce"
+                    curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+                    tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+                    mv /tmp/docker/* /usr/bin
+            - run:
+                name: Install Docker Compose
+                command: |
+                    set -x
+                    curl -L https://github.com/docker/compose/releases/download/1.13.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+                    chmod +x /usr/local/bin/docker-compose
             - setup_remote_docker
             - run:
                 name: Build Docker Image
-                command: docker build -t goodjoblife/goodjobshare:$CIRCLE_SHA1 -f docker/Dockerfile .
+                command: docker-compose -f .circleci/docker-compose-stage.yml build
             - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-            - run: docker push goodjoblife/goodjobshare:$CIRCLE_SHA1
+            - run: docker-compose -f .circleci/docker-compose-stage.yml push
