@@ -126,24 +126,59 @@ export const interviewSectionSubtitleOptions = [
     value: '自訂段落',
   },
   {
-    label: '面試過程',
-    value: '面試過程',
+    label: '面試方式',
+    value: '面試方式',
   },
   {
-    label: '面試時間',
-    value: '面試時間',
+    label: '面試官專業程度',
+    value: '面試官專業程度',
   },
   {
-    label: '公司管理制度',
-    value: '公司管理制度',
+    label: '整體心得',
+    value: '整體心得',
   },
   {
-    label: '公司環境',
-    value: '公司環境',
+    label: '給公司的建議',
+    value: '給公司的建議',
+  },
+];
+
+export const workExSectionSubtitleOptions = [
+  {
+    label: '自訂段落',
+    value: '自訂段落',
   },
   {
-    label: '公司前景發展',
-    value: '公司前景發展',
+    label: '實際工作內容',
+    value: '實際工作內容',
+  },
+  {
+    label: '工時狀況',
+    value: '工時狀況',
+  },
+  {
+    label: '薪資福利',
+    value: '薪資福利',
+  },
+  {
+    label: '公司管理方式',
+    value: '公司管理方式',
+  },
+  {
+    label: '獲得的成長',
+    value: '獲得的成長',
+  },
+  {
+    label: '給管理者的建議',
+    value: '給管理者的建議',
+  },
+  {
+    label: '升遷制度',
+    value: '升遷制度',
+  },
+  {
+    label: '整體心得',
+    value: '整體心得',
   },
 ];
 
