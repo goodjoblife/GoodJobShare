@@ -1,5 +1,5 @@
 import fetchUtil from '../utils/fetchUtil';
-import status from '../constants/status';
+// import status from '../constants/status';
 
 export const SET_SORT = 'SET_TSET_SORTYPE';
 export const SET_SEARCH_TYPE = 'SET_SEARCH_TYPE';
@@ -39,19 +39,30 @@ export const setKeyword = e => ({
   keyword: e.target.value,
 });
 
-export const fetchExperiences = (cond, val) => (dispatch, getState) => {
+export const fetchExperiences = (cond, val, page) => (dispatch, getState) => {
   const data = getState().experienceSearch.toJS();
   const sort = val || data.sort;
-  let url = '/experiences';
+  const limit = 20;
+  const start = (typeof page === 'number' ? page : 0) * limit;
+  let url = `/experiences?start=${start}&limit=${limit}`;
   let objCond;
+  let hasMore = false;
 
-  dispatch({
-    type: SET_LOADING_STATUS,
-    loadingStatus: status.FETCHING,
-  });
+
+  // DON'T open the following dispatch if <InfiniteScroll> is used
+  // (<InfiniteScroll> has loading component as well)
+
+  // dispatch({
+  //   type: SET_LOADING_STATUS,
+  //   loadingStatus: status.FETCHING,
+  //   prevCond: cond,
+  //   prevValue: val,
+  //   prevPage: page,
+  // });
+
 
   if (cond === 'searchBy') {
-    url = `${url}?search_by=${data.searchBy}&search_query=${val}`;
+    url = `${url}&search_by=${data.searchBy}&search_query=${val}`;
 
     objCond = {
       type: SET_SEARCH_QUERY_AND_EXPERIENCES,
@@ -59,7 +70,7 @@ export const fetchExperiences = (cond, val) => (dispatch, getState) => {
       searchQuery: val,
     };
   } else { // cond === 'sort'
-    url = `${url}?sort=${sort}`;
+    url = `${url}&sort=${sort}`;
 
     objCond = {
       type: SET_SORT_AND_EXPERIENCES,
@@ -72,22 +83,42 @@ export const fetchExperiences = (cond, val) => (dispatch, getState) => {
   }
   return fetchUtil(url)('GET')
     .then(result => {
+      hasMore = (start + limit) < result.total;
       dispatch(Object.assign(objCond, {
         loadingStatus: status.FETCHED,
+        prevCond: cond,
+        prevValue: val,
+        // prevPage: page,
         error: null,
-        experiences: result.experiences,
+        experiences: (
+          page
+          ? [...data.experiences, ...result.experiences]
+          : result.experiences
+        ),
         experienceCount: result.total,
+        hasMore,
       }));
     })
     .catch(error => {
       dispatch(Object.assign(objCond, {
         loadingStatus: status.ERROR,
+        prevCond: cond,
+        prevValue: val,
+        // prevPage: (page ? page - 1 : page),
         error,
         salary: false,
         experiences: [],
         experienceCount: 0,
+        hasMore,
       }));
     });
+};
+
+export const fetchMoreExperiences = nextPage => (dispatch, getState) => {
+  const data = getState().experienceSearch.toJS();
+  return dispatch(
+    fetchExperiences(data.prevCond, data.prevValue, nextPage)
+  );
 };
 
 export const fetchWorkings = val => (dispatch, getState) => {
@@ -96,6 +127,13 @@ export const fetchWorkings = val => (dispatch, getState) => {
 
   return fetchUtil(url)('GET')
     .then(result => {
+      if (result.error) {
+        dispatch({
+          type: SET_WORKINGS,
+          workings: [],
+        });
+        return;
+      }
       dispatch({
         type: SET_WORKINGS,
         workings: result,
@@ -129,16 +167,3 @@ export const fetchKeywords = e => (dispatch, getState) => {
       });
     });
 };
-
-/*
-export const fetchKeywordMock = e => (dispatch, getState) => {
-  const data = getState().experienceSearch.toJS();
-  const val = e ? e.target.value : data.searchBy;
-  dispatch({
-    type: SET_KEYWORDS,
-    searchBy: val,
-    keywords: val === 'company' ? ['GoodJob', 'Yahoo', 'MTK'] : ['程序猿', '攻城獅', '猴子'],
-  });
-  return Promise.resolve();
-};
-*/
