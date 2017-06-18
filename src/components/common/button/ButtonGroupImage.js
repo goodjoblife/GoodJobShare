@@ -11,11 +11,22 @@ class ButtonGroupImageEle extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this.onChange = this.onChange.bind(this);
+
     this.id = makeId();
   }
 
+  onChange(e) {
+    const { onChange, checked } = this.props;
+
+    if (checked) {
+      return onChange(null);
+    }
+    return onChange(e.target.value);
+  }
+
   render() {
-    const { value, label, onChange, checked, last, icon } = this.props;
+    const { value, label, checked, last, icon } = this.props;
     const id = `${this.id}-${value}`;
     return (
       <label
@@ -30,7 +41,7 @@ class ButtonGroupImageEle extends React.PureComponent {
           type="radio"
           checked={checked}
           value={value}
-          onChange={e => onChange(e.target.value)}
+          onChange={this.onChange}
           style={{
             display: 'none',
           }}
