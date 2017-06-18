@@ -65,7 +65,7 @@ const defaultForm = {
   salaryAmount: 0,
   weekWorkTime: '',
   recommendToOthers: null,
-  title: '',
+  title: '工作經驗分享',
   sections: {
     [firstSectionId]: createBlock.sections(firstSectionId)(),
   },

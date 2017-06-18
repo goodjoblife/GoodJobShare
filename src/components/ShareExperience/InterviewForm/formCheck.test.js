@@ -266,7 +266,7 @@ describe('interviewFormCheck tests', () => {
     salaryType: 'month',
     salaryAmount: '',
     overallRating: 0,
-    title: '',
+    title: '面試經驗分享',
     sections: {
       1: {
         subtitle: '',
@@ -300,7 +300,7 @@ describe('interviewFormCheck tests', () => {
       salaryType: 'month',
       salaryAmount: 50000,
       overallRating: 1,
-      title: '面試經驗',
+      title: '面試經驗分享',
       sections: {
         1: {
           subtitle: 'test',
@@ -328,7 +328,7 @@ describe('interviewFormCheck tests', () => {
       interviewTimeMonth: 1,
       interviewResult: '錄取',
       overallRating: 1,
-      title: '面試經驗',
+      title: '面試經驗分享',
       sections: {
         1: {
           subtitle: 'test',

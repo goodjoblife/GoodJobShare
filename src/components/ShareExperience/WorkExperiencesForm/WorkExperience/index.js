@@ -44,7 +44,7 @@ class WorkExperience extends React.PureComponent {
             <Title
               title={title}
               onChange={handleState('title')}
-              placeholder="ＯＯ 股份有限公司工作經驗"
+              placeholder="ＯＯ 股份有限公司工作經驗分享"
             />
           </div>
           <div
