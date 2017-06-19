@@ -1,7 +1,7 @@
 /*@value main-gray, gray-light from "../common/variables.module.css";*/
 
 .container {
-  margin: 50px 0;
+  margin-top: 50px;
   .recommendationZone {
     display: flex;
     > section {

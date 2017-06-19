@@ -54,4 +54,7 @@
 .reaction {
   display: flex;
   align-items: center;
+  > div {
+    margin-right: 24px;
+  }
 }

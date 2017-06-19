@@ -6,7 +6,7 @@ import Loader from 'common/Loader';
 import styles from './ExperienceDetail.module.css';
 import Article from './Article';
 import ReactionZone from './ReactionZone';
-import RecommendationZone from './RecommendationZone';
+// import RecommendationZone from './RecommendationZone';
 import MessageBoard from './MessageBoard';
 import status from '../../constants/status';
 import {
@@ -19,6 +19,7 @@ class ExperienceDetail extends Component {
     fetchExperience: React.PropTypes.func.isRequired,
     fetchReplies: React.PropTypes.func.isRequired,
     setTos: React.PropTypes.func.isRequired,
+    likeExperience: React.PropTypes.func.isRequired,
     likeReply: React.PropTypes.func.isRequired,
     setComment: React.PropTypes.func.isRequired,
     submitComment: React.PropTypes.func.isRequired,
@@ -57,7 +58,7 @@ class ExperienceDetail extends Component {
 
   render() {
     const {
-      experienceDetail, setTos, setComment, likeReply,
+      experienceDetail, setTos, setComment, likeExperience, likeReply,
     } = this.props;
     const data = experienceDetail.toJS();
     const experience = data.experience;
@@ -83,16 +84,16 @@ class ExperienceDetail extends Component {
         <Article experience={experience} />
 
         { /* 按讚，分享，檢舉區塊  */}
-        <ReactionZone />
+        <ReactionZone experience={experience} likeExperience={likeExperience} />
 
         { /* 返回列表 */}
 
         { /* 你可能還想看...  */}
-        <RecommendationZone />
+        { /* <RecommendationZone /> */ }
 
         { /* 留言區塊  */}
         {
-          data.loadingStatus === status.FETCHING
+          data.replyStatus === status.FETCHING
           ? <Loader />
           : <MessageBoard
             replies={data.replies}
