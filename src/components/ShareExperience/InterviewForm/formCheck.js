@@ -29,7 +29,7 @@ export const experienceInYear = R.anyPass([
     n => n >= 0,
     n => n <= 50,
   ]),
-  n => n === null,
+  n => n === null || n === undefined,
 ]);
 
 export const interviewTimeYear = R.allPass([
