@@ -26,7 +26,10 @@ class LaborRightsMenu extends React.Component {
 
   render() {
     const title = '勞動知識小教室';
-    const description = 'GoodJob 工時薪資透明化團隊，看見勞工們的需要，自 2016 年底推出【勞動知識小教室】系列懶人包，將複雜的法律資訊轉換成易懂的圖文，讓勞工認識自己的權益，學會保護自己。內容涵蓋勞基法、性別工作平等法、就服法以及工會相關法令等勞工必備的權益資訊。';
+    const description = `
+      GoodJob 工時薪資透明化團隊，看見勞工們的需要，自 2016 年底推出【勞動知識小教室】系列懶人包
+      將複雜的法律資訊轉換成易懂的圖文，讓勞工認識自己的權益，學會保護自己。內容涵蓋勞基法、性別工作平等法、
+      就服法以及工會相關法令等勞工必備的權益資訊。`;
     return (
       <Section Tag="main" pageTop>
         <Wrapper size="l" Tag="main">
@@ -40,7 +43,7 @@ class LaborRightsMenu extends React.Component {
               { property: 'og:description', content: description },
               { property: 'og:title', content: formatTitle(title) },
               { property: 'og:site_name', content: siteName },
-              { property: 'og:image', content: 'https://www.goodjob.life/assets/img/common/og-image_1200-630.png' },
+              { property: 'og:image', content: 'https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/og-image-labor-rights.jpg' },
             ]}
             link={[
               { rel: 'canonical', href: formatCanonicalPath('/labor-rights') },
