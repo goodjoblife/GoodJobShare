@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 import ButtonGroupImage from 'common/button/ButtonGroupImage';
 
-import Cross from '../../../images/x.svg';
+import Good from 'common/icons/Good';
+import Bad from 'common/icons/Bad';
 
 import InputTitle from '../../common/InputTitle';
 
@@ -11,12 +12,26 @@ const recommendToOthersOptions = [
   {
     label: '推',
     value: 'yes',
-    icon: <Cross />,
+    icon: (
+      <Good
+        style={{
+          width: '30px',
+          height: '30px',
+        }}
+      />
+    ),
   },
   {
     label: '不推',
     value: 'no',
-    icon: <Cross />,
+    icon: (
+      <Bad
+        style={{
+          width: '30px',
+          height: '30px',
+        }}
+      />
+    ),
   },
 ];
 
