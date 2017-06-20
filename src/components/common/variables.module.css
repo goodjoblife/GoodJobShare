@@ -39,4 +39,4 @@
 /* ------------------------------------
  *  Font
  * ------------------------------------ */
-@value primary-font: "Helvetica Neue", "Helvetica", "Arial", "PingFang TC", "微軟正黑體", "Microsoft JhengHei", sans-serif;
+@value primary-font: "SF Pro TC", "PingFang TC", "Helvetica Neue", Helvetica, Arial, "微軟正黑體", "Microsoft JhengHei", sans-serif;

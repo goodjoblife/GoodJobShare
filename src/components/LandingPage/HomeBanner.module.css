@@ -1,62 +1,57 @@
 @value main-yellow from '../common/variables.module.css';
 
-.home_banner {
-  height: 500px;
-  padding-top: 67px;
-  align-items: center;
-  background-color: main-yellow;
-
-  @media (max-width: 1280px) {
-    height: 400px;
-  }
+.banner {
+  background-color: #222;
+  background-image: url("https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/black-bg.jpg");
+  background-repeat: repeat;
 
   > div {
     display: flex;
-  }
-}
 
-.home_banner_img {
-  > img {
-    width: 500px;
-    margin-left: 30px;
-
-    @media (max-width: 1280px) {
-      width: 400px;
-      margin-top: 30px;
-      margin-left: 50;
+    @media (max-width: 850px) {
+      flex-direction: column;
     }
   }
+}
 
-  @media (max-width: 1280px) {
-    flex: 1;
+.image {
+  order: 2;
+  flex: 1 1 auto;
+  align-self: flex-end;
+  text-align: right;
+
+  img {
+    display: inline-block;
+    max-width: 527px;
+    @media (max-width: 850px) {
+      max-width: 300px;
+    }
   }
 }
 
-.home_banner_text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.content {
+  color: #fff;
+  flex: 0 0 50%;
+  padding-top: 64px;
+  padding-bottom: 64px;
 
-  > h1 {
-    margin-bottom: 30px;
-    font-size: 3em;
-    font-weight: 500;
-    letter-spacing: 0.02em;
+  @media (max-width: 850px) {
+    padding-top: 40px;
+    padding-bottom: 0;
   }
+}
 
-  > h3 {
-    margin-bottom: 20px;
-    font-size: 1.2em;
-    line-height: 1.4em;
-    font-weight: 500;
-  }
+.heading {
+  font-size: 2.75em;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  font-weight: 300;
 
-  > a {
-    text-decoration: underline;
+  @media (max-width: 850px) {
+    font-size: 2.3em;
   }
+}
 
-  @media (max-width: 1280px) {
-    height: 264px;
-    flex: 1;
-  }
+.subheading {
+  margin-bottom: 24px;
 }

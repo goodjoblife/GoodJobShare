@@ -31,10 +31,18 @@
 .sm {
   font-size: 1.2em;
   line-height: 1.6em;
+
+  @media (max-width: 550px) {
+    font-size: 1.1em;
+  }
 }
 
 .bold {
   font-weight: 700;
+}
+
+.light {
+  font-weight: 300;
 }
 
 .center {

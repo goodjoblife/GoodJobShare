@@ -1,7 +1,7 @@
 @import "../common/reset.module.css";
 @import "../common/global.module.css";
 
-@value primary-font, white-light, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "../common/variables.module.css";
+@value primary-font, white-light, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
 .App {
 
@@ -20,7 +20,7 @@
 body, html {
 	font-family: primary-font;
 	font-weight: 400;
-	color: #111;
+	color: #333;
 	font-size: 16px;
 	-webkit-tap-highlight-color: rgba(0,0,0,.2);
 	overflow-x: hidden;
@@ -44,7 +44,6 @@ svg {
 p {
   font-size: 1.13em;
 	line-height: 1.5em;
-	color: #333;
 	@media (max-width: 850px) {
 		font-size: 1em;
 	}
