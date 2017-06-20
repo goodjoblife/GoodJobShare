@@ -23,41 +23,50 @@ class ButtonSubmit extends React.PureComponent {
   render() {
     const { text, onSubmit, disabled, auth } = this.props;
     return (
-      isLogin(auth) ?
-        <button
-          className={styles.container}
-          onClick={onSubmit}
-          disabled={disabled}
-        >
-          {text}
-        </button> :
-        <div>
-          <button
-            className={styles.container}
-            onClick={() =>
-              this.login()
-                .then(onSubmit)
-            }
-            disabled={disabled}
-          >
-            {`以F認證，${text}`}
-          </button>
-          <div
-            style={{
-              textAlign: 'center',
-              marginTop: '21px',
-            }}
-          >
-            <p
-              className="pMbold"
-              style={{
-                color: '#C0C0C0',
-              }}
+      <div
+        style={{
+          // display: 'flex',
+          textAlign: 'center',
+        }}
+      >
+        {
+          isLogin(auth) ?
+            <button
+              className={styles.container}
+              onClick={onSubmit}
+              disabled={disabled}
             >
-              為什麼需要 Facebook 帳戶驗證？
-            </p>
-          </div>
-        </div>
+              {text}
+            </button> :
+            <div>
+              <button
+                className={styles.container}
+                onClick={() =>
+                  this.login()
+                    .then(onSubmit)
+                }
+                disabled={disabled}
+              >
+                <pre>{`以  f  認證，${text}`}</pre>
+              </button>
+              <div
+                style={{
+                  textAlign: 'center',
+                  marginTop: '21px',
+                }}
+              >
+                <p
+                  className="pMbold"
+                  style={{
+                    color: '#C0C0C0',
+                  }}
+                >
+                  為什麼需要 Facebook 帳戶驗證？
+              </p>
+              </div>
+            </div>
+        }
+      </div>
     );
   }
 }
