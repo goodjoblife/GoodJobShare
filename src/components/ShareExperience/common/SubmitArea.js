@@ -133,6 +133,7 @@ class SubmitArea extends React.PureComponent {
         <Modal
           isOpen={isOpen}
           close={() => this.handleIsOpen(!isOpen)}
+          hasClose={false}
         >
           {feedback}
         </Modal>
