@@ -76,22 +76,21 @@ class Header extends React.Component {
           >
             <SiteMenu />
             <div className={styles.buttonsArea}>
-              {
-                this.props.auth.getIn(['user', 'name']) === null &&
-                <div className={styles.leaveDataBtn} onClick={this.login}>
-                  <div>登入<i.User /></div>
-                </div>
-              }
-              {
-                this.props.auth.getIn(['user', 'name']) !== null &&
-                <div className={styles.leaveDataBtn} onClick={this.login}>
-                  <div>{this.props.auth.getIn(['user', 'name'])}<i.User /></div>
-                </div>
-              }
-
               <Link to="/share" className={styles.leaveDataBtn}>
                 留下資料<i.ArrowGo />
               </Link>
+              {
+                this.props.auth.getIn(['user', 'name']) === null &&
+                <button className={styles.loginBtn} onClick={this.login}>
+                  <i.People />登入
+                </button>
+              }
+              {
+                this.props.auth.getIn(['user', 'name']) !== null &&
+                <div className={cn(styles.loginBtn, styles.disableBtn)}>
+                  <i.People />{this.props.auth.getIn(['user', 'name'])}
+                </div>
+              }
             </div>
           </nav>
         </Wrapper>
