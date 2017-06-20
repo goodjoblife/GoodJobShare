@@ -1,0 +1,18 @@
+@value main-yellow from "common/variables.module.css";
+
+.wrapper {
+  background-color: #fff;
+  border: 1px solid main-yellow;
+  padding: 32px;
+  border-radius: 5px;
+}
+
+.image {
+  width: 240px;
+  margin: 0 auto;
+}
+
+.cc {
+  width: 90px;
+  margin-top: 8px;
+}

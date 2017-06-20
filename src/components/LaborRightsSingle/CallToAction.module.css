@@ -1,11 +1,8 @@
 .callToAction {
-  background-color: #ffffff;
-  padding-top: 64px;
-  padding-bottom: 64px;
   margin-top: 80px;
+
   @media (max-width: 550px) {
-    padding-top: 30px;
-    padding-bottom: 30px;
+    flex-direction: 40px;
   }
 }
 
@@ -13,6 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   @media (max-width: 550px) {
     flex-direction: column;
   }
@@ -21,19 +19,28 @@
 .image {
   margin-right: 40px;
   flex: 0 0 30%;
+
   @media (max-width: 550px) {
     flex: 1 1 auto;
     margin-right: 0;
-    margin-top: 20px;
-    order: 2;
+    margin-bottom: 20px;
+    order: 1;
+  }
+
+  img {
+    max-width: 200px;
+    @media (max-width: 550px) {
+      max-width: 150px;
+    }
   }
 }
 
 .content {
   flex: 1 1 auto;
+
   @media (max-width: 550px) {
     text-align: center;
-    order: 1;
+    order: 2;
   }
 }
 

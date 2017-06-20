@@ -14,6 +14,7 @@ import {
 } from '../../actions/laborRightsMenu';
 import status from '../../constants/status';
 import LaborRightsEntry from './LaborRightsEntry';
+import About from './About';
 
 class LaborRightsMenu extends React.Component {
   static fetchData({ store }) {
@@ -26,10 +27,7 @@ class LaborRightsMenu extends React.Component {
 
   render() {
     const title = '勞動知識小教室';
-    const description = `
-      GoodJob 工時薪資透明化團隊，看見勞工們的需要，自 2016 年底推出【勞動知識小教室】系列懶人包
-      將複雜的法律資訊轉換成易懂的圖文，讓勞工認識自己的權益，學會保護自己。內容涵蓋勞基法、性別工作平等法、
-      就服法以及工會相關法令等勞工必備的權益資訊。`;
+    const description = `${siteName}，看見勞工們的需要，自 2016 年底推出【勞動知識小教室】系列懶人包，將複雜的法律資訊轉換成易懂的圖文，讓勞工認識自己的權益，學會保護自己。內容涵蓋勞基法、性別工作平等法、就服法以及工會相關法令等勞工必備的權益資訊。`;
     return (
       <Section Tag="main" pageTop>
         <Wrapper size="l" Tag="main">
@@ -64,6 +62,9 @@ class LaborRightsMenu extends React.Component {
                 />
               </section>
           }
+        </Wrapper>
+        <Wrapper size="s">
+          <About />
         </Wrapper>
       </Section>
     );
