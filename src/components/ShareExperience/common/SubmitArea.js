@@ -4,21 +4,32 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import ButtonSubmit from 'common/button/ButtonSubmit';
 import Checkbox from 'common/form/Checkbox';
+import Modal from 'common/Modal';
+
+import SuccessFeedback from './SuccessFeedback';
 
 class SubmitArea extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.handleAgree = this.handleAgree.bind(this);
+    this.handleIsOpen = this.handleIsOpen.bind(this);
 
     this.state = {
       agree: false,
+      isOpen: true,
     };
   }
 
   handleAgree(agree) {
     this.setState(() => ({
       agree,
+    }));
+  }
+
+  handleIsOpen(isOpen) {
+    this.setState(() => ({
+      isOpen,
     }));
   }
 
@@ -33,6 +44,7 @@ class SubmitArea extends React.PureComponent {
 
     const {
       agree,
+      isOpen,
     } = this.state;
 
     return (
@@ -77,6 +89,12 @@ class SubmitArea extends React.PureComponent {
             FB={FB}
           />
         </div>
+        <Modal
+          isOpen={isOpen}
+          close={() => this.handleIsOpen(!isOpen)}
+        >
+          <SuccessFeedback />
+        </Modal>
       </div>
     );
   }
