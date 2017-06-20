@@ -72,7 +72,7 @@ const defaultForm = {
   salaryType: 'month',
   salaryAmount: 0,
   overallRating: 0,
-  title: '',
+  title: '面試經驗分享',
   sections: {
     [firstSectionId]: createBlock.sections(firstSectionId)(),
   },

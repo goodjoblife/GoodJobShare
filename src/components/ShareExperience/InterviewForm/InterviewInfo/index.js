@@ -46,7 +46,10 @@ class InterviewInfo extends React.PureComponent {
           >
             <CompanyQuery
               companyQuery={companyQuery}
-              onChange={handleState('companyQuery')}
+              onChange={v => {
+                handleState('companyQuery')(v);
+                handleState('title')(`${v} 面試經驗分享`);
+              }}
               onCompanyId={handleState('companyId')}
             />
           </div>
