@@ -8,12 +8,19 @@ import Checkbox from 'common/form/Checkbox';
 import Modal from 'common/Modal';
 
 import SuccessFeedback from './SuccessFeedback';
+import FailFeedback from './FailFeedback';
 
 const getSuccessFeedback = id => (
   <SuccessFeedback
     buttonClick={() => (
       browserHistory.push(`/experiences/${id}`)
     )}
+  />
+);
+
+const getFailFeedback = buttonClick => (
+  <FailFeedback
+    buttonClick={buttonClick}
   />
 );
 
@@ -24,12 +31,28 @@ class SubmitArea extends React.PureComponent {
     this.handleAgree = this.handleAgree.bind(this);
     this.handleIsOpen = this.handleIsOpen.bind(this);
     this.handleFeedback = this.handleFeedback.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       agree: false,
       isOpen: false,
       feedback: null,
     };
+  }
+
+  onSubmit() {
+    return this.props.onSubmit()
+      .then(r => r.experience._id)
+      .then(id => {
+        this.handleIsOpen(true);
+        return this.handleFeedback(getSuccessFeedback(id));
+      })
+      .catch(() => {
+        this.handleIsOpen(true);
+        return this.handleFeedback(getFailFeedback(
+          () => this.handleIsOpen(false)
+        ));
+      });
   }
 
   handleAgree(agree) {
@@ -52,7 +75,6 @@ class SubmitArea extends React.PureComponent {
 
   render() {
     const {
-      onSubmit,
       submitable,
       auth,
       login,
@@ -100,21 +122,11 @@ class SubmitArea extends React.PureComponent {
         <div>
           <ButtonSubmit
             text="送出資料"
-            onSubmit={() => (
-              onSubmit()
-                .then(r => r.experience._id)
-                .then(id => {
-                  this.handleIsOpen(true);
-                  return this.handleFeedback(getSuccessFeedback(id));
-                })
-                .catch(() => {
-                  this.handleIsOpen(true);
-                  return this.handleFeedback(getSuccessFeedback('fail'));
-                })
-            )}
+            onSubmit={this.onSubmit}
             disabled={!this.state.agree || !submitable}
             auth={auth}
             login={login}
+            loginFallback={() => { console.log('登入失敗啦！！！'); }}
             FB={FB}
           />
         </div>

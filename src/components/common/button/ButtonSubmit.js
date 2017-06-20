@@ -15,9 +15,8 @@ class ButtonSubmit extends React.PureComponent {
   }
   login() {
     return this.props.login(this.props.FB)
-      .catch(error => {
-        console.log(error);
-      });
+      .then(this.props.onSubmit)
+      .catch(this.props.loginFallback);
   }
 
   render() {
@@ -25,7 +24,6 @@ class ButtonSubmit extends React.PureComponent {
     return (
       <div
         style={{
-          // display: 'flex',
           textAlign: 'center',
         }}
       >
@@ -43,7 +41,6 @@ class ButtonSubmit extends React.PureComponent {
                 className={styles.container}
                 onClick={() =>
                   this.login()
-                    .then(onSubmit)
                 }
                 disabled={disabled}
               >
@@ -77,6 +74,7 @@ ButtonSubmit.propTypes = {
   disabled: PropTypes.bool,
   auth: ImmutablePropTypes.map,
   login: PropTypes.func.isRequired,
+  loginFallback: PropTypes.func,
   FB: PropTypes.object,
 };
 
