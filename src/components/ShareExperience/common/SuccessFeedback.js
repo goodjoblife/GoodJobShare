@@ -1,10 +1,10 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import Checked from 'common/icons/Checked';
-// import Button from 'common/button/Button';
+import Button from 'common/button/Button';
 
-const SuccessFeedback = () => (
+const SuccessFeedback = ({ buttonClick }) => (
   <div
     style={{
       padding: '55px',
@@ -22,13 +22,30 @@ const SuccessFeedback = () => (
     <h2
       style={{
         fontSize: '2rem',
+        marginBottom: '47px',
       }}
     >
       上傳成功
     </h2>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      <Button
+        btnStyle="black"
+        circleSize="md"
+        onClick={buttonClick}
+      >
+        查看本篇
+      </Button>
+    </div>
   </div>
 );
 
-SuccessFeedback.propTypes = {};
+SuccessFeedback.propTypes = {
+  buttonClick: PropTypes.func,
+};
 
 export default SuccessFeedback;

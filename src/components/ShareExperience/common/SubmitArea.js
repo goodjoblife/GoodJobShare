@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import { browserHistory } from 'react-router';
 
 import ButtonSubmit from 'common/button/ButtonSubmit';
 import Checkbox from 'common/form/Checkbox';
@@ -8,22 +9,38 @@ import Modal from 'common/Modal';
 
 import SuccessFeedback from './SuccessFeedback';
 
+const getSuccessFeedback = id => (
+  <SuccessFeedback
+    buttonClick={() => (
+      browserHistory.push(`/experiences/${id}`)
+    )}
+  />
+);
+
 class SubmitArea extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.handleAgree = this.handleAgree.bind(this);
     this.handleIsOpen = this.handleIsOpen.bind(this);
+    this.handleFeedback = this.handleFeedback.bind(this);
 
     this.state = {
       agree: false,
-      isOpen: true,
+      isOpen: false,
+      feedback: null,
     };
   }
 
   handleAgree(agree) {
     this.setState(() => ({
       agree,
+    }));
+  }
+
+  handleFeedback(feedback) {
+    this.setState(() => ({
+      feedback,
     }));
   }
 
@@ -45,6 +62,7 @@ class SubmitArea extends React.PureComponent {
     const {
       agree,
       isOpen,
+      feedback,
     } = this.state;
 
     return (
@@ -82,7 +100,18 @@ class SubmitArea extends React.PureComponent {
         <div>
           <ButtonSubmit
             text="送出資料"
-            onSubmit={onSubmit}
+            onSubmit={() => (
+              onSubmit()
+                .then(r => r.experience._id)
+                .then(id => {
+                  this.handleIsOpen(true);
+                  return this.handleFeedback(getSuccessFeedback(id));
+                })
+                .catch(() => {
+                  this.handleIsOpen(true);
+                  return this.handleFeedback(getSuccessFeedback('fail'));
+                })
+            )}
             disabled={!this.state.agree || !submitable}
             auth={auth}
             login={login}
@@ -93,7 +122,7 @@ class SubmitArea extends React.PureComponent {
           isOpen={isOpen}
           close={() => this.handleIsOpen(!isOpen)}
         >
-          <SuccessFeedback />
+          {feedback}
         </Modal>
       </div>
     );
