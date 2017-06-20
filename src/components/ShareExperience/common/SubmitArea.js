@@ -40,7 +40,6 @@ class SubmitArea extends React.PureComponent {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
           marginTop: '57px',
         }}
       >
