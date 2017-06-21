@@ -1,9 +1,8 @@
-@value gray-dark, link-blue from "../common/variables.module.css";
+@value gray-dark, link-blue, border-gray from "../common/variables.module.css";
 
 .container {
   display: block;
   background-color: #fff;
-  padding: 24px;
   box-shadow: 0 0 4px rgba(0,0,0, .15);
   margin-bottom: 40px;
   transition-property: background, box-shadow;
@@ -18,6 +17,10 @@
       box-shadow: 1px 1px 11px rgba(0,0,0, .2);
     }
   }
+}
+
+.contentWrapper {
+  padding: 24px;
 }
 
 .heading {
@@ -36,15 +39,11 @@
   align-items: center;
 
   svg {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     fill: #C3C3C3;
     margin-right: 8px;
   }
-}
-
-.content {
-  margin-bottom: 16px;
 }
 
 .more {
@@ -54,7 +53,24 @@
 .reaction {
   display: flex;
   align-items: center;
+  padding: 8px 24px;
   > div {
     margin-right: 24px;
+  }
+}
+
+.m {
+  .company, .location, .salary {
+    display: none;
+  }
+
+  .reaction {
+    border-top: 1px solid border-gray;
+  }
+}
+
+.l {
+  .reaction {
+    padding-bottom: 20px;
   }
 }

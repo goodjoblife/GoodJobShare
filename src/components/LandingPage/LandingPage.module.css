@@ -1,0 +1,38 @@
+.columns {
+  display: flex;
+  flex-wrap: wrap;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+  }
+}
+
+.columnItem {
+  flex: 0 0 calc((100% - gutter * 2) / 3);
+  margin-right: gutter;
+  margin-bottom: 64px;
+
+  &:nth-child(3n) {
+    margin-right: 0;
+  }
+
+  @media (max-width: 850px) {
+    flex: 0 0 calc((100% - gutter) / 2);
+
+    &:nth-child(3n) {
+      margin-right: gutter;
+    }
+
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 550px) {
+    flex: 1 1 auto;
+    margin-right: 0;
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+}
