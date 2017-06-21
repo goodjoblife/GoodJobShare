@@ -43,7 +43,7 @@ class LandingPage extends Component {
             <Heading size="l" center marginBottom>熱門分享</Heading>
             <div className={columnStyle.columns}>
               {
-                expDatas.filter((elem, index) => index < 3).map(data => (
+                expDatas.slice(0, 3).map(data => (
                   <div className={columnStyle.column} key={data._id}>
                     <ExperienceBlock data={data} size="m" />
                   </div>
