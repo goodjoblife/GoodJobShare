@@ -70,7 +70,7 @@ const defaultForm = {
   interviewTimeMonth: null,
   interviewResult: null,
   salaryType: 'month',
-  salaryAmount: 0,
+  salaryAmount: '',
   overallRating: 0,
   title: '面試經驗分享',
   sections: {
