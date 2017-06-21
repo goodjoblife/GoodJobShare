@@ -1,4 +1,4 @@
-@value gray-dark, link-blue, border-gray from "../common/variables.module.css";
+@value gray-dark, link-blue, border-gray from "common/variables.module.css";
 
 .container {
   display: block;
@@ -29,13 +29,12 @@
 }
 
 .labels {
-  display: flex;
   margin-bottom: 16px;
 }
 
 .label {
   margin-right: 24px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
 
   svg {
@@ -60,11 +59,24 @@
 }
 
 .m {
-  .company, .location, .salary {
+  &.container {
+    height: 100%;
+    position: relative;
+  }
+
+  .location, .salary {
     display: none;
   }
 
+  .contentWrapper {
+    margin-bottom: 40px;
+  }
+
   .reaction {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
     border-top: 1px solid border-gray;
   }
 }

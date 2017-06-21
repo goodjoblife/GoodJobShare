@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import cn from 'classnames';
 import Helmet from 'react-helmet';
 import { Section, Wrapper, Heading } from 'common/base';
 import ShareExpSection from 'common/ShareExpSection';
@@ -21,7 +23,15 @@ class LandingPage extends Component {
   }
   render() {
     const expDatas = this.props.experienceSearch.toJS().experiences || [];
-    console.log(expDatas);
+    expDatas.sort((a, b) => {
+      if (a.like_count < b.like_count) {
+        return 1;
+      }
+      if (a.like_count > b.like_count) {
+        return -1;
+      }
+      return 0;
+    });
     return (
       <main>
         <Helmet
@@ -40,12 +50,22 @@ class LandingPage extends Component {
                 ))
               }
             </div>
+            <Section center Tag="div">
+              <Link className={cn('buttonCircleL', 'buttonBlack')} to="/experiences/search" title="面試工作經驗">
+                看更多
+              </Link>
+            </Section>
           </Wrapper>
         </Section>
         <Section padding bg="white">
           <Wrapper size="l">
             <Heading size="l" center marginBottom>勞動知識小教室</Heading>
           </Wrapper>
+          <Section center Tag="div">
+            <Link className={cn('buttonCircleL', 'buttonBlack')} to="/labor-rights" title="勞動知識小教室">
+              看更多
+            </Link>
+          </Section>
         </Section>
         <ShareExpSection heading="現在就留下你的資料吧！" />
       </main>
