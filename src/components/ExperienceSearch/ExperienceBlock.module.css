@@ -1,4 +1,4 @@
-@value gray-dark, link-blue, border-gray from "common/variables.module.css";
+@value gray-dark, link-blue, border-gray, page-gutter-s from "common/variables.module.css";
 
 .container {
   display: block;
@@ -82,6 +82,14 @@
 }
 
 .l {
+  &.container {
+    @media (max-width: 850px) {
+      margin-left: calc(page-gutter-s * -1);
+      margin-right: calc(page-gutter-s * -1);
+      margin-bottom: 24px;
+    }
+  }
+
   .reaction {
     padding-bottom: 20px;
   }

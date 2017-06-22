@@ -1,6 +1,4 @@
-@value main-yellow from "../variables.module.css";
-@value border-gray from "../variables.module.css";
-@value warning-red from "../variables.module.css";
+@value main-yellow, border-gray, main-gray, warning-red from "../variables.module.css";
 
 .input {
   width: 100%;
@@ -9,10 +7,6 @@
 
   &:focus{
     border-color: main-yellow;
-  }
-
-  &::placeholder {
-    color: #C0C0C0;
   }
 }
 
@@ -35,4 +29,14 @@
 
 .isWarning {
   display: inherit;
+}
+
+::-webkit-input-placeholder {
+  color: main-gray;
+}
+::-moz-placeholder {
+  color: main-gray;
+}
+:-ms-input-placeholder {
+  color: main-gray;
 }

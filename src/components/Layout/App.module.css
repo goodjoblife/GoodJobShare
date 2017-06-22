@@ -1,7 +1,7 @@
 @import "../common/reset.module.css";
 @import "../common/global.module.css";
 
-@value primary-font, white-light, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
+@value primary-font, white-light, border-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
 .App {
 
@@ -39,6 +39,12 @@ img {
 
 svg {
 	vertical-align: middle;
+}
+
+hr {
+	border : 0;
+ 	height : 1px;
+	background-color: border-gray;
 }
 
 /* global style end */

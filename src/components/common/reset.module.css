@@ -24,6 +24,7 @@ textarea {
   outline: 0;
   box-shadow: none;
   background-clip: padding-box;
+  border: 0;
   border-radius: 0;
 }
 button {
