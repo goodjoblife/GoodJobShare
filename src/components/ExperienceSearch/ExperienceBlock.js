@@ -68,7 +68,6 @@ class ExperienceBlock extends Component {
           <Heading
             Tag="h2"
             size={size === 'l' ? 'sl' : 'sm'}
-            bold={size === 'l'}
             className={styles.heading}
           >
             {data.title}

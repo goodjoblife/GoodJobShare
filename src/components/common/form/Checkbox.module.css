@@ -1,4 +1,4 @@
-@value main-yellow, main-gray from "../variables.module.css";
+@value main-yellow, main-gray, border-gray, main-black from "common/variables.module.css";
 
 .formGroup {
   position: relative;
@@ -11,15 +11,18 @@
     display: inline-block;
     align-items: center;
     transition: color .3s;
+
     .checkboxInput {
       position: relative;
       display: inline-block;
       vertical-align: middle;
       width: 20px;
       height: 20px;
-      border: 1px solid #000;
+      border: 1px solid main-gray;
+      border-radius: 3px;
       margin-right: 10px;
-      transition: all .3s;
+      transition-property: color, background-color, border;
+      transition-duration: .3s;
       cursor: pointer;
     }
     .checkboxText {
@@ -27,7 +30,7 @@
       display: inline-block;
       vertical-align: middle;
       font-size: 1em;
-      font-weight: 400;
+      letter-spacing: 1px;
       cursor: pointer;
     }
   }
@@ -50,21 +53,22 @@
 
     .checkboxInput:before {
       content: '✓';
-      //transform: rotate(15deg);
       transform-origin: 0% 100%;
       width: 6px;
       height: 12px;
-      //border-color: #fff;
       transform: translate3d(-.1em,-.4em,0) rotate(15deg);
     }
   }
 
   &.disabled {
-    pointer-events: none;
+    cursor: not-allowed;
+
     input[type="checkbox"] + label {
       color: main-gray;
+      pointer-events: none;
+
       .checkboxInput {
-        border: 1px solid main-gray;
+        border: 1px solid border-gray;
       }
     }
   }
