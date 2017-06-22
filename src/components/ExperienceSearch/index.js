@@ -77,7 +77,7 @@ class ExperienceSearch extends Component {
     // console.log('-->', experienceSearch, data);
 
     return (
-      <Section Tag="main" pageTop>
+      <Section Tag="main" pageTop paddingBottom>
         <Helmet title="面試 ‧ 工作經驗" />
         <Wrapper size="l">
           {/*

@@ -17,6 +17,11 @@ const Footer = () => (
             與<a href="/privacy-policy">隱私權政策</a>
           </p>
         </div>
+        <div className={styles.g0v}>
+          <a herf="https://grants.g0v.tw/power/" alt="power by g0v">
+            <img src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/logo-g0v.svg" alt="g0v" />
+          </a>
+        </div>
       </div>
       <div className={styles.col2}>
         <div className={styles.shareButtons}>
