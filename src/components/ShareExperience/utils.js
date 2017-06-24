@@ -95,7 +95,17 @@ const handleInterviewExperienceInYear = interviewForm => {
   return data;
 };
 
+export const handleSalaryAmount = interviewForm => {
+  let data = interviewForm;
+
+  if (!interviewForm.salaryAmount) {
+    data = R.omit(['salaryAmount', 'salaryType'])(data);
+  }
+  return data;
+};
+
 export const getInterviewForm = R.compose(
+  handleSalaryAmount,
   handleInterviewExperienceInYear,
   handleInterviewQas,
   propsInterviewForm
@@ -108,11 +118,17 @@ export const portInterviewFormToRequestFormat = interviewForm => {
       year: interviewForm.interviewTimeYear,
       month: interviewForm.interviewTimeMonth,
     },
-    salary: {
-      type: interviewForm.salaryType,
-      amount: interviewForm.salaryAmount,
-    },
   };
+
+  if (interviewForm.salaryAmount) {
+    body = {
+      ...body,
+      salary: {
+        type: interviewForm.salaryType,
+        amount: interviewForm.salaryAmount,
+      },
+    };
+  }
 
   body = R.omit([
     'interviewTimeYear',
@@ -133,11 +149,17 @@ const portWorkExperiencesFormToRequestFormat = workExperiencesForm => {
       year: workExperiencesForm.jobEndingTimeYear,
       month: workExperiencesForm.jobEndingTimeMonth,
     },
-    salary: {
-      type: workExperiencesForm.salaryType,
-      amount: workExperiencesForm.salaryAmount,
-    },
   };
+
+  if (workExperiencesForm.salaryAmount) {
+    body = {
+      ...body,
+      salary: {
+        type: workExperiencesForm.salaryType,
+        amount: workExperiencesForm.salaryAmount,
+      },
+    };
+  }
 
   body = R.omit([
     'jobEndingTimeYear',
@@ -201,6 +223,7 @@ export const propsWorkExperiencesForm = state => {
 
 
 export const workExperiencesToBody = R.compose(
+  handleSalaryAmount,
   portWorkExperiencesFormToRequestFormat,
   handleInterviewExperienceInYear,
   propsWorkExperiencesForm

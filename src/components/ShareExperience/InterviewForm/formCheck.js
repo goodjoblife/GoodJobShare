@@ -49,7 +49,7 @@ export const salaryAmount = R.anyPass([
   R.allPass([
     n => n >= 0,
   ]),
-  n => n === '',
+  n => n === undefined,
 ]);
 
 export const overallRating = R.allPass([

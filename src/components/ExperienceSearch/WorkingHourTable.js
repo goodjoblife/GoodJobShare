@@ -56,6 +56,9 @@ class WorkingHourTable extends Component {
     );
   }
   static getSalary = val => {
+    if (!val) {
+      return '0';
+    }
     const amount = val.amount.toString()
       .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     let type;

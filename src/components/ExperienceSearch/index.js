@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import Checkbox from 'common/form/Checkbox';
 import Loader from 'common/Loader';
@@ -18,7 +19,7 @@ import status from '../../constants/status';
 
 class ExperienceSearch extends Component {
   static fetchData({ store: { dispatch } }) {
-    return dispatch(fetchExperiences('sort', ''));
+    return dispatch(fetchExperiences('sort', '', 0));
   }
 
   static propTypes = {
@@ -28,6 +29,7 @@ class ExperienceSearch extends Component {
     // setSearchBy: PropTypes.func.isRequired,
     setKeyword: PropTypes.func.isRequired,
     fetchExperiences: PropTypes.func.isRequired,
+    fetchMoreExperiences: PropTypes.func.isRequired,
     fetchWorkings: PropTypes.func.isRequired,
     fetchKeywords: PropTypes.func.isRequired,
     experienceSearch: ImmutablePropTypes.map.isRequired,
@@ -42,7 +44,7 @@ class ExperienceSearch extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchExperiences('sort', '');
+    this.props.fetchExperiences('sort', '', 0);
     this.props.fetchKeywords('');
   }
 
@@ -59,22 +61,21 @@ class ExperienceSearch extends Component {
   }
 
   fetchExperiencesAndWorkings(val) {
-    console.log(val);
-    this.props.fetchExperiences('searchBy', val);
+    this.props.fetchExperiences('searchBy', val, 0);
     this.props.fetchWorkings(val);
   }
 
   fetchExperiencesWithSort(e) {
-    this.props.fetchExperiences('sort', e.target.value);
+    this.props.fetchExperiences('sort', e.target.value, 0);
   }
 
   render() {
     const {
       /* setSort, */ setSearchType, /* setIndustry, */ fetchKeywords, setKeyword,
+      fetchMoreExperiences,
       experienceSearch,
     } = this.props;
     const data = experienceSearch.toJS();
-    // console.log('-->', experienceSearch, data);
 
     return (
       <Section Tag="main" pageTop paddingBottom>
@@ -163,13 +164,23 @@ class ExperienceSearch extends Component {
               }
               <br />
 
-              {
-                (data.experiences || []).map(o => (
-                  data[o.type] && (
-                    <ExperienceBlock key={o._id} data={o} size="l" />
-                  )
-                ))
-              }
+              <InfiniteScroll
+                pageStart={0} hasMore={data.hasMore}
+                loadMore={nextPage => {
+                  if (data.hasMore) {
+                    fetchMoreExperiences(nextPage);
+                  }
+                }}
+                loader={<Loader />}
+              >
+                {
+                  (data.experiences || []).map(o => (
+                    data[o.type] && (
+                      <ExperienceBlock key={o._id} to={`/experiences/${o._id}`} data={o} />
+                    )
+                  ))
+                }
+              </InfiniteScroll>
 
               {
                 data.salary && (data.workings || []).map((o, i) => (

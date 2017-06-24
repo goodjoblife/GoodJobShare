@@ -29,6 +29,10 @@ const preloadedState = Map({
   keywords: [],
   experiences: [],
   experienceCount: 0,
+  prevCond: 'sort',
+  preValue: '',
+  prevPage: 0,
+  hasMore: false,
   workings: [],
   loadingStatus: status.UNFETCHED,
   error: null,
@@ -50,7 +54,12 @@ const experienceSearch = createReducer(preloadedState, {
     state.update('keyword', () => action.keyword),
 
   [SET_LOADING_STATUS]: (state, action) =>
-    state.update('loadingStatus', () => action.loadingStatus),
+    state.merge({
+      loadingStatus: action.loadingStatus,
+      prevCond: action.prevCond,
+      prevValue: action.prevValue,
+      // prevPage: action.prevPage,
+    }),
 
   [SET_EXPERIENCES]: (state, action) =>
     state.merge({
@@ -78,6 +87,10 @@ const experienceSearch = createReducer(preloadedState, {
       salary: action.salary,
       experienceCount: action.experienceCount,
       experiences: fromJS(action.experiences || []),
+      hasMore: action.hasMore,
+      prevCond: action.prevCond,
+      prevValue: action.prevValue,
+      // prevPage: action.prevPage,
     }),
 
   [SET_SEARCH_QUERY_AND_EXPERIENCES]: (state, action) =>
@@ -88,6 +101,10 @@ const experienceSearch = createReducer(preloadedState, {
       searchQuery: action.searchQuery,
       experienceCount: action.experienceCount,
       experiences: fromJS(action.experiences || []),
+      hasMore: action.hasMore,
+      prevCond: action.prevCond,
+      prevValue: action.prevValue,
+      // prevPage: action.prevPage,
     }),
 
   [SET_KEYWORDS_AND_EXPERIENCES]: (state, action) =>

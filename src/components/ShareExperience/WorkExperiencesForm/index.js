@@ -62,10 +62,10 @@ const defaultForm = {
   jobEndingTimeYear: new Date().getFullYear(),
   jobEndingTimeMonth: new Date().getMonth(),
   salaryType: 'month',
-  salaryAmount: 0,
+  salaryAmount: '',
   weekWorkTime: '',
   recommendToOthers: null,
-  title: '',
+  title: '工作經驗分享',
   sections: {
     [firstSectionId]: createBlock.sections(firstSectionId)(),
   },
