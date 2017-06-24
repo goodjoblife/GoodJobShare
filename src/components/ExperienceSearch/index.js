@@ -12,7 +12,6 @@ import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
 import WorkingHourBlock from './WorkingHourBlock';
 import { fetchExperiences } from '../../actions/experienceSearch';
-import status from '../../constants/status';
 
 class ExperienceSearch extends Component {
   static fetchData({ store: { dispatch } }) {
