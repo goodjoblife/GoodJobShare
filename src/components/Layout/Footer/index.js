@@ -18,7 +18,7 @@ const Footer = () => (
           </p>
         </div>
         <div className={styles.g0v}>
-          <a herf="https://grants.g0v.tw/power/" alt="power by g0v">
+          <a href="https://grants.g0v.tw/power/" alt="power by g0v">
             <img src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/logo-g0v.svg" alt="g0v" />
           </a>
         </div>
