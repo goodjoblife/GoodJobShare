@@ -6,16 +6,12 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Checkbox from 'common/form/Checkbox';
 import Loader from 'common/Loader';
 import { Section, Wrapper } from 'common/base';
-// import Alert from 'common/Alert';
 
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
 import WorkingHourBlock from './WorkingHourBlock';
 import { fetchExperiences } from '../../actions/experienceSearch';
-import status from '../../constants/status';
-
-// let cmpAlert;
 
 class ExperienceSearch extends Component {
   static fetchData({ store: { dispatch } }) {
@@ -23,10 +19,7 @@ class ExperienceSearch extends Component {
   }
 
   static propTypes = {
-    // setSort: PropTypes.func.isRequired,
     setSearchType: PropTypes.func.isRequired,
-    // setIndustry: PropTypes.func.isRequired,
-    // setSearchBy: PropTypes.func.isRequired,
     setKeyword: PropTypes.func.isRequired,
     fetchExperiences: PropTypes.func.isRequired,
     fetchMoreExperiences: PropTypes.func.isRequired,
@@ -81,11 +74,6 @@ class ExperienceSearch extends Component {
       <Section Tag="main" pageTop paddingBottom>
         <Helmet title="面試 ‧ 工作經驗" />
         <Wrapper size="l">
-          {/*
-            <Alert ref={c => { cmpAlert = c; }}>
-              <p>test</p>
-            </Alert>
-          */}
           <div className={styles.container}>
             <aside className={styles.aside}>
               <section>
@@ -122,26 +110,6 @@ class ExperienceSearch extends Component {
                   />
                 ))
               }
-              {/*
-              <div className={styles.splitter} />
-
-              {
-                [
-                  { label: '全部', value: 'all' },
-                  { label: '金融業', value: 'finance' },
-                  { label: '製造業', value: 'manufacturing' },
-                  { label: '運輸業', value: 'transportation' },
-                  { label: '科技業', value: 'technology' },
-                ].map(o => (
-                  <Radio
-                    key={o.value} id={`industry-${o.value}`}
-                    label={o.label} value={o.value}
-                    onChange={setIndustry}
-                    checked={data.industry === o.value}
-                  />
-                ))
-              }
-              */}
             </aside>
 
             <div className={styles.content}>
@@ -154,8 +122,6 @@ class ExperienceSearch extends Component {
                 handleKeywordClick={this.handleKeywordClick}
                 fetchExperiencesAndWorkings={this.fetchExperiencesAndWorkings}
               />
-
-              {data.loadingStatus === status.FETCHING && <Loader />}
 
               {data.searchQuery &&
                 <div className={styles.searchResult}>

@@ -1,5 +1,4 @@
 import fetchUtil from '../utils/fetchUtil';
-// import status from '../constants/status';
 
 export const SET_SORT = 'SET_TSET_SORTYPE';
 export const SET_SEARCH_TYPE = 'SET_SEARCH_TYPE';
@@ -48,19 +47,6 @@ export const fetchExperiences = (cond, val, page) => (dispatch, getState) => {
   let objCond;
   let hasMore = false;
 
-
-  // DON'T open the following dispatch if <InfiniteScroll> is used
-  // (<InfiniteScroll> has loading component as well)
-
-  // dispatch({
-  //   type: SET_LOADING_STATUS,
-  //   loadingStatus: status.FETCHING,
-  //   prevCond: cond,
-  //   prevValue: val,
-  //   prevPage: page,
-  // });
-
-
   if (cond === 'searchBy') {
     url = `${url}&search_by=${data.searchBy}&search_query=${val}`;
 
@@ -85,7 +71,6 @@ export const fetchExperiences = (cond, val, page) => (dispatch, getState) => {
     .then(result => {
       hasMore = (start + limit) < result.total;
       dispatch(Object.assign(objCond, {
-        loadingStatus: status.FETCHED,
         prevCond: cond,
         prevValue: val,
         // prevPage: page,
@@ -101,7 +86,6 @@ export const fetchExperiences = (cond, val, page) => (dispatch, getState) => {
     })
     .catch(error => {
       dispatch(Object.assign(objCond, {
-        loadingStatus: status.ERROR,
         prevCond: cond,
         prevValue: val,
         // prevPage: (page ? page - 1 : page),
