@@ -47,19 +47,6 @@ export const fetchExperiences = (cond, val, page) => (dispatch, getState) => {
   let objCond;
   let hasMore = false;
 
-
-  // DON'T open the following dispatch if <InfiniteScroll> is used
-  // (<InfiniteScroll> has loading component as well)
-
-  // dispatch({
-  //   type: SET_LOADING_STATUS,
-  //   loadingStatus: status.FETCHING,
-  //   prevCond: cond,
-  //   prevValue: val,
-  //   prevPage: page,
-  // });
-
-
   if (cond === 'searchBy') {
     url = `${url}&search_by=${data.searchBy}&search_query=${val}`;
 
