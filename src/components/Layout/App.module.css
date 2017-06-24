@@ -1,7 +1,7 @@
 @import "../common/reset.module.css";
 @import "../common/global.module.css";
 
-@value primary-font, white-light, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "../common/variables.module.css";
+@value primary-font, white-light, border-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
 .App {
 
@@ -19,8 +19,8 @@
 /* gloabl style start */
 body, html {
 	font-family: primary-font;
-	font-weight: 300;
-	color: #111;
+	font-weight: 400;
+	color: #444;
 	font-size: 16px;
 	-webkit-tap-highlight-color: rgba(0,0,0,.2);
 	overflow-x: hidden;
@@ -41,13 +41,10 @@ svg {
 	vertical-align: middle;
 }
 
-p {
-  font-size: 1.13em;
-	line-height: 1.5em;
-	color: #333;
-	@media (max-width: 850px) {
-		font-size: 1em;
-	}
+hr {
+	border : 0;
+ 	height : 1px;
+	background-color: border-gray;
 }
 
 /* global style end */

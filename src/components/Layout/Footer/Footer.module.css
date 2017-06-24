@@ -13,8 +13,10 @@
 }
 
 .col1 {
-  flex: 0 0 70%;
+  flex: 1 1 auto;
   display: flex;
+  justify-content: center;
+  align-items: space-between;
   @media (max-width: 850px) {
     flex: 1 1 auto;
   }
@@ -24,7 +26,8 @@
 }
 
 .col2 {
-  flex: 0 0 30%;
+  flex: 0 0 140px;
+  
   @media (max-width: 850px) {
     flex: 1 1 auto;
   }
@@ -40,10 +43,28 @@
   }
 }
 
+.g0v {
+  flex: 0 0 120px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  @media (max-width: 550px) {
+    flex: 1 1 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  img {
+    width: 120px;
+  }
+}
+
 .content {
   flex: 1 1 auto;
   font-size: .85em;
   line-height: 1.4em;
+
   @media (max-width: 550px) {
     flex: 1 1 auto;
   }

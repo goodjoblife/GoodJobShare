@@ -16,3 +16,24 @@
     padding-bottom: 48px;
   }
 }
+
+.paddingBottom {
+  padding-bottom: 64px;
+
+  @media (max-width: 550px) {
+    padding-bottom: 48px;
+  }
+}
+
+.paddingTop {
+  padding-top: 64px;
+
+  @media (max-width: 550px) {
+    padding-top: 48px;
+  }
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}

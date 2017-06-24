@@ -147,6 +147,19 @@
     @media (min-width: 851px) {
       &:hover {
         background-color: main-yellow;
+        color: main-black;
+      }
+    }
+  }
+
+  .buttonWhiteLine {
+    border: 1px solid #fff;
+    color: #fff;
+    @media (min-width: 851px) {
+      &:hover {
+        background-color: main-yellow;
+        color: main-black;
+        border-color: main-yellow;
       }
     }
   }

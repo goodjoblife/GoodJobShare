@@ -1,9 +1,8 @@
-@value gray-dark, link-blue from "../common/variables.module.css";
+@value gray-dark, link-blue, border-gray, page-gutter-s from "common/variables.module.css";
 
 .container {
   display: block;
   background-color: #fff;
-  padding: 24px;
   box-shadow: 0 0 4px rgba(0,0,0, .15);
   margin-bottom: 40px;
   transition-property: background, box-shadow;
@@ -20,31 +19,30 @@
   }
 }
 
+.contentWrapper {
+  padding: 24px;
+}
+
 .heading {
   margin-bottom: 16px;
   margin-top: 16px;
 }
 
 .labels {
-  display: flex;
   margin-bottom: 16px;
 }
 
 .label {
   margin-right: 24px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
 
   svg {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     fill: #C3C3C3;
     margin-right: 8px;
   }
-}
-
-.content {
-  margin-bottom: 16px;
 }
 
 .more {
@@ -54,7 +52,45 @@
 .reaction {
   display: flex;
   align-items: center;
+  padding: 8px 24px;
   > div {
     margin-right: 24px;
+  }
+}
+
+.m {
+  &.container {
+    height: 100%;
+    position: relative;
+  }
+
+  .location, .salary {
+    display: none;
+  }
+
+  .contentWrapper {
+    margin-bottom: 40px;
+  }
+
+  .reaction {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid border-gray;
+  }
+}
+
+.l {
+  &.container {
+    @media (max-width: 850px) {
+      margin-left: calc(page-gutter-s * -1);
+      margin-right: calc(page-gutter-s * -1);
+      margin-bottom: 24px;
+    }
+  }
+
+  .reaction {
+    padding-bottom: 20px;
   }
 }

@@ -3,12 +3,13 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import Radio from 'common/form/Radio';
 import Checkbox from 'common/form/Checkbox';
 import Loader from 'common/Loader';
+import { Section, Wrapper } from 'common/base';
 // import Alert from 'common/Alert';
+
 import styles from './ExperienceSearch.module.css';
-import Search from '../images/search.svg';
+import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
 import WorkingHourBlock from './WorkingHourBlock';
 import { fetchExperiences } from '../../actions/experienceSearch';
@@ -39,6 +40,7 @@ class ExperienceSearch extends Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleKeywordClick = this.handleKeywordClick.bind(this);
     this.fetchExperiencesWithSort = this.fetchExperiencesWithSort.bind(this);
+    this.fetchExperiencesAndWorkings = this.fetchExperiencesAndWorkings.bind(this);
   }
 
   componentDidMount() {
@@ -76,164 +78,119 @@ class ExperienceSearch extends Component {
     const data = experienceSearch.toJS();
 
     return (
-      <main className="wrapperL">
+      <Section Tag="main" pageTop paddingBottom>
         <Helmet title="面試 ‧ 工作經驗" />
-        {/*
-          <Alert ref={c => { cmpAlert = c; }}>
-            <p>test</p>
-          </Alert>
-        */}
-        <div className={styles.container}>
-          <aside>
-            <button
-              className={data.sort === 'created_at'
-                ? `${styles.frontButton} ${styles.toggle}`
-                : styles.frontButton}
-              onClick={this.fetchExperiencesWithSort} value="created_at"
-            >
-              最新
-            </button>
-            <button
-              className={data.sort === 'popularity'
-                ? `${styles.rearButton} ${styles.toggle}`
-                : styles.rearButton}
-              onClick={this.fetchExperiencesWithSort} value="popularity"
-            >
-              熱門
-            </button>
+        <Wrapper size="l">
+          {/*
+            <Alert ref={c => { cmpAlert = c; }}>
+              <p>test</p>
+            </Alert>
+          */}
+          <div className={styles.container}>
+            <aside className={styles.aside}>
+              <section>
+                <button
+                  className={data.sort === 'created_at'
+                    ? `${styles.frontButton} ${styles.toggle}`
+                    : styles.frontButton}
+                  onClick={this.fetchExperiencesWithSort} value="created_at"
+                >
+                  最新
+                </button>
+                <button
+                  className={data.sort === 'popularity'
+                    ? `${styles.rearButton} ${styles.toggle}`
+                    : styles.rearButton}
+                  onClick={this.fetchExperiencesWithSort} value="popularity"
+                >
+                  熱門
+                </button>
+              </section>
+              <hr className={styles.splitter} />
 
-            <div className={styles.splitter} />
-
-            {
-              [
-                { label: '面試經驗', value: 'interview' },
-                { label: '工作經驗', value: 'work' },
-                { label: '薪時資料', value: 'salary' },
-              ].map(o => (
-                <Checkbox
-                  key={o.value} id={`searchType-${o.value}`}
-                  label={o.label} value={o.value}
-                  disabled={o.value === 'salary' && !data.searchQuery}
-                  onChange={setSearchType} checked={data[o.value]}
-                />
-              ))
-            }
-            {/*
-            <div className={styles.splitter} />
-
-            {
-              [
-                { label: '全部', value: 'all' },
-                { label: '金融業', value: 'finance' },
-                { label: '製造業', value: 'manufacturing' },
-                { label: '運輸業', value: 'transportation' },
-                { label: '科技業', value: 'technology' },
-              ].map(o => (
-                <Radio
-                  key={o.value} id={`industry-${o.value}`}
-                  label={o.label} value={o.value}
-                  onChange={setIndustry}
-                  checked={data.industry === o.value}
-                />
-              ))
-            }
-            */}
-          </aside>
-
-          <div className={styles.content}>
-            <div className={styles.searchbar}>
-              <div className={styles.condition}>
-                {
-                  [
-                    { label: '公司', value: 'company' },
-                    { label: '職稱', value: 'job_title' },
-                  ].map(o => (
-                    <Radio
-                      key={o.value} id={`condition-${o.value}`}
-                      label={o.label} value={o.value} inline
-                      onChange={fetchKeywords}
-                      checked={data.searchBy === o.value}
-                    />
-                  ))
-                }
-              </div>
-              <div className={styles.search}>
-                <input
-                  type="text"
-                  onKeyPress={this.handleKeyPress}
-                  onChange={setKeyword}
-                  value={data.keyword}
-                  placeholder={
-                    data.searchBy === 'company'
-                      ? '以公司搜尋'
-                      : '以職稱搜尋'
-                  }
-                />
-                <Search
-                  onClick={() => {
-                    // cmpAlert.show();
-                    const val = data.keyword;
-                    this.fetchExperiencesAndWorkings(val);
-                  }}
-                />
-                <div className={styles.keywordGroup}>
-                  {
-                    (data.keywords || []).map(o => (
-                      <span
-                        key={o} className={styles.keyword}
-                        onClick={this.handleKeywordClick}
-                      >
-                        {o}
-                      </span>
-                    ))
-                  }
-                </div>
-              </div>
-            </div>
-
-            {data.loadingStatus === status.FETCHING && <Loader />}
-
-            {data.searchQuery &&
-              <div className={styles.info}>
-                找到 {data.experienceCount} 筆與 &quot;{data.searchQuery}&quot; 相關的資料
-              </div>
-            }
-            <br />
-
-            { /*
-              (data.experiences || []).map(o => (
-                data[o.type] && (
-                  <ExperienceBlock key={o._id} to={`/experiences/${o._id}`} data={o} />
-                )
-              ))
-            */ }
-
-            <InfiniteScroll
-              pageStart={0} hasMore={data.hasMore}
-              loadMore={nextPage => {
-                if (data.hasMore) {
-                  fetchMoreExperiences(nextPage);
-                }
-              }}
-              loader={<Loader />}
-            >
               {
-                (data.experiences || []).map(o => (
-                  data[o.type] && (
-                    <ExperienceBlock key={o._id} to={`/experiences/${o._id}`} data={o} />
-                  )
+                [
+                  { label: '面試經驗', value: 'interview' },
+                  { label: '工作經驗', value: 'work' },
+                  { label: '薪時資料', value: 'salary' },
+                ].map(o => (
+                  <Checkbox
+                    key={o.value} id={`searchType-${o.value}`}
+                    label={o.label} value={o.value}
+                    disabled={o.value === 'salary' && !data.searchQuery}
+                    onChange={setSearchType} checked={data[o.value]}
+                  />
                 ))
               }
-            </InfiniteScroll>
+              {/*
+              <div className={styles.splitter} />
 
-            {
-              data.salary && (data.workings || []).map((o, i) => (
-                <WorkingHourBlock key={o.company.id || i} data={o} />
-              ))
-            }
+              {
+                [
+                  { label: '全部', value: 'all' },
+                  { label: '金融業', value: 'finance' },
+                  { label: '製造業', value: 'manufacturing' },
+                  { label: '運輸業', value: 'transportation' },
+                  { label: '科技業', value: 'technology' },
+                ].map(o => (
+                  <Radio
+                    key={o.value} id={`industry-${o.value}`}
+                    label={o.label} value={o.value}
+                    onChange={setIndustry}
+                    checked={data.industry === o.value}
+                  />
+                ))
+              }
+              */}
+            </aside>
+
+            <div className={styles.content}>
+              <Searchbar
+                className={styles.searcbarLarge}
+                data={data}
+                fetchKeywords={fetchKeywords}
+                setKeyword={setKeyword}
+                handleKeyPress={this.handleKeyPress}
+                handleKeywordClick={this.handleKeywordClick}
+                fetchExperiencesAndWorkings={this.fetchExperiencesAndWorkings}
+              />
+
+              {data.loadingStatus === status.FETCHING && <Loader />}
+
+              {data.searchQuery &&
+                <div className={styles.searchResult}>
+                  找到 {data.experienceCount} 筆與 &quot;{data.searchQuery}&quot; 相關的資料
+                </div>
+              }
+              <br />
+
+              <InfiniteScroll
+                pageStart={0} hasMore={data.hasMore}
+                loadMore={nextPage => {
+                  if (data.hasMore) {
+                    fetchMoreExperiences(nextPage);
+                  }
+                }}
+                loader={<Loader />}
+              >
+                {
+                  (data.experiences || []).map(o => (
+                    data[o.type] && (
+                      <ExperienceBlock key={o._id} to={`/experiences/${o._id}`} data={o} />
+                    )
+                  ))
+                }
+              </InfiniteScroll>
+
+              {
+                data.salary && (data.workings || []).map((o, i) => (
+                  <WorkingHourBlock key={o.company.id || i} data={o} />
+                ))
+              }
+            </div>
           </div>
-        </div>
-      </main>
+        </Wrapper>
+      </Section>
     );
   }
 }

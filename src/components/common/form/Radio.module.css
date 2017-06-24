@@ -20,11 +20,7 @@
     position: relative;
     z-index: 1;
     cursor: pointer;
-    /*@media (min-width: $above-desktop) {
-      &:hover {
-        color: $gray-dark;
-      }
-    }*/
+
     .radioInput {
       display: inline-block;
       vertical-align: middle;
@@ -39,10 +35,10 @@
         width: 8px;
         height: 8px;
         border-radius: 100%;
-        background-color: main-yellow;
+        background-color: #000;
         top: 4px;
         left: 4px;
-        /* transition: transform .3s; */
+        transition: transform .3s;
         transform: scale(0);
       }
     }
@@ -59,8 +55,9 @@
 
   input[type="radio"]:checked + .radioCircle {
     .radioInput {
-      border: 1px solid main-yellow;
-      &:before {
+      border: 1px solid #000;
+
+      &::before {
         transform: scale(1);
       }
     }

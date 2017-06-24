@@ -29,12 +29,20 @@
 }
 
 .sm {
-  font-size: 1.2em;
-  line-height: 1.6em;
+  font-size: 1.375em;
+  line-height: 1.4em;
+
+  @media (max-width: 550px) {
+    font-size: 1.2em;
+  }
 }
 
 .bold {
   font-weight: 700;
+}
+
+.light {
+  font-weight: 300;
 }
 
 .center {

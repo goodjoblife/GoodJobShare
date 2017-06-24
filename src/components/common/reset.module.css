@@ -18,11 +18,13 @@ textarea {
   text-align: left;
   font-size: inherit;
   font-family: inherit;
+  font-weight: inherit;
   color: inherit;
   box-sizing: border-box;
   outline: 0;
   box-shadow: none;
   background-clip: padding-box;
+  border: 0;
   border-radius: 0;
 }
 button {

@@ -1,19 +1,6 @@
 @value PAGE_TOP, PAGE_TOP_S from "common/variables.module.css";
-
-.body {
-  padding-top: PAGE_TOP;
-  @media (max-width: 550px) {
-    padding-top: PAGE_TOP_S;
-  }
-}
-
-.heading {
-
-  margin-bottom: 30px;
-}
-
 .description {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .seoText {

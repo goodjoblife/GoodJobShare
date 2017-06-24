@@ -1,4 +1,4 @@
-@value main-black, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
+@value main-yellow, main-black, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
 .header {
   position: fixed;
@@ -9,6 +9,7 @@
   background-color: main-black;
   height: NAV_HEIGHT;
   box-shadow: 0 0 8px rgba(0,0,0,.15);
+  font-weight: 300;
 
   @media (max-width: 850px) {
     height: NAV_MOBILE_HEIGHT;
@@ -103,7 +104,7 @@
 
   @media (min-width: 851px) {
     &:hover {
-      background-color: rgba(255,255,255, .1);
+      background-color: rgba(255,255,255, .2);
     }
   }
 
@@ -112,17 +113,48 @@
   }
 }
 
+.loginBtn {
+  color: #fff;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-left: 40px;
+  transition-property: color;
+  transition-duration: .3s;
+  text-transform: lowercase;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: #fff;
+    margin-right: 8px;
+  }
+
+  @media (min-width: 851px) {
+    &:hover {
+      color: main-yellow;
+    }
+  }
+}
+
+.disableBtn {
+  pointer-events: none;
+}
+
 .mHeaderButton {
   @media (min-width: 851px) {
     display: none;
   }
+
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 3;
+  z-index: 9;
   display: block;
   transform: translate(0, 0);
   padding: 9px 19px 0 19px;
+
   &::before, &::after, span {
     background: #fff;
     border-radius: 3px;

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import cn from 'classnames';
 
 import { Heading, P } from 'common/base';
 import i from 'common/icons';
@@ -8,8 +9,8 @@ import Comment from 'common/reaction/Comment';
 import { formatWithCommas } from '../../utils/numberUtil';
 import styles from './ExperienceBlock.module.css';
 
-const Label = ({ Icon, text }) => (
-  <div className={styles.label}>
+const Label = ({ Icon, text, className }) => (
+  <div className={cn(styles.label, className)}>
     <Icon />
     <P Tag="span" size="m" bold>{text}</P>
   </div>
@@ -17,16 +18,20 @@ const Label = ({ Icon, text }) => (
 Label.propTypes = {
   Icon: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 class ExperienceBlock extends Component {
   static propTypes = {
-    to: PropTypes.string.isRequired,
     data: PropTypes.object.isRequired,
+    size: PropTypes.oneOf(['s', 'm', 'l']),
+  }
+  static defaultProps = {
+    size: 'm',
   }
 
   render() {
-    const { data, to } = this.props;
+    const { data, size } = this.props;
     const expType = data.type === 'interview' ? '面試' : '工作';
     const date = new Date(Date.parse(data.created_at));
     const year = date.getFullYear();
@@ -54,32 +59,35 @@ class ExperienceBlock extends Component {
     }
 
     return (
-      <Link to={to} className={styles.container}>
-        <section>
+      <Link to={`/experiences/${data._id}`} className={cn(styles.container, styles[size])}>
+        <section className={styles.contentWrapper}>
           <P size="s">
             {`${expType}${splitter}${year} 年 ${month} 月`}
           </P>
 
-          <Heading Tag="h2" size="sl" bold className={styles.heading}>
+          <Heading
+            Tag="h2"
+            size={size === 'l' ? 'sl' : 'sm'}
+            className={styles.heading}
+          >
             {data.title}
           </Heading>
 
           <div className={styles.labels}>
-            <Label text={data.company.name} Icon={i.Company} />
-            <Label text={data.job_title} Icon={i.User} />
-            <Label text={data.region} Icon={i.Location} />
-            {salary && <Label text={`${salaryAmount} / ${salaryType}`} Icon={i.Coin} />}
+            <Label text={data.company.name} Icon={i.Company} className={styles.company} />
+            <Label text={data.job_title} Icon={i.User} className={styles.position} />
+            <Label text={data.region} Icon={i.Location} className={styles.location} />
+            {salary && <Label text={`${salaryAmount} / ${salaryType}`} Icon={i.Coin} className={styles.salary} />}
           </div>
 
-          <P size="m" className={styles.content}>
+          <P size="m">
             {data.preview} ... ... <span className={styles.more}>閱讀更多</span>
           </P>
-
-          <div className={styles.reaction}>
-            <ThumbsUp count={data.like_count} />
-            <Comment count={data.reply_count} />
-          </div>
         </section>
+        <div className={styles.reaction}>
+          <ThumbsUp count={data.like_count} />
+          <Comment count={data.reply_count} />
+        </div>
       </Link>
     );
   }
