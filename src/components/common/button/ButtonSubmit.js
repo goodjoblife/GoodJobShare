@@ -8,19 +8,8 @@ const isLogin = auth =>
   auth.get('status') === 'connected';
 
 class ButtonSubmit extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.login = this.login.bind(this);
-  }
-  login() {
-    return this.props.login(this.props.FB)
-      .then(this.props.onSubmit)
-      .catch(this.props.loginFallback);
-  }
-
   render() {
-    const { text, onSubmit, disabled, auth } = this.props;
+    const { text, onSubmit, disabled, auth, login } = this.props;
     return (
       <div
         style={{
@@ -39,9 +28,7 @@ class ButtonSubmit extends React.PureComponent {
             <div>
               <button
                 className={styles.container}
-                onClick={() =>
-                  this.login()
-                }
+                onClick={login}
                 disabled={disabled}
               >
                 <pre>{`以  f  認證，${text}`}</pre>
@@ -74,8 +61,6 @@ ButtonSubmit.propTypes = {
   disabled: PropTypes.bool,
   auth: ImmutablePropTypes.map,
   login: PropTypes.func.isRequired,
-  loginFallback: PropTypes.func,
-  FB: PropTypes.object,
 };
 
 export default ButtonSubmit;

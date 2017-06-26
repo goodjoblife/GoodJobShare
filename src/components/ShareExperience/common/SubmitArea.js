@@ -9,6 +9,7 @@ import Modal from 'common/Modal';
 
 import SuccessFeedback from './SuccessFeedback';
 import FailFeedback from './FailFeedback';
+import FacebookFail from './FacebookFail';
 
 const getSuccessFeedback = id => (
   <SuccessFeedback
@@ -24,6 +25,12 @@ const getFailFeedback = buttonClick => (
   />
 );
 
+const getFacebookFail = buttonClick => (
+  <FacebookFail
+    buttonClick={buttonClick}
+  />
+);
+
 class SubmitArea extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -32,6 +39,8 @@ class SubmitArea extends React.PureComponent {
     this.handleIsOpen = this.handleIsOpen.bind(this);
     this.handleFeedback = this.handleFeedback.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.login = this.login.bind(this);
+    this.onFacebookFail = this.onFacebookFail.bind(this);
 
     this.state = {
       agree: false,
@@ -39,6 +48,7 @@ class SubmitArea extends React.PureComponent {
       feedback: null,
     };
   }
+
 
   onSubmit() {
     return this.props.onSubmit()
@@ -55,6 +65,22 @@ class SubmitArea extends React.PureComponent {
       });
   }
 
+  onFacebookFail() {
+    this.handleIsOpen(true);
+    return this.handleFeedback(getFacebookFail(this.login));
+  }
+
+  login() {
+    return this.props.login(this.props.FB)
+      .then(status => {
+        if (status === 'connected') {
+          return this.onSubmit();
+        }
+
+        throw Error('can not login');
+      })
+      .catch(this.onFacebookFail);
+  }
   handleAgree(agree) {
     this.setState(() => ({
       agree,
@@ -77,8 +103,6 @@ class SubmitArea extends React.PureComponent {
     const {
       submitable,
       auth,
-      login,
-      FB,
     } = this.props;
 
     const {
@@ -125,9 +149,7 @@ class SubmitArea extends React.PureComponent {
             onSubmit={this.onSubmit}
             disabled={!this.state.agree || !submitable}
             auth={auth}
-            login={login}
-            loginFallback={() => { console.log('登入失敗啦！！！'); }}
-            FB={FB}
+            login={this.login}
           />
         </div>
         <Modal
