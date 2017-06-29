@@ -6,7 +6,7 @@ import Cross from '../images/x.svg';
 
 import styles from './Modal.module.css';
 
-const Modal = ({ children, isOpen, close }) => (
+const Modal = ({ children, isOpen, hasClose, close }) => (
   <div
     className={
       cn(styles.modal, { [styles.isOpen]: isOpen })
@@ -14,12 +14,15 @@ const Modal = ({ children, isOpen, close }) => (
   >
     <div className={styles.inner}>
       <div className={styles.content}>
-        <div className={styles.close}>
-          <Cross
-            className={styles.close__icon}
-            onClick={close}
-          />
-        </div>
+        {
+          hasClose ?
+            <div className={styles.close}>
+              <Cross
+                className={styles.close__icon}
+                onClick={close}
+              />
+            </div> : null
+        }
         {children}
       </div>
     </div>
@@ -29,7 +32,12 @@ const Modal = ({ children, isOpen, close }) => (
 Modal.propTypes = {
   children: PropTypes.node,
   isOpen: PropTypes.bool,
+  hasClose: PropTypes.bool,
   close: PropTypes.func,
+};
+
+Modal.defaultProps = {
+  hasClose: true,
 };
 
 export default Modal;

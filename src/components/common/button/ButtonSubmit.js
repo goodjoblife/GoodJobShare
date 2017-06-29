@@ -8,56 +8,49 @@ const isLogin = auth =>
   auth.get('status') === 'connected';
 
 class ButtonSubmit extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.login = this.login.bind(this);
-  }
-  login() {
-    return this.props.login(this.props.FB)
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
   render() {
-    const { text, onSubmit, disabled, auth } = this.props;
+    const { text, onSubmit, disabled, auth, login } = this.props;
     return (
-      isLogin(auth) ?
-        <button
-          className={styles.container}
-          onClick={onSubmit}
-          disabled={disabled}
-        >
-          {text}
-        </button> :
-        <div>
-          <button
-            className={styles.container}
-            onClick={() =>
-              this.login()
-                .then(onSubmit)
-            }
-            disabled={disabled}
-          >
-            {`以F認證，${text}`}
-          </button>
-          <div
-            style={{
-              textAlign: 'center',
-              marginTop: '21px',
-            }}
-          >
-            <p
-              className="pMbold"
-              style={{
-                color: '#C0C0C0',
-              }}
+      <div
+        style={{
+          textAlign: 'center',
+        }}
+      >
+        {
+          isLogin(auth) ?
+            <button
+              className={styles.container}
+              onClick={onSubmit}
+              disabled={disabled}
             >
-              為什麼需要 Facebook 帳戶驗證？
-            </p>
-          </div>
-        </div>
+              {text}
+            </button> :
+            <div>
+              <button
+                className={styles.container}
+                onClick={login}
+                disabled={disabled}
+              >
+                <pre>{`以  f  認證，${text}`}</pre>
+              </button>
+              <div
+                style={{
+                  textAlign: 'center',
+                  marginTop: '21px',
+                }}
+              >
+                <p
+                  className="pMbold"
+                  style={{
+                    color: '#C0C0C0',
+                  }}
+                >
+                  為什麼需要 Facebook 帳戶驗證？
+              </p>
+              </div>
+            </div>
+        }
+      </div>
     );
   }
 }
@@ -68,7 +61,6 @@ ButtonSubmit.propTypes = {
   disabled: PropTypes.bool,
   auth: ImmutablePropTypes.map,
   login: PropTypes.func.isRequired,
-  FB: PropTypes.object,
 };
 
 export default ButtonSubmit;

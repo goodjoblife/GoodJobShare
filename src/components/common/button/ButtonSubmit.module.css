@@ -4,7 +4,10 @@
 .container {
   background: #000000;
   color: #FFFFFF;
-  padding: 14px 68px;
+  padding: 14px 0;
+  // height: 50px;
+  width: 200px;
+  text-align: center;
 
   &:hover {
     background: main-yellow;

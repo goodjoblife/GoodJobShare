@@ -1,38 +1,114 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import { browserHistory } from 'react-router';
 
 import ButtonSubmit from 'common/button/ButtonSubmit';
 import Checkbox from 'common/form/Checkbox';
+import Modal from 'common/Modal';
+
+import SuccessFeedback from './SuccessFeedback';
+import FailFeedback from './FailFeedback';
+import FacebookFail from './FacebookFail';
+
+const getSuccessFeedback = id => (
+  <SuccessFeedback
+    buttonClick={() => (
+      browserHistory.push(`/experiences/${id}`)
+    )}
+  />
+);
+
+const getFailFeedback = buttonClick => (
+  <FailFeedback
+    buttonClick={buttonClick}
+  />
+);
+
+const getFacebookFail = buttonClick => (
+  <FacebookFail
+    buttonClick={buttonClick}
+  />
+);
 
 class SubmitArea extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.handleAgree = this.handleAgree.bind(this);
+    this.handleIsOpen = this.handleIsOpen.bind(this);
+    this.handleFeedback = this.handleFeedback.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.login = this.login.bind(this);
+    this.onFacebookFail = this.onFacebookFail.bind(this);
 
     this.state = {
       agree: false,
+      isOpen: false,
+      feedback: null,
     };
   }
 
+
+  onSubmit() {
+    return this.props.onSubmit()
+      .then(r => r.experience._id)
+      .then(id => {
+        this.handleIsOpen(true);
+        return this.handleFeedback(getSuccessFeedback(id));
+      })
+      .catch(() => {
+        this.handleIsOpen(true);
+        return this.handleFeedback(getFailFeedback(
+          () => this.handleIsOpen(false)
+        ));
+      });
+  }
+
+  onFacebookFail() {
+    this.handleIsOpen(true);
+    return this.handleFeedback(getFacebookFail(this.login));
+  }
+
+  login() {
+    return this.props.login(this.props.FB)
+      .then(status => {
+        if (status === 'connected') {
+          return this.onSubmit();
+        }
+
+        throw Error('can not login');
+      })
+      .catch(this.onFacebookFail);
+  }
   handleAgree(agree) {
     this.setState(() => ({
       agree,
     }));
   }
 
+  handleFeedback(feedback) {
+    this.setState(() => ({
+      feedback,
+    }));
+  }
+
+  handleIsOpen(isOpen) {
+    this.setState(() => ({
+      isOpen,
+    }));
+  }
+
   render() {
     const {
-      onSubmit,
       submitable,
       auth,
-      login,
-      FB,
     } = this.props;
 
     const {
       agree,
+      isOpen,
+      feedback,
     } = this.state;
 
     return (
@@ -40,7 +116,6 @@ class SubmitArea extends React.PureComponent {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
           marginTop: '57px',
         }}
       >
@@ -71,13 +146,19 @@ class SubmitArea extends React.PureComponent {
         <div>
           <ButtonSubmit
             text="送出資料"
-            onSubmit={onSubmit}
+            onSubmit={this.onSubmit}
             disabled={!this.state.agree || !submitable}
             auth={auth}
-            login={login}
-            FB={FB}
+            login={this.login}
           />
         </div>
+        <Modal
+          isOpen={isOpen}
+          close={() => this.handleIsOpen(!isOpen)}
+          hasClose={false}
+        >
+          {feedback}
+        </Modal>
       </div>
     );
   }
