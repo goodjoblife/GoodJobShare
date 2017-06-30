@@ -223,7 +223,7 @@ describe('singleQa and qas tests', () => {
 
   test('singleInterviewQa content tests', () => {
     expect(singleInterviewQa(sectionTooLongAnswer)).toBe(false);
-    expect(singleInterviewQa(sectionEmptyAnswer)).toBe(false);
+    expect(singleInterviewQa(sectionEmptyAnswer)).toBe(true);
   });
 
   test('interviewQas pass', () => {
@@ -235,7 +235,6 @@ describe('singleQa and qas tests', () => {
     expect(interviewQas([normalQa, sectionTooLongQuestion])).toBe(false);
     expect(interviewQas([normalQa, sectionEmptyQuestion])).toBe(false);
     expect(interviewQas([normalQa, sectionTooLongAnswer])).toBe(false);
-    expect(interviewQas([normalQa, sectionEmptyAnswer])).toBe(false);
   });
 });
 
