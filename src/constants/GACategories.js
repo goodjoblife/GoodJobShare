@@ -1,0 +1,9 @@
+export const HEADER = 'HEADER';
+export const FOOTER = 'FOOTER';
+export const LANDING_PAGE = 'LANDING_PAGE';
+export const LABOR_RIGHTS = 'LABOR_RIGHTS';
+export const SHARE = 'SHARE';
+export const SHARE_INTERVIEW = 'SHARE_INTERVIEW';
+export const SHARE_WORK = 'SHARE_WORK';
+export const EXPERIENCE_SEARCH = 'EXPERIENCE_SEARCH';
+export const EXPERIENCE_PAGE = 'EXPERIENCE_PAGE';
