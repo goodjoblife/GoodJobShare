@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router';
+import ReactGA from 'react-ga';
 import cn from 'classnames';
 import { Wrapper } from 'common/base';
 import i from 'common/icons';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
+import HEADER from '../../../constants/GACategories';
 
 class Header extends React.Component {
   constructor(props) {
@@ -66,7 +68,17 @@ class Header extends React.Component {
             toggle={this.toggleNav}
           />
           <div className={styles.logo}>
-            <Link to="/" title="goodjob 工時薪資透明化運動" onClick={this.closeNav}>
+            <Link
+              to="/"
+              title="goodjob 工時薪資透明化運動"
+              onClick={() => {
+                ReactGA.event({
+                  category: HEADER,
+                  action: 'click-logo',
+                });
+                this.closeNav();
+              }}
+            >
               <i.GjLogo />
             </Link>
           </div>
@@ -76,7 +88,16 @@ class Header extends React.Component {
           >
             <SiteMenu />
             <div className={styles.buttonsArea}>
-              <Link to="/share" className={styles.leaveDataBtn}>
+              <Link
+                to="/share"
+                className={styles.leaveDataBtn}
+                onClick={() => {
+                  ReactGA.event({
+                    category: HEADER,
+                    action: 'click-to-share-button',
+                  });
+                }}
+              >
                 留下資料<i.ArrowGo />
               </Link>
               {
