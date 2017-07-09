@@ -25,37 +25,37 @@ const link3 = [
 
 const Footer = () => (
   <footer className={styles.wrapper}>
-    <Wrapper size="l">
-      <section className={styles.header}>
+    <section className={styles.header}>
+      <Wrapper size="l" className={styles.inner}>
         <i.GjLogo className={styles.logo} />
-        <h1>透明資訊求職平台</h1>
+        <h1 className={styles.heading}>透明資訊求職平台</h1>
         <span
           className={cn('fb-like', styles.fbLike)}
           data-href="https://www.facebook.com/goodjob.life/"
           data-layout="button_count" data-action="like" data-size="small"
           data-show-faces="true" data-share="false"
         />
+      </Wrapper>
+    </section>
+    <Wrapper size="l" tag="section" className={styles.body}>
+      <section className={styles.links}>
+        <LinkItem
+          title="求職者工具"
+          items={link1}
+        />
+        <LinkItem
+          title="常見問題"
+          items={link2}
+        />
+        <LinkItem
+          title="Goodjob"
+          items={link3}
+        />
       </section>
-      <div className={styles.body}>
-        <section className={styles.links}>
-          <LinkItem
-            title="求職者工具"
-            items={link1}
-          />
-          <LinkItem
-            title="常見問題"
-            items={link2}
-          />
-          <LinkItem
-            title="Goodjob"
-            items={link3}
-          />
-        </section>
-        <section className={styles.medias}>
-          <h4 className={styles.heading}>\ 感謝各大媒體採訪報導 /</h4>
-          <Link to="/about#media"><img src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/medias.jpg" alt="cheers yahoo 蘋果日報 數位時代" /></Link>
-        </section>
-      </div>
+      <section className={styles.medias}>
+        <h4 className={styles.heading}>\ 感謝各大媒體採訪報導 /</h4>
+        <Link to="/about"><img src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/medias.jpg" alt="cheers yahoo 蘋果日報 數位時代" /></Link>
+      </section>
     </Wrapper>
     <div className={styles.footer}>
       <Wrapper size="l" className={styles.inner}>

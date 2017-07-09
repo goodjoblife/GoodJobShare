@@ -1,13 +1,23 @@
 @value main-yellow from "common/variables.module.css";
 
 .linkItem {
-  width: 160px;
+  flex-basis: 160px;
+
+  @media (max-width: 850px) {
+    flex-basis: 33%;
+  }
+
+  @media (max-width: 550px) {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 50%;
+  }
 }
 
 .heading {
   margin-bottom: 24px;
   font-size: 1.1em;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
 }
 
 .link {

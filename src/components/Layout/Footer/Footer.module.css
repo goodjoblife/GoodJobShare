@@ -2,16 +2,34 @@
 
 .wrapper {
   background-color: main-black;
-  padding: 12px 0;
 }
 
 .header {
-  color: #fff;
-  font-size: 20px;
-  letter-spacing: 1px;
   margin-bottom: 24px;
-  display: flex;
-  align-items: center;
+  padding-top: 24px;
+
+  @media (max-width: 550px) {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #4f4f4f;
+    padding-bottom: 16px;
+  }
+
+  .heading {
+    display: inline-flex;
+    color: #fff;
+    font-size: 20px;
+    letter-spacing: 1px;
+
+    @media (max-width: 550px) {
+      font-size: 18px;
+      margin-right: 16px;
+    }
+  }
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .logo {
@@ -22,12 +40,18 @@
 
 .fbLike {
   margin-left: 24px;
+
+  @media (max-width: 550px) {
+    margin-left: 0;
+    margin-top: 8px;
+  }
 }
 
 .body {
   display: flex;
   justify-content: space-between;
   color: #eaeaea;
+  padding-bottom: 16px;
 }
 
 .footer {
@@ -39,6 +63,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: 550px) {
+      flex-direction: column;
+      padding-bottom: 12px;
+    }
   }
 }
 
@@ -50,6 +79,7 @@
 .links {
   flex: 1 1 auto;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .medias {
@@ -61,5 +91,9 @@
     letter-spacing: 1px;
     text-align: center;
     margin-bottom: 8px;
+  }
+
+  @media (max-width: 850px) {
+    display: none;
   }
 }
