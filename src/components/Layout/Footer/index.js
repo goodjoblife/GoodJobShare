@@ -12,10 +12,10 @@ const link1 = [
   { to: '/labor-rights', text: '勞動小教室' },
 ];
 const link2 = [
-  { to: '/', text: '發文留言規定' },
+  { to: '/guidelines', text: '發文留言規定' },
   { to: '/faq', text: '常見問題' },
   { to: '/privacy-policy', text: '隱私權政策' },
-  { to: '/user-term', text: '使用者條款' },
+  { to: '/user-terms', text: '使用者條款' },
 ];
 const link3 = [
   { to: '/about', text: '關於我們' },

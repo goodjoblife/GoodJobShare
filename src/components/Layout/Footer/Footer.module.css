@@ -7,6 +7,7 @@
 .header {
   margin-bottom: 24px;
   padding-top: 24px;
+  justify-content: center;
 
   @media (max-width: 550px) {
     margin-bottom: 20px;
@@ -14,8 +15,13 @@
     padding-bottom: 16px;
   }
 
+  .inner {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
   .heading {
-    display: inline-flex;
     color: #fff;
     font-size: 20px;
     letter-spacing: 1px;
@@ -57,6 +63,7 @@
 .footer {
   border-top: 1px solid #4f4f4f;
   padding-top: 12px;
+  padding-bottom: 12px;
   color: #bbb;
 
   .inner {
@@ -65,8 +72,7 @@
     justify-content: center;
 
     @media (max-width: 550px) {
-      flex-direction: column;
-      padding-bottom: 12px;
+      flex-direction: column;      
     }
   }
 }

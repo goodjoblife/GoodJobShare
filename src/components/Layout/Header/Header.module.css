@@ -8,7 +8,7 @@
   right: 0;
   background-color: main-black;
   height: NAV_HEIGHT;
-  box-shadow: 0 0 8px rgba(0,0,0,.12);
+  box-shadow: 0 0 8px rgba(0,0,0,.11);
   font-weight: 300;
 
   @media (max-width: 850px) {
