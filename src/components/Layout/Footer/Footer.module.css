@@ -1,91 +1,65 @@
-@value main-yellow from "common/variables.module.css";
+@value main-yellow, main-black from "common/variables.module.css";
 
-.footer {
-  background-color: main-yellow;
+.wrapper {
+  background-color: main-black;
   padding: 12px 0;
 }
 
-.inner {
+.header {
+  color: #fff;
+  font-size: 20px;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
   display: flex;
-  @media (max-width: 850px) {
-    flex-direction: column;
-  }
-}
-
-.col1 {
-  flex: 1 1 auto;
-  display: flex;
-  justify-content: center;
-  align-items: space-between;
-  @media (max-width: 850px) {
-    flex: 1 1 auto;
-  }
-  @media (max-width: 550px) {
-    flex-direction: column;
-  }
-}
-
-.col2 {
-  flex: 0 0 140px;
-  
-  @media (max-width: 850px) {
-    flex: 1 1 auto;
-  }
+  align-items: center;
 }
 
 .logo {
-  flex: 0 0 140px;
-  svg {
-    width: 120px;
-  }
-  @media (max-width: 550px) {
-    flex: 1 1 auto;
+  fill: #fff;
+  width: 120px;
+  margin-right: 16px;
+}
+
+.fbLike {
+  margin-left: 24px;
+}
+
+.body {
+  display: flex;
+  justify-content: space-between;
+  color: #eaeaea;
+}
+
+.footer {
+  border-top: 1px solid #4f4f4f;
+  padding-top: 12px;
+  color: #bbb;
+
+  .inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
 .g0v {
-  flex: 0 0 120px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-
-  @media (max-width: 550px) {
-    flex: 1 1 auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-
-  img {
-    width: 120px;
-  }
+  width: 170px;
+  margin-left: 16px;
 }
 
-.content {
+.links {
   flex: 1 1 auto;
-  font-size: .85em;
-  line-height: 1.4em;
-
-  @media (max-width: 550px) {
-    flex: 1 1 auto;
-  }
+  display: flex;
 }
 
-.shareButtons {
-  text-align: right;
-  @media (max-width: 850px) {
-    text-align: left;
-  }
-}
+.medias {
+  flex: 0 0 260px;
 
-.shareItem {
-  display: inline-block;
-  margin: 0 15px;
-  @media (max-width: 850px) {
-    margin: 0 10px 0 0;
-  }
-  svg {
-    width: 34px;
-    height: 34px;
-    margin-top: 10px;
+  .heading {
+    color: main-yellow;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-bottom: 8px;
   }
 }

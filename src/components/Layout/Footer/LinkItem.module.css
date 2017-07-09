@@ -1,0 +1,26 @@
+@value main-yellow from "common/variables.module.css";
+
+.linkItem {
+  width: 160px;
+}
+
+.heading {
+  margin-bottom: 24px;
+  font-size: 1.1em;
+  letter-spacing: 1px;
+}
+
+.link {
+  display: block;
+  font-size: 0.9375em;
+  font-weight: 300;
+  margin-bottom: 16px;
+
+  @media (min-width: 851px) {
+    transition-duration: .3s;
+    transition-property: color;
+    &:hover {
+      color: main-yellow;
+    }
+  }
+}
