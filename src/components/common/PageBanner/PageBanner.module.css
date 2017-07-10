@@ -1,0 +1,25 @@
+@value gray-light from "common/variables.module.css";
+
+.pageBanner {
+  background-color: #fff;
+	border-bottom: 1px solid gray-light;
+	position: relative;
+}
+
+.grayPattern {
+  background-image: url("https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/pattern-gray.svg");
+  background-repeat: repeat;
+}
+
+.inner {
+  height: 185px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 550px) {
+    height: auto;
+		padding-top: 32px;
+		padding-bottom: 32px;
+  }
+}
