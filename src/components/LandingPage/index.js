@@ -6,20 +6,31 @@ import Helmet from 'react-helmet';
 import { Section, Wrapper, Heading } from 'common/base';
 import ShareExpSection from 'common/ShareExpSection';
 import columnStyle from 'common/Columns.module.css';
+import Columns from 'common/Columns';
 import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
 import { fetchExperiences } from '../../actions/experienceSearch';
+import { fetchMetaListIfNeeded } from '../../actions/laborRightsMenu';
+import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import HomeBanner from './HomeBanner';
 
 class LandingPage extends Component {
   static fetchData({ store: { dispatch } }) {
-    return dispatch(fetchExperiences('sort', ''));
+    return Promise.all([
+      dispatch(fetchExperiences('sort', '')),
+      dispatch(fetchMetaListIfNeeded()),
+    ]);
   }
   static propTypes = {
     fetchExperiences: PropTypes.func.isRequired,
     experienceSearch: ImmutablePropTypes.map.isRequired,
+    fetchMetaListIfNeeded: React.PropTypes.func.isRequired,
+    laborRightsMetaList: ImmutablePropTypes.list.isRequired,
   }
   componentDidMount() {
-    this.props.fetchExperiences('sort', '');
+    Promise.all([
+      this.props.fetchExperiences('sort', ''),
+      this.props.fetchMetaListIfNeeded(),
+    ]);
   }
   render() {
     const expDatas = this.props.experienceSearch.toJS().experiences || [];
@@ -60,6 +71,10 @@ class LandingPage extends Component {
         <Section padding bg="white">
           <Wrapper size="l">
             <Heading size="l" center marginBottom>勞動知識小教室</Heading>
+            <Columns
+              Item={LaborRightsEntry}
+              items={this.props.laborRightsMetaList.toJS()}
+            />
           </Wrapper>
           <Section center Tag="div">
             <Link className={cn('buttonCircleL', 'buttonBlack')} to="/labor-rights" title="勞動知識小教室">
