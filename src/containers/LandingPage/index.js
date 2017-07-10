@@ -7,7 +7,7 @@ import * as LaborRightsMenuActions from '../../actions/laborRightsMenu';
 
 const mapStateToProps = state => ({
   experienceSearch: state.experienceSearch,
-  laborRightsMetaList: state.laborRightsMenu.get('metaList'),
+  laborRightsMetaList: state.laborRightsMenu.get('metaList').slice(-3),
 });
 
 const mapDispatchToProps = dispatch =>
