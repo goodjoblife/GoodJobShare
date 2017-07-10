@@ -13,7 +13,7 @@ const CallToAction = () => (
         <Heading size="m" className={styles.heading} Tag="h3">
           覺得很有用嗎？也留下你的資訊吧！
         </Heading>
-        <a href="/time-and-salary" className={cn('buttonCircleM', 'buttonBlack')}>留下資料</a>
+        <a href="/share/time-and-salary" className={cn('buttonCircleM', 'buttonBlack')}>留下資料</a>
       </div>
     </Wrapper>
   </Section>
