@@ -5,7 +5,6 @@ import cn from 'classnames';
 import Helmet from 'react-helmet';
 import { Section, Wrapper, Heading } from 'common/base';
 import ShareExpSection from 'common/ShareExpSection';
-import columnStyle from 'common/Columns.module.css';
 import Columns from 'common/Columns';
 import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
 import { fetchExperiences } from '../../actions/experienceSearch';
@@ -52,15 +51,10 @@ class LandingPage extends Component {
         <Section padding>
           <Wrapper size="l">
             <Heading size="l" center marginBottom>熱門分享</Heading>
-            <div className={columnStyle.columns}>
-              {
-                expDatas.slice(0, 3).map(data => (
-                  <div className={columnStyle.column} key={data._id}>
-                    <ExperienceBlock data={data} size="m" />
-                  </div>
-                ))
-              }
-            </div>
+            <Columns
+              Item={ExperienceBlock}
+              items={expDatas.slice(0, 3).map(data => ({ data, size: 'm' }))}
+            />
             <Section center Tag="div">
               <Link className={cn('buttonCircleL', 'buttonBlack')} to="/experiences/search" title="面試工作經驗">
                 看更多
