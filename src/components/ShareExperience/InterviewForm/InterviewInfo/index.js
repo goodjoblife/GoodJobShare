@@ -6,6 +6,7 @@ import styles from '../../ShareExperience.module.css';
 import {
   companyQuery as companyQueryValidator,
   jobTitle as jobTitleValidator,
+  region as regionValidator,
 } from '../formCheck';
 
 import IconHeading from '../../common/IconHeading';
@@ -67,6 +68,7 @@ class InterviewInfo extends React.PureComponent {
             <Region
               region={region}
               onChange={handleState('region')}
+              validator={regionValidator}
             />
           </div>
           <div

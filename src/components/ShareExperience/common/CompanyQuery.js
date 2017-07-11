@@ -55,7 +55,6 @@ class CompanyQuery extends React.Component {
   render() {
     const { autocompleteItems } = this.state;
     const { companyQuery, onChange, onCompanyId, validator } = this.props;
-    console.log(validator(companyQuery));
     return (
       <div>
         <InputTitle
