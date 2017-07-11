@@ -2,13 +2,9 @@ import React, { PropTypes } from 'react';
 
 import TextInput from 'common/form/TextInput';
 
-import {
-  lteLength,
-} from 'utils/dataCheckUtil';
-
 import InputTitle from './InputTitle';
 
-const JobTitle = ({ inputTitle, jobTitle, onChange }) => (
+const JobTitle = ({ inputTitle, jobTitle, onChange, validator }) => (
   <div>
     <InputTitle
       text={inputTitle}
@@ -18,8 +14,8 @@ const JobTitle = ({ inputTitle, jobTitle, onChange }) => (
       placeholder="硬體工程師"
       value={jobTitle}
       onChange={e => onChange(e.target.value)}
-      isWarning={!lteLength(10)(jobTitle)}
-      warningWording="請輸入10個字以內"
+      isWarning={!validator(jobTitle)}
+      warningWording="需填寫職稱"
     />
   </div>
 );
@@ -28,6 +24,11 @@ JobTitle.propTypes = {
   inputTitle: PropTypes.string,
   jobTitle: PropTypes.string,
   onChange: PropTypes.func,
+  validator: PropTypes.func,
+};
+
+JobTitle.defaultProps = {
+  validator: () => {},
 };
 
 export default JobTitle;

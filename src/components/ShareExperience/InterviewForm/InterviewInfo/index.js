@@ -3,6 +3,11 @@ import i from 'common/icons';
 
 import styles from '../../ShareExperience.module.css';
 
+import {
+  companyQuery as companyQueryValidator,
+  jobTitle as jobTitleValidator,
+} from '../formCheck';
+
 import IconHeading from '../../common/IconHeading';
 import CompanyQuery from '../../common/CompanyQuery';
 import Region from '../../common/Region';
@@ -51,6 +56,7 @@ class InterviewInfo extends React.PureComponent {
                 handleState('title')(`${v} 面試經驗分享`);
               }}
               onCompanyId={handleState('companyId')}
+              validator={companyQueryValidator}
             />
           </div>
           <div
@@ -72,6 +78,7 @@ class InterviewInfo extends React.PureComponent {
               inputTitle="應徵職稱"
               jobTitle={jobTitle}
               onChange={handleState('jobTitle')}
+              validator={jobTitleValidator}
             />
           </div>
           <div
