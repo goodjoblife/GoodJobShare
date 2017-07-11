@@ -13,6 +13,7 @@ const SectionEle = ({
   isSubtitleEditable,
   editSection,
   removeSection,
+  placeholder,
 }) => (
   <div
     className={styles.container}
@@ -48,7 +49,7 @@ const SectionEle = ({
       useCacheForDOMMeasurements
       value={content}
       onChange={e => editSection('content')(e.target.value)}
-      placeholder="請輸入內文"
+      placeholder={placeholder || '請輸入內文'}
       className={styles.textarea}
       style={{
         resize: 'none',
@@ -65,6 +66,7 @@ const SectionEle = ({
 
 SectionEle.propTypes = {
   subtitle: PropTypes.string,
+  placeholder: PropTypes.string,
   content: PropTypes.string,
   isSubtitleEditable: PropTypes.bool,
   editSection: PropTypes.func,

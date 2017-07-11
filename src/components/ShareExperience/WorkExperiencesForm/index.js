@@ -28,10 +28,11 @@ import styles from './WorkExperiencesForm.module.css';
 import helmetData from '../../../constants/helmetData';
 import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 
-const createSection = id => subtitle => {
+const createSection = id => (subtitle, placeholder = '') => {
   const section = {
     id,
     subtitle,
+    placeholder,
     content: '',
     isSubtitleEditable: false,
   };
@@ -40,6 +41,7 @@ const createSection = id => subtitle => {
       ...section,
       subtitle: '',
       isSubtitleEditable: true,
+      placeholder,
     };
   }
   return section;
@@ -138,12 +140,12 @@ class WorkExperiencesForm extends React.Component {
   }
 
   appendBlock(blockKey) {
-    return subtitle => {
+    return (subtitle, placeholder = '') => {
       const id = idCounter();
       return this.setState(state => ({
         [blockKey]: {
           ...state[blockKey],
-          [id]: createBlock.sections(id)(subtitle),
+          [id]: createBlock.sections(id)(subtitle, placeholder),
         },
       }));
     };

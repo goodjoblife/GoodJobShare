@@ -152,6 +152,7 @@ InterviewExperience.propTypes = {
   sections: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     subtitle: PropTypes.string,
+    placeholder: PropTypes.string,
     content: PropTypes.string,
   })),
   appendSection: PropTypes.func,

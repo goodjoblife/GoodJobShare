@@ -124,6 +124,7 @@ export const interviewSectionSubtitleOptions = [
   {
     label: '自訂段落',
     value: '自訂段落',
+    placeholder: 'test',
   },
   {
     label: '面試方式',
@@ -147,6 +148,7 @@ export const workExSectionSubtitleOptions = [
   {
     label: '自訂段落',
     value: '自訂段落',
+    placeholder: 'test',
   },
   {
     label: '實際工作內容',

@@ -68,7 +68,7 @@ class ButtonAdd extends React.PureComponent {
                     custimized={custimizedValues.includes(ele.value)}
                     disabled={disabledValues.includes(ele.value)}
                     onClick={() => {
-                      appendBlock(ele.value);
+                      appendBlock(ele.value, ele.placeholder);
                       this.handleStage();
                     }}
                   />
