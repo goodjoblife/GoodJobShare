@@ -8,7 +8,7 @@ const ShareExpSection = ({ heading }) => (
     <Wrapper size="l">
       <Heading size="l" center className={styles.heading}>{heading}</Heading>
       <div className={styles.container}>
-        <a href="/time-and-salary/share" className={styles.item}>
+        <a href="/share/time-and-salary" className={styles.item}>
           <img src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/share-1.png" alt="留下工時或薪資" className={styles.image} />
           <P size="l" bold className={styles.button}>留下工時或薪資</P>
         </a>

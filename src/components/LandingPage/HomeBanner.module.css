@@ -45,7 +45,7 @@
   font-size: 2.75em;
   letter-spacing: 2px;
   margin-bottom: 20px;
-  font-weight: 300;
+  font-weight: 400;
 
   @media (max-width: 850px) {
     font-size: 2.3em;
@@ -53,5 +53,9 @@
 }
 
 .subheading {
+  font-size: 1.25em;
+  font-weight: 300;
+  line-height: 1.4em;
+  letter-spacing: 1px;
   margin-bottom: 24px;
 }

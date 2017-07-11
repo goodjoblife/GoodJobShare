@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router';
-import { Wrapper, Heading } from 'common/base';
+import { Wrapper } from 'common/base';
 import styles from './HomeBanner.module.css';
 
 const HomeBanner = () => (
@@ -12,9 +12,9 @@ const HomeBanner = () => (
       </div>
       <div className={styles.content}>
         <h1 className={styles.heading}>求職市場透明化</h1>
-        <Heading size="sm" light className={styles.subheading}>
+        <h2 light className={styles.subheading}>
           分享你的真實工時、薪資資訊，讓我們一起改善工作資訊不透明的現況
-        </Heading>
+        </h2>
         <Link to="/share" className={cn('buttonCircleM', 'buttonWhiteLine')}>立即參與</Link>
       </div>
     </Wrapper>

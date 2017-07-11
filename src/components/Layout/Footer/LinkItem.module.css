@@ -1,0 +1,36 @@
+@value main-yellow from "common/variables.module.css";
+
+.linkItem {
+  flex-basis: 160px;
+
+  @media (max-width: 850px) {
+    flex-basis: 33%;
+  }
+
+  @media (max-width: 550px) {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 50%;
+  }
+}
+
+.heading {
+  margin-bottom: 24px;
+  font-size: 1.1em;
+  letter-spacing: 2px;
+}
+
+.link {
+  display: block;
+  font-size: 0.9375em;
+  font-weight: 300;
+  margin-bottom: 16px;
+
+  @media (min-width: 851px) {
+    transition-duration: .3s;
+    transition-property: color;
+    &:hover {
+      color: main-yellow;
+    }
+  }
+}
