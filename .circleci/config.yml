@@ -41,12 +41,30 @@ jobs:
                 command: docker-compose -f .circleci/docker-compose-stage.yml build
             - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
             - run: docker-compose -f .circleci/docker-compose-stage.yml push
+    deploy-stage:
+        working_directory: ~/app
+        docker:
+            - image: buildpack-deps
+        steps:
+            - run:
+                name: Trigger Deploy
+                command: |
+                    curl --user ${CIRCLE_API_TOKEN_FOR_DEPLOY}: \
+                        --data build_parameters[CIRCLE_JOB]=build \
+                        https://circleci.com/api/v1.1/project/github/mark86092/goodjob-deploy-ci/tree/www-stage
 workflows:
     version: 2
     build_and_test:
         jobs:
             - build
             - build_stage_docker:
+                filters:
+                    branches:
+                        only: master
+            - deploy-stage:
+                requires:
+                    - build
+                    - build_stage_docker
                 filters:
                     branches:
                         only: master
