@@ -13,6 +13,7 @@ import InterviewSensitiveQuestions from './InterviewSensitiveQuestions';
 
 import {
   title as titleValidator,
+  sections as sectionsValidator,
 } from '../formCheck';
 
 import {
@@ -66,6 +67,7 @@ class InterviewExperience extends Component {
               sections={sections}
               removeSection={removeSection}
               editSection={editSection}
+              validator={sectionsValidator}
             />
             <div
               style={{
