@@ -12,6 +12,10 @@ import InterviewQas from './InterviewQas';
 import InterviewSensitiveQuestions from './InterviewSensitiveQuestions';
 
 import {
+  title as titleValidator,
+} from '../formCheck';
+
+import {
   interviewSectionSubtitleOptions,
 } from '../../common/optionMap';
 
@@ -49,6 +53,7 @@ class InterviewExperience extends Component {
               title={title}
               onChange={handleState('title')}
               placeholder="ＯＯ 股份有限公司面試經驗分享"
+              validator={titleValidator}
             />
           </div>
           <div
