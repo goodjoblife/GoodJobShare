@@ -7,6 +7,8 @@ import {
   companyQuery as companyQueryValidator,
   jobTitle as jobTitleValidator,
   region as regionValidator,
+  interviewTimeYear as interviewTimeYearValidator,
+  interviewTimeMonth as interviewTimeMonthValidator,
 } from '../formCheck';
 
 import IconHeading from '../../common/IconHeading';
@@ -113,6 +115,8 @@ class InterviewInfo extends React.PureComponent {
               interviewTimeMonth={interviewTimeMonth}
               onInterviewTimeYear={handleState('interviewTimeYear')}
               onInterviewTimeMonth={handleState('interviewTimeMonth')}
+              interviewTimeYearValidator={interviewTimeYearValidator}
+              interviewTimeMonthValidator={interviewTimeMonthValidator}
             />
           </div>
           <div
