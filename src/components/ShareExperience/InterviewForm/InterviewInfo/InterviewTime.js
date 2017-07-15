@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import cn from 'classnames';
 
 import Select from 'common/form/Select';
 import InputTitle from '../../common/InputTitle';
@@ -97,12 +98,12 @@ const InterviewTime = (
       {
         isWarning ?
           <p
-            className={styles.warning__wording}
+            className={cn(styles.warning__wording, 'pS')}
             style={{
               marginTop: '8px',
             }}
           >
-            需輸入面試時間
+            需填寫面試時間
             </p>
           : null
       }

@@ -10,6 +10,7 @@ import {
   interviewTimeYear as interviewTimeYearValidator,
   interviewTimeMonth as interviewTimeMonthValidator,
   interviewResult as interviewResultValidator,
+  overallRating as overallRatingValidator,
 } from '../formCheck';
 
 import IconHeading from '../../common/IconHeading';
@@ -147,6 +148,7 @@ class InterviewInfo extends React.PureComponent {
             <OverallRating
               overallRating={overallRating}
               onChange={handleState('overallRating')}
+              validator={overallRatingValidator}
             />
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import cn from 'classnames';
 
 import ButtonGroup from 'common/button/ButtonGroup';
 import TextInput from 'common/form/TextInput';
@@ -67,12 +68,12 @@ const InterviewResult = ({ interviewResult, onChange, validator }) => {
       {
         isWarning ?
           <p
-            className={styles.warning__wording}
+            className={cn(styles.warning__wording, 'pS')}
             style={{
               marginTop: '8px',
             }}
           >
-            需輸入面試結果
+            需填寫面試結果
           </p>
           : null
       }
