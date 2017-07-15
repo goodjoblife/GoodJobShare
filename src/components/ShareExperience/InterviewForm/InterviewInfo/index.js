@@ -9,6 +9,7 @@ import {
   region as regionValidator,
   interviewTimeYear as interviewTimeYearValidator,
   interviewTimeMonth as interviewTimeMonthValidator,
+  interviewResult as interviewResultValidator,
 } from '../formCheck';
 
 import IconHeading from '../../common/IconHeading';
@@ -127,6 +128,7 @@ class InterviewInfo extends React.PureComponent {
             <InterviewResult
               interviewResult={interviewResult}
               onChange={handleState('interviewResult')}
+              validator={interviewResultValidator}
             />
           </div>
           <div
