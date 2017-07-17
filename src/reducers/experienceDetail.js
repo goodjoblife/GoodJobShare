@@ -45,6 +45,8 @@ const experienceDetail = createReducer(preloadedState, {
       replyStatus: action.replyStatus,
       replyError: action.replyError,
       replies: fromJS(action.replies),
+      tos: false,
+      comment: '',
     }),
 });
 
