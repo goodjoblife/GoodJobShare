@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router';
-import styles from './LectureEntry.module.css';
+import styles from './LaborRightsEntry.module.css';
 
 const LaborRightsEntry = ({ id, title, coverUrl }) => (
   <Link to={`/labor-rights/${id}`} className={styles.wrapper}>
