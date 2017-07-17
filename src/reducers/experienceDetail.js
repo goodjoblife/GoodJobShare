@@ -23,7 +23,11 @@ const preloadedState = fromJS({
 
 const experienceDetail = createReducer(preloadedState, {
   [SET_EXPERIENCE]: (state, action) =>
-    state.update('experience', () => fromJS(action.experience)),
+    state.merge({
+      experienceStatus: action.experienceStatus,
+      experienceError: action.experienceError,
+      experience: fromJS(action.experience),
+    }),
 
   [SET_EXPERIENCE_STATUS]: (state, action) =>
     state.update('experienceStatus', () => action.status),
