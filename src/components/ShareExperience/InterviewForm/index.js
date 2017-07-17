@@ -93,10 +93,23 @@ class InterviewForm extends React.Component {
     this.appendBlock = this.appendBlock.bind(this);
     this.removeBlock = this.removeBlock.bind(this);
     this.editBlock = this.editBlock.bind(this);
+    this.onSumbit = this.onSumbit.bind(this);
 
     this.state = {
       ...defaultForm,
+      submitted: false,
     };
+  }
+
+  onSumbit() {
+    const valid = interviewFormCheck(getInterviewForm(this.state));
+
+    if (valid) {
+      return postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
+    }
+    this.handleState('submitted')(true);
+
+    return null;
   }
 
   handleState(key) {
@@ -165,6 +178,7 @@ class InterviewForm extends React.Component {
           salaryType={this.state.salaryType}
           salaryAmount={this.state.salaryAmount}
           overallRating={this.state.overallRating}
+          submitted={this.state.submitted}
         />
         <InterviewExperience
           handleState={this.handleState}
@@ -178,10 +192,10 @@ class InterviewForm extends React.Component {
           removeQa={this.removeBlock('interviewQas')}
           editQa={this.editBlock('interviewQas')}
           interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
+          submitted={this.state.submitted}
         />
         <SubmitArea
-          onSubmit={() => postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)))}
-          submitable={interviewFormCheck(getInterviewForm(this.state))}
+          onSubmit={this.onSumbit}
         />
       </div>
     );

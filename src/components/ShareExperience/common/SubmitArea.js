@@ -51,18 +51,23 @@ class SubmitArea extends React.PureComponent {
 
 
   onSubmit() {
-    return this.props.onSubmit()
-      .then(r => r.experience._id)
-      .then(id => {
-        this.handleIsOpen(true);
-        return this.handleFeedback(getSuccessFeedback(id));
-      })
-      .catch(() => {
-        this.handleIsOpen(true);
-        return this.handleFeedback(getFailFeedback(
-          () => this.handleIsOpen(false)
-        ));
-      });
+    const p = this.props.onSubmit();
+    if (p) {
+      return p
+        .then(r => r.experience._id)
+        .then(id => {
+          this.handleIsOpen(true);
+          return this.handleFeedback(getSuccessFeedback(id));
+        })
+        .catch(() => {
+          this.handleIsOpen(true);
+          return this.handleFeedback(getFailFeedback(
+            () => this.handleIsOpen(false)
+          ));
+        });
+    }
+
+    return Promise.resolve();
   }
 
   onFacebookFail() {
@@ -76,11 +81,11 @@ class SubmitArea extends React.PureComponent {
         if (status === 'connected') {
           return this.onSubmit();
         }
-
         throw Error('can not login');
       })
       .catch(this.onFacebookFail);
   }
+
   handleAgree(agree) {
     this.setState(() => ({
       agree,
@@ -101,7 +106,6 @@ class SubmitArea extends React.PureComponent {
 
   render() {
     const {
-      submitable,
       auth,
     } = this.props;
 
@@ -147,7 +151,7 @@ class SubmitArea extends React.PureComponent {
           <ButtonSubmit
             text="送出資料"
             onSubmit={this.onSubmit}
-            disabled={!this.state.agree || !submitable}
+            disabled={!this.state.agree}
             auth={auth}
             login={this.login}
           />
@@ -166,7 +170,6 @@ class SubmitArea extends React.PureComponent {
 
 SubmitArea.propTypes = {
   onSubmit: PropTypes.func,
-  submitable: PropTypes.bool,
   auth: ImmutablePropTypes.map,
   login: PropTypes.func.isRequired,
   FB: PropTypes.object,
