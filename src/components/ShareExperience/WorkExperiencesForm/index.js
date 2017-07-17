@@ -1,6 +1,7 @@
 import React from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
+import { animateScroll } from 'react-scroll';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -82,10 +83,23 @@ class WorkExperiencesForm extends React.Component {
     this.appendBlock = this.appendBlock.bind(this);
     this.removeBlock = this.removeBlock.bind(this);
     this.editBlock = this.editBlock.bind(this);
+    this.onSumbit = this.onSumbit.bind(this);
 
     this.state = {
       ...defaultForm,
+      submitted: false,
     };
+  }
+
+  onSumbit() {
+    const valid = workExperiencesFormCheck(propsWorkExperiencesForm(this.state));
+
+    if (valid) {
+      return postWorkExperience(workExperiencesToBody(this.state));
+    }
+    this.handleState('submitted')(true);
+    animateScroll.scrollToTop();
+    return null;
   }
 
   handleState(key) {
@@ -148,6 +162,7 @@ class WorkExperiencesForm extends React.Component {
       recommendToOthers,
       title,
       sections,
+      submitted,
     } = this.state;
 
     return (
@@ -172,6 +187,7 @@ class WorkExperiencesForm extends React.Component {
           salaryAmount={salaryAmount}
           weekWorkTime={weekWorkTime}
           recommendToOthers={recommendToOthers}
+          submitted={submitted}
         />
         <WorkExperience
           handleState={this.handleState}
@@ -180,10 +196,10 @@ class WorkExperiencesForm extends React.Component {
           appendSection={this.appendBlock('sections')}
           removeSection={this.removeBlock('sections')}
           editSection={this.editBlock('sections')}
+          submitted={submitted}
         />
         <SubmitArea
-          onSubmit={() => postWorkExperience(workExperiencesToBody(this.state))}
-          submitable={workExperiencesFormCheck(propsWorkExperiencesForm(this.state))}
+          onSubmit={this.onSumbit}
         />
       </div>
     );
