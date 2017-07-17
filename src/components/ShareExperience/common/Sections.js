@@ -34,7 +34,7 @@ const Sections = ({ sections, removeSection, editSection, validator, submitted }
           <p
             className={cn(styles.warning__wording, 'pS')}
           >
-            需完整填寫一則內容（包含標題及內文）
+            需填寫一則內容（包含完整的標題及內文）
           </p>
           : null
       }

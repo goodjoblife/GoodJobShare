@@ -1,6 +1,7 @@
 import React from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
+import { animateScroll } from 'react-scroll';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -108,7 +109,7 @@ class InterviewForm extends React.Component {
       return postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
     }
     this.handleState('submitted')(true);
-
+    animateScroll.scrollToTop();
     return null;
   }
 
@@ -165,6 +166,17 @@ class InterviewForm extends React.Component {
         >
           面試經驗分享
         </h1>
+        {
+          this.state.submitted ?
+            <h2
+              style={{
+                marginTop: '20px',
+              }}
+              className={styles.warning__wording}
+            >
+              oops! 請檢查底下紅框內的內容是否正確
+            </h2> : null
+        }
         <InterviewInfo
           handleState={this.handleState}
           companyQuery={this.state.companyQuery}
