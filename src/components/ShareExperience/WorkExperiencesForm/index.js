@@ -1,5 +1,6 @@
 import React from 'react';
 import R from 'ramda';
+import Helmet from 'react-helmet';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -22,6 +23,8 @@ import {
 } from './formCheck';
 
 import styles from './WorkExperiencesForm.module.css';
+
+import helmetData from '../../../constants/helmetData';
 
 const createSection = id => subtitle => {
   const section = {
@@ -149,6 +152,7 @@ class WorkExperiencesForm extends React.Component {
 
     return (
       <div className={styles.container}>
+        <Helmet {...helmetData.SHARE_WORK} />
         <h1
           className="headingL"
         >
