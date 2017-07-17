@@ -38,10 +38,10 @@ export const setKeyword = e => ({
   keyword: e.target.value,
 });
 
-export const fetchExperiences = (cond, val, page) => (dispatch, getState) => {
+export const fetchExperiences = (cond, val, page, count) => (dispatch, getState) => {
   const data = getState().experienceSearch.toJS();
   const sort = val || data.sort;
-  const limit = 20;
+  const limit = typeof count === 'number' ? count : 20;
   const start = (typeof page === 'number' ? page : 0) * limit;
   let url = `/experiences?start=${start}&limit=${limit}`;
   let objCond;

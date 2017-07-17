@@ -15,7 +15,7 @@ import HomeBanner from './HomeBanner';
 class LandingPage extends Component {
   static fetchData({ store: { dispatch } }) {
     return Promise.all([
-      dispatch(fetchExperiences('sort', '')),
+      dispatch(fetchExperiences('sort', 'popularity', 0, 3)),
       dispatch(fetchMetaListIfNeeded()),
     ]);
   }
@@ -27,21 +27,12 @@ class LandingPage extends Component {
   }
   componentDidMount() {
     Promise.all([
-      this.props.fetchExperiences('sort', ''),
+      this.props.fetchExperiences('sort', 'popularity', 0, 3),
       this.props.fetchMetaListIfNeeded(),
     ]);
   }
   render() {
-    const expDatas = this.props.experienceSearch.toJS().experiences || [];
-    expDatas.sort((a, b) => {
-      if (a.like_count < b.like_count) {
-        return 1;
-      }
-      if (a.like_count > b.like_count) {
-        return -1;
-      }
-      return 0;
-    });
+    const expData = this.props.experienceSearch.toJS().experiences || [];
     return (
       <main>
         <Helmet
@@ -53,7 +44,7 @@ class LandingPage extends Component {
             <Heading size="l" center marginBottom>熱門分享</Heading>
             <Columns
               Item={ExperienceBlock}
-              items={expDatas.slice(0, 3).map(data => ({ data, size: 'm' }))}
+              items={expData.map(data => ({ data, size: 'm' }))}
             />
             <Section center Tag="div">
               <Link className={cn('buttonCircleL', 'buttonBlack')} to="/experiences/search" title="面試工作經驗">
