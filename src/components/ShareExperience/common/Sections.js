@@ -5,8 +5,8 @@ import SectionEle from './SectionEle';
 
 import styles from './Sections.module.css';
 
-const Sections = ({ sections, removeSection, editSection, validator }) => {
-  const isWarning = !validator(sections);
+const Sections = ({ sections, removeSection, editSection, validator, submitted }) => {
+  const isWarning = submitted && !validator(sections);
   return (
     <div
       className={isWarning ? styles.warning : ''}
@@ -52,6 +52,7 @@ Sections.propTypes = {
   removeSection: PropTypes.func,
   editSection: PropTypes.func,
   validator: PropTypes.func,
+  submitted: PropTypes.bool,
 };
 
 export default Sections;

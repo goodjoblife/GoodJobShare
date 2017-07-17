@@ -4,7 +4,7 @@ import TextInput from 'common/form/TextInput';
 
 import InputTitle from './InputTitle';
 
-const JobTitle = ({ inputTitle, jobTitle, onChange, validator }) => (
+const JobTitle = ({ inputTitle, jobTitle, onChange, validator, submitted }) => (
   <div>
     <InputTitle
       text={inputTitle}
@@ -14,7 +14,7 @@ const JobTitle = ({ inputTitle, jobTitle, onChange, validator }) => (
       placeholder="硬體工程師"
       value={jobTitle}
       onChange={e => onChange(e.target.value)}
-      isWarning={!validator(jobTitle)}
+      isWarning={submitted && !validator(jobTitle)}
       warningWording="需填寫職稱"
     />
   </div>
@@ -25,6 +25,7 @@ JobTitle.propTypes = {
   jobTitle: PropTypes.string,
   onChange: PropTypes.func,
   validator: PropTypes.func,
+  submitted: PropTypes.bool,
 };
 
 JobTitle.defaultProps = {

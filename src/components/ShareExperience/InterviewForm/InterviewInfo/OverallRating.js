@@ -15,8 +15,8 @@ const handleRatingDialog = rating => (
   overallRatingDialogMap[rating] || '點擊作評分'
 );
 
-const OverallRating = ({ overallRating, onChange, validator }) => {
-  const isWarning = !validator(overallRating);
+const OverallRating = ({ overallRating, onChange, validator, submitted }) => {
+  const isWarning = submitted && !validator(overallRating);
   return (
     <div>
       <div
@@ -71,6 +71,7 @@ OverallRating.propTypes = {
   overallRating: PropTypes.number,
   onChange: PropTypes.func,
   validator: PropTypes.func,
+  submitted: PropTypes.bool,
 };
 
 export default OverallRating;

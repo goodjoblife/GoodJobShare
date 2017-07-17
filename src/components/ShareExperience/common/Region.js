@@ -9,8 +9,8 @@ import {
   regionOptions,
 } from './optionMap';
 
-const Region = ({ region, onChange, validator }) => {
-  const isWarning = !validator(region);
+const Region = ({ region, onChange, validator, submitted }) => {
+  const isWarning = submitted && !validator(region);
   return (
     <div>
       <InputTitle
@@ -60,6 +60,7 @@ Region.propTypes = {
   ]),
   onChange: PropTypes.func,
   validator: PropTypes.func,
+  submitted: PropTypes.bool,
 };
 
 Region.defaultProps = {

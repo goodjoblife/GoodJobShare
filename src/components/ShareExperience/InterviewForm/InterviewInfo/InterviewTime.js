@@ -24,9 +24,10 @@ const InterviewTime = (
     onInterviewTimeMonth,
     interviewTimeYearValidator,
     interviewTimeMonthValidator,
+    submitted,
   }
 ) => {
-  const isWarning = !(interviewTimeYearValidator(interviewTimeYear)
+  const isWarning = submitted && !(interviewTimeYearValidator(interviewTimeYear)
     && interviewTimeMonthValidator(interviewTimeMonth));
   return (
     <div>
@@ -124,6 +125,7 @@ InterviewTime.propTypes = {
   onInterviewTimeMonth: PropTypes.func,
   interviewTimeYearValidator: PropTypes.func,
   interviewTimeMonthValidator: PropTypes.func,
+  submitted: PropTypes.bool,
 };
 
 export default InterviewTime;

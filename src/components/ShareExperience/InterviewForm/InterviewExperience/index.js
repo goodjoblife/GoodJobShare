@@ -34,6 +34,7 @@ class InterviewExperience extends Component {
       removeQa,
       editQa,
       interviewSensitiveQuestions,
+      submitted,
     } = this.props;
     return (
       <div
@@ -55,6 +56,7 @@ class InterviewExperience extends Component {
               onChange={handleState('title')}
               placeholder="ＯＯ 股份有限公司面試經驗分享"
               validator={titleValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -68,6 +70,7 @@ class InterviewExperience extends Component {
               removeSection={removeSection}
               editSection={editSection}
               validator={sectionsValidator}
+              submitted={submitted}
             />
             <div
               style={{
@@ -156,6 +159,7 @@ InterviewExperience.propTypes = {
   interviewSensitiveQuestions: PropTypes.arrayOf(
     PropTypes.string,
   ),
+  submitted: PropTypes.bool,
 };
 
 export default InterviewExperience;

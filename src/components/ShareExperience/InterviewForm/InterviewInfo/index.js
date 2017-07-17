@@ -39,6 +39,7 @@ class InterviewInfo extends React.PureComponent {
       salaryType,
       salaryAmount,
       overallRating,
+      submitted,
     } = this.props;
 
     return (
@@ -62,6 +63,7 @@ class InterviewInfo extends React.PureComponent {
               }}
               onCompanyId={handleState('companyId')}
               validator={companyQueryValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -73,6 +75,7 @@ class InterviewInfo extends React.PureComponent {
               region={region}
               onChange={handleState('region')}
               validator={regionValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -85,6 +88,7 @@ class InterviewInfo extends React.PureComponent {
               jobTitle={jobTitle}
               onChange={handleState('jobTitle')}
               validator={jobTitleValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -119,6 +123,7 @@ class InterviewInfo extends React.PureComponent {
               onInterviewTimeMonth={handleState('interviewTimeMonth')}
               interviewTimeYearValidator={interviewTimeYearValidator}
               interviewTimeMonthValidator={interviewTimeMonthValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -130,6 +135,7 @@ class InterviewInfo extends React.PureComponent {
               interviewResult={interviewResult}
               onChange={handleState('interviewResult')}
               validator={interviewResultValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -149,6 +155,7 @@ class InterviewInfo extends React.PureComponent {
               overallRating={overallRating}
               onChange={handleState('overallRating')}
               validator={overallRatingValidator}
+              submitted={submitted}
             />
           </div>
         </div>
@@ -194,6 +201,7 @@ InterviewInfo.propTypes = {
     PropTypes.number,
   ]),
   overallRating: PropTypes.number,
+  submitted: PropTypes.bool,
 };
 
 export default InterviewInfo;

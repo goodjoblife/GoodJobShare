@@ -24,10 +24,10 @@ const notOtherValueMap = interviewResultMap.filter(option =>
 const isNotOther = result =>
   notOtherValueMap.includes(result) || result === null;
 
-const InterviewResult = ({ interviewResult, onChange, validator }) => {
+const InterviewResult = ({ interviewResult, onChange, validator, submitted }) => {
   const notOther = isNotOther(interviewResult);
 
-  const isWarning = !validator(interviewResult);
+  const isWarning = submitted && !validator(interviewResult);
   return (
     <div>
       <InputTitle
@@ -88,6 +88,7 @@ InterviewResult.propTypes = {
   ]),
   onChange: PropTypes.func,
   validator: PropTypes.func,
+  submitted: PropTypes.bool,
 };
 
 export default InterviewResult;
