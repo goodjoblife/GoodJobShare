@@ -57,7 +57,6 @@ class LaborRightsSingle extends React.Component {
           meta={[
             { name: 'description', content: seoDescription },
             { property: 'og:url', content: formatCanonicalPath(`/labor-rights/${id}`) },
-            { property: 'og:type', content: 'website' },
             { property: 'og:title', content: formatTitle(seoTitle) },
             { property: 'og:description', content: seoDescription },
             { property: 'og:image', content: formatUrl(coverUrl) },
