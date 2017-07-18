@@ -111,7 +111,7 @@ const helmetData = {
     title: '勞動知識小教室',
     meta: [
       { name: 'description', content: `${siteName}，看見勞工們的需要，自 2016 年底推出【勞動知識小教室】系列懶人包，將複雜的法律資訊轉換成易懂的圖文，讓勞工認識自己的權益，學會保護自己。內容涵蓋勞基法、性別工作平等法、就服法以及工會相關法令等勞工必備的權益資訊。` },
-      { property: 'og:title', content: '搜尋面試及工作經驗' },
+      { property: 'og:title', content: '勞動知識小教室' },
       { property: 'og:url', content: formatCanonicalPath('/labor-rights') },
       { property: 'og:image', content: `${imgHost}/www/og/labor-rights.jpg` },
       { property: 'og:description', content: `${siteName}，看見勞工們的需要，自 2016 年底推出【勞動知識小教室】系列懶人包，將複雜的法律資訊轉換成易懂的圖文，讓勞工認識自己的權益，學會保護自己。內容涵蓋勞基法、性別工作平等法、就服法以及工會相關法令等勞工必備的權益資訊。` },
