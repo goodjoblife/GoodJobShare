@@ -30,7 +30,7 @@ const Faq = () => (
           <li>
             <div className={styles.q}>我填錯了，想要刪除、修改資料怎麼辦？</div>
             <div className={styles.a}>
-              請填寫<a href="https://docs.google.com/forms/d/e/1FAIpQLScM412J7mMsW25nCxfL7UY92qv5_12zHJf_tcIO2XMrihEaIg/viewform?c=0&w=1">本表單</a>，用以確保您是本人，也保障您的權益。填寫完畢後當週的週日，工程師會統一處理，感謝您的耐心等候。
+              請填寫<a href="https://docs.google.com/forms/d/e/1FAIpQLScM412J7mMsW25nCxfL7UY92qv5_12zHJf_tcIO2XMrihEaIg/viewform?c=0&w=1">本表單</a>，填寫完畢後當週的週日，工程師會統一處理，感謝您的耐心等候。
             </div>
           </li>
         </ol>

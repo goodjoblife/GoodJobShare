@@ -1,4 +1,7 @@
+@value border-gray from "common/variables.module.css";
+
 .wrapper {
+  border-bottom: 1px solid border-gray;
   padding-top: 24px;
 
   @media (max-width: 550px) {
@@ -12,8 +15,8 @@
 }
 
 .icon {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   margin-right: 24px;
 
   svg {

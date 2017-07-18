@@ -28,7 +28,7 @@ ShareExpSection.propTypes = {
   heading: PropTypes.string,
 };
 ShareExpSection.defaultProps = {
-  heading: '你要分享何種經驗？',
+  heading: '你要分享何種資訊？',
 };
 
 export default ShareExpSection;

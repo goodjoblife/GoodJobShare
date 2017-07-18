@@ -4,7 +4,7 @@ import Columns from 'common/Columns';
 import FIcon from './f.svg';
 import BarChartIcon from './barChart.svg';
 import HandIcon from './hand.svg';
-import styles from './HomeData.module.css';
+import styles from './Dashboard.module.css';
 
 const Block = ({ Icon, heading, text, smallText }) => (
   <div className={styles.item}>
@@ -43,9 +43,9 @@ const datas = [
   },
 ];
 
-const HomeData = () => (
-  <Section bg="white">
-    <Wrapper size="l" className={styles.wrapper}>
+const Dashboard = () => (
+  <Section bg="white" className={styles.wrapper}>
+    <Wrapper size="l">
       <Columns
         Item={Block}
         items={datas}
@@ -54,4 +54,4 @@ const HomeData = () => (
   </Section>
 );
 
-export default HomeData;
+export default Dashboard;

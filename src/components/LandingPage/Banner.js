@@ -2,9 +2,9 @@ import React from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router';
 import { Wrapper, P } from 'common/base';
-import styles from './HomeBanner.module.css';
+import styles from './Banner.module.css';
 
-const HomeBanner = () => (
+const Banner = () => (
   <section className={styles.banner}>
     <Wrapper size="l">
       <div className={styles.image}>
@@ -22,4 +22,4 @@ const HomeBanner = () => (
   </section>
 );
 
-export default HomeBanner;
+export default Banner;
