@@ -12,6 +12,7 @@ import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
 import WorkingHourBlock from './WorkingHourBlock';
 import { fetchExperiences } from '../../actions/experienceSearch';
+import helmetData from '../../constants/helmetData';
 
 class ExperienceSearch extends Component {
   static fetchData({ store: { dispatch } }) {
@@ -72,7 +73,7 @@ class ExperienceSearch extends Component {
 
     return (
       <Section Tag="main" pageTop paddingBottom>
-        <Helmet title="面試 ‧ 工作經驗" />
+        <Helmet {...helmetData.EXPERIENCE_SEARCH} />
         <Wrapper size="l">
           <div className={styles.container}>
             <aside className={styles.aside}>

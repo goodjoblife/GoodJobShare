@@ -3,12 +3,11 @@ import Helmet from 'react-helmet';
 import { Section, Wrapper } from 'common/base';
 import PageBanner from 'common/PageBanner';
 import editorStyles from 'common/Editor.module.css';
+import helmetData from '../../constants/helmetData';
 
 const Terms = () => (
   <main>
-    <Helmet
-      title="使用者條款"
-    />
+    <Helmet {...helmetData.USER_TERMS} />
     <PageBanner heading="使用者條款" />
     <Section padding>
       <Wrapper size="l" className={editorStyles.editor}>

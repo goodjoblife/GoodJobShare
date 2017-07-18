@@ -12,6 +12,7 @@ import status from '../../constants/status';
 import {
   fetchExperience,
 } from '../../actions/experienceDetail';
+import { formatCanonicalPath } from '../../utils/helmetHelper';
 
 class ExperienceDetail extends Component {
   static propTypes = {
@@ -56,6 +57,42 @@ class ExperienceDetail extends Component {
     this.props.submitComment(data.experience._id);
   }
 
+  renderHelmet = () => {
+    if (this.props.experienceDetail) {
+      const experience = this.props.experienceDetail.toJS().experience;
+      console.log(experience);
+      if ('_id' in experience) {
+        const id = experience._id;
+        const company = experience.company.name;
+        const jobTitle = experience.job_title;
+        const type = experience.type;
+        const sections = experience.sections;
+        const mapping = {
+          interview: '面試經驗分享',
+          work: '工作經驗分享',
+        };
+        const title = `${company} ${jobTitle} ${mapping[type]}`;
+        const description = `${sections[0].subtitle} ${sections[0].content}`;
+        return (
+          <Helmet
+            title={title}
+            meta={[
+              { name: 'description', content: description },
+              { property: 'og:title', content: title },
+              { property: 'og:url', content: formatCanonicalPath(`/experiences/${id}`) },
+              { property: 'og:description', content: description },
+            ]}
+            link={[
+              { rel: 'canonical', href: formatCanonicalPath(`/experiences/${id}`) },
+            ]}
+          />
+        );
+      }
+      return null;
+    }
+    return null;
+  }
+
   render() {
     const {
       experienceDetail, setTos, setComment, likeExperience, likeReply,
@@ -64,9 +101,7 @@ class ExperienceDetail extends Component {
     const experience = data.experience;
     return (
       <main className="wrapperL">
-        <Helmet
-          title="面試‧工作經驗"
-        />
+        {this.renderHelmet()}
         <div className={styles.heading}>
           <h2 className={`${styles.badge} pM`}>
             {experience.type === 'work' ? '工作' : '面試'}
