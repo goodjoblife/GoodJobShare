@@ -1,44 +1,40 @@
-@value main-yellow from '../common/variables.module.css';
+@value main-yellow, main-black from 'common/variables.module.css';
 
 .banner {
-  background-color: #222;
-  background-image: url("https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/black-bg.jpg");
-  background-repeat: repeat;
+  background-color: main-yellow;
 
   > div {
     display: flex;
+    align-items: center;
+    padding-top: 24px;
+    padding-bottom: 24px;
 
-    @media (max-width: 850px) {
+    @media (max-width: 550px) {
       flex-direction: column;
     }
   }
 }
 
 .image {
-  order: 2;
+  order: 1;
   flex: 1 1 auto;
-  align-self: flex-end;
-  text-align: right;
 
   img {
     display: inline-block;
-    max-width: 527px;
+    max-width: 430px;
+
     @media (max-width: 850px) {
-      max-width: 300px;
+      max-width: 280px;
     }
   }
 }
 
 .content {
-  color: #fff;
+  order: 2;
+  color: main-black;
   flex: 0 0 50%;
-  padding-top: 64px;
-  padding-bottom: 64px;
-
-  @media (max-width: 850px) {
-    padding-top: 40px;
-    padding-bottom: 0;
-  }
+  margin-left: 32px;
+  animation: fadeUp 1s linear;
 }
 
 .heading {
@@ -53,9 +49,16 @@
 }
 
 .subheading {
-  font-size: 1.25em;
-  font-weight: 300;
-  line-height: 1.4em;
-  letter-spacing: 1px;
   margin-bottom: 24px;
+}
+
+@keyframes fadeUp {
+	from {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
