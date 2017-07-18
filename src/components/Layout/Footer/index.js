@@ -7,7 +7,7 @@ import LinkItem from './LinkItem';
 import styles from './Footer.module.css';
 
 const link1 = [
-  { to: '/share/time-and-salary', text: '薪資工時', anchor: true },
+  { to: '/time-and-salary', text: '薪資工時', anchor: true },
   { to: '/experiences/search', text: '面試・工作經驗' },
   { to: '/labor-rights', text: '勞動小教室' },
 ];

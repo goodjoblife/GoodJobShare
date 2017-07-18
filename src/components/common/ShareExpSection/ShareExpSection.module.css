@@ -59,6 +59,7 @@
   margin-top: 24px;
   height: 48px;
   padding: 0 32px;
+  letter-spacing: 2px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -75,7 +76,7 @@
 .image {
   display: inline-block;
   max-width: 210px;
-  
+
   @media (max-width: 850px) {
     max-width: 140px;
   }

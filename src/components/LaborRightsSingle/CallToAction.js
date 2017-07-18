@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+import { Link } from 'react-router';
 import { Section, Wrapper, Heading } from 'common/base';
 import styles from './CallToAction.module.css';
 
@@ -13,7 +14,7 @@ const CallToAction = () => (
         <Heading size="m" className={styles.heading} Tag="h3">
           覺得很有用嗎？也留下你的資訊吧！
         </Heading>
-        <a href="/share/time-and-salary" className={cn('buttonCircleM', 'buttonBlack')}>留下資料</a>
+        <Link to="/share" className={cn('buttonCircleM', 'buttonBlack')}>留下資料</Link>
       </div>
     </Wrapper>
   </Section>
