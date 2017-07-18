@@ -17,10 +17,9 @@ import WorkExperiencesFormContainer
   from './containers/ShareExperience/WorkExperiencesFormContainer';
 
 import About from './components/About';
-import Contact from './components/Contact';
 import Faq from './components/Faq';
+import Guidelines from './components/Guidelines';
 import Privacy from './components/Privacy';
-import Recruit from './components/Recruit';
 import Terms from './components/Terms';
 
 const routes = () => ({
@@ -99,20 +98,16 @@ const routes = () => ({
       component: About,
     },
     {
-      path: 'contact',
-      component: Contact,
-    },
-    {
       path: 'faq',
       component: Faq,
     },
     {
-      path: 'privacy-policy',
-      component: Privacy,
+      path: 'guidelines',
+      component: Guidelines,
     },
     {
-      path: 'recruit',
-      component: Recruit,
+      path: 'privacy-policy',
+      component: Privacy,
     },
     {
       path: 'user-terms',

@@ -3,13 +3,13 @@ import Helmet from 'react-helmet';
 import { Section, Wrapper } from 'common/base';
 import helmetData from '../../constants/helmetData';
 
-const Recruit = () => (
+const GuideLines = () => (
   <Section Tag="main" pageTop paddingBottom>
-    <Helmet {...helmetData.RECRUIT} />
+    <Helmet {...helmetData.GUIDELINES} />
     <Wrapper size="l">
-      Recruit
+      GuideLines
     </Wrapper>
   </Section>
 );
 
-export default Recruit;
+export default GuideLines;
