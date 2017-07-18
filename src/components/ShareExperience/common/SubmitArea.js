@@ -83,7 +83,10 @@ class SubmitArea extends React.PureComponent {
         }
         throw Error('can not login');
       })
-      .catch(this.onFacebookFail);
+      .catch(e => {
+        console.log(e);
+        this.onFacebookFail();
+      });
   }
 
   handleAgree(agree) {

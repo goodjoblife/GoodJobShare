@@ -58,7 +58,7 @@ const firstSectionId = idCounter();
 const defaultForm = {
   companyQuery: '',
   companyId: '',
-  region: null,
+  region: '',
   jobTitle: '',
   experienceInYear: null,
   education: null,
@@ -173,6 +173,17 @@ class WorkExperiencesForm extends React.Component {
         >
           工作經驗分享
         </h1>
+        {
+          this.state.submitted ?
+            <h2
+              style={{
+                marginTop: '20px',
+              }}
+              className={styles.warning__wording}
+            >
+              oops! 請檢查底下紅框內的內容是否正確
+            </h2> : null
+        }
         <WorkInfo
           handleState={this.handleState}
           companyQuery={companyQuery}

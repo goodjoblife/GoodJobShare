@@ -66,7 +66,7 @@ const firstQaId = idCounter();
 const defaultForm = {
   companyQuery: '',
   companyId: '',
-  region: null,
+  region: '',
   jobTitle: '',
   experienceInYear: null,
   education: null,

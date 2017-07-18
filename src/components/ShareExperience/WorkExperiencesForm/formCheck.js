@@ -2,7 +2,6 @@ import R from 'ramda';
 
 import {
   notStrEmpty,
-  notNullOrUndefined,
   lteLength,
   gtLength,
 } from 'utils/dataCheckUtil';
@@ -16,7 +15,7 @@ export const companyQuery = R.allPass([
 ]);
 
 export const region = R.allPass([
-  notNullOrUndefined,
+  notStrEmpty,
 ]);
 
 export const jobTitle = R.allPass([

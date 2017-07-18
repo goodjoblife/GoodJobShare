@@ -17,7 +17,7 @@ export const companyQuery = R.allPass([
 ]);
 
 export const region = R.allPass([
-  notNullOrUndefined,
+  notStrEmpty,
 ]);
 
 export const jobTitle = R.allPass([
