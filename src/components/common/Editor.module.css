@@ -29,10 +29,10 @@
 
   ol, ul {
     margin-left: 1.3em;
-    > li {
-      font-size: 1.1em;
+    > li {    
       list-style: decimal;
-      line-height: 1.5em;
+      font-size: 1.1em;
+      line-height: 1.6em;
       p {
         font-size: inherit;
         line-height: inherit;

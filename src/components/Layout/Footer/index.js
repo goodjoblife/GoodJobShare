@@ -12,8 +12,8 @@ const link1 = [
   { to: '/labor-rights', text: '勞動小教室' },
 ];
 const link2 = [
+  { to: '/faq', text: '常見問答' },
   { to: '/guidelines', text: '發文留言規定' },
-  { to: '/faq', text: '常見問題' },
   { to: '/privacy-policy', text: '隱私權政策' },
   { to: '/user-terms', text: '使用者條款' },
 ];
@@ -44,7 +44,7 @@ const Footer = () => (
           items={link1}
         />
         <LinkItem
-          title="常見問題"
+          title="常見問答"
           items={link2}
         />
         <LinkItem
