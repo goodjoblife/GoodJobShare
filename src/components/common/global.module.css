@@ -1,4 +1,4 @@
-@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, gray-dark, main-black, main-yellow from "common/variables.module.css";
+@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, gray-dark, main-black, main-yellow, link-blue from "common/variables.module.css";
 
 :global {
   /* wrapper */
@@ -164,6 +164,18 @@
     }
   }
 
+  .buttonBlackLine {
+    border: 1px solid main-black;
+    color: main-black;
+
+    @media (min-width: 851px) {
+      &:hover {
+        background-color: main-black;
+        color: #fff;
+      }
+    }
+  }
+
   .buttonGray {
     background-color: gray-dark;
     color: #fff;
@@ -205,6 +217,18 @@
     &[disabled] {
       background-color: gray-dark;
       cursor: auto;
+    }
+  }
+
+  .blueLink {
+    color: link-blue;
+    border-bottom: 1px solid transparent;
+    transition: border .3s;
+    padding-bottom: 2px;
+    @media (min-width: 851px) {
+      &:hover {
+        border-bottom: 1px solid link-blue;
+      }
     }
   }
 

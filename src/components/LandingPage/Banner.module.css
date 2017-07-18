@@ -1,0 +1,64 @@
+@value main-yellow, main-black from 'common/variables.module.css';
+
+.banner {
+  background-color: main-yellow;
+
+  > div {
+    display: flex;
+    align-items: center;
+    padding-top: 24px;
+    padding-bottom: 24px;
+
+    @media (max-width: 550px) {
+      flex-direction: column;
+    }
+  }
+}
+
+.image {
+  order: 1;
+  flex: 1 1 auto;
+
+  img {
+    display: inline-block;
+    max-width: 430px;
+
+    @media (max-width: 850px) {
+      max-width: 280px;
+    }
+  }
+}
+
+.content {
+  order: 2;
+  color: main-black;
+  flex: 0 0 50%;
+  margin-left: 32px;
+  animation: fadeUp 1s linear;
+}
+
+.heading {
+  font-size: 2.75em;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  font-weight: 400;
+
+  @media (max-width: 850px) {
+    font-size: 2.3em;
+  }
+}
+
+.subheading {
+  margin-bottom: 24px;
+}
+
+@keyframes fadeUp {
+	from {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -10,7 +10,7 @@ const Privacy = () => (
     <Helmet {...helmetData.PRIVACY_POLICY} />
     <PageBanner heading="隱私權政策" />
     <Section padding>
-      <Wrapper size="l" className={editorStyles.editor}>
+      <Wrapper size="m" className={editorStyles.editor}>
         <p>
           GoodJob 的使用者您好！為了尊重您個人的隱私權，因此制訂了隱私權政策。對於 GoodJob 如何蒐集、應用及保護您所提供之個人資訊，請詳細閱讀下列內容。 我們未來有可能修訂本政策，您將會於本頁面或公告指定的頁面找到此政策的最新版本。
         </p>

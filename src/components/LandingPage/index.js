@@ -10,7 +10,8 @@ import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
 import { fetchExperiences } from '../../actions/experienceSearch';
 import { fetchMetaListIfNeeded } from '../../actions/laborRightsMenu';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
-import HomeBanner from './HomeBanner';
+import Banner from './Banner';
+import Dashboard from './Dashboard';
 import helmetData from '../../constants/helmetData';
 
 class LandingPage extends Component {
@@ -47,7 +48,8 @@ class LandingPage extends Component {
     return (
       <main>
         {this.renderHelmet()}
-        <HomeBanner />
+        <Banner />
+        <Dashboard />
         <Section padding>
           <Wrapper size="l">
             <Heading size="l" center marginBottom>熱門分享</Heading>

@@ -1,0 +1,10 @@
+.faq > li {
+  margin-bottom: 32px;
+}
+
+.q {
+  font-weight: 700;
+}
+.a {
+  margin-top: 8px;
+}

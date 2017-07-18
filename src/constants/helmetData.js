@@ -123,19 +123,6 @@ const helmetData = {
   LABOR_RIGHTS_SINGLE: {
     // information is dynamic
   },
-  CONTACT: {
-    title: '聯絡我們',
-    meta: [
-      { name: 'description', content: '' },
-      { property: 'og:title', content: '聯絡我們' },
-      { property: 'og:url', content: formatCanonicalPath('/contact') },
-      { property: 'og:image', content: `${imgHost}/www/og/contact.jpg` },
-      { property: 'og:description', content: '' },
-    ],
-    link: [
-      { rel: 'canonical', href: formatCanonicalPath('/contact') },
-    ],
-  },
   ABOUT: {
     title: '關於我們',
     meta: [
@@ -155,7 +142,6 @@ const helmetData = {
       { name: 'description', content: '' },
       { property: 'og:title', content: '隱私權政策' },
       { property: 'og:url', content: formatCanonicalPath('/privacy-policy') },
-      { property: 'og:image', content: `${imgHost}/www/og/privacy-policy.jpg` },
       { property: 'og:description', content: '' },
     ],
     link: [
@@ -168,7 +154,6 @@ const helmetData = {
       { name: 'description', content: '' },
       { property: 'og:title', content: '使用者條款' },
       { property: 'og:url', content: formatCanonicalPath('/user-term') },
-      { property: 'og:image', content: `${imgHost}/www/og/user-term.jpg` },
       { property: 'og:description', content: '' },
     ],
     link: [
@@ -188,17 +173,17 @@ const helmetData = {
       { rel: 'canonical', href: formatCanonicalPath('/faq') },
     ],
   },
-  RECRUIT: {
-    title: '加入我們',
+  GUIDELINES: {
+    title: '發文留言規定',
     meta: [
       { name: 'description', content: '' },
-      { property: 'og:title', content: '加入我們' },
-      { property: 'og:url', content: formatCanonicalPath('/recruit') },
-      { property: 'og:image', content: `${imgHost}/www/og/recruit.jpg` },
+      { property: 'og:title', content: '常見問答' },
+      { property: 'og:url', content: formatCanonicalPath('/guidelines') },
+      { property: 'og:image', content: `${imgHost}/www/og/guidelines.jpg` },
       { property: 'og:description', content: '' },
     ],
     link: [
-      { rel: 'canonical', href: formatCanonicalPath('/recruit') },
+      { rel: 'canonical', href: formatCanonicalPath('/guidelines') },
     ],
   },
 };

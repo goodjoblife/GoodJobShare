@@ -7,20 +7,20 @@ import LinkItem from './LinkItem';
 import styles from './Footer.module.css';
 
 const link1 = [
-  { to: '/share/time-and-salary', text: '薪資工時', anchor: true },
+  { to: '/time-and-salary', text: '薪資工時', anchor: true },
   { to: '/experiences/search', text: '面試・工作經驗' },
   { to: '/labor-rights', text: '勞動小教室' },
 ];
 const link2 = [
+  { to: '/faq', text: '常見問答' },
   { to: '/guidelines', text: '發文留言規定' },
-  { to: '/faq', text: '常見問題' },
   { to: '/privacy-policy', text: '隱私權政策' },
   { to: '/user-terms', text: '使用者條款' },
 ];
 const link3 = [
   { to: '/about', text: '關於我們' },
-  { to: '/contact', text: '聯絡我們' },
-  { to: '/recruit', text: '加入我們' },
+  { to: '/about#contact', text: '聯絡我們' },
+  { to: '/about#join-us', text: '加入我們' },
 ];
 
 const Footer = () => (
@@ -44,7 +44,7 @@ const Footer = () => (
           items={link1}
         />
         <LinkItem
-          title="常見問題"
+          title="常見問答"
           items={link2}
         />
         <LinkItem

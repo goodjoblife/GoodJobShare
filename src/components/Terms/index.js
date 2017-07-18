@@ -10,7 +10,7 @@ const Terms = () => (
     <Helmet {...helmetData.USER_TERMS} />
     <PageBanner heading="使用者條款" />
     <Section padding>
-      <Wrapper size="l" className={editorStyles.editor}>
+      <Wrapper size="m" className={editorStyles.editor}>
         <p>
         GoodJob 歡迎您！ 一旦您使用 GoodJob 的產品、軟體、網站或服務（以下簡稱「本服務」），即代表您同意遵守以下條款，及其未來修訂公告的最新版本。
         </p>
