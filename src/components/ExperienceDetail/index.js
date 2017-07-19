@@ -116,7 +116,11 @@ class ExperienceDetail extends Component {
         </div>
 
         { /* 文章區塊  */}
-        <Article experience={experience} />
+        {
+          data.experienceStatus === status.FETCHING
+          ? <Loader />
+          : <Article experience={experience} />
+        }
 
         { /* 按讚，分享，檢舉區塊  */}
         <ReactionZone experience={experience} likeExperience={likeExperience} />
