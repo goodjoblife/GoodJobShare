@@ -37,7 +37,7 @@ class CommentBlock extends Component {
         <div className={`pS ${styles.heading}`}>
           <div>
             <span className={`pMBold ${styles.serialNo}`}>
-              {`${reply.floor}F`}
+              {`${reply.floor + 1}F`}
             </span>
             {CommentBlock.formatDate(reply.created_at)}
           </div>
