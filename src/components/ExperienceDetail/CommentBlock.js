@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
 import ThumbsUp from '../common/reaction/ThumbsUp';
-import Report from '../common/reaction/Report';
 
 import styles from './CommentBlock.module.css';
 
@@ -41,7 +40,6 @@ class CommentBlock extends Component {
             </span>
             {CommentBlock.formatDate(reply.created_at)}
           </div>
-          <div><Report fontClass="pSBold" /></div>
         </div>
         <div className={`pL ${styles.comment}`}>{reply.content}</div>
         <div className={`pS ${styles.reaction}`}>
