@@ -54,7 +54,7 @@ class CompanyQuery extends React.Component {
 
   render() {
     const { autocompleteItems } = this.state;
-    const { companyQuery, onChange, onCompanyId } = this.props;
+    const { companyQuery, onChange, onCompanyId, validator, submitted } = this.props;
     return (
       <div>
         <InputTitle
@@ -72,6 +72,8 @@ class CompanyQuery extends React.Component {
             onCompanyId(item.value);
             return onChange(value);
           }}
+          isWarning={submitted && !validator(companyQuery)}
+          warningWording="需填寫公司/單位"
         />
       </div>
     );
@@ -82,6 +84,12 @@ CompanyQuery.propTypes = {
   companyQuery: PropTypes.string,
   onChange: PropTypes.func,
   onCompanyId: PropTypes.func,
+  validator: PropTypes.func,
+  submitted: PropTypes.bool,
+};
+
+CompanyQuery.defaultProps = {
+  validator: () => {},
 };
 
 export default CompanyQuery;

@@ -17,7 +17,7 @@ export const companyQuery = R.allPass([
 ]);
 
 export const region = R.allPass([
-  notNullOrUndefined,
+  notStrEmpty,
 ]);
 
 export const jobTitle = R.allPass([
@@ -40,10 +40,11 @@ export const interviewTimeMonth = R.allPass([
   notNullOrUndefined,
 ]);
 
-export const interviewResult = R.allPass([
-  gteLength(0),
-  lteLength(10),
-]);
+export const interviewResult = t =>
+  notNullOrUndefined(t) && R.allPass([
+    gteLength(0),
+    lteLength(10),
+  ])(t);
 
 export const salaryAmount = R.anyPass([
   R.allPass([

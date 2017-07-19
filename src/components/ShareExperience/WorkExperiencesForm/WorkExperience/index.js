@@ -10,6 +10,11 @@ import {
   interviewSectionSubtitleOptions,
 } from '../../common/optionMap';
 
+import {
+  title as titleValidator,
+  sections as sectionsValidator,
+} from '../formCheck';
+
 class WorkExperience extends React.PureComponent {
   render() {
     const {
@@ -19,6 +24,7 @@ class WorkExperience extends React.PureComponent {
       appendSection,
       removeSection,
       editSection,
+      submitted,
     } = this.props;
 
     return (
@@ -45,6 +51,8 @@ class WorkExperience extends React.PureComponent {
               title={title}
               onChange={handleState('title')}
               placeholder="ＯＯ 股份有限公司工作經驗分享"
+              validator={titleValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -57,6 +65,8 @@ class WorkExperience extends React.PureComponent {
               sections={sections}
               removeSection={removeSection}
               editSection={editSection}
+              validator={sectionsValidator}
+              submitted={submitted}
             />
             <div
               style={{
@@ -92,6 +102,7 @@ WorkExperience.propTypes = {
   appendSection: PropTypes.func,
   removeSection: PropTypes.func,
   editSection: PropTypes.func,
+  submitted: PropTypes.bool,
 };
 
 export default WorkExperience;

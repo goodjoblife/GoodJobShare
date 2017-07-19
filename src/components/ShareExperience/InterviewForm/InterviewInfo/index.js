@@ -3,6 +3,16 @@ import i from 'common/icons';
 
 import styles from '../../ShareExperience.module.css';
 
+import {
+  companyQuery as companyQueryValidator,
+  jobTitle as jobTitleValidator,
+  region as regionValidator,
+  interviewTimeYear as interviewTimeYearValidator,
+  interviewTimeMonth as interviewTimeMonthValidator,
+  interviewResult as interviewResultValidator,
+  overallRating as overallRatingValidator,
+} from '../formCheck';
+
 import IconHeading from '../../common/IconHeading';
 import CompanyQuery from '../../common/CompanyQuery';
 import Region from '../../common/Region';
@@ -29,6 +39,7 @@ class InterviewInfo extends React.PureComponent {
       salaryType,
       salaryAmount,
       overallRating,
+      submitted,
     } = this.props;
 
     return (
@@ -51,6 +62,8 @@ class InterviewInfo extends React.PureComponent {
                 handleState('title')(`${v} 面試經驗分享`);
               }}
               onCompanyId={handleState('companyId')}
+              validator={companyQueryValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -61,6 +74,8 @@ class InterviewInfo extends React.PureComponent {
             <Region
               region={region}
               onChange={handleState('region')}
+              validator={regionValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -72,6 +87,8 @@ class InterviewInfo extends React.PureComponent {
               inputTitle="應徵職稱"
               jobTitle={jobTitle}
               onChange={handleState('jobTitle')}
+              validator={jobTitleValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -104,6 +121,9 @@ class InterviewInfo extends React.PureComponent {
               interviewTimeMonth={interviewTimeMonth}
               onInterviewTimeYear={handleState('interviewTimeYear')}
               onInterviewTimeMonth={handleState('interviewTimeMonth')}
+              interviewTimeYearValidator={interviewTimeYearValidator}
+              interviewTimeMonthValidator={interviewTimeMonthValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -114,6 +134,8 @@ class InterviewInfo extends React.PureComponent {
             <InterviewResult
               interviewResult={interviewResult}
               onChange={handleState('interviewResult')}
+              validator={interviewResultValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -132,6 +154,8 @@ class InterviewInfo extends React.PureComponent {
             <OverallRating
               overallRating={overallRating}
               onChange={handleState('overallRating')}
+              validator={overallRatingValidator}
+              submitted={submitted}
             />
           </div>
         </div>
@@ -177,6 +201,7 @@ InterviewInfo.propTypes = {
     PropTypes.number,
   ]),
   overallRating: PropTypes.number,
+  submitted: PropTypes.bool,
 };
 
 export default InterviewInfo;

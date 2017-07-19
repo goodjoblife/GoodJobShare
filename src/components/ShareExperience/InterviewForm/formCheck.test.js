@@ -37,12 +37,12 @@ describe('companyQuery test', () => {
 });
 
 describe('region test', () => {
-  test('non-null should pass', () => {
+  test('non-empty should pass', () => {
     expect(region('台北市')).toBe(true);
   });
 
-  test('null should not pass', () => {
-    expect(region(null)).toBe(false);
+  test('empty string should not pass', () => {
+    expect(region('')).toBe(false);
   });
 });
 
@@ -255,7 +255,7 @@ describe('interviewFormCheck tests', () => {
   const defaultForm = {
     companyQuery: '',
     companyId: '',
-    region: null,
+    region: '',
     jobTitle: '',
     experienceInYear: null,
     education: null,

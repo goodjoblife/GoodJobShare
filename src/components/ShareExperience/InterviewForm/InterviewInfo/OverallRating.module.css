@@ -1,4 +1,5 @@
 @value main-yellow from "common/variables.module.css";
+@value warning-red from "common/variables.module.css";
 
 .dialog {
   display: flex;
@@ -11,3 +12,12 @@
   border: 1px solid main-yellow;
   border-radius: 3px;
 }
+
+.warning {
+  border: 1px solid warning-red;
+}
+
+.warning__wording {
+  color: warning-red;
+}
+
