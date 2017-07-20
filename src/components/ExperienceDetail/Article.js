@@ -45,15 +45,19 @@ const Article = ({ experience }) => (
         <InfoBlock label="面試整體滿意度">
           {experience.overall_rating}
         </InfoBlock>
-        <InfoBlock label="有以下特殊問題">
-          <ul>
-            {experience.interview_sensitive_questions && (
-              experience.interview_sensitive_questions.map((o, idx) => (
-                <li key={idx}>{o.question}</li>
-              ))
-            )}
-          </ul>
-        </InfoBlock>
+        {
+          experience.interview_sensitive_questions && experience.interview_sensitive_questions.length
+          ? (<InfoBlock label="有以下特殊問題">
+            <ul>
+              {
+                experience.interview_sensitive_questions.map((o, idx) => (
+                  <li key={idx}>{o.question}</li>
+                ))
+              }
+            </ul>
+          </InfoBlock>)
+          : null
+        }
       </ul>
       )}
 
