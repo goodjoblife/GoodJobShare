@@ -128,6 +128,7 @@ class InterviewInfo extends React.PureComponent {
               interviewTimeYearValidator={interviewTimeYearValidator}
               interviewTimeMonthValidator={interviewTimeMonthValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
