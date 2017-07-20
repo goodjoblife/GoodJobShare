@@ -92,6 +92,7 @@ class InterviewInfo extends React.PureComponent {
               onChange={handleState('jobTitle')}
               validator={jobTitleValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
