@@ -65,6 +65,7 @@ class InterviewInfo extends React.PureComponent {
               onCompanyId={handleState('companyId')}
               validator={companyQueryValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
