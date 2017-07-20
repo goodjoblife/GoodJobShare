@@ -1,52 +1,50 @@
 import React, { PropTypes } from 'react';
 
-import i from 'common/icons';
+// import i from 'common/icons';
+import { Clock, Coin2 } from 'common/icons';
 
 import styles from './OvertimeBlock.module.css';
 
-const OvertimeBlock = ({ heading, data, noDataText }) => (
-  <div>
+const OvertimeBlock = ({ type, heading, data, noDataText }) => (
+  <div className={styles.overtimeBlock}>
     <div className={`pMBold ${styles.heading}`}>
-      <i.X />
+      { type === 'salary' ? (<Coin2 />) : (<Clock />) }
       <span>{heading}</span>
     </div>
     {
       data
-      ? (<div className={`pMBold ${styles.data}`}>
-
+      ? (<div className={styles.item}>
         <div className={styles.positive}>
-          <div className={styles.stat}>
-            <div>有</div>
-            <div className="pS">
-              <div className={styles.subStat}>
-                <div>優於或符合勞基法</div>
-                <div>{data.yes || '-'}</div>
-              </div>
-              <div className={styles.subStat}>
-                <div>不符合勞基法</div>
-                <div>{data.no || '-'}</div>
-              </div>
-              <div className={styles.subStat}>
-                <div>不清楚是否符合勞基法</div>
-                <div>{data["don't know"] || '-'}</div>
-              </div>
+          <div>
+            <div className={styles.statName}>有</div>
+            <ul className={`${styles.positiveStat}`}>
+              <li>
+                <div className={styles.statHeading}>優於或符合勞基法</div>
+                <div className={styles.num}>{data.yes || '-'}</div>
+              </li>
+              <li>
+                <div className={styles.statHeading}>不符合勞基法</div>
+                <div className={styles.num}>{data.no || '-'}</div>
+              </li>
+              <li>
+                <div className={styles.statHeading}>不清楚是否符合勞基法</div>
+                <div className={styles.num}>{data["don't know"] || '-'}</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className={styles.negative}>
+          <div>
+            <div className={styles.negativeStat}>
+              <div className={styles.statName}>沒有</div>
+              <div className={styles.num}>2</div>
+            </div>
+            <div className={styles.negativeStat}>
+              <div className={styles.statName}>不知道</div>
+              <div className={styles.num}>1</div>
             </div>
           </div>
         </div>
-
-        <div className={styles.spacer} />
-
-        <div className={styles.negative}>
-          <div className={styles.stat}>
-            <div>沒有</div>
-            <div>2</div>
-          </div>
-          <div className={styles.stat}>
-            <div>不知道</div>
-            <div>1</div>
-          </div>
-        </div>
-
       </div>)
       : <div className={`pM ${styles.noData}`}>{noDataText}</div>
     }
@@ -54,12 +52,14 @@ const OvertimeBlock = ({ heading, data, noDataText }) => (
 );
 
 OvertimeBlock.propTypes = {
-  heading: PropTypes.string,
-  data: PropTypes.object,
+  type: PropTypes.oneOf(['salary', 'dayoff']),
+  heading: PropTypes.string.isRequired,
+  data: PropTypes.object.isRequired,
   noDataText: PropTypes.string,
 };
 
 OvertimeBlock.defaultProps = {
+  type: 'salary',
   noDataText: '資料未達 5 筆',
 };
 

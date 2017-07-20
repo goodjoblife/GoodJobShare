@@ -63,11 +63,14 @@ class WorkingHourBlock extends Component {
             this.state.isExpanded ? styles.expanded : ''
           )}
         >
+
           <div className={styles.overtime}>
-            <OvertimeBlock heading="加班有無加班費" data={data.is_overtime_salary_legal_count} />
-            <OvertimeBlock heading="加班有無補休" data={data.has_compensatory_dayoff_count} />
+            <div className={styles.overtimeBlockWrapper}>
+              <OvertimeBlock type="salary" heading="加班有無加班費" data={data.is_overtime_salary_legal_count} />
+              <OvertimeBlock type="dayoff" heading="加班有無補休" data={data.has_compensatory_dayoff_count} />
+            </div>
+            <div className={styles.unit}>單位：資料筆數</div>
           </div>
-          <div className={`pS ${styles.unit}`}>單位：資料筆數</div>
 
           <WorkingHourTable data={data.time_and_salary} />
         </div>

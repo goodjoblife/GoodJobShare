@@ -1,61 +1,176 @@
-@value main-yellow, main-gray, gray-light from "../common/variables.module.css";
+@value main-yellow, main-gray, white-light, gray-dark from "common/variables.module.css";
 
-@value blockHeight: 110px;
+.overtimeBlock {
+  flex: 0 0 48%;
+
+  &:first-child {
+    margin-right: 4%;
+
+    @media (max-width: 550px) {
+      margin-right: 0;
+      margin-bottom: 24px;
+    }
+  }
+
+  @media (max-width: 550px) {
+    flex: 0 0 auto;
+  }
+}
 
 .heading {
-  padding: 10px 0;
-  display: flex;
-  align-items: center;
-  svg {
-    fill: main-yellow;
-    width: 1.5em;
-    height: 1.5em;
-  }
-  span {
-    margin-left: 15px;
-  }
-}
-.noData {
-  height: blockHeight;
-  text-align: center;
-  line-height: blockHeight;
-  border: 2px dashed main-gray;
-}
-.data {
-  height: blockHeight;
-  background-color: gray-light;
+  margin-bottom: 16px;
   display: flex;
   align-items: center;
 
-  .positive {
-    flex: 7;
+  svg {
+    fill: main-yellow;
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
   }
-  .negative {
-    flex: 3;
+}
+
+.item {
+  display: flex;
+  background-color: #f9f9f9;
+  margin-top: 15px;
+  font-size: .95em;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
   }
-  .spacer {
-    width: 40px;
+
+  @media (max-width: 550px) {
+    margin-top: 10px;
   }
-  .positive, .negative {
-    .stat {
-      margin: 10px 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      > div {
-        padding: 0 10px;
-      }
+}
+
+.noData {
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #e3e3e3;
+  color: main-gray;
+
+  @media (max-width: 850px) {
+    max-height: 75px;
+  }
+}
+
+.positive, .negative {
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  min-height: 100px;
+
+  > div {
+    width: 100%;
+  }
+
+  @media (min-width: 1025px) {
+    min-height: 100px;
+  }
+
+  @media (max-width: 1280px) {
+    padding: 15px;
+  }
+
+  @media (max-width: 850px) {
+    flex: 1 1 auto;
+    border-right: 0;
+    border-bottom: 5px solid #fff;
+  }
+}
+
+.positive {
+  flex: 1 1 auto;
+  border-right: 5px solid #fff;
+
+  @media (max-width: 850px) {
+    border-right: 0;
+  }
+
+  > div {
+    display: flex;
+    align-items: center;
+  }
+
+  .statName {
+    flex: 0 1 70px;
+    @media (max-width: $below-medium) {
+      flex: 0 1 40px;
+    }
+    @media (max-width: $below-small) {
+      flex: 1 1 auto;
+      margin-right: 15px;
     }
   }
-  .positive {
-    .subStat {
-      margin: 5px 0;
+
+  .num {
+    flex: 0 1 30px;
+  }
+
+  .positiveStat {
+    width: 100%;
+
+    > li {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      > div {
-        padding: 0 5px;
+      width: 100%;
+      margin-bottom: 8px;
+      line-height: 1.2em;
+      &:last-child {
+        margin-bottom: 0;
       }
     }
+
+    .statHeading {
+      flex: 1 1 auto;
+      color: gray-dark;
+      font-size: .9em;
+    }
+
+    .num {
+      flex: 0 1 30px;
+    }
   }
+}
+
+.negative {
+  flex: 0 1 40%;
+  > div {
+    width: 100%;
+  }
+
+  @media (max-width: 1280px) {
+    padding: 15px;
+  }
+
+  @media (max-width: 850px) {
+    flex: 1 1 auto;
+  }
+}
+
+.negativeStat {
+  display: flex;
+
+  &:first-child {
+    margin-bottom: 15px;
+  }
+
+  .statName {
+    flex: 1 1 auto;
+  }
+
+  .num {
+    flex: 0 1 30px;
+  }
+}
+
+.statName {
+  font-weight: 700;
+}
+
+.num {
+  text-align: right;
 }
