@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import Table from '../common/table/Table';
 import styles from './WorkingHourTable.module.css';
+import employmentType from '../../constants/employmentType';
 
 class WorkingHourTable extends Component {
   static propTypes = {
@@ -15,6 +16,10 @@ class WorkingHourTable extends Component {
         {row.sector}
       </span>
     </div>
+  )
+  static getEmploymentType = type => (type ? employmentType[type] : '')
+  static getWorkingHour = (val, row) => (
+    <div>{`${val} / ${row.day_real_work_time}`}</div>
   )
   static getWorkingTime = val => (
     <div
@@ -77,7 +82,7 @@ class WorkingHourTable extends Component {
     }
     return [amount, type].join(' / ');
   }
-  static getWage = val => Math.round(val)
+  static getWage = val => (typeof val === 'number' ? Math.round(val) : '')
   static getDate = val => {
     const month = (val.month >= 10 ? '' : '0') + val.month;
     return [val.year, month].join('.');
@@ -94,7 +99,20 @@ class WorkingHourTable extends Component {
         >
           職稱
         </Table.Column>
-        {/* <Column dataField="name">表訂 / 實際工時</Column> */}
+
+        <Table.Column
+          dataField="employment_type"
+          dataFormatter={WorkingHourTable.getEmploymentType}
+        >
+          職務型態
+        </Table.Column>
+
+        <Table.Column
+          dataField="day_promised_work_time"
+          dataFormatter={WorkingHourTable.getWorkingHour}
+        >
+          表訂 / 實際工時
+        </Table.Column>
 
         <Table.Column
           dataField="week_work_time"
@@ -109,7 +127,10 @@ class WorkingHourTable extends Component {
         >
           加班頻率
         </Table.Column>
-        {/* <Column dataField="name">業界工作經歷</Column> */}
+
+        <Table.Column dataField="experience_in_year">
+          業界工作經歷
+        </Table.Column>
 
         <Table.Column
           dataField="salary"
