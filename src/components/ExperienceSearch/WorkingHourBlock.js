@@ -45,8 +45,8 @@ class WorkingHourBlock extends Component {
           >
             <div className="subheadingL">{company.name}</div>
             <div>
-              <span className={`pS ${styles.hoursPerWeek}`}>平均一週總工時: </span>
-              <span className="pL">{average.week_work_time} 小時</span>
+              <span className={`pS ${styles.hoursPerWeek}`}>平均一週總工時：</span>
+              <span className="pL">{average.week_work_time.toFixed(1)} 小時</span>
             </div>
           </div>
           <div
@@ -66,8 +66,16 @@ class WorkingHourBlock extends Component {
 
           <div className={styles.overtime}>
             <div className={styles.overtimeBlockWrapper}>
-              <OvertimeBlock type="salary" heading="加班有無加班費" data={data.is_overtime_salary_legal_count} />
-              <OvertimeBlock type="dayoff" heading="加班有無補休" data={data.has_compensatory_dayoff_count} />
+              <OvertimeBlock
+                type="salary"
+                heading="加班有無加班費"
+                data={data}
+              />
+              <OvertimeBlock
+                type="dayoff"
+                heading="加班有無補休"
+                data={data}
+              />
             </div>
             <div className={styles.unit}>單位：資料筆數</div>
           </div>

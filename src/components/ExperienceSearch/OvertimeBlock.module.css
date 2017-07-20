@@ -98,10 +98,12 @@
 
   .statName {
     flex: 0 1 70px;
-    @media (max-width: $below-medium) {
+
+    @media (max-width: 1280px) {
       flex: 0 1 40px;
     }
-    @media (max-width: $below-small) {
+    
+    @media (max-width: 550px) {
       flex: 1 1 auto;
       margin-right: 15px;
     }
