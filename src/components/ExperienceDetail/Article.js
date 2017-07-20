@@ -107,16 +107,18 @@ const Article = ({ experience }) => (
         ))
       )}
 
-      {experience.type === 'interview' && (
-        <div>
-          <h3 className="pLBold">面試問答</h3>
-          {experience.interview_qas && (
-            experience.interview_qas.map((o, idx) => (
+      {(experience.type === 'interview' && experience.interview_qas
+        && experience.interview_qas.length) ?
+        (
+          <div>
+            <h3 className="pLBold">面試問答</h3>
+            {experience.interview_qas.map((o, idx) => (
               <QABlock key={idx} qa={o} />
-            ))
-          )}
-        </div>
-      )}
+            ))}
+          </div>
+        ) :
+        null
+      }
     </div>
   </div>
 );
