@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { Element as ScrollElement } from 'react-scroll';
 
 import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput';
 
@@ -11,8 +10,6 @@ import InputTitle from './InputTitle';
 import {
   getCompaniesSearch,
 } from '../../../apis/companySearchApi';
-
-import { VALID, INVALID, COMPANY } from '../../../constants/formElements';
 
 const getItemValue = item => item.label;
 
@@ -44,21 +41,9 @@ class CompanyQuery extends React.Component {
       return search(e, value);
     };
 
-    const isValid = props.validator(props.companyQuery);
-    props.changeValidationStatus(COMPANY, isValid ? VALID : INVALID);
     this.state = {
       autocompleteItems: [],
-      isValid,
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const isValid = this.props.validator(nextProps.companyQuery);
-    if (isValid !== this.state.isValid) {
-      this.setState({ isValid });
-      const status = isValid ? VALID : INVALID;
-      this.props.changeValidationStatus(COMPANY, status);
-    }
   }
 
   handleAutocompleteItems(autocompleteItems) {
@@ -69,10 +54,9 @@ class CompanyQuery extends React.Component {
 
   render() {
     const { autocompleteItems } = this.state;
-    const { companyQuery, onChange, onCompanyId, submitted } = this.props;
+    const { companyQuery, onChange, onCompanyId, validator, submitted } = this.props;
     return (
       <div>
-        <ScrollElement name={COMPANY} />
         <InputTitle
           text="公司/單位 或 統一編號"
           must
@@ -88,7 +72,7 @@ class CompanyQuery extends React.Component {
             onCompanyId(item.value);
             return onChange(value);
           }}
-          isWarning={submitted && !this.state.isValid}
+          isWarning={submitted && !validator(companyQuery)}
           warningWording="需填寫公司/單位"
         />
       </div>
@@ -102,7 +86,6 @@ CompanyQuery.propTypes = {
   onCompanyId: PropTypes.func,
   validator: PropTypes.func,
   submitted: PropTypes.bool,
-  changeValidationStatus: PropTypes.func,
 };
 
 CompanyQuery.defaultProps = {
