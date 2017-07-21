@@ -51,7 +51,7 @@ const Article = ({ experience }) => (
             <ul>
               {
                 experience.interview_sensitive_questions.map((o, idx) => (
-                  <li key={idx}>{o.question}</li>
+                  <li key={idx}>{o}</li>
                 ))
               }
             </ul>
