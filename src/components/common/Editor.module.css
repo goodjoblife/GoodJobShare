@@ -1,12 +1,19 @@
 @value link-blue from "common/variables.module.css";
-@import "common/mixin.module.css";
-@import "common/typography.module.css";
 
 .editor {
-  @mixin pL;
+  /* pL */
+  font-size: 1.1em;
+  line-height: 1.6em;
 
   h2 {
-    @mixin headingSL;
+    /*headingSL*/
+    font-size: 1.5em;
+    line-height: 1.5em;
+    letter-spacing: 0.05em;
+
+    @media (max-width: 550px) {
+      font-size: 1.4em;
+    }
 
     margin-top: 1.5em;
     margin-bottom: 16px;
@@ -20,19 +27,38 @@
     font-weight: 700;
   }
 
+  /* blueLink */
   a {
-    @mixin blueLink;
+    color: link-blue;
+    border-bottom: 1px solid transparent;
+    transition: border .3s;
+    padding-bottom: 2px;
+    @media (min-width: 851px) {
+      &:hover {
+        border-bottom: 1px solid link-blue;
+      }
+    }
   }
 
   ul, ol {
-    @mixin list;
+    margin-left: 1.3em;
+    > li {
+      p {
+        font-size: inherit;
+        line-height: inherit;
+      }
+      li {
+        font-size: inherit;
+        line-height: inherit;
+      }
+    }
   }
 
   ul {
-    @mixin unorderedList;
+    list-style-type: disc;
   }
 
   ol {
-    @mixin orderedList;
+    list-style-type: decimal;
   }
 }

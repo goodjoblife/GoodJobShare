@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-
+import styles from './Table.module.css';
 import Column from './Column';
 
 class Table extends Component {
@@ -43,7 +43,7 @@ class Table extends Component {
     });
 
     return (
-      <table>
+      <table className={styles.rwdTable}>
         <thead><tr>{children}</tr></thead>
         <tbody>{records}</tbody>
       </table>

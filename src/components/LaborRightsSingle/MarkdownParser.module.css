@@ -1,10 +1,10 @@
 @value link-blue from "common/variables.module.css";
-@import "common/mixin.module.css";
-@import "common/typography.module.css";
 
 .md {
+  /* PL */
   p {
-    @mixin pL;
+    font-size: 1.1em;
+    line-height: 1.6em;
   }
 
   strong, bold {
@@ -12,18 +12,28 @@
   }
 
   ul, ol {
-    @mixin list;
+    margin-left: 1.3em;
     > li {
-      @mixin pL;
+      /* PL */
+      font-size: 1.1em;
+      line-height: 1.6em;
+      p {
+        font-size: inherit;
+        line-height: inherit;
+      }
+      li {
+        font-size: inherit;
+        line-height: inherit;
+      }
     }
   }
 
   ul {
-    @mixin unorderedList;
+    list-style-type: decimal;
   }
 
   ol {
-    @mixin orderedList;
+    list-style-type: disc;
   }
 
   img {
@@ -31,8 +41,17 @@
     margin-bottom: 10px;
   }
 
+  /* bludLink */
   a {
-    @mixin blueLink;
+    color: link-blue;
+    border-bottom: 1px solid transparent;
+    transition: border .3s;
+    padding-bottom: 2px;
+    @media (min-width: 851px) {
+      &:hover {
+        border-bottom: 1px solid link-blue;
+      }
+    }
   }
 
   hr {

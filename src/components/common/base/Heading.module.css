@@ -1,5 +1,3 @@
-@import "common/typography.module.css";
-
 .l {
   font-size: 2.25em;
   line-height: 1.25em;
@@ -21,7 +19,13 @@
 }
 
 .sl {
-  @mixin headingSL;
+  font-size: 1.5em;
+  line-height: 1.5em;
+  letter-spacing: 0.05em;
+
+  @media (max-width: 550px) {
+    font-size: 1.4em;
+  }
 }
 
 .sm {

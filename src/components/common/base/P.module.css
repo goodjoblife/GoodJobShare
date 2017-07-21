@@ -1,5 +1,3 @@
-@import "common/typography.module.css";
-
 .bold {
   font-weight: 700;
 }
@@ -9,11 +7,13 @@
 }
 
 .l {
-  @mixin pL;
+  font-size: 1.1em;
+  line-height: 1.6em;
 }
 
 .m {
-  @mixin pM;
+  font-size: 1em;
+  line-height: 1.6em;
 }
 
 .s {
