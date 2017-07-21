@@ -1,44 +1,38 @@
 @value link-blue from "common/variables.module.css";
+@import "common/mixin.module.css";
+@import "common/typography.module.css";
 
 .md {
-  /* pL */
   p {
-    font-size: 1.1em;
-    line-height: 1.6em;
+    @mixin pL;
   }
 
   strong, bold {
     font-weight: 700;
   }
 
-  ol, ul {
-    margin-left: 1.3em;
+  ul, ol {
+    @mixin list;
     > li {
-      font-size: 1.1em;
-      list-style: decimal;
-      line-height: 1.5em;
-      p {
-        font-size: inherit;
-        line-height: inherit;
-      }
-      li {
-        font-size: inherit;
-        line-height: inherit;
-      }
+      @mixin pL;
     }
   }
 
-  ol > li {
-    list-style-type: decimal;
+  ul {
+    @mixin unorderedList;
   }
 
-  ul > li {
-    list-style-type: disc;
+  ol {
+    @mixin orderedList;
   }
 
   img {
     max-width: 100%;
     margin-bottom: 10px;
+  }
+
+  a {
+    @mixin blueLink;
   }
 
   hr {
@@ -51,18 +45,6 @@
     margin-right: 0;
     @media (max-width: 850px) {
       margin-bottom: 64px;
-    }
-  }
-
-  a {
-    color: link-blue;
-    border-bottom: 1px solid transparent;
-    transition: border .3s;
-    padding-bottom: 2px;
-    @media (min-width: 851px) {
-      &:hover {
-        border-bottom: 1px solid link-blue;
-      }
     }
   }
 }

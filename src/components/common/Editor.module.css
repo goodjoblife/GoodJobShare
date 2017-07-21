@@ -1,48 +1,27 @@
 @value link-blue from "common/variables.module.css";
 @import "common/mixin.module.css";
+@import "common/typography.module.css";
 
 .editor {
-  /* sl bold but margin */
-  h2 {
-    font-size: 1.5em;
-    line-height: 1.5em;
-    letter-spacing: 0.05em;
-    font-weight: 700;
+  @mixin pL;
 
-    @media (max-width: 550px) {
-      font-size: 1.4em;
-    }
-    margin-top: 60px;
-    margin-bottom: 20px;
+  h2 {
+    @mixin headingSL;
+
+    margin-top: 1.5em;
+    margin-bottom: 16px;
   }
 
-  /* l but margin bottom */
   p {
-    font-size: 1.1em;
-    line-height: 1.6em;
     margin-bottom: 1em;
   }
 
-  /* same as MarkdowmParser.module.css */
   strong, bold {
     font-weight: 700;
   }
 
-  img {
-    max-width: 100%;
-    margin-bottom: 10px;
-  }
-
   a {
-    color: link-blue;
-    border-bottom: 1px solid transparent;
-    transition: border .3s;
-    padding-bottom: 2px;
-    @media (min-width: 851px) {
-      &:hover {
-        border-bottom: 1px solid link-blue;
-      }
-    }
+    @mixin blueLink;
   }
 
   ul, ol {

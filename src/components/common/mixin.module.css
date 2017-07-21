@@ -1,8 +1,6 @@
 @define-mixin list {
   margin-left: 1.3em;
   > li {
-    font-size: 1.1em;
-    line-height: 1.6em;
     p {
       font-size: inherit;
       line-height: inherit;

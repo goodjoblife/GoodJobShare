@@ -1,0 +1,33 @@
+@value link-blue from "common/variables.module.css";
+
+@define-mixin headingSL {
+  font-size: 1.5em;
+  line-height: 1.5em;
+  letter-spacing: 0.05em;
+
+  @media (max-width: 550px) {
+    font-size: 1.4em;
+  }
+}
+
+@define-mixin pM {
+  font-size: 1em;
+  line-height: 1.6em;
+}
+
+@define-mixin pL {
+  font-size: 1.1em;
+  line-height: 1.6em;
+}
+
+@define-mixin blueLink {
+  color: link-blue;
+  border-bottom: 1px solid transparent;
+  transition: border .3s;
+  padding-bottom: 2px;
+  @media (min-width: 851px) {
+    &:hover {
+      border-bottom: 1px solid link-blue;
+    }
+  }
+}
