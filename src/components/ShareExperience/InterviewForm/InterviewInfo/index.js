@@ -40,7 +40,6 @@ class InterviewInfo extends React.PureComponent {
       salaryAmount,
       overallRating,
       submitted,
-      changeValidationStatus,
     } = this.props;
 
     return (
@@ -65,7 +64,6 @@ class InterviewInfo extends React.PureComponent {
               onCompanyId={handleState('companyId')}
               validator={companyQueryValidator}
               submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
@@ -78,7 +76,6 @@ class InterviewInfo extends React.PureComponent {
               onChange={handleState('region')}
               validator={regionValidator}
               submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
@@ -92,7 +89,6 @@ class InterviewInfo extends React.PureComponent {
               onChange={handleState('jobTitle')}
               validator={jobTitleValidator}
               submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
@@ -128,7 +124,6 @@ class InterviewInfo extends React.PureComponent {
               interviewTimeYearValidator={interviewTimeYearValidator}
               interviewTimeMonthValidator={interviewTimeMonthValidator}
               submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
@@ -207,7 +202,6 @@ InterviewInfo.propTypes = {
   ]),
   overallRating: PropTypes.number,
   submitted: PropTypes.bool,
-  changeValidationStatus: PropTypes.func,
 };
 
 export default InterviewInfo;

@@ -1,7 +1,7 @@
 import React from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
-import { scroller } from 'react-scroll';
+import { animateScroll } from 'react-scroll';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -26,7 +26,6 @@ import {
 } from '../utils';
 
 import helmetData from '../../../constants/helmetData';
-import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
 
 const createSection = id => subtitle => {
   const section = {
@@ -101,8 +100,6 @@ class InterviewForm extends React.Component {
       ...defaultForm,
       submitted: false,
     };
-
-    this.elementValidationStatus = {};
   }
 
   onSumbit() {
@@ -112,35 +109,8 @@ class InterviewForm extends React.Component {
       return postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
     }
     this.handleState('submitted')(true);
-    const topInvalidElement = this.getTopInvalidElement();
-    console.log(topInvalidElement);
-    if (topInvalidElement !== null) {
-      scroller.scrollTo(topInvalidElement, {
-        duration: 1000,
-        delay: 100,
-        offset: -100,
-        smooth: true,
-      });
-    }
+    animateScroll.scrollToTop();
     return null;
-  }
-
-  getTopInvalidElement = () => {
-    const order = INTERVIEW_FORM_ORDER;
-    for (let i = 0; i <= order.length; i += 1) {
-      if (
-        this.elementValidationStatus[order[i]] &&
-        this.elementValidationStatus[order[i]] === INVALID
-      ) {
-        return order[i];
-      }
-    }
-    return null;
-  }
-
-  changeValidationStatus = (elementId, status) => {
-    this.elementValidationStatus[elementId] = status;
-    console.log(this.elementValidationStatus);
   }
 
   handleState(key) {
@@ -191,7 +161,6 @@ class InterviewForm extends React.Component {
     return (
       <div className={styles.container}>
         <Helmet {...helmetData.SHARE_INTERVIEW} />
-
         <h1
           className="headingL"
         >
@@ -222,7 +191,6 @@ class InterviewForm extends React.Component {
           salaryAmount={this.state.salaryAmount}
           overallRating={this.state.overallRating}
           submitted={this.state.submitted}
-          changeValidationStatus={this.changeValidationStatus}
         />
         <InterviewExperience
           handleState={this.handleState}
@@ -237,7 +205,6 @@ class InterviewForm extends React.Component {
           editQa={this.editBlock('interviewQas')}
           interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
           submitted={this.state.submitted}
-          changeValidationStatus={this.changeValidationStatus}
         />
         <SubmitArea
           onSubmit={this.onSumbit}
