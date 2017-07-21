@@ -1,4 +1,5 @@
 @value link-blue from "common/variables.module.css";
+@import "common/mixin.module.css";
 
 .editor {
   /* sl bold but margin */
@@ -27,31 +28,6 @@
     font-weight: 700;
   }
 
-  ol, ul {
-    margin-left: 1.3em;
-    > li {    
-      list-style: decimal;
-      font-size: 1.1em;
-      line-height: 1.6em;
-      p {
-        font-size: inherit;
-        line-height: inherit;
-      }
-      li {
-        font-size: inherit;
-        line-height: inherit;
-      }
-    }
-  }
-
-  ol > li {
-    list-style-type: decimal;
-  }
-
-  ul > li {
-    list-style-type: disc;
-  }
-
   img {
     max-width: 100%;
     margin-bottom: 10px;
@@ -67,5 +43,17 @@
         border-bottom: 1px solid link-blue;
       }
     }
+  }
+
+  ul, ol {
+    @mixin list;
+  }
+
+  ul {
+    @mixin unorderedList;
+  }
+
+  ol {
+    @mixin orderedList;
   }
 }
