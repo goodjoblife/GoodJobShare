@@ -9,7 +9,7 @@ const Article = ({ experience }) => (
   <div className={styles.container}>
     <aside className={styles.aside}>
       {experience.type === 'interview' && (
-      <ul>
+      <ul className={styles.infoList}>
         <InfoBlock label="面試地區">
           {experience.region}
         </InfoBlock>
@@ -63,7 +63,7 @@ const Article = ({ experience }) => (
       )}
 
       {experience.type === 'work' && (
-      <ul>
+      <ul className={styles.infoList}>
         <InfoBlock label="工作地區">
           {experience.region}
         </InfoBlock>
@@ -104,22 +104,23 @@ const Article = ({ experience }) => (
       )}
     </aside>
     <section className={styles.main}>
-      <Heading size="m" className={styles.heading}>{experience.title}</Heading>
-
-      {experience.sections && (
-        experience.sections.map(({ subtitle, content }, idx) => (
-          <SectionBlock
-            key={idx}
-            subtitle={subtitle}
-            content={content}
-          />
-        ))
-      )}
+      <div className={styles.article}>
+        <Heading size="m" className={styles.heading}>{experience.title}</Heading>
+        {experience.sections && (
+          experience.sections.map(({ subtitle, content }, idx) => (
+            <SectionBlock
+              key={idx}
+              subtitle={subtitle}
+              content={content}
+            />
+          ))
+        )}
+      </div>
 
       {(experience.type === 'interview' && experience.interview_qas
         && experience.interview_qas.length) ?
         (
-          <div>
+          <div className={styles.qaWrapper}>
             <P size="l" bold>面試問答</P>
             {experience.interview_qas.map(({ question, answer }, idx) => (
               <QABlock key={idx} question={question} answer={answer} />

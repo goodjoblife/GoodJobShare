@@ -1,21 +1,64 @@
 @value white-light, border-gray from "common/variables.module.css";
 
+$padding: 40px;
+$paddingS: 16px;
+
 .container {
   display: flex;
   border: 1px solid border-gray;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+  }
 }
 
 .aside {
   width: 345px;
   background-color: white-light;
-  padding: 40px;
+  padding: $padding;
+
+  @media (max-width: 1280px) {
+    width: 30%;
+  }
+
+  @media (max-width: 850px) {
+    width: 100%;
+  }
+
+  @media (max-width: 550px) {
+    padding: $paddingS;
+  }
+}
+
+.infoList {
+  @media (max-width: 850px) {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: -32px;
+  }
 }
 
 .main {
   flex: 1;
-  padding: 40px 48px;
 }
 
-.heading {
-  margin-bottom: 24px;
+.article {
+  padding: $padding;
+
+  .heading {
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 550px) {
+    padding: $paddingS;
+  }
+}
+
+.qaWrapper {
+  border-top: 1px solid border-gray;
+  padding: $padding;
+
+  @media (max-width: 550px) {
+    padding: $paddingS;
+  }
 }

@@ -102,7 +102,7 @@ class ExperienceDetail extends Component {
     return (
       <main>
         {this.renderHelmet()}
-        <Section bg="white" padding>
+        <Section bg="white" paddingBottom pageTop>
           <Wrapper size="l">
             <div className={styles.heading}>
               <P Tag="h2" size="l" className={styles.badge}>

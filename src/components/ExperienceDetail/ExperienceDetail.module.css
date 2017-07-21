@@ -8,6 +8,8 @@
 
   @media (max-width: 550px) {
     margin-bottom: 16px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
@@ -16,4 +18,8 @@
   border: 1px solid border-gray;
   padding: 4px 12px;
   margin-right: 24px;
+
+  @media (max-width: 550px) {
+    margin-bottom: 8px;
+  }
 }
