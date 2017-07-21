@@ -90,13 +90,13 @@ describe('interviewTimeMonth test', () => {
 });
 
 describe('interviewResult test', () => {
-  test('string length in [0, 10] should pass', () => {
-    expect(interviewResult('')).toBe(true);
+  test('string length in (0, 10] should pass', () => {
     expect(interviewResult('abcdeabcde')).toBe(true);
     expect(interviewResult('abc')).toBe(true);
   });
 
-  test('string length not in [0, 10] should not pass', () => {
+  test('string length not in (0, 10] should not pass', () => {
+    expect(interviewResult('')).toBe(false);
     expect(interviewResult('abcdeabcdea')).toBe(false);
   });
 });
