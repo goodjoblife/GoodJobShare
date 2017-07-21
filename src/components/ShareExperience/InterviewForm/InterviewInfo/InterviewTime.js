@@ -27,8 +27,19 @@ const InterviewTime = (
     submitted,
   }
 ) => {
-  const isWarning = submitted && !(interviewTimeYearValidator(interviewTimeYear)
-    && interviewTimeMonthValidator(interviewTimeMonth));
+  const yearInvalid = !interviewTimeYearValidator(interviewTimeYear);
+  const monthInvalid = !interviewTimeMonthValidator(interviewTimeMonth);
+  const yearWording = yearInvalid ? '年份' : null;
+  const monthWording = monthInvalid ? '月份' : null;
+
+  let warningWordingArray = [
+    yearWording,
+    monthWording,
+  ];
+
+  warningWordingArray = warningWordingArray.filter(n => n);
+
+  const isWarning = submitted && (yearInvalid || monthInvalid);
   return (
     <div>
       <InputTitle
@@ -104,8 +115,8 @@ const InterviewTime = (
               marginTop: '8px',
             }}
           >
-            需填寫面試時間
-            </p>
+            {`需填寫面試${warningWordingArray.join(' 及 ')}`}
+          </p>
           : null
       }
     </div>
