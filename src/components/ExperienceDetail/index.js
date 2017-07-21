@@ -8,6 +8,7 @@ import Article from './Article';
 import ReactionZone from './ReactionZone';
 // import RecommendationZone from './RecommendationZone';
 import MessageBoard from './MessageBoard';
+import BackToList from './BackToList';
 import status from '../../constants/status';
 import {
   fetchExperience,
@@ -127,7 +128,7 @@ class ExperienceDetail extends Component {
             { /* 按讚，分享，檢舉區塊  */}
             <ReactionZone experience={experience} likeExperience={likeExperience} />
 
-            { /* 返回列表 */}
+            <BackToList />
           </Wrapper>
         </Section>
         <Section>
