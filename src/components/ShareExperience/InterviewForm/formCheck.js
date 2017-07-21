@@ -101,9 +101,9 @@ const interviewQaAnswer = R.compose(
   R.anyPass([
     R.allPass([
       lteLength(5000),
-      gtLength(0),
+      gteLength(0),
     ]),
-    n => (n === undefined) || (n === null) || (n === ''),
+    n => (n === undefined) || (n === null),
   ]),
   R.prop('answer')
 );
