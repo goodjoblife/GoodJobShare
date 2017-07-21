@@ -131,7 +131,7 @@ class ExperienceDetail extends Component {
           </Wrapper>
         </Section>
         <Section>
-          <Wrapper size="l">
+          <Wrapper size="s">
             { /* 你可能還想看...  */}
             { /* <RecommendationZone /> */ }
 

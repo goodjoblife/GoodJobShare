@@ -21,6 +21,9 @@
 
     &.toggled {
       fill: main-yellow;
+      &:hover {
+        fill: main-yellow;
+      }
     }
   }
 

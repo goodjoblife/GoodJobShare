@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-
+import { P } from 'common/base';
 import ThumbsUp from '../common/reaction/ThumbsUp';
 
 import styles from './CommentBlock.module.css';
@@ -32,17 +32,15 @@ class CommentBlock extends Component {
     const { reply } = this.props;
 
     return (
-      <section>
-        <div className={`pS ${styles.heading}`}>
-          <div>
-            <span className={`pMBold ${styles.serialNo}`}>
-              {`${reply.floor + 1}F`}
-            </span>
-            {CommentBlock.formatDate(reply.created_at)}
-          </div>
+      <section className={styles.container}>
+        <div className={styles.heading}>
+          <P size="m" bold className={styles.serialNo}>
+            {`${reply.floor + 1}F`}
+          </P>
+          <P size="s">{CommentBlock.formatDate(reply.created_at)}</P>
         </div>
-        <div className={`pL ${styles.comment}`}>{reply.content}</div>
-        <div className={`pS ${styles.reaction}`}>
+        <P size="m" className={styles.comment}>{reply.content}</P>
+        <div className={styles.reaction}>
           <ThumbsUp
             count={reply.like_count}
             toggled={reply.liked}

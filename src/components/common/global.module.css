@@ -1,4 +1,4 @@
-@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, gray-dark, main-black, main-yellow, link-blue from "common/variables.module.css";
+@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, gray-dark, main-black, main-yellow, link-blue, main-gray from "common/variables.module.css";
 
 :global {
   /* font */
@@ -130,10 +130,12 @@
   }
 
   .buttonSubmit {
+    font-size: .95em;
+    letter-spacing: 1px;
     background-color: #000;
     border: none;
     color: white;
-    padding: 15px 64px;
+    padding: 15px 40px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -144,12 +146,13 @@
         background-color: main-yellow;
       }
       &[disabled]:hover {
-        background-color: gray-dark;
+        background-color: main-gray;
+        cursor: not-allowed;
       }
     }
     &[disabled] {
-      background-color: gray-dark;
-      cursor: auto;
+      background-color: main-gray;
+      cursor: not-allowed;
     }
   }
 
