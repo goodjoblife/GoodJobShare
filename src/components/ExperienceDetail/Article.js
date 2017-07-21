@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { Heading, P } from 'common/base';
 import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
 import SectionBlock from './SectionBlock';
@@ -102,12 +103,16 @@ const Article = ({ experience }) => (
       </ul>
       )}
     </aside>
-    <div className={styles.main}>
-      <h2 className="headingMBold">{experience.title}</h2>
-      <br />
+    <section className={styles.main}>
+      <Heading size="m" className={styles.heading}>{experience.title}</Heading>
+
       {experience.sections && (
-        experience.sections.map((o, idx) => (
-          <SectionBlock key={idx} section={o} />
+        experience.sections.map(({ subtitle, content }, idx) => (
+          <SectionBlock
+            key={idx}
+            subtitle={subtitle}
+            content={content}
+          />
         ))
       )}
 
@@ -115,15 +120,15 @@ const Article = ({ experience }) => (
         && experience.interview_qas.length) ?
         (
           <div>
-            <h3 className="pLBold">面試問答</h3>
-            {experience.interview_qas.map((o, idx) => (
-              <QABlock key={idx} qa={o} />
+            <P size="l" bold>面試問答</P>
+            {experience.interview_qas.map(({ question, answer }, idx) => (
+              <QABlock key={idx} question={question} answer={answer} />
             ))}
           </div>
         ) :
         null
       }
-    </div>
+    </section>
   </div>
 );
 

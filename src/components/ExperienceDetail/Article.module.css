@@ -1,23 +1,21 @@
-@value gray-light, border-gray from "common/variables.module.css";
+@value white-light, border-gray from "common/variables.module.css";
 
 .container {
-  margin: 35px 0 0 0;
   display: flex;
   border: 1px solid border-gray;
-  > .aside {
-    width: 345px;
-    background-color: gray-light;
-    padding: 40px 30px;
-    > ul > li {
-      margin-bottom: 20px;
-      ul > li {
-        list-style-type: disc;
-        margin-left: 20px;
-      }
-    }
-  }
-  > .main {
-    flex: 1;
-    padding: 40px 50px;
-  }
+}
+
+.aside {
+  width: 345px;
+  background-color: white-light;
+  padding: 40px;
+}
+
+.main {
+  flex: 1;
+  padding: 40px 48px;
+}
+
+.heading {
+  margin-bottom: 24px;
 }
