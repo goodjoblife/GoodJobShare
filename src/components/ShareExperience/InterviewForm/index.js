@@ -113,7 +113,6 @@ class InterviewForm extends React.Component {
     }
     this.handleState('submitted')(true);
     const topInvalidElement = this.getTopInvalidElement();
-    console.log(topInvalidElement);
     if (topInvalidElement !== null) {
       scroller.scrollTo(topInvalidElement, {
         duration: 1000,
@@ -140,7 +139,6 @@ class InterviewForm extends React.Component {
 
   changeValidationStatus = (elementId, status) => {
     this.elementValidationStatus[elementId] = status;
-    console.log(this.elementValidationStatus);
   }
 
   handleState(key) {
