@@ -20,3 +20,11 @@ export const INTERVIEW_FORM_ORDER = [
   TITLE,
   SECTIONS,
 ];
+
+export const WORK_FORM_ORDER = [
+  COMPANY,
+  REGION,
+  JOB_TITLE,
+  TITLE,
+  SECTIONS,
+];
