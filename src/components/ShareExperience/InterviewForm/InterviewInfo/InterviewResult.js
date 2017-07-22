@@ -4,8 +4,6 @@ import cn from 'classnames';
 import ButtonGroup from 'common/button/ButtonGroup';
 import TextInput from 'common/form/TextInput';
 
-import * as formCheck from '../formCheck';
-
 import InputTitle from '../../common/InputTitle';
 import {
   interviewResultMap,
@@ -58,8 +56,6 @@ const InterviewResult = ({ interviewResult, onChange, validator, submitted }) =>
                 value={interviewResult}
                 placeholder="輸入面試結果..."
                 onChange={e => onChange(e.target.value)}
-                isWarning={!formCheck.interviewResult(interviewResult)}
-                warningWording="請輸入10個字以內"
               />
             </section> :
             null

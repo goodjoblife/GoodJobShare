@@ -3,8 +3,8 @@ import R from 'ramda';
 import {
   notStrEmpty,
   notNullOrUndefined,
-  gteLength,
   lteLength,
+  gteLength,
   gtLength,
 } from 'utils/dataCheckUtil';
 
@@ -42,7 +42,7 @@ export const interviewTimeMonth = R.allPass([
 
 export const interviewResult = t =>
   notNullOrUndefined(t) && R.allPass([
-    gteLength(0),
+    gtLength(0),
     lteLength(10),
   ])(t);
 
@@ -101,9 +101,9 @@ const interviewQaAnswer = R.compose(
   R.anyPass([
     R.allPass([
       lteLength(5000),
-      gtLength(0),
+      gteLength(0),
     ]),
-    n => (n === undefined) || (n === null) || (n === ''),
+    n => (n === undefined) || (n === null),
   ]),
   R.prop('answer')
 );

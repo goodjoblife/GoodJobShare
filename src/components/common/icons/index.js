@@ -55,3 +55,5 @@ const icons = {
 };
 
 export default icons;
+export { default as Clock } from './Clock';
+export { default as Coin2 } from './Coin2';

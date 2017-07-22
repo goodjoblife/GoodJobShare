@@ -45,15 +45,19 @@ const Article = ({ experience }) => (
         <InfoBlock label="面試整體滿意度">
           {experience.overall_rating}
         </InfoBlock>
-        <InfoBlock label="有以下特殊問題">
-          <ul>
-            {experience.interview_sensitive_questions && (
-              experience.interview_sensitive_questions.map((o, idx) => (
-                <li key={idx}>{o.question}</li>
-              ))
-            )}
-          </ul>
-        </InfoBlock>
+        {
+          experience.interview_sensitive_questions && experience.interview_sensitive_questions.length
+          ? (<InfoBlock label="有以下特殊問題">
+            <ul>
+              {
+                experience.interview_sensitive_questions.map((o, idx) => (
+                  <li key={idx}>{o}</li>
+                ))
+              }
+            </ul>
+          </InfoBlock>)
+          : null
+        }
       </ul>
       )}
 
@@ -107,16 +111,18 @@ const Article = ({ experience }) => (
         ))
       )}
 
-      {experience.type === 'interview' && (
-        <div>
-          <h3 className="pLBold">面試問答</h3>
-          {experience.interview_qas && (
-            experience.interview_qas.map((o, idx) => (
+      {(experience.type === 'interview' && experience.interview_qas
+        && experience.interview_qas.length) ?
+        (
+          <div>
+            <h3 className="pLBold">面試問答</h3>
+            {experience.interview_qas.map((o, idx) => (
               <QABlock key={idx} qa={o} />
-            ))
-          )}
-        </div>
-      )}
+            ))}
+          </div>
+        ) :
+        null
+      }
     </div>
   </div>
 );
