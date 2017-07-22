@@ -126,7 +126,7 @@ class InterviewForm extends React.Component {
       return this.setState(state => ({
         [blockKey]: {
           ...state[blockKey],
-          [id]: createBlock.sections(id)(subtitle),
+          [id]: createBlock[blockKey](id)(subtitle),
         },
       }));
     };
