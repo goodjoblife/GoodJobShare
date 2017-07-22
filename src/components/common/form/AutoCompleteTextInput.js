@@ -22,69 +22,106 @@ const renderItem = (item, isHighlighted) => (
   </div>
 );
 
-const AutoCompleteTextInput = (
-  {
-    value,
-    placeholder,
-    onChange,
-    isWarning,
-    warningWording,
-    type,
-    getItemValue,
-    items,
-    onSelect,
+class AutoCompleteTextInput extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.handleIsOpen = this.handleIsOpen.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+
+    this.state = {
+      isOpen: false,
+    };
   }
-) => {
-  const inputClassName = isWarning ? styles.warning : styles.input;
-  return (
-    <div
-      style={{
-        position: 'relative',
-      }}
-    >
-      <Autocomplete
-        type={type}
-        placeholder={placeholder}
-        inputProps={{
-          className: inputClassName,
+
+  onFocus() {
+    this.handleIsOpen(true);
+  }
+
+  onBlur() {
+    this.handleIsOpen(false);
+  }
+
+  handleIsOpen(isOpen) {
+    this.setState({
+      isOpen,
+    });
+  }
+
+  render() {
+    const {
+      value,
+      placeholder,
+      onChange,
+      isWarning,
+      warningWording,
+      type,
+      getItemValue,
+      items,
+      onSelect,
+    ...rest
+    } = this.props;
+
+    const {
+      isOpen,
+    } = this.state;
+
+    const inputClassName = isWarning ? styles.warning : styles.input;
+    return (
+      <div
+        style={{
+          position: 'relative',
         }}
-        value={value}
-        onChange={onChange}
-        renderItem={renderItem}
-        getItemValue={getItemValue}
-        items={items}
-        wrapperStyle={{
-          display: 'block',
-        }}
-        menuStyle={{
-          position: 'absolute',
-          zIndex: '99',
-          top: null,
-          bottom: 0,
-          left: 0,
-          transform: 'translateY(100%)',
-          border: '1px solid #b4b4b4',
-          maxHeight: '150px',
-          overflowY: 'scroll',
-          padding: '5px 0',
-        }}
-        autoHighlight={false}
-        onSelect={onSelect}
-      />
-      {
-        warningWording ?
-          <p
-            className={`
+      >
+        <Autocomplete
+          type={type}
+          placeholder={placeholder}
+          inputProps={{
+            className: inputClassName,
+            onFocus: this.onFocus,
+            onBlur: this.onBlur,
+          }}
+          value={value}
+          onChange={onChange}
+          renderItem={renderItem}
+          getItemValue={getItemValue}
+          items={items}
+          wrapperStyle={{
+            display: 'block',
+          }}
+          menuStyle={{
+            display: items.length !== 0 ? 'block' : 'none',
+            position: 'absolute',
+            zIndex: '99',
+            top: null,
+            bottom: 0,
+            left: 0,
+            transform: 'translateY(100%)',
+            border: '1px solid #b4b4b4',
+            maxHeight: '150px',
+            overflowY: 'scroll',
+            padding: '5px 0',
+          }}
+          autoHighlight={false}
+          onSelect={onSelect}
+          open={isOpen}
+          {...rest}
+        />
+        {
+          warningWording ?
+            <p
+              className={`
             pS ${styles.warning__text} ${isWarning ? styles.isWarning : ''}
           `}
-          >
-            {warningWording}
-          </p> : null
-      }
-    </div>
-  );
-};
-
+            >
+              {warningWording}
+            </p> : null
+        }
+      </div>
+    );
+  }
+}
 
 AutoCompleteTextInput.propTypes = {
   value: PropTypes.oneOfType([
