@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 
 import Button from 'common/button/Button';
 import Checkbox from 'common/form/Checkbox';
+import { P } from 'common/base';
 import CommentBlock from './CommentBlock';
 
 import styles from './MessageBoard.module.css';
@@ -10,7 +11,7 @@ const MessageBoard = ({
   replies, likeReply, tos, comment, setTos, setComment, submitComment,
 }) => (
   <div className={styles.container}>
-    <div className="formLabel">共 {replies.length} 則回應</div>
+    <P size="m">共 {replies.length} 則回應</P>
     <hr />
     <textarea
       rows="5" placeholder="寫下您的留言、意見"

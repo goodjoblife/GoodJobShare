@@ -1,25 +1,27 @@
 import React, { PropTypes } from 'react';
+import { P } from 'common/base';
 import styles from './QABlock.module.css';
 
-const QABlock = ({ qa }) => (
+const QABlock = ({ question, answer }) => (
   <section className={styles.container}>
-    <div className={styles.question}>
-      <div className={styles.q}>Q</div>
-      <div className={`${styles.content} pMBold`}>
-        {qa.question}
-      </div>
+    <div className={styles.qItem}>
+      <div className={styles.qLabel}>Q</div>
+      <P size="m" bold className={styles.content}>
+        {question}
+      </P>
     </div>
-    <div className={styles.answer}>
-      <div className={styles.a}>A</div>
-      <div className={`${styles.content} pM`}>
-        {qa.answer}
-      </div>
-    </div>
+    { answer && <div className={styles.aItem}>
+      <div bold className={styles.aLabel}>A</div>
+      <P size="m" className={styles.content}>
+        {answer}
+      </P>
+    </div> }
   </section>
 );
 
 QABlock.propTypes = {
-  qa: PropTypes.object.isRequired,
+  question: PropTypes.string.isRequired,
+  answer: PropTypes.string,
 };
 
 export default QABlock;

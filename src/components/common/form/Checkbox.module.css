@@ -8,14 +8,13 @@
   }
 
   input[type="checkbox"] + label {
-    display: inline-block;
+    display: flex;
     align-items: center;
     transition: color .3s;
 
     .checkboxInput {
       position: relative;
-      display: inline-block;
-      vertical-align: middle;
+      flex: 0 0 20px;
       width: 20px;
       height: 20px;
       border: 1px solid main-gray;
@@ -26,10 +25,9 @@
       cursor: pointer;
     }
     .checkboxText {
-      text-transform: capitalize;
-      display: inline-block;
-      vertical-align: middle;
-      font-size: 1em;
+      font-size: 16px;
+      font-weight: normal;
+      line-height: 1.3em;
       letter-spacing: 1px;
       cursor: pointer;
     }

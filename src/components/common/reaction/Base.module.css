@@ -1,23 +1,37 @@
-@value main-gray, main-yellow from "../variables.module.css";
+@value main-gray, gray-dark, main-yellow from "../variables.module.css";
 
 .container {
-  color: main-gray;
+  font-size: 1em;
   display: flex;
   align-items: center;
+  justify-content: center;
 
   svg {
     fill: main-gray;
     width: 18px;
     height: 18px;
+    transition: fill .2s;
+
     &.clickable {
       cursor: pointer;
+      &:hover {
+        fill: gray-dark;
+      }
     }
+
     &.toggled {
       fill: main-yellow;
+      &:hover {
+        fill: main-yellow;
+      }
     }
   }
 
   .label, .count {
     margin-left: 12px;
+
+    @media (max-width: 550px) {
+      margin-left: 6px;
+    }
   }
 }

@@ -1,5 +1,7 @@
 const autoprefixer = require('autoprefixer');
 const nested = require('postcss-nested');
+const mixin = require('postcss-mixins');
+const simpleVars = require('postcss-simple-vars');
 const webpack = require('webpack');
 
 const {
@@ -41,6 +43,8 @@ module.exports = {
     autoprefixer({
       browsers: ['last 2 version', 'ie >= 10'],
     }),
+    mixin,
+    simpleVars,
     nested,
   ],
   resolve: {

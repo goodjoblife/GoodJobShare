@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import { Wrapper } from 'common/base';
 import i from 'common/icons';
 import FacebookWrapper from 'common/FacebookWrapper';
 import { formatCanonicalPath } from 'utils/helmetHelper';
@@ -9,7 +10,7 @@ import styles from './Footer.module.css';
 import { FACEBOOK_APP_ID } from '../../config';
 
 const Footer = ({ id, prev, next }) => (
-  <div className={cn(styles.footer, 'wrapperM')}>
+  <Wrapper size="m" className={styles.footer}>
     <div className={styles.share}>
       <FacebookWrapper appId={FACEBOOK_APP_ID}>
         <div
@@ -43,7 +44,7 @@ const Footer = ({ id, prev, next }) => (
         {...next && next.toJS()}
       />
     </div>
-  </div>
+  </Wrapper>
 );
 
 Footer.propTypes = {

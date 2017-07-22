@@ -1,38 +1,48 @@
 @value link-blue from "common/variables.module.css";
 
 .editor {
-  /* sl bold but margin */
+  /* pL */
+  font-size: 1.1em;
+  line-height: 1.6em;
+
   h2 {
+    /*headingSL*/
     font-size: 1.5em;
     line-height: 1.5em;
     letter-spacing: 0.05em;
-    font-weight: 700;
 
     @media (max-width: 550px) {
       font-size: 1.4em;
     }
-    margin-top: 60px;
-    margin-bottom: 20px;
+
+    margin-top: 1.5em;
+    margin-bottom: 16px;
   }
 
-  /* l but margin bottom */
   p {
-    font-size: 1.1em;
-    line-height: 1.6em;
     margin-bottom: 1em;
   }
 
-  /* same as MarkdowmParser.module.css */
   strong, bold {
     font-weight: 700;
   }
 
-  ol, ul {
+  /* blueLink */
+  a {
+    color: link-blue;
+    border-bottom: 1px solid transparent;
+    transition: border .3s;
+    padding-bottom: 2px;
+    @media (min-width: 851px) {
+      &:hover {
+        border-bottom: 1px solid link-blue;
+      }
+    }
+  }
+
+  ul, ol {
     margin-left: 1.3em;
-    > li {    
-      list-style: decimal;
-      font-size: 1.1em;
-      line-height: 1.6em;
+    > li {
       p {
         font-size: inherit;
         line-height: inherit;
@@ -44,28 +54,11 @@
     }
   }
 
-  ol > li {
-    list-style-type: decimal;
-  }
-
-  ul > li {
+  ul {
     list-style-type: disc;
   }
 
-  img {
-    max-width: 100%;
-    margin-bottom: 10px;
-  }
-
-  a {
-    color: link-blue;
-    border-bottom: 1px solid transparent;
-    transition: border .3s;
-    padding-bottom: 2px;
-    @media (min-width: 851px) {
-      &:hover {
-        border-bottom: 1px solid link-blue;
-      }
-    }
+  ol {
+    list-style-type: decimal;
   }
 }

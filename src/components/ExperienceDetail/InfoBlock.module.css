@@ -1,5 +1,23 @@
-@value gray-dark from "../common/variables.module.css";
+@value gray-dark from "common/variables.module.css";
+
+.block {
+  margin-bottom: 32px;
+
+  @media (max-width: 850px) {
+    width: 160px;
+  }
+}
 
 .label {
   color: gray-dark;
+  margin-bottom: 4px;
+}
+
+.content {
+  > ul {
+    margin-left: 1.3em;
+    > li {
+      list-style-type: disc;
+    }
+  }
 }

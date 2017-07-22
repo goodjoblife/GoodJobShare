@@ -1,14 +1,15 @@
 import React from 'react';
-import cn from 'classnames';
+import { Link } from 'react-router';
+import { Wrapper, Heading } from 'common/base';
 import styles from './NotFound.module.css';
 
 const NotFound = () => (
-  <div className={cn(styles.wrapper, 'wrapperL')}>
+  <Wrapper size="l" className={styles.wrapper}>
     <div className={styles.inner}>
-      <h1 className={cn('subheadingL', styles.heading)}>不好意思，頁面不存在</h1>
-      <a href="/" className={styles.link}>回首頁</a>
+      <Heading size="l" className={styles.heading}>不好意思，頁面不存在</Heading>
+      <Link to="/" className={styles.link}>回首頁</Link>
     </div>
-  </div>
+  </Wrapper>
 );
 
 export default NotFound;

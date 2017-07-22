@@ -6,6 +6,10 @@
   @media (max-width: 850px) {
     font-size: 2em;
   }
+
+  @media (max-width: 550px) {
+    font-size: 1.8em;
+  }
 }
 
 .m {

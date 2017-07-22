@@ -1,23 +1,64 @@
-@value gray-light, border-gray from "common/variables.module.css";
+@value white-light, border-gray from "common/variables.module.css";
+
+$padding: 40px;
+$paddingS: 16px;
 
 .container {
-  margin: 35px 0 0 0;
   display: flex;
   border: 1px solid border-gray;
-  > .aside {
-    width: 345px;
-    background-color: gray-light;
-    padding: 40px 30px;
-    > ul > li {
-      margin-bottom: 20px;
-      ul > li {
-        list-style-type: disc;
-        margin-left: 20px;
-      }
-    }
+
+  @media (max-width: 850px) {
+    flex-direction: column;
   }
-  > .main {
-    flex: 1;
-    padding: 40px 50px;
+}
+
+.aside {
+  width: 345px;
+  background-color: white-light;
+  padding: $padding;
+
+  @media (max-width: 1280px) {
+    width: 30%;
+  }
+
+  @media (max-width: 850px) {
+    width: 100%;
+  }
+
+  @media (max-width: 550px) {
+    padding: $paddingS;
+  }
+}
+
+.infoList {
+  @media (max-width: 850px) {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: -32px;
+  }
+}
+
+.main {
+  flex: 1;
+}
+
+.article {
+  padding: $padding;
+
+  .heading {
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 550px) {
+    padding: $paddingS;
+  }
+}
+
+.qaWrapper {
+  border-top: 1px solid border-gray;
+  padding: $padding;
+
+  @media (max-width: 550px) {
+    padding: $paddingS;
   }
 }

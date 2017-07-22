@@ -1,31 +1,31 @@
-@value main-gray, gray-light from "../common/variables.module.css";
+@value main-gray, gray-light, border-gray from "../common/variables.module.css";
 
 .container {
-  width: 750px;
-  margin: 50px auto;
+  margin: 50px 0;
   hr {
     border: 0;
-    border-top: 1px solid main-gray;
+    border-top: 1px solid border-gray;
     margin: 10px 0 20px 0;
   }
   textarea {
     width: 100%;
     padding: 20px;
-    border: 1px solid main-gray;
+    border: 1px solid border-gray;
   }
-  .termsOfService {
-    text-align: center;
-    button {
-      margin: 20px auto;
-    }
-  }
+}
 
-  .commentBlocks {
-    section {
-      &:first-child {
-        border-top: 1px solid main-gray;
-      }
-      border-bottom: 1px solid main-gray;
+.termsOfService {
+  text-align: center;
+  button {
+    margin: 20px auto;
+  }
+}
+
+.commentBlocks {
+  section {
+    &:first-child {
+      border-top: 1px solid border-gray;
     }
+    border-bottom: 1px solid border-gray;
   }
 }
