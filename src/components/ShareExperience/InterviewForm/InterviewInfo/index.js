@@ -162,6 +162,7 @@ class InterviewInfo extends React.PureComponent {
               onChange={handleState('overallRating')}
               validator={overallRatingValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
           </div>
         </div>
