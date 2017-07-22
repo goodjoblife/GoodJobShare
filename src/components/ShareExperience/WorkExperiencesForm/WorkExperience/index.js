@@ -25,6 +25,7 @@ class WorkExperience extends React.PureComponent {
       removeSection,
       editSection,
       submitted,
+      changeValidationStatus,
     } = this.props;
 
     return (
@@ -53,6 +54,7 @@ class WorkExperience extends React.PureComponent {
               placeholder="ＯＯ 股份有限公司工作經驗分享"
               validator={titleValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
@@ -67,6 +69,7 @@ class WorkExperience extends React.PureComponent {
               editSection={editSection}
               validator={sectionsValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
             <div
               style={{
@@ -103,6 +106,7 @@ WorkExperience.propTypes = {
   removeSection: PropTypes.func,
   editSection: PropTypes.func,
   submitted: PropTypes.bool,
+  changeValidationStatus: PropTypes.func,
 };
 
 export default WorkExperience;
