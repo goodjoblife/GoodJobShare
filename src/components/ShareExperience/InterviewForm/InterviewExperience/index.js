@@ -73,6 +73,7 @@ class InterviewExperience extends Component {
               editSection={editSection}
               validator={sectionsValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
             <div
               style={{
