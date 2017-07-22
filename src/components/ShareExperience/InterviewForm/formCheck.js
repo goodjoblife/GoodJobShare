@@ -4,6 +4,7 @@ import {
   notStrEmpty,
   notNullOrUndefined,
   lteLength,
+  gteLength,
   gtLength,
 } from 'utils/dataCheckUtil';
 
