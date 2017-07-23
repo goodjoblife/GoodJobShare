@@ -6,9 +6,8 @@ import Base from './Base';
 import styles from './Base.module.css';
 
 const ThumbsUp = ({ onClick, toggled, ...restProps }) => (
-  <Base {...restProps}>
+  <Base onClick={onClick} {...restProps}>
     <i.Like
-      onClick={onClick}
       className={cn(
         toggled ? styles.toggled : '',
         onClick ? styles.clickable : ''
