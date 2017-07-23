@@ -37,12 +37,12 @@ describe('companyQuery test', () => {
 });
 
 describe('region test', () => {
-  test('non-null should pass', () => {
+  test('non-empty should pass', () => {
     expect(region('台北市')).toBe(true);
   });
 
-  test('null should not pass', () => {
-    expect(region(null)).toBe(false);
+  test('empty string should not pass', () => {
+    expect(region('')).toBe(false);
   });
 });
 
@@ -90,13 +90,13 @@ describe('interviewTimeMonth test', () => {
 });
 
 describe('interviewResult test', () => {
-  test('string length in [0, 10] should pass', () => {
-    expect(interviewResult('')).toBe(true);
+  test('string length in (0, 10] should pass', () => {
     expect(interviewResult('abcdeabcde')).toBe(true);
     expect(interviewResult('abc')).toBe(true);
   });
 
-  test('string length not in [0, 10] should not pass', () => {
+  test('string length not in (0, 10] should not pass', () => {
+    expect(interviewResult('')).toBe(false);
     expect(interviewResult('abcdeabcdea')).toBe(false);
   });
 });
@@ -255,7 +255,7 @@ describe('interviewFormCheck tests', () => {
   const defaultForm = {
     companyQuery: '',
     companyId: '',
-    region: null,
+    region: '',
     jobTitle: '',
     experienceInYear: null,
     education: null,

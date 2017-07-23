@@ -12,6 +12,11 @@ import InterviewQas from './InterviewQas';
 import InterviewSensitiveQuestions from './InterviewSensitiveQuestions';
 
 import {
+  title as titleValidator,
+  sections as sectionsValidator,
+} from '../formCheck';
+
+import {
   interviewSectionSubtitleOptions,
 } from '../../common/optionMap';
 
@@ -29,6 +34,7 @@ class InterviewExperience extends Component {
       removeQa,
       editQa,
       interviewSensitiveQuestions,
+      submitted,
     } = this.props;
     return (
       <div
@@ -49,6 +55,8 @@ class InterviewExperience extends Component {
               title={title}
               onChange={handleState('title')}
               placeholder="ＯＯ 股份有限公司面試經驗分享"
+              validator={titleValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -61,6 +69,8 @@ class InterviewExperience extends Component {
               sections={sections}
               removeSection={removeSection}
               editSection={editSection}
+              validator={sectionsValidator}
+              submitted={submitted}
             />
             <div
               style={{
@@ -149,6 +159,7 @@ InterviewExperience.propTypes = {
   interviewSensitiveQuestions: PropTypes.arrayOf(
     PropTypes.string,
   ),
+  submitted: PropTypes.bool,
 };
 
 export default InterviewExperience;

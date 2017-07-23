@@ -1,7 +1,53 @@
-@value border-gray from "./variables.module.css";
+@value border-gray, gray-dark, link-blue from "common/variables.module.css";
+
+$below-small: 850px;
+
+@define-mixin table-th {
+  text-align: left;
+  font-size: .95em;
+  line-height: 1.2em;
+  letter-spacing: 0.05em;
+  color: gray-dark;
+}
+@define-mixin table-td {
+  text-align: left;
+  font-size: .95em;
+  line-height: 1.3em;
+}
+@define-mixin table-link {
+  font-weight: 700;
+}
 
 .container {
   margin: 15px 0;
   background-color: white;
   border: 2px solid border-gray;
+}
+
+.rwdTable {
+  width: 100%;
+	table-layout: fixed;
+  background-color: #fff;
+
+  th {
+    @mixin table-th;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
+    border-bottom: 2px solid border-gray;
+    vertical-align: bottom;
+
+		@media (max-width: $below-small) {
+			display: none;
+		}
+	}
+
+  /* havn't done yet */
+  td {
+    font-size: .95em;
+    line-height: 1.3em;
+    border-bottom: 1px solid #ededed;
+    padding: 12px 5px;
+  }
 }

@@ -40,3 +40,19 @@
  *  Font
  * ------------------------------------ */
 @value primary-font: "PingFang TC", "Helvetica Neue", Helvetica, Arial, "微軟正黑體", "Microsoft JhengHei", sans-serif;
+
+/* ------------------------------------
+ *  MediaQueries
+ * ------------------------------------ */
+@value below-medium: 1280px;
+@value below-desktop: 1024px;
+@value below-small: 850px;
+@value below-tablet: 767px;
+@value below-mobile: 550px;
+@value below-little: 330px;
+
+@value above-medium: 1281px;
+@value above-desktop: 1025px;
+@value above-small: 851px;
+@value above-tablet: 768px;
+@value above-mobile: 551px;

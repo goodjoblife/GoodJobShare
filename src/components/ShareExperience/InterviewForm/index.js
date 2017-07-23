@@ -1,6 +1,7 @@
 import React from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
+import { animateScroll } from 'react-scroll';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -65,7 +66,7 @@ const firstQaId = idCounter();
 const defaultForm = {
   companyQuery: '',
   companyId: '',
-  region: null,
+  region: '',
   jobTitle: '',
   experienceInYear: null,
   education: null,
@@ -93,10 +94,23 @@ class InterviewForm extends React.Component {
     this.appendBlock = this.appendBlock.bind(this);
     this.removeBlock = this.removeBlock.bind(this);
     this.editBlock = this.editBlock.bind(this);
+    this.onSumbit = this.onSumbit.bind(this);
 
     this.state = {
       ...defaultForm,
+      submitted: false,
     };
+  }
+
+  onSumbit() {
+    const valid = interviewFormCheck(getInterviewForm(this.state));
+
+    if (valid) {
+      return postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
+    }
+    this.handleState('submitted')(true);
+    animateScroll.scrollToTop();
+    return null;
   }
 
   handleState(key) {
@@ -112,7 +126,7 @@ class InterviewForm extends React.Component {
       return this.setState(state => ({
         [blockKey]: {
           ...state[blockKey],
-          [id]: createBlock.sections(id)(subtitle),
+          [id]: createBlock[blockKey](id)(subtitle),
         },
       }));
     };
@@ -152,6 +166,17 @@ class InterviewForm extends React.Component {
         >
           面試經驗分享
         </h1>
+        {
+          this.state.submitted ?
+            <h2
+              style={{
+                marginTop: '20px',
+              }}
+              className={styles.warning__wording}
+            >
+              oops! 請檢查底下紅框內的內容是否正確
+            </h2> : null
+        }
         <InterviewInfo
           handleState={this.handleState}
           companyQuery={this.state.companyQuery}
@@ -165,6 +190,7 @@ class InterviewForm extends React.Component {
           salaryType={this.state.salaryType}
           salaryAmount={this.state.salaryAmount}
           overallRating={this.state.overallRating}
+          submitted={this.state.submitted}
         />
         <InterviewExperience
           handleState={this.handleState}
@@ -178,10 +204,10 @@ class InterviewForm extends React.Component {
           removeQa={this.removeBlock('interviewQas')}
           editQa={this.editBlock('interviewQas')}
           interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
+          submitted={this.state.submitted}
         />
         <SubmitArea
-          onSubmit={() => postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)))}
-          submitable={interviewFormCheck(getInterviewForm(this.state))}
+          onSubmit={this.onSumbit}
         />
       </div>
     );

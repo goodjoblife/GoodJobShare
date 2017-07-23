@@ -3,8 +3,8 @@ import R from 'ramda';
 import {
   notStrEmpty,
   notNullOrUndefined,
-  gteLength,
   lteLength,
+  gteLength,
   gtLength,
 } from 'utils/dataCheckUtil';
 
@@ -17,7 +17,7 @@ export const companyQuery = R.allPass([
 ]);
 
 export const region = R.allPass([
-  notNullOrUndefined,
+  notStrEmpty,
 ]);
 
 export const jobTitle = R.allPass([
@@ -33,17 +33,19 @@ export const experienceInYear = R.anyPass([
 ]);
 
 export const interviewTimeYear = R.allPass([
-  notNullOrUndefined,
+  n => n > 0,
 ]);
 
 export const interviewTimeMonth = R.allPass([
-  notNullOrUndefined,
+  n => n > 0,
+  n => n < 13,
 ]);
 
-export const interviewResult = R.allPass([
-  gteLength(0),
-  lteLength(10),
-]);
+export const interviewResult = t =>
+  notNullOrUndefined(t) && R.allPass([
+    gtLength(0),
+    lteLength(10),
+  ])(t);
 
 export const salaryAmount = R.anyPass([
   R.allPass([
@@ -100,9 +102,9 @@ const interviewQaAnswer = R.compose(
   R.anyPass([
     R.allPass([
       lteLength(5000),
-      gtLength(0),
+      gteLength(0),
     ]),
-    n => (n === undefined) || (n === null) || (n === ''),
+    n => (n === undefined) || (n === null),
   ]),
   R.prop('answer')
 );

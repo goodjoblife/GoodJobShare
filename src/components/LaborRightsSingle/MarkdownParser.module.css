@@ -1,7 +1,7 @@
 @value link-blue from "common/variables.module.css";
 
 .md {
-  /* pL */
+  /* PL */
   p {
     font-size: 1.1em;
     line-height: 1.6em;
@@ -11,12 +11,12 @@
     font-weight: 700;
   }
 
-  ol, ul {
+  ul, ol {
     margin-left: 1.3em;
     > li {
+      /* PL */
       font-size: 1.1em;
-      list-style: decimal;
-      line-height: 1.5em;
+      line-height: 1.6em;
       p {
         font-size: inherit;
         line-height: inherit;
@@ -28,17 +28,30 @@
     }
   }
 
-  ol > li {
+  ul {
     list-style-type: decimal;
   }
 
-  ul > li {
+  ol {
     list-style-type: disc;
   }
 
   img {
     max-width: 100%;
     margin-bottom: 10px;
+  }
+
+  /* bludLink */
+  a {
+    color: link-blue;
+    border-bottom: 1px solid transparent;
+    transition: border .3s;
+    padding-bottom: 2px;
+    @media (min-width: 851px) {
+      &:hover {
+        border-bottom: 1px solid link-blue;
+      }
+    }
   }
 
   hr {
@@ -51,18 +64,6 @@
     margin-right: 0;
     @media (max-width: 850px) {
       margin-bottom: 64px;
-    }
-  }
-
-  a {
-    color: link-blue;
-    border-bottom: 1px solid transparent;
-    transition: border .3s;
-    padding-bottom: 2px;
-    @media (min-width: 851px) {
-      &:hover {
-        border-bottom: 1px solid link-blue;
-      }
     }
   }
 }

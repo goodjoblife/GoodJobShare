@@ -1,4 +1,4 @@
-@value yellow-bar, main-yellow, border-gray, main-gray, gray-dark from "../common/variables.module.css";
+@value yellow-bar, main-yellow, border-gray, main-gray, gray-dark from "common/variables.module.css";
 
 .preview {
   width: 100%;
@@ -61,7 +61,6 @@
 }
 
 .content {
-  padding: 10px 30px;
   opacity: 0;
   height: 0;
   display: none;
@@ -71,15 +70,28 @@
     opacity: 1;
     height: auto;
   }
+
   .overtime {
-    display: flex;
-    > div {
-      flex: 1;
-      margin: 0 15px;
+    padding: 24px;
+
+    @media (max-width: 1024px) {
+      padding: 16px;
     }
   }
+
+  .overtimeBlockWrapper {
+    display: flex;
+
+    @media (max-width: 550px) {
+      flex-direction: column;
+    }
+  }
+
   .unit {
+    color: #b4b4b4;
     text-align: right;
-    margin: 5px 15px 50px 0;
+    font-size: .82em;
+    letter-spacing: .05em;
+    margin-top: 8px;
   }
 }

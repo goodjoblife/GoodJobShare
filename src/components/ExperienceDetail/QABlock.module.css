@@ -1,34 +1,50 @@
-@value border-gray from "../common/variables.module.css";
+@value border-gray, main-orange from "common/variables.module.css";
 
 .container {
-  padding: 25px 0 20px 0;
   border-bottom: 1px solid border-gray;
+  padding-top: 24px;
+  padding-bottom: 24px;
+
+  &:first-of-type {
+    padding-top: 8px;
+  }
+
   &:last-child {
     border-bottom: none;
   }
-  .question {
-    display: flex;
-    .q {
-      width: 32px;
-      height: 32px;
-      border-radius: 16px;
-      background-color: #EC7910;
-      text-align: center;
-      padding: 5px 7px;
-    }
-  }
-  .answer {
-    display: flex;
-    .a {
-      width: 32px;
-      height: 32px;
-      border-radius: 16px;
-      border: 1px solid #EC7910;
-      text-align: center;
-      padding: 5px 7px;
-    }
-  }
-  .content {
-    margin-left: 15px;
-  }
+}
+
+.content {
+  flex: 1 1 auto;
+  margin-left: 15px;
+}
+
+.qItem,
+.aItem {
+  display: flex;
+}
+
+.qItem {
+  margin-bottom: 8px;
+}
+
+.qLabel,
+.aLabel {
+  flex: 0 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid main-orange;
+}
+
+.qLabel {
+  background-color: main-orange;
+  color: #fff;
+}
+
+.aLabel {
+  color: main-orange;
 }

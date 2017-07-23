@@ -143,7 +143,10 @@ class ExperienceSearch extends Component {
                 {
                   (data.experiences || []).map(o => (
                     data[o.type] && (
-                      <ExperienceBlock key={o._id} to={`/experiences/${o._id}`} data={o} />
+                      <ExperienceBlock
+                        key={o._id} to={`/experiences/${o._id}`}
+                        data={o} size="l"
+                      />
                     )
                   ))
                 }

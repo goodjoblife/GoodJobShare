@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import Loader from 'common/Loader';
-
+import { Wrapper, Section, Heading, P } from 'common/base';
 import styles from './ExperienceDetail.module.css';
 import Article from './Article';
 import ReactionZone from './ReactionZone';
 // import RecommendationZone from './RecommendationZone';
 import MessageBoard from './MessageBoard';
+import BackToList from './BackToList';
 import status from '../../constants/status';
 import {
   fetchExperience,
@@ -100,48 +101,55 @@ class ExperienceDetail extends Component {
     const data = experienceDetail.toJS();
     const experience = data.experience;
     return (
-      <main className="wrapperL">
+      <main>
         {this.renderHelmet()}
-        <div className={styles.heading}>
-          <h2 className={`${styles.badge} pM`}>
-            {experience.type === 'work' ? '工作' : '面試'}
-          </h2>
-          <h1 className="headingL">
-            {experience && experience.company && (
-              typeof experience.company.name === 'string'
-              ? experience.company.name
-              : experience.company.name.join(' / ')
-            )}
-          </h1>
-        </div>
+        <Section bg="white" paddingBottom pageTop>
+          <Wrapper size="l">
+            <div className={styles.heading}>
+              <P Tag="h2" size="l" className={styles.badge}>
+                {experience.type === 'work' ? '工作' : '面試'}
+              </P>
+              <Heading size="l">
+                {experience && experience.company && (
+                  typeof experience.company.name === 'string'
+                  ? experience.company.name
+                  : experience.company.name.join(' / ')
+                )}
+              </Heading>
+            </div>
 
-        { /* 文章區塊  */}
-        {
-          data.experienceStatus === status.FETCHING
-          ? <Loader />
-          : <Article experience={experience} />
-        }
+            { /* 文章區塊  */}
+            {
+              data.experienceStatus === status.FETCHING
+              ? <Loader />
+              : <Article experience={experience} />
+            }
 
-        { /* 按讚，分享，檢舉區塊  */}
-        <ReactionZone experience={experience} likeExperience={likeExperience} />
+            { /* 按讚，分享，檢舉區塊  */}
+            <ReactionZone experience={experience} likeExperience={likeExperience} />
 
-        { /* 返回列表 */}
+            <BackToList />
+          </Wrapper>
+        </Section>
+        <Section>
+          <Wrapper size="s">
+            { /* 你可能還想看...  */}
+            { /* <RecommendationZone /> */ }
 
-        { /* 你可能還想看...  */}
-        { /* <RecommendationZone /> */ }
-
-        { /* 留言區塊  */}
-        {
-          data.replyStatus === status.FETCHING
-          ? <Loader />
-          : <MessageBoard
-            replies={data.replies}
-            likeReply={likeReply}
-            tos={data.tos} setTos={setTos}
-            comment={data.comment} setComment={setComment}
-            submitComment={this.submitComment}
-          />
-        }
+            { /* 留言區塊  */}
+            {
+              data.replyStatus === status.FETCHING
+              ? <Loader />
+              : <MessageBoard
+                replies={data.replies}
+                likeReply={likeReply}
+                tos={data.tos} setTos={setTos}
+                comment={data.comment} setComment={setComment}
+                submitComment={this.submitComment}
+              />
+            }
+          </Wrapper>
+        </Section>
       </main>
     );
   }

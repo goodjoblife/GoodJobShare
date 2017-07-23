@@ -12,10 +12,10 @@ class Select extends React.PureComponent {
       >
         <select
           className={styles.select}
-          value={this.props.value === null ? undefined : this.props.value}
+          value={this.props.value === null ? '' : this.props.value}
           onChange={e => this.props.onChange(e)}
         >
-          <option value={undefined}>{this.props.placeholder}</option>
+          <option value={''}>{this.props.placeholder}</option>
           {
             this.props.options.map(option =>
               <option

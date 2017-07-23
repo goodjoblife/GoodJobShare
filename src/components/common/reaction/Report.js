@@ -6,9 +6,8 @@ import Explanation from '../../images/explanation.svg';
 import styles from './Base.module.css';
 
 const Report = ({ onClick, toggled, ...restProps }) => (
-  <Base {...restProps}>
+  <Base {...restProps} onClick={onClick}>
     <Explanation
-      onClick={onClick}
       className={cn(
         toggled ? styles.toggled : '',
         onClick ? styles.clickable : ''

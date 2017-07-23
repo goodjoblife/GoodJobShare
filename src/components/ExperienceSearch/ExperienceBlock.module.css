@@ -1,4 +1,4 @@
-@value gray-dark, link-blue, border-gray, page-gutter-s from "common/variables.module.css";
+@value gray-dark, main-gray, link-blue, border-gray, page-gutter-s from "common/variables.module.css";
 
 .container {
   display: block;
@@ -53,6 +53,7 @@
   display: flex;
   align-items: center;
   padding: 8px 24px;
+  color: main-gray;
   > div {
     margin-right: 24px;
   }

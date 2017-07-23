@@ -54,7 +54,7 @@ class JobTitle extends React.Component {
 
   render() {
     const { autocompleteItems } = this.state;
-    const { inputTitle, jobTitle, onChange } = this.props;
+    const { inputTitle, jobTitle, onChange, validator, submitted } = this.props;
     return (
       <div>
         <InputTitle
@@ -71,6 +71,8 @@ class JobTitle extends React.Component {
             this.handleAutocompleteItems([]);
             return onChange(value);
           }}
+          isWarning={submitted && !validator(jobTitle)}
+          warningWording="需填寫職稱"
         />
       </div>
     );
@@ -81,6 +83,12 @@ JobTitle.propTypes = {
   inputTitle: PropTypes.string,
   jobTitle: PropTypes.string,
   onChange: PropTypes.func,
+  validator: PropTypes.func,
+  submitted: PropTypes.bool,
+};
+
+JobTitle.defaultProps = {
+  validator: () => {},
 };
 
 export default JobTitle;

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { Heading, P } from 'common/base';
 import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
 import SectionBlock from './SectionBlock';
@@ -8,7 +9,7 @@ const Article = ({ experience }) => (
   <div className={styles.container}>
     <aside className={styles.aside}>
       {experience.type === 'interview' && (
-      <ul>
+      <ul className={styles.infoList}>
         <InfoBlock label="面試地區">
           {experience.region}
         </InfoBlock>
@@ -45,20 +46,24 @@ const Article = ({ experience }) => (
         <InfoBlock label="面試整體滿意度">
           {experience.overall_rating}
         </InfoBlock>
-        <InfoBlock label="有以下特殊問題">
-          <ul>
-            {experience.interview_sensitive_questions && (
-              experience.interview_sensitive_questions.map((o, idx) => (
-                <li key={idx}>{o.question}</li>
-              ))
-            )}
-          </ul>
-        </InfoBlock>
+        {
+          experience.interview_sensitive_questions && experience.interview_sensitive_questions.length
+          ? (<InfoBlock label="有以下特殊問題">
+            <ul>
+              {
+                experience.interview_sensitive_questions.map((o, idx) => (
+                  <li key={idx}>{o}</li>
+                ))
+              }
+            </ul>
+          </InfoBlock>)
+          : null
+        }
       </ul>
       )}
 
       {experience.type === 'work' && (
-      <ul>
+      <ul className={styles.infoList}>
         <InfoBlock label="工作地區">
           {experience.region}
         </InfoBlock>
@@ -98,26 +103,33 @@ const Article = ({ experience }) => (
       </ul>
       )}
     </aside>
-    <div className={styles.main}>
-      <h2 className="headingMBold">{experience.title}</h2>
-      <br />
-      {experience.sections && (
-        experience.sections.map((o, idx) => (
-          <SectionBlock key={idx} section={o} />
-        ))
-      )}
+    <section className={styles.main}>
+      <div className={styles.article}>
+        <Heading size="m" className={styles.heading}>{experience.title}</Heading>
+        {experience.sections && (
+          experience.sections.map(({ subtitle, content }, idx) => (
+            <SectionBlock
+              key={idx}
+              subtitle={subtitle}
+              content={content}
+            />
+          ))
+        )}
+      </div>
 
-      {experience.type === 'interview' && (
-        <div>
-          <h3 className="pLBold">面試問答</h3>
-          {experience.interview_qas && (
-            experience.interview_qas.map((o, idx) => (
-              <QABlock key={idx} qa={o} />
-            ))
-          )}
-        </div>
-      )}
-    </div>
+      {(experience.type === 'interview' && experience.interview_qas
+        && experience.interview_qas.length) ?
+        (
+          <div className={styles.qaWrapper}>
+            <P size="l" bold>面試問答</P>
+            {experience.interview_qas.map(({ question, answer }, idx) => (
+              <QABlock key={idx} question={question} answer={answer} />
+            ))}
+          </div>
+        ) :
+        null
+      }
+    </section>
   </div>
 );
 

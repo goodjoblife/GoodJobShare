@@ -1,15 +1,17 @@
 import React, { PropTypes } from 'react';
+import { P } from 'common/base';
+import styles from './SectionBlock.module.css';
 
-const SectionBlock = ({ section }) => (
+const SectionBlock = ({ subtitle, content }) => (
   <section>
-    <h3 className={'pLBold'}>{section.subtitle}</h3>
-    <p className={'pL'}>{section.content}</p>
-    <br />
+    <P size="l" bold className={styles.heading}>{subtitle}</P>
+    <P size="l" className={styles.content}>{content}</P>
   </section>
 );
 
 SectionBlock.propTypes = {
-  section: PropTypes.object.isRequired,
+  subtitle: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
 };
 
 export default SectionBlock;

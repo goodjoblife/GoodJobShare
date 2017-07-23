@@ -2,7 +2,6 @@ import R from 'ramda';
 
 import {
   notStrEmpty,
-  notNullOrUndefined,
   lteLength,
   gtLength,
 } from 'utils/dataCheckUtil';
@@ -16,7 +15,7 @@ export const companyQuery = R.allPass([
 ]);
 
 export const region = R.allPass([
-  notNullOrUndefined,
+  notStrEmpty,
 ]);
 
 export const jobTitle = R.allPass([
@@ -35,7 +34,7 @@ export const salaryAmount = R.anyPass([
   R.allPass([
     n => n >= 0,
   ]),
-  n => n === '',
+  n => n === undefined,
 ]);
 
 export const weekWorkTime = R.allPass([

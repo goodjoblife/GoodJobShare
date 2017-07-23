@@ -13,6 +13,12 @@ import IsEmployed from './IsEmployed';
 import WeekWorkTime from './WeekWorkTime';
 import RecommendToOthers from './RecommendToOthers';
 
+import {
+  companyQuery as companyQueryValidator,
+  region as regionValidator,
+  jobTitle as jobTitleValidator,
+} from '../formCheck';
+
 class WorkInfo extends React.PureComponent {
   render() {
     const {
@@ -29,6 +35,7 @@ class WorkInfo extends React.PureComponent {
       salaryAmount,
       recommendToOthers,
       weekWorkTime,
+      submitted,
     } = this.props;
 
     return (
@@ -58,6 +65,8 @@ class WorkInfo extends React.PureComponent {
                 handleState('title')(`${v} 工作經驗分享`);
               }}
               onCompanyId={handleState('companyId')}
+              validator={companyQueryValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -68,6 +77,8 @@ class WorkInfo extends React.PureComponent {
             <Region
               region={region}
               onChange={handleState('region')}
+              validator={regionValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -79,6 +90,8 @@ class WorkInfo extends React.PureComponent {
               inputTitle="職稱"
               jobTitle={jobTitle}
               onChange={handleState('jobTitle')}
+              validator={jobTitleValidator}
+              submitted={submitted}
             />
           </div>
           <div
@@ -178,6 +191,7 @@ WorkInfo.propTypes = {
     PropTypes.string,
   ]),
   recommendToOthers: PropTypes.string,
+  submitted: PropTypes.bool,
 };
 
 export default WorkInfo;

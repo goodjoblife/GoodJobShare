@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
+import { P } from 'common/base';
 import styles from './InfoBlock.module.css';
 
 const InfoBlock = ({ label, children }) => (
-  <li>
-    <div className={`pM ${styles.label}`}>{label}</div>
-    <div className="pMBold">{children}</div>
+  <li className={styles.block}>
+    <P size="m" className={styles.label}>{label}</P>
+    <P size="l" blod className={styles.content}>{children}</P>
   </li>
 );
 
