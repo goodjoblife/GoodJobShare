@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
-import { animateScroll } from 'react-scroll';
+import { scroller } from 'react-scroll';
+
+import {
+  debounce,
+} from 'utils/streamUtils';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -26,6 +30,8 @@ import {
 import styles from './WorkExperiencesForm.module.css';
 
 import helmetData from '../../../constants/helmetData';
+
+import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 
 const createSection = id => subtitle => {
   const section = {
@@ -89,6 +95,18 @@ class WorkExperiencesForm extends React.Component {
       ...defaultForm,
       submitted: false,
     };
+
+    this.elementValidationStatus = {};
+    this.leaveAlert = false;
+    this.debounceUpdateLeaveAlert = debounce(this.updateLeaveAlert, 3000);
+  }
+
+  componentDidUpdate() {
+    if (this.leaveAlert) {
+      this.debounceUpdateLeaveAlert();
+    } else {
+      this.updateLeaveAlert();
+    }
   }
 
   onSumbit() {
@@ -98,8 +116,84 @@ class WorkExperiencesForm extends React.Component {
       return postWorkExperience(workExperiencesToBody(this.state));
     }
     this.handleState('submitted')(true);
-    animateScroll.scrollToTop();
+    const topInvalidElement = this.getTopInvalidElement();
+    if (topInvalidElement !== null) {
+      scroller.scrollTo(topInvalidElement, {
+        duration: 1000,
+        delay: 100,
+        offset: -100,
+        smooth: true,
+      });
+    }
     return null;
+  }
+
+  getTopInvalidElement = () => {
+    const order = WORK_FORM_ORDER;
+    for (let i = 0; i <= order.length; i += 1) {
+      if (
+        this.elementValidationStatus[order[i]] &&
+        this.elementValidationStatus[order[i]] === INVALID
+      ) {
+        return order[i];
+      }
+    }
+    return null;
+  }
+
+  setLeaveAlert = flag => {
+    const router = this.props.router;
+    const route = this.props.route;
+    if (flag) {
+      window.onbeforeunload = () => '您有填寫到一半而未上傳的資訊，確定要離開嗎？';
+      router.setRouteLeaveHook(route, () => '您有填寫到一半而未上傳的資訊，確定要離開嗎？');
+    } else {
+      window.onbeforeunload = null;
+      router.setRouteLeaveHook(route, null);
+    }
+  }
+
+  checkFormEdited = () => {
+    const plainFields = [
+      'companyQuery',
+      'region',
+      'jobTitle',
+      'experienceInYear',
+      'education',
+      'isCurrentlyEmployed',
+      'jobEndingTimeYear',
+      'jobEndingTimeMonth',
+      'salaryType',
+      'salaryAmount',
+      'weekWorkTime',
+      'recommendToOthers',
+    ];
+    if (plainFields.some(key => this.state[key] !== defaultForm[key])) {
+      return true;
+    }
+
+    const keys = Object.keys(this.state.sections);
+    if (keys.length !== 1) {
+      return true;
+    }
+    const section = this.state.sections[keys[0]];
+    if (section.subtitle !== '' || section.content !== '') {
+      return true;
+    }
+
+    return false;
+  }
+
+  updateLeaveAlert = () => {
+    const newLeaveAlert = this.checkFormEdited();
+    if (this.leaveAlert !== newLeaveAlert) {
+      this.setLeaveAlert(newLeaveAlert);
+      this.leaveAlert = newLeaveAlert;
+    }
+  }
+
+  changeValidationStatus = (elementId, status) => {
+    this.elementValidationStatus[elementId] = status;
   }
 
   handleState(key) {
@@ -199,6 +293,7 @@ class WorkExperiencesForm extends React.Component {
           weekWorkTime={weekWorkTime}
           recommendToOthers={recommendToOthers}
           submitted={submitted}
+          changeValidationStatus={this.changeValidationStatus}
         />
         <WorkExperience
           handleState={this.handleState}
@@ -208,6 +303,7 @@ class WorkExperiencesForm extends React.Component {
           removeSection={this.removeBlock('sections')}
           editSection={this.editBlock('sections')}
           submitted={submitted}
+          changeValidationStatus={this.changeValidationStatus}
         />
         <SubmitArea
           onSubmit={this.onSumbit}
@@ -216,5 +312,10 @@ class WorkExperiencesForm extends React.Component {
     );
   }
 }
+
+WorkExperiencesForm.propTypes = {
+  route: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
+};
 
 export default WorkExperiencesForm;

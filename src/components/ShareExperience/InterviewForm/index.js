@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
-import { animateScroll } from 'react-scroll';
+import { scroller } from 'react-scroll';
+
+import {
+  debounce,
+} from 'utils/streamUtils';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -26,6 +30,7 @@ import {
 } from '../utils';
 
 import helmetData from '../../../constants/helmetData';
+import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
 
 const createSection = id => subtitle => {
   const section = {
@@ -100,6 +105,18 @@ class InterviewForm extends React.Component {
       ...defaultForm,
       submitted: false,
     };
+
+    this.elementValidationStatus = {};
+    this.leaveAlert = false;
+    this.debounceUpdateLeaveAlert = debounce(this.updateLeaveAlert, 3000);
+  }
+
+  componentDidUpdate() {
+    if (this.leaveAlert) {
+      this.debounceUpdateLeaveAlert();
+    } else {
+      this.updateLeaveAlert();
+    }
   }
 
   onSumbit() {
@@ -109,8 +126,96 @@ class InterviewForm extends React.Component {
       return postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
     }
     this.handleState('submitted')(true);
-    animateScroll.scrollToTop();
+    const topInvalidElement = this.getTopInvalidElement();
+    if (topInvalidElement !== null) {
+      scroller.scrollTo(topInvalidElement, {
+        duration: 1000,
+        delay: 100,
+        offset: -100,
+        smooth: true,
+      });
+    }
     return null;
+  }
+
+  getTopInvalidElement = () => {
+    const order = INTERVIEW_FORM_ORDER;
+    for (let i = 0; i <= order.length; i += 1) {
+      if (
+        this.elementValidationStatus[order[i]] &&
+        this.elementValidationStatus[order[i]] === INVALID
+      ) {
+        return order[i];
+      }
+    }
+    return null;
+  }
+
+  setLeaveAlert = flag => {
+    const router = this.props.router;
+    const route = this.props.route;
+    if (flag) {
+      window.onbeforeunload = () => '您有填寫到一半而未上傳的資訊，確定要離開嗎？';
+      router.setRouteLeaveHook(route, () => '您有填寫到一半而未上傳的資訊，確定要離開嗎？');
+    } else {
+      window.onbeforeunload = null;
+      router.setRouteLeaveHook(route, null);
+    }
+  }
+
+  checkFormEdited = () => {
+    const plainFields = [
+      'companyQuery',
+      'region',
+      'jobTitle',
+      'experienceInYear',
+      'education',
+      'interviewTimeYear',
+      'interviewTimeMonth',
+      'interviewResult',
+      'salaryType',
+      'salaryAmount',
+      'overallRating',
+    ];
+    if (plainFields.some(key => this.state[key] !== defaultForm[key])) {
+      return true;
+    }
+
+    let keys = Object.keys(this.state.sections);
+    if (keys.length !== 1) {
+      return true;
+    }
+    const section = this.state.sections[keys[0]];
+    if (section.subtitle !== '' || section.content !== '') {
+      return true;
+    }
+
+    keys = Object.keys(this.state.interviewQas);
+    if (keys.length !== 1) {
+      return true;
+    }
+    const qa = this.state.interviewQas[keys[0]];
+    if (qa.question !== '' || qa.answer !== '') {
+      return true;
+    }
+
+    if (this.state.interviewSensitiveQuestions.length > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  updateLeaveAlert = () => {
+    const newLeaveAlert = this.checkFormEdited();
+    if (this.leaveAlert !== newLeaveAlert) {
+      this.setLeaveAlert(newLeaveAlert);
+      this.leaveAlert = newLeaveAlert;
+    }
+  }
+
+  changeValidationStatus = (elementId, status) => {
+    this.elementValidationStatus[elementId] = status;
   }
 
   handleState(key) {
@@ -161,6 +266,7 @@ class InterviewForm extends React.Component {
     return (
       <div className={styles.container}>
         <Helmet {...helmetData.SHARE_INTERVIEW} />
+
         <h1
           className="headingL"
         >
@@ -191,6 +297,7 @@ class InterviewForm extends React.Component {
           salaryAmount={this.state.salaryAmount}
           overallRating={this.state.overallRating}
           submitted={this.state.submitted}
+          changeValidationStatus={this.changeValidationStatus}
         />
         <InterviewExperience
           handleState={this.handleState}
@@ -205,6 +312,7 @@ class InterviewForm extends React.Component {
           editQa={this.editBlock('interviewQas')}
           interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
           submitted={this.state.submitted}
+          changeValidationStatus={this.changeValidationStatus}
         />
         <SubmitArea
           onSubmit={this.onSumbit}
@@ -214,6 +322,9 @@ class InterviewForm extends React.Component {
   }
 }
 
-InterviewForm.propTypes = {};
+InterviewForm.propTypes = {
+  route: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
+};
 
 export default InterviewForm;
