@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
 import { scroller } from 'react-scroll';
+
+import {
+  debounce,
+} from 'utils/streamUtils';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -93,6 +97,16 @@ class WorkExperiencesForm extends React.Component {
     };
 
     this.elementValidationStatus = {};
+    this.leaveAlert = false;
+    this.debounceUpdateLeaveAlert = debounce(this.updateLeaveAlert, 3000);
+  }
+
+  componentDidUpdate() {
+    if (this.leaveAlert) {
+      this.debounceUpdateLeaveAlert();
+    } else {
+      this.updateLeaveAlert();
+    }
   }
 
   onSumbit() {
@@ -125,6 +139,57 @@ class WorkExperiencesForm extends React.Component {
       }
     }
     return null;
+  }
+
+  setLeaveAlert = flag => {
+    const router = this.props.router;
+    const route = this.props.route;
+    if (flag) {
+      window.onbeforeunload = () => '您有填寫到一半而未上傳的資訊，確定要離開嗎？';
+      router.setRouteLeaveHook(route, () => '您有填寫到一半而未上傳的資訊，確定要離開嗎？');
+    } else {
+      window.onbeforeunload = null;
+      router.setRouteLeaveHook(route, null);
+    }
+  }
+
+  checkFormEdited = () => {
+    const plainFields = [
+      'companyQuery',
+      'region',
+      'jobTitle',
+      'experienceInYear',
+      'education',
+      'isCurrentlyEmployed',
+      'jobEndingTimeYear',
+      'jobEndingTimeMonth',
+      'salaryType',
+      'salaryAmount',
+      'weekWorkTime',
+      'recommendToOthers',
+    ];
+    if (plainFields.some(key => this.state[key] !== defaultForm[key])) {
+      return true;
+    }
+
+    const keys = Object.keys(this.state.sections);
+    if (keys.length !== 1) {
+      return true;
+    }
+    const section = this.state.sections[keys[0]];
+    if (section.subtitle !== '' || section.content !== '') {
+      return true;
+    }
+
+    return false;
+  }
+
+  updateLeaveAlert = () => {
+    const newLeaveAlert = this.checkFormEdited();
+    if (this.leaveAlert !== newLeaveAlert) {
+      this.setLeaveAlert(newLeaveAlert);
+      this.leaveAlert = newLeaveAlert;
+    }
   }
 
   changeValidationStatus = (elementId, status) => {
@@ -247,5 +312,10 @@ class WorkExperiencesForm extends React.Component {
     );
   }
 }
+
+WorkExperiencesForm.propTypes = {
+  route: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
+};
 
 export default WorkExperiencesForm;
