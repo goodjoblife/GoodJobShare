@@ -33,11 +33,12 @@ export const experienceInYear = R.anyPass([
 ]);
 
 export const interviewTimeYear = R.allPass([
-  notNullOrUndefined,
+  n => n > 0,
 ]);
 
 export const interviewTimeMonth = R.allPass([
-  notNullOrUndefined,
+  n => n > 0,
+  n => n < 13,
 ]);
 
 export const interviewResult = t =>
