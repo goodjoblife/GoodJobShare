@@ -7,6 +7,7 @@
     "start-production": "cross-env NODE_ENV=production node bin/server.js",
     "clean": "rimraf lib dist coverage",
     "lint": "eslint src scripts *.js",
+    "lint-staged": "lint-staged",
     "testonly": "cross-env NODE_ENV=test jest",
     "testonly:watch": "npm run testonly -- --watch",
     "test": "npm run lint && npm run testonly",
@@ -14,8 +15,11 @@
     "build": "npm run clean && cross-env NODE_ENV=production webpack src/index.js --config webpack.config.prod.js"
   },
   "pre-commit": [
-    "lint"
+    "lint-staged"
   ],
+  "lint-staged": {
+    "*.js": "eslint"
+  },
   "jest": {
     "moduleNameMapper": {
       "common(.*)": "<rootDir>/src/components/common$1",
@@ -48,6 +52,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "jest": "^17.0.3",
     "json-loader": "^0.5.4",
+    "lint-staged": "^4.0.2",
     "postcss-loader": "^1.2.0",
     "postcss-mixins": "^6.0.1",
     "postcss-nested": "^1.0.0",
