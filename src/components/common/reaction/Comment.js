@@ -5,9 +5,8 @@ import Base from './Base';
 import styles from './Base.module.css';
 
 const Comment = ({ onClick, ...restProps }) => (
-  <Base {...restProps}>
+  <Base {...restProps} onClick={onClick}>
     <i.Comment
-      onClick={onClick}
       className={onClick ? styles.clickable : ''}
     />
   </Base>

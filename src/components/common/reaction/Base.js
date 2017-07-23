@@ -16,8 +16,12 @@ const renderCount = count => {
   return <div className={styles.count}>{count}</div>;
 };
 
-const Base = ({ fontClass, children, label, count, style }) => (
-  <div className={`${fontClass || 'pS'} ${styles.container}`} style={style}>
+const Base = ({ fontClass, children, label, count, style, onClick }) => (
+  <div
+    className={`${fontClass || 'pS'} ${styles.container}`}
+    style={style}
+    onClick={onClick}
+  >
     <div>{children}</div>
     {renderLabel(label)}
     {renderCount(count)}
@@ -31,6 +35,7 @@ Base.propTypes = {
   count: PropTypes.number,
   style: PropTypes.object,
   // toggled: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 export default Base;
