@@ -26,7 +26,7 @@ const ReactionZone = ({ likeExperience, experience }) => (
 );
 
 ReactionZone.propTypes = {
-  experience: PropTypes.array.isRequired,
+  experience: PropTypes.object.isRequired,
   likeExperience: PropTypes.func.isRequired,
 };
 

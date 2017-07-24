@@ -1,9 +1,13 @@
 import React, { PropTypes } from 'react';
+import cn from 'classnames';
 import { Heading, P } from 'common/base';
+import i from 'common/icons';
+import rateButtonStyles from 'common/button/RateButtonElement.module.css';
 import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
 import SectionBlock from './SectionBlock';
 import QABlock from './QABlock';
+import { overallRatingDialogMap } from '../ShareExperience/common/optionMap';
 
 const Article = ({ experience }) => (
   <div className={styles.container}>
@@ -44,7 +48,19 @@ const Article = ({ experience }) => (
           </InfoBlock>
         }
         <InfoBlock label="面試整體滿意度">
-          {experience.overall_rating}
+          <div className={styles.ratingContainer}>
+            {[1, 2, 3, 4, 5].map(el => (
+              <i.Glike
+                key={el}
+                className={cn(rateButtonStyles.container, styles.autoCursor, {
+                  [rateButtonStyles.active]: (el <= experience.overall_rating),
+                })}
+              />
+            ))}
+            <div className={`${styles.ratingText} pS`}>
+              {overallRatingDialogMap[experience.overall_rating]}
+            </div>
+          </div>
         </InfoBlock>
         {
           experience.interview_sensitive_questions && experience.interview_sensitive_questions.length
