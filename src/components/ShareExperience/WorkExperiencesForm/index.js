@@ -1,7 +1,7 @@
 import React from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
-import { animateScroll } from 'react-scroll';
+import { scroller } from 'react-scroll';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -26,6 +26,7 @@ import {
 import styles from './WorkExperiencesForm.module.css';
 
 import helmetData from '../../../constants/helmetData';
+import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 
 const createSection = id => subtitle => {
   const section = {
@@ -89,6 +90,8 @@ class WorkExperiencesForm extends React.Component {
       ...defaultForm,
       submitted: false,
     };
+
+    this.elementValidationStatus = {};
   }
 
   onSumbit() {
@@ -98,8 +101,33 @@ class WorkExperiencesForm extends React.Component {
       return postWorkExperience(workExperiencesToBody(this.state));
     }
     this.handleState('submitted')(true);
-    animateScroll.scrollToTop();
+    const topInvalidElement = this.getTopInvalidElement();
+    if (topInvalidElement !== null) {
+      scroller.scrollTo(topInvalidElement, {
+        duration: 1000,
+        delay: 100,
+        offset: -100,
+        smooth: true,
+      });
+    }
     return null;
+  }
+
+  getTopInvalidElement = () => {
+    const order = WORK_FORM_ORDER;
+    for (let i = 0; i <= order.length; i += 1) {
+      if (
+        this.elementValidationStatus[order[i]] &&
+        this.elementValidationStatus[order[i]] === INVALID
+      ) {
+        return order[i];
+      }
+    }
+    return null;
+  }
+
+  changeValidationStatus = (elementId, status) => {
+    this.elementValidationStatus[elementId] = status;
   }
 
   handleState(key) {
@@ -199,6 +227,7 @@ class WorkExperiencesForm extends React.Component {
           weekWorkTime={weekWorkTime}
           recommendToOthers={recommendToOthers}
           submitted={submitted}
+          changeValidationStatus={this.changeValidationStatus}
         />
         <WorkExperience
           handleState={this.handleState}
