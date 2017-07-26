@@ -101,13 +101,14 @@ class ExperienceSearch extends Component {
                 [
                   { label: '面試經驗', value: 'interview' },
                   { label: '工作經驗', value: 'work' },
-                  { label: '薪時資料', value: 'salary' },
+                  { label: '薪資工時', value: 'salary' },
                 ].map(o => (
                   <Checkbox
                     key={o.value} id={`searchType-${o.value}`}
                     label={o.label} value={o.value}
                     disabled={o.value === 'salary' && !data.searchQuery}
-                    onChange={setSearchType} checked={data[o.value]}
+                    onChange={setSearchType}
+                    checked={data[o.value]}
                   />
                 ))
               }
@@ -129,7 +130,6 @@ class ExperienceSearch extends Component {
                   找到 {data.experienceCount} 筆與 &quot;{data.searchQuery}&quot; 相關的資料
                 </div>
               }
-              <br />
 
               <InfiniteScroll
                 pageStart={0} hasMore={data.hasMore}
@@ -152,11 +152,14 @@ class ExperienceSearch extends Component {
                 }
               </InfiniteScroll>
 
-              {
-                data.salary && (data.workings || []).map((o, i) => (
-                  <WorkingHourBlock key={o.company.id || i} data={o} />
-                ))
-              }
+              <div className={styles.workingHourWrapper}>
+                {
+                  data.salary && (data.workings || []).map((o, i) => (
+                    <WorkingHourBlock key={o.company.id || i} data={o} />
+                  ))
+                }
+              </div>
+
             </div>
           </div>
         </Wrapper>

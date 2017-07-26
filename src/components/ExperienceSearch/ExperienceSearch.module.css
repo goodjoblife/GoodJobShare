@@ -34,6 +34,7 @@
   border: 1px solid #ccc;
   font-weight: 700;
   padding: 20px;
+  margin-bottom: 24px;
 }
 
 .frontButton, .rearButton {
@@ -59,4 +60,12 @@
 .splitter {
   margin-bottom: 32px;
   margin-top: 32px;
+}
+
+.workingHourWrapper {
+  margin-top: 40px;
+
+  @media (max-wdith: 1024px) {
+    margin-top: 24px;
+  }
 }

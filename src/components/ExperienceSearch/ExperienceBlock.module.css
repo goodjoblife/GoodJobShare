@@ -8,13 +8,23 @@
   transition-property: background, box-shadow;
   transition-duration: .3s;
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   @media (min-width: 1025px) {
     &:hover {
-      box-shadow: 1px 1px 11px rgba(0,0,0, .3);
+      box-shadow: 1px 1px 11px rgba(0,0,0, .25);
     }
   }
 
   @media (max-width: 1024px) {
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 550px) {
+    margin-left: calc(page-gutter-s * -1);
+    margin-right: calc(page-gutter-s * -1);
     margin-bottom: 24px;
   }
 }
@@ -87,15 +97,14 @@
 }
 
 .l {
-  &.container {
-    @media (max-width: 850px) {
-      margin-left: calc(page-gutter-s * -1);
-      margin-right: calc(page-gutter-s * -1);
-      margin-bottom: 24px;
-    }
-  }
-
   .reaction {
     padding-bottom: 20px;
+  }
+}
+
+.m {
+  &.container {
+    margin-left: 0;
+    margin-right: 0;
   }
 }

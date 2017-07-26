@@ -47,7 +47,6 @@ const ExperienceBlock = ({ data, size }) => {
     }
     salaryAmount = formatWithCommas(salary.amount);
   }
-  console.log(data, 'data tin');
 
   return (
     <Link to={`/experiences/${data._id}`} className={cn(styles.container, styles[size])}>
