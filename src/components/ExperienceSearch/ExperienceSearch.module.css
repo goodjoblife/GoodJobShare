@@ -7,6 +7,10 @@
 .aside {
   flex: 0 0 196px;
 
+  @media (max-width: 1280px) {
+    flex-basis: 20%;
+  }
+
   @media (max-width: 850px) {
     display: none;
   }
@@ -15,6 +19,10 @@
 .content {
   flex: 1 1 auto;
   margin-left: 64px;
+
+  @media (max-width: 1280px) {
+    margin-left: 24px;
+  }
 
   @media (max-width: 850px) {
     margin-left: 0;

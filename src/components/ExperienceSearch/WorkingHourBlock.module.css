@@ -1,63 +1,82 @@
-@value yellow-bar, main-yellow, border-gray, main-gray, gray-dark from "common/variables.module.css";
+@value yellow-bar, main-yellow, border-gray, main-gray, gray-dark, gray-light from "common/variables.module.css";
 
-.preview {
+.toggleButton {
+  display: block;
   width: 100%;
+  position: relative;
+}
+
+.headingWrapper {
+  padding: 10px 24px;
+  border-bottom: 2px solid white;
   display: flex;
-  align-items:center;
+  justify-content: space-between;
+  align-items: flex-start;
 
-  .heading {
-    flex: 1;
-    padding: 10px 30px;
-    border-bottom: 2px solid white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    &.expanded {
-      border-bottom: 2px solid yellow-bar;
-    }
-
-    .hoursPerWeek {
-      color: gray-dark;
-    }
+  @media (max-width: 1024px) {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
-  .more {
-    width: 0;
-    &.expanded::after {
-      content: '－';
-    }
-    &::after {
-      display: inline-block;
-      text-align: center;
-      line-height: 40px;
-      content: '＋';
-      font-weight: 700;
-      margin-left: -20px;
-      background-color: #fff;
-      color: main-gray;
-      border: 2px solid border-gray;
-      border-radius: 50%;
-      height: 40px;
-      width: 40px;
-    }
+  @media (max-width: 850px) {
+    flex-direction: column;
   }
 
+  &.expanded {
+    border-bottom: 1px solid yellow-bar;
+  }
+}
 
-  &:hover {
-    color: main-yellow;
-    border-color: main-yellow;
-    //border-bottom: 1px solid yellow-bar;
-    .heading {
-      color: main-yellow;
-    }
-    .more {
-      &::after, &.expanded::after {
-        color: main-yellow;
-        border: 2px solid main-yellow;
-      }
-    }
+.headingBlock {
+  flex: 1 1 auto;
+  margin-right: 16px;
+  transition: color .3s;
+}
+
+.averageBlock {
+  flex: 0 0 200px;
+  margin-top: 4px;
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.averageBlockHeading {
+  font-size: 0.9em;
+  color: main-gray;
+}
+
+.averageBlockValue {
+  font-size: 1.1em;
+}
+
+.expandIcon {
+  position: absolute;
+  top: 7px;
+  right: -20px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid main-gray;
+  border-radius: 100%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: border .4s;
+
+  @media (max-width: 850px) {
+    width: 28px;
+    height: 28px;
+    right: 9px;
+    top: 9px;
+    border-color: main-gray;
   }
 
+  svg {
+    width: 18px;
+    height: 18px;
+    fill: main-gray;
+  }
 }
 
 .content {
@@ -65,33 +84,47 @@
   height: 0;
   display: none;
   transition: all .4s ease .4s;
+
   &.expanded {
     display: block;
     opacity: 1;
     height: auto;
   }
+}
 
-  .overtime {
-    padding: 24px;
+.overtimeBlock {
+  padding: 24px;
 
-    @media (max-width: 1024px) {
-      padding: 16px;
-    }
+  @media (max-width: 1024px) {
+    padding: 16px;
   }
+}
 
-  .overtimeBlockWrapper {
-    display: flex;
+.overtimeBlockInner {
+  display: flex;
 
-    @media (max-width: 550px) {
-      flex-direction: column;
-    }
+  @media (max-width: 550px) {
+    flex-direction: column;
   }
+}
 
-  .unit {
-    color: #b4b4b4;
-    text-align: right;
-    font-size: .82em;
-    letter-spacing: .05em;
-    margin-top: 8px;
-  }
+.overtimeBlockUnit {
+  color: #b4b4b4;
+  text-align: right;
+  font-size: .82em;
+  letter-spacing: .05em;
+  margin-top: 8px;
+}
+
+
+.averageBlock {
+
+}
+
+.averageBlockHeading {
+
+}
+
+.averageBlockValue {
+
 }

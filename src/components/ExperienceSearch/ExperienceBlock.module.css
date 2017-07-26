@@ -8,19 +8,23 @@
   transition-property: background, box-shadow;
   transition-duration: .3s;
 
-  &:last-of-type {
-    margin-bottom: 0;
+  @media (min-width: 1025px) {
+    &:hover {
+      box-shadow: 1px 1px 11px rgba(0,0,0, .3);
+    }
   }
 
-  @media (min-width: 851px) {
-    &:hover {
-      box-shadow: 1px 1px 11px rgba(0,0,0, .2);
-    }
+  @media (max-width: 1024px) {
+    margin-bottom: 24px;
   }
 }
 
 .contentWrapper {
   padding: 24px;
+
+  @media (max-width: 1024px) {
+    padding: 16px;
+  }
 }
 
 .heading {
