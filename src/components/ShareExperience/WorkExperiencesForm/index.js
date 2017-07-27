@@ -237,6 +237,7 @@ class WorkExperiencesForm extends React.Component {
           removeSection={this.removeBlock('sections')}
           editSection={this.editBlock('sections')}
           submitted={submitted}
+          changeValidationStatus={this.changeValidationStatus}
         />
         <SubmitArea
           onSubmit={this.onSumbit}
