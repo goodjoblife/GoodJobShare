@@ -1,5 +1,7 @@
 @value yellow-bar, main-yellow, border-gray, main-gray, gray-dark from "common/variables.module.css";
 
+$below-small: 850px;
+
 .preview {
   width: 100%;
   display: flex;
@@ -18,6 +20,9 @@
 
     .hoursPerWeek {
       color: gray-dark;
+    }
+    @media (max-width: $below-small) {
+      flex-direction: column;;
     }
   }
 
