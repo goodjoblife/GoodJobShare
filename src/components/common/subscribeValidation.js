@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Element as ScrollElement } from 'react-scroll';
 
 import { VALID, INVALID } from '../../constants/formElements';
@@ -9,18 +9,25 @@ import { VALID, INVALID } from '../../constants/formElements';
  * @param {*} WrappedComponent: The component to be wrapped
  * @param {*} validate: The validation function to validate target value, it should return true / false
  * @param {*} elementName: The element name for scrolling
- * @param {*} onChangeFuncName: The function name in this.props to update validation status
  */
-export default function subscribeValidation(WrappedComponent, validate, elementName, onChangeFuncName) {
+export default function subscribeValidation(WrappedComponent, validate, elementName) {
   return class extends React.Component {
+    static propTypes = {
+      changeValidationStatus: PropTypes.func,
+    }
+    static defaultProps = {
+      changeValidationStatus: undefined,
+    }
     render() {
-      if (this.props[onChangeFuncName]) {
+      if (this.props.changeValidationStatus) {
         const isValid = validate(this.props);
-        this.props[onChangeFuncName](elementName, isValid ? VALID : INVALID);
+        this.props.changeValidationStatus(elementName, isValid ? VALID : INVALID);
+        // eslint-disable-next-line no-unused-vars
+        const { changeValidationStatus, ...restProps } = this.props;
         return (
           <div>
             <ScrollElement name={elementName} />
-            <WrappedComponent {...this.props} />
+            <WrappedComponent {...restProps} />
           </div>
         );
       }
