@@ -1,6 +1,14 @@
 @value border-gray, gray-dark, link-blue from "common/variables.module.css";
 
 $below-small: 850px;
+$above-small: 851px;
+
+$above-desktop: 1025px;
+$below-desktop: 1024px;
+
+$gray: #b4b4b4;
+$orange: #ec7910;
+$block-gutter-s: 20px;
 
 @define-mixin table-th {
   text-align: left;
@@ -29,6 +37,11 @@ $below-small: 850px;
 	table-layout: fixed;
   background-color: #fff;
 
+  &.isDisabled {
+    td {
+      pointer-events: none;
+    }
+  }
   th {
     @mixin table-th;
     padding-top: 30px;
@@ -39,15 +52,128 @@ $below-small: 850px;
     vertical-align: bottom;
 
 		@media (max-width: $below-small) {
-			display: none;
+			display: none !important;
 		}
 	}
 
-  /* havn't done yet */
   td {
+    @mixin table-td;
     font-size: .95em;
     line-height: 1.3em;
     border-bottom: 1px solid #ededed;
     padding: 12px 5px;
+    transition: background-color .3s;
+    @media (max-width: $below-small) {
+      display: flex !important;
+      width: 100%;
+      padding: 10px 20px;
+    }
+    &:before {
+			@media (max-width: $below-small) {
+				content: attr(data-th);
+        flex: 0 0 100px;
+        margin-right: 10px;
+        width: 100px;
+        @mixin table-th;
+			}
+    }
+    &:last-child {
+      @media (max-width: $below-small) {
+        border-bottom: 4px solid gray-light;
+      }
+    }
+    a {
+      @mixin table-link;
+    }
+  }
+  th, td {
+    display: table-cell;
+    text-align: left;
+    @media (min-width: $above-small) {
+      &:first-child {
+        padding-left: $block-gutter-s;
+      }
+      &:last-child {
+        padding-right: $block-gutter-s;
+      }
+    }
+    @media (min-width: $above-desktop) {
+      &:first-child {
+        padding-left: $block-gutter-s;
+      }
+      &:last-child {
+        padding-right: $block-gutter-s;
+      }
+    }
+  }
+  tr {
+    @media (min-width: $above-desktop) {
+      &:hover {
+        td {
+          background-color: rgba(0,0,0,.025);
+        }
+      }
+    }
+    &:last-child {
+      td {
+        @media (min-width: $above-small) {
+          border: 0;
+        }
+        &:last-child {
+          @media (max-width: $below-small) {
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+  .rwdTd {
+    display: block;
+    @media (max-width: $below-small) {
+      flex: 1 1 auto;
+    }
+  }
+
+  .alignRight {
+    @media (min-width: $above-small) {
+      text-align: right;
+      padding-right: 15px;
+      padding-left: 0;
+    }
+  }
+
+  .dataTime {
+    font-size: 0.95em;
+    color: $gray;
+    @media (max-width: $below-desktop) {
+      word-break: break-all;
+    }
+  }
+
+  [data-sort] {
+    &::after {
+      font-size: 11px;
+      line-height: 1.2em;
+      position: relative;
+      top: -2px;
+      display: inline-block;
+      margin-left: 5px;
+      color: $orange;
+    }
+  }
+
+  [data-sort="high"] {
+    color: $orange;
+    &::after {
+      content: "▲";
+    }
+  }
+
+  [data-sort="low"] {
+    color: $orange;
+    &::after {
+      content: "▼";
+    }
   }
 }
+

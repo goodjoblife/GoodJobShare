@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import cn from 'classnames';
 import styles from './Table.module.css';
 import Column from './Column';
 
@@ -37,13 +38,13 @@ class Table extends Component {
         if (col.props.dataFormatter) {
           value = col.props.dataFormatter(value, d);
         }
-        record.push(<td key={idx}>{value}</td>);
+        record.push(<td key={idx} data-th={col.props.children}>{value}</td>);
       });
       records.push(<tr key={d[primaryKey] || i}>{record}</tr>);
     });
 
     return (
-      <table className={styles.rwdTable}>
+      <table className={cn([styles.rwdTable, className])}>
         <thead><tr>{children}</tr></thead>
         <tbody>{records}</tbody>
       </table>
