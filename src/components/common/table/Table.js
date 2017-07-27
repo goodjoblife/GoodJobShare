@@ -8,6 +8,7 @@ class Table extends Component {
     data: PropTypes.array.isRequired,
     primaryKey: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
+    className: PropTypes.object,
   }
 
   static Column = Column
@@ -26,7 +27,7 @@ class Table extends Component {
   }
 
   render() {
-    const { data, primaryKey, children } = this.props;
+    const { data, primaryKey, children, className } = this.props;
     const records = [];
     let record;
     let value;
