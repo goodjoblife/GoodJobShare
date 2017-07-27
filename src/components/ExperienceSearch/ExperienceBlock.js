@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import cn from 'classnames';
+import qs from 'qs';
 
 import { Heading, P } from 'common/base';
 import i from 'common/icons';
@@ -50,7 +51,7 @@ const ExperienceBlock = ({ data, size }) => {
   console.log(data, 'data tin');
 
   return (
-    <Link to={`/experiences/${data._id}`} className={cn(styles.container, styles[size])}>
+    <Link to={`/experiences/${data._id}?${qs.stringify({ backable: 1 })}`} className={cn(styles.container, styles[size])}>
       <section className={styles.contentWrapper}>
         <P size="s">
           {`${expType}${splitter}${year} 年 ${month} 月`}
