@@ -20,12 +20,24 @@ import {
   jobTitle as jobTitleValidator,
 } from '../formCheck';
 
-import { REGION } from '../../../../constants/formElements';
+import { COMPANY, REGION, JOB_TITLE } from '../../../../constants/formElements';
+
+const CompanyQueryWithValidation = subscribeValidation(
+  CompanyQuery,
+  props => props.validator(props.companyQuery),
+  COMPANY,
+);
 
 const RegionWithValidation = subscribeValidation(
   Region,
   props => props.validator(props.region),
   REGION,
+);
+
+const JobTitleWithValidation = subscribeValidation(
+  JobTitle,
+  props => props.validator(props.jobTitle),
+  JOB_TITLE,
 );
 
 class WorkInfo extends React.PureComponent {
@@ -68,7 +80,7 @@ class WorkInfo extends React.PureComponent {
               marginBottom: '35px',
             }}
           >
-            <CompanyQuery
+            <CompanyQueryWithValidation
               companyQuery={companyQuery}
               onChange={v => {
                 handleState('companyQuery')(v);
@@ -77,6 +89,7 @@ class WorkInfo extends React.PureComponent {
               onCompanyId={handleState('companyId')}
               validator={companyQueryValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
@@ -97,12 +110,13 @@ class WorkInfo extends React.PureComponent {
               marginBottom: '41px',
             }}
           >
-            <JobTitle
+            <JobTitleWithValidation
               inputTitle="職稱"
               jobTitle={jobTitle}
               onChange={handleState('jobTitle')}
               validator={jobTitleValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
