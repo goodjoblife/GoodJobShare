@@ -104,9 +104,7 @@ class ExperienceDetail extends Component {
       experienceDetail, setTos, setComment, likeExperience, likeReply,
     } = this.props;
 
-    const {
-      backable,
-    } = this.props.location.query;
+    const backable = this.props.location.query.backable || 'false';
     const data = experienceDetail.toJS();
     const experience = data.experience;
     return (
@@ -138,7 +136,7 @@ class ExperienceDetail extends Component {
             <ReactionZone experience={experience} likeExperience={likeExperience} />
 
             <BackToList
-              backable={Boolean(Number(backable))}
+              backable={JSON.parse(backable)}
             />
           </Wrapper>
         </Section>
