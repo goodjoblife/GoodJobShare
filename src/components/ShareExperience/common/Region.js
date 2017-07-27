@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import subscribeValidation from 'common/subscribeValidation';
-
 import Select from 'common/form/Select';
 import InputTitle from './InputTitle';
 
@@ -10,8 +8,6 @@ import styles from './Region.module.css';
 import {
   regionOptions,
 } from './optionMap';
-
-import { REGION } from '../../../constants/formElements';
 
 const Region = ({ region, onChange, validator, submitted }) => {
   const isWarning = submitted && !validator(region);
@@ -71,11 +67,4 @@ Region.defaultProps = {
   validator: () => {},
 };
 
-const RegionWithValidation = subscribeValidation(
-  Region,
-  props => props.validator(props.region),
-  REGION,
-  'changeValidationStatus',
-);
-
-export default RegionWithValidation;
+export default Region;

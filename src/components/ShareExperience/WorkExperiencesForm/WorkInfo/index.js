@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import subscribeValidation from 'common/subscribeValidation';
 
 import styles from './WorkInfo.module.css';
 
@@ -18,6 +19,14 @@ import {
   region as regionValidator,
   jobTitle as jobTitleValidator,
 } from '../formCheck';
+
+import { REGION } from '../../../../constants/formElements';
+
+const RegionWithValidation = subscribeValidation(
+  Region,
+  props => props.validator(props.region),
+  REGION,
+);
 
 class WorkInfo extends React.PureComponent {
   render() {
@@ -75,7 +84,7 @@ class WorkInfo extends React.PureComponent {
               marginBottom: '41px',
             }}
           >
-            <Region
+            <RegionWithValidation
               region={region}
               onChange={handleState('region')}
               validator={regionValidator}
