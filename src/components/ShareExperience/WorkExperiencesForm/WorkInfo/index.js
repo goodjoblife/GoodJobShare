@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import subscribeValidation from 'common/subscribeValidation';
 
 import styles from './WorkInfo.module.css';
 
@@ -19,6 +20,26 @@ import {
   jobTitle as jobTitleValidator,
 } from '../formCheck';
 
+import { COMPANY, REGION, JOB_TITLE } from '../../../../constants/formElements';
+
+const CompanyQueryWithValidation = subscribeValidation(
+  CompanyQuery,
+  props => props.validator(props.companyQuery),
+  COMPANY,
+);
+
+const RegionWithValidation = subscribeValidation(
+  Region,
+  props => props.validator(props.region),
+  REGION,
+);
+
+const JobTitleWithValidation = subscribeValidation(
+  JobTitle,
+  props => props.validator(props.jobTitle),
+  JOB_TITLE,
+);
+
 class WorkInfo extends React.PureComponent {
   render() {
     const {
@@ -36,6 +57,7 @@ class WorkInfo extends React.PureComponent {
       recommendToOthers,
       weekWorkTime,
       submitted,
+      changeValidationStatus,
     } = this.props;
 
     return (
@@ -58,7 +80,7 @@ class WorkInfo extends React.PureComponent {
               marginBottom: '35px',
             }}
           >
-            <CompanyQuery
+            <CompanyQueryWithValidation
               companyQuery={companyQuery}
               onChange={v => {
                 handleState('companyQuery')(v);
@@ -67,6 +89,7 @@ class WorkInfo extends React.PureComponent {
               onCompanyId={handleState('companyId')}
               validator={companyQueryValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
@@ -74,12 +97,13 @@ class WorkInfo extends React.PureComponent {
               marginBottom: '41px',
             }}
           >
-            <Region
+            <RegionWithValidation
               region={region}
               inputTitle={'工作地區'}
               onChange={handleState('region')}
               validator={regionValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
@@ -87,12 +111,13 @@ class WorkInfo extends React.PureComponent {
               marginBottom: '41px',
             }}
           >
-            <JobTitle
+            <JobTitleWithValidation
               inputTitle="職稱"
               jobTitle={jobTitle}
               onChange={handleState('jobTitle')}
               validator={jobTitleValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
@@ -193,6 +218,7 @@ WorkInfo.propTypes = {
   ]),
   recommendToOthers: PropTypes.string,
   submitted: PropTypes.bool,
+  changeValidationStatus: PropTypes.func,
 };
 
 export default WorkInfo;
