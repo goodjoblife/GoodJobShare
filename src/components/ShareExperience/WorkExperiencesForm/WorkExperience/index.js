@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import subscribeValidation from 'common/subscribeValidation';
 
 import ButtonAdd from 'common/button/ButtonAdd';
 import styles from './WorkExperience.module.css';
@@ -15,6 +16,20 @@ import {
   sections as sectionsValidator,
 } from '../formCheck';
 
+import { TITLE, SECTIONS } from '../../../../constants/formElements';
+
+const TitleWithValidation = subscribeValidation(
+  Title,
+  props => props.validator(props.title),
+  TITLE,
+);
+
+const SectionsWithValidation = subscribeValidation(
+  Sections,
+  props => props.validator(props.sections),
+  SECTIONS,
+);
+
 class WorkExperience extends React.PureComponent {
   render() {
     const {
@@ -25,6 +40,7 @@ class WorkExperience extends React.PureComponent {
       removeSection,
       editSection,
       submitted,
+      changeValidationStatus,
     } = this.props;
 
     return (
@@ -47,12 +63,13 @@ class WorkExperience extends React.PureComponent {
               marginBottom: '50px',
             }}
           >
-            <Title
+            <TitleWithValidation
               title={title}
               onChange={handleState('title')}
               placeholder="ＯＯ 股份有限公司工作經驗分享"
               validator={titleValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
@@ -61,12 +78,13 @@ class WorkExperience extends React.PureComponent {
               marginBottom: '80px',
             }}
           >
-            <Sections
+            <SectionsWithValidation
               sections={sections}
               removeSection={removeSection}
               editSection={editSection}
               validator={sectionsValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
             <div
               style={{
@@ -103,6 +121,7 @@ WorkExperience.propTypes = {
   removeSection: PropTypes.func,
   editSection: PropTypes.func,
   submitted: PropTypes.bool,
+  changeValidationStatus: PropTypes.func,
 };
 
 export default WorkExperience;

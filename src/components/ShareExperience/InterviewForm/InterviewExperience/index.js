@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ButtonAdd from 'common/button/ButtonAdd';
 import AddButton from 'common/button/AddButton';
 import i from 'common/icons';
+import subscribeValidation from 'common/subscribeValidation';
 
 import styles from '../../ShareExperience.module.css';
 
@@ -20,6 +21,20 @@ import {
   interviewSectionSubtitleOptions,
 } from '../../common/optionMap';
 
+import { TITLE, SECTIONS } from '../../../../constants/formElements';
+
+const TitleWithValidation = subscribeValidation(
+  Title,
+  props => props.validator(props.title),
+  TITLE,
+);
+
+const SectionsWithValidation = subscribeValidation(
+  Sections,
+  props => props.validator(props.sections),
+  SECTIONS,
+);
+
 class InterviewExperience extends Component {
   render() {
     const {
@@ -35,6 +50,7 @@ class InterviewExperience extends Component {
       editQa,
       interviewSensitiveQuestions,
       submitted,
+      changeValidationStatus,
     } = this.props;
     return (
       <div
@@ -51,12 +67,13 @@ class InterviewExperience extends Component {
               marginBottom: '50px',
             }}
           >
-            <Title
+            <TitleWithValidation
               title={title}
               onChange={handleState('title')}
               placeholder="ＯＯ 股份有限公司面試經驗分享"
               validator={titleValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div
@@ -65,12 +82,13 @@ class InterviewExperience extends Component {
               marginBottom: '80px',
             }}
           >
-            <Sections
+            <SectionsWithValidation
               sections={sections}
               removeSection={removeSection}
               editSection={editSection}
               validator={sectionsValidator}
               submitted={submitted}
+              changeValidationStatus={changeValidationStatus}
             />
             <div
               style={{
@@ -160,6 +178,7 @@ InterviewExperience.propTypes = {
     PropTypes.string,
   ),
   submitted: PropTypes.bool,
+  changeValidationStatus: PropTypes.func,
 };
 
 export default InterviewExperience;
