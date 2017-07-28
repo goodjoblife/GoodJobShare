@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import cn from 'classnames';
+import qs from 'qs';
 
 import { Heading, P } from 'common/base';
 import i from 'common/icons';
@@ -21,7 +22,7 @@ Label.propTypes = {
   className: PropTypes.string,
 };
 
-const ExperienceBlock = ({ data, size }) => {
+const ExperienceBlock = ({ data, size, backable }) => {
   const expType = data.type === 'interview' ? '面試' : '工作';
   const date = new Date(Date.parse(data.created_at));
   const year = date.getFullYear();
@@ -49,7 +50,7 @@ const ExperienceBlock = ({ data, size }) => {
   }
 
   return (
-    <Link to={`/experiences/${data._id}`} className={cn(styles.container, styles[size])}>
+    <Link to={`/experiences/${data._id}?${qs.stringify({ backable })}`} className={cn(styles.container, styles[size])}>
       <section className={styles.contentWrapper}>
         <P size="s">
           {`${expType}${splitter}${year} 年 ${month} 月`}
@@ -84,9 +85,11 @@ const ExperienceBlock = ({ data, size }) => {
 ExperienceBlock.propTypes = {
   data: PropTypes.object.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
+  backable: PropTypes.bool,
 };
 ExperienceBlock.defaultProps = {
   size: 'm',
+  backable: false,
 };
 
 export default ExperienceBlock;

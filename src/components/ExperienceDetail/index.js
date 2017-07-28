@@ -26,6 +26,11 @@ class ExperienceDetail extends Component {
     setComment: React.PropTypes.func.isRequired,
     submitComment: React.PropTypes.func.isRequired,
     params: React.PropTypes.object.isRequired,
+    location: React.PropTypes.shape({
+      query: React.PropTypes.shape({
+        backable: React.PropTypes.string,
+      }),
+    }),
   }
 
   static fetchData({ store, params }) {
@@ -98,6 +103,8 @@ class ExperienceDetail extends Component {
     const {
       experienceDetail, setTos, setComment, likeExperience, likeReply,
     } = this.props;
+
+    const backable = this.props.location.query.backable || 'false';
     const data = experienceDetail.toJS();
     const experience = data.experience;
     return (
@@ -128,7 +135,9 @@ class ExperienceDetail extends Component {
             { /* 按讚，分享，檢舉區塊  */}
             <ReactionZone experience={experience} likeExperience={likeExperience} />
 
-            <BackToList />
+            <BackToList
+              backable={JSON.parse(backable)}
+            />
           </Wrapper>
         </Section>
         <Section>
