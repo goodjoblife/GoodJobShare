@@ -31,6 +31,7 @@ class ExperienceDetail extends Component {
         backable: React.PropTypes.string,
       }),
     }),
+    authStatus: React.PropTypes.string,
   }
 
   static fetchData({ store, params }) {
@@ -54,6 +55,10 @@ class ExperienceDetail extends Component {
     if (nextProps.params.id !== this.props.params.id) {
       this.props.fetchExperience(nextProps.params.id);
       this.props.fetchReplies(nextProps.params.id);
+    }
+
+    if (nextProps.authStatus !== this.props.authStatus && nextProps.authStatus === 'connected') {
+      this.props.fetchExperience(this.props.params.id);
     }
   }
 
