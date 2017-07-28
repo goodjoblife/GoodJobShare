@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
 import { animateScroll } from 'react-scroll';
+
+import {
+  debounce,
+} from 'utils/streamUtils';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -100,6 +104,17 @@ class InterviewForm extends React.Component {
       ...defaultForm,
       submitted: false,
     };
+
+    this.leaveAlert = false;
+    this.debounceUpdateLeaveAlert = debounce(this.updateLeaveAlert, 3000);
+  }
+
+  componentDidUpdate() {
+    if (this.leaveAlert) {
+      this.debounceUpdateLeaveAlert();
+    } else {
+      this.updateLeaveAlert();
+    }
   }
 
   onSumbit() {
@@ -111,6 +126,69 @@ class InterviewForm extends React.Component {
     this.handleState('submitted')(true);
     animateScroll.scrollToTop();
     return null;
+  }
+
+  setLeaveAlert = flag => {
+    const router = this.props.router;
+    const route = this.props.route;
+    if (flag) {
+      window.onbeforeunload = () => '您有填寫到一半而未上傳的資訊，確定要離開嗎？';
+      router.setRouteLeaveHook(route, () => '您有填寫到一半而未上傳的資訊，確定要離開嗎？');
+    } else {
+      window.onbeforeunload = null;
+      router.setRouteLeaveHook(route, null);
+    }
+  }
+
+  checkFormEdited = () => {
+    const plainFields = [
+      'companyQuery',
+      'region',
+      'jobTitle',
+      'experienceInYear',
+      'education',
+      'interviewTimeYear',
+      'interviewTimeMonth',
+      'interviewResult',
+      'salaryType',
+      'salaryAmount',
+      'overallRating',
+    ];
+    if (plainFields.some(key => this.state[key] !== defaultForm[key])) {
+      return true;
+    }
+
+    let keys = Object.keys(this.state.sections);
+    if (keys.length !== 1) {
+      return true;
+    }
+    const section = this.state.sections[keys[0]];
+    if (section.subtitle !== '' || section.content !== '') {
+      return true;
+    }
+
+    keys = Object.keys(this.state.interviewQas);
+    if (keys.length !== 1) {
+      return true;
+    }
+    const qa = this.state.interviewQas[keys[0]];
+    if (qa.question !== '' || qa.answer !== '') {
+      return true;
+    }
+
+    if (this.state.interviewSensitiveQuestions.length > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  updateLeaveAlert = () => {
+    const newLeaveAlert = this.checkFormEdited();
+    if (this.leaveAlert !== newLeaveAlert) {
+      this.setLeaveAlert(newLeaveAlert);
+      this.leaveAlert = newLeaveAlert;
+    }
   }
 
   handleState(key) {
@@ -214,6 +292,9 @@ class InterviewForm extends React.Component {
   }
 }
 
-InterviewForm.propTypes = {};
+InterviewForm.propTypes = {
+  route: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
+};
 
 export default InterviewForm;
