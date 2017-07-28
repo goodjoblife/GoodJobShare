@@ -21,9 +21,8 @@ export default function subscribeValidation(WrappedComponent, validate, elementN
     render() {
       if (this.props.changeValidationStatus) {
         const isValid = validate(this.props);
-        this.props.changeValidationStatus(elementName, isValid ? VALID : INVALID);
-        // eslint-disable-next-line no-unused-vars
         const { changeValidationStatus, ...restProps } = this.props;
+        changeValidationStatus(elementName, isValid ? VALID : INVALID);
         return (
           <div>
             <ScrollElement name={elementName} />
