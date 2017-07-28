@@ -9,12 +9,12 @@ import {
   regionOptions,
 } from './optionMap';
 
-const Region = ({ region, onChange, validator, submitted }) => {
+const Region = ({ region, inputTitle, onChange, validator, submitted }) => {
   const isWarning = submitted && !validator(region);
   return (
     <div>
       <InputTitle
-        text="面試地區"
+        text={inputTitle}
         must
       />
       <div
@@ -58,6 +58,7 @@ Region.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
+  inputTitle: PropTypes.string,
   onChange: PropTypes.func,
   validator: PropTypes.func,
   submitted: PropTypes.bool,
