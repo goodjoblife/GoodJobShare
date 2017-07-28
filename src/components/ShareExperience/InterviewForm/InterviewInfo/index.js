@@ -73,6 +73,7 @@ class InterviewInfo extends React.PureComponent {
           >
             <Region
               region={region}
+              inputTitle={'面試地區'}
               onChange={handleState('region')}
               validator={regionValidator}
               submitted={submitted}

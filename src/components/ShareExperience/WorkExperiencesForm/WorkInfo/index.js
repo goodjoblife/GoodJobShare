@@ -76,6 +76,7 @@ class WorkInfo extends React.PureComponent {
           >
             <Region
               region={region}
+              inputTitle={'工作地區'}
               onChange={handleState('region')}
               validator={regionValidator}
               submitted={submitted}
