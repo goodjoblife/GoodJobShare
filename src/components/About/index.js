@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import Helmet from 'react-helmet';
 import { Section, Wrapper, Heading, P } from 'common/base';
 import CallToAction from 'common/CallToAction';
+import { Facebook, Email, Github } from 'common/icons';
+import editorStyles from 'common/Editor.module.css';
 import helmetData from '../../constants/helmetData';
 import styles from './About.module.css';
 import Timeline from './Timeline';
@@ -115,6 +117,31 @@ const About = () => (
       headingSize="sl"
       buttonText="現在就留下資料"
     />
+    <Section bg="white" padding id="contact">
+      <Wrapper size="m">
+        <Heading size="l" center marginBottom>聯絡我們</Heading>
+        <div className={styles.contact}>
+          <a href="/" className={styles.facebook} title="facebook"><Facebook /></a>
+          <a href="/" className={styles.github} title="Github"><Github /></a>
+          <a href="/" className={styles.email} title="email"><Email /></a>
+        </div>
+      </Wrapper>
+    </Section>
+    <Section padding id="joinUs">
+      <Wrapper size="s">
+        <Heading size="l" center marginBottom>加入我們</Heading>
+        <div className={editorStyles.editor}>
+          <p>若您有以下任一專長或條件，我們非常希望您可以加入我們！</p>
+          <ul>
+            <li>曾有管理粉絲專頁經驗者</li>
+            <li>具行銷企劃專長者</li>
+            <li>具網頁介面設計、網頁前端開發能力者</li>
+            <li>有資訊設計專長者，以協助設計勞動權益資訊懶人包</li>
+            <li>對於推動工作資訊透明化、改善台灣勞動環境具有熱忱的任何人</li>
+          </ul>
+        </div>
+      </Wrapper>
+    </Section>
   </Section>
 );
 

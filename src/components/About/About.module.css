@@ -75,3 +75,47 @@
     }
   }
 }
+
+.contact {
+  text-align: center;
+
+  > a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 16px;
+    width: 60px;
+    height: 60px;
+    background-color: #000;
+    border-radius: 50%;
+    transition-property: background-color;
+    transition-duration: .25s;
+
+    @media (max-width: 550px) {
+      width: 48px;
+      height: 48px;
+    }
+
+    svg {
+      width: 28px;
+      height: auto;
+      fill: #fff;
+
+      @media (max-width: 550px) {
+        width: 24px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1025px) {
+  .facebook:hover {
+    background-color: #3b5998;
+  }
+  .github:hover {
+    background-color: #555;
+  }
+  .email:hover {
+    background-color: #d14836;
+  }
+}
