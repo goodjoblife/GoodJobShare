@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react';
 import subscribeValidation from 'common/subscribeValidation';
 
 import ButtonAdd from 'common/button/ButtonAdd';
-import styles from './WorkExperience.module.css';
+
+import styles from '../../ShareExperience.module.css';
 
 import Title from '../../common/Title';
 import Sections from '../../common/Sections';
@@ -57,7 +58,7 @@ class WorkExperience extends React.PureComponent {
         >
           工作經驗
         </h1>
-        <div className={styles.form}>
+        <div className={styles.block}>
           <div
             style={{
               marginBottom: '50px',
