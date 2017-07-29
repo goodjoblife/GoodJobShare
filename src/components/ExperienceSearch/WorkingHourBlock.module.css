@@ -39,6 +39,10 @@
   margin-right: 16px;
   display: flex;
   align-items: center;
+
+  @media (max-width: 850px) {
+    flex-basis: auto;
+  }
 }
 
 .averageBlockHeading {

@@ -11,6 +11,10 @@
     flex-basis: 20%;
   }
 
+  @media (max-width: 1024px) {
+    flex-basis: 14%;
+  }
+
   @media (max-width: 850px) {
     display: none;
   }
@@ -40,7 +44,8 @@
 .frontButton, .rearButton {
   display: inline-block;
   text-align: center;
-  width: 80px;
+  width: 50%;
+  max-width: 80px;
   height: 35px;
   line-height: 35px;
   border: 1px solid main-yellow;
