@@ -1,7 +1,7 @@
 @value main-yellow from "common/variables.module.css";
 
 .container {
-  padding: 0 20%;
+  padding: 0 15%;
   @media (max-width: 550px) {
     padding: 0 20px;
   }
