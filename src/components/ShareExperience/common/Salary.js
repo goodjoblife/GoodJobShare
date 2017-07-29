@@ -23,12 +23,15 @@ const Salary = (
       <div
         style={{
           display: 'flex',
+          flexWrap: 'wrap',
+          marginRight: '40px',
         }}
       >
         <div
           style={{
             width: '107px',
             marginRight: '18px',
+            marginBottom: '5px',
           }}
         >
           <Select
