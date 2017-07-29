@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import Table from '../common/table/Table';
+import InfoSalaryModal from './InfoSalaryModal';
 import styles from './WorkingHourTable.module.css';
 import employmentType from '../../constants/employmentType';
 
@@ -88,6 +89,22 @@ class WorkingHourTable extends Component {
     return [val.year, month].join('.');
   }
 
+  constructor(props) {
+    super(props);
+    this.toggleInfoSalaryModal = this.toggleInfoSalaryModal.bind(this);
+    this.state = {
+      infoSalaryModal: {
+        isOpen: false,
+      },
+    };
+  }
+
+  toggleInfoSalaryModal() {
+    const state = this.state;
+    state.infoSalaryModal.isOpen = !state.infoSalaryModal.isOpen;
+    this.setState(state);
+  }
+
   render() {
     const { data } = this.props;
 
@@ -143,7 +160,13 @@ class WorkingHourTable extends Component {
           dataField="estimated_hourly_wage"
           dataFormatter={WorkingHourTable.getWage}
         >
-          估計時薪
+          <InfoSalaryModal
+            isOpen={this.state.infoSalaryModal.isOpen}
+            close={this.toggleInfoSalaryModal}
+          />
+          <button onClick={this.toggleInfoSalaryModal}>
+            估計時薪
+          </button>
         </Table.Column>
 
         <Table.Column
