@@ -1,0 +1,7 @@
+.single__select__input {
+  width: 320px;
+
+  @media (max-width: 550px) {
+    width: auto;
+  }
+}

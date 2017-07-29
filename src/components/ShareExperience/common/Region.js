@@ -1,9 +1,11 @@
 import React, { PropTypes } from 'react';
+import cn from 'classnames';
 
 import Select from 'common/form/Select';
 import InputTitle from './InputTitle';
 
 import styles from './Region.module.css';
+import shareStyles from './share.module.css';
 
 import {
   regionOptions,
@@ -18,9 +20,8 @@ const Region = ({ region, inputTitle, onChange, validator, submitted }) => {
         must
       />
       <div
-        className={isWarning ? styles.warning : null}
+        className={cn(isWarning ? styles.warning : null, shareStyles.single__select__input)}
         style={{
-          width: '320px',
           position: 'relative',
         }}
       >

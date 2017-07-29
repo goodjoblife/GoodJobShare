@@ -3,6 +3,8 @@ import React, { PropTypes } from 'react';
 import Select from 'common/form/Select';
 import InputTitle from './InputTitle';
 
+import shareStyles from './share.module.css';
+
 import {
   experienceInYearOptions,
 } from './optionMap';
@@ -13,8 +15,8 @@ const ExperienceInYear = ({ experienceInYear, onChange }) => (
       text="相關職務工作經驗"
     />
     <div
+      className={shareStyles.single__select__input}
       style={{
-        width: '320px',
         position: 'relative',
       }}
     >
