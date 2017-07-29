@@ -2,13 +2,11 @@
 
 .container {
   padding: 0 20%;
-}
-
-@media (max-width: 550px) {
-  .container {
+  @media (max-width: 550px) {
     padding: 0 20px;
   }
 }
+
 
 .iconHeading {
   margin-bottom: 16px;
