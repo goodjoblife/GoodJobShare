@@ -12,6 +12,8 @@ import Sections from '../../common/Sections';
 import InterviewQas from './InterviewQas';
 import InterviewSensitiveQuestions from './InterviewSensitiveQuestions';
 
+import shareStyles from '../../common/share.module.css';
+
 import {
   title as titleValidator,
   sections as sectionsValidator,
@@ -91,13 +93,7 @@ class InterviewExperience extends Component {
               changeValidationStatus={changeValidationStatus}
             />
             <div
-              style={{
-                position: 'absolute',
-                left: 0,
-                bottom: 0,
-                minWidth: '150%',
-                transform: 'translate(-65px, 100%)',
-              }}
+              className={shareStyles.button__add}
             >
               <ButtonAdd
                 options={interviewSectionSubtitleOptions}
@@ -125,12 +121,7 @@ class InterviewExperience extends Component {
               removeQa={removeQa}
             />
             <div
-              style={{
-                position: 'absolute',
-                left: 0,
-                bottom: 0,
-                transform: 'translate(-65px, 100%)',
-              }}
+              className={shareStyles.button__add}
             >
               <AddButton
                 onClick={() => appendQa()}

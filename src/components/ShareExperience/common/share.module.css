@@ -5,3 +5,15 @@
     width: auto;
   }
 }
+
+.button__add {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  min-width: 150%;
+  transform: translate(-65px, 100%);
+
+  @media (max-width: 550px) {
+    transform: translate(-25px, 100%);
+  }
+}
