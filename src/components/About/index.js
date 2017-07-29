@@ -17,7 +17,7 @@ const data2016 = [
   },
   {
     month: 12,
-    Content: () => <div>推出<Link to="/labor-rights">「勞動知識小教室」</Link>系列懶人包，將複雜的法律資訊轉換成易懂的圖文。內容涵蓋勞基法、性別工作平等法、就服法以及工會相關法令等勞工必備的權益資訊，讓勞工學會保護自己。</div>,
+    Content: () => <div>推出「勞動知識小教室」系列懶人包，將複雜的法律資訊轉換成易懂的圖文。內容涵蓋勞基法、性別工作平等法、就服法以及工會相關法令等勞工必備的權益資訊，讓勞工學會保護自己。</div>,
   },
   {
     month: 12,
@@ -90,8 +90,13 @@ const About = () => (
         />
       </Wrapper>
     </Section>
-    <Section>
-      <Wrapper size="l">
+    <Section padding>
+      <img
+        src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/about-city.png"
+        alt="大事紀"
+        className={styles.timelineImage}
+      />
+      <Wrapper size="m">
         <div className={styles.timelineColWrapper}>
           <div className={styles.timelineCol}>
             <Timeline year="2016" data={data2016} />

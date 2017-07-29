@@ -39,6 +39,22 @@
   }
 }
 
+.timelineImage {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -90px;
+
+  @media (max-width: 850px) {
+    max-width: 90%;
+    margin-top: 0;
+  }
+
+  @media (max-width: 550px) {
+    display: none;
+  }
+}
+
 .timelineColWrapper {
   display: flex;
 
@@ -53,5 +69,9 @@
 
   &:nth-child(2) {
     margin-right: 0;
+
+    @media (max-width: 850px) {
+      margin-top: 32px;
+    }
   }
 }
