@@ -4,6 +4,15 @@
   display: block;
   width: 100%;
   position: relative;
+
+  @media (min-width: 1025px) {
+    &:hover {
+      .expandIcon {
+        border-color: main-yellow;
+        svg { fill: main-yellow; }
+      }
+    }    
+  }
 }
 
 .headingWrapper {

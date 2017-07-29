@@ -2,6 +2,10 @@
 
 .container {
   display: flex;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+  }
 }
 
 .aside {
@@ -16,7 +20,7 @@
   }
 
   @media (max-width: 850px) {
-    display: none;
+    margin-bottom: 16px;
   }
 }
 
@@ -42,13 +46,13 @@
 }
 
 .frontButton, .rearButton {
-  display: inline-block;
-  text-align: center;
+  display: inline-flex;
   width: 50%;
-  max-width: 80px;
-  height: 35px;
-  line-height: 35px;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
   border: 1px solid main-yellow;
+
   &.toggle {
     background-color: main-yellow;
   }
@@ -65,6 +69,16 @@
 .splitter {
   margin-bottom: 32px;
   margin-top: 32px;
+
+  @media (max-width: 850px) {
+    display: none;
+  }
+}
+
+.fliters {
+  @media (max-width: 850px) {
+    display: none;
+  }
 }
 
 .workingHourWrapper {

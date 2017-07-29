@@ -96,22 +96,23 @@ class ExperienceSearch extends Component {
                 </button>
               </section>
               <hr className={styles.splitter} />
-
-              {
-                [
-                  { label: '面試經驗', value: 'interview' },
-                  { label: '工作經驗', value: 'work' },
-                  { label: '薪資工時', value: 'salary' },
-                ].map(o => (
-                  <Checkbox
-                    key={o.value} id={`searchType-${o.value}`}
-                    label={o.label} value={o.value}
-                    disabled={o.value === 'salary' && !data.searchQuery}
-                    onChange={setSearchType}
-                    checked={data[o.value]}
-                  />
-                ))
-              }
+              <div className={styles.fliters}>
+                {
+                  [
+                    { label: '面試經驗', value: 'interview' },
+                    { label: '工作經驗', value: 'work' },
+                    { label: '薪資工時', value: 'salary' },
+                  ].map(o => (
+                    <Checkbox
+                      key={o.value} id={`searchType-${o.value}`}
+                      label={o.label} value={o.value}
+                      disabled={o.value === 'salary' && !data.searchQuery}
+                      onChange={setSearchType}
+                      checked={data[o.value]}
+                    />
+                  ))
+                }
+              </div>
             </aside>
 
             <div className={styles.content}>
