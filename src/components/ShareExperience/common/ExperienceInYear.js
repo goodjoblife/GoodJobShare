@@ -15,26 +15,27 @@ const ExperienceInYear = ({ experienceInYear, onChange }) => (
       text="相關職務工作經驗"
     />
     <div
-      className={shareStyles.single__select__input}
       style={{
-        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
       }}
     >
-      <Select
-        options={experienceInYearOptions}
-        value={experienceInYear}
-        onChange={
-          e => onChange(Number(e.target.value))
-        }
-      />
+      <div
+        className={shareStyles.single__select__input}
+        style={{
+          marginRight: '16px',
+        }}
+      >
+        <Select
+          options={experienceInYearOptions}
+          value={experienceInYear}
+          onChange={
+            e => onChange(Number(e.target.value))
+          }
+        />
+      </div>
       <p
         className="pS"
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '100%',
-          transform: 'translate(16px, -50%)',
-        }}
       >
         年
       </p>
