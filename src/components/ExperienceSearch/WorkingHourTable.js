@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
+import { InfoButton } from 'common/Modal';
 import Table from '../common/table/Table';
 import InfoSalaryModal from './InfoSalaryModal';
 import InfoTimeModal from './InfoTimeModal';
@@ -175,9 +176,9 @@ class WorkingHourTable extends Component {
             isOpen={this.state.infoSalaryModal.isOpen}
             close={this.toggleInfoSalaryModal}
           />
-          <button onClick={this.toggleInfoSalaryModal}>
+          <InfoButton onClick={this.toggleInfoSalaryModal}>
             估計時薪
-          </button>
+          </InfoButton>
         </Table.Column>
 
         <Table.Column
@@ -188,9 +189,9 @@ class WorkingHourTable extends Component {
             isOpen={this.state.infoTimeModal.isOpen}
             close={this.toggleInfoTimeModal}
           />
-          <button onClick={this.toggleInfoTimeModal}>
+          <InfoButton onClick={this.toggleInfoTimeModal}>
             參考時間
-          </button>
+          </InfoButton>
         </Table.Column>
       </Table>
     );

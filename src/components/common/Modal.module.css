@@ -1,3 +1,7 @@
+$above-desktop: 1025px;
+$primary-color: #fcd406;
+$orange: #ec7910;
+
 .modal {
 	position: fixed;
 	top: 0;
@@ -62,3 +66,24 @@
     fill: #000;
   }
 }
+
+.infoButton {
+	cursor: help;
+	display: inline-block;
+	position: relative;
+	&::after {
+		@media (min-width: $above-desktop) {
+			content: "";
+			position: absolute;
+			width: 100%;
+			left: 0;
+			bottom: -4px;
+			height: 1px;
+			border-bottom: 2px dotted $primary-color;
+		}
+	}
+	&:hover {
+		color: $orange;
+	}
+}
+
