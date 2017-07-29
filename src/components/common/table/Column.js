@@ -7,7 +7,7 @@ const Column = ({ children, className, alignRight }) => (
 
 Column.propTypes = {
   children: PropTypes.node.isRequired,
-  className: PropTypes.object,
+  className: PropTypes.string,
   alignRight: PropTypes.bool,
 };
 

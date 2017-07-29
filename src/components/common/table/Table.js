@@ -8,7 +8,7 @@ class Table extends Component {
     data: PropTypes.array.isRequired,
     primaryKey: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
-    className: PropTypes.object,
+    className: PropTypes.string,
   }
 
   static Column = Column
