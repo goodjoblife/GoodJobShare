@@ -18,7 +18,7 @@
 
 .image {
   margin-right: 40px;
-  flex: 0 0 30%;
+  flex: 0 0 43%;
 
   @media (max-width: 550px) {
     flex: 1 1 auto;
@@ -28,9 +28,9 @@
   }
 
   img {
-    max-width: 200px;
+    max-width: 100%;
     @media (max-width: 550px) {
-      max-width: 150px;
+      max-width: 220px;
     }
   }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Helmet from 'react-helmet';
 import { Section, Wrapper, Heading, P } from 'common/base';
+import CallToAction from 'common/CallToAction';
 import helmetData from '../../constants/helmetData';
 import styles from './About.module.css';
 import Timeline from './Timeline';
@@ -107,6 +108,13 @@ const About = () => (
         </div>
       </Wrapper>
     </Section>
+    <CallToAction
+      bgColor="#fcd406"
+      imgSrc="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/about-people.png"
+      heading="台灣將會有一場改善勞動環境的革命，而這一場革命需要每一個「你」的參與。"
+      headingSize="sl"
+      buttonText="現在就留下資料"
+    />
   </Section>
 );
 

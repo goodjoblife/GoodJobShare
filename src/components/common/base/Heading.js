@@ -32,7 +32,7 @@ Heading.propTypes = {
 };
 Heading.defaultProps = {
   children: '',
-  size: 'headingM',
+  size: 'm',
   Tag: 'h1',
   bold: false,
   marginBottom: false,
