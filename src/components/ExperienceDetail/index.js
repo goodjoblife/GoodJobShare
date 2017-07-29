@@ -15,6 +15,8 @@ import {
 } from '../../actions/experienceDetail';
 import { formatCanonicalPath } from '../../utils/helmetHelper';
 
+import authStatus from '../../constants/authStatus';
+
 class ExperienceDetail extends Component {
   static propTypes = {
     experienceDetail: ImmutablePropTypes.map.isRequired,
@@ -57,7 +59,7 @@ class ExperienceDetail extends Component {
       this.props.fetchReplies(nextProps.params.id);
     }
 
-    if (nextProps.authStatus !== this.props.authStatus && nextProps.authStatus === 'connected') {
+    if (nextProps.authStatus !== this.props.authStatus && nextProps.authStatus === authStatus.CONNECTED) {
       this.props.fetchExperience(this.props.params.id);
     }
   }

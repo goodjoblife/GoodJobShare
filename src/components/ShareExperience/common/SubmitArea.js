@@ -11,6 +11,8 @@ import SuccessFeedback from './SuccessFeedback';
 import FailFeedback from './FailFeedback';
 import FacebookFail from './FacebookFail';
 
+import authStatus from '../../../constants/authStatus';
+
 const getSuccessFeedback = id => (
   <SuccessFeedback
     buttonClick={() => (
@@ -78,7 +80,7 @@ class SubmitArea extends React.PureComponent {
   login() {
     return this.props.login(this.props.FB)
       .then(status => {
-        if (status === 'connected') {
+        if (status === authStatus.CONNECTED) {
           return this.onSubmit();
         }
         throw Error('can not login');

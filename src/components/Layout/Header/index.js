@@ -6,6 +6,8 @@ import i from 'common/icons';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 
+import authStatus from '../../../constants/authStatus';
+
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -33,7 +35,7 @@ class Header extends React.Component {
     }
 
     if (prevProps.auth.get('status') !== this.props.auth.get('status') &&
-      this.props.auth.get('status') === 'connected') {
+      this.props.auth.get('status') === authStatus.CONNECTED) {
       const { getMe, FB } = this.props;
       getMe(FB).catch(() => {});
     }
