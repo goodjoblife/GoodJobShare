@@ -1,0 +1,57 @@
+@value main-yellow from "common/variables.module.css";
+
+.beginning {
+  display: flex;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+  }
+
+  .item {
+    flex: 1 1 50%;
+    text-align: center;
+    padding-top: 40px;
+  }
+
+  .heading {
+    display: inline;
+    border-bottom: 3px solid main-yellow;
+  }
+
+  img {
+    max-width: 230px;
+    display: inline-block;
+
+    @media (max-width: 550px) {
+      max-width: 180px;
+    }
+  }
+}
+
+.about3img {
+  max-width: 230px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 32px;
+
+  @media (max-width: 550px) {
+    max-width: 180px;
+  }
+}
+
+.timelineColWrapper {
+  display: flex;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+  }
+}
+
+.timelineCol {
+  flex: 1 1 calc(50% - 32px);
+  margin-right: 32px;
+
+  &:nth-child(2) {
+    margin-right: 0;
+  }
+}

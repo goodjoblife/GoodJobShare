@@ -4,13 +4,14 @@ import styles from './Heading.module.css';
 
 const sizeOptions = ['l', 'm', 'sl', 'sm'];
 
-const Heading = ({ Tag, size, bold, light, center, marginBottom, children, style, className }) => (
+const Heading = ({ Tag, size, bold, light, center, marginBottom, marginBottomS, children, style, className }) => (
   <Tag
     className={cn(styles[size], className, {
       [styles.bold]: bold,
       [styles.light]: light,
       [styles.center]: center,
       [styles.marginBottom]: marginBottom,
+      [styles.marginBottomS]: marginBottomS,
     })}
     style={style}
   >
@@ -25,6 +26,7 @@ Heading.propTypes = {
   light: PropTypes.bool,
   center: PropTypes.bool,
   marginBottom: PropTypes.bool,
+  marginBottomS: PropTypes.bool,
   style: PropTypes.object,
   className: PropTypes.string,
 };
@@ -33,6 +35,8 @@ Heading.defaultProps = {
   size: 'headingM',
   Tag: 'h1',
   bold: false,
+  marginBottom: false,
+  marginBottomS: false,
 };
 
 export default Heading;
