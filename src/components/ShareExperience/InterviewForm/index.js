@@ -191,6 +191,9 @@ class InterviewForm extends React.Component {
         <Helmet {...helmetData.SHARE_INTERVIEW} />
         <h1
           className="headingL"
+          style={{
+            textAlign: 'center',
+          }}
         >
           面試經驗分享
         </h1>

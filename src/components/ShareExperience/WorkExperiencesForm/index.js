@@ -198,6 +198,9 @@ class WorkExperiencesForm extends React.Component {
         <Helmet {...helmetData.SHARE_WORK} />
         <h1
           className="headingL"
+          style={{
+            textAlign: 'center',
+          }}
         >
           工作經驗分享
         </h1>

@@ -1,5 +1,15 @@
 @value main-yellow from "common/variables.module.css";
 
+.container {
+  padding: 0 20%;
+}
+
+@media (max-width: 550px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
 .iconHeading {
   margin-bottom: 16px;
   display: flex;
