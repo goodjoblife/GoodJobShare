@@ -144,6 +144,7 @@ class WorkingHourTable extends Component {
           className={styles.colSalary}
           dataField="salary"
           dataFormatter={WorkingHourTable.getSalary}
+          alignRight
         >
           薪資
         </Table.Column>
@@ -152,6 +153,7 @@ class WorkingHourTable extends Component {
           className={styles.colHourly}
           dataField="estimated_hourly_wage"
           dataFormatter={WorkingHourTable.getWage}
+          alignRight
         >
           估計時薪
         </Table.Column>

@@ -39,7 +39,7 @@ class Table extends Component {
         if (col.props.dataFormatter) {
           value = col.props.dataFormatter(value, d);
         }
-        record.push(<td key={idx} data-th={col.props.children}>{value}</td>);
+        record.push(<td key={idx} data-th={col.props.children} className={col.props.alignRight && 'alignRight'}>{value}</td>);
       });
       records.push(<tr key={d[primaryKey] || i}>{record}</tr>);
     });
