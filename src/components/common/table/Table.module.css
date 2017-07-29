@@ -7,6 +7,7 @@ $above-desktop: 1025px;
 $below-desktop: 1024px;
 
 $gray: #b4b4b4;
+$gray-light: #eeeeed;
 $orange: #ec7910;
 $block-gutter-s: 20px;
 
@@ -79,7 +80,7 @@ $block-gutter-s: 20px;
     }
     &:last-child {
       @media (max-width: $below-small) {
-        border-bottom: 4px solid gray-light;
+        border-bottom: 4px solid $gray-light;
       }
     }
     a {
