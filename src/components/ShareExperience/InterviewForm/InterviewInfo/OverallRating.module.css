@@ -11,6 +11,11 @@
   background: #FFFAE1;
   border: 1px solid main-yellow;
   border-radius: 3px;
+
+  @media (max-width: 550px) {
+    margin-top: 5px;
+    margin-left: 0;
+  }
 }
 
 .warning {
