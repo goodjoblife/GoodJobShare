@@ -1,0 +1,41 @@
+@define-mixin font-p-m {
+  font-size: 1em;
+  line-height: 1.6em;
+  color: #333;
+}
+
+$above-desktop: 1025px;
+$blue: #325bbd;
+
+.htmlEditor {
+  a {
+    color: $blue;
+    border-bottom: 1px solid transparent;
+    transition: border .3s;
+    padding-bottom: 2px;
+    @media (min-width: $above-desktop) {
+      &:hover {
+        border-bottom: 1px solid $blue;
+      }
+    }
+  }
+  strong, bold {
+    font-weight: 800;
+  }
+  h2 {
+    font-size: 1.6em;
+    margin-top: 60px;
+    margin-bottom: 20px;
+  }
+  p {
+    @mixin font-p-m;
+    margin-bottom: 1em;
+  }
+  ul {
+    margin-left: 1.5em;
+    > li {
+      list-style: disc;
+      @mixin font-p-m;
+    }
+  }
+}

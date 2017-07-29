@@ -168,4 +168,7 @@
     }
   }
 
+  .alignLeft {
+    text-align: left;
+  }
 }
