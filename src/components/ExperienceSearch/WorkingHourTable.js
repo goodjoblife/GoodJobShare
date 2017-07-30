@@ -137,6 +137,7 @@ class WorkingHourTable extends Component {
       <Table className={styles.companyTable} data={data} primaryKey="created_at">
         <Table.Column
           className={styles.colPosition}
+          title="職稱"
           dataField="job_title"
           dataFormatter={WorkingHourTable.getTitle}
         >
@@ -145,6 +146,7 @@ class WorkingHourTable extends Component {
 
         <Table.Column
           className={styles.colType}
+          title="職務型態"
           dataField="employment_type"
           dataFormatter={WorkingHourTable.getEmploymentType}
         >
@@ -153,6 +155,7 @@ class WorkingHourTable extends Component {
 
         <Table.Column
           className={styles.colDayTime}
+          title="表訂 / 實際工時"
           dataField="day_promised_work_time"
           dataFormatter={WorkingHourTable.getWorkingHour}
         >
@@ -161,6 +164,7 @@ class WorkingHourTable extends Component {
 
         <Table.Column
           className={styles.colWeekTime}
+          title="一週總工時"
           dataField="week_work_time"
           dataFormatter={WorkingHourTable.getWorkingTime}
         >
@@ -169,6 +173,7 @@ class WorkingHourTable extends Component {
 
         <Table.Column
           className={styles.colFrequency}
+          title="加班頻率"
           dataField="overtime_frequency"
           dataFormatter={WorkingHourTable.getFrequency}
         >
@@ -177,6 +182,7 @@ class WorkingHourTable extends Component {
 
         <Table.Column
           className={styles.colExperience}
+          title="業界工作經歷"
           dataField="experience_in_year"
           dataFormatter={WorkingHourTable.getYear}
         >
@@ -185,6 +191,7 @@ class WorkingHourTable extends Component {
 
         <Table.Column
           className={styles.colSalary}
+          title="薪資"
           dataField="salary"
           dataFormatter={WorkingHourTable.getSalary}
           alignRight
@@ -194,6 +201,7 @@ class WorkingHourTable extends Component {
 
         <Table.Column
           className={styles.colHourly}
+          title="估計時薪"
           dataField="estimated_hourly_wage"
           dataFormatter={WorkingHourTable.getWage}
           alignRight
@@ -209,6 +217,7 @@ class WorkingHourTable extends Component {
 
         <Table.Column
           className={styles.colDataTime}
+          title="參考時間"
           dataField="data_time"
           dataFormatter={WorkingHourTable.getDate}
         >

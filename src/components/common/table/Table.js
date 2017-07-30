@@ -42,7 +42,7 @@ class Table extends Component {
         record.push(
           <td
             key={idx}
-            data-th={col.props.children}
+            data-th={col.props.title}
             className={cn({ [styles.alignRight]: col.props.alignRight })}
           >
             {value}
