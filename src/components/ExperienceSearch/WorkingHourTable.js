@@ -82,7 +82,8 @@ class WorkingHourTable extends Component {
     }
     return [amount, type].join(' / ');
   }
-  static getWage = val => (typeof val === 'number' ? Math.round(val) : '')
+  static getExperience = val => (typeof val === 'number' ? `${Math.round(val)} 年` : '')
+  static getWage = val => (typeof val === 'number' ? `${Math.round(val)} 元` : '')
   static getDate = val => {
     const month = (val.month >= 10 ? '' : '0') + val.month;
     return [val.year, month].join('.');
@@ -128,7 +129,10 @@ class WorkingHourTable extends Component {
           加班頻率
         </Table.Column>
 
-        <Table.Column dataField="experience_in_year">
+        <Table.Column
+          dataField="experience_in_year"
+          dataFormatter={WorkingHourTable.getExperience}
+        >
           業界工作經歷
         </Table.Column>
 
