@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import Modal from 'common/Modal';
 import Question from 'common/icons/Question';
-import HtmlEditor from 'common/HtmlEditor';
+import editorStyles from 'common/Editor.module.css';
 import Button from 'common/button/Button';
 
 const InfoSalaryModal = ({ isOpen, close }) => (
@@ -25,7 +26,7 @@ const InfoSalaryModal = ({ isOpen, close }) => (
     >
       時薪估計方式
     </h2>
-    <HtmlEditor className="alignLeft">
+    <div className={cn(editorStyles.editor, 'alignLeft')}>
       <ul>
         <li>當薪資種類為「時薪」：無需估算</li>
         <li>當薪資種類為「日薪」：以 <bold>日薪 ÷ 工作日實際工時</bold> 估算</li>
@@ -47,7 +48,7 @@ const InfoSalaryModal = ({ isOpen, close }) => (
          OK，我瞭解了
         </Button>
       </div>
-    </HtmlEditor>
+    </div>
   </Modal>
 );
 
