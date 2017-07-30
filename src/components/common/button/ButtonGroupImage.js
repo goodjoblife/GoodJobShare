@@ -34,6 +34,7 @@ class ButtonGroupImageEle extends React.PureComponent {
         className={checked ? styles.checked : styles.unchecked}
         style={{
           marginRight: last ? null : '3px',
+          marginBottom: '5px',
         }}
       >
         <input
