@@ -5,9 +5,9 @@ import Loader from 'common/Loader';
 import { Wrapper, Section, Heading, P } from 'common/base';
 import styles from './ExperienceDetail.module.css';
 import Article from './Article';
-import ReactionZone from './ReactionZone';
+import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
 // import RecommendationZone from './RecommendationZone';
-import MessageBoard from './MessageBoard';
+import MessageBoard from '../../containers/ExperienceDetail/MessageBoard';
 import BackToList from './BackToList';
 import status from '../../constants/status';
 import {
