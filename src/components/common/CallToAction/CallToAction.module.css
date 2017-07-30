@@ -1,11 +1,3 @@
-.callToAction {
-  margin-top: 80px;
-
-  @media (max-width: 550px) {
-    flex-direction: 40px;
-  }
-}
-
 .container {
   display: flex;
   align-items: center;

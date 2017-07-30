@@ -86,6 +86,7 @@ class LaborRightsSingle extends React.Component {
               />
               <CallToAction
                 imgSrc="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/cta-01.png"
+                marginTop
               />
             </div>
         }

@@ -5,7 +5,7 @@ import { Section, Wrapper, Heading } from 'common/base';
 import styles from './CallToAction.module.css';
 
 const CallToAction = ({ heading, headingSize, imgSrc, buttonText, bgColor }) => (
-  <Section padding bg={bgColor} className={styles.callToAction}>
+  <Section padding bg={bgColor}>
     <Wrapper size="m" className={styles.container}>
       <div className={styles.image}>
         <img src={imgSrc} alt="留下你的資訊" />
@@ -14,7 +14,7 @@ const CallToAction = ({ heading, headingSize, imgSrc, buttonText, bgColor }) => 
         <Heading size={headingSize} className={styles.heading} Tag="h3">
           {heading}
         </Heading>
-        <Link to="/share" className={cn('buttonCircleL', 'buttonBlack')}>{buttonText}</Link>
+        <Link to="/share" className={cn('buttonCircleL', 'buttonBlack2')}>{buttonText}</Link>
       </div>
     </Wrapper>
   </Section>

@@ -11,6 +11,10 @@
     flex: 1 1 50%;
     text-align: center;
     padding-top: 40px;
+
+    @media (max-width: 550px) {
+      flex-basis: auto;
+    }
   }
 
   .heading {
@@ -20,7 +24,8 @@
 
   img {
     max-width: 230px;
-    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
 
     @media (max-width: 550px) {
       max-width: 180px;
@@ -39,26 +44,33 @@
   }
 }
 
+.timelineWrapper {
+  position: relative;
+  padding-top: 336px;
+  @media (max-width: 550px) {
+    padding-top: 200px;
+  }
+}
+
 .timelineImage {
-  max-width: 960px;
+  width: 960px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: -90px;
-
-  @media (max-width: 850px) {
-    max-width: 90%;
-    margin-top: 0;
-  }
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  margin-left: -480px;
 
   @media (max-width: 550px) {
-    display: none;
+    width: 600px;
+    margin-left: -260px;
   }
 }
 
 .timelineColWrapper {
   display: flex;
 
-  @media (max-width: 850px) {
+  @media (max-width: 550px) {
     flex-direction: column;
   }
 }
@@ -67,10 +79,14 @@
   flex: 1 1 calc(50% - 32px);
   margin-right: 32px;
 
+  @media (max-width: 550px) {
+    margin-right: 0px;
+  }
+
   &:nth-child(2) {
     margin-right: 0;
 
-    @media (max-width: 850px) {
+    @media (max-width: 550px) {
       margin-top: 32px;
     }
   }

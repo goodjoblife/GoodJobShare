@@ -11,6 +11,10 @@
   padding-left: 24px;
   margin-bottom: 24px;
 
+  @media (max-width: 550px) {
+    max-width: 100%;
+  }
+
   &::before {
     content: "";
     display: block;
