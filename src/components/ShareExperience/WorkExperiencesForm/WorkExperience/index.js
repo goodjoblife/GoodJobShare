@@ -8,6 +8,8 @@ import styles from '../../ShareExperience.module.css';
 import Title from '../../common/Title';
 import Sections from '../../common/Sections';
 
+import shareStyles from '../../common/share.module.css';
+
 import {
   interviewSectionSubtitleOptions,
 } from '../../common/optionMap';
@@ -88,13 +90,7 @@ class WorkExperience extends React.PureComponent {
               changeValidationStatus={changeValidationStatus}
             />
             <div
-              style={{
-                position: 'absolute',
-                left: 0,
-                bottom: 0,
-                minWidth: '150%',
-                transform: 'translate(-65px, 100%)',
-              }}
+              className={shareStyles.button__add}
             >
               <ButtonAdd
                 options={interviewSectionSubtitleOptions}
