@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { P } from 'common/base';
 import ThumbsUp from '../common/reaction/ThumbsUp';
+import authStatusConstant from '../../constants/authStatus';
 
 import styles from './CommentBlock.module.css';
 
@@ -8,6 +9,9 @@ class CommentBlock extends Component {
   static propTypes = {
     reply: PropTypes.object.isRequired,
     likeReply: PropTypes.func.isRequired,
+    login: React.PropTypes.func.isRequired,
+    authStatus: React.PropTypes.string,
+    FB: React.PropTypes.object,
   }
 
   static formatDate = d => {
@@ -24,8 +28,12 @@ class CommentBlock extends Component {
   }
 
   likeReply() {
-    const { reply, likeReply } = this.props;
-    likeReply(reply);
+    const { authStatus, login, FB, reply, likeReply } = this.props;
+    if (authStatus !== authStatusConstant.CONNECTED) {
+      login(FB).then(() => likeReply(reply));
+    } else {
+      likeReply(reply);
+    }
   }
 
   render() {
