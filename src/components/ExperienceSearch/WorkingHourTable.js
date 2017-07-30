@@ -62,7 +62,7 @@ class WorkingHourTable extends Component {
   }
   static getSalary = val => {
     if (!val) {
-      return '0';
+      return '-';
     }
     const amount = val.amount.toString()
       .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -82,8 +82,20 @@ class WorkingHourTable extends Component {
     }
     return [amount, type].join(' / ');
   }
-  static getExperience = val => (typeof val === 'number' ? `${Math.round(val)} 年` : '')
-  static getWage = val => (typeof val === 'number' ? `${Math.round(val)} 元` : '')
+  static getExperience = val => {
+    if (typeof val === 'number') {
+      if (!val) return '-';
+      return `${Math.round(val)} 年`;
+    }
+    return '';
+  }
+  static getWage = val => {
+    if (typeof val === 'number') {
+      if (!val) return '-';
+      return `${Math.round(val)} 元`;
+    }
+    return '';
+  }
   static getDate = val => {
     const month = (val.month >= 10 ? '' : '0') + val.month;
     return [val.year, month].join('.');
