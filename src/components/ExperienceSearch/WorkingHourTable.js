@@ -82,7 +82,7 @@ class WorkingHourTable extends Component {
     }
     return [amount, type].join(' / ');
   }
-  static getExperience = val => {
+  static getYear = val => {
     if (typeof val === 'number') {
       if (!val) return '-';
       return `${Math.round(val)} 年`;
@@ -143,7 +143,7 @@ class WorkingHourTable extends Component {
 
         <Table.Column
           dataField="experience_in_year"
-          dataFormatter={WorkingHourTable.getExperience}
+          dataFormatter={WorkingHourTable.getYear}
         >
           業界工作經歷
         </Table.Column>
