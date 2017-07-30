@@ -135,7 +135,7 @@ $block-gutter-s: 20px;
     }
   }
 
-  :global(.alignRight) {
+  .alignRight {
     @media (min-width: $above-small) {
       text-align: right;
       padding-right: 15px;
