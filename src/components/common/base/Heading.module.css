@@ -1,7 +1,7 @@
 .l {
   font-size: 2.25em;
   line-height: 1.25em;
-  letter-spacing: 2px;
+  letter-spacing: 0.05em;
 
   @media (max-width: 850px) {
     font-size: 2em;
@@ -15,7 +15,7 @@
 .m {
   font-size: 1.75em;
   line-height: 1.3em;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
 
   @media (max-width: 550px) {
     font-size: 1.6em;
@@ -59,4 +59,8 @@
   @media (max-width: 550px) {
     margin-bottom: 24px;
   }
+}
+
+.marginBottomS {
+  margin-bottom: .5em;
 }

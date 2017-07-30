@@ -1,0 +1,47 @@
+@value border-gray, main-yellow, link-blue from 'common/variables.module.css';
+
+.timeline {
+  margin-top: 24px;
+  border-left: 1px solid border-gray;
+}
+
+.item {
+  max-width: 310px;
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 24px;
+
+  @media (max-width: 550px) {
+    max-width: 100%;
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: main-yellow;
+    border-radius: 50%;
+
+    position: absolute;
+    left: -5px;
+    top: 8px;
+  }
+
+  /* bludLink */
+  a {
+    color: link-blue;
+    border-bottom: 1px solid transparent;
+    transition: border .3s;
+    padding-bottom: 2px;
+    @media (min-width: 851px) {
+      &:hover {
+        border-bottom: 1px solid link-blue;
+      }
+    }
+  }
+}
+
+.month {
+  margin-bottom: 4px;
+}

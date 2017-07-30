@@ -1,0 +1,137 @@
+@value main-yellow from "common/variables.module.css";
+
+.beginning {
+  display: flex;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+  }
+
+  .item {
+    flex: 1 1 50%;
+    text-align: center;
+    padding-top: 40px;
+
+    @media (max-width: 550px) {
+      flex-basis: auto;
+    }
+  }
+
+  .heading {
+    display: inline;
+    border-bottom: 3px solid main-yellow;
+  }
+
+  img {
+    max-width: 230px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: 550px) {
+      max-width: 180px;
+    }
+  }
+}
+
+.about3img {
+  max-width: 230px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 32px;
+
+  @media (max-width: 550px) {
+    max-width: 180px;
+  }
+}
+
+.timelineWrapper {
+  position: relative;
+  padding-top: 336px;
+  @media (max-width: 550px) {
+    padding-top: 200px;
+  }
+}
+
+.timelineImage {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  margin-left: -480px;
+
+  @media (max-width: 550px) {
+    width: 600px;
+    margin-left: -260px;
+  }
+}
+
+.timelineColWrapper {
+  display: flex;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+  }
+}
+
+.timelineCol {
+  flex: 1 1 calc(50% - 32px);
+  margin-right: 32px;
+
+  @media (max-width: 550px) {
+    margin-right: 0px;
+  }
+
+  &:nth-child(2) {
+    margin-right: 0;
+
+    @media (max-width: 550px) {
+      margin-top: 32px;
+    }
+  }
+}
+
+.contact {
+  text-align: center;
+
+  > a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 16px;
+    width: 60px;
+    height: 60px;
+    background-color: #000;
+    border-radius: 50%;
+    transition-property: background-color;
+    transition-duration: .25s;
+
+    @media (max-width: 550px) {
+      width: 48px;
+      height: 48px;
+    }
+
+    svg {
+      width: 28px;
+      height: auto;
+      fill: #fff;
+
+      @media (max-width: 550px) {
+        width: 24px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1025px) {
+  .facebook:hover {
+    background-color: #3b5998;
+  }
+  .github:hover {
+    background-color: #555;
+  }
+  .email:hover {
+    background-color: #d14836;
+  }
+}

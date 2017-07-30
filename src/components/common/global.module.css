@@ -85,6 +85,16 @@
     }
   }
 
+  .buttonBlack2 {
+    background-color: main-black;
+    color: #fff;
+    @media (min-width: 851px) {
+      &:hover {
+        background-color: #555;
+      }
+    }
+  }
+
   .buttonWhiteLine {
     border: 1px solid #fff;
     color: #fff;
