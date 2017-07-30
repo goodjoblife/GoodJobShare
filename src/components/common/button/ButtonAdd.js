@@ -34,6 +34,7 @@ class ButtonAdd extends React.PureComponent {
       <div
         style={{
           display: 'flex',
+          flexWrap: 'wrap',
           minHeight: '40px',
           alignItems: 'center',
         }}
