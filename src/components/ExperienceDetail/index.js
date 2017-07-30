@@ -5,15 +5,17 @@ import Loader from 'common/Loader';
 import { Wrapper, Section, Heading, P } from 'common/base';
 import styles from './ExperienceDetail.module.css';
 import Article from './Article';
-import ReactionZone from './ReactionZone';
+import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
 // import RecommendationZone from './RecommendationZone';
-import MessageBoard from './MessageBoard';
+import MessageBoard from '../../containers/ExperienceDetail/MessageBoard';
 import BackToList from './BackToList';
 import status from '../../constants/status';
 import {
   fetchExperience,
 } from '../../actions/experienceDetail';
 import { formatCanonicalPath } from '../../utils/helmetHelper';
+
+import authStatus from '../../constants/authStatus';
 
 class ExperienceDetail extends Component {
   static propTypes = {
@@ -26,6 +28,12 @@ class ExperienceDetail extends Component {
     setComment: React.PropTypes.func.isRequired,
     submitComment: React.PropTypes.func.isRequired,
     params: React.PropTypes.object.isRequired,
+    location: React.PropTypes.shape({
+      query: React.PropTypes.shape({
+        backable: React.PropTypes.string,
+      }),
+    }),
+    authStatus: React.PropTypes.string,
   }
 
   static fetchData({ store, params }) {
@@ -49,6 +57,10 @@ class ExperienceDetail extends Component {
     if (nextProps.params.id !== this.props.params.id) {
       this.props.fetchExperience(nextProps.params.id);
       this.props.fetchReplies(nextProps.params.id);
+    }
+
+    if (nextProps.authStatus !== this.props.authStatus && nextProps.authStatus === authStatus.CONNECTED) {
+      this.props.fetchExperience(this.props.params.id);
     }
   }
 
@@ -98,6 +110,8 @@ class ExperienceDetail extends Component {
     const {
       experienceDetail, setTos, setComment, likeExperience, likeReply,
     } = this.props;
+
+    const backable = this.props.location.query.backable || 'false';
     const data = experienceDetail.toJS();
     const experience = data.experience;
     return (
@@ -128,7 +142,9 @@ class ExperienceDetail extends Component {
             { /* 按讚，分享，檢舉區塊  */}
             <ReactionZone experience={experience} likeExperience={likeExperience} />
 
-            <BackToList />
+            <BackToList
+              backable={JSON.parse(backable)}
+            />
           </Wrapper>
         </Section>
         <Section>

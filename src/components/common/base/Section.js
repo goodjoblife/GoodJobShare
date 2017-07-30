@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import cn from 'classnames';
 import styles from './Section.module.css';
 
-const Section = ({ Tag, pageTop, bg, padding, paddingTop, paddingBottom, center, children, className }) => (
+const Section = ({ Tag, pageTop, bg, padding, paddingTop, paddingBottom, center, children, className, ...props }) => (
   <Tag
     className={cn(className, {
       [styles.pageTop]: pageTop,
@@ -12,6 +12,7 @@ const Section = ({ Tag, pageTop, bg, padding, paddingTop, paddingBottom, center,
       [styles.center]: center,
     })}
     style={{ backgroundColor: bg }}
+    {...props}
   >
     {children}
   </Tag>

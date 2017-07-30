@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
+import authStatus from '../../../constants/authStatus';
+
 import styles from './ButtonSubmit.module.css';
 
 const isLogin = auth =>
-  auth.get('status') === 'connected';
+  auth.get('status') === authStatus.CONNECTED;
 
 class ButtonSubmit extends React.PureComponent {
   render() {

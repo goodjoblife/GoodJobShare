@@ -1,3 +1,5 @@
+import authStatus from '../constants/authStatus';
+
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
 
@@ -16,9 +18,9 @@ export const login = FB => dispatch => {
   if (FB) {
     return new Promise(resolve => FB.login(response => resolve(response)))
       .then(response => {
-        if (response.status === 'connected') {
+        if (response.status === authStatus.CONNECTED) {
           dispatch(setLogin(response.status, response.authResponse.accessToken));
-        } else if (response.status === 'not_authorized') {
+        } else if (response.status === authStatus.NOT_AUTHORIZED) {
           dispatch(setLogin(response.status));
         }
         return response.status;
@@ -31,9 +33,9 @@ export const getLoginStatus = FB => dispatch => {
   if (FB) {
     return new Promise(resolve => FB.getLoginStatus(response => resolve(response)))
       .then(response => {
-        if (response.status === 'connected') {
+        if (response.status === authStatus.CONNECTED) {
           dispatch(setLogin(response.status, response.authResponse.accessToken));
-        } else if (response.status === 'not_authorized') {
+        } else if (response.status === authStatus.NOT_AUTHORIZED) {
           dispatch(setLogin(response.status));
         }
         return response.status;
@@ -46,7 +48,7 @@ export const getMe = FB => (dispatch, getState) => {
   if (!FB) {
     return Promise.reject('FB should ready');
   }
-  if (getState().auth.get('status') !== 'connected') {
+  if (getState().auth.get('status') !== authStatus.CONNECTED) {
     return Promise.reject('auth status should be connected');
   }
   return new Promise(resolve => FB.api('/me', response => resolve(response)))
