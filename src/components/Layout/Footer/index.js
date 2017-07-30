@@ -20,7 +20,7 @@ const link2 = [
 const link3 = [
   { to: '/about', text: '關於我們' },
   { to: '/about#contact', text: '聯絡我們' },
-  { to: '/about#join-us', text: '加入我們' },
+  { to: '/about#joinUs', text: '加入我們' },
 ];
 
 const Footer = () => (

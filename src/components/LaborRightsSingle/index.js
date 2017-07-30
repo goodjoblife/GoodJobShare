@@ -7,10 +7,10 @@ import {
   formatCanonicalPath,
   formatUrl,
 } from 'utils/helmetHelper';
+import NotFound from 'common/NotFound';
+import CallToAction from 'common/CallToAction';
 import Body from './Body';
 import Footer from './Footer';
-import NotFound from '../common/NotFound';
-import CallToAction from './CallToAction';
 
 import {
     fetchMetaListIfNeeded,
@@ -84,7 +84,10 @@ class LaborRightsSingle extends React.Component {
                 prev={this.props.prev}
                 next={this.props.next}
               />
-              <CallToAction />
+              <CallToAction
+                imgSrc="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/cta-01.png"
+                marginTop
+              />
             </div>
         }
       </main>

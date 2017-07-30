@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import cn from 'classnames';
 import styles from './Table.module.css';
 import Column from './Column';
 
@@ -7,6 +8,7 @@ class Table extends Component {
     data: PropTypes.array.isRequired,
     primaryKey: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
+    className: PropTypes.string,
   }
 
   static Column = Column
@@ -25,7 +27,7 @@ class Table extends Component {
   }
 
   render() {
-    const { data, primaryKey, children } = this.props;
+    const { data, primaryKey, children, className } = this.props;
     const records = [];
     let record;
     let value;
@@ -37,13 +39,21 @@ class Table extends Component {
         if (col.props.dataFormatter) {
           value = col.props.dataFormatter(value, d);
         }
-        record.push(<td key={idx}>{value}</td>);
+        record.push(
+          <td
+            key={idx}
+            data-th={col.props.children}
+            className={cn({ [styles.alignRight]: col.props.alignRight })}
+          >
+            {value}
+          </td>
+        );
       });
       records.push(<tr key={d[primaryKey] || i}>{record}</tr>);
     });
 
     return (
-      <table className={styles.rwdTable}>
+      <table className={cn([styles.rwdTable, className])}>
         <thead><tr>{children}</tr></thead>
         <tbody>{records}</tbody>
       </table>

@@ -9,14 +9,26 @@
 .l {
   font-size: 1.1em;
   line-height: 1.6em;
+
+  strong {
+    font-weight: 700;
+  }
 }
 
 .m {
   font-size: 1em;
   line-height: 1.6em;
+
+  strong {
+    font-weight: 700;
+  }
 }
 
 .s {
   font-size: 0.9em;
   line-height: 1.5em;
+
+  strong {
+    font-weight: 700;
+  }
 }

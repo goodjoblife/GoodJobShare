@@ -3,12 +3,14 @@ import React, { PropTypes } from 'react';
 import Button from 'common/button/Button';
 import Checkbox from 'common/form/Checkbox';
 import { P } from 'common/base';
-import CommentBlock from './CommentBlock';
+import CommentBlock from '../../containers/ExperienceDetail/CommentBlock';
+import authStatusConstant from '../../constants/authStatus';
 
 import styles from './MessageBoard.module.css';
 
 const MessageBoard = ({
   replies, likeReply, tos, comment, setTos, setComment, submitComment,
+  login, authStatus, FB,
 }) => (
   <div className={styles.container}>
     <P size="m">共 {replies.length} 則回應</P>
@@ -26,9 +28,17 @@ const MessageBoard = ({
       <Button
         btnStyle="submit"
         disabled={!tos || !comment}
-        onClick={submitComment}
+        onClick={() => {
+          if (authStatus !== authStatusConstant.CONNECTED) {
+            login(FB).then(() => submitComment());
+          } else {
+            submitComment();
+          }
+        }}
       >
-        發佈留言
+        {
+          authStatus === authStatusConstant.CONNECTED ? '發佈留言' : '以  f  認證，發佈留言'
+        }
       </Button>
     </div>
     <div className={styles.commentBlocks}>
@@ -49,6 +59,9 @@ MessageBoard.propTypes = {
   setTos: PropTypes.func.isRequired,
   setComment: PropTypes.func.isRequired,
   submitComment: PropTypes.func.isRequired,
+  login: React.PropTypes.func.isRequired,
+  authStatus: React.PropTypes.string,
+  FB: React.PropTypes.object,
 };
 
 export default MessageBoard;

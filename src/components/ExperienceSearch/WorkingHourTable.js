@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 
+import { InfoButton } from 'common/Modal';
 import Table from '../common/table/Table';
+import InfoSalaryModal from './InfoSalaryModal';
+import InfoTimeModal from './InfoTimeModal';
 import styles from './WorkingHourTable.module.css';
 import employmentType from '../../constants/employmentType';
 
@@ -88,12 +91,39 @@ class WorkingHourTable extends Component {
     return [val.year, month].join('.');
   }
 
+  constructor(props) {
+    super(props);
+    this.toggleInfoSalaryModal = this.toggleInfoSalaryModal.bind(this);
+    this.toggleInfoTimeModal = this.toggleInfoTimeModal.bind(this);
+    this.state = {
+      infoSalaryModal: {
+        isOpen: false,
+      },
+      infoTimeModal: {
+        isOpen: false,
+      },
+    };
+  }
+
+  toggleInfoSalaryModal() {
+    const state = this.state;
+    state.infoSalaryModal.isOpen = !state.infoSalaryModal.isOpen;
+    this.setState(state);
+  }
+
+  toggleInfoTimeModal() {
+    const state = this.state;
+    state.infoTimeModal.isOpen = !state.infoTimeModal.isOpen;
+    this.setState(state);
+  }
+
   render() {
     const { data } = this.props;
 
     return (
-      <Table data={data} primaryKey="created_at">
+      <Table className={styles.companyTable} data={data} primaryKey="created_at">
         <Table.Column
+          className={styles.colPosition}
           dataField="job_title"
           dataFormatter={WorkingHourTable.getTitle}
         >
@@ -101,6 +131,7 @@ class WorkingHourTable extends Component {
         </Table.Column>
 
         <Table.Column
+          className={styles.colType}
           dataField="employment_type"
           dataFormatter={WorkingHourTable.getEmploymentType}
         >
@@ -108,6 +139,7 @@ class WorkingHourTable extends Component {
         </Table.Column>
 
         <Table.Column
+          className={styles.colDayTime}
           dataField="day_promised_work_time"
           dataFormatter={WorkingHourTable.getWorkingHour}
         >
@@ -115,6 +147,7 @@ class WorkingHourTable extends Component {
         </Table.Column>
 
         <Table.Column
+          className={styles.colWeekTime}
           dataField="week_work_time"
           dataFormatter={WorkingHourTable.getWorkingTime}
         >
@@ -122,35 +155,56 @@ class WorkingHourTable extends Component {
         </Table.Column>
 
         <Table.Column
+          className={styles.colFrequency}
           dataField="overtime_frequency"
           dataFormatter={WorkingHourTable.getFrequency}
         >
           加班頻率
         </Table.Column>
 
-        <Table.Column dataField="experience_in_year">
+        <Table.Column
+          className={styles.colExperience}
+          dataField="experience_in_year"
+        >
           業界工作經歷
         </Table.Column>
 
         <Table.Column
+          className={styles.colSalary}
           dataField="salary"
           dataFormatter={WorkingHourTable.getSalary}
+          alignRight
         >
           薪資
         </Table.Column>
 
         <Table.Column
+          className={styles.colHourly}
           dataField="estimated_hourly_wage"
           dataFormatter={WorkingHourTable.getWage}
+          alignRight
         >
-          估計時薪
+          <InfoSalaryModal
+            isOpen={this.state.infoSalaryModal.isOpen}
+            close={this.toggleInfoSalaryModal}
+          />
+          <InfoButton onClick={this.toggleInfoSalaryModal}>
+            估計時薪
+          </InfoButton>
         </Table.Column>
 
         <Table.Column
+          className={styles.colDataTime}
           dataField="data_time"
           dataFormatter={WorkingHourTable.getDate}
         >
-          參考時間
+          <InfoTimeModal
+            isOpen={this.state.infoTimeModal.isOpen}
+            close={this.toggleInfoTimeModal}
+          />
+          <InfoButton onClick={this.toggleInfoTimeModal}>
+            參考時間
+          </InfoButton>
         </Table.Column>
       </Table>
     );

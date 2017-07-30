@@ -41,3 +41,16 @@ Modal.defaultProps = {
 };
 
 export default Modal;
+
+const InfoButton = ({ children, onClick }) => (
+  <button className={styles.infoButton} onClick={onClick}>
+    {children}
+  </button>
+);
+
+InfoButton.propTypes = {
+  children: PropTypes.node,
+  onClick: PropTypes.func.isRequired,
+};
+
+export { InfoButton };

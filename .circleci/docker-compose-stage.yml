@@ -6,7 +6,7 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
       args:
-        - API_HOST=https://api-stage-v4.goodjob.life
+        - API_HOST=https://tranquil-fortress-92731.herokuapp.com
         - CONTENTFUL_API_HOST=https://content-stage.goodjob.life
         - FACEBOOK_APP_ID=1844389232511081
     ports:

@@ -146,6 +146,7 @@ class ExperienceSearch extends Component {
                     data[o.type] && (
                       <ExperienceBlock
                         key={o._id}
+                        to={`/experiences/${o._id}`}
                         data={o}
                         size="l"
                         backable

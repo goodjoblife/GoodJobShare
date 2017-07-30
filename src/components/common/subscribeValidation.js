@@ -11,7 +11,7 @@ import { VALID, INVALID } from '../../constants/formElements';
  * @param {*} elementName: The element name for scrolling
  */
 export default function subscribeValidation(WrappedComponent, validate, elementName) {
-  return class extends React.Component {
+  return class Subscriber extends React.Component {
     static propTypes = {
       changeValidationStatus: PropTypes.func,
     }

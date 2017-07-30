@@ -5,15 +5,17 @@ import Loader from 'common/Loader';
 import { Wrapper, Section, Heading, P } from 'common/base';
 import styles from './ExperienceDetail.module.css';
 import Article from './Article';
-import ReactionZone from './ReactionZone';
+import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
 // import RecommendationZone from './RecommendationZone';
-import MessageBoard from './MessageBoard';
+import MessageBoard from '../../containers/ExperienceDetail/MessageBoard';
 import BackToList from './BackToList';
 import status from '../../constants/status';
 import {
   fetchExperience,
 } from '../../actions/experienceDetail';
 import { formatCanonicalPath } from '../../utils/helmetHelper';
+
+import authStatus from '../../constants/authStatus';
 
 class ExperienceDetail extends Component {
   static propTypes = {
@@ -57,7 +59,7 @@ class ExperienceDetail extends Component {
       this.props.fetchReplies(nextProps.params.id);
     }
 
-    if (nextProps.authStatus !== this.props.authStatus && nextProps.authStatus === 'connected') {
+    if (nextProps.authStatus !== this.props.authStatus && nextProps.authStatus === authStatus.CONNECTED) {
       this.props.fetchExperience(this.props.params.id);
     }
   }

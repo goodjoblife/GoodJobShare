@@ -7,8 +7,10 @@ import createReducer from 'utils/createReducer';
 import { saveToken } from 'utils/tokenUtil';
 import { SET_LOGIN, SET_USER } from '../actions/auth';
 
+import authStatus from '../constants/authStatus';
+
 const preloadedState = fromJS({
-  status: 'unknown',
+  status: authStatus.UNKNOWN,
   token: null,
   user: {
     name: null,
