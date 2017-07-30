@@ -31,7 +31,7 @@ const data2016 = [
 const data2017 = [
   {
     month: 1,
-    Content: () => <div>申請上 <a href="https://grants.g0v.tw/power/">2017 春季 g0v 公民科技創新獎助金</a>。</div>,
+    Content: () => <div>申請上 <a href="https://grants.g0v.tw/power">2017 春季 g0v 公民科技創新獎助金</a>。</div>,
   },
   {
     month: 2,
@@ -122,7 +122,7 @@ const About = () => (
         <Heading size="l" center marginBottom>聯絡我們</Heading>
         <div className={styles.contact}>
           <a href="https://www.facebook.com/goodjob.life" className={styles.facebook} title="facebook"><Facebook /></a>
-          <a href="https://github.com/goodjoblife/GoodJobShare/" className={styles.github} title="Github"><Github /></a>
+          <a href="https://github.com/goodjoblife/GoodJobShare" className={styles.github} title="Github"><Github /></a>
           <a href="mailto:findyourgoodjob@gmail.com" className={styles.email} title="findyourgoodjob@gmail.com"><Email /></a>
         </div>
       </Wrapper>
