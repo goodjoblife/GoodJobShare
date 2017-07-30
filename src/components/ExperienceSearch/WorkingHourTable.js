@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 
+import { InfoButton } from 'common/Modal';
 import Table from '../common/table/Table';
+import InfoSalaryModal from './InfoSalaryModal';
+import InfoTimeModal from './InfoTimeModal';
 import styles from './WorkingHourTable.module.css';
 import employmentType from '../../constants/employmentType';
 
@@ -88,6 +91,32 @@ class WorkingHourTable extends Component {
     return [val.year, month].join('.');
   }
 
+  constructor(props) {
+    super(props);
+    this.toggleInfoSalaryModal = this.toggleInfoSalaryModal.bind(this);
+    this.toggleInfoTimeModal = this.toggleInfoTimeModal.bind(this);
+    this.state = {
+      infoSalaryModal: {
+        isOpen: false,
+      },
+      infoTimeModal: {
+        isOpen: false,
+      },
+    };
+  }
+
+  toggleInfoSalaryModal() {
+    const state = this.state;
+    state.infoSalaryModal.isOpen = !state.infoSalaryModal.isOpen;
+    this.setState(state);
+  }
+
+  toggleInfoTimeModal() {
+    const state = this.state;
+    state.infoTimeModal.isOpen = !state.infoTimeModal.isOpen;
+    this.setState(state);
+  }
+
   render() {
     const { data } = this.props;
 
@@ -143,14 +172,26 @@ class WorkingHourTable extends Component {
           dataField="estimated_hourly_wage"
           dataFormatter={WorkingHourTable.getWage}
         >
-          估計時薪
+          <InfoSalaryModal
+            isOpen={this.state.infoSalaryModal.isOpen}
+            close={this.toggleInfoSalaryModal}
+          />
+          <InfoButton onClick={this.toggleInfoSalaryModal}>
+            估計時薪
+          </InfoButton>
         </Table.Column>
 
         <Table.Column
           dataField="data_time"
           dataFormatter={WorkingHourTable.getDate}
         >
-          參考時間
+          <InfoTimeModal
+            isOpen={this.state.infoTimeModal.isOpen}
+            close={this.toggleInfoTimeModal}
+          />
+          <InfoButton onClick={this.toggleInfoTimeModal}>
+            參考時間
+          </InfoButton>
         </Table.Column>
       </Table>
     );
