@@ -33,31 +33,39 @@
   }
 }
 
-.about3img {
+.mission {
+  * {
+    @media (max-width: 550px) {
+      text-align: left;
+    }
+  }
+}
+
+.missionImg {
   max-width: 230px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 32px;
 
   @media (max-width: 550px) {
-    max-width: 180px;
+    max-width: 200px;
   }
 }
 
 .timelineWrapper {
   position: relative;
-  padding-top: 336px;
+  padding-bottom: 280px;
   @media (max-width: 550px) {
-    padding-top: 200px;
+    padding-bottom: 200px;
   }
 }
 
 .timelineImage {
-  width: 960px;
+  width: 1000px;
   margin-left: auto;
   margin-right: auto;
   position: absolute;
-  top: -10px;
+  bottom: 0;
   left: 50%;
   margin-left: -480px;
 
