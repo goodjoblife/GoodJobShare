@@ -175,7 +175,7 @@ export const workExSectionSubtitleOptions = [
   {
     label: '給公司的建議',
     value: '給公司的建議',
-    placeholder: '例如：「希望公司大會可以從每週改成每月一次 (´ཀ`) 」！！！」「希望公司可以開放在辦公室吃早餐 ( ; _ ; )/~~」',
+    placeholder: '例如：「希望公司大會可以從每週改成每月一次」「希望公司可以開放在辦公室吃早餐」',
   },
   {
     label: '升遷制度',
