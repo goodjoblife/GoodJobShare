@@ -49,7 +49,7 @@ const Footer = () => (
           items={link2}
         />
         <LinkItem
-          title="Goodjob"
+          title="GoodaJob"
           items={link3}
         />
       </section>

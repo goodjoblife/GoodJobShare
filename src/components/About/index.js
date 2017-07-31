@@ -114,7 +114,7 @@ const About = () => (
     <CallToAction
       bgColor="#fcd406"
       imgSrc="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/about-people.png"
-      heading="促進職場資訊透明化，需要每一個「你」的參與。"
+      heading="促進職場資訊透明化，需要每一個「你」的參與！"
       headingSize="m"
       buttonText="現在就留下資料"
     />
