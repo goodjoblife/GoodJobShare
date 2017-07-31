@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
 
-import styles from './ShareExperience.module.css';
+import { Section, Wrapper } from 'common/base';
 
 const ShareExperience = ({ children }) => (
-  <div
-    className={styles.container}
-  >
-    {children}
-  </div>
+  <Section Tag="main" pageTop paddingBottom>
+    <Wrapper size="m">
+      {children}
+    </Wrapper>
+  </Section>
 );
 
 ShareExperience.propTypes = {

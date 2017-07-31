@@ -1,12 +1,5 @@
 @value warning-red from "common/variables.module.css";
 
-.container {
-  padding-top: 38px;
-  padding-bottom: 70px;
-  display: flex;
-  flex-direction: column;
-}
-
 .warning__wording {
   color: warning-red;
 }

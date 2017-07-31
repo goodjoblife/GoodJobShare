@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import i from 'common/icons';
+import { People } from 'common/icons';
 import subscribeValidation from 'common/subscribeValidation';
 
 import styles from '../../ShareExperience.module.css';
@@ -88,7 +88,7 @@ class InterviewInfo extends React.PureComponent {
           marginTop: '30px',
         }}
       >
-        <IconHeading text="面試資訊" Icon={i.People} />
+        <IconHeading text="面試資訊" Icon={People} />
         <div className={styles.block}>
           <div
             style={{

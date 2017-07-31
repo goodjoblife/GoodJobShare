@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ButtonAdd from 'common/button/ButtonAdd';
 import AddButton from 'common/button/AddButton';
-import i from 'common/icons';
+import { Comment2 } from 'common/icons';
 import subscribeValidation from 'common/subscribeValidation';
 
 import styles from '../../ShareExperience.module.css';
@@ -60,7 +60,7 @@ class InterviewExperience extends Component {
           marginTop: '59px',
         }}
       >
-        <IconHeading text="面試經驗" Icon={i.Comment2} />
+        <IconHeading text="面試經驗" Icon={Comment2} />
         <div
           className={styles.block}
         >

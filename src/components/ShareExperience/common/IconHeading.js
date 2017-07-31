@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
-import cn from 'classnames';
-import styles from '../ShareExperience.module.css';
+import { P } from 'common/base';
+import styles from './IconHeading.module.css';
 
 const IconHeading = ({ text, Icon }) => (
-  <h2 className={cn('pLBold', styles.iconHeading)}>
+  <P size="l" bold Tag="h2" className={styles.iconHeading}>
     <Icon />{text}
-  </h2>
+  </P>
 );
 
 IconHeading.propTypes = {

@@ -2,9 +2,10 @@ import React, { PropTypes } from 'react';
 import subscribeValidation from 'common/subscribeValidation';
 
 import ButtonAdd from 'common/button/ButtonAdd';
+import { Comment2 } from 'common/icons';
 
 import styles from '../../ShareExperience.module.css';
-
+import IconHeading from '../../common/IconHeading';
 import Title from '../../common/Title';
 import Sections from '../../common/Sections';
 
@@ -52,14 +53,7 @@ class WorkExperience extends React.PureComponent {
           marginTop: '30px',
         }}
       >
-        <h1
-          className="pLBold"
-          style={{
-            marginBottom: '13px',
-          }}
-        >
-          工作經驗
-        </h1>
+        <IconHeading text="工作經驗" Icon={Comment2} />
         <div className={styles.block}>
           <div
             style={{

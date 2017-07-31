@@ -1,0 +1,14 @@
+@value main-yellow from "common/variables.module.css";
+
+.iconHeading {
+  margin-bottom: 16px;
+  display: flex;
+  letter-spacing: 1px;
+
+  svg {
+    width: 30px;
+    height: 30px;
+    fill: main-yellow;
+    margin-right: 12px;
+  }
+}
