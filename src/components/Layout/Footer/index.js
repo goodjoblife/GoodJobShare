@@ -13,7 +13,7 @@ const link1 = [
 ];
 const link2 = [
   { to: '/faq', text: '常見問答' },
-  { to: '/guidelines', text: '發文留言規定' },
+  { to: '/guidelines', text: '發文留言規則' },
   { to: '/privacy-policy', text: '隱私權政策' },
   { to: '/user-terms', text: '使用者條款' },
 ];
