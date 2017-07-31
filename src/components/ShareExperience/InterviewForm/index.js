@@ -113,7 +113,15 @@ class InterviewForm extends React.Component {
   }
 
   componentDidMount() {
-    const defaultState = JSON.parse(localStorage.getItem(LS_INTERVIEW_FORM_KEY)) || defaultForm;
+    let defaultFromDraft;
+
+    try {
+      defaultFromDraft = JSON.parse(localStorage.getItem(LS_INTERVIEW_FORM_KEY));
+    } catch (error) {
+      defaultFromDraft = null;
+    }
+
+    const defaultState = defaultFromDraft || defaultForm;
 
     this.setState({ // eslint-disable-line react/no-did-mount-set-state
       ...defaultState,
