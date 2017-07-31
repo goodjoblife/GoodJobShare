@@ -62,7 +62,6 @@ jobs:
                 name: Retag
                 command: docker tag 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:production 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:production-${CIRCLE_SHA1}
             - run: docker login -u $AWS_DOCKER_USER -p $AWS_DOCKER_PASS https://059402281999.dkr.ecr.ap-northeast-1.amazonaws.com
-            - run: docker-compose -f .circleci/docker-compose-production.yml push
             - run: docker push 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:production-${CIRCLE_SHA1}
 workflows:
     version: 2
