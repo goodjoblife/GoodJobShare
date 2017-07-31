@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 
 import Button from 'common/button/Button';
 import Checkbox from 'common/form/Checkbox';
@@ -22,8 +23,30 @@ const MessageBoard = ({
     <div className={`formLabel ${styles.termsOfService}`}>
       <Checkbox
         id="termsOfService" value="agree"
-        label="我分享的是真實資訊，並且遵守中華民國法律以及本站使用者條款。"
+        label={
+          <p
+            style={{
+              color: '#3B3B3B',
+            }}
+          >
+            我分享的是真實資訊，並且遵守中華民國法律以及
+            <Link
+              to="/user-terms"
+              target="_blank"
+              style={{
+                color: '#02309E',
+              }}
+            >
+              本站使用者條款
+            </Link>
+            。
+          </p>
+        }
         onChange={setTos} checked={tos}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
       />
       <Button
         btnStyle="submit"
