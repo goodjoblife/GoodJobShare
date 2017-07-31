@@ -2,10 +2,13 @@ import React, { PropTypes } from 'react';
 import subscribeValidation from 'common/subscribeValidation';
 
 import ButtonAdd from 'common/button/ButtonAdd';
-import styles from './WorkExperience.module.css';
+
+import styles from '../../ShareExperience.module.css';
 
 import Title from '../../common/Title';
 import Sections from '../../common/Sections';
+
+import shareStyles from '../../common/share.module.css';
 
 import {
   interviewSectionSubtitleOptions,
@@ -57,7 +60,7 @@ class WorkExperience extends React.PureComponent {
         >
           工作經驗
         </h1>
-        <div className={styles.form}>
+        <div className={styles.block}>
           <div
             style={{
               marginBottom: '50px',
@@ -87,13 +90,7 @@ class WorkExperience extends React.PureComponent {
               changeValidationStatus={changeValidationStatus}
             />
             <div
-              style={{
-                position: 'absolute',
-                left: 0,
-                bottom: 0,
-                minWidth: '150%',
-                transform: 'translate(-65px, 100%)',
-              }}
+              className={shareStyles.button__add}
             >
               <ButtonAdd
                 options={interviewSectionSubtitleOptions}

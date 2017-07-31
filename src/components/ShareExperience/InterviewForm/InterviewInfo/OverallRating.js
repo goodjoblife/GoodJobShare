@@ -33,6 +33,7 @@ const OverallRating = ({ overallRating, onChange, validator, submitted }) => {
         className={isWarning ? styles.warning : ''}
         style={{
           display: 'flex',
+          flexWrap: 'wrap',
           alignItems: 'center',
         }}
       >

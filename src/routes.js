@@ -78,10 +78,16 @@ const routes = () => ({
       //     cb(null, require('./components/ShareExperience').default);
       //   }, 'ShareExperience');
       // },
+      component: Entry,
+    },
+    {
+      path: 'share',
+      // getComponent(nextState, cb) {
+      //   require.ensure([], require => {
+      //     cb(null, require('./components/ShareExperience').default);
+      //   }, 'ShareExperience');
+      // },
       component: ShareExperience,
-      indexRoute: {
-        component: Entry,
-      },
       childRoutes: [
         {
           path: 'interview',

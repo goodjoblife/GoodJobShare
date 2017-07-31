@@ -49,12 +49,14 @@ const InterviewTime = (
       <div
         style={{
           display: 'flex',
+          flexWrap: 'wrap',
         }}
         className={isWarning ? styles.warning : ''}
       >
         <div
           style={{
             marginRight: '35px',
+            marginBottom: '5px',
           }}
         >
           <div

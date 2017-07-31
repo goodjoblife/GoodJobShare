@@ -18,54 +18,56 @@ const Salary = (
       text="待遇"
     />
     <div
-      style={{
-        display: 'flex',
-      }}
+      className={styles.input__container}
     >
       <div
         style={{
-          width: '107px',
-          marginRight: '18px',
-        }}
-      >
-        <Select
-          value={salaryType}
-          options={salaryTypeOptions}
-          onChange={e => onSalaryType(e.target.value)}
-        />
-      </div>
-      <div
-        style={{
-          width: '155px',
           display: 'flex',
+          flexWrap: 'wrap',
+          marginRight: '40px',
         }}
       >
-        <TextInput
-          value={salaryAmount}
-          onChange={e => onSalaryAmount(e.target.value)}
-          placeholder="700,000"
-          type="number"
-          min={0}
-        />
-        <div>
-          <p
-            className="pS"
-            style={{
-              marginLeft: '12px',
-              lineHeight: '44px',
-            }}
-          >
-            元
-          </p>
+        <div
+          style={{
+            width: '107px',
+            marginRight: '18px',
+            marginBottom: '5px',
+          }}
+        >
+          <Select
+            value={salaryType}
+            options={salaryTypeOptions}
+            onChange={e => onSalaryType(e.target.value)}
+          />
+        </div>
+        <div
+          style={{
+            width: '155px',
+            display: 'flex',
+          }}
+        >
+          <TextInput
+            value={salaryAmount}
+            onChange={e => onSalaryAmount(e.target.value)}
+            placeholder="700,000"
+            type="number"
+            min={0}
+          />
+          <div>
+            <p
+              className="pS"
+              style={{
+                marginLeft: '12px',
+                lineHeight: '44px',
+              }}
+            >
+              元
+            </p>
+          </div>
         </div>
       </div>
       <div
         className={styles.dialog}
-        style={{
-          width: '330px',
-          marginLeft: '74px',
-          padding: '10px',
-        }}
       >
         <p className={styles.exclamation}>！</p>
         <p className="pS">

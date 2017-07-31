@@ -3,6 +3,8 @@ import React, { PropTypes } from 'react';
 import Select from 'common/form/Select';
 import InputTitle from './InputTitle';
 
+import shareStyles from './share.module.css';
+
 import {
   experienceInYearOptions,
 } from './optionMap';
@@ -14,25 +16,26 @@ const ExperienceInYear = ({ experienceInYear, onChange }) => (
     />
     <div
       style={{
-        width: '320px',
-        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
       }}
     >
-      <Select
-        options={experienceInYearOptions}
-        value={experienceInYear}
-        onChange={
-          e => onChange(Number(e.target.value))
-        }
-      />
+      <div
+        className={shareStyles.single__select__input}
+        style={{
+          marginRight: '16px',
+        }}
+      >
+        <Select
+          options={experienceInYearOptions}
+          value={experienceInYear}
+          onChange={
+            e => onChange(Number(e.target.value))
+          }
+        />
+      </div>
       <p
         className="pS"
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '100%',
-          transform: 'translate(16px, -50%)',
-        }}
       >
         年
       </p>

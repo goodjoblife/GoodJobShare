@@ -3,6 +3,8 @@ import React, { PropTypes } from 'react';
 import Select from 'common/form/Select';
 import InputTitle from './InputTitle';
 
+import shareStyles from './share.module.css';
+
 import {
   educationOptions,
 } from './optionMap';
@@ -13,9 +15,7 @@ const Education = ({ education, onChange }) => (
       text="最高學歷"
     />
     <div
-      style={{
-        width: '320px',
-      }}
+      className={shareStyles.single__select__input}
     >
       <Select
         options={educationOptions}

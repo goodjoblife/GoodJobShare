@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import subscribeValidation from 'common/subscribeValidation';
 
-import styles from './WorkInfo.module.css';
+import styles from '../../ShareExperience.module.css';
 
 import CompanyQuery from '../../common/CompanyQuery';
 import Region from '../../common/Region';
@@ -74,7 +74,7 @@ class WorkInfo extends React.PureComponent {
         >
           工作資訊
         </h1>
-        <div className={styles.form}>
+        <div className={styles.block}>
           <div
             style={{
               marginBottom: '35px',

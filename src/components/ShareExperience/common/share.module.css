@@ -1,0 +1,20 @@
+.single__select__input {
+  width: 320px;
+
+  @media (max-width: 550px) {
+    width: auto;
+  }
+}
+
+.button__add {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  min-width: 150%;
+  transform: translate(-65px, 100%);
+
+  @media (max-width: 550px) {
+    min-width: 80%;
+    transform: translate(-25px, 100%);
+  }
+}

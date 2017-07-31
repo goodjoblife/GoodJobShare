@@ -33,7 +33,11 @@ class RateButton extends React.PureComponent {
     const { max, rating, onChange } = this.props;
     const { hover } = this.state;
     return (
-      <div>
+      <div
+        style={{
+          display: 'flex',
+        }}
+      >
         {
           Array(max)
             .fill(null)

@@ -21,9 +21,15 @@ const WeekWorkTime = ({ weekWorkTime, onChange }) => (
     <div
       style={{
         display: 'flex',
+        flexWrap: 'wrap',
       }}
     >
-      <div>
+      <div
+        style={{
+          marginRight: '75px',
+          marginBottom: '5px',
+        }}
+      >
         <TextInput
           type="number"
           value={weekWorkTime}
@@ -51,7 +57,6 @@ const WeekWorkTime = ({ weekWorkTime, onChange }) => (
         style={{
           width: '330px',
           height: '67px',
-          marginLeft: '181px',
           padding: '10px',
         }}
       >
