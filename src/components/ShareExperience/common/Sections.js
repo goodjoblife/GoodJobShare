@@ -26,6 +26,7 @@ const Sections = ({ sections, removeSection, editSection, validator, submitted }
               editSection={editSection(section.id)}
               removeSection={() => removeSection(section.id)}
               placeholder={section.placeholder}
+              titlePlaceholder={section.titlePlaceholder}
             />
           </div>
         )
@@ -48,6 +49,7 @@ Sections.propTypes = {
     id: PropTypes.number,
     subtitle: PropTypes.string,
     placeholder: PropTypes.string,
+    titlePlaceholder: PropTypes.string,
     content: PropTypes.string,
     isSubtitleEditable: PropTypes.bool,
   })),

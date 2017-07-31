@@ -5,7 +5,7 @@ import AddButton from 'common/button/AddButton';
 
 import styles from './SectionEle.module.css';
 
-export const SECTION_DEFAULT_TITLE = '請輸入標題，例：面試過程';
+export const SECTION_TITLE_PLACEHOLDER = '請輸入標題';
 
 const SectionEle = ({
   subtitle,
@@ -14,6 +14,7 @@ const SectionEle = ({
   editSection,
   removeSection,
   placeholder,
+  titlePlaceholder,
 }) => (
   <div
     className={styles.container}
@@ -36,7 +37,7 @@ const SectionEle = ({
           <input
             value={subtitle}
             onChange={e => editSection('subtitle')(e.target.value)}
-            placeholder={SECTION_DEFAULT_TITLE}
+            placeholder={titlePlaceholder || SECTION_TITLE_PLACEHOLDER}
             className={`pLBold ${styles.subtitle}`}
           />
           :
@@ -67,6 +68,7 @@ const SectionEle = ({
 SectionEle.propTypes = {
   subtitle: PropTypes.string,
   placeholder: PropTypes.string,
+  titlePlaceholder: PropTypes.string,
   content: PropTypes.string,
   isSubtitleEditable: PropTypes.bool,
   editSection: PropTypes.func,
