@@ -48,7 +48,6 @@ const ExperienceBlock = ({ data, size, backable }) => {
     }
     salaryAmount = formatWithCommas(salary.amount);
   }
-  console.log(data, 'data tin');
 
   return (
     <Link to={`/experiences/${data._id}?${qs.stringify({ backable })}`} className={cn(styles.container, styles[size])}>

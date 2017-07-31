@@ -13,11 +13,9 @@ import GjLogo from './GjLogo';
 import Glike from './Glike';
 import Like from './Like';
 import Location from './Location';
-import Minus from './Minus';
 import New from './New';
 import Open from './Open';
 import People from './People';
-import Plus from './Plus';
 import Thumbnails from './Thumbnails';
 import User from './User';
 import Warning from './Warning';
@@ -39,11 +37,9 @@ const icons = {
   Glike,
   Like,
   Location,
-  Minus,
   New,
   Open,
   People,
-  Plus,
   Thumbnails,
   User,
   Warning,
@@ -58,3 +54,6 @@ export { default as Email } from './Email';
 export { default as Facebook } from './Facebook';
 export { default as Github } from './Github';
 export { default as Twitter } from './Twitter';
+
+export { default as Plus } from './Plus';
+export { default as Minus } from './Minus';

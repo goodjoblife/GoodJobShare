@@ -64,7 +64,7 @@ export const fetchExperiences = (cond, val, page, count) => (dispatch, getState)
       keyword: '',
       searchQuery: '',
       workings: '',
-      salary: false,
+      salary: true,
     };
   }
   return fetchUtil(url)('GET')

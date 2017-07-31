@@ -69,5 +69,13 @@
         border: 1px solid border-gray;
       }
     }
+
+    input[type="checkbox"]:checked + label {
+
+      .checkboxInput {
+        background-color: border-gray;
+        border: 1px solid border-gray;
+      }
+    }
   }
 }
