@@ -132,7 +132,7 @@ const About = () => (
       <Wrapper size="s">
         <Heading size="l" center marginBottom>加入我們</Heading>
         <div className={editorStyles.editor}>
-          <p>若您有以下任一專長或條件，我們非常希望您可以加入我們！</p>
+          <p>若你有以下任一專長或條件，非常希望你可以加入我們：</p>
           <ul>
             <li>具行銷企劃專長者</li>
             <li>瞭解社群經營，或曾有 Facebook 粉絲專頁管理經驗者</li>
