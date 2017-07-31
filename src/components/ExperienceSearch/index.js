@@ -14,6 +14,8 @@ import WorkingHourBlock from './WorkingHourBlock';
 import { fetchExperiences } from '../../actions/experienceSearch';
 import helmetData from '../../constants/helmetData';
 
+import getScale from '../../utils/numberUtils';
+
 class ExperienceSearch extends Component {
   static fetchData({ store: { dispatch } }) {
     return dispatch(fetchExperiences('sort', '', 0));
@@ -63,6 +65,17 @@ class ExperienceSearch extends Component {
     this.props.fetchExperiences('sort', e.target.value, 0);
   }
 
+  renderHelmet = () => {
+    const scale = getScale(this.props.experienceSearch.get('experienceCount'));
+    const description = `馬上查詢超過 ${scale} 篇面試及工作經驗分享，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
+    const data = helmetData.EXPERIENCE_SEARCH;
+    data.meta.push(
+      { name: 'description', content: description },
+      { property: 'og:description', content: description },
+    );
+    return <Helmet {...data} />;
+  }
+
   render() {
     const {
       /* setSort, */ setSearchType, /* setIndustry, */ fetchKeywords, setKeyword,
@@ -73,7 +86,7 @@ class ExperienceSearch extends Component {
 
     return (
       <Section Tag="main" pageTop paddingBottom>
-        <Helmet {...helmetData.EXPERIENCE_SEARCH} />
+        {this.renderHelmet()}
         <Wrapper size="l">
           <div className={styles.container}>
             <aside className={styles.aside}>
