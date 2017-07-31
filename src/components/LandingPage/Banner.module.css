@@ -49,6 +49,9 @@
 }
 
 .subheading {
+  font-size: 1.25em;
+  line-height: 1.6em;
+  letter-spacing: 0.05em;
   margin-bottom: 24px;
 }
 
