@@ -115,6 +115,7 @@ class InterviewExperience extends Component {
           >
             <AddButton
               onClick={() => appendQa()}
+              addQa
             />
           </div>
         </div>

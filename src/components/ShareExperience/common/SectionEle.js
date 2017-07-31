@@ -23,8 +23,8 @@ const SectionEle = ({
       className={styles.remove__btn}
     >
       <AddButton
-        active
         onClick={removeSection}
+        deleteBtn
       />
     </div>
     <div
