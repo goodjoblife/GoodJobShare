@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router';
 import cn from 'classnames';
+import ReactGA from 'react-ga';
 import { Wrapper } from 'common/base';
 import i from 'common/icons';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 
 import authStatus from '../../../constants/authStatus';
+import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 
 class Header extends React.Component {
   constructor(props) {
@@ -39,6 +41,13 @@ class Header extends React.Component {
       const { getMe, FB } = this.props;
       getMe(FB).catch(() => {});
     }
+  }
+
+  onClickShareData = () => {
+    ReactGA.event({
+      category: GA_CATEGORY.HEADER,
+      action: GA_ACTION.CLICK_SHARE_DATA,
+    });
   }
 
   toggleNav() {
@@ -78,7 +87,7 @@ class Header extends React.Component {
           >
             <SiteMenu />
             <div className={styles.buttonsArea}>
-              <Link to="/share" className={styles.leaveDataBtn}>
+              <Link to="/share" className={styles.leaveDataBtn} onClick={this.onClickShareData}>
                 留下資料<i.ArrowGo />
               </Link>
               {
