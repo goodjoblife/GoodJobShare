@@ -49,12 +49,12 @@ const InterviewResult = ({ interviewResult, onChange, validator, submitted }) =>
           !notOther ?
             <section
               style={{
-                marginTop: '20px',
+                marginTop: '8px',
               }}
             >
               <TextInput
                 value={interviewResult}
-                placeholder="輸入面試結果..."
+                placeholder="輸入面試結果"
                 onChange={e => onChange(e.target.value)}
               />
             </section> :

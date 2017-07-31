@@ -17,14 +17,19 @@
   composes: element;
   background: #606060;
   color: white;
+  cursor: default;
 }
 
 .unchecked{
   composes: element;
   background: #F0F0F0;
   color: #333333;
+  cursor: pointer;
+  transition: background-color .25s;
 
-  &:hover{
-    background: #D8D8D8;
+  @media (min-width: 1025px) {
+    &:hover{
+      background: #D8D8D8;
+    }
   }
 }

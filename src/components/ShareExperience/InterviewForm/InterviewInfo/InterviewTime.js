@@ -61,7 +61,7 @@ const InterviewTime = (
         >
           <div
             style={{
-              width: '110px',
+              width: '130px',
               display: 'inline-block',
               marginRight: '11px',
             }}
@@ -86,7 +86,7 @@ const InterviewTime = (
         <div>
           <div
             style={{
-              width: '110px',
+              width: '130px',
               display: 'inline-block',
               marginRight: '11px',
             }}

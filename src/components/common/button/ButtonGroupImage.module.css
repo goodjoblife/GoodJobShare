@@ -3,18 +3,23 @@
   vertical-align: middle;
   padding: 20px 64px;
   background: #F0F0F0;
+  transition: background-color .25s;
 }
 
 .checked {
   composes: radio;
   background-color: #606060;
+  cursor: default;
 }
 
 .unchecked {
   composes: radio;
+  cursor: pointer;
 
-  &:hover {
-    background: #D8D8D8;
+  @media (min-width: 1025px) {
+    &:hover {
+      background: #D8D8D8;
+    }
   }
 }
 
