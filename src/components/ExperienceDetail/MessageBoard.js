@@ -29,7 +29,17 @@ const MessageBoard = ({
               color: '#3B3B3B',
             }}
           >
-            我分享的是真實資訊，並且遵守中華民國法律以及
+            我分享的是真實資訊，並且遵守本站
+            <Link
+              to="/guidelines"
+              target="_blank"
+              style={{
+                color: '#02309E',
+              }}
+            >
+              發文留言規定
+            </Link>
+            、
             <Link
               to="/user-terms"
               target="_blank"
@@ -37,9 +47,9 @@ const MessageBoard = ({
                 color: '#02309E',
               }}
             >
-              本站使用者條款
+              使用者條款
             </Link>
-            。
+            以及中華民國法律。
           </p>
         }
         onChange={setTos} checked={tos}
