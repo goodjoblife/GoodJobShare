@@ -54,7 +54,6 @@
   /*buttons*/
   [class^="buttonCircle"] {
     display: inline-flex;
-    /*height: 45px;*/
     align-items: center;
     justify-content: center;
     font-size: 1em;
@@ -64,14 +63,14 @@
   }
 
   .buttonCircleL {
-    padding: 10px 50px;
-    font-size: 1.1em;
-    line-height: 1.5em;
+    padding: 0 50px;
+    font-size: 1.05em;
+    height: 45px;
   }
   .buttonCircleM {
-    padding: 8px 40px;
+    padding: 0 40px;
     font-size: 0.95em;
-    line-height: 1.4em;
+    height: 40px;
   }
 
   .buttonBlack {

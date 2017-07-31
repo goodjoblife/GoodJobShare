@@ -28,6 +28,15 @@
 
     @media (max-width: 550px) {
       font-size: 18px;
+    }
+  }
+
+  .subheading {
+    color: #ddd;
+    letter-spacing: 0.05em;
+    font-weight: 300;
+    padding-left: 8px;
+    @media (max-width: 550px) {
       margin-right: 16px;
     }
   }
@@ -41,7 +50,7 @@
 .logo {
   fill: #fff;
   width: 120px;
-  margin-right: 16px;
+  margin-right: 8px;
 }
 
 .fbLike {
@@ -72,7 +81,7 @@
     justify-content: center;
 
     @media (max-width: 550px) {
-      flex-direction: column;      
+      flex-direction: column;
     }
   }
 }

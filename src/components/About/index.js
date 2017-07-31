@@ -80,25 +80,21 @@ const About = () => (
         </div>
       </Wrapper>
     </Section>
-    <Section bg="white" padding>
+    <Section bg="white" padding className={styles.mission}>
       <Wrapper size="s">
-        <Heading size="sl" center marginBottomS>使命：促進求職市場資訊透明化，讓台灣的求職者擁有更完整的資訊，進而找到適合自己的工作。</Heading>
+        <Heading size="m" center marginBottomS>使命：促進職場資訊透明化</Heading>
         <P size="l" center>
           我們相信，當職場資訊變得足夠透明，在市場機制的運作下，好的公司更容易找到好人才，變得更有競爭力；條件相對差一點的公司將會提升薪資及福利，以招募更好的人才。<strong>台灣的產業整體而言向上提升，進入正向循環。</strong>
         </P>
         <img
           src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/about-03.png"
           alt="台灣整體而言向上提升，進入正向循環"
-          className={styles.about3img}
+          className={styles.missionImg}
         />
       </Wrapper>
     </Section>
     <Section padding className={styles.timelineWrapper}>
-      <img
-        src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/about-city.png"
-        alt="大事紀"
-        className={styles.timelineImage}
-      />
+      <Heading size="l" center marginBottom>大事紀</Heading>
       <Wrapper size="m">
         <div className={styles.timelineColWrapper}>
           <div className={styles.timelineCol}>
@@ -108,13 +104,18 @@ const About = () => (
             <Timeline year="2017" data={data2017} />
           </div>
         </div>
+        <img
+          src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/about-city.png"
+          alt="大事紀"
+          className={styles.timelineImage}
+        />
       </Wrapper>
     </Section>
     <CallToAction
       bgColor="#fcd406"
       imgSrc="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/about-people.png"
-      heading="我們將發起一場改善勞動環境的革命，而這一場革命需要每一個「你」的參與。"
-      headingSize="sl"
+      heading="促進職場資訊透明化，需要每一個「你」的參與！"
+      headingSize="m"
       buttonText="現在就留下資料"
     />
     <Section bg="white" padding id="contact">
@@ -131,7 +132,7 @@ const About = () => (
       <Wrapper size="s">
         <Heading size="l" center marginBottom>加入我們</Heading>
         <div className={editorStyles.editor}>
-          <p>若您有以下任一專長或條件，我們非常希望您可以加入我們！</p>
+          <p>若你有以下任一專長或條件，非常希望你可以加入我們：</p>
           <ul>
             <li>具行銷企劃專長者</li>
             <li>瞭解社群經營，或曾有 Facebook 粉絲專頁管理經驗者</li>

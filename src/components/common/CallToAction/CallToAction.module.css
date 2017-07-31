@@ -10,7 +10,7 @@
 
 .image {
   margin-right: 40px;
-  flex: 0 0 43%;
+  flex: 0 0 40%;
 
   @media (max-width: 550px) {
     flex: 1 1 auto;
