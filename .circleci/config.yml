@@ -39,8 +39,12 @@ jobs:
             - run:
                 name: Build Docker Image
                 command: docker-compose -f .circleci/docker-compose-stage.yml build
-            - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+            - run:
+                name: Retag
+                command: docker tag 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:stage 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:${CIRCLE_SHA1}
+            - run: docker login -u $AWS_DOCKER_USER -p $AWS_DOCKER_PASS https://059402281999.dkr.ecr.ap-northeast-1.amazonaws.com
             - run: docker-compose -f .circleci/docker-compose-stage.yml push
+            - run: docker push 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:${CIRCLE_SHA1}
     deploy-stage:
         working_directory: ~/app
         docker:

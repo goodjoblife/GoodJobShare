@@ -1,7 +1,7 @@
 version: "2"
 services:
   node:
-    image: goodjoblife/goodjobshare:stage
+    image: 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:stage
     build:
       context: ..
       dockerfile: docker/Dockerfile
