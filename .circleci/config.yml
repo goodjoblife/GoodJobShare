@@ -22,19 +22,8 @@ jobs:
         steps:
             - checkout
             - run:
-                name: Install Docker client
-                command: |
-                    set -x
-                    VER="17.03.0-ce"
-                    curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-                    tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-                    mv /tmp/docker/* /usr/bin
-            - run:
-                name: Install Docker Compose
-                command: |
-                    set -x
-                    curl -L https://github.com/docker/compose/releases/download/1.13.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-                    chmod +x /usr/local/bin/docker-compose
+                name: Install Docker client & Docker Compose
+                command: ./.circleci/prepare-docker-compose.sh
             - setup_remote_docker
             - run:
                 name: Build Docker Image
@@ -56,12 +45,35 @@ jobs:
                     curl --user ${CIRCLE_API_TOKEN_FOR_DEPLOY}: \
                         --data build_parameters[CIRCLE_JOB]=build \
                         https://circleci.com/api/v1.1/project/github/mark86092/goodjob-deploy-ci/tree/www-stage
+    build_production_docker:
+        working_directory: ~/app
+        docker:
+            - image: buildpack-deps
+        steps:
+            - checkout
+            - run:
+                name: Install Docker client & Docker Compose
+                command: ./.circleci/prepare-docker-compose.sh
+            - setup_remote_docker
+            - run:
+                name: Build Docker Image
+                command: docker-compose -f .circleci/docker-compose-production.yml build
+            - run:
+                name: Retag
+                command: docker tag 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:production 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:production-${CIRCLE_SHA1}
+            - run: docker login -u $AWS_DOCKER_USER -p $AWS_DOCKER_PASS https://059402281999.dkr.ecr.ap-northeast-1.amazonaws.com
+            - run: docker-compose -f .circleci/docker-compose-production.yml push
+            - run: docker push 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:production-${CIRCLE_SHA1}
 workflows:
     version: 2
     build_and_test:
         jobs:
             - build
             - build_stage_docker:
+                filters:
+                    branches:
+                        only: master
+            - build_production_docker:
                 filters:
                     branches:
                         only: master

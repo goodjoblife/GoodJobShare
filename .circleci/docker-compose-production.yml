@@ -1,0 +1,13 @@
+version: "2"
+services:
+  node:
+    image: 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:production
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        - API_HOST=https://tranquil-fortress-92731.herokuapp.com
+        - CONTENTFUL_API_HOST=https://content.goodjob.life
+        - FACEBOOK_APP_ID=1750216878594984
+    ports:
+      - 42000:3001
