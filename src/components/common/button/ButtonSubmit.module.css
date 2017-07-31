@@ -1,4 +1,4 @@
-@value main-yellow, main-gray from "common/variables.module.css";
+@value main-yellow, main-gray, gray-dark from "common/variables.module.css";
 
 
 .container {
@@ -16,5 +16,14 @@
   &:disabled {
     background: main-gray;
     cursor: not-allowed;
+  }
+}
+
+.whyFB {
+  color: #C0C0C0;
+  transition: color 0.2s linear;
+
+  &:hover {
+    color: gray-dark;
   }
 }
