@@ -2,6 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
 import { scroller } from 'react-scroll';
+import ReactGA from 'react-ga';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -27,6 +28,7 @@ import {
 
 import helmetData from '../../../constants/helmetData';
 import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
+import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 
 const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '請輸入標題，例：面試過程') => {
   const section = {
@@ -109,11 +111,30 @@ class InterviewForm extends React.Component {
     this.elementValidationStatus = {};
   }
 
+  componentDidMount() {
+    ReactGA.event({
+      category: GA_CATEGORY.SHARE_INTERVIEW,
+      action: GA_ACTION.ENTER_PAGE,
+    });
+  }
+
   onSumbit() {
     const valid = interviewFormCheck(getInterviewForm(this.state));
 
     if (valid) {
-      return postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
+      const p = postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
+      p.then(() => {
+        ReactGA.event({
+          category: GA_CATEGORY.SHARE_INTERVIEW,
+          action: GA_ACTION.UPLOAD_SUCCESS,
+        });
+      }).catch(() => {
+        ReactGA.event({
+          category: GA_CATEGORY.SHARE_INTERVIEW,
+          action: GA_ACTION.UPLOAD_FAIL,
+        });
+      });
+      return p;
     }
     this.handleState('submitted')(true);
     const topInvalidElement = this.getTopInvalidElement();
