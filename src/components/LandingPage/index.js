@@ -34,20 +34,11 @@ class LandingPage extends Component {
     ]);
   }
 
-  renderHelmet = () => {
-    const data = helmetData.LANDING_PAGE;
-    return (
-      <Helmet
-        title={data.title}
-        meta={data.meta}
-      />
-    );
-  }
   render() {
     const expData = this.props.experienceSearch.toJS().experiences || [];
     return (
       <main>
-        {this.renderHelmet()}
+        <Helmet {...helmetData.LANDING_PAGE} />
         <Banner />
         <Dashboard />
         <Section padding>
