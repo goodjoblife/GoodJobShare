@@ -2,8 +2,6 @@ import React, { PropTypes } from 'react';
 import { People } from 'common/icons';
 import subscribeValidation from 'common/subscribeValidation';
 
-import styles from '../../ShareExperience.module.css';
-
 import {
   companyQuery as companyQueryValidator,
   jobTitle as jobTitleValidator,
@@ -14,7 +12,7 @@ import {
   overallRating as overallRatingValidator,
 } from '../formCheck';
 
-import IconHeading from '../../common/IconHeading';
+import IconHeadingBlock from '../../common/IconHeadingBlock';
 import CompanyQuery from '../../common/CompanyQuery';
 import Region from '../../common/Region';
 import JobTitle from '../../common/JobTitle';
@@ -83,130 +81,123 @@ class InterviewInfo extends React.PureComponent {
     } = this.props;
 
     return (
-      <div
-        style={{
-          marginTop: '30px',
-        }}
-      >
-        <IconHeading text="面試資訊" Icon={People} />
-        <div className={styles.block}>
-          <div
-            style={{
-              marginBottom: '35px',
+      <IconHeadingBlock heading="面試資訊" Icon={People}>
+        <div
+          style={{
+            marginBottom: '35px',
+          }}
+        >
+          <CompanyQueryWithValidation
+            companyQuery={companyQuery}
+            onChange={v => {
+              handleState('companyQuery')(v);
+              handleState('title')(`${v} 面試經驗分享`);
             }}
-          >
-            <CompanyQueryWithValidation
-              companyQuery={companyQuery}
-              onChange={v => {
-                handleState('companyQuery')(v);
-                handleState('title')(`${v} 面試經驗分享`);
-              }}
-              onCompanyId={handleState('companyId')}
-              validator={companyQueryValidator}
-              submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '41px',
-            }}
-          >
-            <RegionWithValidation
-              region={region}
-              inputTitle={'面試地區'}
-              onChange={handleState('region')}
-              validator={regionValidator}
-              submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '41px',
-            }}
-          >
-            <JobTitleWithValidation
-              inputTitle="應徵職稱"
-              jobTitle={jobTitle}
-              onChange={handleState('jobTitle')}
-              validator={jobTitleValidator}
-              submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '52px',
-            }}
-          >
-            <ExperienceInYear
-              experienceInYear={experienceInYear}
-              onChange={handleState('experienceInYear')}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '64px',
-            }}
-          >
-            <Education
-              education={education}
-              onChange={handleState('education')}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '64px',
-            }}
-          >
-            <InterviewTimeWithValidation
-              interviewTimeYear={interviewTimeYear}
-              interviewTimeMonth={interviewTimeMonth}
-              onInterviewTimeYear={handleState('interviewTimeYear')}
-              onInterviewTimeMonth={handleState('interviewTimeMonth')}
-              interviewTimeYearValidator={interviewTimeYearValidator}
-              interviewTimeMonthValidator={interviewTimeMonthValidator}
-              submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '53px',
-            }}
-          >
-            <InterviewResultWithValidation
-              interviewResult={interviewResult}
-              onChange={handleState('interviewResult')}
-              validator={interviewResultValidator}
-              submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '57px',
-            }}
-          >
-            <Salary
-              salaryType={salaryType}
-              salaryAmount={salaryAmount}
-              onSalaryType={handleState('salaryType')}
-              onSalaryAmount={handleState('salaryAmount')}
-            />
-          </div>
-          <div>
-            <OverallRatingWithValidation
-              overallRating={overallRating}
-              onChange={handleState('overallRating')}
-              validator={overallRatingValidator}
-              submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
-            />
-          </div>
+            onCompanyId={handleState('companyId')}
+            validator={companyQueryValidator}
+            submitted={submitted}
+            changeValidationStatus={changeValidationStatus}
+          />
         </div>
-      </div>
+        <div
+          style={{
+            marginBottom: '41px',
+          }}
+        >
+          <RegionWithValidation
+            region={region}
+            inputTitle={'面試地區'}
+            onChange={handleState('region')}
+            validator={regionValidator}
+            submitted={submitted}
+            changeValidationStatus={changeValidationStatus}
+          />
+        </div>
+        <div
+          style={{
+            marginBottom: '41px',
+          }}
+        >
+          <JobTitleWithValidation
+            inputTitle="應徵職稱"
+            jobTitle={jobTitle}
+            onChange={handleState('jobTitle')}
+            validator={jobTitleValidator}
+            submitted={submitted}
+            changeValidationStatus={changeValidationStatus}
+          />
+        </div>
+        <div
+          style={{
+            marginBottom: '52px',
+          }}
+        >
+          <ExperienceInYear
+            experienceInYear={experienceInYear}
+            onChange={handleState('experienceInYear')}
+          />
+        </div>
+        <div
+          style={{
+            marginBottom: '64px',
+          }}
+        >
+          <Education
+            education={education}
+            onChange={handleState('education')}
+          />
+        </div>
+        <div
+          style={{
+            marginBottom: '64px',
+          }}
+        >
+          <InterviewTimeWithValidation
+            interviewTimeYear={interviewTimeYear}
+            interviewTimeMonth={interviewTimeMonth}
+            onInterviewTimeYear={handleState('interviewTimeYear')}
+            onInterviewTimeMonth={handleState('interviewTimeMonth')}
+            interviewTimeYearValidator={interviewTimeYearValidator}
+            interviewTimeMonthValidator={interviewTimeMonthValidator}
+            submitted={submitted}
+            changeValidationStatus={changeValidationStatus}
+          />
+        </div>
+        <div
+          style={{
+            marginBottom: '53px',
+          }}
+        >
+          <InterviewResultWithValidation
+            interviewResult={interviewResult}
+            onChange={handleState('interviewResult')}
+            validator={interviewResultValidator}
+            submitted={submitted}
+            changeValidationStatus={changeValidationStatus}
+          />
+        </div>
+        <div
+          style={{
+            marginBottom: '57px',
+          }}
+        >
+          <Salary
+            salaryType={salaryType}
+            salaryAmount={salaryAmount}
+            onSalaryType={handleState('salaryType')}
+            onSalaryAmount={handleState('salaryAmount')}
+          />
+        </div>
+        <div>
+          <OverallRatingWithValidation
+            overallRating={overallRating}
+            onChange={handleState('overallRating')}
+            validator={overallRatingValidator}
+            submitted={submitted}
+            changeValidationStatus={changeValidationStatus}
+          />
+        </div>
+      </IconHeadingBlock>
     );
   }
 }

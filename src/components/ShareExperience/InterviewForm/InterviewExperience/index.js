@@ -4,9 +4,7 @@ import AddButton from 'common/button/AddButton';
 import { Comment2 } from 'common/icons';
 import subscribeValidation from 'common/subscribeValidation';
 
-import styles from '../../ShareExperience.module.css';
-
-import IconHeading from '../../common/IconHeading';
+import IconHeadingBlock from '../../common/IconHeadingBlock';
 import Title from '../../common/Title';
 import Sections from '../../common/Sections';
 import InterviewQas from './InterviewQas';
@@ -55,93 +53,84 @@ class InterviewExperience extends Component {
       changeValidationStatus,
     } = this.props;
     return (
-      <div
-        style={{
-          marginTop: '59px',
-        }}
-      >
-        <IconHeading text="面試經驗" Icon={Comment2} />
+      <IconHeadingBlock heading="面試經驗" Icon={Comment2} marginTop>
         <div
-          className={styles.block}
+          style={{
+            marginBottom: '50px',
+          }}
         >
-          <div
-            style={{
-              marginBottom: '50px',
-            }}
-          >
-            <TitleWithValidation
-              title={title}
-              onChange={handleState('title')}
-              placeholder="ＯＯ 股份有限公司面試經驗分享"
-              validator={titleValidator}
-              submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
-            />
-          </div>
-          <div
-            style={{
-              position: 'relative',
-              marginBottom: '80px',
-            }}
-          >
-            <SectionsWithValidation
-              sections={sections}
-              removeSection={removeSection}
-              editSection={editSection}
-              validator={sectionsValidator}
-              submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
-            />
-            <div
-              className={shareStyles.button__add}
-            >
-              <ButtonAdd
-                options={interviewSectionSubtitleOptions}
-                custimizedValues={[interviewSectionSubtitleOptions[0].value]}
-                disabledValues={sections.map(section => section.subtitle)}
-                appendBlock={appendSection}
-              />
-            </div>
-          </div>
-          <hr
-            style={{
-              border: '1px solid #E7E7E7',
-              marginBottom: '35px',
-            }}
+          <TitleWithValidation
+            title={title}
+            onChange={handleState('title')}
+            placeholder="ＯＯ 股份有限公司面試經驗分享"
+            validator={titleValidator}
+            submitted={submitted}
+            changeValidationStatus={changeValidationStatus}
+          />
+        </div>
+        <div
+          style={{
+            position: 'relative',
+            marginBottom: '80px',
+          }}
+        >
+          <SectionsWithValidation
+            sections={sections}
+            removeSection={removeSection}
+            editSection={editSection}
+            validator={sectionsValidator}
+            submitted={submitted}
+            changeValidationStatus={changeValidationStatus}
           />
           <div
-            style={{
-              position: 'relative',
-              marginBottom: '80px',
-            }}
+            className={shareStyles.button__add}
           >
-            <InterviewQas
-              interviewQas={interviewQas}
-              editQa={editQa}
-              removeQa={removeQa}
-            />
-            <div
-              className={shareStyles.button__add}
-            >
-              <AddButton
-                onClick={() => appendQa()}
-              />
-            </div>
-          </div>
-          <hr
-            style={{
-              border: '1px solid #E7E7E7',
-              marginBottom: '35px',
-            }}
-          />
-          <div>
-            <InterviewSensitiveQuestions
-              interviewSensitiveQuestions={interviewSensitiveQuestions}
-              onChange={handleState('interviewSensitiveQuestions')}
+            <ButtonAdd
+              options={interviewSectionSubtitleOptions}
+              custimizedValues={[interviewSectionSubtitleOptions[0].value]}
+              disabledValues={sections.map(section => section.subtitle)}
+              appendBlock={appendSection}
             />
           </div>
         </div>
-      </div>
+        <hr
+          style={{
+            border: '1px solid #E7E7E7',
+            marginBottom: '35px',
+          }}
+        />
+        <div
+          style={{
+            position: 'relative',
+            marginBottom: '80px',
+          }}
+        >
+          <InterviewQas
+            interviewQas={interviewQas}
+            editQa={editQa}
+            removeQa={removeQa}
+          />
+          <div
+            className={shareStyles.button__add}
+          >
+            <AddButton
+              onClick={() => appendQa()}
+            />
+          </div>
+        </div>
+        <hr
+          style={{
+            border: '1px solid #E7E7E7',
+            marginBottom: '35px',
+          }}
+        />
+        <div>
+          <InterviewSensitiveQuestions
+            interviewSensitiveQuestions={interviewSensitiveQuestions}
+            onChange={handleState('interviewSensitiveQuestions')}
+          />
+        </div>
+      </IconHeadingBlock>
     );
   }
 }
