@@ -68,7 +68,7 @@ class Header extends React.Component {
             toggle={this.toggleNav}
           />
           <div className={styles.logo}>
-            <Link to="/" title="goodjob 工時薪資透明化運動" onClick={this.closeNav}>
+            <Link to="/" title="GoodJob 好工作評論網" onClick={this.closeNav}>
               <i.GjLogo />
             </Link>
           </div>
