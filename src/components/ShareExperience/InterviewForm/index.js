@@ -28,10 +28,12 @@ import {
 import helmetData from '../../../constants/helmetData';
 import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
 
-const createSection = id => subtitle => {
+const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '請輸入標題，例：面試過程') => {
   const section = {
     id,
     subtitle,
+    placeholder,
+    titlePlaceholder,
     content: '',
     isSubtitleEditable: false,
   };
@@ -40,6 +42,8 @@ const createSection = id => subtitle => {
       ...section,
       subtitle: '',
       isSubtitleEditable: true,
+      placeholder,
+      titlePlaceholder,
     };
   }
   return section;
@@ -149,12 +153,12 @@ class InterviewForm extends React.Component {
   }
 
   appendBlock(blockKey) {
-    return subtitle => {
+    return (subtitle, placeholder, titlePlaceholder) => {
       const id = idCounter();
       return this.setState(state => ({
         [blockKey]: {
           ...state[blockKey],
-          [id]: createBlock[blockKey](id)(subtitle),
+          [id]: createBlock[blockKey](id)(subtitle, placeholder, titlePlaceholder),
         },
       }));
     };

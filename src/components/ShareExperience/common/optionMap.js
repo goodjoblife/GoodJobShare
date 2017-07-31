@@ -126,24 +126,66 @@ export const interviewSectionSubtitleOptions = [
     value: '自訂段落',
   },
   {
-    label: '面試過程',
-    value: '面試過程',
+    label: '面試方式',
+    value: '面試方式',
+    placeholder: '例如：有幾關？實體/線上/筆試？流程？ 面試官有誰？',
   },
   {
-    label: '面試時間',
-    value: '面試時間',
+    label: '面試心得',
+    value: '面試心得',
+    placeholder: '例如：面試流程很快/冗長、面試官態度友善與否 …等。',
   },
   {
-    label: '公司管理制度',
-    value: '公司管理制度',
+    label: '給公司的建議',
+    value: '給公司的建議',
+    placeholder: '例如：希望可以尊重求職者、希望面試官對於公司福利可以明確說明...等。',
+  },
+];
+
+export const workExSectionSubtitleOptions = [
+  {
+    label: '自訂段落',
+    value: '自訂段落',
   },
   {
-    label: '公司環境',
-    value: '公司環境',
+    label: '實際工作內容',
+    value: '實際工作內容',
+    placeholder: '實際工作內容是什麼？與當初面試時說明的有不同嗎？',
   },
   {
-    label: '公司前景發展',
-    value: '公司前景發展',
+    label: '工時狀況',
+    value: '工時狀況',
+    placeholder: '例如：幾點上下班？經常加班？加班有淡旺季？要帶工作回家做？下班要收 Line？',
+  },
+  {
+    label: '薪資福利',
+    value: '薪資福利',
+    placeholder: '例如：底薪、績效獎金、年終獎金、分紅、津貼補助等。',
+  },
+  {
+    label: '公司管理方式',
+    value: '公司管理方式',
+    placeholder: '例如：採責任制、講求業績結果勝過一切。( ´•̥̥̥ω•̥̥̥` )',
+  },
+  {
+    label: '獲得的成長',
+    value: '獲得的成長',
+    placeholder: '例如：專業技術、管理團隊的經驗、對市場的瞭解、對廠商的瞭解等等。',
+  },
+  {
+    label: '給公司的建議',
+    value: '給公司的建議',
+    placeholder: '例如：「希望公司大會可以從每週改成每月一次」「希望公司可以開放在辦公室吃早餐」',
+  },
+  {
+    label: '升遷制度',
+    value: '升遷制度',
+    placeholder: '例如：一年考核一次，三年以上才有機會升主管。',
+  },
+  {
+    label: '公司 / 團隊文化',
+    value: '公司 / 團隊文化',
+    placeholder: '例如：團隊成員向心力高、同事有很多是幹話王^_−☆',
   },
 ];
 

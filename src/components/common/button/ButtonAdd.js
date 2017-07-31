@@ -34,9 +34,7 @@ class ButtonAdd extends React.PureComponent {
       <div
         style={{
           display: 'flex',
-          flexWrap: 'wrap',
           minHeight: '40px',
-          alignItems: 'center',
         }}
       >
         <div
@@ -49,28 +47,36 @@ class ButtonAdd extends React.PureComponent {
             onClick={this.handleStage}
           />
         </div>
-        {
-          stage !== 0 ?
-            options.map(ele =>
-              <span
-                key={ele.value}
-                style={{
-                  marginRight: '15px',
-                }}
-              >
-                <ButtonAddElement
-                  text={ele.label}
-                  custimized={custimizedValues.includes(ele.value)}
-                  disabled={disabledValues.includes(ele.value)}
-                  onClick={() => {
-                    appendBlock(ele.value);
-                    this.handleStage();
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+          }}
+        >
+          {
+            stage !== 0 ?
+              options.map(ele =>
+                <span
+                  key={ele.value}
+                  style={{
+                    marginRight: '15px',
+                    marginBottom: '10px',
                   }}
-                />
-              </span>
-            )
-            : null
-        }
+                >
+                  <ButtonAddElement
+                    text={ele.label}
+                    custimized={custimizedValues.includes(ele.value)}
+                    disabled={disabledValues.includes(ele.value)}
+                    onClick={() => {
+                      appendBlock(ele.value, ele.placeholder, ele.titlePlaceholder);
+                      this.handleStage();
+                    }}
+                  />
+                </span>
+              )
+              : null
+          }
+        </div>
       </div>
     );
   }

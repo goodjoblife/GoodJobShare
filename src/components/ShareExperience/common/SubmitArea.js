@@ -133,6 +133,7 @@ class SubmitArea extends React.PureComponent {
             display: 'flex',
             marginBottom: '28px',
             alignItems: 'center',
+            justifyContent: 'center',
           }}
           htmlFor="submitArea-checkbox"
         >

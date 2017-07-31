@@ -11,7 +11,7 @@ import Sections from '../../common/Sections';
 import shareStyles from '../../common/share.module.css';
 
 import {
-  interviewSectionSubtitleOptions,
+  workExSectionSubtitleOptions,
 } from '../../common/optionMap';
 
 import {
@@ -93,8 +93,8 @@ class WorkExperience extends React.PureComponent {
               className={shareStyles.button__add}
             >
               <ButtonAdd
-                options={interviewSectionSubtitleOptions}
-                custimizedValues={[interviewSectionSubtitleOptions[0].value]}
+                options={workExSectionSubtitleOptions}
+                custimizedValues={[workExSectionSubtitleOptions[0].value]}
                 disabledValues={sections.map(section => section.subtitle)}
                 appendBlock={appendSection}
               />
