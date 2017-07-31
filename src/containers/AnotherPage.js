@@ -1,6 +1,11 @@
 import React from 'react';
 
+import { Section } from 'common/base';
 import Button from 'common/button/Button';
+import Modal from 'common/Modal';
+import FacebookFail from '../components/ShareExperience/common/FacebookFail';
+import FailFeedback from '../components/ShareExperience/common/FailFeedback';
+import SuccessFeedback from '../components/ShareExperience/common/SuccessFeedback';
 
 const AnotherPage = () => (
   <div style={{ padding: 10 }}>
@@ -49,6 +54,27 @@ const AnotherPage = () => (
 
     <div className="formLabel">公司/單位 或 統一編號 (formLabel)</div>
     <div className="formLabel">公司/單位 或 統一編號 (formLabel)</div>
+    <Section padding>
+      <Modal
+        hasClose
+      >
+        <FacebookFail />
+      </Modal>
+    </Section>
+    <Section padding>
+      <Modal
+        hasClose
+      >
+        <FailFeedback />
+      </Modal>
+    </Section>
+    <Section padding>
+      <Modal
+        hasClose
+      >
+        <SuccessFeedback />
+      </Modal>
+    </Section>
   </div>
 );
 
