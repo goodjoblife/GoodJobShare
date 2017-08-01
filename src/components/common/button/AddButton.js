@@ -1,22 +1,27 @@
 import React, { PropTypes } from 'react';
+import cn from 'classnames';
 
-import Cross from '../../images/x.svg';
+import X from 'common/icons/X';
 import styles from './AddButton.module.css';
 
-const AddButton = ({ active, onClick }) => (
+const AddButton = ({ active, onClick, addQa, deleteBtn }) => (
   <button
-    className={active ? styles.active : styles.button}
+    className={cn(styles.button, {
+      [styles.active]: active,
+      [styles.addQa]: addQa,
+      [styles.deleteBtn]: deleteBtn,
+    })}
     onClick={onClick}
   >
-    <Cross
-      className={active ? styles.cross__active : styles.cross}
-    />
+    <X className={styles.cross} />
   </button>
 );
 
 AddButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
   active: PropTypes.bool,
-  onClick: PropTypes.func,
+  addQa: PropTypes.bool,
+  deleteBtn: PropTypes.bool,
 };
 
 export default AddButton;

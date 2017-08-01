@@ -13,8 +13,8 @@ const InterviewQa = ({ question, answer, editQa, removeQa }) => (
       className={styles.remove__btn}
     >
       <AddButton
-        active
         onClick={removeQa}
+        deleteBtn
       />
     </div>
     <div

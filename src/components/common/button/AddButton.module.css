@@ -1,35 +1,62 @@
+@value main-yellow, main-black, main-orange, yellow-dark from "common/variables.module.css";
 @value diameter: 32px;
 
 .button {
   width: diameter;
   height: diameter;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: diameter;
   color: white;
   background: #DFDFDF;
+  transition: background .25s;
 
-  &:hover {
-    background: #D0D0D0;
+  @media (min-width: 1025px) {
+    &:hover {
+      background: #D0D0D0;
+    }
   }
 }
 
 .active {
-  composes: button;
-  background: #FCD406;
+  background-color: main-yellow;
 
-  &:hover {
-    background: #FCD406;
+  @media (min-width: 1025px) {
+    &:hover {
+      background: main-yellow;
+    }
+  }
+
+  .cross {
+    transform: rotate(0);
   }
 }
 
 .cross {
   transform: rotate(45deg);
   transition: transform 0.2s;
-  stroke: white;
   fill: white;
+  width: 12px;
+  height: 12px;
 }
 
-.cross__active {
-  composes: cross;
-  transform: rotate(0);
+.addQa {
+  @media (min-width: 1025px) {
+    &:hover {
+      background-color: main-orange;
+    }
+  }
+}
+
+.deleteBtn {
+  background-color: main-yellow;
+  .cross {
+    transform: rotate(0);
+  }
+  @media (min-width: 1025px) {
+    &:hover {
+      background: yellow-dark;
+    }
+  }
 }

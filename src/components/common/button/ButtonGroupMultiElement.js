@@ -26,8 +26,7 @@ class ButtonGroupMultiElement extends React.PureComponent {
         <p
           style={{
             color: 'inherit',
-            fontSize: '14px',
-            lineHeight: '23px',
+            fontSize: '15px',
           }}
         >
           {label}

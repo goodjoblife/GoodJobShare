@@ -1,9 +1,11 @@
-@value main-yellow, border-gray, main-gray, warning-red from "../variables.module.css";
+@value main-yellow, border-gray, main-gray, warning-red, INPUT_HEIGHT, main-gray from "../variables.module.css";
 
 .input {
   width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #BDBDBD;
+  padding: 0 16px;
+  height: INPUT_HEIGHT;
+  line-height: INPUT_HEIGHT;
+  border: 1px solid main-gray;
 
   &:focus{
     border-color: main-yellow;

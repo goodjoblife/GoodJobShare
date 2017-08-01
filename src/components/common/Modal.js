@@ -13,7 +13,7 @@ const Modal = ({ children, isOpen, hasClose, close }) => (
     }
   >
     <div className={styles.inner}>
-      <div className={styles.content}>
+      <div className={styles.container}>
         {
           hasClose ?
             <div className={styles.close}>
@@ -23,7 +23,9 @@ const Modal = ({ children, isOpen, hasClose, close }) => (
               />
             </div> : null
         }
-        {children}
+        <div className={styles.content}>
+          {children}
+        </div>
       </div>
     </div>
   </div>

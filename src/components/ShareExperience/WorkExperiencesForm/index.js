@@ -2,6 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
 import { scroller } from 'react-scroll';
+import { Heading } from 'common/base';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -198,16 +199,11 @@ class WorkExperiencesForm extends React.Component {
     } = this.state;
 
     return (
-      <div className={styles.container}>
+      <div>
         <Helmet {...HELMET_DATA.SHARE_WORK} />
-        <h1
-          className="headingL"
-          style={{
-            textAlign: 'center',
-          }}
-        >
+        <Heading size="l" marginBottomS center>
           工作經驗分享
-        </h1>
+        </Heading>
         {
           this.state.submitted ?
             <h2

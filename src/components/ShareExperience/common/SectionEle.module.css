@@ -1,4 +1,4 @@
-@value main-yellow from "../../common/variables.module.css";
+@value main-yellow, main-gray from "../../common/variables.module.css";
 
 
 .container {
@@ -26,15 +26,15 @@
   border: none;
 
   &::placeholder {
-    color: #BDBDBD;
+    color: main-gray;
+    font-weight: 400;
   }
 }
 
 .textarea {
 
   &::placeholder {
-    color: #C0C0C0;
-    font-size: 1rem;
-    font-weight: normal;
+    color: main-gray;
+    font-weight: 300;
   }
 }

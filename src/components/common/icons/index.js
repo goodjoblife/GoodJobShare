@@ -5,7 +5,6 @@ import Bad from './Bad';
 import Checked from './Checked';
 import Coin from './Coin';
 import Comment from './Comment';
-import Comment2 from './Comment2';
 import Company from './Company';
 import Ellipses from './Ellipses';
 import Exclamation from './Exclamation';
@@ -29,7 +28,6 @@ const icons = {
   Checked,
   Coin,
   Comment,
-  Comment2,
   Company,
   Ellipses,
   Exclamation,
@@ -50,10 +48,12 @@ export default icons;
 
 export { default as Clock } from './Clock';
 export { default as Coin2 } from './Coin2';
+export { default as Comment2 } from './Comment2';
 export { default as Email } from './Email';
 export { default as Facebook } from './Facebook';
 export { default as Github } from './Github';
 export { default as Twitter } from './Twitter';
 
 export { default as Plus } from './Plus';
+export { default as People } from './People';
 export { default as Minus } from './Minus';
