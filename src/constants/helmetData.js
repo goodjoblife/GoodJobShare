@@ -76,11 +76,11 @@ export const HELMET_DATA = {
     title: '工作經驗分享',
     meta: [
       { property: 'og:title', content: formatTitle('工作經驗分享', SITE_NAME) },
-      { property: 'og:url', content: formatCanonicalPath('/share/work-experience') },
+      { property: 'og:url', content: formatCanonicalPath('/share/work-experiences') },
       { property: 'og:image', content: `${imgHost}/www/og/share-work.jpg` },
     ],
     link: [
-      { rel: 'canonical', href: formatCanonicalPath('/share/work-experience') },
+      { rel: 'canonical', href: formatCanonicalPath('/share/work-experiences') },
     ],
   },
   EXPERIENCE_SEARCH: {
@@ -142,10 +142,10 @@ export const HELMET_DATA = {
     meta: [
       { name: 'description', content: '' },
       { property: 'og:title', content: formatTitle('使用者條款', SITE_NAME) },
-      { property: 'og:url', content: formatCanonicalPath('/user-term') },
+      { property: 'og:url', content: formatCanonicalPath('/user-terms') },
     ],
     link: [
-      { rel: 'canonical', href: formatCanonicalPath('/user-term') },
+      { rel: 'canonical', href: formatCanonicalPath('/user-terms') },
     ],
   },
   FAQ: {
