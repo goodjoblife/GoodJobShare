@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Checked from 'common/icons/Checked';
-import Feedback from './Feedback';
+import Feedback from 'common/Feedback';
 
 const SuccessFeedback = ({ buttonClick }) => (
   <Feedback
