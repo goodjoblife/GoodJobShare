@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Feedback from './Feedback';
+import Feedback from 'common/Feedback';
 
 const FailFeedback = ({ buttonClick }) => (
   <Feedback
