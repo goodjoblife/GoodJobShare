@@ -25,7 +25,7 @@ import {
 
 import styles from './WorkExperiencesForm.module.css';
 
-import helmetData from '../../../constants/helmetData';
+import { HELMET_DATA } from '../../../constants/helmetData';
 import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 
 const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '請輸入標題，例：實際工作內容') => {
@@ -199,7 +199,7 @@ class WorkExperiencesForm extends React.Component {
 
     return (
       <div className={styles.container}>
-        <Helmet {...helmetData.SHARE_WORK} />
+        <Helmet {...HELMET_DATA.SHARE_WORK} />
         <h1
           className="headingL"
           style={{
