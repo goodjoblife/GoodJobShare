@@ -48,6 +48,7 @@ class SubmitArea extends React.PureComponent {
       agree: false,
       isOpen: false,
       feedback: null,
+      hasClose: false,
     };
   }
 
@@ -59,10 +60,12 @@ class SubmitArea extends React.PureComponent {
         .then(r => r.experience._id)
         .then(id => {
           this.handleIsOpen(true);
+          this.handleHasClose(false);
           return this.handleFeedback(getSuccessFeedback(id));
         })
         .catch(() => {
           this.handleIsOpen(true);
+          this.handleHasClose(false);
           return this.handleFeedback(getFailFeedback(
             () => this.handleIsOpen(false)
           ));
@@ -74,6 +77,7 @@ class SubmitArea extends React.PureComponent {
 
   onFacebookFail() {
     this.handleIsOpen(true);
+    this.handleHasClose(true);
     return this.handleFeedback(getFacebookFail(this.login));
   }
 
@@ -109,6 +113,12 @@ class SubmitArea extends React.PureComponent {
     }));
   }
 
+  handleHasClose(hasClose) {
+    this.setState(() => ({
+      hasClose,
+    }));
+  }
+
   render() {
     const {
       auth,
@@ -118,6 +128,7 @@ class SubmitArea extends React.PureComponent {
       agree,
       isOpen,
       feedback,
+      hasClose,
     } = this.state;
 
     return (
@@ -185,7 +196,7 @@ class SubmitArea extends React.PureComponent {
         <Modal
           isOpen={isOpen}
           close={() => this.handleIsOpen(!isOpen)}
-          hasClose={false}
+          hasClose={hasClose}
         >
           {feedback}
         </Modal>
