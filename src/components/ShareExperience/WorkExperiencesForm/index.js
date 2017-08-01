@@ -26,10 +26,10 @@ import {
 
 import styles from './WorkExperiencesForm.module.css';
 
-import helmetData from '../../../constants/helmetData';
+import { HELMET_DATA } from '../../../constants/helmetData';
 import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 
-const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '請輸入標題，例：工作環境') => {
+const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '請輸入標題，例：實際工作內容') => {
   const section = {
     id,
     subtitle,
@@ -200,7 +200,7 @@ class WorkExperiencesForm extends React.Component {
 
     return (
       <div>
-        <Helmet {...helmetData.SHARE_WORK} />
+        <Helmet {...HELMET_DATA.SHARE_WORK} />
         <Heading size="l" marginBottomS center>
           工作經驗分享
         </Heading>

@@ -1,6 +1,4 @@
-export const siteName = '工時薪資透明化運動';
-
-export const formatTitle = title =>
+export const formatTitle = (title, siteName) =>
   `${title} | ${siteName}`;
 
 export const formatCanonicalPath = path =>

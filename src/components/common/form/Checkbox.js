@@ -4,11 +4,11 @@ import cn from 'classnames';
 import styles from './Checkbox.module.css';
 
 const Checkbox = ({
-  id, name, label, value, checked, disabled, margin, onChange,
+  id, name, label, value, checked, disabled, margin, onChange, style,
 }) => (
   <div
     className={cn(styles.formGroup, { [styles.disabled]: disabled })}
-    style={{ margin }}
+    style={{ margin, ...style }}
   >
     <input
       type="checkbox" id={id || `checkbox-${value}`}
@@ -29,12 +29,16 @@ Checkbox.defaultProps = {
 Checkbox.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+  ]).isRequired,
   value: PropTypes.string.isRequired,
   checked: PropTypes.bool.isRequired,
   disabled: PropTypes.bool,
   margin: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  style: PropTypes.object,
 };
 
 export default Checkbox;

@@ -26,10 +26,10 @@ import {
   idGenerator,
 } from '../utils';
 
-import helmetData from '../../../constants/helmetData';
+import { HELMET_DATA } from '../../../constants/helmetData';
 import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
 
-const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '請輸入標題，例：面試過程') => {
+const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '請輸入標題，例：面試方式') => {
   const section = {
     id,
     subtitle,
@@ -193,7 +193,7 @@ class InterviewForm extends React.Component {
   render() {
     return (
       <div>
-        <Helmet {...helmetData.SHARE_INTERVIEW} />
+        <Helmet {...HELMET_DATA.SHARE_INTERVIEW} />
         <Heading size="l" marginBottomS center>
           面試經驗分享
         </Heading>
