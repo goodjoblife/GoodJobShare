@@ -12,7 +12,7 @@ import { fetchMetaListIfNeeded } from '../../actions/laborRightsMenu';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
 import Dashboard from './Dashboard';
-import helmetData from '../../constants/helmetData';
+import { HELMET_DATA } from '../../constants/helmetData';
 
 class LandingPage extends Component {
   static fetchData({ store: { dispatch } }) {
@@ -38,7 +38,7 @@ class LandingPage extends Component {
     const expData = this.props.experienceSearch.toJS().experiences || [];
     return (
       <main>
-        <Helmet {...helmetData.LANDING_PAGE} />
+        <Helmet {...HELMET_DATA.LANDING_PAGE} />
         <Banner />
         <Dashboard />
         <Section padding>

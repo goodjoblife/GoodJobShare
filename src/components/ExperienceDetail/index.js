@@ -13,7 +13,8 @@ import status from '../../constants/status';
 import {
   fetchExperience,
 } from '../../actions/experienceDetail';
-import { formatCanonicalPath } from '../../utils/helmetHelper';
+import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
+import { SITE_NAME } from '../../constants/helmetData';
 
 import authStatus from '../../constants/authStatus';
 
@@ -91,7 +92,7 @@ class ExperienceDetail extends Component {
             title={title}
             meta={[
               { name: 'description', content: description },
-              { property: 'og:title', content: title },
+              { property: 'og:title', content: formatTitle(title, SITE_NAME) },
               { property: 'og:url', content: formatCanonicalPath(`/experiences/${id}`) },
               { property: 'og:description', content: description },
             ]}

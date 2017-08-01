@@ -5,7 +5,7 @@ import { Section, Wrapper, Heading, P } from 'common/base';
 import CallToAction from 'common/CallToAction';
 import { Facebook, Email, Github } from 'common/icons';
 import editorStyles from 'common/Editor.module.css';
-import helmetData from '../../constants/helmetData';
+import { HELMET_DATA } from '../../constants/helmetData';
 import styles from './About.module.css';
 import Timeline from './Timeline';
 
@@ -53,7 +53,7 @@ const data2017 = [
 
 const About = () => (
   <Section Tag="main" pageTop>
-    <Helmet {...helmetData.ABOUT} />
+    <Helmet {...HELMET_DATA.ABOUT} />
     <Section paddingBottom>
       <Wrapper size="m">
         <Heading size="m" marginBottomS>緣起：求職資訊不透明</Heading>
