@@ -42,5 +42,6 @@ input[type="submit"] {
 }
 textarea {
   max-width: 100%;
+  white-space: pre-wrap;
 }
 /*form reset end*/
