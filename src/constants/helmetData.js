@@ -1,5 +1,5 @@
 
-
+import { FACEBOOK_APP_ID } from '../config';
 import { formatTitle, formatCanonicalPath } from '../utils/helmetHelper';
 /*
   This file will organize most of CONSTANT head information.
@@ -42,13 +42,16 @@ export const HELMET_DATA = {
       { property: 'og:description', content: '你是否曾覺得職場資訊不夠透明？分享你的職場或面試經驗，讓我們一起改變現狀、定義理想的工作！' },
       { property: 'og:locale', content: 'zh_TW' },
       { property: 'og:site_name', content: SITE_NAME },
+      { property: 'fb:app_id', content: FACEBOOK_APP_ID },
     ],
     link: [
       { rel: 'canonical', href: formatCanonicalPath('/') },
     ],
   },
   LANDING_PAGE: {
-    // same as default
+    meta: [
+      { property: 'og:image', content: `${imgHost}/www/og/index.jpg` },
+    ],
   },
   SHARE: {
     title: '分享你的職場資訊',
