@@ -169,7 +169,6 @@ export const HELMET_DATA = {
       { name: 'description', content: '' },
       { property: 'og:title', content: formatTitle('發文留言規則', SITE_NAME) },
       { property: 'og:url', content: formatCanonicalPath('/guidelines') },
-      { property: 'og:image', content: `${imgHost}/www/og/guidelines.jpg` },
     ],
     link: [
       { rel: 'canonical', href: formatCanonicalPath('/guidelines') },
