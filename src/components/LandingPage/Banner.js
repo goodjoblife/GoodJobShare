@@ -8,7 +8,7 @@ const Banner = () => (
   <section className={styles.banner}>
     <Wrapper size="l">
       <div className={styles.image}>
-        <img src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/yellow-banner.png" alt="求職市場透明化" />
+        <img src="https://image.goodjob.life/yellow-banner.png" alt="求職市場透明化" />
       </div>
       <div className={styles.content}>
         <h1 className={styles.heading}>好工作評論網</h1>

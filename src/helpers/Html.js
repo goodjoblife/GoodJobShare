@@ -33,7 +33,7 @@ export default class Html extends Component {
           {head.link.toComponent()}
           {head.script.toComponent()}
 
-          <link rel="shortcut icon" href="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/favicon.ico" />
+          <link rel="shortcut icon" href="https://image.goodjob.life/favicon.ico" />
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1"

@@ -6,7 +6,7 @@ const About = () => (
   <Section paddingBottom>
     <img
       className={styles.image}
-      src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/labor-rights-about.png"
+      src="https://image.goodjob.life/labor-rights-about.png"
       alt="勞動知識小教室"
     />
     <P size="l" className={styles.wrapper}>
@@ -15,7 +15,7 @@ const About = () => (
       內容皆為創用 CC 授權，歡迎分享、散佈，但需標明出處。
       <img
         className={styles.cc}
-        src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/logo-cc.svg"
+        src="https://image.goodjob.life/logo-cc.svg"
         alt="cc"
       />
     </P>

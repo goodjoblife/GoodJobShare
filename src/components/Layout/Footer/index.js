@@ -55,7 +55,7 @@ const Footer = () => (
       </section>
       <section className={styles.medias}>
         <h4 className={styles.heading}>\ 感謝各大媒體採訪報導 /</h4>
-        <Link to="/about"><img src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/medias.jpg" alt="cheers yahoo 蘋果日報 數位時代" /></Link>
+        <Link to="/about"><img src="https://image.goodjob.life/medias.jpg" alt="cheers yahoo 蘋果日報 數位時代" /></Link>
       </section>
     </Wrapper>
     <div className={styles.footer}>
@@ -63,7 +63,7 @@ const Footer = () => (
         <P size="s">Copyright © GoodJob.life team 2017</P>
         <div className={styles.g0v}>
           <a href="https://grants.g0v.tw/power/" alt="power by g0v">
-            <img src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/logo-g0v-white.svg" alt="g0v" />
+            <img src="https://image.goodjob.life/logo-g0v-white.svg" alt="g0v" />
           </a>
         </div>
       </Wrapper>

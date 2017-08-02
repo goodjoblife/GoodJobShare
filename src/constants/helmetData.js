@@ -26,7 +26,7 @@ The followings are some useful elements from Open Graph Protocol:
 
 */
 
-const imgHost = 'https://s3-ap-northeast-1.amazonaws.com/goodjob.life';
+const imgHost = 'https://image.goodjob.life';
 export const SITE_NAME = 'GoodJob 好工作評論網';
 export const HELMET_DATA = {
   DEFAULT: {
@@ -38,7 +38,7 @@ export const HELMET_DATA = {
       { property: 'og:title', content: SITE_NAME },
       { property: 'og:url', content: formatCanonicalPath('/') },
       { property: 'og:type', content: 'website' },
-      { property: 'og:image', content: `${imgHost}/www/og/default.jpg` },
+      { property: 'og:image', content: `${imgHost}/og/default.jpg` },
       { property: 'og:description', content: '你是否曾覺得職場資訊不夠透明？分享你的職場或面試經驗，讓我們一起改變現狀、定義理想的工作！' },
       { property: 'og:locale', content: 'zh_TW' },
       { property: 'og:site_name', content: SITE_NAME },
@@ -50,7 +50,7 @@ export const HELMET_DATA = {
   },
   LANDING_PAGE: {
     meta: [
-      { property: 'og:image', content: `${imgHost}/www/og/index.jpg` },
+      { property: 'og:image', content: `${imgHost}/og/index.jpg` },
     ],
   },
   SHARE: {
@@ -58,7 +58,7 @@ export const HELMET_DATA = {
     meta: [
       { property: 'og:title', content: formatTitle('分享你的職場資訊', SITE_NAME) },
       { property: 'og:url', content: formatCanonicalPath('/share') },
-      { property: 'og:image', content: `${imgHost}/www/og/share.jpg` },
+      { property: 'og:image', content: `${imgHost}/og/share.jpg` },
     ],
     link: [
       { rel: 'canonical', href: formatCanonicalPath('/share') },
@@ -69,7 +69,7 @@ export const HELMET_DATA = {
     meta: [
       { property: 'og:title', content: formatTitle('面試經驗分享', SITE_NAME) },
       { property: 'og:url', content: formatCanonicalPath('/share/interview') },
-      { property: 'og:image', content: `${imgHost}/www/og/share-interview.jpg` },
+      { property: 'og:image', content: `${imgHost}/og/share-interview.jpg` },
     ],
     link: [
       { rel: 'canonical', href: formatCanonicalPath('/share/interview') },
@@ -80,7 +80,7 @@ export const HELMET_DATA = {
     meta: [
       { property: 'og:title', content: formatTitle('工作經驗分享', SITE_NAME) },
       { property: 'og:url', content: formatCanonicalPath('/share/work-experiences') },
-      { property: 'og:image', content: `${imgHost}/www/og/share-work.jpg` },
+      { property: 'og:image', content: `${imgHost}/og/share-work.jpg` },
     ],
     link: [
       { rel: 'canonical', href: formatCanonicalPath('/share/work-experiences') },
@@ -91,7 +91,7 @@ export const HELMET_DATA = {
     meta: [
       { property: 'og:title', content: formatTitle('查詢面試、工作經驗', SITE_NAME) },
       { property: 'og:url', content: formatCanonicalPath('/experiences/search') },
-      { property: 'og:image', content: `${imgHost}/www/og/experience-search.jpg` },
+      { property: 'og:image', content: `${imgHost}/og/experience-search.jpg` },
     ],
     link: [
       { rel: 'canonical', href: formatCanonicalPath('/experiences/search') },
@@ -106,7 +106,7 @@ export const HELMET_DATA = {
       { name: 'description', content: '我們看見勞工們的需要，推出【勞動知識小教室】系列懶人包，將複雜的法律資訊轉換成易懂的圖文，內容涵蓋勞動基準法、性別工作平等法、就業服務法以及工會相關法令等勞工必備的權益資訊。讓勞工認識自己的權益，學會保護自己。' },
       { property: 'og:title', content: formatTitle('勞動知識小教室', SITE_NAME) },
       { property: 'og:url', content: formatCanonicalPath('/labor-rights') },
-      { property: 'og:image', content: `${imgHost}/www/og/labor-rights.jpg` },
+      { property: 'og:image', content: `${imgHost}/og/labor-rights.jpg` },
       { property: 'og:description', content: '我們看見勞工們的需要，推出【勞動知識小教室】系列懶人包，將複雜的法律資訊轉換成易懂的圖文，內容涵蓋勞動基準法、性別工作平等法、就業服務法以及工會相關法令等勞工必備的權益資訊。讓勞工認識自己的權益，學會保護自己。' },
     ],
     link: [
@@ -122,7 +122,7 @@ export const HELMET_DATA = {
       { name: 'description', content: '在過去求職的經驗中，我們發現台灣的求職資訊相當不透明。 薪資、工時的資訊經常不得而知，而實際工作內容也與當初求職網站說明的有所出入。 因此，我們決定採取行動，嘗試解決求職市場資訊不透明的問題，讓我們在找工作時，能夠做出更好的選擇。' },
       { property: 'og:title', content: formatTitle('關於我們', SITE_NAME) },
       { property: 'og:url', content: formatCanonicalPath('/about') },
-      { property: 'og:image', content: `${imgHost}/www/og/about.jpg` },
+      { property: 'og:image', content: `${imgHost}/og/about.jpg` },
       { property: 'og:description', content: '在過去求職的經驗中，我們發現台灣的求職資訊相當不透明。 薪資、工時的資訊經常不得而知，而實際工作內容也與當初求職網站說明的有所出入。 因此，我們決定採取行動，嘗試解決求職市場資訊不透明的問題，讓我們在找工作時，能夠做出更好的選擇。' },
     ],
     link: [
@@ -157,7 +157,7 @@ export const HELMET_DATA = {
       { name: 'description', content: '' },
       { property: 'og:title', content: formatTitle('常見問答', SITE_NAME) },
       { property: 'og:url', content: formatCanonicalPath('/faq') },
-      { property: 'og:image', content: `${imgHost}/www/og/faq.jpg` },
+      { property: 'og:image', content: `${imgHost}/og/faq.jpg` },
     ],
     link: [
       { rel: 'canonical', href: formatCanonicalPath('/faq') },
