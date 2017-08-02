@@ -46,11 +46,11 @@
 }
 
 .frontButton, .rearButton {
-  display: inline-flex;
+  display: inline-block;
   width: 50%;
   height: 32px;
-  justify-content: center;
-  align-items: center;
+  line-height: 32px;
+  text-align: center;
   border: 1px solid main-yellow;
 
   &.toggle {
