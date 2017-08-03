@@ -5,7 +5,7 @@ import { Section, Wrapper, Heading, P } from 'common/base';
 import CallToAction from 'common/CallToAction';
 import { Facebook, Email, Github } from 'common/icons';
 import editorStyles from 'common/Editor.module.css';
-import helmetData from '../../constants/helmetData';
+import { HELMET_DATA } from '../../constants/helmetData';
 import styles from './About.module.css';
 import Timeline from './Timeline';
 
@@ -53,7 +53,7 @@ const data2017 = [
 
 const About = () => (
   <Section Tag="main" pageTop>
-    <Helmet {...helmetData.ABOUT} />
+    <Helmet {...HELMET_DATA.ABOUT} />
     <Section paddingBottom>
       <Wrapper size="m">
         <Heading size="m" marginBottomS>緣起：求職資訊不透明</Heading>
@@ -66,14 +66,14 @@ const About = () => (
           <div className={styles.item}>
             <P Tag="h3" size="l" bold className={styles.heading}>好的工作、好的公司無法真正被看見</P>
             <img
-              src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/about-01.png"
+              src="https://image.goodjob.life/about-01.png"
               alt="好的工作、好的公司無法真正被看見"
             />
           </div>
           <div className={styles.item}>
             <P Tag="h3" size="l" bold className={styles.heading}>求職者更難找到適合自己的工作</P>
             <img
-              src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/about-02.png"
+              src="https://image.goodjob.life/about-02.png"
               alt="求職者更難找到適合自己的工作"
             />
           </div>
@@ -87,7 +87,7 @@ const About = () => (
           我們相信，當職場資訊變得足夠透明，在市場機制的運作下，好的公司更容易找到好人才，變得更有競爭力；條件相對差一點的公司將會提升薪資及福利，以招募更好的人才。<strong>台灣的產業整體而言向上提升，進入正向循環。</strong>
         </P>
         <img
-          src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/about-03.png"
+          src="https://image.goodjob.life/about-03.png"
           alt="台灣整體而言向上提升，進入正向循環"
           className={styles.missionImg}
         />
@@ -105,7 +105,7 @@ const About = () => (
           </div>
         </div>
         <img
-          src="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/about-city.png"
+          src="https://image.goodjob.life/about-city.png"
           alt="大事紀"
           className={styles.timelineImage}
         />
@@ -113,7 +113,7 @@ const About = () => (
     </Section>
     <CallToAction
       bgColor="#fcd406"
-      imgSrc="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/about-people.png"
+      imgSrc="https://image.goodjob.life/about-people.png"
       heading="促進職場資訊透明化，需要每一個「你」的參與！"
       headingSize="m"
       buttonText="現在就留下資料"

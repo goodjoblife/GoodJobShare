@@ -3,6 +3,7 @@ import R from 'ramda';
 import Helmet from 'react-helmet';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
+import { Heading } from 'common/base';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -26,11 +27,11 @@ import {
 
 import styles from './WorkExperiencesForm.module.css';
 
-import helmetData from '../../../constants/helmetData';
+import { HELMET_DATA } from '../../../constants/helmetData';
 import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 
-const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '請輸入標題，例：工作環境') => {
+const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '請輸入標題，例：實際工作內容') => {
   const section = {
     id,
     subtitle,
@@ -219,16 +220,11 @@ class WorkExperiencesForm extends React.Component {
     } = this.state;
 
     return (
-      <div className={styles.container}>
-        <Helmet {...helmetData.SHARE_WORK} />
-        <h1
-          className="headingL"
-          style={{
-            textAlign: 'center',
-          }}
-        >
+      <div>
+        <Helmet {...HELMET_DATA.SHARE_WORK} />
+        <Heading size="l" marginBottomS center>
           工作經驗分享
-        </h1>
+        </Heading>
         {
           this.state.submitted ?
             <h2

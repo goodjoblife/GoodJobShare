@@ -36,7 +36,7 @@ const IsEmployed = ({
         }}
       >
         <InputTitle
-          text="你先在在職嗎？"
+          text="你現在在職嗎？"
           must
         />
       </div>

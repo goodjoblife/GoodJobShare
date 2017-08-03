@@ -10,7 +10,7 @@ import {
 import status from '../../constants/status';
 import LaborRightsEntry from './LaborRightsEntry';
 import About from './About';
-import helmetData from '../../constants/helmetData';
+import { HELMET_DATA } from '../../constants/helmetData';
 
 class LaborRightsMenu extends React.Component {
   static fetchData({ store }) {
@@ -26,7 +26,7 @@ class LaborRightsMenu extends React.Component {
     return (
       <Section Tag="main" pageTop>
         <Wrapper size="l" Tag="main">
-          <Helmet {...helmetData.LABOR_RIGHTS_MENU} />
+          <Helmet {...HELMET_DATA.LABOR_RIGHTS_MENU} />
           {this.props.status === status.FETCHING && <Loader />}
           {
             this.props.status === status.ERROR && this.props.error &&

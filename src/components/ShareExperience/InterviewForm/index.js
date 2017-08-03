@@ -3,6 +3,7 @@ import R from 'ramda';
 import Helmet from 'react-helmet';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
+import { Heading } from 'common/base';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -26,11 +27,11 @@ import {
   idGenerator,
 } from '../utils';
 
-import helmetData from '../../../constants/helmetData';
+import { HELMET_DATA } from '../../../constants/helmetData';
 import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 
-const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '請輸入標題，例：面試過程') => {
+const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '請輸入標題，例：面試方式') => {
   const section = {
     id,
     subtitle,
@@ -212,16 +213,11 @@ class InterviewForm extends React.Component {
 
   render() {
     return (
-      <div className={styles.container}>
-        <Helmet {...helmetData.SHARE_INTERVIEW} />
-        <h1
-          className="headingL"
-          style={{
-            textAlign: 'center',
-          }}
-        >
+      <div>
+        <Helmet {...HELMET_DATA.SHARE_INTERVIEW} />
+        <Heading size="l" marginBottomS center>
           面試經驗分享
-        </h1>
+        </Heading>
         {
           this.state.submitted ?
             <h2

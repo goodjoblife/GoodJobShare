@@ -17,6 +17,7 @@ import {
     fetchDataIfNeeded,
 } from '../../actions/laborRightsSingle';
 import status from '../../constants/status';
+import { SITE_NAME } from '../../constants/helmetData';
 
 class LaborRightsSingle extends React.Component {
   static fetchData({ store: { dispatch }, params: { id } }) {
@@ -53,11 +54,11 @@ class LaborRightsSingle extends React.Component {
     return (
       <main>
         <Helmet
-          title={formatTitle(seoTitle)}
+          title={seoTitle}
           meta={[
             { name: 'description', content: seoDescription },
             { property: 'og:url', content: formatCanonicalPath(`/labor-rights/${id}`) },
-            { property: 'og:title', content: formatTitle(seoTitle) },
+            { property: 'og:title', content: formatTitle(seoTitle, SITE_NAME) },
             { property: 'og:description', content: seoDescription },
             { property: 'og:image', content: formatUrl(coverUrl) },
           ]}
@@ -85,7 +86,7 @@ class LaborRightsSingle extends React.Component {
                 next={this.props.next}
               />
               <CallToAction
-                imgSrc="https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/cta-01.png"
+                imgSrc="https://image.goodjob.life/cta-01.png"
                 marginTop
               />
             </div>

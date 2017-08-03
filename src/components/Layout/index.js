@@ -4,12 +4,12 @@ import Helmet from 'react-helmet';
 import styles from './App.module.css';
 import Header from '../../containers/Layout/Header';
 import Footer from './Footer';
-import helmetData from '../../constants/helmetData';
+import { HELMET_DATA } from '../../constants/helmetData';
 
 const App = ({ children }) => (
   <div className={styles.App}>
     <Header />
-    <Helmet {...helmetData.DEFAULT} />
+    <Helmet {...HELMET_DATA.DEFAULT} />
     <div className={styles.content}>
       {children}
     </div>

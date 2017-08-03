@@ -5,11 +5,11 @@ import { Wrapper } from 'common/base';
 import ShareExpSection from 'common/ShareExpSection';
 import i from 'common/icons';
 import styles from './Entry.module.css';
-import helmetData from '../../constants/helmetData';
+import { HELMET_DATA } from '../../constants/helmetData';
 
 const Entry = () => (
   <div>
-    <Helmet {...helmetData.SHARE} />
+    <Helmet {...HELMET_DATA.SHARE} />
     <Wrapper size="l" className={styles.wrapper}>
       <button onClick={() => browserHistory.goBack()} className={styles.closeBtn}><i.X /></button>
     </Wrapper>

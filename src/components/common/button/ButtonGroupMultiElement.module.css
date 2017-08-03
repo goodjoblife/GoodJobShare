@@ -1,13 +1,18 @@
+@value INPUT_HEIGHT, main-gray from "common/variables.module.css";
+
 .element{
-  display: inline-block;
+  display: inline-flex;
   min-width: 110px;
-  height: 39px;
+  height: INPUT_HEIGHT;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 8px 22px;
+  padding: 0 22px;
   box-sizing: border-box;
   margin-right: 12px;
-  border: 1px dashed #D8D8D8;
+  border: 1px dashed main-gray;
   margin-bottom: 5px;
+  transition: background-color .25s;
 }
 
 .last {
@@ -19,13 +24,17 @@
   background: #606060;
   color: white;
   border-color: transparent;
+  cursor: default;
 }
 
 .unchecked{
   composes: element;
   color: #505050;
+  cursor: pointer;
 
-  &:hover{
-    background: #D8D8D8;
+  @media(min-width: 1025px) {
+    &:hover{
+      background: #D8D8D8;
+    }
   }
 }

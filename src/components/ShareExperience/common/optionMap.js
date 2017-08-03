@@ -234,6 +234,6 @@ export const jobEndingTimeYearOptions = Array(11).fill(0).map((_, index) => ({
 }));
 
 export const jobEndingTimeMonthOptions = Array(12).fill(0).map((_, index) => ({
-  label: index,
-  value: index,
+  label: index + 1,
+  value: index + 1,
 }));

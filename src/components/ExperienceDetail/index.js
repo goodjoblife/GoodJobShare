@@ -13,7 +13,8 @@ import status from '../../constants/status';
 import {
   fetchExperience,
 } from '../../actions/experienceDetail';
-import { formatCanonicalPath } from '../../utils/helmetHelper';
+import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
+import { SITE_NAME } from '../../constants/helmetData';
 
 import authStatus from '../../constants/authStatus';
 
@@ -73,25 +74,25 @@ class ExperienceDetail extends Component {
   renderHelmet = () => {
     if (this.props.experienceDetail) {
       const experience = this.props.experienceDetail.toJS().experience;
-      console.log(experience);
       if ('_id' in experience) {
         const id = experience._id;
+        const title = experience.title;
         const company = experience.company.name;
         const jobTitle = experience.job_title;
         const type = experience.type;
-        const sections = experience.sections;
+        const subtitle = experience.sections[0].subtitle.replace(/(\r\n|\n|\r)/gm, ' ');
+        const content = experience.sections[0].content.replace(/(\r\n|\n|\r)/gm, ' ');
         const mapping = {
           interview: '面試經驗分享',
           work: '工作經驗分享',
         };
-        const title = `${company} ${jobTitle} ${mapping[type]}`;
-        const description = `${sections[0].subtitle} ${sections[0].content}`;
+        const description = `${company} ${jobTitle} 的${mapping[type]}。 ${subtitle}：${content}`;
         return (
           <Helmet
             title={title}
             meta={[
               { name: 'description', content: description },
-              { property: 'og:title', content: title },
+              { property: 'og:title', content: formatTitle(title, SITE_NAME) },
               { property: 'og:url', content: formatCanonicalPath(`/experiences/${id}`) },
               { property: 'og:description', content: description },
             ]}

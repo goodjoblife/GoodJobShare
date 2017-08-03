@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react';
 import subscribeValidation from 'common/subscribeValidation';
 
 import ButtonAdd from 'common/button/ButtonAdd';
+import { Comment2 } from 'common/icons';
 
-import styles from '../../ShareExperience.module.css';
-
+import IconHeadingBlock from '../../common/IconHeadingBlock';
 import Title from '../../common/Title';
 import Sections from '../../common/Sections';
 
@@ -47,61 +47,47 @@ class WorkExperience extends React.PureComponent {
     } = this.props;
 
     return (
-      <div
-        style={{
-          marginTop: '30px',
-        }}
-      >
-        <h1
-          className="pLBold"
+      <IconHeadingBlock heading="工作經驗" Icon={Comment2} marginTop>
+        <div
           style={{
-            marginBottom: '13px',
+            marginBottom: '50px',
           }}
         >
-          工作經驗
-        </h1>
-        <div className={styles.block}>
+          <TitleWithValidation
+            title={title}
+            onChange={handleState('title')}
+            placeholder="ＯＯ 股份有限公司工作經驗分享"
+            validator={titleValidator}
+            submitted={submitted}
+            changeValidationStatus={changeValidationStatus}
+          />
+        </div>
+        <div
+          style={{
+            position: 'relative',
+            marginBottom: '80px',
+          }}
+        >
+          <SectionsWithValidation
+            sections={sections}
+            removeSection={removeSection}
+            editSection={editSection}
+            validator={sectionsValidator}
+            submitted={submitted}
+            changeValidationStatus={changeValidationStatus}
+          />
           <div
-            style={{
-              marginBottom: '50px',
-            }}
+            className={shareStyles.button__add}
           >
-            <TitleWithValidation
-              title={title}
-              onChange={handleState('title')}
-              placeholder="ＯＯ 股份有限公司工作經驗分享"
-              validator={titleValidator}
-              submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
+            <ButtonAdd
+              options={workExSectionSubtitleOptions}
+              custimizedValues={[workExSectionSubtitleOptions[0].value]}
+              disabledValues={sections.map(section => section.subtitle)}
+              appendBlock={appendSection}
             />
-          </div>
-          <div
-            style={{
-              position: 'relative',
-              marginBottom: '80px',
-            }}
-          >
-            <SectionsWithValidation
-              sections={sections}
-              removeSection={removeSection}
-              editSection={editSection}
-              validator={sectionsValidator}
-              submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
-            />
-            <div
-              className={shareStyles.button__add}
-            >
-              <ButtonAdd
-                options={workExSectionSubtitleOptions}
-                custimizedValues={[workExSectionSubtitleOptions[0].value]}
-                disabledValues={sections.map(section => section.subtitle)}
-                appendBlock={appendSection}
-              />
-            </div>
           </div>
         </div>
-      </div>
+      </IconHeadingBlock>
     );
   }
 }

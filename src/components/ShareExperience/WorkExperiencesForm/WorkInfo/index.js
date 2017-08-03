@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import subscribeValidation from 'common/subscribeValidation';
+import { People } from 'common/icons';
 
-import styles from '../../ShareExperience.module.css';
-
+import IconHeadingBlock from '../../common/IconHeadingBlock';
 import CompanyQuery from '../../common/CompanyQuery';
 import Region from '../../common/Region';
 import JobTitle from '../../common/JobTitle';
@@ -61,20 +61,8 @@ class WorkInfo extends React.PureComponent {
     } = this.props;
 
     return (
-      <div
-        style={{
-          marginTop: '30px',
-        }}
-      >
-        <h1
-          className="pLBold"
-          style={{
-            marginBottom: '13px',
-          }}
-        >
-          工作資訊
-        </h1>
-        <div className={styles.block}>
+      <IconHeadingBlock heading="工作資訊" Icon={People}>
+        <div>
           <div
             style={{
               marginBottom: '35px',
@@ -183,7 +171,7 @@ class WorkInfo extends React.PureComponent {
             />
           </div>
         </div>
-      </div>
+      </IconHeadingBlock>
     );
   }
 }

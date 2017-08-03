@@ -1,0 +1,22 @@
+@value main-yellow from "common/variables.module.css";
+
+.wrapper {
+  width: 470px;
+
+  @media (max-width: 550px) {
+    width: 280px;
+  }
+}
+
+.button {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.icon {
+  fill: main-yellow;
+  height: 82px;
+  width: 82px;
+  margin-bottom: 32px;
+}

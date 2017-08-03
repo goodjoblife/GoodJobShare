@@ -55,7 +55,8 @@ const InterviewSensitiveQuestions = ({ interviewSensitiveQuestions, onChange }) 
         <p
           style={{
             color: '#6E6E6E',
-            fontSize: '0.8125rem',
+            fontSize: '0.85em',
+            paddingTop: '3px',
           }}
         >
           都沒有請留空
@@ -81,7 +82,7 @@ const InterviewSensitiveQuestions = ({ interviewSensitiveQuestions, onChange }) 
         hasOther ?
           <section
             style={{
-              marginTop: '20px',
+              marginTop: '8px',
             }}
           >
             <TextInput
@@ -90,7 +91,7 @@ const InterviewSensitiveQuestions = ({ interviewSensitiveQuestions, onChange }) 
                 ...resultsBesidesOther,
                 e.target.value,
               ])}
-              placeholder="輸入敏感問題..."
+              placeholder="輸入敏感問題"
               warningWording="請輸入20個字以內"
             />
           </section> :

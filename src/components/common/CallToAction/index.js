@@ -30,7 +30,7 @@ CallToAction.defaultProps = {
   heading: '覺得很有用嗎？也留下你的資訊吧！',
   headingSize: 'm',
   buttonText: '留下資料',
-  imgSrc: 'https://s3-ap-northeast-1.amazonaws.com/goodjob.life/www/cta-01.jpg',
+  imgSrc: 'https://image.goodjob.life/cta-01.jpg',
   bgColor: 'white',
 };
 

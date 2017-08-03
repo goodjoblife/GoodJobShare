@@ -1,8 +1,12 @@
+@value INPUT_HEIGHT, main-gray from "common/variables.module.css";
+
 .select {
   background: white;
-	border: 1px solid #BDBDBD;
+	border: 1px solid main-gray;
   width: 100%;
   -webkit-appearance: none;
   -moz-appearance: none;
-  padding: 12px 14px;
+  padding: 0 14px;
+  height: INPUT_HEIGHT;
+  line-height: INPUT_HEIGHT;
 }

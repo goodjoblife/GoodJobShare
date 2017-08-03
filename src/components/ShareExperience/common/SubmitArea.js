@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 
 import ButtonSubmit from 'common/button/ButtonSubmit';
 import Checkbox from 'common/form/Checkbox';
@@ -48,6 +48,7 @@ class SubmitArea extends React.PureComponent {
       agree: false,
       isOpen: false,
       feedback: null,
+      hasClose: false,
     };
   }
 
@@ -59,10 +60,12 @@ class SubmitArea extends React.PureComponent {
         .then(r => r.experience._id)
         .then(id => {
           this.handleIsOpen(true);
+          this.handleHasClose(false);
           return this.handleFeedback(getSuccessFeedback(id));
         })
         .catch(() => {
           this.handleIsOpen(true);
+          this.handleHasClose(false);
           return this.handleFeedback(getFailFeedback(
             () => this.handleIsOpen(false)
           ));
@@ -74,6 +77,7 @@ class SubmitArea extends React.PureComponent {
 
   onFacebookFail() {
     this.handleIsOpen(true);
+    this.handleHasClose(true);
     return this.handleFeedback(getFacebookFail(this.login));
   }
 
@@ -109,6 +113,12 @@ class SubmitArea extends React.PureComponent {
     }));
   }
 
+  handleHasClose(hasClose) {
+    this.setState(() => ({
+      hasClose,
+    }));
+  }
+
   render() {
     const {
       auth,
@@ -118,6 +128,7 @@ class SubmitArea extends React.PureComponent {
       agree,
       isOpen,
       feedback,
+      hasClose,
     } = this.state;
 
     return (
@@ -150,7 +161,27 @@ class SubmitArea extends React.PureComponent {
               color: '#3B3B3B',
             }}
           >
-            我分享的是真實資訊，並且遵守中華民國法律以及本站使用者條款。
+            我分享的是真實資訊，並且遵守本站
+            <Link
+              to="/guidelines"
+              target="_blank"
+              style={{
+                color: '#02309E',
+              }}
+            >
+              發文留言規定
+            </Link>
+            、
+            <Link
+              to="/user-terms"
+              target="_blank"
+              style={{
+                color: '#02309E',
+              }}
+            >
+              使用者條款
+            </Link>
+            以及中華民國法律。
           </p>
         </label>
         <div>
@@ -165,7 +196,7 @@ class SubmitArea extends React.PureComponent {
         <Modal
           isOpen={isOpen}
           close={() => this.handleIsOpen(!isOpen)}
-          hasClose={false}
+          hasClose={hasClose}
         >
           {feedback}
         </Modal>
