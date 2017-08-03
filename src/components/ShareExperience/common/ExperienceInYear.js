@@ -12,7 +12,7 @@ import {
 const ExperienceInYear = ({ experienceInYear, onChange }) => (
   <div>
     <InputTitle
-      text="相關職務工作經驗"
+      text="自身相關職務工作經驗"
     />
     <div
       style={{
