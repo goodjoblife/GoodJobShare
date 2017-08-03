@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 import PropTypes from 'prop-types';
 
 import {
@@ -31,11 +32,10 @@ class ButtonGroupImageEle extends React.PureComponent {
     return (
       <label
         htmlFor={id}
-        className={checked ? styles.checked : styles.unchecked}
-        style={{
-          marginRight: last ? null : '3px',
-          marginBottom: '5px',
-        }}
+        className={cn(styles.radio, {
+          [styles.checked]: checked,
+          [styles.last]: last,
+        })}
       >
         <input
           id={id}
@@ -90,7 +90,7 @@ ButtonGroupImageEle.propTypes = {
 };
 
 const ButtonGroupImage = ({ value, options, onChange }) => (
-  <div>
+  <div className={styles.wrapper}>
     {options.map((option, index, arr) => (
       <ButtonGroupImageEle
         key={option.value}

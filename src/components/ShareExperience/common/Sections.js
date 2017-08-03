@@ -15,9 +15,7 @@ const Sections = ({ sections, removeSection, editSection, validator, submitted }
         sections.map(section =>
           <div
             key={section.id}
-            style={{
-              marginBottom: '40px',
-            }}
+            className={styles.section}
           >
             <SectionEle
               subtitle={section.subtitle}

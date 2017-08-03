@@ -50,7 +50,7 @@ class WorkExperience extends React.PureComponent {
       <IconHeadingBlock heading="工作經驗" Icon={Comment2} marginTop>
         <div
           style={{
-            marginBottom: '50px',
+            marginBottom: '24px',
           }}
         >
           <TitleWithValidation
@@ -65,7 +65,6 @@ class WorkExperience extends React.PureComponent {
         <div
           style={{
             position: 'relative',
-            marginBottom: '80px',
           }}
         >
           <SectionsWithValidation

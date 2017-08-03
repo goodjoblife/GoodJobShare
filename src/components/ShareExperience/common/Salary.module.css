@@ -1,34 +1,7 @@
-@value main-yellow from "common/variables.module.css";
-
-.input__container {
+.container {
   display: flex;
 
   @media (max-width: 550px) {
     flex-direction: column;
   }
-}
-
-
-.dialog {
-  display: flex;
-  align-items: center;
-  background: #FFFAE1;
-  border: 1px solid main-yellow;
-  border-radius: 3px;
-  width: 330px;
-  marginLeft: 74px;
-  padding: 10px;
-
-  @media (max-width: 550px) {
-    width: auto;
-    margin: 0;
-    margin-top: 10px;
-  }
-}
-
-.exclamation {
-  color: main-yellow;
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-right: 17px;
 }

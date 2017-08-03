@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+  margin-top: 16px;
+}
+
+.button {
+  flex: 0 0 105px;
+
+  @media (max-width: 550px) {
+    flex-basis: 90px;
+  }
+}
+
+.sectionButtons {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+}

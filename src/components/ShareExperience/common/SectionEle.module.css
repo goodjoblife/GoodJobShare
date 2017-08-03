@@ -38,3 +38,11 @@
     font-weight: 300;
   }
 }
+
+.heading {
+  margin-bottom: 12px;
+
+  @media (max-width: 550px) {
+    margin-bottom: 0;
+  }
+}

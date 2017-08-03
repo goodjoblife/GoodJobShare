@@ -1,10 +1,11 @@
 .button {
-  padding: 6px 16px;
-  height: 37px;
+  padding: 0 16px;
+  height: 36px;
+  line-height: 36px;
   border: 1px solid #DCDCDC;
   border-radius: 100px;
   background: #FFFFFF;
-  font-size: 1rem;
+  font-size: 1em;
   font-weight: normal;
   text-align: center;
   color: #3D3D3D;
@@ -17,6 +18,12 @@
     background: white;
     color: #DCDCDC;
     cursor: not-allowed;
+  }
+
+  @media (max-width: 550px) {
+    height: 32px;
+    line-height: 32px;
+    font-size: 0.9em;
   }
 }
 

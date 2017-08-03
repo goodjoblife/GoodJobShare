@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+  }
+
+  > *:first-child {
+    margin-right: 72px;
+
+    @media (max-width: 850px) {
+      margin-right: 0;
+      margin-bottom: 24px;
+    }
+  }
+}
+
+
+.radios {
+  display: flex;
+  margin-top: 8px;
+
+  > *:first-child {
+    margin-right: 32px;
+  }
+}
+
+.selects {
+  display: flex;
+  align-items: center;
+}
