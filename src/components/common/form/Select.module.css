@@ -6,7 +6,7 @@
   width: 100%;
   -webkit-appearance: none;
   -moz-appearance: none;
-  padding: 0 14px;
+  padding: 0 12px;
   height: INPUT_HEIGHT;
   line-height: INPUT_HEIGHT;
 }

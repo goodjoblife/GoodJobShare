@@ -9,6 +9,11 @@
     height: 30px;
     fill: main-yellow;
     margin-right: 12px;
+
+    @media(max-width: 550px) {
+      width: 24px;
+      height: 24px;
+    }
   }
 }
 
