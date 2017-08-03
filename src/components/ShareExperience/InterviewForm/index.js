@@ -29,7 +29,7 @@ import {
 import { HELMET_DATA } from '../../../constants/helmetData';
 import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
 
-const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '請輸入標題，例：面試方式') => {
+const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '段落標題，例：面試方式') => {
   const section = {
     id,
     subtitle,
@@ -199,14 +199,14 @@ class InterviewForm extends React.Component {
         </Heading>
         {
           this.state.submitted ?
-            <h2
+            <div
               style={{
                 marginTop: '20px',
               }}
               className={styles.warning__wording}
             >
               oops! 請檢查底下紅框內的內容是否正確
-            </h2> : null
+            </div> : null
         }
         <InterviewInfo
           handleState={this.handleState}

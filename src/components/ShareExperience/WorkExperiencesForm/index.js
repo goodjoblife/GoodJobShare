@@ -29,7 +29,7 @@ import styles from './WorkExperiencesForm.module.css';
 import { HELMET_DATA } from '../../../constants/helmetData';
 import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 
-const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '請輸入標題，例：實際工作內容') => {
+const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '段落標題，例：實際工作內容') => {
   const section = {
     id,
     subtitle,
@@ -206,14 +206,14 @@ class WorkExperiencesForm extends React.Component {
         </Heading>
         {
           this.state.submitted ?
-            <h2
+            <div
               style={{
                 marginTop: '20px',
               }}
               className={styles.warning__wording}
             >
               oops! 請檢查底下紅框內的內容是否正確
-            </h2> : null
+            </div> : null
         }
         <WorkInfo
           handleState={this.handleState}

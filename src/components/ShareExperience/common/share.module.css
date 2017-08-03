@@ -10,10 +10,12 @@
   position: absolute;
   left: 0;
   bottom: 0;
+  right: -65px;
   transform: translate(-65px, 100%);
+  z-index: 999;
 
   @media (max-width: 550px) {
-    min-width: 80%;
+    right: -25px;
     transform: translate(-25px, 100%);
   }
 }
