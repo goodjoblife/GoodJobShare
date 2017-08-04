@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
 import cn from 'classnames';
-import i from 'common/icons';
+import { Glike } from 'common/icons';
 import styles from './RateButtonElement.module.css';
 
+
 const RateButtonElement = ({ hover, active, onClick }) => (
-  <i.Glike
+  <Glike
     className={cn(styles.container, {
       [styles.hover]: hover,
       [styles.active]: active,
