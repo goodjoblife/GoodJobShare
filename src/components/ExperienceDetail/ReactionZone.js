@@ -27,6 +27,11 @@ const ReactionZone = ({ likeExperience, experience, login, authStatus, FB }) => 
         <button className={styles.button}><Facebook /></button>
       </div> */}
     </div>
+    <div className={styles.right}>
+      <div className={styles.dropdownToggle} onClick={() => {}}>
+        <span />
+      </div>
+    </div>
   </div>
 );
 
