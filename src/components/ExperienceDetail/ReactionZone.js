@@ -2,9 +2,12 @@ import React, { PropTypes } from 'react';
 
 import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
+import PopoverToggle from 'common/Popover/PopoverToggle';
 // import { Facebook } from 'common/icons';
 import authStatusConstant from '../../constants/authStatus';
 import styles from './ReactionZone.module.css';
+
+const dropdown = <div>dropdown</div>;
 
 const ReactionZone = ({ likeExperience, experience, login, authStatus, FB }) => (
   <div className={styles.container}>
@@ -28,9 +31,13 @@ const ReactionZone = ({ likeExperience, experience, login, authStatus, FB }) => 
       </div> */}
     </div>
     <div className={styles.right}>
-      <div className={styles.dropdownToggle} onClick={() => {}}>
+      <PopoverToggle
+        className={styles.dropdownToggle}
+        popoverClassName={styles.dropdown}
+        popoverContent={dropdown}
+      >
         <span />
-      </div>
+      </PopoverToggle>
     </div>
   </div>
 );

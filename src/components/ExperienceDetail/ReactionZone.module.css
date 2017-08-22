@@ -34,13 +34,12 @@
 
 .right {
   width: 85px;
-  display: flex;
 
   .dropdownToggle {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
     cursor: pointer;
 
     span, &:after, &:before {
@@ -53,6 +52,11 @@
       margin: 2.5px;
     }
   }
+}
+
+.dropdown {
+  left: calc(50% - 60px);
+  width: 120px;
 }
 
 .share {
