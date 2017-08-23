@@ -36,12 +36,7 @@ class ReportInspectModal extends React.Component {
         close={() => toggleReportInspectModal(false)}
         hasClose
       >
-        <h2
-          style={{
-            fontSize: '2rem',
-            margin: '35px 0',
-          }}
-        >
+        <h2 className={styles.title}>
           查看檢舉
         </h2>
         <div className={styles.reports}>
