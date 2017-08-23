@@ -4,14 +4,19 @@ import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
 import PopoverToggle from 'common/Popover/PopoverToggle';
 // import { Facebook } from 'common/icons';
+import ReportInspectModal from './ReportInspectModal';
 import authStatusConstant from '../../constants/authStatus';
 import styles from './ReactionZone.module.css';
 
-const dropdown = (
+const Dropdown = ({ toggleReportInspectModal }) => (
   <ul className={styles.dropdownItem}>
-    <li>查看檢舉數量</li>
+    <li onClick={toggleReportInspectModal}>查看檢舉數量</li>
   </ul>
 );
+
+Dropdown.propTypes = {
+  toggleReportInspectModal: PropTypes.func.isRequired,
+};
 
 class ReactionZone extends React.Component {
   static propTypes = {
@@ -22,9 +27,22 @@ class ReactionZone extends React.Component {
     FB: React.PropTypes.object,
   }
 
+  constructor(props) {
+    super(props);
+    this.toggleReportInspectModal = this.toggleReportInspectModal.bind(this);
+  }
+
+  state = {
+    isInspectReportOpen: false,
+  }
+
+  toggleReportInspectModal() {
+    this.setState({ isInspectReportOpen: !this.state.isInspectReportOpen });
+  }
 
   render() {
     const { likeExperience, experience, login, authStatus, FB } = this.props;
+    const { isInspectReportOpen } = this.state;
     return (
       <div className={styles.container}>
         <div className={styles.left}>
@@ -50,11 +68,17 @@ class ReactionZone extends React.Component {
           <PopoverToggle
             className={styles.dropdownToggle}
             popoverClassName={styles.dropdown}
-            popoverContent={dropdown}
+            popoverContent={(
+              <Dropdown toggleReportInspectModal={this.toggleReportInspectModal} />
+            )}
           >
             <span />
           </PopoverToggle>
         </div>
+        <ReportInspectModal
+          isOpen={isInspectReportOpen}
+          toggleReportInspectModal={this.toggleReportInspectModal}
+        />
       </div>
     );
   }
