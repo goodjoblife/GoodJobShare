@@ -59,10 +59,10 @@ class ReportInspectModal extends React.Component {
               : <span>共 {reports.length} 個檢舉：</span>
             }
             {
-              reports.map(({ reason, detail }, i) => (
+              reports.map(({ reason_category: reasonCategory, reason }, i) => (
                 <div key={i} className={styles.report}>
-                  <h2 className="pMBold">{reason}</h2>
-                  <span className="pM">{detail}</span>
+                  <h2 className="pMBold">{reasonCategory}</h2>
+                  <span className="pM">{reason}</span>
                 </div>
               ))
             }
