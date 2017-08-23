@@ -5,6 +5,7 @@ import IconHeadingBlock from 'common/IconHeadingBlock';
 import { Comment2 } from 'common/icons';
 
 import styles from './Me.module.css';
+import ShareBlockElement from './ShareBlockElement';
 import authStatus from '../../constants/authStatus';
 
 class Me extends Component {
@@ -58,7 +59,31 @@ class Me extends Component {
                 {this.props.auth.getIn(['user', 'name'])}&nbsp;&nbsp;的個人頁面
               </Heading>
               <IconHeadingBlock heading="我分享的資料" Icon={Comment2} marginTop noPadding>
-                hello
+                <div>
+                  <ShareBlockElement
+                    type="面試"
+                    heading="日月光半導體面試經驗分享"
+                    to="/"
+                    disabled
+                  />
+                  <ShareBlockElement
+                    type="工作"
+                    heading="在亞熱帶低碳發展中心待了1年"
+                    to="/"
+                  />
+                  <ShareBlockElement
+                    type="薪時"
+                    heading="大亞電線電纜股份有限公司"
+                    position="助理管理師"
+                    to="/"
+                  />
+                  <ShareBlockElement
+                    type="留言"
+                    heading="欽瑞工業股份有限公司 面試經驗分享"
+                    comment="個情問體之她品商家為持禮爭平晚去光意母家入車弟實關人不量聽。面不天正三要知直色，此中分坡代女的他好我。"
+                    to="/"
+                  />
+                </div>
               </IconHeadingBlock>
             </div>
           }

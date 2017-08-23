@@ -58,7 +58,7 @@
     justify-content: center;
     font-size: 1em;
     letter-spacing: 0.1em;
-    border-radius: 45px;
+    border-radius: 1.5em;
     transition: background-color .3s;
   }
 
@@ -71,6 +71,12 @@
     padding: 0 40px;
     font-size: 0.95em;
     height: 40px;
+  }
+  .buttonCircleS {
+    padding: 0 24px;
+    font-size: 0.95em;
+    height: 36px;
+    font-weight: 400;
   }
 
   .buttonBlack {
@@ -173,6 +179,15 @@
     @media (min-width: 851px) {
       &:hover {
         border-bottom: 1px solid link-blue;
+      }
+    }
+  }
+
+  .hoverBlue {
+    transition: color .3s;
+    @media (min-width: 1025px) {
+      &:hover {
+        color: link-blue;
       }
     }
   }
