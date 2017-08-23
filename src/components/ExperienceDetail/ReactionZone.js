@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
-import PopoverToggle from 'common/Popover/PopoverToggle';
+import PopoverToggle from 'common/PopoverToggle';
 // import { Facebook } from 'common/icons';
 import ReportInspectModal from './ReportInspectModal';
 import authStatusConstant from '../../constants/authStatus';
