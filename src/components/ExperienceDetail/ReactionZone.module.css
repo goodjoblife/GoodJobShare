@@ -54,27 +54,6 @@
   }
 }
 
-.dropdown {
-  left: calc(50% - 60px);
-  width: 120px;
-  bottom: -35px;
-  height: 38px;
-}
-
-.dropdownItem {
-  font-size: 14px;
-  display: block;
-  li {
-    padding: 12px 0;
-    padding-left: 16px;
-    border-bottom: 1px solid border-gray;
-
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-}
-
 .share {
   svg {
     width: 100%;

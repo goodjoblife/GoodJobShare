@@ -4,19 +4,11 @@ import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
 import PopoverToggle from 'common/PopoverToggle';
 // import { Facebook } from 'common/icons';
+import ReactionZoneOtherOptions from './ReactionZoneOtherOptions';
 import ReportInspectModal from './ReportInspectModal';
 import authStatusConstant from '../../constants/authStatus';
 import styles from './ReactionZone.module.css';
-
-const Dropdown = ({ toggleReportInspectModal }) => (
-  <ul className={styles.dropdownItem}>
-    <li onClick={toggleReportInspectModal}>查看檢舉數量</li>
-  </ul>
-);
-
-Dropdown.propTypes = {
-  toggleReportInspectModal: PropTypes.func.isRequired,
-};
+import dropdownStyles from './ReactionZoneOtherOptions.module.css';
 
 class ReactionZone extends React.Component {
   static propTypes = {
@@ -68,9 +60,11 @@ class ReactionZone extends React.Component {
         <div className={styles.right}>
           <PopoverToggle
             className={styles.dropdownToggle}
-            popoverClassName={styles.dropdown}
+            popoverClassName={dropdownStyles.dropdown}
             popoverContent={(
-              <Dropdown toggleReportInspectModal={this.toggleReportInspectModal} />
+              <ReactionZoneOtherOptions
+                toggleReportInspectModal={this.toggleReportInspectModal}
+              />
             )}
           >
             <span />
