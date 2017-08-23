@@ -20,6 +20,7 @@ Dropdown.propTypes = {
 
 class ReactionZone extends React.Component {
   static propTypes = {
+    id: PropTypes.string.isRequired,
     experience: PropTypes.object.isRequired,
     likeExperience: PropTypes.func.isRequired,
     login: React.PropTypes.func.isRequired,
@@ -41,7 +42,7 @@ class ReactionZone extends React.Component {
   }
 
   render() {
-    const { likeExperience, experience, login, authStatus, FB } = this.props;
+    const { id, likeExperience, experience, login, authStatus, FB } = this.props;
     const { isInspectReportOpen } = this.state;
     return (
       <div className={styles.container}>
@@ -76,6 +77,7 @@ class ReactionZone extends React.Component {
           </PopoverToggle>
         </div>
         <ReportInspectModal
+          id={id}
           isOpen={isInspectReportOpen}
           toggleReportInspectModal={this.toggleReportInspectModal}
         />

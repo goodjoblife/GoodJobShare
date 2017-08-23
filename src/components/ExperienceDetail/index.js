@@ -109,7 +109,7 @@ class ExperienceDetail extends Component {
 
   render() {
     const {
-      experienceDetail, setTos, setComment, likeExperience, likeReply,
+      experienceDetail, setTos, setComment, likeExperience, likeReply, params: { id },
     } = this.props;
 
     const backable = this.props.location.query.backable || 'false';
@@ -141,7 +141,7 @@ class ExperienceDetail extends Component {
             }
 
             { /* 按讚，分享，檢舉區塊  */}
-            <ReactionZone experience={experience} likeExperience={likeExperience} />
+            <ReactionZone experience={experience} likeExperience={likeExperience} id={id} />
 
             <BackToList
               backable={JSON.parse(backable)}
