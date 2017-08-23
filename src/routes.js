@@ -16,6 +16,8 @@ from './containers/ShareExperience/InterviewFormContainer';
 import WorkExperiencesFormContainer
   from './containers/ShareExperience/WorkExperiencesFormContainer';
 
+import Me from './containers/Me';
+
 import About from './components/About';
 import Faq from './components/Faq';
 import Guidelines from './components/Guidelines';
@@ -98,6 +100,10 @@ const routes = () => ({
           component: WorkExperiencesFormContainer,
         },
       ],
+    },
+    {
+      path: 'me',
+      component: Me,
     },
     {
       path: 'about',
