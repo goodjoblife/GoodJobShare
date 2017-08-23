@@ -3,8 +3,8 @@ import subscribeValidation from 'common/subscribeValidation';
 
 import ButtonAdd from 'common/button/ButtonAdd';
 import { Comment2 } from 'common/icons';
+import IconHeadingBlock from 'common/IconHeadingBlock';
 
-import IconHeadingBlock from '../../common/IconHeadingBlock';
 import Title from '../../common/Title';
 import Sections from '../../common/Sections';
 
@@ -47,7 +47,7 @@ class WorkExperience extends React.PureComponent {
     } = this.props;
 
     return (
-      <IconHeadingBlock heading="工作經驗" Icon={Comment2} marginTop>
+      <IconHeadingBlock heading="工作經驗" Icon={Comment2} marginTop requiredText>
         <div
           style={{
             marginBottom: '24px',

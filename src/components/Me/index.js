@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 
 import { Wrapper, Section, Heading } from 'common/base';
-import styles from './Me.module.css';
+import IconHeadingBlock from 'common/IconHeadingBlock';
+import { Comment2 } from 'common/icons';
 
+import styles from './Me.module.css';
 import authStatus from '../../constants/authStatus';
 
 class Me extends Component {
@@ -39,7 +41,7 @@ class Me extends Component {
   render() {
     return (
       <Section pageTop paddingBottom>
-        <Wrapper size="l">
+        <Wrapper size="m">
           {
             this.props.auth.getIn(['user', 'name']) === null &&
             <div>
@@ -51,9 +53,14 @@ class Me extends Component {
           }
           {
             this.props.auth.getIn(['user', 'name']) !== null &&
-            <Heading size="l" center>
-              {this.props.auth.getIn(['user', 'name'])}&nbsp;&nbsp;的個人頁面
-            </Heading>
+            <div>
+              <Heading size="l" center>
+                {this.props.auth.getIn(['user', 'name'])}&nbsp;&nbsp;的個人頁面
+              </Heading>
+              <IconHeadingBlock heading="我分享的資料" Icon={Comment2} marginTop noPadding>
+                hello
+              </IconHeadingBlock>
+            </div>
           }
         </Wrapper>
       </Section>
