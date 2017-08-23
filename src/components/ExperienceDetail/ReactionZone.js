@@ -7,7 +7,11 @@ import PopoverToggle from 'common/Popover/PopoverToggle';
 import authStatusConstant from '../../constants/authStatus';
 import styles from './ReactionZone.module.css';
 
-const dropdown = <div>dropdown</div>;
+const dropdown = (
+  <ul className={styles.dropdownItem}>
+    <li>查看檢舉數量</li>
+  </ul>
+);
 
 const ReactionZone = ({ likeExperience, experience, login, authStatus, FB }) => (
   <div className={styles.container}>
