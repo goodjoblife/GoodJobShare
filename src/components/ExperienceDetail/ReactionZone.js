@@ -8,7 +8,6 @@ import ReactionZoneOtherOptions from './ReactionZoneOtherOptions';
 import ReportInspectModal from './ReportInspectModal';
 import authStatusConstant from '../../constants/authStatus';
 import styles from './ReactionZone.module.css';
-import dropdownStyles from './ReactionZoneOtherOptions.module.css';
 
 class ReactionZone extends React.Component {
   static propTypes = {
@@ -59,15 +58,16 @@ class ReactionZone extends React.Component {
         </div>
         <div className={styles.right}>
           <PopoverToggle
-            className={styles.dropdownToggle}
-            popoverClassName={dropdownStyles.dropdown}
+            popoverClassName={styles.popover}
             popoverContent={(
               <ReactionZoneOtherOptions
                 toggleReportInspectModal={this.toggleReportInspectModal}
               />
             )}
           >
-            <span />
+            <div className={styles.popoverToggle}>
+              <span />
+            </div>
           </PopoverToggle>
         </div>
         <ReportInspectModal

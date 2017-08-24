@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
-import styles from './ReactionZoneOtherOptions.module.css';
+import styles from './ReactionZone.module.css';
 
 const ReactionZoneOtherOptions = ({ toggleReportInspectModal }) => (
-  <ul className={styles.dropdownItem}>
+  <ul className={styles.popoverItem}>
     <li onClick={toggleReportInspectModal}>查看檢舉數量</li>
   </ul>
 );

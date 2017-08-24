@@ -2,6 +2,7 @@
 
 .toggle {
   position: relative;
+  height: 100%;
 
   .popover {
     position: absolute;
