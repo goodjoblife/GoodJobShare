@@ -3,8 +3,8 @@ import ButtonAdd from 'common/button/ButtonAdd';
 import AddButton from 'common/button/AddButton';
 import { Comment2 } from 'common/icons';
 import subscribeValidation from 'common/subscribeValidation';
+import IconHeadingBlock from 'common/IconHeadingBlock';
 
-import IconHeadingBlock from '../../common/IconHeadingBlock';
 import Title from '../../common/Title';
 import Sections from '../../common/Sections';
 import InterviewQas from './InterviewQas';
@@ -53,7 +53,7 @@ class InterviewExperience extends Component {
       changeValidationStatus,
     } = this.props;
     return (
-      <IconHeadingBlock heading="面試經驗" Icon={Comment2} marginTop>
+      <IconHeadingBlock heading="面試經驗" Icon={Comment2} marginTop requiredText>
         <div
           style={{
             marginBottom: '50px',

@@ -1,0 +1,103 @@
+@value main-yellow, border-gray, link-bule, white-light from "common/variables.module.css";
+
+.badge {
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  letter-spacing: 1px;
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid border-gray;
+
+  @media (min-width: 1025px) {
+    &:hover {
+      .buttons {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  @media (max-width: 850px) {
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+  }
+}
+
+.type {
+  flex: 0 0 116px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 850px) {
+    flex: 0 0 110px;
+  }
+
+  @media (max-width: 550px) {
+    width: 100%;
+    flex: 1 1 auto;
+    justify-content: flex-start;
+    padding-left: 16px;
+    margin-bottom: 8px;
+  }
+}
+
+.content {
+  flex: 1 1 auto;
+
+  @media (max-width: 850px) {
+    flex: 0 0 calc(100% - 110px);
+    padding-right: 16px;
+  }
+
+  @media (max-width: 550px) {
+    width: 100%;
+    flex: 1 1 auto;
+    padding-left: 16px;
+  }
+}
+
+.buttons {
+  flex: 0 0 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 1025px) {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .25s;
+  }
+
+  @media (max-width: 850px) {
+    flex: 1 1 auto;
+    margin-top: 16px;
+  }
+}
+
+.articleLink {
+  margin-top: 8px;
+  svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+  }
+}
+
+.disabled {
+  background-color: white-light;
+
+  .type, .content {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}

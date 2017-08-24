@@ -43,6 +43,7 @@ const icons = {
 export default icons;
 
 export { default as Bad } from './Bad';
+export { default as Bookmark } from './Bookmark';
 export { default as Clock } from './Clock';
 export { default as Coin2 } from './Coin2';
 export { default as Comment2 } from './Comment2';

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { People } from 'common/icons';
 import subscribeValidation from 'common/subscribeValidation';
+import IconHeadingBlock from 'common/IconHeadingBlock';
 
 import {
   companyQuery as companyQueryValidator,
@@ -12,7 +13,6 @@ import {
   overallRating as overallRatingValidator,
 } from '../formCheck';
 
-import IconHeadingBlock from '../../common/IconHeadingBlock';
 import CompanyQuery from '../../common/CompanyQuery';
 import Region from '../../common/Region';
 import JobTitle from '../../common/JobTitle';
@@ -81,7 +81,7 @@ class InterviewInfo extends React.PureComponent {
     } = this.props;
 
     return (
-      <IconHeadingBlock heading="面試資訊" Icon={People}>
+      <IconHeadingBlock heading="面試資訊" Icon={People} requiredText>
         <div
           style={{
             marginBottom: '35px',

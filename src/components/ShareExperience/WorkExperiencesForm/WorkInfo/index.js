@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import subscribeValidation from 'common/subscribeValidation';
 import { People } from 'common/icons';
+import IconHeadingBlock from 'common/IconHeadingBlock';
 
-import IconHeadingBlock from '../../common/IconHeadingBlock';
 import FormGroup from '../../common/FormGroup';
 import CompanyQuery from '../../common/CompanyQuery';
 import Region from '../../common/Region';
@@ -62,7 +62,7 @@ class WorkInfo extends React.PureComponent {
     } = this.props;
 
     return (
-      <IconHeadingBlock heading="工作資訊" Icon={People}>
+      <IconHeadingBlock heading="工作資訊" Icon={People} requiredText>
         <FormGroup>
           <CompanyQueryWithValidation
             companyQuery={companyQuery}
