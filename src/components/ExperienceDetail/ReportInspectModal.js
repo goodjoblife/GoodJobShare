@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react';
 import Modal from 'common/Modal';
 import Loader from 'common/Loader';
 import Warning from 'common/icons/Warning';
-import fetchUtil from 'utils/fetchUtil';
 import styles from './ReportInspectModal.module.css';
+import { getReports } from '../../apis/reportApi';
 import fetchingStatus from '../../constants/status';
 
 class ReportInspectModal extends React.Component {
@@ -23,8 +23,8 @@ class ReportInspectModal extends React.Component {
     if (this.state.status !== fetchingStatus.UNFETCHED) return;
     const { id } = this.props;
     this.setState({ status: fetchingStatus.FETCHING });
-    fetchUtil(`/experiences/${id}/reports`)('GET')
-      .then(({ reports }) => {
+    getReports(id)
+      .then(reports => {
         this.setState({
           status: fetchingStatus.FETCHED,
           reports,
