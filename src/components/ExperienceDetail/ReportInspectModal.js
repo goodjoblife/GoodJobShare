@@ -20,7 +20,7 @@ class ReportInspectModal extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.isOpen) return;
-    if (this.state.status !== fetchingStatus.UNFETCHED) return;
+    if (this.state.status === fetchingStatus.FETCHED) return;
     const { id } = this.props;
     this.setState({ status: fetchingStatus.FETCHING });
     getReports(id)
