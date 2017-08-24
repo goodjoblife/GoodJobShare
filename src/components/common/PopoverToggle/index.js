@@ -25,7 +25,7 @@ Popover.defaultProps = {
   active: false,
 };
 
-export default class extends React.Component {
+export default class PopoverToggle extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     popoverClassName: PropTypes.string,
