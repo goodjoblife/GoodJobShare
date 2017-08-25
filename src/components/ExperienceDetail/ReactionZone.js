@@ -28,6 +28,7 @@ const ReactionZone = ({ likeExperience, experience, login, authStatus, FB, openR
         <button className={styles.button}><Facebook /></button>
       </div> */}
       <ReportDetail
+        label="檢舉"
         onClick={openReportDetail}
       />
     </div>
