@@ -38,10 +38,7 @@ const ReasonCategory = ({
 );
 
 ReasonCategory.propTypes = {
-  reasonCategory: PropTypes.shape({
-    label: PropTypes.string,
-    value: PropTypes.string,
-  }),
+  reasonCategory: PropTypes.string,
   reasonCategoryOptions: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,

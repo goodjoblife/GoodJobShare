@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Textarea from 'react-textarea-autosize';
 
 import Heading from 'common/base/Heading';
+import P from 'common/base/P';
 
 import ReasonCategory from './ReasonCategory';
 
@@ -57,17 +58,17 @@ class ReportForm extends PureComponent {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          minWidth: '460px',
+          width: '460px',
         }}
       >
         <Heading
           Tag="h2"
-          size="m"
+          size="l"
           style={{
             marginBottom: '27px',
           }}
         >
-          檢舉此文章
+          檢舉此篇文章
         </Heading>
         <ReasonCategory
           reasonCategoryOptions={reasonCategoryOptions}
@@ -93,6 +94,15 @@ class ReportForm extends PureComponent {
             padding: '14px 18px',
           }}
         />
+        <P
+          size="s"
+          style={{
+            textAlign: 'initial',
+          }}
+        >
+          請盡量詳細說明為何這則內容不妥或不實，以供我們評估，您也可以在被檢舉的內容下方留言，
+          讓其他使用者知道您的不同意見。
+        </P>
       </section>
     );
   }
