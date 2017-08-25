@@ -2,11 +2,12 @@ import React, { PropTypes } from 'react';
 
 import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
+import ReportDetail from 'common/reaction/ReportDetail';
 // import { Facebook } from 'common/icons';
 import authStatusConstant from '../../constants/authStatus';
 import styles from './ReactionZone.module.css';
 
-const ReactionZone = ({ likeExperience, experience, login, authStatus, FB }) => (
+const ReactionZone = ({ likeExperience, experience, login, authStatus, FB, openReportDetail }) => (
   <div className={styles.container}>
     <div className={styles.left}>
       <ThumbsUp
@@ -26,7 +27,13 @@ const ReactionZone = ({ likeExperience, experience, login, authStatus, FB }) => 
         分享
         <button className={styles.button}><Facebook /></button>
       </div> */}
+      <ReportDetail
+        onClick={openReportDetail}
+      />
     </div>
+    <div
+      className={styles.right}
+    />
   </div>
 );
 
@@ -36,6 +43,7 @@ ReactionZone.propTypes = {
   login: React.PropTypes.func.isRequired,
   authStatus: React.PropTypes.string,
   FB: React.PropTypes.object,
+  openReportDetail: React.PropTypes.func,
 };
 
 export default ReactionZone;

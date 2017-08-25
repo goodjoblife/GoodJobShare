@@ -3,6 +3,8 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import Loader from 'common/Loader';
 import { Wrapper, Section, Heading, P } from 'common/base';
+import Modal from 'common/Modal';
+
 import styles from './ExperienceDetail.module.css';
 import Article from './Article';
 import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
@@ -13,10 +15,16 @@ import status from '../../constants/status';
 import {
   fetchExperience,
 } from '../../actions/experienceDetail';
+import ReportForm from './ReportForm';
+
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { SITE_NAME } from '../../constants/helmetData';
 
 import authStatus from '../../constants/authStatus';
+
+const MODAL_TYPE = {
+  REPORT_DETAIL: 'REPORT_TYPE',
+};
 
 class ExperienceDetail extends Component {
   static propTypes = {
@@ -44,6 +52,11 @@ class ExperienceDetail extends Component {
   constructor() {
     super();
     this.submitComment = this.submitComment.bind(this);
+
+    this.state = {
+      isModalOpen: false,
+      modalType: '',
+    };
   }
 
   componentDidMount() {
@@ -69,6 +82,23 @@ class ExperienceDetail extends Component {
     const { experienceDetail } = this.props;
     const data = experienceDetail.toJS();
     this.props.submitComment(data.experience._id);
+  }
+
+  handleIsModalOpen = (isModalOpen, modalType) =>
+    this.setState({
+      isModalOpen,
+      modalType,
+    })
+
+  renderModalChildren = modalType => {
+    switch (modalType) {
+      case MODAL_TYPE.REPORT_DETAIL:
+        return (
+          <ReportForm />
+        );
+      default:
+        return null;
+    }
   }
 
   renderHelmet = () => {
@@ -112,6 +142,11 @@ class ExperienceDetail extends Component {
       experienceDetail, setTos, setComment, likeExperience, likeReply,
     } = this.props;
 
+    const {
+      isModalOpen,
+      modalType,
+    } = this.state;
+
     const backable = this.props.location.query.backable || 'false';
     const data = experienceDetail.toJS();
     const experience = data.experience;
@@ -141,7 +176,11 @@ class ExperienceDetail extends Component {
             }
 
             { /* 按讚，分享，檢舉區塊  */}
-            <ReactionZone experience={experience} likeExperience={likeExperience} />
+            <ReactionZone
+              experience={experience}
+              likeExperience={likeExperience}
+              openReportDetail={() => this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)}
+            />
 
             <BackToList
               backable={JSON.parse(backable)}
@@ -167,6 +206,12 @@ class ExperienceDetail extends Component {
             }
           </Wrapper>
         </Section>
+        <Modal
+          isOpen={isModalOpen}
+          close={() => this.handleIsModalOpen(false)}
+        >
+          {this.renderModalChildren(modalType)}
+        </Modal>
       </main>
     );
   }
