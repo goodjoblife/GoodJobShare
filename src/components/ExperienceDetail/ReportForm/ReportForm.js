@@ -1,9 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Textarea from 'react-textarea-autosize';
 
 import Heading from 'common/base/Heading';
 
 import ReasonCategory from './ReasonCategory';
+
+import styles from './ReportForm.module.css';
 
 const reasonCategoryOptions = [
   {
@@ -30,6 +33,7 @@ class ReportForm extends PureComponent {
 
     this.state = {
       reasonCategory: reasonCategoryOptions[0].value,
+      reason: '',
     };
   }
 
@@ -38,9 +42,15 @@ class ReportForm extends PureComponent {
       reasonCategory,
     })
 
+  handleReason = reason =>
+    this.setState({
+      reason,
+    })
+
   render() {
     const {
       reasonCategory,
+      reason,
     } = this.state;
     return (
       <section
@@ -63,6 +73,25 @@ class ReportForm extends PureComponent {
           reasonCategoryOptions={reasonCategoryOptions}
           reasonCategory={reasonCategory}
           handleReasonCategory={this.handleReasonCategory}
+        />
+        <Textarea
+          useCacheForDOMMeasurements
+          value={reason}
+          onChange={e => this.handleReason(e.target.value)}
+          placeholder="請詳述檢舉原因"
+          className={styles.textarea}
+          style={{
+            resize: 'none',
+            width: '100%',
+            color: '#333333',
+            fontSize: '1rem',
+            border: '1px solid #BDBDBD',
+            lineHeight: '1.5',
+            minHeight: '88px',
+            marginTop: '17px',
+            marginBottom: '10px',
+            padding: '14px 18px',
+          }}
         />
       </section>
     );

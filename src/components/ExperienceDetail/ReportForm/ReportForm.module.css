@@ -1,0 +1,7 @@
+.textarea {
+
+  &::placeholder {
+    color: main-gray;
+    font-weight: 300;
+  }
+}
