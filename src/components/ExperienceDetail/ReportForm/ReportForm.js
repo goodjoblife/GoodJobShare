@@ -46,6 +46,7 @@ class ReportForm extends PureComponent {
 
   onSubmit = () =>
     postExperiencesReports(this.props.id, stateToApiParams(this.state))
+      .then(this.props.close)
 
   handleReasonCategory = reasonCategory =>
     this.setState({
