@@ -8,12 +8,16 @@ import Button from 'common/button/Button';
 import ReasonCategory from './ReasonCategory';
 import Reason from './Reason';
 
+import authStatus from '../../../constants/authStatus';
 
 import {
   stateToApiParams,
 } from './helper';
 
 import { postExperiencesReports } from '../../../apis/reportsExperiencesApi';
+
+const isLogin = auth =>
+  auth.get('status') === authStatus.CONNECTED;
 
 const reasonCategoryOptions = [
   {
@@ -67,7 +71,9 @@ class ReportForm extends PureComponent {
 
     const {
       close,
+      auth,
     } = this.props;
+
     return (
       <section
         style={{
@@ -111,16 +117,29 @@ class ReportForm extends PureComponent {
             marginBottom: '18px',
           }}
         >
-          <Button
-            circleSize="lg"
-            btnStyle="black"
-            style={{
-              marginRight: '20px',
-            }}
-            onClick={this.onSubmit}
-          >
-            送出
-          </Button>
+          {
+            isLogin(auth) ?
+              <Button
+                circleSize="lg"
+                btnStyle="black"
+                style={{
+                  marginRight: '20px',
+                }}
+                onClick={this.onSubmit}
+              >
+                送出
+              </Button> :
+              <Button
+                circleSize="lg"
+                btnStyle="black"
+                style={{
+                  marginRight: '20px',
+                }}
+                onClick={this.onSubmit}
+              >
+                <pre>{'以 f 認證，並送出檢舉'}</pre>
+              </Button>
+          }
           <Button
             circleSize="lg"
             btnStyle="black"
@@ -137,6 +156,7 @@ class ReportForm extends PureComponent {
 ReportForm.propTypes = {
   close: PropTypes.func,
   id: PropTypes.string,
+  auth: PropTypes.object,
 };
 
 export default ReportForm;

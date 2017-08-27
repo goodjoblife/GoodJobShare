@@ -15,7 +15,7 @@ import status from '../../constants/status';
 import {
   fetchExperience,
 } from '../../actions/experienceDetail';
-import ReportForm from './ReportForm';
+import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { SITE_NAME } from '../../constants/helmetData';
@@ -94,7 +94,7 @@ class ExperienceDetail extends Component {
     switch (modalType) {
       case MODAL_TYPE.REPORT_DETAIL:
         return (
-          <ReportForm
+          <ReportFormContainer
             close={() => this.handleIsModalOpen(false)}
             id={this.props.params.id}
           />
