@@ -94,7 +94,10 @@ class ExperienceDetail extends Component {
     switch (modalType) {
       case MODAL_TYPE.REPORT_DETAIL:
         return (
-          <ReportForm />
+          <ReportForm
+            close={() => this.handleIsModalOpen(false)}
+            id={this.props.params.id}
+          />
         );
       default:
         return null;

@@ -1,13 +1,19 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Textarea from 'react-textarea-autosize';
 
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
+import Button from 'common/button/Button';
 
 import ReasonCategory from './ReasonCategory';
+import Reason from './Reason';
 
-import styles from './ReportForm.module.css';
+
+import {
+  stateToApiParams,
+} from './helper';
+
+import { postExperiencesReports } from '../../../apis/reportsExperiencesApi';
 
 const reasonCategoryOptions = [
   {
@@ -38,6 +44,9 @@ class ReportForm extends PureComponent {
     };
   }
 
+  onSubmit = () =>
+    postExperiencesReports(this.props.id, stateToApiParams(this.state))
+
   handleReasonCategory = reasonCategory =>
     this.setState({
       reasonCategory,
@@ -48,11 +57,16 @@ class ReportForm extends PureComponent {
       reason,
     })
 
+
   render() {
     const {
       reasonCategory,
       reason,
     } = this.state;
+
+    const {
+      close,
+    } = this.props;
     return (
       <section
         style={{
@@ -75,41 +89,53 @@ class ReportForm extends PureComponent {
           reasonCategory={reasonCategory}
           handleReasonCategory={this.handleReasonCategory}
         />
-        <Textarea
-          useCacheForDOMMeasurements
-          value={reason}
+        <Reason
+          reason={reason}
           onChange={e => this.handleReason(e.target.value)}
-          placeholder="請詳述檢舉原因"
-          className={styles.textarea}
-          style={{
-            resize: 'none',
-            width: '100%',
-            color: '#333333',
-            fontSize: '1rem',
-            border: '1px solid #BDBDBD',
-            lineHeight: '1.5',
-            minHeight: '88px',
-            marginTop: '17px',
-            marginBottom: '10px',
-            padding: '14px 18px',
-          }}
         />
         <P
           size="s"
           style={{
             textAlign: 'initial',
+            marginBottom: '30px',
           }}
         >
           請盡量詳細說明為何這則內容不妥或不實，以供我們評估，您也可以在被檢舉的內容下方留言，
           讓其他使用者知道您的不同意見。
         </P>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '18px',
+          }}
+        >
+          <Button
+            circleSize="lg"
+            btnStyle="black"
+            style={{
+              marginRight: '20px',
+            }}
+            onClick={this.onSubmit}
+          >
+            送出
+          </Button>
+          <Button
+            circleSize="lg"
+            btnStyle="black"
+            onClick={close}
+          >
+            取消
+          </Button>
+        </div>
       </section>
     );
   }
 }
 
 ReportForm.propTypes = {
-  onSubmit: PropTypes.func,
+  close: PropTypes.func,
+  id: PropTypes.string,
 };
 
 export default ReportForm;
