@@ -62,6 +62,10 @@ class ReportForm extends PureComponent {
       reason,
     })
 
+  login = () =>
+    this.props.login(this.props.FB)
+      .then(this.onSubmit)
+
 
   render() {
     const {
@@ -135,7 +139,7 @@ class ReportForm extends PureComponent {
                 style={{
                   marginRight: '20px',
                 }}
-                onClick={this.onSubmit}
+                onClick={this.login}
               >
                 <pre>{'以 f 認證，並送出檢舉'}</pre>
               </Button>
@@ -157,6 +161,8 @@ ReportForm.propTypes = {
   close: PropTypes.func,
   id: PropTypes.string,
   auth: PropTypes.object,
+  login: PropTypes.func,
+  FB: PropTypes.object,
 };
 
 export default ReportForm;
