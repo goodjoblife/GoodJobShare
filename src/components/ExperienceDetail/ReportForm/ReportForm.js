@@ -11,15 +11,21 @@ import Reason from './Reason';
 import authStatus from '../../../constants/authStatus';
 
 import {
-  stateToApiParams,
+  handleToApiParams,
 } from './helper';
 
 import { postExperiencesReports } from '../../../apis/reportsExperiencesApi';
 
+import {
+  validReasomForm,
+  validReason,
+  isReasonLimit,
+} from './formCheck';
+
 const isLogin = auth =>
   auth.get('status') === authStatus.CONNECTED;
 
-const reasonCategoryOptions = [
+export const reasonCategoryOptions = [
   {
     label: '這是廣告或垃圾訊息',
     value: '這是廣告或垃圾訊息',
@@ -45,12 +51,23 @@ class ReportForm extends PureComponent {
     this.state = {
       reasonCategory: reasonCategoryOptions[0].value,
       reason: '',
+      submitted: false,
     };
   }
 
-  onSubmit = () =>
-    postExperiencesReports(this.props.id, stateToApiParams(this.state))
-      .then(this.props.close)
+  onSubmit = () => {
+    this.setState({
+      submitted: true,
+    });
+    const valid = validReasomForm(this.state);
+
+    if (valid) {
+      return postExperiencesReports(this.props.id, handleToApiParams(this.state))
+        .then(this.props.close);
+    }
+
+    return null;
+  }
 
   handleReasonCategory = reasonCategory =>
     this.setState({
@@ -71,6 +88,7 @@ class ReportForm extends PureComponent {
     const {
       reasonCategory,
       reason,
+      submitted,
     } = this.state;
 
     const {
@@ -103,6 +121,7 @@ class ReportForm extends PureComponent {
         <Reason
           reason={reason}
           onChange={e => this.handleReason(e.target.value)}
+          invalid={submitted && !validReason(isReasonLimit(reasonCategory))(reason)}
         />
         <P
           size="s"
