@@ -56,14 +56,25 @@ class ReportForm extends PureComponent {
   }
 
   onSubmit = () => {
+    const {
+      onApiError,
+      close,
+      id,
+    } = this.props;
     this.setState({
       submitted: true,
     });
     const valid = validReasomForm(this.state);
 
     if (valid) {
-      return postExperiencesReports(this.props.id, handleToApiParams(this.state))
-        .then(this.props.close);
+      return postExperiencesReports(id, handleToApiParams(this.state))
+        .then(close)
+        .catch(
+          e =>
+            onApiError({
+              message: e.message,
+            })
+        );
     }
 
     return null;
@@ -182,6 +193,7 @@ ReportForm.propTypes = {
   auth: PropTypes.object,
   login: PropTypes.func,
   FB: PropTypes.object,
+  onApiError: PropTypes.func,
 };
 
 export default ReportForm;

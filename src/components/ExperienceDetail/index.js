@@ -11,6 +11,8 @@ import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
 // import RecommendationZone from './RecommendationZone';
 import MessageBoard from '../../containers/ExperienceDetail/MessageBoard';
 import BackToList from './BackToList';
+import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
+
 import status from '../../constants/status';
 import {
   fetchExperience,
@@ -24,6 +26,8 @@ import authStatus from '../../constants/authStatus';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
+  REPORT_API_ERROR: 'REPORT_API_ERROR',
+  REPORT_SUCCESS: 'REPORT_SUCCESS',
 };
 
 class ExperienceDetail extends Component {
@@ -84,19 +88,31 @@ class ExperienceDetail extends Component {
     this.props.submitComment(data.experience._id);
   }
 
-  handleIsModalOpen = (isModalOpen, modalType) =>
+  handleIsModalOpen = (isModalOpen, modalType, modalPayload = {}) =>
     this.setState({
       isModalOpen,
       modalType,
+      modalPayload,
     })
 
-  renderModalChildren = modalType => {
+  renderModalChildren = (modalType, modalPayload) => {
     switch (modalType) {
       case MODAL_TYPE.REPORT_DETAIL:
         return (
           <ReportFormContainer
             close={() => this.handleIsModalOpen(false)}
             id={this.props.params.id}
+            onApiError={
+              pload =>
+                this.handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload)
+            }
+          />
+        );
+      case MODAL_TYPE.REPORT_API_ERROR:
+        return (
+          <ApiErrorFeedback
+            buttonClick={() => this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)}
+            message={modalPayload.message}
           />
         );
       default:
@@ -148,6 +164,7 @@ class ExperienceDetail extends Component {
     const {
       isModalOpen,
       modalType,
+      modalPayload,
     } = this.state;
 
     const backable = this.props.location.query.backable || 'false';
@@ -213,7 +230,7 @@ class ExperienceDetail extends Component {
           isOpen={isModalOpen}
           close={() => this.handleIsModalOpen(false)}
         >
-          {this.renderModalChildren(modalType)}
+          {this.renderModalChildren(modalType, modalPayload)}
         </Modal>
       </main>
     );

@@ -40,6 +40,11 @@ const checkStatus = handle401 => response => {
     return handle401();
   }
 
+  if (String(response.status)[0] !== 2) {
+    return response.json()
+      .then(json => Promise.reject(json));
+  }
+
   return response.json();
 };
 
