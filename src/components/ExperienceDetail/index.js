@@ -12,6 +12,7 @@ import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
 import MessageBoard from '../../containers/ExperienceDetail/MessageBoard';
 import BackToList from './BackToList';
 import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
+import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
 
 import status from '../../constants/status';
 import {
@@ -95,7 +96,11 @@ class ExperienceDetail extends Component {
       modalPayload,
     })
 
-  renderModalChildren = (modalType, modalPayload) => {
+  renderModalChildren = modalType => {
+    const {
+      modalPayload,
+    } = this.state;
+
     switch (modalType) {
       case MODAL_TYPE.REPORT_DETAIL:
         return (
@@ -106,6 +111,10 @@ class ExperienceDetail extends Component {
               pload =>
                 this.handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload)
             }
+            onSuccess={
+              () =>
+                this.handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS)
+            }
           />
         );
       case MODAL_TYPE.REPORT_API_ERROR:
@@ -113,6 +122,12 @@ class ExperienceDetail extends Component {
           <ApiErrorFeedback
             buttonClick={() => this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)}
             message={modalPayload.message}
+          />
+        );
+      case MODAL_TYPE.REPORT_SUCCESS:
+        return (
+          <ReportSuccessFeedback
+            buttonClick={() => this.handleIsModalOpen(false)}
           />
         );
       default:
@@ -229,6 +244,7 @@ class ExperienceDetail extends Component {
         <Modal
           isOpen={isModalOpen}
           close={() => this.handleIsModalOpen(false)}
+          hasClose={false}
         >
           {this.renderModalChildren(modalType, modalPayload)}
         </Modal>
