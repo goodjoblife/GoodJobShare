@@ -4,6 +4,9 @@ import { getToken } from 'utils/tokenUtil';
 
 import { API_HOST } from '../config';
 
+const isValidHttpStatusCode = statusCode =>
+  String(statusCode)[0] === '2';
+
 const headerBuilder = token => (
   token ?
   {
@@ -40,7 +43,7 @@ const checkStatus = handle401 => response => {
     return handle401();
   }
 
-  if (String(response.status)[0] !== 2) {
+  if (!isValidHttpStatusCode(response.status)) {
     return response.json()
       .then(json => Promise.reject(json));
   }
