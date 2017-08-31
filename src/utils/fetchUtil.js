@@ -5,7 +5,7 @@ import { getToken } from 'utils/tokenUtil';
 import { API_HOST } from '../config';
 
 const isValidHttpStatusCode = statusCode =>
-  String(statusCode)[0] === '2';
+  String(statusCode)[0] !== '4' && String(statusCode)[0] !== '5';
 
 const headerBuilder = token => (
   token ?
