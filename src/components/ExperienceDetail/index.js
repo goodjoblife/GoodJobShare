@@ -173,7 +173,7 @@ class ExperienceDetail extends Component {
 
   render() {
     const {
-      experienceDetail, setTos, setComment, likeExperience, likeReply,
+      experienceDetail, setTos, setComment, likeExperience, likeReply, params: { id },
     } = this.props;
 
     const {
@@ -215,6 +215,7 @@ class ExperienceDetail extends Component {
               experience={experience}
               likeExperience={likeExperience}
               openReportDetail={() => this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)}
+              id={id}
             />
 
             <BackToList
