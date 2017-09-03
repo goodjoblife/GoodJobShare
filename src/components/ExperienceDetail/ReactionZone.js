@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 
 import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
+import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 // import { Facebook } from 'common/icons';
 import ReactionZoneOtherOptions from './ReactionZoneOtherOptions';
@@ -17,6 +18,7 @@ class ReactionZone extends React.Component {
     login: React.PropTypes.func.isRequired,
     authStatus: React.PropTypes.string,
     FB: React.PropTypes.object,
+    openReportDetail: React.PropTypes.func,
   }
 
   constructor(props) {
@@ -33,7 +35,7 @@ class ReactionZone extends React.Component {
   }
 
   render() {
-    const { id, likeExperience, experience, login, authStatus, FB } = this.props;
+    const { id, likeExperience, experience, login, authStatus, FB, openReportDetail } = this.props;
     const { isInspectReportOpen } = this.state;
     return (
       <div className={styles.container}>
@@ -55,6 +57,10 @@ class ReactionZone extends React.Component {
             分享
             <button className={styles.button}><Facebook /></button>
           </div> */}
+          <ReportDetail
+            label="檢舉"
+            onClick={openReportDetail}
+          />
         </div>
         <div className={styles.right}>
           <PopoverToggle
