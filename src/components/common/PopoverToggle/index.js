@@ -42,10 +42,25 @@ export default class PopoverToggle extends React.Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
+    this.outsideHook = this.outsideHook.bind(this);
   }
 
   state = {
     isOpen: false,
+  }
+
+  componentDidMount() {
+    document.addEventListener('click', this.outsideHook);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.outsideHook);
+  }
+
+  outsideHook(e) {
+    if (!this.dropdown.contains(e.target)) {
+      if (this.state.isOpen) this.toggle();
+    }
   }
 
   toggle() {
@@ -54,7 +69,11 @@ export default class PopoverToggle extends React.Component {
 
   render() {
     return (
-      <div className={cn(this.props.className, styles.toggle)} onClick={this.toggle}>
+      <div
+        ref={node => { this.dropdown = node; }}
+        className={cn(this.props.className, styles.toggle)}
+        onClick={this.toggle}
+      >
         <Popover className={this.props.popoverClassName} active={this.state.isOpen}>
           {this.props.popoverContent}
         </Popover>
