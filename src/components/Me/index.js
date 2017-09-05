@@ -10,17 +10,8 @@ import styles from './Me.module.css';
 import ShareBlockElement from './ShareBlockElement';
 import authStatus from '../../constants/authStatus';
 import status from '../../constants/status';
-import { fetchMyExperiences, fetchMyWorkings, fetchMyReplies } from '../../actions/me';
 
 class Me extends Component {
-  static fetchData({ store: { dispatch } }) {
-    return Promise.all([
-      dispatch(fetchMyExperiences()),
-      dispatch(fetchMyWorkings()),
-      dispatch(fetchMyReplies()),
-    ]);
-  }
-
   static propTypes = {
     fetchMyExperiences: PropTypes.func.isRequired,
     fetchMyWorkings: PropTypes.func.isRequired,
