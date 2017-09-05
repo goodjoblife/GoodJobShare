@@ -24,6 +24,10 @@ import {
   workExperiencesFormCheck,
 } from './formCheck';
 
+import {
+  LS_WORK_EXPERIENCES_FORM_KEY,
+} from '../../../constants/localStorageKey';
+
 import styles from './WorkExperiencesForm.module.css';
 
 import { HELMET_DATA } from '../../../constants/helmetData';
@@ -99,10 +103,27 @@ class WorkExperiencesForm extends React.Component {
     this.elementValidationStatus = {};
   }
 
+  componentDidMount() {
+    let defaultFromDraft;
+
+    try {
+      defaultFromDraft = JSON.parse(localStorage.getItem(LS_WORK_EXPERIENCES_FORM_KEY));
+    } catch (error) {
+      defaultFromDraft = null;
+    }
+
+    const defaultState = defaultFromDraft || defaultForm;
+
+    this.setState({ // eslint-disable-line react/no-did-mount-set-state
+      ...defaultState,
+    });
+  }
+
   onSumbit() {
     const valid = workExperiencesFormCheck(propsWorkExperiencesForm(this.state));
 
     if (valid) {
+      localStorage.removeItem(LS_WORK_EXPERIENCES_FORM_KEY);
       return postWorkExperience(workExperiencesToBody(this.state));
     }
     this.handleState('submitted')(true);
@@ -136,10 +157,17 @@ class WorkExperiencesForm extends React.Component {
   }
 
   handleState(key) {
-    return value =>
-      this.setState({
+    return value => {
+      const updateState = {
         [key]: value,
-      });
+      };
+      this.setState(updateState);
+      const state = {
+        ...this.state,
+        ...updateState,
+      };
+      localStorage.setItem(LS_WORK_EXPERIENCES_FORM_KEY, JSON.stringify(state));
+    };
   }
 
   appendBlock(blockKey) {

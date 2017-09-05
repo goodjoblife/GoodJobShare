@@ -28,6 +28,9 @@ import {
 
 import { HELMET_DATA } from '../../../constants/helmetData';
 import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
+import {
+  LS_INTERVIEW_FORM_KEY,
+} from '../../../constants/localStorageKey';
 
 const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '段落標題，例：面試方式') => {
   const section = {
@@ -110,10 +113,27 @@ class InterviewForm extends React.Component {
     this.elementValidationStatus = {};
   }
 
+  componentDidMount() {
+    let defaultFromDraft;
+
+    try {
+      defaultFromDraft = JSON.parse(localStorage.getItem(LS_INTERVIEW_FORM_KEY));
+    } catch (error) {
+      defaultFromDraft = null;
+    }
+
+    const defaultState = defaultFromDraft || defaultForm;
+
+    this.setState({ // eslint-disable-line react/no-did-mount-set-state
+      ...defaultState,
+    });
+  }
+
   onSumbit() {
     const valid = interviewFormCheck(getInterviewForm(this.state));
 
     if (valid) {
+      localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
       return postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
     }
     this.handleState('submitted')(true);
@@ -147,10 +167,17 @@ class InterviewForm extends React.Component {
   }
 
   handleState(key) {
-    return value =>
-      this.setState({
+    return value => {
+      const updateState = {
         [key]: value,
-      });
+      };
+      this.setState(updateState);
+      const state = {
+        ...this.state,
+        ...updateState,
+      };
+      localStorage.setItem(LS_INTERVIEW_FORM_KEY, JSON.stringify(state));
+    };
   }
 
   appendBlock(blockKey) {
@@ -188,6 +215,11 @@ class InterviewForm extends React.Component {
           },
         },
       }));
+  }
+
+  handleSubmit() {
+    localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
+    return postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
   }
 
   render() {
