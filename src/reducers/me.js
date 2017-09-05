@@ -18,6 +18,9 @@ const preloadedState = fromJS({
   myWorkingsStatus: status.UNFETCHED,
   myWorkingsError: null,
   myWorkings: {},
+  myRepliesStatus: status.UNFETCHED,
+  myRepliesError: null,
+  myReplies: {},
 });
 
 const me = createReducer(preloadedState, {

@@ -29,12 +29,14 @@ const ShareBlock = ({
           <P size="l" Tag="h3">
             {comment}
           </P>
-          <P size="l" bold className={styles.articleLink}>
+          {heading &&
+          (<P size="l" bold className={styles.articleLink}>
             <Bookmark />
             <Link to={to} title="檢視文章" className="hoverBlue">
               {heading}
             </Link>
-          </P>
+          </P>)
+          }
         </div>
         :
         <Heading size="sl" Tag="h3">

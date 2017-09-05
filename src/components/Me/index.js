@@ -10,24 +10,24 @@ import styles from './Me.module.css';
 import ShareBlockElement from './ShareBlockElement';
 import authStatus from '../../constants/authStatus';
 import status from '../../constants/status';
-import { fetchMyExperiences, fetchMyWorkings /* , fetchMyReplies */ } from '../../actions/me';
+import { fetchMyExperiences, fetchMyWorkings, fetchMyReplies } from '../../actions/me';
 
 class Me extends Component {
   static fetchData({ store: { dispatch } }) {
     return Promise.all([
       dispatch(fetchMyExperiences()),
       dispatch(fetchMyWorkings()),
-      // dispatch(fetchMyReplies()),
+      dispatch(fetchMyReplies()),
     ]);
   }
 
   static propTypes = {
     fetchMyExperiences: PropTypes.func.isRequired,
     fetchMyWorkings: PropTypes.func.isRequired,
-    // fetchMyReplies: PropTypes.func.isRequired,
+    fetchMyReplies: PropTypes.func.isRequired,
     setExperienceStatus: PropTypes.func.isRequired,
     setWorkingStatus: PropTypes.func.isRequired,
-    // setReplyStatus: PropTypes.func.isRequired,
+    setReplyStatus: PropTypes.func.isRequired,
     me: ImmutablePropTypes.map.isRequired,
   }
 
@@ -42,7 +42,7 @@ class Me extends Component {
   componentDidMount() {
     this.props.fetchMyExperiences();
     this.props.fetchMyWorkings();
-    // this.props.fetchMyReplies();
+    this.props.fetchMyReplies();
   }
 
   componentDidUpdate(prevProps) {
@@ -72,7 +72,7 @@ class Me extends Component {
     const data = me.toJS();
     const { experiences } = data.myExperiences;
     const workings = data.myWorkings.time_and_salary;
-    // const { replies } = data.myReplies;
+    const { replies } = data.myReplies;
 
     return (
       <Section pageTop paddingBottom>
@@ -127,23 +127,23 @@ class Me extends Component {
                       />
                     ))
                   }
-                  {/*
+                  {
                     data.myRepliesStatus === status.FETCHING
                     ? <Loader />
                     : (replies || []).map(o => (
                       <ShareBlockElement
                         key={o._id}
                         type="留言"
-                        heading={o.company.name}
-                        comment="test"
-                        to="/time-and-salary"
+                        heading=""
+                        comment={o.content}
+                        to=""
                         disabled={o.status === 'hidden'}
                         publishHandler={() => {
                           this.props.setReplyStatus(o);
                         }}
                       />
                     ))
-                  */}
+                  }
                 </div>
               </IconHeadingBlock>
             </div>
