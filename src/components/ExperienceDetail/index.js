@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import Loader from 'common/Loader';
 import { Wrapper, Section, Heading, P } from 'common/base';
 import Modal from 'common/Modal';
+import NotFound from 'common/NotFound';
 
 import styles from './ExperienceDetail.module.css';
 import Article from './Article';
@@ -185,8 +186,10 @@ class ExperienceDetail extends Component {
     const backable = this.props.location.query.backable || 'false';
     const data = experienceDetail.toJS();
     const experience = data.experience;
-    return (
-      <main>
+
+    return ((data.experienceError && data.experienceError.error && data.experienceError.error.status === 403)
+      ? <NotFound heading="本篇文章已經被原作者隱藏，目前無法查看" />
+      : (<main>
         {this.renderHelmet()}
         <Section bg="white" paddingBottom pageTop>
           <Wrapper size="l">
@@ -250,7 +253,7 @@ class ExperienceDetail extends Component {
           {this.renderModalChildren(modalType, modalPayload)}
         </Modal>
       </main>
-    );
+    ));
   }
 }
 
