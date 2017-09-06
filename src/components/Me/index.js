@@ -125,9 +125,9 @@ class Me extends Component {
                       <ShareBlockElement
                         key={o._id}
                         type="留言"
-                        heading=""
+                        heading={o.experience.title}
                         comment={o.content}
-                        to=""
+                        to={`/experiences/${o.experience._id}?backable=true`}
                         disabled={o.status === 'hidden'}
                         publishHandler={() => {
                           this.props.setReplyStatus(o);
