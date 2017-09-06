@@ -6,7 +6,15 @@ import { Bookmark } from 'common/icons';
 import { Heading, P } from 'common/base';
 import styles from './ShareBlockElement.module.css';
 
-const ShareBlock = ({ type, heading, to, position, comment, disabled }) => (
+const ShareBlock = ({
+  type,
+  heading,
+  to,
+  position,
+  comment,
+  disabled,
+  publishHandler,
+}) => (
   <section
     className={cn(styles.block, {
       [styles.disabled]: disabled,
@@ -21,12 +29,14 @@ const ShareBlock = ({ type, heading, to, position, comment, disabled }) => (
           <P size="l" Tag="h3">
             {comment}
           </P>
-          <P size="l" bold className={styles.articleLink}>
+          {heading &&
+          (<P size="l" bold className={styles.articleLink}>
             <Bookmark />
             <Link to={to} title="檢視文章" className="hoverBlue">
               {heading}
             </Link>
-          </P>
+          </P>)
+          }
         </div>
         :
         <Heading size="sl" Tag="h3">
@@ -39,9 +49,9 @@ const ShareBlock = ({ type, heading, to, position, comment, disabled }) => (
     <div className={styles.buttons}>
       <button
         className="buttonCircleS buttonBlack2"
-        onClick={() => {}}
+        onClick={publishHandler}
       >
-        隱藏
+        {disabled ? '重新發佈' : '隱藏'}
       </button>
     </div>
   </section>
@@ -53,6 +63,7 @@ ShareBlock.propTypes = {
   position: PropTypes.string,
   comment: PropTypes.string,
   disabled: PropTypes.bool,
+  publishHandler: PropTypes.func.isRequired,
 };
 
 export default ShareBlock;
