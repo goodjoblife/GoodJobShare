@@ -29,6 +29,20 @@ export const login = FB => dispatch => {
   return Promise.reject('FB should ready');
 };
 
+export const logout = FB => dispatch => {
+  if (FB) {
+    return new Promise(resolve => FB.logout(response => resolve(response)))
+      .then(response => {
+        if (response.status === authStatus.UNKNOWN) {
+          dispatch(setLogin(response.status, response.authResponse.accessToken));
+          dispatch(setUser({ name: null }));
+        }
+        return response.status;
+      });
+  }
+  return Promise.reject('FB should ready');
+};
+
 export const getLoginStatus = FB => dispatch => {
   if (FB) {
     return new Promise(resolve => FB.getLoginStatus(response => resolve(response)))
