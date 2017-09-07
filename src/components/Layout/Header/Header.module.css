@@ -1,4 +1,4 @@
-@value main-yellow, main-black, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
+@value main-yellow, main-black, border-gray, main-gray NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
 .header {
   position: fixed;
@@ -126,17 +126,48 @@
     height: 20px;
     fill: #fff;
     margin-right: 8px;
+    transition-property: fill;
+    transition-duration: .3s;
   }
 
   @media (min-width: 851px) {
     &:hover {
       color: main-yellow;
+      svg {
+        fill: main-yellow;
+      }
     }
   }
 }
 
-.disableBtn {
-  pointer-events: none;
+.popover {
+  left: calc(50% - 60px);
+  width: 120px;
+  top: calc(100% + 4px);
+
+  .popoverItem {
+    font-size: 14px;
+    display: block;
+    font-weight: 400;
+    li {
+      border-bottom: 1px solid border-gray;
+      transition: color .3s;
+
+      a, button {
+        display: block;
+        padding: 12px;
+
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        color: main-gray;
+      }
+    }
+  }
 }
 
 .mHeaderButton {

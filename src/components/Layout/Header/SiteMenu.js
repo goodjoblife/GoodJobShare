@@ -14,14 +14,20 @@ Item.propTypes = {
   className: PropTypes.string,
 };
 
-const SiteMenu = () => (
+const SiteMenu = ({ isLogin }) => (
   <ul className={styles.menu}>
     <li className={styles.menuItem}>
       <a href="/time-and-salary">薪資工時</a>
     </li>
     <Item to="/experiences/search" text="面試・工作經驗" />
     <Item to="/labor-rights" text="勞動小教室" />
+    {
+      isLogin && (<Item to="/me" text="個人頁面" />)
+    }
   </ul>
 );
+SiteMenu.propTypes = {
+  isLogin: PropTypes.bool,
+};
 
 export default SiteMenu;
