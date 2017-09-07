@@ -18,6 +18,7 @@ class Header extends React.Component {
     this.toggleNav = this.toggleNav.bind(this);
     this.closeNav = this.closeNav.bind(this);
     this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
 
     const { getLoginStatus, FB, getMe } = this.props;
 
@@ -60,6 +61,12 @@ class Header extends React.Component {
       .catch(() => {});
   }
 
+  logout() {
+    const { logout, FB } = this.props;
+    logout(FB)
+      .catch(() => {});
+  }
+
   render() {
     return (
       <header className={styles.header}>
@@ -96,7 +103,7 @@ class Header extends React.Component {
                     popoverContent={(
                       <ul className={styles.popoverItem}>
                         <li><Link to="/me">個人頁面</Link></li>
-                        <li><button onClick={() => {}}>登出</button></li>
+                        <li><button onClick={() => { this.logout(); }}>登出</button></li>
                       </ul>
                     )}
                   >
@@ -116,6 +123,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
   login: React.PropTypes.func.isRequired,
+  logout: React.PropTypes.func.isRequired,
   getLoginStatus: React.PropTypes.func.isRequired,
   getMe: React.PropTypes.func.isRequired,
   auth: React.PropTypes.object,
