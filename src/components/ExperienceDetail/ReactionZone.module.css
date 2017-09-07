@@ -33,17 +33,13 @@
   }
 }
 
-.right {
-  position: relative;
-  width: 85px;
-}
-
 .popoverToggle {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  cursor: pointer;
+  padding-left: 16px;
+  padding-right: 16px;
 
   span, &:after, &:before {
     content: '';
@@ -65,14 +61,22 @@
   .popoverItem {
     font-size: 14px;
     display: block;
+    font-weight: 400;
     li {
-      padding: 12px 0;
-      padding-left: 16px;
       border-bottom: 1px solid border-gray;
-      cursor: pointer;
+      transition: color .3s;
+
+      a, button {
+        display: block;
+        padding: 12px;
+      }
 
       &:last-child {
         border-bottom: none;
+      }
+
+      &:hover {
+        color: main-gray;
       }
     }
   }

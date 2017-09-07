@@ -62,7 +62,7 @@ class ReactionZone extends React.Component {
             onClick={openReportDetail}
           />
         </div>
-        <div className={styles.right}>
+        <div>
           <PopoverToggle
             popoverClassName={styles.popover}
             popoverContent={(

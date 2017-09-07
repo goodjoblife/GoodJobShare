@@ -3,7 +3,7 @@ import styles from './ReactionZone.module.css';
 
 const ReactionZoneOtherOptions = ({ toggleReportInspectModal }) => (
   <ul className={styles.popoverItem}>
-    <li onClick={toggleReportInspectModal}>查看檢舉數量</li>
+    <li><button onClick={toggleReportInspectModal}>查看檢舉</button></li>
   </ul>
 );
 
