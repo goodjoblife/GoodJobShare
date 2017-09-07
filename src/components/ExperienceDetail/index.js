@@ -47,12 +47,25 @@ class ExperienceDetail extends Component {
       query: React.PropTypes.shape({
         backable: React.PropTypes.string,
       }),
+      state: React.PropTypes.shape({
+        replyId: React.PropTypes.string,
+      }),
     }),
     authStatus: React.PropTypes.string,
   }
 
   static fetchData({ store, params }) {
     return store.dispatch(fetchExperience(params.id));
+  }
+
+  static getPosition(obj) {
+    let top = 0;
+    let parent = obj;
+    while (parent) {
+      top += parent.offsetTop;
+      parent = parent.offsetParent;
+    }
+    return top - 54; // deduct header
   }
 
   constructor() {
@@ -63,6 +76,8 @@ class ExperienceDetail extends Component {
       isModalOpen: false,
       modalType: '',
     };
+
+    this.goTo = true;
   }
 
   componentDidMount() {
@@ -81,6 +96,19 @@ class ExperienceDetail extends Component {
 
     if (nextProps.authStatus !== this.props.authStatus && nextProps.authStatus === authStatus.CONNECTED) {
       this.props.fetchExperience(this.props.params.id);
+    }
+  }
+
+  componentDidUpdate() {
+    if (window && this.goTo && this.props.location.state && this.props.location.state.replyId) {
+      const id = `reply-${this.props.location.state.replyId}`;
+      if (document.getElementById(id)) {
+        window.scrollTo(
+          0,
+          ExperienceDetail.getPosition(document.getElementById(id))
+        );
+        this.goTo = false;
+      }
     }
   }
 
@@ -187,8 +215,9 @@ class ExperienceDetail extends Component {
     const data = experienceDetail.toJS();
     const experience = data.experience;
 
-    return ((data.experienceError && data.experienceError.error && data.experienceError.error.status === 403)
-      ? <NotFound heading="本篇文章已經被原作者隱藏，目前無法查看" />
+    return ((data.experienceError && data.experienceError.error)
+      ? ((data.experienceError.error.status === 403 && <NotFound heading="本篇文章已經被原作者隱藏，目前無法查看" />) ||
+         (data.experienceError.error.status === 404 && <NotFound />) || null)
       : (<main>
         {this.renderHelmet()}
         <Section bg="white" paddingBottom pageTop>

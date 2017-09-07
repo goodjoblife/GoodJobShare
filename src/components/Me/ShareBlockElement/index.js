@@ -7,6 +7,7 @@ import { Heading, P } from 'common/base';
 import styles from './ShareBlockElement.module.css';
 
 const ShareBlock = ({
+  options,
   type,
   heading,
   to,
@@ -32,7 +33,7 @@ const ShareBlock = ({
           {heading &&
           (<P size="l" bold className={styles.articleLink}>
             <Bookmark />
-            <Link to={to} title="檢視文章" className="hoverBlue">
+            <Link to={{ pathname: to, query: { backable: true }, state: options }} title="檢視文章" className="hoverBlue">
               {heading}
             </Link>
           </P>)
@@ -57,6 +58,7 @@ const ShareBlock = ({
   </section>
 );
 ShareBlock.propTypes = {
+  options: PropTypes.object,
   type: PropTypes.string.isRequired,
   heading: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,

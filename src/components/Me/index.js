@@ -127,11 +127,12 @@ class Me extends Component {
                         type="留言"
                         heading={o.experience.title}
                         comment={o.content}
-                        to={`/experiences/${o.experience._id}?backable=true`}
+                        to={`/experiences/${o.experience._id}`}
                         disabled={o.status === 'hidden'}
                         publishHandler={() => {
                           this.props.setReplyStatus(o);
                         }}
+                        options={{ replyId: o._id }}
                       />
                     ))
                   }
