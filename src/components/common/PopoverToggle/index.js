@@ -43,6 +43,7 @@ export default class PopoverToggle extends React.Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
+    this.close = this.close.bind(this);
     this.outsideHook = this.outsideHook.bind(this);
   }
 
@@ -52,7 +53,7 @@ export default class PopoverToggle extends React.Component {
 
   componentDidMount() {
     document.addEventListener('click', this.outsideHook);
-    browserHistory.listen(this.toggle);
+    browserHistory.listen(this.close);
   }
 
   componentWillUnmount() {
@@ -63,6 +64,10 @@ export default class PopoverToggle extends React.Component {
     if (!this.dropdown.contains(e.target)) {
       if (this.state.isOpen) this.toggle();
     }
+  }
+
+  close() {
+    this.setState({ isOpen: false });
   }
 
   toggle() {
