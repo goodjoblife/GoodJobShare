@@ -45,6 +45,7 @@ export default class PopoverToggle extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.close = this.close.bind(this);
     this.outsideHook = this.outsideHook.bind(this);
+    this.unlisten = () => {};
   }
 
   state = {
@@ -53,11 +54,12 @@ export default class PopoverToggle extends React.Component {
 
   componentDidMount() {
     document.addEventListener('click', this.outsideHook);
-    browserHistory.listen(this.close);
+    this.unlisten = browserHistory.listen(this.close);
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this.outsideHook);
+    this.unlisten();
   }
 
   outsideHook(e) {
