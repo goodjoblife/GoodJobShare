@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 import cn from 'classnames';
 import styles from './Popover.module.css';
 
@@ -42,7 +43,9 @@ export default class PopoverToggle extends React.Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
+    this.close = this.close.bind(this);
     this.outsideHook = this.outsideHook.bind(this);
+    this.unlisten = () => {};
   }
 
   state = {
@@ -51,16 +54,22 @@ export default class PopoverToggle extends React.Component {
 
   componentDidMount() {
     document.addEventListener('click', this.outsideHook);
+    this.unlisten = browserHistory.listen(this.close);
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this.outsideHook);
+    this.unlisten();
   }
 
   outsideHook(e) {
     if (!this.dropdown.contains(e.target)) {
       if (this.state.isOpen) this.toggle();
     }
+  }
+
+  close() {
+    this.setState({ isOpen: false });
   }
 
   toggle() {
@@ -71,7 +80,7 @@ export default class PopoverToggle extends React.Component {
     return (
       <div
         ref={node => { this.dropdown = node; }}
-        className={cn(this.props.className, styles.toggle)}
+        className={cn(this.props.className, styles.popoverToggle)}
         onClick={this.toggle}
       >
         <Popover className={this.props.popoverClassName} active={this.state.isOpen}>
