@@ -69,6 +69,7 @@
       a, button {
         display: block;
         padding: 12px;
+        width: 100%;
       }
 
       &:last-child {
