@@ -1,4 +1,4 @@
-@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, gray-dark, main-black, main-yellow, link-blue, main-gray from "common/variables.module.css";
+@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, gray-dark, main-black, main-yellow, link-blue, main-gray, gray-light, white-light from "common/variables.module.css";
 
 :global {
   /* font */
@@ -120,6 +120,17 @@
       &:hover {
         background-color: main-black;
         color: #fff;
+      }
+    }
+  }
+
+  .buttonGrayLine {
+    border: 1px solid main-gray;
+    color: main-black;
+
+    @media (min-width: 851px) {
+      &:hover {
+        background-color: gray-light;
       }
     }
   }

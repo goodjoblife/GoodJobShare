@@ -7,6 +7,7 @@ import Button from 'common/button/Button';
 
 import ReasonCategory from './ReasonCategory';
 import Reason from './Reason';
+import styles from './ReportForm.module.css';
 
 import authStatus from '../../../constants/authStatus';
 
@@ -132,23 +133,17 @@ class ReportForm extends PureComponent {
         <P
           size="s"
           style={{
-            marginBottom: '30px',
+            marginBottom: '16px',
           }}
         >
           請盡量詳細說明為何這則內容不妥或不實，以供我們評估，您也可以在被檢舉的內容下方留言，
           讓其他使用者知道您的不同意見。
         </P>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginBottom: '18px',
-          }}
-        >
+        <div className={isLogin(auth) ? styles.buttons : styles.notLoginButtons}>
           {
             isLogin(auth) ?
               <Button
-                circleSize="lg"
+                circleSize="md"
                 btnStyle="black"
                 style={{
                   marginRight: '20px',
@@ -158,19 +153,16 @@ class ReportForm extends PureComponent {
                 送出
               </Button> :
               <Button
-                circleSize="lg"
+                circleSize="md"
                 btnStyle="black"
-                style={{
-                  marginRight: '20px',
-                }}
                 onClick={this.login}
               >
                 <pre>{'以 f 認證，並送出檢舉'}</pre>
               </Button>
           }
           <Button
-            circleSize="lg"
-            btnStyle="black"
+            circleSize="md"
+            btnStyle="grayLine"
             onClick={close}
           >
             取消
