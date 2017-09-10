@@ -1,0 +1,32 @@
+@value warning-red from "common/variables.module.css";
+
+.textarea {
+  &::placeholder {
+    color: main-gray;
+    font-weight: 300;
+  }
+}
+
+.warning {
+  position: absolute;
+  color: warning-red;
+  bottom: 8px;
+  left: 16px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notLoginButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  > button:not(:first-child) {
+    margin-top: 16px;
+  }
+}

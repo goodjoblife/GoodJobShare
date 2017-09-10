@@ -8,16 +8,12 @@ import styles from './Base.module.css';
 const ThumbsUp = ({ onClick, toggled, ...restProps }) => (
   <Base onClick={onClick} {...restProps}>
     <i.Like
-      className={cn(
-        toggled ? styles.toggled : '',
-        onClick ? styles.clickable : ''
-      )}
+      className={cn({ [styles.toggled]: toggled })}
     />
   </Base>
 );
 
 ThumbsUp.propTypes = {
-  fontClass: PropTypes.string,
   label: PropTypes.string,
   count: PropTypes.number,
   toggled: PropTypes.bool,

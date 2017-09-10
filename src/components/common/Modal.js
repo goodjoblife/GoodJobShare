@@ -6,14 +6,14 @@ import Cross from '../images/x.svg';
 
 import styles from './Modal.module.css';
 
-const Modal = ({ children, isOpen, hasClose, close }) => (
+const Modal = ({ children, isOpen, hasClose, close, size }) => (
   <div
-    className={
-      cn(styles.modal, { [styles.isOpen]: isOpen })
-    }
+    className={cn(styles.modal, {
+      [styles.isOpen]: isOpen,
+    })}
   >
     <div className={styles.inner}>
-      <div className={styles.container}>
+      <div className={cn(styles.container, styles[size])}>
         {
           hasClose ?
             <div className={styles.close}>
@@ -36,10 +36,12 @@ Modal.propTypes = {
   isOpen: PropTypes.bool,
   hasClose: PropTypes.bool,
   close: PropTypes.func,
+  size: PropTypes.string,
 };
 
 Modal.defaultProps = {
   hasClose: true,
+  size: 's',
 };
 
 export default Modal;

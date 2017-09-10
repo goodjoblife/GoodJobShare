@@ -40,7 +40,7 @@ class CommentBlock extends Component {
     const { reply } = this.props;
 
     return (
-      <section className={styles.container}>
+      <section className={styles.container} id={`reply-${reply._id}`}>
         <div className={styles.heading}>
           <P size="m" bold className={styles.serialNo}>
             {`${reply.floor + 1}F`}

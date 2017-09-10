@@ -12,6 +12,11 @@
     width: 18px;
     height: 18px;
     transition: fill .2s;
+    margin-right: 12px;
+
+    @media (max-width: 550px) {
+      margin-right: 6px;
+    }
 
     &.clickable {
       cursor: pointer;
@@ -28,11 +33,11 @@
     }
   }
 
-  .label, .count {
+  .count {
     margin-left: 12px;
 
     @media (max-width: 550px) {
-      margin-left: 6px;
+      margin-right: 6px;
     }
   }
 }

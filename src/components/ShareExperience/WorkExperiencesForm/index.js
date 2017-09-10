@@ -93,7 +93,7 @@ class WorkExperiencesForm extends React.Component {
     this.appendBlock = this.appendBlock.bind(this);
     this.removeBlock = this.removeBlock.bind(this);
     this.editBlock = this.editBlock.bind(this);
-    this.onSumbit = this.onSumbit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       ...defaultForm,
@@ -119,7 +119,7 @@ class WorkExperiencesForm extends React.Component {
     });
   }
 
-  onSumbit() {
+  onSubmit() {
     const valid = workExperiencesFormCheck(propsWorkExperiencesForm(this.state));
 
     if (valid) {
@@ -271,7 +271,7 @@ class WorkExperiencesForm extends React.Component {
           changeValidationStatus={this.changeValidationStatus}
         />
         <SubmitArea
-          onSubmit={this.onSumbit}
+          onSubmit={this.onSubmit}
         />
       </div>
     );

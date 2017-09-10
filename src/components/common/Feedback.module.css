@@ -1,13 +1,5 @@
 @value main-yellow from "common/variables.module.css";
 
-.wrapper {
-  width: 470px;
-
-  @media (max-width: 550px) {
-    width: 280px;
-  }
-}
-
 .button {
   margin-top: 32px;
   display: flex;
