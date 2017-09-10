@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import Modal from 'common/Modal';
 import Loader from 'common/Loader';
-import Warning from 'common/icons/Warning';
+import { Heading, P } from 'common/base';
+
 import styles from './ReportInspectModal.module.css';
 import { getReports } from '../../apis/reportApi';
 import fetchingStatus from '../../constants/status';
@@ -47,12 +48,12 @@ class ReportInspectModal extends React.Component {
         close={() => toggleReportInspectModal(false)}
         hasClose
       >
-        <h2 className={styles.title}>
+        <Heading size="l" marginBottomS center>
           查看檢舉
-        </h2>
-        { status === fetchingStatus.FETCHING && <Loader /> }
+        </Heading>
+        { status === fetchingStatus.FETCHING && <Loader size="s" /> }
         { status === fetchingStatus.FETCHED && (
-          <div className={styles.reports}>
+          <div>
             {
               reports.length === 0 ?
                 <span>沒有檢舉記錄</span>
@@ -60,9 +61,9 @@ class ReportInspectModal extends React.Component {
             }
             {
               reports.map(({ reason_category: reasonCategory, reason }, i) => (
-                <div key={i} className={styles.report}>
-                  <h2 className="pMBold">{reasonCategory}</h2>
-                  <span className="pM">{reason}</span>
+                <div key={i} className={styles.reportItem}>
+                  <P size="m" bold>{reasonCategory}</P>
+                  <P size="m">{reason}</P>
                 </div>
               ))
             }
@@ -70,7 +71,6 @@ class ReportInspectModal extends React.Component {
         )}
         {status === fetchingStatus.ERROR && (
           <div>
-            <Warning />
             <div>Oops! 發生錯誤</div>
           </div>
         )}

@@ -31,14 +31,13 @@ const Reason = ({ invalid, reason, onChange }) => (
         border: getBorderStyle(invalid),
         lineHeight: '1.5',
         minHeight: '88px',
-        marginTop: '17px',
+        marginTop: '16px',
         marginBottom: '10px',
-        padding: '14px 18px',
+        padding: '12px 16px',
       }}
     />
     <P
       style={{
-        textAlign: 'left',
         color: variables['warning-red'],
         minHeight: '30px',
       }}

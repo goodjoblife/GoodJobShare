@@ -10,12 +10,7 @@ const ReasonCategory = ({
   reasonCategoryOptions,
   handleReasonCategory,
 }) => (
-  <div
-    style={{
-      display: 'flex',
-      flexDirection: 'column',
-    }}
-  >
+  <div>
     {
       reasonCategoryOptions.map(
         ({ label, value }) => (

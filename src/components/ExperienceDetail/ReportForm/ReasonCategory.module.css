@@ -1,6 +1,4 @@
 .radio {
-  display: flex;
-
   &:not(:last-child) {
     margin-bottom: 16px;
   }

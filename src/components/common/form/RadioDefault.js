@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
+
+import { P } from 'common/base';
 
 import {
   makeId,
@@ -27,6 +30,7 @@ class RadioDefault extends React.PureComponent {
     return (
       <label
         htmlFor={id}
+        className={styles.wrapper}
       >
         <input
           id={id}
@@ -40,24 +44,13 @@ class RadioDefault extends React.PureComponent {
           }}
         />
         <span
-          className={checked ? styles.checked : styles.unchecked}
+          className={cn(styles.radio, {
+            [styles.checked]: checked,
+          })}
         />
-        <span
-          style={{
-            display: 'inline-block',
-            verticalAlign: 'middle',
-            marginLeft: '6.5px',
-          }}
-        >
-          <p
-            style={{
-              color: '#333333',
-            }}
-            className="pM"
-          >
-            {label}
-          </p>
-        </span>
+        <P className={styles.label}>
+          {label}
+        </P>
       </label>
     );
   }

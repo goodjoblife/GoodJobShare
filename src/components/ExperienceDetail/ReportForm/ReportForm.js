@@ -110,19 +110,12 @@ class ReportForm extends PureComponent {
     } = this.props;
 
     return (
-      <section
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '460px',
-        }}
-      >
+      <section>
         <Heading
           Tag="h2"
           size="l"
-          style={{
-            marginBottom: '27px',
-          }}
+          marginBottomS
+          center
         >
           檢舉此篇文章
         </Heading>
@@ -139,7 +132,6 @@ class ReportForm extends PureComponent {
         <P
           size="s"
           style={{
-            textAlign: 'initial',
             marginBottom: '30px',
           }}
         >

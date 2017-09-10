@@ -1,5 +1,6 @@
 .textarea {
-
+  width: 100%;
+  
   &::placeholder {
     color: main-gray;
     font-weight: 300;
