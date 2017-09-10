@@ -1,30 +1,34 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
 import styles from './RecommendationBlock.module.css';
 
-const RecommendationBlock = () => (
+const RecommendationBlock = ({ experience }) => (
   <section className={styles.container}>
     <div>
       <div className={`pS ${styles.createdDate}`}>
-        {'面試　•　2016 年 12 月'}
+        { experience.type === 'interview' ? '面試' : '工作' }
       </div>
 
       <div className={`pMBold ${styles.heading}`}>
-        日月光半導體面試經驗分享
+        { experience.title }
       </div>
 
       <div className={`pS ${styles.createdDate}`}>
-        專案工程師
+        { experience.job_title }
       </div>
     </div>
 
     <div className={`pS ${styles.reaction}`}>
-      <ThumbsUp count={15} toggled onClick={e => { console.log(e); }} />
-      <Comment count={35} />
+      <ThumbsUp count={experience.like_count} toggled onClick={e => { console.log(e); }} />
+      <Comment count={experience.reply_count} />
     </div>
   </section>
 );
+
+RecommendationBlock.propTypes = {
+  experience: PropTypes.object.isRequired,
+};
 
 export default RecommendationBlock;
