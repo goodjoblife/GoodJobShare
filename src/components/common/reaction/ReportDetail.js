@@ -2,19 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Base from './Base';
-import Exclamation from '../icons/Exclamation';
 
-import styles from './Base.module.css';
-
-const ReportDetail = ({ onClick, label }) => (
+const ReportDetail = ({ onClick, label, ...restProps }) => (
   <Base
     onClick={onClick}
     label={label}
-  >
-    <Exclamation
-      className={onClick ? styles.clickable : ''}
-    />
-  </Base>
+    {...restProps}
+  />
 );
 
 ReportDetail.propTypes = {
