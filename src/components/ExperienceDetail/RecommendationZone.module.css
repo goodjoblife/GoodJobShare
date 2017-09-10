@@ -4,7 +4,7 @@
   margin-top: 50px;
   .recommendationZone {
     display: flex;
-    > section {
+    > a {
       flex: 1;
       margin-right: 50px;
       &:last-child {
