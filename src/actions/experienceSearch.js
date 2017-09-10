@@ -131,10 +131,11 @@ export const fetchWorkings = val => (dispatch, getState) => {
     });
 };
 
+const KEYWORD_NUM = 5;
 export const fetchKeywords = e => (dispatch, getState) => {
   const data = getState().experienceSearch.toJS();
   const val = e ? e.target.value : data.searchBy;
-  const url = val === 'company' ? '/company_keywords' : '/job_title_keywords';
+  const url = val === 'company' ? `/company_keywords?num=${KEYWORD_NUM}` : `/job_title_keywords?num=${KEYWORD_NUM}`;
   return fetchUtil(url)('GET')
     .then(result => {
       dispatch({
