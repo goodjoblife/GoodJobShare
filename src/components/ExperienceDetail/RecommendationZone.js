@@ -1,7 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-
-// import Button from 'common/button/Button';
-// import Checkbox from 'common/form/Checkbox';
 import Loader from 'common/Loader';
 import RecommendationBlock from './RecommendationBlock';
 import fetchingStatus from '../../constants/status';
@@ -53,7 +50,6 @@ class RecommendationZone extends Component {
 
   render() {
     const { status, experiences } = this.state;
-    console.log(experiences);
     return (
       <div className={styles.container}>
         <div className="subheadingL">您可能還想看...</div>
