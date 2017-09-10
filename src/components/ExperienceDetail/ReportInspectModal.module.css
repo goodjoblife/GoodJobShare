@@ -1,19 +1,6 @@
 @value border-gray from "common/variables.module.css";
 
-.title {
-  font-size: 2rem;
-  margin: 0;
-  margin-top: 15px;
-  margin-bottom: 30px;
-}
-
-.reports {
-  text-align: left;
-  width: 473px;
-  margin: 0 22px;
-
-  .report {
-    padding: 22px 0;
-    border-bottom: 1px solid border-gray;
-  }
+.reportItem {
+  padding: 16px 0;
+  border-bottom: 1px solid border-gray;
 }

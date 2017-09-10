@@ -51,19 +51,26 @@ class ReactionZone extends React.Component {
                 likeExperience(experience);
               }
             }}
+            className={styles.button}
           />
-          <Comment label="留言" count={experience.reply_count} />
+          <Comment
+            label="留言"
+            count={experience.reply_count}
+            className={styles.button}
+          />
           {/* <div className={styles.share}>
             分享
             <button className={styles.button}><Facebook /></button>
           </div> */}
+        </div>
+        <div className={styles.right}>
           <ReportDetail
             label="檢舉"
             onClick={openReportDetail}
+            className={styles.button}
           />
-        </div>
-        <div>
           <PopoverToggle
+            className={styles.moreButton}
             popoverClassName={styles.popover}
             popoverContent={(
               <ReactionZoneOtherOptions
@@ -71,7 +78,7 @@ class ReactionZone extends React.Component {
               />
             )}
           >
-            <div className={styles.popoverToggle}>
+            <div className={styles.popoverIcon}>
               <span />
             </div>
           </PopoverToggle>

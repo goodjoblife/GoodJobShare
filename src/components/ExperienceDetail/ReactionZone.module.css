@@ -1,10 +1,14 @@
-@value border-gray, main-gray, main-yellow from "common/variables.module.css";
+@value border-gray, main-gray, main-yellow, white-light, gray-light from "common/variables.module.css";
 
 .container {
   display: flex;
   justify-content: space-between;
   border: 1px solid border-gray;
   border-top: 0;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+  }
 }
 
 .left {
@@ -13,34 +17,53 @@
   @media (max-width: 550px) {
     width: 100%;
   }
+}
 
-  > div {
-    padding: 16px 32px;
-    border-right: 1px solid border-gray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.right {
+  display: flex;
 
-    @media (max-width: 550px) {
-      padding: 8px;
-      width: calc(100% / 2);
-      font-size: .9em;
-
-      &:last-of-type {
-        border-right: 0;
-      }
-    }
+  @media (max-width: 550px) {
+    border-top: 1px solid border-gray;
   }
 }
 
-.popoverToggle {
+.button, .moreButton {
+  padding: 16px 32px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  padding-left: 16px;
-  padding-right: 16px;
 
+  @media (max-width: 550px) {
+    padding: 8px;
+    width: calc(100% / 2);
+  }
+}
+
+.button {
+  border-right: 1px solid border-gray;
+  transition-duration: .25s;
+  transition-property: color;
+
+  @media (min-width: 1025px) {
+    &:hover {
+      color: main-gray;
+    }
+  }
+
+  @media (max-width: 550px) {
+    font-size: .9em;
+
+    &:last-of-type {
+      border-right: 0;
+    }
+  }
+
+  &:first-child {
+    border-left: 1px solid border-gray;
+  }
+}
+
+.popoverIcon {
   span, &:after, &:before {
     content: '';
     display: inline-block;

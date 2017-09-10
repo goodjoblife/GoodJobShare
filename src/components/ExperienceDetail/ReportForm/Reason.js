@@ -15,6 +15,7 @@ const Reason = ({ invalid, reason, onChange }) => (
   <div
     style={{
       marginBottom: '10px',
+      position: 'relative',
     }}
   >
     <Textarea
@@ -27,24 +28,19 @@ const Reason = ({ invalid, reason, onChange }) => (
         resize: 'none',
         width: '100%',
         color: '#333333',
-        fontSize: '1rem',
         border: getBorderStyle(invalid),
         lineHeight: '1.5',
         minHeight: '88px',
-        marginTop: '17px',
-        marginBottom: '10px',
-        padding: '14px 18px',
+        marginTop: '16px',
+        padding: '12px 16px',
       }}
     />
     <P
-      style={{
-        textAlign: 'left',
-        color: variables['warning-red'],
-        minHeight: '30px',
-      }}
+      className={styles.warning}
+      size="s"
     >
       {
-        invalid ? '請輸入500字以內的內容' : ''
+        invalid ? '請輸入 500 字以內的內容' : ''
       }
     </P>
   </div>

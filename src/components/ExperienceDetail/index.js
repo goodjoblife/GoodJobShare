@@ -263,7 +263,7 @@ class ExperienceDetail extends Component {
             { /* 留言區塊  */}
             {
               data.replyStatus === status.FETCHING
-              ? <Loader />
+              ? <Loader size="s" />
               : <MessageBoard
                 replies={data.replies}
                 likeReply={likeReply}
