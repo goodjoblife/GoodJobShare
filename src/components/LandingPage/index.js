@@ -47,6 +47,7 @@ class LandingPage extends Component {
             <Columns
               Item={ExperienceBlock}
               items={expData.map(data => ({ data, size: 'm' }))}
+              gutter="s"
             />
             <Section center Tag="div">
               <Link className={cn('buttonCircleL', 'buttonBlack')} to="/experiences/search" title="面試工作經驗">

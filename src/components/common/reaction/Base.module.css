@@ -33,8 +33,8 @@
     }
   }
 
-  .count {
-    margin-left: 12px;
+  .label {
+    margin-right: 12px;
 
     @media (max-width: 550px) {
       margin-right: 6px;

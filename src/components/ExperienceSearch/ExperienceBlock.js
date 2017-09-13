@@ -71,9 +71,13 @@ const ExperienceBlock = ({ data, size, backable }) => {
           {salary && <Label text={`${salaryAmount} / ${salaryType}`} Icon={i.Coin} className={styles.salary} />}
         </div>
 
-        <P size="m">
-          {data.preview} ... ... <span className={styles.more}>閱讀更多</span>
-        </P>
+        {
+          (size === 'l' || size === 'm') ?
+            <P size="m">
+              {data.preview} ... ... <span className={styles.more}>閱讀更多</span>
+            </P>
+            : null
+        }
       </section>
       <div className={styles.reaction}>
         <ThumbsUp count={data.like_count} />
