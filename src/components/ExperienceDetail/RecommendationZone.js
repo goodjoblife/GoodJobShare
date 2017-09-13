@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import Loader from 'common/Loader';
-import RecommendationBlock from './RecommendationBlock';
+import Columns from 'common/Columns';
+import { Section, Wrapper, Heading } from 'common/base';
+import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
 import fetchingStatus from '../../constants/status';
 import { getExperiencesRecommended } from '../../apis/experiencesApi';
-
-import styles from './RecommendationZone.module.css';
 
 class RecommendationZone extends Component {
   static propTypes = {
@@ -50,18 +50,20 @@ class RecommendationZone extends Component {
   render() {
     const { status, experiences } = this.state;
     return (
-      <div className={styles.container}>
-        <div className="subheadingL">您可能還想看...</div>
-        <br />
-        <div className={styles.recommendationZone}>
-          { status === fetchingStatus.FETCHING && <Loader /> }
+      <Section paddingTop>
+        <Wrapper size="l">
+          <Heading size="sl" Tag="h4" marginBottomS>您可能還想看...</Heading>
+          { status === fetchingStatus.FETCHING && <Loader size="s" /> }
           {
             status === fetchingStatus.FETCHED &&
-            experiences
-              .map(experience => <RecommendationBlock key={experience._id} experience={experience} />)
+              <Columns
+                Item={ExperienceBlock}
+                items={experiences.map(data => ({ data, size: 's' }))}
+                gutter="s"
+              />
           }
-        </div>
-      </div>
+        </Wrapper>
+      </Section>
     );
   }
 }

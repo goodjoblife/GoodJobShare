@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import cn from 'classnames';
+
 import styles from './Columns.module.css';
 
 const Columns = ({
   Item,
   items,
+  gutter,
 }) => (
   <div className={styles.columns}>
     {
       items.map((props, i) => (
-        <div key={i} className={styles.column}>
+        <div key={i} className={cn(styles.column, styles[`gutter-${gutter}`])}>
           <Item {...props} />
         </div>
       ))
@@ -17,8 +20,12 @@ const Columns = ({
 );
 
 Columns.propTypes = {
-  Item: React.PropTypes.func,
-  items: React.PropTypes.array,
+  Item: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
+  gutter: PropTypes.oneOf(['s', 'm', 'l']),
+};
+Columns.defaultProps = {
+  gutter: 'm',
 };
 
 export default Columns;

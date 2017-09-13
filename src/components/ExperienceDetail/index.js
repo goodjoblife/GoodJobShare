@@ -255,12 +255,13 @@ class ExperienceDetail extends Component {
             />
           </Wrapper>
         </Section>
-        <Section>
-          <Wrapper size="s">
-            { /* 你可能還想看...  */}
-            { <RecommendationZone id={id} /> }
 
-            { /* 留言區塊  */}
+        { /* 你可能還想看...  */}
+        <RecommendationZone id={id} />
+
+        { /* 留言區塊  */}
+        <Section paddingBottom>
+          <Wrapper size="s">
             {
               data.replyStatus === status.FETCHING
               ? <Loader size="s" />
