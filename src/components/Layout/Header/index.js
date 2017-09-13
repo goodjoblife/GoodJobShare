@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import cn from 'classnames';
 import { Wrapper } from 'common/base';
 import { GjLogo, ArrowGo, People, PeopleFill } from 'common/icons';
@@ -19,12 +19,17 @@ class Header extends React.Component {
     this.closeNav = this.closeNav.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.unlisten = () => {};
 
     const { getLoginStatus, FB, getMe } = this.props;
 
     getLoginStatus(FB)
       .then(() => getMe(FB))
       .catch(() => {});
+  }
+
+  componentDidMount() {
+    this.unlisten = browserHistory.listen(this.closeNav);
   }
 
   componentDidUpdate(prevProps) {
@@ -41,6 +46,10 @@ class Header extends React.Component {
       const { getMe, FB } = this.props;
       getMe(FB).catch(() => {});
     }
+  }
+
+  componentWillUnmount() {
+    this.unlisten();
   }
 
   toggleNav() {
@@ -76,13 +85,12 @@ class Header extends React.Component {
             toggle={this.toggleNav}
           />
           <div className={styles.logo}>
-            <Link to="/" title="GoodJob 好工作評論網" onClick={this.closeNav}>
+            <Link to="/" title="GoodJob 好工作評論網">
               <GjLogo />
             </Link>
           </div>
           <nav
             className={cn(styles.nav, { [styles.isNavOpen]: this.state.isNavOpen })}
-            onClick={this.closeNav}
           >
             <SiteMenu isLogin={this.props.auth.get('status') === authStatus.CONNECTED} />
             <div className={styles.buttonsArea}>
