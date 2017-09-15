@@ -87,7 +87,7 @@ class Me extends Component {
                 <div>
                   {
                     data.myExperiencesStatus === status.FETCHING
-                    ? <Loader />
+                    ? <Loader size="s" />
                     : (experiences || []).map(o => (
                       <ShareBlockElement
                         key={o._id}
@@ -103,14 +103,14 @@ class Me extends Component {
                   }
                   {
                     data.myWorkingsStatus === status.FETCHING
-                    ? <Loader />
+                    ? <Loader size="s" />
                     : (workings || []).map(o => (
                       <ShareBlockElement
                         key={o._id}
                         type="薪時"
                         heading={o.company.name}
                         position={o.job_title}
-                        to="/time-and-salary"
+                        to={o.company.name}
                         disabled={o.status === 'hidden'}
                         publishHandler={() => {
                           this.props.setWorkingStatus(o);
@@ -120,7 +120,7 @@ class Me extends Component {
                   }
                   {
                     data.myRepliesStatus === status.FETCHING
-                    ? <Loader />
+                    ? <Loader size="s" />
                     : (replies || []).map(o => (
                       <ShareBlockElement
                         key={o._id}
