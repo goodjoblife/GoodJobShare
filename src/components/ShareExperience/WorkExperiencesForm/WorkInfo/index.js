@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 import subscribeValidation from 'common/subscribeValidation';
 import { People } from 'common/icons';
+import IconHeadingBlock from 'common/IconHeadingBlock';
 
-import IconHeadingBlock from '../../common/IconHeadingBlock';
+import FormGroup from '../../common/FormGroup';
 import CompanyQuery from '../../common/CompanyQuery';
 import Region from '../../common/Region';
 import JobTitle from '../../common/JobTitle';
@@ -61,116 +62,82 @@ class WorkInfo extends React.PureComponent {
     } = this.props;
 
     return (
-      <IconHeadingBlock heading="工作資訊" Icon={People}>
-        <div>
-          <div
-            style={{
-              marginBottom: '35px',
+      <IconHeadingBlock heading="工作資訊" Icon={People} requiredText>
+        <FormGroup>
+          <CompanyQueryWithValidation
+            companyQuery={companyQuery}
+            onChange={v => {
+              handleState('companyQuery')(v);
+              handleState('title')(`${v} 工作經驗分享`);
             }}
-          >
-            <CompanyQueryWithValidation
-              companyQuery={companyQuery}
-              onChange={v => {
-                handleState('companyQuery')(v);
-                handleState('title')(`${v} 工作經驗分享`);
-              }}
-              onCompanyId={handleState('companyId')}
-              validator={companyQueryValidator}
-              submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '41px',
-            }}
-          >
-            <RegionWithValidation
-              region={region}
-              inputTitle={'工作地區'}
-              onChange={handleState('region')}
-              validator={regionValidator}
-              submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '41px',
-            }}
-          >
-            <JobTitleWithValidation
-              inputTitle="職稱"
-              jobTitle={jobTitle}
-              onChange={handleState('jobTitle')}
-              validator={jobTitleValidator}
-              submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '52px',
-            }}
-          >
-            <ExperienceInYear
-              experienceInYear={experienceInYear}
-              onChange={handleState('experienceInYear')}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '64px',
-            }}
-          >
-            <Education
-              education={education}
-              onChange={handleState('education')}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '47px',
-            }}
-          >
-            <IsEmployed
-              isCurrentlyEmployed={isCurrentlyEmployed}
-              jobEndingTimeYear={jobEndingTimeYear}
-              jobEndingTimeMonth={jobEndingTimeMonth}
-              onIsCurrentlyEmployed={handleState('isCurrentlyEmployed')}
-              onJobEndingTimeYear={handleState('jobEndingTimeYear')}
-              onJobEndingTimeMonth={handleState('jobEndingTimeMonth')}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '57px',
-            }}
-          >
-            <Salary
-              salaryType={salaryType}
-              salaryAmount={salaryAmount}
-              onSalaryType={handleState('salaryType')}
-              onSalaryAmount={handleState('salaryAmount')}
-            />
-          </div>
-          <div
-            style={{
-              marginBottom: '36px',
-            }}
-          >
-            <WeekWorkTime
-              weekWorkTime={weekWorkTime}
-              onChange={handleState('weekWorkTime')}
-            />
-          </div>
-          <div>
-            <RecommendToOthers
-              recommendToOthers={recommendToOthers}
-              onChange={handleState('recommendToOthers')}
-            />
-          </div>
-        </div>
+            onCompanyId={handleState('companyId')}
+            validator={companyQueryValidator}
+            submitted={submitted}
+            changeValidationStatus={changeValidationStatus}
+          />
+        </FormGroup>
+        <FormGroup>
+          <RegionWithValidation
+            region={region}
+            inputTitle={'工作地區'}
+            onChange={handleState('region')}
+            validator={regionValidator}
+            submitted={submitted}
+            changeValidationStatus={changeValidationStatus}
+          />
+        </FormGroup>
+        <FormGroup>
+          <JobTitleWithValidation
+            inputTitle="職稱"
+            jobTitle={jobTitle}
+            onChange={handleState('jobTitle')}
+            validator={jobTitleValidator}
+            submitted={submitted}
+            changeValidationStatus={changeValidationStatus}
+          />
+        </FormGroup>
+        <FormGroup>
+          <ExperienceInYear
+            experienceInYear={experienceInYear}
+            onChange={handleState('experienceInYear')}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Education
+            education={education}
+            onChange={handleState('education')}
+          />
+        </FormGroup>
+        <FormGroup>
+          <IsEmployed
+            isCurrentlyEmployed={isCurrentlyEmployed}
+            jobEndingTimeYear={jobEndingTimeYear}
+            jobEndingTimeMonth={jobEndingTimeMonth}
+            onIsCurrentlyEmployed={handleState('isCurrentlyEmployed')}
+            onJobEndingTimeYear={handleState('jobEndingTimeYear')}
+            onJobEndingTimeMonth={handleState('jobEndingTimeMonth')}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Salary
+            salaryType={salaryType}
+            salaryAmount={salaryAmount}
+            onSalaryType={handleState('salaryType')}
+            onSalaryAmount={handleState('salaryAmount')}
+          />
+        </FormGroup>
+        <FormGroup>
+          <WeekWorkTime
+            weekWorkTime={weekWorkTime}
+            onChange={handleState('weekWorkTime')}
+          />
+        </FormGroup>
+        <FormGroup>
+          <RecommendToOthers
+            recommendToOthers={recommendToOthers}
+            onChange={handleState('recommendToOthers')}
+          />
+        </FormGroup>
       </IconHeadingBlock>
     );
   }

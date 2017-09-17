@@ -1,9 +1,9 @@
-@value gray-dark, main-gray, link-blue, border-gray, page-gutter-s from "common/variables.module.css";
+@value gray-dark, main-gray, link-blue, border-gray, page-gutter-s, link-blue from "common/variables.module.css";
 
 .container {
   display: block;
   background-color: #fff;
-  box-shadow: 0 0 4px rgba(0,0,0, .15);
+  box-shadow: 0 0 6px rgba(0,0,0, .15);
   margin-bottom: 40px;
   transition-property: background, box-shadow;
   transition-duration: .3s;
@@ -15,6 +15,9 @@
   @media (min-width: 1025px) {
     &:hover {
       box-shadow: 1px 1px 11px rgba(0,0,0, .25);
+      .heading {
+        color: link-blue;
+      }
     }
   }
 
@@ -40,6 +43,7 @@
 .heading {
   margin-bottom: 16px;
   margin-top: 16px;
+  transition: color, .25s;
 }
 
 .labels {
@@ -73,7 +77,7 @@
   }
 }
 
-.m {
+.m, .s {
   &.container {
     height: 100%;
     position: relative;
@@ -102,9 +106,29 @@
   }
 }
 
-.m {
+.m, .s {
   &.container {
     margin-left: 0;
     margin-right: 0;
   }
+}
+
+.s {
+ &.container {
+   font-size: 0.9em;
+ }
+
+ .labels {
+   color: main-gray;
+   margin-bottom: 0;
+ }
+
+ .company {
+   display: none;
+ }
+
+ .heading {
+   margin-top: 12px;
+   margin-bottom: 12px;
+ }
 }

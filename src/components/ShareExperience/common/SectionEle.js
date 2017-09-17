@@ -27,11 +27,7 @@ const SectionEle = ({
         deleteBtn
       />
     </div>
-    <div
-      style={{
-        marginBottom: '14px',
-      }}
-    >
+    <div className={styles.heading}>
       {
         isSubtitleEditable ?
           <input
@@ -50,7 +46,7 @@ const SectionEle = ({
       useCacheForDOMMeasurements
       value={content}
       onChange={e => editSection('content')(e.target.value)}
-      placeholder={placeholder || '請輸入內文'}
+      placeholder={placeholder || '段落內文...'}
       className={styles.textarea}
       style={{
         resize: 'none',
@@ -58,7 +54,7 @@ const SectionEle = ({
         color: '#333333',
         fontSize: '1rem',
         border: 'none',
-        lineHeight: '1.5rem',
+        lineHeight: '1.5',
         minHeight: '40px',
       }}
     />

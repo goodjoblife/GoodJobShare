@@ -25,7 +25,7 @@ const OverallRating = ({ overallRating, onChange, validator, submitted }) => {
         }}
       >
         <InputTitle
-          text="整體面試滿意程度"
+          text="對公司的面試整體滿意度"
           must
         />
       </div>

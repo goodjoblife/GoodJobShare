@@ -9,4 +9,5 @@
 
 .warning__wording {
   color: warning-red;
+  text-align: center;
 }

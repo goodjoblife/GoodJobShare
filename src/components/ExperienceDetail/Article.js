@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import cn from 'classnames';
 import { Heading, P } from 'common/base';
-import i from 'common/icons';
+import { Good, Bad, Glike } from 'common/icons';
 import rateButtonStyles from 'common/button/RateButtonElement.module.css';
 import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
@@ -22,7 +22,7 @@ const Article = ({ experience }) => (
         </InfoBlock>
         {
           experience.experience_in_year &&
-          <InfoBlock label="相關職務工作經驗">
+          <InfoBlock label="自身相關職務工作經驗">
             {experience.experience_in_year} 年
           </InfoBlock>
         }
@@ -47,10 +47,10 @@ const Article = ({ experience }) => (
             {`${experience.salary.amount} / ${Article.getTimeUnit(experience.salary.type)}`}
           </InfoBlock>
         }
-        <InfoBlock label="面試整體滿意度">
+        <InfoBlock label="對公司的面試整體滿意度">
           <div className={styles.ratingContainer}>
             {[1, 2, 3, 4, 5].map(el => (
-              <i.Glike
+              <Glike
                 key={el}
                 className={cn(rateButtonStyles.container, styles.autoCursor, {
                   [rateButtonStyles.active]: (el <= experience.overall_rating),
@@ -83,12 +83,12 @@ const Article = ({ experience }) => (
         <InfoBlock label="工作地區">
           {experience.region}
         </InfoBlock>
-        <InfoBlock label="應徵職稱">
+        <InfoBlock label="職稱">
           {experience.job_title}
         </InfoBlock>
         {
           experience.experience_in_year &&
-          <InfoBlock label="相關職務工作經驗">
+          <InfoBlock label="自身相關職務工作經驗">
             {experience.experience_in_year} 年
           </InfoBlock>
         }
@@ -113,7 +113,10 @@ const Article = ({ experience }) => (
         {
           experience.recommend_to_others &&
           <InfoBlock label="是否推薦此工作">
-            {experience.recommend_to_others === 'yes' ? '是' : '否'}
+            {experience.recommend_to_others === 'yes' ?
+              <div className={styles.recommendIcon}><Good />推</div>
+              : <div className={styles.recommendIcon}><Bad /> 不推</div>
+            }
           </InfoBlock>
         }
       </ul>

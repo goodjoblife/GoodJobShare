@@ -1,4 +1,4 @@
-@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, gray-dark, main-black, main-yellow, link-blue, main-gray from "common/variables.module.css";
+@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, gray-dark, main-black, main-yellow, link-blue, main-gray, gray-light, white-light from "common/variables.module.css";
 
 :global {
   /* font */
@@ -58,7 +58,7 @@
     justify-content: center;
     font-size: 1em;
     letter-spacing: 0.1em;
-    border-radius: 45px;
+    border-radius: 1.5em;
     transition: background-color .3s;
   }
 
@@ -71,6 +71,12 @@
     padding: 0 40px;
     font-size: 0.95em;
     height: 40px;
+  }
+  .buttonCircleS {
+    padding: 0 24px;
+    font-size: 0.95em;
+    height: 36px;
+    font-weight: 400;
   }
 
   .buttonBlack {
@@ -114,6 +120,17 @@
       &:hover {
         background-color: main-black;
         color: #fff;
+      }
+    }
+  }
+
+  .buttonGrayLine {
+    border: 1px solid main-gray;
+    color: main-black;
+
+    @media (min-width: 851px) {
+      &:hover {
+        background-color: gray-light;
       }
     }
   }
@@ -173,6 +190,15 @@
     @media (min-width: 851px) {
       &:hover {
         border-bottom: 1px solid link-blue;
+      }
+    }
+  }
+
+  .hoverBlue {
+    transition: color .3s;
+    @media (min-width: 1025px) {
+      &:hover {
+        color: link-blue;
       }
     }
   }

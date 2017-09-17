@@ -37,15 +37,9 @@ const recommendToOthersOptions = [
 
 const RecommendToOthers = ({ recommendToOthers, onChange }) => (
   <div>
-    <div
-      style={{
-        marginBottom: '18px',
-      }}
-    >
-      <InputTitle
-        text="你會推薦此工作嗎？"
-      />
-    </div>
+    <InputTitle
+      text="你會推薦此工作嗎？"
+    />
     <ButtonGroupImage
       value={recommendToOthers}
       options={recommendToOthersOptions}

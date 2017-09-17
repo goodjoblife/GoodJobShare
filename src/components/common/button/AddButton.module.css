@@ -1,47 +1,24 @@
-@value main-yellow, main-black, main-orange, yellow-dark from "common/variables.module.css";
+@value main-yellow, main-black, gray-dark, main-gray, main-orange, yellow-dark from "common/variables.module.css";
 @value diameter: 32px;
 
-.button {
-  width: diameter;
+.addQa, .deleteBtn, .addSection {
+  cursor: pointer;
   height: diameter;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   border-radius: diameter;
   color: white;
-  background: #DFDFDF;
   transition: background .25s;
-
-  @media (min-width: 1025px) {
-    &:hover {
-      background: #D0D0D0;
-    }
-  }
 }
 
-.active {
-  background-color: main-yellow;
-
-  @media (min-width: 1025px) {
-    &:hover {
-      background: main-yellow;
-    }
-  }
-
-  .cross {
-    transform: rotate(0);
-  }
-}
-
-.cross {
-  transform: rotate(45deg);
-  transition: transform 0.2s;
-  fill: white;
-  width: 12px;
-  height: 12px;
+.addQa, .deleteBtn {
+  width: diameter;
 }
 
 .addQa {
+  background: main-gray;
+
   @media (min-width: 1025px) {
     &:hover {
       background-color: main-orange;
@@ -51,12 +28,60 @@
 
 .deleteBtn {
   background-color: main-yellow;
+
   .cross {
     transform: rotate(0);
   }
+
   @media (min-width: 1025px) {
     &:hover {
       background: yellow-dark;
     }
   }
+}
+
+.addSection {
+  background-color: #000;
+  color: #fff;
+  width: 90px;
+  font-size: 15px;
+  letter-spacing: 0.05em;
+
+  &.active {
+    background-color: main-yellow;
+    color: #000;
+
+    @media (min-width: 1025px) {
+      &:hover {
+        background: main-yellow;
+      }
+    }
+
+    .cross {
+      transform: rotate(0);
+      fill: #000;
+    }
+  }
+
+  .cross {
+    margin-right: 8px;
+  }
+
+  @media (min-width: 1025px) {
+    &:hover {
+      background-color: main-gray;
+    }
+  }
+
+  @media (max-width: 550px) {
+    width: 80px;
+  }
+}
+
+.cross {
+  transform: rotate(45deg);
+  transition: transform 0.2s;
+  fill: white;
+  width: 12px;
+  height: 12px;
 }

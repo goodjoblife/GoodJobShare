@@ -1,7 +1,6 @@
 import Add from './Add';
 import ArrowGo from './ArrowGo';
 import ArrowLeft from './ArrowLeft';
-import Bad from './Bad';
 import Checked from './Checked';
 import Coin from './Coin';
 import Comment from './Comment';
@@ -9,7 +8,6 @@ import Company from './Company';
 import Ellipses from './Ellipses';
 import Exclamation from './Exclamation';
 import GjLogo from './GjLogo';
-import Glike from './Glike';
 import Like from './Like';
 import Location from './Location';
 import New from './New';
@@ -24,7 +22,6 @@ const icons = {
   Add,
   ArrowGo,
   ArrowLeft,
-  Bad,
   Checked,
   Coin,
   Comment,
@@ -32,7 +29,6 @@ const icons = {
   Ellipses,
   Exclamation,
   GjLogo,
-  Glike,
   Like,
   Location,
   New,
@@ -46,14 +42,22 @@ const icons = {
 
 export default icons;
 
+export { default as ArrowGo } from './ArrowGo';
+export { default as ArrowLeft } from './ArrowLeft';
+export { default as Bad } from './Bad';
+export { default as Bookmark } from './Bookmark';
 export { default as Clock } from './Clock';
 export { default as Coin2 } from './Coin2';
 export { default as Comment2 } from './Comment2';
 export { default as Email } from './Email';
 export { default as Facebook } from './Facebook';
 export { default as Github } from './Github';
+export { default as Good } from './Good';
+export { default as Glike } from './Glike';
+export { default as GjLogo } from './GjLogo';
 export { default as Twitter } from './Twitter';
 
 export { default as Plus } from './Plus';
 export { default as People } from './People';
+export { default as PeopleFill } from './PeopleFill';
 export { default as Minus } from './Minus';

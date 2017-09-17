@@ -15,6 +15,25 @@ jobs:
             - run:
                 name: Build
                 command: npm run build
+    build_dev_docker:
+        working_directory: ~/app
+        docker:
+            - image: buildpack-deps
+        steps:
+            - checkout
+            - run:
+                name: Install Docker client & Docker Compose
+                command: ./.circleci/prepare-docker-compose.sh
+            - setup_remote_docker
+            - run:
+                name: Build Docker Image
+                command: docker-compose -f .circleci/docker-compose-dev.yml build
+            - run:
+                name: Retag
+                command: docker tag 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:dev 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:${CIRCLE_SHA1}
+            - run: ./.circleci/prepare-docker-login.sh
+            - run: docker-compose -f .circleci/docker-compose-dev.yml push
+            - run: docker push 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:${CIRCLE_SHA1}
     build_stage_docker:
         working_directory: ~/app
         docker:
@@ -34,6 +53,17 @@ jobs:
             - run: ./.circleci/prepare-docker-login.sh
             - run: docker-compose -f .circleci/docker-compose-stage.yml push
             - run: docker push 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:${CIRCLE_SHA1}
+    deploy-dev:
+        working_directory: ~/app
+        docker:
+            - image: buildpack-deps
+        steps:
+            - run:
+                name: Trigger Deploy
+                command: |
+                    curl --user ${CIRCLE_API_TOKEN_FOR_DEPLOY}: \
+                        --data build_parameters[CIRCLE_JOB]=build \
+                        https://circleci.com/api/v1.1/project/github/mark86092/goodjob-deploy-ci/tree/www-dev
     deploy-stage:
         working_directory: ~/app
         docker:
@@ -68,6 +98,10 @@ workflows:
     build_and_test:
         jobs:
             - build
+            - build_dev_docker:
+                filters:
+                    branches:
+                        only: dev
             - build_stage_docker:
                 filters:
                     branches:
@@ -76,6 +110,13 @@ workflows:
                 filters:
                     branches:
                         only: master
+            - deploy-dev:
+                requires:
+                    - build
+                    - build_dev_docker
+                filters:
+                    branches:
+                        only: dev
             - deploy-stage:
                 requires:
                     - build

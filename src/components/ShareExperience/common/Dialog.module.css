@@ -1,0 +1,30 @@
+@value main-yellow, yellow-bg from "common/variables.module.css";
+
+.dialog {
+  display: flex;
+  align-items: center;
+  background: yellow-bg;
+  border: 1px solid main-yellow;
+  border-radius: 3px;
+  width: 330px;
+  marginLeft: 74px;
+  padding: 10px;
+
+  @media (max-width: 550px) {
+    width: auto;
+    margin: 0;
+    margin-top: 8px;
+    padding: 8px;
+  }
+}
+
+.exclamation {
+  color: main-yellow;
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-right: 16px;
+
+  @media (max-width: 550px) {
+    display: none;
+  }
+}

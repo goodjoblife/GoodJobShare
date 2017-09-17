@@ -4,7 +4,11 @@
   margin-bottom: 32px;
 
   @media (max-width: 850px) {
-    width: 160px;
+    width: calc(100% / 3);
+  }
+
+  @media (max-width: 550px) {
+    width: 100%;
   }
 }
 
@@ -14,6 +18,8 @@
 }
 
 .content {
+  margin-top: 8px;
+
   > ul {
     margin-left: 1.3em;
     > li {

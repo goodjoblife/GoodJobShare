@@ -24,14 +24,20 @@ const onSendGA = action => {
   });
 };
 
-const SiteMenu = () => (
+const SiteMenu = ({ isLogin }) => (
   <ul className={styles.menu}>
     <li className={styles.menuItem}>
       <a href="/time-and-salary" onClick={() => { onSendGA(GA_ACTION.CLICK_TIME_AND_SALARY); }} >薪資工時</a>
     </li>
     <Item to="/experiences/search" text="面試・工作經驗" onClick={() => { onSendGA(GA_ACTION.CLICK_EXPERIENCE_SEARCH); }} />
     <Item to="/labor-rights" text="勞動小教室" onClick={() => { onSendGA(GA_ACTION.CLICK_LABOR_RIGHTS); }} />
+    {
+      isLogin && (<Item to="/me" text="個人頁面" />)
+    }
   </ul>
 );
+SiteMenu.propTypes = {
+  isLogin: PropTypes.bool,
+};
 
 export default SiteMenu;

@@ -25,13 +25,17 @@ import {
   workExperiencesFormCheck,
 } from './formCheck';
 
+import {
+  LS_WORK_EXPERIENCES_FORM_KEY,
+} from '../../../constants/localStorageKey';
+
 import styles from './WorkExperiencesForm.module.css';
 
 import { HELMET_DATA } from '../../../constants/helmetData';
 import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 
-const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '請輸入標題，例：實際工作內容') => {
+const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '段落標題，例：實際工作內容') => {
   const section = {
     id,
     subtitle,
@@ -91,7 +95,7 @@ class WorkExperiencesForm extends React.Component {
     this.appendBlock = this.appendBlock.bind(this);
     this.removeBlock = this.removeBlock.bind(this);
     this.editBlock = this.editBlock.bind(this);
-    this.onSumbit = this.onSumbit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       ...defaultForm,
@@ -106,9 +110,23 @@ class WorkExperiencesForm extends React.Component {
       category: GA_CATEGORY.SHARE_WORK,
       action: GA_ACTION.ENTER_PAGE,
     });
+
+    let defaultFromDraft;
+
+    try {
+      defaultFromDraft = JSON.parse(localStorage.getItem(LS_WORK_EXPERIENCES_FORM_KEY));
+    } catch (error) {
+      defaultFromDraft = null;
+    }
+
+    const defaultState = defaultFromDraft || defaultForm;
+
+    this.setState({ // eslint-disable-line react/no-did-mount-set-state
+      ...defaultState,
+    });
   }
 
-  onSumbit() {
+  onSubmit() {
     const valid = workExperiencesFormCheck(propsWorkExperiencesForm(this.state));
 
     if (valid) {
@@ -124,6 +142,7 @@ class WorkExperiencesForm extends React.Component {
           action: GA_ACTION.UPLOAD_FAIL,
         });
       });
+      localStorage.removeItem(LS_WORK_EXPERIENCES_FORM_KEY);
       return p;
     }
     this.handleState('submitted')(true);
@@ -157,10 +176,17 @@ class WorkExperiencesForm extends React.Component {
   }
 
   handleState(key) {
-    return value =>
-      this.setState({
+    return value => {
+      const updateState = {
         [key]: value,
-      });
+      };
+      this.setState(updateState);
+      const state = {
+        ...this.state,
+        ...updateState,
+      };
+      localStorage.setItem(LS_WORK_EXPERIENCES_FORM_KEY, JSON.stringify(state));
+    };
   }
 
   appendBlock(blockKey) {
@@ -227,14 +253,14 @@ class WorkExperiencesForm extends React.Component {
         </Heading>
         {
           this.state.submitted ?
-            <h2
+            <div
               style={{
                 marginTop: '20px',
               }}
               className={styles.warning__wording}
             >
               oops! 請檢查底下紅框內的內容是否正確
-            </h2> : null
+            </div> : null
         }
         <WorkInfo
           handleState={this.handleState}
@@ -264,7 +290,7 @@ class WorkExperiencesForm extends React.Component {
           changeValidationStatus={this.changeValidationStatus}
         />
         <SubmitArea
-          onSubmit={this.onSumbit}
+          onSubmit={this.onSubmit}
         />
       </div>
     );

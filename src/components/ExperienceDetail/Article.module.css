@@ -59,7 +59,7 @@ $paddingS: 16px;
   }
 
   @media (max-width: 550px) {
-    padding: $paddingS;
+    padding: $padding $paddingS;
   }
 }
 
@@ -93,5 +93,13 @@ $paddingS: 16px;
 
   @media (max-width: 550px) {
     padding: $paddingS;
+  }
+}
+
+.recommendIcon {
+  svg {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
   }
 }

@@ -204,7 +204,7 @@ class ExperienceSearch extends Component {
                     this.fetchMoreExperiences(nextPage);
                   }
                 }}
-                loader={<Loader />}
+                loader={<Loader size="s" />}
               >
                 {
                   (data.experiences || []).map(o => (

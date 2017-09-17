@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import ButtonAddElement from './ButtonAddElement';
 import AddButton from './AddButton';
+import styles from './ButtonAdd.module.css';
 
 class ButtonAdd extends React.PureComponent {
   constructor(props) {
@@ -31,28 +32,15 @@ class ButtonAdd extends React.PureComponent {
     } = this.state;
 
     return (
-      <div
-        style={{
-          display: 'flex',
-          minHeight: '40px',
-        }}
-      >
-        <div
-          style={{
-            marginRight: '35px',
-          }}
-        >
+      <div className={styles.wrapper}>
+        <div className={styles.button}>
           <AddButton
             active={stage !== 0}
             onClick={this.handleStage}
+            addSection
           />
         </div>
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-          }}
-        >
+        <div className={styles.sectionButtons}>
           {
             stage !== 0 ?
               options.map(ele =>

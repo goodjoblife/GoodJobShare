@@ -1,0 +1,7 @@
+.group {
+  margin-bottom: 64px;
+
+  @media (max-width: 550px) {
+    margin-bottom: 32px;
+  }
+}
