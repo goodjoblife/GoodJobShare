@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import InfiniteScroll from 'react-infinite-scroller';
+import ReactGA from 'react-ga';
 
 import Checkbox from 'common/form/Checkbox';
 import Loader from 'common/Loader';
@@ -12,9 +13,18 @@ import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
 import WorkingHourBlock from './WorkingHourBlock';
 import { fetchExperiences } from '../../actions/experienceSearch';
-import { HELMET_DATA } from '../../constants/helmetData';
 
+import { HELMET_DATA } from '../../constants/helmetData';
 import getScale from '../../utils/numberUtils';
+
+import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
+
+const SORT = { CREATED_AT: 'created_at', POPULARITY: 'popularity' };
+const SEARCH_TYPE = {
+  INTERVIEW: 'interview',
+  WORK: 'work',
+  SALARY: 'salary',
+};
 
 class ExperienceSearch extends Component {
   static fetchData({ store: { dispatch } }) {
@@ -44,6 +54,23 @@ class ExperienceSearch extends Component {
     this.props.fetchKeywords('');
   }
 
+  setSearchType = e => {
+    const searchType = e.target.value;
+    const on = this.props.experienceSearch.get(searchType);
+    if (on) {
+      ReactGA.event({
+        category: GA_CATEGORY.SEARCH_EXPERIENCE,
+        action: `${GA_ACTION.TOGGLE_OFF}_${searchType}`,
+      });
+    } else {
+      ReactGA.event({
+        category: GA_CATEGORY.SEARCH_EXPERIENCE,
+        action: `${GA_ACTION.TOGGLE_ON}_${searchType}`,
+      });
+    }
+    this.props.setSearchType(e);
+  }
+
   handleKeyPress(e) {
     if (e.key === 'Enter') {
       const val = e.target.value;
@@ -57,12 +84,38 @@ class ExperienceSearch extends Component {
   }
 
   fetchExperiencesAndWorkings(val) {
+    ReactGA.event({
+      category: GA_CATEGORY.SEARCH_EXPERIENCE,
+      action: `${GA_ACTION.SEARCH_BY}_${this.props.experienceSearch.get('searchBy')}`,
+      value: val,
+    });
     this.props.fetchExperiences('searchBy', val, 0);
     this.props.fetchWorkings(val);
   }
 
   fetchExperiencesWithSort(e) {
+    const value = e.target.value;
+    if (value === SORT.CREATED_AT) {
+      ReactGA.event({
+        category: GA_CATEGORY.SEARCH_EXPERIENCE,
+        action: GA_ACTION.CLICK_LATEST,
+      });
+    } else if (value === SORT.POPULARITY) {
+      ReactGA.event({
+        category: GA_CATEGORY.SEARCH_EXPERIENCE,
+        action: GA_ACTION.CLICK_POPULAR,
+      });
+    }
     this.props.fetchExperiences('sort', e.target.value, 0);
+  }
+
+  fetchMoreExperiences = nextPage => {
+    ReactGA.event({
+      category: GA_CATEGORY.SEARCH_EXPERIENCE,
+      action: GA_ACTION.FETCH_MORE,
+      value: nextPage,
+    });
+    this.props.fetchMoreExperiences(nextPage);
   }
 
   renderHelmet = () => {
@@ -78,8 +131,7 @@ class ExperienceSearch extends Component {
 
   render() {
     const {
-      /* setSort, */ setSearchType, /* setIndustry, */ fetchKeywords, setKeyword,
-      fetchMoreExperiences,
+      /* setSort, setIndustry, */ fetchKeywords, setKeyword,
       experienceSearch,
     } = this.props;
     const data = experienceSearch.toJS();
@@ -92,18 +144,18 @@ class ExperienceSearch extends Component {
             <aside className={styles.aside}>
               <section>
                 <button
-                  className={data.sort === 'created_at'
+                  className={data.sort === SORT.CREATED_AT
                     ? `${styles.frontButton} ${styles.toggle}`
                     : styles.frontButton}
-                  onClick={this.fetchExperiencesWithSort} value="created_at"
+                  onClick={this.fetchExperiencesWithSort} value={SORT.CREATED_AT}
                 >
                   最新
                 </button>
                 <button
-                  className={data.sort === 'popularity'
+                  className={data.sort === SORT.POPULARITY
                     ? `${styles.rearButton} ${styles.toggle}`
                     : styles.rearButton}
-                  onClick={this.fetchExperiencesWithSort} value="popularity"
+                  onClick={this.fetchExperiencesWithSort} value={SORT.POPULARITY}
                 >
                   熱門
                 </button>
@@ -112,15 +164,15 @@ class ExperienceSearch extends Component {
               <div className={styles.fliters}>
                 {
                   [
-                    { label: '面試經驗', value: 'interview' },
-                    { label: '工作經驗', value: 'work' },
-                    { label: '薪資工時', value: 'salary' },
+                    { label: '面試經驗', value: SEARCH_TYPE.INTERVIEW },
+                    { label: '工作經驗', value: SEARCH_TYPE.WORK },
+                    { label: '薪資工時', value: SEARCH_TYPE.SALARY },
                   ].map(o => (
                     <Checkbox
                       key={o.value} id={`searchType-${o.value}`}
                       label={o.label} value={o.value}
                       disabled={o.value === 'salary' && !data.searchQuery}
-                      onChange={setSearchType}
+                      onChange={this.setSearchType}
                       checked={data[o.value]}
                     />
                   ))
@@ -149,7 +201,7 @@ class ExperienceSearch extends Component {
                 pageStart={0} hasMore={data.hasMore}
                 loadMore={nextPage => {
                   if (data.hasMore) {
-                    fetchMoreExperiences(nextPage);
+                    this.fetchMoreExperiences(nextPage);
                   }
                 }}
                 loader={<Loader size="s" />}

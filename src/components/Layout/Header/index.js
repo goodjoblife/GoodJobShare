@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import cn from 'classnames';
+import ReactGA from 'react-ga';
 import { Wrapper } from 'common/base';
 import { GjLogo, ArrowGo, People, PeopleFill } from 'common/icons';
 import PopoverToggle from 'common/PopoverToggle';
@@ -8,6 +9,7 @@ import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 
 import authStatus from '../../../constants/authStatus';
+import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 
 class Header extends React.Component {
   constructor(props) {
@@ -52,6 +54,13 @@ class Header extends React.Component {
     this.unlisten();
   }
 
+  onClickShareData = () => {
+    ReactGA.event({
+      category: GA_CATEGORY.HEADER,
+      action: GA_ACTION.CLICK_SHARE_DATA,
+    });
+  }
+
   toggleNav() {
     this.setState({
       isNavOpen: !this.state.isNavOpen,
@@ -94,7 +103,7 @@ class Header extends React.Component {
           >
             <SiteMenu isLogin={this.props.auth.get('status') === authStatus.CONNECTED} />
             <div className={styles.buttonsArea}>
-              <Link to="/share" className={styles.leaveDataBtn}>
+              <Link to="/share" className={styles.leaveDataBtn} onClick={this.onClickShareData}>
                 留下資料<ArrowGo />
               </Link>
               <div style={{ position: 'relative' }}>
