@@ -106,11 +106,6 @@ class WorkExperiencesForm extends React.Component {
   }
 
   componentDidMount() {
-    ReactGA.event({
-      category: GA_CATEGORY.SHARE_WORK,
-      action: GA_ACTION.ENTER_PAGE,
-    });
-
     let defaultFromDraft;
 
     try {

@@ -116,11 +116,6 @@ class InterviewForm extends React.Component {
   }
 
   componentDidMount() {
-    ReactGA.event({
-      category: GA_CATEGORY.SHARE_INTERVIEW,
-      action: GA_ACTION.ENTER_PAGE,
-    });
-
     let defaultFromDraft;
 
     try {

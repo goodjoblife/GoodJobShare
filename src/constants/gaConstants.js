@@ -9,7 +9,6 @@ export const GA_CATEGORY = {
 };
 
 export const GA_ACTION = {
-  ENTER_PAGE: 'enter_page',
   START_WRITING: 'start_writing',
   UPLOAD_SUCCESS: 'upload_success',
   UPLOAD_FAIL: 'upload_fail',
