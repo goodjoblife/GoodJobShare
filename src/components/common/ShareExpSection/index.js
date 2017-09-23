@@ -3,11 +3,17 @@ import { Link } from 'react-router';
 import { Section, Wrapper, Heading, P } from 'common/base';
 import styles from './ShareExpSection.module.css';
 
-const ShareExpSection = ({ heading, subheading }) => (
+const DefaultSubheading = () => (
+  <div>
+    面試又被問家庭、感情狀況 ( ˘･з･)？<br />覺得現在的公司超級棒、想要分享給大家 (^y^)？ <br />分享你的經驗，讓我們一起改變現狀、定義理想的工作！
+  </div>
+);
+
+const ShareExpSection = ({ heading, Subheading }) => (
   <Section padding>
     <Wrapper size="l">
-      <Heading size="l" center className={styles.heading} marginBottom>{heading}</Heading>
-      <P size="l" Tag="h2" center className={styles.subheading}>{subheading}</P>
+      <Heading size="l" center className={styles.heading} marginBottomS>{heading}</Heading>
+      <P size="l" Tag="h2" center className={styles.subheading}><Subheading /></P>
       <div className={styles.container}>
         <a href="/share/time-and-salary" className={styles.item}>
           <img src="https://image.goodjob.life/share-1.png" alt="留下工時或薪資" className={styles.image} />
@@ -17,7 +23,7 @@ const ShareExpSection = ({ heading, subheading }) => (
         <Link to="/share/interview" className={styles.item}>
           <img src="https://image.goodjob.life/share-2.png" alt="分享面試經驗" className={styles.image} />
           <P size="l" Tag="h3" bold className={styles.button}>面試經驗</P>
-          <P className={styles.description} size="l">分享你的面試過程、面試問題，減少大家走冤望路～</P>
+          <P className={styles.description} size="l">分享你的面試過程、面試問題，減少大家走冤枉路～</P>
         </Link>
         <Link to="/share/work-experiences" className={styles.item}>
           <img src="https://image.goodjob.life/share-3.png" alt="分享工作經驗" className={styles.image} />
@@ -30,11 +36,11 @@ const ShareExpSection = ({ heading, subheading }) => (
 );
 ShareExpSection.propTypes = {
   heading: PropTypes.string.isRequired,
-  subheading: PropTypes.string.isRequired,
+  Subheading: PropTypes.func,
 };
 ShareExpSection.defaultProps = {
   heading: '你要分享何種資訊？',
-  subheading: '面試又被問家庭、感情狀況 ( ˘･з･)？覺得現在的公司超級棒、想要分享給大家 (^y^)？分享你的經驗，讓我們一起改變現狀、定義理想的工作！',
+  Subheading: DefaultSubheading,
 };
 
 export default ShareExpSection;

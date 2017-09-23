@@ -70,7 +70,7 @@ class LandingPage extends Component {
             </Link>
           </Section>
         </Section>
-        <ShareExpSection heading="現在就留下你的資料吧！" />
+        <ShareExpSection heading="現在就留下你的資料" />
       </main>
     );
   }
