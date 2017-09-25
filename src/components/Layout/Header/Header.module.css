@@ -78,16 +78,16 @@
 }
 
 .leaveDataBtn {
-  color: #fff;
+  display: flex;
+  background-color: main-yellow;
   height: 36px;
+  border-radius: 1.5em;
   align-items: center;
   justify-content: center;
-  display: flex;
   padding-right: 20px;
   padding-left: 20px;
-  border: 1px solid #bbb;
-  background-color: rgba(255,255,255,.15);
   font-size: .92em;
+  font-weight: 400;
   letter-spacing: 1px;
   transition-property: background, color;
   transition-duration: .3s;
@@ -95,18 +95,34 @@
   svg {
     width: 20px;
     height: 20px;
-    fill: #fff;
+    fill: main-black;
     margin-left: 8px;
   }
 
-  @media (min-width: 851px) {
+  @media (min-width: 1025px) {
     &:hover {
-      background-color: rgba(255,255,255, .3);
+      background-color: rgba(255,255,255, .9);
     }
   }
 
   @media (max-width: 850px) {
-    margin-top: 16px;
+    display: none;
+  }
+
+  &.isMobileButton {
+    display: none;
+
+    @media (max-width: 850px) {
+      display: flex;
+      position: fixed;
+      top: 9px;
+      height: 32px;
+      right: 60px;
+
+      svg {
+        display: none;
+      }
+    }
   }
 }
 
@@ -137,6 +153,9 @@
         fill: main-yellow;
       }
     }
+  }
+  @media (max-width: 850px) {
+    margin-left: 0;
   }
 }
 

@@ -33,6 +33,14 @@
   }
 }
 
+.marginTop {
+  margin-top: 64px;
+
+  @media (max-width: 550px) {
+    margin-top: 48px;
+  }
+}
+
 .center {
   display: flex;
   justify-content: center;

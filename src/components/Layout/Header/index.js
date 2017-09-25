@@ -98,14 +98,13 @@ class Header extends React.Component {
               <GjLogo />
             </Link>
           </div>
+          <ShareButton onClick={this.onClickShareData} isMobileButton />
           <nav
             className={cn(styles.nav, { [styles.isNavOpen]: this.state.isNavOpen })}
           >
             <SiteMenu isLogin={this.props.auth.get('status') === authStatus.CONNECTED} />
             <div className={styles.buttonsArea}>
-              <Link to="/share" className={styles.leaveDataBtn} onClick={this.onClickShareData}>
-                留下資料<ArrowGo />
-              </Link>
+              <ShareButton onClick={this.onClickShareData} />
               <div style={{ position: 'relative' }}>
                 {
                   this.props.auth.getIn(['user', 'name']) === null &&
@@ -155,10 +154,28 @@ const HeaderButton = ({ isNavOpen, toggle }) => (
     <span />
   </div>
 );
-
 HeaderButton.propTypes = {
   isNavOpen: React.PropTypes.bool.isRequired,
   toggle: React.PropTypes.func.isRequired,
+};
+
+const ShareButton = ({ isMobileButton, onClick }) => (
+  <Link
+    to="/share"
+    className={cn(styles.leaveDataBtn, {
+      [styles.isMobileButton]: isMobileButton,
+    })}
+    onClick={onClick}
+  >
+    立即分享<ArrowGo />
+  </Link>
+);
+ShareButton.propTypes = {
+  isMobileButton: React.PropTypes.bool,
+  onClick: React.PropTypes.func,
+};
+ShareButton.defaultProps = {
+  isMobileButton: false,
 };
 
 export default Header;
