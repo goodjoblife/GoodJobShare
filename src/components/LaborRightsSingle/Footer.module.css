@@ -1,7 +1,11 @@
 @value border-gray, main-gray, gray-dark from "common/variables.module.css";
 
 .footer {
-  margin-top: 100px;
+  margin-top: 60px;
+
+  @media (max-width: 850px) {
+    margin-top: 32px;
+  }
 }
 
 .share {

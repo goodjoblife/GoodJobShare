@@ -1,12 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import cn from 'classnames';
+import ReactGA from 'react-ga';
 import { Wrapper } from 'common/base';
-import i from 'common/icons';
+import { GjLogo, ArrowGo, People, PeopleFill } from 'common/icons';
+import PopoverToggle from 'common/PopoverToggle';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 
 import authStatus from '../../../constants/authStatus';
+import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 
 class Header extends React.Component {
   constructor(props) {
@@ -17,12 +20,18 @@ class Header extends React.Component {
     this.toggleNav = this.toggleNav.bind(this);
     this.closeNav = this.closeNav.bind(this);
     this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
+    this.unlisten = () => {};
 
     const { getLoginStatus, FB, getMe } = this.props;
 
     getLoginStatus(FB)
       .then(() => getMe(FB))
       .catch(() => {});
+  }
+
+  componentDidMount() {
+    this.unlisten = browserHistory.listen(this.closeNav);
   }
 
   componentDidUpdate(prevProps) {
@@ -39,6 +48,17 @@ class Header extends React.Component {
       const { getMe, FB } = this.props;
       getMe(FB).catch(() => {});
     }
+  }
+
+  componentWillUnmount() {
+    this.unlisten();
+  }
+
+  onClickShareData = () => {
+    ReactGA.event({
+      category: GA_CATEGORY.HEADER,
+      action: GA_ACTION.CLICK_SHARE_DATA,
+    });
   }
 
   toggleNav() {
@@ -59,6 +79,12 @@ class Header extends React.Component {
       .catch(() => {});
   }
 
+  logout() {
+    const { logout, FB } = this.props;
+    logout(FB)
+      .catch(() => {});
+  }
+
   render() {
     return (
       <header className={styles.header}>
@@ -68,31 +94,41 @@ class Header extends React.Component {
             toggle={this.toggleNav}
           />
           <div className={styles.logo}>
-            <Link to="/" title="GoodJob 好工作評論網" onClick={this.closeNav}>
-              <i.GjLogo />
+            <Link to="/" title="GoodJob 好工作評論網">
+              <GjLogo />
             </Link>
           </div>
+          <ShareButton onClick={this.onClickShareData} isMobileButton />
           <nav
             className={cn(styles.nav, { [styles.isNavOpen]: this.state.isNavOpen })}
-            onClick={this.closeNav}
           >
-            <SiteMenu />
+            <SiteMenu isLogin={this.props.auth.get('status') === authStatus.CONNECTED} />
             <div className={styles.buttonsArea}>
-              <Link to="/share" className={styles.leaveDataBtn}>
-                留下資料<i.ArrowGo />
-              </Link>
-              {
-                this.props.auth.getIn(['user', 'name']) === null &&
-                <button className={styles.loginBtn} onClick={this.login}>
-                  <i.People />登入
-                </button>
-              }
-              {
-                this.props.auth.getIn(['user', 'name']) !== null &&
-                <div className={cn(styles.loginBtn, styles.disableBtn)}>
-                  <i.People />{this.props.auth.getIn(['user', 'name'])}
-                </div>
-              }
+              <ShareButton onClick={this.onClickShareData} />
+              <div style={{ position: 'relative' }}>
+                {
+                  this.props.auth.getIn(['user', 'name']) === null &&
+                  <button className={styles.loginBtn} onClick={this.login}>
+                    <People />登入
+                  </button>
+                }
+                {
+                  this.props.auth.getIn(['user', 'name']) !== null &&
+                  <PopoverToggle
+                    popoverClassName={styles.popover}
+                    popoverContent={(
+                      <ul className={styles.popoverItem}>
+                        <li><Link to="/me">個人頁面</Link></li>
+                        <li><button onClick={() => { this.logout(); }}>登出</button></li>
+                      </ul>
+                    )}
+                  >
+                    <div className={styles.loginBtn}>
+                      <PeopleFill />{this.props.auth.getIn(['user', 'name'])}
+                    </div>
+                  </PopoverToggle>
+                }
+              </div>
             </div>
           </nav>
         </Wrapper>
@@ -103,6 +139,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
   login: React.PropTypes.func.isRequired,
+  logout: React.PropTypes.func.isRequired,
   getLoginStatus: React.PropTypes.func.isRequired,
   getMe: React.PropTypes.func.isRequired,
   auth: React.PropTypes.object,
@@ -117,10 +154,28 @@ const HeaderButton = ({ isNavOpen, toggle }) => (
     <span />
   </div>
 );
-
 HeaderButton.propTypes = {
   isNavOpen: React.PropTypes.bool.isRequired,
   toggle: React.PropTypes.func.isRequired,
+};
+
+const ShareButton = ({ isMobileButton, onClick }) => (
+  <Link
+    to="/share"
+    className={cn(styles.leaveDataBtn, {
+      [styles.isMobileButton]: isMobileButton,
+    })}
+    onClick={onClick}
+  >
+    立即分享<ArrowGo />
+  </Link>
+);
+ShareButton.propTypes = {
+  isMobileButton: React.PropTypes.bool,
+  onClick: React.PropTypes.func,
+};
+ShareButton.defaultProps = {
+  isMobileButton: false,
 };
 
 export default Header;

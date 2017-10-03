@@ -80,14 +80,14 @@ class LaborRightsSingle extends React.Component {
                 description={description}
                 content={content}
               />
+              <CallToAction
+                imgSrc="https://image.goodjob.life/cta-02.jpg"
+                marginTop
+              />
               <Footer
                 id={id}
                 prev={this.props.prev}
                 next={this.props.next}
-              />
-              <CallToAction
-                imgSrc="https://image.goodjob.life/cta-01.png"
-                marginTop
               />
             </div>
         }

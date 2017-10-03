@@ -8,7 +8,7 @@ import Button from 'common/button/Button';
 import styles from './Feedback.module.css';
 
 const Feedback = ({ buttonClick, heading, info, buttonText, Icon }) => (
-  <div className={styles.wrapper}>
+  <div style={{ textAlign: 'center' }}>
     <Icon className={styles.icon} />
     <Heading size="l" marginBottomS center>
       {heading}

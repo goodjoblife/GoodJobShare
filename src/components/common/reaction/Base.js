@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import cn from 'classnames';
 
 import styles from './Base.module.css';
 
@@ -16,9 +17,9 @@ const renderCount = count => {
   return <div className={styles.count}>{count}</div>;
 };
 
-const Base = ({ fontClass, children, label, count, style, onClick }) => (
+const Base = ({ className, style, children, label, count, onClick }) => (
   <div
-    className={`${fontClass || 'pS'} ${styles.container}`}
+    className={cn(className, styles.container)}
     style={style}
     onClick={onClick}
   >
@@ -29,12 +30,11 @@ const Base = ({ fontClass, children, label, count, style, onClick }) => (
 );
 
 Base.propTypes = {
-  fontClass: PropTypes.string,
+  className: PropTypes.string,
   children: PropTypes.node.isRequired,
   label: PropTypes.string,
   count: PropTypes.number,
   style: PropTypes.object,
-  // toggled: PropTypes.bool,
   onClick: PropTypes.func,
 };
 

@@ -3,20 +3,34 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import Loader from 'common/Loader';
 import { Wrapper, Section, Heading, P } from 'common/base';
+import Modal from 'common/Modal';
+import NotFound from 'common/NotFound';
+
 import styles from './ExperienceDetail.module.css';
 import Article from './Article';
 import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
-// import RecommendationZone from './RecommendationZone';
+import RecommendationZone from './RecommendationZone';
 import MessageBoard from '../../containers/ExperienceDetail/MessageBoard';
 import BackToList from './BackToList';
+import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
+import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
+
 import status from '../../constants/status';
 import {
   fetchExperience,
 } from '../../actions/experienceDetail';
+import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
+
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { SITE_NAME } from '../../constants/helmetData';
 
 import authStatus from '../../constants/authStatus';
+
+const MODAL_TYPE = {
+  REPORT_DETAIL: 'REPORT_TYPE',
+  REPORT_API_ERROR: 'REPORT_API_ERROR',
+  REPORT_SUCCESS: 'REPORT_SUCCESS',
+};
 
 class ExperienceDetail extends Component {
   static propTypes = {
@@ -33,6 +47,9 @@ class ExperienceDetail extends Component {
       query: React.PropTypes.shape({
         backable: React.PropTypes.string,
       }),
+      state: React.PropTypes.shape({
+        replyId: React.PropTypes.string,
+      }),
     }),
     authStatus: React.PropTypes.string,
   }
@@ -41,9 +58,26 @@ class ExperienceDetail extends Component {
     return store.dispatch(fetchExperience(params.id));
   }
 
+  static getPosition(obj) {
+    let top = 0;
+    let parent = obj;
+    while (parent) {
+      top += parent.offsetTop;
+      parent = parent.offsetParent;
+    }
+    return top - 54; // deduct header
+  }
+
   constructor() {
     super();
     this.submitComment = this.submitComment.bind(this);
+
+    this.state = {
+      isModalOpen: false,
+      modalType: '',
+    };
+
+    this.goTo = true;
   }
 
   componentDidMount() {
@@ -65,10 +99,69 @@ class ExperienceDetail extends Component {
     }
   }
 
+  componentDidUpdate() {
+    if (window && this.goTo && this.props.location.state && this.props.location.state.replyId) {
+      const id = `reply-${this.props.location.state.replyId}`;
+      if (document.getElementById(id)) {
+        window.scrollTo(
+          0,
+          ExperienceDetail.getPosition(document.getElementById(id))
+        );
+        this.goTo = false;
+      }
+    }
+  }
+
   submitComment() {
     const { experienceDetail } = this.props;
     const data = experienceDetail.toJS();
     this.props.submitComment(data.experience._id);
+  }
+
+  handleIsModalOpen = (isModalOpen, modalType, modalPayload = {}) =>
+    this.setState({
+      isModalOpen,
+      modalType,
+      modalPayload,
+    })
+
+  renderModalChildren = modalType => {
+    const {
+      modalPayload,
+    } = this.state;
+
+    switch (modalType) {
+      case MODAL_TYPE.REPORT_DETAIL:
+        return (
+          <ReportFormContainer
+            close={() => this.handleIsModalOpen(false)}
+            id={this.props.params.id}
+            onApiError={
+              pload =>
+                this.handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload)
+            }
+            onSuccess={
+              () =>
+                this.handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS)
+            }
+          />
+        );
+      case MODAL_TYPE.REPORT_API_ERROR:
+        return (
+          <ApiErrorFeedback
+            buttonClick={() => this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)}
+            message={modalPayload.message}
+          />
+        );
+      case MODAL_TYPE.REPORT_SUCCESS:
+        return (
+          <ReportSuccessFeedback
+            buttonClick={() => this.handleIsModalOpen(false)}
+          />
+        );
+      default:
+        return null;
+    }
   }
 
   renderHelmet = () => {
@@ -109,14 +202,23 @@ class ExperienceDetail extends Component {
 
   render() {
     const {
-      experienceDetail, setTos, setComment, likeExperience, likeReply,
+      experienceDetail, setTos, setComment, likeExperience, likeReply, params: { id },
     } = this.props;
+
+    const {
+      isModalOpen,
+      modalType,
+      modalPayload,
+    } = this.state;
 
     const backable = this.props.location.query.backable || 'false';
     const data = experienceDetail.toJS();
     const experience = data.experience;
-    return (
-      <main>
+
+    return ((data.experienceError && data.experienceError.error)
+      ? ((data.experienceError.error.status === 403 && <NotFound heading="本篇文章已經被原作者隱藏，目前無法查看" />) ||
+         (data.experienceError.error.status === 404 && <NotFound />) || null)
+      : (<main>
         {this.renderHelmet()}
         <Section bg="white" paddingBottom pageTop>
           <Wrapper size="l">
@@ -141,22 +243,28 @@ class ExperienceDetail extends Component {
             }
 
             { /* 按讚，分享，檢舉區塊  */}
-            <ReactionZone experience={experience} likeExperience={likeExperience} />
+            <ReactionZone
+              experience={experience}
+              likeExperience={likeExperience}
+              openReportDetail={() => this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)}
+              id={id}
+            />
 
             <BackToList
               backable={JSON.parse(backable)}
             />
           </Wrapper>
         </Section>
-        <Section>
-          <Wrapper size="s">
-            { /* 你可能還想看...  */}
-            { /* <RecommendationZone /> */ }
 
-            { /* 留言區塊  */}
+        { /* 你可能還想看...  */}
+        <RecommendationZone id={id} />
+
+        { /* 留言區塊  */}
+        <Section paddingBottom>
+          <Wrapper size="s">
             {
               data.replyStatus === status.FETCHING
-              ? <Loader />
+              ? <Loader size="s" />
               : <MessageBoard
                 replies={data.replies}
                 likeReply={likeReply}
@@ -167,8 +275,15 @@ class ExperienceDetail extends Component {
             }
           </Wrapper>
         </Section>
+        <Modal
+          isOpen={isModalOpen}
+          close={() => this.handleIsModalOpen(false)}
+          hasClose={false}
+        >
+          {this.renderModalChildren(modalType, modalPayload)}
+        </Modal>
       </main>
-    );
+    ));
   }
 }
 

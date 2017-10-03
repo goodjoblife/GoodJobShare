@@ -7,6 +7,7 @@ import experienceDetail from './experienceDetail';
 import experienceSearch from './experienceSearch';
 import laborRightsSingle from './laborRightsSingle';
 import laborRightsMenu from './laborRightsMenu';
+import me from './me';
 
 const rootReducer = combineReducers({
   auth,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   experienceDetail,
   laborRightsSingle,
   laborRightsMenu,
+  me,
   routing,
 });
 

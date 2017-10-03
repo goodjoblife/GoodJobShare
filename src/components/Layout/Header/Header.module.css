@@ -1,4 +1,4 @@
-@value main-yellow, main-black, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
+@value main-yellow, main-black, border-gray, main-gray NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
 .header {
   position: fixed;
@@ -78,16 +78,16 @@
 }
 
 .leaveDataBtn {
-  color: #fff;
+  display: flex;
+  background-color: main-yellow;
   height: 36px;
+  border-radius: 1.5em;
   align-items: center;
   justify-content: center;
-  display: flex;
   padding-right: 20px;
   padding-left: 20px;
-  border: 1px solid #bbb;
-  background-color: rgba(255,255,255,.15);
   font-size: .92em;
+  font-weight: 400;
   letter-spacing: 1px;
   transition-property: background, color;
   transition-duration: .3s;
@@ -95,18 +95,34 @@
   svg {
     width: 20px;
     height: 20px;
-    fill: #fff;
+    fill: main-black;
     margin-left: 8px;
   }
 
-  @media (min-width: 851px) {
+  @media (min-width: 1025px) {
     &:hover {
-      background-color: rgba(255,255,255, .3);
+      background-color: rgba(255,255,255, .9);
     }
   }
 
   @media (max-width: 850px) {
-    margin-top: 16px;
+    display: none;
+  }
+
+  &.isMobileButton {
+    display: none;
+
+    @media (max-width: 850px) {
+      display: flex;
+      position: fixed;
+      top: 9px;
+      height: 32px;
+      right: 60px;
+
+      svg {
+        display: none;
+      }
+    }
   }
 }
 
@@ -126,17 +142,51 @@
     height: 20px;
     fill: #fff;
     margin-right: 8px;
+    transition-property: fill;
+    transition-duration: .3s;
   }
 
   @media (min-width: 851px) {
     &:hover {
       color: main-yellow;
+      svg {
+        fill: main-yellow;
+      }
     }
+  }
+  @media (max-width: 850px) {
+    margin-left: 0;
   }
 }
 
-.disableBtn {
-  pointer-events: none;
+.popover {
+  left: calc(50% - 60px);
+  width: 120px;
+  top: calc(100% + 4px);
+
+  .popoverItem {
+    font-size: 14px;
+    display: block;
+    font-weight: 400;
+    li {
+      border-bottom: 1px solid border-gray;
+      transition: color .3s;
+
+      a, button {
+        display: block;
+        padding: 12px;
+        width: 100%;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        color: main-gray;
+      }
+    }
+  }
 }
 
 .mHeaderButton {
