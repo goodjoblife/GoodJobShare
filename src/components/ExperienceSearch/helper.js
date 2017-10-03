@@ -17,13 +17,13 @@ export const toQsString = R.compose(
 );
 
 const toQueryPath = ['location', 'query'];
-const qsSelector = key => R.path([
+const qsSelector = (key, defaultValue) => R.pathOr(defaultValue, [
   ...toQueryPath,
   key,
 ]);
 
-export const searchQuerySelector = qsSelector('q');
-export const searchBySelector = qsSelector('s_type');
-export const pageSelector = qsSelector('p');
-export const typeSelector = qsSelector('type');
+export const searchQuerySelector = qsSelector('q', '');
+export const searchBySelector = qsSelector('s_type', 'company');
+export const pageSelector = qsSelector('p', 1);
+export const typeSelector = qsSelector('type', 'interview,work');
 
