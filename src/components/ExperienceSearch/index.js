@@ -18,7 +18,7 @@ import getScale from '../../utils/numberUtils';
 
 class ExperienceSearch extends Component {
   static fetchData({ store: { dispatch } }) {
-    return dispatch(fetchExperiences('sort', '', 0));
+    return dispatch(fetchExperiences('sort', '', 0, null, 'created_at', 'job_title'));
   }
 
   static propTypes = {
@@ -29,6 +29,8 @@ class ExperienceSearch extends Component {
     fetchWorkings: PropTypes.func.isRequired,
     fetchKeywords: PropTypes.func.isRequired,
     experienceSearch: ImmutablePropTypes.map.isRequired,
+    searchBy: PropTypes.string,
+    sort: PropTypes.string,
   }
 
   constructor() {
@@ -40,7 +42,13 @@ class ExperienceSearch extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchExperiences('sort', '', 0);
+    const {
+      sort,
+      searchBy,
+      fetchExperiences: fetch,
+    } = this.props;
+
+    fetch('sort', '', 0, null, sort, searchBy);
     this.props.fetchKeywords('');
   }
 
@@ -57,12 +65,22 @@ class ExperienceSearch extends Component {
   }
 
   fetchExperiencesAndWorkings(val) {
-    this.props.fetchExperiences('searchBy', val, 0);
+    const {
+      sort,
+      searchBy,
+      fetchExperiences: fetch,
+    } = this.props;
+    fetch('searchBy', val, 0, null, sort, searchBy);
     this.props.fetchWorkings(val);
   }
 
   fetchExperiencesWithSort(e) {
-    this.props.fetchExperiences('sort', e.target.value, 0);
+    const {
+      sort,
+      searchBy,
+      fetchExperiences: fetch,
+    } = this.props;
+    fetch('sort', e.target.value, 0, null, sort, searchBy);
   }
 
   renderHelmet = () => {

@@ -38,9 +38,14 @@ export const setKeyword = e => ({
   keyword: e.target.value,
 });
 
-export const fetchExperiences = (cond, val, page, count) => (dispatch, getState) => {
+export const setSortAndExperiences = payload => ({
+  type: SET_SORT_AND_EXPERIENCES,
+  payload,
+});
+
+export const fetchExperiences = (cond, val, page, count, _sort, searchBy) => (dispatch, getState) => {
   const data = getState().experienceSearch.toJS();
-  const sort = val || data.sort;
+  const sort = val || _sort;
   const limit = typeof count === 'number' ? count : 20;
   const start = (typeof page === 'number' ? page : 0) * limit;
   let url = `/experiences?start=${start}&limit=${limit}`;
@@ -48,10 +53,9 @@ export const fetchExperiences = (cond, val, page, count) => (dispatch, getState)
   let hasMore = false;
 
   if (cond === 'searchBy') {
-    url = `${url}&search_by=${data.searchBy}&search_query=${val}`;
+    url = `${url}&search_by=${searchBy}&search_query=${val}`;
 
     objCond = {
-      type: SET_SEARCH_QUERY_AND_EXPERIENCES,
       keyword: val,
       searchQuery: val,
     };
@@ -59,7 +63,6 @@ export const fetchExperiences = (cond, val, page, count) => (dispatch, getState)
     url = `${url}&sort=${sort}`;
 
     objCond = {
-      type: SET_SORT_AND_EXPERIENCES,
       sort,
       keyword: '',
       searchQuery: '',
@@ -70,22 +73,26 @@ export const fetchExperiences = (cond, val, page, count) => (dispatch, getState)
   return fetchUtil(url)('GET')
     .then(result => {
       hasMore = (start + limit) < result.total;
-      dispatch(Object.assign(objCond, {
+
+      const payload = {
+        ...objCond,
         prevCond: cond,
         prevValue: val,
         // prevPage: page,
         error: null,
         experiences: (
           page
-          ? [...data.experiences, ...result.experiences]
-          : result.experiences
+            ? [...data.experiences, ...result.experiences]
+            : result.experiences
         ),
         experienceCount: result.total,
         hasMore,
-      }));
+      };
+      dispatch(setSortAndExperiences(payload));
     })
     .catch(error => {
-      dispatch(Object.assign(objCond, {
+      const payload = {
+        ...objCond,
         prevCond: cond,
         prevValue: val,
         // prevPage: (page ? page - 1 : page),
@@ -94,7 +101,9 @@ export const fetchExperiences = (cond, val, page, count) => (dispatch, getState)
         experiences: [],
         experienceCount: 0,
         hasMore,
-      }));
+      };
+
+      dispatch(setSortAndExperiences(payload));
     });
 };
 

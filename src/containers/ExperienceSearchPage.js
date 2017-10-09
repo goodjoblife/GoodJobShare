@@ -1,11 +1,19 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import ExperienceSearch from '../components/ExperienceSearch';
 import * as ExperienceSearchActions from '../actions/experienceSearch';
 
-const mapStateToProps = state => ({
-  experienceSearch: state.experienceSearch,
+import {
+  searchBySelector,
+  sortSelector,
+} from '../selectors/experienceSearchSelector';
+
+const mapStateToProps = createStructuredSelector({
+  experienceSearch: state => state.experienceSearch,
+  searchBy: searchBySelector,
+  sort: sortSelector,
 });
 
 const mapDispatchToProps = dispatch =>
