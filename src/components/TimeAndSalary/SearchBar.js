@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { push } from 'react-router-redux';
 import cn from 'classnames';
+import R from 'ramda';
 
 import Radio from 'common/form/Radio';
-import TextInput from 'common/form/TextInput';
+import { debounce } from 'utils/streamUtils';
+import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput';
 
 import styles from './SearchBar.module.css';
 import submitButtonStyle from '../common/button/ButtonSubmit.module.css';
+import { fetchCompanyCandidates, fetchJobTitleCandidates } from '../../apis/timeAndSalaryApi';
 
 const searchOptions = [
   { label: '公司', value: 'company' },
@@ -24,6 +27,7 @@ export default class SearchBar extends Component {
   state = {
     searchType: 'company',
     keyword: '',
+    candidates: [],
   }
 
   componentDidMount() {
@@ -48,12 +52,52 @@ export default class SearchBar extends Component {
   handleTypeChange(e) {
     this.setState({
       searchType: e.target.value,
+      candidates: [],
     });
   }
 
-  handleKeywordChange(e) {
+  handleKeywordChange = e => {
     this.setState({
       keyword: e.target.value,
+    });
+    this.searchKeyword(e.target.value);
+  }
+
+  searchKeyword = debounce(value => {
+    if (!value) {
+      this.handleAutocompleteItems([]);
+      return;
+    }
+    const { searchType } = this.state;
+    let fetchCandidates;
+    if (searchType === 'company') {
+      fetchCandidates =
+        fetchCompanyCandidates(value).then(r =>
+          r.map(({ _id: { name } }) => ({
+            label: name,
+            value: name,
+          }))
+        );
+    } else {
+      fetchCandidates =
+        fetchJobTitleCandidates(value).then(r =>
+          r.map(({ _id: name }) => ({
+            label: name,
+            value: name,
+          }))
+        );
+    }
+    fetchCandidates.then(candidates => {
+      this.setState({ candidates });
+    }, () => {
+      this.setState({ candidates: [] });
+    });
+  }, 500)
+
+  handleSelectCandidate = keyword => {
+    this.setState({
+      candidates: [],
+      keyword,
     });
   }
 
@@ -63,7 +107,7 @@ export default class SearchBar extends Component {
     push(`/time-and-salary/${searchType}/${encodeURIComponent(keyword)}/work-time-dashboard`);
   }
   render() {
-    const { keyword, searchType } = this.state;
+    const { keyword, searchType, candidates } = this.state;
     return (
       <form className={cn(styles.section, styles.showSearchbar)} onSubmit={this.handleSubmit}>
         <div className={styles.type}>
@@ -78,10 +122,13 @@ export default class SearchBar extends Component {
         <div className={styles.form}>
           <div className={styles.searchBar}>
             <div style={{ flex: 1 }}>
-              <TextInput
+              <AutoCompleteTextInput
                 value={keyword}
                 onChange={this.handleKeywordChange}
                 placeholder={searchType === 'company' ? '輸入公司 / 單位名稱' : '輸入職稱'}
+                items={candidates}
+                getItemValue={R.prop('label')}
+                onSelect={this.handleSelectCandidate}
               />
             </div>
             <button
