@@ -8,6 +8,7 @@
     align-items: center;
     padding-top: 24px;
     padding-bottom: 24px;
+    max-width: 1100px;
 
     @media (max-width: 550px) {
       flex-direction: column;
@@ -17,23 +18,21 @@
 
 .image {
   order: 1;
-  flex: 1 1 auto;
-  min-height: 150px;
-
+  flex-grow: 0;
+  flex-basis: 400px;
+  @media (max-width: 850px) {
+    max-width: 280px;
+  }
   img {
-    display: inline-block;
-    max-width: 430px;
-
-    @media (max-width: 850px) {
-      max-width: 280px;
-    }
+    min-height: 150px;
   }
 }
 
 .content {
   order: 2;
   color: main-black;
-  flex: 0 0 50%;
+  flex-grow: 1;
+  flex-basis: auto;
   margin-left: 32px;
   animation: fadeUp 1s linear;
   text-align: center;

@@ -1,0 +1,47 @@
+@value yellow-dark, main-black from 'common/variables.module.css';
+
+.root {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  margin-top: 40px;
+}
+
+.progress {
+  width: 100%;
+  background-color: yellow-dark;
+  height: 10px;
+  border-radius: 10px;
+}
+
+.start, .end {
+  flex-grow: 0;
+  flex-basis: 40px;
+  font-size: 14px;
+
+}
+
+.end {
+  text-align: right;
+}
+
+.bar {
+  flex-grow: 1;
+  display: block;
+  border-radius: 10px;
+  height: 10px;
+  background-color: main-black;
+  position: relative;
+}
+
+.totalData {
+  position: absolute;
+  top: -30px;
+  right: 0;
+  font-size: 13px;
+  &::after {
+    content: "▼";
+    display: block;
+    margin-top: 1px;
+  }
+}
