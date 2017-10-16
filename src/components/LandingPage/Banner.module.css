@@ -18,6 +18,7 @@
 .image {
   order: 1;
   flex: 1 1 auto;
+  min-height: 150px;
 
   img {
     display: inline-block;
@@ -35,23 +36,26 @@
   flex: 0 0 50%;
   margin-left: 32px;
   animation: fadeUp 1s linear;
+  text-align: center;
 }
 
 .heading {
-  font-size: 2.75em;
+  font-size: 1.85em;
   letter-spacing: 2px;
   margin-bottom: 20px;
-  font-weight: 400;
 
   @media (max-width: 850px) {
     font-size: 2.3em;
   }
+
+  > span {
+    font-weight: 700;
+  }
 }
 
 .subheading {
-  font-size: 1.25em;
+  font-size: 1.125em;
   line-height: 1.6em;
-  letter-spacing: 0.05em;
   margin-bottom: 24px;
 }
 
