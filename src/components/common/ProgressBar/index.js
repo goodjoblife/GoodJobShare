@@ -1,29 +1,41 @@
 import React, { PropTypes } from 'react';
+import cn from 'classnames';
 import styles from './ProgressBar.module.css';
 
 const goalData = 500;
+const sizeOptions = ['l', 'm', 's'];
+const themeOptions = ['yellow', 'black', 'gray'];
 
 const ProgressBar = ({
   totalData,
+  size,
+  rootClassName,
+  theme,
 }) => {
   const percentage = `${(totalData / goalData) * 100}%`;
   return (
-    <div className={styles.root}>
-      <div className={styles.start}>0</div>
+    <div className={cn(styles.root, rootClassName, styles[size], styles[theme])}>
+      { size === 'l' && <div className={styles.start}>0</div> }
       <div className={styles.progress}>
         <div className={styles.bar} style={{ width: percentage }}>
-          <span className={styles.totalData}>{totalData}</span>
+          { (size === 'l' || size === 'm') && <span className={styles.totalData}>{totalData}</span>}
         </div>
       </div>
-      <div className={styles.end}>{goalData}</div>
+      { size === 'l' && <div className={styles.end}>{goalData}</div> }
+      { size === 's' && <div className={styles.numbers}>{totalData}/{goalData}</div> }
     </div>
   );
 };
 ProgressBar.propTypes = {
   totalData: PropTypes.number.isRequired,
+  size: PropTypes.oneOf(sizeOptions),
+  rootClassName: PropTypes.string,
+  theme: PropTypes.oneOf(themeOptions),
 };
 ProgressBar.defaultProps = {
   totalData: 0,
+  size: 'l',
+  theme: 'yellow',
 };
 
 export default ProgressBar;

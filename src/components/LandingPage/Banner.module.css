@@ -77,6 +77,11 @@
   }
 }
 
+.progressBar {
+  margin-bottom: 24px;
+  margin-top: 40px;
+}
+
 @keyframes fadeUp {
 	from {
     opacity: 0;

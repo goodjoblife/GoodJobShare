@@ -1,17 +1,13 @@
-@value yellow-dark, main-black from 'common/variables.module.css';
+@value yellow-dark, main-black, main-yellow from 'common/variables.module.css';
 
 .root {
   display: flex;
   align-items: center;
-  margin-bottom: 24px;
-  margin-top: 40px;
+  min-width: 270px;
 }
 
 .progress {
   width: 100%;
-  background-color: yellow-dark;
-  height: 10px;
-  border-radius: 10px;
 }
 
 .start, .end {
@@ -27,20 +23,65 @@
 .bar {
   flex-grow: 1;
   display: block;
-  border-radius: 10px;
-  height: 10px;
-  background-color: main-black;
   position: relative;
 }
 
 .totalData {
   position: absolute;
-  top: -30px;
-  right: 0;
+  top: -28px;
+  right: -5px;
   font-size: 13px;
   &::after {
     content: "▼";
     display: block;
     margin-top: 1px;
+    font-size: 11px;
+  }
+}
+
+.numbers {
+  font-size: 12px;
+  margin-left: 8px;
+  letter-spacing: 1px;
+}
+
+/* COLOR */
+.yellow {
+  .progress {
+    background-color: yellow-dark;
+  }
+
+  .bar {
+    background-color: main-black;
+  }
+}
+
+.black {
+  .progress {
+    background-color: #272727;
+  }
+
+  .bar {
+    background-color: main-yellow;
+  }
+
+  .numbers {
+    color: #999999;
+  }
+}
+
+/* SIZE */
+
+.l {
+  .progress, .bar {
+    height: 10px;
+    border-radius: 10px;
+  }
+}
+
+.s, .m {
+  .progress, .bar {
+    height: 5px;
+    border-radius: 5px;
   }
 }
