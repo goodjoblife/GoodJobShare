@@ -1,12 +1,17 @@
 import fetchUtil from '../utils/fetchUtil';
 
 import {
+  getExperiences as getExperiencesApi,
+} from '../apis/experiencesApi';
+
+import {
   PAGE_COUNT,
 } from '../constants/experienceSearch';
 
 import {
   searchBySelector,
   sortSelector,
+  searchQuerySelector,
 } from '../selectors/experienceSearchSelector';
 
 export const SET_SORT = 'SET_TSET_SORTYPE';
@@ -17,9 +22,7 @@ export const SET_EXPERIENCES = 'SET_EXPERIENCES';
 export const SET_WORKINGS = 'SET_WORKINGS';
 export const SET_KEYWORD = 'SET_KEYWORD';
 export const SET_KEYWORDS = 'SET_KEYWORDS';
-export const SET_LOADING_STATUS = 'SET_LOADING_STATUS';
 export const SET_SORT_AND_EXPERIENCES = 'SET_SORT_AND_EXPERIENCES';
-export const SET_SEARCH_QUERY_AND_EXPERIENCES = 'SET_SEARCH_QUERY_AND_EXPERIENCES';
 export const SET_KEYWORDS_AND_EXPERIENCES = 'SET_KEYWORDS_AND_EXPERIENCES';
 
 export const setSort = e => ({
@@ -52,41 +55,39 @@ export const setSortAndExperiences = payload => ({
   payload,
 });
 
-export const fetchExperiences = (cond, val, page, limit, _sort, searchBy) => (dispatch, getState) => {
+//
+// sort,
+// searchBy,
+// searchQuery,
+// limit,
+// page,
+//
+export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => (dispatch, getState) => {
   const data = getState().experienceSearch.toJS();
-  const sort = val || _sort;
-  const start = (typeof page === 'number' ? page : 0) * limit;
-  let url = `/experiences?start=${start}&limit=${limit}`;
-  let objCond;
+  const start = page * limit;
+  const query = {
+    limit,
+    start,
+    sort: _sort,
+    searchBy,
+    searchQuery,
+  };
   let hasMore = false;
 
-  if (cond === 'searchBy') {
-    url = `${url}&search_by=${searchBy}&search_query=${val}`;
+  const objCond = {
+    sort: _sort,
+    keyword: '',
+    searchQuery: '',
+    workings: '',
+    salary: true,
+  };
 
-    objCond = {
-      keyword: val,
-      searchQuery: val,
-    };
-  } else { // cond === 'sort'
-    url = `${url}&sort=${sort}`;
-
-    objCond = {
-      sort,
-      keyword: '',
-      searchQuery: '',
-      workings: '',
-      salary: true,
-    };
-  }
-  return fetchUtil(url)('GET')
+  return getExperiencesApi(query)
     .then(result => {
       hasMore = (start + limit) < result.total;
 
       const payload = {
         ...objCond,
-        prevCond: cond,
-        prevValue: val,
-        // prevPage: page,
         error: null,
         experiences: (
           page
@@ -101,9 +102,6 @@ export const fetchExperiences = (cond, val, page, limit, _sort, searchBy) => (di
     .catch(error => {
       const payload = {
         ...objCond,
-        prevCond: cond,
-        prevValue: val,
-        // prevPage: (page ? page - 1 : page),
         error,
         salary: false,
         experiences: [],
@@ -117,11 +115,11 @@ export const fetchExperiences = (cond, val, page, limit, _sort, searchBy) => (di
 
 export const fetchMoreExperiences = nextPage => (dispatch, getState) => {
   const state = getState();
-  const data = getState().experienceSearch.toJS();
   const searchBy = searchBySelector(state);
   const sort = sortSelector(state);
+  const searchQuery = searchQuerySelector(state);
   return dispatch(
-    fetchExperiences(data.prevCond, data.prevValue, nextPage, PAGE_COUNT, sort, searchBy)
+    fetchExperiences(nextPage, PAGE_COUNT, sort, searchBy, searchQuery)
   );
 };
 

@@ -11,8 +11,6 @@ import {
   SET_WORKINGS,
   SET_KEYWORD,
   SET_KEYWORDS,
-  SET_LOADING_STATUS,
-  SET_SEARCH_QUERY_AND_EXPERIENCES,
   SET_KEYWORDS_AND_EXPERIENCES,
   SET_SORT_AND_EXPERIENCES,
 } from '../actions/experienceSearch';
@@ -53,14 +51,6 @@ const experienceSearch = createReducer(preloadedState, {
   [SET_KEYWORD]: (state, action) =>
     state.update('keyword', () => action.keyword),
 
-  [SET_LOADING_STATUS]: (state, action) =>
-    state.merge({
-      loadingStatus: action.loadingStatus,
-      prevCond: action.prevCond,
-      prevValue: action.prevValue,
-      // prevPage: action.prevPage,
-    }),
-
   [SET_EXPERIENCES]: (state, action) =>
     state.merge({
       experiences: fromJS(action.experiences || []),
@@ -90,20 +80,6 @@ const experienceSearch = createReducer(preloadedState, {
       hasMore: action.payload.hasMore,
       prevCond: action.payload.prevCond,
       prevValue: action.payload.prevValue,
-      // prevPage: action.prevPage,
-    }),
-
-  [SET_SEARCH_QUERY_AND_EXPERIENCES]: (state, action) =>
-    state.merge({
-      loadingStatus: action.loadingStatus,
-      error: action.error,
-      keyword: action.searchQuery,
-      searchQuery: action.searchQuery,
-      experienceCount: action.experienceCount,
-      experiences: fromJS(action.experiences || []),
-      hasMore: action.hasMore,
-      prevCond: action.prevCond,
-      prevValue: action.prevValue,
       // prevPage: action.prevPage,
     }),
 
