@@ -1,5 +1,14 @@
 import fetchUtil from '../utils/fetchUtil';
 
+import {
+  PAGE_COUNT,
+} from '../constants/experienceSearch';
+
+import {
+  searchBySelector,
+  sortSelector,
+} from '../selectors/experienceSearchSelector';
+
 export const SET_SORT = 'SET_TSET_SORTYPE';
 export const SET_SEARCH_TYPE = 'SET_SEARCH_TYPE';
 export const SET_INDUSTRY = 'SET_INDUSTRY';
@@ -43,10 +52,9 @@ export const setSortAndExperiences = payload => ({
   payload,
 });
 
-export const fetchExperiences = (cond, val, page, count, _sort, searchBy) => (dispatch, getState) => {
+export const fetchExperiences = (cond, val, page, limit, _sort, searchBy) => (dispatch, getState) => {
   const data = getState().experienceSearch.toJS();
   const sort = val || _sort;
-  const limit = typeof count === 'number' ? count : 20;
   const start = (typeof page === 'number' ? page : 0) * limit;
   let url = `/experiences?start=${start}&limit=${limit}`;
   let objCond;
@@ -108,9 +116,12 @@ export const fetchExperiences = (cond, val, page, count, _sort, searchBy) => (di
 };
 
 export const fetchMoreExperiences = nextPage => (dispatch, getState) => {
+  const state = getState();
   const data = getState().experienceSearch.toJS();
+  const searchBy = searchBySelector(state);
+  const sort = sortSelector(state);
   return dispatch(
-    fetchExperiences(data.prevCond, data.prevValue, nextPage)
+    fetchExperiences(data.prevCond, data.prevValue, nextPage, PAGE_COUNT, sort, searchBy)
   );
 };
 

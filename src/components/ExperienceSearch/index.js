@@ -13,6 +13,9 @@ import ExperienceBlock from './ExperienceBlock';
 import WorkingHourBlock from './WorkingHourBlock';
 import { fetchExperiences } from '../../actions/experienceSearch';
 import { HELMET_DATA } from '../../constants/helmetData';
+import {
+  PAGE_COUNT,
+} from '../../constants/experienceSearch';
 
 import getScale from '../../utils/numberUtils';
 
@@ -48,7 +51,7 @@ class ExperienceSearch extends Component {
       fetchExperiences: fetch,
     } = this.props;
 
-    fetch('sort', '', 0, null, sort, searchBy);
+    fetch('sort', '', 0, PAGE_COUNT, sort, searchBy);
     this.props.fetchKeywords('');
   }
 
@@ -70,7 +73,7 @@ class ExperienceSearch extends Component {
       searchBy,
       fetchExperiences: fetch,
     } = this.props;
-    fetch('searchBy', val, 0, null, sort, searchBy);
+    fetch('searchBy', val, 0, PAGE_COUNT, sort, searchBy);
     this.props.fetchWorkings(val);
   }
 
@@ -80,7 +83,7 @@ class ExperienceSearch extends Component {
       searchBy,
       fetchExperiences: fetch,
     } = this.props;
-    fetch('sort', e.target.value, 0, null, sort, searchBy);
+    fetch('sort', e.target.value, 0, PAGE_COUNT, sort, searchBy);
   }
 
   renderHelmet = () => {
