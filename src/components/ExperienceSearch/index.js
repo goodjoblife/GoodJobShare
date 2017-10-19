@@ -12,6 +12,7 @@ import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
 import WorkingHourBlock from './WorkingHourBlock';
+import { Banner1, Banner2 } from './Banners';
 import { fetchExperiences } from '../../actions/experienceSearch';
 
 import { HELMET_DATA } from '../../constants/helmetData';
@@ -178,6 +179,7 @@ class ExperienceSearch extends Component {
                   ))
                 }
               </div>
+              <Banner1 />
             </aside>
 
             <div className={styles.content}>
@@ -197,6 +199,7 @@ class ExperienceSearch extends Component {
                 </div>
               }
 
+              <Banner2 />
               <InfiniteScroll
                 pageStart={0} hasMore={data.hasMore}
                 loadMore={nextPage => {
