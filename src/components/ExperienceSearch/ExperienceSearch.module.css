@@ -42,9 +42,31 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
+  margin-top: 32px;
 }
 
-.workingHourWrapper {
+.searchNoResult {
+  background-color: #f2f2f2;
+  border: 1px solid border-gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-top: 40px;
+}
+
+.splitter {
+  margin-top: 64px;
+  margin-bottom: 64px;
+
+  @media (max-width: 550px) {
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
+}
+
+.timeSalaryWrapper {
   margin-top: 40px;
 
   @media (max-wdith: 1024px) {
