@@ -38,10 +38,9 @@
 }
 
 .searchResult {
-  background-color: gray-light;
-  border: 1px solid #ccc;
-  font-weight: 700;
-  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 24px;
 }
 

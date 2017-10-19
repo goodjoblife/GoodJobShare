@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import ReactGA from 'react-ga';
 
 import Loader from 'common/Loader';
-import { Section, Wrapper } from 'common/base';
+import { Section, Wrapper, Heading } from 'common/base';
 
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
@@ -162,7 +162,8 @@ class ExperienceSearch extends Component {
 
               {data.searchQuery &&
                 <div className={styles.searchResult}>
-                  找到 {data.experienceCount} 筆與 &quot;{data.searchQuery}&quot; 相關的資料
+                  <Heading size="m" bold>{data.searchQuery}</Heading>
+                  <div>1-20 篇 (共&nbsp;{data.experienceCount}&nbsp;篇)</div>
                 </div>
               }
 

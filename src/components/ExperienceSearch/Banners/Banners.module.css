@@ -1,0 +1,20 @@
+@value page-gutter-s from 'common/variables.module.css';
+
+.banner1 {
+  margin-top: 32px;
+
+  @media (max-width: 850px) {
+    display: none;
+  }
+}
+
+.banner2 {
+  margin-bottom: 24px;
+
+  @media (max-width: 550px) {
+    width: 140%;
+    margin-bottom: 16px;
+    margin-left: -20%;
+    margin-right: -20%;
+  }
+}
