@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { Link } from 'react-router';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Wrapper } from 'common/base';
-import i from 'common/icons';
+import { ArrowLeft, Thumbnails } from 'common/icons';
 import FacebookWrapper from 'common/FacebookWrapper';
 import { formatCanonicalPath } from 'utils/helmetHelper';
 import styles from './Footer.module.css';
@@ -27,7 +27,7 @@ const Footer = ({ id, prev, next }) => (
     <div className={styles.pagers}>
       <Link to="/labor-rights" className={styles.back}>
         <div>
-          <i.Thumbnails className={styles.icon} />
+          <Thumbnails className={styles.icon} />
           <span className="pB">返回列表</span>
         </div>
       </Link>
@@ -60,7 +60,7 @@ const Pager = ({
     to={`/labor-rights/${id}`}
     className={cn(styles.pager, className)}
   >
-    <i.ArrowLeft className={styles.icon} />
+    <ArrowLeft className={styles.icon} />
     <h3 className={cn('pLBold', styles.title)}>{title}</h3>
   </Link>
 );

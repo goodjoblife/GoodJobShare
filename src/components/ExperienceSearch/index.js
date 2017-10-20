@@ -7,6 +7,8 @@ import ReactGA from 'react-ga';
 import Loader from 'common/Loader';
 import { Section, Wrapper, Heading, P } from 'common/base';
 import Columns from 'common/Columns';
+import Button from 'common/button/Button';
+import { ArrowLeft } from 'common/icons';
 
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
@@ -178,6 +180,7 @@ class ExperienceSearch extends Component {
               }
 
               <Banner2 />
+
               <InfiniteScroll
                 pageStart={0} hasMore={data.hasMore}
                 loadMore={nextPage => {
@@ -201,6 +204,15 @@ class ExperienceSearch extends Component {
                   ))
                 }
               </InfiniteScroll>
+
+              <div className={styles.pagination}>
+                <P size="m" className={styles.info}>1-20 篇 (共 93 篇)</P>
+                <div>
+                  <Button btnStyle="firstPage">第一頁</Button>
+                  <Button btnStyle="page"><ArrowLeft />前一頁</Button>
+                  <Button btnStyle="page" disabled>下一頁<ArrowLeft style={{ transform: 'scaleX(-1)' }} /></Button>
+                </div>
+              </div>
 
               {(data.searchQuery && data.workings.length > 0) &&
                 <div>
