@@ -23,6 +23,7 @@ const ProgressBar = ({
       </div>
       { size === 'l' && <div className={styles.end}>{goalData}</div> }
       { size === 's' && <div className={styles.numbers}>{totalData}/{goalData}</div> }
+      { size === 'm' && <div className={styles.goal}>目標：{goalData} 筆</div> }
     </div>
   );
 };

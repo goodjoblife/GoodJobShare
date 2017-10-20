@@ -1,9 +1,9 @@
-@value yellow-dark, main-black, main-yellow from 'common/variables.module.css';
+@value yellow-dark, main-black, main-yellow, main-gray from 'common/variables.module.css';
 
 .root {
   display: flex;
   align-items: center;
-  min-width: 270px;
+  position: relative;
 }
 
 .progress {
@@ -29,8 +29,10 @@
 .totalData {
   position: absolute;
   top: -28px;
-  right: -5px;
+  right: -10px;
   font-size: 13px;
+  text-align: center;
+
   &::after {
     content: "▼";
     display: block;
@@ -43,6 +45,14 @@
   font-size: 12px;
   margin-left: 8px;
   letter-spacing: 1px;
+}
+
+.goal {
+  position: absolute;
+  right: 0;
+  bottom: -20px;
+  font-size: 13px;
+  color: main-gray;
 }
 
 /* COLOR */
@@ -70,18 +80,53 @@
   }
 }
 
+.gray {
+  .progress {
+    background-color: #E8E8E8;
+  }
+
+  .bar {
+    background-color: main-yellow;
+  }
+
+  .numbers {
+    color: #E8E8E8;
+  }
+
+  .totalData {
+    color: main-gray;
+  }
+}
+
 /* SIZE */
 
 .l {
+  min-width: 270px;
+
   .progress, .bar {
     height: 10px;
     border-radius: 10px;
   }
 }
 
+
 .s, .m {
   .progress, .bar {
     height: 5px;
     border-radius: 5px;
+  }
+}
+
+.s {
+  min-width: 270px;
+}
+
+.m {
+  .totalData {
+    transform: scale(.9);
+
+    &::after {
+      transform: scale(.8);
+    }
   }
 }

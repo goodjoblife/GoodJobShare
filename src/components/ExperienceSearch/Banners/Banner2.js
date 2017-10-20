@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+
 import styles from './Banners.module.css';
 
 const Banner2 = () => (

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
+
+import ProgressBar from 'common/ProgressBar';
 import styles from './Banners.module.css';
 
 const Banner1 = () => (
@@ -9,6 +11,7 @@ const Banner1 = () => (
       alt="好工作評論網募資中"
       className={styles.banner1}
     />
+    <ProgressBar totalData={250} size="m" theme="gray" rootClassName={styles.progress} />
   </Link>
 );
 
