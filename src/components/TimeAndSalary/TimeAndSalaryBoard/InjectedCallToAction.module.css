@@ -9,6 +9,13 @@
   }
 }
 
+.go {
+  display: inline-block;
+  width: 82px;
+  color: #333333;
+  margin-left: 17px;
+}
+
 .eye {
   display: inline-block;
   width: inherit;
