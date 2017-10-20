@@ -12,6 +12,7 @@ import InfoSalaryModal from '../common/InfoSalaryModal';
 import styles from './TimeAndSalaryBoard.module.css';
 import commonStyles from '../views/view.module.css';
 import fetchingStatus from '../../../constants/status';
+import InjectedCallToAction from './InjectedCallToAction';
 
 const pathnameMapping = {
   'work-time-dashboard': {
@@ -164,9 +165,7 @@ export default class TimeAndSalaryBoard extends Component {
     interstitialPos.reverse();
 
     interstitialPos.forEach(i => {
-      rows.splice(i, 0, (
-        <tr key={`inject-${i}`}><td colSpan="7">Injected AD</td></tr>
-      ));
+      rows.splice(i, 0, <InjectedCallToAction key={`injected-${i}`} />);
     });
   }
 
