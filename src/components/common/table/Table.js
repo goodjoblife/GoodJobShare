@@ -9,6 +9,11 @@ class Table extends Component {
     primaryKey: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
+    postProcRows: PropTypes.func,
+  }
+
+  static defaultProps = {
+    postProcRows: () => {},
   }
 
   static Column = Column
@@ -27,7 +32,7 @@ class Table extends Component {
   }
 
   render() {
-    const { data, primaryKey, children, className } = this.props;
+    const { data, primaryKey, children, className, postProcRows } = this.props;
     const records = [];
     let record;
     let value;
@@ -51,6 +56,8 @@ class Table extends Component {
       });
       records.push(<tr key={d[primaryKey] || i}>{record}</tr>);
     });
+
+    postProcRows(records);
 
     return (
       <table className={cn([styles.rwdTable, className])}>

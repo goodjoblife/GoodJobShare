@@ -153,6 +153,23 @@ export default class TimeAndSalaryBoard extends Component {
     switchPath: PropTypes.func,
   }
 
+  static injectCallToActions(rows) {
+    const interval = 10;
+
+    const nRows = rows.length;
+    const nChunks = Math.ceil(nRows / interval);
+    const interstitialPos =
+      R.range(1, nChunks).map(R.multiply(interval));
+
+    interstitialPos.reverse();
+
+    interstitialPos.forEach(i => {
+      rows.splice(i, 0, (
+        <tr key={`inject-${i}`}><td colSpan="7">Injected AD</td></tr>
+      ));
+    });
+  }
+
   constructor(props) {
     super(props);
     this.handleScroll = this.handleScroll.bind(this);
@@ -232,7 +249,12 @@ export default class TimeAndSalaryBoard extends Component {
               />
             </div>
           </div>
-          <Table className={styles.latestTable} data={raw} primaryKey="_id">
+          <Table
+            className={styles.latestTable}
+            data={raw}
+            primaryKey="_id"
+            postProcRows={TimeAndSalaryBoard.injectCallToActions}
+          >
             <Table.Column
               className={styles.colCompany}
               title="公司名稱"
