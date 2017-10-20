@@ -3,6 +3,7 @@ import cn from 'classnames';
 import { Section, Wrapper, Heading } from 'common/base';
 import MarkdownParser from './MarkdownParser';
 import styles from './Body.module.css';
+import LeftBanner from '../ExperienceSearch/Banners/Banner1';
 
 const Body = ({ title, seoText, description, content }) => (
   <Section Tag="main" pageTop>
@@ -11,7 +12,14 @@ const Body = ({ title, seoText, description, content }) => (
       <div className={cn('subheadingM', styles.description)}>
         {description}
       </div>
-      <MarkdownParser content={content} />
+      <div className={styles.contentWrapper}>
+        <div className={styles.leftBanner}>
+          <LeftBanner />
+        </div>
+        <div className={styles.content}>
+          <MarkdownParser content={content} />
+        </div>
+      </div>
       {seoText && <div className={styles.seoText}>
         {seoText}
       </div>}

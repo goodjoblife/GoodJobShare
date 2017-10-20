@@ -6,3 +6,16 @@
 .seoText {
   display: none;
 }
+
+.contentWrapper {
+  display: flex;
+
+  .leftBanner {
+    width: 196px;
+    margin-right: 40px;
+  }
+
+  .content {
+    flex: 1;
+  }
+}
