@@ -11,7 +11,7 @@ import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
 import WorkingHourBlock from './WorkingHourBlock';
-import { fetchExperiences } from '../../actions/experienceSearch';
+import { fetchExperiences as fetchExperiencesAction } from '../../actions/experienceSearch';
 import { HELMET_DATA } from '../../constants/helmetData';
 import {
   PAGE_COUNT,
@@ -21,7 +21,7 @@ import getScale from '../../utils/numberUtils';
 
 class ExperienceSearch extends Component {
   static fetchData({ store: { dispatch } }) {
-    return dispatch(fetchExperiences('sort', '', 0, null, 'created_at', 'job_title'));
+    return dispatch(fetchExperiencesAction(0, PAGE_COUNT, 'created_at', 'job_title', ''));
   }
 
   static propTypes = {
@@ -48,10 +48,10 @@ class ExperienceSearch extends Component {
     const {
       sort,
       searchBy,
-      fetchExperiences: fetch,
+      fetchExperiences,
     } = this.props;
 
-    fetch('sort', '', 0, PAGE_COUNT, sort, searchBy);
+    fetchExperiences(0, PAGE_COUNT, sort, searchBy, '');
     this.props.fetchKeywords('');
   }
 
@@ -71,19 +71,18 @@ class ExperienceSearch extends Component {
     const {
       sort,
       searchBy,
-      fetchExperiences: fetch,
+      fetchExperiences,
     } = this.props;
-    fetch('searchBy', val, 0, PAGE_COUNT, sort, searchBy);
+    fetchExperiences(0, PAGE_COUNT, sort, searchBy, val);
     this.props.fetchWorkings(val);
   }
 
-  fetchExperiencesWithSort(e) {
+  fetchExperiencesWithSort(sort) {
     const {
-      sort,
       searchBy,
-      fetchExperiences: fetch,
+      fetchExperiences,
     } = this.props;
-    fetch('sort', e.target.value, 0, PAGE_COUNT, sort, searchBy);
+    fetchExperiences(0, PAGE_COUNT, sort, searchBy, '');
   }
 
   renderHelmet = () => {
@@ -99,7 +98,9 @@ class ExperienceSearch extends Component {
 
   render() {
     const {
-      /* setSort, */ setSearchType, /* setIndustry, */ fetchKeywords, setKeyword,
+      setSearchType,
+      fetchKeywords,
+      setKeyword,
       fetchMoreExperiences,
       experienceSearch,
     } = this.props;
@@ -116,7 +117,7 @@ class ExperienceSearch extends Component {
                   className={data.sort === 'created_at'
                     ? `${styles.frontButton} ${styles.toggle}`
                     : styles.frontButton}
-                  onClick={this.fetchExperiencesWithSort} value="created_at"
+                  onClick={e => this.fetchExperiencesWithSort(e.target.value)} value="created_at"
                 >
                   最新
                 </button>
@@ -124,7 +125,7 @@ class ExperienceSearch extends Component {
                   className={data.sort === 'popularity'
                     ? `${styles.rearButton} ${styles.toggle}`
                     : styles.rearButton}
-                  onClick={this.fetchExperiencesWithSort} value="popularity"
+                  onClick={e => this.fetchExperiencesWithSort(e.target.value)} value="popularity"
                 >
                   熱門
                 </button>
@@ -141,7 +142,7 @@ class ExperienceSearch extends Component {
                       key={o.value} id={`searchType-${o.value}`}
                       label={o.label} value={o.value}
                       disabled={o.value === 'salary' && !data.searchQuery}
-                      onChange={setSearchType}
+                      onChange={e => setSearchType(e.target.value)}
                       checked={data[o.value]}
                     />
                   ))

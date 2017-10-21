@@ -34,7 +34,7 @@ const SearchBar = ({
       <input
         type="text"
         onKeyPress={handleKeyPress}
-        onChange={setKeyword}
+        onChange={e => setKeyword(e.target.value)}
         value={data.keyword}
         placeholder={
           data.searchBy === 'company'

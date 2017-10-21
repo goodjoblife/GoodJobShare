@@ -14,9 +14,7 @@ import {
   searchQuerySelector,
 } from '../selectors/experienceSearchSelector';
 
-export const SET_SORT = 'SET_TSET_SORTYPE';
 export const SET_SEARCH_TYPE = 'SET_SEARCH_TYPE';
-export const SET_INDUSTRY = 'SET_INDUSTRY';
 export const SET_SEARCH_BY = 'SET_SEARCH_BY';
 export const SET_EXPERIENCES = 'SET_EXPERIENCES';
 export const SET_WORKINGS = 'SET_WORKINGS';
@@ -25,29 +23,14 @@ export const SET_KEYWORDS = 'SET_KEYWORDS';
 export const SET_SORT_AND_EXPERIENCES = 'SET_SORT_AND_EXPERIENCES';
 export const SET_KEYWORDS_AND_EXPERIENCES = 'SET_KEYWORDS_AND_EXPERIENCES';
 
-export const setSort = e => ({
-  type: SET_SORT,
-  sort: e.target.value,
-});
-
-export const setSearchType = e => ({
+export const setSearchType = searchType => ({
   type: SET_SEARCH_TYPE,
-  searchType: e.target.value,
+  searchType,
 });
 
-export const setIndustry = e => ({
-  type: SET_INDUSTRY,
-  industry: e.target.value,
-});
-
-export const setSearchBy = e => ({
-  type: SET_SEARCH_BY,
-  searchBy: e.target.value,
-});
-
-export const setKeyword = e => ({
+export const setKeyword = keyword => ({
   type: SET_KEYWORD,
-  keyword: e.target.value,
+  keyword,
 });
 
 export const setSortAndExperiences = payload => ({
@@ -55,13 +38,6 @@ export const setSortAndExperiences = payload => ({
   payload,
 });
 
-//
-// sort,
-// searchBy,
-// searchQuery,
-// limit,
-// page,
-//
 export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => (dispatch, getState) => {
   const data = getState().experienceSearch.toJS();
   const start = page * limit;
@@ -77,7 +53,7 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => (
   const objCond = {
     sort: _sort,
     keyword: '',
-    searchQuery: '',
+    searchQuery,
     workings: '',
     salary: true,
   };

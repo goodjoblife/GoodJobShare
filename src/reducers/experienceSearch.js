@@ -3,9 +3,7 @@ import { Map, fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 import status from '../constants/status';
 import {
-  SET_SORT,
   SET_SEARCH_TYPE,
-  SET_INDUSTRY,
   SET_SEARCH_BY,
   SET_EXPERIENCES,
   SET_WORKINGS,
@@ -37,13 +35,8 @@ const preloadedState = Map({
 });
 
 const experienceSearch = createReducer(preloadedState, {
-  [SET_SORT]: (state, action) => state.update('sort', () => action.sort),
-
   [SET_SEARCH_TYPE]: (state, action) =>
     state.update(action.searchType, v => !v),
-
-  [SET_INDUSTRY]: (state, action) =>
-    state.update('industry', () => action.industry),
 
   [SET_SEARCH_BY]: (state, action) =>
     state.update('searchBy', () => action.searchBy),
@@ -80,7 +73,6 @@ const experienceSearch = createReducer(preloadedState, {
       hasMore: action.payload.hasMore,
       prevCond: action.payload.prevCond,
       prevValue: action.payload.prevValue,
-      // prevPage: action.prevPage,
     }),
 
   [SET_KEYWORDS_AND_EXPERIENCES]: (state, action) =>
