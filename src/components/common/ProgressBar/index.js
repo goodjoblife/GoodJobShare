@@ -18,7 +18,9 @@ const ProgressBar = ({
       { size === 'l' && <div className={styles.start}>0</div> }
       <div className={styles.progress}>
         <div className={styles.bar} style={{ width: percentage }}>
-          { (size === 'l' || size === 'm') && <span className={styles.totalData}>{totalData}</span>}
+          { (size === 'l' || size === 'm') &&
+            <span className={styles.totalData}><span className={styles.hideDesktop}>募集資料數：</span>{totalData}</span>
+          }
         </div>
       </div>
       { size === 'l' && <div className={styles.end}>{goalData}</div> }

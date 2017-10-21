@@ -1,10 +1,16 @@
 @value page-gutter-s from 'common/variables.module.css';
 
 .banner1 {
-  margin-top: 32px;
-
   @media (max-width: 850px) {
     display: none;
+  }
+}
+
+.progress {
+  margin-top: 40px;
+
+  @media (max-width: 550px) {
+    margin-bottom: 24px;
   }
 }
 
@@ -16,13 +22,5 @@
     margin-bottom: 16px;
     margin-left: -20%;
     margin-right: -20%;
-  }
-}
-
-.progress {
-  margin-top: 40px;
-
-  @media (max-width: 550px) {
-    margin-bottom: 24px;
   }
 }

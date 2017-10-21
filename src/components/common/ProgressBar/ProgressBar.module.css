@@ -55,6 +55,14 @@
   color: main-gray;
 }
 
+.hideDesktop {
+  display: none;
+
+  @media (max-width: 850px) {
+    display: inline-block;
+  }
+}
+
 /* COLOR */
 .yellow {
   .progress {

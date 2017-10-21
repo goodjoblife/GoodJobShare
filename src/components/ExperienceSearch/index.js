@@ -148,8 +148,9 @@ class ExperienceSearch extends Component {
                 data={data}
                 fetchExperiencesWithSort={this.fetchExperiencesWithSort}
                 setSearchType={this.setSearchType}
+                className={styles.filter}
               />
-              <Banner1 />
+              <Banner1 className={styles.banner} />
             </aside>
 
             <section className={styles.content}>

@@ -13,8 +13,13 @@ const SEARCH_TYPE = {
   SALARY: 'salary',
 };
 
-const Filter = ({ data, fetchExperiencesWithSort, setSearchType }) => (
-  <div>
+const Filter = ({
+  data,
+  fetchExperiencesWithSort,
+  setSearchType,
+  className,
+}) => (
+  <div className={className}>
     <section>
       <button
         className={data.sort === SORT.CREATED_AT
@@ -54,6 +59,7 @@ const Filter = ({ data, fetchExperiencesWithSort, setSearchType }) => (
   </div>
 );
 Filter.propTypes = {
+  className: PropTypes.string,
   data: PropTypes.object.isRequired,
   fetchExperiencesWithSort: PropTypes.func.isRequired,
   setSearchType: PropTypes.func.isRequired,

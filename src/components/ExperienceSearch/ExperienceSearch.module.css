@@ -21,6 +21,28 @@
 
   @media (max-width: 850px) {
     margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.filter {
+  @media (max-width: 850px) {
+    order: 2;
+  }
+}
+
+.banner {
+  display: block;
+
+  @media (min-width: 851px) {
+    margin-top: 32px;
+  }
+
+  @media (max-width: 850px) {
+    order: 1;
+    margin-top: -32px;
+    margin-bottom: 32px;
   }
 }
 
