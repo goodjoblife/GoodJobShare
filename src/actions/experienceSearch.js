@@ -52,7 +52,6 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => (
 
   const objCond = {
     sort: _sort,
-    keyword: '',
     searchQuery,
     workings: '',
     salary: true,
