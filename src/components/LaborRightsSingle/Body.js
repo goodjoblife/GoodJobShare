@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { StickyContainer, Sticky } from 'react-sticky';
 import cn from 'classnames';
 import { Section, Wrapper, Heading } from 'common/base';
 import MarkdownParser from './MarkdownParser';
@@ -13,9 +14,15 @@ const Body = ({ title, seoText, description, content }) => (
         {description}
       </div>
       <div className={styles.contentWrapper}>
-        <div className={styles.leftBanner}>
-          <LeftBanner />
-        </div>
+        <StickyContainer>
+          <Sticky disableCompensation>
+            {({ style }) => (
+              <div className={styles.leftBanner} style={style}>
+                <LeftBanner />
+              </div>
+            )}
+          </Sticky>
+        </StickyContainer>
         <div className={styles.content}>
           <MarkdownParser content={content} />
         </div>
