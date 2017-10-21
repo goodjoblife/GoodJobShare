@@ -66,7 +66,7 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => (
         error: null,
         experiences: (
           page
-            ? [...data.experiences, ...result.experiences]
+            ? data.experiences.concat(result.experiences)
             : result.experiences
         ),
         experienceCount: result.total,
