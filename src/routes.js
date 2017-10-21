@@ -5,7 +5,6 @@ import LaborRightsMenu from './containers/LaborRightsMenu';
 import LaborRightsSingle from './containers/LaborRightsSingle';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
 import ExperienceDetailPage from './containers/ExperienceDetailPage';
-import AnotherPage from './containers/AnotherPage';
 import NotFound from './components/common/NotFound';
 
 import Entry from './components/ShareExperience/Entry';
@@ -17,7 +16,6 @@ import WorkExperiencesFormContainer
   from './containers/ShareExperience/WorkExperiencesFormContainer';
 
 import Me from './containers/Me';
-
 import About from './components/About';
 import Faq from './components/Faq';
 import Guidelines from './components/Guidelines';
@@ -34,13 +32,6 @@ const routes = () => ({
     {
       path: 'labor-rights',
       component: div,
-      /*
-      getComponent(nextState, cb) {
-        require.ensure([], require => {
-          cb(null, require('./containers/LaborRightsMenu').default);
-        }, 'labor-rights-menu');
-      },
-      */
       indexRoute: {
         component: LaborRightsMenu,
       },
@@ -54,41 +45,17 @@ const routes = () => ({
     {
       path: 'experiences/search',
       component: ExperienceSearchPage,
-      /*
-      getComponent(nextState, cb) {
-        require.ensure([], require => {
-          cb(null, require('./containers/ExperienceSearchPage').default);
-        }, 'search');
-      },
-      */
     },
     {
       path: 'experiences/:id',
       component: ExperienceDetailPage,
-      /*
-      getComponent(nextState, cb) {
-        require.ensure([], require => {
-          cb(null, require('./containers/ExperienceDetailPage').default);
-        }, 'detail');
-      },
-      */
     },
     {
       path: 'share',
-      // getComponent(nextState, cb) {
-      //   require.ensure([], require => {
-      //     cb(null, require('./components/ShareExperience').default);
-      //   }, 'ShareExperience');
-      // },
       component: Entry,
     },
     {
       path: 'share',
-      // getComponent(nextState, cb) {
-      //   require.ensure([], require => {
-      //     cb(null, require('./components/ShareExperience').default);
-      //   }, 'ShareExperience');
-      // },
       component: ShareExperience,
       childRoutes: [
         {
@@ -126,27 +93,10 @@ const routes = () => ({
       component: Terms,
     },
     {
-      path: 'another',
-      component: AnotherPage,
-      /*
-      getComponent(nextState, cb) {
-        require.ensure([], require => {
-          cb(null, require('./containers/AnotherPage').default);
-        }, 'another');
-      },
-      */
-    },
-    {
       path: '*',
       component: NotFound,
-      /*
-      getComponent(nextState, cb) {
-        require.ensure([], require => {
-          cb(null, require('./containers/NotFound').default);
-        }, 'notFound');
-      },
-      */
-    }],
+    },
+  ],
 });
 
 
