@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import R from 'ramda';
 import Loading from 'common/Loader';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import $ from 'jquery';
 
 import Select from 'common/form/Select';
 import Table from 'common/table/Table';
@@ -154,6 +155,7 @@ export default class TimeAndSalaryBoard extends Component {
 
   constructor(props) {
     super(props);
+    this.handleScroll = this.handleScroll.bind(this);
     this.toggleInfoSalaryModal = this.toggleInfoSalaryModal.bind(this);
     this.toggleInfoTimeModal = this.toggleInfoTimeModal.bind(this);
   }
@@ -172,6 +174,8 @@ export default class TimeAndSalaryBoard extends Component {
     const { sortBy, order } = pathnameMapping[path];
 
     this.props.queryTimeAndSalary({ sortBy, order });
+
+    $(window).on('scroll', this.handleScroll);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -180,6 +184,10 @@ export default class TimeAndSalaryBoard extends Component {
       const { sortBy, order } = pathnameMapping[path];
       this.props.queryTimeAndSalary({ sortBy, order });
     }
+  }
+
+  componentWillUnmount() {
+    $(window).off('scroll', this.handleScroll);
   }
 
   toggleInfoSalaryModal() {
@@ -191,6 +199,16 @@ export default class TimeAndSalaryBoard extends Component {
     const state = this.state;
     state.infoTimeModal.isOpen = !state.infoTimeModal.isOpen;
     this.setState(state);
+  }
+
+  handleScroll() {
+    const view = $(window).scrollTop() + window.innerHeight;
+    const threshold = $(document).height() - 100;
+    if (view < threshold) return;
+
+    const { path } = this.props.route;
+    const { sortBy, order } = pathnameMapping[path];
+    this.props.queryTimeAndSalary({ sortBy, order });
   }
 
   render() {
