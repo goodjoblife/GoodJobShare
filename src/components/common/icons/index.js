@@ -13,6 +13,8 @@ import Location from './Location';
 import New from './New';
 import Open from './Open';
 import People from './People';
+import Star from './Star';
+import Sort from './Sort';
 import Thumbnails from './Thumbnails';
 import User from './User';
 import Warning from './Warning';
@@ -34,6 +36,8 @@ const icons = {
   New,
   Open,
   People,
+  Star,
+  Sort,
   Thumbnails,
   User,
   Warning,
@@ -55,6 +59,8 @@ export { default as Github } from './Github';
 export { default as Good } from './Good';
 export { default as Glike } from './Glike';
 export { default as GjLogo } from './GjLogo';
+export { default as Star } from './Star';
+export { default as Sort } from './Sort';
 export { default as Twitter } from './Twitter';
 
 export { default as Plus } from './Plus';

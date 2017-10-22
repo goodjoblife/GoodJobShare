@@ -3,6 +3,7 @@ import App from './containers/Layout';
 import LandingPage from './containers/LandingPage';
 import LaborRightsMenu from './containers/LaborRightsMenu';
 import LaborRightsSingle from './containers/LaborRightsSingle';
+import TimeAndSalary from './components/TimeAndSalary';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
 import ExperienceDetailPage from './containers/ExperienceDetailPage';
 import NotFound from './components/common/NotFound';
@@ -39,6 +40,19 @@ const routes = () => ({
         {
           path: ':id',
           component: LaborRightsSingle,
+        },
+      ],
+    },
+    {
+      path: 'time-and-salary',
+      component: TimeAndSalary,
+      indexRoute: {
+        onEnter: ({ params }, replace) => replace('/time-and-salary/latest'),
+      },
+      childRoutes: [
+        {
+          path: '*',
+          onEnter: ({ params }, replace) => replace('/time-and-salary/latest'),
         },
       ],
     },
