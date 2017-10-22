@@ -4,6 +4,7 @@ import LandingPage from './containers/LandingPage';
 import LaborRightsMenu from './containers/LaborRightsMenu';
 import LaborRightsSingle from './containers/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
+import TimeAndSalaryBoard from './containers/TimeAndSalary/TimeAndSalaryBoard';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
 import ExperienceDetailPage from './containers/ExperienceDetailPage';
 import NotFound from './components/common/NotFound';
@@ -51,6 +52,30 @@ const routes = () => ({
       },
       childRoutes: [
         // for board
+        {
+          path: 'latest',
+          component: TimeAndSalaryBoard,
+        },
+        {
+          path: 'sort/time-asc',
+          component: TimeAndSalaryBoard,
+        },
+        {
+          path: 'work-time-dashboard',
+          component: TimeAndSalaryBoard,
+        },
+        {
+          path: 'sort/work-time-asc',
+          component: TimeAndSalaryBoard,
+        },
+        {
+          path: 'salary-dashboard',
+          component: TimeAndSalaryBoard,
+        },
+        {
+          path: 'sort/salary-asc',
+          component: TimeAndSalaryBoard,
+        },
         // for company
         // for job
         {
