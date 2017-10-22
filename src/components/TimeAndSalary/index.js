@@ -4,6 +4,7 @@ import Wrapper from 'common/base/Wrapper';
 import styles from './styles.module.css';
 import SearchBar from './SearchBar';
 import CallToShareData from './CallToShareData';
+import Banner from './Banner';
 import MobileInfoButtons from './MobileInfoButtons';
 import InfoTimeModal from './common/InfoTimeModal';
 import InfoSalaryModal from './common/InfoSalaryModal';
@@ -44,6 +45,7 @@ export default class TimeAndSalary extends Component {
     const { children } = this.props;
     return (
       <div className={styles.container}>
+        <Banner />
         <Wrapper size="m" className={styles.showSearchbarWrapper}>
           <CallToShareData />
           <SearchBar />
