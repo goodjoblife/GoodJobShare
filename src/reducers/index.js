@@ -9,6 +9,7 @@ import laborRightsMenu from './laborRightsMenu';
 import me from './me';
 import timeAndSalaryBoard from './timeAndSalaryBoard';
 import timeAndSalaryCompany from './timeAndSalaryCompany';
+import timeAndSalaryJobTitle from './timeAndSalaryJobTitle';
 
 const rootReducer = combineReducers({
   auth,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   me,
   timeAndSalaryBoard,
   timeAndSalaryCompany,
+  timeAndSalaryJobTitle,
   routing,
 });
 

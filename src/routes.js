@@ -6,6 +6,7 @@ import LaborRightsSingle from './containers/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/TimeAndSalary/TimeAndSalaryBoard';
 import TimeAndSalaryCompany from './containers/TimeAndSalary/TimeAndSalaryCompany';
+import TimeAndSalaryJobTitle from './containers/TimeAndSalary/TimeAndSalaryJobTitle';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
 import ExperienceDetailPage from './containers/ExperienceDetailPage';
 import NotFound from './components/common/NotFound';
@@ -91,6 +92,22 @@ const routes = () => ({
         {
           path: 'company/:keyword/sort/salary-asc',
           component: TimeAndSalaryCompany,
+        },
+        {
+          path: 'job-title/:keyword/work-time-dashboard',
+          component: TimeAndSalaryJobTitle,
+        },
+        {
+          path: 'job-title/:keyword/sort/work-time-asc',
+          component: TimeAndSalaryJobTitle,
+        },
+        {
+          path: 'job-title/:keyword/salary-dashboard',
+          component: TimeAndSalaryJobTitle,
+        },
+        {
+          path: 'job-title/:keyword/sort/salary-asc',
+          component: TimeAndSalaryJobTitle,
         },
         {
           path: '*',
