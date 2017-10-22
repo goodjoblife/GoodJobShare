@@ -11,7 +11,7 @@ import { Section, Wrapper } from 'common/base';
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
-import WorkingHourBlock from './WorkingHourBlock';
+import WorkingHourBlock from '../TimeAndSalary/common/WorkingHourBlock';
 import { fetchExperiences } from '../../actions/experienceSearch';
 
 import { HELMET_DATA } from '../../constants/helmetData';

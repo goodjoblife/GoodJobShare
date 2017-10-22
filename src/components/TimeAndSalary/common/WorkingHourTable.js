@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 
 import { InfoButton } from 'common/Modal';
-import Table from '../common/table/Table';
+import Table from 'common/table/Table';
 import InfoSalaryModal from './InfoSalaryModal';
 import InfoTimeModal from './InfoTimeModal';
 import styles from './WorkingHourTable.module.css';
-import employmentType from '../../constants/employmentType';
+import employmentType from '../../../constants/employmentType';
 
 class WorkingHourTable extends Component {
   static propTypes = {

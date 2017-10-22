@@ -1,4 +1,4 @@
-@value yellow-bar, gray-dark, main-gray, main-yellow, warning-red from "../common/variables.module.css";
+@value yellow-bar, gray-dark, main-gray, main-yellow, warning-red from "../../common/variables.module.css";
 
 .bar {
   background-color: yellow-bar;
