@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import Wrapper from 'common/base/Wrapper';
 import styles from './styles.module.css';
 import SearchBar from './SearchBar';
+import CallToShareData from './CallToShareData';
 import MobileInfoButtons from './MobileInfoButtons';
 import InfoTimeModal from './common/InfoTimeModal';
 import InfoSalaryModal from './common/InfoSalaryModal';
@@ -44,6 +45,7 @@ export default class TimeAndSalary extends Component {
     return (
       <div className={styles.container}>
         <Wrapper size="m" className={styles.showSearchbarWrapper}>
+          <CallToShareData />
           <SearchBar />
           <MobileInfoButtons
             toggleInfoSalaryModal={this.toggleInfoSalaryModal}
