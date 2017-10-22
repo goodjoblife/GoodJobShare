@@ -9,6 +9,9 @@
 
 .contentWrapper {
   display: flex;
+  position: relative;
+  left: -118px;
+  width: calc(100% + 236px);
 
   .leftBanner {
     width: 196px;
