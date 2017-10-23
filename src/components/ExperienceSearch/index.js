@@ -19,6 +19,12 @@ import {
 
 import getScale from '../../utils/numberUtils';
 
+import {
+  searchQuerySelector,
+  searchBySelector,
+  sortBySelector,
+} from './helper';
+
 class ExperienceSearch extends Component {
   static fetchData({ store: { dispatch } }) {
     return dispatch(fetchExperiencesAction(0, PAGE_COUNT, 'created_at', 'job_title', ''));
@@ -34,6 +40,10 @@ class ExperienceSearch extends Component {
     experienceSearch: ImmutablePropTypes.map.isRequired,
     searchBy: PropTypes.string,
     sort: PropTypes.string,
+    location: PropTypes.shape({
+      search: PropTypes.string,
+      query: PropTypes.object,
+    }),
   }
 
   constructor() {
@@ -55,16 +65,34 @@ class ExperienceSearch extends Component {
     this.props.fetchKeywords('');
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.search !== this.props.location.search) {
+      const {
+        fetchExperiences,
+      } = nextProps;
+
+      const {
+        query,
+      } = nextProps.location;
+
+      const sort = sortBySelector(query);
+      const searchBy = searchBySelector(query);
+      const searchQuery = searchQuerySelector(query);
+
+      fetchExperiences(0, PAGE_COUNT, sort, searchBy, searchQuery);
+    }
+  }
+
   handleKeyPress(e) {
     if (e.key === 'Enter') {
-      const val = e.target.value;
-      this.fetchExperiencesAndWorkings(val);
+      const searchQuery = e.target.value;
+      this.fetchExperiencesAndWorkings(searchQuery);
     }
   }
 
   handleKeywordClick(e) {
-    const val = e.target.innerHTML;
-    this.fetchExperiencesAndWorkings(val);
+    const searchQuery = e.target.innerHTML;
+    this.fetchExperiencesAndWorkings(searchQuery);
   }
 
   fetchExperiencesAndWorkings(val) {
@@ -72,9 +100,10 @@ class ExperienceSearch extends Component {
       sort,
       searchBy,
       fetchExperiences,
+      fetchWorkings,
     } = this.props;
     fetchExperiences(0, PAGE_COUNT, sort, searchBy, val);
-    this.props.fetchWorkings(val);
+    fetchWorkings(searchBy, val);
   }
 
   fetchExperiencesWithSort(sort) {

@@ -24,6 +24,7 @@ const qsSelector = (key, defaultValue) => R.pathOr(defaultValue, [
 
 export const searchQuerySelector = qsSelector('q', '');
 export const searchBySelector = qsSelector('s_type', 'company');
+export const sortBySelector = qsSelector('sort', 'created_at');
 export const pageSelector = qsSelector('p', 1);
 export const typeSelector = qsSelector('type', 'interview,work');
 

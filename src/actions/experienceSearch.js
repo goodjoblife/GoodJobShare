@@ -38,6 +38,11 @@ export const setSortAndExperiences = payload => ({
   payload,
 });
 
+export const setWorkings = workings => ({
+  type: SET_WORKINGS,
+  workings,
+});
+
 export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => (dispatch, getState) => {
   const data = getState().experienceSearch.toJS();
   const start = page * limit;
@@ -98,29 +103,19 @@ export const fetchMoreExperiences = nextPage => (dispatch, getState) => {
   );
 };
 
-export const fetchWorkings = val => (dispatch, getState) => {
-  const data = getState().experienceSearch.toJS();
-  const url = `/workings/search_by/${data.searchBy}/group_by/company?${data.searchBy}=${val}`;
+export const fetchWorkings = (searchBy, searchQuery) => dispatch => {
+  const url = `/workings/search_by/${searchBy}/group_by/company?${searchBy}=${searchQuery}`;
 
   return fetchUtil(url)('GET')
     .then(result => {
       if (result.error) {
-        dispatch({
-          type: SET_WORKINGS,
-          workings: [],
-        });
+        dispatch(setWorkings([]));
         return;
       }
-      dispatch({
-        type: SET_WORKINGS,
-        workings: result,
-      });
+      dispatch(setWorkings(result));
     })
     .catch(() => {
-      dispatch({
-        type: SET_WORKINGS,
-        workings: [],
-      });
+      dispatch(setWorkings([]));
     });
 };
 
