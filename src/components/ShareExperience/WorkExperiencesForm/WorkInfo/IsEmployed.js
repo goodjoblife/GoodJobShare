@@ -51,6 +51,7 @@ const IsEmployed = ({
           />
           <div className={styles.selects}>
             <Select
+              placeholder="- 請選擇 -"
               options={jobEndingTimeYearOptions}
               value={jobEndingTimeYear}
               onChange={e => onJobEndingTimeYear(Number(e.target.value))}

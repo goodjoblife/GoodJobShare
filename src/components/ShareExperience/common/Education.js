@@ -18,6 +18,7 @@ const Education = ({ education, onChange }) => (
       className={shareStyles.single__select__input}
     >
       <Select
+        placeholder="- 請選擇 -"
         options={educationOptions}
         value={education}
         onChange={

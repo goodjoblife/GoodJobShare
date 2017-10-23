@@ -26,6 +26,7 @@ const Region = ({ region, inputTitle, onChange, validator, submitted }) => {
         }}
       >
         <Select
+          placeholder="- 請選擇 -"
           options={regionOptions}
           value={region}
           onChange={
