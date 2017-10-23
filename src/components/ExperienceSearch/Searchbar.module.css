@@ -45,16 +45,17 @@
 }
 
 .keywordGroup {
-  margin: 10px 0 20px 0;
+  margin-top: 8px;
 }
 
 .keyword {
+  display: inline-block;
   font-size: 0.9em;
-  line-height: 2.5em;
   border: 1px dashed #aaa;
   border-radius: 5px;
-  padding: 7px 13px;
+  padding: 6px 12px;
   margin-left: 10px;
+  margin-bottom: 8px;
 
   &:first-child {
     margin-left: 0;

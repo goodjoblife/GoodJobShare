@@ -138,3 +138,11 @@
     }
   }
 }
+
+.m, .l {
+  .totalData {
+    @media (max-width: 850px) {
+      right: -50px;
+    }  
+  }
+}

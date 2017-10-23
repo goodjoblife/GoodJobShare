@@ -167,7 +167,7 @@ class ExperienceSearch extends Component {
               {(data.searchQuery && data.experienceCount > 0) &&
                 <div className={styles.searchResult}>
                   <Heading size="m" bold>「{data.searchQuery}」的面試經驗、工作經驗</Heading>
-                  <div>1-20 篇 (共&nbsp;{data.experienceCount}&nbsp;篇)</div>
+                  <div className={styles.searchResultNum}>1-20 篇 (共&nbsp;{data.experienceCount}&nbsp;篇)</div>
                 </div>
               }
 
