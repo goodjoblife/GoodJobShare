@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import cn from 'classnames';
 import R from 'ramda';
@@ -16,7 +17,10 @@ const searchOptions = [
   { label: '職稱', value: 'job-title' },
 ];
 
-export default class SearchBar extends Component {
+class SearchBar extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+  }
   constructor(props) {
     super(props);
     this.handleTypeChange = this.handleTypeChange.bind(this);
@@ -104,7 +108,9 @@ export default class SearchBar extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { searchType, keyword } = this.state;
-    push(`/time-and-salary/${searchType}/${encodeURIComponent(keyword)}/work-time-dashboard`);
+    this.props.dispatch(push(
+      `/time-and-salary/${searchType}/${encodeURIComponent(keyword)}/work-time-dashboard`,
+    ));
   }
   render() {
     const { keyword, searchType, candidates } = this.state;
@@ -143,3 +149,5 @@ export default class SearchBar extends Component {
     );
   }
 }
+
+export default connect()(SearchBar);
