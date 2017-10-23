@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import InfiniteScroll from 'react-infinite-scroller';
+import { browserHistory } from 'react-router';
+
 
 import Checkbox from 'common/form/Checkbox';
 import Loader from 'common/Loader';
@@ -23,6 +25,7 @@ import {
   searchQuerySelector,
   searchBySelector,
   sortBySelector,
+  toQsString,
 } from './helper';
 
 class ExperienceSearch extends Component {
@@ -41,11 +44,10 @@ class ExperienceSearch extends Component {
     fetchWorkings: PropTypes.func.isRequired,
     fetchKeywords: PropTypes.func.isRequired,
     experienceSearch: ImmutablePropTypes.map.isRequired,
-    searchBy: PropTypes.string,
-    sort: PropTypes.string,
     location: PropTypes.shape({
       search: PropTypes.string,
       query: PropTypes.object,
+      pathname: PropTypes.string,
     }),
   }
 
@@ -58,14 +60,6 @@ class ExperienceSearch extends Component {
   }
 
   componentDidMount() {
-    // const {
-    //   sort,
-    //   searchBy,
-    //   fetchExperiences,
-    // } = this.props;
-
-    // fetchExperiences(0, PAGE_COUNT, sort, searchBy, '');
-
     const {
       fetchExperiences,
     } = this.props;
@@ -114,21 +108,45 @@ class ExperienceSearch extends Component {
 
   fetchExperiencesAndWorkings(val) {
     const {
-      sort,
-      searchBy,
-      fetchExperiences,
       fetchWorkings,
     } = this.props;
-    fetchExperiences(0, PAGE_COUNT, sort, searchBy, val);
+
+    const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const sort = sortBySelector(query);
+    const searchBy = searchBySelector(query);
+
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery: val,
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    browserHistory.push(url);
     fetchWorkings(searchBy, val);
   }
 
   fetchExperiencesWithSort(sort) {
     const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const searchBy = searchBySelector(query);
+    const queryString = toQsString({
+      sort,
       searchBy,
-      fetchExperiences,
-    } = this.props;
-    fetchExperiences(0, PAGE_COUNT, sort, searchBy, '');
+      searchQuery: '',
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    browserHistory.push(url);
   }
 
   renderHelmet = () => {
