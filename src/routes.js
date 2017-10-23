@@ -50,6 +50,9 @@ const routes = () => ({
         onEnter: ({ params }, replace) => replace('/time-and-salary/latest'),
       },
       childRoutes: [
+        // for board
+        // for company
+        // for job
         {
           path: '*',
           onEnter: ({ params }, replace) => replace('/time-and-salary/latest'),
