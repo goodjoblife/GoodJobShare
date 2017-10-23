@@ -5,7 +5,7 @@ import { SET_JOB_TITLE_DATA, SET_JOB_TITLE_STATUS } from '../actions/timeAndSala
 import fetchingStatus from '../constants/status';
 
 const preloadedState = fromJS({
-  soryBy: null,
+  sortBy: null,
   order: null,
   job_title: null,
   data: [],

@@ -12,34 +12,26 @@ const pathnameMapping = {
   'company/:keyword/work-time-dashboard': {
     title: '工時排行榜',
     label: '一週平均總工時（高到低）',
-    viewParams: {
-      groupSortBy: 'week_work_time',
-      order: 'descending',
-    },
+    groupSortBy: 'week_work_time',
+    order: 'descending',
   },
   'company/:keyword/sort/work-time-asc': {
     title: '工時排行榜（由低到高）',
     label: '一週平均總工時（低到高）',
-    viewParams: {
-      groupSortBy: 'week_work_time',
-      order: 'ascending',
-    },
+    groupSortBy: 'week_work_time',
+    order: 'ascending',
   },
   'company/:keyword/salary-dashboard': {
     title: '估算時薪排行榜',
     label: '估算時薪（高到低）',
-    viewParams: {
-      groupSortBy: 'estimated_hourly_wage',
-      order: 'descending',
-    },
+    groupSortBy: 'estimated_hourly_wage',
+    order: 'descending',
   },
   'company/:keyword/sort/salary-asc': {
     title: '估算時薪排行榜（由低到高）',
     label: '估算時薪（低到高）',
-    viewParams: {
-      groupSortBy: 'estimated_hourly_wage',
-      order: 'ascending',
-    },
+    groupSortBy: 'estimated_hourly_wage',
+    order: 'ascending',
   },
 };
 
@@ -59,23 +51,23 @@ export default class TimeAndSalaryCompany extends Component {
 
   componentDidMount() {
     const { path } = this.props.route;
-    const { viewParams: { sortBy, order } } = pathnameMapping[path];
+    const { groupSortBy, order } = pathnameMapping[path];
     const company = this.props.params.keyword;
-    this.props.queryCompany({ sortBy, order, company });
+    this.props.queryCompany({ groupSortBy, order, company });
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.route.path !== nextProps.route.path || this.props.params.keyword !== nextProps.params.keyword) {
       const { path } = nextProps.route;
-      const { viewParams: { sortBy, order } } = pathnameMapping[path];
+      const { groupSortBy, order } = pathnameMapping[path];
       const company = nextProps.params.keyword;
-      this.props.queryCompany({ sortBy, order, company });
+      this.props.queryCompany({ groupSortBy, order, company });
     }
   }
 
   render() {
     const { route: { path }, switchPath } = this.props;
-    const { viewParams: { groupSortBy } } = pathnameMapping[path];
+    const { groupSortBy } = pathnameMapping[path];
     const company = this.props.params.keyword;
     const raw = this.props.data.toJS();
 

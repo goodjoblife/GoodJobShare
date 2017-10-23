@@ -5,7 +5,7 @@ import { SET_COMPANY_DATA, SET_COMPANY_STATUS } from '../actions/timeAndSalaryCo
 import fetchingStatus from '../constants/status';
 
 const preloadedState = fromJS({
-  soryBy: null,
+  groupSortBy: null,
   order: null,
   company: null,
   data: [],
@@ -14,12 +14,12 @@ const preloadedState = fromJS({
 });
 
 export default createReducer(preloadedState, {
-  [SET_COMPANY_DATA]: (state, { sortBy, order, company, data, status, error }) =>
+  [SET_COMPANY_DATA]: (state, { groupSortBy, order, company, data, status, error }) =>
     state
       .set('data', fromJS(data))
       .set('status', status)
       .set('error', error)
-      .set('sortBy', sortBy)
+      .set('groupSortBy', groupSortBy)
       .set('order', order)
       .set('company', company),
   [SET_COMPANY_STATUS]: (state, { status }) =>
