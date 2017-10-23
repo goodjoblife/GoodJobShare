@@ -26,8 +26,11 @@ import {
 } from './helper';
 
 class ExperienceSearch extends Component {
-  static fetchData({ store: { dispatch } }) {
-    return dispatch(fetchExperiencesAction(0, PAGE_COUNT, 'created_at', 'job_title', ''));
+  static fetchData({ query, store: { dispatch } }) {
+    const sort = sortBySelector(query);
+    const searchBy = searchBySelector(query);
+    const searchQuery = searchQuerySelector(query);
+    return dispatch(fetchExperiencesAction(0, PAGE_COUNT, sort, searchBy, searchQuery));
   }
 
   static propTypes = {
