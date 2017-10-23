@@ -15,7 +15,9 @@ class Select extends React.PureComponent {
           value={this.props.value === null ? '' : this.props.value}
           onChange={e => this.props.onChange(e)}
         >
-          <option value={''}>{this.props.placeholder}</option>
+          {this.props.placeholder && (
+            <option value={''}>{this.props.placeholder}</option>
+          )}
           {
             this.props.options.map(option =>
               <option
@@ -66,10 +68,6 @@ Select.propTypes = {
     PropTypes.number,
   ]),
   onChange: PropTypes.func,
-};
-
-Select.defaultProps = {
-  placeholder: '- 請選擇 -',
 };
 
 export default Select;
