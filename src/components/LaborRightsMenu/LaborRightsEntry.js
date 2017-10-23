@@ -3,8 +3,8 @@ import cn from 'classnames';
 import { Link } from 'react-router';
 import styles from './LaborRightsEntry.module.css';
 
-const LaborRightsEntry = ({ id, title, coverUrl }) => (
-  <Link to={`/labor-rights/${id}`} className={styles.wrapper}>
+const LaborRightsEntry = ({ link, title, coverUrl }) => (
+  <Link to={link} className={styles.wrapper}>
     {
       coverUrl &&
         <div className={styles.cover}>
@@ -18,7 +18,7 @@ const LaborRightsEntry = ({ id, title, coverUrl }) => (
 );
 
 LaborRightsEntry.propTypes = {
-  id: React.PropTypes.string,
+  link: React.PropTypes.string,
   title: React.PropTypes.string,
   coverUrl: React.PropTypes.string,
 };
