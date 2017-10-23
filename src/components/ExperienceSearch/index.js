@@ -55,13 +55,27 @@ class ExperienceSearch extends Component {
   }
 
   componentDidMount() {
+    // const {
+    //   sort,
+    //   searchBy,
+    //   fetchExperiences,
+    // } = this.props;
+
+    // fetchExperiences(0, PAGE_COUNT, sort, searchBy, '');
+
     const {
-      sort,
-      searchBy,
       fetchExperiences,
     } = this.props;
 
-    fetchExperiences(0, PAGE_COUNT, sort, searchBy, '');
+    const {
+      query,
+    } = this.props.location;
+
+    const sort = sortBySelector(query);
+    const searchBy = searchBySelector(query);
+    const searchQuery = searchQuerySelector(query);
+
+    fetchExperiences(0, PAGE_COUNT, sort, searchBy, searchQuery);
     this.props.fetchKeywords('');
   }
 

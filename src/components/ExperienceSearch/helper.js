@@ -16,9 +16,7 @@ export const toQsString = R.compose(
   renameObject,
 );
 
-const toQueryPath = ['location', 'query'];
 const qsSelector = (key, defaultValue) => R.pathOr(defaultValue, [
-  ...toQueryPath,
   key,
 ]);
 
