@@ -1,3 +1,5 @@
+import { push } from 'react-router-redux';
+
 import { fetchSearchJobTitle } from '../apis/timeAndSalaryApi';
 import fetchingStatus from '../constants/status';
 
@@ -41,3 +43,7 @@ export const queryJobTitle = ({ sortBy, order, jobTitle }) =>
       dispatch(setJobTitleData(fetchingStatus.ERROR, sortBy, order, jobTitle, [], err));
     });
   };
+
+export const switchPath = path =>
+  dispatch =>
+    dispatch(push(`/time-and-salary/${path}`));

@@ -14,14 +14,14 @@ const preloadedState = fromJS({
 });
 
 export default createReducer(preloadedState, {
-  [SET_JOB_TITLE_DATA]: (state, { sortBy, order, job_title, data, status, error }) =>
+  [SET_JOB_TITLE_DATA]: (state, { sortBy, order, jobTitle, data, status, error }) =>
     state
       .set('data', fromJS(data))
       .set('status', status)
       .set('error', error)
       .set('sortBy', sortBy)
       .set('order', order)
-      .set('job_title', job_title),
+      .set('job_title', jobTitle),
   [SET_JOB_TITLE_STATUS]: (state, { status }) =>
     state.set('status', status),
 });
