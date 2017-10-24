@@ -60,7 +60,7 @@ class SearchBar extends Component {
     });
   }
 
-  handleKeywordChange = e => {
+  handleKeywordChange(e) {
     this.setState({
       keyword: e.target.value,
     });
