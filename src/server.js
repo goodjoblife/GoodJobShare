@@ -48,7 +48,16 @@ export default (app, webpackIsomorphicTools) => {
 
       function getReduxPromise() {
         const { query, params } = renderProps;
-        const component = renderProps.components[renderProps.components.length - 1].WrappedComponent; // eslint-disable-line max-len
+
+        function resolveComponent() {
+          const component = renderProps.components[renderProps.components.length - 1];
+          if (component && component.WrappedComponent) {
+            return component.WrappedComponent;
+          }
+          return component;
+        }
+
+        const component = resolveComponent();
 
         if (component && component.fetchData) {
           return component.fetchData({ query, params, store, history });

@@ -1,3 +1,4 @@
+/* global __SERVER__ */
 import { div } from 'react';
 import App from './containers/Layout';
 import LandingPage from './containers/LandingPage';
@@ -50,7 +51,19 @@ const routes = () => ({
       path: 'time-and-salary',
       component: TimeAndSalary,
       indexRoute: {
-        onEnter: ({ params }, replace) => replace('/time-and-salary/latest'),
+        onEnter: ({ location }, replace) => {
+          if (__SERVER__) {
+            return;
+          }
+          if (location.hash) {
+            const targets = location.hash.split('#');
+            if (targets.length >= 2) {
+              replace(`/time-and-salary${targets[1]}`);
+              return;
+            }
+          }
+          replace('/time-and-salary/latest');
+        },
       },
       childRoutes: [
         {
