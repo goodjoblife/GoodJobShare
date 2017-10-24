@@ -72,7 +72,7 @@ export default class TimeAndSalaryJobTitle extends Component {
     const raw = this.props.data.toJS();
 
     const substituteKeyword =
-      R.invoker(2, 'replace')(/:keyword/, jobTitle);
+      R.invoker(2, 'replace')(/:keyword/, encodeURIComponent(jobTitle));
 
     return (
       <section className={styles.searchResult}>
