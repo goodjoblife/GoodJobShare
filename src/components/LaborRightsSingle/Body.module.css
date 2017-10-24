@@ -13,9 +13,12 @@
   left: -118px;
   width: calc(100% + 236px);
 
+  .leftBannerWrapper {
+    margin-right: 40px;
+  }
+
   .leftBanner {
-    width: 196px;
-    padding-right: 40px;
+    width: 156px;
   }
 
   .content {

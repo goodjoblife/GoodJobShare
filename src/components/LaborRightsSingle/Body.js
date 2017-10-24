@@ -14,7 +14,7 @@ const Body = ({ title, seoText, description, content }) => (
         {description}
       </div>
       <div className={styles.contentWrapper}>
-        <StickyContainer style={{ width: '198px' }}>
+        <StickyContainer className={cn(styles.leftBanner, styles.leftBannerWrapper)}>
           <Sticky disableCompensation>
             {({ style }) => (
               <div className={styles.leftBanner} style={style}>
