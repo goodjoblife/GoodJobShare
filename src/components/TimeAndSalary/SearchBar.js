@@ -69,7 +69,7 @@ class SearchBar extends Component {
 
   searchKeyword = debounce(value => {
     if (!value) {
-      this.handleAutocompleteItems([]);
+      this.setState({ candidates: [] });
       return;
     }
     const { searchType } = this.state;
