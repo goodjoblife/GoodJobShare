@@ -5,7 +5,7 @@ import { SET_BOARD_DATA, SET_BOARD_STATUS } from '../actions/timeAndSalaryBoard'
 import fetchingStatus from '../constants/status';
 
 const preloadedState = fromJS({
-  sortBy: null,
+  soryBy: null,
   order: null,
   data: [],
   status: fetchingStatus.UNFETCHED,
