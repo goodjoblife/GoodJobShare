@@ -1,19 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import cn from 'classnames';
+import R from 'ramda';
 
 import Radio from 'common/form/Radio';
-import TextInput from 'common/form/TextInput';
+import { debounce } from 'utils/streamUtils';
+import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput';
 
 import styles from './SearchBar.module.css';
 import submitButtonStyle from '../common/button/ButtonSubmit.module.css';
+import { fetchCompanyCandidates, fetchJobTitleCandidates } from '../../apis/timeAndSalaryApi';
 
 const searchOptions = [
   { label: '公司', value: 'company' },
   { label: '職稱', value: 'job-title' },
 ];
 
-export default class SearchBar extends Component {
+class SearchBar extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+  }
   constructor(props) {
     super(props);
     this.handleTypeChange = this.handleTypeChange.bind(this);
@@ -24,6 +31,7 @@ export default class SearchBar extends Component {
   state = {
     searchType: 'company',
     keyword: '',
+    candidates: [],
   }
 
   componentDidMount() {
@@ -48,6 +56,7 @@ export default class SearchBar extends Component {
   handleTypeChange(e) {
     this.setState({
       searchType: e.target.value,
+      candidates: [],
     });
   }
 
@@ -55,15 +64,57 @@ export default class SearchBar extends Component {
     this.setState({
       keyword: e.target.value,
     });
+    this.searchKeyword(e.target.value);
+  }
+
+  fetchCandidates = value => {
+    const { searchType } = this.state;
+    if (searchType === 'company') {
+      return fetchCompanyCandidates(value).then(r =>
+          r.map(({ _id: { name } }) => ({
+            label: name,
+            value: name,
+          }))
+        );
+    }
+    return fetchJobTitleCandidates(value).then(r =>
+        r.map(({ _id: name }) => ({
+          label: name,
+          value: name,
+        }))
+      );
+  }
+
+  searchKeyword = debounce(value => {
+    if (!value) {
+      this.setState({ candidates: [] });
+      return;
+    }
+    this.fetchCandidates(value)
+      .then(candidates => {
+        this.setState({ candidates });
+      })
+      .catch(() => {
+        this.setState({ candidates: [] });
+      });
+  }, 500)
+
+  handleSelectCandidate = keyword => {
+    this.setState({
+      candidates: [],
+      keyword,
+    });
   }
 
   handleSubmit(e) {
     e.preventDefault();
     const { searchType, keyword } = this.state;
-    push(`/time-and-salary/${searchType}/${encodeURIComponent(keyword)}/work-time-dashboard`);
+    this.props.dispatch(push(
+      `/time-and-salary/${searchType}/${encodeURIComponent(keyword)}/work-time-dashboard`,
+    ));
   }
   render() {
-    const { keyword, searchType } = this.state;
+    const { keyword, searchType, candidates } = this.state;
     return (
       <form className={cn(styles.section, styles.showSearchbar)} onSubmit={this.handleSubmit}>
         <div className={styles.type}>
@@ -78,10 +129,13 @@ export default class SearchBar extends Component {
         <div className={styles.form}>
           <div className={styles.searchBar}>
             <div style={{ flex: 1 }}>
-              <TextInput
+              <AutoCompleteTextInput
                 value={keyword}
                 onChange={this.handleKeywordChange}
                 placeholder={searchType === 'company' ? '輸入公司 / 單位名稱' : '輸入職稱'}
+                items={candidates}
+                getItemValue={R.prop('label')}
+                onSelect={this.handleSelectCandidate}
               />
             </div>
             <button
@@ -96,3 +150,5 @@ export default class SearchBar extends Component {
     );
   }
 }
+
+export default connect()(SearchBar);

@@ -3,6 +3,12 @@ import qs from 'qs';
 
 const endpoint = '/workings';
 
+export const fetchCompanyCandidates = key =>
+  fetchUtil(`${endpoint}/companies/search?${qs.stringify({ key })}`)('GET');
+
+export const fetchJobTitleCandidates = key =>
+  fetchUtil(`${endpoint}/jobs/search?${qs.stringify({ key })}`)('GET');
+
 export const fetchTimeAndSalary = opt =>
   fetchUtil(`${endpoint}?${qs.stringify(opt)}`)('GET');
 
