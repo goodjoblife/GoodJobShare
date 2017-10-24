@@ -90,11 +90,13 @@ class SearchBar extends Component {
       this.setState({ candidates: [] });
       return;
     }
-    this.fetchCandidates(value).then(candidates => {
-      this.setState({ candidates });
-    }, () => {
-      this.setState({ candidates: [] });
-    });
+    this.fetchCandidates(value)
+      .then(candidates => {
+        this.setState({ candidates });
+      })
+      .catch(() => {
+        this.setState({ candidates: [] });
+      });
   }, 500)
 
   handleSelectCandidate = keyword => {
