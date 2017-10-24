@@ -5,23 +5,23 @@ import { SET_JOB_TITLE_DATA, SET_JOB_TITLE_STATUS } from '../actions/timeAndSala
 import fetchingStatus from '../constants/status';
 
 const preloadedState = fromJS({
-  sortBy: null,
+  groupSortBy: null,
   order: null,
-  job_title: null,
+  jobTitle: null,
   data: [],
   status: fetchingStatus.UNFETCHED,
   error: null,
 });
 
 export default createReducer(preloadedState, {
-  [SET_JOB_TITLE_DATA]: (state, { sortBy, order, jobTitle, data, status, error }) =>
+  [SET_JOB_TITLE_DATA]: (state, { groupSortBy, order, jobTitle, data, status, error }) =>
     state
       .set('data', fromJS(data))
       .set('status', status)
       .set('error', error)
-      .set('sortBy', sortBy)
+      .set('groupSortBy', groupSortBy)
       .set('order', order)
-      .set('job_title', jobTitle),
+      .set('jobTitle', jobTitle),
   [SET_JOB_TITLE_STATUS]: (state, { status }) =>
     state.set('status', status),
 });
