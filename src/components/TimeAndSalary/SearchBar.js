@@ -67,31 +67,30 @@ class SearchBar extends Component {
     this.searchKeyword(e.target.value);
   }
 
-  searchKeyword = debounce(value => {
-    if (!value) {
-      this.setState({ candidates: [] });
-      return;
-    }
+  fetchCandidates = value => {
     const { searchType } = this.state;
-    let fetchCandidates;
     if (searchType === 'company') {
-      fetchCandidates =
-        fetchCompanyCandidates(value).then(r =>
+      return fetchCompanyCandidates(value).then(r =>
           r.map(({ _id: { name } }) => ({
             label: name,
             value: name,
           }))
         );
-    } else {
-      fetchCandidates =
-        fetchJobTitleCandidates(value).then(r =>
-          r.map(({ _id: name }) => ({
-            label: name,
-            value: name,
-          }))
-        );
     }
-    fetchCandidates.then(candidates => {
+    return fetchJobTitleCandidates(value).then(r =>
+        r.map(({ _id: name }) => ({
+          label: name,
+          value: name,
+        }))
+      );
+  }
+
+  searchKeyword = debounce(value => {
+    if (!value) {
+      this.setState({ candidates: [] });
+      return;
+    }
+    this.fetchCandidates(value).then(candidates => {
       this.setState({ candidates });
     }, () => {
       this.setState({ candidates: [] });
