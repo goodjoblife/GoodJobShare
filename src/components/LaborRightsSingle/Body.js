@@ -16,10 +16,10 @@ const Body = ({ title, seoText, description, content }) => (
     </Wrapper>
     <Wrapper size="l">
       <div className={styles.contentWrapper}>
-        <StickyContainer className={cn(styles.leftBannerWrapper)}>
+        <StickyContainer className={cn(styles.leftBanner)}>
           <Sticky disableCompensation>
             {({ style }) => (
-              <div className={styles.leftBanner} style={style}>
+              <div style={style}>
                 <LeftBanner />
               </div>
             )}
