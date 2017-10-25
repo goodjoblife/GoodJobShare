@@ -27,6 +27,7 @@ const ExperienceInYear = ({ experienceInYear, onChange }) => (
         }}
       >
         <Select
+          placeholder="- 請選擇 -"
           options={experienceInYearOptions}
           value={experienceInYear}
           onChange={
