@@ -18,6 +18,7 @@ class RadioDefault extends React.PureComponent {
   }
   render() {
     const {
+      idPrefix,
       label,
       value,
       checked,
@@ -25,7 +26,7 @@ class RadioDefault extends React.PureComponent {
       name,
     } = this.props;
 
-    const id = `${this.id}-${value}`;
+    const id = `${idPrefix || this.id}-${value}`;
 
     return (
       <label
@@ -57,6 +58,7 @@ class RadioDefault extends React.PureComponent {
 }
 
 RadioDefault.propTypes = {
+  idPrefix: PropTypes.string,
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   checked: PropTypes.bool.isRequired,

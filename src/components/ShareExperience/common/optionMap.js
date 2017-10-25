@@ -26,6 +26,20 @@ export const regionOptions = [
   value: region,
 }));
 
+export const employmentTypeOptions = [{
+  label: '全職', value: 'full-time',
+}, {
+  label: '兼職(含打工)', value: 'part-time',
+}, {
+  label: '實習', value: 'intern',
+}, {
+  label: '臨時工', value: 'temporary',
+}, {
+  label: '約聘雇', value: 'contract',
+}, {
+  label: '派遣', value: 'dispatched-labor',
+}];
+
 export const experienceInYearOptions = Array(51).fill(0).map((_, index) => {
   if (index === 0) {
     return {
@@ -35,6 +49,19 @@ export const experienceInYearOptions = Array(51).fill(0).map((_, index) => {
   }
   return {
     label: index,
+    value: index,
+  };
+});
+
+export const experienceInYearOptions2 = Array(51).fill(0).map((_, index) => {
+  if (index === 0) {
+    return {
+      label: '小於 1 年',
+      value: index,
+    };
+  }
+  return {
+    label: `${index} 年`,
     value: index,
   };
 });
