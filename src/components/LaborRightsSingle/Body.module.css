@@ -10,18 +10,27 @@
 .contentWrapper {
   display: flex;
   position: relative;
-  left: -118px;
-  width: calc(100% + 236px);
 
   .leftBannerWrapper {
-    margin-right: 40px;
-  }
+    flex: 0 0 196px;
+    width: 196px;
 
-  .leftBanner {
-    width: 156px;
+    @media (max-width: 1280px) {
+      flex-basis: 15%;
+      width: 15%;
+    }
+
+    @media (max-width: 850px) {
+      display: none;
+    }
   }
 
   .content {
-    flex: 1;
+    flex: 1 1 auto;
+    margin-left: 40px;
+
+    @media (max-width: 1280px) {
+      margin-left: 24px;
+    }
   }
 }

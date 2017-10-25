@@ -13,8 +13,10 @@ const Body = ({ title, seoText, description, content }) => (
       <div className={cn('subheadingM', styles.description)}>
         {description}
       </div>
+    </Wrapper>
+    <Wrapper size="l">
       <div className={styles.contentWrapper}>
-        <StickyContainer className={cn(styles.leftBanner, styles.leftBannerWrapper)}>
+        <StickyContainer className={cn(styles.leftBannerWrapper)}>
           <Sticky disableCompensation>
             {({ style }) => (
               <div className={styles.leftBanner} style={style}>
