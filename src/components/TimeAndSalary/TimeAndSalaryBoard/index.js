@@ -8,7 +8,8 @@ import Table from 'common/table/Table';
 import { InfoButton } from 'common/Modal';
 import InfoTimeModal from '../common/InfoTimeModal';
 import InfoSalaryModal from '../common/InfoSalaryModal';
-import styles from '../views/view.module.css';
+import styles from './TimeAndSalaryBoard.module.css';
+import commonStyles from '../views/view.module.css';
 import fetchingStatus from '../../../constants/status';
 
 const pathnameMapping = {
@@ -64,14 +65,14 @@ const getTitle = (val, row) => (
   <div>
     {val}
     {' '}
-    <span className={`pM ${styles.sector}`}>
+    <span className={`pM ${commonStyles.sector}`}>
       {row.sector}
     </span>
   </div>
 );
 const getWorkingTime = val => (
   <div
-    className={styles.bar}
+    className={commonStyles.bar}
     style={{ width: `${val >= 100 ? 100 : val}%` }}
   >
     {val}
@@ -83,27 +84,27 @@ const getFrequency = val => {
   switch (val) {
     case 0:
       text = '幾乎不';
-      style = styles.hardly;
+      style = commonStyles.hardly;
       break;
     case 1:
       text = '偶爾';
-      style = styles.sometimes;
+      style = commonStyles.sometimes;
       break;
     case 2:
       text = '經常';
-      style = styles.usually;
+      style = commonStyles.usually;
       break;
     case 3:
       text = '幾乎每天';
-      style = styles.always;
+      style = commonStyles.always;
       break;
     default:
       text = '幾乎不';
-      style = styles.hardly;
+      style = commonStyles.hardly;
   }
   return (
     <div>
-      <div className={`${styles.dot} ${style}`} />
+      <div className={`${commonStyles.dot} ${style}`} />
       {text}
     </div>
   );
@@ -199,12 +200,12 @@ export default class TimeAndSalaryBoard extends Component {
     const { status, switchPath } = this.props;
 
     return (
-      <section className={styles.searchResult}>
-        <h2 className={styles.heading}>{title}</h2>
-        <div className={styles.result}>
-          <div className={styles.sort}>
-            <div className={styles.label}> 排序：</div>
-            <div className={styles.select}>
+      <section className={commonStyles.searchResult}>
+        <h2 className={commonStyles.heading}>{title}</h2>
+        <div className={commonStyles.result}>
+          <div className={commonStyles.sort}>
+            <div className={commonStyles.label}> 排序：</div>
+            <div className={commonStyles.select}>
               <Select
                 options={selectOptions(pathnameMapping)}
                 onChange={e => switchPath(e.target.value)}
@@ -212,7 +213,7 @@ export default class TimeAndSalaryBoard extends Component {
               />
             </div>
           </div>
-          <Table className={styles.companyTable} data={raw} primaryKey="_id">
+          <Table className={styles.latestTable} data={raw} primaryKey="_id">
             <Table.Column
               className={styles.colCompany}
               title="公司名稱"

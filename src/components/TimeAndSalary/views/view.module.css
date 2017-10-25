@@ -1,3 +1,4 @@
+@value yellow-bar, gray-dark, main-gray, main-yellow, warning-red from "../../common/variables.module.css";
 $below-mobile: 550px;
 $below-small: 850px;
 $above-desktop: 1025px;
@@ -92,4 +93,33 @@ $bold: 700;
   @media (max-width: $below-mobile) {
     margin-bottom: $block-gutter-s;
   }
+}
+
+.bar {
+  background-color: yellow-bar;
+  padding: 5px;
+}
+
+.dot {
+  display: inline-block;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+  &.hardly {
+    background-color: main-gray;
+  }
+  &.sometimes {
+    background-color: gray-dark;
+  }
+  &.usually {
+    background-color: main-yellow;
+  }
+  &.always {
+    background-color: warning-red;
+  }
+}
+
+.sector {
+  color: main-gray;
 }
