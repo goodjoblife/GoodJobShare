@@ -85,6 +85,7 @@ export default class TimeAndSalaryCompany extends Component {
                 options={selectOptions(pathnameMapping)}
                 value={path}
                 onChange={e => switchPath(substituteKeyword(e.target.value))}
+                hasNullOption={false}
               />
             </div>
           </div>

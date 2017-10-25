@@ -209,6 +209,7 @@ export default class TimeAndSalaryBoard extends Component {
                 options={selectOptions(pathnameMapping)}
                 onChange={e => switchPath(e.target.value)}
                 value={path}
+                hasNullOption={false}
               />
             </div>
           </div>
