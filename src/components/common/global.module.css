@@ -1,15 +1,11 @@
-@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, gray-dark, main-black, main-yellow, link-blue, main-gray, gray-light, white-light from "common/variables.module.css";
+@value inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, gray-dark, main-black, main-yellow, link-blue, main-gray, gray-light, white-light, border-gray from "common/variables.module.css";
 
 :global {
   /* font */
-  [class*="Bold"], .formLabel, .buttonSubmit {
-    font-weight: 700;
-  }
-
   .headingL, .headingLBold {
     font-size: 2.25em;
-  	line-height: 1.25em;
-  	letter-spacing: 0.03em;
+    line-height: 1.25em;
+    letter-spacing: 0.03em;
   }
 
   .headingM, .headingMBold {
@@ -45,21 +41,28 @@
     line-height: 1.5em;
   }
 
-  .formLabel, .buttonSubmit {
+  .formLabel {
     font-size: 0.9em;
+    font-weight: 700;
     letter-spacing: 0.1em;
   }
 
+  [class*="Bold"] {
+    font-weight: 700;
+  }
 
-  /*buttons*/
-  [class^="buttonCircle"] {
+  /* buttons start */
+  [class^="button"] {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     font-size: 1em;
     letter-spacing: 0.1em;
-    border-radius: 1.5em;
     transition: background-color .3s;
+  }
+
+  [class^="buttonCircle"] {
+    border-radius: 1.5em;
   }
 
   .buttonCircleL {
@@ -67,6 +70,7 @@
     font-size: 1.05em;
     height: 45px;
   }
+
   .buttonCircleM {
     padding: 0 40px;
     font-size: 0.95em;
@@ -82,7 +86,7 @@
   .buttonBlack {
     background-color: main-black;
     color: #fff;
-    @media (min-width: 851px) {
+    @media (min-width: 1025px) {
       &:hover {
         background-color: main-yellow;
         color: main-black;
@@ -93,7 +97,7 @@
   .buttonBlack2 {
     background-color: main-black;
     color: #fff;
-    @media (min-width: 851px) {
+    @media (min-width: 1025px) {
       &:hover {
         background-color: #555;
       }
@@ -103,7 +107,7 @@
   .buttonWhiteLine {
     border: 1px solid #fff;
     color: #fff;
-    @media (min-width: 851px) {
+    @media (min-width: 1025px) {
       &:hover {
         background-color: main-yellow;
         color: main-black;
@@ -116,7 +120,7 @@
     border: 1px solid main-black;
     color: main-black;
 
-    @media (min-width: 851px) {
+    @media (min-width: 1025px) {
       &:hover {
         background-color: main-black;
         color: #fff;
@@ -128,7 +132,7 @@
     border: 1px solid main-gray;
     color: main-black;
 
-    @media (min-width: 851px) {
+    @media (min-width: 1025px) {
       &:hover {
         background-color: gray-light;
       }
@@ -138,7 +142,7 @@
   .buttonGray {
     background-color: gray-dark;
     color: #fff;
-    @media (min-width: 851px) {
+    @media (min-width: 1025px) {
       &:hover {
         background-color: #424242;
       }
@@ -148,39 +152,71 @@
   .buttonHoverYellow {
     background-color: transparent;
     color: black;
-    @media (min-width: 851px) {
+    @media (min-width: 1025px) {
       &:hover {
         background-color: main-yellow;
       }
     }
   }
 
-  .buttonSubmit {
-    font-size: .95em;
-    letter-spacing: 1px;
-    background-color: #000;
-    border: none;
-    color: white;
-    padding: 15px 40px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    transition: background-color .3s;
-    @media (min-width: 851px) {
+  .buttonFirstPage, .buttonPage {
+    height: 42px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 5px;
+    margin-left: 16px;
+
+    @media (max-width: 550px) {
+      padding-left: 8px;
+      padding-right: 8px;
+      height: 36px;
+      font-size: .95em;
+      margin-left: 10px;
+    }
+  }
+
+  .buttonPage {
+    background-color: #e0e0e0;
+
+    @media (min-width: 1025px) {
       &:hover {
         background-color: main-yellow;
       }
-      &[disabled]:hover {
-        background-color: main-gray;
-        cursor: not-allowed;
+    }
+
+    svg {
+      width: 14px;
+      height: 14px;
+      fill: main-black;
+
+      &:first-child {
+        margin-right: 8px;
+      }
+
+      &:last-child {
+        margin-left: 8px;
       }
     }
+
     &[disabled] {
-      background-color: main-gray;
-      cursor: not-allowed;
+      background-color: rgba(224,224,224, .4);
+      color: #ccc;
+      pointer-events: none;
+
+      svg { fill: #ccc; }
     }
   }
+
+  .buttonFirstPage {
+    color: gray-dark;
+
+    @media (min-width: 1025px) {
+      &:hover {
+        color: main-yellow;
+      }
+    }
+  }
+  /* buttons end */
 
   .blueLink {
     color: link-blue;

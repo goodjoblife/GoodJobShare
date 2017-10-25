@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import ArrowLeft from '../../images/arrow-left.svg';
-
 import styles from './Button.module.css';
 
 const Button = ({
@@ -19,6 +17,9 @@ const Button = ({
   switch (btnStyle) {
     case 'black':
       cnBtnStyle = 'buttonBlack';
+      break;
+    case 'black2':
+      cnBtnStyle = 'buttonBlack2';
       break;
     case 'gray':
       cnBtnStyle = 'buttonGray';
@@ -41,6 +42,12 @@ const Button = ({
     case 'back':
       cnBtnStyle = 'formLabel';
       break;
+    case 'page':
+      cnBtnStyle = 'buttonPage';
+      break;
+    case 'firstPage':
+      cnBtnStyle = 'buttonFirstPage';
+      break;
     default:
       cnBtnStyle = '';
   }
@@ -52,7 +59,6 @@ const Button = ({
       onClick={onClick}
       style={style}
     >
-      {btnStyle === 'back' && <ArrowLeft className={styles.arrowLeft} />}
       {children}
     </button>
   );
