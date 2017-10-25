@@ -5,16 +5,17 @@
   background: #000000;
   color: #FFFFFF;
   padding: 14px 0;
-  // height: 50px;
   width: 200px;
   text-align: center;
 
-  &:hover {
-    background: main-yellow;
+  @media (min-width: 1025px) {
+    &:hover {
+      background-color: main-yellow;
+    }
   }
 
   &:disabled {
-    background: main-gray;
+    background-color: main-gray;
     cursor: not-allowed;
   }
 }
@@ -23,7 +24,9 @@
   color: #C0C0C0;
   transition: color 0.2s linear;
 
-  &:hover {
-    color: gray-dark;
+  @media (min-width: 1025px) {
+    &:hover {
+      color: gray-dark;
+    }
   }
 }

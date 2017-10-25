@@ -1,11 +1,16 @@
 @value main-yellow, main-black, border-gray, main-gray NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
+.root {
+  @media (max-width: 850px) {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
 .header {
-  position: fixed;
-  z-index: 999;
-  top: 0;
-  left: 0;
-  right: 0;
   background-color: main-black;
   height: NAV_HEIGHT;
   box-shadow: 0 0 8px rgba(0,0,0,.11);

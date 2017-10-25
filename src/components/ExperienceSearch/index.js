@@ -4,14 +4,18 @@ import Helmet from 'react-helmet';
 import InfiniteScroll from 'react-infinite-scroller';
 import ReactGA from 'react-ga';
 
-import Checkbox from 'common/form/Checkbox';
 import Loader from 'common/Loader';
-import { Section, Wrapper } from 'common/base';
+import { Section, Wrapper, Heading, P } from 'common/base';
+import Columns from 'common/Columns';
+import Button from 'common/button/Button';
+import { ArrowLeft } from 'common/icons';
 
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
-import WorkingHourBlock from '../TimeAndSalary/common/WorkingHourBlock';
+import TimeSalaryBlock from './TimeSalaryBlock';
+import Filter from './Filter';
+import { Banner1, Banner2 } from './Banners';
 import { fetchExperiences } from '../../actions/experienceSearch';
 
 import { HELMET_DATA } from '../../constants/helmetData';
@@ -19,11 +23,9 @@ import getScale from '../../utils/numberUtils';
 
 import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
 
-const SORT = { CREATED_AT: 'created_at', POPULARITY: 'popularity' };
-const SEARCH_TYPE = {
-  INTERVIEW: 'interview',
-  WORK: 'work',
-  SALARY: 'salary',
+const SORT = {
+  CREATED_AT: 'created_at',
+  POPULARITY: 'popularity',
 };
 
 class ExperienceSearch extends Component {
@@ -142,45 +144,16 @@ class ExperienceSearch extends Component {
         <Wrapper size="l">
           <div className={styles.container}>
             <aside className={styles.aside}>
-              <section>
-                <button
-                  className={data.sort === SORT.CREATED_AT
-                    ? `${styles.frontButton} ${styles.toggle}`
-                    : styles.frontButton}
-                  onClick={this.fetchExperiencesWithSort} value={SORT.CREATED_AT}
-                >
-                  最新
-                </button>
-                <button
-                  className={data.sort === SORT.POPULARITY
-                    ? `${styles.rearButton} ${styles.toggle}`
-                    : styles.rearButton}
-                  onClick={this.fetchExperiencesWithSort} value={SORT.POPULARITY}
-                >
-                  熱門
-                </button>
-              </section>
-              <hr className={styles.splitter} />
-              <div className={styles.fliters}>
-                {
-                  [
-                    { label: '面試經驗', value: SEARCH_TYPE.INTERVIEW },
-                    { label: '工作經驗', value: SEARCH_TYPE.WORK },
-                    { label: '薪資工時', value: SEARCH_TYPE.SALARY },
-                  ].map(o => (
-                    <Checkbox
-                      key={o.value} id={`searchType-${o.value}`}
-                      label={o.label} value={o.value}
-                      disabled={o.value === 'salary' && !data.searchQuery}
-                      onChange={this.setSearchType}
-                      checked={data[o.value]}
-                    />
-                  ))
-                }
-              </div>
+              <Filter
+                data={data}
+                fetchExperiencesWithSort={this.fetchExperiencesWithSort}
+                setSearchType={this.setSearchType}
+                className={styles.filter}
+              />
+              <Banner1 className={styles.banner} />
             </aside>
 
-            <div className={styles.content}>
+            <section className={styles.content}>
               <Searchbar
                 className={styles.searcbarLarge}
                 data={data}
@@ -191,11 +164,23 @@ class ExperienceSearch extends Component {
                 fetchExperiencesAndWorkings={this.fetchExperiencesAndWorkings}
               />
 
-              {data.searchQuery &&
+              {(data.searchQuery && data.experienceCount > 0) &&
                 <div className={styles.searchResult}>
-                  找到 {data.experienceCount} 筆與 &quot;{data.searchQuery}&quot; 相關的資料
+                  <Heading size="m" bold>「{data.searchQuery}」的面試經驗、工作經驗</Heading>
+                  <div className={styles.searchResultNum}>1-20 篇 (共&nbsp;{data.experienceCount}&nbsp;篇)</div>
                 </div>
               }
+
+              {(data.searchQuery && data.experienceCount === 0) &&
+                <P
+                  size="l" bold
+                  className={styles.searchNoResult}
+                >
+                    尚未有「{data.searchQuery}」的經驗分享
+                </P>
+              }
+
+              <Banner2 />
 
               <InfiniteScroll
                 pageStart={0} hasMore={data.hasMore}
@@ -221,15 +206,31 @@ class ExperienceSearch extends Component {
                 }
               </InfiniteScroll>
 
-              <div className={styles.workingHourWrapper}>
-                {
-                  data.salary && (data.workings || []).map((o, i) => (
-                    <WorkingHourBlock key={o.company.id || i} data={o} />
-                  ))
-                }
+              <div className={styles.pagination}>
+                <P size="m" className={styles.info}>1-20 篇 (共 93 篇)</P>
+                <div>
+                  <Button btnStyle="firstPage">第一頁</Button>
+                  <Button btnStyle="page"><ArrowLeft />前一頁</Button>
+                  <Button btnStyle="page" disabled>下一頁<ArrowLeft style={{ transform: 'scaleX(-1)' }} /></Button>
+                </div>
               </div>
 
-            </div>
+              {(data.searchQuery && data.workings.length > 0) &&
+                <div>
+                  <hr className={styles.splitter} />
+                  <section className={styles.timeSalaryWrapper}>
+                    <Heading size="m" bold marginBottom>「{data.searchQuery}」的薪資工時</Heading>
+                    {data.salary &&
+                      <Columns
+                        Item={TimeSalaryBlock}
+                        items={(data.workings || []).map(o => ({ data: o }))}
+                        gutter="s"
+                      />
+                    }
+                  </section>
+                </div>
+              }
+            </section>
           </div>
         </Wrapper>
       </Section>
