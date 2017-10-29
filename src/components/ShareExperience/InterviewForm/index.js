@@ -2,6 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
 import { scroller } from 'react-scroll';
+import ReactGA from 'react-ga';
 import { Heading } from 'common/base';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
@@ -28,6 +29,7 @@ import {
 
 import { HELMET_DATA } from '../../../constants/helmetData';
 import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
+import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import {
   LS_INTERVIEW_FORM_KEY,
 } from '../../../constants/localStorageKey';
@@ -103,7 +105,7 @@ class InterviewForm extends React.Component {
     this.appendBlock = this.appendBlock.bind(this);
     this.removeBlock = this.removeBlock.bind(this);
     this.editBlock = this.editBlock.bind(this);
-    this.onSumbit = this.onSumbit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       ...defaultForm,
@@ -121,7 +123,6 @@ class InterviewForm extends React.Component {
     } catch (error) {
       defaultFromDraft = null;
     }
-
     const defaultState = defaultFromDraft || defaultForm;
 
     this.setState({ // eslint-disable-line react/no-did-mount-set-state
@@ -129,12 +130,24 @@ class InterviewForm extends React.Component {
     });
   }
 
-  onSumbit() {
+  onSubmit() {
     const valid = interviewFormCheck(getInterviewForm(this.state));
 
     if (valid) {
+      const p = postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
+      p.then(() => {
+        ReactGA.event({
+          category: GA_CATEGORY.SHARE_INTERVIEW,
+          action: GA_ACTION.UPLOAD_SUCCESS,
+        });
+      }).catch(() => {
+        ReactGA.event({
+          category: GA_CATEGORY.SHARE_INTERVIEW,
+          action: GA_ACTION.UPLOAD_FAIL,
+        });
+      });
       localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
-      return postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
+      return p;
     }
     this.handleState('submitted')(true);
     const topInvalidElement = this.getTopInvalidElement();
@@ -272,7 +285,7 @@ class InterviewForm extends React.Component {
           changeValidationStatus={this.changeValidationStatus}
         />
         <SubmitArea
-          onSubmit={this.onSumbit}
+          onSubmit={this.onSubmit}
         />
       </div>
     );

@@ -2,6 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
 import { scroller } from 'react-scroll';
+import ReactGA from 'react-ga';
 import { Heading } from 'common/base';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
@@ -32,6 +33,7 @@ import styles from './WorkExperiencesForm.module.css';
 
 import { HELMET_DATA } from '../../../constants/helmetData';
 import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
+import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 
 const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '段落標題，例：實際工作內容') => {
   const section = {
@@ -123,8 +125,20 @@ class WorkExperiencesForm extends React.Component {
     const valid = workExperiencesFormCheck(propsWorkExperiencesForm(this.state));
 
     if (valid) {
+      const p = postWorkExperience(workExperiencesToBody(this.state));
+      p.then(() => {
+        ReactGA.event({
+          category: GA_CATEGORY.SHARE_WORK,
+          action: GA_ACTION.UPLOAD_SUCCESS,
+        });
+      }).catch(() => {
+        ReactGA.event({
+          category: GA_CATEGORY.SHARE_WORK,
+          action: GA_ACTION.UPLOAD_FAIL,
+        });
+      });
       localStorage.removeItem(LS_WORK_EXPERIENCES_FORM_KEY);
-      return postWorkExperience(workExperiencesToBody(this.state));
+      return p;
     }
     this.handleState('submitted')(true);
     const topInvalidElement = this.getTopInvalidElement();

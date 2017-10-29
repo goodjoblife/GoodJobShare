@@ -23,6 +23,17 @@ class LaborRightsMenu extends React.Component {
 
   render() {
     const title = '勞動知識小教室';
+    // eslint-disable-next-line no-shadow
+    const items = this.props.metaList.toJS().map(({ id, title, coverUrl }) => ({
+      link: `/labor-rights/${id}`,
+      coverUrl,
+      title,
+    }));
+    items.splice(4, 0, {
+      link: '/share',
+      coverUrl: 'https://image.goodjob.life/banners/banner3_2x.jpg',
+      title: '留下你的面試經驗、工作經驗',
+    });
     return (
       <Section Tag="main" pageTop>
         <Wrapper size="l" Tag="main">
@@ -38,7 +49,7 @@ class LaborRightsMenu extends React.Component {
                 <Heading size="l" center marginBottom>{title}</Heading>
                 <Columns
                   Item={LaborRightsEntry}
-                  items={this.props.metaList.toJS()}
+                  items={items}
                 />
               </section>
           }

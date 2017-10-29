@@ -60,4 +60,5 @@ export { default as Twitter } from './Twitter';
 export { default as Plus } from './Plus';
 export { default as People } from './People';
 export { default as PeopleFill } from './PeopleFill';
+export { default as Thumbnails } from './Thumbnails';
 export { default as Minus } from './Minus';

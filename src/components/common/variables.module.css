@@ -12,6 +12,7 @@
 
 @value NAV_HEIGHT: 54px;
 @value NAV_MOBILE_HEIGHT: 50px;
+@value TOP_HEIGHT: 32px;
 @value PAGE_TOP: 64px;
 @value PAGE_TOP_S: 30px;
 
@@ -25,7 +26,7 @@
 @value yellow-light: #fffbe8;
 @value yellow-bar: #FCEEA7;
 @value yellow-bg: #FFFAE1;
-@value yellow-dark: #eac401;
+@value yellow-dark: #E5BA00;
 @value main-orange: #ec7910;
 
 @value main-gray: #b4b4b4;

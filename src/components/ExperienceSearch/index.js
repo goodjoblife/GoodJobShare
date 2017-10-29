@@ -4,20 +4,25 @@ import Helmet from 'react-helmet';
 import InfiniteScroll from 'react-infinite-scroller';
 import { browserHistory } from 'react-router';
 
+import ReactGA from 'react-ga';
 
-import Checkbox from 'common/form/Checkbox';
 import Loader from 'common/Loader';
-import { Section, Wrapper } from 'common/base';
+import { Section, Wrapper, Heading, P } from 'common/base';
+import Columns from 'common/Columns';
+import Button from 'common/button/Button';
+import { ArrowLeft } from 'common/icons';
 
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
-import WorkingHourBlock from './WorkingHourBlock';
 import { fetchExperiences as fetchExperiencesAction } from '../../actions/experienceSearch';
 import { HELMET_DATA } from '../../constants/helmetData';
 import {
   PAGE_COUNT,
 } from '../../constants/experienceSearch';
+import TimeSalaryBlock from './TimeSalaryBlock';
+import Filter from './Filter';
+import { Banner1, Banner2 } from './Banners';
 
 import getScale from '../../utils/numberUtils';
 
@@ -27,6 +32,12 @@ import {
   sortBySelector,
   toQsString,
 } from './helper';
+import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
+
+const SORT = {
+  CREATED_AT: 'created_at',
+  POPULARITY: 'popularity',
+};
 
 class ExperienceSearch extends Component {
   static fetchData({ query, store: { dispatch } }) {
@@ -94,6 +105,23 @@ class ExperienceSearch extends Component {
     }
   }
 
+  setSearchType = e => {
+    const searchType = e.target.value;
+    const on = this.props.experienceSearch.get(searchType);
+    if (on) {
+      ReactGA.event({
+        category: GA_CATEGORY.SEARCH_EXPERIENCE,
+        action: `${GA_ACTION.TOGGLE_OFF}_${searchType}`,
+      });
+    } else {
+      ReactGA.event({
+        category: GA_CATEGORY.SEARCH_EXPERIENCE,
+        action: `${GA_ACTION.TOGGLE_ON}_${searchType}`,
+      });
+    }
+    this.props.setSearchType(e);
+  }
+
   handleKeyPress(e) {
     if (e.key === 'Enter') {
       const searchQuery = e.target.value;
@@ -152,6 +180,12 @@ class ExperienceSearch extends Component {
 
     browserHistory.push(url);
     fetchWorkings(searchBy, val);
+
+    ReactGA.event({
+      category: GA_CATEGORY.SEARCH_EXPERIENCE,
+      action: `${GA_ACTION.SEARCH_BY}_${this.props.experienceSearch.get('searchBy')}`,
+      value: val,
+    });
   }
 
   fetchExperiencesWithSort(sort) {
@@ -170,6 +204,27 @@ class ExperienceSearch extends Component {
     const url = `${pathname}?${queryString}`;
 
     browserHistory.push(url);
+
+    if (sort === SORT.CREATED_AT) {
+      ReactGA.event({
+        category: GA_CATEGORY.SEARCH_EXPERIENCE,
+        action: GA_ACTION.CLICK_LATEST,
+      });
+    } else if (sort === SORT.POPULARITY) {
+      ReactGA.event({
+        category: GA_CATEGORY.SEARCH_EXPERIENCE,
+        action: GA_ACTION.CLICK_POPULAR,
+      });
+    }
+  }
+
+  fetchMoreExperiences = nextPage => {
+    ReactGA.event({
+      category: GA_CATEGORY.SEARCH_EXPERIENCE,
+      action: GA_ACTION.FETCH_MORE,
+      value: nextPage,
+    });
+    this.props.fetchMoreExperiences(nextPage);
   }
 
   renderHelmet = () => {
@@ -185,9 +240,7 @@ class ExperienceSearch extends Component {
 
   render() {
     const {
-      setSearchType,
       setKeyword,
-      fetchMoreExperiences,
       experienceSearch,
     } = this.props;
     const data = experienceSearch.toJS();
@@ -198,45 +251,16 @@ class ExperienceSearch extends Component {
         <Wrapper size="l">
           <div className={styles.container}>
             <aside className={styles.aside}>
-              <section>
-                <button
-                  className={data.sort === 'created_at'
-                    ? `${styles.frontButton} ${styles.toggle}`
-                    : styles.frontButton}
-                  onClick={e => this.fetchExperiencesWithSort(e.target.value)} value="created_at"
-                >
-                  最新
-                </button>
-                <button
-                  className={data.sort === 'popularity'
-                    ? `${styles.rearButton} ${styles.toggle}`
-                    : styles.rearButton}
-                  onClick={e => this.fetchExperiencesWithSort(e.target.value)} value="popularity"
-                >
-                  熱門
-                </button>
-              </section>
-              <hr className={styles.splitter} />
-              <div className={styles.fliters}>
-                {
-                  [
-                    { label: '面試經驗', value: 'interview' },
-                    { label: '工作經驗', value: 'work' },
-                    { label: '薪資工時', value: 'salary' },
-                  ].map(o => (
-                    <Checkbox
-                      key={o.value} id={`searchType-${o.value}`}
-                      label={o.label} value={o.value}
-                      disabled={o.value === 'salary' && !data.searchQuery}
-                      onChange={e => setSearchType(e.target.value)}
-                      checked={data[o.value]}
-                    />
-                  ))
-                }
-              </div>
+              <Filter
+                data={data}
+                fetchExperiencesWithSort={this.fetchExperiencesWithSort}
+                setSearchType={this.setSearchType}
+                className={styles.filter}
+              />
+              <Banner1 className={styles.banner} />
             </aside>
 
-            <div className={styles.content}>
+            <section className={styles.content}>
               <Searchbar
                 className={styles.searcbarLarge}
                 data={data}
@@ -247,17 +271,29 @@ class ExperienceSearch extends Component {
                 fetchExperiencesAndWorkings={this.fetchExperiencesAndWorkings}
               />
 
-              {data.searchQuery &&
+              {(data.searchQuery && data.experienceCount > 0) &&
                 <div className={styles.searchResult}>
-                  找到 {data.experienceCount} 筆與 &quot;{data.searchQuery}&quot; 相關的資料
+                  <Heading size="m" bold>「{data.searchQuery}」的面試經驗、工作經驗</Heading>
+                  <div className={styles.searchResultNum}>1-20 篇 (共&nbsp;{data.experienceCount}&nbsp;篇)</div>
                 </div>
               }
+
+              {(data.searchQuery && data.experienceCount === 0) &&
+                <P
+                  size="l" bold
+                  className={styles.searchNoResult}
+                >
+                    尚未有「{data.searchQuery}」的經驗分享
+                </P>
+              }
+
+              <Banner2 />
 
               <InfiniteScroll
                 pageStart={0} hasMore={data.hasMore}
                 loadMore={nextPage => {
                   if (data.hasMore) {
-                    fetchMoreExperiences(nextPage);
+                    this.fetchMoreExperiences(nextPage);
                   }
                 }}
                 loader={<Loader size="s" />}
@@ -277,15 +313,31 @@ class ExperienceSearch extends Component {
                 }
               </InfiniteScroll>
 
-              <div className={styles.workingHourWrapper}>
-                {
-                  data.salary && (data.workings || []).map((o, i) => (
-                    <WorkingHourBlock key={o.company.id || i} data={o} />
-                  ))
-                }
+              <div className={styles.pagination}>
+                <P size="m" className={styles.info}>1-20 篇 (共 93 篇)</P>
+                <div>
+                  <Button btnStyle="firstPage">第一頁</Button>
+                  <Button btnStyle="page"><ArrowLeft />前一頁</Button>
+                  <Button btnStyle="page" disabled>下一頁<ArrowLeft style={{ transform: 'scaleX(-1)' }} /></Button>
+                </div>
               </div>
 
-            </div>
+              {(data.searchQuery && data.workings.length > 0) &&
+                <div>
+                  <hr className={styles.splitter} />
+                  <section className={styles.timeSalaryWrapper}>
+                    <Heading size="m" bold marginBottom>「{data.searchQuery}」的薪資工時</Heading>
+                    {data.salary &&
+                      <Columns
+                        Item={TimeSalaryBlock}
+                        items={(data.workings || []).map(o => ({ data: o }))}
+                        gutter="s"
+                      />
+                    }
+                  </section>
+                </div>
+              }
+            </section>
           </div>
         </Wrapper>
       </Section>

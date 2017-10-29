@@ -97,6 +97,7 @@
     "react-router-redux": "^4.0.7",
     "react-router-scroll": "^0.4.2",
     "react-scroll": "^1.5.4",
+    "react-sticky": "^6.0.1",
     "react-textarea-autosize": "^4.3.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",

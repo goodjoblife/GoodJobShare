@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import cn from 'classnames';
 import styles from './Section.module.css';
 
-const Section = ({ Tag, pageTop, bg, padding, paddingTop, paddingBottom, center, children, className, ...props }) => (
+const Section = ({ Tag, pageTop, bg, padding, paddingTop, paddingBottom, center, children, marginTop, className, ...props }) => (
   <Tag
     className={cn(className, {
       [styles.pageTop]: pageTop,
@@ -10,6 +10,7 @@ const Section = ({ Tag, pageTop, bg, padding, paddingTop, paddingBottom, center,
       [styles.paddingTop]: paddingTop,
       [styles.paddingBottom]: paddingBottom,
       [styles.center]: center,
+      [styles.marginTop]: marginTop,
     })}
     style={{ backgroundColor: bg }}
     {...props}
@@ -25,6 +26,7 @@ Section.propTypes = {
   paddingTop: PropTypes.bool,
   paddingBottom: PropTypes.bool,
   center: PropTypes.bool,
+  marginTop: PropTypes.bool,
   bg: PropTypes.string,
   className: PropTypes.string,
 };

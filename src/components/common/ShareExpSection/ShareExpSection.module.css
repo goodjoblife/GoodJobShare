@@ -1,17 +1,20 @@
-@value main-yellow from "common/variables.module.css";
+@value main-yellow, gray-dark from "common/variables.module.css";
 
-.heading {
-  margin-bottom: 40px;
+.subheading {
+  max-width: 500px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 24px;
 
-  @media (max-width: 550px) {
-    margin-bottom: 24px;
+  @media (max-width: 850px) {
+    display: none;
   }
 }
 
 .container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 
   @media (max-width: 550px) {
     flex-wrap: wrap;
@@ -19,6 +22,8 @@
 }
 
 .item {
+  position: relative;
+  overflow: hidden;
   flex: 1 1 calc(100% / 3);
   margin-left: 40px;
   margin-right: 40px;
@@ -27,13 +32,21 @@
   transition-property: background, box-shadow;
   transition-duration: .3s;
 
-  @media (min-width: 851px) {
+  @media (min-width: 1025px) {
     &:hover {
       background-color: #fff;
       box-shadow: 2px 0 11px rgba(0,0,0, .12);
 
       .button {
         background-color: main-yellow;
+      }
+
+      &::before {
+        transform: scale(1);
+        visibility: visible;
+      }
+      .description {
+        opacity: 1;
       }
     }
   }
@@ -53,7 +66,53 @@
     flex: 0 0 50%;
     padding: 8px;
   }
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 110%;
+    top: -45%;
+    border-radius: 50%;
+    transform: scale(0);
+    transition-property: opacity, transform;
+    transition-duration: .25s;
+
+    background-color: rgba(255,248,215, .95);
+  }
+
+
+  &:first-child::before {
+    left: -15%;
+    transform-origin: 100% 0%;
+  }
+  &:nth-child(2)::before {
+    left: -50%;
+    transform-origin: 50% 0%;
+  }
+  &:last-child::before {
+    right: -15%;
+    transform-origin: 0% 0%;
+  }
 }
+
+.description {
+  @media (min-width: 1025px) {
+    position: absolute;
+    color: gray-dark;
+    left: 24px;
+    right: 24px;
+    top: 30%;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: .3s;
+  }
+  @media (max-width: 1024px) {
+    font-size: .95em;
+    margin-top: 16px;
+  }
+}
+
 
 .button {
   margin-top: 24px;
@@ -67,9 +126,10 @@
   transition-duration: .3s;
   border-radius: 48px;
 
-  @media (max-width: 850px) {
-    padding: 0;
-    margin-top: 8px;
+  @media (max-width: 1024px) {
+    background-color: main-yellow;
+    height: 40px;
+    padding: 0 24px;
   }
 }
 

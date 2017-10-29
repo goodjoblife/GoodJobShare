@@ -4,8 +4,8 @@ import { Link } from 'react-router';
 import { Section, Wrapper, Heading } from 'common/base';
 import styles from './CallToAction.module.css';
 
-const CallToAction = ({ heading, headingSize, imgSrc, buttonText, bgColor }) => (
-  <Section padding bg={bgColor}>
+const CallToAction = ({ heading, headingSize, imgSrc, buttonText, bgColor, marginTop }) => (
+  <Section padding bg={bgColor} marginTop={marginTop}>
     <Wrapper size="m" className={styles.container}>
       <div className={styles.image}>
         <img src={imgSrc} alt="留下你的資訊" />
@@ -25,11 +25,12 @@ CallToAction.propTypes = {
   buttonText: PropTypes.string.isRequired,
   imgSrc: PropTypes.string.isRequired,
   bgColor: PropTypes.string,
+  marginTop: PropTypes.bool,
 };
 CallToAction.defaultProps = {
-  heading: '覺得很有用嗎？也留下你的資訊吧！',
+  heading: '覺得小教室很有用嗎？快分享你的資訊吧！',
   headingSize: 'm',
-  buttonText: '留下資料',
+  buttonText: '立即分享',
   imgSrc: 'https://image.goodjob.life/cta-01.jpg',
   bgColor: 'white',
 };
