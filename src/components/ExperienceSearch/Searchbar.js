@@ -7,8 +7,8 @@ import styles from './Searchbar.module.css';
 
 const SearchBar = ({
   data,
-  fetchKeywords,
   setKeyword,
+  handleSearchType,
   handleKeyPress,
   handleKeywordClick,
   fetchExperiencesAndWorkings,
@@ -24,7 +24,7 @@ const SearchBar = ({
           <Radio
             key={o.value} id={`condition-${o.value}`}
             label={o.label} value={o.value} inline
-            onChange={fetchKeywords}
+            onChange={() => handleSearchType(o.value)}
             checked={data.searchBy === o.value}
           />
         ))
@@ -70,7 +70,7 @@ const SearchBar = ({
 SearchBar.propTypes = {
   className: PropTypes.string,
   data: PropTypes.object.isRequired,
-  fetchKeywords: PropTypes.func.isRequired,
+  handleSearchType: PropTypes.func.isRequired,
   handleKeyPress: PropTypes.func.isRequired,
   handleKeywordClick: PropTypes.func.isRequired,
   setKeyword: PropTypes.func.isRequired,

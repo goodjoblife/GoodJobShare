@@ -55,8 +55,7 @@ const experienceSearch = createReducer(preloadedState, {
 
   [SET_KEYWORDS]: (state, action) =>
     state.merge({
-      searchBy: action.searchBy,
-      keywords: fromJS(action.keywords || []),
+      keywords: fromJS(action.keywords),
     }),
 
   [SET_SORT_AND_EXPERIENCES]: (state, action) =>

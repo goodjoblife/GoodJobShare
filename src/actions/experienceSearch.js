@@ -119,23 +119,25 @@ export const fetchWorkings = (searchBy, searchQuery) => dispatch => {
     });
 };
 
-export const fetchKeywords = e => (dispatch, getState) => {
-  const data = getState().experienceSearch.toJS();
-  const val = e ? e.target.value : data.searchBy;
-  const url = val === 'company' ? '/company_keywords' : '/job_title_keywords';
+const setKeywords = keywords => ({
+  type: SET_KEYWORDS,
+  keywords,
+});
+
+const setSearchBy = searchBy => ({
+  type: SET_SEARCH_BY,
+  searchBy,
+});
+
+export const getNewSearchBy = searchBy => dispatch => {
+  const url = searchBy === 'company' ? '/company_keywords' : '/job_title_keywords';
   return fetchUtil(url)('GET')
     .then(result => {
-      dispatch({
-        type: SET_KEYWORDS,
-        searchBy: val,
-        keywords: result.keywords,
-      });
+      dispatch(setSearchBy(searchBy));
+      dispatch(setKeywords(result.keywords));
     })
     .catch(() => {
-      dispatch({
-        type: SET_KEYWORDS,
-        searchBy: val,
-        keywords: [],
-      });
+      dispatch(setSearchBy(searchBy));
+      dispatch(setKeyword([]));
     });
 };

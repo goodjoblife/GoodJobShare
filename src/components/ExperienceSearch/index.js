@@ -42,7 +42,7 @@ class ExperienceSearch extends Component {
     fetchExperiences: PropTypes.func.isRequired,
     fetchMoreExperiences: PropTypes.func.isRequired,
     fetchWorkings: PropTypes.func.isRequired,
-    fetchKeywords: PropTypes.func.isRequired,
+    getNewSearchBy: PropTypes.func.isRequired,
     experienceSearch: ImmutablePropTypes.map.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string,
@@ -73,7 +73,7 @@ class ExperienceSearch extends Component {
     const searchQuery = searchQuerySelector(query);
 
     fetchExperiences(0, PAGE_COUNT, sort, searchBy, searchQuery);
-    this.props.fetchKeywords('');
+    this.props.getNewSearchBy(searchBy);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -104,6 +104,30 @@ class ExperienceSearch extends Component {
   handleKeywordClick(e) {
     const searchQuery = e.target.innerHTML;
     this.fetchExperiencesAndWorkings(searchQuery);
+  }
+
+  handleSearchType = searchBy => {
+    const {
+      getNewSearchBy,
+    } = this.props;
+    const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const sort = sortBySelector(query);
+    const searchQuery = searchQuerySelector(query);
+
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery,
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    getNewSearchBy(searchBy);
+    browserHistory.push(url);
   }
 
   fetchExperiencesAndWorkings(val) {
@@ -163,7 +187,6 @@ class ExperienceSearch extends Component {
   render() {
     const {
       setSearchType,
-      fetchKeywords,
       setKeyword,
       fetchMoreExperiences,
       experienceSearch,
@@ -218,7 +241,7 @@ class ExperienceSearch extends Component {
               <Searchbar
                 className={styles.searcbarLarge}
                 data={data}
-                fetchKeywords={fetchKeywords}
+                handleSearchType={this.handleSearchType}
                 setKeyword={setKeyword}
                 handleKeyPress={this.handleKeyPress}
                 handleKeywordClick={this.handleKeywordClick}
