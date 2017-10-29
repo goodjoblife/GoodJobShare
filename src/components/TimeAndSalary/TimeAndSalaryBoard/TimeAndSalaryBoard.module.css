@@ -1,0 +1,25 @@
+.latestTable {
+  background-color: #fff;
+  .colCompany {
+    width: 25%;
+  }
+  .colPosition {
+    width: 21%;
+  }
+  .colWeekTime {
+    width: 10%;
+  }
+  .colFrequency {
+    width: 10%;
+  }
+  .colSalary {
+    width: 14%;
+  }
+  .colHourly {
+    width: 12%;
+  }
+  .colDataTime {
+    width: 10%;
+  }
+}
+

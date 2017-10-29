@@ -6,11 +6,11 @@ import OvertimeBlock from './OvertimeBlock';
 import WorkingHourTable from './WorkingHourTable';
 
 import styles from './WorkingHourBlock.module.css';
-import containerStyle from './ExperienceBlock.module.css';
 
 class WorkingHourBlock extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
+    groupSortBy: PropTypes.string.isRequired,
   }
 
   constructor() {
@@ -21,11 +21,13 @@ class WorkingHourBlock extends Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, groupSortBy } = this.props;
     const { average, company } = data;
+    const avgVal = average[groupSortBy];
+    const avgUnit = groupSortBy === 'week_work_time' ? '小時' : '元';
 
     return (
-      <section className={containerStyle.container}>
+      <section className={styles.container}>
         <button
           className={styles.toggleButton} onClick={() => {
             this.setState({
@@ -41,7 +43,7 @@ class WorkingHourBlock extends Component {
             <Heading size="sl" className={styles.headingBlock}>{company.name}</Heading>
             <div className={styles.averageBlock}>
               <span className={styles.averageBlockHeading}>平均一週總工時：</span>
-              <span className={styles.averageBlockValue}>{average.week_work_time.toFixed(1)} 小時</span>
+              <span className={styles.averageBlockValue}>{avgVal ? avgVal.toFixed(1) : '-'} {avgUnit}</span>
             </div>
           </div>
           <div className={styles.expandIcon}>
