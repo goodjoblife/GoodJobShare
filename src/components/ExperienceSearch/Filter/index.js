@@ -25,7 +25,8 @@ const Filter = ({
         className={data.sort === SORT.CREATED_AT
           ? `${styles.frontButton} ${styles.toggle}`
           : styles.frontButton}
-        onClick={fetchExperiencesWithSort} value={SORT.CREATED_AT}
+        onClick={() => fetchExperiencesWithSort(SORT.CREATED_AT)}
+        value={SORT.CREATED_AT}
       >
         最新
       </button>
@@ -33,7 +34,8 @@ const Filter = ({
         className={data.sort === SORT.POPULARITY
           ? `${styles.rearButton} ${styles.toggle}`
           : styles.rearButton}
-        onClick={fetchExperiencesWithSort} value={SORT.POPULARITY}
+        onClick={() => fetchExperiencesWithSort(SORT.POPULARITY)}
+        value={SORT.POPULARITY}
       >
         熱門
       </button>
