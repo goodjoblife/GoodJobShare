@@ -57,7 +57,7 @@ const SearchBar = ({
           (data.keywords || []).map(o => (
             <span
               key={o} className={styles.keyword}
-              onClick={handleKeywordClick}
+              onClick={() => handleKeywordClick(o)}
             >
               {o}
             </span>

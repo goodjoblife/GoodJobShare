@@ -101,8 +101,7 @@ class ExperienceSearch extends Component {
     }
   }
 
-  handleKeywordClick(e) {
-    const searchQuery = e.target.innerHTML;
+  handleKeywordClick(searchQuery) {
     this.fetchExperiencesAndWorkings(searchQuery);
   }
 
