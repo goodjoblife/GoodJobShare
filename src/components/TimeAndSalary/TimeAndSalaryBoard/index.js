@@ -165,7 +165,12 @@ export default class TimeAndSalaryBoard extends Component {
     interstitialPos.reverse();
 
     interstitialPos.forEach(i => {
-      rows.splice(i, 0, <InjectedCallToAction key={`injected-${i}`} />);
+      rows.splice(i, 0, (
+        <InjectedCallToAction
+          key={`injected-${i}`}
+          interval={interval}
+        />
+      ));
     });
   }
 
