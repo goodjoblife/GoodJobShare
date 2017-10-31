@@ -155,7 +155,7 @@ export default class TimeAndSalaryBoard extends Component {
   }
 
   static injectCallToActions(rows) {
-    const interval = 10;
+    const interval = 100;
 
     const nRows = rows.length;
     const nChunks = Math.ceil(nRows / interval);
