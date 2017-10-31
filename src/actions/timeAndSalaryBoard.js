@@ -1,11 +1,13 @@
 import R from 'ramda';
 import { push } from 'react-router-redux';
 
-import { fetchTimeAndSalary } from '../apis/timeAndSalaryApi';
+import { fetchTimeAndSalary, fetchTimeAndSalaryExtreme } from '../apis/timeAndSalaryApi';
 import fetchingStatus from '../constants/status';
 
 export const SET_BOARD_DATA = '@@timeAndSalary/SET_BOARD_DATA';
 export const SET_BOARD_STATUS = '@@timeAndSalary/SET_BOARD_STATUS';
+export const SET_BOARD_EXTREME_DATA = '@@timeAndSalary/SET_BOARD_EXTREME_DATA';
+export const SET_BOARD_EXTREME_STATUS = '@@timeAndSalary/SET_BOARD_EXTREME_STATUS';
 
 const sortBySelector = state => state.timeAndSalaryBoard.get('sortBy');
 const orderSelector = state => state.timeAndSalaryBoard.get('order');
@@ -89,3 +91,57 @@ export const queryTimeAndSalary = ({ sortBy, order }) =>
 export const switchPath = path =>
   dispatch =>
     dispatch(push(`/time-and-salary/${path}`));
+
+const setBoardExtremeData = ({ sortBy, order }, { extremeStatus, extremeData, extremeError = null }) =>
+  (dispatch, getState) => {
+    // make sure the store is consistent
+    if (sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
+      return;
+    }
+    dispatch({
+      type: SET_BOARD_EXTREME_DATA,
+      extremeStatus,
+      extremeData,
+      extremeError,
+    });
+  };
+
+export const queryExtremeTimeAndSalary = () =>
+  (dispatch, getState) => {
+    if (sortBySelector(getState()) !== 'created_at') {
+      return Promise.resolve();
+    }
+    dispatch({
+      type: SET_BOARD_EXTREME_STATUS,
+      extremeStatus: fetchingStatus.FETCHING,
+    });
+
+    const sortBy = sortBySelector(getState());
+    const order = orderSelector(getState());
+    const opt = {
+      sort_by: sortBy,
+      order,
+    };
+
+    return fetchTimeAndSalaryExtreme(opt)
+      .then(rawData => {
+        // 將Array公司名稱轉換成String
+        const takeFirstFromArrayCompanyName =
+          R.over(
+            R.lensPath(['company', 'name']),
+            R.when(
+              R.pipe(R.type, R.equals('Array')),
+              R.head,
+            ),
+          );
+        const extremeData =
+          rawData.time_and_salary.map(
+            takeFirstFromArrayCompanyName,
+          );
+
+        dispatch(setBoardExtremeData({ sortBy, order }, { extremeStatus: fetchingStatus.FETCHED, extremeData }));
+      })
+      .catch(error => {
+        dispatch(setBoardExtremeData({ sortBy, order }, { extremeStatus: fetchingStatus.ERROR, extremeData: [], error }));
+      });
+  };
