@@ -18,7 +18,7 @@
 
 .eye {
   display: inline-block;
-  width: inherit;
+  width: initial;
   height: 30px;
   margin-right: 27px;
   vertical-align: middle;
