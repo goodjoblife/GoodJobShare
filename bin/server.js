@@ -24,6 +24,8 @@ if (process.env.NODE_ENV !== 'production') {
   registerWebpackDevServer(app)
 }
 
+global.__SERVER__ = true;
+
 const WebpackIsomorphicTools = require('webpack-isomorphic-tools');
 const webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack-isomorphic-tools'));
 webpackIsomorphicTools.server(project_base_path)

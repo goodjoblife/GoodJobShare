@@ -1,0 +1,191 @@
+@value warning-red, main-gray, main-yellow from "../variables.module.css";
+
+.radioButtonItem {
+  @media (min-width: 551px) {
+    width: calc(99.9% * 1/4 - (50px - 50px * 1/4));
+    &:nth-child(1n) {
+      margin-right: 50px;
+    }
+  }
+  @media (max-width: 550px) {
+    width: calc(99.9% * 1/4 - (12px - 12px * 1/4));
+    &:nth-child(1n) {
+      margin-right: 12px;
+    }
+  }
+  @media (max-width: 330px) {
+    width: calc(99.9% * 1/4 - (5px - 5px * 1/4));
+    &:nth-child(1n) {
+      margin-right: 5px;
+    }
+  }
+
+  &:nth-child(1n) {
+    float: left;
+    clear: none;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+  &:nth-child(4n) {
+    margin-right: 0;
+    float: right;
+  }
+  &:nth-child(4n + 1) {
+    clear: both;
+  }
+
+  input[type="radio"] {
+    display: none;
+  }
+}
+
+.radioButtonIcon {
+	.radioSquare {
+		padding: 15px 10px;
+		@media (max-width: below-mobile) {
+			padding: 10px 3px;
+		}
+	}
+}
+
+.radioSquare {
+	width: 100%;
+	border: 1px solid main-yellow;
+	background-color: #fff;
+	padding: 20px 10px;
+	text-align: center;
+	cursor: pointer;
+	position: relative;
+	transition: border .3s;
+	@media (min-width: 1025px) {
+		&:hover {
+			border-color: #000;
+		}
+	}
+	@media (max-width: 550px) {
+		padding: 20px 5px;
+	}
+	&:after {
+		content: "";
+		position: absolute;
+		left: -5px;
+		top: -5px;
+		bottom: -5px;
+		right: -5px;
+		border: 3px solid transparent;
+		transition: border .2s;
+		@media (max-width: 550px) {
+			left: -2px;
+			top: -2px;
+			right: -2px;
+			bottom: -2px;
+		}
+	}
+	&:before {
+		content: "";
+		width: 32px;
+		height: 32px;
+		background: url("../img/icons/checked.svg") 0 0 no-repeat;
+		background-size: 100%;
+		position: absolute;
+		top: -15px;
+		right: -15px;
+		transform: scale(0);
+		transition: transform .3s;
+		z-index: 2;
+		@media (max-width: 550px) {
+			width: 20px;
+			height: 20px;
+			top: -10px;
+			right: -10px;
+		}
+	}
+}
+
+.radioSquareText {
+  font-size: 1em;
+  font-weight: 400;
+  @media (max-width: 550px) {
+    font-size: .95em;
+  }
+  @media (max-width: 330px) {
+    font-size: .86em;
+  }
+}
+
+input[type="radio"]:checked + .radioSquare {
+	&:after {
+		border: 5px solid #000;
+		@media (max-width: 550px) {
+			border: 3px solid #000;
+		}
+	}
+	&:before {
+		transform: scale(1);
+	}
+}
+
+.radioSquareIcon {
+	display: block;
+	margin: 0 auto;
+	margin-bottom: 10px;
+	width: 45px;
+	height: 45px;
+	background-size: 100%;
+	background-repeat: no-repeat;
+	@media (max-width: 550px) {
+		width: 30px;
+		height: 30px;
+		margin-bottom: 5px;
+	}
+}
+
+
+.btnRadioClear {
+	height: 100%;
+	padding: 30px 10px;
+	border: 1px solid transaprent;
+	text-align: center;
+	color: main-gray;
+	cursor: pointer;
+	transition: color .25s, background .25s;
+	font-size: 1em;
+	font-weight: 400;
+	@media (max-width: 550px) {
+		font-size: .95em;
+	}
+	@media (max-width: 330px) {
+		font-size: .86em;
+    }
+	svg {
+		fill: main-gray;
+		margin-right: 5px;
+		transition: fill .25s;
+	}
+	@media (min-width: 1025px) {
+		&:hover {
+			background-color: rgba(255,255,255,.7);
+			color: warning-red;
+			svg {
+				fill: warning-red;
+			}
+		}
+	}
+	@media (max-width: 550px) {
+		padding: 20px 10px;
+	}
+}
+
+.emoji0 {
+	background-image: url("../img/icons/emoji-0.svg");
+}
+.emoji1 {
+	background-image: url("../img/icons/emoji-1.svg");
+}
+.emoji2 {
+	background-image: url("../img/icons/emoji-2.svg");
+}
+.emoji3 {
+	background-image: url("../img/icons/emoji-3.svg");
+}

@@ -26,9 +26,7 @@ const onSendGA = action => {
 
 const SiteMenu = ({ isLogin }) => (
   <ul className={styles.menu}>
-    <li className={styles.menuItem}>
-      <a href="/time-and-salary" onClick={() => { onSendGA(GA_ACTION.CLICK_TIME_AND_SALARY); }} >薪資工時</a>
-    </li>
+    <Item to="/time-and-salary" text="薪資工時" onClick={() => { onSendGA(GA_ACTION.CLICK_TIME_AND_SALARY); }} />
     <Item to="/experiences/search" text="面試・工作經驗" onClick={() => { onSendGA(GA_ACTION.CLICK_EXPERIENCE_SEARCH); }} />
     <Item to="/labor-rights" text="勞動小教室" onClick={() => { onSendGA(GA_ACTION.CLICK_LABOR_RIGHTS); }} />
     {

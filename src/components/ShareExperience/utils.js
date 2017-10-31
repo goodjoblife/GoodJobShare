@@ -52,6 +52,70 @@ const propsInterviewForm = state => {
   };
 };
 
+const propsBasicForm = state => {
+  const {
+    company,
+    companyId,
+    isCurrentlyEmployed,
+    jobEndingTimeYear,
+    jobEndingTimeMonth,
+    jobTitle,
+    sector,
+    employmentType,
+    gender,
+    email,
+  } = state;
+
+  return {
+    company,
+    companyId,
+    isCurrentlyEmployed,
+    jobEndingTimeYear,
+    jobEndingTimeMonth,
+    jobTitle,
+    sector,
+    employmentType,
+    gender,
+    email,
+  };
+};
+
+const propsSalaryForm = state => {
+  const {
+    salaryType,
+    salaryAmount,
+    experienceInYear,
+  } = state;
+
+  return {
+    salaryType,
+    salaryAmount,
+    experienceInYear,
+  };
+};
+
+const propsTimeForm = state => {
+  const {
+    dayPromisedWorkTime,
+    dayRealWorkTime,
+    weekWorkTime,
+    overtimeFrequency,
+    hasOvertimeSalary,
+    isOvertimeSalaryLegal,
+    hasCompensatoryDayoff,
+  } = state;
+
+  return {
+    dayPromisedWorkTime,
+    dayRealWorkTime,
+    weekWorkTime,
+    overtimeFrequency,
+    hasOvertimeSalary,
+    isOvertimeSalaryLegal,
+    hasCompensatoryDayoff,
+  };
+};
+
 const needDeleteInterviewQas = R.compose(
     n => n === 1,
     R.length,
@@ -105,6 +169,15 @@ export const getInterviewForm = R.compose(
   propsInterviewForm
 );
 
+export const getBasicForm = propsBasicForm;
+export const getSalaryForm = propsSalaryForm;
+export const getTimeForm = propsTimeForm;
+export const getTimeAndSalaryForm = state => ({
+  ...propsBasicForm(state),
+  ...propsSalaryForm(state),
+  ...propsTimeForm(state),
+});
+
 export const portInterviewFormToRequestFormat = interviewForm => {
   let body = {
     ...interviewForm,
@@ -134,6 +207,23 @@ export const portInterviewFormToRequestFormat = interviewForm => {
   body = transferKeyToSnakecase(body);
 
   return body;
+};
+
+export const portTimeSalaryFormToRequestFormat = form => {
+  const isEmployed = form.isCurrentlyEmployed === 'yes';
+  let body = Object.assign({}, form, {
+    jobEndingTimeYear: form.jobEndingTimeYear.toString(),
+    jobEndingTimeMonth: form.jobEndingTimeMonth.toString(),
+  });
+
+  if (isEmployed) {
+    body = R.omit([
+      'jobEndingTimeYear',
+      'jobEndingTimeMonth',
+    ])(body);
+  }
+
+  return transferKeyToSnakecase(body);
 };
 
 const portWorkExperiencesFormToRequestFormat = workExperiencesForm => {
