@@ -133,7 +133,7 @@ class ExperienceSearch extends Component {
     this.fetchExperiencesAndWorkings(searchQuery);
   }
 
-  handleSearchType = searchBy => {
+  handleSearchBy = searchBy => {
     const {
       getNewSearchBy,
     } = this.props;
@@ -264,7 +264,7 @@ class ExperienceSearch extends Component {
               <Searchbar
                 className={styles.searcbarLarge}
                 data={data}
-                handleSearchType={this.handleSearchType}
+                handleSearchBy={this.handleSearchBy}
                 setKeyword={setKeyword}
                 handleKeyPress={this.handleKeyPress}
                 handleKeywordClick={this.handleKeywordClick}
