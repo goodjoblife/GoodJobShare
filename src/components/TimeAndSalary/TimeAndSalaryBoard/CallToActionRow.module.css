@@ -6,11 +6,15 @@
     color: #FFFFFF;
     font-size: 18px;
     line-height: 29px;
+
+    &::before {
+      content: none !important;
+    }
   }
 }
 
 .go {
-  display: inline-block;
+  display: inline-flex;
   width: 82px;
   color: #333333;
   margin-left: 17px;
