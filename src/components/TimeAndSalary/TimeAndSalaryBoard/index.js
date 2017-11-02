@@ -153,7 +153,7 @@ const injectCallToActions = rows => {
       return [row, (
         <InjectedCallToAction
           key={`injected-${nthInjected}`}
-          interval={N}
+          position={i}
         />
       )];
     }

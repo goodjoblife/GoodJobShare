@@ -12,18 +12,19 @@ const GoButton = () => (
   </div>
 );
 
-const InjectedCallToAction = ({ interval }) => (
+// position: start from 0
+const InjectedCallToAction = ({ position }) => (
   <tr className={styles.row}>
     <td colSpan="7" className={styles.col}>
       <img className={styles.eye} src="https://image.goodjob.life/banners/eyes.png" role="presentation" />
-      你已經看了 {interval} 筆了，該留下你的了拔  (´_ゝ`)
+      你已經看了 {position + 1} 筆了，該留下你的了拔  (´_ゝ`)
       <GoButton />
     </td>
   </tr>
 );
 
 InjectedCallToAction.propTypes = {
-  interval: PropTypes.number.isRequired,
+  position: PropTypes.number.isRequired,
 };
 
 export default InjectedCallToAction;
