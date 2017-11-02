@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-import styles from './InjectedCallToAction.module.css';
+import styles from './CallToActionRow.module.css';
 import headerStyles from '../../Layout/Header/Header.module.css';
 
 const GoButton = () => (

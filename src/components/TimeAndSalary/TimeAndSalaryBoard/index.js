@@ -12,7 +12,7 @@ import InfoSalaryModal from '../common/InfoSalaryModal';
 import styles from './TimeAndSalaryBoard.module.css';
 import commonStyles from '../views/view.module.css';
 import fetchingStatus from '../../../constants/status';
-import InjectedCallToAction from './InjectedCallToAction';
+import CallToActionRow from './CallToActionRow';
 
 const pathnameMapping = {
   'work-time-dashboard': {
@@ -151,7 +151,7 @@ const injectCallToActions = rows => {
     if (i % N === N - 1) {
       const nthInjected = parseInt(i / N, 10);
       return [row, (
-        <InjectedCallToAction
+        <CallToActionRow
           key={`injected-${nthInjected}`}
           position={i}
         />
