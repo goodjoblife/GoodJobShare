@@ -146,25 +146,20 @@ const getDate = val => {
 };
 
 const injectCallToActions = rows => {
-  const interval = 100;
-
-  const nRows = rows.length;
-  const nChunks = Math.ceil(nRows / interval);
-  const interstitialPos =
-    R.range(1, nChunks).map(R.multiply(interval));
-
-  interstitialPos.reverse();
-
-  interstitialPos.forEach(i => {
-    rows.splice(i, 0, (
-      <InjectedCallToAction
-        key={`injected-${i}`}
-        interval={interval}
-      />
-    ));
-  });
-
-  return rows;
+  const flapMapIndexed = R.addIndex(R.chain);
+  const injectEvery = N => (row, i) => {
+    if (i % N === N - 1) {
+      const nthInjected = parseInt(i / N, 10);
+      return [row, (
+        <InjectedCallToAction
+          key={`injected-${nthInjected}`}
+          interval={N}
+        />
+      )];
+    }
+    return row;
+  };
+  return flapMapIndexed(injectEvery(100))(rows);
 };
 
 export default class TimeAndSalaryBoard extends Component {
