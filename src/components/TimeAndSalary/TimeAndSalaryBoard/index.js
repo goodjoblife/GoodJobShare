@@ -145,6 +145,28 @@ const getDate = val => {
   return [val.year, month].join('.');
 };
 
+const injectCallToActions = rows => {
+  const interval = 100;
+
+  const nRows = rows.length;
+  const nChunks = Math.ceil(nRows / interval);
+  const interstitialPos =
+    R.range(1, nChunks).map(R.multiply(interval));
+
+  interstitialPos.reverse();
+
+  interstitialPos.forEach(i => {
+    rows.splice(i, 0, (
+      <InjectedCallToAction
+        key={`injected-${i}`}
+        interval={interval}
+      />
+    ));
+  });
+
+  return rows;
+};
+
 export default class TimeAndSalaryBoard extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
@@ -152,28 +174,6 @@ export default class TimeAndSalaryBoard extends Component {
     route: PropTypes.object.isRequired,
     queryTimeAndSalary: PropTypes.func,
     switchPath: PropTypes.func,
-  }
-
-  static injectCallToActions(rows) {
-    const interval = 100;
-
-    const nRows = rows.length;
-    const nChunks = Math.ceil(nRows / interval);
-    const interstitialPos =
-      R.range(1, nChunks).map(R.multiply(interval));
-
-    interstitialPos.reverse();
-
-    interstitialPos.forEach(i => {
-      rows.splice(i, 0, (
-        <InjectedCallToAction
-          key={`injected-${i}`}
-          interval={interval}
-        />
-      ));
-    });
-
-    return rows;
   }
 
   constructor(props) {
@@ -259,7 +259,7 @@ export default class TimeAndSalaryBoard extends Component {
             className={styles.latestTable}
             data={raw}
             primaryKey="_id"
-            postProcessRows={TimeAndSalaryBoard.injectCallToActions}
+            postProcessRows={injectCallToActions}
           >
             <Table.Column
               className={styles.colCompany}
