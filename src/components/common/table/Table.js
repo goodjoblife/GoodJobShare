@@ -13,7 +13,7 @@ class Table extends Component {
   }
 
   static defaultProps = {
-    postProcessRows: () => {},
+    postProcessRows: x => x,
   }
 
   static Column = Column
@@ -57,12 +57,12 @@ class Table extends Component {
       records.push(<tr key={d[primaryKey] || i}>{record}</tr>);
     });
 
-    postProcessRows(records);
+    const postRecords = postProcessRows(records);
 
     return (
       <table className={cn([styles.rwdTable, className])}>
         <thead><tr>{children}</tr></thead>
-        <tbody>{records}</tbody>
+        <tbody>{postRecords}</tbody>
       </table>
     );
   }

@@ -172,6 +172,8 @@ export default class TimeAndSalaryBoard extends Component {
         />
       ));
     });
+
+    return rows;
   }
 
   constructor(props) {
