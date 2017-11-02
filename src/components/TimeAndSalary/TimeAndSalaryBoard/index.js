@@ -257,7 +257,7 @@ export default class TimeAndSalaryBoard extends Component {
             className={styles.latestTable}
             data={raw}
             primaryKey="_id"
-            postProcRows={TimeAndSalaryBoard.injectCallToActions}
+            postProcessRows={TimeAndSalaryBoard.injectCallToActions}
           >
             <Table.Column
               className={styles.colCompany}
