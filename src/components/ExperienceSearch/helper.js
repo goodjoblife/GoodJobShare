@@ -30,13 +30,8 @@ export const searchTypeSelector = R.compose(
   qsSelector('type', 'interview,work'),
 );
 
-const sayIt = label => R.tap(
-  x => console.log(`${label}: `, x)
-);
-
 export const handleSearchType = searchType => R.compose(
   R.join(','),
-  sayIt('next searchType'),
   R.ifElse(
     R.contains(searchType),
     R.reject(
@@ -44,5 +39,4 @@ export const handleSearchType = searchType => R.compose(
     ),
     R.append(searchType),
   ),
-  sayIt('previous searchType'),
 );
