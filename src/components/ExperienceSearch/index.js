@@ -15,7 +15,10 @@ import { ArrowLeft } from 'common/icons';
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
-import { fetchExperiences as fetchExperiencesAction } from '../../actions/experienceSearch';
+import {
+  fetchExperiences as fetchExperiencesAction,
+  setSearchType as setSearchTypeAction,
+} from '../../actions/experienceSearch';
 import { HELMET_DATA } from '../../constants/helmetData';
 import {
   PAGE_COUNT,
@@ -30,6 +33,8 @@ import {
   searchQuerySelector,
   searchBySelector,
   sortBySelector,
+  searchTypeSelector,
+  handleSearchType,
   toQsString,
 } from './helper';
 import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
@@ -44,6 +49,9 @@ class ExperienceSearch extends Component {
     const sort = sortBySelector(query);
     const searchBy = searchBySelector(query);
     const searchQuery = searchQuerySelector(query);
+    const searchType = searchTypeSelector(query);
+
+    dispatch(setSearchTypeAction(searchType));
     return dispatch(fetchExperiencesAction(0, PAGE_COUNT, sort, searchBy, searchQuery));
   }
 
@@ -73,6 +81,7 @@ class ExperienceSearch extends Component {
   componentDidMount() {
     const {
       fetchExperiences,
+      setSearchType,
     } = this.props;
 
     const {
@@ -82,6 +91,9 @@ class ExperienceSearch extends Component {
     const sort = sortBySelector(query);
     const searchBy = searchBySelector(query);
     const searchQuery = searchQuerySelector(query);
+    const searchType = searchTypeSelector(query);
+
+    setSearchType(searchType);
 
     fetchExperiences(0, PAGE_COUNT, sort, searchBy, searchQuery);
     this.props.getNewSearchBy(searchBy);
@@ -91,6 +103,7 @@ class ExperienceSearch extends Component {
     if (nextProps.location.search !== this.props.location.search) {
       const {
         fetchExperiences,
+        setSearchType,
       } = nextProps;
 
       const {
@@ -100,6 +113,9 @@ class ExperienceSearch extends Component {
       const sort = sortBySelector(query);
       const searchBy = searchBySelector(query);
       const searchQuery = searchQuerySelector(query);
+      const searchType = searchTypeSelector(query);
+
+      setSearchType(searchType);
 
       fetchExperiences(0, PAGE_COUNT, sort, searchBy, searchQuery);
     }
@@ -119,7 +135,29 @@ class ExperienceSearch extends Component {
         action: `${GA_ACTION.TOGGLE_ON}_${searchType}`,
       });
     }
-    this.props.setSearchType(searchType);
+
+    const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const sort = sortBySelector(query);
+    const searchQuery = searchQuerySelector(query);
+    const searchBy = searchBySelector(query);
+    const prevSearchType = searchTypeSelector(query);
+
+    const nextSearchType = handleSearchType(searchType)(prevSearchType);
+
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery,
+      searchType: nextSearchType,
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    browserHistory.push(url);
   }
 
   handleKeyPress(e) {

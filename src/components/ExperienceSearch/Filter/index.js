@@ -53,7 +53,7 @@ const Filter = ({
             label={o.label} value={o.value}
             disabled={o.value === 'salary' && !data.searchQuery}
             onChange={setSearchType}
-            checked={data[o.value]}
+            checked={data.searchType.includes(o.value)}
           />
         ))
       }

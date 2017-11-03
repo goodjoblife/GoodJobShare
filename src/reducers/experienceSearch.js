@@ -15,9 +15,7 @@ import {
 
 const preloadedState = Map({
   sort: 'created_at',
-  interview: true,
-  work: true,
-  salary: false,
+  searchType: ['interview', 'work'],
   industry: 'all',
   searchBy: 'job_title',
   searchQuery: '', // query & result 用
@@ -36,7 +34,7 @@ const preloadedState = Map({
 
 const experienceSearch = createReducer(preloadedState, {
   [SET_SEARCH_TYPE]: (state, action) =>
-    state.update(action.searchType, v => !v),
+    state.set('searchType', action.searchType),
 
   [SET_SEARCH_BY]: (state, action) =>
     state.update('searchBy', () => action.searchBy),
