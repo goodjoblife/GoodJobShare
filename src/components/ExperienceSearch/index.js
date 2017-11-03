@@ -119,7 +119,7 @@ class ExperienceSearch extends Component {
         action: `${GA_ACTION.TOGGLE_ON}_${searchType}`,
       });
     }
-    this.props.setSearchType(e);
+    this.props.setSearchType(searchType);
   }
 
   handleKeyPress(e) {
