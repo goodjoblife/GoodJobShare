@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 
 import { InfoButton } from 'common/Modal';
-import Table from '../common/table/Table';
+import Table from 'common/table/Table';
 import InfoSalaryModal from './InfoSalaryModal';
 import InfoTimeModal from './InfoTimeModal';
 import styles from './WorkingHourTable.module.css';
-import employmentType from '../../constants/employmentType';
+import commonStyles from '../views/view.module.css';
+import employmentType from '../../../constants/employmentType';
 
 class WorkingHourTable extends Component {
   static propTypes = {
@@ -15,7 +16,7 @@ class WorkingHourTable extends Component {
     <div>
       {val}
       {' '}
-      <span className={`pM ${styles.sector}`}>
+      <span className={`pM ${commonStyles.sector}`}>
         {row.sector}
       </span>
     </div>
@@ -26,7 +27,7 @@ class WorkingHourTable extends Component {
   )
   static getWorkingTime = val => (
     <div
-      className={styles.bar}
+      className={commonStyles.bar}
       style={{ width: `${val >= 100 ? 100 : val}%` }}
     >
       {val}
@@ -38,27 +39,27 @@ class WorkingHourTable extends Component {
     switch (val) {
       case 0:
         text = '幾乎不';
-        style = styles.hardly;
+        style = commonStyles.hardly;
         break;
       case 1:
         text = '偶爾';
-        style = styles.sometimes;
+        style = commonStyles.sometimes;
         break;
       case 2:
         text = '經常';
-        style = styles.usually;
+        style = commonStyles.usually;
         break;
       case 3:
         text = '幾乎每天';
-        style = styles.always;
+        style = commonStyles.always;
         break;
       default:
         text = '幾乎不';
-        style = styles.hardly;
+        style = commonStyles.hardly;
     }
     return (
       <div>
-        <div className={`${styles.dot} ${style}`} />
+        <div className={`${commonStyles.dot} ${style}`} />
         {text}
       </div>
     );

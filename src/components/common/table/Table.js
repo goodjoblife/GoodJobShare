@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, Children, PropTypes } from 'react';
 import cn from 'classnames';
 import styles from './Table.module.css';
 import Column from './Column';
@@ -34,7 +34,7 @@ class Table extends Component {
 
     data.forEach((d, i) => {
       record = [];
-      children.forEach((col, idx) => {
+      Children.forEach(children, (col, idx) => {
         value = Table.getValue(d, col.props.dataField);
         if (col.props.dataFormatter) {
           value = col.props.dataFormatter(value, d);
