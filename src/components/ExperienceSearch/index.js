@@ -337,17 +337,18 @@ class ExperienceSearch extends Component {
                 loader={<Loader size="s" />}
               >
                 {
-                  (data.experiences || []).map(o => (
-                    data[o.type] && (
-                      <ExperienceBlock
-                        key={o._id}
-                        to={`/experiences/${o._id}`}
-                        data={o}
-                        size="l"
-                        backable
-                      />
-                    )
-                  ))
+                  (data.experiences || [])
+                    .map(o => (
+                      data.searchType.includes(o.type) && (
+                        <ExperienceBlock
+                          key={o._id}
+                          to={`/experiences/${o._id}`}
+                          data={o}
+                          size="l"
+                          backable
+                        />
+                      )
+                    ))
                 }
               </InfiniteScroll>
 
