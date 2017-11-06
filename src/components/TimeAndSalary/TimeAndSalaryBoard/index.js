@@ -169,6 +169,7 @@ export default class TimeAndSalaryBoard extends Component {
     route: PropTypes.object.isRequired,
     queryTimeAndSalary: PropTypes.func,
     switchPath: PropTypes.func,
+    queryExtremeTimeAndSalary: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -233,6 +234,7 @@ export default class TimeAndSalaryBoard extends Component {
   toggleShowExtreme = () => {
     const { showExtreme } = this.state;
     this.setState({ showExtreme: !showExtreme });
+    this.props.queryExtremeTimeAndSalary();
   }
 
   render() {
