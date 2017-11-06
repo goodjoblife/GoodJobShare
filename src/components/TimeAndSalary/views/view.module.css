@@ -57,8 +57,9 @@ $bold: 700;
 }
 
 .sort {
-  text-align: right;
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 
   @media (max-width: $below-mobile) {
     text-align: left;

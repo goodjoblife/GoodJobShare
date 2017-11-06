@@ -239,15 +239,23 @@ export default class TimeAndSalaryBoard extends Component {
       <section className={commonStyles.searchResult}>
         <h2 className={commonStyles.heading}>{title}</h2>
         <div className={commonStyles.result}>
-          <div className={commonStyles.sort}>
-            <div className={commonStyles.label}> 排序：</div>
-            <div className={commonStyles.select}>
-              <Select
-                options={selectOptions(pathnameMapping)}
-                onChange={e => switchPath(e.target.value)}
-                value={path}
-                hasNullOption={false}
-              />
+          <div className={styles.sortRow}>
+            <div className={styles.extremeDescription}>
+              <span>
+                前 1 % 的資料可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
+                <button className={styles.toggle}>展開 +</button>
+              </span>
+            </div>
+            <div className={commonStyles.sort}>
+              <div className={commonStyles.label}> 排序：</div>
+              <div className={commonStyles.select}>
+                <Select
+                  options={selectOptions(pathnameMapping)}
+                  onChange={e => switchPath(e.target.value)}
+                  value={path}
+                  hasNullOption={false}
+                />
+              </div>
             </div>
           </div>
           <Table
