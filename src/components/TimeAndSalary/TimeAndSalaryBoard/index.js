@@ -185,6 +185,7 @@ export default class TimeAndSalaryBoard extends Component {
     infoTimeModal: {
       isOpen: false,
     },
+    showExtreme: false,
   }
 
   componentDidMount() {
@@ -229,11 +230,17 @@ export default class TimeAndSalaryBoard extends Component {
     this.props.queryTimeAndSalary({ sortBy, order });
   }
 
+  toggleShowExtreme = () => {
+    const { showExtreme } = this.state;
+    this.setState({ showExtreme: !showExtreme });
+  }
+
   render() {
     const { path } = this.props.route;
     const { title } = pathnameMapping[path];
     const raw = this.props.data.toJS();
     const { status, switchPath } = this.props;
+    const { showExtreme } = this.state;
 
     return (
       <section className={commonStyles.searchResult}>
@@ -243,7 +250,9 @@ export default class TimeAndSalaryBoard extends Component {
             <div className={styles.extremeDescription}>
               <span>
                 前 1 % 的資料可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
-                <button className={styles.toggle}>展開 +</button>
+                <button className={styles.toggle} onClick={this.toggleShowExtreme}>
+                  {showExtreme ? '隱藏 -' : '展開 +'}
+                </button>
               </span>
             </div>
             <div className={commonStyles.sort}>
