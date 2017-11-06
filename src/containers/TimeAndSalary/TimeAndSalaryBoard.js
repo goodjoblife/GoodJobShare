@@ -6,6 +6,8 @@ import { queryTimeAndSalary, switchPath, queryExtremeTimeAndSalary } from '../..
 const mapStateToProps = state => ({
   data: state.timeAndSalaryBoard.get('data'),
   status: state.timeAndSalaryBoard.get('status'),
+  extremeStatus: state.timeAndSalaryBoard.get('extremeStatus'),
+  extremeData: state.timeAndSalaryBoard.get('extremeData'),
 });
 
 const mapDispatchToProps = dispatch =>

@@ -170,6 +170,8 @@ export default class TimeAndSalaryBoard extends Component {
     queryTimeAndSalary: PropTypes.func,
     switchPath: PropTypes.func,
     queryExtremeTimeAndSalary: PropTypes.func.isRequired,
+    extremeStatus: PropTypes.string,
+    extremeData: ImmutablePropTypes.list,
   }
 
   constructor(props) {
@@ -240,9 +242,14 @@ export default class TimeAndSalaryBoard extends Component {
   render() {
     const { path } = this.props.route;
     const { title } = pathnameMapping[path];
-    const raw = this.props.data.toJS();
-    const { status, switchPath } = this.props;
+    const { status, data, switchPath, extremeStatus, extremeData } = this.props;
     const { showExtreme } = this.state;
+    let raw;
+    if (showExtreme && extremeStatus === fetchingStatus.FETCHED) {
+      raw = extremeData.concat(data).toJS();
+    } else {
+      raw = data.toJS();
+    }
 
     return (
       <section className={commonStyles.searchResult}>
