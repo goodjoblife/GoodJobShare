@@ -12,6 +12,7 @@ import InfoSalaryModal from '../common/InfoSalaryModal';
 import styles from './TimeAndSalaryBoard.module.css';
 import commonStyles from '../views/view.module.css';
 import fetchingStatus from '../../../constants/status';
+import CallToActionRow from './CallToActionRow';
 
 const pathnameMapping = {
   'work-time-dashboard': {
@@ -144,6 +145,23 @@ const getDate = val => {
   return [val.year, month].join('.');
 };
 
+const injectCallToActions = rows => {
+  const flapMapIndexed = R.addIndex(R.chain);
+  const injectEvery = N => (row, i) => {
+    if (i % N === N - 1) {
+      const nthInjected = parseInt(i / N, 10);
+      return [row, (
+        <CallToActionRow
+          key={`injected-${nthInjected}`}
+          position={i}
+        />
+      )];
+    }
+    return row;
+  };
+  return flapMapIndexed(injectEvery(100))(rows);
+};
+
 export default class TimeAndSalaryBoard extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
@@ -232,7 +250,12 @@ export default class TimeAndSalaryBoard extends Component {
               />
             </div>
           </div>
-          <Table className={styles.latestTable} data={raw} primaryKey="_id">
+          <Table
+            className={styles.latestTable}
+            data={raw}
+            primaryKey="_id"
+            postProcessRows={injectCallToActions}
+          >
             <Table.Column
               className={styles.colCompany}
               title="公司名稱"
