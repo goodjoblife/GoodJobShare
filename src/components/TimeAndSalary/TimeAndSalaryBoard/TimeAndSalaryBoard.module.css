@@ -48,4 +48,8 @@
 
 .extremeRow {
   background-color: #f1f1f1;
+
+  .noBefore::before {
+    content: none !important;
+  }
 }

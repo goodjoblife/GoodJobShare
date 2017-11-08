@@ -254,7 +254,7 @@ export default class TimeAndSalaryBoard extends Component {
         const injectExtremeDivider = R.insert(
           nExtremeRows, (
             <tr key="extreme-divider" className={styles.extremeRow}>
-              <td colSpan="7">
+              <td colSpan="7" className={styles.noBefore}>
                 <div className={styles.extremeDescription}>
                   <span>
                     以上資料為前 1 % 的資料，可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
@@ -274,7 +274,7 @@ export default class TimeAndSalaryBoard extends Component {
       }
       const injectLoadingIconRow = R.prepend(
         <tr key="extreme-loading" className={styles.extremeRow}>
-          <td colSpan="7">
+          <td colSpan="7" className={styles.noBefore}>
             <Loading size="s" />
           </td>
         </tr>
