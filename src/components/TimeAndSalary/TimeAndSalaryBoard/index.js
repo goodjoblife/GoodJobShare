@@ -253,7 +253,14 @@ export default class TimeAndSalaryBoard extends Component {
           });
         return mapIndexed(IfExtremeRow(wearExtremeStyle))(rows);
       }
-      return rows;
+      const injectLoadingIconRow = R.prepend(
+        <tr key="extreme-loading" className={styles.extremeRow}>
+          <td colSpan="7">
+            <Loading size="s" />
+          </td>
+        </tr>
+      );
+      return injectLoadingIconRow(rows);
     }
     return rows;
   }
