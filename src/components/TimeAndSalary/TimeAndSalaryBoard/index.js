@@ -251,7 +251,19 @@ export default class TimeAndSalaryBoard extends Component {
           cloneElement(row, {
             className: cn(row.props.className, styles.extremeRow),
           });
-        return mapIndexed(IfExtremeRow(wearExtremeStyle))(rows);
+        const injectExtremeDivider = R.insert(
+          nExtremeRows, (
+            <tr key="extreme-divider" className={styles.extremeRow}>
+              <td colSpan="7">
+                Divider
+              </td>
+            </tr>
+          )
+        );
+        return R.pipe(
+          mapIndexed(IfExtremeRow(wearExtremeStyle)),
+          injectExtremeDivider,
+        )(rows);
       }
       const injectLoadingIconRow = R.prepend(
         <tr key="extreme-loading" className={styles.extremeRow}>
