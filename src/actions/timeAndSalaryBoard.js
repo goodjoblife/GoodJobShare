@@ -13,6 +13,7 @@ const sortBySelector = state => state.timeAndSalaryBoard.get('sortBy');
 const orderSelector = state => state.timeAndSalaryBoard.get('order');
 const dataSelector = state => state.timeAndSalaryBoard.get('data');
 const statusSelector = state => state.timeAndSalaryBoard.get('status');
+const extremeStatusSelector = state => state.timeAndSalaryBoard.get('extremeStatus');
 
 const resetBoard = ({ sortBy, order }) => ({
   type: SET_BOARD_DATA,
@@ -109,6 +110,9 @@ const setBoardExtremeData = ({ sortBy, order }, { extremeStatus, extremeData, ex
 export const queryExtremeTimeAndSalary = () =>
   (dispatch, getState) => {
     if (sortBySelector(getState()) !== 'created_at') {
+      return Promise.resolve();
+    }
+    if (extremeStatusSelector(getState()) === fetchingStatus.FETCHED) {
       return Promise.resolve();
     }
     dispatch({
