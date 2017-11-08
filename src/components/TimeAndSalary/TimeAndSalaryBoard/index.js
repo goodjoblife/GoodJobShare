@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes, cloneElement } from 'react';
 import R from 'ramda';
 import Loading from 'common/Loader';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import $ from 'jquery';
+import cn from 'classnames';
 
 import Select from 'common/form/Select';
 import Table from 'common/table/Table';
@@ -239,6 +240,24 @@ export default class TimeAndSalaryBoard extends Component {
     this.props.queryExtremeTimeAndSalary();
   }
 
+  decorateExtremeRows = rows => {
+    if (this.state.showExtreme) {
+      if (this.props.extremeStatus === fetchingStatus.FETCHED) {
+        const nExtremeRows = this.props.extremeData.size;
+        const mapIndexed = R.addIndex(R.map);
+        const IfExtremeRow = then => (row, i) =>
+          ((i < nExtremeRows) ? then(row) : row);
+        const wearExtremeStyle = row =>
+          cloneElement(row, {
+            className: cn(row.props.className, styles.extremeRow),
+          });
+        return mapIndexed(IfExtremeRow(wearExtremeStyle))(rows);
+      }
+      return rows;
+    }
+    return rows;
+  }
+
   render() {
     const { path } = this.props.route;
     const { title } = pathnameMapping[path];
@@ -280,7 +299,10 @@ export default class TimeAndSalaryBoard extends Component {
             className={styles.latestTable}
             data={raw}
             primaryKey="_id"
-            postProcessRows={injectCallToActions}
+            postProcessRows={R.pipe(
+              this.decorateExtremeRows,
+              injectCallToActions,
+            )}
           >
             <Table.Column
               className={styles.colCompany}
