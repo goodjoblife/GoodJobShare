@@ -241,37 +241,10 @@ export default class TimeAndSalaryBoard extends Component {
   }
 
   decorateExtremeRows = rows => {
-    if (this.state.showExtreme) {
-      if (this.props.extremeStatus === fetchingStatus.FETCHED) {
-        const nExtremeRows = this.props.extremeData.size;
-        const mapIndexed = R.addIndex(R.map);
-        const IfExtremeRow = then => (row, i) =>
-          ((i < nExtremeRows) ? then(row) : row);
-        const wearExtremeStyle = row =>
-          cloneElement(row, {
-            className: cn(row.props.className, styles.extremeRow),
-          });
-        const injectExtremeDivider = R.insert(
-          nExtremeRows, (
-            <tr key="extreme-divider" className={styles.extremeRow}>
-              <td colSpan="7" className={styles.noBefore}>
-                <div className={styles.extremeDescription}>
-                  <span>
-                    以上資料為前 1 % 的資料，可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
-                    <button className={styles.toggle} onClick={this.toggleShowExtreme}>
-                      隱藏 -
-                    </button>
-                  </span>
-                </div>
-              </td>
-            </tr>
-          )
-        );
-        return R.pipe(
-          mapIndexed(IfExtremeRow(wearExtremeStyle)),
-          injectExtremeDivider,
-        )(rows);
-      }
+    if (!this.state.showExtreme) {
+      return rows;
+    }
+    if (this.props.extremeStatus !== fetchingStatus.FETCHED) {
       const injectLoadingIconRow = R.prepend(
         <tr key="extreme-loading" className={styles.extremeRow}>
           <td colSpan="7" className={styles.noBefore}>
@@ -281,7 +254,34 @@ export default class TimeAndSalaryBoard extends Component {
       );
       return injectLoadingIconRow(rows);
     }
-    return rows;
+    const nExtremeRows = this.props.extremeData.size;
+    const mapIndexed = R.addIndex(R.map);
+    const IfExtremeRow = then => (row, i) =>
+      ((i < nExtremeRows) ? then(row) : row);
+    const wearExtremeStyle = row =>
+      cloneElement(row, {
+        className: cn(row.props.className, styles.extremeRow),
+      });
+    const injectExtremeDivider = R.insert(
+      nExtremeRows, (
+        <tr key="extreme-divider" className={styles.extremeRow}>
+          <td colSpan="7" className={styles.noBefore}>
+            <div className={styles.extremeDescription}>
+              <span>
+                以上資料為前 1 % 的資料，可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
+                <button className={styles.toggle} onClick={this.toggleShowExtreme}>
+                  隱藏 -
+                </button>
+              </span>
+            </div>
+          </td>
+        </tr>
+      )
+    );
+    return R.pipe(
+      mapIndexed(IfExtremeRow(wearExtremeStyle)),
+      injectExtremeDivider,
+    )(rows);
   }
 
   render() {
