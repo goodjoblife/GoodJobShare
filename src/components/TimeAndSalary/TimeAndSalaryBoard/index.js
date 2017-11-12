@@ -169,6 +169,14 @@ const injectCallToActions = rows => {
   return flapMapIndexed(injectEvery(100))(rows);
 };
 
+const injectLoadingIconRow = R.prepend(
+  <tr key="extreme-loading" className={styles.extremeRow}>
+    <td colSpan="7" className={styles.noBefore}>
+      <Loading size="s" />
+    </td>
+  </tr>
+);
+
 export default class TimeAndSalaryBoard extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
@@ -251,13 +259,6 @@ export default class TimeAndSalaryBoard extends Component {
       return rows;
     }
     if (this.props.extremeStatus !== fetchingStatus.FETCHED) {
-      const injectLoadingIconRow = R.prepend(
-        <tr key="extreme-loading" className={styles.extremeRow}>
-          <td colSpan="7" className={styles.noBefore}>
-            <Loading size="s" />
-          </td>
-        </tr>
-      );
       return injectLoadingIconRow(rows);
     }
     const nExtremeRows = this.props.extremeData.size;
