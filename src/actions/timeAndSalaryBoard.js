@@ -146,7 +146,7 @@ export const queryExtremeTimeAndSalary = () =>
 
         dispatch(setBoardExtremeData({ sortBy, order }, { extremeStatus: fetchingStatus.FETCHED, extremeData }));
       })
-      .catch(error => {
-        dispatch(setBoardExtremeData({ sortBy, order }, { extremeStatus: fetchingStatus.ERROR, extremeData: [], error }));
+      .catch(extremeError => {
+        dispatch(setBoardExtremeData({ sortBy, order }, { extremeStatus: fetchingStatus.ERROR, extremeData: [], extremeError }));
       });
   };
