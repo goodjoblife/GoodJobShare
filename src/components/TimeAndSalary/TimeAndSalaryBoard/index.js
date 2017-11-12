@@ -21,36 +21,42 @@ const pathnameMapping = {
     label: '一週平均總工時（高到低）',
     sortBy: 'week_work_time',
     order: 'descending',
+    hasExtreme: true,
   },
   'sort/work-time-asc': {
     title: '工時排行榜（由低到高）',
     label: '一週平均總工時（低到高）',
     sortBy: 'week_work_time',
     order: 'ascending',
+    hasExtreme: true,
   },
   'salary-dashboard': {
     title: '估算時薪排行榜',
     label: '估算時薪（高到低）',
     sortBy: 'estimated_hourly_wage',
     order: 'descending',
+    hasExtreme: true,
   },
   'sort/salary-asc': {
     title: '估算時薪排行榜（由低到高）',
     label: '估算時薪（低到高）',
     sortBy: 'estimated_hourly_wage',
     order: 'ascending',
+    hasExtreme: true,
   },
   latest: {
     title: '最新薪時資訊',
     label: '資料時間（新到舊）',
     sortBy: 'created_at',
     order: 'descending',
+    hasExtreme: false,
   },
   'sort/time-asc': {
     title: '最舊薪時資訊',
     label: '資料時間（舊到新）',
     sortBy: 'created_at',
     order: 'ascending',
+    hasExtreme: false,
   },
 };
 
@@ -286,7 +292,7 @@ export default class TimeAndSalaryBoard extends Component {
 
   render() {
     const { path } = this.props.route;
-    const { title } = pathnameMapping[path];
+    const { title, hasExtreme } = pathnameMapping[path];
     const { status, data, switchPath, extremeStatus, extremeData } = this.props;
     const { showExtreme } = this.state;
     let raw;
@@ -302,12 +308,14 @@ export default class TimeAndSalaryBoard extends Component {
         <div className={commonStyles.result}>
           <div className={styles.sortRow}>
             <div className={styles.extremeDescription}>
-              <span>
-                前 1 % 的資料可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
-                <button className={styles.toggle} onClick={this.toggleShowExtreme}>
-                  {showExtreme ? '隱藏 -' : '展開 +'}
-                </button>
-              </span>
+              {hasExtreme && (
+                <span>
+                  前 1 % 的資料可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
+                  <button className={styles.toggle} onClick={this.toggleShowExtreme}>
+                    {showExtreme ? '隱藏 -' : '展開 +'}
+                  </button>
+                </span>
+              )}
             </div>
             <div className={commonStyles.sort}>
               <div className={commonStyles.label}> 排序：</div>
