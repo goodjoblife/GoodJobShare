@@ -24,13 +24,13 @@
 }
 
 .sortRow {
-  margin-bottom: 20px;
   display: flex;
 
   .extremeDescription {
     justify-content: flex-start;
     font-size: 14px;
     line-height: 18px;
+    margin-bottom: 20px;
     color: #626262;
   }
 }
