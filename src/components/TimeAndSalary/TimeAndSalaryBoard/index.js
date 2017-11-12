@@ -177,6 +177,23 @@ const injectLoadingIconRow = R.prepend(
   </tr>
 );
 
+const injectExtremeDividerAt = nthRow => onClick => R.insert(
+  nthRow, (
+    <tr key="extreme-divider" className={styles.extremeRow}>
+      <td colSpan="7" className={styles.noBefore}>
+        <div className={styles.extremeDescription}>
+          <span>
+            以上資料為前 1 % 的資料，可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
+            <button className={styles.toggle} onClick={onClick}>
+              隱藏 -
+            </button>
+          </span>
+        </div>
+      </td>
+    </tr>
+  )
+);
+
 export default class TimeAndSalaryBoard extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
@@ -269,25 +286,9 @@ export default class TimeAndSalaryBoard extends Component {
       cloneElement(row, {
         className: cn(row.props.className, styles.extremeRow),
       });
-    const injectExtremeDivider = R.insert(
-      nExtremeRows, (
-        <tr key="extreme-divider" className={styles.extremeRow}>
-          <td colSpan="7" className={styles.noBefore}>
-            <div className={styles.extremeDescription}>
-              <span>
-                以上資料為前 1 % 的資料，可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
-                <button className={styles.toggle} onClick={this.toggleShowExtreme}>
-                  隱藏 -
-                </button>
-              </span>
-            </div>
-          </td>
-        </tr>
-      )
-    );
     return R.pipe(
       mapIndexed(IfExtremeRow(wearExtremeStyle)),
-      injectExtremeDivider,
+      injectExtremeDividerAt(nExtremeRows)(this.toggleShowExtreme),
     )(rows);
   }
 
