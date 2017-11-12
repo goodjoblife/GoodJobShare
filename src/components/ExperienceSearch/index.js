@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import InfiniteScroll from 'react-infinite-scroller';
+import { browserHistory } from 'react-router';
+
 import ReactGA from 'react-ga';
 
 import Loader from 'common/Loader';
@@ -13,14 +15,28 @@ import { ArrowLeft } from 'common/icons';
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
+import {
+  fetchExperiences as fetchExperiencesAction,
+  setSearchType as setSearchTypeAction,
+} from '../../actions/experienceSearch';
+import { HELMET_DATA } from '../../constants/helmetData';
+import {
+  PAGE_COUNT,
+} from '../../constants/experienceSearch';
 import TimeSalaryBlock from './TimeSalaryBlock';
 import Filter from './Filter';
 import { Banner1, Banner2 } from './Banners';
-import { fetchExperiences } from '../../actions/experienceSearch';
 
-import { HELMET_DATA } from '../../constants/helmetData';
 import getScale from '../../utils/numberUtils';
 
+import {
+  searchQuerySelector,
+  searchBySelector,
+  sortBySelector,
+  searchTypeSelector,
+  handleSearchType,
+  toQsString,
+} from './helper';
 import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
 
 const SORT = {
@@ -29,8 +45,14 @@ const SORT = {
 };
 
 class ExperienceSearch extends Component {
-  static fetchData({ store: { dispatch } }) {
-    return dispatch(fetchExperiences('sort', '', 0));
+  static fetchData({ query, store: { dispatch } }) {
+    const sort = sortBySelector(query);
+    const searchBy = searchBySelector(query);
+    const searchQuery = searchQuerySelector(query);
+    const searchType = searchTypeSelector(query);
+
+    dispatch(setSearchTypeAction(searchType));
+    return dispatch(fetchExperiencesAction(0, PAGE_COUNT, sort, searchBy, searchQuery));
   }
 
   static propTypes = {
@@ -39,8 +61,13 @@ class ExperienceSearch extends Component {
     fetchExperiences: PropTypes.func.isRequired,
     fetchMoreExperiences: PropTypes.func.isRequired,
     fetchWorkings: PropTypes.func.isRequired,
-    fetchKeywords: PropTypes.func.isRequired,
+    getNewSearchBy: PropTypes.func.isRequired,
     experienceSearch: ImmutablePropTypes.map.isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string,
+      query: PropTypes.object,
+      pathname: PropTypes.string,
+    }),
   }
 
   constructor() {
@@ -52,8 +79,46 @@ class ExperienceSearch extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchExperiences('sort', '', 0);
-    this.props.fetchKeywords('');
+    const {
+      fetchExperiences,
+      setSearchType,
+    } = this.props;
+
+    const {
+      query,
+    } = this.props.location;
+
+    const sort = sortBySelector(query);
+    const searchBy = searchBySelector(query);
+    const searchQuery = searchQuerySelector(query);
+    const searchType = searchTypeSelector(query);
+
+    setSearchType(searchType);
+
+    fetchExperiences(0, PAGE_COUNT, sort, searchBy, searchQuery);
+    this.props.getNewSearchBy(searchBy);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.search !== this.props.location.search) {
+      const {
+        fetchExperiences,
+        setSearchType,
+      } = nextProps;
+
+      const {
+        query,
+      } = nextProps.location;
+
+      const sort = sortBySelector(query);
+      const searchBy = searchBySelector(query);
+      const searchQuery = searchQuerySelector(query);
+      const searchType = searchTypeSelector(query);
+
+      setSearchType(searchType);
+
+      fetchExperiences(0, PAGE_COUNT, sort, searchBy, searchQuery);
+    }
   }
 
   setSearchType = e => {
@@ -70,45 +135,125 @@ class ExperienceSearch extends Component {
         action: `${GA_ACTION.TOGGLE_ON}_${searchType}`,
       });
     }
-    this.props.setSearchType(e);
+
+    const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const sort = sortBySelector(query);
+    const searchQuery = searchQuerySelector(query);
+    const searchBy = searchBySelector(query);
+    const prevSearchType = searchTypeSelector(query);
+
+    const nextSearchType = handleSearchType(searchType)(prevSearchType);
+
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery,
+      searchType: nextSearchType,
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    browserHistory.push(url);
   }
 
   handleKeyPress(e) {
     if (e.key === 'Enter') {
-      const val = e.target.value;
-      this.fetchExperiencesAndWorkings(val);
+      const searchQuery = e.target.value;
+      this.fetchExperiencesAndWorkings(searchQuery);
     }
   }
 
-  handleKeywordClick(e) {
-    const val = e.target.innerHTML;
-    this.fetchExperiencesAndWorkings(val);
+  handleKeywordClick(searchQuery) {
+    this.fetchExperiencesAndWorkings(searchQuery);
+  }
+
+  handleSearchBy = searchBy => {
+    const {
+      getNewSearchBy,
+    } = this.props;
+    const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const sort = sortBySelector(query);
+    const searchQuery = searchQuerySelector(query);
+
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery,
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    getNewSearchBy(searchBy);
+    browserHistory.push(url);
   }
 
   fetchExperiencesAndWorkings(val) {
+    const {
+      fetchWorkings,
+    } = this.props;
+
+    const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const sort = sortBySelector(query);
+    const searchBy = searchBySelector(query);
+
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery: val,
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    browserHistory.push(url);
+    fetchWorkings(searchBy, val);
+
     ReactGA.event({
       category: GA_CATEGORY.SEARCH_EXPERIENCE,
       action: `${GA_ACTION.SEARCH_BY}_${this.props.experienceSearch.get('searchBy')}`,
       value: val,
     });
-    this.props.fetchExperiences('searchBy', val, 0);
-    this.props.fetchWorkings(val);
   }
 
-  fetchExperiencesWithSort(e) {
-    const value = e.target.value;
-    if (value === SORT.CREATED_AT) {
+  fetchExperiencesWithSort(sort) {
+    const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const searchBy = searchBySelector(query);
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery: '',
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    browserHistory.push(url);
+
+    if (sort === SORT.CREATED_AT) {
       ReactGA.event({
         category: GA_CATEGORY.SEARCH_EXPERIENCE,
         action: GA_ACTION.CLICK_LATEST,
       });
-    } else if (value === SORT.POPULARITY) {
+    } else if (sort === SORT.POPULARITY) {
       ReactGA.event({
         category: GA_CATEGORY.SEARCH_EXPERIENCE,
         action: GA_ACTION.CLICK_POPULAR,
       });
     }
-    this.props.fetchExperiences('sort', e.target.value, 0);
   }
 
   fetchMoreExperiences = nextPage => {
@@ -133,7 +278,7 @@ class ExperienceSearch extends Component {
 
   render() {
     const {
-      /* setSort, setIndustry, */ fetchKeywords, setKeyword,
+      setKeyword,
       experienceSearch,
     } = this.props;
     const data = experienceSearch.toJS();
@@ -157,7 +302,7 @@ class ExperienceSearch extends Component {
               <Searchbar
                 className={styles.searcbarLarge}
                 data={data}
-                fetchKeywords={fetchKeywords}
+                handleSearchBy={this.handleSearchBy}
                 setKeyword={setKeyword}
                 handleKeyPress={this.handleKeyPress}
                 handleKeywordClick={this.handleKeywordClick}
@@ -192,17 +337,18 @@ class ExperienceSearch extends Component {
                 loader={<Loader size="s" />}
               >
                 {
-                  (data.experiences || []).map(o => (
-                    data[o.type] && (
-                      <ExperienceBlock
-                        key={o._id}
-                        to={`/experiences/${o._id}`}
-                        data={o}
-                        size="l"
-                        backable
-                      />
-                    )
-                  ))
+                  (data.experiences || [])
+                    .map(o => (
+                      data.searchType.includes(o.type) && (
+                        <ExperienceBlock
+                          key={o._id}
+                          to={`/experiences/${o._id}`}
+                          data={o}
+                          size="l"
+                          backable
+                        />
+                      )
+                    ))
                 }
               </InfiniteScroll>
 

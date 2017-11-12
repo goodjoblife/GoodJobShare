@@ -17,7 +17,7 @@ import { HELMET_DATA } from '../../constants/helmetData';
 class LandingPage extends Component {
   static fetchData({ store: { dispatch } }) {
     return Promise.all([
-      dispatch(fetchExperiences('sort', 'popularity', 0, 3)),
+      dispatch(fetchExperiences(0, 3, 'popularity', 'created_at', '')),
       dispatch(fetchMetaListIfNeeded()),
     ]);
   }
@@ -29,7 +29,7 @@ class LandingPage extends Component {
   }
   componentDidMount() {
     Promise.all([
-      this.props.fetchExperiences('sort', 'popularity', 0, 3),
+      this.props.fetchExperiences(0, 3, 'popularity', 'created_at', ''),
       this.props.fetchMetaListIfNeeded(),
     ]);
   }

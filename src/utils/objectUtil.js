@@ -1,3 +1,5 @@
+import R from 'ramda';
+
 import {
   toSnakecase,
 } from './stringUtil';
@@ -12,3 +14,7 @@ export const transferKeyToSnakecase = obj => (
   )
 );
 export const foo = 1;
+
+export const renameKeys = R.curry((keysMap, obj) =>
+  R.reduce((acc, key) => R.assoc(keysMap[key] || key, obj[key], acc), {}, R.keys(obj))
+);
