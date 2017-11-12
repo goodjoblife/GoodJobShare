@@ -288,6 +288,7 @@ export default class TimeAndSalaryBoard extends Component {
       });
     return R.pipe(
       mapIndexed(IfExtremeRow(wearExtremeStyle)),
+      // inject a divider here to tell extreme rows apart from other rows
       injectExtremeDividerAt(nExtremeRows)(this.toggleShowExtreme),
     )(rows);
   }
