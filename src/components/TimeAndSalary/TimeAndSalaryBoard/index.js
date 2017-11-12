@@ -236,6 +236,7 @@ export default class TimeAndSalaryBoard extends Component {
     if (this.props.route.path !== nextProps.route.path) {
       const { path } = nextProps.route;
       const { sortBy, order } = pathnameMapping[path];
+      this.setState({ showExtreme: false });
       this.props.queryTimeAndSalary({ sortBy, order });
     }
   }
