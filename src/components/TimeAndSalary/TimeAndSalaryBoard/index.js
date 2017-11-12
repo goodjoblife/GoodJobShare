@@ -202,6 +202,7 @@ export default class TimeAndSalaryBoard extends Component {
     queryTimeAndSalary: PropTypes.func,
     switchPath: PropTypes.func,
     queryExtremeTimeAndSalary: PropTypes.func.isRequired,
+    resetBoardExtremeData: PropTypes.func.isRequired,
     extremeStatus: PropTypes.string,
     extremeData: ImmutablePropTypes.list,
   }
@@ -237,6 +238,7 @@ export default class TimeAndSalaryBoard extends Component {
       const { path } = nextProps.route;
       const { sortBy, order } = pathnameMapping[path];
       this.setState({ showExtreme: false });
+      this.props.resetBoardExtremeData();
       this.props.queryTimeAndSalary({ sortBy, order });
     }
   }

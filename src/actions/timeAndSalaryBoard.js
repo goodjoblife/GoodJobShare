@@ -93,6 +93,13 @@ export const switchPath = path =>
   dispatch =>
     dispatch(push(`/time-and-salary/${path}`));
 
+export const resetBoardExtremeData = () => ({
+  type: SET_BOARD_EXTREME_DATA,
+  extremeStatus: fetchingStatus.UNFETCHED,
+  extremeData: [],
+  extremeError: null,
+});
+
 const setBoardExtremeData = ({ sortBy, order }, { extremeStatus, extremeData, extremeError = null }) =>
   (dispatch, getState) => {
     // make sure the store is consistent
