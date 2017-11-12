@@ -109,7 +109,8 @@ const setBoardExtremeData = ({ sortBy, order }, { extremeStatus, extremeData, ex
 
 export const queryExtremeTimeAndSalary = () =>
   (dispatch, getState) => {
-    if (sortBySelector(getState()) !== 'created_at') {
+    // extreme data only available for data sorted by estimated_hourly_wage and week_work_time
+    if (sortBySelector(getState()) !== 'estimated_hourly_wage' && sortBySelector(getState()) !== 'week_work_time') {
       return Promise.resolve();
     }
     if (extremeStatusSelector(getState()) === fetchingStatus.FETCHED) {
