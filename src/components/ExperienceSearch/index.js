@@ -1,16 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
-import InfiniteScroll from 'react-infinite-scroller';
+// import InfiniteScroll from 'react-infinite-scroller';
 import { browserHistory } from 'react-router';
 
 import ReactGA from 'react-ga';
 
-import Loader from 'common/Loader';
+// import Loader from 'common/Loader';
 import { Section, Wrapper, Heading, P } from 'common/base';
 import Columns from 'common/Columns';
-import Button from 'common/button/Button';
-import { ArrowLeft } from 'common/icons';
 
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
@@ -26,6 +24,8 @@ import {
 import TimeSalaryBlock from './TimeSalaryBlock';
 import Filter from './Filter';
 import { Banner1, Banner2 } from './Banners';
+
+import Pagination from './Pagination';
 
 import getScale from '../../utils/numberUtils';
 
@@ -262,7 +262,7 @@ class ExperienceSearch extends Component {
       action: GA_ACTION.FETCH_MORE,
       value: nextPage,
     });
-    this.props.fetchMoreExperiences(nextPage);
+    return this.props.fetchMoreExperiences(nextPage);
   }
 
   renderHelmet = () => {
@@ -327,39 +327,22 @@ class ExperienceSearch extends Component {
 
               <Banner2 />
 
-              <InfiniteScroll
-                pageStart={0} hasMore={data.hasMore}
-                loadMore={nextPage => {
-                  if (data.hasMore) {
-                    this.fetchMoreExperiences(nextPage);
-                  }
-                }}
-                loader={<Loader size="s" />}
-              >
-                {
-                  (data.experiences || [])
-                    .map(o => (
-                      data.searchType.includes(o.type) && (
-                        <ExperienceBlock
-                          key={o._id}
-                          to={`/experiences/${o._id}`}
-                          data={o}
-                          size="l"
-                          backable
-                        />
-                      )
-                    ))
-                }
-              </InfiniteScroll>
+              {
+                (data.experiences || [])
+                  .map(o => (
+                    data.searchType.includes(o.type) && (
+                      <ExperienceBlock
+                        key={o._id}
+                        to={`/experiences/${o._id}`}
+                        data={o}
+                        size="l"
+                        backable
+                      />
+                    )
+                  ))
+              }
 
-              <div className={styles.pagination}>
-                <P size="m" className={styles.info}>1-20 篇 (共 93 篇)</P>
-                <div>
-                  <Button btnStyle="firstPage">第一頁</Button>
-                  <Button btnStyle="page"><ArrowLeft />前一頁</Button>
-                  <Button btnStyle="page" disabled>下一頁<ArrowLeft style={{ transform: 'scaleX(-1)' }} /></Button>
-                </div>
-              </div>
+              <Pagination />
 
               {(data.searchQuery && data.workings.length > 0) &&
                 <div>
