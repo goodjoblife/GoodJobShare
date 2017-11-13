@@ -3,6 +3,7 @@ import cn from 'classnames';
 import { Link } from 'react-router';
 import { Wrapper } from 'common/base';
 import RaiseExperiencesProgressBar from 'common/RaiseExperiencesProgressBar';
+import getCallToActionLink from 'utils/callToActionUtils';
 import styles from './Banner.module.css';
 
 const Banner = () => (
@@ -18,7 +19,7 @@ const Banner = () => (
           目標 <strong>500</strong> 筆資料，不需要花上辛苦錢，只需要動動你的手，<br />
           將你的面試、工作經驗分享給更多人知道。
         </h2>
-        <Link to="/share/work-experiences" className={cn('buttonCircleM', 'buttonBlack2')}>GO!</Link>
+        <Link to={getCallToActionLink()} className={cn('buttonCircleM', 'buttonBlack2')}>GO!</Link>
       </div>
     </Wrapper>
   </section>

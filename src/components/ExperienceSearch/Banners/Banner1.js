@@ -2,10 +2,11 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 import RaiseExperiencesProgressBar from 'common/RaiseExperiencesProgressBar';
+import getCallToActionLink from 'utils/callToActionUtils';
 import styles from './Banners.module.css';
 
 const Banner1 = ({ className }) => (
-  <Link to="/share/interview" className={className}>
+  <Link to={getCallToActionLink()} className={className}>
     <img
       src="https://image.goodjob.life/banners/banner2_2x.jpg"
       alt="好工作評論網募資中"
