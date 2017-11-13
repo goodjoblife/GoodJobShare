@@ -4,6 +4,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Loader from 'common/Loader';
 import Columns from 'common/Columns';
 import { Section, Wrapper, Heading } from 'common/base';
+import getCallToActionLink from 'utils/callToActionUtils';
 import {
   fetchMetaListIfNeeded,
 } from '../../actions/laborRightsMenu';
@@ -30,7 +31,7 @@ class LaborRightsMenu extends React.Component {
       title,
     }));
     items.splice(4, 0, {
-      link: '/share',
+      link: getCallToActionLink(),
       coverUrl: 'https://image.goodjob.life/banners/banner3_2x.jpg',
       title: '留下你的面試經驗、工作經驗',
     });

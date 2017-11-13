@@ -2,10 +2,11 @@ import React from 'react';
 import { Link } from 'react-router';
 import { Wrapper } from 'common/base';
 import ProgressBar from 'common/ProgressBar';
+import getCallToActionLink from 'utils/callToActionUtils';
 import styles from './Top.module.css';
 
 const Top = () => (
-  <Link to="/share" className={styles.root}>
+  <Link to={getCallToActionLink()} className={styles.root}>
     <Wrapper size="l" className={styles.inner}>
       <div className={styles.heading}>\  好工作評論網募「資」中  /</div>
       <ProgressBar totalData={20} size="s" theme="black" />
