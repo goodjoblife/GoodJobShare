@@ -342,7 +342,13 @@ class ExperienceSearch extends Component {
                   ))
               }
 
-              <Pagination />
+              <Pagination
+                totalPage={5}
+                totalCount={93}
+                unit={20}
+                currentCount={20}
+                currentPage={1}
+              />
 
               {(data.searchQuery && data.workings.length > 0) &&
                 <div>
