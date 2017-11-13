@@ -6,7 +6,7 @@ import MarkdownParser from './MarkdownParser';
 import styles from './Body.module.css';
 import LeftBanner from '../ExperienceSearch/Banners/Banner1';
 
-const Body = ({ title, seoText, description, content }) => (
+const Body = ({ title, seoText, description, content, experienceCount }) => (
   <Section Tag="main" pageTop>
     <Wrapper size="m">
       <Heading size="l" bold marginBottom>{title}</Heading>
@@ -20,7 +20,7 @@ const Body = ({ title, seoText, description, content }) => (
           <Sticky disableCompensation>
             {({ style }) => (
               <div style={style}>
-                <LeftBanner />
+                <LeftBanner experienceCount={experienceCount} />
               </div>
             )}
           </Sticky>
@@ -41,6 +41,7 @@ Body.propTypes = {
   seoText: PropTypes.string,
   description: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
+  experienceCount: PropTypes.number,
 };
 Body.defaultProps = {
   title: '',
