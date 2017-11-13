@@ -86,10 +86,17 @@ class Header extends React.Component {
       .catch(() => {});
   }
 
+  renderTop = () => {
+    if (this.props.location.pathname === '/') {
+      return null;
+    }
+    return <Top experienceCount={this.props.experienceCount} />;
+  }
+
   render() {
     return (
       <div className={styles.root}>
-        <Top />
+        {this.renderTop()}
         <header className={styles.header}>
           <Wrapper size="l" className={styles.inner}>
             <HeaderButton
@@ -148,6 +155,8 @@ Header.propTypes = {
   getMe: React.PropTypes.func.isRequired,
   auth: React.PropTypes.object,
   FB: React.PropTypes.object,
+  location: React.PropTypes.object,
+  experienceCount: React.PropTypes.number,
 };
 
 const HeaderButton = ({ isNavOpen, toggle }) => (

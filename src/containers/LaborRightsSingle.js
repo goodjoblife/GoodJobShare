@@ -26,12 +26,14 @@ export default connect(
       metaList.get(index > 0 ? index - 1 : undefined);
     const nextData =
       metaList.get(index < ids.count() - 1 ? index + 1 : undefined);
+    const experienceCount = state.experienceSearch.get('experienceCount');
     return {
       data,
       prev: prevData,
       next: nextData,
       status: dataStatus,
       error: dataError,
+      experienceCount,
     };
   },
   dispatch => bindActionCreators(actionCreators, dispatch),

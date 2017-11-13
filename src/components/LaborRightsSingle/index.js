@@ -79,6 +79,7 @@ class LaborRightsSingle extends React.Component {
                 seoText={seoText}
                 description={description}
                 content={content}
+                experienceCount={this.props.experienceCount}
               />
               <CallToAction
                 imgSrc="https://image.goodjob.life/cta-02.jpg"
@@ -105,6 +106,7 @@ LaborRightsSingle.propTypes = {
   fetchDataIfNeeded: React.PropTypes.func.isRequired,
   status: React.PropTypes.string.isRequired,
   error: ImmutablePropTypes.map,
+  experienceCount: React.PropTypes.number,
 };
 
 export default LaborRightsSingle;

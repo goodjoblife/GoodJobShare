@@ -295,7 +295,7 @@ class ExperienceSearch extends Component {
                 setSearchType={this.setSearchType}
                 className={styles.filter}
               />
-              <Banner1 className={styles.banner} />
+              <Banner1 experienceCount={this.props.experienceSearch.get('experienceCount')} className={styles.banner} />
             </aside>
 
             <section className={styles.content}>
