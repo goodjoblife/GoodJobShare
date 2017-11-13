@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router';
 import { Wrapper } from 'common/base';
-import ProgressBar from 'common/ProgressBar';
+import RaiseExperiencesProgressBar from 'common/RaiseExperiencesProgressBar';
 import styles from './Banner.module.css';
 
 const Banner = () => (
@@ -13,7 +13,7 @@ const Banner = () => (
       </div>
       <div className={styles.content}>
         <h1 className={styles.heading}><span>好工作評論網募「資」中 </span>(๑•̀ㅂ•́)و✧</h1>
-        <ProgressBar totalData={400} rootClassName={styles.progressBar} />
+        <RaiseExperiencesProgressBar rootClassName={styles.progressBar} />
         <h2 className={styles.subheading}>
           目標 <strong>500</strong> 筆資料，不需要花上辛苦錢，只需要動動你的手，<br />
           將你的面試、工作經驗分享給更多人知道。
