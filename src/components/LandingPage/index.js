@@ -39,7 +39,7 @@ class LandingPage extends Component {
     return (
       <main>
         <Helmet {...HELMET_DATA.LANDING_PAGE} />
-        <Banner />
+        <Banner experienceCount={this.props.experienceSearch.get('experienceCount')} />
         <Dashboard />
         <ShareExpSection heading="現在就留下你的資料" />
         <Section padding bg="white">
