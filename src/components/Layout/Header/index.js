@@ -90,7 +90,7 @@ class Header extends React.Component {
     if (this.props.location.pathname === '/') {
       return null;
     }
-    return <Top />;
+    return <Top experienceCount={this.props.experienceCount} />;
   }
 
   render() {
@@ -156,6 +156,7 @@ Header.propTypes = {
   auth: React.PropTypes.object,
   FB: React.PropTypes.object,
   location: React.PropTypes.object,
+  experienceCount: React.PropTypes.number,
 };
 
 const HeaderButton = ({ isNavOpen, toggle }) => (
