@@ -20,6 +20,7 @@ const Pagination = ({
   totalCount,
   unit,
   currentPage,
+  onSelect,
 }) => {
   const totalPage = getTotalPage(totalCount, unit);
   const currentCount = getCurrentCount(totalCount, unit, currentPage);
@@ -29,16 +30,23 @@ const Pagination = ({
         {`${getFromCount(currentPage, unit)}-${getToCount(currentPage, unit, currentCount)} 篇 (共 ${totalCount} 篇)`}
       </P>
       <div>
-        <Button btnStyle="firstPage">{`第 ${currentPage} 頁`}</Button>
+        <Button
+          btnStyle="firstPage"
+          onClick={() => onSelect(1)}
+        >
+          第一頁
+        </Button>
         <Button
           btnStyle="page"
           disabled={isPreviousDisabled(currentPage)}
+          onClick={() => onSelect(currentPage - 1)}
         >
           <ArrowLeft />前一頁
       </Button>
         <Button
           btnStyle="page"
           disabled={isNextDisabled(currentPage, totalPage)}
+          onClick={() => onSelect(currentPage + 1)}
         >
           下一頁<ArrowLeft style={{ transform: 'scaleX(-1)' }} />
         </Button>
@@ -51,8 +59,7 @@ Pagination.propTypes = {
   totalCount: PropTypes.number,
   unit: PropTypes.number,
   currentPage: PropTypes.number,
-  // onSelect: PropTypes.func,
-  // style: PropTypes.object,
+  onSelect: PropTypes.func,
   // disabled: PropTypes.bool,
 };
 

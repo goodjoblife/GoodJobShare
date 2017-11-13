@@ -52,7 +52,7 @@ class ExperienceSearch extends Component {
     const searchType = searchTypeSelector(query);
 
     dispatch(setSearchTypeAction(searchType));
-    return dispatch(fetchExperiencesAction(0, PAGE_COUNT, sort, searchBy, searchQuery));
+    return dispatch(fetchExperiencesAction(1, PAGE_COUNT, sort, searchBy, searchQuery));
   }
 
   static propTypes = {
@@ -95,7 +95,7 @@ class ExperienceSearch extends Component {
 
     setSearchType(searchType);
 
-    fetchExperiences(0, PAGE_COUNT, sort, searchBy, searchQuery);
+    fetchExperiences(1, PAGE_COUNT, sort, searchBy, searchQuery);
     this.props.getNewSearchBy(searchBy);
   }
 
@@ -117,7 +117,7 @@ class ExperienceSearch extends Component {
 
       setSearchType(searchType);
 
-      fetchExperiences(0, PAGE_COUNT, sort, searchBy, searchQuery);
+      fetchExperiences(1, PAGE_COUNT, sort, searchBy, searchQuery);
     }
   }
 
@@ -346,6 +346,7 @@ class ExperienceSearch extends Component {
                 totalCount={data.experienceCount}
                 unit={PAGE_COUNT}
                 currentPage={data.currentPage}
+                onSelect={this.fetchMoreExperiences}
               />
 
               {(data.searchQuery && data.workings.length > 0) &&

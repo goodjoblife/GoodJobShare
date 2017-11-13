@@ -49,9 +49,8 @@ export const setCurrentPage = currentPage => ({
   currentPage,
 });
 
-export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => (dispatch, getState) => {
-  const data = getState().experienceSearch.toJS();
-  const start = page * limit;
+export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => dispatch => {
+  const start = (page - 1) * limit;
   const query = {
     limit,
     start,
@@ -76,9 +75,7 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => (
         ...objCond,
         error: null,
         experiences: (
-          page
-            ? data.experiences.concat(result.experiences)
-            : result.experiences
+          result.experiences
         ),
         experienceCount: result.total,
         hasMore,
