@@ -10,3 +10,8 @@ export const isPreviousDisabled = currentPage =>
 export const isNextDisabled = (currentPage, totalPage) =>
   currentPage >= totalPage;
 
+export const getTotalPage = (totalCount, unit) =>
+  Math.ceil(totalCount / unit);
+
+export const getCurrentCount = (totalCount, unit, currentPage) =>
+  totalCount - ((currentPage - 1) * unit);

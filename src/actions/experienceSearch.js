@@ -22,6 +22,7 @@ export const SET_KEYWORD = 'SET_KEYWORD';
 export const SET_KEYWORDS = 'SET_KEYWORDS';
 export const SET_SORT_AND_EXPERIENCES = 'SET_SORT_AND_EXPERIENCES';
 export const SET_KEYWORDS_AND_EXPERIENCES = 'SET_KEYWORDS_AND_EXPERIENCES';
+export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 
 export const setSearchType = searchType => ({
   type: SET_SEARCH_TYPE,
@@ -41,6 +42,11 @@ export const setSortAndExperiences = payload => ({
 export const setWorkings = workings => ({
   type: SET_WORKINGS,
   workings,
+});
+
+export const setCurrentPage = currentPage => ({
+  type: SET_CURRENT_PAGE,
+  currentPage,
 });
 
 export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => (dispatch, getState) => {
@@ -98,6 +104,8 @@ export const fetchMoreExperiences = nextPage => (dispatch, getState) => {
   const searchBy = searchBySelector(state);
   const sort = sortSelector(state);
   const searchQuery = searchQuerySelector(state);
+
+  dispatch(setCurrentPage(nextPage));
   return dispatch(
     fetchExperiences(nextPage, PAGE_COUNT, sort, searchBy, searchQuery)
   );
