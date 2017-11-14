@@ -281,6 +281,8 @@ export default class TimeAndSalaryBoard extends Component {
     if (this.props.extremeStatus !== fetchingStatus.FETCHED) {
       return injectLoadingIconRow(rows);
     }
+    // here, the first {nExtremeRows} rows are extreme data
+    // we would like to highlight them with the right style
     const nExtremeRows = this.props.extremeData.size;
     const mapIndexed = R.addIndex(R.map);
     const IfExtremeRow = then => (row, i) =>
