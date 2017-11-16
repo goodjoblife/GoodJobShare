@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-import ProgressBar from 'common/ProgressBar';
 import getCallToActionLink from 'utils/callToActionUtils';
 import styles from './Banners.module.css';
+import ProgressBarWithExperienceCount from '../../../containers/ProgressBar';
 
 const Banner1 = ({ className }) => (
   <Link to={getCallToActionLink()} className={className}>
@@ -12,7 +12,7 @@ const Banner1 = ({ className }) => (
       alt="好工作評論網募資中"
       className={styles.banner1}
     />
-    <ProgressBar totalData={250} size="m" theme="gray" rootClassName={styles.progress} />
+    <ProgressBarWithExperienceCount size="m" theme="gray" rootClassName={styles.progress} />
   </Link>
 );
 Banner1.propTypes = {

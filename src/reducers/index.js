@@ -10,6 +10,7 @@ import me from './me';
 import timeAndSalaryBoard from './timeAndSalaryBoard';
 import timeAndSalaryCompany from './timeAndSalaryCompany';
 import timeAndSalaryJobTitle from './timeAndSalaryJobTitle';
+import progressBarState from './progressBarState';
 
 const rootReducer = combineReducers({
   auth,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   timeAndSalaryBoard,
   timeAndSalaryCompany,
   timeAndSalaryJobTitle,
+  progressBarState,
   routing,
 });
 
