@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes, cloneElement } from 'react';
 import R from 'ramda';
 import Loading from 'common/Loader';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import $ from 'jquery';
+import cn from 'classnames';
 
 import Select from 'common/form/Select';
 import Table from 'common/table/Table';
@@ -20,36 +21,42 @@ const pathnameMapping = {
     label: '一週平均總工時（高到低）',
     sortBy: 'week_work_time',
     order: 'descending',
+    hasExtreme: true,
   },
   'sort/work-time-asc': {
     title: '工時排行榜（由低到高）',
     label: '一週平均總工時（低到高）',
     sortBy: 'week_work_time',
     order: 'ascending',
+    hasExtreme: true,
   },
   'salary-dashboard': {
     title: '估算時薪排行榜',
     label: '估算時薪（高到低）',
     sortBy: 'estimated_hourly_wage',
     order: 'descending',
+    hasExtreme: true,
   },
   'sort/salary-asc': {
     title: '估算時薪排行榜（由低到高）',
     label: '估算時薪（低到高）',
     sortBy: 'estimated_hourly_wage',
     order: 'ascending',
+    hasExtreme: true,
   },
   latest: {
     title: '最新薪時資訊',
     label: '資料時間（新到舊）',
     sortBy: 'created_at',
     order: 'descending',
+    hasExtreme: false,
   },
   'sort/time-asc': {
     title: '最舊薪時資訊',
     label: '資料時間（舊到新）',
     sortBy: 'created_at',
     order: 'ascending',
+    hasExtreme: false,
   },
 };
 
@@ -162,6 +169,31 @@ const injectCallToActions = rows => {
   return flapMapIndexed(injectEvery(100))(rows);
 };
 
+const injectLoadingIconRow = R.prepend(
+  <tr key="extreme-loading" className={styles.extremeRow}>
+    <td colSpan="7" className={styles.noBefore}>
+      <Loading size="s" />
+    </td>
+  </tr>
+);
+
+const injectExtremeDividerAt = nthRow => onClick => R.insert(
+  nthRow, (
+    <tr key="extreme-divider" className={styles.extremeRow}>
+      <td colSpan="7" className={styles.noBefore}>
+        <div className={styles.extremeDescription}>
+          <span>
+            以上資料為前 1 % 的資料，可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
+            <button className={styles.toggle} onClick={onClick}>
+              隱藏 -
+            </button>
+          </span>
+        </div>
+      </td>
+    </tr>
+  )
+);
+
 export default class TimeAndSalaryBoard extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
@@ -169,6 +201,10 @@ export default class TimeAndSalaryBoard extends Component {
     route: PropTypes.object.isRequired,
     queryTimeAndSalary: PropTypes.func,
     switchPath: PropTypes.func,
+    queryExtremeTimeAndSalary: PropTypes.func.isRequired,
+    resetBoardExtremeData: PropTypes.func.isRequired,
+    extremeStatus: PropTypes.string,
+    extremeData: ImmutablePropTypes.list,
   }
 
   constructor(props) {
@@ -185,6 +221,7 @@ export default class TimeAndSalaryBoard extends Component {
     infoTimeModal: {
       isOpen: false,
     },
+    showExtreme: false,
   }
 
   componentDidMount() {
@@ -200,6 +237,8 @@ export default class TimeAndSalaryBoard extends Component {
     if (this.props.route.path !== nextProps.route.path) {
       const { path } = nextProps.route;
       const { sortBy, order } = pathnameMapping[path];
+      this.setState({ showExtreme: false });
+      this.props.resetBoardExtremeData();
       this.props.queryTimeAndSalary({ sortBy, order });
     }
   }
@@ -229,32 +268,83 @@ export default class TimeAndSalaryBoard extends Component {
     this.props.queryTimeAndSalary({ sortBy, order });
   }
 
+  toggleShowExtreme = () => {
+    const { showExtreme } = this.state;
+    this.setState({ showExtreme: !showExtreme });
+    this.props.queryExtremeTimeAndSalary();
+  }
+
+  decorateExtremeRows = rows => {
+    if (!this.state.showExtreme) {
+      return rows;
+    }
+    if (this.props.extremeStatus !== fetchingStatus.FETCHED) {
+      return injectLoadingIconRow(rows);
+    }
+    // here, the first {nExtremeRows} rows are extreme data
+    // we would like to highlight them with the right style
+    const nExtremeRows = this.props.extremeData.size;
+    const mapIndexed = R.addIndex(R.map);
+    const IfExtremeRow = then => (row, i) =>
+      ((i < nExtremeRows) ? then(row) : row);
+    const wearExtremeStyle = row =>
+      cloneElement(row, {
+        className: cn(row.props.className, styles.extremeRow),
+      });
+    return R.pipe(
+      mapIndexed(IfExtremeRow(wearExtremeStyle)),
+      // inject a divider here to tell extreme rows apart from other rows
+      injectExtremeDividerAt(nExtremeRows)(this.toggleShowExtreme),
+    )(rows);
+  }
+
   render() {
     const { path } = this.props.route;
-    const { title } = pathnameMapping[path];
-    const raw = this.props.data.toJS();
-    const { status, switchPath } = this.props;
+    const { title, hasExtreme } = pathnameMapping[path];
+    const { status, data, switchPath, extremeStatus, extremeData } = this.props;
+    const { showExtreme } = this.state;
+    let raw;
+    if (showExtreme && extremeStatus === fetchingStatus.FETCHED) {
+      raw = extremeData.concat(data).toJS();
+    } else {
+      raw = data.toJS();
+    }
 
     return (
       <section className={commonStyles.searchResult}>
         <h2 className={commonStyles.heading}>{title}</h2>
         <div className={commonStyles.result}>
-          <div className={commonStyles.sort}>
-            <div className={commonStyles.label}> 排序：</div>
-            <div className={commonStyles.select}>
-              <Select
-                options={selectOptions(pathnameMapping)}
-                onChange={e => switchPath(e.target.value)}
-                value={path}
-                hasNullOption={false}
-              />
+          <div className={styles.sortRow}>
+            <div className={styles.extremeDescription}>
+              {hasExtreme && (
+                <span>
+                  前 1 % 的資料可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
+                  <button className={styles.toggle} onClick={this.toggleShowExtreme}>
+                    {showExtreme ? '隱藏 -' : '展開 +'}
+                  </button>
+                </span>
+              )}
+            </div>
+            <div className={commonStyles.sort}>
+              <div className={commonStyles.label}> 排序：</div>
+              <div className={commonStyles.select}>
+                <Select
+                  options={selectOptions(pathnameMapping)}
+                  onChange={e => switchPath(e.target.value)}
+                  value={path}
+                  hasNullOption={false}
+                />
+              </div>
             </div>
           </div>
           <Table
             className={styles.latestTable}
             data={raw}
             primaryKey="_id"
-            postProcessRows={injectCallToActions}
+            postProcessRows={R.pipe(
+              this.decorateExtremeRows,
+              injectCallToActions,
+            )}
           >
             <Table.Column
               className={styles.colCompany}
