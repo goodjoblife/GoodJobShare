@@ -9,7 +9,7 @@ class ProgressBarWithExperienceCount extends Component {
   }
 
   componentDidMount() {
-    if (this.props.hasFetched === false && this.props.queryExperienceCount) {
+    if (this.props.hasFetched === false) {
       this.props.queryExperienceCount();
     }
   }
@@ -22,13 +22,11 @@ class ProgressBarWithExperienceCount extends Component {
 ProgressBarWithExperienceCount.propTypes = {
   experienceCount: PropTypes.number,
   hasFetched: PropTypes.bool,
-  queryExperienceCount: PropTypes.func,
+  queryExperienceCount: PropTypes.func.isRequired,
 };
 
 ProgressBarWithExperienceCount.defaultProps = {
-  experienceCount: 0,
   hasFetched: false,
-  queryExperienceCount: () => {},
 };
 
 export default ProgressBarWithExperienceCount;
