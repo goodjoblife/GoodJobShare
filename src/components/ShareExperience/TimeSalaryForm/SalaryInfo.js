@@ -38,12 +38,35 @@ class SalaryInfo extends React.PureComponent {
       changeValidationStatus,
     } = this.props;
 
+    const changeSalaryTypeStatus = val => {
+      changeValidationStatus(
+        SALARY_TYPE,
+        salaryTypeValidator(val) ? VALID : INVALID
+      );
+    };
+    const changeSalaryAmountStatus = val => {
+      changeValidationStatus(
+        SALARY_AMOUNT,
+        salaryAmountValidator(val) ? VALID : INVALID
+      );
+    };
+    const changeExperienceInYearStatus = val => {
+      changeValidationStatus(
+        EXPERIENCE_IN_YEAR,
+        experienceInYearValidator(val) ? VALID : INVALID
+      );
+    };
+
     const isSalaryTypeValid = salaryTypeValidator(salaryType);
     const isSalaryAmountValid = salaryAmountValidator(salaryAmount);
     const isSalarySetWarning = submitted && (!isSalaryTypeValid || !isSalaryAmountValid);
 
     const isExperienceInYearValid = experienceInYearValidator(experienceInYear);
     const isExperienceInYearWarning = submitted && !isExperienceInYearValid;
+
+    changeSalaryTypeStatus(salaryType);
+    changeSalaryAmountStatus(salaryAmount);
+    changeExperienceInYearStatus(experienceInYear);
 
     return (
       <section className={styles.formSectionSalary}>
@@ -66,10 +89,7 @@ class SalaryInfo extends React.PureComponent {
                   value={salaryType}
                   options={salaryTypeOptions}
                   onChange={e => {
-                    changeValidationStatus(
-                      SALARY_TYPE,
-                      salaryTypeValidator(e.target.value) ? VALID : INVALID
-                    );
+                    changeSalaryTypeStatus(e.target.value);
                     return handleState('salaryType')(e.target.value);
                   }}
                 />
@@ -80,10 +100,7 @@ class SalaryInfo extends React.PureComponent {
                     value={salaryAmount}
                     placeholder="22000"
                     onChange={e => {
-                      changeValidationStatus(
-                        SALARY_AMOUNT,
-                        salaryAmountValidator(e.target.value) ? VALID : INVALID
-                      );
+                      changeSalaryAmountStatus(e.target.value);
                       return handleState('salaryAmount')(e.target.value);
                     }}
                   />
@@ -114,10 +131,7 @@ class SalaryInfo extends React.PureComponent {
                   value={experienceInYear}
                   options={experienceInYearOptions2}
                   onChange={e => {
-                    changeValidationStatus(
-                      EXPERIENCE_IN_YEAR,
-                      experienceInYearValidator(e.target.value) ? VALID : INVALID
-                    );
+                    changeExperienceInYearStatus(e.target.value);
                     return handleState('experienceInYear')(e.target.value);
                   }}
                 />
