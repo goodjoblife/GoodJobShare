@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 
-import FolderUpper from '../../images/folder-upper.svg';
+import FolderUpper from '../../images/folder-upper.png';
 import styles from './FolderBanner.module.css';
 
 const FolderBanner = ({ children, rootClassName }) => (
   <div className={rootClassName}>
-    <FolderUpper className={styles['folder-svg']} />
+    <img src={FolderUpper} alt="foler-upper" />
     <div className={styles.container}>
       {children}
     </div>
