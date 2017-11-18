@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router';
 import { Section, Wrapper, Heading } from 'common/base';
-import styles from './CallToAction.module.css';
+import styles from './CallToActionBanner.module.css';
 
-const CallToAction = ({ heading, headingSize, imgSrc, buttonText, bgColor, marginTop }) => (
+const CallToActionBanner = ({ heading, headingSize, imgSrc, buttonText, bgColor, marginTop }) => (
   <Section padding bg={bgColor} marginTop={marginTop}>
     <Wrapper size="m" className={styles.container}>
       <div className={styles.image}>
@@ -19,7 +19,7 @@ const CallToAction = ({ heading, headingSize, imgSrc, buttonText, bgColor, margi
     </Wrapper>
   </Section>
 );
-CallToAction.propTypes = {
+CallToActionBanner.propTypes = {
   heading: PropTypes.string.isRequired,
   headingSize: PropTypes.string.isRequired,
   buttonText: PropTypes.string.isRequired,
@@ -27,7 +27,7 @@ CallToAction.propTypes = {
   bgColor: PropTypes.string,
   marginTop: PropTypes.bool,
 };
-CallToAction.defaultProps = {
+CallToActionBanner.defaultProps = {
   heading: '覺得小教室很有用嗎？快分享你的資訊吧！',
   headingSize: 'm',
   buttonText: '立即分享',
@@ -36,4 +36,4 @@ CallToAction.defaultProps = {
 };
 
 
-export default CallToAction;
+export default CallToActionBanner;

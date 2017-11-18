@@ -8,7 +8,7 @@ import {
   formatUrl,
 } from 'utils/helmetHelper';
 import NotFound from 'common/NotFound';
-import CallToAction from 'common/CallToAction';
+import CallToActionBanner from 'common/CallToAction/CallToActionBanner';
 import Body from './Body';
 import Footer from './Footer';
 
@@ -80,7 +80,7 @@ class LaborRightsSingle extends React.Component {
                 description={description}
                 content={content}
               />
-              <CallToAction
+              <CallToActionBanner
                 imgSrc="https://image.goodjob.life/cta-02.jpg"
                 marginTop
               />
