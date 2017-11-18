@@ -3,8 +3,8 @@ import React, { PropTypes } from 'react';
 import FolderUpper from '../../images/folder-upper.svg';
 import styles from './FolderBanner.module.css';
 
-const FolderBanner = ({ children }) => (
-  <div>
+const FolderBanner = ({ children, rootClassName }) => (
+  <div className={rootClassName}>
     <FolderUpper className={styles['folder-svg']} />
     <div className={styles.container}>
       {children}
@@ -14,10 +14,12 @@ const FolderBanner = ({ children }) => (
 
 FolderBanner.propTypes = {
   children: PropTypes.element,
+  rootClassName: PropTypes.string,
 };
 
 FolderBanner.defaultProps = {
   children: null,
+  rootClassName: '',
 };
 
 export default FolderBanner;
