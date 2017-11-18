@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Helmet from 'react-helmet';
 import { Section, Wrapper, Heading, P } from 'common/base';
+import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import CallToActionBanner from 'common/CallToAction/CallToActionBanner';
 import { Facebook, Email, Github } from 'common/icons';
 import editorStyles from 'common/Editor.module.css';
@@ -54,6 +55,9 @@ const data2017 = [
 const About = () => (
   <Section Tag="main" pageTop>
     <Helmet {...HELMET_DATA.ABOUT} />
+    <Section paddingBottom>
+      <CallToActionFolder />
+    </Section>
     <Section paddingBottom>
       <Wrapper size="m">
         <Heading size="m" marginBottomS>緣起：求職資訊不透明</Heading>
