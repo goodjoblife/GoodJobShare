@@ -79,6 +79,7 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery, sear
       };
 
       dispatch(setSortAndExperiences(payload));
+      throw error;
     });
 };
 
@@ -93,8 +94,9 @@ export const fetchWorkings = (searchBy, searchQuery) => dispatch => {
       }
       dispatch(setWorkings(result));
     })
-    .catch(() => {
+    .catch(e => {
       dispatch(setWorkings([]));
+      throw e;
     });
 };
 
@@ -110,7 +112,6 @@ const setSearchBy = searchBy => ({
 
 export const getNewSearchBy = searchBy => dispatch => {
   const url = searchBy === 'company' ? '/company_keywords' : '/job_title_keywords';
-  console.log('searchBy', searchBy);
   return fetchUtil(url)('GET')
     .then(result => {
       dispatch(setSearchBy(searchBy));
