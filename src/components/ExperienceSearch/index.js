@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
-// import InfiniteScroll from 'react-infinite-scroller';
 import { browserHistory } from 'react-router';
+import R from 'ramda';
 
 import ReactGA from 'react-ga';
 
@@ -50,8 +50,10 @@ class ExperienceSearch extends Component {
     const sort = sortBySelector(query);
     const searchBy = searchBySelector(query);
     const searchQuery = searchQuerySelector(query);
-    const searchType = searchTypeSelector(query);
     const page = pageSelector(query);
+
+    let searchType = searchTypeSelector(query);
+    searchType = R.split(',', searchType);
 
     dispatch(setSearchTypeAction(searchType));
     return dispatch(fetchExperiencesAction(page, PAGE_COUNT, sort, searchBy, searchQuery));
@@ -92,8 +94,9 @@ class ExperienceSearch extends Component {
     const sort = sortBySelector(query);
     const searchBy = searchBySelector(query);
     const searchQuery = searchQuerySelector(query);
-    const searchType = searchTypeSelector(query);
     const page = pageSelector(query);
+    let searchType = searchTypeSelector(query);
+    searchType = R.split(',', searchType);
 
     setSearchType(searchType);
 
@@ -115,8 +118,9 @@ class ExperienceSearch extends Component {
       const sort = sortBySelector(query);
       const searchBy = searchBySelector(query);
       const searchQuery = searchQuerySelector(query);
-      const searchType = searchTypeSelector(query);
       const page = pageSelector(query);
+      let searchType = searchTypeSelector(query);
+      searchType = R.split(',', searchType);
 
       setSearchType(searchType);
 
@@ -147,8 +151,9 @@ class ExperienceSearch extends Component {
     const sort = sortBySelector(query);
     const searchQuery = searchQuerySelector(query);
     const searchBy = searchBySelector(query);
-    const prevSearchType = searchTypeSelector(query);
     const page = pageSelector(query);
+    let prevSearchType = searchTypeSelector(query);
+    prevSearchType = R.split(',', prevSearchType);
 
     const nextSearchType = handleSearchType(searchType)(prevSearchType);
 
