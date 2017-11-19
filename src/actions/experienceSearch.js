@@ -64,7 +64,6 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => d
     sort: _sort,
     searchQuery,
     workings: '',
-    salary: true,
     currentPage: Number(page),
   };
 
@@ -87,7 +86,6 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => d
       const payload = {
         ...objCond,
         error,
-        salary: false,
         experiences: [],
         experienceCount: 0,
         hasMore,

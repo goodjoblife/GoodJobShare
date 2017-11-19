@@ -94,7 +94,6 @@ class ExperienceSearch extends Component {
     const searchQuery = searchQuerySelector(query);
     const searchType = searchTypeSelector(query);
     const page = pageSelector(query);
-    console.log('page', page);
 
     setSearchType(searchType);
 
@@ -189,12 +188,14 @@ class ExperienceSearch extends Component {
     const sort = sortBySelector(query);
     const searchQuery = searchQuerySelector(query);
     const page = pageSelector(query);
+    const searchType = searchTypeSelector(query);
 
     const queryString = toQsString({
       sort,
       searchBy,
       searchQuery,
       page,
+      searchType,
     });
 
     const url = `${pathname}?${queryString}`;
@@ -216,12 +217,14 @@ class ExperienceSearch extends Component {
     const sort = sortBySelector(query);
     const searchBy = searchBySelector(query);
     const page = pageSelector(query);
+    const searchType = searchTypeSelector(query);
 
     const queryString = toQsString({
       sort,
       searchBy,
       searchQuery: val,
       page,
+      searchType,
     });
 
     const url = `${pathname}?${queryString}`;
@@ -244,11 +247,14 @@ class ExperienceSearch extends Component {
 
     const searchBy = searchBySelector(query);
     const page = pageSelector(query);
+    const searchType = searchTypeSelector(query);
+
     const queryString = toQsString({
       sort,
       searchBy,
       searchQuery: '',
       page,
+      searchType,
     });
 
     const url = `${pathname}?${queryString}`;
@@ -283,12 +289,14 @@ class ExperienceSearch extends Component {
     const searchBy = searchBySelector(query);
     const searchQuery = searchQuerySelector(query);
     const sort = sortBySelector(query);
+    const searchType = searchTypeSelector(query);
 
     const queryString = toQsString({
       sort,
       searchBy,
       searchQuery,
       page: nextPage,
+      searchType,
     });
 
     const url = `${pathname}?${queryString}`;
