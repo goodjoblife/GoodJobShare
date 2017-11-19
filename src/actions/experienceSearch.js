@@ -4,17 +4,6 @@ import {
   getExperiences as getExperiencesApi,
 } from '../apis/experiencesApi';
 
-import {
-  PAGE_COUNT,
-} from '../constants/experienceSearch';
-
-import {
-  searchBySelector,
-  sortSelector,
-  searchQuerySelector,
-} from '../selectors/experienceSearchSelector';
-
-export const SET_SEARCH_TYPE = 'SET_SEARCH_TYPE';
 export const SET_SEARCH_BY = 'SET_SEARCH_BY';
 export const SET_EXPERIENCES = 'SET_EXPERIENCES';
 export const SET_WORKINGS = 'SET_WORKINGS';
@@ -24,10 +13,6 @@ export const SET_SORT_AND_EXPERIENCES = 'SET_SORT_AND_EXPERIENCES';
 export const SET_KEYWORDS_AND_EXPERIENCES = 'SET_KEYWORDS_AND_EXPERIENCES';
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 
-export const setSearchType = searchType => ({
-  type: SET_SEARCH_TYPE,
-  searchType,
-});
 
 export const setKeyword = keyword => ({
   type: SET_KEYWORD,
@@ -49,7 +34,7 @@ export const setCurrentPage = currentPage => ({
   currentPage,
 });
 
-export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => dispatch => {
+export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery, searchType) => dispatch => {
   const start = (page - 1) * limit;
   const query = {
     limit,
@@ -57,6 +42,7 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => d
     sort: _sort,
     searchBy,
     searchQuery,
+    searchType,
   };
   let hasMore = false;
 
@@ -65,6 +51,7 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => d
     searchQuery,
     workings: '',
     currentPage: Number(page),
+    searchType,
   };
 
   return getExperiencesApi(query)
@@ -95,18 +82,6 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => d
     });
 };
 
-export const fetchMoreExperiences = nextPage => (dispatch, getState) => {
-  const state = getState();
-  const searchBy = searchBySelector(state);
-  const sort = sortSelector(state);
-  const searchQuery = searchQuerySelector(state);
-
-  dispatch(setCurrentPage(nextPage));
-  return dispatch(
-    fetchExperiences(nextPage, PAGE_COUNT, sort, searchBy, searchQuery)
-  );
-};
-
 export const fetchWorkings = (searchBy, searchQuery) => dispatch => {
   const url = `/workings/search_by/${searchBy}/group_by/company?${searchBy}=${searchQuery}`;
 
@@ -135,13 +110,15 @@ const setSearchBy = searchBy => ({
 
 export const getNewSearchBy = searchBy => dispatch => {
   const url = searchBy === 'company' ? '/company_keywords' : '/job_title_keywords';
+  console.log('searchBy', searchBy);
   return fetchUtil(url)('GET')
     .then(result => {
       dispatch(setSearchBy(searchBy));
       dispatch(setKeywords(result.keywords));
     })
-    .catch(() => {
+    .catch(e => {
       dispatch(setSearchBy(searchBy));
-      dispatch(setKeyword([]));
+      dispatch(setKeywords([]));
+      throw e;
     });
 };

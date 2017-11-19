@@ -3,7 +3,6 @@ import { Map, fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 import status from '../constants/status';
 import {
-  SET_SEARCH_TYPE,
   SET_SEARCH_BY,
   SET_EXPERIENCES,
   SET_WORKINGS,
@@ -34,9 +33,6 @@ const preloadedState = Map({
 });
 
 const experienceSearch = createReducer(preloadedState, {
-  [SET_SEARCH_TYPE]: (state, action) =>
-    state.set('searchType', action.searchType),
-
   [SET_SEARCH_BY]: (state, action) =>
     state.update('searchBy', () => action.searchBy),
 
@@ -72,6 +68,7 @@ const experienceSearch = createReducer(preloadedState, {
       prevCond: action.payload.prevCond,
       prevValue: action.payload.prevValue,
       currentPage: action.payload.currentPage,
+      searchType: action.payload.searchType,
     }),
 
   [SET_KEYWORDS_AND_EXPERIENCES]: (state, action) =>

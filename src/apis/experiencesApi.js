@@ -1,4 +1,5 @@
 import qs from 'qs';
+import R from 'ramda';
 
 import fetchUtil from 'utils/fetchUtil';
 
@@ -15,6 +16,7 @@ export const getExperiences = ({
   searchBy,
   searchQuery,
   sort,
+  searchType,
 }) => {
   const queryObj = {
     start,
@@ -22,6 +24,7 @@ export const getExperiences = ({
     search_by: searchBy,
     search_query: searchQuery,
     sort,
+    type: R.join(',', searchType),
   };
   const queryString = qs.stringify(queryObj);
 

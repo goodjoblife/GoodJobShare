@@ -15,7 +15,6 @@ import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
 import {
   fetchExperiences as fetchExperiencesAction,
-  setSearchType as setSearchTypeAction,
 } from '../../actions/experienceSearch';
 import { HELMET_DATA } from '../../constants/helmetData';
 import {
@@ -55,12 +54,10 @@ class ExperienceSearch extends Component {
     let searchType = searchTypeSelector(query);
     searchType = R.split(',', searchType);
 
-    dispatch(setSearchTypeAction(searchType));
-    return dispatch(fetchExperiencesAction(page, PAGE_COUNT, sort, searchBy, searchQuery));
+    return dispatch(fetchExperiencesAction(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType));
   }
 
   static propTypes = {
-    setSearchType: PropTypes.func.isRequired,
     setKeyword: PropTypes.func.isRequired,
     fetchExperiences: PropTypes.func.isRequired,
     fetchWorkings: PropTypes.func.isRequired,
@@ -84,7 +81,6 @@ class ExperienceSearch extends Component {
   componentDidMount() {
     const {
       fetchExperiences,
-      setSearchType,
     } = this.props;
 
     const {
@@ -98,9 +94,7 @@ class ExperienceSearch extends Component {
     let searchType = searchTypeSelector(query);
     searchType = R.split(',', searchType);
 
-    setSearchType(searchType);
-
-    fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery);
+    fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType);
     this.props.getNewSearchBy(searchBy);
   }
 
@@ -108,7 +102,6 @@ class ExperienceSearch extends Component {
     if (nextProps.location.search !== this.props.location.search) {
       const {
         fetchExperiences,
-        setSearchType,
       } = nextProps;
 
       const {
@@ -122,9 +115,7 @@ class ExperienceSearch extends Component {
       let searchType = searchTypeSelector(query);
       searchType = R.split(',', searchType);
 
-      setSearchType(searchType);
-
-      fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery);
+      fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType);
     }
   }
 
@@ -374,15 +365,13 @@ class ExperienceSearch extends Component {
               {
                 (data.experiences || [])
                   .map(o => (
-                    data.searchType.includes(o.type) && (
-                      <ExperienceBlock
-                        key={o._id}
-                        to={`/experiences/${o._id}`}
-                        data={o}
-                        size="l"
-                        backable
-                      />
-                    )
+                    <ExperienceBlock
+                      key={o._id}
+                      to={`/experiences/${o._id}`}
+                      data={o}
+                      size="l"
+                      backable
+                    />
                   ))
               }
 
