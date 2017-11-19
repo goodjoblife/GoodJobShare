@@ -11,6 +11,7 @@ import {
   SET_KEYWORDS_AND_EXPERIENCES,
   SET_SORT_AND_EXPERIENCES,
   SET_CURRENT_PAGE,
+  SET_LOADING_STATUS,
 } from '../actions/experienceSearch';
 
 const preloadedState = Map({
@@ -80,7 +81,12 @@ const experienceSearch = createReducer(preloadedState, {
 
   [SET_CURRENT_PAGE]: (state, action) =>
     state.merge({
-      currentPage: action.currentPage,
+      currentPage: action.payload.currentPage,
+    }),
+
+  [SET_LOADING_STATUS]: (state, action) =>
+    state.merge({
+      loadingStatus: action.payload.loadingStatus,
     }),
 });
 

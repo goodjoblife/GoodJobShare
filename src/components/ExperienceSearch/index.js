@@ -6,7 +6,7 @@ import R from 'ramda';
 
 import ReactGA from 'react-ga';
 
-// import Loader from 'common/Loader';
+import Loader from 'common/Loader';
 import { Section, Wrapper, Heading, P } from 'common/base';
 import Columns from 'common/Columns';
 
@@ -20,6 +20,7 @@ import { HELMET_DATA } from '../../constants/helmetData';
 import {
   PAGE_COUNT,
 } from '../../constants/experienceSearch';
+import status from '../../constants/status';
 import TimeSalaryBlock from './TimeSalaryBlock';
 import Filter from './Filter';
 import { Banner1, Banner2 } from './Banners';
@@ -68,6 +69,7 @@ class ExperienceSearch extends Component {
       query: PropTypes.object,
       pathname: PropTypes.string,
     }),
+    loadingStatus: PropTypes.string,
   }
 
   constructor() {
@@ -315,6 +317,7 @@ class ExperienceSearch extends Component {
     const {
       setKeyword,
       experienceSearch,
+      loadingStatus,
     } = this.props;
     const data = experienceSearch.toJS();
 
@@ -363,7 +366,9 @@ class ExperienceSearch extends Component {
               <Banner2 />
 
               {
-                (data.experiences || [])
+                loadingStatus === status.FETCHING
+                ? <Loader size="s" />
+                : (data.experiences || [])
                   .map(o => (
                     <ExperienceBlock
                       key={o._id}
