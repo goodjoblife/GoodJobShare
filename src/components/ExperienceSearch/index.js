@@ -35,6 +35,7 @@ import {
   sortBySelector,
   searchTypeSelector,
   handleSearchType,
+  pageSelector,
   toQsString,
 } from './helper';
 import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
@@ -50,16 +51,16 @@ class ExperienceSearch extends Component {
     const searchBy = searchBySelector(query);
     const searchQuery = searchQuerySelector(query);
     const searchType = searchTypeSelector(query);
+    const page = pageSelector(query);
 
     dispatch(setSearchTypeAction(searchType));
-    return dispatch(fetchExperiencesAction(1, PAGE_COUNT, sort, searchBy, searchQuery));
+    return dispatch(fetchExperiencesAction(page, PAGE_COUNT, sort, searchBy, searchQuery));
   }
 
   static propTypes = {
     setSearchType: PropTypes.func.isRequired,
     setKeyword: PropTypes.func.isRequired,
     fetchExperiences: PropTypes.func.isRequired,
-    fetchMoreExperiences: PropTypes.func.isRequired,
     fetchWorkings: PropTypes.func.isRequired,
     getNewSearchBy: PropTypes.func.isRequired,
     experienceSearch: ImmutablePropTypes.map.isRequired,
@@ -92,10 +93,12 @@ class ExperienceSearch extends Component {
     const searchBy = searchBySelector(query);
     const searchQuery = searchQuerySelector(query);
     const searchType = searchTypeSelector(query);
+    const page = pageSelector(query);
+    console.log('page', page);
 
     setSearchType(searchType);
 
-    fetchExperiences(1, PAGE_COUNT, sort, searchBy, searchQuery);
+    fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery);
     this.props.getNewSearchBy(searchBy);
   }
 
@@ -114,10 +117,11 @@ class ExperienceSearch extends Component {
       const searchBy = searchBySelector(query);
       const searchQuery = searchQuerySelector(query);
       const searchType = searchTypeSelector(query);
+      const page = pageSelector(query);
 
       setSearchType(searchType);
 
-      fetchExperiences(1, PAGE_COUNT, sort, searchBy, searchQuery);
+      fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery);
     }
   }
 
@@ -145,10 +149,12 @@ class ExperienceSearch extends Component {
     const searchQuery = searchQuerySelector(query);
     const searchBy = searchBySelector(query);
     const prevSearchType = searchTypeSelector(query);
+    const page = pageSelector(query);
 
     const nextSearchType = handleSearchType(searchType)(prevSearchType);
 
     const queryString = toQsString({
+      page,
       sort,
       searchBy,
       searchQuery,
@@ -182,11 +188,13 @@ class ExperienceSearch extends Component {
 
     const sort = sortBySelector(query);
     const searchQuery = searchQuerySelector(query);
+    const page = pageSelector(query);
 
     const queryString = toQsString({
       sort,
       searchBy,
       searchQuery,
+      page,
     });
 
     const url = `${pathname}?${queryString}`;
@@ -207,11 +215,13 @@ class ExperienceSearch extends Component {
 
     const sort = sortBySelector(query);
     const searchBy = searchBySelector(query);
+    const page = pageSelector(query);
 
     const queryString = toQsString({
       sort,
       searchBy,
       searchQuery: val,
+      page,
     });
 
     const url = `${pathname}?${queryString}`;
@@ -233,10 +243,12 @@ class ExperienceSearch extends Component {
     } = this.props.location;
 
     const searchBy = searchBySelector(query);
+    const page = pageSelector(query);
     const queryString = toQsString({
       sort,
       searchBy,
       searchQuery: '',
+      page,
     });
 
     const url = `${pathname}?${queryString}`;
@@ -262,7 +274,26 @@ class ExperienceSearch extends Component {
       action: GA_ACTION.FETCH_MORE,
       value: nextPage,
     });
-    return this.props.fetchMoreExperiences(nextPage);
+
+    const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const searchBy = searchBySelector(query);
+    const searchQuery = searchQuerySelector(query);
+    const sort = sortBySelector(query);
+
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery,
+      page: nextPage,
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    browserHistory.push(url);
   }
 
   renderHelmet = () => {

@@ -17,9 +17,18 @@ export const toQsString = R.compose(
   renameObject,
 );
 
-const qsSelector = (key, defaultValue) => R.pathOr(defaultValue, [
-  key,
-]);
+const wrapDefaultTo = defaultValue => value => {
+  if (value === '') {
+    return defaultValue;
+  }
+
+  return R.defaultTo(defaultValue)(value);
+};
+
+const qsSelector = (key, defaultValue) => R.compose(
+  wrapDefaultTo(defaultValue),
+  R.prop(key),
+);
 
 export const searchQuerySelector = qsSelector('q', '');
 export const searchBySelector = qsSelector('s_by', 'job_title');

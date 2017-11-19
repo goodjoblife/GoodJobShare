@@ -71,6 +71,7 @@ const experienceSearch = createReducer(preloadedState, {
       hasMore: action.payload.hasMore,
       prevCond: action.payload.prevCond,
       prevValue: action.payload.prevValue,
+      currentPage: action.payload.currentPage,
     }),
 
   [SET_KEYWORDS_AND_EXPERIENCES]: (state, action) =>

@@ -65,6 +65,7 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => d
     searchQuery,
     workings: '',
     salary: true,
+    currentPage: Number(page),
   };
 
   return getExperiencesApi(query)

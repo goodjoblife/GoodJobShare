@@ -14,4 +14,8 @@ export const getTotalPage = (totalCount, unit) =>
   Math.ceil(totalCount / unit);
 
 export const getCurrentCount = (totalCount, unit, currentPage) =>
-  totalCount - ((currentPage - 1) * unit);
+  (
+    (currentPage * unit) < totalCount
+      ? unit
+      : totalCount - ((currentPage - 1) * unit)
+  );
