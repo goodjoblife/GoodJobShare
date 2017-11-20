@@ -2,13 +2,14 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Loader from 'common/Loader';
+import { Section } from 'common/base';
 import {
   formatTitle,
   formatCanonicalPath,
   formatUrl,
 } from 'utils/helmetHelper';
 import NotFound from 'common/NotFound';
-import CallToAction from 'common/CallToAction';
+import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import Body from './Body';
 import Footer from './Footer';
 
@@ -80,10 +81,9 @@ class LaborRightsSingle extends React.Component {
                 description={description}
                 content={content}
               />
-              <CallToAction
-                imgSrc="https://image.goodjob.life/cta-02.jpg"
-                marginTop
-              />
+              <Section marginTop>
+                <CallToActionFolder />
+              </Section>
               <Footer
                 id={id}
                 prev={this.props.prev}

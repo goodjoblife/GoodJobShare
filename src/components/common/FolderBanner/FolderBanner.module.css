@@ -1,0 +1,12 @@
+$primary-color: #fcd406;
+
+.folder-svg {
+  width: 100%;
+  height: auto;
+}
+
+.container {
+  border: 1px solid $primary-color;
+  border-radius: 5px;
+  background-color: #FFFFFF;
+}
