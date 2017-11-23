@@ -30,13 +30,14 @@ import Pagination from './Pagination';
 import getScale from '../../utils/numberUtils';
 
 import {
-  searchQuerySelector,
-  searchBySelector,
-  sortBySelector,
-  searchTypeSelector,
+  // searchQuerySelector,
+  // searchBySelector,
+  // sortBySelector,
+  // searchTypeSelector,
   handleSearchType,
-  pageSelector,
+  // pageSelector,
   toQsString,
+  querySelector,
 } from './helper';
 import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
 
@@ -47,12 +48,23 @@ const SORT = {
 
 class ExperienceSearch extends Component {
   static fetchData({ query, store: { dispatch } }) {
-    const sort = sortBySelector(query);
-    const searchBy = searchBySelector(query);
-    const searchQuery = searchQuerySelector(query);
-    const page = pageSelector(query);
+    // const sort = sortBySelector(query);
+    // const searchBy = searchBySelector(query);
+    // const searchQuery = searchQuerySelector(query);
+    // const page = pageSelector(query);
 
-    let searchType = searchTypeSelector(query);
+    // let searchType = searchTypeSelector(query);
+
+    const {
+      searchBy,
+      searchQuery,
+      sortBy: sort,
+      page,
+    } = querySelector(query);
+
+    let {
+      searchType,
+    } = querySelector(query);
     searchType = R.split(',', searchType);
 
     return dispatch(fetchExperiencesAction(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType));
@@ -89,11 +101,22 @@ class ExperienceSearch extends Component {
       query,
     } = this.props.location;
 
-    const sort = sortBySelector(query);
-    const searchBy = searchBySelector(query);
-    const searchQuery = searchQuerySelector(query);
-    const page = pageSelector(query);
-    let searchType = searchTypeSelector(query);
+    // const sort = sortBySelector(query);
+    // const searchBy = searchBySelector(query);
+    // const searchQuery = searchQuerySelector(query);
+    // const page = pageSelector(query);
+    // let searchType = searchTypeSelector(query);
+
+    const {
+      searchBy,
+      searchQuery,
+      sortBy: sort,
+      page,
+    } = querySelector(query);
+
+    let {
+      searchType,
+    } = querySelector(query);
     searchType = R.split(',', searchType);
 
     fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType);
@@ -110,11 +133,20 @@ class ExperienceSearch extends Component {
         query,
       } = nextProps.location;
 
-      const sort = sortBySelector(query);
-      const searchBy = searchBySelector(query);
-      const searchQuery = searchQuerySelector(query);
-      const page = pageSelector(query);
-      let searchType = searchTypeSelector(query);
+      // const sort = sortBySelector(query);
+      // const searchBy = searchBySelector(query);
+      // const searchQuery = searchQuerySelector(query);
+      // const page = pageSelector(query);
+      const {
+        searchBy,
+        searchQuery,
+        sortBy: sort,
+        page,
+      } = querySelector(query);
+
+      let {
+        searchType,
+      } = querySelector(query);
       searchType = R.split(',', searchType);
 
       fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType);
@@ -141,11 +173,23 @@ class ExperienceSearch extends Component {
       query,
     } = this.props.location;
 
-    const sort = sortBySelector(query);
-    const searchQuery = searchQuerySelector(query);
-    const searchBy = searchBySelector(query);
+    // const sort = sortBySelector(query);
+    // const searchQuery = searchQuerySelector(query);
+    // const searchBy = searchBySelector(query);
     // const page = pageSelector(query);
-    let prevSearchType = searchTypeSelector(query);
+    // let prevSearchType = searchTypeSelector(query);
+
+
+    const {
+      searchBy,
+      searchQuery,
+      sortBy: sort,
+    } = querySelector(query);
+
+    let {
+      searchType: prevSearchType,
+    } = querySelector(query);
+
     prevSearchType = R.split(',', prevSearchType);
 
     const nextSearchType = handleSearchType(searchType)(prevSearchType);
@@ -183,10 +227,17 @@ class ExperienceSearch extends Component {
       query,
     } = this.props.location;
 
-    const sort = sortBySelector(query);
-    const searchQuery = searchQuerySelector(query);
+    // const sort = sortBySelector(query);
+    // const searchQuery = searchQuerySelector(query);
     // const page = pageSelector(query);
-    const searchType = searchTypeSelector(query);
+    // const searchType = searchTypeSelector(query);
+
+
+    const {
+      searchQuery,
+      sortBy: sort,
+      searchType,
+    } = querySelector(query);
 
     const queryString = toQsString({
       sort,
@@ -212,10 +263,17 @@ class ExperienceSearch extends Component {
       query,
     } = this.props.location;
 
-    const sort = sortBySelector(query);
-    const searchBy = searchBySelector(query);
+    // const sort = sortBySelector(query);
+    // const searchBy = searchBySelector(query);
     // const page = pageSelector(query);
-    const searchType = searchTypeSelector(query);
+    // const searchType = searchTypeSelector(query);
+
+
+    const {
+      searchBy,
+      sortBy: sort,
+      searchType,
+    } = querySelector(query);
 
     const queryString = toQsString({
       sort,
@@ -243,9 +301,15 @@ class ExperienceSearch extends Component {
       query,
     } = this.props.location;
 
-    const searchBy = searchBySelector(query);
+    // const searchBy = searchBySelector(query);
     // const page = pageSelector(query);
-    const searchType = searchTypeSelector(query);
+    // const searchType = searchTypeSelector(query);
+
+
+    const {
+      searchBy,
+      searchType,
+    } = querySelector(query);
 
     const queryString = toQsString({
       sort,
@@ -284,10 +348,12 @@ class ExperienceSearch extends Component {
       query,
     } = this.props.location;
 
-    const searchBy = searchBySelector(query);
-    const searchQuery = searchQuerySelector(query);
-    const sort = sortBySelector(query);
-    const searchType = searchTypeSelector(query);
+    const {
+      searchBy,
+      searchQuery,
+      sortBy: sort,
+      searchType,
+    } = querySelector(query);
 
     const queryString = toQsString({
       sort,

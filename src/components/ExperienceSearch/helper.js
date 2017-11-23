@@ -38,6 +38,24 @@ export const searchTypeSelector = R.compose(
   qsSelector('type', 'interview,work'),
 );
 
+export const querySelector = query => ({
+  get sortBy() {
+    return sortBySelector(query);
+  },
+  get searchQuery() {
+    return searchQuerySelector(query);
+  },
+  get searchBy() {
+    return searchBySelector(query);
+  },
+  get page() {
+    return pageSelector(query);
+  },
+  get searchType() {
+    return searchTypeSelector(query);
+  },
+});
+
 export const handleSearchType = searchType => R.compose(
   R.join(','),
   R.ifElse(
