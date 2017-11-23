@@ -24,6 +24,8 @@ const Pagination = ({
 }) => {
   const totalPage = getTotalPage(totalCount, unit);
   const currentCount = getCurrentCount(totalCount, unit, currentPage);
+
+  if (totalCount === 0) return null;
   return (
     <div className={styles.pagination}>
       <P size="m" className={styles.info}>

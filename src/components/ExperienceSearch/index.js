@@ -144,14 +144,14 @@ class ExperienceSearch extends Component {
     const sort = sortBySelector(query);
     const searchQuery = searchQuerySelector(query);
     const searchBy = searchBySelector(query);
-    const page = pageSelector(query);
+    // const page = pageSelector(query);
     let prevSearchType = searchTypeSelector(query);
     prevSearchType = R.split(',', prevSearchType);
 
     const nextSearchType = handleSearchType(searchType)(prevSearchType);
 
     const queryString = toQsString({
-      page,
+      page: 1,
       sort,
       searchBy,
       searchQuery,
@@ -185,14 +185,14 @@ class ExperienceSearch extends Component {
 
     const sort = sortBySelector(query);
     const searchQuery = searchQuerySelector(query);
-    const page = pageSelector(query);
+    // const page = pageSelector(query);
     const searchType = searchTypeSelector(query);
 
     const queryString = toQsString({
       sort,
       searchBy,
       searchQuery,
-      page,
+      page: 1,
       searchType,
     });
 
@@ -214,14 +214,14 @@ class ExperienceSearch extends Component {
 
     const sort = sortBySelector(query);
     const searchBy = searchBySelector(query);
-    const page = pageSelector(query);
+    // const page = pageSelector(query);
     const searchType = searchTypeSelector(query);
 
     const queryString = toQsString({
       sort,
       searchBy,
       searchQuery: val,
-      page,
+      page: 1,
       searchType,
     });
 
@@ -244,14 +244,14 @@ class ExperienceSearch extends Component {
     } = this.props.location;
 
     const searchBy = searchBySelector(query);
-    const page = pageSelector(query);
+    // const page = pageSelector(query);
     const searchType = searchTypeSelector(query);
 
     const queryString = toQsString({
       sort,
       searchBy,
       searchQuery: '',
-      page,
+      page: 1,
       searchType,
     });
 
@@ -350,9 +350,15 @@ class ExperienceSearch extends Component {
               {(data.searchQuery && data.experienceCount > 0) &&
                 <div className={styles.searchResult}>
                   <Heading size="m" bold>「{data.searchQuery}」的面試經驗、工作經驗</Heading>
-                  <div className={styles.searchResultNum}>1-20 篇 (共&nbsp;{data.experienceCount}&nbsp;篇)</div>
                 </div>
               }
+
+              <Pagination
+                totalCount={data.experienceCount}
+                unit={PAGE_COUNT}
+                currentPage={data.currentPage}
+                onSelect={this.fetchMoreExperiences}
+              />
 
               {(data.searchQuery && data.experienceCount === 0) &&
                 <P

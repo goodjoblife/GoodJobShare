@@ -2,7 +2,8 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 24px;
+  margin-top: 12px;
+  margin-bottom: 12px;
 
   @media (max-width: 550px) {
     flex-direction: column;
