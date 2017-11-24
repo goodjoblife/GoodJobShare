@@ -48,13 +48,6 @@ const SORT = {
 
 class ExperienceSearch extends Component {
   static fetchData({ query, store: { dispatch } }) {
-    // const sort = sortBySelector(query);
-    // const searchBy = searchBySelector(query);
-    // const searchQuery = searchQuerySelector(query);
-    // const page = pageSelector(query);
-
-    // let searchType = searchTypeSelector(query);
-
     const {
       searchBy,
       searchQuery,
@@ -101,12 +94,6 @@ class ExperienceSearch extends Component {
       query,
     } = this.props.location;
 
-    // const sort = sortBySelector(query);
-    // const searchBy = searchBySelector(query);
-    // const searchQuery = searchQuerySelector(query);
-    // const page = pageSelector(query);
-    // let searchType = searchTypeSelector(query);
-
     const {
       searchBy,
       searchQuery,
@@ -133,10 +120,6 @@ class ExperienceSearch extends Component {
         query,
       } = nextProps.location;
 
-      // const sort = sortBySelector(query);
-      // const searchBy = searchBySelector(query);
-      // const searchQuery = searchQuerySelector(query);
-      // const page = pageSelector(query);
       const {
         searchBy,
         searchQuery,
@@ -172,13 +155,6 @@ class ExperienceSearch extends Component {
       pathname,
       query,
     } = this.props.location;
-
-    // const sort = sortBySelector(query);
-    // const searchQuery = searchQuerySelector(query);
-    // const searchBy = searchBySelector(query);
-    // const page = pageSelector(query);
-    // let prevSearchType = searchTypeSelector(query);
-
 
     const {
       searchBy,
@@ -227,12 +203,6 @@ class ExperienceSearch extends Component {
       query,
     } = this.props.location;
 
-    // const sort = sortBySelector(query);
-    // const searchQuery = searchQuerySelector(query);
-    // const page = pageSelector(query);
-    // const searchType = searchTypeSelector(query);
-
-
     const {
       searchQuery,
       sortBy: sort,
@@ -262,12 +232,6 @@ class ExperienceSearch extends Component {
       pathname,
       query,
     } = this.props.location;
-
-    // const sort = sortBySelector(query);
-    // const searchBy = searchBySelector(query);
-    // const page = pageSelector(query);
-    // const searchType = searchTypeSelector(query);
-
 
     const {
       searchBy,
@@ -300,11 +264,6 @@ class ExperienceSearch extends Component {
       pathname,
       query,
     } = this.props.location;
-
-    // const searchBy = searchBySelector(query);
-    // const page = pageSelector(query);
-    // const searchType = searchTypeSelector(query);
-
 
     const {
       searchBy,
