@@ -1,7 +1,3 @@
-const autoprefixer = require('autoprefixer');
-const nested = require('postcss-nested');
-const mixin = require('postcss-mixins');
-const simpleVars = require('postcss-simple-vars');
 const webpack = require('webpack');
 
 const {
@@ -12,10 +8,12 @@ const {
 
 module.exports = {
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loaders: ['babel'],
+        use: [
+          'babel-loader',
+        ],
         exclude: /node_modules/,
       },
       {
@@ -24,11 +22,13 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        loader: 'babel!svg-react',
+        use: [
+          'babel-loader',
+          'svg-react-loader',
+        ],
       },
     ],
   },
-
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
@@ -37,15 +37,6 @@ module.exports = {
         FACEBOOK_APP_ID: JSON.stringify(FACEBOOK_APP_ID),
       },
     }),
-  ],
-
-  postcss: [
-    autoprefixer({
-      browsers: ['last 2 version', 'ie >= 10'],
-    }),
-    mixin,
-    simpleVars,
-    nested,
   ],
   resolve: {
     alias: {
