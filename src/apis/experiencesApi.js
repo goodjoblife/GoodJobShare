@@ -16,7 +16,7 @@ export const getExperiences = ({
   searchBy,
   searchQuery,
   sort,
-  searchType,
+  searchType = ['interview', 'work'],
 }) => {
   const queryObj = {
     start,
