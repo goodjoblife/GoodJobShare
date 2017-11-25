@@ -4,17 +4,9 @@ import {
   getExperiences as getExperiencesApi,
 } from '../apis/experiencesApi';
 
-import {
-  PAGE_COUNT,
-} from '../constants/experienceSearch';
+import status from '../constants/status';
 
-import {
-  searchBySelector,
-  sortSelector,
-  searchQuerySelector,
-} from '../selectors/experienceSearchSelector';
 
-export const SET_SEARCH_TYPE = 'SET_SEARCH_TYPE';
 export const SET_SEARCH_BY = 'SET_SEARCH_BY';
 export const SET_EXPERIENCES = 'SET_EXPERIENCES';
 export const SET_WORKINGS = 'SET_WORKINGS';
@@ -22,11 +14,8 @@ export const SET_KEYWORD = 'SET_KEYWORD';
 export const SET_KEYWORDS = 'SET_KEYWORDS';
 export const SET_SORT_AND_EXPERIENCES = 'SET_SORT_AND_EXPERIENCES';
 export const SET_KEYWORDS_AND_EXPERIENCES = 'SET_KEYWORDS_AND_EXPERIENCES';
-
-export const setSearchType = searchType => ({
-  type: SET_SEARCH_TYPE,
-  searchType,
-});
+export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+export const SET_LOADING_STATUS = 'SET_LOADING_STATUS';
 
 export const setKeyword = keyword => ({
   type: SET_KEYWORD,
@@ -43,15 +32,29 @@ export const setWorkings = workings => ({
   workings,
 });
 
-export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => (dispatch, getState) => {
-  const data = getState().experienceSearch.toJS();
-  const start = page * limit;
+export const setCurrentPage = currentPage => ({
+  type: SET_CURRENT_PAGE,
+  payload: {
+    currentPage,
+  },
+});
+
+const setLoadintStatus = loadingStatus => ({
+  type: SET_LOADING_STATUS,
+  payload: {
+    loadingStatus,
+  },
+});
+
+export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery, searchType) => dispatch => {
+  const start = (page - 1) * limit;
   const query = {
     limit,
     start,
     sort: _sort,
     searchBy,
     searchQuery,
+    searchType,
   };
   let hasMore = false;
 
@@ -59,8 +62,11 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => (
     sort: _sort,
     searchQuery,
     workings: '',
-    salary: true,
+    currentPage: Number(page),
+    searchType,
   };
+
+  dispatch(setLoadintStatus(status.FETCHING));
 
   return getExperiencesApi(query)
     .then(result => {
@@ -70,12 +76,11 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => (
         ...objCond,
         error: null,
         experiences: (
-          page
-            ? data.experiences.concat(result.experiences)
-            : result.experiences
+          result.experiences
         ),
         experienceCount: result.total,
         hasMore,
+        loadingStatus: status.FETCHED,
       };
       dispatch(setSortAndExperiences(payload));
     })
@@ -83,24 +88,15 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery) => (
       const payload = {
         ...objCond,
         error,
-        salary: false,
         experiences: [],
         experienceCount: 0,
         hasMore,
+        loadingStatus: status.ERROR,
       };
 
       dispatch(setSortAndExperiences(payload));
+      throw error;
     });
-};
-
-export const fetchMoreExperiences = nextPage => (dispatch, getState) => {
-  const state = getState();
-  const searchBy = searchBySelector(state);
-  const sort = sortSelector(state);
-  const searchQuery = searchQuerySelector(state);
-  return dispatch(
-    fetchExperiences(nextPage, PAGE_COUNT, sort, searchBy, searchQuery)
-  );
 };
 
 export const fetchWorkings = (searchBy, searchQuery) => dispatch => {
@@ -114,8 +110,9 @@ export const fetchWorkings = (searchBy, searchQuery) => dispatch => {
       }
       dispatch(setWorkings(result));
     })
-    .catch(() => {
+    .catch(e => {
       dispatch(setWorkings([]));
+      throw e;
     });
 };
 
@@ -136,8 +133,9 @@ export const getNewSearchBy = searchBy => dispatch => {
       dispatch(setSearchBy(searchBy));
       dispatch(setKeywords(result.keywords));
     })
-    .catch(() => {
+    .catch(e => {
       dispatch(setSearchBy(searchBy));
-      dispatch(setKeyword([]));
+      dispatch(setKeywords([]));
+      throw e;
     });
 };

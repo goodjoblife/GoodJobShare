@@ -9,6 +9,7 @@ import {
   searchBySelector,
   sortSelector,
   searchQuerySelector,
+  loadingStatusSelector,
 } from '../selectors/experienceSearchSelector';
 
 const mapStateToProps = createStructuredSelector({
@@ -16,6 +17,7 @@ const mapStateToProps = createStructuredSelector({
   searchBy: searchBySelector,
   searchQuery: searchQuerySelector,
   sort: sortSelector,
+  loadingStatus: loadingStatusSelector,
 });
 
 const mapDispatchToProps = dispatch =>

@@ -1,41 +1,43 @@
 import React, { Component, PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
-import InfiniteScroll from 'react-infinite-scroller';
 import { browserHistory } from 'react-router';
+import R from 'ramda';
 
 import ReactGA from 'react-ga';
 
 import Loader from 'common/Loader';
 import { Section, Wrapper, Heading, P } from 'common/base';
 import Columns from 'common/Columns';
-import Button from 'common/button/Button';
-import { ArrowLeft } from 'common/icons';
 
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
 import {
   fetchExperiences as fetchExperiencesAction,
-  setSearchType as setSearchTypeAction,
 } from '../../actions/experienceSearch';
 import { HELMET_DATA } from '../../constants/helmetData';
 import {
   PAGE_COUNT,
 } from '../../constants/experienceSearch';
+import status from '../../constants/status';
 import TimeSalaryBlock from './TimeSalaryBlock';
 import Filter from './Filter';
 import { Banner1, Banner2 } from './Banners';
 
+import Pagination from './Pagination';
+
 import getScale from '../../utils/numberUtils';
 
 import {
-  searchQuerySelector,
-  searchBySelector,
-  sortBySelector,
-  searchTypeSelector,
+  // searchQuerySelector,
+  // searchBySelector,
+  // sortBySelector,
+  // searchTypeSelector,
   handleSearchType,
+  // pageSelector,
   toQsString,
+  querySelector,
 } from './helper';
 import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
 
@@ -46,20 +48,24 @@ const SORT = {
 
 class ExperienceSearch extends Component {
   static fetchData({ query, store: { dispatch } }) {
-    const sort = sortBySelector(query);
-    const searchBy = searchBySelector(query);
-    const searchQuery = searchQuerySelector(query);
-    const searchType = searchTypeSelector(query);
+    const {
+      searchBy,
+      searchQuery,
+      sortBy: sort,
+      page,
+    } = querySelector(query);
 
-    dispatch(setSearchTypeAction(searchType));
-    return dispatch(fetchExperiencesAction(0, PAGE_COUNT, sort, searchBy, searchQuery));
+    let {
+      searchType,
+    } = querySelector(query);
+    searchType = R.split(',', searchType);
+
+    return dispatch(fetchExperiencesAction(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType));
   }
 
   static propTypes = {
-    setSearchType: PropTypes.func.isRequired,
     setKeyword: PropTypes.func.isRequired,
     fetchExperiences: PropTypes.func.isRequired,
-    fetchMoreExperiences: PropTypes.func.isRequired,
     fetchWorkings: PropTypes.func.isRequired,
     getNewSearchBy: PropTypes.func.isRequired,
     experienceSearch: ImmutablePropTypes.map.isRequired,
@@ -68,6 +74,7 @@ class ExperienceSearch extends Component {
       query: PropTypes.object,
       pathname: PropTypes.string,
     }),
+    loadingStatus: PropTypes.string,
   }
 
   constructor() {
@@ -81,21 +88,25 @@ class ExperienceSearch extends Component {
   componentDidMount() {
     const {
       fetchExperiences,
-      setSearchType,
     } = this.props;
 
     const {
       query,
     } = this.props.location;
 
-    const sort = sortBySelector(query);
-    const searchBy = searchBySelector(query);
-    const searchQuery = searchQuerySelector(query);
-    const searchType = searchTypeSelector(query);
+    const {
+      searchBy,
+      searchQuery,
+      sortBy: sort,
+      page,
+    } = querySelector(query);
 
-    setSearchType(searchType);
+    let {
+      searchType,
+    } = querySelector(query);
+    searchType = R.split(',', searchType);
 
-    fetchExperiences(0, PAGE_COUNT, sort, searchBy, searchQuery);
+    fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType);
     this.props.getNewSearchBy(searchBy);
   }
 
@@ -103,21 +114,25 @@ class ExperienceSearch extends Component {
     if (nextProps.location.search !== this.props.location.search) {
       const {
         fetchExperiences,
-        setSearchType,
       } = nextProps;
 
       const {
         query,
       } = nextProps.location;
 
-      const sort = sortBySelector(query);
-      const searchBy = searchBySelector(query);
-      const searchQuery = searchQuerySelector(query);
-      const searchType = searchTypeSelector(query);
+      const {
+        searchBy,
+        searchQuery,
+        sortBy: sort,
+        page,
+      } = querySelector(query);
 
-      setSearchType(searchType);
+      let {
+        searchType,
+      } = querySelector(query);
+      searchType = R.split(',', searchType);
 
-      fetchExperiences(0, PAGE_COUNT, sort, searchBy, searchQuery);
+      fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType);
     }
   }
 
@@ -141,14 +156,22 @@ class ExperienceSearch extends Component {
       query,
     } = this.props.location;
 
-    const sort = sortBySelector(query);
-    const searchQuery = searchQuerySelector(query);
-    const searchBy = searchBySelector(query);
-    const prevSearchType = searchTypeSelector(query);
+    const {
+      searchBy,
+      searchQuery,
+      sortBy: sort,
+    } = querySelector(query);
+
+    let {
+      searchType: prevSearchType,
+    } = querySelector(query);
+
+    prevSearchType = R.split(',', prevSearchType);
 
     const nextSearchType = handleSearchType(searchType)(prevSearchType);
 
     const queryString = toQsString({
+      page: 1,
       sort,
       searchBy,
       searchQuery,
@@ -180,13 +203,18 @@ class ExperienceSearch extends Component {
       query,
     } = this.props.location;
 
-    const sort = sortBySelector(query);
-    const searchQuery = searchQuerySelector(query);
+    const {
+      searchQuery,
+      sortBy: sort,
+      searchType,
+    } = querySelector(query);
 
     const queryString = toQsString({
       sort,
       searchBy,
       searchQuery,
+      page: 1,
+      searchType,
     });
 
     const url = `${pathname}?${queryString}`;
@@ -205,13 +233,18 @@ class ExperienceSearch extends Component {
       query,
     } = this.props.location;
 
-    const sort = sortBySelector(query);
-    const searchBy = searchBySelector(query);
+    const {
+      searchBy,
+      sortBy: sort,
+      searchType,
+    } = querySelector(query);
 
     const queryString = toQsString({
       sort,
       searchBy,
       searchQuery: val,
+      page: 1,
+      searchType,
     });
 
     const url = `${pathname}?${queryString}`;
@@ -232,11 +265,17 @@ class ExperienceSearch extends Component {
       query,
     } = this.props.location;
 
-    const searchBy = searchBySelector(query);
+    const {
+      searchBy,
+      searchType,
+    } = querySelector(query);
+
     const queryString = toQsString({
       sort,
       searchBy,
       searchQuery: '',
+      page: 1,
+      searchType,
     });
 
     const url = `${pathname}?${queryString}`;
@@ -262,7 +301,30 @@ class ExperienceSearch extends Component {
       action: GA_ACTION.FETCH_MORE,
       value: nextPage,
     });
-    this.props.fetchMoreExperiences(nextPage);
+
+    const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const {
+      searchBy,
+      searchQuery,
+      sortBy: sort,
+      searchType,
+    } = querySelector(query);
+
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery,
+      page: nextPage,
+      searchType,
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    browserHistory.push(url);
   }
 
   renderHelmet = () => {
@@ -280,6 +342,7 @@ class ExperienceSearch extends Component {
     const {
       setKeyword,
       experienceSearch,
+      loadingStatus,
     } = this.props;
     const data = experienceSearch.toJS();
 
@@ -312,9 +375,15 @@ class ExperienceSearch extends Component {
               {(data.searchQuery && data.experienceCount > 0) &&
                 <div className={styles.searchResult}>
                   <Heading size="m" bold>「{data.searchQuery}」的面試經驗、工作經驗</Heading>
-                  <div className={styles.searchResultNum}>1-20 篇 (共&nbsp;{data.experienceCount}&nbsp;篇)</div>
                 </div>
               }
+
+              <Pagination
+                totalCount={data.experienceCount}
+                unit={PAGE_COUNT}
+                currentPage={data.currentPage}
+                onSelect={this.fetchMoreExperiences}
+              />
 
               {(data.searchQuery && data.experienceCount === 0) &&
                 <P
@@ -327,39 +396,27 @@ class ExperienceSearch extends Component {
 
               <Banner2 />
 
-              <InfiniteScroll
-                pageStart={0} hasMore={data.hasMore}
-                loadMore={nextPage => {
-                  if (data.hasMore) {
-                    this.fetchMoreExperiences(nextPage);
-                  }
-                }}
-                loader={<Loader size="s" />}
-              >
-                {
-                  (data.experiences || [])
-                    .map(o => (
-                      data.searchType.includes(o.type) && (
-                        <ExperienceBlock
-                          key={o._id}
-                          to={`/experiences/${o._id}`}
-                          data={o}
-                          size="l"
-                          backable
-                        />
-                      )
-                    ))
-                }
-              </InfiniteScroll>
+              {
+                loadingStatus === status.FETCHING
+                ? <Loader size="s" />
+                : (data.experiences || [])
+                  .map(o => (
+                    <ExperienceBlock
+                      key={o._id}
+                      to={`/experiences/${o._id}`}
+                      data={o}
+                      size="l"
+                      backable
+                    />
+                  ))
+              }
 
-              <div className={styles.pagination}>
-                <P size="m" className={styles.info}>1-20 篇 (共 93 篇)</P>
-                <div>
-                  <Button btnStyle="firstPage">第一頁</Button>
-                  <Button btnStyle="page"><ArrowLeft />前一頁</Button>
-                  <Button btnStyle="page" disabled>下一頁<ArrowLeft style={{ transform: 'scaleX(-1)' }} /></Button>
-                </div>
-              </div>
+              <Pagination
+                totalCount={data.experienceCount}
+                unit={PAGE_COUNT}
+                currentPage={data.currentPage}
+                onSelect={this.fetchMoreExperiences}
+              />
 
               {(data.searchQuery && data.workings.length > 0) &&
                 <div>

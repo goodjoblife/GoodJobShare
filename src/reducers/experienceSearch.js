@@ -3,7 +3,6 @@ import { Map, fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 import status from '../constants/status';
 import {
-  SET_SEARCH_TYPE,
   SET_SEARCH_BY,
   SET_EXPERIENCES,
   SET_WORKINGS,
@@ -11,6 +10,8 @@ import {
   SET_KEYWORDS,
   SET_KEYWORDS_AND_EXPERIENCES,
   SET_SORT_AND_EXPERIENCES,
+  SET_CURRENT_PAGE,
+  SET_LOADING_STATUS,
 } from '../actions/experienceSearch';
 
 const preloadedState = Map({
@@ -25,7 +26,7 @@ const preloadedState = Map({
   experienceCount: 0,
   prevCond: 'sort',
   preValue: '',
-  prevPage: 0,
+  currentPage: 1,
   hasMore: false,
   workings: [],
   loadingStatus: status.UNFETCHED,
@@ -33,9 +34,6 @@ const preloadedState = Map({
 });
 
 const experienceSearch = createReducer(preloadedState, {
-  [SET_SEARCH_TYPE]: (state, action) =>
-    state.set('searchType', action.searchType),
-
   [SET_SEARCH_BY]: (state, action) =>
     state.update('searchBy', () => action.searchBy),
 
@@ -70,6 +68,8 @@ const experienceSearch = createReducer(preloadedState, {
       hasMore: action.payload.hasMore,
       prevCond: action.payload.prevCond,
       prevValue: action.payload.prevValue,
+      currentPage: action.payload.currentPage,
+      searchType: action.payload.searchType,
     }),
 
   [SET_KEYWORDS_AND_EXPERIENCES]: (state, action) =>
@@ -77,6 +77,16 @@ const experienceSearch = createReducer(preloadedState, {
       keyword: fromJS(action.keywords || []),
       experienceCount: action.experienceCount,
       experiences: fromJS(action.experiences || []),
+    }),
+
+  [SET_CURRENT_PAGE]: (state, action) =>
+    state.merge({
+      currentPage: action.payload.currentPage,
+    }),
+
+  [SET_LOADING_STATUS]: (state, action) =>
+    state.merge({
+      loadingStatus: action.payload.loadingStatus,
     }),
 });
 
