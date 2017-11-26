@@ -47,8 +47,6 @@ export default (app, webpackIsomorphicTools) => {
       }
 
       function getReduxPromise() {
-        const { query, params } = renderProps;
-
         function resolveComponent() {
           const component = renderProps.components[renderProps.components.length - 1];
           if (component && component.WrappedComponent) {
@@ -60,7 +58,8 @@ export default (app, webpackIsomorphicTools) => {
         const component = resolveComponent();
 
         if (component && component.fetchData) {
-          return component.fetchData({ query, params, store, history });
+          // expect renderProps to have routes, params, location, components
+          return component.fetchData({ ...renderProps, store, history });
         }
 
         return Promise.resolve();
