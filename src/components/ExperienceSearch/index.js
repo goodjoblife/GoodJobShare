@@ -3,6 +3,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import { browserHistory } from 'react-router';
 import R from 'ramda';
+import qs from 'qs';
 
 import ReactGA from 'react-ga';
 
@@ -145,6 +146,27 @@ class ExperienceSearch extends Component {
 
       fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType);
     }
+  }
+
+  getCanonicalUrl = () => {
+    const {
+      searchType,
+      searchQuery,
+      searchBy,
+      sortBy,
+      page,
+    } = querySelector(this.props.location.query);
+
+    const params = {
+      type: searchType || 'interview,work',
+      q: searchQuery || '',
+      s_by: searchBy || 'job_title',
+      sort: sortBy || 'created_at',
+      p: page || 1,
+    };
+    const str = qs.stringify(params, { sort: (a, b) => a.localeCompare(b) });
+    const url = formatCanonicalPath(`${this.props.location.pathname}?${str}`);
+    return url;
   }
 
   setSearchType = e => {
@@ -348,7 +370,7 @@ class ExperienceSearch extends Component {
 
     const count = this.props.experienceSearch.get('experienceCount');
     const scale = getScale(count);
-    const url = formatCanonicalPath(this.props.location.pathname + this.props.location.search);
+    const url = this.getCanonicalUrl();
     const searchTypeName = searchType.split(',').sort().reduce((names, type) => {
       if (searchTypeMap[type]) { names.push(searchTypeMap[type]); }
       return names;
