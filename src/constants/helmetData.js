@@ -86,16 +86,18 @@ export const HELMET_DATA = {
       { rel: 'canonical', href: formatCanonicalPath('/share/work-experiences') },
     ],
   },
-  EXPERIENCE_SEARCH: {
-    title: '查詢面試、工作經驗',
-    meta: [
-      { property: 'og:title', content: formatTitle('查詢面試、工作經驗', SITE_NAME) },
-      { property: 'og:url', content: formatCanonicalPath('/experiences/search') },
-      { property: 'og:image', content: `${imgHost}/og/experience-search.jpg` },
-    ],
-    link: [
-      { rel: 'canonical', href: formatCanonicalPath('/experiences/search') },
-    ],
+  get EXPERIENCE_SEARCH() {
+    return {
+      title: '查詢面試、工作經驗',
+      meta: [
+        { property: 'og:title', content: formatTitle('查詢面試、工作經驗', SITE_NAME) },
+        { property: 'og:url', content: formatCanonicalPath('/experiences/search') },
+        { property: 'og:image', content: `${imgHost}/og/experience-search.jpg` },
+      ],
+      link: [
+        { rel: 'canonical', href: formatCanonicalPath('/experiences/search') },
+      ],
+    };
   },
   EXPERIENCE_DETAIL: {
     // information is dynamic
