@@ -3,11 +3,12 @@ import Helmet from 'react-helmet';
 import { Section, Wrapper } from 'common/base';
 import PageBanner from 'common/PageBanner';
 import editorStyles from 'common/Editor.module.css';
-import { HELMET_DATA } from '../../constants/helmetData';
+import { PAGE_NAMES } from '../../constants/helmetConstants';
+import { HelmetData } from '../../utils/helmetHelper';
 
 const GuideLines = () => (
   <main>
-    <Helmet {...HELMET_DATA.GUIDELINES} />
+    <Helmet {...new HelmetData(PAGE_NAMES.GUIDELINES).getData()} />
     <PageBanner heading="發文留言規則" />
     <Section padding>
       <Wrapper size="m" className={editorStyles.editor}>

@@ -27,7 +27,8 @@ import {
   idGenerator,
 } from '../utils';
 
-import { HELMET_DATA } from '../../../constants/helmetData';
+import { PAGE_NAMES } from '../../../constants/helmetConstants';
+import { HelmetData } from '../../../utils/helmetHelper';
 import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import {
@@ -238,7 +239,7 @@ class InterviewForm extends React.Component {
   render() {
     return (
       <div>
-        <Helmet {...HELMET_DATA.SHARE_INTERVIEW} />
+        <Helmet {...new HelmetData(PAGE_NAMES.SHARE_INTERVIEW).getData()} />
         <Heading size="l" marginBottomS center>
           面試經驗分享
         </Heading>

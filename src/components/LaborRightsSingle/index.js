@@ -6,6 +6,7 @@ import {
   formatTitle,
   formatCanonicalPath,
   formatUrl,
+  HelmetData,
 } from 'utils/helmetHelper';
 import NotFound from 'common/NotFound';
 import CallToAction from 'common/CallToAction';
@@ -17,7 +18,7 @@ import {
     fetchDataIfNeeded,
 } from '../../actions/laborRightsSingle';
 import status from '../../constants/status';
-import { SITE_NAME } from '../../constants/helmetData';
+import { PAGE_NAMES, SITE_NAME } from '../../constants/helmetConstants';
 
 class LaborRightsSingle extends React.Component {
   static fetchData({ store: { dispatch }, params: { id } }) {
@@ -54,17 +55,15 @@ class LaborRightsSingle extends React.Component {
     return (
       <main>
         <Helmet
-          title={seoTitle}
-          meta={[
-            { name: 'description', content: seoDescription },
-            { property: 'og:url', content: formatCanonicalPath(`/labor-rights/${id}`) },
-            { property: 'og:title', content: formatTitle(seoTitle, SITE_NAME) },
-            { property: 'og:description', content: seoDescription },
-            { property: 'og:image', content: formatUrl(coverUrl) },
-          ]}
-          link={[
-            { rel: 'canonical', href: formatCanonicalPath(`/labor-rights/${id}`) },
-          ]}
+          {...new HelmetData(PAGE_NAMES.LABOR_RIGHTS_SINGLE).setData({
+            title: seoTitle,
+            description: seoDescription,
+            'og:url': formatCanonicalPath(`/labor-rights/${id}`),
+            'og:title': formatTitle(seoTitle, SITE_NAME),
+            'og:description': seoDescription,
+            'og:image': formatUrl(coverUrl),
+            link: formatCanonicalPath(`/labor-rights/${id}`),
+          }).getData()}
         />
         {this.props.status === status.FETCHING && <Loader />}
         {

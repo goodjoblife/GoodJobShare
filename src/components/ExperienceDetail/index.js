@@ -21,8 +21,8 @@ import {
 } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 
-import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
-import { SITE_NAME } from '../../constants/helmetData';
+import { formatTitle, formatCanonicalPath, HelmetData } from '../../utils/helmetHelper';
+import { PAGE_NAMES, SITE_NAME } from '../../constants/helmetConstants';
 
 import authStatus from '../../constants/authStatus';
 
@@ -180,20 +180,16 @@ class ExperienceDetail extends Component {
           work: '工作經驗分享',
         };
         const description = `${company} ${jobTitle} 的${mapping[type]}。 ${subtitle}：${content}`;
-        return (
-          <Helmet
-            title={title}
-            meta={[
-              { name: 'description', content: description },
-              { property: 'og:title', content: formatTitle(title, SITE_NAME) },
-              { property: 'og:url', content: formatCanonicalPath(`/experiences/${id}`) },
-              { property: 'og:description', content: description },
-            ]}
-            link={[
-              { rel: 'canonical', href: formatCanonicalPath(`/experiences/${id}`) },
-            ]}
-          />
-        );
+        const helmetData = new HelmetData(PAGE_NAMES.EXPERIENCE_DETAIL);
+        helmetData.setData({
+          title,
+          description,
+          'og:title': formatTitle(title, SITE_NAME),
+          'og:url': formatCanonicalPath(`/experiences/${id}`),
+          'og:description': description,
+          link: formatCanonicalPath(`/experiences/${id}`),
+        });
+        return (<Helmet {...helmetData.getData()} />);
       }
       return null;
     }

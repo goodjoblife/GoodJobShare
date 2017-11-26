@@ -12,7 +12,8 @@ import { fetchMetaListIfNeeded } from '../../actions/laborRightsMenu';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
 import Dashboard from './Dashboard';
-import { HELMET_DATA } from '../../constants/helmetData';
+import { PAGE_NAMES } from '../../constants/helmetConstants';
+import { HelmetData } from '../../utils/helmetHelper';
 
 class LandingPage extends Component {
   static fetchData({ store: { dispatch } }) {
@@ -38,7 +39,7 @@ class LandingPage extends Component {
     const expData = this.props.experienceSearch.toJS().experiences || [];
     return (
       <main>
-        <Helmet {...HELMET_DATA.LANDING_PAGE} />
+        <Helmet {...new HelmetData(PAGE_NAMES.LANDING_PAGE).getData()} />
         <Banner />
         <Dashboard />
         <Section padding>

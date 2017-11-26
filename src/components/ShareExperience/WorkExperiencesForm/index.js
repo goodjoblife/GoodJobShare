@@ -31,7 +31,8 @@ import {
 
 import styles from './WorkExperiencesForm.module.css';
 
-import { HELMET_DATA } from '../../../constants/helmetData';
+import { PAGE_NAMES } from '../../../constants/helmetConstants';
+import { HelmetData } from '../../../utils/helmetHelper';
 import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 
@@ -242,7 +243,7 @@ class WorkExperiencesForm extends React.Component {
 
     return (
       <div>
-        <Helmet {...HELMET_DATA.SHARE_WORK} />
+        <Helmet {...new HelmetData(PAGE_NAMES.SHARE_WORK).getData()} />
         <Heading size="l" marginBottomS center>
           工作經驗分享
         </Heading>
