@@ -47,7 +47,8 @@ const SORT = {
 };
 
 class ExperienceSearch extends Component {
-  static fetchData({ query, store: { dispatch } }) {
+  static fetchData({ location, store: { dispatch } }) {
+    const { query } = location;
     const {
       searchBy,
       searchQuery,
