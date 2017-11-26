@@ -16,7 +16,8 @@ import ExperienceBlock from './ExperienceBlock';
 import {
   fetchExperiences as fetchExperiencesAction,
 } from '../../actions/experienceSearch';
-import { HELMET_DATA } from '../../constants/helmetData';
+import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
+import { imgHost, SITE_NAME } from '../../constants/helmetData';
 import {
   PAGE_COUNT,
 } from '../../constants/experienceSearch';
@@ -44,6 +45,16 @@ import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
 const SORT = {
   CREATED_AT: 'created_at',
   POPULARITY: 'popularity',
+};
+
+const searchTypeMap = {
+  work: '工作經驗',
+  interview: '面試經驗',
+};
+
+const sortByMap = {
+  created_at: '最新',
+  popularity: '熱門',
 };
 
 class ExperienceSearch extends Component {
@@ -328,14 +339,49 @@ class ExperienceSearch extends Component {
   }
 
   renderHelmet = () => {
-    const scale = getScale(this.props.experienceSearch.get('experienceCount'));
-    const description = `馬上查詢超過 ${scale} 篇面試及工作經驗分享，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
-    const data = HELMET_DATA.EXPERIENCE_SEARCH;
-    data.meta.push(
-      { name: 'description', content: description },
-      { property: 'og:description', content: description },
+    const {
+      searchType,
+      searchQuery,
+      sortBy,
+      page,
+    } = querySelector(this.props.location.query);
+
+    const count = this.props.experienceSearch.get('experienceCount');
+    const scale = getScale(count);
+    const url = formatCanonicalPath(this.props.location.pathname + this.props.location.search);
+    const searchTypeName = searchType.split(',').sort().reduce((names, type) => {
+      if (searchTypeMap[type]) { names.push(searchTypeMap[type]); }
+      return names;
+    }, []).join('、');
+
+    // default helmet info
+    let title = '查詢面試、工作經驗';
+    let description = `馬上查詢超過 ${scale} 篇面試及工作經驗分享，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
+
+    // if searchQuery is given and number of result > 0, then show job / company name
+    if (searchQuery && count > 0) {
+      const tmpStr = `${searchQuery}的${searchTypeName}分享`;
+      title = `${tmpStr}，第 ${page} 頁`;
+      description = `馬上查看共 ${count} 篇有關${tmpStr}，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
+    } else if (sortBy) { // if searchQuery is not given, but sortBy is given, then show 最新/熱門
+      title = `${sortByMap[sortBy]}${searchTypeName}分享 - 第 ${page} 頁`;
+      description = `馬上查詢超過 ${scale} 篇${searchTypeName}分享，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
+    }
+    return (
+      <Helmet
+        title={title}
+        meta={[
+          { name: 'description', content: description },
+          { property: 'og:title', content: formatTitle(title, SITE_NAME) },
+          { property: 'og:description', content: description },
+          { property: 'og:url', content: url },
+          { property: 'og:image', content: `${imgHost}/og/experience-search.jpg` },
+        ]}
+        link={[
+          { rel: 'canonical', href: url },
+        ]}
+      />
     );
-    return <Helmet {...data} />;
   }
 
   render() {
