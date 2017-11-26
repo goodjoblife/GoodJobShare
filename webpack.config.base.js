@@ -36,6 +36,7 @@ module.exports = {
         CONTENTFUL_API_HOST: JSON.stringify(CONTENTFUL_API_HOST),
         FACEBOOK_APP_ID: JSON.stringify(FACEBOOK_APP_ID),
       },
+      __SERVER__: false,
     }),
   ],
 

@@ -1,3 +1,4 @@
+/* global __SERVER__ */
 import { div } from 'react';
 import App from './containers/Layout';
 import LandingPage from './containers/LandingPage';
