@@ -4,11 +4,12 @@ import { Section, Wrapper } from 'common/base';
 import PageBanner from 'common/PageBanner';
 import editorStyles from 'common/Editor.module.css';
 import styles from './Faq.module.css';
-import { HELMET_DATA } from '../../constants/helmetData';
+import { PAGE_NAMES } from '../../constants/helmetConstants';
+import { HelmetData } from '../../utils/helmetHelper';
 
 const Faq = () => (
   <main>
-    <Helmet {...HELMET_DATA.FAQ} />
+    <Helmet {...new HelmetData(PAGE_NAMES.FAQ).getData()} />
     <PageBanner heading="常見問答" />
     <Section padding>
       <Wrapper size="m" className={editorStyles.editor}>

@@ -10,7 +10,8 @@ import {
 import status from '../../constants/status';
 import LaborRightsEntry from './LaborRightsEntry';
 import About from './About';
-import { HELMET_DATA } from '../../constants/helmetData';
+import { PAGE_NAMES } from '../../constants/helmetConstants';
+import { HelmetData } from '../../utils/helmetHelper';
 
 class LaborRightsMenu extends React.Component {
   static fetchData({ store }) {
@@ -26,7 +27,7 @@ class LaborRightsMenu extends React.Component {
     return (
       <Section Tag="main" pageTop>
         <Wrapper size="l" Tag="main">
-          <Helmet {...HELMET_DATA.LABOR_RIGHTS_MENU} />
+          <Helmet {...new HelmetData(PAGE_NAMES.LABOR_RIGHTS_MENU).getData()} />
           {this.props.status === status.FETCHING && <Loader />}
           {
             this.props.status === status.ERROR && this.props.error &&
