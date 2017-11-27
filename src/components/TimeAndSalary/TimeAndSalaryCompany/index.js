@@ -5,6 +5,7 @@ import R from 'ramda';
 
 import Select from 'common/form/Select';
 import WorkingHourBlock from '../common/WorkingHourBlock';
+import { queryCompany } from '../../../actions/timeAndSalaryCompany';
 
 import styles from '../views/view.module.css';
 
@@ -47,6 +48,16 @@ export default class TimeAndSalaryCompany extends Component {
     params: PropTypes.object.isRequired,
     queryCompany: PropTypes.func,
     switchPath: PropTypes.func,
+  }
+
+  static fetchData({ routes, params, store: { dispatch } }) {
+    console.log(routes);
+    console.log(params);
+    const { path } = R.last(routes);
+    const { groupSortBy, order } = pathnameMapping[path];
+    const company = params.keyword;
+
+    return dispatch(queryCompany({ groupSortBy, order, company }));
   }
 
   componentDidMount() {
