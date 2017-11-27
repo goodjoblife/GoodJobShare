@@ -58,6 +58,8 @@ const sortByMap = {
   popularity: '熱門',
 };
 
+const BANNER_LOCATION = 10;
+
 class ExperienceSearch extends Component {
   static fetchData({ location, store: { dispatch } }) {
     const { query } = location;
@@ -462,22 +464,36 @@ class ExperienceSearch extends Component {
                     尚未有「{data.searchQuery}」的經驗分享
                 </P>
               }
-
-              <Banner2 />
-
-              {
+              { // rendering experiences blocks and banner
                 loadingStatus === status.FETCHING
                 ? <Loader size="s" />
                 : (data.experiences || [])
-                  .map(o => (
-                    <ExperienceBlock
-                      key={o._id}
-                      to={`/experiences/${o._id}`}
-                      data={o}
-                      size="l"
-                      backable
-                    />
-                  ))
+                  .map((o, index) => {
+                    if (index === BANNER_LOCATION) {
+                      return (
+                        <div>
+                          <Banner2 />
+                          <ExperienceBlock
+                            key={o._id}
+                            to={`/experiences/${o._id}`}
+                            data={o}
+                            size="l"
+                            backable
+                          />
+                        </div>
+                      );
+                    }
+                    return (
+                      <ExperienceBlock
+                        key={o._id}
+                        to={`/experiences/${o._id}`}
+                        data={o}
+                        size="l"
+                        backable
+                      />
+                    );
+                  }
+                )
               }
 
               <Pagination
