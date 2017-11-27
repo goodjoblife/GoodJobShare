@@ -14,6 +14,7 @@ import styles from './TimeAndSalaryBoard.module.css';
 import commonStyles from '../views/view.module.css';
 import fetchingStatus from '../../../constants/status';
 import CallToActionRow from './CallToActionRow';
+import { queryTimeAndSalary } from '../../../actions/timeAndSalaryBoard';
 
 const pathnameMapping = {
   'work-time-dashboard': {
@@ -205,6 +206,13 @@ export default class TimeAndSalaryBoard extends Component {
     resetBoardExtremeData: PropTypes.func.isRequired,
     extremeStatus: PropTypes.string,
     extremeData: ImmutablePropTypes.list,
+  }
+
+  static fetchData({ routes, store: { dispatch } }) {
+    const { path } = R.last(routes);
+    const { sortBy, order } = pathnameMapping[path];
+
+    return dispatch(queryTimeAndSalary({ sortBy, order }));
   }
 
   constructor(props) {
