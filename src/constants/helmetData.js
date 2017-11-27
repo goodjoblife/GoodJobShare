@@ -26,7 +26,7 @@ The followings are some useful elements from Open Graph Protocol:
 
 */
 
-const imgHost = 'https://image.goodjob.life';
+export const imgHost = 'https://image.goodjob.life';
 export const SITE_NAME = 'GoodJob 好工作評論網';
 export const HELMET_DATA = {
   DEFAULT: {
