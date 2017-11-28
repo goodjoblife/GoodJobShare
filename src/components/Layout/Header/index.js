@@ -7,6 +7,7 @@ import { GjLogo, ArrowGo, People, PeopleFill } from 'common/icons';
 import PopoverToggle from 'common/PopoverToggle';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
+import Top from './Top';
 
 import authStatus from '../../../constants/authStatus';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
@@ -85,54 +86,64 @@ class Header extends React.Component {
       .catch(() => {});
   }
 
+  renderTop = () => {
+    if (this.props.location.pathname === '/') {
+      return null;
+    }
+    return <Top />;
+  }
+
   render() {
     return (
-      <header className={styles.header}>
-        <Wrapper size="l" className={styles.inner}>
-          <HeaderButton
-            isNavOpen={this.state.isNavOpen}
-            toggle={this.toggleNav}
-          />
-          <div className={styles.logo}>
-            <Link to="/" title="GoodJob 好工作評論網">
-              <GjLogo />
-            </Link>
-          </div>
-          <ShareButton onClick={this.onClickShareData} isMobileButton />
-          <nav
-            className={cn(styles.nav, { [styles.isNavOpen]: this.state.isNavOpen })}
-          >
-            <SiteMenu isLogin={this.props.auth.get('status') === authStatus.CONNECTED} />
-            <div className={styles.buttonsArea}>
-              <ShareButton onClick={this.onClickShareData} />
-              <div style={{ position: 'relative' }}>
-                {
-                  this.props.auth.getIn(['user', 'name']) === null &&
-                  <button className={styles.loginBtn} onClick={this.login}>
-                    <People />登入
-                  </button>
-                }
-                {
-                  this.props.auth.getIn(['user', 'name']) !== null &&
-                  <PopoverToggle
-                    popoverClassName={styles.popover}
-                    popoverContent={(
-                      <ul className={styles.popoverItem}>
-                        <li><Link to="/me">個人頁面</Link></li>
-                        <li><button onClick={() => { this.logout(); }}>登出</button></li>
-                      </ul>
-                    )}
-                  >
-                    <div className={styles.loginBtn}>
-                      <PeopleFill />{this.props.auth.getIn(['user', 'name'])}
-                    </div>
-                  </PopoverToggle>
-                }
-              </div>
+      <div className={styles.root}>
+        {this.renderTop()}
+        <header className={styles.header}>
+          <Wrapper size="l" className={styles.inner}>
+            <HeaderButton
+              isNavOpen={this.state.isNavOpen}
+              toggle={this.toggleNav}
+            />
+            <div className={styles.logo}>
+              <Link to="/" title="GoodJob 好工作評論網">
+                <GjLogo />
+              </Link>
             </div>
-          </nav>
-        </Wrapper>
-      </header>
+            <ShareButton onClick={this.onClickShareData} isMobileButton />
+            <nav
+              className={cn(styles.nav, { [styles.isNavOpen]: this.state.isNavOpen })}
+            >
+              <SiteMenu isLogin={this.props.auth.get('status') === authStatus.CONNECTED} />
+              <div className={styles.buttonsArea}>
+                <ShareButton onClick={this.onClickShareData} />
+                <div style={{ position: 'relative' }}>
+                  {
+                    this.props.auth.getIn(['user', 'name']) === null &&
+                    <button className={styles.loginBtn} onClick={this.login}>
+                      <People />登入
+                    </button>
+                  }
+                  {
+                    this.props.auth.getIn(['user', 'name']) !== null &&
+                    <PopoverToggle
+                      popoverClassName={styles.popover}
+                      popoverContent={(
+                        <ul className={styles.popoverItem}>
+                          <li><Link to="/me">個人頁面</Link></li>
+                          <li><button onClick={() => { this.logout(); }}>登出</button></li>
+                        </ul>
+                      )}
+                    >
+                      <div className={styles.loginBtn}>
+                        <PeopleFill />{this.props.auth.getIn(['user', 'name'])}
+                      </div>
+                    </PopoverToggle>
+                  }
+                </div>
+              </div>
+            </nav>
+          </Wrapper>
+        </header>
+      </div>
     );
   }
 }
@@ -144,6 +155,7 @@ Header.propTypes = {
   getMe: React.PropTypes.func.isRequired,
   auth: React.PropTypes.object,
   FB: React.PropTypes.object,
+  location: React.PropTypes.object,
 };
 
 const HeaderButton = ({ isNavOpen, toggle }) => (

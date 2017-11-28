@@ -1,0 +1,17 @@
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 12px;
+  margin-bottom: 12px;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+  }
+
+  .info {
+    @media (max-width: 550px) {
+      margin-bottom: 16px;
+    }
+  }
+}

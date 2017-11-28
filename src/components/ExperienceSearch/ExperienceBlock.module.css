@@ -4,7 +4,7 @@
   display: block;
   background-color: #fff;
   box-shadow: 0 0 6px rgba(0,0,0, .15);
-  margin-bottom: 40px;
+  margin-bottom: 24px;
   transition-property: background, box-shadow;
   transition-duration: .3s;
 
@@ -21,14 +21,10 @@
     }
   }
 
-  @media (max-width: 1024px) {
-    margin-bottom: 24px;
-  }
-
   @media (max-width: 550px) {
     margin-left: calc(page-gutter-s * -1);
     margin-right: calc(page-gutter-s * -1);
-    margin-bottom: 24px;
+    margin-bottom: 16px;
   }
 }
 

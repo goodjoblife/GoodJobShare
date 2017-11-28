@@ -21,6 +21,28 @@
 
   @media (max-width: 850px) {
     margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.filter {
+  @media (max-width: 850px) {
+    order: 2;
+  }
+}
+
+.banner {
+  display: block;
+
+  @media (min-width: 851px) {
+    margin-top: 32px;
+  }
+
+  @media (max-width: 850px) {
+    order: 1;
+    margin-top: -32px;
+    margin-bottom: 32px;
   }
 }
 
@@ -38,53 +60,45 @@
 }
 
 .searchResult {
-  background-color: gray-light;
-  border: 1px solid #ccc;
-  font-weight: 700;
-  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 24px;
-}
-
-.frontButton, .rearButton {
-  display: inline-block;
-  width: 50%;
-  height: 32px;
-  line-height: 32px;
-  text-align: center;
-  border: 1px solid main-yellow;
-
-  &.toggle {
-    background-color: main-yellow;
-  }
-}
-
-.frontButton {
-  border-radius: 5px 0 0 5px;
-}
-
-.rearButton {
-  border-radius: 0 5px 5px 0;
-}
-
-.splitter {
-  margin-bottom: 32px;
   margin-top: 32px;
 
   @media (max-width: 850px) {
-    display: none;
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
-.fliters {
+.searchResultNum {
   @media (max-width: 850px) {
-    display: none;
+    margin-top: 16px;
   }
 }
 
-.workingHourWrapper {
+.searchNoResult {
+  background-color: #f2f2f2;
+  border: 1px solid border-gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-top: 40px;
+}
+
+.splitter {
+  margin-top: 64px;
+  margin-bottom: 64px;
+}
+
+.timeSalaryWrapper {
   margin-top: 40px;
 
   @media (max-wdith: 1024px) {
     margin-top: 24px;
   }
 }
+

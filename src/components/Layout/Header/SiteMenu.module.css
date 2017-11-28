@@ -37,7 +37,7 @@
       padding-left: 16px;
       transition: color .3s, background-color .3s;
 			&.isCurrent {
-        background-color: rgba(255, 255, 255, 0.15);
+        background-color: rgba(255, 255, 255, 0.09);
       }
     }
   }

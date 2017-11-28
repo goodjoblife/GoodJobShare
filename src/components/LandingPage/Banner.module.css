@@ -8,8 +8,9 @@
     align-items: center;
     padding-top: 24px;
     padding-bottom: 24px;
+    max-width: 1100px;
 
-    @media (max-width: 550px) {
+    @media (max-width: 850px) {
       flex-direction: column;
     }
   }
@@ -17,12 +18,14 @@
 
 .image {
   order: 1;
-  flex: 1 1 auto;
-
+  flex-grow: 0;
+  flex-basis: 390px;
+  @media (max-width: 850px) {
+    flex-basis: auto;
+    margin-top: 24px;
+  }
   img {
-    display: inline-block;
-    max-width: 430px;
-
+    min-height: 150px;
     @media (max-width: 850px) {
       max-width: 280px;
     }
@@ -32,27 +35,51 @@
 .content {
   order: 2;
   color: main-black;
-  flex: 0 0 50%;
-  margin-left: 32px;
+  flex-grow: 1;
+  flex-basis: auto;
   animation: fadeUp 1s linear;
+  text-align: center;
+
+  @media (max-width: 850px) {
+    order: 0;
+  }
 }
 
 .heading {
-  font-size: 2.75em;
+  font-size: 1.85em;
+  line-height: 1.2em;
   letter-spacing: 2px;
   margin-bottom: 20px;
-  font-weight: 400;
 
   @media (max-width: 850px) {
-    font-size: 2.3em;
+    font-size: 1.65em;
+  }
+
+  > span {
+    font-weight: 700;
   }
 }
 
 .subheading {
-  font-size: 1.25em;
+  font-size: 1.125em;
   line-height: 1.6em;
-  letter-spacing: 0.05em;
   margin-bottom: 24px;
+
+  @media (max-width: 850px) {
+    br {
+      display: none;
+      font-size: 1em;
+    }
+  }
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+.progressBar {
+  margin-bottom: 24px;
+  margin-top: 40px;
 }
 
 @keyframes fadeUp {

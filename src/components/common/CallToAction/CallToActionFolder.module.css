@@ -1,0 +1,44 @@
+.root {
+  max-width: 750px;
+  margin: auto;
+}
+
+.container {
+  padding: 45px 80px 30px 80px;
+  text-align: center;
+
+  @media (max-width: 550px) {
+    padding: 30px 30px;
+  }
+}
+
+.title {
+  text-align: center;
+}
+
+.progressbar {
+  margin-top: 35px;
+}
+
+.content-container {
+  margin-top: 20px;
+  max-width: 580px;
+}
+
+.content {
+  font-size: 18px;
+  line-height: 29px;
+  text-align: center;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.strong-text {
+  font-weight: 900;
+}
+
+.button {
+  margin-top: 15px;
+}

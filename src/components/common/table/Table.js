@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, Children, PropTypes } from 'react';
 import cn from 'classnames';
 import styles from './Table.module.css';
 import Column from './Column';
@@ -9,6 +9,11 @@ class Table extends Component {
     primaryKey: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
+    postProcessRows: PropTypes.func,
+  }
+
+  static defaultProps = {
+    postProcessRows: x => x,
   }
 
   static Column = Column
@@ -27,14 +32,14 @@ class Table extends Component {
   }
 
   render() {
-    const { data, primaryKey, children, className } = this.props;
+    const { data, primaryKey, children, className, postProcessRows } = this.props;
     const records = [];
     let record;
     let value;
 
     data.forEach((d, i) => {
       record = [];
-      children.forEach((col, idx) => {
+      Children.forEach(children, (col, idx) => {
         value = Table.getValue(d, col.props.dataField);
         if (col.props.dataFormatter) {
           value = col.props.dataFormatter(value, d);
@@ -52,10 +57,12 @@ class Table extends Component {
       records.push(<tr key={d[primaryKey] || i}>{record}</tr>);
     });
 
+    const postRecords = postProcessRows(records);
+
     return (
       <table className={cn([styles.rwdTable, className])}>
         <thead><tr>{children}</tr></thead>
-        <tbody>{records}</tbody>
+        <tbody>{postRecords}</tbody>
       </table>
     );
   }

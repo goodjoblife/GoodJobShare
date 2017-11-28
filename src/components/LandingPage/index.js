@@ -17,7 +17,7 @@ import { HELMET_DATA } from '../../constants/helmetData';
 class LandingPage extends Component {
   static fetchData({ store: { dispatch } }) {
     return Promise.all([
-      dispatch(fetchExperiences('sort', 'popularity', 0, 3)),
+      dispatch(fetchExperiences(1, 3, 'popularity', 'created_at', '', ['interview', 'work'])),
       dispatch(fetchMetaListIfNeeded()),
     ]);
   }
@@ -29,7 +29,7 @@ class LandingPage extends Component {
   }
   componentDidMount() {
     Promise.all([
-      this.props.fetchExperiences('sort', 'popularity', 0, 3),
+      this.props.fetchExperiences(1, 3, 'popularity', 'created_at', '', ['interview', 'work']),
       this.props.fetchMetaListIfNeeded(),
     ]);
   }
@@ -41,6 +41,21 @@ class LandingPage extends Component {
         <Helmet {...HELMET_DATA.LANDING_PAGE} />
         <Banner />
         <Dashboard />
+        <ShareExpSection heading="現在就留下你的資料" />
+        <Section padding bg="white">
+          <Wrapper size="l">
+            <Heading size="l" center marginBottom>勞動知識小教室</Heading>
+            <Columns
+              Item={LaborRightsEntry}
+              items={this.props.laborRightsMetaList.toJS()}
+            />
+          </Wrapper>
+          <Section center Tag="div">
+            <Link className={cn('buttonCircleL', 'buttonBlack')} to="/labor-rights" title="勞動知識小教室">
+              看更多
+            </Link>
+          </Section>
+        </Section>
         <Section padding>
           <Wrapper size="l">
             <Heading size="l" center marginBottom>熱門分享</Heading>
@@ -56,21 +71,6 @@ class LandingPage extends Component {
             </Section>
           </Wrapper>
         </Section>
-        <Section padding bg="white">
-          <Wrapper size="l">
-            <Heading size="l" center marginBottom>勞動知識小教室</Heading>
-            <Columns
-              Item={LaborRightsEntry}
-              items={this.props.laborRightsMetaList.toJS()}
-            />
-          </Wrapper>
-          <Section center Tag="div">
-            <Link className={cn('buttonCircleL', 'buttonBlack')} to="/labor-rights" title="勞動知識小教室">
-              看更多
-            </Link>
-          </Section>
-        </Section>
-        <ShareExpSection heading="現在就留下你的資料" />
       </main>
     );
   }

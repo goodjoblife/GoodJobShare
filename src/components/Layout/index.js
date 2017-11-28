@@ -6,9 +6,9 @@ import Header from '../../containers/Layout/Header';
 import Footer from './Footer';
 import { HELMET_DATA } from '../../constants/helmetData';
 
-const App = ({ children }) => (
+const App = ({ children, location }) => (
   <div className={styles.App}>
-    <Header />
+    <Header location={location} />
     <Helmet {...HELMET_DATA.DEFAULT} />
     <div className={styles.content}>
       {children}
@@ -19,6 +19,7 @@ const App = ({ children }) => (
 
 App.propTypes = {
   children: PropTypes.node.isRequired,
+  location: PropTypes.object,
 };
 
 

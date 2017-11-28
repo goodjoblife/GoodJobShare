@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router';
 import Helmet from 'react-helmet';
 import { Section, Wrapper, Heading, P } from 'common/base';
-import CallToAction from 'common/CallToAction';
+import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
+import CallToActionBanner from 'common/CallToAction/CallToActionBanner';
 import { Facebook, Email, Github } from 'common/icons';
 import editorStyles from 'common/Editor.module.css';
 import { HELMET_DATA } from '../../constants/helmetData';
@@ -54,6 +55,9 @@ const data2017 = [
 const About = () => (
   <Section Tag="main" pageTop>
     <Helmet {...HELMET_DATA.ABOUT} />
+    <Section paddingBottom>
+      <CallToActionFolder />
+    </Section>
     <Section paddingBottom>
       <Wrapper size="m">
         <Heading size="m" marginBottomS>緣起：求職資訊不透明</Heading>
@@ -111,7 +115,7 @@ const About = () => (
         />
       </Wrapper>
     </Section>
-    <CallToAction
+    <CallToActionBanner
       bgColor="#fcd406"
       imgSrc="https://image.goodjob.life/about-people.png"
       heading="促進職場資訊透明化，需要每一個「你」的參與！"
