@@ -102,7 +102,7 @@ export default class TimeAndSalaryCompany extends Component {
           </div>
         </div>
         {raw.map((o, i) => (
-          <WorkingHourBlock key={o.company.id || i} data={o} groupSortBy={groupSortBy} />
+          <WorkingHourBlock key={o.company.id || i} data={o} groupSortBy={groupSortBy} isExpanded={(i === 0) && (raw.length === 1)} />
         ))}
       </section>
     );

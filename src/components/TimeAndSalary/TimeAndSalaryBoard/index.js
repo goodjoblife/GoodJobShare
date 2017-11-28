@@ -4,6 +4,7 @@ import Loading from 'common/Loader';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import $ from 'jquery';
 import cn from 'classnames';
+import { Link } from 'react-router';
 
 import Select from 'common/form/Select';
 import Table from 'common/table/Table';
@@ -68,12 +69,16 @@ const selectOptions = R.pipe(
 
 const getName = val => (
   <div>
-    {val.name}
+    <Link to={`/time-and-salary/company/${encodeURIComponent(val.name)}/work-time-dashboard`}>
+      {val.name}
+    </Link>
   </div>
 );
 const getTitle = (val, row) => (
   <div>
-    {val}
+    <Link to={`/time-and-salary/job-title/${encodeURIComponent(val)}/work-time-dashboard`}>
+      {val}
+    </Link>
     {' '}
     <span className={`pM ${commonStyles.sector}`}>
       {row.sector}

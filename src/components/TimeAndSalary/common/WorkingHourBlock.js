@@ -11,12 +11,17 @@ class WorkingHourBlock extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
     groupSortBy: PropTypes.string.isRequired,
+    isExpanded: PropTypes.bool,
   }
 
-  constructor() {
-    super();
+  static defaultProps = {
+    isExpanded: false,
+  }
+
+  constructor(props) {
+    super(props);
     this.state = {
-      isExpanded: false,
+      isExpanded: props.isExpanded,
     };
   }
 
