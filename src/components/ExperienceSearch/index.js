@@ -471,10 +471,9 @@ class ExperienceSearch extends Component {
                   .map((o, index) => {
                     if (index === BANNER_LOCATION) {
                       return (
-                        <div>
+                        <div key={o._id}>
                           <Banner2 />
                           <ExperienceBlock
-                            key={o._id}
                             to={`/experiences/${o._id}`}
                             data={o}
                             size="l"
