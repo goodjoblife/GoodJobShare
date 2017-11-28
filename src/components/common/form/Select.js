@@ -15,7 +15,9 @@ class Select extends React.PureComponent {
           value={this.props.value === null ? '' : this.props.value}
           onChange={e => this.props.onChange(e)}
         >
-          <option value={''}>{this.props.placeholder}</option>
+          {this.props.hasNullOption && (
+            <option value={''}>{this.props.nullOptionText}</option>
+          )}
           {
             this.props.options.map(option =>
               <option
@@ -61,15 +63,14 @@ Select.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
-  placeholder: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  hasNullOption: PropTypes.bool,
+  nullOptionText: PropTypes.string,
   onChange: PropTypes.func,
 };
 
 Select.defaultProps = {
-  placeholder: '- 請選擇 -',
+  hasNullOption: true,
+  nullOptionText: '- 請選擇 -',
 };
 
 export default Select;

@@ -1,3 +1,5 @@
+@value yellow-dark from 'common/variables.module.css';
+
 .button {
   padding: 0 16px;
   height: 36px;
@@ -29,8 +31,8 @@
 
 .custimized {
   composes: button;
-  border-color: #E5BA00;
-  color: #E5BA00;
+  border-color: yellow-dark;
+  color: yellow-dark;
   font-weight: bold;
 
   &:hover {

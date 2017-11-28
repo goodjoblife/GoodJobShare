@@ -1,0 +1,48 @@
+@value TOP_HEIGHT, main-yellow from 'common/variables.module.css';
+
+.root {
+  display: block;
+  height: TOP_HEIGHT;
+  background-color: #494949;
+  transition-property: background-color;
+  transition-duration: .25s;
+
+  @media (min-width: 1025px) {
+    &:hover {
+      background-color: #393939;
+    }
+  }
+
+  @media (max-width: 850px) {
+    display: none;
+  }
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.heading {
+  color: main-yellow;
+  margin-right: 16px;
+  font-size: 14px;
+}
+
+.subheading {
+  color: #eee;
+  font-size: 13px;
+  margin-left: 16px;
+
+  @media (max-width: 1280px) {
+    display: none;
+  }
+}
+
+.button {
+  font-size: 13px;
+  color: main-yellow;
+  font-weight: 700;
+  padding-left: 8px;
+}

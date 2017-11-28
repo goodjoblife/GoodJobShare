@@ -1,44 +1,95 @@
 import React, { Component, PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
-import InfiniteScroll from 'react-infinite-scroller';
+import { browserHistory } from 'react-router';
+import R from 'ramda';
+import qs from 'qs';
+
 import ReactGA from 'react-ga';
 
-import Checkbox from 'common/form/Checkbox';
 import Loader from 'common/Loader';
-import { Section, Wrapper } from 'common/base';
+import { Section, Wrapper, Heading, P } from 'common/base';
+import Columns from 'common/Columns';
 
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
-import WorkingHourBlock from './WorkingHourBlock';
-import { fetchExperiences } from '../../actions/experienceSearch';
+import {
+  fetchExperiences as fetchExperiencesAction,
+} from '../../actions/experienceSearch';
+import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
+import { imgHost, SITE_NAME } from '../../constants/helmetData';
+import {
+  PAGE_COUNT,
+} from '../../constants/experienceSearch';
+import status from '../../constants/status';
+import TimeSalaryBlock from './TimeSalaryBlock';
+import Filter from './Filter';
+import { Banner1, Banner2 } from './Banners';
 
-import { HELMET_DATA } from '../../constants/helmetData';
+import Pagination from './Pagination';
+
 import getScale from '../../utils/numberUtils';
 
+import {
+  // searchQuerySelector,
+  // searchBySelector,
+  // sortBySelector,
+  // searchTypeSelector,
+  handleSearchType,
+  // pageSelector,
+  toQsString,
+  querySelector,
+} from './helper';
 import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
 
-const SORT = { CREATED_AT: 'created_at', POPULARITY: 'popularity' };
-const SEARCH_TYPE = {
-  INTERVIEW: 'interview',
-  WORK: 'work',
-  SALARY: 'salary',
+const SORT = {
+  CREATED_AT: 'created_at',
+  POPULARITY: 'popularity',
 };
 
+const searchTypeMap = {
+  work: '工作經驗',
+  interview: '面試經驗',
+};
+
+const sortByMap = {
+  created_at: '最新',
+  popularity: '熱門',
+};
+
+const BANNER_LOCATION = 10;
+
 class ExperienceSearch extends Component {
-  static fetchData({ store: { dispatch } }) {
-    return dispatch(fetchExperiences('sort', '', 0));
+  static fetchData({ location, store: { dispatch } }) {
+    const { query } = location;
+    const {
+      searchBy,
+      searchQuery,
+      sortBy: sort,
+      page,
+    } = querySelector(query);
+
+    let {
+      searchType,
+    } = querySelector(query);
+    searchType = R.split(',', searchType);
+
+    return dispatch(fetchExperiencesAction(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType));
   }
 
   static propTypes = {
-    setSearchType: PropTypes.func.isRequired,
     setKeyword: PropTypes.func.isRequired,
     fetchExperiences: PropTypes.func.isRequired,
-    fetchMoreExperiences: PropTypes.func.isRequired,
     fetchWorkings: PropTypes.func.isRequired,
-    fetchKeywords: PropTypes.func.isRequired,
+    getNewSearchBy: PropTypes.func.isRequired,
     experienceSearch: ImmutablePropTypes.map.isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string,
+      query: PropTypes.object,
+      pathname: PropTypes.string,
+    }),
+    loadingStatus: PropTypes.string,
   }
 
   constructor() {
@@ -50,8 +101,75 @@ class ExperienceSearch extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchExperiences('sort', '', 0);
-    this.props.fetchKeywords('');
+    const {
+      fetchExperiences,
+    } = this.props;
+
+    const {
+      query,
+    } = this.props.location;
+
+    const {
+      searchBy,
+      searchQuery,
+      sortBy: sort,
+      page,
+    } = querySelector(query);
+
+    let {
+      searchType,
+    } = querySelector(query);
+    searchType = R.split(',', searchType);
+
+    fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType);
+    this.props.getNewSearchBy(searchBy);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.search !== this.props.location.search) {
+      const {
+        fetchExperiences,
+      } = nextProps;
+
+      const {
+        query,
+      } = nextProps.location;
+
+      const {
+        searchBy,
+        searchQuery,
+        sortBy: sort,
+        page,
+      } = querySelector(query);
+
+      let {
+        searchType,
+      } = querySelector(query);
+      searchType = R.split(',', searchType);
+
+      fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType);
+    }
+  }
+
+  getCanonicalUrl = () => {
+    const {
+      searchType,
+      searchQuery,
+      searchBy,
+      sortBy,
+      page,
+    } = querySelector(this.props.location.query);
+
+    const params = {
+      type: searchType || 'interview,work',
+      q: searchQuery || '',
+      s_by: searchBy || 'job_title',
+      sort: sortBy || 'created_at',
+      p: page || 1,
+    };
+    const str = qs.stringify(params, { sort: (a, b) => a.localeCompare(b) });
+    const url = formatCanonicalPath(`${this.props.location.pathname}?${str}`);
+    return url;
   }
 
   setSearchType = e => {
@@ -68,45 +186,149 @@ class ExperienceSearch extends Component {
         action: `${GA_ACTION.TOGGLE_ON}_${searchType}`,
       });
     }
-    this.props.setSearchType(e);
+
+    const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const {
+      searchBy,
+      searchQuery,
+      sortBy: sort,
+    } = querySelector(query);
+
+    let {
+      searchType: prevSearchType,
+    } = querySelector(query);
+
+    prevSearchType = R.split(',', prevSearchType);
+
+    const nextSearchType = handleSearchType(searchType)(prevSearchType);
+
+    const queryString = toQsString({
+      page: 1,
+      sort,
+      searchBy,
+      searchQuery,
+      searchType: nextSearchType,
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    browserHistory.push(url);
   }
 
   handleKeyPress(e) {
     if (e.key === 'Enter') {
-      const val = e.target.value;
-      this.fetchExperiencesAndWorkings(val);
+      const searchQuery = e.target.value;
+      this.fetchExperiencesAndWorkings(searchQuery);
     }
   }
 
-  handleKeywordClick(e) {
-    const val = e.target.innerHTML;
-    this.fetchExperiencesAndWorkings(val);
+  handleKeywordClick(searchQuery) {
+    this.fetchExperiencesAndWorkings(searchQuery);
+  }
+
+  handleSearchBy = searchBy => {
+    const {
+      getNewSearchBy,
+    } = this.props;
+    const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const {
+      searchQuery,
+      sortBy: sort,
+      searchType,
+    } = querySelector(query);
+
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery,
+      page: 1,
+      searchType,
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    getNewSearchBy(searchBy);
+    browserHistory.push(url);
   }
 
   fetchExperiencesAndWorkings(val) {
+    const {
+      fetchWorkings,
+    } = this.props;
+
+    const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const {
+      searchBy,
+      sortBy: sort,
+      searchType,
+    } = querySelector(query);
+
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery: val,
+      page: 1,
+      searchType,
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    browserHistory.push(url);
+    fetchWorkings(searchBy, val);
+
     ReactGA.event({
       category: GA_CATEGORY.SEARCH_EXPERIENCE,
       action: `${GA_ACTION.SEARCH_BY}_${this.props.experienceSearch.get('searchBy')}`,
       value: val,
     });
-    this.props.fetchExperiences('searchBy', val, 0);
-    this.props.fetchWorkings(val);
   }
 
-  fetchExperiencesWithSort(e) {
-    const value = e.target.value;
-    if (value === SORT.CREATED_AT) {
+  fetchExperiencesWithSort(sort) {
+    const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const {
+      searchBy,
+      searchType,
+    } = querySelector(query);
+
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery: '',
+      page: 1,
+      searchType,
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    browserHistory.push(url);
+
+    if (sort === SORT.CREATED_AT) {
       ReactGA.event({
         category: GA_CATEGORY.SEARCH_EXPERIENCE,
         action: GA_ACTION.CLICK_LATEST,
       });
-    } else if (value === SORT.POPULARITY) {
+    } else if (sort === SORT.POPULARITY) {
       ReactGA.event({
         category: GA_CATEGORY.SEARCH_EXPERIENCE,
         action: GA_ACTION.CLICK_POPULAR,
       });
     }
-    this.props.fetchExperiences('sort', e.target.value, 0);
   }
 
   fetchMoreExperiences = nextPage => {
@@ -115,24 +337,83 @@ class ExperienceSearch extends Component {
       action: GA_ACTION.FETCH_MORE,
       value: nextPage,
     });
-    this.props.fetchMoreExperiences(nextPage);
+
+    const {
+      pathname,
+      query,
+    } = this.props.location;
+
+    const {
+      searchBy,
+      searchQuery,
+      sortBy: sort,
+      searchType,
+    } = querySelector(query);
+
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery,
+      page: nextPage,
+      searchType,
+    });
+
+    const url = `${pathname}?${queryString}`;
+
+    browserHistory.push(url);
   }
 
   renderHelmet = () => {
-    const scale = getScale(this.props.experienceSearch.get('experienceCount'));
-    const description = `馬上查詢超過 ${scale} 篇面試及工作經驗分享，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
-    const data = HELMET_DATA.EXPERIENCE_SEARCH;
-    data.meta.push(
-      { name: 'description', content: description },
-      { property: 'og:description', content: description },
+    const {
+      searchType,
+      searchQuery,
+      sortBy,
+      page,
+    } = querySelector(this.props.location.query);
+
+    const count = this.props.experienceSearch.get('experienceCount');
+    const scale = getScale(count);
+    const url = this.getCanonicalUrl();
+    const searchTypeName = searchType.split(',').sort().reduce((names, type) => {
+      if (searchTypeMap[type]) { names.push(searchTypeMap[type]); }
+      return names;
+    }, []).join('、');
+
+    // default helmet info
+    let title = '查詢面試、工作經驗';
+    let description = `馬上查詢超過 ${scale} 篇面試及工作經驗分享，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
+
+    // if searchQuery is given and number of result > 0, then show job / company name
+    if (searchQuery && count > 0) {
+      const tmpStr = `${searchQuery}的${searchTypeName}分享`;
+      title = `${tmpStr}，第 ${page} 頁`;
+      description = `馬上查看共 ${count} 篇有關${tmpStr}，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
+    } else if (sortBy) { // if searchQuery is not given, but sortBy is given, then show 最新/熱門
+      title = `${sortByMap[sortBy]}${searchTypeName}分享 - 第 ${page} 頁`;
+      description = `馬上查詢超過 ${scale} 篇${searchTypeName}分享，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
+    }
+    return (
+      <Helmet
+        title={title}
+        meta={[
+          { name: 'description', content: description },
+          { property: 'og:title', content: formatTitle(title, SITE_NAME) },
+          { property: 'og:description', content: description },
+          { property: 'og:url', content: url },
+          { property: 'og:image', content: `${imgHost}/og/experience-search.jpg` },
+        ]}
+        link={[
+          { rel: 'canonical', href: url },
+        ]}
+      />
     );
-    return <Helmet {...data} />;
   }
 
   render() {
     const {
-      /* setSort, setIndustry, */ fetchKeywords, setKeyword,
+      setKeyword,
       experienceSearch,
+      loadingStatus,
     } = this.props;
     const data = experienceSearch.toJS();
 
@@ -142,73 +423,66 @@ class ExperienceSearch extends Component {
         <Wrapper size="l">
           <div className={styles.container}>
             <aside className={styles.aside}>
-              <section>
-                <button
-                  className={data.sort === SORT.CREATED_AT
-                    ? `${styles.frontButton} ${styles.toggle}`
-                    : styles.frontButton}
-                  onClick={this.fetchExperiencesWithSort} value={SORT.CREATED_AT}
-                >
-                  最新
-                </button>
-                <button
-                  className={data.sort === SORT.POPULARITY
-                    ? `${styles.rearButton} ${styles.toggle}`
-                    : styles.rearButton}
-                  onClick={this.fetchExperiencesWithSort} value={SORT.POPULARITY}
-                >
-                  熱門
-                </button>
-              </section>
-              <hr className={styles.splitter} />
-              <div className={styles.fliters}>
-                {
-                  [
-                    { label: '面試經驗', value: SEARCH_TYPE.INTERVIEW },
-                    { label: '工作經驗', value: SEARCH_TYPE.WORK },
-                    { label: '薪資工時', value: SEARCH_TYPE.SALARY },
-                  ].map(o => (
-                    <Checkbox
-                      key={o.value} id={`searchType-${o.value}`}
-                      label={o.label} value={o.value}
-                      disabled={o.value === 'salary' && !data.searchQuery}
-                      onChange={this.setSearchType}
-                      checked={data[o.value]}
-                    />
-                  ))
-                }
-              </div>
+              <Filter
+                data={data}
+                fetchExperiencesWithSort={this.fetchExperiencesWithSort}
+                setSearchType={this.setSearchType}
+                className={styles.filter}
+              />
+              <Banner1 className={styles.banner} />
             </aside>
 
-            <div className={styles.content}>
+            <section className={styles.content}>
               <Searchbar
                 className={styles.searcbarLarge}
                 data={data}
-                fetchKeywords={fetchKeywords}
+                handleSearchBy={this.handleSearchBy}
                 setKeyword={setKeyword}
                 handleKeyPress={this.handleKeyPress}
                 handleKeywordClick={this.handleKeywordClick}
                 fetchExperiencesAndWorkings={this.fetchExperiencesAndWorkings}
               />
 
-              {data.searchQuery &&
+              {(data.searchQuery && data.experienceCount > 0) &&
                 <div className={styles.searchResult}>
-                  找到 {data.experienceCount} 筆與 &quot;{data.searchQuery}&quot; 相關的資料
+                  <Heading size="m" bold>「{data.searchQuery}」的面試經驗、工作經驗</Heading>
                 </div>
               }
 
-              <InfiniteScroll
-                pageStart={0} hasMore={data.hasMore}
-                loadMore={nextPage => {
-                  if (data.hasMore) {
-                    this.fetchMoreExperiences(nextPage);
-                  }
-                }}
-                loader={<Loader size="s" />}
-              >
-                {
-                  (data.experiences || []).map(o => (
-                    data[o.type] && (
+              <Pagination
+                totalCount={data.experienceCount}
+                unit={PAGE_COUNT}
+                currentPage={data.currentPage}
+                onSelect={this.fetchMoreExperiences}
+              />
+
+              {(data.searchQuery && data.experienceCount === 0) &&
+                <P
+                  size="l" bold
+                  className={styles.searchNoResult}
+                >
+                    尚未有「{data.searchQuery}」的經驗分享
+                </P>
+              }
+              { // rendering experiences blocks and banner
+                loadingStatus === status.FETCHING
+                ? <Loader size="s" />
+                : (data.experiences || [])
+                  .map((o, index) => {
+                    if (index === BANNER_LOCATION) {
+                      return (
+                        <div key={o._id}>
+                          <Banner2 />
+                          <ExperienceBlock
+                            to={`/experiences/${o._id}`}
+                            data={o}
+                            size="l"
+                            backable
+                          />
+                        </div>
+                      );
+                    }
+                    return (
                       <ExperienceBlock
                         key={o._id}
                         to={`/experiences/${o._id}`}
@@ -216,20 +490,34 @@ class ExperienceSearch extends Component {
                         size="l"
                         backable
                       />
-                    )
-                  ))
-                }
-              </InfiniteScroll>
+                    );
+                  }
+                )
+              }
 
-              <div className={styles.workingHourWrapper}>
-                {
-                  data.salary && (data.workings || []).map((o, i) => (
-                    <WorkingHourBlock key={o.company.id || i} data={o} />
-                  ))
-                }
-              </div>
+              <Pagination
+                totalCount={data.experienceCount}
+                unit={PAGE_COUNT}
+                currentPage={data.currentPage}
+                onSelect={this.fetchMoreExperiences}
+              />
 
-            </div>
+              {(data.searchQuery && data.workings.length > 0) &&
+                <div>
+                  <hr className={styles.splitter} />
+                  <section className={styles.timeSalaryWrapper}>
+                    <Heading size="m" bold marginBottom>「{data.searchQuery}」的薪資工時</Heading>
+                    {data.salary &&
+                      <Columns
+                        Item={TimeSalaryBlock}
+                        items={(data.workings || []).map(o => ({ data: o }))}
+                        gutter="s"
+                      />
+                    }
+                  </section>
+                </div>
+              }
+            </section>
           </div>
         </Wrapper>
       </Section>

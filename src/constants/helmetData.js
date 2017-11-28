@@ -26,7 +26,7 @@ The followings are some useful elements from Open Graph Protocol:
 
 */
 
-const imgHost = 'https://image.goodjob.life';
+export const imgHost = 'https://image.goodjob.life';
 export const SITE_NAME = 'GoodJob 好工作評論網';
 export const HELMET_DATA = {
   DEFAULT: {
@@ -86,18 +86,8 @@ export const HELMET_DATA = {
       { rel: 'canonical', href: formatCanonicalPath('/share/work-experiences') },
     ],
   },
-  get EXPERIENCE_SEARCH() {
-    return {
-      title: '查詢面試、工作經驗',
-      meta: [
-        { property: 'og:title', content: formatTitle('查詢面試、工作經驗', SITE_NAME) },
-        { property: 'og:url', content: formatCanonicalPath('/experiences/search') },
-        { property: 'og:image', content: `${imgHost}/og/experience-search.jpg` },
-      ],
-      link: [
-        { rel: 'canonical', href: formatCanonicalPath('/experiences/search') },
-      ],
-    };
+  EXPERIENCE_SEARCH: {
+    // information is dynamic
   },
   EXPERIENCE_DETAIL: {
     // information is dynamic

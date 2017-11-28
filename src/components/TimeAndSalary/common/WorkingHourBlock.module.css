@@ -1,5 +1,37 @@
 @value yellow-bar, main-yellow, border-gray, main-gray, gray-dark, gray-light from "common/variables.module.css";
 
+.container {
+  display: block;
+  background-color: #fff;
+  box-shadow: 0 0 6px rgba(0,0,0, .15);
+  margin-bottom: 40px;
+  transition-property: background, box-shadow;
+  transition-duration: .3s;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 1025px) {
+    &:hover {
+      box-shadow: 1px 1px 11px rgba(0,0,0, .25);
+      .heading {
+        color: link-blue;
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 550px) {
+    margin-left: calc(page-gutter-s * -1);
+    margin-right: calc(page-gutter-s * -1);
+    margin-bottom: 24px;
+  }
+}
+
 .toggleButton {
   display: block;
   width: 100%;
@@ -11,7 +43,7 @@
         border-color: main-yellow;
         svg { fill: main-yellow; }
       }
-    }    
+    }
   }
 }
 

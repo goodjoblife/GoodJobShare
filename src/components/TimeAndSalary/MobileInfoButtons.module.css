@@ -1,0 +1,39 @@
+$below-small: 850px;
+$primary-color: #fcd406;
+
+.mobileInfoButtons {
+	display: none;
+
+	@media (max-width: $below-small) {
+		display: flex;
+		margin-bottom: 15px;
+		justify-content: flex-end;
+	}
+
+	.infoButton {
+		display: flex;
+		align-items: center;
+		margin-left: 20px;
+		font-size: 0.95em;
+		&::after {
+			content: "?";
+			color: $primary-color;
+			font-weight: 800;
+			font-size: 12px;
+			width: 21px;
+			height: 21px;
+			padding-left: 1px;
+			border-radius: 50%;
+			font-size: 12px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: $primary-color;
+			border: 2px solid $primary-color;
+			transition: opacity .25s;
+			margin-right: 4px;
+			transform: scale(.9);
+			margin-left: 5px;
+		}
+	}
+}
