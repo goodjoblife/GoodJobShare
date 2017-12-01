@@ -64,9 +64,18 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery, sear
     workings: '',
     currentPage: Number(page),
     searchType,
+    searchBy,
   };
 
   dispatch(setLoadintStatus(status.FETCHING));
+  dispatch(setSortAndExperiences({
+    ...objCond,
+    error: null,
+    experiences: [],
+    experienceCount: 0,
+    hasMore: false,
+    loadingStatus: status.FETCHING,
+  }));
 
   return getExperiencesApi(query)
     .then(result => {
