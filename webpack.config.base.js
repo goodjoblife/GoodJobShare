@@ -8,6 +8,7 @@ const {
   API_HOST,
   CONTENTFUL_API_HOST,
   FACEBOOK_APP_ID,
+  GA_ID,
 } = require('./src/config');
 
 module.exports = {
@@ -35,6 +36,7 @@ module.exports = {
         API_HOST: JSON.stringify(API_HOST),
         CONTENTFUL_API_HOST: JSON.stringify(CONTENTFUL_API_HOST),
         FACEBOOK_APP_ID: JSON.stringify(FACEBOOK_APP_ID),
+        GA_ID: JSON.stringify(GA_ID),
       },
       __SERVER__: false,
     }),
