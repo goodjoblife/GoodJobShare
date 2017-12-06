@@ -9,5 +9,6 @@ services:
         - API_HOST=https://api-dev.goodjob.life
         - CONTENTFUL_API_HOST=https://content-stage.goodjob.life
         - FACEBOOK_APP_ID=1844389232511081
+        - GA_ID=UA-79990667-2
     ports:
       - 39000:3001

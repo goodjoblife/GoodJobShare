@@ -6,9 +6,15 @@ jobs:
             - image: node
         steps:
             - checkout
+            - restore_cache:
+                key: dependency-cache-{{ checksum "yarn.lock" }}
             - run:
                 name: Install Dependencies
                 command: yarn install
+            - save_cache:
+                key: dependency-cache-{{ checksum "yarn.lock" }}
+                paths:
+                  - ./node_modules
             - run:
                 name: Lint and Unit test
                 command: npm test
@@ -18,7 +24,7 @@ jobs:
     build_dev_docker:
         working_directory: ~/app
         docker:
-            - image: buildpack-deps
+            - image: alpine
         steps:
             - checkout
             - run:
@@ -26,18 +32,15 @@ jobs:
                 command: ./.circleci/prepare-docker-compose.sh
             - setup_remote_docker
             - run:
-                name: Build Docker Image
-                command: docker-compose -f .circleci/docker-compose-dev.yml build
-            - run:
-                name: Retag
-                command: docker tag 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:dev 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:${CIRCLE_SHA1}
-            - run: ./.circleci/prepare-docker-login.sh
-            - run: docker-compose -f .circleci/docker-compose-dev.yml push
-            - run: docker push 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:${CIRCLE_SHA1}
+                name: Build Docker and Push
+                command: |
+                    if [ "${CIRCLE_PROJECT_USERNAME}" == "goodjoblife" ]; then
+                        ./.circleci/build-dev-docker.sh
+                    fi
     build_stage_docker:
         working_directory: ~/app
         docker:
-            - image: buildpack-deps
+            - image: alpine
         steps:
             - checkout
             - run:
@@ -45,14 +48,27 @@ jobs:
                 command: ./.circleci/prepare-docker-compose.sh
             - setup_remote_docker
             - run:
-                name: Build Docker Image
-                command: docker-compose -f .circleci/docker-compose-stage.yml build
+                name: Build Docker and Push
+                command: |
+                    if [ "${CIRCLE_PROJECT_USERNAME}" == "goodjoblife" ]; then
+                        ./.circleci/build-stage-docker.sh
+                    fi
+    build_production_docker:
+        working_directory: ~/app
+        docker:
+            - image: alpine
+        steps:
+            - checkout
             - run:
-                name: Retag
-                command: docker tag 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:stage 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:${CIRCLE_SHA1}
-            - run: ./.circleci/prepare-docker-login.sh
-            - run: docker-compose -f .circleci/docker-compose-stage.yml push
-            - run: docker push 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:${CIRCLE_SHA1}
+                name: Install Docker client & Docker Compose
+                command: ./.circleci/prepare-docker-compose.sh
+            - setup_remote_docker
+            - run:
+                name: Build Docker and Push
+                command: |
+                    if [ "${CIRCLE_PROJECT_USERNAME}" == "goodjoblife" ]; then
+                        ./.circleci/build-production-docker.sh
+                    fi
     deploy-dev:
         working_directory: ~/app
         docker:
@@ -61,9 +77,11 @@ jobs:
             - run:
                 name: Trigger Deploy
                 command: |
-                    curl --user ${CIRCLE_API_TOKEN_FOR_DEPLOY}: \
-                        --data build_parameters[CIRCLE_JOB]=build \
-                        https://circleci.com/api/v1.1/project/github/mark86092/goodjob-deploy-ci/tree/www-dev
+                    if [ "${CIRCLE_PROJECT_USERNAME}" == "goodjoblife" ]; then
+                        curl --user ${CIRCLE_API_TOKEN_FOR_DEPLOY}: \
+                            --data build_parameters[CIRCLE_JOB]=build \
+                            https://circleci.com/api/v1.1/project/github/mark86092/goodjob-deploy-ci/tree/www-dev
+                    fi
     deploy-stage:
         working_directory: ~/app
         docker:
@@ -72,27 +90,11 @@ jobs:
             - run:
                 name: Trigger Deploy
                 command: |
-                    curl --user ${CIRCLE_API_TOKEN_FOR_DEPLOY}: \
-                        --data build_parameters[CIRCLE_JOB]=build \
-                        https://circleci.com/api/v1.1/project/github/mark86092/goodjob-deploy-ci/tree/www-stage
-    build_production_docker:
-        working_directory: ~/app
-        docker:
-            - image: buildpack-deps
-        steps:
-            - checkout
-            - run:
-                name: Install Docker client & Docker Compose
-                command: ./.circleci/prepare-docker-compose.sh
-            - setup_remote_docker
-            - run:
-                name: Build Docker Image
-                command: docker-compose -f .circleci/docker-compose-production.yml build
-            - run:
-                name: Retag
-                command: docker tag 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:production 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:production-${CIRCLE_SHA1}
-            - run: ./.circleci/prepare-docker-login.sh
-            - run: docker push 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:production-${CIRCLE_SHA1}
+                    if [ "${CIRCLE_PROJECT_USERNAME}" == "goodjoblife" ]; then
+                        curl --user ${CIRCLE_API_TOKEN_FOR_DEPLOY}: \
+                            --data build_parameters[CIRCLE_JOB]=build \
+                            https://circleci.com/api/v1.1/project/github/mark86092/goodjob-deploy-ci/tree/www-stage
+                    fi
 workflows:
     version: 2
     build_and_test:
