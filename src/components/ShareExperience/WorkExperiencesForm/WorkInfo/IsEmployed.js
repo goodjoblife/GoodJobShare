@@ -16,6 +16,7 @@ import {
 import styles from './IsEmployed.module.css';
 
 const IsEmployed = ({
+  idPrefix4Radio,
   isCurrentlyEmployed,
   jobEndingTimeYear,
   jobEndingTimeMonth,
@@ -33,6 +34,8 @@ const IsEmployed = ({
         {
           isEmployedOptions.map(option => (
             <RadioDefault
+              idPrefix={idPrefix4Radio}
+              key={option.value}
               label={option.label}
               value={option.value}
               onChange={onIsCurrentlyEmployed}
@@ -70,6 +73,7 @@ const IsEmployed = ({
 );
 
 IsEmployed.propTypes = {
+  idPrefix4Radio: PropTypes.string,
   isCurrentlyEmployed: PropTypes.string,
   jobEndingTimeYear: PropTypes.number,
   jobEndingTimeMonth: PropTypes.number,

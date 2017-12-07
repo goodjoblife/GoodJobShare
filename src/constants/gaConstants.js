@@ -1,6 +1,7 @@
 
 export const GA_CATEGORY = {
   SHARE_INTERVIEW: 'share_interview',
+  SHARE_TIME_SALARY: 'share_time_salary',
   SHARE_WORK: 'share_work',
   FORM_TIME: 'form_time',
   SEARCH_EXPERIENCE: 'search_experience',

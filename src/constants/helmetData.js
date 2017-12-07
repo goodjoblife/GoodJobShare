@@ -75,6 +75,17 @@ export const HELMET_DATA = {
       { rel: 'canonical', href: formatCanonicalPath('/share/interview') },
     ],
   },
+  SHARE_TIME_SALARY: {
+    title: '薪資工時分享',
+    meta: [
+      { property: 'og:title', content: formatTitle('薪資工時分享', SITE_NAME) },
+      { property: 'og:url', content: formatCanonicalPath('/share/time-and-salary') },
+      { property: 'og:image', content: `${imgHost}/og/share-time-and-salary.jpg` },
+    ],
+    link: [
+      { rel: 'canonical', href: formatCanonicalPath('/share/time-and-salary') },
+    ],
+  },
   SHARE_WORK: {
     title: '工作經驗分享',
     meta: [

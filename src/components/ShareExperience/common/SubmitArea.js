@@ -21,6 +21,16 @@ const getSuccessFeedback = id => (
   />
 );
 
+const getWorkingsSuccessFeedback = count => (
+  <SuccessFeedback
+    info={`您已經上傳 ${count} 次，還有 ${5 - (count || 0)} 次可以上傳。`}
+    buttonText="查看最新工時、薪資"
+    buttonClick={() => (
+      browserHistory.push('/time-and-salary/latest')
+    )}
+  />
+);
+
 const getFailFeedback = buttonClick => (
   <FailFeedback
     buttonClick={buttonClick}
@@ -55,12 +65,22 @@ class SubmitArea extends React.PureComponent {
 
   onSubmit() {
     const p = this.props.onSubmit();
+    const { type } = this.props;
+
     if (p) {
       return p
-        .then(r => r.experience._id)
+        .then(r => {
+          if (type === 'workings') {
+            return r.queries_count;
+          }
+          return r.experience._id;
+        })
         .then(id => {
           this.handleIsOpen(true);
           this.handleHasClose(false);
+          if (type === 'workings') {
+            return this.handleFeedback(getWorkingsSuccessFeedback(id));
+          }
           return this.handleFeedback(getSuccessFeedback(id));
         })
         .catch(() => {
@@ -206,6 +226,7 @@ class SubmitArea extends React.PureComponent {
 }
 
 SubmitArea.propTypes = {
+  type: PropTypes.string,
   onSubmit: PropTypes.func,
   auth: ImmutablePropTypes.map,
   login: PropTypes.func.isRequired,
