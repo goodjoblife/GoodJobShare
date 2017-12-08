@@ -8,7 +8,6 @@ const webpackIsomorphicTools = require('./webpack-isomorphic-tools');
 const config = require('./webpack.config.base');
 
 module.exports = merge.smart(config, {
-  debug: true,
   devtool: 'cheap-module-eval-source-map',
   entry: [
     'webpack-hot-middleware/client',
@@ -21,6 +20,10 @@ module.exports = merge.smart(config, {
     publicPath: '/static/',
   },
   plugins: [
+    // The debug mode for loaders will be removed in webpack 3 or later. https://webpack.js.org/guides/migrating/#debug
+    new webpack.LoaderOptionsPlugin({
+      debug: true,
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
@@ -30,17 +33,16 @@ module.exports = merge.smart(config, {
     new WebpackIsomorphicToolsPlugin(webpackIsomorphicTools).development(),
   ],
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.jsx?$/,
+        enforce: 'pre',
         exclude: path.resolve(__dirname, 'node_modules'),
-        loaders: ['eslint-loader'],
+        loader: 'eslint-loader',
       },
-    ],
-    loaders: [
       {
         test: /^((?!\.module).)*\.css$/,
-        loaders: [
+        use: [
           'style-loader',
           'css-loader?sourceMap',
         ],
@@ -50,7 +52,7 @@ module.exports = merge.smart(config, {
       },
       {
         test: /\.module\.css$/,
-        loaders: [
+        use: [
           'style-loader',
           'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', // eslint-disable-line max-len
           'postcss-loader',
