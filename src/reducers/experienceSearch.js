@@ -1,7 +1,7 @@
 import { Map, fromJS } from 'immutable';
 
 import createReducer from 'utils/createReducer';
-import status from '../constants/status';
+import statusConstant from '../constants/status';
 import {
   SET_SEARCH_BY,
   SET_EXPERIENCES,
@@ -16,20 +16,22 @@ import {
 
 const preloadedState = Map({
   sort: 'created_at',
-  searchType: ['interview', 'work'],
-  industry: 'all',
-  searchBy: 'job_title',
-  searchQuery: '', // query & result 用
-  keyword: '', // input value 用
-  keywords: [],
+  searchType: ['interview', 'work'], // 過濾 面試、工作經驗 --> 正確是 type
+  searchBy: 'job_title', // 搜尋類別（公司、職稱）
+  searchQuery: '', // 搜尋類別的關鍵字
+  currentPage: 1,
+
   experiences: [],
   experienceCount: 0,
+
+  industry: 'all',
+  keyword: '', // input value 用
+  keywords: [],
   prevCond: 'sort',
   preValue: '',
-  currentPage: 1,
   hasMore: false,
   workings: [],
-  loadingStatus: status.UNFETCHED,
+  loadingStatus: statusConstant.UNFETCHED,
   error: null,
 });
 
@@ -56,8 +58,6 @@ const experienceSearch = createReducer(preloadedState, {
 
   [SET_SORT_AND_EXPERIENCES]: (state, action) =>
     state.merge({
-      loadingStatus: action.payload.loadingStatus,
-      error: action.payload.error,
       sort: action.payload.sort,
       keyword: action.payload.searchQuery,
       searchQuery: action.payload.searchQuery,
@@ -85,9 +85,10 @@ const experienceSearch = createReducer(preloadedState, {
       currentPage: action.payload.currentPage,
     }),
 
-  [SET_LOADING_STATUS]: (state, action) =>
+  [SET_LOADING_STATUS]: (state, { payload: { status, error } }) =>
     state.merge({
-      loadingStatus: action.payload.loadingStatus,
+      loadingStatus: status,
+      error,
     }),
 });
 

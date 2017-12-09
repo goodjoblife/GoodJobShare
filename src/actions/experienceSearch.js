@@ -4,7 +4,7 @@ import {
   getExperiences as getExperiencesApi,
 } from '../apis/experiencesApi';
 
-import status from '../constants/status';
+import statusConstant from '../constants/status';
 
 
 export const SET_SEARCH_BY = 'SET_SEARCH_BY';
@@ -39,10 +39,11 @@ export const setCurrentPage = currentPage => ({
   },
 });
 
-const setLoadintStatus = loadingStatus => ({
+const setLoadingStatus = (status, error = null) => ({
   type: SET_LOADING_STATUS,
   payload: {
-    loadingStatus,
+    status,
+    error,
   },
 });
 
@@ -67,14 +68,12 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery, sear
     searchBy,
   };
 
-  dispatch(setLoadintStatus(status.FETCHING));
+  dispatch(setLoadingStatus(statusConstant.FETCHING));
   dispatch(setSortAndExperiences({
     ...objCond,
-    error: null,
     experiences: [],
     experienceCount: 0,
     hasMore: false,
-    loadingStatus: status.FETCHING,
   }));
 
   return getExperiencesApi(query)
@@ -83,27 +82,17 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery, sear
 
       const payload = {
         ...objCond,
-        error: null,
         experiences: (
           result.experiences
         ),
         experienceCount: result.total,
         hasMore,
-        loadingStatus: status.FETCHED,
       };
+      dispatch(setLoadingStatus(statusConstant.FETCHED));
       dispatch(setSortAndExperiences(payload));
     })
     .catch(error => {
-      const payload = {
-        ...objCond,
-        error,
-        experiences: [],
-        experienceCount: 0,
-        hasMore,
-        loadingStatus: status.ERROR,
-      };
-
-      dispatch(setSortAndExperiences(payload));
+      dispatch(setLoadingStatus(statusConstant.ERROR, error));
       throw error;
     });
 };
