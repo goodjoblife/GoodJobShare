@@ -24,7 +24,7 @@ export default createReducer(preloadedState, {
   [SET_DATA_STATUS]: (state, { id, nextStatus, err }) =>
     state
       .setIn(['dataMapById', id, 'dataStatus'], nextStatus)
-      .setIn(['dataMapById', id, 'dataError'], err),
+      .setIn(['dataMapById', id, 'dataError'], fromJS(err)),
   [SET_DATA]: (state, { id, data }) =>
     state.setIn(['dataMapById', id, 'data'], fromJS(data)),
 });

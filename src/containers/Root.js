@@ -13,7 +13,7 @@ class Root extends Component {
   }
 
   initGA = () => {
-    ReactGA.initialize('UA-79990667-1');
+    ReactGA.initialize(process.env.GA_ID);
   }
 
   logPageView = () => {
