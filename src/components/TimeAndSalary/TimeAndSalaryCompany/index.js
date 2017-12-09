@@ -4,8 +4,10 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
 
 import Select from 'common/form/Select';
+import Loading from 'common/Loader';
 import WorkingHourBlock from '../common/WorkingHourBlock';
 import { queryCompany } from '../../../actions/timeAndSalaryCompany';
+import fetchingStatus from '../../../constants/status';
 
 import styles from '../views/view.module.css';
 
@@ -44,6 +46,7 @@ const selectOptions = R.pipe(
 export default class TimeAndSalaryCompany extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
+    status: PropTypes.string,
     route: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
     queryCompany: PropTypes.func,
@@ -77,7 +80,7 @@ export default class TimeAndSalaryCompany extends Component {
   }
 
   render() {
-    const { route: { path }, switchPath } = this.props;
+    const { route: { path }, switchPath, status } = this.props;
     const { groupSortBy } = pathnameMapping[path];
     const company = this.props.params.keyword;
     const raw = this.props.data.toJS();
@@ -101,6 +104,7 @@ export default class TimeAndSalaryCompany extends Component {
             </div>
           </div>
         </div>
+        { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
         {raw.map((o, i) => (
           <WorkingHourBlock key={o.company.id || i} data={o} groupSortBy={groupSortBy} isExpanded={(i === 0) && (raw.length === 1)} />
         ))}
