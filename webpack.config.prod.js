@@ -31,27 +31,32 @@ module.exports = merge.smart(config, {
         warnings: false,
       },
     }),
-    new ExtractTextPlugin('style-[contenthash].css', { allChunks: true }),
+    new ExtractTextPlugin({ filename: 'style-[contenthash].css', allChunks: true }),
     new WebpackIsomorphicToolsPlugin(webpackIsomorphicTools),
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /^((?!\.module).)*\.css$/,
-        loader: ExtractTextPlugin.extract(
-          'style-loader',
-          'css-loader'
-        ),
+        loader: ExtractTextPlugin.extract({
+          use: [
+            'style-loader',
+            'css-loader',
+          ],
+        }),
         include: [
           path.resolve(__dirname, 'src'),
         ],
       },
       {
         test: /\.module\.css$/,
-        loader: ExtractTextPlugin.extract(
-          'style-loader',
-          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' // eslint-disable-line max-len
-        ),
+        loader: ExtractTextPlugin.extract({
+          use: [
+            'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+            'postcss-loader',
+          ],
+          fallback: 'style-loader',
+        }),
         exclude: /node_modules/,
       },
     ],
