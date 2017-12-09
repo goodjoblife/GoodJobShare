@@ -8,13 +8,10 @@ import statusConstant from '../constants/status';
 
 
 export const SET_SEARCH_BY = 'SET_SEARCH_BY';
-export const SET_EXPERIENCES = 'SET_EXPERIENCES';
 export const SET_WORKINGS = 'SET_WORKINGS';
 export const SET_KEYWORD = 'SET_KEYWORD';
 export const SET_KEYWORDS = 'SET_KEYWORDS';
 export const SET_SORT_AND_EXPERIENCES = 'SET_SORT_AND_EXPERIENCES';
-export const SET_KEYWORDS_AND_EXPERIENCES = 'SET_KEYWORDS_AND_EXPERIENCES';
-export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 export const SET_LOADING_STATUS = 'SET_LOADING_STATUS';
 
 export const setKeyword = keyword => ({
@@ -30,13 +27,6 @@ export const setSortAndExperiences = payload => ({
 export const setWorkings = workings => ({
   type: SET_WORKINGS,
   workings,
-});
-
-export const setCurrentPage = currentPage => ({
-  type: SET_CURRENT_PAGE,
-  payload: {
-    currentPage,
-  },
 });
 
 const setLoadingStatus = (status, error = null) => ({
@@ -57,12 +47,10 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery, sear
     searchQuery,
     searchType,
   };
-  let hasMore = false;
 
   const objCond = {
     sort: _sort,
     searchQuery,
-    workings: '',
     currentPage: Number(page),
     searchType,
     searchBy,
@@ -73,20 +61,16 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery, sear
     ...objCond,
     experiences: [],
     experienceCount: 0,
-    hasMore: false,
   }));
 
   return getExperiencesApi(query)
     .then(result => {
-      hasMore = (start + limit) < result.total;
-
       const payload = {
         ...objCond,
         experiences: (
           result.experiences
         ),
         experienceCount: result.total,
-        hasMore,
       };
       dispatch(setLoadingStatus(statusConstant.FETCHED));
       dispatch(setSortAndExperiences(payload));
