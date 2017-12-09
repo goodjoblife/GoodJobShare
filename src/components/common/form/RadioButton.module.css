@@ -86,7 +86,7 @@
 		content: "";
 		width: 32px;
 		height: 32px;
-		background: url("../img/icons/checked.svg") 0 0 no-repeat;
+		background: url("https://image.goodjob.life/checked.svg") 0 0 no-repeat;
 		background-size: 100%;
 		position: absolute;
 		top: -15px;
@@ -178,14 +178,14 @@ input[type="radio"]:checked + .radioSquare {
 }
 
 .emoji0 {
-	background-image: url("../img/icons/emoji-0.svg");
+  background-image: url("https://image.goodjob.life/emoji-0.svg");
 }
 .emoji1 {
-	background-image: url("../img/icons/emoji-1.svg");
+  background-image: url("https://image.goodjob.life/emoji-1.svg");
 }
 .emoji2 {
-	background-image: url("../img/icons/emoji-2.svg");
+  background-image: url("https://image.goodjob.life/emoji-2.svg");
 }
 .emoji3 {
-	background-image: url("../img/icons/emoji-3.svg");
+  background-image: url("https://image.goodjob.life/emoji-3.svg");
 }
