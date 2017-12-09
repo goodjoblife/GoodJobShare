@@ -25,11 +25,11 @@ const ShareExpSection = ({ heading, Subheading }) => (
           <P size="l" Tag="h3" bold className={styles.button}>工作經驗</P>
           <P className={styles.description} size="l">想推薦工作、爆料的，這邊請！</P>
         </Link>
-        <a href="/share/time-and-salary" className={styles.item}>
+        <Link to="/share/time-and-salary" className={styles.item}>
           <img src="https://image.goodjob.life/share-1.png" alt="留下工時或薪資" className={styles.image} />
           <P size="l" Tag="h3" bold className={styles.button}>薪資工時</P>
           <P className={styles.description} size="l">常加班、薪水又少嗎？快分享避免他人踩雷！</P>
-        </a>
+        </Link>
       </div>
     </Wrapper>
   </Section>
