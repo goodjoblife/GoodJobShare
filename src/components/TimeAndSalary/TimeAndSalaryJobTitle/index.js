@@ -5,6 +5,7 @@ import R from 'ramda';
 
 import Select from 'common/form/Select';
 import Loading from 'common/Loader';
+import { P } from 'common/base';
 import WorkingHourBlock from '../common/WorkingHourBlock';
 import { queryJobTitle } from '../../../actions/timeAndSalaryJobTitle';
 import fetchingStatus from '../../../constants/status';
@@ -103,6 +104,14 @@ export default class TimeAndSalaryJobTitle extends Component {
           </div>
         </div>
         { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
+        { status === fetchingStatus.FETCHED && raw.length === 0 &&
+          <P
+            size="l" bold
+            className={styles.searchNoResult}
+          >
+              尚未有職稱「{jobTitle}」的薪時資訊
+          </P>
+        }
         {raw.map((o, i) => (
           <WorkingHourBlock key={o.company.id || i} data={o} groupSortBy={groupSortBy} isExpanded={(i === 0) && (raw.length === 1)} />
         ))}
