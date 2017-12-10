@@ -4,8 +4,11 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
 
 import Select from 'common/form/Select';
+import Loading from 'common/Loader';
+import { P } from 'common/base';
 import WorkingHourBlock from '../common/WorkingHourBlock';
 import { queryCompany } from '../../../actions/timeAndSalaryCompany';
+import fetchingStatus from '../../../constants/status';
 
 import styles from '../views/view.module.css';
 
@@ -44,6 +47,7 @@ const selectOptions = R.pipe(
 export default class TimeAndSalaryCompany extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
+    status: PropTypes.string,
     route: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
     queryCompany: PropTypes.func,
@@ -77,8 +81,8 @@ export default class TimeAndSalaryCompany extends Component {
   }
 
   render() {
-    const { route: { path }, switchPath } = this.props;
-    const { groupSortBy } = pathnameMapping[path];
+    const { route: { path }, switchPath, status } = this.props;
+    const { title, groupSortBy } = pathnameMapping[path];
     const company = this.props.params.keyword;
     const raw = this.props.data.toJS();
 
@@ -87,7 +91,7 @@ export default class TimeAndSalaryCompany extends Component {
 
     return (
       <section className={styles.searchResult}>
-        <h2 className={styles.heading}>搜尋 “{company}” 的薪時資訊</h2>
+        <h2 className={styles.heading}>搜尋 “{company}” 的 {title}</h2>
         <div className={styles.result}>
           <div className={styles.sort}>
             <div className={styles.label}> 排序：</div>
@@ -101,6 +105,15 @@ export default class TimeAndSalaryCompany extends Component {
             </div>
           </div>
         </div>
+        { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
+        { status === fetchingStatus.FETCHED && raw.length === 0 &&
+          <P
+            size="l" bold
+            className={styles.searchNoResult}
+          >
+              尚未有公司「{company}」的薪時資訊
+          </P>
+        }
         {raw.map((o, i) => (
           <WorkingHourBlock key={o.company.id || i} data={o} groupSortBy={groupSortBy} isExpanded={(i === 0) && (raw.length === 1)} />
         ))}
