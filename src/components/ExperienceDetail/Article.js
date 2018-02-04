@@ -7,6 +7,7 @@ import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
 import SectionBlock from './SectionBlock';
 import QABlock from './QABlock';
+import BasicPermissionBlock from '../../containers/PermissionBlock/BasicPermissionBlockContainer';
 import { overallRatingDialogMap } from '../ShareExperience/common/optionMap';
 import { MAX_WORDS_IF_HIDDEN } from '../../constants/hideContent';
 
@@ -186,6 +187,7 @@ class Article extends React.Component {
             ) :
             null
           }
+          {hideContent ? <BasicPermissionBlock /> : null}
         </section>
       </div>
     );
