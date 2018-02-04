@@ -8,16 +8,19 @@ import {
   formatCanonicalPath,
   formatUrl,
 } from 'utils/helmetHelper';
+import { nthIndexOf } from 'utils/stringUtil';
 import NotFound from 'common/NotFound';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import Body from './Body';
 import Footer from './Footer';
+import BasicPermissionBlock from '../../containers/PermissionBlock/BasicPermissionBlockContainer';
 
 import {
     fetchMetaListIfNeeded,
     fetchDataIfNeeded,
 } from '../../actions/laborRightsSingle';
 import status from '../../constants/status';
+import { MAX_IMAGES_IF_HIDDEN, MARKDOWN_DIVIDER } from '../../constants/hideContent';
 import { SITE_NAME } from '../../constants/helmetData';
 
 class LaborRightsSingle extends React.Component {
@@ -31,6 +34,7 @@ class LaborRightsSingle extends React.Component {
     this.props.fetchMetaListIfNeeded().then(() => {
       this.props.fetchDataIfNeeded(this.props.params.id);
     });
+    this.props.fetchMyPermission();
   }
 
   componentDidUpdate() {
@@ -52,6 +56,14 @@ class LaborRightsSingle extends React.Component {
       seoDescription,
       seoText,
     } = this.props.data ? this.props.data.toJS() : {};
+    const { canViewLaborRightsSingle } = this.props;
+
+    // hide some content if don't have permission
+    let newContent = content;
+    if (!canViewLaborRightsSingle) {
+      const endPos = nthIndexOf(content, MARKDOWN_DIVIDER, MAX_IMAGES_IF_HIDDEN);
+      newContent = content.substr(0, endPos);
+    }
     return (
       <main>
         <Helmet
@@ -79,11 +91,14 @@ class LaborRightsSingle extends React.Component {
                 title={title}
                 seoText={seoText}
                 description={description}
-                content={content}
+                content={newContent}
               />
-              <Section marginTop>
-                <CallToActionFolder />
-              </Section>
+              {!canViewLaborRightsSingle ? <BasicPermissionBlock /> : null}
+              {canViewLaborRightsSingle && (
+                <Section marginTop>
+                  <CallToActionFolder />
+                </Section>
+              )}
               <Footer
                 id={id}
                 prev={this.props.prev}
@@ -105,6 +120,8 @@ LaborRightsSingle.propTypes = {
   fetchDataIfNeeded: React.PropTypes.func.isRequired,
   status: React.PropTypes.string.isRequired,
   error: ImmutablePropTypes.map,
+  canViewLaborRightsSingle: React.PropTypes.bool.isRequired,
+  fetchMyPermission: React.PropTypes.func.isRequired,
 };
 
 export default LaborRightsSingle;

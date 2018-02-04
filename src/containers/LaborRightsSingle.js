@@ -1,8 +1,14 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/laborRightsSingle';
+import { fetchMyPermission } from '../actions/me';
 import status from '../constants/status';
 import LaborRightsSingle from '../components/LaborRightsSingle';
+
+import {
+  canViewLaborRightsSingleSelector,
+} from '../selectors/meSelector';
+
 
 export default connect(
   (state, { params: { id } }) => {
@@ -32,7 +38,11 @@ export default connect(
       next: nextData,
       status: dataStatus,
       error: dataError,
+      canViewLaborRightsSingle: canViewLaborRightsSingleSelector(state),
     };
   },
-  dispatch => bindActionCreators(actionCreators, dispatch),
+  dispatch => bindActionCreators({
+    ...actionCreators,
+    fetchMyPermission,
+  }, dispatch),
 )(LaborRightsSingle);
