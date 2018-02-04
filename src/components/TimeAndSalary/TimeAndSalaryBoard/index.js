@@ -14,7 +14,10 @@ import InfoSalaryModal from '../common/InfoSalaryModal';
 import styles from './TimeAndSalaryBoard.module.css';
 import commonStyles from '../views/view.module.css';
 import fetchingStatus from '../../../constants/status';
+import { MAX_ROWS_IF_HIDDEN } from '../../../constants/hideContent';
 import CallToActionRow from './CallToActionRow';
+import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
+
 import { queryTimeAndSalary } from '../../../actions/timeAndSalaryBoard';
 
 const pathnameMapping = {
@@ -175,6 +178,18 @@ const injectCallToActions = rows => {
   return flapMapIndexed(injectEvery(100))(rows);
 };
 
+const injectPermissionBlock = rows => {
+  const newRows = rows.slice(0, MAX_ROWS_IF_HIDDEN);
+  newRows.push(
+    <tr>
+      <td colSpan="7" className={styles.noBefore}>
+        <BasicPermissionBlock />
+      </td>
+    </tr>
+    );
+  return newRows;
+};
+
 const injectLoadingIconRow = R.prepend(
   <tr key="extreme-loading" className={styles.extremeRow}>
     <td colSpan="7" className={styles.noBefore}>
@@ -211,6 +226,8 @@ export default class TimeAndSalaryBoard extends Component {
     resetBoardExtremeData: PropTypes.func.isRequired,
     extremeStatus: PropTypes.string,
     extremeData: ImmutablePropTypes.list,
+    canViewTimeAndSalary: PropTypes.bool.isRequired,
+    fetchMyPermission: PropTypes.func.isRequired,
   }
 
   static fetchData({ routes, store: { dispatch } }) {
@@ -242,6 +259,7 @@ export default class TimeAndSalaryBoard extends Component {
     const { sortBy, order } = pathnameMapping[path];
 
     this.props.queryTimeAndSalary({ sortBy, order });
+    this.props.fetchMyPermission();
 
     $(window).on('scroll', this.handleScroll);
   }
@@ -253,6 +271,7 @@ export default class TimeAndSalaryBoard extends Component {
       this.setState({ showExtreme: false });
       this.props.resetBoardExtremeData();
       this.props.queryTimeAndSalary({ sortBy, order });
+      this.props.fetchMyPermission();
     }
   }
 
@@ -272,6 +291,7 @@ export default class TimeAndSalaryBoard extends Component {
   }
 
   handleScroll() {
+    if (!this.props.canViewTimeAndSalary) { return; }
     const view = $(window).scrollTop() + window.innerHeight;
     const threshold = $(document).height() - 100;
     if (view < threshold) return;
@@ -311,10 +331,20 @@ export default class TimeAndSalaryBoard extends Component {
     )(rows);
   }
 
+  postProcessRows = () => {
+    if (!this.props.canViewTimeAndSalary) {
+      return injectPermissionBlock;
+    }
+    return R.pipe(
+      this.decorateExtremeRows,
+      injectCallToActions,
+    );
+  }
+
   render() {
     const { path } = this.props.route;
     const { title, hasExtreme } = pathnameMapping[path];
-    const { status, data, switchPath, extremeStatus, extremeData } = this.props;
+    const { status, data, switchPath, extremeStatus, extremeData, canViewTimeAndSalary } = this.props;
     const { showExtreme } = this.state;
     let raw;
     if (showExtreme && extremeStatus === fetchingStatus.FETCHED) {
@@ -329,7 +359,7 @@ export default class TimeAndSalaryBoard extends Component {
         <div className={commonStyles.result}>
           <div className={styles.sortRow}>
             <div className={styles.extremeDescription}>
-              {hasExtreme && (
+              {(hasExtreme && canViewTimeAndSalary) && (
                 <span>
                   前 1 % 的資料可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
                   <button className={styles.toggle} onClick={this.toggleShowExtreme}>
@@ -354,10 +384,8 @@ export default class TimeAndSalaryBoard extends Component {
             className={styles.latestTable}
             data={raw}
             primaryKey="_id"
-            postProcessRows={R.pipe(
-              this.decorateExtremeRows,
-              injectCallToActions,
-            )}
+            postProcessRows={this.postProcessRows()}
+            hideContent={!canViewTimeAndSalary}
           >
             <Table.Column
               className={styles.colCompany}
