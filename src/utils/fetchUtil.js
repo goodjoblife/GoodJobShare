@@ -51,9 +51,9 @@ const checkStatus = handle401 => response => {
   return response.json();
 };
 
-const fetchUtil = endpoint => (method, body) =>
+const fetchUtil = (endpoint, apiHost = API_HOST) => (method, body) =>
   fetch(
-    `${API_HOST}${endpoint}`,
+    `${apiHost}${endpoint}`,
     optionsBuilder(body)(method)
   )
     .then(checkStatus());
