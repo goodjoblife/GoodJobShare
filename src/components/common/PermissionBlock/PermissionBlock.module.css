@@ -1,16 +1,23 @@
 
 
-.permission-block {
-  /*
-  flex-grow: 1;
-  margin-top: -20px;
-  margin-left: -30px;
-  margin-right: -30px;
-  margin-bottom: 30px;
-  */
+.permissionBlock {
   border: 1px solid #FCD406;
   border-radius: 5px;
   background-color: #FFFBE8;
   box-shadow: 0 0 5px 0 rgba(0,0,0,0.21);
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+}
+
+.ctaText {
+  font-weight: 300;
+}
+
+.ctaButtonContainer {
+  text-align: center;
+  margin-top: 30px;
 }
 
