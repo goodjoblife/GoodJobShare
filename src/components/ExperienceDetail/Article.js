@@ -187,7 +187,7 @@ class Article extends React.Component {
             ) :
             null
           }
-          {hideContent ? <BasicPermissionBlock /> : null}
+          {hideContent ? <BasicPermissionBlock rootClassName={styles.permissionBlockArticle} /> : null}
         </section>
       </div>
     );
