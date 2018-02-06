@@ -183,7 +183,7 @@ const injectPermissionBlock = rows => {
   newRows.push(
     <tr>
       <td colSpan="7" className={styles.noBefore}>
-        <BasicPermissionBlock />
+        <BasicPermissionBlock rootClassName={styles.permissionBlockBoard} />
       </td>
     </tr>
     );

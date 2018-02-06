@@ -53,3 +53,10 @@
 .noBefore::before {
   content: none !important;
 }
+
+.permissionBlockBoard {
+  margin: -12px -20px;
+  padding: 50px 25px;
+
+  width: calc(100% + 40px);
+}

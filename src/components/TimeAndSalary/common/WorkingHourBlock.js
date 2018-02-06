@@ -33,7 +33,7 @@ class WorkingHourBlock extends Component {
       return (
         <div className={styles.overtimeBlock}>
           <div className={styles.overtimeBlockInner}>
-            <BasicPermissionBlock />
+            <BasicPermissionBlock rootClassName={styles.permissionBlockWorkingHour} />
           </div>
         </div>
       );
