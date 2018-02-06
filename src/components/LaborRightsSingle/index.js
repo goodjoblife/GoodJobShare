@@ -59,7 +59,7 @@ class LaborRightsSingle extends React.Component {
 
     // hide some content if don't have permission
     let newContent = content;
-    if (!canViewLaborRightsSingle) {
+    if (!canViewLaborRightsSingle && content) {
       const endPos = nthIndexOf(content, MARKDOWN_DIVIDER, MAX_IMAGES_IF_HIDDEN);
       newContent = content.substr(0, endPos);
     }
