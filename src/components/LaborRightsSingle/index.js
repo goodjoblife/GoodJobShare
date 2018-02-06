@@ -13,7 +13,6 @@ import NotFound from 'common/NotFound';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import Body from './Body';
 import Footer from './Footer';
-import BasicPermissionBlock from '../../containers/PermissionBlock/BasicPermissionBlockContainer';
 
 import {
     fetchMetaListIfNeeded,
@@ -92,8 +91,8 @@ class LaborRightsSingle extends React.Component {
                 seoText={seoText}
                 description={description}
                 content={newContent}
+                hideContent={!canViewLaborRightsSingle}
               />
-              {!canViewLaborRightsSingle ? <BasicPermissionBlock /> : null}
               {canViewLaborRightsSingle && (
                 <Section marginTop>
                   <CallToActionFolder />

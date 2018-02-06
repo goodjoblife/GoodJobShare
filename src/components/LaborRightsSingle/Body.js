@@ -5,8 +5,9 @@ import { Section, Wrapper, Heading } from 'common/base';
 import MarkdownParser from './MarkdownParser';
 import styles from './Body.module.css';
 import LeftBanner from '../ExperienceSearch/Banners/Banner1';
+import LaborRightsPermissionBlock from '../../containers/PermissionBlock/LaborRightsPermissionBlockContainer';
 
-const Body = ({ title, seoText, description, content }) => (
+const Body = ({ title, seoText, description, content, hideContent }) => (
   <Section Tag="main" pageTop>
     <Wrapper size="m">
       <Heading size="l" bold marginBottom>{title}</Heading>
@@ -27,6 +28,12 @@ const Body = ({ title, seoText, description, content }) => (
         </StickyContainer>
         <div className={styles.content}>
           <MarkdownParser content={content} />
+          {hideContent ?
+            <LaborRightsPermissionBlock
+              rootClassName={styles.permissionBlockLaborRights}
+              description="- 123"
+            /> : null
+          }
         </div>
       </div>
       {seoText && <div className={styles.seoText}>
@@ -41,6 +48,7 @@ Body.propTypes = {
   seoText: PropTypes.string,
   description: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
+  hideContent: PropTypes.bool.isRequired,
 };
 Body.defaultProps = {
   title: '',
