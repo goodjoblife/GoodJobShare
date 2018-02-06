@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import cn from 'classnames';
-import { Link } from 'react-router';
 
 import P from 'common/base/P';
 import MarkdownParser from '../../LaborRightsSingle/MarkdownParser';
+import CallToLoginShareButton from '../../../containers/PermissionBlock/CallToLoginShareButtonContainer';
 import styles from './PermissionBlock.module.css';
 
 class BasicPermissionBlock extends React.Component {
@@ -59,7 +59,7 @@ class BasicPermissionBlock extends React.Component {
           <br />
           <P size="l"><strong>若你已經分享過資訊，登入即可查看全文！</strong></P>
           <div className={styles.ctaButtonContainer}>
-            <Link to={'/share'} className={cn('buttonCircleM', 'buttonBlack2')}>立即登入並分享</Link>
+            <CallToLoginShareButton to="/share" notLoginText="立即登入並分享" isLoginText="立即分享" />
           </div>
         </div>
       </div>
