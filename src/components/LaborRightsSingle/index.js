@@ -49,6 +49,7 @@ class LaborRightsSingle extends React.Component {
       description,
       content,
       coverUrl,
+      nPublicPages,
     } = this.props.data ? this.props.data.toJS() : {};
     const {
       seoTitle = title || '',
@@ -57,9 +58,10 @@ class LaborRightsSingle extends React.Component {
     } = this.props.data ? this.props.data.toJS() : {};
     const { canViewLaborRightsSingle } = this.props;
 
-    // hide some content if don't have permission
+    // hide some content if user dosen't have permission
+    // or when bPublicPages === -1, all pages are public
     let newContent = content;
-    if (!canViewLaborRightsSingle && content) {
+    if (!canViewLaborRightsSingle && nPublicPages > 0 && content) {
       const endPos = nthIndexOf(content, MARKDOWN_DIVIDER, MAX_IMAGES_IF_HIDDEN);
       newContent = content.substr(0, endPos);
     }
@@ -91,9 +93,9 @@ class LaborRightsSingle extends React.Component {
                 seoText={seoText}
                 description={description}
                 content={newContent}
-                hideContent={!canViewLaborRightsSingle}
+                hideContent={!canViewLaborRightsSingle && nPublicPages > 0}
               />
-              {canViewLaborRightsSingle && (
+              {(canViewLaborRightsSingle || nPublicPages < 0) && (
                 <Section marginTop>
                   <CallToActionFolder />
                 </Section>
