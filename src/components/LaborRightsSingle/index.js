@@ -13,6 +13,7 @@ import NotFound from 'common/NotFound';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import Body from './Body';
 import Footer from './Footer';
+import LaborRightsPermissionBlock from '../../containers/PermissionBlock/LaborRightsPermissionBlockContainer';
 
 import {
     fetchMetaListIfNeeded,
@@ -21,6 +22,8 @@ import {
 import status from '../../constants/status';
 import { MAX_IMAGES_IF_HIDDEN, MARKDOWN_DIVIDER } from '../../constants/hideContent';
 import { SITE_NAME } from '../../constants/helmetData';
+
+import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
   static fetchData({ store: { dispatch }, params: { id } }) {
@@ -50,6 +53,7 @@ class LaborRightsSingle extends React.Component {
       content,
       coverUrl,
       nPublicPages,
+      descriptionInPermissionBlock,
     } = this.props.data ? this.props.data.toJS() : {};
     const {
       seoTitle = title || '',
@@ -59,11 +63,18 @@ class LaborRightsSingle extends React.Component {
     const { canViewLaborRightsSingle } = this.props;
 
     // hide some content if user dosen't have permission
-    // or when bPublicPages === -1, all pages are public
+    // but when bPublicPages === -1, all pages are public
     let newContent = content;
+    let permissionBlock = null;
     if (!canViewLaborRightsSingle && nPublicPages > 0 && content) {
       const endPos = nthIndexOf(content, MARKDOWN_DIVIDER, MAX_IMAGES_IF_HIDDEN);
       newContent = content.substr(0, endPos);
+      permissionBlock = (
+        <LaborRightsPermissionBlock
+          rootClassName={styles.permissionBlockLaborRights}
+          description={descriptionInPermissionBlock || ''}
+        />
+      );
     }
     return (
       <main>
@@ -93,7 +104,7 @@ class LaborRightsSingle extends React.Component {
                 seoText={seoText}
                 description={description}
                 content={newContent}
-                hideContent={!canViewLaborRightsSingle && nPublicPages > 0}
+                permissionBlock={permissionBlock}
               />
               {(canViewLaborRightsSingle || nPublicPages < 0) && (
                 <Section marginTop>
