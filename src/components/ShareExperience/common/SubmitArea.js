@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { browserHistory, Link } from 'react-router';
+import { Link } from 'react-router';
 
 import ButtonSubmit from 'common/button/ButtonSubmit';
 import Checkbox from 'common/form/Checkbox';
@@ -16,7 +16,7 @@ import authStatus from '../../../constants/authStatus';
 const getSuccessFeedback = id => (
   <SuccessFeedback
     buttonClick={() => (
-      browserHistory.push(`/experiences/${id}`)
+      window.location.replace(`/experiences/${id}`)
     )}
   />
 );
@@ -26,7 +26,7 @@ const getWorkingsSuccessFeedback = count => (
     info={`您已經上傳 ${count} 次，還有 ${5 - (count || 0)} 次可以上傳。`}
     buttonText="查看最新工時、薪資"
     buttonClick={() => (
-      browserHistory.push('/time-and-salary/latest')
+      window.location.replace('/time-and-salary/latest')
     )}
   />
 );

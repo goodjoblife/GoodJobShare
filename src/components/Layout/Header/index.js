@@ -47,6 +47,7 @@ class Header extends React.Component {
     if (prevProps.auth.get('status') !== this.props.auth.get('status') &&
       this.props.auth.get('status') === authStatus.CONNECTED) {
       const { getMe, FB } = this.props;
+      this.props.fetchMyPermission();
       getMe(FB).catch(() => {});
     }
   }
@@ -156,6 +157,7 @@ Header.propTypes = {
   auth: React.PropTypes.object,
   FB: React.PropTypes.object,
   location: React.PropTypes.object,
+  fetchMyPermission: React.PropTypes.func.isRequired,
 };
 
 const HeaderButton = ({ isNavOpen, toggle }) => (

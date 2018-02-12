@@ -37,6 +37,7 @@ class ExperienceDetail extends Component {
     experienceDetail: ImmutablePropTypes.map.isRequired,
     fetchExperience: React.PropTypes.func.isRequired,
     fetchReplies: React.PropTypes.func.isRequired,
+    fetchMyPermission: React.PropTypes.func.isRequired,
     setTos: React.PropTypes.func.isRequired,
     likeExperience: React.PropTypes.func.isRequired,
     likeReply: React.PropTypes.func.isRequired,
@@ -52,6 +53,7 @@ class ExperienceDetail extends Component {
       }),
     }),
     authStatus: React.PropTypes.string,
+    canViewExperirenceDetail: React.PropTypes.bool.isRequired,
   }
 
   static fetchData({ store, params }) {
@@ -85,6 +87,7 @@ class ExperienceDetail extends Component {
       this.props.fetchExperience(this.props.params.id);
     }
     this.props.fetchReplies(this.props.params.id);
+    this.props.fetchMyPermission();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -92,6 +95,7 @@ class ExperienceDetail extends Component {
     if (nextProps.params.id !== this.props.params.id) {
       this.props.fetchExperience(nextProps.params.id);
       this.props.fetchReplies(nextProps.params.id);
+      this.props.fetchMyPermission();
     }
 
     if (nextProps.authStatus !== this.props.authStatus && nextProps.authStatus === authStatus.CONNECTED) {
@@ -202,7 +206,7 @@ class ExperienceDetail extends Component {
 
   render() {
     const {
-      experienceDetail, setTos, setComment, likeExperience, likeReply, params: { id },
+      experienceDetail, setTos, setComment, likeExperience, likeReply, params: { id }, canViewExperirenceDetail,
     } = this.props;
 
     const {
@@ -239,7 +243,7 @@ class ExperienceDetail extends Component {
             {
               data.experienceStatus === status.FETCHING
               ? <Loader />
-              : <Article experience={experience} />
+              : <Article experience={experience} hideContent={!canViewExperirenceDetail} />
             }
 
             { /* 按讚，分享，檢舉區塊  */}

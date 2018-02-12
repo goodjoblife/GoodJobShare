@@ -8,17 +8,22 @@ import {
   formatCanonicalPath,
   formatUrl,
 } from 'utils/helmetHelper';
+import { nthIndexOf } from 'utils/stringUtil';
 import NotFound from 'common/NotFound';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import Body from './Body';
 import Footer from './Footer';
+import LaborRightsPermissionBlock from '../../containers/PermissionBlock/LaborRightsPermissionBlockContainer';
 
 import {
     fetchMetaListIfNeeded,
     fetchDataIfNeeded,
 } from '../../actions/laborRightsSingle';
 import status from '../../constants/status';
+import { MAX_IMAGES_IF_HIDDEN, MARKDOWN_DIVIDER } from '../../constants/hideContent';
 import { SITE_NAME } from '../../constants/helmetData';
+
+import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
   static fetchData({ store: { dispatch }, params: { id } }) {
@@ -31,6 +36,7 @@ class LaborRightsSingle extends React.Component {
     this.props.fetchMetaListIfNeeded().then(() => {
       this.props.fetchDataIfNeeded(this.props.params.id);
     });
+    this.props.fetchMyPermission();
   }
 
   componentDidUpdate() {
@@ -46,12 +52,30 @@ class LaborRightsSingle extends React.Component {
       description,
       content,
       coverUrl,
+      nPublicPages,
+      descriptionInPermissionBlock,
     } = this.props.data ? this.props.data.toJS() : {};
     const {
       seoTitle = title || '',
       seoDescription,
       seoText,
     } = this.props.data ? this.props.data.toJS() : {};
+    const { canViewLaborRightsSingle } = this.props;
+
+    // hide some content if user dosen't have permission
+    // but when bPublicPages === -1, all pages are public
+    let newContent = content;
+    let permissionBlock = null;
+    if (!canViewLaborRightsSingle && nPublicPages > 0 && content) {
+      const endPos = nthIndexOf(content, MARKDOWN_DIVIDER, MAX_IMAGES_IF_HIDDEN);
+      newContent = content.substr(0, endPos);
+      permissionBlock = (
+        <LaborRightsPermissionBlock
+          rootClassName={styles.permissionBlockLaborRights}
+          description={descriptionInPermissionBlock || ''}
+        />
+      );
+    }
     return (
       <main>
         <Helmet
@@ -79,11 +103,14 @@ class LaborRightsSingle extends React.Component {
                 title={title}
                 seoText={seoText}
                 description={description}
-                content={content}
+                content={newContent}
+                permissionBlock={permissionBlock}
               />
-              <Section marginTop>
-                <CallToActionFolder />
-              </Section>
+              {(canViewLaborRightsSingle || nPublicPages < 0) && (
+                <Section marginTop>
+                  <CallToActionFolder />
+                </Section>
+              )}
               <Footer
                 id={id}
                 prev={this.props.prev}
@@ -105,6 +132,8 @@ LaborRightsSingle.propTypes = {
   fetchDataIfNeeded: React.PropTypes.func.isRequired,
   status: React.PropTypes.string.isRequired,
   error: ImmutablePropTypes.map,
+  canViewLaborRightsSingle: React.PropTypes.bool.isRequired,
+  fetchMyPermission: React.PropTypes.func.isRequired,
 };
 
 export default LaborRightsSingle;

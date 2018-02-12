@@ -7,6 +7,7 @@ export const SET_MY_WORKINGS = 'SET_MY_WORKINGS';
 export const SET_MY_WORKINGS_STATUS = 'SET_MY_WORKINGS_STATUS';
 export const SET_MY_REPLIES = 'SET_MY_REPLIES';
 export const SET_MY_REPLIES_STATUS = 'SET_MY_REPLIES_STATUS';
+export const SET_MY_PERMISSION = 'SET_MY_PERMISSION';
 
 const getIndex = (ary, id) => ary.map(e => e._id).indexOf(id);
 
@@ -29,6 +30,13 @@ export const setMyReplies = (myReplies, err) => ({
   myRepliesStatus: err ? status.ERROR : status.FETCHED,
   myRepliesError: err,
   myReplies,
+});
+
+export const setMyPermission = ({ permission, location }, err) => ({
+  type: SET_MY_PERMISSION,
+  permission,
+  location,
+  fetchPermissionError: err,
 });
 
 export const fetchMyExperiences = () => dispatch => {
@@ -167,3 +175,13 @@ export const setReplyStatus = o => (dispatch, getState) => {
     dispatch(setMyReplies(replies, null));
   });
 };
+
+export const fetchMyPermission = () => (dispatch, getState) =>
+  fetchUtil('/me/permissions/search')('GET').then(result => {
+    dispatch(setMyPermission({
+      permission: result.hasSearchPermission,
+      location: getState().routing.locationBeforeTransitions,
+    }, null));
+  }).catch(error => {
+    dispatch(setMyPermission({}, error));
+  });
