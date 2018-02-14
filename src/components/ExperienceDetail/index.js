@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import R from 'ramda';
 import Helmet from 'react-helmet';
 import Loader from 'common/Loader';
 import { Wrapper, Section, Heading, P } from 'common/base';
@@ -45,11 +46,9 @@ class ExperienceDetail extends Component {
     submitComment: React.PropTypes.func.isRequired,
     params: React.PropTypes.object.isRequired,
     location: React.PropTypes.shape({
-      query: React.PropTypes.shape({
-        backable: React.PropTypes.string,
-      }),
       state: React.PropTypes.shape({
         replyId: React.PropTypes.string,
+        backable: React.PropTypes.bool,
       }),
     }),
     authStatus: React.PropTypes.string,
@@ -215,7 +214,7 @@ class ExperienceDetail extends Component {
       modalPayload,
     } = this.state;
 
-    const backable = this.props.location.query.backable || 'false';
+    const backable = R.pathOr(false, ['location', 'state', 'backable'], this.props);
     const data = experienceDetail.toJS();
     const experience = data.experience;
 
@@ -255,7 +254,7 @@ class ExperienceDetail extends Component {
             />
 
             <BackToList
-              backable={JSON.parse(backable)}
+              backable={backable}
             />
           </Wrapper>
         </Section>

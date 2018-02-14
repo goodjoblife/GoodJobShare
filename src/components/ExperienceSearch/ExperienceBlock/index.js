@@ -40,7 +40,7 @@ const ExperienceBlock = ({ data, size, backable }) => {
   const splitter = ' ・ ';
 
   return (
-    <Link to={{ pathname: `/experiences/${_id}`, query: { backable } }} className={cn(styles.container, styles[size])}>
+    <Link to={{ pathname: `/experiences/${_id}`, state: { backable } }} className={cn(styles.container, styles[size])}>
       <section className={styles.contentWrapper}>
         <P size="s">
           {`${formatType(type)}${splitter}${formatCreatedAt(createdAt)}`}
