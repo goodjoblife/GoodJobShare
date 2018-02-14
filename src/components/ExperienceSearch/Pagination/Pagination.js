@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 
 import { P } from 'common/base';
-import Button from 'common/button/Button';
 import { ArrowLeft } from 'common/icons';
 
 import {
@@ -20,7 +20,7 @@ const Pagination = ({
   totalCount,
   unit,
   currentPage,
-  onSelect,
+  createPageLinkTo,
 }) => {
   const totalPage = getTotalPage(totalCount, unit);
   const currentCount = getCurrentCount(totalCount, unit, currentPage);
@@ -32,26 +32,26 @@ const Pagination = ({
         {`${getFromCount(currentPage, unit)}-${getToCount(currentPage, unit, currentCount)} 篇 (共 ${totalCount} 篇)`}
       </P>
       <div>
-        <Button
-          btnStyle="firstPage"
-          onClick={() => onSelect(1)}
+        <Link
+          className="buttonFirstPage"
+          to={createPageLinkTo(1)}
         >
           第一頁
-        </Button>
-        <Button
-          btnStyle="page"
+        </Link>
+        <Link
+          className="buttonPage"
           disabled={isPreviousDisabled(currentPage)}
-          onClick={() => onSelect(currentPage - 1)}
+          to={createPageLinkTo(currentPage - 1)}
         >
           <ArrowLeft />前一頁
-      </Button>
-        <Button
-          btnStyle="page"
+        </Link>
+        <Link
+          className="buttonPage"
           disabled={isNextDisabled(currentPage, totalPage)}
-          onClick={() => onSelect(currentPage + 1)}
+          to={createPageLinkTo(currentPage + 1)}
         >
           下一頁<ArrowLeft style={{ transform: 'scaleX(-1)' }} />
-        </Button>
+        </Link>
       </div>
     </div>
   );
@@ -61,8 +61,7 @@ Pagination.propTypes = {
   totalCount: PropTypes.number,
   unit: PropTypes.number,
   currentPage: PropTypes.number,
-  onSelect: PropTypes.func,
-  // disabled: PropTypes.bool,
+  createPageLinkTo: PropTypes.func.isRequired,
 };
 
 export default Pagination;

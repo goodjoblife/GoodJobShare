@@ -40,6 +40,7 @@ import {
   // pageSelector,
   toQsString,
   querySelector,
+  pageKeysToQuery,
 } from './helper';
 import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
 
@@ -331,13 +332,8 @@ class ExperienceSearch extends Component {
     }
   }
 
-  fetchMoreExperiences = nextPage => {
-    ReactGA.event({
-      category: GA_CATEGORY.SEARCH_EXPERIENCE,
-      action: GA_ACTION.FETCH_MORE,
-      value: nextPage,
-    });
-
+  // 給 Pagination 建立分頁的連結用
+  createPageLinkTo = nextPage => {
     const {
       pathname,
       query,
@@ -346,21 +342,20 @@ class ExperienceSearch extends Component {
     const {
       searchBy,
       searchQuery,
-      sortBy: sort,
+      sortBy,
       searchType,
     } = querySelector(query);
 
-    const queryString = toQsString({
-      sort,
-      searchBy,
-      searchQuery,
-      page: nextPage,
-      searchType,
-    });
-
-    const url = `${pathname}?${queryString}`;
-
-    browserHistory.push(url);
+    return {
+      pathname,
+      query: pageKeysToQuery({
+        searchBy,
+        searchQuery,
+        sortBy,
+        searchType,
+        page: nextPage,
+      }),
+    };
   }
 
   renderHelmet = () => {
@@ -453,7 +448,7 @@ class ExperienceSearch extends Component {
                 totalCount={data.experienceCount}
                 unit={PAGE_COUNT}
                 currentPage={data.currentPage}
-                onSelect={this.fetchMoreExperiences}
+                createPageLinkTo={this.createPageLinkTo}
               />
 
               {(data.searchQuery && data.experienceCount === 0 && loadingStatus !== status.FETCHING) &&
@@ -499,7 +494,7 @@ class ExperienceSearch extends Component {
                 totalCount={data.experienceCount}
                 unit={PAGE_COUNT}
                 currentPage={data.currentPage}
-                onSelect={this.fetchMoreExperiences}
+                createPageLinkTo={this.createPageLinkTo}
               />
 
               {(data.searchQuery && data.workings.length > 0) &&
