@@ -83,7 +83,14 @@ export default (app, webpackIsomorphicTools) => {
         );
 
         res.send(`<!doctype html>\n${html}`);
-      });
+      }).catch(error => next(error));
     });
+  });
+
+  app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+    console.log(req.ip, req.ips);
+    console.log(err);
+    res.status(500);
+    res.send('Internal Server Error');
   });
 };
