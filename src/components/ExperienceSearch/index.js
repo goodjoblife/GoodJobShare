@@ -358,6 +358,32 @@ class ExperienceSearch extends Component {
     };
   }
 
+  renderBlocks = experiences => {
+    const _toBlocks = R.map(experience =>
+      (<ExperienceBlock
+        key={experience._id}
+        data={experience}
+        size="l"
+        backable
+      />));
+
+    const injectBannerAt = N =>
+      R.addIndex(R.chain)((row, i) => {
+        if (i === N - 1) {
+          return [(<Banner2 />), row];
+        }
+        return row;
+      });
+
+    // 複寫原本的 toBlocks 行為，插入 Banner
+    const toBlocks = R.pipe(
+      _toBlocks,
+      injectBannerAt(BANNER_LOCATION)
+    );
+
+    return toBlocks(experiences);
+  }
+
   renderHelmet = () => {
     const {
       searchType,
@@ -411,6 +437,7 @@ class ExperienceSearch extends Component {
       loadingStatus,
     } = this.props;
     const data = experienceSearch.toJS();
+    const experiences = data.experiences || [];
 
     return (
       <Section Tag="main" pageTop paddingBottom>
@@ -462,32 +489,7 @@ class ExperienceSearch extends Component {
               { // rendering experiences blocks and banner
                 loadingStatus === status.FETCHING
                 ? <Loader size="s" />
-                : (data.experiences || [])
-                  .map((o, index) => {
-                    if (index === BANNER_LOCATION) {
-                      return (
-                        <div key={o._id}>
-                          <Banner2 />
-                          <ExperienceBlock
-                            to={`/experiences/${o._id}`}
-                            data={o}
-                            size="l"
-                            backable
-                          />
-                        </div>
-                      );
-                    }
-                    return (
-                      <ExperienceBlock
-                        key={o._id}
-                        to={`/experiences/${o._id}`}
-                        data={o}
-                        size="l"
-                        backable
-                      />
-                    );
-                  }
-                )
+                : this.renderBlocks(experiences)
               }
 
               <Pagination

@@ -1,14 +1,18 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import cn from 'classnames';
-import qs from 'qs';
 
 import { Heading, P } from 'common/base';
 import i from 'common/icons';
 import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
-import { formatWithCommas } from '../../utils/numberUtil';
 import styles from './ExperienceBlock.module.css';
+import {
+  formatType,
+  formatCreatedAt,
+  formatSalaryType,
+  formatSalaryAmount,
+} from './helper';
 
 const Label = ({ Icon, text, className }) => (
   <div className={cn(styles.label, className)}>
@@ -16,6 +20,7 @@ const Label = ({ Icon, text, className }) => (
     <P Tag="span" size="m" bold>{text}</P>
   </div>
 );
+
 Label.propTypes = {
   Icon: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
@@ -23,37 +28,22 @@ Label.propTypes = {
 };
 
 const ExperienceBlock = ({ data, size, backable }) => {
-  const expType = data.type === 'interview' ? '面試' : '工作';
-  const date = new Date(Date.parse(data.created_at));
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const { salary } = data;
+  const {
+    _id,
+    type,
+    created_at: createdAt,
+    salary,
+    title,
+    like_count: likeCount,
+    reply_count: replyCount,
+  } = data;
   const splitter = ' ・ ';
-  let salaryType;
-  let salaryAmount;
-
-  if (salary) {
-    switch (salary.type) {
-      case 'year':
-        salaryType = '年';
-        break;
-      case 'month':
-        salaryType = '月';
-        break;
-      case 'day':
-        salaryType = '日';
-        break;
-      default: // 'hour':
-        salaryType = '小時';
-    }
-    salaryAmount = formatWithCommas(salary.amount);
-  }
 
   return (
-    <Link to={`/experiences/${data._id}?${qs.stringify({ backable })}`} className={cn(styles.container, styles[size])}>
+    <Link to={{ pathname: `/experiences/${_id}`, query: { backable } }} className={cn(styles.container, styles[size])}>
       <section className={styles.contentWrapper}>
         <P size="s">
-          {`${expType}${splitter}${year} 年 ${month} 月`}
+          {`${formatType(type)}${splitter}${formatCreatedAt(createdAt)}`}
         </P>
 
         <Heading
@@ -61,14 +51,21 @@ const ExperienceBlock = ({ data, size, backable }) => {
           size={size === 'l' ? 'sl' : 'sm'}
           className={styles.heading}
         >
-          {data.title}
+          {title}
         </Heading>
 
         <div className={styles.labels}>
           <Label text={data.company.name} Icon={i.Company} className={styles.company} />
           <Label text={data.job_title} Icon={i.User} className={styles.position} />
           <Label text={data.region} Icon={i.Location} className={styles.location} />
-          {salary && <Label text={`${salaryAmount} / ${salaryType}`} Icon={i.Coin} className={styles.salary} />}
+          {
+            salary &&
+            <Label
+              className={styles.salary}
+              text={`${formatSalaryAmount(salary)} / ${formatSalaryType(salary)}`}
+              Icon={i.Coin}
+            />
+          }
         </div>
 
         {
@@ -80,17 +77,19 @@ const ExperienceBlock = ({ data, size, backable }) => {
         }
       </section>
       <div className={styles.reaction}>
-        <ThumbsUp count={data.like_count} />
-        <Comment count={data.reply_count} />
+        <ThumbsUp count={likeCount} />
+        <Comment count={replyCount} />
       </div>
     </Link>
   );
 };
+
 ExperienceBlock.propTypes = {
   data: PropTypes.object.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
   backable: PropTypes.bool,
 };
+
 ExperienceBlock.defaultProps = {
   size: 'm',
   backable: false,
