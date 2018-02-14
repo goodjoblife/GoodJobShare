@@ -370,7 +370,7 @@ class ExperienceSearch extends Component {
     const injectBannerAt = N =>
       R.addIndex(R.chain)((row, i) => {
         if (i === N - 1) {
-          return [(<Banner2 />), row];
+          return [(<Banner2 key="banner" />), row];
         }
         return row;
       });
