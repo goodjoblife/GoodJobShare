@@ -52,6 +52,8 @@ export default class TimeAndSalaryJobTitle extends Component {
     params: PropTypes.object.isRequired,
     queryJobTitle: PropTypes.func,
     switchPath: PropTypes.func,
+    canViewTimeAndSalary: PropTypes.bool.isRequired,
+    fetchMyPermission: PropTypes.func.isRequired,
   }
 
   static fetchData({ routes, params, store: { dispatch } }) {
@@ -67,6 +69,7 @@ export default class TimeAndSalaryJobTitle extends Component {
     const { groupSortBy, order } = pathnameMapping[path];
     const jobTitle = this.props.params.keyword;
     this.props.queryJobTitle({ groupSortBy, order, jobTitle });
+    this.props.fetchMyPermission();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -75,11 +78,12 @@ export default class TimeAndSalaryJobTitle extends Component {
       const { groupSortBy, order } = pathnameMapping[path];
       const jobTitle = nextProps.params.keyword;
       this.props.queryJobTitle({ groupSortBy, order, jobTitle });
+      this.props.fetchMyPermission();
     }
   }
 
   render() {
-    const { route: { path }, switchPath, status } = this.props;
+    const { route: { path }, switchPath, status, canViewTimeAndSalary } = this.props;
     const { title, groupSortBy } = pathnameMapping[path];
     const jobTitle = this.props.params.keyword;
     const raw = this.props.data.toJS();
@@ -113,7 +117,13 @@ export default class TimeAndSalaryJobTitle extends Component {
           </P>
         }
         {raw.map((o, i) => (
-          <WorkingHourBlock key={o.company.id || i} data={o} groupSortBy={groupSortBy} isExpanded={(i === 0) && (raw.length === 1)} />
+          <WorkingHourBlock
+            key={o.company.id || i}
+            data={o}
+            groupSortBy={groupSortBy}
+            isExpanded={(i === 0) && (raw.length === 1)}
+            hideContent={!canViewTimeAndSalary}
+          />
         ))}
       </section>
     );

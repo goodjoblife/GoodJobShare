@@ -173,3 +173,15 @@
 .averageBlockValue {
 
 }
+
+.permissionBlockWorkingHour {
+  margin: -24px;
+  padding: 50px 25px;
+
+  width: calc(100% + 48px);
+
+  @media (max-width: 1024px) {
+    margin: -16px;
+    width: calc(100% + 32px);
+  }
+}

@@ -52,11 +52,11 @@ export default class TimeAndSalaryCompany extends Component {
     params: PropTypes.object.isRequired,
     queryCompany: PropTypes.func,
     switchPath: PropTypes.func,
+    canViewTimeAndSalary: PropTypes.bool.isRequired,
+    fetchMyPermission: PropTypes.func.isRequired,
   }
 
   static fetchData({ routes, params, store: { dispatch } }) {
-    console.log(routes);
-    console.log(params);
     const { path } = R.last(routes);
     const { groupSortBy, order } = pathnameMapping[path];
     const company = params.keyword;
@@ -69,6 +69,7 @@ export default class TimeAndSalaryCompany extends Component {
     const { groupSortBy, order } = pathnameMapping[path];
     const company = this.props.params.keyword;
     this.props.queryCompany({ groupSortBy, order, company });
+    this.props.fetchMyPermission();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -77,11 +78,12 @@ export default class TimeAndSalaryCompany extends Component {
       const { groupSortBy, order } = pathnameMapping[path];
       const company = nextProps.params.keyword;
       this.props.queryCompany({ groupSortBy, order, company });
+      this.props.fetchMyPermission();
     }
   }
 
   render() {
-    const { route: { path }, switchPath, status } = this.props;
+    const { route: { path }, switchPath, status, canViewTimeAndSalary } = this.props;
     const { title, groupSortBy } = pathnameMapping[path];
     const company = this.props.params.keyword;
     const raw = this.props.data.toJS();
@@ -115,7 +117,13 @@ export default class TimeAndSalaryCompany extends Component {
           </P>
         }
         {raw.map((o, i) => (
-          <WorkingHourBlock key={o.company.id || i} data={o} groupSortBy={groupSortBy} isExpanded={(i === 0) && (raw.length === 1)} />
+          <WorkingHourBlock
+            key={o.company.id || i}
+            data={o}
+            groupSortBy={groupSortBy}
+            isExpanded={(i === 0) && (raw.length === 1)}
+            hideContent={!canViewTimeAndSalary}
+          />
         ))}
       </section>
     );

@@ -6,7 +6,7 @@ import MarkdownParser from './MarkdownParser';
 import styles from './Body.module.css';
 import LeftBanner from '../ExperienceSearch/Banners/Banner1';
 
-const Body = ({ title, seoText, description, content }) => (
+const Body = ({ title, seoText, description, content, permissionBlock }) => (
   <Section Tag="main" pageTop>
     <Wrapper size="m">
       <Heading size="l" bold marginBottom>{title}</Heading>
@@ -27,6 +27,7 @@ const Body = ({ title, seoText, description, content }) => (
         </StickyContainer>
         <div className={styles.content}>
           <MarkdownParser content={content} />
+          {permissionBlock}
         </div>
       </div>
       {seoText && <div className={styles.seoText}>
@@ -41,11 +42,13 @@ Body.propTypes = {
   seoText: PropTypes.string,
   description: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
+  permissionBlock: PropTypes.element,
 };
 Body.defaultProps = {
   title: '',
   description: '',
   content: '',
+  permissionBlock: null,
 };
 
 export default Body;

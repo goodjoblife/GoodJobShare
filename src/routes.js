@@ -17,6 +17,8 @@ import ShareExperience
 from './components/ShareExperience';
 import InterviewFormContainer
 from './containers/ShareExperience/InterviewFormContainer';
+import TimeSalaryFormContainer
+from './containers/ShareExperience/TimeSalaryFormContainer';
 import WorkExperiencesFormContainer
   from './containers/ShareExperience/WorkExperiencesFormContainer';
 
@@ -147,6 +149,10 @@ const routes = () => ({
         {
           path: 'interview',
           component: InterviewFormContainer,
+        },
+        {
+          path: 'time-and-salary',
+          component: TimeSalaryFormContainer,
         },
         {
           path: 'work-experiences',

@@ -6,12 +6,14 @@ import OvertimeBlock from './OvertimeBlock';
 import WorkingHourTable from './WorkingHourTable';
 
 import styles from './WorkingHourBlock.module.css';
+import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 
 class WorkingHourBlock extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
     groupSortBy: PropTypes.string.isRequired,
     isExpanded: PropTypes.bool,
+    hideContent: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
@@ -25,12 +27,44 @@ class WorkingHourBlock extends Component {
     };
   }
 
+  renderBlockContent = () => {
+    const { data, hideContent } = this.props;
+    if (hideContent) {
+      return (
+        <div className={styles.overtimeBlock}>
+          <div className={styles.overtimeBlockInner}>
+            <BasicPermissionBlock rootClassName={styles.permissionBlockWorkingHour} />
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <div className={styles.overtimeBlock}>
+          <div className={styles.overtimeBlockInner}>
+            <OvertimeBlock
+              type="salary"
+              heading="加班有無加班費"
+              data={data}
+            />
+            <OvertimeBlock
+              type="dayoff"
+              heading="加班有無補休"
+              data={data}
+            />
+          </div>
+          <div className={styles.overtimeBlockUnit}>單位：資料筆數</div>
+        </div>
+        <WorkingHourTable data={data.time_and_salary} />
+      </div>
+    );
+  }
+
   render() {
     const { data, groupSortBy } = this.props;
     const { average, company } = data;
     const avgVal = average[groupSortBy];
     const avgUnit = groupSortBy === 'week_work_time' ? '小時' : '元';
-
     return (
       <section className={styles.container}>
         <button
@@ -61,24 +95,7 @@ class WorkingHourBlock extends Component {
             [styles.expanded]: this.state.isExpanded,
           })}
         >
-
-          <div className={styles.overtimeBlock}>
-            <div className={styles.overtimeBlockInner}>
-              <OvertimeBlock
-                type="salary"
-                heading="加班有無加班費"
-                data={data}
-              />
-              <OvertimeBlock
-                type="dayoff"
-                heading="加班有無補休"
-                data={data}
-              />
-            </div>
-            <div className={styles.overtimeBlockUnit}>單位：資料筆數</div>
-          </div>
-
-          <WorkingHourTable data={data.time_and_salary} />
+          {this.renderBlockContent()}
         </div>
       </section>
     );
