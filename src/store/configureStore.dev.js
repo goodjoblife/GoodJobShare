@@ -3,7 +3,6 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { routerMiddleware } from 'react-router-redux';
-import { composeWithDevTools } from 'remote-redux-devtools';
 
 import rootReducer from '../reducers';
 
@@ -18,9 +17,7 @@ const configureStore = (preloadedState, history) => {
   const store = createStore(
     rootReducer,
     preloadedState,
-    composeWithDevTools(
-      applyMiddleware(thunk, router, logger),
-    )
+    applyMiddleware(thunk, router, logger),
   );
 
   if (module.hot) {
