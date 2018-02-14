@@ -36,6 +36,11 @@ class LandingPage extends Component {
 
   render() {
     const expData = this.props.experienceSearch.toJS().experiences || [];
+    const items = this.props.laborRightsMetaList.toJS().map(({ id, title, coverUrl }) => ({
+      link: `/labor-rights/${id}`,
+      coverUrl,
+      title,
+    }));
     return (
       <main>
         <Helmet {...HELMET_DATA.LANDING_PAGE} />
@@ -47,7 +52,7 @@ class LandingPage extends Component {
             <Heading size="l" center marginBottom>勞動知識小教室</Heading>
             <Columns
               Item={LaborRightsEntry}
-              items={this.props.laborRightsMetaList.toJS()}
+              items={items}
             />
           </Wrapper>
           <Section center Tag="div">
