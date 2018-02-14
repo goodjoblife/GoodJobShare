@@ -456,7 +456,7 @@ class ExperienceSearch extends Component {
                 onSelect={this.fetchMoreExperiences}
               />
 
-              {(data.searchQuery && data.experienceCount === 0) &&
+              {(data.searchQuery && data.experienceCount === 0 && loadingStatus !== status.FETCHING) &&
                 <P
                   size="l" bold
                   className={styles.searchNoResult}
