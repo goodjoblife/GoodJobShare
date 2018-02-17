@@ -21,7 +21,7 @@ export default () => (
           <Sort /> 時薪排行
         </Link>
       </div>
-      <img src="https://www.goodjob.life/assets/img/workers.jpg" className={styles.image} role="presentation" />
+      <img src="https://image.goodjob.life/workers.jpg" className={styles.image} role="presentation" />
     </Wrapper>
   </section>
 );
