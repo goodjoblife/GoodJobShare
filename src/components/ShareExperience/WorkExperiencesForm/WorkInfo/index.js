@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import subscribeValidation from 'common/subscribeValidation';
 import { People } from 'common/icons';
 import IconHeadingBlock from 'common/IconHeadingBlock';

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Loader from 'common/Loader';
 import Columns from 'common/Columns';
 import { Section, Wrapper, Heading } from 'common/base';

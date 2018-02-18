@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
 import Helmet from 'react-helmet';
@@ -36,23 +37,23 @@ const MODAL_TYPE = {
 class ExperienceDetail extends Component {
   static propTypes = {
     experienceDetail: ImmutablePropTypes.map.isRequired,
-    fetchExperience: React.PropTypes.func.isRequired,
-    fetchReplies: React.PropTypes.func.isRequired,
-    fetchMyPermission: React.PropTypes.func.isRequired,
-    setTos: React.PropTypes.func.isRequired,
-    likeExperience: React.PropTypes.func.isRequired,
-    likeReply: React.PropTypes.func.isRequired,
-    setComment: React.PropTypes.func.isRequired,
-    submitComment: React.PropTypes.func.isRequired,
-    params: React.PropTypes.object.isRequired,
-    location: React.PropTypes.shape({
-      state: React.PropTypes.shape({
-        replyId: React.PropTypes.string,
-        backable: React.PropTypes.bool,
+    fetchExperience: PropTypes.func.isRequired,
+    fetchReplies: PropTypes.func.isRequired,
+    fetchMyPermission: PropTypes.func.isRequired,
+    setTos: PropTypes.func.isRequired,
+    likeExperience: PropTypes.func.isRequired,
+    likeReply: PropTypes.func.isRequired,
+    setComment: PropTypes.func.isRequired,
+    submitComment: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired,
+    location: PropTypes.shape({
+      state: PropTypes.shape({
+        replyId: PropTypes.string,
+        backable: PropTypes.bool,
       }),
     }),
-    authStatus: React.PropTypes.string,
-    canViewExperirenceDetail: React.PropTypes.bool.isRequired,
+    authStatus: PropTypes.string,
+    canViewExperirenceDetail: PropTypes.bool.isRequired,
   }
 
   static fetchData({ store, params }) {

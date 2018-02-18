@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
@@ -24,7 +25,7 @@ class LandingPage extends Component {
   static propTypes = {
     fetchExperiences: PropTypes.func.isRequired,
     experienceSearch: ImmutablePropTypes.map.isRequired,
-    fetchMetaListIfNeeded: React.PropTypes.func.isRequired,
+    fetchMetaListIfNeeded: PropTypes.func.isRequired,
     laborRightsMetaList: ImmutablePropTypes.list.isRequired,
   }
   componentDidMount() {

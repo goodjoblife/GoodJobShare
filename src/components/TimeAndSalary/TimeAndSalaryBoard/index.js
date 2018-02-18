@@ -1,4 +1,5 @@
-import React, { Component, PropTypes, cloneElement } from 'react';
+import React, { Component, cloneElement } from 'react';
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import Loading from 'common/Loader';
 import ImmutablePropTypes from 'react-immutable-proptypes';

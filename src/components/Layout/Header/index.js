@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link, browserHistory } from 'react-router';
 import cn from 'classnames';
 import ReactGA from 'react-ga';
@@ -150,14 +151,14 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  login: React.PropTypes.func.isRequired,
-  logout: React.PropTypes.func.isRequired,
-  getLoginStatus: React.PropTypes.func.isRequired,
-  getMe: React.PropTypes.func.isRequired,
-  auth: React.PropTypes.object,
-  FB: React.PropTypes.object,
-  location: React.PropTypes.object,
-  fetchMyPermission: React.PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
+  getLoginStatus: PropTypes.func.isRequired,
+  getMe: PropTypes.func.isRequired,
+  auth: PropTypes.object,
+  FB: PropTypes.object,
+  location: PropTypes.object,
+  fetchMyPermission: PropTypes.func.isRequired,
 };
 
 const HeaderButton = ({ isNavOpen, toggle }) => (
@@ -169,8 +170,8 @@ const HeaderButton = ({ isNavOpen, toggle }) => (
   </div>
 );
 HeaderButton.propTypes = {
-  isNavOpen: React.PropTypes.bool.isRequired,
-  toggle: React.PropTypes.func.isRequired,
+  isNavOpen: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired,
 };
 
 const ShareButton = ({ isMobileButton, onClick }) => (
@@ -185,8 +186,8 @@ const ShareButton = ({ isMobileButton, onClick }) => (
   </Link>
 );
 ShareButton.propTypes = {
-  isMobileButton: React.PropTypes.bool,
-  onClick: React.PropTypes.func,
+  isMobileButton: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 ShareButton.defaultProps = {
   isMobileButton: false,

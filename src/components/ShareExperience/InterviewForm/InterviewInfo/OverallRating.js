@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import RateButton from 'common/button/RateButton';
@@ -76,4 +77,3 @@ OverallRating.propTypes = {
 };
 
 export default OverallRating;
-

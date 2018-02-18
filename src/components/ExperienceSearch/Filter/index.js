@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Checkbox from 'common/form/Checkbox';
 
 import styles from './Filter.module.css';

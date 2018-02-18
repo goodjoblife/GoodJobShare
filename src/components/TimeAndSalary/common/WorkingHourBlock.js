@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Plus, Minus } from 'common/icons';
 import { Heading } from 'common/base';

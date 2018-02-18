@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { P } from 'common/base';
 import ThumbsUp from '../common/reaction/ThumbsUp';
 import authStatusConstant from '../../constants/authStatus';
@@ -9,9 +10,9 @@ class CommentBlock extends Component {
   static propTypes = {
     reply: PropTypes.object.isRequired,
     likeReply: PropTypes.func.isRequired,
-    login: React.PropTypes.func.isRequired,
-    authStatus: React.PropTypes.string,
-    FB: React.PropTypes.object,
+    login: PropTypes.func.isRequired,
+    authStatus: PropTypes.string,
+    FB: PropTypes.object,
   }
 
   static formatDate = d => {

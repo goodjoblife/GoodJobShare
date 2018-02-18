@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ButtonAddElement from './ButtonAddElement';
 import AddButton from './AddButton';
 import styles from './ButtonAdd.module.css';
