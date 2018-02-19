@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import withFB from './withFB';
 
 class FacebookWrapper extends Component {
@@ -33,7 +34,7 @@ class FacebookWrapper extends Component {
 
 FacebookWrapper.propTypes = {
   children: PropTypes.node,
-  FB: React.PropTypes.object,
+  FB: PropTypes.object,
 };
 
 export default withFB(FacebookWrapper);

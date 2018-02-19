@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import marked from 'marked';
 import styles from './MarkdownParser.module.css';
 
@@ -13,7 +14,7 @@ const MarkdownParser = ({ content }) => (
 );
 
 MarkdownParser.propTypes = {
-  content: React.PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
 };
 MarkdownParser.defaultProps = {
   content: '',

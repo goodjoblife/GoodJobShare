@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Loader from 'common/Loader';
@@ -65,8 +66,8 @@ class LaborRightsMenu extends React.Component {
 
 LaborRightsMenu.propTypes = {
   metaList: ImmutablePropTypes.list.isRequired,
-  fetchMetaListIfNeeded: React.PropTypes.func.isRequired,
-  status: React.PropTypes.string.isRequired,
+  fetchMetaListIfNeeded: PropTypes.func.isRequired,
+  status: PropTypes.string.isRequired,
   error: ImmutablePropTypes.map,
 };
 

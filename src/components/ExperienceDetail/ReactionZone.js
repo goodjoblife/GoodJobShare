@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
@@ -15,10 +16,10 @@ class ReactionZone extends React.Component {
     id: PropTypes.string.isRequired,
     experience: PropTypes.object.isRequired,
     likeExperience: PropTypes.func.isRequired,
-    login: React.PropTypes.func.isRequired,
-    authStatus: React.PropTypes.string,
-    FB: React.PropTypes.object,
-    openReportDetail: React.PropTypes.func,
+    login: PropTypes.func.isRequired,
+    authStatus: PropTypes.string,
+    FB: PropTypes.object,
+    openReportDetail: PropTypes.func,
   }
 
   constructor(props) {

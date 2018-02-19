@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ButtonAdd from 'common/button/ButtonAdd';
 import AddButton from 'common/button/AddButton';
 import { Comment2 } from 'common/icons';

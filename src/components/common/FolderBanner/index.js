@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import FolderUpper from '../../images/folder-upper.png';
 import styles from './FolderBanner.module.css';

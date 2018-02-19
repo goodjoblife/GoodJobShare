@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 import Button from 'common/button/Button';
@@ -92,9 +93,9 @@ MessageBoard.propTypes = {
   setTos: PropTypes.func.isRequired,
   setComment: PropTypes.func.isRequired,
   submitComment: PropTypes.func.isRequired,
-  login: React.PropTypes.func.isRequired,
-  authStatus: React.PropTypes.string,
-  FB: React.PropTypes.object,
+  login: PropTypes.func.isRequired,
+  authStatus: PropTypes.string,
+  FB: PropTypes.object,
 };
 
 export default MessageBoard;

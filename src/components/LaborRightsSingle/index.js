@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Loader from 'common/Loader';
@@ -124,16 +125,16 @@ class LaborRightsSingle extends React.Component {
 }
 
 LaborRightsSingle.propTypes = {
-  params: React.PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
   data: ImmutablePropTypes.map,
   prev: ImmutablePropTypes.map,
   next: ImmutablePropTypes.map,
-  fetchMetaListIfNeeded: React.PropTypes.func.isRequired,
-  fetchDataIfNeeded: React.PropTypes.func.isRequired,
-  status: React.PropTypes.string.isRequired,
+  fetchMetaListIfNeeded: PropTypes.func.isRequired,
+  fetchDataIfNeeded: PropTypes.func.isRequired,
+  status: PropTypes.string.isRequired,
   error: ImmutablePropTypes.map,
-  canViewLaborRightsSingle: React.PropTypes.bool.isRequired,
-  fetchMyPermission: React.PropTypes.func.isRequired,
+  canViewLaborRightsSingle: PropTypes.bool.isRequired,
+  fetchMyPermission: PropTypes.func.isRequired,
 };
 
 export default LaborRightsSingle;

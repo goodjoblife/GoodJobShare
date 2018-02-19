@@ -24,7 +24,6 @@ module.exports = {
       {
         test: /\.svg$/,
         use: [
-          'babel-loader',
           'svg-react-loader',
         ],
       },

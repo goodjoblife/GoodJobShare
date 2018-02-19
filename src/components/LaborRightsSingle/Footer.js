@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Link } from 'react-router';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -48,7 +49,7 @@ const Footer = ({ id, prev, next }) => (
 );
 
 Footer.propTypes = {
-  id: React.PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   prev: ImmutablePropTypes.map,
   next: ImmutablePropTypes.map,
 };
