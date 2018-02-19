@@ -1,6 +1,7 @@
 import React, { Component, Children } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import R from 'ramda';
 import styles from './Table.module.css';
 import Column from './Column';
 
@@ -19,33 +20,21 @@ class Table extends Component {
 
   static Column = Column
 
-  static getValue = (data, path) => {
-    const parts = path.split('.');
-    const len = parts.length;
-    if (len > 1) {
-      let d = data;
-      for (let i = 0; i < len; i += 1) {
-        d = d[parts[i]];
-      }
-      return d;
-    }
-    return data[parts[0]];
-  }
-
   render() {
     const { data, primaryKey, children, className, postProcessRows } = this.props;
-    const records = [];
-    let record;
-    let value;
-
-    data.forEach((d, i) => {
-      record = [];
-      Children.forEach(children, (col, idx) => {
-        value = Table.getValue(d, col.props.dataField);
-        if (col.props.dataFormatter) {
-          value = col.props.dataFormatter(value, d);
+    const records = data.map((d, i) => {
+      const record = Children.map(children, (col, idx) => {
+        let value;
+        if (typeof col.props.dataField === 'function') {
+          value = col.props.dataField(d, i);
+        } else {
+          value = R.path(col.props.dataField.split('.'), d);
+          if (col.props.dataFormatter) {
+            value = col.props.dataFormatter(value, d);
+          }
         }
-        record.push(
+
+        return (
           <td
             key={idx}
             data-th={col.props.title}
@@ -55,7 +44,7 @@ class Table extends Component {
           </td>
         );
       });
-      records.push(<tr key={d[primaryKey] || i}>{record}</tr>);
+      return (<tr key={d[primaryKey] || i}>{record}</tr>);
     });
 
     const postRecords = postProcessRows(records);
