@@ -20,6 +20,7 @@ import CallToActionRow from './CallToActionRow';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 
 import { queryTimeAndSalary } from '../../../actions/timeAndSalaryBoard';
+import GradientMask from '../../common/GradientMask';
 
 const pathnameMapping = {
   'work-time-dashboard': {
@@ -183,11 +184,18 @@ const injectPermissionBlock = rows => {
   const newRows = rows.slice(0, MAX_ROWS_IF_HIDDEN);
   newRows.push(
     <tr>
+      <td colSpan="7" className={styles.noPadding}>
+        <GradientMask />
+      </td>
+    </tr>
+  );
+  newRows.push(
+    <tr>
       <td colSpan="7" className={styles.noBefore}>
         <BasicPermissionBlock rootClassName={styles.permissionBlockBoard} />
       </td>
     </tr>
-    );
+  );
   return newRows;
 };
 

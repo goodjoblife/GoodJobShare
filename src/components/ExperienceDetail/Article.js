@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Heading, P } from 'common/base';
 import { Good, Bad, Glike } from 'common/icons';
+import GradientMask from 'common/GradientMask';
 import rateButtonStyles from 'common/button/RateButtonElement.module.css';
 import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
@@ -31,7 +32,9 @@ class Article extends React.Component {
                 const showLength = content.length - (currentTotalWords - MAX_WORDS_IF_HIDDEN);
                 const newContent = `${content.substring(0, showLength)}...`;
                 return (
-                  <SectionBlock key={idx} subtitle={subtitle} content={newContent} />
+                  <GradientMask>
+                    <SectionBlock key={idx} subtitle={subtitle} content={newContent} />
+                  </GradientMask>
                 );
               }
               return (
