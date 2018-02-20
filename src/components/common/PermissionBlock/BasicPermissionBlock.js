@@ -6,6 +6,7 @@ import FontAwesome from 'react-fontawesome';
 import P from 'common/base/P';
 import { Heading } from 'common/base';
 import CallToLoginShareButton from '../../../containers/PermissionBlock/CallToLoginShareButtonContainer';
+import getScale from '../../../utils/numberUtils';
 import styles from './PermissionBlock.module.css';
 
 class BasicPermissionBlock extends React.Component {
@@ -40,6 +41,8 @@ class BasicPermissionBlock extends React.Component {
 
   render() {
     const { rootClassName, experienceCount, timeAndSalaryCount, laborRightsCount } = this.props;
+    const experienceScale = getScale(experienceCount);
+    const timeAndSalaryScale = getScale(timeAndSalaryCount);
     return (
       <div className={cn(styles.permissionBlock, rootClassName)}>
         <div className={styles.container}>
@@ -48,10 +51,9 @@ class BasicPermissionBlock extends React.Component {
             <Heading size="sl" Tag="h3">你暫時沒有查看完整資訊的權限</Heading>
           </div>
           <P size="l" className={styles.ctaText}>
-            <strong>只要 40 秒</strong>，分享一筆你的 薪資<strong> 或 </strong>工時
-            <strong> 或 </strong>面試<strong> 或 </strong> 工作經驗，就能查看
-            <strong>{`全站 ${timeAndSalaryCount} 筆`}</strong>薪資工時資訊、
-            <strong>{`${experienceCount} 篇`}</strong>面試及工作經驗分享，以及
+            只需幾分鐘，<strong>分享你的職場資訊</strong>，不僅幫助其他人不再踩雷，更能
+            <strong>{`查看全站超過 ${timeAndSalaryScale} 筆`}</strong>薪資工時資訊、
+            <strong>{`${experienceScale}+ 篇`}</strong>面試及工作經驗分享，以及
             <strong>{` ${laborRightsCount} 篇`}</strong>勞動權益懶人包哦！
           </P>
           <br />
