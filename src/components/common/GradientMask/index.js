@@ -7,7 +7,7 @@ import styles from './GradientMask.module.css';
 const GradientMask = ({ children, rootClassName, show = true }) => (
   <div className={cn(styles.container, rootClassName)}>
     {children}
-    <div className={show ? styles.show : styles.hidden} />
+    <div className={cn({ [styles.mask]: show })} />
   </div>
 );
 
