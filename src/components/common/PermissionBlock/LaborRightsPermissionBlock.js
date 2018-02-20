@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import FontAwesome from 'react-fontawesome';
 
 import P from 'common/base/P';
+import { Heading } from 'common/base';
 import MarkdownParser from '../../LaborRightsSingle/MarkdownParser';
 import CallToLoginShareButton from '../../../containers/PermissionBlock/CallToLoginShareButtonContainer';
 import styles from './PermissionBlock.module.css';
@@ -43,6 +45,10 @@ class BasicPermissionBlock extends React.Component {
     return (
       <div className={cn(styles.permissionBlock, rootClassName)}>
         <div className={styles.container}>
+          <div className={styles.headingContainer}>
+            <FontAwesome className={styles.lockIcon} name="lock" />
+            <Heading size="sl" Tag="h3">你暫時沒有查看完整資訊的權限</Heading>
+          </div>
           <P size="l" className={styles.ctaText}>
             <strong>只要 40 秒</strong>，分享一筆你的 薪資<strong> 或 </strong>工時
             <strong> 或 </strong>面試<strong> 或 </strong> 工作經驗，就能

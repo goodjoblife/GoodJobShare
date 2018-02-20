@@ -24,3 +24,20 @@
 .descriptionContainer {
   margin: 20px 10px;
 }
+
+.headingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.lockIcon {
+  display: inline;
+  font-size: 36px;
+  margin-right: 15px;
+}
+
+.heading {
+  display: inline;
+}
