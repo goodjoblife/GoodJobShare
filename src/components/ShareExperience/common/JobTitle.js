@@ -22,30 +22,28 @@ const mapToAutocompleteList = l => ({
 class JobTitle extends React.Component {
   constructor(props) {
     super(props);
-
     this.handleAutocompleteItems = this.handleAutocompleteItems.bind(this);
-
-    const search = debounce(
-      (e, value) => {
-        if (value) {
-          return getJobTitlesSearch(value)
-            .then(r => (Array.isArray(r) ? this.handleAutocompleteItems(r.map(mapToAutocompleteList)) : this.handleAutocompleteItems([])))
-            .catch(() => this.handleAutocompleteItems([]));
-        }
-        return this.handleAutocompleteItems([]);
-      }
-      , 800
-    );
-
-    this.handleOnChange = (e, value) => {
-      props.onChange(e.target.value);
-      return search(e, value);
-    };
-
     this.state = {
       autocompleteItems: [],
     };
   }
+
+  search = debounce(
+    (e, value) => {
+      if (value) {
+        return getJobTitlesSearch(value)
+          .then(r => (Array.isArray(r) ? this.handleAutocompleteItems(r.map(mapToAutocompleteList)) : this.handleAutocompleteItems([])))
+          .catch(() => this.handleAutocompleteItems([]));
+      }
+      return this.handleAutocompleteItems([]);
+    }
+    , 800
+  );
+
+  handleOnChange = (e, value) => {
+    this.props.onChange(e.target.value);
+    return this.search(e, value);
+  };
 
   handleAutocompleteItems(autocompleteItems) {
     return this.setState(() => ({
