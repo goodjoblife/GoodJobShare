@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import FontAwesome from 'react-fontawesome';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 
 import P from 'common/base/P';
 import { Heading } from 'common/base';
@@ -47,7 +48,7 @@ class BasicPermissionBlock extends React.Component {
       <div className={cn(styles.permissionBlock, rootClassName)}>
         <div className={styles.container}>
           <div className={styles.headingContainer}>
-            <FontAwesome className={styles.lockIcon} name="lock" />
+            <FontAwesomeIcon icon={faLock} className={styles.headingIcon} />
             <Heading size="sl" Tag="h3">你暫時沒有查看完整資訊的權限</Heading>
           </div>
           <P size="l" className={styles.ctaText}>
