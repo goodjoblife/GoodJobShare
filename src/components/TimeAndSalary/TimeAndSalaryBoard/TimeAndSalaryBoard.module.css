@@ -54,6 +54,10 @@
   content: none !important;
 }
 
+.noPadding {
+  padding: 0 !important;
+}
+
 .permissionBlockBoard {
   margin: -12px -20px;
   padding: 50px 25px;

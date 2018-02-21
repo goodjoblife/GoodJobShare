@@ -24,3 +24,20 @@
 .descriptionContainer {
   margin: 20px 10px;
 }
+
+.headingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.headingIcon {
+  display: inline;
+  font-size: 2em;
+  margin-right: 15px;
+}
+
+.heading {
+  display: inline;
+}

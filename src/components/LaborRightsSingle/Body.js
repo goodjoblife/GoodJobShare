@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { StickyContainer, Sticky } from 'react-sticky';
 import cn from 'classnames';
 import { Section, Wrapper, Heading } from 'common/base';
+import GradientMask from 'common/GradientMask';
 import MarkdownParser from './MarkdownParser';
 import styles from './Body.module.css';
 import LeftBanner from '../ExperienceSearch/Banners/Banner1';
@@ -27,7 +28,9 @@ const Body = ({ title, seoText, description, content, permissionBlock }) => (
           </Sticky>
         </StickyContainer>
         <div className={styles.content}>
-          <MarkdownParser content={content} />
+          <GradientMask show={permissionBlock !== null}>
+            <MarkdownParser content={content} />
+          </GradientMask>
           {permissionBlock}
         </div>
       </div>
