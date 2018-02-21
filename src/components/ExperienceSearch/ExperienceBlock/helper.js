@@ -1,4 +1,7 @@
-import { formatWithCommas } from '../../../utils/numberUtil';
+import {
+  formatSalaryAmount,
+  formatSalaryType,
+} from 'common/formatter';
 
 export const formatType = type => (type === 'interview' ? '面試' : '工作');
 
@@ -9,18 +12,12 @@ export const formatCreatedAt = createdAt => {
   return `${year} 年 ${month} 月`;
 };
 
-export const formatSalaryType = salary => {
-  switch (salary.type) {
-    case 'year':
-      return '年';
-    case 'month':
-      return '月';
-    case 'day':
-      return '日';
-    default: // 'hour'
-      return '小時';
+export const formatSalary = salary => {
+  if (!salary) {
+    return '-';
   }
-};
 
-export const formatSalaryAmount = salary =>
-  formatWithCommas(salary.amount);
+  const { amount, type } = salary;
+
+  return `${formatSalaryAmount(amount)} / ${formatSalaryType(type)}`;
+};

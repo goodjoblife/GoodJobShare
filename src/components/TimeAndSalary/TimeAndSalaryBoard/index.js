@@ -5,11 +5,8 @@ import Loading from 'common/Loader';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import $ from 'jquery';
 import cn from 'classnames';
-import { Link } from 'react-router';
 
 import Select from 'common/form/Select';
-import Table from 'common/table/Table';
-import { InfoButton } from 'common/Modal';
 import InfoTimeModal from '../common/InfoTimeModal';
 import InfoSalaryModal from '../common/InfoSalaryModal';
 import styles from './TimeAndSalaryBoard.module.css';
@@ -21,6 +18,8 @@ import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermi
 
 import { queryTimeAndSalary } from '../../../actions/timeAndSalaryBoard';
 import GradientMask from '../../common/GradientMask';
+
+import DashBoardTable from '../common/DashBoardTable';
 
 const pathnameMapping = {
   'work-time-dashboard': {
@@ -71,97 +70,6 @@ const selectOptions = R.pipe(
   R.toPairs,
   R.map(([path, opt]) => ({ value: path, label: opt.label }))
 );
-
-const getName = val => (
-  <div>
-    <Link to={`/time-and-salary/company/${encodeURIComponent(val.name)}/work-time-dashboard`}>
-      {val.name}
-    </Link>
-  </div>
-);
-const getTitle = (val, row) => (
-  <div>
-    <Link to={`/time-and-salary/job-title/${encodeURIComponent(val)}/work-time-dashboard`}>
-      {val}
-    </Link>
-    {' '}
-    <span className={`pM ${commonStyles.sector}`}>
-      {row.sector}
-    </span>
-  </div>
-);
-const getWorkingTime = val => (
-  <div
-    className={commonStyles.bar}
-    style={{ width: `${val >= 100 ? 100 : val}%` }}
-  >
-    {val}
-  </div>
-);
-const getFrequency = val => {
-  let text;
-  let style;
-  switch (val) {
-    case 0:
-      text = '幾乎不';
-      style = commonStyles.hardly;
-      break;
-    case 1:
-      text = '偶爾';
-      style = commonStyles.sometimes;
-      break;
-    case 2:
-      text = '經常';
-      style = commonStyles.usually;
-      break;
-    case 3:
-      text = '幾乎每天';
-      style = commonStyles.always;
-      break;
-    default:
-      text = '幾乎不';
-      style = commonStyles.hardly;
-  }
-  return (
-    <div>
-      <div className={`${commonStyles.dot} ${style}`} />
-      {text}
-    </div>
-  );
-};
-const getSalary = val => {
-  if (!val) {
-    return '-';
-  }
-  const amount = val.amount.toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  let type;
-  switch (val.type) {
-    case 'year':
-      type = '年';
-      break;
-    case 'month':
-      type = '月';
-      break;
-    case 'hour':
-      type = '小時';
-      break;
-    default:
-      type = '月';
-  }
-  return [amount, type].join(' / ');
-};
-const getWage = val => {
-  if (typeof val === 'number') {
-    if (!val) return '-';
-    return `${Math.round(val)} 元`;
-  }
-  return '';
-};
-const getDate = val => {
-  const month = (val.month >= 10 ? '' : '0') + val.month;
-  return [val.year, month].join('.');
-};
 
 const injectCallToActions = rows => {
   const flapMapIndexed = R.addIndex(R.chain);
@@ -340,7 +248,7 @@ export default class TimeAndSalaryBoard extends Component {
     )(rows);
   }
 
-  postProcessRows = () => {
+  createPostProcessRows = () => {
     if (!this.props.canViewTimeAndSalary) {
       return injectPermissionBlock;
     }
@@ -389,77 +297,12 @@ export default class TimeAndSalaryBoard extends Component {
               </div>
             </div>
           </div>
-          <Table
-            className={styles.latestTable}
+          <DashBoardTable
             data={raw}
-            primaryKey="_id"
-            postProcessRows={this.postProcessRows()}
-            hideContent={!canViewTimeAndSalary}
-          >
-            <Table.Column
-              className={styles.colCompany}
-              title="公司名稱"
-              dataField="company"
-              dataFormatter={getName}
-            >
-              公司名稱
-            </Table.Column>
-            <Table.Column
-              className={styles.colCompany}
-              title="職稱"
-              dataField="job_title"
-              dataFormatter={getTitle}
-            >
-              職稱
-              <span className="table-sector">廠區/門市/分公司</span>
-            </Table.Column>
-            <Table.Column
-              className={styles.colWeekTime}
-              title="一週總工時"
-              dataField="week_work_time"
-              dataFormatter={getWorkingTime}
-            >
-              一週總工時
-            </Table.Column>
-            <Table.Column
-              className={styles.colFrequency}
-              title="加班頻率"
-              dataField="overtime_frequency"
-              dataFormatter={getFrequency}
-            >
-              加班頻率
-            </Table.Column>
-            <Table.Column
-              className={styles.colSalary}
-              title="薪資"
-              dataField="salary"
-              dataFormatter={getSalary}
-              alignRight
-            >
-              薪資
-            </Table.Column>
-            <Table.Column
-              className={styles.colHourly}
-              title="估計時薪"
-              dataField="estimated_hourly_wage"
-              dataFormatter={getWage}
-              alignRight
-            >
-              <InfoButton onClick={this.toggleInfoSalaryModal}>
-                估計時薪
-              </InfoButton>
-            </Table.Column>
-            <Table.Column
-              className={styles.colDataTime}
-              title="參考時間"
-              dataField="data_time"
-              dataFormatter={getDate}
-            >
-              <InfoButton onClick={this.toggleInfoTimeModal}>
-                參考時間
-              </InfoButton>
-            </Table.Column>
-          </Table>
+            postProcessRows={this.createPostProcessRows()}
+            toggleInfoSalaryModal={this.toggleInfoSalaryModal}
+            toggleInfoTimeModal={this.toggleInfoTimeModal}
+          />
           <div className={styles.status}>
             { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
           </div>

@@ -11,8 +11,7 @@ import styles from './ExperienceBlock.module.css';
 import {
   formatType,
   formatCreatedAt,
-  formatSalaryType,
-  formatSalaryAmount,
+  formatSalary,
 } from './helper';
 
 const Label = ({ Icon, text, className }) => (
@@ -63,7 +62,7 @@ const ExperienceBlock = ({ data, size, backable }) => {
             salary &&
             <Label
               className={styles.salary}
-              text={`${formatSalaryAmount(salary)} / ${formatSalaryType(salary)}`}
+              text={formatSalary(salary)}
               Icon={i.Coin}
             />
           }

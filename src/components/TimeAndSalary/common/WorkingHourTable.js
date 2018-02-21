@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import R from 'ramda';
 
 import { InfoButton } from 'common/Modal';
 import Table from 'common/table/Table';
@@ -8,11 +9,19 @@ import InfoTimeModal from './InfoTimeModal';
 import styles from './WorkingHourTable.module.css';
 import commonStyles from '../views/view.module.css';
 import employmentType from '../../../constants/employmentType';
+import {
+  getFrequency,
+  getSalary,
+  getWeekWorkTime,
+  formatWage,
+  formatDate,
+} from './formatter';
 
 class WorkingHourTable extends Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
   }
+
   static getTitle = (val, row) => (
     <div>
       {val}
@@ -22,88 +31,19 @@ class WorkingHourTable extends Component {
       </span>
     </div>
   )
+
   static getEmploymentType = type => (type ? employmentType[type] : '')
+
   static getWorkingHour = (val, row) => (
     <div>{`${val} / ${row.day_real_work_time}`}</div>
   )
-  static getWorkingTime = val => (
-    <div
-      className={commonStyles.bar}
-      style={{ width: `${val >= 100 ? 100 : val}%` }}
-    >
-      {val}
-    </div>
-  )
-  static getFrequency = val => {
-    let text;
-    let style;
-    switch (val) {
-      case 0:
-        text = '幾乎不';
-        style = commonStyles.hardly;
-        break;
-      case 1:
-        text = '偶爾';
-        style = commonStyles.sometimes;
-        break;
-      case 2:
-        text = '經常';
-        style = commonStyles.usually;
-        break;
-      case 3:
-        text = '幾乎每天';
-        style = commonStyles.always;
-        break;
-      default:
-        text = '幾乎不';
-        style = commonStyles.hardly;
-    }
-    return (
-      <div>
-        <div className={`${commonStyles.dot} ${style}`} />
-        {text}
-      </div>
-    );
-  }
-  static getSalary = val => {
-    if (!val) {
-      return '-';
-    }
-    const amount = val.amount.toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    let type;
-    switch (val.type) {
-      case 'year':
-        type = '年';
-        break;
-      case 'month':
-        type = '月';
-        break;
-      case 'hour':
-        type = '小時';
-        break;
-      default:
-        type = '月';
-    }
-    return [amount, type].join(' / ');
-  }
+
   static getYear = val => {
     if (typeof val === 'number') {
       if (!val) return '-';
       return `${Math.round(val)} 年`;
     }
-    return '';
-  }
-  static getWage = val => {
-    if (typeof val === 'number') {
-      if (!val) return '-';
-      return `${Math.round(val)} 元`;
-    }
-    return '';
-  }
-  static getDate = val => {
-    const month = (val.month >= 10 ? '' : '0') + val.month;
-    return [val.year, month].join('.');
+    return '-';
   }
 
   constructor(props) {
@@ -145,7 +85,6 @@ class WorkingHourTable extends Component {
         >
           職稱
         </Table.Column>
-
         <Table.Column
           className={styles.colType}
           title="職務型態"
@@ -154,7 +93,6 @@ class WorkingHourTable extends Component {
         >
           職務型態
         </Table.Column>
-
         <Table.Column
           className={styles.colDayTime}
           title="表訂 / 實際工時"
@@ -163,25 +101,20 @@ class WorkingHourTable extends Component {
         >
           表訂 / 實際工時
         </Table.Column>
-
         <Table.Column
           className={styles.colWeekTime}
           title="一週總工時"
-          dataField="week_work_time"
-          dataFormatter={WorkingHourTable.getWorkingTime}
+          dataField={getWeekWorkTime}
         >
           一週總工時
         </Table.Column>
-
         <Table.Column
           className={styles.colFrequency}
           title="加班頻率"
-          dataField="overtime_frequency"
-          dataFormatter={WorkingHourTable.getFrequency}
+          dataField={getFrequency}
         >
           加班頻率
         </Table.Column>
-
         <Table.Column
           className={styles.colExperience}
           title="業界工作經歷"
@@ -190,22 +123,18 @@ class WorkingHourTable extends Component {
         >
           業界工作經歷
         </Table.Column>
-
         <Table.Column
           className={styles.colSalary}
           title="薪資"
-          dataField="salary"
-          dataFormatter={WorkingHourTable.getSalary}
+          dataField={getSalary}
           alignRight
         >
           薪資
         </Table.Column>
-
         <Table.Column
           className={styles.colHourly}
           title="估計時薪"
-          dataField="estimated_hourly_wage"
-          dataFormatter={WorkingHourTable.getWage}
+          dataField={R.compose(formatWage, R.prop('estimated_hourly_wage'))}
           alignRight
         >
           <InfoSalaryModal
@@ -216,12 +145,10 @@ class WorkingHourTable extends Component {
             估計時薪
           </InfoButton>
         </Table.Column>
-
         <Table.Column
           className={styles.colDataTime}
           title="參考時間"
-          dataField="data_time"
-          dataFormatter={WorkingHourTable.getDate}
+          dataField={R.compose(formatDate, R.prop('data_time'))}
         >
           <InfoTimeModal
             isOpen={this.state.infoTimeModal.isOpen}
