@@ -31,6 +31,14 @@ module.exports = merge.smart(config, {
         warnings: false,
       },
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vender',
+      filename: '[name]-[chunkhash].js',
+      minChunks(module) {
+        const context = module.context;
+        return context && context.indexOf('node_modules') >= 0;
+      },
+    }),
     new ExtractTextPlugin({ filename: 'style-[contenthash].css', allChunks: true }),
     new WebpackIsomorphicToolsPlugin(webpackIsomorphicTools),
   ],

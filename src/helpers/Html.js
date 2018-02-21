@@ -79,6 +79,7 @@ export default class Html extends Component {
             }}
             charSet="UTF-8"
           />
+          <script src={assets.javascript.vender} charSet="UTF-8" />
           <script src={assets.javascript.main} charSet="UTF-8" />
         </body>
       </html>
