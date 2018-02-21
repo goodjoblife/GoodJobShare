@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import ProgressBar from './ProgressBar';
-import { queryExperienceCount } from '../../../actions/progressBar';
+import { queryExperienceCount } from '../../../actions/experiences';
 
 class ProgressBarWithExperienceCount extends Component {
   static fetchData({ store: { dispatch } }) {
@@ -22,6 +22,7 @@ class ProgressBarWithExperienceCount extends Component {
 
 ProgressBarWithExperienceCount.propTypes = {
   experienceCount: PropTypes.number,
+  // 是否已經 fetch 過 experienceCount
   hasFetched: PropTypes.bool,
   queryExperienceCount: PropTypes.func.isRequired,
 };

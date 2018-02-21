@@ -5,13 +5,13 @@ import auth from './auth';
 import dataCount from './dataCount';
 import experienceDetail from './experienceDetail';
 import experienceSearch from './experienceSearch';
+import experiences from './experiences';
 import laborRightsSingle from './laborRightsSingle';
 import laborRightsMenu from './laborRightsMenu';
 import me from './me';
 import timeAndSalaryBoard from './timeAndSalaryBoard';
 import timeAndSalaryCompany from './timeAndSalaryCompany';
 import timeAndSalaryJobTitle from './timeAndSalaryJobTitle';
-import progressBarState from './progressBarState';
 import popularExperiences from './popularExperiences';
 
 const rootReducer = combineReducers({
@@ -19,13 +19,13 @@ const rootReducer = combineReducers({
   dataCount,
   experienceSearch,
   experienceDetail,
+  experiences,
   laborRightsSingle,
   laborRightsMenu,
   me,
   timeAndSalaryBoard,
   timeAndSalaryCompany,
   timeAndSalaryJobTitle,
-  progressBarState,
   popularExperiences,
   routing,
 });
