@@ -32,7 +32,7 @@ const Base = ({ className, style, children, label, count, onClick }) => (
 
 Base.propTypes = {
   className: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   label: PropTypes.string,
   count: PropTypes.number,
   style: PropTypes.object,
