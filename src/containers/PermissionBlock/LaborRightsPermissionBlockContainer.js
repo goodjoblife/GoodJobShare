@@ -2,13 +2,18 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import LaborRightsPermissionBlock from '../../components/common/PermissionBlock/LaborRightsPermissionBlock';
-import { queryExperienceCount, queryTimeAndSalaryCount, queryLaborRightsCount } from '../../actions/dataCount';
+import { queryTimeAndSalaryCount, queryLaborRightsCount } from '../../actions/dataCount';
+import { queryExperienceCount } from '../../actions/experiences';
+import {
+  experienceCountSelector,
+  hasFetchedexperienceCountSelector,
+} from './selectors';
 
 const mapStateToProps = state => ({
-  experienceCount: state.dataCount.get('experienceCount'),
+  experienceCount: experienceCountSelector(state),
   timeAndSalaryCount: state.dataCount.get('timeAndSalaryCount'),
   laborRightsCount: state.dataCount.get('laborRightsCount'),
-  hasFetchedExperienceCount: state.dataCount.get('hasFetchedExperienceCount'),
+  hasFetchedExperienceCount: hasFetchedexperienceCountSelector(state),
   hasFetchedTimeAndSalaryCount: state.dataCount.get('hasFetchedTimeAndSalaryCount'),
   hasFetchedLaborRightsCount: state.dataCount.get('hasFetchedLaborRightsCount'),
 });
