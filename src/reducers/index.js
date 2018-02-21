@@ -12,6 +12,7 @@ import timeAndSalaryBoard from './timeAndSalaryBoard';
 import timeAndSalaryCompany from './timeAndSalaryCompany';
 import timeAndSalaryJobTitle from './timeAndSalaryJobTitle';
 import progressBarState from './progressBarState';
+import popularExperiences from './popularExperiences';
 
 const rootReducer = combineReducers({
   auth,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   timeAndSalaryCompany,
   timeAndSalaryJobTitle,
   progressBarState,
+  popularExperiences,
   routing,
 });
 

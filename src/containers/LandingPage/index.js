@@ -2,18 +2,18 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import LandingPage from '../../components/LandingPage';
-import * as ExperienceSearchActions from '../../actions/experienceSearch';
 import * as LaborRightsMenuActions from '../../actions/laborRightsMenu';
+import { queryPopularExperiences } from '../../actions/popularExperiences';
 
 const mapStateToProps = state => ({
-  experienceSearch: state.experienceSearch,
+  popularExperiences: state.popularExperiences.get('data'),
   laborRightsMetaList: state.laborRightsMenu.get('metaList').slice(-3),
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
-    ...ExperienceSearchActions,
     ...LaborRightsMenuActions,
+    queryPopularExperiences,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

@@ -8,7 +8,7 @@ import { Section, Wrapper, Heading } from 'common/base';
 import ShareExpSection from 'common/ShareExpSection';
 import Columns from 'common/Columns';
 import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
-import { fetchExperiences } from '../../actions/experienceSearch';
+import { queryPopularExperiences } from '../../actions/popularExperiences';
 import { fetchMetaListIfNeeded } from '../../actions/laborRightsMenu';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
@@ -18,25 +18,27 @@ import { HELMET_DATA } from '../../constants/helmetData';
 class LandingPage extends Component {
   static fetchData({ store: { dispatch } }) {
     return Promise.all([
-      dispatch(fetchExperiences(1, 3, 'popularity', 'created_at', '', ['interview', 'work'])),
+      dispatch(queryPopularExperiences()),
       dispatch(fetchMetaListIfNeeded()),
     ]);
   }
+
   static propTypes = {
-    fetchExperiences: PropTypes.func.isRequired,
-    experienceSearch: ImmutablePropTypes.map.isRequired,
+    queryPopularExperiences: PropTypes.func.isRequired,
     fetchMetaListIfNeeded: PropTypes.func.isRequired,
     laborRightsMetaList: ImmutablePropTypes.list.isRequired,
+    popularExperiences: ImmutablePropTypes.list.isRequired,
   }
+
   componentDidMount() {
-    Promise.all([
-      this.props.fetchExperiences(1, 3, 'popularity', 'created_at', '', ['interview', 'work']),
-      this.props.fetchMetaListIfNeeded(),
-    ]);
+    if (this.props.popularExperiences.size === 0) {
+      this.props.queryPopularExperiences();
+    }
+    this.props.fetchMetaListIfNeeded();
   }
 
   render() {
-    const expData = this.props.experienceSearch.toJS().experiences || [];
+    const popularExperiences = this.props.popularExperiences.take(3).toJS() || [];
     const items = this.props.laborRightsMetaList.toJS().map(({ id, title, coverUrl }) => ({
       link: `/labor-rights/${id}`,
       coverUrl,
@@ -67,7 +69,7 @@ class LandingPage extends Component {
             <Heading size="l" center marginBottom>熱門分享</Heading>
             <Columns
               Item={ExperienceBlock}
-              items={expData.map(data => ({ data, size: 'm' }))}
+              items={popularExperiences.map(data => ({ data, size: 'm' }))}
               gutter="s"
             />
             <Section center Tag="div">
