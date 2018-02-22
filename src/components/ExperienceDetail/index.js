@@ -4,11 +4,10 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
 import Helmet from 'react-helmet';
 import Loader from 'common/Loader';
-import { Wrapper, Section, Heading, P } from 'common/base';
+import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
 
-import styles from './ExperienceDetail.module.css';
 import Article from './Article';
 import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
 import RecommendationZone from './RecommendationZone';
@@ -16,6 +15,7 @@ import MessageBoard from '../../containers/ExperienceDetail/MessageBoard';
 import BackToList from './BackToList';
 import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
 import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
+import ExperienceHeading from './Heading';
 
 import status from '../../constants/status';
 import {
@@ -34,16 +34,28 @@ const MODAL_TYPE = {
   REPORT_SUCCESS: 'REPORT_SUCCESS',
 };
 
+function getPosition(obj) {
+  let top = 0;
+  let parent = obj;
+  while (parent) {
+    top += parent.offsetTop;
+    parent = parent.offsetParent;
+  }
+  return top - 54; // deduct header
+}
+
+const experienceIdSelector = R.prop('id');
+
 class ExperienceDetail extends Component {
   static propTypes = {
     experienceDetail: ImmutablePropTypes.map.isRequired,
+    replies: ImmutablePropTypes.list.isRequired,
+    repliesStatus: PropTypes.string,
     fetchExperience: PropTypes.func.isRequired,
     fetchReplies: PropTypes.func.isRequired,
     fetchMyPermission: PropTypes.func.isRequired,
-    setTos: PropTypes.func.isRequired,
     likeExperience: PropTypes.func.isRequired,
     likeReply: PropTypes.func.isRequired,
-    setComment: PropTypes.func.isRequired,
     submitComment: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     location: PropTypes.shape({
@@ -56,50 +68,48 @@ class ExperienceDetail extends Component {
     canViewExperirenceDetail: PropTypes.bool.isRequired,
   }
 
-  static fetchData({ store, params }) {
-    return store.dispatch(fetchExperience(params.id));
+  static fetchData({ store: { dispatch }, params }) {
+    const experienceId = experienceIdSelector(params);
+    return dispatch(fetchExperience(experienceId));
   }
 
-  static getPosition(obj) {
-    let top = 0;
-    let parent = obj;
-    while (parent) {
-      top += parent.offsetTop;
-      parent = parent.offsetParent;
-    }
-    return top - 54; // deduct header
-  }
-
-  constructor() {
-    super();
-    this.submitComment = this.submitComment.bind(this);
-
-    this.state = {
-      isModalOpen: false,
-      modalType: '',
-    };
-
+  constructor(props) {
+    super(props);
     this.goTo = true;
   }
 
+  state = {
+    isModalOpen: false,
+    modalType: '',
+  };
+
   componentDidMount() {
-    if (this.props.experienceDetail.getIn(['experience', '_id']) !== this.props.params.id) {
-      this.props.fetchExperience(this.props.params.id);
+    const params = this.props.params;
+    const experienceId = experienceIdSelector(params);
+
+    if (this.props.experienceDetail.getIn(['experience', '_id']) !== experienceId) {
+      this.props.fetchExperience(experienceId);
     }
-    this.props.fetchReplies(this.props.params.id);
+    this.props.fetchReplies(experienceId);
     this.props.fetchMyPermission();
   }
 
   componentWillReceiveProps(nextProps) {
-    // if params.id changes due to route, we should refetch target experience
-    if (nextProps.params.id !== this.props.params.id) {
-      this.props.fetchExperience(nextProps.params.id);
-      this.props.fetchReplies(nextProps.params.id);
+    const nextParams = nextProps.params;
+    const params = this.props.params;
+
+    const nextExperienceId = experienceIdSelector(nextParams);
+    const experienceId = experienceIdSelector(params);
+    // if params changes due to route, we should refetch target experience
+    if (nextExperienceId !== experienceId) {
+      this.props.fetchExperience(nextExperienceId);
+      this.props.fetchReplies(nextExperienceId);
       this.props.fetchMyPermission();
     }
 
     if (nextProps.authStatus !== this.props.authStatus && nextProps.authStatus === authStatus.CONNECTED) {
-      this.props.fetchExperience(this.props.params.id);
+      this.props.fetchExperience(experienceId);
+      this.props.fetchReplies(experienceId);
     }
   }
 
@@ -109,17 +119,16 @@ class ExperienceDetail extends Component {
       if (document.getElementById(id)) {
         window.scrollTo(
           0,
-          ExperienceDetail.getPosition(document.getElementById(id))
+          getPosition(document.getElementById(id))
         );
         this.goTo = false;
       }
     }
   }
 
-  submitComment() {
-    const { experienceDetail } = this.props;
-    const data = experienceDetail.toJS();
-    this.props.submitComment(data.experience._id);
+  submitComment = comment => {
+    const experienceId = this.props.params.id;
+    this.props.submitComment(experienceId, comment);
   }
 
   handleIsModalOpen = (isModalOpen, modalType, modalPayload = {}) =>
@@ -206,7 +215,10 @@ class ExperienceDetail extends Component {
 
   render() {
     const {
-      experienceDetail, setTos, setComment, likeExperience, likeReply, params: { id }, canViewExperirenceDetail,
+      likeExperience,
+      likeReply,
+      params: { id },
+      canViewExperirenceDetail,
     } = this.props;
 
     const {
@@ -216,32 +228,38 @@ class ExperienceDetail extends Component {
     } = this.state;
 
     const backable = R.pathOr(false, ['location', 'state', 'backable'], this.props);
-    const data = experienceDetail.toJS();
-    const experience = data.experience;
+    const data = this.props.experienceDetail.toJS();
 
-    return ((data.experienceError && data.experienceError.error)
-      ? ((data.experienceError.error.status === 403 && <NotFound heading="本篇文章已經被原作者隱藏，目前無法查看" />) ||
-         (data.experienceError.error.status === 404 && <NotFound />) || null)
-      : (<main>
+    const {
+      experience,
+      experienceStatus,
+      experienceError,
+    } = data;
+    const replies = this.props.replies.toJS();
+    const repliesStatus = this.props.repliesStatus;
+
+    if (experienceError && experienceError.error) {
+      switch (experienceError.error.status) {
+        case 403:
+          return (<NotFound heading="本篇文章已經被原作者隱藏，目前無法查看" />);
+        case 404:
+          return (<NotFound />);
+        default:
+          return null;
+      }
+    }
+
+    return (
+      <main>
         {this.renderHelmet()}
         <Section bg="white" paddingBottom pageTop>
           <Wrapper size="l">
-            <div className={styles.heading}>
-              <P Tag="h2" size="l" className={styles.badge}>
-                {experience.type === 'work' ? '工作' : '面試'}
-              </P>
-              <Heading size="l">
-                {experience && experience.company && (
-                  typeof experience.company.name === 'string'
-                  ? experience.company.name
-                  : experience.company.name.join(' / ')
-                )}
-              </Heading>
-            </div>
+
+            <ExperienceHeading experience={experience} />
 
             { /* 文章區塊  */}
             {
-              data.experienceStatus === status.FETCHING
+              experienceStatus === status.FETCHING
               ? <Loader />
               : <Article experience={experience} hideContent={!canViewExperirenceDetail} />
             }
@@ -267,13 +285,11 @@ class ExperienceDetail extends Component {
         <Section paddingBottom>
           <Wrapper size="s">
             {
-              data.replyStatus === status.FETCHING
+              repliesStatus === status.FETCHING
               ? <Loader size="s" />
               : <MessageBoard
-                replies={data.replies}
+                replies={replies}
                 likeReply={likeReply}
-                tos={data.tos} setTos={setTos}
-                comment={data.comment} setComment={setComment}
                 submitComment={this.submitComment}
               />
             }
@@ -287,7 +303,7 @@ class ExperienceDetail extends Component {
           {this.renderModalChildren(modalType, modalPayload)}
         </Modal>
       </main>
-    ));
+    );
   }
 }
 

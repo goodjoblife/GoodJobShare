@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
 import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
-// import { Facebook } from 'common/icons';
+import authStatusConstant from '../../../constants/authStatus';
 import ReactionZoneOtherOptions from './ReactionZoneOtherOptions';
 import ReportInspectModal from './ReportInspectModal';
-import authStatusConstant from '../../constants/authStatus';
 import styles from './ReactionZone.module.css';
 
-class ReactionZone extends React.Component {
+class ReactionZone extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     experience: PropTypes.object.isRequired,
@@ -59,10 +58,6 @@ class ReactionZone extends React.Component {
             count={experience.reply_count}
             className={styles.button}
           />
-          {/* <div className={styles.share}>
-            分享
-            <button className={styles.button}><Facebook /></button>
-          </div> */}
         </div>
         <div className={styles.right}>
           <ReportDetail

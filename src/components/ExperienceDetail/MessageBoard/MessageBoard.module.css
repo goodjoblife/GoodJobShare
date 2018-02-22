@@ -1,4 +1,4 @@
-@value main-gray, gray-light, border-gray from "../common/variables.module.css";
+@value main-gray, gray-light, border-gray from "common/variables.module.css";
 
 .container {
   margin: 50px 0;

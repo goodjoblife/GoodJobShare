@@ -5,8 +5,8 @@ import Loader from 'common/Loader';
 import { Heading, P } from 'common/base';
 
 import styles from './ReportInspectModal.module.css';
-import { getReports } from '../../apis/reportApi';
-import fetchingStatus from '../../constants/status';
+import { getReports } from '../../../apis/reportApi';
+import fetchingStatus from '../../../constants/status';
 
 class ReportInspectModal extends React.Component {
   static propTypes = {

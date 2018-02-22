@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Loader from 'common/Loader';
 import Columns from 'common/Columns';
 import { Section, Wrapper, Heading } from 'common/base';
+import R from 'ramda';
 import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
 import fetchingStatus from '../../constants/status';
 import { getExperiencesRecommended } from '../../apis/experiencesApi';
@@ -33,11 +34,12 @@ class RecommendationZone extends Component {
       experiences: [],
     });
 
-    getExperiencesRecommended(id)
-      .then(result => {
+    getExperiencesRecommended({ id })
+      .then(rawData => {
+        const experiences = R.prop('experiences')(rawData);
         this.setState({
           status: fetchingStatus.FETCHED,
-          experiences: result.experiences,
+          experiences,
         });
       })
       .catch(() => {

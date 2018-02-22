@@ -9,7 +9,7 @@ import TimeAndSalaryBoard from './containers/TimeAndSalary/TimeAndSalaryBoard';
 import TimeAndSalaryCompany from './containers/TimeAndSalary/TimeAndSalaryCompany';
 import TimeAndSalaryJobTitle from './containers/TimeAndSalary/TimeAndSalaryJobTitle';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
-import ExperienceDetailPage from './containers/ExperienceDetailPage';
+import ExperienceDetail from './containers/ExperienceDetail';
 import NotFound from './components/common/NotFound';
 
 import Entry from './components/ShareExperience/Entry';
@@ -136,7 +136,7 @@ const routes = () => ({
     },
     {
       path: 'experiences/:id',
-      component: ExperienceDetailPage,
+      component: ExperienceDetail,
     },
     {
       path: 'share',

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { P } from 'common/base';
-import ThumbsUp from '../common/reaction/ThumbsUp';
-import authStatusConstant from '../../constants/authStatus';
+import ThumbsUp from 'common/reaction/ThumbsUp';
+import authStatusConstant from '../../../constants/authStatus';
 
 import styles from './CommentBlock.module.css';
 

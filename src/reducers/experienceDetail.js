@@ -1,22 +1,20 @@
 import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
-import status from '../constants/status';
+import fetchingStatus from '../constants/status';
 import {
   SET_EXPERIENCE,
   SET_EXPERIENCE_STATUS,
-  SET_TOS,
-  SET_COMMENT,
-  SET_REPLY_STATUS,
-  SET_REPLIES,
+  SET_REPLIES_STATUS,
+  SET_REPLIES_DATA,
+  SET_REPLY_LIKED,
 } from '../actions/experienceDetail';
 
 const preloadedState = fromJS({
-  experienceStatus: status.UNFETCHED,
+  experienceStatus: fetchingStatus.UNFETCHED,
   experienceError: null,
   experience: {},
-  tos: false,
-  comment: '',
-  replyStatus: status.UNFETCHED,
+  repliesExperienceId: null,
+  replyStatus: fetchingStatus.UNFETCHED,
   replyError: null,
   replies: [],
 });
@@ -32,22 +30,28 @@ const experienceDetail = createReducer(preloadedState, {
   [SET_EXPERIENCE_STATUS]: (state, action) =>
     state.update('experienceStatus', () => action.status),
 
-  [SET_TOS]: state => state.update('tos', v => !v),
+  [SET_REPLIES_STATUS]: (state, { status }) =>
+    state.set('replyStatus', status),
 
-  [SET_COMMENT]: (state, action) =>
-    state.update('comment', () => action.comment),
+  [SET_REPLIES_DATA]: (state, { experienceId, status, replies, error }) =>
+    state
+      .set('repliesExperienceId', experienceId)
+      .set('replyStatus', status)
+      .set('replies', fromJS(replies))
+      .set('error', error),
 
-  [SET_REPLY_STATUS]: (state, action) =>
-    state.update('replyStatus', () => action.replyStatus),
+  [SET_REPLY_LIKED]: (state, { replyId, liked }) => {
+    const index = state.get('replies').findIndex(reply => reply.get('_id') === replyId);
+    if (index === -1) {
+      return state;
+    }
 
-  [SET_REPLIES]: (state, action) =>
-    state.merge({
-      replyStatus: action.replyStatus,
-      replyError: action.replyError,
-      replies: fromJS(action.replies),
-      tos: false,
-      comment: '',
-    }),
+    return state.updateIn(['replies', index], reply =>
+      reply
+        .set('liked', liked)
+        .update('like_count', v => (liked === true ? v + 1 : v - 1))
+    );
+  },
 });
 
 export default experienceDetail;
