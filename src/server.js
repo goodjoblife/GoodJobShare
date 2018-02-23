@@ -7,9 +7,22 @@ import { match, createMemoryHistory, RouterContext } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import React from 'react';
-import routes from './routes';
+import createRoutes from './routes';
 import configureStore from './store/configureStore';
 import Html from './helpers/Html';
+
+
+const matchRoutes = ({ routes, location, history }) =>
+  (new Promise((resolve, reject) => {
+    match({ routes, location, history }, (err, redirectLocation, renderProps) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      resolve({ redirectLocation, renderProps });
+    });
+  }));
 
 
 export default (app, webpackIsomorphicTools) => {
@@ -24,68 +37,58 @@ export default (app, webpackIsomorphicTools) => {
     });
   }
 
-  app.use((req, res, next) => {
+  const wrap = fn => (req, res, next) => fn(req, res).catch(err => next(err));
+
+  app.use(wrap(async (req, res) => {
     const memoryHistory = createMemoryHistory(req.originalUrl);
     const store = configureStore(undefined, memoryHistory);
     const history = syncHistoryWithStore(memoryHistory, store);
 
     const location = req.originalUrl;
 
-    match({ routes: routes(), location, history }, (err, redirectLocation, renderProps) => { // eslint-disable-line max-len
-      if (err) {
-        next(err);
-        return;
+    const { redirectLocation, renderProps } = await matchRoutes({ routes: createRoutes(), location, history });
+
+    if (redirectLocation) {
+      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+      return;
+    }
+
+    if (!renderProps) {
+      throw new Error('Missing render props');
+    }
+
+    function resolveComponent() {
+      const component = renderProps.components[renderProps.components.length - 1];
+      if (component && component.WrappedComponent) {
+        return component.WrappedComponent;
       }
+      return component;
+    }
 
-      if (redirectLocation) {
-        res.redirect(302, redirectLocation.pathname + redirectLocation.search); // eslint-disable-line max-len
-        return;
-      }
-      if (!renderProps) {
-        next(new Error('Missing render props'));
-        return;
-      }
+    const component = resolveComponent();
+    if (component && component.fetchData) {
+      // expect renderProps to have routes, params, location, components
+      await component.fetchData({ ...renderProps, store, history });
+    }
 
-      function getReduxPromise() {
-        function resolveComponent() {
-          const component = renderProps.components[renderProps.components.length - 1];
-          if (component && component.WrappedComponent) {
-            return component.WrappedComponent;
-          }
-          return component;
-        }
+    /*
+    做兩件事：
+    1. 準備 Component (很像 Root.js 做的事)
+    2. 準備 Template (Html Component)
+    */
+    const assets = webpackIsomorphicTools.assets();
+    const finalComponent = (
+      <Provider store={store}>
+        <RouterContext {...renderProps} />
+      </Provider>
+    );
 
-        const component = resolveComponent();
+    const html = ReactDOMServer.renderToString(
+      <Html assets={assets} component={finalComponent} store={store} />
+    );
 
-        if (component && component.fetchData) {
-          // expect renderProps to have routes, params, location, components
-          return component.fetchData({ ...renderProps, store, history });
-        }
-
-        return Promise.resolve();
-      }
-
-      getReduxPromise().then(() => {
-        /*
-        做兩件事：
-        1. 準備 Component (很像 Root.js 做的事)
-        2. 準備 Template (Html Component)
-        */
-        const assets = webpackIsomorphicTools.assets();
-        const component = (
-          <Provider store={store}>
-            <RouterContext {...renderProps} />
-          </Provider>
-        );
-
-        const html = ReactDOMServer.renderToString(
-          <Html assets={assets} component={component} store={store} />
-        );
-
-        res.send(`<!doctype html>\n${html}`);
-      }).catch(error => next(error));
-    });
-  });
+    res.send(`<!doctype html>\n${html}`);
+  }));
 
   app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
     console.log(req.ip, req.ips);
