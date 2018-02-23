@@ -1,5 +1,12 @@
 #!/usr/bin/node
-require('babel-register');
+require('babel-register')({
+  babelrc: false,
+  presets: [
+    ["env", { targets: {node: "9"}, useBuiltIns: true }],
+    "react",
+    "stage-2",
+  ],
+});
 
 const path = require('path');
 const project_base_path = path.resolve(__dirname, '..');

@@ -33,6 +33,7 @@
     "babel-jest": "^17.0.2",
     "babel-loader": "^7.1.2",
     "babel-plugin-dev-expression": "^0.2.1",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-latest": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-optimize": "^1.0.1",
