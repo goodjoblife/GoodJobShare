@@ -4,22 +4,29 @@ import { Provider } from 'react-redux';
 import { applyRouterMiddleware, Router } from 'react-router';
 import { useScroll } from 'react-router-scroll';
 import ReactGA from 'react-ga';
+import ReactPixel from 'react-facebook-pixel';
 
 import routes from '../routes';
 
 class Root extends Component {
   constructor(props) {
     super(props);
-    this.initGA();
+    this.init();
   }
 
-  initGA = () => {
+  init = () => {
+    // initialize google analytics
     ReactGA.initialize(process.env.GA_ID);
+
+    // initialize facebook pixel
+    ReactPixel.init(process.env.PIXEL_ID);
   }
 
   logPageView = () => {
     ReactGA.set({ page: window.location.pathname + window.location.search });
     ReactGA.pageview(window.location.pathname + window.location.search);
+
+    ReactPixel.pageView();
   }
 
   render() {
