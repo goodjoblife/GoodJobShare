@@ -11,6 +11,7 @@ import styles from './InterviewForm.module.css';
 
 import InterviewInfo from './InterviewInfo';
 import InterviewExperience from './InterviewExperience';
+import InterviewInfoOptional from './InterviewInfoOptional';
 
 import {
   postInterviewExperience,
@@ -281,6 +282,22 @@ class InterviewForm extends React.Component {
           removeQa={this.removeBlock('interviewQas')}
           editQa={this.editBlock('interviewQas')}
           interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
+          submitted={this.state.submitted}
+          changeValidationStatus={this.changeValidationStatus}
+        />
+        <InterviewInfoOptional
+          handleState={this.handleState}
+          companyQuery={this.state.companyQuery}
+          region={this.state.region}
+          jobTitle={this.state.jobTitle}
+          experienceInYear={this.state.experienceInYear}
+          education={this.state.education}
+          interviewTimeYear={this.state.interviewTimeYear}
+          interviewTimeMonth={this.state.interviewTimeMonth}
+          interviewResult={this.state.interviewResult}
+          salaryType={this.state.salaryType}
+          salaryAmount={this.state.salaryAmount}
+          overallRating={this.state.overallRating}
           submitted={this.state.submitted}
           changeValidationStatus={this.changeValidationStatus}
         />

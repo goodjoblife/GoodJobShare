@@ -17,11 +17,8 @@ import {
 import CompanyQuery from '../../common/CompanyQuery';
 import Region from '../../common/Region';
 import JobTitle from '../../common/JobTitle';
-import ExperienceInYear from '../../common/ExperienceInYear';
-import Education from '../../common/Education';
 import InterviewTime from './InterviewTime';
 import InterviewResult from './InterviewResult';
-import Salary from '../../common/Salary';
 import OverallRating from './OverallRating';
 
 import { COMPANY, REGION, JOB_TITLE, INTERVIEW_TIME, INTERVIEW_RESULT, OVERALL_RATING } from '../../../../constants/formElements';
@@ -69,13 +66,9 @@ class InterviewInfo extends React.PureComponent {
       companyQuery,
       region,
       jobTitle,
-      experienceInYear,
-      education,
       interviewTimeYear,
       interviewTimeMonth,
       interviewResult,
-      salaryType,
-      salaryAmount,
       overallRating,
       submitted,
       changeValidationStatus,
@@ -130,26 +123,6 @@ class InterviewInfo extends React.PureComponent {
         </div>
         <div
           style={{
-            marginBottom: '52px',
-          }}
-        >
-          <ExperienceInYear
-            experienceInYear={experienceInYear}
-            onChange={handleState('experienceInYear')}
-          />
-        </div>
-        <div
-          style={{
-            marginBottom: '64px',
-          }}
-        >
-          <Education
-            education={education}
-            onChange={handleState('education')}
-          />
-        </div>
-        <div
-          style={{
             marginBottom: '64px',
           }}
         >
@@ -177,18 +150,6 @@ class InterviewInfo extends React.PureComponent {
             changeValidationStatus={changeValidationStatus}
           />
         </div>
-        <div
-          style={{
-            marginBottom: '57px',
-          }}
-        >
-          <Salary
-            salaryType={salaryType}
-            salaryAmount={salaryAmount}
-            onSalaryType={handleState('salaryType')}
-            onSalaryAmount={handleState('salaryAmount')}
-          />
-        </div>
         <div>
           <OverallRatingWithValidation
             overallRating={overallRating}
@@ -211,14 +172,6 @@ InterviewInfo.propTypes = {
   ]),
   jobTitle: PropTypes.string,
   handleState: PropTypes.func,
-  experienceInYear: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  education: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
   interviewTimeYear: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -228,14 +181,6 @@ InterviewInfo.propTypes = {
     PropTypes.number,
   ]),
   interviewResult: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  salaryType: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  salaryAmount: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
   ]),
