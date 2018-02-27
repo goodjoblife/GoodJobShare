@@ -259,13 +259,9 @@ class InterviewForm extends React.Component {
           companyQuery={this.state.companyQuery}
           region={this.state.region}
           jobTitle={this.state.jobTitle}
-          experienceInYear={this.state.experienceInYear}
-          education={this.state.education}
           interviewTimeYear={this.state.interviewTimeYear}
           interviewTimeMonth={this.state.interviewTimeMonth}
           interviewResult={this.state.interviewResult}
-          salaryType={this.state.salaryType}
-          salaryAmount={this.state.salaryAmount}
           overallRating={this.state.overallRating}
           submitted={this.state.submitted}
           changeValidationStatus={this.changeValidationStatus}
@@ -287,19 +283,10 @@ class InterviewForm extends React.Component {
         />
         <InterviewInfoOptional
           handleState={this.handleState}
-          companyQuery={this.state.companyQuery}
-          region={this.state.region}
-          jobTitle={this.state.jobTitle}
           experienceInYear={this.state.experienceInYear}
           education={this.state.education}
-          interviewTimeYear={this.state.interviewTimeYear}
-          interviewTimeMonth={this.state.interviewTimeMonth}
-          interviewResult={this.state.interviewResult}
           salaryType={this.state.salaryType}
           salaryAmount={this.state.salaryAmount}
-          overallRating={this.state.overallRating}
-          submitted={this.state.submitted}
-          changeValidationStatus={this.changeValidationStatus}
         />
         <SubmitArea
           onSubmit={this.onSubmit}
