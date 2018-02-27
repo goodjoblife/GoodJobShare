@@ -8,6 +8,7 @@ import { Heading } from 'common/base';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
 import WorkInfo from './WorkInfo';
+import WorkInfoOptional from './WorkInfoOptional';
 import WorkExperience from './WorkExperience';
 
 import {
@@ -262,14 +263,9 @@ class WorkExperiencesForm extends React.Component {
           companyQuery={companyQuery}
           region={region}
           jobTitle={jobTitle}
-          experienceInYear={experienceInYear}
-          education={education}
           isCurrentlyEmployed={isCurrentlyEmployed}
           jobEndingTimeYear={jobEndingTimeYear}
           jobEndingTimeMonth={jobEndingTimeMonth}
-          salaryType={salaryType}
-          salaryAmount={salaryAmount}
-          weekWorkTime={weekWorkTime}
           recommendToOthers={recommendToOthers}
           submitted={submitted}
           changeValidationStatus={this.changeValidationStatus}
@@ -283,6 +279,14 @@ class WorkExperiencesForm extends React.Component {
           editSection={this.editBlock('sections')}
           submitted={submitted}
           changeValidationStatus={this.changeValidationStatus}
+        />
+        <WorkInfoOptional
+          handleState={this.handleState}
+          experienceInYear={experienceInYear}
+          education={education}
+          salaryType={salaryType}
+          salaryAmount={salaryAmount}
+          weekWorkTime={weekWorkTime}
         />
         <SubmitArea
           onSubmit={this.onSubmit}
