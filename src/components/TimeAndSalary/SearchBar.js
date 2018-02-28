@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import cn from 'classnames';
 import R from 'ramda';
+import ReactPixel from 'react-facebook-pixel';
 
 import Radio from 'common/form/Radio';
 import { debounce } from 'utils/streamUtils';
@@ -12,6 +13,8 @@ import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput';
 import styles from './SearchBar.module.css';
 import submitButtonStyle from '../common/button/ButtonSubmit.module.css';
 import { fetchCompanyCandidates, fetchJobTitleCandidates } from '../../apis/timeAndSalaryApi';
+
+import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
 const searchOptions = [
   { label: '公司', value: 'company' },
@@ -113,6 +116,11 @@ class SearchBar extends Component {
     this.props.dispatch(push(
       `/time-and-salary/${searchType}/${encodeURIComponent(keyword)}/work-time-dashboard`,
     ));
+
+    ReactPixel.track('Search', {
+      search_string: keyword,
+      content_category: PIXEL_CONTENT_CATEGORY.TIME_AND_SALARY_SEARCH,
+    });
   }
   render() {
     const { keyword, searchType, candidates } = this.state;

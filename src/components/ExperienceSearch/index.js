@@ -7,6 +7,7 @@ import R from 'ramda';
 import qs from 'qs';
 
 import ReactGA from 'react-ga';
+import ReactPixel from 'react-facebook-pixel';
 
 import Loader from 'common/Loader';
 import { Section, Wrapper, Heading, P } from 'common/base';
@@ -20,6 +21,7 @@ import {
 } from '../../actions/experienceSearch';
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../constants/helmetData';
+import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 import {
   PAGE_COUNT,
 } from '../../constants/experienceSearch';
@@ -294,6 +296,11 @@ class ExperienceSearch extends Component {
       category: GA_CATEGORY.SEARCH_EXPERIENCE,
       action: `${GA_ACTION.SEARCH_BY}_${this.props.experienceSearch.get('searchBy')}`,
       value: val,
+    });
+
+    ReactPixel.track('Search', {
+      search_string: val,
+      content_category: PIXEL_CONTENT_CATEGORY.EXPERIENCES_SEARCH,
     });
   }
 
