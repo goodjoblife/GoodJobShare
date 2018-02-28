@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
 import Helmet from 'react-helmet';
+import ReactPixel from 'react-facebook-pixel';
+
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
@@ -25,8 +27,10 @@ import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormCon
 
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { SITE_NAME } from '../../constants/helmetData';
+import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
 import authStatus from '../../constants/authStatus';
+
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -92,6 +96,12 @@ class ExperienceDetail extends Component {
     }
     this.props.fetchReplies(experienceId);
     this.props.fetchMyPermission();
+
+    // send Facebook Pixel 'ViewContent' event
+    ReactPixel.track('ViewContent', {
+      content_ids: [experienceId],
+      content_category: PIXEL_CONTENT_CATEGORY.EXPERIENCES,
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -113,7 +123,7 @@ class ExperienceDetail extends Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     if (window && this.goTo && this.props.location.state && this.props.location.state.replyId) {
       const id = `reply-${this.props.location.state.replyId}`;
       if (document.getElementById(id)) {
@@ -123,6 +133,16 @@ class ExperienceDetail extends Component {
         );
         this.goTo = false;
       }
+    }
+
+    // send Facebook Pixel 'ViewContent' event if goto reading another experience
+    const prevExperienceId = experienceIdSelector(prevProps.params);
+    const experienceId = experienceIdSelector(this.props.params);
+    if (prevExperienceId !== experienceId) {
+      ReactPixel.track('ViewContent', {
+        content_ids: [experienceId],
+        content_category: PIXEL_CONTENT_CATEGORY.EXPERIENCES,
+      });
     }
   }
 
