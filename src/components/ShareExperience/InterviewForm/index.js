@@ -146,6 +146,11 @@ class InterviewForm extends React.Component {
           category: GA_CATEGORY.SHARE_INTERVIEW,
           action: GA_ACTION.UPLOAD_SUCCESS,
         });
+        ReactPixel.track('Purchase', {
+          value: 1,
+          currency: 'TWD',
+          content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
+        });
       }).catch(() => {
         ReactGA.event({
           category: GA_CATEGORY.SHARE_INTERVIEW,
