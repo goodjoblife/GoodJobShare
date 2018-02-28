@@ -3,6 +3,7 @@ import R from 'ramda';
 import Helmet from 'react-helmet';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
+import ReactPixel from 'react-facebook-pixel';
 import { Heading } from 'common/base';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
@@ -34,6 +35,7 @@ import styles from './WorkExperiencesForm.module.css';
 import { HELMET_DATA } from '../../../constants/helmetData';
 import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
+import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
 
 const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '段落標題，例：實際工作內容') => {
   const section = {
@@ -118,6 +120,10 @@ class WorkExperiencesForm extends React.Component {
 
     this.setState({ // eslint-disable-line react/no-did-mount-set-state
       ...defaultState,
+    });
+
+    ReactPixel.track('InitiateCheckout', {
+      content_category: PIXEL_CONTENT_CATEGORY.VISIT_WORK_EXPERIENCE_FORM,
     });
   }
 

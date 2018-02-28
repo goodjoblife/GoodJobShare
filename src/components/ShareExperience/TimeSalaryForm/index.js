@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import ReactGA from 'react-ga';
+import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
 import { Heading } from 'common/base';
 import { People } from 'common/icons';
@@ -37,6 +38,7 @@ import {
   TIME_SALARY_EXT_ORDER,
 } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
+import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
 import {
   LS_TIME_SALARY_FORM_KEY,
 } from '../../../constants/localStorageKey';
@@ -90,6 +92,10 @@ class TimeSalaryForm extends React.PureComponent {
 
     this.setState({ // eslint-disable-line react/no-did-mount-set-state
       ...defaultState,
+    });
+
+    ReactPixel.track('InitiateCheckout', {
+      content_category: PIXEL_CONTENT_CATEGORY.VISIT_TIME_AND_SALARY_FORM,
     });
   }
 
