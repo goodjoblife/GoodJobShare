@@ -48,7 +48,7 @@ class TimeInfo extends React.PureComponent {
                   placeholder="8 或 8.5"
                   onChange={e => handleState('dayPromisedWorkTime')(e.target.value)}
                 />
-                <span className={styles.unit}> 元</span>
+                <span className={styles.unit}> 小時</span>
               </div>
             </div>
             <div className={styles.formGroup}>
@@ -59,7 +59,7 @@ class TimeInfo extends React.PureComponent {
                   placeholder="10 或 10.5"
                   onChange={e => handleState('dayRealWorkTime')(e.target.value)}
                 />
-                <span className={styles.unit}> 元</span>
+                <span className={styles.unit}> 小時</span>
               </div>
             </div>
           </div>
