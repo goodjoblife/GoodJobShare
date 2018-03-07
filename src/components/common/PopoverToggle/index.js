@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
+import createHistory from 'history/createBrowserHistory';
 import cn from 'classnames';
 import styles from './Popover.module.css';
 
@@ -55,7 +55,7 @@ export default class PopoverToggle extends React.Component {
 
   componentDidMount() {
     document.addEventListener('click', this.outsideHook);
-    this.unlisten = browserHistory.listen(this.close);
+    this.unlisten = createHistory().listen(this.close);
   }
 
   componentWillUnmount() {

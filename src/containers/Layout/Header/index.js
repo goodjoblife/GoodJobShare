@@ -1,5 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import withFB from 'common/withFB';
 import Header from '../../../components/Layout/Header';
@@ -15,4 +16,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ login, logout, getLoginStatus, getMe, fetchMyPermission }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withFB(Header));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withFB(Header)));

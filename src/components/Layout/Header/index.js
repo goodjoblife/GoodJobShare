@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { browserHistory } from 'react-router';
 import cn from 'classnames';
 import ReactGA from 'react-ga';
 import { Wrapper } from 'common/base';
@@ -34,7 +33,8 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
-    this.unlisten = browserHistory.listen(this.closeNav);
+    const { history } = this.props;
+    this.unlisten = history.listen(this.closeNav);
   }
 
   componentDidUpdate(prevProps) {
@@ -159,6 +159,7 @@ Header.propTypes = {
   auth: PropTypes.object,
   FB: PropTypes.object,
   location: PropTypes.object,
+  history: PropTypes.object.isRequired,
   fetchMyPermission: PropTypes.func.isRequired,
 };
 

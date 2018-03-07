@@ -3,26 +3,30 @@ import Express from 'express';
 import favicon from 'serve-favicon';
 import path from 'path';
 import ReactDOMServer from 'react-dom/server';
-import { match, createMemoryHistory, RouterContext } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
+import { StaticRouter } from 'react-router';
+import { matchPath } from 'react-router-dom';
+import createHistory from 'history/createMemoryHistory';
 import { Provider } from 'react-redux';
 import React from 'react';
-import createRoutes from './routes';
 import configureStore from './store/configureStore';
 import Html from './helpers/Html';
+import App from './components/Layout';
+import rootRoutes from './routes';
 
 
-const matchRoutes = ({ routes, location, history }) =>
-  (new Promise((resolve, reject) => {
-    match({ routes, location, history }, (err, redirectLocation, renderProps) => {
-      if (err) {
-        reject(err);
-        return;
+const matchRoutes = (pathname, routes) => {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const route of routes) {
+    const match = matchPath(pathname, route);
+    if (match) {
+      if (route.routes) {
+        return matchRoutes(pathname, route.routes);
       }
-
-      resolve({ redirectLocation, renderProps });
-    });
-  }));
+      return { route, match };
+    }
+  }
+  return null;
+};
 
 
 export default (app, webpackIsomorphicTools) => {
@@ -40,25 +44,16 @@ export default (app, webpackIsomorphicTools) => {
   const wrap = fn => (req, res, next) => fn(req, res).catch(err => next(err));
 
   app.use(wrap(async (req, res) => {
-    const memoryHistory = createMemoryHistory(req.originalUrl);
-    const store = configureStore(undefined, memoryHistory);
-    const history = syncHistoryWithStore(memoryHistory, store);
+    const history = createHistory({ initialEntries: [req.originalUrl] });
+    const location = history.location;
+    const store = configureStore({ routing: { location } }, history);
 
-    const location = req.originalUrl;
+    const context = {};
 
-    const { redirectLocation, renderProps } = await matchRoutes({ routes: createRoutes(), location, history });
-
-    if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-      return;
-    }
-
-    if (!renderProps) {
-      throw new Error('Missing render props');
-    }
+    const { match, route: matchRoute } = matchRoutes(req.path, rootRoutes);
 
     function resolveComponent() {
-      const component = renderProps.components[renderProps.components.length - 1];
+      const component = matchRoute.component;
       if (component && component.WrappedComponent) {
         return component.WrappedComponent;
       }
@@ -67,8 +62,12 @@ export default (app, webpackIsomorphicTools) => {
 
     const component = resolveComponent();
     if (component && component.fetchData) {
-      // expect renderProps to have routes, params, location, components
-      await component.fetchData({ ...renderProps, store, history });
+      // match: 來自 withRouter 或 Route
+      // location: 來自 withRouter 或 Route
+      // history: 來自 withRouter 或 Route
+      // see https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/withRouter.md
+      // store: 提供 fetchData 可以 dispath action
+      await component.fetchData({ match, location, history, store });
     }
 
     /*
@@ -79,7 +78,9 @@ export default (app, webpackIsomorphicTools) => {
     const assets = webpackIsomorphicTools.assets();
     const finalComponent = (
       <Provider store={store}>
-        <RouterContext {...renderProps} />
+        <StaticRouter location={req.url} context={context}>
+          <App />
+        </StaticRouter>
       </Provider>
     );
 

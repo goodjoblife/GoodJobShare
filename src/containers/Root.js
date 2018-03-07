@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Provider } from 'react-redux';
-import { applyRouterMiddleware, Router } from 'react-router';
-import { useScroll } from 'react-router-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
+import App from '../components/Layout';
 
-import routes from '../routes';
 
 class Root extends Component {
   constructor(props) {
@@ -29,24 +25,10 @@ class Root extends Component {
   }
 
   render() {
-    const { store, history } = this.props;
     return (
-      <Provider store={store}>
-        <Router
-          history={history}
-          routes={routes(store)}
-          render={applyRouterMiddleware(useScroll())}
-          onUpdate={this.logPageView}
-        />
-      </Provider>
+      <App />
     );
   }
 }
-
-Root.propTypes = {
-  store: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-};
-
 
 export default Root;
