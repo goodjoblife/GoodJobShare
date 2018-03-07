@@ -22,42 +22,42 @@ import GradientMask from '../../common/GradientMask';
 import DashBoardTable from '../common/DashBoardTable';
 
 const pathnameMapping = {
-  'work-time-dashboard': {
+  '/time-and-salary/work-time-dashboard': {
     title: '工時排行榜',
     label: '一週平均總工時（高到低）',
     sortBy: 'week_work_time',
     order: 'descending',
     hasExtreme: true,
   },
-  'sort/work-time-asc': {
+  '/time-and-salary/sort/work-time-asc': {
     title: '工時排行榜（由低到高）',
     label: '一週平均總工時（低到高）',
     sortBy: 'week_work_time',
     order: 'ascending',
     hasExtreme: true,
   },
-  'salary-dashboard': {
+  '/time-and-salary/salary-dashboard': {
     title: '估算時薪排行榜',
     label: '估算時薪（高到低）',
     sortBy: 'estimated_hourly_wage',
     order: 'descending',
     hasExtreme: true,
   },
-  'sort/salary-asc': {
+  '/time-and-salary/sort/salary-asc': {
     title: '估算時薪排行榜（由低到高）',
     label: '估算時薪（低到高）',
     sortBy: 'estimated_hourly_wage',
     order: 'ascending',
     hasExtreme: true,
   },
-  latest: {
+  '/time-and-salary/latest': {
     title: '最新薪時資訊',
     label: '資料時間（新到舊）',
     sortBy: 'created_at',
     order: 'descending',
     hasExtreme: false,
   },
-  'sort/time-asc': {
+  '/time-and-salary/sort/time-asc': {
     title: '最舊薪時資訊',
     label: '資料時間（舊到新）',
     sortBy: 'created_at',
@@ -136,7 +136,7 @@ export default class TimeAndSalaryBoard extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
     status: PropTypes.string,
-    route: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     queryTimeAndSalary: PropTypes.func,
     switchPath: PropTypes.func,
     queryExtremeTimeAndSalary: PropTypes.func.isRequired,
@@ -147,8 +147,8 @@ export default class TimeAndSalaryBoard extends Component {
     fetchMyPermission: PropTypes.func.isRequired,
   }
 
-  static fetchData({ routes, store: { dispatch } }) {
-    const { path } = R.last(routes);
+  static fetchData({ match, store: { dispatch } }) {
+    const { path } = match;
     const { sortBy, order } = pathnameMapping[path];
 
     return dispatch(queryTimeAndSalary({ sortBy, order }));
@@ -172,7 +172,7 @@ export default class TimeAndSalaryBoard extends Component {
   }
 
   componentDidMount() {
-    const { path } = this.props.route;
+    const { path } = this.props.match;
     const { sortBy, order } = pathnameMapping[path];
 
     this.props.queryTimeAndSalary({ sortBy, order });
@@ -182,8 +182,8 @@ export default class TimeAndSalaryBoard extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.route.path !== nextProps.route.path) {
-      const { path } = nextProps.route;
+    if (this.props.match.path !== nextProps.match.path) {
+      const { path } = nextProps.match;
       const { sortBy, order } = pathnameMapping[path];
       this.setState({ showExtreme: false });
       this.props.resetBoardExtremeData();
@@ -213,7 +213,7 @@ export default class TimeAndSalaryBoard extends Component {
     const threshold = $(document).height() - 100;
     if (view < threshold) return;
 
-    const { path } = this.props.route;
+    const { path } = this.props.match;
     const { sortBy, order } = pathnameMapping[path];
     this.props.queryTimeAndSalary({ sortBy, order });
   }
@@ -259,7 +259,7 @@ export default class TimeAndSalaryBoard extends Component {
   }
 
   render() {
-    const { path } = this.props.route;
+    const { path } = this.props.match;
     const { title, hasExtreme } = pathnameMapping[path];
     const { status, data, switchPath, extremeStatus, extremeData, canViewTimeAndSalary } = this.props;
     const { showExtreme } = this.state;
