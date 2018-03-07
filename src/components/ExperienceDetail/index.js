@@ -31,7 +31,6 @@ import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
 import authStatus from '../../constants/authStatus';
 
-
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
   REPORT_API_ERROR: 'REPORT_API_ERROR',
