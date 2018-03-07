@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import { browserHistory } from 'react-router';
 import cn from 'classnames';
 import ReactGA from 'react-ga';
 import { Wrapper } from 'common/base';

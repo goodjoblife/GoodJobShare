@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import { Heading } from 'common/base';
 import getCallToActionLink from 'utils/callToActionUtils';
