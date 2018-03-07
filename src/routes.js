@@ -3,6 +3,11 @@ import React from 'react';
 import LandingPage from './containers/LandingPage';
 import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/TimeAndSalary/TimeAndSalaryBoard';
+import ShareExperience from './components/ShareExperience';
+import ShareExperienceEntry from './components/ShareExperience/Entry';
+import InterviewForm from './containers/ShareExperience/InterviewFormContainer';
+import TimeSalaryForm from './containers/ShareExperience/TimeSalaryFormContainer';
+import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
 import About from './components/About';
 
 
@@ -11,6 +16,32 @@ const routes = [
     path: '/',
     exact: true,
     component: LandingPage,
+  },
+  {
+    path: '/share',
+    exact: true,
+    component: ShareExperienceEntry,
+  },
+  {
+    path: '/share',
+    component: ShareExperience,
+    routes: [
+      {
+        path: '/share/interview',
+        exact: true,
+        component: InterviewForm,
+      },
+      {
+        path: '/share/time-and-salary',
+        exact: true,
+        component: TimeSalaryForm,
+      },
+      {
+        path: '/share/work-experiences',
+        exact: true,
+        component: WorkExperiencesForm,
+      },
+    ],
   },
   {
     path: '/time-and-salary',
