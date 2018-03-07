@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
+import createHistory from 'history/createBrowserHistory';
 import i from 'common/icons';
 import { P } from 'common/base';
 import styles from './BackToList.module.css';
 
 const backOrPush = backable => {
   if (backable) {
-    return browserHistory.goBack();
+    return createHistory().goBack();
   }
 
-  return browserHistory.push('/experiences/search');
+  return createHistory().push('/experiences/search');
 };
 
 const BackToList = ({ backable }) => (
