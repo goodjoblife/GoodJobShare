@@ -99,7 +99,7 @@ class ExperienceDetail extends Component {
     // send Facebook Pixel 'ViewContent' event
     ReactPixel.track('ViewContent', {
       content_ids: [experienceId],
-      content_category: PIXEL_CONTENT_CATEGORY.EXPERIENCES,
+      content_category: PIXEL_CONTENT_CATEGORY.VIEW_EXPERIENCE,
     });
   }
 
@@ -140,7 +140,7 @@ class ExperienceDetail extends Component {
     if (prevExperienceId !== experienceId) {
       ReactPixel.track('ViewContent', {
         content_ids: [experienceId],
-        content_category: PIXEL_CONTENT_CATEGORY.EXPERIENCES,
+        content_category: PIXEL_CONTENT_CATEGORY.VIEW_EXPERIENCE,
       });
     }
   }

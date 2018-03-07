@@ -300,7 +300,7 @@ class ExperienceSearch extends Component {
 
     ReactPixel.track('Search', {
       search_string: val,
-      content_category: PIXEL_CONTENT_CATEGORY.EXPERIENCES_SEARCH,
+      content_category: PIXEL_CONTENT_CATEGORY.SEARCH_EXPERIENCES,
     });
   }
 

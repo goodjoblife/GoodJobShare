@@ -119,7 +119,7 @@ class SearchBar extends Component {
 
     ReactPixel.track('Search', {
       search_string: keyword,
-      content_category: PIXEL_CONTENT_CATEGORY.TIME_AND_SALARY_SEARCH,
+      content_category: PIXEL_CONTENT_CATEGORY.SEARCH_TIME_AND_SALARY,
     });
   }
   render() {

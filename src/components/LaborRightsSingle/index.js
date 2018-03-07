@@ -45,7 +45,7 @@ class LaborRightsSingle extends React.Component {
     // send Facebook Pixel 'ViewContent' event
     ReactPixel.track('ViewContent', {
       content_ids: [this.props.params.id],
-      content_category: PIXEL_CONTENT_CATEGORY.LABOR_RIGHTS,
+      content_category: PIXEL_CONTENT_CATEGORY.VIEW_LABOR_RIGHT,
     });
   }
 
@@ -58,7 +58,7 @@ class LaborRightsSingle extends React.Component {
     if (prevProps.params.id !== this.props.params.id) {
       ReactPixel.track('ViewContent', {
         content_ids: [this.props.params.id],
-        content_category: PIXEL_CONTENT_CATEGORY.LABOR_RIGHTS,
+        content_category: PIXEL_CONTENT_CATEGORY.VIEW_LABOR_RIGHT,
       });
     }
   }
