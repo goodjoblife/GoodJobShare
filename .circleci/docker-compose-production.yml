@@ -10,5 +10,6 @@ services:
         - CONTENTFUL_API_HOST=https://content.goodjob.life
         - FACEBOOK_APP_ID=1750216878594984
         - GA_ID=UA-79990667-1
+        - PIXEL_ID=603414113402034
     ports:
       - 42000:3001
