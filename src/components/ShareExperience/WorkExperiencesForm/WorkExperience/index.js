@@ -2,18 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import subscribeValidation from 'common/subscribeValidation';
 
-import ButtonAdd from 'common/button/ButtonAdd';
 import { Comment2 } from 'common/icons';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 
 import Title from '../../common/Title';
 import Sections from '../../common/Sections';
 
-import shareStyles from '../../common/share.module.css';
-
-import {
-  workExSectionSubtitleOptions,
-} from '../../common/optionMap';
 
 import {
   title as titleValidator,
@@ -40,7 +34,6 @@ class WorkExperience extends React.PureComponent {
       handleState,
       title,
       sections,
-      appendSection,
       removeSection,
       editSection,
       submitted,
@@ -76,7 +69,7 @@ class WorkExperience extends React.PureComponent {
             submitted={submitted}
             changeValidationStatus={changeValidationStatus}
           />
-          <div
+          {/* <div
             className={shareStyles.button__add}
           >
             <ButtonAdd
@@ -85,7 +78,7 @@ class WorkExperience extends React.PureComponent {
               disabledValues={sections.map(section => section.subtitle)}
               appendBlock={appendSection}
             />
-          </div>
+          </div> */}
         </div>
       </IconHeadingBlock>
     );
@@ -100,7 +93,6 @@ WorkExperience.propTypes = {
     subtitle: PropTypes.string,
     content: PropTypes.string,
   })),
-  appendSection: PropTypes.func,
   removeSection: PropTypes.func,
   editSection: PropTypes.func,
   submitted: PropTypes.bool,
