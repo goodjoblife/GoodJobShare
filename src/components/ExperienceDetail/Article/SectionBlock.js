@@ -5,13 +5,15 @@ import styles from './SectionBlock.module.css';
 
 const SectionBlock = ({ subtitle, content }) => (
   <section>
-    <P size="l" bold className={styles.heading}>{subtitle}</P>
+    {
+      subtitle && <P size="l" bold className={styles.heading}>{subtitle}</P>
+    }
     <P size="l" className={styles.content}>{content}</P>
   </section>
 );
 
 SectionBlock.propTypes = {
-  subtitle: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
   content: PropTypes.string.isRequired,
 };
 
