@@ -48,13 +48,13 @@ export const title = R.allPass([
   lteLength(25),
 ]);
 
-const sectionSubtitle = R.compose(
-  R.allPass([
-    lteLength(25),
-    gtLength(0),
-  ]),
-  R.prop('subtitle')
-);
+// const sectionSubtitle = R.compose(
+//   R.allPass([
+//     lteLength(25),
+//     gtLength(0),
+//   ]),
+//   R.prop('subtitle')
+// );
 
 const sectionContent = R.compose(
   R.allPass([
@@ -65,7 +65,7 @@ const sectionContent = R.compose(
 );
 
 export const singleSection = R.allPass([
-  sectionSubtitle,
+  // sectionSubtitle,
   sectionContent,
 ]);
 

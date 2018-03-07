@@ -4,13 +4,13 @@
 .container {
   position: relative;
   border: 1px solid transparent;
-  &:hover {
+  /* &:hover {
     border-color: main-yellow;
 
     > .remove__btn {
       visibility: visible;
     }
-  }
+  } */
 }
 
 .remove__btn {
