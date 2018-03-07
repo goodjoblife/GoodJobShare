@@ -48,7 +48,7 @@ const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '段
   if (subtitle === '自訂段落' || !subtitle) {
     return {
       ...section,
-      subtitle: '',
+      subtitle: null,
       isSubtitleEditable: true,
       placeholder,
       titlePlaceholder,
