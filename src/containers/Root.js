@@ -20,13 +20,12 @@ class Root extends Component {
 
     // initialize facebook pixel
     ReactPixel.init(process.env.PIXEL_ID);
+    ReactPixel.pageView();
   }
 
   logPageView = () => {
     ReactGA.set({ page: window.location.pathname + window.location.search });
     ReactGA.pageview(window.location.pathname + window.location.search);
-
-    ReactPixel.pageView();
   }
 
   render() {
