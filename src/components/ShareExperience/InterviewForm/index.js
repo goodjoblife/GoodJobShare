@@ -3,6 +3,7 @@ import R from 'ramda';
 import Helmet from 'react-helmet';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
+import ReactPixel from 'react-facebook-pixel';
 import { Heading } from 'common/base';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
@@ -30,6 +31,7 @@ import {
 import { HELMET_DATA } from '../../../constants/helmetData';
 import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
+import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
 import {
   LS_INTERVIEW_FORM_KEY,
 } from '../../../constants/localStorageKey';
@@ -128,6 +130,10 @@ class InterviewForm extends React.Component {
     this.setState({ // eslint-disable-line react/no-did-mount-set-state
       ...defaultState,
     });
+
+    ReactPixel.track('InitiateCheckout', {
+      content_category: PIXEL_CONTENT_CATEGORY.VISIT_INTERVIEW_FORM,
+    });
   }
 
   onSubmit() {
@@ -139,6 +145,11 @@ class InterviewForm extends React.Component {
         ReactGA.event({
           category: GA_CATEGORY.SHARE_INTERVIEW,
           action: GA_ACTION.UPLOAD_SUCCESS,
+        });
+        ReactPixel.track('Purchase', {
+          value: 1,
+          currency: 'TWD',
+          content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
         });
       }).catch(() => {
         ReactGA.event({

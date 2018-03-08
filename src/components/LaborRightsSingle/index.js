@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import ReactPixel from 'react-facebook-pixel';
+
 import Loader from 'common/Loader';
 import { Section } from 'common/base';
 import {
@@ -23,6 +25,7 @@ import {
 import status from '../../constants/status';
 import { MAX_IMAGES_IF_HIDDEN, MARKDOWN_DIVIDER } from '../../constants/hideContent';
 import { SITE_NAME } from '../../constants/helmetData';
+import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
 import styles from './LaborRightsSingle.module.css';
 
@@ -38,12 +41,26 @@ class LaborRightsSingle extends React.Component {
       this.props.fetchDataIfNeeded(this.props.params.id);
     });
     this.props.fetchMyPermission();
+
+    // send Facebook Pixel 'ViewContent' event
+    ReactPixel.track('ViewContent', {
+      content_ids: [this.props.params.id],
+      content_category: PIXEL_CONTENT_CATEGORY.VIEW_LABOR_RIGHT,
+    });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.props.fetchMetaListIfNeeded().then(() => {
       this.props.fetchDataIfNeeded(this.props.params.id);
     });
+
+    // send Facebook Pixel 'ViewContent' event if goto reading another labor rights unit
+    if (prevProps.params.id !== this.props.params.id) {
+      ReactPixel.track('ViewContent', {
+        content_ids: [this.props.params.id],
+        content_category: PIXEL_CONTENT_CATEGORY.VIEW_LABOR_RIGHT,
+      });
+    }
   }
 
   render() {
