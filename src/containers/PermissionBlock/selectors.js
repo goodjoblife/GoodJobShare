@@ -9,3 +9,11 @@ export const hasFetchedexperienceCountSelector = R.compose(
   R.equals(fetchingStatus.FETCHED),
   state => state.experiences.get('countStatus')
 );
+
+export const laborRightsCountSelector = state =>
+  state.laborRights.get('menuEntries').size;
+
+export const hasFetchedLaborRightsCountSelector = R.compose(
+  R.equals(fetchingStatus.FETCHED),
+  state => state.laborRights.get('menuStatus')
+);
