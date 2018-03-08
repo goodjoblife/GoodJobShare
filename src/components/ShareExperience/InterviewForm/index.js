@@ -41,7 +41,12 @@ const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '段
     subtitle,
     placeholder,
     titlePlaceholder,
-    content: '',
+    content: `面試方式：
+
+面試心得：
+
+給公司的建議：
+`,
     isSubtitleEditable: false,
   };
   if (subtitle === '自訂段落' || !subtitle) {

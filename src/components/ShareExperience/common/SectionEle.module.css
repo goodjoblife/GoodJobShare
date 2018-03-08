@@ -3,14 +3,7 @@
 
 .container {
   position: relative;
-  border: 1px solid transparent;
-  /* &:hover {
-    border-color: main-yellow;
-
-    > .remove__btn {
-      visibility: visible;
-    }
-  } */
+  border: 1px solid #b4b4b4;
 }
 
 .remove__btn {

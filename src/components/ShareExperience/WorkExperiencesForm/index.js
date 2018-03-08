@@ -42,7 +42,22 @@ const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '段
     subtitle,
     placeholder,
     titlePlaceholder,
-    content: '',
+    content: `實際工作內容：
+
+工時狀況：
+
+薪資福利：
+
+公司管理方式：
+
+獲得的成長：
+
+給公司的建議：
+
+升遷制度：
+
+公司 / 團隊文化：
+`,
     isSubtitleEditable: false,
   };
   if (subtitle === '自訂段落' || !subtitle) {
