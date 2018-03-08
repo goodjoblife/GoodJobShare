@@ -77,16 +77,6 @@ class InterviewExperience extends Component {
             submitted={submitted}
             changeValidationStatus={changeValidationStatus}
           />
-          {/* <div
-            className={shareStyles.button__add}
-          >
-            <ButtonAdd
-              options={interviewSectionSubtitleOptions}
-              custimizedValues={[interviewSectionSubtitleOptions[0].value]}
-              disabledValues={sections.map(section => section.subtitle)}
-              appendBlock={appendSection}
-            />
-          </div> */}
         </div>
         <hr
           style={{

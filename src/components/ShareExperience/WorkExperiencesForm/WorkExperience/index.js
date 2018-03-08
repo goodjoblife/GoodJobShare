@@ -69,16 +69,6 @@ class WorkExperience extends React.PureComponent {
             submitted={submitted}
             changeValidationStatus={changeValidationStatus}
           />
-          {/* <div
-            className={shareStyles.button__add}
-          >
-            <ButtonAdd
-              options={workExSectionSubtitleOptions}
-              custimizedValues={[workExSectionSubtitleOptions[0].value]}
-              disabledValues={sections.map(section => section.subtitle)}
-              appendBlock={appendSection}
-            />
-          </div> */}
         </div>
       </IconHeadingBlock>
     );
