@@ -19,10 +19,10 @@ import Footer from './Footer';
 import LaborRightsPermissionBlock from '../../containers/PermissionBlock/LaborRightsPermissionBlockContainer';
 
 import {
-    fetchMetaListIfNeeded,
-    fetchDataIfNeeded,
-} from '../../actions/laborRightsSingle';
-import status from '../../constants/status';
+  queryMenu,
+  queryEntry,
+} from '../../actions/laborRights';
+import fetchingStatus from '../../constants/status';
 import { MAX_IMAGES_IF_HIDDEN, MARKDOWN_DIVIDER } from '../../constants/hideContent';
 import { SITE_NAME } from '../../constants/helmetData';
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
@@ -31,15 +31,15 @@ import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
   static fetchData({ store: { dispatch }, params: { id } }) {
-    return dispatch(fetchMetaListIfNeeded()).then(() =>
-      dispatch(fetchDataIfNeeded(id))
-    );
+    return Promise.all([
+      dispatch(queryMenu()),
+      dispatch(queryEntry(id)),
+    ]);
   }
 
   componentDidMount() {
-    this.props.fetchMetaListIfNeeded().then(() => {
-      this.props.fetchDataIfNeeded(this.props.params.id);
-    });
+    this.props.queryMenuIfUnfetched();
+    this.props.queryEntryIfUnfetched(this.props.params.id);
     this.props.fetchMyPermission();
 
     // send Facebook Pixel 'ViewContent' event
@@ -50,9 +50,8 @@ class LaborRightsSingle extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    this.props.fetchMetaListIfNeeded().then(() => {
-      this.props.fetchDataIfNeeded(this.props.params.id);
-    });
+    this.props.queryMenuIfUnfetched();
+    this.props.queryEntryIfUnfetched(this.props.params.id);
 
     // send Facebook Pixel 'ViewContent' event if goto reading another labor rights unit
     if (prevProps.params.id !== this.props.params.id) {
@@ -72,12 +71,12 @@ class LaborRightsSingle extends React.Component {
       coverUrl,
       nPublicPages,
       descriptionInPermissionBlock,
-    } = this.props.data ? this.props.data.toJS() : {};
+    } = this.props.entry ? this.props.entry.toJS() : {};
     const {
       seoTitle = title || '',
       seoDescription,
       seoText,
-    } = this.props.data ? this.props.data.toJS() : {};
+    } = this.props.entry ? this.props.entry.toJS() : {};
     const { canViewLaborRightsSingle } = this.props;
 
     // hide some content if user dosen't have permission
@@ -94,6 +93,8 @@ class LaborRightsSingle extends React.Component {
         />
       );
     }
+
+    const { entryStatus, entryError } = this.props;
     return (
       <main>
         <Helmet
@@ -109,13 +110,13 @@ class LaborRightsSingle extends React.Component {
             { rel: 'canonical', href: formatCanonicalPath(`/labor-rights/${id}`) },
           ]}
         />
-        {this.props.status === status.FETCHING && <Loader />}
+        {(entryStatus === fetchingStatus.FETCHING || entryStatus === fetchingStatus.UNFETCHED) && <Loader />}
         {
-          this.props.status === status.ERROR && this.props.error.get('message') === 'Not found' &&
+          entryStatus === fetchingStatus.ERROR && entryError.get('message') === 'Not found' &&
             <NotFound />
         }
         {
-          this.props.status === status.FETCHED &&
+          entryStatus === fetchingStatus.FETCHED &&
             <div>
               <Body
                 title={title}
@@ -131,8 +132,8 @@ class LaborRightsSingle extends React.Component {
               )}
               <Footer
                 id={id}
-                prev={this.props.prev}
-                next={this.props.next}
+                prev={this.props.prevEntry}
+                next={this.props.nextEntry}
               />
             </div>
         }
@@ -143,13 +144,13 @@ class LaborRightsSingle extends React.Component {
 
 LaborRightsSingle.propTypes = {
   params: PropTypes.object.isRequired,
-  data: ImmutablePropTypes.map,
-  prev: ImmutablePropTypes.map,
-  next: ImmutablePropTypes.map,
-  fetchMetaListIfNeeded: PropTypes.func.isRequired,
-  fetchDataIfNeeded: PropTypes.func.isRequired,
-  status: PropTypes.string.isRequired,
-  error: ImmutablePropTypes.map,
+  entry: ImmutablePropTypes.map,
+  entryStatus: PropTypes.string.isRequired,
+  entryError: ImmutablePropTypes.map,
+  prevEntry: ImmutablePropTypes.map,
+  nextEntry: ImmutablePropTypes.map,
+  queryMenuIfUnfetched: PropTypes.func.isRequired,
+  queryEntryIfUnfetched: PropTypes.func.isRequired,
   canViewLaborRightsSingle: PropTypes.bool.isRequired,
   fetchMyPermission: PropTypes.func.isRequired,
 };

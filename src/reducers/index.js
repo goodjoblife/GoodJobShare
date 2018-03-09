@@ -6,8 +6,7 @@ import dataCount from './dataCount';
 import experienceDetail from './experienceDetail';
 import experienceSearch from './experienceSearch';
 import experiences from './experiences';
-import laborRightsSingle from './laborRightsSingle';
-import laborRightsMenu from './laborRightsMenu';
+import laborRights from './laborRights';
 import me from './me';
 import timeAndSalaryBoard from './timeAndSalaryBoard';
 import timeAndSalaryCompany from './timeAndSalaryCompany';
@@ -20,8 +19,7 @@ const rootReducer = combineReducers({
   experienceSearch,
   experienceDetail,
   experiences,
-  laborRightsSingle,
-  laborRightsMenu,
+  laborRights,
   me,
   timeAndSalaryBoard,
   timeAndSalaryCompany,

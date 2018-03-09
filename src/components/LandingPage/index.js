@@ -9,7 +9,7 @@ import ShareExpSection from 'common/ShareExpSection';
 import Columns from 'common/Columns';
 import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
 import { queryPopularExperiences } from '../../actions/popularExperiences';
-import { fetchMetaListIfNeeded } from '../../actions/laborRightsMenu';
+import { queryMenu } from '../../actions/laborRights';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
 import Dashboard from './Dashboard';
@@ -19,14 +19,14 @@ class LandingPage extends Component {
   static fetchData({ store: { dispatch } }) {
     return Promise.all([
       dispatch(queryPopularExperiences()),
-      dispatch(fetchMetaListIfNeeded()),
+      dispatch(queryMenu()),
     ]);
   }
 
   static propTypes = {
     queryPopularExperiences: PropTypes.func.isRequired,
-    fetchMetaListIfNeeded: PropTypes.func.isRequired,
-    laborRightsMetaList: ImmutablePropTypes.list.isRequired,
+    queryMenuIfUnfetched: PropTypes.func.isRequired,
+    laborRightsMenuEntries: ImmutablePropTypes.list.isRequired,
     popularExperiences: ImmutablePropTypes.list.isRequired,
   }
 
@@ -34,12 +34,12 @@ class LandingPage extends Component {
     if (this.props.popularExperiences.size === 0) {
       this.props.queryPopularExperiences();
     }
-    this.props.fetchMetaListIfNeeded();
+    this.props.queryMenuIfUnfetched();
   }
 
   render() {
     const popularExperiences = this.props.popularExperiences.take(3).toJS() || [];
-    const items = this.props.laborRightsMetaList.toJS().map(({ id, title, coverUrl }) => ({
+    const items = this.props.laborRightsMenuEntries.toJS().map(({ id, title, coverUrl }) => ({
       link: `/labor-rights/${id}`,
       coverUrl,
       title,

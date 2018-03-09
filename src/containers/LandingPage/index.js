@@ -2,17 +2,20 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import LandingPage from '../../components/LandingPage';
-import * as LaborRightsMenuActions from '../../actions/laborRightsMenu';
+import { queryMenuIfUnfetched } from '../../actions/laborRights';
 import { queryPopularExperiences } from '../../actions/popularExperiences';
+import {
+  menuEntriesSelector,
+} from '../../selectors/laborRightsSelector';
 
 const mapStateToProps = state => ({
   popularExperiences: state.popularExperiences.get('data'),
-  laborRightsMetaList: state.laborRightsMenu.get('metaList').slice(-3),
+  laborRightsMenuEntries: menuEntriesSelector(state).slice(-3),
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
-    ...LaborRightsMenuActions,
+    queryMenuIfUnfetched,
     queryPopularExperiences,
   }, dispatch);
 
