@@ -39,24 +39,24 @@ class LaborRightsSingle extends React.Component {
 
   componentDidMount() {
     this.props.queryMenuIfUnfetched();
-    this.props.queryEntryIfUnfetched(this.props.params.id);
+    this.props.queryEntryIfUnfetched(this.props.match.params.id);
     this.props.fetchMyPermission();
 
     // send Facebook Pixel 'ViewContent' event
     ReactPixel.track('ViewContent', {
-      content_ids: [this.props.params.id],
+      content_ids: [this.props.match.params.id],
       content_category: PIXEL_CONTENT_CATEGORY.VIEW_LABOR_RIGHT,
     });
   }
 
   componentDidUpdate(prevProps) {
     this.props.queryMenuIfUnfetched();
-    this.props.queryEntryIfUnfetched(this.props.params.id);
+    this.props.queryEntryIfUnfetched(this.props.match.params.id);
 
     // send Facebook Pixel 'ViewContent' event if goto reading another labor rights unit
-    if (prevProps.params.id !== this.props.params.id) {
+    if (prevProps.match.params.id !== this.props.match.params.id) {
       ReactPixel.track('ViewContent', {
-        content_ids: [this.props.params.id],
+        content_ids: [this.props.match.params.id],
         content_category: PIXEL_CONTENT_CATEGORY.VIEW_LABOR_RIGHT,
       });
     }
@@ -143,7 +143,9 @@ class LaborRightsSingle extends React.Component {
 }
 
 LaborRightsSingle.propTypes = {
-  params: PropTypes.object.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.object.isRequired,
+  }),
   entry: ImmutablePropTypes.map,
   entryStatus: PropTypes.string.isRequired,
   entryError: ImmutablePropTypes.map,

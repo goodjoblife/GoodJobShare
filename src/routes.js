@@ -1,6 +1,8 @@
 import React from 'react';
 
 import LandingPage from './containers/LandingPage';
+import LaborRightsMenu from './containers/LaborRightsMenu';
+import LaborRightsSingle from './containers/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/TimeAndSalary/TimeAndSalaryBoard';
 import ShareExperience from './components/ShareExperience';
@@ -16,6 +18,16 @@ const routes = [
     path: '/',
     exact: true,
     component: LandingPage,
+  },
+  {
+    path: '/labor-rights',
+    exact: true,
+    component: LaborRightsMenu,
+  },
+  {
+    path: '/labor-rights/:id',
+    exact: true,
+    component: LaborRightsSingle,
   },
   {
     path: '/share',
