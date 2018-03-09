@@ -11,6 +11,10 @@ import InterviewForm from './containers/ShareExperience/InterviewFormContainer';
 import TimeSalaryForm from './containers/ShareExperience/TimeSalaryFormContainer';
 import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
 import About from './components/About';
+import Faq from './components/Faq';
+import Guidelines from './components/Guidelines';
+import Privacy from './components/Privacy';
+import Terms from './components/Terms';
 
 
 const routes = [
@@ -89,6 +93,26 @@ const routes = [
     path: '/about',
     exact: true,
     component: About,
+  },
+  {
+    path: '/faq',
+    exact: true,
+    component: Faq,
+  },
+  {
+    path: '/guidelines',
+    exact: true,
+    component: Guidelines,
+  },
+  {
+    path: '/privacy-policy',
+    exact: true,
+    component: Privacy,
+  },
+  {
+    path: '/user-terms',
+    exact: true,
+    component: Terms,
   },
   {
     render: () => (<div>Not Found!</div>),
