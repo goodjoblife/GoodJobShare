@@ -11,7 +11,6 @@ import ReactPixel from 'react-facebook-pixel';
 
 import Loader from 'common/Loader';
 import { Section, Wrapper, Heading, P } from 'common/base';
-import Columns from 'common/Columns';
 
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
@@ -26,7 +25,6 @@ import {
   PAGE_COUNT,
 } from '../../constants/experienceSearch';
 import status from '../../constants/status';
-import TimeSalaryBlock from './TimeSalaryBlock';
 import Filter from './Filter';
 import { Banner1, Banner2 } from './Banners';
 
@@ -500,22 +498,6 @@ class ExperienceSearch extends Component {
                 currentPage={data.currentPage}
                 createPageLinkTo={this.createPageLinkTo}
               />
-
-              {(data.searchQuery && data.workings.length > 0) &&
-                <div>
-                  <hr className={styles.splitter} />
-                  <section className={styles.timeSalaryWrapper}>
-                    <Heading size="m" bold marginBottom>「{data.searchQuery}」的薪資工時</Heading>
-                    {data.salary &&
-                      <Columns
-                        Item={TimeSalaryBlock}
-                        items={(data.workings || []).map(o => ({ data: o }))}
-                        gutter="s"
-                      />
-                    }
-                  </section>
-                </div>
-              }
             </section>
           </div>
         </Wrapper>
