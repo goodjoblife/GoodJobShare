@@ -5,6 +5,7 @@ import LaborRightsMenu from './containers/LaborRightsMenu';
 import LaborRightsSingle from './containers/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/TimeAndSalary/TimeAndSalaryBoard';
+import ExperienceSearchPage from './containers/ExperienceSearchPage';
 import ShareExperience from './components/ShareExperience';
 import ShareExperienceEntry from './components/ShareExperience/Entry';
 import InterviewForm from './containers/ShareExperience/InterviewFormContainer';
@@ -32,6 +33,11 @@ const routes = [
     path: '/labor-rights/:id',
     exact: true,
     component: LaborRightsSingle,
+  },
+  {
+    path: '/experiences/search',
+    exact: true,
+    component: ExperienceSearchPage,
   },
   {
     path: '/share',

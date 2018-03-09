@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
-import { browserHistory } from 'react-router';
 import R from 'ramda';
 import qs from 'qs';
 
@@ -35,15 +34,10 @@ import Pagination from './Pagination';
 import getScale from '../../utils/numberUtils';
 
 import {
-  // searchQuerySelector,
-  // searchBySelector,
-  // sortBySelector,
-  // searchTypeSelector,
   handleSearchType,
-  // pageSelector,
   toQsString,
   querySelector,
-  pageKeysToQuery,
+  locationSearchToQuery,
 } from './helper';
 import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
 
@@ -66,7 +60,8 @@ const BANNER_LOCATION = 10;
 
 class ExperienceSearch extends Component {
   static fetchData({ location, store: { dispatch } }) {
-    const { query } = location;
+    const { search } = location;
+    const query = locationSearchToQuery(search);
     const {
       searchBy,
       searchQuery,
@@ -90,8 +85,10 @@ class ExperienceSearch extends Component {
     experienceSearch: ImmutablePropTypes.map.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string,
-      query: PropTypes.object,
       pathname: PropTypes.string,
+    }),
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
     }),
     loadingStatus: PropTypes.string,
   }
@@ -110,8 +107,9 @@ class ExperienceSearch extends Component {
     } = this.props;
 
     const {
-      query,
+      search,
     } = this.props.location;
+    const query = locationSearchToQuery(search);
 
     const {
       searchBy,
@@ -136,8 +134,9 @@ class ExperienceSearch extends Component {
       } = nextProps;
 
       const {
-        query,
+        search,
       } = nextProps.location;
+      const query = locationSearchToQuery(search);
 
       const {
         searchBy,
@@ -156,13 +155,15 @@ class ExperienceSearch extends Component {
   }
 
   getCanonicalUrl = () => {
+    const { search } = this.props.location;
+    const query = locationSearchToQuery(search);
     const {
       searchType,
       searchQuery,
       searchBy,
       sortBy,
       page,
-    } = querySelector(this.props.location.query);
+    } = querySelector(query);
 
     const params = {
       type: searchType || 'interview,work',
@@ -193,8 +194,9 @@ class ExperienceSearch extends Component {
 
     const {
       pathname,
-      query,
+      search,
     } = this.props.location;
+    const query = locationSearchToQuery(search);
 
     const {
       searchBy,
@@ -220,7 +222,7 @@ class ExperienceSearch extends Component {
 
     const url = `${pathname}?${queryString}`;
 
-    browserHistory.push(url);
+    this.props.history.push(url);
   }
 
   handleKeyPress(e) {
@@ -240,8 +242,9 @@ class ExperienceSearch extends Component {
     } = this.props;
     const {
       pathname,
-      query,
+      search,
     } = this.props.location;
+    const query = locationSearchToQuery(search);
 
     const {
       searchQuery,
@@ -260,7 +263,7 @@ class ExperienceSearch extends Component {
     const url = `${pathname}?${queryString}`;
 
     getNewSearchBy(searchBy);
-    browserHistory.push(url);
+    this.props.history.push(url);
   }
 
   fetchExperiencesAndWorkings(val) {
@@ -270,8 +273,9 @@ class ExperienceSearch extends Component {
 
     const {
       pathname,
-      query,
+      search,
     } = this.props.location;
+    const query = locationSearchToQuery(search);
 
     const {
       searchBy,
@@ -289,7 +293,7 @@ class ExperienceSearch extends Component {
 
     const url = `${pathname}?${queryString}`;
 
-    browserHistory.push(url);
+    this.props.history.push(url);
     fetchWorkings(searchBy, val);
 
     ReactGA.event({
@@ -307,8 +311,9 @@ class ExperienceSearch extends Component {
   fetchExperiencesWithSort(sort) {
     const {
       pathname,
-      query,
+      search,
     } = this.props.location;
+    const query = locationSearchToQuery(search);
 
     const {
       searchBy,
@@ -325,7 +330,7 @@ class ExperienceSearch extends Component {
 
     const url = `${pathname}?${queryString}`;
 
-    browserHistory.push(url);
+    this.props.history.push(url);
 
     if (sort === SORT.CREATED_AT) {
       ReactGA.event({
@@ -344,8 +349,9 @@ class ExperienceSearch extends Component {
   createPageLinkTo = nextPage => {
     const {
       pathname,
-      query,
+      search,
     } = this.props.location;
+    const query = locationSearchToQuery(search);
 
     const {
       searchBy,
@@ -354,15 +360,17 @@ class ExperienceSearch extends Component {
       searchType,
     } = querySelector(query);
 
+    const queryString = toQsString({
+      sort: sortBy,
+      searchBy,
+      searchQuery,
+      searchType,
+      page: nextPage,
+    });
+
     return {
       pathname,
-      query: pageKeysToQuery({
-        searchBy,
-        searchQuery,
-        sortBy,
-        searchType,
-        page: nextPage,
-      }),
+      search: `?${queryString}`,
     };
   }
 
@@ -394,11 +402,15 @@ class ExperienceSearch extends Component {
 
   renderHelmet = () => {
     const {
+      search,
+    } = this.props.location;
+    const query = locationSearchToQuery(search);
+    const {
       searchType,
       searchQuery,
       sortBy,
       page,
-    } = querySelector(this.props.location.query);
+    } = querySelector(query);
 
     const count = this.props.experienceSearch.get('experienceCount');
     const scale = getScale(count);

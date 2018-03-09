@@ -67,16 +67,12 @@ export const handleSearchType = searchType => R.compose(
   ),
 );
 
-export const pageKeysToQuery = ({
-  searchType,
-  searchQuery,
-  searchBy,
-  sortBy,
-  page,
-}) => ({
-  type: searchType || 'interview,work',
-  q: searchQuery || '',
-  s_by: searchBy || 'job_title',
-  sort: sortBy || 'created_at',
-  p: page || 1,
-});
+export const locationSearchToQuery = R.compose(
+  search => {
+    if (search[0] === '?') {
+      return R.tail(search);
+    }
+    return search;
+  },
+  qs.parse
+);
