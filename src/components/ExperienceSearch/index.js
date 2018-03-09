@@ -35,12 +35,7 @@ import Pagination from './Pagination';
 import getScale from '../../utils/numberUtils';
 
 import {
-  // searchQuerySelector,
-  // searchBySelector,
-  // sortBySelector,
-  // searchTypeSelector,
   handleSearchType,
-  // pageSelector,
   toQsString,
   querySelector,
   pageKeysToQuery,
@@ -70,7 +65,7 @@ class ExperienceSearch extends Component {
     const {
       searchBy,
       searchQuery,
-      sortBy: sort,
+      sort,
       page,
     } = querySelector(query);
 
@@ -83,10 +78,10 @@ class ExperienceSearch extends Component {
   }
 
   static propTypes = {
-    setKeyword: PropTypes.func.isRequired,
+    // setKeyword: PropTypes.func.isRequired, // TODO: remove
     fetchExperiences: PropTypes.func.isRequired,
-    fetchWorkings: PropTypes.func.isRequired,
-    getNewSearchBy: PropTypes.func.isRequired,
+    // fetchWorkings: PropTypes.func.isRequired, // TODO: remove
+    getNewSearchBy: PropTypes.func.isRequired, // TODO: rename, eg: queryKeywords
     experienceSearch: ImmutablePropTypes.map.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string,
@@ -96,12 +91,9 @@ class ExperienceSearch extends Component {
     loadingStatus: PropTypes.string,
   }
 
-  constructor() {
-    super();
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.handleKeywordClick = this.handleKeywordClick.bind(this);
+  constructor(props) {
+    super(props);
     this.fetchExperiencesWithSort = this.fetchExperiencesWithSort.bind(this);
-    this.fetchExperiencesAndWorkings = this.fetchExperiencesAndWorkings.bind(this);
   }
 
   componentDidMount() {
@@ -116,7 +108,7 @@ class ExperienceSearch extends Component {
     const {
       searchBy,
       searchQuery,
-      sortBy: sort,
+      sort,
       page,
     } = querySelector(query);
 
@@ -142,7 +134,7 @@ class ExperienceSearch extends Component {
       const {
         searchBy,
         searchQuery,
-        sortBy: sort,
+        sort,
         page,
       } = querySelector(query);
 
@@ -160,7 +152,7 @@ class ExperienceSearch extends Component {
       searchType,
       searchQuery,
       searchBy,
-      sortBy,
+      sort,
       page,
     } = querySelector(this.props.location.query);
 
@@ -168,7 +160,7 @@ class ExperienceSearch extends Component {
       type: searchType || 'interview,work',
       q: searchQuery || '',
       s_by: searchBy || 'job_title',
-      sort: sortBy || 'created_at',
+      sort: sort || 'created_at',
       p: page || 1,
     };
     const str = qs.stringify(params, { sort: (a, b) => a.localeCompare(b) });
@@ -223,18 +215,27 @@ class ExperienceSearch extends Component {
     browserHistory.push(url);
   }
 
-  handleKeyPress(e) {
-    if (e.key === 'Enter') {
-      const searchQuery = e.target.value;
-      this.fetchExperiencesAndWorkings(searchQuery);
-    }
+  handleSearchbarKeywordClick = ({ keyword, searchQuery, searchBy }) => {
+    const { pathname, query } = this.props.location;
+    // pickup parameter from query
+    const { sort, searchType } = querySelector(query);
+    // reset to initial page
+    const page = 1;
+
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery: keyword,
+      page,
+      searchType,
+    });
+    const url = `${pathname}?${queryString}`;
+    browserHistory.push(url);
+
+    this.searchTrack({ searchBy, searchQuery });
   }
 
-  handleKeywordClick(searchQuery) {
-    this.fetchExperiencesAndWorkings(searchQuery);
-  }
-
-  handleSearchBy = searchBy => {
+  handleSearchBy = ({ searchQuery, searchBy }) => {
     const {
       getNewSearchBy,
     } = this.props;
@@ -244,8 +245,7 @@ class ExperienceSearch extends Component {
     } = this.props.location;
 
     const {
-      searchQuery,
-      sortBy: sort,
+      sort,
       searchType,
     } = querySelector(query);
 
@@ -261,45 +261,37 @@ class ExperienceSearch extends Component {
 
     getNewSearchBy(searchBy);
     browserHistory.push(url);
+    this.searchTrack({ searchBy, searchQuery });
   }
 
-  fetchExperiencesAndWorkings(val) {
-    const {
-      fetchWorkings,
-    } = this.props;
-
-    const {
-      pathname,
-      query,
-    } = this.props.location;
-
-    const {
-      searchBy,
-      sortBy: sort,
-      searchType,
-    } = querySelector(query);
+  handleSearchbarSubmit = ({ searchBy, searchQuery }) => {
+    const { pathname, query } = this.props.location;
+    // pickup parameter from query
+    const { sort, searchType } = querySelector(query);
+    // reset to initial page
+    const page = 1;
 
     const queryString = toQsString({
       sort,
       searchBy,
-      searchQuery: val,
-      page: 1,
+      searchQuery,
+      page,
       searchType,
     });
-
     const url = `${pathname}?${queryString}`;
-
     browserHistory.push(url);
-    fetchWorkings(searchBy, val);
+    this.searchTrack({ searchBy, searchQuery });
+  }
 
+  searchTrack = ({ searchBy, searchQuery }) => {
     ReactGA.event({
       category: GA_CATEGORY.SEARCH_EXPERIENCE,
-      action: `${GA_ACTION.SEARCH_BY}_${this.props.experienceSearch.get('searchBy')}`,
-      value: val,
+      action: `${GA_ACTION.SEARCH_BY}_${searchBy}`,
+      value: searchQuery,
     });
 
     ReactPixel.track('Search', {
-      search_string: val,
+      search_string: searchQuery,
       content_category: PIXEL_CONTENT_CATEGORY.SEARCH_EXPERIENCES,
     });
   }
@@ -440,12 +432,14 @@ class ExperienceSearch extends Component {
 
   render() {
     const {
-      setKeyword,
       experienceSearch,
       loadingStatus,
     } = this.props;
     const data = experienceSearch.toJS();
     const experiences = data.experiences || [];
+
+    const { query } = this.props.location;
+    const { searchQuery, searchBy } = querySelector(query);
 
     return (
       <Section Tag="main" pageTop paddingBottom>
@@ -465,12 +459,12 @@ class ExperienceSearch extends Component {
             <section className={styles.content}>
               <Searchbar
                 className={styles.searcbarLarge}
-                data={data}
-                handleSearchBy={this.handleSearchBy}
-                setKeyword={setKeyword}
-                handleKeyPress={this.handleKeyPress}
-                handleKeywordClick={this.handleKeywordClick}
-                fetchExperiencesAndWorkings={this.fetchExperiencesAndWorkings}
+                keywords={data.keywords}
+                searchBy={searchBy}
+                searchQuery={searchQuery}
+                onKeywordClick={this.handleSearchbarKeywordClick}
+                onSearchByChange={this.handleSearchBy}
+                onSubmit={this.handleSearchbarSubmit}
               />
 
               {(data.searchQuery && data.experienceCount > 0) &&
