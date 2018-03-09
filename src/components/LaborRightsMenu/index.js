@@ -6,27 +6,26 @@ import Loader from 'common/Loader';
 import Columns from 'common/Columns';
 import { Section, Wrapper, Heading } from 'common/base';
 import getCallToActionLink from 'utils/callToActionUtils';
-import {
-  fetchMetaListIfNeeded,
-} from '../../actions/laborRightsMenu';
-import status from '../../constants/status';
+import { queryMenu } from '../../actions/laborRights';
+import fetchingStatus from '../../constants/status';
 import LaborRightsEntry from './LaborRightsEntry';
 import About from './About';
 import { HELMET_DATA } from '../../constants/helmetData';
 
 class LaborRightsMenu extends React.Component {
   static fetchData({ store }) {
-    return store.dispatch(fetchMetaListIfNeeded());
+    return store.dispatch(queryMenu());
   }
 
   componentDidMount() {
-    this.props.fetchMetaListIfNeeded();
+    this.props.queryMenuIfUnfetched();
   }
 
   render() {
     const title = '勞動知識小教室';
+    const { menuStatus: status, menuError, menuEntries: entries } = this.props;
     // eslint-disable-next-line no-shadow
-    const items = this.props.metaList.toJS().map(({ id, title, coverUrl }) => ({
+    const items = entries.toJS().map(({ id, title, coverUrl }) => ({
       link: `/labor-rights/${id}`,
       coverUrl,
       title,
@@ -40,13 +39,13 @@ class LaborRightsMenu extends React.Component {
       <Section Tag="main" pageTop>
         <Wrapper size="l" Tag="main">
           <Helmet {...HELMET_DATA.LABOR_RIGHTS_MENU} />
-          {this.props.status === status.FETCHING && <Loader />}
+          {status === fetchingStatus.FETCHING && <Loader />}
           {
-            this.props.status === status.ERROR && this.props.error &&
-              <Heading center size="m" Tag="div">{this.props.error.toString()}</Heading>
+            status === fetchingStatus.ERROR && menuError &&
+              <Heading center size="m" Tag="div">{menuError.toString()}</Heading>
           }
           {
-            this.props.status === status.FETCHED &&
+            status === fetchingStatus.FETCHED &&
               <section>
                 <Heading size="l" center marginBottom>{title}</Heading>
                 <Columns
@@ -65,10 +64,10 @@ class LaborRightsMenu extends React.Component {
 }
 
 LaborRightsMenu.propTypes = {
-  metaList: ImmutablePropTypes.list.isRequired,
-  fetchMetaListIfNeeded: PropTypes.func.isRequired,
-  status: PropTypes.string.isRequired,
-  error: ImmutablePropTypes.map,
+  menuEntries: ImmutablePropTypes.list.isRequired,
+  menuStatus: PropTypes.string.isRequired,
+  menuError: ImmutablePropTypes.map,
+  queryMenuIfUnfetched: PropTypes.func.isRequired,
 };
 
 export default LaborRightsMenu;

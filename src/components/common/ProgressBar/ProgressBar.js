@@ -13,7 +13,7 @@ const ProgressBar = ({
   rootClassName,
   theme,
 }) => {
-  const percentage = `${(totalData / goalData) * 100}%`;
+  const percentage = totalData <= goalData ? `${(totalData / goalData) * 100}%` : '100%';
   return (
     <div className={cn(styles.root, rootClassName, styles[size], styles[theme])}>
       { size === 'l' && <div className={styles.start}>0</div> }
