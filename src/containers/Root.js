@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
+import { ScrollContext } from 'react-router-scroll-4';
 import App from '../components/Layout';
 
 
@@ -26,7 +27,9 @@ class Root extends Component {
 
   render() {
     return (
-      <App />
+      <ScrollContext>
+        <App />
+      </ScrollContext>
     );
   }
 }
