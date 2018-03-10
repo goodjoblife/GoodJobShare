@@ -11,6 +11,7 @@ import ShareExperienceEntry from './components/ShareExperience/Entry';
 import InterviewForm from './containers/ShareExperience/InterviewFormContainer';
 import TimeSalaryForm from './containers/ShareExperience/TimeSalaryFormContainer';
 import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
+import Me from './containers/Me';
 import About from './components/About';
 import Faq from './components/Faq';
 import Guidelines from './components/Guidelines';
@@ -94,6 +95,11 @@ const routes = [
         component: TimeAndSalaryBoard,
       },
     ],
+  },
+  {
+    path: '/me',
+    exact: true,
+    component: Me,
   },
   {
     path: '/about',
