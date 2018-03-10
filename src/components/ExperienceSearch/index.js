@@ -33,7 +33,6 @@ import Pagination from './Pagination';
 import getScale from '../../utils/numberUtils';
 
 import {
-  handleSearchType,
   toQsString,
   querySelector,
   pageKeysToQuery,
@@ -85,11 +84,6 @@ class ExperienceSearch extends Component {
       pathname: PropTypes.string,
     }),
     loadingStatus: PropTypes.string,
-  }
-
-  constructor(props) {
-    super(props);
-    this.fetchExperiencesWithSort = this.fetchExperiencesWithSort.bind(this);
   }
 
   componentDidMount() {
@@ -164,54 +158,28 @@ class ExperienceSearch extends Component {
     return url;
   }
 
-  setSearchType = e => {
-    const searchType = e.target.value;
-    const on = this.props.experienceSearch.get(searchType);
-    if (on) {
-      ReactGA.event({
-        category: GA_CATEGORY.SEARCH_EXPERIENCE,
-        action: `${GA_ACTION.TOGGLE_OFF}_${searchType}`,
-      });
-    } else {
-      ReactGA.event({
-        category: GA_CATEGORY.SEARCH_EXPERIENCE,
-        action: `${GA_ACTION.TOGGLE_ON}_${searchType}`,
-      });
-    }
-
-    const {
-      pathname,
-      query,
-    } = this.props.location;
+  handleSearchTypeChange = ({ searchType, sort }) => {
+    const { pathname, query } = this.props.location;
 
     const {
       searchBy,
       searchQuery,
-      sortBy: sort,
     } = querySelector(query);
 
-    let {
-      searchType: prevSearchType,
-    } = querySelector(query);
-
-    prevSearchType = R.split(',', prevSearchType);
-
-    const nextSearchType = handleSearchType(searchType)(prevSearchType);
+    const page = 1;
 
     const queryString = toQsString({
-      page: 1,
+      page,
       sort,
       searchBy,
       searchQuery,
-      searchType: nextSearchType,
+      searchType: R.join(',')(searchType),
     });
-
     const url = `${pathname}?${queryString}`;
-
     browserHistory.push(url);
   }
 
-  handleSearchbarKeywordClick = ({ keyword, searchQuery, searchBy }) => {
+  handleSearchbarKeywordClick = ({ keyword, searchBy }) => {
     const { pathname, query } = this.props.location;
     // pickup parameter from query
     const { sort, searchType } = querySelector(query);
@@ -228,7 +196,7 @@ class ExperienceSearch extends Component {
     const url = `${pathname}?${queryString}`;
     browserHistory.push(url);
 
-    this.searchTrack({ searchBy, searchQuery });
+    this.searchTrack({ searchBy, keyword });
   }
 
   handleSearchBy = ({ searchQuery, searchBy }) => {
@@ -292,7 +260,7 @@ class ExperienceSearch extends Component {
     });
   }
 
-  fetchExperiencesWithSort(sort) {
+  handleSortClick = ({ searchType, sort }) => {
     const {
       pathname,
       query,
@@ -300,19 +268,21 @@ class ExperienceSearch extends Component {
 
     const {
       searchBy,
-      searchType,
     } = querySelector(query);
+
+    // reset searchQuery
+    const searchQuery = '';
+    const page = 1;
 
     const queryString = toQsString({
       sort,
       searchBy,
-      searchQuery: '',
-      page: 1,
+      searchQuery,
+      page,
       searchType,
     });
 
     const url = `${pathname}?${queryString}`;
-
     browserHistory.push(url);
 
     if (sort === SORT.CREATED_AT) {
@@ -435,7 +405,7 @@ class ExperienceSearch extends Component {
     const experiences = data.experiences || [];
 
     const { query } = this.props.location;
-    const { searchQuery, searchBy } = querySelector(query);
+    const { searchQuery, searchBy, sort, searchType } = querySelector(query);
 
     return (
       <Section Tag="main" pageTop paddingBottom>
@@ -444,9 +414,10 @@ class ExperienceSearch extends Component {
           <div className={styles.container}>
             <aside className={styles.aside}>
               <Filter
-                data={data}
-                fetchExperiencesWithSort={this.fetchExperiencesWithSort}
-                setSearchType={this.setSearchType}
+                sort={sort}
+                searchType={searchType.split(',')}
+                onSeachTypeChange={this.handleSearchTypeChange}
+                onSortClick={this.handleSortClick}
                 className={styles.filter}
               />
               <Banner1 className={styles.banner} />
