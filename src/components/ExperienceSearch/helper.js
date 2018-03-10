@@ -33,6 +33,7 @@ const qsSelector = (key, defaultValue) => R.compose(
 export const searchQuerySelector = qsSelector('q', '');
 export const searchBySelector = qsSelector('s_by', 'job_title');
 export const sortBySelector = qsSelector('sort', 'created_at');
+export const sortSelector = qsSelector('sort', 'created_at');
 export const pageSelector = qsSelector('p', 1);
 export const searchTypeSelector = R.compose(
   qsSelector('type', 'interview,work'),
@@ -41,6 +42,9 @@ export const searchTypeSelector = R.compose(
 export const querySelector = query => ({
   get sortBy() {
     return sortBySelector(query);
+  },
+  get sort() {
+    return sortSelector(query);
   },
   get searchQuery() {
     return searchQuerySelector(query);

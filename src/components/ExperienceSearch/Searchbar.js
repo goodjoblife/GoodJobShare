@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -6,76 +6,115 @@ import Radio from 'common/form/Radio';
 import Magnifiner from 'common/icons/Magnifiner';
 import styles from './Searchbar.module.css';
 
-const SearchBar = ({
-  data,
-  setKeyword,
-  handleSearchBy,
-  handleKeyPress,
-  handleKeywordClick,
-  fetchExperiencesAndWorkings,
-  className,
-}) => (
-  <section className={cn(styles.searchbar, className)}>
-    <div className={styles.condition}>
-      {
-        [
-          { label: '公司', value: 'company' },
-          { label: '職稱', value: 'job_title' },
-        ].map(o => (
-          <Radio
-            key={o.value} id={`condition-${o.value}`}
-            label={o.label} value={o.value} inline
-            onChange={() => handleSearchBy(o.value)}
-            checked={data.searchBy === o.value}
+const OPTIONS = [
+  { label: '公司', value: 'company' },
+  { label: '職稱', value: 'job_title' },
+];
+
+class SearchBar extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    const { searchBy, searchQuery } = props;
+    this.state = {
+      searchBy,
+      searchQuery,
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      searchBy,
+      searchQuery,
+    } = nextProps;
+
+    this.setState({
+      searchBy,
+      searchQuery,
+    });
+  }
+
+  render() {
+    const { keywords } = this.props;
+    const {
+      onKeywordClick,
+      onSearchByChange,
+      onSubmit,
+    } = this.props;
+    const { className } = this.props;
+    const { searchBy, searchQuery } = this.state;
+
+    return (
+      <section className={cn(styles.searchbar, className)}>
+        <div className={styles.condition}>
+          {
+            OPTIONS.map(o => (
+              <Radio
+                key={o.value}
+                id={`condition-${o.value}`}
+                label={o.label}
+                value={o.value}
+                inline
+                onChange={() => {
+                  const newSearchBy = o.value;
+                  this.setState({ searchBy: newSearchBy });
+                  onSearchByChange({ searchBy: newSearchBy, searchQuery });
+                }}
+                checked={searchBy === o.value}
+              />
+            ))
+          }
+        </div>
+        <div className={styles.search}>
+          <input
+            type="text"
+            onKeyPress={e => {
+              if (e.key === 'Enter') {
+                const newSearchQuery = e.target.value;
+                onSubmit({ searchBy, searchQuery: newSearchQuery });
+              }
+            }}
+            onChange={e => this.setState({ searchQuery: e.target.value })}
+            value={searchQuery}
+            placeholder={searchBy === 'company' ? 'ex: 台灣電機股份有限公司' : 'ex: 行銷企劃'}
           />
-        ))
-      }
-    </div>
-    <div className={styles.search}>
-      <input
-        type="text"
-        onKeyPress={handleKeyPress}
-        onChange={e => setKeyword(e.target.value)}
-        value={data.keyword}
-        placeholder={
-          data.searchBy === 'company'
-            ? 'ex: 台灣電機股份有限公司'
-            : 'ex: 行銷企劃'
-        }
-      />
-      <button
-        className={styles.searchBtn}
-        onClick={() => {
-          // cmpAlert.show();
-          const val = data.keyword;
-          fetchExperiencesAndWorkings(val);
-        }}
-      >
-        <Magnifiner />
-      </button>
-      <div className={styles.keywordGroup}>
-        {
-          (data.keywords || []).map(o => (
-            <span
-              key={o} className={styles.keyword}
-              onClick={() => handleKeywordClick(o)}
-            >
-              {o}
-            </span>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-);
+          <button
+            className={styles.searchBtn}
+            onClick={() => {
+              onSubmit({ searchBy, searchQuery });
+            }}
+          >
+            <Magnifiner />
+          </button>
+          <div className={styles.keywordGroup}>
+            {
+              (keywords || []).map(keyword => (
+                <span
+                  key={keyword}
+                  className={styles.keyword}
+                  onClick={() => {
+                    onKeywordClick({ keyword, searchBy, searchQuery });
+                  }}
+                >
+                  {keyword}
+                </span>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+    );
+  }
+}
+
 SearchBar.propTypes = {
   className: PropTypes.string,
-  data: PropTypes.object.isRequired,
-  handleSearchBy: PropTypes.func.isRequired,
-  handleKeyPress: PropTypes.func.isRequired,
-  handleKeywordClick: PropTypes.func.isRequired,
-  setKeyword: PropTypes.func.isRequired,
-  fetchExperiencesAndWorkings: PropTypes.func.isRequired,
+  keywords: PropTypes.array,
+  searchBy: PropTypes.string.isRequired,
+  searchQuery: PropTypes.string.isRequired,
+  onSearchByChange: PropTypes.func.isRequired,
+  onKeywordClick: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default SearchBar;
