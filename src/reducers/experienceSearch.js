@@ -3,9 +3,6 @@ import { Map, fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 import statusConstant from '../constants/status';
 import {
-  SET_SEARCH_BY,
-  SET_WORKINGS,
-  SET_KEYWORD,
   SET_KEYWORDS,
   SET_SORT_AND_EXPERIENCES,
   SET_LOADING_STATUS,
@@ -21,23 +18,12 @@ const preloadedState = Map({
   experiences: [],
   experienceCount: 0,
 
-  keyword: '', // input value 用
   keywords: [],
-  workings: [],
   loadingStatus: statusConstant.UNFETCHED,
   error: null,
 });
 
 const experienceSearch = createReducer(preloadedState, {
-  [SET_SEARCH_BY]: (state, action) =>
-    state.update('searchBy', () => action.searchBy),
-
-  [SET_KEYWORD]: (state, action) =>
-    state.update('keyword', () => action.keyword),
-
-  [SET_WORKINGS]: (state, action) =>
-    state.update('workings', () => fromJS(action.workings || [])),
-
   [SET_KEYWORDS]: (state, action) =>
     state.merge({
       keywords: fromJS(action.keywords),

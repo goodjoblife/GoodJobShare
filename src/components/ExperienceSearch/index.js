@@ -76,9 +76,7 @@ class ExperienceSearch extends Component {
   }
 
   static propTypes = {
-    // setKeyword: PropTypes.func.isRequired, // TODO: remove
     fetchExperiences: PropTypes.func.isRequired,
-    // fetchWorkings: PropTypes.func.isRequired, // TODO: remove
     getNewSearchBy: PropTypes.func.isRequired, // TODO: rename, eg: queryKeywords
     experienceSearch: ImmutablePropTypes.map.isRequired,
     location: PropTypes.shape({
