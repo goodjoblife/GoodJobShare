@@ -10,7 +10,6 @@ import ReactPixel from 'react-facebook-pixel';
 
 import Loader from 'common/Loader';
 import { Section, Wrapper, Heading, P } from 'common/base';
-import Columns from 'common/Columns';
 
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
@@ -25,7 +24,6 @@ import {
   PAGE_COUNT,
 } from '../../constants/experienceSearch';
 import status from '../../constants/status';
-import TimeSalaryBlock from './TimeSalaryBlock';
 import Filter from './Filter';
 import { Banner1, Banner2 } from './Banners';
 
@@ -34,7 +32,6 @@ import Pagination from './Pagination';
 import getScale from '../../utils/numberUtils';
 
 import {
-  handleSearchType,
   toQsString,
   querySelector,
   locationSearchToQuery,
@@ -65,7 +62,7 @@ class ExperienceSearch extends Component {
     const {
       searchBy,
       searchQuery,
-      sortBy: sort,
+      sort,
       page,
     } = querySelector(query);
 
@@ -78,10 +75,8 @@ class ExperienceSearch extends Component {
   }
 
   static propTypes = {
-    setKeyword: PropTypes.func.isRequired,
     fetchExperiences: PropTypes.func.isRequired,
-    fetchWorkings: PropTypes.func.isRequired,
-    getNewSearchBy: PropTypes.func.isRequired,
+    getNewSearchBy: PropTypes.func.isRequired, // TODO: rename, eg: queryKeywords
     experienceSearch: ImmutablePropTypes.map.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string,
@@ -91,14 +86,6 @@ class ExperienceSearch extends Component {
       push: PropTypes.func.isRequired,
     }),
     loadingStatus: PropTypes.string,
-  }
-
-  constructor() {
-    super();
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.handleKeywordClick = this.handleKeywordClick.bind(this);
-    this.fetchExperiencesWithSort = this.fetchExperiencesWithSort.bind(this);
-    this.fetchExperiencesAndWorkings = this.fetchExperiencesAndWorkings.bind(this);
   }
 
   componentDidMount() {
@@ -114,7 +101,7 @@ class ExperienceSearch extends Component {
     const {
       searchBy,
       searchQuery,
-      sortBy: sort,
+      sort,
       page,
     } = querySelector(query);
 
@@ -141,7 +128,7 @@ class ExperienceSearch extends Component {
       const {
         searchBy,
         searchQuery,
-        sortBy: sort,
+        sort,
         page,
       } = querySelector(query);
 
@@ -161,7 +148,7 @@ class ExperienceSearch extends Component {
       searchType,
       searchQuery,
       searchBy,
-      sortBy,
+      sort,
       page,
     } = querySelector(query);
 
@@ -169,7 +156,7 @@ class ExperienceSearch extends Component {
       type: searchType || 'interview,work',
       q: searchQuery || '',
       s_by: searchBy || 'job_title',
-      sort: sortBy || 'created_at',
+      sort: sort || 'created_at',
       p: page || 1,
     };
     const str = qs.stringify(params, { sort: (a, b) => a.localeCompare(b) });
@@ -177,66 +164,50 @@ class ExperienceSearch extends Component {
     return url;
   }
 
-  setSearchType = e => {
-    const searchType = e.target.value;
-    const on = this.props.experienceSearch.get(searchType);
-    if (on) {
-      ReactGA.event({
-        category: GA_CATEGORY.SEARCH_EXPERIENCE,
-        action: `${GA_ACTION.TOGGLE_OFF}_${searchType}`,
-      });
-    } else {
-      ReactGA.event({
-        category: GA_CATEGORY.SEARCH_EXPERIENCE,
-        action: `${GA_ACTION.TOGGLE_ON}_${searchType}`,
-      });
-    }
-
-    const {
-      pathname,
-      search,
-    } = this.props.location;
+  handleSearchTypeChange = ({ searchType, sort }) => {
+    const { pathname, search } = this.props.location;
     const query = locationSearchToQuery(search);
 
     const {
       searchBy,
       searchQuery,
-      sortBy: sort,
     } = querySelector(query);
 
-    let {
-      searchType: prevSearchType,
-    } = querySelector(query);
-
-    prevSearchType = R.split(',', prevSearchType);
-
-    const nextSearchType = handleSearchType(searchType)(prevSearchType);
+    const page = 1;
 
     const queryString = toQsString({
-      page: 1,
+      page,
       sort,
       searchBy,
       searchQuery,
-      searchType: nextSearchType,
+      searchType: R.join(',')(searchType),
     });
-
     const url = `${pathname}?${queryString}`;
-
     this.props.history.push(url);
   }
 
-  handleKeyPress(e) {
-    if (e.key === 'Enter') {
-      const searchQuery = e.target.value;
-      this.fetchExperiencesAndWorkings(searchQuery);
-    }
+  handleSearchbarKeywordClick = ({ keyword, searchBy }) => {
+    const { pathname, search } = this.props.location;
+    // pickup parameter from query
+    const query = locationSearchToQuery(search);
+    const { sort, searchType } = querySelector(query);
+    // reset to initial page
+    const page = 1;
+
+    const queryString = toQsString({
+      sort,
+      searchBy,
+      searchQuery: keyword,
+      page,
+      searchType,
+    });
+    const url = `${pathname}?${queryString}`;
+    this.props.history.push(url);
+
+    this.searchTrack({ searchBy, keyword });
   }
 
-  handleKeywordClick(searchQuery) {
-    this.fetchExperiencesAndWorkings(searchQuery);
-  }
-
-  handleSearchBy = searchBy => {
+  handleSearchBy = ({ searchQuery, searchBy }) => {
     const {
       getNewSearchBy,
     } = this.props;
@@ -247,8 +218,7 @@ class ExperienceSearch extends Component {
     const query = locationSearchToQuery(search);
 
     const {
-      searchQuery,
-      sortBy: sort,
+      sort,
       searchType,
     } = querySelector(query);
 
@@ -264,51 +234,43 @@ class ExperienceSearch extends Component {
 
     getNewSearchBy(searchBy);
     this.props.history.push(url);
+    this.searchTrack({ searchBy, searchQuery });
   }
 
-  fetchExperiencesAndWorkings(val) {
-    const {
-      fetchWorkings,
-    } = this.props;
-
-    const {
-      pathname,
-      search,
-    } = this.props.location;
+  handleSearchbarSubmit = ({ searchBy, searchQuery }) => {
+    const { pathname, search } = this.props.location;
+    // pickup parameter from query
     const query = locationSearchToQuery(search);
-
-    const {
-      searchBy,
-      sortBy: sort,
-      searchType,
-    } = querySelector(query);
+    const { sort, searchType } = querySelector(query);
+    // reset to initial page
+    const page = 1;
 
     const queryString = toQsString({
       sort,
       searchBy,
-      searchQuery: val,
-      page: 1,
+      searchQuery,
+      page,
       searchType,
     });
-
     const url = `${pathname}?${queryString}`;
-
     this.props.history.push(url);
-    fetchWorkings(searchBy, val);
+    this.searchTrack({ searchBy, searchQuery });
+  }
 
+  searchTrack = ({ searchBy, searchQuery }) => {
     ReactGA.event({
       category: GA_CATEGORY.SEARCH_EXPERIENCE,
-      action: `${GA_ACTION.SEARCH_BY}_${this.props.experienceSearch.get('searchBy')}`,
-      value: val,
+      action: `${GA_ACTION.SEARCH_BY}_${searchBy}`,
+      value: searchQuery,
     });
 
     ReactPixel.track('Search', {
-      search_string: val,
+      search_string: searchQuery,
       content_category: PIXEL_CONTENT_CATEGORY.SEARCH_EXPERIENCES,
     });
   }
 
-  fetchExperiencesWithSort(sort) {
+  handleSortClick = ({ searchType, sort }) => {
     const {
       pathname,
       search,
@@ -317,19 +279,21 @@ class ExperienceSearch extends Component {
 
     const {
       searchBy,
-      searchType,
     } = querySelector(query);
+
+    // reset searchQuery
+    const searchQuery = '';
+    const page = 1;
 
     const queryString = toQsString({
       sort,
       searchBy,
-      searchQuery: '',
-      page: 1,
+      searchQuery,
+      page,
       searchType,
     });
 
     const url = `${pathname}?${queryString}`;
-
     this.props.history.push(url);
 
     if (sort === SORT.CREATED_AT) {
@@ -452,12 +416,15 @@ class ExperienceSearch extends Component {
 
   render() {
     const {
-      setKeyword,
       experienceSearch,
       loadingStatus,
     } = this.props;
     const data = experienceSearch.toJS();
     const experiences = data.experiences || [];
+
+    const { search } = this.props.location;
+    const query = locationSearchToQuery(search);
+    const { searchQuery, searchBy, sort, searchType } = querySelector(query);
 
     return (
       <Section Tag="main" pageTop paddingBottom>
@@ -466,9 +433,10 @@ class ExperienceSearch extends Component {
           <div className={styles.container}>
             <aside className={styles.aside}>
               <Filter
-                data={data}
-                fetchExperiencesWithSort={this.fetchExperiencesWithSort}
-                setSearchType={this.setSearchType}
+                sort={sort}
+                searchType={searchType.split(',')}
+                onSeachTypeChange={this.handleSearchTypeChange}
+                onSortClick={this.handleSortClick}
                 className={styles.filter}
               />
               <Banner1 className={styles.banner} />
@@ -477,12 +445,12 @@ class ExperienceSearch extends Component {
             <section className={styles.content}>
               <Searchbar
                 className={styles.searcbarLarge}
-                data={data}
-                handleSearchBy={this.handleSearchBy}
-                setKeyword={setKeyword}
-                handleKeyPress={this.handleKeyPress}
-                handleKeywordClick={this.handleKeywordClick}
-                fetchExperiencesAndWorkings={this.fetchExperiencesAndWorkings}
+                keywords={data.keywords}
+                searchBy={searchBy}
+                searchQuery={searchQuery}
+                onKeywordClick={this.handleSearchbarKeywordClick}
+                onSearchByChange={this.handleSearchBy}
+                onSubmit={this.handleSearchbarSubmit}
               />
 
               {(data.searchQuery && data.experienceCount > 0) &&
@@ -518,22 +486,6 @@ class ExperienceSearch extends Component {
                 currentPage={data.currentPage}
                 createPageLinkTo={this.createPageLinkTo}
               />
-
-              {(data.searchQuery && data.workings.length > 0) &&
-                <div>
-                  <hr className={styles.splitter} />
-                  <section className={styles.timeSalaryWrapper}>
-                    <Heading size="m" bold marginBottom>「{data.searchQuery}」的薪資工時</Heading>
-                    {data.salary &&
-                      <Columns
-                        Item={TimeSalaryBlock}
-                        items={(data.workings || []).map(o => ({ data: o }))}
-                        gutter="s"
-                      />
-                    }
-                  </section>
-                </div>
-              }
             </section>
           </div>
         </Wrapper>

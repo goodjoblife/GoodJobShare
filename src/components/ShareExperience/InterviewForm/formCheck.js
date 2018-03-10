@@ -65,10 +65,14 @@ export const title = R.allPass([
 ]);
 
 const sectionSubtitle = R.compose(
-  R.allPass([
-    lteLength(25),
-    gtLength(0),
-  ]),
+  R.ifElse(
+    R.isNil,
+    R.always(true),
+    R.allPass([
+      lteLength(25),
+      gtLength(0),
+    ]),
+  ),
   R.prop('subtitle')
 );
 

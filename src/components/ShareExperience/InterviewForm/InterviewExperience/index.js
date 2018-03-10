@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ButtonAdd from 'common/button/ButtonAdd';
 import AddButton from 'common/button/AddButton';
 import { Comment2 } from 'common/icons';
 import subscribeValidation from 'common/subscribeValidation';
@@ -17,10 +16,6 @@ import {
   title as titleValidator,
   sections as sectionsValidator,
 } from '../formCheck';
-
-import {
-  interviewSectionSubtitleOptions,
-} from '../../common/optionMap';
 
 import { TITLE, SECTIONS } from '../../../../constants/formElements';
 
@@ -42,7 +37,6 @@ class InterviewExperience extends Component {
       handleState,
       title,
       sections,
-      appendSection,
       removeSection,
       editSection,
       interviewQas,
@@ -83,16 +77,6 @@ class InterviewExperience extends Component {
             submitted={submitted}
             changeValidationStatus={changeValidationStatus}
           />
-          <div
-            className={shareStyles.button__add}
-          >
-            <ButtonAdd
-              options={interviewSectionSubtitleOptions}
-              custimizedValues={[interviewSectionSubtitleOptions[0].value]}
-              disabledValues={sections.map(section => section.subtitle)}
-              appendBlock={appendSection}
-            />
-          </div>
         </div>
         <hr
           style={{
@@ -146,7 +130,6 @@ InterviewExperience.propTypes = {
     placeholder: PropTypes.string,
     content: PropTypes.string,
   })),
-  appendSection: PropTypes.func,
   removeSection: PropTypes.func,
   editSection: PropTypes.func,
   interviewQas: PropTypes.arrayOf(PropTypes.shape({
