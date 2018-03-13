@@ -205,8 +205,7 @@ class ExperienceDetail extends Component {
         const company = experience.company.name;
         const jobTitle = experience.job_title;
         const type = experience.type;
-        const subtitle = experience.sections[0].subtitle ? experience.sections[0].subtitle.replace(/(\r\n|\n|\r)/gm, ' ')
-          : '';
+        const subtitle = experience.sections[0].subtitle.replace(/(\r\n|\n|\r)/gm, ' ');
         const content = experience.sections[0].content.replace(/(\r\n|\n|\r)/gm, ' ');
         const mapping = {
           interview: '面試經驗分享',

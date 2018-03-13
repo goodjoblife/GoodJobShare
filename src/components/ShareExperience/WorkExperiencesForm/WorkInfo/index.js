@@ -8,8 +8,12 @@ import FormGroup from '../../common/FormGroup';
 import CompanyQuery from '../../common/CompanyQuery';
 import Region from '../../common/Region';
 import JobTitle from '../../common/JobTitle';
+import ExperienceInYear from '../../common/ExperienceInYear';
+import Education from '../../common/Education';
+import Salary from '../../common/Salary';
 
 import IsEmployed from './IsEmployed';
+import WeekWorkTime from './WeekWorkTime';
 import RecommendToOthers from './RecommendToOthers';
 
 import {
@@ -45,10 +49,15 @@ class WorkInfo extends React.PureComponent {
       companyQuery,
       region,
       jobTitle,
+      experienceInYear,
+      education,
       isCurrentlyEmployed,
       jobEndingTimeYear,
       jobEndingTimeMonth,
+      salaryType,
+      salaryAmount,
       recommendToOthers,
+      weekWorkTime,
       submitted,
       changeValidationStatus,
     } = this.props;
@@ -89,6 +98,18 @@ class WorkInfo extends React.PureComponent {
           />
         </FormGroup>
         <FormGroup>
+          <ExperienceInYear
+            experienceInYear={experienceInYear}
+            onChange={handleState('experienceInYear')}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Education
+            education={education}
+            onChange={handleState('education')}
+          />
+        </FormGroup>
+        <FormGroup>
           <IsEmployed
             isCurrentlyEmployed={isCurrentlyEmployed}
             jobEndingTimeYear={jobEndingTimeYear}
@@ -96,6 +117,20 @@ class WorkInfo extends React.PureComponent {
             onIsCurrentlyEmployed={handleState('isCurrentlyEmployed')}
             onJobEndingTimeYear={handleState('jobEndingTimeYear')}
             onJobEndingTimeMonth={handleState('jobEndingTimeMonth')}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Salary
+            salaryType={salaryType}
+            salaryAmount={salaryAmount}
+            onSalaryType={handleState('salaryType')}
+            onSalaryAmount={handleState('salaryAmount')}
+          />
+        </FormGroup>
+        <FormGroup>
+          <WeekWorkTime
+            weekWorkTime={weekWorkTime}
+            onChange={handleState('weekWorkTime')}
           />
         </FormGroup>
         <FormGroup>
@@ -117,9 +152,26 @@ WorkInfo.propTypes = {
     PropTypes.number,
   ]),
   jobTitle: PropTypes.string,
+  experienceInYear: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  education: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   isCurrentlyEmployed: PropTypes.string,
   jobEndingTimeYear: PropTypes.number,
   jobEndingTimeMonth: PropTypes.number,
+  salaryType: PropTypes.string,
+  salaryAmount: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  weekWorkTime: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
   recommendToOthers: PropTypes.string,
   submitted: PropTypes.bool,
   changeValidationStatus: PropTypes.func,
