@@ -41,14 +41,14 @@ const Pagination = ({
         <Link
           className="buttonPage"
           disabled={isPreviousDisabled(currentPage)}
-          to={createPageLinkTo(currentPage - 1)}
+          to={isPreviousDisabled(currentPage) ? undefined : createPageLinkTo(currentPage - 1)}
         >
           <ArrowLeft />前一頁
         </Link>
         <Link
           className="buttonPage"
           disabled={isNextDisabled(currentPage, totalPage)}
-          to={createPageLinkTo(currentPage + 1)}
+          to={isNextDisabled(currentPage, totalPage) ? undefined : createPageLinkTo(currentPage + 1)}
         >
           下一頁<ArrowLeft style={{ transform: 'scaleX(-1)' }} />
         </Link>
