@@ -38,20 +38,39 @@ const Pagination = ({
         >
           第一頁
         </Link>
-        <Link
-          className="buttonPage"
-          disabled={isPreviousDisabled(currentPage)}
-          to={isPreviousDisabled(currentPage) ? undefined : createPageLinkTo(currentPage - 1)}
-        >
-          <ArrowLeft />前一頁
-        </Link>
-        <Link
-          className="buttonPage"
-          disabled={isNextDisabled(currentPage, totalPage)}
-          to={isNextDisabled(currentPage, totalPage) ? undefined : createPageLinkTo(currentPage + 1)}
-        >
-          下一頁<ArrowLeft style={{ transform: 'scaleX(-1)' }} />
-        </Link>
+        {
+          isPreviousDisabled(currentPage) ?
+          (
+            <div className="buttonPage" disabled>
+              <ArrowLeft />前一頁
+            </div>
+          )
+          : (
+            <Link
+              className="buttonPage"
+              disabled={isPreviousDisabled(currentPage)}
+              to={isPreviousDisabled(currentPage) ? '' : createPageLinkTo(currentPage - 1)}
+            >
+              <ArrowLeft />前一頁
+            </Link>
+          )
+        }
+        {
+          isNextDisabled(currentPage, totalPage) ?
+          (
+            <div className="buttonPage" disabled>
+              下一頁<ArrowLeft style={{ transform: 'scaleX(-1)' }} />
+            </div>
+          ) : (
+            <Link
+              className="buttonPage"
+              disabled={isNextDisabled(currentPage, totalPage)}
+              to={createPageLinkTo(currentPage + 1)}
+            >
+              下一頁<ArrowLeft style={{ transform: 'scaleX(-1)' }} />
+            </Link>
+          )
+        }
       </div>
     </div>
   );
