@@ -69,7 +69,7 @@ class BasicPermissionBlock extends React.Component {
           <br />
           <P size="l"><strong>若你已經分享過資訊，登入即可查看全文！</strong></P>
           <div className={styles.ctaButtonContainer}>
-            <CallToLoginShareButton to="/share" notLoginText="立即登入並分享" isLoginText="立即分享" />
+            <CallToLoginShareButton to="/share/time-and-salary" notLoginText="立即登入並分享" isLoginText="立即分享" />
           </div>
         </div>
       </div>

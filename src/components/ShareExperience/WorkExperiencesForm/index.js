@@ -9,7 +9,6 @@ import { Heading } from 'common/base';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
 import WorkInfo from './WorkInfo';
-import WorkInfoOptional from './WorkInfoOptional';
 import WorkExperience from './WorkExperience';
 
 import {
@@ -44,28 +43,13 @@ const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '段
     subtitle,
     placeholder,
     titlePlaceholder,
-    content: `實際工作內容：
-
-工時狀況：
-
-薪資福利：
-
-公司管理方式：
-
-獲得的成長：
-
-給公司的建議：
-
-升遷制度：
-
-公司 / 團隊文化：
-`,
+    content: '',
     isSubtitleEditable: false,
   };
   if (subtitle === '自訂段落' || !subtitle) {
     return {
       ...section,
-      subtitle: null,
+      subtitle: '',
       isSubtitleEditable: true,
       placeholder,
       titlePlaceholder,
@@ -289,9 +273,14 @@ class WorkExperiencesForm extends React.Component {
           companyQuery={companyQuery}
           region={region}
           jobTitle={jobTitle}
+          experienceInYear={experienceInYear}
+          education={education}
           isCurrentlyEmployed={isCurrentlyEmployed}
           jobEndingTimeYear={jobEndingTimeYear}
           jobEndingTimeMonth={jobEndingTimeMonth}
+          salaryType={salaryType}
+          salaryAmount={salaryAmount}
+          weekWorkTime={weekWorkTime}
           recommendToOthers={recommendToOthers}
           submitted={submitted}
           changeValidationStatus={this.changeValidationStatus}
@@ -305,14 +294,6 @@ class WorkExperiencesForm extends React.Component {
           editSection={this.editBlock('sections')}
           submitted={submitted}
           changeValidationStatus={this.changeValidationStatus}
-        />
-        <WorkInfoOptional
-          handleState={this.handleState}
-          experienceInYear={experienceInYear}
-          education={education}
-          salaryType={salaryType}
-          salaryAmount={salaryAmount}
-          weekWorkTime={weekWorkTime}
         />
         <SubmitArea
           onSubmit={this.onSubmit}

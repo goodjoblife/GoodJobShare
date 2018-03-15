@@ -23,7 +23,7 @@ import {
   queryEntry,
 } from '../../actions/laborRights';
 import fetchingStatus from '../../constants/status';
-import { MAX_IMAGES_IF_HIDDEN, MARKDOWN_DIVIDER } from '../../constants/hideContent';
+import { MARKDOWN_DIVIDER } from '../../constants/hideContent';
 import { SITE_NAME } from '../../constants/helmetData';
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
@@ -84,7 +84,7 @@ class LaborRightsSingle extends React.Component {
     let newContent = content;
     let permissionBlock = null;
     if (!canViewLaborRightsSingle && nPublicPages > 0 && content) {
-      const endPos = nthIndexOf(content, MARKDOWN_DIVIDER, MAX_IMAGES_IF_HIDDEN);
+      const endPos = nthIndexOf(content, MARKDOWN_DIVIDER, nPublicPages);
       newContent = content.substr(0, endPos);
       permissionBlock = (
         <LaborRightsPermissionBlock
