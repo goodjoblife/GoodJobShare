@@ -1,5 +1,3 @@
-import React from 'react';
-
 import LandingPage from './containers/LandingPage';
 import LaborRightsMenu from './containers/LaborRightsMenu';
 import LaborRightsSingle from './containers/LaborRightsSingle';
@@ -7,6 +5,7 @@ import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/TimeAndSalary/TimeAndSalaryBoard';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
 import ExperienceDetail from './containers/ExperienceDetail';
+import NotFound from './components/common/NotFound';
 import ShareExperience from './components/ShareExperience';
 import ShareExperienceEntry from './components/ShareExperience/Entry';
 import InterviewForm from './containers/ShareExperience/InterviewFormContainer';
@@ -132,7 +131,7 @@ const routes = [
     component: Terms,
   },
   {
-    render: () => (<div>Not Found!</div>),
+    component: NotFound,
   },
 ];
 

@@ -88,6 +88,10 @@ export default (app, webpackIsomorphicTools) => {
       <Html assets={assets} component={finalComponent} store={store} />
     );
 
+    if (context.status) {
+      res.status(context.status);
+    }
+
     res.send(`<!doctype html>\n${html}`);
   }));
 

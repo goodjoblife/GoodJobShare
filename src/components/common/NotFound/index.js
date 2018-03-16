@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import { Wrapper, Heading } from 'common/base';
 import styles from './NotFound.module.css';
 
-const NotFound = ({ heading }) => (
+const NotFoundBase = ({ heading }) => (
   <Wrapper size="l" className={styles.wrapper}>
     <div className={styles.inner}>
       <Heading size="l" className={styles.heading}>
@@ -15,8 +15,19 @@ const NotFound = ({ heading }) => (
   </Wrapper>
 );
 
-NotFound.propTypes = {
+NotFoundBase.propTypes = {
   heading: PropTypes.string,
 };
+
+const NotFound = props => (
+  <Route
+    render={({ staticContext }) => {
+      if (staticContext) {
+        staticContext.status = 404; // eslint-disable-line no-param-reassign
+      }
+      return (<NotFoundBase {...props} />);
+    }}
+  />
+);
 
 export default NotFound;
