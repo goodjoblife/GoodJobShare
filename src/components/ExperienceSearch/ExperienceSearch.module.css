@@ -4,7 +4,7 @@
   display: flex;
 
   @media (max-width: 850px) {
-    flex-direction: column;
+    display: block;
   }
 }
 
@@ -101,4 +101,3 @@
     margin-top: 24px;
   }
 }
-
