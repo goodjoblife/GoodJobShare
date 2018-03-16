@@ -7,11 +7,17 @@
 
   @media (max-width: 550px) {
     flex-direction: column;
+    margin-top: 24px;
   }
 
   .info {
     @media (max-width: 550px) {
-      margin-bottom: 16px;
+      margin-bottom: 8px;    
     }
   }
+}
+
+
+.buttons {
+  display: flex;
 }

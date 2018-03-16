@@ -31,7 +31,7 @@ const Pagination = ({
       <P size="m" className={styles.info}>
         {`${getFromCount(currentPage, unit)}-${getToCount(currentPage, unit, currentCount)} 篇 (共 ${totalCount} 篇)`}
       </P>
-      <div>
+      <div className={styles.buttons}>
         <Link
           className="buttonFirstPage"
           to={createPageLinkTo(1)}
