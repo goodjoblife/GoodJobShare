@@ -14,25 +14,25 @@ import fetchingStatus from '../../../constants/status';
 import styles from '../views/view.module.css';
 
 const pathnameMapping = {
-  'company/:keyword/work-time-dashboard': {
+  '/time-and-salary/company/:keyword/work-time-dashboard': {
     title: '工時排行榜',
     label: '一週平均總工時（高到低）',
     groupSortBy: 'week_work_time',
     order: 'descending',
   },
-  'company/:keyword/sort/work-time-asc': {
+  '/time-and-salary/company/:keyword/sort/work-time-asc': {
     title: '工時排行榜（由低到高）',
     label: '一週平均總工時（低到高）',
     groupSortBy: 'week_work_time',
     order: 'ascending',
   },
-  'company/:keyword/salary-dashboard': {
+  '/time-and-salary/company/:keyword/salary-dashboard': {
     title: '估算時薪排行榜',
     label: '估算時薪（高到低）',
     groupSortBy: 'estimated_hourly_wage',
     order: 'descending',
   },
-  'company/:keyword/sort/salary-asc': {
+  '/time-and-salary/company/:keyword/sort/salary-asc': {
     title: '估算時薪排行榜（由低到高）',
     label: '估算時薪（低到高）',
     groupSortBy: 'estimated_hourly_wage',
@@ -45,48 +45,53 @@ const selectOptions = R.pipe(
   R.map(([path, { label }]) => ({ value: path, label }))
 );
 
+const pathSelector = R.path(['match', 'path']);
+const keywordSelector = R.path(['match', 'params', 'keyword']);
+const pathParameterSelector = R.compose(path => pathnameMapping[path], pathSelector);
+
 export default class TimeAndSalaryCompany extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
     status: PropTypes.string,
-    route: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired,
+    // eslint-disable-next-line react/no-unused-prop-types
+    match: PropTypes.shape({
+      path: PropTypes.string.isRequired,
+      params: PropTypes.object.isRequired,
+    }),
     queryCompany: PropTypes.func,
     switchPath: PropTypes.func,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchMyPermission: PropTypes.func.isRequired,
   }
 
-  static fetchData({ routes, params, store: { dispatch } }) {
-    const { path } = R.last(routes);
-    const { groupSortBy, order } = pathnameMapping[path];
-    const company = params.keyword;
+  static fetchData({ store: { dispatch }, ...props }) {
+    const { groupSortBy, order } = pathParameterSelector(props);
+    const company = keywordSelector(props);
 
     return dispatch(queryCompany({ groupSortBy, order, company }));
   }
 
   componentDidMount() {
-    const { path } = this.props.route;
-    const { groupSortBy, order } = pathnameMapping[path];
-    const company = this.props.params.keyword;
+    const { groupSortBy, order } = pathParameterSelector(this.props);
+    const company = keywordSelector(this.props);
     this.props.queryCompany({ groupSortBy, order, company });
     this.props.fetchMyPermission();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.route.path !== nextProps.route.path || this.props.params.keyword !== nextProps.params.keyword) {
-      const { path } = nextProps.route;
-      const { groupSortBy, order } = pathnameMapping[path];
-      const company = nextProps.params.keyword;
+    if (pathSelector(this.props) !== pathSelector(nextProps) || keywordSelector(this.props) !== keywordSelector(nextProps)) {
+      const { groupSortBy, order } = pathParameterSelector(nextProps);
+      const company = keywordSelector(nextProps);
       this.props.queryCompany({ groupSortBy, order, company });
       this.props.fetchMyPermission();
     }
   }
 
   render() {
-    const { route: { path }, switchPath, status, canViewTimeAndSalary } = this.props;
-    const { title, groupSortBy } = pathnameMapping[path];
-    const company = this.props.params.keyword;
+    const { switchPath, status, canViewTimeAndSalary } = this.props;
+    const path = pathSelector(this.props);
+    const { title, groupSortBy } = pathParameterSelector(this.props);
+    const company = keywordSelector(this.props);
     const raw = this.props.data.toJS();
 
     const substituteKeyword =

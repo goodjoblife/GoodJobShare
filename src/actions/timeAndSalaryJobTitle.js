@@ -50,4 +50,4 @@ export const queryJobTitle = ({ groupSortBy, order, jobTitle }) =>
 
 export const switchPath = path =>
   dispatch =>
-    dispatch(push(`/time-and-salary/${path}`));
+    dispatch(push(path));
