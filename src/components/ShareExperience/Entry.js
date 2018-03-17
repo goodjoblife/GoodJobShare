@@ -1,5 +1,5 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
+import createHistory from 'history/createBrowserHistory';
 import Helmet from 'react-helmet';
 import { Wrapper } from 'common/base';
 import ShareExpSection from 'common/ShareExpSection';
@@ -11,7 +11,7 @@ const Entry = () => (
   <div>
     <Helmet {...HELMET_DATA.SHARE} />
     <Wrapper size="l" className={styles.wrapper}>
-      <button onClick={() => browserHistory.goBack()} className={styles.closeBtn}><i.X /></button>
+      <button onClick={() => createHistory().goBack()} className={styles.closeBtn}><i.X /></button>
     </Wrapper>
     <ShareExpSection />
   </div>

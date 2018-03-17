@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Wrapper } from 'common/base';
 import getCallToActionLink from 'utils/callToActionUtils';
 import styles from './Banner.module.css';

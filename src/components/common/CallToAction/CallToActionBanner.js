@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Section, Wrapper, Heading } from 'common/base';
 import styles from './CallToActionBanner.module.css';
 

@@ -180,7 +180,7 @@ export const fetchMyPermission = () => (dispatch, getState) =>
   fetchUtil('/me/permissions/search')('GET').then(result => {
     dispatch(setMyPermission({
       permission: result.hasSearchPermission,
-      location: getState().routing.locationBeforeTransitions,
+      location: getState().routing.location,
     }, null));
   }).catch(error => {
     dispatch(setMyPermission({}, error));

@@ -1,27 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import { Switch } from 'react-router-dom';
 
+import RouteWithSubRoutes from '../route';
 import styles from './App.module.css';
 import Header from '../../containers/Layout/Header';
 import Footer from './Footer';
 import { HELMET_DATA } from '../../constants/helmetData';
 
-const App = ({ children, location }) => (
+import routes from '../../routes';
+
+const App = () => (
   <div className={styles.App}>
-    <Header location={location} />
+    <Header />
     <Helmet {...HELMET_DATA.DEFAULT} />
     <div className={styles.content}>
-      {children}
+      <Switch>
+        { routes.map((route, i) => (<RouteWithSubRoutes key={i} {...route} />)) }
+      </Switch>
     </div>
     <Footer />
   </div>
 );
-
-App.propTypes = {
-  children: PropTypes.node.isRequired,
-  location: PropTypes.object,
-};
-
 
 export default App;

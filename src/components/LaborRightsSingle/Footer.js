@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Wrapper } from 'common/base';
 import { ArrowLeft, Thumbnails } from 'common/icons';

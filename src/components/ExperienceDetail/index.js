@@ -47,7 +47,7 @@ function getPosition(obj) {
   return top - 54; // deduct header
 }
 
-const experienceIdSelector = R.prop('id');
+const experienceIdSelector = R.path(['params', 'id']);
 
 class ExperienceDetail extends Component {
   static propTypes = {
@@ -60,7 +60,9 @@ class ExperienceDetail extends Component {
     likeExperience: PropTypes.func.isRequired,
     likeReply: PropTypes.func.isRequired,
     submitComment: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.object.isRequired,
+    }),
     location: PropTypes.shape({
       state: PropTypes.shape({
         replyId: PropTypes.string,
@@ -71,8 +73,8 @@ class ExperienceDetail extends Component {
     canViewExperirenceDetail: PropTypes.bool.isRequired,
   }
 
-  static fetchData({ store: { dispatch }, params }) {
-    const experienceId = experienceIdSelector(params);
+  static fetchData({ store: { dispatch }, match }) {
+    const experienceId = experienceIdSelector(match);
     return dispatch(fetchExperience(experienceId));
   }
 
@@ -87,8 +89,8 @@ class ExperienceDetail extends Component {
   };
 
   componentDidMount() {
-    const params = this.props.params;
-    const experienceId = experienceIdSelector(params);
+    const match = this.props.match;
+    const experienceId = experienceIdSelector(match);
 
     if (this.props.experienceDetail.getIn(['experience', '_id']) !== experienceId) {
       this.props.fetchExperience(experienceId);
@@ -104,11 +106,11 @@ class ExperienceDetail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const nextParams = nextProps.params;
-    const params = this.props.params;
+    const nextMatch = nextProps.match;
+    const match = this.props.match;
 
-    const nextExperienceId = experienceIdSelector(nextParams);
-    const experienceId = experienceIdSelector(params);
+    const nextExperienceId = experienceIdSelector(nextMatch);
+    const experienceId = experienceIdSelector(match);
     // if params changes due to route, we should refetch target experience
     if (nextExperienceId !== experienceId) {
       this.props.fetchExperience(nextExperienceId);
@@ -135,8 +137,8 @@ class ExperienceDetail extends Component {
     }
 
     // send Facebook Pixel 'ViewContent' event if goto reading another experience
-    const prevExperienceId = experienceIdSelector(prevProps.params);
-    const experienceId = experienceIdSelector(this.props.params);
+    const prevExperienceId = experienceIdSelector(prevProps.match);
+    const experienceId = experienceIdSelector(this.props.match);
     if (prevExperienceId !== experienceId) {
       ReactPixel.track('ViewContent', {
         content_ids: [experienceId],
@@ -146,7 +148,7 @@ class ExperienceDetail extends Component {
   }
 
   submitComment = comment => {
-    const experienceId = this.props.params.id;
+    const experienceId = experienceIdSelector(this.props.match);
     this.props.submitComment(experienceId, comment);
   }
 
@@ -167,7 +169,7 @@ class ExperienceDetail extends Component {
         return (
           <ReportFormContainer
             close={() => this.handleIsModalOpen(false)}
-            id={this.props.params.id}
+            id={experienceIdSelector(this.props.match)}
             onApiError={
               pload =>
                 this.handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload)
@@ -237,9 +239,10 @@ class ExperienceDetail extends Component {
     const {
       likeExperience,
       likeReply,
-      params: { id },
+      match,
       canViewExperirenceDetail,
     } = this.props;
+    const id = experienceIdSelector(match);
 
     const {
       isModalOpen,

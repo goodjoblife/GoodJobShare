@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import { Redirect, Switch } from 'react-router';
 
 import Wrapper from 'common/base/Wrapper';
+import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
 import SearchBar from './SearchBar';
 import CallToShareData from './CallToShareData';
@@ -25,13 +27,16 @@ const pathnameMapping = {
 
 export default class TimeAndSalary extends Component {
   static propTypes = {
-    children: PropTypes.node,
+    routes: PropTypes.array,
     location: PropTypes.shape({
       pathname: PropTypes.string,
     }),
-    params: PropTypes.shape({
-      keyword: PropTypes.string,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        keyword: PropTypes.string,
+      }),
     }),
+    staticContext: PropTypes.object,
   }
 
   constructor(props) {
@@ -79,7 +84,7 @@ export default class TimeAndSalary extends Component {
     if (name) { title = name; }
 
     // 假如 keyword 不是 null, undefined 或 ''。則把 keywords 更新到 title & description
-    const keyword = this.props.params.keyword;
+    const keyword = this.props.match.params.keyword;
     if (keyword) {
       if (name) {
         title = `${keyword}的${name}`;
@@ -107,7 +112,21 @@ export default class TimeAndSalary extends Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { routes, location, staticContext } = this.props;
+    if (!staticContext) {
+      if (location.pathname === '/time-and-salary') {
+        if (location.hash) {
+          const targets = location.hash.split('#');
+          if (targets.length >= 2) {
+            return (
+              <Redirect to={`/time-and-salary${targets[1]}`} />
+            );
+          }
+        }
+        return (<Redirect to="/time-and-salary/latest" />);
+      }
+    }
+
     return (
       <div className={styles.container}>
         {this.renderHelmet()}
@@ -129,7 +148,9 @@ export default class TimeAndSalary extends Component {
           close={this.toggleInfoTimeModal}
         />
         <Wrapper size="l">
-          { children }
+          <Switch>
+            { routes.map((route, i) => (<RouteWithSubRoutes key={i} {...route} />)) }
+          </Switch>
         </Wrapper>
       </div>
     );

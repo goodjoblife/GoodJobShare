@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import authStatus from '../../../constants/authStatus';
 import FacebookFail from '../../ShareExperience/common/FacebookFail';

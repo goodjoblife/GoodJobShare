@@ -91,7 +91,7 @@ export const queryTimeAndSalary = ({ sortBy, order }) =>
 
 export const switchPath = path =>
   dispatch =>
-    dispatch(push(`/time-and-salary/${path}`));
+    dispatch(push(path));
 
 export const resetBoardExtremeData = () => ({
   type: SET_BOARD_EXTREME_DATA,

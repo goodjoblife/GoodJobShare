@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Section, Wrapper, Heading, P } from 'common/base';
 import styles from './ShareExpSection.module.css';
 

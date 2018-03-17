@@ -13,7 +13,8 @@ import {
   canViewLaborRightsSingleSelector,
 } from '../selectors/meSelector';
 
-const mapStateToProps = (state, { params: { id } }) => {
+const mapStateToProps = (state, { match }) => {
+  const id = match.params.id;
   const menuEntries = menuEntriesSelector(state); // List
   const index = menuEntries.findIndex(menuEntry => menuEntry.get('id') === id);
   const prevEntry = menuEntries.get(index > 0 ? index - 1 : undefined);

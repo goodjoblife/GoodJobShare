@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { browserHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
 import { fromJS } from 'immutable';
-
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux';
 import Root from './containers/Root';
 import configureStore from './store/configureStore';
 
@@ -18,8 +18,8 @@ Object.keys(window.__data).forEach(key => {
 });
 delete window.__data;
 
-const store = configureStore(preloadedState, browserHistory);
-const history = syncHistoryWithStore(browserHistory, store);
+const history = createHistory();
+const store = configureStore(preloadedState, history);
 const rootElement = document.getElementById('root');
 
 let app;
@@ -28,7 +28,11 @@ if (module.hot) {
   const { AppContainer } = require('react-hot-loader'); // eslint-disable-line global-require
   app = (
     <AppContainer>
-      <Root store={store} history={history} />
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <Root />
+        </ConnectedRouter>
+      </Provider>
     </AppContainer>
   );
 
@@ -37,13 +41,23 @@ if (module.hot) {
 
     render(
       <AppContainer>
-        <NewRoot store={store} history={history} />
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <NewRoot store={store} history={history} />
+          </ConnectedRouter>
+        </Provider>
       </AppContainer>,
       rootElement
     );
   });
 } else {
-  app = <Root store={store} history={history} />;
+  app = (
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <Root />
+      </ConnectedRouter>
+    </Provider>
+  );
 }
 
 render(app, rootElement);

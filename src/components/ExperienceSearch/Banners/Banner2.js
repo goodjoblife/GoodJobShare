@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import getCallToActionLink from 'utils/callToActionUtils';
 import styles from './Banners.module.css';
 

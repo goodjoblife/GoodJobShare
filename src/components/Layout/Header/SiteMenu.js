@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import styles from './SiteMenu.module.css';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 
 const Item = ({ to, text, className, onClick }) => (
   <li className={cn(styles.menuItem, className)}>
-    <Link to={to} activeClassName={styles.isCurrent} onClick={onClick} >{text}</Link>
+    <NavLink to={to} activeClassName={styles.isCurrent} onClick={onClick} >{text}</NavLink>
   </li>
 );
 Item.propTypes = {
