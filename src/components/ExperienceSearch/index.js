@@ -290,7 +290,7 @@ class ExperienceSearch extends Component {
       searchBy,
       searchQuery,
       page,
-      searchType,
+      searchType: R.join(',')(searchType),
     });
 
     const url = `${pathname}?${queryString}`;

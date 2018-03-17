@@ -72,11 +72,11 @@ export const handleSearchType = searchType => R.compose(
 );
 
 export const locationSearchToQuery = R.compose(
+  qs.parse,
   search => {
     if (search[0] === '?') {
       return R.tail(search);
     }
     return search;
-  },
-  qs.parse
+  }
 );
