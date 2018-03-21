@@ -30,7 +30,7 @@ import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
-  static fetchData({ store: { dispatch }, params: { id } }) {
+  static fetchData({ store: { dispatch }, match: { params: { id } } }) {
     return Promise.all([
       dispatch(queryMenu()),
       dispatch(queryEntry(id)),
