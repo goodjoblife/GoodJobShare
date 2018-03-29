@@ -17,39 +17,6 @@ $paddingS: 16px;
   background-color: white-light;
   padding: $padding;
 
-  .ratingContainer {
-    display: flex;
-    align-items: center;
-    .autoCursor {
-      cursor: auto;
-    }
-    .ratingText {
-      margin-left: 30px;
-      position: relative;
-      padding: 4px 10px;
-      background: yellow-light;
-      border: 1px solid main-yellow;
-      border-radius: 3px;
-
-      &:before, &:after {
-        content: "\A";
-        position: absolute;
-        display: inline-block;
-        border-style: solid;
-        border-width: 8px 10px 8px 0;
-        border-color: transparent main-yellow transparent transparent;
-        left: -10px;
-        top: 7px;
-      }
-      &:after {
-        left: -8px;
-        top: 9px;
-        border-width: 6px 8px 6px 0;
-        border-color: transparent yellow-light transparent transparent;
-      }
-    }
-  }
-
   @media (max-width: 1280px) {
     width: 30%;
   }
