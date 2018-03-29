@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import createHistory from 'history/createBrowserHistory';
+import { withRouter } from 'react-router';
 import cn from 'classnames';
 import styles from './Popover.module.css';
 
@@ -27,12 +27,13 @@ Popover.defaultProps = {
   active: false,
 };
 
-export default class PopoverToggle extends React.Component {
+class PopoverToggle extends Component {
   static propTypes = {
     className: PropTypes.string,
     popoverClassName: PropTypes.string,
     children: PropTypes.node.isRequired,
     popoverContent: PropTypes.node,
+    history: PropTypes.object.isRequired,
   }
 
   static defaultProps = {
@@ -55,7 +56,7 @@ export default class PopoverToggle extends React.Component {
 
   componentDidMount() {
     document.addEventListener('click', this.outsideHook);
-    this.unlisten = createHistory().listen(this.close);
+    this.unlisten = this.props.history.listen(this.close);
   }
 
   componentWillUnmount() {
@@ -92,3 +93,5 @@ export default class PopoverToggle extends React.Component {
     );
   }
 }
+
+export default withRouter(PopoverToggle);
