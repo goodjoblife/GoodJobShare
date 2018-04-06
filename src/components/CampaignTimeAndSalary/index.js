@@ -8,7 +8,7 @@ import RouteWithSubRoutes from '../route';
 import timeAndSalaryStyles from '../TimeAndSalary/styles.module.css';
 import SearchBar from '../TimeAndSalary/SearchBar';
 import CallToShareData from '../TimeAndSalary/CallToShareData';
-import Banner from '../TimeAndSalary/Banner';
+import Banner from './Banner';
 import MobileInfoButtons from '../TimeAndSalary/MobileInfoButtons';
 import InfoTimeModal from '../TimeAndSalary/common/InfoTimeModal';
 import InfoSalaryModal from '../TimeAndSalary/common/InfoSalaryModal';
