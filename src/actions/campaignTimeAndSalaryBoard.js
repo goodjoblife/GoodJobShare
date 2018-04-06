@@ -40,7 +40,7 @@ const setBoardData = ({ sortBy, order }, { status, data, error = null }) =>
     });
   };
 
-export const queryCampaignTimeAndSalary = ({ sortBy, order }) =>
+export const queryCampaignTimeAndSalary = ({ campaignName, sortBy, order }) =>
   (dispatch, getState) => {
     if (sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
       dispatch(resetBoard({ sortBy, order }));
@@ -56,6 +56,7 @@ export const queryCampaignTimeAndSalary = ({ sortBy, order }) =>
     });
 
     const opt = {
+      campaign: campaignName,
       sort_by: sortBy,
       order,
       page: Math.ceil(dataSelector(getState()).size / 25),
@@ -114,7 +115,7 @@ const setBoardExtremeData = ({ sortBy, order }, { extremeStatus, extremeData, ex
     });
   };
 
-export const queryExtremeCampaignTimeAndSalary = () =>
+export const queryExtremeCampaignTimeAndSalary = ({ campaignName }) =>
   (dispatch, getState) => {
     // extreme data only available for data sorted by estimated_hourly_wage and week_work_time
     if (sortBySelector(getState()) !== 'estimated_hourly_wage' && sortBySelector(getState()) !== 'week_work_time') {
@@ -131,6 +132,7 @@ export const queryExtremeCampaignTimeAndSalary = () =>
     const sortBy = sortBySelector(getState());
     const order = orderSelector(getState());
     const opt = {
+      campaign: campaignName,
       sort_by: sortBy,
       order,
     };
