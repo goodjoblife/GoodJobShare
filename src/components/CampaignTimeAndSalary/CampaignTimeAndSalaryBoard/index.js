@@ -15,6 +15,7 @@ import fetchingStatus from '../../../constants/status';
 import { MAX_ROWS_IF_HIDDEN } from '../../../constants/hideContent';
 import CallToActionRow from '../../TimeAndSalary/TimeAndSalaryBoard/CallToActionRow';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
+import styles from '../CampaignTimeAndSalary.module.css';
 
 import { queryCampaignTimeAndSalary } from '../../../actions/campaignTimeAndSalaryBoard';
 import GradientMask from '../../common/GradientMask';
@@ -272,7 +273,7 @@ export default class TimeAndSalaryBoard extends Component {
 
     return (
       <section className={timeAndSalaryCommonStyles.searchResult}>
-        <h2 className={timeAndSalaryCommonStyles.heading}>{title}</h2>
+        <h2 className={styles.heading}>{title}</h2>
         <div className={timeAndSalaryCommonStyles.result}>
           <div className={timeAndSalaryBoardStyles.sortRow}>
             <div className={timeAndSalaryBoardStyles.extremeDescription}>
