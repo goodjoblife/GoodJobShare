@@ -13,6 +13,7 @@ import ShareExperience from './components/ShareExperience';
 import ShareExperienceEntry from './components/ShareExperience/Entry';
 import InterviewForm from './containers/ShareExperience/InterviewFormContainer';
 import TimeSalaryForm from './containers/ShareExperience/TimeSalaryFormContainer';
+import CampaignTimeAndSalaryForm from './containers/ShareExperience/CampaignTimeAndSalaryFormContainer';
 import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
 import Me from './containers/Me';
 import About from './components/About';
@@ -65,6 +66,11 @@ const routes = [
         path: '/share/time-and-salary',
         exact: true,
         component: TimeSalaryForm,
+      },
+      {
+        path: '/share/time-and-salary/campaigns/:campaign_name',
+        exact: true,
+        component: CampaignTimeAndSalaryForm,
       },
       {
         path: '/share/work-experiences',
