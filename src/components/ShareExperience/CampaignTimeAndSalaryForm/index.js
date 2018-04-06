@@ -31,6 +31,7 @@ import {
   getSalaryForm,
   getTimeForm,
   getTimeAndSalaryForm,
+  getExtraForm,
   portTimeSalaryFormToRequestFormat,
 } from '../utils';
 
@@ -88,6 +89,11 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       formTitle: '軟體工程師 薪資工時大調查',
       formInfo: '#### 軟體工程師高工時的問題 .... ',
       formEnding: '#### 我們這一次與電資工會合作',
+      extraFields: [{ key: 'ptt', title: 'PTT' }],
+    };
+    this.state = {
+      ...this.state,
+      ...getExtraForm(this.state.extraFields)(),
     };
     this.basicElValidationStatus = {};
     this.extElValidationStatus = {};
@@ -102,7 +108,14 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     } catch (error) {
       defaultFromDraft = null;
     }
-    const defaultState = defaultFromDraft || defaultForm;
+
+    const { extraFields } = this.state;
+    const defaultExtraForm = getExtraForm(extraFields)();
+
+    const defaultState = defaultFromDraft || {
+      ...defaultForm,
+      ...defaultExtraForm,
+    };
 
     this.setState({ // eslint-disable-line react/no-did-mount-set-state
       ...defaultState,
@@ -227,7 +240,9 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
 
       formTitle,
       formInfo,
+      extraFields,
       formEnding,
+      ...extra
     } = this.state;
 
     return (
@@ -290,6 +305,16 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
             isOvertimeSalaryLegal={isOvertimeSalaryLegal}
             hasCompensatoryDayoff={hasCompensatoryDayoff}
           />
+
+          { extraFields.map(({ key, title }) => (
+            <div key={key} className={timeAndSalaryFormStyles.formSection}>
+              <InputTitle text={title} />
+              <TextInput
+                value={extra[key]}
+                onChange={e => this.handleState(key)(e.target.value)}
+              />
+            </div>
+          )) }
 
           <InputTitle text="電子郵件 - 有消息時將通知您" />
           <TextInput

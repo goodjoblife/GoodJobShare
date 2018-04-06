@@ -177,6 +177,8 @@ export const getTimeAndSalaryForm = state => ({
   ...propsSalaryForm(state),
   ...propsTimeForm(state),
 });
+export const getExtraForm = extraFields => state =>
+  R.fromPairs(extraFields.map(({ key }) => [key, state ? state[key] : '']));
 
 export const portInterviewFormToRequestFormat = interviewForm => {
   let body = {
