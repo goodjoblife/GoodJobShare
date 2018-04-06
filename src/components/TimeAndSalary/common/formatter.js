@@ -7,6 +7,7 @@ import {
 } from 'common/formatter';
 
 import commonStyles from '../views/view.module.css';
+import MagnifierPlus from '../../common/icons/MagnifierPlus';
 
 export const getCompany = item => (
   <div>
@@ -98,3 +99,9 @@ export const formatWage = wage => {
 
 export const formatDate = ({ year, month }) =>
   `${year}.${month >= 10 ? '' : 0}${month}`;
+
+export const getAboutThisJobButton = toggleAboutThisJobModal => d => (
+  <div onClick={() => toggleAboutThisJobModal(d.about_this_job)}>
+    <MagnifierPlus style={{ width: 23, height: 23 }} />
+  </div>
+);
