@@ -11,6 +11,7 @@ import Banner from './Banner';
 import MobileInfoButtons from '../TimeAndSalary/MobileInfoButtons';
 import InfoTimeModal from '../TimeAndSalary/common/InfoTimeModal';
 import InfoSalaryModal from '../TimeAndSalary/common/InfoSalaryModal';
+import styles from './CampaignTimeAndSalary.module.css';
 
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../constants/helmetData';
@@ -145,7 +146,7 @@ export default class TimeAndSalary extends Component {
           isOpen={this.state.infoTimeModal.isOpen}
           close={this.toggleInfoTimeModal}
         />
-        <Wrapper size="l">
+        <Wrapper size="l" className={styles.wrapper}>
           <Switch>
             { routes.map((route, i) => (<RouteWithSubRoutes key={i} {...route} />)) }
           </Switch>
