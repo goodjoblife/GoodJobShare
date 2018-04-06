@@ -67,6 +67,7 @@ const defaultForm = {
   hasOvertimeSalary: null,
   isOvertimeSalaryLegal: null,
   hasCompensatoryDayoff: null,
+  jobContent: '',
   email: '',
 };
 
@@ -89,6 +90,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       formTitle: '軟體工程師 薪資工時大調查',
       formInfo: '#### 軟體工程師高工時的問題 .... ',
       defaultJobTitle: '軟體工程師',
+      defaultJobContent: '加班的狀況為何：\n\n 年終幾個月：',
       formEnding: '#### 我們這一次與電資工會合作',
       extraFields: [{ key: 'ptt', title: 'PTT' }],
     };
@@ -110,12 +112,13 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       defaultFromDraft = null;
     }
 
-    const { defaultJobTitle, extraFields } = this.state;
+    const { defaultJobTitle, defaultJobContent, extraFields } = this.state;
     const defaultExtraForm = getExtraForm(extraFields)();
 
     const defaultState = defaultFromDraft || {
       ...defaultForm,
       jobTitle: defaultJobTitle,
+      jobContent: defaultJobContent,
       ...defaultExtraForm,
     };
 
@@ -238,6 +241,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       hasOvertimeSalary,
       isOvertimeSalaryLegal,
       hasCompensatoryDayoff,
+      jobContent,
       email,
 
       formTitle,
@@ -306,6 +310,12 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
             hasOvertimeSalary={hasOvertimeSalary}
             isOvertimeSalaryLegal={isOvertimeSalaryLegal}
             hasCompensatoryDayoff={hasCompensatoryDayoff}
+          />
+
+          <InputTitle text="職場甘苦談" />
+          <TextInput
+            value={jobContent}
+            onChange={e => this.handleState('jobContent')(e.target.value)}
           />
 
           { extraFields.map(({ key, title }) => (
