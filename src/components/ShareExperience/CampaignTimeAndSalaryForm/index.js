@@ -34,7 +34,7 @@ import {
   getBasicForm,
   getSalaryForm,
   getTimeForm,
-  getTimeAndSalaryForm,
+  getCampaignTimeAndSalaryForm,
   getCampaignExtendedForm,
   getExtraForm,
   portTimeSalaryFormToRequestFormat,
@@ -92,6 +92,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       submitted: false,
 
       // campaign props
+      campaignName: props.match.params.campaign_name,
       formTitle: '軟體工程師 薪資工時大調查',
       formInfo: '#### 軟體工程師高工時的問題 .... ',
       defaultJobTitle: '軟體工程師',
@@ -146,7 +147,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
 
     if (valid && (valid2 || valid3) && valid4) {
       const p = postWorkings(
-        portTimeSalaryFormToRequestFormat(getTimeAndSalaryForm(this.state))
+        portTimeSalaryFormToRequestFormat(getCampaignTimeAndSalaryForm(this.state.extraFields)(this.state))
       );
 
       p.then(() => {
