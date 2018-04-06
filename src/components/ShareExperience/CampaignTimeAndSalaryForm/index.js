@@ -13,10 +13,12 @@ import SalaryInfo from '../TimeSalaryForm/SalaryInfo';
 import TimeInfo from '../TimeSalaryForm/TimeInfo';
 import InputTitle from '../common/InputTitle';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
+import MarkdownParser from '../../LaborRightsSingle/MarkdownParser';
 
 import { postWorkings } from '../../../apis/timeAndSalaryApi';
 
 import timeAndSalaryFormStyles from '../TimeSalaryForm/TimeSalaryForm.module.css';
+import styles from '../CampaignTimeAndSalaryForm/CampaignTimeAndSalaryForm.module.css';
 
 import {
   basicFormCheck,
@@ -81,6 +83,11 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     this.state = {
       ...defaultForm,
       submitted: false,
+
+      // campaign props
+      formTitle: '軟體工程師 薪資工時大調查',
+      formInfo: '#### 軟體工程師高工時的問題 .... ',
+      formEnding: '#### 我們這一次與電資工會合作',
     };
     this.basicElValidationStatus = {};
     this.extElValidationStatus = {};
@@ -217,14 +224,21 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       isOvertimeSalaryLegal,
       hasCompensatoryDayoff,
       email,
+
+      formTitle,
+      formInfo,
+      formEnding,
     } = this.state;
 
     return (
       <div>
         <Helmet {...HELMET_DATA.SHARE_TIME_SALARY} />
         <Heading size="l" marginBottomS center>
-          薪資工時分享
+          {formTitle}
         </Heading>
+        <div className={styles.infoBlock}>
+          <MarkdownParser content={formInfo} />
+        </div>
         {
           submitted ?
             <div
@@ -285,6 +299,9 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
         </IconHeadingBlock>
 
         <SubmitArea onSubmit={this.onSubmit} type="workings" />
+        <div className={styles.infoBlock}>
+          <MarkdownParser content={formEnding} />
+        </div>
       </div>
     );
   }
