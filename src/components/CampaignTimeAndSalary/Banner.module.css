@@ -1,0 +1,189 @@
+@define-mixin heading-style-l {
+  font-size: 2.3em;
+  line-height: 1.1em;
+  letter-spacing: 0.05em;
+  font-weight: 400;
+  @media (max-width: $below-small) {
+    font-size: 2em;
+  }
+}
+
+@define-mixin hover-bg-color $bgcolor, $color {
+	transition: background-color .2s, color .2s;
+	@media (min-width: $above-desktop) {
+		&:hover {
+			background-color: $bgcolor;
+			color: $color;
+		}
+	}
+}
+
+$nav-height-l: 54px;
+$nav-height-s: 50px;
+
+$gray-light: #eeeeed;
+$primary-color: #fcd406;
+
+$below-small: 850px;
+$below-medium: 1280px;
+$below-mobile: 550px;
+$below-desktop: 1024px;
+$above-desktop: 1025px;
+
+$inner-wrap-l: 1264px;
+$page-gutter: 40px;
+$page-gutter-s: 15px;
+
+.pageBanner {
+  background-color: #4f4f4f;
+
+  .bannerImage {
+    display: inline-block;
+    width: 319px;
+    height: 133px;
+    margin-right: 58px;
+  }
+
+  .campaignItem {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+    height: 67px;
+    line-height: 67px;
+    text-align: center;
+    font-size: 24px;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    vertical-align: top;
+    margin-top: 29px;
+    margin-right: 65px;
+    box-shadow: 8px 8px black;
+
+    &.active {
+      background-color: #FCD406;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: -29px;
+        left: 93px;
+        display: block;
+        border: 14px solid transparent;
+        border-bottom-width: 0;
+        border-top-color: #FCD406;
+      }
+    }
+  }
+  /* END */
+
+  /*
+  border-bottom: 1px solid $gray-light;
+  position: relative;
+  @media (max-width: $below-small) {
+    margin-top: $nav-height-s;
+  }
+
+  .container {
+    height: 185px;
+    @media (max-width: $below-mobile) {
+      height: auto;
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+  }
+
+  .image {
+    position: absolute;
+    right: 10%;
+    bottom: 0;
+    width: 430px;
+    @media (max-width: $below-desktop) {
+      width: 380px;
+    }
+    @media (max-width: $below-small) {
+      display: none;
+    }
+  }
+
+  .heading {
+    display: inline-block;
+    @mixin heading-style-l;
+    letter-spacing: 0.05em;
+    padding-top: 40px;
+    vertical-align: bottom;
+    @media (max-width: $below-mobile) {
+      padding-top: 0px;
+    }
+  }
+
+  .btns {
+    display: inline-block;
+
+    @media (max-width: $below-medium) {
+      display: block;
+      margin-top: 15px;
+    }
+
+    @media (max-width: $below-mobile) {
+      display: flex;
+    }
+
+    .btnYellowLine {
+      display: inline-block;
+      vertical-align: bottom;
+      margin-left: 15px;
+
+      @media (max-width: $below-medium) {
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+
+      @media (max-width: $below-mobile) {
+        padding: 0 8px;
+        letter-spacing: 0;
+        margin-left: 8px;
+      }
+
+      svg {
+        width: 16px;
+        height: 16px;
+        fill: $primary-color;
+        @media (max-width: $below-mobile) {
+          width: 12px;
+          height: 12px;
+        }
+      }
+    }
+
+    .page-banner--gray-pattern {
+      background-image: url("/assets/img/pattern-gray.svg");
+      background-repeat: repeat;
+    }
+  }
+  */
+}
+
+.btnS {
+  display: inline-block;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 14px;
+  text-align: center;
+  font-size: .9em;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: background .3s, color .3s, border .3s;
+  svg {
+    margin-top: -3px;
+    margin-right: 5px;
+  }
+}
+
+.btnYellowLine {
+  background-color: #fff;
+  border: 1px solid $primary-color;
+  @mixin hover-bg-color $gray-light;
+}
