@@ -152,10 +152,10 @@ export default class TimeAndSalaryBoard extends Component {
   }
 
   static fetchData({ match, store: { dispatch } }) {
-    const { path } = match;
+    const { path, params: { campaign_name: campaignName } } = match;
     const { sortBy, order } = pathnameMapping[path];
 
-    return dispatch(queryCampaignTimeAndSalary({ sortBy, order }));
+    return dispatch(queryCampaignTimeAndSalary({ campaignName, sortBy, order }));
   }
 
   constructor(props) {
@@ -176,10 +176,10 @@ export default class TimeAndSalaryBoard extends Component {
   }
 
   componentDidMount() {
-    const { path } = this.props.match;
+    const { path, params: { campaign_name: campaignName } } = this.props.match;
     const { sortBy, order } = pathnameMapping[path];
 
-    this.props.queryCampaignTimeAndSalary({ sortBy, order });
+    this.props.queryCampaignTimeAndSalary({ campaignName, sortBy, order });
     this.props.fetchMyPermission();
 
     $(window).on('scroll', this.handleScroll);
@@ -187,11 +187,11 @@ export default class TimeAndSalaryBoard extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.match.path !== nextProps.match.path) {
-      const { path } = nextProps.match;
+      const { path, params: { campaign_name: campaignName } } = nextProps.match;
       const { sortBy, order } = pathnameMapping[path];
       this.setState({ showExtreme: false });
       this.props.resetBoardExtremeData();
-      this.props.queryCampaignTimeAndSalary({ sortBy, order });
+      this.props.queryCampaignTimeAndSalary({ campaignName, sortBy, order });
       this.props.fetchMyPermission();
     }
   }
@@ -217,15 +217,16 @@ export default class TimeAndSalaryBoard extends Component {
     const threshold = $(document).height() - 100;
     if (view < threshold) return;
 
-    const { path } = this.props.match;
+    const { path, params: { campaign_name: campaignName } } = this.props.match;
     const { sortBy, order } = pathnameMapping[path];
-    this.props.queryCampaignTimeAndSalary({ sortBy, order });
+    this.props.queryCampaignTimeAndSalary({ campaignName, sortBy, order });
   }
 
   toggleShowExtreme = () => {
+    const { params: { campaign_name: campaignName } } = this.props.match;
     const { showExtreme } = this.state;
     this.setState({ showExtreme: !showExtreme });
-    this.props.queryExtremeCampaignTimeAndSalary();
+    this.props.queryExtremeCampaignTimeAndSalary({ campaignName });
   }
 
   decorateExtremeRows = rows => {
