@@ -309,6 +309,7 @@ export default class TimeAndSalaryBoard extends Component {
             postProcessRows={this.createPostProcessRows()}
             toggleInfoSalaryModal={this.toggleInfoSalaryModal}
             toggleInfoTimeModal={this.toggleInfoTimeModal}
+            toggleAboutThisJobModal={() => {}}
           />
           <div className={timeAndSalaryBoardStyles.status}>
             { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
