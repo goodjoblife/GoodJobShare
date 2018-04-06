@@ -6,7 +6,6 @@ import { Redirect, Switch } from 'react-router';
 import Wrapper from 'common/base/Wrapper';
 import RouteWithSubRoutes from '../route';
 import timeAndSalaryStyles from '../TimeAndSalary/styles.module.css';
-import SearchBar from '../TimeAndSalary/SearchBar';
 import CallToShareData from '../TimeAndSalary/CallToShareData';
 import Banner from './Banner';
 import MobileInfoButtons from '../TimeAndSalary/MobileInfoButtons';
@@ -133,7 +132,6 @@ export default class TimeAndSalary extends Component {
         <Banner />
         <Wrapper size="m" className={timeAndSalaryStyles.showSearchbarWrapper}>
           <CallToShareData />
-          <SearchBar />
           <MobileInfoButtons
             toggleInfoSalaryModal={this.toggleInfoSalaryModal}
             toggleInfoTimeModal={this.toggleInfoTimeModal}
