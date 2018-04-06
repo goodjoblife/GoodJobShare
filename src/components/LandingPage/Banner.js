@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Wrapper } from 'common/base';
 import getCallToActionLink from 'utils/callToActionUtils';
 import styles from './Banner.module.css';
-import ProgressBarWithExperienceCount from '../../containers/ProgressBar';
 
 const Banner = () => (
   <section className={styles.banner}>
@@ -13,11 +12,9 @@ const Banner = () => (
         <img src="https://image.goodjob.life/yellow-banner.png" alt="求職市場透明化" />
       </div>
       <div className={styles.content}>
-        <h1 className={styles.heading}><span>好工作評論網募「資」中 </span>(๑•̀ㅂ•́)و✧</h1>
-        <ProgressBarWithExperienceCount rootClassName={styles.progressBar} />
+        <h1 className={styles.heading}>職場透明化運動</h1>
         <h2 className={styles.subheading}>
-          目標 <strong>500</strong> 筆資料，不需要花上辛苦錢，只需要動動你的手，<br />
-          將你的面試、工作經驗分享給更多人知道。
+          匿名分享你的工時、薪資，讓我們求職不再面議！
         </h2>
         <Link to={getCallToActionLink()} className={cn('buttonCircleM', 'buttonBlack2')}>GO!</Link>
       </div>
