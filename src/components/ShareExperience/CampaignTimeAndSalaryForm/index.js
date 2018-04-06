@@ -88,6 +88,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       // campaign props
       formTitle: '軟體工程師 薪資工時大調查',
       formInfo: '#### 軟體工程師高工時的問題 .... ',
+      defaultJobTitle: '軟體工程師',
       formEnding: '#### 我們這一次與電資工會合作',
       extraFields: [{ key: 'ptt', title: 'PTT' }],
     };
@@ -109,11 +110,12 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       defaultFromDraft = null;
     }
 
-    const { extraFields } = this.state;
+    const { defaultJobTitle, extraFields } = this.state;
     const defaultExtraForm = getExtraForm(extraFields)();
 
     const defaultState = defaultFromDraft || {
       ...defaultForm,
+      jobTitle: defaultJobTitle,
       ...defaultExtraForm,
     };
 
