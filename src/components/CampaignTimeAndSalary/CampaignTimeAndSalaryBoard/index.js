@@ -5,11 +5,14 @@ import Loading from 'common/Loader';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import $ from 'jquery';
 import cn from 'classnames';
+import { Link } from 'react-router-dom';
 
+import { Star } from 'common/icons';
 import Select from 'common/form/Select';
 import InfoTimeModal from '../../TimeAndSalary/common/InfoTimeModal';
 import InfoSalaryModal from '../../TimeAndSalary/common/InfoSalaryModal';
 import timeAndSalaryBoardStyles from '../../TimeAndSalary/TimeAndSalaryBoard/TimeAndSalaryBoard.module.css';
+import timeAndSalaryBannerStyles from '../../TimeAndSalary/Banner.module.css';
 import timeAndSalaryCommonStyles from '../../TimeAndSalary/views/view.module.css';
 import fetchingStatus from '../../../constants/status';
 import { MAX_ROWS_IF_HIDDEN } from '../../../constants/hideContent';
@@ -274,6 +277,9 @@ export default class TimeAndSalaryBoard extends Component {
     return (
       <section className={timeAndSalaryCommonStyles.searchResult}>
         <h2 className={styles.heading}>{title}</h2>
+        <Link className={cn(timeAndSalaryBannerStyles.btnS, timeAndSalaryBannerStyles.btnYellowLine)} to="/time-and-salary/latest">
+          <Star /> 全站薪資工時
+        </Link>
         <div className={timeAndSalaryCommonStyles.result}>
           <div className={timeAndSalaryBoardStyles.sortRow}>
             <div className={timeAndSalaryBoardStyles.extremeDescription}>
