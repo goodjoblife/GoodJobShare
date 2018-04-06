@@ -183,6 +183,11 @@ export const getCampaignExtendedForm = extraFields => state => ({
   aboutThisJob: state.jobContent,
   ...getExtraForm(extraFields)(state),
 });
+export const getCampaignTimeAndSalaryForm = extraFields => state => ({
+  campaign: state.campaignName,
+  ...getTimeAndSalaryForm(state),
+  ...getCampaignExtendedForm(extraFields)(state),
+});
 
 export const portInterviewFormToRequestFormat = interviewForm => {
   let body = {
