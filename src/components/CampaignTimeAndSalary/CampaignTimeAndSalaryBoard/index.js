@@ -24,6 +24,7 @@ import { queryCampaignTimeAndSalary } from '../../../actions/campaignTimeAndSala
 import GradientMask from '../../common/GradientMask';
 
 import DashBoardTable from '../../TimeAndSalary/common/DashBoardTable';
+import AboutThisJobModal from './AboutThisJobModal';
 
 const pathnameMapping = {
   '/time-and-salary/campaigns/:campaign_name/work-time-dashboard': {
@@ -172,6 +173,10 @@ export default class TimeAndSalaryBoard extends Component {
     infoTimeModal: {
       isOpen: false,
     },
+    aboutThisJobModal: {
+      isOpen: false,
+      aboutThisJob: '',
+    },
     showExtreme: false,
   }
 
@@ -208,6 +213,14 @@ export default class TimeAndSalaryBoard extends Component {
   toggleInfoTimeModal() {
     const state = this.state;
     state.infoTimeModal.isOpen = !state.infoTimeModal.isOpen;
+    this.setState(state);
+  }
+  toggleAboutThisJobModal = aboutThisJob => {
+    const state = this.state;
+    state.aboutThisJobModal.isOpen = !state.aboutThisJobModal.isOpen;
+    if (state.aboutThisJobModal.isOpen) {
+      state.aboutThisJobModal.aboutThisJob = aboutThisJob;
+    }
     this.setState(state);
   }
 
@@ -309,7 +322,7 @@ export default class TimeAndSalaryBoard extends Component {
             postProcessRows={this.createPostProcessRows()}
             toggleInfoSalaryModal={this.toggleInfoSalaryModal}
             toggleInfoTimeModal={this.toggleInfoTimeModal}
-            toggleAboutThisJobModal={() => {}}
+            toggleAboutThisJobModal={this.toggleAboutThisJobModal}
           />
           <div className={timeAndSalaryBoardStyles.status}>
             { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
@@ -321,6 +334,11 @@ export default class TimeAndSalaryBoard extends Component {
           <InfoTimeModal
             isOpen={this.state.infoTimeModal.isOpen}
             close={this.toggleInfoTimeModal}
+          />
+          <AboutThisJobModal
+            isOpen={this.state.aboutThisJobModal.isOpen}
+            close={this.toggleAboutThisJobModal}
+            aboutThisJob={this.state.aboutThisJobModal.aboutThisJob}
           />
         </div>
       </section>
