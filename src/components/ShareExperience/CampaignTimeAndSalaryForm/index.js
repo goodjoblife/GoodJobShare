@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
@@ -67,6 +68,11 @@ const defaultForm = {
 };
 
 class CampaignTimeAndSalaryForm extends React.PureComponent {
+  static propTypes = {
+    match: PropTypes.shape({
+      params: PropTypes.object.isRequired,
+    }),
+  }
   constructor(props) {
     super(props);
 
@@ -78,13 +84,14 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     };
     this.basicElValidationStatus = {};
     this.extElValidationStatus = {};
+    this.localStorageKey = `${LS_TIME_SALARY_FORM_KEY}:${props.match.params.campaign_name}`;
   }
 
   componentDidMount() {
     let defaultFromDraft;
 
     try {
-      defaultFromDraft = JSON.parse(localStorage.getItem(LS_TIME_SALARY_FORM_KEY));
+      defaultFromDraft = JSON.parse(localStorage.getItem(this.localStorageKey));
     } catch (error) {
       defaultFromDraft = null;
     }
@@ -125,7 +132,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
           action: GA_ACTION.UPLOAD_FAIL,
         });
       });
-      localStorage.removeItem(LS_TIME_SALARY_FORM_KEY);
+      localStorage.removeItem(this.localStorageKey);
 
       return p;
     }
@@ -184,7 +191,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
         ...this.state,
         ...updateState,
       };
-      localStorage.setItem(LS_TIME_SALARY_FORM_KEY, JSON.stringify(state));
+      localStorage.setItem(this.localStorageKey, JSON.stringify(state));
     };
   }
 
