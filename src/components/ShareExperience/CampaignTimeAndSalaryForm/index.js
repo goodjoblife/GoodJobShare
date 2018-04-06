@@ -8,6 +8,7 @@ import { Heading } from 'common/base';
 import { People } from 'common/icons';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import TextInput from 'common/form/TextInput';
+import TextArea from 'common/form/TextArea';
 import BasicInfo from '../TimeSalaryForm/BasicInfo';
 import SalaryInfo from '../TimeSalaryForm/SalaryInfo';
 import TimeInfo from '../TimeSalaryForm/TimeInfo';
@@ -312,11 +313,13 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
             hasCompensatoryDayoff={hasCompensatoryDayoff}
           />
 
-          <InputTitle text="職場甘苦談" />
-          <TextInput
-            value={jobContent}
-            onChange={e => this.handleState('jobContent')(e.target.value)}
-          />
+          <div className={timeAndSalaryFormStyles.formSection}>
+            <InputTitle text="職場甘苦談" />
+            <TextArea
+              value={jobContent}
+              onChange={e => this.handleState('jobContent')(e.target.value)}
+            />
+          </div>
 
           { extraFields.map(({ key, title }) => (
             <div key={key} className={timeAndSalaryFormStyles.formSection}>
