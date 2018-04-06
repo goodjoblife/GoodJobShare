@@ -26,12 +26,16 @@ import {
   salaryFormCheck,
   timeFormCheck,
 } from '../TimeSalaryForm/formCheck';
+import {
+  campaignExtendedFormCheck,
+} from './formCheck';
 
 import {
   getBasicForm,
   getSalaryForm,
   getTimeForm,
   getTimeAndSalaryForm,
+  getCampaignExtendedForm,
   getExtraForm,
   portTimeSalaryFormToRequestFormat,
 } from '../utils';
@@ -136,8 +140,11 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     const valid = basicFormCheck(getBasicForm(this.state));
     const valid2 = salaryFormCheck(getSalaryForm(this.state));
     const valid3 = timeFormCheck(getTimeForm(this.state));
+    const valid4 = campaignExtendedFormCheck(this.state.extraFields)(
+      getCampaignExtendedForm(this.state.extraFields)(this.state)
+    );
 
-    if (valid && (valid2 || valid3)) {
+    if (valid && (valid2 || valid3) && valid4) {
       const p = postWorkings(
         portTimeSalaryFormToRequestFormat(getTimeAndSalaryForm(this.state))
       );
