@@ -9,14 +9,16 @@ export const SET_BOARD_STATUS = '@@campaignTimeAndSalary/SET_BOARD_STATUS';
 export const SET_BOARD_EXTREME_DATA = '@@campaignTimeAndSalary/SET_BOARD_EXTREME_DATA';
 export const SET_BOARD_EXTREME_STATUS = '@@campaignTimeAndSalary/SET_BOARD_EXTREME_STATUS';
 
+const campaignNameSelector = state => state.campaignTimeAndSalaryBoard.get('campaignName');
 const sortBySelector = state => state.campaignTimeAndSalaryBoard.get('sortBy');
 const orderSelector = state => state.campaignTimeAndSalaryBoard.get('order');
 const dataSelector = state => state.campaignTimeAndSalaryBoard.get('data');
 const statusSelector = state => state.campaignTimeAndSalaryBoard.get('status');
 const extremeStatusSelector = state => state.campaignTimeAndSalaryBoard.get('extremeStatus');
 
-const resetBoard = ({ sortBy, order }) => ({
+const resetBoard = ({ campaignName, sortBy, order }) => ({
   type: SET_BOARD_DATA,
+  campaignName,
   sortBy,
   order,
   status: fetchingStatus.UNFETCHED,
@@ -24,14 +26,15 @@ const resetBoard = ({ sortBy, order }) => ({
   error: null,
 });
 
-const setBoardData = ({ sortBy, order }, { status, data, error = null }) =>
+const setBoardData = ({ campaignName, sortBy, order }, { status, data, error = null }) =>
   (dispatch, getState) => {
     // make sure the store is consistent
-    if (sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
+    if (campaignName !== campaignNameSelector(getState()) || sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
       return;
     }
     dispatch({
       type: SET_BOARD_DATA,
+      campaignName,
       sortBy,
       order,
       status,
@@ -42,8 +45,8 @@ const setBoardData = ({ sortBy, order }, { status, data, error = null }) =>
 
 export const queryCampaignTimeAndSalary = ({ campaignName, sortBy, order }) =>
   (dispatch, getState) => {
-    if (sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
-      dispatch(resetBoard({ sortBy, order }));
+    if (campaignName !== campaignNameSelector(getState()) || sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
+      dispatch(resetBoard({ campaignName, sortBy, order }));
     }
 
     if (statusSelector(getState()) === fetchingStatus.FETCHING) {
@@ -83,10 +86,10 @@ export const queryCampaignTimeAndSalary = ({ campaignName, sortBy, order }) =>
 
         const currentData = dataSelector(getState()).toJS();
         const nextData = currentData.concat(data);
-        dispatch(setBoardData({ sortBy, order }, { status: fetchingStatus.FETCHED, data: nextData }));
+        dispatch(setBoardData({ campaignName, sortBy, order }, { status: fetchingStatus.FETCHED, data: nextData }));
       })
       .catch(error => {
-        dispatch(setBoardData({ sortBy, order }, { status: fetchingStatus.ERROR, data: [], error }));
+        dispatch(setBoardData({ campaignName, sortBy, order }, { status: fetchingStatus.ERROR, data: [], error }));
       });
   };
 
@@ -101,10 +104,10 @@ export const resetBoardExtremeData = () => ({
   extremeError: null,
 });
 
-const setBoardExtremeData = ({ sortBy, order }, { extremeStatus, extremeData, extremeError = null }) =>
+const setBoardExtremeData = ({ campaignName, sortBy, order }, { extremeStatus, extremeData, extremeError = null }) =>
   (dispatch, getState) => {
     // make sure the store is consistent
-    if (sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
+    if (campaignName !== campaignNameSelector(getState()) || sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
       return;
     }
     dispatch({
@@ -153,9 +156,9 @@ export const queryExtremeCampaignTimeAndSalary = ({ campaignName }) =>
             takeFirstFromArrayCompanyName,
           );
 
-        dispatch(setBoardExtremeData({ sortBy, order }, { extremeStatus: fetchingStatus.FETCHED, extremeData }));
+        dispatch(setBoardExtremeData({ campaignName, sortBy, order }, { extremeStatus: fetchingStatus.FETCHED, extremeData }));
       })
       .catch(extremeError => {
-        dispatch(setBoardExtremeData({ sortBy, order }, { extremeStatus: fetchingStatus.ERROR, extremeData: [], extremeError }));
+        dispatch(setBoardExtremeData({ campaignName, sortBy, order }, { extremeStatus: fetchingStatus.ERROR, extremeData: [], extremeError }));
       });
   };
