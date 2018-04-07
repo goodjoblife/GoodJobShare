@@ -5,6 +5,7 @@ import { SET_BOARD_DATA, SET_BOARD_STATUS, SET_BOARD_EXTREME_DATA, SET_BOARD_EXT
 import fetchingStatus from '../constants/status';
 
 const preloadedState = fromJS({
+  campaignName: '',
   sortBy: null,
   order: null,
   data: [],
@@ -16,8 +17,9 @@ const preloadedState = fromJS({
 });
 
 export default createReducer(preloadedState, {
-  [SET_BOARD_DATA]: (state, { sortBy, order, data, status, error }) =>
+  [SET_BOARD_DATA]: (state, { campaignName, sortBy, order, data, status, error }) =>
     state
+      .set('campaignName', campaignName)
       .set('data', fromJS(data))
       .set('status', status)
       .set('error', error)
