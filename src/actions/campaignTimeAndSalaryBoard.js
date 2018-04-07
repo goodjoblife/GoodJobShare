@@ -47,6 +47,7 @@ export const queryCampaignTimeAndSalary = ({ campaignName, sortBy, order }) =>
   (dispatch, getState) => {
     if (campaignName !== campaignNameSelector(getState()) || sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
       dispatch(resetBoard({ campaignName, sortBy, order }));
+      dispatch(resetBoardExtremeData()); // eslint-disable-line no-use-before-define
     }
 
     if (statusSelector(getState()) === fetchingStatus.FETCHING) {
