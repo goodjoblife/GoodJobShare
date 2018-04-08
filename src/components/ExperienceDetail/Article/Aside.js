@@ -1,13 +1,10 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
-
 import { formatSalaryType } from 'common/formatter';
-import { Good, Bad, Glike } from 'common/icons';
-import rateButtonStyles from 'common/button/RateButtonElement.module.css';
+import { Good, Bad } from 'common/icons';
 import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
-import { overallRatingDialogMap } from '../../ShareExperience/common/optionMap';
+import RateButtons from './RateButtons';
 
 const InterviewInfoBlocks = ({ experience }) =>
   (
@@ -46,19 +43,7 @@ const InterviewInfoBlocks = ({ experience }) =>
         </InfoBlock>
       }
       <InfoBlock label="對公司的面試整體滿意度">
-        <div className={styles.ratingContainer}>
-          {[1, 2, 3, 4, 5].map(el => (
-            <Glike
-              key={el}
-              className={cn(rateButtonStyles.container, styles.autoCursor, {
-                [rateButtonStyles.active]: (el <= experience.overall_rating),
-              })}
-            />
-          ))}
-          <div className={`${styles.ratingText} pS`}>
-            {overallRatingDialogMap[experience.overall_rating]}
-          </div>
-        </div>
+        <RateButtons rate={experience.overall_rating} />
       </InfoBlock>
       {
         experience.interview_sensitive_questions && experience.interview_sensitive_questions.length
@@ -129,6 +114,64 @@ WorkInfoBlocks.propTypes = {
   experience: PropTypes.object.isRequired,
 };
 
+const InternBlocks = ({ experience }) =>
+  (
+    <Fragment>
+      {
+        experience.region &&
+        <InfoBlock label="實習地區">
+          {experience.region}
+        </InfoBlock>
+      }
+      {
+        experience.job_title &&
+        <InfoBlock label="職稱">
+          {experience.job_title}
+        </InfoBlock>
+      }
+      {
+        experience.education &&
+        <InfoBlock label="最高學歷">
+          {experience.education}
+        </InfoBlock>
+      }
+      {
+        experience.starting_year &&
+        <InfoBlock label="實習開始的年份">
+          {experience.starting_year} 年
+        </InfoBlock>
+      }
+      {
+        experience.period &&
+        <InfoBlock label="實習長度">
+          {experience.period} 月
+        </InfoBlock>
+      }
+      {
+        experience.week_work_time &&
+        <InfoBlock label="一週工時">
+          {experience.week_work_time}
+        </InfoBlock>
+      }
+      {
+        experience.salary &&
+        <InfoBlock label="實習薪資">
+          {`${experience.salary.amount} / ${formatSalaryType(experience.salary.type)}`}
+        </InfoBlock>
+      }
+      {
+        experience.overall_rating &&
+        <InfoBlock label="實習整體滿意度">
+          <RateButtons rate={experience.overall_rating} />
+        </InfoBlock>
+      }
+    </Fragment>
+  );
+
+InternBlocks.propTypes = {
+  experience: PropTypes.object.isRequired,
+};
+
 const Aside = ({ experience }) => {
   const {
     type,
@@ -146,6 +189,13 @@ const Aside = ({ experience }) => {
         type === 'work' && (
           <ul className={styles.infoList}>
             <WorkInfoBlocks experience={experience} />
+          </ul>
+        )
+      }
+      {
+        type === 'intern' && (
+          <ul className={styles.infoList}>
+            <InternBlocks experience={experience} />
           </ul>
         )
       }

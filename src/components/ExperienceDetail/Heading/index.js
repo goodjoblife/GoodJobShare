@@ -4,8 +4,18 @@ import { Heading, P } from 'common/base';
 
 import styles from './Heading.module.css';
 
-const formatType = type =>
-  (type === 'work' ? '工作' : '面試');
+const formatType = type => {
+  switch (type) {
+    case 'work':
+      return '工作';
+    case 'interview':
+      return '面試';
+    case 'intern':
+      return '實習';
+    default:
+      return '工作';
+  }
+};
 
 const formatComapny = company => {
   if (company) {

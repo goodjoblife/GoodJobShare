@@ -36,7 +36,7 @@ export const sortBySelector = qsSelector('sort', 'created_at');
 export const sortSelector = qsSelector('sort', 'created_at');
 export const pageSelector = qsSelector('p', 1);
 export const searchTypeSelector = R.compose(
-  qsSelector('type', 'interview,work'),
+  qsSelector('type', 'interview,work,intern'),
 );
 
 export const querySelector = query => ({

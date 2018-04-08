@@ -213,6 +213,7 @@ class ExperienceDetail extends Component {
         const mapping = {
           interview: '面試經驗分享',
           work: '工作經驗分享',
+          intern: '實習經驗分享',
         };
         const description = `${company} ${jobTitle} 的${mapping[type]}。 ${subtitle}：${content}`;
         return (
