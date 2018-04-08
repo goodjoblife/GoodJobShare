@@ -10,7 +10,7 @@
     padding-bottom: 24px;
     max-width: 1100px;
 
-    @media (max-width: 850px) {
+    @media (max-width: 550px) {
       flex-direction: column;
     }
   }
@@ -20,13 +20,13 @@
   order: 1;
   flex-grow: 0;
   flex-basis: 390px;
-  @media (max-width: 850px) {
+  @media (max-width: 550px) {
     flex-basis: auto;
     margin-top: 24px;
   }
   img {
     min-height: 150px;
-    @media (max-width: 850px) {
+    @media (max-width: 550px) {
       max-width: 280px;
     }
   }
@@ -38,48 +38,31 @@
   flex-grow: 1;
   flex-basis: auto;
   animation: fadeUp 1s linear;
-  text-align: center;
+  padding-left: 40px;
 
-  @media (max-width: 850px) {
+  @media (max-width: 550px) {
     order: 0;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
 
 .heading {
-  font-size: 1.85em;
+  font-size: 2.3em;
   line-height: 1.2em;
   letter-spacing: 2px;
   margin-bottom: 20px;
+  font-weight: 700;
 
-  @media (max-width: 850px) {
-    font-size: 1.65em;
-  }
-
-  > span {
-    font-weight: 700;
+  @media (max-width: 550px) {
+    font-size: 2em;
   }
 }
 
 .subheading {
-  font-size: 1.125em;
+  font-size: 1.25em;
   line-height: 1.6em;
   margin-bottom: 24px;
-
-  @media (max-width: 850px) {
-    br {
-      display: none;
-      font-size: 1em;
-    }
-  }
-
-  strong {
-    font-weight: 700;
-  }
-}
-
-.progressBar {
-  margin-bottom: 24px;
-  margin-top: 40px;
 }
 
 @keyframes fadeUp {
