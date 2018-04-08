@@ -3,7 +3,18 @@ import {
   formatSalaryType,
 } from 'common/formatter';
 
-export const formatType = type => (type === 'interview' ? '面試' : '工作');
+export const formatType = type => {
+  switch (type) {
+    case 'work':
+      return '工作';
+    case 'interview':
+      return '面試';
+    case 'intern':
+      return '實習';
+    default:
+      return '工作';
+  }
+};
 
 export const formatCreatedAt = createdAt => {
   const date = new Date(Date.parse(createdAt));
