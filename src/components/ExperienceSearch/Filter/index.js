@@ -13,11 +13,13 @@ const SORT = {
 const SEARCH_TYPE = {
   INTERVIEW: 'interview',
   WORK: 'work',
+  INTERN: 'intern',
 };
 
 const OPTIONS = [
   { label: '面試經驗', value: SEARCH_TYPE.INTERVIEW },
   { label: '工作經驗', value: SEARCH_TYPE.WORK },
+  { label: '實習經驗', value: SEARCH_TYPE.INTERN },
 ];
 
 class Filter extends PureComponent {

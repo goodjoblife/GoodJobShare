@@ -46,6 +46,7 @@ const SORT = {
 const searchTypeMap = {
   work: '工作經驗',
   interview: '面試經驗',
+  intern: '實習經驗',
 };
 
 const sortByMap = {
@@ -365,6 +366,7 @@ class ExperienceSearch extends Component {
   }
 
   renderHelmet = () => {
+    // TODO 將邏輯拆成 1. 公司職稱搜尋 2. 非搜尋，減少 if/else
     const {
       search,
     } = this.props.location;
@@ -385,8 +387,8 @@ class ExperienceSearch extends Component {
     }, []).join('、');
 
     // default helmet info
-    let title = '查詢面試、工作經驗';
-    let description = `馬上查詢超過 ${scale} 篇面試及工作經驗分享，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
+    let title = '查詢面試、工作、實習經驗';
+    let description = `馬上查詢超過 ${scale} 篇面試、工作及實習經驗分享，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
 
     // if searchQuery is given and number of result > 0, then show job / company name
     if (searchQuery && count > 0) {
