@@ -16,7 +16,6 @@ import timeAndSalaryBannerStyles from '../../TimeAndSalary/Banner.module.css';
 import timeAndSalaryCommonStyles from '../../TimeAndSalary/views/view.module.css';
 import fetchingStatus from '../../../constants/status';
 import { MAX_ROWS_IF_HIDDEN } from '../../../constants/hideContent';
-import CallToActionRow from '../../TimeAndSalary/TimeAndSalaryBoard/CallToActionRow';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 import styles from '../CampaignTimeAndSalary.module.css';
 
@@ -75,23 +74,6 @@ const selectOptions = R.pipe(
   R.toPairs,
   R.map(([path, opt]) => ({ value: path, label: opt.label }))
 );
-
-const injectCallToActions = rows => {
-  const flapMapIndexed = R.addIndex(R.chain);
-  const injectEvery = N => (row, i) => {
-    if (i % N === N - 1) {
-      const nthInjected = parseInt(i / N, 10);
-      return [row, (
-        <CallToActionRow
-          key={`injected-${nthInjected}`}
-          position={i}
-        />
-      )];
-    }
-    return row;
-  };
-  return flapMapIndexed(injectEvery(100))(rows);
-};
 
 const injectPermissionBlock = rows => {
   const newRows = rows.slice(0, MAX_ROWS_IF_HIDDEN);
@@ -272,7 +254,6 @@ export default class TimeAndSalaryBoard extends Component {
     }
     return R.pipe(
       this.decorateExtremeRows,
-      injectCallToActions,
     );
   }
 
