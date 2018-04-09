@@ -45,7 +45,7 @@ class Table extends Component {
             {value}
           </td>
         );
-      }).filter(Boolean);
+      }).filter(td => td !== null);
 
       return (<tr key={d[primaryKey] || i}>{record}</tr>);
     });
