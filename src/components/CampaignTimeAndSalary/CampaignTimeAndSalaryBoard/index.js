@@ -278,8 +278,8 @@ export default class TimeAndSalaryBoard extends Component {
 
   render() {
     const { path, params: { campaign_name } } = this.props.match;
-    const { title, hasExtreme } = pathnameMapping[path];
-    const { status, data, switchPath, extremeStatus, extremeData, canViewTimeAndSalary } = this.props;
+    const { title } = pathnameMapping[path];
+    const { status, data, switchPath, extremeStatus, extremeData } = this.props;
     const { showExtreme } = this.state;
     let raw;
     if (showExtreme && extremeStatus === fetchingStatus.FETCHED) {
@@ -297,14 +297,14 @@ export default class TimeAndSalaryBoard extends Component {
         <div className={timeAndSalaryCommonStyles.result}>
           <div className={timeAndSalaryBoardStyles.sortRow}>
             <div className={timeAndSalaryBoardStyles.extremeDescription}>
-              {(hasExtreme && canViewTimeAndSalary) && (
+              {/* {(hasExtreme && canViewTimeAndSalary) && (
                 <span>
                   前 1 % 的資料可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
                   <button className={timeAndSalaryBoardStyles.toggle} onClick={this.toggleShowExtreme}>
                     {showExtreme ? '隱藏 -' : '展開 +'}
                   </button>
                 </span>
-              )}
+              )} */}
             </div>
             <div className={timeAndSalaryCommonStyles.sort}>
               <div className={timeAndSalaryCommonStyles.label}> 排序：</div>
