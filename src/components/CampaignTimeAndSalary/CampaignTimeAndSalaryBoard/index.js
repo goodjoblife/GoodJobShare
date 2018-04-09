@@ -97,14 +97,14 @@ const injectPermissionBlock = rows => {
   const newRows = rows.slice(0, MAX_ROWS_IF_HIDDEN);
   newRows.push(
     <tr>
-      <td colSpan="7" className={timeAndSalaryBoardStyles.noPadding}>
+      <td colSpan="8" className={timeAndSalaryBoardStyles.noPadding}>
         <GradientMask />
       </td>
     </tr>
   );
   newRows.push(
     <tr>
-      <td colSpan="7" className={timeAndSalaryBoardStyles.noBefore}>
+      <td colSpan="8" className={timeAndSalaryBoardStyles.noBefore}>
         <BasicPermissionBlock rootClassName={timeAndSalaryBoardStyles.permissionBlockBoard} />
       </td>
     </tr>
@@ -114,7 +114,7 @@ const injectPermissionBlock = rows => {
 
 const injectLoadingIconRow = R.prepend(
   <tr key="extreme-loading" className={timeAndSalaryBoardStyles.extremeRow}>
-    <td colSpan="7" className={timeAndSalaryBoardStyles.noBefore}>
+    <td colSpan="8" className={timeAndSalaryBoardStyles.noBefore}>
       <Loading size="s" />
     </td>
   </tr>
@@ -123,7 +123,7 @@ const injectLoadingIconRow = R.prepend(
 const injectExtremeDividerAt = nthRow => onClick => R.insert(
   nthRow, (
     <tr key="extreme-divider" className={timeAndSalaryBoardStyles.extremeRow}>
-      <td colSpan="7" className={timeAndSalaryBoardStyles.noBefore}>
+      <td colSpan="8" className={timeAndSalaryBoardStyles.noBefore}>
         <div className={timeAndSalaryBoardStyles.extremeDescription}>
           <span>
             以上資料為前 1 % 的資料，可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
