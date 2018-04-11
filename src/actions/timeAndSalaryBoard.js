@@ -44,6 +44,7 @@ export const queryTimeAndSalary = ({ sortBy, order }) =>
   (dispatch, getState) => {
     if (sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
       dispatch(resetBoard({ sortBy, order }));
+      dispatch(resetBoardExtremeData()); // eslint-disable-line no-use-before-define
     }
 
     if (statusSelector(getState()) === fetchingStatus.FETCHING) {
