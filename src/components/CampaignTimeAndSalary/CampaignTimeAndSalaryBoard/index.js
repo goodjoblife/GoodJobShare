@@ -1,4 +1,4 @@
-import React, { Component, cloneElement } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 import Loading from 'common/Loader';
@@ -31,42 +31,36 @@ const pathnameMapping = {
     label: '一週平均總工時（高到低）',
     sortBy: 'week_work_time',
     order: 'descending',
-    hasExtreme: true,
   },
   '/time-and-salary/campaigns/:campaign_name/sort/work-time-asc': {
     title: '工時排行榜（由低到高）',
     label: '一週平均總工時（低到高）',
     sortBy: 'week_work_time',
     order: 'ascending',
-    hasExtreme: true,
   },
   '/time-and-salary/campaigns/:campaign_name/salary-dashboard': {
     title: '估算時薪排行榜',
     label: '估算時薪（高到低）',
     sortBy: 'estimated_hourly_wage',
     order: 'descending',
-    hasExtreme: true,
   },
   '/time-and-salary/campaigns/:campaign_name/sort/salary-asc': {
     title: '估算時薪排行榜（由低到高）',
     label: '估算時薪（低到高）',
     sortBy: 'estimated_hourly_wage',
     order: 'ascending',
-    hasExtreme: true,
   },
   '/time-and-salary/campaigns/:campaign_name/latest': {
     title: '最新薪時資訊',
     label: '資料時間（新到舊）',
     sortBy: 'created_at',
     order: 'descending',
-    hasExtreme: false,
   },
   '/time-and-salary/campaigns/:campaign_name/sort/time-asc': {
     title: '最舊薪時資訊',
     label: '資料時間（舊到新）',
     sortBy: 'created_at',
     order: 'ascending',
-    hasExtreme: false,
   },
 };
 
@@ -94,31 +88,6 @@ const injectPermissionBlock = rows => {
   return newRows;
 };
 
-const injectLoadingIconRow = R.prepend(
-  <tr key="extreme-loading" className={timeAndSalaryBoardStyles.extremeRow}>
-    <td colSpan="8" className={timeAndSalaryBoardStyles.noBefore}>
-      <Loading size="s" />
-    </td>
-  </tr>
-);
-
-const injectExtremeDividerAt = nthRow => onClick => R.insert(
-  nthRow, (
-    <tr key="extreme-divider" className={timeAndSalaryBoardStyles.extremeRow}>
-      <td colSpan="8" className={timeAndSalaryBoardStyles.noBefore}>
-        <div className={timeAndSalaryBoardStyles.extremeDescription}>
-          <span>
-            以上資料為前 1 % 的資料，可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
-            <button className={timeAndSalaryBoardStyles.toggle} onClick={onClick}>
-              隱藏 -
-            </button>
-          </span>
-        </div>
-      </td>
-    </tr>
-  )
-);
-
 export default class TimeAndSalaryBoard extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
@@ -126,10 +95,6 @@ export default class TimeAndSalaryBoard extends Component {
     match: PropTypes.object.isRequired,
     queryCampaignTimeAndSalary: PropTypes.func,
     switchPath: PropTypes.func,
-    queryExtremeCampaignTimeAndSalary: PropTypes.func.isRequired,
-    resetBoardExtremeData: PropTypes.func.isRequired,
-    extremeStatus: PropTypes.string,
-    extremeData: ImmutablePropTypes.list,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchMyPermission: PropTypes.func.isRequired,
   }
@@ -159,7 +124,6 @@ export default class TimeAndSalaryBoard extends Component {
       isOpen: false,
       aboutThisJob: '',
     },
-    showExtreme: false,
   }
 
   componentDidMount() {
@@ -176,8 +140,6 @@ export default class TimeAndSalaryBoard extends Component {
     if (this.props.match.path !== nextProps.match.path) {
       const { path, params: { campaign_name: campaignName } } = nextProps.match;
       const { sortBy, order } = pathnameMapping[path];
-      this.setState({ showExtreme: false });
-      this.props.resetBoardExtremeData();
       this.props.queryCampaignTimeAndSalary({ campaignName, sortBy, order });
       this.props.fetchMyPermission();
     }
@@ -217,57 +179,18 @@ export default class TimeAndSalaryBoard extends Component {
     this.props.queryCampaignTimeAndSalary({ campaignName, sortBy, order });
   }
 
-  toggleShowExtreme = () => {
-    const { params: { campaign_name: campaignName } } = this.props.match;
-    const { showExtreme } = this.state;
-    this.setState({ showExtreme: !showExtreme });
-    this.props.queryExtremeCampaignTimeAndSalary({ campaignName });
-  }
-
-  decorateExtremeRows = rows => {
-    if (!this.state.showExtreme) {
-      return rows;
-    }
-    if (this.props.extremeStatus !== fetchingStatus.FETCHED) {
-      return injectLoadingIconRow(rows);
-    }
-    // here, the first {nExtremeRows} rows are extreme data
-    // we would like to highlight them with the right style
-    const nExtremeRows = this.props.extremeData.size;
-    const mapIndexed = R.addIndex(R.map);
-    const IfExtremeRow = then => (row, i) =>
-      ((i < nExtremeRows) ? then(row) : row);
-    const wearExtremeStyle = row =>
-      cloneElement(row, {
-        className: cn(row.props.className, timeAndSalaryBoardStyles.extremeRow),
-      });
-    return R.pipe(
-      mapIndexed(IfExtremeRow(wearExtremeStyle)),
-      // inject a divider here to tell extreme rows apart from other rows
-      injectExtremeDividerAt(nExtremeRows)(this.toggleShowExtreme),
-    )(rows);
-  }
-
   createPostProcessRows = () => {
     if (!this.props.canViewTimeAndSalary) {
       return injectPermissionBlock;
     }
-    return R.pipe(
-      this.decorateExtremeRows,
-    );
+    return R.identity;
   }
 
   render() {
     const { path, params: { campaign_name } } = this.props.match;
     const { title } = pathnameMapping[path];
-    const { status, data, switchPath, extremeStatus, extremeData } = this.props;
-    const { showExtreme } = this.state;
-    let raw;
-    if (showExtreme && extremeStatus === fetchingStatus.FETCHED) {
-      raw = extremeData.concat(data).toJS();
-    } else {
-      raw = data.toJS();
-    }
+    const { status, data, switchPath } = this.props;
+    const raw = data.toJS();
 
     return (
       <section className={timeAndSalaryCommonStyles.searchResult}>
@@ -277,16 +200,7 @@ export default class TimeAndSalaryBoard extends Component {
         </Link>
         <div className={timeAndSalaryCommonStyles.result}>
           <div className={timeAndSalaryBoardStyles.sortRow}>
-            <div className={timeAndSalaryBoardStyles.extremeDescription}>
-              {/* {(hasExtreme && canViewTimeAndSalary) && (
-                <span>
-                  前 1 % 的資料可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
-                  <button className={timeAndSalaryBoardStyles.toggle} onClick={this.toggleShowExtreme}>
-                    {showExtreme ? '隱藏 -' : '展開 +'}
-                  </button>
-                </span>
-              )} */}
-            </div>
+            <div className={timeAndSalaryBoardStyles.extremeDescription} />
             <div className={timeAndSalaryCommonStyles.sort}>
               <div className={timeAndSalaryCommonStyles.label}> 排序：</div>
               <div className={timeAndSalaryCommonStyles.select}>
