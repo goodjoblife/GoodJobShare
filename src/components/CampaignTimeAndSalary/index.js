@@ -31,11 +31,6 @@ export default class TimeAndSalary extends Component {
     location: PropTypes.shape({
       pathname: PropTypes.string,
     }),
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        keyword: PropTypes.string,
-      }),
-    }),
   }
 
   constructor(props) {
@@ -71,7 +66,7 @@ export default class TimeAndSalary extends Component {
 
     // default title and description
     let title = '查看薪資、工時資訊';
-    let description = '馬上查看薪資、工時資訊以及加班狀況，協助您找到更好的工作！';
+    const description = '馬上查看薪資、工時資訊以及加班狀況，協助您找到更好的工作！';
 
     // 根據 route 去更新 title  e.g. 工時排行榜（由高到低）
     let name = '';
@@ -81,17 +76,6 @@ export default class TimeAndSalary extends Component {
       }
     });
     if (name) { title = name; }
-
-    // 假如 keyword 不是 null, undefined 或 ''。則把 keywords 更新到 title & description
-    const keyword = this.props.match.params.keyword;
-    if (keyword) {
-      if (name) {
-        title = `${keyword}的${name}`;
-      } else {
-        title = `${keyword}的薪資、工時資訊`;
-      }
-      description = `馬上查看${keyword}的薪資、工時資訊以及加班狀況，協助您找到更好的工作！`;
-    }
 
     return (
       <Helmet
