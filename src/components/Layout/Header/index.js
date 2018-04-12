@@ -107,7 +107,7 @@ class Header extends React.Component {
               toggle={this.toggleNav}
             />
             <div className={styles.logo}>
-              <Link to="/" title="GoodJob 好工作評論網">
+              <Link to="/" title="GoodJob 職場透明化運動">
                 <GjLogo />
               </Link>
             </div>
