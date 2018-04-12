@@ -5,9 +5,9 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Loader from 'common/Loader';
 import Columns from 'common/Columns';
 import { Section, Wrapper, Heading } from 'common/base';
-import getCallToActionLink from 'utils/callToActionUtils';
 import { queryMenu } from '../../actions/laborRights';
 import fetchingStatus from '../../constants/status';
+import { shareLink } from '../../constants/dataProgress';
 import LaborRightsEntry from './LaborRightsEntry';
 import About from './About';
 import { HELMET_DATA } from '../../constants/helmetData';
@@ -31,7 +31,7 @@ class LaborRightsMenu extends React.Component {
       title,
     }));
     items.splice(4, 0, {
-      link: getCallToActionLink(),
+      link: shareLink,
       coverUrl: 'https://image.goodjob.life/banners/banner3_2x.jpg',
       title: '留下你的面試經驗、工作經驗',
     });
