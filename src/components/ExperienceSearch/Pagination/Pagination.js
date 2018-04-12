@@ -36,7 +36,7 @@ const Pagination = ({
           className="buttonFirstPage"
           to={createPageLinkTo(1)}
         >
-          第一頁
+          最前頁
         </Link>
         {
           isPreviousDisabled(currentPage) ?
