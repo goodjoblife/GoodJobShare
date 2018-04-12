@@ -7,7 +7,7 @@ const Banner2 = () => (
   <Link to={getCallToActionLink()}>
     <img
       src="https://image.goodjob.life/banners/banner1_2x.jpg"
-      alt="好工作評論網募資中"
+      alt="職場透明化運動進行中"
       className={styles.banner2}
     />
   </Link>

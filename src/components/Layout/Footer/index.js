@@ -28,8 +28,8 @@ const Footer = () => (
     <section className={styles.header}>
       <Wrapper size="l" className={styles.inner}>
         <i.GjLogo className={styles.logo} />
-        <h1 className={styles.heading}>好工作評論網</h1>
-        <h5 className={styles.subheading}>—— 讓我們一起定義心中的理想工作</h5>
+        <h1 className={styles.heading}>職場透明化運動</h1>
+        <h5 className={styles.subheading}>—— 共享工時薪資，求職不再面議！</h5>
         <span
           className={cn('fb-like', styles.fbLike)}
           data-href="https://www.facebook.com/goodjob.life/"

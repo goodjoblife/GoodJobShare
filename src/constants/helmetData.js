@@ -27,19 +27,19 @@ The followings are some useful elements from Open Graph Protocol:
 */
 
 export const imgHost = 'https://image.goodjob.life';
-export const SITE_NAME = 'GoodJob 好工作評論網';
+export const SITE_NAME = 'GoodJob 職場透明化運動';
 export const HELMET_DATA = {
   DEFAULT: {
     defaultTitle: SITE_NAME,
     titleTemplate: `%s | ${SITE_NAME}`,
     meta: [
-      { name: 'description', content: '你是否曾覺得職場資訊不夠透明？分享你的職場或面試經驗，讓我們一起改變現狀、定義理想的工作！' },
-      { name: 'keywords', content: '工作時間, 薪資, 面試經驗, 工作經驗, 工作評論' },
+      { name: 'description', content: '匿名分享你的工時、薪資，讓我們求職不再面議！' },
+      { name: 'keywords', content: '工作時間, 薪資福利, 面試經驗, 工作經驗, 實習經驗, 工作評論, 職場資訊透明化' },
       { property: 'og:title', content: SITE_NAME },
       { property: 'og:url', content: formatCanonicalPath('/') },
       { property: 'og:type', content: 'website' },
-      { property: 'og:image', content: `${imgHost}/og/default.jpg` },
-      { property: 'og:description', content: '你是否曾覺得職場資訊不夠透明？分享你的職場或面試經驗，讓我們一起改變現狀、定義理想的工作！' },
+      { property: 'og:image', content: `${imgHost}/og/default-06-April.jpg` },
+      { property: 'og:description', content: '匿名分享你的工時、薪資，讓我們求職不再面議！' },
       { property: 'og:locale', content: 'zh_TW' },
       { property: 'og:site_name', content: SITE_NAME },
       { property: 'fb:app_id', content: FACEBOOK_APP_ID },
@@ -50,7 +50,7 @@ export const HELMET_DATA = {
   },
   LANDING_PAGE: {
     meta: [
-      { property: 'og:image', content: `${imgHost}/og/index.jpg` },
+      { property: 'og:image', content: `${imgHost}/og/default-06-April.jpg` },
     ],
   },
   SHARE: {
@@ -58,7 +58,7 @@ export const HELMET_DATA = {
     meta: [
       { property: 'og:title', content: formatTitle('分享你的職場資訊', SITE_NAME) },
       { property: 'og:url', content: formatCanonicalPath('/share') },
-      { property: 'og:image', content: `${imgHost}/og/share.jpg` },
+      { property: 'og:image', content: `${imgHost}/og/share-work.jpg` },
     ],
     link: [
       { rel: 'canonical', href: formatCanonicalPath('/share') },

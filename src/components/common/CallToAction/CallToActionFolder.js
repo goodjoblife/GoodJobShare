@@ -10,7 +10,7 @@ import styles from './CallToActionFolder.module.css';
 const CallToActionFolder = () => (
   <FolderBanner rootClassName={styles.root}>
     <div className={styles.container}>
-      <Heading size="m" className={styles.title} Tag="h2">好工作評論網募「資」中
+      <Heading size="m" className={styles.title} Tag="h2">「職場透明化運動」進行中
         <span className={styles.nowrap}> (๑•̀ㅂ•́)و✧</span>
       </Heading>
       <ProgressBarWithExperienceCount size="l" theme="gray" rootClassName={styles.progressbar} />

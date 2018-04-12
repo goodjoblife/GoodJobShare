@@ -8,7 +8,7 @@ import ProgressBarWithExperienceCount from '../../../../containers/ProgressBar';
 const Top = () => (
   <Link to={getCallToActionLink()} className={styles.root}>
     <Wrapper size="l" className={styles.inner}>
-      <div className={styles.heading}>\  好工作評論網募「資」中  /</div>
+      <div className={styles.heading}>\  「職場透明化運動」進行中  /</div>
       <ProgressBarWithExperienceCount size="s" theme="black" />
       <div className={styles.subheading}>
         不需要花上辛苦錢，只需要動動你的手，將你的面試、工作經驗分享出去！
