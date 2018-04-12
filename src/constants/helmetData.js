@@ -38,7 +38,7 @@ export const HELMET_DATA = {
       { property: 'og:title', content: SITE_NAME },
       { property: 'og:url', content: formatCanonicalPath('/') },
       { property: 'og:type', content: 'website' },
-      { property: 'og:image', content: `${imgHost}/og/default.jpg` },
+      { property: 'og:image', content: `${imgHost}/og/default-06-April.jpg` },
       { property: 'og:description', content: '匿名分享你的工時、薪資，讓我們求職不再面議！' },
       { property: 'og:locale', content: 'zh_TW' },
       { property: 'og:site_name', content: SITE_NAME },
@@ -50,7 +50,7 @@ export const HELMET_DATA = {
   },
   LANDING_PAGE: {
     meta: [
-      { property: 'og:image', content: `${imgHost}/og/index.jpg` },
+      { property: 'og:image', content: `${imgHost}/og/default-06-April.jpg` },
     ],
   },
   SHARE: {
@@ -58,7 +58,7 @@ export const HELMET_DATA = {
     meta: [
       { property: 'og:title', content: formatTitle('分享你的職場資訊', SITE_NAME) },
       { property: 'og:url', content: formatCanonicalPath('/share') },
-      { property: 'og:image', content: `${imgHost}/og/share.jpg` },
+      { property: 'og:image', content: `${imgHost}/og/share-work.jpg` },
     ],
     link: [
       { rel: 'canonical', href: formatCanonicalPath('/share') },
