@@ -1,21 +1,15 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import R from 'ramda';
 
-import { ProgressBarWithExperienceCount } from '../components/common/ProgressBar';
-import { queryExperienceCount } from '../actions/experiences';
-import fetchingStatus from '../constants/status';
-
-const experienceCountSelector = state => state.experiences.get('count');
-const countStatusSelector = state => state.experiences.get('countStatus');
-const hasFetchedSelector = R.compose(R.equals(fetchingStatus.FETCHED), countStatusSelector);
+import { ProgressBarWithDataCount } from '../components/common/ProgressBar';
+import { queryTimeAndSalaryCount } from '../actions/dataCount';
 
 const mapStateToProps = state => ({
-  experienceCount: experienceCountSelector(state),
-  hasFetched: hasFetchedSelector(state),
+  dataCount: state.dataCount.get('timeAndSalaryCount'),
+  hasFetched: state.dataCount.get('hasFetchedTimeAndSalaryCount'),
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ queryExperienceCount }, dispatch);
+  bindActionCreators({ dispatchGetDataCount: queryTimeAndSalaryCount }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProgressBarWithExperienceCount);
+export default connect(mapStateToProps, mapDispatchToProps)(ProgressBarWithDataCount);

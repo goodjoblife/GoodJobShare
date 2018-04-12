@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styles from './ProgressBar.module.css';
+import { goalNum } from '../../../constants/dataProgress';
 
-const goalData = 500;
 const sizeOptions = ['l', 'm', 's'];
 const themeOptions = ['yellow', 'black', 'gray'];
 
@@ -13,7 +13,7 @@ const ProgressBar = ({
   rootClassName,
   theme,
 }) => {
-  const percentage = totalData <= goalData ? `${(totalData / goalData) * 100}%` : '100%';
+  const percentage = totalData <= goalNum ? `${(totalData / goalNum) * 100}%` : '100%';
   return (
     <div className={cn(styles.root, rootClassName, styles[size], styles[theme])}>
       { size === 'l' && <div className={styles.start}>0</div> }
@@ -24,9 +24,9 @@ const ProgressBar = ({
           }
         </div>
       </div>
-      { size === 'l' && <div className={styles.end}>{goalData}</div> }
-      { size === 's' && <div className={styles.numbers}>{totalData}/{goalData}</div> }
-      { size === 'm' && <div className={styles.goal}>目標：{goalData} 筆</div> }
+      { size === 'l' && <div className={styles.end}>{goalNum}</div> }
+      { size === 's' && <div className={styles.numbers}>{totalData}/{goalNum}</div> }
+      { size === 'm' && <div className={styles.goal}>目標：{goalNum} 筆</div> }
     </div>
   );
 };

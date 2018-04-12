@@ -2,33 +2,32 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import ProgressBar from './ProgressBar';
-import { queryExperienceCount } from '../../../actions/experiences';
 
-class ProgressBarWithExperienceCount extends Component {
-  static fetchData({ store: { dispatch } }) {
-    return dispatch(queryExperienceCount());
+class ProgressBarWithDataCount extends Component {
+  static fetchData() {
+    return this.props.dispatchGetDataCount;
   }
 
   componentDidMount() {
     if (this.props.hasFetched === false) {
-      this.props.queryExperienceCount();
+      this.props.dispatchGetDataCount();
     }
   }
 
   render() {
-    return (<ProgressBar totalData={this.props.experienceCount} {...this.props} />);
+    return (<ProgressBar totalData={this.props.dataCount} {...this.props} />);
   }
 }
 
-ProgressBarWithExperienceCount.propTypes = {
-  experienceCount: PropTypes.number,
+ProgressBarWithDataCount.propTypes = {
+  dataCount: PropTypes.number,
   // 是否已經 fetch 過 experienceCount
   hasFetched: PropTypes.bool,
-  queryExperienceCount: PropTypes.func.isRequired,
+  dispatchGetDataCount: PropTypes.func.isRequired,
 };
 
-ProgressBarWithExperienceCount.defaultProps = {
+ProgressBarWithDataCount.defaultProps = {
   hasFetched: false,
 };
 
-export default ProgressBarWithExperienceCount;
+export default ProgressBarWithDataCount;
