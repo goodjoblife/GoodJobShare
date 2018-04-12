@@ -175,6 +175,7 @@ export default class TimeAndSalaryBoard extends Component {
     const { path } = this.props.match;
     const { sortBy, order } = pathnameMapping[path];
 
+    this.props.resetBoardExtremeData();
     this.props.queryTimeAndSalary({ sortBy, order });
     this.props.fetchMyPermission();
 
