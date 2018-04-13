@@ -1,6 +1,6 @@
 import R from 'ramda';
 
-import fetchingStatus from '../../constants/status';
+import { isFetched } from '../../constants/status';
 import {
   menuEntriesSelector,
   menuStatusSelector,
@@ -10,8 +10,16 @@ export const experienceCountSelector = state =>
   state.experiences.get('count');
 
 export const hasFetchedexperienceCountSelector = R.compose(
-  R.equals(fetchingStatus.FETCHED),
+  isFetched,
   state => state.experiences.get('countStatus')
+);
+
+export const timeAndSalaryCountSelector = state =>
+  state.timeAndSalary.get('count');
+
+export const hasFetchedTimeAndSalaryCountSelector = R.compose(
+  isFetched,
+  state => state.timeAndSalary.get('countStatus')
 );
 
 export const laborRightsCountSelector = R.compose(
@@ -20,6 +28,6 @@ export const laborRightsCountSelector = R.compose(
 );
 
 export const hasFetchedLaborRightsCountSelector = R.compose(
-  R.equals(fetchingStatus.FETCHED),
+  isFetched,
   menuStatusSelector,
 );
