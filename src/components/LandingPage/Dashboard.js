@@ -27,7 +27,7 @@ const datas = [
   {
     Icon: BarChartIcon,
     heading: '薪資工時資料',
-    text: '5,000',
+    text: '6,000',
     smallText: '筆',
   },
   {
