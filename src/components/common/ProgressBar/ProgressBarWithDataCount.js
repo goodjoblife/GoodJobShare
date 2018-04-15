@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import ProgressBar from './ProgressBar';
+import { goalNum } from '../../../constants/dataProgress';
 
 class ProgressBarWithDataCount extends Component {
   static fetchData() {
@@ -15,17 +16,18 @@ class ProgressBarWithDataCount extends Component {
   }
 
   render() {
-    return (<ProgressBar totalData={this.props.dataCount} {...this.props} />);
+    return (<ProgressBar dataNum={this.props.dataNum} goalNum={goalNum} {...this.props} />);
   }
 }
 
 ProgressBarWithDataCount.propTypes = {
-  dataCount: PropTypes.number,
+  dataNum: PropTypes.number,
   hasFetched: PropTypes.bool,
   dispatchGetDataCount: PropTypes.func.isRequired,
 };
 
 ProgressBarWithDataCount.defaultProps = {
+  dataNum: 0,
   hasFetched: false,
 };
 
