@@ -2,8 +2,8 @@ import React from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { Wrapper } from 'common/base';
-import getCallToActionLink from 'utils/callToActionUtils';
 import styles from './Banner.module.css';
+import { shareLink } from '../../constants/dataProgress';
 
 const Banner = () => (
   <section className={styles.banner}>
@@ -16,7 +16,7 @@ const Banner = () => (
         <h2 className={styles.subheading}>
           匿名分享你的工時、薪資，讓我們求職不再面議！
         </h2>
-        <Link to={getCallToActionLink()} className={cn('buttonCircleM', 'buttonBlack2')}>GO!</Link>
+        <Link to={shareLink} className={cn('buttonCircleM', 'buttonBlack2')}>GO!</Link>
       </div>
     </Wrapper>
   </section>
