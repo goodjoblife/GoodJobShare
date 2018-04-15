@@ -22,7 +22,6 @@ class ProgressBarWithDataCount extends Component {
 
 ProgressBarWithDataCount.propTypes = {
   dataNum: PropTypes.number,
-  // 是否已經 fetch 過 experienceCount
   hasFetched: PropTypes.bool,
   dispatchGetDataCount: PropTypes.func.isRequired,
 };
