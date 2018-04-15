@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
-import getCallToActionLink from 'utils/callToActionUtils';
 import styles from './CallToActionRow.module.css';
 import headerStyles from '../../Layout/Header/Header.module.css';
+import { shareLink } from '../../../constants/dataProgress';
 
 const GoButton = () => (
-  <Link to={getCallToActionLink()} className={cn(styles.go, headerStyles.leaveDataBtn)}>
+  <Link to={shareLink} className={cn(styles.go, headerStyles.leaveDataBtn)}>
     GO!
   </Link>
 );
