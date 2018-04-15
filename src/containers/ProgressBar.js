@@ -1,12 +1,14 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { isFetched } from '../constants/status';
+
 import { ProgressBarWithDataCount } from '../components/common/ProgressBar';
-import { queryTimeAndSalaryCount } from '../actions/dataCount';
+import { queryTimeAndSalaryCount } from '../actions/timeAndSalary';
 
 const mapStateToProps = state => ({
-  dataCount: state.dataCount.get('timeAndSalaryCount'),
-  hasFetched: state.dataCount.get('hasFetchedTimeAndSalaryCount'),
+  dataCount: state.timeAndSalary.get('count'),
+  hasFetched: isFetched(state.timeAndSalary.get('countStatus')),
 });
 
 const mapDispatchToProps = dispatch =>
