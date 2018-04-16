@@ -25,12 +25,18 @@ class Root extends Component {
     logPageView(location);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const {
       location,
     } = this.props;
 
-    logPageView(location);
+    const {
+      location: prevLocation,
+    } = prevProps;
+
+    if (location !== prevLocation) {
+      logPageView(location);
+    }
   }
 
   init = () => {
