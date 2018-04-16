@@ -20,11 +20,6 @@ class Root extends Component {
     ReactPixel.pageView();
   }
 
-  logPageView = () => {
-    ReactGA.set({ page: window.location.pathname + window.location.search });
-    ReactGA.pageview(window.location.pathname + window.location.search);
-  }
-
   render() {
     return (
       <ScrollContext>
