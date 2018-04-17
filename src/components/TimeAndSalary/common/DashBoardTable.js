@@ -14,6 +14,7 @@ import {
   getSalary,
   formatWage,
   formatDate,
+  getAboutThisJobButton,
 } from './formatter';
 
 const DashBoardTable = ({
@@ -21,6 +22,7 @@ const DashBoardTable = ({
   postProcessRows,
   toggleInfoSalaryModal,
   toggleInfoTimeModal,
+  toggleAboutThisJobModal,
 }) => (
   <Table
     className={styles.latestTable}
@@ -84,6 +86,11 @@ const DashBoardTable = ({
         參考時間
       </InfoButton>
     </Table.Column>
+    { toggleAboutThisJobModal && (<Table.Column
+      className={styles.colAboutThisJob}
+      title="關於此工作"
+      dataField={getAboutThisJobButton(toggleAboutThisJobModal)}
+    />)}
   </Table>
 );
 
@@ -92,6 +99,11 @@ DashBoardTable.propTypes = {
   postProcessRows: PropTypes.func.isRequired,
   toggleInfoSalaryModal: PropTypes.func.isRequired,
   toggleInfoTimeModal: PropTypes.func.isRequired,
+  toggleAboutThisJobModal: PropTypes.func,
+};
+
+DashBoardTable.defaultProps = {
+  toggleAboutThisJobModal: null,
 };
 
 export default DashBoardTable;

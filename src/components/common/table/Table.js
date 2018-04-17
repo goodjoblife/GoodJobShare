@@ -24,6 +24,8 @@ class Table extends Component {
     const { data, primaryKey, children, className, postProcessRows } = this.props;
     const records = data.map((d, i) => {
       const record = Children.map(children, (col, idx) => {
+        if (!col) return null;
+
         let value;
         if (typeof col.props.dataField === 'function') {
           value = col.props.dataField(d, i);
@@ -43,7 +45,8 @@ class Table extends Component {
             {value}
           </td>
         );
-      });
+      }).filter(td => td !== null);
+
       return (<tr key={d[primaryKey] || i}>{record}</tr>);
     });
 
