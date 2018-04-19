@@ -26,8 +26,11 @@ class LandingPage extends Component {
   static propTypes = {
     queryPopularExperiences: PropTypes.func.isRequired,
     queryMenuIfUnfetched: PropTypes.func.isRequired,
+    queryTimeAndSalaryCount: PropTypes.func.isRequired,
     laborRightsMenuEntries: ImmutablePropTypes.list.isRequired,
     popularExperiences: ImmutablePropTypes.list.isRequired,
+    laborRightsCount: PropTypes.number.isRequired,
+    timeAndSalaryCount: PropTypes.number.isRequired,
   }
 
   componentDidMount() {
@@ -35,6 +38,7 @@ class LandingPage extends Component {
       this.props.queryPopularExperiences();
     }
     this.props.queryMenuIfUnfetched();
+    this.props.queryTimeAndSalaryCount();
   }
 
   render() {
@@ -44,11 +48,12 @@ class LandingPage extends Component {
       coverUrl,
       title,
     }));
+    const { timeAndSalaryCount, laborRightsCount } = this.props;
     return (
       <main>
         <Helmet {...HELMET_DATA.LANDING_PAGE} />
         <Banner />
-        <Dashboard />
+        <Dashboard timeAndSalaryCount={timeAndSalaryCount} laborRightsCount={laborRightsCount} />
         <ShareExpSection heading="現在就留下你的資料" />
         <Section padding bg="white">
           <Wrapper size="l">
