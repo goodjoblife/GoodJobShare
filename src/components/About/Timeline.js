@@ -8,8 +8,8 @@ const Timeline = ({ year, data }) => (
     <P size="l" bold className={styles.year}>{year}</P>
     <div className={styles.timeline}>
       {
-        data.map(({ month, Content }) => (
-          <div className={styles.item}>
+        data.map(({ month, Content }, i) => (
+          <div key={i} className={styles.item}>
             <P bold className={styles.month}>{month} 月</P>
             <P className={styles.content}><Content /></P>
           </div>
