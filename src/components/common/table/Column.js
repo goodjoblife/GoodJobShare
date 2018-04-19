@@ -8,9 +8,13 @@ const Column = ({ children, className, alignRight }) => (
 );
 
 Column.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   className: PropTypes.string,
   alignRight: PropTypes.bool,
+};
+
+Column.defaultProps = {
+  children: null,
 };
 
 export default Column;
