@@ -15,6 +15,9 @@ export const fetchTimeAndSalary = opt =>
 export const fetchTimeAndSalaryExtreme = opt =>
   fetchUtil(`${endpoint}/extreme?${qs.stringify(opt)}`)('GET');
 
+export const fetchCampaignTimeAndSalary = (campaignName, opt) =>
+  fetchUtil(`${endpoint}/campaigns/${campaignName}?${qs.stringify(opt)}`)('GET');
+
 export const fetchSearchCompany = opt =>
   fetchUtil(`${endpoint}/search_by/company/group_by/company?${qs.stringify(opt)}`)('GET');
 

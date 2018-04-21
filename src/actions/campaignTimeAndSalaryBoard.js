@@ -1,7 +1,7 @@
 import R from 'ramda';
 import { push } from 'react-router-redux';
 
-import { fetchTimeAndSalary } from '../apis/timeAndSalaryApi';
+import { fetchCampaignTimeAndSalary } from '../apis/timeAndSalaryApi';
 import fetchingStatus from '../constants/status';
 
 export const SET_BOARD_DATA = '@@campaignTimeAndSalary/SET_BOARD_DATA';
@@ -40,7 +40,7 @@ const setBoardData = ({ campaignName, sortBy, order }, { status, data, error = n
     });
   };
 
-export const queryCampaignTimeAndSalary = ({ campaignName, sortBy, order }) =>
+export const queryCampaignTimeAndSalary = (campaignName, { sortBy, order }) =>
   (dispatch, getState) => {
     if (campaignName !== campaignNameSelector(getState()) || sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
       dispatch(resetBoard({ campaignName, sortBy, order }));
@@ -56,7 +56,6 @@ export const queryCampaignTimeAndSalary = ({ campaignName, sortBy, order }) =>
     });
 
     const opt = {
-      campaign: campaignName,
       sort_by: sortBy,
       order,
       page: Math.ceil(dataSelector(getState()).size / 25),
@@ -64,7 +63,7 @@ export const queryCampaignTimeAndSalary = ({ campaignName, sortBy, order }) =>
       skip: (sortBy !== 'created_at').toString(),
     };
 
-    return fetchTimeAndSalary(opt)
+    return fetchCampaignTimeAndSalary(campaignName, opt)
       .then(rawData => {
         // 將Array公司名稱轉換成String
         const takeFirstFromArrayCompanyName =

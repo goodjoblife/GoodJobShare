@@ -102,7 +102,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     const { path, params: { campaign_name: campaignName } } = match;
     const { sortBy, order } = pathnameMapping[path];
 
-    return dispatch(queryCampaignTimeAndSalary({ campaignName, sortBy, order }));
+    return dispatch(queryCampaignTimeAndSalary(campaignName, { sortBy, order }));
   }
 
   constructor(props) {
@@ -125,7 +125,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     const { path, params: { campaign_name: campaignName } } = this.props.match;
     const { sortBy, order } = pathnameMapping[path];
 
-    this.props.queryCampaignTimeAndSalary({ campaignName, sortBy, order });
+    this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order });
     this.props.fetchMyPermission();
 
     $(window).on('scroll', this.handleScroll);
@@ -135,7 +135,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     if (this.props.match.path !== nextProps.match.path) {
       const { path, params: { campaign_name: campaignName } } = nextProps.match;
       const { sortBy, order } = pathnameMapping[path];
-      this.props.queryCampaignTimeAndSalary({ campaignName, sortBy, order });
+      this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order });
       this.props.fetchMyPermission();
     }
   }
@@ -163,7 +163,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
 
     const { path, params: { campaign_name: campaignName } } = this.props.match;
     const { sortBy, order } = pathnameMapping[path];
-    this.props.queryCampaignTimeAndSalary({ campaignName, sortBy, order });
+    this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order });
   }
 
   createPostProcessRows = () => {
