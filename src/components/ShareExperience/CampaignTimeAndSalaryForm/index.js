@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
@@ -48,9 +47,6 @@ import {
 } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
-import {
-  LS_TIME_SALARY_FORM_KEY,
-} from '../../../constants/localStorageKey';
 
 const defaultForm = {
   company: '',
@@ -77,11 +73,6 @@ const defaultForm = {
 };
 
 class CampaignTimeAndSalaryForm extends React.PureComponent {
-  static propTypes = {
-    match: PropTypes.shape({
-      params: PropTypes.object.isRequired,
-    }),
-  }
   constructor(props) {
     super(props);
 
@@ -106,22 +97,13 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     };
     this.basicElValidationStatus = {};
     this.extElValidationStatus = {};
-    this.localStorageKey = `${LS_TIME_SALARY_FORM_KEY}:${props.match.params.campaign_name}`;
   }
 
   componentDidMount() {
-    let defaultFromDraft;
-
-    try {
-      defaultFromDraft = JSON.parse(localStorage.getItem(this.localStorageKey));
-    } catch (error) {
-      defaultFromDraft = null;
-    }
-
     const { defaultJobTitle, defaultJobContent, extraFields } = this.state;
     const defaultExtraForm = getExtraForm(extraFields)();
 
-    const defaultState = defaultFromDraft || {
+    const defaultState = {
       ...defaultForm,
       jobTitle: defaultJobTitle,
       jobContent: defaultJobContent,
@@ -166,7 +148,6 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
           action: GA_ACTION.UPLOAD_FAIL,
         });
       });
-      localStorage.removeItem(this.localStorageKey);
 
       return p;
     }
@@ -221,11 +202,6 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
         [key]: value,
       };
       this.setState(updateState);
-      const state = {
-        ...this.state,
-        ...updateState,
-      };
-      localStorage.setItem(this.localStorageKey, JSON.stringify(state));
     };
   }
 
