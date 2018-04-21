@@ -46,6 +46,10 @@ export default class TimeAndSalary extends Component {
     infoTimeModal: {
       isOpen: false,
     },
+    campaigns: [
+      { name: 'npo_worker', title: 'NPO工作者' },
+      { name: 'software_engineer', title: '軟體工程師' },
+    ],
   }
 
   toggleInfoSalaryModal() {
@@ -96,10 +100,11 @@ export default class TimeAndSalary extends Component {
 
   render() {
     const { routes } = this.props;
+    const { campaigns } = this.state;
     return (
       <div className={timeAndSalaryStyles.container}>
         {this.renderHelmet()}
-        <Banner />
+        <Banner campaigns={campaigns} />
         <Wrapper size="m" className={timeAndSalaryStyles.showSearchbarWrapper}>
           <CallToShareData />
           <MobileInfoButtons

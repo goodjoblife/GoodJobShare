@@ -16,14 +16,24 @@ CampaignItem.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default () => (
+const Banner = ({ campaigns }) => (
   <section className={styles.pageBanner}>
     <Wrapper size="l" className={styles.container}>
       <div className={styles.bannerImage}>
         <img src="https://image.goodjob.life/banners/campaign-banner.png" alt="Campaign" />
       </div>
-      <CampaignItem name="npo_worker" title="NPO工作者" />
-      <CampaignItem name="software_engineer" title="軟體工程師" />
+      { campaigns.map(({ name, title }) => (
+        <CampaignItem key={name} name={name} title={title} />
+      )) }
     </Wrapper>
   </section>
 );
+
+Banner.propTypes = {
+  campaigns: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    title: PropTypes.string,
+  })).isRequired,
+};
+
+export default Banner;
