@@ -87,7 +87,7 @@ const injectPermissionBlock = rows => {
   return newRows;
 };
 
-export default class TimeAndSalaryBoard extends Component {
+export default class CampaignTimeAndSalaryBoard extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
     status: PropTypes.string,
