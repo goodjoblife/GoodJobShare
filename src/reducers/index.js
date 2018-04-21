@@ -12,6 +12,7 @@ import timeAndSalaryBoard from './timeAndSalaryBoard';
 import timeAndSalaryCompany from './timeAndSalaryCompany';
 import timeAndSalaryJobTitle from './timeAndSalaryJobTitle';
 import popularExperiences from './popularExperiences';
+import campaignTimeAndSalaryBoard from './campaignTimeAndSalaryBoard';
 
 const rootReducer = combineReducers({
   auth,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   timeAndSalaryCompany,
   timeAndSalaryJobTitle,
   popularExperiences,
+  campaignTimeAndSalaryBoard,
   routing,
 });
 
