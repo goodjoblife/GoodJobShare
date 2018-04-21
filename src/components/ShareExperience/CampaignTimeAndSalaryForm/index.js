@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
@@ -73,6 +74,11 @@ const defaultForm = {
 };
 
 class CampaignTimeAndSalaryForm extends React.PureComponent {
+  static propTypes = {
+    match: PropTypes.shape({
+      params: PropTypes.object.isRequired,
+    }),
+  }
   constructor(props) {
     super(props);
 
