@@ -11,6 +11,7 @@ import { Star } from 'common/icons';
 import Select from 'common/form/Select';
 import InfoTimeModal from '../../TimeAndSalary/common/InfoTimeModal';
 import InfoSalaryModal from '../../TimeAndSalary/common/InfoSalaryModal';
+import AboutThisJobModal from '../../TimeAndSalary/common/AboutThisJobModal';
 import timeAndSalaryBoardStyles from '../../TimeAndSalary/TimeAndSalaryBoard/TimeAndSalaryBoard.module.css';
 import timeAndSalaryBannerStyles from '../../TimeAndSalary/Banner.module.css';
 import timeAndSalaryCommonStyles from '../../TimeAndSalary/views/view.module.css';
@@ -119,6 +120,10 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     infoTimeModal: {
       isOpen: false,
     },
+    aboutThisJobModal: {
+      isOpen: false,
+      aboutThisJob: '',
+    },
   }
 
   componentDidMount() {
@@ -152,6 +157,14 @@ export default class CampaignTimeAndSalaryBoard extends Component {
   toggleInfoTimeModal() {
     const state = this.state;
     state.infoTimeModal.isOpen = !state.infoTimeModal.isOpen;
+    this.setState(state);
+  }
+  toggleAboutThisJobModal = aboutThisJob => {
+    const state = this.state;
+    state.aboutThisJobModal.isOpen = !state.aboutThisJobModal.isOpen;
+    if (state.aboutThisJobModal.isOpen) {
+      state.aboutThisJobModal.aboutThisJob = aboutThisJob;
+    }
     this.setState(state);
   }
 
@@ -205,6 +218,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
             postProcessRows={this.createPostProcessRows()}
             toggleInfoSalaryModal={this.toggleInfoSalaryModal}
             toggleInfoTimeModal={this.toggleInfoTimeModal}
+            toggleAboutThisJobModal={this.toggleAboutThisJobModal}
           />
           <div className={timeAndSalaryBoardStyles.status}>
             { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
@@ -216,6 +230,11 @@ export default class CampaignTimeAndSalaryBoard extends Component {
           <InfoTimeModal
             isOpen={this.state.infoTimeModal.isOpen}
             close={this.toggleInfoTimeModal}
+          />
+          <AboutThisJobModal
+            isOpen={this.state.aboutThisJobModal.isOpen}
+            close={this.toggleAboutThisJobModal}
+            aboutThisJob={this.state.aboutThisJobModal.aboutThisJob}
           />
         </div>
       </section>
