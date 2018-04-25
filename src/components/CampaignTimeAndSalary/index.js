@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import { Switch } from 'react-router';
 
@@ -25,8 +26,15 @@ const pathnameMapping = {
   'sort/time-asc': '最舊薪資、工時資訊',
 };
 
+const campaignListFromEntries = campaignEntries =>
+  campaignEntries.valueSeq().map(info => ({
+    name: info.get('name'),
+    title: info.get('title'),
+  })).toJS();
+
 export default class TimeAndSalary extends Component {
   static propTypes = {
+    campaignEntries: ImmutablePropTypes.map.isRequired,
     routes: PropTypes.array,
     location: PropTypes.shape({
       pathname: PropTypes.string,
@@ -46,10 +54,6 @@ export default class TimeAndSalary extends Component {
     infoTimeModal: {
       isOpen: false,
     },
-    campaigns: [
-      { name: 'npo_worker', title: 'NPO工作者' },
-      { name: 'software_engineer', title: '軟體工程師' },
-    ],
   }
 
   toggleInfoSalaryModal() {
@@ -100,7 +104,8 @@ export default class TimeAndSalary extends Component {
 
   render() {
     const { routes } = this.props;
-    const { campaigns } = this.state;
+    const campaigns = campaignListFromEntries(this.props.campaignEntries);
+
     return (
       <div className={timeAndSalaryStyles.container}>
         {this.renderHelmet()}
