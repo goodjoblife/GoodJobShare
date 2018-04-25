@@ -88,8 +88,16 @@ const injectPermissionBlock = rows => {
   return newRows;
 };
 
+const campaignEntriesSelector = state => state.campaignInfo.get('entries');
+
+const jobTitlesFromCampaignEntries = (campaignEntries, campaignName) => {
+  const campaignInfo = campaignEntries.get(campaignName);
+  return campaignInfo ? campaignInfo.toJS().queryJobTitles : [];
+};
+
 export default class CampaignTimeAndSalaryBoard extends Component {
   static propTypes = {
+    campaignEntries: ImmutablePropTypes.map.isRequired,
     campaignEntriesStatus: PropTypes.string.isRequired,
     queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
     data: ImmutablePropTypes.list,
@@ -101,12 +109,14 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     fetchMyPermission: PropTypes.func.isRequired,
   }
 
-  static fetchData({ match, store: { dispatch } }) {
+  static fetchData({ match, store: { dispatch, getState } }) {
     const { path, params: { campaign_name: campaignName } } = match;
     const { sortBy, order } = pathnameMapping[path];
 
     return dispatch(queryCampaignInfoList()).then(() => {
-      return dispatch(queryCampaignTimeAndSalary(campaignName, { sortBy, order }));
+      const campaignEntries = campaignEntriesSelector(getState());
+      const jobTitles = jobTitlesFromCampaignEntries(campaignEntries, campaignName);
+      return dispatch(queryCampaignTimeAndSalary(campaignName, { sortBy, order, jobTitles }));
     });
   }
 
@@ -127,11 +137,11 @@ export default class CampaignTimeAndSalaryBoard extends Component {
   }
 
   componentDidMount() {
-    const { path, params: { campaign_name: campaignName } } = this.props.match;
+    const { campaignEntries, match: { path, params: { campaign_name: campaignName } } } = this.props;
+    const jobTitles = jobTitlesFromCampaignEntries(campaignEntries, campaignName);
     const { sortBy, order } = pathnameMapping[path];
-
     this.props.queryCampaignInfoListIfNeeded().then(() => {
-      this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order });
+      this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order, jobTitles });
       this.props.fetchMyPermission();
     });
 
@@ -140,10 +150,11 @@ export default class CampaignTimeAndSalaryBoard extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.match.path !== nextProps.match.path || this.props.match.params.campaign_name !== nextProps.match.params.campaign_name) {
-      const { path, params: { campaign_name: campaignName } } = nextProps.match;
+      const { campaignEntries, match: { path, params: { campaign_name: campaignName } } } = nextProps;
+      const jobTitles = jobTitlesFromCampaignEntries(campaignEntries, campaignName);
       const { sortBy, order } = pathnameMapping[path];
       this.props.queryCampaignInfoListIfNeeded().then(() => {
-        this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order });
+        this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order, jobTitles });
         this.props.fetchMyPermission();
       });
     }

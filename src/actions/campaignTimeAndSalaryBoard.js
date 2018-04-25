@@ -40,7 +40,7 @@ const setBoardData = ({ campaignName, sortBy, order }, { status, data, error = n
     });
   };
 
-export const queryCampaignTimeAndSalary = (campaignName, { sortBy, order }) =>
+export const queryCampaignTimeAndSalary = (campaignName, { sortBy, order, jobTitles }) =>
   (dispatch, getState) => {
     if (campaignName !== campaignNameSelector(getState()) || sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
       dispatch(resetBoard({ campaignName, sortBy, order }));
@@ -58,6 +58,7 @@ export const queryCampaignTimeAndSalary = (campaignName, { sortBy, order }) =>
     const opt = {
       sort_by: sortBy,
       order,
+      job_titles: jobTitles,
       page: Math.ceil(dataSelector(getState()).size / 25),
       limit: 25,
       skip: (sortBy !== 'created_at').toString(),

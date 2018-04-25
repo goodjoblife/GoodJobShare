@@ -10,6 +10,7 @@ import {
 
 
 const mapStateToProps = state => ({
+  campaignEntries: state.campaignInfo.get('entries'),
   campaignEntriesStatus: state.campaignInfo.get('entriesStatus'),
   campaignEntriesError: state.campaignInfo.get('entriesError'),
   data: state.campaignTimeAndSalaryBoard.get('data'),
