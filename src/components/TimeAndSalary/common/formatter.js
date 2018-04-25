@@ -100,8 +100,12 @@ export const formatWage = wage => {
 export const formatDate = ({ year, month }) =>
   `${year}.${month >= 10 ? '' : 0}${month}`;
 
-export const getAboutThisJobButton = toggleAboutThisJobModal => d => (
-  <div onClick={() => toggleAboutThisJobModal(d.about_this_job)}>
-    <MagnifierPlus style={{ width: 23, height: 23 }} />
-  </div>
-);
+export const getAboutThisJobButton = toggleAboutThisJobModal => d => {
+  const aboutThisJob = d.about_this_job;
+  const title = `${d.company.name} ${d.job_title}`;
+  return (
+    <div onClick={() => toggleAboutThisJobModal(aboutThisJob, title)}>
+      <MagnifierPlus style={{ width: 23, height: 23 }} />
+    </div>
+  );
+};
