@@ -21,6 +21,7 @@ import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer'
 import MarkdownParser from '../../LaborRightsSingle/MarkdownParser';
 
 import { postWorkings } from '../../../apis/timeAndSalaryApi';
+import { queryCampaignInfoList } from '../../../actions/campaignInfo';
 
 import timeAndSalaryFormStyles from '../TimeSalaryForm/TimeSalaryForm.module.css';
 import styles from '../CampaignTimeAndSalaryForm/CampaignTimeAndSalaryForm.module.css';
@@ -78,6 +79,10 @@ const defaultForm = {
 };
 
 class CampaignTimeAndSalaryForm extends React.PureComponent {
+  static fetchData({ store: { dispatch } }) {
+    return dispatch(queryCampaignInfoList());
+  }
+
   static propTypes = {
     campaignEntries: ImmutablePropTypes.map.isRequired,
     campaignEntriesStatus: PropTypes.string.isRequired,
