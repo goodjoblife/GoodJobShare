@@ -16,6 +16,7 @@ import styles from './CampaignTimeAndSalary.module.css';
 
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../constants/helmetData';
+import { queryCampaignInfoList } from '../../actions/campaignTimeAndSalaryBoard';
 
 const pathnameMapping = {
   'work-time-dashboard': '工時排行榜（由高到低）',
@@ -33,6 +34,10 @@ const campaignListFromEntries = campaignEntries =>
   })).toJS();
 
 export default class TimeAndSalary extends Component {
+  static fetchData({ store: { dispatch } }) {
+    return dispatch(queryCampaignInfoList());
+  }
+
   static propTypes = {
     campaignEntries: ImmutablePropTypes.map.isRequired,
     queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
