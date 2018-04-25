@@ -19,6 +19,7 @@ import { MAX_ROWS_IF_HIDDEN } from '../../../constants/hideContent';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 import styles from '../CampaignTimeAndSalary.module.css';
 
+import { queryCampaignInfoList } from '../../../actions/campaignInfo';
 import { queryCampaignTimeAndSalary } from '../../../actions/campaignTimeAndSalaryBoard';
 import GradientMask from '../../common/GradientMask';
 
@@ -104,7 +105,9 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     const { path, params: { campaign_name: campaignName } } = match;
     const { sortBy, order } = pathnameMapping[path];
 
-    return dispatch(queryCampaignTimeAndSalary(campaignName, { sortBy, order }));
+    return dispatch(queryCampaignInfoList()).then(() => {
+      return dispatch(queryCampaignTimeAndSalary(campaignName, { sortBy, order }));
+    });
   }
 
   constructor(props) {
