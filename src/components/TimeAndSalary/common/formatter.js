@@ -102,6 +102,8 @@ export const formatDate = ({ year, month }) =>
 
 export const getAboutThisJobButton = toggleAboutThisJobModal => d => {
   const aboutThisJob = d.about_this_job;
+  if (!aboutThisJob) return null;
+
   const title = `${d.company.name} ${d.job_title}`;
   return (
     <div onClick={() => toggleAboutThisJobModal(aboutThisJob, title)}>
