@@ -89,6 +89,7 @@ const injectPermissionBlock = rows => {
 
 export default class CampaignTimeAndSalaryBoard extends Component {
   static propTypes = {
+    campaignEntriesStatus: PropTypes.string.isRequired,
     queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
     data: ImmutablePropTypes.list,
     status: PropTypes.string,
@@ -181,8 +182,10 @@ export default class CampaignTimeAndSalaryBoard extends Component {
   render() {
     const { path, params: { campaign_name } } = this.props.match;
     const { title } = pathnameMapping[path];
-    const { status, data, switchPath } = this.props;
+    const { campaignEntriesStatus, status, data, switchPath } = this.props;
     const raw = data.toJS();
+
+    const isLoading = campaignEntriesStatus === fetchingStatus.FETCHIING || status === fetchingStatus.FETCHING;
 
     return (
       <section className={timeAndSalaryCommonStyles.searchResult}>
@@ -212,7 +215,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
             toggleInfoTimeModal={this.toggleInfoTimeModal}
           />
           <div className={timeAndSalaryBoardStyles.status}>
-            { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
+            { isLoading && (<Loading size="s" />) }
           </div>
           <InfoSalaryModal
             isOpen={this.state.infoSalaryModal.isOpen}
