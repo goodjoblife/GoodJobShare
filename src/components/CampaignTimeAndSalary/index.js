@@ -35,6 +35,7 @@ const campaignListFromEntries = campaignEntries =>
 export default class TimeAndSalary extends Component {
   static propTypes = {
     campaignEntries: ImmutablePropTypes.map.isRequired,
+    queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
     routes: PropTypes.array,
     location: PropTypes.shape({
       pathname: PropTypes.string,
@@ -54,6 +55,10 @@ export default class TimeAndSalary extends Component {
     infoTimeModal: {
       isOpen: false,
     },
+  }
+
+  componentDidMount() {
+    this.props.queryCampaignInfoListIfNeeded();
   }
 
   toggleInfoSalaryModal() {
