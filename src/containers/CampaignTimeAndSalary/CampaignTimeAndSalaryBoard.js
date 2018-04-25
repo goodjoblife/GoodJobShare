@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CampaignTimeAndSalaryBoard from '../../components/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
+import { queryCampaignInfoListIfNeeded } from '../../actions/campaignInfo';
 import { queryCampaignTimeAndSalary, switchPath } from '../../actions/campaignTimeAndSalaryBoard';
 import { fetchMyPermission } from '../../actions/me';
 import {
@@ -16,6 +17,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
+    queryCampaignInfoListIfNeeded,
     queryCampaignTimeAndSalary,
     switchPath,
     fetchMyPermission,

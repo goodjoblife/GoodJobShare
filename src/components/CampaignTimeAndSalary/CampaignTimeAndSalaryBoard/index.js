@@ -89,6 +89,7 @@ const injectPermissionBlock = rows => {
 
 export default class CampaignTimeAndSalaryBoard extends Component {
   static propTypes = {
+    queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
     data: ImmutablePropTypes.list,
     status: PropTypes.string,
     match: PropTypes.object.isRequired,
@@ -125,18 +126,22 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     const { path, params: { campaign_name: campaignName } } = this.props.match;
     const { sortBy, order } = pathnameMapping[path];
 
-    this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order });
-    this.props.fetchMyPermission();
+    this.props.queryCampaignInfoListIfNeeded().then(() => {
+      this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order });
+      this.props.fetchMyPermission();
+    });
 
     $(window).on('scroll', this.handleScroll);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.match.path !== nextProps.match.path) {
+    if (this.props.match.path !== nextProps.match.path || this.props.match.params.campaign_name !== nextProps.match.params.campaign_name) {
       const { path, params: { campaign_name: campaignName } } = nextProps.match;
       const { sortBy, order } = pathnameMapping[path];
-      this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order });
-      this.props.fetchMyPermission();
+      this.props.queryCampaignInfoListIfNeeded().then(() => {
+        this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order });
+        this.props.fetchMyPermission();
+      });
     }
   }
 
