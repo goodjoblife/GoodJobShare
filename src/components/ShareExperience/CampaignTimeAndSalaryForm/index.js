@@ -7,10 +7,12 @@ import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
 import { Heading } from 'common/base';
 import { People } from 'common/icons';
+import Loader from 'common/Loader';
 import NotFound from 'common/NotFound';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import TextInput from 'common/form/TextInput';
 import TextArea from 'common/form/TextArea';
+import fetchingStatus from '../../../constants/status';
 import BasicInfo from '../TimeSalaryForm/BasicInfo';
 import SalaryInfo from '../TimeSalaryForm/SalaryInfo';
 import TimeInfo from '../TimeSalaryForm/TimeInfo';
@@ -78,6 +80,8 @@ const defaultForm = {
 class CampaignTimeAndSalaryForm extends React.PureComponent {
   static propTypes = {
     campaignEntries: ImmutablePropTypes.map.isRequired,
+    campaignEntriesStatus: PropTypes.string.isRequired,
+    queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
         campaign_name: PropTypes.string,
@@ -106,13 +110,25 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       ...defaultState,
     });
 
-    this.setCampaignInfoFromEntries(this.props.campaignEntries);
+    if (this.props.campaignEntriesStatus === fetchingStatus.FETCHED) {
+      this.setCampaignInfoFromEntries(this.props.campaignEntries);
+    } else {
+      this.props.queryCampaignInfoListIfNeeded();
+    }
   }
 
   componentDidMount() {
     ReactPixel.track('InitiateCheckout', {
       content_category: PIXEL_CONTENT_CATEGORY.VISIT_TIME_AND_SALARY_FORM,
     });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const prevStatus = this.props.campaignEntriesStatus;
+    const nextStatus = nextProps.campaignEntriesStatus;
+    if (prevStatus !== nextStatus && nextStatus === fetchingStatus.FETCHED) {
+      this.setCampaignInfoFromEntries(nextProps.campaignEntries);
+    }
   }
 
   onSubmit() {
@@ -231,9 +247,14 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
 
   render() {
     const {
+      campaignEntriesStatus,
       campaignEntries,
       match: { params: { campaign_name: campaignName } },
     } = this.props;
+
+    if (campaignEntriesStatus !== fetchingStatus.FETCHED) {
+      return <Loader />;
+    }
 
     const campaignInfo = campaignEntries.get(campaignName);
     if (!campaignInfo) {
