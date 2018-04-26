@@ -171,6 +171,7 @@ export default class TimeAndSalaryBoard extends Component {
     },
     aboutThisJobModal: {
       isOpen: false,
+      title: '',
       aboutThisJob: '',
     },
     showExtreme: false,
@@ -212,10 +213,11 @@ export default class TimeAndSalaryBoard extends Component {
     state.infoTimeModal.isOpen = !state.infoTimeModal.isOpen;
     this.setState(state);
   }
-  toggleAboutThisJobModal = aboutThisJob => {
+  toggleAboutThisJobModal = (aboutThisJob, title) => {
     const state = this.state;
     state.aboutThisJobModal.isOpen = !state.aboutThisJobModal.isOpen;
     if (state.aboutThisJobModal.isOpen) {
+      state.aboutThisJobModal.title = title;
       state.aboutThisJobModal.aboutThisJob = aboutThisJob;
     }
     this.setState(state);
@@ -332,6 +334,7 @@ export default class TimeAndSalaryBoard extends Component {
           <AboutThisJobModal
             isOpen={this.state.aboutThisJobModal.isOpen}
             close={this.toggleAboutThisJobModal}
+            title={this.state.aboutThisJobModal.title}
             aboutThisJob={this.state.aboutThisJobModal.aboutThisJob}
           />
         </div>
