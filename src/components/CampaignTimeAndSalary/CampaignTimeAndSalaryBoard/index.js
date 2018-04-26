@@ -90,7 +90,7 @@ const injectPermissionBlock = rows => {
 
 const campaignEntriesSelector = state => state.campaignInfo.get('entries');
 
-const jobTitlesFromCampaignEntries = (campaignEntries, campaignName) => {
+const queryJobTitlesFromCampaignEntries = (campaignEntries, campaignName) => {
   const campaignInfo = campaignEntries.get(campaignName);
   return campaignInfo ? campaignInfo.toJS().queryJobTitles : [];
 };
@@ -115,7 +115,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
 
     return dispatch(queryCampaignInfoList()).then(() => {
       const campaignEntries = campaignEntriesSelector(getState());
-      const jobTitles = jobTitlesFromCampaignEntries(campaignEntries, campaignName);
+      const jobTitles = queryJobTitlesFromCampaignEntries(campaignEntries, campaignName);
       return dispatch(queryCampaignTimeAndSalary(campaignName, { sortBy, order, jobTitles }));
     });
   }
@@ -138,7 +138,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
 
   componentDidMount() {
     const { campaignEntries, match: { path, params: { campaign_name: campaignName } } } = this.props;
-    const jobTitles = jobTitlesFromCampaignEntries(campaignEntries, campaignName);
+    const jobTitles = queryJobTitlesFromCampaignEntries(campaignEntries, campaignName);
     const { sortBy, order } = pathnameMapping[path];
     this.props.queryCampaignInfoListIfNeeded().then(() => {
       this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order, jobTitles });
@@ -151,7 +151,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.match.path !== nextProps.match.path || this.props.match.params.campaign_name !== nextProps.match.params.campaign_name) {
       const { campaignEntries, match: { path, params: { campaign_name: campaignName } } } = nextProps;
-      const jobTitles = jobTitlesFromCampaignEntries(campaignEntries, campaignName);
+      const jobTitles = queryJobTitlesFromCampaignEntries(campaignEntries, campaignName);
       const { sortBy, order } = pathnameMapping[path];
       this.props.queryCampaignInfoListIfNeeded().then(() => {
         this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order, jobTitles });
