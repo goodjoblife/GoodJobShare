@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
@@ -75,9 +76,12 @@ const defaultForm = {
 
 class CampaignTimeAndSalaryForm extends React.PureComponent {
   static propTypes = {
+    campaignEntries: ImmutablePropTypes.map.isRequired,
     match: PropTypes.shape({
-      params: PropTypes.object.isRequired,
-    }),
+      params: PropTypes.shape({
+        campaign_name: PropTypes.string,
+      }),
+    }).isRequired,
   }
   constructor(props) {
     super(props);
@@ -87,39 +91,24 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     this.state = {
       ...defaultForm,
       submitted: false,
-
-      // campaign props
-      campaignName: props.match.params.campaign_name,
-      formTitle: '軟體工程師 薪資工時大調查',
-      formInfo: '#### 軟體工程師高工時的問題 .... ',
-      defaultJobTitle: '軟體工程師',
-      defaultJobContent: '加班的狀況為何：\n\n 年終幾個月：',
-      formEnding: '#### 我們這一次與電資工會合作',
-      extraFields: [{ key: 'ptt', title: 'PTT' }],
-    };
-    this.state = {
-      ...this.state,
-      ...getExtraForm(this.state.extraFields)(),
     };
     this.basicElValidationStatus = {};
     this.extElValidationStatus = {};
   }
 
-  componentDidMount() {
-    const { defaultJobTitle, defaultJobContent, extraFields } = this.state;
-    const defaultExtraForm = getExtraForm(extraFields)();
-
+  componentWillMount() {
     const defaultState = {
       ...defaultForm,
-      jobTitle: defaultJobTitle,
-      jobContent: defaultJobContent,
-      ...defaultExtraForm,
     };
 
     this.setState({ // eslint-disable-line react/no-did-mount-set-state
       ...defaultState,
     });
 
+    this.setCampaignInfoFromEntries(this.props.campaignEntries);
+  }
+
+  componentDidMount() {
     ReactPixel.track('InitiateCheckout', {
       content_category: PIXEL_CONTENT_CATEGORY.VISIT_TIME_AND_SALARY_FORM,
     });
@@ -129,13 +118,16 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     const valid = basicFormCheck(getBasicForm(this.state));
     const valid2 = salaryFormCheck(getSalaryForm(this.state));
     const valid3 = timeFormCheck(getTimeForm(this.state));
-    const valid4 = campaignExtendedFormCheck(this.state.extraFields)(
-      getCampaignExtendedForm(this.state.extraFields)(this.state)
+
+    const campaignName = this.props.match.params.campaign_name;
+    const extraFields = this.props.campaignEntries.get(campaignName).toJS().extraFields;
+    const valid4 = campaignExtendedFormCheck(extraFields)(
+      getCampaignExtendedForm(extraFields)(this.state)
     );
 
     if (valid && (valid2 || valid3) && valid4) {
       const p = postWorkings(
-        portTimeSalaryFormToRequestFormat(getCampaignTimeAndSalaryForm(this.state.extraFields)(this.state))
+        portTimeSalaryFormToRequestFormat(getCampaignTimeAndSalaryForm(extraFields)(this.state))
       );
 
       p.then(() => {
@@ -168,6 +160,31 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       });
     }
     return null;
+  }
+
+  setCampaignInfoFromEntries(campaignEntries) {
+    const { match: { params: { campaign_name: campaignName } } } = this.props;
+    const campaignInfo = campaignEntries.get(campaignName);
+    if (campaignInfo) {
+      this.setCampaignInfo(campaignInfo.toJS());
+    }
+  }
+
+  setCampaignInfo(campaignInfo) {
+    const {
+      defaultJobTitle,
+      defaultContent,
+      extraFields,
+    } = campaignInfo;
+
+    const defaultExtraForm = getExtraForm(extraFields)();
+
+    this.setState({
+      ...this.state,
+      jobTitle: defaultJobTitle,
+      jobContent: defaultContent,
+      ...defaultExtraForm,
+    });
   }
 
   getTopInvalidElement = () => {
@@ -213,6 +230,20 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
 
   render() {
     const {
+      campaignEntries,
+      match: { params: { campaign_name: campaignName } },
+    } = this.props;
+
+    const campaignInfo = campaignEntries.get(campaignName);
+
+    const {
+      formTitle,
+      formIntroduction,
+      formEnding,
+      extraFields,
+    } = campaignInfo.toJS();
+
+    const {
       submitted,
       company,
       isCurrentlyEmployed,
@@ -234,11 +265,6 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       hasCompensatoryDayoff,
       jobContent,
       email,
-
-      formTitle,
-      formInfo,
-      extraFields,
-      formEnding,
       ...extra
     } = this.state;
 
@@ -249,7 +275,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
           {formTitle}
         </Heading>
         <div className={styles.infoBlock}>
-          <MarkdownParser content={formInfo} />
+          <MarkdownParser content={formIntroduction} />
         </div>
         {
           submitted ?

@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import CampaignTimeAndSalaryForm from '../../components/ShareExperience/CampaignTimeAndSalaryForm';
 
 
-const mapStateToProps = () => ({});
+const mapStateToProps = state => ({
+  campaignEntries: state.campaignInfo.get('entries'),
+});
 
 const mapDispatchToProps = () => ({});
 
