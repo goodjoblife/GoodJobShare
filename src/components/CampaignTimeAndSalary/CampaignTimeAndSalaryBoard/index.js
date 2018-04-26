@@ -142,8 +142,8 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     const { sortBy, order } = pathnameMapping[path];
     this.props.queryCampaignInfoListIfNeeded().then(() => {
       this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order, jobTitles });
-      this.props.fetchMyPermission();
     });
+    this.props.fetchMyPermission();
 
     $(window).on('scroll', this.handleScroll);
   }
@@ -155,8 +155,8 @@ export default class CampaignTimeAndSalaryBoard extends Component {
       const { sortBy, order } = pathnameMapping[path];
       this.props.queryCampaignInfoListIfNeeded().then(() => {
         this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order, jobTitles });
-        this.props.fetchMyPermission();
       });
+      this.props.fetchMyPermission();
     }
   }
 
