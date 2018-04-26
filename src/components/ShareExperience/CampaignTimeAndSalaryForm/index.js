@@ -7,6 +7,7 @@ import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
 import { Heading } from 'common/base';
 import { People } from 'common/icons';
+import NotFound from 'common/NotFound';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import TextInput from 'common/form/TextInput';
 import TextArea from 'common/form/TextArea';
@@ -235,6 +236,9 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     } = this.props;
 
     const campaignInfo = campaignEntries.get(campaignName);
+    if (!campaignInfo) {
+      return <NotFound />;
+    }
 
     const {
       formTitle,
