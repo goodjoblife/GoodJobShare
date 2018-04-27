@@ -34,7 +34,6 @@ $warning: #d50000;
   .type {
     float: left;
     margin-top: 10px;
-    width: calc(100% - 440px);
     padding-left: 40px;
     @media (max-width: $below-small) {
       width: 40%;
@@ -57,6 +56,10 @@ $warning: #d50000;
       float: none;
       width: 100%;
     }
+  }
+  .inputWrapper {
+    display: inline-block;
+    width: 380px;
   }
 }
 
@@ -97,8 +100,3 @@ $warning: #d50000;
     }
   }
 }
-
-.searchBar {
-  display: flex;
-}
-

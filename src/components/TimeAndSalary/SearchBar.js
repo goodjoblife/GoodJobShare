@@ -9,9 +9,10 @@ import ReactPixel from 'react-facebook-pixel';
 import Radio from 'common/form/Radio';
 import { debounce } from 'utils/streamUtils';
 import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput';
+import Magnifiner from 'common/icons/Magnifiner';
 
 import styles from './SearchBar.module.css';
-import submitButtonStyle from '../common/button/ButtonSubmit.module.css';
+import searchBarStyles from '../ExperienceSearch/Searchbar.module.css';
 import { fetchCompanyCandidates, fetchJobTitleCandidates } from '../../apis/timeAndSalaryApi';
 
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
@@ -125,7 +126,10 @@ class SearchBar extends Component {
   render() {
     const { keyword, searchType, candidates } = this.state;
     return (
-      <form className={cn(styles.section, styles.showSearchbar)} onSubmit={this.handleSubmit}>
+      <form
+        className={cn(styles.section, styles.showSearchbar, searchBarStyles.searchbar)}
+        onSubmit={this.handleSubmit}
+      >
         <div className={styles.type}>
           {searchOptions.map(({ label, value }) => (
             <Radio
@@ -137,7 +141,7 @@ class SearchBar extends Component {
         </div>
         <div className={styles.form}>
           <div className={styles.searchBar}>
-            <div style={{ flex: 1 }}>
+            <div className={styles.inputWrapper}>
               <AutoCompleteTextInput
                 value={keyword}
                 onChange={this.handleKeywordChange}
@@ -149,9 +153,9 @@ class SearchBar extends Component {
             </div>
             <button
               type="submit"
-              className={submitButtonStyle.container}
+              className={searchBarStyles.searchBtn}
             >
-              搜尋
+              <Magnifiner />
             </button>
           </div>
         </div>
