@@ -1,0 +1,12 @@
+.wrapper {
+  padding-top: 60px;
+
+  .heading {
+    display: inline;
+    font-size: 2.1em;
+    line-height: 1.25em;
+    letter-spacing: 0.03em;
+    margin-bottom: 40px;
+    margin-right: 29px;
+  }
+}

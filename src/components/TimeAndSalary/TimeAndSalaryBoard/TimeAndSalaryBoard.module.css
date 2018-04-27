@@ -21,6 +21,9 @@
   .colDataTime {
     width: 10%;
   }
+  .colAboutThisJob {
+    width: 5%;
+  }
 }
 
 .sortRow {
