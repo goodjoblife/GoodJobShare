@@ -24,6 +24,10 @@ $gray: #b4b4b4;
   background-color: white;
 }
 
+.subRouteWrapper {
+  padding-top: 40px;
+}
+
 .status {
   position: relative;
   padding-top: 1em;

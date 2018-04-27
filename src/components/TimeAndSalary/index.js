@@ -169,7 +169,7 @@ export default class TimeAndSalary extends Component {
           isOpen={this.state.infoTimeModal.isOpen}
           close={this.toggleInfoTimeModal}
         />
-        <Wrapper size="l">
+        <Wrapper size="l" className={styles.subRouteWrapper}>
           <Switch>
             { routes.map((route, i) => (<RouteWithSubRoutes key={i} {...route} />)) }
           </Switch>
