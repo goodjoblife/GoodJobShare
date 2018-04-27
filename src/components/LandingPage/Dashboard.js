@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Section, Wrapper, P } from 'common/base';
 import Columns from 'common/Columns';
+import getScale from '../../utils/numberUtils';
 import FIcon from './f.svg';
 import BarChartIcon from './barChart.svg';
 import HandIcon from './hand.svg';
@@ -23,17 +24,17 @@ Block.propTypes = {
   smallText: PropTypes.string,
 };
 
-const datas = [
+const getDatas = ({ timeAndSalaryCount, laborRightsCount }) => [
   {
     Icon: BarChartIcon,
     heading: '薪資工時資料',
-    text: '6,000',
+    text: String(getScale(timeAndSalaryCount)),
     smallText: '筆',
   },
   {
     Icon: HandIcon,
     heading: '勞動知識',
-    text: '13',
+    text: String(laborRightsCount),
     smallText: '個主題',
   },
   {
@@ -44,15 +45,25 @@ const datas = [
   },
 ];
 
-const Dashboard = () => (
+const Dashboard = ({ timeAndSalaryCount, laborRightsCount }) => (
   <Section bg="white" className={styles.wrapper}>
     <Wrapper size="l">
       <Columns
         Item={Block}
-        items={datas}
+        items={getDatas({ timeAndSalaryCount, laborRightsCount })}
       />
     </Wrapper>
   </Section>
 );
+
+Dashboard.propTypes = {
+  timeAndSalaryCount: PropTypes.number,
+  laborRightsCount: PropTypes.number,
+};
+
+Dashboard.defaultProps = {
+  timeAndSalaryCount: 6000,
+  laborRightsCount: 13,
+};
 
 export default Dashboard;
