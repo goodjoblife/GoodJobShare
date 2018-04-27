@@ -145,7 +145,7 @@ class SearchBar extends Component {
               <AutoCompleteTextInput
                 value={keyword}
                 onChange={this.handleKeywordChange}
-                placeholder={searchType === 'company' ? '輸入公司 / 單位名稱' : '輸入職稱'}
+                placeholder={`以${searchType === 'company' ? '公司' : '職稱'}搜尋`}
                 items={candidates}
                 getItemValue={R.prop('label')}
                 onSelect={this.handleSelectCandidate}
