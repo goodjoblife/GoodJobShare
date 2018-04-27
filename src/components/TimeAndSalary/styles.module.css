@@ -20,6 +20,10 @@ $gray: #b4b4b4;
   }
 }
 
+.whiteBackground {
+  background-color: white;
+}
+
 .status {
   position: relative;
   padding-top: 1em;

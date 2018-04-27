@@ -151,14 +151,16 @@ export default class TimeAndSalary extends Component {
       <div className={styles.container}>
         {this.renderHelmet()}
         <Banner campaigns={campaigns} />
-        <Wrapper size="m" className={styles.showSearchbarWrapper}>
-          <CallToShareData />
-          <SearchBar />
-          <MobileInfoButtons
-            toggleInfoSalaryModal={this.toggleInfoSalaryModal}
-            toggleInfoTimeModal={this.toggleInfoTimeModal}
-          />
-        </Wrapper>
+        <section className={styles.whiteBackground}>
+          <Wrapper size="l" className={styles.showSearchbarWrapper}>
+            <CallToShareData />
+            <SearchBar />
+            <MobileInfoButtons
+              toggleInfoSalaryModal={this.toggleInfoSalaryModal}
+              toggleInfoTimeModal={this.toggleInfoTimeModal}
+            />
+          </Wrapper>
+        </section>
         <InfoSalaryModal
           isOpen={this.state.infoSalaryModal.isOpen}
           close={this.toggleInfoSalaryModal}
