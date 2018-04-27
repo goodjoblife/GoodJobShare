@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import { Redirect, Switch } from 'react-router';
 
@@ -8,13 +9,14 @@ import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
 import SearchBar from './SearchBar';
 import CallToShareData from './CallToShareData';
-import Banner from './Banner';
+import Banner from '../CampaignTimeAndSalary/Banner';
 import MobileInfoButtons from './MobileInfoButtons';
 import InfoTimeModal from './common/InfoTimeModal';
 import InfoSalaryModal from './common/InfoSalaryModal';
 
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../constants/helmetData';
+import { queryCampaignInfoList } from '../../actions/campaignTimeAndSalaryBoard';
 
 const pathnameMapping = {
   'work-time-dashboard': '工時排行榜（由高到低）',
@@ -25,8 +27,20 @@ const pathnameMapping = {
   'sort/time-asc': '最舊薪資、工時資訊',
 };
 
+const campaignListFromEntries = campaignEntries =>
+  campaignEntries.valueSeq().map(info => ({
+    name: info.get('name'),
+    title: info.get('title'),
+  })).toJS();
+
 export default class TimeAndSalary extends Component {
+  static fetchData({ store: { dispatch } }) {
+    return dispatch(queryCampaignInfoList());
+  }
+
   static propTypes = {
+    campaignEntries: ImmutablePropTypes.map.isRequired,
+    queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
     routes: PropTypes.array,
     location: PropTypes.shape({
       pathname: PropTypes.string,
@@ -52,6 +66,10 @@ export default class TimeAndSalary extends Component {
     infoTimeModal: {
       isOpen: false,
     },
+  }
+
+  componentDidMount() {
+    this.props.queryCampaignInfoListIfNeeded();
   }
 
   toggleInfoSalaryModal() {
@@ -127,10 +145,12 @@ export default class TimeAndSalary extends Component {
       }
     }
 
+    const campaigns = campaignListFromEntries(this.props.campaignEntries);
+
     return (
       <div className={styles.container}>
         {this.renderHelmet()}
-        <Banner />
+        <Banner campaigns={campaigns} />
         <Wrapper size="m" className={styles.showSearchbarWrapper}>
           <CallToShareData />
           <SearchBar />
