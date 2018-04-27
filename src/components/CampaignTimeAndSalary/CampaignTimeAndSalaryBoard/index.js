@@ -20,6 +20,7 @@ import { MAX_ROWS_IF_HIDDEN } from '../../../constants/hideContent';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 import styles from '../CampaignTimeAndSalary.module.css';
 
+import { queryCampaignInfoList } from '../../../actions/campaignInfo';
 import { queryCampaignTimeAndSalary } from '../../../actions/campaignTimeAndSalaryBoard';
 import GradientMask from '../../common/GradientMask';
 
@@ -88,8 +89,18 @@ const injectPermissionBlock = rows => {
   return newRows;
 };
 
+const campaignEntriesSelector = state => state.campaignInfo.get('entries');
+
+const queryJobTitlesFromCampaignEntries = (campaignEntries, campaignName) => {
+  const campaignInfo = campaignEntries.get(campaignName);
+  return campaignInfo ? campaignInfo.toJS().queryJobTitles : [];
+};
+
 export default class CampaignTimeAndSalaryBoard extends Component {
   static propTypes = {
+    campaignEntries: ImmutablePropTypes.map.isRequired,
+    campaignEntriesStatus: PropTypes.string.isRequired,
+    queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
     data: ImmutablePropTypes.list,
     status: PropTypes.string,
     match: PropTypes.object.isRequired,
@@ -99,11 +110,15 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     fetchMyPermission: PropTypes.func.isRequired,
   }
 
-  static fetchData({ match, store: { dispatch } }) {
+  static fetchData({ match, store: { dispatch, getState } }) {
     const { path, params: { campaign_name: campaignName } } = match;
     const { sortBy, order } = pathnameMapping[path];
 
-    return dispatch(queryCampaignTimeAndSalary(campaignName, { sortBy, order }));
+    return dispatch(queryCampaignInfoList()).then(() => {
+      const campaignEntries = campaignEntriesSelector(getState());
+      const jobTitles = queryJobTitlesFromCampaignEntries(campaignEntries, campaignName);
+      return dispatch(queryCampaignTimeAndSalary(campaignName, { sortBy, order, jobTitles }));
+    });
   }
 
   constructor(props) {
@@ -128,20 +143,25 @@ export default class CampaignTimeAndSalaryBoard extends Component {
   }
 
   componentDidMount() {
-    const { path, params: { campaign_name: campaignName } } = this.props.match;
+    const { campaignEntries, match: { path, params: { campaign_name: campaignName } } } = this.props;
+    const jobTitles = queryJobTitlesFromCampaignEntries(campaignEntries, campaignName);
     const { sortBy, order } = pathnameMapping[path];
-
-    this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order });
+    this.props.queryCampaignInfoListIfNeeded().then(() => {
+      this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order, jobTitles });
+    });
     this.props.fetchMyPermission();
 
     $(window).on('scroll', this.handleScroll);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.match.path !== nextProps.match.path) {
-      const { path, params: { campaign_name: campaignName } } = nextProps.match;
+    if (this.props.match.path !== nextProps.match.path || this.props.match.params.campaign_name !== nextProps.match.params.campaign_name) {
+      const { campaignEntries, match: { path, params: { campaign_name: campaignName } } } = nextProps;
+      const jobTitles = queryJobTitlesFromCampaignEntries(campaignEntries, campaignName);
       const { sortBy, order } = pathnameMapping[path];
-      this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order });
+      this.props.queryCampaignInfoListIfNeeded().then(() => {
+        this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order, jobTitles });
+      });
       this.props.fetchMyPermission();
     }
   }
@@ -191,8 +211,10 @@ export default class CampaignTimeAndSalaryBoard extends Component {
   render() {
     const { path, params: { campaign_name } } = this.props.match;
     const { title } = pathnameMapping[path];
-    const { status, data, switchPath } = this.props;
+    const { campaignEntriesStatus, status, data, switchPath } = this.props;
     const raw = data.toJS();
+
+    const isLoading = campaignEntriesStatus === fetchingStatus.FETCHIING || status === fetchingStatus.FETCHING;
 
     return (
       <section className={timeAndSalaryCommonStyles.searchResult}>
@@ -223,7 +245,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
             toggleAboutThisJobModal={this.toggleAboutThisJobModal}
           />
           <div className={timeAndSalaryBoardStyles.status}>
-            { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
+            { isLoading && (<Loading size="s" />) }
           </div>
           <InfoSalaryModal
             isOpen={this.state.infoSalaryModal.isOpen}

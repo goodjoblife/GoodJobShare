@@ -1,8 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import CampaignTimeAndSalaryForm from '../../components/ShareExperience/CampaignTimeAndSalaryForm';
+import CampaignTimeAndSalary from '../../components/CampaignTimeAndSalary';
 import { queryCampaignInfoListIfNeeded } from '../../actions/campaignInfo';
-
 
 const mapStateToProps = state => ({
   campaignEntries: state.campaignInfo.get('entries'),
@@ -15,4 +14,4 @@ const mapDispatchToProps = dispatch =>
     queryCampaignInfoListIfNeeded,
   }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(CampaignTimeAndSalaryForm);
+export default connect(mapStateToProps, mapDispatchToProps)(CampaignTimeAndSalary);

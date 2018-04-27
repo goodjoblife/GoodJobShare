@@ -6,7 +6,7 @@ import TimeAndSalaryBoard from './containers/TimeAndSalary/TimeAndSalaryBoard';
 import TimeAndSalaryCompany from './containers/TimeAndSalary/TimeAndSalaryCompany';
 import TimeAndSalaryJobTitle from './containers/TimeAndSalary/TimeAndSalaryJobTitle';
 import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
-import CampaignTimeAndSalary from './components/CampaignTimeAndSalary';
+import CampaignTimeAndSalary from './containers/CampaignTimeAndSalary';
 import CampaignTimeAndSalaryBoard from './containers/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
 import CampaignTimeAndSalaryNotFound from './components/CampaignTimeAndSalary/NotFound';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
