@@ -45,7 +45,9 @@ import {
   portTimeSalaryFormToRequestFormat,
 } from '../utils';
 
-import { HELMET_DATA } from '../../../constants/helmetData';
+import { HELMET_DATA, SITE_NAME } from '../../../constants/helmetData';
+import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';
+
 import {
   INVALID,
   TIME_SALARY_BASIC_ORDER,
@@ -251,6 +253,30 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     };
   }
 
+  renderHelmet = () => {
+    if (this.props.campaignEntriesStatus === fetchingStatus.FETCHED) {
+      const campaignName = this.props.match.params.campaign_name;
+      const campaignInfo = this.props.campaignEntries.get(campaignName).toJS();
+      const { formTitle, metaDescription } = campaignInfo;
+      const helmetData = {
+        title: formTitle,
+        meta: [
+          { name: 'description', content: metaDescription },
+          { property: 'og:title', content: formatTitle(formTitle, SITE_NAME) },
+          { property: 'og:description', content: metaDescription },
+          { property: 'og:url', content: formatCanonicalPath(`/share/time-and-salary/campaign/${campaignName}`) },
+          // TODO: og:image
+        ],
+        link: [
+          { rel: 'canonical', href: formatCanonicalPath(`/share/time-and-salary/campaign/${campaignName}`) },
+        ],
+      };
+      return <Helmet {...helmetData} />;
+    }
+    return <Helmet {...HELMET_DATA.SHARE_TIME_SALARY} />;
+  }
+
+
   render() {
     const {
       campaignEntriesStatus,
@@ -301,7 +327,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
 
     return (
       <div>
-        <Helmet {...HELMET_DATA.SHARE_TIME_SALARY} />
+        {this.renderHelmet()}
         <Heading size="l" marginBottomS center>
           {formTitle}
         </Heading>
