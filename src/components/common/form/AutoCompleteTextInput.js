@@ -76,9 +76,9 @@ class AutoCompleteTextInput extends React.PureComponent {
         }}
       >
         <Autocomplete
-          type={type}
-          placeholder={placeholder}
           inputProps={{
+            type,
+            placeholder,
             className: inputClassName,
             onFocus: this.onFocus,
             onBlur: this.onBlur,
