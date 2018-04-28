@@ -188,6 +188,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     const { match: { params: { campaign_name: campaignName } } } = this.props;
     const campaignInfo = campaignEntries.get(campaignName);
     if (campaignInfo) {
+      this.setState({ campaignName });
       this.setCampaignInfo(campaignInfo.toJS());
     }
   }
