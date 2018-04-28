@@ -37,6 +37,10 @@ $page-gutter-s: 15px;
 .pageBanner {
   background-color: #4f4f4f;
 
+  @media (max-width: $below-small) {
+    margin-top: $nav-height-s;
+  }
+
   .bannerImage {
     display: inline-block;
     width: 319px;
