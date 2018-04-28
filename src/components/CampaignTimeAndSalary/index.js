@@ -45,6 +45,11 @@ export default class TimeAndSalary extends Component {
     location: PropTypes.shape({
       pathname: PropTypes.string,
     }),
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        campaign_name: PropTypes.string,
+      }),
+    }).isRequired,
   }
 
   constructor(props) {
@@ -81,10 +86,13 @@ export default class TimeAndSalary extends Component {
   renderHelmet = () => {
     const path = this.props.location.pathname;
     const url = formatCanonicalPath(path);
+    const campaignName = this.props.match.params.campaign_name;
+    const campaignInfo = this.props.campaignEntries.get(campaignName).toJS();
+    const { title: campaignTitle } = campaignInfo;
 
     // default title and description
-    let title = '查看薪資、工時資訊';
-    const description = '馬上查看薪資、工時資訊以及加班狀況，協助您找到更好的工作！';
+    let title = `${campaignTitle}的最新薪資、工時資訊`;
+    const description = `馬上查看${title}的薪資、工時資訊以及加班狀況，協助您找到更好的工作！`;
 
     // 根據 route 去更新 title  e.g. 工時排行榜（由高到低）
     let name = '';
@@ -93,7 +101,7 @@ export default class TimeAndSalary extends Component {
         name = pathnameMapping[key];
       }
     });
-    if (name) { title = name; }
+    if (name) { title = `${campaignTitle}的${name}`; }
 
     return (
       <Helmet
@@ -103,6 +111,7 @@ export default class TimeAndSalary extends Component {
           { property: 'og:title', content: formatTitle(title, SITE_NAME) },
           { property: 'og:description', content: description },
           { property: 'og:url', content: url },
+          // TODO
           { property: 'og:image', content: `${imgHost}/og/time-and-salary.jpg` },
         ]}
         link={[
