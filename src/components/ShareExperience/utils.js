@@ -184,7 +184,7 @@ export const getCampaignExtendedForm = extraFields => state => ({
   ...getExtraForm(extraFields)(state),
 });
 export const getCampaignTimeAndSalaryForm = extraFields => state => ({
-  campaign: state.campaignName,
+  campaignName: state.campaignName,
   ...getTimeAndSalaryForm(state),
   ...getCampaignExtendedForm(extraFields)(state),
 });
