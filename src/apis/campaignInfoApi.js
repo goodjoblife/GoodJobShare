@@ -35,7 +35,6 @@ export const fetchCampaignList = () => Promise.resolve([
 
 7. 實際上的工作內容為何？`,
     extraFields: [
-      { key: 'ptt', title: 'PTT' },
     ],
     queryJobTitles: ['工程師', 'engineer'],
   },
