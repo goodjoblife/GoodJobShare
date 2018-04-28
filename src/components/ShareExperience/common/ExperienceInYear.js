@@ -31,7 +31,7 @@ const ExperienceInYear = ({ experienceInYear, onChange }) => (
           options={experienceInYearOptions}
           value={experienceInYear}
           onChange={
-            e => onChange(Number(e.target.value))
+            e => (e.target.value === '' ? onChange(null) : onChange(Number(e.target.value)))
           }
         />
       </div>
