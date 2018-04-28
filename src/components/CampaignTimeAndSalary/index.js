@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
-import { Redirect, Switch } from 'react-router';
+import { Switch } from 'react-router';
 
 import Wrapper from 'common/base/Wrapper';
 import RouteWithSubRoutes from '../route';
-import styles from './styles.module.css';
-import SearchBar from './SearchBar';
-import CallToShareData from './CallToShareData';
-import Banner from '../CampaignTimeAndSalary/Banner';
-import MobileInfoButtons from './MobileInfoButtons';
-import InfoTimeModal from './common/InfoTimeModal';
-import InfoSalaryModal from './common/InfoSalaryModal';
+import timeAndSalaryStyles from '../TimeAndSalary/styles.module.css';
+import CallToShareData from '../TimeAndSalary/CallToShareData';
+import Banner from './Banner';
+import MobileInfoButtons from '../TimeAndSalary/MobileInfoButtons';
+import InfoTimeModal from '../TimeAndSalary/common/InfoTimeModal';
+import InfoSalaryModal from '../TimeAndSalary/common/InfoSalaryModal';
+import styles from './CampaignTimeAndSalary.module.css';
 
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../constants/helmetData';
@@ -45,12 +45,6 @@ export default class TimeAndSalary extends Component {
     location: PropTypes.shape({
       pathname: PropTypes.string,
     }),
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        keyword: PropTypes.string,
-      }),
-    }),
-    staticContext: PropTypes.object,
   }
 
   constructor(props) {
@@ -90,7 +84,7 @@ export default class TimeAndSalary extends Component {
 
     // default title and description
     let title = '查看薪資、工時資訊';
-    let description = '馬上查看薪資、工時資訊以及加班狀況，協助您找到更好的工作！';
+    const description = '馬上查看薪資、工時資訊以及加班狀況，協助您找到更好的工作！';
 
     // 根據 route 去更新 title  e.g. 工時排行榜（由高到低）
     let name = '';
@@ -100,17 +94,6 @@ export default class TimeAndSalary extends Component {
       }
     });
     if (name) { title = name; }
-
-    // 假如 keyword 不是 null, undefined 或 ''。則把 keywords 更新到 title & description
-    const keyword = this.props.match.params.keyword;
-    if (keyword) {
-      if (name) {
-        title = `${keyword}的${name}`;
-      } else {
-        title = `${keyword}的薪資、工時資訊`;
-      }
-      description = `馬上查看${keyword}的薪資、工時資訊以及加班狀況，協助您找到更好的工作！`;
-    }
 
     return (
       <Helmet
@@ -130,37 +113,20 @@ export default class TimeAndSalary extends Component {
   }
 
   render() {
-    const { routes, location, staticContext } = this.props;
-    if (!staticContext) {
-      if (location.pathname === '/time-and-salary') {
-        if (location.hash) {
-          const targets = location.hash.split('#');
-          if (targets.length >= 2) {
-            return (
-              <Redirect to={`/time-and-salary${targets[1]}`} />
-            );
-          }
-        }
-        return (<Redirect to="/time-and-salary/latest" />);
-      }
-    }
-
+    const { routes } = this.props;
     const campaigns = campaignListFromEntries(this.props.campaignEntries);
 
     return (
-      <div className={styles.container}>
+      <div className={timeAndSalaryStyles.container}>
         {this.renderHelmet()}
         <Banner campaigns={campaigns} />
-        <section className={styles.whiteBackground}>
-          <Wrapper size="l" className={styles.showSearchbarWrapper}>
-            <CallToShareData />
-            <SearchBar />
-            <MobileInfoButtons
-              toggleInfoSalaryModal={this.toggleInfoSalaryModal}
-              toggleInfoTimeModal={this.toggleInfoTimeModal}
-            />
-          </Wrapper>
-        </section>
+        <Wrapper size="m" className={timeAndSalaryStyles.showSearchbarWrapper}>
+          <CallToShareData />
+          <MobileInfoButtons
+            toggleInfoSalaryModal={this.toggleInfoSalaryModal}
+            toggleInfoTimeModal={this.toggleInfoTimeModal}
+          />
+        </Wrapper>
         <InfoSalaryModal
           isOpen={this.state.infoSalaryModal.isOpen}
           close={this.toggleInfoSalaryModal}
@@ -169,7 +135,7 @@ export default class TimeAndSalary extends Component {
           isOpen={this.state.infoTimeModal.isOpen}
           close={this.toggleInfoTimeModal}
         />
-        <Wrapper size="l" className={styles.subRouteWrapper}>
+        <Wrapper size="l" className={styles.wrapper}>
           <Switch>
             { routes.map((route, i) => (<RouteWithSubRoutes key={i} {...route} />)) }
           </Switch>

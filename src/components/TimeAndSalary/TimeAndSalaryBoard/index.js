@@ -9,6 +9,7 @@ import cn from 'classnames';
 import Select from 'common/form/Select';
 import InfoTimeModal from '../common/InfoTimeModal';
 import InfoSalaryModal from '../common/InfoSalaryModal';
+import AboutThisJobModal from '../common/AboutThisJobModal';
 import styles from './TimeAndSalaryBoard.module.css';
 import commonStyles from '../views/view.module.css';
 import fetchingStatus from '../../../constants/status';
@@ -92,14 +93,14 @@ const injectPermissionBlock = rows => {
   const newRows = rows.slice(0, MAX_ROWS_IF_HIDDEN);
   newRows.push(
     <tr>
-      <td colSpan="7" className={styles.noPadding}>
+      <td colSpan="8" className={styles.noPadding}>
         <GradientMask />
       </td>
     </tr>
   );
   newRows.push(
     <tr>
-      <td colSpan="7" className={styles.noBefore}>
+      <td colSpan="8" className={styles.noBefore}>
         <BasicPermissionBlock rootClassName={styles.permissionBlockBoard} />
       </td>
     </tr>
@@ -109,7 +110,7 @@ const injectPermissionBlock = rows => {
 
 const injectLoadingIconRow = R.prepend(
   <tr key="extreme-loading" className={styles.extremeRow}>
-    <td colSpan="7" className={styles.noBefore}>
+    <td colSpan="8" className={styles.noBefore}>
       <Loading size="s" />
     </td>
   </tr>
@@ -118,7 +119,7 @@ const injectLoadingIconRow = R.prepend(
 const injectExtremeDividerAt = nthRow => onClick => R.insert(
   nthRow, (
     <tr key="extreme-divider" className={styles.extremeRow}>
-      <td colSpan="7" className={styles.noBefore}>
+      <td colSpan="8" className={styles.noBefore}>
         <div className={styles.extremeDescription}>
           <span>
             以上資料為前 1 % 的資料，可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
@@ -168,6 +169,11 @@ export default class TimeAndSalaryBoard extends Component {
     infoTimeModal: {
       isOpen: false,
     },
+    aboutThisJobModal: {
+      isOpen: false,
+      title: '',
+      aboutThisJob: '',
+    },
     showExtreme: false,
   }
 
@@ -205,6 +211,15 @@ export default class TimeAndSalaryBoard extends Component {
   toggleInfoTimeModal() {
     const state = this.state;
     state.infoTimeModal.isOpen = !state.infoTimeModal.isOpen;
+    this.setState(state);
+  }
+  toggleAboutThisJobModal = (aboutThisJob, title) => {
+    const state = this.state;
+    state.aboutThisJobModal.isOpen = !state.aboutThisJobModal.isOpen;
+    if (state.aboutThisJobModal.isOpen) {
+      state.aboutThisJobModal.title = title;
+      state.aboutThisJobModal.aboutThisJob = aboutThisJob;
+    }
     this.setState(state);
   }
 
@@ -303,6 +318,7 @@ export default class TimeAndSalaryBoard extends Component {
             postProcessRows={this.createPostProcessRows()}
             toggleInfoSalaryModal={this.toggleInfoSalaryModal}
             toggleInfoTimeModal={this.toggleInfoTimeModal}
+            toggleAboutThisJobModal={this.toggleAboutThisJobModal}
           />
           <div className={styles.status}>
             { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
@@ -314,6 +330,12 @@ export default class TimeAndSalaryBoard extends Component {
           <InfoTimeModal
             isOpen={this.state.infoTimeModal.isOpen}
             close={this.toggleInfoTimeModal}
+          />
+          <AboutThisJobModal
+            isOpen={this.state.aboutThisJobModal.isOpen}
+            close={this.toggleAboutThisJobModal}
+            title={this.state.aboutThisJobModal.title}
+            aboutThisJob={this.state.aboutThisJobModal.aboutThisJob}
           />
         </div>
       </section>
