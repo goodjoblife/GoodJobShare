@@ -60,6 +60,14 @@ $warning: #d50000;
   .inputWrapper {
     display: inline-block;
     width: 380px;
+    @media (max-width: $below-small) {
+      width: 100%;
+    }
+
+    .searchBtn {
+      top: 10px;
+      right: 0;
+    }
   }
 }
 
