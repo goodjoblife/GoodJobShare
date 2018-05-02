@@ -13,6 +13,8 @@ const setCountData = (count, status, error = null) => ({
 
 export const queryTimeAndSalaryCount = () =>
   dispatch => {
+    dispatch(setCountData(0, fetchingStatus.FETCHING));
+
     const opt = {
       limit: 1,
     };
