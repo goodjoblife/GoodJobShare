@@ -1,6 +1,6 @@
 import R from 'ramda';
 import { getExperiences } from '../apis/experiencesApi';
-import fetchingStatus from '../constants/status';
+import fetchingStatus, { isUnfetched } from '../constants/status';
 
 export const SET_COUNT_DATA = '@@EXPERIENCES/SET_COUNT_DATA';
 
@@ -13,6 +13,7 @@ const setCountData = (count, status, error = null) => ({
 
 export const queryExperienceCount = () =>
   dispatch => {
+    dispatch(setCountData(0, fetchingStatus.FETCHING));
     const opt = {
       limit: 1,
       start: 0,
@@ -27,3 +28,11 @@ export const queryExperienceCount = () =>
         dispatch(setCountData(0, fetchingStatus.ERROR, error));
       });
   };
+
+export const queryExperienceCountIfUnfetched = () =>
+(dispatch, getState) => {
+  if (isUnfetched(getState().experiences.get('countStatus'))) {
+    return dispatch(queryExperienceCount());
+  }
+  return Promise.resolve();
+};
