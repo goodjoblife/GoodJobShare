@@ -96,7 +96,7 @@ class WorkingHourBlock extends Component {
             [styles.expanded]: this.state.isExpanded,
           })}
         >
-          {this.renderBlockContent()}
+          { this.state.isExpanded ? this.renderBlockContent() : null}
         </div>
       </section>
     );
