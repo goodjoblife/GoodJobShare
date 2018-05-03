@@ -28,6 +28,7 @@
 
 .sortRow {
   display: flex;
+  margin-top: 16px;
 
   .extremeDescription {
     justify-content: flex-start;

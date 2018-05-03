@@ -1,7 +1,12 @@
 @value main-orange from "common/variables.module.css";
 
 .infoBlock {
-    margin: 5em 0;
+    margin: 60px 0;
+
+    @media (max-width: 550px) {
+        margin: 40px 0;
+    }
+    
     p {
         margin-bottom: 1em;
     }
