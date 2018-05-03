@@ -1,4 +1,16 @@
+@value main-orange from "common/variables.module.css";
+
 .infoBlock {
     margin: 5em 0;
-    text-align: center;
+    p {
+        margin-bottom: 1em;
+    }
+
+    h2 {
+        font-size: 1.25em;
+        color: main-orange;
+        margin-bottom: 8px;
+        font-weight: bold;
+        margin-top: 32px;
+    }
 }
