@@ -5,7 +5,7 @@ import Modal from 'common/Modal';
 const AboutThisJobModal = ({ isOpen, close, title, aboutThisJob }) => (
   <Modal isOpen={isOpen} hasClose close={close}>
     <h1>{title}</h1>
-    {aboutThisJob}
+    {aboutThisJob && aboutThisJob.split('\n').map((line, i) => <p key={i}>{line}</p>)}
   </Modal>
 );
 
