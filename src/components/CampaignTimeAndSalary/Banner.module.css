@@ -37,36 +37,63 @@ $page-gutter-s: 15px;
 .pageBanner {
   background-color: #4f4f4f;
 
+  @media (max-width: $below-small) {
+    margin-top: $nav-height-s;
+  }
+
   .bannerImage {
     display: inline-block;
     width: 319px;
     height: 133px;
     margin-right: 58px;
+
+    @media (max-width: 850px) {
+      width: 50%;
+      margin-right: 2%;
+      height: auto;
+    }
+
+    @media (max-width: 550px) {
+      display: none;
+    }
   }
 
   .campaignItem {
     position: relative;
-    display: inline-block;
-    width: 200px;
-    height: 67px;
-    line-height: 67px;
+    display: inline-flex;
+    padding: 16px 32px;
     text-align: center;
     font-size: 24px;
     border-radius: 5px;
     background-color: #FFFFFF;
-    vertical-align: top;
-    margin-top: 29px;
     margin-right: 65px;
     box-shadow: 8px 8px black;
+    vertical-align: top;
+    margin-top: 29px;
+
+    @media (max-width: 850px) {
+      padding: 16px;
+      font-size: 18px;
+    }
+
+    @media (max-width: 550px) {
+      margin-bottom: 32px;
+    }
+
+    &:hover {
+      background-color: #FCD406;
+    }
 
     &.active {
       background-color: #FCD406;
+      cursor: default;
 
       &::before {
         content: "";
         position: absolute;
         top: -29px;
-        left: 93px;
+        left: 50%;
+        margin-left: -9px;
         display: block;
         border: 14px solid transparent;
         border-bottom-width: 0;

@@ -90,7 +90,7 @@
     "qs": "^6.4.0",
     "ramda": "^0.23.0",
     "react": "^16.2.0",
-    "react-autocomplete": "^1.5.6",
+    "react-autocomplete": "^1.8.1",
     "react-dom": "^16.2.0",
     "react-facebook-pixel": "^0.1.0",
     "react-ga": "^2.2.0",

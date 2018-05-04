@@ -142,14 +142,14 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     const valid3 = timeFormCheck(getTimeForm(this.state));
 
     const campaignName = this.props.match.params.campaign_name;
-    const extraFields = this.props.campaignEntries.get(campaignName).toJS().extraFields;
+    const { extraFields, defaultContent } = this.props.campaignEntries.get(campaignName).toJS();
     const valid4 = campaignExtendedFormCheck(extraFields)(
       getCampaignExtendedForm(extraFields)(this.state)
     );
 
     if (valid && (valid2 || valid3) && valid4) {
       const p = postWorkings(
-        portTimeSalaryFormToRequestFormat(getCampaignTimeAndSalaryForm(extraFields)(this.state))
+        portTimeSalaryFormToRequestFormat(getCampaignTimeAndSalaryForm(extraFields, defaultContent)(this.state))
       );
 
       p.then(() => {
@@ -188,6 +188,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     const { match: { params: { campaign_name: campaignName } } } = this.props;
     const campaignInfo = campaignEntries.get(campaignName);
     if (campaignInfo) {
+      this.setState({ campaignName });
       this.setCampaignInfo(campaignInfo.toJS());
     }
   }

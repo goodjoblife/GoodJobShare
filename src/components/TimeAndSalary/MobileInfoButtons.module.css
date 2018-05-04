@@ -6,7 +6,8 @@ $primary-color: #fcd406;
 
 	@media (max-width: $below-small) {
 		display: flex;
-		margin-bottom: 15px;
+		margin-top: 8px;
+		margin-bottom: 8px;
 		justify-content: flex-end;
 	}
 

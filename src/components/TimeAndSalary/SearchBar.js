@@ -140,7 +140,7 @@ class SearchBar extends Component {
           ))}
         </div>
         <div className={styles.form}>
-          <div className={styles.searchBar}>
+          <div className={searchBarStyles.search}>
             <div className={styles.inputWrapper}>
               <AutoCompleteTextInput
                 value={keyword}
@@ -150,13 +150,13 @@ class SearchBar extends Component {
                 getItemValue={R.prop('label')}
                 onSelect={this.handleSelectCandidate}
               />
+              <button
+                type="submit"
+                className={cn(searchBarStyles.searchBtn, styles.searchBtn)}
+              >
+                <Magnifiner />
+              </button>
             </div>
-            <button
-              type="submit"
-              className={searchBarStyles.searchBtn}
-            >
-              <Magnifiner />
-            </button>
           </div>
         </div>
       </form>

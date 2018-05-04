@@ -16,7 +16,6 @@ $gray: #b4b4b4;
 .showSearchbarWrapper {
   @media (max-width: $below-small) {
     border-bottom: 1px solid #ddd;
-    margin-bottom: $block-gutter-m;
   }
 }
 
