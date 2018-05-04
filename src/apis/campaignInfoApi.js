@@ -11,13 +11,13 @@ export const fetchCampaignList = () => Promise.resolve([
 
 ## Q&A
 
-1. 留下資訊對我來說有什麼好處？
+* 留下資訊對我來說有什麼好處？
 
-你可以馬上取得查看超過 6000 筆薪資工時、800 篇職場經驗分享、13 篇勞動權益懶人包的完整權限。
+    你可以馬上取得查看超過 6000 筆薪資工時、800 篇職場經驗分享、13 篇勞動權益懶人包的完整權限。
 
-2. 我的留言是匿名的嗎？
+* 我的留言是匿名的嗎？
 
-是的，永久匿名。`,
+    是的，永久匿名。`,
     formEnding: `## 合作單位
 ![台灣電子電機資訊產業工會 ](http://www.tueeit.org.tw/_/rsrc/1362329924603/config/customLogo.gif?revision=14)`,
     defaultJobTitle: '',
