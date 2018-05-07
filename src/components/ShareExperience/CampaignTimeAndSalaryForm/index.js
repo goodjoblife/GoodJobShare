@@ -257,7 +257,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     if (this.props.campaignEntriesStatus === fetchingStatus.FETCHED) {
       const campaignName = this.props.match.params.campaign_name;
       const campaignInfo = this.props.campaignEntries.get(campaignName).toJS();
-      const { formTitle, metaDescription } = campaignInfo;
+      const { formTitle, metaDescription, ogImgUrl } = campaignInfo;
       const helmetData = {
         title: formTitle,
         meta: [
@@ -265,7 +265,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
           { property: 'og:title', content: formatTitle(formTitle, SITE_NAME) },
           { property: 'og:description', content: metaDescription },
           { property: 'og:url', content: formatCanonicalPath(`/share/time-and-salary/campaign/${campaignName}`) },
-          // TODO: og:image
+          { property: 'og:image', content: ogImgUrl },
         ],
         link: [
           { rel: 'canonical', href: formatCanonicalPath(`/share/time-and-salary/campaign/${campaignName}`) },

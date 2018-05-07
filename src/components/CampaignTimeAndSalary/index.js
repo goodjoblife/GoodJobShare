@@ -15,7 +15,7 @@ import InfoSalaryModal from '../TimeAndSalary/common/InfoSalaryModal';
 import styles from './CampaignTimeAndSalary.module.css';
 
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
-import { imgHost, SITE_NAME } from '../../constants/helmetData';
+import { SITE_NAME } from '../../constants/helmetData';
 import { queryCampaignInfoList } from '../../actions/campaignTimeAndSalaryBoard';
 
 const pathnameMapping = {
@@ -88,7 +88,7 @@ export default class TimeAndSalary extends Component {
     const url = formatCanonicalPath(path);
     const campaignName = this.props.match.params.campaign_name;
     const campaignInfo = this.props.campaignEntries.get(campaignName).toJS();
-    const { title: campaignTitle } = campaignInfo;
+    const { title: campaignTitle, ogImgUrl } = campaignInfo;
 
     // default title and description
     let title = `${campaignTitle}的最新薪資、工時資訊`;
@@ -111,8 +111,7 @@ export default class TimeAndSalary extends Component {
           { property: 'og:title', content: formatTitle(title, SITE_NAME) },
           { property: 'og:description', content: description },
           { property: 'og:url', content: url },
-          // TODO
-          { property: 'og:image', content: `${imgHost}/og/time-and-salary.jpg` },
+          { property: 'og:image', content: ogImgUrl },
         ]}
         link={[
           { rel: 'canonical', href: url },
