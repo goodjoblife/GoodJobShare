@@ -16,7 +16,7 @@ import styles from './CampaignTimeAndSalary.module.css';
 
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { SITE_NAME } from '../../constants/helmetData';
-import { queryCampaignInfoList } from '../../actions/campaignTimeAndSalaryBoard';
+import { queryCampaignInfoList } from '../../actions/campaignInfo';
 
 const pathnameMapping = {
   'work-time-dashboard': '工時排行榜（由高到低）',
