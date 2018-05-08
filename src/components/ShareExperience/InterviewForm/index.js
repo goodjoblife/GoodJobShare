@@ -36,6 +36,9 @@ import {
   LS_INTERVIEW_FORM_KEY,
 } from '../../../constants/localStorageKey';
 
+import SuccessFeedback from '../common/SuccessFeedback';
+import FailFeedback from '../common/FailFeedback';
+
 const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '段落標題，例：面試方式') => {
   const section = {
     id,
@@ -136,12 +139,25 @@ class InterviewForm extends React.Component {
     });
   }
 
-  onSubmit() {
+  onSubmit(opt) {
+    const { handleIsOpen, handleHasClose, handleFeedback } = opt;
     const valid = interviewFormCheck(getInterviewForm(this.state));
 
     if (valid) {
+      localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
       const p = postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
-      p.then(() => {
+      return p.then(response => {
+        const experienceId = response.experience._id;
+        handleIsOpen(true);
+        handleHasClose(false);
+        handleFeedback(
+          <SuccessFeedback
+            buttonClick={() => (
+              window.location.replace(`/experiences/${experienceId}`)
+            )}
+          />
+        );
+
         ReactGA.event({
           category: GA_CATEGORY.SHARE_INTERVIEW,
           action: GA_ACTION.UPLOAD_SUCCESS,
@@ -151,14 +167,21 @@ class InterviewForm extends React.Component {
           currency: 'TWD',
           content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
         });
-      }).catch(() => {
+      }, error => {
+        handleIsOpen(true);
+        handleHasClose(false);
+        handleFeedback(
+          <FailFeedback
+            info={error.message}
+            buttonClick={() => handleIsOpen(false)}
+          />
+        );
+
         ReactGA.event({
           category: GA_CATEGORY.SHARE_INTERVIEW,
           action: GA_ACTION.UPLOAD_FAIL,
         });
       });
-      localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
-      return p;
     }
     this.handleState('submitted')(true);
     const topInvalidElement = this.getTopInvalidElement();

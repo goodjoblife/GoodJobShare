@@ -37,6 +37,9 @@ import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
 
+import SuccessFeedback from '../common/SuccessFeedback';
+import FailFeedback from '../common/FailFeedback';
+
 const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '段落標題，例：實際工作內容') => {
   const section = {
     id,
@@ -127,12 +130,25 @@ class WorkExperiencesForm extends React.Component {
     });
   }
 
-  onSubmit() {
+  onSubmit(opt) {
+    const { handleIsOpen, handleHasClose, handleFeedback } = opt;
     const valid = workExperiencesFormCheck(propsWorkExperiencesForm(this.state));
 
     if (valid) {
+      localStorage.removeItem(LS_WORK_EXPERIENCES_FORM_KEY);
       const p = postWorkExperience(workExperiencesToBody(this.state));
-      p.then(() => {
+      return p.then(response => {
+        const experienceId = response.experience._id;
+        handleIsOpen(true);
+        handleHasClose(false);
+        handleFeedback(
+          <SuccessFeedback
+            buttonClick={() => (
+              window.location.replace(`/experiences/${experienceId}`)
+            )}
+          />
+        );
+
         ReactGA.event({
           category: GA_CATEGORY.SHARE_WORK,
           action: GA_ACTION.UPLOAD_SUCCESS,
@@ -142,14 +158,21 @@ class WorkExperiencesForm extends React.Component {
           currency: 'TWD',
           content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_WORK_EXPERIENCE,
         });
-      }).catch(() => {
+      }, error => {
+        handleIsOpen(true);
+        handleHasClose(false);
+        handleFeedback(
+          <FailFeedback
+            info={error.message}
+            buttonClick={() => handleIsOpen(false)}
+          />
+        );
+
         ReactGA.event({
           category: GA_CATEGORY.SHARE_WORK,
           action: GA_ACTION.UPLOAD_FAIL,
         });
       });
-      localStorage.removeItem(LS_WORK_EXPERIENCES_FORM_KEY);
-      return p;
     }
     this.handleState('submitted')(true);
     const topInvalidElement = this.getTopInvalidElement();
