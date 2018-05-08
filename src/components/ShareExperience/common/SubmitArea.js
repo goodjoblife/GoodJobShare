@@ -31,8 +31,9 @@ const getWorkingsSuccessFeedback = count => (
   />
 );
 
-const getFailFeedback = buttonClick => (
+const getFailFeedback = (info, buttonClick) => (
   <FailFeedback
+    info={info}
     buttonClick={buttonClick}
   />
 );
@@ -83,11 +84,12 @@ class SubmitArea extends React.PureComponent {
           }
           return this.handleFeedback(getSuccessFeedback(id));
         })
-        .catch(() => {
+        .catch(error => {
           this.handleIsOpen(true);
           this.handleHasClose(false);
           return this.handleFeedback(getFailFeedback(
-            () => this.handleIsOpen(false)
+            error.message,
+            () => this.handleIsOpen(false),
           ));
         });
     }
