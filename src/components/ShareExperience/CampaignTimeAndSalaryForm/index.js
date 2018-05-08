@@ -411,7 +411,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
           />
         </IconHeadingBlock>
 
-        <SubmitArea onSubmit={this.onSubmit} type="workings" />
+        <SubmitArea onSubmit={this.onSubmit} type="workings" campaignName={campaignName} />
         <div className={styles.infoBlock}>
           <MarkdownParser content={formEnding} />
         </div>

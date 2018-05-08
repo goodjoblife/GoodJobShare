@@ -21,13 +21,14 @@ const getSuccessFeedback = id => (
   />
 );
 
-const getWorkingsSuccessFeedback = count => (
+const getWorkingsSuccessFeedback = (count, campaignName = null) => (
   <SuccessFeedback
     info={`您已經上傳 ${count} 次，還有 ${5 - (count || 0)} 次可以上傳。`}
     buttonText="查看最新工時、薪資"
-    buttonClick={() => (
-      window.location.replace('/time-and-salary/latest')
-    )}
+    buttonClick={() => {
+      const url = campaignName ? `/time-and-salary/campaigns/${campaignName}/latest` : '/time-and-salary/latest';
+      window.location.replace(url);
+    }}
   />
 );
 
@@ -65,7 +66,7 @@ class SubmitArea extends React.PureComponent {
 
   onSubmit() {
     const p = this.props.onSubmit();
-    const { type } = this.props;
+    const { type, campaignName } = this.props;
 
     if (p) {
       return p
@@ -79,7 +80,7 @@ class SubmitArea extends React.PureComponent {
           this.handleIsOpen(true);
           this.handleHasClose(false);
           if (type === 'workings') {
-            return this.handleFeedback(getWorkingsSuccessFeedback(id));
+            return this.handleFeedback(getWorkingsSuccessFeedback(id, campaignName));
           }
           return this.handleFeedback(getSuccessFeedback(id));
         })
@@ -227,6 +228,7 @@ class SubmitArea extends React.PureComponent {
 
 SubmitArea.propTypes = {
   type: PropTypes.string,
+  campaignName: PropTypes.string,
   onSubmit: PropTypes.func,
   auth: ImmutablePropTypes.map,
   login: PropTypes.func.isRequired,
