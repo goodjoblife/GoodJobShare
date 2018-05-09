@@ -136,6 +136,7 @@ const injectExtremeDividerAt = nthRow => onClick => R.insert(
 export default class TimeAndSalaryBoard extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
+    totalCount: PropTypes.number,
     status: PropTypes.string,
     match: PropTypes.object.isRequired,
     queryTimeAndSalary: PropTypes.func,
@@ -146,6 +147,10 @@ export default class TimeAndSalaryBoard extends Component {
     extremeData: ImmutablePropTypes.list,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchMyPermission: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    totalCount: -1,
   }
 
   static fetchData({ match, store: { dispatch } }) {
@@ -225,6 +230,7 @@ export default class TimeAndSalaryBoard extends Component {
 
   handleScroll() {
     if (!this.props.canViewTimeAndSalary) { return; }
+    if (this.props.totalCount !== -1 && this.props.data.size >= this.props.totalCount) { return; }
     const view = $(window).scrollTop() + window.innerHeight;
     const threshold = $(document).height() - 100;
     if (view < threshold) return;
