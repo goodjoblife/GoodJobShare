@@ -20,10 +20,11 @@ const resetBoard = ({ campaignName, sortBy, order }) => ({
   order,
   status: fetchingStatus.UNFETCHED,
   data: [],
+  total: 0,
   error: null,
 });
 
-const setBoardData = ({ campaignName, sortBy, order }, { status, data, error = null }) =>
+const setBoardData = ({ campaignName, sortBy, order }, { status, data, total = 0, error = null }) =>
   (dispatch, getState) => {
     // make sure the store is consistent
     if (campaignName !== campaignNameSelector(getState()) || sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
@@ -36,6 +37,7 @@ const setBoardData = ({ campaignName, sortBy, order }, { status, data, error = n
       order,
       status,
       data,
+      total,
       error,
     });
   };
@@ -83,7 +85,7 @@ export const queryCampaignTimeAndSalary = (campaignName, { sortBy, order, jobTit
 
         const currentData = dataSelector(getState()).toJS();
         const nextData = currentData.concat(data);
-        dispatch(setBoardData({ campaignName, sortBy, order }, { status: fetchingStatus.FETCHED, data: nextData }));
+        dispatch(setBoardData({ campaignName, sortBy, order }, { status: fetchingStatus.FETCHED, data: nextData, total: rawData.total }));
       })
       .catch(error => {
         dispatch(setBoardData({ campaignName, sortBy, order }, { status: fetchingStatus.ERROR, data: [], error }));

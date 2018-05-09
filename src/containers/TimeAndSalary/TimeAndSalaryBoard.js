@@ -10,6 +10,7 @@ import {
 
 const mapStateToProps = state => ({
   data: state.timeAndSalaryBoard.get('data'),
+  totalCount: state.timeAndSalaryBoard.get('total'),
   status: state.timeAndSalaryBoard.get('status'),
   extremeStatus: state.timeAndSalaryBoard.get('extremeStatus'),
   extremeData: state.timeAndSalaryBoard.get('extremeData'),

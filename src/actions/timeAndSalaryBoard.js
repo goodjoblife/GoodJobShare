@@ -24,7 +24,7 @@ const resetBoard = ({ sortBy, order }) => ({
   error: null,
 });
 
-const setBoardData = ({ sortBy, order }, { status, data, error = null }) =>
+const setBoardData = ({ sortBy, order }, { status, data, total = 0, error = null }) =>
   (dispatch, getState) => {
     // make sure the store is consistent
     if (sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
@@ -36,6 +36,7 @@ const setBoardData = ({ sortBy, order }, { status, data, error = null }) =>
       order,
       status,
       data,
+      total,
       error,
     });
   };
@@ -82,7 +83,7 @@ export const queryTimeAndSalary = ({ sortBy, order }) =>
 
         const currentData = dataSelector(getState()).toJS();
         const nextData = currentData.concat(data);
-        dispatch(setBoardData({ sortBy, order }, { status: fetchingStatus.FETCHED, data: nextData }));
+        dispatch(setBoardData({ sortBy, order }, { status: fetchingStatus.FETCHED, data: nextData, total: rawData.total }));
       })
       .catch(error => {
         dispatch(setBoardData({ sortBy, order }, { status: fetchingStatus.ERROR, data: [], error }));
