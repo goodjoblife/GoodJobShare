@@ -102,12 +102,17 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     campaignEntriesStatus: PropTypes.string.isRequired,
     queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
     data: ImmutablePropTypes.list,
+    totalCount: PropTypes.number,
     status: PropTypes.string,
     match: PropTypes.object.isRequired,
     queryCampaignTimeAndSalary: PropTypes.func,
     switchPath: PropTypes.func,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchMyPermission: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    totalCount: -1,
   }
 
   static fetchData({ match, store: { dispatch, getState } }) {
@@ -192,6 +197,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
 
   handleScroll() {
     if (!this.props.canViewTimeAndSalary) { return; }
+    if (this.props.totalCount !== -1 && this.props.data.size >= this.props.totalCount) { return; }
     const view = $(window).scrollTop() + window.innerHeight;
     const threshold = $(document).height() - 100;
     if (view < threshold) return;
