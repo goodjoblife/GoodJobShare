@@ -262,8 +262,8 @@ class ExperienceDetail extends Component {
     const replies = this.props.replies.toJS();
     const repliesStatus = this.props.repliesStatus;
 
-    if (experienceError && experienceError.error) {
-      switch (experienceError.error.status) {
+    if (experienceError) {
+      switch (experienceError.statusCode) {
         case 403:
           return (<NotFound heading="本篇文章已經被原作者隱藏，目前無法查看" />);
         case 404:

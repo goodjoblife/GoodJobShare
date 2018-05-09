@@ -4,9 +4,6 @@ import { getToken } from 'utils/tokenUtil';
 
 import { API_HOST } from '../config';
 
-const isValidHttpStatusCode = statusCode =>
-  String(statusCode)[0] !== '4' && String(statusCode)[0] !== '5';
-
 const headerBuilder = token => (
   token ?
   {
@@ -38,16 +35,10 @@ const optionsBuilder = body => method => (
   }
 );
 
-const checkStatus = handle401 => response => {
-  if (response.status === 401) {
-    return handle401();
+const checkStatus = response => {
+  if (!response.ok) {
+    return response.json().then(json => Promise.reject({ statusCode: response.status, ...json }));
   }
-
-  if (!isValidHttpStatusCode(response.status)) {
-    return response.json()
-      .then(json => Promise.reject(json));
-  }
-
   return response.json();
 };
 
@@ -56,6 +47,6 @@ const fetchUtil = (endpoint, apiHost = API_HOST) => (method, body) =>
     `${apiHost}${endpoint}`,
     optionsBuilder(body)(method)
   )
-    .then(checkStatus());
+    .then(checkStatus);
 
 export default fetchUtil;
