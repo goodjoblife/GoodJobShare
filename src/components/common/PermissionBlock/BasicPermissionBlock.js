@@ -12,6 +12,7 @@ import styles from './PermissionBlock.module.css';
 
 class BasicPermissionBlock extends React.Component {
   static propTypes = {
+    to: PropTypes.string,
     rootClassName: PropTypes.string,
     experienceCount: PropTypes.number.isRequired,
     timeAndSalaryCount: PropTypes.number.isRequired,
@@ -25,6 +26,7 @@ class BasicPermissionBlock extends React.Component {
   }
 
   static defaultProps = {
+    to: '/share/time-and-salary',
     rootClassName: '',
   }
 
@@ -41,7 +43,7 @@ class BasicPermissionBlock extends React.Component {
   }
 
   render() {
-    const { rootClassName, experienceCount, timeAndSalaryCount, laborRightsCount } = this.props;
+    const { to, rootClassName, experienceCount, timeAndSalaryCount, laborRightsCount } = this.props;
     const experienceScale = getScale(experienceCount);
     const timeAndSalaryScale = getScale(timeAndSalaryCount);
     return (
@@ -60,7 +62,7 @@ class BasicPermissionBlock extends React.Component {
           <br />
           <P size="l"><strong>若你已經分享過資訊，登入即可查看全文！</strong></P>
           <div className={styles.ctaButtonContainer}>
-            <CallToLoginShareButton to="/share/time-and-salary" notLoginText="立即登入並分享" isLoginText="立即分享" />
+            <CallToLoginShareButton to={to} notLoginText="立即登入並分享" isLoginText="立即分享" />
           </div>
         </div>
       </div>
