@@ -111,10 +111,6 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     fetchMyPermission: PropTypes.func.isRequired,
   }
 
-  static defaultProps = {
-    totalCount: -1,
-  }
-
   static fetchData({ match, store: { dispatch, getState } }) {
     const { path, params: { campaign_name: campaignName } } = match;
     const { sortBy, order } = pathnameMapping[path];
@@ -197,7 +193,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
 
   handleScroll() {
     if (!this.props.canViewTimeAndSalary) { return; }
-    if (this.props.totalCount !== -1 && this.props.data.size >= this.props.totalCount) { return; }
+    if (this.props.data.size >= this.props.totalCount) { return; }
     const view = $(window).scrollTop() + window.innerHeight;
     const threshold = $(document).height() - 100;
     if (view < threshold) return;
