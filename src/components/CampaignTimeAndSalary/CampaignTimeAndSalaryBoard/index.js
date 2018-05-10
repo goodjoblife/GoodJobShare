@@ -70,7 +70,7 @@ const selectOptions = R.pipe(
   R.map(([path, opt]) => ({ value: path, label: opt.label }))
 );
 
-const injectPermissionBlock = rows => {
+const injectPermissionBlock = campaignName => rows => {
   const newRows = rows.slice(0, MAX_ROWS_IF_HIDDEN);
   newRows.push(
     <tr>
@@ -82,7 +82,10 @@ const injectPermissionBlock = rows => {
   newRows.push(
     <tr>
       <td colSpan="8" className={timeAndSalaryBoardStyles.noBefore}>
-        <BasicPermissionBlock rootClassName={timeAndSalaryBoardStyles.permissionBlockBoard} />
+        <BasicPermissionBlock
+          rootClassName={timeAndSalaryBoardStyles.permissionBlockBoard}
+          to={`/share/time-and-salary/campaigns/${campaignName}`}
+        />
       </td>
     </tr>
   );
@@ -203,15 +206,15 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order });
   }
 
-  createPostProcessRows = () => {
+  createPostProcessRows = campaignName => {
     if (!this.props.canViewTimeAndSalary) {
-      return injectPermissionBlock;
+      return injectPermissionBlock(campaignName);
     }
     return R.identity;
   }
 
   render() {
-    const { path, params: { campaign_name } } = this.props.match;
+    const { path, params: { campaign_name: campaignName } } = this.props.match;
     const { title } = pathnameMapping[path];
     const { campaignEntriesStatus, status, data, switchPath } = this.props;
     const raw = data.toJS();
@@ -232,7 +235,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
               <div className={timeAndSalaryCommonStyles.select}>
                 <Select
                   options={selectOptions(pathnameMapping)}
-                  onChange={e => switchPath(e.target.value.replace(':campaign_name', campaign_name))}
+                  onChange={e => switchPath(e.target.value.replace(':campaign_name', campaignName))}
                   value={path}
                   hasNullOption={false}
                 />
@@ -241,7 +244,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
           </div>
           <DashBoardTable
             data={raw}
-            postProcessRows={this.createPostProcessRows()}
+            postProcessRows={this.createPostProcessRows(campaignName)}
             toggleInfoSalaryModal={this.toggleInfoSalaryModal}
             toggleInfoTimeModal={this.toggleInfoTimeModal}
             toggleAboutThisJobModal={this.toggleAboutThisJobModal}
