@@ -38,12 +38,15 @@ class SubmitArea extends React.PureComponent {
 
 
   onSubmit() {
-    const opt = {
-      handleIsOpen: this.handleIsOpen.bind(this),
-      handleHasClose: this.handleHasClose.bind(this),
-      handleFeedback: this.handleFeedback.bind(this),
-    };
-    return this.props.onSubmit(opt);
+    return this.props.onSubmit()
+      .then(Feedback => {
+        this.handleIsOpen(true);
+        this.handleHasClose(false);
+        return this.handleFeedback(Feedback({
+          buttonClick: () => this.handleIsOpen(false),
+        }));
+      })
+      .catch(e => console.log(e));
   }
 
   onFacebookFail() {
