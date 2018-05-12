@@ -8,7 +8,7 @@
   border: 1px solid main-gray;
 
   textarea& {
-    height: calc(INPUT_HEIGHT * 5);
+    height: calc(INPUT_HEIGHT * 6);
   }
 
   &:focus{
