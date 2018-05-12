@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import ReactPixel from 'react-facebook-pixel';
+import R from 'ramda';
 
 import Loader from 'common/Loader';
 import { Section } from 'common/base';
@@ -22,7 +23,7 @@ import {
   queryMenu,
   queryEntry,
 } from '../../actions/laborRights';
-import fetchingStatus from '../../constants/status';
+import { isFetching, isUnfetched, isError, isFetched } from '../../constants/status';
 import { MARKDOWN_DIVIDER } from '../../constants/hideContent';
 import { SITE_NAME } from '../../constants/helmetData';
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
@@ -110,13 +111,10 @@ class LaborRightsSingle extends React.Component {
             { rel: 'canonical', href: formatCanonicalPath(`/labor-rights/${id}`) },
           ]}
         />
-        {(entryStatus === fetchingStatus.FETCHING || entryStatus === fetchingStatus.UNFETCHED) && <Loader />}
+        { R.anyPass([isFetching, isUnfetched])(entryStatus) && <Loader /> }
+        { isError(entryStatus) && entryError.get('statusCode') === 400 && <NotFound /> }
         {
-          entryStatus === fetchingStatus.ERROR && entryError.get('message') === 'Not found' &&
-            <NotFound />
-        }
-        {
-          entryStatus === fetchingStatus.FETCHED &&
+          isFetched(entryStatus) &&
             <div>
               <Body
                 title={title}

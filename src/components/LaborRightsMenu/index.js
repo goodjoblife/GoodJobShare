@@ -6,7 +6,7 @@ import Loader from 'common/Loader';
 import Columns from 'common/Columns';
 import { Section, Wrapper, Heading } from 'common/base';
 import { queryMenu } from '../../actions/laborRights';
-import fetchingStatus from '../../constants/status';
+import { isFetching, isError, isFetched } from '../../constants/status';
 import { shareLink } from '../../constants/dataProgress';
 import LaborRightsEntry from './LaborRightsEntry';
 import About from './About';
@@ -39,13 +39,13 @@ class LaborRightsMenu extends React.Component {
       <Section Tag="main" pageTop>
         <Wrapper size="l" Tag="main">
           <Helmet {...HELMET_DATA.LABOR_RIGHTS_MENU} />
-          {status === fetchingStatus.FETCHING && <Loader />}
+          { isFetching(status) && <Loader /> }
           {
-            status === fetchingStatus.ERROR && menuError &&
+            isError(status) && menuError &&
               <Heading center size="m" Tag="div">{menuError.toString()}</Heading>
           }
           {
-            status === fetchingStatus.FETCHED &&
+            isFetched(status) &&
               <section>
                 <Heading size="l" center marginBottom>{title}</Heading>
                 <Columns
