@@ -102,8 +102,7 @@ class TimeSalaryForm extends React.PureComponent {
     });
   }
 
-  onSubmit(opt) {
-    const { handleIsOpen, handleHasClose, handleFeedback } = opt;
+  onSubmit() {
     const valid = basicFormCheck(getBasicForm(this.state));
     const valid2 = salaryFormCheck(getSalaryForm(this.state));
     const valid3 = timeFormCheck(getTimeForm(this.state));
@@ -117,17 +116,6 @@ class TimeSalaryForm extends React.PureComponent {
 
       return p.then(response => {
         const count = response.queries_count;
-        handleIsOpen(true);
-        handleHasClose(false);
-        handleFeedback(
-          <SuccessFeedback
-            info={`您已經上傳 ${count} 次，還有 ${5 - (count || 0)} 次可以上傳。`}
-            buttonText="查看最新工時、薪資"
-            buttonClick={() => {
-              window.location.replace('/time-and-salary/latest');
-            }}
-          />
-        );
 
         ReactGA.event({
           category: GA_CATEGORY.SHARE_TIME_SALARY,
@@ -138,20 +126,32 @@ class TimeSalaryForm extends React.PureComponent {
           currency: 'TWD',
           content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_TIME_AND_SALARY,
         });
-      }, error => {
-        handleIsOpen(true);
-        handleHasClose(false);
-        handleFeedback(
-          <FailFeedback
-            info={error.message}
-            buttonClick={() => handleIsOpen(false)}
-          />
-        );
 
+        return (
+          () => (
+            <SuccessFeedback
+              info={`您已經上傳 ${count} 次，還有 ${5 - (count || 0)} 次可以上傳。`}
+              buttonText="查看最新工時、薪資"
+              buttonClick={() => {
+                window.location.replace('/time-and-salary/latest');
+              }}
+            />
+          )
+        );
+      }, error => {
         ReactGA.event({
           category: GA_CATEGORY.SHARE_TIME_SALARY,
           action: GA_ACTION.UPLOAD_FAIL,
         });
+
+        return (
+          ({ buttonClickCallback }) => (
+            <FailFeedback
+              info={error.message}
+              buttonClick={buttonClickCallback}
+            />
+          )
+        );
       });
     }
     this.handleState('submitted')(true);
@@ -164,7 +164,7 @@ class TimeSalaryForm extends React.PureComponent {
         smooth: true,
       });
     }
-    return null;
+    return Promise.reject();
   }
 
   getTopInvalidElement = () => {

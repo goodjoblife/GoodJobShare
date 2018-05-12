@@ -130,8 +130,7 @@ class WorkExperiencesForm extends React.Component {
     });
   }
 
-  onSubmit(opt) {
-    const { handleIsOpen, handleHasClose, handleFeedback } = opt;
+  onSubmit() {
     const valid = workExperiencesFormCheck(propsWorkExperiencesForm(this.state));
 
     if (valid) {
@@ -139,15 +138,6 @@ class WorkExperiencesForm extends React.Component {
       const p = postWorkExperience(workExperiencesToBody(this.state));
       return p.then(response => {
         const experienceId = response.experience._id;
-        handleIsOpen(true);
-        handleHasClose(false);
-        handleFeedback(
-          <SuccessFeedback
-            buttonClick={() => (
-              window.location.replace(`/experiences/${experienceId}`)
-            )}
-          />
-        );
 
         ReactGA.event({
           category: GA_CATEGORY.SHARE_WORK,
@@ -158,20 +148,30 @@ class WorkExperiencesForm extends React.Component {
           currency: 'TWD',
           content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_WORK_EXPERIENCE,
         });
-      }, error => {
-        handleIsOpen(true);
-        handleHasClose(false);
-        handleFeedback(
-          <FailFeedback
-            info={error.message}
-            buttonClick={() => handleIsOpen(false)}
-          />
-        );
 
+        return (
+          () => (
+            <SuccessFeedback
+              buttonClick={() => (
+                window.location.replace(`/experiences/${experienceId}`)
+              )}
+            />
+          )
+        );
+      }, error => {
         ReactGA.event({
           category: GA_CATEGORY.SHARE_WORK,
           action: GA_ACTION.UPLOAD_FAIL,
         });
+
+        return (
+          ({ buttonClickCallback }) => (
+            <FailFeedback
+              info={error.message}
+              buttonClick={buttonClickCallback}
+            />
+          )
+        );
       });
     }
     this.handleState('submitted')(true);
@@ -184,7 +184,7 @@ class WorkExperiencesForm extends React.Component {
         smooth: true,
       });
     }
-    return null;
+    return Promise.reject();
   }
 
   getTopInvalidElement = () => {
