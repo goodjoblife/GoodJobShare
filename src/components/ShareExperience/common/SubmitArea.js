@@ -180,7 +180,7 @@ class SubmitArea extends React.PureComponent {
 }
 
 SubmitArea.propTypes = {
-  onSubmit: PropTypes.func,
+  onSubmit: PropTypes.func, // () => Promise<({ buttonClickCallback?: () => void }) => Component>
   auth: ImmutablePropTypes.map,
   login: PropTypes.func.isRequired,
   FB: PropTypes.object,
