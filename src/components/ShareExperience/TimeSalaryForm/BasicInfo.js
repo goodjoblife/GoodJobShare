@@ -94,7 +94,7 @@ class BasicInfo extends React.PureComponent {
           <div className={styles.formGroupTwo}>
             <div className={styles.formGroup}>
               <JobTitleWithValidation
-                inputTitle="應徵職稱"
+                inputTitle="職稱"
                 jobTitle={jobTitle}
                 onChange={handleState('jobTitle')}
                 validator={jobTitleValidator}
