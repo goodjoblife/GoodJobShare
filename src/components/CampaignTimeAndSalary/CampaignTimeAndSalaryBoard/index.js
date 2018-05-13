@@ -221,7 +221,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     const raw = data.toJS();
 
     // 如果 campaign_name 不在清單中，代表 Not Found
-    if (isFetched(campaignEntriesStatus) && !campaignEntries.has(campaign_name)) {
+    if (isFetched(campaignEntriesStatus) && !campaignEntries.has(campaignName)) {
       return <CommonNotFound />;
     }
 
