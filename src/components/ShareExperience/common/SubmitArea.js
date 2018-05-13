@@ -7,37 +7,9 @@ import ButtonSubmit from 'common/button/ButtonSubmit';
 import Checkbox from 'common/form/Checkbox';
 import Modal from 'common/Modal';
 
-import SuccessFeedback from './SuccessFeedback';
-import FailFeedback from './FailFeedback';
 import FacebookFail from './FacebookFail';
 
 import authStatus from '../../../constants/authStatus';
-
-const getSuccessFeedback = id => (
-  <SuccessFeedback
-    buttonClick={() => (
-      window.location.replace(`/experiences/${id}`)
-    )}
-  />
-);
-
-const getWorkingsSuccessFeedback = (count, campaignName = null) => (
-  <SuccessFeedback
-    info={`您已經上傳 ${count} 次，還有 ${5 - (count || 0)} 次可以上傳。`}
-    buttonText="查看最新工時、薪資"
-    buttonClick={() => {
-      const url = campaignName ? `/time-and-salary/campaigns/${campaignName}/latest` : '/time-and-salary/latest';
-      window.location.replace(url);
-    }}
-  />
-);
-
-const getFailFeedback = (info, buttonClick) => (
-  <FailFeedback
-    info={info}
-    buttonClick={buttonClick}
-  />
-);
 
 const getFacebookFail = buttonClick => (
   <FacebookFail
@@ -66,36 +38,15 @@ class SubmitArea extends React.PureComponent {
 
 
   onSubmit() {
-    const p = this.props.onSubmit();
-    const { type, campaignName } = this.props;
-
-    if (p) {
-      return p
-        .then(r => {
-          if (type === 'workings') {
-            return r.queries_count;
-          }
-          return r.experience._id;
-        })
-        .then(id => {
-          this.handleIsOpen(true);
-          this.handleHasClose(false);
-          if (type === 'workings') {
-            return this.handleFeedback(getWorkingsSuccessFeedback(id, campaignName));
-          }
-          return this.handleFeedback(getSuccessFeedback(id));
-        })
-        .catch(error => {
-          this.handleIsOpen(true);
-          this.handleHasClose(false);
-          return this.handleFeedback(getFailFeedback(
-            error.message,
-            () => this.handleIsOpen(false),
-          ));
-        });
-    }
-
-    return Promise.resolve();
+    return this.props.onSubmit()
+      .then(Feedback => {
+        this.handleIsOpen(true);
+        this.handleHasClose(false);
+        return this.handleFeedback(Feedback({
+          buttonClick: () => this.handleIsOpen(false),
+        }));
+      })
+      .catch(e => console.log(e));
   }
 
   onFacebookFail() {
@@ -229,9 +180,7 @@ class SubmitArea extends React.PureComponent {
 }
 
 SubmitArea.propTypes = {
-  type: PropTypes.string,
-  campaignName: PropTypes.string,
-  onSubmit: PropTypes.func,
+  onSubmit: PropTypes.func, // () => Promise<({ buttonClickCallback?: () => void }) => Component>
   auth: ImmutablePropTypes.map,
   login: PropTypes.func.isRequired,
   FB: PropTypes.object,

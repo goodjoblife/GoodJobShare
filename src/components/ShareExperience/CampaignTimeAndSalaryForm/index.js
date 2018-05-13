@@ -56,6 +56,9 @@ import {
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
 
+import SuccessFeedback from '../common/SuccessFeedback';
+import FailFeedback from '../common/FailFeedback';
+
 const defaultForm = {
   company: '',
   companyId: '',
@@ -154,7 +157,9 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
         portTimeSalaryFormToRequestFormat(getCampaignTimeAndSalaryForm(extraFields, defaultContent)(this.state))
       );
 
-      p.then(() => {
+      return p.then(response => {
+        const count = response.queries_count;
+
         ReactGA.event({
           category: GA_CATEGORY.SHARE_TIME_SALARY,
           action: GA_ACTION.UPLOAD_SUCCESS,
@@ -164,14 +169,33 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
           currency: 'TWD',
           content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_TIME_AND_SALARY,
         });
-      }).catch(() => {
+
+        return (
+          () => (
+            <SuccessFeedback
+              info={`您已經上傳 ${count} 次，還有 ${5 - (count || 0)} 次可以上傳。`}
+              buttonText="查看最新工時、薪資"
+              buttonClick={() => {
+                window.location.replace(`/time-and-salary/campaigns/${campaignName}/latest`);
+              }}
+            />
+          )
+        );
+      }, error => {
         ReactGA.event({
           category: GA_CATEGORY.SHARE_TIME_SALARY,
           action: GA_ACTION.UPLOAD_FAIL,
         });
-      });
 
-      return p;
+        return (
+          ({ buttonClickCallback }) => (
+            <FailFeedback
+              info={error.message}
+              buttonClick={buttonClickCallback}
+            />
+          )
+        );
+      });
     }
     this.handleState('submitted')(true);
     const topInvalidElement = this.getTopInvalidElement();
@@ -183,7 +207,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
         smooth: true,
       });
     }
-    return null;
+    return Promise.reject();
   }
 
   setCampaignInfoFromEntries(campaignEntries) {
@@ -411,7 +435,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
           />
         </IconHeadingBlock>
 
-        <SubmitArea onSubmit={this.onSubmit} type="workings" campaignName={campaignName} />
+        <SubmitArea onSubmit={this.onSubmit} />
         <div className={styles.infoBlock}>
           <MarkdownParser content={formEnding} />
         </div>

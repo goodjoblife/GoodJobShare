@@ -74,9 +74,11 @@ export const getFrequency = item => {
 };
 
 export const getWeekWorkTime = item => (
-  <div className={commonStyles.bar} style={{ width: `${item.week_work_time >= 100 ? 100 : item.week_work_time}%` }} >
-    {item.week_work_time}
-  </div>
+  item.week_work_time ? (
+    <div className={commonStyles.bar} style={{ width: `${item.week_work_time >= 100 ? 100 : item.week_work_time}%` }} >
+      {item.week_work_time}
+    </div>
+  ) : '-'
 );
 
 export const getSalary = item => {

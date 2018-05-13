@@ -9,7 +9,7 @@ import Loading from 'common/Loader';
 import { P } from 'common/base';
 import WorkingHourBlock from '../common/WorkingHourBlock';
 import { queryCompany } from '../../../actions/timeAndSalaryCompany';
-import fetchingStatus from '../../../constants/status';
+import { isFetching, isFetched } from '../../../constants/status';
 
 import styles from '../views/view.module.css';
 
@@ -113,8 +113,8 @@ export default class TimeAndSalaryCompany extends Component {
             </div>
           </div>
         </div>
-        { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
-        { status === fetchingStatus.FETCHED && raw.length === 0 &&
+        { isFetching(status) && (<Loading size="s" />) }
+        { isFetched(status) && raw.length === 0 &&
           <P
             size="l" bold
             className={styles.searchNoResult}

@@ -9,13 +9,14 @@ import { Link } from 'react-router-dom';
 
 import { Star } from 'common/icons';
 import Select from 'common/form/Select';
+import CommonNotFound from 'common/NotFound';
 import InfoTimeModal from '../../TimeAndSalary/common/InfoTimeModal';
 import InfoSalaryModal from '../../TimeAndSalary/common/InfoSalaryModal';
 import AboutThisJobModal from '../../TimeAndSalary/common/AboutThisJobModal';
 import timeAndSalaryBoardStyles from '../../TimeAndSalary/TimeAndSalaryBoard/TimeAndSalaryBoard.module.css';
 import timeAndSalaryBannerStyles from '../../TimeAndSalary/Banner.module.css';
 import timeAndSalaryCommonStyles from '../../TimeAndSalary/views/view.module.css';
-import fetchingStatus from '../../../constants/status';
+import fetchingStatus, { isFetched } from '../../../constants/status';
 import { MAX_ROWS_IF_HIDDEN } from '../../../constants/hideContent';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 import styles from '../CampaignTimeAndSalary.module.css';
@@ -216,8 +217,13 @@ export default class CampaignTimeAndSalaryBoard extends Component {
   render() {
     const { path, params: { campaign_name: campaignName } } = this.props.match;
     const { title } = pathnameMapping[path];
-    const { campaignEntriesStatus, status, data, switchPath } = this.props;
+    const { campaignEntries, campaignEntriesStatus, status, data, switchPath } = this.props;
     const raw = data.toJS();
+
+    // 如果 campaign_name 不在清單中，代表 Not Found
+    if (isFetched(campaignEntriesStatus) && !campaignEntries.has(campaign_name)) {
+      return <CommonNotFound />;
+    }
 
     const isLoading = campaignEntriesStatus === fetchingStatus.FETCHIING || status === fetchingStatus.FETCHING;
 
