@@ -43,6 +43,9 @@ import {
   LS_TIME_SALARY_FORM_KEY,
 } from '../../../constants/localStorageKey';
 
+import SuccessFeedback from '../common/SuccessFeedback';
+import FailFeedback from '../common/FailFeedback';
+
 const defaultForm = {
   company: '',
   companyId: '',
@@ -105,11 +108,15 @@ class TimeSalaryForm extends React.PureComponent {
     const valid3 = timeFormCheck(getTimeForm(this.state));
 
     if (valid && (valid2 || valid3)) {
+      localStorage.removeItem(LS_TIME_SALARY_FORM_KEY);
+
       const p = postWorkings(
         portTimeSalaryFormToRequestFormat(getTimeAndSalaryForm(this.state))
       );
 
-      p.then(() => {
+      return p.then(response => {
+        const count = response.queries_count;
+
         ReactGA.event({
           category: GA_CATEGORY.SHARE_TIME_SALARY,
           action: GA_ACTION.UPLOAD_SUCCESS,
@@ -119,15 +126,33 @@ class TimeSalaryForm extends React.PureComponent {
           currency: 'TWD',
           content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_TIME_AND_SALARY,
         });
-      }).catch(() => {
+
+        return (
+          () => (
+            <SuccessFeedback
+              info={`您已經上傳 ${count} 次，還有 ${5 - (count || 0)} 次可以上傳。`}
+              buttonText="查看最新工時、薪資"
+              buttonClick={() => {
+                window.location.replace('/time-and-salary/latest');
+              }}
+            />
+          )
+        );
+      }, error => {
         ReactGA.event({
           category: GA_CATEGORY.SHARE_TIME_SALARY,
           action: GA_ACTION.UPLOAD_FAIL,
         });
-      });
-      localStorage.removeItem(LS_TIME_SALARY_FORM_KEY);
 
-      return p;
+        return (
+          ({ buttonClickCallback }) => (
+            <FailFeedback
+              info={error.message}
+              buttonClick={buttonClickCallback}
+            />
+          )
+        );
+      });
     }
     this.handleState('submitted')(true);
     const topInvalidElement = this.getTopInvalidElement();
@@ -139,7 +164,7 @@ class TimeSalaryForm extends React.PureComponent {
         smooth: true,
       });
     }
-    return null;
+    return Promise.reject();
   }
 
   getTopInvalidElement = () => {
@@ -277,7 +302,7 @@ class TimeSalaryForm extends React.PureComponent {
           />
         </IconHeadingBlock>
 
-        <SubmitArea onSubmit={this.onSubmit} type="workings" />
+        <SubmitArea onSubmit={this.onSubmit} />
       </div>
     );
   }
