@@ -16,8 +16,7 @@ class NotFound extends Component {
   }
 
   render() {
-    const { staticContext, match: { params: { campaign_name: campaignName } } } = this.props;
-    const { campaignEntries, campaignEntriesStatus } = this.props;
+    const { staticContext, campaignName, campaignEntries, campaignEntriesStatus } = this.props;
 
     if (isFetched(campaignEntriesStatus) && !campaignEntries.has(campaignName)) {
       return <CommonNotFound />;
@@ -32,11 +31,7 @@ class NotFound extends Component {
 
 NotFound.propTypes = {
   staticContext: PropTypes.object,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      campaign_name: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
+  campaignName: PropTypes.string.isRequired,
   campaignEntries: ImmutablePropTypes.map.isRequired,
   campaignEntriesStatus: PropTypes.string.isRequired,
   queryCampaignInfoList: PropTypes.func.isRequired,
