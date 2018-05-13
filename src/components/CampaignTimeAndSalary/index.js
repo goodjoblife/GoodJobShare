@@ -88,7 +88,7 @@ export default class TimeAndSalary extends Component {
     const url = formatCanonicalPath(path);
     const campaignName = this.props.match.params.campaign_name;
     if (!this.props.campaignEntries.has(campaignName)) {
-      // We will render a 404 Not Found
+      // We will render a 301 / 404
       return null;
     }
     const campaignInfo = this.props.campaignEntries.get(campaignName).toJS();

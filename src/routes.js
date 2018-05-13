@@ -8,7 +8,7 @@ import TimeAndSalaryJobTitle from './containers/TimeAndSalary/TimeAndSalaryJobTi
 import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
 import CampaignTimeAndSalary from './containers/CampaignTimeAndSalary';
 import CampaignTimeAndSalaryBoard from './containers/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
-import CampaignTimeAndSalaryNotFound from './components/CampaignTimeAndSalary/NotFound';
+import CampaignTimeAndSalaryNotFound from './containers/CampaignTimeAndSalary/NotFound';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
 import ExperienceDetail from './containers/ExperienceDetail';
 import NotFound from './components/common/NotFound';
