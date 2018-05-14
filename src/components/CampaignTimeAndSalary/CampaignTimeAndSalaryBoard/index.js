@@ -26,6 +26,7 @@ import { queryCampaignTimeAndSalary } from '../../../actions/campaignTimeAndSala
 import GradientMask from '../../common/GradientMask';
 
 import DashBoardTable from '../../TimeAndSalary/common/DashBoardTable';
+import { campaignNameSelector, campaignEntriesSelector } from '../../../selectors/campaignSelector';
 
 const pathnameMapping = {
   '/time-and-salary/campaigns/:campaign_name/work-time-dashboard': {
@@ -93,8 +94,6 @@ const injectPermissionBlock = campaignName => rows => {
   return newRows;
 };
 
-const campaignEntriesSelector = state => state.campaignInfo.get('entries');
-
 const queryJobTitlesFromCampaignEntries = (campaignEntries, campaignName) => {
   const campaignInfo = campaignEntries.get(campaignName);
   return campaignInfo ? campaignInfo.toJS().queryJobTitles : [];
@@ -102,6 +101,7 @@ const queryJobTitlesFromCampaignEntries = (campaignEntries, campaignName) => {
 
 export default class CampaignTimeAndSalaryBoard extends Component {
   static propTypes = {
+    campaignName: PropTypes.string.isRequired,
     campaignEntries: ImmutablePropTypes.map.isRequired,
     campaignEntriesStatus: PropTypes.string.isRequired,
     queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
@@ -116,8 +116,9 @@ export default class CampaignTimeAndSalaryBoard extends Component {
   }
 
   static fetchData({ match, store: { dispatch, getState } }) {
-    const { path, params: { campaign_name: campaignName } } = match;
+    const { path } = match;
     const { sortBy, order } = pathnameMapping[path];
+    const campaignName = campaignNameSelector(match);
 
     return dispatch(queryCampaignInfoList()).then(() => {
       const campaignEntries = campaignEntriesSelector(getState());
@@ -148,7 +149,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
   }
 
   componentDidMount() {
-    const { campaignEntries, match: { path, params: { campaign_name: campaignName } } } = this.props;
+    const { campaignName, campaignEntries, match: { path } } = this.props;
     const jobTitles = queryJobTitlesFromCampaignEntries(campaignEntries, campaignName);
     const { sortBy, order } = pathnameMapping[path];
     this.props.queryCampaignInfoListIfNeeded().then(() => {
@@ -159,9 +160,11 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     $(window).on('scroll', this.handleScroll);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.match.path !== nextProps.match.path || this.props.match.params.campaign_name !== nextProps.match.params.campaign_name) {
-      const { campaignEntries, match: { path, params: { campaign_name: campaignName } } } = nextProps;
+  componentDidUpdate(prevProps) {
+    const { campaignName: prevCampaignName, match: { path: prevPath } } = prevProps;
+    const { campaignName, campaignEntries, match: { path } } = this.props;
+
+    if (prevPath !== path || prevCampaignName !== campaignName) {
       const jobTitles = queryJobTitlesFromCampaignEntries(campaignEntries, campaignName);
       const { sortBy, order } = pathnameMapping[path];
       this.props.queryCampaignInfoListIfNeeded().then(() => {
@@ -202,7 +205,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     const threshold = $(document).height() - 100;
     if (view < threshold) return;
 
-    const { path, params: { campaign_name: campaignName } } = this.props.match;
+    const { campaignName, match: { path } } = this.props;
     const { sortBy, order } = pathnameMapping[path];
     this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order });
   }
@@ -215,12 +218,12 @@ export default class CampaignTimeAndSalaryBoard extends Component {
   }
 
   render() {
-    const { path, params: { campaign_name: campaignName } } = this.props.match;
+    const { campaignName, campaignEntries, campaignEntriesStatus, match: { path } } = this.props;
     const { title } = pathnameMapping[path];
-    const { campaignEntries, campaignEntriesStatus, status, data, switchPath } = this.props;
+    const { status, data, switchPath } = this.props;
     const raw = data.toJS();
 
-    // 如果 campaign_name 不在清單中，代表 Not Found
+    // 如果 campaignName 不在清單中，代表 Not Found
     if (isFetched(campaignEntriesStatus) && !campaignEntries.has(campaignName)) {
       return <CommonNotFound />;
     }

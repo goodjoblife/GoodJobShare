@@ -39,17 +39,13 @@ export default class TimeAndSalary extends Component {
   }
 
   static propTypes = {
+    campaignName: PropTypes.string.isRequired,
     campaignEntries: ImmutablePropTypes.map.isRequired,
     queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
     routes: PropTypes.array,
     location: PropTypes.shape({
       pathname: PropTypes.string,
     }),
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        campaign_name: PropTypes.string,
-      }),
-    }).isRequired,
   }
 
   constructor(props) {
@@ -86,12 +82,12 @@ export default class TimeAndSalary extends Component {
   renderHelmet = () => {
     const path = this.props.location.pathname;
     const url = formatCanonicalPath(path);
-    const campaignName = this.props.match.params.campaign_name;
-    if (!this.props.campaignEntries.has(campaignName)) {
+    const { campaignName, campaignEntries } = this.props;
+    if (!campaignEntries.has(campaignName)) {
       // We will render a 301 / 404
       return null;
     }
-    const campaignInfo = this.props.campaignEntries.get(campaignName).toJS();
+    const campaignInfo = campaignEntries.get(campaignName).toJS();
     const { title: campaignTitle, ogImgUrl } = campaignInfo;
 
     // default title and description
@@ -126,7 +122,8 @@ export default class TimeAndSalary extends Component {
 
   render() {
     const { routes } = this.props;
-    const campaigns = campaignListFromEntries(this.props.campaignEntries);
+    const { campaignEntries } = this.props;
+    const campaigns = campaignListFromEntries(campaignEntries);
 
     return (
       <div className={timeAndSalaryStyles.container}>
