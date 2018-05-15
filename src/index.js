@@ -7,16 +7,23 @@ import { ConnectedRouter } from 'react-router-redux';
 import Root from './containers/Root';
 import configureStore from './store/configureStore';
 
-const preloadedState = {};
-// TODO
-Object.keys(window.__data).forEach(key => {
-  if (key === 'routing') {
-    preloadedState[key] = window.__data[key];
-  } else {
-    preloadedState[key] = fromJS(window.__data[key]);
+function parseState(window) {
+  if (!window.__data) {
+    return {};
   }
-});
-delete window.__data;
+  const preloadedState = {};
+  Object.keys(window.__data).forEach(key => {
+    if (key === 'routing') {
+      preloadedState[key] = window.__data[key];
+    } else {
+      preloadedState[key] = fromJS(window.__data[key]);
+    }
+  });
+  // delete window.__data;
+  return preloadedState;
+}
+
+const preloadedState = parseState(window);
 
 const history = createHistory();
 const store = configureStore(preloadedState, history);
