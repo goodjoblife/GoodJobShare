@@ -51,7 +51,6 @@
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "jest": "^17.0.3",
-    "json-loader": "^0.5.4",
     "lint-staged": "^4.0.2",
     "postcss-loader": "^2.0.9",
     "postcss-mixins": "^6.0.1",
@@ -77,7 +76,6 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.6",
     "@fortawesome/react-fontawesome": "^0.0.17",
     "classnames": "^2.2.5",
-    "contentful": "^4.1.2",
     "eslint-import-resolver-webpack": "^0.8.1",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
@@ -107,7 +105,6 @@
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.1",
     "serialize-javascript": "^1.3.0",
-    "serve-favicon": "^2.3.2",
     "webpack-isomorphic-tools": "^3.0.5"
   }
 }

@@ -1,6 +1,5 @@
 /* global webpackIsomorphicTools */
 import Express from 'express';
-import favicon from 'serve-favicon';
 import path from 'path';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
@@ -30,8 +29,6 @@ const matchRoutes = (pathname, routes) => {
 
 
 export default (app, webpackIsomorphicTools) => {
-  app.use(favicon(path.join(__dirname, 'components', 'images', 'favicon.ico'))); // eslint-disable-line max-len
-
   app.use(Express.static(path.join(__dirname, '..', 'dist'), { index: false })); // eslint-disable-line max-len
 
   if (process.env.NODE_ENV !== 'production') {
