@@ -5,6 +5,7 @@ import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
 import { ScrollContext } from 'react-router-scroll-4';
 import App from '../components/Layout';
+import { GA_ID, PIXEL_ID } from '../config';
 
 const logPageView = location => {
   ReactGA.set({ page: location.pathname + location.search });
@@ -41,10 +42,10 @@ class Root extends Component {
 
   init = () => {
     // initialize google analytics
-    ReactGA.initialize(process.env.GA_ID);
+    ReactGA.initialize(GA_ID);
 
     // initialize facebook pixel
-    ReactPixel.init(process.env.PIXEL_ID);
+    ReactPixel.init(PIXEL_ID);
     ReactPixel.pageView();
   }
 
