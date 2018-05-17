@@ -1,16 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import Redirect from 'common/routing/Redirect';
 
-const NotFound = ({ staticContext }) => {
-  if (staticContext) {
-    staticContext.status = 301; // eslint-disable-line no-param-reassign
-  }
-  return (<Redirect to="/time-and-salary/latest" />);
-};
-
-NotFound.propTypes = {
-  staticContext: PropTypes.object,
-};
+const NotFound = () => (
+  <Redirect to="/time-and-salary/latest" />
+);
 
 export default NotFound;
