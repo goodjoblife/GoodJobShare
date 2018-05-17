@@ -69,7 +69,8 @@ class WorkingHourBlock extends Component {
     return (
       <section className={styles.container}>
         <button
-          className={styles.toggleButton} onClick={() => {
+          className={styles.toggleButton}
+          onClick={() => {
             this.setState({
               isExpanded: !this.state.isExpanded,
             });

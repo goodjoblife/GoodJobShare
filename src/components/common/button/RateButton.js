@@ -43,7 +43,7 @@ class RateButton extends React.PureComponent {
           Array(max)
             .fill(null)
             .map((_, index) => index + 1)
-            .map(ele =>
+            .map(ele => (
               <div
                 key={ele}
                 onMouseEnter={this.onMouseEnter(ele)}
@@ -59,7 +59,7 @@ class RateButton extends React.PureComponent {
                   hover={hover >= ele}
                 />
               </div>
-            )
+            ))
         }
       </div>
     );

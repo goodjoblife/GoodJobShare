@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import cn from 'classnames';
 import styles from './Popover.module.css';
 
-const Popover = ({ active, className, children }) =>
+const Popover = ({ active, className, children }) => (
   <div
     className={cn(
       styles.popover,
@@ -14,7 +14,8 @@ const Popover = ({ active, className, children }) =>
     onClick={e => { e.stopPropagation(); }}
   >
     {children}
-  </div>;
+  </div>
+);
 
 Popover.propTypes = {
   children: PropTypes.node.isRequired,

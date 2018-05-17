@@ -20,14 +20,14 @@ class Select extends React.PureComponent {
             <option value={''}>{this.props.nullOptionText}</option>
           )}
           {
-            this.props.options.map(option =>
+            this.props.options.map(option => (
               <option
                 key={option.value}
                 value={option.value}
               >
                 {option.label}
               </option>
-            )
+            ))
           }
         </select>
         <div

@@ -116,7 +116,8 @@ export default class TimeAndSalaryCompany extends Component {
         { isFetching(status) && (<Loading size="s" />) }
         { isFetched(status) && raw.length === 0 &&
           <P
-            size="l" bold
+            size="l"
+            bold
             className={styles.searchNoResult}
           >
               尚未有公司「{company}」的薪時資訊

@@ -297,7 +297,8 @@ class TimeSalaryForm extends React.PureComponent {
 
           <InputTitle text="電子郵件 - 有消息時將通知您" />
           <TextInput
-            value={email} placeholder="example@email.com"
+            value={email}
+            placeholder="example@email.com"
             onChange={e => this.handleState('email')(e.target.value)}
           />
         </IconHeadingBlock>

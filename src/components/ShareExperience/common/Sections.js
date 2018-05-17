@@ -13,7 +13,7 @@ const Sections = ({ sections, removeSection, editSection, validator, submitted }
       className={isWarning ? styles.warning : ''}
     >
       {
-        sections.map(section =>
+        sections.map(section => (
           <div
             key={section.id}
             className={styles.section}
@@ -28,7 +28,7 @@ const Sections = ({ sections, removeSection, editSection, validator, submitted }
               titlePlaceholder={section.titlePlaceholder}
             />
           </div>
-        )
+        ))
       }
       {
         isWarning ?

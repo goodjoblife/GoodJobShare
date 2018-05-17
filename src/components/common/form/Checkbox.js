@@ -12,8 +12,11 @@ const Checkbox = ({
     style={{ margin, ...style }}
   >
     <input
-      type="checkbox" id={id || `checkbox-${value}`}
-      name={name} value={value} checked={checked}
+      type="checkbox"
+      id={id || `checkbox-${value}`}
+      name={name}
+      value={value}
+      checked={checked}
       onChange={onChange}
     />
     <label htmlFor={id || `checkbox-${value}`}>

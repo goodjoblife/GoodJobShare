@@ -45,7 +45,7 @@ const EmploymentType = ({ employmentType, inputTitle, onChange, validator, submi
                 className={`pS ${styles.warning__wording}`}
               >
                 需填寫職務型態
-            </p>
+              </p>
             </div>
             : null
         }

@@ -44,7 +44,7 @@ export default class Html extends Component {
           { /* TODO 插入 css reset */ }
 
           {/* styles (will be present only in production with webpack extract text plugin)  // eslint-disable-line max-len */}
-          {Object.keys(assets.styles).map((style, key) =>
+          {Object.keys(assets.styles).map((style, key) => (
             <link
               href={assets.styles[style]}
               key={key}
@@ -53,7 +53,7 @@ export default class Html extends Component {
               type="text/css"
               charSet="UTF-8"
             />
-          )}
+          ))}
         </head>
         <body>
           <div
@@ -72,6 +72,7 @@ export default class Html extends Component {
           <script src={assets.javascript.main} charSet="UTF-8" />
           {/* Hotjar Tracking Code for https://www.goodjob.life --> */}
           <script
+            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: `(function(h,o,t,j,a,r){
               h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
               h._hjSettings={hjid:648683,hjsv:6};

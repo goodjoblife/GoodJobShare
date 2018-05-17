@@ -1,4 +1,3 @@
-/* global webpackIsomorphicTools */
 import Express from 'express';
 import path from 'path';
 import ReactDOMServer from 'react-dom/server';

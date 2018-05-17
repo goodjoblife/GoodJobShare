@@ -470,7 +470,8 @@ class ExperienceSearch extends Component {
 
               {(data.searchQuery && data.experienceCount === 0 && loadingStatus !== status.FETCHING) &&
                 <P
-                  size="l" bold
+                  size="l"
+                  bold
                   className={styles.searchNoResult}
                 >
                     尚未有「{data.searchQuery}」的經驗分享

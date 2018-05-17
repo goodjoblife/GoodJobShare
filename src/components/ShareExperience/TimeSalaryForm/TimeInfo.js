@@ -114,7 +114,9 @@ class TimeInfo extends React.PureComponent {
               { label: '幾乎每天', value: '3' },
             ].map(o => (
               <RadioButton
-                key={o.value} label={o.label} value={o.value}
+                key={o.value}
+                label={o.label}
+                value={o.value}
                 name="overtimeFrequency"
                 emoji={`emoji${o.value}`}
                 id={`overtimeFrequency-${o.value}`}
@@ -138,7 +140,9 @@ class TimeInfo extends React.PureComponent {
               { label: '不知道', value: 'don\'t know' },
             ].map(o => (
               <RadioButton
-                key={o.value} label={o.label} value={o.value}
+                key={o.value}
+                label={o.label}
+                value={o.value}
                 id={`hasOvertimeSalary-${o.value}`}
                 checked={hasOvertimeSalary === o.value}
                 onChange={e => {
@@ -157,8 +161,11 @@ class TimeInfo extends React.PureComponent {
               { label: '有，不清楚是否符合勞基法', value: 'don\'t know' },
             ].map(o => (
               <Radio
-                key={o.value} id={`isOvertimeSalaryLegal-${o.value}`}
-                label={o.label} value={o.value} margin="10px 0 5px 0"
+                key={o.value}
+                id={`isOvertimeSalaryLegal-${o.value}`}
+                label={o.label}
+                value={o.value}
+                margin="10px 0 5px 0"
                 checked={isOvertimeSalaryLegal === o.value}
                 onChange={e => {
                   handleState('isOvertimeSalaryLegal')(
@@ -179,7 +186,9 @@ class TimeInfo extends React.PureComponent {
               { label: '不知道', value: 'don\'t know' },
             ].map(o => (
               <RadioButton
-                key={o.value} label={o.label} value={o.value}
+                key={o.value}
+                label={o.label}
+                value={o.value}
                 id={`hasCompensatoryDayoff-${o.value}`}
                 checked={hasCompensatoryDayoff === o.value}
                 onChange={e => {

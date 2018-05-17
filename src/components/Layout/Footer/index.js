@@ -33,8 +33,11 @@ const Footer = () => (
         <span
           className={cn('fb-like', styles.fbLike)}
           data-href="https://www.facebook.com/goodjob.life/"
-          data-layout="button_count" data-action="like" data-size="small"
-          data-show-faces="true" data-share="false"
+          data-layout="button_count"
+          data-action="like"
+          data-size="small"
+          data-show-faces="true"
+          data-share="false"
         />
       </Wrapper>
     </section>
