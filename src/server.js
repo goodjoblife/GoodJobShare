@@ -10,9 +10,10 @@ import Html from './helpers/Html';
 import App from './containers/App';
 import rootRoutes from './routes';
 
-const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
+const assets = require(process.env.RAZZLE_ASSETS_MANIFEST); // eslint-disable-line import/no-dynamic-require
 
 const matchRoutes = (pathname, routes) => {
+  // eslint-disable-next-line no-restricted-syntax
   for (const route of routes) {
     const match = matchPath(pathname, route);
     if (match) {
@@ -28,7 +29,7 @@ const matchRoutes = (pathname, routes) => {
 const server = Express();
 server
   .disable('x-powered-by')
-  .use(Express.static(process.env.RAZZLE_PUBLIC_DIR))
+  .use(Express.static(process.env.RAZZLE_PUBLIC_DIR));
 
 const wrap = fn => (req, res, next) => fn(req, res).catch(err => next(err));
 server.get('/*', wrap(

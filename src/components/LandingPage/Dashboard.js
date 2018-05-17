@@ -26,19 +26,19 @@ Block.propTypes = {
 
 const getDatas = ({ timeAndSalaryCount, laborRightsCount }) => [
   {
-    Icon: () => <img src={BarChartIcon} />,
+    Icon: () => <img src={BarChartIcon} alt="BarChartIcon" />,
     heading: '薪資工時資料',
     text: String(getScale(timeAndSalaryCount)),
     smallText: '筆',
   },
   {
-    Icon: () => <img src={HandIcon} />,
+    Icon: () => <img src={HandIcon} alt="HandIcon" />,
     heading: '勞動知識',
     text: String(laborRightsCount),
     smallText: '個主題',
   },
   {
-    Icon: () => <img src={FIcon} />,
+    Icon: () => <img src={FIcon} alt="FIcon" />,
     heading: '粉絲專頁',
     text: '一萬',
     smallText: '個讚',

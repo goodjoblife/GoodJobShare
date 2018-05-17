@@ -17,7 +17,8 @@ const Modal = ({ children, isOpen, hasClose, close, size }) => (
         {
           hasClose ?
             <div className={styles.close}>
-              <img src={Cross} className={styles.close__icon} onClick={close} />
+              { /* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */ }
+              <img src={Cross} className={styles.close__icon} onClick={close} alt="close" />
             </div> : null
         }
         <div className={styles.content}>

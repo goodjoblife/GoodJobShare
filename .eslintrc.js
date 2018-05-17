@@ -20,7 +20,7 @@ module.exports = {
       "extensions": [".js"]
     }],
     "jsx-a11y/no-static-element-interactions": "off",
-    "react/require-default-props": "warn",
+    "react/require-default-props": "off",
     "indent": "off",
     "react/no-array-index-key": "off"
   },
