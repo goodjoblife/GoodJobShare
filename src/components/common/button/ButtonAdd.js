@@ -44,7 +44,7 @@ class ButtonAdd extends React.PureComponent {
         <div className={styles.sectionButtons}>
           {
             stage !== 0 ?
-              options.map(ele =>
+              options.map(ele => (
                 <span
                   key={ele.value}
                   style={{
@@ -62,7 +62,7 @@ class ButtonAdd extends React.PureComponent {
                     }}
                   />
                 </span>
-              )
+              ))
               : null
           }
         </div>

@@ -82,7 +82,7 @@ const InterviewTime = (
             }}
           >
             年
-        </p>
+          </p>
         </div>
         <div>
           <div
@@ -107,7 +107,7 @@ const InterviewTime = (
             }}
           >
             月
-        </p>
+          </p>
         </div>
       </div>
       {

@@ -17,7 +17,6 @@ const getFacebookFail = buttonClick => (
 );
 
 class CallToLoginShareButton extends React.PureComponent {
-
   onFacebookFail = () => {
     this.handleIsOpen(true);
     this.handleHasClose(true);

@@ -116,7 +116,8 @@ export default class TimeAndSalaryJobTitle extends Component {
         { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
         { status === fetchingStatus.FETCHED && raw.length === 0 &&
           <P
-            size="l" bold
+            size="l"
+            bold
             className={styles.searchNoResult}
           >
               尚未有職稱「{jobTitle}」的薪時資訊

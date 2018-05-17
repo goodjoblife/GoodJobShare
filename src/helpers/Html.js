@@ -60,6 +60,7 @@ export default class Html extends Component {
           <script src={assets.client.js} charSet="UTF-8" />
           {/* Hotjar Tracking Code for https://www.goodjob.life --> */}
           <script
+            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: `(function(h,o,t,j,a,r){
               h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
               h._hjSettings={hjid:648683,hjsv:6};
