@@ -1,11 +1,10 @@
-{
-  "parser": "babel-eslint",
-  "extends": "airbnb",
-  "env": {
-    "browser": true,
-    "node": true,
-    "jest": true
-  },
+const path = require('path');
+
+module.exports = {
+  "extends": [
+    "react-app",
+    "airbnb"
+  ],
   "rules": {
     "arrow-parens": ["error", "as-needed"],
     "comma-dangle": ["error", "always-multiline"],
@@ -21,15 +20,22 @@
       "extensions": [".js"]
     }],
     "jsx-a11y/no-static-element-interactions": "off",
-    "react/require-default-props": "warn",
+    "react/require-default-props": "off",
     "indent": "off",
     "react/no-array-index-key": "off"
   },
   "settings": {
     "import/resolver": {
       "webpack": {
-        "config": "webpack.config.base.js"
+        "config": {
+          "resolve": {
+            "alias": {
+              "common": path.resolve("./src/components/common"),
+              "utils": path.resolve("./src/utils"),
+            }
+          }
+        }
       }
     }
   }
-}
+};

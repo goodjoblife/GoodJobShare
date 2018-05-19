@@ -40,20 +40,6 @@ export default class Html extends Component {
             content="width=device-width, initial-scale=1"
           />
           <meta charSet="UTF-8" />
-
-          { /* TODO 插入 css reset */ }
-
-          {/* styles (will be present only in production with webpack extract text plugin)  // eslint-disable-line max-len */}
-          {Object.keys(assets.styles).map((style, key) => (
-            <link
-              href={assets.styles[style]}
-              key={key}
-              media="screen, projection"
-              rel="stylesheet"
-              type="text/css"
-              charSet="UTF-8"
-            />
-          ))}
         </head>
         <body>
           <div
@@ -68,8 +54,10 @@ export default class Html extends Component {
             }}
             charSet="UTF-8"
           />
-          <script src={assets.javascript.vender} charSet="UTF-8" />
-          <script src={assets.javascript.main} charSet="UTF-8" />
+          {
+            assets.client.css && <link rel="stylesheet" href={assets.client.css} />
+          }
+          <script src={assets.client.js} charSet="UTF-8" />
           {/* Hotjar Tracking Code for https://www.goodjob.life --> */}
           <script
             // eslint-disable-next-line react/no-danger

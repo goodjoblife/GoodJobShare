@@ -20,7 +20,7 @@ jobs:
                 command: npm test
             - run:
                 name: Build
-                command: npm run build
+                command: CI=false npm run build
     build_dev_docker:
         working_directory: ~/app
         docker:

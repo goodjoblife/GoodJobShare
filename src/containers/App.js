@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
-import { ScrollContext } from 'react-router-scroll-4';
 import App from '../components/Layout';
 import { GA_ID, PIXEL_ID } from '../config';
 
@@ -13,12 +12,8 @@ const logPageView = location => {
 };
 
 class Root extends Component {
-  constructor(props) {
-    super(props);
-    this.init();
-  }
-
   componentDidMount() {
+    this.init();
     const {
       location,
     } = this.props;
@@ -51,9 +46,7 @@ class Root extends Component {
 
   render() {
     return (
-      <ScrollContext>
-        <App />
-      </ScrollContext>
+      <App />
     );
   }
 }
