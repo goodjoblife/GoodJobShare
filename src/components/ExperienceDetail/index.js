@@ -265,7 +265,7 @@ class ExperienceDetail extends Component {
     if (experienceError) {
       switch (experienceError.statusCode) {
         case 403:
-          return (<NotFound heading="本篇文章已經被原作者隱藏，目前無法查看" />);
+          return (<NotFound heading="本篇文章已經被原作者隱藏，目前無法查看" status={403} />);
         case 404:
           return (<NotFound />);
         default:

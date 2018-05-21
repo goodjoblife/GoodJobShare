@@ -77,6 +77,15 @@ server.get('/*', wrap(
       <Html assets={assets} component={finalComponent} store={store} />
     );
 
+    if (context.url) {
+      if (context.status === 301) {
+        res.redirect(301, context.url);
+        return;
+      }
+      res.redirect(context.url);
+      return;
+    }
+
     if (context.status) {
       res.status(context.status);
     }

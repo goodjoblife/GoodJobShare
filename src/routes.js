@@ -80,6 +80,9 @@ const routes = [
         exact: true,
         component: WorkExperiencesForm,
       },
+      {
+        component: NotFound,
+      },
     ],
   },
   {
