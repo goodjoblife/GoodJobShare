@@ -29,6 +29,13 @@ import {
 import styles from './TimeSalaryForm.module.css';
 
 class SalaryInfo extends React.PureComponent {
+  renderHint = () => {
+    if (this.props.showWarning) {
+      return (<div className={cn([styles.warning__wording, styles.salaryHint])}>{this.props.hint}，確定嗎？</div>);
+    }
+    return <div className={cn(styles.salaryHint)}>{this.props.hint}</div>;
+  }
+
   render() {
     const {
       handleState,
@@ -108,6 +115,7 @@ class SalaryInfo extends React.PureComponent {
                   <span className={styles.unit}> 元</span>
                 </div>
               </div>
+              {this.renderHint()}
               {isSalarySetWarning && (
                 <div>
                   <p
@@ -175,6 +183,8 @@ SalaryInfo.propTypes = {
   ]),
   submitted: PropTypes.bool,
   changeValidationStatus: PropTypes.func,
+  showWarning: PropTypes.bool,
+  hint: PropTypes.string,
 };
 
 export default SalaryInfo;

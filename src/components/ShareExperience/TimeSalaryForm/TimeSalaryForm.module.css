@@ -202,3 +202,9 @@
 		clear: both;
 	}
 }
+
+.salaryHint {
+  font-size: 0.9em;
+  margin-top: 10px;
+  text-align: center;
+}
