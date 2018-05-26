@@ -45,6 +45,8 @@ import {
   portTimeSalaryFormToRequestFormat,
 } from '../utils';
 
+import { salaryHint } from '../../../utils/formUtils';
+
 import { HELMET_DATA, SITE_NAME } from '../../../constants/helmetData';
 import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';
 
@@ -106,6 +108,9 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     this.state = {
       ...defaultForm,
       submitted: false,
+      // for handling salary hint
+      salaryHint: null,
+      showSalaryWarning: false,
     };
     this.basicElValidationStatus = {};
     this.extElValidationStatus = {};
@@ -268,12 +273,33 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     this.extElValidationStatus[elementId] = status;
   }
 
+  handleSalaryHint = (key, value) => {
+    let salaryAmount;
+    let salaryType;
+    if (key === 'salaryType') {
+      salaryAmount = this.state.salaryAmount;
+      salaryType = value;
+    } else if (key === 'salaryAmount') {
+      salaryAmount = value;
+      salaryType = this.state.salaryType;
+    }
+    const { showWarning, hint } = salaryHint(salaryType, salaryAmount);
+    this.setState({
+      showSalaryWarning: showWarning,
+      salaryHint: hint,
+    });
+  }
+
   handleState(key) {
     return value => {
       const updateState = {
         [key]: value,
       };
       this.setState(updateState);
+      // handle salary hint
+      if (['salaryType', 'salaryAmount'].indexOf(key) >= 0) {
+        this.handleSalaryHint(key, value);
+      }
     };
   }
 
@@ -397,6 +423,8 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
             experienceInYear={experienceInYear}
             submitted={submitted}
             changeValidationStatus={this.changeExtElValidationStatus}
+            showWarning={this.state.showSalaryWarning}
+            hint={this.state.salaryHint}
           />
 
           <TimeInfo
