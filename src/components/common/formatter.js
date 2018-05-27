@@ -7,6 +7,8 @@ export const formatSalaryType = type => {
       return '年';
     case 'month':
       return '月';
+    case 'day':
+      return '日';
     case 'hour':
       return '小時';
     default:
