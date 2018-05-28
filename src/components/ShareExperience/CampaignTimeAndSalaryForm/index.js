@@ -45,7 +45,7 @@ import {
   portTimeSalaryFormToRequestFormat,
 } from '../utils';
 
-import { salaryHint } from '../../../utils/formUtils';
+import salaryHint from '../../../utils/formUtils';
 
 import { HELMET_DATA, SITE_NAME } from '../../../constants/helmetData';
 import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';

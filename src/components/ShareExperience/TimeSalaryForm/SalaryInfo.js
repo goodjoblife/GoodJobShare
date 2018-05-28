@@ -30,7 +30,9 @@ import styles from './TimeSalaryForm.module.css';
 
 class SalaryInfo extends React.PureComponent {
   renderHint = () => {
-    if (this.props.showWarning) {
+    if (this.props.hint === null) {
+      return null;
+    } else if (this.props.showWarning) {
       return (<div className={cn([styles.warning__wording, styles.salaryHint])}>{this.props.hint}，確定嗎？</div>);
     }
     return <div className={cn(styles.salaryHint)}>{this.props.hint}</div>;
@@ -185,6 +187,11 @@ SalaryInfo.propTypes = {
   changeValidationStatus: PropTypes.func,
   showWarning: PropTypes.bool,
   hint: PropTypes.string,
+};
+
+SalaryInfo.defaultProps = {
+  showWarning: false,
+  hint: null,
 };
 
 export default SalaryInfo;
