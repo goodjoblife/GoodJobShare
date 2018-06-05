@@ -104,20 +104,22 @@ class SalaryInfo extends React.PureComponent {
                   }}
                 />
                 <div style={{ width: '15px' }} />
-                <div className={styles.inputUnit}>
-                  <ScrollElement name={SALARY_AMOUNT} />
-                  <TextInput
-                    value={salaryAmount}
-                    placeholder="22000"
-                    onChange={e => {
-                      changeSalaryAmountStatus(e.target.value);
-                      return handleState('salaryAmount')(e.target.value);
-                    }}
-                  />
-                  <span className={styles.unit}> 元</span>
+                <div>
+                  <div className={styles.inputUnit}>
+                    <ScrollElement name={SALARY_AMOUNT} />
+                    <TextInput
+                      value={salaryAmount}
+                      placeholder="22000"
+                      onChange={e => {
+                        changeSalaryAmountStatus(e.target.value);
+                        return handleState('salaryAmount')(e.target.value);
+                      }}
+                    />
+                    <span className={styles.unit}> 元</span>
+                  </div>
+                  {this.renderHint()}
                 </div>
               </div>
-              {this.renderHint()}
               {isSalarySetWarning && (
                 <div>
                   <p

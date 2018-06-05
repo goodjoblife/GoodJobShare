@@ -176,7 +176,6 @@
 		right: 0;
 		top: 0;
 		display: block;
-		height: 100%;
 		width: 50px;
 		border-left: 1px solid main-gray;
 		line-height: 42px;
@@ -206,5 +205,5 @@
 .salaryHint {
   font-size: 0.9em;
   margin-top: 10px;
-  text-align: center;
+  text-align: right;
 }
