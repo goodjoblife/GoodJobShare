@@ -35,7 +35,7 @@ class WorkingHourTable extends Component {
   static getEmploymentType = type => (type ? employmentType[type] : '')
 
   static getWorkingHour = (val, row) => (
-    <div>{`${val} / ${row.day_real_work_time}`}</div>
+    <div>{`${typeof val === 'undefined' ? '-' : val} / ${typeof row.day_real_work_time === 'undefined' ? '-' : row.day_real_work_time}`}</div>
   )
 
   static getYear = val => {
