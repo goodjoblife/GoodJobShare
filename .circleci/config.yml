@@ -35,7 +35,7 @@ jobs:
             - setup_remote_docker
             - run:
                 name: Login docker registry
-                command: docker login registry.gitlab.com -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASSWORD}
+                command: docker login registry.gitlab.com -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASS}
             - run:
                 name: Build Docker and Push
                 command: |
@@ -56,7 +56,7 @@ jobs:
             - setup_remote_docker
             - run:
                 name: Login docker registry
-                command: docker login registry.gitlab.com -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASSWORD}
+                command: docker login registry.gitlab.com -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASS}
             - run:
                 name: Build Docker and Push
                 command: |
@@ -71,11 +71,13 @@ jobs:
             - checkout
             - run:
                 name: Install Docker client & Docker Compose
-                command: ./.circleci/prepare-docker-compose.sh
+                command: |
+                    apk add --update docker py-pip
+                    pip install docker-compose
             - setup_remote_docker
             - run:
                 name: Login docker registry
-                command: docker login registry.gitlab.com -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASSWORD}
+                command: docker login registry.gitlab.com -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASS}
             - run:
                 name: Build Docker and Push
                 command: |
