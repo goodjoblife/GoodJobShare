@@ -29,6 +29,15 @@ import {
 import styles from './TimeSalaryForm.module.css';
 
 class SalaryInfo extends React.PureComponent {
+  renderHint = () => {
+    if (this.props.hint === null) {
+      return null;
+    } else if (this.props.showWarning) {
+      return (<div className={cn([styles.warning__wording, styles.salaryHint])}>{this.props.hint}，確定嗎？</div>);
+    }
+    return <div className={cn(styles.salaryHint)}>{this.props.hint}</div>;
+  }
+
   render() {
     const {
       handleState,
@@ -95,17 +104,20 @@ class SalaryInfo extends React.PureComponent {
                   }}
                 />
                 <div style={{ width: '15px' }} />
-                <div className={styles.inputUnit}>
-                  <ScrollElement name={SALARY_AMOUNT} />
-                  <TextInput
-                    value={salaryAmount}
-                    placeholder="22000"
-                    onChange={e => {
-                      changeSalaryAmountStatus(e.target.value);
-                      return handleState('salaryAmount')(e.target.value);
-                    }}
-                  />
-                  <span className={styles.unit}> 元</span>
+                <div>
+                  <div className={styles.inputUnit}>
+                    <ScrollElement name={SALARY_AMOUNT} />
+                    <TextInput
+                      value={salaryAmount}
+                      placeholder="22000"
+                      onChange={e => {
+                        changeSalaryAmountStatus(e.target.value);
+                        return handleState('salaryAmount')(e.target.value);
+                      }}
+                    />
+                    <span className={styles.unit}> 元</span>
+                  </div>
+                  {this.renderHint()}
                 </div>
               </div>
               {isSalarySetWarning && (
@@ -175,6 +187,13 @@ SalaryInfo.propTypes = {
   ]),
   submitted: PropTypes.bool,
   changeValidationStatus: PropTypes.func,
+  showWarning: PropTypes.bool,
+  hint: PropTypes.string,
+};
+
+SalaryInfo.defaultProps = {
+  showWarning: false,
+  hint: null,
 };
 
 export default SalaryInfo;
