@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 import Loading from 'common/Loader';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import $ from 'jquery';
 import cn from 'classnames';
 
 import Select from 'common/form/Select';
+import Pagination from 'common/Pagination';
 import InfoTimeModal from '../common/InfoTimeModal';
 import InfoSalaryModal from '../common/InfoSalaryModal';
 import AboutThisJobModal from '../common/AboutThisJobModal';
@@ -21,6 +21,13 @@ import { queryTimeAndSalary } from '../../../actions/timeAndSalaryBoard';
 import GradientMask from '../../common/GradientMask';
 
 import DashBoardTable from '../common/DashBoardTable';
+
+import {
+  toQsString,
+  querySelector,
+  locationSearchToQuery,
+} from './helper';
+import DATA_NUM_PER_PAGE from '../../../constants/timeAndSalarSearch';
 
 const pathnameMapping = {
   '/time-and-salary/work-time-dashboard': {
@@ -137,7 +144,8 @@ export default class TimeAndSalaryBoard extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
     totalCount: PropTypes.number,
-    status: PropTypes.string,
+    currentPage: PropTypes.number,
+    location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
     queryTimeAndSalary: PropTypes.func,
     switchPath: PropTypes.func,
@@ -149,16 +157,19 @@ export default class TimeAndSalaryBoard extends Component {
     fetchMyPermission: PropTypes.func.isRequired,
   }
 
-  static fetchData({ match, store: { dispatch } }) {
+  static fetchData({ match, location, store: { dispatch } }) {
     const { path } = match;
+    const { search } = location;
     const { sortBy, order } = pathnameMapping[path];
 
-    return dispatch(queryTimeAndSalary({ sortBy, order }));
+    const query = locationSearchToQuery(search);
+    const { page } = querySelector(query);
+
+    return dispatch(queryTimeAndSalary({ sortBy, order, page }));
   }
 
   constructor(props) {
     super(props);
-    this.handleScroll = this.handleScroll.bind(this);
     this.toggleInfoSalaryModal = this.toggleInfoSalaryModal.bind(this);
     this.toggleInfoTimeModal = this.toggleInfoTimeModal.bind(this);
   }
@@ -180,28 +191,29 @@ export default class TimeAndSalaryBoard extends Component {
 
   componentDidMount() {
     const { path } = this.props.match;
+    const { search } = this.props.location;
     const { sortBy, order } = pathnameMapping[path];
 
-    this.props.resetBoardExtremeData();
-    this.props.queryTimeAndSalary({ sortBy, order });
-    this.props.fetchMyPermission();
+    const query = locationSearchToQuery(search);
+    const { page } = querySelector(query);
 
-    $(window).on('scroll', this.handleScroll);
+    this.props.resetBoardExtremeData();
+    this.props.queryTimeAndSalary({ sortBy, order, page });
+    this.props.fetchMyPermission();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.match.path !== nextProps.match.path) {
+    if (this.props.match.path !== nextProps.match.path || this.props.location.search !== nextProps.location.search) {
       const { path } = nextProps.match;
+      const { search } = nextProps.location;
       const { sortBy, order } = pathnameMapping[path];
+      const query = locationSearchToQuery(search);
+      const { page } = querySelector(query);
       this.setState({ showExtreme: false });
       this.props.resetBoardExtremeData();
-      this.props.queryTimeAndSalary({ sortBy, order });
+      this.props.queryTimeAndSalary({ sortBy, order, page });
       this.props.fetchMyPermission();
     }
-  }
-
-  componentWillUnmount() {
-    $(window).off('scroll', this.handleScroll);
   }
 
   toggleInfoSalaryModal() {
@@ -222,18 +234,6 @@ export default class TimeAndSalaryBoard extends Component {
       state.aboutThisJobModal.aboutThisJob = aboutThisJob;
     }
     this.setState(state);
-  }
-
-  handleScroll() {
-    if (!this.props.canViewTimeAndSalary) { return; }
-    if (this.props.data.size >= this.props.totalCount) { return; }
-    const view = $(window).scrollTop() + window.innerHeight;
-    const threshold = $(document).height() - 100;
-    if (view < threshold) return;
-
-    const { path } = this.props.match;
-    const { sortBy, order } = pathnameMapping[path];
-    this.props.queryTimeAndSalary({ sortBy, order });
   }
 
   toggleShowExtreme = () => {
@@ -276,10 +276,21 @@ export default class TimeAndSalaryBoard extends Component {
     );
   }
 
+  // 給 Pagination 建立分頁的連結用
+  createPageLinkTo = nextPage => {
+    const { pathname } = this.props.location;
+    const queryString = toQsString({ page: nextPage });
+
+    return {
+      pathname,
+      search: `?${queryString}`,
+    };
+  }
+
   render() {
     const { path } = this.props.match;
     const { title, hasExtreme } = pathnameMapping[path];
-    const { status, data, switchPath, extremeStatus, extremeData, canViewTimeAndSalary } = this.props;
+    const { data, totalCount, currentPage, switchPath, extremeStatus, extremeData, canViewTimeAndSalary } = this.props;
     const { showExtreme } = this.state;
     let raw;
     if (showExtreme && extremeStatus === fetchingStatus.FETCHED) {
@@ -322,9 +333,12 @@ export default class TimeAndSalaryBoard extends Component {
             toggleInfoTimeModal={this.toggleInfoTimeModal}
             toggleAboutThisJobModal={this.toggleAboutThisJobModal}
           />
-          <div className={styles.status}>
-            { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
-          </div>
+          <Pagination
+            totalCount={totalCount}
+            unit={DATA_NUM_PER_PAGE}
+            currentPage={currentPage}
+            createPageLinkTo={this.createPageLinkTo}
+          />
           <InfoSalaryModal
             isOpen={this.state.infoSalaryModal.isOpen}
             close={this.toggleInfoSalaryModal}
