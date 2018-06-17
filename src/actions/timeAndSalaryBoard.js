@@ -3,7 +3,7 @@ import { push } from 'react-router-redux';
 
 import { fetchTimeAndSalary, fetchTimeAndSalaryExtreme } from '../apis/timeAndSalaryApi';
 import fetchingStatus from '../constants/status';
-import DATA_NUM_PER_PAGE from '../constants/timeAndSalarSearch';
+import { DATA_NUM_PER_PAGE } from '../constants/timeAndSalarSearch';
 
 export const SET_BOARD_DATA = '@@timeAndSalary/SET_BOARD_DATA';
 export const SET_BOARD_STATUS = '@@timeAndSalary/SET_BOARD_STATUS';
@@ -62,7 +62,7 @@ export const queryTimeAndSalary = ({ sortBy, order, page }) =>
     const opt = {
       sort_by: sortBy,
       order,
-      page,
+      page: page - 1,
       limit: DATA_NUM_PER_PAGE,
       skip: (sortBy !== 'created_at').toString(),
     };

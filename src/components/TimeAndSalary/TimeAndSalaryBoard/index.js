@@ -27,7 +27,7 @@ import {
   querySelector,
   locationSearchToQuery,
 } from './helper';
-import DATA_NUM_PER_PAGE from '../../../constants/timeAndSalarSearch';
+import { DATA_NUM_PER_PAGE } from '../../../constants/timeAndSalarSearch';
 
 const pathnameMapping = {
   '/time-and-salary/work-time-dashboard': {
@@ -146,6 +146,7 @@ export default class TimeAndSalaryBoard extends Component {
     totalCount: PropTypes.number,
     currentPage: PropTypes.number,
     location: PropTypes.object.isRequired,
+    status: PropTypes.string,
     match: PropTypes.object.isRequired,
     queryTimeAndSalary: PropTypes.func,
     switchPath: PropTypes.func,
@@ -290,7 +291,7 @@ export default class TimeAndSalaryBoard extends Component {
   render() {
     const { path } = this.props.match;
     const { title, hasExtreme } = pathnameMapping[path];
-    const { data, totalCount, currentPage, switchPath, extremeStatus, extremeData, canViewTimeAndSalary } = this.props;
+    const { data, status, totalCount, currentPage, switchPath, extremeStatus, extremeData, canViewTimeAndSalary } = this.props;
     const { showExtreme } = this.state;
     let raw;
     if (showExtreme && extremeStatus === fetchingStatus.FETCHED) {
@@ -326,13 +327,19 @@ export default class TimeAndSalaryBoard extends Component {
               </div>
             </div>
           </div>
-          <DashBoardTable
-            data={raw}
-            postProcessRows={this.createPostProcessRows()}
-            toggleInfoSalaryModal={this.toggleInfoSalaryModal}
-            toggleInfoTimeModal={this.toggleInfoTimeModal}
-            toggleAboutThisJobModal={this.toggleAboutThisJobModal}
-          />
+          {
+            status === fetchingStatus.FETCHING ?
+              <div className={styles.status}>
+                <Loading size="s" />
+              </div> :
+              <DashBoardTable
+                data={raw}
+                postProcessRows={this.createPostProcessRows()}
+                toggleInfoSalaryModal={this.toggleInfoSalaryModal}
+                toggleInfoTimeModal={this.toggleInfoTimeModal}
+                toggleAboutThisJobModal={this.toggleAboutThisJobModal}
+              />
+          }
           <Pagination
             totalCount={totalCount}
             unit={DATA_NUM_PER_PAGE}
