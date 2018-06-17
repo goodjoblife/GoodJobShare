@@ -340,12 +340,15 @@ export default class TimeAndSalaryBoard extends Component {
                 toggleAboutThisJobModal={this.toggleAboutThisJobModal}
               />
           }
-          <Pagination
-            totalCount={totalCount}
-            unit={DATA_NUM_PER_PAGE}
-            currentPage={currentPage}
-            createPageLinkTo={this.createPageLinkTo}
-          />
+          {
+            status === fetchingStatus.FETCHING ? null :
+            <Pagination
+              totalCount={totalCount}
+              unit={DATA_NUM_PER_PAGE}
+              currentPage={currentPage}
+              createPageLinkTo={this.createPageLinkTo}
+            />
+          }
           <InfoSalaryModal
             isOpen={this.state.infoSalaryModal.isOpen}
             close={this.toggleInfoSalaryModal}
