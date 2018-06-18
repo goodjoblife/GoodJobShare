@@ -9,6 +9,7 @@ import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
+import FeedbackBlock from 'common/FeedbackBlock';
 
 import Article from './Article';
 import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
@@ -295,10 +296,10 @@ class ExperienceDetail extends Component {
               openReportDetail={() => this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)}
               id={id}
             />
-
             <BackToList
               backable={backable}
             />
+            <FeedbackBlock category="ExperienceDetailFeedback" />
           </Wrapper>
         </Section>
 
