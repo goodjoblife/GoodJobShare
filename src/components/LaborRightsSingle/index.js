@@ -15,6 +15,7 @@ import {
 import { nthIndexOf } from 'utils/stringUtil';
 import NotFound from 'common/NotFound';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
+import FeedbackBlock from 'common/FeedbackBlock';
 import Body from './Body';
 import Footer from './Footer';
 import LaborRightsPermissionBlock from '../../containers/PermissionBlock/LaborRightsPermissionBlockContainer';
@@ -122,6 +123,10 @@ class LaborRightsSingle extends React.Component {
                 description={description}
                 content={newContent}
                 permissionBlock={permissionBlock}
+              />
+              <FeedbackBlock
+                category="LaborRightsSingleFeedback"
+                className={styles.feedbackBlock}
               />
               {(canViewLaborRightsSingle || nPublicPages < 0) && (
                 <Section marginTop>
