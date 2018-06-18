@@ -64,6 +64,7 @@ class FeedbackBlock extends React.Component {
       <div className={styles.feedbackBlock}>
         <Heading size="sm" Tag="h4">{question}</Heading>
         <ButtonGroupImage
+          className={styles.btnGroup}
           value={this.state.polarity}
           onChange={v => {
             this.setState({ polarity: v });
@@ -80,6 +81,7 @@ class FeedbackBlock extends React.Component {
               icon: (<Close className={styles.icon} />),
             },
           ]}
+          theme="yellow"
         />
         {
           polarity === null ? null :
