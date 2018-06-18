@@ -1,3 +1,5 @@
+@value main-yellow from "common/variables.module.css";
+
 .wrapper {
   display: flex;
   margin-top: 16px;
@@ -25,29 +27,60 @@
   }
 }
 
-.checked {
-  background-color: #606060;
-  cursor: default;
-
-  @media (min-width: 1025px) {
-    &:hover {
-      background: #606060;
-    }
-  }
-}
-
 .last {
   margin-right: 0;
 }
 
-.content__checked {
+.content__unchecked {
   > svg {
-    fill: white;
+    fill: black;
   }
 }
 
-.content__unchecked {
-  > svg {
-      fill: black;
+.grayTheme {
+  .btnText {
+    color: #333333;
+  }
+
+  &.checked {
+    background-color: #606060;
+    cursor: default;
+
+    @media (min-width: 1025px) {
+      &:hover {
+        background: #606060;
+      }
     }
+
+    .btnText {
+      color: white;
+    }
+  }
+
+  .content__checked {
+    svg {
+      fill: white;
+    }
+  }
+}
+
+.yellowTheme {
+  .btnText {
+    color: #333333;
+  }
+
+  &.checked {
+    background-color: main-yellow;
+    cursor: default;
+
+    @media (min-width: 1025px) {
+      &:hover {
+        background: main-yellow;
+      }
+    }
+
+    .btnText {
+      color: black;
+    }
+  }
 }
