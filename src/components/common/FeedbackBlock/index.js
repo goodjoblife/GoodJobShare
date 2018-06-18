@@ -1,6 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import { Heading } from 'common/base';
 import Button from 'common/button/Button';
@@ -18,6 +19,7 @@ class FeedbackBlock extends React.Component {
       yes: PropTypes.string,
       no: PropTypes.string,
     }),
+    className: PropTypes.string,
   }
 
   static defaultProps = {
@@ -26,6 +28,7 @@ class FeedbackBlock extends React.Component {
       yes: '說說為什麼你覺得很實用？',
       no: '說說為什麼你覺得不實用？ 或是有任何其他的回饋？',
     },
+    className: '',
   }
 
   constructor(props) {
@@ -51,17 +54,17 @@ class FeedbackBlock extends React.Component {
 
   render() {
     const { polarity, feedback, done } = this.state;
-    const { question, placeholders } = this.props;
+    const { question, placeholders, className } = this.props;
     if (done) {
       return (
-        <div className={styles.doneBlock}>
+        <div className={cn(styles.doneBlock, className)}>
           <Checked className={styles.icon} style={{ marginRight: 20 }} />
           <Heading size="sm" Tag="h4"> 感謝您的回饋！ </Heading>
         </div>
       );
     }
     return (
-      <div className={styles.feedbackBlock}>
+      <div className={cn(styles.feedbackBlock, className)}>
         <Heading size="sm" Tag="h4">{question}</Heading>
         <ButtonGroupImage
           className={styles.btnGroup}

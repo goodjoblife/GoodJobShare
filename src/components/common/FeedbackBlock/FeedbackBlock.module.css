@@ -3,14 +3,12 @@
 .doneBlock {
   display: flex;
   justify-content: center;
-  margin-top: 25px;
 }
 
 .feedbackBlock {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 25px;
 }
 
 .btnGroup {

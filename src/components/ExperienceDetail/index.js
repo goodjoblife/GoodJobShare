@@ -32,6 +32,8 @@ import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
 import authStatus from '../../constants/authStatus';
 
+import styles from './ExperienceDetail.module.css';
+
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
   REPORT_API_ERROR: 'REPORT_API_ERROR',
@@ -299,7 +301,7 @@ class ExperienceDetail extends Component {
             <BackToList
               backable={backable}
             />
-            <FeedbackBlock category="ExperienceDetailFeedback" />
+            <FeedbackBlock category="ExperienceDetailFeedback" className={styles.feedbackBlock} />
           </Wrapper>
         </Section>
 
