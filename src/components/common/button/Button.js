@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './Button.module.css';
-
 const Button = ({
-  circleSize, btnStyle, disabled, children, onClick, style,
+  circleSize, btnStyle, disabled, children, onClick, style, className,
 }) => {
   let cnCircleSize = '';
   let cnBtnStyle;
@@ -55,7 +53,7 @@ const Button = ({
 
   return (
     <button
-      className={`${cnCircleSize} ${cnBtnStyle} ${styles.button}`}
+      className={`${cnCircleSize} ${cnBtnStyle} ${className}`}
       disabled={disabled}
       onClick={onClick}
       style={style}
@@ -72,6 +70,7 @@ Button.propTypes = {
   children: PropTypes.node,
   onClick: PropTypes.func,
   style: PropTypes.object,
+  className: PropTypes.string,
 };
 
 export default Button;
