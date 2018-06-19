@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import ReactGA from 'react-ga';
 
 import { Heading } from 'common/base';
 import Button from 'common/button/Button';
@@ -40,16 +41,13 @@ class FeedbackBlock extends React.Component {
     };
   }
 
-  onClick = value => e => {
-    e.preventDefault();
-    this.setState({ polarity: value });
-  }
-
   onSubmit = () => {
-    if (window.ga) {
-      window.ga('send', 'event', this.props.category, this.state.polarity, this.state.feedback);
-      this.setState({ done: true });
-    }
+    ReactGA.event({
+      category: this.props.category,
+      action: this.state.polarity,
+      label: this.state.feedback,
+    });
+    this.setState({ done: true });
   }
 
   render() {
@@ -59,7 +57,7 @@ class FeedbackBlock extends React.Component {
       return (
         <div className={cn(styles.doneBlock, className)}>
           <Checked className={styles.icon} style={{ marginRight: 20 }} />
-          <Heading size="sm" Tag="h4"> 感謝您的回饋！ </Heading>
+          <Heading size="sm" Tag="h4">感謝您的回饋！</Heading>
         </div>
       );
     }

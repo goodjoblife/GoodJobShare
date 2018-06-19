@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 const Button = ({
   circleSize, btnStyle, disabled, children, onClick, style, className,
@@ -53,7 +54,7 @@ const Button = ({
 
   return (
     <button
-      className={`${cnCircleSize} ${cnBtnStyle} ${className}`}
+      className={cn(cnCircleSize, cnBtnStyle, className)}
       disabled={disabled}
       onClick={onClick}
       style={style}

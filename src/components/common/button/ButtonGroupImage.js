@@ -91,6 +91,10 @@ ButtonGroupImageEle.propTypes = {
   theme: PropTypes.string,
 };
 
+ButtonGroupImageEle.defaultProps = {
+  theme: 'gray',
+};
+
 const ButtonGroupImage = ({ value, options, onChange, className, theme = 'gray' }) => (
   <div className={cn(styles.wrapper, className)}>
     {options.map((option, index, arr) => (
@@ -135,6 +139,11 @@ ButtonGroupImage.propTypes = {
   )),
   className: PropTypes.string,
   theme: PropTypes.string,
+};
+
+ButtonGroupImage.defaultProps = {
+  className: '',
+  theme: 'gray',
 };
 
 export default ButtonGroupImage;
