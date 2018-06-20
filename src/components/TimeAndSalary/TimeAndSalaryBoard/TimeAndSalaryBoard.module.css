@@ -68,3 +68,7 @@
 
   width: calc(100% + 40px);
 }
+
+.feedbackBlock {
+  margin-top: 60px;
+}
