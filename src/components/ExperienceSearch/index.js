@@ -27,7 +27,7 @@ import status from '../../constants/status';
 import Filter from './Filter';
 import { Banner1, Banner2 } from './Banners';
 
-import Pagination from './Pagination';
+import Pagination from '../common/Pagination';
 
 import getScale from '../../utils/numberUtils';
 
