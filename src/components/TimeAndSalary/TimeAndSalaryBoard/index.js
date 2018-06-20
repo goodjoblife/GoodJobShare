@@ -7,6 +7,7 @@ import cn from 'classnames';
 
 import Select from 'common/form/Select';
 import Pagination from 'common/Pagination';
+import FeedbackBlock from 'common/FeedbackBlock';
 import InfoTimeModal from '../common/InfoTimeModal';
 import InfoSalaryModal from '../common/InfoSalaryModal';
 import AboutThisJobModal from '../common/AboutThisJobModal';
@@ -349,6 +350,10 @@ export default class TimeAndSalaryBoard extends Component {
               createPageLinkTo={this.createPageLinkTo}
             />
           }
+          <FeedbackBlock
+            className={styles.feedbackBlock}
+            category="TimeAndSalarySearchFeedback"
+          />
           <InfoSalaryModal
             isOpen={this.state.infoSalaryModal.isOpen}
             close={this.toggleInfoSalaryModal}

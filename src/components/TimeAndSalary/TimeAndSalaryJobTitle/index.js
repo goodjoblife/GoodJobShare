@@ -7,6 +7,7 @@ import R from 'ramda';
 import Select from 'common/form/Select';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
+import FeedbackBlock from 'common/FeedbackBlock';
 import WorkingHourBlock from '../common/WorkingHourBlock';
 import { queryJobTitle } from '../../../actions/timeAndSalaryJobTitle';
 import fetchingStatus from '../../../constants/status';
@@ -132,6 +133,10 @@ export default class TimeAndSalaryJobTitle extends Component {
             hideContent={!canViewTimeAndSalary}
           />
         ))}
+        <FeedbackBlock
+          className={styles.feedbackBlock}
+          category="TimeAndSalarySearchFeedback"
+        />
       </section>
     );
   }

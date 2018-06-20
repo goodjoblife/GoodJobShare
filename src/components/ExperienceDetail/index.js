@@ -9,6 +9,7 @@ import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
+import FeedbackBlock from 'common/FeedbackBlock';
 
 import Article from './Article';
 import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
@@ -30,6 +31,8 @@ import { SITE_NAME } from '../../constants/helmetData';
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
 import authStatus from '../../constants/authStatus';
+
+import styles from './ExperienceDetail.module.css';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -295,10 +298,10 @@ class ExperienceDetail extends Component {
               openReportDetail={() => this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)}
               id={id}
             />
-
             <BackToList
               backable={backable}
             />
+            <FeedbackBlock category="ExperienceDetailFeedback" className={styles.feedbackBlock} />
           </Wrapper>
         </Section>
 

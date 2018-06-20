@@ -27,15 +27,19 @@ class ButtonGroupImageEle extends React.PureComponent {
   }
 
   render() {
-    const { value, label, checked, last, icon } = this.props;
+    const { value, label, checked, last, icon, theme } = this.props;
     const id = `${this.id}-${value}`;
     return (
       <label
         htmlFor={id}
-        className={cn(styles.radio, {
-          [styles.checked]: checked,
-          [styles.last]: last,
-        })}
+        className={cn(
+          styles.radio,
+          theme === 'yellow' ? styles.yellowTheme : styles.grayTheme,
+          {
+            [styles.checked]: checked,
+            [styles.last]: last,
+          }
+        )}
       >
         <input
           id={id}
@@ -56,11 +60,8 @@ class ButtonGroupImageEle extends React.PureComponent {
         >
           {icon}
           <p
-            style={{
-              color: checked ? 'white' : '#333333',
-              marginTop: '12px',
-            }}
-            className="pM"
+            style={{ marginTop: '12px' }}
+            className={cn('pM', styles.btnText)}
           >
             {label}
           </p>
@@ -87,10 +88,15 @@ ButtonGroupImageEle.propTypes = {
   ),
   last: PropTypes.bool,
   icon: PropTypes.node,
+  theme: PropTypes.string,
 };
 
-const ButtonGroupImage = ({ value, options, onChange }) => (
-  <div className={styles.wrapper}>
+ButtonGroupImageEle.defaultProps = {
+  theme: 'gray',
+};
+
+const ButtonGroupImage = ({ value, options, onChange, className, theme = 'gray' }) => (
+  <div className={cn(styles.wrapper, className)}>
     {options.map((option, index, arr) => (
       <ButtonGroupImageEle
         key={option.value}
@@ -100,6 +106,7 @@ const ButtonGroupImage = ({ value, options, onChange }) => (
         checked={value === option.value}
         last={index === arr.length - 1}
         icon={option.icon}
+        theme={theme}
       />
     ))}
   </div>
@@ -130,6 +137,13 @@ ButtonGroupImage.propTypes = {
       icon: PropTypes.node,
     }
   )),
+  className: PropTypes.string,
+  theme: PropTypes.string,
+};
+
+ButtonGroupImage.defaultProps = {
+  className: '',
+  theme: 'gray',
 };
 
 export default ButtonGroupImage;

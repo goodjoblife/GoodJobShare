@@ -136,3 +136,7 @@ $bold: 700;
 .sector {
   color: main-gray;
 }
+
+.feedbackBlock {
+  margin-top: 60px;
+}
