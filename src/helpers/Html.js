@@ -40,6 +40,9 @@ export default class Html extends Component {
             content="width=device-width, initial-scale=1"
           />
           <meta charSet="UTF-8" />
+          {
+            assets.client.css && <link rel="stylesheet" href={assets.client.css} />
+          }
         </head>
         <body>
           <div
@@ -54,9 +57,6 @@ export default class Html extends Component {
             }}
             charSet="UTF-8"
           />
-          {
-            assets.client.css && <link rel="stylesheet" href={assets.client.css} />
-          }
           <script src={assets.client.js} charSet="UTF-8" />
           {/* Hotjar Tracking Code for https://www.goodjob.life --> */}
           <script
