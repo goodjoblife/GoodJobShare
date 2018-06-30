@@ -22,6 +22,7 @@ const mapStateToProps = (state, { match }) => ({
   campaignEntriesError: campaignEntriesErrorSelector(state),
   data: state.campaignTimeAndSalaryBoard.get('data'),
   totalCount: state.campaignTimeAndSalaryBoard.get('total'),
+  currentPage: state.campaignTimeAndSalaryBoard.get('currentPage'),
   status: state.campaignTimeAndSalaryBoard.get('status'),
   canViewTimeAndSalary: canViewTimeAndSalarySelector(state),
 });
