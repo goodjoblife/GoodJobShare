@@ -173,10 +173,10 @@ class InterviewForm extends React.Component {
         });
 
         return (
-          ({ buttonClickCallback }) => (
+          ({ buttonClick }) => (
             <FailFeedback
               info={error.message}
-              buttonClick={buttonClickCallback}
+              buttonClick={buttonClick}
             />
           )
         );
