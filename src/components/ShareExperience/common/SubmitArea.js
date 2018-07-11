@@ -33,11 +33,16 @@ class SubmitArea extends React.PureComponent {
       isOpen: false,
       feedback: null,
       hasClose: false,
+      isSubmitting: false,
     };
   }
 
 
   onSubmit() {
+    if (this.state.isSubmitting === true) {
+      return Promise.resolve();
+    }
+    this.setState({ isSubmitting: true });
     return this.props.onSubmit()
       .then(Feedback => {
         this.handleIsOpen(true);
@@ -46,7 +51,10 @@ class SubmitArea extends React.PureComponent {
           buttonClick: () => this.handleIsOpen(false),
         }));
       })
-      .catch(e => console.log(e));
+      .catch(e => console.log(e))
+      .then(() => {
+        this.setState({ isSubmitting: false });
+      });
   }
 
   onFacebookFail() {
@@ -162,7 +170,7 @@ class SubmitArea extends React.PureComponent {
           <ButtonSubmit
             text="送出資料"
             onSubmit={this.onSubmit}
-            disabled={!this.state.agree}
+            disabled={this.state.isSubmitting || (!this.state.agree)}
             auth={auth}
             login={this.login}
           />

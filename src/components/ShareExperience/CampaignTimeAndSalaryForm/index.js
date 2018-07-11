@@ -193,10 +193,10 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
         });
 
         return (
-          ({ buttonClickCallback }) => (
+          ({ buttonClick }) => (
             <FailFeedback
               info={error.message}
-              buttonClick={buttonClickCallback}
+              buttonClick={buttonClick}
             />
           )
         );
