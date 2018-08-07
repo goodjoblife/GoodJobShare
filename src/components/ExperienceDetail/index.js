@@ -9,7 +9,7 @@ import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
-import FeedbackBlock from 'common/FeedbackBlock';
+import FanPageBlock from 'common/FanPageBlock';
 
 import Article from './Article';
 import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
@@ -301,7 +301,7 @@ class ExperienceDetail extends Component {
             <BackToList
               backable={backable}
             />
-            <FeedbackBlock category="ExperienceDetailFeedback" className={styles.feedbackBlock} />
+            <FanPageBlock className={styles.fanPageBlock} />
           </Wrapper>
         </Section>
 
