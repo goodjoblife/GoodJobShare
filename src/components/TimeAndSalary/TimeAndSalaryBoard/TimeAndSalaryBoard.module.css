@@ -72,3 +72,9 @@
 .feedbackBlock {
   margin-top: 60px;
 }
+
+.fanPageBlock {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
