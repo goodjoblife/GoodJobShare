@@ -10,6 +10,7 @@ import ReactPixel from 'react-facebook-pixel';
 
 import Loader from 'common/Loader';
 import { Section, Wrapper, Heading, P } from 'common/base';
+import FanPageBlock from 'common/FanPageBlock';
 
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
@@ -491,6 +492,9 @@ class ExperienceSearch extends Component {
               />
             </section>
           </div>
+        </Wrapper>
+        <Wrapper>
+          <FanPageBlock className={styles.fanPageBlock} />
         </Wrapper>
       </Section>
     );
