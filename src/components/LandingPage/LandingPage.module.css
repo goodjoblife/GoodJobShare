@@ -36,3 +36,8 @@
     }
   }
 }
+
+.fanPageBlock {
+  display: flex;
+  justify-content: center;
+}
