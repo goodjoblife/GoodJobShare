@@ -4,7 +4,14 @@ import cn from 'classnames';
 import { P } from 'common/base';
 import styles from './IconHeadingBlock.module.css';
 
-const IconHeadingBlock = ({ heading, Icon, marginTop, noPadding, requiredText, children }) => (
+const IconHeadingBlock = ({
+  heading,
+  Icon,
+  marginTop,
+  noPadding,
+  requiredText,
+  children,
+}) => (
   <section
     className={cn({
       [styles.marginTop]: marginTop,
@@ -12,11 +19,14 @@ const IconHeadingBlock = ({ heading, Icon, marginTop, noPadding, requiredText, c
   >
     <div className={styles.header}>
       <P size="l" bold Tag="h2" className={styles.heading}>
-        <Icon />{heading}
+        <Icon />
+        {heading}
       </P>
-      {requiredText &&
-        <P size="s" className={styles.note}><span>*</span> 為必填</P>
-      }
+      {requiredText && (
+        <P size="s" className={styles.note}>
+          <span>*</span> 為必填
+        </P>
+      )}
     </div>
     <div
       className={cn(styles.body, {
@@ -26,7 +36,6 @@ const IconHeadingBlock = ({ heading, Icon, marginTop, noPadding, requiredText, c
       {children}
     </div>
   </section>
-
 );
 
 IconHeadingBlock.propTypes = {

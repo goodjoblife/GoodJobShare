@@ -11,12 +11,16 @@ const QABlock = ({ question, answer }) => (
         {question}
       </P>
     </div>
-    { answer && <div className={styles.aItem}>
-      <div bold className={styles.aLabel}>A</div>
-      <P size="m" className={styles.content}>
-        {answer}
-      </P>
-    </div> }
+    {answer && (
+      <div className={styles.aItem}>
+        <div bold className={styles.aLabel}>
+          A
+        </div>
+        <P size="m" className={styles.content}>
+          {answer}
+        </P>
+      </div>
+    )}
   </section>
 );
 

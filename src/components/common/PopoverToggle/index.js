@@ -6,12 +6,10 @@ import styles from './Popover.module.css';
 
 const Popover = ({ active, className, children }) => (
   <div
-    className={cn(
-      styles.popover,
-      { [styles.active]: active },
-      className,
-    )}
-    onClick={e => { e.stopPropagation(); }}
+    className={cn(styles.popover, { [styles.active]: active }, className)}
+    onClick={e => {
+      e.stopPropagation();
+    }}
   >
     {children}
   </div>
@@ -35,13 +33,13 @@ class PopoverToggle extends Component {
     children: PropTypes.node.isRequired,
     popoverContent: PropTypes.node,
     history: PropTypes.object.isRequired,
-  }
+  };
 
   static defaultProps = {
     className: '',
     popoverClassName: '',
     popoverContent: '',
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -53,7 +51,7 @@ class PopoverToggle extends Component {
 
   state = {
     isOpen: false,
-  }
+  };
 
   componentDidMount() {
     document.addEventListener('click', this.outsideHook);
@@ -82,11 +80,16 @@ class PopoverToggle extends Component {
   render() {
     return (
       <div
-        ref={node => { this.dropdown = node; }}
+        ref={node => {
+          this.dropdown = node;
+        }}
         className={cn(this.props.className, styles.popoverToggle)}
         onClick={this.toggle}
       >
-        <Popover className={this.props.popoverClassName} active={this.state.isOpen}>
+        <Popover
+          className={this.props.popoverClassName}
+          active={this.state.isOpen}
+        >
           {this.props.popoverContent}
         </Popover>
         {this.props.children}

@@ -26,43 +26,48 @@ const ShareBlock = ({
       <span className={styles.badge}>{type}</span>
     </div>
     <div className={styles.content}>
-      {type === '留言' ?
+      {type === '留言' ? (
         <div>
           <P size="l" Tag="h3">
             {comment}
           </P>
-          {heading &&
-          (<P size="l" bold className={styles.articleLink}>
-            <Bookmark />
-            <Link to={{ pathname: to, query: { backable: true }, state: options }} title="檢視文章" className="hoverBlue">
-              {heading}
-            </Link>
-          </P>)
-          }
+          {heading && (
+            <P size="l" bold className={styles.articleLink}>
+              <Bookmark />
+              <Link
+                to={{ pathname: to, query: { backable: true }, state: options }}
+                title="檢視文章"
+                className="hoverBlue"
+              >
+                {heading}
+              </Link>
+            </P>
+          )}
         </div>
-        :
+      ) : (
         <Heading size="sl" Tag="h3">
-          {type === '薪時' ?
+          {type === '薪時' ? (
             <Link
-              to={`/time-and-salary/company/${encodeURIComponent(to)}/work-time-dashboard`}
+              to={`/time-and-salary/company/${encodeURIComponent(
+                to
+              )}/work-time-dashboard`}
               title="檢視薪時"
               className="hoverBlue"
             >
-              {heading}{position && <span> - {position}</span>}
+              {heading}
+              {position && <span> - {position}</span>}
             </Link>
-            :
+          ) : (
             <Link to={to} title="檢視文章" className="hoverBlue">
-              {heading}{position && <span> - {position}</span>}
+              {heading}
+              {position && <span> - {position}</span>}
             </Link>
-          }
+          )}
         </Heading>
-      }
+      )}
     </div>
     <div className={styles.buttons}>
-      <button
-        className="buttonCircleS buttonBlack2"
-        onClick={publishHandler}
-      >
+      <button className="buttonCircleS buttonBlack2" onClick={publishHandler}>
         {disabled ? '重新發佈' : '隱藏'}
       </button>
     </div>

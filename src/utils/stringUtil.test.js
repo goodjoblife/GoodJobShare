@@ -1,7 +1,4 @@
-import {
-  toSnakecase,
-  toCamelcase,
-} from './stringUtil';
+import { toSnakecase, toCamelcase } from './stringUtil';
 
 describe('toSnakecase tests', () => {
   test('toSnakecase', () => {

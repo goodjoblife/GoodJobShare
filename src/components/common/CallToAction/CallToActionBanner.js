@@ -5,7 +5,14 @@ import { Link } from 'react-router-dom';
 import { Section, Wrapper, Heading } from 'common/base';
 import styles from './CallToActionBanner.module.css';
 
-const CallToActionBanner = ({ heading, headingSize, imgSrc, buttonText, bgColor, marginTop }) => (
+const CallToActionBanner = ({
+  heading,
+  headingSize,
+  imgSrc,
+  buttonText,
+  bgColor,
+  marginTop,
+}) => (
   <Section padding bg={bgColor} marginTop={marginTop}>
     <Wrapper size="m" className={styles.container}>
       <div className={styles.image}>
@@ -15,7 +22,9 @@ const CallToActionBanner = ({ heading, headingSize, imgSrc, buttonText, bgColor,
         <Heading size={headingSize} className={styles.heading} Tag="h3">
           {heading}
         </Heading>
-        <Link to="/share" className={cn('buttonCircleL', 'buttonBlack2')}>{buttonText}</Link>
+        <Link to="/share" className={cn('buttonCircleL', 'buttonBlack2')}>
+          {buttonText}
+        </Link>
       </div>
     </Wrapper>
   </Section>
@@ -35,6 +44,5 @@ CallToActionBanner.defaultProps = {
   imgSrc: 'https://image.goodjob.life/cta-01.jpg',
   bgColor: 'white',
 };
-
 
 export default CallToActionBanner;

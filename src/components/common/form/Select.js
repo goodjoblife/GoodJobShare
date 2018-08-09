@@ -19,16 +19,11 @@ class Select extends React.PureComponent {
           {this.props.hasNullOption && (
             <option value={''}>{this.props.nullOptionText}</option>
           )}
-          {
-            this.props.options.map(option => (
-              <option
-                key={option.value}
-                value={option.value}
-              >
-                {option.label}
-              </option>
-            ))
-          }
+          {this.props.options.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
         <div
           style={{
@@ -50,20 +45,11 @@ class Select extends React.PureComponent {
 Select.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-      ]),
-      label: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-      ]),
-    }),
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    })
   ),
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   hasNullOption: PropTypes.bool,
   nullOptionText: PropTypes.string,
   onChange: PropTypes.func,

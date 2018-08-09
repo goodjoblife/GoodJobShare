@@ -14,8 +14,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    queryMenuIfUnfetched,
-  }, dispatch);
+  bindActionCreators(
+    {
+      queryMenuIfUnfetched,
+    },
+    dispatch
+  );
 
-export default connect(mapStateToProps, mapDispatchToProps)(LaborRightsMenu);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LaborRightsMenu);

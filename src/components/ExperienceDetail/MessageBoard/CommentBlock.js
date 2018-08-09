@@ -13,7 +13,7 @@ class CommentBlock extends Component {
     login: PropTypes.func.isRequired,
     authStatus: PropTypes.string,
     FB: PropTypes.object,
-  }
+  };
 
   static formatDate = d => {
     const date = new Date(Date.parse(d));
@@ -48,7 +48,9 @@ class CommentBlock extends Component {
           </P>
           <P size="s">{CommentBlock.formatDate(reply.created_at)}</P>
         </div>
-        <P size="m" className={styles.comment}>{reply.content}</P>
+        <P size="m" className={styles.comment}>
+          {reply.content}
+        </P>
         <div className={styles.reaction}>
           <ThumbsUp
             count={reply.like_count}

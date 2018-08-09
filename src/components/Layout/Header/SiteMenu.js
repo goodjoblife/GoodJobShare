@@ -8,7 +8,9 @@ import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 
 const Item = ({ to, text, className, onClick }) => (
   <li className={cn(styles.menuItem, className)}>
-    <NavLink to={to} activeClassName={styles.isCurrent} onClick={onClick} >{text}</NavLink>
+    <NavLink to={to} activeClassName={styles.isCurrent} onClick={onClick}>
+      {text}
+    </NavLink>
   </li>
 );
 Item.propTypes = {
@@ -27,11 +29,31 @@ const onSendGA = action => {
 
 const SiteMenu = () => (
   <ul className={styles.menu}>
-    <Item to="/time-and-salary" text="薪資工時" onClick={() => { onSendGA(GA_ACTION.CLICK_TIME_AND_SALARY); }} />
-    <Item to="/experiences/search" text="職場經驗" onClick={() => { onSendGA(GA_ACTION.CLICK_EXPERIENCE_SEARCH); }} />
-    <Item to="/labor-rights" text="勞動小教室" onClick={() => { onSendGA(GA_ACTION.CLICK_LABOR_RIGHTS); }} />
+    <Item
+      to="/time-and-salary"
+      text="薪資工時"
+      onClick={() => {
+        onSendGA(GA_ACTION.CLICK_TIME_AND_SALARY);
+      }}
+    />
+    <Item
+      to="/experiences/search"
+      text="職場經驗"
+      onClick={() => {
+        onSendGA(GA_ACTION.CLICK_EXPERIENCE_SEARCH);
+      }}
+    />
+    <Item
+      to="/labor-rights"
+      text="勞動小教室"
+      onClick={() => {
+        onSendGA(GA_ACTION.CLICK_LABOR_RIGHTS);
+      }}
+    />
     <li className={cn(styles.menuItem, '')}>
-      <a href="//media.goodjob.life" title="部落格">百工寫真</a>
+      <a href="//media.goodjob.life" title="部落格">
+        百工寫真
+      </a>
     </li>
   </ul>
 );

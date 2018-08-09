@@ -16,9 +16,14 @@ const GoButton = () => (
 const InjectedCallToAction = ({ position }) => (
   <tr className={styles.row}>
     <td colSpan="8" className={styles.col}>
-      <img className={styles.eye} src="https://image.goodjob.life/banners/eyes.png" alt="eyes" role="presentation" />
+      <img
+        className={styles.eye}
+        src="https://image.goodjob.life/banners/eyes.png"
+        alt="eyes"
+        role="presentation"
+      />
       <span>
-        你已經看了 {position + 1} 筆了，該留下你的了拔  (´_ゝ`)
+        你已經看了 {position + 1} 筆了，該留下你的了拔 (´_ゝ`)
         <GoButton />
       </span>
     </td>

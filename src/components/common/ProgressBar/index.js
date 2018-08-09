@@ -1,2 +1,4 @@
 export { default as ProgressBar } from './ProgressBar';
-export { default as ProgressBarWithDataCount } from './ProgressBarWithDataCount';
+export {
+  default as ProgressBarWithDataCount,
+} from './ProgressBarWithDataCount';

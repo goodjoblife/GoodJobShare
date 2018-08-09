@@ -10,9 +10,7 @@ import dialogStyles from '../../common/Dialog.module.css';
 
 const WeekWorkTime = ({ weekWorkTime, onChange }) => (
   <div>
-    <InputTitle
-      text="一週工時"
-    />
+    <InputTitle text="一週工時" />
     <div
       style={{
         display: 'flex',
@@ -39,9 +37,7 @@ const WeekWorkTime = ({ weekWorkTime, onChange }) => (
         />
         <Unit>小時</Unit>
       </div>
-      <div
-        className={dialogStyles.dialog}
-      >
+      <div className={dialogStyles.dialog}>
         <span className={dialogStyles.exclamation}>！</span>
         <P size="s">
           請您留下最近一週的「實際工作時數」（不含休息時間，如：午休）。
@@ -52,10 +48,7 @@ const WeekWorkTime = ({ weekWorkTime, onChange }) => (
 );
 
 WeekWorkTime.propTypes = {
-  weekWorkTime: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
+  weekWorkTime: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onChange: PropTypes.func,
 };
 

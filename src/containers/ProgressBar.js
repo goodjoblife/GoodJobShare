@@ -12,6 +12,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ dispatchGetDataCount: queryTimeAndSalaryCount }, dispatch);
+  bindActionCreators(
+    { dispatchGetDataCount: queryTimeAndSalaryCount },
+    dispatch
+  );
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProgressBarWithDataCount);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProgressBarWithDataCount);

@@ -4,9 +4,7 @@ import cn from 'classnames';
 
 import styles from './RadioButton.module.css';
 
-const RadioButton = ({
-  id, label, name, value, checked, onChange, emoji,
-}) => (
+const RadioButton = ({ id, label, name, value, checked, onChange, emoji }) => (
   <div className={styles.radioButtonItem}>
     <input
       type="radio"
@@ -16,10 +14,7 @@ const RadioButton = ({
       checked={checked}
       onChange={onChange}
     />
-    <label
-      className={styles.radioSquare}
-      htmlFor={id || `radio-${value}`}
-    >
+    <label className={styles.radioSquare} htmlFor={id || `radio-${value}`}>
       {emoji && <i className={cn(styles.radioSquareIcon, styles[emoji])} />}
       <span className={styles.radioSquareText}>{label}</span>
     </label>

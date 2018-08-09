@@ -8,16 +8,14 @@ import i from 'common/icons';
 import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
 import styles from './ExperienceBlock.module.css';
-import {
-  formatType,
-  formatCreatedAt,
-  formatSalary,
-} from './helper';
+import { formatType, formatCreatedAt, formatSalary } from './helper';
 
 const Label = ({ Icon, text, className }) => (
   <div className={cn(styles.label, className)}>
     <Icon />
-    <P Tag="span" size="m" bold>{text}</P>
+    <P Tag="span" size="m" bold>
+      {text}
+    </P>
   </div>
 );
 
@@ -40,7 +38,10 @@ const ExperienceBlock = ({ data, size, backable }) => {
   const splitter = ' ・ ';
 
   return (
-    <Link to={{ pathname: `/experiences/${_id}`, state: { backable } }} className={cn(styles.container, styles[size])}>
+    <Link
+      to={{ pathname: `/experiences/${_id}`, state: { backable } }}
+      className={cn(styles.container, styles[size])}
+    >
       <section className={styles.contentWrapper}>
         <P size="s">
           {`${formatType(type)}${splitter}${formatCreatedAt(createdAt)}`}
@@ -55,26 +56,35 @@ const ExperienceBlock = ({ data, size, backable }) => {
         </Heading>
 
         <div className={styles.labels}>
-          <Label text={data.company.name} Icon={i.Company} className={styles.company} />
-          <Label text={data.job_title} Icon={i.User} className={styles.position} />
-          <Label text={data.region} Icon={i.Location} className={styles.location} />
-          {
-            salary &&
+          <Label
+            text={data.company.name}
+            Icon={i.Company}
+            className={styles.company}
+          />
+          <Label
+            text={data.job_title}
+            Icon={i.User}
+            className={styles.position}
+          />
+          <Label
+            text={data.region}
+            Icon={i.Location}
+            className={styles.location}
+          />
+          {salary && (
             <Label
               className={styles.salary}
               text={formatSalary(salary)}
               Icon={i.Coin}
             />
-          }
+          )}
         </div>
 
-        {
-          (size === 'l' || size === 'm') ?
-            <P size="m">
-              {data.preview} ... ... <span className={styles.more}>閱讀更多</span>
-            </P>
-            : null
-        }
+        {size === 'l' || size === 'm' ? (
+          <P size="m">
+            {data.preview} ... ... <span className={styles.more}>閱讀更多</span>
+          </P>
+        ) : null}
       </section>
       <div className={styles.reaction}>
         <ThumbsUp count={likeCount} />

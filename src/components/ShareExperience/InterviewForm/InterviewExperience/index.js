@@ -18,22 +18,20 @@ import {
   sections as sectionsValidator,
 } from '../formCheck';
 
-import {
-  interviewSectionSubtitleOptions,
-} from '../../common/optionMap';
+import { interviewSectionSubtitleOptions } from '../../common/optionMap';
 
 import { TITLE, SECTIONS } from '../../../../constants/formElements';
 
 const TitleWithValidation = subscribeValidation(
   Title,
   props => props.validator(props.title),
-  TITLE,
+  TITLE
 );
 
 const SectionsWithValidation = subscribeValidation(
   Sections,
   props => props.validator(props.sections),
-  SECTIONS,
+  SECTIONS
 );
 
 class InterviewExperience extends Component {
@@ -54,7 +52,12 @@ class InterviewExperience extends Component {
       changeValidationStatus,
     } = this.props;
     return (
-      <IconHeadingBlock heading="面試經驗" Icon={Comment2} marginTop requiredText>
+      <IconHeadingBlock
+        heading="面試經驗"
+        Icon={Comment2}
+        marginTop
+        requiredText
+      >
         <div
           style={{
             marginBottom: '50px',
@@ -83,9 +86,7 @@ class InterviewExperience extends Component {
             submitted={submitted}
             changeValidationStatus={changeValidationStatus}
           />
-          <div
-            className={shareStyles.button__add}
-          >
+          <div className={shareStyles.button__add}>
             <ButtonAdd
               options={interviewSectionSubtitleOptions}
               custimizedValues={[interviewSectionSubtitleOptions[0].value]}
@@ -111,13 +112,8 @@ class InterviewExperience extends Component {
             editQa={editQa}
             removeQa={removeQa}
           />
-          <div
-            className={shareStyles.button__add}
-          >
-            <AddButton
-              onClick={() => appendQa()}
-              addQa
-            />
+          <div className={shareStyles.button__add}>
+            <AddButton onClick={() => appendQa()} addQa />
           </div>
         </div>
         <hr
@@ -140,26 +136,28 @@ class InterviewExperience extends Component {
 InterviewExperience.propTypes = {
   handleState: PropTypes.func,
   title: PropTypes.string,
-  sections: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    subtitle: PropTypes.string,
-    placeholder: PropTypes.string,
-    content: PropTypes.string,
-  })),
+  sections: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      subtitle: PropTypes.string,
+      placeholder: PropTypes.string,
+      content: PropTypes.string,
+    })
+  ),
   appendSection: PropTypes.func,
   removeSection: PropTypes.func,
   editSection: PropTypes.func,
-  interviewQas: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    subtitle: PropTypes.string,
-    content: PropTypes.string,
-  })),
+  interviewQas: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      subtitle: PropTypes.string,
+      content: PropTypes.string,
+    })
+  ),
   appendQa: PropTypes.func,
   removeQa: PropTypes.func,
   editQa: PropTypes.func,
-  interviewSensitiveQuestions: PropTypes.arrayOf(
-    PropTypes.string,
-  ),
+  interviewSensitiveQuestions: PropTypes.arrayOf(PropTypes.string),
   submitted: PropTypes.bool,
   changeValidationStatus: PropTypes.func,
 };

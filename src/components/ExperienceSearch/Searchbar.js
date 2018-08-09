@@ -23,10 +23,7 @@ class SearchBar extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {
-      searchBy,
-      searchQuery,
-    } = nextProps;
+    const { searchBy, searchQuery } = nextProps;
 
     this.setState({
       searchBy,
@@ -36,34 +33,28 @@ class SearchBar extends PureComponent {
 
   render() {
     const { keywords } = this.props;
-    const {
-      onKeywordClick,
-      onSearchByChange,
-      onSubmit,
-    } = this.props;
+    const { onKeywordClick, onSearchByChange, onSubmit } = this.props;
     const { className } = this.props;
     const { searchBy, searchQuery } = this.state;
 
     return (
       <section className={cn(styles.searchbar, className)}>
         <div className={styles.condition}>
-          {
-            OPTIONS.map(o => (
-              <Radio
-                key={o.value}
-                id={`condition-${o.value}`}
-                label={o.label}
-                value={o.value}
-                inline
-                onChange={() => {
-                  const newSearchBy = o.value;
-                  this.setState({ searchBy: newSearchBy });
-                  onSearchByChange({ searchBy: newSearchBy, searchQuery });
-                }}
-                checked={searchBy === o.value}
-              />
-            ))
-          }
+          {OPTIONS.map(o => (
+            <Radio
+              key={o.value}
+              id={`condition-${o.value}`}
+              label={o.label}
+              value={o.value}
+              inline
+              onChange={() => {
+                const newSearchBy = o.value;
+                this.setState({ searchBy: newSearchBy });
+                onSearchByChange({ searchBy: newSearchBy, searchQuery });
+              }}
+              checked={searchBy === o.value}
+            />
+          ))}
         </div>
         <div className={styles.search}>
           <input
@@ -76,7 +67,11 @@ class SearchBar extends PureComponent {
             }}
             onChange={e => this.setState({ searchQuery: e.target.value })}
             value={searchQuery}
-            placeholder={searchBy === 'company' ? 'ex: 台灣電機股份有限公司' : 'ex: 行銷企劃'}
+            placeholder={
+              searchBy === 'company'
+                ? 'ex: 台灣電機股份有限公司'
+                : 'ex: 行銷企劃'
+            }
           />
           <button
             className={styles.searchBtn}
@@ -87,19 +82,17 @@ class SearchBar extends PureComponent {
             <Magnifiner />
           </button>
           <div className={styles.keywordGroup}>
-            {
-              (keywords || []).map(keyword => (
-                <span
-                  key={keyword}
-                  className={styles.keyword}
-                  onClick={() => {
-                    onKeywordClick({ keyword, searchBy, searchQuery });
-                  }}
-                >
-                  {keyword}
-                </span>
-              ))
-            }
+            {(keywords || []).map(keyword => (
+              <span
+                key={keyword}
+                className={styles.keyword}
+                onClick={() => {
+                  onKeywordClick({ keyword, searchBy, searchQuery });
+                }}
+              >
+                {keyword}
+              </span>
+            ))}
           </div>
         </div>
       </section>

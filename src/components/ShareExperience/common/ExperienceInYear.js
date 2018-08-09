@@ -6,15 +6,11 @@ import InputTitle from './InputTitle';
 
 import shareStyles from './share.module.css';
 
-import {
-  experienceInYearOptions,
-} from './optionMap';
+import { experienceInYearOptions } from './optionMap';
 
 const ExperienceInYear = ({ experienceInYear, onChange }) => (
   <div>
-    <InputTitle
-      text="自身相關職務工作經驗"
-    />
+    <InputTitle text="自身相關職務工作經驗" />
     <div
       style={{
         display: 'flex',
@@ -30,25 +26,20 @@ const ExperienceInYear = ({ experienceInYear, onChange }) => (
         <Select
           options={experienceInYearOptions}
           value={experienceInYear}
-          onChange={
-            e => (e.target.value === '' ? onChange(null) : onChange(Number(e.target.value)))
+          onChange={e =>
+            e.target.value === ''
+              ? onChange(null)
+              : onChange(Number(e.target.value))
           }
         />
       </div>
-      <p
-        className="pS"
-      >
-        年
-      </p>
+      <p className="pS">年</p>
     </div>
   </div>
 );
 
 ExperienceInYear.propTypes = {
-  experienceInYear: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  experienceInYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
 };
 

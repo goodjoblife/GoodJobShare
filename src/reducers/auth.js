@@ -1,6 +1,4 @@
-import {
-  fromJS,
-} from 'immutable';
+import { fromJS } from 'immutable';
 
 import createReducer from 'utils/createReducer';
 import { saveToken } from 'utils/tokenUtil';
@@ -23,8 +21,7 @@ const auth = createReducer(preloadedState, {
     }
     return state.set('status', status).set('token', token);
   },
-  [SET_USER]: (state, { name }) =>
-    state.setIn(['user', 'name'], name),
+  [SET_USER]: (state, { name }) => state.setIn(['user', 'name'], name),
 });
 
 export default auth;

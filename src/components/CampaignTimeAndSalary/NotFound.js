@@ -18,11 +18,21 @@ class NotFound extends Component {
   render() {
     const { campaignName, campaignEntries, campaignEntriesStatus } = this.props;
 
-    if (isFetched(campaignEntriesStatus) && !campaignEntries.has(campaignName)) {
+    if (
+      isFetched(campaignEntriesStatus) &&
+      !campaignEntries.has(campaignName)
+    ) {
       return <CommonNotFound />;
     }
 
-    return (<Redirect to={'/time-and-salary/campaigns/:campaign_name/latest'.replace(':campaign_name', campaignName)} />);
+    return (
+      <Redirect
+        to={'/time-and-salary/campaigns/:campaign_name/latest'.replace(
+          ':campaign_name',
+          campaignName
+        )}
+      />
+    );
   }
 }
 

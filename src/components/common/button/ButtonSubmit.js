@@ -10,14 +10,9 @@ import WhyFacebookAuth from './WhyFacebookAuth';
 
 import styles from './ButtonSubmit.module.css';
 
-const isLogin = auth =>
-  auth.get('status') === authStatus.CONNECTED;
+const isLogin = auth => auth.get('status') === authStatus.CONNECTED;
 
-const getWhyFacebookAuth = onClick => (
-  <WhyFacebookAuth
-    buttonClick={onClick}
-  />
-);
+const getWhyFacebookAuth = onClick => <WhyFacebookAuth buttonClick={onClick} />;
 
 class ButtonSubmit extends React.PureComponent {
   constructor(props) {
@@ -29,17 +24,15 @@ class ButtonSubmit extends React.PureComponent {
     };
   }
 
-  handleIsOpen = isOpen => (
+  handleIsOpen = isOpen =>
     this.setState({
       isOpen,
-    })
-  )
+    });
 
-  handleFeedback = feedback => (
+  handleFeedback = feedback =>
     this.setState({
       feedback,
-    })
-  )
+    });
 
   render() {
     const { text, onSubmit, disabled, auth, login } = this.props;
@@ -50,49 +43,47 @@ class ButtonSubmit extends React.PureComponent {
           textAlign: 'center',
         }}
       >
-        {
-          isLogin(auth) ?
+        {isLogin(auth) ? (
+          <button
+            className={styles.container}
+            onClick={onSubmit}
+            disabled={disabled}
+          >
+            {text}
+          </button>
+        ) : (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
             <button
               className={styles.container}
-              onClick={onSubmit}
+              onClick={login}
               disabled={disabled}
             >
-              {text}
-            </button> :
+              <pre>{`以  f  認證，${text}`}</pre>
+            </button>
             <div
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
+                marginTop: '21px',
+                cursor: 'pointer',
+              }}
+              onClick={() => {
+                this.handleIsOpen(true);
+                return this.handleFeedback(
+                  getWhyFacebookAuth(() => this.handleIsOpen(false))
+                );
               }}
             >
-              <button
-                className={styles.container}
-                onClick={login}
-                disabled={disabled}
-              >
-                <pre>{`以  f  認證，${text}`}</pre>
-              </button>
-              <div
-                style={{
-                  marginTop: '21px',
-                  cursor: 'pointer',
-                }}
-                onClick={() => {
-                  this.handleIsOpen(true);
-                  return this.handleFeedback(getWhyFacebookAuth(
-                    () => this.handleIsOpen(false)
-                  ));
-                }}
-              >
-                <p
-                  className={cn('pMbold', styles.whyFB)}
-                >
-                  為什麼需要 Facebook 帳戶驗證？
-                </p>
-              </div>
+              <p className={cn('pMbold', styles.whyFB)}>
+                為什麼需要 Facebook 帳戶驗證？
+              </p>
             </div>
-        }
+          </div>
+        )}
         <Modal
           isOpen={isOpen}
           close={() => this.handleIsOpen(!isOpen)}

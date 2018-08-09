@@ -5,10 +5,12 @@ import fetchUtil from 'utils/fetchUtil';
 
 const endpoint = '/experiences';
 
-const getEndpoint = ({ id, limit = 3 }) => `${endpoint}/${id}/recommended?limit=${limit}`;
+const getEndpoint = ({ id, limit = 3 }) =>
+  `${endpoint}/${id}/recommended?limit=${limit}`;
 const fetch = ({ id, limit }) => fetchUtil(getEndpoint({ id, limit }));
 
-export const getExperiencesRecommended = ({ id, limit }) => fetch({ id, limit })('get');
+export const getExperiencesRecommended = ({ id, limit }) =>
+  fetch({ id, limit })('get');
 
 export const getExperiences = ({
   start,

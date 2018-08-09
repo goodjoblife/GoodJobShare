@@ -11,9 +11,7 @@ import Sections from '../../common/Sections';
 
 import shareStyles from '../../common/share.module.css';
 
-import {
-  workExSectionSubtitleOptions,
-} from '../../common/optionMap';
+import { workExSectionSubtitleOptions } from '../../common/optionMap';
 
 import {
   title as titleValidator,
@@ -25,13 +23,13 @@ import { TITLE, SECTIONS } from '../../../../constants/formElements';
 const TitleWithValidation = subscribeValidation(
   Title,
   props => props.validator(props.title),
-  TITLE,
+  TITLE
 );
 
 const SectionsWithValidation = subscribeValidation(
   Sections,
   props => props.validator(props.sections),
-  SECTIONS,
+  SECTIONS
 );
 
 class WorkExperience extends React.PureComponent {
@@ -48,7 +46,12 @@ class WorkExperience extends React.PureComponent {
     } = this.props;
 
     return (
-      <IconHeadingBlock heading="工作經驗" Icon={Comment2} marginTop requiredText>
+      <IconHeadingBlock
+        heading="工作經驗"
+        Icon={Comment2}
+        marginTop
+        requiredText
+      >
         <div
           style={{
             marginBottom: '24px',
@@ -76,9 +79,7 @@ class WorkExperience extends React.PureComponent {
             submitted={submitted}
             changeValidationStatus={changeValidationStatus}
           />
-          <div
-            className={shareStyles.button__add}
-          >
+          <div className={shareStyles.button__add}>
             <ButtonAdd
               options={workExSectionSubtitleOptions}
               custimizedValues={[workExSectionSubtitleOptions[0].value]}
@@ -95,11 +96,13 @@ class WorkExperience extends React.PureComponent {
 WorkExperience.propTypes = {
   handleState: PropTypes.func,
   title: PropTypes.string,
-  sections: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    subtitle: PropTypes.string,
-    content: PropTypes.string,
-  })),
+  sections: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      subtitle: PropTypes.string,
+      content: PropTypes.string,
+    })
+  ),
   appendSection: PropTypes.func,
   removeSection: PropTypes.func,
   editSection: PropTypes.func,

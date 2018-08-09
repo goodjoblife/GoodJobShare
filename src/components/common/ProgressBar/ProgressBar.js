@@ -13,20 +13,35 @@ const ProgressBar = ({
   rootClassName,
   theme,
 }) => {
-  const percentage = dataNum <= goalNum ? `${(dataNum / goalNum) * 100}%` : '100%';
+  const percentage =
+    dataNum <= goalNum ? `${(dataNum / goalNum) * 100}%` : '100%';
   return (
-    <div className={cn(styles.root, rootClassName, styles[size], styles[theme])}>
-      { size === 'l' && <div className={styles.start}>0</div> }
+    <div
+      className={cn(styles.root, rootClassName, styles[size], styles[theme])}
+    >
+      {size === 'l' && <div className={styles.start}>0</div>}
       <div className={styles.progress}>
         <div className={styles.bar} style={{ width: percentage }}>
-          { (size === 'l' || size === 'm') &&
-            <span className={styles.totalData}><span className={styles.hideDesktop}>募集資料數：</span>{dataNum}</span>
-          }
+          {(size === 'l' || size === 'm') && (
+            <span className={styles.totalData}>
+              <span className={styles.hideDesktop}>募集資料數：</span>
+              {dataNum}
+            </span>
+          )}
         </div>
       </div>
-      { size === 'l' && <div className={styles.end}>{goalNum}</div> }
-      { size === 's' && <div className={styles.numbers}>{dataNum}/{goalNum}</div> }
-      { size === 'm' && <div className={styles.goal}>目標：{goalNum} 筆</div> }
+      {size === 'l' && <div className={styles.end}>{goalNum}</div>}
+      {size === 's' && (
+        <div className={styles.numbers}>
+          {dataNum}/{goalNum}
+        </div>
+      )}
+      {size === 'm' && (
+        <div className={styles.goal}>
+          目標：
+          {goalNum} 筆
+        </div>
+      )}
     </div>
   );
 };

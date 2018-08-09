@@ -25,7 +25,6 @@ import Guidelines from './components/Guidelines';
 import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 
-
 const routes = [
   {
     path: '/',

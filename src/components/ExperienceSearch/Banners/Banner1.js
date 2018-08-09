@@ -13,7 +13,11 @@ const Banner1 = ({ className }) => (
       alt="職場透明化運動進行中"
       className={styles.banner1}
     />
-    <ProgressBarWithExperienceCount size="m" theme="gray" rootClassName={styles.progress} />
+    <ProgressBarWithExperienceCount
+      size="m"
+      theme="gray"
+      rootClassName={styles.progress}
+    />
   </Link>
 );
 Banner1.propTypes = {

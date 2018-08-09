@@ -6,8 +6,7 @@ import {
   menuStatusSelector,
 } from '../../selectors/laborRightsSelector';
 
-export const experienceCountSelector = state =>
-  state.experiences.get('count');
+export const experienceCountSelector = state => state.experiences.get('count');
 
 export const hasFetchedexperienceCountSelector = R.compose(
   isFetched,
@@ -24,10 +23,10 @@ export const hasFetchedTimeAndSalaryCountSelector = R.compose(
 
 export const laborRightsCountSelector = R.compose(
   entries => entries.size,
-  menuEntriesSelector,
+  menuEntriesSelector
 );
 
 export const hasFetchedLaborRightsCountSelector = R.compose(
   isFetched,
-  menuStatusSelector,
+  menuStatusSelector
 );

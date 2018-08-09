@@ -4,7 +4,9 @@ import styles from './ReactionZone.module.css';
 
 const ReactionZoneOtherOptions = ({ toggleReportInspectModal }) => (
   <ul className={styles.popoverItem}>
-    <li><button onClick={toggleReportInspectModal}>查看檢舉</button></li>
+    <li>
+      <button onClick={toggleReportInspectModal}>查看檢舉</button>
+    </li>
   </ul>
 );
 

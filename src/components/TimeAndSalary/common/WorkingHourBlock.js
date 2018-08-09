@@ -15,11 +15,11 @@ class WorkingHourBlock extends Component {
     groupSortBy: PropTypes.string.isRequired,
     isExpanded: PropTypes.bool,
     hideContent: PropTypes.bool.isRequired,
-  }
+  };
 
   static defaultProps = {
     isExpanded: false,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -34,7 +34,9 @@ class WorkingHourBlock extends Component {
       return (
         <div className={styles.overtimeBlock}>
           <div className={styles.overtimeBlockInner}>
-            <BasicPermissionBlock rootClassName={styles.permissionBlockWorkingHour} />
+            <BasicPermissionBlock
+              rootClassName={styles.permissionBlockWorkingHour}
+            />
           </div>
         </div>
       );
@@ -43,23 +45,15 @@ class WorkingHourBlock extends Component {
       <div>
         <div className={styles.overtimeBlock}>
           <div className={styles.overtimeBlockInner}>
-            <OvertimeBlock
-              type="salary"
-              heading="加班有無加班費"
-              data={data}
-            />
-            <OvertimeBlock
-              type="dayoff"
-              heading="加班有無補休"
-              data={data}
-            />
+            <OvertimeBlock type="salary" heading="加班有無加班費" data={data} />
+            <OvertimeBlock type="dayoff" heading="加班有無補休" data={data} />
           </div>
           <div className={styles.overtimeBlockUnit}>單位：資料筆數</div>
         </div>
         <WorkingHourTable data={data.time_and_salary} />
       </div>
     );
-  }
+  };
 
   render() {
     const { data, groupSortBy } = this.props;
@@ -81,14 +75,20 @@ class WorkingHourBlock extends Component {
               [styles.expanded]: this.state.isExpanded,
             })}
           >
-            <Heading size="sl" className={styles.headingBlock}>{company.name}</Heading>
+            <Heading size="sl" className={styles.headingBlock}>
+              {company.name}
+            </Heading>
             <div className={styles.averageBlock}>
-              <span className={styles.averageBlockHeading}>平均一週總工時：</span>
-              <span className={styles.averageBlockValue}>{avgVal ? avgVal.toFixed(1) : '-'} {avgUnit}</span>
+              <span className={styles.averageBlockHeading}>
+                平均一週總工時：
+              </span>
+              <span className={styles.averageBlockValue}>
+                {avgVal ? avgVal.toFixed(1) : '-'} {avgUnit}
+              </span>
             </div>
           </div>
           <div className={styles.expandIcon}>
-            { this.state.isExpanded ? <Minus /> : <Plus /> }
+            {this.state.isExpanded ? <Minus /> : <Plus />}
           </div>
         </button>
 
@@ -97,7 +97,7 @@ class WorkingHourBlock extends Component {
             [styles.expanded]: this.state.isExpanded,
           })}
         >
-          { this.state.isExpanded ? this.renderBlockContent() : null}
+          {this.state.isExpanded ? this.renderBlockContent() : null}
         </div>
       </section>
     );

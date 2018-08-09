@@ -18,17 +18,11 @@ import {
   propsWorkExperiencesForm,
 } from '../utils';
 
-import {
-  postWorkExperience,
-} from '../../../apis/workExperiencesApi';
+import { postWorkExperience } from '../../../apis/workExperiencesApi';
 
-import {
-  workExperiencesFormCheck,
-} from './formCheck';
+import { workExperiencesFormCheck } from './formCheck';
 
-import {
-  LS_WORK_EXPERIENCES_FORM_KEY,
-} from '../../../constants/localStorageKey';
+import { LS_WORK_EXPERIENCES_FORM_KEY } from '../../../constants/localStorageKey';
 
 import styles from './WorkExperiencesForm.module.css';
 
@@ -40,7 +34,11 @@ import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
 
-const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '段落標題，例：實際工作內容') => {
+const createSection = id => (
+  subtitle,
+  placeholder = '',
+  titlePlaceholder = '段落標題，例：實際工作內容'
+) => {
   const section = {
     id,
     subtitle,
@@ -67,8 +65,7 @@ const createBlock = {
 
 const idCounter = idGenerator();
 
-const isBlockRemovable = blocks =>
-  R.length(R.keys(blocks)) > 1;
+const isBlockRemovable = blocks => R.length(R.keys(blocks)) > 1;
 
 const firstSectionId = idCounter();
 
@@ -114,14 +111,17 @@ class WorkExperiencesForm extends React.Component {
     let defaultFromDraft;
 
     try {
-      defaultFromDraft = JSON.parse(localStorage.getItem(LS_WORK_EXPERIENCES_FORM_KEY));
+      defaultFromDraft = JSON.parse(
+        localStorage.getItem(LS_WORK_EXPERIENCES_FORM_KEY)
+      );
     } catch (error) {
       defaultFromDraft = null;
     }
 
     const defaultState = defaultFromDraft || defaultForm;
 
-    this.setState({ // eslint-disable-line react/no-did-mount-set-state
+    this.setState({
+      // eslint-disable-line react/no-did-mount-set-state
       ...defaultState,
     });
 
@@ -131,48 +131,46 @@ class WorkExperiencesForm extends React.Component {
   }
 
   onSubmit() {
-    const valid = workExperiencesFormCheck(propsWorkExperiencesForm(this.state));
+    const valid = workExperiencesFormCheck(
+      propsWorkExperiencesForm(this.state)
+    );
 
     if (valid) {
       localStorage.removeItem(LS_WORK_EXPERIENCES_FORM_KEY);
       const p = postWorkExperience(workExperiencesToBody(this.state));
-      return p.then(response => {
-        const experienceId = response.experience._id;
+      return p.then(
+        response => {
+          const experienceId = response.experience._id;
 
-        ReactGA.event({
-          category: GA_CATEGORY.SHARE_WORK,
-          action: GA_ACTION.UPLOAD_SUCCESS,
-        });
-        ReactPixel.track('Purchase', {
-          value: 1,
-          currency: 'TWD',
-          content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_WORK_EXPERIENCE,
-        });
+          ReactGA.event({
+            category: GA_CATEGORY.SHARE_WORK,
+            action: GA_ACTION.UPLOAD_SUCCESS,
+          });
+          ReactPixel.track('Purchase', {
+            value: 1,
+            currency: 'TWD',
+            content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_WORK_EXPERIENCE,
+          });
 
-        return (
-          () => (
+          return () => (
             <SuccessFeedback
-              buttonClick={() => (
+              buttonClick={() =>
                 window.location.replace(`/experiences/${experienceId}`)
-              )}
+              }
             />
-          )
-        );
-      }, error => {
-        ReactGA.event({
-          category: GA_CATEGORY.SHARE_WORK,
-          action: GA_ACTION.UPLOAD_FAIL,
-        });
+          );
+        },
+        error => {
+          ReactGA.event({
+            category: GA_CATEGORY.SHARE_WORK,
+            action: GA_ACTION.UPLOAD_FAIL,
+          });
 
-        return (
-          ({ buttonClick }) => (
-            <FailFeedback
-              info={error.message}
-              buttonClick={buttonClick}
-            />
-          )
-        );
-      });
+          return ({ buttonClick }) => (
+            <FailFeedback info={error.message} buttonClick={buttonClick} />
+          );
+        }
+      );
     }
     this.handleState('submitted')(true);
     const topInvalidElement = this.getTopInvalidElement();
@@ -198,11 +196,11 @@ class WorkExperiencesForm extends React.Component {
       }
     }
     return null;
-  }
+  };
 
   changeValidationStatus = (elementId, status) => {
     this.elementValidationStatus[elementId] = status;
-  }
+  };
 
   handleState(key) {
     return value => {
@@ -224,22 +222,27 @@ class WorkExperiencesForm extends React.Component {
       return this.setState(state => ({
         [blockKey]: {
           ...state[blockKey],
-          [id]: createBlock.sections(id)(subtitle, placeholder, titlePlaceholder),
+          [id]: createBlock.sections(id)(
+            subtitle,
+            placeholder,
+            titlePlaceholder
+          ),
         },
       }));
     };
   }
 
   removeBlock(blockKey) {
-    return id => this.setState(state => {
-      if (isBlockRemovable(state[blockKey])) {
-        return ({
-          [blockKey]: R.filter(block => block.id !== id)(state[blockKey]),
-        });
-      }
+    return id =>
+      this.setState(state => {
+        if (isBlockRemovable(state[blockKey])) {
+          return {
+            [blockKey]: R.filter(block => block.id !== id)(state[blockKey]),
+          };
+        }
 
-      return null;
-    });
+        return null;
+      });
   }
 
   editBlock(blockKey) {
@@ -280,17 +283,16 @@ class WorkExperiencesForm extends React.Component {
         <Heading size="l" marginBottomS center>
           工作經驗分享
         </Heading>
-        {
-          this.state.submitted ?
-            <div
-              style={{
-                marginTop: '20px',
-              }}
-              className={styles.warning__wording}
-            >
-              oops! 請檢查底下紅框內的內容是否正確
-            </div> : null
-        }
+        {this.state.submitted ? (
+          <div
+            style={{
+              marginTop: '20px',
+            }}
+            className={styles.warning__wording}
+          >
+            oops! 請檢查底下紅框內的內容是否正確
+          </div>
+        ) : null}
         <WorkInfo
           handleState={this.handleState}
           companyQuery={companyQuery}
@@ -318,9 +320,7 @@ class WorkExperiencesForm extends React.Component {
           submitted={submitted}
           changeValidationStatus={this.changeValidationStatus}
         />
-        <SubmitArea
-          onSubmit={this.onSubmit}
-        />
+        <SubmitArea onSubmit={this.onSubmit} />
       </div>
     );
   }

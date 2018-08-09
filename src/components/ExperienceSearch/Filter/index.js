@@ -42,11 +42,7 @@ class Filter extends PureComponent {
   }
 
   render() {
-    const {
-      onSortClick,
-      onSeachTypeChange,
-      className,
-    } = this.props;
+    const { onSortClick, onSeachTypeChange, className } = this.props;
 
     const { sort, searchType } = this.state;
 
@@ -55,7 +51,11 @@ class Filter extends PureComponent {
       <div className={className}>
         <section>
           <button
-            className={sort === SORT.CREATED_AT ? `${styles.frontButton} ${styles.toggle}` : styles.frontButton}
+            className={
+              sort === SORT.CREATED_AT
+                ? `${styles.frontButton} ${styles.toggle}`
+                : styles.frontButton
+            }
             onClick={() => {
               const newSort = SORT.CREATED_AT;
               this.setState({ sort: newSort });
@@ -66,7 +66,11 @@ class Filter extends PureComponent {
             最新
           </button>
           <button
-            className={sort === SORT.POPULARITY ? `${styles.rearButton} ${styles.toggle}` : styles.rearButton}
+            className={
+              sort === SORT.POPULARITY
+                ? `${styles.rearButton} ${styles.toggle}`
+                : styles.rearButton
+            }
             onClick={() => {
               const newSort = SORT.POPULARITY;
               this.setState({ sort: newSort });
@@ -79,27 +83,25 @@ class Filter extends PureComponent {
         </section>
         <hr className={styles.splitter} />
         <div className={styles.fliters}>
-          {
-            OPTIONS.map(o => (
-              <Checkbox
-                key={o.value}
-                id={`searchType-${o.value}`}
-                label={o.label}
-                value={o.value}
-                onChange={e => {
-                  const value = e.target.value;
-                  const newSearchType = R.ifElse(
-                    R.contains(value),
-                    R.reject(R.equals(value)),
-                    R.append(value),
-                  )(searchType);
-                  this.setState({ searchType: newSearchType });
-                  onSeachTypeChange({ searchType: newSearchType, sort });
-                }}
-                checked={searchType.includes(o.value)}
-              />
-            ))
-          }
+          {OPTIONS.map(o => (
+            <Checkbox
+              key={o.value}
+              id={`searchType-${o.value}`}
+              label={o.label}
+              value={o.value}
+              onChange={e => {
+                const value = e.target.value;
+                const newSearchType = R.ifElse(
+                  R.contains(value),
+                  R.reject(R.equals(value)),
+                  R.append(value)
+                )(searchType);
+                this.setState({ searchType: newSearchType });
+                onSeachTypeChange({ searchType: newSearchType, sort });
+              }}
+              checked={searchType.includes(o.value)}
+            />
+          ))}
         </div>
       </div>
     );

@@ -16,7 +16,9 @@ const App = () => (
     <Helmet {...HELMET_DATA.DEFAULT} />
     <div className={styles.content}>
       <Switch>
-        {routes.map((route, i) => (<RouteWithSubRoutes key={i} {...route} />))}
+        {routes.map((route, i) => (
+          <RouteWithSubRoutes key={i} {...route} />
+        ))}
       </Switch>
     </div>
     <Footer />

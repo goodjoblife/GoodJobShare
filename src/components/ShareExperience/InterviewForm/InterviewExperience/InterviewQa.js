@@ -7,16 +7,9 @@ import AddButton from 'common/button/AddButton';
 import styles from './InterviewQa.module.css';
 
 const InterviewQa = ({ question, answer, editQa, removeQa }) => (
-  <div
-    className={styles.container}
-  >
-    <div
-      className={styles.remove__btn}
-    >
-      <AddButton
-        onClick={removeQa}
-        deleteBtn
-      />
+  <div className={styles.container}>
+    <div className={styles.remove__btn}>
+      <AddButton onClick={removeQa} deleteBtn />
     </div>
     <div
       style={{
@@ -24,11 +17,7 @@ const InterviewQa = ({ question, answer, editQa, removeQa }) => (
         marginBottom: '14px',
       }}
     >
-      <p
-        className={styles.property__title}
-      >
-        Q
-      </p>
+      <p className={styles.property__title}>Q</p>
       <input
         placeholder="面試問題"
         value={question}
@@ -45,11 +34,7 @@ const InterviewQa = ({ question, answer, editQa, removeQa }) => (
         marginBottom: '14px',
       }}
     >
-      <p
-        className={styles.property__title}
-      >
-        A
-      </p>
+      <p className={styles.property__title}>A</p>
       <Textarea
         useCacheForDOMMeasurements
         value={answer}

@@ -12,26 +12,24 @@ const setListData = (campaignList, status, error = null) => ({
   error,
 });
 
-export const queryCampaignInfoList = () =>
-  dispatch => {
-    dispatch({
-      type: SET_LIST_STATUS,
-      status: fetchingStatus.FETCHING,
+export const queryCampaignInfoList = () => dispatch => {
+  dispatch({
+    type: SET_LIST_STATUS,
+    status: fetchingStatus.FETCHING,
+  });
+
+  return fetchCampaignList()
+    .then(rawData => {
+      dispatch(setListData(rawData, fetchingStatus.FETCHED));
+    })
+    .catch(error => {
+      dispatch(setListData([], fetchingStatus.ERROR, error));
     });
+};
 
-    return fetchCampaignList()
-      .then(rawData => {
-        dispatch(setListData(rawData, fetchingStatus.FETCHED));
-      })
-      .catch(error => {
-        dispatch(setListData([], fetchingStatus.ERROR, error));
-      });
-  };
-
-export const queryCampaignInfoListIfNeeded = () =>
-  (dispatch, getState) => {
-    if (isUnfetched(campaignEntriesStatusSelector(getState()))) {
-      return dispatch(queryCampaignInfoList());
-    }
-    return Promise.resolve();
-  };
+export const queryCampaignInfoListIfNeeded = () => (dispatch, getState) => {
+  if (isUnfetched(campaignEntriesStatusSelector(getState()))) {
+    return dispatch(queryCampaignInfoList());
+  }
+  return Promise.resolve();
+};

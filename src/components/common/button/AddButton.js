@@ -16,9 +16,7 @@ const AddButton = ({ active, onClick, addSection, addQa, deleteBtn }) => (
     onClick={onClick}
   >
     <X className={styles.cross} />
-    {addSection &&
-      <div className={styles.addSectionInner}>段落</div>
-    }
+    {addSection && <div className={styles.addSectionInner}>段落</div>}
   </div>
 );
 

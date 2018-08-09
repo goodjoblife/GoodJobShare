@@ -6,13 +6,21 @@ import styles from './LinkItem.module.css';
 
 const LinkItem = ({ title, items }) => (
   <div className={styles.linkItem}>
-    <h4 size="l" className={styles.heading}>{title}</h4>
+    <h4 size="l" className={styles.heading}>
+      {title}
+    </h4>
     {items.map(({ to, text, anchor }, index) => {
       if (anchor) {
-        return (<a key={index} href={to} className={styles.link}>{text}</a>);
+        return (
+          <a key={index} href={to} className={styles.link}>
+            {text}
+          </a>
+        );
       }
       return (
-        <Link key={index} to={to} className={styles.link}>{text}</Link>
+        <Link key={index} to={to} className={styles.link}>
+          {text}
+        </Link>
       );
     })}
   </div>

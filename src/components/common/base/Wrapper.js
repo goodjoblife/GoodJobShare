@@ -6,11 +6,7 @@ import styles from './Wrapper.module.css';
 const sizeOptions = ['l', 'm', 's'];
 
 const Wrapper = ({ Tag, size, children, className }) => (
-  <Tag
-    className={cn(styles[size], className)}
-  >
-    {children}
-  </Tag>
+  <Tag className={cn(styles[size], className)}>{children}</Tag>
 );
 Wrapper.propTypes = {
   Tag: PropTypes.string,

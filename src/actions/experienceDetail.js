@@ -1,9 +1,7 @@
 import fetchUtil from '../utils/fetchUtil';
 import fetchingStatus from '../constants/status';
 
-import {
-  getExperienceReply,
-} from '../apis/experiencesApi';
+import { getExperienceReply } from '../apis/experiencesApi';
 
 export const SET_EXPERIENCE = '@@experienceDetail/SET_EXPERIENCE';
 export const SET_EXPERIENCE_STATUS = '@@experienceDetail/SET_EXPERIENCE_STATUS';
@@ -21,71 +19,59 @@ export const setExperience = experience => ({
   experience,
 });
 
-const resetRepliesData = experienceId =>
-  ({
-    type: SET_REPLIES_DATA,
-    experienceId,
-    status: fetchingStatus.UNFETCHED,
-    error: null,
-    replies: [],
+const resetRepliesData = experienceId => ({
+  type: SET_REPLIES_DATA,
+  experienceId,
+  status: fetchingStatus.UNFETCHED,
+  error: null,
+  replies: [],
+});
+
+const setRepliesData = (experienceId, { status, replies, error = null }) => (
+  dispatch,
+  getState
+) => {
+  if (experienceId === repliesExperienceIdSelector(getState())) {
+    return dispatch({
+      type: SET_REPLIES_DATA,
+      experienceId,
+      status,
+      error,
+      replies,
+    });
+  }
+  return Promise.resolve();
+};
+
+export const submitComment = (id, comment) => (dispatch, getState) => {
+  const oldReplies = getState()
+    .experienceDetail.get('replies')
+    .toJS();
+
+  return fetchUtil(`/experiences/${id}/replies`)('POST', {
+    content: comment,
+  }).then(result => {
+    dispatch(
+      setRepliesData(id, {
+        status: fetchingStatus.FETCHED,
+        replies: [...oldReplies, result.reply],
+      })
+    );
   });
-
-const setRepliesData = (experienceId, { status, replies, error = null }) =>
-  (dispatch, getState) => {
-    if (experienceId === repliesExperienceIdSelector(getState())) {
-      return dispatch({
-        type: SET_REPLIES_DATA,
-        experienceId,
-        status,
-        error,
-        replies,
-      });
-    }
-    return Promise.resolve();
-  };
-
-export const submitComment = (id, comment) =>
-  (dispatch, getState) => {
-    const oldReplies = getState().experienceDetail.get('replies').toJS();
-
-    return fetchUtil(`/experiences/${id}/replies`)('POST', { content: comment })
-      .then(result => {
-        dispatch(setRepliesData(id, {
-          status: fetchingStatus.FETCHED,
-          replies: [...oldReplies, result.reply],
-        }));
-      });
-  };
+};
 
 export const likeExperience = o => dispatch => {
   if (o.liked) {
-    return fetchUtil(`/experiences/${o._id}/likes`)('DELETE')
-      .then(result => {
-        if (result.success) {
-          dispatch(setExperience(
+    return fetchUtil(`/experiences/${o._id}/likes`)('DELETE').then(result => {
+      if (result.success) {
+        dispatch(
+          setExperience(
             Object.assign({}, o, {
               liked: false,
               like_count: o.like_count - 1,
             })
-          ));
-          return;
-        }
-        dispatch(setExperience(o));
-      });
-      // .catch(error => {
-      //   dispatch(setExperience(o));
-      // });
-  }
-
-  return fetchUtil(`/experiences/${o._id}/likes`)('POST')
-    .then(result => {
-      if (result.success) {
-        dispatch(setExperience(
-          Object.assign({}, o, {
-            liked: true,
-            like_count: o.like_count + 1,
-          })
-        ));
+          )
+        );
         return;
       }
       dispatch(setExperience(o));
@@ -93,37 +79,52 @@ export const likeExperience = o => dispatch => {
     // .catch(error => {
     //   dispatch(setExperience(o));
     // });
+  }
+
+  return fetchUtil(`/experiences/${o._id}/likes`)('POST').then(result => {
+    if (result.success) {
+      dispatch(
+        setExperience(
+          Object.assign({}, o, {
+            liked: true,
+            like_count: o.like_count + 1,
+          })
+        )
+      );
+      return;
+    }
+    dispatch(setExperience(o));
+  });
+  // .catch(error => {
+  //   dispatch(setExperience(o));
+  // });
 };
 
-const setReplyLiked = (replyId, liked) =>
-  ({
-    type: SET_REPLY_LIKED,
-    replyId,
-    liked,
-  });
+const setReplyLiked = (replyId, liked) => ({
+  type: SET_REPLY_LIKED,
+  replyId,
+  liked,
+});
 
-export const likeReply = reply =>
-  dispatch => {
-    const { _id: replyId, liked } = reply;
+export const likeReply = reply => dispatch => {
+  const { _id: replyId, liked } = reply;
 
-    if (liked) {
-      return fetchUtil(`/replies/${replyId}/likes`)('DELETE')
-        .then(result => {
-          if (result.success) {
-            return dispatch(setReplyLiked(replyId, false));
-          }
-          return Promise.resolve();
-        });
+  if (liked) {
+    return fetchUtil(`/replies/${replyId}/likes`)('DELETE').then(result => {
+      if (result.success) {
+        return dispatch(setReplyLiked(replyId, false));
+      }
+      return Promise.resolve();
+    });
+  }
+
+  return fetchUtil(`/replies/${replyId}/likes`)('POST').then(result => {
+    if (result.success) {
+      return dispatch(setReplyLiked(replyId, true));
     }
-
-    return fetchUtil(`/replies/${replyId}/likes`)('POST')
-      .then(result => {
-        if (result.success) {
-          return dispatch(setReplyLiked(replyId, true));
-        }
-        return Promise.resolve();
-      });
-  };
+    return Promise.resolve();
+  });
+};
 
 export const fetchExperience = id => dispatch => {
   dispatch({
@@ -145,27 +146,30 @@ export const fetchExperience = id => dispatch => {
     });
 };
 
-export const fetchReplies = id =>
-  (dispatch, getState) => {
-    if (id !== repliesExperienceIdSelector(getState())) {
-      dispatch(resetRepliesData(id));
-    }
+export const fetchReplies = id => (dispatch, getState) => {
+  if (id !== repliesExperienceIdSelector(getState())) {
+    dispatch(resetRepliesData(id));
+  }
 
-    dispatch({
-      type: SET_REPLIES_STATUS,
-      status: fetchingStatus.FETCHING,
-    });
+  dispatch({
+    type: SET_REPLIES_STATUS,
+    status: fetchingStatus.FETCHING,
+  });
 
-    return getExperienceReply(id, 0, 100)
-      .then(rawData => {
-        const replies = rawData.replies;
-        return dispatch(setRepliesData(id, { status: fetchingStatus.FETCHED, replies }));
-      })
-      .catch(error =>
-        dispatch(setRepliesData(id, {
+  return getExperienceReply(id, 0, 100)
+    .then(rawData => {
+      const replies = rawData.replies;
+      return dispatch(
+        setRepliesData(id, { status: fetchingStatus.FETCHED, replies })
+      );
+    })
+    .catch(error =>
+      dispatch(
+        setRepliesData(id, {
           status: fetchingStatus.ERROR,
           error,
           replies: [],
-        }))
-      );
-  };
+        })
+      )
+    );
+};

@@ -19,7 +19,7 @@ class ReactionZone extends Component {
     authStatus: PropTypes.string,
     FB: PropTypes.object,
     openReportDetail: PropTypes.func,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -28,14 +28,22 @@ class ReactionZone extends Component {
 
   state = {
     isInspectReportOpen: false,
-  }
+  };
 
   toggleReportInspectModal() {
     this.setState({ isInspectReportOpen: !this.state.isInspectReportOpen });
   }
 
   render() {
-    const { id, likeExperience, experience, login, authStatus, FB, openReportDetail } = this.props;
+    const {
+      id,
+      likeExperience,
+      experience,
+      login,
+      authStatus,
+      FB,
+      openReportDetail,
+    } = this.props;
     const { isInspectReportOpen } = this.state;
     return (
       <div className={styles.container}>
@@ -68,11 +76,11 @@ class ReactionZone extends Component {
           <PopoverToggle
             className={styles.moreButton}
             popoverClassName={styles.popover}
-            popoverContent={(
+            popoverContent={
               <ReactionZoneOtherOptions
                 toggleReportInspectModal={this.toggleReportInspectModal}
               />
-            )}
+            }
           >
             <div className={styles.popoverIcon}>
               <span />

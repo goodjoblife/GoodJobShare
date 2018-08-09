@@ -13,12 +13,12 @@ class ReportInspectModal extends React.Component {
     id: PropTypes.string.isRequired,
     isOpen: PropTypes.bool.isRequired,
     toggleReportInspectModal: PropTypes.func.isRequired,
-  }
+  };
 
   state = {
     status: fetchingStatus.UNFETCHED,
     reports: [],
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.isOpen) return;
@@ -52,22 +52,22 @@ class ReportInspectModal extends React.Component {
         <Heading size="l" marginBottomS center>
           查看檢舉
         </Heading>
-        { status === fetchingStatus.FETCHING && <Loader size="s" /> }
-        { status === fetchingStatus.FETCHED && (
+        {status === fetchingStatus.FETCHING && <Loader size="s" />}
+        {status === fetchingStatus.FETCHED && (
           <div>
-            {
-              reports.length === 0 ?
-                <span>沒有檢舉記錄</span>
-              : <span>共 {reports.length} 個檢舉：</span>
-            }
-            {
-              reports.map(({ reason_category: reasonCategory, reason }, i) => (
-                <div key={i} className={styles.reportItem}>
-                  <P size="m" bold>{reasonCategory}</P>
-                  <P size="m">{reason}</P>
-                </div>
-              ))
-            }
+            {reports.length === 0 ? (
+              <span>沒有檢舉記錄</span>
+            ) : (
+              <span>共 {reports.length} 個檢舉：</span>
+            )}
+            {reports.map(({ reason_category: reasonCategory, reason }, i) => (
+              <div key={i} className={styles.reportItem}>
+                <P size="m" bold>
+                  {reasonCategory}
+                </P>
+                <P size="m">{reason}</P>
+              </div>
+            ))}
           </div>
         )}
         {status === fetchingStatus.ERROR && (

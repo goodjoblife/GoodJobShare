@@ -9,4 +9,3 @@ const Close = (props) => (
 /* eslint-enable */
 
 export default Close;
-

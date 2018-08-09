@@ -5,7 +5,14 @@ import cn from 'classnames';
 import styles from './Radio.module.css';
 
 const Radio = ({
-  id, label, name, value, inline, checked, margin, onChange,
+  id,
+  label,
+  name,
+  value,
+  inline,
+  checked,
+  margin,
+  onChange,
 }) => (
   <div
     className={cn(styles.formGroup, { [styles.inline]: inline })}
@@ -21,10 +28,7 @@ const Radio = ({
       checked={checked}
       onChange={onChange}
     />
-    <label
-      className={styles.radioCircle}
-      htmlFor={id || `radio-${value}`}
-    >
+    <label className={styles.radioCircle} htmlFor={id || `radio-${value}`}>
       <span className={styles.radioInput} />
       <span className={styles.radioText}>{label}</span>
     </label>

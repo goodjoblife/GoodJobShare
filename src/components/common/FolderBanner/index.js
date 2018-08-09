@@ -7,9 +7,7 @@ import styles from './FolderBanner.module.css';
 const FolderBanner = ({ children, rootClassName }) => (
   <div className={rootClassName}>
     <img src={FolderUpper} alt="foler-upper" />
-    <div className={styles.container}>
-      {children}
-    </div>
+    <div className={styles.container}>{children}</div>
   </div>
 );
 

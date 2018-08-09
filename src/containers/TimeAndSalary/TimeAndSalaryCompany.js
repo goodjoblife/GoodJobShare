@@ -14,4 +14,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ queryCompany, switchPath, fetchMyPermission }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(TimeAndSalaryCompany);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TimeAndSalaryCompany);

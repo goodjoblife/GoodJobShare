@@ -54,13 +54,8 @@ Footer.propTypes = {
   next: ImmutablePropTypes.map,
 };
 
-const Pager = ({
-  className, id, title,
-}) => (
-  <Link
-    to={`/labor-rights/${id}`}
-    className={cn(styles.pager, className)}
-  >
+const Pager = ({ className, id, title }) => (
+  <Link to={`/labor-rights/${id}`} className={cn(styles.pager, className)}>
     <ArrowLeft className={styles.icon} />
     <h3 className={cn('pLBold', styles.title)}>{title}</h3>
   </Link>

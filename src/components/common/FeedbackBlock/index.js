@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
@@ -21,7 +20,7 @@ class FeedbackBlock extends React.Component {
       no: PropTypes.string,
     }),
     className: PropTypes.string,
-  }
+  };
 
   static defaultProps = {
     question: '請問您是否覺得以上的資訊實用？ 感到滿意？',
@@ -30,7 +29,7 @@ class FeedbackBlock extends React.Component {
       no: '說說為什麼你覺得不實用？ 或是有任何其他的回饋？',
     },
     className: '',
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -48,7 +47,7 @@ class FeedbackBlock extends React.Component {
       label: this.state.feedback,
     });
     this.setState({ done: true });
-  }
+  };
 
   render() {
     const { polarity, feedback, done } = this.state;
@@ -57,13 +56,17 @@ class FeedbackBlock extends React.Component {
       return (
         <div className={cn(styles.doneBlock, className)}>
           <Checked className={styles.icon} style={{ marginRight: 20 }} />
-          <Heading size="sm" Tag="h4">感謝您的回饋！</Heading>
+          <Heading size="sm" Tag="h4">
+            感謝您的回饋！
+          </Heading>
         </div>
       );
     }
     return (
       <div className={cn(styles.feedbackBlock, className)}>
-        <Heading size="sm" Tag="h4">{question}</Heading>
+        <Heading size="sm" Tag="h4">
+          {question}
+        </Heading>
         <ButtonGroupImage
           className={styles.btnGroup}
           value={this.state.polarity}
@@ -74,32 +77,38 @@ class FeedbackBlock extends React.Component {
             {
               value: 'yes',
               label: '是',
-              icon: (<Checked className={styles.icon} />),
+              icon: <Checked className={styles.icon} />,
             },
             {
               value: 'no',
               label: '否',
-              icon: (<Close className={styles.icon} />),
+              icon: <Close className={styles.icon} />,
             },
           ]}
           theme="yellow"
         />
-        {
-          polarity === null ? null :
+        {polarity === null ? null : (
           <textarea
             className={styles.feedback}
-            placeholder={polarity === 'yes' ? placeholders.yes : placeholders.no}
+            placeholder={
+              polarity === 'yes' ? placeholders.yes : placeholders.no
+            }
             onChange={e => {
               e.preventDefault();
               this.setState({ feedback: e.target.value });
             }}
             value={feedback}
           />
-        }
-        {
-          polarity === null ? null :
-          <Button btnStyle="submit" onClick={this.onSubmit} className={styles.submitBtn}>送出</Button>
-        }
+        )}
+        {polarity === null ? null : (
+          <Button
+            btnStyle="submit"
+            onClick={this.onSubmit}
+            className={styles.submitBtn}
+          >
+            送出
+          </Button>
+        )}
       </div>
     );
   }

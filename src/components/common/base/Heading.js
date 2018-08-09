@@ -5,7 +5,18 @@ import styles from './Heading.module.css';
 
 const sizeOptions = ['l', 'm', 'sl', 'sm'];
 
-const Heading = ({ Tag, size, bold, light, center, marginBottom, marginBottomS, children, style, className }) => (
+const Heading = ({
+  Tag,
+  size,
+  bold,
+  light,
+  center,
+  marginBottom,
+  marginBottomS,
+  children,
+  style,
+  className,
+}) => (
   <Tag
     className={cn(styles[size], className, {
       [styles.bold]: bold,

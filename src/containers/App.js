@@ -14,21 +14,15 @@ const logPageView = location => {
 class Root extends Component {
   componentDidMount() {
     this.init();
-    const {
-      location,
-    } = this.props;
+    const { location } = this.props;
 
     logPageView(location);
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      location,
-    } = this.props;
+    const { location } = this.props;
 
-    const {
-      location: prevLocation,
-    } = prevProps;
+    const { location: prevLocation } = prevProps;
 
     if (location !== prevLocation) {
       logPageView(location);
@@ -42,12 +36,10 @@ class Root extends Component {
     // initialize facebook pixel
     ReactPixel.init(PIXEL_ID);
     ReactPixel.pageView();
-  }
+  };
 
   render() {
-    return (
-      <App />
-    );
+    return <App />;
   }
 }
 
@@ -57,6 +49,5 @@ Root.propTypes = {
     search: PropTypes.string,
   }),
 };
-
 
 export default withRouter(Root);

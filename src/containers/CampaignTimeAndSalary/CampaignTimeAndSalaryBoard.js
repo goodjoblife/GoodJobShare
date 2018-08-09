@@ -2,18 +2,18 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CampaignTimeAndSalaryBoard from '../../components/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
 import { queryCampaignInfoListIfNeeded } from '../../actions/campaignInfo';
-import { queryCampaignTimeAndSalary, switchPath } from '../../actions/campaignTimeAndSalaryBoard';
-import { fetchMyPermission } from '../../actions/me';
 import {
-  canViewTimeAndSalarySelector,
-} from '../../selectors/meSelector';
+  queryCampaignTimeAndSalary,
+  switchPath,
+} from '../../actions/campaignTimeAndSalaryBoard';
+import { fetchMyPermission } from '../../actions/me';
+import { canViewTimeAndSalarySelector } from '../../selectors/meSelector';
 import {
   campaignNameSelector,
   campaignEntriesSelector,
   campaignEntriesStatusSelector,
   campaignEntriesErrorSelector,
 } from '../../selectors/campaignSelector';
-
 
 const mapStateToProps = (state, { match }) => ({
   campaignName: campaignNameSelector(match),
@@ -28,11 +28,17 @@ const mapStateToProps = (state, { match }) => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    queryCampaignInfoListIfNeeded,
-    queryCampaignTimeAndSalary,
-    switchPath,
-    fetchMyPermission,
-  }, dispatch);
+  bindActionCreators(
+    {
+      queryCampaignInfoListIfNeeded,
+      queryCampaignTimeAndSalary,
+      switchPath,
+      fetchMyPermission,
+    },
+    dispatch
+  );
 
-export default connect(mapStateToProps, mapDispatchToProps)(CampaignTimeAndSalaryBoard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CampaignTimeAndSalaryBoard);

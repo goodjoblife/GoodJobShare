@@ -28,10 +28,13 @@ const pathnameMapping = {
 };
 
 const campaignListFromEntries = campaignEntries =>
-  campaignEntries.valueSeq().map(info => ({
-    name: info.get('name'),
-    title: info.get('title'),
-  })).toJS();
+  campaignEntries
+    .valueSeq()
+    .map(info => ({
+      name: info.get('name'),
+      title: info.get('title'),
+    }))
+    .toJS();
 
 export default class TimeAndSalary extends Component {
   static fetchData({ store: { dispatch } }) {
@@ -51,7 +54,7 @@ export default class TimeAndSalary extends Component {
       }),
     }),
     staticContext: PropTypes.object,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -66,7 +69,7 @@ export default class TimeAndSalary extends Component {
     infoTimeModal: {
       isOpen: false,
     },
-  }
+  };
 
   componentDidMount() {
     this.props.queryCampaignInfoListIfNeeded();
@@ -90,7 +93,8 @@ export default class TimeAndSalary extends Component {
 
     // default title and description
     let title = '查看薪資、工時資訊';
-    let description = '馬上查看薪資、工時資訊以及加班狀況，協助您找到更好的工作！';
+    let description =
+      '馬上查看薪資、工時資訊以及加班狀況，協助您找到更好的工作！';
 
     // 根據 route 去更新 title  e.g. 工時排行榜（由高到低）
     let name = '';
@@ -99,7 +103,9 @@ export default class TimeAndSalary extends Component {
         name = pathnameMapping[key];
       }
     });
-    if (name) { title = name; }
+    if (name) {
+      title = name;
+    }
 
     // 假如 keyword 不是 null, undefined 或 ''。則把 keywords 更新到 title & description
     const keyword = this.props.match.params.keyword;
@@ -120,14 +126,15 @@ export default class TimeAndSalary extends Component {
           { property: 'og:title', content: formatTitle(title, SITE_NAME) },
           { property: 'og:description', content: description },
           { property: 'og:url', content: url },
-          { property: 'og:image', content: `${imgHost}/og/time-and-salary.jpg` },
+          {
+            property: 'og:image',
+            content: `${imgHost}/og/time-and-salary.jpg`,
+          },
         ]}
-        link={[
-          { rel: 'canonical', href: url },
-        ]}
+        link={[{ rel: 'canonical', href: url }]}
       />
     );
-  }
+  };
 
   render() {
     const { routes, location, staticContext } = this.props;
@@ -136,12 +143,10 @@ export default class TimeAndSalary extends Component {
         if (location.hash) {
           const targets = location.hash.split('#');
           if (targets.length >= 2) {
-            return (
-              <Redirect to={`/time-and-salary${targets[1]}`} />
-            );
+            return <Redirect to={`/time-and-salary${targets[1]}`} />;
           }
         }
-        return (<Redirect to="/time-and-salary/latest" />);
+        return <Redirect to="/time-and-salary/latest" />;
       }
     }
 
@@ -171,7 +176,9 @@ export default class TimeAndSalary extends Component {
         />
         <Wrapper size="l" className={styles.subRouteWrapper}>
           <Switch>
-            { routes.map((route, i) => (<RouteWithSubRoutes key={i} {...route} />)) }
+            {routes.map((route, i) => (
+              <RouteWithSubRoutes key={i} {...route} />
+            ))}
           </Switch>
         </Wrapper>
       </div>

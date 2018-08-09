@@ -70,21 +70,23 @@ const DashBoardTable = ({
     <Table.Column
       className={styles.colHourly}
       title="估計時薪"
-      dataField={R.compose(formatWage, R.prop('estimated_hourly_wage'))}
+      dataField={R.compose(
+        formatWage,
+        R.prop('estimated_hourly_wage')
+      )}
       alignRight
     >
-      <InfoButton onClick={toggleInfoSalaryModal}>
-        估計時薪
-      </InfoButton>
+      <InfoButton onClick={toggleInfoSalaryModal}>估計時薪</InfoButton>
     </Table.Column>
     <Table.Column
       className={styles.colDataTime}
       title="參考時間"
-      dataField={R.compose(formatDate, R.prop('data_time'))}
+      dataField={R.compose(
+        formatDate,
+        R.prop('data_time')
+      )}
     >
-      <InfoButton onClick={toggleInfoTimeModal}>
-        參考時間
-      </InfoButton>
+      <InfoButton onClick={toggleInfoTimeModal}>參考時間</InfoButton>
     </Table.Column>
     <Table.Column
       className={styles.colAboutThisJob}

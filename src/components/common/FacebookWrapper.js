@@ -24,11 +24,7 @@ class FacebookWrapper extends Component {
   render() {
     const { children } = this.props;
 
-    return (
-      <div ref={this.handleContainer}>
-        {children}
-      </div>
-    );
+    return <div ref={this.handleContainer}>{children}</div>;
   }
 }
 

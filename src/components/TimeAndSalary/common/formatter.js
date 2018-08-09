@@ -1,17 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import {
-  formatSalaryAmount,
-  formatSalaryType,
-} from 'common/formatter';
+import { formatSalaryAmount, formatSalaryType } from 'common/formatter';
 
 import commonStyles from '../views/view.module.css';
 import MagnifierPlus from '../../common/icons/MagnifierPlus';
 
 export const getCompany = item => (
   <div>
-    <Link to={`/time-and-salary/company/${encodeURIComponent(item.company.name)}/work-time-dashboard`}>
+    <Link
+      to={`/time-and-salary/company/${encodeURIComponent(
+        item.company.name
+      )}/work-time-dashboard`}
+    >
       {item.company.name}
     </Link>
   </div>
@@ -21,13 +22,14 @@ export const getJobTitle = item => {
   const { job_title: jobTitle, sector } = item;
   return (
     <div>
-      <Link to={`/time-and-salary/job-title/${encodeURIComponent(jobTitle)}/work-time-dashboard`}>
+      <Link
+        to={`/time-and-salary/job-title/${encodeURIComponent(
+          jobTitle
+        )}/work-time-dashboard`}
+      >
         {jobTitle}
-      </Link>
-      {' '}
-      <span className={`pM ${commonStyles.sector}`}>
-        {sector}
-      </span>
+      </Link>{' '}
+      <span className={`pM ${commonStyles.sector}`}>{sector}</span>
     </div>
   );
 };
@@ -73,13 +75,19 @@ export const getFrequency = item => {
   );
 };
 
-export const getWeekWorkTime = item => (
+export const getWeekWorkTime = item =>
   item.week_work_time ? (
-    <div className={commonStyles.bar} style={{ width: `${item.week_work_time >= 100 ? 100 : item.week_work_time}%` }} >
+    <div
+      className={commonStyles.bar}
+      style={{
+        width: `${item.week_work_time >= 100 ? 100 : item.week_work_time}%`,
+      }}
+    >
       {item.week_work_time}
     </div>
-  ) : '-'
-);
+  ) : (
+    '-'
+  );
 
 export const getSalary = item => {
   if (!item.salary) {

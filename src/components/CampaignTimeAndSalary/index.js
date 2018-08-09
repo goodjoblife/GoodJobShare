@@ -29,10 +29,13 @@ const pathnameMapping = {
 };
 
 const campaignListFromEntries = campaignEntries =>
-  campaignEntries.valueSeq().map(info => ({
-    name: info.get('name'),
-    title: info.get('title'),
-  })).toJS();
+  campaignEntries
+    .valueSeq()
+    .map(info => ({
+      name: info.get('name'),
+      title: info.get('title'),
+    }))
+    .toJS();
 
 export default class TimeAndSalary extends Component {
   static fetchData({ store: { dispatch } }) {
@@ -47,7 +50,7 @@ export default class TimeAndSalary extends Component {
     location: PropTypes.shape({
       pathname: PropTypes.string,
     }),
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -62,7 +65,7 @@ export default class TimeAndSalary extends Component {
     infoTimeModal: {
       isOpen: false,
     },
-  }
+  };
 
   componentDidMount() {
     this.props.queryCampaignInfoListIfNeeded();
@@ -102,7 +105,9 @@ export default class TimeAndSalary extends Component {
         name = pathnameMapping[key];
       }
     });
-    if (name) { title = `${campaignTitle}的${name}`; }
+    if (name) {
+      title = `${campaignTitle}的${name}`;
+    }
 
     return (
       <Helmet
@@ -114,12 +119,10 @@ export default class TimeAndSalary extends Component {
           { property: 'og:url', content: url },
           { property: 'og:image', content: ogImgUrl },
         ]}
-        link={[
-          { rel: 'canonical', href: url },
-        ]}
+        link={[{ rel: 'canonical', href: url }]}
       />
     );
-  }
+  };
 
   render() {
     const { routes } = this.props;
@@ -147,7 +150,9 @@ export default class TimeAndSalary extends Component {
         />
         <Wrapper size="l" className={styles.wrapper}>
           <Switch>
-            { routes.map((route, i) => (<RouteWithSubRoutes key={i} {...route} />)) }
+            {routes.map((route, i) => (
+              <RouteWithSubRoutes key={i} {...route} />
+            ))}
           </Switch>
         </Wrapper>
         <FanPageBlock className={styles.fanPageBlock} />

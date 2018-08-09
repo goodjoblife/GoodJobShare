@@ -11,26 +11,25 @@ const setCountData = (count, status, error = null) => ({
   error,
 });
 
-export const queryExperienceCount = () =>
-  dispatch => {
-    dispatch(setCountData(0, fetchingStatus.FETCHING));
-    const opt = {
-      limit: 1,
-      start: 0,
-      sort: 'created_at',
-    };
-
-    return getExperiences(opt)
-      .then(rawData => {
-        const count = R.prop('total')(rawData);
-        dispatch(setCountData(count, fetchingStatus.FETCHED));
-      }).catch(error => {
-        dispatch(setCountData(0, fetchingStatus.ERROR, error));
-      });
+export const queryExperienceCount = () => dispatch => {
+  dispatch(setCountData(0, fetchingStatus.FETCHING));
+  const opt = {
+    limit: 1,
+    start: 0,
+    sort: 'created_at',
   };
 
-export const queryExperienceCountIfUnfetched = () =>
-(dispatch, getState) => {
+  return getExperiences(opt)
+    .then(rawData => {
+      const count = R.prop('total')(rawData);
+      dispatch(setCountData(count, fetchingStatus.FETCHED));
+    })
+    .catch(error => {
+      dispatch(setCountData(0, fetchingStatus.ERROR, error));
+    });
+};
+
+export const queryExperienceCountIfUnfetched = () => (dispatch, getState) => {
   if (isUnfetched(getState().experiences.get('countStatus'))) {
     return dispatch(queryExperienceCount());
   }

@@ -48,7 +48,10 @@ const selectOptions = R.pipe(
 
 const pathSelector = R.path(['match', 'path']);
 const keywordSelector = R.path(['match', 'params', 'keyword']);
-const pathParameterSelector = R.compose(path => pathnameMapping[path], pathSelector);
+const pathParameterSelector = R.compose(
+  path => pathnameMapping[path],
+  pathSelector
+);
 
 export default class TimeAndSalaryJobTitle extends Component {
   static propTypes = {
@@ -63,7 +66,7 @@ export default class TimeAndSalaryJobTitle extends Component {
     switchPath: PropTypes.func,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchMyPermission: PropTypes.func.isRequired,
-  }
+  };
 
   static fetchData({ store: { dispatch }, ...props }) {
     const { groupSortBy, order } = pathParameterSelector(props);
@@ -80,7 +83,10 @@ export default class TimeAndSalaryJobTitle extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (pathSelector(this.props) !== pathSelector(nextProps) || keywordSelector(this.props) !== keywordSelector(nextProps)) {
+    if (
+      pathSelector(this.props) !== pathSelector(nextProps) ||
+      keywordSelector(this.props) !== keywordSelector(nextProps)
+    ) {
       const { groupSortBy, order } = pathParameterSelector(nextProps);
       const jobTitle = keywordSelector(nextProps);
       this.props.queryJobTitle({ groupSortBy, order, jobTitle });
@@ -95,12 +101,16 @@ export default class TimeAndSalaryJobTitle extends Component {
     const jobTitle = keywordSelector(this.props);
     const raw = this.props.data.toJS();
 
-    const substituteKeyword =
-      R.invoker(2, 'replace')(/:keyword/, encodeURIComponent(jobTitle));
+    const substituteKeyword = R.invoker(2, 'replace')(
+      /:keyword/,
+      encodeURIComponent(jobTitle)
+    );
 
     return (
       <section className={styles.searchResult}>
-        <h2 className={styles.heading}>“{jobTitle}” 的 {title}</h2>
+        <h2 className={styles.heading}>
+          “{jobTitle}” 的 {title}
+        </h2>
         <div className={styles.result}>
           <div className={styles.sort}>
             <div className={styles.label}> 排序：</div>
@@ -108,28 +118,29 @@ export default class TimeAndSalaryJobTitle extends Component {
               <Select
                 options={selectOptions(pathnameMapping)}
                 value={path}
-                onChange={e => switchPath(substituteKeyword(e.target.value, jobTitle))}
+                onChange={e =>
+                  switchPath(substituteKeyword(e.target.value, jobTitle))
+                }
                 hasNullOption={false}
               />
             </div>
           </div>
         </div>
-        { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
-        { status === fetchingStatus.FETCHED && raw.length === 0 &&
-          <P
-            size="l"
-            bold
-            className={styles.searchNoResult}
-          >
-              尚未有職稱「{jobTitle}」的薪時資訊
-          </P>
-        }
+        {status === fetchingStatus.FETCHING && <Loading size="s" />}
+        {status === fetchingStatus.FETCHED &&
+          raw.length === 0 && (
+            <P size="l" bold className={styles.searchNoResult}>
+              尚未有職稱「
+              {jobTitle}
+              」的薪時資訊
+            </P>
+          )}
         {raw.map((o, i) => (
           <WorkingHourBlock
             key={o.company.id || i}
             data={o}
             groupSortBy={groupSortBy}
-            isExpanded={(i === 0) && (raw.length === 1)}
+            isExpanded={i === 0 && raw.length === 1}
             hideContent={!canViewTimeAndSalary}
           />
         ))}

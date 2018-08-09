@@ -1,8 +1,6 @@
 import R from 'ramda';
 
-import {
-  transferKeyToSnakecase,
-} from 'utils/objectUtil';
+import { transferKeyToSnakecase } from 'utils/objectUtil';
 
 const sortById = R.sortBy(R.prop('id'));
 
@@ -81,11 +79,7 @@ const propsBasicForm = state => {
 };
 
 const propsSalaryForm = state => {
-  const {
-    salaryType,
-    salaryAmount,
-    experienceInYear,
-  } = state;
+  const { salaryType, salaryAmount, experienceInYear } = state;
 
   return {
     salaryType,
@@ -117,8 +111,8 @@ const propsTimeForm = state => {
 };
 
 const needDeleteInterviewQas = R.compose(
-    n => n === 1,
-    R.length,
+  n => n === 1,
+  R.length
 );
 
 const filterEmptyInterviewQas = R.filter(
@@ -179,11 +173,17 @@ export const getTimeAndSalaryForm = state => ({
 });
 export const getExtraForm = extraFields => state =>
   R.fromPairs(extraFields.map(({ key }) => [key, state ? state[key] : '']));
-export const getCampaignExtendedForm = (extraFields, defaultContent) => state => ({
+export const getCampaignExtendedForm = (
+  extraFields,
+  defaultContent
+) => state => ({
   aboutThisJob: state.jobContent === defaultContent ? '' : state.jobContent,
   ...getExtraForm(extraFields)(state),
 });
-export const getCampaignTimeAndSalaryForm = (extraFields, defaultContent) => state => ({
+export const getCampaignTimeAndSalaryForm = (
+  extraFields,
+  defaultContent
+) => state => ({
   campaignName: state.campaignName,
   ...getTimeAndSalaryForm(state),
   ...getCampaignExtendedForm(extraFields, defaultContent)(state),
@@ -228,10 +228,7 @@ export const portTimeSalaryFormToRequestFormat = form => {
   });
 
   if (isEmployed) {
-    body = R.omit([
-      'jobEndingTimeYear',
-      'jobEndingTimeMonth',
-    ])(body);
+    body = R.omit(['jobEndingTimeYear', 'jobEndingTimeMonth'])(body);
   }
 
   return transferKeyToSnakecase(body);
@@ -315,7 +312,6 @@ export const propsWorkExperiencesForm = state => {
     sections: handleBlocks(sections),
   };
 };
-
 
 export const workExperiencesToBody = R.compose(
   handleSalaryAmount,

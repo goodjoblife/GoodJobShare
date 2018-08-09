@@ -39,28 +39,26 @@ class RateButton extends React.PureComponent {
           display: 'flex',
         }}
       >
-        {
-          Array(max)
-            .fill(null)
-            .map((_, index) => index + 1)
-            .map(ele => (
-              <div
-                key={ele}
-                onMouseEnter={this.onMouseEnter(ele)}
-                onMouseLeave={this.onMouseLeave()}
-                style={{
-                  display: 'inline-block',
-                  margin: '0 3px',
-                }}
-              >
-                <RateButtonElement
-                  active={rating >= ele}
-                  onClick={() => onChange(ele)}
-                  hover={hover >= ele}
-                />
-              </div>
-            ))
-        }
+        {Array(max)
+          .fill(null)
+          .map((_, index) => index + 1)
+          .map(ele => (
+            <div
+              key={ele}
+              onMouseEnter={this.onMouseEnter(ele)}
+              onMouseLeave={this.onMouseLeave()}
+              style={{
+                display: 'inline-block',
+                margin: '0 3px',
+              }}
+            >
+              <RateButtonElement
+                active={rating >= ele}
+                onClick={() => onChange(ele)}
+                hover={hover >= ele}
+              />
+            </div>
+          ))}
       </div>
     );
   }

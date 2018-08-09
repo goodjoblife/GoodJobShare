@@ -12,9 +12,7 @@ import FacebookFail from './FacebookFail';
 import authStatus from '../../../constants/authStatus';
 
 const getFacebookFail = buttonClick => (
-  <FacebookFail
-    buttonClick={buttonClick}
-  />
+  <FacebookFail buttonClick={buttonClick} />
 );
 
 class SubmitArea extends React.PureComponent {
@@ -37,19 +35,21 @@ class SubmitArea extends React.PureComponent {
     };
   }
 
-
   onSubmit() {
     if (this.state.isSubmitting === true) {
       return Promise.resolve();
     }
     this.setState({ isSubmitting: true });
-    return this.props.onSubmit()
+    return this.props
+      .onSubmit()
       .then(Feedback => {
         this.handleIsOpen(true);
         this.handleHasClose(false);
-        return this.handleFeedback(Feedback({
-          buttonClick: () => this.handleIsOpen(false),
-        }));
+        return this.handleFeedback(
+          Feedback({
+            buttonClick: () => this.handleIsOpen(false),
+          })
+        );
       })
       .catch(e => console.log(e))
       .then(() => {
@@ -64,7 +64,8 @@ class SubmitArea extends React.PureComponent {
   }
 
   login() {
-    return this.props.login(this.props.FB)
+    return this.props
+      .login(this.props.FB)
       .then(status => {
         if (status === authStatus.CONNECTED) {
           return this.onSubmit();
@@ -102,16 +103,9 @@ class SubmitArea extends React.PureComponent {
   }
 
   render() {
-    const {
-      auth,
-    } = this.props;
+    const { auth } = this.props;
 
-    const {
-      agree,
-      isOpen,
-      feedback,
-      hasClose,
-    } = this.state;
+    const { agree, isOpen, feedback, hasClose } = this.state;
 
     return (
       <div
@@ -170,7 +164,7 @@ class SubmitArea extends React.PureComponent {
           <ButtonSubmit
             text="送出資料"
             onSubmit={this.onSubmit}
-            disabled={this.state.isSubmitting || (!this.state.agree)}
+            disabled={this.state.isSubmitting || !this.state.agree}
             auth={auth}
             login={this.login}
           />

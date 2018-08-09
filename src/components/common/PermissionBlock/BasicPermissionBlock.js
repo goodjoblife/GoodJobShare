@@ -23,12 +23,12 @@ class BasicPermissionBlock extends React.Component {
     queryExperienceCount: PropTypes.func.isRequired,
     queryTimeAndSalaryCount: PropTypes.func.isRequired,
     queryLaborRightsCount: PropTypes.func.isRequired,
-  }
+  };
 
   static defaultProps = {
     to: '/share/time-and-salary',
     rootClassName: '',
-  }
+  };
 
   componentDidMount() {
     if (this.props.hasFetchedExperienceCount === false) {
@@ -43,7 +43,13 @@ class BasicPermissionBlock extends React.Component {
   }
 
   render() {
-    const { to, rootClassName, experienceCount, timeAndSalaryCount, laborRightsCount } = this.props;
+    const {
+      to,
+      rootClassName,
+      experienceCount,
+      timeAndSalaryCount,
+      laborRightsCount,
+    } = this.props;
     const experienceScale = getScale(experienceCount);
     const timeAndSalaryScale = getScale(timeAndSalaryCount);
     return (
@@ -51,18 +57,31 @@ class BasicPermissionBlock extends React.Component {
         <div className={styles.container}>
           <div className={styles.headingContainer}>
             <FontAwesomeIcon icon={faLock} className={styles.headingIcon} />
-            <Heading size="sl" Tag="h3">你暫時沒有查看完整資訊的權限</Heading>
+            <Heading size="sl" Tag="h3">
+              你暫時沒有查看完整資訊的權限
+            </Heading>
           </div>
           <P size="l" className={styles.ctaText}>
-            只需幾分鐘，<strong>分享你的職場資訊</strong>，不僅幫助其他人不再踩雷，更能
-            <strong>{`查看全站超過 ${timeAndSalaryScale} 筆`}</strong>薪資工時資訊、
-            <strong>{`${experienceScale}+ 篇`}</strong>面試及工作經驗分享，以及
-            <strong>{` ${laborRightsCount} 篇`}</strong>勞動權益懶人包哦！
+            只需幾分鐘，
+            <strong>分享你的職場資訊</strong>
+            ，不僅幫助其他人不再踩雷，更能
+            <strong>{`查看全站超過 ${timeAndSalaryScale} 筆`}</strong>
+            薪資工時資訊、
+            <strong>{`${experienceScale}+ 篇`}</strong>
+            面試及工作經驗分享，以及
+            <strong>{` ${laborRightsCount} 篇`}</strong>
+            勞動權益懶人包哦！
           </P>
           <br />
-          <P size="l"><strong>若你已經分享過資訊，登入即可查看全文！</strong></P>
+          <P size="l">
+            <strong>若你已經分享過資訊，登入即可查看全文！</strong>
+          </P>
           <div className={styles.ctaButtonContainer}>
-            <CallToLoginShareButton to={to} notLoginText="立即登入並分享" isLoginText="立即分享" />
+            <CallToLoginShareButton
+              to={to}
+              notLoginText="立即登入並分享"
+              isLoginText="立即分享"
+            />
           </div>
         </div>
       </div>

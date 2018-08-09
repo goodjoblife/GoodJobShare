@@ -32,5 +32,4 @@ const rootReducer = combineReducers({
   routing,
 });
 
-
 export default rootReducer;

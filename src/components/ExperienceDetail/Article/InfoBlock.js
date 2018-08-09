@@ -5,8 +5,12 @@ import styles from './InfoBlock.module.css';
 
 const InfoBlock = ({ label, children }) => (
   <li className={styles.block}>
-    <P size="m" className={styles.label}>{label}</P>
-    <P size="l" blod className={styles.content}>{children}</P>
+    <P size="m" className={styles.label}>
+      {label}
+    </P>
+    <P size="l" blod className={styles.content}>
+      {children}
+    </P>
   </li>
 );
 

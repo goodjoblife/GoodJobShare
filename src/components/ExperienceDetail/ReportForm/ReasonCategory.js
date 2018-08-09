@@ -11,24 +11,17 @@ const ReasonCategory = ({
   handleReasonCategory,
 }) => (
   <div>
-    {
-      reasonCategoryOptions.map(
-        ({ label, value }) => (
-          <div
-            key={value}
-            className={styles.radio}
-          >
-            <RadioDefault
-              label={label}
-              value={value}
-              name="reasonCategory"
-              onChange={handleReasonCategory}
-              checked={reasonCategory === value}
-            />
-          </div>
-        )
-      )
-    }
+    {reasonCategoryOptions.map(({ label, value }) => (
+      <div key={value} className={styles.radio}>
+        <RadioDefault
+          label={label}
+          value={value}
+          name="reasonCategory"
+          onChange={handleReasonCategory}
+          checked={reasonCategory === value}
+        />
+      </div>
+    ))}
   </div>
 );
 

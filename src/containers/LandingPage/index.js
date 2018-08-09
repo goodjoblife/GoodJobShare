@@ -6,13 +6,11 @@ import LandingPage from '../../components/LandingPage';
 import { queryMenuIfUnfetched } from '../../actions/laborRights';
 import { queryPopularExperiences } from '../../actions/popularExperiences';
 import { queryTimeAndSalaryCountIfUnfetched } from '../../actions/timeAndSalary';
-import {
-  menuEntriesSelector,
-} from '../../selectors/laborRightsSelector';
+import { menuEntriesSelector } from '../../selectors/laborRightsSelector';
 
 const laborRightsCountSelector = R.compose(
   entries => entries.size,
-  menuEntriesSelector,
+  menuEntriesSelector
 );
 
 const mapStateToProps = state => ({
@@ -23,10 +21,16 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    queryMenuIfUnfetched,
-    queryPopularExperiences,
-    queryTimeAndSalaryCount: queryTimeAndSalaryCountIfUnfetched,
-  }, dispatch);
+  bindActionCreators(
+    {
+      queryMenuIfUnfetched,
+      queryPopularExperiences,
+      queryTimeAndSalaryCount: queryTimeAndSalaryCountIfUnfetched,
+    },
+    dispatch
+  );
 
-export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LandingPage);

@@ -14,16 +14,18 @@ const Modal = ({ children, isOpen, hasClose, close, size }) => (
   >
     <div className={styles.inner}>
       <div className={cn(styles.container, styles[size])}>
-        {
-          hasClose ?
-            <div className={styles.close}>
-              { /* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */ }
-              <img src={Cross} className={styles.close__icon} onClick={close} alt="close" />
-            </div> : null
-        }
-        <div className={styles.content}>
-          {children}
-        </div>
+        {hasClose ? (
+          <div className={styles.close}>
+            {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+            <img
+              src={Cross}
+              className={styles.close__icon}
+              onClick={close}
+              alt="close"
+            />
+          </div>
+        ) : null}
+        <div className={styles.content}>{children}</div>
       </div>
     </div>
   </div>

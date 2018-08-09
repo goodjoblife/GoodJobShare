@@ -24,10 +24,16 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    queryExperienceCount: queryExperienceCountIfUnfetched,
-    queryTimeAndSalaryCount: queryTimeAndSalaryCountIfUnfetched,
-    queryLaborRightsCount: queryMenuIfUnfetched,
-  }, dispatch);
+  bindActionCreators(
+    {
+      queryExperienceCount: queryExperienceCountIfUnfetched,
+      queryTimeAndSalaryCount: queryTimeAndSalaryCountIfUnfetched,
+      queryLaborRightsCount: queryMenuIfUnfetched,
+    },
+    dispatch
+  );
 
-export default connect(mapStateToProps, mapDispatchToProps)(BasicPermissionBlock);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BasicPermissionBlock);

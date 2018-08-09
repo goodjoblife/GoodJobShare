@@ -24,42 +24,51 @@ import InterviewResult from './InterviewResult';
 import Salary from '../../common/Salary';
 import OverallRating from './OverallRating';
 
-import { COMPANY, REGION, JOB_TITLE, INTERVIEW_TIME, INTERVIEW_RESULT, OVERALL_RATING } from '../../../../constants/formElements';
+import {
+  COMPANY,
+  REGION,
+  JOB_TITLE,
+  INTERVIEW_TIME,
+  INTERVIEW_RESULT,
+  OVERALL_RATING,
+} from '../../../../constants/formElements';
 
 const CompanyQueryWithValidation = subscribeValidation(
   CompanyQuery,
   props => props.validator(props.companyQuery),
-  COMPANY,
+  COMPANY
 );
 
 const RegionWithValidation = subscribeValidation(
   Region,
   props => props.validator(props.region),
-  REGION,
+  REGION
 );
 
 const JobTitleWithValidation = subscribeValidation(
   JobTitle,
   props => props.validator(props.jobTitle),
-  JOB_TITLE,
+  JOB_TITLE
 );
 
 const InterviewTimeWithValidation = subscribeValidation(
   InterviewTime,
-  props => props.interviewTimeYearValidator(props.interviewTimeYear) && props.interviewTimeMonthValidator(props.interviewTimeMonth),
-  INTERVIEW_TIME,
+  props =>
+    props.interviewTimeYearValidator(props.interviewTimeYear) &&
+    props.interviewTimeMonthValidator(props.interviewTimeMonth),
+  INTERVIEW_TIME
 );
 
 const InterviewResultWithValidation = subscribeValidation(
   InterviewResult,
   props => props.validator(props.interviewResult),
-  INTERVIEW_RESULT,
+  INTERVIEW_RESULT
 );
 
 const OverallRatingWithValidation = subscribeValidation(
   OverallRating,
   props => props.validator(props.overallRating),
-  OVERALL_RATING,
+  OVERALL_RATING
 );
 
 class InterviewInfo extends React.PureComponent {
@@ -205,40 +214,16 @@ class InterviewInfo extends React.PureComponent {
 
 InterviewInfo.propTypes = {
   companyQuery: PropTypes.string,
-  region: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  region: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   jobTitle: PropTypes.string,
   handleState: PropTypes.func,
-  experienceInYear: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  education: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  interviewTimeYear: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  interviewTimeMonth: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  interviewResult: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  salaryType: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  salaryAmount: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  experienceInYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  education: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  interviewTimeYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  interviewTimeMonth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  interviewResult: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  salaryType: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  salaryAmount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   overallRating: PropTypes.number,
   submitted: PropTypes.bool,
   changeValidationStatus: PropTypes.func,

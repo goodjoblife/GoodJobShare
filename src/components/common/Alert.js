@@ -8,11 +8,11 @@ class Alert extends Component {
   static propTypes = {
     children: PropTypes.node,
     closeIn: PropTypes.number,
-  }
+  };
 
   static defaultProps = {
     closeIn: 3000,
-  }
+  };
 
   constructor() {
     super();
@@ -23,18 +23,21 @@ class Alert extends Component {
   }
 
   show() {
-    this.setState({
-      isHidden: false,
-    }, () => {
-      const closeIn = this.props.closeIn;
-      if (!isNaN(closeIn) && closeIn > 0) {
-        setTimeout(() => {
-          this.setState({
-            isHidden: true,
-          });
-        }, this.props.closeIn);
+    this.setState(
+      {
+        isHidden: false,
+      },
+      () => {
+        const closeIn = this.props.closeIn;
+        if (!isNaN(closeIn) && closeIn > 0) {
+          setTimeout(() => {
+            this.setState({
+              isHidden: true,
+            });
+          }, this.props.closeIn);
+        }
       }
-    });
+    );
   }
 
   close() {
@@ -52,9 +55,7 @@ class Alert extends Component {
         <div className={styles.closeButton}>
           <Close onClick={this.close} />
         </div>
-        <div className={styles.desc}>
-          {this.props.children}
-        </div>
+        <div className={styles.desc}>{this.props.children}</div>
       </div>
     );
   }

@@ -26,45 +26,62 @@ export const regionOptions = [
   value: region,
 }));
 
-export const employmentTypeOptions = [{
-  label: '全職', value: 'full-time',
-}, {
-  label: '兼職(含打工)', value: 'part-time',
-}, {
-  label: '實習', value: 'intern',
-}, {
-  label: '臨時工', value: 'temporary',
-}, {
-  label: '約聘雇', value: 'contract',
-}, {
-  label: '派遣', value: 'dispatched-labor',
-}];
+export const employmentTypeOptions = [
+  {
+    label: '全職',
+    value: 'full-time',
+  },
+  {
+    label: '兼職(含打工)',
+    value: 'part-time',
+  },
+  {
+    label: '實習',
+    value: 'intern',
+  },
+  {
+    label: '臨時工',
+    value: 'temporary',
+  },
+  {
+    label: '約聘雇',
+    value: 'contract',
+  },
+  {
+    label: '派遣',
+    value: 'dispatched-labor',
+  },
+];
 
-export const experienceInYearOptions = Array(51).fill(0).map((_, index) => {
-  if (index === 0) {
+export const experienceInYearOptions = Array(51)
+  .fill(0)
+  .map((_, index) => {
+    if (index === 0) {
+      return {
+        label: '小於一年',
+        value: index,
+      };
+    }
     return {
-      label: '小於一年',
+      label: index,
       value: index,
     };
-  }
-  return {
-    label: index,
-    value: index,
-  };
-});
+  });
 
-export const experienceInYearOptions2 = Array(51).fill(0).map((_, index) => {
-  if (index === 0) {
+export const experienceInYearOptions2 = Array(51)
+  .fill(0)
+  .map((_, index) => {
+    if (index === 0) {
+      return {
+        label: '小於 1 年',
+        value: index,
+      };
+    }
     return {
-      label: '小於 1 年',
+      label: `${index} 年`,
       value: index,
     };
-  }
-  return {
-    label: `${index} 年`,
-    value: index,
-  };
-});
+  });
 
 export const educationOptions = [
   {
@@ -165,7 +182,8 @@ export const interviewSectionSubtitleOptions = [
   {
     label: '給公司的建議',
     value: '給公司的建議',
-    placeholder: '例如：希望可以尊重求職者、希望面試官對於公司福利可以明確說明...等。',
+    placeholder:
+      '例如：希望可以尊重求職者、希望面試官對於公司福利可以明確說明...等。',
   },
 ];
 
@@ -182,7 +200,8 @@ export const workExSectionSubtitleOptions = [
   {
     label: '工時狀況',
     value: '工時狀況',
-    placeholder: '例如：幾點上下班？經常加班？加班有淡旺季？要帶工作回家做？下班要收 Line？',
+    placeholder:
+      '例如：幾點上下班？經常加班？加班有淡旺季？要帶工作回家做？下班要收 Line？',
   },
   {
     label: '薪資福利',
@@ -197,12 +216,14 @@ export const workExSectionSubtitleOptions = [
   {
     label: '獲得的成長',
     value: '獲得的成長',
-    placeholder: '例如：專業技術、管理團隊的經驗、對市場的瞭解、對廠商的瞭解等等。',
+    placeholder:
+      '例如：專業技術、管理團隊的經驗、對市場的瞭解、對廠商的瞭解等等。',
   },
   {
     label: '給公司的建議',
     value: '給公司的建議',
-    placeholder: '例如：「希望公司大會可以從每週改成每月一次」「希望公司可以開放在辦公室吃早餐」',
+    placeholder:
+      '例如：「希望公司大會可以從每週改成每月一次」「希望公司可以開放在辦公室吃早餐」',
   },
   {
     label: '升遷制度',
@@ -243,7 +264,6 @@ export const overallRatingDialogMap = {
   5: '大推！',
 };
 
-
 export const isEmployedOptions = [
   {
     label: '在職',
@@ -255,12 +275,16 @@ export const isEmployedOptions = [
   },
 ];
 
-export const jobEndingTimeYearOptions = Array(11).fill(0).map((_, index) => ({
-  label: new Date().getFullYear() - index,
-  value: new Date().getFullYear() - index,
-}));
+export const jobEndingTimeYearOptions = Array(11)
+  .fill(0)
+  .map((_, index) => ({
+    label: new Date().getFullYear() - index,
+    value: new Date().getFullYear() - index,
+  }));
 
-export const jobEndingTimeMonthOptions = Array(12).fill(0).map((_, index) => ({
-  label: index + 1,
-  value: index + 1,
-}));
+export const jobEndingTimeMonthOptions = Array(12)
+  .fill(0)
+  .map((_, index) => ({
+    label: index + 1,
+    value: index + 1,
+  }));

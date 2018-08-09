@@ -27,19 +27,19 @@ import {
 const CompanyWithValidation = subscribeValidation(
   CompanyQuery,
   props => props.validator(props.companyQuery),
-  COMPANY,
+  COMPANY
 );
 
 const JobTitleWithValidation = subscribeValidation(
   JobTitle,
   props => props.validator(props.jobTitle),
-  JOB_TITLE,
+  JOB_TITLE
 );
 
 const EmploymentTypeWithValidation = subscribeValidation(
   EmploymentType,
   props => props.validator(props.employmentType),
-  EMPLOYMENT_TYPE,
+  EMPLOYMENT_TYPE
 );
 
 class BasicInfo extends React.PureComponent {
@@ -129,13 +129,20 @@ class BasicInfo extends React.PureComponent {
               <InputTitle text="性別" />
               <Select
                 value={gender}
-                options={[{
-                  label: '男', value: 'male',
-                }, {
-                  label: '女', value: 'female',
-                }, {
-                  label: '其他', value: 'other',
-                }]}
+                options={[
+                  {
+                    label: '男',
+                    value: 'male',
+                  },
+                  {
+                    label: '女',
+                    value: 'female',
+                  },
+                  {
+                    label: '其他',
+                    value: 'other',
+                  },
+                ]}
                 onChange={e => handleState('gender')(e.target.value)}
               />
             </div>

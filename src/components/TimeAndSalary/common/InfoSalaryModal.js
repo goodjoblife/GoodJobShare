@@ -29,9 +29,24 @@ const InfoSalaryModal = ({ isOpen, close }) => (
     <div className={cn(editorStyles.editor, 'alignLeft')}>
       <ul>
         <li>當薪資種類為「時薪」：無需估算</li>
-        <li>當薪資種類為「日薪」：以 <bold>日薪 ÷ 工作日實際工時</bold> 估算</li>
-        <li>當薪資種類為「月薪」：以 <bold>(月薪 × 12) ÷ (52 × 每週平均工時 - (12天國假 + 7天特休) × 工作日實際工時)</bold> 估算</li>
-        <li>當薪資種類為「年薪」：以 <bold>年薪 ÷ (52 × 每週平均工時 - (12天國假+7天特休) × 工作日實際工時)</bold> 估算</li>
+        <li>
+          當薪資種類為「日薪」：以 <bold>日薪 ÷ 工作日實際工時</bold> 估算
+        </li>
+        <li>
+          當薪資種類為「月薪」：以{' '}
+          <bold>
+            (月薪 × 12) ÷ (52 × 每週平均工時 - (12天國假 + 7天特休) ×
+            工作日實際工時)
+          </bold>{' '}
+          估算
+        </li>
+        <li>
+          當薪資種類為「年薪」：以{' '}
+          <bold>
+            年薪 ÷ (52 × 每週平均工時 - (12天國假+7天特休) × 工作日實際工時)
+          </bold>{' '}
+          估算
+        </li>
       </ul>
       <div
         style={{
@@ -40,12 +55,8 @@ const InfoSalaryModal = ({ isOpen, close }) => (
           marginTop: '40px',
         }}
       >
-        <Button
-          btnStyle="black"
-          circleSize="md"
-          onClick={close}
-        >
-         OK，我瞭解了
+        <Button btnStyle="black" circleSize="md" onClick={close}>
+          OK，我瞭解了
         </Button>
       </div>
     </div>

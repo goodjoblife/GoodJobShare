@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 const Button = ({
-  circleSize, btnStyle, disabled, children, onClick, style, className,
+  circleSize,
+  btnStyle,
+  disabled,
+  children,
+  onClick,
+  style,
+  className,
 }) => {
   let cnCircleSize = '';
   let cnBtnStyle;

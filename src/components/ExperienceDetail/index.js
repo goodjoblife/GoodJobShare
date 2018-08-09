@@ -21,9 +21,7 @@ import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
 import ExperienceHeading from './Heading';
 
 import status from '../../constants/status';
-import {
-  fetchExperience,
-} from '../../actions/experienceDetail';
+import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
@@ -74,7 +72,7 @@ class ExperienceDetail extends Component {
     }),
     authStatus: PropTypes.string,
     canViewExperirenceDetail: PropTypes.bool.isRequired,
-  }
+  };
 
   static fetchData({ store: { dispatch }, match }) {
     const experienceId = experienceIdSelector(match);
@@ -95,7 +93,9 @@ class ExperienceDetail extends Component {
     const match = this.props.match;
     const experienceId = experienceIdSelector(match);
 
-    if (this.props.experienceDetail.getIn(['experience', '_id']) !== experienceId) {
+    if (
+      this.props.experienceDetail.getIn(['experience', '_id']) !== experienceId
+    ) {
       this.props.fetchExperience(experienceId);
     }
     this.props.fetchReplies(experienceId);
@@ -121,20 +121,25 @@ class ExperienceDetail extends Component {
       this.props.fetchMyPermission();
     }
 
-    if (nextProps.authStatus !== this.props.authStatus && nextProps.authStatus === authStatus.CONNECTED) {
+    if (
+      nextProps.authStatus !== this.props.authStatus &&
+      nextProps.authStatus === authStatus.CONNECTED
+    ) {
       this.props.fetchExperience(experienceId);
       this.props.fetchReplies(experienceId);
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (window && this.goTo && this.props.location.state && this.props.location.state.replyId) {
+    if (
+      window &&
+      this.goTo &&
+      this.props.location.state &&
+      this.props.location.state.replyId
+    ) {
       const id = `reply-${this.props.location.state.replyId}`;
       if (document.getElementById(id)) {
-        window.scrollTo(
-          0,
-          getPosition(document.getElementById(id))
-        );
+        window.scrollTo(0, getPosition(document.getElementById(id)));
         this.goTo = false;
       }
     }
@@ -153,19 +158,17 @@ class ExperienceDetail extends Component {
   submitComment = comment => {
     const experienceId = experienceIdSelector(this.props.match);
     this.props.submitComment(experienceId, comment);
-  }
+  };
 
   handleIsModalOpen = (isModalOpen, modalType, modalPayload = {}) =>
     this.setState({
       isModalOpen,
       modalType,
       modalPayload,
-    })
+    });
 
   renderModalChildren = modalType => {
-    const {
-      modalPayload,
-    } = this.state;
+    const { modalPayload } = this.state;
 
     switch (modalType) {
       case MODAL_TYPE.REPORT_DETAIL:
@@ -173,20 +176,20 @@ class ExperienceDetail extends Component {
           <ReportFormContainer
             close={() => this.handleIsModalOpen(false)}
             id={experienceIdSelector(this.props.match)}
-            onApiError={
-              pload =>
-                this.handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload)
+            onApiError={pload =>
+              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload)
             }
-            onSuccess={
-              () =>
-                this.handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS)
+            onSuccess={() =>
+              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS)
             }
           />
         );
       case MODAL_TYPE.REPORT_API_ERROR:
         return (
           <ApiErrorFeedback
-            buttonClick={() => this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)}
+            buttonClick={() =>
+              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)
+            }
             message={modalPayload.message}
           />
         );
@@ -199,7 +202,7 @@ class ExperienceDetail extends Component {
       default:
         return null;
     }
-  }
+  };
 
   renderHelmet = () => {
     if (this.props.experienceDetail) {
@@ -210,26 +213,38 @@ class ExperienceDetail extends Component {
         const company = experience.company.name;
         const jobTitle = experience.job_title;
         const type = experience.type;
-        const subtitle = experience.sections[0].subtitle ? experience.sections[0].subtitle.replace(/(\r\n|\n|\r)/gm, ' ')
+        const subtitle = experience.sections[0].subtitle
+          ? experience.sections[0].subtitle.replace(/(\r\n|\n|\r)/gm, ' ')
           : '';
-        const content = experience.sections[0].content.replace(/(\r\n|\n|\r)/gm, ' ');
+        const content = experience.sections[0].content.replace(
+          /(\r\n|\n|\r)/gm,
+          ' '
+        );
         const mapping = {
           interview: '面試經驗分享',
           work: '工作經驗分享',
           intern: '實習經驗分享',
         };
-        const description = `${company} ${jobTitle} 的${mapping[type]}。 ${subtitle}：${content}`;
+        const description = `${company} ${jobTitle} 的${
+          mapping[type]
+        }。 ${subtitle}：${content}`;
         return (
           <Helmet
             title={title}
             meta={[
               { name: 'description', content: description },
               { property: 'og:title', content: formatTitle(title, SITE_NAME) },
-              { property: 'og:url', content: formatCanonicalPath(`/experiences/${id}`) },
+              {
+                property: 'og:url',
+                content: formatCanonicalPath(`/experiences/${id}`),
+              },
               { property: 'og:description', content: description },
             ]}
             link={[
-              { rel: 'canonical', href: formatCanonicalPath(`/experiences/${id}`) },
+              {
+                rel: 'canonical',
+                href: formatCanonicalPath(`/experiences/${id}`),
+              },
             ]}
           />
         );
@@ -237,7 +252,7 @@ class ExperienceDetail extends Component {
       return null;
     }
     return null;
-  }
+  };
 
   render() {
     const {
@@ -248,29 +263,30 @@ class ExperienceDetail extends Component {
     } = this.props;
     const id = experienceIdSelector(match);
 
-    const {
-      isModalOpen,
-      modalType,
-      modalPayload,
-    } = this.state;
+    const { isModalOpen, modalType, modalPayload } = this.state;
 
-    const backable = R.pathOr(false, ['location', 'state', 'backable'], this.props);
+    const backable = R.pathOr(
+      false,
+      ['location', 'state', 'backable'],
+      this.props
+    );
     const data = this.props.experienceDetail.toJS();
 
-    const {
-      experience,
-      experienceStatus,
-      experienceError,
-    } = data;
+    const { experience, experienceStatus, experienceError } = data;
     const replies = this.props.replies.toJS();
     const repliesStatus = this.props.repliesStatus;
 
     if (experienceError) {
       switch (experienceError.statusCode) {
         case 403:
-          return (<NotFound heading="本篇文章已經被原作者隱藏，目前無法查看" status={403} />);
+          return (
+            <NotFound
+              heading="本篇文章已經被原作者隱藏，目前無法查看"
+              status={403}
+            />
+          );
         case 404:
-          return (<NotFound />);
+          return <NotFound />;
         default:
           return null;
       }
@@ -281,45 +297,47 @@ class ExperienceDetail extends Component {
         {this.renderHelmet()}
         <Section bg="white" paddingBottom pageTop>
           <Wrapper size="l">
-
             <ExperienceHeading experience={experience} />
 
-            { /* 文章區塊  */}
-            {
-              experienceStatus === status.FETCHING
-              ? <Loader />
-              : <Article experience={experience} hideContent={!canViewExperirenceDetail} />
-            }
+            {/* 文章區塊  */}
+            {experienceStatus === status.FETCHING ? (
+              <Loader />
+            ) : (
+              <Article
+                experience={experience}
+                hideContent={!canViewExperirenceDetail}
+              />
+            )}
 
-            { /* 按讚，分享，檢舉區塊  */}
+            {/* 按讚，分享，檢舉區塊  */}
             <ReactionZone
               experience={experience}
               likeExperience={likeExperience}
-              openReportDetail={() => this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)}
+              openReportDetail={() =>
+                this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)
+              }
               id={id}
             />
-            <BackToList
-              backable={backable}
-            />
+            <BackToList backable={backable} />
             <FanPageBlock className={styles.fanPageBlock} />
           </Wrapper>
         </Section>
 
-        { /* 你可能還想看...  */}
+        {/* 你可能還想看...  */}
         <RecommendationZone id={id} />
 
-        { /* 留言區塊  */}
+        {/* 留言區塊  */}
         <Section paddingBottom>
           <Wrapper size="s">
-            {
-              repliesStatus === status.FETCHING
-              ? <Loader size="s" />
-              : <MessageBoard
+            {repliesStatus === status.FETCHING ? (
+              <Loader size="s" />
+            ) : (
+              <MessageBoard
                 replies={replies}
                 likeReply={likeReply}
                 submitComment={this.submitComment}
               />
-            }
+            )}
           </Wrapper>
         </Section>
         <Modal

@@ -10,8 +10,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    queryCampaignInfoListIfNeeded,
-  }, dispatch);
+  bindActionCreators(
+    {
+      queryCampaignInfoListIfNeeded,
+    },
+    dispatch
+  );
 
-export default connect(mapStateToProps, mapDispatchToProps)(TimeAndSalary);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TimeAndSalary);

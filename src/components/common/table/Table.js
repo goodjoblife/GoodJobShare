@@ -12,16 +12,22 @@ class Table extends Component {
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
     postProcessRows: PropTypes.func,
-  }
+  };
 
   static defaultProps = {
     postProcessRows: x => x,
-  }
+  };
 
-  static Column = Column
+  static Column = Column;
 
   render() {
-    const { data, primaryKey, children, className, postProcessRows } = this.props;
+    const {
+      data,
+      primaryKey,
+      children,
+      className,
+      postProcessRows,
+    } = this.props;
     const records = data.map((d, i) => {
       const record = Children.map(children, (col, idx) => {
         let value;
@@ -44,14 +50,16 @@ class Table extends Component {
           </td>
         );
       });
-      return (<tr key={d[primaryKey] || i}>{record}</tr>);
+      return <tr key={d[primaryKey] || i}>{record}</tr>;
     });
 
     const postRecords = postProcessRows(records);
 
     return (
       <table className={cn([styles.rwdTable, className])}>
-        <thead><tr>{children}</tr></thead>
+        <thead>
+          <tr>{children}</tr>
+        </thead>
         <tbody>{postRecords}</tbody>
       </table>
     );

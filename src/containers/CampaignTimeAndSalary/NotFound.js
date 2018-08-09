@@ -17,8 +17,14 @@ const mapStateToProps = (state, { match }) => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    queryCampaignInfoList: queryCampaignInfoListIfNeeded,
-  }, dispatch);
+  bindActionCreators(
+    {
+      queryCampaignInfoList: queryCampaignInfoListIfNeeded,
+    },
+    dispatch
+  );
 
-export default connect(mapStateToProps, mapDispatchToProps)(NotFound);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NotFound);

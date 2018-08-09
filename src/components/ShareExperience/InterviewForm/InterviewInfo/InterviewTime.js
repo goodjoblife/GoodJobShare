@@ -7,46 +7,42 @@ import InputTitle from '../../common/InputTitle';
 
 import styles from './InterviewTime.module.css';
 
-const monthMap = Array(12).fill(0).map((_, index) => ({
-  label: index + 1,
-  value: index + 1,
-}));
+const monthMap = Array(12)
+  .fill(0)
+  .map((_, index) => ({
+    label: index + 1,
+    value: index + 1,
+  }));
 
-const yearMap = Array(12).fill(0).map((_, index) => ({
-  label: new Date().getFullYear() - index,
-  value: new Date().getFullYear() - index,
-}));
+const yearMap = Array(12)
+  .fill(0)
+  .map((_, index) => ({
+    label: new Date().getFullYear() - index,
+    value: new Date().getFullYear() - index,
+  }));
 
-const InterviewTime = (
-  {
-    interviewTimeYear,
-    interviewTimeMonth,
-    onInterviewTimeYear,
-    onInterviewTimeMonth,
-    interviewTimeYearValidator,
-    interviewTimeMonthValidator,
-    submitted,
-  }
-) => {
+const InterviewTime = ({
+  interviewTimeYear,
+  interviewTimeMonth,
+  onInterviewTimeYear,
+  onInterviewTimeMonth,
+  interviewTimeYearValidator,
+  interviewTimeMonthValidator,
+  submitted,
+}) => {
   const yearInvalid = !interviewTimeYearValidator(interviewTimeYear);
   const monthInvalid = !interviewTimeMonthValidator(interviewTimeMonth);
   const yearWording = yearInvalid ? '年份' : null;
   const monthWording = monthInvalid ? '月份' : null;
 
-  let warningWordingArray = [
-    yearWording,
-    monthWording,
-  ];
+  let warningWordingArray = [yearWording, monthWording];
 
   warningWordingArray = warningWordingArray.filter(n => n);
 
   const isWarning = submitted && (yearInvalid || monthInvalid);
   return (
     <div>
-      <InputTitle
-        text="面試時間"
-        must
-      />
+      <InputTitle text="面試時間" must />
       <div
         style={{
           display: 'flex',
@@ -70,9 +66,7 @@ const InterviewTime = (
             <Select
               options={yearMap}
               value={interviewTimeYear}
-              onChange={
-                e => onInterviewTimeYear(Number(e.target.value))
-              }
+              onChange={e => onInterviewTimeYear(Number(e.target.value))}
             />
           </div>
           <p
@@ -95,9 +89,7 @@ const InterviewTime = (
             <Select
               options={monthMap}
               value={interviewTimeMonth}
-              onChange={
-                e => onInterviewTimeMonth(Number(e.target.value))
-              }
+              onChange={e => onInterviewTimeMonth(Number(e.target.value))}
             />
           </div>
           <p
@@ -110,31 +102,23 @@ const InterviewTime = (
           </p>
         </div>
       </div>
-      {
-        isWarning ?
-          <p
-            className={cn(styles.warning__wording, 'pS')}
-            style={{
-              marginTop: '8px',
-            }}
-          >
-            {`需填寫面試${warningWordingArray.join(' 及 ')}`}
-          </p>
-          : null
-      }
+      {isWarning ? (
+        <p
+          className={cn(styles.warning__wording, 'pS')}
+          style={{
+            marginTop: '8px',
+          }}
+        >
+          {`需填寫面試${warningWordingArray.join(' 及 ')}`}
+        </p>
+      ) : null}
     </div>
   );
 };
 
 InterviewTime.propTypes = {
-  interviewTimeYear: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  interviewTimeMonth: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  interviewTimeYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  interviewTimeMonth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onInterviewTimeYear: PropTypes.func,
   onInterviewTimeMonth: PropTypes.func,
   interviewTimeYearValidator: PropTypes.func,

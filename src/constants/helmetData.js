@@ -1,4 +1,3 @@
-
 import { FACEBOOK_APP_ID } from '../config';
 import { formatTitle, formatCanonicalPath } from '../utils/helmetHelper';
 /*
@@ -33,20 +32,28 @@ export const HELMET_DATA = {
     defaultTitle: SITE_NAME,
     titleTemplate: `%s | ${SITE_NAME}`,
     meta: [
-      { name: 'description', content: '匿名分享你的工時、薪資，讓我們求職不再面議！' },
-      { name: 'keywords', content: '工作時間, 薪資福利, 面試經驗, 工作經驗, 實習經驗, 工作評論, 職場資訊透明化' },
+      {
+        name: 'description',
+        content: '匿名分享你的工時、薪資，讓我們求職不再面議！',
+      },
+      {
+        name: 'keywords',
+        content:
+          '工作時間, 薪資福利, 面試經驗, 工作經驗, 實習經驗, 工作評論, 職場資訊透明化',
+      },
       { property: 'og:title', content: SITE_NAME },
       { property: 'og:url', content: formatCanonicalPath('/') },
       { property: 'og:type', content: 'website' },
       { property: 'og:image', content: `${imgHost}/og/default-06-April.jpg` },
-      { property: 'og:description', content: '匿名分享你的工時、薪資，讓我們求職不再面議！' },
+      {
+        property: 'og:description',
+        content: '匿名分享你的工時、薪資，讓我們求職不再面議！',
+      },
       { property: 'og:locale', content: 'zh_TW' },
       { property: 'og:site_name', content: SITE_NAME },
       { property: 'fb:app_id', content: FACEBOOK_APP_ID },
     ],
-    link: [
-      { rel: 'canonical', href: formatCanonicalPath('/') },
-    ],
+    link: [{ rel: 'canonical', href: formatCanonicalPath('/') }],
   },
   LANDING_PAGE: {
     meta: [
@@ -56,13 +63,14 @@ export const HELMET_DATA = {
   SHARE: {
     title: '分享你的職場資訊',
     meta: [
-      { property: 'og:title', content: formatTitle('分享你的職場資訊', SITE_NAME) },
+      {
+        property: 'og:title',
+        content: formatTitle('分享你的職場資訊', SITE_NAME),
+      },
       { property: 'og:url', content: formatCanonicalPath('/share') },
       { property: 'og:image', content: `${imgHost}/og/share-work.jpg` },
     ],
-    link: [
-      { rel: 'canonical', href: formatCanonicalPath('/share') },
-    ],
+    link: [{ rel: 'canonical', href: formatCanonicalPath('/share') }],
   },
   SHARE_INTERVIEW: {
     title: '面試經驗分享',
@@ -71,16 +79,20 @@ export const HELMET_DATA = {
       { property: 'og:url', content: formatCanonicalPath('/share/interview') },
       { property: 'og:image', content: `${imgHost}/og/share-interview.jpg` },
     ],
-    link: [
-      { rel: 'canonical', href: formatCanonicalPath('/share/interview') },
-    ],
+    link: [{ rel: 'canonical', href: formatCanonicalPath('/share/interview') }],
   },
   SHARE_TIME_SALARY: {
     title: '薪資工時分享',
     meta: [
       { property: 'og:title', content: formatTitle('薪資工時分享', SITE_NAME) },
-      { property: 'og:url', content: formatCanonicalPath('/share/time-and-salary') },
-      { property: 'og:image', content: `${imgHost}/og/share-time-and-salary.jpg` },
+      {
+        property: 'og:url',
+        content: formatCanonicalPath('/share/time-and-salary'),
+      },
+      {
+        property: 'og:image',
+        content: `${imgHost}/og/share-time-and-salary.jpg`,
+      },
     ],
     link: [
       { rel: 'canonical', href: formatCanonicalPath('/share/time-and-salary') },
@@ -90,11 +102,17 @@ export const HELMET_DATA = {
     title: '工作經驗分享',
     meta: [
       { property: 'og:title', content: formatTitle('工作經驗分享', SITE_NAME) },
-      { property: 'og:url', content: formatCanonicalPath('/share/work-experiences') },
+      {
+        property: 'og:url',
+        content: formatCanonicalPath('/share/work-experiences'),
+      },
       { property: 'og:image', content: `${imgHost}/og/share-work.jpg` },
     ],
     link: [
-      { rel: 'canonical', href: formatCanonicalPath('/share/work-experiences') },
+      {
+        rel: 'canonical',
+        href: formatCanonicalPath('/share/work-experiences'),
+      },
     ],
   },
   EXPERIENCE_SEARCH: {
@@ -106,15 +124,24 @@ export const HELMET_DATA = {
   LABOR_RIGHTS_MENU: {
     title: '勞動知識小教室',
     meta: [
-      { name: 'description', content: '我們看見勞工們的需要，推出【勞動知識小教室】系列懶人包，將複雜的法律資訊轉換成易懂的圖文，內容涵蓋勞動基準法、性別工作平等法、就業服務法以及工會相關法令等勞工必備的權益資訊。讓勞工認識自己的權益，學會保護自己。' },
-      { property: 'og:title', content: formatTitle('勞動知識小教室', SITE_NAME) },
+      {
+        name: 'description',
+        content:
+          '我們看見勞工們的需要，推出【勞動知識小教室】系列懶人包，將複雜的法律資訊轉換成易懂的圖文，內容涵蓋勞動基準法、性別工作平等法、就業服務法以及工會相關法令等勞工必備的權益資訊。讓勞工認識自己的權益，學會保護自己。',
+      },
+      {
+        property: 'og:title',
+        content: formatTitle('勞動知識小教室', SITE_NAME),
+      },
       { property: 'og:url', content: formatCanonicalPath('/labor-rights') },
       { property: 'og:image', content: `${imgHost}/og/labor-rights.jpg` },
-      { property: 'og:description', content: '我們看見勞工們的需要，推出【勞動知識小教室】系列懶人包，將複雜的法律資訊轉換成易懂的圖文，內容涵蓋勞動基準法、性別工作平等法、就業服務法以及工會相關法令等勞工必備的權益資訊。讓勞工認識自己的權益，學會保護自己。' },
+      {
+        property: 'og:description',
+        content:
+          '我們看見勞工們的需要，推出【勞動知識小教室】系列懶人包，將複雜的法律資訊轉換成易懂的圖文，內容涵蓋勞動基準法、性別工作平等法、就業服務法以及工會相關法令等勞工必備的權益資訊。讓勞工認識自己的權益，學會保護自己。',
+      },
     ],
-    link: [
-      { rel: 'canonical', href: formatCanonicalPath('/labor-rights') },
-    ],
+    link: [{ rel: 'canonical', href: formatCanonicalPath('/labor-rights') }],
   },
   LABOR_RIGHTS_SINGLE: {
     // information is dynamic
@@ -122,15 +149,21 @@ export const HELMET_DATA = {
   ABOUT: {
     title: '關於我們',
     meta: [
-      { name: 'description', content: '在過去求職的經驗中，我們發現台灣的求職資訊相當不透明。 薪資、工時的資訊經常不得而知，而實際工作內容也與當初求職網站說明的有所出入。 因此，我們決定採取行動，嘗試解決求職市場資訊不透明的問題，讓我們在找工作時，能夠做出更好的選擇。' },
+      {
+        name: 'description',
+        content:
+          '在過去求職的經驗中，我們發現台灣的求職資訊相當不透明。 薪資、工時的資訊經常不得而知，而實際工作內容也與當初求職網站說明的有所出入。 因此，我們決定採取行動，嘗試解決求職市場資訊不透明的問題，讓我們在找工作時，能夠做出更好的選擇。',
+      },
       { property: 'og:title', content: formatTitle('關於我們', SITE_NAME) },
       { property: 'og:url', content: formatCanonicalPath('/about') },
       { property: 'og:image', content: `${imgHost}/og/about.jpg` },
-      { property: 'og:description', content: '在過去求職的經驗中，我們發現台灣的求職資訊相當不透明。 薪資、工時的資訊經常不得而知，而實際工作內容也與當初求職網站說明的有所出入。 因此，我們決定採取行動，嘗試解決求職市場資訊不透明的問題，讓我們在找工作時，能夠做出更好的選擇。' },
+      {
+        property: 'og:description',
+        content:
+          '在過去求職的經驗中，我們發現台灣的求職資訊相當不透明。 薪資、工時的資訊經常不得而知，而實際工作內容也與當初求職網站說明的有所出入。 因此，我們決定採取行動，嘗試解決求職市場資訊不透明的問題，讓我們在找工作時，能夠做出更好的選擇。',
+      },
     ],
-    link: [
-      { rel: 'canonical', href: formatCanonicalPath('/about') },
-    ],
+    link: [{ rel: 'canonical', href: formatCanonicalPath('/about') }],
   },
   PRIVACY_POLICY: {
     title: '隱私權政策',
@@ -139,9 +172,7 @@ export const HELMET_DATA = {
       { property: 'og:title', content: formatTitle('隱私權政策', SITE_NAME) },
       { property: 'og:url', content: formatCanonicalPath('/privacy-policy') },
     ],
-    link: [
-      { rel: 'canonical', href: formatCanonicalPath('/privacy-policy') },
-    ],
+    link: [{ rel: 'canonical', href: formatCanonicalPath('/privacy-policy') }],
   },
   USER_TERMS: {
     title: '使用者條款',
@@ -150,9 +181,7 @@ export const HELMET_DATA = {
       { property: 'og:title', content: formatTitle('使用者條款', SITE_NAME) },
       { property: 'og:url', content: formatCanonicalPath('/user-terms') },
     ],
-    link: [
-      { rel: 'canonical', href: formatCanonicalPath('/user-terms') },
-    ],
+    link: [{ rel: 'canonical', href: formatCanonicalPath('/user-terms') }],
   },
   FAQ: {
     title: '常見問答',
@@ -162,9 +191,7 @@ export const HELMET_DATA = {
       { property: 'og:url', content: formatCanonicalPath('/faq') },
       { property: 'og:image', content: `${imgHost}/og/faq.jpg` },
     ],
-    link: [
-      { rel: 'canonical', href: formatCanonicalPath('/faq') },
-    ],
+    link: [{ rel: 'canonical', href: formatCanonicalPath('/faq') }],
   },
   GUIDELINES: {
     title: '發文留言規則',
@@ -173,8 +200,6 @@ export const HELMET_DATA = {
       { property: 'og:title', content: formatTitle('發文留言規則', SITE_NAME) },
       { property: 'og:url', content: formatCanonicalPath('/guidelines') },
     ],
-    link: [
-      { rel: 'canonical', href: formatCanonicalPath('/guidelines') },
-    ],
+    link: [{ rel: 'canonical', href: formatCanonicalPath('/guidelines') }],
   },
 };

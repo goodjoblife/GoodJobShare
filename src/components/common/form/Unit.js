@@ -5,7 +5,10 @@ import { P } from 'common/base';
 import styles from './Unit.module.css';
 
 const Unit = ({ children, marginRight }) => (
-  <P size="s" className={cn(styles.unit, { [styles.marginRight]: marginRight })}>
+  <P
+    size="s"
+    className={cn(styles.unit, { [styles.marginRight]: marginRight })}
+  >
     {children}
   </P>
 );

@@ -26,7 +26,10 @@ import { queryCampaignTimeAndSalary } from '../../../actions/campaignTimeAndSala
 import GradientMask from '../../common/GradientMask';
 
 import DashBoardTable from '../../TimeAndSalary/common/DashBoardTable';
-import { campaignNameSelector, campaignEntriesSelector } from '../../../selectors/campaignSelector';
+import {
+  campaignNameSelector,
+  campaignEntriesSelector,
+} from '../../../selectors/campaignSelector';
 
 import {
   toQsString,
@@ -122,7 +125,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     switchPath: PropTypes.func,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchMyPermission: PropTypes.func.isRequired,
-  }
+  };
 
   static fetchData({ match, location, store: { dispatch, getState } }) {
     const { path } = match;
@@ -135,8 +138,18 @@ export default class CampaignTimeAndSalaryBoard extends Component {
 
     return dispatch(queryCampaignInfoList()).then(() => {
       const campaignEntries = campaignEntriesSelector(getState());
-      const jobTitles = queryJobTitlesFromCampaignEntries(campaignEntries, campaignName);
-      return dispatch(queryCampaignTimeAndSalary(campaignName, { sortBy, order, jobTitles, page }));
+      const jobTitles = queryJobTitlesFromCampaignEntries(
+        campaignEntries,
+        campaignName
+      );
+      return dispatch(
+        queryCampaignTimeAndSalary(campaignName, {
+          sortBy,
+          order,
+          jobTitles,
+          page,
+        })
+      );
     });
   }
 
@@ -158,33 +171,66 @@ export default class CampaignTimeAndSalaryBoard extends Component {
       title: '',
       aboutThisJob: '',
     },
-  }
+  };
 
   componentDidMount() {
-    const { campaignName, campaignEntries, match: { path } } = this.props;
-    const jobTitles = queryJobTitlesFromCampaignEntries(campaignEntries, campaignName);
+    const {
+      campaignName,
+      campaignEntries,
+      match: { path },
+    } = this.props;
+    const jobTitles = queryJobTitlesFromCampaignEntries(
+      campaignEntries,
+      campaignName
+    );
     const { sortBy, order } = pathnameMapping[path];
     const { search } = this.props.location;
     const query = locationSearchToQuery(search);
     const { page } = querySelector(query);
 
     this.props.queryCampaignInfoListIfNeeded().then(() => {
-      this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order, jobTitles, page });
+      this.props.queryCampaignTimeAndSalary(campaignName, {
+        sortBy,
+        order,
+        jobTitles,
+        page,
+      });
     });
     this.props.fetchMyPermission();
   }
 
   componentDidUpdate(prevProps) {
-    const { campaignName: prevCampaignName, match: { path: prevPath }, location: { search: prevSearch } } = prevProps;
-    const { campaignName, campaignEntries, match: { path }, location: { search } } = this.props;
+    const {
+      campaignName: prevCampaignName,
+      match: { path: prevPath },
+      location: { search: prevSearch },
+    } = prevProps;
+    const {
+      campaignName,
+      campaignEntries,
+      match: { path },
+      location: { search },
+    } = this.props;
 
-    if (prevPath !== path || prevCampaignName !== campaignName || prevSearch !== search) {
-      const jobTitles = queryJobTitlesFromCampaignEntries(campaignEntries, campaignName);
+    if (
+      prevPath !== path ||
+      prevCampaignName !== campaignName ||
+      prevSearch !== search
+    ) {
+      const jobTitles = queryJobTitlesFromCampaignEntries(
+        campaignEntries,
+        campaignName
+      );
       const { sortBy, order } = pathnameMapping[path];
       const query = locationSearchToQuery(search);
       const { page } = querySelector(query);
       this.props.queryCampaignInfoListIfNeeded().then(() => {
-        this.props.queryCampaignTimeAndSalary(campaignName, { sortBy, order, jobTitles, page });
+        this.props.queryCampaignTimeAndSalary(campaignName, {
+          sortBy,
+          order,
+          jobTitles,
+          page,
+        });
       });
       this.props.fetchMyPermission();
     }
@@ -198,7 +244,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
       pathname,
       search: `?${queryString}`,
     };
-  }
+  };
 
   toggleInfoSalaryModal() {
     const state = this.state;
@@ -218,32 +264,48 @@ export default class CampaignTimeAndSalaryBoard extends Component {
       state.aboutThisJobModal.aboutThisJob = aboutThisJob;
     }
     this.setState(state);
-  }
+  };
 
   createPostProcessRows = campaignName => {
     if (!this.props.canViewTimeAndSalary) {
       return injectPermissionBlock(campaignName);
     }
     return R.identity;
-  }
+  };
 
   render() {
-    const { campaignName, campaignEntries, campaignEntriesStatus, match: { path } } = this.props;
+    const {
+      campaignName,
+      campaignEntries,
+      campaignEntriesStatus,
+      match: { path },
+    } = this.props;
     const { title } = pathnameMapping[path];
     const { status, data, switchPath, totalCount, currentPage } = this.props;
     const raw = data.toJS();
 
     // 如果 campaignName 不在清單中，代表 Not Found
-    if (isFetched(campaignEntriesStatus) && !campaignEntries.has(campaignName)) {
+    if (
+      isFetched(campaignEntriesStatus) &&
+      !campaignEntries.has(campaignName)
+    ) {
       return <CommonNotFound />;
     }
 
-    const isLoading = campaignEntriesStatus === fetchingStatus.FETCHIING || status === fetchingStatus.FETCHING;
+    const isLoading =
+      campaignEntriesStatus === fetchingStatus.FETCHIING ||
+      status === fetchingStatus.FETCHING;
 
     return (
       <section className={timeAndSalaryCommonStyles.searchResult}>
         <h2 className={styles.heading}>{title}</h2>
-        <Link className={cn(timeAndSalaryBannerStyles.btnS, timeAndSalaryBannerStyles.btnYellowLine)} to="/time-and-salary/latest">
+        <Link
+          className={cn(
+            timeAndSalaryBannerStyles.btnS,
+            timeAndSalaryBannerStyles.btnYellowLine
+          )}
+          to="/time-and-salary/latest"
+        >
           <Star /> 全站薪資工時
         </Link>
         <div className={timeAndSalaryCommonStyles.result}>
@@ -254,35 +316,38 @@ export default class CampaignTimeAndSalaryBoard extends Component {
               <div className={timeAndSalaryCommonStyles.select}>
                 <Select
                   options={selectOptions(pathnameMapping)}
-                  onChange={e => switchPath(e.target.value.replace(':campaign_name', campaignName))}
+                  onChange={e =>
+                    switchPath(
+                      e.target.value.replace(':campaign_name', campaignName)
+                    )
+                  }
                   value={path}
                   hasNullOption={false}
                 />
               </div>
             </div>
           </div>
-          {
-            isLoading ?
-              <div className={styles.status}>
-                <Loading size="s" />
-              </div> :
-              <DashBoardTable
-                data={raw}
-                postProcessRows={this.createPostProcessRows(campaignName)}
-                toggleInfoSalaryModal={this.toggleInfoSalaryModal}
-                toggleInfoTimeModal={this.toggleInfoTimeModal}
-                toggleAboutThisJobModal={this.toggleAboutThisJobModal}
-              />
-          }
-          {
-            isLoading ? null :
+          {isLoading ? (
+            <div className={styles.status}>
+              <Loading size="s" />
+            </div>
+          ) : (
+            <DashBoardTable
+              data={raw}
+              postProcessRows={this.createPostProcessRows(campaignName)}
+              toggleInfoSalaryModal={this.toggleInfoSalaryModal}
+              toggleInfoTimeModal={this.toggleInfoTimeModal}
+              toggleAboutThisJobModal={this.toggleAboutThisJobModal}
+            />
+          )}
+          {isLoading ? null : (
             <Pagination
               totalCount={totalCount}
               unit={DATA_NUM_PER_PAGE}
               currentPage={currentPage}
               createPageLinkTo={this.createPageLinkTo}
             />
-          }
+          )}
           <InfoSalaryModal
             isOpen={this.state.infoSalaryModal.isOpen}
             close={this.toggleInfoSalaryModal}

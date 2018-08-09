@@ -31,9 +31,7 @@ import {
   salaryFormCheck,
   timeFormCheck,
 } from '../TimeSalaryForm/formCheck';
-import {
-  campaignExtendedFormCheck,
-} from './formCheck';
+import { campaignExtendedFormCheck } from './formCheck';
 
 import {
   getBasicForm,
@@ -99,7 +97,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
         campaign_name: PropTypes.string,
       }),
     }).isRequired,
-  }
+  };
   constructor(props) {
     super(props);
 
@@ -121,7 +119,8 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       ...defaultForm,
     };
 
-    this.setState({ // eslint-disable-line react/no-did-mount-set-state
+    this.setState({
+      // eslint-disable-line react/no-did-mount-set-state
       ...defaultState,
     });
 
@@ -152,55 +151,58 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     const valid3 = timeFormCheck(getTimeForm(this.state));
 
     const campaignName = this.props.match.params.campaign_name;
-    const { extraFields, defaultContent } = this.props.campaignEntries.get(campaignName).toJS();
+    const { extraFields, defaultContent } = this.props.campaignEntries
+      .get(campaignName)
+      .toJS();
     const valid4 = campaignExtendedFormCheck(extraFields)(
       getCampaignExtendedForm(extraFields)(this.state)
     );
 
     if (valid && (valid2 || valid3) && valid4) {
       const p = postWorkings(
-        portTimeSalaryFormToRequestFormat(getCampaignTimeAndSalaryForm(extraFields, defaultContent)(this.state))
+        portTimeSalaryFormToRequestFormat(
+          getCampaignTimeAndSalaryForm(extraFields, defaultContent)(this.state)
+        )
       );
 
-      return p.then(response => {
-        const count = response.queries_count;
+      return p.then(
+        response => {
+          const count = response.queries_count;
 
-        ReactGA.event({
-          category: GA_CATEGORY.SHARE_TIME_SALARY,
-          action: GA_ACTION.UPLOAD_SUCCESS,
-        });
-        ReactPixel.track('Purchase', {
-          value: 1,
-          currency: 'TWD',
-          content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_TIME_AND_SALARY,
-        });
+          ReactGA.event({
+            category: GA_CATEGORY.SHARE_TIME_SALARY,
+            action: GA_ACTION.UPLOAD_SUCCESS,
+          });
+          ReactPixel.track('Purchase', {
+            value: 1,
+            currency: 'TWD',
+            content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_TIME_AND_SALARY,
+          });
 
-        return (
-          () => (
+          return () => (
             <SuccessFeedback
-              info={`您已經上傳 ${count} 次，還有 ${5 - (count || 0)} 次可以上傳。`}
+              info={`您已經上傳 ${count} 次，還有 ${5 -
+                (count || 0)} 次可以上傳。`}
               buttonText="查看最新工時、薪資"
               buttonClick={() => {
-                window.location.replace(`/time-and-salary/campaigns/${campaignName}/latest`);
+                window.location.replace(
+                  `/time-and-salary/campaigns/${campaignName}/latest`
+                );
               }}
             />
-          )
-        );
-      }, error => {
-        ReactGA.event({
-          category: GA_CATEGORY.SHARE_TIME_SALARY,
-          action: GA_ACTION.UPLOAD_FAIL,
-        });
+          );
+        },
+        error => {
+          ReactGA.event({
+            category: GA_CATEGORY.SHARE_TIME_SALARY,
+            action: GA_ACTION.UPLOAD_FAIL,
+          });
 
-        return (
-          ({ buttonClick }) => (
-            <FailFeedback
-              info={error.message}
-              buttonClick={buttonClick}
-            />
-          )
-        );
-      });
+          return ({ buttonClick }) => (
+            <FailFeedback info={error.message} buttonClick={buttonClick} />
+          );
+        }
+      );
     }
     this.handleState('submitted')(true);
     const topInvalidElement = this.getTopInvalidElement();
@@ -216,7 +218,11 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
   }
 
   setCampaignInfoFromEntries(campaignEntries) {
-    const { match: { params: { campaign_name: campaignName } } } = this.props;
+    const {
+      match: {
+        params: { campaign_name: campaignName },
+      },
+    } = this.props;
     const campaignInfo = campaignEntries.get(campaignName);
     if (campaignInfo) {
       this.setState({ campaignName });
@@ -225,11 +231,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
   }
 
   setCampaignInfo(campaignInfo) {
-    const {
-      defaultJobTitle,
-      defaultContent,
-      extraFields,
-    } = campaignInfo;
+    const { defaultJobTitle, defaultContent, extraFields } = campaignInfo;
 
     const defaultExtraForm = getExtraForm(extraFields)();
 
@@ -263,15 +265,15 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       }
     }
     return null;
-  }
+  };
 
   changeBasicElValidationStatus = (elementId, status) => {
     this.basicElValidationStatus[elementId] = status;
-  }
+  };
 
   changeExtElValidationStatus = (elementId, status) => {
     this.extElValidationStatus[elementId] = status;
-  }
+  };
 
   handleSalaryHint = (key, value) => {
     let salaryAmount;
@@ -288,7 +290,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       showSalaryWarning: showWarning,
       salaryHint: hint,
     });
-  }
+  };
 
   handleState(key) {
     return value => {
@@ -314,24 +316,35 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
           { name: 'description', content: metaDescription },
           { property: 'og:title', content: formatTitle(formTitle, SITE_NAME) },
           { property: 'og:description', content: metaDescription },
-          { property: 'og:url', content: formatCanonicalPath(`/share/time-and-salary/campaign/${campaignName}`) },
+          {
+            property: 'og:url',
+            content: formatCanonicalPath(
+              `/share/time-and-salary/campaign/${campaignName}`
+            ),
+          },
           { property: 'og:image', content: ogImgUrl },
         ],
         link: [
-          { rel: 'canonical', href: formatCanonicalPath(`/share/time-and-salary/campaign/${campaignName}`) },
+          {
+            rel: 'canonical',
+            href: formatCanonicalPath(
+              `/share/time-and-salary/campaign/${campaignName}`
+            ),
+          },
         ],
       };
       return <Helmet {...helmetData} />;
     }
     return <Helmet {...HELMET_DATA.SHARE_TIME_SALARY} />;
-  }
-
+  };
 
   render() {
     const {
       campaignEntriesStatus,
       campaignEntries,
-      match: { params: { campaign_name: campaignName } },
+      match: {
+        params: { campaign_name: campaignName },
+      },
     } = this.props;
 
     if (campaignEntriesStatus !== fetchingStatus.FETCHED) {
@@ -384,17 +397,16 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
         <div className={styles.infoBlock}>
           <MarkdownParser content={formIntroduction} />
         </div>
-        {
-          submitted ?
-            <div
-              style={{
-                marginTop: '20px',
-              }}
-              className={timeAndSalaryFormStyles.warning__wording}
-            >
-              oops! 請檢查底下紅框內的內容是否正確
-            </div> : null
-        }
+        {submitted ? (
+          <div
+            style={{
+              marginTop: '20px',
+            }}
+            className={timeAndSalaryFormStyles.warning__wording}
+          >
+            oops! 請檢查底下紅框內的內容是否正確
+          </div>
+        ) : null}
 
         <IconHeadingBlock heading="薪資工時資訊" Icon={People} requiredText>
           <BasicInfo
@@ -446,7 +458,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
             />
           </div>
 
-          { extraFields.map(({ key, title }) => (
+          {extraFields.map(({ key, title }) => (
             <div key={key} className={timeAndSalaryFormStyles.formSection}>
               <InputTitle text={title} />
               <TextInput
@@ -454,7 +466,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
                 onChange={e => this.handleState(key)(e.target.value)}
               />
             </div>
-          )) }
+          ))}
 
           <InputTitle text="電子郵件 - 有消息時將通知您" />
           <TextInput

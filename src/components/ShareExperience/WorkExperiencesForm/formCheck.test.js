@@ -1,6 +1,4 @@
-import {
-  generateStr,
-} from 'utils/mockUtil';
+import { generateStr } from 'utils/mockUtil';
 
 import {
   companyQuery,
@@ -15,9 +13,7 @@ import {
   weekWorkTime,
 } from './formCheck';
 
-import {
-  propsWorkExperiencesForm,
-} from '../utils';
+import { propsWorkExperiencesForm } from '../utils';
 
 describe('weekWorkTime tests', () => {
   test('weekWorkTime pass', () => {
@@ -32,7 +28,6 @@ describe('weekWorkTime tests', () => {
     expect(weekWorkTime(-1)).toBe(false);
   });
 });
-
 
 describe('companyQuery test', () => {
   test('non-empty string should pass', () => {
@@ -176,7 +171,9 @@ describe('interviewFormCheck tests', () => {
   };
 
   test('defaultForm should not pass', () => {
-    expect(workExperiencesFormCheck(propsWorkExperiencesForm(defaultForm))).toBe(false);
+    expect(
+      workExperiencesFormCheck(propsWorkExperiencesForm(defaultForm))
+    ).toBe(false);
   });
 
   test('all fill and fit to rules should pass', () => {
@@ -218,6 +215,8 @@ describe('interviewFormCheck tests', () => {
       },
     };
 
-    expect(workExperiencesFormCheck(propsWorkExperiencesForm(justFillForm))).toBe(true);
+    expect(
+      workExperiencesFormCheck(propsWorkExperiencesForm(justFillForm))
+    ).toBe(true);
   });
 });

@@ -1,6 +1,4 @@
-import {
-  generateStr,
-} from 'utils/mockUtil';
+import { generateStr } from 'utils/mockUtil';
 
 import {
   companyQuery,
@@ -21,10 +19,7 @@ import {
   interviewFormCheck,
 } from './formCheck';
 
-import {
-  getInterviewForm,
-} from '../utils';
-
+import { getInterviewForm } from '../utils';
 
 describe('companyQuery test', () => {
   test('non-empty string should pass', () => {
@@ -246,7 +241,9 @@ describe('interviewSensitiveQuestions test', () => {
   });
 
   test('element string length not in (0, 20] should not pass', () => {
-    expect(interviewSensitiveQuestions(['abcdeabcdeabcdeabcdeabcdeabcde'])).toBe(false);
+    expect(
+      interviewSensitiveQuestions(['abcdeabcdeabcdeabcdeabcdeabcde'])
+    ).toBe(false);
     expect(interviewSensitiveQuestions([''])).toBe(false);
   });
 });

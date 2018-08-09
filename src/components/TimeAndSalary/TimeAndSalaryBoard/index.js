@@ -23,11 +23,7 @@ import GradientMask from '../../common/GradientMask';
 
 import DashBoardTable from '../common/DashBoardTable';
 
-import {
-  toQsString,
-  querySelector,
-  locationSearchToQuery,
-} from './helper';
+import { toQsString, querySelector, locationSearchToQuery } from './helper';
 import { DATA_NUM_PER_PAGE } from '../../../constants/timeAndSalarSearch';
 
 const pathnameMapping = {
@@ -85,12 +81,10 @@ const injectCallToActions = rows => {
   const injectEvery = N => (row, i) => {
     if (i % N === N - 1) {
       const nthInjected = parseInt(i / N, 10);
-      return [row, (
-        <CallToActionRow
-          key={`injected-${nthInjected}`}
-          position={i}
-        />
-      )];
+      return [
+        row,
+        <CallToActionRow key={`injected-${nthInjected}`} position={i} />,
+      ];
     }
     return row;
   };
@@ -124,13 +118,15 @@ const injectLoadingIconRow = R.prepend(
   </tr>
 );
 
-const injectExtremeDividerAt = nthRow => onClick => R.insert(
-  nthRow, (
+const injectExtremeDividerAt = nthRow => onClick =>
+  R.insert(
+    nthRow,
     <tr key="extreme-divider" className={styles.extremeRow}>
       <td colSpan="8" className={styles.noBefore}>
         <div className={styles.extremeDescription}>
           <span>
-            以上資料為前 1 % 的資料，可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
+            以上資料為前 1 %
+            的資料，可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
             <button className={styles.toggle} onClick={onClick}>
               隱藏 -
             </button>
@@ -138,8 +134,7 @@ const injectExtremeDividerAt = nthRow => onClick => R.insert(
         </div>
       </td>
     </tr>
-  )
-);
+  );
 
 export default class TimeAndSalaryBoard extends Component {
   static propTypes = {
@@ -157,7 +152,7 @@ export default class TimeAndSalaryBoard extends Component {
     extremeData: ImmutablePropTypes.list,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchMyPermission: PropTypes.func.isRequired,
-  }
+  };
 
   static fetchData({ match, location, store: { dispatch } }) {
     const { path } = match;
@@ -189,7 +184,7 @@ export default class TimeAndSalaryBoard extends Component {
       aboutThisJob: '',
     },
     showExtreme: false,
-  }
+  };
 
   componentDidMount() {
     const { path } = this.props.match;
@@ -205,7 +200,10 @@ export default class TimeAndSalaryBoard extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.match.path !== nextProps.match.path || this.props.location.search !== nextProps.location.search) {
+    if (
+      this.props.match.path !== nextProps.match.path ||
+      this.props.location.search !== nextProps.location.search
+    ) {
       const { path } = nextProps.match;
       const { search } = nextProps.location;
       const { sortBy, order } = pathnameMapping[path];
@@ -236,13 +234,13 @@ export default class TimeAndSalaryBoard extends Component {
       state.aboutThisJobModal.aboutThisJob = aboutThisJob;
     }
     this.setState(state);
-  }
+  };
 
   toggleShowExtreme = () => {
     const { showExtreme } = this.state;
     this.setState({ showExtreme: !showExtreme });
     this.props.queryExtremeTimeAndSalary();
-  }
+  };
 
   decorateExtremeRows = rows => {
     if (!this.state.showExtreme) {
@@ -256,7 +254,7 @@ export default class TimeAndSalaryBoard extends Component {
     const nExtremeRows = this.props.extremeData.size;
     const mapIndexed = R.addIndex(R.map);
     const IfExtremeRow = then => (row, i) =>
-      ((i < nExtremeRows) ? then(row) : row);
+      i < nExtremeRows ? then(row) : row;
     const wearExtremeStyle = row =>
       cloneElement(row, {
         className: cn(row.props.className, styles.extremeRow),
@@ -264,9 +262,9 @@ export default class TimeAndSalaryBoard extends Component {
     return R.pipe(
       mapIndexed(IfExtremeRow(wearExtremeStyle)),
       // inject a divider here to tell extreme rows apart from other rows
-      injectExtremeDividerAt(nExtremeRows)(this.toggleShowExtreme),
+      injectExtremeDividerAt(nExtremeRows)(this.toggleShowExtreme)
     )(rows);
-  }
+  };
 
   createPostProcessRows = () => {
     if (!this.props.canViewTimeAndSalary) {
@@ -274,9 +272,9 @@ export default class TimeAndSalaryBoard extends Component {
     }
     return R.pipe(
       this.decorateExtremeRows,
-      injectCallToActions,
+      injectCallToActions
     );
-  }
+  };
 
   // 給 Pagination 建立分頁的連結用
   createPageLinkTo = nextPage => {
@@ -287,12 +285,21 @@ export default class TimeAndSalaryBoard extends Component {
       pathname,
       search: `?${queryString}`,
     };
-  }
+  };
 
   render() {
     const { path } = this.props.match;
     const { title, hasExtreme } = pathnameMapping[path];
-    const { data, status, totalCount, currentPage, switchPath, extremeStatus, extremeData, canViewTimeAndSalary } = this.props;
+    const {
+      data,
+      status,
+      totalCount,
+      currentPage,
+      switchPath,
+      extremeStatus,
+      extremeData,
+      canViewTimeAndSalary,
+    } = this.props;
     const { showExtreme } = this.state;
     let raw;
     if (showExtreme && extremeStatus === fetchingStatus.FETCHED) {
@@ -307,14 +314,19 @@ export default class TimeAndSalaryBoard extends Component {
         <div className={commonStyles.result}>
           <div className={styles.sortRow}>
             <div className={styles.extremeDescription}>
-              {(hasExtreme && canViewTimeAndSalary) && (
-                <span>
-                  前 1 % 的資料可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
-                  <button className={styles.toggle} onClick={this.toggleShowExtreme}>
-                    {showExtreme ? '隱藏 -' : '展開 +'}
-                  </button>
-                </span>
-              )}
+              {hasExtreme &&
+                canViewTimeAndSalary && (
+                  <span>
+                    前 1 %
+                    的資料可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
+                    <button
+                      className={styles.toggle}
+                      onClick={this.toggleShowExtreme}
+                    >
+                      {showExtreme ? '隱藏 -' : '展開 +'}
+                    </button>
+                  </span>
+                )}
             </div>
             <div className={commonStyles.sort}>
               <div className={commonStyles.label}> 排序：</div>
@@ -328,28 +340,27 @@ export default class TimeAndSalaryBoard extends Component {
               </div>
             </div>
           </div>
-          {
-            status === fetchingStatus.FETCHING ?
-              <div className={styles.status}>
-                <Loading size="s" />
-              </div> :
-              <DashBoardTable
-                data={raw}
-                postProcessRows={this.createPostProcessRows()}
-                toggleInfoSalaryModal={this.toggleInfoSalaryModal}
-                toggleInfoTimeModal={this.toggleInfoTimeModal}
-                toggleAboutThisJobModal={this.toggleAboutThisJobModal}
-              />
-          }
-          {
-            status === fetchingStatus.FETCHING ? null :
+          {status === fetchingStatus.FETCHING ? (
+            <div className={styles.status}>
+              <Loading size="s" />
+            </div>
+          ) : (
+            <DashBoardTable
+              data={raw}
+              postProcessRows={this.createPostProcessRows()}
+              toggleInfoSalaryModal={this.toggleInfoSalaryModal}
+              toggleInfoTimeModal={this.toggleInfoTimeModal}
+              toggleAboutThisJobModal={this.toggleAboutThisJobModal}
+            />
+          )}
+          {status === fetchingStatus.FETCHING ? null : (
             <Pagination
               totalCount={totalCount}
               unit={DATA_NUM_PER_PAGE}
               currentPage={currentPage}
               createPageLinkTo={this.createPageLinkTo}
             />
-          }
+          )}
           <FanPageBlock className={styles.fanPageBlock} />
           <InfoSalaryModal
             isOpen={this.state.infoSalaryModal.isOpen}

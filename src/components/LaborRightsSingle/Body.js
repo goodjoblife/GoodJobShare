@@ -11,10 +11,10 @@ import LeftBanner from '../ExperienceSearch/Banners/Banner1';
 const Body = ({ title, seoText, description, content, permissionBlock }) => (
   <Section Tag="main" pageTop>
     <Wrapper size="m">
-      <Heading size="l" bold marginBottom>{title}</Heading>
-      <div className={cn('subheadingM', styles.description)}>
-        {description}
-      </div>
+      <Heading size="l" bold marginBottom>
+        {title}
+      </Heading>
+      <div className={cn('subheadingM', styles.description)}>{description}</div>
     </Wrapper>
     <Wrapper size="l">
       <div className={styles.contentWrapper}>
@@ -34,9 +34,7 @@ const Body = ({ title, seoText, description, content, permissionBlock }) => (
           {permissionBlock}
         </div>
       </div>
-      {seoText && <div className={styles.seoText}>
-        {seoText}
-      </div>}
+      {seoText && <div className={styles.seoText}>{seoText}</div>}
     </Wrapper>
   </Section>
 );

@@ -10,10 +10,15 @@ import styles from './Dashboard.module.css';
 
 const Block = ({ Icon, heading, text, smallText }) => (
   <div className={styles.item}>
-    <div className={styles.icon}><Icon /></div>
+    <div className={styles.icon}>
+      <Icon />
+    </div>
     <P size="l">
       <h4 className={styles.heading}>{heading}</h4>
-      <div><span className={styles.text}>{text}+</span>{smallText}</div>
+      <div>
+        <span className={styles.text}>{text}+</span>
+        {smallText}
+      </div>
     </P>
   </div>
 );

@@ -13,7 +13,10 @@ import Magnifiner from 'common/icons/Magnifiner';
 
 import styles from './SearchBar.module.css';
 import searchBarStyles from '../ExperienceSearch/Searchbar.module.css';
-import { fetchCompanyCandidates, fetchJobTitleCandidates } from '../../apis/timeAndSalaryApi';
+import {
+  fetchCompanyCandidates,
+  fetchJobTitleCandidates,
+} from '../../apis/timeAndSalaryApi';
 
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
@@ -25,7 +28,7 @@ const searchOptions = [
 class SearchBar extends Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-  }
+  };
   constructor(props) {
     super(props);
     this.handleTypeChange = this.handleTypeChange.bind(this);
@@ -37,7 +40,7 @@ class SearchBar extends Component {
     searchType: 'company',
     keyword: '',
     candidates: [],
-  }
+  };
 
   componentDidMount() {
     // TODO 將路由的資訊反映到搜尋選項
@@ -76,19 +79,19 @@ class SearchBar extends Component {
     const { searchType } = this.state;
     if (searchType === 'company') {
       return fetchCompanyCandidates(value).then(r =>
-          r.map(({ _id: { name } }) => ({
-            label: name,
-            value: name,
-          }))
-        );
-    }
-    return fetchJobTitleCandidates(value).then(r =>
-        r.map(({ _id: name }) => ({
+        r.map(({ _id: { name } }) => ({
           label: name,
           value: name,
         }))
       );
-  }
+    }
+    return fetchJobTitleCandidates(value).then(r =>
+      r.map(({ _id: name }) => ({
+        label: name,
+        value: name,
+      }))
+    );
+  };
 
   searchKeyword = debounce(value => {
     if (!value) {
@@ -102,21 +105,25 @@ class SearchBar extends Component {
       .catch(() => {
         this.setState({ candidates: [] });
       });
-  }, 500)
+  }, 500);
 
   handleSelectCandidate = keyword => {
     this.setState({
       candidates: [],
       keyword,
     });
-  }
+  };
 
   handleSubmit(e) {
     e.preventDefault();
     const { searchType, keyword } = this.state;
-    this.props.dispatch(push(
-      `/time-and-salary/${searchType}/${encodeURIComponent(keyword)}/work-time-dashboard`,
-    ));
+    this.props.dispatch(
+      push(
+        `/time-and-salary/${searchType}/${encodeURIComponent(
+          keyword
+        )}/work-time-dashboard`
+      )
+    );
 
     ReactPixel.track('Search', {
       search_string: keyword,
@@ -127,7 +134,11 @@ class SearchBar extends Component {
     const { keyword, searchType, candidates } = this.state;
     return (
       <form
-        className={cn(styles.section, styles.showSearchbar, searchBarStyles.searchbar)}
+        className={cn(
+          styles.section,
+          styles.showSearchbar,
+          searchBarStyles.searchbar
+        )}
         onSubmit={this.handleSubmit}
       >
         <div className={styles.type}>
@@ -148,7 +159,9 @@ class SearchBar extends Component {
               <AutoCompleteTextInput
                 value={keyword}
                 onChange={this.handleKeywordChange}
-                placeholder={`以${searchType === 'company' ? '公司' : '職稱'}搜尋`}
+                placeholder={`以${
+                  searchType === 'company' ? '公司' : '職稱'
+                }搜尋`}
                 items={candidates}
                 getItemValue={R.prop('label')}
                 onSelect={this.handleSelectCandidate}

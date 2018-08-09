@@ -27,19 +27,19 @@ import { COMPANY, REGION, JOB_TITLE } from '../../../../constants/formElements';
 const CompanyQueryWithValidation = subscribeValidation(
   CompanyQuery,
   props => props.validator(props.companyQuery),
-  COMPANY,
+  COMPANY
 );
 
 const RegionWithValidation = subscribeValidation(
   Region,
   props => props.validator(props.region),
-  REGION,
+  REGION
 );
 
 const JobTitleWithValidation = subscribeValidation(
   JobTitle,
   props => props.validator(props.jobTitle),
-  JOB_TITLE,
+  JOB_TITLE
 );
 
 class WorkInfo extends React.PureComponent {
@@ -147,31 +147,16 @@ class WorkInfo extends React.PureComponent {
 WorkInfo.propTypes = {
   handleState: PropTypes.func,
   companyQuery: PropTypes.string,
-  region: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  region: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   jobTitle: PropTypes.string,
-  experienceInYear: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  education: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  experienceInYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  education: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isCurrentlyEmployed: PropTypes.string,
   jobEndingTimeYear: PropTypes.number,
   jobEndingTimeMonth: PropTypes.number,
   salaryType: PropTypes.string,
-  salaryAmount: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  weekWorkTime: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
+  salaryAmount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  weekWorkTime: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   recommendToOthers: PropTypes.string,
   submitted: PropTypes.bool,
   changeValidationStatus: PropTypes.func,

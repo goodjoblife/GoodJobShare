@@ -7,15 +7,11 @@ const RouteWithSubRoutes = route => {
     return (
       <Route
         {...routeProps}
-        render={props => (
-          <Component {...props} routes={routes} />
-        )}
+        render={props => <Component {...props} routes={routes} />}
       />
     );
   }
-  return (
-    <Route component={Component} {...routeProps} />
-  );
+  return <Route component={Component} {...routeProps} />;
 };
 
 export default RouteWithSubRoutes;

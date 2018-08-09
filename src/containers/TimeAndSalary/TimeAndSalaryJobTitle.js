@@ -12,6 +12,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ queryJobTitle, switchPath, fetchMyPermission }, dispatch);
+  bindActionCreators(
+    { queryJobTitle, switchPath, fetchMyPermission },
+    dispatch
+  );
 
-export default connect(mapStateToProps, mapDispatchToProps)(TimeAndSalaryJobTitle);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TimeAndSalaryJobTitle);

@@ -20,23 +20,23 @@ import {
 class WorkingHourTable extends Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
-  }
+  };
 
   static getTitle = (val, row) => (
     <div>
-      {val}
-      {' '}
-      <span className={`pM ${commonStyles.sector}`}>
-        {row.sector}
-      </span>
+      {val} <span className={`pM ${commonStyles.sector}`}>{row.sector}</span>
     </div>
-  )
+  );
 
-  static getEmploymentType = type => (type ? employmentType[type] : '')
+  static getEmploymentType = type => (type ? employmentType[type] : '');
 
   static getWorkingHour = (val, row) => (
-    <div>{`${typeof val === 'undefined' ? '-' : val} / ${typeof row.day_real_work_time === 'undefined' ? '-' : row.day_real_work_time}`}</div>
-  )
+    <div>{`${typeof val === 'undefined' ? '-' : val} / ${
+      typeof row.day_real_work_time === 'undefined'
+        ? '-'
+        : row.day_real_work_time
+    }`}</div>
+  );
 
   static getYear = val => {
     if (typeof val === 'number') {
@@ -44,7 +44,7 @@ class WorkingHourTable extends Component {
       return `${Math.round(val)} 年`;
     }
     return '-';
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -76,7 +76,11 @@ class WorkingHourTable extends Component {
     const { data } = this.props;
 
     return (
-      <Table className={styles.companyTable} data={data} primaryKey="created_at">
+      <Table
+        className={styles.companyTable}
+        data={data}
+        primaryKey="created_at"
+      >
         <Table.Column
           className={styles.colPosition}
           title="職稱"
@@ -134,29 +138,31 @@ class WorkingHourTable extends Component {
         <Table.Column
           className={styles.colHourly}
           title="估計時薪"
-          dataField={R.compose(formatWage, R.prop('estimated_hourly_wage'))}
+          dataField={R.compose(
+            formatWage,
+            R.prop('estimated_hourly_wage')
+          )}
           alignRight
         >
           <InfoSalaryModal
             isOpen={this.state.infoSalaryModal.isOpen}
             close={this.toggleInfoSalaryModal}
           />
-          <InfoButton onClick={this.toggleInfoSalaryModal}>
-            估計時薪
-          </InfoButton>
+          <InfoButton onClick={this.toggleInfoSalaryModal}>估計時薪</InfoButton>
         </Table.Column>
         <Table.Column
           className={styles.colDataTime}
           title="參考時間"
-          dataField={R.compose(formatDate, R.prop('data_time'))}
+          dataField={R.compose(
+            formatDate,
+            R.prop('data_time')
+          )}
         >
           <InfoTimeModal
             isOpen={this.state.infoTimeModal.isOpen}
             close={this.toggleInfoTimeModal}
           />
-          <InfoButton onClick={this.toggleInfoTimeModal}>
-            參考時間
-          </InfoButton>
+          <InfoButton onClick={this.toggleInfoTimeModal}>參考時間</InfoButton>
         </Table.Column>
       </Table>
     );

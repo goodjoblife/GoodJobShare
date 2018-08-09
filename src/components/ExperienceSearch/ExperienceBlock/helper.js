@@ -1,7 +1,4 @@
-import {
-  formatSalaryAmount,
-  formatSalaryType,
-} from 'common/formatter';
+import { formatSalaryAmount, formatSalaryType } from 'common/formatter';
 
 export const formatType = type => {
   switch (type) {

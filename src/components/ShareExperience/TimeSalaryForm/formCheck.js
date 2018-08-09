@@ -1,34 +1,18 @@
 import R from 'ramda';
 
-import {
-  notStrEmpty,
-} from 'utils/dataCheckUtil';
+import { notStrEmpty } from 'utils/dataCheckUtil';
 
-import {
-  ifThenLog,
-} from 'utils/debugUtil';
+import { ifThenLog } from 'utils/debugUtil';
 
-export const company = R.allPass([
-  notStrEmpty,
-]);
+export const company = R.allPass([notStrEmpty]);
 
-export const jobTitle = R.allPass([
-  notStrEmpty,
-]);
+export const jobTitle = R.allPass([notStrEmpty]);
 
-export const employmentType = R.allPass([
-  notStrEmpty,
-]);
+export const employmentType = R.allPass([notStrEmpty]);
 
-export const salaryType = R.allPass([
-  notStrEmpty,
-]);
+export const salaryType = R.allPass([notStrEmpty]);
 
-export const salaryAmount = R.allPass([
-  notStrEmpty,
-  n => n >= 0,
-]);
-
+export const salaryAmount = R.allPass([notStrEmpty, n => n >= 0]);
 
 export const experienceInYear = R.allPass([
   notStrEmpty,
@@ -54,9 +38,7 @@ export const weekWorkTime = R.allPass([
   n => n <= 168,
 ]);
 
-export const overtimeFrequency = R.allPass([
-  t => t !== null,
-]);
+export const overtimeFrequency = R.allPass([t => t !== null]);
 
 const ifFalseLog = ifThenLog(n => n === false);
 

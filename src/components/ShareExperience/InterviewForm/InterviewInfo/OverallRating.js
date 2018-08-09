@@ -7,14 +7,10 @@ import RateButton from 'common/button/RateButton';
 import InputTitle from '../../common/InputTitle';
 import styles from './OverallRating.module.css';
 
+import { overallRatingDialogMap } from '../../common/optionMap';
 
-import {
-  overallRatingDialogMap,
-} from '../../common/optionMap';
-
-const handleRatingDialog = rating => (
-  overallRatingDialogMap[rating] || '點擊作評分'
-);
+const handleRatingDialog = rating =>
+  overallRatingDialogMap[rating] || '點擊作評分';
 
 const OverallRating = ({ overallRating, onChange, validator, submitted }) => {
   const isWarning = submitted && !validator(overallRating);
@@ -25,10 +21,7 @@ const OverallRating = ({ overallRating, onChange, validator, submitted }) => {
           marginBottom: '20px',
         }}
       >
-        <InputTitle
-          text="對公司的面試整體滿意度"
-          must
-        />
+        <InputTitle text="對公司的面試整體滿意度" must />
       </div>
       <div
         className={isWarning ? styles.warning : ''}
@@ -38,33 +31,21 @@ const OverallRating = ({ overallRating, onChange, validator, submitted }) => {
           alignItems: 'center',
         }}
       >
-        <RateButton
-          max={5}
-          rating={overallRating}
-          onChange={onChange}
-        />
-        <div
-          className={styles.dialog}
-        >
-          <p
-            className="pS"
-          >
-            {handleRatingDialog(overallRating)}
-          </p>
+        <RateButton max={5} rating={overallRating} onChange={onChange} />
+        <div className={styles.dialog}>
+          <p className="pS">{handleRatingDialog(overallRating)}</p>
         </div>
       </div>
-      {
-        isWarning ?
-          <p
-            className={cn(styles.warning__wording, 'pS')}
-            style={{
-              marginTop: '8px',
-            }}
-          >
-            需選取面試滿意程度
-          </p>
-          : null
-      }
+      {isWarning ? (
+        <p
+          className={cn(styles.warning__wording, 'pS')}
+          style={{
+            marginTop: '8px',
+          }}
+        >
+          需選取面試滿意程度
+        </p>
+      ) : null}
     </div>
   );
 };

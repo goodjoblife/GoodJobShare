@@ -14,7 +14,7 @@ class MessageBoard extends Component {
   state = {
     comment: '',
     isTermsAccepted: false,
-  }
+  };
 
   handleTermsAcceptedChange = () => {
     this.setState({
@@ -26,7 +26,7 @@ class MessageBoard extends Component {
     this.setState({
       comment: e.target.value,
     });
-  }
+  };
 
   handleSubmitComment = () => {
     const { submitComment, login, authStatus, FB } = this.props;
@@ -37,7 +37,7 @@ class MessageBoard extends Component {
     } else {
       submitComment(comment);
     }
-  }
+  };
 
   render() {
     const { replies, likeReply, authStatus } = this.props;
@@ -60,11 +60,19 @@ class MessageBoard extends Component {
             label={
               <p style={{ color: '#3B3B3B' }}>
                 我分享的是真實資訊，並且遵守本站
-                <Link to="/guidelines" target="_blank" style={{ color: '#02309E' }}>
+                <Link
+                  to="/guidelines"
+                  target="_blank"
+                  style={{ color: '#02309E' }}
+                >
                   發文留言規定
                 </Link>
                 、
-                <Link to="/user-terms" target="_blank" style={{ color: '#02309E' }}>
+                <Link
+                  to="/user-terms"
+                  target="_blank"
+                  style={{ color: '#02309E' }}
+                >
                   使用者條款
                 </Link>
                 以及中華民國法律。
@@ -79,15 +87,15 @@ class MessageBoard extends Component {
             disabled={!isTermsAccepted || !comment}
             onClick={this.handleSubmitComment}
           >
-            { authStatus === authStatusConstant.CONNECTED ? '發佈留言' : '以  f  認證，發佈留言' }
+            {authStatus === authStatusConstant.CONNECTED
+              ? '發佈留言'
+              : '以  f  認證，發佈留言'}
           </Button>
         </div>
         <div className={styles.commentBlocks}>
-          {
-            replies.map(reply => (
-              <CommentBlock key={reply._id} reply={reply} likeReply={likeReply} />
-            ))
-          }
+          {replies.map(reply => (
+            <CommentBlock key={reply._id} reply={reply} likeReply={likeReply} />
+          ))}
         </div>
       </div>
     );

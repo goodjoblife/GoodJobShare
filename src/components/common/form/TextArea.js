@@ -3,9 +3,14 @@ import PropTypes from 'prop-types';
 
 import styles from './TextInput.module.css';
 
-const TextInput = (
-  { value, placeholder, onChange, isWarning, warningWording, style }
-) => (
+const TextInput = ({
+  value,
+  placeholder,
+  onChange,
+  isWarning,
+  warningWording,
+  style,
+}) => (
   <div
     style={{
       position: 'relative',
@@ -18,25 +23,20 @@ const TextInput = (
       value={value}
       onChange={onChange}
     />
-    {
-      warningWording ?
-        <p
-          className={`
+    {warningWording ? (
+      <p
+        className={`
             pS ${styles.warning__text} ${isWarning ? styles.isWarning : ''}
           `}
-        >
-          { warningWording }
-        </p> : null
-    }
+      >
+        {warningWording}
+      </p>
+    ) : null}
   </div>
 );
 
-
 TextInput.propTypes = {
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
   isWarning: PropTypes.bool,

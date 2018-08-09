@@ -10,20 +10,12 @@ import InputTitle from './InputTitle';
 import styles from './Salary.module.css';
 import dialogStyles from './Dialog.module.css';
 
-import {
-  salaryTypeOptions,
-} from './optionMap';
+import { salaryTypeOptions } from './optionMap';
 
-const Salary = (
-  { salaryType, salaryAmount, onSalaryType, onSalaryAmount }
-) => (
+const Salary = ({ salaryType, salaryAmount, onSalaryType, onSalaryAmount }) => (
   <div>
-    <InputTitle
-      text="待遇"
-    />
-    <div
-      className={styles.container}
-    >
+    <InputTitle text="待遇" />
+    <div className={styles.container}>
       <div
         style={{
           display: 'flex',
@@ -60,12 +52,12 @@ const Salary = (
           <Unit>元</Unit>
         </div>
       </div>
-      <div
-        className={dialogStyles.dialog}
-      >
+      <div className={dialogStyles.dialog}>
         <span className={dialogStyles.exclamation}>！</span>
         <P size="s">
-          薪資請以包含平常的<strong>薪資、分紅、年終、績效獎金</strong>等實質上獲得的價值去計算。
+          薪資請以包含平常的
+          <strong>薪資、分紅、年終、績效獎金</strong>
+          等實質上獲得的價值去計算。
         </P>
       </div>
     </div>
@@ -73,14 +65,8 @@ const Salary = (
 );
 
 Salary.propTypes = {
-  salaryType: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  salaryAmount: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  salaryType: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  salaryAmount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onSalaryType: PropTypes.func,
   onSalaryAmount: PropTypes.func,
 };

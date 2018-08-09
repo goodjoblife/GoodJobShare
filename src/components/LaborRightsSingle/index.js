@@ -20,11 +20,13 @@ import Body from './Body';
 import Footer from './Footer';
 import LaborRightsPermissionBlock from '../../containers/PermissionBlock/LaborRightsPermissionBlockContainer';
 
+import { queryMenu, queryEntry } from '../../actions/laborRights';
 import {
-  queryMenu,
-  queryEntry,
-} from '../../actions/laborRights';
-import { isFetching, isUnfetched, isError, isFetched } from '../../constants/status';
+  isFetching,
+  isUnfetched,
+  isError,
+  isFetched,
+} from '../../constants/status';
 import { MARKDOWN_DIVIDER } from '../../constants/hideContent';
 import { SITE_NAME } from '../../constants/helmetData';
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
@@ -32,11 +34,13 @@ import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 import styles from './LaborRightsSingle.module.css';
 
 class LaborRightsSingle extends React.Component {
-  static fetchData({ store: { dispatch }, match: { params: { id } } }) {
-    return Promise.all([
-      dispatch(queryMenu()),
-      dispatch(queryEntry(id)),
-    ]);
+  static fetchData({
+    store: { dispatch },
+    match: {
+      params: { id },
+    },
+  }) {
+    return Promise.all([dispatch(queryMenu()), dispatch(queryEntry(id))]);
   }
 
   componentDidMount() {
@@ -74,11 +78,9 @@ class LaborRightsSingle extends React.Component {
       nPublicPages,
       descriptionInPermissionBlock,
     } = this.props.entry ? this.props.entry.toJS() : {};
-    const {
-      seoTitle = title || '',
-      seoDescription,
-      seoText,
-    } = this.props.entry ? this.props.entry.toJS() : {};
+    const { seoTitle = title || '', seoDescription, seoText } = this.props.entry
+      ? this.props.entry.toJS()
+      : {};
     const { canViewLaborRightsSingle } = this.props;
 
     // hide some content if user dosen't have permission
@@ -103,40 +105,46 @@ class LaborRightsSingle extends React.Component {
           title={seoTitle}
           meta={[
             { name: 'description', content: seoDescription },
-            { property: 'og:url', content: formatCanonicalPath(`/labor-rights/${id}`) },
+            {
+              property: 'og:url',
+              content: formatCanonicalPath(`/labor-rights/${id}`),
+            },
             { property: 'og:title', content: formatTitle(seoTitle, SITE_NAME) },
             { property: 'og:description', content: seoDescription },
             { property: 'og:image', content: formatUrl(coverUrl) },
           ]}
           link={[
-            { rel: 'canonical', href: formatCanonicalPath(`/labor-rights/${id}`) },
+            {
+              rel: 'canonical',
+              href: formatCanonicalPath(`/labor-rights/${id}`),
+            },
           ]}
         />
-        { R.anyPass([isFetching, isUnfetched])(entryStatus) && <Loader /> }
-        { isError(entryStatus) && entryError.get('statusCode') === 400 && <NotFound /> }
-        {
-          isFetched(entryStatus) &&
-            <div>
-              <Body
-                title={title}
-                seoText={seoText}
-                description={description}
-                content={newContent}
-                permissionBlock={permissionBlock}
-              />
-              <FanPageBlock className={styles.fanPageBlock} />
-              {(canViewLaborRightsSingle || nPublicPages < 0) && (
-                <Section marginTop>
-                  <CallToActionFolder />
-                </Section>
-              )}
-              <Footer
-                id={id}
-                prev={this.props.prevEntry}
-                next={this.props.nextEntry}
-              />
-            </div>
-        }
+        {R.anyPass([isFetching, isUnfetched])(entryStatus) && <Loader />}
+        {isError(entryStatus) &&
+          entryError.get('statusCode') === 400 && <NotFound />}
+        {isFetched(entryStatus) && (
+          <div>
+            <Body
+              title={title}
+              seoText={seoText}
+              description={description}
+              content={newContent}
+              permissionBlock={permissionBlock}
+            />
+            <FanPageBlock className={styles.fanPageBlock} />
+            {(canViewLaborRightsSingle || nPublicPages < 0) && (
+              <Section marginTop>
+                <CallToActionFolder />
+              </Section>
+            )}
+            <Footer
+              id={id}
+              prev={this.props.prevEntry}
+              next={this.props.nextEntry}
+            />
+          </div>
+        )}
       </main>
     );
   }

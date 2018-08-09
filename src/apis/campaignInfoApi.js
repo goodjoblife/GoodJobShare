@@ -1,9 +1,10 @@
-export const fetchCampaignList = () => Promise.resolve([
-  {
-    name: 'software-engineer',
-    title: '科技業工程師',
-    formTitle: '科技業工程師 真實工時 x 薪資分紅 大調查',
-    formIntroduction: `科技業工程師，在過去總是被稱呼為「科技新貴」，給大眾高薪的印象。然而，**高薪的背後是否隱藏著高工時的代價**，被訂單追趕而無止盡加班，導致自身健康與家庭出現問題，我們經常不得而知。
+export const fetchCampaignList = () =>
+  Promise.resolve([
+    {
+      name: 'software-engineer',
+      title: '科技業工程師',
+      formTitle: '科技業工程師 真實工時 x 薪資分紅 大調查',
+      formIntroduction: `科技業工程師，在過去總是被稱呼為「科技新貴」，給大眾高薪的印象。然而，**高薪的背後是否隱藏著高工時的代價**，被訂單追趕而無止盡加班，導致自身健康與家庭出現問題，我們經常不得而知。
 
 有真的工時合理也高薪的高 CP 值工作，但也有高薪卻超高工時的工作，換算下來恐怕只是燒肝在換錢。
 
@@ -18,12 +19,14 @@ export const fetchCampaignList = () => Promise.resolve([
 * 我的留言是匿名的嗎？
 
     是的，永久匿名。`,
-    formEnding: `## 合作單位
+      formEnding: `## 合作單位
 ![台灣電子電機資訊產業工會](https://image.goodjob.life/campaign/TUEEIT_logo.png)`,
-    metaDescription: '科技業工程師，高薪的背後是否隱藏著高工時的代價，被訂單追趕而無止盡加班，導致自身健康與家庭出現問題，我們經常不得而知。因此，我們與台灣電子電機資訊產業工會合作，共同發起 「科技業工程師 真實工時 x 薪資分紅」大調查，想邀請各位科技業的工程師們分享自己的真實工時以及薪資福利多寡，讓職場變得更加透明，讓高工時的工作無所遁形。',
-    ogImgUrl: 'https://image.goodjob.life/campaign/software-engineer-campaign.png',
-    defaultJobTitle: '',
-    defaultContent: `1. 是否經常加班？ 加班的原因為何？
+      metaDescription:
+        '科技業工程師，高薪的背後是否隱藏著高工時的代價，被訂單追趕而無止盡加班，導致自身健康與家庭出現問題，我們經常不得而知。因此，我們與台灣電子電機資訊產業工會合作，共同發起 「科技業工程師 真實工時 x 薪資分紅」大調查，想邀請各位科技業的工程師們分享自己的真實工時以及薪資福利多寡，讓職場變得更加透明，讓高工時的工作無所遁形。',
+      ogImgUrl:
+        'https://image.goodjob.life/campaign/software-engineer-campaign.png',
+      defaultJobTitle: '',
+      defaultContent: `1. 是否經常加班？ 加班的原因為何？
 
 
 2. 是否有「累積補休卻沒有時間休」的情況？
@@ -44,10 +47,17 @@ export const fetchCampaignList = () => Promise.resolve([
 7. 實際上的工作內容為何？
 
 `,
-    extraFields: [
-    ],
-    queryJobTitles: ['工程師', '軟體工程師', '軟體研發工程師', '軟體設計工程師', '韌體工程師', '開發工程師', '通訊軟體工程師'],
-  },
-]);
+      extraFields: [],
+      queryJobTitles: [
+        '工程師',
+        '軟體工程師',
+        '軟體研發工程師',
+        '軟體設計工程師',
+        '韌體工程師',
+        '開發工程師',
+        '通訊軟體工程師',
+      ],
+    },
+  ]);
 
 export const foo = 1;

@@ -40,21 +40,21 @@ class LaborRightsMenu extends React.Component {
       <Section Tag="main" pageTop>
         <Wrapper size="l" Tag="main">
           <Helmet {...HELMET_DATA.LABOR_RIGHTS_MENU} />
-          { isFetching(status) && <Loader /> }
-          {
-            isError(status) && menuError &&
-              <Heading center size="m" Tag="div">{menuError.toString()}</Heading>
-          }
-          {
-            isFetched(status) &&
-              <section>
-                <Heading size="l" center marginBottom>{title}</Heading>
-                <Columns
-                  Item={LaborRightsEntry}
-                  items={items}
-                />
-              </section>
-          }
+          {isFetching(status) && <Loader />}
+          {isError(status) &&
+            menuError && (
+              <Heading center size="m" Tag="div">
+                {menuError.toString()}
+              </Heading>
+            )}
+          {isFetched(status) && (
+            <section>
+              <Heading size="l" center marginBottom>
+                {title}
+              </Heading>
+              <Columns Item={LaborRightsEntry} items={items} />
+            </section>
+          )}
         </Wrapper>
         <Wrapper size="s">
           <FanPageBlock className={styles.fanPageBlock} />

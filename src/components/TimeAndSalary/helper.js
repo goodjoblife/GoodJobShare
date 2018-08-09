@@ -1,9 +1,7 @@
 import R from 'ramda';
 import qs from 'qs';
 
-import {
-  renameKeys,
-} from 'utils/objectUtil';
+import { renameKeys } from 'utils/objectUtil';
 
 const renameObject = renameKeys({
   page: 'p',
@@ -11,7 +9,7 @@ const renameObject = renameKeys({
 
 export const toQsString = R.compose(
   qs.stringify,
-  renameObject,
+  renameObject
 );
 
 const wrapDefaultTo = defaultValue => value => {
@@ -22,10 +20,11 @@ const wrapDefaultTo = defaultValue => value => {
   return R.defaultTo(defaultValue)(value);
 };
 
-const qsSelector = (key, defaultValue) => R.compose(
-  wrapDefaultTo(defaultValue),
-  R.propOr(defaultValue, key),
-);
+const qsSelector = (key, defaultValue) =>
+  R.compose(
+    wrapDefaultTo(defaultValue),
+    R.propOr(defaultValue, key)
+  );
 
 export const pageSelector = qsSelector('p', 1);
 export const searchQuerySelector = qsSelector('q', '');
@@ -44,7 +43,6 @@ export const querySelector = query => ({
   get searchBy() {
     return searchBySelector(query);
   },
-
 });
 
 // parse search string to object

@@ -1,11 +1,8 @@
 import fetchUtil from '../utils/fetchUtil';
 
-import {
-  getExperiences as getExperiencesApi,
-} from '../apis/experiencesApi';
+import { getExperiences as getExperiencesApi } from '../apis/experiencesApi';
 
 import statusConstant from '../constants/status';
-
 
 export const SET_SEARCH_BY = 'SET_SEARCH_BY';
 export const SET_KEYWORDS = 'SET_KEYWORDS';
@@ -25,7 +22,14 @@ const setLoadingStatus = (status, error = null) => ({
   },
 });
 
-export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery, searchType) => dispatch => {
+export const fetchExperiences = (
+  page,
+  limit,
+  _sort,
+  searchBy,
+  searchQuery,
+  searchType
+) => dispatch => {
   const start = (page - 1) * limit;
   const query = {
     limit,
@@ -45,19 +49,19 @@ export const fetchExperiences = (page, limit, _sort, searchBy, searchQuery, sear
   };
 
   dispatch(setLoadingStatus(statusConstant.FETCHING));
-  dispatch(setSortAndExperiences({
-    ...objCond,
-    experiences: [],
-    experienceCount: 0,
-  }));
+  dispatch(
+    setSortAndExperiences({
+      ...objCond,
+      experiences: [],
+      experienceCount: 0,
+    })
+  );
 
   return getExperiencesApi(query)
     .then(result => {
       const payload = {
         ...objCond,
-        experiences: (
-          result.experiences
-        ),
+        experiences: result.experiences,
         experienceCount: result.total,
       };
       dispatch(setLoadingStatus(statusConstant.FETCHED));
@@ -74,23 +78,23 @@ const setKeywords = keywords => ({
   keywords,
 });
 
-export const getNewSearchBy = searchBy =>
-  async dispatch => {
-    const keywordName = searchBy === 'company' ? 'company_keywords' : 'job_title_keywords';
-    const body = {
-      query: `{
+export const getNewSearchBy = searchBy => async dispatch => {
+  const keywordName =
+    searchBy === 'company' ? 'company_keywords' : 'job_title_keywords';
+  const body = {
+    query: `{
         ${keywordName}
       }`,
-    };
-
-    try {
-      const result = await fetchUtil('/graphql')('POST', body);
-      if (!result.data) {
-        throw new Error(result.error);
-      }
-      const keywords = result.data[keywordName];
-      dispatch(setKeywords(keywords));
-    } catch (e) {
-      dispatch(setKeywords([]));
-    }
   };
+
+  try {
+    const result = await fetchUtil('/graphql')('POST', body);
+    if (!result.data) {
+      throw new Error(result.error);
+    }
+    const keywords = result.data[keywordName];
+    dispatch(setKeywords(keywords));
+  } catch (e) {
+    dispatch(setKeywords([]));
+  }
+};

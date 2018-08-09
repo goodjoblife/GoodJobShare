@@ -12,7 +12,9 @@ const NotFound = ({ status, heading }) => (
         <Heading size="l" className={styles.heading}>
           {heading || '不好意思，頁面不存在'}
         </Heading>
-        <Link to="/" className={styles.link}>回首頁</Link>
+        <Link to="/" className={styles.link}>
+          回首頁
+        </Link>
       </div>
     </Wrapper>
   </NotFoundStatus>

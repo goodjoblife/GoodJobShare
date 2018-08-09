@@ -6,17 +6,13 @@ import TextInput from 'common/form/TextInput';
 
 import InputTitle from '../../common/InputTitle';
 
-import {
-  interviewSensitiveQuestionsMap,
-} from '../../common/optionMap';
+import { interviewSensitiveQuestionsMap } from '../../common/optionMap';
 
 const OTHER_VALUE = '其他';
 
-const notOtherValueMap = interviewSensitiveQuestionsMap.filter(option =>
-  option.value !== OTHER_VALUE
-).map(option =>
-  option.value
-  );
+const notOtherValueMap = interviewSensitiveQuestionsMap
+  .filter(option => option.value !== OTHER_VALUE)
+  .map(option => option.value);
 
 const hasOtherFunc = results =>
   results.filter(result => !notOtherValueMap.includes(result)).length > 0;
@@ -27,19 +23,17 @@ const notOtherFunc = results =>
 const getOtherValue = results =>
   results.find(result => !notOtherValueMap.includes(result));
 
-const InterviewSensitiveQuestions = ({ interviewSensitiveQuestions, onChange }) => {
+const InterviewSensitiveQuestions = ({
+  interviewSensitiveQuestions,
+  onChange,
+}) => {
   const hasOther = hasOtherFunc(interviewSensitiveQuestions);
   const resultsBesidesOther = notOtherFunc(interviewSensitiveQuestions);
   const otherValue = getOtherValue(interviewSensitiveQuestions);
 
-  const resultsForButtonGroup = hasOther ?
-  [
-    ...resultsBesidesOther,
-    OTHER_VALUE,
-  ] :
-  [
-    ...resultsBesidesOther,
-  ];
+  const resultsForButtonGroup = hasOther
+    ? [...resultsBesidesOther, OTHER_VALUE]
+    : [...resultsBesidesOther];
 
   return (
     <div>
@@ -49,9 +43,7 @@ const InterviewSensitiveQuestions = ({ interviewSensitiveQuestions, onChange }) 
           marginBottom: '15px',
         }}
       >
-        <InputTitle
-          text="是否有以下特殊問題"
-        />
+        <InputTitle text="是否有以下特殊問題" />
         <p
           style={{
             color: '#6E6E6E',
@@ -78,33 +70,26 @@ const InterviewSensitiveQuestions = ({ interviewSensitiveQuestions, onChange }) 
           }}
         />
       }
-      {
-        hasOther ?
-          <section
-            style={{
-              marginTop: '8px',
-            }}
-          >
-            <TextInput
-              value={otherValue || ''}
-              onChange={e => onChange([
-                ...resultsBesidesOther,
-                e.target.value,
-              ])}
-              placeholder="輸入敏感問題"
-              warningWording="請輸入20個字以內"
-            />
-          </section> :
-          null
-      }
+      {hasOther ? (
+        <section
+          style={{
+            marginTop: '8px',
+          }}
+        >
+          <TextInput
+            value={otherValue || ''}
+            onChange={e => onChange([...resultsBesidesOther, e.target.value])}
+            placeholder="輸入敏感問題"
+            warningWording="請輸入20個字以內"
+          />
+        </section>
+      ) : null}
     </div>
   );
 };
 
 InterviewSensitiveQuestions.propTypes = {
-  interviewSensitiveQuestions: PropTypes.arrayOf(
-    PropTypes.string,
-  ),
+  interviewSensitiveQuestions: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func,
 };
 

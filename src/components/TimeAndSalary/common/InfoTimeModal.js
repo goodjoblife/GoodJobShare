@@ -27,9 +27,10 @@ const InfoTimeModal = ({ isOpen, close }) => (
       參考時間
     </h2>
     <div className={cn(editorStyles.editor, 'alignLeft')}>
-      若分享該筆資料的使用者已離職，則參考時間為<bold>離職年、月</bold>。
-      <br />
-      若尚在職，則為<bold>分享資料的年、月</bold>。
+      若分享該筆資料的使用者已離職，則參考時間為
+      <bold>離職年、月</bold>。<br />
+      若尚在職，則為
+      <bold>分享資料的年、月</bold>。
       <div
         style={{
           display: 'flex',
@@ -37,12 +38,8 @@ const InfoTimeModal = ({ isOpen, close }) => (
           marginTop: '40px',
         }}
       >
-        <Button
-          btnStyle="black"
-          circleSize="md"
-          onClick={close}
-        >
-         OK，我瞭解了
+        <Button btnStyle="black" circleSize="md" onClick={close}>
+          OK，我瞭解了
         </Button>
       </div>
     </div>

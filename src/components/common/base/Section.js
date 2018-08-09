@@ -3,7 +3,19 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styles from './Section.module.css';
 
-const Section = ({ Tag, pageTop, bg, padding, paddingTop, paddingBottom, center, children, marginTop, className, ...props }) => (
+const Section = ({
+  Tag,
+  pageTop,
+  bg,
+  padding,
+  paddingTop,
+  paddingBottom,
+  center,
+  children,
+  marginTop,
+  className,
+  ...props
+}) => (
   <Tag
     className={cn(className, {
       [styles.pageTop]: pageTop,

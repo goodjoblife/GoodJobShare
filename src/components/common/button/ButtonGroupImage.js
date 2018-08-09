@@ -2,9 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 
-import {
-  makeId,
-} from 'utils/stringUtil';
+import { makeId } from 'utils/stringUtil';
 
 import styles from './ButtonGroupImage.module.css';
 
@@ -56,13 +54,12 @@ class ButtonGroupImageEle extends React.PureComponent {
             display: 'inline-block',
             textAlign: 'center',
           }}
-          className={checked ? styles.content__checked : styles.content__unchecked}
+          className={
+            checked ? styles.content__checked : styles.content__unchecked
+          }
         >
           {icon}
-          <p
-            style={{ marginTop: '12px' }}
-            className={cn('pM', styles.btnText)}
-          >
+          <p style={{ marginTop: '12px' }} className={cn('pM', styles.btnText)}>
             {label}
           </p>
         </span>
@@ -74,18 +71,8 @@ class ButtonGroupImageEle extends React.PureComponent {
 ButtonGroupImageEle.propTypes = {
   checked: PropTypes.bool,
   onChange: PropTypes.func,
-  value: PropTypes.oneOfType(
-    [
-      PropTypes.string,
-      PropTypes.number,
-    ]
-  ),
-  label: PropTypes.oneOfType(
-    [
-      PropTypes.string,
-      PropTypes.number,
-    ]
-  ),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   last: PropTypes.bool,
   icon: PropTypes.node,
   theme: PropTypes.string,
@@ -95,7 +82,13 @@ ButtonGroupImageEle.defaultProps = {
   theme: 'gray',
 };
 
-const ButtonGroupImage = ({ value, options, onChange, className, theme = 'gray' }) => (
+const ButtonGroupImage = ({
+  value,
+  options,
+  onChange,
+  className,
+  theme = 'gray',
+}) => (
   <div className={cn(styles.wrapper, className)}>
     {options.map((option, index, arr) => (
       <ButtonGroupImageEle
@@ -113,30 +106,15 @@ const ButtonGroupImage = ({ value, options, onChange, className, theme = 'gray' 
 );
 
 ButtonGroupImage.propTypes = {
-  value: PropTypes.oneOfType(
-    [
-      PropTypes.string,
-      PropTypes.number,
-    ]
-  ),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
-  options: PropTypes.arrayOf(PropTypes.shape(
-    {
-      value: PropTypes.oneOfType(
-        [
-          PropTypes.string,
-          PropTypes.number,
-        ]
-      ),
-      label: PropTypes.oneOfType(
-        [
-          PropTypes.string,
-          PropTypes.number,
-        ]
-      ),
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       icon: PropTypes.node,
-    }
-  )),
+    })
+  ),
   className: PropTypes.string,
   theme: PropTypes.string,
 };

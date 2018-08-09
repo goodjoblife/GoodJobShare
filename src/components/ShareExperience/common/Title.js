@@ -7,10 +7,7 @@ import InputTitle from './InputTitle';
 
 const Title = ({ title, onChange, placeholder, validator, submitted }) => (
   <div>
-    <InputTitle
-      text="標題"
-      must
-    />
+    <InputTitle text="標題" must />
     <TextInput
       value={title}
       placeholder={placeholder}

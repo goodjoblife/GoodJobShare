@@ -19,24 +19,23 @@ const formatType = type => {
 
 const formatComapny = company => {
   if (company) {
-    return (typeof company.name === 'string')
+    return typeof company.name === 'string'
       ? company.name
       : company.name.join(' / ');
   }
   return null;
 };
 
-const ExperienceHeading = ({ experience }) =>
-  (
-    <div className={styles.heading}>
-      <P Tag="h2" size="l" className={styles.badge}>
-        {experience && formatType(experience.type)}
-      </P>
-      <Heading size="l">
-        {experience && formatComapny(experience.company)}
-      </Heading>
-    </div>
-  );
+const ExperienceHeading = ({ experience }) => (
+  <div className={styles.heading}>
+    <P Tag="h2" size="l" className={styles.badge}>
+      {experience && formatType(experience.type)}
+    </P>
+    <Heading size="l">
+      {experience && formatComapny(experience.company)}
+    </Heading>
+  </div>
+);
 
 ExperienceHeading.propTypes = {
   experience: PropTypes.object,

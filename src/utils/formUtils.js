@@ -1,4 +1,3 @@
-
 /**
  * convert number to [xxxx億][xxxx萬][xxxx]元 format
  * @param {Integer} num the number to be converted
@@ -38,7 +37,10 @@ const shouldShowSalaryWarning = (salaryType, salaryAmount) => {
   if (!(salaryType in ranges)) {
     return false;
   }
-  if (salaryAmount < ranges[salaryType][0] || salaryAmount > ranges[salaryType][1]) {
+  if (
+    salaryAmount < ranges[salaryType][0] ||
+    salaryAmount > ranges[salaryType][1]
+  ) {
     return true;
   }
   return false;

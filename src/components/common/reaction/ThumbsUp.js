@@ -8,9 +8,7 @@ import styles from './Base.module.css';
 
 const ThumbsUp = ({ onClick, toggled, ...restProps }) => (
   <Base onClick={onClick} {...restProps}>
-    <i.Like
-      className={cn({ [styles.toggled]: toggled })}
-    />
+    <i.Like className={cn({ [styles.toggled]: toggled })} />
   </Base>
 );
 

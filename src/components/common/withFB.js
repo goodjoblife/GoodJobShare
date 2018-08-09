@@ -22,8 +22,7 @@ export default WrappedComponent =>
         facebookInstance = new Facebook(FACEBOOK_APP_ID);
       }
 
-      facebookInstance.init()
-        .then(FB => this.setState({ FB }));
+      facebookInstance.init().then(FB => this.setState({ FB }));
     }
 
     render() {

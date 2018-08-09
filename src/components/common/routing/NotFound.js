@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import Status from './Status';
 
 const NotFound = ({ status, children }) => (
-  <Status status={status}>
-    { children }
-  </Status>
+  <Status status={status}>{children}</Status>
 );
 
 NotFound.propTypes = {

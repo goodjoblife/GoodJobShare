@@ -13,13 +13,9 @@ import styles from './InterviewForm.module.css';
 import InterviewInfo from './InterviewInfo';
 import InterviewExperience from './InterviewExperience';
 
-import {
-  postInterviewExperience,
-} from '../../../apis/interviewExperiencesApi';
+import { postInterviewExperience } from '../../../apis/interviewExperiencesApi';
 
-import {
-  interviewFormCheck,
-} from './formCheck';
+import { interviewFormCheck } from './formCheck';
 
 import {
   handleBlocks,
@@ -32,14 +28,16 @@ import { HELMET_DATA } from '../../../constants/helmetData';
 import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
-import {
-  LS_INTERVIEW_FORM_KEY,
-} from '../../../constants/localStorageKey';
+import { LS_INTERVIEW_FORM_KEY } from '../../../constants/localStorageKey';
 
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
 
-const createSection = id => (subtitle, placeholder = '', titlePlaceholder = '段落標題，例：面試方式') => {
+const createSection = id => (
+  subtitle,
+  placeholder = '',
+  titlePlaceholder = '段落標題，例：面試方式'
+) => {
   const section = {
     id,
     subtitle,
@@ -73,8 +71,7 @@ const createBlock = {
 
 const idCounter = idGenerator();
 
-const isBlockRemovable = blocks =>
-  R.length(R.keys(blocks)) > 1;
+const isBlockRemovable = blocks => R.length(R.keys(blocks)) > 1;
 
 const firstSectionId = idCounter();
 const firstQaId = idCounter();
@@ -124,13 +121,16 @@ class InterviewForm extends React.Component {
     let defaultFromDraft;
 
     try {
-      defaultFromDraft = JSON.parse(localStorage.getItem(LS_INTERVIEW_FORM_KEY));
+      defaultFromDraft = JSON.parse(
+        localStorage.getItem(LS_INTERVIEW_FORM_KEY)
+      );
     } catch (error) {
       defaultFromDraft = null;
     }
     const defaultState = defaultFromDraft || defaultForm;
 
-    this.setState({ // eslint-disable-line react/no-did-mount-set-state
+    this.setState({
+      // eslint-disable-line react/no-did-mount-set-state
       ...defaultState,
     });
 
@@ -144,43 +144,42 @@ class InterviewForm extends React.Component {
 
     if (valid) {
       localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
-      const p = postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
-      return p.then(response => {
-        const experienceId = response.experience._id;
+      const p = postInterviewExperience(
+        portInterviewFormToRequestFormat(getInterviewForm(this.state))
+      );
+      return p.then(
+        response => {
+          const experienceId = response.experience._id;
 
-        ReactGA.event({
-          category: GA_CATEGORY.SHARE_INTERVIEW,
-          action: GA_ACTION.UPLOAD_SUCCESS,
-        });
-        ReactPixel.track('Purchase', {
-          value: 1,
-          currency: 'TWD',
-          content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
-        });
-        return (
-          () => (
+          ReactGA.event({
+            category: GA_CATEGORY.SHARE_INTERVIEW,
+            action: GA_ACTION.UPLOAD_SUCCESS,
+          });
+          ReactPixel.track('Purchase', {
+            value: 1,
+            currency: 'TWD',
+            content_category:
+              PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
+          });
+          return () => (
             <SuccessFeedback
-              buttonClick={() => (
+              buttonClick={() =>
                 window.location.replace(`/experiences/${experienceId}`)
-              )}
+              }
             />
-          )
-        );
-      }, error => {
-        ReactGA.event({
-          category: GA_CATEGORY.SHARE_INTERVIEW,
-          action: GA_ACTION.UPLOAD_FAIL,
-        });
+          );
+        },
+        error => {
+          ReactGA.event({
+            category: GA_CATEGORY.SHARE_INTERVIEW,
+            action: GA_ACTION.UPLOAD_FAIL,
+          });
 
-        return (
-          ({ buttonClick }) => (
-            <FailFeedback
-              info={error.message}
-              buttonClick={buttonClick}
-            />
-          )
-        );
-      });
+          return ({ buttonClick }) => (
+            <FailFeedback info={error.message} buttonClick={buttonClick} />
+          );
+        }
+      );
     }
     this.handleState('submitted')(true);
     const topInvalidElement = this.getTopInvalidElement();
@@ -206,11 +205,11 @@ class InterviewForm extends React.Component {
       }
     }
     return null;
-  }
+  };
 
   changeValidationStatus = (elementId, status) => {
     this.elementValidationStatus[elementId] = status;
-  }
+  };
 
   handleState(key) {
     return value => {
@@ -232,22 +231,27 @@ class InterviewForm extends React.Component {
       return this.setState(state => ({
         [blockKey]: {
           ...state[blockKey],
-          [id]: createBlock[blockKey](id)(subtitle, placeholder, titlePlaceholder),
+          [id]: createBlock[blockKey](id)(
+            subtitle,
+            placeholder,
+            titlePlaceholder
+          ),
         },
       }));
     };
   }
 
   removeBlock(blockKey) {
-    return id => this.setState(state => {
-      if (isBlockRemovable(state[blockKey])) {
-        return ({
-          [blockKey]: R.filter(block => block.id !== id)(state[blockKey]),
-        });
-      }
+    return id =>
+      this.setState(state => {
+        if (isBlockRemovable(state[blockKey])) {
+          return {
+            [blockKey]: R.filter(block => block.id !== id)(state[blockKey]),
+          };
+        }
 
-      return null;
-    });
+        return null;
+      });
   }
 
   editBlock(blockKey) {
@@ -265,7 +269,9 @@ class InterviewForm extends React.Component {
 
   handleSubmit() {
     localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
-    return postInterviewExperience(portInterviewFormToRequestFormat(getInterviewForm(this.state)));
+    return postInterviewExperience(
+      portInterviewFormToRequestFormat(getInterviewForm(this.state))
+    );
   }
 
   render() {
@@ -275,17 +281,16 @@ class InterviewForm extends React.Component {
         <Heading size="l" marginBottomS center>
           面試經驗分享
         </Heading>
-        {
-          this.state.submitted ?
-            <div
-              style={{
-                marginTop: '20px',
-              }}
-              className={styles.warning__wording}
-            >
-              oops! 請檢查底下紅框內的內容是否正確
-            </div> : null
-        }
+        {this.state.submitted ? (
+          <div
+            style={{
+              marginTop: '20px',
+            }}
+            className={styles.warning__wording}
+          >
+            oops! 請檢查底下紅框內的內容是否正確
+          </div>
+        ) : null}
         <InterviewInfo
           handleState={this.handleState}
           companyQuery={this.state.companyQuery}
@@ -317,9 +322,7 @@ class InterviewForm extends React.Component {
           submitted={this.state.submitted}
           changeValidationStatus={this.changeValidationStatus}
         />
-        <SubmitArea
-          onSubmit={this.onSubmit}
-        />
+        <SubmitArea onSubmit={this.onSubmit} />
       </div>
     );
   }

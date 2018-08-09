@@ -4,14 +4,13 @@ import { getToken } from 'utils/tokenUtil';
 
 import { API_HOST } from '../config';
 
-const headerBuilder = token => (
-  token ?
-  {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
-  } :
-  {}
-);
+const headerBuilder = token =>
+  token
+    ? {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }
+    : {};
 
 const removeContentType = headers => {
   const {
@@ -22,31 +21,30 @@ const removeContentType = headers => {
   return rest;
 };
 
-const optionsBuilder = body => method => (
-  body ?
-  {
-    method: method.toUpperCase(),
-    headers: headerBuilder(getToken()),
-    body: JSON.stringify(body),
-  } :
-  {
-    method: method.toUpperCase(),
-    headers: removeContentType(headerBuilder(getToken())),
-  }
-);
+const optionsBuilder = body => method =>
+  body
+    ? {
+        method: method.toUpperCase(),
+        headers: headerBuilder(getToken()),
+        body: JSON.stringify(body),
+      }
+    : {
+        method: method.toUpperCase(),
+        headers: removeContentType(headerBuilder(getToken())),
+      };
 
 const checkStatus = response => {
   if (!response.ok) {
-    return response.json().then(json => Promise.reject({ statusCode: response.status, ...json }));
+    return response
+      .json()
+      .then(json => Promise.reject({ statusCode: response.status, ...json }));
   }
   return response.json();
 };
 
 const fetchUtil = (endpoint, apiHost = API_HOST) => (method, body) =>
-  fetch(
-    `${apiHost}${endpoint}`,
-    optionsBuilder(body)(method)
-  )
-    .then(checkStatus);
+  fetch(`${apiHost}${endpoint}`, optionsBuilder(body)(method)).then(
+    checkStatus
+  );
 
 export default fetchUtil;

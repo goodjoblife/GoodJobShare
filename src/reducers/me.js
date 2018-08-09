@@ -70,19 +70,32 @@ const me = createReducer(preloadedState, {
       // 根據路徑，去更新相關的觀看權限 state
       if (laborRightsSingleRegex.test(pathname)) {
         // 假如是小教室頁，直接更新觀看權限 state
-        newState = state.update('canViewLaborRightsSingle', () => action.permission);
+        newState = state.update(
+          'canViewLaborRightsSingle',
+          () => action.permission
+        );
       } else if (experienceDetailRegex.test(pathname)) {
         // 假如是單篇經驗分享頁，localStorage 沒值的話，不更新觀看權限 state。因此不會做阻擋，但是馬上就更新 localStorage。
-        const hasViewedExperirenceDetail = localStorage.getItem('hasViewedExperirenceDetail');
+        const hasViewedExperirenceDetail = localStorage.getItem(
+          'hasViewedExperirenceDetail'
+        );
         if (hasViewedExperirenceDetail !== null) {
-          newState = state.update('canViewExperirenceDetail', () => action.permission);
+          newState = state.update(
+            'canViewExperirenceDetail',
+            () => action.permission
+          );
         }
         localStorage.setItem('hasViewedExperirenceDetail', true);
       } else if (timeAndSalaryRegex.test(pathname)) {
         // 假如是薪資工時查詢頁，localStorage 沒值的話，不更新觀看權限 state。因此不會做阻擋，但是馬上就更新 localStorage。
-        const hasViewedTimeAndSalary = localStorage.getItem('hasViewedTimeAndSalary');
+        const hasViewedTimeAndSalary = localStorage.getItem(
+          'hasViewedTimeAndSalary'
+        );
         if (hasViewedTimeAndSalary !== null) {
-          newState = state.update('canViewTimeAndSalary', () => action.permission);
+          newState = state.update(
+            'canViewTimeAndSalary',
+            () => action.permission
+          );
         }
         localStorage.setItem('hasViewedTimeAndSalary', true);
       }

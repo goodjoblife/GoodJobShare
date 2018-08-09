@@ -7,18 +7,19 @@ import InputTitle from './InputTitle';
 
 import styles from './EmploymentType.module.css';
 
-import {
-  employmentTypeOptions,
-} from './optionMap';
+import { employmentTypeOptions } from './optionMap';
 
-const EmploymentType = ({ employmentType, inputTitle, onChange, validator, submitted }) => {
+const EmploymentType = ({
+  employmentType,
+  inputTitle,
+  onChange,
+  validator,
+  submitted,
+}) => {
   const isWarning = submitted && !validator(employmentType);
   return (
     <div>
-      <InputTitle
-        text={inputTitle}
-        must
-      />
+      <InputTitle text={inputTitle} must />
       <div
         className={cn(isWarning ? styles.warning : null)}
         style={{
@@ -28,27 +29,19 @@ const EmploymentType = ({ employmentType, inputTitle, onChange, validator, submi
         <Select
           options={employmentTypeOptions}
           value={employmentType}
-          onChange={
-            e => onChange(e.target.value)
-          }
+          onChange={e => onChange(e.target.value)}
         />
-        {
-          isWarning ?
-            <div
-              style={{
-                position: 'absolute',
-                bottom: '0',
-                transform: 'translateY(150%)',
-              }}
-            >
-              <p
-                className={`pS ${styles.warning__wording}`}
-              >
-                需填寫職務型態
-              </p>
-            </div>
-            : null
-        }
+        {isWarning ? (
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '0',
+              transform: 'translateY(150%)',
+            }}
+          >
+            <p className={`pS ${styles.warning__wording}`}>需填寫職務型態</p>
+          </div>
+        ) : null}
       </div>
     </div>
   );

@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 
 import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput';
 
-import {
-  debounce,
-} from 'utils/streamUtils';
+import { debounce } from 'utils/streamUtils';
 
 import InputTitle from './InputTitle';
-import {
-  getCompaniesSearch,
-} from '../../../apis/companySearchApi';
+import { getCompaniesSearch } from '../../../apis/companySearchApi';
 
 const getItemValue = item => item.label;
 
@@ -28,17 +24,19 @@ class CompanyQuery extends React.Component {
     };
   }
 
-  search = debounce(
-    (e, value) => {
-      if (value) {
-        return getCompaniesSearch(value)
-          .then(r => (Array.isArray(r) ? this.handleAutocompleteItems(r.map(mapToAutocompleteList)) : this.handleAutocompleteItems([])))
-          .catch(() => this.handleAutocompleteItems([]));
-      }
-      return this.handleAutocompleteItems([]);
+  search = debounce((e, value) => {
+    if (value) {
+      return getCompaniesSearch(value)
+        .then(
+          r =>
+            Array.isArray(r)
+              ? this.handleAutocompleteItems(r.map(mapToAutocompleteList))
+              : this.handleAutocompleteItems([])
+        )
+        .catch(() => this.handleAutocompleteItems([]));
     }
-    , 800
-  );
+    return this.handleAutocompleteItems([]);
+  }, 800);
 
   handleOnChange = (e, value) => {
     this.props.onChange(e.target.value);
@@ -53,13 +51,16 @@ class CompanyQuery extends React.Component {
 
   render() {
     const { autocompleteItems } = this.state;
-    const { companyQuery, onChange, onCompanyId, validator, submitted } = this.props;
+    const {
+      companyQuery,
+      onChange,
+      onCompanyId,
+      validator,
+      submitted,
+    } = this.props;
     return (
       <div>
-        <InputTitle
-          text="公司/單位 或 統一編號"
-          must
-        />
+        <InputTitle text="公司/單位 或 統一編號" must />
         <AutoCompleteTextInput
           placeholder="ＯＯ 股份有限公司"
           value={companyQuery}

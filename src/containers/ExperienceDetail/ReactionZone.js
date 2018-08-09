@@ -5,16 +5,15 @@ import withFB from 'common/withFB';
 import ReactionZone from '../../components/ExperienceDetail/ReactionZone';
 import { login } from '../../actions/auth';
 
-import {
-  statusSelector,
-} from '../../selectors/authSelector';
+import { statusSelector } from '../../selectors/authSelector';
 
 const mapStateToProps = state => ({
   authStatus: statusSelector(state),
 });
 
+const mapDispatchToProps = dispatch => bindActionCreators({ login }, dispatch);
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ login }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(withFB(ReactionZone));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withFB(ReactionZone));

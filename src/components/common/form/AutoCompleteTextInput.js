@@ -61,12 +61,10 @@ class AutoCompleteTextInput extends React.PureComponent {
       getItemValue,
       items,
       onSelect,
-    ...rest
+      ...rest
     } = this.props;
 
-    const {
-      isOpen,
-    } = this.state;
+    const { isOpen } = this.state;
 
     const inputClassName = isWarning ? styles.warning : styles.input;
     return (
@@ -109,26 +107,22 @@ class AutoCompleteTextInput extends React.PureComponent {
           open={isOpen}
           {...rest}
         />
-        {
-          warningWording ?
-            <p
-              className={`
+        {warningWording ? (
+          <p
+            className={`
             pS ${styles.warning__text} ${isWarning ? styles.isWarning : ''}
           `}
-            >
-              {warningWording}
-            </p> : null
-        }
+          >
+            {warningWording}
+          </p>
+        ) : null}
       </div>
     );
   }
 }
 
 AutoCompleteTextInput.propTypes = {
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
   isWarning: PropTypes.bool,

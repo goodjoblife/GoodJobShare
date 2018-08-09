@@ -17,11 +17,7 @@ import { postWorkings } from '../../../apis/timeAndSalaryApi';
 
 import styles from './TimeSalaryForm.module.css';
 
-import {
-  basicFormCheck,
-  salaryFormCheck,
-  timeFormCheck,
-} from './formCheck';
+import { basicFormCheck, salaryFormCheck, timeFormCheck } from './formCheck';
 
 import {
   getBasicForm,
@@ -41,9 +37,7 @@ import {
 } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
-import {
-  LS_TIME_SALARY_FORM_KEY,
-} from '../../../constants/localStorageKey';
+import { LS_TIME_SALARY_FORM_KEY } from '../../../constants/localStorageKey';
 
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
@@ -92,13 +86,16 @@ class TimeSalaryForm extends React.PureComponent {
     let defaultFromDraft;
 
     try {
-      defaultFromDraft = JSON.parse(localStorage.getItem(LS_TIME_SALARY_FORM_KEY));
+      defaultFromDraft = JSON.parse(
+        localStorage.getItem(LS_TIME_SALARY_FORM_KEY)
+      );
     } catch (error) {
       defaultFromDraft = null;
     }
     const defaultState = defaultFromDraft || defaultForm;
 
-    this.setState({ // eslint-disable-line react/no-did-mount-set-state
+    this.setState({
+      // eslint-disable-line react/no-did-mount-set-state
       ...defaultState,
     });
 
@@ -119,45 +116,42 @@ class TimeSalaryForm extends React.PureComponent {
         portTimeSalaryFormToRequestFormat(getTimeAndSalaryForm(this.state))
       );
 
-      return p.then(response => {
-        const count = response.queries_count;
+      return p.then(
+        response => {
+          const count = response.queries_count;
 
-        ReactGA.event({
-          category: GA_CATEGORY.SHARE_TIME_SALARY,
-          action: GA_ACTION.UPLOAD_SUCCESS,
-        });
-        ReactPixel.track('Purchase', {
-          value: 1,
-          currency: 'TWD',
-          content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_TIME_AND_SALARY,
-        });
+          ReactGA.event({
+            category: GA_CATEGORY.SHARE_TIME_SALARY,
+            action: GA_ACTION.UPLOAD_SUCCESS,
+          });
+          ReactPixel.track('Purchase', {
+            value: 1,
+            currency: 'TWD',
+            content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_TIME_AND_SALARY,
+          });
 
-        return (
-          () => (
+          return () => (
             <SuccessFeedback
-              info={`您已經上傳 ${count} 次，還有 ${5 - (count || 0)} 次可以上傳。`}
+              info={`您已經上傳 ${count} 次，還有 ${5 -
+                (count || 0)} 次可以上傳。`}
               buttonText="查看最新工時、薪資"
               buttonClick={() => {
                 window.location.replace('/time-and-salary/latest');
               }}
             />
-          )
-        );
-      }, error => {
-        ReactGA.event({
-          category: GA_CATEGORY.SHARE_TIME_SALARY,
-          action: GA_ACTION.UPLOAD_FAIL,
-        });
+          );
+        },
+        error => {
+          ReactGA.event({
+            category: GA_CATEGORY.SHARE_TIME_SALARY,
+            action: GA_ACTION.UPLOAD_FAIL,
+          });
 
-        return (
-          ({ buttonClick }) => (
-            <FailFeedback
-              info={error.message}
-              buttonClick={buttonClick}
-            />
-          )
-        );
-      });
+          return ({ buttonClick }) => (
+            <FailFeedback info={error.message} buttonClick={buttonClick} />
+          );
+        }
+      );
     }
     this.handleState('submitted')(true);
     const topInvalidElement = this.getTopInvalidElement();
@@ -194,15 +188,15 @@ class TimeSalaryForm extends React.PureComponent {
       }
     }
     return null;
-  }
+  };
 
   changeBasicElValidationStatus = (elementId, status) => {
     this.basicElValidationStatus[elementId] = status;
-  }
+  };
 
   changeExtElValidationStatus = (elementId, status) => {
     this.extElValidationStatus[elementId] = status;
-  }
+  };
 
   handleSalaryHint = (key, value) => {
     let salaryAmount;
@@ -219,7 +213,7 @@ class TimeSalaryForm extends React.PureComponent {
       showSalaryWarning: showWarning,
       salaryHint: hint,
     });
-  }
+  };
 
   handleState(key) {
     return value => {
@@ -270,17 +264,16 @@ class TimeSalaryForm extends React.PureComponent {
         <Heading size="l" marginBottomS center>
           薪資工時分享
         </Heading>
-        {
-          submitted ?
-            <div
-              style={{
-                marginTop: '20px',
-              }}
-              className={styles.warning__wording}
-            >
-              oops! 請檢查底下紅框內的內容是否正確
-            </div> : null
-        }
+        {submitted ? (
+          <div
+            style={{
+              marginTop: '20px',
+            }}
+            className={styles.warning__wording}
+          >
+            oops! 請檢查底下紅框內的內容是否正確
+          </div>
+        ) : null}
 
         <IconHeadingBlock heading="薪資工時資訊" Icon={People} requiredText>
           <BasicInfo
@@ -298,9 +291,7 @@ class TimeSalaryForm extends React.PureComponent {
           />
 
           <br />
-          <h5 className={styles.pleaseSelectOne}>
-            以下薪資 / 工時擇一必填
-          </h5>
+          <h5 className={styles.pleaseSelectOne}>以下薪資 / 工時擇一必填</h5>
 
           <SalaryInfo
             handleState={this.handleState}

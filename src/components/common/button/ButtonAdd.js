@@ -28,9 +28,7 @@ class ButtonAdd extends React.PureComponent {
       appendBlock,
     } = this.props;
 
-    const {
-      stage,
-    } = this.state;
+    const { stage } = this.state;
 
     return (
       <div className={styles.wrapper}>
@@ -42,9 +40,8 @@ class ButtonAdd extends React.PureComponent {
           />
         </div>
         <div className={styles.sectionButtons}>
-          {
-            stage !== 0 ?
-              options.map(ele => (
+          {stage !== 0
+            ? options.map(ele => (
                 <span
                   key={ele.value}
                   style={{
@@ -57,14 +54,17 @@ class ButtonAdd extends React.PureComponent {
                     custimized={custimizedValues.includes(ele.value)}
                     disabled={disabledValues.includes(ele.value)}
                     onClick={() => {
-                      appendBlock(ele.value, ele.placeholder, ele.titlePlaceholder);
+                      appendBlock(
+                        ele.value,
+                        ele.placeholder,
+                        ele.titlePlaceholder
+                      );
                       this.handleStage();
                     }}
                   />
                 </span>
               ))
-              : null
-          }
+            : null}
         </div>
       </div>
     );
@@ -73,27 +73,17 @@ class ButtonAdd extends React.PureComponent {
 
 ButtonAdd.propTypes = {
   custimizedValues: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ])
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   ),
   disabledValues: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ])
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   ),
-  options: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-    value: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-  })),
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    })
+  ),
   appendBlock: PropTypes.func,
 };
 ButtonAdd.defaultProps = {

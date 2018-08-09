@@ -35,13 +35,8 @@ const Reason = ({ invalid, reason, onChange }) => (
         padding: '12px 16px',
       }}
     />
-    <P
-      className={styles.warning}
-      size="s"
-    >
-      {
-        invalid ? '請輸入 500 字以內的內容' : ''
-      }
+    <P className={styles.warning} size="s">
+      {invalid ? '請輸入 500 字以內的內容' : ''}
     </P>
   </div>
 );

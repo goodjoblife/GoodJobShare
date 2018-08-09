@@ -4,7 +4,6 @@ import cn from 'classnames';
 import { Glike } from 'common/icons';
 import styles from './RateButtonElement.module.css';
 
-
 const RateButtonElement = ({ hover, active, onClick }) => (
   <Glike
     className={cn(styles.container, {

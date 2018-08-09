@@ -13,15 +13,9 @@ const Feedback = ({ buttonClick, heading, info, buttonText, Icon }) => (
     <Heading size="l" marginBottomS center>
       {heading}
     </Heading>
-    <P size="l">
-      {info}
-    </P>
+    <P size="l">{info}</P>
     <div className={styles.button}>
-      <Button
-        btnStyle="black"
-        circleSize="md"
-        onClick={buttonClick}
-      >
+      <Button btnStyle="black" circleSize="md" onClick={buttonClick}>
         {buttonText}
       </Button>
     </div>

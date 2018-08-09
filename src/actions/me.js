@@ -112,10 +112,12 @@ export const setExperienceStatus = o => (dispatch, getState) => {
         }),
         ...experiences.slice(index + 1),
       ];
-      dispatch(setMyExperiences(
-        Object.assign(data.myExperiences, { experiences }),
-        null
-      ));
+      dispatch(
+        setMyExperiences(
+          Object.assign(data.myExperiences, { experiences }),
+          null
+        )
+      );
       return;
     }
     dispatch(setMyExperiences(experiences, null));
@@ -138,12 +140,14 @@ export const setWorkingStatus = o => (dispatch, getState) => {
         }),
         ...workings.slice(index + 1),
       ];
-      dispatch(setMyWorkings(
-        Object.assign(data.myWorkings, {
-          time_and_salary: workings,
-        }),
-        null
-      ));
+      dispatch(
+        setMyWorkings(
+          Object.assign(data.myWorkings, {
+            time_and_salary: workings,
+          }),
+          null
+        )
+      );
       return;
     }
     dispatch(setMyWorkings(workings, null));
@@ -166,10 +170,7 @@ export const setReplyStatus = o => (dispatch, getState) => {
         }),
         ...replies.slice(index + 1),
       ];
-      dispatch(setMyReplies(
-        Object.assign(data.myReplies, { replies }),
-        null
-      ));
+      dispatch(setMyReplies(Object.assign(data.myReplies, { replies }), null));
       return;
     }
     dispatch(setMyReplies(replies, null));
@@ -177,11 +178,18 @@ export const setReplyStatus = o => (dispatch, getState) => {
 };
 
 export const fetchMyPermission = () => (dispatch, getState) =>
-  fetchUtil('/me/permissions/search')('GET').then(result => {
-    dispatch(setMyPermission({
-      permission: result.hasSearchPermission,
-      location: getState().routing.location,
-    }, null));
-  }).catch(error => {
-    dispatch(setMyPermission({}, error));
-  });
+  fetchUtil('/me/permissions/search')('GET')
+    .then(result => {
+      dispatch(
+        setMyPermission(
+          {
+            permission: result.hasSearchPermission,
+            location: getState().routing.location,
+          },
+          null
+        )
+      );
+    })
+    .catch(error => {
+      dispatch(setMyPermission({}, error));
+    });

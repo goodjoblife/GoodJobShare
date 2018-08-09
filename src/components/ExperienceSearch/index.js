@@ -15,15 +15,11 @@ import FanPageBlock from 'common/FanPageBlock';
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
-import {
-  fetchExperiences as fetchExperiencesAction,
-} from '../../actions/experienceSearch';
+import { fetchExperiences as fetchExperiencesAction } from '../../actions/experienceSearch';
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../constants/helmetData';
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
-import {
-  PAGE_COUNT,
-} from '../../constants/experienceSearch';
+import { PAGE_COUNT } from '../../constants/experienceSearch';
 import status from '../../constants/status';
 import Filter from './Filter';
 import { Banner1, Banner2 } from './Banners';
@@ -32,11 +28,7 @@ import Pagination from '../common/Pagination';
 
 import getScale from '../../utils/numberUtils';
 
-import {
-  toQsString,
-  querySelector,
-  locationSearchToQuery,
-} from './helper';
+import { toQsString, querySelector, locationSearchToQuery } from './helper';
 import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
 
 const SORT = {
@@ -61,19 +53,21 @@ class ExperienceSearch extends Component {
   static fetchData({ location, store: { dispatch } }) {
     const { search } = location;
     const query = locationSearchToQuery(search);
-    const {
-      searchBy,
-      searchQuery,
-      sort,
-      page,
-    } = querySelector(query);
+    const { searchBy, searchQuery, sort, page } = querySelector(query);
 
-    let {
-      searchType,
-    } = querySelector(query);
+    let { searchType } = querySelector(query);
     searchType = R.split(',', searchType);
 
-    return dispatch(fetchExperiencesAction(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType));
+    return dispatch(
+      fetchExperiencesAction(
+        page,
+        PAGE_COUNT,
+        sort,
+        searchBy,
+        searchQuery,
+        searchType
+      )
+    );
   }
 
   static propTypes = {
@@ -88,28 +82,17 @@ class ExperienceSearch extends Component {
       push: PropTypes.func.isRequired,
     }),
     loadingStatus: PropTypes.string,
-  }
+  };
 
   componentDidMount() {
-    const {
-      fetchExperiences,
-    } = this.props;
+    const { fetchExperiences } = this.props;
 
-    const {
-      search,
-    } = this.props.location;
+    const { search } = this.props.location;
     const query = locationSearchToQuery(search);
 
-    const {
-      searchBy,
-      searchQuery,
-      sort,
-      page,
-    } = querySelector(query);
+    const { searchBy, searchQuery, sort, page } = querySelector(query);
 
-    let {
-      searchType,
-    } = querySelector(query);
+    let { searchType } = querySelector(query);
     searchType = R.split(',', searchType);
 
     fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType);
@@ -118,41 +101,33 @@ class ExperienceSearch extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.location.search !== this.props.location.search) {
-      const {
-        fetchExperiences,
-      } = nextProps;
+      const { fetchExperiences } = nextProps;
 
-      const {
-        search,
-      } = nextProps.location;
+      const { search } = nextProps.location;
       const query = locationSearchToQuery(search);
 
-      const {
-        searchBy,
-        searchQuery,
-        sort,
-        page,
-      } = querySelector(query);
+      const { searchBy, searchQuery, sort, page } = querySelector(query);
 
-      let {
-        searchType,
-      } = querySelector(query);
+      let { searchType } = querySelector(query);
       searchType = R.split(',', searchType);
 
-      fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType);
+      fetchExperiences(
+        page,
+        PAGE_COUNT,
+        sort,
+        searchBy,
+        searchQuery,
+        searchType
+      );
     }
   }
 
   getCanonicalUrl = () => {
     const { search } = this.props.location;
     const query = locationSearchToQuery(search);
-    const {
-      searchType,
-      searchQuery,
-      searchBy,
-      sort,
-      page,
-    } = querySelector(query);
+    const { searchType, searchQuery, searchBy, sort, page } = querySelector(
+      query
+    );
 
     const params = {
       type: searchType || 'interview,work',
@@ -164,16 +139,13 @@ class ExperienceSearch extends Component {
     const str = qs.stringify(params, { sort: (a, b) => a.localeCompare(b) });
     const url = formatCanonicalPath(`${this.props.location.pathname}?${str}`);
     return url;
-  }
+  };
 
   handleSearchTypeChange = ({ searchType, sort }) => {
     const { pathname, search } = this.props.location;
     const query = locationSearchToQuery(search);
 
-    const {
-      searchBy,
-      searchQuery,
-    } = querySelector(query);
+    const { searchBy, searchQuery } = querySelector(query);
 
     const page = 1;
 
@@ -186,7 +158,7 @@ class ExperienceSearch extends Component {
     });
     const url = `${pathname}?${queryString}`;
     this.props.history.push(url);
-  }
+  };
 
   handleSearchbarKeywordClick = ({ keyword, searchBy }) => {
     const { pathname, search } = this.props.location;
@@ -207,22 +179,14 @@ class ExperienceSearch extends Component {
     this.props.history.push(url);
 
     this.searchTrack({ searchBy, keyword });
-  }
+  };
 
   handleSearchBy = ({ searchQuery, searchBy }) => {
-    const {
-      getNewSearchBy,
-    } = this.props;
-    const {
-      pathname,
-      search,
-    } = this.props.location;
+    const { getNewSearchBy } = this.props;
+    const { pathname, search } = this.props.location;
     const query = locationSearchToQuery(search);
 
-    const {
-      sort,
-      searchType,
-    } = querySelector(query);
+    const { sort, searchType } = querySelector(query);
 
     const queryString = toQsString({
       sort,
@@ -237,7 +201,7 @@ class ExperienceSearch extends Component {
     getNewSearchBy(searchBy);
     this.props.history.push(url);
     this.searchTrack({ searchBy, searchQuery });
-  }
+  };
 
   handleSearchbarSubmit = ({ searchBy, searchQuery }) => {
     const { pathname, search } = this.props.location;
@@ -257,7 +221,7 @@ class ExperienceSearch extends Component {
     const url = `${pathname}?${queryString}`;
     this.props.history.push(url);
     this.searchTrack({ searchBy, searchQuery });
-  }
+  };
 
   searchTrack = ({ searchBy, searchQuery }) => {
     ReactGA.event({
@@ -270,18 +234,13 @@ class ExperienceSearch extends Component {
       search_string: searchQuery,
       content_category: PIXEL_CONTENT_CATEGORY.SEARCH_EXPERIENCES,
     });
-  }
+  };
 
   handleSortClick = ({ searchType, sort }) => {
-    const {
-      pathname,
-      search,
-    } = this.props.location;
+    const { pathname, search } = this.props.location;
     const query = locationSearchToQuery(search);
 
-    const {
-      searchBy,
-    } = querySelector(query);
+    const { searchBy } = querySelector(query);
 
     // reset searchQuery
     const searchQuery = '';
@@ -309,22 +268,14 @@ class ExperienceSearch extends Component {
         action: GA_ACTION.CLICK_POPULAR,
       });
     }
-  }
+  };
 
   // 給 Pagination 建立分頁的連結用
   createPageLinkTo = nextPage => {
-    const {
-      pathname,
-      search,
-    } = this.props.location;
+    const { pathname, search } = this.props.location;
     const query = locationSearchToQuery(search);
 
-    const {
-      searchBy,
-      searchQuery,
-      sortBy,
-      searchType,
-    } = querySelector(query);
+    const { searchBy, searchQuery, sortBy, searchType } = querySelector(query);
 
     const queryString = toQsString({
       sort: sortBy,
@@ -338,21 +289,22 @@ class ExperienceSearch extends Component {
       pathname,
       search: `?${queryString}`,
     };
-  }
+  };
 
   renderBlocks = experiences => {
-    const _toBlocks = R.map(experience =>
-      (<ExperienceBlock
+    const _toBlocks = R.map(experience => (
+      <ExperienceBlock
         key={experience._id}
         data={experience}
         size="l"
         backable
-      />));
+      />
+    ));
 
     const injectBannerAt = N =>
       R.addIndex(R.chain)((row, i) => {
         if (i === N - 1) {
-          return [(<Banner2 key="banner" />), row];
+          return [<Banner2 key="banner" />, row];
         }
         return row;
       });
@@ -364,28 +316,27 @@ class ExperienceSearch extends Component {
     );
 
     return toBlocks(experiences);
-  }
+  };
 
   renderHelmet = () => {
     // TODO 將邏輯拆成 1. 公司職稱搜尋 2. 非搜尋，減少 if/else
-    const {
-      search,
-    } = this.props.location;
+    const { search } = this.props.location;
     const query = locationSearchToQuery(search);
-    const {
-      searchType,
-      searchQuery,
-      sortBy,
-      page,
-    } = querySelector(query);
+    const { searchType, searchQuery, sortBy, page } = querySelector(query);
 
     const count = this.props.experienceSearch.get('experienceCount');
     const scale = getScale(count);
     const url = this.getCanonicalUrl();
-    const searchTypeName = searchType.split(',').sort().reduce((names, type) => {
-      if (searchTypeMap[type]) { names.push(searchTypeMap[type]); }
-      return names;
-    }, []).join('、');
+    const searchTypeName = searchType
+      .split(',')
+      .sort()
+      .reduce((names, type) => {
+        if (searchTypeMap[type]) {
+          names.push(searchTypeMap[type]);
+        }
+        return names;
+      }, [])
+      .join('、');
 
     // default helmet info
     let title = '查詢面試、工作、實習經驗';
@@ -396,7 +347,8 @@ class ExperienceSearch extends Component {
       const tmpStr = `${searchQuery}的${searchTypeName}分享`;
       title = `${tmpStr}，第 ${page} 頁`;
       description = `馬上查看共 ${count} 篇有關${tmpStr}，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
-    } else if (sortBy) { // if searchQuery is not given, but sortBy is given, then show 最新/熱門
+    } else if (sortBy) {
+      // if searchQuery is not given, but sortBy is given, then show 最新/熱門
       title = `${sortByMap[sortBy]}${searchTypeName}分享 - 第 ${page} 頁`;
       description = `馬上查詢超過 ${scale} 篇${searchTypeName}分享，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
     }
@@ -408,20 +360,18 @@ class ExperienceSearch extends Component {
           { property: 'og:title', content: formatTitle(title, SITE_NAME) },
           { property: 'og:description', content: description },
           { property: 'og:url', content: url },
-          { property: 'og:image', content: `${imgHost}/og/experience-search.jpg` },
+          {
+            property: 'og:image',
+            content: `${imgHost}/og/experience-search.jpg`,
+          },
         ]}
-        link={[
-          { rel: 'canonical', href: url },
-        ]}
+        link={[{ rel: 'canonical', href: url }]}
       />
     );
-  }
+  };
 
   render() {
-    const {
-      experienceSearch,
-      loadingStatus,
-    } = this.props;
+    const { experienceSearch, loadingStatus } = this.props;
     const data = experienceSearch.toJS();
     const experiences = data.experiences || [];
 
@@ -456,11 +406,15 @@ class ExperienceSearch extends Component {
                 onSubmit={this.handleSearchbarSubmit}
               />
 
-              {(data.searchQuery && data.experienceCount > 0) &&
-                <div className={styles.searchResult}>
-                  <Heading size="m" bold>「{data.searchQuery}」的面試經驗、工作經驗</Heading>
-                </div>
-              }
+              {data.searchQuery &&
+                data.experienceCount > 0 && (
+                  <div className={styles.searchResult}>
+                    <Heading size="m" bold>
+                      「{data.searchQuery}
+                      」的面試經驗、工作經驗
+                    </Heading>
+                  </div>
+                )}
 
               <Pagination
                 totalCount={data.experienceCount}
@@ -469,20 +423,21 @@ class ExperienceSearch extends Component {
                 createPageLinkTo={this.createPageLinkTo}
               />
 
-              {(data.searchQuery && data.experienceCount === 0 && loadingStatus !== status.FETCHING) &&
-                <P
-                  size="l"
-                  bold
-                  className={styles.searchNoResult}
-                >
-                    尚未有「{data.searchQuery}」的經驗分享
-                </P>
-              }
-              { // rendering experiences blocks and banner
-                loadingStatus === status.FETCHING
-                ? <Loader size="s" />
-                : this.renderBlocks(experiences)
-              }
+              {data.searchQuery &&
+                data.experienceCount === 0 &&
+                loadingStatus !== status.FETCHING && (
+                  <P size="l" bold className={styles.searchNoResult}>
+                    尚未有「
+                    {data.searchQuery}
+                    」的經驗分享
+                  </P>
+                )}
+              {// rendering experiences blocks and banner
+              loadingStatus === status.FETCHING ? (
+                <Loader size="s" />
+              ) : (
+                this.renderBlocks(experiences)
+              )}
 
               <Pagination
                 totalCount={data.experienceCount}

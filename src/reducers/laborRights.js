@@ -23,14 +23,12 @@ export default createReducer(preloadedState, {
       .set('menuEntries', fromJS(entries))
       .set('menuStatus', status)
       .set('menuError', error),
-  [SET_MENU_STATUS]: (state, { status }) =>
-    state.set('menuStatus', status),
+  [SET_MENU_STATUS]: (state, { status }) => state.set('menuStatus', status),
   [SET_ENTRY_DATA]: (state, { entryId, status, data, error }) =>
     state
       .setIn(['entries', entryId, 'data'], fromJS(data))
       .setIn(['entries', entryId, 'status'], status)
       .setIn(['entries', entryId, 'error'], fromJS(error)),
   [SET_ENTRY_STATUS]: (state, { entryId, status }) =>
-    state
-      .setIn(['entries', entryId, 'status'], status),
+    state.setIn(['entries', entryId, 'status'], status),
 });

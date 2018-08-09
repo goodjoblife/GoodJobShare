@@ -1,6 +1,4 @@
-import {
-  transferKeyToSnakecase,
-} from './objectUtil';
+import { transferKeyToSnakecase } from './objectUtil';
 
 describe('transferKeyToSnakecase tests', () => {
   test('transferKeyToSnakecase', () => {

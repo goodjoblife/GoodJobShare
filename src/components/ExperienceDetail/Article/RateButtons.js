@@ -12,7 +12,7 @@ const RateButtons = ({ rate }) => (
       <Glike
         key={el}
         className={cn(rateButtonStyles.container, styles.autoCursor, {
-          [rateButtonStyles.active]: (el <= rate),
+          [rateButtonStyles.active]: el <= rate,
         })}
       />
     ))}

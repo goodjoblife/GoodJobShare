@@ -42,12 +42,13 @@ class Header extends React.Component {
       // FB instance changed
       const { getLoginStatus, FB } = this.props;
 
-      getLoginStatus(FB)
-        .catch(() => {});
+      getLoginStatus(FB).catch(() => {});
     }
 
-    if (prevProps.auth.get('status') !== this.props.auth.get('status') &&
-      this.props.auth.get('status') === authStatus.CONNECTED) {
+    if (
+      prevProps.auth.get('status') !== this.props.auth.get('status') &&
+      this.props.auth.get('status') === authStatus.CONNECTED
+    ) {
       const { getMe, FB } = this.props;
       this.props.fetchMyPermission();
       getMe(FB).catch(() => {});
@@ -63,7 +64,7 @@ class Header extends React.Component {
       category: GA_CATEGORY.HEADER,
       action: GA_ACTION.CLICK_SHARE_DATA,
     });
-  }
+  };
 
   toggleNav() {
     this.setState({
@@ -79,14 +80,12 @@ class Header extends React.Component {
 
   login() {
     const { login, FB } = this.props;
-    login(FB)
-      .catch(() => {});
+    login(FB).catch(() => {});
   }
 
   logout() {
     const { logout, FB } = this.props;
-    logout(FB)
-      .catch(() => {});
+    logout(FB).catch(() => {});
   }
 
   renderTop = () => {
@@ -94,7 +93,7 @@ class Header extends React.Component {
       return null;
     }
     return <Top />;
-  }
+  };
 
   render() {
     return (
@@ -113,34 +112,48 @@ class Header extends React.Component {
             </div>
             <ShareButton onClick={this.onClickShareData} isMobileButton />
             <nav
-              className={cn(styles.nav, { [styles.isNavOpen]: this.state.isNavOpen })}
+              className={cn(styles.nav, {
+                [styles.isNavOpen]: this.state.isNavOpen,
+              })}
             >
-              <SiteMenu isLogin={this.props.auth.get('status') === authStatus.CONNECTED} />
+              <SiteMenu
+                isLogin={this.props.auth.get('status') === authStatus.CONNECTED}
+              />
               <div className={styles.buttonsArea}>
                 <ShareButton onClick={this.onClickShareData} />
                 <div style={{ position: 'relative' }}>
-                  {
-                    this.props.auth.getIn(['user', 'name']) === null &&
+                  {this.props.auth.getIn(['user', 'name']) === null && (
                     <button className={styles.loginBtn} onClick={this.login}>
-                      <People />登入
+                      <People />
+                      登入
                     </button>
-                  }
-                  {
-                    this.props.auth.getIn(['user', 'name']) !== null &&
+                  )}
+                  {this.props.auth.getIn(['user', 'name']) !== null && (
                     <PopoverToggle
                       popoverClassName={styles.popover}
-                      popoverContent={(
+                      popoverContent={
                         <ul className={styles.popoverItem}>
-                          <li><Link to="/me">個人頁面</Link></li>
-                          <li><button onClick={() => { this.logout(); }}>登出</button></li>
+                          <li>
+                            <Link to="/me">個人頁面</Link>
+                          </li>
+                          <li>
+                            <button
+                              onClick={() => {
+                                this.logout();
+                              }}
+                            >
+                              登出
+                            </button>
+                          </li>
                         </ul>
-                      )}
+                      }
                     >
                       <div className={styles.loginBtn}>
-                        <PeopleFill />{this.props.auth.getIn(['user', 'name'])}
+                        <PeopleFill />
+                        {this.props.auth.getIn(['user', 'name'])}
                       </div>
                     </PopoverToggle>
-                  }
+                  )}
                 </div>
               </div>
             </nav>
@@ -184,7 +197,8 @@ const ShareButton = ({ isMobileButton, onClick }) => (
     })}
     onClick={onClick}
   >
-    立即分享<ArrowGo />
+    立即分享
+    <ArrowGo />
   </Link>
 );
 ShareButton.propTypes = {

@@ -9,7 +9,9 @@ const ShareExperience = ({ routes }) => (
   <Section Tag="main" pageTop paddingBottom>
     <Wrapper size="m">
       <Switch>
-        { routes.map((route, i) => (<RouteWithSubRoutes key={i} {...route} />)) }
+        {routes.map((route, i) => (
+          <RouteWithSubRoutes key={i} {...route} />
+        ))}
       </Switch>
     </Wrapper>
   </Section>

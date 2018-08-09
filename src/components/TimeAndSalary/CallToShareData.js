@@ -5,9 +5,7 @@ export default () => (
     <div className="dashed-line-box">
       <div className="not-login">
         哈囉！請先
-        <button className="btn-login">
-          登入
-        </button>
+        <button className="btn-login">登入</button>
         才能查看完整工時、薪資資訊喔
       </div>
       <div className="logined">

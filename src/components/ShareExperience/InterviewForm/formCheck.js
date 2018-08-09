@@ -8,103 +8,58 @@ import {
   gtLength,
 } from 'utils/dataCheckUtil';
 
-import {
-  ifThenLog,
-} from 'utils/debugUtil';
+import { ifThenLog } from 'utils/debugUtil';
 
-export const companyQuery = R.allPass([
-  notStrEmpty,
-]);
+export const companyQuery = R.allPass([notStrEmpty]);
 
-export const region = R.allPass([
-  notStrEmpty,
-]);
+export const region = R.allPass([notStrEmpty]);
 
-export const jobTitle = R.allPass([
-  notStrEmpty,
-]);
+export const jobTitle = R.allPass([notStrEmpty]);
 
 export const experienceInYear = R.anyPass([
-  R.allPass([
-    n => n >= 0,
-    n => n <= 50,
-  ]),
+  R.allPass([n => n >= 0, n => n <= 50]),
   n => n === null || n === undefined,
 ]);
 
-export const interviewTimeYear = R.allPass([
-  n => n > 0,
-]);
+export const interviewTimeYear = R.allPass([n => n > 0]);
 
-export const interviewTimeMonth = R.allPass([
-  n => n > 0,
-  n => n < 13,
-]);
+export const interviewTimeMonth = R.allPass([n => n > 0, n => n < 13]);
 
 export const interviewResult = t =>
-  notNullOrUndefined(t) && R.allPass([
-    gtLength(0),
-    lteLength(10),
-  ])(t);
+  notNullOrUndefined(t) && R.allPass([gtLength(0), lteLength(10)])(t);
 
 export const salaryAmount = R.anyPass([
-  R.allPass([
-    n => n >= 0,
-  ]),
+  R.allPass([n => n >= 0]),
   n => n === undefined,
 ]);
 
-export const overallRating = R.allPass([
-  n => n >= 1,
-  n => n <= 5,
-]);
+export const overallRating = R.allPass([n => n >= 1, n => n <= 5]);
 
-export const title = R.allPass([
-  gtLength(0),
-  lteLength(25),
-]);
+export const title = R.allPass([gtLength(0), lteLength(25)]);
 
 const sectionSubtitle = R.compose(
-  R.allPass([
-    lteLength(25),
-    gtLength(0),
-  ]),
+  R.allPass([lteLength(25), gtLength(0)]),
   R.prop('subtitle')
 );
 
 const sectionContent = R.compose(
-  R.allPass([
-    lteLength(5000),
-    gtLength(0),
-  ]),
+  R.allPass([lteLength(5000), gtLength(0)]),
   R.prop('content')
 );
 
-export const singleSection = R.allPass([
-  sectionSubtitle,
-  sectionContent,
-]);
+export const singleSection = R.allPass([sectionSubtitle, sectionContent]);
 
-export const sections = R.allPass([
-  R.all(singleSection),
-  gtLength(0),
-]);
+export const sections = R.allPass([R.all(singleSection), gtLength(0)]);
 
 const interviewQaQuestion = R.compose(
-  R.allPass([
-    lteLength(250),
-    gtLength(0),
-  ]),
+  R.allPass([lteLength(250), gtLength(0)]),
   R.prop('question')
 );
 
 const interviewQaAnswer = R.compose(
   R.anyPass([
-    R.allPass([
-      lteLength(5000),
-      gteLength(0),
-    ]),
-    n => (n === undefined) || (n === null),
+    R.allPass([lteLength(5000), gteLength(0)]),
+    n => n === undefined || n === null,
   ]),
   R.prop('answer')
 );
@@ -122,10 +77,7 @@ export const interviewQas = R.allPass([
 export const interviewSensitiveQuestions = R.anyPass([
   R.all(
     R.compose(
-      R.allPass([
-        lteLength(20),
-        gtLength(0),
-      ]),
+      R.allPass([lteLength(20), gtLength(0)]),
       R.defaultTo('')
     )
   ),

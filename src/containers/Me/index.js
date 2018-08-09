@@ -11,8 +11,10 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ login, getLoginStatus, getMe, ...MyActions }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withFB(Me));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withFB(Me));

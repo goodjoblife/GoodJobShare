@@ -32,7 +32,7 @@ class LandingPage extends Component {
     popularExperiences: ImmutablePropTypes.list.isRequired,
     laborRightsCount: PropTypes.number.isRequired,
     timeAndSalaryCount: PropTypes.number.isRequired,
-  }
+  };
 
   componentDidMount() {
     if (this.props.popularExperiences.size === 0) {
@@ -43,43 +43,58 @@ class LandingPage extends Component {
   }
 
   render() {
-    const popularExperiences = this.props.popularExperiences.take(3).toJS() || [];
-    const items = this.props.laborRightsMenuEntries.toJS().map(({ id, title, coverUrl }) => ({
-      link: `/labor-rights/${id}`,
-      coverUrl,
-      title,
-    }));
+    const popularExperiences =
+      this.props.popularExperiences.take(3).toJS() || [];
+    const items = this.props.laborRightsMenuEntries
+      .toJS()
+      .map(({ id, title, coverUrl }) => ({
+        link: `/labor-rights/${id}`,
+        coverUrl,
+        title,
+      }));
     const { timeAndSalaryCount, laborRightsCount } = this.props;
     return (
       <main>
         <Helmet {...HELMET_DATA.LANDING_PAGE} />
         <Banner />
-        <Dashboard timeAndSalaryCount={timeAndSalaryCount} laborRightsCount={laborRightsCount} />
+        <Dashboard
+          timeAndSalaryCount={timeAndSalaryCount}
+          laborRightsCount={laborRightsCount}
+        />
         <ShareExpSection heading="現在就留下你的資料" />
         <Section padding bg="white">
           <Wrapper size="l">
-            <Heading size="l" center marginBottom>勞動知識小教室</Heading>
-            <Columns
-              Item={LaborRightsEntry}
-              items={items}
-            />
+            <Heading size="l" center marginBottom>
+              勞動知識小教室
+            </Heading>
+            <Columns Item={LaborRightsEntry} items={items} />
           </Wrapper>
           <Section center Tag="div">
-            <Link className={cn('buttonCircleL', 'buttonBlack')} to="/labor-rights" title="勞動知識小教室">
+            <Link
+              className={cn('buttonCircleL', 'buttonBlack')}
+              to="/labor-rights"
+              title="勞動知識小教室"
+            >
               看更多
             </Link>
           </Section>
         </Section>
         <Section padding>
           <Wrapper size="l">
-            <Heading size="l" center marginBottom>熱門分享</Heading>
+            <Heading size="l" center marginBottom>
+              熱門分享
+            </Heading>
             <Columns
               Item={ExperienceBlock}
               items={popularExperiences.map(data => ({ data, size: 'm' }))}
               gutter="s"
             />
             <Section center Tag="div">
-              <Link className={cn('buttonCircleL', 'buttonBlack')} to="/experiences/search" title="面試工作經驗">
+              <Link
+                className={cn('buttonCircleL', 'buttonBlack')}
+                to="/experiences/search"
+                title="面試工作經驗"
+              >
                 看更多
               </Link>
             </Section>

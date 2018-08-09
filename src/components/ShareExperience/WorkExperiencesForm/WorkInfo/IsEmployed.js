@@ -26,49 +26,39 @@ const IsEmployed = ({
 }) => (
   <div className={styles.wrapper}>
     <div>
-      <InputTitle
-        text="你現在在職嗎？"
-        must
-      />
+      <InputTitle text="你現在在職嗎？" must />
       <div className={styles.radios}>
-        {
-          isEmployedOptions.map(option => (
-            <RadioDefault
-              idPrefix={idPrefix4Radio}
-              key={option.value}
-              label={option.label}
-              value={option.value}
-              onChange={onIsCurrentlyEmployed}
-              checked={isCurrentlyEmployed === option.value}
-            />
-          ))
-        }
+        {isEmployedOptions.map(option => (
+          <RadioDefault
+            idPrefix={idPrefix4Radio}
+            key={option.value}
+            label={option.label}
+            value={option.value}
+            onChange={onIsCurrentlyEmployed}
+            checked={isCurrentlyEmployed === option.value}
+          />
+        ))}
       </div>
     </div>
-    {
-      isCurrentlyEmployed === 'no' ?
-        <div>
-          <InputTitle
-            text="離職時間"
-            must
+    {isCurrentlyEmployed === 'no' ? (
+      <div>
+        <InputTitle text="離職時間" must />
+        <div className={styles.selects}>
+          <Select
+            options={jobEndingTimeYearOptions}
+            value={jobEndingTimeYear}
+            onChange={e => onJobEndingTimeYear(Number(e.target.value))}
           />
-          <div className={styles.selects}>
-            <Select
-              options={jobEndingTimeYearOptions}
-              value={jobEndingTimeYear}
-              onChange={e => onJobEndingTimeYear(Number(e.target.value))}
-            />
-            <Unit marginRight>年</Unit>
-            <Select
-              options={jobEndingTimeMonthOptions}
-              value={jobEndingTimeMonth}
-              onChange={e => onJobEndingTimeMonth(Number(e.target.value))}
-            />
-            <Unit>月</Unit>
-          </div>
+          <Unit marginRight>年</Unit>
+          <Select
+            options={jobEndingTimeMonthOptions}
+            value={jobEndingTimeMonth}
+            onChange={e => onJobEndingTimeMonth(Number(e.target.value))}
+          />
+          <Unit>月</Unit>
         </div>
-        : null
-    }
+      </div>
+    ) : null}
   </div>
 );
 

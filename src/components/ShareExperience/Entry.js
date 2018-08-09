@@ -12,7 +12,9 @@ const Entry = ({ history }) => (
   <div>
     <Helmet {...HELMET_DATA.SHARE} />
     <Wrapper size="l" className={styles.wrapper}>
-      <button onClick={() => history.goBack()} className={styles.closeBtn}><i.X /></button>
+      <button onClick={() => history.goBack()} className={styles.closeBtn}>
+        <i.X />
+      </button>
     </Wrapper>
     <ShareExpSection />
   </div>

@@ -11,20 +11,13 @@ import styles from './ReportForm.module.css';
 
 import authStatus from '../../../constants/authStatus';
 
-import {
-  handleToApiParams,
-} from './helper';
+import { handleToApiParams } from './helper';
 
 import { postExperiencesReports } from '../../../apis/reportsExperiencesApi';
 
-import {
-  validReasomForm,
-  validReason,
-  isReasonLimit,
-} from './formCheck';
+import { validReasomForm, validReason, isReasonLimit } from './formCheck';
 
-const isLogin = auth =>
-  auth.get('status') === authStatus.CONNECTED;
+const isLogin = auth => auth.get('status') === authStatus.CONNECTED;
 
 export const reasonCategoryOptions = [
   {
@@ -57,12 +50,7 @@ class ReportForm extends PureComponent {
   }
 
   onSubmit = () => {
-    const {
-      onApiError,
-      onSuccess,
-      close,
-      id,
-    } = this.props;
+    const { onApiError, onSuccess, close, id } = this.props;
     this.setState({
       submitted: true,
     });
@@ -72,52 +60,36 @@ class ReportForm extends PureComponent {
       return postExperiencesReports(id, handleToApiParams(this.state))
         .then(close)
         .then(onSuccess)
-        .catch(
-          e =>
-            onApiError({
-              message: e.message,
-            })
+        .catch(e =>
+          onApiError({
+            message: e.message,
+          })
         );
     }
 
     return null;
-  }
+  };
 
   handleReasonCategory = reasonCategory =>
     this.setState({
       reasonCategory,
-    })
+    });
 
   handleReason = reason =>
     this.setState({
       reason,
-    })
+    });
 
-  login = () =>
-    this.props.login(this.props.FB)
-      .then(this.onSubmit)
-
+  login = () => this.props.login(this.props.FB).then(this.onSubmit);
 
   render() {
-    const {
-      reasonCategory,
-      reason,
-      submitted,
-    } = this.state;
+    const { reasonCategory, reason, submitted } = this.state;
 
-    const {
-      close,
-      auth,
-    } = this.props;
+    const { close, auth } = this.props;
 
     return (
       <section>
-        <Heading
-          Tag="h2"
-          size="l"
-          marginBottomS
-          center
-        >
+        <Heading Tag="h2" size="l" marginBottomS center>
           檢舉此篇文章
         </Heading>
         <ReasonCategory
@@ -128,7 +100,9 @@ class ReportForm extends PureComponent {
         <Reason
           reason={reason}
           onChange={e => this.handleReason(e.target.value)}
-          invalid={submitted && !validReason(isReasonLimit(reasonCategory))(reason)}
+          invalid={
+            submitted && !validReason(isReasonLimit(reasonCategory))(reason)
+          }
         />
         <P
           size="s"
@@ -139,32 +113,26 @@ class ReportForm extends PureComponent {
           請盡量詳細說明為何這則內容不妥或不實，以供我們評估，您也可以在被檢舉的內容下方留言，
           讓其他使用者知道您的不同意見。
         </P>
-        <div className={isLogin(auth) ? styles.buttons : styles.notLoginButtons}>
-          {
-            isLogin(auth) ?
-              <Button
-                circleSize="md"
-                btnStyle="black"
-                style={{
-                  marginRight: '20px',
-                }}
-                onClick={this.onSubmit}
-              >
-                送出
-              </Button> :
-              <Button
-                circleSize="md"
-                btnStyle="black"
-                onClick={this.login}
-              >
-                <pre>{'以 f 認證，並送出檢舉'}</pre>
-              </Button>
-          }
-          <Button
-            circleSize="md"
-            btnStyle="grayLine"
-            onClick={close}
-          >
+        <div
+          className={isLogin(auth) ? styles.buttons : styles.notLoginButtons}
+        >
+          {isLogin(auth) ? (
+            <Button
+              circleSize="md"
+              btnStyle="black"
+              style={{
+                marginRight: '20px',
+              }}
+              onClick={this.onSubmit}
+            >
+              送出
+            </Button>
+          ) : (
+            <Button circleSize="md" btnStyle="black" onClick={this.login}>
+              <pre>{'以 f 認證，並送出檢舉'}</pre>
+            </Button>
+          )}
+          <Button circleSize="md" btnStyle="grayLine" onClick={close}>
             取消
           </Button>
         </div>

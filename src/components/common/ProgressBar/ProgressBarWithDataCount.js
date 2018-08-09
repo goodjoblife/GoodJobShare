@@ -16,7 +16,13 @@ class ProgressBarWithDataCount extends Component {
   }
 
   render() {
-    return (<ProgressBar dataNum={this.props.dataNum} goalNum={goalNum} {...this.props} />);
+    return (
+      <ProgressBar
+        dataNum={this.props.dataNum}
+        goalNum={goalNum}
+        {...this.props}
+      />
+    );
   }
 }
 

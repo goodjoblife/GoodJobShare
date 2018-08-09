@@ -33,10 +33,15 @@ class SalaryInfo extends React.PureComponent {
     if (this.props.hint === null) {
       return null;
     } else if (this.props.showWarning) {
-      return (<div className={cn([styles.warning__wording, styles.salaryHint])}>{this.props.hint}，確定嗎？</div>);
+      return (
+        <div className={cn([styles.warning__wording, styles.salaryHint])}>
+          {this.props.hint}
+          ，確定嗎？
+        </div>
+      );
     }
     return <div className={cn(styles.salaryHint)}>{this.props.hint}</div>;
-  }
+  };
 
   render() {
     const {
@@ -69,7 +74,8 @@ class SalaryInfo extends React.PureComponent {
 
     const isSalaryTypeValid = salaryTypeValidator(salaryType);
     const isSalaryAmountValid = salaryAmountValidator(salaryAmount);
-    const isSalarySetWarning = submitted && (!isSalaryTypeValid || !isSalaryAmountValid);
+    const isSalarySetWarning =
+      submitted && (!isSalaryTypeValid || !isSalaryAmountValid);
 
     const isExperienceInYearValid = experienceInYearValidator(experienceInYear);
     const isExperienceInYearWarning = submitted && !isExperienceInYearValid;
@@ -85,7 +91,6 @@ class SalaryInfo extends React.PureComponent {
         </div>
         <div className={styles.formSection}>
           <div className={styles.formGroupTwo}>
-
             <div className={styles.formGroup}>
               <InputTitle text="薪資" must />
               <div
@@ -149,25 +154,27 @@ class SalaryInfo extends React.PureComponent {
                   }}
                 />
               </div>
-              {!isSalarySetWarning && isExperienceInYearWarning && (
-                <div>
-                  <p
-                    className={`pS ${styles.warning__wording}`}
-                    style={{ textAlign: 'left', margin: '10px 0 0 0' }}
-                  >
-                    需填寫當時業界工作經歷
-                  </p>
-                </div>
-              )}
+              {!isSalarySetWarning &&
+                isExperienceInYearWarning && (
+                  <div>
+                    <p
+                      className={`pS ${styles.warning__wording}`}
+                      style={{ textAlign: 'left', margin: '10px 0 0 0' }}
+                    >
+                      需填寫當時業界工作經歷
+                    </p>
+                  </div>
+                )}
             </div>
           </div>
 
           <div className={styles.formInfo}>
             <P size="s">
-              薪資請以包含平常的<strong>薪資、分紅、年終、績效獎金</strong>等實質上獲得的價值去計算。
+              薪資請以包含平常的
+              <strong>薪資、分紅、年終、績效獎金</strong>
+              等實質上獲得的價值去計算。
             </P>
           </div>
-
         </div>
       </section>
     );
@@ -177,14 +184,8 @@ class SalaryInfo extends React.PureComponent {
 SalaryInfo.propTypes = {
   handleState: PropTypes.func,
   salaryType: PropTypes.string,
-  salaryAmount: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  experienceInYear: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  salaryAmount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  experienceInYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   submitted: PropTypes.bool,
   changeValidationStatus: PropTypes.func,
   showWarning: PropTypes.bool,

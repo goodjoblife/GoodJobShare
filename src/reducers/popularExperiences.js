@@ -16,6 +16,5 @@ export default createReducer(preloadedState, {
       .set('data', fromJS(data))
       .set('status', status)
       .set('error', error),
-  [SET_STATUS]: (state, { status }) =>
-    state.set('status', status),
+  [SET_STATUS]: (state, { status }) => state.set('status', status),
 });

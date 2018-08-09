@@ -14,8 +14,14 @@ const backOrPush = (backable, history) => {
 };
 
 const BackToList = ({ backable, history }) => (
-  <button onClick={() => backOrPush(backable, history)} className={styles.backBtn}>
-    <i.ArrowGo /><P size="m" bold>返回列表</P>
+  <button
+    onClick={() => backOrPush(backable, history)}
+    className={styles.backBtn}
+  >
+    <i.ArrowGo />
+    <P size="m" bold>
+      返回列表
+    </P>
   </button>
 );
 

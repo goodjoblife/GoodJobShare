@@ -4,9 +4,7 @@ import cn from 'classnames';
 
 import { P } from 'common/base';
 
-import {
-  makeId,
-} from 'utils/stringUtil';
+import { makeId } from 'utils/stringUtil';
 
 import styles from './RadioDefault.module.css';
 
@@ -17,22 +15,12 @@ class RadioDefault extends React.PureComponent {
     this.id = makeId();
   }
   render() {
-    const {
-      idPrefix,
-      label,
-      value,
-      checked,
-      onChange,
-      name,
-    } = this.props;
+    const { idPrefix, label, value, checked, onChange, name } = this.props;
 
     const id = `${idPrefix || this.id}-${value}`;
 
     return (
-      <label
-        htmlFor={id}
-        className={styles.wrapper}
-      >
+      <label htmlFor={id} className={styles.wrapper}>
         <input
           id={id}
           type="radio"
@@ -49,9 +37,7 @@ class RadioDefault extends React.PureComponent {
             [styles.checked]: checked,
           })}
         />
-        <P className={styles.label}>
-          {label}
-        </P>
+        <P className={styles.label}>{label}</P>
       </label>
     );
   }

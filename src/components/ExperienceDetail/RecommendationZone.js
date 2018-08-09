@@ -11,12 +11,12 @@ import { getExperiencesRecommended } from '../../apis/experiencesApi';
 class RecommendationZone extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-  }
+  };
 
   state = {
     status: fetchingStatus.UNFETCHED,
     experiences: [],
-  }
+  };
 
   componentDidMount() {
     this.fetchRecommended({ id: this.props.id });
@@ -55,16 +55,17 @@ class RecommendationZone extends Component {
     return (
       <Section paddingTop>
         <Wrapper size="l">
-          <Heading size="sl" Tag="h4" marginBottomS>您可能還想看...</Heading>
-          { status === fetchingStatus.FETCHING && <Loader size="s" /> }
-          {
-            status === fetchingStatus.FETCHED &&
-              <Columns
-                Item={ExperienceBlock}
-                items={experiences.map(data => ({ data, size: 's' }))}
-                gutter="s"
-              />
-          }
+          <Heading size="sl" Tag="h4" marginBottomS>
+            您可能還想看...
+          </Heading>
+          {status === fetchingStatus.FETCHING && <Loader size="s" />}
+          {status === fetchingStatus.FETCHED && (
+            <Columns
+              Item={ExperienceBlock}
+              items={experiences.map(data => ({ data, size: 's' }))}
+              gutter="s"
+            />
+          )}
         </Wrapper>
       </Section>
     );

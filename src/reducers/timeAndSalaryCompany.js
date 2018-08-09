@@ -1,7 +1,10 @@
 import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 
-import { SET_COMPANY_DATA, SET_COMPANY_STATUS } from '../actions/timeAndSalaryCompany';
+import {
+  SET_COMPANY_DATA,
+  SET_COMPANY_STATUS,
+} from '../actions/timeAndSalaryCompany';
 import fetchingStatus from '../constants/status';
 
 const preloadedState = fromJS({
@@ -14,7 +17,10 @@ const preloadedState = fromJS({
 });
 
 export default createReducer(preloadedState, {
-  [SET_COMPANY_DATA]: (state, { groupSortBy, order, company, data, status, error }) =>
+  [SET_COMPANY_DATA]: (
+    state,
+    { groupSortBy, order, company, data, status, error }
+  ) =>
     state
       .set('data', fromJS(data))
       .set('status', status)
@@ -22,6 +28,5 @@ export default createReducer(preloadedState, {
       .set('groupSortBy', groupSortBy)
       .set('order', order)
       .set('company', company),
-  [SET_COMPANY_STATUS]: (state, { status }) =>
-    state.set('status', status),
+  [SET_COMPANY_STATUS]: (state, { status }) => state.set('status', status),
 });

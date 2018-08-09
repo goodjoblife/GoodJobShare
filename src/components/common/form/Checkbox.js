@@ -5,7 +5,15 @@ import cn from 'classnames';
 import styles from './Checkbox.module.css';
 
 const Checkbox = ({
-  id, name, label, value, checked, disabled, margin, onChange, style,
+  id,
+  name,
+  label,
+  value,
+  checked,
+  disabled,
+  margin,
+  onChange,
+  style,
 }) => (
   <div
     className={cn(styles.formGroup, { [styles.disabled]: disabled })}
@@ -33,10 +41,7 @@ Checkbox.defaultProps = {
 Checkbox.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
-  label: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.node,
-  ]).isRequired,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   value: PropTypes.string.isRequired,
   checked: PropTypes.bool.isRequired,
   disabled: PropTypes.bool,

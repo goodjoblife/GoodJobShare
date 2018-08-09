@@ -15,19 +15,16 @@ const InputTitle = ({ text, must }) => (
     >
       {text}
     </p>
-    {
-      must
-        ?
-          <p
-            style={{
-              display: 'inline-block',
-              color: variables['warning-red'],
-            }}
-          >
-            *
-          </p>
-        : null
-    }
+    {must ? (
+      <p
+        style={{
+          display: 'inline-block',
+          color: variables['warning-red'],
+        }}
+      >
+        *
+      </p>
+    ) : null}
   </div>
 );
 

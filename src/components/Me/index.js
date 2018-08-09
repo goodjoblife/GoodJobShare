@@ -21,7 +21,7 @@ class Me extends Component {
     setWorkingStatus: PropTypes.func.isRequired,
     setReplyStatus: PropTypes.func.isRequired,
     me: ImmutablePropTypes.map.isRequired,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -42,12 +42,13 @@ class Me extends Component {
       // FB instance changed
       const { getLoginStatus, FB } = this.props;
 
-      getLoginStatus(FB)
-        .catch(() => {});
+      getLoginStatus(FB).catch(() => {});
     }
 
-    if (prevProps.auth.get('status') !== this.props.auth.get('status') &&
-      this.props.auth.get('status') === authStatus.CONNECTED) {
+    if (
+      prevProps.auth.get('status') !== this.props.auth.get('status') &&
+      this.props.auth.get('status') === authStatus.CONNECTED
+    ) {
       const { getMe, FB } = this.props;
       getMe(FB).catch(() => {});
     }
@@ -55,9 +56,8 @@ class Me extends Component {
 
   login = () => {
     const { login, FB } = this.props;
-    login(FB)
-      .catch(() => {});
-  }
+    login(FB).catch(() => {});
+  };
 
   render() {
     const { me } = this.props;
@@ -69,27 +69,38 @@ class Me extends Component {
     return (
       <Section pageTop paddingBottom>
         <Wrapper size="m">
-          {
-            this.props.auth.getIn(['user', 'name']) === null &&
-            <div>
-              <Heading size="l" center>登入以查看個人頁面</Heading>
-              <div className={styles.loginBtnSection}>
-                <button className="buttonCircleM buttonBlackLine" onClick={this.login}>facebook 登入</button>
-              </div>
-            </div>
-          }
-          {
-            this.props.auth.getIn(['user', 'name']) !== null &&
+          {this.props.auth.getIn(['user', 'name']) === null && (
             <div>
               <Heading size="l" center>
-                {this.props.auth.getIn(['user', 'name'])}&nbsp;&nbsp;的個人頁面
+                登入以查看個人頁面
               </Heading>
-              <IconHeadingBlock heading="我分享的資料" Icon={Comment2} marginTop noPadding>
+              <div className={styles.loginBtnSection}>
+                <button
+                  className="buttonCircleM buttonBlackLine"
+                  onClick={this.login}
+                >
+                  facebook 登入
+                </button>
+              </div>
+            </div>
+          )}
+          {this.props.auth.getIn(['user', 'name']) !== null && (
+            <div>
+              <Heading size="l" center>
+                {this.props.auth.getIn(['user', 'name'])}
+                &nbsp;&nbsp;的個人頁面
+              </Heading>
+              <IconHeadingBlock
+                heading="我分享的資料"
+                Icon={Comment2}
+                marginTop
+                noPadding
+              >
                 <div>
-                  {
-                    data.myExperiencesStatus === status.FETCHING
-                    ? <Loader size="s" />
-                    : (experiences || []).map(o => (
+                  {data.myExperiencesStatus === status.FETCHING ? (
+                    <Loader size="s" />
+                  ) : (
+                    (experiences || []).map(o => (
                       <ShareBlockElement
                         key={o._id}
                         type={o.type === 'work' ? '工作' : '面試'}
@@ -101,11 +112,11 @@ class Me extends Component {
                         }}
                       />
                     ))
-                  }
-                  {
-                    data.myWorkingsStatus === status.FETCHING
-                    ? <Loader size="s" />
-                    : (workings || []).map(o => (
+                  )}
+                  {data.myWorkingsStatus === status.FETCHING ? (
+                    <Loader size="s" />
+                  ) : (
+                    (workings || []).map(o => (
                       <ShareBlockElement
                         key={o._id}
                         type="薪時"
@@ -118,11 +129,11 @@ class Me extends Component {
                         }}
                       />
                     ))
-                  }
-                  {
-                    data.myRepliesStatus === status.FETCHING
-                    ? <Loader size="s" />
-                    : (replies || []).map(o => (
+                  )}
+                  {data.myRepliesStatus === status.FETCHING ? (
+                    <Loader size="s" />
+                  ) : (
+                    (replies || []).map(o => (
                       <ShareBlockElement
                         key={o._id}
                         type="留言"
@@ -136,11 +147,11 @@ class Me extends Component {
                         options={{ replyId: o._id }}
                       />
                     ))
-                  }
+                  )}
                 </div>
               </IconHeadingBlock>
             </div>
-          }
+          )}
         </Wrapper>
       </Section>
     );
