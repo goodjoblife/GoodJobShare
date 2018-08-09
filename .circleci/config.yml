@@ -20,7 +20,7 @@ jobs:
                 command: npm test
             - run:
                 name: Build
-                command: npm run build
+                command: CI=false npm run build
     build_dev_docker:
         working_directory: ~/app
         docker:
@@ -29,8 +29,13 @@ jobs:
             - checkout
             - run:
                 name: Install Docker client & Docker Compose
-                command: ./.circleci/prepare-docker-compose.sh
+                command: |
+                    apk add --update docker py-pip
+                    pip install docker-compose
             - setup_remote_docker
+            - run:
+                name: Login docker registry
+                command: docker login registry.gitlab.com -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASS}
             - run:
                 name: Build Docker and Push
                 command: |
@@ -45,8 +50,13 @@ jobs:
             - checkout
             - run:
                 name: Install Docker client & Docker Compose
-                command: ./.circleci/prepare-docker-compose.sh
+                command: |
+                    apk add --update docker py-pip
+                    pip install docker-compose
             - setup_remote_docker
+            - run:
+                name: Login docker registry
+                command: docker login registry.gitlab.com -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASS}
             - run:
                 name: Build Docker and Push
                 command: |
@@ -61,8 +71,13 @@ jobs:
             - checkout
             - run:
                 name: Install Docker client & Docker Compose
-                command: ./.circleci/prepare-docker-compose.sh
+                command: |
+                    apk add --update docker py-pip
+                    pip install docker-compose
             - setup_remote_docker
+            - run:
+                name: Login docker registry
+                command: docker login registry.gitlab.com -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASS}
             - run:
                 name: Build Docker and Push
                 command: |
@@ -72,8 +87,9 @@ jobs:
     deploy-dev:
         working_directory: ~/app
         docker:
-            - image: buildpack-deps
+            - image: alpine
         steps:
+            - run: apk add --update curl
             - run:
                 name: Trigger Deploy
                 command: |
@@ -85,8 +101,9 @@ jobs:
     deploy-stage:
         working_directory: ~/app
         docker:
-            - image: buildpack-deps
+            - image: alpine
         steps:
+            - run: apk add --update curl
             - run:
                 name: Trigger Deploy
                 command: |

@@ -7,9 +7,10 @@ import R from 'ramda';
 import Select from 'common/form/Select';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
+import FanPageBlock from 'common/FanPageBlock';
 import WorkingHourBlock from '../common/WorkingHourBlock';
 import { queryCompany } from '../../../actions/timeAndSalaryCompany';
-import fetchingStatus from '../../../constants/status';
+import { isFetching, isFetched } from '../../../constants/status';
 
 import styles from '../views/view.module.css';
 
@@ -113,10 +114,11 @@ export default class TimeAndSalaryCompany extends Component {
             </div>
           </div>
         </div>
-        { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
-        { status === fetchingStatus.FETCHED && raw.length === 0 &&
+        { isFetching(status) && (<Loading size="s" />) }
+        { isFetched(status) && raw.length === 0 &&
           <P
-            size="l" bold
+            size="l"
+            bold
             className={styles.searchNoResult}
           >
               尚未有公司「{company}」的薪時資訊
@@ -131,6 +133,7 @@ export default class TimeAndSalaryCompany extends Component {
             hideContent={!canViewTimeAndSalary}
           />
         ))}
+        <FanPageBlock className={styles.fanPageBlock} />
       </section>
     );
   }

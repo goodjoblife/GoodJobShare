@@ -74,14 +74,23 @@ const setKeywords = keywords => ({
   keywords,
 });
 
-export const getNewSearchBy = searchBy => dispatch => {
-  const url = searchBy === 'company' ? '/company_keywords' : '/job_title_keywords';
-  return fetchUtil(url)('GET')
-    .then(result => {
-      dispatch(setKeywords(result.keywords));
-    })
-    .catch(e => {
+export const getNewSearchBy = searchBy =>
+  async dispatch => {
+    const keywordName = searchBy === 'company' ? 'company_keywords' : 'job_title_keywords';
+    const body = {
+      query: `{
+        ${keywordName}
+      }`,
+    };
+
+    try {
+      const result = await fetchUtil('/graphql')('POST', body);
+      if (!result.data) {
+        throw new Error(result.error);
+      }
+      const keywords = result.data[keywordName];
+      dispatch(setKeywords(keywords));
+    } catch (e) {
       dispatch(setKeywords([]));
-      throw e;
-    });
-};
+    }
+  };

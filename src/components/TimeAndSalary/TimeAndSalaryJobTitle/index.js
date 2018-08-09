@@ -7,6 +7,7 @@ import R from 'ramda';
 import Select from 'common/form/Select';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
+import FanPageBlock from 'common/FanPageBlock';
 import WorkingHourBlock from '../common/WorkingHourBlock';
 import { queryJobTitle } from '../../../actions/timeAndSalaryJobTitle';
 import fetchingStatus from '../../../constants/status';
@@ -116,7 +117,8 @@ export default class TimeAndSalaryJobTitle extends Component {
         { status === fetchingStatus.FETCHING && (<Loading size="s" />) }
         { status === fetchingStatus.FETCHED && raw.length === 0 &&
           <P
-            size="l" bold
+            size="l"
+            bold
             className={styles.searchNoResult}
           >
               尚未有職稱「{jobTitle}」的薪時資訊
@@ -131,6 +133,7 @@ export default class TimeAndSalaryJobTitle extends Component {
             hideContent={!canViewTimeAndSalary}
           />
         ))}
+        <FanPageBlock className={styles.fanPageBlock} />
       </section>
     );
   }

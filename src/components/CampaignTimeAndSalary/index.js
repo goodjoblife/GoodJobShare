@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 import { Switch } from 'react-router';
 
 import Wrapper from 'common/base/Wrapper';
+import FanPageBlock from 'common/FanPageBlock';
 import RouteWithSubRoutes from '../route';
 import timeAndSalaryStyles from '../TimeAndSalary/styles.module.css';
 import CallToShareData from '../TimeAndSalary/CallToShareData';
@@ -16,7 +17,7 @@ import styles from './CampaignTimeAndSalary.module.css';
 
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { SITE_NAME } from '../../constants/helmetData';
-import { queryCampaignInfoList } from '../../actions/campaignTimeAndSalaryBoard';
+import { queryCampaignInfoList } from '../../actions/campaignInfo';
 
 const pathnameMapping = {
   'work-time-dashboard': '工時排行榜（由高到低）',
@@ -39,17 +40,13 @@ export default class TimeAndSalary extends Component {
   }
 
   static propTypes = {
+    campaignName: PropTypes.string.isRequired,
     campaignEntries: ImmutablePropTypes.map.isRequired,
     queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
     routes: PropTypes.array,
     location: PropTypes.shape({
       pathname: PropTypes.string,
     }),
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        campaign_name: PropTypes.string,
-      }),
-    }).isRequired,
   }
 
   constructor(props) {
@@ -86,8 +83,12 @@ export default class TimeAndSalary extends Component {
   renderHelmet = () => {
     const path = this.props.location.pathname;
     const url = formatCanonicalPath(path);
-    const campaignName = this.props.match.params.campaign_name;
-    const campaignInfo = this.props.campaignEntries.get(campaignName).toJS();
+    const { campaignName, campaignEntries } = this.props;
+    if (!campaignEntries.has(campaignName)) {
+      // We will render a 301 / 404
+      return null;
+    }
+    const campaignInfo = campaignEntries.get(campaignName).toJS();
     const { title: campaignTitle, ogImgUrl } = campaignInfo;
 
     // default title and description
@@ -122,7 +123,8 @@ export default class TimeAndSalary extends Component {
 
   render() {
     const { routes } = this.props;
-    const campaigns = campaignListFromEntries(this.props.campaignEntries);
+    const { campaignEntries } = this.props;
+    const campaigns = campaignListFromEntries(campaignEntries);
 
     return (
       <div className={timeAndSalaryStyles.container}>
@@ -148,6 +150,7 @@ export default class TimeAndSalary extends Component {
             { routes.map((route, i) => (<RouteWithSubRoutes key={i} {...route} />)) }
           </Switch>
         </Wrapper>
+        <FanPageBlock className={styles.fanPageBlock} />
       </div>
     );
   }

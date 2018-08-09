@@ -3,6 +3,7 @@ import { push } from 'react-router-redux';
 
 import { fetchTimeAndSalary, fetchTimeAndSalaryExtreme } from '../apis/timeAndSalaryApi';
 import fetchingStatus from '../constants/status';
+import { DATA_NUM_PER_PAGE } from '../constants/timeAndSalarSearch';
 
 export const SET_BOARD_DATA = '@@timeAndSalary/SET_BOARD_DATA';
 export const SET_BOARD_STATUS = '@@timeAndSalary/SET_BOARD_STATUS';
@@ -11,23 +12,29 @@ export const SET_BOARD_EXTREME_STATUS = '@@timeAndSalary/SET_BOARD_EXTREME_STATU
 
 const sortBySelector = state => state.timeAndSalaryBoard.get('sortBy');
 const orderSelector = state => state.timeAndSalaryBoard.get('order');
-const dataSelector = state => state.timeAndSalaryBoard.get('data');
+const pageSelector = state => state.timeAndSalaryBoard.get('currentPage');
 const statusSelector = state => state.timeAndSalaryBoard.get('status');
 const extremeStatusSelector = state => state.timeAndSalaryBoard.get('extremeStatus');
 
-const resetBoard = ({ sortBy, order }) => ({
+const resetBoard = ({ sortBy, order, page }) => ({
   type: SET_BOARD_DATA,
   sortBy,
   order,
   status: fetchingStatus.UNFETCHED,
   data: [],
+  total: 0,
+  currentPage: page,
   error: null,
 });
 
-const setBoardData = ({ sortBy, order }, { status, data, error = null }) =>
+const setBoardData = ({ sortBy, order }, { status, data, total = 0, currentPage = 0, error = null }) =>
   (dispatch, getState) => {
     // make sure the store is consistent
-    if (sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
+    if (
+      sortBy !== sortBySelector(getState()) ||
+      order !== orderSelector(getState()) ||
+      currentPage !== pageSelector(getState())
+    ) {
       return;
     }
     dispatch({
@@ -36,14 +43,20 @@ const setBoardData = ({ sortBy, order }, { status, data, error = null }) =>
       order,
       status,
       data,
+      total,
+      currentPage,
       error,
     });
   };
 
-export const queryTimeAndSalary = ({ sortBy, order }) =>
+export const queryTimeAndSalary = ({ sortBy, order, page }) =>
   (dispatch, getState) => {
-    if (sortBy !== sortBySelector(getState()) || order !== orderSelector(getState())) {
-      dispatch(resetBoard({ sortBy, order }));
+    if (
+      sortBy !== sortBySelector(getState()) ||
+      order !== orderSelector(getState()) ||
+      page !== pageSelector(getState())
+    ) {
+      dispatch(resetBoard({ sortBy, order, page }));
     }
 
     if (statusSelector(getState()) === fetchingStatus.FETCHING) {
@@ -58,8 +71,8 @@ export const queryTimeAndSalary = ({ sortBy, order }) =>
     const opt = {
       sort_by: sortBy,
       order,
-      page: Math.ceil(dataSelector(getState()).size / 25),
-      limit: 25,
+      page: page - 1,
+      limit: DATA_NUM_PER_PAGE,
       skip: (sortBy !== 'created_at').toString(),
     };
 
@@ -80,9 +93,12 @@ export const queryTimeAndSalary = ({ sortBy, order }) =>
             takeFirstFromArrayCompanyName,
           );
 
-        const currentData = dataSelector(getState()).toJS();
-        const nextData = currentData.concat(data);
-        dispatch(setBoardData({ sortBy, order }, { status: fetchingStatus.FETCHED, data: nextData }));
+        dispatch(setBoardData({ sortBy, order }, {
+          status: fetchingStatus.FETCHED,
+          data,
+          total: rawData.total,
+          currentPage: page,
+        }));
       })
       .catch(error => {
         dispatch(setBoardData({ sortBy, order }, { status: fetchingStatus.ERROR, data: [], error }));

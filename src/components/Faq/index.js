@@ -30,7 +30,7 @@ const Faq = () => (
           <li>
             <div className={styles.q}>我填錯了，想要刪除、修改資料怎麼辦？</div>
             <div className={styles.a}>
-              請填寫<a href="https://docs.google.com/forms/d/e/1FAIpQLScM412J7mMsW25nCxfL7UY92qv5_12zHJf_tcIO2XMrihEaIg/viewform?c=0&w=1">本表單</a>，填寫完畢後當週的週日，工程師會統一處理，感謝您的耐心等候。
+              請點選網頁最右上方您的名字，將出現<strong>「個人頁面」</strong>的選項，進入個人頁面後可以隱藏資料。資料隱藏後，將不會於任何地方被查詢到。您可以再留一筆資訊，以作為修正後之資訊。
             </div>
           </li>
         </ol>

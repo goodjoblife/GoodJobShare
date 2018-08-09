@@ -46,7 +46,7 @@ const Region = ({ region, inputTitle, onChange, validator, submitted }) => {
                 className={`pS ${styles.warning__wording}`}
               >
                 需填寫面試地區
-            </p>
+              </p>
             </div>
             : null
         }

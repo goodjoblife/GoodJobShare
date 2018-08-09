@@ -10,6 +10,7 @@ import ReactPixel from 'react-facebook-pixel';
 
 import Loader from 'common/Loader';
 import { Section, Wrapper, Heading, P } from 'common/base';
+import FanPageBlock from 'common/FanPageBlock';
 
 import styles from './ExperienceSearch.module.css';
 import Searchbar from './Searchbar';
@@ -27,7 +28,7 @@ import status from '../../constants/status';
 import Filter from './Filter';
 import { Banner1, Banner2 } from './Banners';
 
-import Pagination from './Pagination';
+import Pagination from '../common/Pagination';
 
 import getScale from '../../utils/numberUtils';
 
@@ -470,7 +471,8 @@ class ExperienceSearch extends Component {
 
               {(data.searchQuery && data.experienceCount === 0 && loadingStatus !== status.FETCHING) &&
                 <P
-                  size="l" bold
+                  size="l"
+                  bold
                   className={styles.searchNoResult}
                 >
                     尚未有「{data.searchQuery}」的經驗分享
@@ -490,6 +492,9 @@ class ExperienceSearch extends Component {
               />
             </section>
           </div>
+        </Wrapper>
+        <Wrapper>
+          <FanPageBlock className={styles.fanPageBlock} />
         </Wrapper>
       </Section>
     );

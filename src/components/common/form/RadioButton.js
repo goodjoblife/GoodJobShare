@@ -9,9 +9,12 @@ const RadioButton = ({
 }) => (
   <div className={styles.radioButtonItem}>
     <input
-      type="radio" id={id || `radio-${value}`}
-      name={name} value={value}
-      checked={checked} onChange={onChange}
+      type="radio"
+      id={id || `radio-${value}`}
+      name={name}
+      value={value}
+      checked={checked}
+      onChange={onChange}
     />
     <label
       className={styles.radioSquare}

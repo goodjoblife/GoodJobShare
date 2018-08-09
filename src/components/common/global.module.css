@@ -159,6 +159,33 @@
     }
   }
 
+  .buttonSubmit {
+    font-size: .95em;
+    letter-spacing: 1px;
+    background-color: #000;
+    border: none;
+    color: white;
+    padding: 15px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color .3s;
+    @media (min-width: 1025px) {
+      &:hover {
+        background-color: main-yellow;
+      }
+      &[disabled]:hover {
+        background-color: main-gray;
+        cursor: not-allowed;
+      }
+    }
+    &[disabled] {
+      background-color: main-gray;
+      cursor: not-allowed;
+    }
+  }
+
   .buttonFirstPage, .buttonPage {
     height: 42px;
     padding-left: 12px;

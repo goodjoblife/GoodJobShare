@@ -7,13 +7,22 @@ import { fetchMyPermission } from '../../actions/me';
 import {
   canViewTimeAndSalarySelector,
 } from '../../selectors/meSelector';
+import {
+  campaignNameSelector,
+  campaignEntriesSelector,
+  campaignEntriesStatusSelector,
+  campaignEntriesErrorSelector,
+} from '../../selectors/campaignSelector';
 
 
-const mapStateToProps = state => ({
-  campaignEntries: state.campaignInfo.get('entries'),
-  campaignEntriesStatus: state.campaignInfo.get('entriesStatus'),
-  campaignEntriesError: state.campaignInfo.get('entriesError'),
+const mapStateToProps = (state, { match }) => ({
+  campaignName: campaignNameSelector(match),
+  campaignEntries: campaignEntriesSelector(state),
+  campaignEntriesStatus: campaignEntriesStatusSelector(state),
+  campaignEntriesError: campaignEntriesErrorSelector(state),
   data: state.campaignTimeAndSalaryBoard.get('data'),
+  totalCount: state.campaignTimeAndSalaryBoard.get('total'),
+  currentPage: state.campaignTimeAndSalaryBoard.get('currentPage'),
   status: state.campaignTimeAndSalaryBoard.get('status'),
   canViewTimeAndSalary: canViewTimeAndSalarySelector(state),
 });

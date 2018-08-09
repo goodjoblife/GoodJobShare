@@ -1,14 +1,12 @@
 #!/bin/sh
 
-REGISTRY="059402281999.dkr.ecr.ap-northeast-1.amazonaws.com"
+REGISTRY="registry.gitlab.com/goodjoblife/i/goodjobshare"
 
 # Build Docker Image
 docker-compose -f .circleci/docker-compose-stage.yml build
-docker tag "${REGISTRY}/goodjob/goodjobshare:stage" "${REGISTRY}/goodjob/goodjobshare:${CIRCLE_SHA1}"
-
-# Login
-./.circleci/prepare-docker-login.sh
+docker tag "goodjobshare:stage" "${REGISTRY}:stage"
+docker tag "goodjobshare:stage" "${REGISTRY}:${CIRCLE_SHA1}"
 
 # Push
-docker-compose -f .circleci/docker-compose-stage.yml push
-docker push "${REGISTRY}/goodjob/goodjobshare:${CIRCLE_SHA1}"
+docker push "${REGISTRY}:stage"
+docker push "${REGISTRY}:${CIRCLE_SHA1}"

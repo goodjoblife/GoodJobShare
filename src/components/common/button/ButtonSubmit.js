@@ -89,7 +89,7 @@ class ButtonSubmit extends React.PureComponent {
                   className={cn('pMbold', styles.whyFB)}
                 >
                   為什麼需要 Facebook 帳戶驗證？
-              </p>
+                </p>
               </div>
             </div>
         }

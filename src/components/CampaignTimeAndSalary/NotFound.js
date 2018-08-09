@@ -1,17 +1,36 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import CommonNotFound from 'common/NotFound';
+import Redirect from 'common/routing/Redirect';
+import { queryCampaignInfoList } from '../../actions/campaignInfo';
+import { isFetched } from '../../constants/status';
 
-const NotFound = ({ staticContext, match: { params: { campaign_name } } }) => {
-  if (staticContext) {
-    staticContext.status = 301; // eslint-disable-line no-param-reassign
+class NotFound extends Component {
+  static fetchData({ store: { dispatch } }) {
+    return dispatch(queryCampaignInfoList());
   }
-  return (<Redirect to={'/time-and-salary/campaigns/:campaign_name/latest'.replace(':campaign_name', campaign_name)} />);
-};
+
+  componentDidMount() {
+    this.props.queryCampaignInfoList();
+  }
+
+  render() {
+    const { campaignName, campaignEntries, campaignEntriesStatus } = this.props;
+
+    if (isFetched(campaignEntriesStatus) && !campaignEntries.has(campaignName)) {
+      return <CommonNotFound />;
+    }
+
+    return (<Redirect to={'/time-and-salary/campaigns/:campaign_name/latest'.replace(':campaign_name', campaignName)} />);
+  }
+}
 
 NotFound.propTypes = {
-  staticContext: PropTypes.object,
-  match: PropTypes.object.isRequired,
+  campaignName: PropTypes.string.isRequired,
+  campaignEntries: ImmutablePropTypes.map.isRequired,
+  campaignEntriesStatus: PropTypes.string.isRequired,
+  queryCampaignInfoList: PropTypes.func.isRequired,
 };
 
 export default NotFound;

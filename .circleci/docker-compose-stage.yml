@@ -1,14 +1,12 @@
 version: "2"
 services:
   node:
-    image: 059402281999.dkr.ecr.ap-northeast-1.amazonaws.com/goodjob/goodjobshare:stage
+    image: goodjobshare:stage
     build:
       context: ..
       dockerfile: docker/Dockerfile
       args:
-        - API_HOST=https://api.goodjob.life
-        - CONTENTFUL_API_HOST=https://content-stage.goodjob.life
-        - FACEBOOK_APP_ID=1750216878594984
-        - GA_ID=UA-79990667-2
-    ports:
-      - 39000:3001
+        - RAZZLE_API_HOST=https://api.goodjob.life
+        - RAZZLE_CONTENTFUL_API_HOST=https://content-stage.goodjob.life
+        - RAZZLE_FACEBOOK_APP_ID=1750216878594984
+        - RAZZLE_GA_ID=UA-79990667-2

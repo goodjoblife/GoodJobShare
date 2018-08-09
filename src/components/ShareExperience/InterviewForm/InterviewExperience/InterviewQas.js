@@ -6,7 +6,7 @@ import InterviewQa from './InterviewQa';
 const InterviewQas = ({ interviewQas, editQa, removeQa }) => (
   <div>
     {
-      interviewQas.map(qa =>
+      interviewQas.map(qa => (
         <div
           key={qa.id}
           style={{
@@ -20,7 +20,7 @@ const InterviewQas = ({ interviewQas, editQa, removeQa }) => (
             removeQa={() => removeQa(qa.id)}
           />
         </div>
-      )
+      ))
     }
   </div>
 );

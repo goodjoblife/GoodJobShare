@@ -7,6 +7,7 @@ import Helmet from 'react-helmet';
 import { Section, Wrapper, Heading } from 'common/base';
 import ShareExpSection from 'common/ShareExpSection';
 import Columns from 'common/Columns';
+import FanPageBlock from 'common/FanPageBlock';
 import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
 import { queryPopularExperiences } from '../../actions/popularExperiences';
 import { queryMenu } from '../../actions/laborRights';
@@ -83,6 +84,9 @@ class LandingPage extends Component {
               </Link>
             </Section>
           </Wrapper>
+        </Section>
+        <Section padding bg="white">
+          <FanPageBlock />
         </Section>
       </main>
     );

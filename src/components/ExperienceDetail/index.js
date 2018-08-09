@@ -9,6 +9,7 @@ import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
+import FanPageBlock from 'common/FanPageBlock';
 
 import Article from './Article';
 import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
@@ -30,6 +31,8 @@ import { SITE_NAME } from '../../constants/helmetData';
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
 import authStatus from '../../constants/authStatus';
+
+import styles from './ExperienceDetail.module.css';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -262,10 +265,10 @@ class ExperienceDetail extends Component {
     const replies = this.props.replies.toJS();
     const repliesStatus = this.props.repliesStatus;
 
-    if (experienceError && experienceError.error) {
-      switch (experienceError.error.status) {
+    if (experienceError) {
+      switch (experienceError.statusCode) {
         case 403:
-          return (<NotFound heading="本篇文章已經被原作者隱藏，目前無法查看" />);
+          return (<NotFound heading="本篇文章已經被原作者隱藏，目前無法查看" status={403} />);
         case 404:
           return (<NotFound />);
         default:
@@ -295,10 +298,10 @@ class ExperienceDetail extends Component {
               openReportDetail={() => this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)}
               id={id}
             />
-
             <BackToList
               backable={backable}
             />
+            <FanPageBlock className={styles.fanPageBlock} />
           </Wrapper>
         </Section>
 

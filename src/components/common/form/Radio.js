@@ -14,8 +14,11 @@ const Radio = ({
     }}
   >
     <input
-      type="radio" id={id || `radio-${value}`}
-      name={name} value={value} checked={checked}
+      type="radio"
+      id={id || `radio-${value}`}
+      name={name}
+      value={value}
+      checked={checked}
       onChange={onChange}
     />
     <label

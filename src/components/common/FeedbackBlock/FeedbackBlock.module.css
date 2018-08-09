@@ -1,0 +1,40 @@
+@value border-gray from "common/variables.module.css";
+
+.doneBlock {
+  display: flex;
+  justify-content: center;
+}
+
+.feedbackBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btnGroup {
+  width: 100%;
+  justify-content: center;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+}
+
+.feedback {
+  width: 100%;
+  max-width: 500px;
+  height: 60px;
+  padding: 20px;
+  margin-top: 25px;
+  border: 1px solid border-gray;
+
+  @media (max-width: 550px) {
+    padding: 10px;
+  }
+}
+
+.submitBtn {
+  width: 200px;
+  margin-top: 15px;
+}

@@ -1,7 +1,4 @@
-/* global webpackIsomorphicTools */
 import Express from 'express';
-import favicon from 'serve-favicon';
-import path from 'path';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import { matchPath } from 'react-router-dom';
@@ -10,9 +7,10 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import configureStore from './store/configureStore';
 import Html from './helpers/Html';
-import App from './components/Layout';
+import App from './containers/App';
 import rootRoutes from './routes';
 
+const assets = require(process.env.RAZZLE_ASSETS_MANIFEST); // eslint-disable-line import/no-dynamic-require
 
 const matchRoutes = (pathname, routes) => {
   // eslint-disable-next-line no-restricted-syntax
@@ -28,22 +26,14 @@ const matchRoutes = (pathname, routes) => {
   return null;
 };
 
+const server = Express();
+server
+  .disable('x-powered-by')
+  .use(Express.static(process.env.RAZZLE_PUBLIC_DIR));
 
-export default (app, webpackIsomorphicTools) => {
-  app.use(favicon(path.join(__dirname, 'components', 'images', 'favicon.ico'))); // eslint-disable-line max-len
-
-  app.use(Express.static(path.join(__dirname, '..', 'dist'), { index: false })); // eslint-disable-line max-len
-
-  if (process.env.NODE_ENV !== 'production') {
-    app.use((req, res, next) => {
-      webpackIsomorphicTools.refresh();
-      next();
-    });
-  }
-
-  const wrap = fn => (req, res, next) => fn(req, res).catch(err => next(err));
-
-  app.use(wrap(async (req, res) => {
+const wrap = fn => (req, res, next) => fn(req, res).catch(err => next(err));
+server.get('/*', wrap(
+  async (req, res) => {
     const history = createHistory({ initialEntries: [req.originalUrl] });
     const location = history.location;
     const store = configureStore({ routing: { location } }, history);
@@ -75,7 +65,6 @@ export default (app, webpackIsomorphicTools) => {
     1. 準備 Component (很像 Root.js 做的事)
     2. 準備 Template (Html Component)
     */
-    const assets = webpackIsomorphicTools.assets();
     const finalComponent = (
       <Provider store={store}>
         <StaticRouter location={req.url} context={context}>
@@ -88,17 +77,22 @@ export default (app, webpackIsomorphicTools) => {
       <Html assets={assets} component={finalComponent} store={store} />
     );
 
+    if (context.url) {
+      if (context.status === 301) {
+        res.redirect(301, context.url);
+        return;
+      }
+      res.redirect(context.url);
+      return;
+    }
+
     if (context.status) {
       res.status(context.status);
     }
 
+    // TODO handle 301/302
+
     res.send(`<!doctype html>\n${html}`);
   }));
 
-  app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
-    console.log(req.ip, req.ips);
-    console.log(err);
-    res.status(500);
-    res.send('Internal Server Error');
-  });
-};
+export default server;

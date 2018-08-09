@@ -24,7 +24,7 @@ export default class Facebook {
           appId,
           cookie: true,
           xfbml: true,
-          version: 'v2.6',
+          version: 'v3.0',
         });
 
         resolve(window.FB);

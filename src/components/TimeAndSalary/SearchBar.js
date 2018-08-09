@@ -133,7 +133,10 @@ class SearchBar extends Component {
         <div className={styles.type}>
           {searchOptions.map(({ label, value }) => (
             <Radio
-              key={value} label={label} value={value} inline
+              key={value}
+              label={label}
+              value={value}
+              inline
               checked={searchType === value}
               onChange={this.handleTypeChange}
             />

@@ -9,15 +9,19 @@ const preloadedState = fromJS({
   sortBy: null,
   order: null,
   data: [],
+  total: 0,
+  currentPage: 0,
   status: fetchingStatus.UNFETCHED,
   error: null,
 });
 
 export default createReducer(preloadedState, {
-  [SET_BOARD_DATA]: (state, { campaignName, sortBy, order, data, status, error }) =>
+  [SET_BOARD_DATA]: (state, { campaignName, sortBy, order, data, total, currentPage, status, error }) =>
     state
       .set('campaignName', campaignName)
       .set('data', fromJS(data))
+      .set('total', total)
+      .set('currentPage', currentPage)
       .set('status', status)
       .set('error', error)
       .set('sortBy', sortBy)

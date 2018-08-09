@@ -2,3 +2,17 @@
   padding: 50px 25px;
   margin-top: 25px;
 }
+
+.feedbackBlock {
+  margin-top: 90px;
+  margin-bottom: 90px;
+
+  @media (max-width: 550px) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+.fanPageBlock {
+  margin-top: 70px;
+}
