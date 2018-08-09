@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 import { Switch } from 'react-router';
 
 import Wrapper from 'common/base/Wrapper';
+import FanPageBlock from 'common/FanPageBlock';
 import RouteWithSubRoutes from '../route';
 import timeAndSalaryStyles from '../TimeAndSalary/styles.module.css';
 import CallToShareData from '../TimeAndSalary/CallToShareData';
@@ -149,6 +150,7 @@ export default class TimeAndSalary extends Component {
             { routes.map((route, i) => (<RouteWithSubRoutes key={i} {...route} />)) }
           </Switch>
         </Wrapper>
+        <FanPageBlock className={styles.fanPageBlock} />
       </div>
     );
   }

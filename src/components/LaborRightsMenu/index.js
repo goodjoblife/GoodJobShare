@@ -5,12 +5,13 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Loader from 'common/Loader';
 import Columns from 'common/Columns';
 import { Section, Wrapper, Heading } from 'common/base';
+import FanPageBlock from 'common/FanPageBlock';
 import { queryMenu } from '../../actions/laborRights';
 import { isFetching, isError, isFetched } from '../../constants/status';
 import { shareLink } from '../../constants/dataProgress';
 import LaborRightsEntry from './LaborRightsEntry';
-import About from './About';
 import { HELMET_DATA } from '../../constants/helmetData';
+import styles from './LaborRightsEntry.module.css';
 
 class LaborRightsMenu extends React.Component {
   static fetchData({ store }) {
@@ -56,7 +57,7 @@ class LaborRightsMenu extends React.Component {
           }
         </Wrapper>
         <Wrapper size="s">
-          <About />
+          <FanPageBlock className={styles.fanPageBlock} />
         </Wrapper>
       </Section>
     );

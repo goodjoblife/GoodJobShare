@@ -7,7 +7,7 @@ import R from 'ramda';
 import Select from 'common/form/Select';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
-import FeedbackBlock from 'common/FeedbackBlock';
+import FanPageBlock from 'common/FanPageBlock';
 import WorkingHourBlock from '../common/WorkingHourBlock';
 import { queryCompany } from '../../../actions/timeAndSalaryCompany';
 import { isFetching, isFetched } from '../../../constants/status';
@@ -133,10 +133,7 @@ export default class TimeAndSalaryCompany extends Component {
             hideContent={!canViewTimeAndSalary}
           />
         ))}
-        <FeedbackBlock
-          className={styles.feedbackBlock}
-          category="TimeAndSalarySearchFeedback"
-        />
+        <FanPageBlock className={styles.fanPageBlock} />
       </section>
     );
   }

@@ -1,0 +1,33 @@
+$below-small: 850px;
+
+.fanPageBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: $below-small) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.img {
+  width: 190px;
+
+  @media (max-width: $below-small) {
+    width: 150px;
+    margin-bottom: 30px;
+  }
+}
+
+.rightContainer {
+  margin-left: 45px;
+
+  @media (max-width: $below-small) {
+    margin-left: 0;
+  }
+}
+
+.text {
+  margin-bottom: 15px;
+}
