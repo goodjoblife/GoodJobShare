@@ -15,7 +15,6 @@ import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
 import Dashboard from './Dashboard';
 import { HELMET_DATA } from '../../constants/helmetData';
-import styles from './LandingPage.module.css';
 
 class LandingPage extends Component {
   static fetchData({ store: { dispatch } }) {
@@ -87,7 +86,7 @@ class LandingPage extends Component {
           </Wrapper>
         </Section>
         <Section padding bg="white">
-          <FanPageBlock className={styles.fanPageBlock} />
+          <FanPageBlock />
         </Section>
       </main>
     );
