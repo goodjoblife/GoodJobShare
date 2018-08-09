@@ -3,7 +3,11 @@ const path = require('path');
 module.exports = {
   "extends": [
     "react-app",
-    "airbnb"
+    "prettier",
+    "prettier/react"
+  ],
+  "plugins": [
+    "prettier"
   ],
   "rules": {
     "arrow-parens": ["error", "as-needed"],
@@ -22,7 +26,13 @@ module.exports = {
     "jsx-a11y/no-static-element-interactions": "off",
     "react/require-default-props": "off",
     "indent": "off",
-    "react/no-array-index-key": "off"
+    "react/no-array-index-key": "off",
+    "prettier/prettier": [
+      "error", {
+        "trailingComma": "es5",
+        "singleQuote": true
+      }
+    ]
   },
   "settings": {
     "import/resolver": {
