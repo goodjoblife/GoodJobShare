@@ -82,13 +82,13 @@ export default class TimeAndSalaryJobTitle extends Component {
     this.props.fetchMyPermission();
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     if (
-      pathSelector(this.props) !== pathSelector(nextProps) ||
-      keywordSelector(this.props) !== keywordSelector(nextProps)
+      pathSelector(this.props) !== pathSelector(prevProps) ||
+      keywordSelector(this.props) !== keywordSelector(prevProps)
     ) {
-      const { groupSortBy, order } = pathParameterSelector(nextProps);
-      const jobTitle = keywordSelector(nextProps);
+      const { groupSortBy, order } = pathParameterSelector(this.props);
+      const jobTitle = keywordSelector(this.props);
       this.props.queryJobTitle({ groupSortBy, order, jobTitle });
       this.props.fetchMyPermission();
     }

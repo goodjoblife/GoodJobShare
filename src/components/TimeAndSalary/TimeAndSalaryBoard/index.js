@@ -205,13 +205,13 @@ export default class TimeAndSalaryBoard extends Component {
     this.props.fetchMyPermission();
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     if (
-      pathSelector(this.props) !== pathSelector(nextProps) ||
-      this.props.location.search !== nextProps.location.search
+      pathSelector(prevProps) !== pathSelector(this.props) ||
+      prevProps.location.search !== this.props.location.search
     ) {
-      const { search } = nextProps.location;
-      const { sortBy, order } = pathParameterSelector(nextProps);
+      const { search } = this.props.location;
+      const { sortBy, order } = pathParameterSelector(this.props);
       const query = locationSearchToQuery(search);
       const { page } = querySelector(query);
       this.setState({ showExtreme: false });

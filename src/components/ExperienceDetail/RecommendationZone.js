@@ -22,9 +22,9 @@ class RecommendationZone extends Component {
     this.fetchRecommended({ id: this.props.id });
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.id !== this.props.id) {
-      this.fetchRecommended({ id: nextProps.id });
+  componentDidUpdate(prevProps) {
+    if (this.props.id !== prevProps.id) {
+      this.fetchRecommended({ id: this.props.id });
     }
   }
 

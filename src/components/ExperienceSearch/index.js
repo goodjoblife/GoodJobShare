@@ -99,11 +99,11 @@ class ExperienceSearch extends Component {
     this.props.getNewSearchBy(searchBy);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.location.search !== this.props.location.search) {
-      const { fetchExperiences } = nextProps;
+  componentDidUpdate(prevProps) {
+    if (this.props.location.search !== prevProps.location.search) {
+      const { fetchExperiences } = this.props;
 
-      const { search } = nextProps.location;
+      const { search } = this.props.location;
       const query = locationSearchToQuery(search);
 
       const { searchBy, searchQuery, sort, page } = querySelector(query);

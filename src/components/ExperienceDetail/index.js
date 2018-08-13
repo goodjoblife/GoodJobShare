@@ -108,29 +108,27 @@ class ExperienceDetail extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    const nextMatch = nextProps.match;
+  componentDidUpdate(prevProps) {
+    const prevMatch = prevProps.match;
     const match = this.props.match;
 
-    const nextExperienceId = experienceIdSelector(nextMatch);
+    const prevExperienceId = experienceIdSelector(prevMatch);
     const experienceId = experienceIdSelector(match);
     // if params changes due to route, we should refetch target experience
-    if (nextExperienceId !== experienceId) {
-      this.props.fetchExperience(nextExperienceId);
-      this.props.fetchReplies(nextExperienceId);
+    if (prevExperienceId !== experienceId) {
+      this.props.fetchExperience(experienceId);
+      this.props.fetchReplies(experienceId);
       this.props.fetchMyPermission();
     }
 
     if (
-      nextProps.authStatus !== this.props.authStatus &&
-      nextProps.authStatus === authStatus.CONNECTED
+      prevProps.authStatus !== this.props.authStatus &&
+      this.props.authStatus === authStatus.CONNECTED
     ) {
       this.props.fetchExperience(experienceId);
       this.props.fetchReplies(experienceId);
     }
-  }
 
-  componentDidUpdate(prevProps) {
     if (
       window &&
       this.goTo &&
@@ -145,8 +143,6 @@ class ExperienceDetail extends Component {
     }
 
     // send Facebook Pixel 'ViewContent' event if goto reading another experience
-    const prevExperienceId = experienceIdSelector(prevProps.match);
-    const experienceId = experienceIdSelector(this.props.match);
     if (prevExperienceId !== experienceId) {
       ReactPixel.track('ViewContent', {
         content_ids: [experienceId],

@@ -82,13 +82,13 @@ export default class TimeAndSalaryCompany extends Component {
     this.props.fetchMyPermission();
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     if (
-      pathSelector(this.props) !== pathSelector(nextProps) ||
-      keywordSelector(this.props) !== keywordSelector(nextProps)
+      pathSelector(prevProps) !== pathSelector(this.props) ||
+      keywordSelector(prevProps) !== keywordSelector(this.props)
     ) {
-      const { groupSortBy, order } = pathParameterSelector(nextProps);
-      const company = keywordSelector(nextProps);
+      const { groupSortBy, order } = pathParameterSelector(this.props);
+      const company = keywordSelector(this.props);
       this.props.queryCompany({ groupSortBy, order, company });
       this.props.fetchMyPermission();
     }

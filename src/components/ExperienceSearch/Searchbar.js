@@ -22,13 +22,12 @@ class SearchBar extends PureComponent {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { searchBy, searchQuery } = nextProps;
-
-    this.setState({
+  static getDerivedStateFromProps(props, state) {
+    const { searchBy, searchQuery } = props;
+    return {
       searchBy,
       searchQuery,
-    });
+    };
   }
 
   render() {

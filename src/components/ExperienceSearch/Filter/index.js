@@ -33,12 +33,12 @@ class Filter extends PureComponent {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { sort, searchType } = nextProps;
-    this.setState({
+  static getDerivedStateFromProps(props, state) {
+    const { sort, searchType } = props;
+    return {
       sort,
       searchType,
-    });
+    };
   }
 
   render() {
