@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { push } from 'react-router-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
 
@@ -11,6 +10,7 @@ import FanPageBlock from 'common/FanPageBlock';
 import WorkingHourBlock from '../common/WorkingHourBlock';
 import { queryCompany } from '../../../actions/timeAndSalaryCompany';
 import { isFetching, isFetched } from '../../../constants/status';
+import renderHelmet from './helmet';
 
 import styles from '../views/view.module.css';
 
@@ -97,6 +97,7 @@ export default class TimeAndSalaryCompany extends Component {
   render() {
     const { switchPath, status, canViewTimeAndSalary } = this.props;
     const path = pathSelector(this.props);
+    const pathname = this.props.location.pathname;
     const { title, groupSortBy } = pathParameterSelector(this.props);
     const company = keywordSelector(this.props);
     const raw = this.props.data.toJS();
@@ -108,6 +109,7 @@ export default class TimeAndSalaryCompany extends Component {
 
     return (
       <section className={styles.searchResult}>
+        {renderHelmet({ title, pathname, company })}
         <h2 className={styles.heading}>
           搜尋 “{company}” 的 {title}
         </h2>

@@ -13,7 +13,7 @@ import InfoSalaryModal from '../common/InfoSalaryModal';
 import AboutThisJobModal from '../common/AboutThisJobModal';
 import styles from './TimeAndSalaryBoard.module.css';
 import commonStyles from '../views/view.module.css';
-import fetchingStatus from '../../../constants/status';
+import { isFetching, isFetched } from '../../../constants/status';
 import { MAX_ROWS_IF_HIDDEN } from '../../../constants/hideContent';
 import CallToActionRow from './CallToActionRow';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
@@ -25,6 +25,7 @@ import DashBoardTable from '../common/DashBoardTable';
 
 import { toQsString, querySelector, locationSearchToQuery } from './helper';
 import { DATA_NUM_PER_PAGE } from '../../../constants/timeAndSalarSearch';
+import renderHelmet from './helmet';
 
 const pathnameMapping = {
   '/time-and-salary/work-time-dashboard': {
@@ -56,14 +57,14 @@ const pathnameMapping = {
     hasExtreme: true,
   },
   '/time-and-salary/latest': {
-    title: '最新薪時資訊',
+    title: '最新薪資、工時資訊',
     label: '資料時間（新到舊）',
     sortBy: 'created_at',
     order: 'descending',
     hasExtreme: false,
   },
   '/time-and-salary/sort/time-asc': {
-    title: '最舊薪時資訊',
+    title: '最舊薪資、工時資訊',
     label: '資料時間（舊到新）',
     sortBy: 'created_at',
     order: 'ascending',
@@ -74,6 +75,13 @@ const pathnameMapping = {
 const selectOptions = R.pipe(
   R.toPairs,
   R.map(([path, opt]) => ({ value: path, label: opt.label }))
+);
+
+const pathSelector = R.path(['match', 'path']);
+
+const pathParameterSelector = R.compose(
+  path => pathnameMapping[path],
+  pathSelector
 );
 
 const injectCallToActions = rows => {
@@ -154,10 +162,9 @@ export default class TimeAndSalaryBoard extends Component {
     fetchMyPermission: PropTypes.func.isRequired,
   };
 
-  static fetchData({ match, location, store: { dispatch } }) {
-    const { path } = match;
+  static fetchData({ location, store: { dispatch }, ...props }) {
     const { search } = location;
-    const { sortBy, order } = pathnameMapping[path];
+    const { sortBy, order } = pathParameterSelector(props);
 
     const query = locationSearchToQuery(search);
     const { page } = querySelector(query);
@@ -187,9 +194,8 @@ export default class TimeAndSalaryBoard extends Component {
   };
 
   componentDidMount() {
-    const { path } = this.props.match;
     const { search } = this.props.location;
-    const { sortBy, order } = pathnameMapping[path];
+    const { sortBy, order } = pathParameterSelector(this.props);
 
     const query = locationSearchToQuery(search);
     const { page } = querySelector(query);
@@ -201,12 +207,11 @@ export default class TimeAndSalaryBoard extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      this.props.match.path !== nextProps.match.path ||
+      pathSelector(this.props) !== pathSelector(nextProps) ||
       this.props.location.search !== nextProps.location.search
     ) {
-      const { path } = nextProps.match;
       const { search } = nextProps.location;
-      const { sortBy, order } = pathnameMapping[path];
+      const { sortBy, order } = pathParameterSelector(nextProps);
       const query = locationSearchToQuery(search);
       const { page } = querySelector(query);
       this.setState({ showExtreme: false });
@@ -221,11 +226,13 @@ export default class TimeAndSalaryBoard extends Component {
     state.infoSalaryModal.isOpen = !state.infoSalaryModal.isOpen;
     this.setState(state);
   }
+
   toggleInfoTimeModal() {
     const state = this.state;
     state.infoTimeModal.isOpen = !state.infoTimeModal.isOpen;
     this.setState(state);
   }
+
   toggleAboutThisJobModal = (aboutThisJob, title) => {
     const state = this.state;
     state.aboutThisJobModal.isOpen = !state.aboutThisJobModal.isOpen;
@@ -246,7 +253,7 @@ export default class TimeAndSalaryBoard extends Component {
     if (!this.state.showExtreme) {
       return rows;
     }
-    if (this.props.extremeStatus !== fetchingStatus.FETCHED) {
+    if (!isFetched(this.props.extremeStatus)) {
       return injectLoadingIconRow(rows);
     }
     // here, the first {nExtremeRows} rows are extreme data
@@ -288,8 +295,10 @@ export default class TimeAndSalaryBoard extends Component {
   };
 
   render() {
-    const { path } = this.props.match;
-    const { title, hasExtreme } = pathnameMapping[path];
+    const path = pathSelector(this.props);
+    const { pathname, search } = this.props.location;
+    const { page } = querySelector(locationSearchToQuery(search));
+    const { title, hasExtreme } = pathParameterSelector(this.props);
     const {
       data,
       status,
@@ -302,7 +311,7 @@ export default class TimeAndSalaryBoard extends Component {
     } = this.props;
     const { showExtreme } = this.state;
     let raw;
-    if (showExtreme && extremeStatus === fetchingStatus.FETCHED) {
+    if (showExtreme && isFetched(extremeStatus)) {
       raw = extremeData.concat(data).toJS();
     } else {
       raw = data.toJS();
@@ -310,6 +319,7 @@ export default class TimeAndSalaryBoard extends Component {
 
     return (
       <section className={commonStyles.searchResult}>
+        {renderHelmet({ title, pathname, page })}
         <h2 className={commonStyles.heading}>{title}</h2>
         <div className={commonStyles.result}>
           <div className={styles.sortRow}>
@@ -340,11 +350,12 @@ export default class TimeAndSalaryBoard extends Component {
               </div>
             </div>
           </div>
-          {status === fetchingStatus.FETCHING ? (
+          {isFetching(status) && (
             <div className={styles.status}>
               <Loading size="s" />
             </div>
-          ) : (
+          )}
+          {isFetched(status) && (
             <DashBoardTable
               data={raw}
               postProcessRows={this.createPostProcessRows()}
@@ -353,7 +364,7 @@ export default class TimeAndSalaryBoard extends Component {
               toggleAboutThisJobModal={this.toggleAboutThisJobModal}
             />
           )}
-          {status === fetchingStatus.FETCHING ? null : (
+          {isFetched(status) && (
             <Pagination
               totalCount={totalCount}
               unit={DATA_NUM_PER_PAGE}

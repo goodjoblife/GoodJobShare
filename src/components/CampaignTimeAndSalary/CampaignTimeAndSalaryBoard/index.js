@@ -64,13 +64,13 @@ const pathnameMapping = {
     order: 'ascending',
   },
   '/time-and-salary/campaigns/:campaign_name/latest': {
-    title: '最新薪時資訊',
+    title: '最新薪資、工時資訊',
     label: '資料時間（新到舊）',
     sortBy: 'created_at',
     order: 'descending',
   },
   '/time-and-salary/campaigns/:campaign_name/sort/time-asc': {
-    title: '最舊薪時資訊',
+    title: '最舊薪資、工時資訊',
     label: '資料時間（舊到新）',
     sortBy: 'created_at',
     order: 'ascending',
@@ -251,11 +251,13 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     state.infoSalaryModal.isOpen = !state.infoSalaryModal.isOpen;
     this.setState(state);
   }
+
   toggleInfoTimeModal() {
     const state = this.state;
     state.infoTimeModal.isOpen = !state.infoTimeModal.isOpen;
     this.setState(state);
   }
+
   toggleAboutThisJobModal = (aboutThisJob, title) => {
     const state = this.state;
     state.aboutThisJobModal.isOpen = !state.aboutThisJobModal.isOpen;
