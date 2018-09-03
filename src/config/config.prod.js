@@ -7,6 +7,6 @@ module.exports = {
   GA_ID: process.env.RAZZLE_GA_ID || 'UA-79990667-2',
   PIXEL_ID: process.env.RAZZLE_PIXEL_ID || '603414113402034',
   SENTRY_DSN:
-    process.env.SENTRY_DSN ||
+    process.env.RAZZLE_SENTRY_DSN ||
     'https://5cacfa2ac0934509a3e563fc0a52275f@sentry.io/1269010',
 };
