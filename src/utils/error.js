@@ -1,12 +1,11 @@
-function HttpError({ message, statusCode, errorCode, ...extra }) {
-  this.name = 'HttpError';
-  this.message = message || 'Default Message';
-  this.statusCode = statusCode;
-  this.errorCode = errorCode;
-  this.stack = new Error().stack;
-  this.extra = extra;
+class HttpError extends Error {
+  constructor({ message, statusCode, errorCode, ...extra }) {
+    super(message);
+    this.name = 'HttpError';
+    this.statusCode = statusCode;
+    this.errorCode = errorCode;
+    this.extra = extra;
+    Error.captureStackTrace(this, HttpError);
+  }
 }
-HttpError.prototype = Object.create(Error.prototype);
-HttpError.prototype.constructor = HttpError;
-
 export default HttpError;
