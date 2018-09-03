@@ -43,6 +43,11 @@ export default class Html extends Component {
           {assets.client.css && (
             <link rel="stylesheet" href={assets.client.css} />
           )}
+          {/* include Sentry library for reporting website error --> */}
+          <script
+            src="https://cdn.ravenjs.com/3.26.4/raven.min.js"
+            crossorigin="anonymous"
+          />
         </head>
         <body>
           <div
