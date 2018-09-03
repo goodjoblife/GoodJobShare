@@ -1,9 +1,8 @@
 /* eslint-disable global-require */
 import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { thunk } from './middlewares';
 import createLogger from 'redux-logger';
 import { routerMiddleware } from 'react-router-redux';
-
 import rootReducer from '../reducers';
 
 const logger = createLogger({

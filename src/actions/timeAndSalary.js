@@ -25,6 +25,7 @@ export const queryTimeAndSalaryCount = () => dispatch => {
     })
     .catch(error => {
       dispatch(setCountData(0, fetchingStatus.ERROR, error));
+      throw error;
     });
 };
 
