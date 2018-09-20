@@ -16,6 +16,7 @@ const ShareBlock = ({
   comment,
   disabled,
   publishHandler,
+  archive,
 }) => (
   <section
     className={cn(styles.block, {
@@ -63,14 +64,29 @@ const ShareBlock = ({
               {position && <span> - {position}</span>}
             </Link>
           )}
+          {archive &&
+            archive.is_archived && (
+              <span
+                style={{
+                  fontSize: '50%',
+                  border: '1px solid red',
+                  padding: '0.5em',
+                  borderRadius: '5px',
+                }}
+              >
+                已封存
+              </span>
+            )}
         </Heading>
       )}
     </div>
-    <div className={styles.buttons}>
-      <button className="buttonCircleS buttonBlack2" onClick={publishHandler}>
-        {disabled ? '重新發佈' : '隱藏'}
-      </button>
-    </div>
+    {(archive && archive.is_archived && <div>{archive.reason}</div>) || (
+      <div className={styles.buttons}>
+        <button className="buttonCircleS buttonBlack2" onClick={publishHandler}>
+          {disabled ? '重新發佈' : '隱藏'}
+        </button>
+      </div>
+    )}
   </section>
 );
 ShareBlock.propTypes = {
@@ -82,6 +98,10 @@ ShareBlock.propTypes = {
   comment: PropTypes.string,
   disabled: PropTypes.bool,
   publishHandler: PropTypes.func.isRequired,
+  archive: PropTypes.shape({
+    is_archived: PropTypes.bool,
+    reason: PropTypes.string,
+  }),
 };
 
 export default ShareBlock;

@@ -106,10 +106,14 @@ class Me extends Component {
                         type={o.type === 'work' ? '工作' : '面試'}
                         heading={o.title}
                         to={`/experiences/${o._id}?backable=true`}
-                        disabled={o.status === 'hidden'}
+                        disabled={
+                          o.status === 'hidden' ||
+                          (o.archive && o.archive.is_archived)
+                        }
                         publishHandler={() => {
                           this.props.setExperienceStatus(o);
                         }}
+                        archive={o.archive}
                       />
                     ))
                   )}
@@ -123,10 +127,14 @@ class Me extends Component {
                         heading={o.company.name}
                         position={o.job_title}
                         to={o.company.name}
-                        disabled={o.status === 'hidden'}
+                        disabled={
+                          o.status === 'hidden' ||
+                          (o.archive && o.archive.is_archived)
+                        }
                         publishHandler={() => {
                           this.props.setWorkingStatus(o);
                         }}
+                        archive={o.archive}
                       />
                     ))
                   )}
@@ -140,11 +148,15 @@ class Me extends Component {
                         heading={o.experience.title}
                         comment={o.content}
                         to={`/experiences/${o.experience._id}`}
-                        disabled={o.status === 'hidden'}
+                        disabled={
+                          o.status === 'hidden' ||
+                          (o.archive && o.archive.is_archived)
+                        }
                         publishHandler={() => {
                           this.props.setReplyStatus(o);
                         }}
                         options={{ replyId: o._id }}
+                        archive={o.archive}
                       />
                     ))
                   )}
