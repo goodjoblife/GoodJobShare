@@ -69,16 +69,7 @@ const ShareBlock = ({
           )}
           {archive &&
             archive.is_archived && (
-              <span
-                style={{
-                  fontSize: '50%',
-                  border: '1px solid red',
-                  padding: '0.5em',
-                  borderRadius: '5px',
-                }}
-              >
-                已封存
-              </span>
+              <span className={cn(styles.badge, styles.archive)}>已封存</span>
             )}
         </Heading>
       )}
