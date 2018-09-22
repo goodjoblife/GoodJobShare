@@ -1,6 +1,7 @@
 import 'isomorphic-fetch';
 
 import { getToken } from 'utils/tokenUtil';
+import HttpError from 'utils/error';
 
 import { API_HOST } from '../config';
 
@@ -35,9 +36,13 @@ const optionsBuilder = body => method =>
 
 const checkStatus = response => {
   if (!response.ok) {
-    return response
-      .json()
-      .then(json => Promise.reject({ statusCode: response.status, ...json }));
+    return response.json().then(json => {
+      throw new HttpError({
+        message: json.message,
+        statusCode: response.status,
+        errorCode: json.error ? json.error.errorCode : undefined,
+      });
+    });
   }
   return response.json();
 };
