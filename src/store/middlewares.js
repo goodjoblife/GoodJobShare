@@ -9,7 +9,7 @@ export const errorHandlingMiddleware = ({
       // this is the default handler for each promise in redux thunk
       if (error.errorCode) {
         // if there exist errorCode, this is an expected error
-      } else if (window.Raven) {
+      } else if (window && window.Raven) {
         // otherwise, it's unexpected, send to sentry
         window.Raven.captureException(error, {
           extra: {
