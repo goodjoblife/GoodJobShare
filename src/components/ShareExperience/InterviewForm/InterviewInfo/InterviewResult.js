@@ -63,7 +63,7 @@ const InterviewResult = ({
             marginTop: '8px',
           }}
         >
-          需填寫面試結果
+          需填寫面試結果，或字數少於 100 字。
         </p>
       ) : null}
     </div>

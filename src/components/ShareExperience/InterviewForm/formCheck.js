@@ -26,7 +26,7 @@ export const interviewTimeYear = R.allPass([n => n > 0]);
 export const interviewTimeMonth = R.allPass([n => n > 0, n => n < 13]);
 
 export const interviewResult = t =>
-  notNullOrUndefined(t) && R.allPass([gtLength(0), lteLength(10)])(t);
+  notNullOrUndefined(t) && R.allPass([gtLength(0), lteLength(100)])(t);
 
 export const salaryAmount = R.anyPass([
   R.allPass([n => n >= 0]),
