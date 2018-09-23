@@ -18,15 +18,6 @@ import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../constants/helmetData';
 import { queryCampaignInfoList } from '../../actions/campaignInfo';
 
-const pathnameMapping = {
-  'work-time-dashboard': '工時排行榜（由高到低）',
-  'sort/work-time-asc': '工時排行榜（由低到高）',
-  'salary-dashboard': '估算時薪排行榜（由高到低）',
-  'sort/salary-asc': '估算時薪排行榜（由低到高）',
-  latest: '最新薪資、工時資訊',
-  'sort/time-asc': '最舊薪資、工時資訊',
-};
-
 const campaignListFromEntries = campaignEntries =>
   campaignEntries
     .valueSeq()
@@ -88,35 +79,11 @@ export default class TimeAndSalary extends Component {
   }
 
   renderHelmet = () => {
-    const path = this.props.location.pathname;
-    const url = formatCanonicalPath(path);
-
-    // default title and description
-    let title = '查看薪資、工時資訊';
-    let description =
+    const pathname = this.props.location.pathname;
+    const url = formatCanonicalPath(pathname);
+    const title = '查看薪資、工時資訊';
+    const description =
       '馬上查看薪資、工時資訊以及加班狀況，協助您找到更好的工作！';
-
-    // 根據 route 去更新 title  e.g. 工時排行榜（由高到低）
-    let name = '';
-    Object.keys(pathnameMapping).forEach(key => {
-      if (path.indexOf(key) >= 0) {
-        name = pathnameMapping[key];
-      }
-    });
-    if (name) {
-      title = name;
-    }
-
-    // 假如 keyword 不是 null, undefined 或 ''。則把 keywords 更新到 title & description
-    const keyword = this.props.match.params.keyword;
-    if (keyword) {
-      if (name) {
-        title = `${keyword}的${name}`;
-      } else {
-        title = `${keyword}的薪資、工時資訊`;
-      }
-      description = `馬上查看${keyword}的薪資、工時資訊以及加班狀況，協助您找到更好的工作！`;
-    }
 
     return (
       <Helmet

@@ -7,6 +7,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import { ScrollContext } from 'react-router-scroll-4';
 import App from './containers/App';
 import configureStore from './store/configureStore';
+import initSentry from './utils/sentryUtil';
 
 function parseState(window) {
   if (!window.__data) {
@@ -23,6 +24,8 @@ function parseState(window) {
   // delete window.__data;
   return preloadedState;
 }
+
+initSentry();
 
 const preloadedState = parseState(window);
 

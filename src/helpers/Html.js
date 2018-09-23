@@ -43,6 +43,11 @@ export default class Html extends Component {
           {assets.client.css && (
             <link rel="stylesheet" href={assets.client.css} />
           )}
+          {/* include Sentry library for reporting website error --> */}
+          <script
+            src="https://cdn.ravenjs.com/3.26.4/raven.min.js"
+            crossorigin="anonymous"
+          />
         </head>
         <body>
           <div
@@ -58,20 +63,6 @@ export default class Html extends Component {
             charSet="UTF-8"
           />
           <script src={assets.client.js} charSet="UTF-8" />
-          {/* Hotjar Tracking Code for https://www.goodjob.life --> */}
-          <script
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{
-              __html: `(function(h,o,t,j,a,r){
-              h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-              h._hjSettings={hjid:648683,hjsv:6};
-              a=o.getElementsByTagName('head')[0];
-              r=o.createElement('script');r.async=1;
-              r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-              a.appendChild(r);
-            })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`,
-            }}
-          />
         </body>
       </html>
     );

@@ -24,17 +24,16 @@ class Header extends React.Component {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.unlisten = () => {};
-
-    const { getLoginStatus, FB, getMe } = this.props;
-
-    getLoginStatus(FB)
-      .then(() => getMe(FB))
-      .catch(() => {});
   }
 
   componentDidMount() {
     const { history } = this.props;
     this.unlisten = history.listen(this.closeNav);
+
+    const { getLoginStatus, FB, getMe } = this.props;
+    getLoginStatus(FB)
+      .then(() => getMe(FB))
+      .catch(() => {});
   }
 
   componentDidUpdate(prevProps) {

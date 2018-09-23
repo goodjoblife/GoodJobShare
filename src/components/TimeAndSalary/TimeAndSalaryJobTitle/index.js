@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { push } from 'react-router-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
 
@@ -10,7 +9,8 @@ import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import WorkingHourBlock from '../common/WorkingHourBlock';
 import { queryJobTitle } from '../../../actions/timeAndSalaryJobTitle';
-import fetchingStatus from '../../../constants/status';
+import { isFetching, isFetched } from '../../../constants/status';
+import renderHelmet from './helmet';
 
 import styles from '../views/view.module.css';
 
@@ -82,13 +82,13 @@ export default class TimeAndSalaryJobTitle extends Component {
     this.props.fetchMyPermission();
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     if (
-      pathSelector(this.props) !== pathSelector(nextProps) ||
-      keywordSelector(this.props) !== keywordSelector(nextProps)
+      pathSelector(this.props) !== pathSelector(prevProps) ||
+      keywordSelector(this.props) !== keywordSelector(prevProps)
     ) {
-      const { groupSortBy, order } = pathParameterSelector(nextProps);
-      const jobTitle = keywordSelector(nextProps);
+      const { groupSortBy, order } = pathParameterSelector(this.props);
+      const jobTitle = keywordSelector(this.props);
       this.props.queryJobTitle({ groupSortBy, order, jobTitle });
       this.props.fetchMyPermission();
     }
@@ -97,6 +97,7 @@ export default class TimeAndSalaryJobTitle extends Component {
   render() {
     const { switchPath, status, canViewTimeAndSalary } = this.props;
     const path = pathSelector(this.props);
+    const pathname = this.props.location.pathname;
     const { title, groupSortBy } = pathParameterSelector(this.props);
     const jobTitle = keywordSelector(this.props);
     const raw = this.props.data.toJS();
@@ -108,6 +109,7 @@ export default class TimeAndSalaryJobTitle extends Component {
 
     return (
       <section className={styles.searchResult}>
+        {renderHelmet({ title, pathname, jobTitle })}
         <h2 className={styles.heading}>
           “{jobTitle}” 的 {title}
         </h2>
@@ -126,8 +128,8 @@ export default class TimeAndSalaryJobTitle extends Component {
             </div>
           </div>
         </div>
-        {status === fetchingStatus.FETCHING && <Loading size="s" />}
-        {status === fetchingStatus.FETCHED &&
+        {isFetching(status) && <Loading size="s" />}
+        {isFetched(status) &&
           raw.length === 0 && (
             <P size="l" bold className={styles.searchNoResult}>
               尚未有職稱「
