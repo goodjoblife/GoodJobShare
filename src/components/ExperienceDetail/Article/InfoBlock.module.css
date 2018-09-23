@@ -19,6 +19,15 @@
 
 .content {
   margin-top: 8px;
+  word-wrap: break-word;
+
+  @media (max-width: 850px) {
+    margin-right: 15px;
+  }
+
+  @media (max-width: 550px) {
+    margin-right: 0;
+  }
 
   > ul {
     margin-left: 1.3em;
