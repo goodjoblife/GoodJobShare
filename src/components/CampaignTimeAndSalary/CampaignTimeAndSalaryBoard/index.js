@@ -26,10 +26,14 @@ import { queryCampaignTimeAndSalary } from '../../../actions/campaignTimeAndSala
 import GradientMask from '../../common/GradientMask';
 
 import DashBoardTable from '../../TimeAndSalary/common/DashBoardTable';
+import { campaignEntriesSelector } from '../../../selectors/campaignSelector';
+
 import {
-  campaignNameSelector,
-  campaignEntriesSelector,
-} from '../../../selectors/campaignSelector';
+  pathSelector,
+  paramsSelector,
+  pathnameSelector,
+  searchSelector,
+} from 'common/routing/selectors';
 
 import {
   toQsString,
@@ -84,6 +88,16 @@ const selectOptions = R.pipe(
   R.map(([path, opt]) => ({ value: path, label: opt.label }))
 );
 
+const campaignNameSelector = R.compose(
+  params => params.campaign_name,
+  paramsSelector
+);
+
+const pathParameterSelector = R.compose(
+  path => pathnameMapping[path],
+  pathSelector
+);
+
 const injectPermissionBlock = campaignName => rows => {
   const newRows = rows.slice(0, MAX_ROWS_IF_HIDDEN);
   newRows.push(
@@ -129,11 +143,10 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     fetchMyPermission: PropTypes.func.isRequired,
   };
 
-  static fetchData({ match, location, store: { dispatch, getState } }) {
-    const { path } = match;
-    const { search } = location;
-    const { sortBy, order } = pathnameMapping[path];
-    const campaignName = campaignNameSelector(match);
+  static fetchData({ store: { dispatch, getState }, ...props }) {
+    const search = searchSelector(props);
+    const { sortBy, order } = pathParameterSelector(props);
+    const campaignName = campaignNameSelector(props);
 
     const query = locationSearchToQuery(search);
     const { page } = querySelector(query);
@@ -176,17 +189,15 @@ export default class CampaignTimeAndSalaryBoard extends Component {
   };
 
   componentDidMount() {
-    const {
-      campaignName,
-      campaignEntries,
-      match: { path },
-    } = this.props;
+    const search = searchSelector(this.props);
+    const campaignName = campaignNameSelector(this.props);
+
+    const { campaignEntries } = this.props;
     const jobTitles = queryJobTitlesFromCampaignEntries(
       campaignEntries,
       campaignName
     );
-    const { sortBy, order } = pathnameMapping[path];
-    const { search } = this.props.location;
+    const { sortBy, order } = pathParameterSelector(this.props);
     const query = locationSearchToQuery(search);
     const { page } = querySelector(query);
 
@@ -202,17 +213,14 @@ export default class CampaignTimeAndSalaryBoard extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      campaignName: prevCampaignName,
-      match: { path: prevPath },
-      location: { search: prevSearch },
-    } = prevProps;
-    const {
-      campaignName,
-      campaignEntries,
-      match: { path },
-      location: { search },
-    } = this.props;
+    const prevPath = pathSelector(prevProps);
+    const prevSearch = searchSelector(prevProps);
+    const prevCampaignName = campaignNameSelector(prevProps);
+
+    const path = pathSelector(this.props);
+    const search = searchSelector(this.props);
+    const campaignName = campaignNameSelector(this.props);
+    const { campaignEntries } = this.props;
 
     if (
       prevPath !== path ||
@@ -223,7 +231,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
         campaignEntries,
         campaignName
       );
-      const { sortBy, order } = pathnameMapping[path];
+      const { sortBy, order } = pathParameterSelector(this.props);
       const query = locationSearchToQuery(search);
       const { page } = querySelector(query);
       this.props.queryCampaignInfoListIfNeeded().then(() => {
@@ -240,7 +248,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
 
   // 給 Pagination 建立分頁的連結用
   createPageLinkTo = nextPage => {
-    const { pathname } = this.props.location;
+    const pathname = pathnameSelector(this.props);
     const queryString = toQsString({ page: nextPage });
     return {
       pathname,
@@ -278,18 +286,13 @@ export default class CampaignTimeAndSalaryBoard extends Component {
   };
 
   render() {
-    const {
-      campaignName,
-      campaignEntries,
-      campaignEntriesStatus,
-      match: { path },
-    } = this.props;
-    const { search } = this.props.location;
+    const path = pathSelector(this.props);
+    const pathname = pathnameSelector(this.props);
+    const { campaignName, campaignEntries, campaignEntriesStatus } = this.props;
+    const { title } = pathParameterSelector(this.props);
+    const search = searchSelector(this.props);
     const { page } = querySelector(locationSearchToQuery(search));
-    const { title } = pathnameMapping[path];
     const { status, data, switchPath, totalCount, currentPage } = this.props;
-    const pathname = this.props.location.pathname;
-    const campaignInfo = campaignEntries.get(campaignName).toJS();
     const raw = data.toJS();
 
     // 如果 campaignName 不在清單中，代表 Not Found
@@ -299,6 +302,8 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     ) {
       return <CommonNotFound />;
     }
+
+    const campaignInfo = campaignEntries.get(campaignName).toJS();
 
     const isLoading =
       campaignEntriesStatus === fetchingStatus.FETCHIING ||

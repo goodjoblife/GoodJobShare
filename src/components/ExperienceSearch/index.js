@@ -31,6 +31,8 @@ import getScale from '../../utils/numberUtils';
 import { toQsString, querySelector, locationSearchToQuery } from './helper';
 import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
 
+import { pathnameSelector, searchSelector } from 'common/routing/selectors';
+
 const SORT = {
   CREATED_AT: 'created_at',
   POPULARITY: 'popularity',
@@ -50,8 +52,8 @@ const sortByMap = {
 const BANNER_LOCATION = 10;
 
 class ExperienceSearch extends Component {
-  static fetchData({ location, store: { dispatch } }) {
-    const { search } = location;
+  static fetchData({ store: { dispatch }, ...props }) {
+    const search = searchSelector(props);
     const query = locationSearchToQuery(search);
     const { searchBy, searchQuery, sort, page } = querySelector(query);
 
@@ -87,7 +89,7 @@ class ExperienceSearch extends Component {
   componentDidMount() {
     const { fetchExperiences } = this.props;
 
-    const { search } = this.props.location;
+    const search = searchSelector(this.props);
     const query = locationSearchToQuery(search);
 
     const { searchBy, searchQuery, sort, page } = querySelector(query);
@@ -100,10 +102,10 @@ class ExperienceSearch extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.location.search !== prevProps.location.search) {
+    if (searchSelector(this.props) !== searchSelector(prevProps)) {
       const { fetchExperiences } = this.props;
 
-      const { search } = this.props.location;
+      const search = searchSelector(this.props);
       const query = locationSearchToQuery(search);
 
       const { searchBy, searchQuery, sort, page } = querySelector(query);
@@ -123,7 +125,7 @@ class ExperienceSearch extends Component {
   }
 
   getCanonicalUrl = () => {
-    const { search } = this.props.location;
+    const search = searchSelector(this.props);
     const query = locationSearchToQuery(search);
     const { searchType, searchQuery, searchBy, sort, page } = querySelector(
       query
@@ -142,7 +144,8 @@ class ExperienceSearch extends Component {
   };
 
   handleSearchTypeChange = ({ searchType, sort }) => {
-    const { pathname, search } = this.props.location;
+    const search = searchSelector(this.props);
+    const pathname = pathnameSelector(this.props);
     const query = locationSearchToQuery(search);
 
     const { searchBy, searchQuery } = querySelector(query);
@@ -161,7 +164,8 @@ class ExperienceSearch extends Component {
   };
 
   handleSearchbarKeywordClick = ({ keyword, searchBy }) => {
-    const { pathname, search } = this.props.location;
+    const search = searchSelector(this.props);
+    const pathname = pathnameSelector(this.props);
     // pickup parameter from query
     const query = locationSearchToQuery(search);
     const { sort, searchType } = querySelector(query);
@@ -183,7 +187,8 @@ class ExperienceSearch extends Component {
 
   handleSearchBy = ({ searchQuery, searchBy }) => {
     const { getNewSearchBy } = this.props;
-    const { pathname, search } = this.props.location;
+    const search = searchSelector(this.props);
+    const pathname = pathnameSelector(this.props);
     const query = locationSearchToQuery(search);
 
     const { sort, searchType } = querySelector(query);
@@ -204,7 +209,8 @@ class ExperienceSearch extends Component {
   };
 
   handleSearchbarSubmit = ({ searchBy, searchQuery }) => {
-    const { pathname, search } = this.props.location;
+    const search = searchSelector(this.props);
+    const pathname = pathnameSelector(this.props);
     // pickup parameter from query
     const query = locationSearchToQuery(search);
     const { sort, searchType } = querySelector(query);
@@ -237,7 +243,8 @@ class ExperienceSearch extends Component {
   };
 
   handleSortClick = ({ searchType, sort }) => {
-    const { pathname, search } = this.props.location;
+    const search = searchSelector(this.props);
+    const pathname = pathnameSelector(this.props);
     const query = locationSearchToQuery(search);
 
     const { searchBy } = querySelector(query);
@@ -272,7 +279,8 @@ class ExperienceSearch extends Component {
 
   // 給 Pagination 建立分頁的連結用
   createPageLinkTo = nextPage => {
-    const { pathname, search } = this.props.location;
+    const search = searchSelector(this.props);
+    const pathname = pathnameSelector(this.props);
     const query = locationSearchToQuery(search);
 
     const { searchBy, searchQuery, sortBy, searchType } = querySelector(query);
@@ -320,7 +328,7 @@ class ExperienceSearch extends Component {
 
   renderHelmet = () => {
     // TODO 將邏輯拆成 1. 公司職稱搜尋 2. 非搜尋，減少 if/else
-    const { search } = this.props.location;
+    const search = searchSelector(this.props);
     const query = locationSearchToQuery(search);
     const { searchType, searchQuery, sortBy, page } = querySelector(query);
 
@@ -375,7 +383,7 @@ class ExperienceSearch extends Component {
     const data = experienceSearch.toJS();
     const experiences = data.experiences || [];
 
-    const { search } = this.props.location;
+    const search = searchSelector(this.props);
     const query = locationSearchToQuery(search);
     const { searchQuery, searchBy, sort, searchType } = querySelector(query);
 

@@ -26,6 +26,11 @@ import DashBoardTable from '../common/DashBoardTable';
 import { toQsString, querySelector, locationSearchToQuery } from './helper';
 import { DATA_NUM_PER_PAGE } from '../../../constants/timeAndSalarSearch';
 import renderHelmet from './helmet';
+import {
+  pathSelector,
+  pathnameSelector,
+  searchSelector,
+} from 'common/routing/selectors';
 
 const pathnameMapping = {
   '/time-and-salary/work-time-dashboard': {
@@ -76,8 +81,6 @@ const selectOptions = R.pipe(
   R.toPairs,
   R.map(([path, opt]) => ({ value: path, label: opt.label }))
 );
-
-const pathSelector = R.path(['match', 'path']);
 
 const pathParameterSelector = R.compose(
   path => pathnameMapping[path],
@@ -162,8 +165,8 @@ export default class TimeAndSalaryBoard extends Component {
     fetchMyPermission: PropTypes.func.isRequired,
   };
 
-  static fetchData({ location, store: { dispatch }, ...props }) {
-    const { search } = location;
+  static fetchData({ store: { dispatch }, ...props }) {
+    const search = searchSelector(props);
     const { sortBy, order } = pathParameterSelector(props);
 
     const query = locationSearchToQuery(search);
@@ -194,7 +197,7 @@ export default class TimeAndSalaryBoard extends Component {
   };
 
   componentDidMount() {
-    const { search } = this.props.location;
+    const search = searchSelector(this.props);
     const { sortBy, order } = pathParameterSelector(this.props);
 
     const query = locationSearchToQuery(search);
@@ -208,9 +211,9 @@ export default class TimeAndSalaryBoard extends Component {
   componentDidUpdate(prevProps) {
     if (
       pathSelector(prevProps) !== pathSelector(this.props) ||
-      prevProps.location.search !== this.props.location.search
+      searchSelector(prevProps) !== searchSelector(this.props)
     ) {
-      const { search } = this.props.location;
+      const search = searchSelector(this.props);
       const { sortBy, order } = pathParameterSelector(this.props);
       const query = locationSearchToQuery(search);
       const { page } = querySelector(query);
@@ -296,7 +299,8 @@ export default class TimeAndSalaryBoard extends Component {
 
   render() {
     const path = pathSelector(this.props);
-    const { pathname, search } = this.props.location;
+    const pathname = pathnameSelector(this.props);
+    const search = searchSelector(this.props);
     const { page } = querySelector(locationSearchToQuery(search));
     const { title, hasExtreme } = pathParameterSelector(this.props);
     const {

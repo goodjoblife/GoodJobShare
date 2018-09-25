@@ -18,6 +18,8 @@ import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../constants/helmetData';
 import { queryCampaignInfoList } from '../../actions/campaignInfo';
 
+import { pathnameSelector } from 'common/routing/selectors';
+
 const campaignListFromEntries = campaignEntries =>
   campaignEntries
     .valueSeq()
@@ -79,7 +81,7 @@ export default class TimeAndSalary extends Component {
   }
 
   renderHelmet = () => {
-    const pathname = this.props.location.pathname;
+    const pathname = pathnameSelector(this.props);
     const url = formatCanonicalPath(pathname);
     const title = '查看薪資、工時資訊';
     const description =

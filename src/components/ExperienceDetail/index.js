@@ -32,6 +32,8 @@ import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 import authStatus from '../../constants/authStatus';
 import { COMMENT_ZONE } from '../../constants/formElements';
 
+import { paramsSelector } from 'common/routing/selectors';
+
 import styles from './ExperienceDetail.module.css';
 
 const MODAL_TYPE = {
@@ -50,7 +52,10 @@ function getPosition(obj) {
   return top - 54; // deduct header
 }
 
-const experienceIdSelector = R.path(['params', 'id']);
+const experienceIdSelector = R.compose(
+  params => params.id,
+  paramsSelector
+);
 
 class ExperienceDetail extends Component {
   static propTypes = {
@@ -76,8 +81,8 @@ class ExperienceDetail extends Component {
     canViewExperirenceDetail: PropTypes.bool.isRequired,
   };
 
-  static fetchData({ store: { dispatch }, match }) {
-    const experienceId = experienceIdSelector(match);
+  static fetchData({ store: { dispatch }, ...props }) {
+    const experienceId = experienceIdSelector(props);
     return dispatch(fetchExperience(experienceId));
   }
 
@@ -92,8 +97,7 @@ class ExperienceDetail extends Component {
   };
 
   componentDidMount() {
-    const match = this.props.match;
-    const experienceId = experienceIdSelector(match);
+    const experienceId = experienceIdSelector(this.props);
 
     if (
       this.props.experienceDetail.getIn(['experience', '_id']) !== experienceId
@@ -111,11 +115,8 @@ class ExperienceDetail extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const prevMatch = prevProps.match;
-    const match = this.props.match;
-
-    const prevExperienceId = experienceIdSelector(prevMatch);
-    const experienceId = experienceIdSelector(match);
+    const prevExperienceId = experienceIdSelector(prevProps);
+    const experienceId = experienceIdSelector(this.props);
     // if params changes due to route, we should refetch target experience
     if (prevExperienceId !== experienceId) {
       this.props.fetchExperience(experienceId);
@@ -154,7 +155,7 @@ class ExperienceDetail extends Component {
   }
 
   submitComment = comment => {
-    const experienceId = experienceIdSelector(this.props.match);
+    const experienceId = experienceIdSelector(this.props);
     this.props.submitComment(experienceId, comment);
   };
 
@@ -173,7 +174,7 @@ class ExperienceDetail extends Component {
         return (
           <ReportFormContainer
             close={() => this.handleIsModalOpen(false)}
-            id={experienceIdSelector(this.props.match)}
+            id={experienceIdSelector(this.props)}
             onApiError={pload =>
               this.handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload)
             }
