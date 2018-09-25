@@ -284,6 +284,8 @@ export default class CampaignTimeAndSalaryBoard extends Component {
       campaignEntriesStatus,
       match: { path },
     } = this.props;
+    const { search } = this.props.location;
+    const { page } = querySelector(locationSearchToQuery(search));
     const { title } = pathnameMapping[path];
     const { status, data, switchPath, totalCount, currentPage } = this.props;
     const pathname = this.props.location.pathname;
@@ -304,7 +306,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
 
     return (
       <section className={timeAndSalaryCommonStyles.searchResult}>
-        {renderHelmet({ pathname, title, campaignInfo })}
+        {renderHelmet({ pathname, title, campaignInfo, page })}
         <h2 className={styles.heading}>{title}</h2>
         <Link
           className={cn(
