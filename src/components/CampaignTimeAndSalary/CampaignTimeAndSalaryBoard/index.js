@@ -38,6 +38,8 @@ import {
 } from '../../TimeAndSalary/TimeAndSalaryBoard/helper';
 import { DATA_NUM_PER_PAGE } from '../../../constants/timeAndSalarSearch';
 
+import renderHelmet from './helmet';
+
 const pathnameMapping = {
   '/time-and-salary/campaigns/:campaign_name/work-time-dashboard': {
     title: '工時排行榜',
@@ -282,8 +284,12 @@ export default class CampaignTimeAndSalaryBoard extends Component {
       campaignEntriesStatus,
       match: { path },
     } = this.props;
+    const { search } = this.props.location;
+    const { page } = querySelector(locationSearchToQuery(search));
     const { title } = pathnameMapping[path];
     const { status, data, switchPath, totalCount, currentPage } = this.props;
+    const pathname = this.props.location.pathname;
+    const campaignInfo = campaignEntries.get(campaignName).toJS();
     const raw = data.toJS();
 
     // 如果 campaignName 不在清單中，代表 Not Found
@@ -300,6 +306,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
 
     return (
       <section className={timeAndSalaryCommonStyles.searchResult}>
+        {renderHelmet({ pathname, title, campaignInfo, page })}
         <h2 className={styles.heading}>{title}</h2>
         <Link
           className={cn(

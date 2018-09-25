@@ -83,47 +83,6 @@ export default class TimeAndSalary extends Component {
     this.setState(state);
   }
 
-  renderHelmet = () => {
-    const path = this.props.location.pathname;
-    const url = formatCanonicalPath(path);
-    const { campaignName, campaignEntries } = this.props;
-    if (!campaignEntries.has(campaignName)) {
-      // We will render a 301 / 404
-      return null;
-    }
-    const campaignInfo = campaignEntries.get(campaignName).toJS();
-    const { title: campaignTitle, ogImgUrl } = campaignInfo;
-
-    // default title and description
-    let title = `${campaignTitle}的最新薪資、工時資訊`;
-    const description = `馬上查看${title}的薪資、工時資訊以及加班狀況，協助您找到更好的工作！`;
-
-    // 根據 route 去更新 title  e.g. 工時排行榜（由高到低）
-    let name = '';
-    Object.keys(pathnameMapping).forEach(key => {
-      if (path.indexOf(key) >= 0) {
-        name = pathnameMapping[key];
-      }
-    });
-    if (name) {
-      title = `${campaignTitle}的${name}`;
-    }
-
-    return (
-      <Helmet
-        title={title}
-        meta={[
-          { name: 'description', content: description },
-          { property: 'og:title', content: formatTitle(title, SITE_NAME) },
-          { property: 'og:description', content: description },
-          { property: 'og:url', content: url },
-          { property: 'og:image', content: ogImgUrl },
-        ]}
-        link={[{ rel: 'canonical', href: url }]}
-      />
-    );
-  };
-
   render() {
     const { routes } = this.props;
     const { campaignEntries } = this.props;
@@ -131,7 +90,6 @@ export default class TimeAndSalary extends Component {
 
     return (
       <div className={timeAndSalaryStyles.container}>
-        {this.renderHelmet()}
         <Banner campaigns={campaigns} />
         <Wrapper size="m" className={timeAndSalaryStyles.showSearchbarWrapper}>
           <CallToShareData />
