@@ -5,6 +5,11 @@ import createReducer from 'utils/createReducer';
 import { SET_LIST_DATA, SET_LIST_STATUS } from '../actions/campaignInfo';
 import fetchingStatus from '../constants/status';
 
+/*
+ * entries: name ->
+ *   { name, title, ... }
+ *   see `src/apis/campaignInfoApi.js`
+ */
 const preloadedState = fromJS({
   entries: {},
   entriesStatus: fetchingStatus.UNFETCHED,
