@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import Helmet from 'react-helmet';
 import { Switch } from 'react-router';
 
 import Wrapper from 'common/base/Wrapper';
@@ -15,18 +14,7 @@ import InfoTimeModal from '../TimeAndSalary/common/InfoTimeModal';
 import InfoSalaryModal from '../TimeAndSalary/common/InfoSalaryModal';
 import styles from './CampaignTimeAndSalary.module.css';
 
-import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
-import { SITE_NAME } from '../../constants/helmetData';
 import { queryCampaignInfoList } from '../../actions/campaignInfo';
-
-const pathnameMapping = {
-  'work-time-dashboard': '工時排行榜（由高到低）',
-  'sort/work-time-asc': '工時排行榜（由低到高）',
-  'salary-dashboard': '估算時薪排行榜（由高到低）',
-  'sort/salary-asc': '估算時薪排行榜（由低到高）',
-  latest: '最新薪資、工時資訊',
-  'sort/time-asc': '最舊薪資、工時資訊',
-};
 
 const campaignListFromEntries = campaignEntries =>
   campaignEntries

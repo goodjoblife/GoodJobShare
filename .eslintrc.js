@@ -16,7 +16,7 @@ module.exports = {
     'react/prefer-stateless-function': 'off',
     'no-underscore-dangle': 'off',
     'no-console': 'off',
-    'import/no-extraneous-dependencies': 'off',
+    'import/no-extraneous-dependencies': 'error',
     'react/forbid-prop-types': 'off',
     'react/jsx-filename-extension': [
       'error',
@@ -26,8 +26,8 @@ module.exports = {
     ],
     'jsx-a11y/no-static-element-interactions': 'off',
     'react/require-default-props': 'off',
-    indent: 'off',
     'react/no-array-index-key': 'off',
+    'no-unused-vars': 'error',
     'prettier/prettier': [
       'error',
       {

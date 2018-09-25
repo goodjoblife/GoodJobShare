@@ -15,7 +15,10 @@
     "lint-staged"
   ],
   "lint-staged": {
-    "*.js": ["eslint --fix", "git add"]
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "jest": {
     "moduleNameMapper": {
@@ -24,6 +27,7 @@
     }
   },
   "devDependencies": {
+    "autoprefixer": "7.1.1",
     "babel-eslint": "7.2.3",
     "eslint": "4.19.1",
     "eslint-config-prettier": "^2.9.0",
@@ -49,6 +53,7 @@
     "@fortawesome/react-fontawesome": "^0.0.17",
     "classnames": "^2.2.5",
     "express": "^4.16.3",
+    "history": "^4.7.2",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
     "marked": "^0.3.6",
