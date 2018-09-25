@@ -5,6 +5,13 @@
   border: 1px solid #ddd;
   padding: 6px 12px;
   letter-spacing: 1px;
+
+  &.archive {
+    font-size: 50%;
+    vertical-align: middle;
+    margin-left: 1em;
+    background-color: border-gray;
+  }
 }
 
 .block {
