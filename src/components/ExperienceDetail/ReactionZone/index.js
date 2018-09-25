@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { scroller } from 'react-scroll';
 
 import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
 import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 import authStatusConstant from '../../../constants/authStatus';
+import { COMMENT_ZONE } from '../../../constants/formElements';
 import ReactionZoneOtherOptions from './ReactionZoneOtherOptions';
 import ReportInspectModal from './ReportInspectModal';
 import styles from './ReactionZone.module.css';
@@ -33,6 +35,14 @@ class ReactionZone extends Component {
   toggleReportInspectModal() {
     this.setState({ isInspectReportOpen: !this.state.isInspectReportOpen });
   }
+
+  onClickCommentButton = () => {
+    scroller.scrollTo(COMMENT_ZONE, {
+      duration: 1000,
+      offset: -100,
+      smooth: true,
+    });
+  };
 
   render() {
     const {
@@ -65,6 +75,7 @@ class ReactionZone extends Component {
             label="留言"
             count={experience.reply_count}
             className={styles.button}
+            onClick={this.onClickCommentButton}
           />
         </div>
         <div className={styles.right}>

@@ -18,6 +18,7 @@ export const INTERVIEW_RESULT = 'interview_result';
 export const OVERALL_RATING = 'overall_rating';
 export const TITLE = 'title';
 export const SECTIONS = 'sections';
+export const COMMENT_ZONE = 'comment_zone';
 
 export const INTERVIEW_FORM_ORDER = [
   COMPANY,

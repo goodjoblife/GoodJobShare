@@ -4,6 +4,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
 import Helmet from 'react-helmet';
 import ReactPixel from 'react-facebook-pixel';
+import { Element as ScrollElement } from 'react-scroll';
 
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
@@ -29,6 +30,7 @@ import { SITE_NAME } from '../../constants/helmetData';
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
 import authStatus from '../../constants/authStatus';
+import { COMMENT_ZONE } from '../../constants/formElements';
 
 import styles from './ExperienceDetail.module.css';
 
@@ -325,6 +327,7 @@ class ExperienceDetail extends Component {
         {/* 留言區塊  */}
         <Section paddingBottom>
           <Wrapper size="s">
+            <ScrollElement name={COMMENT_ZONE} />
             {repliesStatus === status.FETCHING ? (
               <Loader size="s" />
             ) : (
