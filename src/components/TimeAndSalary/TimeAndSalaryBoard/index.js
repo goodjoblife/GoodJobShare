@@ -11,6 +11,7 @@ import FanPageBlock from 'common/FanPageBlock';
 import InfoTimeModal from '../common/InfoTimeModal';
 import InfoSalaryModal from '../common/InfoSalaryModal';
 import AboutThisJobModal from '../common/AboutThisJobModal';
+import withModal from '../common/withModal';
 import styles from './TimeAndSalaryBoard.module.css';
 import commonStyles from '../views/view.module.css';
 import { isFetching, isFetched } from '../../../constants/status';
@@ -144,7 +145,7 @@ const injectExtremeDividerAt = nthRow => onClick =>
     </tr>
   );
 
-export default class TimeAndSalaryBoard extends Component {
+class TimeAndSalaryBoard extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
     totalCount: PropTypes.number,
@@ -160,6 +161,14 @@ export default class TimeAndSalaryBoard extends Component {
     extremeData: ImmutablePropTypes.list,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchMyPermission: PropTypes.func.isRequired,
+    infoSalaryModal: PropTypes.shape({
+      isOpen: PropTypes.bool.isRequired,
+      setIsOpen: PropTypes.func.isRequired,
+    }).isRequired,
+    infoTimeModal: PropTypes.shape({
+      isOpen: PropTypes.bool.isRequired,
+      setIsOpen: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   static fetchData({ location, store: { dispatch }, ...props }) {
@@ -172,19 +181,7 @@ export default class TimeAndSalaryBoard extends Component {
     return dispatch(queryTimeAndSalary({ sortBy, order, page }));
   }
 
-  constructor(props) {
-    super(props);
-    this.toggleInfoSalaryModal = this.toggleInfoSalaryModal.bind(this);
-    this.toggleInfoTimeModal = this.toggleInfoTimeModal.bind(this);
-  }
-
   state = {
-    infoSalaryModal: {
-      isOpen: false,
-    },
-    infoTimeModal: {
-      isOpen: false,
-    },
     aboutThisJobModal: {
       isOpen: false,
       title: '',
@@ -221,17 +218,15 @@ export default class TimeAndSalaryBoard extends Component {
     }
   }
 
-  toggleInfoSalaryModal() {
-    const state = this.state;
-    state.infoSalaryModal.isOpen = !state.infoSalaryModal.isOpen;
-    this.setState(state);
-  }
+  toggleInfoSalaryModal = () => {
+    const { infoSalaryModal } = this.props;
+    infoSalaryModal.setIsOpen(!infoSalaryModal.isOpen);
+  };
 
-  toggleInfoTimeModal() {
-    const state = this.state;
-    state.infoTimeModal.isOpen = !state.infoTimeModal.isOpen;
-    this.setState(state);
-  }
+  toggleInfoTimeModal = () => {
+    const { infoTimeModal } = this.props;
+    infoTimeModal.setIsOpen(!infoTimeModal.isOpen);
+  };
 
   toggleAboutThisJobModal = (aboutThisJob, title) => {
     const state = this.state;
@@ -374,11 +369,11 @@ export default class TimeAndSalaryBoard extends Component {
           )}
           <FanPageBlock className={styles.fanPageBlock} />
           <InfoSalaryModal
-            isOpen={this.state.infoSalaryModal.isOpen}
+            isOpen={this.props.infoSalaryModal.isOpen}
             close={this.toggleInfoSalaryModal}
           />
           <InfoTimeModal
-            isOpen={this.state.infoTimeModal.isOpen}
+            isOpen={this.props.infoTimeModal.isOpen}
             close={this.toggleInfoTimeModal}
           />
           <AboutThisJobModal
@@ -392,3 +387,8 @@ export default class TimeAndSalaryBoard extends Component {
     );
   }
 }
+
+export default R.compose(
+  withModal('infoSalaryModal'),
+  withModal('infoTimeModal')
+)(TimeAndSalaryBoard);
