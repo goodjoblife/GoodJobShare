@@ -24,13 +24,14 @@ import GradientMask from '../../common/GradientMask';
 
 import DashBoardTable from '../common/DashBoardTable';
 
-import { toQsString, querySelector, locationSearchToQuery } from './helper';
+import { toQsString, queryParser } from './helper';
 import { DATA_NUM_PER_PAGE } from '../../../constants/timeAndSalarSearch';
 import renderHelmet from './helmet';
 import {
   pathSelector,
   pathnameSelector,
   searchSelector,
+  querySelector,
 } from 'common/routing/selectors';
 
 const pathnameMapping = {
@@ -175,11 +176,8 @@ class TimeAndSalaryBoard extends Component {
   };
 
   static fetchData({ store: { dispatch }, ...props }) {
-    const search = searchSelector(props);
     const { sortBy, order } = pathParameterSelector(props);
-
-    const query = locationSearchToQuery(search);
-    const { page } = querySelector(query);
+    const { page } = queryParser(querySelector(props));
 
     return dispatch(queryTimeAndSalary({ sortBy, order, page }));
   }
@@ -194,11 +192,8 @@ class TimeAndSalaryBoard extends Component {
   };
 
   componentDidMount() {
-    const search = searchSelector(this.props);
     const { sortBy, order } = pathParameterSelector(this.props);
-
-    const query = locationSearchToQuery(search);
-    const { page } = querySelector(query);
+    const { page } = queryParser(querySelector(this.props));
 
     this.props.resetBoardExtremeData();
     this.props.queryTimeAndSalary({ sortBy, order, page });
@@ -210,10 +205,8 @@ class TimeAndSalaryBoard extends Component {
       pathSelector(prevProps) !== pathSelector(this.props) ||
       searchSelector(prevProps) !== searchSelector(this.props)
     ) {
-      const search = searchSelector(this.props);
       const { sortBy, order } = pathParameterSelector(this.props);
-      const query = locationSearchToQuery(search);
-      const { page } = querySelector(query);
+      const { page } = queryParser(querySelector(this.props));
       this.setState({ showExtreme: false });
       this.props.resetBoardExtremeData();
       this.props.queryTimeAndSalary({ sortBy, order, page });
@@ -295,8 +288,7 @@ class TimeAndSalaryBoard extends Component {
   render() {
     const path = pathSelector(this.props);
     const pathname = pathnameSelector(this.props);
-    const search = searchSelector(this.props);
-    const { page } = querySelector(locationSearchToQuery(search));
+    const { page } = queryParser(querySelector(this.props));
     const { title, hasExtreme } = pathParameterSelector(this.props);
     const {
       data,

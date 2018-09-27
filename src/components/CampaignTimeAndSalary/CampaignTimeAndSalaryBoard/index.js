@@ -34,12 +34,12 @@ import {
   paramsSelector,
   pathnameSelector,
   searchSelector,
+  querySelector,
 } from 'common/routing/selectors';
 
 import {
   toQsString,
-  querySelector,
-  locationSearchToQuery,
+  queryParser,
 } from '../../TimeAndSalary/TimeAndSalaryBoard/helper';
 import { DATA_NUM_PER_PAGE } from '../../../constants/timeAndSalarSearch';
 
@@ -153,12 +153,9 @@ class CampaignTimeAndSalaryBoard extends Component {
   };
 
   static fetchData({ store: { dispatch, getState }, ...props }) {
-    const search = searchSelector(props);
     const { sortBy, order } = pathParameterSelector(props);
     const campaignName = campaignNameSelector(props);
-
-    const query = locationSearchToQuery(search);
-    const { page } = querySelector(query);
+    const { page } = queryParser(querySelector(props));
 
     return dispatch(queryCampaignInfoList()).then(() => {
       const campaignEntries = campaignEntriesSelector(getState());
@@ -186,7 +183,6 @@ class CampaignTimeAndSalaryBoard extends Component {
   };
 
   componentDidMount() {
-    const search = searchSelector(this.props);
     const campaignName = campaignNameSelector(this.props);
 
     const { campaignEntries } = this.props;
@@ -195,8 +191,7 @@ class CampaignTimeAndSalaryBoard extends Component {
       campaignName
     );
     const { sortBy, order } = pathParameterSelector(this.props);
-    const query = locationSearchToQuery(search);
-    const { page } = querySelector(query);
+    const { page } = queryParser(querySelector(this.props));
 
     this.props.queryCampaignInfoListIfNeeded().then(() => {
       this.props.queryCampaignTimeAndSalary(campaignName, {
@@ -229,8 +224,7 @@ class CampaignTimeAndSalaryBoard extends Component {
         campaignName
       );
       const { sortBy, order } = pathParameterSelector(this.props);
-      const query = locationSearchToQuery(search);
-      const { page } = querySelector(query);
+      const { page } = queryParser(querySelector(this.props));
       this.props.queryCampaignInfoListIfNeeded().then(() => {
         this.props.queryCampaignTimeAndSalary(campaignName, {
           sortBy,
@@ -285,8 +279,7 @@ class CampaignTimeAndSalaryBoard extends Component {
     const pathname = pathnameSelector(this.props);
     const { campaignName, campaignEntries, campaignEntriesStatus } = this.props;
     const { title } = pathParameterSelector(this.props);
-    const search = searchSelector(this.props);
-    const { page } = querySelector(locationSearchToQuery(search));
+    const { page } = queryParser(querySelector(this.props));
     const { status, data, switchPath, totalCount, currentPage } = this.props;
     const raw = data.toJS();
 
