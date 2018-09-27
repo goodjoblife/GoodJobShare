@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import { Redirect, Switch } from 'react-router';
+import R from 'ramda';
 
 import Wrapper from 'common/base/Wrapper';
 import RouteWithSubRoutes from '../route';
@@ -13,6 +14,7 @@ import Banner from '../CampaignTimeAndSalary/Banner';
 import MobileInfoButtons from './MobileInfoButtons';
 import InfoTimeModal from './common/InfoTimeModal';
 import InfoSalaryModal from './common/InfoSalaryModal';
+import withModal from './common/withModal';
 
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../constants/helmetData';
@@ -29,7 +31,7 @@ const campaignListFromEntries = campaignEntries =>
     }))
     .toJS();
 
-export default class TimeAndSalary extends Component {
+class TimeAndSalary extends Component {
   static fetchData({ store: { dispatch } }) {
     return dispatch(queryCampaignInfoList());
   }
@@ -47,38 +49,29 @@ export default class TimeAndSalary extends Component {
       }),
     }),
     staticContext: PropTypes.object,
-  };
-
-  constructor(props) {
-    super(props);
-    this.toggleInfoSalaryModal = this.toggleInfoSalaryModal.bind(this);
-    this.toggleInfoTimeModal = this.toggleInfoTimeModal.bind(this);
-  }
-
-  state = {
-    infoSalaryModal: {
-      isOpen: false,
-    },
-    infoTimeModal: {
-      isOpen: false,
-    },
+    infoSalaryModal: PropTypes.shape({
+      isOpen: PropTypes.bool.isRequired,
+      setIsOpen: PropTypes.func.isRequired,
+    }).isRequired,
+    infoTimeModal: PropTypes.shape({
+      isOpen: PropTypes.bool.isRequired,
+      setIsOpen: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   componentDidMount() {
     this.props.queryCampaignInfoListIfNeeded();
   }
 
-  toggleInfoSalaryModal() {
-    const state = this.state;
-    state.infoSalaryModal.isOpen = !state.infoSalaryModal.isOpen;
-    this.setState(state);
-  }
+  toggleInfoSalaryModal = () => {
+    const { infoSalaryModal } = this.props;
+    infoSalaryModal.setIsOpen(!infoSalaryModal.isOpen);
+  };
 
-  toggleInfoTimeModal() {
-    const state = this.state;
-    state.infoTimeModal.isOpen = !state.infoTimeModal.isOpen;
-    this.setState(state);
-  }
+  toggleInfoTimeModal = () => {
+    const { infoTimeModal } = this.props;
+    infoTimeModal.setIsOpen(!infoTimeModal.isOpen);
+  };
 
   renderHelmet = () => {
     const pathname = pathnameSelector(this.props);
@@ -136,11 +129,11 @@ export default class TimeAndSalary extends Component {
           </Wrapper>
         </section>
         <InfoSalaryModal
-          isOpen={this.state.infoSalaryModal.isOpen}
+          isOpen={this.props.infoSalaryModal.isOpen}
           close={this.toggleInfoSalaryModal}
         />
         <InfoTimeModal
-          isOpen={this.state.infoTimeModal.isOpen}
+          isOpen={this.props.infoTimeModal.isOpen}
           close={this.toggleInfoTimeModal}
         />
         <Wrapper size="l" className={styles.subRouteWrapper}>
@@ -154,3 +147,8 @@ export default class TimeAndSalary extends Component {
     );
   }
 }
+
+export default R.compose(
+  withModal('infoSalaryModal'),
+  withModal('infoTimeModal')
+)(TimeAndSalary);

@@ -12,6 +12,7 @@ import Pagination from 'common/Pagination';
 import CommonNotFound from 'common/NotFound';
 import InfoTimeModal from '../../TimeAndSalary/common/InfoTimeModal';
 import InfoSalaryModal from '../../TimeAndSalary/common/InfoSalaryModal';
+import withModal from '../../TimeAndSalary/common/withModal';
 import AboutThisJobModal from '../../TimeAndSalary/common/AboutThisJobModal';
 import timeAndSalaryBoardStyles from '../../TimeAndSalary/TimeAndSalaryBoard/TimeAndSalaryBoard.module.css';
 import timeAndSalaryBannerStyles from '../../TimeAndSalary/Banner.module.css';
@@ -125,7 +126,7 @@ const queryJobTitlesFromCampaignEntries = (campaignEntries, campaignName) => {
   return campaignInfo ? campaignInfo.toJS().queryJobTitles : [];
 };
 
-export default class CampaignTimeAndSalaryBoard extends Component {
+class CampaignTimeAndSalaryBoard extends Component {
   static propTypes = {
     campaignName: PropTypes.string.isRequired,
     campaignEntries: ImmutablePropTypes.map.isRequired,
@@ -141,6 +142,14 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     switchPath: PropTypes.func,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchMyPermission: PropTypes.func.isRequired,
+    infoSalaryModal: PropTypes.shape({
+      isOpen: PropTypes.bool.isRequired,
+      setIsOpen: PropTypes.func.isRequired,
+    }).isRequired,
+    infoTimeModal: PropTypes.shape({
+      isOpen: PropTypes.bool.isRequired,
+      setIsOpen: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   static fetchData({ store: { dispatch, getState }, ...props }) {
@@ -168,19 +177,7 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     });
   }
 
-  constructor(props) {
-    super(props);
-    this.toggleInfoSalaryModal = this.toggleInfoSalaryModal.bind(this);
-    this.toggleInfoTimeModal = this.toggleInfoTimeModal.bind(this);
-  }
-
   state = {
-    infoSalaryModal: {
-      isOpen: false,
-    },
-    infoTimeModal: {
-      isOpen: false,
-    },
     aboutThisJobModal: {
       isOpen: false,
       title: '',
@@ -256,17 +253,15 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     };
   };
 
-  toggleInfoSalaryModal() {
-    const state = this.state;
-    state.infoSalaryModal.isOpen = !state.infoSalaryModal.isOpen;
-    this.setState(state);
-  }
+  toggleInfoSalaryModal = () => {
+    const { infoSalaryModal } = this.props;
+    infoSalaryModal.setIsOpen(!infoSalaryModal.isOpen);
+  };
 
-  toggleInfoTimeModal() {
-    const state = this.state;
-    state.infoTimeModal.isOpen = !state.infoTimeModal.isOpen;
-    this.setState(state);
-  }
+  toggleInfoTimeModal = () => {
+    const { infoTimeModal } = this.props;
+    infoTimeModal.setIsOpen(!infoTimeModal.isOpen);
+  };
 
   toggleAboutThisJobModal = (aboutThisJob, title) => {
     const state = this.state;
@@ -363,11 +358,11 @@ export default class CampaignTimeAndSalaryBoard extends Component {
             />
           )}
           <InfoSalaryModal
-            isOpen={this.state.infoSalaryModal.isOpen}
+            isOpen={this.props.infoSalaryModal.isOpen}
             close={this.toggleInfoSalaryModal}
           />
           <InfoTimeModal
-            isOpen={this.state.infoTimeModal.isOpen}
+            isOpen={this.props.infoTimeModal.isOpen}
             close={this.toggleInfoTimeModal}
           />
           <AboutThisJobModal
@@ -381,3 +376,8 @@ export default class CampaignTimeAndSalaryBoard extends Component {
     );
   }
 }
+
+export default R.compose(
+  withModal('infoSalaryModal'),
+  withModal('infoTimeModal')
+)(CampaignTimeAndSalaryBoard);
