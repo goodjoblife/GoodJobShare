@@ -10,7 +10,7 @@
   marginLeft: 74px;
   padding: 10px;
 
-  @media (max-width: 550px) {
+  @media (max-width: 850px) {
     width: auto;
     margin: 0;
     margin-top: 8px;
