@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Switch } from 'react-router';
+import R from 'ramda';
 
 import Wrapper from 'common/base/Wrapper';
 import FanPageBlock from 'common/FanPageBlock';
@@ -12,6 +13,7 @@ import Banner from './Banner';
 import MobileInfoButtons from '../TimeAndSalary/MobileInfoButtons';
 import InfoTimeModal from '../TimeAndSalary/common/InfoTimeModal';
 import InfoSalaryModal from '../TimeAndSalary/common/InfoSalaryModal';
+import withModal from '../TimeAndSalary/common/withModal';
 import styles from './CampaignTimeAndSalary.module.css';
 
 import { queryCampaignInfoList } from '../../actions/campaignInfo';
@@ -25,7 +27,7 @@ const campaignListFromEntries = campaignEntries =>
     }))
     .toJS();
 
-export default class TimeAndSalary extends Component {
+class TimeAndSalary extends Component {
   static fetchData({ store: { dispatch } }) {
     return dispatch(queryCampaignInfoList());
   }
@@ -38,38 +40,29 @@ export default class TimeAndSalary extends Component {
     location: PropTypes.shape({
       pathname: PropTypes.string,
     }),
-  };
-
-  constructor(props) {
-    super(props);
-    this.toggleInfoSalaryModal = this.toggleInfoSalaryModal.bind(this);
-    this.toggleInfoTimeModal = this.toggleInfoTimeModal.bind(this);
-  }
-
-  state = {
-    infoSalaryModal: {
-      isOpen: false,
-    },
-    infoTimeModal: {
-      isOpen: false,
-    },
+    infoSalaryModal: PropTypes.shape({
+      isOpen: PropTypes.bool.isRequired,
+      setIsOpen: PropTypes.func.isRequired,
+    }).isRequired,
+    infoTimeModal: PropTypes.shape({
+      isOpen: PropTypes.bool.isRequired,
+      setIsOpen: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   componentDidMount() {
     this.props.queryCampaignInfoListIfNeeded();
   }
 
-  toggleInfoSalaryModal() {
-    const state = this.state;
-    state.infoSalaryModal.isOpen = !state.infoSalaryModal.isOpen;
-    this.setState(state);
-  }
+  toggleInfoSalaryModal = () => {
+    const { infoSalaryModal } = this.props;
+    infoSalaryModal.setIsOpen(!infoSalaryModal.isOpen);
+  };
 
-  toggleInfoTimeModal() {
-    const state = this.state;
-    state.infoTimeModal.isOpen = !state.infoTimeModal.isOpen;
-    this.setState(state);
-  }
+  toggleInfoTimeModal = () => {
+    const { infoTimeModal } = this.props;
+    infoTimeModal.setIsOpen(!infoTimeModal.isOpen);
+  };
 
   render() {
     const { routes } = this.props;
@@ -87,11 +80,11 @@ export default class TimeAndSalary extends Component {
           />
         </Wrapper>
         <InfoSalaryModal
-          isOpen={this.state.infoSalaryModal.isOpen}
+          isOpen={this.props.infoSalaryModal.isOpen}
           close={this.toggleInfoSalaryModal}
         />
         <InfoTimeModal
-          isOpen={this.state.infoTimeModal.isOpen}
+          isOpen={this.props.infoTimeModal.isOpen}
           close={this.toggleInfoTimeModal}
         />
         <Wrapper size="l" className={styles.wrapper}>
@@ -106,3 +99,8 @@ export default class TimeAndSalary extends Component {
     );
   }
 }
+
+export default R.compose(
+  withModal('infoSalaryModal'),
+  withModal('infoTimeModal')
+)(TimeAndSalary);
