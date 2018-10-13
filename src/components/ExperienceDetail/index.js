@@ -254,13 +254,8 @@ class ExperienceDetail extends Component {
   };
 
   render() {
-    const {
-      likeExperience,
-      likeReply,
-      match,
-      canViewExperirenceDetail,
-    } = this.props;
-    const id = experienceIdSelector(match);
+    const { likeExperience, likeReply, canViewExperirenceDetail } = this.props;
+    const id = experienceIdSelector(this.props);
 
     const { isModalOpen, modalType, modalPayload } = this.state;
 
