@@ -41,7 +41,10 @@ server.get(
 
     const context = {};
 
-    const { match, route: matchRoute } = matchRoutes(req.path, rootRoutes);
+    const { match, route: matchRoute } = matchRoutes(
+      location.pathname,
+      rootRoutes
+    );
 
     function resolveComponent() {
       const component = matchRoute.component;
