@@ -31,21 +31,24 @@ import { MARKDOWN_DIVIDER } from '../../constants/hideContent';
 import { SITE_NAME } from '../../constants/helmetData';
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
+import { paramsSelector } from 'common/routing/selectors';
+
 import styles from './LaborRightsSingle.module.css';
 
+const idSelector = R.compose(
+  params => params.id,
+  paramsSelector
+);
+
 class LaborRightsSingle extends React.Component {
-  static fetchData({
-    store: { dispatch },
-    match: {
-      params: { id },
-    },
-  }) {
+  static fetchData({ store: { dispatch }, ...props }) {
+    const id = idSelector(props);
     return Promise.all([dispatch(queryMenu()), dispatch(queryEntry(id))]);
   }
 
   componentDidMount() {
     this.props.queryMenuIfUnfetched();
-    this.props.queryEntryIfUnfetched(this.props.match.params.id);
+    this.props.queryEntryIfUnfetched(idSelector(this.props));
     this.props.fetchMyPermission();
 
     // send Facebook Pixel 'ViewContent' event
@@ -57,12 +60,12 @@ class LaborRightsSingle extends React.Component {
 
   componentDidUpdate(prevProps) {
     this.props.queryMenuIfUnfetched();
-    this.props.queryEntryIfUnfetched(this.props.match.params.id);
+    this.props.queryEntryIfUnfetched(idSelector(this.props));
 
     // send Facebook Pixel 'ViewContent' event if goto reading another labor rights unit
-    if (prevProps.match.params.id !== this.props.match.params.id) {
+    if (idSelector(prevProps) !== idSelector(this.props)) {
       ReactPixel.track('ViewContent', {
-        content_ids: [this.props.match.params.id],
+        content_ids: [idSelector(this.props)],
         content_category: PIXEL_CONTENT_CATEGORY.VIEW_LABOR_RIGHT,
       });
     }

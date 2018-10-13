@@ -38,7 +38,7 @@ export const searchTypeSelector = R.compose(
   qsSelector('type', 'interview,work,intern')
 );
 
-export const querySelector = query => ({
+export const queryParser = query => ({
   get sortBy() {
     return sortBySelector(query);
   },
@@ -68,13 +68,3 @@ export const handleSearchType = searchType =>
       R.append(searchType)
     )
   );
-
-export const locationSearchToQuery = R.compose(
-  qs.parse,
-  search => {
-    if (search[0] === '?') {
-      return R.tail(search);
-    }
-    return search;
-  }
-);

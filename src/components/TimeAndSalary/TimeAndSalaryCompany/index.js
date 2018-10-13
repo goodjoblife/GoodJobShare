@@ -12,6 +12,12 @@ import { queryCompany } from '../../../actions/timeAndSalaryCompany';
 import { isFetching, isFetched } from '../../../constants/status';
 import renderHelmet from './helmet';
 
+import {
+  pathSelector,
+  paramsSelector,
+  pathnameSelector,
+} from 'common/routing/selectors';
+
 import styles from '../views/view.module.css';
 
 const pathnameMapping = {
@@ -46,8 +52,11 @@ const selectOptions = R.pipe(
   R.map(([path, { label }]) => ({ value: path, label }))
 );
 
-const pathSelector = R.path(['match', 'path']);
-const keywordSelector = R.path(['match', 'params', 'keyword']);
+const keywordSelector = R.compose(
+  params => params.keyword,
+  paramsSelector
+);
+
 const pathParameterSelector = R.compose(
   path => pathnameMapping[path],
   pathSelector
@@ -97,7 +106,7 @@ export default class TimeAndSalaryCompany extends Component {
   render() {
     const { switchPath, status, canViewTimeAndSalary } = this.props;
     const path = pathSelector(this.props);
-    const pathname = this.props.location.pathname;
+    const pathname = pathnameSelector(this.props);
     const { title, groupSortBy } = pathParameterSelector(this.props);
     const company = keywordSelector(this.props);
     const raw = this.props.data.toJS();

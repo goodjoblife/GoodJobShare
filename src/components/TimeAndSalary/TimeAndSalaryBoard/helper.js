@@ -26,20 +26,10 @@ const qsSelector = (key, defaultValue) =>
     R.propOr(defaultValue, key)
   );
 
-export const pageSelector = qsSelector('p', 1);
+const pageSelector = qsSelector('p', 1);
 
-export const querySelector = query => ({
+export const queryParser = query => ({
   get page() {
     return parseInt(pageSelector(query), 10);
   },
 });
-
-export const locationSearchToQuery = R.compose(
-  qs.parse,
-  search => {
-    if (search[0] === '?') {
-      return R.tail(search);
-    }
-    return search;
-  }
-);

@@ -24,9 +24,15 @@ import GradientMask from '../../common/GradientMask';
 
 import DashBoardTable from '../common/DashBoardTable';
 
-import { toQsString, querySelector, locationSearchToQuery } from './helper';
+import { toQsString, queryParser } from './helper';
 import { DATA_NUM_PER_PAGE } from '../../../constants/timeAndSalarSearch';
 import renderHelmet from './helmet';
+import {
+  pathSelector,
+  pathnameSelector,
+  searchSelector,
+  querySelector,
+} from 'common/routing/selectors';
 
 const pathnameMapping = {
   '/time-and-salary/work-time-dashboard': {
@@ -77,8 +83,6 @@ const selectOptions = R.pipe(
   R.toPairs,
   R.map(([path, opt]) => ({ value: path, label: opt.label }))
 );
-
-const pathSelector = R.path(['match', 'path']);
 
 const pathParameterSelector = R.compose(
   path => pathnameMapping[path],
@@ -171,12 +175,9 @@ class TimeAndSalaryBoard extends Component {
     }).isRequired,
   };
 
-  static fetchData({ location, store: { dispatch }, ...props }) {
-    const { search } = location;
+  static fetchData({ store: { dispatch }, ...props }) {
     const { sortBy, order } = pathParameterSelector(props);
-
-    const query = locationSearchToQuery(search);
-    const { page } = querySelector(query);
+    const { page } = queryParser(querySelector(props));
 
     return dispatch(queryTimeAndSalary({ sortBy, order, page }));
   }
@@ -191,11 +192,8 @@ class TimeAndSalaryBoard extends Component {
   };
 
   componentDidMount() {
-    const { search } = this.props.location;
     const { sortBy, order } = pathParameterSelector(this.props);
-
-    const query = locationSearchToQuery(search);
-    const { page } = querySelector(query);
+    const { page } = queryParser(querySelector(this.props));
 
     this.props.resetBoardExtremeData();
     this.props.queryTimeAndSalary({ sortBy, order, page });
@@ -205,12 +203,10 @@ class TimeAndSalaryBoard extends Component {
   componentDidUpdate(prevProps) {
     if (
       pathSelector(prevProps) !== pathSelector(this.props) ||
-      prevProps.location.search !== this.props.location.search
+      searchSelector(prevProps) !== searchSelector(this.props)
     ) {
-      const { search } = this.props.location;
       const { sortBy, order } = pathParameterSelector(this.props);
-      const query = locationSearchToQuery(search);
-      const { page } = querySelector(query);
+      const { page } = queryParser(querySelector(this.props));
       this.setState({ showExtreme: false });
       this.props.resetBoardExtremeData();
       this.props.queryTimeAndSalary({ sortBy, order, page });
@@ -291,8 +287,8 @@ class TimeAndSalaryBoard extends Component {
 
   render() {
     const path = pathSelector(this.props);
-    const { pathname, search } = this.props.location;
-    const { page } = querySelector(locationSearchToQuery(search));
+    const pathname = pathnameSelector(this.props);
+    const { page } = queryParser(querySelector(this.props));
     const { title, hasExtreme } = pathParameterSelector(this.props);
     const {
       data,
