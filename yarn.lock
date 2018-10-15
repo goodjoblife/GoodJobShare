@@ -8016,15 +8016,6 @@ react-router-dom@^4.2.2:
     react-router "^4.2.0"
     warning "^3.0.0"
 
-react-router-redux@^5.0.0-alpha.9:
-  version "5.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/react-router-redux/-/react-router-redux-5.0.0-alpha.9.tgz#825431516e0e6f1fd93b8807f6bd595e23ec3d10"
-  integrity sha512-euSgNIANnRXr4GydIuwA7RZCefrLQzIw5WdXspS8NPYbV+FxrKSS9MKG7U9vb6vsKHONnA4VxrVNWfnMUnUQAw==
-  dependencies:
-    history "^4.7.2"
-    prop-types "^15.6.0"
-    react-router "^4.2.0"
-
 react-router-scroll-4@^1.0.0-beta.1:
   version "1.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/react-router-scroll-4/-/react-router-scroll-4-1.0.0-beta.1.tgz#b1838c6e67b9fe64db33176958e88836e10bc4ce"

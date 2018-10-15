@@ -1,5 +1,3 @@
-import { push } from 'react-router-redux';
-
 import { fetchSearchCompany } from '../apis/timeAndSalaryApi';
 import fetchingStatus from '../constants/status';
 
@@ -87,5 +85,3 @@ export const queryCompany = ({ groupSortBy, order, company }) => (
       );
     });
 };
-
-export const switchPath = path => dispatch => dispatch(push(path));

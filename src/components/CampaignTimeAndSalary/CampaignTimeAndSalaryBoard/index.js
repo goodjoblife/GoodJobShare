@@ -141,7 +141,9 @@ class CampaignTimeAndSalaryBoard extends Component {
     status: PropTypes.string,
     match: PropTypes.object.isRequired,
     queryCampaignTimeAndSalary: PropTypes.func,
-    switchPath: PropTypes.func,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchPermission: PropTypes.func.isRequired,
     infoSalaryModal: PropTypes.shape({
@@ -260,7 +262,7 @@ class CampaignTimeAndSalaryBoard extends Component {
     const { campaignName, campaignEntries, campaignEntriesStatus } = this.props;
     const { title } = pathParameterSelector(this.props);
     const { page } = queryParser(querySelector(this.props));
-    const { status, data, switchPath, totalCount, currentPage } = this.props;
+    const { status, data, totalCount, currentPage, history } = this.props;
     const raw = data.toJS();
 
     // 如果 campaignName 不在清單中，代表 Not Found
@@ -299,7 +301,7 @@ class CampaignTimeAndSalaryBoard extends Component {
                 <Select
                   options={selectOptions(pathnameMapping)}
                   onChange={e =>
-                    switchPath(
+                    history.push(
                       e.target.value.replace(':campaign_name', campaignName)
                     )
                   }
