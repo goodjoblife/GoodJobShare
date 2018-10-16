@@ -7,8 +7,9 @@
     "start-production": "NODE_ENV=production node build/server.js",
     "lint": "eslint src scripts *.js",
     "lint-staged": "lint-staged",
+    "flow": "flow",
     "testonly": "razzle test --env=jsdom",
-    "test": "npm run lint && npm run testonly",
+    "test": "npm run flow && npm run lint && npm run testonly",
     "build": "razzle build"
   },
   "pre-commit": [
@@ -28,7 +29,6 @@
   },
   "devDependencies": {
     "autoprefixer": "7.1.1",
-    "babel-eslint": "7.2.3",
     "eslint": "4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-react-app": "^2.1.0",
@@ -39,9 +39,11 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.3.0",
+    "flow-bin": "^0.74.0",
     "lint-staged": "^7.1.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.14.2",
+    "razzle-plugin-flow": "^1.0.0",
     "redux-logger": "^2.7.4",
     "stylelint": "^7.8.0",
     "stylelint-config-standard": "^16.0.0",
