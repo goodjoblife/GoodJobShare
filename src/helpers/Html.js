@@ -46,7 +46,7 @@ export default class Html extends Component {
           {/* include Sentry library for reporting website error --> */}
           <script
             src="https://cdn.ravenjs.com/3.26.4/raven.min.js"
-            crossorigin="anonymous"
+            crossOrigin="anonymous"
           />
         </head>
         <body>

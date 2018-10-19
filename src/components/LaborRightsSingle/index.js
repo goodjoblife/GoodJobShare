@@ -103,7 +103,7 @@ class LaborRightsSingle extends React.Component {
 
     const { entryStatus, entryError } = this.props;
     return (
-      <main>
+      <Section>
         <Helmet
           title={seoTitle}
           meta={[
@@ -148,7 +148,7 @@ class LaborRightsSingle extends React.Component {
             />
           </div>
         )}
-      </main>
+      </Section>
     );
   }
 }

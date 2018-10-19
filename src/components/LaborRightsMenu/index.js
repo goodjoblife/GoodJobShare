@@ -38,7 +38,7 @@ class LaborRightsMenu extends React.Component {
     });
     return (
       <Section Tag="main" pageTop>
-        <Wrapper size="l" Tag="main">
+        <Wrapper size="l">
           <Helmet {...HELMET_DATA.LABOR_RIGHTS_MENU} />
           {isFetching(status) && <Loader />}
           {isError(status) &&
