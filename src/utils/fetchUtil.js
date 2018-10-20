@@ -1,7 +1,7 @@
 import 'isomorphic-fetch';
 
 import { getToken } from 'utils/tokenUtil';
-import HttpError from 'utils/error';
+import { HttpError } from 'utils/errors';
 
 import { API_HOST } from '../config';
 
@@ -40,7 +40,6 @@ const checkStatus = response => {
       throw new HttpError({
         message: json.message,
         statusCode: response.status,
-        errorCode: json.error ? json.error.errorCode : undefined,
       });
     });
   }
