@@ -37,8 +37,7 @@ const optionsBuilder = body => method =>
 const checkStatus = response => {
   if (!response.ok) {
     return response.json().then(json => {
-      throw new HttpError({
-        message: json.message,
+      throw new HttpError(json.message, {
         statusCode: response.status,
       });
     });
