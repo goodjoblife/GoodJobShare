@@ -4,6 +4,7 @@ import {
   entryStatusSelector,
 } from '../selectors/laborRightsSelector';
 import fetchingStatus from '../constants/status';
+import { isHttpError } from 'utils/errors';
 
 export const SET_MENU_STATUS = '@@LABOR_RIGHTS/SET_MENU_STATUS';
 export const SET_MENU_DATA = '@@LABOR_RIGHTS/SET_MENU_DATA';
@@ -61,7 +62,21 @@ export const queryEntry = entryId => dispatch => {
       dispatch(setEntryData(entryId, rawData, fetchingStatus.FETCHED));
     })
     .catch(error => {
-      dispatch(setEntryData(entryId, {}, fetchingStatus.ERROR, error));
+      if (isHttpError(error)) {
+        const { name, message, statusCode } = error;
+        if (statusCode === 400) {
+          // remap server 400 statusCode to 404
+          return dispatch(
+            setEntryData(entryId, {}, fetchingStatus.ERROR, {
+              name,
+              message,
+              statusCode: 404,
+            })
+          );
+        }
+      }
+      // unexpected error
+      throw error;
     });
 };
 

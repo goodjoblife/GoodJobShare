@@ -10,16 +10,12 @@ export const errorHandlingMiddleware = ({
   // if it's a promise.
   if (isPromise(result)) {
     return result.catch(error => {
-      // this is the default handler for each promise in redux thunk
-      if (error.errorCode) {
-        // if there exist errorCode, this is an expected error
-      } else if (typeof window !== 'undefined' && window.Raven) {
-        // otherwise, it's unexpected, send to sentry
+      // it's unexpected, send to sentry
+      console.error(error);
+      if (typeof window !== 'undefined' && window.Raven) {
         window.Raven.captureException(error, {
           extra: {
             state: getState(), // dump application state
-            errorCode: error.errorCode,
-            ...error.extra,
           },
         });
       }

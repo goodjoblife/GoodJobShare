@@ -125,7 +125,7 @@ class LaborRightsSingle extends React.Component {
         />
         {R.anyPass([isFetching, isUnfetched])(entryStatus) && <Loader />}
         {isError(entryStatus) &&
-          entryError.get('statusCode') === 400 && <NotFound />}
+          entryError.toJS().statusCode === 404 && <NotFound />}
         {isFetched(entryStatus) && (
           <div>
             <Body

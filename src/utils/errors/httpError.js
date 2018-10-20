@@ -1,11 +1,13 @@
+import R from 'ramda';
+
 class HttpError extends Error {
-  constructor({ message, statusCode, errorCode, ...extra }) {
+  constructor(message, { statusCode }) {
     super(message);
     this.name = 'HttpError';
     this.statusCode = statusCode;
-    this.errorCode = errorCode;
-    this.extra = extra;
     Error.captureStackTrace(this, HttpError);
   }
 }
+
 export default HttpError;
+export const isHttpError = R.propEq('name', 'HttpError');
