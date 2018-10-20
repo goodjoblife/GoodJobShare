@@ -31,9 +31,10 @@ class Header extends React.Component {
     this.unlisten = history.listen(this.closeNav);
 
     const { getLoginStatus, FB, getMe } = this.props;
-    getLoginStatus(FB)
-      .then(() => getMe(FB))
-      .catch(() => {});
+    FB &&
+      getLoginStatus(FB)
+        .then(() => getMe(FB))
+        .catch(() => {});
   }
 
   componentDidUpdate(prevProps) {
@@ -41,7 +42,7 @@ class Header extends React.Component {
       // FB instance changed
       const { getLoginStatus, FB } = this.props;
 
-      getLoginStatus(FB).catch(() => {});
+      FB && getLoginStatus(FB).catch(() => {});
     }
 
     if (
@@ -50,7 +51,7 @@ class Header extends React.Component {
     ) {
       const { getMe, FB } = this.props;
       this.props.fetchMyPermission();
-      getMe(FB).catch(() => {});
+      FB && getMe(FB).catch(() => {});
     }
   }
 

@@ -23,18 +23,15 @@ class Me extends Component {
     me: ImmutablePropTypes.map.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    const { getLoginStatus, FB, getMe } = this.props;
-    getLoginStatus(FB)
-      .then(() => getMe(FB))
-      .catch(() => {});
-  }
-
   componentDidMount() {
     this.props.fetchMyExperiences();
     this.props.fetchMyWorkings();
     this.props.fetchMyReplies();
+    const { getLoginStatus, FB, getMe } = this.props;
+    FB &&
+      getLoginStatus(FB)
+        .then(() => getMe(FB))
+        .catch(() => {});
   }
 
   componentDidUpdate(prevProps) {
@@ -42,7 +39,7 @@ class Me extends Component {
       // FB instance changed
       const { getLoginStatus, FB } = this.props;
 
-      getLoginStatus(FB).catch(() => {});
+      FB && getLoginStatus(FB).catch(() => {});
     }
 
     if (
@@ -50,13 +47,13 @@ class Me extends Component {
       this.props.auth.get('status') === authStatus.CONNECTED
     ) {
       const { getMe, FB } = this.props;
-      getMe(FB).catch(() => {});
+      FB && getMe(FB).catch(() => {});
     }
   }
 
   login = () => {
     const { login, FB } = this.props;
-    login(FB).catch(() => {});
+    FB && login(FB).catch(() => {});
   };
 
   render() {
