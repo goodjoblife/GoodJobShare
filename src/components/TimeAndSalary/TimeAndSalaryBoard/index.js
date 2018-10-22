@@ -16,7 +16,6 @@ import styles from './TimeAndSalaryBoard.module.css';
 import commonStyles from '../views/view.module.css';
 import { isFetching, isFetched } from '../../../constants/status';
 import { MAX_ROWS_IF_HIDDEN } from '../../../constants/hideContent';
-import CallToActionRow from './CallToActionRow';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 
 import { queryTimeAndSalary } from '../../../actions/timeAndSalaryBoard';
@@ -89,39 +88,23 @@ const pathParameterSelector = R.compose(
   pathSelector
 );
 
-const injectCallToActions = rows => {
-  const flapMapIndexed = R.addIndex(R.chain);
-  const injectEvery = N => (row, i) => {
-    if (i % N === N - 1) {
-      const nthInjected = parseInt(i / N, 10);
-      return [
-        row,
-        <CallToActionRow key={`injected-${nthInjected}`} position={i} />,
-      ];
-    }
-    return row;
-  };
-  return flapMapIndexed(injectEvery(100))(rows);
-};
-
-const injectPermissionBlock = rows => {
-  const newRows = rows.slice(0, MAX_ROWS_IF_HIDDEN);
-  newRows.push(
+const injectPermissionBlock = R.pipe(
+  R.take(MAX_ROWS_IF_HIDDEN),
+  R.append(
     <tr>
       <td colSpan="8" className={styles.noPadding}>
         <GradientMask />
       </td>
     </tr>
-  );
-  newRows.push(
+  ),
+  R.append(
     <tr>
       <td colSpan="8" className={styles.noBefore}>
         <BasicPermissionBlock rootClassName={styles.permissionBlockBoard} />
       </td>
     </tr>
-  );
-  return newRows;
-};
+  )
+);
 
 const injectLoadingIconRow = R.prepend(
   <tr key="extreme-loading" className={styles.extremeRow}>
@@ -268,10 +251,7 @@ class TimeAndSalaryBoard extends Component {
     if (!this.props.canViewTimeAndSalary) {
       return injectPermissionBlock;
     }
-    return R.pipe(
-      this.decorateExtremeRows,
-      injectCallToActions
-    );
+    return R.pipe(this.decorateExtremeRows);
   };
 
   // 給 Pagination 建立分頁的連結用
