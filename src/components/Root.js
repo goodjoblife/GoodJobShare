@@ -5,6 +5,7 @@ import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
 
 import { PermissionContextProvider } from 'common/permission-context';
+import { FacebookContextProvider } from 'common/facebook';
 
 import App from './App';
 import { GA_ID, PIXEL_ID } from '../config';
@@ -38,7 +39,9 @@ class Root extends Component {
   render() {
     return (
       <PermissionContextProvider>
-        <App />
+        <FacebookContextProvider>
+          <App />
+        </FacebookContextProvider>
       </PermissionContextProvider>
     );
   }

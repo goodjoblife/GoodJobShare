@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import { P } from 'common/base';
-import FacebookWrapper from 'common/FacebookWrapper';
+import { FacebookWrapper } from 'common/facebook';
 
 import styles from './FanPageBlock.module.css';
 

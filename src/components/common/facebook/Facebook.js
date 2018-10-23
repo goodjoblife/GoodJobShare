@@ -1,15 +1,28 @@
+// @flow
 /*
  * FB SDK 包裝
  */
 // reference: https://github.com/CherryProjects/react-facebook/blob/master/src/Facebook.js
 // 由於需要 DOM，所以 Server Side Rendering 不能使用
 
+type Callback = any => void;
+
+export type FBType = {
+  login: Callback => void,
+  logout: Callback => void,
+  api: (string, Callback) => void,
+  getLoginStatus: Callback => void,
+};
+
 export default class Facebook {
-  constructor(appId) {
+  appId: string;
+  loadingPromise: ?Promise<FBType>;
+
+  constructor(appId: string) {
     this.appId = appId;
   }
 
-  init() {
+  init(): Promise<FBType> {
     // 第二次 init 時可以取用之前的結果
     if (this.loadingPromise) {
       return this.loadingPromise;
@@ -38,6 +51,7 @@ export default class Facebook {
         const js = d.createElement(s);
         js.id = id;
         js.src = '//connect.facebook.net/zh_TW/sdk.js';
+        // $FlowFixMe
         fjs.parentNode.insertBefore(js, fjs);
       })(document, 'script', 'facebook-jssdk');
     });
