@@ -66,11 +66,13 @@ const ExperienceBlock = ({ data, size, backable }) => {
             Icon={i.User}
             className={styles.position}
           />
-          <Label
-            text={data.region}
-            Icon={i.Location}
-            className={styles.location}
-          />
+          {data.region && (
+            <Label
+              text={data.region}
+              Icon={i.Location}
+              className={styles.location}
+            />
+          )}
           {salary && (
             <Label
               className={styles.salary}
