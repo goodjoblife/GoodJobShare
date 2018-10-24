@@ -9,6 +9,7 @@ import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import WorkingHourBlock from '../common/WorkingHourBlock';
+import { withPermission } from 'common/permission-context';
 import { queryJobTitle } from '../../../actions/timeAndSalaryJobTitle';
 import { isFetching, isFetched } from '../../../constants/status';
 import renderHelmet from './helmet';
@@ -74,14 +75,14 @@ class TimeAndSalaryJobTitle extends Component {
     queryJobTitle: PropTypes.func,
     switchPath: PropTypes.func,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
-    fetchMyPermission: PropTypes.func.isRequired,
+    fetchPermission: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
     const { groupSortBy, order } = pathParameterSelector(this.props);
     const jobTitle = keywordSelector(this.props);
     this.props.queryJobTitle({ groupSortBy, order, jobTitle });
-    this.props.fetchMyPermission();
+    this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
@@ -92,7 +93,7 @@ class TimeAndSalaryJobTitle extends Component {
       const { groupSortBy, order } = pathParameterSelector(this.props);
       const jobTitle = keywordSelector(this.props);
       this.props.queryJobTitle({ groupSortBy, order, jobTitle });
-      this.props.fetchMyPermission();
+      this.props.fetchPermission();
     }
   }
 
@@ -161,6 +162,9 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   return dispatch(queryJobTitle({ groupSortBy, order, jobTitle }));
 });
 
-const hoc = compose(ssr);
+const hoc = compose(
+  ssr,
+  withPermission
+);
 
 export default hoc(TimeAndSalaryJobTitle);

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
+import { PermissionContextProvider } from 'common/permission-context';
 import App from '../components/Layout';
 import { GA_ID, PIXEL_ID } from '../config';
 
@@ -39,7 +40,11 @@ class Root extends Component {
   };
 
   render() {
-    return <App />;
+    return (
+      <PermissionContextProvider>
+        <App />
+      </PermissionContextProvider>
+    );
   }
 }
 

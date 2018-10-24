@@ -12,6 +12,7 @@ import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
 import FanPageBlock from 'common/FanPageBlock';
+import { withPermission } from 'common/permission-context';
 
 import Article from './Article';
 import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
@@ -65,7 +66,7 @@ class ExperienceDetail extends Component {
     repliesStatus: PropTypes.string,
     fetchExperience: PropTypes.func.isRequired,
     fetchReplies: PropTypes.func.isRequired,
-    fetchMyPermission: PropTypes.func.isRequired,
+    fetchPermission: PropTypes.func.isRequired,
     likeExperience: PropTypes.func.isRequired,
     likeReply: PropTypes.func.isRequired,
     submitComment: PropTypes.func.isRequired,
@@ -101,7 +102,7 @@ class ExperienceDetail extends Component {
       this.props.fetchExperience(experienceId);
     }
     this.props.fetchReplies(experienceId);
-    this.props.fetchMyPermission();
+    this.props.fetchPermission();
 
     // send Facebook Pixel 'ViewContent' event
     ReactPixel.track('ViewContent', {
@@ -117,7 +118,7 @@ class ExperienceDetail extends Component {
     if (prevExperienceId !== experienceId) {
       this.props.fetchExperience(experienceId);
       this.props.fetchReplies(experienceId);
-      this.props.fetchMyPermission();
+      this.props.fetchPermission();
     }
 
     if (
@@ -348,6 +349,9 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   return dispatch(fetchExperience(experienceId));
 });
 
-const hoc = compose(ssr);
+const hoc = compose(
+  ssr,
+  withPermission
+);
 
 export default hoc(ExperienceDetail);
