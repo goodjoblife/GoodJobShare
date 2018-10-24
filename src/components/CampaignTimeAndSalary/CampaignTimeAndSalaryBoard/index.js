@@ -5,11 +5,13 @@ import Loading from 'common/Loader';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
+import { compose, setStatic } from 'recompose';
 
 import { Star } from 'common/icons';
 import Select from 'common/form/Select';
 import Pagination from 'common/Pagination';
 import CommonNotFound from 'common/NotFound';
+import { withPermission } from 'common/permission-context';
 import InfoTimeModal from '../../TimeAndSalary/common/InfoTimeModal';
 import InfoSalaryModal from '../../TimeAndSalary/common/InfoSalaryModal';
 import withModal from '../../TimeAndSalary/common/withModal';
@@ -141,7 +143,7 @@ class CampaignTimeAndSalaryBoard extends Component {
     queryCampaignTimeAndSalary: PropTypes.func,
     switchPath: PropTypes.func,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
-    fetchMyPermission: PropTypes.func.isRequired,
+    fetchPermission: PropTypes.func.isRequired,
     infoSalaryModal: PropTypes.shape({
       isOpen: PropTypes.bool.isRequired,
       setIsOpen: PropTypes.func.isRequired,
@@ -151,28 +153,6 @@ class CampaignTimeAndSalaryBoard extends Component {
       setIsOpen: PropTypes.func.isRequired,
     }).isRequired,
   };
-
-  static fetchData({ store: { dispatch, getState }, ...props }) {
-    const { sortBy, order } = pathParameterSelector(props);
-    const campaignName = campaignNameSelector(props);
-    const { page } = queryParser(querySelector(props));
-
-    return dispatch(queryCampaignInfoList()).then(() => {
-      const campaignEntries = campaignEntriesSelector(getState());
-      const jobTitles = queryJobTitlesFromCampaignEntries(
-        campaignEntries,
-        campaignName
-      );
-      return dispatch(
-        queryCampaignTimeAndSalary(campaignName, {
-          sortBy,
-          order,
-          jobTitles,
-          page,
-        })
-      );
-    });
-  }
 
   state = {
     aboutThisJobModal: {
@@ -201,7 +181,7 @@ class CampaignTimeAndSalaryBoard extends Component {
         page,
       });
     });
-    this.props.fetchMyPermission();
+    this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
@@ -233,7 +213,7 @@ class CampaignTimeAndSalaryBoard extends Component {
           page,
         });
       });
-      this.props.fetchMyPermission();
+      this.props.fetchPermission();
     }
   }
 
@@ -370,7 +350,36 @@ class CampaignTimeAndSalaryBoard extends Component {
   }
 }
 
-export default R.compose(
+const ssr = setStatic(
+  'fetchData',
+  ({ store: { dispatch, getState }, ...props }) => {
+    const { sortBy, order } = pathParameterSelector(props);
+    const campaignName = campaignNameSelector(props);
+    const { page } = queryParser(querySelector(props));
+
+    return dispatch(queryCampaignInfoList()).then(() => {
+      const campaignEntries = campaignEntriesSelector(getState());
+      const jobTitles = queryJobTitlesFromCampaignEntries(
+        campaignEntries,
+        campaignName
+      );
+      return dispatch(
+        queryCampaignTimeAndSalary(campaignName, {
+          sortBy,
+          order,
+          jobTitles,
+          page,
+        })
+      );
+    });
+  }
+);
+
+const hoc = compose(
+  ssr,
+  withPermission,
   withModal('infoSalaryModal'),
   withModal('infoTimeModal')
-)(CampaignTimeAndSalaryBoard);
+);
+
+export default hoc(CampaignTimeAndSalaryBoard);

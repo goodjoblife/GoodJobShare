@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import ReactPixel from 'react-facebook-pixel';
 import R from 'ramda';
+import { compose, setStatic } from 'recompose';
 
 import Loader from 'common/Loader';
 import { Section } from 'common/base';
@@ -16,6 +17,7 @@ import { nthIndexOf } from 'utils/stringUtil';
 import NotFound from 'common/NotFound';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import FanPageBlock from 'common/FanPageBlock';
+import { withPermission } from 'common/permission-context';
 import Body from './Body';
 import Footer from './Footer';
 import LaborRightsPermissionBlock from '../../containers/PermissionBlock/LaborRightsPermissionBlockContainer';
@@ -41,15 +43,10 @@ const idSelector = R.compose(
 );
 
 class LaborRightsSingle extends React.Component {
-  static fetchData({ store: { dispatch }, ...props }) {
-    const id = idSelector(props);
-    return Promise.all([dispatch(queryMenu()), dispatch(queryEntry(id))]);
-  }
-
   componentDidMount() {
     this.props.queryMenuIfUnfetched();
     this.props.queryEntryIfUnfetched(idSelector(this.props));
-    this.props.fetchMyPermission();
+    this.props.fetchPermission();
 
     // send Facebook Pixel 'ViewContent' event
     ReactPixel.track('ViewContent', {
@@ -165,7 +162,17 @@ LaborRightsSingle.propTypes = {
   queryMenuIfUnfetched: PropTypes.func.isRequired,
   queryEntryIfUnfetched: PropTypes.func.isRequired,
   canViewLaborRightsSingle: PropTypes.bool.isRequired,
-  fetchMyPermission: PropTypes.func.isRequired,
+  fetchPermission: PropTypes.func.isRequired,
 };
 
-export default LaborRightsSingle;
+const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
+  const id = idSelector(props);
+  return Promise.all([dispatch(queryMenu()), dispatch(queryEntry(id))]);
+});
+
+const hoc = compose(
+  ssr,
+  withPermission
+);
+
+export default hoc(LaborRightsSingle);

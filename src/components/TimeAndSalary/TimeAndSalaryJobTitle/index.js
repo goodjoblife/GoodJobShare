@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
+import { compose, setStatic } from 'recompose';
 
 import Select from 'common/form/Select';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import WorkingHourBlock from '../common/WorkingHourBlock';
+import { withPermission } from 'common/permission-context';
 import { queryJobTitle } from '../../../actions/timeAndSalaryJobTitle';
 import { isFetching, isFetched } from '../../../constants/status';
 import renderHelmet from './helmet';
@@ -61,7 +63,7 @@ const pathParameterSelector = R.compose(
   pathSelector
 );
 
-export default class TimeAndSalaryJobTitle extends Component {
+class TimeAndSalaryJobTitle extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
     status: PropTypes.string,
@@ -73,21 +75,14 @@ export default class TimeAndSalaryJobTitle extends Component {
     queryJobTitle: PropTypes.func,
     switchPath: PropTypes.func,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
-    fetchMyPermission: PropTypes.func.isRequired,
+    fetchPermission: PropTypes.func.isRequired,
   };
-
-  static fetchData({ store: { dispatch }, ...props }) {
-    const { groupSortBy, order } = pathParameterSelector(props);
-    const jobTitle = keywordSelector(props);
-
-    return dispatch(queryJobTitle({ groupSortBy, order, jobTitle }));
-  }
 
   componentDidMount() {
     const { groupSortBy, order } = pathParameterSelector(this.props);
     const jobTitle = keywordSelector(this.props);
     this.props.queryJobTitle({ groupSortBy, order, jobTitle });
-    this.props.fetchMyPermission();
+    this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
@@ -98,7 +93,7 @@ export default class TimeAndSalaryJobTitle extends Component {
       const { groupSortBy, order } = pathParameterSelector(this.props);
       const jobTitle = keywordSelector(this.props);
       this.props.queryJobTitle({ groupSortBy, order, jobTitle });
-      this.props.fetchMyPermission();
+      this.props.fetchPermission();
     }
   }
 
@@ -159,3 +154,17 @@ export default class TimeAndSalaryJobTitle extends Component {
     );
   }
 }
+
+const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
+  const { groupSortBy, order } = pathParameterSelector(props);
+  const jobTitle = keywordSelector(props);
+
+  return dispatch(queryJobTitle({ groupSortBy, order, jobTitle }));
+});
+
+const hoc = compose(
+  ssr,
+  withPermission
+);
+
+export default hoc(TimeAndSalaryJobTitle);

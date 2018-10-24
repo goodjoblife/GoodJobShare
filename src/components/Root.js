@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
 import { compose, lifecycle } from 'recompose';
+import { PermissionContextProvider } from 'common/permission-context';
 import App from '../components/App';
 import { GA_ID, PIXEL_ID } from '../config';
 
@@ -39,7 +40,9 @@ const Record = compose(
 
 const Root = () => (
   <Fragment>
-    <App />
+    <PermissionContextProvider>
+      <App />
+    </PermissionContextProvider>
     <Record />
   </Fragment>
 );

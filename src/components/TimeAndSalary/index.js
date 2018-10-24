@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import { Redirect, Switch } from 'react-router';
-import R from 'ramda';
+import { compose, setStatic } from 'recompose';
 
 import Wrapper from 'common/base/Wrapper';
 import RouteWithSubRoutes from '../route';
@@ -32,10 +32,6 @@ const campaignListFromEntries = campaignEntries =>
     .toJS();
 
 class TimeAndSalary extends Component {
-  static fetchData({ store: { dispatch } }) {
-    return dispatch(queryCampaignInfoList());
-  }
-
   static propTypes = {
     campaignEntries: ImmutablePropTypes.map.isRequired,
     queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
@@ -148,7 +144,14 @@ class TimeAndSalary extends Component {
   }
 }
 
-export default R.compose(
+const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
+  return dispatch(queryCampaignInfoList());
+});
+
+const hoc = compose(
+  ssr,
   withModal('infoSalaryModal'),
   withModal('infoTimeModal')
-)(TimeAndSalary);
+);
+
+export default hoc(TimeAndSalary);

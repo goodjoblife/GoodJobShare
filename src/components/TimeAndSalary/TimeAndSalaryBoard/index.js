@@ -4,10 +4,12 @@ import R from 'ramda';
 import Loading from 'common/Loader';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
+import { compose, setStatic } from 'recompose';
 
 import Select from 'common/form/Select';
 import Pagination from 'common/Pagination';
 import FanPageBlock from 'common/FanPageBlock';
+import { withPermission } from 'common/permission-context';
 import InfoTimeModal from '../common/InfoTimeModal';
 import InfoSalaryModal from '../common/InfoSalaryModal';
 import AboutThisJobModal from '../common/AboutThisJobModal';
@@ -147,7 +149,7 @@ class TimeAndSalaryBoard extends Component {
     extremeStatus: PropTypes.string,
     extremeData: ImmutablePropTypes.list,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
-    fetchMyPermission: PropTypes.func.isRequired,
+    fetchPermission: PropTypes.func.isRequired,
     infoSalaryModal: PropTypes.shape({
       isOpen: PropTypes.bool.isRequired,
       setIsOpen: PropTypes.func.isRequired,
@@ -157,13 +159,6 @@ class TimeAndSalaryBoard extends Component {
       setIsOpen: PropTypes.func.isRequired,
     }).isRequired,
   };
-
-  static fetchData({ store: { dispatch }, ...props }) {
-    const { sortBy, order } = pathParameterSelector(props);
-    const { page } = queryParser(querySelector(props));
-
-    return dispatch(queryTimeAndSalary({ sortBy, order, page }));
-  }
 
   state = {
     aboutThisJobModal: {
@@ -180,7 +175,7 @@ class TimeAndSalaryBoard extends Component {
 
     this.props.resetBoardExtremeData();
     this.props.queryTimeAndSalary({ sortBy, order, page });
-    this.props.fetchMyPermission();
+    this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
@@ -193,7 +188,7 @@ class TimeAndSalaryBoard extends Component {
       this.setState({ showExtreme: false });
       this.props.resetBoardExtremeData();
       this.props.queryTimeAndSalary({ sortBy, order, page });
-      this.props.fetchMyPermission();
+      this.props.fetchPermission();
     }
   }
 
@@ -364,7 +359,18 @@ class TimeAndSalaryBoard extends Component {
   }
 }
 
-export default R.compose(
+const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
+  const { sortBy, order } = pathParameterSelector(props);
+  const { page } = queryParser(querySelector(props));
+
+  return dispatch(queryTimeAndSalary({ sortBy, order, page }));
+});
+
+const hoc = compose(
+  ssr,
+  withPermission,
   withModal('infoSalaryModal'),
   withModal('infoTimeModal')
-)(TimeAndSalaryBoard);
+);
+
+export default hoc(TimeAndSalaryBoard);

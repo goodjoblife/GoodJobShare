@@ -6,8 +6,6 @@ import {
   queryCampaignTimeAndSalary,
   switchPath,
 } from '../../actions/campaignTimeAndSalaryBoard';
-import { fetchMyPermission } from '../../actions/me';
-import { canViewTimeAndSalarySelector } from '../../selectors/meSelector';
 import {
   campaignNameSelector,
   campaignEntriesSelector,
@@ -24,7 +22,6 @@ const mapStateToProps = (state, { match }) => ({
   totalCount: state.campaignTimeAndSalaryBoard.get('total'),
   currentPage: state.campaignTimeAndSalaryBoard.get('currentPage'),
   status: state.campaignTimeAndSalaryBoard.get('status'),
-  canViewTimeAndSalary: canViewTimeAndSalarySelector(state),
 });
 
 const mapDispatchToProps = dispatch =>
@@ -33,7 +30,6 @@ const mapDispatchToProps = dispatch =>
       queryCampaignInfoListIfNeeded,
       queryCampaignTimeAndSalary,
       switchPath,
-      fetchMyPermission,
     },
     dispatch
   );
