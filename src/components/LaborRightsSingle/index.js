@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import ReactPixel from 'react-facebook-pixel';
 import R from 'ramda';
+import { compose, setStatic } from 'recompose';
 
 import Loader from 'common/Loader';
 import { Section } from 'common/base';
@@ -41,11 +42,6 @@ const idSelector = R.compose(
 );
 
 class LaborRightsSingle extends React.Component {
-  static fetchData({ store: { dispatch }, ...props }) {
-    const id = idSelector(props);
-    return Promise.all([dispatch(queryMenu()), dispatch(queryEntry(id))]);
-  }
-
   componentDidMount() {
     this.props.queryMenuIfUnfetched();
     this.props.queryEntryIfUnfetched(idSelector(this.props));
@@ -168,4 +164,11 @@ LaborRightsSingle.propTypes = {
   fetchMyPermission: PropTypes.func.isRequired,
 };
 
-export default LaborRightsSingle;
+const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
+  const id = idSelector(props);
+  return Promise.all([dispatch(queryMenu()), dispatch(queryEntry(id))]);
+});
+
+const hoc = compose(ssr);
+
+export default hoc(LaborRightsSingle);

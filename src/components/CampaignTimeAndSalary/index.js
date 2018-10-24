@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Switch } from 'react-router';
-import R from 'ramda';
+import { compose, setStatic } from 'recompose';
 
 import Wrapper from 'common/base/Wrapper';
 import FanPageBlock from 'common/FanPageBlock';
@@ -28,10 +28,6 @@ const campaignListFromEntries = campaignEntries =>
     .toJS();
 
 class TimeAndSalary extends Component {
-  static fetchData({ store: { dispatch } }) {
-    return dispatch(queryCampaignInfoList());
-  }
-
   static propTypes = {
     campaignName: PropTypes.string.isRequired,
     campaignEntries: ImmutablePropTypes.map.isRequired,
@@ -100,7 +96,14 @@ class TimeAndSalary extends Component {
   }
 }
 
-export default R.compose(
+const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
+  return dispatch(queryCampaignInfoList());
+});
+
+const hoc = compose(
+  ssr,
   withModal('infoSalaryModal'),
   withModal('infoTimeModal')
-)(TimeAndSalary);
+);
+
+export default hoc(TimeAndSalary);

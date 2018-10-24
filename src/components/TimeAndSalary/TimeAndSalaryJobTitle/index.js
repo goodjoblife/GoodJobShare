@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
+import { compose, setStatic } from 'recompose';
 
 import Select from 'common/form/Select';
 import Loading from 'common/Loader';
@@ -61,7 +62,7 @@ const pathParameterSelector = R.compose(
   pathSelector
 );
 
-export default class TimeAndSalaryJobTitle extends Component {
+class TimeAndSalaryJobTitle extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
     status: PropTypes.string,
@@ -75,13 +76,6 @@ export default class TimeAndSalaryJobTitle extends Component {
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchMyPermission: PropTypes.func.isRequired,
   };
-
-  static fetchData({ store: { dispatch }, ...props }) {
-    const { groupSortBy, order } = pathParameterSelector(props);
-    const jobTitle = keywordSelector(props);
-
-    return dispatch(queryJobTitle({ groupSortBy, order, jobTitle }));
-  }
 
   componentDidMount() {
     const { groupSortBy, order } = pathParameterSelector(this.props);
@@ -159,3 +153,14 @@ export default class TimeAndSalaryJobTitle extends Component {
     );
   }
 }
+
+const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
+  const { groupSortBy, order } = pathParameterSelector(props);
+  const jobTitle = keywordSelector(props);
+
+  return dispatch(queryJobTitle({ groupSortBy, order, jobTitle }));
+});
+
+const hoc = compose(ssr);
+
+export default hoc(TimeAndSalaryJobTitle);

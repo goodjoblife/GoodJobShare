@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
+import { compose, setStatic } from 'recompose';
 
 import Select from 'common/form/Select';
 import Loading from 'common/Loader';
@@ -62,7 +63,7 @@ const pathParameterSelector = R.compose(
   pathSelector
 );
 
-export default class TimeAndSalaryCompany extends Component {
+class TimeAndSalaryCompany extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
     status: PropTypes.string,
@@ -76,13 +77,6 @@ export default class TimeAndSalaryCompany extends Component {
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchMyPermission: PropTypes.func.isRequired,
   };
-
-  static fetchData({ store: { dispatch }, ...props }) {
-    const { groupSortBy, order } = pathParameterSelector(props);
-    const company = keywordSelector(props);
-
-    return dispatch(queryCompany({ groupSortBy, order, company }));
-  }
 
   componentDidMount() {
     const { groupSortBy, order } = pathParameterSelector(this.props);
@@ -158,3 +152,14 @@ export default class TimeAndSalaryCompany extends Component {
     );
   }
 }
+
+const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
+  const { groupSortBy, order } = pathParameterSelector(props);
+  const company = keywordSelector(props);
+
+  return dispatch(queryCompany({ groupSortBy, order, company }));
+});
+
+const hoc = compose(ssr);
+
+export default hoc(TimeAndSalaryCompany);
