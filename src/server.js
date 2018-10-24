@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import configureStore from './store/configureStore';
 import Html from './helpers/Html';
-import App from './containers/App';
+import Root from './components/Root';
 import rootRoutes from './routes';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST); // eslint-disable-line import/no-dynamic-require
@@ -72,7 +72,7 @@ server.get(
     const finalComponent = (
       <Provider store={store}>
         <StaticRouter location={req.url} context={context}>
-          <App />
+          <Root />
         </StaticRouter>
       </Provider>
     );

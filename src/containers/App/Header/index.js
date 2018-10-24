@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import withFB from 'common/withFB';
-import Header from '../../../components/Layout/Header';
+import Header from '../../../components/App/Header';
 import { login, logout, getLoginStatus, getMe } from '../../../actions/auth';
 import { fetchMyPermission } from '../../../actions/me';
 
