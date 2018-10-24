@@ -17,6 +17,7 @@ import { nthIndexOf } from 'utils/stringUtil';
 import NotFound from 'common/NotFound';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import FanPageBlock from 'common/FanPageBlock';
+import { withPermission } from 'common/permission-context';
 import Body from './Body';
 import Footer from './Footer';
 import LaborRightsPermissionBlock from '../../containers/PermissionBlock/LaborRightsPermissionBlockContainer';
@@ -45,7 +46,7 @@ class LaborRightsSingle extends React.Component {
   componentDidMount() {
     this.props.queryMenuIfUnfetched();
     this.props.queryEntryIfUnfetched(idSelector(this.props));
-    this.props.fetchMyPermission();
+    this.props.fetchPermission();
 
     // send Facebook Pixel 'ViewContent' event
     ReactPixel.track('ViewContent', {
@@ -161,7 +162,7 @@ LaborRightsSingle.propTypes = {
   queryMenuIfUnfetched: PropTypes.func.isRequired,
   queryEntryIfUnfetched: PropTypes.func.isRequired,
   canViewLaborRightsSingle: PropTypes.bool.isRequired,
-  fetchMyPermission: PropTypes.func.isRequired,
+  fetchPermission: PropTypes.func.isRequired,
 };
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
@@ -169,6 +170,9 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   return Promise.all([dispatch(queryMenu()), dispatch(queryEntry(id))]);
 });
 
-const hoc = compose(ssr);
+const hoc = compose(
+  ssr,
+  withPermission
+);
 
 export default hoc(LaborRightsSingle);

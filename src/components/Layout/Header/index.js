@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import ReactGA from 'react-ga';
+import { compose } from 'recompose';
 import { Wrapper } from 'common/base';
 import { GjLogo, ArrowGo, People, PeopleFill } from 'common/icons';
 import PopoverToggle from 'common/PopoverToggle';
+import { withPermission } from 'common/permission-context';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 import Top from './Top';
@@ -50,7 +52,7 @@ class Header extends React.Component {
       this.props.auth.get('status') === authStatus.CONNECTED
     ) {
       const { getMe, FB } = this.props;
-      this.props.fetchMyPermission();
+      this.props.fetchPermission();
       FB && getMe(FB).catch(() => {});
     }
   }
@@ -173,7 +175,7 @@ Header.propTypes = {
   FB: PropTypes.object,
   location: PropTypes.object,
   history: PropTypes.object.isRequired,
-  fetchMyPermission: PropTypes.func.isRequired,
+  fetchPermission: PropTypes.func.isRequired,
 };
 
 const HeaderButton = ({ isNavOpen, toggle }) => (
@@ -209,4 +211,6 @@ ShareButton.defaultProps = {
   isMobileButton: false,
 };
 
-export default Header;
+const hoc = compose(withPermission);
+
+export default hoc(Header);

@@ -11,6 +11,7 @@ import { Star } from 'common/icons';
 import Select from 'common/form/Select';
 import Pagination from 'common/Pagination';
 import CommonNotFound from 'common/NotFound';
+import { withPermission } from 'common/permission-context';
 import InfoTimeModal from '../../TimeAndSalary/common/InfoTimeModal';
 import InfoSalaryModal from '../../TimeAndSalary/common/InfoSalaryModal';
 import withModal from '../../TimeAndSalary/common/withModal';
@@ -142,7 +143,7 @@ class CampaignTimeAndSalaryBoard extends Component {
     queryCampaignTimeAndSalary: PropTypes.func,
     switchPath: PropTypes.func,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
-    fetchMyPermission: PropTypes.func.isRequired,
+    fetchPermission: PropTypes.func.isRequired,
     infoSalaryModal: PropTypes.shape({
       isOpen: PropTypes.bool.isRequired,
       setIsOpen: PropTypes.func.isRequired,
@@ -180,7 +181,7 @@ class CampaignTimeAndSalaryBoard extends Component {
         page,
       });
     });
-    this.props.fetchMyPermission();
+    this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
@@ -212,7 +213,7 @@ class CampaignTimeAndSalaryBoard extends Component {
           page,
         });
       });
-      this.props.fetchMyPermission();
+      this.props.fetchPermission();
     }
   }
 
@@ -376,6 +377,7 @@ const ssr = setStatic(
 
 const hoc = compose(
   ssr,
+  withPermission,
   withModal('infoSalaryModal'),
   withModal('infoTimeModal')
 );

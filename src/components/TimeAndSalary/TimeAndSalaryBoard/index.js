@@ -9,6 +9,7 @@ import { compose, setStatic } from 'recompose';
 import Select from 'common/form/Select';
 import Pagination from 'common/Pagination';
 import FanPageBlock from 'common/FanPageBlock';
+import { withPermission } from 'common/permission-context';
 import InfoTimeModal from '../common/InfoTimeModal';
 import InfoSalaryModal from '../common/InfoSalaryModal';
 import AboutThisJobModal from '../common/AboutThisJobModal';
@@ -148,7 +149,7 @@ class TimeAndSalaryBoard extends Component {
     extremeStatus: PropTypes.string,
     extremeData: ImmutablePropTypes.list,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
-    fetchMyPermission: PropTypes.func.isRequired,
+    fetchPermission: PropTypes.func.isRequired,
     infoSalaryModal: PropTypes.shape({
       isOpen: PropTypes.bool.isRequired,
       setIsOpen: PropTypes.func.isRequired,
@@ -174,7 +175,7 @@ class TimeAndSalaryBoard extends Component {
 
     this.props.resetBoardExtremeData();
     this.props.queryTimeAndSalary({ sortBy, order, page });
-    this.props.fetchMyPermission();
+    this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
@@ -187,7 +188,7 @@ class TimeAndSalaryBoard extends Component {
       this.setState({ showExtreme: false });
       this.props.resetBoardExtremeData();
       this.props.queryTimeAndSalary({ sortBy, order, page });
-      this.props.fetchMyPermission();
+      this.props.fetchPermission();
     }
   }
 
@@ -367,6 +368,7 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
 
 const hoc = compose(
   ssr,
+  withPermission,
   withModal('infoSalaryModal'),
   withModal('infoTimeModal')
 );

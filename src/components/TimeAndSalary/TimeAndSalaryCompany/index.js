@@ -8,6 +8,7 @@ import Select from 'common/form/Select';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
+import { withPermission } from 'common/permission-context';
 import WorkingHourBlock from '../common/WorkingHourBlock';
 import { queryCompany } from '../../../actions/timeAndSalaryCompany';
 import { isFetching, isFetched } from '../../../constants/status';
@@ -75,14 +76,14 @@ class TimeAndSalaryCompany extends Component {
     queryCompany: PropTypes.func,
     switchPath: PropTypes.func,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
-    fetchMyPermission: PropTypes.func.isRequired,
+    fetchPermission: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
     const { groupSortBy, order } = pathParameterSelector(this.props);
     const company = keywordSelector(this.props);
     this.props.queryCompany({ groupSortBy, order, company });
-    this.props.fetchMyPermission();
+    this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
@@ -93,7 +94,7 @@ class TimeAndSalaryCompany extends Component {
       const { groupSortBy, order } = pathParameterSelector(this.props);
       const company = keywordSelector(this.props);
       this.props.queryCompany({ groupSortBy, order, company });
-      this.props.fetchMyPermission();
+      this.props.fetchPermission();
     }
   }
 
@@ -160,6 +161,9 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   return dispatch(queryCompany({ groupSortBy, order, company }));
 });
 
-const hoc = compose(ssr);
+const hoc = compose(
+  ssr,
+  withPermission
+);
 
 export default hoc(TimeAndSalaryCompany);
