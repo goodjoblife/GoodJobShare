@@ -4,6 +4,7 @@ import R from 'ramda';
 import Loading from 'common/Loader';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
+import { compose, setStatic } from 'recompose';
 
 import Select from 'common/form/Select';
 import Pagination from 'common/Pagination';
@@ -157,13 +158,6 @@ class TimeAndSalaryBoard extends Component {
       setIsOpen: PropTypes.func.isRequired,
     }).isRequired,
   };
-
-  static fetchData({ store: { dispatch }, ...props }) {
-    const { sortBy, order } = pathParameterSelector(props);
-    const { page } = queryParser(querySelector(props));
-
-    return dispatch(queryTimeAndSalary({ sortBy, order, page }));
-  }
 
   state = {
     aboutThisJobModal: {
@@ -364,7 +358,17 @@ class TimeAndSalaryBoard extends Component {
   }
 }
 
-export default R.compose(
+const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
+  const { sortBy, order } = pathParameterSelector(props);
+  const { page } = queryParser(querySelector(props));
+
+  return dispatch(queryTimeAndSalary({ sortBy, order, page }));
+});
+
+const hoc = compose(
+  ssr,
   withModal('infoSalaryModal'),
   withModal('infoTimeModal')
-)(TimeAndSalaryBoard);
+);
+
+export default hoc(TimeAndSalaryBoard);

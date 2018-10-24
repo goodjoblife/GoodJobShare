@@ -4,6 +4,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import R from 'ramda';
 import qs from 'qs';
+import { compose, setStatic } from 'recompose';
 
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
@@ -56,28 +57,6 @@ const sortByMap = {
 const BANNER_LOCATION = 10;
 
 class ExperienceSearch extends Component {
-  static fetchData({ store: { dispatch }, ...props }) {
-    const {
-      searchBy,
-      searchQuery,
-      sort,
-      page,
-      searchType: seachTypeStr,
-    } = queryParser(querySelector(props));
-    const searchType = R.split(',', seachTypeStr);
-
-    return dispatch(
-      fetchExperiencesAction(
-        page,
-        PAGE_COUNT,
-        sort,
-        searchBy,
-        searchQuery,
-        searchType
-      )
-    );
-  }
-
   static propTypes = {
     fetchExperiences: PropTypes.func.isRequired,
     getNewSearchBy: PropTypes.func.isRequired, // TODO: rename, eg: queryKeywords
@@ -454,4 +433,28 @@ class ExperienceSearch extends Component {
   }
 }
 
-export default ExperienceSearch;
+const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
+  const {
+    searchBy,
+    searchQuery,
+    sort,
+    page,
+    searchType: seachTypeStr,
+  } = queryParser(querySelector(props));
+  const searchType = R.split(',', seachTypeStr);
+
+  return dispatch(
+    fetchExperiencesAction(
+      page,
+      PAGE_COUNT,
+      sort,
+      searchBy,
+      searchQuery,
+      searchType
+    )
+  );
+});
+
+const hoc = compose(ssr);
+
+export default hoc(ExperienceSearch);

@@ -5,6 +5,7 @@ import R from 'ramda';
 import Helmet from 'react-helmet';
 import ReactPixel from 'react-facebook-pixel';
 import { Element as ScrollElement } from 'react-scroll';
+import { compose, setStatic } from 'recompose';
 
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
@@ -80,11 +81,6 @@ class ExperienceDetail extends Component {
     authStatus: PropTypes.string,
     canViewExperirenceDetail: PropTypes.bool.isRequired,
   };
-
-  static fetchData({ store: { dispatch }, ...props }) {
-    const experienceId = experienceIdSelector(props);
-    return dispatch(fetchExperience(experienceId));
-  }
 
   constructor(props) {
     super(props);
@@ -347,4 +343,11 @@ class ExperienceDetail extends Component {
   }
 }
 
-export default ExperienceDetail;
+const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
+  const experienceId = experienceIdSelector(props);
+  return dispatch(fetchExperience(experienceId));
+});
+
+const hoc = compose(ssr);
+
+export default hoc(ExperienceDetail);
