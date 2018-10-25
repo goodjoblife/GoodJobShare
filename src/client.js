@@ -5,7 +5,7 @@ import { fromJS } from 'immutable';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ScrollContext } from 'react-router-scroll-4';
-import App from './containers/App';
+import Root from './components/Root';
 import configureStore from './store/configureStore';
 import initSentry from './utils/sentryUtil';
 
@@ -36,7 +36,7 @@ hydrate(
   <Provider store={store}>
     <Router>
       <ScrollContext>
-        <App />
+        <Root />
       </ScrollContext>
     </Router>
   </Provider>,
@@ -44,12 +44,12 @@ hydrate(
 );
 
 if (module.hot) {
-  module.hot.accept('./containers/App', () => {
+  module.hot.accept('./components/Root', () => {
     hydrate(
       <Provider store={store}>
         <Router>
           <ScrollContext>
-            <App />
+            <Root />
           </ScrollContext>
         </Router>
       </Provider>,
