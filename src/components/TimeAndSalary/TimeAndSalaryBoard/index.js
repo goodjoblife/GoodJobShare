@@ -143,7 +143,9 @@ class TimeAndSalaryBoard extends Component {
     status: PropTypes.string,
     match: PropTypes.object.isRequired,
     queryTimeAndSalary: PropTypes.func,
-    switchPath: PropTypes.func,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
     queryExtremeTimeAndSalary: PropTypes.func.isRequired,
     resetBoardExtremeData: PropTypes.func.isRequired,
     extremeStatus: PropTypes.string,
@@ -270,7 +272,7 @@ class TimeAndSalaryBoard extends Component {
       status,
       totalCount,
       currentPage,
-      switchPath,
+      history,
       extremeStatus,
       extremeData,
       canViewTimeAndSalary,
@@ -309,7 +311,7 @@ class TimeAndSalaryBoard extends Component {
               <div className={commonStyles.select}>
                 <Select
                   options={selectOptions(pathnameMapping)}
-                  onChange={e => switchPath(e.target.value)}
+                  onChange={e => history.push(e.target.value)}
                   value={path}
                   hasNullOption={false}
                 />

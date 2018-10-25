@@ -1,5 +1,4 @@
 import R from 'ramda';
-import { push } from 'react-router-redux';
 
 import { fetchCampaignTimeAndSalary } from '../apis/timeAndSalaryApi';
 import fetchingStatus from '../constants/status';
@@ -122,5 +121,3 @@ export const queryCampaignTimeAndSalary = (
       );
     });
 };
-
-export const switchPath = path => dispatch => dispatch(push(path));

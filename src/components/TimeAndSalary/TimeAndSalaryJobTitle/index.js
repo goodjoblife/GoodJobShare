@@ -73,7 +73,9 @@ class TimeAndSalaryJobTitle extends Component {
       params: PropTypes.object.isRequired,
     }),
     queryJobTitle: PropTypes.func,
-    switchPath: PropTypes.func,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchPermission: PropTypes.func.isRequired,
   };
@@ -98,7 +100,7 @@ class TimeAndSalaryJobTitle extends Component {
   }
 
   render() {
-    const { switchPath, status, canViewTimeAndSalary } = this.props;
+    const { history, status, canViewTimeAndSalary } = this.props;
     const path = pathSelector(this.props);
     const pathname = pathnameSelector(this.props);
     const { title, groupSortBy } = pathParameterSelector(this.props);
@@ -124,7 +126,7 @@ class TimeAndSalaryJobTitle extends Component {
                 options={selectOptions(pathnameMapping)}
                 value={path}
                 onChange={e =>
-                  switchPath(substituteKeyword(e.target.value, jobTitle))
+                  history.push(substituteKeyword(e.target.value, jobTitle))
                 }
                 hasNullOption={false}
               />
