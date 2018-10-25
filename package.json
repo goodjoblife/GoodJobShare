@@ -77,7 +77,6 @@
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-router-redux": "^5.0.0-alpha.9",
     "react-router-scroll-4": "^1.0.0-beta.1",
     "react-scroll": "^1.5.4",
     "react-sticky": "^6.0.1",

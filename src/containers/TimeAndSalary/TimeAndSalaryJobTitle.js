@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import TimeAndSalaryJobTitle from '../../components/TimeAndSalary/TimeAndSalaryJobTitle';
-import { queryJobTitle, switchPath } from '../../actions/timeAndSalaryJobTitle';
+import { queryJobTitle } from '../../actions/timeAndSalaryJobTitle';
 
 const mapStateToProps = state => ({
   data: state.timeAndSalaryJobTitle.get('data'),
@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ queryJobTitle, switchPath }, dispatch);
+  bindActionCreators({ queryJobTitle }, dispatch);
 
 export default connect(
   mapStateToProps,

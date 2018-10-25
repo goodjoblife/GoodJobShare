@@ -3,7 +3,7 @@ import { hydrate } from 'react-dom';
 import createHistory from 'history/createBrowserHistory';
 import { fromJS } from 'immutable';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { ScrollContext } from 'react-router-scroll-4';
 import App from './containers/App';
 import configureStore from './store/configureStore';
@@ -34,11 +34,11 @@ const store = configureStore(preloadedState, history);
 
 hydrate(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
+    <Router>
       <ScrollContext>
         <App />
       </ScrollContext>
-    </ConnectedRouter>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
@@ -47,11 +47,11 @@ if (module.hot) {
   module.hot.accept('./containers/App', () => {
     hydrate(
       <Provider store={store}>
-        <ConnectedRouter history={history}>
+        <Router>
           <ScrollContext>
             <App />
           </ScrollContext>
-        </ConnectedRouter>
+        </Router>
       </Provider>,
       document.getElementById('root')
     );

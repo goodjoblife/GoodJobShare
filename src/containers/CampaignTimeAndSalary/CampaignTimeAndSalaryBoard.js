@@ -2,10 +2,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CampaignTimeAndSalaryBoard from '../../components/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
 import { queryCampaignInfoListIfNeeded } from '../../actions/campaignInfo';
-import {
-  queryCampaignTimeAndSalary,
-  switchPath,
-} from '../../actions/campaignTimeAndSalaryBoard';
+import { queryCampaignTimeAndSalary } from '../../actions/campaignTimeAndSalaryBoard';
 import {
   campaignNameSelector,
   campaignEntriesSelector,
@@ -29,7 +26,6 @@ const mapDispatchToProps = dispatch =>
     {
       queryCampaignInfoListIfNeeded,
       queryCampaignTimeAndSalary,
-      switchPath,
     },
     dispatch
   );

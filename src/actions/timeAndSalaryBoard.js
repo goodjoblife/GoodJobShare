@@ -1,5 +1,4 @@
 import R from 'ramda';
-import { push } from 'react-router-redux';
 
 import {
   fetchTimeAndSalary,
@@ -122,8 +121,6 @@ export const queryTimeAndSalary = ({ sortBy, order, page }) => (
       );
     });
 };
-
-export const switchPath = path => dispatch => dispatch(push(path));
 
 export const resetBoardExtremeData = () => ({
   type: SET_BOARD_EXTREME_DATA,
