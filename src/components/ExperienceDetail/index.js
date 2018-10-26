@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
@@ -291,16 +291,17 @@ class ExperienceDetail extends Component {
         {this.renderHelmet()}
         <Section bg="white" paddingBottom pageTop>
           <Wrapper size="l">
-            <ExperienceHeading experience={experience} />
-
             {/* 文章區塊  */}
             {experienceStatus === status.FETCHING ? (
               <Loader />
             ) : (
-              <Article
-                experience={experience}
-                hideContent={!canViewExperirenceDetail}
-              />
+              <Fragment>
+                <ExperienceHeading experience={experience} />
+                <Article
+                  experience={experience}
+                  hideContent={!canViewExperirenceDetail}
+                />
+              </Fragment>
             )}
 
             {/* 按讚，分享，檢舉區塊  */}
