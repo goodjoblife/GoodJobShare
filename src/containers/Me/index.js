@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import withFB from 'common/withFB';
+import { withFB } from 'common/facebook';
 import Me from '../../components/Me';
 import { login, getLoginStatus, getMe } from '../../actions/auth';
 import * as MyActions from '../../actions/me';

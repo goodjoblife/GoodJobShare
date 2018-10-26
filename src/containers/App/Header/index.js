@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import withFB from 'common/withFB';
+import { withFB } from 'common/facebook';
 import Header from '../../../components/App/Header';
 import { login, logout, getLoginStatus, getMe } from '../../../actions/auth';
 

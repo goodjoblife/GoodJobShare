@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import withFB from 'common/withFB';
+import { withFB } from 'common/facebook';
 import SubmitArea from '../../components/ShareExperience/common/SubmitArea';
 import { login } from '../../actions/auth';
 
