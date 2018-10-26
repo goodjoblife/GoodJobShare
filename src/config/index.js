@@ -10,4 +10,5 @@ module.exports = {
   GA_ID: process.env.RAZZLE_GA_ID || 'UA-79990667-2',
   PIXEL_ID: process.env.RAZZLE_PIXEL_ID || '603414113402034',
   SENTRY_DSN: process.env.RAZZLE_SENTRY_DSN,
+  GIT_SHA1: process.env.RAZZLE_GIT_SHA1,
 };
