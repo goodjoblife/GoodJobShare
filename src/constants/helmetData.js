@@ -47,7 +47,7 @@ export const HELMET_DATA = {
       { property: 'og:image', content: `${imgHost}/og/default-06-April.jpg` },
       {
         property: 'og:description',
-        content: '匿名分享你的面試經驗，一起建立台灣最大面試資料庫！ㄋ',
+        content: '匿名分享你的面試經驗，一起建立台灣最大面試資料庫！',
       },
       { property: 'og:locale', content: 'zh_TW' },
       { property: 'og:site_name', content: SITE_NAME },
