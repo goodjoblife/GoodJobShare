@@ -14,6 +14,7 @@ const setCountData = (count, status, error = null) => ({
 export const queryExperienceCount = () => dispatch => {
   dispatch(setCountData(0, fetchingStatus.FETCHING));
   const opt = {
+    searchType: ['interview', 'work', 'intern'],
     limit: 1,
     start: 0,
     sort: 'created_at',
