@@ -4,16 +4,17 @@ import { connect } from 'react-redux';
 import { isFetched } from '../constants/status';
 
 import { ProgressBarWithDataCount } from '../components/common/ProgressBar';
-import { queryTimeAndSalaryCount } from '../actions/timeAndSalary';
+import { queryExperienceCountIfUnfetched } from '../actions/experiences';
+import { experienceCountSelector } from './PermissionBlock/selectors';
 
 const mapStateToProps = state => ({
-  dataNum: state.timeAndSalary.get('count'),
-  hasFetched: isFetched(state.timeAndSalary.get('countStatus')),
+  dataNum: experienceCountSelector(state),
+  hasFetched: isFetched(state.experiences.get('countStatus')),
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { dispatchGetDataCount: queryTimeAndSalaryCount },
+    { dispatchGetDataCount: queryExperienceCountIfUnfetched },
     dispatch
   );
 

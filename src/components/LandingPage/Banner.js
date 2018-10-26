@@ -17,7 +17,7 @@ const Banner = () => (
       <div className={styles.content}>
         <h1 className={styles.heading}>職場透明化運動</h1>
         <h2 className={styles.subheading}>
-          匿名分享你的工時、薪資，讓我們求職不再面議！
+          匿名分享你的面試經驗，一起建立台灣最大面試資料庫！
         </h2>
         <Link to={shareLink} className={cn('buttonCircleM', 'buttonBlack2')}>
           GO!

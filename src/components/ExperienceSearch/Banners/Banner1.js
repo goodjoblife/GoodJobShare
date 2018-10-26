@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import styles from './Banners.module.css';
-import ProgressBarWithExperienceCount from '../../../containers/ProgressBar';
+import ProgressBarWithDataCount from '../../../containers/ProgressBar';
 import { shareLink } from '../../../constants/dataProgress';
 
 const Banner1 = ({ className }) => (
@@ -13,7 +13,7 @@ const Banner1 = ({ className }) => (
       alt="職場透明化運動進行中"
       className={styles.banner1}
     />
-    <ProgressBarWithExperienceCount
+    <ProgressBarWithDataCount
       size="m"
       theme="gray"
       rootClassName={styles.progress}
