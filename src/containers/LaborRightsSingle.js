@@ -4,15 +4,12 @@ import {
   queryMenuIfUnfetched,
   queryEntryIfUnfetched,
 } from '../actions/laborRights';
-import { fetchMyPermission } from '../actions/me';
 import {
   menuEntriesSelector,
   entryDataSelector,
   entryStatusSelector,
 } from '../selectors/laborRightsSelector';
 import LaborRightsSingle from '../components/LaborRightsSingle';
-
-import { canViewLaborRightsSingleSelector } from '../selectors/meSelector';
 
 const mapStateToProps = (state, { match }) => {
   const id = match.params.id;
@@ -28,7 +25,6 @@ const mapStateToProps = (state, { match }) => {
     entryError: state.laborRights.getIn(['entries', id, 'error']),
     prevEntry,
     nextEntry,
-    canViewLaborRightsSingle: canViewLaborRightsSingleSelector(state),
   };
 };
 
@@ -37,7 +33,6 @@ const mapDispatchToProps = dispatch =>
     {
       queryMenuIfUnfetched,
       queryEntryIfUnfetched,
-      fetchMyPermission,
     },
     dispatch
   );

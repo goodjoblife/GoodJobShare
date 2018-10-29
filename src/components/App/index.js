@@ -4,7 +4,7 @@ import { Switch } from 'react-router-dom';
 
 import RouteWithSubRoutes from '../route';
 import styles from './App.module.css';
-import Header from '../../containers/Layout/Header';
+import Header from '../../containers/App/Header';
 import Footer from './Footer';
 import { HELMET_DATA } from '../../constants/helmetData';
 

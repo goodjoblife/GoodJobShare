@@ -3,10 +3,10 @@ import { hydrate } from 'react-dom';
 import createHistory from 'history/createBrowserHistory';
 import { fromJS } from 'immutable';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { ScrollContext } from 'react-router-scroll-4';
 import initSentry from 'utils/sentryUtil';
-import App from './containers/App';
+import Root from './components/Root';
 import configureStore from './store/configureStore';
 
 function parseState(window) {
@@ -34,24 +34,24 @@ const store = configureStore(preloadedState, history);
 
 hydrate(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
+    <Router>
       <ScrollContext>
-        <App />
+        <Root />
       </ScrollContext>
-    </ConnectedRouter>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
 
 if (module.hot) {
-  module.hot.accept('./containers/App', () => {
+  module.hot.accept('./components/Root', () => {
     hydrate(
       <Provider store={store}>
-        <ConnectedRouter history={history}>
+        <Router>
           <ScrollContext>
-            <App />
+            <Root />
           </ScrollContext>
-        </ConnectedRouter>
+        </Router>
       </Provider>,
       document.getElementById('root')
     );

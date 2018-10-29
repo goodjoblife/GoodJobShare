@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import cn from 'classnames';
 import R from 'ramda';
 import ReactPixel from 'react-facebook-pixel';
+import { withRouter } from 'react-router-dom';
 
 import Radio from 'common/form/Radio';
 import { debounce } from 'utils/streamUtils';
@@ -117,12 +116,10 @@ class SearchBar extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { searchType, keyword } = this.state;
-    this.props.dispatch(
-      push(
-        `/time-and-salary/${searchType}/${encodeURIComponent(
-          keyword
-        )}/work-time-dashboard`
-      )
+    this.props.history.push(
+      `/time-and-salary/${searchType}/${encodeURIComponent(
+        keyword
+      )}/work-time-dashboard`
     );
 
     ReactPixel.track('Search', {
@@ -180,4 +177,4 @@ class SearchBar extends Component {
   }
 }
 
-export default connect()(SearchBar);
+export default withRouter(SearchBar);

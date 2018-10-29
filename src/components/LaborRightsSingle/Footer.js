@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Wrapper } from 'common/base';
 import { ArrowLeft, Thumbnails } from 'common/icons';
-import FacebookWrapper from 'common/FacebookWrapper';
+import { FacebookWrapper } from 'common/facebook';
 import { formatCanonicalPath } from 'utils/helmetHelper';
 import styles from './Footer.module.css';
 import { FACEBOOK_APP_ID } from '../../config';

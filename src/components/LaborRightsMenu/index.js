@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import { compose, setStatic } from 'recompose';
 import Loader from 'common/Loader';
 import Columns from 'common/Columns';
 import { Section, Wrapper, Heading } from 'common/base';
@@ -14,10 +15,6 @@ import { HELMET_DATA } from '../../constants/helmetData';
 import styles from './LaborRightsEntry.module.css';
 
 class LaborRightsMenu extends React.Component {
-  static fetchData({ store }) {
-    return store.dispatch(queryMenu());
-  }
-
   componentDidMount() {
     this.props.queryMenuIfUnfetched();
   }
@@ -71,4 +68,10 @@ LaborRightsMenu.propTypes = {
   queryMenuIfUnfetched: PropTypes.func.isRequired,
 };
 
-export default LaborRightsMenu;
+const ssr = setStatic('fetchData', ({ store }) => {
+  return store.dispatch(queryMenu());
+});
+
+const hoc = compose(ssr);
+
+export default hoc(LaborRightsMenu);
