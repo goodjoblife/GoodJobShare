@@ -55,7 +55,7 @@ export const queryMenuIfUnfetched = () => (dispatch, getState) => {
 };
 
 export const queryEntry = entryId => dispatch => {
-  dispatch(setEntryStatus(fetchingStatus.FETCHING));
+  dispatch(setEntryStatus(entryId, fetchingStatus.FETCHING));
 
   return getEntry(entryId)
     .then(rawData => {
