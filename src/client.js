@@ -5,9 +5,9 @@ import { fromJS } from 'immutable';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ScrollContext } from 'react-router-scroll-4';
+import initSentry from 'utils/sentryUtil';
 import Root from './components/Root';
 import configureStore from './store/configureStore';
-import initSentry from './utils/sentryUtil';
 
 function parseState(window) {
   if (!window.__data) {
