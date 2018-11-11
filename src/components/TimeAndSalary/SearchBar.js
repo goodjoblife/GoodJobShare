@@ -26,7 +26,7 @@ const searchOptions = [
 
 class SearchBar extends Component {
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
   };
   constructor(props) {
     super(props);
