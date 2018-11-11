@@ -28,6 +28,7 @@ module.exports = {
     'react/require-default-props': 'off',
     'react/no-array-index-key': 'off',
     'no-unused-vars': 'error',
+    'react/no-deprecated': 'error',
     'prettier/prettier': [
       'error',
       {

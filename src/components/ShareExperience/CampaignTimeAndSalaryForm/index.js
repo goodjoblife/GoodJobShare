@@ -114,34 +114,23 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     this.extElValidationStatus = {};
   }
 
-  componentWillMount() {
-    const defaultState = {
-      ...defaultForm,
-    };
-
-    this.setState({
-      // eslint-disable-line react/no-did-mount-set-state
-      ...defaultState,
-    });
-
+  componentDidMount() {
     if (this.props.campaignEntriesStatus === fetchingStatus.FETCHED) {
       this.setCampaignInfoFromEntries(this.props.campaignEntries);
     } else {
       this.props.queryCampaignInfoListIfNeeded();
     }
-  }
 
-  componentDidMount() {
     ReactPixel.track('InitiateCheckout', {
       content_category: PIXEL_CONTENT_CATEGORY.VISIT_TIME_AND_SALARY_FORM,
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    const prevStatus = this.props.campaignEntriesStatus;
-    const nextStatus = nextProps.campaignEntriesStatus;
-    if (prevStatus !== nextStatus && nextStatus === fetchingStatus.FETCHED) {
-      this.setCampaignInfoFromEntries(nextProps.campaignEntries);
+  componentDidUpdate(prevProps) {
+    const prevStatus = prevProps.campaignEntriesStatus;
+    const status = this.props.campaignEntriesStatus;
+    if (prevStatus !== status && status === fetchingStatus.FETCHED) {
+      this.setCampaignInfoFromEntries(this.props.campaignEntries);
     }
   }
 
