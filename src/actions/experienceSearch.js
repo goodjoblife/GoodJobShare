@@ -1,5 +1,3 @@
-import fetchUtil from '../utils/fetchUtil';
-
 import statusConstant from '../constants/status';
 
 export const SET_SEARCH_BY = 'SET_SEARCH_BY';
@@ -77,7 +75,11 @@ const setKeywords = keywords => ({
   keywords,
 });
 
-export const getNewSearchBy = searchBy => async dispatch => {
+export const getNewSearchBy = searchBy => async (
+  dispatch,
+  getState,
+  { api },
+) => {
   const keywordName =
     searchBy === 'company' ? 'company_keywords' : 'job_title_keywords';
   const body = {
@@ -87,7 +89,7 @@ export const getNewSearchBy = searchBy => async dispatch => {
   };
 
   try {
-    const result = await fetchUtil('/graphql')('POST', body);
+    const result = await api.experiences.newExperienceSearchBy({ body });
     if (!result.data) {
       throw new Error(result.error);
     }

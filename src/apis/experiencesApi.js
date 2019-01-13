@@ -76,6 +76,9 @@ export const postReplyLikes = ({ id }) =>
 
 export const getExperience = ({ id }) => fetchUtil(`/experiences/${id}`)('GET');
 
+export const newExperienceSearchBy = ({ body }) =>
+  fetchUtil('/graphql')('POST', body);
+
 export default {
   getExperience,
   getExperiencesRecommended,
@@ -86,4 +89,5 @@ export default {
   postExperienceLikes,
   deleteReplyLikes,
   postReplyLikes,
+  newExperienceSearchBy,
 };
