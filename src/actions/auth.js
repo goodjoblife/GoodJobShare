@@ -15,7 +15,6 @@ export const setUser = ({ name }) => ({
 });
 
 export const login = FB => (dispatch, getState, { api }) => {
-  console.log(api);
   if (FB) {
     return new Promise(resolve => FB.login(response => resolve(response))).then(
       response => {
