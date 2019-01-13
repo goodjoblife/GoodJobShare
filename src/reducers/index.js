@@ -16,9 +16,10 @@ import timeAndSalaryJobTitle from './timeAndSalaryJobTitle';
 import popularExperiences from './popularExperiences';
 import campaignInfo from './campaignInfo';
 import campaignTimeAndSalaryBoard from './campaignTimeAndSalaryBoard';
+import { PERSIST_KEY } from '../config';
 
 const persistConfig = {
-  key: 'root',
+  key: PERSIST_KEY,
   storage,
   whitelist: ['auth'],
   transforms: [immutableTransform()],

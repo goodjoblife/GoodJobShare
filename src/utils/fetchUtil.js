@@ -47,8 +47,20 @@ const checkStatus = response => {
   return response.json();
 };
 
-const fetchUtil = (token = getToken()) => (endpoint, apiHost = API_HOST) => (method, body) =>
-  fetch(
+const defaultOptions = {
+  apiHost: API_HOST,
+  token: getToken(),
+};
+
+const fetchUtil = (endpoint, options) => (method, body) => {
+  const finalOptions = {
+    ...defaultOptions,
+    ...options,
+  };
+
+  const { token, apiHost } = finalOptions;
+
+  return fetch(
     `${apiHost}${endpoint}`,
     optionsBuilder({
       token,
@@ -56,5 +68,6 @@ const fetchUtil = (token = getToken()) => (endpoint, apiHost = API_HOST) => (met
       method,
     }),
   ).then(checkStatus);
+};
 
 export default fetchUtil;
