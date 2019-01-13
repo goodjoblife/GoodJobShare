@@ -59,5 +59,3 @@ export const fetchCampaignList = () =>
       ],
     },
   ]);
-
-export const foo = 1;
