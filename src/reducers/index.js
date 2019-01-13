@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import auth from './auth';
 import experienceDetail from './experienceDetail';
@@ -13,6 +15,12 @@ import timeAndSalaryJobTitle from './timeAndSalaryJobTitle';
 import popularExperiences from './popularExperiences';
 import campaignInfo from './campaignInfo';
 import campaignTimeAndSalaryBoard from './campaignTimeAndSalaryBoard';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['auth'],
+};
 
 const rootReducer = combineReducers({
   auth,
@@ -30,4 +38,4 @@ const rootReducer = combineReducers({
   campaignTimeAndSalaryBoard,
 });
 
-export default rootReducer;
+export default persistReducer(persistConfig, rootReducer);
