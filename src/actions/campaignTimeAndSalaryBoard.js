@@ -1,6 +1,5 @@
 import R from 'ramda';
 
-import { fetchCampaignTimeAndSalary } from '../apis/timeAndSalaryApi';
 import fetchingStatus from '../constants/status';
 import { DATA_NUM_PER_PAGE } from '../constants/timeAndSalarSearch';
 
@@ -56,7 +55,7 @@ const setBoardData = (
 export const queryCampaignTimeAndSalary = (
   campaignName,
   { sortBy, order, jobTitles, page },
-) => (dispatch, getState) => {
+) => (dispatch, getState, { api }) => {
   if (
     campaignName !== campaignNameSelector(getState()) ||
     sortBy !== sortBySelector(getState()) ||
@@ -84,7 +83,8 @@ export const queryCampaignTimeAndSalary = (
     skip: (sortBy !== 'created_at').toString(),
   };
 
-  return fetchCampaignTimeAndSalary({ campaignName, opt })
+  return api.timeAndSalary
+    .fetchCampaignTimeAndSalary({ campaignName, opt })
     .then(rawData => {
       // 將Array公司名稱轉換成String
       const takeFirstFromArrayCompanyName = R.over(

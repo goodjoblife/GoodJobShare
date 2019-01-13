@@ -1,4 +1,3 @@
-import { fetchSearchJobTitle } from '../apis/timeAndSalaryApi';
 import fetchingStatus from '../constants/status';
 
 export const SET_JOB_TITLE_DATA = '@@timeAndSalaryJobTitle/SET_JOB_TITLE_DATA';
@@ -25,6 +24,7 @@ export const setJobTitleData = (
 export const queryJobTitle = ({ groupSortBy, order, jobTitle }) => (
   dispatch,
   getState,
+  { api },
 ) => {
   if (
     groupSortBy !== getState().timeAndSalaryJobTitle.get('groupSortBy') ||
@@ -60,7 +60,8 @@ export const queryJobTitle = ({ groupSortBy, order, jobTitle }) => (
     group_sort_order: order,
   };
 
-  return fetchSearchJobTitle({ opt })
+  return api.timeAndSalary
+    .fetchSearchJobTitle({ opt })
     .then(data => {
       dispatch(
         setJobTitleData(

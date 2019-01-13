@@ -1,7 +1,5 @@
 import fetchUtil from '../utils/fetchUtil';
 
-import { getExperiences as getExperiencesApi } from '../apis/experiencesApi';
-
 import statusConstant from '../constants/status';
 
 export const SET_SEARCH_BY = 'SET_SEARCH_BY';
@@ -28,8 +26,8 @@ export const fetchExperiences = (
   _sort,
   searchBy,
   searchQuery,
-  searchType
-) => dispatch => {
+  searchType,
+) => (dispatch, getState, { api }) => {
   const start = (page - 1) * limit;
   const query = {
     limit,
@@ -54,10 +52,11 @@ export const fetchExperiences = (
       ...objCond,
       experiences: [],
       experienceCount: 0,
-    })
+    }),
   );
 
-  return getExperiencesApi(query)
+  return api.experiences
+    .getExperiences(query)
     .then(result => {
       const payload = {
         ...objCond,

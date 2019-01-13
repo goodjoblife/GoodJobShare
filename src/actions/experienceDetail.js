@@ -1,8 +1,6 @@
 import fetchUtil from '../utils/fetchUtil';
 import fetchingStatus from '../constants/status';
 
-import { getExperienceReply } from '../apis/experiencesApi';
-
 export const SET_EXPERIENCE = '@@experienceDetail/SET_EXPERIENCE';
 export const SET_EXPERIENCE_STATUS = '@@experienceDetail/SET_EXPERIENCE_STATUS';
 export const SET_REPLIES_STATUS = '@@EXPERIENCE_DETAIL/SET_REPLIES_STATUS';
@@ -146,7 +144,7 @@ export const fetchExperience = id => dispatch => {
     });
 };
 
-export const fetchReplies = id => (dispatch, getState) => {
+export const fetchReplies = id => (dispatch, getState, { api }) => {
   if (id !== repliesExperienceIdSelector(getState())) {
     dispatch(resetRepliesData(id));
   }
@@ -156,15 +154,19 @@ export const fetchReplies = id => (dispatch, getState) => {
     status: fetchingStatus.FETCHING,
   });
 
-  return getExperienceReply({
-    experienceId: id,
-    start: 0,
-    limit: 100,
-  })
+  return api.experiences
+    .getExperienceReply({
+      experienceId: id,
+      start: 0,
+      limit: 100,
+    })
     .then(rawData => {
       const replies = rawData.replies;
       return dispatch(
-        setRepliesData(id, { status: fetchingStatus.FETCHED, replies }),
+        setRepliesData(id, {
+          status: fetchingStatus.FETCHED,
+          replies,
+        }),
       );
     })
     .catch(error =>

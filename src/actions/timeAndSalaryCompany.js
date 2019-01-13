@@ -1,4 +1,3 @@
-import { fetchSearchCompany } from '../apis/timeAndSalaryApi';
 import fetchingStatus from '../constants/status';
 
 export const SET_COMPANY_DATA = '@@timeAndSalaryCompany/SET_COMPANY_DATA';
@@ -24,6 +23,7 @@ export const setCompanyData = (
 export const queryCompany = ({ groupSortBy, order, company }) => (
   dispatch,
   getState,
+  { api },
 ) => {
   if (
     groupSortBy !== getState().timeAndSalaryCompany.get('groupSortBy') ||
@@ -59,7 +59,8 @@ export const queryCompany = ({ groupSortBy, order, company }) => (
     group_sort_order: order,
   };
 
-  return fetchSearchCompany({ opt })
+  return api.timeAndSalary
+    .fetchSearchCompany({ opt })
     .then(data => {
       dispatch(
         setCompanyData(
