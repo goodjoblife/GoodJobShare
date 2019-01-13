@@ -31,7 +31,7 @@ const setEntryData = (entryId, data, status, error = null) => ({
   error,
 });
 
-export const queryMenu = () => (dispatch, getState, api) => {
+export const queryMenu = () => (dispatch, getState, { api }) => {
   dispatch({
     type: SET_MENU_STATUS,
     status: fetchingStatus.FETCHING,

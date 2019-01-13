@@ -57,8 +57,33 @@ export const getExperienceReply = options => {
   return fetchUtil(queryString ? `${url}?${queryString}` : url)('GET');
 };
 
+export const postExperienceReply = ({ id, comment }) =>
+  fetchUtil(`/experiences/${id}/replies`)('POST', {
+    content: comment,
+  });
+
+export const deleteExperienceLikes = ({ id }) =>
+  fetchUtil(`/experiences/${id}/likes`)('DELETE');
+
+export const postExperienceLikes = ({ id }) =>
+  fetchUtil(`/experiences/${id}/likes`)('POST');
+
+export const deleteReplyLikes = ({ id }) =>
+  fetchUtil(`/replies/${id}/likes`)('DELETE');
+
+export const postReplyLikes = ({ id }) =>
+  fetchUtil(`/replies/${id}/likes`)('POST');
+
+export const getExperience = ({ id }) => fetchUtil(`/experiences/${id}`)('GET');
+
 export default {
+  getExperience,
   getExperiencesRecommended,
   getExperiences,
   getExperienceReply,
+  postExperienceReply,
+  deleteExperienceLikes,
+  postExperienceLikes,
+  deleteReplyLikes,
+  postReplyLikes,
 };

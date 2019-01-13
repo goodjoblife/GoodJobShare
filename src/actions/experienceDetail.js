@@ -1,5 +1,12 @@
-import fetchUtil from '../utils/fetchUtil';
 import fetchingStatus from '../constants/status';
+import {
+  postExperienceReply,
+  deleteExperienceLikes,
+  postExperienceLikes,
+  deleteReplyLikes,
+  postReplyLikes,
+  getExperience,
+} from '../apis/experiencesApi';
 
 export const SET_EXPERIENCE = '@@experienceDetail/SET_EXPERIENCE';
 export const SET_EXPERIENCE_STATUS = '@@experienceDetail/SET_EXPERIENCE_STATUS';
@@ -46,9 +53,7 @@ export const submitComment = (id, comment) => (dispatch, getState) => {
     .experienceDetail.get('replies')
     .toJS();
 
-  return fetchUtil(`/experiences/${id}/replies`)('POST', {
-    content: comment,
-  }).then(result => {
+  return postExperienceReply({ id, comment }).then(result => {
     dispatch(
       setRepliesData(id, {
         status: fetchingStatus.FETCHED,
@@ -60,7 +65,7 @@ export const submitComment = (id, comment) => (dispatch, getState) => {
 
 export const likeExperience = o => dispatch => {
   if (o.liked) {
-    return fetchUtil(`/experiences/${o._id}/likes`)('DELETE').then(result => {
+    return deleteExperienceLikes({ id: o._id }).then(result => {
       if (result.success) {
         dispatch(
           setExperience(
@@ -79,7 +84,7 @@ export const likeExperience = o => dispatch => {
     // });
   }
 
-  return fetchUtil(`/experiences/${o._id}/likes`)('POST').then(result => {
+  return postExperienceLikes({ id: o._id }).then(result => {
     if (result.success) {
       dispatch(
         setExperience(
@@ -108,7 +113,7 @@ export const likeReply = reply => dispatch => {
   const { _id: replyId, liked } = reply;
 
   if (liked) {
-    return fetchUtil(`/replies/${replyId}/likes`)('DELETE').then(result => {
+    return deleteReplyLikes({ id: replyId }).then(result => {
       if (result.success) {
         return dispatch(setReplyLiked(replyId, false));
       }
@@ -116,7 +121,7 @@ export const likeReply = reply => dispatch => {
     });
   }
 
-  return fetchUtil(`/replies/${replyId}/likes`)('POST').then(result => {
+  return postReplyLikes({ id: replyId }).then(result => {
     if (result.success) {
       return dispatch(setReplyLiked(replyId, true));
     }
@@ -130,7 +135,7 @@ export const fetchExperience = id => dispatch => {
     status: fetchingStatus.FETCHING,
   });
 
-  return fetchUtil(`/experiences/${id}`)('GET')
+  return getExperience({ id })
     .then(result => {
       dispatch(setExperience(result));
     })
