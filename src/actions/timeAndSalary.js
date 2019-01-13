@@ -18,7 +18,7 @@ export const queryTimeAndSalaryCount = () => dispatch => {
     limit: 1,
   };
 
-  return fetchTimeAndSalary(opt)
+  return fetchTimeAndSalary({ opt })
     .then(rawData => {
       const count = R.prop('total')(rawData);
       dispatch(setCountData(count, fetchingStatus.FETCHED));
@@ -31,7 +31,7 @@ export const queryTimeAndSalaryCount = () => dispatch => {
 
 export const queryTimeAndSalaryCountIfUnfetched = () => (
   dispatch,
-  getState
+  getState,
 ) => {
   if (isUnfetched(getState().timeAndSalary.get('countStatus'))) {
     return dispatch(queryTimeAndSalaryCount());

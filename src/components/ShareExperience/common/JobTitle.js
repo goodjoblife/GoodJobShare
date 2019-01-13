@@ -26,12 +26,12 @@ class JobTitle extends React.Component {
 
   search = debounce((e, value) => {
     if (value) {
-      return getJobTitlesSearch(value)
+      return getJobTitlesSearch({ key: value })
         .then(
           r =>
             Array.isArray(r)
               ? this.handleAutocompleteItems(r.map(mapToAutocompleteList))
-              : this.handleAutocompleteItems([])
+              : this.handleAutocompleteItems([]),
         )
         .catch(() => this.handleAutocompleteItems([]));
     }

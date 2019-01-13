@@ -33,7 +33,7 @@ const resetBoard = ({ sortBy, order, page }) => ({
 
 const setBoardData = (
   { sortBy, order },
-  { status, data, total = 0, currentPage = 0, error = null }
+  { status, data, total = 0, currentPage = 0, error = null },
 ) => (dispatch, getState) => {
   // make sure the store is consistent
   if (
@@ -57,7 +57,7 @@ const setBoardData = (
 
 export const queryTimeAndSalary = ({ sortBy, order, page }) => (
   dispatch,
-  getState
+  getState,
 ) => {
   if (
     sortBy !== sortBySelector(getState()) ||
@@ -84,7 +84,7 @@ export const queryTimeAndSalary = ({ sortBy, order, page }) => (
     skip: (sortBy !== 'created_at').toString(),
   };
 
-  return fetchTimeAndSalary(opt)
+  return fetchTimeAndSalary({ opt })
     .then(rawData => {
       // 將Array公司名稱轉換成String
       const takeFirstFromArrayCompanyName = R.over(
@@ -92,11 +92,11 @@ export const queryTimeAndSalary = ({ sortBy, order, page }) => (
         R.ifElse(
           R.pipe(
             R.type,
-            R.equals('Array')
+            R.equals('Array'),
           ),
           R.head,
-          R.identity
-        )
+          R.identity,
+        ),
       );
       const data = rawData.time_and_salary.map(takeFirstFromArrayCompanyName);
 
@@ -108,16 +108,16 @@ export const queryTimeAndSalary = ({ sortBy, order, page }) => (
             data,
             total: rawData.total,
             currentPage: page,
-          }
-        )
+          },
+        ),
       );
     })
     .catch(error => {
       dispatch(
         setBoardData(
           { sortBy, order },
-          { status: fetchingStatus.ERROR, data: [], error }
-        )
+          { status: fetchingStatus.ERROR, data: [], error },
+        ),
       );
     });
 };
@@ -131,7 +131,7 @@ export const resetBoardExtremeData = () => ({
 
 const setBoardExtremeData = (
   { sortBy, order },
-  { extremeStatus, extremeData, extremeError = null }
+  { extremeStatus, extremeData, extremeError = null },
 ) => (dispatch, getState) => {
   // make sure the store is consistent
   if (
@@ -171,7 +171,7 @@ export const queryExtremeTimeAndSalary = () => (dispatch, getState) => {
     order,
   };
 
-  return fetchTimeAndSalaryExtreme(opt)
+  return fetchTimeAndSalaryExtreme({ opt })
     .then(rawData => {
       // 將Array公司名稱轉換成String
       const takeFirstFromArrayCompanyName = R.over(
@@ -179,28 +179,32 @@ export const queryExtremeTimeAndSalary = () => (dispatch, getState) => {
         R.when(
           R.pipe(
             R.type,
-            R.equals('Array')
+            R.equals('Array'),
           ),
-          R.head
-        )
+          R.head,
+        ),
       );
       const extremeData = rawData.time_and_salary.map(
-        takeFirstFromArrayCompanyName
+        takeFirstFromArrayCompanyName,
       );
 
       dispatch(
         setBoardExtremeData(
           { sortBy, order },
-          { extremeStatus: fetchingStatus.FETCHED, extremeData }
-        )
+          { extremeStatus: fetchingStatus.FETCHED, extremeData },
+        ),
       );
     })
     .catch(extremeError => {
       dispatch(
         setBoardExtremeData(
           { sortBy, order },
-          { extremeStatus: fetchingStatus.ERROR, extremeData: [], extremeError }
-        )
+          {
+            extremeStatus: fetchingStatus.ERROR,
+            extremeData: [],
+            extremeError,
+          },
+        ),
       );
     });
 };

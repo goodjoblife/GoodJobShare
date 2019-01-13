@@ -35,7 +35,19 @@ export const getExperiences = ({
   return fetchUtil(url)('GET');
 };
 
-export const getExperienceReply = (experienceId, start = 0, limit = 100) => {
+const getExperienceReplyOptions = {
+  start: 0,
+  limit: 100,
+};
+
+export const getExperienceReply = options => {
+  const finalOptions = {
+    ...getExperienceReplyOptions,
+    ...options,
+  };
+
+  const { experienceId, start, limit } = finalOptions;
+
   const url = `/experiences/${experienceId}/replies`;
   const queryString = qs.stringify({
     start,

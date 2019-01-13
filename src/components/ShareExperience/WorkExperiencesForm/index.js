@@ -37,7 +37,7 @@ import FailFeedback from '../common/FailFeedback';
 const createSection = id => (
   subtitle,
   placeholder = '',
-  titlePlaceholder = '段落標題，例：實際工作內容'
+  titlePlaceholder = '段落標題，例：實際工作內容',
 ) => {
   const section = {
     id,
@@ -112,7 +112,7 @@ class WorkExperiencesForm extends React.Component {
 
     try {
       defaultFromDraft = JSON.parse(
-        localStorage.getItem(LS_WORK_EXPERIENCES_FORM_KEY)
+        localStorage.getItem(LS_WORK_EXPERIENCES_FORM_KEY),
       );
     } catch (error) {
       defaultFromDraft = null;
@@ -132,12 +132,12 @@ class WorkExperiencesForm extends React.Component {
 
   onSubmit() {
     const valid = workExperiencesFormCheck(
-      propsWorkExperiencesForm(this.state)
+      propsWorkExperiencesForm(this.state),
     );
 
     if (valid) {
       localStorage.removeItem(LS_WORK_EXPERIENCES_FORM_KEY);
-      const p = postWorkExperience(workExperiencesToBody(this.state));
+      const p = postWorkExperience({ body: workExperiencesToBody(this.state) });
       return p.then(
         response => {
           const experienceId = response.experience._id;
@@ -169,7 +169,7 @@ class WorkExperiencesForm extends React.Component {
           return ({ buttonClick }) => (
             <FailFeedback info={error.message} buttonClick={buttonClick} />
           );
-        }
+        },
       );
     }
     this.handleState('submitted')(true);
@@ -225,7 +225,7 @@ class WorkExperiencesForm extends React.Component {
           [id]: createBlock.sections(id)(
             subtitle,
             placeholder,
-            titlePlaceholder
+            titlePlaceholder,
           ),
         },
       }));

@@ -10,7 +10,7 @@ export const setCompanyData = (
   order,
   company,
   data,
-  error
+  error,
 ) => ({
   type: SET_COMPANY_DATA,
   groupSortBy,
@@ -23,7 +23,7 @@ export const setCompanyData = (
 
 export const queryCompany = ({ groupSortBy, order, company }) => (
   dispatch,
-  getState
+  getState,
 ) => {
   if (
     groupSortBy !== getState().timeAndSalaryCompany.get('groupSortBy') ||
@@ -37,8 +37,8 @@ export const queryCompany = ({ groupSortBy, order, company }) => (
         order,
         company,
         [],
-        null
-      )
+        null,
+      ),
     );
   }
 
@@ -59,7 +59,7 @@ export const queryCompany = ({ groupSortBy, order, company }) => (
     group_sort_order: order,
   };
 
-  return fetchSearchCompany(opt)
+  return fetchSearchCompany({ opt })
     .then(data => {
       dispatch(
         setCompanyData(
@@ -68,8 +68,8 @@ export const queryCompany = ({ groupSortBy, order, company }) => (
           order,
           company,
           data,
-          null
-        )
+          null,
+        ),
       );
     })
     .catch(err => {
@@ -80,8 +80,8 @@ export const queryCompany = ({ groupSortBy, order, company }) => (
           order,
           company,
           [],
-          err
-        )
+          err,
+        ),
       );
     });
 };

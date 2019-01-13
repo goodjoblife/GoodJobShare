@@ -3,5 +3,5 @@ import qs from 'qs';
 
 const endpoint = '/jobs/search';
 
-export const getJobTitlesSearch = key =>
+export const getJobTitlesSearch = ({ key }) =>
   fetchUtil(`${endpoint}?${qs.stringify({ key })}`)('get');

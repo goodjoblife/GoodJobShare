@@ -57,13 +57,16 @@ class ReportForm extends PureComponent {
     const valid = validReasomForm(this.state);
 
     if (valid) {
-      return postExperiencesReports(id, handleToApiParams(this.state))
+      return postExperiencesReports({
+        id,
+        body: handleToApiParams(this.state),
+      })
         .then(close)
         .then(onSuccess)
         .catch(e =>
           onApiError({
             message: e.message,
-          })
+          }),
         );
     }
 

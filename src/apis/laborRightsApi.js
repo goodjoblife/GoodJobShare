@@ -10,5 +10,5 @@ export default fetchLaborRightsMetaList;
 export const getEntries = () =>
   fetchUtil('/entries', { apiHost: CONTENTFUL_API_HOST })('GET');
 
-export const getEntry = entryId =>
+export const getEntry = ({ entryId }) =>
   fetchUtil(`/entries/${entryId}`, { apiHost: CONTENTFUL_API_HOST })('GET');

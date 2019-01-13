@@ -36,7 +36,7 @@ import FailFeedback from '../common/FailFeedback';
 const createSection = id => (
   subtitle,
   placeholder = '',
-  titlePlaceholder = '段落標題，例：面試方式'
+  titlePlaceholder = '段落標題，例：面試方式',
 ) => {
   const section = {
     id,
@@ -122,7 +122,7 @@ class InterviewForm extends React.Component {
 
     try {
       defaultFromDraft = JSON.parse(
-        localStorage.getItem(LS_INTERVIEW_FORM_KEY)
+        localStorage.getItem(LS_INTERVIEW_FORM_KEY),
       );
     } catch (error) {
       defaultFromDraft = null;
@@ -145,7 +145,7 @@ class InterviewForm extends React.Component {
     if (valid) {
       localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
       const p = postInterviewExperience(
-        portInterviewFormToRequestFormat(getInterviewForm(this.state))
+        portInterviewFormToRequestFormat(getInterviewForm(this.state)),
       );
       return p.then(
         response => {
@@ -178,7 +178,7 @@ class InterviewForm extends React.Component {
           return ({ buttonClick }) => (
             <FailFeedback info={error.message} buttonClick={buttonClick} />
           );
-        }
+        },
       );
     }
     this.handleState('submitted')(true);
@@ -234,7 +234,7 @@ class InterviewForm extends React.Component {
           [id]: createBlock[blockKey](id)(
             subtitle,
             placeholder,
-            titlePlaceholder
+            titlePlaceholder,
           ),
         },
       }));
@@ -269,9 +269,9 @@ class InterviewForm extends React.Component {
 
   handleSubmit() {
     localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
-    return postInterviewExperience(
-      portInterviewFormToRequestFormat(getInterviewForm(this.state))
-    );
+    return postInterviewExperience({
+      body: portInterviewFormToRequestFormat(getInterviewForm(this.state)),
+    });
   }
 
   render() {

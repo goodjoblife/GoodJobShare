@@ -19,7 +19,7 @@ const store = compose(
   withHandlers({
     fetchReports: ({ setStatus, setReports }) => id => {
       setStatus(fetchingStatus.FETCHING);
-      getReports(id)
+      getReports({ id })
         .then(reports => {
           setStatus(fetchingStatus.FETCHED);
           setReports(reports);
@@ -29,7 +29,7 @@ const store = compose(
           setReports([]);
         });
     },
-  })
+  }),
 );
 
 const queryData = lifecycle({
@@ -99,7 +99,7 @@ ReportInspectModal.propTypes = {
 
 const hoc = compose(
   store,
-  queryData
+  queryData,
 );
 
 export default hoc(ReportInspectModal);
