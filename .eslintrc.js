@@ -29,13 +29,6 @@ module.exports = {
     'react/no-array-index-key': 'off',
     'no-unused-vars': 'error',
     'react/no-deprecated': 'error',
-    'prettier/prettier': [
-      'error',
-      {
-        trailingComma: 'es5',
-        singleQuote: true,
-      },
-    ],
   },
   settings: {
     'import/resolver': {

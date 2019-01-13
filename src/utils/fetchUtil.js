@@ -24,16 +24,16 @@ const removeContentType = headers => {
   return rest;
 };
 
-const optionsBuilder = body => method =>
+const optionsBuilder = body => method => token =>
   body
     ? {
         method: method.toUpperCase(),
-        headers: headerBuilder(getToken()),
+        headers: headerBuilder(token),
         body: JSON.stringify(body),
       }
     : {
         method: method.toUpperCase(),
-        headers: removeContentType(headerBuilder(getToken())),
+        headers: removeContentType(headerBuilder(token)),
       };
 
 const checkStatus = response => {
@@ -47,9 +47,14 @@ const checkStatus = response => {
   return response.json();
 };
 
-const fetchUtil = (endpoint, apiHost = API_HOST) => (method, body) =>
-  fetch(`${apiHost}${endpoint}`, optionsBuilder(body)(method)).then(
-    checkStatus
-  );
+const fetchUtil = (token = getToken()) => (endpoint, apiHost = API_HOST) => (method, body) =>
+  fetch(
+    `${apiHost}${endpoint}`,
+    optionsBuilder({
+      token,
+      body,
+      method,
+    }),
+  ).then(checkStatus);
 
 export default fetchUtil;
