@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import immutableTransform from 'redux-persist-transform-immutable';
 
 import auth from './auth';
 import experienceDetail from './experienceDetail';
@@ -20,6 +21,7 @@ const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['auth'],
+  transforms: [immutableTransform()],
 };
 
 const rootReducer = combineReducers({
