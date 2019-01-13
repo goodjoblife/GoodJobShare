@@ -24,7 +24,7 @@ const removeContentType = headers => {
   return rest;
 };
 
-const optionsBuilder = body => method => token =>
+const optionsBuilder = ({ body, method, token }) =>
   body
     ? {
         method: method.toUpperCase(),
