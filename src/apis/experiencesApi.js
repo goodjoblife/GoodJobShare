@@ -56,3 +56,9 @@ export const getExperienceReply = options => {
 
   return fetchUtil(queryString ? `${url}?${queryString}` : url)('GET');
 };
+
+export default {
+  getExperiencesRecommended,
+  getExperiences,
+  getExperienceReply,
+};

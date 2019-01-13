@@ -5,3 +5,7 @@ const endpoint = '/jobs/search';
 
 export const getJobTitlesSearch = ({ key }) =>
   fetchUtil(`${endpoint}?${qs.stringify({ key })}`)('get');
+
+export default {
+  getJobTitlesSearch,
+};

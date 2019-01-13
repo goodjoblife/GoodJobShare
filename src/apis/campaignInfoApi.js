@@ -59,3 +59,7 @@ export const fetchCampaignList = () =>
       ],
     },
   ]);
+
+export default {
+  fetchCampaignList,
+};

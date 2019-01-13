@@ -31,3 +31,14 @@ export const fetchSearchJobTitle = ({ opt }) =>
   )('GET');
 
 export const postWorkings = ({ body }) => fetchUtil(endpoint)('post', body);
+
+export default {
+  fetchCompanyCandidates,
+  fetchJobTitleCandidates,
+  fetchTimeAndSalary,
+  fetchTimeAndSalaryExtreme,
+  fetchCampaignTimeAndSalary,
+  fetchSearchCompany,
+  fetchSearchJobTitle,
+  postWorkings,
+};
