@@ -1,9 +1,16 @@
-const TOKEN_KEY_NAME = 'apiToken';
+import { path } from 'ramda';
 
-const checkSessionStorage = () => typeof sessionStorage !== 'undefined';
+const TOKEN_KEY_NAME = 'persist:goodjob';
 
-export const saveToken = token =>
-  checkSessionStorage() ? sessionStorage.setItem(TOKEN_KEY_NAME, token) : null;
+const checkStorage = () => typeof localStorage !== 'undefined';
 
-export const getToken = () =>
-  checkSessionStorage() ? sessionStorage.getItem(TOKEN_KEY_NAME) : null;
+export const getToken = () => {
+  // FIXME: remove this util
+  if (checkStorage()) {
+    const localData = JSON.parse(
+      JSON.parse(JSON.parse(localStorage.getItem(TOKEN_KEY_NAME)).auth),
+    );
+    return path(['data', 'token'])(localData);
+  }
+  return null;
+};
