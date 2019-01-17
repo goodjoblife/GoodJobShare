@@ -8,6 +8,7 @@ import report from './reportApi';
 import reportsExperiences from './reportsExperiencesApi';
 import timeAndSalary from './timeAndSalaryApi';
 import workExperiences from './workExperiencesApi';
+import me from './me';
 
 export default {
   campaignInfo,
@@ -20,4 +21,5 @@ export default {
   reportsExperiences,
   timeAndSalary,
   workExperiences,
+  me,
 };

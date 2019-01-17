@@ -74,10 +74,20 @@ export const deleteReplyLikes = ({ id }) =>
 export const postReplyLikes = ({ id }) =>
   fetchUtil(`/replies/${id}/likes`)('POST');
 
+const patchReply = ({ id, status }) =>
+  fetchUtil(`/replies/${id}`)('PATCH', {
+    status,
+  });
+
 export const getExperience = ({ id }) => fetchUtil(`/experiences/${id}`)('GET');
 
 export const newExperienceSearchBy = ({ body }) =>
   fetchUtil('/graphql')('POST', body);
+
+const patchExperience = ({ id, status }) =>
+  fetchUtil(`/experiences/${id}`)('PATCH', {
+    status,
+  });
 
 export default {
   getExperience,
@@ -90,4 +100,6 @@ export default {
   deleteReplyLikes,
   postReplyLikes,
   newExperienceSearchBy,
+  patchExperience,
+  patchReply,
 };

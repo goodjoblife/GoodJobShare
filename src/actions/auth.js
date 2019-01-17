@@ -73,6 +73,8 @@ export const getMe = FB => (dispatch, getState) => {
   return new Promise(resolve =>
     FB.api('/me', response => resolve(response)),
   ).then(response => {
+    console.log('response', response);
+
     dispatch(setUser(response));
     return response;
   });

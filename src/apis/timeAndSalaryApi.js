@@ -32,6 +32,11 @@ export const fetchSearchJobTitle = ({ opt }) =>
 
 export const postWorkings = ({ body }) => fetchUtil(endpoint)('post', body);
 
+const patchWorking = ({ id, status }) =>
+  fetchUtil(`/workings/${id}`)('PATCH', {
+    status,
+  });
+
 export default {
   fetchCompanyCandidates,
   fetchJobTitleCandidates,
@@ -41,4 +46,5 @@ export default {
   fetchSearchCompany,
   fetchSearchJobTitle,
   postWorkings,
+  patchWorking,
 };
