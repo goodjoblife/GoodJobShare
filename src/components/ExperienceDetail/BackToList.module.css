@@ -1,9 +1,11 @@
 @value main-yellow from "common/variables.module.css";
 
 .backBtn {
+  position: absolute;
+  margin-top: 6px;
+
   display: flex;
   align-items: center;
-  margin-top: 24px;
   transition-property: color;
   transition-duration: .25s;
 

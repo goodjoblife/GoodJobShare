@@ -293,6 +293,7 @@ class ExperienceDetail extends Component {
               <Loader />
             ) : (
               <Fragment>
+                <BackToList backable={backable} />
                 <ExperienceHeading experience={experience} />
                 <Article
                   experience={experience}
@@ -310,7 +311,6 @@ class ExperienceDetail extends Component {
               }
               id={id}
             />
-            <BackToList backable={backable} />
             <FanPageBlock className={styles.fanPageBlock} />
           </Wrapper>
         </Section>
