@@ -11,12 +11,9 @@ import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
-import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
 
 import Article from './Article';
-import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
-import RecommendationZone from './RecommendationZone';
 import MessageBoard from '../../containers/ExperienceDetail/MessageBoard';
 import BackToList from './BackToList';
 import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
@@ -36,7 +33,6 @@ import { COMMENT_ZONE } from '../../constants/formElements';
 
 import { paramsSelector } from 'common/routing/selectors';
 
-import styles from './ExperienceDetail.module.css';
 import LikeZone from '../../containers/ExperienceDetail/LikeZone';
 
 const MODAL_TYPE = {
@@ -307,18 +303,9 @@ class ExperienceDetail extends Component {
               </Fragment>
             )}
 
-            {/* 按讚，分享，檢舉區塊  */}
-            <ReactionZone
-              experience={experience}
-              likeExperience={likeExperience}
-            />
             <LikeZone experience={experience} likeExperience={likeExperience} />
-            <FanPageBlock className={styles.fanPageBlock} />
           </Wrapper>
         </Section>
-
-        {/* 你可能還想看...  */}
-        <RecommendationZone id={id} />
 
         {/* 留言區塊  */}
         <Section paddingBottom>
