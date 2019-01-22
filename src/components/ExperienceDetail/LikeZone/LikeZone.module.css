@@ -1,3 +1,5 @@
+@value main-gray, gray-dark, main-yellow from "common/variables.module.css";
+
 .likeZone {
   display: flex;
   flex-direction: column;
@@ -24,5 +26,45 @@
   padding: 10px 16px;
   border-radius: 6px;
   border: 1px solid #bdbdbd;
-  padding: 10px 16px;
+
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  svg {
+    fill: main-gray;
+    width: 32px;
+    height: 32px;
+    transition: fill .2s;
+    margin-right: 12px;
+
+    @media (max-width: 550px) {
+      margin-right: 6px;
+    }
+
+    &.clickable {
+      cursor: pointer;
+      &:hover {
+        fill: gray-dark;
+      }
+    }
+
+    &.toggled {
+      fill: main-yellow;
+      &:hover {
+        fill: main-yellow;
+      }
+    }
+  }
+
+  .label {
+    margin-right: 12px;
+    color: #969696;
+
+    @media (max-width: 550px) {
+      margin-right: 6px;
+    }
+  }
 }

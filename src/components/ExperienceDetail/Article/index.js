@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, withState, withHandlers } from 'recompose';
+import cn from 'classnames';
 
 import { Heading, P } from 'common/base';
 import GradientMask from 'common/GradientMask';
@@ -30,10 +31,10 @@ class Article extends React.Component {
           <ReportDetail
             label="檢舉"
             onClick={openReportDetail}
-            className={ReactionZoneStyles.button}
+            className={cn(styles.button, ReactionZoneStyles.button)}
           />
           <PopoverToggle
-            className={ReactionZoneStyles.moreButton}
+            className={cn(styles.button, ReactionZoneStyles.moreButton)}
             popoverClassName={ReactionZoneStyles.popover}
             popoverContent={
               <ReactionZoneOtherOptions

@@ -1,8 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ThumbsUp from 'common/reaction/ThumbsUp';
+import cn from 'classnames';
+import i from 'common/icons';
 import authStatusConstant from '../../../constants/authStatus';
 import styles from './LikeZone.module.css';
+
+const renderLabel = label => {
+  if (typeof label === 'undefined') {
+    return null;
+  }
+  return <div className={styles.label}>{label}</div>;
+};
+
+const renderCount = count => {
+  if (typeof count === 'undefined') {
+    return null;
+  }
+  return <div className={styles.count}>{count}</div>;
+};
+
+const ThumbsUp = ({ onClick, toggled, label, count, ...restProps }) => (
+  <div className={styles.button} onClick={onClick} {...restProps}>
+    <i.Like className={cn({ [styles.toggled]: toggled })} />
+    {renderLabel(label)}
+    {renderCount(count)}
+  </div>
+);
 
 const LikeZone = ({ likeExperience, experience, login, authStatus, FB }) => (
   <div className={styles.likeZone}>

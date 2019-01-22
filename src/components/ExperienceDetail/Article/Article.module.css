@@ -91,4 +91,8 @@ $paddingS: 16px;
   right: 0;
   display: flex;
   margin-right: 26px;
+
+  .button {
+    color: #969696;
+  }
 }
