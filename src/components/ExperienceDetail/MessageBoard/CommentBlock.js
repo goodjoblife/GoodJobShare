@@ -42,6 +42,13 @@ class CommentBlock extends Component {
 
     return (
       <section className={styles.container} id={`reply-${reply._id}`}>
+        <div className={styles.reaction}>
+          <ThumbsUp
+            count={reply.like_count}
+            toggled={reply.liked}
+            onClick={this.likeReply}
+          />
+        </div>
         <div className={styles.heading}>
           <P size="m" bold className={styles.serialNo}>
             {`${reply.floor + 1}F`}
@@ -51,13 +58,6 @@ class CommentBlock extends Component {
         <P size="m" className={styles.comment}>
           {reply.content}
         </P>
-        <div className={styles.reaction}>
-          <ThumbsUp
-            count={reply.like_count}
-            toggled={reply.liked}
-            onClick={this.likeReply}
-          />
-        </div>
       </section>
     );
   }
