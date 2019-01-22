@@ -31,7 +31,7 @@ const ExperienceHeading = ({ experience }) => (
     <P Tag="h2" size="l" className={styles.badge}>
       {experience && formatType(experience.type)}
     </P>
-    <Heading size="l">
+    <Heading size="l" className={styles.title}>
       {experience && formatComapny(experience.company)}
     </Heading>
   </div>
