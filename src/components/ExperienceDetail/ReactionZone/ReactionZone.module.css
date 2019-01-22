@@ -19,19 +19,12 @@
   }
 }
 
-.right {
-  display: flex;
-
-  @media (max-width: 550px) {
-    border-top: 1px solid border-gray;
-  }
-}
-
 .button, .moreButton {
-  padding: 16px 32px;
+  padding: 24px 9px;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #626262;
 
   @media (max-width: 550px) {
     padding: 8px;
@@ -40,7 +33,6 @@
 }
 
 .button {
-  border-right: 1px solid border-gray;
   transition-duration: .25s;
   transition-property: color;
 
@@ -52,14 +44,6 @@
 
   @media (max-width: 550px) {
     font-size: .9em;
-
-    &:last-of-type {
-      border-right: 0;
-    }
-  }
-
-  &:first-child {
-    border-left: 1px solid border-gray;
   }
 }
 

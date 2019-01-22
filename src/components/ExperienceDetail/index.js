@@ -296,8 +296,12 @@ class ExperienceDetail extends Component {
                 <BackToList backable={backable} />
                 <ExperienceHeading experience={experience} />
                 <Article
+                  id={id}
                   experience={experience}
                   hideContent={!canViewExperirenceDetail}
+                  openReportDetail={() =>
+                    this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)
+                  }
                 />
               </Fragment>
             )}
@@ -306,10 +310,6 @@ class ExperienceDetail extends Component {
             <ReactionZone
               experience={experience}
               likeExperience={likeExperience}
-              openReportDetail={() =>
-                this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)
-              }
-              id={id}
             />
             <FanPageBlock className={styles.fanPageBlock} />
           </Wrapper>
