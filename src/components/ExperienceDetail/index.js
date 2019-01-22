@@ -37,6 +37,7 @@ import { COMMENT_ZONE } from '../../constants/formElements';
 import { paramsSelector } from 'common/routing/selectors';
 
 import styles from './ExperienceDetail.module.css';
+import LikeZone from '../../containers/ExperienceDetail/LikeZone';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -311,6 +312,7 @@ class ExperienceDetail extends Component {
               experience={experience}
               likeExperience={likeExperience}
             />
+            <LikeZone experience={experience} likeExperience={likeExperience} />
             <FanPageBlock className={styles.fanPageBlock} />
           </Wrapper>
         </Section>

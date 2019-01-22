@@ -1,0 +1,28 @@
+.likeZone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 37px;
+  padding-bottom: 50px;
+
+  & > * {
+    margin-bottom: 26px;
+  }
+
+  & > *:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.description {
+  font-size: 22px;
+  text-align: center;
+  line-height: normal;
+}
+
+.button {
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: 1px solid #bdbdbd;
+  padding: 10px 16px;
+}

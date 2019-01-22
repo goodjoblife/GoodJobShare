@@ -1,7 +1,7 @@
 @value main-gray, gray-dark, main-yellow from "../variables.module.css";
 
 .container {
-  font-size: 1em;
+  font-size: 17px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,8 +9,8 @@
 
   svg {
     fill: main-gray;
-    width: 18px;
-    height: 18px;
+    width: 32px;
+    height: 32px;
     transition: fill .2s;
     margin-right: 12px;
 
@@ -35,6 +35,7 @@
 
   .label {
     margin-right: 12px;
+    color: #969696;
 
     @media (max-width: 550px) {
       margin-right: 6px;
