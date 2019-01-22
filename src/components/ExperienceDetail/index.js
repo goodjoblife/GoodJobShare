@@ -305,10 +305,6 @@ class ExperienceDetail extends Component {
 
             <LikeZone experience={experience} likeExperience={likeExperience} />
           </Wrapper>
-        </Section>
-
-        {/* 留言區塊  */}
-        <Section paddingBottom>
           <Wrapper size="s">
             <ScrollElement name={COMMENT_ZONE} />
             {repliesStatus === status.FETCHING ? (
