@@ -16,11 +16,16 @@ import shareStyles from '../../common/share.module.css';
 import {
   title as titleValidator,
   sections as sectionsValidator,
+  interviewSensitiveQuestions as interviewSensitiveQuestionsValidator,
 } from '../formCheck';
 
 import { interviewSectionSubtitleOptions } from '../../common/optionMap';
 
-import { TITLE, SECTIONS } from '../../../../constants/formElements';
+import {
+  TITLE,
+  SECTIONS,
+  INTERVIEW_SENSITIVE_QUESTIONS,
+} from '../../../../constants/formElements';
 
 const TitleWithValidation = subscribeValidation(
   Title,
@@ -32,6 +37,12 @@ const SectionsWithValidation = subscribeValidation(
   Sections,
   props => props.validator(props.sections),
   SECTIONS
+);
+
+const InterviewSensitiveQuestionsWithValidation = subscribeValidation(
+  InterviewSensitiveQuestions,
+  props => props.validator(props.interviewSensitiveQuestions),
+  INTERVIEW_SENSITIVE_QUESTIONS
 );
 
 class InterviewExperience extends Component {
@@ -123,9 +134,11 @@ class InterviewExperience extends Component {
           }}
         />
         <div>
-          <InterviewSensitiveQuestions
+          <InterviewSensitiveQuestionsWithValidation
             interviewSensitiveQuestions={interviewSensitiveQuestions}
             onChange={handleState('interviewSensitiveQuestions')}
+            validator={interviewSensitiveQuestionsValidator}
+            changeValidationStatus={changeValidationStatus}
           />
         </div>
       </IconHeadingBlock>
