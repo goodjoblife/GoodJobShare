@@ -80,7 +80,10 @@ const InterviewSensitiveQuestions = ({
             value={otherValue || ''}
             onChange={e => onChange([...resultsBesidesOther, e.target.value])}
             placeholder="輸入敏感問題"
-            warningWording="請輸入20個字以內"
+            warningWording="請輸入 1～20 字"
+            isWarning={
+              !otherValue || otherValue.length > 20 || otherValue.length === 0
+            }
           />
         </section>
       ) : null}
