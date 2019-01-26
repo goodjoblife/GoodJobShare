@@ -144,9 +144,9 @@ class InterviewForm extends React.Component {
 
     if (valid) {
       localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
-      const p = postInterviewExperience(
-        portInterviewFormToRequestFormat(getInterviewForm(this.state)),
-      );
+      const p = postInterviewExperience({
+        body: portInterviewFormToRequestFormat(getInterviewForm(this.state)),
+      });
       return p.then(
         response => {
           const experienceId = response.experience._id;
