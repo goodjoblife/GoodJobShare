@@ -49,13 +49,15 @@ const checkStatus = response => {
 
 const defaultOptions = {
   apiHost: API_HOST,
-  token: getToken(),
+  token: null,
 };
 
 const fetchUtil = (endpoint, options) => (method, body) => {
   const finalOptions = {
     ...defaultOptions,
     ...options,
+    // FIXME: workaround before get it from store
+    token: getToken(),
   };
 
   const { token, apiHost } = finalOptions;

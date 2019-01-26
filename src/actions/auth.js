@@ -14,16 +14,19 @@ export const setUser = ({ name }) => ({
   name,
 });
 
-export const login = FB => (dispatch, getState, { api }) => {
+export const loginWithFB = FB => (dispatch, getState, { api }) => {
   if (FB) {
     return new Promise(resolve => FB.login(response => resolve(response))).then(
       response => {
         if (response.status === authStatus.CONNECTED) {
-          dispatch(
-            setLogin(response.status, response.authResponse.accessToken),
-          );
+          return api.auth
+            .postAuthFacebook(response.authResponse.accessToken)
+            .then(({ token, user: { _id, facebook_id } }) =>
+              dispatch(setLogin(authStatus.CONNECTED, token)),
+            )
+            .then(() => authStatus.CONNECTED);
         } else if (response.status === authStatus.NOT_AUTHORIZED) {
-          dispatch(setLogin(response.status));
+          dispatch(setLogin(authStatus.NOT_AUTHORIZED));
         }
         return response.status;
       },

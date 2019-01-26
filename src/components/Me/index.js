@@ -28,10 +28,7 @@ class Me extends Component {
     this.props.fetchMyWorkings();
     this.props.fetchMyReplies();
     const { getLoginStatus, FB, getMe } = this.props;
-    FB &&
-      getLoginStatus(FB)
-        .then(() => getMe(FB))
-        .catch(() => {});
+    FB && getLoginStatus(FB).then(() => getMe(FB));
   }
 
   componentDidUpdate(prevProps) {
@@ -39,7 +36,7 @@ class Me extends Component {
       // FB instance changed
       const { getLoginStatus, FB } = this.props;
 
-      FB && getLoginStatus(FB).catch(() => {});
+      FB && getLoginStatus(FB);
     }
 
     if (
@@ -47,13 +44,13 @@ class Me extends Component {
       this.props.auth.get('status') === authStatus.CONNECTED
     ) {
       const { getMe, FB } = this.props;
-      FB && getMe(FB).catch(() => {});
+      FB && getMe(FB);
     }
   }
 
   login = () => {
     const { login, FB } = this.props;
-    FB && login(FB).catch(() => {});
+    FB && login(FB);
   };
 
   render() {
