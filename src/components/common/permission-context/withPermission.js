@@ -6,7 +6,7 @@ import {
   compose,
 } from 'recompose';
 import { withRouter } from 'react-router-dom';
-import fetchUtil from 'utils/fetchUtil';
+import { getHasSearchPermission } from '../../../apis/me';
 import PermissionContext from './PermissionContext';
 
 const withPermissionContext = Component => {
@@ -23,8 +23,10 @@ const withPermission = compose(
   withRouter,
   withHandlers({
     fetchPermission: ({ location, setCanView }) => async () => {
-      const result = await fetchUtil('/me/permissions/search')('GET');
+      const result = await getHasSearchPermission();
       const { hasSearchPermission: hasPermission } = result;
+
+      console.log('fetchPermission result', result);
 
       if (typeof Storage !== 'undefined') {
         // check current pathname
@@ -41,7 +43,7 @@ const withPermission = compose(
         } else if (experienceDetailRegex.test(pathname)) {
           // 假如是單篇經驗分享頁，localStorage 沒值的話，不更新觀看權限 state。因此不會做阻擋，但是馬上就更新 localStorage。
           const viewedExperirenceDetail = localStorage.getItem(
-            'viewedExperirenceDetail'
+            'viewedExperirenceDetail',
           );
 
           if (viewedExperirenceDetail === null) {
@@ -55,7 +57,7 @@ const withPermission = compose(
         } else if (timeAndSalaryRegex.test(pathname)) {
           // 假如是薪資工時查詢頁，localStorage 沒值的話，不更新觀看權限 state。因此不會做阻擋，但是馬上就更新 localStorage。
           const viewedTimeAndSalary = localStorage.getItem(
-            'viewedTimeAndSalary'
+            'viewedTimeAndSalary',
           );
 
           if (viewedTimeAndSalary === null) {
@@ -69,7 +71,7 @@ const withPermission = compose(
         }
       }
     },
-  })
+  }),
 );
 
 export default withPermission;
