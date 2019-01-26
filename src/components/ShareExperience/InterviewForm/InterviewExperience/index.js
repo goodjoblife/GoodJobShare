@@ -137,6 +137,7 @@ class InterviewExperience extends Component {
           <InterviewSensitiveQuestionsWithValidation
             interviewSensitiveQuestions={interviewSensitiveQuestions}
             onChange={handleState('interviewSensitiveQuestions')}
+            submitted={submitted}
             validator={interviewSensitiveQuestionsValidator}
             changeValidationStatus={changeValidationStatus}
           />

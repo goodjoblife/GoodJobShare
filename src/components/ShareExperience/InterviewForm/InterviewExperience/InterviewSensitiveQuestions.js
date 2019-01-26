@@ -26,6 +26,7 @@ const getOtherValue = results =>
 const InterviewSensitiveQuestions = ({
   interviewSensitiveQuestions,
   onChange,
+  submitted,
 }) => {
   const hasOther = hasOtherFunc(interviewSensitiveQuestions);
   const resultsBesidesOther = notOtherFunc(interviewSensitiveQuestions);
@@ -82,7 +83,8 @@ const InterviewSensitiveQuestions = ({
             placeholder="輸入敏感問題"
             warningWording="請輸入 1～20 字"
             isWarning={
-              !otherValue || otherValue.length > 20 || otherValue.length === 0
+              submitted &&
+              (!otherValue || otherValue.length > 20 || otherValue.length === 0)
             }
           />
         </section>
