@@ -9,7 +9,14 @@ import ButtonGroup from 'common/button/ButtonGroup';
 
 import styles from './MessageBoard.module.css';
 
-const recommendedSentences = ['詳細給推', '感謝大大無私分享'];
+const recommendedSentences = [
+  '詳細給推',
+  '感謝大大無私分享',
+  '蒸的很蚌',
+  '真的非常謝謝你的分享！',
+  '很實用！',
+  '台灣的職場因為有你變得更好！',
+];
 
 class MessageBoard extends Component {
   state = {
