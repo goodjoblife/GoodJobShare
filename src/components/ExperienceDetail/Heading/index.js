@@ -7,13 +7,13 @@ import styles from './Heading.module.css';
 const formatType = type => {
   switch (type) {
     case 'work':
-      return '工作經驗';
+      return '工作心得';
     case 'interview':
       return '面試經驗';
     case 'intern':
-      return '實習經驗';
+      return '實習心得';
     default:
-      return '工作經驗';
+      return '工作心得';
   }
 };
 
