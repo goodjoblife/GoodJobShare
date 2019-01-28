@@ -87,7 +87,7 @@ class TimeSalaryForm extends React.PureComponent {
 
     try {
       defaultFromDraft = JSON.parse(
-        localStorage.getItem(LS_TIME_SALARY_FORM_KEY)
+        localStorage.getItem(LS_TIME_SALARY_FORM_KEY),
       );
     } catch (error) {
       defaultFromDraft = null;
@@ -112,9 +112,11 @@ class TimeSalaryForm extends React.PureComponent {
     if (valid && (valid2 || valid3)) {
       localStorage.removeItem(LS_TIME_SALARY_FORM_KEY);
 
-      const p = postWorkings(
-        portTimeSalaryFormToRequestFormat(getTimeAndSalaryForm(this.state))
-      );
+      const p = postWorkings({
+        body: portTimeSalaryFormToRequestFormat(
+          getTimeAndSalaryForm(this.state),
+        ),
+      });
 
       return p.then(
         response => {
@@ -150,7 +152,7 @@ class TimeSalaryForm extends React.PureComponent {
           return ({ buttonClick }) => (
             <FailFeedback info={error.message} buttonClick={buttonClick} />
           );
-        }
+        },
       );
     }
     this.handleState('submitted')(true);

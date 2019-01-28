@@ -24,16 +24,16 @@ const removeContentType = headers => {
   return rest;
 };
 
-const optionsBuilder = body => method =>
+const optionsBuilder = ({ body, method, token }) =>
   body
     ? {
         method: method.toUpperCase(),
-        headers: headerBuilder(getToken()),
+        headers: headerBuilder(token),
         body: JSON.stringify(body),
       }
     : {
         method: method.toUpperCase(),
-        headers: removeContentType(headerBuilder(getToken())),
+        headers: removeContentType(headerBuilder(token)),
       };
 
 const checkStatus = response => {
@@ -47,9 +47,29 @@ const checkStatus = response => {
   return response.json();
 };
 
-const fetchUtil = (endpoint, apiHost = API_HOST) => (method, body) =>
-  fetch(`${apiHost}${endpoint}`, optionsBuilder(body)(method)).then(
-    checkStatus
-  );
+const defaultOptions = {
+  apiHost: API_HOST,
+  token: null,
+};
+
+const fetchUtil = (endpoint, options) => (method, body) => {
+  const finalOptions = {
+    ...defaultOptions,
+    ...options,
+    // FIXME: workaround before get it from store
+    token: getToken(),
+  };
+
+  const { token, apiHost } = finalOptions;
+
+  return fetch(
+    `${apiHost}${endpoint}`,
+    optionsBuilder({
+      token,
+      body,
+      method,
+    }),
+  ).then(checkStatus);
+};
 
 export default fetchUtil;

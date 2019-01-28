@@ -11,4 +11,5 @@ module.exports = {
   PIXEL_ID: process.env.RAZZLE_PIXEL_ID || '603414113402034',
   SENTRY_DSN: process.env.RAZZLE_SENTRY_DSN,
   GIT_SHA1: process.env.RAZZLE_GIT_SHA1,
+  PERSIST_KEY: process.env.PERSIST_KEY || 'goodjob',
 };

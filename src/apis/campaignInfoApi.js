@@ -60,4 +60,6 @@ export const fetchCampaignList = () =>
     },
   ]);
 
-export const foo = 1;
+export default {
+  fetchCampaignList,
+};

@@ -35,7 +35,19 @@ export const getExperiences = ({
   return fetchUtil(url)('GET');
 };
 
-export const getExperienceReply = (experienceId, start = 0, limit = 100) => {
+const getExperienceReplyOptions = {
+  start: 0,
+  limit: 100,
+};
+
+export const getExperienceReply = options => {
+  const finalOptions = {
+    ...getExperienceReplyOptions,
+    ...options,
+  };
+
+  const { experienceId, start, limit } = finalOptions;
+
   const url = `/experiences/${experienceId}/replies`;
   const queryString = qs.stringify({
     start,
@@ -43,4 +55,51 @@ export const getExperienceReply = (experienceId, start = 0, limit = 100) => {
   });
 
   return fetchUtil(queryString ? `${url}?${queryString}` : url)('GET');
+};
+
+export const postExperienceReply = ({ id, comment }) =>
+  fetchUtil(`/experiences/${id}/replies`)('POST', {
+    content: comment,
+  });
+
+export const deleteExperienceLikes = ({ id }) =>
+  fetchUtil(`/experiences/${id}/likes`)('DELETE');
+
+export const postExperienceLikes = ({ id }) =>
+  fetchUtil(`/experiences/${id}/likes`)('POST');
+
+export const deleteReplyLikes = ({ id }) =>
+  fetchUtil(`/replies/${id}/likes`)('DELETE');
+
+export const postReplyLikes = ({ id }) =>
+  fetchUtil(`/replies/${id}/likes`)('POST');
+
+const patchReply = ({ id, status }) =>
+  fetchUtil(`/replies/${id}`)('PATCH', {
+    status,
+  });
+
+export const getExperience = ({ id }) => fetchUtil(`/experiences/${id}`)('GET');
+
+export const newExperienceSearchBy = ({ body }) =>
+  fetchUtil('/graphql')('POST', body);
+
+const patchExperience = ({ id, status }) =>
+  fetchUtil(`/experiences/${id}`)('PATCH', {
+    status,
+  });
+
+export default {
+  getExperience,
+  getExperiencesRecommended,
+  getExperiences,
+  getExperienceReply,
+  postExperienceReply,
+  deleteExperienceLikes,
+  postExperienceLikes,
+  deleteReplyLikes,
+  postReplyLikes,
+  newExperienceSearchBy,
+  patchExperience,
+  patchReply,
 };

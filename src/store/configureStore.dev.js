@@ -1,7 +1,8 @@
 /* eslint-disable global-require */
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
+import api from '../apis';
 
 import rootReducer from '../reducers';
 
@@ -10,11 +11,14 @@ const logger = createLogger({
   collapsed: true,
 });
 
+const composeEnhancers =
+  (global.window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+
 const configureStore = (preloadedState, history) => {
   const store = createStore(
     rootReducer,
     preloadedState,
-    applyMiddleware(thunk, logger)
+    composeEnhancers(applyMiddleware(thunk.withExtraArgument({ api }), logger)),
   );
 
   if (module.hot) {

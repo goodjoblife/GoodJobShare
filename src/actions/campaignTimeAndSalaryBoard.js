@@ -1,6 +1,5 @@
 import R from 'ramda';
 
-import { fetchCampaignTimeAndSalary } from '../apis/timeAndSalaryApi';
 import fetchingStatus from '../constants/status';
 import { DATA_NUM_PER_PAGE } from '../constants/timeAndSalarSearch';
 
@@ -29,7 +28,7 @@ const resetBoard = ({ campaignName, sortBy, order, page }) => ({
 
 const setBoardData = (
   { campaignName, sortBy, order },
-  { status, data, total = 0, currentPage = 0, error = null }
+  { status, data, total = 0, currentPage = 0, error = null },
 ) => (dispatch, getState) => {
   // make sure the store is consistent
   if (
@@ -55,8 +54,8 @@ const setBoardData = (
 
 export const queryCampaignTimeAndSalary = (
   campaignName,
-  { sortBy, order, jobTitles, page }
-) => (dispatch, getState) => {
+  { sortBy, order, jobTitles, page },
+) => (dispatch, getState, { api }) => {
   if (
     campaignName !== campaignNameSelector(getState()) ||
     sortBy !== sortBySelector(getState()) ||
@@ -84,7 +83,8 @@ export const queryCampaignTimeAndSalary = (
     skip: (sortBy !== 'created_at').toString(),
   };
 
-  return fetchCampaignTimeAndSalary(campaignName, opt)
+  return api.timeAndSalary
+    .fetchCampaignTimeAndSalary({ campaignName, opt })
     .then(rawData => {
       // 將Array公司名稱轉換成String
       const takeFirstFromArrayCompanyName = R.over(
@@ -92,11 +92,11 @@ export const queryCampaignTimeAndSalary = (
         R.ifElse(
           R.pipe(
             R.type,
-            R.equals('Array')
+            R.equals('Array'),
           ),
           R.head,
-          R.identity
-        )
+          R.identity,
+        ),
       );
       const data = rawData.time_and_salary.map(takeFirstFromArrayCompanyName);
 
@@ -108,16 +108,16 @@ export const queryCampaignTimeAndSalary = (
             data,
             total: rawData.total,
             currentPage: page,
-          }
-        )
+          },
+        ),
       );
     })
     .catch(error => {
       dispatch(
         setBoardData(
           { campaignName, sortBy, order },
-          { status: fetchingStatus.ERROR, data: [], error }
-        )
+          { status: fetchingStatus.ERROR, data: [], error },
+        ),
       );
     });
 };

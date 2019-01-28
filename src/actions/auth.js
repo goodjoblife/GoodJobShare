@@ -14,19 +14,22 @@ export const setUser = ({ name }) => ({
   name,
 });
 
-export const login = FB => dispatch => {
+export const loginWithFB = FB => (dispatch, getState, { api }) => {
   if (FB) {
     return new Promise(resolve => FB.login(response => resolve(response))).then(
       response => {
         if (response.status === authStatus.CONNECTED) {
-          dispatch(
-            setLogin(response.status, response.authResponse.accessToken)
-          );
+          return api.auth
+            .postAuthFacebook(response.authResponse.accessToken)
+            .then(({ token, user: { _id, facebook_id } }) =>
+              dispatch(setLogin(authStatus.CONNECTED, token)),
+            )
+            .then(() => authStatus.CONNECTED);
         } else if (response.status === authStatus.NOT_AUTHORIZED) {
-          dispatch(setLogin(response.status));
+          dispatch(setLogin(authStatus.NOT_AUTHORIZED));
         }
         return response.status;
-      }
+      },
     );
   }
   return Promise.reject('FB should ready');
@@ -35,7 +38,7 @@ export const login = FB => dispatch => {
 export const logout = FB => dispatch => {
   if (FB) {
     return new Promise(resolve =>
-      FB.logout(response => resolve(response))
+      FB.logout(response => resolve(response)),
     ).then(response => {
       if (response.status === authStatus.UNKNOWN) {
         dispatch(setLogin(response.status, response.authResponse.accessToken));
@@ -50,7 +53,7 @@ export const logout = FB => dispatch => {
 export const getLoginStatus = FB => dispatch => {
   if (FB) {
     return new Promise(resolve =>
-      FB.getLoginStatus(response => resolve(response))
+      FB.getLoginStatus(response => resolve(response)),
     ).then(response => {
       if (response.status === authStatus.CONNECTED) {
         dispatch(setLogin(response.status, response.authResponse.accessToken));
@@ -71,7 +74,7 @@ export const getMe = FB => (dispatch, getState) => {
     return Promise.reject('auth status should be connected');
   }
   return new Promise(resolve =>
-    FB.api('/me', response => resolve(response))
+    FB.api('/me', response => resolve(response)),
   ).then(response => {
     dispatch(setUser(response));
     return response;

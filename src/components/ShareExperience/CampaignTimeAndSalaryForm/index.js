@@ -144,15 +144,15 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       .get(campaignName)
       .toJS();
     const valid4 = campaignExtendedFormCheck(extraFields)(
-      getCampaignExtendedForm(extraFields)(this.state)
+      getCampaignExtendedForm(extraFields)(this.state),
     );
 
     if (valid && (valid2 || valid3) && valid4) {
-      const p = postWorkings(
-        portTimeSalaryFormToRequestFormat(
-          getCampaignTimeAndSalaryForm(extraFields, defaultContent)(this.state)
-        )
-      );
+      const p = postWorkings({
+        body: portTimeSalaryFormToRequestFormat(
+          getCampaignTimeAndSalaryForm(extraFields, defaultContent)(this.state),
+        ),
+      });
 
       return p.then(
         response => {
@@ -175,7 +175,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
               buttonText="查看最新工時、薪資"
               buttonClick={() => {
                 window.location.replace(
-                  `/time-and-salary/campaigns/${campaignName}/latest`
+                  `/time-and-salary/campaigns/${campaignName}/latest`,
                 );
               }}
             />
@@ -190,7 +190,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
           return ({ buttonClick }) => (
             <FailFeedback info={error.message} buttonClick={buttonClick} />
           );
-        }
+        },
       );
     }
     this.handleState('submitted')(true);
@@ -308,7 +308,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
           {
             property: 'og:url',
             content: formatCanonicalPath(
-              `/share/time-and-salary/campaign/${campaignName}`
+              `/share/time-and-salary/campaign/${campaignName}`,
             ),
           },
           { property: 'og:image', content: ogImgUrl },
@@ -317,7 +317,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
           {
             rel: 'canonical',
             href: formatCanonicalPath(
-              `/share/time-and-salary/campaign/${campaignName}`
+              `/share/time-and-salary/campaign/${campaignName}`,
             ),
           },
         ],

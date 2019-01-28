@@ -1,5 +1,4 @@
 import R from 'ramda';
-import { getExperiences } from '../apis/experiencesApi';
 import fetchingStatus, { isUnfetched } from '../constants/status';
 
 export const SET_COUNT_DATA = '@@EXPERIENCES/SET_COUNT_DATA';
@@ -11,7 +10,7 @@ const setCountData = (count, status, error = null) => ({
   error,
 });
 
-export const queryExperienceCount = () => dispatch => {
+export const queryExperienceCount = () => (dispatch, getState, { api }) => {
   dispatch(setCountData(0, fetchingStatus.FETCHING));
   const opt = {
     searchType: ['interview', 'work', 'intern'],
@@ -20,7 +19,8 @@ export const queryExperienceCount = () => dispatch => {
     sort: 'created_at',
   };
 
-  return getExperiences(opt)
+  return api.experiences
+    .getExperiences(opt)
     .then(rawData => {
       const count = R.prop('total')(rawData);
       dispatch(setCountData(count, fetchingStatus.FETCHED));

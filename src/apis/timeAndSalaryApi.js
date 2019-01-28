@@ -3,31 +3,48 @@ import qs from 'qs';
 
 const endpoint = '/workings';
 
-export const fetchCompanyCandidates = key =>
+export const fetchCompanyCandidates = ({ key }) =>
   fetchUtil(`${endpoint}/companies/search?${qs.stringify({ key })}`)('GET');
 
-export const fetchJobTitleCandidates = key =>
+export const fetchJobTitleCandidates = ({ key }) =>
   fetchUtil(`${endpoint}/jobs/search?${qs.stringify({ key })}`)('GET');
 
-export const fetchTimeAndSalary = opt =>
+export const fetchTimeAndSalary = ({ opt }) =>
   fetchUtil(`${endpoint}?${qs.stringify(opt)}`)('GET');
 
-export const fetchTimeAndSalaryExtreme = opt =>
+export const fetchTimeAndSalaryExtreme = ({ opt }) =>
   fetchUtil(`${endpoint}/extreme?${qs.stringify(opt)}`)('GET');
 
-export const fetchCampaignTimeAndSalary = (campaignName, opt) =>
+export const fetchCampaignTimeAndSalary = ({ campaignName, opt }) =>
   fetchUtil(`${endpoint}/campaigns/${campaignName}?${qs.stringify(opt)}`)(
-    'GET'
+    'GET',
   );
 
-export const fetchSearchCompany = opt =>
+export const fetchSearchCompany = ({ opt }) =>
   fetchUtil(
-    `${endpoint}/search_by/company/group_by/company?${qs.stringify(opt)}`
+    `${endpoint}/search_by/company/group_by/company?${qs.stringify(opt)}`,
   )('GET');
 
-export const fetchSearchJobTitle = opt =>
+export const fetchSearchJobTitle = ({ opt }) =>
   fetchUtil(
-    `${endpoint}/search_by/job_title/group_by/company?${qs.stringify(opt)}`
+    `${endpoint}/search_by/job_title/group_by/company?${qs.stringify(opt)}`,
   )('GET');
 
-export const postWorkings = body => fetchUtil(endpoint)('post', body);
+export const postWorkings = ({ body }) => fetchUtil(endpoint)('post', body);
+
+const patchWorking = ({ id, status }) =>
+  fetchUtil(`/workings/${id}`)('PATCH', {
+    status,
+  });
+
+export default {
+  fetchCompanyCandidates,
+  fetchJobTitleCandidates,
+  fetchTimeAndSalary,
+  fetchTimeAndSalaryExtreme,
+  fetchCampaignTimeAndSalary,
+  fetchSearchCompany,
+  fetchSearchJobTitle,
+  postWorkings,
+  patchWorking,
+};

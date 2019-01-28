@@ -1,7 +1,12 @@
-import fetchUtil from '../utils/fetchUtil';
 import fetchingStatus from '../constants/status';
-
-import { getExperienceReply } from '../apis/experiencesApi';
+import {
+  postExperienceReply,
+  deleteExperienceLikes,
+  postExperienceLikes,
+  deleteReplyLikes,
+  postReplyLikes,
+  getExperience,
+} from '../apis/experiencesApi';
 
 export const SET_EXPERIENCE = '@@experienceDetail/SET_EXPERIENCE';
 export const SET_EXPERIENCE_STATUS = '@@experienceDetail/SET_EXPERIENCE_STATUS';
@@ -29,7 +34,7 @@ const resetRepliesData = experienceId => ({
 
 const setRepliesData = (experienceId, { status, replies, error = null }) => (
   dispatch,
-  getState
+  getState,
 ) => {
   if (experienceId === repliesExperienceIdSelector(getState())) {
     return dispatch({
@@ -48,29 +53,27 @@ export const submitComment = (id, comment) => (dispatch, getState) => {
     .experienceDetail.get('replies')
     .toJS();
 
-  return fetchUtil(`/experiences/${id}/replies`)('POST', {
-    content: comment,
-  }).then(result => {
+  return postExperienceReply({ id, comment }).then(result => {
     dispatch(
       setRepliesData(id, {
         status: fetchingStatus.FETCHED,
         replies: [...oldReplies, result.reply],
-      })
+      }),
     );
   });
 };
 
 export const likeExperience = o => dispatch => {
   if (o.liked) {
-    return fetchUtil(`/experiences/${o._id}/likes`)('DELETE').then(result => {
+    return deleteExperienceLikes({ id: o._id }).then(result => {
       if (result.success) {
         dispatch(
           setExperience(
             Object.assign({}, o, {
               liked: false,
               like_count: o.like_count - 1,
-            })
-          )
+            }),
+          ),
         );
         return;
       }
@@ -81,15 +84,15 @@ export const likeExperience = o => dispatch => {
     // });
   }
 
-  return fetchUtil(`/experiences/${o._id}/likes`)('POST').then(result => {
+  return postExperienceLikes({ id: o._id }).then(result => {
     if (result.success) {
       dispatch(
         setExperience(
           Object.assign({}, o, {
             liked: true,
             like_count: o.like_count + 1,
-          })
-        )
+          }),
+        ),
       );
       return;
     }
@@ -110,7 +113,7 @@ export const likeReply = reply => dispatch => {
   const { _id: replyId, liked } = reply;
 
   if (liked) {
-    return fetchUtil(`/replies/${replyId}/likes`)('DELETE').then(result => {
+    return deleteReplyLikes({ id: replyId }).then(result => {
       if (result.success) {
         return dispatch(setReplyLiked(replyId, false));
       }
@@ -118,7 +121,7 @@ export const likeReply = reply => dispatch => {
     });
   }
 
-  return fetchUtil(`/replies/${replyId}/likes`)('POST').then(result => {
+  return postReplyLikes({ id: replyId }).then(result => {
     if (result.success) {
       return dispatch(setReplyLiked(replyId, true));
     }
@@ -132,7 +135,7 @@ export const fetchExperience = id => dispatch => {
     status: fetchingStatus.FETCHING,
   });
 
-  return fetchUtil(`/experiences/${id}`)('GET')
+  return getExperience({ id })
     .then(result => {
       dispatch(setExperience(result));
     })
@@ -146,7 +149,7 @@ export const fetchExperience = id => dispatch => {
     });
 };
 
-export const fetchReplies = id => (dispatch, getState) => {
+export const fetchReplies = id => (dispatch, getState, { api }) => {
   if (id !== repliesExperienceIdSelector(getState())) {
     dispatch(resetRepliesData(id));
   }
@@ -156,11 +159,19 @@ export const fetchReplies = id => (dispatch, getState) => {
     status: fetchingStatus.FETCHING,
   });
 
-  return getExperienceReply(id, 0, 100)
+  return api.experiences
+    .getExperienceReply({
+      experienceId: id,
+      start: 0,
+      limit: 100,
+    })
     .then(rawData => {
       const replies = rawData.replies;
       return dispatch(
-        setRepliesData(id, { status: fetchingStatus.FETCHED, replies })
+        setRepliesData(id, {
+          status: fetchingStatus.FETCHED,
+          replies,
+        }),
       );
     })
     .catch(error =>
@@ -169,7 +180,7 @@ export const fetchReplies = id => (dispatch, getState) => {
           status: fetchingStatus.ERROR,
           error,
           replies: [],
-        })
-      )
+        }),
+      ),
     );
 };

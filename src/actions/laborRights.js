@@ -1,4 +1,3 @@
-import { getEntries, getEntry } from '../apis/laborRightsApi';
 import {
   menuStatusSelector,
   entryStatusSelector,
@@ -32,13 +31,14 @@ const setEntryData = (entryId, data, status, error = null) => ({
   error,
 });
 
-export const queryMenu = () => dispatch => {
+export const queryMenu = () => (dispatch, getState, { api }) => {
   dispatch({
     type: SET_MENU_STATUS,
     status: fetchingStatus.FETCHING,
   });
 
-  return getEntries()
+  return api.laborRights
+    .getEntries()
     .then(rawData => {
       dispatch(setMenuData(rawData, fetchingStatus.FETCHED));
     })
@@ -54,10 +54,11 @@ export const queryMenuIfUnfetched = () => (dispatch, getState) => {
   return Promise.resolve();
 };
 
-export const queryEntry = entryId => dispatch => {
+export const queryEntry = entryId => (dispatch, getState, { api }) => {
   dispatch(setEntryStatus(entryId, fetchingStatus.FETCHING));
 
-  return getEntry(entryId)
+  return api.laborRights
+    .getEntry({ entryId })
     .then(rawData => {
       dispatch(setEntryData(entryId, rawData, fetchingStatus.FETCHED));
     })
@@ -71,7 +72,7 @@ export const queryEntry = entryId => dispatch => {
               name,
               message,
               statusCode: 404,
-            })
+            }),
           );
         }
       }

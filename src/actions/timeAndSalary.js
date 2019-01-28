@@ -1,5 +1,4 @@
 import R from 'ramda';
-import { fetchTimeAndSalary } from '../apis/timeAndSalaryApi';
 import fetchingStatus, { isUnfetched } from '../constants/status';
 
 export const SET_COUNT_DATA = '@@TIME_AND_SALARY/SET_COUNT_DATA';
@@ -11,14 +10,15 @@ const setCountData = (count, status, error = null) => ({
   error,
 });
 
-export const queryTimeAndSalaryCount = () => dispatch => {
+export const queryTimeAndSalaryCount = () => (dispatch, getState, { api }) => {
   dispatch(setCountData(0, fetchingStatus.FETCHING));
 
   const opt = {
     limit: 1,
   };
 
-  return fetchTimeAndSalary(opt)
+  return api.timeAndSalary
+    .fetchTimeAndSalary({ opt })
     .then(rawData => {
       const count = R.prop('total')(rawData);
       dispatch(setCountData(count, fetchingStatus.FETCHED));
@@ -31,7 +31,7 @@ export const queryTimeAndSalaryCount = () => dispatch => {
 
 export const queryTimeAndSalaryCountIfUnfetched = () => (
   dispatch,
-  getState
+  getState,
 ) => {
   if (isUnfetched(getState().timeAndSalary.get('countStatus'))) {
     return dispatch(queryTimeAndSalaryCount());
