@@ -7,7 +7,7 @@ import editorStyles from 'common/Editor.module.css';
 import Button from 'common/button/Button';
 
 const InfoSalaryModal = ({ isOpen, close }) => (
-  <Modal isOpen={isOpen} hasClose close={close}>
+  <Modal isOpen={isOpen} hasClose close={close} closableOnClickOutside>
     <div>
       <Question
         style={{

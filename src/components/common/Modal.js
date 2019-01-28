@@ -27,7 +27,9 @@ const Modal = ({ children, isOpen, hasClose, close, size, onClickOutside }) => (
             />
           </div>
         ) : null}
-        <div className={styles.content}>{children}</div>
+        <div className={styles.content} onClick={e => e.stopPropagation()}>
+          {children}
+        </div>
       </div>
     </div>
   </div>

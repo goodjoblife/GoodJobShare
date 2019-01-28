@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'common/Modal';
 
 const AboutThisJobModal = ({ isOpen, close, title, aboutThisJob }) => (
-  <Modal isOpen={isOpen} hasClose close={close}>
+  <Modal isOpen={isOpen} hasClose close={close} closableOnClickOutside>
     <h1 style={{ textAlign: 'center', fontSize: '150%', marginBottom: '1em' }}>
       {title}
     </h1>

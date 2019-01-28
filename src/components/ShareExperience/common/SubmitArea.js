@@ -31,6 +31,7 @@ class SubmitArea extends React.PureComponent {
       isOpen: false,
       feedback: null,
       hasClose: false,
+      closableOnClickOutside: true,
       isSubmitting: false,
     };
   }
@@ -45,6 +46,7 @@ class SubmitArea extends React.PureComponent {
       .then(Feedback => {
         this.handleIsOpen(true);
         this.handleHasClose(false);
+        this.handleclosableOnClickOutside(true);
         return this.handleFeedback(
           Feedback({
             buttonClick: () => this.handleIsOpen(false),
@@ -60,6 +62,7 @@ class SubmitArea extends React.PureComponent {
   onFacebookFail() {
     this.handleIsOpen(true);
     this.handleHasClose(true);
+    this.handleclosableOnClickOutside(true);
     return this.handleFeedback(getFacebookFail(this.login));
   }
 
@@ -102,10 +105,22 @@ class SubmitArea extends React.PureComponent {
     }));
   }
 
+  handleclosableOnClickOutside = closableOnClickOutside => {
+    this.setState({
+      closableOnClickOutside,
+    });
+  };
+
   render() {
     const { auth } = this.props;
 
-    const { agree, isOpen, feedback, hasClose } = this.state;
+    const {
+      agree,
+      isOpen,
+      feedback,
+      hasClose,
+      closableOnClickOutside,
+    } = this.state;
 
     return (
       <div
@@ -173,6 +188,7 @@ class SubmitArea extends React.PureComponent {
           isOpen={isOpen}
           close={() => this.handleIsOpen(!isOpen)}
           hasClose={hasClose}
+          closableOnClickOutside={closableOnClickOutside}
         >
           {feedback}
         </Modal>
