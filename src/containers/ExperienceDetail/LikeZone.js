@@ -11,9 +11,10 @@ const mapStateToProps = state => ({
   authStatus: statusSelector(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ login: loginWithFB }, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ login: loginWithFB }, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(withFB(LikeZone));

@@ -157,7 +157,7 @@ const enhance = compose(
     }) => () => {
       setIsInspectReportOpen(!isInspectReportOpen);
     },
-  })
+  }),
 );
 
 export default enhance(Article);
