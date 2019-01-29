@@ -172,7 +172,7 @@ describe('interviewFormCheck tests', () => {
 
   test('defaultForm should not pass', () => {
     expect(
-      workExperiencesFormCheck(propsWorkExperiencesForm(defaultForm))
+      workExperiencesFormCheck(propsWorkExperiencesForm(defaultForm)),
     ).toBe(false);
   });
 
@@ -216,7 +216,7 @@ describe('interviewFormCheck tests', () => {
     };
 
     expect(
-      workExperiencesFormCheck(propsWorkExperiencesForm(justFillForm))
+      workExperiencesFormCheck(propsWorkExperiencesForm(justFillForm)),
     ).toBe(true);
   });
 });

@@ -53,7 +53,7 @@ function getPosition(obj) {
 
 const experienceIdSelector = R.compose(
   params => params.id,
-  paramsSelector
+  paramsSelector,
 );
 
 class ExperienceDetail extends Component {
@@ -211,7 +211,7 @@ class ExperienceDetail extends Component {
           : '';
         const content = experience.sections[0].content.replace(
           /(\r\n|\n|\r)/gm,
-          ' '
+          ' ',
         );
         const mapping = {
           interview: '面試經驗分享',
@@ -256,7 +256,7 @@ class ExperienceDetail extends Component {
     const backable = R.pathOr(
       false,
       ['location', 'state', 'backable'],
-      this.props
+      this.props,
     );
     const data = this.props.experienceDetail.toJS();
 
@@ -337,7 +337,7 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
 
 const hoc = compose(
   ssr,
-  withPermission
+  withPermission,
 );
 
 export default hoc(ExperienceDetail);

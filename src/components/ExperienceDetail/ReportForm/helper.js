@@ -14,7 +14,7 @@ const omitByReasonCategory = state => {
 
 export const handleToApiParams = R.compose(
   stateToApiParams,
-  omitByReasonCategory
+  omitByReasonCategory,
 );
 
 export const foo = 1;

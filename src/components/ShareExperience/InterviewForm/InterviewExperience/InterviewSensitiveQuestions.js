@@ -26,10 +26,14 @@ const getOtherValue = results =>
 const InterviewSensitiveQuestions = ({
   interviewSensitiveQuestions,
   onChange,
+  submitted,
 }) => {
   const hasOther = hasOtherFunc(interviewSensitiveQuestions);
   const resultsBesidesOther = notOtherFunc(interviewSensitiveQuestions);
   const otherValue = getOtherValue(interviewSensitiveQuestions);
+  const otherValueIsWarning =
+    submitted &&
+    (!otherValue || otherValue.length > 20 || otherValue.length === 0);
 
   const resultsForButtonGroup = hasOther
     ? [...resultsBesidesOther, OTHER_VALUE]
@@ -80,7 +84,8 @@ const InterviewSensitiveQuestions = ({
             value={otherValue || ''}
             onChange={e => onChange([...resultsBesidesOther, e.target.value])}
             placeholder="輸入敏感問題"
-            warningWording="請輸入20個字以內"
+            warningWording="請輸入 1～20 字"
+            isWarning={otherValueIsWarning}
           />
         </section>
       ) : null}

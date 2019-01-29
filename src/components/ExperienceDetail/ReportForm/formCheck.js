@@ -10,7 +10,7 @@ export const validReason = isLimit =>
     () => !isLimit,
     R.compose(
       R.allPass([n => n > 0, n => n <= 500]),
-      R.length
+      R.length,
     ),
   ]);
 
@@ -20,10 +20,10 @@ export const validReasonCategory = reasonCategory =>
 export const validReasomForm = R.allPass([
   R.compose(
     n => validReason(isReasonLimit(n[1]))(n[0]),
-    n => R.pair(R.prop('reason')(n), R.prop('reasonCategory')(n))
+    n => R.pair(R.prop('reason')(n), R.prop('reasonCategory')(n)),
   ),
   R.compose(
     validReasonCategory,
-    R.prop('reasonCategory')
+    R.prop('reasonCategory'),
   ),
 ]);

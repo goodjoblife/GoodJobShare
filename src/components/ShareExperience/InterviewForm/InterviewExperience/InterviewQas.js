@@ -29,7 +29,7 @@ InterviewQas.propTypes = {
       id: PropTypes.number,
       question: PropTypes.string,
       answer: PropTypes.string,
-    })
+    }),
   ),
   editQa: PropTypes.func,
   removeQa: PropTypes.func,

@@ -7,7 +7,7 @@ const sortById = R.sortBy(R.prop('id'));
 export const handleBlocks = R.compose(
   sortById,
   R.map(ele => ele[1]),
-  R.toPairs
+  R.toPairs,
 );
 
 const propsInterviewForm = state => {
@@ -112,7 +112,7 @@ const propsTimeForm = state => {
 
 const needDeleteInterviewQas = R.compose(
   n => n === 1,
-  R.length
+  R.length,
 );
 
 const filterEmptyInterviewQas = R.filter(
@@ -121,9 +121,9 @@ const filterEmptyInterviewQas = R.filter(
       n => n !== 0,
       s => s.length,
       R.defaultTo(''),
-      R.prop('question')
+      R.prop('question'),
     ),
-  ])
+  ]),
 );
 
 const handleInterviewQas = interviewForm => {
@@ -160,7 +160,7 @@ export const getInterviewForm = R.compose(
   handleSalaryAmount,
   handleInterviewExperienceInYear,
   handleInterviewQas,
-  propsInterviewForm
+  propsInterviewForm,
 );
 
 export const getBasicForm = propsBasicForm;
@@ -175,14 +175,14 @@ export const getExtraForm = extraFields => state =>
   R.fromPairs(extraFields.map(({ key }) => [key, state ? state[key] : '']));
 export const getCampaignExtendedForm = (
   extraFields,
-  defaultContent
+  defaultContent,
 ) => state => ({
   aboutThisJob: state.jobContent === defaultContent ? '' : state.jobContent,
   ...getExtraForm(extraFields)(state),
 });
 export const getCampaignTimeAndSalaryForm = (
   extraFields,
-  defaultContent
+  defaultContent,
 ) => state => ({
   campaignName: state.campaignName,
   ...getTimeAndSalaryForm(state),
@@ -317,5 +317,5 @@ export const workExperiencesToBody = R.compose(
   handleSalaryAmount,
   portWorkExperiencesFormToRequestFormat,
   handleInterviewExperienceInYear,
-  propsWorkExperiencesForm
+  propsWorkExperiencesForm,
 );

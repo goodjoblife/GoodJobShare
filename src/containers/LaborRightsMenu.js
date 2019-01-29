@@ -18,10 +18,10 @@ const mapDispatchToProps = dispatch =>
     {
       queryMenuIfUnfetched,
     },
-    dispatch
+    dispatch,
   );
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(LaborRightsMenu);

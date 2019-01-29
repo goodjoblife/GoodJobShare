@@ -41,7 +41,7 @@ const OvertimeBlock = ({ type, heading, data }) => (
                   <div className={styles.statHeading}>不清楚是否符合勞基法</div>
                   <div className={styles.num}>
                     {formatNum(
-                      data.is_overtime_salary_legal_count["don't know"]
+                      data.is_overtime_salary_legal_count["don't know"],
                     )}
                   </div>
                 </li>

@@ -48,7 +48,7 @@ class SubmitArea extends React.PureComponent {
         return this.handleFeedback(
           Feedback({
             buttonClick: () => this.handleIsOpen(false),
-          })
+          }),
         );
       })
       .catch(e => console.log(e))

@@ -50,7 +50,7 @@ const experienceDetail = createReducer(preloadedState, {
     return state.updateIn(['replies', index], reply =>
       reply
         .set('liked', liked)
-        .update('like_count', v => (liked === true ? v + 1 : v - 1))
+        .update('like_count', v => (liked === true ? v + 1 : v - 1)),
     );
   },
 });

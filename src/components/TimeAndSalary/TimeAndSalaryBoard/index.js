@@ -82,12 +82,12 @@ const pathnameMapping = {
 
 const selectOptions = R.pipe(
   R.toPairs,
-  R.map(([path, opt]) => ({ value: path, label: opt.label }))
+  R.map(([path, opt]) => ({ value: path, label: opt.label })),
 );
 
 const pathParameterSelector = R.compose(
   path => pathnameMapping[path],
-  pathSelector
+  pathSelector,
 );
 
 const injectPermissionBlock = R.pipe(
@@ -97,15 +97,15 @@ const injectPermissionBlock = R.pipe(
       <td colSpan="8" className={styles.noPadding}>
         <GradientMask />
       </td>
-    </tr>
+    </tr>,
   ),
   R.append(
     <tr>
       <td colSpan="8" className={styles.noBefore}>
         <BasicPermissionBlock rootClassName={styles.permissionBlockBoard} />
       </td>
-    </tr>
-  )
+    </tr>,
+  ),
 );
 
 const injectLoadingIconRow = R.prepend(
@@ -113,7 +113,7 @@ const injectLoadingIconRow = R.prepend(
     <td colSpan="8" className={styles.noBefore}>
       <Loading size="s" />
     </td>
-  </tr>
+  </tr>,
 );
 
 const injectExtremeDividerAt = nthRow => onClick =>
@@ -131,7 +131,7 @@ const injectExtremeDividerAt = nthRow => onClick =>
           </span>
         </div>
       </td>
-    </tr>
+    </tr>,
   );
 
 class TimeAndSalaryBoard extends Component {
@@ -240,7 +240,7 @@ class TimeAndSalaryBoard extends Component {
     return R.pipe(
       mapIndexed(IfExtremeRow(wearExtremeStyle)),
       // inject a divider here to tell extreme rows apart from other rows
-      injectExtremeDividerAt(nExtremeRows)(this.toggleShowExtreme)
+      injectExtremeDividerAt(nExtremeRows)(this.toggleShowExtreme),
     )(rows);
   };
 
@@ -372,7 +372,7 @@ const hoc = compose(
   ssr,
   withPermission,
   withModal('infoSalaryModal'),
-  withModal('infoTimeModal')
+  withModal('infoTimeModal'),
 );
 
 export default hoc(TimeAndSalaryBoard);

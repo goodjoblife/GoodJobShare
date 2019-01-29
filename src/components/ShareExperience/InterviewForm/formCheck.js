@@ -39,12 +39,12 @@ export const title = R.allPass([gtLength(0), lteLength(25)]);
 
 const sectionSubtitle = R.compose(
   R.allPass([lteLength(25), gtLength(0)]),
-  R.prop('subtitle')
+  R.prop('subtitle'),
 );
 
 const sectionContent = R.compose(
   R.allPass([lteLength(5000), gtLength(0)]),
-  R.prop('content')
+  R.prop('content'),
 );
 
 export const singleSection = R.allPass([sectionSubtitle, sectionContent]);
@@ -53,7 +53,7 @@ export const sections = R.allPass([R.all(singleSection), gtLength(0)]);
 
 const interviewQaQuestion = R.compose(
   R.allPass([lteLength(250), gtLength(0)]),
-  R.prop('question')
+  R.prop('question'),
 );
 
 const interviewQaAnswer = R.compose(
@@ -61,7 +61,7 @@ const interviewQaAnswer = R.compose(
     R.allPass([lteLength(5000), gteLength(0)]),
     n => n === undefined || n === null,
   ]),
-  R.prop('answer')
+  R.prop('answer'),
 );
 
 export const singleInterviewQa = R.allPass([
@@ -78,8 +78,8 @@ export const interviewSensitiveQuestions = R.anyPass([
   R.all(
     R.compose(
       R.allPass([lteLength(20), gtLength(0)]),
-      R.defaultTo('')
-    )
+      R.defaultTo(''),
+    ),
   ),
   n => n === [],
 ]);
@@ -90,66 +90,66 @@ export const interviewFormCheck = R.allPass([
   R.compose(
     ifFalseLog('companyQuery not pass'),
     companyQuery,
-    R.prop('companyQuery')
+    R.prop('companyQuery'),
   ),
   R.compose(
     ifFalseLog('region not pass'),
     region,
-    R.prop('region')
+    R.prop('region'),
   ),
   R.compose(
     ifFalseLog('jobTitle not pass'),
     jobTitle,
-    R.prop('jobTitle')
+    R.prop('jobTitle'),
   ),
   R.compose(
     ifFalseLog('experienceInYear not pass'),
     experienceInYear,
-    R.prop('experienceInYear')
+    R.prop('experienceInYear'),
   ),
   R.compose(
     ifFalseLog('interviewTimeYear not pass'),
     interviewTimeYear,
-    R.prop('interviewTimeYear')
+    R.prop('interviewTimeYear'),
   ),
   R.compose(
     ifFalseLog('interviewTimeMonth not pass'),
     interviewTimeMonth,
-    R.prop('interviewTimeMonth')
+    R.prop('interviewTimeMonth'),
   ),
   R.compose(
     ifFalseLog('interviewResult not pass'),
     t => notNullOrUndefined(t) && interviewResult(t),
-    R.prop('interviewResult')
+    R.prop('interviewResult'),
   ),
   R.compose(
     ifFalseLog('salaryAmount not pass'),
     salaryAmount,
-    R.prop('salaryAmount')
+    R.prop('salaryAmount'),
   ),
   R.compose(
     ifFalseLog('overallRating not pass'),
     overallRating,
-    R.prop('overallRating')
+    R.prop('overallRating'),
   ),
   R.compose(
     ifFalseLog('title not pass'),
     title,
-    R.prop('title')
+    R.prop('title'),
   ),
   R.compose(
     ifFalseLog('sections not pass'),
     sections,
-    R.prop('sections')
+    R.prop('sections'),
   ),
   R.compose(
     ifFalseLog('interviewQas not pass'),
     interviewQas,
-    R.prop('interviewQas')
+    R.prop('interviewQas'),
   ),
   R.compose(
     ifFalseLog('interviewSensitiveQuestions not pass'),
     interviewSensitiveQuestions,
-    R.prop('interviewSensitiveQuestions')
+    R.prop('interviewSensitiveQuestions'),
   ),
 ]);

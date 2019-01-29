@@ -23,13 +23,13 @@ import { TITLE, SECTIONS } from '../../../../constants/formElements';
 const TitleWithValidation = subscribeValidation(
   Title,
   props => props.validator(props.title),
-  TITLE
+  TITLE,
 );
 
 const SectionsWithValidation = subscribeValidation(
   Sections,
   props => props.validator(props.sections),
-  SECTIONS
+  SECTIONS,
 );
 
 class WorkExperience extends React.PureComponent {
@@ -101,7 +101,7 @@ WorkExperience.propTypes = {
       id: PropTypes.number,
       subtitle: PropTypes.string,
       content: PropTypes.string,
-    })
+    }),
   ),
   appendSection: PropTypes.func,
   removeSection: PropTypes.func,

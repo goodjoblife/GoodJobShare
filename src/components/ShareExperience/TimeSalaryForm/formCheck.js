@@ -46,17 +46,17 @@ export const basicFormCheck = R.allPass([
   R.compose(
     ifFalseLog('company not pass'),
     company,
-    R.prop('company')
+    R.prop('company'),
   ),
   R.compose(
     ifFalseLog('jobTitle not pass'),
     jobTitle,
-    R.prop('jobTitle')
+    R.prop('jobTitle'),
   ),
   R.compose(
     ifFalseLog('employmentType not pass'),
     employmentType,
-    R.prop('employmentType')
+    R.prop('employmentType'),
   ),
 ]);
 
@@ -64,17 +64,17 @@ export const salaryFormCheck = R.allPass([
   R.compose(
     ifFalseLog('salaryType not pass'),
     salaryType,
-    R.prop('salaryType')
+    R.prop('salaryType'),
   ),
   R.compose(
     ifFalseLog('salaryAmount not pass'),
     salaryAmount,
-    R.prop('salaryAmount')
+    R.prop('salaryAmount'),
   ),
   R.compose(
     ifFalseLog('experienceInYear not pass'),
     experienceInYear,
-    R.prop('experienceInYear')
+    R.prop('experienceInYear'),
   ),
 ]);
 
@@ -82,21 +82,21 @@ export const timeFormCheck = R.allPass([
   R.compose(
     ifFalseLog('dayPromisedWorkTime not pass'),
     dayPromisedWorkTime,
-    R.prop('dayPromisedWorkTime')
+    R.prop('dayPromisedWorkTime'),
   ),
   R.compose(
     ifFalseLog('dayRealWorkTime not pass'),
     dayRealWorkTime,
-    R.prop('dayRealWorkTime')
+    R.prop('dayRealWorkTime'),
   ),
   R.compose(
     ifFalseLog('weekWorkTime not pass'),
     weekWorkTime,
-    R.prop('weekWorkTime')
+    R.prop('weekWorkTime'),
   ),
   R.compose(
     ifFalseLog('overtimeFrequency not pass'),
     overtimeFrequency,
-    R.prop('overtimeFrequency')
+    R.prop('overtimeFrequency'),
   ),
 ]);

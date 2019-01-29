@@ -30,10 +30,10 @@ const mapDispatchToProps = dispatch =>
       queryTimeAndSalaryCount: queryTimeAndSalaryCountIfUnfetched,
       queryLaborRightsCount: queryMenuIfUnfetched,
     },
-    dispatch
+    dispatch,
   );
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(LaborRightsPermissionBlock);

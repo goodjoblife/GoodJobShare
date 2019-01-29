@@ -27,19 +27,19 @@ import { COMPANY, REGION, JOB_TITLE } from '../../../../constants/formElements';
 const CompanyQueryWithValidation = subscribeValidation(
   CompanyQuery,
   props => props.validator(props.companyQuery),
-  COMPANY
+  COMPANY,
 );
 
 const RegionWithValidation = subscribeValidation(
   Region,
   props => props.validator(props.region),
-  REGION
+  REGION,
 );
 
 const JobTitleWithValidation = subscribeValidation(
   JobTitle,
   props => props.validator(props.jobTitle),
-  JOB_TITLE
+  JOB_TITLE,
 );
 
 class WorkInfo extends React.PureComponent {
