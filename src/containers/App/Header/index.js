@@ -16,6 +16,6 @@ const mapDispatchToProps = dispatch =>
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps
-  )(withFB(Header))
+    mapDispatchToProps,
+  )(withFB(Header)),
 );

@@ -28,7 +28,7 @@ export const fetchExperiences = (
   _sort,
   searchBy,
   searchQuery,
-  searchType
+  searchType,
 ) => dispatch => {
   const start = (page - 1) * limit;
   const query = {
@@ -54,7 +54,7 @@ export const fetchExperiences = (
       ...objCond,
       experiences: [],
       experienceCount: 0,
-    })
+    }),
   );
 
   return getExperiencesApi(query)

@@ -36,7 +36,7 @@ class Alert extends Component {
             });
           }, this.props.closeIn);
         }
-      }
+      },
     );
   }
 

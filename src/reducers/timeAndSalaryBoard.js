@@ -25,7 +25,7 @@ const preloadedState = fromJS({
 export default createReducer(preloadedState, {
   [SET_BOARD_DATA]: (
     state,
-    { sortBy, order, data, total, currentPage, status, error }
+    { sortBy, order, data, total, currentPage, status, error },
   ) =>
     state
       .set('data', fromJS(data))
@@ -38,7 +38,7 @@ export default createReducer(preloadedState, {
   [SET_BOARD_STATUS]: (state, { status }) => state.set('status', status),
   [SET_BOARD_EXTREME_DATA]: (
     state,
-    { extremeData, extremeStatus, extremeError }
+    { extremeData, extremeStatus, extremeError },
   ) =>
     state
       .set('extremeData', fromJS(extremeData))

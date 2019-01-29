@@ -11,7 +11,7 @@ export const setJobTitleData = (
   order,
   jobTitle,
   data,
-  error
+  error,
 ) => ({
   type: SET_JOB_TITLE_DATA,
   groupSortBy,
@@ -24,7 +24,7 @@ export const setJobTitleData = (
 
 export const queryJobTitle = ({ groupSortBy, order, jobTitle }) => (
   dispatch,
-  getState
+  getState,
 ) => {
   if (
     groupSortBy !== getState().timeAndSalaryJobTitle.get('groupSortBy') ||
@@ -38,8 +38,8 @@ export const queryJobTitle = ({ groupSortBy, order, jobTitle }) => (
         order,
         jobTitle,
         [],
-        null
-      )
+        null,
+      ),
     );
   }
 
@@ -69,8 +69,8 @@ export const queryJobTitle = ({ groupSortBy, order, jobTitle }) => (
           order,
           jobTitle,
           data,
-          null
-        )
+          null,
+        ),
       );
     })
     .catch(err => {
@@ -81,8 +81,8 @@ export const queryJobTitle = ({ groupSortBy, order, jobTitle }) => (
           order,
           jobTitle,
           [],
-          err
-        )
+          err,
+        ),
       );
     });
 };

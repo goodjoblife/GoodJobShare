@@ -29,7 +29,7 @@ class NotFound extends Component {
       <Redirect
         to={'/time-and-salary/campaigns/:campaign_name/latest'.replace(
           ':campaign_name',
-          campaignName
+          campaignName,
         )}
       />
     );

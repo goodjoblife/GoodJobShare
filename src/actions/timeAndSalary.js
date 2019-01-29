@@ -31,7 +31,7 @@ export const queryTimeAndSalaryCount = () => dispatch => {
 
 export const queryTimeAndSalaryCountIfUnfetched = () => (
   dispatch,
-  getState
+  getState,
 ) => {
   if (isUnfetched(getState().timeAndSalary.get('countStatus'))) {
     return dispatch(queryTimeAndSalaryCount());

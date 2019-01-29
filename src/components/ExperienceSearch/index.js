@@ -104,14 +104,14 @@ class ExperienceSearch extends Component {
         sort,
         searchBy,
         searchQuery,
-        searchType
+        searchType,
       );
     }
   }
 
   getCanonicalUrl = () => {
     const { searchType, searchQuery, searchBy, sort, page } = queryParser(
-      querySelector(this.props)
+      querySelector(this.props),
     );
 
     const params = {
@@ -251,7 +251,7 @@ class ExperienceSearch extends Component {
   createPageLinkTo = nextPage => {
     const pathname = pathnameSelector(this.props);
     const { searchBy, searchQuery, sortBy, searchType } = queryParser(
-      querySelector(this.props)
+      querySelector(this.props),
     );
 
     const queryString = toQsString({
@@ -289,7 +289,7 @@ class ExperienceSearch extends Component {
     // 複寫原本的 toBlocks 行為，插入 Banner
     const toBlocks = R.pipe(
       _toBlocks,
-      injectBannerAt(BANNER_LOCATION)
+      injectBannerAt(BANNER_LOCATION),
     );
 
     return toBlocks(experiences);
@@ -298,7 +298,7 @@ class ExperienceSearch extends Component {
   renderHelmet = () => {
     // TODO 將邏輯拆成 1. 公司職稱搜尋 2. 非搜尋，減少 if/else
     const { searchType, searchQuery, sortBy, page } = queryParser(
-      querySelector(this.props)
+      querySelector(this.props),
     );
 
     const count = this.props.experienceSearch.get('experienceCount');
@@ -353,7 +353,7 @@ class ExperienceSearch extends Component {
     const experiences = data.experiences || [];
 
     const { searchQuery, searchBy, sort, searchType } = queryParser(
-      querySelector(this.props)
+      querySelector(this.props),
     );
 
     return (
@@ -450,8 +450,8 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
       sort,
       searchBy,
       searchQuery,
-      searchType
-    )
+      searchType,
+    ),
   );
 });
 

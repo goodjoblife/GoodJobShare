@@ -81,14 +81,14 @@ class SearchBar extends Component {
         r.map(({ _id: { name } }) => ({
           label: name,
           value: name,
-        }))
+        })),
       );
     }
     return fetchJobTitleCandidates(value).then(r =>
       r.map(({ _id: name }) => ({
         label: name,
         value: name,
-      }))
+      })),
     );
   };
 
@@ -118,8 +118,8 @@ class SearchBar extends Component {
     const { searchType, keyword } = this.state;
     this.props.history.push(
       `/time-and-salary/${searchType}/${encodeURIComponent(
-        keyword
-      )}/work-time-dashboard`
+        keyword,
+      )}/work-time-dashboard`,
     );
 
     ReactPixel.track('Search', {
@@ -134,7 +134,7 @@ class SearchBar extends Component {
         className={cn(
           styles.section,
           styles.showSearchbar,
-          searchBarStyles.searchbar
+          searchBarStyles.searchbar,
         )}
         onSubmit={this.handleSubmit}
       >

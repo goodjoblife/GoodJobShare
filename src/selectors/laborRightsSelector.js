@@ -11,5 +11,5 @@ export const entryDataSelector = entryId => state =>
 export const entryStatusSelector = entryId => state =>
   state.laborRights.getIn(
     ['entries', entryId, 'status'],
-    fetchingStatus.UNFETCHED
+    fetchingStatus.UNFETCHED,
   );

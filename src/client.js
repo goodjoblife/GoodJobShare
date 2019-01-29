@@ -40,7 +40,7 @@ hydrate(
       </ScrollContext>
     </Router>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 if (module.hot) {
@@ -53,7 +53,7 @@ if (module.hot) {
           </ScrollContext>
         </Router>
       </Provider>,
-      document.getElementById('root')
+      document.getElementById('root'),
     );
   });
 }

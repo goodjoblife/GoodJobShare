@@ -15,11 +15,11 @@ const locationSearchToQuery = R.compose(
       return R.tail(search);
     }
     return search;
-  }
+  },
 );
 
 // props --> query object
 export const querySelector = R.compose(
   locationSearchToQuery,
-  searchSelector
+  searchSelector,
 );

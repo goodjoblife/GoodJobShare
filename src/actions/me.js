@@ -107,8 +107,8 @@ export const setExperienceStatus = o => (dispatch, getState) => {
       dispatch(
         setMyExperiences(
           Object.assign(data.myExperiences, { experiences }),
-          null
-        )
+          null,
+        ),
       );
       return;
     }
@@ -137,8 +137,8 @@ export const setWorkingStatus = o => (dispatch, getState) => {
           Object.assign(data.myWorkings, {
             time_and_salary: workings,
           }),
-          null
-        )
+          null,
+        ),
       );
       return;
     }

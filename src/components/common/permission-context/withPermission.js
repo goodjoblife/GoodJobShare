@@ -41,7 +41,7 @@ const withPermission = compose(
         } else if (experienceDetailRegex.test(pathname)) {
           // 假如是單篇經驗分享頁，localStorage 沒值的話，不更新觀看權限 state。因此不會做阻擋，但是馬上就更新 localStorage。
           const viewedExperirenceDetail = localStorage.getItem(
-            'viewedExperirenceDetail'
+            'viewedExperirenceDetail',
           );
 
           if (viewedExperirenceDetail === null) {
@@ -55,7 +55,7 @@ const withPermission = compose(
         } else if (timeAndSalaryRegex.test(pathname)) {
           // 假如是薪資工時查詢頁，localStorage 沒值的話，不更新觀看權限 state。因此不會做阻擋，但是馬上就更新 localStorage。
           const viewedTimeAndSalary = localStorage.getItem(
-            'viewedTimeAndSalary'
+            'viewedTimeAndSalary',
           );
 
           if (viewedTimeAndSalary === null) {
@@ -69,7 +69,7 @@ const withPermission = compose(
         }
       }
     },
-  })
+  }),
 );
 
 export default withPermission;

@@ -242,7 +242,7 @@ describe('interviewSensitiveQuestions test', () => {
 
   test('element string length not in (0, 20] should not pass', () => {
     expect(
-      interviewSensitiveQuestions(['abcdeabcdeabcdeabcdeabcdeabcde'])
+      interviewSensitiveQuestions(['abcdeabcdeabcdeabcdeabcdeabcde']),
     ).toBe(false);
     expect(interviewSensitiveQuestions([''])).toBe(false);
   });

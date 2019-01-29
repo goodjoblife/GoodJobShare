@@ -49,7 +49,7 @@ const checkStatus = response => {
 
 const fetchUtil = (endpoint, apiHost = API_HOST) => (method, body) =>
   fetch(`${apiHost}${endpoint}`, optionsBuilder(body)(method)).then(
-    checkStatus
+    checkStatus,
   );
 
 export default fetchUtil;

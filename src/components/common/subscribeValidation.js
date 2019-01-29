@@ -13,7 +13,7 @@ import { VALID, INVALID } from '../../constants/formElements';
 export default function subscribeValidation(
   WrappedComponent,
   validate,
-  elementName
+  elementName,
 ) {
   return class Subscriber extends React.Component {
     static propTypes = {

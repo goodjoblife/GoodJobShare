@@ -15,5 +15,5 @@ const mapDispatchToProps = dispatch => bindActionCreators({ login }, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(withFB(CommentBlock));

@@ -7,7 +7,7 @@ const configureStore = (preloadedState, history) =>
   createStore(
     rootReducer,
     preloadedState,
-    applyMiddleware(errorHandlingMiddleware, thunk)
+    applyMiddleware(errorHandlingMiddleware, thunk),
   );
 
 export default configureStore;

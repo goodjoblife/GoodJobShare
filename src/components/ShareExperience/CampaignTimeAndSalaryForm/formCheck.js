@@ -13,15 +13,15 @@ export const campaignExtendedFormCheck = extraFields =>
     R.compose(
       ifFalseLog('aboutThisJob not pass'),
       aboutThisJob,
-      R.prop('aboutThisJob')
+      R.prop('aboutThisJob'),
     ),
     R.allPass(
       extraFields.map(({ key }) =>
         R.compose(
           ifFalseLog(`${key} not pass`),
           extraField,
-          R.prop(key)
-        )
-      )
+          R.prop(key),
+        ),
+      ),
     ),
   ]);

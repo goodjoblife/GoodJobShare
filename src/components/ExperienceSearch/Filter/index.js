@@ -94,7 +94,7 @@ class Filter extends PureComponent {
                 const newSearchType = R.ifElse(
                   R.contains(value),
                   R.reject(R.equals(value)),
-                  R.append(value)
+                  R.append(value),
                 )(searchType);
                 this.setState({ searchType: newSearchType });
                 onSeachTypeChange({ searchType: newSearchType, sort });

@@ -51,17 +51,17 @@ const pathnameMapping = {
 
 const selectOptions = R.pipe(
   R.toPairs,
-  R.map(([path, { label }]) => ({ value: path, label }))
+  R.map(([path, { label }]) => ({ value: path, label })),
 );
 
 const keywordSelector = R.compose(
   params => params.keyword,
-  paramsSelector
+  paramsSelector,
 );
 
 const pathParameterSelector = R.compose(
   path => pathnameMapping[path],
-  pathSelector
+  pathSelector,
 );
 
 class TimeAndSalaryCompany extends Component {
@@ -110,7 +110,7 @@ class TimeAndSalaryCompany extends Component {
 
     const substituteKeyword = R.invoker(2, 'replace')(
       /:keyword/,
-      encodeURIComponent(company)
+      encodeURIComponent(company),
     );
 
     return (
@@ -165,7 +165,7 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
 
 const hoc = compose(
   ssr,
-  withPermission
+  withPermission,
 );
 
 export default hoc(TimeAndSalaryCompany);

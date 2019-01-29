@@ -27,19 +27,19 @@ import {
 const CompanyWithValidation = subscribeValidation(
   CompanyQuery,
   props => props.validator(props.companyQuery),
-  COMPANY
+  COMPANY,
 );
 
 const JobTitleWithValidation = subscribeValidation(
   JobTitle,
   props => props.validator(props.jobTitle),
-  JOB_TITLE
+  JOB_TITLE,
 );
 
 const EmploymentTypeWithValidation = subscribeValidation(
   EmploymentType,
   props => props.validator(props.employmentType),
-  EMPLOYMENT_TYPE
+  EMPLOYMENT_TYPE,
 );
 
 class BasicInfo extends React.PureComponent {

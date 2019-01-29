@@ -30,19 +30,19 @@ import {
 const TitleWithValidation = subscribeValidation(
   Title,
   props => props.validator(props.title),
-  TITLE
+  TITLE,
 );
 
 const SectionsWithValidation = subscribeValidation(
   Sections,
   props => props.validator(props.sections),
-  SECTIONS
+  SECTIONS,
 );
 
 const InterviewSensitiveQuestionsWithValidation = subscribeValidation(
   InterviewSensitiveQuestions,
   props => props.validator(props.interviewSensitiveQuestions),
-  INTERVIEW_SENSITIVE_QUESTIONS
+  INTERVIEW_SENSITIVE_QUESTIONS,
 );
 
 class InterviewExperience extends Component {
@@ -156,7 +156,7 @@ InterviewExperience.propTypes = {
       subtitle: PropTypes.string,
       placeholder: PropTypes.string,
       content: PropTypes.string,
-    })
+    }),
   ),
   appendSection: PropTypes.func,
   removeSection: PropTypes.func,
@@ -166,7 +166,7 @@ InterviewExperience.propTypes = {
       id: PropTypes.number,
       subtitle: PropTypes.string,
       content: PropTypes.string,
-    })
+    }),
   ),
   appendQa: PropTypes.func,
   removeQa: PropTypes.func,

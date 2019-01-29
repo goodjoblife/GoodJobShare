@@ -9,7 +9,7 @@ const renameObject = renameKeys({
 
 export const toQsString = R.compose(
   qs.stringify,
-  renameObject
+  renameObject,
 );
 
 const wrapDefaultTo = defaultValue => value => {
@@ -23,7 +23,7 @@ const wrapDefaultTo = defaultValue => value => {
 const qsSelector = (key, defaultValue) =>
   R.compose(
     wrapDefaultTo(defaultValue),
-    R.propOr(defaultValue, key)
+    R.propOr(defaultValue, key),
   );
 
 const pageSelector = qsSelector('p', 1);
