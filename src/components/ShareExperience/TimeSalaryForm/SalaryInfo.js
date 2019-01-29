@@ -56,19 +56,19 @@ class SalaryInfo extends React.PureComponent {
     const changeSalaryTypeStatus = val => {
       changeValidationStatus(
         SALARY_TYPE,
-        salaryTypeValidator(val) ? VALID : INVALID
+        salaryTypeValidator(val) ? VALID : INVALID,
       );
     };
     const changeSalaryAmountStatus = val => {
       changeValidationStatus(
         SALARY_AMOUNT,
-        salaryAmountValidator(val) ? VALID : INVALID
+        salaryAmountValidator(val) ? VALID : INVALID,
       );
     };
     const changeExperienceInYearStatus = val => {
       changeValidationStatus(
         EXPERIENCE_IN_YEAR,
-        experienceInYearValidator(val) ? VALID : INVALID
+        experienceInYearValidator(val) ? VALID : INVALID,
       );
     };
 

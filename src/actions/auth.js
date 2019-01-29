@@ -20,13 +20,13 @@ export const login = FB => dispatch => {
       response => {
         if (response.status === authStatus.CONNECTED) {
           dispatch(
-            setLogin(response.status, response.authResponse.accessToken)
+            setLogin(response.status, response.authResponse.accessToken),
           );
         } else if (response.status === authStatus.NOT_AUTHORIZED) {
           dispatch(setLogin(response.status));
         }
         return response.status;
-      }
+      },
     );
   }
   return Promise.reject('FB should ready');
@@ -35,7 +35,7 @@ export const login = FB => dispatch => {
 export const logout = FB => dispatch => {
   if (FB) {
     return new Promise(resolve =>
-      FB.logout(response => resolve(response))
+      FB.logout(response => resolve(response)),
     ).then(response => {
       if (response.status === authStatus.UNKNOWN) {
         dispatch(setLogin(response.status, response.authResponse.accessToken));
@@ -50,7 +50,7 @@ export const logout = FB => dispatch => {
 export const getLoginStatus = FB => dispatch => {
   if (FB) {
     return new Promise(resolve =>
-      FB.getLoginStatus(response => resolve(response))
+      FB.getLoginStatus(response => resolve(response)),
     ).then(response => {
       if (response.status === authStatus.CONNECTED) {
         dispatch(setLogin(response.status, response.authResponse.accessToken));
@@ -71,7 +71,7 @@ export const getMe = FB => (dispatch, getState) => {
     return Promise.reject('auth status should be connected');
   }
   return new Promise(resolve =>
-    FB.api('/me', response => resolve(response))
+    FB.api('/me', response => resolve(response)),
   ).then(response => {
     dispatch(setUser(response));
     return response;

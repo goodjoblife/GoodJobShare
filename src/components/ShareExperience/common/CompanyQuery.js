@@ -31,7 +31,7 @@ class CompanyQuery extends React.Component {
           r =>
             Array.isArray(r)
               ? this.handleAutocompleteItems(r.map(mapToAutocompleteList))
-              : this.handleAutocompleteItems([])
+              : this.handleAutocompleteItems([]),
         )
         .catch(() => this.handleAutocompleteItems([]));
     }

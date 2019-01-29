@@ -17,17 +17,17 @@ export const fetchTimeAndSalaryExtreme = opt =>
 
 export const fetchCampaignTimeAndSalary = (campaignName, opt) =>
   fetchUtil(`${endpoint}/campaigns/${campaignName}?${qs.stringify(opt)}`)(
-    'GET'
+    'GET',
   );
 
 export const fetchSearchCompany = opt =>
   fetchUtil(
-    `${endpoint}/search_by/company/group_by/company?${qs.stringify(opt)}`
+    `${endpoint}/search_by/company/group_by/company?${qs.stringify(opt)}`,
   )('GET');
 
 export const fetchSearchJobTitle = opt =>
   fetchUtil(
-    `${endpoint}/search_by/job_title/group_by/company?${qs.stringify(opt)}`
+    `${endpoint}/search_by/job_title/group_by/company?${qs.stringify(opt)}`,
   )('GET');
 
 export const postWorkings = body => fetchUtil(endpoint)('post', body);

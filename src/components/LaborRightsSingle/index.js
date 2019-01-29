@@ -39,7 +39,7 @@ import styles from './LaborRightsSingle.module.css';
 
 const idSelector = R.compose(
   params => params.id,
-  paramsSelector
+  paramsSelector,
 );
 
 class LaborRightsSingle extends React.Component {
@@ -172,7 +172,7 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
 
 const hoc = compose(
   ssr,
-  withPermission
+  withPermission,
 );
 
 export default hoc(LaborRightsSingle);

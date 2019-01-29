@@ -29,7 +29,7 @@ const resetRepliesData = experienceId => ({
 
 const setRepliesData = (experienceId, { status, replies, error = null }) => (
   dispatch,
-  getState
+  getState,
 ) => {
   if (experienceId === repliesExperienceIdSelector(getState())) {
     return dispatch({
@@ -55,7 +55,7 @@ export const submitComment = (id, comment) => (dispatch, getState) => {
       setRepliesData(id, {
         status: fetchingStatus.FETCHED,
         replies: [...oldReplies, result.reply],
-      })
+      }),
     );
   });
 };
@@ -69,8 +69,8 @@ export const likeExperience = o => dispatch => {
             Object.assign({}, o, {
               liked: false,
               like_count: o.like_count - 1,
-            })
-          )
+            }),
+          ),
         );
         return;
       }
@@ -88,8 +88,8 @@ export const likeExperience = o => dispatch => {
           Object.assign({}, o, {
             liked: true,
             like_count: o.like_count + 1,
-          })
-        )
+          }),
+        ),
       );
       return;
     }
@@ -160,7 +160,7 @@ export const fetchReplies = id => (dispatch, getState) => {
     .then(rawData => {
       const replies = rawData.replies;
       return dispatch(
-        setRepliesData(id, { status: fetchingStatus.FETCHED, replies })
+        setRepliesData(id, { status: fetchingStatus.FETCHED, replies }),
       );
     })
     .catch(error =>
@@ -169,7 +169,7 @@ export const fetchReplies = id => (dispatch, getState) => {
           status: fetchingStatus.ERROR,
           error,
           replies: [],
-        })
-      )
+        }),
+      ),
     );
 };

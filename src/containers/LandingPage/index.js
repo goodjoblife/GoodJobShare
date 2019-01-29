@@ -10,7 +10,7 @@ import { menuEntriesSelector } from '../../selectors/laborRightsSelector';
 
 const laborRightsCountSelector = R.compose(
   entries => entries.size,
-  menuEntriesSelector
+  menuEntriesSelector,
 );
 
 const mapStateToProps = state => ({
@@ -27,10 +27,10 @@ const mapDispatchToProps = dispatch =>
       queryPopularExperiences,
       queryTimeAndSalaryCount: queryTimeAndSalaryCountIfUnfetched,
     },
-    dispatch
+    dispatch,
   );
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(LandingPage);

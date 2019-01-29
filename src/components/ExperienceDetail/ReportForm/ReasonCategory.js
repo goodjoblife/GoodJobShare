@@ -31,7 +31,7 @@ ReasonCategory.propTypes = {
     PropTypes.shape({
       label: PropTypes.string,
       value: PropTypes.string,
-    })
+    }),
   ),
   handleReasonCategory: PropTypes.func,
 };

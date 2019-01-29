@@ -71,7 +71,7 @@ export const queryEntry = entryId => dispatch => {
               name,
               message,
               statusCode: 404,
-            })
+            }),
           );
         }
       }

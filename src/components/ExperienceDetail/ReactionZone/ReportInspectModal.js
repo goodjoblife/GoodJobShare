@@ -29,7 +29,7 @@ const store = compose(
           setReports([]);
         });
     },
-  })
+  }),
 );
 
 const queryData = lifecycle({
@@ -99,7 +99,7 @@ ReportInspectModal.propTypes = {
 
 const hoc = compose(
   store,
-  queryData
+  queryData,
 );
 
 export default hoc(ReportInspectModal);

@@ -36,7 +36,7 @@ class ButtonGroupImageEle extends React.PureComponent {
           {
             [styles.checked]: checked,
             [styles.last]: last,
-          }
+          },
         )}
       >
         <input
@@ -113,7 +113,7 @@ ButtonGroupImage.propTypes = {
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       icon: PropTypes.node,
-    })
+    }),
   ),
   className: PropTypes.string,
   theme: PropTypes.string,

@@ -47,7 +47,7 @@ Sections.propTypes = {
       titlePlaceholder: PropTypes.string,
       content: PropTypes.string,
       isSubtitleEditable: PropTypes.bool,
-    })
+    }),
   ),
   removeSection: PropTypes.func,
   editSection: PropTypes.func,

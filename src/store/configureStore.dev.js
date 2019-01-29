@@ -14,7 +14,7 @@ const configureStore = (preloadedState, history) => {
   const store = createStore(
     rootReducer,
     preloadedState,
-    applyMiddleware(thunk, logger)
+    applyMiddleware(thunk, logger),
   );
 
   if (module.hot) {

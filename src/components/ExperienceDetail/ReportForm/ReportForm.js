@@ -63,7 +63,7 @@ class ReportForm extends PureComponent {
         .catch(e =>
           onApiError({
             message: e.message,
-          })
+          }),
         );
     }
 

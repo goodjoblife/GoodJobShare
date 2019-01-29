@@ -12,7 +12,7 @@ const hoc = compose(
       const facebook = new Facebook(FACEBOOK_APP_ID);
       facebook.init().then(FB => setFB(FB));
     },
-  })
+  }),
 );
 
 const FacebookContextProvider = ({ FB, children }) => (
