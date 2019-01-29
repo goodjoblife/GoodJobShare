@@ -2,7 +2,7 @@
 
 .heading {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   margin-bottom: 24px;
 
@@ -18,8 +18,14 @@
   border: 1px solid border-gray;
   padding: 4px 12px;
   margin-right: 24px;
+  margin-top: 3px;
 
   @media (max-width: 550px) {
     margin-bottom: 8px;
   }
+}
+
+.title {
+  max-width: 700px;
+  vertical-align: top;
 }

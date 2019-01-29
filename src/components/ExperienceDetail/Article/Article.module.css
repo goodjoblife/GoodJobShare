@@ -42,6 +42,7 @@ $paddingS: 16px;
   flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .article {
@@ -81,5 +82,17 @@ $paddingS: 16px;
   @media (max-width: 550px) {
     margin-top: -15px;
     padding: 50px 25px;
+  }
+}
+
+/* 檢舉 */
+.right {
+  position: absolute;
+  right: 0;
+  display: flex;
+  margin-right: 26px;
+
+  .button {
+    color: #969696;
   }
 }

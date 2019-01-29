@@ -1,30 +1,31 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 import Button from 'common/button/Button';
-import Checkbox from 'common/form/Checkbox';
 import { P } from 'common/base';
 import CommentBlock from '../../../containers/ExperienceDetail/CommentBlock';
 import authStatusConstant from '../../../constants/authStatus';
+import ButtonGroup from 'common/button/ButtonGroup';
 
 import styles from './MessageBoard.module.css';
+
+const recommendedSentences = [
+  '詳細給推',
+  '感謝大大無私分享',
+  '蒸的很蚌',
+  '真的非常謝謝你的分享！',
+  '很實用！',
+  '台灣的職場因為有你變得更好！',
+];
 
 class MessageBoard extends Component {
   state = {
     comment: '',
-    isTermsAccepted: false,
   };
 
-  handleTermsAcceptedChange = () => {
+  updateComment = comment => {
     this.setState({
-      isTermsAccepted: !this.state.isTermsAccepted,
-    });
-  };
-
-  handleCommentChange = e => {
-    this.setState({
-      comment: e.target.value,
+      comment,
     });
   };
 
@@ -41,50 +42,31 @@ class MessageBoard extends Component {
 
   render() {
     const { replies, likeReply, authStatus } = this.props;
-    const { isTermsAccepted, comment } = this.state;
+    const { comment } = this.state;
 
     return (
       <div className={styles.container}>
-        <P size="m">共 {replies.length} 則回應</P>
-        <hr />
         <textarea
           rows="5"
           placeholder="寫下您的留言、意見"
           value={comment}
-          onChange={this.handleCommentChange}
+          onChange={e => {
+            this.updateComment(e.target.value);
+          }}
         />
-        <div className={`formLabel ${styles.termsOfService}`}>
-          <Checkbox
-            id="termsOfService"
-            value="agree"
-            label={
-              <p style={{ color: '#3B3B3B' }}>
-                我分享的是真實資訊，並且遵守本站
-                <Link
-                  to="/guidelines"
-                  target="_blank"
-                  style={{ color: '#02309E' }}
-                >
-                  發文留言規定
-                </Link>
-                、
-                <Link
-                  to="/user-terms"
-                  target="_blank"
-                  style={{ color: '#02309E' }}
-                >
-                  使用者條款
-                </Link>
-                以及中華民國法律。
-              </p>
-            }
-            onChange={this.handleTermsAcceptedChange}
-            checked={isTermsAccepted}
-            style={{ display: 'flex', justifyContent: 'center' }}
+        <div className={styles.recommendedSentences}>
+          <ButtonGroup
+            value={[]}
+            options={recommendedSentences.map(v => ({ label: v, value: v }))}
+            onChange={v => {
+              this.updateComment((comment ? `${comment}\n` : '') + v);
+            }}
           />
+        </div>
+        <div className={`formLabel ${styles.termsOfService}`}>
           <Button
             btnStyle="submit"
-            disabled={!isTermsAccepted || !comment}
+            disabled={!comment}
             onClick={this.handleSubmitComment}
           >
             {authStatus === authStatusConstant.CONNECTED
@@ -93,6 +75,8 @@ class MessageBoard extends Component {
           </Button>
         </div>
         <div className={styles.commentBlocks}>
+          <P size="m">共 {replies.length} 則回應</P>
+          <hr />
           {replies.map(reply => (
             <CommentBlock key={reply._id} reply={reply} likeReply={likeReply} />
           ))}

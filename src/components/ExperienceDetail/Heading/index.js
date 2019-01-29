@@ -7,13 +7,13 @@ import styles from './Heading.module.css';
 const formatType = type => {
   switch (type) {
     case 'work':
-      return '工作';
+      return '工作心得';
     case 'interview':
-      return '面試';
+      return '面試經驗';
     case 'intern':
-      return '實習';
+      return '實習心得';
     default:
-      return '工作';
+      return '工作心得';
   }
 };
 
@@ -31,7 +31,7 @@ const ExperienceHeading = ({ experience }) => (
     <P Tag="h2" size="l" className={styles.badge}>
       {experience && formatType(experience.type)}
     </P>
-    <Heading size="l">
+    <Heading size="l" className={styles.title}>
       {experience && formatComapny(experience.company)}
     </Heading>
   </div>
