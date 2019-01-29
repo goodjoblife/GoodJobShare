@@ -15,6 +15,7 @@ export const OVERTIME_FREQUENCY = 'overtime_frequency';
 
 export const INTERVIEW_TIME = 'interview_time';
 export const INTERVIEW_RESULT = 'interview_result';
+export const INTERVIEW_SENSITIVE_QUESTIONS = 'interview_sensitive_questions';
 export const OVERALL_RATING = 'overall_rating';
 export const TITLE = 'title';
 export const SECTIONS = 'sections';
@@ -29,6 +30,7 @@ export const INTERVIEW_FORM_ORDER = [
   OVERALL_RATING,
   TITLE,
   SECTIONS,
+  INTERVIEW_SENSITIVE_QUESTIONS,
 ];
 
 export const TIME_SALARY_BASIC_ORDER = [COMPANY, JOB_TITLE, EMPLOYMENT_TYPE];
