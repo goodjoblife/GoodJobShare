@@ -43,7 +43,7 @@ server.get(
 
     const { match, route: matchRoute } = matchRoutes(
       location.pathname,
-      rootRoutes
+      rootRoutes,
     );
 
     function resolveComponent() {
@@ -78,7 +78,7 @@ server.get(
     );
 
     const html = ReactDOMServer.renderToString(
-      <Html assets={assets} component={finalComponent} store={store} />
+      <Html assets={assets} component={finalComponent} store={store} />,
     );
 
     if (context.url) {
@@ -97,7 +97,7 @@ server.get(
     // TODO handle 301/302
 
     res.send(`<!doctype html>\n${html}`);
-  })
+  }),
 );
 
 export default server;

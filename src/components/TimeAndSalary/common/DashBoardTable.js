@@ -72,7 +72,7 @@ const DashBoardTable = ({
       title="估計時薪"
       dataField={R.compose(
         formatWage,
-        R.prop('estimated_hourly_wage')
+        R.prop('estimated_hourly_wage'),
       )}
       alignRight
     >
@@ -83,7 +83,7 @@ const DashBoardTable = ({
       title="參考時間"
       dataField={R.compose(
         formatDate,
-        R.prop('data_time')
+        R.prop('data_time'),
       )}
     >
       <InfoButton onClick={toggleInfoTimeModal}>參考時間</InfoButton>

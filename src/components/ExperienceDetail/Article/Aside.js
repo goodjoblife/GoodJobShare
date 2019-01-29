@@ -29,7 +29,7 @@ const InterviewInfoBlocks = ({ experience }) => (
     {experience.salary && (
       <InfoBlock label="待遇">
         {`${experience.salary.amount} / ${formatSalaryType(
-          experience.salary.type
+          experience.salary.type,
         )}`}
       </InfoBlock>
     )}
@@ -71,7 +71,7 @@ const WorkInfoBlocks = ({ experience }) => (
     {experience.salary && (
       <InfoBlock label="待遇">
         {`${experience.salary.amount} / ${formatSalaryType(
-          experience.salary.type
+          experience.salary.type,
         )}`}
       </InfoBlock>
     )}
@@ -120,7 +120,7 @@ const InternBlocks = ({ experience }) => (
     {experience.salary && (
       <InfoBlock label="實習薪資">
         {`${experience.salary.amount} / ${formatSalaryType(
-          experience.salary.type
+          experience.salary.type,
         )}`}
       </InfoBlock>
     )}

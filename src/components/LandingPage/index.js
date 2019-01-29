@@ -111,7 +111,7 @@ LandingPage.propTypes = {
 
 const hoc = compose(
   ssr,
-  queryData
+  queryData,
 );
 
 export default hoc(LandingPage);

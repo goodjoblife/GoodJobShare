@@ -21,10 +21,10 @@ const mapDispatchToProps = dispatch =>
     {
       queryCampaignInfoList: queryCampaignInfoListIfNeeded,
     },
-    dispatch
+    dispatch,
   );
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(NotFound);

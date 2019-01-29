@@ -41,7 +41,7 @@ Banner.propTypes = {
     PropTypes.shape({
       name: PropTypes.string,
       title: PropTypes.string,
-    })
+    }),
   ).isRequired,
 };
 

@@ -10,7 +10,7 @@ export const experienceCountSelector = state => state.experiences.get('count');
 
 export const hasFetchedexperienceCountSelector = R.compose(
   isFetched,
-  state => state.experiences.get('countStatus')
+  state => state.experiences.get('countStatus'),
 );
 
 export const timeAndSalaryCountSelector = state =>
@@ -18,15 +18,15 @@ export const timeAndSalaryCountSelector = state =>
 
 export const hasFetchedTimeAndSalaryCountSelector = R.compose(
   isFetched,
-  state => state.timeAndSalary.get('countStatus')
+  state => state.timeAndSalary.get('countStatus'),
 );
 
 export const laborRightsCountSelector = R.compose(
   entries => entries.size,
-  menuEntriesSelector
+  menuEntriesSelector,
 );
 
 export const hasFetchedLaborRightsCountSelector = R.compose(
   isFetched,
-  menuStatusSelector
+  menuStatusSelector,
 );

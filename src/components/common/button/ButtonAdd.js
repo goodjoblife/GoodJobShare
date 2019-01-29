@@ -57,7 +57,7 @@ class ButtonAdd extends React.PureComponent {
                       appendBlock(
                         ele.value,
                         ele.placeholder,
-                        ele.titlePlaceholder
+                        ele.titlePlaceholder,
                       );
                       this.handleStage();
                     }}
@@ -73,16 +73,16 @@ class ButtonAdd extends React.PureComponent {
 
 ButtonAdd.propTypes = {
   custimizedValues: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   ),
   disabledValues: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   ),
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    })
+    }),
   ),
   appendBlock: PropTypes.func,
 };

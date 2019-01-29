@@ -151,7 +151,7 @@ const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
 const hoc = compose(
   ssr,
   withModal('infoSalaryModal'),
-  withModal('infoTimeModal')
+  withModal('infoTimeModal'),
 );
 
 export default hoc(TimeAndSalary);

@@ -141,7 +141,7 @@ class TimeInfo extends React.PureComponent {
               checked={overtimeFrequency === o.value}
               onChange={e => {
                 handleState('overtimeFrequency')(
-                  overtimeFrequency === o.value ? null : e.target.value
+                  overtimeFrequency === o.value ? null : e.target.value,
                 );
               }}
             />
@@ -163,7 +163,7 @@ class TimeInfo extends React.PureComponent {
               checked={hasOvertimeSalary === o.value}
               onChange={e => {
                 handleState('hasOvertimeSalary')(
-                  hasOvertimeSalary === o.value ? null : e.target.value
+                  hasOvertimeSalary === o.value ? null : e.target.value,
                 );
               }}
             />
@@ -184,7 +184,7 @@ class TimeInfo extends React.PureComponent {
                 checked={isOvertimeSalaryLegal === o.value}
                 onChange={e => {
                   handleState('isOvertimeSalaryLegal')(
-                    isOvertimeSalaryLegal === o.value ? null : e.target.value
+                    isOvertimeSalaryLegal === o.value ? null : e.target.value,
                   );
                 }}
               />
@@ -206,7 +206,7 @@ class TimeInfo extends React.PureComponent {
               checked={hasCompensatoryDayoff === o.value}
               onChange={e => {
                 handleState('hasCompensatoryDayoff')(
-                  hasCompensatoryDayoff === o.value ? null : e.target.value
+                  hasCompensatoryDayoff === o.value ? null : e.target.value,
                 );
               }}
             />

@@ -15,10 +15,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     { dispatchGetDataCount: queryExperienceCountIfUnfetched },
-    dispatch
+    dispatch,
   );
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(ProgressBarWithDataCount);

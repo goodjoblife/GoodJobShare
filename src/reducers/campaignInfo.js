@@ -19,7 +19,7 @@ const preloadedState = fromJS({
 const entriesFromList = R.compose(
   fromJS,
   R.fromPairs,
-  R.map(info => [info.name, info])
+  R.map(info => [info.name, info]),
 );
 
 export default createReducer(preloadedState, {

@@ -10,7 +10,7 @@ export const getCompany = item => (
   <div>
     <Link
       to={`/time-and-salary/company/${encodeURIComponent(
-        item.company.name
+        item.company.name,
       )}/work-time-dashboard`}
     >
       {item.company.name}
@@ -24,7 +24,7 @@ export const getJobTitle = item => {
     <div>
       <Link
         to={`/time-and-salary/job-title/${encodeURIComponent(
-          jobTitle
+          jobTitle,
         )}/work-time-dashboard`}
       >
         {jobTitle}

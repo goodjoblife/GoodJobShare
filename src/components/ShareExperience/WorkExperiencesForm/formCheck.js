@@ -26,12 +26,12 @@ export const title = R.allPass([gtLength(0), lteLength(25)]);
 
 const sectionSubtitle = R.compose(
   R.allPass([lteLength(25), gtLength(0)]),
-  R.prop('subtitle')
+  R.prop('subtitle'),
 );
 
 const sectionContent = R.compose(
   R.allPass([lteLength(5000), gtLength(0)]),
-  R.prop('content')
+  R.prop('content'),
 );
 
 export const singleSection = R.allPass([sectionSubtitle, sectionContent]);
@@ -44,41 +44,41 @@ export const workExperiencesFormCheck = R.allPass([
   R.compose(
     ifFalseLog('companyQuery not pass'),
     companyQuery,
-    R.prop('companyQuery')
+    R.prop('companyQuery'),
   ),
   R.compose(
     ifFalseLog('region not pass'),
     region,
-    R.prop('region')
+    R.prop('region'),
   ),
   R.compose(
     ifFalseLog('jobTitle not pass'),
     jobTitle,
-    R.prop('jobTitle')
+    R.prop('jobTitle'),
   ),
   R.compose(
     ifFalseLog('experienceInYear not pass'),
     experienceInYear,
-    R.prop('experienceInYear')
+    R.prop('experienceInYear'),
   ),
   R.compose(
     ifFalseLog('salaryAmount not pass'),
     salaryAmount,
-    R.prop('salaryAmount')
+    R.prop('salaryAmount'),
   ),
   R.compose(
     ifFalseLog('title not pass'),
     title,
-    R.prop('title')
+    R.prop('title'),
   ),
   R.compose(
     ifFalseLog('sections not pass'),
     sections,
-    R.prop('sections')
+    R.prop('sections'),
   ),
   R.compose(
     ifFalseLog('weekWorkTime not pass'),
     weekWorkTime,
-    R.prop('weekWorkTime')
+    R.prop('weekWorkTime'),
   ),
 ]);

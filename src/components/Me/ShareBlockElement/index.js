@@ -53,7 +53,7 @@ const ShareBlock = ({
           {type === '薪時' ? (
             <Link
               to={`/time-and-salary/company/${encodeURIComponent(
-                to
+                to,
               )}/work-time-dashboard`}
               title="檢視薪時"
               className="hoverBlue"

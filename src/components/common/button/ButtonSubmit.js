@@ -74,7 +74,7 @@ class ButtonSubmit extends React.PureComponent {
               onClick={() => {
                 this.handleIsOpen(true);
                 return this.handleFeedback(
-                  getWhyFacebookAuth(() => this.handleIsOpen(false))
+                  getWhyFacebookAuth(() => this.handleIsOpen(false)),
                 );
               }}
             >

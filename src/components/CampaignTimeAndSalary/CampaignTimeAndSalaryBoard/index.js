@@ -88,17 +88,17 @@ const pathnameMapping = {
 
 const selectOptions = R.pipe(
   R.toPairs,
-  R.map(([path, opt]) => ({ value: path, label: opt.label }))
+  R.map(([path, opt]) => ({ value: path, label: opt.label })),
 );
 
 const campaignNameSelector = R.compose(
   params => params.campaign_name,
-  paramsSelector
+  paramsSelector,
 );
 
 const pathParameterSelector = R.compose(
   path => pathnameMapping[path],
-  pathSelector
+  pathSelector,
 );
 
 const injectPermissionBlock = campaignName => rows => {
@@ -108,7 +108,7 @@ const injectPermissionBlock = campaignName => rows => {
       <td colSpan="8" className={timeAndSalaryBoardStyles.noPadding}>
         <GradientMask />
       </td>
-    </tr>
+    </tr>,
   );
   newRows.push(
     <tr>
@@ -118,7 +118,7 @@ const injectPermissionBlock = campaignName => rows => {
           to={`/share/time-and-salary/campaigns/${campaignName}`}
         />
       </td>
-    </tr>
+    </tr>,
   );
   return newRows;
 };
@@ -170,7 +170,7 @@ class CampaignTimeAndSalaryBoard extends Component {
     const { campaignEntries } = this.props;
     const jobTitles = queryJobTitlesFromCampaignEntries(
       campaignEntries,
-      campaignName
+      campaignName,
     );
     const { sortBy, order } = pathParameterSelector(this.props);
     const { page } = queryParser(querySelector(this.props));
@@ -203,7 +203,7 @@ class CampaignTimeAndSalaryBoard extends Component {
     ) {
       const jobTitles = queryJobTitlesFromCampaignEntries(
         campaignEntries,
-        campaignName
+        campaignName,
       );
       const { sortBy, order } = pathParameterSelector(this.props);
       const { page } = queryParser(querySelector(this.props));
@@ -286,7 +286,7 @@ class CampaignTimeAndSalaryBoard extends Component {
         <Link
           className={cn(
             timeAndSalaryBannerStyles.btnS,
-            timeAndSalaryBannerStyles.btnYellowLine
+            timeAndSalaryBannerStyles.btnYellowLine,
           )}
           to="/time-and-salary/latest"
         >
@@ -302,7 +302,7 @@ class CampaignTimeAndSalaryBoard extends Component {
                   options={selectOptions(pathnameMapping)}
                   onChange={e =>
                     history.push(
-                      e.target.value.replace(':campaign_name', campaignName)
+                      e.target.value.replace(':campaign_name', campaignName),
                     )
                   }
                   value={path}
@@ -363,7 +363,7 @@ const ssr = setStatic(
       const campaignEntries = campaignEntriesSelector(getState());
       const jobTitles = queryJobTitlesFromCampaignEntries(
         campaignEntries,
-        campaignName
+        campaignName,
       );
       return dispatch(
         queryCampaignTimeAndSalary(campaignName, {
@@ -371,17 +371,17 @@ const ssr = setStatic(
           order,
           jobTitles,
           page,
-        })
+        }),
       );
     });
-  }
+  },
 );
 
 const hoc = compose(
   ssr,
   withPermission,
   withModal('infoSalaryModal'),
-  withModal('infoTimeModal')
+  withModal('infoTimeModal'),
 );
 
 export default hoc(CampaignTimeAndSalaryBoard);

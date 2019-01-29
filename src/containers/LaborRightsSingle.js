@@ -17,7 +17,7 @@ const mapStateToProps = (state, { match }) => {
   const index = menuEntries.findIndex(menuEntry => menuEntry.get('id') === id);
   const prevEntry = menuEntries.get(index > 0 ? index - 1 : undefined);
   const nextEntry = menuEntries.get(
-    index < menuEntries.size - 1 ? index + 1 : undefined
+    index < menuEntries.size - 1 ? index + 1 : undefined,
   );
   return {
     entry: entryDataSelector(id)(state),
@@ -34,10 +34,10 @@ const mapDispatchToProps = dispatch =>
       queryMenuIfUnfetched,
       queryEntryIfUnfetched,
     },
-    dispatch
+    dispatch,
   );
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(LaborRightsSingle);

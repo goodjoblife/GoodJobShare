@@ -36,19 +36,19 @@ import {
 const CompanyQueryWithValidation = subscribeValidation(
   CompanyQuery,
   props => props.validator(props.companyQuery),
-  COMPANY
+  COMPANY,
 );
 
 const RegionWithValidation = subscribeValidation(
   Region,
   props => props.validator(props.region),
-  REGION
+  REGION,
 );
 
 const JobTitleWithValidation = subscribeValidation(
   JobTitle,
   props => props.validator(props.jobTitle),
-  JOB_TITLE
+  JOB_TITLE,
 );
 
 const InterviewTimeWithValidation = subscribeValidation(
@@ -56,19 +56,19 @@ const InterviewTimeWithValidation = subscribeValidation(
   props =>
     props.interviewTimeYearValidator(props.interviewTimeYear) &&
     props.interviewTimeMonthValidator(props.interviewTimeMonth),
-  INTERVIEW_TIME
+  INTERVIEW_TIME,
 );
 
 const InterviewResultWithValidation = subscribeValidation(
   InterviewResult,
   props => props.validator(props.interviewResult),
-  INTERVIEW_RESULT
+  INTERVIEW_RESULT,
 );
 
 const OverallRatingWithValidation = subscribeValidation(
   OverallRating,
   props => props.validator(props.overallRating),
-  OVERALL_RATING
+  OVERALL_RATING,
 );
 
 class InterviewInfo extends React.PureComponent {

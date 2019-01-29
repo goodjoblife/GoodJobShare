@@ -18,7 +18,7 @@ const Region = ({ region, inputTitle, onChange, validator, submitted }) => {
       <div
         className={cn(
           isWarning ? styles.warning : null,
-          shareStyles.single__select__input
+          shareStyles.single__select__input,
         )}
         style={{
           position: 'relative',
