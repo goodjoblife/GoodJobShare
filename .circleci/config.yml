@@ -35,7 +35,7 @@ jobs:
             - setup_remote_docker
             - run:
                 name: Login docker registry
-                command: docker login registry.gitlab.com -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASS}
+                command: docker login reg.goodjob.life -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASSWORD}
             - run:
                 name: Build Docker and Push
                 command: |
@@ -56,7 +56,7 @@ jobs:
             - setup_remote_docker
             - run:
                 name: Login docker registry
-                command: docker login registry.gitlab.com -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASS}
+                command: docker login reg.goodjob.life -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_PASSWORD}
             - run:
                 name: Build Docker and Push
                 command: |

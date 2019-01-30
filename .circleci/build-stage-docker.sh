@@ -1,6 +1,8 @@
 #!/bin/sh
 
-REGISTRY="registry.gitlab.com/goodjoblife/i/goodjobshare"
+set -euo pipefail
+
+REGISTRY="reg.goodjob.life/goodjob/goodjobshare"
 
 # Build Docker Image
 docker-compose -f .circleci/docker-compose-stage.yml build
