@@ -66,6 +66,25 @@ export const getLoginStatus = FB => dispatch => {
   return Promise.reject('FB should ready');
 };
 
+export const setAuthForFB = (status, accessToken) => async (
+  dispatch,
+  getState,
+  { api },
+) => {
+  if (status !== authStatus.CONNECTED) {
+    await dispatch(setLogin(status));
+    return;
+  }
+
+  const response = await api.auth.postAuthFacebook(accessToken);
+  if (response.error) {
+    await dispatch(setLogin(authStatus.NOT_AUTHORIZED));
+    return;
+  }
+  const { token } = response;
+  await dispatch(setLogin(authStatus.CONNECTED, token));
+};
+
 export const getMe = FB => (dispatch, getState) => {
   if (!FB) {
     return Promise.reject('FB should ready');
