@@ -4,22 +4,14 @@ import { withRouter } from 'react-router-dom';
 
 import { withFB } from 'common/facebook';
 import Header from '../../../components/App/Header';
-import {
-  loginWithFB,
-  logout,
-  getLoginStatus,
-  getMe,
-} from '../../../actions/auth';
+import { loginWithFB, logout } from '../../../actions/auth';
 
 const mapStateToProps = state => ({
   auth: state.auth,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    { login: loginWithFB, logout, getLoginStatus, getMe },
-    dispatch,
-  );
+  bindActionCreators({ login: loginWithFB, logout }, dispatch);
 
 export default withRouter(
   connect(
