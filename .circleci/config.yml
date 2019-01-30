@@ -3,7 +3,7 @@ jobs:
     build:
         working_directory: ~/app
         docker:
-            - image: node
+            - image: node:10
         steps:
             - checkout
             - restore_cache:
