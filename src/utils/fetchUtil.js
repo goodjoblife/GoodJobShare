@@ -2,7 +2,6 @@ import 'isomorphic-fetch';
 
 import { stringify } from 'qs';
 
-// import { getToken } from 'utils/tokenUtil';
 import { HttpError } from 'utils/errors';
 
 import { API_HOST } from '../config';
