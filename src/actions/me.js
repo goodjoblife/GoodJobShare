@@ -1,5 +1,7 @@
 import status from '../constants/status';
 
+import { tokenSelector } from '../selectors/authSelector';
+
 export const SET_MY_EXPERIENCES = 'SET_MY_EXPERIENCES';
 export const SET_MY_EXPERIENCES_STATUS = 'SET_MY_EXPERIENCES_STATUS';
 export const SET_MY_WORKINGS = 'SET_MY_WORKINGS';
@@ -36,8 +38,11 @@ export const fetchMyExperiences = () => (dispatch, getState, { api }) => {
     status: status.FETCHING,
   });
 
+  const state = getState();
+  const token = tokenSelector(state);
+
   return api.me
-    .getMeExperiences()
+    .getMeExperiences({ token })
     .then(result => {
       if (result.error) {
         dispatch(setMyExperiences({}, result.error));
@@ -56,8 +61,11 @@ export const fetchMyWorkings = () => (dispatch, getState, { api }) => {
     status: status.FETCHING,
   });
 
+  const state = getState();
+  const token = tokenSelector(state);
+
   return api.me
-    .getMeWorkings()
+    .getMeWorkings({ token })
     .then(result => {
       if (result.error) {
         dispatch(setMyWorkings({}, result.error));
@@ -76,8 +84,11 @@ export const fetchMyReplies = () => (dispatch, getState, { api }) => {
     status: status.FETCHING,
   });
 
+  const state = getState();
+  const token = tokenSelector(state);
+
   return api.me
-    .getMeReplies()
+    .getMeReplies({ token })
     .then(result => {
       if (result.error) {
         dispatch(setMyReplies({}, result.error));

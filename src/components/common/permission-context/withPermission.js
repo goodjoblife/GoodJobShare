@@ -6,8 +6,11 @@ import {
   compose,
 } from 'recompose';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import { getHasSearchPermission } from '../../../apis/me';
 import PermissionContext from './PermissionContext';
+import { tokenSelector } from '../../../selectors/authSelector';
 
 const withPermissionContext = Component => {
   const hoc = setDisplayName(wrapDisplayName(Component, 'withPermission'));
@@ -19,11 +22,12 @@ const withPermissionContext = Component => {
 };
 
 const withPermission = compose(
+  connect(state => ({ token: tokenSelector(state) })),
   withPermissionContext,
   withRouter,
   withHandlers({
-    fetchPermission: ({ location, setCanView }) => async () => {
-      const result = await getHasSearchPermission();
+    fetchPermission: ({ location, setCanView, token }) => async () => {
+      const result = await getHasSearchPermission({ token });
       const { hasSearchPermission: hasPermission } = result;
 
       console.log('fetchPermission result', result);
