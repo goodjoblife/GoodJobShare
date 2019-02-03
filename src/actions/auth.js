@@ -20,7 +20,9 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
       response => {
         if (response.status === authStatus.CONNECTED) {
           return api.auth
-            .postAuthFacebook(response.authResponse.accessToken)
+            .postAuthFacebook({
+              accessToken: response.authResponse.accessToken,
+            })
             .then(({ token, user: { _id, facebook_id } }) =>
               dispatch(setLogin(authStatus.CONNECTED, token)),
             )
@@ -60,7 +62,7 @@ export const setAuthForFB = (status, accessToken) => async (
     return;
   }
 
-  const response = await api.auth.postAuthFacebook(accessToken);
+  const response = await api.auth.postAuthFacebook({ accessToken });
   if (response.error) {
     await dispatch(setLogin(authStatus.NOT_AUTHORIZED));
     return;

@@ -1,11 +1,11 @@
 import fetchUtil from 'utils/fetchUtil';
 
-const getMeExperiences = () => fetchUtil('/me/experiences')('GET');
-const getMeWorkings = () => fetchUtil('/me/workings')('GET');
-const getMeReplies = () => fetchUtil('/me/replies')('GET');
+const getMeExperiences = () => fetchUtil('/me/experiences').get();
+const getMeWorkings = () => fetchUtil('/me/workings').get();
+const getMeReplies = () => fetchUtil('/me/replies').get();
 
 export const getHasSearchPermission = () =>
-  fetchUtil('/me/permissions/search')('GET');
+  fetchUtil('/me/permissions/search').get();
 
 export default {
   getMeExperiences,

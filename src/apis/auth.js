@@ -2,7 +2,7 @@ import fetchUtil from 'utils/fetchUtil';
 
 const endpoint = '/auth';
 
-const postAuthFacebook = accessToken =>
+const postAuthFacebook = ({ accessToken }) =>
   fetchUtil(`${endpoint}/facebook`).post({
     body: { access_token: accessToken },
   });

@@ -60,7 +60,7 @@ const fetchUtil = endpoint =>
   allowMethods.reduce(
     (pV, method) => ({
       ...pV,
-      [method]: ({ body, query, options }) => {
+      [method]: ({ body, query, options } = {}) => {
         const finalOptions = {
           ...defaultOptions,
           ...options,

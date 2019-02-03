@@ -10,7 +10,7 @@ const getEndpoint = ({ id, limit = 3 }) =>
 const fetch = ({ id, limit }) => fetchUtil(getEndpoint({ id, limit }));
 
 export const getExperiencesRecommended = ({ id, limit }) =>
-  fetch({ id, limit })('get');
+  fetch({ id, limit }).get();
 
 export const getExperiences = ({
   start,
@@ -32,7 +32,7 @@ export const getExperiences = ({
 
   const url = queryString ? `${endpoint}?${queryString}` : `${endpoint}`;
 
-  return fetchUtil(url)('GET');
+  return fetchUtil(url).get();
 };
 
 const getExperienceReplyOptions = {
@@ -54,39 +54,45 @@ export const getExperienceReply = options => {
     limit,
   });
 
-  return fetchUtil(queryString ? `${url}?${queryString}` : url)('GET');
+  return fetchUtil(queryString ? `${url}?${queryString}` : url).get();
 };
 
 export const postExperienceReply = ({ id, comment }) =>
-  fetchUtil(`/experiences/${id}/replies`)('POST', {
-    content: comment,
+  fetchUtil(`/experiences/${id}/replies`).post({
+    body: {
+      content: comment,
+    },
   });
 
 export const deleteExperienceLikes = ({ id }) =>
-  fetchUtil(`/experiences/${id}/likes`)('DELETE');
+  fetchUtil(`/experiences/${id}/likes`).delete();
 
 export const postExperienceLikes = ({ id }) =>
-  fetchUtil(`/experiences/${id}/likes`)('POST');
+  fetchUtil(`/experiences/${id}/likes`).post();
 
 export const deleteReplyLikes = ({ id }) =>
-  fetchUtil(`/replies/${id}/likes`)('DELETE');
+  fetchUtil(`/replies/${id}/likes`).delete();
 
 export const postReplyLikes = ({ id }) =>
-  fetchUtil(`/replies/${id}/likes`)('POST');
+  fetchUtil(`/replies/${id}/likes`).post();
 
 const patchReply = ({ id, status }) =>
-  fetchUtil(`/replies/${id}`)('PATCH', {
-    status,
+  fetchUtil(`/replies/${id}`).patch({
+    body: {
+      status,
+    },
   });
 
-export const getExperience = ({ id }) => fetchUtil(`/experiences/${id}`)('GET');
+export const getExperience = ({ id }) => fetchUtil(`/experiences/${id}`).get();
 
 export const newExperienceSearchBy = ({ body }) =>
-  fetchUtil('/graphql')('POST', body);
+  fetchUtil('/graphql').post({ body });
 
 const patchExperience = ({ id, status }) =>
-  fetchUtil(`/experiences/${id}`)('PATCH', {
-    status,
+  fetchUtil(`/experiences/${id}`).patch({
+    body: {
+      status,
+    },
   });
 
 export default {

@@ -3,6 +3,6 @@ import fetchUtil from 'utils/fetchUtil';
 const endpoint = '/companies/search';
 
 export const getCompaniesSearch = ({ key }) =>
-  fetchUtil(endpoint).get({ query: { key } })('get');
+  fetchUtil(endpoint).get({ query: { key } });
 
 export default { getCompaniesSearch };
