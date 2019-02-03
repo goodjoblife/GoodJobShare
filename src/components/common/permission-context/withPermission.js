@@ -30,8 +30,6 @@ const withPermission = compose(
       const result = await getHasSearchPermission({ token });
       const { hasSearchPermission: hasPermission } = result;
 
-      console.log('fetchPermission result', result);
-
       if (typeof Storage !== 'undefined') {
         // check current pathname
         const { pathname } = location;
