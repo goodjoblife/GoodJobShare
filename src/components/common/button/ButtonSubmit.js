@@ -88,6 +88,7 @@ class ButtonSubmit extends React.PureComponent {
           isOpen={isOpen}
           close={() => this.handleIsOpen(!isOpen)}
           hasClose={false}
+          closableOnClickOutside
         >
           {feedback}
         </Modal>

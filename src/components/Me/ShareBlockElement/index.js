@@ -86,6 +86,7 @@ const ShareBlock = ({
           <Modal
             isOpen={isArchiveModalOpen}
             close={() => setArchiveModalOpen(false)}
+            closableOnClickOutside
           >
             {archive.reason}
           </Modal>

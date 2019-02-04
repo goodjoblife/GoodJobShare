@@ -5,12 +5,14 @@ import cn from 'classnames';
 import Cross from '../images/x.svg';
 
 import styles from './Modal.module.css';
+import { compose, withHandlers } from 'recompose';
 
-const Modal = ({ children, isOpen, hasClose, close, size }) => (
+const Modal = ({ children, isOpen, hasClose, close, size, onClickOutside }) => (
   <div
     className={cn(styles.modal, {
       [styles.isOpen]: isOpen,
     })}
+    onClick={onClickOutside}
   >
     <div className={styles.inner}>
       <div className={cn(styles.container, styles[size])}>
@@ -25,7 +27,9 @@ const Modal = ({ children, isOpen, hasClose, close, size }) => (
             />
           </div>
         ) : null}
-        <div className={styles.content}>{children}</div>
+        <div className={styles.content} onClick={e => e.stopPropagation()}>
+          {children}
+        </div>
       </div>
     </div>
   </div>
@@ -37,6 +41,7 @@ Modal.propTypes = {
   hasClose: PropTypes.bool,
   close: PropTypes.func,
   size: PropTypes.string,
+  onClickOutside: PropTypes.func.isRequired,
 };
 
 Modal.defaultProps = {
@@ -44,7 +49,17 @@ Modal.defaultProps = {
   size: 's',
 };
 
-export default Modal;
+const enhanceModal = compose(
+  withHandlers({
+    onClickOutside: ({ closableOnClickOutside, close }) => () => {
+      if (closableOnClickOutside) {
+        close();
+      }
+    },
+  }),
+);
+
+export default enhanceModal(Modal);
 
 const InfoButton = ({ children, onClick }) => (
   <button className={styles.infoButton} onClick={onClick}>
