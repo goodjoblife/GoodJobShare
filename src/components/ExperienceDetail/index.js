@@ -91,6 +91,7 @@ class ExperienceDetail extends Component {
   state = {
     isModalOpen: false,
     modalType: '',
+    ModalClosableOnClickOutside: true,
   };
 
   componentDidMount() {
@@ -163,6 +164,12 @@ class ExperienceDetail extends Component {
       modalPayload,
     });
 
+  setModalClosableOnClickOutside = closableOnClickOutside => {
+    this.setState({
+      closableOnClickOutside,
+    });
+  };
+
   renderModalChildren = modalType => {
     const { modalPayload } = this.state;
 
@@ -172,20 +179,23 @@ class ExperienceDetail extends Component {
           <ReportFormContainer
             close={() => this.handleIsModalOpen(false)}
             id={experienceIdSelector(this.props)}
-            onApiError={pload =>
-              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload)
-            }
-            onSuccess={() =>
-              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS)
-            }
+            onApiError={pload => {
+              this.setModalClosableOnClickOutside(false);
+              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload);
+            }}
+            onSuccess={() => {
+              this.setModalClosableOnClickOutside(true);
+              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS);
+            }}
           />
         );
       case MODAL_TYPE.REPORT_API_ERROR:
         return (
           <ApiErrorFeedback
-            buttonClick={() =>
-              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)
-            }
+            buttonClick={() => {
+              this.setModalClosableOnClickOutside(false);
+              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
+            }}
             message={modalPayload.message}
           />
         );
@@ -254,7 +264,12 @@ class ExperienceDetail extends Component {
     const { likeExperience, likeReply, canViewExperirenceDetail } = this.props;
     const id = experienceIdSelector(this.props);
 
-    const { isModalOpen, modalType, modalPayload } = this.state;
+    const {
+      isModalOpen,
+      modalType,
+      modalPayload,
+      closableOnClickOutside,
+    } = this.state;
 
     const backable = R.pathOr(
       false,
@@ -297,6 +312,10 @@ class ExperienceDetail extends Component {
                 <Article
                   experience={experience}
                   hideContent={!canViewExperirenceDetail}
+                  openReportDetail={() => {
+                    this.setModalClosableOnClickOutside(false);
+                    this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
+                  }}
                 />
               </Fragment>
             )}
@@ -337,6 +356,7 @@ class ExperienceDetail extends Component {
           isOpen={isModalOpen}
           close={() => this.handleIsModalOpen(false)}
           hasClose={false}
+          closableOnClickOutside={closableOnClickOutside}
         >
           {this.renderModalChildren(modalType, modalPayload)}
         </Modal>

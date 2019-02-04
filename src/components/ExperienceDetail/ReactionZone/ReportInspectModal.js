@@ -58,6 +58,7 @@ const ReportInspectModal = ({
       isOpen={isOpen}
       close={() => toggleReportInspectModal(false)}
       hasClose
+      closableOnClickOutside
     >
       <Heading size="l" marginBottomS center>
         查看檢舉
