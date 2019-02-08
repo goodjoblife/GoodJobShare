@@ -53,11 +53,13 @@ if (module.hot) {
   module.hot.accept('./components/Root', () => {
     hydrate(
       <Provider store={store}>
-        <Router history={history}>
-          <ScrollContext>
-            <Root />
-          </ScrollContext>
-        </Router>
+        <PersistGate loading={null} persistor={persistor}>
+          <Router history={history}>
+            <ScrollContext>
+              <Root />
+            </ScrollContext>
+          </Router>
+        </PersistGate>
       </Provider>,
       document.getElementById('root'),
     );
