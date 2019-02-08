@@ -10,6 +10,7 @@ const preloadedState = fromJS({
   token: null,
   user: {
     name: null,
+    _id: null,
   },
 });
 
