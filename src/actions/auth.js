@@ -16,9 +16,14 @@ export const setUser = user => ({
   user,
 });
 
-export const logout = () => ({
+const logOutAction = () => ({
   type: LOG_OUT,
 });
+
+export const logout = () => (dispatch, getState, { history }) => {
+  dispatch(logOutAction());
+  history.push('/');
+};
 
 export const loginWithFB = FB => (dispatch, getState, { api }) => {
   if (FB) {

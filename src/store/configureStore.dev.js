@@ -18,7 +18,9 @@ const configureStore = (preloadedState, history) => {
   const store = createStore(
     rootReducer,
     preloadedState,
-    composeEnhancers(applyMiddleware(thunk.withExtraArgument({ api }), logger)),
+    composeEnhancers(
+      applyMiddleware(thunk.withExtraArgument({ api, history }), logger),
+    ),
   );
 
   if (module.hot) {
