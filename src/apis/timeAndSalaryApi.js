@@ -13,24 +13,24 @@ export const fetchJobTitleCandidates = ({ key }) =>
   });
 
 export const fetchTimeAndSalary = ({ opt }) =>
-  fetchUtil(`${endpoint}`).get({ query: { opt } });
+  fetchUtil(`${endpoint}`).get({ query: opt });
 
 export const fetchTimeAndSalaryExtreme = ({ opt }) =>
-  fetchUtil(`${endpoint}/extreme`).get({ query: { opt } });
+  fetchUtil(`${endpoint}/extreme`).get({ query: opt });
 
 export const fetchCampaignTimeAndSalary = ({ campaignName, opt }) =>
   fetchUtil(`${endpoint}/campaigns/${campaignName}`).get({
-    query: { opt },
+    query: opt,
   });
 
 export const fetchSearchCompany = ({ opt }) =>
   fetchUtil(`${endpoint}/search_by/company/group_by/company`).get({
-    query: { opt },
+    query: opt,
   });
 
 export const fetchSearchJobTitle = ({ opt }) =>
   fetchUtil(`${endpoint}/search_by/job_title/group_by/company`).get({
-    query: { opt },
+    query: opt,
   });
 
 export const postWorkings = ({ body }) => fetchUtil(endpoint).post({ body });
