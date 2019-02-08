@@ -12,4 +12,7 @@ module.exports = {
   SENTRY_DSN: process.env.RAZZLE_SENTRY_DSN,
   GIT_SHA1: process.env.RAZZLE_GIT_SHA1,
   PERSIST_KEY: process.env.PERSIST_KEY || 'goodjob',
+  GRAPHQL_ENDPOINT:
+    `${process.env.RAZZLE_API_HOST}/graphql` ||
+    'https://api-dev.goodjob.life/graphql',
 };
