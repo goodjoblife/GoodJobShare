@@ -11,7 +11,8 @@ const getMeReplies = ({ token }) => fetchUtil('/me/replies').get({ token });
 export const getHasSearchPermission = ({ token }) =>
   fetchUtil('/me/permissions/search').get({ token });
 
-const getMe = ({ token }) => graphqlClient({ query: getMeQuery });
+const getMe = ({ token }) =>
+  graphqlClient({ query: getMeQuery, token }).then(data => data.me);
 
 export default {
   getMeExperiences,

@@ -1,10 +1,8 @@
 export const getMeQuery = `
   {
-    query {
-      me {
-        _id
-        facebook_id
-      }
+    me {
+      _id
+      facebook_id
     }
   }
 `;

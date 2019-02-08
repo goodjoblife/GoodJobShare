@@ -1,9 +1,10 @@
 import fetchUtil from './fetchUtil';
-import { GRAPHQL_ENDPOINT } from '../config';
 
-const fetch = fetchUtil(GRAPHQL_ENDPOINT);
+const fetch = fetchUtil('/graphql');
 
 const graphqlClient = ({ variables, query, options, token }) =>
-  fetch.post({ body: { query, variables }, token, options });
+  fetch
+    .post({ body: { query, variables }, token, options })
+    .then(response => response.data);
 
 export default graphqlClient;
