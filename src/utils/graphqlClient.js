@@ -12,7 +12,9 @@ const graphqlClient = ({ variables, query, options, token }) =>
   fetch.post({ body: { query, variables }, token, options }).then(response => {
     if (response.errors) {
       return Promise.reject(
-        `Graphql Server Errors: ${mapErrorMessages(response.errors)}`,
+        new Error(
+          `Graphql Server Errors: ${mapErrorMessages(response.errors)}`,
+        ),
       );
     }
     return response.data;
