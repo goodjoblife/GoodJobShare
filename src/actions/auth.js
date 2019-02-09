@@ -57,4 +57,11 @@ export const loginWithToken = () => (dispatch, getState, { api }) => {
 };
 
 export const getMeInfo = token => (dispatch, getState, { api }) =>
-  api.me.getMe({ token }).then(user => dispatch(setUser(user)));
+  api.me
+    .getMe({ token })
+    .then(user => dispatch(setUser(user)))
+    .catch(error => {
+      dispatch(logOutAction());
+
+      console.error(error);
+    });
