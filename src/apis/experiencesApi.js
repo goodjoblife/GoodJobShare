@@ -1,4 +1,3 @@
-import qs from 'qs';
 import R from 'ramda';
 
 import fetchUtil from 'utils/fetchUtil';
@@ -28,11 +27,8 @@ export const getExperiences = ({
     sort,
     type: R.join(',', searchType),
   };
-  const queryString = qs.stringify(queryObj);
 
-  const url = queryString ? `${endpoint}?${queryString}` : `${endpoint}`;
-
-  return fetchUtil(url).get();
+  return fetchUtil(endpoint).get({ query: queryObj });
 };
 
 const getExperienceReplyOptions = {
@@ -49,12 +45,13 @@ export const getExperienceReply = options => {
   const { experienceId, start, limit } = finalOptions;
 
   const url = `/experiences/${experienceId}/replies`;
-  const queryString = qs.stringify({
-    start,
-    limit,
-  });
 
-  return fetchUtil(queryString ? `${url}?${queryString}` : url).get();
+  return fetchUtil(url).get({
+    query: {
+      start,
+      limit,
+    },
+  });
 };
 
 export const postExperienceReply = ({ id, comment }) =>
