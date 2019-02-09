@@ -16,7 +16,7 @@ const preloadedState = fromJS({
 
 const auth = createReducer(preloadedState, {
   [SET_LOGIN]: (state, { status, token }) => state.merge({ status, token }),
-  [SET_USER]: (state, { user }) => state.setIn(['user'], user),
+  [SET_USER]: (state, { user }) => state.setIn(['user'], fromJS(user)),
 });
 
 export default auth;
