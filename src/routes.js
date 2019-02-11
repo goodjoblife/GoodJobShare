@@ -158,26 +158,6 @@ const routes = [
         component: TimeAndSalaryBoard,
       },
       {
-        path: '/time-and-salary/company/:keyword/work-time-dashboard',
-        exact: true,
-        component: TimeAndSalaryCompany,
-      },
-      {
-        path: '/time-and-salary/company/:keyword/sort/work-time-asc',
-        exact: true,
-        component: TimeAndSalaryCompany,
-      },
-      {
-        path: '/time-and-salary/company/:keyword/salary-dashboard',
-        exact: true,
-        component: TimeAndSalaryCompany,
-      },
-      {
-        path: '/time-and-salary/company/:keyword/sort/salary-asc',
-        exact: true,
-        component: TimeAndSalaryCompany,
-      },
-      {
         path: '/time-and-salary/job-title/:keyword/work-time-dashboard',
         exact: true,
         component: TimeAndSalaryJobTitle,
@@ -199,6 +179,17 @@ const routes = [
       },
       {
         component: TimeAndSalaryNotFound,
+      },
+    ],
+  },
+  {
+    path: '/salary-worktime',
+    component: TimeAndSalary,
+    routes: [
+      {
+        path: '/salary-worktime',
+        exact: true,
+        component: TimeAndSalaryCompany,
       },
     ],
   },

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
 import { compose, setStatic } from 'recompose';
+import qs from 'qs';
 
 import Select from 'common/form/Select';
 import Loading from 'common/Loader';
@@ -16,8 +17,8 @@ import renderHelmet from './helmet';
 
 import {
   pathSelector,
-  paramsSelector,
   pathnameSelector,
+  searchSelector,
 } from 'common/routing/selectors';
 
 import styles from '../views/view.module.css';
@@ -49,20 +50,30 @@ const pathnameMapping = {
   },
 };
 
+const groupSortBy = 'week_work_time';
+const order = 'descending';
+
 const selectOptions = R.pipe(
   R.toPairs,
   R.map(([path, { label }]) => ({ value: path, label })),
 );
 
-const keywordSelector = R.compose(
-  params => params.keyword,
-  paramsSelector,
+const pathParameterSelector = R.compose(
+  query => qs.parse(query, { ignoreQueryPrefix: true }),
+  searchSelector,
 );
 
-const pathParameterSelector = R.compose(
-  path => pathnameMapping[path],
-  pathSelector,
+const keywordSelector = R.compose(
+  params => params.q,
+  pathParameterSelector,
 );
+
+const searchCriteriaSelector = R.compose(
+  params => params.s_by,
+  pathParameterSelector,
+);
+
+const searchCriteriaText = searchBy => (searchBy === 'company' ? '公司' : '??');
 
 class TimeAndSalaryCompany extends Component {
   static propTypes = {
@@ -82,9 +93,8 @@ class TimeAndSalaryCompany extends Component {
   };
 
   componentDidMount() {
-    const { groupSortBy, order } = pathParameterSelector(this.props);
-    const company = keywordSelector(this.props);
-    this.props.queryCompany({ groupSortBy, order, company });
+    const keyword = keywordSelector(this.props);
+    this.props.queryCompany({ groupSortBy, order, company: keyword });
     this.props.fetchPermission();
   }
 
@@ -93,9 +103,8 @@ class TimeAndSalaryCompany extends Component {
       pathSelector(prevProps) !== pathSelector(this.props) ||
       keywordSelector(prevProps) !== keywordSelector(this.props)
     ) {
-      const { groupSortBy, order } = pathParameterSelector(this.props);
-      const company = keywordSelector(this.props);
-      this.props.queryCompany({ groupSortBy, order, company });
+      const keyword = keywordSelector(this.props);
+      this.props.queryCompany({ groupSortBy, order, company: keyword });
       this.props.fetchPermission();
     }
   }
@@ -104,21 +113,21 @@ class TimeAndSalaryCompany extends Component {
     const { history, status, canViewTimeAndSalary } = this.props;
     const path = pathSelector(this.props);
     const pathname = pathnameSelector(this.props);
-    const { title, groupSortBy } = pathParameterSelector(this.props);
-    const company = keywordSelector(this.props);
+
+    const keyword = keywordSelector(this.props);
+    const title = `查詢「${keyword}」的結果`;
+
     const raw = this.props.data.toJS();
 
     const substituteKeyword = R.invoker(2, 'replace')(
       /:keyword/,
-      encodeURIComponent(company),
+      encodeURIComponent(keyword),
     );
 
     return (
       <section className={styles.searchResult}>
-        {renderHelmet({ title, pathname, company })}
-        <h2 className={styles.heading}>
-          搜尋 “{company}” 的 {title}
-        </h2>
+        {renderHelmet({ title, pathname, company: keyword })}
+        <h2 className={styles.heading}>{title}</h2>
         <div className={styles.result}>
           <div className={styles.sort}>
             <div className={styles.label}> 排序：</div>
@@ -136,8 +145,9 @@ class TimeAndSalaryCompany extends Component {
         {isFetched(status) &&
           raw.length === 0 && (
             <P size="l" bold className={styles.searchNoResult}>
-              尚未有公司「
-              {company}
+              尚未有
+              {searchCriteriaText(searchCriteriaSelector(this.props))}「
+              {keyword}
               」的薪時資訊
             </P>
           )}
@@ -157,10 +167,9 @@ class TimeAndSalaryCompany extends Component {
 }
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const { groupSortBy, order } = pathParameterSelector(props);
-  const company = keywordSelector(props);
+  const keyword = keywordSelector(props);
 
-  return dispatch(queryCompany({ groupSortBy, order, company }));
+  return dispatch(queryCompany({ groupSortBy, order, company: keyword }));
 });
 
 const hoc = compose(
