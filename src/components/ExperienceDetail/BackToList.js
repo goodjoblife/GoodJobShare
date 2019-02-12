@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import i from 'common/icons';
 import { P } from 'common/base';
 import styles from './BackToList.module.css';
+import cn from 'classnames';
 
 const backOrPush = (backable, history) => {
   if (backable) {
@@ -13,10 +14,10 @@ const backOrPush = (backable, history) => {
   return history.push('/experiences/search');
 };
 
-const BackToList = ({ backable, history }) => (
+const BackToList = ({ backable, history, className }) => (
   <button
     onClick={() => backOrPush(backable, history)}
-    className={styles.backBtn}
+    className={cn(styles.backBtn, className)}
   >
     <i.ArrowGo />
     <P size="m" bold>
@@ -28,6 +29,7 @@ const BackToList = ({ backable, history }) => (
 BackToList.propTypes = {
   backable: PropTypes.bool,
   history: PropTypes.object.isRequired,
+  className: PropTypes.string,
 };
 
 export default withRouter(BackToList);
