@@ -46,7 +46,7 @@ $paddingS: 16px;
 }
 
 .article {
-  padding: $padding;
+  padding: 0 $padding $padding $padding;
 
   .heading {
     margin-bottom: 24px;
@@ -85,14 +85,14 @@ $paddingS: 16px;
   }
 }
 
-/* 檢舉 */
-.right {
-  position: absolute;
-  right: 0;
+.functionButtons {
   display: flex;
-  margin-right: 26px;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 4px 8px 0 8px;
 
-  .button {
-    color: #969696;
+  @media (max-width: 550px) {
+    border-bottom: 1px solid border-gray;
+    border-top: 1px solid border-gray;
   }
 }

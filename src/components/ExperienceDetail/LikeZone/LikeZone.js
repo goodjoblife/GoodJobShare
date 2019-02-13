@@ -4,40 +4,24 @@ import cn from 'classnames';
 import i from 'common/icons';
 import authStatusConstant from '../../../constants/authStatus';
 import styles from './LikeZone.module.css';
+import { P } from 'common/base';
 
-const renderLabel = label => {
-  if (typeof label === 'undefined') {
-    return null;
-  }
-  return <div className={styles.label}>{label}</div>;
-};
-
-const renderCount = count => {
-  if (typeof count === 'undefined') {
-    return null;
-  }
-  return <div className={styles.count}>{count}</div>;
-};
-
-const ThumbsUp = ({ onClick, toggled, label, count, ...restProps }) => (
-  <div className={styles.button} onClick={onClick} {...restProps}>
-    <i.Like className={cn({ [styles.toggled]: toggled })} />
-    {renderLabel(label)}
-    {renderCount(count)}
+const ThumbsUp = ({ onClick, label, count, ...restProps }) => (
+  <div onClick={onClick} {...restProps}>
+    <i.Like className={styles.icon} />
+    {label && <div className={styles.label}>{label}</div>}
+    {count && <div className={styles.count}>{count}</div>}
   </div>
 );
 
 const LikeZone = ({ likeExperience, experience, login, authStatus, FB }) => (
   <div className={styles.likeZone}>
-    <div className={styles.description}>
-      覺得這篇面試分享很實用的話，不妨點個讚或留言，
-      <br />
-      讓原作者知道，才會有更多經驗分享哦！
-    </div>
+    <P center className={styles.description} size="l">
+      覺得這篇面試分享很實用的話，不妨點個讚或留言，讓原作者知道，才會有更多經驗分享哦！
+    </P>
     <ThumbsUp
       label="好"
       count={experience.like_count >= 0 ? experience.like_count : 0}
-      toggled={experience.liked}
       onClick={() => {
         if (authStatus !== authStatusConstant.CONNECTED) {
           login(FB).then(() => likeExperience(experience));
@@ -45,7 +29,7 @@ const LikeZone = ({ likeExperience, experience, login, authStatus, FB }) => (
           likeExperience(experience);
         }
       }}
-      className={styles.button}
+      className={cn(styles.button, { [styles.toggled]: experience.liked })}
     />
   </div>
 );
