@@ -1,6 +1,6 @@
 @value INPUT_HEIGHT, main-gray from "common/variables.module.css";
 
-.element{
+.element {
   display: inline-flex;
   min-width: 110px;
   height: INPUT_HEIGHT;
@@ -12,14 +12,14 @@
   margin-right: 12px;
   border: 1px dashed main-gray;
   margin-bottom: 5px;
-  transition: background-color .25s;
+  transition: background-color 0.25s;
 }
 
 .last {
   margin-right: 0;
 }
 
-.checked{
+.checked {
   composes: element;
   background: #606060;
   color: white;
@@ -27,14 +27,14 @@
   cursor: default;
 }
 
-.unchecked{
+.unchecked {
   composes: element;
   color: #505050;
   cursor: pointer;
 
-  @media(min-width: 1025px) {
-    &:hover{
-      background: #D8D8D8;
+  @media (min-width: 1025px) {
+    &:hover {
+      background: #d8d8d8;
     }
   }
 }

@@ -9,13 +9,13 @@
 }
 
 @define-mixin hover-bg-color $bgcolor, $color {
-	transition: background-color .2s, color .2s;
-	@media (min-width: $above-desktop) {
-		&:hover {
-			background-color: $bgcolor;
-			color: $color;
-		}
-	}
+  transition: background-color 0.2s, color 0.2s;
+  @media (min-width: $above-desktop) {
+    &:hover {
+      background-color: $bgcolor;
+      color: $color;
+    }
+  }
 }
 
 $nav-height-l: 54px;
@@ -116,7 +116,7 @@ $page-gutter-s: 15px;
     }
 
     .page-banner--gray-pattern {
-      background-image: url("/assets/img/pattern-gray.svg");
+      background-image: url('/assets/img/pattern-gray.svg');
       background-repeat: repeat;
     }
   }
@@ -128,12 +128,12 @@ $page-gutter-s: 15px;
   line-height: 32px;
   padding: 0 14px;
   text-align: center;
-  font-size: .9em;
+  font-size: 0.9em;
   font-weight: 400;
   letter-spacing: 0.1em;
   margin: 0 auto;
   cursor: pointer;
-  transition: background .3s, color .3s, border .3s;
+  transition: background 0.3s, color 0.3s, border 0.3s;
   svg {
     margin-top: -3px;
     margin-right: 5px;

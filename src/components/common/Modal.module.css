@@ -3,17 +3,17 @@ $primary-color: #fcd406;
 $orange: #ec7910;
 
 .modal {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	width: 100%;
-	z-index: 9999;
-	background-color: rgba(255,255,255,.9);
-	opacity: 0;
-	visibility: hidden;
-	transition: opacity .2s, visibility .2s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
 }
 
 .isOpen {
@@ -22,11 +22,11 @@ $orange: #ec7910;
 }
 
 .inner {
-	height: 100vh;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .content {
@@ -35,31 +35,31 @@ $orange: #ec7910;
   overflow-x: hidden;
   position: relative;
   background: #fff;
-	padding: 40px;
-	box-shadow: 0px 0px 10px rgba(0,0,0,.2);
+  padding: 40px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 
-	@media (max-width: 850px) {
-		padding: 32px 16px;
-	}
+  @media (max-width: 850px) {
+    padding: 32px 16px;
+  }
 }
 
 .s {
-	width: 470px;
+  width: 470px;
 
-	@media (max-width: 550px) {
-		width: 90%;
-	}
+  @media (max-width: 550px) {
+    width: 90%;
+  }
 }
 
 .close {
   display: block;
-	text-align: right;
-	margin-bottom: 16px;
-	margin-right: -24px;
+  text-align: right;
+  margin-bottom: 16px;
+  margin-right: -24px;
 
-	@media (max-width: 550px) {
-		margin-right: 0;
-	}
+  @media (max-width: 550px) {
+    margin-right: 0;
+  }
 }
 
 .close__icon {
@@ -67,7 +67,7 @@ $orange: #ec7910;
   height: 20px;
   fill: #aaa;
   cursor: pointer;
-  transition: fill .2s;
+  transition: fill 0.2s;
 
   &:hover {
     fill: #000;
@@ -75,21 +75,21 @@ $orange: #ec7910;
 }
 
 .infoButton {
-	cursor: help;
-	display: inline-block;
-	position: relative;
-	&::after {
-		@media (min-width: $above-desktop) {
-			content: "";
-			position: absolute;
-			width: 100%;
-			left: 0;
-			bottom: -4px;
-			height: 1px;
-			border-bottom: 2px dotted $primary-color;
-		}
-	}
-	&:hover {
-		color: $orange;
-	}
+  cursor: help;
+  display: inline-block;
+  position: relative;
+  &::after {
+    @media (min-width: $above-desktop) {
+      content: '';
+      position: absolute;
+      width: 100%;
+      left: 0;
+      bottom: -4px;
+      height: 1px;
+      border-bottom: 2px dotted $primary-color;
+    }
+  }
+  &:hover {
+    color: $orange;
+  }
 }

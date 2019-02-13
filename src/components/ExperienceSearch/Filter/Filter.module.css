@@ -1,6 +1,7 @@
 @value main-yellow from 'common/variables.module.css';
 
-.frontButton, .rearButton {
+.frontButton,
+.rearButton {
   display: inline-block;
   width: 50%;
   height: 32px;

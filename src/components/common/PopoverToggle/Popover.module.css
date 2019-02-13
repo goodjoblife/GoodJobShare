@@ -11,7 +11,7 @@
   display: block;
   z-index: 10;
   background-color: #fff;
-  box-shadow: 0 0 4px rgba(0,0,0, .2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
   visibility: hidden;
   cursor: default;
 
@@ -19,7 +19,8 @@
     visibility: visible;
   }
 
-  &::before, &::after {
+  &::before,
+  &::after {
     position: absolute;
     z-index: -1;
     content: '';
@@ -30,7 +31,7 @@
 
   &::before {
     top: -7px;
-    border-bottom-color: rgba(0,0,0, .2);
+    border-bottom-color: rgba(0, 0, 0, 0.2);
   }
 
   &::after {

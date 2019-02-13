@@ -113,7 +113,7 @@
     background-color: #000;
     border-radius: 50%;
     transition-property: background-color;
-    transition-duration: .25s;
+    transition-duration: 0.25s;
 
     @media (max-width: 550px) {
       width: 48px;

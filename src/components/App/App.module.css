@@ -1,45 +1,45 @@
-@import "../common/reset.module.css";
-@import "../common/global.module.css";
+@import '../common/reset.module.css';
+@import '../common/global.module.css';
 
 @value primary-font, white-light, border-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
 .content {
-	min-height: 100vh;
-	@media (max-width: 850px) {
-		padding-top: NAV_MOBILE_HEIGHT;
-	}
+  min-height: 100vh;
+  @media (max-width: 850px) {
+    padding-top: NAV_MOBILE_HEIGHT;
+  }
 }
 
-
 /* gloabl style start */
-body, html {
-	font-family: primary-font;
-	font-weight: 400;
-	color: #444;
-	font-size: 16px;
-	-webkit-tap-highlight-color: rgba(0,0,0,.2);
-	overflow-x: hidden;
-	background-color: white-light;
+body,
+html {
+  font-family: primary-font;
+  font-weight: 400;
+  color: #444;
+  font-size: 16px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.2);
+  overflow-x: hidden;
+  background-color: white-light;
 }
 
 a {
-	color: inherit;
-	text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 img {
-	display: block;
-	width: 100%;
+  display: block;
+  width: 100%;
 }
 
 svg {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 
 hr {
-	border : 0;
- 	height : 1px;
-	background-color: border-gray;
+  border: 0;
+  height: 1px;
+  background-color: border-gray;
 }
 
 /* global style end */

@@ -3,10 +3,10 @@
 .container {
   display: block;
   background-color: #fff;
-  box-shadow: 0 0 6px rgba(0,0,0, .15);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
   margin-bottom: 40px;
   transition-property: background, box-shadow;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
 
   &:last-child {
     margin-bottom: 0;
@@ -14,7 +14,7 @@
 
   @media (min-width: 1025px) {
     &:hover {
-      box-shadow: 1px 1px 11px rgba(0,0,0, .25);
+      box-shadow: 1px 1px 11px rgba(0, 0, 0, 0.25);
       .heading {
         color: link-blue;
       }
@@ -41,7 +41,9 @@
     &:hover {
       .expandIcon {
         border-color: main-yellow;
-        svg { fill: main-yellow; }
+        svg {
+          fill: main-yellow;
+        }
       }
     }
   }
@@ -71,7 +73,7 @@
 .headingBlock {
   flex: 1 1 auto;
   margin-right: 16px;
-  transition: color .3s;
+  transition: color 0.3s;
 }
 
 .averageBlock {
@@ -107,7 +109,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: border .4s;
+  transition: border 0.4s;
 
   @media (max-width: 850px) {
     width: 28px;
@@ -128,7 +130,7 @@
   opacity: 0;
   height: 0;
   display: none;
-  transition: all .4s ease .4s;
+  transition: all 0.4s ease 0.4s;
 
   &.expanded {
     display: block;
@@ -156,22 +158,18 @@
 .overtimeBlockUnit {
   color: #b4b4b4;
   text-align: right;
-  font-size: .82em;
-  letter-spacing: .05em;
+  font-size: 0.82em;
+  letter-spacing: 0.05em;
   margin-top: 8px;
 }
 
-
 .averageBlock {
-
 }
 
 .averageBlockHeading {
-
 }
 
 .averageBlockValue {
-
 }
 
 .permissionBlockWorkingHour {

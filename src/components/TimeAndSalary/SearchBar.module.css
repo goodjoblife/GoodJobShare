@@ -6,24 +6,25 @@ $gray: #b4b4b4;
 $warning: #d50000;
 
 @define-mixin clear {
-	&:before, &:after {
-		content: "";
-		display: table;
-	}
-	&:after {
-		clear: both;
-	}
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
 }
 
 .showSearchbar {
   @mixin clear;
   &.is-disabled {
-    opacity: .4;
+    opacity: 0.4;
     pointer-events: none;
     label {
       color: $gray;
     }
-    input[type="text"] {
+    input[type='text'] {
       border-color: $gray;
     }
     button {
@@ -72,25 +73,25 @@ $warning: #d50000;
 }
 
 .section {
-	padding-top: $block-gutter-l;
-	padding-bottom: $block-gutter-l;
-	@media (max-width: $below-small) {
-		padding-top: $block-gutter-m;
-		padding-bottom: $block-gutter-m;
-	}
+  padding-top: $block-gutter-l;
+  padding-bottom: $block-gutter-l;
+  @media (max-width: $below-small) {
+    padding-top: $block-gutter-m;
+    padding-bottom: $block-gutter-m;
+  }
 }
 
 .formGroup {
-	position: relative;
-	&.has-error {
-		input,
-		select {
-			border-color: $warning;
-		}
-		.input-unit span {
-			border-color: $warning;
-		}
-	}
+  position: relative;
+  &.has-error {
+    input,
+    select {
+      border-color: $warning;
+    }
+    .input-unit span {
+      border-color: $warning;
+    }
+  }
 
   .inline {
     .radioForm {

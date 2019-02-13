@@ -3,11 +3,11 @@
     &:hover .cover {
       transform: translateY(-5px);
       &::before {
-        opacity: .2;
+        opacity: 0.2;
         transform: translateY(-10px) rotate(2deg) scale(1.05);
       }
       &::after {
-        opacity: .3;
+        opacity: 0.3;
         transform: translateY(0px) rotate(-4deg) scale(1.05);
       }
     }
@@ -15,12 +15,13 @@
 }
 
 .cover {
-  box-shadow: 0 0 8px rgba(0,0,0,.3);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
   position: relative;
-  transition: transform .3s;
-  &::before, &::after {
+  transition: transform 0.3s;
+  &::before,
+  &::after {
     opacity: 0;
-    content: "";
+    content: '';
     position: absolute;
     z-index: 1;
     top: 0;
@@ -28,7 +29,7 @@
     right: 0;
     bottom: 0;
     background-color: #999;
-    transition: opacity, transform .3s;
+    transition: opacity, transform 0.3s;
   }
 }
 

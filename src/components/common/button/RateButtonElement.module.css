@@ -5,7 +5,7 @@
   width: 32px;
   height: 32px;
   transition-property: fill;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
   cursor: pointer;
 }
 

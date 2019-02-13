@@ -24,27 +24,27 @@ $bold: 700;
 }
 
 @define-mixin font-p {
-	font-size: 1.13em;
-	line-height: 1.5em;
-	color: #333;
-	@media (max-width: $below-small) {
-		font-size: 1em;
-	}
+  font-size: 1.13em;
+  line-height: 1.5em;
+  color: #333;
+  @media (max-width: $below-small) {
+    font-size: 1em;
+  }
 }
 
 @define-mixin font-p-m {
-	font-size: 1em;
-	line-height: 1.6em;
-	color: #333;
+  font-size: 1em;
+  line-height: 1.6em;
+  color: #333;
 }
 
 @define-mixin hover-color $color {
-	transition: color .2s;
-	@media (min-width: $above-desktop) {
-		&:hover {
-			color: $color;
-		}
-	}
+  transition: color 0.2s;
+  @media (min-width: $above-desktop) {
+    &:hover {
+      color: $color;
+    }
+  }
 }
 
 .searchResult {

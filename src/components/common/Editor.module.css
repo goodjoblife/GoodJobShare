@@ -23,7 +23,8 @@
     margin-bottom: 1em;
   }
 
-  strong, bold {
+  strong,
+  bold {
     font-weight: 700;
   }
 
@@ -31,7 +32,7 @@
   a {
     color: link-blue;
     border-bottom: 1px solid transparent;
-    transition: border .3s;
+    transition: border 0.3s;
     padding-bottom: 2px;
     @media (min-width: 851px) {
       &:hover {
@@ -40,7 +41,8 @@
     }
   }
 
-  ul, ol {
+  ul,
+  ol {
     margin-left: 1.3em;
     > li {
       p {

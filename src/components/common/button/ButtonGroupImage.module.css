@@ -11,14 +11,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #F0F0F0;
-  transition: background-color .25s;
+  background: #f0f0f0;
+  transition: background-color 0.25s;
   cursor: pointer;
   margin-right: 4px;
 
   @media (min-width: 1025px) {
     &:hover {
-      background: #D8D8D8;
+      background: #d8d8d8;
     }
   }
 
