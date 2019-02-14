@@ -6,6 +6,10 @@
   justify-content: center;
   margin-bottom: 24px;
 
+  @media (min-width: 851px) {
+    max-width: calc(100% - 300px);
+  }
+
   @media (max-width: 550px) {
     margin-bottom: 16px;
     flex-direction: column;
@@ -19,13 +23,12 @@
   padding: 4px 12px;
   margin-right: 24px;
   margin-top: 3px;
+  flex-shrink: 0;
+  letter-spacing: 0.03em;
 
   @media (max-width: 550px) {
     margin-bottom: 8px;
+    font-size: 14px;
+    padding: 3px 12px;
   }
-}
-
-.title {
-  max-width: 700px;
-  vertical-align: top;
 }

@@ -34,7 +34,7 @@ import { COMMENT_ZONE } from '../../constants/formElements';
 import { paramsSelector } from 'common/routing/selectors';
 
 import LikeZone from '../../containers/ExperienceDetail/LikeZone';
-
+import styles from './ExperienceDetail.module.css';
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
   REPORT_API_ERROR: 'REPORT_API_ERROR',
@@ -305,8 +305,13 @@ class ExperienceDetail extends Component {
               <Loader />
             ) : (
               <Fragment>
-                <BackToList backable={backable} />
-                <ExperienceHeading experience={experience} />
+                <div className={styles.headingBlock}>
+                  <BackToList backable={backable} className={styles.back} />
+                  <ExperienceHeading
+                    experience={experience}
+                    className={styles.heading}
+                  />
+                </div>
                 <Article
                   id={id}
                   experience={experience}
