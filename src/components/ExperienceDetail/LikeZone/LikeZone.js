@@ -9,8 +9,8 @@ import { P } from 'common/base';
 const ThumbsUp = ({ onClick, label, count, ...restProps }) => (
   <div onClick={onClick} {...restProps}>
     <i.Like className={styles.icon} />
-    {label && <div className={styles.label}>{label}</div>}
-    {count && <div className={styles.count}>{count}</div>}
+    {typeof label !== undefined && <div className={styles.label}>{label}</div>}
+    {typeof count !== undefined && <div className={styles.count}>{count}</div>}
   </div>
 );
 
