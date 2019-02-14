@@ -1,51 +1,9 @@
 {
-  "extends": "stylelint-config-standard",
-  "plugins": "stylelint-order",
+  "extends": [
+    "stylelint-prettier/recommended"
+  ],
+  "plugins": ["stylelint-prettier"],
   "rules": {
-    "order/declaration-block-properties-specified-order": [
-      [
-        "position",
-        "z-index",
-        "top",
-        "right",
-        "bottom",
-        "left",
-        "display",
-        "overflow",
-        "box-sizing",
-        "width",
-        "max-width",
-        "min-width",
-        "height",
-        "max-height",
-        "min-height",
-        "padding",
-        "border",
-        "margin",
-        "flex-flow",
-        "flex-direction",
-        "flex-wrap",
-        "justify-content",
-        "align-items",
-        "align-content",
-        "flex",
-        "flex-grow",
-        "flex-shrink",
-        "flex-basis",
-        "order",
-        "align-self",
-        "background",
-        "background-image",
-        "color",
-        "box-shadow",
-        "font-family",
-        "font-size",
-        "line-height",
-        "text-align",
-        "content",
-        "cursor"
-      ],
-      { "unspecified": "bottomAlphabetical" }
-    ]
+    "prettier/prettier": true
   }
 }

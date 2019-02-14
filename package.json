@@ -8,8 +8,9 @@
     "lint": "eslint src scripts *.js",
     "lint-staged": "lint-staged",
     "flow": "flow",
+    "stylelint": "stylelint \"src/**/*.css\"",
     "testonly": "razzle test --env=jsdom",
-    "test": "npm run flow && npm run lint && npm run testonly",
+    "test": "npm run flow && npm run lint && npm run stylelint && npm run testonly",
     "build": "razzle build"
   },
   "pre-commit": [
@@ -45,9 +46,9 @@
     "prettier": "^1.14.2",
     "razzle-plugin-flow": "^1.0.0",
     "redux-logger": "^2.7.4",
-    "stylelint": "^7.8.0",
-    "stylelint-config-standard": "^16.0.0",
-    "stylelint-order": "^0.3.0"
+    "stylelint": "^9.10.1",
+    "stylelint-config-prettier": "^4.0.0",
+    "stylelint-prettier": "^1.0.6"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.3",

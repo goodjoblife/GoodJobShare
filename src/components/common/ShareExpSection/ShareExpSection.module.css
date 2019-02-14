@@ -30,12 +30,12 @@
   padding: 40px;
   text-align: center;
   transition-property: background, box-shadow;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
 
   @media (min-width: 1025px) {
     &:hover {
       background-color: #fff;
-      box-shadow: 2px 0 11px rgba(0,0,0, .12);
+      box-shadow: 2px 0 11px rgba(0, 0, 0, 0.12);
 
       .button {
         background-color: main-yellow;
@@ -68,7 +68,7 @@
   }
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     width: 200%;
     height: 110%;
@@ -76,11 +76,10 @@
     border-radius: 50%;
     transform: scale(0);
     transition-property: opacity, transform;
-    transition-duration: .25s;
+    transition-duration: 0.25s;
 
-    background-color: rgba(255,248,215, .95);
+    background-color: rgba(255, 248, 215, 0.95);
   }
-
 
   &:first-child::before {
     left: -15%;
@@ -105,14 +104,13 @@
     top: 30%;
     opacity: 0;
     transition-property: opacity;
-    transition-duration: .3s;
+    transition-duration: 0.3s;
   }
   @media (max-width: 1024px) {
-    font-size: .95em;
+    font-size: 0.95em;
     margin-top: 16px;
   }
 }
-
 
 .button {
   margin-top: 24px;
@@ -123,7 +121,7 @@
   align-items: center;
   justify-content: center;
   transition-property: background;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
   border-radius: 48px;
 
   @media (max-width: 1024px) {

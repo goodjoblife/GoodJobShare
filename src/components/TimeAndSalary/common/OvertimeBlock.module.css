@@ -34,7 +34,7 @@
   display: flex;
   background-color: #f9f9f9;
   margin-top: 15px;
-  font-size: .95em;
+  font-size: 0.95em;
 
   @media (max-width: 850px) {
     flex-direction: column;
@@ -58,7 +58,8 @@
   }
 }
 
-.positive, .negative {
+.positive,
+.negative {
   padding: 15px 30px;
   display: flex;
   align-items: center;
@@ -102,7 +103,7 @@
     @media (max-width: 1280px) {
       flex: 0 1 40px;
     }
-    
+
     @media (max-width: 550px) {
       flex: 1 1 auto;
       margin-right: 15px;
@@ -129,7 +130,7 @@
     .statHeading {
       flex: 1 1 auto;
       color: gray-dark;
-      font-size: .9em;
+      font-size: 0.9em;
     }
 
     .num {

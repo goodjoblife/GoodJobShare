@@ -9,13 +9,13 @@
 }
 
 @define-mixin hover-bg-color $bgcolor, $color {
-	transition: background-color .2s, color .2s;
-	@media (min-width: $above-desktop) {
-		&:hover {
-			background-color: $bgcolor;
-			color: $color;
-		}
-	}
+  transition: background-color 0.2s, color 0.2s;
+  @media (min-width: $above-desktop) {
+    &:hover {
+      background-color: $bgcolor;
+      color: $color;
+    }
+  }
 }
 
 $nav-height-l: 54px;
@@ -65,7 +65,7 @@ $page-gutter-s: 15px;
     text-align: center;
     font-size: 24px;
     border-radius: 5px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     margin-right: 65px;
     box-shadow: 8px 8px black;
     vertical-align: top;
@@ -81,15 +81,15 @@ $page-gutter-s: 15px;
     }
 
     &:hover {
-      background-color: #FCD406;
+      background-color: #fcd406;
     }
 
     &.active {
-      background-color: #FCD406;
+      background-color: #fcd406;
       cursor: default;
 
       &::before {
-        content: "";
+        content: '';
         position: absolute;
         top: -29px;
         left: 50%;
@@ -97,7 +97,7 @@ $page-gutter-s: 15px;
         display: block;
         border: 14px solid transparent;
         border-bottom-width: 0;
-        border-top-color: #FCD406;
+        border-top-color: #fcd406;
       }
     }
   }
@@ -109,12 +109,12 @@ $page-gutter-s: 15px;
   line-height: 32px;
   padding: 0 14px;
   text-align: center;
-  font-size: .9em;
+  font-size: 0.9em;
   font-weight: 400;
   letter-spacing: 0.1em;
   margin: 0 auto;
   cursor: pointer;
-  transition: background .3s, color .3s, border .3s;
+  transition: background 0.3s, color 0.3s, border 0.3s;
   svg {
     margin-top: -3px;
     margin-right: 5px;

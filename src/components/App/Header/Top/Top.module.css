@@ -5,7 +5,7 @@
   height: TOP_HEIGHT;
   background-color: #494949;
   transition-property: background-color;
-  transition-duration: .25s;
+  transition-duration: 0.25s;
 
   @media (min-width: 1025px) {
     &:hover {

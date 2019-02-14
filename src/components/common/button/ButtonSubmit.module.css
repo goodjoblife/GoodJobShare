@@ -1,9 +1,8 @@
 @value main-yellow, main-gray, gray-dark from "common/variables.module.css";
 
-
 .container {
   background: #000000;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 14px 0;
   width: 200px;
   text-align: center;
@@ -21,7 +20,7 @@
 }
 
 .whyFB {
-  color: #C0C0C0;
+  color: #c0c0c0;
   transition: color 0.2s linear;
 
   @media (min-width: 1025px) {

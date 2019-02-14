@@ -13,7 +13,7 @@
   text-align: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity .4s, visibility .4s;
+  transition: opacity 0.4s, visibility 0.4s;
 
   &.show {
     opacity: 1;

@@ -9,5 +9,8 @@
   width: 100%;
   height: 100px;
   pointer-events: none;
-  background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 1)
+  );
 }

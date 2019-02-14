@@ -10,7 +10,8 @@
   width: 100%;
 }
 
-.start, .end {
+.start,
+.end {
   flex-grow: 0;
   flex-basis: 40px;
   font-size: 14px;
@@ -34,7 +35,7 @@
   text-align: center;
 
   &::after {
-    content: "▼";
+    content: '▼';
     display: block;
     margin-top: 1px;
     font-size: 11px;
@@ -90,7 +91,7 @@
 
 .gray {
   .progress {
-    background-color: #E8E8E8;
+    background-color: #e8e8e8;
   }
 
   .bar {
@@ -98,7 +99,7 @@
   }
 
   .numbers {
-    color: #E8E8E8;
+    color: #e8e8e8;
   }
 
   .totalData {
@@ -111,15 +112,17 @@
 .l {
   min-width: 270px;
 
-  .progress, .bar {
+  .progress,
+  .bar {
     height: 10px;
     border-radius: 10px;
   }
 }
 
-
-.s, .m {
-  .progress, .bar {
+.s,
+.m {
+  .progress,
+  .bar {
     height: 5px;
     border-radius: 5px;
   }
@@ -131,18 +134,19 @@
 
 .m {
   .totalData {
-    transform: scale(.9);
+    transform: scale(0.9);
 
     &::after {
-      transform: scale(.8);
+      transform: scale(0.8);
     }
   }
 }
 
-.m, .l {
+.m,
+.l {
   .totalData {
     @media (max-width: 850px) {
       right: -50px;
-    }  
+    }
   }
 }

@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
 
-  input[type=text] {
+  input[type='text'] {
     border: 0;
     border-bottom: 1px solid black;
     background-color: transparent;
@@ -80,7 +80,7 @@
   height: 30px;
   cursor: pointer;
   transition-property: fill;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
 
   &:hover {
     fill: main-gray;

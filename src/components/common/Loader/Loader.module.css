@@ -11,7 +11,7 @@
   width: 56px;
   height: 56px;
   border: 8px solid yellow-bg;
-  border-top-color: main-yellow ;
+  border-top-color: main-yellow;
   border-radius: 50%;
   animation: loader-rotate 1s linear infinite;
   margin: -28px auto 0;

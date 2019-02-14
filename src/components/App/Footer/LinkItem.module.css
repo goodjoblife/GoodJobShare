@@ -28,7 +28,7 @@
   margin-bottom: 16px;
 
   @media (min-width: 851px) {
-    transition-duration: .3s;
+    transition-duration: 0.3s;
     transition-property: color;
     &:hover {
       color: main-yellow;

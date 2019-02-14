@@ -27,7 +27,8 @@
   }
 }
 
-.button, .moreButton {
+.button,
+.moreButton {
   padding: 16px 32px;
   display: flex;
   justify-content: center;
@@ -41,7 +42,7 @@
 
 .button {
   border-right: 1px solid border-gray;
-  transition-duration: .25s;
+  transition-duration: 0.25s;
   transition-property: color;
 
   @media (min-width: 1025px) {
@@ -51,7 +52,7 @@
   }
 
   @media (max-width: 550px) {
-    font-size: .9em;
+    font-size: 0.9em;
 
     &:last-of-type {
       border-right: 0;
@@ -64,7 +65,9 @@
 }
 
 .popoverIcon {
-  span, &:after, &:before {
+  span,
+  &:after,
+  &:before {
     content: '';
     display: inline-block;
     background-color: main-gray;
@@ -87,9 +90,10 @@
     font-weight: 400;
     li {
       border-bottom: 1px solid border-gray;
-      transition: color .3s;
+      transition: color 0.3s;
 
-      a, button {
+      a,
+      button {
         display: block;
         padding: 12px;
         width: 100%;
@@ -110,7 +114,7 @@
   svg {
     width: 100%;
     height: 100%;
-    transition: fill .25s;
+    transition: fill 0.25s;
   }
   .button {
     width: 18px;
