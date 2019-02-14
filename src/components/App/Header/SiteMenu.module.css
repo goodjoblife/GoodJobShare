@@ -1,18 +1,18 @@
 @value main-yellow, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
 .menu {
-	@media (min-width: 851px) {
+  @media (min-width: 851px) {
     height: 100%;
   }
 
-	@media (max-width: 850px) {
-		margin-top: 20px;
+  @media (max-width: 850px) {
+    margin-top: 20px;
     width: 100%;
   }
 }
 
 .menuItem {
-	position: relative;
+  position: relative;
 
   @media (min-width: 851px) {
     display: inline-block;
@@ -30,13 +30,13 @@
       position: relative;
       display: block;
       color: #fff;
-      font-size: .95em;
+      font-size: 0.95em;
       height: 100%;
       letter-spacing: 0.08em;
       padding-right: 16px;
       padding-left: 16px;
-      transition: color .3s, background-color .3s;
-			&.isCurrent {
+      transition: color 0.3s, background-color 0.3s;
+      &.isCurrent {
         background-color: rgba(255, 255, 255, 0.09);
       }
     }
@@ -44,12 +44,12 @@
 
   @media (max-width: 850px) {
     > a {
-			color: #fff;
+      color: #fff;
       display: block;
       font-size: 1.15em;
       padding: 15px 20px;
-			margin-top: 16px;
-			margin-bottom: 16px;
+      margin-top: 16px;
+      margin-bottom: 16px;
       text-align: center;
 
       &.isCurrent {
@@ -60,18 +60,18 @@
 }
 
 .newItem {
-	> a {
-		padding-right: 18px;
-	}
+  > a {
+    padding-right: 18px;
+  }
 }
 
 .new {
-	position: absolute;
-	top: 0;
-	right: -5px;
-	z-index: 2;
+  position: absolute;
+  top: 0;
+  right: -5px;
+  z-index: 2;
 
-	@media (max-width: 850px) {
-		right: 0;
-	}
+  @media (max-width: 850px) {
+    right: 0;
+  }
 }

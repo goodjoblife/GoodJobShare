@@ -1,4 +1,4 @@
-@value border-gray, main-gray, main-yellow, white-light, gray-light from "common/variables.module.css";
+@value border-gray, main-gray, main-yellow, white-light, gray-light, gray-dark from "common/variables.module.css";
 
 .container {
   display: flex;
@@ -19,12 +19,12 @@
   }
 }
 
-.button, .moreButton {
-  padding: 24px 9px;
+.button,
+.moreButton {
+  padding: 16px 12px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #626262;
 
   @media (max-width: 550px) {
     padding: 8px;
@@ -33,29 +33,39 @@
 }
 
 .button {
-  transition-duration: .25s;
+  color: main-gray;
+  transition-duration: 0.25s;
   transition-property: color;
+  line-height: 1;
 
   @media (min-width: 1025px) {
     &:hover {
-      color: main-gray;
+      color: gray-dark;
     }
-  }
-
-  @media (max-width: 550px) {
-    font-size: .9em;
   }
 }
 
 .popoverIcon {
-  span, &:after, &:before {
+  span,
+  &:after,
+  &:before {
     content: '';
     display: inline-block;
     background-color: main-gray;
     border-radius: 50%;
-    width: 7px;
-    height: 7px;
-    margin: 2.5px;
+    width: 6px;
+    height: 6px;
+    margin: 2px;
+    transition: background-color 0.25s;
+  }
+  @media (min-width: 1025px) {
+    &:hover {
+      span,
+      &:after,
+      &:before {
+        background-color: gray-dark;
+      }
+    }
   }
 }
 
@@ -71,9 +81,10 @@
     font-weight: 400;
     li {
       border-bottom: 1px solid border-gray;
-      transition: color .3s;
+      transition: color 0.3s;
 
-      a, button {
+      a,
+      button {
         display: block;
         padding: 12px;
         width: 100%;
@@ -94,7 +105,7 @@
   svg {
     width: 100%;
     height: 100%;
-    transition: fill .25s;
+    transition: fill 0.25s;
   }
   .button {
     width: 18px;

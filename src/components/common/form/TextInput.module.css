@@ -11,7 +11,7 @@
     height: calc(INPUT_HEIGHT * 6);
   }
 
-  &:focus{
+  &:focus {
     border-color: main-yellow;
   }
 }
@@ -20,7 +20,7 @@
   composes: input;
   border-color: warning-red;
 
-  &:focus{
+  &:focus {
     border-color: warning-red;
   }
 }

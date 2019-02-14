@@ -11,7 +11,7 @@
     fill: main-gray;
     width: 18px;
     height: 18px;
-    transition: fill .2s;
+    transition: fill 0.2s;
     margin-right: 12px;
 
     @media (max-width: 550px) {

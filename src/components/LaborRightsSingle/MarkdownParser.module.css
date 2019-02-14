@@ -7,11 +7,13 @@
     line-height: 1.6em;
   }
 
-  strong, bold {
+  strong,
+  bold {
     font-weight: 700;
   }
 
-  ul, ol {
+  ul,
+  ol {
     margin-left: 1.3em;
     > li {
       /* PL */
@@ -45,7 +47,7 @@
   a {
     color: link-blue;
     border-bottom: 1px solid transparent;
-    transition: border .3s;
+    transition: border 0.3s;
     padding-bottom: 2px;
     @media (min-width: 851px) {
       &:hover {
@@ -57,7 +59,7 @@
   hr {
     border: 0;
     height: 0px;
-    background : none;
+    background: none;
     margin-top: 0px;
     margin-bottom: 100px;
     margin-left: 0;

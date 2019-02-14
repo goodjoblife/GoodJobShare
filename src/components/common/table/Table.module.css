@@ -13,14 +13,14 @@ $block-gutter-s: 20px;
 
 @define-mixin table-th {
   text-align: left;
-  font-size: .95em;
+  font-size: 0.95em;
   line-height: 1.2em;
   letter-spacing: 0.05em;
   color: gray-dark;
 }
 @define-mixin table-td {
   text-align: left;
-  font-size: .95em;
+  font-size: 0.95em;
   line-height: 1.3em;
 }
 @define-mixin table-link {
@@ -35,7 +35,7 @@ $block-gutter-s: 20px;
 
 .rwdTable {
   width: 100%;
-	table-layout: fixed;
+  table-layout: fixed;
   background-color: #fff;
 
   &.isDisabled {
@@ -52,31 +52,31 @@ $block-gutter-s: 20px;
     border-bottom: 2px solid border-gray;
     vertical-align: bottom;
 
-		@media (max-width: $below-small) {
-			display: none !important;
-		}
-	}
+    @media (max-width: $below-small) {
+      display: none !important;
+    }
+  }
 
   td {
     @mixin table-td;
-    font-size: .95em;
+    font-size: 0.95em;
     line-height: 1.3em;
     border-bottom: 1px solid #ededed;
     padding: 12px 5px;
-    transition: background-color .3s;
+    transition: background-color 0.3s;
     @media (max-width: $below-small) {
       display: flex !important;
       width: 100%;
       padding: 10px 20px;
     }
     &:before {
-			@media (max-width: $below-small) {
-				content: attr(data-th);
+      @media (max-width: $below-small) {
+        content: attr(data-th);
         flex: 0 0 100px;
         margin-right: 10px;
         width: 100px;
         @mixin table-th;
-			}
+      }
     }
     &:last-child {
       @media (max-width: $below-small) {
@@ -87,7 +87,8 @@ $block-gutter-s: 20px;
       @mixin table-link;
     }
   }
-  th, td {
+  th,
+  td {
     display: table-cell;
     text-align: left;
     @media (min-width: $above-small) {
@@ -111,7 +112,7 @@ $block-gutter-s: 20px;
     @media (min-width: $above-desktop) {
       &:hover {
         td {
-          background-color: rgba(0,0,0,.025);
+          background-color: rgba(0, 0, 0, 0.025);
         }
       }
     }
@@ -163,18 +164,17 @@ $block-gutter-s: 20px;
     }
   }
 
-  [data-sort="high"] {
+  [data-sort='high'] {
     color: $orange;
     &::after {
-      content: "▲";
+      content: '▲';
     }
   }
 
-  [data-sort="low"] {
+  [data-sort='low'] {
     color: $orange;
     &::after {
-      content: "▼";
+      content: '▼';
     }
   }
 }
-

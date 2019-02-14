@@ -27,7 +27,7 @@ class Article extends React.Component {
     } = this.props;
     return (
       <React.Fragment>
-        <div className={styles.right}>
+        <div className={styles.functionButtons}>
           <ReportDetail
             label="檢舉"
             onClick={openReportDetail}

@@ -1,13 +1,10 @@
 @value main-yellow from "common/variables.module.css";
 
 .backBtn {
-  position: absolute;
-  margin-top: 6px;
-
   display: flex;
   align-items: center;
   transition-property: color;
-  transition-duration: .25s;
+  transition-duration: 0.25s;
 
   svg {
     width: 28px;
@@ -15,7 +12,7 @@
     transform: rotate(180deg);
     margin-right: 16px;
     transition-property: fill;
-    transition-duration: .25s;
+    transition-duration: 0.25s;
   }
 
   @media (min-width: 1025px) {

@@ -2,12 +2,12 @@
 
 .pageBanner {
   background-color: #fff;
-	border-bottom: 1px solid gray-light;
-	position: relative;
+  border-bottom: 1px solid gray-light;
+  position: relative;
 }
 
 .grayPattern {
-  background-image: url("https://image.goodjob.life/pattern-gray.svg");
+  background-image: url('https://image.goodjob.life/pattern-gray.svg');
   background-repeat: repeat;
 }
 
@@ -19,7 +19,7 @@
 
   @media (max-width: 550px) {
     height: auto;
-		padding-top: 32px;
-		padding-bottom: 32px;
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
 }

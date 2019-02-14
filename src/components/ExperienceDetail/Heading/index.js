@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Heading, P } from 'common/base';
+import cn from 'classnames';
 
 import styles from './Heading.module.css';
 
@@ -26,12 +27,12 @@ const formatComapny = company => {
   return null;
 };
 
-const ExperienceHeading = ({ experience }) => (
-  <div className={styles.heading}>
+const ExperienceHeading = ({ experience, className }) => (
+  <div className={cn(styles.heading, className)}>
     <P Tag="h2" size="l" className={styles.badge}>
       {experience && formatType(experience.type)}
     </P>
-    <Heading size="l" className={styles.title}>
+    <Heading size="l">
       {experience && formatComapny(experience.company)}
     </Heading>
   </div>
@@ -39,6 +40,7 @@ const ExperienceHeading = ({ experience }) => (
 
 ExperienceHeading.propTypes = {
   experience: PropTypes.object,
+  className: PropTypes.string,
 };
 
 export default ExperienceHeading;
