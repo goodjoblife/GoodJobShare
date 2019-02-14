@@ -3,14 +3,14 @@
 .formGroup {
   position: relative;
 
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     display: none;
   }
 
-  input[type="checkbox"] + label {
+  input[type='checkbox'] + label {
     display: flex;
     align-items: center;
-    transition: color .3s;
+    transition: color 0.3s;
 
     .checkboxInput {
       position: relative;
@@ -21,7 +21,7 @@
       border-radius: 3px;
       margin-right: 10px;
       transition-property: color, background-color, border;
-      transition-duration: .3s;
+      transition-duration: 0.3s;
       cursor: pointer;
     }
     .checkboxText {
@@ -34,7 +34,7 @@
   }
 
   .checkboxInput:before {
-    content: "";
+    content: '';
     position: absolute;
     top: 6px;
     left: 3px;
@@ -42,8 +42,7 @@
     border-bottom: 2px solid transparent;
   }
 
-  input[type="checkbox"]:checked + label {
-
+  input[type='checkbox']:checked + label {
     .checkboxInput {
       background-color: main-yellow;
       border: 1px solid main-yellow;
@@ -54,14 +53,14 @@
       transform-origin: 0% 100%;
       width: 6px;
       height: 12px;
-      transform: translate3d(-.1em,-.4em,0) rotate(15deg);
+      transform: translate3d(-0.1em, -0.4em, 0) rotate(15deg);
     }
   }
 
   &.disabled {
     cursor: not-allowed;
 
-    input[type="checkbox"] + label {
+    input[type='checkbox'] + label {
       color: main-gray;
       pointer-events: none;
 
@@ -70,8 +69,7 @@
       }
     }
 
-    input[type="checkbox"]:checked + label {
-
+    input[type='checkbox']:checked + label {
       .checkboxInput {
         background-color: border-gray;
         border: 1px solid border-gray;

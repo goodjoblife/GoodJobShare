@@ -8,5 +8,5 @@ $primary-color: #fcd406;
 .container {
   border: 1px solid $primary-color;
   border-radius: 5px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }

@@ -41,7 +41,8 @@
   .icon {
     fill: main-yellow;
   }
-  .label, .count {
+  .label,
+  .count {
     color: gray-dark;
   }
 }
@@ -50,7 +51,7 @@
   fill: main-gray;
   width: 32px;
   height: 32px;
-  transition: fill .2s;
+  transition: fill 0.2s;
   margin-right: 12px;
   width: 24px;
 
@@ -59,7 +60,8 @@
   }
 }
 
-.label, .count {
+.label,
+.count {
   color: main-gray;
 }
 

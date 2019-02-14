@@ -82,7 +82,7 @@
   @media (min-width: 1025px) {
     opacity: 0;
     visibility: hidden;
-    transition: opacity .25s;
+    transition: opacity 0.25s;
   }
 
   @media (max-width: 850px) {
@@ -103,7 +103,8 @@
 .disabled {
   background-color: white-light;
 
-  .type, .content {
+  .type,
+  .content {
     pointer-events: none;
     opacity: 0.5;
   }

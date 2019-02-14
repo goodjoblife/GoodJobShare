@@ -2,19 +2,22 @@
 
 :global {
   /* font */
-  .headingL, .headingLBold {
+  .headingL,
+  .headingLBold {
     font-size: 2.25em;
     line-height: 1.25em;
     letter-spacing: 0.03em;
   }
 
-  .headingM, .headingMBold {
+  .headingM,
+  .headingMBold {
     font-size: 1.75em;
     line-height: 1.3em;
     letter-spacing: 0.1em;
   }
 
-  .subheadingL, .subheadingLBold {
+  .subheadingL,
+  .subheadingLBold {
     font-size: 1.5em;
     line-height: 1.5em;
     letter-spacing: 0.05em;
@@ -23,20 +26,24 @@
     }
   }
 
-  .subheadingM, .subheadingMBold {
+  .subheadingM,
+  .subheadingMBold {
     font-size: 1.2em;
     line-height: 1.6em;
   }
 
-  .pL, .pLBold {
+  .pL,
+  .pLBold {
     font-size: 1.1em;
     line-height: 1.6em;
   }
-  .pM, .pMBold {
+  .pM,
+  .pMBold {
     font-size: 1em;
     line-height: 1.6em;
   }
-  .pS, .pSBold {
+  .pS,
+  .pSBold {
     font-size: 0.9em;
     line-height: 1.5em;
   }
@@ -47,21 +54,21 @@
     letter-spacing: 0.1em;
   }
 
-  [class*="Bold"] {
+  [class*='Bold'] {
     font-weight: 700;
   }
 
   /* buttons start */
-  [class^="button"] {
+  [class^='button'] {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     font-size: 1em;
     letter-spacing: 0.1em;
-    transition: background-color .3s;
+    transition: background-color 0.3s;
   }
 
-  [class^="buttonCircle"] {
+  [class^='buttonCircle'] {
     border-radius: 1.5em;
   }
 
@@ -160,7 +167,7 @@
   }
 
   .buttonSubmit {
-    font-size: .95em;
+    font-size: 0.95em;
     letter-spacing: 1px;
     background-color: #000;
     border: none;
@@ -170,7 +177,7 @@
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
-    transition: background-color .3s;
+    transition: background-color 0.3s;
     @media (min-width: 1025px) {
       &:hover {
         background-color: main-yellow;
@@ -186,7 +193,8 @@
     }
   }
 
-  .buttonFirstPage, .buttonPage {
+  .buttonFirstPage,
+  .buttonPage {
     height: 42px;
     padding-left: 12px;
     padding-right: 12px;
@@ -197,7 +205,7 @@
       padding-left: 8px;
       padding-right: 8px;
       height: 36px;
-      font-size: .95em;
+      font-size: 0.95em;
       margin-left: 10px;
     }
   }
@@ -226,11 +234,13 @@
     }
 
     &[disabled] {
-      background-color: rgba(224,224,224, .4);
+      background-color: rgba(224, 224, 224, 0.4);
       color: #ccc;
       pointer-events: none;
 
-      svg { fill: #ccc; }
+      svg {
+        fill: #ccc;
+      }
     }
   }
 
@@ -248,7 +258,7 @@
   .blueLink {
     color: link-blue;
     border-bottom: 1px solid transparent;
-    transition: border .3s;
+    transition: border 0.3s;
     padding-bottom: 2px;
     @media (min-width: 851px) {
       &:hover {
@@ -258,7 +268,7 @@
   }
 
   .hoverBlue {
-    transition: color .3s;
+    transition: color 0.3s;
     @media (min-width: 1025px) {
       &:hover {
         color: link-blue;

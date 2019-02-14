@@ -3,10 +3,10 @@
 .container {
   display: block;
   background-color: #fff;
-  box-shadow: 0 0 6px rgba(0,0,0, .15);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
   margin-bottom: 24px;
   transition-property: background, box-shadow;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
 
   &:last-child {
     margin-bottom: 0;
@@ -14,7 +14,7 @@
 
   @media (min-width: 1025px) {
     &:hover {
-      box-shadow: 1px 1px 11px rgba(0,0,0, .25);
+      box-shadow: 1px 1px 11px rgba(0, 0, 0, 0.25);
       .heading {
         color: link-blue;
       }
@@ -39,7 +39,7 @@
 .heading {
   margin-bottom: 16px;
   margin-top: 16px;
-  transition: color, .25s;
+  transition: color, 0.25s;
 }
 
 .labels {
@@ -54,7 +54,7 @@
   svg {
     width: 16px;
     height: 16px;
-    fill: #C3C3C3;
+    fill: #c3c3c3;
     margin-right: 8px;
   }
 }
@@ -73,13 +73,15 @@
   }
 }
 
-.m, .s {
+.m,
+.s {
   &.container {
     height: 100%;
     position: relative;
   }
 
-  .location, .salary {
+  .location,
+  .salary {
     display: none;
   }
 
@@ -102,7 +104,8 @@
   }
 }
 
-.m, .s {
+.m,
+.s {
   &.container {
     margin-left: 0;
     margin-right: 0;
@@ -110,21 +113,21 @@
 }
 
 .s {
- &.container {
-   font-size: 0.9em;
- }
+  &.container {
+    font-size: 0.9em;
+  }
 
- .labels {
-   color: main-gray;
-   margin-bottom: 0;
- }
+  .labels {
+    color: main-gray;
+    margin-bottom: 0;
+  }
 
- .company {
-   display: none;
- }
+  .company {
+    display: none;
+  }
 
- .heading {
-   margin-top: 12px;
-   margin-bottom: 12px;
- }
+  .heading {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
 }

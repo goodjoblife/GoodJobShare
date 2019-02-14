@@ -14,17 +14,17 @@
   flex-direction: column;
   border-radius: 100%;
   transition-property: background;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
 
   &::after {
-    content: "取消";
+    content: '取消';
     position: absolute;
     bottom: -24px;
     display: block;
     text-align: center;
     opacity: 0;
     transition-property: opacity;
-    transition-duration: .3s;
+    transition-duration: 0.3s;
   }
 
   svg {

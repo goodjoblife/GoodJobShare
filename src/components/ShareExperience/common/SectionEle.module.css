@@ -1,6 +1,5 @@
 @value main-yellow, main-gray from "../../common/variables.module.css";
 
-
 .container {
   position: relative;
   border: 1px solid transparent;
@@ -32,7 +31,6 @@
 }
 
 .textarea {
-
   &::placeholder {
     color: main-gray;
     font-weight: 300;

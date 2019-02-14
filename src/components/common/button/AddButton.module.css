@@ -1,7 +1,9 @@
 @value main-yellow, main-black, gray-dark, main-gray, main-orange, yellow-dark from "common/variables.module.css";
 @value diameter: 32px;
 
-.addQa, .deleteBtn, .addSection {
+.addQa,
+.deleteBtn,
+.addSection {
   cursor: pointer;
   height: diameter;
   display: flex;
@@ -9,10 +11,11 @@
   align-items: center;
   border-radius: diameter;
   color: white;
-  transition: background .25s;
+  transition: background 0.25s;
 }
 
-.addQa, .deleteBtn {
+.addQa,
+.deleteBtn {
   width: diameter;
 }
 

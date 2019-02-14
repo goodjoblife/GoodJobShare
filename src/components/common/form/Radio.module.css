@@ -10,7 +10,7 @@
     display: inline-block;
   }
 
-  input[type="radio"] {
+  input[type='radio'] {
     display: none;
   }
 
@@ -30,7 +30,7 @@
       border: 1px solid #000;
       position: relative;
       &:before {
-        content: "";
+        content: '';
         position: absolute;
         width: 8px;
         height: 8px;
@@ -38,7 +38,7 @@
         background-color: #000;
         top: 4px;
         left: 4px;
-        transition: transform .3s;
+        transition: transform 0.3s;
         transform: scale(0);
       }
     }
@@ -47,13 +47,13 @@
       vertical-align: middle;
       text-transform: capitalize;
       padding-left: 10px;
-      transition: color .3s;
+      transition: color 0.3s;
       font-size: 1em;
       font-weight: 400;
     }
   }
 
-  input[type="radio"]:checked + .radioCircle {
+  input[type='radio']:checked + .radioCircle {
     .radioInput {
       border: 1px solid #000;
 
@@ -62,5 +62,4 @@
       }
     }
   }
-
 }

@@ -16,7 +16,7 @@
   }
 
   &::before {
-    content: "";
+    content: '';
     display: block;
     width: 10px;
     height: 10px;
@@ -32,7 +32,7 @@
   a {
     color: link-blue;
     border-bottom: 1px solid transparent;
-    transition: border .3s;
+    transition: border 0.3s;
     padding-bottom: 2px;
     @media (min-width: 851px) {
       &:hover {

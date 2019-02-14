@@ -3,7 +3,7 @@
 .dialog {
   display: flex;
   align-items: center;
-  background: #FFFAE1;
+  background: #fffae1;
   border: 1px solid main-yellow;
   border-radius: 3px;
 }
