@@ -1,9 +1,8 @@
 import fetchUtil from 'utils/fetchUtil';
-import qs from 'qs';
 
 const endpoint = '/companies/search';
 
 export const getCompaniesSearch = ({ key }) =>
-  fetchUtil(`${endpoint}?${qs.stringify({ key })}`)('get');
+  fetchUtil(endpoint).get({ query: { key } });
 
 export default { getCompaniesSearch };

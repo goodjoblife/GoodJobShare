@@ -1,6 +1,7 @@
 import 'isomorphic-fetch';
 
-import { getToken } from 'utils/tokenUtil';
+import { stringify } from 'qs';
+
 import { HttpError } from 'utils/errors';
 
 import { API_HOST } from '../config';
@@ -52,24 +53,32 @@ const defaultOptions = {
   token: null,
 };
 
-const fetchUtil = (endpoint, options) => (method, body) => {
-  const finalOptions = {
-    ...defaultOptions,
-    ...options,
-    // FIXME: workaround before get it from store
-    token: getToken(),
-  };
+const allowMethods = ['get', 'post', 'patch', 'delete'];
 
-  const { token, apiHost } = finalOptions;
+const fetchUtil = endpoint =>
+  allowMethods.reduce(
+    (pV, method) => ({
+      ...pV,
+      [method]: ({ body, query, options, token } = {}) => {
+        const finalOptions = {
+          ...defaultOptions,
+          ...options,
+        };
 
-  return fetch(
-    `${apiHost}${endpoint}`,
-    optionsBuilder({
-      token,
-      body,
-      method,
+        const { apiHost } = finalOptions;
+        return fetch(
+          query
+            ? `${apiHost}${endpoint}?${stringify(query)}`
+            : `${apiHost}${endpoint}`,
+          optionsBuilder({
+            token,
+            body,
+            method,
+          }),
+        ).then(checkStatus);
+      },
     }),
-  ).then(checkStatus);
-};
+    {},
+  );
 
 export default fetchUtil;

@@ -5,6 +5,7 @@ module.exports = config => {
   config.resolve.alias = {
     common: path.resolve('./src/components/common'),
     utils: path.resolve('./src/utils'),
+    graphql: path.resolve('./src/graphql'),
   };
   return config;
 };

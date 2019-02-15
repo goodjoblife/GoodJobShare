@@ -1,40 +1,45 @@
 import fetchUtil from 'utils/fetchUtil';
-import qs from 'qs';
 
 const endpoint = '/workings';
 
 export const fetchCompanyCandidates = ({ key }) =>
-  fetchUtil(`${endpoint}/companies/search?${qs.stringify({ key })}`)('GET');
+  fetchUtil(`${endpoint}/companies/search`).get({
+    query: { key },
+  });
 
 export const fetchJobTitleCandidates = ({ key }) =>
-  fetchUtil(`${endpoint}/jobs/search?${qs.stringify({ key })}`)('GET');
+  fetchUtil(`${endpoint}/jobs/search`).get({
+    query: { key },
+  });
 
 export const fetchTimeAndSalary = ({ opt }) =>
-  fetchUtil(`${endpoint}?${qs.stringify(opt)}`)('GET');
+  fetchUtil(`${endpoint}`).get({ query: opt });
 
 export const fetchTimeAndSalaryExtreme = ({ opt }) =>
-  fetchUtil(`${endpoint}/extreme?${qs.stringify(opt)}`)('GET');
+  fetchUtil(`${endpoint}/extreme`).get({ query: opt });
 
 export const fetchCampaignTimeAndSalary = ({ campaignName, opt }) =>
-  fetchUtil(`${endpoint}/campaigns/${campaignName}?${qs.stringify(opt)}`)(
-    'GET',
-  );
+  fetchUtil(`${endpoint}/campaigns/${campaignName}`).get({
+    query: opt,
+  });
 
 export const fetchSearchCompany = ({ opt }) =>
-  fetchUtil(
-    `${endpoint}/search_by/company/group_by/company?${qs.stringify(opt)}`,
-  )('GET');
+  fetchUtil(`${endpoint}/search_by/company/group_by/company`).get({
+    query: opt,
+  });
 
 export const fetchSearchJobTitle = ({ opt }) =>
-  fetchUtil(
-    `${endpoint}/search_by/job_title/group_by/company?${qs.stringify(opt)}`,
-  )('GET');
+  fetchUtil(`${endpoint}/search_by/job_title/group_by/company`).get({
+    query: opt,
+  });
 
-export const postWorkings = ({ body }) => fetchUtil(endpoint)('post', body);
+export const postWorkings = ({ body }) => fetchUtil(endpoint).post({ body });
 
 const patchWorking = ({ id, status }) =>
-  fetchUtil(`/workings/${id}`)('PATCH', {
-    status,
+  fetchUtil(`/workings/${id}`).patch({
+    body: {
+      status,
+    },
   });
 
 export default {

@@ -8,7 +8,10 @@ const configureStore = (preloadedState, history) =>
   createStore(
     rootReducer,
     preloadedState,
-    applyMiddleware(errorHandlingMiddleware, thunk.withExtraArgument({ api })),
+    applyMiddleware(
+      errorHandlingMiddleware,
+      thunk.withExtraArgument({ api, history }),
+    ),
   );
 
 export default configureStore;

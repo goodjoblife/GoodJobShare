@@ -67,12 +67,12 @@ class Header extends React.Component {
 
   login() {
     const { login, FB } = this.props;
-    login(FB).catch(() => {});
+    login(FB);
   }
 
   logout() {
-    const { logout, FB } = this.props;
-    logout(FB).catch(() => {});
+    const { logout } = this.props;
+    logout();
   }
 
   renderTop = () => {
