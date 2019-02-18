@@ -5,7 +5,6 @@ import R from 'ramda';
 import { compose, setStatic } from 'recompose';
 import qs from 'qs';
 
-import Select from 'common/form/Select';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
@@ -23,40 +22,8 @@ import {
 
 import styles from '../views/view.module.css';
 
-const pathnameMapping = {
-  '/time-and-salary/company/:keyword/work-time-dashboard': {
-    title: '工時排行榜',
-    label: '一週平均總工時（高到低）',
-    groupSortBy: 'week_work_time',
-    order: 'descending',
-  },
-  '/time-and-salary/company/:keyword/sort/work-time-asc': {
-    title: '工時排行榜（由低到高）',
-    label: '一週平均總工時（低到高）',
-    groupSortBy: 'week_work_time',
-    order: 'ascending',
-  },
-  '/time-and-salary/company/:keyword/salary-dashboard': {
-    title: '估算時薪排行榜',
-    label: '估算時薪（高到低）',
-    groupSortBy: 'estimated_hourly_wage',
-    order: 'descending',
-  },
-  '/time-and-salary/company/:keyword/sort/salary-asc': {
-    title: '估算時薪排行榜（由低到高）',
-    label: '估算時薪（低到高）',
-    groupSortBy: 'estimated_hourly_wage',
-    order: 'ascending',
-  },
-};
-
 const groupSortBy = 'week_work_time';
 const order = 'descending';
-
-const selectOptions = R.pipe(
-  R.toPairs,
-  R.map(([path, { label }]) => ({ value: path, label })),
-);
 
 const pathParameterSelector = R.compose(
   query => qs.parse(query, { ignoreQueryPrefix: true }),
@@ -110,8 +77,7 @@ class TimeAndSalaryCompany extends Component {
   }
 
   render() {
-    const { history, status, canViewTimeAndSalary } = this.props;
-    const path = pathSelector(this.props);
+    const { status, canViewTimeAndSalary } = this.props;
     const pathname = pathnameSelector(this.props);
 
     const keyword = keywordSelector(this.props);
@@ -119,28 +85,10 @@ class TimeAndSalaryCompany extends Component {
 
     const raw = this.props.data.toJS();
 
-    const substituteKeyword = R.invoker(2, 'replace')(
-      /:keyword/,
-      encodeURIComponent(keyword),
-    );
-
     return (
       <section className={styles.searchResult}>
         {renderHelmet({ title, pathname, company: keyword })}
         <h2 className={styles.heading}>{title}</h2>
-        <div className={styles.result}>
-          <div className={styles.sort}>
-            <div className={styles.label}> 排序：</div>
-            <div className={styles.select}>
-              <Select
-                options={selectOptions(pathnameMapping)}
-                value={path}
-                onChange={e => history.push(substituteKeyword(e.target.value))}
-                hasNullOption={false}
-              />
-            </div>
-          </div>
-        </div>
         {isFetching(status) && <Loading size="s" />}
         {isFetched(status) &&
           raw.length === 0 && (
