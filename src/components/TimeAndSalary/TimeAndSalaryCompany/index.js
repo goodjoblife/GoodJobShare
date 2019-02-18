@@ -22,6 +22,7 @@ import {
 
 import styles from '../views/view.module.css';
 
+// TODO: remove these after API is ready
 const groupSortBy = 'week_work_time';
 const order = 'descending';
 
