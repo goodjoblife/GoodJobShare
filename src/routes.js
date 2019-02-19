@@ -4,7 +4,6 @@ import LaborRightsSingle from './containers/LaborRightsSingle';
 import TimeAndSalary from './containers/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/TimeAndSalary/TimeAndSalaryBoard';
 import TimeAndSalarySearch from './containers/TimeAndSalary/TimeAndSalarySearch';
-import TimeAndSalaryJobTitle from './containers/TimeAndSalary/TimeAndSalaryJobTitle';
 import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
 import CampaignTimeAndSalary from './containers/CampaignTimeAndSalary';
 import CampaignTimeAndSalaryBoard from './containers/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
@@ -156,26 +155,6 @@ const routes = [
         path: '/time-and-salary/sort/salary-asc',
         exact: true,
         component: TimeAndSalaryBoard,
-      },
-      {
-        path: '/time-and-salary/job-title/:keyword/work-time-dashboard',
-        exact: true,
-        component: TimeAndSalaryJobTitle,
-      },
-      {
-        path: '/time-and-salary/job-title/:keyword/sort/work-time-asc',
-        exact: true,
-        component: TimeAndSalaryJobTitle,
-      },
-      {
-        path: '/time-and-salary/job-title/:keyword/salary-dashboard',
-        exact: true,
-        component: TimeAndSalaryJobTitle,
-      },
-      {
-        path: '/time-and-salary/job-title/:keyword/sort/salary-asc',
-        exact: true,
-        component: TimeAndSalaryJobTitle,
       },
       {
         component: TimeAndSalaryNotFound,

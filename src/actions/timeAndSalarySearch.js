@@ -7,6 +7,7 @@ export const setSearchData = (
   status,
   groupSortBy,
   order,
+  searchBy,
   keyword,
   data,
   error,
@@ -14,13 +15,14 @@ export const setSearchData = (
   type: SET_SEARCH_DATA,
   groupSortBy,
   order,
+  searchBy,
   keyword,
   status,
   data,
   error,
 });
 
-export const queryKeyword = ({ groupSortBy, order, keyword }) => (
+export const queryKeyword = ({ groupSortBy, order, searchBy, keyword }) => (
   dispatch,
   getState,
   { api },
@@ -28,6 +30,7 @@ export const queryKeyword = ({ groupSortBy, order, keyword }) => (
   if (
     groupSortBy !== getState().timeAndSalarySearch.get('groupSortBy') ||
     order !== getState().timeAndSalarySearch.get('order') ||
+    searchBy !== getState().timeAndSalarySearch.get('searchBy') ||
     keyword !== getState().timeAndSalarySearch.get('keyword')
   ) {
     dispatch(
@@ -35,6 +38,7 @@ export const queryKeyword = ({ groupSortBy, order, keyword }) => (
         fetchingStatus.UNFETCHED,
         groupSortBy,
         order,
+        searchBy,
         keyword,
         [],
         null,
@@ -54,19 +58,49 @@ export const queryKeyword = ({ groupSortBy, order, keyword }) => (
   });
 
   const opt = {
-    company: keyword,
     group_sort_by: groupSortBy,
     group_sort_order: order,
   };
 
-  return api.timeAndSalary
-    .fetchSearchCompany({ opt })
+  let promise;
+
+  if (searchBy === 'company') {
+    promise = api.timeAndSalary.fetchSearchCompany({
+      opt: {
+        ...opt,
+        company: keyword,
+      },
+    });
+  } else if (searchBy === 'job_title') {
+    promise = api.timeAndSalary.fetchSearchJobTitle({
+      opt: {
+        ...opt,
+        job_title: keyword,
+      },
+    });
+  } else {
+    // TODO: handle unexpected case
+    return dispatch(
+      setSearchData(
+        fetchingStatus.ERROR,
+        groupSortBy,
+        order,
+        searchBy,
+        keyword,
+        [],
+        new Error('Unrecognized parameter: searchBy'),
+      ),
+    );
+  }
+
+  return promise
     .then(data => {
       dispatch(
         setSearchData(
           fetchingStatus.FETCHED,
           groupSortBy,
           order,
+          searchBy,
           keyword,
           data,
           null,
@@ -79,6 +113,7 @@ export const queryKeyword = ({ groupSortBy, order, keyword }) => (
           fetchingStatus.ERROR,
           groupSortBy,
           order,
+          searchBy,
           keyword,
           [],
           err,

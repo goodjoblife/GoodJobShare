@@ -41,7 +41,8 @@ const searchCriteriaSelector = R.compose(
   pathParameterSelector,
 );
 
-const searchCriteriaText = searchBy => (searchBy === 'company' ? '公司' : '??');
+const searchCriteriaText = searchBy =>
+  searchBy === 'company' ? '公司' : searchBy === 'job_title' ? '職稱' : '??';
 
 class TimeAndSalarySearch extends Component {
   static propTypes = {
@@ -61,18 +62,22 @@ class TimeAndSalarySearch extends Component {
   };
 
   componentDidMount() {
+    const searchBy = searchCriteriaSelector(this.props);
     const keyword = keywordSelector(this.props);
-    this.props.queryKeyword({ groupSortBy, order, keyword });
+    this.props.queryKeyword({ groupSortBy, order, searchBy, keyword });
     this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
     if (
       pathSelector(prevProps) !== pathSelector(this.props) ||
+      searchCriteriaSelector(prevProps) !==
+        searchCriteriaSelector(this.props) ||
       keywordSelector(prevProps) !== keywordSelector(this.props)
     ) {
+      const searchBy = searchCriteriaSelector(this.props);
       const keyword = keywordSelector(this.props);
-      this.props.queryKeyword({ groupSortBy, order, keyword });
+      this.props.queryKeyword({ groupSortBy, order, searchBy, keyword });
       this.props.fetchPermission();
     }
   }
@@ -116,9 +121,10 @@ class TimeAndSalarySearch extends Component {
 }
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
+  const searchBy = searchCriteriaSelector(props);
   const keyword = keywordSelector(props);
 
-  return dispatch(queryKeyword({ groupSortBy, order, keyword }));
+  return dispatch(queryKeyword({ groupSortBy, order, searchBy, keyword }));
 });
 
 const hoc = compose(

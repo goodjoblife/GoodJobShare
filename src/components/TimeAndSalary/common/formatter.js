@@ -23,9 +23,7 @@ export const getJobTitle = item => {
   return (
     <div>
       <Link
-        to={`/time-and-salary/job-title/${encodeURIComponent(
-          jobTitle,
-        )}/work-time-dashboard`}
+        to={`/salary-worktime?s_by=job_title&q=${encodeURIComponent(jobTitle)}`}
       >
         {jobTitle}
       </Link>{' '}

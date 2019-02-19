@@ -10,6 +10,7 @@ import fetchingStatus from '../constants/status';
 const preloadedState = fromJS({
   groupSortBy: null,
   order: null,
+  searchBy: null,
   keyword: null,
   data: [],
   status: fetchingStatus.UNFETCHED,
@@ -19,7 +20,7 @@ const preloadedState = fromJS({
 export default createReducer(preloadedState, {
   [SET_SEARCH_DATA]: (
     state,
-    { groupSortBy, order, keyword, data, status, error },
+    { groupSortBy, order, searchBy, keyword, data, status, error },
   ) =>
     state
       .set('data', fromJS(data))
@@ -27,6 +28,7 @@ export default createReducer(preloadedState, {
       .set('error', error)
       .set('groupSortBy', groupSortBy)
       .set('order', order)
+      .set('searchBy', searchBy)
       .set('keyword', keyword),
   [SET_SEARCH_STATUS]: (state, { status }) => state.set('status', status),
 });

@@ -21,7 +21,7 @@ import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
 const searchOptions = [
   { label: '公司', value: 'company' },
-  { label: '職稱', value: 'job-title' },
+  { label: '職稱', value: 'job_title' },
 ];
 
 class SearchBar extends Component {
