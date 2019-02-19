@@ -10,7 +10,7 @@ import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
 import WorkingHourBlock from '../common/WorkingHourBlock';
-import { queryCompany } from '../../../actions/timeAndSalaryCompany';
+import { queryKeyword } from '../../../actions/timeAndSalarySearch';
 import { isFetching, isFetched } from '../../../constants/status';
 import renderHelmet from './helmet';
 
@@ -43,7 +43,7 @@ const searchCriteriaSelector = R.compose(
 
 const searchCriteriaText = searchBy => (searchBy === 'company' ? '公司' : '??');
 
-class TimeAndSalaryCompany extends Component {
+class TimeAndSalarySearch extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
     status: PropTypes.string,
@@ -52,7 +52,7 @@ class TimeAndSalaryCompany extends Component {
       path: PropTypes.string.isRequired,
       params: PropTypes.object.isRequired,
     }),
-    queryCompany: PropTypes.func,
+    queryKeyword: PropTypes.func,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -62,7 +62,7 @@ class TimeAndSalaryCompany extends Component {
 
   componentDidMount() {
     const keyword = keywordSelector(this.props);
-    this.props.queryCompany({ groupSortBy, order, company: keyword });
+    this.props.queryKeyword({ groupSortBy, order, keyword });
     this.props.fetchPermission();
   }
 
@@ -72,7 +72,7 @@ class TimeAndSalaryCompany extends Component {
       keywordSelector(prevProps) !== keywordSelector(this.props)
     ) {
       const keyword = keywordSelector(this.props);
-      this.props.queryCompany({ groupSortBy, order, company: keyword });
+      this.props.queryKeyword({ groupSortBy, order, keyword });
       this.props.fetchPermission();
     }
   }
@@ -88,7 +88,7 @@ class TimeAndSalaryCompany extends Component {
 
     return (
       <section className={styles.searchResult}>
-        {renderHelmet({ title, pathname, company: keyword })}
+        {renderHelmet({ title, pathname, keyword })}
         <h2 className={styles.heading}>{title}</h2>
         {isFetching(status) && <Loading size="s" />}
         {isFetched(status) &&
@@ -118,7 +118,7 @@ class TimeAndSalaryCompany extends Component {
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   const keyword = keywordSelector(props);
 
-  return dispatch(queryCompany({ groupSortBy, order, company: keyword }));
+  return dispatch(queryKeyword({ groupSortBy, order, keyword }));
 });
 
 const hoc = compose(
@@ -126,4 +126,4 @@ const hoc = compose(
   withPermission,
 );
 
-export default hoc(TimeAndSalaryCompany);
+export default hoc(TimeAndSalarySearch);

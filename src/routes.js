@@ -3,7 +3,7 @@ import LaborRightsMenu from './containers/LaborRightsMenu';
 import LaborRightsSingle from './containers/LaborRightsSingle';
 import TimeAndSalary from './containers/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/TimeAndSalary/TimeAndSalaryBoard';
-import TimeAndSalaryCompany from './containers/TimeAndSalary/TimeAndSalaryCompany';
+import TimeAndSalarySearch from './containers/TimeAndSalary/TimeAndSalarySearch';
 import TimeAndSalaryJobTitle from './containers/TimeAndSalary/TimeAndSalaryJobTitle';
 import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
 import CampaignTimeAndSalary from './containers/CampaignTimeAndSalary';
@@ -189,7 +189,7 @@ const routes = [
       {
         path: '/salary-worktime',
         exact: true,
-        component: TimeAndSalaryCompany,
+        component: TimeAndSalarySearch,
       },
     ],
   },

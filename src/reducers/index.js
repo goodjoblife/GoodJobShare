@@ -11,7 +11,7 @@ import laborRights from './laborRights';
 import me from './me';
 import timeAndSalary from './timeAndSalary';
 import timeAndSalaryBoard from './timeAndSalaryBoard';
-import timeAndSalaryCompany from './timeAndSalaryCompany';
+import timeAndSalarySearch from './timeAndSalarySearch';
 import timeAndSalaryJobTitle from './timeAndSalaryJobTitle';
 import popularExperiences from './popularExperiences';
 import campaignInfo from './campaignInfo';
@@ -34,7 +34,7 @@ const rootReducer = combineReducers({
   me,
   timeAndSalary,
   timeAndSalaryBoard,
-  timeAndSalaryCompany,
+  timeAndSalarySearch,
   timeAndSalaryJobTitle,
   popularExperiences,
   campaignInfo,

@@ -2,24 +2,24 @@ import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 
 import {
-  SET_COMPANY_DATA,
-  SET_COMPANY_STATUS,
-} from '../actions/timeAndSalaryCompany';
+  SET_SEARCH_DATA,
+  SET_SEARCH_STATUS,
+} from '../actions/timeAndSalarySearch';
 import fetchingStatus from '../constants/status';
 
 const preloadedState = fromJS({
   groupSortBy: null,
   order: null,
-  company: null,
+  keyword: null,
   data: [],
   status: fetchingStatus.UNFETCHED,
   error: null,
 });
 
 export default createReducer(preloadedState, {
-  [SET_COMPANY_DATA]: (
+  [SET_SEARCH_DATA]: (
     state,
-    { groupSortBy, order, company, data, status, error },
+    { groupSortBy, order, keyword, data, status, error },
   ) =>
     state
       .set('data', fromJS(data))
@@ -27,6 +27,6 @@ export default createReducer(preloadedState, {
       .set('error', error)
       .set('groupSortBy', groupSortBy)
       .set('order', order)
-      .set('company', company),
-  [SET_COMPANY_STATUS]: (state, { status }) => state.set('status', status),
+      .set('keyword', keyword),
+  [SET_SEARCH_STATUS]: (state, { status }) => state.set('status', status),
 });

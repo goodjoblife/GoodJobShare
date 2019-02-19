@@ -1,41 +1,41 @@
 import fetchingStatus from '../constants/status';
 
-export const SET_COMPANY_DATA = '@@timeAndSalaryCompany/SET_COMPANY_DATA';
-export const SET_COMPANY_STATUS = '@@timeAndSalaryCompany/SET_COMPANY_STATUS';
+export const SET_SEARCH_DATA = '@@timeAndSalarySearch/SET_SEARCH_DATA';
+export const SET_SEARCH_STATUS = '@@timeAndSalarySearch/SET_SEARCH_STATUS';
 
-export const setCompanyData = (
+export const setSearchData = (
   status,
   groupSortBy,
   order,
-  company,
+  keyword,
   data,
   error,
 ) => ({
-  type: SET_COMPANY_DATA,
+  type: SET_SEARCH_DATA,
   groupSortBy,
   order,
-  company,
+  keyword,
   status,
   data,
   error,
 });
 
-export const queryCompany = ({ groupSortBy, order, company }) => (
+export const queryKeyword = ({ groupSortBy, order, keyword }) => (
   dispatch,
   getState,
   { api },
 ) => {
   if (
-    groupSortBy !== getState().timeAndSalaryCompany.get('groupSortBy') ||
-    order !== getState().timeAndSalaryCompany.get('order') ||
-    company !== getState().timeAndSalaryCompany.get('company')
+    groupSortBy !== getState().timeAndSalarySearch.get('groupSortBy') ||
+    order !== getState().timeAndSalarySearch.get('order') ||
+    keyword !== getState().timeAndSalarySearch.get('keyword')
   ) {
     dispatch(
-      setCompanyData(
+      setSearchData(
         fetchingStatus.UNFETCHED,
         groupSortBy,
         order,
-        company,
+        keyword,
         [],
         null,
       ),
@@ -43,18 +43,18 @@ export const queryCompany = ({ groupSortBy, order, company }) => (
   }
 
   if (
-    getState().timeAndSalaryCompany.get('status') === fetchingStatus.FETCHING
+    getState().timeAndSalarySearch.get('status') === fetchingStatus.FETCHING
   ) {
     return Promise.resolve();
   }
 
   dispatch({
-    type: SET_COMPANY_STATUS,
+    type: SET_SEARCH_STATUS,
     status: fetchingStatus.FETCHING,
   });
 
   const opt = {
-    company,
+    company: keyword,
     group_sort_by: groupSortBy,
     group_sort_order: order,
   };
@@ -63,11 +63,11 @@ export const queryCompany = ({ groupSortBy, order, company }) => (
     .fetchSearchCompany({ opt })
     .then(data => {
       dispatch(
-        setCompanyData(
+        setSearchData(
           fetchingStatus.FETCHED,
           groupSortBy,
           order,
-          company,
+          keyword,
           data,
           null,
         ),
@@ -75,11 +75,11 @@ export const queryCompany = ({ groupSortBy, order, company }) => (
     })
     .catch(err => {
       dispatch(
-        setCompanyData(
+        setSearchData(
           fetchingStatus.ERROR,
           groupSortBy,
           order,
-          company,
+          keyword,
           [],
           err,
         ),
