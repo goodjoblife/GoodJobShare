@@ -16,6 +16,10 @@ import {
   fetchCompanyCandidates,
   fetchJobTitleCandidates,
 } from '../../apis/timeAndSalaryApi';
+import {
+  searchCriteriaSelector,
+  searchKeywordSelector,
+} from 'common/routing/selectors';
 
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
@@ -23,6 +27,11 @@ const searchOptions = [
   { label: '公司', value: 'company' },
   { label: '職稱', value: 'job_title' },
 ];
+
+const castValidSearchType = R.when(
+  searchType => searchOptions.every(option => option.value !== searchType),
+  R.always(R.head(searchOptions).value),
+);
 
 class SearchBar extends Component {
   static propTypes = {
@@ -42,22 +51,27 @@ class SearchBar extends Component {
   };
 
   componentDidMount() {
-    // TODO 將路由的資訊反映到搜尋選項
-    /* const view = this.props.route.path.split('/')[0];
-    if (this.props.view === VIEWS.SEARCH_COMPANY_VIEW && this.state.searchType !== 'company') {
+    const searchType = searchCriteriaSelector(this.props);
+    const keyword = searchKeywordSelector(this.props);
+    this.setState({
+      searchType: castValidSearchType(searchType),
+      keyword,
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      searchCriteriaSelector(prevProps) !==
+        searchCriteriaSelector(this.props) ||
+      searchKeywordSelector(prevProps) !== searchKeywordSelector(this.props)
+    ) {
+      const searchType = searchCriteriaSelector(this.props);
+      const keyword = searchKeywordSelector(this.props);
       this.setState({
-        searchType: 'company',
-      });
-    } else if (this.props.view === VIEWS.SEARCH_JOB_TITLE_VIEW && this.state.searchType !== 'job-title') {
-      this.setState({
-        searchType: 'job-title',
+        searchType: castValidSearchType(searchType),
+        keyword,
       });
     }
-    if (prevProps.keyword !== this.props.keyword) {
-      this.setState({
-        keyword: this.props.keyword,
-      });
-    } */
   }
 
   handleTypeChange(e) {
