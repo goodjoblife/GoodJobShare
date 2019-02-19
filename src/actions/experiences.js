@@ -1,5 +1,6 @@
 import R from 'ramda';
 import fetchingStatus, { isUnfetched } from '../constants/status';
+import { tokenSelector } from '../selectors/authSelector';
 
 export const SET_COUNT_DATA = '@@EXPERIENCES/SET_COUNT_DATA';
 
@@ -35,4 +36,18 @@ export const queryExperienceCountIfUnfetched = () => (dispatch, getState) => {
     return dispatch(queryExperienceCount());
   }
   return Promise.resolve();
+};
+
+export const createInterviewExperience = ({ body }) => (
+  dispatch,
+  getState,
+  { api },
+) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
+  return api.interviewExperiences.postInterviewExperience({
+    body,
+    token,
+  });
 };
