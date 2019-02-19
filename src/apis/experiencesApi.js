@@ -42,7 +42,7 @@ export const getExperienceReply = options => {
     ...options,
   };
 
-  const { experienceId, start, limit } = finalOptions;
+  const { experienceId, start, limit, token } = finalOptions;
 
   const url = `/experiences/${experienceId}/replies`;
 
@@ -51,45 +51,50 @@ export const getExperienceReply = options => {
       start,
       limit,
     },
+    token,
   });
 };
 
-export const postExperienceReply = ({ id, comment }) =>
+export const postExperienceReply = ({ id, comment, token }) =>
   fetchUtil(`/experiences/${id}/replies`).post({
     body: {
       content: comment,
     },
+    token,
   });
 
-export const deleteExperienceLikes = ({ id }) =>
-  fetchUtil(`/experiences/${id}/likes`).delete();
+export const deleteExperienceLikes = ({ id, token }) =>
+  fetchUtil(`/experiences/${id}/likes`).delete({ token });
 
-export const postExperienceLikes = ({ id }) =>
-  fetchUtil(`/experiences/${id}/likes`).post();
+export const postExperienceLikes = ({ id, token }) =>
+  fetchUtil(`/experiences/${id}/likes`).post({ token });
 
-export const deleteReplyLikes = ({ id }) =>
-  fetchUtil(`/replies/${id}/likes`).delete();
+export const deleteReplyLikes = ({ id, token }) =>
+  fetchUtil(`/replies/${id}/likes`).delete({ token });
 
-export const postReplyLikes = ({ id }) =>
-  fetchUtil(`/replies/${id}/likes`).post();
+export const postReplyLikes = ({ id, token }) =>
+  fetchUtil(`/replies/${id}/likes`).post({ token });
 
-const patchReply = ({ id, status }) =>
+const patchReply = ({ id, status, token }) =>
   fetchUtil(`/replies/${id}`).patch({
     body: {
       status,
     },
+    token,
   });
 
-export const getExperience = ({ id }) => fetchUtil(`/experiences/${id}`).get();
+export const getExperience = ({ id, token }) =>
+  fetchUtil(`/experiences/${id}`).get({ token });
 
 export const newExperienceSearchBy = ({ body }) =>
   fetchUtil('/graphql').post({ body });
 
-const patchExperience = ({ id, status }) =>
+const patchExperience = ({ id, status, token }) =>
   fetchUtil(`/experiences/${id}`).patch({
     body: {
       status,
     },
+    token,
   });
 
 export default {
