@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import R from 'ramda';
 import { compose, setStatic } from 'recompose';
-import qs from 'qs';
 
 import Loading from 'common/Loader';
 import { P } from 'common/base';
@@ -17,7 +15,8 @@ import renderHelmet from './helmet';
 import {
   pathSelector,
   pathnameSelector,
-  searchSelector,
+  searchCriteriaSelector,
+  searchKeywordSelector,
 } from 'common/routing/selectors';
 
 import styles from '../views/view.module.css';
@@ -25,21 +24,6 @@ import styles from '../views/view.module.css';
 // TODO: remove these after API is ready
 const groupSortBy = 'week_work_time';
 const order = 'descending';
-
-const pathParameterSelector = R.compose(
-  query => qs.parse(query, { ignoreQueryPrefix: true }),
-  searchSelector,
-);
-
-const keywordSelector = R.compose(
-  params => params.q,
-  pathParameterSelector,
-);
-
-const searchCriteriaSelector = R.compose(
-  params => params.s_by,
-  pathParameterSelector,
-);
 
 const searchCriteriaText = searchBy =>
   searchBy === 'company' ? '公司' : searchBy === 'job_title' ? '職稱' : '??';
@@ -63,7 +47,7 @@ class TimeAndSalarySearch extends Component {
 
   componentDidMount() {
     const searchBy = searchCriteriaSelector(this.props);
-    const keyword = keywordSelector(this.props);
+    const keyword = searchKeywordSelector(this.props);
     this.props.queryKeyword({ groupSortBy, order, searchBy, keyword });
     this.props.fetchPermission();
   }
@@ -73,10 +57,10 @@ class TimeAndSalarySearch extends Component {
       pathSelector(prevProps) !== pathSelector(this.props) ||
       searchCriteriaSelector(prevProps) !==
         searchCriteriaSelector(this.props) ||
-      keywordSelector(prevProps) !== keywordSelector(this.props)
+      searchKeywordSelector(prevProps) !== searchKeywordSelector(this.props)
     ) {
       const searchBy = searchCriteriaSelector(this.props);
-      const keyword = keywordSelector(this.props);
+      const keyword = searchKeywordSelector(this.props);
       this.props.queryKeyword({ groupSortBy, order, searchBy, keyword });
       this.props.fetchPermission();
     }
@@ -86,7 +70,7 @@ class TimeAndSalarySearch extends Component {
     const { status, canViewTimeAndSalary } = this.props;
     const pathname = pathnameSelector(this.props);
 
-    const keyword = keywordSelector(this.props);
+    const keyword = searchKeywordSelector(this.props);
     const title = `查詢「${keyword}」的結果`;
 
     const raw = this.props.data.toJS();
@@ -122,7 +106,7 @@ class TimeAndSalarySearch extends Component {
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   const searchBy = searchCriteriaSelector(props);
-  const keyword = keywordSelector(props);
+  const keyword = searchKeywordSelector(props);
 
   return dispatch(queryKeyword({ groupSortBy, order, searchBy, keyword }));
 });
