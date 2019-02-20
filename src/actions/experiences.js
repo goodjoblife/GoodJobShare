@@ -51,3 +51,17 @@ export const createInterviewExperience = ({ body }) => (
     token,
   });
 };
+
+export const createWorkExperience = ({ body }) => (
+  dispatch,
+  getState,
+  { api },
+) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
+  return api.workExperiences.postWorkExperience({
+    body,
+    token,
+  });
+};
