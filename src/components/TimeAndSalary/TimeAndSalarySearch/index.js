@@ -87,9 +87,10 @@ class TimeAndSalarySearch extends Component {
   }
 
   render() {
-    const { status, canViewTimeAndSalary } = this.props;
+    const { status, canViewTimeAndSalary, history } = this.props;
     const pathname = pathnameSelector(this.props);
 
+    const searchBy = searchCriteriaSelector(this.props);
     const keyword = castValidSearchKeyword(searchKeywordSelector(this.props));
     const title = keyword ? `查詢「${keyword}」的結果` : '請輸入搜尋條件！';
 
@@ -115,8 +116,12 @@ class TimeAndSalarySearch extends Component {
           <WorkingHourBlock
             key={o.company.id || i}
             data={o}
+            onClickHeader={() => {
+              if (searchBy === 'company') {
+                history.push(`/companies/${o.company.name}/salary-work-times`);
+              }
+            }}
             groupSortBy={groupSortBy}
-            isExpanded={i === 0 && raw.length === 1}
             hideContent={!canViewTimeAndSalary}
           />
         ))}

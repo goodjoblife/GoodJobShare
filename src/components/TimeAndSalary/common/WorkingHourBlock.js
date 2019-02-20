@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { Plus, Minus } from 'common/icons';
 import { Heading } from 'common/base';
 import OvertimeBlock from './OvertimeBlock';
 import WorkingHourTable from './WorkingHourTable';
@@ -13,6 +12,7 @@ class WorkingHourBlock extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
     groupSortBy: PropTypes.string.isRequired,
+    onClickHeader: PropTypes.func,
     isExpanded: PropTypes.bool,
     hideContent: PropTypes.bool.isRequired,
   };
@@ -56,20 +56,13 @@ class WorkingHourBlock extends Component {
   };
 
   render() {
-    const { data, groupSortBy } = this.props;
+    const { data, groupSortBy, onClickHeader } = this.props;
     const { average, company } = data;
     const avgVal = average[groupSortBy];
     const avgUnit = groupSortBy === 'week_work_time' ? '小時' : '元';
     return (
       <section className={styles.container}>
-        <button
-          className={styles.toggleButton}
-          onClick={() => {
-            this.setState({
-              isExpanded: !this.state.isExpanded,
-            });
-          }}
-        >
+        <button className={styles.toggleButton} onClick={onClickHeader}>
           <div
             className={cn(styles.headingWrapper, {
               [styles.expanded]: this.state.isExpanded,
@@ -86,9 +79,6 @@ class WorkingHourBlock extends Component {
                 {avgVal ? avgVal.toFixed(1) : '-'} {avgUnit}
               </span>
             </div>
-          </div>
-          <div className={styles.expandIcon}>
-            {this.state.isExpanded ? <Minus /> : <Plus />}
           </div>
         </button>
 
