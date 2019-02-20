@@ -136,7 +136,7 @@ class SearchBar extends Component {
     e.preventDefault();
     const { searchType, keyword } = this.state;
     this.props.history.push(
-      `/salary-worktime?q=${encodeURIComponent(keyword)}&s_by=${searchType}`,
+      `/salary-work-times?q=${encodeURIComponent(keyword)}&s_by=${searchType}`,
     );
 
     ReactPixel.track('Search', {

@@ -162,11 +162,11 @@ const routes = [
     ],
   },
   {
-    path: '/salary-worktime',
+    path: '/salary-work-times',
     component: TimeAndSalary,
     routes: [
       {
-        path: '/salary-worktime',
+        path: '/salary-work-times',
         exact: true,
         component: TimeAndSalarySearch,
       },
