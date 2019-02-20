@@ -23,7 +23,7 @@ import {
 
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
-const searchOptions = [
+export const searchOptions = [
   { label: '公司', value: 'company' },
   { label: '職稱', value: 'job_title' },
 ];
@@ -31,6 +31,11 @@ const searchOptions = [
 const castValidSearchType = R.when(
   searchType => searchOptions.every(option => option.value !== searchType),
   R.always(R.head(searchOptions).value),
+);
+
+const castValidKeyword = R.when(
+  keyword => typeof keyword !== 'string',
+  R.always(''),
 );
 
 class SearchBar extends Component {
@@ -55,7 +60,7 @@ class SearchBar extends Component {
     const keyword = searchKeywordSelector(this.props);
     this.setState({
       searchType: castValidSearchType(searchType),
-      keyword,
+      keyword: castValidKeyword(keyword),
     });
   }
 
@@ -69,7 +74,7 @@ class SearchBar extends Component {
       const keyword = searchKeywordSelector(this.props);
       this.setState({
         searchType: castValidSearchType(searchType),
-        keyword,
+        keyword: castValidKeyword(keyword),
       });
     }
   }
