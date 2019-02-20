@@ -91,7 +91,7 @@ class TimeAndSalarySearch extends Component {
     const pathname = pathnameSelector(this.props);
 
     const keyword = castValidSearchKeyword(searchKeywordSelector(this.props));
-    const title = `查詢「${keyword}」的結果`;
+    const title = keyword ? `查詢「${keyword}」的結果` : '請輸入搜尋條件！';
 
     const raw = this.props.data.toJS();
 
