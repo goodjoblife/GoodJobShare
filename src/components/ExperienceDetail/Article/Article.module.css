@@ -42,10 +42,11 @@ $paddingS: 16px;
   flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .article {
-  padding: $padding;
+  padding: 0 $padding $padding $padding;
 
   .heading {
     margin-bottom: 24px;
@@ -81,5 +82,17 @@ $paddingS: 16px;
   @media (max-width: 550px) {
     margin-top: -15px;
     padding: 50px 25px;
+  }
+}
+
+.functionButtons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 4px 8px 0 8px;
+
+  @media (max-width: 550px) {
+    border-bottom: 1px solid border-gray;
+    border-top: 1px solid border-gray;
   }
 }

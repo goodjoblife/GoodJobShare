@@ -26,7 +26,7 @@ class CompanyQuery extends React.Component {
 
   search = debounce((e, value) => {
     if (value) {
-      return getCompaniesSearch(value)
+      return getCompaniesSearch({ key: value })
         .then(
           r =>
             Array.isArray(r)

@@ -1,7 +1,9 @@
 import authStatus from '../constants/authStatus';
+import { tokenSelector } from '../selectors/authSelector';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
+export const LOG_OUT = '@@auth/LOG_OUT';
 
 export const setLogin = (status, token = null) => ({
   type: SET_LOGIN,
@@ -9,21 +11,36 @@ export const setLogin = (status, token = null) => ({
   token,
 });
 
-export const setUser = ({ name }) => ({
+export const setUser = user => ({
   type: SET_USER,
-  name,
+  user,
 });
 
-export const login = FB => dispatch => {
+const logOutAction = () => ({
+  type: LOG_OUT,
+});
+
+export const logout = () => (dispatch, getState, { history }) => {
+  dispatch(logOutAction());
+  history.push('/');
+};
+
+export const loginWithFB = FB => (dispatch, getState, { api }) => {
   if (FB) {
     return new Promise(resolve => FB.login(response => resolve(response))).then(
       response => {
         if (response.status === authStatus.CONNECTED) {
-          dispatch(
-            setLogin(response.status, response.authResponse.accessToken),
-          );
+          return api.auth
+            .postAuthFacebook({
+              accessToken: response.authResponse.accessToken,
+            })
+            .then(({ token, user: { _id, facebook_id } }) => {
+              dispatch(setLogin(authStatus.CONNECTED, token));
+              dispatch(getMeInfo(token));
+            })
+            .then(() => authStatus.CONNECTED);
         } else if (response.status === authStatus.NOT_AUTHORIZED) {
-          dispatch(setLogin(response.status));
+          dispatch(setLogin(authStatus.NOT_AUTHORIZED));
         }
         return response.status;
       },
@@ -32,48 +49,19 @@ export const login = FB => dispatch => {
   return Promise.reject('FB should ready');
 };
 
-export const logout = FB => dispatch => {
-  if (FB) {
-    return new Promise(resolve =>
-      FB.logout(response => resolve(response)),
-    ).then(response => {
-      if (response.status === authStatus.UNKNOWN) {
-        dispatch(setLogin(response.status, response.authResponse.accessToken));
-        dispatch(setUser({ name: null }));
-      }
-      return response.status;
-    });
-  }
-  return Promise.reject('FB should ready');
+export const loginWithToken = () => (dispatch, getState, { api }) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
+  return dispatch(getMeInfo(token));
 };
 
-export const getLoginStatus = FB => dispatch => {
-  if (FB) {
-    return new Promise(resolve =>
-      FB.getLoginStatus(response => resolve(response)),
-    ).then(response => {
-      if (response.status === authStatus.CONNECTED) {
-        dispatch(setLogin(response.status, response.authResponse.accessToken));
-      } else if (response.status === authStatus.NOT_AUTHORIZED) {
-        dispatch(setLogin(response.status));
-      }
-      return response.status;
-    });
-  }
-  return Promise.reject('FB should ready');
-};
+export const getMeInfo = token => (dispatch, getState, { api }) =>
+  api.me
+    .getMe({ token })
+    .then(user => dispatch(setUser(user)))
+    .catch(error => {
+      dispatch(logOutAction());
 
-export const getMe = FB => (dispatch, getState) => {
-  if (!FB) {
-    return Promise.reject('FB should ready');
-  }
-  if (getState().auth.get('status') !== authStatus.CONNECTED) {
-    return Promise.reject('auth status should be connected');
-  }
-  return new Promise(resolve =>
-    FB.api('/me', response => resolve(response)),
-  ).then(response => {
-    dispatch(setUser(response));
-    return response;
-  });
-};
+      console.error(error);
+    });

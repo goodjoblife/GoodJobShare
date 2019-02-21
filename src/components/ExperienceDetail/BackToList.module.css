@@ -3,7 +3,6 @@
 .backBtn {
   display: flex;
   align-items: center;
-  margin-top: 24px;
   transition-property: color;
   transition-duration: 0.25s;
 

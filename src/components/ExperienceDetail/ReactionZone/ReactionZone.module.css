@@ -1,4 +1,4 @@
-@value border-gray, main-gray, main-yellow, white-light, gray-light from "common/variables.module.css";
+@value border-gray, main-gray, main-yellow, white-light, gray-light, gray-dark from "common/variables.module.css";
 
 .container {
   display: flex;
@@ -19,17 +19,9 @@
   }
 }
 
-.right {
-  display: flex;
-
-  @media (max-width: 550px) {
-    border-top: 1px solid border-gray;
-  }
-}
-
 .button,
 .moreButton {
-  padding: 16px 32px;
+  padding: 16px 12px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,26 +33,15 @@
 }
 
 .button {
-  border-right: 1px solid border-gray;
+  color: main-gray;
   transition-duration: 0.25s;
   transition-property: color;
+  line-height: 1;
 
   @media (min-width: 1025px) {
     &:hover {
-      color: main-gray;
+      color: gray-dark;
     }
-  }
-
-  @media (max-width: 550px) {
-    font-size: 0.9em;
-
-    &:last-of-type {
-      border-right: 0;
-    }
-  }
-
-  &:first-child {
-    border-left: 1px solid border-gray;
   }
 }
 
@@ -72,9 +53,19 @@
     display: inline-block;
     background-color: main-gray;
     border-radius: 50%;
-    width: 7px;
-    height: 7px;
-    margin: 2.5px;
+    width: 6px;
+    height: 6px;
+    margin: 2px;
+    transition: background-color 0.25s;
+  }
+  @media (min-width: 1025px) {
+    &:hover {
+      span,
+      &:after,
+      &:before {
+        background-color: gray-dark;
+      }
+    }
   }
 }
 

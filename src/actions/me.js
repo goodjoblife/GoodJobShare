@@ -1,5 +1,6 @@
-import fetchUtil from '../utils/fetchUtil';
 import status from '../constants/status';
+
+import { tokenSelector } from '../selectors/authSelector';
 
 export const SET_MY_EXPERIENCES = 'SET_MY_EXPERIENCES';
 export const SET_MY_EXPERIENCES_STATUS = 'SET_MY_EXPERIENCES_STATUS';
@@ -31,13 +32,17 @@ export const setMyReplies = (myReplies, err) => ({
   myReplies,
 });
 
-export const fetchMyExperiences = () => dispatch => {
+export const fetchMyExperiences = () => (dispatch, getState, { api }) => {
   dispatch({
     type: SET_MY_EXPERIENCES_STATUS,
     status: status.FETCHING,
   });
 
-  return fetchUtil('/me/experiences')('GET')
+  const state = getState();
+  const token = tokenSelector(state);
+
+  return api.me
+    .getMeExperiences({ token })
     .then(result => {
       if (result.error) {
         dispatch(setMyExperiences({}, result.error));
@@ -50,13 +55,17 @@ export const fetchMyExperiences = () => dispatch => {
     });
 };
 
-export const fetchMyWorkings = () => dispatch => {
+export const fetchMyWorkings = () => (dispatch, getState, { api }) => {
   dispatch({
     type: SET_MY_WORKINGS_STATUS,
     status: status.FETCHING,
   });
 
-  return fetchUtil('/me/workings')('GET')
+  const state = getState();
+  const token = tokenSelector(state);
+
+  return api.me
+    .getMeWorkings({ token })
     .then(result => {
       if (result.error) {
         dispatch(setMyWorkings({}, result.error));
@@ -69,13 +78,17 @@ export const fetchMyWorkings = () => dispatch => {
     });
 };
 
-export const fetchMyReplies = () => dispatch => {
+export const fetchMyReplies = () => (dispatch, getState, { api }) => {
   dispatch({
     type: SET_MY_REPLIES_STATUS,
     status: status.FETCHING,
   });
 
-  return fetchUtil('/me/replies')('GET')
+  const state = getState();
+  const token = tokenSelector(state);
+
+  return api.me
+    .getMeReplies({ token })
     .then(result => {
       if (result.error) {
         dispatch(setMyReplies({}, result.error));
@@ -88,83 +101,103 @@ export const fetchMyReplies = () => dispatch => {
     });
 };
 
-export const setExperienceStatus = o => (dispatch, getState) => {
+export const setExperienceStatus = o => (dispatch, getState, { api }) => {
   const data = getState().me.toJS();
   let experiences = data.myExperiences.experiences;
   const index = getIndex(experiences, o._id);
+  const state = getState();
+  const token = tokenSelector(state);
 
-  return fetchUtil(`/experiences/${o._id}`)('PATCH', {
-    status: o.status === 'published' ? 'hidden' : 'published',
-  }).then(result => {
-    if (result.success) {
-      experiences = [
-        ...experiences.slice(0, index),
-        Object.assign({}, o, {
-          status: result.status,
-        }),
-        ...experiences.slice(index + 1),
-      ];
-      dispatch(
-        setMyExperiences(
-          Object.assign(data.myExperiences, { experiences }),
-          null,
-        ),
-      );
-      return;
-    }
-    dispatch(setMyExperiences(experiences, null));
-  });
+  return api.experiences
+    .patchExperience({
+      id: o._id,
+      status: o.status === 'published' ? 'hidden' : 'published',
+      token,
+    })
+    .then(result => {
+      if (result.success) {
+        experiences = [
+          ...experiences.slice(0, index),
+          Object.assign({}, o, {
+            status: result.status,
+          }),
+          ...experiences.slice(index + 1),
+        ];
+        dispatch(
+          setMyExperiences(
+            Object.assign(data.myExperiences, { experiences }),
+            null,
+          ),
+        );
+        return;
+      }
+      dispatch(setMyExperiences(experiences, null));
+    });
 };
 
-export const setWorkingStatus = o => (dispatch, getState) => {
+export const setWorkingStatus = o => (dispatch, getState, { api }) => {
   const data = getState().me.toJS();
   let workings = data.myWorkings.time_and_salary;
   const index = getIndex(workings, o._id);
+  const state = getState();
+  const token = tokenSelector(state);
 
-  return fetchUtil(`/workings/${o._id}`)('PATCH', {
-    status: o.status === 'published' ? 'hidden' : 'published',
-  }).then(result => {
-    if (result.success) {
-      workings = [
-        ...workings.slice(0, index),
-        Object.assign({}, o, {
-          status: result.status,
-        }),
-        ...workings.slice(index + 1),
-      ];
-      dispatch(
-        setMyWorkings(
-          Object.assign(data.myWorkings, {
-            time_and_salary: workings,
+  return api.timeAndSalary
+    .patchWorking({
+      id: o._id,
+      status: o.status === 'published' ? 'hidden' : 'published',
+      token,
+    })
+    .then(result => {
+      if (result.success) {
+        workings = [
+          ...workings.slice(0, index),
+          Object.assign({}, o, {
+            status: result.status,
           }),
-          null,
-        ),
-      );
-      return;
-    }
-    dispatch(setMyWorkings(workings, null));
-  });
+          ...workings.slice(index + 1),
+        ];
+        dispatch(
+          setMyWorkings(
+            Object.assign(data.myWorkings, {
+              time_and_salary: workings,
+            }),
+            null,
+          ),
+        );
+        return;
+      }
+      dispatch(setMyWorkings(workings, null));
+    });
 };
 
-export const setReplyStatus = o => (dispatch, getState) => {
+export const setReplyStatus = o => (dispatch, getState, { api }) => {
   const data = getState().me.toJS();
   let replies = data.myReplies.replies;
   const index = getIndex(replies, o._id);
+  const state = getState();
+  const token = tokenSelector(state);
 
-  return fetchUtil(`/replies/${o._id}`)('PATCH', {
-    status: o.status === 'published' ? 'hidden' : 'published',
-  }).then(result => {
-    if (result.success) {
-      replies = [
-        ...replies.slice(0, index),
-        Object.assign({}, o, {
-          status: result.status,
-        }),
-        ...replies.slice(index + 1),
-      ];
-      dispatch(setMyReplies(Object.assign(data.myReplies, { replies }), null));
-      return;
-    }
-    dispatch(setMyReplies(replies, null));
-  });
+  return api.experiences
+    .patchReply({
+      id: o._id,
+      status: o.status === 'published' ? 'hidden' : 'published',
+      token,
+    })
+    .then(result => {
+      if (result.success) {
+        replies = [
+          ...replies.slice(0, index),
+          Object.assign({}, o, {
+            status: result.status,
+          }),
+          ...replies.slice(index + 1),
+        ];
+        dispatch(
+          setMyReplies(Object.assign(data.myReplies, { replies }), null),
+        );
+        return;
+      }
+      dispatch(setMyReplies(replies, null));
+    });
 };

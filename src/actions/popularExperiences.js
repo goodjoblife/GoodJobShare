@@ -1,5 +1,4 @@
 import R from 'ramda';
-import { getExperiences as getExperiencesApi } from '../apis/experiencesApi';
 import fetchingStatus from '../constants/status';
 
 export const SET_DATA = '@@POPULAR_EXPERIENCES/SET_DATA';
@@ -16,7 +15,11 @@ const setData = ({ data, status, error = null }) => ({
   error,
 });
 
-export const queryPopularExperiences = (limit = 3) => dispatch => {
+export const queryPopularExperiences = (limit = 3) => (
+  dispatch,
+  getState,
+  { api },
+) => {
   dispatch(startFetching());
 
   const opt = {
@@ -26,10 +29,16 @@ export const queryPopularExperiences = (limit = 3) => dispatch => {
     searchType: ['interview', 'work'],
   };
 
-  return getExperiencesApi(opt)
+  return api.experiences
+    .getExperiences(opt)
     .then(rawData => {
       const experiences = R.prop('experiences')(rawData);
-      dispatch(setData({ status: fetchingStatus.FETCHED, data: experiences }));
+      dispatch(
+        setData({
+          status: fetchingStatus.FETCHED,
+          data: experiences,
+        }),
+      );
     })
     .catch(error => {
       dispatch(setData({ status: fetchingStatus.ERROR, data: [], error }));

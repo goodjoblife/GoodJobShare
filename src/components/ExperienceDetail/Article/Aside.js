@@ -11,7 +11,7 @@ const InterviewInfoBlocks = ({ experience }) => (
     <InfoBlock label="面試地區">{experience.region}</InfoBlock>
     <InfoBlock label="應徵職稱">{experience.job_title}</InfoBlock>
     {experience.experience_in_year && (
-      <InfoBlock label="自身相關職務工作經驗">
+      <InfoBlock label="相關職務工作經驗">
         {experience.experience_in_year} 年
       </InfoBlock>
     )}
@@ -33,7 +33,7 @@ const InterviewInfoBlocks = ({ experience }) => (
         )}`}
       </InfoBlock>
     )}
-    <InfoBlock label="對公司的面試整體滿意度">
+    <InfoBlock label="整體面試滿意度">
       <RateButtons rate={experience.overall_rating} />
     </InfoBlock>
     {experience.interview_sensitive_questions &&

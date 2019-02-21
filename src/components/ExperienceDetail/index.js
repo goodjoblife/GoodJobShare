@@ -11,12 +11,9 @@ import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
-import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
 
 import Article from './Article';
-import ReactionZone from '../../containers/ExperienceDetail/ReactionZone';
-import RecommendationZone from './RecommendationZone';
 import MessageBoard from '../../containers/ExperienceDetail/MessageBoard';
 import BackToList from './BackToList';
 import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
@@ -36,8 +33,8 @@ import { COMMENT_ZONE } from '../../constants/formElements';
 
 import { paramsSelector } from 'common/routing/selectors';
 
+import LikeZone from '../../containers/ExperienceDetail/LikeZone';
 import styles from './ExperienceDetail.module.css';
-
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
   REPORT_API_ERROR: 'REPORT_API_ERROR',
@@ -308,8 +305,15 @@ class ExperienceDetail extends Component {
               <Loader />
             ) : (
               <Fragment>
-                <ExperienceHeading experience={experience} />
+                <div className={styles.headingBlock}>
+                  <BackToList backable={backable} className={styles.back} />
+                  <ExperienceHeading
+                    experience={experience}
+                    className={styles.heading}
+                  />
+                </div>
                 <Article
+                  id={id}
                   experience={experience}
                   hideContent={!canViewExperirenceDetail}
                   openReportDetail={() => {
@@ -320,25 +324,8 @@ class ExperienceDetail extends Component {
               </Fragment>
             )}
 
-            {/* 按讚，分享，檢舉區塊  */}
-            <ReactionZone
-              experience={experience}
-              likeExperience={likeExperience}
-              openReportDetail={() =>
-                this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL)
-              }
-              id={id}
-            />
-            <BackToList backable={backable} />
-            <FanPageBlock className={styles.fanPageBlock} />
+            <LikeZone experience={experience} likeExperience={likeExperience} />
           </Wrapper>
-        </Section>
-
-        {/* 你可能還想看...  */}
-        <RecommendationZone id={id} />
-
-        {/* 留言區塊  */}
-        <Section paddingBottom>
           <Wrapper size="s">
             <ScrollElement name={COMMENT_ZONE} />
             {repliesStatus === status.FETCHING ? (

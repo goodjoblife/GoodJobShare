@@ -19,7 +19,7 @@ const store = compose(
   withHandlers({
     fetchReports: ({ setStatus, setReports }) => id => {
       setStatus(fetchingStatus.FETCHING);
-      getReports(id)
+      getReports({ id })
         .then(reports => {
           setStatus(fetchingStatus.FETCHED);
           setReports(reports);

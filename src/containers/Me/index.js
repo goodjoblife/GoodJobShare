@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { withFB } from 'common/facebook';
 import Me from '../../components/Me';
-import { login, getLoginStatus, getMe } from '../../actions/auth';
+import { loginWithFB } from '../../actions/auth';
 import * as MyActions from '../../actions/me';
 
 const mapStateToProps = state => ({
@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ login, getLoginStatus, getMe, ...MyActions }, dispatch);
+  bindActionCreators({ login: loginWithFB, ...MyActions }, dispatch);
 
 export default connect(
   mapStateToProps,

@@ -1,7 +1,8 @@
 @value gray-dark from "common/variables.module.css";
 
 .block {
-  margin-bottom: 32px;
+  margin-top: 5px;
+  margin-bottom: 45px;
 
   @media (max-width: 850px) {
     width: calc(100% / 3);
@@ -14,11 +15,9 @@
 
 .label {
   color: gray-dark;
-  margin-bottom: 4px;
 }
 
 .content {
-  margin-top: 8px;
   word-wrap: break-word;
 
   @media (max-width: 850px) {

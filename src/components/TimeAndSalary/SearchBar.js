@@ -77,14 +77,14 @@ class SearchBar extends Component {
   fetchCandidates = value => {
     const { searchType } = this.state;
     if (searchType === 'company') {
-      return fetchCompanyCandidates(value).then(r =>
+      return fetchCompanyCandidates({ key: value }).then(r =>
         r.map(({ _id: { name } }) => ({
           label: name,
           value: name,
         })),
       );
     }
-    return fetchJobTitleCandidates(value).then(r =>
+    return fetchJobTitleCandidates({ key: value }).then(r =>
       r.map(({ _id: name }) => ({
         label: name,
         value: name,

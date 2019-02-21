@@ -13,8 +13,6 @@ import authStatus from '../../../constants/authStatus';
 
 import { handleToApiParams } from './helper';
 
-import { postExperiencesReports } from '../../../apis/reportsExperiencesApi';
-
 import { validReasomForm, validReason, isReasonLimit } from './formCheck';
 
 const isLogin = auth => auth.get('status') === authStatus.CONNECTED;
@@ -51,13 +49,17 @@ class ReportForm extends PureComponent {
 
   onSubmit = () => {
     const { onApiError, onSuccess, close, id } = this.props;
+    const { createReport } = this.props;
     this.setState({
       submitted: true,
     });
     const valid = validReasomForm(this.state);
 
     if (valid) {
-      return postExperiencesReports(id, handleToApiParams(this.state))
+      return createReport({
+        experienceId: id,
+        body: handleToApiParams(this.state),
+      })
         .then(close)
         .then(onSuccess)
         .catch(e =>
@@ -149,6 +151,7 @@ ReportForm.propTypes = {
   FB: PropTypes.object,
   onApiError: PropTypes.func,
   onSuccess: PropTypes.func,
+  createReport: PropTypes.func,
 };
 
 export default ReportForm;

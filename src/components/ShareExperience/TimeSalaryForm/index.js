@@ -12,9 +12,6 @@ import SalaryInfo from './SalaryInfo';
 import TimeInfo from './TimeInfo';
 import InputTitle from '../common/InputTitle';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
-
-import { postWorkings } from '../../../apis/timeAndSalaryApi';
-
 import styles from './TimeSalaryForm.module.css';
 
 import { basicFormCheck, salaryFormCheck, timeFormCheck } from './formCheck';
@@ -112,9 +109,11 @@ class TimeSalaryForm extends React.PureComponent {
     if (valid && (valid2 || valid3)) {
       localStorage.removeItem(LS_TIME_SALARY_FORM_KEY);
 
-      const p = postWorkings(
-        portTimeSalaryFormToRequestFormat(getTimeAndSalaryForm(this.state)),
-      );
+      const p = this.props.createSalaryWorkTime({
+        body: portTimeSalaryFormToRequestFormat(
+          getTimeAndSalaryForm(this.state),
+        ),
+      });
 
       return p.then(
         response => {

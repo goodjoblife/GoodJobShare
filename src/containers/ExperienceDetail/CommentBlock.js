@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { withFB } from 'common/facebook';
 import CommentBlock from '../../components/ExperienceDetail/MessageBoard/CommentBlock';
-import { login } from '../../actions/auth';
+import { loginWithFB } from '../../actions/auth';
 
 import { statusSelector } from '../../selectors/authSelector';
 
@@ -11,7 +11,8 @@ const mapStateToProps = state => ({
   authStatus: statusSelector(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ login }, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ login: loginWithFB }, dispatch);
 
 export default connect(
   mapStateToProps,

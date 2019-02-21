@@ -1,6 +1,7 @@
 import 'isomorphic-fetch';
 
-import { getToken } from 'utils/tokenUtil';
+import { stringify } from 'qs';
+
 import { HttpError } from 'utils/errors';
 
 import { API_HOST } from '../config';
@@ -24,16 +25,16 @@ const removeContentType = headers => {
   return rest;
 };
 
-const optionsBuilder = body => method =>
+const optionsBuilder = ({ body, method, token }) =>
   body
     ? {
         method: method.toUpperCase(),
-        headers: headerBuilder(getToken()),
+        headers: headerBuilder(token),
         body: JSON.stringify(body),
       }
     : {
         method: method.toUpperCase(),
-        headers: removeContentType(headerBuilder(getToken())),
+        headers: removeContentType(headerBuilder(token)),
       };
 
 const checkStatus = response => {
@@ -47,9 +48,37 @@ const checkStatus = response => {
   return response.json();
 };
 
-const fetchUtil = (endpoint, apiHost = API_HOST) => (method, body) =>
-  fetch(`${apiHost}${endpoint}`, optionsBuilder(body)(method)).then(
-    checkStatus,
+const defaultOptions = {
+  apiHost: API_HOST,
+  token: null,
+};
+
+const allowMethods = ['get', 'post', 'patch', 'delete'];
+
+const fetchUtil = endpoint =>
+  allowMethods.reduce(
+    (pV, method) => ({
+      ...pV,
+      [method]: ({ body, query, options, token } = {}) => {
+        const finalOptions = {
+          ...defaultOptions,
+          ...options,
+        };
+
+        const { apiHost } = finalOptions;
+        return fetch(
+          query
+            ? `${apiHost}${endpoint}?${stringify(query)}`
+            : `${apiHost}${endpoint}`,
+          optionsBuilder({
+            token,
+            body,
+            method,
+          }),
+        ).then(checkStatus);
+      },
+    }),
+    {},
   );
 
 export default fetchUtil;

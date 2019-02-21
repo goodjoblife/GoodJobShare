@@ -1,4 +1,3 @@
-import qs from 'qs';
 import R from 'ramda';
 
 import fetchUtil from 'utils/fetchUtil';
@@ -10,7 +9,7 @@ const getEndpoint = ({ id, limit = 3 }) =>
 const fetch = ({ id, limit }) => fetchUtil(getEndpoint({ id, limit }));
 
 export const getExperiencesRecommended = ({ id, limit }) =>
-  fetch({ id, limit })('get');
+  fetch({ id, limit }).get();
 
 export const getExperiences = ({
   start,
@@ -28,19 +27,87 @@ export const getExperiences = ({
     sort,
     type: R.join(',', searchType),
   };
-  const queryString = qs.stringify(queryObj);
 
-  const url = queryString ? `${endpoint}?${queryString}` : `${endpoint}`;
-
-  return fetchUtil(url)('GET');
+  return fetchUtil(endpoint).get({ query: queryObj });
 };
 
-export const getExperienceReply = (experienceId, start = 0, limit = 100) => {
+const getExperienceReplyOptions = {
+  start: 0,
+  limit: 100,
+};
+
+export const getExperienceReply = options => {
+  const finalOptions = {
+    ...getExperienceReplyOptions,
+    ...options,
+  };
+
+  const { experienceId, start, limit, token } = finalOptions;
+
   const url = `/experiences/${experienceId}/replies`;
-  const queryString = qs.stringify({
-    start,
-    limit,
+
+  return fetchUtil(url).get({
+    query: {
+      start,
+      limit,
+    },
+    token,
+  });
+};
+
+export const postExperienceReply = ({ id, comment, token }) =>
+  fetchUtil(`/experiences/${id}/replies`).post({
+    body: {
+      content: comment,
+    },
+    token,
   });
 
-  return fetchUtil(queryString ? `${url}?${queryString}` : url)('GET');
+export const deleteExperienceLikes = ({ id, token }) =>
+  fetchUtil(`/experiences/${id}/likes`).delete({ token });
+
+export const postExperienceLikes = ({ id, token }) =>
+  fetchUtil(`/experiences/${id}/likes`).post({ token });
+
+export const deleteReplyLikes = ({ id, token }) =>
+  fetchUtil(`/replies/${id}/likes`).delete({ token });
+
+export const postReplyLikes = ({ id, token }) =>
+  fetchUtil(`/replies/${id}/likes`).post({ token });
+
+const patchReply = ({ id, status, token }) =>
+  fetchUtil(`/replies/${id}`).patch({
+    body: {
+      status,
+    },
+    token,
+  });
+
+export const getExperience = ({ id, token }) =>
+  fetchUtil(`/experiences/${id}`).get({ token });
+
+export const newExperienceSearchBy = ({ body }) =>
+  fetchUtil('/graphql').post({ body });
+
+const patchExperience = ({ id, status, token }) =>
+  fetchUtil(`/experiences/${id}`).patch({
+    body: {
+      status,
+    },
+    token,
+  });
+
+export default {
+  getExperience,
+  getExperiencesRecommended,
+  getExperiences,
+  getExperienceReply,
+  postExperienceReply,
+  deleteExperienceLikes,
+  postExperienceLikes,
+  deleteReplyLikes,
+  postReplyLikes,
+  newExperienceSearchBy,
+  patchExperience,
+  patchReply,
 };

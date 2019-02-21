@@ -31,29 +31,14 @@ class Header extends React.Component {
   componentDidMount() {
     const { history } = this.props;
     this.unlisten = history.listen(this.closeNav);
-
-    const { getLoginStatus, FB, getMe } = this.props;
-    FB &&
-      getLoginStatus(FB)
-        .then(() => getMe(FB))
-        .catch(() => {});
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.FB !== this.props.FB) {
-      // FB instance changed
-      const { getLoginStatus, FB } = this.props;
-
-      FB && getLoginStatus(FB).catch(() => {});
-    }
-
     if (
       prevProps.auth.get('status') !== this.props.auth.get('status') &&
       this.props.auth.get('status') === authStatus.CONNECTED
     ) {
-      const { getMe, FB } = this.props;
       this.props.fetchPermission();
-      FB && getMe(FB).catch(() => {});
     }
   }
 
@@ -82,12 +67,12 @@ class Header extends React.Component {
 
   login() {
     const { login, FB } = this.props;
-    login(FB).catch(() => {});
+    login(FB);
   }
 
   logout() {
-    const { logout, FB } = this.props;
-    logout(FB).catch(() => {});
+    const { logout } = this.props;
+    logout();
   }
 
   renderTop = () => {
@@ -169,8 +154,6 @@ class Header extends React.Component {
 Header.propTypes = {
   login: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
-  getLoginStatus: PropTypes.func.isRequired,
-  getMe: PropTypes.func.isRequired,
   auth: PropTypes.object,
   FB: PropTypes.object,
   location: PropTypes.object,

@@ -9,7 +9,6 @@ import { Comment2 } from 'common/icons';
 
 import styles from './Me.module.css';
 import ShareBlockElement from './ShareBlockElement';
-import authStatus from '../../constants/authStatus';
 import status from '../../constants/status';
 
 class Me extends Component {
@@ -27,33 +26,11 @@ class Me extends Component {
     this.props.fetchMyExperiences();
     this.props.fetchMyWorkings();
     this.props.fetchMyReplies();
-    const { getLoginStatus, FB, getMe } = this.props;
-    FB &&
-      getLoginStatus(FB)
-        .then(() => getMe(FB))
-        .catch(() => {});
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.FB !== this.props.FB) {
-      // FB instance changed
-      const { getLoginStatus, FB } = this.props;
-
-      FB && getLoginStatus(FB).catch(() => {});
-    }
-
-    if (
-      prevProps.auth.get('status') !== this.props.auth.get('status') &&
-      this.props.auth.get('status') === authStatus.CONNECTED
-    ) {
-      const { getMe, FB } = this.props;
-      FB && getMe(FB).catch(() => {});
-    }
   }
 
   login = () => {
     const { login, FB } = this.props;
-    FB && login(FB).catch(() => {});
+    FB && login(FB);
   };
 
   render() {
@@ -168,8 +145,6 @@ class Me extends Component {
 }
 Me.propTypes = {
   login: PropTypes.func.isRequired,
-  getLoginStatus: PropTypes.func.isRequired,
-  getMe: PropTypes.func.isRequired,
   auth: PropTypes.object,
   FB: PropTypes.object,
 };

@@ -1,7 +1,5 @@
-import fetchUtil from '../utils/fetchUtil';
 import fetchingStatus from '../constants/status';
-
-import { getExperienceReply } from '../apis/experiencesApi';
+import { tokenSelector } from '../selectors/authSelector';
 
 export const SET_EXPERIENCE = '@@experienceDetail/SET_EXPERIENCE';
 export const SET_EXPERIENCE_STATUS = '@@experienceDetail/SET_EXPERIENCE_STATUS';
@@ -43,32 +41,58 @@ const setRepliesData = (experienceId, { status, replies, error = null }) => (
   return Promise.resolve();
 };
 
-export const submitComment = (id, comment) => (dispatch, getState) => {
+export const submitComment = (id, comment) => (dispatch, getState, { api }) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
   const oldReplies = getState()
     .experienceDetail.get('replies')
     .toJS();
 
-  return fetchUtil(`/experiences/${id}/replies`)('POST', {
-    content: comment,
-  }).then(result => {
-    dispatch(
-      setRepliesData(id, {
-        status: fetchingStatus.FETCHED,
-        replies: [...oldReplies, result.reply],
-      }),
-    );
-  });
+  return api.experiences
+    .postExperienceReply({ id, comment, token })
+    .then(result => {
+      dispatch(
+        setRepliesData(id, {
+          status: fetchingStatus.FETCHED,
+          replies: [...oldReplies, result.reply],
+        }),
+      );
+    });
 };
 
-export const likeExperience = o => dispatch => {
+export const likeExperience = o => (dispatch, getState, { api }) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
   if (o.liked) {
-    return fetchUtil(`/experiences/${o._id}/likes`)('DELETE').then(result => {
+    return api.experiences
+      .deleteExperienceLikes({ id: o._id, token })
+      .then(result => {
+        if (result.success) {
+          dispatch(
+            setExperience(
+              Object.assign({}, o, {
+                liked: false,
+                like_count: o.like_count - 1,
+              }),
+            ),
+          );
+          return;
+        }
+        dispatch(setExperience(o));
+      });
+  }
+
+  return api.experiences
+    .postExperienceLikes({ id: o._id, token })
+    .then(result => {
       if (result.success) {
         dispatch(
           setExperience(
             Object.assign({}, o, {
-              liked: false,
-              like_count: o.like_count - 1,
+              liked: true,
+              like_count: o.like_count + 1,
             }),
           ),
         );
@@ -76,28 +100,6 @@ export const likeExperience = o => dispatch => {
       }
       dispatch(setExperience(o));
     });
-    // .catch(error => {
-    //   dispatch(setExperience(o));
-    // });
-  }
-
-  return fetchUtil(`/experiences/${o._id}/likes`)('POST').then(result => {
-    if (result.success) {
-      dispatch(
-        setExperience(
-          Object.assign({}, o, {
-            liked: true,
-            like_count: o.like_count + 1,
-          }),
-        ),
-      );
-      return;
-    }
-    dispatch(setExperience(o));
-  });
-  // .catch(error => {
-  //   dispatch(setExperience(o));
-  // });
 };
 
 const setReplyLiked = (replyId, liked) => ({
@@ -106,19 +108,24 @@ const setReplyLiked = (replyId, liked) => ({
   liked,
 });
 
-export const likeReply = reply => dispatch => {
+export const likeReply = reply => (dispatch, getState, { api }) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
   const { _id: replyId, liked } = reply;
 
   if (liked) {
-    return fetchUtil(`/replies/${replyId}/likes`)('DELETE').then(result => {
-      if (result.success) {
-        return dispatch(setReplyLiked(replyId, false));
-      }
-      return Promise.resolve();
-    });
+    return api.experiences
+      .deleteReplyLikes({ id: replyId, token })
+      .then(result => {
+        if (result.success) {
+          return dispatch(setReplyLiked(replyId, false));
+        }
+        return Promise.resolve();
+      });
   }
 
-  return fetchUtil(`/replies/${replyId}/likes`)('POST').then(result => {
+  return api.experiences.postReplyLikes({ id: replyId, token }).then(result => {
     if (result.success) {
       return dispatch(setReplyLiked(replyId, true));
     }
@@ -126,13 +133,17 @@ export const likeReply = reply => dispatch => {
   });
 };
 
-export const fetchExperience = id => dispatch => {
+export const fetchExperience = id => (dispatch, getState, { api }) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
   dispatch({
     type: SET_EXPERIENCE_STATUS,
     status: fetchingStatus.FETCHING,
   });
 
-  return fetchUtil(`/experiences/${id}`)('GET')
+  return api.experiences
+    .getExperience({ id, token })
     .then(result => {
       dispatch(setExperience(result));
     })
@@ -146,7 +157,10 @@ export const fetchExperience = id => dispatch => {
     });
 };
 
-export const fetchReplies = id => (dispatch, getState) => {
+export const fetchReplies = id => (dispatch, getState, { api }) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
   if (id !== repliesExperienceIdSelector(getState())) {
     dispatch(resetRepliesData(id));
   }
@@ -156,11 +170,20 @@ export const fetchReplies = id => (dispatch, getState) => {
     status: fetchingStatus.FETCHING,
   });
 
-  return getExperienceReply(id, 0, 100)
+  return api.experiences
+    .getExperienceReply({
+      experienceId: id,
+      start: 0,
+      limit: 100,
+      token,
+    })
     .then(rawData => {
       const replies = rawData.replies;
       return dispatch(
-        setRepliesData(id, { status: fetchingStatus.FETCHED, replies }),
+        setRepliesData(id, {
+          status: fetchingStatus.FETCHED,
+          replies,
+        }),
       );
     })
     .catch(error =>

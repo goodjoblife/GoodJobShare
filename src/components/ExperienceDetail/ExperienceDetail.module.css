@@ -1,7 +1,19 @@
-.feedbackBlock {
-  margin-top: 25px;
+.headingBlock {
+  position: relative;
+  @media (min-width: 851px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
-.fanPageBlock {
-  margin-top: 40px;
+.back {
+  @media (min-width: 851px) {
+    position: absolute;
+    top: 11px;
+    left: 0;
+  }
+  @media (max-width: 850px) {
+    margin-bottom: 16px;
+  }
 }

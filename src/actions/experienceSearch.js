@@ -1,7 +1,3 @@
-import fetchUtil from '../utils/fetchUtil';
-
-import { getExperiences as getExperiencesApi } from '../apis/experiencesApi';
-
 import statusConstant from '../constants/status';
 
 export const SET_SEARCH_BY = 'SET_SEARCH_BY';
@@ -29,7 +25,7 @@ export const fetchExperiences = (
   searchBy,
   searchQuery,
   searchType,
-) => dispatch => {
+) => (dispatch, getState, { api }) => {
   const start = (page - 1) * limit;
   const query = {
     limit,
@@ -57,7 +53,8 @@ export const fetchExperiences = (
     }),
   );
 
-  return getExperiencesApi(query)
+  return api.experiences
+    .getExperiences(query)
     .then(result => {
       const payload = {
         ...objCond,
@@ -78,7 +75,11 @@ const setKeywords = keywords => ({
   keywords,
 });
 
-export const getNewSearchBy = searchBy => async dispatch => {
+export const getNewSearchBy = searchBy => async (
+  dispatch,
+  getState,
+  { api },
+) => {
   const keywordName =
     searchBy === 'company' ? 'company_keywords' : 'job_title_keywords';
   const body = {
@@ -88,7 +89,7 @@ export const getNewSearchBy = searchBy => async dispatch => {
   };
 
   try {
-    const result = await fetchUtil('/graphql')('POST', body);
+    const result = await api.experiences.newExperienceSearchBy({ body });
     if (!result.data) {
       throw new Error(result.error);
     }

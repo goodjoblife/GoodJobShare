@@ -27,5 +27,5 @@
 .reaction {
   color: main-gray;
   margin: 10px 0;
-  display: flex;
+  float: right;
 }
