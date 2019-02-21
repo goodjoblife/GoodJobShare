@@ -1,5 +1,6 @@
 import R from 'ramda';
 import fetchingStatus, { isUnfetched } from '../constants/status';
+import { tokenSelector } from '../selectors/authSelector';
 
 export const SET_COUNT_DATA = '@@TIME_AND_SALARY/SET_COUNT_DATA';
 
@@ -37,4 +38,18 @@ export const queryTimeAndSalaryCountIfUnfetched = () => (
     return dispatch(queryTimeAndSalaryCount());
   }
   return Promise.resolve();
+};
+
+export const createSalaryWorkTime = ({ body }) => (
+  dispatch,
+  getState,
+  { api },
+) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
+  return api.timeAndSalary.postWorkings({
+    body,
+    token,
+  });
 };
