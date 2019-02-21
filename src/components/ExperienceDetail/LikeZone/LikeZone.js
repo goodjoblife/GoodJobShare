@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import i from 'common/icons';
+import { P } from 'common/base';
 import authStatusConstant from '../../../constants/authStatus';
 import styles from './LikeZone.module.css';
-import { P } from 'common/base';
 
 // count 是 number，不能使用 `count && xxx`，否則 count = 0 會有問題
 const ThumbsUp = ({ onClick, label, count, ...restProps }) => (
-  <div onClick={onClick} {...restProps}>
+  <button onClick={onClick} {...restProps}>
     <i.Like className={styles.icon} />
     {typeof label !== undefined && <div className={styles.label}>{label}</div>}
     {typeof count !== undefined && <div className={styles.count}>{count}</div>}
-  </div>
+  </button>
 );
 
 const LikeZone = ({ likeExperience, experience, login, authStatus, FB }) => (
