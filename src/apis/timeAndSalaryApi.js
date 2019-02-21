@@ -33,13 +33,15 @@ export const fetchSearchJobTitle = ({ opt }) =>
     query: opt,
   });
 
-export const postWorkings = ({ body }) => fetchUtil(endpoint).post({ body });
+export const postWorkings = ({ body, token }) =>
+  fetchUtil(endpoint).post({ body, token });
 
-const patchWorking = ({ id, status }) =>
+const patchWorking = ({ id, status, token }) =>
   fetchUtil(`/workings/${id}`).patch({
     body: {
       status,
     },
+    token,
   });
 
 export default {

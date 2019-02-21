@@ -12,9 +12,6 @@ import styles from './InterviewForm.module.css';
 
 import InterviewInfo from './InterviewInfo';
 import InterviewExperience from './InterviewExperience';
-
-import { postInterviewExperience } from '../../../apis/interviewExperiencesApi';
-
 import { interviewFormCheck } from './formCheck';
 
 import {
@@ -144,7 +141,7 @@ class InterviewForm extends React.Component {
 
     if (valid) {
       localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
-      const p = postInterviewExperience({
+      const p = this.props.createInterviewExperience({
         body: portInterviewFormToRequestFormat(getInterviewForm(this.state)),
       });
       return p.then(
@@ -265,13 +262,6 @@ class InterviewForm extends React.Component {
           },
         },
       }));
-  }
-
-  handleSubmit() {
-    localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
-    return postInterviewExperience({
-      body: portInterviewFormToRequestFormat(getInterviewForm(this.state)),
-    });
   }
 
   render() {

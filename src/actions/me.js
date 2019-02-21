@@ -105,11 +105,14 @@ export const setExperienceStatus = o => (dispatch, getState, { api }) => {
   const data = getState().me.toJS();
   let experiences = data.myExperiences.experiences;
   const index = getIndex(experiences, o._id);
+  const state = getState();
+  const token = tokenSelector(state);
 
   return api.experiences
     .patchExperience({
       id: o._id,
       status: o.status === 'published' ? 'hidden' : 'published',
+      token,
     })
     .then(result => {
       if (result.success) {
@@ -136,11 +139,14 @@ export const setWorkingStatus = o => (dispatch, getState, { api }) => {
   const data = getState().me.toJS();
   let workings = data.myWorkings.time_and_salary;
   const index = getIndex(workings, o._id);
+  const state = getState();
+  const token = tokenSelector(state);
 
   return api.timeAndSalary
     .patchWorking({
       id: o._id,
       status: o.status === 'published' ? 'hidden' : 'published',
+      token,
     })
     .then(result => {
       if (result.success) {
@@ -169,11 +175,14 @@ export const setReplyStatus = o => (dispatch, getState, { api }) => {
   const data = getState().me.toJS();
   let replies = data.myReplies.replies;
   const index = getIndex(replies, o._id);
+  const state = getState();
+  const token = tokenSelector(state);
 
   return api.experiences
     .patchReply({
       id: o._id,
       status: o.status === 'published' ? 'hidden' : 'published',
+      token,
     })
     .then(result => {
       if (result.success) {
