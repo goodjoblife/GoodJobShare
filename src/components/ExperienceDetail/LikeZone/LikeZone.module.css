@@ -11,16 +11,8 @@
     margin-bottom: 26px;
   }
 
-  & > *:last-of-type {
+  & > *:last-child {
     margin-bottom: 0;
-  }
-
-  @media (min-width: 1025px) {
-    &:hover {
-      .icon {
-        fill: main-yellow;
-      }
-    }
   }
 }
 
@@ -35,6 +27,14 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
+  @media (min-width: 1025px) {
+    &:hover {
+      > .icon {
+        fill: main-yellow;
+      }
+    }
+  }
 }
 
 .toggled {
