@@ -15,10 +15,12 @@ class WorkingHourBlock extends Component {
     onClickHeader: PropTypes.func,
     isExpanded: PropTypes.bool,
     hideContent: PropTypes.bool.isRequired,
+    hasOvertimeBlock: PropTypes.bool,
   };
 
   static defaultProps = {
     isExpanded: false,
+    hasOvertimeBlock: true,
   };
 
   constructor(props) {
@@ -29,7 +31,7 @@ class WorkingHourBlock extends Component {
   }
 
   renderBlockContent = () => {
-    const { data, hideContent } = this.props;
+    const { data, hasOvertimeBlock, hideContent } = this.props;
     if (hideContent) {
       return (
         <div className={styles.overtimeBlock}>
@@ -43,13 +45,19 @@ class WorkingHourBlock extends Component {
     }
     return (
       <div>
-        <div className={styles.overtimeBlock}>
-          <div className={styles.overtimeBlockInner}>
-            <OvertimeBlock type="salary" heading="加班有無加班費" data={data} />
-            <OvertimeBlock type="dayoff" heading="加班有無補休" data={data} />
+        {hasOvertimeBlock && (
+          <div className={styles.overtimeBlock}>
+            <div className={styles.overtimeBlockInner}>
+              <OvertimeBlock
+                type="salary"
+                heading="加班有無加班費"
+                data={data}
+              />
+              <OvertimeBlock type="dayoff" heading="加班有無補休" data={data} />
+            </div>
+            <div className={styles.overtimeBlockUnit}>單位：資料筆數</div>
           </div>
-          <div className={styles.overtimeBlockUnit}>單位：資料筆數</div>
-        </div>
+        )}{' '}
         <WorkingHourTable data={data.time_and_salary} />
       </div>
     );

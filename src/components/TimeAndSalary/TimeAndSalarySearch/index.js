@@ -92,12 +92,22 @@ class TimeAndSalarySearch extends Component {
 
   redirectOnSingleResult() {
     if (this.props.data.size === 1) {
-      const companyName = this.props.data.get(0).getIn(['company', 'name']);
-      this.props.history.replace(
-        `/companies/${companyName}/salary-work-times${
-          this.props.location.search
-        }`,
-      );
+      const searchBy = this.props.searchBy;
+      if (searchBy === 'company') {
+        const companyName = this.props.data.get(0).getIn(['company', 'name']);
+        this.props.history.replace(
+          `/companies/${companyName}/salary-work-times${
+            this.props.location.search
+          }`,
+        );
+      } else if (searchBy === 'job_title') {
+        const jobTitle = this.props.data.get(0).getIn(['company', 'name']);
+        this.props.history.replace(
+          `/job-titles/${jobTitle}/salary-work-times${
+            this.props.location.search
+          }`,
+        );
+      }
     }
   }
 
@@ -137,6 +147,12 @@ class TimeAndSalarySearch extends Component {
                   `/companies/${o.company.name}/salary-work-times${
                     this.props.location.search
                   }`,
+                );
+              } else if (searchBy === 'job_title') {
+                history.push(
+                  `/job-titles/${
+                    o.time_and_salary[0].job_title
+                  }/salary-work-times${this.props.location.search}`,
                 );
               }
             }}
