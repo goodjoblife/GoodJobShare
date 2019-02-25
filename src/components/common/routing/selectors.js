@@ -22,3 +22,8 @@ export const searchCriteriaSelector = R.compose(
   params => params.s_by,
   querySelector,
 );
+
+export const pageSelector = R.compose(
+  params => params.p,
+  querySelector,
+);
