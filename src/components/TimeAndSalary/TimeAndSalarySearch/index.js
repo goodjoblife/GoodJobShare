@@ -66,7 +66,9 @@ class TimeAndSalarySearch extends Component {
       searchCriteriaSelector(this.props),
     );
     const keyword = castValidSearchKeyword(searchKeywordSelector(this.props));
-    this.props.queryKeyword({ groupSortBy, order, searchBy, keyword });
+    this.props
+      .queryKeyword({ groupSortBy, order, searchBy, keyword })
+      .then(() => this.redirectOnSingleResult());
     this.props.fetchPermission();
   }
 
@@ -81,8 +83,17 @@ class TimeAndSalarySearch extends Component {
         searchCriteriaSelector(this.props),
       );
       const keyword = castValidSearchKeyword(searchKeywordSelector(this.props));
-      this.props.queryKeyword({ groupSortBy, order, searchBy, keyword });
+      this.props
+        .queryKeyword({ groupSortBy, order, searchBy, keyword })
+        .then(() => this.redirectOnSingleResult());
       this.props.fetchPermission();
+    }
+  }
+
+  redirectOnSingleResult() {
+    if (this.props.data.size === 1) {
+      const companyName = this.props.data.get(0).getIn(['company', 'name']);
+      this.props.history.replace(`/companies/${companyName}/salary-work-times`);
     }
   }
 
