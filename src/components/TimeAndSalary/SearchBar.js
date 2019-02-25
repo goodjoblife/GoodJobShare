@@ -55,6 +55,8 @@ class SearchBar extends Component {
     candidates: [],
   };
 
+  _isMounted = true;
+
   componentDidUpdate(prevProps) {
     if (
       searchCriteriaSelector(prevProps) !==
@@ -63,6 +65,7 @@ class SearchBar extends Component {
     ) {
       const searchType = searchCriteriaSelector(this.props);
       const keyword = searchKeywordSelector(this.props);
+      if (!this._isMounted) return;
       this.setState({
         searchType: castValidSearchType(searchType),
         keyword: castValidKeyword(keyword),
@@ -70,7 +73,12 @@ class SearchBar extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   handleTypeChange(e) {
+    if (!this._isMounted) return;
     this.setState({
       searchType: e.target.value,
       candidates: [],
@@ -78,6 +86,7 @@ class SearchBar extends Component {
   }
 
   handleKeywordChange(e) {
+    if (!this._isMounted) return;
     this.setState({
       keyword: e.target.value,
     });
@@ -103,20 +112,24 @@ class SearchBar extends Component {
   };
 
   searchKeyword = debounce(value => {
+    if (!this._isMounted) return;
     if (!value) {
       this.setState({ candidates: [] });
       return;
     }
     this.fetchCandidates(value)
       .then(candidates => {
+        if (!this._isMounted) return;
         this.setState({ candidates });
       })
       .catch(() => {
+        if (!this._isMounted) return;
         this.setState({ candidates: [] });
       });
   }, 500);
 
   handleSelectCandidate = keyword => {
+    if (!this._isMounted) return;
     this.setState({
       candidates: [],
       keyword,
