@@ -28,9 +28,9 @@ const InfoTimeModal = ({ isOpen, close }) => (
     </h2>
     <div className={cn(editorStyles.editor, 'alignLeft')}>
       若分享該筆資料的使用者已離職，則參考時間為
-      <bold>離職年、月</bold>。<br />
+      <b>離職年、月</b>。<br />
       若尚在職，則為
-      <bold>分享資料的年、月</bold>。
+      <b>分享資料的年、月</b>。
       <div
         style={{
           display: 'flex',
