@@ -50,19 +50,10 @@ class SearchBar extends Component {
   }
 
   state = {
-    searchType: 'company',
-    keyword: '',
+    searchType: castValidSearchType(searchCriteriaSelector(this.props)),
+    keyword: castValidKeyword(searchKeywordSelector(this.props)),
     candidates: [],
   };
-
-  componentDidMount() {
-    const searchType = searchCriteriaSelector(this.props);
-    const keyword = searchKeywordSelector(this.props);
-    this.setState({
-      searchType: castValidSearchType(searchType),
-      keyword: castValidKeyword(keyword),
-    });
-  }
 
   componentDidUpdate(prevProps) {
     if (
