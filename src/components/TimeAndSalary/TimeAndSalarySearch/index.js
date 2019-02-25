@@ -93,7 +93,11 @@ class TimeAndSalarySearch extends Component {
   redirectOnSingleResult() {
     if (this.props.data.size === 1) {
       const companyName = this.props.data.get(0).getIn(['company', 'name']);
-      this.props.history.replace(`/companies/${companyName}/salary-work-times`);
+      this.props.history.replace(
+        `/companies/${companyName}/salary-work-times${
+          this.props.location.search
+        }`,
+      );
     }
   }
 
@@ -129,7 +133,11 @@ class TimeAndSalarySearch extends Component {
             data={o}
             onClickHeader={() => {
               if (searchBy === 'company') {
-                history.push(`/companies/${o.company.name}/salary-work-times`);
+                history.push(
+                  `/companies/${o.company.name}/salary-work-times${
+                    this.props.location.search
+                  }`,
+                );
               }
             }}
             groupSortBy={groupSortBy}
