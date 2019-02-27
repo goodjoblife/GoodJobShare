@@ -9,7 +9,7 @@ import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
-import WorkingHourBlock from '../common/WorkingHourBlock';
+import WorkingHourBlock from './WorkingHourBlock';
 import { queryJobTitle } from '../../../actions/timeAndSalaryJobTitle';
 import { isFetching, isFetched } from '../../../constants/status';
 import renderHelmet from './helmet';
@@ -114,7 +114,6 @@ class TimeAndSalaryJobTitle extends Component {
                   )
                   .toJS()}
                 groupSortBy={groupSortBy}
-                isExpanded
                 hideContent={!canViewTimeAndSalary}
               />
               <Pagination

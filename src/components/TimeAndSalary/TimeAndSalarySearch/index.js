@@ -8,7 +8,7 @@ import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
-import WorkingHourBlock from '../common/WorkingHourBlock';
+import WorkingHourBlock from './WorkingHourBlock';
 import { queryKeyword } from '../../../actions/timeAndSalarySearch';
 import { isFetching, isFetched } from '../../../constants/status';
 import renderHelmet from './helmet';
@@ -57,7 +57,6 @@ class TimeAndSalarySearch extends Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
-    canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchPermission: PropTypes.func.isRequired,
   };
 
@@ -112,7 +111,7 @@ class TimeAndSalarySearch extends Component {
   }
 
   render() {
-    const { status, canViewTimeAndSalary, history } = this.props;
+    const { status, history } = this.props;
     const pathname = pathnameSelector(this.props);
 
     const searchBy = searchCriteriaSelector(this.props);
@@ -157,7 +156,6 @@ class TimeAndSalarySearch extends Component {
               }
             }}
             groupSortBy={groupSortBy}
-            hideContent={!canViewTimeAndSalary}
           />
         ))}
         <FanPageBlock className={styles.fanPageBlock} />
