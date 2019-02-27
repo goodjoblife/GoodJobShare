@@ -9,6 +9,9 @@ export const setSearchData = (
   order,
   searchBy,
   keyword,
+  page,
+  pageSize,
+  totalNum,
   data,
   error,
 ) => ({
@@ -17,17 +20,25 @@ export const setSearchData = (
   order,
   searchBy,
   keyword,
+  page,
+  pageSize,
+  totalNum,
   status,
   data,
   error,
 });
 
-export const queryKeyword = ({ groupSortBy, order, searchBy, keyword }) => (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const queryKeyword = ({
+  groupSortBy,
+  order,
+  searchBy,
+  keyword,
+  page,
+  pageSize,
+}) => (dispatch, getState, { api }) => {
   if (
+    page !== getState().timeAndSalarySearch.get('page') ||
+    pageSize !== getState().timeAndSalarySearch.get('pageSize') ||
     groupSortBy !== getState().timeAndSalarySearch.get('groupSortBy') ||
     order !== getState().timeAndSalarySearch.get('order') ||
     searchBy !== getState().timeAndSalarySearch.get('searchBy') ||
@@ -40,6 +51,9 @@ export const queryKeyword = ({ groupSortBy, order, searchBy, keyword }) => (
         order,
         searchBy,
         keyword,
+        page,
+        pageSize,
+        0,
         [],
         null,
       ),
@@ -87,6 +101,9 @@ export const queryKeyword = ({ groupSortBy, order, searchBy, keyword }) => (
         order,
         searchBy,
         keyword,
+        page,
+        pageSize,
+        0,
         [],
         new Error('Unrecognized parameter: searchBy'),
       ),
@@ -102,7 +119,10 @@ export const queryKeyword = ({ groupSortBy, order, searchBy, keyword }) => (
           order,
           searchBy,
           keyword,
-          data,
+          page,
+          pageSize,
+          data.length,
+          data.slice((page - 1) * pageSize, page * pageSize),
           null,
         ),
       );
@@ -115,6 +135,9 @@ export const queryKeyword = ({ groupSortBy, order, searchBy, keyword }) => (
           order,
           searchBy,
           keyword,
+          page,
+          pageSize,
+          0,
           [],
           err,
         ),

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { compose, setStatic } from 'recompose';
 import R from 'ramda';
+import qs from 'qs';
 
 import Loading from 'common/Loader';
 import { P } from 'common/base';
@@ -14,14 +15,17 @@ import { isFetching, isFetched } from '../../../constants/status';
 import renderHelmet from './helmet';
 
 import {
+  querySelector,
   pathSelector,
   pathnameSelector,
   searchCriteriaSelector,
   searchKeywordSelector,
+  pageSelector,
 } from 'common/routing/selectors';
 
 import styles from '../views/view.module.css';
 import { searchOptions } from '../SearchBar';
+import Pagination from '../../common/Pagination/Pagination';
 
 // TODO: remove these after API is ready
 const groupSortBy = 'week_work_time';
@@ -42,6 +46,11 @@ const castValidSearchCriteria = R.when(
 const castValidSearchKeyword = R.when(
   keyword => typeof keyword !== 'string',
   R.always(''),
+);
+
+const castValidPage = R.compose(
+  R.when(Number.isNaN, R.always(1)),
+  p => parseInt(p, 10),
 );
 
 class TimeAndSalarySearch extends Component {
@@ -65,14 +74,17 @@ class TimeAndSalarySearch extends Component {
       searchCriteriaSelector(this.props),
     );
     const keyword = castValidSearchKeyword(searchKeywordSelector(this.props));
+    const page = castValidPage(pageSelector(this.props));
+    const pageSize = this.props.pageSize;
     this.props
-      .queryKeyword({ groupSortBy, order, searchBy, keyword })
+      .queryKeyword({ groupSortBy, order, searchBy, keyword, page, pageSize })
       .then(() => this.redirectOnSingleResult());
     this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
     if (
+      pageSelector(prevProps) !== pageSelector(this.props) ||
       pathSelector(prevProps) !== pathSelector(this.props) ||
       searchCriteriaSelector(prevProps) !==
         searchCriteriaSelector(this.props) ||
@@ -82,8 +94,10 @@ class TimeAndSalarySearch extends Component {
         searchCriteriaSelector(this.props),
       );
       const keyword = castValidSearchKeyword(searchKeywordSelector(this.props));
+      const page = castValidPage(pageSelector(this.props));
+      const pageSize = this.props.pageSize;
       this.props
-        .queryKeyword({ groupSortBy, order, searchBy, keyword })
+        .queryKeyword({ groupSortBy, order, searchBy, keyword, page, pageSize })
         .then(() => this.redirectOnSingleResult());
       this.props.fetchPermission();
     }
@@ -111,12 +125,14 @@ class TimeAndSalarySearch extends Component {
   }
 
   render() {
-    const { status, history } = this.props;
+    const { status, history, page, pageSize, totalNum } = this.props;
     const pathname = pathnameSelector(this.props);
 
     const searchBy = searchCriteriaSelector(this.props);
     const keyword = castValidSearchKeyword(searchKeywordSelector(this.props));
     const title = keyword ? `查詢「${keyword}」的結果` : '請輸入搜尋條件！';
+
+    const queryParams = querySelector(this.props);
 
     const raw = this.props.data.toJS();
 
@@ -158,6 +174,17 @@ class TimeAndSalarySearch extends Component {
             groupSortBy={groupSortBy}
           />
         ))}
+        <Pagination
+          totalCount={totalNum}
+          unit={pageSize}
+          currentPage={page}
+          createPageLinkTo={toPage =>
+            qs.stringify(
+              { ...queryParams, p: toPage },
+              { addQueryPrefix: true },
+            )
+          }
+        />
         <FanPageBlock className={styles.fanPageBlock} />
       </section>
     );
@@ -167,8 +194,12 @@ class TimeAndSalarySearch extends Component {
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   const searchBy = castValidSearchCriteria(searchCriteriaSelector(props));
   const keyword = castValidSearchKeyword(searchKeywordSelector(props));
+  const page = castValidPage(pageSelector(props));
+  const pageSize = props.pageSize;
 
-  return dispatch(queryKeyword({ groupSortBy, order, searchBy, keyword }));
+  return dispatch(
+    queryKeyword({ groupSortBy, order, searchBy, keyword, page, pageSize }),
+  );
 });
 
 const hoc = compose(

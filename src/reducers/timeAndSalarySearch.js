@@ -12,6 +12,9 @@ const preloadedState = fromJS({
   order: null,
   searchBy: null,
   keyword: null,
+  page: 1,
+  pageSize: 10,
+  totalNum: 0,
   data: [],
   status: fetchingStatus.UNFETCHED,
   error: null,
@@ -20,7 +23,18 @@ const preloadedState = fromJS({
 export default createReducer(preloadedState, {
   [SET_SEARCH_DATA]: (
     state,
-    { groupSortBy, order, searchBy, keyword, data, status, error },
+    {
+      groupSortBy,
+      order,
+      searchBy,
+      keyword,
+      page,
+      pageSize,
+      totalNum,
+      data,
+      status,
+      error,
+    },
   ) =>
     state
       .set('data', fromJS(data))
@@ -29,6 +43,9 @@ export default createReducer(preloadedState, {
       .set('groupSortBy', groupSortBy)
       .set('order', order)
       .set('searchBy', searchBy)
-      .set('keyword', keyword),
+      .set('keyword', keyword)
+      .set('page', page)
+      .set('pageSize', pageSize)
+      .set('totalNum', totalNum),
   [SET_SEARCH_STATUS]: (state, { status }) => state.set('status', status),
 });
