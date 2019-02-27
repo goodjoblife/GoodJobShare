@@ -19,8 +19,6 @@ import TimeInfo from '../TimeSalaryForm/TimeInfo';
 import InputTitle from '../common/InputTitle';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 import MarkdownParser from '../../LaborRightsSingle/MarkdownParser';
-
-import { postWorkings } from '../../../apis/timeAndSalaryApi';
 import { queryCampaignInfoList } from '../../../actions/campaignInfo';
 
 import timeAndSalaryFormStyles from '../TimeSalaryForm/TimeSalaryForm.module.css';
@@ -92,6 +90,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     campaignEntries: ImmutablePropTypes.map.isRequired,
     campaignEntriesStatus: PropTypes.string.isRequired,
     queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
+    createSalaryWorkTime: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
         campaign_name: PropTypes.string,
@@ -148,7 +147,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
     );
 
     if (valid && (valid2 || valid3) && valid4) {
-      const p = postWorkings({
+      const p = this.props.createSalaryWorkTime({
         body: portTimeSalaryFormToRequestFormat(
           getCampaignTimeAndSalaryForm(extraFields, defaultContent)(this.state),
         ),

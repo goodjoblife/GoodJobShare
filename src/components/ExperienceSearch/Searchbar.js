@@ -24,10 +24,20 @@ class SearchBar extends PureComponent {
 
   static getDerivedStateFromProps(props, state) {
     const { searchBy, searchQuery } = props;
-    return {
-      searchBy,
-      searchQuery,
-    };
+    const { prevPropsSearchBy, prevPropsSearchQuery } = state;
+
+    if (
+      searchBy !== prevPropsSearchBy ||
+      searchQuery !== prevPropsSearchQuery
+    ) {
+      return {
+        prevPropsSearchBy: searchBy,
+        prevPropsSearchQuery: searchQuery,
+        searchBy,
+        searchQuery,
+      };
+    }
+    return null;
   }
 
   render() {

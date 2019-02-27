@@ -18,8 +18,6 @@ import {
   propsWorkExperiencesForm,
 } from '../utils';
 
-import { postWorkExperience } from '../../../apis/workExperiencesApi';
-
 import { workExperiencesFormCheck } from './formCheck';
 
 import { LS_WORK_EXPERIENCES_FORM_KEY } from '../../../constants/localStorageKey';
@@ -137,7 +135,9 @@ class WorkExperiencesForm extends React.Component {
 
     if (valid) {
       localStorage.removeItem(LS_WORK_EXPERIENCES_FORM_KEY);
-      const p = postWorkExperience({ body: workExperiencesToBody(this.state) });
+      const p = this.props.createWorkExperience({
+        body: workExperiencesToBody(this.state),
+      });
       return p.then(
         response => {
           const experienceId = response.experience._id;
