@@ -11,6 +11,7 @@ import { withPermission } from 'common/permission-context';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 import Top from './Top';
+import EmailVerificationTop from './Top/EmailVerificationTop';
 import ProgressTop from './Top/ProgressTop';
 
 import authStatus from '../../../constants/authStatus';
@@ -78,12 +79,23 @@ class Header extends React.Component {
   }
 
   renderTop = () => {
-    if (this.props.location.pathname === '/') {
+    const {
+      auth,
+      location: { pathname },
+    } = this.props;
+
+    if (pathname === '/') {
       return null;
     }
+
+    const isLogin = auth.get('status') === authStatus.CONNECTED;
     return (
-      <Top link={shareLink}>
-        <ProgressTop />
+      <Top link={isLogin ? shareLink : shareLink}>
+        {isLogin ? (
+          <EmailVerificationTop isSentVerificationEmail />
+        ) : (
+          <ProgressTop />
+        )}
       </Top>
     );
   };
