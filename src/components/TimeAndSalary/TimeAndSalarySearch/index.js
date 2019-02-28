@@ -27,10 +27,6 @@ import styles from '../views/view.module.css';
 import { searchOptions } from '../SearchBar';
 import Pagination from '../../common/Pagination/Pagination';
 
-// TODO: remove these after API is ready
-const groupSortBy = 'week_work_time';
-const order = 'descending';
-
 const searchCriteriaText = searchBy =>
   R.compose(
     R.prop('label'),
@@ -75,7 +71,7 @@ class TimeAndSalarySearch extends Component {
     const page = validatePage(pageSelector(this.props));
     const pageSize = this.props.pageSize;
     this.props
-      .queryKeyword({ groupSortBy, order, searchBy, keyword, page, pageSize })
+      .queryKeyword({ searchBy, keyword, page, pageSize })
       .then(() => this.redirectOnSingleResult());
     this.props.fetchPermission();
   }
@@ -95,7 +91,7 @@ class TimeAndSalarySearch extends Component {
       const page = validatePage(pageSelector(this.props));
       const pageSize = this.props.pageSize;
       this.props
-        .queryKeyword({ groupSortBy, order, searchBy, keyword, page, pageSize })
+        .queryKeyword({ searchBy, keyword, page, pageSize })
         .then(() => this.redirectOnSingleResult());
       this.props.fetchPermission();
     }
@@ -169,7 +165,6 @@ class TimeAndSalarySearch extends Component {
                 );
               }
             }}
-            groupSortBy={groupSortBy}
           />
         ))}
         <Pagination
@@ -195,9 +190,7 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   const page = validatePage(pageSelector(props));
   const pageSize = props.pageSize;
 
-  return dispatch(
-    queryKeyword({ groupSortBy, order, searchBy, keyword, page, pageSize }),
-  );
+  return dispatch(queryKeyword({ searchBy, keyword, page, pageSize }));
 });
 
 const hoc = compose(

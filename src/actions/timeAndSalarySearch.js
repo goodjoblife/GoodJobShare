@@ -24,19 +24,18 @@ export const setSearchData = (
   error,
 });
 
-export const queryKeyword = ({
-  groupSortBy,
-  order,
-  searchBy,
-  keyword,
-  page,
-  pageSize,
-}) => (dispatch, getState, { api }) => {
+// TODO: remove these after API is ready
+const groupSortBy = 'week_work_time';
+const order = 'descending';
+
+export const queryKeyword = ({ searchBy, keyword, page, pageSize }) => (
+  dispatch,
+  getState,
+  { api },
+) => {
   if (
     page !== getState().timeAndSalarySearch.get('page') ||
     pageSize !== getState().timeAndSalarySearch.get('pageSize') ||
-    groupSortBy !== getState().timeAndSalarySearch.get('groupSortBy') ||
-    order !== getState().timeAndSalarySearch.get('order') ||
     searchBy !== getState().timeAndSalarySearch.get('searchBy') ||
     keyword !== getState().timeAndSalarySearch.get('keyword')
   ) {

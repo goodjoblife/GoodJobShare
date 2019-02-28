@@ -24,9 +24,6 @@ import {
 import styles from '../views/view.module.css';
 import Pagination from '../../common/Pagination/Pagination';
 
-// TODO: remove these after API is ready
-const groupSortBy = 'week_work_time';
-
 const jobTitleSelector = R.compose(
   params => params.jobTitle,
   paramsSelector,
@@ -106,7 +103,6 @@ class TimeAndSalaryJobTitle extends Component {
                     list.slice((page - 1) * pageSize, page * pageSize),
                   )
                   .toJS()}
-                groupSortBy={groupSortBy}
                 hideContent={!canViewTimeAndSalary}
               />
               <Pagination

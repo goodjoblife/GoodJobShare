@@ -7,15 +7,12 @@ import styles from '../common/WorkingHourBlock.module.css';
 class WorkingHourBlock extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
-    groupSortBy: PropTypes.string.isRequired,
     onClickHeader: PropTypes.func,
   };
 
   render() {
-    const { data, groupSortBy, onClickHeader } = this.props;
-    const { average, company } = data;
-    const avgVal = average[groupSortBy];
-    const avgUnit = groupSortBy === 'week_work_time' ? '小時' : '元';
+    const { data, onClickHeader } = this.props;
+    const { company } = data;
     return (
       <section className={styles.container}>
         <button className={styles.toggleButton} onClick={onClickHeader}>
@@ -24,11 +21,9 @@ class WorkingHourBlock extends Component {
               {company.name}
             </Heading>
             <div className={styles.averageBlock}>
-              <span className={styles.averageBlockHeading}>
-                平均一週總工時：
-              </span>
+              <span className={styles.averageBlockHeading}>資料數：</span>
               <span className={styles.averageBlockValue}>
-                {avgVal ? avgVal.toFixed(1) : '-'} {avgUnit}
+                {data.time_and_salary.length} 筆
               </span>
             </div>
           </div>

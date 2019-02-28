@@ -11,7 +11,6 @@ import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermi
 class WorkingHourBlock extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
-    groupSortBy: PropTypes.string.isRequired,
     hideContent: PropTypes.bool.isRequired,
   };
 
@@ -43,10 +42,8 @@ class WorkingHourBlock extends Component {
   };
 
   render() {
-    const { data, groupSortBy } = this.props;
-    const { average, company } = data;
-    const avgVal = average[groupSortBy];
-    const avgUnit = groupSortBy === 'week_work_time' ? '小時' : '元';
+    const { data } = this.props;
+    const { company } = data;
     return (
       <section className={styles.container}>
         <div className={styles.toggleButton}>
@@ -54,14 +51,6 @@ class WorkingHourBlock extends Component {
             <Heading size="sl" className={styles.headingBlock}>
               {company.name}
             </Heading>
-            <div className={styles.averageBlock}>
-              <span className={styles.averageBlockHeading}>
-                平均一週總工時：
-              </span>
-              <span className={styles.averageBlockValue}>
-                {avgVal ? avgVal.toFixed(1) : '-'} {avgUnit}
-              </span>
-            </div>
           </div>
         </div>
 

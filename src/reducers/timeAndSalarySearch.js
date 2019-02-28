@@ -21,25 +21,12 @@ const preloadedState = fromJS({
 export default createReducer(preloadedState, {
   [SET_SEARCH_DATA]: (
     state,
-    {
-      groupSortBy,
-      order,
-      searchBy,
-      keyword,
-      page,
-      pageSize,
-      totalNum,
-      data,
-      status,
-      error,
-    },
+    { searchBy, keyword, page, pageSize, totalNum, data, status, error },
   ) =>
     state
       .set('data', fromJS(data))
       .set('status', status)
       .set('error', error)
-      .set('groupSortBy', groupSortBy)
-      .set('order', order)
       .set('searchBy', searchBy)
       .set('keyword', keyword)
       .set('page', page)
