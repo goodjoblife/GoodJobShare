@@ -11,8 +11,10 @@ import { withPermission } from 'common/permission-context';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 import Top from './Top';
+import ProgressTop from './Top/ProgressTop';
 
 import authStatus from '../../../constants/authStatus';
+import { shareLink } from '../../../constants/dataProgress';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 
 class Header extends React.Component {
@@ -79,7 +81,11 @@ class Header extends React.Component {
     if (this.props.location.pathname === '/') {
       return null;
     }
-    return <Top />;
+    return (
+      <Top link={shareLink}>
+        <ProgressTop />
+      </Top>
+    );
   };
 
   render() {
