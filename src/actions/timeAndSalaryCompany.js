@@ -1,16 +1,17 @@
 import fetchingStatus from '../constants/status';
 
-export const SET_COMPANY = '@@timeAndSalaryCompany/SET_COMPANY';
-export const SET_STATUS = '@@timeAndSalaryCompany/SET_STATUS';
+export const SET_COMPANY_DATA = '@@timeAndSalaryCompany/SET_COMPANY_DATA';
+export const SET_COMPANY_STATUS = '@@timeAndSalaryCompany/SET_COMPANY_STATUS';
 export const SET_PAGE = '@@timeAndSalaryCompany/SET_PAGE';
 
+// TODO: remove these after API is ready
 const groupSortBy = 'week_work_time';
 const order = 'descending';
 
-export const setCompany = (status, companyName, data, error) => ({
-  type: SET_COMPANY,
-  status,
+export const setCompanyData = (status, companyName, data, error) => ({
+  type: SET_COMPANY_DATA,
   companyName,
+  status,
   data,
   error,
 });
@@ -27,7 +28,7 @@ export const queryCompany = ({ companyName }) => (
   { api },
 ) => {
   if (companyName !== getState().timeAndSalaryCompany.get('companyName')) {
-    dispatch(setCompany(fetchingStatus.UNFETCHED, companyName, null, null));
+    dispatch(setCompanyData(fetchingStatus.UNFETCHED, companyName, null, null));
   }
 
   if (
@@ -37,28 +38,27 @@ export const queryCompany = ({ companyName }) => (
   }
 
   dispatch({
-    type: SET_STATUS,
+    type: SET_COMPANY_STATUS,
     status: fetchingStatus.FETCHING,
   });
 
   const opt = {
+    company: companyName,
     group_sort_by: groupSortBy,
     group_sort_order: order,
   };
 
   return api.timeAndSalary
-    .fetchSearchCompany({
-      opt: {
-        ...opt,
-        company: companyName,
-      },
-    })
+    .fetchSearchCompany({ opt })
     .then(data => {
+      // TODO: substitute new api
       const company = data.pop();
       if (!company) throw new Error('No such company');
-      dispatch(setCompany(fetchingStatus.FETCHED, companyName, company, null));
+      dispatch(
+        setCompanyData(fetchingStatus.FETCHED, companyName, company, null),
+      );
     })
     .catch(err => {
-      dispatch(setCompany(fetchingStatus.ERROR, companyName, null, err));
+      dispatch(setCompanyData(fetchingStatus.ERROR, companyName, null, err));
     });
 };

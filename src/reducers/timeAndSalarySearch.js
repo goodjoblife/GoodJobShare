@@ -8,8 +8,6 @@ import {
 import fetchingStatus from '../constants/status';
 
 const preloadedState = fromJS({
-  groupSortBy: null,
-  order: null,
   searchBy: null,
   keyword: null,
   page: 1,

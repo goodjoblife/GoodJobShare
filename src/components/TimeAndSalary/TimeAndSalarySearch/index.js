@@ -38,17 +38,17 @@ const searchCriteriaText = searchBy =>
     R.filter(R.propEq('value', searchBy)),
   )(searchOptions);
 
-const castValidSearchCriteria = R.when(
+const validateSearchCriteria = R.when(
   searchBy => !searchOptions.some(R.propEq('value', searchBy)),
   R.always(R.head(searchOptions).value),
 );
 
-const castValidSearchKeyword = R.when(
+const validateSearchKeyword = R.when(
   keyword => typeof keyword !== 'string',
   R.always(''),
 );
 
-const castValidPage = R.compose(
+const validatePage = R.compose(
   R.when(Number.isNaN, R.always(1)),
   p => parseInt(p, 10),
 );
@@ -70,11 +70,9 @@ class TimeAndSalarySearch extends Component {
   };
 
   componentDidMount() {
-    const searchBy = castValidSearchCriteria(
-      searchCriteriaSelector(this.props),
-    );
-    const keyword = castValidSearchKeyword(searchKeywordSelector(this.props));
-    const page = castValidPage(pageSelector(this.props));
+    const searchBy = validateSearchCriteria(searchCriteriaSelector(this.props));
+    const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
+    const page = validatePage(pageSelector(this.props));
     const pageSize = this.props.pageSize;
     this.props
       .queryKeyword({ groupSortBy, order, searchBy, keyword, page, pageSize })
@@ -90,11 +88,11 @@ class TimeAndSalarySearch extends Component {
         searchCriteriaSelector(this.props) ||
       searchKeywordSelector(prevProps) !== searchKeywordSelector(this.props)
     ) {
-      const searchBy = castValidSearchCriteria(
+      const searchBy = validateSearchCriteria(
         searchCriteriaSelector(this.props),
       );
-      const keyword = castValidSearchKeyword(searchKeywordSelector(this.props));
-      const page = castValidPage(pageSelector(this.props));
+      const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
+      const page = validatePage(pageSelector(this.props));
       const pageSize = this.props.pageSize;
       this.props
         .queryKeyword({ groupSortBy, order, searchBy, keyword, page, pageSize })
@@ -129,7 +127,7 @@ class TimeAndSalarySearch extends Component {
     const pathname = pathnameSelector(this.props);
 
     const searchBy = searchCriteriaSelector(this.props);
-    const keyword = castValidSearchKeyword(searchKeywordSelector(this.props));
+    const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
     const title = keyword ? `查詢「${keyword}」的結果` : '請輸入搜尋條件！';
 
     const queryParams = querySelector(this.props);
@@ -146,7 +144,7 @@ class TimeAndSalarySearch extends Component {
             <P size="l" bold className={styles.searchNoResult}>
               尚未有
               {searchCriteriaText(
-                castValidSearchCriteria(searchCriteriaSelector(this.props)),
+                validateSearchCriteria(searchCriteriaSelector(this.props)),
               )}
               「{keyword}
               」的薪時資訊
@@ -192,9 +190,9 @@ class TimeAndSalarySearch extends Component {
 }
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const searchBy = castValidSearchCriteria(searchCriteriaSelector(props));
-  const keyword = castValidSearchKeyword(searchKeywordSelector(props));
-  const page = castValidPage(pageSelector(props));
+  const searchBy = validateSearchCriteria(searchCriteriaSelector(props));
+  const keyword = validateSearchKeyword(searchKeywordSelector(props));
+  const page = validatePage(pageSelector(props));
   const pageSize = props.pageSize;
 
   return dispatch(

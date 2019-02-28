@@ -28,12 +28,12 @@ export const searchOptions = [
   { label: '職稱', value: 'job_title' },
 ];
 
-const castValidSearchType = R.when(
+const validateSearchType = R.when(
   searchType => searchOptions.every(option => option.value !== searchType),
   R.always(R.head(searchOptions).value),
 );
 
-const castValidKeyword = R.when(
+const validateKeyword = R.when(
   keyword => typeof keyword !== 'string',
   R.always(''),
 );
@@ -50,8 +50,8 @@ class SearchBar extends Component {
   }
 
   state = {
-    searchType: castValidSearchType(searchCriteriaSelector(this.props)),
-    keyword: castValidKeyword(searchKeywordSelector(this.props)),
+    searchType: validateSearchType(searchCriteriaSelector(this.props)),
+    keyword: validateKeyword(searchKeywordSelector(this.props)),
     candidates: [],
   };
 
@@ -67,8 +67,8 @@ class SearchBar extends Component {
       const keyword = searchKeywordSelector(this.props);
       if (!this._isMounted) return;
       this.setState({
-        searchType: castValidSearchType(searchType),
-        keyword: castValidKeyword(keyword),
+        searchType: validateSearchType(searchType),
+        keyword: validateKeyword(keyword),
       });
     }
   }

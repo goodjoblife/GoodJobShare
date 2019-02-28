@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { compose, setStatic } from 'recompose';
 import R from 'ramda';
 import qs from 'qs';
+import { compose, setStatic } from 'recompose';
 
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
-import { withPermission } from 'common/permission-context';
 import WorkingHourBlock from './WorkingHourBlock';
+import { withPermission } from 'common/permission-context';
 import { queryJobTitle } from '../../../actions/timeAndSalaryJobTitle';
 import { isFetching, isFetched } from '../../../constants/status';
 import renderHelmet from './helmet';
@@ -18,29 +18,21 @@ import {
   querySelector,
   pageSelector,
   pathnameSelector,
-  searchCriteriaSelector,
   paramsSelector,
 } from 'common/routing/selectors';
 
 import styles from '../views/view.module.css';
-import { searchOptions } from '../SearchBar';
 import Pagination from '../../common/Pagination/Pagination';
 
 // TODO: remove these after API is ready
 const groupSortBy = 'week_work_time';
-const order = 'descending';
-
-const castValidSearchCriteria = R.when(
-  searchBy => !searchOptions.some(R.propEq('value', searchBy)),
-  R.always(R.head(searchOptions).value),
-);
 
 const jobTitleSelector = R.compose(
   params => params.jobTitle,
   paramsSelector,
 );
 
-const castValidPage = R.compose(
+const validatePage = R.compose(
   R.when(Number.isNaN, R.always(1)),
   page => parseInt(page, 10),
 );
@@ -70,7 +62,7 @@ class TimeAndSalaryJobTitle extends Component {
     });
     this.props.fetchPermission();
     this.props.setPage(
-      castValidPage(pageSelector(this.props)),
+      validatePage(pageSelector(this.props)),
       this.props.pageSize,
     );
   }
@@ -84,7 +76,7 @@ class TimeAndSalaryJobTitle extends Component {
     }
     if (pageSelector(prevProps) !== pageSelector(this.props)) {
       this.props.setPage(
-        castValidPage(pageSelector(this.props)),
+        validatePage(pageSelector(this.props)),
         this.props.pageSize,
       );
     }
@@ -109,6 +101,7 @@ class TimeAndSalaryJobTitle extends Component {
             <React.Fragment>
               <WorkingHourBlock
                 data={data
+                  // pagination over time_and_salary
                   .update('time_and_salary', list =>
                     list.slice((page - 1) * pageSize, page * pageSize),
                   )
@@ -131,7 +124,7 @@ class TimeAndSalaryJobTitle extends Component {
             </React.Fragment>
           )) || (
             <P size="l" bold className={styles.searchNoResult}>
-              尚未有「
+              尚未有職稱「
               {jobTitle}
               」的薪時資訊
             </P>
@@ -141,25 +134,11 @@ class TimeAndSalaryJobTitle extends Component {
   }
 }
 
-const ssr = setStatic(
-  'fetchData',
-  ({ store: { state, dispatch }, ...props }) => {
-    const searchBy = castValidSearchCriteria(searchCriteriaSelector(props));
-    const jobTitle = jobTitleSelector(props);
-    const page = castValidPage(pageSelector(props));
+const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
+  const jobTitle = jobTitleSelector(props);
 
-    return dispatch(
-      queryJobTitle({
-        groupSortBy,
-        order,
-        searchBy,
-        jobTitle,
-        page,
-        pageSize: state.timeAndSalaryJobTitle.get('pageSize'),
-      }),
-    );
-  },
-);
+  return dispatch(queryJobTitle({ jobTitle }));
+});
 
 const hoc = compose(
   ssr,

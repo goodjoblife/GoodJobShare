@@ -5,8 +5,6 @@ export const SET_SEARCH_STATUS = '@@timeAndSalarySearch/SET_SEARCH_STATUS';
 
 export const setSearchData = (
   status,
-  groupSortBy,
-  order,
   searchBy,
   keyword,
   page,
@@ -16,8 +14,6 @@ export const setSearchData = (
   error,
 ) => ({
   type: SET_SEARCH_DATA,
-  groupSortBy,
-  order,
   searchBy,
   keyword,
   page,
@@ -47,8 +43,6 @@ export const queryKeyword = ({
     dispatch(
       setSearchData(
         fetchingStatus.UNFETCHED,
-        groupSortBy,
-        order,
         searchBy,
         keyword,
         page,
@@ -97,8 +91,6 @@ export const queryKeyword = ({
     return dispatch(
       setSearchData(
         fetchingStatus.ERROR,
-        groupSortBy,
-        order,
         searchBy,
         keyword,
         page,
@@ -115,8 +107,6 @@ export const queryKeyword = ({
       dispatch(
         setSearchData(
           fetchingStatus.FETCHED,
-          groupSortBy,
-          order,
           searchBy,
           keyword,
           page,
@@ -131,8 +121,6 @@ export const queryKeyword = ({
       dispatch(
         setSearchData(
           fetchingStatus.ERROR,
-          groupSortBy,
-          order,
           searchBy,
           keyword,
           page,

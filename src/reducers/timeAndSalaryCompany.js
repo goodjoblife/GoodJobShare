@@ -2,8 +2,8 @@ import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 
 import {
-  SET_COMPANY,
-  SET_STATUS,
+  SET_COMPANY_DATA,
+  SET_COMPANY_STATUS,
   SET_PAGE,
 } from '../actions/timeAndSalaryCompany';
 import fetchingStatus from '../constants/status';
@@ -18,7 +18,7 @@ const preloadedState = fromJS({
 });
 
 export default createReducer(preloadedState, {
-  [SET_COMPANY]: (state, { companyName, data, status, error }) =>
+  [SET_COMPANY_DATA]: (state, { companyName, data, status, error }) =>
     state
       .set('data', fromJS(data))
       .set('status', status)
@@ -26,5 +26,5 @@ export default createReducer(preloadedState, {
       .set('companyName', companyName),
   [SET_PAGE]: (state, { page, pageSize }) =>
     state.set('page', page).set('pageSize', pageSize),
-  [SET_STATUS]: (state, { status }) => state.set('status', status),
+  [SET_COMPANY_STATUS]: (state, { status }) => state.set('status', status),
 });
