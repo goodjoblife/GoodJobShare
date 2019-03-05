@@ -24,6 +24,11 @@ import {
   searchKeywordSelector,
   pageSelector,
 } from '../common/selectors';
+import {
+  validatePage,
+  validateSearchCriteria,
+  validateSearchKeyword,
+} from '../common/validators';
 
 import styles from '../views/view.module.css';
 import { searchOptions } from '../SearchBar';
@@ -35,21 +40,6 @@ const searchCriteriaText = searchBy =>
     R.head,
     R.filter(R.propEq('value', searchBy)),
   )(searchOptions);
-
-const validateSearchCriteria = R.when(
-  searchBy => !searchOptions.some(R.propEq('value', searchBy)),
-  R.always(R.head(searchOptions).value),
-);
-
-const validateSearchKeyword = R.when(
-  keyword => typeof keyword !== 'string',
-  R.always(''),
-);
-
-const validatePage = R.compose(
-  R.when(Number.isNaN, R.always(1)),
-  p => parseInt(p, 10),
-);
 
 class TimeAndSalarySearch extends Component {
   static propTypes = {

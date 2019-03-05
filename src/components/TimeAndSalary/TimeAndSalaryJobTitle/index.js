@@ -20,6 +20,7 @@ import {
   paramsSelector,
 } from 'common/routing/selectors';
 import { pageSelector } from '../common/selectors';
+import { validatePage } from '../common/validators';
 
 import styles from '../views/view.module.css';
 import Pagination from '../../common/Pagination/Pagination';
@@ -27,11 +28,6 @@ import Pagination from '../../common/Pagination/Pagination';
 const jobTitleSelector = R.compose(
   params => params.jobTitle,
   paramsSelector,
-);
-
-const validatePage = R.compose(
-  R.when(Number.isNaN, R.always(1)),
-  page => parseInt(page, 10),
 );
 
 class TimeAndSalaryJobTitle extends Component {
