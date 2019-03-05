@@ -12,18 +12,3 @@ export const querySelector = R.compose(
   query => qs.parse(query, { ignoreQueryPrefix: true }),
   searchSelector,
 );
-
-export const searchKeywordSelector = R.compose(
-  params => params.q,
-  querySelector,
-);
-
-export const searchCriteriaSelector = R.compose(
-  params => params.s_by,
-  querySelector,
-);
-
-export const pageSelector = R.compose(
-  params => params.p,
-  querySelector,
-);

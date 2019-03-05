@@ -18,10 +18,12 @@ import {
   querySelector,
   pathSelector,
   pathnameSelector,
+} from 'common/routing/selectors';
+import {
   searchCriteriaSelector,
   searchKeywordSelector,
   pageSelector,
-} from 'common/routing/selectors';
+} from '../common/selectors';
 
 import styles from '../views/view.module.css';
 import { searchOptions } from '../SearchBar';

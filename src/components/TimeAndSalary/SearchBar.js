@@ -19,7 +19,7 @@ import {
 import {
   searchCriteriaSelector,
   searchKeywordSelector,
-} from 'common/routing/selectors';
+} from './common/selectors';
 
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 

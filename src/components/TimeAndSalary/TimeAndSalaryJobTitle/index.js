@@ -16,10 +16,10 @@ import renderHelmet from './helmet';
 
 import {
   querySelector,
-  pageSelector,
   pathnameSelector,
   paramsSelector,
 } from 'common/routing/selectors';
+import { pageSelector } from '../common/selectors';
 
 import styles from '../views/view.module.css';
 import Pagination from '../../common/Pagination/Pagination';
