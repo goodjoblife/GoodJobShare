@@ -1,3 +1,4 @@
+import React from 'react';
 import LandingPage from './containers/LandingPage';
 import LaborRightsMenu from './containers/LaborRightsMenu';
 import LaborRightsSingle from './containers/LaborRightsSingle';
@@ -25,6 +26,7 @@ import Faq from './components/Faq';
 import Guidelines from './components/Guidelines';
 import Privacy from './components/Privacy';
 import Terms from './components/Terms';
+import Redirect from 'common/routing/Redirect';
 
 const routes = [
   {
@@ -157,6 +159,24 @@ const routes = [
         path: '/time-and-salary/sort/salary-asc',
         exact: true,
         component: TimeAndSalaryBoard,
+      },
+      {
+        path: '/time-and-salary/company/:keyword',
+        exact: false,
+        component: ({ match }) => (
+          <Redirect
+            to={`/salary-work-times?q=${match.params.keyword}&s_by=company`}
+          />
+        ),
+      },
+      {
+        path: '/time-and-salary/job-title/:keyword',
+        exact: false,
+        component: ({ match }) => (
+          <Redirect
+            to={`/salary-work-times?q=${match.params.keyword}&s_by=job_title`}
+          />
+        ),
       },
       {
         component: TimeAndSalaryNotFound,
