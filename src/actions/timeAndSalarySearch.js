@@ -3,22 +3,10 @@ import fetchingStatus from '../constants/status';
 export const SET_SEARCH_DATA = '@@timeAndSalarySearch/SET_SEARCH_DATA';
 export const SET_SEARCH_STATUS = '@@timeAndSalarySearch/SET_SEARCH_STATUS';
 
-export const setSearchData = (
-  status,
-  searchBy,
-  keyword,
-  page,
-  pageSize,
-  totalNum,
-  data,
-  error,
-) => ({
+export const setSearchData = (status, searchBy, keyword, data, error) => ({
   type: SET_SEARCH_DATA,
   searchBy,
   keyword,
-  page,
-  pageSize,
-  totalNum,
   status,
   data,
   error,
@@ -28,28 +16,17 @@ export const setSearchData = (
 const groupSortBy = 'week_work_time';
 const order = 'descending';
 
-export const queryKeyword = ({ searchBy, keyword, page, pageSize }) => (
+export const queryKeyword = ({ searchBy, keyword }) => (
   dispatch,
   getState,
   { api },
 ) => {
   if (
-    page !== getState().timeAndSalarySearch.get('page') ||
-    pageSize !== getState().timeAndSalarySearch.get('pageSize') ||
     searchBy !== getState().timeAndSalarySearch.get('searchBy') ||
     keyword !== getState().timeAndSalarySearch.get('keyword')
   ) {
     dispatch(
-      setSearchData(
-        fetchingStatus.UNFETCHED,
-        searchBy,
-        keyword,
-        page,
-        pageSize,
-        0,
-        [],
-        null,
-      ),
+      setSearchData(fetchingStatus.UNFETCHED, searchBy, keyword, [], null),
     );
   }
 
@@ -92,9 +69,6 @@ export const queryKeyword = ({ searchBy, keyword, page, pageSize }) => (
         fetchingStatus.ERROR,
         searchBy,
         keyword,
-        page,
-        pageSize,
-        0,
         [],
         new Error('Unrecognized parameter: searchBy'),
       ),
@@ -104,30 +78,10 @@ export const queryKeyword = ({ searchBy, keyword, page, pageSize }) => (
   return promise
     .then(data => {
       dispatch(
-        setSearchData(
-          fetchingStatus.FETCHED,
-          searchBy,
-          keyword,
-          page,
-          pageSize,
-          data.length,
-          data.slice((page - 1) * pageSize, page * pageSize),
-          null,
-        ),
+        setSearchData(fetchingStatus.FETCHED, searchBy, keyword, data, null),
       );
     })
     .catch(err => {
-      dispatch(
-        setSearchData(
-          fetchingStatus.ERROR,
-          searchBy,
-          keyword,
-          page,
-          pageSize,
-          0,
-          [],
-          err,
-        ),
-      );
+      dispatch(setSearchData(fetchingStatus.ERROR, searchBy, keyword, [], err));
     });
 };

@@ -60,17 +60,14 @@ class TimeAndSalarySearch extends Component {
   componentDidMount() {
     const searchBy = validateSearchCriteria(searchCriteriaSelector(this.props));
     const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
-    const page = validatePage(pageSelector(this.props));
-    const pageSize = this.props.pageSize;
     this.props
-      .queryKeyword({ searchBy, keyword, page, pageSize })
+      .queryKeyword({ searchBy, keyword })
       .then(() => this.redirectOnSingleResult());
     this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
     if (
-      pageSelector(prevProps) !== pageSelector(this.props) ||
       pathSelector(prevProps) !== pathSelector(this.props) ||
       searchCriteriaSelector(prevProps) !==
         searchCriteriaSelector(this.props) ||
@@ -80,10 +77,8 @@ class TimeAndSalarySearch extends Component {
         searchCriteriaSelector(this.props),
       );
       const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
-      const page = validatePage(pageSelector(this.props));
-      const pageSize = this.props.pageSize;
       this.props
-        .queryKeyword({ searchBy, keyword, page, pageSize })
+        .queryKeyword({ searchBy, keyword })
         .then(() => this.redirectOnSingleResult());
       this.props.fetchPermission();
     }
@@ -111,8 +106,11 @@ class TimeAndSalarySearch extends Component {
   }
 
   render() {
-    const { status, history, page, pageSize, totalNum } = this.props;
+    const { status, history } = this.props;
     const pathname = pathnameSelector(this.props);
+    const page = validatePage(pageSelector(this.props));
+    const pageSize = 10;
+    const totalNum = this.props.data.size;
 
     const searchBy = searchCriteriaSelector(this.props);
     const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
@@ -120,7 +118,9 @@ class TimeAndSalarySearch extends Component {
 
     const queryParams = querySelector(this.props);
 
-    const raw = this.props.data.toJS();
+    const raw = this.props.data
+      .slice((page - 1) * pageSize, page * pageSize)
+      .toJS();
 
     return (
       <section className={styles.searchResult}>
@@ -179,10 +179,8 @@ class TimeAndSalarySearch extends Component {
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   const searchBy = validateSearchCriteria(searchCriteriaSelector(props));
   const keyword = validateSearchKeyword(searchKeywordSelector(props));
-  const page = validatePage(pageSelector(props));
-  const pageSize = props.pageSize;
 
-  return dispatch(queryKeyword({ searchBy, keyword, page, pageSize }));
+  return dispatch(queryKeyword({ searchBy, keyword }));
 });
 
 const hoc = compose(
