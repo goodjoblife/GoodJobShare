@@ -2,7 +2,6 @@ import fetchingStatus from '../constants/status';
 
 export const SET_COMPANY_DATA = '@@timeAndSalaryCompany/SET_COMPANY_DATA';
 export const SET_COMPANY_STATUS = '@@timeAndSalaryCompany/SET_COMPANY_STATUS';
-export const SET_PAGE = '@@timeAndSalaryCompany/SET_PAGE';
 
 // TODO: remove these after API is ready
 const groupSortBy = 'week_work_time';
@@ -14,12 +13,6 @@ export const setCompanyData = (status, companyName, data, error) => ({
   status,
   data,
   error,
-});
-
-export const setPage = (page, pageSize) => ({
-  type: SET_PAGE,
-  page,
-  pageSize,
 });
 
 export const queryCompany = ({ companyName }) => (

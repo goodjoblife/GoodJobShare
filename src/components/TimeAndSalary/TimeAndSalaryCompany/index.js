@@ -38,8 +38,6 @@ class TimeAndSalaryCompany extends Component {
   static propTypes = {
     data: ImmutablePropTypes.map,
     status: PropTypes.string,
-    page: PropTypes.number.isRequired,
-    pageSize: PropTypes.number.isRequired,
     // eslint-disable-next-line react/no-unused-prop-types
     match: PropTypes.shape({
       path: PropTypes.string.isRequired,
@@ -58,10 +56,6 @@ class TimeAndSalaryCompany extends Component {
       companyName: companyNameSelector(this.props),
     });
     this.props.fetchPermission();
-    this.props.setPage(
-      validatePage(pageSelector(this.props)),
-      this.props.pageSize,
-    );
   }
 
   componentDidUpdate(prevProps) {
@@ -71,17 +65,13 @@ class TimeAndSalaryCompany extends Component {
       });
       this.props.fetchPermission();
     }
-    if (pageSelector(prevProps) !== pageSelector(this.props)) {
-      this.props.setPage(
-        validatePage(pageSelector(this.props)),
-        this.props.pageSize,
-      );
-    }
   }
 
   render() {
-    const { data, status, page, pageSize, canViewTimeAndSalary } = this.props;
+    const { data, status, canViewTimeAndSalary } = this.props;
     const pathname = pathnameSelector(this.props);
+    const page = validatePage(pageSelector(this.props));
+    const pageSize = 10;
 
     const companyName = companyNameSelector(this.props);
     const title = `${companyName} 薪水、加班情況`;

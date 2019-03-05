@@ -3,7 +3,6 @@ import fetchingStatus from '../constants/status';
 export const SET_JOB_TITLE_DATA = '@@timeAndSalaryJobTitle/SET_JOB_TITLE_DATA';
 export const SET_JOB_TITLE_STATUS =
   '@@timeAndSalaryJobTitle/SET_JOB_TITLE_STATUS';
-export const SET_PAGE = '@@timeAndSalaryJobTitle/SET_PAGE';
 
 // TODO: remove these after API is ready
 const groupSortBy = 'week_work_time';
@@ -15,12 +14,6 @@ export const setJobTitleData = (status, jobTitle, data, error) => ({
   status,
   data,
   error,
-});
-
-export const setPage = (page, pageSize) => ({
-  type: SET_PAGE,
-  page,
-  pageSize,
 });
 
 export const queryJobTitle = ({ jobTitle }) => (

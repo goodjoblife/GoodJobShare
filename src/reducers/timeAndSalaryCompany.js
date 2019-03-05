@@ -4,14 +4,11 @@ import createReducer from 'utils/createReducer';
 import {
   SET_COMPANY_DATA,
   SET_COMPANY_STATUS,
-  SET_PAGE,
 } from '../actions/timeAndSalaryCompany';
 import fetchingStatus from '../constants/status';
 
 const preloadedState = fromJS({
   companyName: null,
-  page: 1,
-  pageSize: 10,
   data: null,
   status: fetchingStatus.UNFETCHED,
   error: null,
@@ -24,7 +21,5 @@ export default createReducer(preloadedState, {
       .set('status', status)
       .set('error', error)
       .set('companyName', companyName),
-  [SET_PAGE]: (state, { page, pageSize }) =>
-    state.set('page', page).set('pageSize', pageSize),
   [SET_COMPANY_STATUS]: (state, { status }) => state.set('status', status),
 });
