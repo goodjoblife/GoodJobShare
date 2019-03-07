@@ -1,32 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { Plus, Minus } from 'common/icons';
 import { Heading } from 'common/base';
-import OvertimeBlock from './OvertimeBlock';
+import OvertimeBlock from '../common/OvertimeBlock';
 import WorkingHourTable from './WorkingHourTable';
 
-import styles from './WorkingHourBlock.module.css';
+import styles from '../common/WorkingHourBlock.module.css';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 
 class WorkingHourBlock extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
-    groupSortBy: PropTypes.string.isRequired,
-    isExpanded: PropTypes.bool,
     hideContent: PropTypes.bool.isRequired,
   };
-
-  static defaultProps = {
-    isExpanded: false,
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      isExpanded: props.isExpanded,
-    };
-  }
 
   renderBlockContent = () => {
     const { data, hideContent } = this.props;
@@ -56,48 +42,20 @@ class WorkingHourBlock extends Component {
   };
 
   render() {
-    const { data, groupSortBy } = this.props;
-    const { average, company } = data;
-    const avgVal = average[groupSortBy];
-    const avgUnit = groupSortBy === 'week_work_time' ? '小時' : '元';
+    const { data } = this.props;
+    const { company } = data;
     return (
       <section className={styles.container}>
-        <button
-          className={styles.toggleButton}
-          onClick={() => {
-            this.setState({
-              isExpanded: !this.state.isExpanded,
-            });
-          }}
-        >
-          <div
-            className={cn(styles.headingWrapper, {
-              [styles.expanded]: this.state.isExpanded,
-            })}
-          >
+        <div className={styles.toggleButton}>
+          <div className={cn(styles.headingWrapper, styles.expanded)}>
             <Heading size="sl" className={styles.headingBlock}>
               {company.name}
             </Heading>
-            <div className={styles.averageBlock}>
-              <span className={styles.averageBlockHeading}>
-                平均一週總工時：
-              </span>
-              <span className={styles.averageBlockValue}>
-                {avgVal ? avgVal.toFixed(1) : '-'} {avgUnit}
-              </span>
-            </div>
           </div>
-          <div className={styles.expandIcon}>
-            {this.state.isExpanded ? <Minus /> : <Plus />}
-          </div>
-        </button>
+        </div>
 
-        <div
-          className={cn(styles.content, {
-            [styles.expanded]: this.state.isExpanded,
-          })}
-        >
-          {this.state.isExpanded ? this.renderBlockContent() : null}
+        <div className={cn(styles.content, styles.expanded)}>
+          {this.renderBlockContent()}
         </div>
       </section>
     );

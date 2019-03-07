@@ -2,24 +2,26 @@ import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 
 import {
-  SET_JOB_TITLE_DATA,
-  SET_JOB_TITLE_STATUS,
-} from '../actions/timeAndSalaryJobTitle';
+  SET_SEARCH_DATA,
+  SET_SEARCH_STATUS,
+} from '../actions/timeAndSalarySearch';
 import fetchingStatus from '../constants/status';
 
 const preloadedState = fromJS({
-  jobTitle: null,
-  data: null,
+  searchBy: null,
+  keyword: null,
+  data: [],
   status: fetchingStatus.UNFETCHED,
   error: null,
 });
 
 export default createReducer(preloadedState, {
-  [SET_JOB_TITLE_DATA]: (state, { jobTitle, data, status, error }) =>
+  [SET_SEARCH_DATA]: (state, { searchBy, keyword, data, status, error }) =>
     state
       .set('data', fromJS(data))
       .set('status', status)
       .set('error', error)
-      .set('jobTitle', jobTitle),
-  [SET_JOB_TITLE_STATUS]: (state, { status }) => state.set('status', status),
+      .set('searchBy', searchBy)
+      .set('keyword', keyword),
+  [SET_SEARCH_STATUS]: (state, { status }) => state.set('status', status),
 });

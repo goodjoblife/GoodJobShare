@@ -9,9 +9,9 @@ import MagnifierPlus from '../../common/icons/MagnifierPlus';
 export const getCompany = item => (
   <div>
     <Link
-      to={`/time-and-salary/company/${encodeURIComponent(
+      to={`/companies/${encodeURIComponent(
         item.company.name,
-      )}/work-time-dashboard`}
+      )}/salary-work-times`}
     >
       {item.company.name}
     </Link>
@@ -23,9 +23,7 @@ export const getJobTitle = item => {
   return (
     <div>
       <Link
-        to={`/time-and-salary/job-title/${encodeURIComponent(
-          jobTitle,
-        )}/work-time-dashboard`}
+        to={`/job-titles/${encodeURIComponent(jobTitle)}/salary-work-times`}
       >
         {jobTitle}
       </Link>{' '}

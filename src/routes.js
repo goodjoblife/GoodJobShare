@@ -1,8 +1,10 @@
+import React from 'react';
 import LandingPage from './containers/LandingPage';
 import LaborRightsMenu from './containers/LaborRightsMenu';
 import LaborRightsSingle from './containers/LaborRightsSingle';
 import TimeAndSalary from './containers/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/TimeAndSalary/TimeAndSalaryBoard';
+import TimeAndSalarySearch from './containers/TimeAndSalary/TimeAndSalarySearch';
 import TimeAndSalaryCompany from './containers/TimeAndSalary/TimeAndSalaryCompany';
 import TimeAndSalaryJobTitle from './containers/TimeAndSalary/TimeAndSalaryJobTitle';
 import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
@@ -24,6 +26,7 @@ import Faq from './components/Faq';
 import Guidelines from './components/Guidelines';
 import Privacy from './components/Privacy';
 import Terms from './components/Terms';
+import Redirect from 'common/routing/Redirect';
 
 const routes = [
   {
@@ -158,42 +161,59 @@ const routes = [
         component: TimeAndSalaryBoard,
       },
       {
-        path: '/time-and-salary/company/:keyword/work-time-dashboard',
+        path: '/time-and-salary/company/:keyword',
+        exact: false,
+        component: ({ match }) => (
+          <Redirect
+            to={`/salary-work-times?q=${match.params.keyword}&s_by=company`}
+          />
+        ),
+      },
+      {
+        path: '/time-and-salary/job-title/:keyword',
+        exact: false,
+        component: ({ match }) => (
+          <Redirect
+            to={`/salary-work-times?q=${match.params.keyword}&s_by=job_title`}
+          />
+        ),
+      },
+      {
+        component: TimeAndSalaryNotFound,
+      },
+    ],
+  },
+  {
+    path: '/salary-work-times',
+    component: TimeAndSalary,
+    routes: [
+      {
+        path: '/salary-work-times',
+        exact: true,
+        component: TimeAndSalarySearch,
+      },
+    ],
+  },
+  {
+    path: '/companies/:companyName',
+    component: TimeAndSalary,
+    routes: [
+      {
+        path: '/companies/:companyName/salary-work-times',
         exact: true,
         component: TimeAndSalaryCompany,
       },
       {
-        path: '/time-and-salary/company/:keyword/sort/work-time-asc',
-        exact: true,
-        component: TimeAndSalaryCompany,
+        component: TimeAndSalaryNotFound,
       },
+    ],
+  },
+  {
+    path: '/job-titles/:jobTitle',
+    component: TimeAndSalary,
+    routes: [
       {
-        path: '/time-and-salary/company/:keyword/salary-dashboard',
-        exact: true,
-        component: TimeAndSalaryCompany,
-      },
-      {
-        path: '/time-and-salary/company/:keyword/sort/salary-asc',
-        exact: true,
-        component: TimeAndSalaryCompany,
-      },
-      {
-        path: '/time-and-salary/job-title/:keyword/work-time-dashboard',
-        exact: true,
-        component: TimeAndSalaryJobTitle,
-      },
-      {
-        path: '/time-and-salary/job-title/:keyword/sort/work-time-asc',
-        exact: true,
-        component: TimeAndSalaryJobTitle,
-      },
-      {
-        path: '/time-and-salary/job-title/:keyword/salary-dashboard',
-        exact: true,
-        component: TimeAndSalaryJobTitle,
-      },
-      {
-        path: '/time-and-salary/job-title/:keyword/sort/salary-asc',
+        path: '/job-titles/:jobTitle/salary-work-times',
         exact: true,
         component: TimeAndSalaryJobTitle,
       },

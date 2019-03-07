@@ -4,9 +4,9 @@ import R from 'ramda';
 
 import { InfoButton } from 'common/Modal';
 import Table from 'common/table/Table';
-import InfoSalaryModal from './InfoSalaryModal';
-import InfoTimeModal from './InfoTimeModal';
-import styles from './WorkingHourTable.module.css';
+import InfoSalaryModal from '../common/InfoSalaryModal';
+import InfoTimeModal from '../common/InfoTimeModal';
+import styles from '../common/WorkingHourTable.module.css';
 import commonStyles from '../views/view.module.css';
 import employmentType from '../../../constants/employmentType';
 import {
@@ -15,7 +15,7 @@ import {
   getWeekWorkTime,
   formatWage,
   formatDate,
-} from './formatter';
+} from '../common/formatter';
 
 class WorkingHourTable extends Component {
   static propTypes = {

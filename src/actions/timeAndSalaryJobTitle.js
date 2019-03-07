@@ -4,43 +4,25 @@ export const SET_JOB_TITLE_DATA = '@@timeAndSalaryJobTitle/SET_JOB_TITLE_DATA';
 export const SET_JOB_TITLE_STATUS =
   '@@timeAndSalaryJobTitle/SET_JOB_TITLE_STATUS';
 
-export const setJobTitleData = (
-  status,
-  groupSortBy,
-  order,
-  jobTitle,
-  data,
-  error,
-) => ({
+// TODO: remove these after API is ready
+const groupSortBy = 'week_work_time';
+const order = 'descending';
+
+export const setJobTitleData = (status, jobTitle, data, error) => ({
   type: SET_JOB_TITLE_DATA,
-  groupSortBy,
-  order,
   jobTitle,
   status,
   data,
   error,
 });
 
-export const queryJobTitle = ({ groupSortBy, order, jobTitle }) => (
+export const queryJobTitle = ({ jobTitle }) => (
   dispatch,
   getState,
   { api },
 ) => {
-  if (
-    groupSortBy !== getState().timeAndSalaryJobTitle.get('groupSortBy') ||
-    order !== getState().timeAndSalaryJobTitle.get('order') ||
-    jobTitle !== getState().timeAndSalaryJobTitle.get('jobTitle')
-  ) {
-    dispatch(
-      setJobTitleData(
-        fetchingStatus.UNFETCHED,
-        groupSortBy,
-        order,
-        jobTitle,
-        [],
-        null,
-      ),
-    );
+  if (jobTitle !== getState().timeAndSalaryJobTitle.get('jobTitle')) {
+    dispatch(setJobTitleData(fetchingStatus.UNFETCHED, jobTitle, null, null));
   }
 
   if (
@@ -63,27 +45,12 @@ export const queryJobTitle = ({ groupSortBy, order, jobTitle }) => (
   return api.timeAndSalary
     .fetchSearchJobTitle({ opt })
     .then(data => {
-      dispatch(
-        setJobTitleData(
-          fetchingStatus.FETCHED,
-          groupSortBy,
-          order,
-          jobTitle,
-          data,
-          null,
-        ),
-      );
+      // TODO: substitute new api
+      const job = data.pop();
+      if (!job) throw new Error('No such job title');
+      dispatch(setJobTitleData(fetchingStatus.FETCHED, jobTitle, job, null));
     })
     .catch(err => {
-      dispatch(
-        setJobTitleData(
-          fetchingStatus.ERROR,
-          groupSortBy,
-          order,
-          jobTitle,
-          [],
-          err,
-        ),
-      );
+      dispatch(setJobTitleData(fetchingStatus.ERROR, jobTitle, null, err));
     });
 };
