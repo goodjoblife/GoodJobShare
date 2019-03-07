@@ -1,6 +1,9 @@
 import fetchUtil from 'utils/fetchUtil';
 import graphqlClient from 'utils/graphqlClient';
-import { getSearchCompanyQuery } from 'graphql/timeAndSalarySearch';
+import {
+  getSearchCompanyQuery,
+  getSearchJobTitleQuery,
+} from 'graphql/timeAndSalarySearch';
 
 const endpoint = '/workings';
 
@@ -31,10 +34,11 @@ export const fetchSearchCompany = ({ companyName }) =>
     variables: { companyName },
   }).then(data => data.search_companies);
 
-export const fetchSearchJobTitle = ({ opt }) =>
-  fetchUtil(`${endpoint}/search_by/job_title/group_by/company`).get({
-    query: opt,
-  });
+export const fetchSearchJobTitle = ({ jobTitle }) =>
+  graphqlClient({
+    query: getSearchJobTitleQuery,
+    variables: { jobTitle },
+  }).then(data => data.search_job_titles);
 
 export const postWorkings = ({ body, token }) =>
   fetchUtil(endpoint).post({ body, token });

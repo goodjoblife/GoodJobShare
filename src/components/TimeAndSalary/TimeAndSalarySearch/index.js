@@ -151,9 +151,9 @@ class TimeAndSalarySearch extends Component {
                 );
               } else if (searchBy === 'job_title') {
                 history.push(
-                  `/job-titles/${
-                    o.time_and_salary[0].job_title
-                  }/salary-work-times${this.props.location.search}`,
+                  `/job-titles/${o.name}/salary-work-times${
+                    this.props.location.search
+                  }`,
                 );
               }
             }}
