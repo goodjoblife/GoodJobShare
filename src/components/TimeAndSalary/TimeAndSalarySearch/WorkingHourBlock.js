@@ -12,18 +12,18 @@ class WorkingHourBlock extends Component {
 
   render() {
     const { data, onClickHeader } = this.props;
-    const { company } = data;
+    const { name } = data;
     return (
       <section className={styles.container}>
         <button className={styles.toggleButton} onClick={onClickHeader}>
           <div className={styles.headingWrapper}>
             <Heading size="sl" className={styles.headingBlock}>
-              {company.name}
+              {name}
             </Heading>
             <div className={styles.averageBlock}>
               <span className={styles.averageBlockHeading}>資料數：</span>
               <span className={styles.averageBlockValue}>
-                {data.time_and_salary.length} 筆
+                {data.salary_work_time_statistics.count} 筆
               </span>
             </div>
           </div>

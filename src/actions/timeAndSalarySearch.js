@@ -50,10 +50,7 @@ export const queryKeyword = ({ searchBy, keyword }) => (
 
   if (searchBy === 'company') {
     promise = api.timeAndSalary.fetchSearchCompany({
-      opt: {
-        ...opt,
-        company: keyword,
-      },
+      companyName: keyword,
     });
   } else if (searchBy === 'job_title') {
     promise = api.timeAndSalary.fetchSearchJobTitle({
