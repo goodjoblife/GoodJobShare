@@ -3,7 +3,7 @@ import graphqlClient from 'utils/graphqlClient';
 import {
   getSearchCompanyQuery,
   getSearchJobTitleQuery,
-} from 'graphql/timeAndSalarySearch';
+} from 'graphql/timeAndSalary';
 
 const endpoint = '/workings';
 
