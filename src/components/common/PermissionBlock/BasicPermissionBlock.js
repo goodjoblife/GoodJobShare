@@ -14,6 +14,7 @@ class BasicPermissionBlock extends React.Component {
   static propTypes = {
     to: PropTypes.string,
     rootClassName: PropTypes.string,
+    simple: PropTypes.bool,
     experienceCount: PropTypes.number.isRequired,
     timeAndSalaryCount: PropTypes.number.isRequired,
     laborRightsCount: PropTypes.number.isRequired,
@@ -28,6 +29,7 @@ class BasicPermissionBlock extends React.Component {
   static defaultProps = {
     to: '/share/time-and-salary',
     rootClassName: '',
+    simple: false,
   };
 
   componentDidMount() {
@@ -43,9 +45,21 @@ class BasicPermissionBlock extends React.Component {
   }
 
   render() {
+    const { simple, rootClassName } = this.props;
+    if (simple) {
+      return (
+        <div className={cn(styles.permissionBlock, rootClassName)}>
+          <div className={styles.container}>
+            <div className={styles.headingContainer}>
+              <FontAwesomeIcon icon={faLock} className={styles.headingIcon} />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     const {
       to,
-      rootClassName,
       experienceCount,
       timeAndSalaryCount,
       laborRightsCount,

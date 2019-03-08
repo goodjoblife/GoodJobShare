@@ -27,13 +27,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+
+  & + * {
+    margin-top: 20px;
+  }
 }
 
 .headingIcon {
   display: inline;
   font-size: 2em;
-  margin-right: 15px;
+
+  & + * {
+    margin-left: 15px;
+  }
 }
 
 .heading {
