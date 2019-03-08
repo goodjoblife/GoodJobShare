@@ -5,6 +5,7 @@ import { formatSalaryAmount, formatSalaryType } from 'common/formatter';
 
 import commonStyles from '../views/view.module.css';
 import MagnifierPlus from '../../common/icons/MagnifierPlus';
+import employmentType from '../../../constants/employmentType';
 
 export const getCompany = item => (
   <div>
@@ -30,6 +31,28 @@ export const getJobTitle = item => {
       <span className={`pM ${commonStyles.sector}`}>{sector}</span>
     </div>
   );
+};
+
+export const getName = (o, row) => (
+  <div>
+    {o.name} <span className={`pM ${commonStyles.sector}`}>{row.sector}</span>
+  </div>
+);
+
+export const getEmploymentType = type => (type ? employmentType[type] : '');
+
+export const getWorkingHour = (val, row) => (
+  <div>{`${typeof val === 'undefined' ? '-' : val} / ${
+    typeof row.day_real_work_time === 'undefined' ? '-' : row.day_real_work_time
+  }`}</div>
+);
+
+export const getYear = val => {
+  if (typeof val === 'number') {
+    if (!val) return '-';
+    return `${Math.round(val)} 年`;
+  }
+  return '-';
 };
 
 const getFrequencyText = item => {
