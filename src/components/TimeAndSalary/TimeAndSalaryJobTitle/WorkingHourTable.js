@@ -18,6 +18,7 @@ import {
   formatWage,
   formatDate,
 } from '../common/formatter';
+import injectHideContentBlock from '../common/injectHideContentBlock';
 
 const columnProps = [
   {
@@ -66,6 +67,7 @@ const columnProps = [
     dataField: getSalary,
     alignRight: true,
     renderChildren: () => '薪資',
+    permissionRequiredStart: true,
   },
   {
     className: styles.colHourly,
@@ -86,6 +88,7 @@ const columnProps = [
         </InfoButton>
       </React.Fragment>
     ),
+    permissionRequiredEnd: true,
   },
   {
     className: styles.colDataTime,
@@ -137,6 +140,17 @@ class WorkingHourTable extends Component {
     this.setState(state);
   }
 
+  postProcessRows = rows => {
+    if (this.props.hideContent) {
+      const hideRange = [
+        R.findIndex(R.propEq('permissionRequiredStart', true))(columnProps),
+        R.findIndex(R.propEq('permissionRequiredEnd', true))(columnProps),
+      ];
+      injectHideContentBlock(hideRange)(rows);
+    }
+    return rows;
+  };
+
   render() {
     const { data } = this.props;
 
@@ -145,6 +159,7 @@ class WorkingHourTable extends Component {
         className={styles.companyTable}
         data={data}
         primaryKey="created_at"
+        postProcessRows={this.postProcessRows}
       >
         {columnProps.map(({ renderChildren, ...props }) => (
           <Table.Column

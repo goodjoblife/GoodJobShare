@@ -5,7 +5,6 @@ import { Heading } from 'common/base';
 import WorkingHourTable from './WorkingHourTable';
 
 import styles from '../common/WorkingHourBlock.module.css';
-import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 
 class WorkingHourBlock extends Component {
   static propTypes = {
@@ -15,20 +14,12 @@ class WorkingHourBlock extends Component {
 
   renderBlockContent = () => {
     const { data, hideContent } = this.props;
-    if (hideContent) {
-      return (
-        <div className={styles.overtimeBlock}>
-          <div className={styles.overtimeBlockInner}>
-            <BasicPermissionBlock
-              rootClassName={styles.permissionBlockWorkingHour}
-            />
-          </div>
-        </div>
-      );
-    }
     return (
       <div>
-        <WorkingHourTable data={data.salary_work_times} />
+        <WorkingHourTable
+          data={data.salary_work_times}
+          hideContent={hideContent}
+        />
       </div>
     );
   };
