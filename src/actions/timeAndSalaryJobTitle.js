@@ -4,10 +4,6 @@ export const SET_JOB_TITLE_DATA = '@@timeAndSalaryJobTitle/SET_JOB_TITLE_DATA';
 export const SET_JOB_TITLE_STATUS =
   '@@timeAndSalaryJobTitle/SET_JOB_TITLE_STATUS';
 
-// TODO: remove these after API is ready
-const groupSortBy = 'week_work_time';
-const order = 'descending';
-
 export const setJobTitleData = (status, jobTitle, data, error) => ({
   type: SET_JOB_TITLE_DATA,
   jobTitle,
@@ -36,19 +32,11 @@ export const queryJobTitle = ({ jobTitle }) => (
     status: fetchingStatus.FETCHING,
   });
 
-  const opt = {
-    job_title: jobTitle,
-    group_sort_by: groupSortBy,
-    group_sort_order: order,
-  };
-
   return api.timeAndSalary
-    .fetchSearchJobTitle({ opt })
+    .fetchJobTitle({ jobTitle })
     .then(data => {
-      // TODO: substitute new api
-      const job = data.pop();
-      if (!job) throw new Error('No such job title');
-      dispatch(setJobTitleData(fetchingStatus.FETCHED, jobTitle, job, null));
+      if (!data) throw new Error('No such job title');
+      dispatch(setJobTitleData(fetchingStatus.FETCHED, jobTitle, data, null));
     })
     .catch(err => {
       dispatch(setJobTitleData(fetchingStatus.ERROR, jobTitle, null, err));

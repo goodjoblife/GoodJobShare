@@ -3,6 +3,7 @@ import graphqlClient from 'utils/graphqlClient';
 import {
   getSearchCompanyQuery,
   getCompanyQuery,
+  getJobTitleQuery,
   getSearchJobTitleQuery,
 } from 'graphql/timeAndSalary';
 
@@ -49,6 +50,14 @@ export const fetchSearchJobTitle = ({ jobTitle }) =>
     variables: { jobTitle },
   }).then(data => data.search_job_titles);
 
+export const fetchJobTitle = ({ jobTitle }) =>
+  graphqlClient({
+    query: getJobTitleQuery,
+    variables: { jobTitle },
+  }).then(data =>
+    data.search_job_titles.filter(job => job.name === jobTitle).pop(),
+  );
+
 export const postWorkings = ({ body, token }) =>
   fetchUtil(endpoint).post({ body, token });
 
@@ -69,6 +78,7 @@ export default {
   fetchSearchCompany,
   fetchSearchJobTitle,
   fetchCompany,
+  fetchJobTitle,
   postWorkings,
   patchWorking,
 };

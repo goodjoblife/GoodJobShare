@@ -48,3 +48,32 @@ export const getSearchJobTitleQuery = `
     }
   }
 `;
+
+export const getJobTitleQuery = `
+  query($jobTitle:String!) {
+    search_job_titles(query:$jobTitle) {
+      name
+      salary_work_times {
+        company {
+          name
+        }
+        sector
+        employment_type
+        day_promised_work_time
+        day_real_work_time
+        week_work_time
+        overtime_frequency
+        experience_in_year
+        salary {
+          type
+          amount
+        }
+        estimated_hourly_wage
+        data_time {
+          year
+          month
+        }
+      }
+    }
+  }
+`;

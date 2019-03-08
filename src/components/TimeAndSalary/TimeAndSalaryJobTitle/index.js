@@ -85,14 +85,14 @@ class TimeAndSalaryJobTitle extends Component {
               <WorkingHourBlock
                 data={data
                   // pagination over time_and_salary
-                  .update('time_and_salary', list =>
+                  .update('salary_work_times', list =>
                     list.slice((page - 1) * pageSize, page * pageSize),
                   )
                   .toJS()}
                 hideContent={!canViewTimeAndSalary}
               />
               <Pagination
-                totalCount={data.get('time_and_salary').size}
+                totalCount={data.get('salary_work_times').size}
                 unit={pageSize}
                 currentPage={page}
                 createPageLinkTo={toPage =>
