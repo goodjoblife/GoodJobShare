@@ -5,4 +5,5 @@
 .content {
   margin-bottom: 1.5em;
   white-space: pre-line;
+  word-break: break-word;
 }
