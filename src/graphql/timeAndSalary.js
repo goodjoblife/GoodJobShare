@@ -11,7 +11,7 @@ export const getSearchCompanyQuery = `
 
 export const getCompanyQuery = `
   query($companyName:String!) {
-    search_companies(query:$companyName) {
+    company(name:$companyName) {
       name
       salary_work_times {
         job_title {
@@ -51,7 +51,7 @@ export const getSearchJobTitleQuery = `
 
 export const getJobTitleQuery = `
   query($jobTitle:String!) {
-    search_job_titles(query:$jobTitle) {
+    job_title(name:$jobTitle) {
       name
       salary_work_times {
         company {

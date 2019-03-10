@@ -40,9 +40,7 @@ export const fetchCompany = ({ companyName }) =>
   graphqlClient({
     query: getCompanyQuery,
     variables: { companyName },
-  }).then(data =>
-    data.search_companies.filter(company => company.name === companyName).pop(),
-  );
+  }).then(data => data.company);
 
 export const fetchSearchJobTitle = ({ jobTitle }) =>
   graphqlClient({
@@ -54,9 +52,7 @@ export const fetchJobTitle = ({ jobTitle }) =>
   graphqlClient({
     query: getJobTitleQuery,
     variables: { jobTitle },
-  }).then(data =>
-    data.search_job_titles.filter(job => job.name === jobTitle).pop(),
-  );
+  }).then(data => data.job_title);
 
 export const postWorkings = ({ body, token }) =>
   fetchUtil(endpoint).post({ body, token });
