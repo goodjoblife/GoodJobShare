@@ -48,9 +48,6 @@ server.get(
 
     function resolveComponent() {
       const component = matchRoute.component;
-      if (component && component.WrappedComponent) {
-        return component.WrappedComponent;
-      }
       return component;
     }
 
