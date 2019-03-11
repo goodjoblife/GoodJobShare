@@ -40,14 +40,6 @@ const optionsBuilder = ({ body, method, token }) =>
 const checkStatus = response => {
   if (!response.ok) {
     return response.json().then(json => {
-      if (json.errors) {
-        throw new HttpError(
-          json.errors.map(error => error.message).join(', '),
-          {
-            statusCode: response.status,
-          },
-        );
-      }
       throw new HttpError(json.message, {
         statusCode: response.status,
       });
