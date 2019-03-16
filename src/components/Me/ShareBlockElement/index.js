@@ -65,31 +65,29 @@ const ShareBlock = ({
               {position && <span> - {position}</span>}
             </Link>
           )}
-          {archive &&
-            archive.is_archived && (
-              <span className={cn(styles.badge, styles.archive)}>已封存</span>
-            )}
+          {archive && archive.is_archived && (
+            <span className={cn(styles.badge, styles.archive)}>已封存</span>
+          )}
         </Heading>
       )}
     </div>
-    {(archive &&
-      archive.is_archived && (
-        <div className={styles.buttons}>
-          <button
-            className="buttonCircleS buttonBlack2"
-            onClick={() => setArchiveModalOpen(true)}
-          >
-            封存理由
-          </button>
-          <Modal
-            isOpen={isArchiveModalOpen}
-            close={() => setArchiveModalOpen(false)}
-            closableOnClickOutside
-          >
-            {archive.reason}
-          </Modal>
-        </div>
-      )) || (
+    {(archive && archive.is_archived && (
+      <div className={styles.buttons}>
+        <button
+          className="buttonCircleS buttonBlack2"
+          onClick={() => setArchiveModalOpen(true)}
+        >
+          封存理由
+        </button>
+        <Modal
+          isOpen={isArchiveModalOpen}
+          close={() => setArchiveModalOpen(false)}
+          closableOnClickOutside
+        >
+          {archive.reason}
+        </Modal>
+      </div>
+    )) || (
       <div className={styles.buttons}>
         <button className="buttonCircleS buttonBlack2" onClick={publishHandler}>
           {disabled ? '重新發佈' : '隱藏'}
