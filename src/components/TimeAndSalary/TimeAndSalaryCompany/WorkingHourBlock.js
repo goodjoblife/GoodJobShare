@@ -36,20 +36,20 @@ class WorkingHourBlock extends Component {
           </div>
           <div className={styles.overtimeBlockUnit}>單位：資料筆數</div>
         </div>
-        <WorkingHourTable data={data.time_and_salary} />
+        <WorkingHourTable data={data.salary_work_times} />
       </div>
     );
   };
 
   render() {
     const { data } = this.props;
-    const { company } = data;
+    const { name } = data;
     return (
       <section className={styles.container}>
         <div className={styles.toggleButton}>
           <div className={cn(styles.headingWrapper, styles.expanded)}>
             <Heading size="sl" className={styles.headingBlock}>
-              {company.name}
+              {name}
             </Heading>
           </div>
         </div>

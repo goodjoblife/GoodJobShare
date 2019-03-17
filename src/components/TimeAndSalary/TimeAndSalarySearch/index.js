@@ -140,20 +140,20 @@ class TimeAndSalarySearch extends Component {
           )}
         {raw.map((o, i) => (
           <WorkingHourBlock
-            key={o.company.id || i}
+            key={i}
             data={o}
             onClickHeader={() => {
               if (searchBy === 'company') {
                 history.push(
-                  `/companies/${o.company.name}/salary-work-times${
+                  `/companies/${o.name}/salary-work-times${
                     this.props.location.search
                   }`,
                 );
               } else if (searchBy === 'job_title') {
                 history.push(
-                  `/job-titles/${
-                    o.time_and_salary[0].job_title
-                  }/salary-work-times${this.props.location.search}`,
+                  `/job-titles/${o.name}/salary-work-times${
+                    this.props.location.search
+                  }`,
                 );
               }
             }}

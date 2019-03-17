@@ -12,10 +12,6 @@ export const setSearchData = (status, searchBy, keyword, data, error) => ({
   error,
 });
 
-// TODO: remove these after API is ready
-const groupSortBy = 'week_work_time';
-const order = 'descending';
-
 export const queryKeyword = ({ searchBy, keyword }) => (
   dispatch,
   getState,
@@ -41,26 +37,15 @@ export const queryKeyword = ({ searchBy, keyword }) => (
     status: fetchingStatus.FETCHING,
   });
 
-  const opt = {
-    group_sort_by: groupSortBy,
-    group_sort_order: order,
-  };
-
   let promise;
 
   if (searchBy === 'company') {
     promise = api.timeAndSalary.fetchSearchCompany({
-      opt: {
-        ...opt,
-        company: keyword,
-      },
+      companyName: keyword,
     });
   } else if (searchBy === 'job_title') {
     promise = api.timeAndSalary.fetchSearchJobTitle({
-      opt: {
-        ...opt,
-        job_title: keyword,
-      },
+      jobTitle: keyword,
     });
   } else {
     // TODO: handle unexpected case

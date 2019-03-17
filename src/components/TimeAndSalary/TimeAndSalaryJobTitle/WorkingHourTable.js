@@ -22,9 +22,9 @@ class WorkingHourTable extends Component {
     data: PropTypes.array.isRequired,
   };
 
-  static getTitle = (val, row) => (
+  static getTitle = (o, row) => (
     <div>
-      {val} <span className={`pM ${commonStyles.sector}`}>{row.sector}</span>
+      {o.name} <span className={`pM ${commonStyles.sector}`}>{row.sector}</span>
     </div>
   );
 
@@ -84,7 +84,7 @@ class WorkingHourTable extends Component {
         <Table.Column
           className={styles.colPosition}
           title="職稱"
-          dataField="job_title"
+          dataField="company"
           dataFormatter={WorkingHourTable.getTitle}
         >
           公司名稱

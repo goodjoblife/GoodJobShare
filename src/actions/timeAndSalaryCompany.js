@@ -3,10 +3,6 @@ import fetchingStatus from '../constants/status';
 export const SET_COMPANY_DATA = '@@timeAndSalaryCompany/SET_COMPANY_DATA';
 export const SET_COMPANY_STATUS = '@@timeAndSalaryCompany/SET_COMPANY_STATUS';
 
-// TODO: remove these after API is ready
-const groupSortBy = 'week_work_time';
-const order = 'descending';
-
 export const setCompanyData = (status, companyName, data, error) => ({
   type: SET_COMPANY_DATA,
   companyName,
@@ -35,21 +31,11 @@ export const queryCompany = ({ companyName }) => (
     status: fetchingStatus.FETCHING,
   });
 
-  const opt = {
-    company: companyName,
-    group_sort_by: groupSortBy,
-    group_sort_order: order,
-  };
-
   return api.timeAndSalary
-    .fetchSearchCompany({ opt })
+    .fetchCompany({ companyName })
     .then(data => {
-      // TODO: substitute new api
-      const company = data.pop();
-      if (!company) throw new Error('No such company');
-      dispatch(
-        setCompanyData(fetchingStatus.FETCHED, companyName, company, null),
-      );
+      if (!data) throw new Error('No such company');
+      dispatch(setCompanyData(fetchingStatus.FETCHED, companyName, data, null));
     })
     .catch(err => {
       dispatch(setCompanyData(fetchingStatus.ERROR, companyName, null, err));
