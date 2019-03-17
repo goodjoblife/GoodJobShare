@@ -68,7 +68,7 @@ server.get(
     */
     const finalComponent = (
       <Provider store={store}>
-        <StaticRouter location={req.url} context={context}>
+        <StaticRouter location={location} context={context}>
           <Root />
         </StaticRouter>
       </Provider>
