@@ -33,6 +33,8 @@ import styles from '../views/view.module.css';
 import { searchOptions } from '../SearchBar';
 import Pagination from '../../common/Pagination/Pagination';
 
+const firstDataNameSelector = props => props.data.get(0).get('name');
+
 const searchCriteriaText = searchBy =>
   R.compose(
     R.prop('label'),
@@ -84,14 +86,14 @@ class TimeAndSalarySearch extends Component {
     if (this.props.data.size === 1) {
       const searchBy = this.props.searchBy;
       if (searchBy === 'company') {
-        const companyName = this.props.data.get(0).getIn(['company', 'name']);
+        const companyName = firstDataNameSelector(this.props);
         this.props.history.replace(
           `/companies/${companyName}/salary-work-times${
             this.props.location.search
           }`,
         );
       } else if (searchBy === 'job_title') {
-        const jobTitle = this.props.data.get(0).getIn(['company', 'name']);
+        const jobTitle = firstDataNameSelector(this.props);
         this.props.history.replace(
           `/job-titles/${jobTitle}/salary-work-times${
             this.props.location.search
