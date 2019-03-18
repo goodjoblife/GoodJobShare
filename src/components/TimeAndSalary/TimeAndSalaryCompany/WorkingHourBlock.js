@@ -6,7 +6,6 @@ import OvertimeBlock from '../common/OvertimeBlock';
 import WorkingHourTable from './WorkingHourTable';
 
 import styles from '../common/WorkingHourBlock.module.css';
-import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 
 class WorkingHourBlock extends Component {
   static propTypes = {
@@ -16,17 +15,6 @@ class WorkingHourBlock extends Component {
 
   renderBlockContent = () => {
     const { data, hideContent } = this.props;
-    if (hideContent) {
-      return (
-        <div className={styles.overtimeBlock}>
-          <div className={styles.overtimeBlockInner}>
-            <BasicPermissionBlock
-              rootClassName={styles.permissionBlockWorkingHour}
-            />
-          </div>
-        </div>
-      );
-    }
     return (
       <div>
         <div className={styles.overtimeBlock}>
@@ -36,7 +24,10 @@ class WorkingHourBlock extends Component {
           </div>
           <div className={styles.overtimeBlockUnit}>單位：資料筆數</div>
         </div>
-        <WorkingHourTable data={data.salary_work_times} />
+        <WorkingHourTable
+          data={data.salary_work_times}
+          hideContent={hideContent}
+        />
       </div>
     );
   };

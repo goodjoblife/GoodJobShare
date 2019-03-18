@@ -8,7 +8,6 @@ import qs from 'qs';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
-import { withPermission } from 'common/permission-context';
 import WorkingHourBlock from './WorkingHourBlock';
 import { queryKeyword } from '../../../actions/timeAndSalarySearch';
 import { isFetching, isFetched } from '../../../constants/status';
@@ -56,7 +55,6 @@ class TimeAndSalarySearch extends Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
-    fetchPermission: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -65,7 +63,6 @@ class TimeAndSalarySearch extends Component {
     this.props
       .queryKeyword({ searchBy, keyword })
       .then(() => this.redirectOnSingleResult());
-    this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
@@ -82,7 +79,6 @@ class TimeAndSalarySearch extends Component {
       this.props
         .queryKeyword({ searchBy, keyword })
         .then(() => this.redirectOnSingleResult());
-      this.props.fetchPermission();
     }
   }
 
@@ -185,9 +181,6 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   return dispatch(queryKeyword({ searchBy, keyword }));
 });
 
-const hoc = compose(
-  ssr,
-  withPermission,
-);
+const hoc = compose(ssr);
 
 export default hoc(TimeAndSalarySearch);

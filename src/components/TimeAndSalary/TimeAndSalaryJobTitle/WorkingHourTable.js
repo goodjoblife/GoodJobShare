@@ -7,43 +7,111 @@ import Table from 'common/table/Table';
 import InfoSalaryModal from '../common/InfoSalaryModal';
 import InfoTimeModal from '../common/InfoTimeModal';
 import styles from '../common/WorkingHourTable.module.css';
-import commonStyles from '../views/view.module.css';
-import employmentType from '../../../constants/employmentType';
 import {
+  getName,
+  getEmploymentType,
+  getWorkingHour,
+  getYear,
   getFrequency,
   getSalary,
   getWeekWorkTime,
   formatWage,
   formatDate,
 } from '../common/formatter';
+import injectHideContentBlock from '../common/injectHideContentBlock';
+
+const columnProps = [
+  {
+    className: styles.colPosition,
+    title: '公司名稱',
+    dataField: 'company',
+    dataFormatter: getName,
+    renderChildren: () => '公司名稱',
+  },
+  {
+    className: styles.colType,
+    title: '職務型態',
+    dataField: 'employment_type',
+    dataFormatter: getEmploymentType,
+    renderChildren: () => '職務型態',
+  },
+  {
+    className: styles.colDayTime,
+    title: '表訂 / 實際工時',
+    dataField: 'day_promised_work_time',
+    dataFormatter: getWorkingHour,
+    renderChildren: () => '表訂 / 實際工時',
+  },
+  {
+    className: styles.colWeekTime,
+    title: '一週總工時',
+    dataField: getWeekWorkTime,
+    renderChildren: () => '一週總工時',
+  },
+  {
+    className: styles.colFrequency,
+    title: '加班頻率',
+    dataField: getFrequency,
+    renderChildren: () => '加班頻率',
+  },
+  {
+    className: styles.colExperience,
+    title: '業界工作經歷',
+    dataField: 'experience_in_year',
+    dataFormatter: getYear,
+    renderChildren: () => '業界工作經歷',
+  },
+  {
+    className: styles.colSalary,
+    title: '薪資',
+    dataField: getSalary,
+    alignRight: true,
+    renderChildren: () => '薪資',
+    permissionRequiredStart: true,
+  },
+  {
+    className: styles.colHourly,
+    title: '估計時薪',
+    dataField: R.compose(
+      formatWage,
+      R.prop('estimated_hourly_wage'),
+    ),
+    alignRight: true,
+    renderChildren: context => (
+      <React.Fragment>
+        <InfoSalaryModal
+          isOpen={context.state.infoSalaryModal.isOpen}
+          close={context.toggleInfoSalaryModal}
+        />
+        <InfoButton onClick={context.toggleInfoSalaryModal}>
+          估計時薪
+        </InfoButton>
+      </React.Fragment>
+    ),
+    permissionRequiredEnd: true,
+  },
+  {
+    className: styles.colDataTime,
+    title: '參考時間',
+    dataField: R.compose(
+      formatDate,
+      R.prop('data_time'),
+    ),
+    renderChildren: context => (
+      <React.Fragment>
+        <InfoTimeModal
+          isOpen={context.state.infoTimeModal.isOpen}
+          close={context.toggleInfoTimeModal}
+        />
+        <InfoButton onClick={context.toggleInfoTimeModal}>參考時間</InfoButton>
+      </React.Fragment>
+    ),
+  },
+];
 
 class WorkingHourTable extends Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
-  };
-
-  static getTitle = (o, row) => (
-    <div>
-      {o.name} <span className={`pM ${commonStyles.sector}`}>{row.sector}</span>
-    </div>
-  );
-
-  static getEmploymentType = type => (type ? employmentType[type] : '');
-
-  static getWorkingHour = (val, row) => (
-    <div>{`${typeof val === 'undefined' ? '-' : val} / ${
-      typeof row.day_real_work_time === 'undefined'
-        ? '-'
-        : row.day_real_work_time
-    }`}</div>
-  );
-
-  static getYear = val => {
-    if (typeof val === 'number') {
-      if (!val) return '-';
-      return `${Math.round(val)} 年`;
-    }
-    return '-';
   };
 
   constructor(props) {
@@ -72,6 +140,17 @@ class WorkingHourTable extends Component {
     this.setState(state);
   }
 
+  postProcessRows = rows => {
+    if (this.props.hideContent) {
+      const hideRange = [
+        R.findIndex(R.propEq('permissionRequiredStart', true))(columnProps),
+        R.findIndex(R.propEq('permissionRequiredEnd', true))(columnProps),
+      ];
+      injectHideContentBlock(hideRange)(rows);
+    }
+    return rows;
+  };
+
   render() {
     const { data } = this.props;
 
@@ -80,90 +159,15 @@ class WorkingHourTable extends Component {
         className={styles.companyTable}
         data={data}
         primaryKey="created_at"
+        postProcessRows={this.postProcessRows}
       >
-        <Table.Column
-          className={styles.colPosition}
-          title="職稱"
-          dataField="company"
-          dataFormatter={WorkingHourTable.getTitle}
-        >
-          公司名稱
-        </Table.Column>
-        <Table.Column
-          className={styles.colType}
-          title="職務型態"
-          dataField="employment_type"
-          dataFormatter={WorkingHourTable.getEmploymentType}
-        >
-          職務型態
-        </Table.Column>
-        <Table.Column
-          className={styles.colDayTime}
-          title="表訂 / 實際工時"
-          dataField="day_promised_work_time"
-          dataFormatter={WorkingHourTable.getWorkingHour}
-        >
-          表訂 / 實際工時
-        </Table.Column>
-        <Table.Column
-          className={styles.colWeekTime}
-          title="一週總工時"
-          dataField={getWeekWorkTime}
-        >
-          一週總工時
-        </Table.Column>
-        <Table.Column
-          className={styles.colFrequency}
-          title="加班頻率"
-          dataField={getFrequency}
-        >
-          加班頻率
-        </Table.Column>
-        <Table.Column
-          className={styles.colExperience}
-          title="業界工作經歷"
-          dataField="experience_in_year"
-          dataFormatter={WorkingHourTable.getYear}
-        >
-          業界工作經歷
-        </Table.Column>
-        <Table.Column
-          className={styles.colSalary}
-          title="薪資"
-          dataField={getSalary}
-          alignRight
-        >
-          薪資
-        </Table.Column>
-        <Table.Column
-          className={styles.colHourly}
-          title="估計時薪"
-          dataField={R.compose(
-            formatWage,
-            R.prop('estimated_hourly_wage'),
-          )}
-          alignRight
-        >
-          <InfoSalaryModal
-            isOpen={this.state.infoSalaryModal.isOpen}
-            close={this.toggleInfoSalaryModal}
+        {columnProps.map(({ renderChildren, ...props }) => (
+          <Table.Column
+            key={props.title}
+            {...props}
+            children={renderChildren(this)}
           />
-          <InfoButton onClick={this.toggleInfoSalaryModal}>估計時薪</InfoButton>
-        </Table.Column>
-        <Table.Column
-          className={styles.colDataTime}
-          title="參考時間"
-          dataField={R.compose(
-            formatDate,
-            R.prop('data_time'),
-          )}
-        >
-          <InfoTimeModal
-            isOpen={this.state.infoTimeModal.isOpen}
-            close={this.toggleInfoTimeModal}
-          />
-          <InfoButton onClick={this.toggleInfoTimeModal}>參考時間</InfoButton>
-        </Table.Column>
+        ))}
       </Table>
     );
   }
