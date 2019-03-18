@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import ReactPixel from 'react-facebook-pixel';
 import R from 'ramda';
 import { compose, setStatic } from 'recompose';
@@ -77,9 +76,9 @@ class LaborRightsSingle extends React.Component {
       coverUrl,
       nPublicPages,
       descriptionInPermissionBlock,
-    } = this.props.entry ? this.props.entry.toJS() : {};
+    } = this.props.entry ? this.props.entry : {};
     const { seoTitle = title || '', seoDescription, seoText } = this.props.entry
-      ? this.props.entry.toJS()
+      ? this.props.entry
       : {};
     const { canViewLaborRightsSingle } = this.props;
 
@@ -122,8 +121,7 @@ class LaborRightsSingle extends React.Component {
           />
         </Helmet>
         {R.anyPass([isFetching, isUnfetched])(entryStatus) && <Loader />}
-        {isError(entryStatus) &&
-          entryError.toJS().statusCode === 404 && <NotFound />}
+        {isError(entryStatus) && entryError.statusCode === 404 && <NotFound />}
         {isFetched(entryStatus) && (
           <div>
             <Body
@@ -155,11 +153,11 @@ LaborRightsSingle.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.object.isRequired,
   }),
-  entry: ImmutablePropTypes.map,
+  entry: PropTypes.object,
   entryStatus: PropTypes.string.isRequired,
-  entryError: ImmutablePropTypes.map,
-  prevEntry: ImmutablePropTypes.map,
-  nextEntry: ImmutablePropTypes.map,
+  entryError: PropTypes.object,
+  prevEntry: PropTypes.object,
+  nextEntry: PropTypes.object,
   queryMenuIfUnfetched: PropTypes.func.isRequired,
   queryEntryIfUnfetched: PropTypes.func.isRequired,
   canViewLaborRightsSingle: PropTypes.bool.isRequired,

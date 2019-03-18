@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import { compose, setStatic } from 'recompose';
 import Loader from 'common/Loader';
 import Columns from 'common/Columns';
@@ -22,7 +21,7 @@ class LaborRightsMenu extends React.Component {
     const title = '勞動知識小教室';
     const { menuStatus: status, menuError, menuEntries: entries } = this.props;
     // eslint-disable-next-line no-shadow
-    const items = entries.toJS().map(({ id, title, coverUrl }) => ({
+    const items = entries.map(({ id, title, coverUrl }) => ({
       link: `/labor-rights/${id}`,
       coverUrl,
       title,
@@ -61,9 +60,9 @@ class LaborRightsMenu extends React.Component {
 }
 
 LaborRightsMenu.propTypes = {
-  menuEntries: ImmutablePropTypes.list.isRequired,
+  menuEntries: PropTypes.array.isRequired,
   menuStatus: PropTypes.string.isRequired,
-  menuError: ImmutablePropTypes.map,
+  menuError: PropTypes.object,
   queryMenuIfUnfetched: PropTypes.func.isRequired,
 };
 

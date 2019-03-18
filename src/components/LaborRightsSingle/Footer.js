@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Wrapper } from 'common/base';
 import { ArrowLeft, Thumbnails } from 'common/icons';
 import { FacebookWrapper } from 'common/facebook';
@@ -36,13 +35,13 @@ const Footer = ({ id, prev, next }) => (
         className={cn(styles.prev, {
           [styles.active]: prev,
         })}
-        {...prev && prev.toJS()}
+        {...prev}
       />
       <Pager
         className={cn(styles.next, {
           [styles.active]: next,
         })}
-        {...next && next.toJS()}
+        {...next}
       />
     </div>
   </Wrapper>
@@ -50,8 +49,8 @@ const Footer = ({ id, prev, next }) => (
 
 Footer.propTypes = {
   id: PropTypes.string.isRequired,
-  prev: ImmutablePropTypes.map,
-  next: ImmutablePropTypes.map,
+  prev: PropTypes.object,
+  next: PropTypes.object,
 };
 
 const Pager = ({ className, id, title }) => (
