@@ -8,26 +8,26 @@ import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
-import Pagination from 'common/Pagination';
 import {
   querySelector,
   pathnameSelector,
   paramsSelector,
 } from 'common/routing/selectors';
-import { queryCompany } from '../../actions/timeAndSalaryCompany';
+import Pagination from 'common/Pagination';
+import { queryJobTitle } from '../../actions/timeAndSalaryJobTitle';
 import { isFetching, isFetched } from '../../constants/status';
 import { pageSelector } from '../TimeAndSalary/common/selectors';
 import { validatePage } from '../TimeAndSalary/common/validators';
-import WorkingHourBlock from './WorkingHourBlock';
 import renderHelmet from './helmet';
-import styles from './TimeAndSalaryScreen.module.css';
+import WorkingHourBlock from './WorkingHourBlock';
+import styles from './SalaryWorkTimeScreen.module.css';
 
-const companyNameSelector = R.compose(
-  params => params.companyName,
+const jobTitleSelector = R.compose(
+  params => params.jobTitle,
   paramsSelector,
 );
 
-class TimeAndSalary extends Component {
+class SalaryWorkTimeScreen extends Component {
   static propTypes = {
     data: ImmutablePropTypes.map,
     status: PropTypes.string,
@@ -36,7 +36,7 @@ class TimeAndSalary extends Component {
       path: PropTypes.string.isRequired,
       params: PropTypes.object.isRequired,
     }),
-    queryCompany: PropTypes.func,
+    queryJobTitle: PropTypes.func,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -45,16 +45,16 @@ class TimeAndSalary extends Component {
   };
 
   componentDidMount() {
-    this.props.queryCompany({
-      companyName: companyNameSelector(this.props),
+    this.props.queryJobTitle({
+      jobTitle: jobTitleSelector(this.props),
     });
     this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
-    if (companyNameSelector(prevProps) !== companyNameSelector(this.props)) {
-      this.props.queryCompany({
-        companyName: companyNameSelector(this.props),
+    if (jobTitleSelector(prevProps) !== jobTitleSelector(this.props)) {
+      this.props.queryJobTitle({
+        jobTitle: jobTitleSelector(this.props),
       });
       this.props.fetchPermission();
     }
@@ -66,14 +66,14 @@ class TimeAndSalary extends Component {
     const page = validatePage(pageSelector(this.props));
     const pageSize = 10;
 
-    const companyName = companyNameSelector(this.props);
-    const title = `${companyName} 薪水、加班情況`;
+    const jobTitle = jobTitleSelector(this.props);
+    const title = `${jobTitle} 薪水、加班情況`;
 
     const queryParams = querySelector(this.props);
 
     return (
       <section className={styles.searchResult}>
-        {renderHelmet({ title, pathname, companyName })}
+        {renderHelmet({ title, pathname, jobTitle })}
         <h2 className={styles.heading}>{title}</h2>
         {isFetching(status) && <Loading size="s" />}
         {isFetched(status) &&
@@ -103,8 +103,8 @@ class TimeAndSalary extends Component {
             </React.Fragment>
           )) || (
             <P size="l" bold className={styles.searchNoResult}>
-              尚未有公司「
-              {companyName}
+              尚未有職稱「
+              {jobTitle}
               」的薪時資訊
             </P>
           ))}
@@ -114,9 +114,9 @@ class TimeAndSalary extends Component {
 }
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const companyName = companyNameSelector(props);
+  const jobTitle = jobTitleSelector(props);
 
-  return dispatch(queryCompany({ companyName }));
+  return dispatch(queryJobTitle({ jobTitle }));
 });
 
 const hoc = compose(
@@ -124,4 +124,4 @@ const hoc = compose(
   withPermission,
 );
 
-export default hoc(TimeAndSalary);
+export default hoc(SalaryWorkTimeScreen);
