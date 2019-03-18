@@ -37,7 +37,7 @@ server.get(
   wrap(async (req, res) => {
     const history = createHistory({ initialEntries: [req.originalUrl] });
     const location = history.location;
-    const store = configureStore({ routing: { location } }, history);
+    const store = configureStore({}, history);
 
     const context = {};
 
