@@ -4,33 +4,30 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
 import qs from 'qs';
 import { compose, setStatic } from 'recompose';
-
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
-import WorkingHourBlock from './WorkingHourBlock';
-import { queryCompany } from '../../../actions/timeAndSalaryCompany';
-import { isFetching, isFetched } from '../../../constants/status';
-import renderHelmet from './helmet';
-
+import Pagination from 'common/Pagination';
 import {
   querySelector,
   pathnameSelector,
   paramsSelector,
 } from 'common/routing/selectors';
-import { pageSelector } from '../common/selectors';
-import { validatePage } from '../common/validators';
-
-import styles from '../views/view.module.css';
-import Pagination from '../../common/Pagination/Pagination';
+import { queryCompany } from '../../actions/timeAndSalaryCompany';
+import { isFetching, isFetched } from '../../constants/status';
+import { pageSelector } from '../TimeAndSalary/common/selectors';
+import { validatePage } from '../TimeAndSalary/common/validators';
+import WorkingHourBlock from './WorkingHourBlock';
+import renderHelmet from './helmet';
+import styles from './SalaryWorkTimeScreen.module.css';
 
 const companyNameSelector = R.compose(
   params => params.companyName,
   paramsSelector,
 );
 
-class TimeAndSalaryCompany extends Component {
+class SalaryWorkTimeScreen extends Component {
   static propTypes = {
     data: ImmutablePropTypes.map,
     status: PropTypes.string,
@@ -127,4 +124,4 @@ const hoc = compose(
   withPermission,
 );
 
-export default hoc(TimeAndSalaryCompany);
+export default hoc(SalaryWorkTimeScreen);

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
-
 import { InfoButton } from 'common/Modal';
 import Table from 'common/table/Table';
-import InfoSalaryModal from '../common/InfoSalaryModal';
-import InfoTimeModal from '../common/InfoTimeModal';
-import styles from '../common/WorkingHourTable.module.css';
+import InfoSalaryModal from '../TimeAndSalary/common/InfoSalaryModal';
+import InfoTimeModal from '../TimeAndSalary/common/InfoTimeModal';
+import styles from '../TimeAndSalary/common/WorkingHourTable.module.css';
 import {
   getName,
   getEmploymentType,
@@ -17,16 +16,16 @@ import {
   getWeekWorkTime,
   formatWage,
   formatDate,
-} from '../common/formatter';
-import injectHideContentBlock from '../common/injectHideContentBlock';
+} from '../TimeAndSalary/common/formatter';
+import injectHideContentBlock from '../TimeAndSalary/common/injectHideContentBlock';
 
 const columnProps = [
   {
     className: styles.colPosition,
-    title: '公司名稱',
-    dataField: 'company',
+    title: '職稱',
+    dataField: 'job_title',
     dataFormatter: getName,
-    renderChildren: () => '公司名稱',
+    renderChildren: () => '職稱',
   },
   {
     className: styles.colType,
@@ -112,6 +111,7 @@ const columnProps = [
 class WorkingHourTable extends Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
+    hideContent: PropTypes.bool.isRequired,
   };
 
   constructor(props) {

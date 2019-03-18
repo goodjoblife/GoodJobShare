@@ -1,6 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';
+import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../../constants/helmetData';
 import { toQsString } from './helper';
 

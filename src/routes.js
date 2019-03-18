@@ -2,11 +2,11 @@ import React from 'react';
 import LandingPage from './containers/LandingPage';
 import LaborRightsMenu from './containers/LaborRightsMenu';
 import LaborRightsSingle from './containers/LaborRightsSingle';
-import TimeAndSalary from './containers/TimeAndSalary';
-import TimeAndSalaryBoard from './containers/TimeAndSalary/TimeAndSalaryBoard';
-import TimeAndSalarySearch from './containers/TimeAndSalary/TimeAndSalarySearch';
-import TimeAndSalaryCompany from './containers/TimeAndSalary/TimeAndSalaryCompany';
-import TimeAndSalaryJobTitle from './containers/TimeAndSalary/TimeAndSalaryJobTitle';
+import TimeAndSalary from './containers/SalaryWorkTime';
+import TimeAndSalaryBoard from './containers/SalaryWorkTime/TimeAndSalaryBoard';
+import SalaryWorkTimeSearchScreen from './containers/SalaryWorkTime/SearchScreen';
+import CompanySalaryWorkTimeScreen from './containers/Company/SalaryWorkTimeScreen';
+import JobTitleSalaryWorkTimeScreen from './containers/JobTitle/SalaryWorkTimeScreen';
 import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
 import CampaignTimeAndSalary from './containers/CampaignTimeAndSalary';
 import CampaignTimeAndSalaryBoard from './containers/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
@@ -190,35 +190,31 @@ const routes = [
       {
         path: '/salary-work-times',
         exact: true,
-        component: TimeAndSalarySearch,
+        component: SalaryWorkTimeSearchScreen,
       },
     ],
   },
   {
-    path: '/companies/:companyName',
+    path: '/companies/:companyName/salary-work-times',
+    exact: true,
     component: TimeAndSalary,
     routes: [
       {
         path: '/companies/:companyName/salary-work-times',
         exact: true,
-        component: TimeAndSalaryCompany,
-      },
-      {
-        component: TimeAndSalaryNotFound,
+        component: CompanySalaryWorkTimeScreen,
       },
     ],
   },
   {
-    path: '/job-titles/:jobTitle',
+    path: '/job-titles/:jobTitle/salary-work-times',
+    exact: true,
     component: TimeAndSalary,
     routes: [
       {
         path: '/job-titles/:jobTitle/salary-work-times',
         exact: true,
-        component: TimeAndSalaryJobTitle,
-      },
-      {
-        component: TimeAndSalaryNotFound,
+        component: JobTitleSalaryWorkTimeScreen,
       },
     ],
   },

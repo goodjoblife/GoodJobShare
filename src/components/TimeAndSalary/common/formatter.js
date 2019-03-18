@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { formatSalaryAmount, formatSalaryType } from 'common/formatter';
-
-import commonStyles from '../views/view.module.css';
-import MagnifierPlus from '../../common/icons/MagnifierPlus';
+import MagnifierPlus from 'common/icons/MagnifierPlus';
 import employmentType from '../../../constants/employmentType';
+import styles from './formatter.module.css';
 
 export const getCompany = item => (
   <div>
@@ -28,14 +26,14 @@ export const getJobTitle = item => {
       >
         {jobTitle}
       </Link>{' '}
-      <span className={`pM ${commonStyles.sector}`}>{sector}</span>
+      <span className={`pM ${styles.sector}`}>{sector}</span>
     </div>
   );
 };
 
 export const getName = (o, row) => (
   <div>
-    {o.name} <span className={`pM ${commonStyles.sector}`}>{row.sector}</span>
+    {o.name} <span className={`pM ${styles.sector}`}>{row.sector}</span>
   </div>
 );
 
@@ -73,15 +71,15 @@ const getFrequencyText = item => {
 const getFrequencyStyle = item => {
   switch (item.overtime_frequency) {
     case 0:
-      return commonStyles.hardly;
+      return styles.hardly;
     case 1:
-      return commonStyles.sometimes;
+      return styles.sometimes;
     case 2:
-      return commonStyles.usually;
+      return styles.usually;
     case 3:
-      return commonStyles.always;
+      return styles.always;
     default:
-      return commonStyles.hardly;
+      return styles.hardly;
   }
 };
 
@@ -90,7 +88,7 @@ export const getFrequency = item => {
   const text = getFrequencyText(item);
   return (
     <div>
-      <div className={`${commonStyles.dot} ${style}`} />
+      <div className={`${styles.dot} ${style}`} />
       {text}
     </div>
   );
@@ -99,7 +97,7 @@ export const getFrequency = item => {
 export const getWeekWorkTime = item =>
   item.week_work_time ? (
     <div
-      className={commonStyles.bar}
+      className={styles.bar}
       style={{
         width: `${item.week_work_time >= 100 ? 100 : item.week_work_time}%`,
       }}
