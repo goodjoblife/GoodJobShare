@@ -4,8 +4,9 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import { Redirect, Switch } from 'react-router';
 import { compose, setStatic } from 'recompose';
-
 import Wrapper from 'common/base/Wrapper';
+import { pathnameSelector } from 'common/routing/selectors';
+import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
 import SearchBar from './SearchBar';
@@ -15,12 +16,8 @@ import MobileInfoButtons from './MobileInfoButtons';
 import InfoTimeModal from './common/InfoTimeModal';
 import InfoSalaryModal from './common/InfoSalaryModal';
 import withModal from './common/withModal';
-
-import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../constants/helmetData';
 import { queryCampaignInfoList } from '../../actions/campaignInfo';
-
-import { pathnameSelector } from 'common/routing/selectors';
 
 const campaignListFromEntries = campaignEntries =>
   campaignEntries

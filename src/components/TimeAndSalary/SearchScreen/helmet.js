@@ -1,11 +1,11 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';
+import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../../constants/helmetData';
 
-export default ({ title, pathname, jobTitle }) => {
+export default ({ title, pathname, keyword }) => {
   const url = formatCanonicalPath(pathname);
-  const description = `馬上查看${jobTitle}的薪資、工時資訊以及加班狀況，協助您找到更好的工作！`;
+  const description = `馬上查看${keyword}的薪資、工時資訊以及加班狀況，協助您找到更好的工作！`;
 
   return (
     <Helmet

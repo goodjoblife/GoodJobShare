@@ -5,11 +5,17 @@ import Loading from 'common/Loader';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
 import { compose, setStatic } from 'recompose';
-
 import Select from 'common/form/Select';
 import Pagination from 'common/Pagination';
 import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
+import GradientMask from 'common/GradientMask';
+import {
+  pathSelector,
+  pathnameSelector,
+  searchSelector,
+  querySelector,
+} from 'common/routing/selectors';
 import InfoTimeModal from '../common/InfoTimeModal';
 import InfoSalaryModal from '../common/InfoSalaryModal';
 import AboutThisJobModal from '../common/AboutThisJobModal';
@@ -19,21 +25,11 @@ import commonStyles from '../views/view.module.css';
 import { isFetching, isFetched } from '../../../constants/status';
 import { MAX_ROWS_IF_HIDDEN } from '../../../constants/hideContent';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
-
 import { queryTimeAndSalary } from '../../../actions/timeAndSalaryBoard';
-import GradientMask from '../../common/GradientMask';
-
 import DashBoardTable from '../common/DashBoardTable';
-
 import { toQsString, queryParser } from './helper';
 import { DATA_NUM_PER_PAGE } from '../../../constants/timeAndSalarSearch';
 import renderHelmet from './helmet';
-import {
-  pathSelector,
-  pathnameSelector,
-  searchSelector,
-  querySelector,
-} from 'common/routing/selectors';
 
 const pathnameMapping = {
   '/time-and-salary/work-time-dashboard': {

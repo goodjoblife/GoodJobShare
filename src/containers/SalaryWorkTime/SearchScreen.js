@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import TimeAndSalarySearch from '../../components/TimeAndSalary/TimeAndSalarySearch';
+import SearchScreen from '../../components/TimeAndSalary/SearchScreen';
 import { queryKeyword } from '../../actions/timeAndSalarySearch';
 
 const mapStateToProps = state => ({
@@ -15,4 +15,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(TimeAndSalarySearch);
+)(SearchScreen);

@@ -4,20 +4,17 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { compose, setStatic } from 'recompose';
 import R from 'ramda';
 import qs from 'qs';
-
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
-import WorkingHourBlock from './WorkingHourBlock';
-import { queryKeyword } from '../../../actions/timeAndSalarySearch';
-import { isFetching, isFetched } from '../../../constants/status';
-import renderHelmet from './helmet';
-
 import {
   querySelector,
   pathSelector,
   pathnameSelector,
 } from 'common/routing/selectors';
+import Pagination from 'common/Pagination';
+import { queryKeyword } from '../../../actions/timeAndSalarySearch';
+import { isFetching, isFetched } from '../../../constants/status';
 import {
   searchCriteriaSelector,
   searchKeywordSelector,
@@ -28,10 +25,10 @@ import {
   validateSearchCriteria,
   validateSearchKeyword,
 } from '../common/validators';
-
-import styles from '../views/view.module.css';
 import { searchOptions } from '../SearchBar';
-import Pagination from '../../common/Pagination/Pagination';
+import WorkingHourBlock from './WorkingHourBlock';
+import renderHelmet from './helmet';
+import styles from './SearchScreen.module.css';
 
 const firstDataNameSelector = props => props.data.get(0).get('name');
 
@@ -42,7 +39,7 @@ const searchCriteriaText = searchBy =>
     R.filter(R.propEq('value', searchBy)),
   )(searchOptions);
 
-class TimeAndSalarySearch extends Component {
+class SearchScreen extends Component {
   static propTypes = {
     data: ImmutablePropTypes.list,
     status: PropTypes.string,
@@ -183,4 +180,4 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
 
 const hoc = compose(ssr);
 
-export default hoc(TimeAndSalarySearch);
+export default hoc(SearchScreen);
