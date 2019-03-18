@@ -1,5 +1,5 @@
 [ignore]
-node_modules/**/*
+<PROJECT_ROOT>/node_modules/.*
 
 [include]
 
@@ -10,5 +10,6 @@ node_modules/**/*
 [options]
 module.name_mapper='^common\/\(.*\)$' -> '<PROJECT_ROOT>/src/components/common/\1'
 module.name_mapper='^utils\/\(.*\)$' -> '<PROJECT_ROOT>/src/utils/\1'
+module.name_mapper='^graphql\/\(.*\)$' -> '<PROJECT_ROOT>/src/graphql/\1'
 
 [strict]
