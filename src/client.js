@@ -1,6 +1,7 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
 import createHistory from 'history/createBrowserHistory';
+import R from 'ramda';
 import { fromJS } from 'immutable';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
@@ -16,9 +17,11 @@ function parseState(window) {
   if (!window.__data) {
     return {};
   }
+
+  const shouldNotTransform = R.flip(R.contains)([]);
   const preloadedState = {};
   Object.keys(window.__data).forEach(key => {
-    if (key === 'routing') {
+    if (shouldNotTransform(key)) {
       preloadedState[key] = window.__data[key];
     } else {
       preloadedState[key] = fromJS(window.__data[key]);
