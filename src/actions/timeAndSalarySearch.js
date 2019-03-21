@@ -69,6 +69,11 @@ export const queryKeyword = ({ searchBy, keyword }) => (
 
   return promise
     .then(data => {
+      data.sort(
+        (a, b) =>
+          b.salary_work_time_statistics.count -
+          a.salary_work_time_statistics.count,
+      );
       dispatch(
         setSearchData(fetchingStatus.FETCHED, searchBy, keyword, data, null),
       );
