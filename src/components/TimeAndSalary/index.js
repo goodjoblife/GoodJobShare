@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
-import { Redirect, Switch } from 'react-router';
+import { Switch } from 'react-router';
 import { compose, setStatic } from 'recompose';
 import Wrapper from 'common/base/Wrapper';
 import { pathnameSelector } from 'common/routing/selectors';
@@ -92,19 +92,7 @@ class TimeAndSalary extends Component {
   };
 
   render() {
-    const { routes, location, staticContext } = this.props;
-    if (!staticContext) {
-      if (location.pathname === '/salary-work-times') {
-        if (location.hash) {
-          const targets = location.hash.split('#');
-          if (targets.length >= 2) {
-            return <Redirect to={`/salary-work-times${targets[1]}`} />;
-          }
-        }
-        return <Redirect to="/salary-work-times/latest" />;
-      }
-    }
-
+    const { routes } = this.props;
     const campaigns = campaignListFromEntries(this.props.campaignEntries);
 
     return (
