@@ -94,11 +94,14 @@ class TimeAndSalary extends Component {
   render() {
     const { routes } = this.props;
     const campaigns = campaignListFromEntries(this.props.campaignEntries);
+    const pathname = pathnameSelector(this.props);
 
     return (
       <div className={styles.container}>
         {this.renderHelmet()}
-        <Banner campaigns={campaigns} />
+        {pathname === '/salary-work-times/latest' && (
+          <Banner campaigns={campaigns} />
+        )}
         <section className={styles.whiteBackground}>
           <Wrapper size="l" className={styles.showSearchbarWrapper}>
             <CallToShareData />
