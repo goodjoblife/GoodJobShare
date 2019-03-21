@@ -5,7 +5,6 @@ import Loading from 'common/Loader';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
 import { compose, setStatic } from 'recompose';
-import Select from 'common/form/Select';
 import Pagination from 'common/Pagination';
 import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
@@ -212,7 +211,6 @@ class TimeAndSalaryBoard extends Component {
   };
 
   render() {
-    const path = pathSelector(this.props);
     const pathname = pathnameSelector(this.props);
     const { page } = queryParser(querySelector(this.props));
     const { title, hasExtreme } = pathParameters;
@@ -221,7 +219,6 @@ class TimeAndSalaryBoard extends Component {
       status,
       totalCount,
       currentPage,
-      history,
       extremeStatus,
       extremeData,
       canViewTimeAndSalary,
@@ -254,22 +251,6 @@ class TimeAndSalaryBoard extends Component {
                     </button>
                   </span>
                 )}
-            </div>
-            <div className={commonStyles.sort}>
-              <div className={commonStyles.label}> 排序：</div>
-              <div className={commonStyles.select}>
-                <Select
-                  options={[
-                    {
-                      value: '/salary-work-times/latest',
-                      label: pathParameters.label,
-                    },
-                  ]}
-                  onChange={e => history.push(e.target.value)}
-                  value={path}
-                  hasNullOption={false}
-                />
-              </div>
             </div>
           </div>
           {isFetching(status) && (
