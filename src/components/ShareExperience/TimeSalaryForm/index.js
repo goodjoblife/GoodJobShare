@@ -135,7 +135,7 @@ class TimeSalaryForm extends React.PureComponent {
                 (count || 0)} 次可以上傳。`}
               buttonText="查看最新工時、薪資"
               buttonClick={() => {
-                window.location.replace('/time-and-salary/latest');
+                window.location.replace('/salary-work-times/latest');
               }}
             />
           );

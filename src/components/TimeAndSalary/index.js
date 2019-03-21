@@ -94,14 +94,14 @@ class TimeAndSalary extends Component {
   render() {
     const { routes, location, staticContext } = this.props;
     if (!staticContext) {
-      if (location.pathname === '/time-and-salary') {
+      if (location.pathname === '/salary-work-times') {
         if (location.hash) {
           const targets = location.hash.split('#');
           if (targets.length >= 2) {
-            return <Redirect to={`/time-and-salary${targets[1]}`} />;
+            return <Redirect to={`/salary-work-times${targets[1]}`} />;
           }
         }
-        return <Redirect to="/time-and-salary/latest" />;
+        return <Redirect to="/salary-work-times/latest" />;
       }
     }
 
