@@ -103,13 +103,15 @@ class SearchScreen extends Component {
   getLinkForData(data) {
     const searchBy = searchCriteriaSelector(this.props);
     if (searchBy === 'company') {
-      return `/companies/${data.name}/salary-work-times${
-        this.props.location.search
-      }`;
+      return `/companies/${data.name}/salary-work-times${qs.stringify(
+        { ...querySelector(this.props), p: 1 },
+        { addQueryPrefix: true },
+      )}`;
     } else if (searchBy === 'job_title') {
-      return `/job-titles/${data.name}/salary-work-times${
-        this.props.location.search
-      }`;
+      return `/job-titles/${data.name}/salary-work-times${qs.stringify(
+        { ...querySelector(this.props), p: 1 },
+        { addQueryPrefix: true },
+      )}`;
     }
     return '';
   }
