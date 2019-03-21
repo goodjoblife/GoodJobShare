@@ -131,36 +131,6 @@ const routes = [
     component: TimeAndSalary,
     routes: [
       {
-        path: '/time-and-salary/latest',
-        exact: true,
-        component: TimeAndSalaryBoard,
-      },
-      {
-        path: '/time-and-salary/sort/time-asc',
-        exact: true,
-        component: TimeAndSalaryBoard,
-      },
-      {
-        path: '/time-and-salary/work-time-dashboard',
-        exact: true,
-        component: TimeAndSalaryBoard,
-      },
-      {
-        path: '/time-and-salary/sort/work-time-asc',
-        exact: true,
-        component: TimeAndSalaryBoard,
-      },
-      {
-        path: '/time-and-salary/salary-dashboard',
-        exact: true,
-        component: TimeAndSalaryBoard,
-      },
-      {
-        path: '/time-and-salary/sort/salary-asc',
-        exact: true,
-        component: TimeAndSalaryBoard,
-      },
-      {
         path: '/time-and-salary/company/:keyword',
         exact: false,
         component: ({ match }) => (
@@ -179,6 +149,11 @@ const routes = [
         ),
       },
       {
+        path: '/time-and-salary',
+        exact: true,
+        component: () => <Redirect to="/salary-work-times/latest" />,
+      },
+      {
         component: TimeAndSalaryNotFound,
       },
     ],
@@ -191,6 +166,14 @@ const routes = [
         path: '/salary-work-times',
         exact: true,
         component: SalaryWorkTimeSearchScreen,
+      },
+      {
+        path: '/salary-work-times/latest',
+        exact: true,
+        component: TimeAndSalaryBoard,
+      },
+      {
+        component: TimeAndSalaryNotFound,
       },
     ],
   },
