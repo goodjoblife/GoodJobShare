@@ -13,7 +13,10 @@ import {
   pathnameSelector,
 } from 'common/routing/selectors';
 import Pagination from 'common/Pagination';
-import { queryKeyword } from '../../../actions/timeAndSalarySearch';
+import {
+  queryKeyword,
+  keywordMinLength,
+} from '../../../actions/timeAndSalarySearch';
 import { isFetching, isFetched } from '../../../constants/status';
 import {
   searchCriteriaSelector,
@@ -38,6 +41,18 @@ const searchCriteriaText = searchBy =>
     R.head,
     R.filter(R.propEq('value', searchBy)),
   )(searchOptions);
+
+function getTitle(keyword) {
+  if (keyword) {
+    if (keyword.length <= keywordMinLength) {
+      return '請輸入更長的搜尋關鍵字';
+    } else {
+      return `查詢「${keyword}」的結果`;
+    }
+  } else {
+    return '請輸入搜尋條件！';
+  }
+}
 
 class SearchScreen extends Component {
   static propTypes = {
@@ -109,7 +124,7 @@ class SearchScreen extends Component {
 
     const searchBy = searchCriteriaSelector(this.props);
     const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
-    const title = keyword ? `查詢「${keyword}」的結果` : '請輸入搜尋條件！';
+    const title = getTitle(keyword);
 
     const queryParams = querySelector(this.props);
 
