@@ -31,60 +31,13 @@ import { toQsString, queryParser } from './helper';
 import { DATA_NUM_PER_PAGE } from '../../../constants/timeAndSalarSearch';
 import renderHelmet from './helmet';
 
-const pathnameMapping = {
-  '/time-and-salary/work-time-dashboard': {
-    title: '工時排行榜',
-    label: '一週平均總工時（高到低）',
-    sortBy: 'week_work_time',
-    order: 'descending',
-    hasExtreme: true,
-  },
-  '/time-and-salary/sort/work-time-asc': {
-    title: '工時排行榜（由低到高）',
-    label: '一週平均總工時（低到高）',
-    sortBy: 'week_work_time',
-    order: 'ascending',
-    hasExtreme: true,
-  },
-  '/time-and-salary/salary-dashboard': {
-    title: '估算時薪排行榜',
-    label: '估算時薪（高到低）',
-    sortBy: 'estimated_hourly_wage',
-    order: 'descending',
-    hasExtreme: true,
-  },
-  '/time-and-salary/sort/salary-asc': {
-    title: '估算時薪排行榜（由低到高）',
-    label: '估算時薪（低到高）',
-    sortBy: 'estimated_hourly_wage',
-    order: 'ascending',
-    hasExtreme: true,
-  },
-  '/time-and-salary/latest': {
-    title: '最新薪資、工時資訊',
-    label: '資料時間（新到舊）',
-    sortBy: 'created_at',
-    order: 'descending',
-    hasExtreme: false,
-  },
-  '/time-and-salary/sort/time-asc': {
-    title: '最舊薪資、工時資訊',
-    label: '資料時間（舊到新）',
-    sortBy: 'created_at',
-    order: 'ascending',
-    hasExtreme: false,
-  },
+const pathParameters = {
+  title: '最新薪資、工時資訊',
+  label: '資料時間（新到舊）',
+  sortBy: 'created_at',
+  order: 'descending',
+  hasExtreme: false,
 };
-
-const selectOptions = R.pipe(
-  R.toPairs,
-  R.map(([path, opt]) => ({ value: path, label: opt.label })),
-);
-
-const pathParameterSelector = R.compose(
-  path => pathnameMapping[path],
-  pathSelector,
-);
 
 const injectPermissionBlock = R.pipe(
   R.take(MAX_ROWS_IF_HIDDEN),
@@ -168,7 +121,7 @@ class TimeAndSalaryBoard extends Component {
   };
 
   componentDidMount() {
-    const { sortBy, order } = pathParameterSelector(this.props);
+    const { sortBy, order } = pathParameters;
     const { page } = queryParser(querySelector(this.props));
 
     this.props.resetBoardExtremeData();
@@ -181,7 +134,7 @@ class TimeAndSalaryBoard extends Component {
       pathSelector(prevProps) !== pathSelector(this.props) ||
       searchSelector(prevProps) !== searchSelector(this.props)
     ) {
-      const { sortBy, order } = pathParameterSelector(this.props);
+      const { sortBy, order } = pathParameters;
       const { page } = queryParser(querySelector(this.props));
       this.setState({ showExtreme: false });
       this.props.resetBoardExtremeData();
@@ -262,7 +215,7 @@ class TimeAndSalaryBoard extends Component {
     const path = pathSelector(this.props);
     const pathname = pathnameSelector(this.props);
     const { page } = queryParser(querySelector(this.props));
-    const { title, hasExtreme } = pathParameterSelector(this.props);
+    const { title, hasExtreme } = pathParameters;
     const {
       data,
       status,
@@ -306,7 +259,12 @@ class TimeAndSalaryBoard extends Component {
               <div className={commonStyles.label}> 排序：</div>
               <div className={commonStyles.select}>
                 <Select
-                  options={selectOptions(pathnameMapping)}
+                  options={[
+                    {
+                      value: '/salary-work-times/latest',
+                      label: pathParameters.label,
+                    },
+                  ]}
                   onChange={e => history.push(e.target.value)}
                   value={path}
                   hasNullOption={false}
@@ -358,7 +316,7 @@ class TimeAndSalaryBoard extends Component {
 }
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const { sortBy, order } = pathParameterSelector(props);
+  const { sortBy, order } = pathParameters;
   const { page } = queryParser(querySelector(props));
 
   return dispatch(queryTimeAndSalary({ sortBy, order, page }));
