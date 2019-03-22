@@ -30,7 +30,7 @@ const onSendGA = action => {
 const SiteMenu = () => (
   <ul className={styles.menu}>
     <Item
-      to="/time-and-salary"
+      to="/salary-work-times/latest"
       text="薪資工時"
       onClick={() => {
         onSendGA(GA_ACTION.CLICK_TIME_AND_SALARY);
