@@ -8,9 +8,6 @@ $below-mobile: 550px;
 $gray: #b4b4b4;
 
 .container {
-  @media (max-width: $below-small) {
-    margin-top: -50px;
-  }
 }
 
 .showSearchbarWrapper {
