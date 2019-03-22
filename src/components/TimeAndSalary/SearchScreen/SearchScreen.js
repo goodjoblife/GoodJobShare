@@ -100,14 +100,33 @@ class SearchScreen extends Component {
     }
   }
 
+  getLinkForData(data) {
+    const searchBy = searchCriteriaSelector(this.props);
+    if (searchBy === 'company') {
+      return `/companies/${encodeURIComponent(
+        data.name,
+      )}/salary-work-times${qs.stringify(
+        { ...querySelector(this.props), p: 1 },
+        { addQueryPrefix: true },
+      )}`;
+    } else if (searchBy === 'job_title') {
+      return `/job-titles/${encodeURIComponent(
+        data.name,
+      )}/salary-work-times${qs.stringify(
+        { ...querySelector(this.props), p: 1 },
+        { addQueryPrefix: true },
+      )}`;
+    }
+    return '';
+  }
+
   render() {
-    const { status, history } = this.props;
+    const { status } = this.props;
     const pathname = pathnameSelector(this.props);
     const page = validatePage(pageSelector(this.props));
     const pageSize = 10;
     const totalNum = this.props.data.size;
 
-    const searchBy = searchCriteriaSelector(this.props);
     const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
     const title = keyword ? `查詢「${keyword}」的結果` : '請輸入搜尋條件！';
 
@@ -134,25 +153,7 @@ class SearchScreen extends Component {
             </P>
           )}
         {raw.map((o, i) => (
-          <WorkingHourBlock
-            key={i}
-            data={o}
-            onClickHeader={() => {
-              if (searchBy === 'company') {
-                history.push(
-                  `/companies/${o.name}/salary-work-times${
-                    this.props.location.search
-                  }`,
-                );
-              } else if (searchBy === 'job_title') {
-                history.push(
-                  `/job-titles/${o.name}/salary-work-times${
-                    this.props.location.search
-                  }`,
-                );
-              }
-            }}
-          />
+          <WorkingHourBlock key={i} data={o} to={this.getLinkForData(o)} />
         ))}
         <Pagination
           totalCount={totalNum}

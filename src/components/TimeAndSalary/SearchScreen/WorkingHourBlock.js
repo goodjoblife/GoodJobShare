@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Heading } from 'common/base';
+import { Link } from 'react-router-dom';
 
 import styles from '../common/WorkingHourBlock.module.css';
 
 class WorkingHourBlock extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
-    onClickHeader: PropTypes.func,
+    to: PropTypes.string.isRequired,
   };
 
   render() {
-    const { data, onClickHeader } = this.props;
+    const { data, to } = this.props;
     const { name } = data;
     return (
       <section className={styles.container}>
-        <button className={styles.toggleButton} onClick={onClickHeader}>
+        <Link className={styles.toggleButton} to={to}>
           <div className={styles.headingWrapper}>
             <Heading size="sl" className={styles.headingBlock}>
               {name}
@@ -27,7 +28,7 @@ class WorkingHourBlock extends Component {
               </span>
             </div>
           </div>
-        </button>
+        </Link>
       </section>
     );
   }
