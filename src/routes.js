@@ -150,7 +150,7 @@ const routes = [
       },
       {
         path: '/time-and-salary',
-        exact: true,
+        exact: false,
         component: () => <Redirect to="/salary-work-times/latest" />,
       },
       {
