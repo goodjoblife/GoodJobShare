@@ -44,7 +44,7 @@ const searchCriteriaText = searchBy =>
 
 function getTitle(keyword) {
   if (keyword) {
-    if (keyword.length <= keywordMinLength) {
+    if (keyword.length < keywordMinLength) {
       return '請輸入更長的搜尋關鍵字';
     } else {
       return `查詢「${keyword}」的結果`;

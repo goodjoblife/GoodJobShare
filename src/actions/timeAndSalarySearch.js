@@ -35,7 +35,7 @@ export const queryKeyword = ({ searchBy, keyword }) => (
   }
 
   // Do not query if keyword is too short
-  if (keyword.length <= keywordMinLength) {
+  if (keyword.length < keywordMinLength) {
     return Promise.resolve();
   }
 
