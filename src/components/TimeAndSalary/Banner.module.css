@@ -38,9 +38,6 @@ $page-gutter-s: 15px;
   background-color: #fff;
   border-bottom: 1px solid $gray-light;
   position: relative;
-  @media (max-width: $below-small) {
-    margin-top: $nav-height-s;
-  }
 
   .container {
     height: 185px;
