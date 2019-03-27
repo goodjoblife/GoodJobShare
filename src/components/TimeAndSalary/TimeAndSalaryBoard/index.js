@@ -31,7 +31,7 @@ import { DATA_NUM_PER_PAGE } from '../../../constants/timeAndSalarSearch';
 import renderHelmet from './helmet';
 
 const pathParameters = {
-  title: '最新薪資、工時資訊',
+  title: '各行各業薪水查詢',
   label: '資料時間（新到舊）',
   sortBy: 'created_at',
   order: 'descending',
@@ -233,7 +233,7 @@ class TimeAndSalaryBoard extends Component {
 
     return (
       <section className={commonStyles.searchResult}>
-        {renderHelmet({ title, pathname, page })}
+        {renderHelmet({ title, pathname, page, dataNum: totalCount })}
         <h2 className={commonStyles.heading}>{title}</h2>
         <div className={commonStyles.result}>
           <div className={styles.sortRow}>

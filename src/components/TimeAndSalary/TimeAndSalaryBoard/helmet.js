@@ -4,18 +4,18 @@ import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../../constants/helmetData';
 import { toQsString } from './helper';
 
-export default ({ title, pathname, page }) => {
+export default ({ title, pathname, page, dataNum }) => {
+  const helmetTitle = `${title} - 第${page}頁`;
   const search = page === 1 ? '' : `?${toQsString({ page })}`;
   const url = `${formatCanonicalPath(pathname)}${search}`;
-  const description =
-    '馬上查看薪資、工時資訊以及加班狀況，協助您找到更好的工作！';
+  const description = `查詢各行各業的薪水、加班情況、工時資料，共 ${dataNum} 筆資料`;
 
   return (
     <Helmet
-      title={title}
+      title={helmetTitle}
       meta={[
         { name: 'description', content: description },
-        { property: 'og:title', content: formatTitle(title, SITE_NAME) },
+        { property: 'og:title', content: formatTitle(helmetTitle, SITE_NAME) },
         { property: 'og:description', content: description },
         { property: 'og:url', content: url },
         {
