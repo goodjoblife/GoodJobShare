@@ -12,6 +12,8 @@ export const setSearchData = (status, searchBy, keyword, data, error) => ({
   error,
 });
 
+export const keywordMinLength = 2;
+
 export const queryKeyword = ({ searchBy, keyword }) => (
   dispatch,
   getState,
@@ -29,6 +31,11 @@ export const queryKeyword = ({ searchBy, keyword }) => (
   if (
     getState().timeAndSalarySearch.get('status') === fetchingStatus.FETCHING
   ) {
+    return Promise.resolve();
+  }
+
+  // Do not query if keyword is too short
+  if (keyword.length < keywordMinLength) {
     return Promise.resolve();
   }
 
@@ -62,6 +69,11 @@ export const queryKeyword = ({ searchBy, keyword }) => (
 
   return promise
     .then(data => {
+      data.sort(
+        (a, b) =>
+          b.salary_work_time_statistics.count -
+          a.salary_work_time_statistics.count,
+      );
       dispatch(
         setSearchData(fetchingStatus.FETCHED, searchBy, keyword, data, null),
       );
