@@ -34,6 +34,26 @@ export const getCompanyQuery = `
           month
         }
       }
+      salary_work_time_statistics {
+        count
+        average_week_work_time
+        average_estimated_hourly_wage
+        has_compensatory_dayoff_count {
+          yes
+          no
+          unknown
+        }
+        has_overtime_salary_count {
+          yes
+          no
+          unknown
+        }
+        is_overtime_salary_legal_count {
+          yes
+          no
+          unknown
+        }
+      }
     }
   }
 `;
@@ -72,6 +92,26 @@ export const getJobTitleQuery = `
         data_time {
           year
           month
+        }
+      }
+      salary_work_time_statistics {
+        count
+        average_week_work_time
+        average_estimated_hourly_wage
+        has_compensatory_dayoff_count {
+          yes
+          no
+          unknown
+        }
+        has_overtime_salary_count {
+          yes
+          no
+          unknown
+        }
+        is_overtime_salary_legal_count {
+          yes
+          no
+          unknown
         }
       }
     }
