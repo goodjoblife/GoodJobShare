@@ -67,13 +67,31 @@ class SalaryWorkTimeScreen extends Component {
     const pageSize = 10;
 
     const companyName = companyNameSelector(this.props);
-    const title = `${companyName} 薪水、加班情況`;
+    const title = `${companyName} 薪水`;
+    const statistics = data
+      ? data.get('salary_work_time_statistics').toJS()
+      : null;
+    const dataNum = R.propOr(0, 'count', statistics);
+    const avgWeekWorkTime = R.propOr(0, 'average_week_work_time', statistics);
+    const avgHourWage = R.propOr(
+      0,
+      'average_estimated_hourly_wage',
+      statistics,
+    );
 
     const queryParams = querySelector(this.props);
 
     return (
       <section className={styles.searchResult}>
-        {renderHelmet({ title, pathname, companyName })}
+        {renderHelmet({
+          title,
+          pathname,
+          page,
+          companyName,
+          dataNum,
+          avgWeekWorkTime: Math.round(avgWeekWorkTime),
+          avgHourWage: Math.round(avgHourWage),
+        })}
         <h2 className={styles.heading}>{title}</h2>
         {isFetching(status) && <Loading size="s" />}
         {isFetched(status) &&
