@@ -13,7 +13,7 @@ export default ({
   avgHourWage,
 }) => {
   const helmetTitle = `${title} - 第${page}頁`;
-  const url = formatCanonicalPath(pathname);
+  const url = `${formatCanonicalPath(pathname)}?p=${page}`;
   const description = `${companyName} 的薪水平均 ${avgHourWage} 元/小時，平均每週工作 ${avgWeekWorkTime} 小時，總共 ${dataNum} 筆的薪水、加班狀況資料。`;
   const keywords = `${companyName}薪水, ${companyName}薪資, ${companyName}加班狀況, ${companyName}工時`;
   return (
