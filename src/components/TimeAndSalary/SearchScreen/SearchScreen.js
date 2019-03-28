@@ -11,6 +11,7 @@ import {
   querySelector,
   pathSelector,
   pathnameSelector,
+  searchSelector,
 } from 'common/routing/selectors';
 import Pagination from 'common/Pagination';
 import {
@@ -138,6 +139,7 @@ class SearchScreen extends Component {
   render() {
     const { status } = this.props;
     const pathname = pathnameSelector(this.props);
+    const search = searchSelector(this.props);
     const page = validatePage(pageSelector(this.props));
     const pageSize = 10;
     const totalNum = this.props.data.size;
@@ -153,7 +155,7 @@ class SearchScreen extends Component {
 
     return (
       <section className={styles.searchResult}>
-        {renderHelmet({ title, pathname, page, keyword })}
+        {renderHelmet({ title, pathname, search, page, keyword })}
         <h2 className={styles.heading}>{title}</h2>
         {isFetching(status) && <Loading size="s" />}
         {isFetched(status) &&
