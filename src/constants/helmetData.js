@@ -39,7 +39,7 @@ export const HELMET_DATA = {
       {
         name: 'keywords',
         content:
-          '工作時間, 薪資福利, 面試經驗, 工作經驗, 實習經驗, 工作評論, 職場資訊透明化',
+          '工作時間, 加班狀況, 薪資福利, 面試經驗, 工作心得, 實習經驗, 工作評論, 職場資訊透明化',
       },
       { property: 'og:title', content: SITE_NAME },
       { property: 'og:url', content: formatCanonicalPath('/') },
