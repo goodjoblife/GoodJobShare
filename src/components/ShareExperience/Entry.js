@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import Helmet from 'react-helmet';
+import HelmetComponent from 'common/HelmetComponent';
 import { Wrapper } from 'common/base';
 import ShareExpSection from 'common/ShareExpSection';
 import i from 'common/icons';
@@ -10,7 +10,7 @@ import { HELMET_DATA } from '../../constants/helmetData';
 
 const Entry = ({ history }) => (
   <div>
-    <Helmet {...HELMET_DATA.SHARE} />
+    <HelmetComponent {...HELMET_DATA.SHARE} />
     <Wrapper size="l" className={styles.wrapper}>
       <button onClick={() => history.goBack()} className={styles.closeBtn}>
         <i.X />

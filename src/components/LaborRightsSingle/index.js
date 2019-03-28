@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import ReactPixel from 'react-facebook-pixel';
 import R from 'ramda';
 import { compose, setStatic } from 'recompose';
 
+import HelmetComponent from 'common/HelmetComponent';
 import Loader from 'common/Loader';
 import { Section } from 'common/base';
 import {
@@ -101,7 +101,7 @@ class LaborRightsSingle extends React.Component {
     const { entryStatus, entryError } = this.props;
     return (
       <Section>
-        <Helmet
+        <HelmetComponent
           title={seoTitle}
           meta={[
             { name: 'description', content: seoDescription },

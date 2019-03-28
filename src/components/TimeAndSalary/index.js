@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import Helmet from 'react-helmet';
 import { Switch } from 'react-router';
 import { compose, setStatic } from 'recompose';
+import HelmetComponent from 'common/HelmetComponent';
 import Wrapper from 'common/base/Wrapper';
 import { pathnameSelector } from 'common/routing/selectors';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
@@ -74,7 +74,7 @@ class TimeAndSalary extends Component {
       '馬上查看薪資、工時資訊以及加班狀況，協助您找到更好的工作！';
 
     return (
-      <Helmet
+      <HelmetComponent
         title={title}
         meta={[
           { name: 'description', content: description },

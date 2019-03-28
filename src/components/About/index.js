@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Helmet from 'react-helmet';
+import HelmetComponent from 'common/HelmetComponent';
 import { Section, Wrapper, Heading, P } from 'common/base';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import CallToActionBanner from 'common/CallToAction/CallToActionBanner';
@@ -83,7 +83,7 @@ const data2017 = [
 
 const About = () => (
   <Section Tag="main" pageTop>
-    <Helmet {...HELMET_DATA.ABOUT} />
+    <HelmetComponent {...HELMET_DATA.ABOUT} />
     <Section paddingBottom>
       <CallToActionFolder />
     </Section>

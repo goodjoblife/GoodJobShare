@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import Helmet from 'react-helmet';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
+import HelmetComponent from 'common/HelmetComponent';
 import { Heading } from 'common/base';
 import { People } from 'common/icons';
 import Loader from 'common/Loader';
@@ -321,9 +321,9 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
           },
         ],
       };
-      return <Helmet {...helmetData} />;
+      return <HelmetComponent {...helmetData} />;
     }
-    return <Helmet {...HELMET_DATA.SHARE_TIME_SALARY} />;
+    return <HelmetComponent {...HELMET_DATA.SHARE_TIME_SALARY} />;
   };
 
   render() {

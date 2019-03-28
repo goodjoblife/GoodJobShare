@@ -1,5 +1,5 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import HelmetComponent from 'common/HelmetComponent';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../constants/helmetData';
 
@@ -18,7 +18,7 @@ export default ({
   const keywords = `${jobTitle}薪水, ${jobTitle}薪資, ${jobTitle}加班狀況, ${jobTitle}工時`;
 
   return (
-    <Helmet
+    <HelmetComponent
       title={helmetTitle}
       meta={[
         { name: 'description', content: description },

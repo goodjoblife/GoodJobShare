@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import Helmet from 'react-helmet';
 import R from 'ramda';
 import qs from 'qs';
 import { compose, setStatic } from 'recompose';
@@ -9,6 +8,7 @@ import { compose, setStatic } from 'recompose';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
 
+import HelmetComponent from 'common/HelmetComponent';
 import Loader from 'common/Loader';
 import { Section, Wrapper, Heading, P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
@@ -330,7 +330,7 @@ class ExperienceSearch extends Component {
       description = `馬上查詢超過 ${scale} 篇${searchTypeName}分享，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
     }
     return (
-      <Helmet
+      <HelmetComponent
         title={title}
         meta={[
           { name: 'description', content: description },

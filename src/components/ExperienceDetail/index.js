@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
-import Helmet from 'react-helmet';
+import HelmetComponent from 'common/HelmetComponent';
 import ReactPixel from 'react-facebook-pixel';
 import { Element as ScrollElement } from 'react-scroll';
 import { compose, setStatic } from 'recompose';
@@ -232,7 +232,7 @@ class ExperienceDetail extends Component {
           mapping[type]
         }。 ${subtitle}：${content}`;
         return (
-          <Helmet
+          <HelmetComponent
             title={title}
             meta={[
               { name: 'description', content: description },

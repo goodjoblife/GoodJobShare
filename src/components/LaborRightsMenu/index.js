@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { compose, setStatic } from 'recompose';
+import HelmetComponent from 'common/HelmetComponent';
 import Loader from 'common/Loader';
 import Columns from 'common/Columns';
 import { Section, Wrapper, Heading } from 'common/base';
@@ -36,7 +36,7 @@ class LaborRightsMenu extends React.Component {
     return (
       <Section Tag="main" pageTop>
         <Wrapper size="l">
-          <Helmet {...HELMET_DATA.LABOR_RIGHTS_MENU} />
+          <HelmetComponent {...HELMET_DATA.LABOR_RIGHTS_MENU} />
           {isFetching(status) && <Loader />}
           {isError(status) &&
             menuError && (

@@ -1,8 +1,8 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
+import HelmetComponent from 'common/HelmetComponent';
 import { Heading } from 'common/base';
 import { People } from 'common/icons';
 import IconHeadingBlock from 'common/IconHeadingBlock';
@@ -259,7 +259,7 @@ class TimeSalaryForm extends React.PureComponent {
 
     return (
       <div>
-        <Helmet {...HELMET_DATA.SHARE_TIME_SALARY} />
+        <HelmetComponent {...HELMET_DATA.SHARE_TIME_SALARY} />
         <Heading size="l" marginBottomS center>
           薪資工時分享
         </Heading>

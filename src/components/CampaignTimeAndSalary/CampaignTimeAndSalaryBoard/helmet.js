@@ -1,5 +1,5 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import HelmetComponent from 'common/HelmetComponent';
 import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';
 import { SITE_NAME } from '../../../constants/helmetData';
 
@@ -11,7 +11,7 @@ export default ({ title, campaignInfo, pathname, page }) => {
   const description = `馬上查看${campaignTitle}的薪資、工時資訊以及加班狀況，協助您找到更好的工作！`;
 
   return (
-    <Helmet
+    <HelmetComponent
       title={title}
       meta={[
         { name: 'description', content: description },

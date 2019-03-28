@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
-import Helmet from 'react-helmet';
 import { compose, setStatic, lifecycle } from 'recompose';
+import HelmetComponent from 'common/HelmetComponent';
 import { Section, Wrapper, Heading } from 'common/base';
 import ShareExpSection from 'common/ShareExpSection';
 import Columns from 'common/Columns';
@@ -50,7 +50,7 @@ const LandingPage = ({
     }));
   return (
     <main>
-      <Helmet {...HELMET_DATA.LANDING_PAGE} />
+      <HelmetComponent {...HELMET_DATA.LANDING_PAGE} />
       <Banner />
       <Dashboard
         timeAndSalaryCount={timeAndSalaryCount}

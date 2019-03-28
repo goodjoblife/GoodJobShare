@@ -1,9 +1,9 @@
 import React from 'react';
 import R from 'ramda';
-import Helmet from 'react-helmet';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
+import HelmetComponent from 'common/HelmetComponent';
 import { Heading } from 'common/base';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
@@ -267,7 +267,7 @@ class InterviewForm extends React.Component {
   render() {
     return (
       <div>
-        <Helmet {...HELMET_DATA.SHARE_INTERVIEW} />
+        <HelmetComponent {...HELMET_DATA.SHARE_INTERVIEW} />
         <Heading size="l" marginBottomS center>
           面試經驗分享
         </Heading>

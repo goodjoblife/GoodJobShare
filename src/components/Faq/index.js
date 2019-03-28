@@ -1,5 +1,5 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import HelmetComponent from 'common/HelmetComponent';
 import { Section, Wrapper } from 'common/base';
 import PageBanner from 'common/PageBanner';
 import editorStyles from 'common/Editor.module.css';
@@ -8,7 +8,7 @@ import { HELMET_DATA } from '../../constants/helmetData';
 
 const Faq = () => (
   <main>
-    <Helmet {...HELMET_DATA.FAQ} />
+    <HelmetComponent {...HELMET_DATA.FAQ} />
     <PageBanner heading="常見問答" />
     <Section padding>
       <Wrapper size="m" className={editorStyles.editor}>
