@@ -67,7 +67,7 @@ class SalaryWorkTimeScreen extends Component {
     const pageSize = 10;
 
     const companyName = companyNameSelector(this.props);
-    const title = `${companyName} 薪水`;
+    const title = `${companyName}薪水`;
     const statistics = data
       ? data.get('salary_work_time_statistics').toJS()
       : null;
