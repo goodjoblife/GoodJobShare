@@ -43,7 +43,7 @@ import {
 
 import salaryHint from '../../../utils/formUtils';
 
-import { HELMET_DATA, SITE_NAME } from '../../../constants/helmetData';
+import { STATIC_HELMET, SITE_NAME } from '../../../constants/helmetData';
 import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';
 
 import {
@@ -323,7 +323,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       };
       return <Helmet {...helmetData} />;
     }
-    return <Helmet {...HELMET_DATA.SHARE_TIME_SALARY} />;
+    return <Helmet {...STATIC_HELMET.SHARE_TIME_SALARY} />;
   };
 
   render() {

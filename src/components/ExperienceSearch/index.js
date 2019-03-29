@@ -18,7 +18,7 @@ import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
 import { fetchExperiences as fetchExperiencesAction } from '../../actions/experienceSearch';
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
-import { imgHost, SITE_NAME } from '../../constants/helmetData';
+import { IMG_HOST, SITE_NAME } from '../../constants/helmetData';
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 import { PAGE_COUNT } from '../../constants/experienceSearch';
 import status from '../../constants/status';
@@ -339,7 +339,7 @@ class ExperienceSearch extends Component {
           { property: 'og:url', content: url },
           {
             property: 'og:image',
-            content: `${imgHost}/og/experience-search.jpg`,
+            content: `${IMG_HOST}/og/experience-search.jpg`,
           },
         ]}
         link={[{ rel: 'canonical', href: url }]}

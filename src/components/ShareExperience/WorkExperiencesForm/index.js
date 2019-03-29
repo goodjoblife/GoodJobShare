@@ -1,6 +1,5 @@
 import React from 'react';
 import R from 'ramda';
-import Helmet from 'react-helmet';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
@@ -24,7 +23,7 @@ import { LS_WORK_EXPERIENCES_FORM_KEY } from '../../../constants/localStorageKey
 
 import styles from './WorkExperiencesForm.module.css';
 
-import { HELMET_DATA } from '../../../constants/helmetData';
+import StaticHelmet from 'common/StaticHelmet';
 import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
@@ -279,7 +278,7 @@ class WorkExperiencesForm extends React.Component {
 
     return (
       <div>
-        <Helmet {...HELMET_DATA.SHARE_WORK} />
+        <StaticHelmet.ShareWork />
         <Heading size="l" marginBottomS center>
           工作經驗分享
         </Heading>

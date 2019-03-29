@@ -1,6 +1,5 @@
 import React from 'react';
 import R from 'ramda';
-import Helmet from 'react-helmet';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
@@ -21,7 +20,7 @@ import {
   idGenerator,
 } from '../utils';
 
-import { HELMET_DATA } from '../../../constants/helmetData';
+import StaticHelmet from 'common/StaticHelmet';
 import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
@@ -267,7 +266,7 @@ class InterviewForm extends React.Component {
   render() {
     return (
       <div>
-        <Helmet {...HELMET_DATA.SHARE_INTERVIEW} />
+        <StaticHelmet.ShareInterview />
         <Heading size="l" marginBottomS center>
           面試經驗分享
         </Heading>

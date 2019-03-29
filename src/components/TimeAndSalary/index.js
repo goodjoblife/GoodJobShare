@@ -16,7 +16,7 @@ import MobileInfoButtons from './MobileInfoButtons';
 import InfoTimeModal from './common/InfoTimeModal';
 import InfoSalaryModal from './common/InfoSalaryModal';
 import withModal from './common/withModal';
-import { imgHost, SITE_NAME } from '../../constants/helmetData';
+import { IMG_HOST, SITE_NAME } from '../../constants/helmetData';
 import { queryCampaignInfoList } from '../../actions/campaignInfo';
 
 const campaignListFromEntries = campaignEntries =>
@@ -83,7 +83,7 @@ class TimeAndSalary extends Component {
           { property: 'og:url', content: url },
           {
             property: 'og:image',
-            content: `${imgHost}/og/time-and-salary.jpg`,
+            content: `${IMG_HOST}/og/time-and-salary.jpg`,
           },
         ]}
         link={[{ rel: 'canonical', href: url }]}

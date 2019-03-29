@@ -1,5 +1,4 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 import { Switch } from 'react-router-dom';
 
 import RouteWithSubRoutes from '../route';
@@ -7,7 +6,7 @@ import styles from './App.module.css';
 import Header from '../../containers/App/Header';
 import Footer from './Footer';
 import SyncAuth from '../../containers/App/SyncAuth';
-import { HELMET_DATA } from '../../constants/helmetData';
+import StaticHelmet from 'common/StaticHelmet';
 
 import routes from '../../routes';
 
@@ -15,7 +14,7 @@ const App = () => (
   <div className={styles.App}>
     <Header />
     <SyncAuth />
-    <Helmet {...HELMET_DATA.DEFAULT} />
+    <StaticHelmet.Default />
     <div className={styles.content}>
       <Switch>
         {routes.map((route, i) => (

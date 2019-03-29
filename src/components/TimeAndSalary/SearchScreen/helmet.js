@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
-import { imgHost, SITE_NAME } from '../../../constants/helmetData';
+import { IMG_HOST, SITE_NAME } from '../../../constants/helmetData';
 
 export default ({ title, pathname, search, page, keyword }) => {
   const helmetTitle = `${title} - 第${page}頁`;
@@ -18,7 +18,7 @@ export default ({ title, pathname, search, page, keyword }) => {
         { property: 'og:url', content: url },
         {
           property: 'og:image',
-          content: `${imgHost}/og/time-and-salary.jpg`,
+          content: `${IMG_HOST}/og/time-and-salary.jpg`,
         },
       ]}
       link={[{ rel: 'canonical', href: url }]}
