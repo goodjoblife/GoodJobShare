@@ -19,8 +19,16 @@ class WorkingHourBlock extends Component {
       <div>
         <div className={styles.overtimeBlock}>
           <div className={styles.overtimeBlockInner}>
-            <OvertimeBlock type="salary" heading="加班有無加班費" data={data} />
-            <OvertimeBlock type="dayoff" heading="加班有無補休" data={data} />
+            <OvertimeBlock
+              type="salary"
+              heading="加班有無加班費"
+              statistics={data.salary_work_time_statistics}
+            />
+            <OvertimeBlock
+              type="dayoff"
+              heading="加班有無補休"
+              statistics={data.salary_work_time_statistics}
+            />
           </div>
           <div className={styles.overtimeBlockUnit}>單位：資料筆數</div>
         </div>
