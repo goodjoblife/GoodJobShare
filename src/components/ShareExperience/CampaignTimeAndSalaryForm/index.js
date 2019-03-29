@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
+import StaticHelmet from 'common/StaticHelmet';
 import { Heading } from 'common/base';
 import { People } from 'common/icons';
 import Loader from 'common/Loader';
@@ -43,7 +44,7 @@ import {
 
 import salaryHint from '../../../utils/formUtils';
 
-import { STATIC_HELMET, SITE_NAME } from '../../../constants/helmetData';
+import { SITE_NAME } from '../../../constants/helmetData';
 import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';
 
 import {
@@ -323,7 +324,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       };
       return <Helmet {...helmetData} />;
     }
-    return <Helmet {...STATIC_HELMET.SHARE_TIME_SALARY} />;
+    return <StaticHelmet.ShareSalaryWorkTime />;
   };
 
   render() {
