@@ -12,6 +12,7 @@ export default hideRange => rows => {
         hideIndex,
         nHides,
         <td
+          data-th="薪資"
           key="__hideContent"
           colSpan={nHides}
           rowSpan={rows.length}

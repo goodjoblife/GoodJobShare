@@ -1,24 +1,14 @@
-@value yellow-bar, main-yellow, border-gray, main-gray, gray-dark, gray-light from "common/variables.module.css";
+@value yellow-bar, main-yellow, border-gray, main-gray, gray-dark, gray-light, link-blue from "common/variables.module.css";
 
 .container {
   display: block;
   background-color: #fff;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
-  margin-bottom: 40px;
+  margin-bottom: 24px;
   transition-property: background, box-shadow;
   transition-duration: 0.3s;
 
   &:last-child {
     margin-bottom: 0;
-  }
-
-  @media (min-width: 1025px) {
-    &:hover {
-      box-shadow: 1px 1px 11px rgba(0, 0, 0, 0.25);
-      .heading {
-        color: link-blue;
-      }
-    }
   }
 
   @media (max-width: 1024px) {
@@ -32,18 +22,16 @@
   }
 }
 
-.toggleButton {
+.linkBlock {
   display: block;
   width: 100%;
-  position: relative;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
 
   @media (min-width: 1025px) {
     &:hover {
-      .expandIcon {
-        border-color: main-yellow;
-        svg {
-          fill: main-yellow;
-        }
+      box-shadow: 1px 1px 11px rgba(0, 0, 0, 0.25);
+      .headingBlock {
+        color: link-blue;
       }
     }
   }
@@ -54,7 +42,7 @@
   border-bottom: 2px solid white;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
 
   @media (max-width: 1024px) {
     padding-left: 16px;
@@ -63,6 +51,7 @@
 
   @media (max-width: 850px) {
     flex-direction: column;
+    align-items: flex-start;
   }
 
   &.expanded {
@@ -78,7 +67,6 @@
 
 .averageBlock {
   flex: 0 0 150px;
-  margin-top: 4px;
   margin-right: 16px;
   display: flex;
   align-items: center;
@@ -95,35 +83,6 @@
 
 .averageBlockValue {
   font-size: 1.1em;
-}
-
-.expandIcon {
-  position: absolute;
-  top: 7px;
-  right: -20px;
-  width: 40px;
-  height: 40px;
-  border: 1px solid main-gray;
-  border-radius: 100%;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: border 0.4s;
-
-  @media (max-width: 850px) {
-    width: 28px;
-    height: 28px;
-    right: 9px;
-    top: 9px;
-    border-color: main-gray;
-  }
-
-  svg {
-    width: 18px;
-    height: 18px;
-    fill: main-gray;
-  }
 }
 
 .content {

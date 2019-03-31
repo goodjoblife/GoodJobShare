@@ -16,9 +16,9 @@ class WorkingHourBlock extends Component {
     const { name } = data;
     return (
       <section className={styles.container}>
-        <Link className={styles.toggleButton} to={to}>
+        <Link className={styles.linkBlock} to={to}>
           <div className={styles.headingWrapper}>
-            <Heading size="sl" className={styles.headingBlock}>
+            <Heading size="sm" className={styles.headingBlock}>
               {name}
             </Heading>
             <div className={styles.averageBlock}>

@@ -65,7 +65,7 @@ class BasicPermissionBlock extends React.Component {
       const { isModalOpen, toggleModal } = this.props;
       return (
         <div
-          className={cn(styles.permissionBlock, rootClassName)}
+          className={cn(styles.permissionBlock, rootClassName, styles.simple)}
           onClick={toggleModal}
         >
           <div className={styles.container}>
