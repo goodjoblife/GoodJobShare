@@ -7,8 +7,6 @@ import cn from 'classnames';
 import { compose, setStatic } from 'recompose';
 import Pagination from 'common/Pagination';
 import FanPageBlock from 'common/FanPageBlock';
-import { withPermission } from 'common/permission-context';
-import GradientMask from 'common/GradientMask';
 import {
   pathSelector,
   pathnameSelector,
@@ -22,8 +20,6 @@ import withModal from '../common/withModal';
 import styles from './TimeAndSalaryBoard.module.css';
 import commonStyles from '../views/view.module.css';
 import { isFetching, isFetched } from '../../../constants/status';
-import { MAX_ROWS_IF_HIDDEN } from '../../../constants/hideContent';
-import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 import { queryTimeAndSalary } from '../../../actions/timeAndSalaryBoard';
 import DashBoardTable from '../common/DashBoardTable';
 import { toQsString, queryParser } from './helper';
@@ -37,24 +33,6 @@ const pathParameters = {
   order: 'descending',
   hasExtreme: false,
 };
-
-const injectPermissionBlock = R.pipe(
-  R.take(MAX_ROWS_IF_HIDDEN),
-  R.append(
-    <tr>
-      <td colSpan="8" className={styles.noPadding}>
-        <GradientMask />
-      </td>
-    </tr>,
-  ),
-  R.append(
-    <tr>
-      <td colSpan="8" className={styles.noBefore}>
-        <BasicPermissionBlock rootClassName={styles.permissionBlockBoard} />
-      </td>
-    </tr>,
-  ),
-);
 
 const injectLoadingIconRow = R.prepend(
   <tr key="extreme-loading" className={styles.extremeRow}>
@@ -98,8 +76,6 @@ class TimeAndSalaryBoard extends Component {
     resetBoardExtremeData: PropTypes.func.isRequired,
     extremeStatus: PropTypes.string,
     extremeData: ImmutablePropTypes.list,
-    canViewTimeAndSalary: PropTypes.bool.isRequired,
-    fetchPermission: PropTypes.func.isRequired,
     infoSalaryModal: PropTypes.shape({
       isOpen: PropTypes.bool.isRequired,
       setIsOpen: PropTypes.func.isRequired,
@@ -125,7 +101,6 @@ class TimeAndSalaryBoard extends Component {
 
     this.props.resetBoardExtremeData();
     this.props.queryTimeAndSalary({ sortBy, order, page });
-    this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
@@ -138,7 +113,6 @@ class TimeAndSalaryBoard extends Component {
       this.setState({ showExtreme: false });
       this.props.resetBoardExtremeData();
       this.props.queryTimeAndSalary({ sortBy, order, page });
-      this.props.fetchPermission();
     }
   }
 
@@ -193,9 +167,6 @@ class TimeAndSalaryBoard extends Component {
   };
 
   createPostProcessRows = () => {
-    if (!this.props.canViewTimeAndSalary) {
-      return injectPermissionBlock;
-    }
     return R.pipe(this.decorateExtremeRows);
   };
 
@@ -221,7 +192,6 @@ class TimeAndSalaryBoard extends Component {
       currentPage,
       extremeStatus,
       extremeData,
-      canViewTimeAndSalary,
     } = this.props;
     const { showExtreme } = this.state;
     let raw;
@@ -238,19 +208,18 @@ class TimeAndSalaryBoard extends Component {
         <div className={commonStyles.result}>
           <div className={styles.sortRow}>
             <div className={styles.extremeDescription}>
-              {hasExtreme &&
-                canViewTimeAndSalary && (
-                  <span>
-                    前 1 %
-                    的資料可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
-                    <button
-                      className={styles.toggle}
-                      onClick={this.toggleShowExtreme}
-                    >
-                      {showExtreme ? '隱藏 -' : '展開 +'}
-                    </button>
-                  </span>
-                )}
+              {hasExtreme && (
+                <span>
+                  前 1 %
+                  的資料可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
+                  <button
+                    className={styles.toggle}
+                    onClick={this.toggleShowExtreme}
+                  >
+                    {showExtreme ? '隱藏 -' : '展開 +'}
+                  </button>
+                </span>
+              )}
             </div>
           </div>
           {isFetching(status) && (
@@ -305,7 +274,6 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
 
 const hoc = compose(
   ssr,
-  withPermission,
   withModal('infoSalaryModal'),
   withModal('infoTimeModal'),
 );
