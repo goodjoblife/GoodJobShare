@@ -101,25 +101,26 @@ class LaborRightsSingle extends React.Component {
     const { entryStatus, entryError } = this.props;
     return (
       <Section>
-        <Helmet
-          title={seoTitle}
-          meta={[
-            { name: 'description', content: seoDescription },
-            {
-              property: 'og:url',
-              content: formatCanonicalPath(`/labor-rights/${id}`),
-            },
-            { property: 'og:title', content: formatTitle(seoTitle, SITE_NAME) },
-            { property: 'og:description', content: seoDescription },
-            { property: 'og:image', content: formatUrl(coverUrl) },
-          ]}
-          link={[
-            {
-              rel: 'canonical',
-              href: formatCanonicalPath(`/labor-rights/${id}`),
-            },
-          ]}
-        />
+        <Helmet>
+          <title itemProp="name" lang="zh-TW">
+            {seoTitle}
+          </title>
+          <meta name="description" content={seoDescription} />
+          <meta
+            property="og:title"
+            content={formatTitle(seoTitle, SITE_NAME)}
+          />
+          <meta property="og:description" content={seoDescription} />
+          <meta property="og:image" content={formatUrl(coverUrl)} />
+          <meta
+            property="og:url"
+            content={formatCanonicalPath(`/labor-rights/${id}`)}
+          />
+          <link
+            rel="canonical"
+            href={formatCanonicalPath(`/labor-rights/${id}`)}
+          />
+        </Helmet>
         {R.anyPass([isFetching, isUnfetched])(entryStatus) && <Loader />}
         {isError(entryStatus) &&
           entryError.toJS().statusCode === 404 && <NotFound />}

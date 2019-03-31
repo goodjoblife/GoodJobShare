@@ -11,19 +11,19 @@ export default ({ title, pathname, page, dataNum }) => {
   const description = `查詢各行各業的薪水、加班情況、工時資料，共 ${dataNum} 筆資料`;
 
   return (
-    <Helmet
-      title={helmetTitle}
-      meta={[
-        { name: 'description', content: description },
-        { property: 'og:title', content: formatTitle(helmetTitle, SITE_NAME) },
-        { property: 'og:description', content: description },
-        { property: 'og:url', content: url },
-        {
-          property: 'og:image',
-          content: `${IMG_HOST}/og/time-and-salary.jpg`,
-        },
-      ]}
-      link={[{ rel: 'canonical', href: url }]}
-    />
+    <Helmet>
+      <title itemProp="name" lang="zh-TW">
+        {helmetTitle}
+      </title>
+      <meta name="description" content={description} />
+      <meta property="og:title" content={formatTitle(helmetTitle, SITE_NAME)} />
+      <meta property="og:description" content={description} />
+      <meta
+        property="og:image"
+        content={`${IMG_HOST}/og/time-and-salary.jpg`}
+      />
+      <meta property="og:url" content={url} />
+      <link rel="canonical" href={url} />
+    </Helmet>
   );
 };

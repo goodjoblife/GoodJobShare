@@ -74,20 +74,20 @@ class TimeAndSalary extends Component {
       '馬上查看薪資、工時資訊以及加班狀況，協助您找到更好的工作！';
 
     return (
-      <Helmet
-        title={title}
-        meta={[
-          { name: 'description', content: description },
-          { property: 'og:title', content: formatTitle(title, SITE_NAME) },
-          { property: 'og:description', content: description },
-          { property: 'og:url', content: url },
-          {
-            property: 'og:image',
-            content: `${IMG_HOST}/og/time-and-salary.jpg`,
-          },
-        ]}
-        link={[{ rel: 'canonical', href: url }]}
-      />
+      <Helmet>
+        <title itemProp="name" lang="zh-TW">
+          {title}
+        </title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
+        <meta property="og:description" content={description} />
+        <meta
+          property="og:image"
+          content={`${IMG_HOST}/og/time-and-salary.jpg`}
+        />
+        <meta property="og:url" content={url} />
+        <link rel="canonical" href={url} />
+      </Helmet>
     );
   };
 

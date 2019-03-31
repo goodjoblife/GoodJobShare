@@ -299,30 +299,32 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       const campaignName = this.props.match.params.campaign_name;
       const campaignInfo = this.props.campaignEntries.get(campaignName).toJS();
       const { formTitle, metaDescription, ogImgUrl } = campaignInfo;
-      const helmetData = {
-        title: formTitle,
-        meta: [
-          { name: 'description', content: metaDescription },
-          { property: 'og:title', content: formatTitle(formTitle, SITE_NAME) },
-          { property: 'og:description', content: metaDescription },
-          {
-            property: 'og:url',
-            content: formatCanonicalPath(
+      return (
+        <Helmet>
+          <title itemProp="name" lang="zh-TW">
+            {formTitle}
+          </title>
+          <meta name="description" content={metaDescription} />
+          <meta
+            property="og:title"
+            content={formatTitle(formTitle, SITE_NAME)}
+          />
+          <meta property="og:description" content={metaDescription} />
+          <meta property="og:image" content={ogImgUrl} />
+          <meta
+            property="og:url"
+            content={formatCanonicalPath(
               `/share/time-and-salary/campaign/${campaignName}`,
-            ),
-          },
-          { property: 'og:image', content: ogImgUrl },
-        ],
-        link: [
-          {
-            rel: 'canonical',
-            href: formatCanonicalPath(
+            )}
+          />
+          <link
+            rel="canonical"
+            href={formatCanonicalPath(
               `/share/time-and-salary/campaign/${campaignName}`,
-            ),
-          },
-        ],
-      };
-      return <Helmet {...helmetData} />;
+            )}
+          />
+        </Helmet>
+      );
     }
     return <StaticHelmet.ShareSalaryWorkTime />;
   };
