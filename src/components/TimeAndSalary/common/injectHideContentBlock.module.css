@@ -8,5 +8,8 @@
     right: 0;
     bottom: 0;
     display: flex;
+    @media (max-width: 850px) {
+      left: 120px;
+    }
   }
 }
