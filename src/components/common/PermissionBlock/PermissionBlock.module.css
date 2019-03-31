@@ -4,6 +4,9 @@
   border: 1px solid #fcd406;
   border-radius: 0px;
   background-color: #fffbe8;
+}
+
+.simple {
   cursor: pointer;
 
   @media (min-width: 1025px) {
@@ -46,10 +49,6 @@
 .headingIcon {
   display: inline;
   font-size: 24px;
-
-  & + * {
-    margin-left: 16px;
-  }
 
   @media (max-width: 850px) {
     font-size: 16px;
