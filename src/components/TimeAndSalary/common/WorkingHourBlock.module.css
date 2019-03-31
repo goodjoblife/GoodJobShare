@@ -1,4 +1,4 @@
-@value yellow-bar, main-yellow, border-gray, main-gray, gray-dark, gray-light from "common/variables.module.css";
+@value yellow-bar, main-yellow, border-gray, main-gray, gray-dark, gray-light, link-blue from "common/variables.module.css";
 
 .container {
   display: block;
@@ -54,7 +54,15 @@
   border-bottom: 2px solid white;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+
+  @media (min-width: 1025px) {
+    &:hover {
+      .headingBlock {
+        color: link-blue;
+      }
+    }
+  }
 
   @media (max-width: 1024px) {
     padding-left: 16px;
@@ -63,6 +71,7 @@
 
   @media (max-width: 850px) {
     flex-direction: column;
+    align-items: flex-start;
   }
 
   &.expanded {
@@ -78,7 +87,6 @@
 
 .averageBlock {
   flex: 0 0 150px;
-  margin-top: 4px;
   margin-right: 16px;
   display: flex;
   align-items: center;
