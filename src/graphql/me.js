@@ -4,6 +4,7 @@ export const getMeQuery = `
       _id
       facebook_id
       name
+      email_status
     }
   }
 `;
