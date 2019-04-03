@@ -21,14 +21,6 @@ const EmailVerificationTop = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = useCallback(() => setIsModalOpen(false));
   const openModal = useCallback(() => setIsModalOpen(true));
-  const onSubmit = useCallback(
-    email => {
-      submitEmail(email)
-        .then(value => console.log('submit email: ', value))
-        .then(closeModal);
-    },
-    [submitEmail],
-  );
 
   return (
     <React.Fragment>
@@ -48,7 +40,7 @@ const EmailVerificationTop = ({
       </Wrapper>
       {isModalOpen ? (
         <Modal isOpen={isModalOpen} close={closeModal} size="m">
-          <VerifyEmailForm onSubmit={onSubmit} />
+          <VerifyEmailForm closeModal={closeModal} onSubmit={submitEmail} />
         </Modal>
       ) : null}
     </React.Fragment>
