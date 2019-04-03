@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import cls from 'classnames';
 
@@ -12,16 +13,23 @@ import VerifyEmailForm from '../../../EmailVerification/VerifyEmailForm';
 
 import { getUserName } from '../../../../selectors/authSelector';
 
-const EmailVerificationTop = ({ isSentVerificationEmail, userName }) => {
+const EmailVerificationTop = ({
+  isSentVerificationEmail,
+  userName,
+  submitEmail,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const closeModal = useCallback(() => {
-    console.log('modal false');
-    setIsModalOpen(false);
-  });
-  const openModal = useCallback(() => {
-    console.log('modal true');
-    setIsModalOpen(true);
-  });
+  const closeModal = useCallback(() => setIsModalOpen(false));
+  const openModal = useCallback(() => setIsModalOpen(true));
+  const onSubmit = useCallback(
+    email => {
+      submitEmail(email)
+        .then(value => console.log('submit email: ', value))
+        .then(closeModal);
+    },
+    [submitEmail],
+  );
+
   return (
     <React.Fragment>
       <Wrapper
@@ -38,11 +46,24 @@ const EmailVerificationTop = ({ isSentVerificationEmail, userName }) => {
           {isSentVerificationEmail ? '重發' : 'GO >>'}
         </div>
       </Wrapper>
-      <Modal isOpen={isModalOpen} close={closeModal}>
-        <VerifyEmailForm />
-      </Modal>
+      {isModalOpen ? (
+        <Modal isOpen={isModalOpen} close={closeModal} size="m">
+          <VerifyEmailForm onSubmit={onSubmit} />
+        </Modal>
+      ) : null}
     </React.Fragment>
   );
+};
+
+EmailVerificationTop.propTypes = {
+  isSentVerificationEmail: PropTypes.bool,
+  userName: PropTypes.string,
+  submitEmail: PropTypes.func,
+};
+
+EmailVerificationTop.defaultProps = {
+  submitEmail: email =>
+    new Promise(resolve => setTimeout(() => resolve(email), 1000)),
 };
 
 const mapStateToProps = (state, ownProps) => ({
