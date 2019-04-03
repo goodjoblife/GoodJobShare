@@ -158,17 +158,16 @@ class SearchScreen extends Component {
         {renderHelmet({ title, pathname, search, page, keyword })}
         <h2 className={styles.heading}>{title}</h2>
         {isFetching(status) && <Loading size="s" />}
-        {isFetched(status) &&
-          raw.length === 0 && (
-            <P size="l" bold className={styles.searchNoResult}>
-              尚未有
-              {searchCriteriaText(
-                validateSearchCriteria(searchCriteriaSelector(this.props)),
-              )}
-              「{keyword}
-              」的薪時資訊
-            </P>
-          )}
+        {isFetched(status) && raw.length === 0 && (
+          <P size="l" bold className={styles.searchNoResult}>
+            尚未有
+            {searchCriteriaText(
+              validateSearchCriteria(searchCriteriaSelector(this.props)),
+            )}
+            「{keyword}
+            」的薪時資訊
+          </P>
+        )}
         {raw.map((o, i) => (
           <WorkingHourBlock key={i} data={o} to={this.getLinkForData(o)} />
         ))}

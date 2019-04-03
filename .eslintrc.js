@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   extends: ['react-app', 'prettier', 'prettier/flowtype', 'prettier/react'],
-  plugins: ['prettier', 'flowtype'],
+  plugins: ['prettier', 'flowtype', 'react-hooks'],
   rules: {
     'arrow-parens': ['error', 'as-needed'],
     'comma-dangle': ['error', 'always-multiline'],
