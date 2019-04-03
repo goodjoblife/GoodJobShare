@@ -1,5 +1,9 @@
 @value main-yellow from 'common/variables.module.css';
 
+.wrapper {
+  cursor: pointer;
+}
+
 .heading {
   color: white;
   margin-right: 4px;
