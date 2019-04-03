@@ -90,7 +90,7 @@ class Header extends React.Component {
 
     const isLogin = auth.get('status') === authStatus.CONNECTED;
     return (
-      <Top link={isLogin ? shareLink : shareLink}>
+      <Top link={isLogin ? null : shareLink}>
         {isLogin ? (
           <EmailVerificationTop isSentVerificationEmail />
         ) : (
