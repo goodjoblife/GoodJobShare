@@ -55,7 +55,9 @@ EmailVerificationTop.propTypes = {
 
 EmailVerificationTop.defaultProps = {
   submitEmail: email =>
-    new Promise(resolve => setTimeout(() => resolve(email), 1000)),
+    new Promise(resolve => setTimeout(() => resolve(email), 1500)).then(email =>
+      console.log('submit email: ', email),
+    ),
 };
 
 const mapStateToProps = (state, ownProps) => ({

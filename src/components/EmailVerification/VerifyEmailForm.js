@@ -5,29 +5,52 @@ import Heading from 'common/base/Heading';
 import P from 'common/base/P';
 import TextInput from 'common/form/TextInput';
 import Button from 'common/button/Button';
+import Loading from 'common/Loader';
 
 import styles from './VerifyEmailForm.module.css';
 
 const stageMap = {
   FORM: 'FORM',
   SUCCESS: 'SUCCESS',
+  LOADING: 'LOADING',
 };
 
-const VerifyEmailForm = ({ onSubmit }) => {
+const VerifyEmailForm = ({ onSubmit, closeModal }) => {
   const [emailValue, setEmailValue] = useState('');
   const [stage, setStage] = useState(stageMap.FORM);
   const handleEmailInput = useCallback(e => setEmailValue(e.target.value));
   const handleSubmit = useCallback(
     e => {
-      onSubmit(emailValue)
-        .then(email => console.log('submit email: ', email))
-        .then(() => setStage(stageMap.SUCCESS));
+      setStage(stageMap.LOADING);
+      onSubmit(emailValue).finally(() => setStage(stageMap.SUCCESS));
       e.preventDefault();
     },
     [emailValue, setStage],
   );
 
+  const handleReSubmit = useCallback(
+    e => {
+      setStage(stageMap.LOADING);
+
+      onSubmit(emailValue).finally(() => setStage(stageMap.SUCCESS));
+    },
+    [emailValue],
+  );
+
   switch (stage) {
+    case stageMap.LOADING:
+      return (
+        <div
+          style={{
+            display: 'flex',
+            alighItems: 'center',
+            justifyContent: 'center',
+            minHeight: '250px',
+          }}
+        >
+          <Loading size="s" />
+        </div>
+      );
     case stageMap.SUCCESS:
       return (
         <section className={styles.root}>
@@ -39,6 +62,44 @@ const VerifyEmailForm = ({ onSubmit }) => {
           >
             認證信已發送
           </Heading>
+          <P
+            size="l"
+            style={{
+              marginBottom: '35px',
+            }}
+          >
+            認證完成後，重整此頁面，即可解鎖本篇文章
+          </P>
+          <Button
+            circleSize="lg"
+            btnStyle="black2"
+            style={{
+              marginBottom: '20px',
+            }}
+            onClick={closeModal}
+          >
+            關閉
+          </Button>
+          <div
+            style={{
+              display: 'flex',
+              marginBottom: '20px',
+            }}
+          >
+            <P size="s" style={{ marginRight: '2px' }}>
+              沒收到嗎？
+            </P>
+            <Button
+              style={{
+                color: '#325bbd',
+                fontSize: '0.9em',
+                textDecoration: 'underline',
+              }}
+              onClick={handleReSubmit}
+            >
+              重發
+            </Button>
+          </div>
         </section>
       );
     case stageMap.FORM:
@@ -94,6 +155,7 @@ const VerifyEmailForm = ({ onSubmit }) => {
 
 VerifyEmailForm.propTypes = {
   onSumbit: PropTypes.func,
+  closeModal: PropTypes.func,
 };
 
 export default VerifyEmailForm;
