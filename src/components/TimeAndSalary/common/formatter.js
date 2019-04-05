@@ -31,10 +31,16 @@ export const getJobTitle = item => {
   );
 };
 
-export const getName = (o, row) => (
-  <div>
+export const getNameAsCompanyName = (o, row) => (
+  <Link to={`/companies/${encodeURIComponent(o.name)}/salary-work-times`}>
     {o.name} <span className={`pM ${styles.sector}`}>{row.sector}</span>
-  </div>
+  </Link>
+);
+
+export const getNameAsJobTitle = (o, row) => (
+  <Link to={`/job-titles/${encodeURIComponent(o.name)}/salary-work-times`}>
+    {o.name} <span className={`pM ${styles.sector}`}>{row.sector}</span>
+  </Link>
 );
 
 export const getEmploymentType = type => (type ? employmentType[type] : '');
