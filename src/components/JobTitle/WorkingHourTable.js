@@ -7,7 +7,7 @@ import InfoSalaryModal from '../TimeAndSalary/common/InfoSalaryModal';
 import InfoTimeModal from '../TimeAndSalary/common/InfoTimeModal';
 import styles from '../TimeAndSalary/common/WorkingHourTable.module.css';
 import {
-  getName,
+  getNameAsCompanyName,
   getEmploymentType,
   getWorkingHour,
   getYear,
@@ -24,7 +24,7 @@ const columnProps = [
     className: styles.colPosition,
     title: '公司名稱',
     dataField: 'company',
-    dataFormatter: getName,
+    dataFormatter: getNameAsCompanyName,
     renderChildren: () => '公司名稱',
   },
   {
