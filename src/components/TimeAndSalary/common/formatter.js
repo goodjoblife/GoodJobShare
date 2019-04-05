@@ -40,8 +40,10 @@ export const getName = (o, row) => (
 export const getEmploymentType = type => (type ? employmentType[type] : '');
 
 export const getWorkingHour = (val, row) => (
-  <div>{`${val ? val : '-'} / ${
-    row.day_real_work_time ? row.day_real_work_time : '-'
+  <div>{`${val === undefined || val === null ? '-' : val} / ${
+    row.day_real_work_time === undefined || row.day_real_work_time === null
+      ? '-'
+      : row.day_real_work_time
   }`}</div>
 );
 
