@@ -1,17 +1,38 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-const RouteWithSubRoutes = route => {
-  const { routes, component: Component, ...routeProps } = route;
+const RouteWithSubRoutes = ({
+  routes,
+  component: Component,
+  children,
+  hasHeader,
+  hasFooter,
+  ...routeProps
+}) => {
   if (routes) {
-    return (
-      <Route
-        {...routeProps}
-        render={props => <Component {...props} routes={routes} />}
-      />
-    );
+    return children({
+      children: (
+        <Route
+          {...routeProps}
+          render={props => <Component {...props} routes={routes} />}
+        />
+      ),
+      hasHeader,
+      hasFooter,
+    });
   }
-  return <Route component={Component} {...routeProps} />;
+
+  return children({
+    children: <Route component={Component} {...routeProps} />,
+    hasHeader,
+    hasFooter,
+  });
+};
+
+RouteWithSubRoutes.defaultProps = {
+  children: props => <React.Fragment {...props} />,
+  hasHeader: true,
+  hasFooter: true,
 };
 
 export default RouteWithSubRoutes;

@@ -11,19 +11,21 @@ import StaticHelmet from 'common/StaticHelmet';
 import routes from '../../routes';
 
 const App = () => (
-  <div className={styles.App}>
-    <Header />
-    <SyncAuth />
-    <StaticHelmet.Default />
-    <div className={styles.content}>
-      <Switch>
-        {routes.map((route, i) => (
-          <RouteWithSubRoutes key={i} {...route} />
-        ))}
-      </Switch>
-    </div>
-    <Footer />
-  </div>
+  <Switch>
+    {routes.map((route, i) => (
+      <RouteWithSubRoutes key={i} {...route}>
+        {({ hasHeader, hasFooter, children }) => (
+          <div className={styles.App}>
+            {hasHeader ? <Header /> : null}
+            <SyncAuth />
+            <StaticHelmet.Default />
+            <div className={styles.content}>{children}</div>
+            {hasFooter ? <Footer /> : null}
+          </div>
+        )}
+      </RouteWithSubRoutes>
+    ))}
+  </Switch>
 );
 
 export default App;
