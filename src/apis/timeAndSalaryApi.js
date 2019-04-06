@@ -1,4 +1,11 @@
 import fetchUtil from 'utils/fetchUtil';
+import graphqlClient from 'utils/graphqlClient';
+import {
+  getSearchCompanyQuery,
+  getCompanyQuery,
+  getJobTitleQuery,
+  getSearchJobTitleQuery,
+} from 'graphql/timeAndSalary';
 
 const endpoint = '/workings';
 
@@ -23,15 +30,29 @@ export const fetchCampaignTimeAndSalary = ({ campaignName, opt }) =>
     query: opt,
   });
 
-export const fetchSearchCompany = ({ opt }) =>
-  fetchUtil(`${endpoint}/search_by/company/group_by/company`).get({
-    query: opt,
-  });
+export const fetchSearchCompany = ({ companyName }) =>
+  graphqlClient({
+    query: getSearchCompanyQuery,
+    variables: { companyName },
+  }).then(data => data.search_companies);
 
-export const fetchSearchJobTitle = ({ opt }) =>
-  fetchUtil(`${endpoint}/search_by/job_title/group_by/company`).get({
-    query: opt,
-  });
+export const fetchCompany = ({ companyName }) =>
+  graphqlClient({
+    query: getCompanyQuery,
+    variables: { companyName },
+  }).then(data => data.company);
+
+export const fetchSearchJobTitle = ({ jobTitle }) =>
+  graphqlClient({
+    query: getSearchJobTitleQuery,
+    variables: { jobTitle },
+  }).then(data => data.search_job_titles);
+
+export const fetchJobTitle = ({ jobTitle }) =>
+  graphqlClient({
+    query: getJobTitleQuery,
+    variables: { jobTitle },
+  }).then(data => data.job_title);
 
 export const postWorkings = ({ body, token }) =>
   fetchUtil(endpoint).post({ body, token });
@@ -52,6 +73,8 @@ export default {
   fetchCampaignTimeAndSalary,
   fetchSearchCompany,
   fetchSearchJobTitle,
+  fetchCompany,
+  fetchJobTitle,
   postWorkings,
   patchWorking,
 };

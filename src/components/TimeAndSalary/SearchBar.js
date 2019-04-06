@@ -16,13 +16,27 @@ import {
   fetchCompanyCandidates,
   fetchJobTitleCandidates,
 } from '../../apis/timeAndSalaryApi';
+import {
+  searchCriteriaSelector,
+  searchKeywordSelector,
+} from './common/selectors';
 
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
-const searchOptions = [
+export const searchOptions = [
   { label: '公司', value: 'company' },
-  { label: '職稱', value: 'job-title' },
+  { label: '職稱', value: 'job_title' },
 ];
+
+const validateSearchType = R.when(
+  searchType => searchOptions.every(option => option.value !== searchType),
+  R.always(R.head(searchOptions).value),
+);
+
+const validateKeyword = R.when(
+  keyword => typeof keyword !== 'string',
+  R.always(''),
+);
 
 class SearchBar extends Component {
   static propTypes = {
@@ -36,31 +50,35 @@ class SearchBar extends Component {
   }
 
   state = {
-    searchType: 'company',
-    keyword: '',
+    searchType: validateSearchType(searchCriteriaSelector(this.props)),
+    keyword: validateKeyword(searchKeywordSelector(this.props)),
     candidates: [],
   };
 
-  componentDidMount() {
-    // TODO 將路由的資訊反映到搜尋選項
-    /* const view = this.props.route.path.split('/')[0];
-    if (this.props.view === VIEWS.SEARCH_COMPANY_VIEW && this.state.searchType !== 'company') {
+  _isMounted = true;
+
+  componentDidUpdate(prevProps) {
+    if (
+      searchCriteriaSelector(prevProps) !==
+        searchCriteriaSelector(this.props) ||
+      searchKeywordSelector(prevProps) !== searchKeywordSelector(this.props)
+    ) {
+      const searchType = searchCriteriaSelector(this.props);
+      const keyword = searchKeywordSelector(this.props);
+      if (!this._isMounted) return;
       this.setState({
-        searchType: 'company',
-      });
-    } else if (this.props.view === VIEWS.SEARCH_JOB_TITLE_VIEW && this.state.searchType !== 'job-title') {
-      this.setState({
-        searchType: 'job-title',
+        searchType: validateSearchType(searchType),
+        keyword: validateKeyword(keyword),
       });
     }
-    if (prevProps.keyword !== this.props.keyword) {
-      this.setState({
-        keyword: this.props.keyword,
-      });
-    } */
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   handleTypeChange(e) {
+    if (!this._isMounted) return;
     this.setState({
       searchType: e.target.value,
       candidates: [],
@@ -68,6 +86,7 @@ class SearchBar extends Component {
   }
 
   handleKeywordChange(e) {
+    if (!this._isMounted) return;
     this.setState({
       keyword: e.target.value,
     });
@@ -93,20 +112,24 @@ class SearchBar extends Component {
   };
 
   searchKeyword = debounce(value => {
+    if (!this._isMounted) return;
     if (!value) {
       this.setState({ candidates: [] });
       return;
     }
     this.fetchCandidates(value)
       .then(candidates => {
+        if (!this._isMounted) return;
         this.setState({ candidates });
       })
       .catch(() => {
+        if (!this._isMounted) return;
         this.setState({ candidates: [] });
       });
   }, 500);
 
   handleSelectCandidate = keyword => {
+    if (!this._isMounted) return;
     this.setState({
       candidates: [],
       keyword,
@@ -117,9 +140,7 @@ class SearchBar extends Component {
     e.preventDefault();
     const { searchType, keyword } = this.state;
     this.props.history.push(
-      `/time-and-salary/${searchType}/${encodeURIComponent(
-        keyword,
-      )}/work-time-dashboard`,
+      `/salary-work-times?q=${encodeURIComponent(keyword)}&s_by=${searchType}`,
     );
 
     ReactPixel.track('Search', {

@@ -1,8 +1,21 @@
+@value link-blue from "common/variables.module.css";
+
 .permissionBlock {
   border: 1px solid #fcd406;
-  border-radius: 5px;
+  border-radius: 0px;
   background-color: #fffbe8;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.21);
+}
+
+.simple {
+  cursor: pointer;
+
+  @media (min-width: 1025px) {
+    &:hover {
+      .headingIcon {
+        color: link-blue;
+      }
+    }
+  }
 }
 
 .container {
@@ -27,13 +40,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+
+  & + * {
+    margin-top: 20px;
+  }
 }
 
 .headingIcon {
   display: inline;
-  font-size: 2em;
-  margin-right: 15px;
+  font-size: 24px;
+
+  @media (max-width: 850px) {
+    font-size: 16px;
+  }
 }
 
 .heading {

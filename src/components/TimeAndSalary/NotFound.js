@@ -1,6 +1,6 @@
 import React from 'react';
 import Redirect from 'common/routing/Redirect';
 
-const NotFound = () => <Redirect to="/time-and-salary/latest" />;
+const NotFound = () => <Redirect to="/salary-work-times/latest" />;
 
 export default NotFound;

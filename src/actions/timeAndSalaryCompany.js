@@ -3,43 +3,21 @@ import fetchingStatus from '../constants/status';
 export const SET_COMPANY_DATA = '@@timeAndSalaryCompany/SET_COMPANY_DATA';
 export const SET_COMPANY_STATUS = '@@timeAndSalaryCompany/SET_COMPANY_STATUS';
 
-export const setCompanyData = (
-  status,
-  groupSortBy,
-  order,
-  company,
-  data,
-  error,
-) => ({
+export const setCompanyData = (status, companyName, data, error) => ({
   type: SET_COMPANY_DATA,
-  groupSortBy,
-  order,
-  company,
+  companyName,
   status,
   data,
   error,
 });
 
-export const queryCompany = ({ groupSortBy, order, company }) => (
+export const queryCompany = ({ companyName }) => (
   dispatch,
   getState,
   { api },
 ) => {
-  if (
-    groupSortBy !== getState().timeAndSalaryCompany.get('groupSortBy') ||
-    order !== getState().timeAndSalaryCompany.get('order') ||
-    company !== getState().timeAndSalaryCompany.get('company')
-  ) {
-    dispatch(
-      setCompanyData(
-        fetchingStatus.UNFETCHED,
-        groupSortBy,
-        order,
-        company,
-        [],
-        null,
-      ),
-    );
+  if (companyName !== getState().timeAndSalaryCompany.get('companyName')) {
+    dispatch(setCompanyData(fetchingStatus.UNFETCHED, companyName, null, null));
   }
 
   if (
@@ -53,36 +31,13 @@ export const queryCompany = ({ groupSortBy, order, company }) => (
     status: fetchingStatus.FETCHING,
   });
 
-  const opt = {
-    company,
-    group_sort_by: groupSortBy,
-    group_sort_order: order,
-  };
-
   return api.timeAndSalary
-    .fetchSearchCompany({ opt })
+    .fetchCompany({ companyName })
     .then(data => {
-      dispatch(
-        setCompanyData(
-          fetchingStatus.FETCHED,
-          groupSortBy,
-          order,
-          company,
-          data,
-          null,
-        ),
-      );
+      if (!data) throw new Error('No such company');
+      dispatch(setCompanyData(fetchingStatus.FETCHED, companyName, data, null));
     })
     .catch(err => {
-      dispatch(
-        setCompanyData(
-          fetchingStatus.ERROR,
-          groupSortBy,
-          order,
-          company,
-          [],
-          err,
-        ),
-      );
+      dispatch(setCompanyData(fetchingStatus.ERROR, companyName, null, err));
     });
 };

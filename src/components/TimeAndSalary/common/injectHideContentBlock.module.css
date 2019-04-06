@@ -1,0 +1,27 @@
+td.cell {
+  position: relative;
+
+  .hideContentBlock {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    @media (max-width: 850px) {
+      left: 120px;
+    }
+  }
+
+  @media (max-width: 850px) {
+    display: none !important;
+  }
+
+  &.mobile {
+    display: flex !important;
+
+    @media (min-width: 850px) {
+      display: none !important;
+    }
+  }
+}

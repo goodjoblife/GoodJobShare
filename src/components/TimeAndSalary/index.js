@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
-import { Redirect, Switch } from 'react-router';
+import { Switch } from 'react-router';
 import { compose, setStatic } from 'recompose';
-
 import Wrapper from 'common/base/Wrapper';
+import { pathnameSelector } from 'common/routing/selectors';
+import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
 import SearchBar from './SearchBar';
@@ -15,12 +16,8 @@ import MobileInfoButtons from './MobileInfoButtons';
 import InfoTimeModal from './common/InfoTimeModal';
 import InfoSalaryModal from './common/InfoSalaryModal';
 import withModal from './common/withModal';
-
-import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { imgHost, SITE_NAME } from '../../constants/helmetData';
 import { queryCampaignInfoList } from '../../actions/campaignInfo';
-
-import { pathnameSelector } from 'common/routing/selectors';
 
 const campaignListFromEntries = campaignEntries =>
   campaignEntries
@@ -95,33 +92,26 @@ class TimeAndSalary extends Component {
   };
 
   render() {
-    const { routes, location, staticContext } = this.props;
-    if (!staticContext) {
-      if (location.pathname === '/time-and-salary') {
-        if (location.hash) {
-          const targets = location.hash.split('#');
-          if (targets.length >= 2) {
-            return <Redirect to={`/time-and-salary${targets[1]}`} />;
-          }
-        }
-        return <Redirect to="/time-and-salary/latest" />;
-      }
-    }
-
+    const { routes } = this.props;
     const campaigns = campaignListFromEntries(this.props.campaignEntries);
+    const pathname = pathnameSelector(this.props);
 
     return (
       <div className={styles.container}>
         {this.renderHelmet()}
-        <Banner campaigns={campaigns} />
+        {pathname === '/salary-work-times/latest' && (
+          <Banner campaigns={campaigns} />
+        )}
         <section className={styles.whiteBackground}>
           <Wrapper size="l" className={styles.showSearchbarWrapper}>
             <CallToShareData />
             <SearchBar />
-            <MobileInfoButtons
-              toggleInfoSalaryModal={this.toggleInfoSalaryModal}
-              toggleInfoTimeModal={this.toggleInfoTimeModal}
-            />
+            {pathname !== '/salary-work-times' && (
+              <MobileInfoButtons
+                toggleInfoSalaryModal={this.toggleInfoSalaryModal}
+                toggleInfoTimeModal={this.toggleInfoTimeModal}
+              />
+            )}
           </Wrapper>
         </section>
         <InfoSalaryModal
