@@ -2,7 +2,7 @@ import Express from 'express';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import { matchPath } from 'react-router-dom';
-import createHistory from 'history/createMemoryHistory';
+import { createMemoryHistory as createHistory } from 'history';
 import { Provider } from 'react-redux';
 import React from 'react';
 import configureStore from './store/configureStore';
@@ -41,24 +41,28 @@ server.get(
 
     const context = {};
 
-    const { match, route: matchRoute } = matchRoutes(
-      location.pathname,
-      rootRoutes,
-    );
+    const matchedRoutes = matchRoutes(location.pathname, rootRoutes);
+    // don't do anything when there is no matched routes
+    if (matchedRoutes) {
+      const { match, route: matchRoute } = matchRoutes(
+        location.pathname,
+        rootRoutes,
+      );
 
-    function resolveComponent() {
-      const component = matchRoute.component;
-      return component;
-    }
+      function resolveComponent() {
+        const component = matchRoute.component;
+        return component;
+      }
 
-    const component = resolveComponent();
-    if (component && component.fetchData) {
-      // match: 來自 withRouter 或 Route
-      // location: 來自 withRouter 或 Route
-      // history: 來自 withRouter 或 Route
-      // see https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/withRouter.md
-      // store: 提供 fetchData 可以 dispath action
-      await component.fetchData({ match, location, history, store });
+      const component = resolveComponent();
+      if (component && component.fetchData) {
+        // match: 來自 withRouter 或 Route
+        // location: 來自 withRouter 或 Route
+        // history: 來自 withRouter 或 Route
+        // see https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/withRouter.md
+        // store: 提供 fetchData 可以 dispath action
+        await component.fetchData({ match, location, history, store });
+      }
     }
 
     /*
