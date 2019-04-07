@@ -1,4 +1,4 @@
-@value main-yellow from "common/variables.module.css";
+@value main-yellow, main-orange from "common/variables.module.css";
 
 .root {
   padding-top: 100px;
@@ -31,6 +31,13 @@
   width: 82px;
   height: 82px;
   fill: main-yellow;
+  margin-bottom: 40px;
+}
+
+.warning {
+  width: 82px;
+  height: 82px;
+  fill: main-orange;
   margin-bottom: 40px;
 }
 
