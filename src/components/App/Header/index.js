@@ -84,20 +84,16 @@ class Header extends React.Component {
       location: { pathname },
     } = this.props;
 
-    if (pathname === '/') {
+    const isLogin = auth.get('status') === authStatus.CONNECTED;
+    if (pathname === '/' && !isLogin) {
       return null;
     }
-
-    const isLogin = auth.get('status') === authStatus.CONNECTED;
-    return (
-      <Top link={isLogin ? null : shareLink}>
-        {isLogin ? (
-          <EmailVerificationTop isSentVerificationEmail />
-        ) : (
-          <ProgressTop />
-        )}
-      </Top>
+    const content = isLogin ? (
+      <EmailVerificationTop isSentVerificationEmail />
+    ) : (
+      <ProgressTop />
     );
+    return <Top link={isLogin ? null : shareLink}>{content}</Top>;
   };
 
   render() {
