@@ -1,89 +1,49 @@
-import React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
-import GjLogo from 'common/icons/GjLogo';
-import Checked from 'common/icons/Checked';
-import Heading from 'common/base/Heading';
-import P from 'common/base/P';
-import Button from 'common/button/Button';
+import VerificationSuccess from './VerificationSuccess';
 
-import styles from './VerificationPage.module.css';
+// import styles from './VerificationPage.module.css';
 
-const FooterP = ({ style, ...restProps }) => (
-  <P
-    size="s"
-    style={{
-      fontSize: '0.8125em',
-      color: '#999999',
-      ...Object.assign({}, style ? style : {}),
-    }}
-    {...restProps}
-  />
-);
+const VERIFY_STATUS = {
+  NOT_VERIFITED: 'NOT_VERIFITED',
+  LOADING: 'LOADING',
+  VERIFY_SUCCESS: 'VERIFY_SUCCESS',
+  VERIFY_FAILURE: 'VERIFY_FAILURE',
+};
 
 const VerificationPage = ({
   match: {
     params: { verificationCode },
   },
+  verifyWithCode,
 }) => {
-  console.log('verificationCode', verificationCode);
-  return (
-    <div className={styles.root}>
-      <Link className={styles.titleArea} to="/" title="GoodJob 職場透明化運動">
-        <GjLogo
-          style={{ height: '30px', width: '100px', marginRight: '16px' }}
-        />
-        <Heading size="sm">職場透明化運動</Heading>
-      </Link>
-      <div className={styles.content}>
-        <Checked className={styles.checked} />
-        <Heading
-          size="m"
-          style={{
-            marginBottom: '20px',
-          }}
-        >
-          Email 認證成功
-        </Heading>
-        <P
-          size="m"
-          style={{
-            marginBottom: '28px',
-          }}
-        >
-          感謝你的驗證，未來有重大更新我們將 Email 通知你。
-        </P>
-        <Link to="/" title="GoodJob 職場透明化運動">
-          <Button
-            circleSize="lg"
-            btnStyle="black2"
-            style={{
-              marginBottom: '10px',
-            }}
-          >
-            返回首頁
-          </Button>
-        </Link>
-      </div>
-      <div className={styles.footer}>
-        <FooterP style={{ marginRight: '16px' }}>
-          © GoodJob.life team 2019
-        </FooterP>
-        <Link to="/" title="GoodJob 職場透明化運動">
-          <FooterP style={{ marginRight: '20px' }}>官方網站</FooterP>
-        </Link>
-        <a
-          href="https://www.facebook.com/goodjob.life/"
-          target="_blank"
-          rel="noopener noreferrer"
-          title="GoodJob 職場透明化運動"
-        >
-          <FooterP>facebook</FooterP>
-        </a>
-      </div>
-    </div>
+  const [verifyStatus, setVerifyStatus] = useState(VERIFY_STATUS.NOT_VERIFITED);
+  const sendVerificationCode = useCallback(
+    code => {
+      setVerifyStatus(VERIFY_STATUS.LOADING);
+      verifyWithCode(code)
+        .then(() => setVerifyStatus(VERIFY_STATUS.VERIFY_SUCCESS))
+        .catch(e => {
+          setVerifyStatus(VERIFY_STATUS.VERIFY_FAILURE);
+          console.error(e);
+        });
+    },
+    [verifyWithCode],
   );
+
+  useEffect(() => {
+    sendVerificationCode(verificationCode);
+  }, [verifyWithCode]);
+
+  switch (verifyStatus) {
+    case VERIFY_STATUS.VERIFY_SUCCESS:
+      return <VerificationSuccess />;
+    case VERIFY_STATUS.VERIFY_FAILURE:
+    case VERIFY_STATUS.NOT_VERIFITED:
+    default:
+      return null;
+  }
 };
 
 VerificationPage.propTypes = {
