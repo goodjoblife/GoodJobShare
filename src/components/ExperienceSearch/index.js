@@ -383,14 +383,15 @@ class ExperienceSearch extends Component {
                 onSubmit={this.handleSearchbarSubmit}
               />
 
-              {data.searchQuery && data.experienceCount > 0 && (
-                <div className={styles.searchResult}>
-                  <Heading size="m" bold>
-                    「{data.searchQuery}
-                    」的面試經驗、工作經驗
-                  </Heading>
-                </div>
-              )}
+              {data.searchQuery &&
+                data.experienceCount > 0 && (
+                  <div className={styles.searchResult}>
+                    <Heading size="m" bold>
+                      「{data.searchQuery}
+                      」的面試經驗、工作經驗
+                    </Heading>
+                  </div>
+                )}
 
               <Pagination
                 totalCount={data.experienceCount}
