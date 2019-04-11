@@ -154,16 +154,17 @@ class SalaryInfo extends React.PureComponent {
                   }}
                 />
               </div>
-              {!isSalarySetWarning && isExperienceInYearWarning && (
-                <div>
-                  <p
-                    className={`pS ${styles.warning__wording}`}
-                    style={{ textAlign: 'left', margin: '10px 0 0 0' }}
-                  >
-                    需填寫當時業界工作經歷
-                  </p>
-                </div>
-              )}
+              {!isSalarySetWarning &&
+                isExperienceInYearWarning && (
+                  <div>
+                    <p
+                      className={`pS ${styles.warning__wording}`}
+                      style={{ textAlign: 'left', margin: '10px 0 0 0' }}
+                    >
+                      需填寫當時業界工作經歷
+                    </p>
+                  </div>
+                )}
             </div>
           </div>
 

@@ -38,19 +38,25 @@ const VerificationPage = ({
   verifyWithCode,
 }) => {
   const [verifyStatus, setVerifyStatus] = useState(VERIFY_STATUS.NOT_VERIFITED);
-  const sendVerificationCode = useCallback(() => {
-    setVerifyStatus(VERIFY_STATUS.LOADING);
-    verifyWithCode(verificationCode)
-      .then(() => setVerifyStatus(VERIFY_STATUS.VERIFY_SUCCESS))
-      .catch(e => {
-        setVerifyStatus(VERIFY_STATUS.VERIFY_FAILURE);
-        console.error(e);
-      });
-  }, [verificationCode, verifyWithCode]);
+  const sendVerificationCode = useCallback(
+    () => {
+      setVerifyStatus(VERIFY_STATUS.LOADING);
+      verifyWithCode(verificationCode)
+        .then(() => setVerifyStatus(VERIFY_STATUS.VERIFY_SUCCESS))
+        .catch(e => {
+          setVerifyStatus(VERIFY_STATUS.VERIFY_FAILURE);
+          console.error(e);
+        });
+    },
+    [verificationCode, verifyWithCode],
+  );
 
-  useEffect(() => {
-    sendVerificationCode();
-  }, [sendVerificationCode]);
+  useEffect(
+    () => {
+      sendVerificationCode();
+    },
+    [sendVerificationCode],
+  );
 
   const renderContent = useCallback(() => {
     switch (verifyStatus) {

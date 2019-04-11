@@ -29,6 +29,8 @@ module.exports = {
     'react/no-array-index-key': 'off',
     'no-unused-vars': 'error',
     'react/no-deprecated': 'error',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
     'prettier/prettier': 'error',
   },
   settings: {
