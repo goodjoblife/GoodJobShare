@@ -101,6 +101,8 @@ const isStepTabActive = step => (match, location) => {
   return currentStep >= step;
 };
 
+const stepTabLabels = ['基本資料', '更多資訊', '心得分享'];
+
 class InterviewForm extends React.Component {
   constructor(props) {
     super(props);
@@ -275,33 +277,18 @@ class InterviewForm extends React.Component {
         <StaticHelmet.ShareInterview />
         <div className={styles.header}>
           <div className={styles.title}>面試心得分享</div>
-          <NavLink
-            to="/share/interview/step1"
-            className={styles.stepTab}
-            activeClassName={styles.active}
-            isActive={isStepTabActive(1)}
-            data-step="1"
-          >
-            基本資料
-          </NavLink>
-          <NavLink
-            to="/share/interview/step2"
-            className={styles.stepTab}
-            activeClassName={styles.active}
-            isActive={isStepTabActive(2)}
-            data-step="2"
-          >
-            更多資訊
-          </NavLink>
-          <NavLink
-            to="/share/interview/step3"
-            className={styles.stepTab}
-            activeClassName={styles.active}
-            isActive={isStepTabActive(3)}
-            data-step="3"
-          >
-            心得分享
-          </NavLink>
+          {stepTabLabels.map((label, i) => (
+            <NavLink
+              key={i}
+              to={`/share/interview/step${i + 1}`}
+              className={styles.stepTab}
+              activeClassName={styles.active}
+              isActive={isStepTabActive(i + 1)}
+              data-step={i + 1}
+            >
+              {label}
+            </NavLink>
+          ))}
         </div>
         <Switch>
           <Route
