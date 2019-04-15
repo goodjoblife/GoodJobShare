@@ -10,8 +10,6 @@ import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 
-import styles from './InterviewForm.module.css';
-
 import { interviewFormCheck } from './formCheck';
 
 import {
@@ -271,16 +269,6 @@ class InterviewForm extends React.Component {
         <Heading size="l" marginBottomS center>
           面試經驗分享
         </Heading>
-        {this.state.submitted ? (
-          <div
-            style={{
-              marginTop: '20px',
-            }}
-            className={styles.warning__wording}
-          >
-            oops! 請檢查底下紅框內的內容是否正確
-          </div>
-        ) : null}
         <Switch>
           <Route
             path="/share/interview/step1"
