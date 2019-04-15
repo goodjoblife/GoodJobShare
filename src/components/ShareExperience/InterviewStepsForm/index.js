@@ -10,8 +10,6 @@ import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 
-import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
-
 import styles from './InterviewForm.module.css';
 
 import { interviewFormCheck } from './formCheck';
@@ -312,12 +310,12 @@ class InterviewForm extends React.Component {
                 removeQa={this.removeBlock('interviewQas')}
                 editQa={this.editBlock('interviewQas')}
                 changeValidationStatus={this.changeValidationStatus}
+                onSubmit={this.onSubmit}
               />
             )}
           />
           <Redirect to="/share/interview/step1" />
         </Switch>
-        <SubmitArea onSubmit={this.onSubmit} />
       </div>
     );
   }

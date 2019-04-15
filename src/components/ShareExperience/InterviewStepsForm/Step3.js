@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import InterviewExperience from './InterviewExperience';
+import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
 class Step3 extends React.Component {
   static propTypes = {
@@ -28,6 +29,7 @@ class Step3 extends React.Component {
     removeQa: PropTypes.func.isRequired,
     editQa: PropTypes.func.isRequired,
     changeValidationStatus: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
   };
 
   render() {
@@ -43,24 +45,28 @@ class Step3 extends React.Component {
       removeQa,
       editQa,
       changeValidationStatus,
+      onSubmit,
     } = this.props;
 
     return (
-      <InterviewExperience
-        handleState={handleState}
-        title={state.title}
-        sections={sections}
-        appendSection={appendSection}
-        removeSection={removeSection}
-        editSection={editSection}
-        interviewQas={interviewQas}
-        appendQa={appendQa}
-        removeQa={removeQa}
-        editQa={editQa}
-        interviewSensitiveQuestions={state.interviewSensitiveQuestions}
-        submitted={state.submitted}
-        changeValidationStatus={changeValidationStatus}
-      />
+      <React.Fragment>
+        <InterviewExperience
+          handleState={handleState}
+          title={state.title}
+          sections={sections}
+          appendSection={appendSection}
+          removeSection={removeSection}
+          editSection={editSection}
+          interviewQas={interviewQas}
+          appendQa={appendQa}
+          removeQa={removeQa}
+          editQa={editQa}
+          interviewSensitiveQuestions={state.interviewSensitiveQuestions}
+          submitted={state.submitted}
+          changeValidationStatus={changeValidationStatus}
+        />
+        <SubmitArea onSubmit={onSubmit} />
+      </React.Fragment>
     );
   }
 }
