@@ -23,6 +23,7 @@ import renderHelmet from './helmet';
 import styles from './SalaryWorkTimeScreen.module.css';
 
 const companyNameSelector = R.compose(
+  decodeURIComponent,
   params => params.companyName,
   paramsSelector,
 );

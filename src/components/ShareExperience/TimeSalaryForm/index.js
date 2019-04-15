@@ -1,5 +1,4 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
@@ -26,7 +25,7 @@ import {
 
 import salaryHint from '../../../utils/formUtils';
 
-import { HELMET_DATA } from '../../../constants/helmetData';
+import StaticHelmet from 'common/StaticHelmet';
 import {
   INVALID,
   TIME_SALARY_BASIC_ORDER,
@@ -259,7 +258,7 @@ class TimeSalaryForm extends React.PureComponent {
 
     return (
       <div>
-        <Helmet {...HELMET_DATA.SHARE_TIME_SALARY} />
+        <StaticHelmet.ShareSalaryWorkTime />
         <Heading size="l" marginBottomS center>
           薪資工時分享
         </Heading>

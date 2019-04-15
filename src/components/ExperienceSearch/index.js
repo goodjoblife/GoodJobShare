@@ -18,7 +18,7 @@ import Searchbar from './Searchbar';
 import ExperienceBlock from './ExperienceBlock';
 import { fetchExperiences as fetchExperiencesAction } from '../../actions/experienceSearch';
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
-import { imgHost, SITE_NAME } from '../../constants/helmetData';
+import { IMG_HOST, SITE_NAME } from '../../constants/helmetData';
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 import { PAGE_COUNT } from '../../constants/experienceSearch';
 import status from '../../constants/status';
@@ -330,20 +330,20 @@ class ExperienceSearch extends Component {
       description = `馬上查詢超過 ${scale} 篇${searchTypeName}分享，讓我們一起把面試準備的更好，也更瞭解公司內部的真實樣貌，找到更適合自己的好工作！`;
     }
     return (
-      <Helmet
-        title={title}
-        meta={[
-          { name: 'description', content: description },
-          { property: 'og:title', content: formatTitle(title, SITE_NAME) },
-          { property: 'og:description', content: description },
-          { property: 'og:url', content: url },
-          {
-            property: 'og:image',
-            content: `${imgHost}/og/experience-search.jpg`,
-          },
-        ]}
-        link={[{ rel: 'canonical', href: url }]}
-      />
+      <Helmet>
+        <title itemProp="name" lang="zh-TW">
+          {title}
+        </title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
+        <meta property="og:description" content={description} />
+        <meta
+          property="og:image"
+          content={`${IMG_HOST}/og/experience-search.jpg`}
+        />
+        <meta property="og:url" content={url} />
+        <link rel="canonical" href={url} />
+      </Helmet>
     );
   };
 

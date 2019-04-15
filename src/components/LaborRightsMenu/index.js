@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { compose, setStatic } from 'recompose';
 import Loader from 'common/Loader';
@@ -11,7 +10,7 @@ import { queryMenu } from '../../actions/laborRights';
 import { isFetching, isError, isFetched } from '../../constants/status';
 import { shareLink } from '../../constants/dataProgress';
 import LaborRightsEntry from './LaborRightsEntry';
-import { HELMET_DATA } from '../../constants/helmetData';
+import StaticHelmet from 'common/StaticHelmet';
 import styles from './LaborRightsEntry.module.css';
 
 class LaborRightsMenu extends React.Component {
@@ -36,7 +35,7 @@ class LaborRightsMenu extends React.Component {
     return (
       <Section Tag="main" pageTop>
         <Wrapper size="l">
-          <Helmet {...HELMET_DATA.LABOR_RIGHTS_MENU} />
+          <StaticHelmet.LaborRightsMenu />
           {isFetching(status) && <Loader />}
           {isError(status) &&
             menuError && (

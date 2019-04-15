@@ -232,24 +232,22 @@ class ExperienceDetail extends Component {
           mapping[type]
         }。 ${subtitle}：${content}`;
         return (
-          <Helmet
-            title={title}
-            meta={[
-              { name: 'description', content: description },
-              { property: 'og:title', content: formatTitle(title, SITE_NAME) },
-              {
-                property: 'og:url',
-                content: formatCanonicalPath(`/experiences/${id}`),
-              },
-              { property: 'og:description', content: description },
-            ]}
-            link={[
-              {
-                rel: 'canonical',
-                href: formatCanonicalPath(`/experiences/${id}`),
-              },
-            ]}
-          />
+          <Helmet>
+            <title itemProp="name" lang="zh-TW">
+              {title}
+            </title>
+            <meta name="description" content={description} />
+            <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
+            <meta property="og:description" content={description} />
+            <meta
+              property="og:url"
+              content={formatCanonicalPath(`/experiences/${id}`)}
+            />
+            <link
+              rel="canonical"
+              href={formatCanonicalPath(`/experiences/${id}`)}
+            />
+          </Helmet>
         );
       }
       return null;

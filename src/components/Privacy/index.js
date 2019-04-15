@@ -1,13 +1,12 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 import { Section, Wrapper } from 'common/base';
 import PageBanner from 'common/PageBanner';
 import editorStyles from 'common/Editor.module.css';
-import { HELMET_DATA } from '../../constants/helmetData';
+import StaticHelmet from 'common/StaticHelmet';
 
 const Privacy = () => (
   <main>
-    <Helmet {...HELMET_DATA.PRIVACY_POLICY} />
+    <StaticHelmet.PrivacyPolicy />
     <PageBanner heading="隱私權政策" />
     <Section padding>
       <Wrapper size="m" className={editorStyles.editor}>
