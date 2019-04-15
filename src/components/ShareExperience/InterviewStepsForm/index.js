@@ -14,7 +14,6 @@ import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer'
 
 import styles from './InterviewForm.module.css';
 
-import InterviewInfo from './InterviewInfo';
 import InterviewExperience from './InterviewExperience';
 import { interviewFormCheck } from './formCheck';
 
@@ -286,27 +285,21 @@ class InterviewForm extends React.Component {
           </div>
         ) : null}
         <Switch>
-          <Route path="/share/interview/step1" exact component={Step1} />
+          <Route
+            path="/share/interview/step1"
+            exact
+            render={() => (
+              <Step1
+                handleState={this.handleState}
+                state={this.state}
+                changeValidationStatus={this.changeValidationStatus}
+              />
+            )}
+          />
           <Route path="/share/interview/step2" exact component={Step2} />
           <Route path="/share/interview/step3" exact component={Step3} />
           <Redirect to="/share/interview/step1" />
         </Switch>
-        <InterviewInfo
-          handleState={this.handleState}
-          companyQuery={this.state.companyQuery}
-          region={this.state.region}
-          jobTitle={this.state.jobTitle}
-          experienceInYear={this.state.experienceInYear}
-          education={this.state.education}
-          interviewTimeYear={this.state.interviewTimeYear}
-          interviewTimeMonth={this.state.interviewTimeMonth}
-          interviewResult={this.state.interviewResult}
-          salaryType={this.state.salaryType}
-          salaryAmount={this.state.salaryAmount}
-          overallRating={this.state.overallRating}
-          submitted={this.state.submitted}
-          changeValidationStatus={this.changeValidationStatus}
-        />
         <InterviewExperience
           handleState={this.handleState}
           title={this.state.title}
