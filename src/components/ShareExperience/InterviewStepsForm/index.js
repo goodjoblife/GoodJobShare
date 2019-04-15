@@ -14,7 +14,6 @@ import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer'
 
 import styles from './InterviewForm.module.css';
 
-import InterviewExperience from './InterviewExperience';
 import { interviewFormCheck } from './formCheck';
 
 import {
@@ -297,24 +296,27 @@ class InterviewForm extends React.Component {
             )}
           />
           <Route path="/share/interview/step2" exact component={Step2} />
-          <Route path="/share/interview/step3" exact component={Step3} />
+          <Route
+            path="/share/interview/step3"
+            exact
+            render={() => (
+              <Step3
+                handleState={this.handleState}
+                state={this.state}
+                sections={handleBlocks(this.state.sections)}
+                appendSection={this.appendBlock('sections')}
+                removeSection={this.removeBlock('sections')}
+                editSection={this.editBlock('sections')}
+                interviewQas={handleBlocks(this.state.interviewQas)}
+                appendQa={this.appendBlock('interviewQas')}
+                removeQa={this.removeBlock('interviewQas')}
+                editQa={this.editBlock('interviewQas')}
+                changeValidationStatus={this.changeValidationStatus}
+              />
+            )}
+          />
           <Redirect to="/share/interview/step1" />
         </Switch>
-        <InterviewExperience
-          handleState={this.handleState}
-          title={this.state.title}
-          sections={handleBlocks(this.state.sections)}
-          appendSection={this.appendBlock('sections')}
-          removeSection={this.removeBlock('sections')}
-          editSection={this.editBlock('sections')}
-          interviewQas={handleBlocks(this.state.interviewQas)}
-          appendQa={this.appendBlock('interviewQas')}
-          removeQa={this.removeBlock('interviewQas')}
-          editQa={this.editBlock('interviewQas')}
-          interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
-          submitted={this.state.submitted}
-          changeValidationStatus={this.changeValidationStatus}
-        />
         <SubmitArea onSubmit={this.onSubmit} />
       </div>
     );
