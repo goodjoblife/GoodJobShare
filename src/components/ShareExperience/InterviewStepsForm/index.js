@@ -4,6 +4,11 @@ import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
 import { Heading } from 'common/base';
+import { Switch, Route } from 'react-router-dom';
+import { Redirect } from 'react-router';
+import Step1 from './Step1';
+import Step2 from './Step2';
+import Step3 from './Step3';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 
@@ -280,6 +285,12 @@ class InterviewForm extends React.Component {
             oops! 請檢查底下紅框內的內容是否正確
           </div>
         ) : null}
+        <Switch>
+          <Route path="/share/interview/step1" exact component={Step1} />
+          <Route path="/share/interview/step2" exact component={Step2} />
+          <Route path="/share/interview/step3" exact component={Step3} />
+          <Redirect to="/share/interview/step1" />
+        </Switch>
         <InterviewInfo
           handleState={this.handleState}
           companyQuery={this.state.companyQuery}

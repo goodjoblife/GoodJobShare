@@ -64,7 +64,6 @@ const routes = [
     routes: [
       {
         path: '/share/interview',
-        exact: true,
         component: InterviewForm,
       },
       {
