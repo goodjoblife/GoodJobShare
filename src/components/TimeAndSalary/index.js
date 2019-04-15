@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import { Switch } from 'react-router';
-import { compose, setStatic } from 'recompose';
+import { compose } from 'recompose';
 import Wrapper from 'common/base/Wrapper';
 import { pathnameSelector } from 'common/routing/selectors';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
@@ -11,22 +11,11 @@ import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
 import SearchBar from './SearchBar';
 import CallToShareData from './CallToShareData';
-import Banner from '../CampaignTimeAndSalary/Banner';
 import MobileInfoButtons from './MobileInfoButtons';
 import InfoTimeModal from './common/InfoTimeModal';
 import InfoSalaryModal from './common/InfoSalaryModal';
 import withModal from './common/withModal';
 import { IMG_HOST, SITE_NAME } from '../../constants/helmetData';
-import { queryCampaignInfoList } from '../../actions/campaignInfo';
-
-const campaignListFromEntries = campaignEntries =>
-  campaignEntries
-    .valueSeq()
-    .map(info => ({
-      name: info.get('name'),
-      title: info.get('title'),
-    }))
-    .toJS();
 
 class TimeAndSalary extends Component {
   static propTypes = {
@@ -51,10 +40,6 @@ class TimeAndSalary extends Component {
       setIsOpen: PropTypes.func.isRequired,
     }).isRequired,
   };
-
-  componentDidMount() {
-    this.props.queryCampaignInfoListIfNeeded();
-  }
 
   toggleInfoSalaryModal = () => {
     const { infoSalaryModal } = this.props;
@@ -93,15 +78,11 @@ class TimeAndSalary extends Component {
 
   render() {
     const { routes } = this.props;
-    const campaigns = campaignListFromEntries(this.props.campaignEntries);
     const pathname = pathnameSelector(this.props);
 
     return (
       <div className={styles.container}>
         {this.renderHelmet()}
-        {pathname === '/salary-work-times/latest' && (
-          <Banner campaigns={campaigns} />
-        )}
         <section className={styles.whiteBackground}>
           <Wrapper size="l" className={styles.showSearchbarWrapper}>
             <CallToShareData />
@@ -134,12 +115,7 @@ class TimeAndSalary extends Component {
   }
 }
 
-const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
-  return dispatch(queryCampaignInfoList());
-});
-
 const hoc = compose(
-  ssr,
   withModal('infoSalaryModal'),
   withModal('infoTimeModal'),
 );

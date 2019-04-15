@@ -2,7 +2,7 @@ import React from 'react';
 import LandingPage from './containers/LandingPage';
 import LaborRightsMenu from './containers/LaborRightsMenu';
 import LaborRightsSingle from './containers/LaborRightsSingle';
-import TimeAndSalary from './containers/SalaryWorkTime';
+import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/SalaryWorkTime/TimeAndSalaryBoard';
 import SalaryWorkTimeSearchScreen from './containers/SalaryWorkTime/SearchScreen';
 import CompanySalaryWorkTimeScreen from './containers/Company/SalaryWorkTimeScreen';
