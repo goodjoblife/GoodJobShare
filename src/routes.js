@@ -16,7 +16,7 @@ import ExperienceDetail from './containers/ExperienceDetail';
 import NotFound from './components/common/NotFound';
 import ShareExperience from './components/ShareExperience';
 import ShareExperienceEntry from './components/ShareExperience/Entry';
-import InterviewForm from './containers/ShareExperience/InterviewFormContainer';
+import InterviewForm from './containers/ShareExperience/InterviewStepsFormContainer';
 import TimeSalaryForm from './containers/ShareExperience/TimeSalaryFormContainer';
 import CampaignTimeAndSalaryForm from './containers/ShareExperience/CampaignTimeAndSalaryFormContainer';
 import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
