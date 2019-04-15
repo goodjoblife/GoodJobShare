@@ -101,14 +101,14 @@ class SearchScreen extends Component {
       if (searchBy === 'company') {
         const companyName = firstDataNameSelector(this.props);
         this.props.history.replace(
-          `/companies/${companyName}/salary-work-times${
+          `/companies/${encodeURIComponent(companyName)}/salary-work-times${
             this.props.location.search
           }`,
         );
       } else if (searchBy === 'job_title') {
         const jobTitle = firstDataNameSelector(this.props);
         this.props.history.replace(
-          `/job-titles/${jobTitle}/salary-work-times${
+          `/job-titles/${encodeURIComponent(jobTitle)}/salary-work-times${
             this.props.location.search
           }`,
         );

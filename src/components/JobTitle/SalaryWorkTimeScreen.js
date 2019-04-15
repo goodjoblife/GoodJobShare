@@ -23,6 +23,7 @@ import WorkingHourBlock from './WorkingHourBlock';
 import styles from './SalaryWorkTimeScreen.module.css';
 
 const jobTitleSelector = R.compose(
+  decodeURIComponent,
   params => params.jobTitle,
   paramsSelector,
 );
