@@ -3,9 +3,8 @@ import R from 'ramda';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, NavLink } from 'react-router-dom';
 import { Redirect } from 'react-router';
-import cn from 'classnames';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
@@ -93,6 +92,13 @@ const defaultForm = {
     [firstQaId]: createBlock.interviewQas(firstQaId)(),
   },
   interviewSensitiveQuestions: [],
+};
+
+const isStepTabActive = step => (match, location) => {
+  const matched = location.pathname.match(/step(\d+)$/);
+  if (!matched) return false;
+  const currentStep = parseInt(matched[1], 10);
+  return currentStep >= step;
 };
 
 class InterviewForm extends React.Component {
@@ -269,15 +275,33 @@ class InterviewForm extends React.Component {
         <StaticHelmet.ShareInterview />
         <div className={styles.header}>
           <div className={styles.title}>面試心得分享</div>
-          <div className={cn(styles.stepTab, styles.active)} data-step="1">
+          <NavLink
+            to="/share/interview/step1"
+            className={styles.stepTab}
+            activeClassName={styles.active}
+            isActive={isStepTabActive(1)}
+            data-step="1"
+          >
             基本資料
-          </div>
-          <div className={styles.stepTab} data-step="2">
+          </NavLink>
+          <NavLink
+            to="/share/interview/step2"
+            className={styles.stepTab}
+            activeClassName={styles.active}
+            isActive={isStepTabActive(2)}
+            data-step="2"
+          >
             更多資訊
-          </div>
-          <div className={styles.stepTab} data-step="3">
+          </NavLink>
+          <NavLink
+            to="/share/interview/step3"
+            className={styles.stepTab}
+            activeClassName={styles.active}
+            isActive={isStepTabActive(3)}
+            data-step="3"
+          >
             心得分享
-          </div>
+          </NavLink>
         </div>
         <Switch>
           <Route
