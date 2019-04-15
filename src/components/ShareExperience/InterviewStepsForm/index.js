@@ -293,7 +293,17 @@ class InterviewForm extends React.Component {
               />
             )}
           />
-          <Route path="/share/interview/step2" exact component={Step2} />
+          <Route
+            path="/share/interview/step2"
+            exact
+            render={() => (
+              <Step2
+                handleState={this.handleState}
+                state={this.state}
+                changeValidationStatus={this.changeValidationStatus}
+              />
+            )}
+          />
           <Route
             path="/share/interview/step3"
             exact
