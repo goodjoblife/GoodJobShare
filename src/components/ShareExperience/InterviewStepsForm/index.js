@@ -3,12 +3,13 @@ import R from 'ramda';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
-import { Heading } from 'common/base';
 import { Switch, Route } from 'react-router-dom';
 import { Redirect } from 'react-router';
+import cn from 'classnames';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
+import styles from './InterviewForm.module.css';
 
 import { interviewFormCheck } from './formCheck';
 
@@ -266,9 +267,18 @@ class InterviewForm extends React.Component {
     return (
       <div>
         <StaticHelmet.ShareInterview />
-        <Heading size="l" marginBottomS center>
-          面試經驗分享
-        </Heading>
+        <div className={styles.header}>
+          <div className={styles.title}>面試心得分享</div>
+          <div className={cn(styles.stepTab, styles.active)} data-step="1">
+            基本資料
+          </div>
+          <div className={styles.stepTab} data-step="2">
+            更多資訊
+          </div>
+          <div className={styles.stepTab} data-step="3">
+            心得分享
+          </div>
+        </div>
         <Switch>
           <Route
             path="/share/interview/step1"

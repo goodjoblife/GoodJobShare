@@ -1,5 +1,48 @@
 @value warning-red from "common/variables.module.css";
 
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+
+  .title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 30px;
+  }
+
+  .stepTab {
+    margin-right: 50px;
+    color: #bdbdbd;
+
+    &::last-child {
+      margin-right: 0;
+    }
+
+    &::before {
+      content: attr(data-step);
+      font-weight: bold;
+      color: #ffffff;
+      background: #d8d8d8;
+      margin-right: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 33px;
+      height: 33px;
+      border-radius: 16.5px;
+    }
+
+    &.active {
+      color: #555555;
+
+      &::before {
+        background: #fcd406;
+      }
+    }
+  }
+}
+
 .container {
   padding-top: 38px;
   padding-bottom: 70px;
