@@ -7,6 +7,7 @@ import { debounce } from 'utils/streamUtils';
 
 import InputTitle from './InputTitle';
 import { getJobTitlesSearch } from '../../../apis/jobTitleSearchApi';
+import shareStyles from './share.module.css';
 
 const getItemValue = item => item.label;
 
@@ -53,7 +54,7 @@ class JobTitle extends React.Component {
     const { autocompleteItems } = this.state;
     const { inputTitle, jobTitle, onChange, validator, submitted } = this.props;
     return (
-      <div>
+      <div className={shareStyles.single__select__input}>
         <InputTitle text={inputTitle} must />
         <AutoCompleteTextInput
           placeholder="硬體工程師"

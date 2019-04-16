@@ -54,3 +54,9 @@
   color: warning-red;
   text-align: center;
 }
+
+.nextAction {
+  margin-top: 43px;
+  display: flex;
+  justify-content: flex-end;
+}
