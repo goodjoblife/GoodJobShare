@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InterviewInfo from './InterviewInfo';
+import InterviewInfo from './BasicInfo';
 import styles from './InterviewForm.module.css';
 
 class Step1 extends React.Component {
