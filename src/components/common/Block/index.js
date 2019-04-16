@@ -4,8 +4,8 @@ import cn from 'classnames';
 import { P } from 'common/base';
 import styles from './Block.module.css';
 
-const Block = ({ heading, requiredText, children }) => (
-  <section>
+const Block = ({ heading, requiredText, children, className, style }) => (
+  <section className={className} style={style}>
     <div className={cn(styles.body)}>
       <div className={styles.header}>
         {heading && (
@@ -28,6 +28,8 @@ Block.propTypes = {
   heading: PropTypes.string,
   requiredText: PropTypes.bool,
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  style: PropTypes.object,
 };
 
 Block.defaultProps = {

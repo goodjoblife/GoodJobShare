@@ -1,43 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ButtonAdd from 'common/button/ButtonAdd';
 import AddButton from 'common/button/AddButton';
-import { Comment2 } from 'common/icons';
 import subscribeValidation from 'common/subscribeValidation';
-import IconHeadingBlock from 'common/IconHeadingBlock';
+import Block from 'common/Block';
 
-import Title from '../../common/Title';
-import Sections from '../../common/Sections';
 import InterviewQas from './InterviewQas';
 import InterviewSensitiveQuestions from './InterviewSensitiveQuestions';
 
 import shareStyles from '../../common/share.module.css';
 
-import {
-  title as titleValidator,
-  sections as sectionsValidator,
-  interviewSensitiveQuestions as interviewSensitiveQuestionsValidator,
-} from '../formCheck';
+import { interviewSensitiveQuestions as interviewSensitiveQuestionsValidator } from '../formCheck';
 
-import { interviewSectionSubtitleOptions } from '../../common/optionMap';
-
-import {
-  TITLE,
-  SECTIONS,
-  INTERVIEW_SENSITIVE_QUESTIONS,
-} from '../../../../constants/formElements';
-
-const TitleWithValidation = subscribeValidation(
-  Title,
-  props => props.validator(props.title),
-  TITLE,
-);
-
-const SectionsWithValidation = subscribeValidation(
-  Sections,
-  props => props.validator(props.sections),
-  SECTIONS,
-);
+import { INTERVIEW_SENSITIVE_QUESTIONS } from '../../../../constants/formElements';
 
 const InterviewSensitiveQuestionsWithValidation = subscribeValidation(
   InterviewSensitiveQuestions,
@@ -45,15 +19,10 @@ const InterviewSensitiveQuestionsWithValidation = subscribeValidation(
   INTERVIEW_SENSITIVE_QUESTIONS,
 );
 
-class InterviewExperience extends Component {
+class QAs extends Component {
   render() {
     const {
       handleState,
-      title,
-      sections,
-      appendSection,
-      removeSection,
-      editSection,
       interviewQas,
       appendQa,
       removeQa,
@@ -63,55 +32,10 @@ class InterviewExperience extends Component {
       changeValidationStatus,
     } = this.props;
     return (
-      <IconHeadingBlock
-        heading="面試經驗"
-        Icon={Comment2}
-        marginTop
-        requiredText
+      <Block
+        style={{ marginTop: 34 }}
+        heading="面試中問了什麼問題呢？（每題 ＋50 積分）"
       >
-        <div
-          style={{
-            marginBottom: '50px',
-          }}
-        >
-          <TitleWithValidation
-            title={title}
-            onChange={handleState('title')}
-            placeholder="ＯＯ 股份有限公司面試經驗分享"
-            validator={titleValidator}
-            submitted={submitted}
-            changeValidationStatus={changeValidationStatus}
-          />
-        </div>
-        <div
-          style={{
-            position: 'relative',
-            marginBottom: '80px',
-          }}
-        >
-          <SectionsWithValidation
-            sections={sections}
-            removeSection={removeSection}
-            editSection={editSection}
-            validator={sectionsValidator}
-            submitted={submitted}
-            changeValidationStatus={changeValidationStatus}
-          />
-          <div className={shareStyles.button__add}>
-            <ButtonAdd
-              options={interviewSectionSubtitleOptions}
-              custimizedValues={[interviewSectionSubtitleOptions[0].value]}
-              disabledValues={sections.map(section => section.subtitle)}
-              appendBlock={appendSection}
-            />
-          </div>
-        </div>
-        <hr
-          style={{
-            border: '1px solid #E7E7E7',
-            marginBottom: '35px',
-          }}
-        />
         <div
           style={{
             position: 'relative',
@@ -142,12 +66,12 @@ class InterviewExperience extends Component {
             changeValidationStatus={changeValidationStatus}
           />
         </div>
-      </IconHeadingBlock>
+      </Block>
     );
   }
 }
 
-InterviewExperience.propTypes = {
+QAs.propTypes = {
   handleState: PropTypes.func,
   title: PropTypes.string,
   sections: PropTypes.arrayOf(
@@ -176,4 +100,4 @@ InterviewExperience.propTypes = {
   changeValidationStatus: PropTypes.func,
 };
 
-export default InterviewExperience;
+export default QAs;
