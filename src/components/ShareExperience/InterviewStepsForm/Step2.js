@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import InterviewInfo from './MoreInfo';
 import styles from './InterviewForm.module.css';
+import ButtonRect from 'common/button/ButtonRect';
 
 class Step2 extends React.Component {
   static propTypes = {
@@ -26,11 +27,8 @@ class Step2 extends React.Component {
         ) : null}
         <InterviewInfo
           handleState={handleState}
-          companyQuery={state.companyQuery}
-          region={state.region}
           jobTitle={state.jobTitle}
           experienceInYear={state.experienceInYear}
-          education={state.education}
           interviewTimeYear={state.interviewTimeYear}
           interviewTimeMonth={state.interviewTimeMonth}
           interviewResult={state.interviewResult}
@@ -40,6 +38,9 @@ class Step2 extends React.Component {
           submitted={state.submitted}
           changeValidationStatus={changeValidationStatus}
         />
+        <div className={styles.nextAction}>
+          <ButtonRect>下一步</ButtonRect>
+        </div>
       </React.Fragment>
     );
   }

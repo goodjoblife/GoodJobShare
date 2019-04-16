@@ -21,7 +21,7 @@ const OverallRating = ({ overallRating, onChange, validator, submitted }) => {
           marginBottom: '20px',
         }}
       >
-        <InputTitle text="對公司的面試整體滿意度" must />
+        <InputTitle text="為這次的面試評個分" must />
       </div>
       <div
         className={isWarning ? styles.warning : ''}

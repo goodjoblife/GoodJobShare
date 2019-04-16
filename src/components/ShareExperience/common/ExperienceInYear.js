@@ -8,9 +8,9 @@ import shareStyles from './share.module.css';
 
 import { experienceInYearOptions } from './optionMap';
 
-const ExperienceInYear = ({ experienceInYear, onChange }) => (
+const ExperienceInYear = ({ jobTitle, experienceInYear, onChange }) => (
   <div>
-    <InputTitle text="自身相關職務工作經驗" />
+    <InputTitle text={`當時已經有幾年擔任${jobTitle}的經驗？`} />
     <div
       style={{
         display: 'flex',
@@ -39,6 +39,7 @@ const ExperienceInYear = ({ experienceInYear, onChange }) => (
 );
 
 ExperienceInYear.propTypes = {
+  jobTitle: PropTypes.string.isRequired,
   experienceInYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
 };

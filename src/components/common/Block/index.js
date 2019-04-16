@@ -8,9 +8,11 @@ const Block = ({ heading, requiredText, children }) => (
   <section>
     <div className={cn(styles.body)}>
       <div className={styles.header}>
-        <P size="l" bold Tag="h2" className={styles.heading}>
-          {heading}
-        </P>
+        {heading && (
+          <P size="l" bold Tag="h2" className={styles.heading}>
+            {heading}
+          </P>
+        )}
         {requiredText && (
           <P size="s" className={styles.note}>
             <span>*</span> 為必填
@@ -23,12 +25,13 @@ const Block = ({ heading, requiredText, children }) => (
 );
 
 Block.propTypes = {
-  heading: PropTypes.string.isRequired,
+  heading: PropTypes.string,
   requiredText: PropTypes.bool,
   children: PropTypes.node.isRequired,
 };
 
 Block.defaultProps = {
+  heading: '',
   requiredText: false,
 };
 

@@ -42,7 +42,7 @@ const InterviewTime = ({
   const isWarning = submitted && (yearInvalid || monthInvalid);
   return (
     <div>
-      <InputTitle text="面試時間" must />
+      <InputTitle text="什麼時候去面試的呢？" must />
       <div
         style={{
           display: 'flex',
