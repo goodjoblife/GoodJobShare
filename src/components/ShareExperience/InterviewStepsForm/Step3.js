@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InterviewExperience from './InterviewExperience';
+import ExperienceSection from './ExperienceSection';
+import QAs from './QAs';
+import SuggestionSection from './SuggestionSection';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 import styles from './InterviewForm.module.css';
 
@@ -61,7 +63,37 @@ class Step3 extends React.Component {
             oops! 請檢查底下紅框內的內容是否正確
           </div>
         ) : null}
-        <InterviewExperience
+        <ExperienceSection
+          handleState={handleState}
+          title={state.title}
+          sections={sections}
+          appendSection={appendSection}
+          removeSection={removeSection}
+          editSection={editSection}
+          interviewQas={interviewQas}
+          appendQa={appendQa}
+          removeQa={removeQa}
+          editQa={editQa}
+          interviewSensitiveQuestions={state.interviewSensitiveQuestions}
+          submitted={state.submitted}
+          changeValidationStatus={changeValidationStatus}
+        />
+        <QAs
+          handleState={handleState}
+          title={state.title}
+          sections={sections}
+          appendSection={appendSection}
+          removeSection={removeSection}
+          editSection={editSection}
+          interviewQas={interviewQas}
+          appendQa={appendQa}
+          removeQa={removeQa}
+          editQa={editQa}
+          interviewSensitiveQuestions={state.interviewSensitiveQuestions}
+          submitted={state.submitted}
+          changeValidationStatus={changeValidationStatus}
+        />
+        <SuggestionSection
           handleState={handleState}
           title={state.title}
           sections={sections}
