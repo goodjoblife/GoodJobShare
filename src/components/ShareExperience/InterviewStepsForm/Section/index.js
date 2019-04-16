@@ -4,6 +4,7 @@ import subscribeValidation from 'common/subscribeValidation';
 import Block from 'common/Block';
 
 import Sections from '../../common/Sections';
+import styles from './Section.module.css';
 
 import { sections as sectionsValidator } from '../formCheck';
 
@@ -18,6 +19,8 @@ const SectionsWithValidation = subscribeValidation(
 class ExperienceSection extends Component {
   render() {
     const {
+      title,
+      subtitle,
       sections,
       removeSection,
       editSection,
@@ -25,7 +28,8 @@ class ExperienceSection extends Component {
       changeValidationStatus,
     } = this.props;
     return (
-      <Block heading="當時面試過程是如何呢？（＋100 積分）">
+      <Block style={{ marginBottom: 34 }} heading={title}>
+        {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
         <div
           style={{
             position: 'relative',
@@ -49,6 +53,7 @@ class ExperienceSection extends Component {
 ExperienceSection.propTypes = {
   handleState: PropTypes.func,
   title: PropTypes.string,
+  subtitle: PropTypes.string,
   sections: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,

@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ExperienceSection from './ExperienceSection';
+import Section from './Section';
 import QAs from './QAs';
-import SuggestionSection from './SuggestionSection';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 import styles from './InterviewForm.module.css';
 
@@ -63,9 +62,10 @@ class Step3 extends React.Component {
             oops! 請檢查底下紅框內的內容是否正確
           </div>
         ) : null}
-        <ExperienceSection
+        <Section
           handleState={handleState}
-          title={state.title}
+          title={'當時面試過程是如何呢？（＋100 積分）'}
+          subtitle="回想一下，不論是流程、對話、工作環境、薪資福利，都可以分享哦！"
           sections={sections}
           appendSection={appendSection}
           removeSection={removeSection}
@@ -93,9 +93,9 @@ class Step3 extends React.Component {
           submitted={state.submitted}
           changeValidationStatus={changeValidationStatus}
         />
-        <SuggestionSection
+        <Section
           handleState={handleState}
-          title={state.title}
+          title="給其他面試者的中肯建議 （＋100 積分）"
           sections={sections}
           appendSection={appendSection}
           removeSection={removeSection}

@@ -33,7 +33,7 @@ class QAs extends Component {
     } = this.props;
     return (
       <Block
-        style={{ marginTop: 34 }}
+        style={{ marginBottom: 34 }}
         heading="面試中問了什麼問題呢？（每題 ＋50 積分）"
       >
         <div
