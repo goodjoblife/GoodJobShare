@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import subscribeValidation from 'common/subscribeValidation';
 import Block from 'common/Block';
 
-import Sections from '../../common/Sections';
+import SectionEleContent from '../../common/SectionEleContent';
 import styles from './Section.module.css';
 
-import { sections as sectionsValidator } from '../formCheck';
+// import { sections as sectionsValidator } from '../formCheck';
 
 import { SECTIONS } from '../../../../constants/formElements';
 
-const SectionsWithValidation = subscribeValidation(
-  Sections,
+const SectionWithValidation = subscribeValidation(
+  SectionEleContent,
   props => props.validator(props.sections),
   SECTIONS,
 );
@@ -21,11 +21,12 @@ class ExperienceSection extends Component {
     const {
       title,
       subtitle,
-      sections,
-      removeSection,
-      editSection,
-      submitted,
-      changeValidationStatus,
+      contentMinLength,
+      // sections,
+      // removeSection,
+      // editSection,
+      // submitted,
+      // changeValidationStatus,
     } = this.props;
     return (
       <Block style={{ marginBottom: 34 }} heading={title}>
@@ -33,16 +34,17 @@ class ExperienceSection extends Component {
         <div
           style={{
             position: 'relative',
-            marginBottom: '80px',
           }}
         >
-          <SectionsWithValidation
-            sections={sections}
-            removeSection={removeSection}
-            editSection={editSection}
-            validator={sectionsValidator}
-            submitted={submitted}
-            changeValidationStatus={changeValidationStatus}
+          <SectionWithValidation
+            subtitle="Subtitle"
+            content="Content"
+            contentMinLength={contentMinLength}
+            isSubtitleEditable
+            editSection={() => {}}
+            removeSection={() => {}}
+            placeholder="Placeholder"
+            titlePlaceholder="TitlePlaceholder"
           />
         </div>
       </Block>

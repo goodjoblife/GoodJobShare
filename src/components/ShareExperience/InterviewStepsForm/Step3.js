@@ -67,6 +67,7 @@ class Step3 extends React.Component {
           title={'當時面試過程是如何呢？（＋100 積分）'}
           subtitle="回想一下，不論是流程、對話、工作環境、薪資福利，都可以分享哦！"
           sections={sections}
+          contentMinLength={30}
           appendSection={appendSection}
           removeSection={removeSection}
           editSection={editSection}
@@ -97,6 +98,7 @@ class Step3 extends React.Component {
           handleState={handleState}
           title="給其他面試者的中肯建議 （＋100 積分）"
           sections={sections}
+          contentMinLength={30}
           appendSection={appendSection}
           removeSection={removeSection}
           editSection={editSection}

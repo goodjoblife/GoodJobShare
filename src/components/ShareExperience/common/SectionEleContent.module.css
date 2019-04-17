@@ -1,0 +1,49 @@
+@value main-yellow, main-gray from "../../common/variables.module.css";
+
+.container {
+  position: relative;
+  border: 1px solid transparent;
+}
+
+.remove__btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  visibility: hidden;
+}
+
+.subtitle {
+  width: 100%;
+  border: none;
+
+  &::placeholder {
+    color: main-gray;
+    font-weight: 400;
+  }
+}
+
+.textarea {
+  border: 1px solid #bdbdbd !important;
+  padding: 12px;
+
+  &::placeholder {
+    color: main-gray;
+    font-weight: 300;
+  }
+}
+
+.heading {
+  margin-bottom: 12px;
+
+  @media (max-width: 550px) {
+    margin-bottom: 0;
+  }
+}
+
+.wordCount {
+  text-align: right;
+  font-size: 14px;
+  margin-top: 4px;
+  line-height: 23px;
+}
