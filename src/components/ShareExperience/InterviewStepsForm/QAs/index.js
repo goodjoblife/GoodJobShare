@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import AddButton from 'common/button/AddButton';
+import Button from 'common/button/Button';
 import subscribeValidation from 'common/subscribeValidation';
 import Block from 'common/Block';
 
 import InterviewQas from './InterviewQas';
 import InterviewSensitiveQuestions from './InterviewSensitiveQuestions';
-
-import shareStyles from '../../common/share.module.css';
 
 import { interviewSensitiveQuestions as interviewSensitiveQuestionsValidator } from '../formCheck';
 
@@ -39,7 +37,7 @@ class QAs extends Component {
         <div
           style={{
             position: 'relative',
-            marginBottom: '80px',
+            marginBottom: '32px',
           }}
         >
           <InterviewQas
@@ -47,9 +45,13 @@ class QAs extends Component {
             editQa={editQa}
             removeQa={removeQa}
           />
-          <div className={shareStyles.button__add}>
-            <AddButton onClick={() => appendQa()} addQa />
-          </div>
+          <Button
+            circleSize="md"
+            btnStyle="blackLine"
+            onClick={() => appendQa()}
+          >
+            增加一題
+          </Button>
         </div>
         <hr
           style={{

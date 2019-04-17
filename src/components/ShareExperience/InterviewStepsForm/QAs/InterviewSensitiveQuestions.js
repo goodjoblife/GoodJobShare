@@ -47,7 +47,7 @@ const InterviewSensitiveQuestions = ({
           marginBottom: '15px',
         }}
       >
-        <InputTitle text="是否有以下特殊問題" />
+        <InputTitle text="是否有以下特殊問題？？" />
         <p
           style={{
             color: '#6E6E6E',
