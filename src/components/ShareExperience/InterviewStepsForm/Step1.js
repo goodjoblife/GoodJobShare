@@ -15,16 +15,6 @@ class Step1 extends React.Component {
     const { handleState, state, changeValidationStatus } = this.props;
     return (
       <React.Fragment>
-        {state.submitted ? (
-          <div
-            style={{
-              marginTop: '20px',
-            }}
-            className={styles.warning__wording}
-          >
-            oops! 請檢查底下紅框內的內容是否正確
-          </div>
-        ) : null}
         <InterviewInfo
           handleState={handleState}
           companyQuery={state.companyQuery}

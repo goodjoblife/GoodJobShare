@@ -290,6 +290,17 @@ class InterviewForm extends React.Component {
             </NavLink>
           ))}
         </div>
+        {this.state.submitted && (
+          <div
+            style={{
+              marginTop: '20px',
+              marginBottom: '20px',
+            }}
+            className={styles.warning__wording}
+          >
+            oops! 請檢查底下紅框內的內容是否正確
+          </div>
+        )}
         <Switch>
           <Route
             path="/share/interview/step1"

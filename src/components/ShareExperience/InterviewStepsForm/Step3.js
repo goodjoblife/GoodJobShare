@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Section from './Section';
 import QAs from './QAs';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
-import styles from './InterviewForm.module.css';
 
 class Step3 extends React.Component {
   static propTypes = {
@@ -52,16 +51,6 @@ class Step3 extends React.Component {
 
     return (
       <React.Fragment>
-        {state.submitted ? (
-          <div
-            style={{
-              marginTop: '20px',
-            }}
-            className={styles.warning__wording}
-          >
-            oops! 請檢查底下紅框內的內容是否正確
-          </div>
-        ) : null}
         <Section
           handleState={handleState}
           title={'當時面試過程是如何呢？（＋100 積分）'}
