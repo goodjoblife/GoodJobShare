@@ -12,7 +12,7 @@ class Step2 extends React.Component {
   };
 
   render() {
-    const { handleState, state, changeValidationStatus } = this.props;
+    const { handleState, state, changeValidationStatus, history } = this.props;
     return (
       <React.Fragment>
         <InterviewInfo
@@ -29,7 +29,9 @@ class Step2 extends React.Component {
           changeValidationStatus={changeValidationStatus}
         />
         <div className={styles.nextAction}>
-          <ButtonRect>下一步</ButtonRect>
+          <ButtonRect onClick={() => history.push('/share/interview/step3')}>
+            下一步
+          </ButtonRect>
         </div>
       </React.Fragment>
     );

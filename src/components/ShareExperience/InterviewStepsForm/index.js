@@ -305,8 +305,9 @@ class InterviewForm extends React.Component {
           <Route
             path="/share/interview/step1"
             exact
-            render={() => (
+            render={props => (
               <Step1
+                {...props}
                 handleState={this.handleState}
                 state={this.state}
                 changeValidationStatus={this.changeValidationStatus}
@@ -316,8 +317,9 @@ class InterviewForm extends React.Component {
           <Route
             path="/share/interview/step2"
             exact
-            render={() => (
+            render={props => (
               <Step2
+                {...props}
                 handleState={this.handleState}
                 state={this.state}
                 changeValidationStatus={this.changeValidationStatus}
@@ -327,8 +329,9 @@ class InterviewForm extends React.Component {
           <Route
             path="/share/interview/step3"
             exact
-            render={() => (
+            render={props => (
               <Step3
+                {...props}
                 handleState={this.handleState}
                 state={this.state}
                 sections={handleBlocks(this.state.sections)}
