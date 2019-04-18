@@ -68,7 +68,8 @@ const idCounter = idGenerator();
 
 const isBlockRemovable = blocks => R.length(R.keys(blocks)) > 1;
 
-const firstSectionId = idCounter();
+const experienceSectionId = idCounter();
+const suggestionSectionId = idCounter();
 const firstQaId = idCounter();
 
 const defaultForm = {
@@ -86,7 +87,8 @@ const defaultForm = {
   overallRating: 0,
   title: '面試經驗分享',
   sections: {
-    [firstSectionId]: createBlock.sections(firstSectionId)(),
+    [experienceSectionId]: createBlock.sections(experienceSectionId)(),
+    [suggestionSectionId]: createBlock.sections(suggestionSectionId)(),
   },
   interviewQas: {
     [firstQaId]: createBlock.interviewQas(firstQaId)(),

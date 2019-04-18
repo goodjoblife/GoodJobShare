@@ -6,45 +6,43 @@ import Block from 'common/Block';
 import SectionEleContent from '../../common/SectionEleContent';
 import styles from './Section.module.css';
 
-// import { sections as sectionsValidator } from '../formCheck';
+import { singleSection as singleSectionValidator } from '../formCheck';
 
 import { SECTIONS } from '../../../../constants/formElements';
 
-const SectionWithValidation = subscribeValidation(
+const SectionEleContentWithValidation = subscribeValidation(
   SectionEleContent,
-  props => props.validator(props.sections),
+  props => props.validator(props.section),
   SECTIONS,
 );
 
-class ExperienceSection extends Component {
+class Section extends Component {
   render() {
     const {
-      title,
-      subtitle,
+      heading,
+      subHeading,
+      section,
       contentMinLength,
-      // sections,
-      // removeSection,
-      // editSection,
-      // submitted,
-      // changeValidationStatus,
+      editSection,
+      submitted,
+      changeValidationStatus,
     } = this.props;
+
     return (
-      <Block style={{ marginBottom: 34 }} heading={title}>
-        {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
+      <Block style={{ marginBottom: 34 }} heading={heading}>
+        {subHeading && <div className={styles.subtitle}>{subHeading}</div>}
         <div
           style={{
             position: 'relative',
           }}
         >
-          <SectionWithValidation
-            subtitle="Subtitle"
-            content="Content"
+          <SectionEleContentWithValidation
+            section={section}
             contentMinLength={contentMinLength}
-            isSubtitleEditable
-            editSection={() => {}}
-            removeSection={() => {}}
-            placeholder="Placeholder"
-            titlePlaceholder="TitlePlaceholder"
+            editSection={editSection(section.id)}
+            validator={singleSectionValidator}
+            submitted={submitted}
+            changeValidationStatus={changeValidationStatus}
           />
         </div>
       </Block>
@@ -52,34 +50,18 @@ class ExperienceSection extends Component {
   }
 }
 
-ExperienceSection.propTypes = {
-  handleState: PropTypes.func,
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
-  sections: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      subtitle: PropTypes.string,
-      placeholder: PropTypes.string,
-      content: PropTypes.string,
-    }),
-  ),
-  appendSection: PropTypes.func,
-  removeSection: PropTypes.func,
+Section.propTypes = {
+  heading: PropTypes.string.isRequired,
+  subHeading: PropTypes.string,
+  section: PropTypes.shape({
+    id: PropTypes.number,
+    subtitle: PropTypes.string,
+    content: PropTypes.string,
+  }),
+  contentMinLength: PropTypes.number.isRequired,
   editSection: PropTypes.func,
-  interviewQas: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      subtitle: PropTypes.string,
-      content: PropTypes.string,
-    }),
-  ),
-  appendQa: PropTypes.func,
-  removeQa: PropTypes.func,
-  editQa: PropTypes.func,
-  interviewSensitiveQuestions: PropTypes.arrayOf(PropTypes.string),
   submitted: PropTypes.bool,
   changeValidationStatus: PropTypes.func,
 };
 
-export default ExperienceSection;
+export default Section;

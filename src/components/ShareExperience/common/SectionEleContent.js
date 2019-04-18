@@ -1,55 +1,69 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Textarea from 'react-textarea-autosize';
-
-// import AddButton from 'common/button/AddButton';
+import cn from 'classnames';
 
 import styles from './SectionEleContent.module.css';
 
 export const SECTION_TITLE_PLACEHOLDER = '請輸入標題';
 
 const SectionEleContent = ({
-  // subtitle,
-  content,
-  contentMinLength,
-  // isSubtitleEditable,
-  editSection,
-  // removeSection,
   placeholder,
-  // titlePlaceholder,
-}) => (
-  <div className={styles.container}>
-    <Textarea
-      useCacheForDOMMeasurements
-      value={content}
-      onChange={e => editSection('content')(e.target.value)}
-      placeholder={placeholder || '段落內文...'}
-      className={styles.textarea}
-      style={{
-        resize: 'none',
-        width: '100%',
-        color: '#333333',
-        fontSize: '1rem',
-        border: 'none',
-        lineHeight: '1.5',
-        minHeight: '40px',
-      }}
-    />
-    <div className={styles.wordCount}>
-      {content.length}/{contentMinLength}
+  section,
+  contentMinLength,
+  editSection,
+  validator,
+  submitted,
+}) => {
+  const isWarning = submitted && !validator(section);
+
+  return (
+    <div className={cn(isWarning ? styles.warning : null, styles.container)}>
+      <Textarea
+        useCacheForDOMMeasurements
+        value={section.content}
+        onChange={e => editSection('content')(e.target.value)}
+        placeholder={placeholder || '段落內文...'}
+        className={styles.textarea}
+        style={{
+          resize: 'none',
+          width: '100%',
+          color: '#333333',
+          fontSize: '1rem',
+          border: 'none',
+          lineHeight: '1.5',
+          minHeight: '40px',
+        }}
+      />
+      <div className={styles.wordCount}>
+        {section.content.length}/{contentMinLength}
+      </div>
+      {isWarning ? (
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '0',
+            transform: 'translateY(150%)',
+          }}
+        >
+          <p className={`pS ${styles.warning__wording}`}>需填寫多一點</p>
+        </div>
+      ) : null}
     </div>
-  </div>
-);
+  );
+};
 
 SectionEleContent.propTypes = {
-  subtitle: PropTypes.string,
   placeholder: PropTypes.string,
-  titlePlaceholder: PropTypes.string,
-  content: PropTypes.string,
-  contentMinLength: PropTypes.number,
-  isSubtitleEditable: PropTypes.bool,
-  editSection: PropTypes.func,
-  removeSection: PropTypes.func,
+  section: PropTypes.shape({
+    id: PropTypes.number,
+    subtitle: PropTypes.string,
+    content: PropTypes.string,
+  }).isRequired,
+  contentMinLength: PropTypes.number.isRequired,
+  editSection: PropTypes.func.isRequired,
+  validator: PropTypes.func.isRequired,
+  submitted: PropTypes.bool.isRequired,
 };
 
 export default SectionEleContent;
