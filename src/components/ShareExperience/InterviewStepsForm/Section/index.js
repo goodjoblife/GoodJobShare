@@ -8,12 +8,9 @@ import styles from './Section.module.css';
 
 import { sectionContentOfLength as sectionContentValidator } from '../formCheck';
 
-import { SECTIONS } from '../../../../constants/formElements';
-
 const SectionEleContentWithValidation = subscribeValidation(
   SectionEleContent,
   props => props.validator(props.section.content),
-  SECTIONS,
 );
 
 class Section extends Component {
@@ -26,6 +23,7 @@ class Section extends Component {
       editSection,
       submitted,
       changeValidationStatus,
+      elementName,
     } = this.props;
 
     return (
@@ -43,6 +41,7 @@ class Section extends Component {
             validator={sectionContentValidator(contentMinLength)}
             submitted={submitted}
             changeValidationStatus={changeValidationStatus}
+            elementName={elementName}
           />
         </div>
       </Block>
@@ -62,6 +61,7 @@ Section.propTypes = {
   editSection: PropTypes.func,
   submitted: PropTypes.bool,
   changeValidationStatus: PropTypes.func,
+  elementName: PropTypes.string,
 };
 
 export default Section;

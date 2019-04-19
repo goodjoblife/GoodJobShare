@@ -19,6 +19,9 @@ export const INTERVIEW_SENSITIVE_QUESTIONS = 'interview_sensitive_questions';
 export const OVERALL_RATING = 'overall_rating';
 export const TITLE = 'title';
 export const SECTIONS = 'sections';
+export const EXPERIENCE_SECTION = 'experience_section';
+export const SUGGESTION_SECTION = 'suggestion_section';
+export const INTERVIEW_QAS = 'INTERVIEW_QAS';
 export const COMMENT_ZONE = 'comment_zone';
 
 export const INTERVIEW_FORM_ORDER = [
@@ -30,7 +33,10 @@ export const INTERVIEW_FORM_ORDER = [
   OVERALL_RATING,
   TITLE,
   SECTIONS,
+  EXPERIENCE_SECTION,
+  INTERVIEW_QAS,
   INTERVIEW_SENSITIVE_QUESTIONS,
+  SUGGESTION_SECTION,
 ];
 
 export const TIME_SALARY_BASIC_ORDER = [COMPANY, JOB_TITLE, EMPLOYMENT_TYPE];

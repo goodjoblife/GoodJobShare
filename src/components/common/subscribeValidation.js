@@ -18,6 +18,7 @@ export default function subscribeValidation(
   return class Subscriber extends React.Component {
     static propTypes = {
       changeValidationStatus: PropTypes.func,
+      elementName: PropTypes.string,
     };
     static defaultProps = {
       changeValidationStatus: undefined,
@@ -26,10 +27,13 @@ export default function subscribeValidation(
       if (this.props.changeValidationStatus) {
         const isValid = validate(this.props);
         const { changeValidationStatus, ...restProps } = this.props;
-        changeValidationStatus(elementName, isValid ? VALID : INVALID);
+        changeValidationStatus(
+          elementName || this.props.elementName,
+          isValid ? VALID : INVALID,
+        );
         return (
           <div>
-            <ScrollElement name={elementName} />
+            <ScrollElement name={elementName || this.props.elementName} />
             <WrappedComponent {...restProps} />
           </div>
         );

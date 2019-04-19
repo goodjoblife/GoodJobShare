@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import Section from './Section';
 import QAs from './QAs';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
+import {
+  EXPERIENCE_SECTION,
+  SUGGESTION_SECTION,
+} from '../../../constants/formElements';
 
 class Step3 extends React.Component {
   static propTypes = {
@@ -59,6 +63,7 @@ class Step3 extends React.Component {
           editSection={editSection}
           submitted={state.submitted}
           changeValidationStatus={changeValidationStatus}
+          elementName={EXPERIENCE_SECTION}
         />
         <QAs
           handleState={handleState}
@@ -82,6 +87,7 @@ class Step3 extends React.Component {
           editSection={editSection}
           submitted={state.submitted}
           changeValidationStatus={changeValidationStatus}
+          elementName={SUGGESTION_SECTION}
         />
         <SubmitArea onSubmit={onSubmit} />
       </React.Fragment>

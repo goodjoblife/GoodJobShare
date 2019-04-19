@@ -10,12 +10,15 @@ import InterviewSensitiveQuestions from './InterviewSensitiveQuestions';
 import { singleInterviewQa as singleInterviewQaValidator } from '../formCheck';
 import { interviewSensitiveQuestions as interviewSensitiveQuestionsValidator } from '../formCheck';
 
-import { INTERVIEW_SENSITIVE_QUESTIONS } from '../../../../constants/formElements';
+import {
+  INTERVIEW_SENSITIVE_QUESTIONS,
+  INTERVIEW_QAS,
+} from '../../../../constants/formElements';
 
 const InterviewQasWithValidation = subscribeValidation(
   InterviewQas,
   props => props.interviewQas.every(props.validator),
-  INTERVIEW_SENSITIVE_QUESTIONS,
+  INTERVIEW_QAS,
 );
 
 const InterviewSensitiveQuestionsWithValidation = subscribeValidation(
