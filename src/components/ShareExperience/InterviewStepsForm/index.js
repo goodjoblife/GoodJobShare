@@ -143,6 +143,17 @@ class InterviewForm extends React.Component {
     });
   }
 
+  componentDidUpdate(prevState) {
+    if (!R.equals(this.state, prevState)) {
+      localStorage.setItem(
+        LS_INTERVIEW_FORM_KEY,
+        JSON.stringify({
+          ...this.state,
+        }),
+      );
+    }
+  }
+
   onSubmit() {
     const valid = interviewFormCheck(getInterviewForm(this.state));
 
@@ -221,11 +232,6 @@ class InterviewForm extends React.Component {
         [key]: value,
       };
       this.setState(updateState);
-      const state = {
-        ...this.state,
-        ...updateState,
-      };
-      localStorage.setItem(LS_INTERVIEW_FORM_KEY, JSON.stringify(state));
     };
   }
 
