@@ -23,7 +23,7 @@ import StaticHelmet from 'common/StaticHelmet';
 import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
-import { LS_INTERVIEW_FORM_KEY } from '../../../constants/localStorageKey';
+import { LS_INTERVIEW_STEPS_FORM_KEY } from '../../../constants/localStorageKey';
 
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
@@ -132,7 +132,7 @@ class InterviewForm extends React.Component {
 
     try {
       defaultFromDraft = JSON.parse(
-        localStorage.getItem(LS_INTERVIEW_FORM_KEY),
+        localStorage.getItem(LS_INTERVIEW_STEPS_FORM_KEY),
       );
     } catch (error) {
       defaultFromDraft = null;
@@ -152,7 +152,7 @@ class InterviewForm extends React.Component {
   componentDidUpdate(prevState) {
     if (!R.equals(this.state, prevState)) {
       localStorage.setItem(
-        LS_INTERVIEW_FORM_KEY,
+        LS_INTERVIEW_STEPS_FORM_KEY,
         JSON.stringify({
           ...this.state,
         }),
@@ -164,7 +164,7 @@ class InterviewForm extends React.Component {
     const valid = interviewFormCheck(getInterviewForm(this.state));
 
     if (valid) {
-      localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
+      localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
       const p = this.props.createInterviewExperience({
         body: portInterviewFormToRequestFormat(getInterviewForm(this.state)),
       });
