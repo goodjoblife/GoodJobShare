@@ -6,13 +6,13 @@ import Block from 'common/Block';
 import SectionEleContent from '../../common/SectionEleContent';
 import styles from './Section.module.css';
 
-import { singleSection as singleSectionValidator } from '../formCheck';
+import { sectionContentOfLength as sectionContentValidator } from '../formCheck';
 
 import { SECTIONS } from '../../../../constants/formElements';
 
 const SectionEleContentWithValidation = subscribeValidation(
   SectionEleContent,
-  props => props.validator(props.section),
+  props => props.validator(props.section.content),
   SECTIONS,
 );
 
@@ -40,7 +40,7 @@ class Section extends Component {
             section={section}
             contentMinLength={contentMinLength}
             editSection={editSection(section.id)}
-            validator={singleSectionValidator}
+            validator={sectionContentValidator(contentMinLength)}
             submitted={submitted}
             changeValidationStatus={changeValidationStatus}
           />

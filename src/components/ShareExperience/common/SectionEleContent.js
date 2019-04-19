@@ -15,7 +15,7 @@ const SectionEleContent = ({
   validator,
   submitted,
 }) => {
-  const isWarning = submitted && !validator(section);
+  const isWarning = submitted && !validator(section.content);
 
   return (
     <div className={cn(isWarning ? styles.warning : null, styles.container)}>

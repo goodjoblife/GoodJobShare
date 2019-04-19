@@ -49,6 +49,9 @@ const sectionContent = R.compose(
 
 export const singleSection = R.allPass([sectionSubtitle, sectionContent]);
 
+export const sectionContentOfLength = minLength =>
+  R.allPass([lteLength(5000), gteLength(minLength)]);
+
 export const sections = R.allPass([R.all(singleSection), gtLength(0)]);
 
 const interviewQaQuestion = R.compose(
