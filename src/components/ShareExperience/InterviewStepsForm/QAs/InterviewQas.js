@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 
 import InterviewQa from './InterviewQa';
 
-const InterviewQas = ({ interviewQas, editQa, removeQa }) => (
+const InterviewQas = ({
+  interviewQas,
+  editQa,
+  removeQa,
+  submitted,
+  validator,
+}) => (
   <div>
     {interviewQas.map(qa => (
       <div
@@ -17,6 +23,7 @@ const InterviewQas = ({ interviewQas, editQa, removeQa }) => (
           answer={qa.answer}
           editQa={editQa(qa.id)}
           removeQa={() => removeQa(qa.id)}
+          isWarning={submitted && !validator(qa)}
         />
       </div>
     ))}
@@ -33,6 +40,8 @@ InterviewQas.propTypes = {
   ),
   editQa: PropTypes.func,
   removeQa: PropTypes.func,
+  submitted: PropTypes.bool,
+  validator: PropTypes.func,
 };
 
 export default InterviewQas;

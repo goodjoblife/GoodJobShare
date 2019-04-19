@@ -7,9 +7,16 @@ import Block from 'common/Block';
 import InterviewQas from './InterviewQas';
 import InterviewSensitiveQuestions from './InterviewSensitiveQuestions';
 
+import { singleInterviewQa as singleInterviewQaValidator } from '../formCheck';
 import { interviewSensitiveQuestions as interviewSensitiveQuestionsValidator } from '../formCheck';
 
 import { INTERVIEW_SENSITIVE_QUESTIONS } from '../../../../constants/formElements';
+
+const InterviewQasWithValidation = subscribeValidation(
+  InterviewQas,
+  props => props.interviewQas.every(props.validator),
+  INTERVIEW_SENSITIVE_QUESTIONS,
+);
 
 const InterviewSensitiveQuestionsWithValidation = subscribeValidation(
   InterviewSensitiveQuestions,
@@ -40,10 +47,13 @@ class QAs extends Component {
             marginBottom: '32px',
           }}
         >
-          <InterviewQas
+          <InterviewQasWithValidation
             interviewQas={interviewQas}
             editQa={editQa}
             removeQa={removeQa}
+            submitted={submitted}
+            validator={singleInterviewQaValidator}
+            changeValidationStatus={changeValidationStatus}
           />
           <Button
             circleSize="md"

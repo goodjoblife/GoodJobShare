@@ -1,4 +1,4 @@
-@value main-yellow, main-orange, main-gray from "../../../common/variables.module.css";
+@value main-yellow, main-orange, main-gray, warning-red from "../../../common/variables.module.css";
 
 .container {
   position: relative;
@@ -58,4 +58,16 @@
     color: main-gray;
     font-weight: 300;
   }
+}
+
+.warningWrapper {
+  border: 1px solid transparent;
+
+  &.warning {
+    border-color: warning-red;
+  }
+}
+
+.warning__wording {
+  color: warning-red;
 }
