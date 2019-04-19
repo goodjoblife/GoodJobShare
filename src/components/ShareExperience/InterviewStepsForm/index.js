@@ -87,8 +87,12 @@ const defaultForm = {
   overallRating: 0,
   title: '面試經驗分享',
   sections: {
-    [experienceSectionId]: createBlock.sections(experienceSectionId)(),
-    [suggestionSectionId]: createBlock.sections(suggestionSectionId)(),
+    [experienceSectionId]: createBlock.sections(experienceSectionId)(
+      '面試過程',
+    ),
+    [suggestionSectionId]: createBlock.sections(suggestionSectionId)(
+      '給其他面試者的中肯建議',
+    ),
   },
   interviewQas: {
     [firstQaId]: createBlock.interviewQas(firstQaId)(),
