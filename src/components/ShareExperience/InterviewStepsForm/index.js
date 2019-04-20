@@ -69,11 +69,8 @@ const createBlock = {
 
 const idCounter = idGenerator();
 
-const isBlockRemovable = blocks => R.length(R.keys(blocks)) > 1;
-
 const experienceSectionId = idCounter();
 const suggestionSectionId = idCounter();
-const firstQaId = idCounter();
 
 const defaultForm = {
   companyQuery: '',
@@ -97,9 +94,7 @@ const defaultForm = {
       '給其他面試者的中肯建議',
     ),
   },
-  interviewQas: {
-    [firstQaId]: createBlock.interviewQas(firstQaId)(),
-  },
+  interviewQas: {},
   interviewSensitiveQuestions: [],
 };
 
@@ -275,13 +270,9 @@ class InterviewForm extends React.Component {
   removeBlock(blockKey) {
     return id =>
       this.setState(state => {
-        if (isBlockRemovable(state[blockKey])) {
-          return {
-            [blockKey]: R.filter(block => block.id !== id)(state[blockKey]),
-          };
-        }
-
-        return null;
+        return {
+          [blockKey]: R.filter(block => block.id !== id)(state[blockKey]),
+        };
       });
   }
 
