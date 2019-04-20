@@ -42,17 +42,17 @@ const sectionSubtitle = R.compose(
   R.prop('subtitle'),
 );
 
-const sectionContent = R.compose(
-  R.allPass([lteLength(5000), gtLength(0)]),
-  R.prop('content'),
-);
-
-export const singleSection = R.allPass([sectionSubtitle, sectionContent]);
+export const singleSectionOfLength = minLength =>
+  R.allPass([
+    sectionSubtitle,
+    R.compose(
+      sectionContentOfLength(minLength),
+      R.prop('content'),
+    ),
+  ]);
 
 export const sectionContentOfLength = minLength =>
   R.allPass([lteLength(5000), gteLength(minLength)]);
-
-export const sections = R.allPass([R.all(singleSection), gtLength(0)]);
 
 const interviewQaQuestion = R.compose(
   R.allPass([lteLength(250), gtLength(0)]),
@@ -141,9 +141,14 @@ export const interviewFormCheck = R.allPass([
     R.prop('title'),
   ),
   R.compose(
-    ifFalseLog('sections not pass'),
-    sections,
-    R.prop('sections'),
+    ifFalseLog('experience section not pass'),
+    singleSectionOfLength(30),
+    R.path(['sections', 0]),
+  ),
+  R.compose(
+    ifFalseLog('suggestion section not pass'),
+    singleSectionOfLength(30),
+    R.path(['sections', 1]),
   ),
   R.compose(
     ifFalseLog('interviewQas not pass'),
