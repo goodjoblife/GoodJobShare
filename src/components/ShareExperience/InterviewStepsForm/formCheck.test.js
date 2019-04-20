@@ -134,7 +134,7 @@ describe('title test', () => {
   });
 });
 
-describe('singleSection and sections tests', () => {
+describe.skip('singleSection and sections tests', () => {
   const normalSection = {
     subtitle: 'test',
     content: 'test',
@@ -248,7 +248,7 @@ describe('interviewSensitiveQuestions test', () => {
   });
 });
 
-describe('interviewFormCheck tests', () => {
+describe.skip('interviewFormCheck tests', () => {
   const defaultForm = {
     companyQuery: '',
     companyId: '',
