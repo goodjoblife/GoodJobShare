@@ -3,8 +3,7 @@ import R from 'ramda';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
-import { Switch, Route, NavLink } from 'react-router-dom';
-import { Redirect } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
@@ -213,7 +212,10 @@ class InterviewForm extends React.Component {
       for (let i = 0; i < INTERVIEW_FORM_STEPS.length; i++) {
         for (let elementName of INTERVIEW_FORM_STEPS[i]) {
           if (elementName === topInvalidElement) {
-            await this.props.history.push(`/share/interview/step${i + 1}`);
+            const targetPath = `/share/interview/step${i + 1}`;
+            if (this.props.location.pathname !== targetPath) {
+              await this.props.history.push(targetPath);
+            }
           }
         }
       }
@@ -297,6 +299,10 @@ class InterviewForm extends React.Component {
   }
 
   render() {
+    const {
+      location: { pathname },
+    } = this.props;
+
     return (
       <div>
         <StaticHelmet.ShareInterview />
@@ -326,54 +332,49 @@ class InterviewForm extends React.Component {
             oops! 請檢查底下紅框內的內容是否正確
           </div>
         )}
-        <Switch>
-          <Route
-            path="/share/interview/step1"
-            exact
-            render={props => (
-              <Step1
-                {...props}
-                handleState={this.handleState}
-                state={this.state}
-                changeValidationStatus={this.changeValidationStatus}
-              />
-            )}
+        <div
+          style={{
+            display: pathname === '/share/interview/step1' ? 'block' : 'none',
+          }}
+        >
+          <Step1
+            handleState={this.handleState}
+            state={this.state}
+            changeValidationStatus={this.changeValidationStatus}
           />
-          <Route
-            path="/share/interview/step2"
-            exact
-            render={props => (
-              <Step2
-                {...props}
-                handleState={this.handleState}
-                state={this.state}
-                changeValidationStatus={this.changeValidationStatus}
-              />
-            )}
+        </div>
+
+        <div
+          style={{
+            display: pathname === '/share/interview/step2' ? 'block' : 'none',
+          }}
+        >
+          <Step2
+            handleState={this.handleState}
+            state={this.state}
+            changeValidationStatus={this.changeValidationStatus}
           />
-          <Route
-            path="/share/interview/step3"
-            exact
-            render={props => (
-              <Step3
-                {...props}
-                handleState={this.handleState}
-                state={this.state}
-                sections={handleBlocks(this.state.sections)}
-                appendSection={this.appendBlock('sections')}
-                removeSection={this.removeBlock('sections')}
-                editSection={this.editBlock('sections')}
-                interviewQas={handleBlocks(this.state.interviewQas)}
-                appendQa={this.appendBlock('interviewQas')}
-                removeQa={this.removeBlock('interviewQas')}
-                editQa={this.editBlock('interviewQas')}
-                changeValidationStatus={this.changeValidationStatus}
-                onSubmit={this.onSubmit}
-              />
-            )}
+        </div>
+        <div
+          style={{
+            display: pathname === '/share/interview/step3' ? 'block' : 'none',
+          }}
+        >
+          <Step3
+            handleState={this.handleState}
+            state={this.state}
+            sections={handleBlocks(this.state.sections)}
+            appendSection={this.appendBlock('sections')}
+            removeSection={this.removeBlock('sections')}
+            editSection={this.editBlock('sections')}
+            interviewQas={handleBlocks(this.state.interviewQas)}
+            appendQa={this.appendBlock('interviewQas')}
+            removeQa={this.removeBlock('interviewQas')}
+            editQa={this.editBlock('interviewQas')}
+            changeValidationStatus={this.changeValidationStatus}
+            onSubmit={this.onSubmit}
           />
-          <Redirect to="/share/interview/step1" />
-        </Switch>
+        </div>
       </div>
     );
   }

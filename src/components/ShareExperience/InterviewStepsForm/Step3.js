@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import Section from './Section';
 import QAs from './QAs';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
@@ -95,4 +96,4 @@ class Step3 extends React.Component {
   }
 }
 
-export default Step3;
+export default withRouter(Step3);

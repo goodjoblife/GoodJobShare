@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import InterviewInfo from './BasicInfo';
 import styles from './InterviewForm.module.css';
 import ButtonRect from 'common/button/ButtonRect';
@@ -33,4 +34,4 @@ class Step1 extends React.Component {
   }
 }
 
-export default Step1;
+export default withRouter(Step1);
