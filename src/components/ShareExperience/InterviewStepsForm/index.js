@@ -20,7 +20,11 @@ import {
 } from '../utils';
 
 import StaticHelmet from 'common/StaticHelmet';
-import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
+import {
+  INVALID,
+  INTERVIEW_FORM_ORDER,
+  INTERVIEW_FORM_STEPS,
+} from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
 import { LS_INTERVIEW_STEPS_FORM_KEY } from '../../../constants/localStorageKey';
@@ -160,7 +164,7 @@ class InterviewForm extends React.Component {
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     const valid = interviewFormCheck(getInterviewForm(this.state));
 
     if (valid) {
@@ -205,6 +209,15 @@ class InterviewForm extends React.Component {
     this.handleState('submitted')(true);
     const topInvalidElement = this.getTopInvalidElement();
     if (topInvalidElement !== null) {
+      console.info('topInvalidElement', topInvalidElement);
+      for (let i = 0; i < INTERVIEW_FORM_STEPS.length; i++) {
+        for (let elementName of INTERVIEW_FORM_STEPS[i]) {
+          if (elementName === topInvalidElement) {
+            await this.props.history.push(`/share/interview/step${i + 1}`);
+          }
+        }
+      }
+
       scroller.scrollTo(topInvalidElement, {
         duration: 1000,
         delay: 100,
