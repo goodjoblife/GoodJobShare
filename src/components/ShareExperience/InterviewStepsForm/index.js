@@ -3,7 +3,7 @@ import R from 'ramda';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Switch, Route, Redirect } from 'react-router-dom';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
@@ -375,6 +375,12 @@ class InterviewForm extends React.Component {
             onSubmit={this.onSubmit}
           />
         </div>
+        <Switch>
+          <Route path="/share/interview/step1" />
+          <Route path="/share/interview/step2" />
+          <Route path="/share/interview/step3" />
+          <Redirect to="/share/interview/step1" />
+        </Switch>
       </div>
     );
   }
