@@ -1,11 +1,15 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import qs from 'qs';
 
 import Loading from 'common/Loader';
 import GjLogo from 'common/icons/GjLogo';
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
+
+import { verifyEmail } from '../../actions/emailVerify';
 
 import VerificationSuccess from './VerificationSuccess';
 import VerificationFailure from './VerificationFailure';
@@ -31,32 +35,25 @@ const FooterP = ({ style, ...restProps }) => (
   />
 );
 
-const VerificationPage = ({
-  match: {
-    params: { verificationCode },
-  },
-  verifyWithCode,
-}) => {
-  const [verifyStatus, setVerifyStatus] = useState(VERIFY_STATUS.NOT_VERIFITED);
-  const sendVerificationCode = useCallback(
-    () => {
-      setVerifyStatus(VERIFY_STATUS.LOADING);
-      verifyWithCode(verificationCode)
-        .then(() => setVerifyStatus(VERIFY_STATUS.VERIFY_SUCCESS))
-        .catch(e => {
-          setVerifyStatus(VERIFY_STATUS.VERIFY_FAILURE);
-          console.error(e);
-        });
-    },
-    [verificationCode, verifyWithCode],
-  );
+const VerificationPage = ({ location: { search }, verifyEmail }) => {
+  const { token: verifyToken } = qs.parse(search, {
+    ignoreQueryPrefix: true,
+  });
 
-  useEffect(
-    () => {
-      sendVerificationCode();
-    },
-    [sendVerificationCode],
-  );
+  const [verifyStatus, setVerifyStatus] = useState(VERIFY_STATUS.NOT_VERIFITED);
+  const sendVerificationCode = useCallback(() => {
+    setVerifyStatus(VERIFY_STATUS.LOADING);
+    verifyEmail({ verifyToken })
+      .then(() => setVerifyStatus(VERIFY_STATUS.VERIFY_SUCCESS))
+      .catch(e => {
+        setVerifyStatus(VERIFY_STATUS.VERIFY_FAILURE);
+        console.error(e);
+      });
+  }, [verifyToken, verifyEmail]);
+
+  useEffect(() => {
+    sendVerificationCode();
+  }, [sendVerificationCode]);
 
   const renderContent = useCallback(() => {
     switch (verifyStatus) {
@@ -80,7 +77,7 @@ const VerificationPage = ({
       default:
         return null;
     }
-  });
+  }, [verifyStatus, sendVerificationCode]);
 
   return (
     <div className={styles.root}>
@@ -112,25 +109,17 @@ const VerificationPage = ({
 };
 
 VerificationPage.propTypes = {
-  match: PropTypes.shape({
-    parmas: PropTypes.shape({
-      verificationCode: PropTypes.string,
-    }),
+  location: PropTypes.shape({
+    search: PropTypes.string,
   }),
-  verifyWithCode: PropTypes.func,
+  verifyEmail: PropTypes.func,
 };
 
-VerificationPage.defaultProps = {
-  verifyWithCode: verificationCode =>
-    new Promise(resolve =>
-      setTimeout(() => resolve(verificationCode), 1500),
-    ).then(() => {
-      if (Math.random() > 0.5) {
-        throw Error('some error');
-      } else {
-        console.log('submit verificationCode: ', verificationCode);
-      }
-    }),
+const mapDispatchToProps = {
+  verifyEmail,
 };
 
-export default VerificationPage;
+export default connect(
+  null,
+  mapDispatchToProps,
+)(VerificationPage);

@@ -233,7 +233,7 @@ const routes = [
     component: Terms,
   },
   {
-    path: '/email-verification/:verificationCode',
+    path: '/verify',
     exact: true,
     component: VerificationPage,
     hasHeader: false,

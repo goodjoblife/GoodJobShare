@@ -7,8 +7,8 @@ export const sendVerifyEmail = `
 `;
 
 export const verifyEmail = `
-  mutation SendVerifyEmail($input: VerifyEmailInput!) {
-    verifyEmail(input: $input): {
+  mutation VerifyEmail($input: VerifyEmailInput!) {
+    verifyEmail(input: $input) {
       token
       redirect_url
     }

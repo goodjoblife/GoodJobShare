@@ -1,8 +1,8 @@
 import authStatus from '../constants/authStatus';
-import { tokenSelector } from '../selectors/authSelector';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
+export const SET_TOKEN = '@@auth/SET_TOKEN';
 export const LOG_OUT = '@@auth/LOG_OUT';
 
 export const setLogin = (status, token = null) => ({
@@ -14,6 +14,11 @@ export const setLogin = (status, token = null) => ({
 export const setUser = user => ({
   type: SET_USER,
   user,
+});
+
+export const setToken = token => ({
+  type: SET_TOKEN,
+  token,
 });
 
 const logOutAction = () => ({
@@ -49,11 +54,9 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
   return Promise.reject('FB should ready');
 };
 
-export const loginWithToken = () => (dispatch, getState, { api }) => {
-  const state = getState();
-  const token = tokenSelector(state);
-
-  return dispatch(getMeInfo(token));
+export const loginWithToken = token => (dispatch, getState, { api }) => {
+  dispatch(setToken(token));
+  dispatch(getMeInfo(token));
 };
 
 export const getMeInfo = token => (dispatch, getState, { api }) =>
