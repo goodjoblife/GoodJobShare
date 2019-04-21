@@ -1,14 +1,14 @@
 export const sendVerifyEmail = `
-  mutation SendVerifyEmail($sendVerifyEmailInput: SendVerifyEmailInput!) {
-    sendVerifyEmail(input: $sendVerifyEmailInput) {
+  mutation SendVerifyEmail($input: SendVerifyEmailInput!) {
+    sendVerifyEmail(input: $input) {
       status
     }
   }
 `;
 
 export const verifyEmail = `
-  mutation SendVerifyEmail($verifyEmailInput: VerifyEmailInput!) {
-    verifyEmail(input: $verifyEmailInput): {
+  mutation SendVerifyEmail($input: VerifyEmailInput!) {
+    verifyEmail(input: $input): {
       token
       redirect_url
     }

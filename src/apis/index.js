@@ -10,6 +10,7 @@ import timeAndSalary from './timeAndSalaryApi';
 import workExperiences from './workExperiencesApi';
 import me from './me';
 import auth from './auth';
+import emailVerify from './emailVerify';
 
 export default {
   campaignInfo,
@@ -24,4 +25,5 @@ export default {
   workExperiences,
   me,
   auth,
+  emailVerify,
 };

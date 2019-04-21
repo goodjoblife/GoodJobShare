@@ -13,14 +13,20 @@ import VerifyEmailForm from '../../../EmailVerification/VerifyEmailForm';
 
 import { getUserName } from '../../../../selectors/authSelector';
 
+import { sendVerifyEmail } from '../../../../actions/emailVerify';
+
 const EmailVerificationTop = ({
   isSentVerificationEmail,
   userName,
-  submitEmail,
+  sendVerifyEmail,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const closeModal = useCallback(() => setIsModalOpen(false));
-  const openModal = useCallback(() => setIsModalOpen(true));
+  const closeModal = useCallback(() => setIsModalOpen(false), [setIsModalOpen]);
+  const openModal = useCallback(() => setIsModalOpen(true), [setIsModalOpen]);
+  const submitEmail = useCallback(
+    ({ email, redirectUrl }) => sendVerifyEmail({ email, redirectUrl }),
+    [sendVerifyEmail],
+  );
 
   return (
     <React.Fragment>
@@ -50,20 +56,20 @@ const EmailVerificationTop = ({
 EmailVerificationTop.propTypes = {
   isSentVerificationEmail: PropTypes.bool,
   userName: PropTypes.string,
-  submitEmail: PropTypes.func,
-};
-
-EmailVerificationTop.defaultProps = {
-  submitEmail: email =>
-    new Promise(resolve => setTimeout(() => resolve(email), 1500)).then(email =>
-      console.log('submit email: ', email),
-    ),
+  sendVerifyEmail: PropTypes.func,
 };
 
 const mapStateToProps = (state, ownProps) => ({
   userName: getUserName(state),
 });
 
-const hoc = connect(mapStateToProps);
+const mapDispatchToProps = {
+  sendVerifyEmail,
+};
+
+const hoc = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
 
 export default hoc(EmailVerificationTop);

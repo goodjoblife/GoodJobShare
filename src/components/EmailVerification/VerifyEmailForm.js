@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
@@ -15,26 +16,33 @@ const stageMap = {
   LOADING: 'LOADING',
 };
 
-const VerifyEmailForm = ({ onSubmit, closeModal }) => {
+const VerifyEmailForm = ({ onSubmit, closeModal, location: { pathname } }) => {
   const [emailValue, setEmailValue] = useState('');
   const [stage, setStage] = useState(stageMap.FORM);
-  const handleEmailInput = useCallback(e => setEmailValue(e.target.value));
+
+  const handleEmailInput = useCallback(e => setEmailValue(e.target.value), [
+    setEmailValue,
+  ]);
   const handleSubmit = useCallback(
     e => {
       setStage(stageMap.LOADING);
-      onSubmit(emailValue).finally(() => setStage(stageMap.SUCCESS));
+      onSubmit({ email: emailValue, redirectUrl: pathname }).finally(() =>
+        setStage(stageMap.SUCCESS),
+      );
       e.preventDefault();
     },
-    [emailValue, setStage],
+    [onSubmit, emailValue, setStage, pathname],
   );
 
   const handleReSubmit = useCallback(
     e => {
       setStage(stageMap.LOADING);
 
-      onSubmit(emailValue).finally(() => setStage(stageMap.SUCCESS));
+      onSubmit({ email: emailValue, redirectUrl: pathname }).finally(() =>
+        setStage(stageMap.SUCCESS),
+      );
     },
-    [emailValue],
+    [onSubmit, emailValue, pathname],
   );
 
   switch (stage) {
@@ -156,6 +164,9 @@ const VerifyEmailForm = ({ onSubmit, closeModal }) => {
 VerifyEmailForm.propTypes = {
   onSumbit: PropTypes.func,
   closeModal: PropTypes.func,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }),
 };
 
-export default VerifyEmailForm;
+export default withRouter(VerifyEmailForm);
