@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
 
-import RouteWithSubRoutes from '../route';
+import { AppRouteWithSubRoutes } from '../route';
 import styles from './App.module.css';
 import Header from '../../containers/App/Header';
 import Footer from './Footer';
@@ -13,7 +13,7 @@ import routes from '../../routes';
 const App = () => (
   <Switch>
     {routes.map((route, i) => (
-      <RouteWithSubRoutes key={i} {...route}>
+      <AppRouteWithSubRoutes key={i} {...route}>
         {({ hasHeader, hasFooter, children }) => (
           <div className={styles.App}>
             {hasHeader ? <Header /> : null}
@@ -23,7 +23,7 @@ const App = () => (
             {hasFooter ? <Footer /> : null}
           </div>
         )}
-      </RouteWithSubRoutes>
+      </AppRouteWithSubRoutes>
     ))}
   </Switch>
 );
