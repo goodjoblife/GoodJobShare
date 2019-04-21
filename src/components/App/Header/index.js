@@ -93,6 +93,8 @@ class Header extends React.Component {
     if (pathname === '/' && !isLogin) {
       return null;
     }
+
+    // FIXME: refactor this component structure
     const content =
       isLogin && !isEmailVerified ? (
         <EmailVerificationTop

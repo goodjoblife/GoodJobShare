@@ -39,10 +39,9 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
             .postAuthFacebook({
               accessToken: response.authResponse.accessToken,
             })
-            .then(({ token, user: { _id, facebook_id } }) => {
-              dispatch(setLogin(authStatus.CONNECTED, token));
-              dispatch(getMeInfo(token));
-            })
+            .then(({ token, user: { _id, facebook_id } }) =>
+              dispatch(loginWithToken(token)),
+            )
             .then(() => authStatus.CONNECTED);
         } else if (response.status === authStatus.NOT_AUTHORIZED) {
           dispatch(setLogin(authStatus.NOT_AUTHORIZED));
@@ -54,17 +53,17 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
   return Promise.reject('FB should ready');
 };
 
+const getMeInfo = token => (dispatch, getState, { api }) =>
+  api.me.getMe({ token }).catch(error => {
+    dispatch(logOutAction());
+
+    console.error(error);
+  });
+
 export const loginWithToken = token => (dispatch, getState, { api }) => {
   dispatch(setToken(token));
-  dispatch(getMeInfo(token));
+  dispatch(getMeInfo(token)).then(user => {
+    dispatch(setUser(user));
+    dispatch(setLogin(authStatus.CONNECTED, token));
+  });
 };
-
-export const getMeInfo = token => (dispatch, getState, { api }) =>
-  api.me
-    .getMe({ token })
-    .then(user => dispatch(setUser(user)))
-    .catch(error => {
-      dispatch(logOutAction());
-
-      console.error(error);
-    });
