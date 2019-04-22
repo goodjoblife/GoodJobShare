@@ -1,5 +1,6 @@
 import React from 'react';
 import R from 'ramda';
+import { Switch } from 'react-router-dom';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
@@ -30,6 +31,7 @@ import { LS_INTERVIEW_STEPS_FORM_KEY } from '../../../constants/localStorageKey'
 
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
+import RouteWithSubRoutes from '../../route';
 
 function isExpired(ts) {
   return Date.now() - ts > 1000 * 60 * 60 * 24 * 3; // 3 days
@@ -303,6 +305,7 @@ class InterviewForm extends React.Component {
   render() {
     const {
       location: { pathname },
+      routes,
     } = this.props;
 
     return (
@@ -381,6 +384,11 @@ class InterviewForm extends React.Component {
             onSubmit={this.onSubmit}
           />
         </div>
+        <Switch>
+          {routes.map((route, i) => (
+            <RouteWithSubRoutes key={i} {...route} />
+          ))}
+        </Switch>
       </div>
     );
   }
