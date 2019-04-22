@@ -31,6 +31,10 @@ import { LS_INTERVIEW_STEPS_FORM_KEY } from '../../../constants/localStorageKey'
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
 
+function isExpired(ts) {
+  return Date.now() - ts > 1000 * 60 * 60 * 24 * 3; // 3 days
+}
+
 const createSection = id => (
   subtitle,
   placeholder = '',
@@ -129,9 +133,15 @@ class InterviewForm extends React.Component {
     let defaultFromDraft;
 
     try {
-      defaultFromDraft = JSON.parse(
+      const { __updatedAt, ...storedDraft } = JSON.parse(
         localStorage.getItem(LS_INTERVIEW_STEPS_FORM_KEY),
       );
+      if (isExpired(__updatedAt)) {
+        console.warn(`Stored draft expired at ${new Date(__updatedAt)}`);
+        localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
+      } else {
+        defaultFromDraft = storedDraft;
+      }
     } catch (error) {
       defaultFromDraft = null;
     }
@@ -153,6 +163,7 @@ class InterviewForm extends React.Component {
         LS_INTERVIEW_STEPS_FORM_KEY,
         JSON.stringify({
           ...this.state,
+          __updatedAt: Date.now(),
         }),
       );
     }
