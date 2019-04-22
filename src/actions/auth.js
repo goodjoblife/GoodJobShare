@@ -62,8 +62,13 @@ const getMeInfo = token => (dispatch, getState, { api }) =>
 
 export const loginWithToken = token => (dispatch, getState, { api }) => {
   dispatch(setToken(token));
-  dispatch(getMeInfo(token)).then(user => {
-    dispatch(setUser(user));
-    dispatch(setLogin(authStatus.CONNECTED, token));
-  });
+  dispatch(getMeInfo(token))
+    .then(user => {
+      dispatch(setUser(user));
+      dispatch(setLogin(authStatus.CONNECTED, token));
+    })
+    .catch(error => {
+      console.error(error);
+      dispatch(setLogin(authStatus.NOT_AUTHORIZED));
+    });
 };
