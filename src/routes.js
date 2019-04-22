@@ -65,6 +65,23 @@ const routes = [
       {
         path: '/share/interview',
         component: InterviewForm,
+        routes: [
+          {
+            path: '/share/interview/step1',
+            exact: true,
+          },
+          {
+            path: '/share/interview/step2',
+            exact: true,
+          },
+          {
+            path: '/share/interview/step3',
+            exact: true,
+          },
+          {
+            component: () => <Redirect to="/share/interview/step1" />,
+          },
+        ],
       },
       {
         path: '/share/time-and-salary',
