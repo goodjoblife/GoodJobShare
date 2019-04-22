@@ -40,10 +40,7 @@ class QAs extends Component {
       changeValidationStatus,
     } = this.props;
     return (
-      <Block
-        style={{ marginBottom: 34 }}
-        heading="面試中問了什麼問題呢？（每題 ＋50 積分）"
-      >
+      <Block style={{ marginBottom: 34 }} heading="面試中問了什麼問題呢？">
         <div
           style={{
             position: 'relative',
