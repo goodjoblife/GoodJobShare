@@ -76,7 +76,7 @@ const VerifyEmailForm = ({ onSubmit, closeModal, location: { pathname } }) => {
               marginBottom: '35px',
             }}
           >
-            認證完成後，重整此頁面，即可解鎖本篇文章
+            認證完成後，就可以收到我們的最新消息了囉！
           </P>
           <Button
             circleSize="lg"
