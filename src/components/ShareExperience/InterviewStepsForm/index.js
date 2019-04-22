@@ -334,6 +334,11 @@ class InterviewForm extends React.Component {
             oops! 請檢查底下紅框內的內容是否正確
           </div>
         )}
+        {/*
+          * Here we need to render all steps rather than use <Route />
+          * Because rendering all steps allows us to register the handlers
+          * when the input is not validated on submit
+          */}
         <div
           style={{
             display: pathname === '/share/interview/step1' ? 'block' : 'none',
@@ -345,7 +350,6 @@ class InterviewForm extends React.Component {
             changeValidationStatus={this.changeValidationStatus}
           />
         </div>
-
         <div
           style={{
             display: pathname === '/share/interview/step2' ? 'block' : 'none',
