@@ -13,6 +13,8 @@ import CompanyQuery from '../../common/CompanyQuery';
 import Region from '../../common/Region';
 import JobTitle from '../../common/JobTitle';
 
+import shareStyles from '../../common/share.module.css';
+
 import { COMPANY, REGION, JOB_TITLE } from '../../../../constants/formElements';
 
 const CompanyQueryWithValidation = subscribeValidation(
@@ -79,6 +81,7 @@ class InterviewInfo extends React.PureComponent {
         </div>
         <div>
           <JobTitleWithValidation
+            className={shareStyles.single__select__input}
             inputTitle="應徵職稱"
             jobTitle={jobTitle}
             onChange={handleState('jobTitle')}
