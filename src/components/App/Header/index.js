@@ -105,7 +105,9 @@ class Header extends React.Component {
       ) : (
         <ProgressTop />
       );
-    return <Top link={isLogin ? null : shareLink}>{content}</Top>;
+    return (
+      <Top link={isLogin && !isEmailVerified ? null : shareLink}>{content}</Top>
+    );
   };
 
   render() {
