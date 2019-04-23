@@ -11,9 +11,13 @@ import { withPermission } from 'common/permission-context';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 import Top from './Top';
+import EmailVerificationTop from './Top/EmailVerificationTop';
+import ProgressTop from './Top/ProgressTop';
 
 import authStatus from '../../../constants/authStatus';
+import { shareLink } from '../../../constants/dataProgress';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
+import emailStatusMap from '../../../constants/emailStatus';
 
 class Header extends React.Component {
   constructor(props) {
@@ -76,10 +80,32 @@ class Header extends React.Component {
   }
 
   renderTop = () => {
-    if (this.props.location.pathname === '/') {
+    const {
+      auth,
+      location: { pathname },
+    } = this.props;
+
+    const isLogin = auth.get('status') === authStatus.CONNECTED;
+    const emailStatus = auth.get('user').get('email_status');
+
+    const isEmailVerified = emailStatus === emailStatusMap.VERIFIED;
+
+    if (pathname === '/' && !isLogin) {
       return null;
     }
-    return <Top />;
+
+    // FIXME: refactor this component structure
+    const content =
+      isLogin && !isEmailVerified ? (
+        <EmailVerificationTop
+          isSentVerificationEmail={
+            emailStatus === emailStatusMap.SENT_VERIFICATION_LINK
+          }
+        />
+      ) : (
+        <ProgressTop />
+      );
+    return <Top link={isLogin ? null : shareLink}>{content}</Top>;
   };
 
   render() {

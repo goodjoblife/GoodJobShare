@@ -15,3 +15,36 @@ const RouteWithSubRoutes = route => {
 };
 
 export default RouteWithSubRoutes;
+
+export const AppRouteWithSubRoutes = ({
+  routes,
+  component: Component,
+  children,
+  hasHeader,
+  hasFooter,
+  ...routeProps
+}) => {
+  if (routes) {
+    return children({
+      children: (
+        <Route
+          {...routeProps}
+          render={props => <Component {...props} routes={routes} />}
+        />
+      ),
+      hasHeader,
+      hasFooter,
+    });
+  }
+
+  return children({
+    children: <Route component={Component} {...routeProps} />,
+    hasHeader,
+    hasFooter,
+  });
+};
+
+AppRouteWithSubRoutes.defaultProps = {
+  hasHeader: true,
+  hasFooter: true,
+};

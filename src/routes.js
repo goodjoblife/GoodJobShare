@@ -27,6 +27,7 @@ import Guidelines from './components/Guidelines';
 import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
+import VerificationPage from './components/EmailVerification/VerificationPage';
 
 const routes = [
   {
@@ -230,6 +231,13 @@ const routes = [
     path: '/user-terms',
     exact: true,
     component: Terms,
+  },
+  {
+    path: '/verify',
+    exact: true,
+    component: VerificationPage,
+    hasHeader: false,
+    hasFooter: false,
   },
   {
     component: NotFound,

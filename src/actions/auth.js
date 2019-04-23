@@ -1,8 +1,8 @@
 import authStatus from '../constants/authStatus';
-import { tokenSelector } from '../selectors/authSelector';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
+export const SET_TOKEN = '@@auth/SET_TOKEN';
 export const LOG_OUT = '@@auth/LOG_OUT';
 
 export const setLogin = (status, token = null) => ({
@@ -14,6 +14,11 @@ export const setLogin = (status, token = null) => ({
 export const setUser = user => ({
   type: SET_USER,
   user,
+});
+
+export const setToken = token => ({
+  type: SET_TOKEN,
+  token,
 });
 
 const logOutAction = () => ({
@@ -34,10 +39,9 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
             .postAuthFacebook({
               accessToken: response.authResponse.accessToken,
             })
-            .then(({ token, user: { _id, facebook_id } }) => {
-              dispatch(setLogin(authStatus.CONNECTED, token));
-              dispatch(getMeInfo(token));
-            })
+            .then(({ token, user: { _id, facebook_id } }) =>
+              dispatch(loginWithToken(token)),
+            )
             .then(() => authStatus.CONNECTED);
         } else if (response.status === authStatus.NOT_AUTHORIZED) {
           dispatch(setLogin(authStatus.NOT_AUTHORIZED));
@@ -49,19 +53,22 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
   return Promise.reject('FB should ready');
 };
 
-export const loginWithToken = () => (dispatch, getState, { api }) => {
-  const state = getState();
-  const token = tokenSelector(state);
+const getMeInfo = token => (dispatch, getState, { api }) =>
+  api.me.getMe({ token }).catch(error => {
+    dispatch(logOutAction());
 
-  return dispatch(getMeInfo(token));
-};
+    console.error(error);
+  });
 
-export const getMeInfo = token => (dispatch, getState, { api }) =>
-  api.me
-    .getMe({ token })
-    .then(user => dispatch(setUser(user)))
+export const loginWithToken = token => (dispatch, getState, { api }) => {
+  dispatch(setToken(token));
+  dispatch(getMeInfo(token))
+    .then(user => {
+      dispatch(setUser(user));
+      dispatch(setLogin(authStatus.CONNECTED, token));
+    })
     .catch(error => {
-      dispatch(logOutAction());
-
       console.error(error);
+      dispatch(setLogin(authStatus.NOT_AUTHORIZED));
     });
+};
