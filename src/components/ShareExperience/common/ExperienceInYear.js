@@ -10,7 +10,13 @@ import { experienceInYearOptions } from './optionMap';
 
 const ExperienceInYear = ({ jobTitle, experienceInYear, onChange }) => (
   <div>
-    <InputTitle text={`當時已經有幾年擔任${jobTitle}的經驗？`} />
+    <InputTitle
+      text={
+        jobTitle
+          ? `當時已經有幾年擔任${jobTitle}的經驗？`
+          : '自身相關職務工作經驗'
+      }
+    />
     <div
       style={{
         display: 'flex',
