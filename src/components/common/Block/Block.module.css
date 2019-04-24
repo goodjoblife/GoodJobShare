@@ -1,0 +1,61 @@
+@value main-yellow, warning-red, gray-dark from "common/variables.module.css";
+
+.heading {
+  display: flex;
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+
+  svg {
+    width: 30px;
+    height: 30px;
+    fill: main-yellow;
+    margin-right: 12px;
+
+    @media (max-width: 550px) {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.note {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  color: gray-dark;
+  > span {
+    color: warning-red;
+  }
+}
+
+.header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.body {
+  background: white;
+  width: 100%;
+  padding: 48px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 550px) {
+    padding: 48px 16px;
+    min-height: 70vh;
+  }
+}
+
+.noPadding {
+  padding: 0;
+}
+
+.marginTop {
+  margin-top: 56px;
+
+  @media (max-width: 850px) {
+    margin-top: 32px;
+  }
+}
