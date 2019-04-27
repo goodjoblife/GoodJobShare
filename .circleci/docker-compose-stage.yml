@@ -10,3 +10,4 @@ services:
         - RAZZLE_CONTENTFUL_API_HOST=https://content-stage.goodjob.life
         - RAZZLE_FACEBOOK_APP_ID=1750216878594984
         - RAZZLE_GA_ID=UA-79990667-2
+        - RAZZLE_GTM_ID=GTM-KVZ7DZQ
