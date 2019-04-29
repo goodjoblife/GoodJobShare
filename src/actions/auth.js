@@ -30,7 +30,6 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
     return new Promise(resolve =>
       FB.login(response => resolve(response), { scope: 'email' }),
     ).then(response => {
-      console.log(response);
       if (response.status === authStatus.CONNECTED) {
         return api.auth
           .postAuthFacebook({
