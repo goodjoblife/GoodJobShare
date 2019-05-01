@@ -1,3 +1,9 @@
+export const getSalaryWorkTimeCount = `
+{
+  salary_work_time_count
+}
+`;
+
 export const getSalaryWorkTimes = `
 query($start: Int!, $limit: Int!) {
   salary_work_time_count
