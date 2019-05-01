@@ -2,6 +2,7 @@ import fetchUtil from 'utils/fetchUtil';
 import graphqlClient from 'utils/graphqlClient';
 import {
   getSalaryWorkTimes,
+  getSalaryWorkTimeCount,
   getSearchCompanyQuery,
   getCompanyQuery,
   getJobTitleQuery,
@@ -27,7 +28,9 @@ export const fetchTimeAndSalary = ({ start, limit }) =>
   });
 
 export const fetchTimeAndSalaryCount = () =>
-  fetchUtil(`${endpoint}`).get({ query: { limit: 1 } });
+  graphqlClient({
+    query: getSalaryWorkTimeCount,
+  }).then(data => data.salary_work_time_count);
 
 export const fetchTimeAndSalaryExtreme = ({ opt }) =>
   fetchUtil(`${endpoint}/extreme`).get({ query: opt });
