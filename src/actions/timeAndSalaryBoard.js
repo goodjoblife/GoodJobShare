@@ -70,6 +70,7 @@ export const queryTimeAndSalary = ({ page }) => (
   return api.timeAndSalary
     .fetchTimeAndSalary({ start, limit })
     .then(rawData => {
+      const { salary_work_time_count, salary_work_times } = rawData;
       // 將Array公司名稱轉換成String
       const takeFirstFromArrayCompanyName = R.over(
         R.lensPath(['company', 'name']),
@@ -82,13 +83,13 @@ export const queryTimeAndSalary = ({ page }) => (
           R.identity,
         ),
       );
-      const data = rawData.map(takeFirstFromArrayCompanyName);
+      const data = salary_work_times.map(takeFirstFromArrayCompanyName);
 
       dispatch(
         setBoardData({
           status: fetchingStatus.FETCHED,
           data,
-          total: rawData.total,
+          total: salary_work_time_count,
           currentPage: page,
         }),
       );
