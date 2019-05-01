@@ -1,4 +1,3 @@
-import R from 'ramda';
 import fetchingStatus, { isUnfetched } from '../constants/status';
 import { tokenSelector } from '../selectors/authSelector';
 
@@ -16,8 +15,7 @@ export const queryTimeAndSalaryCount = () => (dispatch, getState, { api }) => {
 
   return api.timeAndSalary
     .fetchTimeAndSalaryCount()
-    .then(rawData => {
-      const count = R.prop('total')(rawData);
+    .then(count => {
       dispatch(setCountData(count, fetchingStatus.FETCHED));
     })
     .catch(error => {
