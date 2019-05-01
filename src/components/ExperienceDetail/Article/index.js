@@ -64,12 +64,8 @@ class Article extends React.Component {
                   content.length - (currentTotalWords - MAX_WORDS_IF_HIDDEN);
                 const newContent = `${content.substring(0, showLength)}...`;
                 return (
-                  <GradientMask>
-                    <SectionBlock
-                      key={idx}
-                      subtitle={subtitle}
-                      content={newContent}
-                    />
+                  <GradientMask key={idx}>
+                    <SectionBlock subtitle={subtitle} content={newContent} />
                   </GradientMask>
                 );
               }
