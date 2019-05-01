@@ -1,5 +1,6 @@
 export const getSalaryWorkTimes = `
 query($start: Int!, $limit: Int!) {
+  salary_work_time_count
   salary_work_times(start: $start, limit: $limit) {
     id
     company {
