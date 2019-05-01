@@ -458,13 +458,6 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
               />
             </div>
           ))}
-
-          <InputTitle text="電子郵件 - 有消息時將通知您" />
-          <TextInput
-            value={email}
-            placeholder="example@email.com"
-            onChange={e => this.handleState('email')(e.target.value)}
-          />
         </IconHeadingBlock>
 
         <SubmitArea onSubmit={this.onSubmit} />
