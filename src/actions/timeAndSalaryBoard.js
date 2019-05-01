@@ -95,7 +95,14 @@ export const queryTimeAndSalary = ({ page }) => (
       );
     })
     .catch(error => {
-      dispatch(setBoardData({ status: fetchingStatus.ERROR, data: [], error }));
+      dispatch(
+        setBoardData({
+          status: fetchingStatus.ERROR,
+          data: [],
+          error,
+          currentPage: page,
+        }),
+      );
     });
 };
 
