@@ -73,16 +73,11 @@ export const queryTimeAndSalary = ({ sortBy, order, page }) => (
     status: fetchingStatus.FETCHING,
   });
 
-  const opt = {
-    sort_by: sortBy,
-    order,
-    page: page - 1,
-    limit: DATA_NUM_PER_PAGE,
-    skip: (sortBy !== 'created_at').toString(),
-  };
+  const start = (page - 1) * DATA_NUM_PER_PAGE;
+  const limit = DATA_NUM_PER_PAGE;
 
   return api.timeAndSalary
-    .fetchTimeAndSalary({ opt })
+    .fetchTimeAndSalary({ start, limit })
     .then(rawData => {
       // 將Array公司名稱轉換成String
       const takeFirstFromArrayCompanyName = R.over(
@@ -96,7 +91,7 @@ export const queryTimeAndSalary = ({ sortBy, order, page }) => (
           R.identity,
         ),
       );
-      const data = rawData.time_and_salary.map(takeFirstFromArrayCompanyName);
+      const data = rawData.map(takeFirstFromArrayCompanyName);
 
       dispatch(
         setBoardData(
