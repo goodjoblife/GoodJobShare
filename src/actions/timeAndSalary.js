@@ -14,12 +14,8 @@ const setCountData = (count, status, error = null) => ({
 export const queryTimeAndSalaryCount = () => (dispatch, getState, { api }) => {
   dispatch(setCountData(0, fetchingStatus.FETCHING));
 
-  const opt = {
-    limit: 1,
-  };
-
   return api.timeAndSalary
-    .fetchTimeAndSalary({ opt })
+    .fetchTimeAndSalaryCount()
     .then(rawData => {
       const count = R.prop('total')(rawData);
       dispatch(setCountData(count, fetchingStatus.FETCHED));
