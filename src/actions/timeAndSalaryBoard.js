@@ -16,10 +16,8 @@ const statusSelector = state => state.timeAndSalaryBoard.get('status');
 const extremeStatusSelector = state =>
   state.timeAndSalaryBoard.get('extremeStatus');
 
-const resetBoard = ({ sortBy, order, page }) => ({
+const resetBoard = ({ page }) => ({
   type: SET_BOARD_DATA,
-  sortBy,
-  order,
   status: fetchingStatus.UNFETCHED,
   data: [],
   total: 0,
@@ -27,22 +25,19 @@ const resetBoard = ({ sortBy, order, page }) => ({
   error: null,
 });
 
-const setBoardData = (
-  { sortBy, order },
-  { status, data, total = 0, currentPage = 0, error = null },
-) => (dispatch, getState) => {
+const setBoardData = ({
+  status,
+  data,
+  total = 0,
+  currentPage = 0,
+  error = null,
+}) => (dispatch, getState) => {
   // make sure the store is consistent
-  if (
-    sortBy !== sortBySelector(getState()) ||
-    order !== orderSelector(getState()) ||
-    currentPage !== pageSelector(getState())
-  ) {
+  if (currentPage !== pageSelector(getState())) {
     return;
   }
   dispatch({
     type: SET_BOARD_DATA,
-    sortBy,
-    order,
     status,
     data,
     total,
@@ -51,17 +46,13 @@ const setBoardData = (
   });
 };
 
-export const queryTimeAndSalary = ({ sortBy, order, page }) => (
+export const queryTimeAndSalary = ({ page }) => (
   dispatch,
   getState,
   { api },
 ) => {
-  if (
-    sortBy !== sortBySelector(getState()) ||
-    order !== orderSelector(getState()) ||
-    page !== pageSelector(getState())
-  ) {
-    dispatch(resetBoard({ sortBy, order, page }));
+  if (page !== pageSelector(getState())) {
+    dispatch(resetBoard({ page }));
   }
 
   if (statusSelector(getState()) === fetchingStatus.FETCHING) {
@@ -94,24 +85,16 @@ export const queryTimeAndSalary = ({ sortBy, order, page }) => (
       const data = rawData.map(takeFirstFromArrayCompanyName);
 
       dispatch(
-        setBoardData(
-          { sortBy, order },
-          {
-            status: fetchingStatus.FETCHED,
-            data,
-            total: rawData.total,
-            currentPage: page,
-          },
-        ),
+        setBoardData({
+          status: fetchingStatus.FETCHED,
+          data,
+          total: rawData.total,
+          currentPage: page,
+        }),
       );
     })
     .catch(error => {
-      dispatch(
-        setBoardData(
-          { sortBy, order },
-          { status: fetchingStatus.ERROR, data: [], error },
-        ),
-      );
+      dispatch(setBoardData({ status: fetchingStatus.ERROR, data: [], error }));
     });
 };
 
