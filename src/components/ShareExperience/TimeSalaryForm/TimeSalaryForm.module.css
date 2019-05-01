@@ -193,7 +193,9 @@
 }
 
 .radioButton {
-  margin-bottom: 40px;
+  &:not(:last-child) {
+    margin-bottom: 40px;
+  }
   &:before,
   &:after {
     content: '';

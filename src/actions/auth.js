@@ -32,23 +32,23 @@ export const logout = () => (dispatch, getState, { history }) => {
 
 export const loginWithFB = FB => (dispatch, getState, { api }) => {
   if (FB) {
-    return new Promise(resolve => FB.login(response => resolve(response))).then(
-      response => {
-        if (response.status === authStatus.CONNECTED) {
-          return api.auth
-            .postAuthFacebook({
-              accessToken: response.authResponse.accessToken,
-            })
-            .then(({ token, user: { _id, facebook_id } }) =>
-              dispatch(loginWithToken(token)),
-            )
-            .then(() => authStatus.CONNECTED);
-        } else if (response.status === authStatus.NOT_AUTHORIZED) {
-          dispatch(setLogin(authStatus.NOT_AUTHORIZED));
-        }
-        return response.status;
-      },
-    );
+    return new Promise(resolve =>
+      FB.login(response => resolve(response), { scope: 'email' }),
+    ).then(response => {
+      if (response.status === authStatus.CONNECTED) {
+        return api.auth
+          .postAuthFacebook({
+            accessToken: response.authResponse.accessToken,
+          })
+          .then(({ token, user: { _id, facebook_id } }) =>
+            dispatch(loginWithToken(token)),
+          )
+          .then(() => authStatus.CONNECTED);
+      } else if (response.status === authStatus.NOT_AUTHORIZED) {
+        dispatch(setLogin(authStatus.NOT_AUTHORIZED));
+      }
+      return response.status;
+    });
   }
   return Promise.reject('FB should ready');
 };

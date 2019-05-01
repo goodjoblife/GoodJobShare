@@ -5,11 +5,9 @@ import { scroller } from 'react-scroll';
 import { Heading } from 'common/base';
 import { People } from 'common/icons';
 import IconHeadingBlock from 'common/IconHeadingBlock';
-import TextInput from 'common/form/TextInput';
 import BasicInfo from './BasicInfo';
 import SalaryInfo from './SalaryInfo';
 import TimeInfo from './TimeInfo';
-import InputTitle from '../common/InputTitle';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 import styles from './TimeSalaryForm.module.css';
 
@@ -253,7 +251,6 @@ class TimeSalaryForm extends React.PureComponent {
       hasOvertimeSalary,
       isOvertimeSalaryLegal,
       hasCompensatoryDayoff,
-      email,
     } = this.state;
 
     return (
@@ -311,13 +308,6 @@ class TimeSalaryForm extends React.PureComponent {
             hasOvertimeSalary={hasOvertimeSalary}
             isOvertimeSalaryLegal={isOvertimeSalaryLegal}
             hasCompensatoryDayoff={hasCompensatoryDayoff}
-          />
-
-          <InputTitle text="電子郵件 - 有消息時將通知您" />
-          <TextInput
-            value={email}
-            placeholder="example@email.com"
-            onChange={e => this.handleState('email')(e.target.value)}
           />
         </IconHeadingBlock>
 
