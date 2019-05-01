@@ -22,6 +22,9 @@ export const fetchJobTitleCandidates = ({ key }) =>
 export const fetchTimeAndSalary = ({ opt }) =>
   fetchUtil(`${endpoint}`).get({ query: opt });
 
+export const fetchTimeAndSalaryCount = () =>
+  fetchUtil(`${endpoint}`).get({ query: { limit: 1 } });
+
 export const fetchTimeAndSalaryExtreme = ({ opt }) =>
   fetchUtil(`${endpoint}/extreme`).get({ query: opt });
 
@@ -69,6 +72,7 @@ export default {
   fetchCompanyCandidates,
   fetchJobTitleCandidates,
   fetchTimeAndSalary,
+  fetchTimeAndSalaryCount,
   fetchTimeAndSalaryExtreme,
   fetchCampaignTimeAndSalary,
   fetchSearchCompany,
