@@ -24,7 +24,7 @@ export const fetchTimeAndSalary = ({ start, limit }) =>
   graphqlClient({
     query: getSalaryWorkTimes,
     variables: { start, limit },
-  }).then(data => data.salary_work_times);
+  });
 
 export const fetchTimeAndSalaryCount = () =>
   fetchUtil(`${endpoint}`).get({ query: { limit: 1 } });
