@@ -24,7 +24,7 @@ export const getJobTitle = item => {
       <Link
         to={`/job-titles/${encodeURIComponent(jobTitle)}/salary-work-times`}
       >
-        {jobTitle}
+        {jobTitle.name}
       </Link>{' '}
       <span className={`pM ${styles.sector}`}>{sector}</span>
     </div>
