@@ -13,3 +13,4 @@ services:
         - RAZZLE_PIXEL_ID=603414113402034
         - RAZZLE_SENTRY_DSN=https://5cacfa2ac0934509a3e563fc0a52275f@sentry.io/1269010
         - RAZZLE_GIT_SHA1=${CIRCLE_SHA1}
+        - RAZZLE_GTM_ID=GTM-54PH93D

@@ -33,7 +33,7 @@ const ExperienceHeading = ({ experience, className }) => (
       {experience && formatType(experience.type)}
     </P>
     <Heading size="l">
-      {experience && formatComapny(experience.company)}
+      {(experience && formatComapny(experience.company)) || ''}
     </Heading>
   </div>
 );
