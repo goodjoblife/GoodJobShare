@@ -1,9 +1,11 @@
 export const getExperienceQuery = `
 query($id:ID!) {
   experience(id:$id) {
-    id
     type
     company {
+      name
+    }
+    job_title {
       name
     }
     region
@@ -18,15 +20,7 @@ query($id:ID!) {
       subtitle
       content
     }
-    created_at
-    reply_count
-    report_count
     like_count
-    status
-    archive {
-      is_archived
-      reason
-    }
 
     ...on InterviewExperience {
       interview_time {
@@ -43,10 +37,6 @@ query($id:ID!) {
     }
 
     ...on WorkExperience {
-      data_time {
-        year
-        month
-      }
       week_work_time
       recommend_to_others
     }
