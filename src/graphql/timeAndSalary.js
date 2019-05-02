@@ -8,17 +8,12 @@ export const getSalaryWorkTimes = `
 query($start: Int!, $limit: Int!) {
   salary_work_time_count
   salary_work_times(start: $start, limit: $limit) {
-    id
     company {
       name
     }
     job_title {
       name
     }
-    day_promised_work_time
-    day_real_work_time
-    employment_type
-    experience_in_year
     overtime_frequency
     salary {
       type
@@ -26,7 +21,6 @@ query($start: Int!, $limit: Int!) {
     }
     sector
     week_work_time
-    created_at
     data_time {
       year
       month
