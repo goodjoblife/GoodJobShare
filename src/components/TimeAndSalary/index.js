@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import { Switch } from 'react-router';
 import { compose } from 'recompose';
@@ -19,8 +18,6 @@ import { IMG_HOST, SITE_NAME } from '../../constants/helmetData';
 
 class TimeAndSalary extends Component {
   static propTypes = {
-    campaignEntries: ImmutablePropTypes.map.isRequired,
-    queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
     routes: PropTypes.array,
     location: PropTypes.shape({
       pathname: PropTypes.string,

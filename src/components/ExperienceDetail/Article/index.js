@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, withState, withHandlers } from 'recompose';
 import cn from 'classnames';
 
 import { Heading, P } from 'common/base';
@@ -14,17 +13,11 @@ import { MAX_WORDS_IF_HIDDEN } from '../../../constants/hideContent';
 import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 import ReactionZoneOtherOptions from '../ReactionZone/ReactionZoneOtherOptions';
-import ReportInspectModal from '../ReactionZone/ReportInspectModal';
 import ReactionZoneStyles from '../ReactionZone/ReactionZone.module.css';
 
 class Article extends React.Component {
   renderReportZone = () => {
-    const {
-      id,
-      openReportDetail,
-      isInspectReportOpen,
-      toggleReportInspectModal,
-    } = this.props;
+    const { openReportDetail, toggleReportInspectModal } = this.props;
     return (
       <React.Fragment>
         <div className={styles.functionButtons}>
@@ -47,11 +40,6 @@ class Article extends React.Component {
             </div>
           </PopoverToggle>
         </div>
-        <ReportInspectModal
-          id={id}
-          isOpen={isInspectReportOpen}
-          toggleReportInspectModal={toggleReportInspectModal}
-        />
       </React.Fragment>
     );
   };
@@ -76,12 +64,8 @@ class Article extends React.Component {
                   content.length - (currentTotalWords - MAX_WORDS_IF_HIDDEN);
                 const newContent = `${content.substring(0, showLength)}...`;
                 return (
-                  <GradientMask>
-                    <SectionBlock
-                      key={idx}
-                      subtitle={subtitle}
-                      content={newContent}
-                    />
+                  <GradientMask key={idx}>
+                    <SectionBlock subtitle={subtitle} content={newContent} />
                   </GradientMask>
                 );
               }
@@ -142,22 +126,8 @@ class Article extends React.Component {
 Article.propTypes = {
   experience: PropTypes.object.isRequired,
   hideContent: PropTypes.bool.isRequired,
-  id: PropTypes.string.isRequired,
   openReportDetail: PropTypes.func.isRequired,
-  isInspectReportOpen: PropTypes.bool.isRequired,
   toggleReportInspectModal: PropTypes.func.isRequired,
 };
 
-const enhance = compose(
-  withState('isInspectReportOpen', 'setIsInspectReportOpen', false),
-  withHandlers({
-    toggleReportInspectModal: ({
-      isInspectReportOpen,
-      setIsInspectReportOpen,
-    }) => () => {
-      setIsInspectReportOpen(!isInspectReportOpen);
-    },
-  }),
-);
-
-export default enhance(Article);
+export default Article;
