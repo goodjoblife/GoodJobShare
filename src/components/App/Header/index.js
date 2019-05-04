@@ -86,27 +86,29 @@ class Header extends React.Component {
     } = this.props;
 
     const isLogin = auth.get('status') === authStatus.CONNECTED;
-    const emailStatus = auth.get('user').get('email_status');
-
+    const emailStatus = auth.getIn(['user', 'email_status']);
     const isEmailVerified = emailStatus === emailStatusMap.VERIFIED;
 
-    if (pathname === '/' && !isLogin) {
+    if (!isLogin && pathname === '/') {
       return null;
     }
 
-    // FIXME: refactor this component structure
-    const content =
-      isLogin && !isEmailVerified ? (
-        <EmailVerificationTop
-          isSentVerificationEmail={
-            emailStatus === emailStatusMap.SENT_VERIFICATION_LINK
-          }
-        />
-      ) : (
-        <ProgressTop />
+    if (isLogin && !isEmailVerified) {
+      return (
+        <Top>
+          <EmailVerificationTop
+            isSentVerificationEmail={
+              emailStatus === emailStatusMap.SENT_VERIFICATION_LINK
+            }
+          />
+        </Top>
       );
+    }
+
     return (
-      <Top link={isLogin && !isEmailVerified ? null : shareLink}>{content}</Top>
+      <Top link={shareLink}>
+        <ProgressTop />
+      </Top>
     );
   };
 
