@@ -26,15 +26,6 @@ const hoc = compose(
         loginWithToken(token);
       }
     },
-    componentDidUpdate(prevProps) {
-      if (
-        prevProps.authStatus !== this.props.authStatus &&
-        this.props.authStatus === CONNECTED
-      ) {
-        const { loginWithToken, token } = this.props;
-        loginWithToken(token);
-      }
-    },
   }),
 );
 
