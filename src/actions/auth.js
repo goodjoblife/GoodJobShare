@@ -2,23 +2,17 @@ import authStatus from '../constants/authStatus';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
-export const SET_TOKEN = '@@auth/SET_TOKEN';
 export const LOG_OUT = '@@auth/LOG_OUT';
 
-export const setLogin = (status, token = null) => ({
+const setLogin = (status, token = null) => ({
   type: SET_LOGIN,
   status,
   token,
 });
 
-export const setUser = user => ({
+const setUser = user => ({
   type: SET_USER,
   user,
-});
-
-export const setToken = token => ({
-  type: SET_TOKEN,
-  token,
 });
 
 const logOutAction = () => ({
@@ -56,12 +50,20 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
 const getMeInfo = token => (dispatch, getState, { api }) =>
   api.me.getMe({ token }).catch(error => {
     dispatch(logOutAction());
-
-    console.error(error);
+    throw error;
   });
 
+/**
+ * Flow
+ *
+ * loginWithFB   ---\                      |
+ *          (token) +--> loginWithToken  --|
+ * loginWithXXX  ---/                      | Auth State
+ *                                         |   Update
+ *                               logout  --|
+ *                                         |
+ */
 export const loginWithToken = token => (dispatch, getState, { api }) => {
-  dispatch(setToken(token));
   dispatch(getMeInfo(token))
     .then(user => {
       dispatch(setUser(user));
