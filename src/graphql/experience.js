@@ -21,6 +21,7 @@ query($id:ID!) {
       content
     }
     like_count
+    liked
 
     ...on InterviewExperience {
       interview_time {
