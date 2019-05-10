@@ -5,11 +5,14 @@ import Loading from 'common/Loader';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
 import { compose, setStatic } from 'recompose';
-
-import Select from 'common/form/Select';
 import Pagination from 'common/Pagination';
 import FanPageBlock from 'common/FanPageBlock';
-import { withPermission } from 'common/permission-context';
+import {
+  pathSelector,
+  pathnameSelector,
+  searchSelector,
+  querySelector,
+} from 'common/routing/selectors';
 import InfoTimeModal from '../common/InfoTimeModal';
 import InfoSalaryModal from '../common/InfoSalaryModal';
 import AboutThisJobModal from '../common/AboutThisJobModal';
@@ -17,96 +20,19 @@ import withModal from '../common/withModal';
 import styles from './TimeAndSalaryBoard.module.css';
 import commonStyles from '../views/view.module.css';
 import { isFetching, isFetched } from '../../../constants/status';
-import { MAX_ROWS_IF_HIDDEN } from '../../../constants/hideContent';
-import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
-
 import { queryTimeAndSalary } from '../../../actions/timeAndSalaryBoard';
-import GradientMask from '../../common/GradientMask';
-
 import DashBoardTable from '../common/DashBoardTable';
-
 import { toQsString, queryParser } from './helper';
 import { DATA_NUM_PER_PAGE } from '../../../constants/timeAndSalarSearch';
 import renderHelmet from './helmet';
-import {
-  pathSelector,
-  pathnameSelector,
-  searchSelector,
-  querySelector,
-} from 'common/routing/selectors';
 
-const pathnameMapping = {
-  '/time-and-salary/work-time-dashboard': {
-    title: '工時排行榜',
-    label: '一週平均總工時（高到低）',
-    sortBy: 'week_work_time',
-    order: 'descending',
-    hasExtreme: true,
-  },
-  '/time-and-salary/sort/work-time-asc': {
-    title: '工時排行榜（由低到高）',
-    label: '一週平均總工時（低到高）',
-    sortBy: 'week_work_time',
-    order: 'ascending',
-    hasExtreme: true,
-  },
-  '/time-and-salary/salary-dashboard': {
-    title: '估算時薪排行榜',
-    label: '估算時薪（高到低）',
-    sortBy: 'estimated_hourly_wage',
-    order: 'descending',
-    hasExtreme: true,
-  },
-  '/time-and-salary/sort/salary-asc': {
-    title: '估算時薪排行榜（由低到高）',
-    label: '估算時薪（低到高）',
-    sortBy: 'estimated_hourly_wage',
-    order: 'ascending',
-    hasExtreme: true,
-  },
-  '/time-and-salary/latest': {
-    title: '最新薪資、工時資訊',
-    label: '資料時間（新到舊）',
-    sortBy: 'created_at',
-    order: 'descending',
-    hasExtreme: false,
-  },
-  '/time-and-salary/sort/time-asc': {
-    title: '最舊薪資、工時資訊',
-    label: '資料時間（舊到新）',
-    sortBy: 'created_at',
-    order: 'ascending',
-    hasExtreme: false,
-  },
+const pathParameters = {
+  title: '各行各業薪水查詢',
+  label: '資料時間（新到舊）',
+  sortBy: 'created_at',
+  order: 'descending',
+  hasExtreme: false,
 };
-
-const selectOptions = R.pipe(
-  R.toPairs,
-  R.map(([path, opt]) => ({ value: path, label: opt.label })),
-);
-
-const pathParameterSelector = R.compose(
-  path => pathnameMapping[path],
-  pathSelector,
-);
-
-const injectPermissionBlock = R.pipe(
-  R.take(MAX_ROWS_IF_HIDDEN),
-  R.append(
-    <tr>
-      <td colSpan="8" className={styles.noPadding}>
-        <GradientMask />
-      </td>
-    </tr>,
-  ),
-  R.append(
-    <tr>
-      <td colSpan="8" className={styles.noBefore}>
-        <BasicPermissionBlock rootClassName={styles.permissionBlockBoard} />
-      </td>
-    </tr>,
-  ),
-);
 
 const injectLoadingIconRow = R.prepend(
   <tr key="extreme-loading" className={styles.extremeRow}>
@@ -150,8 +76,6 @@ class TimeAndSalaryBoard extends Component {
     resetBoardExtremeData: PropTypes.func.isRequired,
     extremeStatus: PropTypes.string,
     extremeData: ImmutablePropTypes.list,
-    canViewTimeAndSalary: PropTypes.bool.isRequired,
-    fetchPermission: PropTypes.func.isRequired,
     infoSalaryModal: PropTypes.shape({
       isOpen: PropTypes.bool.isRequired,
       setIsOpen: PropTypes.func.isRequired,
@@ -172,12 +96,11 @@ class TimeAndSalaryBoard extends Component {
   };
 
   componentDidMount() {
-    const { sortBy, order } = pathParameterSelector(this.props);
+    const { sortBy, order } = pathParameters;
     const { page } = queryParser(querySelector(this.props));
 
     this.props.resetBoardExtremeData();
     this.props.queryTimeAndSalary({ sortBy, order, page });
-    this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
@@ -185,12 +108,11 @@ class TimeAndSalaryBoard extends Component {
       pathSelector(prevProps) !== pathSelector(this.props) ||
       searchSelector(prevProps) !== searchSelector(this.props)
     ) {
-      const { sortBy, order } = pathParameterSelector(this.props);
+      const { sortBy, order } = pathParameters;
       const { page } = queryParser(querySelector(this.props));
       this.setState({ showExtreme: false });
       this.props.resetBoardExtremeData();
       this.props.queryTimeAndSalary({ sortBy, order, page });
-      this.props.fetchPermission();
     }
   }
 
@@ -245,9 +167,6 @@ class TimeAndSalaryBoard extends Component {
   };
 
   createPostProcessRows = () => {
-    if (!this.props.canViewTimeAndSalary) {
-      return injectPermissionBlock;
-    }
     return R.pipe(this.decorateExtremeRows);
   };
 
@@ -263,19 +182,16 @@ class TimeAndSalaryBoard extends Component {
   };
 
   render() {
-    const path = pathSelector(this.props);
     const pathname = pathnameSelector(this.props);
     const { page } = queryParser(querySelector(this.props));
-    const { title, hasExtreme } = pathParameterSelector(this.props);
+    const { title, hasExtreme } = pathParameters;
     const {
       data,
       status,
       totalCount,
       currentPage,
-      history,
       extremeStatus,
       extremeData,
-      canViewTimeAndSalary,
     } = this.props;
     const { showExtreme } = this.state;
     let raw;
@@ -287,35 +203,23 @@ class TimeAndSalaryBoard extends Component {
 
     return (
       <section className={commonStyles.searchResult}>
-        {renderHelmet({ title, pathname, page })}
+        {renderHelmet({ title, pathname, page, dataNum: totalCount })}
         <h2 className={commonStyles.heading}>{title}</h2>
         <div className={commonStyles.result}>
           <div className={styles.sortRow}>
             <div className={styles.extremeDescription}>
-              {hasExtreme &&
-                canViewTimeAndSalary && (
-                  <span>
-                    前 1 %
-                    的資料可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
-                    <button
-                      className={styles.toggle}
-                      onClick={this.toggleShowExtreme}
-                    >
-                      {showExtreme ? '隱藏 -' : '展開 +'}
-                    </button>
-                  </span>
-                )}
-            </div>
-            <div className={commonStyles.sort}>
-              <div className={commonStyles.label}> 排序：</div>
-              <div className={commonStyles.select}>
-                <Select
-                  options={selectOptions(pathnameMapping)}
-                  onChange={e => history.push(e.target.value)}
-                  value={path}
-                  hasNullOption={false}
-                />
-              </div>
+              {hasExtreme && (
+                <span>
+                  前 1 %
+                  的資料可能包含極端值或為使用者誤填，較不具參考價值，預設為隱藏。
+                  <button
+                    className={styles.toggle}
+                    onClick={this.toggleShowExtreme}
+                  >
+                    {showExtreme ? '隱藏 -' : '展開 +'}
+                  </button>
+                </span>
+              )}
             </div>
           </div>
           {isFetching(status) && (
@@ -362,7 +266,7 @@ class TimeAndSalaryBoard extends Component {
 }
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const { sortBy, order } = pathParameterSelector(props);
+  const { sortBy, order } = pathParameters;
   const { page } = queryParser(querySelector(props));
 
   return dispatch(queryTimeAndSalary({ sortBy, order, page }));
@@ -370,7 +274,6 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
 
 const hoc = compose(
   ssr,
-  withPermission,
   withModal('infoSalaryModal'),
   withModal('infoTimeModal'),
 );

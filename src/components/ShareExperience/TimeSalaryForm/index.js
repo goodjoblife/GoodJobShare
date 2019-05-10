@@ -1,16 +1,13 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
 import { Heading } from 'common/base';
 import { People } from 'common/icons';
 import IconHeadingBlock from 'common/IconHeadingBlock';
-import TextInput from 'common/form/TextInput';
 import BasicInfo from './BasicInfo';
 import SalaryInfo from './SalaryInfo';
 import TimeInfo from './TimeInfo';
-import InputTitle from '../common/InputTitle';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 import styles from './TimeSalaryForm.module.css';
 
@@ -26,7 +23,7 @@ import {
 
 import salaryHint from '../../../utils/formUtils';
 
-import { HELMET_DATA } from '../../../constants/helmetData';
+import StaticHelmet from 'common/StaticHelmet';
 import {
   INVALID,
   TIME_SALARY_BASIC_ORDER,
@@ -135,7 +132,7 @@ class TimeSalaryForm extends React.PureComponent {
                 (count || 0)} 次可以上傳。`}
               buttonText="查看最新工時、薪資"
               buttonClick={() => {
-                window.location.replace('/time-and-salary/latest');
+                window.location.replace('/salary-work-times/latest');
               }}
             />
           );
@@ -254,12 +251,11 @@ class TimeSalaryForm extends React.PureComponent {
       hasOvertimeSalary,
       isOvertimeSalaryLegal,
       hasCompensatoryDayoff,
-      email,
     } = this.state;
 
     return (
       <div>
-        <Helmet {...HELMET_DATA.SHARE_TIME_SALARY} />
+        <StaticHelmet.ShareSalaryWorkTime />
         <Heading size="l" marginBottomS center>
           薪資工時分享
         </Heading>
@@ -312,13 +308,6 @@ class TimeSalaryForm extends React.PureComponent {
             hasOvertimeSalary={hasOvertimeSalary}
             isOvertimeSalaryLegal={isOvertimeSalaryLegal}
             hasCompensatoryDayoff={hasCompensatoryDayoff}
-          />
-
-          <InputTitle text="電子郵件 - 有消息時將通知您" />
-          <TextInput
-            value={email}
-            placeholder="example@email.com"
-            onChange={e => this.handleState('email')(e.target.value)}
           />
         </IconHeadingBlock>
 

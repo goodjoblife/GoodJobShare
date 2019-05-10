@@ -5,8 +5,10 @@ import styles from './Wrapper.module.css';
 
 const sizeOptions = ['l', 'm', 's'];
 
-const Wrapper = ({ Tag, size, children, className }) => (
-  <Tag className={cn(styles[size], className)}>{children}</Tag>
+const Wrapper = ({ Tag, size, children, className, onClick }) => (
+  <Tag onClick={onClick} className={cn(styles[size], className)}>
+    {children}
+  </Tag>
 );
 Wrapper.propTypes = {
   Tag: PropTypes.string,

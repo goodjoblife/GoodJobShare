@@ -1,0 +1,73 @@
+@value main-yellow, main-orange, main-gray, warning-red from "../../../common/variables.module.css";
+
+.container {
+  position: relative;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: -10px;
+    right: -10px;
+    border: 1px solid transparent;
+    pointer-events: none;
+  }
+
+  &:hover {
+    &::before {
+      border-color: main-yellow;
+    }
+
+    > .remove__btn {
+      visibility: visible;
+    }
+  }
+}
+
+.remove__btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  visibility: hidden;
+}
+
+.property__title {
+  color: main-orange;
+  font-size: 1.25rem;
+  width: 30px;
+  line-height: 45px;
+}
+
+.input {
+  border: 1px solid #bdbdbd;
+  padding: 12px;
+
+  &::placeholder {
+    color: main-gray;
+  }
+}
+
+.textarea {
+  border: 1px solid #bdbdbd !important;
+  padding: 12px;
+
+  &::placeholder {
+    color: main-gray;
+    font-weight: 300;
+  }
+}
+
+.warningWrapper {
+  border: 1px solid transparent;
+
+  &.warning {
+    border-color: warning-red;
+  }
+}
+
+.warning__wording {
+  color: warning-red;
+}

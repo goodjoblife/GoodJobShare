@@ -8,25 +8,18 @@ import {
 import fetchingStatus from '../constants/status';
 
 const preloadedState = fromJS({
-  groupSortBy: null,
-  order: null,
-  company: null,
-  data: [],
+  companyName: null,
+  data: null,
   status: fetchingStatus.UNFETCHED,
   error: null,
 });
 
 export default createReducer(preloadedState, {
-  [SET_COMPANY_DATA]: (
-    state,
-    { groupSortBy, order, company, data, status, error },
-  ) =>
+  [SET_COMPANY_DATA]: (state, { companyName, data, status, error }) =>
     state
       .set('data', fromJS(data))
       .set('status', status)
       .set('error', error)
-      .set('groupSortBy', groupSortBy)
-      .set('order', order)
-      .set('company', company),
+      .set('companyName', companyName),
   [SET_COMPANY_STATUS]: (state, { status }) => state.set('status', status),
 });

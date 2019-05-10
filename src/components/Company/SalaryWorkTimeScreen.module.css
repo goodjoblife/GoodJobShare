@@ -1,0 +1,81 @@
+@value yellow-bar, gray-dark, main-gray, main-yellow, warning-red from "common/variables.module.css";
+$below-mobile: 550px;
+$below-small: 850px;
+$above-desktop: 1025px;
+$below-desktop: 1024px;
+$block-gutter-l: 70px;
+$block-gutter-m: 40px;
+$block-gutter-s: 20px;
+$page-gutter: 40px;
+$page-gutter-s: 15px;
+$inner-wrap-m: 964px;
+$gray: #b4b4b4;
+$gray-dark: #777;
+$blue: #325bbd;
+$bold: 700;
+
+@define-mixin heading-style {
+  font-size: 2.1em;
+  line-height: 1.25em;
+  letter-spacing: 0.03em;
+  @media (max-width: $below-small) {
+    font-size: 1.8em;
+  }
+}
+
+@define-mixin font-p {
+  font-size: 1.13em;
+  line-height: 1.5em;
+  color: #333;
+  @media (max-width: $below-small) {
+    font-size: 1em;
+  }
+}
+
+@define-mixin font-p-m {
+  font-size: 1em;
+  line-height: 1.6em;
+  color: #333;
+}
+
+@define-mixin hover-color $color {
+  transition: color 0.2s;
+  @media (min-width: $above-desktop) {
+    &:hover {
+      color: $color;
+    }
+  }
+}
+
+.searchResult {
+  margin-bottom: $block-gutter-l;
+  .heading {
+    @media (max-width: $below-mobile) {
+      font-size: 1.5em;
+    }
+  }
+}
+
+.searchNoResult {
+  background-color: #f2f2f2;
+  border: 1px solid border-gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-top: 40px;
+}
+
+.heading {
+  @mixin heading-style;
+  text-align: center;
+  margin-bottom: $block-gutter-m;
+  @media (max-width: $below-mobile) {
+    margin-bottom: $block-gutter-s;
+  }
+}
+
+.fanPageBlock {
+  margin-top: 60px;
+}

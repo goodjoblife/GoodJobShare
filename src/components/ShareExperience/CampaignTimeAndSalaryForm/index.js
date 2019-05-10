@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
+import StaticHelmet from 'common/StaticHelmet';
 import { Heading } from 'common/base';
 import { People } from 'common/icons';
 import Loader from 'common/Loader';
@@ -43,7 +44,7 @@ import {
 
 import salaryHint from '../../../utils/formUtils';
 
-import { HELMET_DATA, SITE_NAME } from '../../../constants/helmetData';
+import { SITE_NAME } from '../../../constants/helmetData';
 import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';
 
 import {
@@ -298,32 +299,34 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       const campaignName = this.props.match.params.campaign_name;
       const campaignInfo = this.props.campaignEntries.get(campaignName).toJS();
       const { formTitle, metaDescription, ogImgUrl } = campaignInfo;
-      const helmetData = {
-        title: formTitle,
-        meta: [
-          { name: 'description', content: metaDescription },
-          { property: 'og:title', content: formatTitle(formTitle, SITE_NAME) },
-          { property: 'og:description', content: metaDescription },
-          {
-            property: 'og:url',
-            content: formatCanonicalPath(
+      return (
+        <Helmet>
+          <title itemProp="name" lang="zh-TW">
+            {formTitle}
+          </title>
+          <meta name="description" content={metaDescription} />
+          <meta
+            property="og:title"
+            content={formatTitle(formTitle, SITE_NAME)}
+          />
+          <meta property="og:description" content={metaDescription} />
+          <meta property="og:image" content={ogImgUrl} />
+          <meta
+            property="og:url"
+            content={formatCanonicalPath(
               `/share/time-and-salary/campaign/${campaignName}`,
-            ),
-          },
-          { property: 'og:image', content: ogImgUrl },
-        ],
-        link: [
-          {
-            rel: 'canonical',
-            href: formatCanonicalPath(
+            )}
+          />
+          <link
+            rel="canonical"
+            href={formatCanonicalPath(
               `/share/time-and-salary/campaign/${campaignName}`,
-            ),
-          },
-        ],
-      };
-      return <Helmet {...helmetData} />;
+            )}
+          />
+        </Helmet>
+      );
     }
-    return <Helmet {...HELMET_DATA.SHARE_TIME_SALARY} />;
+    return <StaticHelmet.ShareSalaryWorkTime />;
   };
 
   render() {
@@ -455,13 +458,6 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
               />
             </div>
           ))}
-
-          <InputTitle text="電子郵件 - 有消息時將通知您" />
-          <TextInput
-            value={email}
-            placeholder="example@email.com"
-            onChange={e => this.handleState('email')(e.target.value)}
-          />
         </IconHeadingBlock>
 
         <SubmitArea onSubmit={this.onSubmit} />

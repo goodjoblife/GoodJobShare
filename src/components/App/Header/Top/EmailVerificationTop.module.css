@@ -1,0 +1,18 @@
+@value main-yellow from 'common/variables.module.css';
+
+.wrapper {
+  cursor: pointer;
+}
+
+.heading {
+  color: white;
+  margin-right: 4px;
+  font-size: 14px;
+}
+
+.button {
+  font-size: 13px;
+  color: main-yellow;
+  font-weight: 700;
+  padding-left: 8px;
+}

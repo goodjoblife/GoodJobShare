@@ -51,9 +51,16 @@ class JobTitle extends React.Component {
 
   render() {
     const { autocompleteItems } = this.state;
-    const { inputTitle, jobTitle, onChange, validator, submitted } = this.props;
+    const {
+      inputTitle,
+      jobTitle,
+      onChange,
+      validator,
+      submitted,
+      className,
+    } = this.props;
     return (
-      <div>
+      <div className={className}>
         <InputTitle text={inputTitle} must />
         <AutoCompleteTextInput
           placeholder="硬體工程師"
@@ -74,6 +81,7 @@ class JobTitle extends React.Component {
 }
 
 JobTitle.propTypes = {
+  className: PropTypes.string,
   inputTitle: PropTypes.string,
   jobTitle: PropTypes.string,
   onChange: PropTypes.func,

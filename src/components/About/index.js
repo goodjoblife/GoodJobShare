@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Helmet from 'react-helmet';
 import { Section, Wrapper, Heading, P } from 'common/base';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import CallToActionBanner from 'common/CallToAction/CallToActionBanner';
 import { Facebook, Email, Github } from 'common/icons';
 import editorStyles from 'common/Editor.module.css';
-import { HELMET_DATA } from '../../constants/helmetData';
+import StaticHelmet from 'common/StaticHelmet';
 import styles from './About.module.css';
 import Timeline from './Timeline';
 
@@ -83,7 +82,7 @@ const data2017 = [
 
 const About = () => (
   <Section Tag="main" pageTop>
-    <Helmet {...HELMET_DATA.ABOUT} />
+    <StaticHelmet.About />
     <Section paddingBottom>
       <CallToActionFolder />
     </Section>

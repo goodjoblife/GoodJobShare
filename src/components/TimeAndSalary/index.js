@@ -1,40 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
-import { Redirect, Switch } from 'react-router';
-import { compose, setStatic } from 'recompose';
-
+import { Switch } from 'react-router';
+import { compose } from 'recompose';
 import Wrapper from 'common/base/Wrapper';
+import { pathnameSelector } from 'common/routing/selectors';
+import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
 import SearchBar from './SearchBar';
 import CallToShareData from './CallToShareData';
-import Banner from '../CampaignTimeAndSalary/Banner';
 import MobileInfoButtons from './MobileInfoButtons';
 import InfoTimeModal from './common/InfoTimeModal';
 import InfoSalaryModal from './common/InfoSalaryModal';
 import withModal from './common/withModal';
-
-import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
-import { imgHost, SITE_NAME } from '../../constants/helmetData';
-import { queryCampaignInfoList } from '../../actions/campaignInfo';
-
-import { pathnameSelector } from 'common/routing/selectors';
-
-const campaignListFromEntries = campaignEntries =>
-  campaignEntries
-    .valueSeq()
-    .map(info => ({
-      name: info.get('name'),
-      title: info.get('title'),
-    }))
-    .toJS();
+import { IMG_HOST, SITE_NAME } from '../../constants/helmetData';
 
 class TimeAndSalary extends Component {
   static propTypes = {
-    campaignEntries: ImmutablePropTypes.map.isRequired,
-    queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
     routes: PropTypes.array,
     location: PropTypes.shape({
       pathname: PropTypes.string,
@@ -55,10 +38,6 @@ class TimeAndSalary extends Component {
     }).isRequired,
   };
 
-  componentDidMount() {
-    this.props.queryCampaignInfoListIfNeeded();
-  }
-
   toggleInfoSalaryModal = () => {
     const { infoSalaryModal } = this.props;
     infoSalaryModal.setIsOpen(!infoSalaryModal.isOpen);
@@ -77,51 +56,40 @@ class TimeAndSalary extends Component {
       '馬上查看薪資、工時資訊以及加班狀況，協助您找到更好的工作！';
 
     return (
-      <Helmet
-        title={title}
-        meta={[
-          { name: 'description', content: description },
-          { property: 'og:title', content: formatTitle(title, SITE_NAME) },
-          { property: 'og:description', content: description },
-          { property: 'og:url', content: url },
-          {
-            property: 'og:image',
-            content: `${imgHost}/og/time-and-salary.jpg`,
-          },
-        ]}
-        link={[{ rel: 'canonical', href: url }]}
-      />
+      <Helmet>
+        <title itemProp="name" lang="zh-TW">
+          {title}
+        </title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
+        <meta property="og:description" content={description} />
+        <meta
+          property="og:image"
+          content={`${IMG_HOST}/og/time-and-salary.jpg`}
+        />
+        <meta property="og:url" content={url} />
+        <link rel="canonical" href={url} />
+      </Helmet>
     );
   };
 
   render() {
-    const { routes, location, staticContext } = this.props;
-    if (!staticContext) {
-      if (location.pathname === '/time-and-salary') {
-        if (location.hash) {
-          const targets = location.hash.split('#');
-          if (targets.length >= 2) {
-            return <Redirect to={`/time-and-salary${targets[1]}`} />;
-          }
-        }
-        return <Redirect to="/time-and-salary/latest" />;
-      }
-    }
-
-    const campaigns = campaignListFromEntries(this.props.campaignEntries);
+    const { routes } = this.props;
+    const pathname = pathnameSelector(this.props);
 
     return (
       <div className={styles.container}>
         {this.renderHelmet()}
-        <Banner campaigns={campaigns} />
         <section className={styles.whiteBackground}>
           <Wrapper size="l" className={styles.showSearchbarWrapper}>
             <CallToShareData />
             <SearchBar />
-            <MobileInfoButtons
-              toggleInfoSalaryModal={this.toggleInfoSalaryModal}
-              toggleInfoTimeModal={this.toggleInfoTimeModal}
-            />
+            {pathname !== '/salary-work-times' && (
+              <MobileInfoButtons
+                toggleInfoSalaryModal={this.toggleInfoSalaryModal}
+                toggleInfoTimeModal={this.toggleInfoTimeModal}
+              />
+            )}
           </Wrapper>
         </section>
         <InfoSalaryModal
@@ -144,12 +112,7 @@ class TimeAndSalary extends Component {
   }
 }
 
-const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
-  return dispatch(queryCampaignInfoList());
-});
-
 const hoc = compose(
-  ssr,
   withModal('infoSalaryModal'),
   withModal('infoTimeModal'),
 );

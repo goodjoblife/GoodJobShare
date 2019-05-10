@@ -11,6 +11,7 @@ const preloadedState = fromJS({
   user: {
     name: null,
     _id: null,
+    email_status: null,
   },
 });
 

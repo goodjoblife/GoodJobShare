@@ -288,7 +288,7 @@ class CampaignTimeAndSalaryBoard extends Component {
             timeAndSalaryBannerStyles.btnS,
             timeAndSalaryBannerStyles.btnYellowLine,
           )}
-          to="/time-and-salary/latest"
+          to="/salary-work-times/latest"
         >
           <Star /> 全站薪資工時
         </Link>

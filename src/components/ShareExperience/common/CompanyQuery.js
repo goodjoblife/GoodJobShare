@@ -60,7 +60,7 @@ class CompanyQuery extends React.Component {
     } = this.props;
     return (
       <div>
-        <InputTitle text="公司/單位 或 統一編號" must />
+        <InputTitle text="公司名稱" must />
         <AutoCompleteTextInput
           placeholder="ＯＯ 股份有限公司"
           value={companyQuery}

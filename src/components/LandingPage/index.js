@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
-import Helmet from 'react-helmet';
 import { compose, setStatic, lifecycle } from 'recompose';
 import { Section, Wrapper, Heading } from 'common/base';
 import ShareExpSection from 'common/ShareExpSection';
@@ -15,7 +14,7 @@ import { queryMenu } from '../../actions/laborRights';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
 import Dashboard from './Dashboard';
-import { HELMET_DATA } from '../../constants/helmetData';
+import StaticHelmet from 'common/StaticHelmet';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
   return Promise.all([
@@ -50,7 +49,7 @@ const LandingPage = ({
     }));
   return (
     <main>
-      <Helmet {...HELMET_DATA.LANDING_PAGE} />
+      <StaticHelmet.LandingPage />
       <Banner />
       <Dashboard
         timeAndSalaryCount={timeAndSalaryCount}

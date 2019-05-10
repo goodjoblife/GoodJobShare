@@ -1,29 +1,29 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';
-import { imgHost, SITE_NAME } from '../../../constants/helmetData';
+import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
+import { IMG_HOST, SITE_NAME } from '../../../constants/helmetData';
 import { toQsString } from './helper';
 
-export default ({ title, pathname, page }) => {
+export default ({ title, pathname, page, dataNum }) => {
+  const helmetTitle = `${title} - 第${page}頁`;
   const search = page === 1 ? '' : `?${toQsString({ page })}`;
   const url = `${formatCanonicalPath(pathname)}${search}`;
-  const description =
-    '馬上查看薪資、工時資訊以及加班狀況，協助您找到更好的工作！';
+  const description = `查詢各行各業的薪水、加班情況、工時資料，共 ${dataNum} 筆資料`;
 
   return (
-    <Helmet
-      title={title}
-      meta={[
-        { name: 'description', content: description },
-        { property: 'og:title', content: formatTitle(title, SITE_NAME) },
-        { property: 'og:description', content: description },
-        { property: 'og:url', content: url },
-        {
-          property: 'og:image',
-          content: `${imgHost}/og/time-and-salary.jpg`,
-        },
-      ]}
-      link={[{ rel: 'canonical', href: url }]}
-    />
+    <Helmet>
+      <title itemProp="name" lang="zh-TW">
+        {helmetTitle}
+      </title>
+      <meta name="description" content={description} />
+      <meta property="og:title" content={formatTitle(helmetTitle, SITE_NAME)} />
+      <meta property="og:description" content={description} />
+      <meta
+        property="og:image"
+        content={`${IMG_HOST}/og/time-and-salary.jpg`}
+      />
+      <meta property="og:url" content={url} />
+      <link rel="canonical" href={url} />
+    </Helmet>
   );
 };

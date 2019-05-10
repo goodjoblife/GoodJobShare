@@ -1,6 +1,6 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory as createHistory } from 'history';
 import R from 'ramda';
 import { fromJS } from 'immutable';
 import { Provider } from 'react-redux';

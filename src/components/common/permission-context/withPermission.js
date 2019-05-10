@@ -35,7 +35,7 @@ const withPermission = compose(
         const { pathname } = location;
         const laborRightsSingleRegex = /\/labor-rights\/.+/;
         const experienceDetailRegex = /\/experiences\/.+/;
-        const timeAndSalaryRegex = /\/time-and-salary\/.+/;
+        const salaryWorkTimeRegex = /\/salary-work-times.*/;
 
         // 根據路徑，去更新相關的觀看權限 state
         if (laborRightsSingleRegex.test(pathname)) {
@@ -56,7 +56,7 @@ const withPermission = compose(
             setCanView({ canViewExperirenceDetail: hasPermission });
             return;
           }
-        } else if (timeAndSalaryRegex.test(pathname)) {
+        } else if (salaryWorkTimeRegex.test(pathname)) {
           // 假如是薪資工時查詢頁，localStorage 沒值的話，不更新觀看權限 state。因此不會做阻擋，但是馬上就更新 localStorage。
           const viewedTimeAndSalary = localStorage.getItem(
             'viewedTimeAndSalary',

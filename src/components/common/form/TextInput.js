@@ -13,6 +13,7 @@ const TextInput = ({
   style,
   min,
   max,
+  id,
 }) => (
   <div
     style={{
@@ -28,6 +29,7 @@ const TextInput = ({
       onChange={onChange}
       min={min}
       max={max}
+      id={id}
     />
     {warningWording ? (
       <p
@@ -51,6 +53,7 @@ TextInput.propTypes = {
   style: PropTypes.object,
   min: PropTypes.number,
   max: PropTypes.number,
+  id: PropTypes.string,
 };
 
 TextInput.defaultProps = {
