@@ -17,17 +17,9 @@ const CallToLoginShareButton = ({
   FB,
 }) => {
   const onClick = () => {
-    login(FB)
-      .then(status => {
-        if (status === authStatus.CONNECTED) {
-          window.location.reload();
-        } else {
-          throw new Error('can not login');
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    login(FB).catch(e => {
+      console.log(e);
+    });
   };
 
   return (
