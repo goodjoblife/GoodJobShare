@@ -2,6 +2,9 @@ import R from 'ramda';
 
 import fetchUtil from 'utils/fetchUtil';
 
+import graphqlClient from 'utils/graphqlClient';
+import { getExperienceQuery } from 'graphql/experience';
+
 const endpoint = '/experiences';
 
 const getEndpoint = ({ id, limit = 3 }) =>
@@ -84,7 +87,13 @@ const patchReply = ({ id, status, token }) =>
   });
 
 export const getExperience = ({ id, token }) =>
-  fetchUtil(`/experiences/${id}`).get({ token });
+  graphqlClient({
+    query: getExperienceQuery,
+    variables: { id },
+    token,
+  })
+    .then(data => data.experience)
+    .then(({ id, ...rest }) => ({ _id: id, ...rest }));
 
 export const newExperienceSearchBy = ({ body }) =>
   fetchUtil('/graphql').post({ body });
