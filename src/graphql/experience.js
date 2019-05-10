@@ -1,6 +1,7 @@
 export const getExperienceQuery = `
 query($id:ID!) {
   experience(id:$id) {
+    id
     type
     company {
       name
