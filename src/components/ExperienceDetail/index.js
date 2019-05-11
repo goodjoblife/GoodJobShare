@@ -97,11 +97,7 @@ class ExperienceDetail extends Component {
   componentDidMount() {
     const experienceId = experienceIdSelector(this.props);
 
-    if (
-      this.props.experienceDetail.getIn(['experience', '_id']) !== experienceId
-    ) {
-      this.props.fetchExperience(experienceId);
-    }
+    this.props.fetchExperience(experienceId);
     this.props.fetchReplies(experienceId);
     this.props.fetchPermission();
 
