@@ -4,39 +4,29 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import R from 'ramda';
 import qs from 'qs';
-import { compose, setStatic } from 'recompose';
-
+import { compose, withHandlers, setStatic, lifecycle } from 'recompose';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
-
 import Loader from 'common/Loader';
 import { Section, Wrapper, Heading, P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
-
-import styles from './ExperienceSearch.module.css';
-import Searchbar from './Searchbar';
-import ExperienceBlock from './ExperienceBlock';
+import Pagination from 'common/Pagination';
+import { pathnameSelector, querySelector } from 'common/routing/selectors';
+import getScale from 'utils/numberUtils';
+import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { fetchExperiences as fetchExperiencesAction } from '../../actions/experienceSearch';
-import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { IMG_HOST, SITE_NAME } from '../../constants/helmetData';
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 import { PAGE_COUNT } from '../../constants/experienceSearch';
 import status from '../../constants/status';
+import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
+import styles from './ExperienceSearch.module.css';
+import Searchbar from './Searchbar';
+import ExperienceBlock from './ExperienceBlock';
 import Filter from './Filter';
 import { Banner1, Banner2 } from './Banners';
-
-import Pagination from '../common/Pagination';
-
-import getScale from '../../utils/numberUtils';
-
-import { toQsString, queryParser } from './helper';
-import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
-
-import {
-  pathnameSelector,
-  searchSelector,
-  querySelector,
-} from 'common/routing/selectors';
+import { queryParser, toQsString } from './helper';
+import withRouteParameter from './withRouteParameter';
 
 const SORT = {
   CREATED_AT: 'created_at',
@@ -58,64 +48,25 @@ const BANNER_LOCATION = 10;
 
 class ExperienceSearch extends Component {
   static propTypes = {
-    fetchExperiences: PropTypes.func.isRequired,
-    getNewSearchBy: PropTypes.func.isRequired, // TODO: rename, eg: queryKeywords
     experienceSearch: ImmutablePropTypes.map.isRequired,
     location: PropTypes.shape({
-      search: PropTypes.string,
       pathname: PropTypes.string,
     }),
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }),
     loadingStatus: PropTypes.string,
+    changeSearchTypeAndSort: PropTypes.func.isRequired,
+    changeSearchQueryAndSearchBy: PropTypes.func.isRequired,
+    searchBy: PropTypes.string.isRequired,
+    searchQuery: PropTypes.string.isRequired,
+    sort: PropTypes.string.isRequired,
+    page: PropTypes.number.isRequired,
+    searchType: PropTypes.array.isRequired,
   };
 
-  componentDidMount() {
-    const { fetchExperiences } = this.props;
-    const {
-      searchBy,
-      searchQuery,
-      sort,
-      page,
-      searchType: searchTypeStr,
-    } = queryParser(querySelector(this.props));
-    const searchType = R.split(',', searchTypeStr);
-
-    fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType);
-    this.props.getNewSearchBy(searchBy);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (searchSelector(this.props) !== searchSelector(prevProps)) {
-      const { fetchExperiences } = this.props;
-      const {
-        searchBy,
-        searchQuery,
-        sort,
-        page,
-        searchType: searchTypeStr,
-      } = queryParser(querySelector(this.props));
-      const searchType = R.split(',', searchTypeStr);
-
-      fetchExperiences(
-        page,
-        PAGE_COUNT,
-        sort,
-        searchBy,
-        searchQuery,
-        searchType,
-      );
-    }
-  }
-
   getCanonicalUrl = () => {
-    const { searchType, searchQuery, searchBy, sort, page } = queryParser(
-      querySelector(this.props),
-    );
+    const { searchType, searchQuery, searchBy, sort, page } = this.props;
 
     const params = {
-      type: searchType || 'interview,work',
+      type: R.join(',')(searchType) || 'interview,work',
       q: searchQuery || '',
       s_by: searchBy || 'job_title',
       sort: sort || 'created_at',
@@ -127,78 +78,24 @@ class ExperienceSearch extends Component {
   };
 
   handleSearchTypeChange = ({ searchType, sort }) => {
-    const pathname = pathnameSelector(this.props);
-    const { searchBy, searchQuery } = queryParser(querySelector(this.props));
-
-    const page = 1;
-
-    const queryString = toQsString({
-      page,
-      sort,
-      searchBy,
-      searchQuery,
-      searchType: R.join(',')(searchType),
-    });
-    const url = `${pathname}?${queryString}`;
-    this.props.history.push(url);
+    this.props.changeSearchTypeAndSort({ searchType, sort });
   };
 
   handleSearchbarKeywordClick = ({ keyword, searchBy }) => {
-    const pathname = pathnameSelector(this.props);
-    // pickup parameter from query
-    const { sort, searchType } = queryParser(querySelector(this.props));
-    // reset to initial page
-    const page = 1;
-
-    const queryString = toQsString({
-      sort,
-      searchBy,
+    this.props.changeSearchQueryAndSearchBy({
       searchQuery: keyword,
-      page,
-      searchType,
+      searchBy,
     });
-    const url = `${pathname}?${queryString}`;
-    this.props.history.push(url);
-
     this.searchTrack({ searchBy, keyword });
   };
 
   handleSearchBy = ({ searchQuery, searchBy }) => {
-    const { getNewSearchBy } = this.props;
-    const pathname = pathnameSelector(this.props);
-    const { sort, searchType } = queryParser(querySelector(this.props));
-
-    const queryString = toQsString({
-      sort,
-      searchBy,
-      searchQuery,
-      page: 1,
-      searchType,
-    });
-
-    const url = `${pathname}?${queryString}`;
-
-    getNewSearchBy(searchBy);
-    this.props.history.push(url);
+    this.props.changeSearchQueryAndSearchBy({ searchQuery, searchBy });
     this.searchTrack({ searchBy, searchQuery });
   };
 
   handleSearchbarSubmit = ({ searchBy, searchQuery }) => {
-    const pathname = pathnameSelector(this.props);
-    // pickup parameter from query
-    const { sort, searchType } = queryParser(querySelector(this.props));
-    // reset to initial page
-    const page = 1;
-
-    const queryString = toQsString({
-      sort,
-      searchBy,
-      searchQuery,
-      page,
-      searchType,
-    });
-    const url = `${pathname}?${queryString}`;
-    this.props.history.push(url);
+    this.props.changeSearchQueryAndSearchBy({ searchQuery, searchBy });
     this.searchTrack({ searchBy, searchQuery });
   };
 
@@ -216,23 +113,7 @@ class ExperienceSearch extends Component {
   };
 
   handleSortClick = ({ searchType, sort }) => {
-    const pathname = pathnameSelector(this.props);
-    const { searchBy } = queryParser(querySelector(this.props));
-
-    // reset searchQuery
-    const searchQuery = '';
-    const page = 1;
-
-    const queryString = toQsString({
-      sort,
-      searchBy,
-      searchQuery,
-      page,
-      searchType: R.join(',')(searchType),
-    });
-
-    const url = `${pathname}?${queryString}`;
-    this.props.history.push(url);
+    this.props.changeSearchTypeAndSort({ searchType, sort });
 
     if (sort === SORT.CREATED_AT) {
       ReactGA.event({
@@ -250,12 +131,10 @@ class ExperienceSearch extends Component {
   // 給 Pagination 建立分頁的連結用
   createPageLinkTo = nextPage => {
     const pathname = pathnameSelector(this.props);
-    const { searchBy, searchQuery, sortBy, searchType } = queryParser(
-      querySelector(this.props),
-    );
+    const { searchBy, searchQuery, sort, searchType } = this.props;
 
     const queryString = toQsString({
-      sort: sortBy,
+      sort,
       searchBy,
       searchQuery,
       searchType,
@@ -297,15 +176,12 @@ class ExperienceSearch extends Component {
 
   renderHelmet = () => {
     // TODO 將邏輯拆成 1. 公司職稱搜尋 2. 非搜尋，減少 if/else
-    const { searchType, searchQuery, sortBy, page } = queryParser(
-      querySelector(this.props),
-    );
+    const { searchType, searchQuery, sortBy, page } = this.props;
 
     const count = this.props.experienceSearch.get('experienceCount');
     const scale = getScale(count);
     const url = this.getCanonicalUrl();
     const searchTypeName = searchType
-      .split(',')
       .sort()
       .reduce((names, type) => {
         if (searchTypeMap[type]) {
@@ -352,9 +228,7 @@ class ExperienceSearch extends Component {
     const data = experienceSearch.toJS();
     const experiences = data.experiences || [];
 
-    const { searchQuery, searchBy, sort, searchType } = queryParser(
-      querySelector(this.props),
-    );
+    const { searchQuery, searchBy, sort, searchType, page } = this.props;
 
     return (
       <Section Tag="main" pageTop paddingBottom>
@@ -364,7 +238,7 @@ class ExperienceSearch extends Component {
             <aside className={styles.aside}>
               <Filter
                 sort={sort}
-                searchType={searchType.split(',')}
+                searchType={searchType}
                 onSeachTypeChange={this.handleSearchTypeChange}
                 onSortClick={this.handleSortClick}
                 className={styles.filter}
@@ -396,7 +270,7 @@ class ExperienceSearch extends Component {
               <Pagination
                 totalCount={data.experienceCount}
                 unit={PAGE_COUNT}
-                currentPage={data.currentPage}
+                currentPage={page}
                 createPageLinkTo={this.createPageLinkTo}
               />
 
@@ -419,7 +293,7 @@ class ExperienceSearch extends Component {
               <Pagination
                 totalCount={data.experienceCount}
                 unit={PAGE_COUNT}
-                currentPage={data.currentPage}
+                currentPage={page}
                 createPageLinkTo={this.createPageLinkTo}
               />
             </section>
@@ -434,14 +308,9 @@ class ExperienceSearch extends Component {
 }
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const {
-    searchBy,
-    searchQuery,
-    sort,
-    page,
-    searchType: seachTypeStr,
-  } = queryParser(querySelector(props));
-  const searchType = R.split(',', seachTypeStr);
+  const { searchBy, searchQuery, sort, page, searchType } = queryParser(
+    querySelector(props),
+  );
 
   return dispatch(
     fetchExperiencesAction(
@@ -455,6 +324,63 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   );
 });
 
-const hoc = compose(ssr);
+const queryData = lifecycle({
+  componentDidMount() {
+    const { fetchExperiences, getNewSearchBy } = this.props;
+    const { searchBy, searchQuery, sort, page, searchType } = this.props;
+
+    fetchExperiences(page, PAGE_COUNT, sort, searchBy, searchQuery, searchType);
+    getNewSearchBy(searchBy);
+  },
+  componentDidUpdate(prevProps) {
+    const props = R.props([
+      'searchBy',
+      'searchQuery',
+      'sort',
+      'page',
+      'searchType',
+    ]);
+    const propsEq = (a, b) => R.equals(props(a), props(b));
+    const { fetchExperiences, getNewSearchBy } = this.props;
+
+    if (!propsEq(this.props, prevProps)) {
+      const { searchBy, searchQuery, sort, page, searchType } = this.props;
+
+      fetchExperiences(
+        page,
+        PAGE_COUNT,
+        sort,
+        searchBy,
+        searchQuery,
+        searchType,
+      );
+    }
+
+    if (!R.eqProps('searchBy')(this.props, prevProps)) {
+      const { searchBy } = this.props;
+      getNewSearchBy(searchBy);
+    }
+  },
+});
+
+const hoc = compose(
+  ssr,
+  withRouteParameter,
+  withHandlers({
+    changeSearchTypeAndSort: ({ changeRouteParameter }) => ({
+      searchType,
+      sort,
+    }) => {
+      changeRouteParameter({ page: 1, searchType, sort });
+    },
+    changeSearchQueryAndSearchBy: ({ changeRouteParameter }) => ({
+      searchQuery,
+      searchBy,
+    }) => {
+      changeRouteParameter({ page: 1, searchQuery, searchBy });
+    },
+  }),
+  queryData,
+);
 
 export default hoc(ExperienceSearch);
