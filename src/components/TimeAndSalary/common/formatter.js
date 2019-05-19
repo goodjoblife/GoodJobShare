@@ -141,7 +141,7 @@ export const getAboutThisJobButton = toggleAboutThisJobModal => d => {
   const aboutThisJob = d.about_this_job;
   if (!aboutThisJob) return null;
 
-  const title = `${d.company.name} ${d.job_title}`;
+  const title = `${d.company.name} ${d.job_title.name}`;
   return (
     <div onClick={() => toggleAboutThisJobModal(aboutThisJob, title)}>
       <MagnifierPlus style={{ width: 23, height: 23 }} />

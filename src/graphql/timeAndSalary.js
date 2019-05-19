@@ -26,6 +26,7 @@ query($start: Int!, $limit: Int!) {
       month
     }
     estimated_hourly_wage
+    about_this_job
   }
 }
 `;
