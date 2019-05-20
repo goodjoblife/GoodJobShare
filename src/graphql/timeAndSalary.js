@@ -1,3 +1,36 @@
+export const getSalaryWorkTimeCount = `
+{
+  salary_work_time_count
+}
+`;
+
+export const getSalaryWorkTimes = `
+query($start: Int!, $limit: Int!) {
+  salary_work_time_count
+  salary_work_times(start: $start, limit: $limit) {
+    company {
+      name
+    }
+    job_title {
+      name
+    }
+    overtime_frequency
+    salary {
+      type
+      amount
+    }
+    sector
+    week_work_time
+    data_time {
+      year
+      month
+    }
+    estimated_hourly_wage
+    about_this_job
+  }
+}
+`;
+
 export const getSearchCompanyQuery = `
   query($companyName:String!) {
     search_companies(query:$companyName) {
