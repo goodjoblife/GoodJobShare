@@ -22,7 +22,7 @@ const Modal = ({ children, isOpen, hasClose, close, size, onClickOutside }) => (
             <img
               src={Cross}
               className={styles.close__icon}
-              onClick={close}
+              onClick={e => e.stopPropagation() || close()}
               alt="close"
             />
           </div>
