@@ -6,11 +6,14 @@ import Helmet from 'react-helmet';
 import ReactPixel from 'react-facebook-pixel';
 import { Element as ScrollElement } from 'react-scroll';
 import { compose, setStatic, withState, withHandlers } from 'recompose';
+import cn from 'classnames';
 
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
+import ReportDetail from 'common/reaction/ReportDetail';
+import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
 
 import Article from './Article';
@@ -20,6 +23,8 @@ import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
 import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
 import ExperienceHeading from './Heading';
 import ReportInspectModal from './ReactionZone/ReportInspectModal';
+import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
+import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 
 import status from '../../constants/status';
 import { fetchExperience } from '../../actions/experienceDetail';
@@ -206,6 +211,37 @@ class ExperienceDetail extends Component {
     }
   };
 
+  renderReportZone = () => {
+    const { toggleReportInspectModal } = this.props;
+    return (
+      <React.Fragment>
+        <div className={styles.functionButtons}>
+          <ReportDetail
+            label="檢舉"
+            onClick={() => {
+              this.setModalClosableOnClickOutside(false);
+              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
+            }}
+            className={cn(styles.button, ReactionZoneStyles.button)}
+          />
+          <PopoverToggle
+            className={cn(styles.button, ReactionZoneStyles.moreButton)}
+            popoverClassName={ReactionZoneStyles.popover}
+            popoverContent={
+              <ReactionZoneOtherOptions
+                toggleReportInspectModal={toggleReportInspectModal}
+              />
+            }
+          >
+            <div className={ReactionZoneStyles.popoverIcon}>
+              <span />
+            </div>
+          </PopoverToggle>
+        </div>
+      </React.Fragment>
+    );
+  };
+
   renderHelmet = () => {
     if (this.props.experienceDetail) {
       const experience = this.props.experienceDetail.toJS().experience;
@@ -317,14 +353,10 @@ class ExperienceDetail extends Component {
                     className={styles.heading}
                   />
                 </div>
+                {this.renderReportZone()}
                 <Article
                   experience={experience}
                   hideContent={!canViewExperirenceDetail}
-                  openReportDetail={() => {
-                    this.setModalClosableOnClickOutside(false);
-                    this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
-                  }}
-                  toggleReportInspectModal={toggleReportInspectModal}
                 />
               </Fragment>
             )}

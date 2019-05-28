@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
 
 import { Heading, P } from 'common/base';
 import GradientMask from 'common/GradientMask';
@@ -10,40 +9,8 @@ import SectionBlock from './SectionBlock';
 import QABlock from './QABlock';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 import { MAX_WORDS_IF_HIDDEN } from '../../../constants/hideContent';
-import ReportDetail from 'common/reaction/ReportDetail';
-import PopoverToggle from 'common/PopoverToggle';
-import ReactionZoneOtherOptions from '../ReactionZone/ReactionZoneOtherOptions';
-import ReactionZoneStyles from '../ReactionZone/ReactionZone.module.css';
 
 class Article extends React.Component {
-  renderReportZone = () => {
-    const { openReportDetail, toggleReportInspectModal } = this.props;
-    return (
-      <React.Fragment>
-        <div className={styles.functionButtons}>
-          <ReportDetail
-            label="檢舉"
-            onClick={openReportDetail}
-            className={cn(styles.button, ReactionZoneStyles.button)}
-          />
-          <PopoverToggle
-            className={cn(styles.button, ReactionZoneStyles.moreButton)}
-            popoverClassName={ReactionZoneStyles.popover}
-            popoverContent={
-              <ReactionZoneOtherOptions
-                toggleReportInspectModal={toggleReportInspectModal}
-              />
-            }
-          >
-            <div className={ReactionZoneStyles.popoverIcon}>
-              <span />
-            </div>
-          </PopoverToggle>
-        </div>
-      </React.Fragment>
-    );
-  };
-
   renderSections = () => {
     const { experience, hideContent } = this.props;
     let toHide = false;
@@ -92,7 +59,6 @@ class Article extends React.Component {
       <div className={styles.container}>
         <ArticleInfo experience={experience} />
         <section className={styles.main}>
-          {this.renderReportZone()}
           <div className={styles.article}>
             <Heading size="m" className={styles.heading}>
               {experience.title}
@@ -126,8 +92,6 @@ class Article extends React.Component {
 Article.propTypes = {
   experience: PropTypes.object.isRequired,
   hideContent: PropTypes.bool.isRequired,
-  openReportDetail: PropTypes.func.isRequired,
-  toggleReportInspectModal: PropTypes.func.isRequired,
 };
 
 export default Article;
