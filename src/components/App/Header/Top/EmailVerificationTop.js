@@ -11,13 +11,14 @@ import styles from './EmailVerificationTop.module.css';
 import Modal from '../../../common/Modal';
 import VerifyEmailForm from '../../../EmailVerification/VerifyEmailForm';
 
-import { getUserName } from '../../../../selectors/authSelector';
+import { getUserName, getUserEmail } from '../../../../selectors/authSelector';
 
 import { sendVerifyEmail } from '../../../../actions/emailVerify';
 
 const EmailVerificationTop = ({
   isSentVerificationEmail,
   userName,
+  userEmail,
   sendVerifyEmail,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,7 +47,11 @@ const EmailVerificationTop = ({
       </Wrapper>
       {isModalOpen ? (
         <Modal isOpen={isModalOpen} close={closeModal} size="m">
-          <VerifyEmailForm closeModal={closeModal} onSubmit={submitEmail} />
+          <VerifyEmailForm
+            userEmail={userEmail}
+            closeModal={closeModal}
+            onSubmit={submitEmail}
+          />
         </Modal>
       ) : null}
     </React.Fragment>
@@ -61,6 +66,7 @@ EmailVerificationTop.propTypes = {
 
 const mapStateToProps = (state, ownProps) => ({
   userName: getUserName(state),
+  userEmail: getUserEmail(state),
 });
 
 const mapDispatchToProps = {

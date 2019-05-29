@@ -16,8 +16,13 @@ const stageMap = {
   LOADING: 'LOADING',
 };
 
-const VerifyEmailForm = ({ onSubmit, closeModal, location: { pathname } }) => {
-  const [emailValue, setEmailValue] = useState('');
+const VerifyEmailForm = ({
+  userEmail,
+  onSubmit,
+  closeModal,
+  location: { pathname },
+}) => {
+  const [emailValue, setEmailValue] = useState(userEmail || '');
   const [stage, setStage] = useState(stageMap.FORM);
 
   const handleEmailInput = useCallback(e => setEmailValue(e.target.value), [
