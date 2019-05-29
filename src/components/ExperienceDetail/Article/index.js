@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { Heading, P } from 'common/base';
 import GradientMask from 'common/GradientMask';
 import styles from './Article.module.css';
-import Aside from './Aside';
+import ArticleInfo from './ArticleInfo';
 import SectionBlock from './SectionBlock';
 import QABlock from './QABlock';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
@@ -90,7 +90,7 @@ class Article extends React.Component {
     const { experience, hideContent } = this.props;
     return (
       <div className={styles.container}>
-        <Aside experience={experience} />
+        <ArticleInfo experience={experience} />
         <section className={styles.main}>
           {this.renderReportZone()}
           <div className={styles.article}>
