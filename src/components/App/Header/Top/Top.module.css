@@ -1,4 +1,4 @@
-@value TOP_HEIGHT, main-yellow from 'common/variables.module.css';
+@value TOP_HEIGHT from 'common/variables.module.css';
 
 .root {
   display: block;
@@ -21,28 +21,6 @@
 .inner {
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 100%;
-}
-
-.heading {
-  color: main-yellow;
-  margin-right: 16px;
-  font-size: 14px;
-}
-
-.subheading {
-  color: #eee;
-  font-size: 13px;
-  margin-left: 16px;
-
-  @media (max-width: 1280px) {
-    display: none;
-  }
-}
-
-.button {
-  font-size: 13px;
-  color: main-yellow;
-  font-weight: 700;
-  padding-left: 8px;
 }

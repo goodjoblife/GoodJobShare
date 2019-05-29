@@ -13,6 +13,9 @@ const renameObject = renameKeys({
 export const toQsString = R.compose(
   qs.stringify,
   renameObject,
+  R.evolve({
+    searchType: R.join(','),
+  }),
 );
 
 const wrapDefaultTo = defaultValue => value => {
@@ -33,15 +36,16 @@ export const searchQuerySelector = qsSelector('q', '');
 export const searchBySelector = qsSelector('s_by', 'job_title');
 export const sortBySelector = qsSelector('sort', 'created_at');
 export const sortSelector = qsSelector('sort', 'created_at');
-export const pageSelector = qsSelector('p', 1);
+export const pageSelector = R.compose(
+  parseInt,
+  qsSelector('p', 1),
+);
 export const searchTypeSelector = R.compose(
+  R.split(','),
   qsSelector('type', 'interview,work,intern'),
 );
 
 export const queryParser = query => ({
-  get sortBy() {
-    return sortBySelector(query);
-  },
   get sort() {
     return sortSelector(query);
   },

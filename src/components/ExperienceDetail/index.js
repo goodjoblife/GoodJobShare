@@ -5,7 +5,7 @@ import R from 'ramda';
 import Helmet from 'react-helmet';
 import ReactPixel from 'react-facebook-pixel';
 import { Element as ScrollElement } from 'react-scroll';
-import { compose, setStatic } from 'recompose';
+import { compose, setStatic, withState, withHandlers } from 'recompose';
 
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
@@ -19,6 +19,7 @@ import BackToList from './BackToList';
 import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
 import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
 import ExperienceHeading from './Heading';
+import ReportInspectModal from './ReactionZone/ReportInspectModal';
 
 import status from '../../constants/status';
 import { fetchExperience } from '../../actions/experienceDetail';
@@ -78,6 +79,8 @@ class ExperienceDetail extends Component {
     }),
     authStatus: PropTypes.string,
     canViewExperirenceDetail: PropTypes.bool.isRequired,
+    isInspectReportOpen: PropTypes.bool.isRequired,
+    toggleReportInspectModal: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -94,11 +97,7 @@ class ExperienceDetail extends Component {
   componentDidMount() {
     const experienceId = experienceIdSelector(this.props);
 
-    if (
-      this.props.experienceDetail.getIn(['experience', '_id']) !== experienceId
-    ) {
-      this.props.fetchExperience(experienceId);
-    }
+    this.props.fetchExperience(experienceId);
     this.props.fetchReplies(experienceId);
     this.props.fetchPermission();
 
@@ -256,7 +255,13 @@ class ExperienceDetail extends Component {
   };
 
   render() {
-    const { likeExperience, likeReply, canViewExperirenceDetail } = this.props;
+    const {
+      likeExperience,
+      likeReply,
+      canViewExperirenceDetail,
+      isInspectReportOpen,
+      toggleReportInspectModal,
+    } = this.props;
     const id = experienceIdSelector(this.props);
 
     const {
@@ -311,16 +316,21 @@ class ExperienceDetail extends Component {
                   />
                 </div>
                 <Article
-                  id={id}
                   experience={experience}
                   hideContent={!canViewExperirenceDetail}
                   openReportDetail={() => {
                     this.setModalClosableOnClickOutside(false);
                     this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
                   }}
+                  toggleReportInspectModal={toggleReportInspectModal}
                 />
               </Fragment>
             )}
+            <ReportInspectModal
+              id={id}
+              isOpen={isInspectReportOpen}
+              toggleReportInspectModal={toggleReportInspectModal}
+            />
 
             <LikeZone experience={experience} likeExperience={likeExperience} />
           </Wrapper>
@@ -358,6 +368,15 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
 const hoc = compose(
   ssr,
   withPermission,
+  withState('isInspectReportOpen', 'setIsInspectReportOpen', false),
+  withHandlers({
+    toggleReportInspectModal: ({
+      isInspectReportOpen,
+      setIsInspectReportOpen,
+    }) => () => {
+      setIsInspectReportOpen(!isInspectReportOpen);
+    },
+  }),
 );
 
 export default hoc(ExperienceDetail);

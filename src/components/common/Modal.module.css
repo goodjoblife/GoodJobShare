@@ -51,6 +51,14 @@ $orange: #ec7910;
   }
 }
 
+.m {
+  width: 550px;
+
+  @media (max-width: 550px) {
+    width: 90%;
+  }
+}
+
 .close {
   display: block;
   text-align: right;

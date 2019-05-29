@@ -1,0 +1,46 @@
+@value main-yellow, main-orange from "common/variables.module.css";
+
+.root {
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titleArea {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.content {
+  background: white;
+  padding: 55px 70px 70px;
+  margin-bottom: 32px;
+  width: 550px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (max-width: 550px) {
+    width: 90%;
+  }
+}
+
+.checked {
+  width: 82px;
+  height: 82px;
+  fill: main-yellow;
+  margin-bottom: 40px;
+}
+
+.warning {
+  width: 82px;
+  height: 82px;
+  fill: main-orange;
+  margin-bottom: 40px;
+}
+
+.footer {
+  display: flex;
+}
