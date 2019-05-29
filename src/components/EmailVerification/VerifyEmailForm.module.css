@@ -11,3 +11,12 @@
   width: 100%;
   margin-bottom: 30px;
 }
+
+.warningText {
+  color: red;
+  margin-top: 5px;
+}
+
+.hidden {
+  display: none;
+}

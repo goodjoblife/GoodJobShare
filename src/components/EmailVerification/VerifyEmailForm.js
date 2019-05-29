@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import { withRouter } from 'react-router';
 
 import Heading from 'common/base/Heading';
@@ -7,6 +8,8 @@ import P from 'common/base/P';
 import TextInput from 'common/form/TextInput';
 import Button from 'common/button/Button';
 import Loading from 'common/Loader';
+
+import { validateEmail } from 'utils/dataCheckUtil';
 
 import styles from './VerifyEmailForm.module.css';
 
@@ -24,28 +27,41 @@ const VerifyEmailForm = ({
 }) => {
   const [emailValue, setEmailValue] = useState(userEmail || '');
   const [stage, setStage] = useState(stageMap.FORM);
+  const [emailValueFormatValid, setEmailValueFormatValid] = useState(true);
 
-  const handleEmailInput = useCallback(e => setEmailValue(e.target.value), [
-    setEmailValue,
-  ]);
+  const handleEmailInput = useCallback(
+    e => {
+      setEmailValue(e.target.value);
+      setEmailValueFormatValid(true);
+    },
+    [setEmailValue, setEmailValueFormatValid],
+  );
   const handleSubmit = useCallback(
     e => {
-      setStage(stageMap.LOADING);
-      onSubmit({ email: emailValue, redirectUrl: pathname }).finally(() =>
-        setStage(stageMap.SUCCESS),
-      );
-      e.preventDefault();
+      if (!validateEmail(emailValue)) {
+        setEmailValueFormatValid(false);
+      } else {
+        setStage(stageMap.LOADING);
+        onSubmit({ email: emailValue, redirectUrl: pathname }).finally(() =>
+          setStage(stageMap.SUCCESS),
+        );
+        e.preventDefault();
+      }
     },
-    [onSubmit, emailValue, setStage, pathname],
+    [setEmailValueFormatValid, onSubmit, emailValue, setStage, pathname],
   );
 
   const handleReSubmit = useCallback(
     e => {
-      setStage(stageMap.LOADING);
+      if (!validateEmail(emailValue)) {
+        setEmailValueFormatValid(false);
+      } else {
+        setStage(stageMap.LOADING);
 
-      onSubmit({ email: emailValue, redirectUrl: pathname }).finally(() =>
-        setStage(stageMap.SUCCESS),
-      );
+        onSubmit({ email: emailValue, redirectUrl: pathname }).finally(() =>
+          setStage(stageMap.SUCCESS),
+        );
+      }
     },
     [onSubmit, emailValue, pathname],
   );
@@ -118,7 +134,7 @@ const VerifyEmailForm = ({
     case stageMap.FORM:
     default:
       return (
-        <form onSubmit={handleSubmit} className={styles.root}>
+        <section className={styles.root}>
           <Heading
             size="l"
             style={{
@@ -151,6 +167,15 @@ const VerifyEmailForm = ({
               value={emailValue}
               onChange={handleEmailInput}
             />
+            <div
+              className={
+                emailValueFormatValid
+                  ? cn(styles.hidden, styles.warningText)
+                  : styles.warningText
+              }
+            >
+              E-mail 格式錯誤
+            </div>
           </div>
           <Button
             circleSize="lg"
@@ -158,10 +183,11 @@ const VerifyEmailForm = ({
             style={{
               marginBottom: '10px',
             }}
+            onClick={handleSubmit}
           >
             發送認證信
           </Button>
-        </form>
+        </section>
       );
   }
 };
