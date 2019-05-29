@@ -301,7 +301,7 @@ class ExperienceDetail extends Component {
     return (
       <main>
         {this.renderHelmet()}
-        <Section bg="white" paddingBottom pageTop>
+        <Section bg="white" paddingBottom className={styles.section}>
           <Wrapper size="m">
             {/* 文章區塊  */}
             {experienceStatus === status.FETCHING ? (
@@ -309,7 +309,9 @@ class ExperienceDetail extends Component {
             ) : (
               <Fragment>
                 <div className={styles.headingBlock}>
-                  <BackToList backable={backable} className={styles.back} />
+                  <div>
+                    <BackToList backable={backable} className={styles.back} />
+                  </div>
                   <ExperienceHeading
                     experience={experience}
                     className={styles.heading}

@@ -1,19 +1,11 @@
 .headingBlock {
   position: relative;
-  @media (min-width: 851px) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 }
 
 .back {
-  @media (min-width: 851px) {
-    position: absolute;
-    top: 11px;
-    left: 0;
-  }
-  @media (max-width: 850px) {
-    margin-bottom: 16px;
-  }
+  margin-bottom: 25px;
+}
+
+.section {
+  margin-top: 25px;
 }
