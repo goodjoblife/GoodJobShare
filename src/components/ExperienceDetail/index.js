@@ -302,7 +302,7 @@ class ExperienceDetail extends Component {
       <main>
         {this.renderHelmet()}
         <Section bg="white" paddingBottom pageTop>
-          <Wrapper size="l">
+          <Wrapper size="m">
             {/* 文章區塊  */}
             {experienceStatus === status.FETCHING ? (
               <Loader />
