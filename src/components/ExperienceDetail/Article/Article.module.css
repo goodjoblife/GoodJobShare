@@ -6,36 +6,13 @@ $paddingS: 16px;
 .container {
   display: flex;
   border: 1px solid border-gray;
-
-  @media (max-width: 850px) {
-    flex-direction: column;
-  }
+  flex-direction: column;
 }
 
-.aside {
-  width: 345px;
+.info {
+  width: 100%;
   background-color: white-light;
-  padding: $padding;
-
-  @media (max-width: 1280px) {
-    width: 30%;
-  }
-
-  @media (max-width: 850px) {
-    width: 100%;
-  }
-
-  @media (max-width: 550px) {
-    padding: $padding $paddingS;
-  }
-}
-
-.infoList {
-  @media (max-width: 850px) {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: -32px;
-  }
+  padding: 25px $padding;
 }
 
 .main {
