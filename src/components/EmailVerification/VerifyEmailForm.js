@@ -38,6 +38,7 @@ const VerifyEmailForm = ({
   );
   const handleSubmit = useCallback(
     e => {
+      e.preventDefault();
       if (!validateEmail(emailValue)) {
         setEmailValueFormatValid(false);
       } else {
@@ -45,7 +46,6 @@ const VerifyEmailForm = ({
         onSubmit({ email: emailValue, redirectUrl: pathname }).finally(() =>
           setStage(stageMap.SUCCESS),
         );
-        e.preventDefault();
       }
     },
     [setEmailValueFormatValid, onSubmit, emailValue, setStage, pathname],
@@ -134,7 +134,7 @@ const VerifyEmailForm = ({
     case stageMap.FORM:
     default:
       return (
-        <section className={styles.root}>
+        <form onSubmit={handleSubmit} className={styles.root}>
           <Heading
             size="l"
             style={{
@@ -174,7 +174,7 @@ const VerifyEmailForm = ({
                   : styles.warningText
               }
             >
-              E-mail 格式錯誤
+              E-mail 格式錯誤
             </div>
           </div>
           <Button
@@ -183,11 +183,10 @@ const VerifyEmailForm = ({
             style={{
               marginBottom: '10px',
             }}
-            onClick={handleSubmit}
           >
             發送認證信
           </Button>
-        </section>
+        </form>
       );
   }
 };
