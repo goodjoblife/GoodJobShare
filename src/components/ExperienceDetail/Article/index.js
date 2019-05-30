@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Heading, P } from 'common/base';
+import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
@@ -59,12 +59,7 @@ class Article extends React.Component {
       <div className={styles.container}>
         <ArticleInfo experience={experience} />
         <section className={styles.main}>
-          <div className={styles.article}>
-            <Heading size="m" className={styles.heading}>
-              {experience.title}
-            </Heading>
-            {this.renderSections()}
-          </div>
+          <div className={styles.article}>{this.renderSections()}</div>
           {experience.type === 'interview' &&
           experience.interview_qas &&
           experience.interview_qas.length &&

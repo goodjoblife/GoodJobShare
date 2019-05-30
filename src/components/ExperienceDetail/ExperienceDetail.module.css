@@ -7,5 +7,17 @@
 }
 
 .section {
-  margin-top: 25px;
+  padding-top: 25px;
+}
+
+.functionButtons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 4px 8px 0 8px;
+
+  @media (max-width: 550px) {
+    border-bottom: 1px solid border-gray;
+    border-top: 1px solid border-gray;
+  }
 }

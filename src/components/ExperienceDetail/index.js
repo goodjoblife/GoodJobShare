@@ -348,10 +348,7 @@ class ExperienceDetail extends Component {
                   <div>
                     <BackToList backable={backable} className={styles.back} />
                   </div>
-                  <ExperienceHeading
-                    experience={experience}
-                    className={styles.heading}
-                  />
+                  <ExperienceHeading experience={experience} />
                 </div>
                 {this.renderReportZone()}
                 <Article
