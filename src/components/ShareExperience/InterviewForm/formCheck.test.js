@@ -122,14 +122,19 @@ describe('overallRating test', () => {
 });
 
 describe('title test', () => {
-  test('string length in (0, 25] should pass', () => {
+  test('string length in (0, 50] should pass', () => {
     expect(title('abcdeabcde')).toBe(true);
     expect(title('abcdeabcdeabcdeabcdeabcde')).toBe(true);
     expect(title('abc')).toBe(true);
+    expect(title('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde')).toBe(
+      true,
+    );
   });
 
-  test('string length not in (0, 25] should not pass', () => {
-    expect(title('abcdeabcdeabcdeabcdeabcdeabcde')).toBe(false);
+  test('string length not in (0, 50] should not pass', () => {
+    expect(
+      title('abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde'),
+    ).toBe(false);
     expect(title('')).toBe(false);
   });
 });
