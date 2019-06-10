@@ -141,7 +141,7 @@ const VerifyEmailForm = ({
               marginBottom: '10px',
             }}
           >
-            發送認證信
+            訂閱 GoodJob
           </Heading>
           <P
             size="l"
@@ -149,7 +149,7 @@ const VerifyEmailForm = ({
               marginBottom: '20px',
             }}
           >
-            填寫你的 Email，有重大更新時我們將通知你。
+            填寫你的 Email，立即掌握最新的薪資福利、面試經驗資訊
           </P>
           <div className={styles.inputArea}>
             <label htmlFor="verifiy-email-input">
@@ -184,7 +184,7 @@ const VerifyEmailForm = ({
               marginBottom: '10px',
             }}
           >
-            發送認證信
+            立即訂閱
           </Button>
         </form>
       );
