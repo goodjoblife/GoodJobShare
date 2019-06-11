@@ -89,7 +89,7 @@ const VerifyEmailForm = ({
               marginBottom: '20px',
             }}
           >
-            認證信已發送
+            訂閱確認信已發送
           </Heading>
           <P
             size="l"
@@ -97,7 +97,7 @@ const VerifyEmailForm = ({
               marginBottom: '35px',
             }}
           >
-            認證完成後，就可以收到我們的最新消息了囉！
+            認證完成後，即可隨時掌握最新的薪資福利、面試經驗資訊
           </P>
           <Button
             circleSize="lg"
