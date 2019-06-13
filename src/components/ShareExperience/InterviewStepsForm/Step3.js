@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import Section from './Section';
 import QAs from './QAs';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
+import Button from 'common/button/Button';
 import {
   EXPERIENCE_SECTION,
   SUGGESTION_SECTION,
@@ -90,6 +91,26 @@ class Step3 extends React.Component {
           changeValidationStatus={changeValidationStatus}
           elementName={SUGGESTION_SECTION}
         />
+        {sections.slice(2).map(section => (
+          <Section
+            heading={section.subtitle}
+            section={section}
+            contentMinLength={30}
+            editSection={editSection}
+            submitted={state.submitted}
+            changeValidationStatus={changeValidationStatus}
+            elementName={SUGGESTION_SECTION}
+          />
+        ))}
+        <div style={{ textAlign: 'center' }}>
+          <Button
+            circleSize="md"
+            btnStyle="blackLine"
+            onClick={() => appendSection('', '', '')}
+          >
+            ＋增加更多章節 （每個 +100 積分）
+          </Button>
+        </div>
         <SubmitArea onSubmit={onSubmit} />
       </React.Fragment>
     );
