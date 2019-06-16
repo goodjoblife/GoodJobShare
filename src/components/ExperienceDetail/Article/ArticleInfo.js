@@ -139,23 +139,23 @@ InternBlocks.propTypes = {
 const Aside = ({ experience }) => {
   const { type } = experience;
   return (
-    <aside className={styles.aside}>
+    <div className={styles.info}>
       {type === 'interview' && (
-        <ul className={styles.infoList}>
+        <ul>
           <InterviewInfoBlocks experience={experience} />
         </ul>
       )}
       {type === 'work' && (
-        <ul className={styles.infoList}>
+        <ul>
           <WorkInfoBlocks experience={experience} />
         </ul>
       )}
       {type === 'intern' && (
-        <ul className={styles.infoList}>
+        <ul>
           <InternBlocks experience={experience} />
         </ul>
       )}
-    </aside>
+    </div>
   );
 };
 
