@@ -58,7 +58,6 @@ class Step3 extends React.Component {
     return (
       <React.Fragment>
         <Section
-          heading="當時面試過程是如何呢？"
           section={sections[0]}
           subHeading="回想一下，不論是流程、對話、工作環境、薪資福利，都可以分享哦！"
           contentMinLength={30}
@@ -83,7 +82,6 @@ class Step3 extends React.Component {
           changeValidationStatus={changeValidationStatus}
         />
         <Section
-          heading="給其他面試者的中肯建議"
           section={sections[1]}
           contentMinLength={30}
           editSection={editSection}
@@ -93,13 +91,15 @@ class Step3 extends React.Component {
         />
         {sections.slice(2).map(section => (
           <Section
-            heading={section.subtitle}
+            key={section.id}
             section={section}
+            isSubtitleEditable
             contentMinLength={30}
             editSection={editSection}
+            removeSection={removeSection}
             submitted={state.submitted}
             changeValidationStatus={changeValidationStatus}
-            elementName={SUGGESTION_SECTION}
+            elementName={`section-${section.id}`}
           />
         ))}
         <div style={{ textAlign: 'center' }}>
@@ -108,7 +108,7 @@ class Step3 extends React.Component {
             btnStyle="blackLine"
             onClick={() => appendSection('', '', '')}
           >
-            ＋增加更多章節 （每個 +100 積分）
+            ＋增加更多章節
           </Button>
         </div>
         <SubmitArea onSubmit={onSubmit} />
