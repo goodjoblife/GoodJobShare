@@ -35,7 +35,7 @@ export const salaryAmount = R.anyPass([
 
 export const overallRating = R.allPass([n => n >= 1, n => n <= 5]);
 
-export const title = R.allPass([gtLength(0), lteLength(25)]);
+export const title = R.allPass([gtLength(0), lteLength(50)]);
 
 const sectionSubtitle = R.compose(
   R.allPass([lteLength(25), gtLength(0)]),
