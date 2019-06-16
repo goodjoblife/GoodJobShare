@@ -11,7 +11,7 @@ const InterviewQas = ({
   validator,
 }) => (
   <div>
-    {interviewQas.map(qa => (
+    {interviewQas.map((qa, i) => (
       <div
         key={qa.id}
         style={{
@@ -19,6 +19,7 @@ const InterviewQas = ({
         }}
       >
         <InterviewQa
+          questionNo={i + 1}
           question={qa.question}
           answer={qa.answer}
           editQa={editQa(qa.id)}
