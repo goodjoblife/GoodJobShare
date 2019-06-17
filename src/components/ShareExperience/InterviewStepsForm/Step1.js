@@ -25,7 +25,10 @@ class Step1 extends React.Component {
           changeValidationStatus={changeValidationStatus}
         />
         <div className={styles.nextAction}>
-          <ButtonRect onClick={() => history.push('/share/interview/step2')}>
+          <ButtonRect
+            style={{ marginLeft: 'auto' }}
+            onClick={() => history.push('/share/interview/step2')}
+          >
             下一步
           </ButtonRect>
         </div>

@@ -58,5 +58,11 @@
 .nextAction {
   margin-top: 43px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .backButton {
+    background-color: #ffffff;
+    color: #626262;
+  }
 }
