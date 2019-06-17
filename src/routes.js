@@ -195,26 +195,54 @@ const routes = [
     ],
   },
   {
-    path: '/companies/:companyName/salary-work-times',
-    exact: true,
+    path: '/companies/:companyName',
     component: TimeAndSalary,
     routes: [
+      {
+        path: '/companies/:companyName',
+        exact: true,
+        component: () => <section>overview</section>,
+      },
       {
         path: '/companies/:companyName/salary-work-times',
         exact: true,
         component: CompanySalaryWorkTimeScreen,
       },
+      {
+        path: '/companies/:companyName/interview-experiences',
+        exact: true,
+        component: () => <section>interview-experiences</section>,
+      },
+      {
+        path: '/companies/:companyName/work-experiences',
+        exact: true,
+        component: () => <section>work-experiences</section>,
+      },
     ],
   },
   {
-    path: '/job-titles/:jobTitle/salary-work-times',
-    exact: true,
+    path: '/job-titles/:jobTitle',
     component: TimeAndSalary,
     routes: [
+      {
+        path: '/job-titles/:jobTitle',
+        exact: true,
+        component: () => <section>overview</section>,
+      },
       {
         path: '/job-titles/:jobTitle/salary-work-times',
         exact: true,
         component: JobTitleSalaryWorkTimeScreen,
+      },
+      {
+        path: '/job-titles/:jobTitle/interview-experiences',
+        exact: true,
+        component: () => <section>interview-experiences</section>,
+      },
+      {
+        path: '/job-titles/:jobTitle/work-experiences',
+        exact: true,
+        component: () => <section>work-experiences</section>,
       },
     ],
   },
