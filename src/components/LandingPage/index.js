@@ -39,7 +39,7 @@ const LandingPage = ({
   timeAndSalaryCount,
   laborRightsCount,
 }) => {
-  const popularExperiences = popularExperiencesRaw.take(3).toJS() || [];
+  const popularExperiences = popularExperiencesRaw.toJS() || [];
   const items = laborRightsMenuEntries
     .toJS()
     .map(({ id, title, coverUrl }) => ({
