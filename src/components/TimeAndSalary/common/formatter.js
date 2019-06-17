@@ -22,7 +22,9 @@ export const getJobTitle = item => {
   return (
     <div>
       <Link
-        to={`/job-titles/${encodeURIComponent(jobTitle)}/salary-work-times`}
+        to={`/job-titles/${encodeURIComponent(
+          jobTitle.name,
+        )}/salary-work-times`}
       >
         {jobTitle.name}
       </Link>{' '}
