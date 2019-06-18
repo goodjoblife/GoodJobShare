@@ -15,7 +15,6 @@ const InterviewQa = ({ question, questionNo, editQa, removeQa, isWarning }) => (
       <div
         style={{
           display: 'flex',
-          marginBottom: '14px',
         }}
       >
         <p className={styles.property__title}>{questionNo}.</p>

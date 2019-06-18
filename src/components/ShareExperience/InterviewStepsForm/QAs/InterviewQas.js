@@ -15,7 +15,7 @@ const InterviewQas = ({
       <div
         key={qa.id}
         style={{
-          marginBottom: '40px',
+          marginBottom: '22px',
         }}
       >
         <InterviewQa
