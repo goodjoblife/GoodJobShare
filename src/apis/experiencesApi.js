@@ -91,9 +91,7 @@ export const getExperience = ({ id, token }) =>
     query: getExperienceQuery,
     variables: { id },
     token,
-  })
-    .then(data => data.experience)
-    .then(({ id, ...rest }) => ({ _id: id, ...rest }));
+  }).then(data => data.experience);
 
 export const newExperienceSearchBy = ({ body }) =>
   fetchUtil('/graphql').post({ body });

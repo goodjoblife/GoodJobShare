@@ -12,6 +12,7 @@ import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
 import { withPermission } from 'common/permission-context';
+import { isUiNotFoundError } from 'utils/errors';
 
 import Article from './Article';
 import MessageBoard from '../../containers/ExperienceDetail/MessageBoard';
@@ -283,18 +284,8 @@ class ExperienceDetail extends Component {
     const repliesStatus = this.props.repliesStatus;
 
     if (experienceError) {
-      switch (experienceError.statusCode) {
-        case 403:
-          return (
-            <NotFound
-              heading="本篇文章已經被原作者隱藏，目前無法查看"
-              status={403}
-            />
-          );
-        case 404:
-          return <NotFound />;
-        default:
-          return null;
+      if (isUiNotFoundError(experienceError)) {
+        return <NotFound />;
       }
     }
 
