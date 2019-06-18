@@ -218,6 +218,9 @@ const routes = [
         exact: true,
         component: () => <section>work-experiences</section>,
       },
+      {
+        component: NotFound,
+      },
     ],
   },
   {
@@ -243,6 +246,9 @@ const routes = [
         path: '/job-titles/:jobTitle/work-experiences',
         exact: true,
         component: () => <section>work-experiences</section>,
+      },
+      {
+        component: NotFound,
       },
     ],
   },
