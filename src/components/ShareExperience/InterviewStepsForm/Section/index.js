@@ -15,6 +15,7 @@ const SectionEleContentWithValidation = subscribeValidation(
 class Section extends Component {
   render() {
     const {
+      isRequired,
       section,
       contentMinLength,
       isSubtitleEditable,
@@ -33,6 +34,7 @@ class Section extends Component {
           }}
         >
           <SectionEleContentWithValidation
+            isRequired={isRequired}
             section={section}
             isSubtitleEditable={isSubtitleEditable}
             contentMinLength={contentMinLength}
@@ -50,6 +52,7 @@ class Section extends Component {
 }
 
 Section.propTypes = {
+  isRequired: PropTypes.bool,
   section: PropTypes.shape({
     id: PropTypes.number,
     subtitle: PropTypes.string,

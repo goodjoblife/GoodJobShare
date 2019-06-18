@@ -10,6 +10,7 @@ import eleStyles from './SectionEle.module.css';
 export const SECTION_TITLE_PLACEHOLDER = '請輸入標題';
 
 const SectionEleContent = ({
+  isRequired,
   placeholder,
   titlePlaceholder,
   section,
@@ -45,7 +46,8 @@ const SectionEleContent = ({
         ) : (
           section.subtitle && (
             <div className={cn(`pLBold`, eleStyles.subtitle)}>
-              {section.subtitle}
+              {section.subtitle}{' '}
+              {isRequired && <span className={styles.isRequired}>*</span>}
             </div>
           )
         )}
@@ -83,6 +85,7 @@ const SectionEleContent = ({
 };
 
 SectionEleContent.propTypes = {
+  isRequired: PropTypes.bool,
   placeholder: PropTypes.string,
   section: PropTypes.shape({
     id: PropTypes.number,

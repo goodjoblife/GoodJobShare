@@ -69,3 +69,7 @@
   margin-bottom: 7px;
   color: #555;
 }
+
+.isRequired {
+  color: #d50000;
+}

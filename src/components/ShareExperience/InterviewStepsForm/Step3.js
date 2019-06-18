@@ -76,6 +76,7 @@ class Step3 extends React.Component {
     return (
       <React.Fragment>
         <Section
+          isRequired
           section={sections[0]}
           subHeading="回想一下，不論是流程、對話、工作環境、薪資福利，都可以分享哦！"
           contentMinLength={30}
@@ -100,6 +101,7 @@ class Step3 extends React.Component {
           changeValidationStatus={changeValidationStatus}
         />
         <Section
+          isRequired
           section={sections[1]}
           contentMinLength={30}
           editSection={editSection}
