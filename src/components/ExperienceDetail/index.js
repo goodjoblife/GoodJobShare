@@ -287,6 +287,7 @@ class ExperienceDetail extends Component {
       if (isUiNotFoundError(experienceError)) {
         return <NotFound />;
       }
+      return null;
     }
 
     return (
