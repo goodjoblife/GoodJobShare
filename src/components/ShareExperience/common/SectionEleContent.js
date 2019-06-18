@@ -21,7 +21,7 @@ const SectionEleContent = ({
   validator,
   submitted,
 }) => {
-  const isWarning = submitted && !validator(section.content);
+  const isWarning = submitted && !validator(section);
 
   return (
     <div

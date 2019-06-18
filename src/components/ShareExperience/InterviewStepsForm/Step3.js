@@ -10,10 +10,6 @@ import ButtonRect from 'common/button/ButtonRect';
 import ButtonSubmit from 'common/button/ButtonSubmit';
 import Checkbox from 'common/form/Checkbox';
 import Modal from 'common/Modal';
-import {
-  EXPERIENCE_SECTION,
-  SUGGESTION_SECTION,
-} from '../../../constants/formElements';
 import { compose } from 'recompose';
 import styles from './InterviewForm.module.css';
 
@@ -83,7 +79,7 @@ class Step3 extends React.Component {
           editSection={editSection}
           submitted={state.submitted}
           changeValidationStatus={changeValidationStatus}
-          elementName={EXPERIENCE_SECTION}
+          elementName={`section-${sections[0].id}`}
         />
         <QAs
           handleState={handleState}
@@ -107,7 +103,7 @@ class Step3 extends React.Component {
           editSection={editSection}
           submitted={state.submitted}
           changeValidationStatus={changeValidationStatus}
-          elementName={SUGGESTION_SECTION}
+          elementName={`section-${sections[1].id}`}
         />
         {sections.slice(2).map(section => (
           <Section

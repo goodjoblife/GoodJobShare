@@ -5,11 +5,11 @@ import Block from 'common/Block';
 
 import SectionEleContent from '../../common/SectionEleContent';
 
-import { sectionContentOfLength as sectionContentValidator } from '../formCheck';
+import { singleSectionOfLength as sectionContentValidator } from '../formCheck';
 
 const SectionEleContentWithValidation = subscribeValidation(
   SectionEleContent,
-  props => props.validator(props.section.content),
+  props => props.validator(props.section),
 );
 
 class Section extends Component {

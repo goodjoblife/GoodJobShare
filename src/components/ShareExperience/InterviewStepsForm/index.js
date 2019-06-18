@@ -224,7 +224,11 @@ class InterviewForm extends React.Component {
       console.info('topInvalidElement', topInvalidElement);
       for (let i = 0; i < INTERVIEW_FORM_STEPS.length; i++) {
         for (let elementName of INTERVIEW_FORM_STEPS[i]) {
-          if (elementName === topInvalidElement) {
+          if (
+            typeof elementName === 'function'
+              ? elementName(topInvalidElement)
+              : elementName === topInvalidElement
+          ) {
             const targetPath = `/share/interview/step${i + 1}`;
             if (this.props.location.pathname !== targetPath) {
               await this.props.history.push(targetPath);
@@ -244,7 +248,11 @@ class InterviewForm extends React.Component {
   }
 
   getTopInvalidElement = () => {
-    const order = INTERVIEW_FORM_ORDER;
+    const order = [
+      ...INTERVIEW_FORM_ORDER,
+      ...R.keys(this.state.sections).map(id => `section-${id}`),
+    ];
+    console.info(order, this.elementValidationStatus);
     for (let i = 0; i <= order.length; i += 1) {
       if (
         this.elementValidationStatus[order[i]] &&
