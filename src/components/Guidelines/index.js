@@ -6,7 +6,7 @@ import StaticHelmet from 'common/StaticHelmet';
 
 const GuideLines = () => (
   <main>
-    <StaticHelmet.GuideLines />
+    <StaticHelmet.Guidelines />
     <PageBanner heading="發文留言規則" />
     <Section padding>
       <Wrapper size="m" className={editorStyles.editor}>
