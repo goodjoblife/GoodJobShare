@@ -1,21 +1,12 @@
-import { map, prop, compose, join } from 'ramda';
+import { GraphqlError } from 'utils/errors';
 import fetchUtil from './fetchUtil';
 
 const fetch = fetchUtil('/graphql');
 
-const mapErrorMessages = compose(
-  join(', '),
-  map(prop('message')),
-);
-
 const graphqlClient = ({ variables, query, options, token }) =>
   fetch.post({ body: { query, variables }, token, options }).then(response => {
     if (response.errors) {
-      return Promise.reject(
-        new Error(
-          `Graphql Server Errors: ${mapErrorMessages(response.errors)}`,
-        ),
-      );
+      throw new GraphqlError(response.errors);
     }
     return response.data;
   });
