@@ -6,35 +6,16 @@ $paddingS: 16px;
 .container {
   display: flex;
   border: 1px solid border-gray;
-
-  @media (max-width: 850px) {
-    flex-direction: column;
-  }
+  flex-direction: column;
 }
 
-.aside {
-  width: 345px;
+.info {
+  width: 100%;
   background-color: white-light;
-  padding: $padding;
-
-  @media (max-width: 1280px) {
-    width: 30%;
-  }
-
-  @media (max-width: 850px) {
-    width: 100%;
-  }
+  padding: 25px $padding;
 
   @media (max-width: 550px) {
-    padding: $padding $paddingS;
-  }
-}
-
-.infoList {
-  @media (max-width: 850px) {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: -32px;
+    padding: $paddingS;
   }
 }
 
@@ -46,7 +27,7 @@ $paddingS: 16px;
 }
 
 .article {
-  padding: 0 $padding $padding $padding;
+  padding: 25px $padding;
 
   .heading {
     margin-bottom: 24px;
@@ -82,17 +63,5 @@ $paddingS: 16px;
   @media (max-width: 550px) {
     margin-top: -15px;
     padding: 50px 25px;
-  }
-}
-
-.functionButtons {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 4px 8px 0 8px;
-
-  @media (max-width: 550px) {
-    border-bottom: 1px solid border-gray;
-    border-top: 1px solid border-gray;
   }
 }

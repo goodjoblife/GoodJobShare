@@ -1,32 +1,22 @@
 @value gray-dark from "common/variables.module.css";
 
 .block {
-  margin-top: 5px;
-  margin-bottom: 45px;
-
-  @media (max-width: 850px) {
-    width: calc(100% / 3);
-  }
-
-  @media (max-width: 550px) {
-    width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  &:not(:last-child) {
+    margin-bottom: 20px;
   }
 }
 
 .label {
-  color: gray-dark;
+  color: #333333;
+  font-weight: 600;
 }
 
 .content {
+  margin-left: 5px;
   word-wrap: break-word;
-
-  @media (max-width: 850px) {
-    margin-right: 15px;
-  }
-
-  @media (max-width: 550px) {
-    margin-right: 0;
-  }
+  color: #333333;
 
   > ul {
     margin-left: 1.3em;

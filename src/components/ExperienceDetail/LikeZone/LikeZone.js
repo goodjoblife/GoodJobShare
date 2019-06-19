@@ -11,14 +11,16 @@ const ThumbsUp = ({ onClick, label, count, ...restProps }) => (
   <button onClick={onClick} {...restProps}>
     <i.Like className={styles.icon} />
     {typeof label !== undefined && <div className={styles.label}>{label}</div>}
-    {typeof count !== undefined && <div className={styles.count}>{count}</div>}
+    {count !== undefined && count > 0 ? (
+      <div className={styles.count}>{count}</div>
+    ) : null}
   </button>
 );
 
 const LikeZone = ({ likeExperience, experience, login, authStatus, FB }) => (
   <div className={styles.likeZone}>
     <P center className={styles.description} size="l">
-      覺得這篇面試分享很實用的話，不妨點個讚或留言，讓原作者知道，才會有更多經驗分享哦！
+      按讚或留言，鼓勵作者分享經驗的勇氣吧～
     </P>
     <ThumbsUp
       label="好"
