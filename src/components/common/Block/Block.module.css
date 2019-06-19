@@ -3,7 +3,7 @@
 .heading {
   display: flex;
   letter-spacing: 1px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 
   svg {
     width: 30px;
@@ -16,6 +16,10 @@
       height: 24px;
     }
   }
+
+  @media (max-width: 550px) {
+    margin-bottom: 8px;
+  }
 }
 
 .note {
@@ -26,6 +30,10 @@
   color: gray-dark;
   > span {
     color: warning-red;
+  }
+
+  @media (max-width: 550px) {
+    top: -18px;
   }
 }
 
@@ -43,8 +51,7 @@
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 
   @media (max-width: 550px) {
-    padding: 48px 16px;
-    min-height: 70vh;
+    padding: 24px 16px;
   }
 }
 
