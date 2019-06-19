@@ -13,6 +13,10 @@ $paddingS: 16px;
   width: 100%;
   background-color: white-light;
   padding: 25px $padding;
+
+  @media (max-width: 550px) {
+    padding: $paddingS;
+  }
 }
 
 .main {

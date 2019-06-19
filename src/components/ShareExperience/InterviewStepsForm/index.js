@@ -313,18 +313,18 @@ class InterviewForm extends React.Component {
         <StaticHelmet.ShareInterview />
         <div className={styles.header}>
           <div className={styles.title}>面試心得分享</div>
-          {stepTabLabels.map((label, i) => (
-            <NavLink
-              key={i}
-              to={`/share/interview/step${i + 1}`}
-              className={styles.stepTab}
-              activeClassName={styles.active}
-              isActive={isStepTabActive(i + 1)}
-              data-step={i + 1}
-            >
-              {label}
-            </NavLink>
-          ))}
+          <div className={styles.stepsWrapper}>
+            {stepTabLabels.map((label, i) => (
+              <NavLink
+                key={i}
+                to={`/share/interview/step${i + 1}`}
+                className={styles.stepTab}
+                activeClassName={styles.active}
+                isActive={isStepTabActive(i + 1)}
+                data-step={i + 1}
+              />
+            ))}
+          </div>
         </div>
         {this.state.submitted && (
           <div
