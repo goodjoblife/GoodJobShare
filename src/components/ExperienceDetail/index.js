@@ -251,7 +251,7 @@ class ExperienceDetail extends Component {
       const id = experience._id;
       const title = experience.title;
       const company = experience.company.name;
-      const jobTitle = experience.job_title;
+      const jobTitle = experience.job_title.name;
       const type = experience.type;
       const subtitle = experience.sections[0].subtitle
         ? experience.sections[0].subtitle.replace(/(\r\n|\n|\r)/gm, ' ')
