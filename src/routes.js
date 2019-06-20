@@ -28,6 +28,7 @@ import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
+import CompanyPageWrapper from './components/Company/CompanyPageWrapper';
 
 const routes = [
   {
@@ -201,7 +202,11 @@ const routes = [
       {
         path: '/companies/:companyName',
         exact: true,
-        component: () => <section>overview</section>,
+        render: () => (
+          <CompanyPageWrapper>
+            <section>overview</section>
+          </CompanyPageWrapper>
+        ),
       },
       {
         path: '/companies/:companyName/salary-work-times',
