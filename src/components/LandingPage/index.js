@@ -39,7 +39,7 @@ const LandingPage = ({
   timeAndSalaryCount,
   laborRightsCount,
 }) => {
-  const popularExperiences = popularExperiencesRaw.take(3).toJS() || [];
+  const popularExperiences = popularExperiencesRaw.toJS() || [];
   const items = laborRightsMenuEntries
     .toJS()
     .map(({ id, title, coverUrl }) => ({
@@ -76,7 +76,7 @@ const LandingPage = ({
       <Section padding>
         <Wrapper size="l">
           <Heading size="l" center marginBottom>
-            熱門分享
+            最新經驗分享
           </Heading>
           <Columns
             Item={ExperienceBlock}
