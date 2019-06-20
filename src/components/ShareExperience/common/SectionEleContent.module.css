@@ -51,9 +51,9 @@
 
 .wordCount {
   text-align: right;
-  font-size: 14px;
-  margin-top: 4px;
-  line-height: 23px;
+  font-size: 13px;
+  margin-top: 6px;
+  color: #b4b4b4;
 }
 
 .warning {

@@ -13,7 +13,7 @@ const Title = ({ title, onChange, placeholder, validator, submitted }) => (
       placeholder={placeholder}
       onChange={e => onChange(e.target.value)}
       isWarning={submitted && !validator(title)}
-      warningWording="需輸入 1 ~ 25 字"
+      warningWording="需輸入 1 ~ 50 字"
     />
   </div>
 );

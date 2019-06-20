@@ -4,6 +4,7 @@ import fetchUtil from 'utils/fetchUtil';
 
 import graphqlClient from 'utils/graphqlClient';
 import { getExperienceQuery } from 'graphql/experience';
+import { getPopularExperiencesQuery } from 'graphql/popularExperience';
 
 const endpoint = '/experiences';
 
@@ -91,9 +92,13 @@ export const getExperience = ({ id, token }) =>
     query: getExperienceQuery,
     variables: { id },
     token,
-  })
-    .then(data => data.experience)
-    .then(({ id, ...rest }) => ({ _id: id, ...rest }));
+  }).then(data => data.experience);
+
+export const getPopularExperiences = ({ token }) =>
+  graphqlClient({
+    query: getPopularExperiencesQuery,
+    token,
+  }).then(data => data.popular_experiences);
 
 export const newExperienceSearchBy = ({ body }) =>
   fetchUtil('/graphql').post({ body });
@@ -108,6 +113,7 @@ const patchExperience = ({ id, status, token }) =>
 
 export default {
   getExperience,
+  getPopularExperiences,
   getExperiencesRecommended,
   getExperiences,
   getExperienceReply,

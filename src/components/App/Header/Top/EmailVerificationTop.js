@@ -38,8 +38,8 @@ const EmailVerificationTop = ({
       >
         <div className={styles.heading}>
           {isSentVerificationEmail
-            ? `✉️  ${userName} 你好，認證信已經發送到你的信箱，沒收到嗎？`
-            : `✉️ ${userName} 你好，認證你的 Email，隨時掌握 GoodJob 最新消息！`}
+            ? `✉️ 訂閱確認信已經發送到你的信箱，有收到嗎？`
+            : `✉️ 訂閱 GoodJob，隨時掌握各公司的薪資福利資訊！`}
         </div>
         <div className={styles.button}>
           {isSentVerificationEmail ? '重發' : 'GO >>'}

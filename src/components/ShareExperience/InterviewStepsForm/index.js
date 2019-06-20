@@ -326,13 +326,15 @@ class InterviewForm extends React.Component {
         <StaticHelmet.ShareInterview />
         <div className={styles.header}>
           <div className={styles.title}>面試心得分享</div>
-          <StepControl.Group>
-            {R.range(1, 4).map(i => (
-              <StepControl key={i} isActive={isStepTabActive(i)}>
-                {i}
-              </StepControl>
-            ))}
-          </StepControl.Group>
+          <div className={styles.stepsWrapper}>
+            <StepControl.Group>
+              {R.range(1, 4).map(i => (
+                <StepControl key={i} isActive={isStepTabActive(i)}>
+                  {i}
+                </StepControl>
+              ))}
+            </StepControl.Group>
+          </div>
         </div>
         {this.state.submitted && (
           <div

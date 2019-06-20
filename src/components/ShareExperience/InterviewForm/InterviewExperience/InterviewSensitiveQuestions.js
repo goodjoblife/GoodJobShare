@@ -41,23 +41,7 @@ const InterviewSensitiveQuestions = ({
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          marginBottom: '15px',
-        }}
-      >
-        <InputTitle text="是否有以下特殊問題" />
-        <p
-          style={{
-            color: '#6E6E6E',
-            fontSize: '0.85em',
-            paddingTop: '3px',
-          }}
-        >
-          都沒有請留空
-        </p>
-      </div>
+      <InputTitle text="是否有以下特殊問題" />
       {
         <ButtonGroup
           value={resultsForButtonGroup}

@@ -6,12 +6,16 @@ import Helmet from 'react-helmet';
 import ReactPixel from 'react-facebook-pixel';
 import { Element as ScrollElement } from 'react-scroll';
 import { compose, setStatic, withState, withHandlers } from 'recompose';
+import cn from 'classnames';
 
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
+import ReportDetail from 'common/reaction/ReportDetail';
+import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
+import { isUiNotFoundError } from 'utils/errors';
 
 import Article from './Article';
 import MessageBoard from '../../containers/ExperienceDetail/MessageBoard';
@@ -20,8 +24,10 @@ import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
 import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
 import ExperienceHeading from './Heading';
 import ReportInspectModal from './ReactionZone/ReportInspectModal';
+import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
+import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 
-import status from '../../constants/status';
+import { isFetching, isFetched, isError } from '../../constants/status';
 import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 
@@ -206,50 +212,80 @@ class ExperienceDetail extends Component {
     }
   };
 
+  renderReportZone = () => {
+    const { toggleReportInspectModal } = this.props;
+    return (
+      <React.Fragment>
+        <div className={styles.functionButtons}>
+          <ReportDetail
+            label="檢舉"
+            onClick={() => {
+              this.setModalClosableOnClickOutside(false);
+              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
+            }}
+            className={cn(styles.button, ReactionZoneStyles.button)}
+          />
+          <PopoverToggle
+            className={cn(styles.button, ReactionZoneStyles.moreButton)}
+            popoverClassName={ReactionZoneStyles.popover}
+            popoverContent={
+              <ReactionZoneOtherOptions
+                toggleReportInspectModal={toggleReportInspectModal}
+              />
+            }
+          >
+            <div className={ReactionZoneStyles.popoverIcon}>
+              <span />
+            </div>
+          </PopoverToggle>
+        </div>
+      </React.Fragment>
+    );
+  };
+
   renderHelmet = () => {
-    if (this.props.experienceDetail) {
-      const experience = this.props.experienceDetail.toJS().experience;
-      if ('_id' in experience) {
-        const id = experience._id;
-        const title = experience.title;
-        const company = experience.company.name;
-        const jobTitle = experience.job_title;
-        const type = experience.type;
-        const subtitle = experience.sections[0].subtitle
-          ? experience.sections[0].subtitle.replace(/(\r\n|\n|\r)/gm, ' ')
-          : '';
-        const content = experience.sections[0].content.replace(
-          /(\r\n|\n|\r)/gm,
-          ' ',
-        );
-        const mapping = {
-          interview: '面試經驗分享',
-          work: '工作經驗分享',
-          intern: '實習經驗分享',
-        };
-        const description = `${company} ${jobTitle} 的${
-          mapping[type]
-        }。 ${subtitle}：${content}`;
-        return (
-          <Helmet>
-            <title itemProp="name" lang="zh-TW">
-              {title}
-            </title>
-            <meta name="description" content={description} />
-            <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
-            <meta property="og:description" content={description} />
-            <meta
-              property="og:url"
-              content={formatCanonicalPath(`/experiences/${id}`)}
-            />
-            <link
-              rel="canonical"
-              href={formatCanonicalPath(`/experiences/${id}`)}
-            />
-          </Helmet>
-        );
-      }
-      return null;
+    const data = this.props.experienceDetail.toJS();
+    const { experience, experienceStatus } = data;
+
+    if (isFetched(experienceStatus)) {
+      const id = experience._id;
+      const title = experience.title;
+      const company = experience.company.name;
+      const jobTitle = experience.job_title.name;
+      const type = experience.type;
+      const subtitle = experience.sections[0].subtitle
+        ? experience.sections[0].subtitle.replace(/(\r\n|\n|\r)/gm, ' ')
+        : '';
+      const content = experience.sections[0].content.replace(
+        /(\r\n|\n|\r)/gm,
+        ' ',
+      );
+      const mapping = {
+        interview: '面試經驗分享',
+        work: '工作經驗分享',
+        intern: '實習經驗分享',
+      };
+      const description = `${company} ${jobTitle} 的${
+        mapping[type]
+      }。 ${subtitle}：${content}`;
+      return (
+        <Helmet>
+          <title itemProp="name" lang="zh-TW">
+            {title}
+          </title>
+          <meta name="description" content={description} />
+          <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
+          <meta property="og:description" content={description} />
+          <meta
+            property="og:url"
+            content={formatCanonicalPath(`/experiences/${id}`)}
+          />
+          <link
+            rel="canonical"
+            href={formatCanonicalPath(`/experiences/${id}`)}
+          />
+        </Helmet>
+      );
     }
     return null;
   };
@@ -282,47 +318,33 @@ class ExperienceDetail extends Component {
     const replies = this.props.replies.toJS();
     const repliesStatus = this.props.repliesStatus;
 
-    if (experienceError) {
-      switch (experienceError.statusCode) {
-        case 403:
-          return (
-            <NotFound
-              heading="本篇文章已經被原作者隱藏，目前無法查看"
-              status={403}
-            />
-          );
-        case 404:
-          return <NotFound />;
-        default:
-          return null;
+    if (isError(experienceStatus)) {
+      if (isUiNotFoundError(experienceError)) {
+        return <NotFound />;
       }
+      return null;
     }
 
     return (
       <main>
         {this.renderHelmet()}
-        <Section bg="white" paddingBottom pageTop>
-          <Wrapper size="l">
+        <Section bg="white" paddingBottom className={styles.section}>
+          <Wrapper size="m">
             {/* 文章區塊  */}
-            {experienceStatus === status.FETCHING ? (
+            {!isFetched(experienceStatus) ? (
               <Loader />
             ) : (
               <Fragment>
                 <div className={styles.headingBlock}>
-                  <BackToList backable={backable} className={styles.back} />
-                  <ExperienceHeading
-                    experience={experience}
-                    className={styles.heading}
-                  />
+                  <div>
+                    <BackToList backable={backable} className={styles.back} />
+                  </div>
+                  <ExperienceHeading experience={experience} />
                 </div>
+                {this.renderReportZone()}
                 <Article
                   experience={experience}
                   hideContent={!canViewExperirenceDetail}
-                  openReportDetail={() => {
-                    this.setModalClosableOnClickOutside(false);
-                    this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
-                  }}
-                  toggleReportInspectModal={toggleReportInspectModal}
                 />
               </Fragment>
             )}
@@ -331,12 +353,16 @@ class ExperienceDetail extends Component {
               isOpen={isInspectReportOpen}
               toggleReportInspectModal={toggleReportInspectModal}
             />
-
-            <LikeZone experience={experience} likeExperience={likeExperience} />
+            {isFetched(experienceStatus) && (
+              <LikeZone
+                experience={experience}
+                likeExperience={likeExperience}
+              />
+            )}
           </Wrapper>
           <Wrapper size="s">
             <ScrollElement name={COMMENT_ZONE} />
-            {repliesStatus === status.FETCHING ? (
+            {isFetching(repliesStatus) ? (
               <Loader size="s" />
             ) : (
               <MessageBoard
