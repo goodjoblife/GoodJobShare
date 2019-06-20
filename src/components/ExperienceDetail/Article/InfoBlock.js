@@ -6,9 +6,9 @@ import styles from './InfoBlock.module.css';
 const InfoBlock = ({ label, children }) => (
   <li className={styles.block}>
     <P size="m" className={styles.label}>
-      {label}
+      {label}：
     </P>
-    <P size="l" blod className={styles.content}>
+    <P size="m" className={styles.content}>
       {children}
     </P>
   </li>

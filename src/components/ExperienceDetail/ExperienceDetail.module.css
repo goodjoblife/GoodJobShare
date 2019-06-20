@@ -1,19 +1,23 @@
 .headingBlock {
   position: relative;
-  @media (min-width: 851px) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 }
 
 .back {
-  @media (min-width: 851px) {
-    position: absolute;
-    top: 11px;
-    left: 0;
-  }
-  @media (max-width: 850px) {
-    margin-bottom: 16px;
+  margin-bottom: 25px;
+}
+
+.section {
+  padding-top: 25px;
+}
+
+.functionButtons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 4px 8px 0 8px;
+
+  @media (max-width: 550px) {
+    border-bottom: 1px solid border-gray;
+    border-top: 1px solid border-gray;
   }
 }

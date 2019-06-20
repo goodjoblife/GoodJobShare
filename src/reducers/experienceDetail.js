@@ -12,7 +12,7 @@ import {
 const preloadedState = fromJS({
   experienceStatus: fetchingStatus.UNFETCHED,
   experienceError: null,
-  experience: {},
+  experience: null,
   repliesExperienceId: null,
   replyStatus: fetchingStatus.UNFETCHED,
   replyError: null,

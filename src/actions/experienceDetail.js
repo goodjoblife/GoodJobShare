@@ -1,5 +1,6 @@
 import fetchingStatus from '../constants/status';
 import { tokenSelector } from '../selectors/authSelector';
+import { UiNotFoundError } from 'utils/errors';
 
 export const SET_EXPERIENCE = '@@experienceDetail/SET_EXPERIENCE';
 export const SET_EXPERIENCE_STATUS = '@@experienceDetail/SET_EXPERIENCE_STATUS';
@@ -144,16 +145,27 @@ export const fetchExperience = id => (dispatch, getState, { api }) => {
 
   return api.experiences
     .getExperience({ id, token })
-    .then(result => {
-      dispatch(setExperience(result));
+    .then(experience => {
+      if (experience === null) {
+        return dispatch({
+          type: SET_EXPERIENCE,
+          experienceStatus: fetchingStatus.ERROR,
+          experienceError: new UiNotFoundError(),
+          experience: null,
+        });
+      }
+
+      const { id, ...rest } = experience;
+      dispatch(setExperience({ _id: id, ...rest }));
     })
     .catch(error => {
       dispatch({
         type: SET_EXPERIENCE,
         experienceStatus: fetchingStatus.ERROR,
         experienceError: error,
-        experience: {},
+        experience: null,
       });
+      throw error;
     });
 };
 
