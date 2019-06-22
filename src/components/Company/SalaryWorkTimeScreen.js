@@ -18,7 +18,7 @@ import { queryCompany } from '../../actions/timeAndSalaryCompany';
 import { isFetching, isFetched } from '../../constants/status';
 import WorkingHourBlock from './WorkingHourBlock';
 import renderHelmet from './helmet';
-import ViewLog from './ViewLog';
+import ViewLog from '../../containers/Company/ViewLog';
 import withRouteParameter from './withRouteParameter';
 import styles from './SalaryWorkTimeScreen.module.css';
 
