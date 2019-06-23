@@ -90,7 +90,7 @@ export const queryEntry = entryId => (dispatch, getState, { api }) => {
 };
 
 export const queryEntryIfUnfetched = entryId => (dispatch, getState) => {
-  if (entryStatusSelector(entryId)(getState()) === fetchingStatus.UNFETCHED) {
+  if (isUnfetched(entryStatusSelector(entryId)(getState()))) {
     return dispatch(queryEntry(entryId));
   }
   return Promise.resolve();
