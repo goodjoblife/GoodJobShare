@@ -13,6 +13,7 @@ import {
   formatUrl,
 } from 'utils/helmetHelper';
 import { nthIndexOf } from 'utils/stringUtil';
+import { isUiNotFoundError } from 'utils/errors';
 import NotFound from 'common/NotFound';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import FanPageBlock from 'common/FanPageBlock';
@@ -121,7 +122,7 @@ class LaborRightsSingle extends React.Component {
           />
         </Helmet>
         {R.anyPass([isFetching, isUnfetched])(entryStatus) && <Loader />}
-        {isError(entryStatus) && entryError.statusCode === 404 && <NotFound />}
+        {isError(entryStatus) && isUiNotFoundError(entryError) && <NotFound />}
         {isFetched(entryStatus) && (
           <div>
             <Body

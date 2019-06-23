@@ -3,8 +3,9 @@ import {
   SET_MENU_QUERY_START,
   SET_MENU_QUERY_DONE,
   SET_MENU_QUERY_ERROR,
-  SET_ENTRY_DATA,
-  SET_ENTRY_STATUS,
+  SET_ENTRY_QUERY_START,
+  SET_ENTRY_QUERY_DONE,
+  SET_ENTRY_QUERY_ERROR,
 } from '../actions/laborRights';
 import fetchingStatus from '../constants/status';
 
@@ -37,12 +38,12 @@ export default createReducer(preloadedState, {
     menuError: error,
   }),
 
-  [SET_ENTRY_DATA]: (state, { entryId, status, data, error }) => {
+  [SET_ENTRY_QUERY_START]: (state, { entryId }) => {
     const entries = state.entries;
     const newEntry = {
-      data,
-      status,
-      error,
+      data: null,
+      status: fetchingStatus.FETCHING,
+      error: null,
     };
     return {
       ...state,
@@ -52,11 +53,27 @@ export default createReducer(preloadedState, {
       },
     };
   },
-  [SET_ENTRY_STATUS]: (state, { entryId, status }) => {
+  [SET_ENTRY_QUERY_DONE]: (state, { entryId, entry }) => {
     const entries = state.entries;
     const newEntry = {
-      ...state.entries[entryId],
-      status,
+      data: entry,
+      status: fetchingStatus.FETCHED,
+      error: null,
+    };
+    return {
+      ...state,
+      entries: {
+        ...entries,
+        [entryId]: newEntry,
+      },
+    };
+  },
+  [SET_ENTRY_QUERY_ERROR]: (state, { entryId, error }) => {
+    const entries = state.entries;
+    const newEntry = {
+      data: null,
+      status: fetchingStatus.ERROR,
+      error,
     };
     return {
       ...state,

@@ -2,15 +2,16 @@ import {
   menuStatusSelector,
   entryStatusSelector,
 } from '../selectors/laborRightsSelector';
-import fetchingStatus, { isUnfetched } from '../constants/status';
-import { isHttpError } from 'utils/errors';
+import { isUnfetched } from '../constants/status';
+import { isGraphqlError, UiNotFoundError } from 'utils/errors';
 
 export const SET_MENU_QUERY_START = '@@LABOR_RIGHTS/SET_MENU_QUERY_START';
 export const SET_MENU_QUERY_DONE = '@@LABOR_RIGHTS/SET_MENU_QUERY_DONE';
 export const SET_MENU_QUERY_ERROR = '@@LABOR_RIGHTS/SET_MENU_QUERY_ERROR';
 
-export const SET_ENTRY_STATUS = '@@LABOR_RIGHTS/SET_ENTRY_STATUS';
-export const SET_ENTRY_DATA = '@@LABOR_RIGHTS/SET_ENTRY_DATA';
+export const SET_ENTRY_QUERY_START = '@@LABOR_RIGHTS/SET_ENTRY_QUERY_START';
+export const SET_ENTRY_QUERY_DONE = '@@LABOR_RIGHTS/SET_ENTRY_QUERY_DONE';
+export const SET_ENTRY_QUERY_ERROR = '@@LABOR_RIGHTS/SET_ENTRY_QUERY_ERROR';
 
 const setMenuQueryStart = () => ({
   type: SET_MENU_QUERY_START,
@@ -26,17 +27,20 @@ const setMenuQueryError = error => ({
   error,
 });
 
-const setEntryStatus = (entryId, status) => ({
-  type: SET_ENTRY_STATUS,
+const setEntryQueryStart = entryId => ({
+  type: SET_ENTRY_QUERY_START,
   entryId,
-  status,
 });
 
-const setEntryData = (entryId, data, status, error = null) => ({
-  type: SET_ENTRY_DATA,
+const setEntryQueryDone = (entryId, entry) => ({
+  type: SET_ENTRY_QUERY_DONE,
   entryId,
-  status,
-  data,
+  entry,
+});
+
+const setEntryQueryError = (entryId, error) => ({
+  type: SET_ENTRY_QUERY_ERROR,
+  entryId,
   error,
 });
 
@@ -62,28 +66,18 @@ export const queryMenuIfUnfetched = () => (dispatch, getState) => {
 };
 
 export const queryEntry = entryId => (dispatch, getState, { api }) => {
-  dispatch(setEntryStatus(entryId, fetchingStatus.FETCHING));
+  dispatch(setEntryQueryStart(entryId));
 
   return api.laborRights
     .getEntry({ entryId })
-    .then(rawData => {
-      dispatch(setEntryData(entryId, rawData, fetchingStatus.FETCHED));
+    .then(entry => {
+      dispatch(setEntryQueryDone(entryId, entry));
     })
     .catch(error => {
-      console.log(error);
-      if (isHttpError(error)) {
-        const { name, message, statusCode } = error;
-        if (statusCode === 400) {
-          // remap server 400 statusCode to 404
-          return dispatch(
-            setEntryData(entryId, {}, fetchingStatus.ERROR, {
-              name,
-              message,
-              statusCode: 404,
-            }),
-          );
-        }
+      if (isGraphqlError(error)) {
+        return dispatch(setEntryQueryError(entryId, new UiNotFoundError()));
       }
+
       // unexpected error
       throw error;
     });
