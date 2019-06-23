@@ -36,13 +36,13 @@ const Footer = ({ id, prev, next }) => (
         className={cn(styles.prev, {
           [styles.active]: prev,
         })}
-        {...prev && prev.toJS()}
+        {...(prev && prev.toJS())}
       />
       <Pager
         className={cn(styles.next, {
           [styles.active]: next,
         })}
-        {...next && next.toJS()}
+        {...(next && next.toJS())}
       />
     </div>
   </Wrapper>

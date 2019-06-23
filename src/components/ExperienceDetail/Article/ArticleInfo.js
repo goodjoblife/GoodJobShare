@@ -20,9 +20,7 @@ const InterviewInfoBlocks = ({ experience }) => (
     )}
     {experience.interview_time && (
       <InfoBlock label="面試時間">
-        {`${experience.interview_time.year} 年 ${
-          experience.interview_time.month
-        } 月`}
+        {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
       </InfoBlock>
     )}
     <InfoBlock label="面試結果">{experience.interview_result}</InfoBlock>

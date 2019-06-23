@@ -265,9 +265,7 @@ class ExperienceDetail extends Component {
         work: '工作經驗分享',
         intern: '實習經驗分享',
       };
-      const description = `${company} ${jobTitle} 的${
-        mapping[type]
-      }。 ${subtitle}：${content}`;
+      const description = `${company} ${jobTitle} 的${mapping[type]}。 ${subtitle}：${content}`;
       return (
         <Helmet>
           <title itemProp="name" lang="zh-TW">
