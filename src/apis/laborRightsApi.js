@@ -1,16 +1,47 @@
-import fetchUtil from 'utils/fetchUtil';
+import graphqlClient from 'utils/graphqlClient';
 
-import { CONTENTFUL_API_HOST } from '../config';
+const getMenuEntriesGql = `
+  query {
+    labor_rights {
+      id
+      title
+      coverUrl
+    }  
+  }
+`;
 
-export const getEntries = () =>
-  fetchUtil('/entries').get({ options: { apiHost: CONTENTFUL_API_HOST } });
+const getMenuEntries = () =>
+  graphqlClient({
+    query: getMenuEntriesGql,
+  }).then(data => data.labor_rights);
+
+const getEntryGql = `
+  query($id: ID!) {
+    labor_right(id: $id) {
+      id
+      title
+      order
+      description
+      content
+      seoTitle
+      seoDescription
+      seoText
+      coverUrl
+      nPublicPages
+      descriptionInPermissionBlock
+    }  
+  }
+`;
 
 export const getEntry = ({ entryId }) =>
-  fetchUtil(`/entries/${entryId}`).get({
-    options: { apiHost: CONTENTFUL_API_HOST },
-  });
+  graphqlClient({
+    query: getEntryGql,
+    variables: {
+      id: entryId,
+    },
+  }).then(data => data.labor_right);
 
 export default {
-  getEntries,
+  getMenuEntries,
   getEntry,
 };

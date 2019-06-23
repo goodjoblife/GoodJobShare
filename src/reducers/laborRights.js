@@ -1,34 +1,86 @@
-import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 import {
-  SET_MENU_DATA,
-  SET_MENU_STATUS,
-  SET_ENTRY_DATA,
-  SET_ENTRY_STATUS,
+  SET_MENU_QUERY_START,
+  SET_MENU_QUERY_DONE,
+  SET_MENU_QUERY_ERROR,
+  SET_ENTRY_QUERY_START,
+  SET_ENTRY_QUERY_DONE,
+  SET_ENTRY_QUERY_ERROR,
 } from '../actions/laborRights';
 import fetchingStatus from '../constants/status';
 
 // menuEntries: [{id, title, coverUrl}]
 // entries: {id: {data, status, error}}
-const preloadedState = fromJS({
+const preloadedState = {
   menuEntries: [],
   menuStatus: fetchingStatus.UNFETCHED,
   menuError: null,
   entries: {},
-});
+};
 
 export default createReducer(preloadedState, {
-  [SET_MENU_DATA]: (state, { entries, status, error }) =>
-    state
-      .set('menuEntries', fromJS(entries))
-      .set('menuStatus', status)
-      .set('menuError', error),
-  [SET_MENU_STATUS]: (state, { status }) => state.set('menuStatus', status),
-  [SET_ENTRY_DATA]: (state, { entryId, status, data, error }) =>
-    state
-      .setIn(['entries', entryId, 'data'], fromJS(data))
-      .setIn(['entries', entryId, 'status'], status)
-      .setIn(['entries', entryId, 'error'], fromJS(error)),
-  [SET_ENTRY_STATUS]: (state, { entryId, status }) =>
-    state.setIn(['entries', entryId, 'status'], status),
+  [SET_MENU_QUERY_START]: state => ({
+    ...state,
+    menuEntries: [],
+    menuStatus: fetchingStatus.FETCHING,
+    menuError: null,
+  }),
+  [SET_MENU_QUERY_DONE]: (state, { entries }) => ({
+    ...state,
+    menuEntries: entries,
+    menuStatus: fetchingStatus.FETCHED,
+    menuError: null,
+  }),
+  [SET_MENU_QUERY_ERROR]: (state, { error }) => ({
+    ...state,
+    menuEntries: [],
+    menuStatus: fetchingStatus.ERROR,
+    menuError: error,
+  }),
+
+  [SET_ENTRY_QUERY_START]: (state, { entryId }) => {
+    const entries = state.entries;
+    const newEntry = {
+      data: null,
+      status: fetchingStatus.FETCHING,
+      error: null,
+    };
+    return {
+      ...state,
+      entries: {
+        ...entries,
+        [entryId]: newEntry,
+      },
+    };
+  },
+  [SET_ENTRY_QUERY_DONE]: (state, { entryId, entry }) => {
+    const entries = state.entries;
+    const newEntry = {
+      data: entry,
+      status: fetchingStatus.FETCHED,
+      error: null,
+    };
+    return {
+      ...state,
+      entries: {
+        ...entries,
+        [entryId]: newEntry,
+      },
+    };
+  },
+  [SET_ENTRY_QUERY_ERROR]: (state, { entryId, error }) => {
+    const entries = state.entries;
+    const newEntry = {
+      data: null,
+      status: fetchingStatus.ERROR,
+      error,
+    };
+    return {
+      ...state,
+      entries: {
+        ...entries,
+        [entryId]: newEntry,
+      },
+    };
+  },
 });
