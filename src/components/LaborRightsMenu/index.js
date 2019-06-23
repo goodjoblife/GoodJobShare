@@ -36,12 +36,11 @@ class LaborRightsMenu extends React.Component {
         <Wrapper size="l">
           <StaticHelmet.LaborRightsMenu />
           {isFetching(status) && <Loader />}
-          {isError(status) &&
-            menuError && (
-              <Heading center size="m" Tag="div">
-                {menuError.toString()}
-              </Heading>
-            )}
+          {isError(status) && menuError && (
+            <Heading center size="m" Tag="div">
+              {menuError.toString()}
+            </Heading>
+          )}
           {isFetched(status) && (
             <section>
               <Heading size="l" center marginBottom>
