@@ -338,10 +338,10 @@ class InterviewForm extends React.Component {
           </div>
         )}
         {/*
-          * Here we need to render all steps rather than use <Route />
-          * Because rendering all steps allows us to register the handlers
-          * when the input is not validated on submit
-          */}
+         * Here we need to render all steps rather than use <Route />
+         * Because rendering all steps allows us to register the handlers
+         * when the input is not validated on submit
+         */}
         <div
           style={{
             display: pathname === '/share/interview/step1' ? 'block' : 'none',
