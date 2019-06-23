@@ -1,9 +1,22 @@
 import fetchUtil from 'utils/fetchUtil';
+import graphqlClient from 'utils/graphqlClient';
 
 import { CONTENTFUL_API_HOST } from '../config';
 
-export const getEntries = () =>
-  fetchUtil('/entries').get({ options: { apiHost: CONTENTFUL_API_HOST } });
+const getMenuEntriesGql = `
+  query {
+    labor_rights {
+      id
+      title
+      coverUrl
+    }  
+  }
+`;
+
+const getMenuEntries = () =>
+  graphqlClient({
+    query: getMenuEntriesGql,
+  }).then(data => data.labor_rights);
 
 export const getEntry = ({ entryId }) =>
   fetchUtil(`/entries/${entryId}`).get({
@@ -11,6 +24,6 @@ export const getEntry = ({ entryId }) =>
   });
 
 export default {
-  getEntries,
+  getMenuEntries,
   getEntry,
 };
