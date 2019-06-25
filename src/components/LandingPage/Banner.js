@@ -2,6 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { Wrapper } from 'common/base';
+import BannerImg from './yellow-banner.png';
 import styles from './Banner.module.css';
 import { shareLink } from '../../constants/dataProgress';
 
@@ -9,10 +10,7 @@ const Banner = () => (
   <section className={styles.banner}>
     <Wrapper size="l">
       <div className={styles.image}>
-        <img
-          src="https://image.goodjob.life/yellow-banner.png"
-          alt="求職市場透明化"
-        />
+        <img src={BannerImg} alt="求職市場透明化" />
       </div>
       <div className={styles.content}>
         <h1 className={styles.heading}>職場透明化運動</h1>
