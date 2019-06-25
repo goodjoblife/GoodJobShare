@@ -4,6 +4,7 @@ import { Section, P } from 'common/base';
 import Loader from 'common/Loader';
 import styles from './InterviewExperiences.module.css';
 import { isUnfetched, isFetching, isError } from '../../../constants/status';
+import ExperienceEntry from './ExperienceEntry';
 
 const InterviewExperiences = ({ status, data }) => {
   if (isUnfetched(status)) {
@@ -26,7 +27,7 @@ const InterviewExperiences = ({ status, data }) => {
       </Section>
     );
   }
-  return JSON.stringify(data);
+  return data.map(d => <ExperienceEntry key={d._id} data={d} />);
 };
 
 InterviewExperiences.propTypes = {
