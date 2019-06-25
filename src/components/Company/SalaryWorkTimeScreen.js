@@ -16,10 +16,10 @@ import {
 } from 'common/routing/selectors';
 import { queryCompany } from '../../actions/timeAndSalaryCompany';
 import { isFetching, isFetched } from '../../constants/status';
-import { pageSelector } from '../TimeAndSalary/common/selectors';
-import { validatePage } from '../TimeAndSalary/common/validators';
 import WorkingHourBlock from './WorkingHourBlock';
 import renderHelmet from './helmet';
+import ViewLog from '../../containers/Company/ViewLog';
+import withRouteParameter from './withRouteParameter';
 import styles from './SalaryWorkTimeScreen.module.css';
 
 const companyNameSelector = R.compose(
@@ -46,28 +46,32 @@ class SalaryWorkTimeScreen extends Component {
   };
 
   componentDidMount() {
-    this.props.queryCompany({
-      companyName: companyNameSelector(this.props),
-    });
+    const companyName = this.props.companyName;
+    this.props.queryCompany({ companyName });
     this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
-    if (companyNameSelector(prevProps) !== companyNameSelector(this.props)) {
-      this.props.queryCompany({
-        companyName: companyNameSelector(this.props),
-      });
+    const prevCompanyName = prevProps.companyName;
+    const companyName = this.props.companyName;
+
+    if (prevCompanyName !== companyName) {
+      this.props.queryCompany({ companyName });
       this.props.fetchPermission();
     }
   }
 
   render() {
-    const { data, status, canViewTimeAndSalary } = this.props;
+    const {
+      data,
+      status,
+      canViewTimeAndSalary,
+      companyName,
+      page,
+    } = this.props;
     const pathname = pathnameSelector(this.props);
-    const page = validatePage(pageSelector(this.props));
     const pageSize = 10;
 
-    const companyName = companyNameSelector(this.props);
     const title = `${companyName}薪水`;
     const statistics = data
       ? data.get('salary_work_time_statistics').toJS()
@@ -79,6 +83,13 @@ class SalaryWorkTimeScreen extends Component {
       'average_estimated_hourly_wage',
       statistics,
     );
+
+    const currentSalaryWorkTimes = data
+      ? data
+          .get('salary_work_times')
+          .slice((page - 1) * pageSize, page * pageSize)
+          .toJS()
+      : [];
 
     const queryParams = querySelector(this.props);
 
@@ -118,7 +129,6 @@ class SalaryWorkTimeScreen extends Component {
                   )
                 }
               />
-              <FanPageBlock className={styles.fanPageBlock} />
             </React.Fragment>
           )) || (
             <P size="l" bold className={styles.searchNoResult}>
@@ -127,6 +137,14 @@ class SalaryWorkTimeScreen extends Component {
               」的薪時資訊
             </P>
           ))}
+        {isFetched(status) && (
+          <ViewLog
+            companyName={companyName}
+            page={page}
+            salaryWorkTimes={currentSalaryWorkTimes}
+          />
+        )}
+        <FanPageBlock className={styles.fanPageBlock} />
       </section>
     );
   }
@@ -141,6 +159,7 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
 const hoc = compose(
   ssr,
   withPermission,
+  withRouteParameter,
 );
 
 export default hoc(SalaryWorkTimeScreen);

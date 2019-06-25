@@ -47,6 +47,7 @@ export const getCompanyQuery = `
     company(name:$companyName) {
       name
       salary_work_times {
+        id
         job_title {
           name
         }
