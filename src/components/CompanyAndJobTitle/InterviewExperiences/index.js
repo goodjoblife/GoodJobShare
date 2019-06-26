@@ -1,5 +1,5 @@
 import React from 'react';
-import CompanyAndJobTitleWrapper from './CompanyAndJobTitleWrapper';
+import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 
 const InterviewExperiences = ({ pageType, pageName, tabName }) => (
   <CompanyAndJobTitleWrapper>
