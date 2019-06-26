@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { compose } from 'ramda';
 
-const CompanyPageWrapper = ({ children }) => {
+const CompanyPageProvider = ({ children }) => {
   return (
     <div>
       {children({
@@ -14,4 +14,4 @@ const CompanyPageWrapper = ({ children }) => {
   );
 };
 
-export default compose(withRouter)(CompanyPageWrapper);
+export default compose(withRouter)(CompanyPageProvider);

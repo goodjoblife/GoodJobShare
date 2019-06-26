@@ -28,7 +28,8 @@ import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
-import CompanyPageWrapper from './components/Company/CompanyPageWrapper';
+import CompanyPageProvider from './components/Company/CompanyPageProvider';
+import Overview from './components/CompanyAndJobTitle/Overview';
 
 const routes = [
   {
@@ -202,11 +203,7 @@ const routes = [
       {
         path: '/companies/:companyName',
         exact: true,
-        render: () => (
-          <CompanyPageWrapper>
-            <section>overview</section>
-          </CompanyPageWrapper>
-        ),
+        render: () => <CompanyPageProvider>{Overview}</CompanyPageProvider>,
       },
       {
         path: '/companies/:companyName/salary-work-times',
