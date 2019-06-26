@@ -4,6 +4,7 @@ import CompanyAndJobTitleWrapper from './CompanyAndJobTitleWrapper';
 
 const Overview = ({ pageType, pageName, tabName }) => (
   <CompanyAndJobTitleWrapper>
+    <h1>Overview</h1>
     <p>{pageType}</p>
     <p>{pageName}</p>
     <p>{tabName}</p>
