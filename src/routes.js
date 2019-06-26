@@ -5,8 +5,10 @@ import LaborRightsSingle from './containers/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/SalaryWorkTime/TimeAndSalaryBoard';
 import SalaryWorkTimeSearchScreen from './containers/SalaryWorkTime/SearchScreen';
-import CompanySalaryWorkTimeScreen from './containers/Company/SalaryWorkTimeScreen';
-import JobTitleSalaryWorkTimeScreen from './containers/JobTitle/SalaryWorkTimeScreen';
+
+// TODO: remove these two import(leave it for developers now)
+// import CompanySalaryWorkTimeScreen from './containers/Company/SalaryWorkTimeScreen';
+// import JobTitleSalaryWorkTimeScreen from './containers/JobTitle/SalaryWorkTimeScreen';
 import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
 import CampaignTimeAndSalary from './containers/CampaignTimeAndSalary';
 import CampaignTimeAndSalaryBoard from './containers/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
@@ -28,6 +30,12 @@ import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
+import CompanyPageProvider from './components/Company/CompanyPageProvider';
+import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
+import Overview from './components/CompanyAndJobTitle/Overview';
+import InterviewExperiences from './components/CompanyAndJobTitle/InterviewExperiences';
+import WorkExperiences from './components/CompanyAndJobTitle/WorkExperiences';
+import CompanyJobTitleTimeAndSalary from './components/CompanyAndJobTitle/TimeAndSalary';
 
 const routes = [
   {
@@ -201,22 +209,30 @@ const routes = [
       {
         path: '/companies/:companyName',
         exact: true,
-        component: () => <section>overview</section>,
+        render: () => <CompanyPageProvider>{Overview}</CompanyPageProvider>,
       },
       {
         path: '/companies/:companyName/salary-work-times',
         exact: true,
-        component: CompanySalaryWorkTimeScreen,
+        render: () => (
+          <CompanyPageProvider>
+            {CompanyJobTitleTimeAndSalary}
+          </CompanyPageProvider>
+        ),
       },
       {
         path: '/companies/:companyName/interview-experiences',
         exact: true,
-        component: () => <section>interview-experiences</section>,
+        render: () => (
+          <CompanyPageProvider>{InterviewExperiences}</CompanyPageProvider>
+        ),
       },
       {
         path: '/companies/:companyName/work-experiences',
         exact: true,
-        component: () => <section>work-experiences</section>,
+        render: () => (
+          <CompanyPageProvider>{WorkExperiences}</CompanyPageProvider>
+        ),
       },
       {
         component: NotFound,
@@ -230,22 +246,30 @@ const routes = [
       {
         path: '/job-titles/:jobTitle',
         exact: true,
-        component: () => <section>overview</section>,
+        render: () => <JobTitlePageProvider>{Overview}</JobTitlePageProvider>,
       },
       {
         path: '/job-titles/:jobTitle/salary-work-times',
         exact: true,
-        component: JobTitleSalaryWorkTimeScreen,
+        render: () => (
+          <JobTitlePageProvider>
+            {CompanyJobTitleTimeAndSalary}
+          </JobTitlePageProvider>
+        ),
       },
       {
         path: '/job-titles/:jobTitle/interview-experiences',
         exact: true,
-        component: () => <section>interview-experiences</section>,
+        render: () => (
+          <JobTitlePageProvider>{InterviewExperiences}</JobTitlePageProvider>
+        ),
       },
       {
         path: '/job-titles/:jobTitle/work-experiences',
         exact: true,
-        component: () => <section>work-experiences</section>,
+        render: () => (
+          <JobTitlePageProvider>{WorkExperiences}</JobTitlePageProvider>
+        ),
       },
       {
         component: NotFound,
