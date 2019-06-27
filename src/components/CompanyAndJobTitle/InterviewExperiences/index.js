@@ -1,7 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import Pagination from 'common/Pagination';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import InterviewExperiencesSection from './InterviewExperiences';
-import STATUS from '../../../constants/status';
+import STATUS, { isFetched } from '../../../constants/status';
+
+const PAGE_COUNT = 10;
 
 const mockData = [
   {
@@ -47,6 +50,7 @@ const InterviewExperiences = ({
 }) => {
   const [data, setData] = useState(null);
   const [status, setStatus] = useState(STATUS.UNFETCHED);
+  const [page] = useState(1);
   const fetchData = useCallback(() => {
     setStatus(STATUS.FETCHING);
     setTimeout(() => {
@@ -63,6 +67,14 @@ const InterviewExperiences = ({
   return (
     <CompanyAndJobTitleWrapper>
       <InterviewExperiencesSection data={data} status={status} />
+      {isFetched(status) && (
+        <Pagination
+          totalCount={data.length}
+          unit={PAGE_COUNT}
+          currentPage={page}
+          createPageLinkTo={page => `?p=${page}`}
+        />
+      )}
     </CompanyAndJobTitleWrapper>
   );
 };
