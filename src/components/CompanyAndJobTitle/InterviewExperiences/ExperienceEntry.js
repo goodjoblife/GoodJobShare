@@ -7,6 +7,7 @@ import i from 'common/icons';
 import styles from './InterviewExperiences.module.css';
 import { formatCreatedAt, formatSalary } from './helper';
 import Label from './Label';
+import Rating from './Rating';
 
 const createLinkTo = (_id, backable) => ({
   pathname: `/experiences/${_id}`,
@@ -14,7 +15,7 @@ const createLinkTo = (_id, backable) => ({
 });
 
 const ExperienceEntry = ({ pageType, data, size, backable }) => {
-  const { _id, created_at: createdAt, salary, title } = data;
+  const { _id, created_at: createdAt, salary, title, overallRating } = data;
 
   return (
     <Link
@@ -61,6 +62,7 @@ const ExperienceEntry = ({ pageType, data, size, backable }) => {
               Icon={i.Coin}
             />
           )}
+          <Rating rate={overallRating} />
         </div>
       </section>
     </Link>

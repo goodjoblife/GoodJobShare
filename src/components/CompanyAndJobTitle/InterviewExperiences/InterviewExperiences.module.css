@@ -1,4 +1,4 @@
-@value gray-dark, main-gray, link-blue, border-gray, page-gutter-s, link-blue from "common/variables.module.css";
+@value gray-dark, main-gray, link-blue, border-gray, page-gutter-s, link-blue, white-light, border-gray, main-yellow, yellow-light from "common/variables.module.css";
 
 .container {
   display: block;
@@ -103,4 +103,19 @@
   text-align: center;
   color: #333333;
   padding: 130px 0;
+}
+
+.rateButtons {
+  cursor: auto;
+  display: inline-flex;
+  align-items: center;
+
+  .rateButton {
+    width: 23px;
+    height: 23px;
+  }
+}
+
+.autoCursor {
+  cursor: auto;
 }

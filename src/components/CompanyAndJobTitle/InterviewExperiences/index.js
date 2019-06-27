@@ -25,6 +25,7 @@ const mockData = [
     status: 'published',
     title: 'ABC 面試經驗分享',
     type: 'interview',
+    overallRating: 3,
   },
   {
     _id: '5d0916631ae15200125e19fa',
@@ -40,6 +41,7 @@ const mockData = [
     status: 'published',
     title: 'abc 面試經驗分享',
     type: 'interview',
+    overallRating: 4,
   },
 ];
 
