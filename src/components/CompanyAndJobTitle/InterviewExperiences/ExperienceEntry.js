@@ -13,7 +13,7 @@ const createLinkTo = (_id, backable) => ({
   state: { backable },
 });
 
-const ExperienceEntry = ({ data, size, backable }) => {
+const ExperienceEntry = ({ pageType, data, size, backable }) => {
   const { _id, created_at: createdAt, salary, title } = data;
 
   return (
@@ -33,16 +33,20 @@ const ExperienceEntry = ({ data, size, backable }) => {
         </Heading>
 
         <div className={styles.labels}>
-          <Label
-            text={data.company.name}
-            Icon={i.Company}
-            className={styles.company}
-          />
-          <Label
-            text={data.job_title}
-            Icon={i.User}
-            className={styles.position}
-          />
+          {pageType !== 'company' && (
+            <Label
+              text={data.company.name}
+              Icon={i.Company}
+              className={styles.company}
+            />
+          )}
+          {pageType !== 'jobTitle' && (
+            <Label
+              text={data.job_title}
+              Icon={i.User}
+              className={styles.position}
+            />
+          )}
           {data.region && (
             <Label
               text={data.region}

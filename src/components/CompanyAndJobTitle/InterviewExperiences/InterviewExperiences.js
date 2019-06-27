@@ -6,7 +6,7 @@ import styles from './InterviewExperiences.module.css';
 import { isUnfetched, isFetching, isError } from '../../../constants/status';
 import ExperienceEntry from './ExperienceEntry';
 
-const InterviewExperiences = ({ status, data }) => {
+const InterviewExperiences = ({ pageType, status, data }) => {
   if (isUnfetched(status)) {
     return null;
   }
@@ -27,10 +27,13 @@ const InterviewExperiences = ({ status, data }) => {
       </Section>
     );
   }
-  return data.map(d => <ExperienceEntry key={d._id} data={d} />);
+  return data.map(d => (
+    <ExperienceEntry key={d._id} pageType={pageType} data={d} />
+  ));
 };
 
 InterviewExperiences.propTypes = {
+  pageType: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   status: PropTypes.string.isRequired,
 };

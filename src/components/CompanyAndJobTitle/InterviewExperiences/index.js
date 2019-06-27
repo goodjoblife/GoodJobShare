@@ -44,7 +44,7 @@ const mockData = [
 ];
 
 const InterviewExperiences = ({
-  pageType, // eslint-disable-line no-unused-vars
+  pageType,
   pageName, // eslint-disable-line no-unused-vars
   tabName, // eslint-disable-line no-unused-vars
 }) => {
@@ -66,7 +66,11 @@ const InterviewExperiences = ({
   );
   return (
     <CompanyAndJobTitleWrapper>
-      <InterviewExperiencesSection data={data} status={status} />
+      <InterviewExperiencesSection
+        pageType={pageType}
+        data={data}
+        status={status}
+      />
       {isFetched(status) && (
         <Pagination
           totalCount={data.length}
