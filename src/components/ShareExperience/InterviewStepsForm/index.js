@@ -73,7 +73,7 @@ const createBlock = {
   interviewQas: createInterviewQa,
 };
 
-const idCounter = idGenerator();
+let idCounter = idGenerator();
 
 const experienceSectionId = idCounter();
 const suggestionSectionId = idCounter();
@@ -135,7 +135,7 @@ class InterviewForm extends React.Component {
     let defaultFromDraft;
 
     try {
-      const { __updatedAt, ...storedDraft } = JSON.parse(
+      const { __updatedAt, __nextId, ...storedDraft } = JSON.parse(
         localStorage.getItem(LS_INTERVIEW_STEPS_FORM_KEY),
       );
       if (isExpired(__updatedAt)) {
@@ -143,6 +143,7 @@ class InterviewForm extends React.Component {
         localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
       } else {
         defaultFromDraft = storedDraft;
+        idCounter = idGenerator(__nextId);
       }
     } catch (error) {
       defaultFromDraft = null;
@@ -165,6 +166,7 @@ class InterviewForm extends React.Component {
         LS_INTERVIEW_STEPS_FORM_KEY,
         JSON.stringify({
           ...this.state,
+          __nextId: idCounter(),
           __updatedAt: Date.now(),
         }),
       );

@@ -65,7 +65,7 @@ const createBlock = {
   interviewQas: createInterviewQa,
 };
 
-const idCounter = idGenerator();
+let idCounter = idGenerator();
 
 const isBlockRemovable = blocks => R.length(R.keys(blocks)) > 1;
 
@@ -117,9 +117,11 @@ class InterviewForm extends React.Component {
     let defaultFromDraft;
 
     try {
-      defaultFromDraft = JSON.parse(
+      const { __nextId, ...storedDraft } = JSON.parse(
         localStorage.getItem(LS_INTERVIEW_FORM_KEY),
       );
+      defaultFromDraft = storedDraft;
+      idCounter = idGenerator(__nextId);
     } catch (error) {
       defaultFromDraft = null;
     }
@@ -217,7 +219,13 @@ class InterviewForm extends React.Component {
         ...this.state,
         ...updateState,
       };
-      localStorage.setItem(LS_INTERVIEW_FORM_KEY, JSON.stringify(state));
+      localStorage.setItem(
+        LS_INTERVIEW_FORM_KEY,
+        JSON.stringify({
+          ...state,
+          __nextId: idCounter(),
+        }),
+      );
     };
   }
 

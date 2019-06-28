@@ -265,8 +265,8 @@ const portWorkExperiencesFormToRequestFormat = workExperiencesForm => {
   return body;
 };
 
-export const idGenerator = () => {
-  let id = -1;
+export const idGenerator = (initValue = -1) => {
+  let id = initValue;
   return () => {
     id += 1;
     return id;
