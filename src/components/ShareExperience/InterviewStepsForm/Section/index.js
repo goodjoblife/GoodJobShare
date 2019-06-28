@@ -13,6 +13,10 @@ const SectionEleContentWithValidation = subscribeValidation(
 );
 
 class Section extends Component {
+  handleRemove =
+    this.props.removeSection &&
+    (() => this.props.removeSection(this.props.section.id));
+
   render() {
     const {
       isRequired,
@@ -20,7 +24,6 @@ class Section extends Component {
       contentMinLength,
       isSubtitleEditable,
       editSection,
-      removeSection,
       submitted,
       changeValidationStatus,
       elementName,
@@ -39,7 +42,7 @@ class Section extends Component {
             isSubtitleEditable={isSubtitleEditable}
             contentMinLength={contentMinLength}
             editSection={editSection(section.id)}
-            removeSection={removeSection && (() => removeSection(section.id))}
+            removeSection={this.handleRemove}
             validator={sectionContentValidator(contentMinLength)}
             submitted={submitted}
             changeValidationStatus={changeValidationStatus}
