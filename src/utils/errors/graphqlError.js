@@ -5,7 +5,7 @@ const mapErrorMessages = R.compose(
   R.map(R.prop('message')),
 );
 
-const mapErrorCodes = R.map(R.props(['extensions', 'code']));
+const mapErrorCodes = R.map(R.path(['extensions', 'code']));
 const mapErrorPaths = R.map(R.prop('path'));
 
 class GraphqlError extends Error {

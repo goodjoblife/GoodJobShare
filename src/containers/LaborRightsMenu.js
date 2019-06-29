@@ -4,13 +4,14 @@ import { queryMenuIfUnfetched } from '../actions/laborRights';
 import {
   menuEntriesSelector,
   menuStatusSelector,
+  menuErrorSelector,
 } from '../selectors/laborRightsSelector';
 import LaborRightsMenu from '../components/LaborRightsMenu';
 
 const mapStateToProps = state => ({
   menuEntries: menuEntriesSelector(state),
   menuStatus: menuStatusSelector(state),
-  menuError: state.laborRights.get('menuError'),
+  menuError: menuErrorSelector(state),
 });
 
 const mapDispatchToProps = dispatch =>

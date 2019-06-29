@@ -39,14 +39,12 @@ const LandingPage = ({
   timeAndSalaryCount,
   laborRightsCount,
 }) => {
-  const popularExperiences = popularExperiencesRaw.take(3).toJS() || [];
-  const items = laborRightsMenuEntries
-    .toJS()
-    .map(({ id, title, coverUrl }) => ({
-      link: `/labor-rights/${id}`,
-      coverUrl,
-      title,
-    }));
+  const popularExperiences = popularExperiencesRaw.toJS() || [];
+  const items = laborRightsMenuEntries.map(({ id, title, coverUrl }) => ({
+    link: `/labor-rights/${id}`,
+    coverUrl,
+    title,
+  }));
   return (
     <main>
       <StaticHelmet.LandingPage />
@@ -76,7 +74,7 @@ const LandingPage = ({
       <Section padding>
         <Wrapper size="l">
           <Heading size="l" center marginBottom>
-            熱門分享
+            最新經驗分享
           </Heading>
           <Columns
             Item={ExperienceBlock}
@@ -102,7 +100,7 @@ const LandingPage = ({
 };
 
 LandingPage.propTypes = {
-  laborRightsMenuEntries: ImmutablePropTypes.list.isRequired,
+  laborRightsMenuEntries: PropTypes.array.isRequired,
   popularExperiences: ImmutablePropTypes.list.isRequired,
   laborRightsCount: PropTypes.number.isRequired,
   timeAndSalaryCount: PropTypes.number.isRequired,
