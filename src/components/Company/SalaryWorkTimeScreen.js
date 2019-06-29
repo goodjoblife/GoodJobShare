@@ -19,7 +19,6 @@ import { isFetching, isFetched } from '../../constants/status';
 import WorkingHourBlock from './WorkingHourBlock';
 import renderHelmet from './helmet';
 import ViewLog from '../../containers/Company/ViewLog';
-import withRouteParameter from './withRouteParameter';
 import styles from './SalaryWorkTimeScreen.module.css';
 
 const companyNameSelector = R.compose(
@@ -159,7 +158,6 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
 const hoc = compose(
   ssr,
   withPermission,
-  withRouteParameter,
 );
 
 export default hoc(SalaryWorkTimeScreen);
