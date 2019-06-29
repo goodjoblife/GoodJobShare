@@ -56,7 +56,6 @@ class Step3 extends React.Component {
       editQa,
       changeValidationStatus,
       onSubmit,
-      history,
       auth,
       agree,
       handleAgree,
@@ -181,7 +180,7 @@ class Step3 extends React.Component {
           <div className={styles.nextAction}>
             <ButtonRect
               className={styles.backButton}
-              onClick={() => history.push('/share/interview/step2')}
+              to="/share/interview/step2"
             >
               上一步
             </ButtonRect>

@@ -13,7 +13,7 @@ class Step1 extends React.Component {
   };
 
   render() {
-    const { handleState, state, changeValidationStatus, history } = this.props;
+    const { handleState, state, changeValidationStatus } = this.props;
     return (
       <React.Fragment>
         <InterviewInfo
@@ -27,7 +27,7 @@ class Step1 extends React.Component {
         <div className={styles.nextAction}>
           <ButtonRect
             style={{ marginLeft: 'auto' }}
-            onClick={() => history.push('/share/interview/step2')}
+            to="/share/interview/step2"
           >
             下一步
           </ButtonRect>
