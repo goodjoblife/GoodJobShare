@@ -41,52 +41,43 @@ const VerificationPage = ({ location: { search }, verifyEmail }) => {
   });
 
   const [verifyStatus, setVerifyStatus] = useState(VERIFY_STATUS.NOT_VERIFITED);
-  const sendVerificationCode = useCallback(
-    () => {
-      setVerifyStatus(VERIFY_STATUS.LOADING);
-      verifyEmail({ verifyToken })
-        .then(() => setVerifyStatus(VERIFY_STATUS.VERIFY_SUCCESS))
-        .catch(e => {
-          setVerifyStatus(VERIFY_STATUS.VERIFY_FAILURE);
-          console.error(e);
-        });
-    },
-    [verifyToken, verifyEmail],
-  );
+  const sendVerificationCode = useCallback(() => {
+    setVerifyStatus(VERIFY_STATUS.LOADING);
+    verifyEmail({ verifyToken })
+      .then(() => setVerifyStatus(VERIFY_STATUS.VERIFY_SUCCESS))
+      .catch(e => {
+        setVerifyStatus(VERIFY_STATUS.VERIFY_FAILURE);
+        console.error(e);
+      });
+  }, [verifyToken, verifyEmail]);
 
-  useEffect(
-    () => {
-      sendVerificationCode();
-    },
-    [sendVerificationCode],
-  );
+  useEffect(() => {
+    sendVerificationCode();
+  }, [sendVerificationCode]);
 
-  const renderContent = useCallback(
-    () => {
-      switch (verifyStatus) {
-        case VERIFY_STATUS.VERIFY_SUCCESS:
-          return <VerificationSuccess />;
-        case VERIFY_STATUS.VERIFY_FAILURE:
-          return (
-            <VerificationFailure sendVerificationCode={sendVerificationCode} />
-          );
-        case VERIFY_STATUS.LOADING:
-          return (
-            <div
-              style={{
-                minHeight: '200px',
-              }}
-            >
-              <Loading size="s" />
-            </div>
-          );
-        case VERIFY_STATUS.NOT_VERIFITED:
-        default:
-          return null;
-      }
-    },
-    [verifyStatus, sendVerificationCode],
-  );
+  const renderContent = useCallback(() => {
+    switch (verifyStatus) {
+      case VERIFY_STATUS.VERIFY_SUCCESS:
+        return <VerificationSuccess />;
+      case VERIFY_STATUS.VERIFY_FAILURE:
+        return (
+          <VerificationFailure sendVerificationCode={sendVerificationCode} />
+        );
+      case VERIFY_STATUS.LOADING:
+        return (
+          <div
+            style={{
+              minHeight: '200px',
+            }}
+          >
+            <Loading size="s" />
+          </div>
+        );
+      case VERIFY_STATUS.NOT_VERIFITED:
+      default:
+        return null;
+    }
+  }, [verifyStatus, sendVerificationCode]);
 
   return (
     <div className={styles.root}>

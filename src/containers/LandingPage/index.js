@@ -9,7 +9,7 @@ import { queryTimeAndSalaryCountIfUnfetched } from '../../actions/timeAndSalary'
 import { menuEntriesSelector } from '../../selectors/laborRightsSelector';
 
 const laborRightsCountSelector = R.compose(
-  entries => entries.size,
+  R.length,
   menuEntriesSelector,
 );
 

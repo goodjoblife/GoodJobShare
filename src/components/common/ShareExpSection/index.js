@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Section, Wrapper, Heading, P } from 'common/base';
+import InterviewImg from './share-2.png';
+import WorkExperienceImg from './share-3.png';
+import SalaryWorkTimeImg from './share-1.png';
 import styles from './ShareExpSection.module.css';
 
 const DefaultSubheading = () => (
@@ -24,11 +27,7 @@ const ShareExpSection = ({ heading, Subheading }) => (
       </P>
       <div className={styles.container}>
         <Link to="/share/interview" className={styles.item}>
-          <img
-            src="https://image.goodjob.life/share-2.png"
-            alt="分享面試經驗"
-            className={styles.image}
-          />
+          <img src={InterviewImg} alt="分享面試經驗" className={styles.image} />
           <P size="l" Tag="h3" bold className={styles.button}>
             面試經驗
           </P>
@@ -38,7 +37,7 @@ const ShareExpSection = ({ heading, Subheading }) => (
         </Link>
         <Link to="/share/work-experiences" className={styles.item}>
           <img
-            src="https://image.goodjob.life/share-3.png"
+            src={WorkExperienceImg}
             alt="分享工作經驗"
             className={styles.image}
           />
@@ -51,7 +50,7 @@ const ShareExpSection = ({ heading, Subheading }) => (
         </Link>
         <Link to="/share/time-and-salary" className={styles.item}>
           <img
-            src="https://image.goodjob.life/share-1.png"
+            src={SalaryWorkTimeImg}
             alt="留下工時或薪資"
             className={styles.image}
           />

@@ -1,15 +1,29 @@
+import R from 'ramda';
+import { fromJS } from 'immutable';
 import fetchingStatus from '../constants/status';
 
-export const menuEntriesSelector = state =>
-  state.laborRights.get('menuEntries');
+export const menuEntriesSelector = R.path(['laborRights', 'menuEntries']);
 
-export const menuStatusSelector = state => state.laborRights.get('menuStatus');
+export const menuStatusSelector = R.pipe(
+  R.path(['laborRights', 'menuStatus']),
+  fromJS,
+);
 
-export const entryDataSelector = entryId => state =>
-  state.laborRights.getIn(['entries', entryId, 'data']);
+export const menuErrorSelector = R.pipe(
+  R.path(['laborRights', 'menuError']),
+  fromJS,
+);
 
-export const entryStatusSelector = entryId => state =>
-  state.laborRights.getIn(
-    ['entries', entryId, 'status'],
-    fetchingStatus.UNFETCHED,
-  );
+export const entryDataSelector = entryId =>
+  R.path(['laborRights', 'entries', entryId, 'data']);
+
+export const entryStatusSelector = entryId =>
+  R.pathOr(fetchingStatus.UNFETCHED, [
+    'laborRights',
+    'entries',
+    entryId,
+    'status',
+  ]);
+
+export const entryErrorSelector = entryId =>
+  R.path(['laborRights', 'entries', entryId, 'error']);

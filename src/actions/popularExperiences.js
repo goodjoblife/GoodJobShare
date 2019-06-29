@@ -1,5 +1,6 @@
 import R from 'ramda';
 import fetchingStatus from '../constants/status';
+import { tokenSelector } from '../selectors/authSelector';
 
 export const SET_DATA = '@@POPULAR_EXPERIENCES/SET_DATA';
 export const SET_STATUS = '@@POPULAR_EXPERIENCES/SET_STATUS';
@@ -15,28 +16,24 @@ const setData = ({ data, status, error = null }) => ({
   error,
 });
 
-export const queryPopularExperiences = (limit = 3) => (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const queryPopularExperiences = () => (dispatch, getState, { api }) => {
   dispatch(startFetching());
 
-  const opt = {
-    start: 1,
-    limit,
-    sort: 'popularity',
-    searchType: ['interview', 'work'],
-  };
+  const state = getState();
+  const token = tokenSelector(state);
 
   return api.experiences
-    .getExperiences(opt)
-    .then(rawData => {
-      const experiences = R.prop('experiences')(rawData);
+    .getPopularExperiences({ token })
+    .then(experiences => {
       dispatch(
         setData({
           status: fetchingStatus.FETCHED,
-          data: experiences,
+          data: R.map(({ id, job_title, ...rest }) => ({
+            // TODO 未來 migrate 掉
+            _id: id,
+            job_title: job_title.name,
+            ...rest,
+          }))(experiences),
         }),
       );
     })
