@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 import InterviewInfo from './BasicInfo';
 import styles from './InterviewForm.module.css';
 import ButtonRect from 'common/button/ButtonRect';
@@ -26,6 +27,7 @@ class Step1 extends React.Component {
         />
         <div className={styles.nextAction}>
           <ButtonRect
+            Tag={Link}
             style={{ marginLeft: 'auto' }}
             to="/share/interview/step2"
           >

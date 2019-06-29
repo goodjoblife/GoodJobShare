@@ -179,6 +179,7 @@ class Step3 extends React.Component {
           </label>
           <div className={styles.nextAction}>
             <ButtonRect
+              Tag={Link}
               className={styles.backButton}
               to="/share/interview/step2"
             >
