@@ -108,6 +108,7 @@ export const getJobTitleQuery = `
     job_title(name:$jobTitle) {
       name
       salary_work_times {
+        id
         company {
           name
         }
