@@ -22,8 +22,8 @@ const CrumbLink = ({ children, to }) => (
   </Link>
 );
 
-const BreadCrumb = ({ pageType, pageName, tabType }) => (
-  <div>
+const BreadCrumb = ({ style, pageType, pageName, tabType }) => (
+  <div style={style}>
     <CrumbLink to="/salary-work-times/latest">
       {pageTypeTranslation[pageType]}
     </CrumbLink>

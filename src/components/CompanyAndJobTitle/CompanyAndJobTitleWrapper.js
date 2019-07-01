@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Heading from 'common/base/Heading';
+
 import BreadCrumb from './BreadCrumb';
 
 const CompanyAndJobTitleWrapper = ({
@@ -11,7 +13,15 @@ const CompanyAndJobTitleWrapper = ({
 }) => {
   return (
     <div>
-      <BreadCrumb pageType={pageType} pageName={pageName} tabType={tabType} />
+      <BreadCrumb
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        style={{
+          marginBottom: '20px',
+        }}
+      />
+      <Heading style={{ color: '#000000' }}>{pageName}</Heading>
     </div>
   );
 };
