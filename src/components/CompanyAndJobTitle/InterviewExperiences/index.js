@@ -31,7 +31,7 @@ const InterviewExperiences = compose(
   ({
     pageType,
     pageName,
-    tabName, // eslint-disable-line no-unused-vars
+    tabName,
     experienceSearch,
     loadingStatus,
     page,
@@ -68,6 +68,7 @@ const InterviewExperiences = compose(
       <CompanyAndJobTitleWrapper>
         <InterviewExperiencesSection
           pageType={pageType}
+          tabName={tabName}
           data={experiences}
           status={loadingStatus}
         />

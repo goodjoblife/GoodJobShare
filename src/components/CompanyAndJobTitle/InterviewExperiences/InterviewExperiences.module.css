@@ -95,16 +95,6 @@
   }
 }
 
-.searchNoResult {
-  background-color: #f2f2f2;
-  border: 1px solid border-gray;
-  font-size: 20px;
-  font-weight: 600;
-  text-align: center;
-  color: #333333;
-  padding: 130px 0;
-}
-
 .rateButtons {
   cursor: auto;
   display: inline-flex;

@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Section, P } from 'common/base';
 import Loader from 'common/Loader';
-import styles from './InterviewExperiences.module.css';
 import { isUnfetched, isFetching, isError } from '../../../constants/status';
 import ExperienceEntry from './ExperienceEntry';
+import EmptyView from '../EmptyView';
 
-const InterviewExperiences = ({ pageType, status, data }) => {
+const InterviewExperiences = ({ pageType, tabName, status, data }) => {
   if (isUnfetched(status)) {
     return null;
   }
@@ -17,15 +16,7 @@ const InterviewExperiences = ({ pageType, status, data }) => {
     return null;
   }
   if (data.length === 0) {
-    return (
-      <Section Tag="main" paddingBottom>
-        <P size="l" bold className={styles.searchNoResult}>
-          尚未有「聯發科股份有限公司」的經驗分享
-          <br />
-          搜尋看看其他？
-        </P>
-      </Section>
-    );
+    return <EmptyView tabName={tabName} />;
   }
   return data.map(d => (
     <ExperienceEntry key={d._id} pageType={pageType} data={d} />
@@ -34,6 +25,7 @@ const InterviewExperiences = ({ pageType, status, data }) => {
 
 InterviewExperiences.propTypes = {
   pageType: PropTypes.string.isRequired,
+  tabName: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   status: PropTypes.string.isRequired,
 };
