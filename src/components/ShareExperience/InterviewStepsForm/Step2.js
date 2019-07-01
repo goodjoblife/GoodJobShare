@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 import InterviewInfo from './MoreInfo';
 import styles from './InterviewForm.module.css';
 import ButtonRect from 'common/button/ButtonRect';
@@ -13,7 +14,7 @@ class Step2 extends React.Component {
   };
 
   render() {
-    const { handleState, state, changeValidationStatus, history } = this.props;
+    const { handleState, state, changeValidationStatus } = this.props;
     return (
       <React.Fragment>
         <InterviewInfo
@@ -31,12 +32,13 @@ class Step2 extends React.Component {
         />
         <div className={styles.nextAction}>
           <ButtonRect
+            Tag={Link}
             className={styles.backButton}
-            onClick={() => history.push('/share/interview/step1')}
+            to="/share/interview/step1"
           >
             上一步
           </ButtonRect>
-          <ButtonRect onClick={() => history.push('/share/interview/step3')}>
+          <ButtonRect Tag={Link} to="/share/interview/step3">
             下一步
           </ButtonRect>
         </div>
