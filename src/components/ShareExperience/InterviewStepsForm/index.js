@@ -104,6 +104,13 @@ const defaultForm = {
   interviewSensitiveQuestions: [],
 };
 
+const getMaxId = state => {
+  const ids = [...R.keys(state.sections), ...R.keys(state.interviewQas)];
+  const maxId = R.reduce(R.max, -Infinity, ids);
+  if (maxId === undefined) return -1;
+  return maxId;
+};
+
 const isStepTabActive = step => (match, location) => {
   const matched = location.pathname.match(/step(\d+)$/);
   if (!matched) return false;
@@ -143,7 +150,9 @@ class InterviewForm extends React.Component {
         localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
       } else {
         defaultFromDraft = storedDraft;
-        idCounter = idGenerator(__nextId);
+        idCounter = idGenerator(
+          __nextId !== undefined ? __nextId : getMaxId(storedDraft),
+        );
       }
     } catch (error) {
       defaultFromDraft = null;

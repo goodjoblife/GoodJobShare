@@ -86,6 +86,13 @@ const defaultForm = {
   },
 };
 
+const getMaxId = state => {
+  const ids = [...R.keys(state.sections)];
+  const maxId = R.max(ids);
+  if (maxId === undefined) return -1;
+  return maxId;
+};
+
 class WorkExperiencesForm extends React.Component {
   constructor(props) {
     super(props);
@@ -112,7 +119,9 @@ class WorkExperiencesForm extends React.Component {
         localStorage.getItem(LS_WORK_EXPERIENCES_FORM_KEY),
       );
       defaultFromDraft = storedDraft;
-      idCounter = idGenerator(__nextId);
+      idCounter = idGenerator(
+        typeof __nextId !== undefined ? __nextId : getMaxId(storedDraft),
+      );
     } catch (error) {
       defaultFromDraft = null;
     }

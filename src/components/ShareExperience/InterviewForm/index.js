@@ -95,6 +95,13 @@ const defaultForm = {
   interviewSensitiveQuestions: [],
 };
 
+const getMaxId = state => {
+  const ids = [...R.keys(state.sections), ...R.keys(state.interviewQas)];
+  const maxId = R.reduce(R.max, -Infinity, ids);
+  if (maxId === undefined) return -1;
+  return maxId;
+};
+
 class InterviewForm extends React.Component {
   constructor(props) {
     super(props);
@@ -121,7 +128,11 @@ class InterviewForm extends React.Component {
         localStorage.getItem(LS_INTERVIEW_FORM_KEY),
       );
       defaultFromDraft = storedDraft;
-      idCounter = idGenerator(__nextId);
+      idCounter = idGenerator(
+        typeof __nextId !== undefined
+          ? __nextId
+          : getMaxId(storedDraft),
+      );
     } catch (error) {
       defaultFromDraft = null;
     }
