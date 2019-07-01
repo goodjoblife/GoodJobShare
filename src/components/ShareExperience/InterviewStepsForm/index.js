@@ -142,7 +142,7 @@ class InterviewForm extends React.Component {
     let defaultFromDraft;
 
     try {
-      const { __updatedAt, __nextId, ...storedDraft } = JSON.parse(
+      const { __updatedAt, __idCounterCurrent, ...storedDraft } = JSON.parse(
         localStorage.getItem(LS_INTERVIEW_STEPS_FORM_KEY),
       );
       if (isExpired(__updatedAt)) {
@@ -151,7 +151,9 @@ class InterviewForm extends React.Component {
       } else {
         defaultFromDraft = storedDraft;
         idCounter = idGenerator(
-          __nextId !== undefined ? __nextId : getMaxId(storedDraft),
+          __idCounterCurrent !== undefined
+            ? __idCounterCurrent
+            : getMaxId(storedDraft),
         );
       }
     } catch (error) {
@@ -175,7 +177,7 @@ class InterviewForm extends React.Component {
         LS_INTERVIEW_STEPS_FORM_KEY,
         JSON.stringify({
           ...this.state,
-          __nextId: idCounter.getCurrent(),
+          __idCounterCurrent: idCounter.getCurrent(),
           __updatedAt: Date.now(),
         }),
       );

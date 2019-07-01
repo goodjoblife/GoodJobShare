@@ -124,13 +124,13 @@ class InterviewForm extends React.Component {
     let defaultFromDraft;
 
     try {
-      const { __nextId, ...storedDraft } = JSON.parse(
+      const { __idCounterCurrent, ...storedDraft } = JSON.parse(
         localStorage.getItem(LS_INTERVIEW_FORM_KEY),
       );
       defaultFromDraft = storedDraft;
       idCounter = idGenerator(
-        typeof __nextId !== undefined
-          ? __nextId
+        typeof __idCounterCurrent !== undefined
+          ? __idCounterCurrent
           : getMaxId(storedDraft),
       );
     } catch (error) {
@@ -234,7 +234,7 @@ class InterviewForm extends React.Component {
         LS_INTERVIEW_FORM_KEY,
         JSON.stringify({
           ...state,
-          __nextId: idCounter.getCurrent(),
+          __idCounterCurrent: idCounter.getCurrent(),
         }),
       );
     };

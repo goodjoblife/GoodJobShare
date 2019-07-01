@@ -115,12 +115,14 @@ class WorkExperiencesForm extends React.Component {
     let defaultFromDraft;
 
     try {
-      const { __nextId, ...storedDraft } = JSON.parse(
+      const { __idCounterCurrent, ...storedDraft } = JSON.parse(
         localStorage.getItem(LS_WORK_EXPERIENCES_FORM_KEY),
       );
       defaultFromDraft = storedDraft;
       idCounter = idGenerator(
-        typeof __nextId !== undefined ? __nextId : getMaxId(storedDraft),
+        typeof __idCounterCurrent !== undefined
+          ? __idCounterCurrent
+          : getMaxId(storedDraft),
       );
     } catch (error) {
       defaultFromDraft = null;
@@ -226,7 +228,7 @@ class WorkExperiencesForm extends React.Component {
         LS_WORK_EXPERIENCES_FORM_KEY,
         JSON.stringify({
           ...state,
-          __nextId: idCounter.getCurrent(),
+          __idCounterCurrent: idCounter.getCurrent(),
         }),
       );
     };
