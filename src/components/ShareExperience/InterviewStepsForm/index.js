@@ -175,7 +175,7 @@ class InterviewForm extends React.Component {
         LS_INTERVIEW_STEPS_FORM_KEY,
         JSON.stringify({
           ...this.state,
-          __nextId: idCounter(),
+          __nextId: idCounter.getCurrent(),
           __updatedAt: Date.now(),
         }),
       );

@@ -226,7 +226,7 @@ class WorkExperiencesForm extends React.Component {
         LS_WORK_EXPERIENCES_FORM_KEY,
         JSON.stringify({
           ...state,
-          __nextId: idCounter,
+          __nextId: idCounter.getCurrent(),
         }),
       );
     };

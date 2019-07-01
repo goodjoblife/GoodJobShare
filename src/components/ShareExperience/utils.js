@@ -267,10 +267,12 @@ const portWorkExperiencesFormToRequestFormat = workExperiencesForm => {
 
 export const idGenerator = (initValue = -1) => {
   let id = initValue;
-  return () => {
+  const getter = () => {
     id += 1;
     return id;
   };
+  getter.getCurrent = () => id;
+  return getter;
 };
 
 export const propsWorkExperiencesForm = state => {
