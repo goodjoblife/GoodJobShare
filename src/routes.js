@@ -212,14 +212,19 @@ const routes = [
         path: '/companies/:companyName',
         exact: true,
         render: routeProps => (
-          <CompanyPageProvider {...routeProps}>{Overview}</CompanyPageProvider>
+          <CompanyPageProvider {...routeProps} tabType={tabType.OVERVIEW}>
+            {Overview}
+          </CompanyPageProvider>
         ),
       },
       {
         path: '/companies/:companyName/salary-work-times',
         exact: true,
         render: routeProps => (
-          <CompanyPageProvider {...routeProps}>
+          <CompanyPageProvider
+            {...routeProps}
+            tabType={tabType.TIME_AND_SALARY}
+          >
             {CompanyJobTitleTimeAndSalary}
           </CompanyPageProvider>
         ),
@@ -228,7 +233,10 @@ const routes = [
         path: '/companies/:companyName/interview-experiences',
         exact: true,
         render: routeProps => (
-          <CompanyPageProvider {...routeProps}>
+          <CompanyPageProvider
+            {...routeProps}
+            tabType={tabType.INTERVIEW_EXPERIENCE}
+          >
             {InterviewExperiences}
           </CompanyPageProvider>
         ),
@@ -237,7 +245,10 @@ const routes = [
         path: '/companies/:companyName/work-experiences',
         exact: true,
         render: routeProps => (
-          <CompanyPageProvider {...routeProps}>
+          <CompanyPageProvider
+            {...routeProps}
+            tabType={tabType.WORK_EXPERIENCE}
+          >
             {WorkExperiences}
           </CompanyPageProvider>
         ),
