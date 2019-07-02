@@ -14,6 +14,72 @@ import withRouteParameter from '../../ExperienceSearch/withRouteParameter';
 
 const PAGE_COUNT = 10;
 
+const InterviewExperiences = ({
+  pageType,
+  pageName,
+  tabType,
+  experienceSearch,
+  loadingStatus,
+  page,
+  sort,
+  searchBy,
+  searchType,
+  fetchExperiences,
+  getNewSearchBy,
+}) => {
+  useEffect(
+    () => {
+      fetchExperiences(
+        page,
+        PAGE_COUNT,
+        sort,
+        searchBy,
+        pageName, // searchQuery
+        searchType,
+      );
+    },
+    [fetchExperiences, page, pageName, searchBy, searchType, sort],
+  );
+  useEffect(
+    () => {
+      getNewSearchBy(searchBy);
+    },
+    [getNewSearchBy, searchBy],
+  );
+
+  const data = experienceSearch.toJS();
+  const { experiences = [], experienceCount } = data;
+
+  return (
+    <CompanyAndJobTitleWrapper
+      pageType={pageType}
+      pageName={pageName}
+      tabType={tabType}
+    >
+      <InterviewExperiencesSection
+        pageType={pageType}
+        tabType={tabType}
+        data={experiences}
+        status={loadingStatus}
+      />
+      {isFetched(loadingStatus) && (
+        <Pagination
+          totalCount={experienceCount}
+          unit={PAGE_COUNT}
+          currentPage={page}
+          createPageLinkTo={page => `?p=${page}`}
+        />
+      )}
+    </CompanyAndJobTitleWrapper>
+  );
+};
+
+InterviewExperiences.propTypes = {
+  pageType: PropTypes.string,
+  pageName: PropTypes.string,
+  tabType: PropTypes.string,
+};
+
 const mapStateToProps = createStructuredSelector({
   experienceSearch: state => state.experienceSearch,
   loadingStatus: loadingStatusSelector,
@@ -22,78 +88,12 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(experienceSearchActions, dispatch);
 
-const InterviewExperiences = compose(
+const enhance = compose(
   withRouteParameter,
   connect(
     mapStateToProps,
     mapDispatchToProps,
   ),
-)(
-  ({
-    pageType,
-    pageName,
-    tabType,
-    experienceSearch,
-    loadingStatus,
-    page,
-    sort,
-    searchBy,
-    searchType,
-    fetchExperiences,
-    getNewSearchBy,
-  }) => {
-    useEffect(
-      () => {
-        fetchExperiences(
-          page,
-          PAGE_COUNT,
-          sort,
-          searchBy,
-          pageName, // searchQuery
-          searchType,
-        );
-      },
-      [fetchExperiences, page, pageName, searchBy, searchType, sort],
-    );
-    useEffect(
-      () => {
-        getNewSearchBy(searchBy);
-      },
-      [getNewSearchBy, searchBy],
-    );
-
-    const data = experienceSearch.toJS();
-    const { experiences = [], experienceCount } = data;
-
-    return (
-      <CompanyAndJobTitleWrapper
-        pageType={pageType}
-        pageName={pageName}
-        tabType={tabType}
-      >
-        <InterviewExperiencesSection
-          pageType={pageType}
-          tabType={tabType}
-          data={experiences}
-          status={loadingStatus}
-        />
-        {isFetched(loadingStatus) && (
-          <Pagination
-            totalCount={experienceCount}
-            unit={PAGE_COUNT}
-            currentPage={page}
-            createPageLinkTo={page => `?p=${page}`}
-          />
-        )}
-      </CompanyAndJobTitleWrapper>
-    );
-  },
 );
 
-InterviewExperiences.propTypes = {
-  pageType: PropTypes.string,
-  pageName: PropTypes.string,
-  tabType: PropTypes.string,
-};
-
-export default props => <InterviewExperiences {...props} />;
+export default enhance(InterviewExperiences);
