@@ -73,7 +73,7 @@ const createBlock = {
   interviewQas: createInterviewQa,
 };
 
-const idCounter = idGenerator();
+let idCounter = idGenerator();
 
 const experienceSectionId = idCounter();
 const suggestionSectionId = idCounter();
@@ -102,6 +102,13 @@ const defaultForm = {
   },
   interviewQas: {},
   interviewSensitiveQuestions: [],
+};
+
+const getMaxId = state => {
+  const ids = [...R.keys(state.sections), ...R.keys(state.interviewQas)];
+  const maxId = R.reduce(R.max, -Infinity, ids);
+  if (maxId === undefined) return -1;
+  return maxId;
 };
 
 const isStepTabActive = step => (match, location) => {
@@ -135,7 +142,7 @@ class InterviewForm extends React.Component {
     let defaultFromDraft;
 
     try {
-      const { __updatedAt, ...storedDraft } = JSON.parse(
+      const { __updatedAt, __idCounterCurrent, ...storedDraft } = JSON.parse(
         localStorage.getItem(LS_INTERVIEW_STEPS_FORM_KEY),
       );
       if (isExpired(__updatedAt)) {
@@ -143,6 +150,11 @@ class InterviewForm extends React.Component {
         localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
       } else {
         defaultFromDraft = storedDraft;
+        idCounter = idGenerator(
+          __idCounterCurrent !== undefined
+            ? __idCounterCurrent
+            : getMaxId(storedDraft),
+        );
       }
     } catch (error) {
       defaultFromDraft = null;
@@ -165,6 +177,7 @@ class InterviewForm extends React.Component {
         LS_INTERVIEW_STEPS_FORM_KEY,
         JSON.stringify({
           ...this.state,
+          __idCounterCurrent: idCounter.getCurrent(),
           __updatedAt: Date.now(),
         }),
       );
