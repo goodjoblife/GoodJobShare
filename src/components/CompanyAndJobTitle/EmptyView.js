@@ -8,10 +8,12 @@ const tabTypeText = {
 
 const formatTabName = tabType => tabTypeText[tabType] || '資料';
 
-const EmptyView = ({ tabType }) => (
+const EmptyView = ({ pageName, tabType }) => (
   <Section Tag="main" paddingBottom>
     <P size="l" bold className={styles.searchNoResult}>
-      尚未有「聯發科股份有限公司」的
+      尚未有「
+      {pageName}
+      」的
       {formatTabName(tabType)}
       <br />
       搜尋看看其他？

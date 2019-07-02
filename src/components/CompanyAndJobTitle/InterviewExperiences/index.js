@@ -58,6 +58,7 @@ const InterviewExperiences = ({
     >
       <InterviewExperiencesSection
         pageType={pageType}
+        pageName={pageName}
         tabType={tabType}
         data={experiences}
         status={loadingStatus}
