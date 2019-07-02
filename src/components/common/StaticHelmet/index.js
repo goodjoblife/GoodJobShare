@@ -240,4 +240,12 @@ export default {
       <link rel="canonical" href={formatCanonicalPath('/guidelines')} />
     </Helmet>
   ),
+  CompanyAndJobTitle: ({ title }) => (
+    <Helmet>
+      <title itemProp="name" lang="zh-TW">
+        {title}
+      </title>
+      <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
+    </Helmet>
+  ),
 };
