@@ -8,6 +8,7 @@ import styles from './InterviewExperiences.module.css';
 import { formatCreatedAt, formatSalary } from './helper';
 import Label from './Label';
 import Rating from './Rating';
+import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 
 const createLinkTo = (_id, backable) => ({
   pathname: `/experiences/${_id}`,
@@ -34,14 +35,14 @@ const ExperienceEntry = ({ pageType, data, size, backable }) => {
         </Heading>
 
         <div className={styles.labels}>
-          {pageType !== 'company' && (
+          {pageType !== PAGE_TYPE.COMPANY && (
             <Label
               text={data.company.name}
               Icon={i.Company}
               className={styles.company}
             />
           )}
-          {pageType !== 'jobTitle' && (
+          {pageType !== PAGE_TYPE.JOB_TITLE && (
             <Label
               text={data.job_title}
               Icon={i.User}
