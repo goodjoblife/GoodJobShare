@@ -1,0 +1,44 @@
+@value main-yellow from "common/variables.module.css";
+
+.stepControlGroup {
+  display: flex;
+  flex-direction: row;
+
+  .stepControl {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 33px;
+    height: 33px;
+    border-radius: 16px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    background-color: #d8d8d8;
+
+    &.active {
+      background-color: main-yellow;
+    }
+  }
+}
+
+.stepControl + .stepControl {
+  margin-left: 120px;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    background-color: #d8d8d8;
+    right: 33px;
+    top: 14px;
+    width: 120px;
+    height: 5px;
+  }
+}
+
+.stepControl.active + .stepControl.active::after {
+  background-color: main-yellow;
+}

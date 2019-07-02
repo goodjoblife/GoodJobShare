@@ -3,6 +3,14 @@
 .container {
   position: relative;
   border: 1px solid transparent;
+
+  &.removable:hover {
+    border-color: main-yellow;
+
+    > .remove__btn {
+      visibility: visible;
+    }
+  }
 }
 
 .remove__btn {
@@ -54,4 +62,14 @@
 
 .warning__wording {
   color: warning-red;
+}
+
+.subtitle {
+  font-size: 15px;
+  margin-bottom: 7px;
+  color: #555;
+}
+
+.isRequired {
+  color: #d50000;
 }

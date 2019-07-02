@@ -141,14 +141,9 @@ export const interviewFormCheck = R.allPass([
     R.prop('title'),
   ),
   R.compose(
-    ifFalseLog('experience section not pass'),
-    singleSectionOfLength(30),
-    R.path(['sections', 0]),
-  ),
-  R.compose(
-    ifFalseLog('suggestion section not pass'),
-    singleSectionOfLength(30),
-    R.path(['sections', 1]),
+    ifFalseLog('other sections not pass'),
+    R.all(singleSectionOfLength(30)),
+    R.prop('sections'),
   ),
   R.compose(
     ifFalseLog('interviewQas not pass'),
