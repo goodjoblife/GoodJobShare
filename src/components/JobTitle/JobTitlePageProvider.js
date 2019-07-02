@@ -1,17 +1,32 @@
 import React from 'react';
-import { withRouter } from 'react-router';
-import { compose } from 'ramda';
+import PropTypes from 'prop-types';
 
-const JobTitlePageProvider = ({ children }) => {
-  return (
-    <div>
-      {children({
-        pageType: 'jobTitle',
-        pageName: 'honestbee',
-        tabName: 'overview',
-      })}
-    </div>
-  );
+import { pageType } from '../../constants/companyJobTitle';
+
+const JobTitlePageProvider = ({
+  children,
+  match: {
+    params: { jobTitle },
+  },
+  tabType,
+}) => (
+  <React.Fragment>
+    {children({
+      pageType: pageType.JOB_TITLE,
+      pageName: jobTitle,
+      tabType,
+    })}
+  </React.Fragment>
+);
+
+JobTitlePageProvider.propTypes = {
+  chdilren: PropTypes.node,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      jobTitle: PropTypes.string,
+    }),
+  }),
+  tabType: PropTypes.string,
 };
 
-export default compose(withRouter)(JobTitlePageProvider);
+export default JobTitlePageProvider;

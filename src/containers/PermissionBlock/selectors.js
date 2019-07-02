@@ -22,7 +22,7 @@ export const hasFetchedTimeAndSalaryCountSelector = R.compose(
 );
 
 export const laborRightsCountSelector = R.compose(
-  entries => entries.size,
+  R.length,
   menuEntriesSelector,
 );
 

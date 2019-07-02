@@ -11,6 +11,7 @@ import workExperiences from './workExperiencesApi';
 import me from './me';
 import auth from './auth';
 import emailVerify from './emailVerify';
+import viewLog from './viewLogApi';
 
 export default {
   campaignInfo,
@@ -26,4 +27,5 @@ export default {
   me,
   auth,
   emailVerify,
+  viewLog,
 };

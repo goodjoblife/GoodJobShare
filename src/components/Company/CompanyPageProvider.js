@@ -1,17 +1,32 @@
 import React from 'react';
-import { withRouter } from 'react-router';
-import { compose } from 'ramda';
+import PropTypes from 'prop-types';
 
-const CompanyPageProvider = ({ children }) => {
-  return (
-    <div>
-      {children({
-        pageType: 'jobTitle',
-        pageName: 'honestbee',
-        tabName: 'overview',
-      })}
-    </div>
-  );
+import { pageType } from '../../constants/companyJobTitle';
+
+const CompanyPageProvider = ({
+  children,
+  match: {
+    params: { companyName },
+  },
+  tabType,
+}) => (
+  <React.Fragment>
+    {children({
+      pageType: pageType.COMPANY,
+      pageName: companyName,
+      tabType,
+    })}
+  </React.Fragment>
+);
+
+CompanyPageProvider.propTypes = {
+  chdilren: PropTypes.node,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      companyName: PropTypes.string,
+    }),
+  }),
+  tabType: PropTypes.string,
 };
 
-export default compose(withRouter)(CompanyPageProvider);
+export default CompanyPageProvider;

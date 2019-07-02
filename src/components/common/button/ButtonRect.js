@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styles from './ButtonRect.module.css';
 
-const ButtonRect = ({ className, ...restProps }) => (
-  <button className={cn(styles.container, className)} {...restProps} />
+/**
+ * If you use Link (from react-router-dom) as Tag, do not
+ * forget to pass 'to' props to this component.
+ */
+const ButtonRect = ({ Tag, className, ...restProps }) => (
+  <Tag className={cn(styles.container, className)} {...restProps} />
 );
 
 ButtonRect.propTypes = {
@@ -13,6 +17,7 @@ ButtonRect.propTypes = {
 
 ButtonRect.defaultProps = {
   className: '',
+  Tag: 'button',
 };
 
 export default ButtonRect;

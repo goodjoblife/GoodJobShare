@@ -4,7 +4,7 @@ import { Switch } from 'react-router-dom';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
-import { NavLink } from 'react-router-dom';
+import StepControl from './StepControl';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
@@ -41,13 +41,14 @@ const createSection = id => (
   subtitle,
   placeholder = '',
   titlePlaceholder = '段落標題，例：面試方式',
+  content = '',
 ) => {
   const section = {
     id,
     subtitle,
     placeholder,
     titlePlaceholder,
-    content: '',
+    content,
     isSubtitleEditable: false,
   };
   if (subtitle === '自訂段落' || !subtitle) {
@@ -73,7 +74,7 @@ const createBlock = {
   interviewQas: createInterviewQa,
 };
 
-const idCounter = idGenerator();
+let idCounter = idGenerator();
 
 const experienceSectionId = idCounter();
 const suggestionSectionId = idCounter();
@@ -95,13 +96,26 @@ const defaultForm = {
   sections: {
     [experienceSectionId]: createBlock.sections(experienceSectionId)(
       '面試過程',
+      undefined,
+      undefined,
+      '第一次面試：\n第二次面試：\n工作環境：',
     ),
     [suggestionSectionId]: createBlock.sections(suggestionSectionId)(
       '給其他面試者的中肯建議',
+      undefined,
+      undefined,
+      '如何準備面試：\n是否推薦此份工作：\n其他注意事項：',
     ),
   },
   interviewQas: {},
   interviewSensitiveQuestions: [],
+};
+
+const getMaxId = state => {
+  const ids = [...R.keys(state.sections), ...R.keys(state.interviewQas)];
+  const maxId = R.reduce(R.max, -Infinity, ids);
+  if (maxId === undefined) return -1;
+  return maxId;
 };
 
 const isStepTabActive = step => (match, location) => {
@@ -110,8 +124,6 @@ const isStepTabActive = step => (match, location) => {
   const currentStep = parseInt(matched[1], 10);
   return currentStep >= step;
 };
-
-const stepTabLabels = ['基本資料', '更多資訊', '心得分享'];
 
 class InterviewForm extends React.Component {
   constructor(props) {
@@ -135,7 +147,7 @@ class InterviewForm extends React.Component {
     let defaultFromDraft;
 
     try {
-      const { __updatedAt, ...storedDraft } = JSON.parse(
+      const { __updatedAt, __idCounterCurrent, ...storedDraft } = JSON.parse(
         localStorage.getItem(LS_INTERVIEW_STEPS_FORM_KEY),
       );
       if (isExpired(__updatedAt)) {
@@ -143,6 +155,11 @@ class InterviewForm extends React.Component {
         localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
       } else {
         defaultFromDraft = storedDraft;
+        idCounter = idGenerator(
+          __idCounterCurrent !== undefined
+            ? __idCounterCurrent
+            : getMaxId(storedDraft),
+        );
       }
     } catch (error) {
       defaultFromDraft = null;
@@ -165,6 +182,7 @@ class InterviewForm extends React.Component {
         LS_INTERVIEW_STEPS_FORM_KEY,
         JSON.stringify({
           ...this.state,
+          __idCounterCurrent: idCounter.getCurrent(),
           __updatedAt: Date.now(),
         }),
       );
@@ -219,7 +237,11 @@ class InterviewForm extends React.Component {
       console.info('topInvalidElement', topInvalidElement);
       for (let i = 0; i < INTERVIEW_FORM_STEPS.length; i++) {
         for (let elementName of INTERVIEW_FORM_STEPS[i]) {
-          if (elementName === topInvalidElement) {
+          if (
+            typeof elementName === 'function'
+              ? elementName(topInvalidElement)
+              : elementName === topInvalidElement
+          ) {
             const targetPath = `/share/interview/step${i + 1}`;
             if (this.props.location.pathname !== targetPath) {
               await this.props.history.push(targetPath);
@@ -239,7 +261,11 @@ class InterviewForm extends React.Component {
   }
 
   getTopInvalidElement = () => {
-    const order = INTERVIEW_FORM_ORDER;
+    const order = [
+      ...INTERVIEW_FORM_ORDER,
+      ...R.keys(this.state.sections).map(id => `section-${id}`),
+    ];
+    console.info(order, this.elementValidationStatus);
     for (let i = 0; i <= order.length; i += 1) {
       if (
         this.elementValidationStatus[order[i]] &&
@@ -314,16 +340,13 @@ class InterviewForm extends React.Component {
         <div className={styles.header}>
           <div className={styles.title}>面試心得分享</div>
           <div className={styles.stepsWrapper}>
-            {stepTabLabels.map((label, i) => (
-              <NavLink
-                key={i}
-                to={`/share/interview/step${i + 1}`}
-                className={styles.stepTab}
-                activeClassName={styles.active}
-                isActive={isStepTabActive(i + 1)}
-                data-step={i + 1}
-              />
-            ))}
+            <StepControl.Group>
+              {R.range(1, 4).map(i => (
+                <StepControl key={i} isActive={isStepTabActive(i)}>
+                  {i}
+                </StepControl>
+              ))}
+            </StepControl.Group>
           </div>
         </div>
         {this.state.submitted && (
@@ -338,10 +361,10 @@ class InterviewForm extends React.Component {
           </div>
         )}
         {/*
-          * Here we need to render all steps rather than use <Route />
-          * Because rendering all steps allows us to register the handlers
-          * when the input is not validated on submit
-          */}
+         * Here we need to render all steps rather than use <Route />
+         * Because rendering all steps allows us to register the handlers
+         * when the input is not validated on submit
+         */}
         <div
           style={{
             display: pathname === '/share/interview/step1' ? 'block' : 'none',

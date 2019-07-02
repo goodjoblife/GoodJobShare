@@ -60,7 +60,7 @@ const createBlock = {
   sections: createSection,
 };
 
-const idCounter = idGenerator();
+let idCounter = idGenerator();
 
 const isBlockRemovable = blocks => R.length(R.keys(blocks)) > 1;
 
@@ -86,6 +86,13 @@ const defaultForm = {
   },
 };
 
+const getMaxId = state => {
+  const ids = [...R.keys(state.sections)];
+  const maxId = R.max(ids);
+  if (maxId === undefined) return -1;
+  return maxId;
+};
+
 class WorkExperiencesForm extends React.Component {
   constructor(props) {
     super(props);
@@ -108,8 +115,14 @@ class WorkExperiencesForm extends React.Component {
     let defaultFromDraft;
 
     try {
-      defaultFromDraft = JSON.parse(
+      const { __idCounterCurrent, ...storedDraft } = JSON.parse(
         localStorage.getItem(LS_WORK_EXPERIENCES_FORM_KEY),
+      );
+      defaultFromDraft = storedDraft;
+      idCounter = idGenerator(
+        typeof __idCounterCurrent !== undefined
+          ? __idCounterCurrent
+          : getMaxId(storedDraft),
       );
     } catch (error) {
       defaultFromDraft = null;
@@ -211,7 +224,13 @@ class WorkExperiencesForm extends React.Component {
         ...this.state,
         ...updateState,
       };
-      localStorage.setItem(LS_WORK_EXPERIENCES_FORM_KEY, JSON.stringify(state));
+      localStorage.setItem(
+        LS_WORK_EXPERIENCES_FORM_KEY,
+        JSON.stringify({
+          ...state,
+          __idCounterCurrent: idCounter.getCurrent(),
+        }),
+      );
     };
   }
 

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -31,7 +32,7 @@ const InterviewExperiences = compose(
   ({
     pageType,
     pageName,
-    tabName,
+    tabType: tabName,
     experienceSearch,
     loadingStatus,
     page,
@@ -65,7 +66,11 @@ const InterviewExperiences = compose(
     const { experiences = [], experienceCount } = data;
 
     return (
-      <CompanyAndJobTitleWrapper>
+      <CompanyAndJobTitleWrapper
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabName}
+      >
         <InterviewExperiencesSection
           pageType={pageType}
           tabName={tabName}
@@ -84,5 +89,11 @@ const InterviewExperiences = compose(
     );
   },
 );
+
+InterviewExperiences.propTypes = {
+  pageType: PropTypes.string,
+  pageName: PropTypes.string,
+  tabType: PropTypes.string,
+};
 
 export default props => <InterviewExperiences {...props} />;
