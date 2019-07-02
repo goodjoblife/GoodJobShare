@@ -65,7 +65,7 @@ const createBlock = {
   interviewQas: createInterviewQa,
 };
 
-const idCounter = idGenerator();
+let idCounter = idGenerator();
 
 const isBlockRemovable = blocks => R.length(R.keys(blocks)) > 1;
 
@@ -95,6 +95,13 @@ const defaultForm = {
   interviewSensitiveQuestions: [],
 };
 
+const getMaxId = state => {
+  const ids = [...R.keys(state.sections), ...R.keys(state.interviewQas)];
+  const maxId = R.reduce(R.max, -Infinity, ids);
+  if (maxId === undefined) return -1;
+  return maxId;
+};
+
 class InterviewForm extends React.Component {
   constructor(props) {
     super(props);
@@ -117,8 +124,14 @@ class InterviewForm extends React.Component {
     let defaultFromDraft;
 
     try {
-      defaultFromDraft = JSON.parse(
+      const { __idCounterCurrent, ...storedDraft } = JSON.parse(
         localStorage.getItem(LS_INTERVIEW_FORM_KEY),
+      );
+      defaultFromDraft = storedDraft;
+      idCounter = idGenerator(
+        typeof __idCounterCurrent !== undefined
+          ? __idCounterCurrent
+          : getMaxId(storedDraft),
       );
     } catch (error) {
       defaultFromDraft = null;
@@ -217,7 +230,13 @@ class InterviewForm extends React.Component {
         ...this.state,
         ...updateState,
       };
-      localStorage.setItem(LS_INTERVIEW_FORM_KEY, JSON.stringify(state));
+      localStorage.setItem(
+        LS_INTERVIEW_FORM_KEY,
+        JSON.stringify({
+          ...state,
+          __idCounterCurrent: idCounter.getCurrent(),
+        }),
+      );
     };
   }
 

@@ -7,201 +7,103 @@ import ButtonSubmit from 'common/button/ButtonSubmit';
 import Checkbox from 'common/form/Checkbox';
 import Modal from 'common/Modal';
 
-import FacebookFail from './FacebookFail';
-
-import authStatus from '../../../constants/authStatus';
-
-const getFacebookFail = buttonClick => (
-  <FacebookFail buttonClick={buttonClick} />
-);
-
-class SubmitArea extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.handleAgree = this.handleAgree.bind(this);
-    this.handleIsOpen = this.handleIsOpen.bind(this);
-    this.handleFeedback = this.handleFeedback.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.login = this.login.bind(this);
-    this.onFacebookFail = this.onFacebookFail.bind(this);
-
-    this.state = {
-      agree: false,
-      isOpen: false,
-      feedback: null,
-      hasClose: false,
-      closableOnClickOutside: true,
-      isSubmitting: false,
-    };
-  }
-
-  onSubmit() {
-    if (this.state.isSubmitting === true) {
-      return Promise.resolve();
-    }
-    this.setState({ isSubmitting: true });
-    return this.props
-      .onSubmit()
-      .then(Feedback => {
-        this.handleIsOpen(true);
-        this.handleHasClose(false);
-        this.handleclosableOnClickOutside(true);
-        return this.handleFeedback(
-          Feedback({
-            buttonClick: () => this.handleIsOpen(false),
-          }),
-        );
-      })
-      .catch(e => console.log(e))
-      .then(() => {
-        this.setState({ isSubmitting: false });
-      });
-  }
-
-  onFacebookFail() {
-    this.handleIsOpen(true);
-    this.handleHasClose(true);
-    this.handleclosableOnClickOutside(true);
-    return this.handleFeedback(getFacebookFail(this.login));
-  }
-
-  login() {
-    return this.props
-      .login(this.props.FB)
-      .then(status => {
-        if (status === authStatus.CONNECTED) {
-          return this.onSubmit();
-        }
-        throw Error('can not login');
-      })
-      .catch(e => {
-        console.log(e);
-        this.onFacebookFail();
-      });
-  }
-
-  handleAgree(agree) {
-    this.setState(() => ({
-      agree,
-    }));
-  }
-
-  handleFeedback(feedback) {
-    this.setState(() => ({
-      feedback,
-    }));
-  }
-
-  handleIsOpen(isOpen) {
-    this.setState(() => ({
-      isOpen,
-    }));
-  }
-
-  handleHasClose(hasClose) {
-    this.setState(() => ({
-      hasClose,
-    }));
-  }
-
-  handleclosableOnClickOutside = closableOnClickOutside => {
-    this.setState({
-      closableOnClickOutside,
-    });
-  };
-
-  render() {
-    const { auth } = this.props;
-
-    const {
-      agree,
-      isOpen,
-      feedback,
-      hasClose,
-      closableOnClickOutside,
-    } = this.state;
-
-    return (
-      <div
+const SubmitArea = ({
+  auth,
+  agree,
+  handleAgree,
+  isOpen,
+  feedback,
+  hasClose,
+  closableOnClickOutside,
+  isSubmitting,
+  onSubmit,
+  login,
+  handleIsOpen,
+}) => (
+  <div
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      marginTop: '57px',
+    }}
+  >
+    <label
+      style={{
+        display: 'flex',
+        marginBottom: '28px',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+      htmlFor="submitArea-checkbox"
+    >
+      <Checkbox
+        margin={'0'}
+        value={''}
+        label={''}
+        checked={agree}
+        onChange={e => handleAgree(e.target.checked)}
+        id="submitArea-checkbox"
+      />
+      <p
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          marginTop: '57px',
+          color: '#3B3B3B',
         }}
       >
-        <label
+        我分享的是真實資訊，並且遵守本站
+        <Link
+          to="/guidelines"
+          target="_blank"
           style={{
-            display: 'flex',
-            marginBottom: '28px',
-            alignItems: 'center',
-            justifyContent: 'center',
+            color: '#02309E',
           }}
-          htmlFor="submitArea-checkbox"
         >
-          <Checkbox
-            margin={'0'}
-            value={''}
-            label={''}
-            checked={agree}
-            onChange={e => this.handleAgree(e.target.checked)}
-            id="submitArea-checkbox"
-          />
-          <p
-            style={{
-              color: '#3B3B3B',
-            }}
-          >
-            我分享的是真實資訊，並且遵守本站
-            <Link
-              to="/guidelines"
-              target="_blank"
-              style={{
-                color: '#02309E',
-              }}
-            >
-              發文留言規定
-            </Link>
-            、
-            <Link
-              to="/user-terms"
-              target="_blank"
-              style={{
-                color: '#02309E',
-              }}
-            >
-              使用者條款
-            </Link>
-            以及中華民國法律。
-          </p>
-        </label>
-        <div>
-          <ButtonSubmit
-            text="送出資料"
-            onSubmit={this.onSubmit}
-            disabled={this.state.isSubmitting || !this.state.agree}
-            auth={auth}
-            login={this.login}
-          />
-        </div>
-        <Modal
-          isOpen={isOpen}
-          close={() => this.handleIsOpen(!isOpen)}
-          hasClose={hasClose}
-          closableOnClickOutside={closableOnClickOutside}
+          發文留言規定
+        </Link>
+        、
+        <Link
+          to="/user-terms"
+          target="_blank"
+          style={{
+            color: '#02309E',
+          }}
         >
-          {feedback}
-        </Modal>
-      </div>
-    );
-  }
-}
+          使用者條款
+        </Link>
+        以及中華民國法律。
+      </p>
+    </label>
+    <div>
+      <ButtonSubmit
+        text="送出資料"
+        onSubmit={onSubmit}
+        disabled={isSubmitting || !agree}
+        auth={auth}
+        login={login}
+      />
+    </div>
+    <Modal
+      isOpen={isOpen}
+      close={() => handleIsOpen(!isOpen)}
+      hasClose={hasClose}
+      closableOnClickOutside={closableOnClickOutside}
+    >
+      {feedback}
+    </Modal>
+  </div>
+);
 
 SubmitArea.propTypes = {
-  onSubmit: PropTypes.func, // () => Promise<({ buttonClickCallback?: () => void }) => Component>
-  auth: ImmutablePropTypes.map,
+  auth: ImmutablePropTypes.map.isRequired,
+  agree: PropTypes.bool.isRequired,
+  handleAgree: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  feedback: PropTypes.node,
+  hasClose: PropTypes.bool.isRequired,
+  closableOnClickOutside: PropTypes.bool.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
-  FB: PropTypes.object,
+  handleIsOpen: PropTypes.func.isRequired,
 };
 
 export default SubmitArea;
