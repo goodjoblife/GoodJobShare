@@ -1,4 +1,5 @@
 import React from 'react';
+import R from 'ramda';
 import Helmet from 'react-helmet';
 import { FACEBOOK_APP_ID } from '../../../config';
 import { SITE_NAME, IMG_HOST } from '../../../constants/helmetData';
@@ -27,6 +28,12 @@ The followings are some useful elements from Open Graph Protocol:
 * reference: http://ogp.me/
 
 */
+
+// TODO: Helmet uses deep-equal and sometimes crashes on circular objects
+// workaround https://github.com/nfl/react-helmet/issues/441#issue-413952394
+Helmet.prototype.shouldComponentUpdate = function(nextProps) {
+  return !R.equals(this.props, nextProps);
+};
 
 export default {
   Default: () => (

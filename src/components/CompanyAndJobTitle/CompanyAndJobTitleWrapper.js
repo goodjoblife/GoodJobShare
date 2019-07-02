@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Heading from 'common/base/Heading';
-// import StaticHelmet from 'common/StaticHelmet';
+import StaticHelmet from 'common/StaticHelmet';
 
-// import { tabTypeTranslation } from '../../constants/companyJobTitle';
+import { tabTypeTranslation } from '../../constants/companyJobTitle';
 
 import BreadCrumb from './BreadCrumb';
 
@@ -13,11 +13,10 @@ const CompanyAndJobTitleWrapper = ({
   pageName,
   tabType,
 }) => {
-  // TODO: StaticHelmet recursion problem
-  // const helmetTitle = `${pageName} ${tabTypeTranslation[tabType]}`;
+  const helmetTitle = `${pageName} ${tabTypeTranslation[tabType]}`;
   return (
     <div>
-      {/* <StaticHelmet.CompanyAndJobTitle title={helmetTitle} /> */}
+      <StaticHelmet.CompanyAndJobTitle title={helmetTitle} />
       <BreadCrumb
         pageType={pageType}
         pageName={pageName}
