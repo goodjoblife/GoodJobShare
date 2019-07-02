@@ -5,7 +5,7 @@ import { isUnfetched, isFetching, isError } from '../../../constants/status';
 import ExperienceEntry from './ExperienceEntry';
 import EmptyView from '../EmptyView';
 
-const InterviewExperiences = ({ pageType, tabName, status, data }) => {
+const InterviewExperiences = ({ pageType, tabType, status, data }) => {
   if (isUnfetched(status)) {
     return null;
   }
@@ -16,7 +16,7 @@ const InterviewExperiences = ({ pageType, tabName, status, data }) => {
     return null;
   }
   if (data.length === 0) {
-    return <EmptyView tabName={tabName} />;
+    return <EmptyView tabType={tabType} />;
   }
   return data.map(d => (
     <ExperienceEntry key={d._id} pageType={pageType} data={d} />
@@ -25,7 +25,7 @@ const InterviewExperiences = ({ pageType, tabName, status, data }) => {
 
 InterviewExperiences.propTypes = {
   pageType: PropTypes.string.isRequired,
-  tabName: PropTypes.string.isRequired,
+  tabType: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   status: PropTypes.string.isRequired,
 };

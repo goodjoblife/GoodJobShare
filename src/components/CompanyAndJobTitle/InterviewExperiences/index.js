@@ -32,7 +32,7 @@ const InterviewExperiences = compose(
   ({
     pageType,
     pageName,
-    tabType: tabName,
+    tabType,
     experienceSearch,
     loadingStatus,
     page,
@@ -69,11 +69,11 @@ const InterviewExperiences = compose(
       <CompanyAndJobTitleWrapper
         pageType={pageType}
         pageName={pageName}
-        tabType={tabName}
+        tabType={tabType}
       >
         <InterviewExperiencesSection
           pageType={pageType}
-          tabName={tabName}
+          tabType={tabType}
           data={experiences}
           status={loadingStatus}
         />
