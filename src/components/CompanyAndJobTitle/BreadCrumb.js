@@ -7,6 +7,8 @@ import {
   tabTypeTranslation,
   pageTypeURLMap,
   tabTypeURLMap,
+  pageType,
+  tabType,
 } from '../../constants/companyJobTitle';
 
 const CrumbLink = ({ children, to }) => (
@@ -41,9 +43,14 @@ const BreadCrumb = ({ style, pageType, pageName, tabType }) => (
 );
 
 BreadCrumb.propTypes = {
-  pageType: PropTypes.string,
+  pageType: PropTypes.oneOf([pageType.COMPANY, pageType.JOB_TITLE]),
   pageName: PropTypes.string,
-  tabType: PropTypes.string,
+  tabType: PropTypes.oneOf([
+    tabType.OVERVIEW,
+    tabType.TIME_AND_SALARY,
+    tabType.WORK_EXPERIENCE,
+    tabType.INTERVIEW_EXPERIENCE,
+  ]),
 };
 
 export default BreadCrumb;
