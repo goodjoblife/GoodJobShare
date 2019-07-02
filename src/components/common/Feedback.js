@@ -25,7 +25,7 @@ const Feedback = ({ buttonClick, heading, info, buttonText, Icon }) => (
 Feedback.propTypes = {
   buttonClick: PropTypes.func.isRequired,
   heading: PropTypes.string.isRequired,
-  info: PropTypes.string.isRequired,
+  info: PropTypes.string,
   buttonText: PropTypes.string.isRequired,
   Icon: PropTypes.func,
 };

@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Textarea from 'react-textarea-autosize';
 import cn from 'classnames';
 
 import AddButton from 'common/button/AddButton';
 
 import styles from './InterviewQa.module.css';
 
-const InterviewQa = ({ question, answer, editQa, removeQa, isWarning }) => (
+const InterviewQa = ({ question, questionNo, editQa, removeQa, isWarning }) => (
   <div className={styles.container}>
     <div className={styles.remove__btn}>
       <AddButton onClick={removeQa} deleteBtn />
@@ -16,10 +15,9 @@ const InterviewQa = ({ question, answer, editQa, removeQa, isWarning }) => (
       <div
         style={{
           display: 'flex',
-          marginBottom: '14px',
         }}
       >
-        <p className={styles.property__title}>Q</p>
+        <p className={styles.property__title}>{questionNo}.</p>
         <input
           placeholder="面試問題"
           value={question}
@@ -27,28 +25,6 @@ const InterviewQa = ({ question, answer, editQa, removeQa, isWarning }) => (
           className={`pM ${styles.input}`}
           style={{
             width: '100%',
-          }}
-        />
-      </div>
-      <div
-        style={{
-          display: 'flex',
-        }}
-      >
-        <p className={styles.property__title}>A</p>
-        <Textarea
-          useCacheForDOMMeasurements
-          value={answer}
-          onChange={e => editQa('answer')(e.target.value)}
-          placeholder="你的回答（選填）"
-          className={styles.textarea}
-          style={{
-            resize: 'none',
-            width: '100%',
-            color: '#333333',
-            fontSize: '1rem',
-            border: 'none',
-            lineHeight: '1.5rem',
           }}
         />
       </div>
@@ -68,7 +44,7 @@ const InterviewQa = ({ question, answer, editQa, removeQa, isWarning }) => (
 
 InterviewQa.propTypes = {
   question: PropTypes.string,
-  answer: PropTypes.string,
+  questionNo: PropTypes.number.isRequired,
   editQa: PropTypes.func,
   removeQa: PropTypes.func,
   isWarning: PropTypes.bool.isRequired,
