@@ -1,9 +1,10 @@
 import React from 'react';
 import { Section, P } from 'common/base';
 import styles from './EmptyView.module.css';
+import { tabType } from '../../constants/companyJobTitle';
 
 const tabTypeText = {
-  interview: '經驗分享',
+  [tabType.INTERVIEW_EXPERIENCE]: '經驗分享',
 };
 
 const formatTabName = tabType => tabTypeText[tabType] || '資料';
