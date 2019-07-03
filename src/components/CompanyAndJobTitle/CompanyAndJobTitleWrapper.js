@@ -24,6 +24,7 @@ const CompanyAndJobTitleWrapper = ({
         style={{ marginBottom: '20px' }}
       />
       <Heading style={{ color: '#000000' }}>{pageName}</Heading>
+      {children}
     </div>
   );
 };
