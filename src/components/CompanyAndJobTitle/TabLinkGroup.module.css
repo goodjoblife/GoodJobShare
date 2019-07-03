@@ -18,14 +18,15 @@
   width: 170px;
   height: 48px;
 
-  @media (min-width: 767px) {
-    &:not(:last-child) {
-      border-right: 1px solid main-yellow;
-    }
-  }
-
   &:not(:last-child) {
     border-bottom: 1px solid main-yellow;
+  }
+
+  @media (min-width: 767px) {
+    &:not(:last-child) {
+      border-bottom: 0;
+      border-right: 1px solid main-yellow;
+    }
   }
 }
 
