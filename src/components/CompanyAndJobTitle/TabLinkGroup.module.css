@@ -5,17 +5,27 @@
   border-radius: 5px;
   border: 1px solid main-yellow;
   background: white;
+  flex-direction: column;
+  @media (min-width: 767px) {
+    flex-direction: row;
+  }
 }
 
 .element {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 180px;
+  width: 170px;
   height: 48px;
 
+  @media (min-width: 767px) {
+    &:not(:last-child) {
+      border-right: 1px solid main-yellow;
+    }
+  }
+
   &:not(:last-child) {
-    border-right: 1px solid main-yellow;
+    border-bottom: 1px solid main-yellow;
   }
 }
 
