@@ -1,0 +1,25 @@
+@value main-yellow from "common/variables.module.css";
+
+.group {
+  display: inline-flex;
+  border-radius: 5px;
+  border: 1px solid main-yellow;
+  background: white;
+}
+
+.element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 48px;
+
+  &:not(:last-child) {
+    border-right: 1px solid main-yellow;
+  }
+}
+
+.active {
+  composes: element;
+  background: main-yellow;
+}

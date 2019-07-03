@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
-const TabLinkGroup = ({ value, options, location: { pathname }, style }) => (
-  <div style={style}>
+import P from 'common/base/P';
+
+import styles from './TabLinkGroup.module.css';
+
+const TabLinkGroup = ({ options, location: { pathname }, style }) => (
+  <div className={styles.group} style={style}>
     {options.map(({ label, to }) => (
-      <Link key={to} to={to}>
-        {label}
+      <Link
+        className={to === pathname ? styles.active : styles.element}
+        key={to}
+        to={to}
+      >
+        <P bold>{label}</P>
       </Link>
     ))}
   </div>
