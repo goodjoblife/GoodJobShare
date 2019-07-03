@@ -27,25 +27,19 @@ const InterviewExperiences = ({
   fetchExperiences,
   getNewSearchBy,
 }) => {
-  useEffect(
-    () => {
-      fetchExperiences(
-        page,
-        PAGE_COUNT,
-        sort,
-        searchBy,
-        pageName, // searchQuery
-        searchType,
-      );
-    },
-    [fetchExperiences, page, pageName, searchBy, searchType, sort],
-  );
-  useEffect(
-    () => {
-      getNewSearchBy(searchBy);
-    },
-    [getNewSearchBy, searchBy],
-  );
+  useEffect(() => {
+    fetchExperiences(
+      page,
+      PAGE_COUNT,
+      sort,
+      searchBy,
+      pageName, // searchQuery
+      searchType,
+    );
+  }, [fetchExperiences, page, pageName, searchBy, searchType, sort]);
+  useEffect(() => {
+    getNewSearchBy(searchBy);
+  }, [getNewSearchBy, searchBy]);
 
   const data = experienceSearch.toJS();
   const { experiences = [], experienceCount } = data;
