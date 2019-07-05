@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import {
   pageTypeTranslation,
   tabTypeTranslation,
-  pageTypeURLMap,
-  tabTypeURLMap,
   pageType,
   tabType,
+  generatePageURL,
+  generateTabURL,
 } from '../../constants/companyJobTitle';
 
 const CrumbLink = ({ children, to }) => (
@@ -30,13 +30,11 @@ const BreadCrumb = ({ style, pageType, pageName, tabType }) => (
       {pageTypeTranslation[pageType]}
     </CrumbLink>
     {' > '}
-    <CrumbLink to={`/${pageTypeURLMap[pageType]}/${pageName}`}>
+    <CrumbLink to={generatePageURL({ pageName, pageType })}>
       {pageName}
     </CrumbLink>
     {' > '}
-    <CrumbLink
-      to={`/${pageTypeURLMap[pageType]}/${pageName}/${tabTypeURLMap[tabType]}`}
-    >
+    <CrumbLink to={generateTabURL({ pageType, pageName, tabType })}>
       {tabTypeTranslation[tabType]}
     </CrumbLink>
   </div>

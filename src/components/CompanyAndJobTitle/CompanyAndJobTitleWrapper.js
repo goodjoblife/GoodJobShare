@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { toPairs, compose, map } from 'ramda';
+
 import Heading from 'common/base/Heading';
 import StaticHelmet from 'common/StaticHelmet';
 
-import { tabTypeTranslation } from '../../constants/companyJobTitle';
+import {
+  tabTypeTranslation,
+  generateTabURL,
+} from '../../constants/companyJobTitle';
 
 import BreadCrumb from './BreadCrumb';
+import TabLinkGroup from './TabLinkGroup';
 
 const CompanyAndJobTitleWrapper = ({
   children,
@@ -14,6 +20,21 @@ const CompanyAndJobTitleWrapper = ({
   tabType,
 }) => {
   const helmetTitle = `${pageName} ${tabTypeTranslation[tabType]}`;
+  const tabLinkOptions = useMemo(
+    () =>
+      compose(
+        map(([type, label]) => ({
+          label,
+          to: generateTabURL({
+            pageType,
+            pageName,
+            tabType: type,
+          }),
+        })),
+        toPairs,
+      )(tabTypeTranslation),
+    [pageType, pageName],
+  );
   return (
     <div>
       <StaticHelmet.CompanyAndJobTitle title={helmetTitle} />
@@ -23,7 +44,15 @@ const CompanyAndJobTitleWrapper = ({
         tabType={tabType}
         style={{ marginBottom: '20px' }}
       />
-      <Heading style={{ color: '#000000' }}>{pageName}</Heading>
+      <Heading style={{ color: '#000000', marginBottom: '30px' }}>
+        {pageName}
+      </Heading>
+      <TabLinkGroup
+        options={tabLinkOptions}
+        style={{
+          marginBottom: '24px',
+        }}
+      />
       {children}
     </div>
   );
