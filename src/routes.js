@@ -211,10 +211,8 @@ const routes = [
       {
         path: '/companies/:companyName',
         exact: true,
-        render: routeProps => (
-          <CompanyPageProvider {...routeProps} tabType={tabType.OVERVIEW}>
-            {Overview}
-          </CompanyPageProvider>
+        render: ({ location: { pathname } }) => (
+          <Redirect to={`${pathname}/overview`} />
         ),
       },
       {
@@ -274,10 +272,8 @@ const routes = [
       {
         path: '/job-titles/:jobTitle',
         exact: true,
-        render: routeProps => (
-          <JobTitlePageProvider {...routeProps} tabType={tabType.OVERVIEW}>
-            {Overview}
-          </JobTitlePageProvider>
+        render: ({ location: { pathname } }) => (
+          <Redirect to={`${pathname}/overview`} />
         ),
       },
       {
