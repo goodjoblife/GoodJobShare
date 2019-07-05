@@ -7,8 +7,7 @@ import StaticHelmet from 'common/StaticHelmet';
 
 import {
   tabTypeTranslation,
-  tabTypeURLMap,
-  pageTypeURLMap,
+  generateTabURL,
 } from '../../constants/companyJobTitle';
 
 import BreadCrumb from './BreadCrumb';
@@ -26,7 +25,11 @@ const CompanyAndJobTitleWrapper = ({
       compose(
         map(([type, label]) => ({
           label,
-          to: `/${pageTypeURLMap[pageType]}/${pageName}/${tabTypeURLMap[type]}`,
+          to: generateTabURL({
+            pageType,
+            pageName,
+            tabType: type,
+          }),
         })),
         toPairs,
       )(tabTypeTranslation),

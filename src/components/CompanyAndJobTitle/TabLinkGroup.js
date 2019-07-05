@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import P from 'common/base/P';
 
@@ -39,4 +40,4 @@ TabLinkGroup.propTypes = {
   ),
 };
 
-export default TabLinkGroup;
+export default withRouter(TabLinkGroup);

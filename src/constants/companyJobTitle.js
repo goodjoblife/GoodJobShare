@@ -1,3 +1,5 @@
+import { generatePath } from 'react-router';
+
 const JOB_TITLE = 'JOB_TITLE';
 const COMPANY = 'COMPANY';
 
@@ -7,7 +9,7 @@ export const pageTypeTranslation = {
   [COMPANY]: '公司',
 };
 
-export const pageTypeURLMap = {
+const pageTypeURLMap = {
   [JOB_TITLE]: 'job-titles',
   [COMPANY]: 'companies',
 };
@@ -31,9 +33,22 @@ export const tabTypeTranslation = {
   [INTERVIEW_EXPERIENCE]: '面試心得',
 };
 
-export const tabTypeURLMap = {
-  [OVERVIEW]: '',
+const tabTypeURLMap = {
+  [OVERVIEW]: 'overview',
   [TIME_AND_SALARY]: 'salary-work-times',
   [WORK_EXPERIENCE]: 'work-experiences',
   [INTERVIEW_EXPERIENCE]: 'interview-experiences',
 };
+
+export const generateTabURL = ({ pageType, pageName, tabType }) =>
+  generatePath('/:pageTypeURL/:pageName/:tabTypeURL', {
+    pageTypeURL: pageTypeURLMap[pageType],
+    pageName,
+    tabTypeURL: tabTypeURLMap[tabType],
+  });
+
+export const generatePageURL = ({ pageName, pageType }) =>
+  generatePath('/:pageTypeURL/:pageName', {
+    pageTypeURL: pageTypeURLMap[pageType],
+    pageName,
+  });
