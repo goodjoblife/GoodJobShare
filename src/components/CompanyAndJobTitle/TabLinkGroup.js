@@ -13,7 +13,7 @@ const TabLinkGroup = ({ options, style }) => (
         className={styles.element}
         activeClassName={styles.active}
         exact
-        key={to}
+        key={label}
         to={to}
       >
         <P bold>{label}</P>
@@ -26,7 +26,15 @@ TabLinkGroup.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
-      to: PropTypes.string,
+      to: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.shape({
+          pathname: PropTypes.string,
+          search: PropTypes.string,
+          hash: PropTypes.string,
+          state: PropTypes.object,
+        }),
+      ]),
     }),
   ),
 };
