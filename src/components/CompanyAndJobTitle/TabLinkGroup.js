@@ -1,31 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 import P from 'common/base/P';
 
 import styles from './TabLinkGroup.module.css';
 
-const TabLinkGroup = ({ options, location: { pathname }, style }) => (
+const TabLinkGroup = ({ options, style }) => (
   <div className={styles.group} style={style}>
     {options.map(({ label, to }) => (
-      <Link
-        className={to === pathname ? styles.active : styles.element}
+      <NavLink
+        className={styles.element}
+        activeClassName={styles.active}
+        exact
         key={to}
         to={to}
       >
         <P bold>{label}</P>
-      </Link>
+      </NavLink>
     ))}
   </div>
 );
 
 TabLinkGroup.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string,
-  }),
-  pathname: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
@@ -34,4 +31,4 @@ TabLinkGroup.propTypes = {
   ),
 };
 
-export default withRouter(TabLinkGroup);
+export default TabLinkGroup;
