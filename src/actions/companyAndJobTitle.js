@@ -27,3 +27,17 @@ export const fetchCompany = companyName => (dispatch, getState, { api }) => {
       throw error;
     });
 };
+
+export const fetchJobTitle = jobTitle => (dispatch, getState, { api }) => {
+  dispatch(setStatus(STATUS.FETCHING));
+  return api.companyAndJobTitle
+    .getJobTitle(jobTitle)
+    .then(data => {
+      dispatch(setData(data));
+      dispatch(setStatus(STATUS.FETCHED));
+    })
+    .catch(error => {
+      dispatch(setStatus(STATUS.ERROR, error));
+      throw error;
+    });
+};

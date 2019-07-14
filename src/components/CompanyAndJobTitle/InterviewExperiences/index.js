@@ -23,16 +23,20 @@ const InterviewExperiences = ({
   status,
   page,
   fetchCompany,
+  fetchJobTitle,
 }) => {
   useEffect(() => {
     switch (pageType) {
       case PAGE_TYPE.COMPANY:
         fetchCompany(pageName);
         break;
+      case PAGE_TYPE.JOB_TITLE:
+        fetchJobTitle(pageName);
+        break;
       default:
         console.error(`Unrecognized pageType '${pageType}'`);
     }
-  }, [fetchCompany, page, pageName, pageType]);
+  }, [fetchCompany, fetchJobTitle, page, pageName, pageType]);
 
   return (
     <CompanyAndJobTitleWrapper
@@ -70,6 +74,7 @@ InterviewExperiences.propTypes = {
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
   fetchCompany: PropTypes.func.isRequired,
+  fetchJobTitle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector(companyAndJobTitleSelectors);
