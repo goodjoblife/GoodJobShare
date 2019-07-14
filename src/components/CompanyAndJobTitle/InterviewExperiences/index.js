@@ -25,7 +25,7 @@ const InterviewExperiences = ({
 }) => {
   useEffect(() => {
     fetchPageData(pageType, pageName);
-  }, [fetchPageData, page, pageName, pageType]);
+  }, [fetchPageData, pageName, pageType]);
 
   return (
     <CompanyAndJobTitleWrapper
