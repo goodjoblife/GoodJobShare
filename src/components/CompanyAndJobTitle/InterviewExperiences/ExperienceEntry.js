@@ -10,17 +10,26 @@ import Label from './Label';
 import Rating from './Rating';
 import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 
-const createLinkTo = (_id, backable) => ({
-  pathname: `/experiences/${_id}`,
+const createLinkTo = (id, backable) => ({
+  pathname: `/experiences/${id}`,
   state: { backable },
 });
 
 const ExperienceEntry = ({ pageType, data, size, backable }) => {
-  const { _id, created_at: createdAt, salary, title, overallRating } = data;
+  const {
+    id,
+    company: { name: companyName } = {},
+    job_title: { name: jobTitle } = {},
+    region,
+    created_at: createdAt,
+    salary,
+    title,
+    overall_rating: overallRating,
+  } = data;
 
   return (
     <Link
-      to={createLinkTo(_id, backable)}
+      to={createLinkTo(id, backable)}
       className={cn(styles.container, styles[size])}
     >
       <section className={styles.contentWrapper}>
@@ -37,21 +46,17 @@ const ExperienceEntry = ({ pageType, data, size, backable }) => {
         <div className={styles.labels}>
           {pageType !== PAGE_TYPE.COMPANY && (
             <Label
-              text={data.company.name}
+              text={companyName}
               Icon={i.Company}
               className={styles.company}
             />
           )}
           {pageType !== PAGE_TYPE.JOB_TITLE && (
-            <Label
-              text={data.job_title}
-              Icon={i.User}
-              className={styles.position}
-            />
+            <Label text={jobTitle} Icon={i.User} className={styles.position} />
           )}
-          {data.region && (
+          {region && (
             <Label
-              text={data.region}
+              text={region}
               Icon={i.Location}
               className={styles.location}
             />

@@ -1,5 +1,6 @@
 import campaignInfo from './campaignInfoApi';
 import companySearch from './companySearchApi';
+import companyAndJobTitle from './companyAndJobTitle';
 import experiences from './experiencesApi';
 import interviewExperiences from './interviewExperiencesApi';
 import jobTitleSearch from './jobTitleSearchApi';
@@ -16,6 +17,7 @@ import viewLog from './viewLogApi';
 export default {
   campaignInfo,
   companySearch,
+  companyAndJobTitle,
   experiences,
   interviewExperiences,
   jobTitleSearch,

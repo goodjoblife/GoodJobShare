@@ -8,41 +8,31 @@ import Pagination from 'common/Pagination';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import InterviewExperiencesSection from './InterviewExperiences';
 import { isFetched } from '../../../constants/status';
-import * as experienceSearchActions from '../../../actions/experienceSearch';
-import { loadingStatusSelector } from '../../../selectors/experienceSearchSelector';
+import * as companyAndJobTitleActions from '../../../actions/companyAndJobTitle';
+import companyAndJobTitleSelectors from '../../../selectors/companyAndJobTitle';
+import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 import withRouteParameter from '../../ExperienceSearch/withRouteParameter';
 
-const PAGE_COUNT = 10;
+const pageSize = 10;
 
 const InterviewExperiences = ({
   pageType,
   pageName,
   tabType,
-  experienceSearch,
-  loadingStatus,
+  interviewExperiences,
+  status,
   page,
-  sort,
-  searchBy,
-  searchType,
-  fetchExperiences,
-  getNewSearchBy,
+  fetchCompany,
 }) => {
   useEffect(() => {
-    fetchExperiences(
-      page,
-      PAGE_COUNT,
-      sort,
-      searchBy,
-      pageName, // searchQuery
-      searchType,
-    );
-  }, [fetchExperiences, page, pageName, searchBy, searchType, sort]);
-  useEffect(() => {
-    getNewSearchBy(searchBy);
-  }, [getNewSearchBy, searchBy]);
-
-  const data = experienceSearch.toJS();
-  const { experiences = [], experienceCount } = data;
+    switch (pageType) {
+      case PAGE_TYPE.COMPANY:
+        fetchCompany(pageName);
+        break;
+      default:
+        console.error(`Unrecognized pageType '${pageType}'`);
+    }
+  }, [fetchCompany, page, pageName, pageType]);
 
   return (
     <CompanyAndJobTitleWrapper
@@ -54,13 +44,16 @@ const InterviewExperiences = ({
         pageType={pageType}
         pageName={pageName}
         tabType={tabType}
-        data={experiences}
-        status={loadingStatus}
+        data={
+          interviewExperiences &&
+          interviewExperiences.slice((page - 1) * pageSize, page * pageSize)
+        }
+        status={status}
       />
-      {isFetched(loadingStatus) && (
+      {isFetched(status) && (
         <Pagination
-          totalCount={experienceCount}
-          unit={PAGE_COUNT}
+          totalCount={interviewExperiences.length}
+          unit={pageSize}
           currentPage={page}
           createPageLinkTo={page => `?p=${page}`}
         />
@@ -73,15 +66,16 @@ InterviewExperiences.propTypes = {
   pageType: PropTypes.string,
   pageName: PropTypes.string,
   tabType: PropTypes.string,
+  interviewExperiences: PropTypes.arrayOf(PropTypes.object),
+  status: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+  fetchCompany: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  experienceSearch: state => state.experienceSearch,
-  loadingStatus: loadingStatusSelector,
-});
+const mapStateToProps = createStructuredSelector(companyAndJobTitleSelectors);
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(experienceSearchActions, dispatch);
+  bindActionCreators(companyAndJobTitleActions, dispatch);
 
 const enhance = compose(
   withRouteParameter,

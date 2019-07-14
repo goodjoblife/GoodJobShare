@@ -18,7 +18,10 @@ function parseState(window) {
     return {};
   }
 
-  const shouldNotTransform = R.flip(R.contains)(['laborRights']);
+  const shouldNotTransform = R.flip(R.contains)([
+    'laborRights',
+    'companyAndJobTitle',
+  ]);
   const preloadedState = {};
   Object.keys(window.__data).forEach(key => {
     if (shouldNotTransform(key)) {
