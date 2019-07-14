@@ -25,9 +25,13 @@ const setStatus = (pageType, pageName, status, error = null) => ({
 const isStateConsistent = (pageType, pageName) => state =>
   pageTypeSelector(state) === pageType && pageNameSelector(state) === pageName;
 
-export const fetchCompany = companyName => (dispatch, getState, { api }) => {
-  if (!isStateConsistent(PAGE_TYPE.COMPANY, companyName)(getState())) {
-    setStatus(PAGE_TYPE.COMPANY, companyName, STATUS.UNFETCHED);
+export const fetchPageData = (pageType, pageName) => (
+  dispatch,
+  getState,
+  { api },
+) => {
+  if (!isStateConsistent(pageType, pageName)(getState())) {
+    setStatus(pageType, pageName, STATUS.UNFETCHED);
   }
 
   const status = statusSelector(getState());
@@ -35,50 +39,41 @@ export const fetchCompany = companyName => (dispatch, getState, { api }) => {
     return;
   }
 
-  dispatch(setStatus(PAGE_TYPE.COMPANY, companyName, STATUS.FETCHING));
-  return api.companyAndJobTitle
-    .getCompany(companyName)
+  dispatch(setStatus(pageType, pageName, STATUS.FETCHING));
+
+  let promise;
+  switch (pageType) {
+    case PAGE_TYPE.COMPANY:
+      promise = api.companyAndJobTitle.getCompany(pageName);
+      break;
+    case PAGE_TYPE.JOB_TITLE:
+      promise = api.companyAndJobTitle.getJobTitle(pageName);
+      break;
+    default:
+      dispatch(
+        setStatus(
+          pageType,
+          pageName,
+          STATUS.ERROR,
+          new Error(`Unrecognized pageType '${pageType}'`),
+        ),
+      );
+      return;
+  }
+
+  return promise
     .then(data => {
-      if (!isStateConsistent(PAGE_TYPE.COMPANY, companyName)(getState())) {
+      if (!isStateConsistent(pageType, pageName)(getState())) {
         return;
       }
       dispatch(setData(data));
-      dispatch(setStatus(PAGE_TYPE.COMPANY, companyName, STATUS.FETCHED));
+      dispatch(setStatus(pageType, pageName, STATUS.FETCHED));
     })
     .catch(error => {
-      if (!isStateConsistent(PAGE_TYPE.COMPANY, companyName)(getState())) {
+      if (!isStateConsistent(pageType, pageName)(getState())) {
         return;
       }
-      dispatch(setStatus(PAGE_TYPE.COMPANY, companyName, STATUS.ERROR, error));
-      throw error;
-    });
-};
-
-export const fetchJobTitle = jobTitle => (dispatch, getState, { api }) => {
-  if (!isStateConsistent(PAGE_TYPE.JOB_TITLE, jobTitle)(getState())) {
-    setStatus(PAGE_TYPE.JOB_TITLE, jobTitle, STATUS.UNFETCHED);
-  }
-
-  const status = statusSelector(getState());
-  if (isFetching(status) || isFetched(status)) {
-    return;
-  }
-
-  dispatch(setStatus(PAGE_TYPE.JOB_TITLE, jobTitle, STATUS.FETCHING));
-  return api.companyAndJobTitle
-    .getJobTitle(jobTitle)
-    .then(data => {
-      if (!isStateConsistent(PAGE_TYPE.JOB_TITLE, jobTitle)(getState())) {
-        return;
-      }
-      dispatch(setData(data));
-      dispatch(setStatus(PAGE_TYPE.JOB_TITLE, jobTitle, STATUS.FETCHED));
-    })
-    .catch(error => {
-      if (!isStateConsistent(PAGE_TYPE.JOB_TITLE, jobTitle)(getState())) {
-        return;
-      }
-      dispatch(setStatus(PAGE_TYPE.JOB_TITLE, jobTitle, STATUS.ERROR, error));
+      dispatch(setStatus(pageType, pageName, STATUS.ERROR, error));
       throw error;
     });
 };

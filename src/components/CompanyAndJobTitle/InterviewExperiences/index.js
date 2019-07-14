@@ -10,7 +10,6 @@ import InterviewExperiencesSection from './InterviewExperiences';
 import { isFetched } from '../../../constants/status';
 import * as companyAndJobTitleActions from '../../../actions/companyAndJobTitle';
 import companyAndJobTitleSelectors from '../../../selectors/companyAndJobTitle';
-import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 import withRouteParameter from '../../ExperienceSearch/withRouteParameter';
 
 const pageSize = 10;
@@ -22,21 +21,11 @@ const InterviewExperiences = ({
   interviewExperiences,
   status,
   page,
-  fetchCompany,
-  fetchJobTitle,
+  fetchPageData,
 }) => {
   useEffect(() => {
-    switch (pageType) {
-      case PAGE_TYPE.COMPANY:
-        fetchCompany(pageName);
-        break;
-      case PAGE_TYPE.JOB_TITLE:
-        fetchJobTitle(pageName);
-        break;
-      default:
-        console.error(`Unrecognized pageType '${pageType}'`);
-    }
-  }, [fetchCompany, fetchJobTitle, page, pageName, pageType]);
+    fetchPageData(pageType, pageName);
+  }, [fetchPageData, page, pageName, pageType]);
 
   return (
     <CompanyAndJobTitleWrapper
@@ -73,8 +62,7 @@ InterviewExperiences.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
-  fetchCompany: PropTypes.func.isRequired,
-  fetchJobTitle: PropTypes.func.isRequired,
+  fetchPageData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector(companyAndJobTitleSelectors);
