@@ -77,3 +77,7 @@ export const fetchPageData = (pageType, pageName) => (
       throw error;
     });
 };
+
+export default {
+  fetchPageData,
+};

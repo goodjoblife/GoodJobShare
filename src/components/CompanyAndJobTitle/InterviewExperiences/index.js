@@ -8,7 +8,7 @@ import Pagination from 'common/Pagination';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import InterviewExperiencesSection from './InterviewExperiences';
 import { isFetched } from '../../../constants/status';
-import * as companyAndJobTitleActions from '../../../actions/companyAndJobTitle';
+import companyAndJobTitleActions from '../../../actions/companyAndJobTitle';
 import companyAndJobTitleSelectors from '../../../selectors/companyAndJobTitle';
 import withRouteParameter from '../../ExperienceSearch/withRouteParameter';
 
