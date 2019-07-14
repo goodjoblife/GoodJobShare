@@ -1,6 +1,8 @@
 import R from 'ramda';
 
-const status = state => state.companyAndJobTitle.status;
+export const status = state => state.companyAndJobTitle.status;
+export const pageType = state => state.companyAndJobTitle.pageType;
+export const pageName = state => state.companyAndJobTitle.pageName;
 const data = state => state.companyAndJobTitle.data;
 const interviewExperiences = R.pipe(
   data,
