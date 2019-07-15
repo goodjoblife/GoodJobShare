@@ -1,40 +1,24 @@
 import { pageType as PAGE_TYPE } from '../constants/companyJobTitle';
 import STATUS, { isFetching, isFetched } from '../constants/status';
-import {
-  pageType as pageTypeSelector,
-  pageName as pageNameSelector,
-  status as statusSelector,
-} from '../selectors/companyAndJobTitle';
+import { pageStatus as pageStatusSelector } from '../selectors/companyAndJobTitle';
 
-export const SET_DATA = '@@companyAndJobTitle/SET_DATA';
 export const SET_STATUS = '@@companyAndJobTitle/SET_STATUS';
 
-const setData = data => ({
-  type: SET_DATA,
-  data,
-});
-
-const setStatus = (pageType, pageName, status, error = null) => ({
+const setStatus = (pageType, pageName, status, data = null, error = null) => ({
   type: SET_STATUS,
   pageType,
   pageName,
   status,
+  data,
   error,
 });
-
-const isStateConsistent = (pageType, pageName) => state =>
-  pageTypeSelector(state) === pageType && pageNameSelector(state) === pageName;
 
 export const fetchPageData = (pageType, pageName) => (
   dispatch,
   getState,
   { api },
 ) => {
-  if (!isStateConsistent(pageType, pageName)(getState())) {
-    setStatus(pageType, pageName, STATUS.UNFETCHED);
-  }
-
-  const status = statusSelector(getState());
+  const status = pageStatusSelector(pageType, pageName)(getState());
   if (isFetching(status) || isFetched(status)) {
     return;
   }
@@ -55,6 +39,7 @@ export const fetchPageData = (pageType, pageName) => (
           pageType,
           pageName,
           STATUS.ERROR,
+          null,
           new Error(`Unrecognized pageType '${pageType}'`),
         ),
       );
@@ -63,17 +48,10 @@ export const fetchPageData = (pageType, pageName) => (
 
   return promise
     .then(data => {
-      if (!isStateConsistent(pageType, pageName)(getState())) {
-        return;
-      }
-      dispatch(setData(data));
-      dispatch(setStatus(pageType, pageName, STATUS.FETCHED));
+      dispatch(setStatus(pageType, pageName, STATUS.FETCHED, data));
     })
     .catch(error => {
-      if (!isStateConsistent(pageType, pageName)(getState())) {
-        return;
-      }
-      dispatch(setStatus(pageType, pageName, STATUS.ERROR, error));
+      dispatch(setStatus(pageType, pageName, STATUS.ERROR, null, error));
       throw error;
     });
 };

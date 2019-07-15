@@ -1,26 +1,19 @@
 import createReducer from 'utils/createReducer';
-import STATUS from '../constants/status';
-import { SET_STATUS, SET_DATA } from '../actions/companyAndJobTitle';
+import { SET_STATUS } from '../actions/companyAndJobTitle';
 
-const preloadedState = {
-  pageType: null,
-  pageName: null,
-  status: STATUS.UNFETCHED,
-  error: null,
-  data: null,
-};
+const preloadedState = {};
 
 const reducer = createReducer(preloadedState, {
-  [SET_STATUS]: (state, { pageType, pageName, status, error }) => ({
+  [SET_STATUS]: (state, { pageType, pageName, status, data, error }) => ({
     ...state,
-    pageType,
-    pageName,
-    status,
-    error,
-  }),
-  [SET_DATA]: (state, { data }) => ({
-    ...state,
-    data,
+    [pageType]: {
+      ...state[pageType],
+      [pageName]: {
+        status,
+        data,
+        error,
+      },
+    },
   }),
 });
 
