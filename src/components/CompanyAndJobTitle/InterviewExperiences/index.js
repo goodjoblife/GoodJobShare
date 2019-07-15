@@ -1,16 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'recompose';
 import Pagination from 'common/Pagination';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import InterviewExperiencesSection from './InterviewExperiences';
 import { isFetched } from '../../../constants/status';
-import companyAndJobTitleActions from '../../../actions/companyAndJobTitle';
-import companyAndJobTitleSelectors from '../../../selectors/companyAndJobTitle';
-import withRouteParameter from '../../ExperienceSearch/withRouteParameter';
 
 const pageSize = 10;
 
@@ -65,17 +58,4 @@ InterviewExperiences.propTypes = {
   fetchPageData: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector(companyAndJobTitleSelectors);
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(companyAndJobTitleActions, dispatch);
-
-const enhance = compose(
-  withRouteParameter,
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  ),
-);
-
-export default enhance(InterviewExperiences);
+export default InterviewExperiences;
