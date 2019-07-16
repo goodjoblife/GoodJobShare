@@ -1,5 +1,5 @@
 import STATUS, { isFetching, isFetched } from '../constants/status';
-import { jobTitleStatus as jobTitleStatusSelector } from '../selectors/jobTitle';
+import { jobTitleStatus as jobTitleStatusSelector } from '../selectors/companyAndJobTitle';
 
 export const SET_STATUS = '@@jobTitle/SET_STATUS';
 

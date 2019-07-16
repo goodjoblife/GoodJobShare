@@ -11,7 +11,7 @@ import { pageType } from '../../constants/companyJobTitle';
 import companyActions from '../../actions/company';
 import companySelectors, {
   company as companySelector,
-} from '../../selectors/company';
+} from '../../selectors/companyAndJobTitle';
 import withRouteParameter from '../ExperienceSearch/withRouteParameter';
 
 const CompanyPageProvider = ({

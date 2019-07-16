@@ -11,7 +11,7 @@ import { pageType } from '../../constants/companyJobTitle';
 import jobTitleActions from '../../actions/jobTitle';
 import jobTitleSelectors, {
   jobTitle as jobTitleSelector,
-} from '../../selectors/jobTitle';
+} from '../../selectors/companyAndJobTitle';
 import withRouteParameter from '../ExperienceSearch/withRouteParameter';
 
 const JobTitlePageProvider = ({

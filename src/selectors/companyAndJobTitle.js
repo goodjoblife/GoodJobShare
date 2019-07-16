@@ -13,6 +13,17 @@ const interviewExperiences = R.pipe(
 
 export default { status, data, interviewExperiences };
 
+export const company = companyName =>
+  R.compose(
+    R.defaultTo({}),
+    R.path(['company', companyName]),
+  );
+export const companyStatus = companyName =>
+  R.compose(
+    status,
+    company(companyName),
+  );
+
 export const jobTitle = jobTitleName =>
   R.compose(
     R.defaultTo({}),
