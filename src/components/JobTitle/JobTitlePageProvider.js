@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
-import { withProps } from 'recompose';
+import { withProps, lifecycle } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'recompose';
 
 import { pageType } from '../../constants/companyJobTitle';
-import companyAndJobTitleActions from '../../actions/companyAndJobTitle';
-import companyAndJobTitleSelectors, {
-  pageData as pageDataSelector,
-} from '../../selectors/companyAndJobTitle';
+import jobTitleActions from '../../actions/jobTitle';
+import jobTitleSelectors, {
+  jobTitle as jobTitleSelector,
+} from '../../selectors/jobTitle';
 import withRouteParameter from '../ExperienceSearch/withRouteParameter';
 
 const JobTitlePageProvider = ({
@@ -22,7 +22,6 @@ const JobTitlePageProvider = ({
   interviewExperiences,
   status,
   page,
-  fetchPageData,
 }) => (
   <React.Fragment>
     {children({
@@ -32,7 +31,6 @@ const JobTitlePageProvider = ({
       interviewExperiences,
       status,
       page,
-      fetchPageData,
     })}
   </React.Fragment>
 );
@@ -45,17 +43,16 @@ JobTitlePageProvider.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
-  fetchPageData: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, { pageType, pageName }) =>
+const mapStateToProps = (state, { pageName }) =>
   R.compose(
-    createStructuredSelector(companyAndJobTitleSelectors),
-    pageDataSelector(pageType, pageName),
+    createStructuredSelector(jobTitleSelectors),
+    jobTitleSelector(pageName),
   )(state);
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(companyAndJobTitleActions, dispatch);
+  bindActionCreators(jobTitleActions, dispatch);
 
 const enhance = compose(
   withRouteParameter,
@@ -67,6 +64,16 @@ const enhance = compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
+  lifecycle({
+    componentDidMount() {
+      this.props.fetchJobTitle(this.props.pageName);
+    },
+    componentDidUpdate(prevProps) {
+      if (this.props.pageName !== prevProps.pageName) {
+        this.props.fetchJobTitle(this.props.pageName);
+      }
+    },
+  }),
 );
 
 export default enhance(JobTitlePageProvider);

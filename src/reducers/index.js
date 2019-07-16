@@ -17,7 +17,8 @@ import timeAndSalaryJobTitle from './timeAndSalaryJobTitle';
 import popularExperiences from './popularExperiences';
 import campaignInfo from './campaignInfo';
 import campaignTimeAndSalaryBoard from './campaignTimeAndSalaryBoard';
-import companyAndJobTitle from './companyAndJobTitle';
+import company from './company';
+import jobTitle from './jobTitle';
 import { PERSIST_KEY } from '../config';
 
 const persistConfig = {
@@ -42,7 +43,8 @@ const rootReducer = combineReducers({
   popularExperiences,
   campaignInfo,
   campaignTimeAndSalaryBoard,
-  companyAndJobTitle,
+  company,
+  jobTitle,
 });
 
 export default persistReducer(persistConfig, rootReducer);

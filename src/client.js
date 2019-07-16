@@ -20,7 +20,8 @@ function parseState(window) {
 
   const shouldNotTransform = R.flip(R.contains)([
     'laborRights',
-    'companyAndJobTitle',
+    'company',
+    'jobTitle',
   ]);
   const preloadedState = {};
   Object.keys(window.__data).forEach(key => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Pagination from 'common/Pagination';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
@@ -14,39 +14,32 @@ const InterviewExperiences = ({
   interviewExperiences,
   status,
   page,
-  fetchPageData,
-}) => {
-  useEffect(() => {
-    fetchPageData(pageType, pageName);
-  }, [fetchPageData, pageName, pageType]);
-
-  return (
-    <CompanyAndJobTitleWrapper
+}) => (
+  <CompanyAndJobTitleWrapper
+    pageType={pageType}
+    pageName={pageName}
+    tabType={tabType}
+  >
+    <InterviewExperiencesSection
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
-    >
-      <InterviewExperiencesSection
-        pageType={pageType}
-        pageName={pageName}
-        tabType={tabType}
-        data={
-          interviewExperiences &&
-          interviewExperiences.slice((page - 1) * pageSize, page * pageSize)
-        }
-        status={status}
+      data={
+        interviewExperiences &&
+        interviewExperiences.slice((page - 1) * pageSize, page * pageSize)
+      }
+      status={status}
+    />
+    {isFetched(status) && (
+      <Pagination
+        totalCount={interviewExperiences.length}
+        unit={pageSize}
+        currentPage={page}
+        createPageLinkTo={page => `?p=${page}`}
       />
-      {isFetched(status) && (
-        <Pagination
-          totalCount={interviewExperiences.length}
-          unit={pageSize}
-          currentPage={page}
-          createPageLinkTo={page => `?p=${page}`}
-        />
-      )}
-    </CompanyAndJobTitleWrapper>
-  );
-};
+    )}
+  </CompanyAndJobTitleWrapper>
+);
 
 InterviewExperiences.propTypes = {
   pageType: PropTypes.string,
@@ -55,7 +48,6 @@ InterviewExperiences.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
-  fetchPageData: PropTypes.func.isRequired,
 };
 
 export default InterviewExperiences;
