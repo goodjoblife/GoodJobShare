@@ -4,12 +4,15 @@ import R from 'ramda';
 import { withProps, lifecycle } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { compose, setStatic } from 'recompose';
 
 import { pageType } from '../../constants/companyJobTitle';
 import companyActions from '../../actions/company';
-import companySelectors, {
+import {
+  interviewExperiences,
+  salaryWorkTimes,
+  salaryWorkTimeStatistics,
+  status,
   company as companySelector,
 } from '../../selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
@@ -27,6 +30,8 @@ const CompanyPageProvider = ({
   pageName,
   tabType,
   interviewExperiences,
+  salaryWorkTimes,
+  salaryWorkTimeStatistics,
   status,
   page,
 }) => (
@@ -36,6 +41,8 @@ const CompanyPageProvider = ({
       pageName,
       tabType,
       interviewExperiences,
+      salaryWorkTimes,
+      salaryWorkTimeStatistics,
       status,
       page,
     })}
@@ -52,11 +59,15 @@ CompanyPageProvider.propTypes = {
   page: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state, { pageName }) =>
-  R.compose(
-    createStructuredSelector(companySelectors),
-    companySelector(pageName),
-  )(state);
+const mapStateToProps = (state, { pageName }) => {
+  const company = companySelector(pageName)(state);
+  return {
+    status: status(company),
+    interviewExperiences: interviewExperiences(company),
+    salaryWorkTimes: salaryWorkTimes(company),
+    salaryWorkTimeStatistics: salaryWorkTimeStatistics(company),
+  };
+};
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(companyActions, dispatch);

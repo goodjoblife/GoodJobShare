@@ -1,17 +1,27 @@
 import R from 'ramda';
 import STATUS from '../constants/status';
 
-const status = R.compose(
+export const status = R.compose(
   R.defaultTo(STATUS.UNFETCHED),
   R.prop('status'),
 );
+
 const data = state => state.data;
-const interviewExperiences = R.pipe(
+
+export const interviewExperiences = R.pipe(
   data,
   R.when(R.is(Object), R.prop('interview_experiences')),
 );
 
-export default { status, data, interviewExperiences };
+export const salaryWorkTimes = R.pipe(
+  data,
+  R.when(R.is(Object), R.prop('salary_work_times')),
+);
+
+export const salaryWorkTimeStatistics = R.pipe(
+  data,
+  R.when(R.is(Object), R.prop('salary_work_time_statistics')),
+);
 
 export const company = companyName =>
   R.compose(

@@ -4,12 +4,15 @@ import R from 'ramda';
 import { withProps, lifecycle } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { compose, setStatic } from 'recompose';
 
 import { pageType } from '../../constants/companyJobTitle';
 import jobTitleActions from '../../actions/jobTitle';
-import jobTitleSelectors, {
+import {
+  interviewExperiences,
+  salaryWorkTimes,
+  salaryWorkTimeStatistics,
+  status,
   jobTitle as jobTitleSelector,
 } from '../../selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
@@ -53,11 +56,15 @@ JobTitlePageProvider.propTypes = {
   page: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state, { pageName }) =>
-  R.compose(
-    createStructuredSelector(jobTitleSelectors),
-    jobTitleSelector(pageName),
-  )(state);
+const mapStateToProps = (state, { pageName }) => {
+  const jobTitle = jobTitleSelector(pageName)(state);
+  return {
+    status: status(jobTitle),
+    interviewExperiences: interviewExperiences(jobTitle),
+    salaryWorkTimes: salaryWorkTimes(jobTitle),
+    salaryWorkTimeStatistics: salaryWorkTimeStatistics(jobTitle),
+  };
+};
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(jobTitleActions, dispatch);

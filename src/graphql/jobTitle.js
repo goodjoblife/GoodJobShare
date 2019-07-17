@@ -27,6 +27,33 @@ query($jobTitle: String!) {
       like_count
       overall_rating
     }
+    salary_work_times {
+      id
+      week_work_time
+      salary {
+        type
+      }
+    }
+    salary_work_time_statistics {
+      count
+      average_estimated_hourly_wage
+      average_week_work_time
+      is_overtime_salary_legal_count {
+        yes
+        no
+        unknown
+      }
+      has_compensatory_dayoff_count {
+        yes
+        no
+        unknown
+      }
+      has_overtime_salary_count {
+        yes
+        no
+        unknown
+      }
+    }
   }
 }
 `;

@@ -17,7 +17,7 @@ import styles from './TimeAndSalary.module.css';
 
 class TimeAndSalary extends Component {
   static propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({})),
+    data: PropTypes.array,
     statistics: PropTypes.shape({
       count: PropTypes.number,
       average_estimated_hourly_wage: PropTypes.number,
@@ -46,26 +46,30 @@ class TimeAndSalary extends Component {
 
   render() {
     const {
-      data,
+      salaryWorkTimes,
+      salaryWorkTimeStatistics,
       status,
       canViewTimeAndSalary,
       page,
       pathname,
       queryParams,
-      statistics: {
-        count: dataNum,
-        average_estimated_hourly_wage: avgHourWage,
-        average_week_work_time: avgWeekWorkTime,
-      },
       pageType,
       pageName,
       tabType,
     } = this.props;
     const pageSize = 10;
-
     const title = `${pageName}薪水`;
 
-    const currentData = data.slice((page - 1) * pageSize, page * pageSize);
+    const {
+      count: dataNum,
+      average_estimated_hourly_wage: avgHourWage,
+      average_week_work_time: avgWeekWorkTime,
+    } = salaryWorkTimeStatistics;
+
+    const currentData = salaryWorkTimes.slice(
+      (page - 1) * pageSize,
+      page * pageSize,
+    );
 
     return (
       <CompanyAndJobTitleWrapper
@@ -86,14 +90,16 @@ class TimeAndSalary extends Component {
           <h2 className={styles.heading}>{title}</h2>
           {isFetching(status) && <Loading size="s" />}
           {isFetched(status) &&
-            ((data.length > 0 && (
+            ((salaryWorkTimes.length > 0 && (
               <React.Fragment>
                 <WorkingHourBlock
-                  data={currentData}
+                  data={salaryWorkTimes}
+                  statistics={salaryWorkTimeStatistics}
+                  pageName={pageName}
                   hideContent={!canViewTimeAndSalary}
                 />
                 <Pagination
-                  totalCount={data.get('salary_work_times').size}
+                  totalCount={salaryWorkTimes.length}
                   unit={pageSize}
                   currentPage={page}
                   createPageLinkTo={toPage =>

@@ -9,12 +9,14 @@ import styles from '../../TimeAndSalary/common/WorkingHourBlock.module.css';
 
 class WorkingHourBlock extends Component {
   static propTypes = {
-    data: PropTypes.object.isRequired,
+    data: PropTypes.array,
+    statistics: PropTypes.object,
+    pageName: PropTypes.string,
     hideContent: PropTypes.bool.isRequired,
   };
 
   renderBlockContent = () => {
-    const { data, hideContent } = this.props;
+    const { data, hideContent, statistics } = this.props;
     return (
       <div>
         <div className={styles.overtimeBlock}>
@@ -22,33 +24,29 @@ class WorkingHourBlock extends Component {
             <OvertimeBlock
               type="salary"
               heading="加班有無加班費"
-              statistics={data.salary_work_time_statistics}
+              statistics={statistics}
             />
             <OvertimeBlock
               type="dayoff"
               heading="加班有無補休"
-              statistics={data.salary_work_time_statistics}
+              statistics={statistics}
             />
           </div>
           <div className={styles.overtimeBlockUnit}>單位：資料筆數</div>
         </div>
-        <WorkingHourTable
-          data={data.salary_work_times}
-          hideContent={hideContent}
-        />
+        <WorkingHourTable data={data} hideContent={hideContent} />
       </div>
     );
   };
 
   render() {
-    const { data } = this.props;
-    const { name } = data;
+    const { pageName } = this.props;
     return (
       <section className={styles.container}>
         <div>
           <div className={cn(styles.headingWrapper, styles.expanded)}>
             <Heading size="sl" className={styles.headingBlock}>
-              {name}
+              {pageName}
             </Heading>
           </div>
         </div>
