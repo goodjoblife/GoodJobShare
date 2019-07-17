@@ -25,7 +25,7 @@ const InterviewExperiences = ({
     return <EmptyView pageName={pageName} tabType={tabType} />;
   }
   return data.map(d => (
-    <ExperienceEntry key={d._id} pageType={pageType} data={d} />
+    <ExperienceEntry key={d.id} pageType={pageType} data={d} />
   ));
 };
 
