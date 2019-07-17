@@ -46,7 +46,7 @@ const InterviewExperiences = ({
       pageName={pageName}
       tabType={tabType}
     >
-      {shouldEmptyView({ interviewExperiences }) ? (
+      {shouldEmptyView({ interviewExperiences, status }) ? (
         <EmptyView pageName={pageName} tabType={tabType} />
       ) : (
         <React.Fragment>
