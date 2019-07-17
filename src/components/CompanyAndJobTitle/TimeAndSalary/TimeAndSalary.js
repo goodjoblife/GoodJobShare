@@ -11,15 +11,15 @@ import { isNil } from 'ramda';
 
 import EmptyView from '../EmptyView';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { isFetching, isFetched } from '../../../constants/status';
+import { isFetched, isUnfetched, isFetching } from '../../../constants/status';
 import { pageTypeTranslation } from '../../../constants/companyJobTitle';
 import WorkingHourBlock from './WorkingHourBlock';
 import renderHelmet from './timeAndSalaryHelmet';
 import ViewLog from './ViewLog';
 import styles from './TimeAndSalary.module.css';
 
-const shouldEmptyView = ({ salaryWorkTimes }) =>
-  isNil(salaryWorkTimes) || salaryWorkTimes.length === 0;
+const shouldEmptyView = ({ salaryWorkTimes, status }) =>
+  isFetched(status) && (isNil(salaryWorkTimes) || salaryWorkTimes.length === 0);
 
 class TimeAndSalary extends Component {
   static propTypes = {
@@ -63,8 +63,28 @@ class TimeAndSalary extends Component {
       pageName,
       tabType,
     } = this.props;
-    if (shouldEmptyView({ salaryWorkTimes })) {
-      return <EmptyView tabType={tabType} pageName={pageName} />;
+    if (shouldEmptyView({ salaryWorkTimes, status })) {
+      return (
+        <CompanyAndJobTitleWrapper
+          pageType={pageType}
+          pageName={pageName}
+          tabType={tabType}
+        >
+          <EmptyView tabType={tabType} pageName={pageName} />
+        </CompanyAndJobTitleWrapper>
+      );
+    }
+
+    if (isUnfetched(status) || isFetching(status)) {
+      return (
+        <CompanyAndJobTitleWrapper
+          pageType={pageType}
+          pageName={pageName}
+          tabType={tabType}
+        >
+          <Loading size="s" />
+        </CompanyAndJobTitleWrapper>
+      );
     }
 
     const pageSize = 10;
@@ -97,43 +117,39 @@ class TimeAndSalary extends Component {
             avgWeekWorkTime: Math.round(avgWeekWorkTime),
             avgHourWage: Math.round(avgHourWage),
           })}
-          {isFetching(status) && <Loading size="s" />}
-          {isFetched(status) &&
-            ((salaryWorkTimes.length > 0 && (
-              <React.Fragment>
-                <WorkingHourBlock
-                  data={currentData}
-                  statistics={salaryWorkTimeStatistics}
-                  pageType={pageType}
-                  pageName={pageName}
-                  hideContent={!canViewTimeAndSalary}
-                />
-                <Pagination
-                  totalCount={salaryWorkTimes.length}
-                  unit={pageSize}
-                  currentPage={page}
-                  createPageLinkTo={toPage =>
-                    qs.stringify(
-                      { ...queryParams, p: toPage },
-                      { addQueryPrefix: true },
-                    )
-                  }
-                />
-              </React.Fragment>
-            )) || (
-              <P size="l" bold className={styles.searchNoResult}>
-                {`尚未有${pageTypeTranslation[pageType]}「
+          {(salaryWorkTimes.length > 0 && (
+            <React.Fragment>
+              <WorkingHourBlock
+                data={currentData}
+                statistics={salaryWorkTimeStatistics}
+                pageType={pageType}
+                pageName={pageName}
+                hideContent={!canViewTimeAndSalary}
+              />
+              <Pagination
+                totalCount={salaryWorkTimes.length}
+                unit={pageSize}
+                currentPage={page}
+                createPageLinkTo={toPage =>
+                  qs.stringify(
+                    { ...queryParams, p: toPage },
+                    { addQueryPrefix: true },
+                  )
+                }
+              />
+            </React.Fragment>
+          )) || (
+            <P size="l" bold className={styles.searchNoResult}>
+              {`尚未有${pageTypeTranslation[pageType]}「
                 {pageName}
                 」的薪時資訊`}
-              </P>
-            ))}
-          {isFetched(status) && (
-            <ViewLog
-              pageName={pageName}
-              page={page}
-              contentIds={currentData.map(i => i.id)}
-            />
+            </P>
           )}
+          <ViewLog
+            pageName={pageName}
+            page={page}
+            contentIds={currentData.map(i => i.id)}
+          />
           <FanPageBlock className={styles.fanPageBlock} />
         </section>
       </CompanyAndJobTitleWrapper>

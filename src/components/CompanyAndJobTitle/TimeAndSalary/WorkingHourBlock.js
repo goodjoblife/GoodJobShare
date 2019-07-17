@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { Heading } from 'common/base';
 import OvertimeBlock from '../../TimeAndSalary/common/OvertimeBlock';
 import WorkingHourTable from './WorkingHourTable';
 
@@ -45,17 +44,8 @@ class WorkingHourBlock extends Component {
   };
 
   render() {
-    const { pageName } = this.props;
     return (
       <section className={styles.container}>
-        <div>
-          <div className={cn(styles.headingWrapper, styles.expanded)}>
-            <Heading size="sl" className={styles.headingBlock}>
-              {pageName}
-            </Heading>
-          </div>
-        </div>
-
         <div className={cn(styles.content, styles.expanded)}>
           {this.renderBlockContent()}
         </div>
