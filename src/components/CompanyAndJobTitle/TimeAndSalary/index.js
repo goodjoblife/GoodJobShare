@@ -1,3 +1,7 @@
+import React from 'react';
+
 import TimeAndSalary from './TimeAndSalary';
 
-export default TimeAndSalary;
+const Helper = props => <TimeAndSalary {...props} />;
+
+export default Helper;

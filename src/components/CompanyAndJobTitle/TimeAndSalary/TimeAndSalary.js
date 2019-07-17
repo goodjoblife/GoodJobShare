@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import { compose } from 'recompose';
+import { compose, renderNothing, branch } from 'recompose';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
 import Pagination from 'common/Pagination';
+import { isNil } from 'ramda';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import { isFetching, isFetched } from '../../../constants/status';
@@ -131,6 +132,13 @@ class TimeAndSalary extends Component {
   }
 }
 
-const hoc = compose(withPermission);
+const hoc = compose(
+  branch(
+    ({ salaryWorkTimes, salaryWorkTimeStatistics }) =>
+      isNil(salaryWorkTimes) || isNil(salaryWorkTimeStatistics),
+    renderNothing,
+  ),
+  withPermission,
+);
 
 export default hoc(TimeAndSalary);

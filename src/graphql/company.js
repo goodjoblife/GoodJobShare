@@ -30,6 +30,8 @@ query($companyName: String!) {
       salary {
         type
       }
+      sector
+      day_real_work_time
     }
     salary_work_time_statistics {
       count

@@ -32,7 +32,7 @@ import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import Overview from './components/CompanyAndJobTitle/Overview';
 import InterviewExperiences from './components/CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from './components/CompanyAndJobTitle/WorkExperiences';
-import CompanyJobTitleTimeAndSalary from './components/CompanyAndJobTitle/TimeAndSalary/TimeAndSalary';
+import CompanyJobTitleTimeAndSalary from './components/CompanyAndJobTitle/TimeAndSalary';
 
 import { tabType } from './constants/companyJobTitle';
 
