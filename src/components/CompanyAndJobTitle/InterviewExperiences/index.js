@@ -18,8 +18,9 @@ import EmptyView from '../EmptyView';
 const pageSize = 10;
 
 const shouldEmptyView = ({ interviewExperiences, status }) =>
-  (isFetched(status) || isError(status)) &&
-  (isNil(interviewExperiences) || interviewExperiences.length === 0);
+  isError(status) ||
+  (isFetched(status) &&
+    (isNil(interviewExperiences) || interviewExperiences.length === 0));
 
 const InterviewExperiences = ({
   pageType,

@@ -24,8 +24,9 @@ import ViewLog from './ViewLog';
 import styles from './TimeAndSalary.module.css';
 
 const shouldEmptyView = ({ salaryWorkTimes, status }) =>
-  (isFetched(status) || isError(status)) &&
-  (isNil(salaryWorkTimes) || salaryWorkTimes.length === 0);
+  isError(status) ||
+  (isFetched(status) &&
+    (isNil(salaryWorkTimes) || salaryWorkTimes.length === 0));
 
 class TimeAndSalary extends Component {
   static propTypes = {
