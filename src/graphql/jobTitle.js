@@ -32,9 +32,20 @@ query($jobTitle: String!) {
       week_work_time
       salary {
         type
+        amount
       }
       sector
       day_real_work_time
+      job_title {
+        name
+      }
+      company {
+        name
+      }
+      data_time {
+        month
+        year
+      }
     }
     salary_work_time_statistics {
       count

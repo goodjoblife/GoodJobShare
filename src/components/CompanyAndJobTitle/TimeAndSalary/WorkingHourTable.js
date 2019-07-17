@@ -153,7 +153,6 @@ class WorkingHourTable extends Component {
 
   render() {
     const { data } = this.props;
-
     return (
       <Table
         className={styles.companyTable}
