@@ -20,6 +20,7 @@ const JobTitlePageProvider = ({
   pageName,
   tabType,
   interviewExperiences,
+  workExperiences,
   status,
   page,
 }) => (
@@ -29,6 +30,7 @@ const JobTitlePageProvider = ({
       pageName,
       tabType,
       interviewExperiences,
+      workExperiences,
       status,
       page,
     })}
@@ -41,6 +43,7 @@ JobTitlePageProvider.propTypes = {
   pageName: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
+  workExperiences: PropTypes.arrayOf(PropTypes.object),
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
 };

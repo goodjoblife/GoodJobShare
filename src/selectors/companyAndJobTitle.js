@@ -10,8 +10,12 @@ const interviewExperiences = R.pipe(
   data,
   R.when(R.is(Object), R.prop('interview_experiences')),
 );
+const workExperiences = R.pipe(
+  data,
+  R.when(R.is(Object), R.prop('work_experiences')),
+);
 
-export default { status, data, interviewExperiences };
+export default { status, data, interviewExperiences, workExperiences };
 
 export const company = companyName =>
   R.compose(
