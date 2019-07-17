@@ -11,6 +11,7 @@ import { isNil } from 'ramda';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import { isFetching, isFetched } from '../../../constants/status';
+import { pageTypeTranslation } from '../../../constants/companyJobTitle';
 import WorkingHourBlock from './WorkingHourBlock';
 import renderHelmet from './timeAndSalaryHelmet';
 import ViewLog from './ViewLog';
@@ -96,6 +97,7 @@ class TimeAndSalary extends Component {
                 <WorkingHourBlock
                   data={salaryWorkTimes}
                   statistics={salaryWorkTimeStatistics}
+                  pageType={pageType}
                   pageName={pageName}
                   hideContent={!canViewTimeAndSalary}
                 />
@@ -113,9 +115,9 @@ class TimeAndSalary extends Component {
               </React.Fragment>
             )) || (
               <P size="l" bold className={styles.searchNoResult}>
-                尚未有公司「
+                {`尚未有${pageTypeTranslation[pageType]}「
                 {pageName}
-                」的薪時資訊
+                」的薪時資訊`}
               </P>
             ))}
           {isFetched(status) && (

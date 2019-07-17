@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 import { InfoButton } from 'common/Modal';
 import Table from 'common/table/Table';
+import { pageType as pageTypeMapping } from '../../../constants/companyJobTitle';
 import InfoSalaryModal from '../../TimeAndSalary/common/InfoSalaryModal';
 import InfoTimeModal from '../../TimeAndSalary/common/InfoTimeModal';
 import styles from '../../TimeAndSalary/common/WorkingHourTable.module.css';
 import {
   getNameAsJobTitle,
+  getNameAsCompanyName,
   getEmploymentType,
   getWorkingHour,
   getYear,
@@ -26,6 +28,15 @@ const columnProps = [
     dataField: 'job_title',
     dataFormatter: getNameAsJobTitle,
     renderChildren: () => '職稱',
+    filterBy: ({ pageType }) => pageType === pageTypeMapping.COMPANY,
+  },
+  {
+    className: styles.colPosition,
+    title: '公司名稱',
+    dataField: 'company',
+    dataFormatter: getNameAsCompanyName,
+    renderChildren: () => '公司名稱',
+    filterBy: ({ pageType }) => pageType === pageTypeMapping.JOB_TITLE,
   },
   {
     className: styles.colType,
@@ -112,6 +123,10 @@ class WorkingHourTable extends Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
     hideContent: PropTypes.bool.isRequired,
+    pageType: PropTypes.oneOf([
+      pageTypeMapping.COMPANY,
+      pageTypeMapping.JOB_TITLE,
+    ]),
   };
 
   constructor(props) {
@@ -152,7 +167,7 @@ class WorkingHourTable extends Component {
   };
 
   render() {
-    const { data } = this.props;
+    const { data, pageType } = this.props;
     return (
       <Table
         className={styles.companyTable}
@@ -160,13 +175,15 @@ class WorkingHourTable extends Component {
         primaryKey="created_at"
         postProcessRows={this.postProcessRows}
       >
-        {columnProps.map(({ renderChildren, ...props }) => (
-          <Table.Column
-            key={props.title}
-            {...props}
-            children={renderChildren(this)}
-          />
-        ))}
+        {columnProps
+          .filter(({ filterBy }) => (filterBy ? filterBy({ pageType }) : true))
+          .map(({ renderChildren, ...props }) => (
+            <Table.Column
+              key={props.title}
+              {...props}
+              children={renderChildren(this)}
+            />
+          ))}
       </Table>
     );
   }

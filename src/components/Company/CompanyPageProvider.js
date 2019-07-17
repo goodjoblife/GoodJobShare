@@ -55,6 +55,8 @@ CompanyPageProvider.propTypes = {
   pageName: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
+  salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
+  salaryWorkTimeStatistics: PropTypes.object,
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
 };
