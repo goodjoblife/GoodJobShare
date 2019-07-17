@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 import { InfoButton } from 'common/Modal';
 import Table from 'common/table/Table';
-import InfoSalaryModal from '../TimeAndSalary/common/InfoSalaryModal';
-import InfoTimeModal from '../TimeAndSalary/common/InfoTimeModal';
-import styles from '../TimeAndSalary/common/WorkingHourTable.module.css';
+import InfoSalaryModal from '../../TimeAndSalary/common/InfoSalaryModal';
+import InfoTimeModal from '../../TimeAndSalary/common/InfoTimeModal';
+import styles from '../../TimeAndSalary/common/WorkingHourTable.module.css';
 import {
   getNameAsJobTitle,
   getEmploymentType,
@@ -16,8 +16,8 @@ import {
   getWeekWorkTime,
   formatWage,
   formatDate,
-} from '../TimeAndSalary/common/formatter';
-import injectHideContentBlock from '../TimeAndSalary/common/injectHideContentBlock';
+} from '../../TimeAndSalary/common/formatter';
+import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
 
 const columnProps = [
   {

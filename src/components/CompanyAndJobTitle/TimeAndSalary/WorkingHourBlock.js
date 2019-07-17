@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Heading } from 'common/base';
-import OvertimeBlock from '../TimeAndSalary/common/OvertimeBlock';
+import OvertimeBlock from '../../TimeAndSalary/common/OvertimeBlock';
 import WorkingHourTable from './WorkingHourTable';
 
-import styles from '../TimeAndSalary/common/WorkingHourBlock.module.css';
+import styles from '../../TimeAndSalary/common/WorkingHourBlock.module.css';
 
 class WorkingHourBlock extends Component {
   static propTypes = {
