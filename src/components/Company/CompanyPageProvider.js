@@ -5,14 +5,21 @@ import { withProps, lifecycle } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { compose } from 'recompose';
+import { compose, setStatic } from 'recompose';
 
 import { pageType } from '../../constants/companyJobTitle';
 import companyActions from '../../actions/company';
 import companySelectors, {
   company as companySelector,
 } from '../../selectors/companyAndJobTitle';
+import { paramsSelector } from 'common/routing/selectors';
 import withRouteParameter from '../ExperienceSearch/withRouteParameter';
+
+const getCompanyNameFromParams = R.compose(
+  decodeURIComponent,
+  params => params.companyName,
+  paramsSelector,
+);
 
 const CompanyPageProvider = ({
   children,
@@ -54,7 +61,13 @@ const mapStateToProps = (state, { pageName }) =>
 const mapDispatchToProps = dispatch =>
   bindActionCreators(companyActions, dispatch);
 
+const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
+  const companyName = getCompanyNameFromParams(props);
+  return dispatch(companyActions.fetchCompany(companyName));
+});
+
 const enhance = compose(
+  ssr,
   withRouteParameter,
   withProps(({ match: { params: { companyName } } }) => ({
     pageType: pageType.COMPANY,
