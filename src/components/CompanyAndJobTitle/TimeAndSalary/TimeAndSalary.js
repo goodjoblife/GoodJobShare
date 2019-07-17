@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import { compose, renderNothing, branch } from 'recompose';
+// import { compose, renderNothing, branch } from 'recompose';
+import { compose } from 'recompose';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
 import Pagination from 'common/Pagination';
-import { isNil } from 'ramda';
+// import { isNil } from 'ramda';
 
+// import EmptyView from '../EmptyView';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import { isFetching, isFetched } from '../../../constants/status';
 import { pageTypeTranslation } from '../../../constants/companyJobTitle';
@@ -134,11 +136,14 @@ class TimeAndSalary extends Component {
 }
 
 const hoc = compose(
-  branch(
-    ({ salaryWorkTimes, salaryWorkTimeStatistics }) =>
-      isNil(salaryWorkTimes) || isNil(salaryWorkTimeStatistics),
-    renderNothing,
-  ),
+  // branch(
+  //   ({ salaryWorkTimes, salaryWorkTimeStatistics, status }) =>
+  //     isFetched(status) &&
+  //     (isNil(salaryWorkTimes) || isNil(salaryWorkTimeStatistics)),
+  //   ({ pageName, tabType }) => (
+  //     <EmptyView tabType={tabType} pageName={pageName} />
+  //   ),
+  // ),
   withPermission,
 );
 
