@@ -3,69 +3,52 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
 import qs from 'qs';
-import { compose, setStatic } from 'recompose';
+import { compose } from 'recompose';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
-import {
-  querySelector,
-  pathnameSelector,
-  paramsSelector,
-} from 'common/routing/selectors';
 import Pagination from 'common/Pagination';
-import { queryJobTitle } from '../../actions/timeAndSalaryJobTitle';
+import { querySelector, pathnameSelector } from 'common/routing/selectors';
 import { isFetching, isFetched } from '../../constants/status';
-import renderHelmet from './helmet';
 import WorkingHourBlock from './WorkingHourBlock';
-import ViewLog from '../../containers/JobTitle/ViewLog';
+import renderHelmet from './timeAndSalaryHelmet';
+import ViewLog from '../../containers/Company/ViewLog';
 import styles from './SalaryWorkTimeScreen.module.css';
-
-const jobTitleSelector = R.compose(
-  decodeURIComponent,
-  params => params.jobTitle,
-  paramsSelector,
-);
 
 class SalaryWorkTimeScreen extends Component {
   static propTypes = {
     data: ImmutablePropTypes.map,
     status: PropTypes.string,
-    // eslint-disable-next-line react/no-unused-prop-types
-    match: PropTypes.shape({
-      path: PropTypes.string.isRequired,
-      params: PropTypes.object.isRequired,
-    }),
-    queryJobTitle: PropTypes.func,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchPermission: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
-    this.props.queryJobTitle({
-      jobTitle: jobTitleSelector(this.props),
-    });
     this.props.fetchPermission();
   }
 
   componentDidUpdate(prevProps) {
-    if (jobTitleSelector(prevProps) !== jobTitleSelector(this.props)) {
-      this.props.queryJobTitle({
-        jobTitle: jobTitleSelector(this.props),
-      });
+    const prevCompanyName = prevProps.companyName;
+    const companyName = this.props.companyName;
+
+    if (prevCompanyName !== companyName) {
       this.props.fetchPermission();
     }
   }
 
   render() {
-    const { data, status, canViewTimeAndSalary, jobTitle, page } = this.props;
+    const {
+      data,
+      status,
+      canViewTimeAndSalary,
+      companyName,
+      page,
+    } = this.props;
     const pathname = pathnameSelector(this.props);
     const pageSize = 10;
 
-    const title = `${jobTitle}薪水`;
+    const title = `${companyName}薪水`;
     const statistics = data
       ? data.get('salary_work_time_statistics').toJS()
       : null;
@@ -92,7 +75,7 @@ class SalaryWorkTimeScreen extends Component {
           title,
           pathname,
           page,
-          jobTitle,
+          companyName,
           dataNum,
           avgWeekWorkTime: Math.round(avgWeekWorkTime),
           avgHourWage: Math.round(avgHourWage),
@@ -125,14 +108,14 @@ class SalaryWorkTimeScreen extends Component {
             </React.Fragment>
           )) || (
             <P size="l" bold className={styles.searchNoResult}>
-              尚未有職稱「
-              {jobTitle}
+              尚未有公司「
+              {companyName}
               」的薪時資訊
             </P>
           ))}
         {isFetched(status) && (
           <ViewLog
-            jobTitle={jobTitle}
+            companyName={companyName}
             page={page}
             salaryWorkTimes={currentSalaryWorkTimes}
           />
@@ -143,15 +126,6 @@ class SalaryWorkTimeScreen extends Component {
   }
 }
 
-const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const jobTitle = jobTitleSelector(props);
-
-  return dispatch(queryJobTitle({ jobTitle }));
-});
-
-const hoc = compose(
-  ssr,
-  withPermission,
-);
+const hoc = compose(withPermission);
 
 export default hoc(SalaryWorkTimeScreen);
