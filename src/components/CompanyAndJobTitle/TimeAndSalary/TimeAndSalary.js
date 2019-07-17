@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
-// import { compose, renderNothing, branch } from 'recompose';
 import { compose } from 'recompose';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
 import Pagination from 'common/Pagination';
-// import { isNil } from 'ramda';
+import { isNil } from 'ramda';
 
-// import EmptyView from '../EmptyView';
+import EmptyView from '../EmptyView';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import { isFetching, isFetched } from '../../../constants/status';
 import { pageTypeTranslation } from '../../../constants/companyJobTitle';
@@ -18,6 +17,9 @@ import WorkingHourBlock from './WorkingHourBlock';
 import renderHelmet from './timeAndSalaryHelmet';
 import ViewLog from './ViewLog';
 import styles from './TimeAndSalary.module.css';
+
+const shouldEmptyView = ({ salaryWorkTimes }) =>
+  isNil(salaryWorkTimes) || salaryWorkTimes.length === 0;
 
 class TimeAndSalary extends Component {
   static propTypes = {
@@ -61,6 +63,10 @@ class TimeAndSalary extends Component {
       pageName,
       tabType,
     } = this.props;
+    if (shouldEmptyView({ salaryWorkTimes })) {
+      return <EmptyView tabType={tabType} pageName={pageName} />;
+    }
+
     const pageSize = 10;
     const title = `${pageName}薪水`;
 
@@ -135,16 +141,6 @@ class TimeAndSalary extends Component {
   }
 }
 
-const hoc = compose(
-  // branch(
-  //   ({ salaryWorkTimes, salaryWorkTimeStatistics, status }) =>
-  //     isFetched(status) &&
-  //     (isNil(salaryWorkTimes) || isNil(salaryWorkTimeStatistics)),
-  //   ({ pageName, tabType }) => (
-  //     <EmptyView tabType={tabType} pageName={pageName} />
-  //   ),
-  // ),
-  withPermission,
-);
+const hoc = compose(withPermission);
 
 export default hoc(TimeAndSalary);
