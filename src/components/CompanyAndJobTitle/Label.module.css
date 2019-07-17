@@ -1,0 +1,12 @@
+.label {
+  margin-right: 24px;
+  display: inline-flex;
+  align-items: center;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    fill: #c3c3c3;
+    margin-right: 8px;
+  }
+}

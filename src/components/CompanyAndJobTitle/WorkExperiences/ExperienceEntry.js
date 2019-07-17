@@ -10,7 +10,7 @@ import {
   formatSalary,
   formatRecommendToOthers,
 } from './helper';
-import Label from './Label';
+import Label from '../Label';
 import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 
 const createLinkTo = (id, backable) => ({

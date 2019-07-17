@@ -6,7 +6,7 @@ import { Heading, P } from 'common/base';
 import i from 'common/icons';
 import styles from './InterviewExperiences.module.css';
 import { formatCreatedAt, formatSalary } from './helper';
-import Label from './Label';
+import Label from '../Label';
 import Rating from './Rating';
 import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 

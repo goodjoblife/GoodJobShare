@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { P } from 'common/base';
-import styles from './WorkExperiences.module.css';
+import styles from './Label.module.css';
 
 const Label = ({ Icon, text, className }) => (
   <div className={cn(styles.label, className)}>
