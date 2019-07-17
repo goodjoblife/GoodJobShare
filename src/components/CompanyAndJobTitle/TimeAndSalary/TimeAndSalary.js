@@ -89,13 +89,12 @@ class TimeAndSalary extends Component {
             avgWeekWorkTime: Math.round(avgWeekWorkTime),
             avgHourWage: Math.round(avgHourWage),
           })}
-          <h2 className={styles.heading}>{title}</h2>
           {isFetching(status) && <Loading size="s" />}
           {isFetched(status) &&
             ((salaryWorkTimes.length > 0 && (
               <React.Fragment>
                 <WorkingHourBlock
-                  data={salaryWorkTimes}
+                  data={currentData}
                   statistics={salaryWorkTimeStatistics}
                   pageType={pageType}
                   pageName={pageName}
