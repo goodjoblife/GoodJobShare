@@ -11,7 +11,12 @@ import { isNil } from 'ramda';
 
 import EmptyView from '../EmptyView';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { isFetched, isUnfetched, isFetching } from '../../../constants/status';
+import {
+  isFetched,
+  isUnfetched,
+  isFetching,
+  isError,
+} from '../../../constants/status';
 import { pageTypeTranslation } from '../../../constants/companyJobTitle';
 import WorkingHourBlock from './WorkingHourBlock';
 import renderHelmet from './timeAndSalaryHelmet';
@@ -19,7 +24,8 @@ import ViewLog from './ViewLog';
 import styles from './TimeAndSalary.module.css';
 
 const shouldEmptyView = ({ salaryWorkTimes, status }) =>
-  isFetched(status) && (isNil(salaryWorkTimes) || salaryWorkTimes.length === 0);
+  (isFetched(status) || isError(status)) &&
+  (isNil(salaryWorkTimes) || salaryWorkTimes.length === 0);
 
 class TimeAndSalary extends Component {
   static propTypes = {
