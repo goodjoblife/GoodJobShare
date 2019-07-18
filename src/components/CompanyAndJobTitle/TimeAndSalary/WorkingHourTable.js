@@ -28,7 +28,7 @@ const columnProps = [
     dataField: 'job_title',
     dataFormatter: getNameAsJobTitle,
     renderChildren: () => '職稱',
-    filterBy: ({ pageType }) => pageType === pageTypeMapping.COMPANY,
+    isEnabled: ({ pageType }) => pageType === pageTypeMapping.COMPANY,
   },
   {
     className: styles.colPosition,
@@ -36,7 +36,7 @@ const columnProps = [
     dataField: 'company',
     dataFormatter: getNameAsCompanyName,
     renderChildren: () => '公司名稱',
-    filterBy: ({ pageType }) => pageType === pageTypeMapping.JOB_TITLE,
+    isEnabled: ({ pageType }) => pageType === pageTypeMapping.JOB_TITLE,
   },
   {
     className: styles.colType,
@@ -176,7 +176,9 @@ class WorkingHourTable extends Component {
         postProcessRows={this.postProcessRows}
       >
         {columnProps
-          .filter(({ filterBy }) => (filterBy ? filterBy({ pageType }) : true))
+          .filter(({ isEnabled }) =>
+            isEnabled ? isEnabled({ pageType }) : true,
+          )
           .map(({ renderChildren, ...props }) => (
             <Table.Column
               key={props.title}

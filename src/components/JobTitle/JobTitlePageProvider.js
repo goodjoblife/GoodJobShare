@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
+import { createStructuredSelector } from 'reselect';
 import {
   withProps,
   lifecycle,
@@ -69,15 +70,16 @@ JobTitlePageProvider.propTypes = {
   page: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state, { pageName }) => {
-  const jobTitle = jobTitleSelector(pageName)(state);
-  return {
-    status: status(jobTitle),
-    interviewExperiences: interviewExperiences(jobTitle),
-    salaryWorkTimes: salaryWorkTimes(jobTitle),
-    salaryWorkTimeStatistics: salaryWorkTimeStatistics(jobTitle),
-  };
-};
+const mapStateToProps = (state, { pageName }) =>
+  R.compose(
+    createStructuredSelector({
+      status,
+      interviewExperiences,
+      salaryWorkTimes,
+      salaryWorkTimeStatistics,
+    }),
+    jobTitleSelector(pageName),
+  )(state);
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(jobTitleActions, dispatch);

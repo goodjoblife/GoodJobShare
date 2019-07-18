@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
+import { createStructuredSelector } from 'reselect';
 import { withProps, lifecycle, compose, setStatic } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -60,15 +61,16 @@ CompanyPageProvider.propTypes = {
   page: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state, { pageName }) => {
-  const company = companySelector(pageName)(state);
-  return {
-    status: status(company),
-    interviewExperiences: interviewExperiences(company),
-    salaryWorkTimes: salaryWorkTimes(company),
-    salaryWorkTimeStatistics: salaryWorkTimeStatistics(company),
-  };
-};
+const mapStateToProps = (state, { pageName }) =>
+  R.compose(
+    createStructuredSelector({
+      status,
+      interviewExperiences,
+      salaryWorkTimes,
+      salaryWorkTimeStatistics,
+    }),
+    companySelector(pageName),
+  )(state);
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(companyActions, dispatch);
