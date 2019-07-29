@@ -46,8 +46,7 @@ export const metaDescriptionSelector = (experience, maxLength) => {
     } else if (experience.type === 'work') {
       return workMetaDescriptionSelector(experience, maxLength);
     } else if (experience.type === 'intern') {
-      return null;
-      // return internMetaDescriptionSelector(experience, maxLength);
+      return internMetaDescriptionSelector(experience, maxLength);
     }
   }
   return null;
@@ -116,6 +115,36 @@ const workMetaDescriptionSelector = (experience, maxLength) => {
     }
     if (salaryAmount && salaryType) {
       content += `薪水：每個${
+        salaryMapping[salaryType]
+      }新台幣 ${salaryAmount} 元。`;
+    }
+    if (sections) {
+      for (let section of sections) {
+        content += `${section.subtitle}：${section.content.replace(
+          /(\r\n|\n|\r)/gm,
+          ' ',
+        )}。`;
+      }
+    }
+    return maxLength < 0 ? content : content.slice(0, maxLength);
+  }
+  return null;
+};
+
+const internMetaDescriptionSelector = (experience, maxLength) => {
+  if (experience) {
+    let content = '';
+    const { region, sections } = experience;
+    const salaryAmount = salaryAmountSelector(experience);
+    const salaryType = salaryTypeSelector(experience);
+    if (region) {
+      content += `實習地區：${region}。`;
+    }
+    if (experience.education) {
+      content += `學歷：${experience.education}。`;
+    }
+    if (salaryAmount && salaryType) {
+      content += `實習薪水：每個${
         salaryMapping[salaryType]
       }新台幣 ${salaryAmount} 元。`;
     }
