@@ -13,7 +13,17 @@ const salaryMapping = {
   hour: '小時',
 };
 
-export const companyNameSelector = R.pathOr(null, ['company', 'name']);
+const formatCompany = name => {
+  if (name) {
+    return typeof name === 'string' ? name : name.join(' / ');
+  }
+  return null;
+};
+
+export const companyNameSelector = R.compose(
+  formatCompany,
+  R.pathOr(null, ['company', 'name']),
+);
 export const jobTitleSelector = R.pathOr(null, ['job_title', 'name']);
 export const typeSelector = experience =>
   R.propOr(null, experience.type, typeMapping);
