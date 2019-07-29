@@ -44,8 +44,7 @@ export const metaDescriptionSelector = (experience, maxLength) => {
     if (experience.type === 'interview') {
       return interviewMetaDescriptionSelector(experience, maxLength);
     } else if (experience.type === 'work') {
-      return null;
-      // return workMetaDescriptionSelector(experience, maxLength);
+      return workMetaDescriptionSelector(experience, maxLength);
     } else if (experience.type === 'intern') {
       return null;
       // return internMetaDescriptionSelector(experience, maxLength);
@@ -78,6 +77,42 @@ const interviewMetaDescriptionSelector = (experience, maxLength) => {
     }
     if (interview_result) {
       content += `面試結果：${interview_result}。`;
+    }
+    if (salaryAmount && salaryType) {
+      content += `薪水：每個${
+        salaryMapping[salaryType]
+      }新台幣 ${salaryAmount} 元。`;
+    }
+    if (sections) {
+      for (let section of sections) {
+        content += `${section.subtitle}：${section.content.replace(
+          /(\r\n|\n|\r)/gm,
+          ' ',
+        )}。`;
+      }
+    }
+    return maxLength < 0 ? content : content.slice(0, maxLength);
+  }
+  return null;
+};
+
+const workMetaDescriptionSelector = (experience, maxLength) => {
+  if (experience) {
+    let content = '';
+    const { region, experience_in_year, sections } = experience;
+    const salaryAmount = salaryAmountSelector(experience);
+    const salaryType = salaryTypeSelector(experience);
+    if (region) {
+      content += `工作地區：${region}。`;
+    }
+    if (experience.experience_in_year) {
+      content += `相關職務工作經驗：${experience_in_year} 年。`;
+    }
+    if (experience.education) {
+      content += `最高學歷：${experience.education}。`;
+    }
+    if (experience.week_work_time) {
+      content += `每週工時：${experience.week_work_time} 小時。`;
     }
     if (salaryAmount && salaryType) {
       content += `薪水：每個${
