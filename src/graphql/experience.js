@@ -23,6 +23,7 @@ query($id:ID!) {
     }
     like_count
     liked
+    created_at
 
     ...on InterviewExperience {
       interview_time {
