@@ -39,6 +39,10 @@ import authStatus from '../../constants/authStatus';
 import { COMMENT_ZONE } from '../../constants/formElements';
 
 import { paramsSelector } from 'common/routing/selectors';
+import {
+  metaTitleSelector,
+  metaDescriptionSelector,
+} from './experienceSelector';
 
 import LikeZone from '../../containers/ExperienceDetail/LikeZone';
 import styles from './ExperienceDetail.module.css';
@@ -249,23 +253,8 @@ class ExperienceDetail extends Component {
 
     if (isFetched(experienceStatus)) {
       const id = experience._id;
-      const title = experience.title;
-      const company = experience.company.name;
-      const jobTitle = experience.job_title.name;
-      const type = experience.type;
-      const subtitle = experience.sections[0].subtitle
-        ? experience.sections[0].subtitle.replace(/(\r\n|\n|\r)/gm, ' ')
-        : '';
-      const content = experience.sections[0].content.replace(
-        /(\r\n|\n|\r)/gm,
-        ' ',
-      );
-      const mapping = {
-        interview: '面試經驗分享',
-        work: '工作經驗分享',
-        intern: '實習經驗分享',
-      };
-      const description = `${company} ${jobTitle} 的${mapping[type]}。 ${subtitle}：${content}`;
+      const title = metaTitleSelector(experience);
+      const description = metaDescriptionSelector(experience, 160);
       return (
         <Helmet>
           <title itemProp="name" lang="zh-TW">
