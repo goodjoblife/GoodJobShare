@@ -1,9 +1,9 @@
 import R from 'ramda';
 
 const typeMapping = {
-  interview: '面試經驗分享',
-  work: '工作經驗分享',
-  intern: '實習經驗分享',
+  interview: '面試經驗',
+  work: '工作心得',
+  intern: '實習心得',
 };
 
 const salaryMapping = {
