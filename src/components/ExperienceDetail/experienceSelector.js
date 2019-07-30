@@ -49,20 +49,20 @@ export const metaTitleSelector = experience => {
   )} ${typeSelector(experience)} ${dateSelector(experience)}`;
 };
 
-export const metaDescriptionSelector = (experience, maxLength) => {
+export const metaDescriptionSelector = experience => {
   if (experience) {
     if (experience.type === 'interview') {
-      return interviewMetaDescriptionSelector(experience, maxLength);
+      return interviewMetaDescriptionSelector(experience);
     } else if (experience.type === 'work') {
-      return workMetaDescriptionSelector(experience, maxLength);
+      return workMetaDescriptionSelector(experience);
     } else if (experience.type === 'intern') {
-      return internMetaDescriptionSelector(experience, maxLength);
+      return internMetaDescriptionSelector(experience);
     }
   }
   return null;
 };
 
-const interviewMetaDescriptionSelector = (experience, maxLength) => {
+const interviewMetaDescriptionSelector = experience => {
   if (experience) {
     let content = '';
     const {
@@ -98,12 +98,12 @@ const interviewMetaDescriptionSelector = (experience, maxLength) => {
         )}。`;
       }
     }
-    return maxLength < 0 ? content : content.slice(0, maxLength);
+    return content;
   }
   return null;
 };
 
-const workMetaDescriptionSelector = (experience, maxLength) => {
+const workMetaDescriptionSelector = experience => {
   if (experience) {
     let content = '';
     const { region, experience_in_year, sections } = experience;
@@ -132,12 +132,12 @@ const workMetaDescriptionSelector = (experience, maxLength) => {
         )}。`;
       }
     }
-    return maxLength < 0 ? content : content.slice(0, maxLength);
+    return content;
   }
   return null;
 };
 
-const internMetaDescriptionSelector = (experience, maxLength) => {
+const internMetaDescriptionSelector = experience => {
   if (experience) {
     let content = '';
     const { region, sections } = experience;
@@ -160,7 +160,7 @@ const internMetaDescriptionSelector = (experience, maxLength) => {
         )}。`;
       }
     }
-    return maxLength < 0 ? content : content.slice(0, maxLength);
+    return content;
   }
   return null;
 };

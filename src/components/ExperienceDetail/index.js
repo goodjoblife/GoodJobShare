@@ -254,7 +254,8 @@ class ExperienceDetail extends Component {
     if (isFetched(experienceStatus)) {
       const id = experience._id;
       const title = metaTitleSelector(experience);
-      const description = metaDescriptionSelector(experience, 160);
+      let description = metaDescriptionSelector(experience);
+      description = description.slice(0, 160);
       return (
         <Helmet>
           <title itemProp="name" lang="zh-TW">
