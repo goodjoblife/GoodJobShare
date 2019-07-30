@@ -88,9 +88,7 @@ const interviewMetaDescriptionSelector = (experience, maxLength) => {
       content += `面試結果：${interview_result}。`;
     }
     if (salaryAmount && salaryType) {
-      content += `薪水：每個${
-        salaryMapping[salaryType]
-      }新台幣 ${salaryAmount} 元。`;
+      content += `薪水：每個${salaryMapping[salaryType]}新台幣 ${salaryAmount} 元。`;
     }
     if (sections) {
       for (let section of sections) {
@@ -124,9 +122,7 @@ const workMetaDescriptionSelector = (experience, maxLength) => {
       content += `每週工時：${experience.week_work_time} 小時。`;
     }
     if (salaryAmount && salaryType) {
-      content += `薪水：每個${
-        salaryMapping[salaryType]
-      }新台幣 ${salaryAmount} 元。`;
+      content += `薪水：每個${salaryMapping[salaryType]}新台幣 ${salaryAmount} 元。`;
     }
     if (sections) {
       for (let section of sections) {
@@ -154,9 +150,7 @@ const internMetaDescriptionSelector = (experience, maxLength) => {
       content += `學歷：${experience.education}。`;
     }
     if (salaryAmount && salaryType) {
-      content += `實習薪水：每個${
-        salaryMapping[salaryType]
-      }新台幣 ${salaryAmount} 元。`;
+      content += `實習薪水：每個${salaryMapping[salaryType]}新台幣 ${salaryAmount} 元。`;
     }
     if (sections) {
       for (let section of sections) {
