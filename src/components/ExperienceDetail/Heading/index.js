@@ -4,6 +4,7 @@ import { Heading, P } from 'common/base';
 import cn from 'classnames';
 
 import styles from './Heading.module.css';
+import { companyNameSelector, jobTitleSelector } from '../experienceSelector';
 
 const formatType = type => {
   switch (type) {
@@ -18,22 +19,14 @@ const formatType = type => {
   }
 };
 
-const formatComapny = company => {
-  if (company) {
-    return typeof company.name === 'string'
-      ? company.name
-      : company.name.join(' / ');
-  }
-  return null;
-};
-
 const ExperienceHeading = ({ experience, className }) => (
   <div className={cn(styles.heading, className)}>
     <P Tag="h2" size="l" className={styles.badge}>
       {experience && formatType(experience.type)}
     </P>
     <Heading size="l">
-      {(experience && formatComapny(experience.company)) || ''}
+      {experience &&
+        `${companyNameSelector(experience)} ${jobTitleSelector(experience)}`}
     </Heading>
   </div>
 );
