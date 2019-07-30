@@ -49,7 +49,7 @@ export const metaTitleSelector = experience => {
   )} ${typeSelector(experience)} ${dateSelector(experience)}`;
 };
 
-export const metaDescriptionSelector = (experience, maxLength) => {
+export const metaDescriptionSelector = (experience, maxLength = -1) => {
   if (experience) {
     if (experience.type === 'interview') {
       return interviewMetaDescriptionSelector(experience, maxLength);
