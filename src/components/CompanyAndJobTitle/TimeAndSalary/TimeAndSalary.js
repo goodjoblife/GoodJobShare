@@ -30,12 +30,12 @@ const shouldEmptyView = ({ salaryWorkTimes, status }) =>
 
 class TimeAndSalary extends Component {
   static propTypes = {
-    salaryWorkTimes: PropTypes.array.isRequired,
+    salaryWorkTimes: PropTypes.array,
     salaryWorkTimeStatistics: PropTypes.shape({
       count: PropTypes.number,
       average_estimated_hourly_wage: PropTypes.number,
       average_week_work_time: PropTypes.number,
-    }).isRequired,
+    }),
     status: PropTypes.string,
     canViewTimeAndSalary: PropTypes.bool.isRequired,
     fetchPermission: PropTypes.func.isRequired,
