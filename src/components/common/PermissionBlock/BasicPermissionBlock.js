@@ -31,7 +31,7 @@ class BasicPermissionBlock extends React.Component {
   };
 
   static defaultProps = {
-    to: '/share/time-and-salary',
+    to: '/share/interview/step1',
     rootClassName: '',
     simple: false,
   };
