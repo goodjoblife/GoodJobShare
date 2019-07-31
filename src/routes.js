@@ -6,9 +6,6 @@ import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/SalaryWorkTime/TimeAndSalaryBoard';
 import SalaryWorkTimeSearchScreen from './containers/SalaryWorkTime/SearchScreen';
 
-// TODO: remove these two import(leave it for developers now)
-// import CompanySalaryWorkTimeScreen from './containers/Company/SalaryWorkTimeScreen';
-// import JobTitleSalaryWorkTimeScreen from './containers/JobTitle/SalaryWorkTimeScreen';
 import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
 import CampaignTimeAndSalary from './containers/CampaignTimeAndSalary';
 import CampaignTimeAndSalaryBoard from './containers/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
