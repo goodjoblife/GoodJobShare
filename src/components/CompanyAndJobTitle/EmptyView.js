@@ -1,13 +1,9 @@
 import React from 'react';
 import { Section, P } from 'common/base';
 import styles from './EmptyView.module.css';
-import { tabType } from '../../constants/companyJobTitle';
+import { tabTypeTranslation } from '../../constants/companyJobTitle';
 
-const tabTypeText = {
-  [tabType.INTERVIEW_EXPERIENCE]: '經驗分享',
-};
-
-const formatTabName = tabType => tabTypeText[tabType] || '資料';
+const formatTabName = tabType => tabTypeTranslation[tabType] || '資料';
 
 const EmptyView = ({ pageName, tabType }) => (
   <Section Tag="main" paddingBottom>
