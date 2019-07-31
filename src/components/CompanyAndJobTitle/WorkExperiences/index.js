@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Pagination from 'common/Pagination';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import WorkExperiencesSection from './WorkExperiences';
-import { isFetched } from '../../../constants/status';
-
-const pageSize = 10;
+import StatusRenderer from './StatusRenderer';
 
 const WorkExperiences = ({
   pageType,
@@ -20,24 +16,14 @@ const WorkExperiences = ({
     pageName={pageName}
     tabType={tabType}
   >
-    <WorkExperiencesSection
+    <StatusRenderer
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
-      data={
-        workExperiences &&
-        workExperiences.slice((page - 1) * pageSize, page * pageSize)
-      }
+      data={workExperiences}
       status={status}
+      page={page}
     />
-    {isFetched(status) && (
-      <Pagination
-        totalCount={workExperiences.length}
-        unit={pageSize}
-        currentPage={page}
-        createPageLinkTo={page => `?p=${page}`}
-      />
-    )}
   </CompanyAndJobTitleWrapper>
 );
 

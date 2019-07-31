@@ -1,26 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Loader from 'common/Loader';
-import { isUnfetched, isFetching, isError } from '../../../constants/status';
 import ExperienceEntry from './ExperienceEntry';
 import EmptyView from '../EmptyView';
+import Pagination from 'common/Pagination';
 
-const WorkExperiences = ({ pageType, pageName, tabType, status, data }) => {
-  if (isUnfetched(status)) {
-    return null;
-  }
-  if (isFetching(status)) {
-    return <Loader size="s" />;
-  }
-  if (isError(status)) {
-    return null;
-  }
+const pageSize = 10;
+
+const WorkExperiences = ({ pageType, pageName, tabType, data, page }) => {
   if (data.length === 0) {
     return <EmptyView pageName={pageName} tabType={tabType} />;
   }
-  return data.map(d => (
-    <ExperienceEntry key={d.id} pageType={pageType} data={d} />
-  ));
+  const visibleData = data.slice((page - 1) * pageSize, page * pageSize);
+  return (
+    <React.Fragment>
+      {visibleData.map(d => (
+        <ExperienceEntry key={d.id} pageType={pageType} data={d} />
+      ))}
+      <Pagination
+        totalCount={data.length}
+        unit={pageSize}
+        currentPage={page}
+        createPageLinkTo={page => `?p=${page}`}
+      />
+    </React.Fragment>
+  );
 };
 
 WorkExperiences.propTypes = {
@@ -28,7 +31,7 @@ WorkExperiences.propTypes = {
   pageName: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
-  status: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
 };
 
 export default WorkExperiences;
