@@ -278,6 +278,48 @@ class ExperienceDetail extends Component {
     return null;
   };
 
+  renderStructureData = () => {
+    const data = this.props.experienceDetail.toJS();
+    const { experience, experienceStatus } = data;
+
+    if (isFetched(experienceStatus)) {
+      const id = experience._id;
+      const title = metaTitleSelector(experience);
+      const description = metaDescriptionSelector(experience);
+      const data = {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': formatCanonicalPath(`/experiences/${id}`),
+        },
+        headline: `${title}`,
+        datePublished: `${experience.created_at}`,
+        dateModified: `${experience.created_at}`,
+        author: {
+          '@type': 'Organization',
+          name: 'GoodJob 職場透明化運動',
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'GoodJob 職場透明化運動',
+          logo: {
+            '@type': 'ImageObject',
+            url:
+              'https://image.goodjob.life/logo_for_structure_data_600x60.jpg',
+          },
+        },
+        description,
+      };
+      return (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+        />
+      );
+    }
+  };
+
   render() {
     const {
       likeExperience,
@@ -316,6 +358,7 @@ class ExperienceDetail extends Component {
     return (
       <main>
         {this.renderHelmet()}
+        {this.renderStructureData()}
         <Section bg="white" paddingBottom className={styles.section}>
           <Wrapper size="m">
             {/* 文章區塊  */}
