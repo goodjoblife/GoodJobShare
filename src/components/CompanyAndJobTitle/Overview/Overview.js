@@ -6,9 +6,11 @@ import { withPermission } from 'common/permission-context';
 
 import SnippetBlock from './SnippetBlock';
 import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
+import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import styles from './Overview.module.css';
 
 const SALARY_WORK_TIMES_LIMIT = 5;
+const WORK_EXPERIENCES_LIMIT = 3;
 
 const Overview = ({
   pageType,
@@ -30,6 +32,15 @@ const Overview = ({
         hideContent={!canViewTimeAndSalary}
         pageType={pageType}
       />
+    </SnippetBlock>
+    <SnippetBlock
+      title="工作心得"
+      linkText={`查看 ${workExperiences.length} 篇完整的工作心得 >>`}
+      linkTo="work-experiences"
+    >
+      {workExperiences.slice(0, WORK_EXPERIENCES_LIMIT).map(d => (
+        <WorkExperienceEntry key={d.id} pageType={pageType} data={d} />
+      ))}
     </SnippetBlock>
   </div>
 );
