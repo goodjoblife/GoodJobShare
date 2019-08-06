@@ -82,17 +82,10 @@
   }
 }
 
-.rateButtons {
-  cursor: auto;
-  display: inline-flex;
-  align-items: center;
-
-  .rateButton {
-    width: 23px;
-    height: 23px;
+.recommendIcon {
+  svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 6.5px;
   }
-}
-
-.autoCursor {
-  cursor: auto;
 }

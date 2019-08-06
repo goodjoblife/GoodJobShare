@@ -12,6 +12,10 @@ export const interviewExperiences = R.pipe(
   data,
   R.when(R.is(Object), R.prop('interview_experiences')),
 );
+export const workExperiences = R.pipe(
+  data,
+  R.when(R.is(Object), R.prop('work_experiences')),
+);
 
 export const salaryWorkTimes = R.pipe(
   data,

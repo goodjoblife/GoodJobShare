@@ -10,6 +10,7 @@ import { pageType } from '../../constants/companyJobTitle';
 import companyActions from '../../actions/company';
 import {
   interviewExperiences,
+  workExperiences,
   salaryWorkTimes,
   salaryWorkTimeStatistics,
   status,
@@ -30,6 +31,7 @@ const CompanyPageProvider = ({
   pageName,
   tabType,
   interviewExperiences,
+  workExperiences,
   salaryWorkTimes,
   salaryWorkTimeStatistics,
   status,
@@ -41,6 +43,7 @@ const CompanyPageProvider = ({
       pageName,
       tabType,
       interviewExperiences,
+      workExperiences,
       salaryWorkTimes,
       salaryWorkTimeStatistics,
       status,
@@ -55,6 +58,7 @@ CompanyPageProvider.propTypes = {
   pageName: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
+  workExperiences: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimeStatistics: PropTypes.object,
   status: PropTypes.string.isRequired,
@@ -66,6 +70,7 @@ const mapStateToProps = (state, { pageName }) =>
     createStructuredSelector({
       status,
       interviewExperiences,
+      workExperiences,
       salaryWorkTimes,
       salaryWorkTimeStatistics,
     }),

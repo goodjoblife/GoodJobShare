@@ -4,10 +4,13 @@ import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import { Heading, P } from 'common/base';
 import i from 'common/icons';
-import styles from './InterviewExperiences.module.css';
-import { formatCreatedAt, formatSalary } from './helper';
+import styles from './WorkExperiences.module.css';
+import {
+  formatCreatedAt,
+  formatSalary,
+  formatRecommendToOthers,
+} from './helper';
 import Label from '../Label';
-import Rating from './Rating';
 import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 
 const createLinkTo = (id, backable) => ({
@@ -24,7 +27,7 @@ const ExperienceEntry = ({ pageType, data, size, backable }) => {
     created_at: createdAt,
     salary,
     title,
-    overall_rating: overallRating,
+    recommend_to_others: recommendToOthers,
   } = data;
 
   return (
@@ -68,7 +71,11 @@ const ExperienceEntry = ({ pageType, data, size, backable }) => {
               Icon={i.Coin}
             />
           )}
-          <Rating rate={overallRating} />
+          <Label
+            className={styles.recommendToOthers}
+            text={formatRecommendToOthers(recommendToOthers)}
+            Icon={recommendToOthers === 'yes' ? i.Good : i.Bad}
+          />
         </div>
       </section>
     </Link>
