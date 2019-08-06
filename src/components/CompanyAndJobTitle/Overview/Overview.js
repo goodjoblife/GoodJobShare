@@ -1,5 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'recompose';
+
+import { withPermission } from 'common/permission-context';
+
+import SnippetBlock from './SnippetBlock';
+import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
+import styles from './Overview.module.css';
+
+const SALARY_WORK_TIMES_LIMIT = 5;
 
 const Overview = ({
   pageType,
@@ -8,13 +17,20 @@ const Overview = ({
   interviewExperiences,
   workExperiences,
   salaryWorkTimes,
-  salaryWorkTimeStatistics,
+  canViewTimeAndSalary,
 }) => (
-  <div>
-    <h1>Overview</h1>
-    <p>{pageType}</p>
-    <p>{pageName}</p>
-    <p>{tabType}</p>
+  <div className={styles.container}>
+    <SnippetBlock
+      title="薪水&加班狀況"
+      linkText={`查看 ${salaryWorkTimes.length} 筆完整的薪水、加班數據資料 >>`}
+      linkTo="salary-work-times"
+    >
+      <WorkingHourTable
+        data={salaryWorkTimes.slice(0, SALARY_WORK_TIMES_LIMIT)}
+        hideContent={!canViewTimeAndSalary}
+        pageType={pageType}
+      />
+    </SnippetBlock>
   </div>
 );
 
@@ -25,7 +41,9 @@ Overview.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
-  salaryWorkTimeStatistics: PropTypes.object,
+  canViewTimeAndSalary: PropTypes.bool.isRequired,
 };
 
-export default Overview;
+const hoc = compose(withPermission);
+
+export default hoc(Overview);
