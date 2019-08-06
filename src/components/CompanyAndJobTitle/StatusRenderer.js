@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loader from 'common/Loader';
-import { isUnfetched, isFetching, isError } from '../../../constants/status';
-import WorkExperiences from './WorkExperiences';
+import { isUnfetched, isFetching, isError } from '../../constants/status';
 
-const StatusRenderer = ({ status, ...props }) => {
+const StatusRenderer = ({ status, children, ...props }) => {
   if (isUnfetched(status)) {
     return null;
   }
@@ -14,11 +13,12 @@ const StatusRenderer = ({ status, ...props }) => {
   if (isError(status)) {
     return null;
   }
-  return <WorkExperiences {...props} />;
+  return children(props);
 };
 
 StatusRenderer.propTypes = {
   status: PropTypes.string.isRequired,
+  children: PropTypes.func.isRequired,
 };
 
 export default StatusRenderer;

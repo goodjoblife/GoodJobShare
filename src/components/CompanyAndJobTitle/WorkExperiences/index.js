@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import StatusRenderer from './StatusRenderer';
+import StatusRenderer from '../StatusRenderer';
+import WorkExperiencesSection from './WorkExperiences';
 
 const WorkExperiences = ({
   pageType,
@@ -23,7 +24,9 @@ const WorkExperiences = ({
       data={workExperiences}
       status={status}
       page={page}
-    />
+    >
+      {props => <WorkExperiencesSection {...props} />}
+    </StatusRenderer>
   </CompanyAndJobTitleWrapper>
 );
 
