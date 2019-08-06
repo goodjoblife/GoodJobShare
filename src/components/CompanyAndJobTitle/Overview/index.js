@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CompanyAndJobTitleWrapper from './CompanyAndJobTitleWrapper';
+import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 
 const Overview = ({ pageType, pageName, tabType }) => (
   <CompanyAndJobTitleWrapper
