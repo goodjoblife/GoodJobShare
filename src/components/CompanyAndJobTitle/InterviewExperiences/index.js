@@ -1,26 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isNil } from 'ramda';
-
-import Pagination from 'common/Pagination';
-import Loader from 'common/Loader';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
+import StatusRenderer from '../StatusRenderer';
 import InterviewExperiencesSection from './InterviewExperiences';
-import {
-  isFetched,
-  isFetching,
-  isError,
-  isUnfetched,
-} from '../../../constants/status';
-import EmptyView from '../EmptyView';
-
-const pageSize = 10;
-
-const shouldEmptyView = ({ interviewExperiences, status }) =>
-  isError(status) ||
-  (isFetched(status) &&
-    (isNil(interviewExperiences) || interviewExperiences.length === 0));
 
 const InterviewExperiences = ({
   pageType,
@@ -29,49 +12,24 @@ const InterviewExperiences = ({
   interviewExperiences,
   status,
   page,
-}) => {
-  if (isFetching(status) || isUnfetched(status)) {
-    return (
-      <CompanyAndJobTitleWrapper
-        pageType={pageType}
-        pageName={pageName}
-        tabType={tabType}
-      >
-        <Loader size="s" />
-      </CompanyAndJobTitleWrapper>
-    );
-  }
-  return (
-    <CompanyAndJobTitleWrapper
+}) => (
+  <CompanyAndJobTitleWrapper
+    pageType={pageType}
+    pageName={pageName}
+    tabType={tabType}
+  >
+    <StatusRenderer
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
+      data={interviewExperiences}
+      status={status}
+      page={page}
     >
-      {shouldEmptyView({ interviewExperiences, status }) ? (
-        <EmptyView pageName={pageName} tabType={tabType} />
-      ) : (
-        <React.Fragment>
-          <InterviewExperiencesSection
-            pageType={pageType}
-            pageName={pageName}
-            tabType={tabType}
-            data={
-              interviewExperiences &&
-              interviewExperiences.slice((page - 1) * pageSize, page * pageSize)
-            }
-            status={status}
-          />
-          <Pagination
-            totalCount={interviewExperiences.length}
-            unit={pageSize}
-            currentPage={page}
-            createPageLinkTo={page => `?p=${page}`}
-          />
-        </React.Fragment>
-      )}
-    </CompanyAndJobTitleWrapper>
-  );
-};
+      {props => <InterviewExperiencesSection {...props} />}
+    </StatusRenderer>
+  </CompanyAndJobTitleWrapper>
+);
 
 InterviewExperiences.propTypes = {
   pageType: PropTypes.string,
