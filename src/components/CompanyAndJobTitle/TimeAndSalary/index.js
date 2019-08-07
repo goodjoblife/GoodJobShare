@@ -19,16 +19,15 @@ const TimeAndSalary = ({
     pageName={pageName}
     tabType={tabType}
   >
-    <StatusRenderer
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-      salaryWorkTimes={salaryWorkTimes}
-      salaryWorkTimeStatistics={salaryWorkTimeStatistics}
-      status={status}
-      page={page}
-    >
-      {TimeAndSalarySection}
+    <StatusRenderer status={status}>
+      <TimeAndSalarySection
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        salaryWorkTimes={salaryWorkTimes}
+        salaryWorkTimeStatistics={salaryWorkTimeStatistics}
+        page={page}
+      />
     </StatusRenderer>
   </CompanyAndJobTitleWrapper>
 );

@@ -17,15 +17,14 @@ const WorkExperiences = ({
     pageName={pageName}
     tabType={tabType}
   >
-    <StatusRenderer
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-      data={workExperiences}
-      status={status}
-      page={page}
-    >
-      {WorkExperiencesSection}
+    <StatusRenderer status={status}>
+      <WorkExperiencesSection
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        data={workExperiences}
+        page={page}
+      />
     </StatusRenderer>
   </CompanyAndJobTitleWrapper>
 );

@@ -18,15 +18,14 @@ const InterviewExperiences = ({
     pageName={pageName}
     tabType={tabType}
   >
-    <StatusRenderer
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-      data={interviewExperiences}
-      status={status}
-      page={page}
-    >
-      {InterviewExperiencesSection}
+    <StatusRenderer status={status}>
+      <InterviewExperiencesSection
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        data={interviewExperiences}
+        page={page}
+      />
     </StatusRenderer>
   </CompanyAndJobTitleWrapper>
 );
