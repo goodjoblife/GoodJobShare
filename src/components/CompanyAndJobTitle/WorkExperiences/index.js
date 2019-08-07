@@ -25,7 +25,7 @@ const WorkExperiences = ({
       status={status}
       page={page}
     >
-      {props => <WorkExperiencesSection {...props} />}
+      {WorkExperiencesSection}
     </StatusRenderer>
   </CompanyAndJobTitleWrapper>
 );

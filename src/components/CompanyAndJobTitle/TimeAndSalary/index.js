@@ -28,7 +28,7 @@ const TimeAndSalary = ({
       status={status}
       page={page}
     >
-      {props => <TimeAndSalarySection {...props} />}
+      {TimeAndSalarySection}
     </StatusRenderer>
   </CompanyAndJobTitleWrapper>
 );
