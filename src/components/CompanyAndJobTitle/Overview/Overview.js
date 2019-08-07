@@ -29,6 +29,8 @@ const Overview = ({
       linkText={`查看 ${salaryWorkTimes.length} 筆完整的薪水、加班數據資料 >>`}
       linkTo="salary-work-times"
       isEmpty={salaryWorkTimes.length === 0}
+      pageType={pageType}
+      pageName={pageName}
     >
       <WorkingHourTable
         data={salaryWorkTimes.slice(0, SALARY_WORK_TIMES_LIMIT)}
@@ -41,6 +43,8 @@ const Overview = ({
       linkText={`查看 ${workExperiences.length} 篇完整的工作心得 >>`}
       linkTo="work-experiences"
       isEmpty={workExperiences.length === 0}
+      pageType={pageType}
+      pageName={pageName}
     >
       {workExperiences.slice(0, WORK_EXPERIENCES_LIMIT).map(d => (
         <WorkExperienceEntry key={d.id} pageType={pageType} data={d} />
@@ -51,6 +55,8 @@ const Overview = ({
       linkText={`查看 ${interviewExperiences.length} 篇完整的面試心得 >>`}
       linkTo="interview-experiences"
       isEmpty={interviewExperiences.length === 0}
+      pageType={pageType}
+      pageName={pageName}
     >
       {interviewExperiences.slice(0, INTERVIEW_EXPERIENCES_LIMIT).map(d => (
         <InterviewExperienceEntry key={d.id} pageType={pageType} data={d} />
