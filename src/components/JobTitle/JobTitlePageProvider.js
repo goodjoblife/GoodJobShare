@@ -2,19 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 import { createStructuredSelector } from 'reselect';
-import {
-  withProps,
-  lifecycle,
-  compose,
-  setStatic,
-  branch,
-  renderNothing,
-} from 'recompose';
+import { withProps, lifecycle, compose, setStatic } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { pageType } from '../../constants/companyJobTitle';
-import { isFetched } from '../../constants/status';
 import jobTitleActions from '../../actions/jobTitle';
 import {
   interviewExperiences,
@@ -115,7 +107,6 @@ const enhance = compose(
       }
     },
   }),
-  branch(({ status }) => !isFetched(status), renderNothing),
 );
 
 export default enhance(JobTitlePageProvider);

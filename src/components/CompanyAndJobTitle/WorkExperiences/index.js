@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import StatusRenderer from './StatusRenderer';
+import StatusRenderer from '../StatusRenderer';
+import WorkExperiencesSection from './WorkExperiences';
 
 const WorkExperiences = ({
   pageType,
@@ -16,14 +17,15 @@ const WorkExperiences = ({
     pageName={pageName}
     tabType={tabType}
   >
-    <StatusRenderer
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-      data={workExperiences}
-      status={status}
-      page={page}
-    />
+    <StatusRenderer status={status}>
+      <WorkExperiencesSection
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        data={workExperiences}
+        page={page}
+      />
+    </StatusRenderer>
   </CompanyAndJobTitleWrapper>
 );
 
