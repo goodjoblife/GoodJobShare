@@ -110,3 +110,15 @@
     color: #626262;
   }
 }
+
+.agreeTermContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 57px;
+}
+
+.agreeTermLabel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}

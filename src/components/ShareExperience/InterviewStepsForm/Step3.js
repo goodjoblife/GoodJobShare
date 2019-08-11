@@ -126,19 +126,9 @@ class Step3 extends React.Component {
             ＋增加更多章節
           </Button>
         </div>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            marginTop: '57px',
-          }}
-        >
+        <div className={styles.agreeTermContainer}>
           <label
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-            }}
+            className={styles.agreeTermLabel}
             htmlFor="submitArea-checkbox"
           >
             <Checkbox
@@ -149,11 +139,7 @@ class Step3 extends React.Component {
               onChange={e => handleAgree(e.target.checked)}
               id="submitArea-checkbox"
             />
-            <p
-              style={{
-                color: '#3B3B3B',
-              }}
-            >
+            <p style={{ color: '#3B3B3B' }}>
               我分享的是真實資訊，並且遵守本站
               <Link
                 to="/guidelines"
