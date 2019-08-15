@@ -11,20 +11,24 @@ const data = state => state.data;
 export const interviewExperiences = R.pipe(
   data,
   R.when(R.is(Object), R.prop('interview_experiences')),
+  R.defaultTo([]),
 );
 export const workExperiences = R.pipe(
   data,
   R.when(R.is(Object), R.prop('work_experiences')),
+  R.defaultTo([]),
 );
 
 export const salaryWorkTimes = R.pipe(
   data,
   R.when(R.is(Object), R.prop('salary_work_times')),
+  R.defaultTo([]),
 );
 
 export const salaryWorkTimeStatistics = R.pipe(
   data,
   R.when(R.is(Object), R.prop('salary_work_time_statistics')),
+  R.defaultTo({}),
 );
 
 export const company = companyName =>
