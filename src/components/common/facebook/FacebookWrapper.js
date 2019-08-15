@@ -9,6 +9,12 @@ class FacebookWrapper extends Component {
     this.handleContainer = this.handleContainer.bind(this);
   }
 
+  componentDidMount() {
+    if (this.props.FB && this.container) {
+      this.props.FB.XFBML.parse(this.container);
+    }
+  }
+
   // 讓 FB 重新 parse children
   componentDidUpdate() {
     // if FB instance
