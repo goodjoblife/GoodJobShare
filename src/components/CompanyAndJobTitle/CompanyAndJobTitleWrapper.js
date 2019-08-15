@@ -4,6 +4,7 @@ import { toPairs, compose, map } from 'ramda';
 
 import Heading from 'common/base/Heading';
 import StaticHelmet from 'common/StaticHelmet';
+import FanPageBlock from 'common/FanPageBlock';
 
 import {
   tabTypeTranslation,
@@ -12,6 +13,7 @@ import {
 
 import BreadCrumb from './BreadCrumb';
 import TabLinkGroup from './TabLinkGroup';
+import styles from './CompanyAndJobTitleWrapper.module.css';
 
 const CompanyAndJobTitleWrapper = ({
   children,
@@ -54,6 +56,7 @@ const CompanyAndJobTitleWrapper = ({
         }}
       />
       {children}
+      <FanPageBlock className={styles.fanPageBlock} />
     </div>
   );
 };

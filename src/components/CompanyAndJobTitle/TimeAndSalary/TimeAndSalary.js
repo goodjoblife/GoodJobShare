@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import { compose } from 'recompose';
-import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
 import Pagination from 'common/Pagination';
+import { Section } from 'common/base';
 
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import renderHelmet from './timeAndSalaryHelmet';
 import ViewLog from './ViewLog';
-import styles from './TimeAndSalary.module.css';
 
 class TimeAndSalary extends Component {
   static propTypes = {
@@ -68,7 +67,7 @@ class TimeAndSalary extends Component {
     );
 
     return (
-      <section className={styles.searchResult}>
+      <Section Tag="main" paddingBottom>
         {renderHelmet({
           title,
           pathname,
@@ -105,8 +104,7 @@ class TimeAndSalary extends Component {
           page={page}
           contentIds={currentData.map(i => i.id)}
         />
-        <FanPageBlock className={styles.fanPageBlock} />
-      </section>
+      </Section>
     );
   }
 }

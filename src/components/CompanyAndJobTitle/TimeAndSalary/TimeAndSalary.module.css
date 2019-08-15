@@ -47,15 +47,6 @@ $bold: 700;
   }
 }
 
-.searchResult {
-  margin-bottom: $block-gutter-l;
-  .heading {
-    @media (max-width: $below-mobile) {
-      font-size: 1.5em;
-    }
-  }
-}
-
 .heading {
   @mixin heading-style;
   text-align: center;
@@ -63,8 +54,4 @@ $bold: 700;
   @media (max-width: $below-mobile) {
     margin-bottom: $block-gutter-s;
   }
-}
-
-.fanPageBlock {
-  margin-top: 60px;
 }
