@@ -1,0 +1,91 @@
+@value gray-dark, main-gray, link-blue, border-gray, page-gutter-s, link-blue, white-light, border-gray, main-yellow, yellow-light from "common/variables.module.css";
+
+.container {
+  display: block;
+  background-color: #fff;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+  margin-bottom: 24px;
+  transition-property: background, box-shadow;
+  transition-duration: 0.3s;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 1025px) {
+    &:hover {
+      box-shadow: 1px 1px 11px rgba(0, 0, 0, 0.25);
+      .heading {
+        color: link-blue;
+      }
+    }
+  }
+
+  @media (max-width: 550px) {
+    margin-left: calc(page-gutter-s * -1);
+    margin-right: calc(page-gutter-s * -1);
+    margin-bottom: 16px;
+  }
+}
+
+.contentWrapper {
+  padding: 15px 29px 21px 29px;
+
+  @media (max-width: 1024px) {
+    padding: 16px;
+  }
+}
+
+.heading {
+  margin-bottom: 9px;
+  margin-top: 6px;
+  transition: color, 0.25s;
+}
+
+.m,
+.s {
+  &.container {
+    height: 100%;
+    position: relative;
+  }
+
+  .contentWrapper {
+    margin-bottom: 15px;
+  }
+}
+
+.m,
+.s {
+  &.container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.s {
+  &.container {
+    font-size: 0.9em;
+  }
+
+  .labels {
+    color: main-gray;
+    margin-bottom: 0;
+  }
+
+  .company {
+    display: none;
+  }
+
+  .heading {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+}
+
+.recommendIcon {
+  svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 6.5px;
+  }
+}

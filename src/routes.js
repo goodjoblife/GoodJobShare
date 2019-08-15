@@ -5,8 +5,7 @@ import LaborRightsSingle from './containers/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/SalaryWorkTime/TimeAndSalaryBoard';
 import SalaryWorkTimeSearchScreen from './containers/SalaryWorkTime/SearchScreen';
-import CompanySalaryWorkTimeScreen from './containers/Company/SalaryWorkTimeScreen';
-import JobTitleSalaryWorkTimeScreen from './containers/JobTitle/SalaryWorkTimeScreen';
+
 import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
 import CampaignTimeAndSalary from './containers/CampaignTimeAndSalary';
 import CampaignTimeAndSalaryBoard from './containers/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
@@ -28,6 +27,14 @@ import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
+import CompanyPageProvider from './components/Company/CompanyPageProvider';
+import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
+import Overview from './components/CompanyAndJobTitle/Overview';
+import InterviewExperiences from './components/CompanyAndJobTitle/InterviewExperiences';
+import WorkExperiences from './components/CompanyAndJobTitle/WorkExperiences';
+import CompanyJobTitleTimeAndSalary from './components/CompanyAndJobTitle/TimeAndSalary';
+
+import { tabType } from './constants/companyJobTitle';
 
 const routes = [
   {
@@ -195,26 +202,124 @@ const routes = [
     ],
   },
   {
-    path: '/companies/:companyName/salary-work-times',
-    exact: true,
+    path: '/companies/:companyName',
     component: TimeAndSalary,
     routes: [
       {
+        path: '/companies/:companyName',
+        exact: true,
+        render: ({ location: { pathname } }) => (
+          <Redirect to={`${pathname}/overview`} />
+        ),
+      },
+      {
+        path: '/companies/:companyName/overview',
+        exact: true,
+        render: routeProps => (
+          <CompanyPageProvider {...routeProps} tabType={tabType.OVERVIEW}>
+            {Overview}
+          </CompanyPageProvider>
+        ),
+      },
+      {
         path: '/companies/:companyName/salary-work-times',
         exact: true,
-        component: CompanySalaryWorkTimeScreen,
+        render: routeProps => (
+          <CompanyPageProvider
+            {...routeProps}
+            tabType={tabType.TIME_AND_SALARY}
+          >
+            {CompanyJobTitleTimeAndSalary}
+          </CompanyPageProvider>
+        ),
+      },
+      {
+        path: '/companies/:companyName/interview-experiences',
+        exact: true,
+        render: routeProps => (
+          <CompanyPageProvider
+            {...routeProps}
+            tabType={tabType.INTERVIEW_EXPERIENCE}
+          >
+            {InterviewExperiences}
+          </CompanyPageProvider>
+        ),
+      },
+      {
+        path: '/companies/:companyName/work-experiences',
+        exact: true,
+        render: routeProps => (
+          <CompanyPageProvider
+            {...routeProps}
+            tabType={tabType.WORK_EXPERIENCE}
+          >
+            {WorkExperiences}
+          </CompanyPageProvider>
+        ),
+      },
+      {
+        component: NotFound,
       },
     ],
   },
   {
-    path: '/job-titles/:jobTitle/salary-work-times',
-    exact: true,
+    path: '/job-titles/:jobTitle',
     component: TimeAndSalary,
     routes: [
       {
+        path: '/job-titles/:jobTitle',
+        exact: true,
+        render: ({ location: { pathname } }) => (
+          <Redirect to={`${pathname}/overview`} />
+        ),
+      },
+      {
+        path: '/job-titles/:jobTitle/overview',
+        exact: true,
+        render: routeProps => (
+          <JobTitlePageProvider {...routeProps} tabType={tabType.OVERVIEW}>
+            {Overview}
+          </JobTitlePageProvider>
+        ),
+      },
+      {
         path: '/job-titles/:jobTitle/salary-work-times',
         exact: true,
-        component: JobTitleSalaryWorkTimeScreen,
+        render: routeProps => (
+          <JobTitlePageProvider
+            {...routeProps}
+            tabType={tabType.TIME_AND_SALARY}
+          >
+            {CompanyJobTitleTimeAndSalary}
+          </JobTitlePageProvider>
+        ),
+      },
+      {
+        path: '/job-titles/:jobTitle/interview-experiences',
+        exact: true,
+        render: routeProps => (
+          <JobTitlePageProvider
+            {...routeProps}
+            tabType={tabType.INTERVIEW_EXPERIENCE}
+          >
+            {InterviewExperiences}
+          </JobTitlePageProvider>
+        ),
+      },
+      {
+        path: '/job-titles/:jobTitle/work-experiences',
+        exact: true,
+        render: routeProps => (
+          <JobTitlePageProvider
+            {...routeProps}
+            tabType={tabType.WORK_EXPERIENCE}
+          >
+            {WorkExperiences}
+          </JobTitlePageProvider>
+        ),
+      },
+      {
+        component: NotFound,
       },
     ],
   },
