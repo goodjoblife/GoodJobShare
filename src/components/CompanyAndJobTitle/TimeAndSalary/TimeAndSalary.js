@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import { compose } from 'recompose';
-import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
 import Pagination from 'common/Pagination';
 
-import { pageTypeTranslation } from '../../../constants/companyJobTitle';
+import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import renderHelmet from './timeAndSalaryHelmet';
 import ViewLog from './ViewLog';
@@ -51,6 +50,7 @@ class TimeAndSalary extends Component {
       queryParams,
       pageType,
       pageName,
+      tabType,
     } = this.props;
 
     const pageSize = 10;
@@ -99,13 +99,7 @@ class TimeAndSalary extends Component {
               }
             />
           </React.Fragment>
-        )) || (
-          <P size="l" bold className={styles.searchNoResult}>
-            {`尚未有${pageTypeTranslation[pageType]}「
-                {pageName}
-                」的薪時資訊`}
-          </P>
-        )}
+        )) || <EmptyView pageName={pageName} tabType={tabType} />}
         <ViewLog
           pageName={pageName}
           page={page}

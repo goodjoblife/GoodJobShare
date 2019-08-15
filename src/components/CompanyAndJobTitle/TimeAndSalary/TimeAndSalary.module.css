@@ -56,17 +56,6 @@ $bold: 700;
   }
 }
 
-.searchNoResult {
-  background-color: #f2f2f2;
-  border: 1px solid border-gray;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  margin-top: 40px;
-}
-
 .heading {
   @mixin heading-style;
   text-align: center;
