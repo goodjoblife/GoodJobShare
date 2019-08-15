@@ -101,14 +101,14 @@ class SearchScreen extends Component {
       if (searchBy === 'company') {
         const companyName = firstDataNameSelector(this.props);
         this.props.history.replace(
-          `/companies/${encodeURIComponent(companyName)}/salary-work-times${
+          `/companies/${encodeURIComponent(companyName)}/overview${
             this.props.location.search
           }`,
         );
       } else if (searchBy === 'job_title') {
         const jobTitle = firstDataNameSelector(this.props);
         this.props.history.replace(
-          `/job-titles/${encodeURIComponent(jobTitle)}/salary-work-times${
+          `/job-titles/${encodeURIComponent(jobTitle)}/overview${
             this.props.location.search
           }`,
         );
@@ -121,14 +121,14 @@ class SearchScreen extends Component {
     if (searchBy === 'company') {
       return `/companies/${encodeURIComponent(
         data.name,
-      )}/salary-work-times${qs.stringify(
+      )}/overview${qs.stringify(
         { ...querySelector(this.props), p: 1 },
         { addQueryPrefix: true },
       )}`;
     } else if (searchBy === 'job_title') {
       return `/job-titles/${encodeURIComponent(
         data.name,
-      )}/salary-work-times${qs.stringify(
+      )}/overview${qs.stringify(
         { ...querySelector(this.props), p: 1 },
         { addQueryPrefix: true },
       )}`;
