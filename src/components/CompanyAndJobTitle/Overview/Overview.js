@@ -9,6 +9,7 @@ import SnippetBlock from './SnippetBlock';
 import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
+import { tabType as TAB_TYPE } from '../../../constants/companyJobTitle';
 
 const SALARY_WORK_TIMES_LIMIT = 5;
 const WORK_EXPERIENCES_LIMIT = 3;
@@ -31,6 +32,7 @@ const Overview = ({
       isEmpty={salaryWorkTimes.length === 0}
       pageType={pageType}
       pageName={pageName}
+      tabType={TAB_TYPE.TIME_AND_SALARY}
     >
       <WorkingHourTable
         data={salaryWorkTimes.slice(0, SALARY_WORK_TIMES_LIMIT)}
@@ -45,6 +47,7 @@ const Overview = ({
       isEmpty={workExperiences.length === 0}
       pageType={pageType}
       pageName={pageName}
+      tabType={TAB_TYPE.WORK_EXPERIENCE}
     >
       {workExperiences.slice(0, WORK_EXPERIENCES_LIMIT).map(d => (
         <WorkExperienceEntry key={d.id} pageType={pageType} data={d} />
@@ -57,6 +60,7 @@ const Overview = ({
       isEmpty={interviewExperiences.length === 0}
       pageType={pageType}
       pageName={pageName}
+      tabType={TAB_TYPE.INTERVIEW_EXPERIENCE}
     >
       {interviewExperiences.slice(0, INTERVIEW_EXPERIENCES_LIMIT).map(d => (
         <InterviewExperienceEntry key={d.id} pageType={pageType} data={d} />

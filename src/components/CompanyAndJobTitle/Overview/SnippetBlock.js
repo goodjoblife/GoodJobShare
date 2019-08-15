@@ -2,17 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
+import EmptyView from '../EmptyView';
 import styles from './Overview.module.css';
-
-const createEmptyTitle = ({ title, pageName, pageType }) =>
-  `尚無${title}！等待${
-    pageType === PAGE_TYPE.COMPANY
-      ? `${pageName}員工`
-      : pageType === PAGE_TYPE.JOB_TITLE
-      ? pageName
-      : '過來人'
-  }分享...`;
 
 const SnippetBlock = ({
   title,
@@ -22,12 +13,13 @@ const SnippetBlock = ({
   isEmpty,
   pageType,
   pageName,
+  tabType,
 }) => (
   <div className={styles.snippet}>
-    <div className={styles.title}>
-      {isEmpty ? createEmptyTitle({ title, pageType, pageName }) : title}
-    </div>
-    {!isEmpty && (
+    <div className={styles.title}>{title}</div>
+    {isEmpty ? (
+      <EmptyView tabType={tabType} pageName={pageName} pageType={pageType} />
+    ) : (
       <React.Fragment>
         {children}
         <Link className={styles.link} to={linkTo}>
@@ -44,9 +36,9 @@ SnippetBlock.propTypes = {
   linkText: PropTypes.string.isRequired,
   linkTo: PropTypes.string.isRequired,
   isEmpty: PropTypes.bool,
-  pageType: PropTypes.oneOf([PAGE_TYPE.COMPANY, PAGE_TYPE.JOB_TITLE])
-    .isRequired,
+  pageType: PropTypes.string.isRequired,
   pageName: PropTypes.string.isRequired,
+  tabType: PropTypes.string.isRequired,
 };
 
 SnippetBlock.defaultProps = {
