@@ -1,0 +1,30 @@
+.container {
+  margin-bottom: 160px;
+}
+
+.snippet {
+  .title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 15px;
+  }
+
+  .link {
+    font-size: 18px;
+    font-weight: 600;
+    color: #325bbd;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    display: block;
+    margin-top: 20px;
+  }
+
+  & + & {
+    margin-top: 60px;
+  }
+}
