@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ExperienceEntry from './ExperienceEntry';
 import EmptyView from '../EmptyView';
+
+import { Section } from 'common/base';
 import Pagination from 'common/Pagination';
 
 const pageSize = 10;
@@ -12,7 +14,7 @@ const WorkExperiences = ({ pageType, pageName, tabType, data, page }) => {
   }
   const visibleData = data.slice((page - 1) * pageSize, page * pageSize);
   return (
-    <React.Fragment>
+    <Section Tag="main" paddingBottom>
       {visibleData.map(d => (
         <ExperienceEntry key={d.id} pageType={pageType} data={d} />
       ))}
@@ -22,7 +24,7 @@ const WorkExperiences = ({ pageType, pageName, tabType, data, page }) => {
         currentPage={page}
         createPageLinkTo={page => `?p=${page}`}
       />
-    </React.Fragment>
+    </Section>
   );
 };
 

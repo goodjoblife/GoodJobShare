@@ -47,15 +47,6 @@ $bold: 700;
   }
 }
 
-.searchResult {
-  margin-bottom: $block-gutter-l;
-  .heading {
-    @media (max-width: $below-mobile) {
-      font-size: 1.5em;
-    }
-  }
-}
-
 .heading {
   @mixin heading-style;
   text-align: center;

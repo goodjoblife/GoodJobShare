@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 
 import { withPermission } from 'common/permission-context';
+import { Section } from 'common/base';
 
 import SnippetBlock from './SnippetBlock';
 import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
-import styles from './Overview.module.css';
 
 const SALARY_WORK_TIMES_LIMIT = 5;
 const WORK_EXPERIENCES_LIMIT = 3;
@@ -23,7 +23,7 @@ const Overview = ({
   salaryWorkTimes,
   canViewTimeAndSalary,
 }) => (
-  <div className={styles.container}>
+  <Section Tag="main" paddingBottom>
     <SnippetBlock
       title="薪水&加班狀況"
       linkText={`查看 ${salaryWorkTimes.length} 筆完整的薪水、加班數據資料 >>`}
@@ -62,7 +62,7 @@ const Overview = ({
         <InterviewExperienceEntry key={d.id} pageType={pageType} data={d} />
       ))}
     </SnippetBlock>
-  </div>
+  </Section>
 );
 
 Overview.propTypes = {
