@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import { compose } from 'recompose';
-import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
 import Pagination from 'common/Pagination';
 
@@ -105,7 +104,6 @@ class TimeAndSalary extends Component {
           page={page}
           contentIds={currentData.map(i => i.id)}
         />
-        <FanPageBlock className={styles.fanPageBlock} />
       </section>
     );
   }
