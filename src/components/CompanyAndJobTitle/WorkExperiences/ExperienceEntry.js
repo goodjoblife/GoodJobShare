@@ -13,12 +13,12 @@ import {
 import Label from '../Label';
 import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 
-const createLinkTo = (id, backable) => ({
+const createLinkTo = id => ({
   pathname: `/experiences/${id}`,
-  state: { backable },
+  state: { backable: true },
 });
 
-const ExperienceEntry = ({ pageType, data, size, backable }) => {
+const ExperienceEntry = ({ pageType, data, size }) => {
   const {
     id,
     company: { name: companyName } = {},
@@ -31,10 +31,7 @@ const ExperienceEntry = ({ pageType, data, size, backable }) => {
   } = data;
 
   return (
-    <Link
-      to={createLinkTo(id, backable)}
-      className={cn(styles.container, styles[size])}
-    >
+    <Link to={createLinkTo(id)} className={cn(styles.container, styles[size])}>
       <section className={styles.contentWrapper}>
         <P size="s">{formatCreatedAt(createdAt)}</P>
 
@@ -85,12 +82,10 @@ const ExperienceEntry = ({ pageType, data, size, backable }) => {
 ExperienceEntry.propTypes = {
   data: PropTypes.object.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
-  backable: PropTypes.bool,
 };
 
 ExperienceEntry.defaultProps = {
   size: 'm',
-  backable: false,
 };
 
 export default ExperienceEntry;
