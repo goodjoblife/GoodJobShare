@@ -28,6 +28,7 @@ const propsInterviewForm = state => {
     sections,
     interviewQas,
     interviewSensitiveQuestions,
+    email,
   } = state;
 
   return {
@@ -47,6 +48,7 @@ const propsInterviewForm = state => {
     sections: handleBlocks(sections),
     interviewQas: handleBlocks(interviewQas),
     interviewSensitiveQuestions,
+    email,
   };
 };
 

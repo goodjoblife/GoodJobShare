@@ -10,8 +10,13 @@ import ButtonRect from 'common/button/ButtonRect';
 import ButtonSubmit from 'common/button/ButtonSubmit';
 import Checkbox from 'common/form/Checkbox';
 import Modal from 'common/Modal';
+import Block from 'common/Block';
+import { validateEmail } from 'utils/dataCheckUtil';
+import Email from '../common/Email';
 import { compose } from 'recompose';
 import styles from './InterviewForm.module.css';
+
+import { EMAIL } from '../../../constants/formElements';
 
 class Step3 extends React.Component {
   static propTypes = {
@@ -126,6 +131,25 @@ class Step3 extends React.Component {
             ＋增加更多章節
           </Button>
         </div>
+        <Block style={{ marginTop: '35px' }}>
+          <Email
+            email={state.email}
+            inputTitle="訂閱 GoodJob，我們會寄送最新的薪資、面試資訊給您"
+            onChange={v => {
+              handleState('email')(v);
+            }}
+            validator={v => {
+              if (v) {
+                return validateEmail(v);
+              } else {
+                return true;
+              }
+            }}
+            submitted={state.submitted}
+            changeValidationStatus={changeValidationStatus}
+            elementName={EMAIL}
+          />
+        </Block>
         <div className={styles.agreeTermContainer}>
           <label
             className={styles.agreeTermLabel}

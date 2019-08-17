@@ -110,6 +110,7 @@ const defaultForm = {
   },
   interviewQas: {},
   interviewSensitiveQuestions: [],
+  email: '',
 };
 
 const getDefaultFormFromDraft = () => {
