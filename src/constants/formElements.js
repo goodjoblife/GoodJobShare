@@ -4,6 +4,7 @@ export const COMPANY = 'company';
 export const REGION = 'region';
 export const JOB_TITLE = 'job_title';
 export const EMPLOYMENT_TYPE = 'employment_type';
+export const EMAIL = 'email';
 
 export const SALARY_TYPE = 'salary_type';
 export const SALARY_AMOUNT = 'salary_amount';
@@ -33,6 +34,7 @@ export const INTERVIEW_FORM_ORDER = [
   SECTIONS,
   INTERVIEW_QAS,
   INTERVIEW_SENSITIVE_QUESTIONS,
+  EMAIL,
 ];
 
 export const INTERVIEW_FORM_STEPS = [
