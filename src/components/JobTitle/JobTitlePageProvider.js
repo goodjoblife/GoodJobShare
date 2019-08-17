@@ -5,8 +5,13 @@ import { createStructuredSelector } from 'reselect';
 import { withProps, lifecycle, compose, setStatic } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
+import Overview from '../CompanyAndJobTitle/Overview';
+import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
+import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
+import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
 
-import { pageType } from '../../constants/companyJobTitle';
+import { tabType, pageType } from '../../constants/companyJobTitle';
 import jobTitleActions from '../../actions/jobTitle';
 import {
   interviewExperiences,
@@ -26,38 +31,46 @@ const getJobTitleFromParams = R.compose(
   paramsSelector,
 );
 
-const JobTitlePageProvider = ({
-  children,
-  pageType,
-  pageName,
-  tabType,
-  interviewExperiences,
-  workExperiences,
-  salaryWorkTimes,
-  salaryWorkTimeStatistics,
-  status,
-  page,
-}) => (
-  <React.Fragment>
-    {children({
-      pageType,
-      pageName,
-      tabType,
-      interviewExperiences,
-      workExperiences,
-      salaryWorkTimes,
-      salaryWorkTimeStatistics,
-      status,
-      page,
-    })}
-  </React.Fragment>
+const JobTitlePageProvider = props => (
+  <Switch>
+    <Route
+      path="/job-titles/:jobTitle/overview"
+      exact
+      render={() => <Overview {...props} tabType={tabType.OVERVIEW} />}
+    />
+    <Route
+      path="/job-titles/:jobTitle/salary-work-times"
+      exact
+      render={() => (
+        <CompanyJobTitleTimeAndSalary
+          {...props}
+          tabType={tabType.TIME_AND_SALARY}
+        />
+      )}
+    />
+    <Route
+      path="/job-titles/:jobTitle/interview-experiences"
+      exact
+      render={() => (
+        <InterviewExperiences
+          {...props}
+          tabType={tabType.INTERVIEW_EXPERIENCE}
+        />
+      )}
+    />
+    <Route
+      path="/job-titles/:jobTitle/work-experiences"
+      exact
+      render={() => (
+        <WorkExperiences {...props} tabType={tabType.WORK_EXPERIENCE} />
+      )}
+    />
+  </Switch>
 );
 
 JobTitlePageProvider.propTypes = {
-  children: PropTypes.func.isRequired,
   pageType: PropTypes.string.isRequired,
   pageName: PropTypes.string.isRequired,
-  tabType: PropTypes.string.isRequired,
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
