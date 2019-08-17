@@ -6,6 +6,8 @@ import {
   lteLength,
   gteLength,
   gtLength,
+  isStrEmpty,
+  validateEmail,
 } from 'utils/dataCheckUtil';
 
 import { ifThenLog } from 'utils/debugUtil';
@@ -87,6 +89,8 @@ export const interviewSensitiveQuestions = R.anyPass([
   n => n === [],
 ]);
 
+export const email = R.anyPass([isStrEmpty, validateEmail]);
+
 const ifFalseLog = ifThenLog(n => n === false);
 
 export const interviewFormCheck = R.allPass([
@@ -154,5 +158,10 @@ export const interviewFormCheck = R.allPass([
     ifFalseLog('interviewSensitiveQuestions not pass'),
     interviewSensitiveQuestions,
     R.prop('interviewSensitiveQuestions'),
+  ),
+  R.compose(
+    ifFalseLog('email not pass'),
+    email,
+    R.prop('email'),
   ),
 ]);
