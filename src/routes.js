@@ -201,29 +201,6 @@ const routes = [
     routes: [
       {
         path: '/companies/:companyName',
-        exact: true,
-        render: ({ location: { pathname } }) => (
-          <Redirect to={`${pathname}/overview`} />
-        ),
-      },
-      {
-        path: '/companies/:companyName/overview',
-        exact: true,
-        component: CompanyPageProvider,
-      },
-      {
-        path: '/companies/:companyName/salary-work-times',
-        exact: true,
-        component: CompanyPageProvider,
-      },
-      {
-        path: '/companies/:companyName/interview-experiences',
-        exact: true,
-        component: CompanyPageProvider,
-      },
-      {
-        path: '/companies/:companyName/work-experiences',
-        exact: true,
         component: CompanyPageProvider,
       },
       {
@@ -237,29 +214,6 @@ const routes = [
     routes: [
       {
         path: '/job-titles/:jobTitle',
-        exact: true,
-        render: ({ location: { pathname } }) => (
-          <Redirect to={`${pathname}/overview`} />
-        ),
-      },
-      {
-        path: '/job-titles/:jobTitle/overview',
-        exact: true,
-        component: JobTitlePageProvider,
-      },
-      {
-        path: '/job-titles/:jobTitle/salary-work-times',
-        exact: true,
-        component: JobTitlePageProvider,
-      },
-      {
-        path: '/job-titles/:jobTitle/interview-experiences',
-        exact: true,
-        component: JobTitlePageProvider,
-      },
-      {
-        path: '/job-titles/:jobTitle/work-experiences',
-        exact: true,
         component: JobTitlePageProvider,
       },
       {

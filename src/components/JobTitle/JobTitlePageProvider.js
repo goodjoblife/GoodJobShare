@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { withProps, lifecycle, compose, setStatic } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Overview from '../CompanyAndJobTitle/Overview';
 import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
@@ -33,6 +33,13 @@ const getJobTitleFromParams = R.compose(
 
 const JobTitlePageProvider = props => (
   <Switch>
+    <Route
+      path="/job-titles/:jobTitle"
+      exact
+      render={({ location: { pathname } }) => (
+        <Redirect to={`${pathname}/overview`} />
+      )}
+    />
     <Route
       path="/job-titles/:jobTitle/overview"
       exact
