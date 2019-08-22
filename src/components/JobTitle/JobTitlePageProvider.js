@@ -10,6 +10,7 @@ import Overview from '../CompanyAndJobTitle/Overview';
 import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
 import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
+import NotFound from '../common/NotFound';
 
 import { tabType, pageType } from '../../constants/companyJobTitle';
 import jobTitleActions from '../../actions/jobTitle';
@@ -72,6 +73,7 @@ const JobTitlePageProvider = props => (
         <WorkExperiences {...props} tabType={tabType.WORK_EXPERIENCE} />
       )}
     />
+    <Route component={NotFound} />
   </Switch>
 );
 
