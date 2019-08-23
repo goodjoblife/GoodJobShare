@@ -5,8 +5,14 @@ import { createStructuredSelector } from 'reselect';
 import { withProps, lifecycle, compose, setStatic } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import Overview from '../CompanyAndJobTitle/Overview';
+import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
+import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
+import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
+import NotFound from '../common/NotFound';
 
-import { pageType } from '../../constants/companyJobTitle';
+import { tabType, pageType } from '../../constants/companyJobTitle';
 import companyActions from '../../actions/company';
 import {
   interviewExperiences,
@@ -25,38 +31,54 @@ const getCompanyNameFromParams = R.compose(
   paramsSelector,
 );
 
-const CompanyPageProvider = ({
-  children,
-  pageType,
-  pageName,
-  tabType,
-  interviewExperiences,
-  workExperiences,
-  salaryWorkTimes,
-  salaryWorkTimeStatistics,
-  status,
-  page,
-}) => (
-  <React.Fragment>
-    {children({
-      pageType,
-      pageName,
-      tabType,
-      interviewExperiences,
-      workExperiences,
-      salaryWorkTimes,
-      salaryWorkTimeStatistics,
-      status,
-      page,
-    })}
-  </React.Fragment>
+const CompanyPageProvider = props => (
+  <Switch>
+    <Route
+      path="/companies/:companyName"
+      exact
+      render={({ location: { pathname } }) => (
+        <Redirect to={`${pathname}/overview`} />
+      )}
+    />
+    <Route
+      path="/companies/:companyName/overview"
+      exact
+      render={() => <Overview {...props} tabType={tabType.OVERVIEW} />}
+    />
+    <Route
+      path="/companies/:companyName/salary-work-times"
+      exact
+      render={() => (
+        <CompanyJobTitleTimeAndSalary
+          {...props}
+          tabType={tabType.TIME_AND_SALARY}
+        />
+      )}
+    />
+    <Route
+      path="/companies/:companyName/interview-experiences"
+      exact
+      render={() => (
+        <InterviewExperiences
+          {...props}
+          tabType={tabType.INTERVIEW_EXPERIENCE}
+        />
+      )}
+    />
+    <Route
+      path="/companies/:companyName/work-experiences"
+      exact
+      render={() => (
+        <WorkExperiences {...props} tabType={tabType.WORK_EXPERIENCE} />
+      )}
+    />
+    <Route component={NotFound} />
+  </Switch>
 );
 
 CompanyPageProvider.propTypes = {
-  children: PropTypes.func.isRequired,
   pageType: PropTypes.string.isRequired,
   pageName: PropTypes.string.isRequired,
-  tabType: PropTypes.string.isRequired,
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),

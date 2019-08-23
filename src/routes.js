@@ -29,12 +29,6 @@ import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
 import CompanyPageProvider from './components/Company/CompanyPageProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
-import Overview from './components/CompanyAndJobTitle/Overview';
-import InterviewExperiences from './components/CompanyAndJobTitle/InterviewExperiences';
-import WorkExperiences from './components/CompanyAndJobTitle/WorkExperiences';
-import CompanyJobTitleTimeAndSalary from './components/CompanyAndJobTitle/TimeAndSalary';
-
-import { tabType } from './constants/companyJobTitle';
 
 const routes = [
   {
@@ -207,55 +201,7 @@ const routes = [
     routes: [
       {
         path: '/companies/:companyName',
-        exact: true,
-        render: ({ location: { pathname } }) => (
-          <Redirect to={`${pathname}/overview`} />
-        ),
-      },
-      {
-        path: '/companies/:companyName/overview',
-        exact: true,
-        render: routeProps => (
-          <CompanyPageProvider {...routeProps} tabType={tabType.OVERVIEW}>
-            {Overview}
-          </CompanyPageProvider>
-        ),
-      },
-      {
-        path: '/companies/:companyName/salary-work-times',
-        exact: true,
-        render: routeProps => (
-          <CompanyPageProvider
-            {...routeProps}
-            tabType={tabType.TIME_AND_SALARY}
-          >
-            {CompanyJobTitleTimeAndSalary}
-          </CompanyPageProvider>
-        ),
-      },
-      {
-        path: '/companies/:companyName/interview-experiences',
-        exact: true,
-        render: routeProps => (
-          <CompanyPageProvider
-            {...routeProps}
-            tabType={tabType.INTERVIEW_EXPERIENCE}
-          >
-            {InterviewExperiences}
-          </CompanyPageProvider>
-        ),
-      },
-      {
-        path: '/companies/:companyName/work-experiences',
-        exact: true,
-        render: routeProps => (
-          <CompanyPageProvider
-            {...routeProps}
-            tabType={tabType.WORK_EXPERIENCE}
-          >
-            {WorkExperiences}
-          </CompanyPageProvider>
-        ),
+        component: CompanyPageProvider,
       },
       {
         component: NotFound,
@@ -268,55 +214,7 @@ const routes = [
     routes: [
       {
         path: '/job-titles/:jobTitle',
-        exact: true,
-        render: ({ location: { pathname } }) => (
-          <Redirect to={`${pathname}/overview`} />
-        ),
-      },
-      {
-        path: '/job-titles/:jobTitle/overview',
-        exact: true,
-        render: routeProps => (
-          <JobTitlePageProvider {...routeProps} tabType={tabType.OVERVIEW}>
-            {Overview}
-          </JobTitlePageProvider>
-        ),
-      },
-      {
-        path: '/job-titles/:jobTitle/salary-work-times',
-        exact: true,
-        render: routeProps => (
-          <JobTitlePageProvider
-            {...routeProps}
-            tabType={tabType.TIME_AND_SALARY}
-          >
-            {CompanyJobTitleTimeAndSalary}
-          </JobTitlePageProvider>
-        ),
-      },
-      {
-        path: '/job-titles/:jobTitle/interview-experiences',
-        exact: true,
-        render: routeProps => (
-          <JobTitlePageProvider
-            {...routeProps}
-            tabType={tabType.INTERVIEW_EXPERIENCE}
-          >
-            {InterviewExperiences}
-          </JobTitlePageProvider>
-        ),
-      },
-      {
-        path: '/job-titles/:jobTitle/work-experiences',
-        exact: true,
-        render: routeProps => (
-          <JobTitlePageProvider
-            {...routeProps}
-            tabType={tabType.WORK_EXPERIENCE}
-          >
-            {WorkExperiences}
-          </JobTitlePageProvider>
-        ),
+        component: JobTitlePageProvider,
       },
       {
         component: NotFound,
