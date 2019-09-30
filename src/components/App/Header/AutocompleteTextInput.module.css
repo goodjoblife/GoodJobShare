@@ -1,0 +1,26 @@
+.menu {
+  display: none;
+  position: absolute;
+  z-index: 99;
+  border: 1px solid #b4b4b4;
+  background: #fff;
+  max-height: 150px;
+  overflow-y: scroll;
+
+  &.active {
+    display: block;
+  }
+
+  .item {
+    padding: 6px;
+
+    &:hover {
+      background: lightgray;
+    }
+
+    &.active {
+      background: lightgray;
+      font-weight: 600;
+    }
+  }
+}
