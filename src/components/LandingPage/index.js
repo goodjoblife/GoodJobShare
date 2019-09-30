@@ -13,7 +13,6 @@ import { queryPopularExperiences } from '../../actions/popularExperiences';
 import { queryMenu } from '../../actions/laborRights';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
-import Dashboard from './Dashboard';
 import StaticHelmet from 'common/StaticHelmet';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
@@ -49,10 +48,6 @@ const LandingPage = ({
     <main>
       <StaticHelmet.LandingPage />
       <Banner />
-      <Dashboard
-        timeAndSalaryCount={timeAndSalaryCount}
-        laborRightsCount={laborRightsCount}
-      />
       <ShareExpSection heading="現在就留下你的資料" />
       <Section padding bg="white">
         <Wrapper size="l">

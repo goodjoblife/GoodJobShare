@@ -1,7 +1,11 @@
 @value main-yellow, main-black from 'common/variables.module.css';
 
 .banner {
-  background-color: main-yellow;
+  background-color: #fff;
+  height: 297px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   > div {
     display: flex;
@@ -39,6 +43,9 @@
   flex-basis: auto;
   animation: fadeUp 1s linear;
   padding-left: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   @media (max-width: 550px) {
     order: 0;
@@ -48,11 +55,11 @@
 }
 
 .heading {
-  font-size: 2.3em;
-  line-height: 1.2em;
+  font-size: 28px;
+  line-height: 1.57;
   letter-spacing: 2px;
-  margin-bottom: 20px;
-  font-weight: 700;
+  margin-bottom: 3px;
+  font-weight: 500;
 
   @media (max-width: 550px) {
     font-size: 2em;
@@ -60,9 +67,9 @@
 }
 
 .subheading {
-  font-size: 1.25em;
-  line-height: 1.6em;
-  margin-bottom: 24px;
+  font-size: 17px;
+  line-height: 2.59;
+  margin-bottom: 13px;
 }
 
 @keyframes fadeUp {
