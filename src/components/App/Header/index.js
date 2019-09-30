@@ -5,7 +5,7 @@ import cn from 'classnames';
 import ReactGA from 'react-ga';
 import { compose } from 'recompose';
 import { Wrapper } from 'common/base';
-import { GjLogo, ArrowGo, People, PeopleFill } from 'common/icons';
+import { GjLogo } from 'common/icons';
 import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
 import styles from './Header.module.css';
@@ -143,7 +143,6 @@ class Header extends React.Component {
                 <div style={{ position: 'relative' }}>
                   {this.props.auth.getIn(['user', 'name']) === null && (
                     <button className={styles.loginBtn} onClick={this.login}>
-                      <People />
                       登入
                     </button>
                   )}
@@ -168,7 +167,6 @@ class Header extends React.Component {
                       }
                     >
                       <div className={styles.loginBtn}>
-                        <PeopleFill />
                         {this.props.auth.getIn(['user', 'name'])}
                       </div>
                     </PopoverToggle>
@@ -215,7 +213,6 @@ const ShareButton = ({ isMobileButton, onClick }) => (
     onClick={onClick}
   >
     立即分享
-    <ArrowGo />
   </Link>
 );
 ShareButton.propTypes = {
