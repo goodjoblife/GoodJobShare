@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { compose, setStatic } from 'recompose';
-import R from 'ramda';
 import qs from 'qs';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
@@ -24,24 +23,12 @@ import {
   searchKeywordSelector,
   pageSelector,
 } from '../common/selectors';
-import {
-  validatePage,
-  validateSearchCriteria,
-  validateSearchKeyword,
-} from '../common/validators';
-import { searchOptions } from '../SearchBar';
+import { validatePage, validateSearchKeyword } from '../common/validators';
 import WorkingHourBlock from './WorkingHourBlock';
 import renderHelmet from './helmet';
 import styles from './SearchScreen.module.css';
 
 const firstDataNameSelector = props => props.data.get(0).get('name');
-
-const searchCriteriaText = searchBy =>
-  R.compose(
-    R.prop('label'),
-    R.head,
-    R.filter(R.propEq('value', searchBy)),
-  )(searchOptions);
 
 function getTitle(keyword) {
   if (keyword) {
@@ -71,7 +58,7 @@ class SearchScreen extends Component {
   };
 
   componentDidMount() {
-    const searchBy = validateSearchCriteria(searchCriteriaSelector(this.props));
+    const searchBy = 'company'; // TODO
     const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
     this.props
       .queryKeyword({ searchBy, keyword })
@@ -85,9 +72,7 @@ class SearchScreen extends Component {
         searchCriteriaSelector(this.props) ||
       searchKeywordSelector(prevProps) !== searchKeywordSelector(this.props)
     ) {
-      const searchBy = validateSearchCriteria(
-        searchCriteriaSelector(this.props),
-      );
+      const searchBy = 'company'; // TODO
       const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
       this.props
         .queryKeyword({ searchBy, keyword })
@@ -160,12 +145,8 @@ class SearchScreen extends Component {
         {isFetching(status) && <Loading size="s" />}
         {isFetched(status) && raw.length === 0 && (
           <P size="l" bold className={styles.searchNoResult}>
-            尚未有
-            {searchCriteriaText(
-              validateSearchCriteria(searchCriteriaSelector(this.props)),
-            )}
-            「{keyword}
-            」的薪時資訊
+            尚未有 「{keyword}
+            」的訊
           </P>
         )}
         {raw.map((o, i) => (
@@ -189,7 +170,7 @@ class SearchScreen extends Component {
 }
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const searchBy = validateSearchCriteria(searchCriteriaSelector(props));
+  const searchBy = 'company'; // TODO
   const keyword = validateSearchKeyword(searchKeywordSelector(props));
 
   return dispatch(queryKeyword({ searchBy, keyword }));
