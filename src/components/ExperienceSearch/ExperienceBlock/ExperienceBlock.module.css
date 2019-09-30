@@ -36,31 +36,22 @@
   }
 }
 
+.meta {
+  font-size: 14px;
+  color: #9a9a9a;
+}
+
 .heading {
-  margin-bottom: 16px;
-  margin-top: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  margin-top: 12px;
   transition: color, 0.25s;
 }
 
-.labels {
-  margin-bottom: 16px;
-}
-
-.label {
-  margin-right: 24px;
-  display: inline-flex;
-  align-items: center;
-
-  svg {
-    width: 16px;
-    height: 16px;
-    fill: #c3c3c3;
-    margin-right: 8px;
-  }
-}
-
 .more {
+  display: inline-block;
   color: link-blue;
+  margin-top: 12px;
 }
 
 .reaction {
