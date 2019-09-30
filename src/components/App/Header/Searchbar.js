@@ -1,32 +1,42 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import { withRouter } from 'react-router-dom';
 
 import Magnifier from '../../common/icons/Magnifiner';
 import styles from './Searchbar.module.css';
 
-const Searchbar = ({ className }) => {
+const searchType = 'company';
+
+const Searchbar = ({ className, history }) => {
   const [searchText, setSearchText] = useState('');
 
-  const onChangeSearchText = useCallback(e => {
+  const handleChange = useCallback(e => {
     setSearchText(e.target.value);
   }, []);
 
-  const onFormSubmit = useCallback(
+  const handleFormSubmit = useCallback(
     e => {
       e.preventDefault();
-      console.info(searchText);
+      history.push(
+        `/salary-work-times?q=${encodeURIComponent(
+          searchText,
+        )}&s_by=${searchType}`,
+      );
     },
-    [searchText],
+    [history, searchText],
   );
 
   return (
-    <form className={cn(className, styles.searchbar)} onSubmit={onFormSubmit}>
+    <form
+      className={cn(className, styles.searchbar)}
+      onSubmit={handleFormSubmit}
+    >
       <input
         className={styles.textInput}
         placeholder="輸入公司、職稱查詢面試及薪水資料"
         value={searchText}
-        onChange={onChangeSearchText}
+        onChange={handleChange}
       />
       <button type="submit" className={styles.searchBtn}>
         <Magnifier />
@@ -37,6 +47,7 @@ const Searchbar = ({ className }) => {
 
 Searchbar.propTypes = {
   className: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
-export default Searchbar;
+export default withRouter(Searchbar);
