@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import R from 'ramda';
@@ -27,6 +27,7 @@ const SearchBar = ({ history, location }) => {
     getInitialSearchTextFromLocation({ location }),
   );
   const [autocompleteItems, setAutocompleteItems] = useState([]);
+  const eleRef = useRef(null);
 
   const performSearch = useCallback(
     debounce(async searchText => {
@@ -34,12 +35,18 @@ const SearchBar = ({ history, location }) => {
         try {
           const response = await fetchCompanyCandidates({ key: searchText });
           const autocompleteItems = response.map(({ _id: { name } }) => name);
-          setAutocompleteItems(autocompleteItems);
+          if (eleRef.current) {
+            setAutocompleteItems(autocompleteItems);
+          }
         } catch (err) {
-          setAutocompleteItems([]);
+          if (eleRef.current) {
+            setAutocompleteItems([]);
+          }
         }
       } else {
-        setAutocompleteItems([]);
+        if (eleRef.current) {
+          setAutocompleteItems([]);
+        }
       }
     }, 500),
     [setAutocompleteItems],
@@ -85,6 +92,7 @@ const SearchBar = ({ history, location }) => {
 
   return (
     <form
+      ref={eleRef}
       className={cn(styles.section, styles.searchbar)}
       onSubmit={handleFormSubmit}
     >
