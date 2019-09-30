@@ -54,6 +54,7 @@
   flex: 1 0 auto;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   @media (max-width: 850px) {
     opacity: 0;
@@ -74,12 +75,17 @@
       visibility: visible;
     }
   }
+
+  .searchbar {
+    flex: 1;
+  }
 }
 
 .buttonsArea {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 16px;
 }
 
 .leaveDataBtn {

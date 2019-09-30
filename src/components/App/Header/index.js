@@ -13,6 +13,7 @@ import SiteMenu from './SiteMenu';
 import Top from './Top';
 import EmailVerificationTop from './Top/EmailVerificationTop';
 import ProgressTop from './Top/ProgressTop';
+import Searchbar from './Searchbar';
 
 import authStatus from '../../../constants/authStatus';
 import { shareLink } from '../../../constants/dataProgress';
@@ -133,6 +134,7 @@ class Header extends React.Component {
                 [styles.isNavOpen]: this.state.isNavOpen,
               })}
             >
+              <Searchbar className={styles.searchbar} />
               <SiteMenu
                 isLogin={this.props.auth.get('status') === authStatus.CONNECTED}
               />
