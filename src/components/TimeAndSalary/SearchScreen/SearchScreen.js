@@ -48,7 +48,7 @@ function getTitle(keyword) {
     if (keyword.length < keywordMinLength) {
       return '請輸入更長的搜尋關鍵字';
     } else {
-      return `查詢「${keyword}」薪水的結果`;
+      return `查詢「${keyword}」的結果`;
     }
   } else {
     return '請輸入搜尋條件！';
