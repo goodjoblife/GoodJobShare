@@ -166,7 +166,7 @@ class Header extends React.Component {
                         </ul>
                       }
                     >
-                      <div className={styles.loginBtn}>
+                      <div className={styles.userNameBtn}>
                         {this.props.auth.getIn(['user', 'name'])}
                       </div>
                     </PopoverToggle>
