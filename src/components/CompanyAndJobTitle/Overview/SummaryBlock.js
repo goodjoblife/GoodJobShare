@@ -10,7 +10,11 @@ const SummaryBlock = () => (
       <BarChartView />
     </div>
     <div className={styles.averageWeekWorkTime}>
-      <AverageWeekWorkTimeView />
+      <AverageWeekWorkTimeView
+        averageWeekWorkHours={45}
+        frequentOverTimeRatio={0.6}
+        fewOverTimeRatio={0.2}
+      />
     </div>
   </div>
 );

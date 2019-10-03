@@ -14,3 +14,33 @@
     margin-left: 21px;
   }
 }
+
+.averageWeekWorkTimeView {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+
+  .title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.61;
+    color: #333;
+  }
+
+  .body {
+    font-size: 16px;
+    color: #333;
+
+    em {
+      font-size: 71px;
+    }
+  }
+
+  .footer {
+    font-size: 14px;
+    line-height: 1.64;
+    color: #969696;
+  }
+}
