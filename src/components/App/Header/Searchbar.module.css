@@ -1,3 +1,5 @@
+@value main-yellow from "common/variables.module.css";
+
 .searchbar {
   display: flex;
   align-items: center;
@@ -12,6 +14,7 @@
     letter-spacing: 0.51px;
     color: #ffffff;
     line-height: 32px;
+    transition: border-color 0.4s;
   }
 
   .searchBtn {
@@ -28,6 +31,19 @@
       transition-property: fill;
       transition-duration: 0.3s;
       fill: #ffffff;
+    }
+  }
+
+  &:hover,
+  &.active {
+    .textInput {
+      border-color: main-yellow;
+    }
+
+    .searchBtn {
+      svg {
+        fill: main-yellow;
+      }
     }
   }
 }

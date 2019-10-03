@@ -21,6 +21,15 @@ const Searchbar = ({ className, history, location }) => {
     getInitialSearchTextFromLocation(location),
   );
   const [autocompleteItems, setAutocompleteItems] = useState([]);
+  const [isActive, setActive] = useState(false);
+
+  const handleFormFocus = useCallback(() => {
+    setActive(true);
+  }, [setActive]);
+
+  const handleFormBlur = useCallback(() => {
+    setActive(false);
+  }, [setActive]);
 
   const performSearchText = useCallback(
     debounce(async searchText => {
@@ -80,8 +89,10 @@ const Searchbar = ({ className, history, location }) => {
 
   return (
     <form
-      className={cn(className, styles.searchbar)}
+      className={cn(className, styles.searchbar, { [styles.active]: isActive })}
       onSubmit={handleFormSubmit}
+      onFocus={handleFormFocus}
+      onBlur={handleFormBlur}
     >
       <AutocompleteTextInput
         className={styles.textInput}
