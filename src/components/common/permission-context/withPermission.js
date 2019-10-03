@@ -44,16 +44,16 @@ const withPermission = compose(
           return;
         } else if (experienceDetailRegex.test(pathname)) {
           // 假如是單篇經驗分享頁，localStorage 沒值的話，不更新觀看權限 state。因此不會做阻擋，但是馬上就更新 localStorage。
-          const viewedExperirenceDetail = localStorage.getItem(
-            'viewedExperirenceDetail',
+          const viewedExperienceDetail = localStorage.getItem(
+            'viewedExperienceDetail',
           );
 
-          if (viewedExperirenceDetail === null) {
-            localStorage.setItem('viewedExperirenceDetail', true);
-            setCanView({ canViewExperirenceDetail: true });
+          if (viewedExperienceDetail === null) {
+            localStorage.setItem('viewedExperienceDetail', true);
+            setCanView({ canViewExperienceDetail: true });
             return;
           } else {
-            setCanView({ canViewExperirenceDetail: hasPermission });
+            setCanView({ canViewExperienceDetail: hasPermission });
             return;
           }
         } else if (salaryWorkTimeRegex.test(pathname)) {
