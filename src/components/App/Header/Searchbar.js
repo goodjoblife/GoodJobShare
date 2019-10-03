@@ -14,7 +14,7 @@ import { getCompaniesSearch } from '../../../apis/companySearchApi';
 const searchType = 'company';
 
 const getInitialSearchTextFromLocation = location =>
-  qs.parse(location.search, { ignoreQueryPrefix: true }).q;
+  qs.parse(location.search, { ignoreQueryPrefix: true }).q || '';
 
 const Searchbar = ({ className, history, location }) => {
   const [searchText, setSearchText] = useState(
