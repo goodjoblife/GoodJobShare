@@ -13,6 +13,8 @@ import { getCompaniesSearch } from '../../../apis/companySearchApi';
 
 const searchType = 'company';
 
+const DEBOUNCE_WAIT_TIME = 800;
+
 const getInitialSearchTextFromLocation = location =>
   qs.parse(location.search, { ignoreQueryPrefix: true }).q || '';
 
@@ -55,7 +57,7 @@ const Searchbar = ({ className, placeholder, history, location }) => {
           setAutocompleteItems([]);
         }
       }
-    }, 800),
+    }, DEBOUNCE_WAIT_TIME),
     [],
   );
 
