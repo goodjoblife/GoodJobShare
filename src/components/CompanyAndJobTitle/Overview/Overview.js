@@ -10,6 +10,7 @@ import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import { tabType as TAB_TYPE } from '../../../constants/companyJobTitle';
+import SummaryBlock from './SummaryBlock';
 
 const SALARY_WORK_TIMES_LIMIT = 5;
 const WORK_EXPERIENCES_LIMIT = 3;
@@ -34,6 +35,7 @@ const Overview = ({
       pageName={pageName}
       tabType={TAB_TYPE.TIME_AND_SALARY}
     >
+      <SummaryBlock />
       <WorkingHourTable
         data={salaryWorkTimes.slice(0, SALARY_WORK_TIMES_LIMIT)}
         hideContent={!canViewTimeAndSalary}
