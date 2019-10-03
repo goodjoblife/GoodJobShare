@@ -11,6 +11,7 @@ import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
 import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
 import NotFound from '../common/NotFound';
+import { withPermission } from 'common/permission-context';
 
 import { tabType, pageType } from '../../constants/companyJobTitle';
 import jobTitleActions from '../../actions/jobTitle';
@@ -111,6 +112,7 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
 const enhance = compose(
   ssr,
   withRouteParameter,
+  withPermission,
   withProps(({ match: { params: { jobTitle } } }) => ({
     pageType: pageType.JOB_TITLE,
     pageName: jobTitle,

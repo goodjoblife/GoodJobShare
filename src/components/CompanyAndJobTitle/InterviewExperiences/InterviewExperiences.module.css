@@ -51,6 +51,12 @@
       height: 16px;
       fill: #adadad;
     }
+
+    &.locked {
+      svg {
+        color: #ed0d5e;
+      }
+    }
   }
 
   .rating {
@@ -116,6 +122,10 @@
 
     &:hover {
       text-decoration: none;
+    }
+
+    &.locked {
+      color: #ed0d5e;
     }
   }
 }

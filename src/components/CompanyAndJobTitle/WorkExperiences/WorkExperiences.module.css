@@ -43,7 +43,25 @@
     align-items: center;
     font-size: 15px;
     color: #424242;
+  }
 
+  .salary {
+    svg {
+      margin-right: 7px;
+      width: 16px;
+      height: 16px;
+      fill: #adadad;
+    }
+
+    &.locked {
+      svg {
+        color: #ed0d5e;
+      }
+    }
+  }
+
+  .weekWorkTime,
+  .recommendToOthers {
     svg {
       margin-right: 7px;
       width: 16px;
@@ -107,6 +125,10 @@
 
     &:hover {
       text-decoration: none;
+    }
+
+    &.locked {
+      color: #ed0d5e;
     }
   }
 }

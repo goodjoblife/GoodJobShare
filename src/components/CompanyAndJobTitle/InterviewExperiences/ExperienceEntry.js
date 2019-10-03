@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faLock from '@fortawesome/fontawesome-free-solid/faLock';
+
 import { Heading, P } from 'common/base';
 import i from 'common/icons';
 import styles from './InterviewExperiences.module.css';
-import { formatCreatedAt, formatSalary } from './helper';
+import { formatCreatedAt, formatSalary, formatSalaryRange } from './helper';
 import Rating from './Rating';
 
 const createLinkTo = id => ({
@@ -27,6 +30,7 @@ const ExperienceEntry = ({
     sections: [section],
   },
   size,
+  canViewExperienceDetail,
 }) => (
   <div className={cn(styles.container, styles[size])}>
     <section className={styles.contentWrapper}>
@@ -35,9 +39,22 @@ const ExperienceEntry = ({
           面試經驗 · {formatCreatedAt(createdAt)}
         </P>
         {salary && (
-          <div className={styles.salary}>
-            <i.Coin />
-            {formatSalary(salary)}
+          <div
+            className={cn(styles.salary, {
+              [styles.locked]: !canViewExperienceDetail,
+            })}
+          >
+            {canViewExperienceDetail ? (
+              <React.Fragment>
+                <i.Coin />
+                {formatSalary(salary)}
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <FontAwesomeIcon icon={faLock} />
+                {formatSalaryRange(salary)}
+              </React.Fragment>
+            )}
           </div>
         )}
         <div className={styles.rating}>
@@ -57,8 +74,13 @@ const ExperienceEntry = ({
         <span className={styles.snippet}>
           {section.content.slice(0, SNIPPET_SIZE)}....
         </span>
-        <Link to={createLinkTo(id)} className={styles.readmore}>
-          閱讀更多
+        <Link
+          to={createLinkTo(id)}
+          className={cn(styles.readmore, {
+            [styles.locked]: !canViewExperienceDetail,
+          })}
+        >
+          {`閱讀更多${canViewExperienceDetail ? '' : '並解鎖'}`}
         </Link>
       </div>
     </section>
@@ -68,6 +90,7 @@ const ExperienceEntry = ({
 ExperienceEntry.propTypes = {
   data: PropTypes.object.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
+  canViewExperienceDetail: PropTypes.bool.isRequired,
 };
 
 ExperienceEntry.defaultProps = {
