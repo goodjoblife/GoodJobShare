@@ -16,7 +16,7 @@ const searchType = 'company';
 const getInitialSearchTextFromLocation = location =>
   qs.parse(location.search, { ignoreQueryPrefix: true }).q || '';
 
-const Searchbar = ({ className, history, location }) => {
+const Searchbar = ({ className, placeholder, history, location }) => {
   const [searchText, setSearchText] = useState(
     getInitialSearchTextFromLocation(location),
   );
@@ -104,7 +104,7 @@ const Searchbar = ({ className, history, location }) => {
     >
       <AutocompleteTextInput
         className={styles.textInput}
-        placeholder="輸入公司、職稱查詢面試及薪水資料"
+        placeholder={placeholder}
         value={searchText}
         onChange={handleChange}
         autocompleteItems={autocompleteItems}
@@ -121,6 +121,7 @@ const Searchbar = ({ className, history, location }) => {
 
 Searchbar.propTypes = {
   className: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
 };

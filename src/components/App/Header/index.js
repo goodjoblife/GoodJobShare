@@ -133,7 +133,18 @@ class Header extends React.Component {
                 <Glike />
               </Link>
             </div>
-            <Searchbar className={styles.searchbar} />
+            <div className={styles.searchbarWrapper}>
+              <Searchbar
+                className={styles.searchbar}
+                placeholder="輸入公司、職稱查詢面試及薪水資料"
+              />
+            </div>
+            <div className={cn(styles.searchbarWrapper, styles.mobile)}>
+              <Searchbar
+                className={styles.searchbar}
+                placeholder="輸入公司、職稱查詢"
+              />
+            </div>
             <nav
               className={cn(styles.nav, {
                 [styles.isNavOpen]: this.state.isNavOpen,

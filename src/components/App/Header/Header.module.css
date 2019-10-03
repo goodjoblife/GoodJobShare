@@ -33,6 +33,23 @@
   }
 }
 
+.searchbarWrapper {
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 850px) {
+    display: none;
+  }
+
+  &.mobile {
+    display: none;
+
+    @media (max-width: 850px) {
+      display: flex;
+    }
+  }
+}
+
 .logo,
 .logoSm {
   > a {
