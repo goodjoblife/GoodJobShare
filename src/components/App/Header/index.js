@@ -5,7 +5,7 @@ import cn from 'classnames';
 import ReactGA from 'react-ga';
 import { compose } from 'recompose';
 import { Wrapper } from 'common/base';
-import { GjLogo } from 'common/icons';
+import { GjLogo, Glike } from 'common/icons';
 import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
 import styles from './Header.module.css';
@@ -128,13 +128,24 @@ class Header extends React.Component {
                 <GjLogo />
               </Link>
             </div>
-            <ShareButton onClick={this.onClickShareData} isMobileButton />
+            <div className={styles.logoSm}>
+              <Link to="/" title="GoodJob 職場透明化運動">
+                <Glike />
+              </Link>
+            </div>
+            <Searchbar className={styles.searchbar} />
             <nav
               className={cn(styles.nav, {
                 [styles.isNavOpen]: this.state.isNavOpen,
               })}
             >
-              <Searchbar className={styles.searchbar} />
+              <Link
+                to="/"
+                className={styles.logo}
+                title="GoodJob 職場透明化運動"
+              >
+                <GjLogo />
+              </Link>
               <SiteMenu
                 isLogin={this.props.auth.get('status') === authStatus.CONNECTED}
               />
@@ -204,23 +215,17 @@ HeaderButton.propTypes = {
   toggle: PropTypes.func.isRequired,
 };
 
-const ShareButton = ({ isMobileButton, onClick }) => (
+const ShareButton = ({ className, onClick }) => (
   <Link
     to="/share"
-    className={cn(styles.leaveDataBtn, {
-      [styles.isMobileButton]: isMobileButton,
-    })}
+    className={cn(className, styles.leaveDataBtn)}
     onClick={onClick}
   >
     立即分享
   </Link>
 );
 ShareButton.propTypes = {
-  isMobileButton: PropTypes.bool,
   onClick: PropTypes.func,
-};
-ShareButton.defaultProps = {
-  isMobileButton: false,
 };
 
 const hoc = compose(withPermission);
