@@ -49,11 +49,6 @@
     padding-right: 16px;
   }
 
-  @media (max-width: 850px) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
   &.expanded {
     border-bottom: 1px solid yellow-bar;
   }
@@ -100,6 +95,7 @@
 
 .averageBlockValue {
   font-size: 1.1em;
+  white-space: nowrap;
 }
 
 .content {
@@ -137,15 +133,6 @@
   font-size: 0.82em;
   letter-spacing: 0.05em;
   margin-top: 8px;
-}
-
-.averageBlock {
-}
-
-.averageBlockHeading {
-}
-
-.averageBlockValue {
 }
 
 .permissionBlockWorkingHour {
