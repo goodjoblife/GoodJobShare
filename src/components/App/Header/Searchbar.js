@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { withRouter } from 'react-router-dom';
@@ -22,6 +22,7 @@ const Searchbar = ({ className, history, location }) => {
   );
   const [autocompleteItems, setAutocompleteItems] = useState([]);
   const [isActive, setActive] = useState(false);
+  const eleRef = useRef();
 
   const handleFormFocus = useCallback(() => {
     setActive(true);
@@ -41,12 +42,18 @@ const Searchbar = ({ className, history, location }) => {
             key: id,
             label: Array.isArray(name) ? name.shift() : name,
           }));
-          setAutocompleteItems(items);
+          if (eleRef.current) {
+            setAutocompleteItems(items);
+          }
         } catch (err) {
-          setAutocompleteItems([]);
+          if (eleRef.current) {
+            setAutocompleteItems([]);
+          }
         }
       } else {
-        setAutocompleteItems([]);
+        if (eleRef.current) {
+          setAutocompleteItems([]);
+        }
       }
     }, 800),
     [],
@@ -89,6 +96,7 @@ const Searchbar = ({ className, history, location }) => {
 
   return (
     <form
+      ref={eleRef}
       className={cn(className, styles.searchbar, { [styles.active]: isActive })}
       onSubmit={handleFormSubmit}
       onFocus={handleFormFocus}
