@@ -9,3 +9,13 @@
 
   border-bottom: solid 1px border-gray;
 }
+
+.page {
+  display: flex;
+
+  .chartWrapper {
+    &:not(:last-child) {
+      margin-right: 46px;
+    }
+  }
+}
