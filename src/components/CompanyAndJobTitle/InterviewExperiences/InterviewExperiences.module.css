@@ -12,15 +12,6 @@
     margin-bottom: 0;
   }
 
-  @media (min-width: 1025px) {
-    &:hover {
-      box-shadow: 1px 1px 11px rgba(0, 0, 0, 0.25);
-      .heading {
-        color: link-blue;
-      }
-    }
-  }
-
   @media (max-width: 550px) {
     margin-left: calc(page-gutter-s * -1);
     margin-right: calc(page-gutter-s * -1);
@@ -29,10 +20,45 @@
 }
 
 .contentWrapper {
-  padding: 15px 29px 21px 29px;
+  padding: 16px 28px;
 
   @media (max-width: 1024px) {
     padding: 16px;
+  }
+}
+
+.labels {
+  display: flex;
+
+  .date {
+    flex: 1;
+    color: #adadad;
+  }
+
+  .salary,
+  .rating {
+    margin-left: 35px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #424242;
+  }
+
+  .salary {
+    svg {
+      margin-right: 7px;
+      width: 16px;
+      height: 16px;
+      fill: #adadad;
+    }
+  }
+
+  .rating {
+    svg {
+      cursor: auto;
+      width: 24px;
+      height: 24px;
+    }
   }
 }
 
@@ -50,7 +76,7 @@
   }
 
   .contentWrapper {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
   }
 }
 
@@ -67,32 +93,29 @@
     font-size: 0.9em;
   }
 
-  .labels {
-    color: main-gray;
-    margin-bottom: 0;
-  }
-
-  .company {
-    display: none;
-  }
-
   .heading {
     margin-top: 12px;
     margin-bottom: 12px;
   }
 }
 
-.rateButtons {
-  cursor: auto;
-  display: inline-flex;
-  align-items: center;
+.snippetWrapper {
+  display: flex;
+  align-items: flex-end;
 
-  .rateButton {
-    width: 23px;
-    height: 23px;
+  .snippet {
+    flex: 1;
+    word-break: break-all;
+    padding-right: 1em;
   }
-}
 
-.autoCursor {
-  cursor: auto;
+  .readmore {
+    font-weight: 600;
+    color: #325bbd;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }

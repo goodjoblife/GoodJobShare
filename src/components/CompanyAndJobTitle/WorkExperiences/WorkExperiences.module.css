@@ -12,15 +12,6 @@
     margin-bottom: 0;
   }
 
-  @media (min-width: 1025px) {
-    &:hover {
-      box-shadow: 1px 1px 11px rgba(0, 0, 0, 0.25);
-      .heading {
-        color: link-blue;
-      }
-    }
-  }
-
   @media (max-width: 550px) {
     margin-left: calc(page-gutter-s * -1);
     margin-right: calc(page-gutter-s * -1);
@@ -29,10 +20,36 @@
 }
 
 .contentWrapper {
-  padding: 15px 29px 21px 29px;
+  padding: 16px 28px;
 
   @media (max-width: 1024px) {
     padding: 16px;
+  }
+}
+
+.labels {
+  display: flex;
+
+  .date {
+    flex: 1;
+    color: #adadad;
+  }
+
+  .weekWorkTime,
+  .salary,
+  .recommendToOthers {
+    margin-left: 35px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #424242;
+
+    svg {
+      margin-right: 7px;
+      width: 16px;
+      height: 16px;
+      fill: #adadad;
+    }
   }
 }
 
@@ -50,7 +67,7 @@
   }
 
   .contentWrapper {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
   }
 }
 
@@ -67,25 +84,29 @@
     font-size: 0.9em;
   }
 
-  .labels {
-    color: main-gray;
-    margin-bottom: 0;
-  }
-
-  .company {
-    display: none;
-  }
-
   .heading {
     margin-top: 12px;
     margin-bottom: 12px;
   }
 }
 
-.recommendIcon {
-  svg {
-    width: 20px;
-    height: 20px;
-    margin-right: 6.5px;
+.snippetWrapper {
+  display: flex;
+  align-items: flex-end;
+
+  .snippet {
+    flex: 1;
+    word-break: break-all;
+    padding-right: 1em;
+  }
+
+  .readmore {
+    font-weight: 600;
+    color: #325bbd;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 }

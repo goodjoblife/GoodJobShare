@@ -7,6 +7,8 @@ export const formatCreatedAt = createdAt => {
   return `${year} 年 ${month} 月`;
 };
 
+export const formatWeekWorkTime = weekWorkTime => `${weekWorkTime} 小時 / 週`;
+
 export const formatSalary = salary => {
   if (!salary) {
     return '-';

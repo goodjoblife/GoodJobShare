@@ -6,71 +6,64 @@ import { Heading, P } from 'common/base';
 import i from 'common/icons';
 import styles from './InterviewExperiences.module.css';
 import { formatCreatedAt, formatSalary } from './helper';
-import Label from '../Label';
 import Rating from './Rating';
-import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 
 const createLinkTo = id => ({
   pathname: `/experiences/${id}`,
   state: { backable: true },
 });
 
-const ExperienceEntry = ({ pageType, data, size }) => {
-  const {
+const SNIPPET_SIZE = 30;
+
+const ExperienceEntry = ({
+  pageType,
+  data: {
     id,
     company: { name: companyName } = {},
     job_title: { name: jobTitle } = {},
-    region,
     created_at: createdAt,
     salary,
-    title,
     overall_rating: overallRating,
-  } = data;
-
-  return (
-    <Link to={createLinkTo(id)} className={cn(styles.container, styles[size])}>
-      <section className={styles.contentWrapper}>
-        <P size="s">{formatCreatedAt(createdAt)}</P>
-
-        <Heading
-          Tag="h2"
-          size={size === 'l' ? 'sl' : 'sm'}
-          className={styles.heading}
-        >
-          {title}
-        </Heading>
-
-        <div className={styles.labels}>
-          {pageType !== PAGE_TYPE.COMPANY && (
-            <Label
-              text={companyName}
-              Icon={i.Company}
-              className={styles.company}
-            />
-          )}
-          {pageType !== PAGE_TYPE.JOB_TITLE && (
-            <Label text={jobTitle} Icon={i.User} className={styles.position} />
-          )}
-          {region && (
-            <Label
-              text={region}
-              Icon={i.Location}
-              className={styles.location}
-            />
-          )}
-          {salary && (
-            <Label
-              className={styles.salary}
-              text={formatSalary(salary)}
-              Icon={i.Coin}
-            />
-          )}
+    sections: [section],
+  },
+  size,
+}) => (
+  <div className={cn(styles.container, styles[size])}>
+    <section className={styles.contentWrapper}>
+      <div className={styles.labels}>
+        <P size="s" className={styles.date}>
+          面試經驗 · {formatCreatedAt(createdAt)}
+        </P>
+        {salary && (
+          <div className={styles.salary}>
+            <i.Coin />
+            {formatSalary(salary)}
+          </div>
+        )}
+        <div className={styles.rating}>
           <Rating rate={overallRating} />
         </div>
-      </section>
-    </Link>
-  );
-};
+      </div>
+
+      <Heading
+        Tag="h2"
+        size={size === 'l' ? 'sl' : 'sm'}
+        className={styles.heading}
+      >
+        {companyName} {jobTitle}
+      </Heading>
+
+      <div className={styles.snippetWrapper}>
+        <span className={styles.snippet}>
+          {section.content.slice(0, SNIPPET_SIZE)}....
+        </span>
+        <Link to={createLinkTo(id)} className={styles.readmore}>
+          閱讀更多
+        </Link>
+      </div>
+    </section>
+  </div>
+);
 
 ExperienceEntry.propTypes = {
   data: PropTypes.object.isRequired,
