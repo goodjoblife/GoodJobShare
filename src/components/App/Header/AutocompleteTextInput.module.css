@@ -1,7 +1,7 @@
 .menu {
   display: none;
   position: absolute;
-  z-index: 99;
+  z-index: 100;
   border: 1px solid #b4b4b4;
   background: #fff;
   max-height: 150px;
