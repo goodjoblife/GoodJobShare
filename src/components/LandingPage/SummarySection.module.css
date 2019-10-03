@@ -1,0 +1,11 @@
+@value border-gray from "common/variables.module.css";
+
+.summarySection {
+  display: flex;
+  justify-content: center;
+
+  padding-top: 72px;
+  padding-bottom: 56px;
+
+  border-bottom: solid 1px border-gray;
+}

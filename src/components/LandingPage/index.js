@@ -15,6 +15,7 @@ import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
 import Dashboard from './Dashboard';
 import StaticHelmet from 'common/StaticHelmet';
+import SummarySection from './SummarySection';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
   return Promise.all([
@@ -53,6 +54,7 @@ const LandingPage = ({
         timeAndSalaryCount={timeAndSalaryCount}
         laborRightsCount={laborRightsCount}
       />
+      <SummarySection />
       <ShareExpSection heading="現在就留下你的資料" />
       <Section padding bg="white">
         <Wrapper size="l">
