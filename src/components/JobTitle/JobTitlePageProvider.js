@@ -124,10 +124,18 @@ const enhance = compose(
   lifecycle({
     componentDidMount() {
       this.props.fetchJobTitle(this.props.pageName);
+      this.props.fetchPermission();
     },
     componentDidUpdate(prevProps) {
       if (this.props.pageName !== prevProps.pageName) {
         this.props.fetchJobTitle(this.props.pageName);
+      }
+
+      if (
+        this.props.pageName !== prevProps.pageName ||
+        this.props.pageType !== prevProps.pageType
+      ) {
+        this.props.fetchPermission();
       }
     },
   }),
