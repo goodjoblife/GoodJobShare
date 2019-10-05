@@ -1,19 +1,13 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { withRouter } from 'react-router-dom';
 import qs from 'qs';
 
-import { debounce } from 'utils/streamUtils';
-
-import AutocompleteTextInput from './AutocompleteTextInput';
+import AutoCompleteCompanyNameTextInput from 'common/form/AutoCompleteTextInput_new/AutoCompleteCompanyNameTextInput';
 import Magnifier from '../../common/icons/Magnifiner';
 import styles from './Searchbar.module.css';
-import { getCompaniesSearch } from '../../../apis/companySearchApi';
-
 const searchType = 'company';
-
-const DEBOUNCE_WAIT_TIME = 800;
 
 const getInitialSearchTextFromLocation = location =>
   qs.parse(location.search, { ignoreQueryPrefix: true }).q || '';
@@ -22,9 +16,7 @@ const Searchbar = ({ className, placeholder, history, location }) => {
   const [searchText, setSearchText] = useState(
     getInitialSearchTextFromLocation(location),
   );
-  const [autocompleteItems, setAutocompleteItems] = useState([]);
   const [isActive, setActive] = useState(false);
-  const eleRef = useRef();
 
   const handleFormFocus = useCallback(() => {
     setActive(true);
@@ -33,42 +25,6 @@ const Searchbar = ({ className, placeholder, history, location }) => {
   const handleFormBlur = useCallback(() => {
     setActive(false);
   }, [setActive]);
-
-  const performSearchText = useCallback(
-    debounce(async searchText => {
-      if (searchText) {
-        try {
-          // TODO: search both company & job-title
-          const response = await getCompaniesSearch({ key: searchText });
-          const items = response.map(({ name, id }) => ({
-            key: id,
-            label: Array.isArray(name) ? name.shift() : name,
-          }));
-          if (eleRef.current) {
-            setAutocompleteItems(items);
-          }
-        } catch (err) {
-          if (eleRef.current) {
-            setAutocompleteItems([]);
-          }
-        }
-      } else {
-        if (eleRef.current) {
-          setAutocompleteItems([]);
-        }
-      }
-    }, DEBOUNCE_WAIT_TIME),
-    [],
-  );
-
-  const handleChange = useCallback(
-    e => {
-      const searchText = e.target.value;
-      setSearchText(searchText);
-      performSearchText(searchText);
-    },
-    [setSearchText, performSearchText],
-  );
 
   const gotoSearchResult = useCallback(
     searchText => {
@@ -81,13 +37,6 @@ const Searchbar = ({ className, placeholder, history, location }) => {
     [history],
   );
 
-  const handleAutocompleteItemSelect = useCallback(
-    e => {
-      gotoSearchResult(e.label);
-    },
-    [gotoSearchResult],
-  );
-
   const handleFormSubmit = useCallback(
     e => {
       e.preventDefault();
@@ -98,21 +47,17 @@ const Searchbar = ({ className, placeholder, history, location }) => {
 
   return (
     <form
-      ref={eleRef}
       className={cn(className, styles.searchbar, { [styles.active]: isActive })}
       onSubmit={handleFormSubmit}
       onFocus={handleFormFocus}
       onBlur={handleFormBlur}
     >
-      <AutocompleteTextInput
+      <AutoCompleteCompanyNameTextInput
         className={styles.textInput}
         placeholder={placeholder}
         value={searchText}
-        onChange={handleChange}
-        autocompleteItems={autocompleteItems}
-        autocompleteItemKeySelector={item => item.key}
-        autocompleteItemLabelSelector={item => item.label}
-        onAutocompleteItemSelect={handleAutocompleteItemSelect}
+        onChange={setSearchText}
+        onCompanyNameSelected={gotoSearchResult}
       />
       <button type="submit" className={styles.searchBtn}>
         <Magnifier />
