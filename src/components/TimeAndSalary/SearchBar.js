@@ -6,7 +6,7 @@ import ReactPixel from 'react-facebook-pixel';
 import { withRouter } from 'react-router-dom';
 
 import { debounce } from 'utils/streamUtils';
-import AutoCompleteTextInput from './AutoCompleteTextInput';
+import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput_new';
 import Magnifiner from 'common/icons/Magnifiner';
 
 import styles from './SearchBar.module.css';
@@ -75,7 +75,7 @@ const SearchBar = ({ history, location }) => {
     [history],
   );
 
-  const handleAutocompleteItemSelect = useCallback(
+  const handleAutocompleteItemSelected = useCallback(
     e => {
       gotoSearchResult(e);
     },
@@ -103,7 +103,7 @@ const SearchBar = ({ history, location }) => {
         onChange={handleSearchTextChange}
         placeholder="輸入公司、職稱查詢"
         autocompleteItems={autocompleteItems}
-        onAutocompleteItemSelect={handleAutocompleteItemSelect}
+        onAutocompleteItemSelected={handleAutocompleteItemSelected}
       />
       <button type="submit" className={styles.searchBtn}>
         <Magnifiner />

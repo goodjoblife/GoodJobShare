@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Autocomplete from 'react-autocomplete';
 import cn from 'classnames';
 
-import styles from './AutoCompleteTextInput.module.css';
+import styles from './styles.module.css';
 
 const AutoCompleteTextInput = ({
   wrapperClassName,
@@ -13,7 +13,7 @@ const AutoCompleteTextInput = ({
   autocompleteItems,
   autocompleteItemKeySelector,
   autocompleteItemLabelSelector,
-  onAutocompleteItemSelect,
+  onAutocompleteItemSelected,
   ...inputProps
 }) => (
   <Autocomplete
@@ -50,7 +50,7 @@ const AutoCompleteTextInput = ({
       </div>
     )}
     getItemValue={autocompleteItemLabelSelector}
-    onSelect={onAutocompleteItemSelect}
+    onSelect={onAutocompleteItemSelected}
     autoHighlight={false}
   />
 );
@@ -63,7 +63,7 @@ AutoCompleteTextInput.propTypes = {
   autocompleteItems: PropTypes.array.isRequired,
   autocompleteItemKeySelector: PropTypes.func,
   autocompleteItemLabelSelector: PropTypes.func,
-  onAutocompleteItemSelect: PropTypes.func.isRequired,
+  onAutocompleteItemSelected: PropTypes.func.isRequired,
 };
 
 AutoCompleteTextInput.defaultProps = {
