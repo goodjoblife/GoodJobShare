@@ -7,7 +7,6 @@ import { compose, setStatic, lifecycle } from 'recompose';
 import { Section, Wrapper, Heading } from 'common/base';
 import ShareExpSection from 'common/ShareExpSection';
 import Columns from 'common/Columns';
-import FanPageBlock from 'common/FanPageBlock';
 import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
 import { queryPopularExperiences } from '../../actions/popularExperiences';
 import { queryMenu } from '../../actions/laborRights';
@@ -15,6 +14,7 @@ import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
 import Dashboard from './Dashboard';
 import StaticHelmet from 'common/StaticHelmet';
+import CallToActionBlock from './CallToActionBlock';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
   return Promise.all([
@@ -92,8 +92,8 @@ const LandingPage = ({
           </Section>
         </Wrapper>
       </Section>
-      <Section padding bg="white">
-        <FanPageBlock />
+      <Section padding>
+        <CallToActionBlock />
       </Section>
     </main>
   );

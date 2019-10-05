@@ -8,7 +8,7 @@
 
 .menu {
   display: none;
-  position: absolute;
+  position: fixed;
   z-index: 99;
   border: 1px solid #b4b4b4;
   max-height: 150px;
