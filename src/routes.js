@@ -81,7 +81,9 @@ const routes = [
             exact: true,
           },
           {
-            component: () => <Redirect to="/share/interview/step1" />,
+            component: ({ location: { search } }) => (
+              <Redirect to={`/share/interview/step1${search}`} />
+            ),
           },
         ],
       },
