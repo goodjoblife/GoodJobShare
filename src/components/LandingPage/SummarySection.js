@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Carousel from './Carousel';
+import Carousel from 'common/Carousel';
 import ChartWrapper from './ChartWrapper';
 import styles from './SummarySection.module.css';
 
