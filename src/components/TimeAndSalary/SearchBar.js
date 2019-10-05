@@ -1,201 +1,84 @@
-import React, { Component } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import R from 'ramda';
 import ReactPixel from 'react-facebook-pixel';
 import { withRouter } from 'react-router-dom';
 
-import Radio from 'common/form/Radio';
-import { debounce } from 'utils/streamUtils';
-import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput';
+import AutoCompleteCompanyNameTextInput from 'common/form/AutoCompleteTextInput_new/AutoCompleteCompanyNameTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
 
 import styles from './SearchBar.module.css';
-import searchBarStyles from '../ExperienceSearch/Searchbar.module.css';
-import {
-  fetchCompanyCandidates,
-  fetchJobTitleCandidates,
-} from '../../apis/timeAndSalaryApi';
-import {
-  searchCriteriaSelector,
-  searchKeywordSelector,
-} from './common/selectors';
+import { searchKeywordSelector } from './common/selectors';
 
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
-export const searchOptions = [
-  { label: '公司', value: 'company' },
-  { label: '職稱', value: 'job_title' },
-];
-
-const validateSearchType = R.when(
-  searchType => searchOptions.every(option => option.value !== searchType),
-  R.always(R.head(searchOptions).value),
+const getInitialSearchTextFromLocation = R.compose(
+  R.defaultTo(''),
+  searchKeywordSelector,
 );
 
-const validateKeyword = R.when(
-  keyword => typeof keyword !== 'string',
-  R.always(''),
-);
+const searchType = 'company';
 
-class SearchBar extends Component {
-  static propTypes = {
-    history: PropTypes.object.isRequired,
-  };
-  constructor(props) {
-    super(props);
-    this.handleTypeChange = this.handleTypeChange.bind(this);
-    this.handleKeywordChange = this.handleKeywordChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+const SearchBar = ({ history, location }) => {
+  const [searchText, setSearchText] = useState(
+    getInitialSearchTextFromLocation({ location }),
+  );
 
-  state = {
-    searchType: validateSearchType(searchCriteriaSelector(this.props)),
-    keyword: validateKeyword(searchKeywordSelector(this.props)),
-    candidates: [],
-  };
-
-  _isMounted = true;
-
-  componentDidUpdate(prevProps) {
-    if (
-      searchCriteriaSelector(prevProps) !==
-        searchCriteriaSelector(this.props) ||
-      searchKeywordSelector(prevProps) !== searchKeywordSelector(this.props)
-    ) {
-      const searchType = searchCriteriaSelector(this.props);
-      const keyword = searchKeywordSelector(this.props);
-      if (!this._isMounted) return;
-      this.setState({
-        searchType: validateSearchType(searchType),
-        keyword: validateKeyword(keyword),
-      });
-    }
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
-  handleTypeChange(e) {
-    if (!this._isMounted) return;
-    this.setState({
-      searchType: e.target.value,
-      candidates: [],
-    });
-  }
-
-  handleKeywordChange(e) {
-    if (!this._isMounted) return;
-    this.setState({
-      keyword: e.target.value,
-    });
-    this.searchKeyword(e.target.value);
-  }
-
-  fetchCandidates = value => {
-    const { searchType } = this.state;
-    if (searchType === 'company') {
-      return fetchCompanyCandidates({ key: value }).then(r =>
-        r.map(({ _id: { name } }) => ({
-          label: name,
-          value: name,
-        })),
+  const gotoSearchResult = useCallback(
+    searchText => {
+      history.push(
+        `/salary-work-times?q=${encodeURIComponent(
+          searchText,
+        )}&s_by=${searchType}`, // TODO: undetermined search-type
       );
-    }
-    return fetchJobTitleCandidates({ key: value }).then(r =>
-      r.map(({ _id: name }) => ({
-        label: name,
-        value: name,
-      })),
-    );
-  };
-
-  searchKeyword = debounce(value => {
-    if (!this._isMounted) return;
-    if (!value) {
-      this.setState({ candidates: [] });
-      return;
-    }
-    this.fetchCandidates(value)
-      .then(candidates => {
-        if (!this._isMounted) return;
-        this.setState({ candidates });
-      })
-      .catch(() => {
-        if (!this._isMounted) return;
-        this.setState({ candidates: [] });
+      ReactPixel.track('Search', {
+        search_string: searchText,
+        content_category: PIXEL_CONTENT_CATEGORY.SEARCH_TIME_AND_SALARY,
       });
-  }, 500);
+    },
+    [history],
+  );
 
-  handleSelectCandidate = keyword => {
-    if (!this._isMounted) return;
-    this.setState({
-      candidates: [],
-      keyword,
-    });
-  };
+  const handleAutocompleteItemSelected = useCallback(
+    e => {
+      gotoSearchResult(e);
+    },
+    [gotoSearchResult],
+  );
 
-  handleSubmit(e) {
-    e.preventDefault();
-    const { searchType, keyword } = this.state;
-    this.props.history.push(
-      `/salary-work-times?q=${encodeURIComponent(keyword)}&s_by=${searchType}`,
-    );
+  const handleFormSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      gotoSearchResult(searchText);
+    },
+    [gotoSearchResult, searchText],
+  );
 
-    ReactPixel.track('Search', {
-      search_string: keyword,
-      content_category: PIXEL_CONTENT_CATEGORY.SEARCH_TIME_AND_SALARY,
-    });
-  }
-  render() {
-    const { keyword, searchType, candidates } = this.state;
-    return (
-      <form
-        className={cn(
-          styles.section,
-          styles.showSearchbar,
-          searchBarStyles.searchbar,
-        )}
-        onSubmit={this.handleSubmit}
-      >
-        <div className={styles.type}>
-          {searchOptions.map(({ label, value }) => (
-            <Radio
-              key={value}
-              label={label}
-              value={value}
-              inline
-              checked={searchType === value}
-              onChange={this.handleTypeChange}
-            />
-          ))}
-        </div>
-        <div className={styles.form}>
-          <div className={searchBarStyles.search}>
-            <div className={styles.inputWrapper}>
-              <AutoCompleteTextInput
-                value={keyword}
-                onChange={this.handleKeywordChange}
-                placeholder={`以${
-                  searchType === 'company' ? '公司' : '職稱'
-                }搜尋`}
-                items={candidates}
-                getItemValue={R.prop('label')}
-                onSelect={this.handleSelectCandidate}
-              />
-              <button
-                type="submit"
-                className={cn(searchBarStyles.searchBtn, styles.searchBtn)}
-              >
-                <Magnifiner />
-              </button>
-            </div>
-          </div>
-        </div>
-      </form>
-    );
-  }
-}
+  return (
+    <form
+      className={cn(styles.section, styles.searchbar)}
+      onSubmit={handleFormSubmit}
+    >
+      <AutoCompleteCompanyNameTextInput
+        wrapperClassName={styles.textInputWrapper}
+        className={styles.textInput}
+        value={searchText}
+        onChange={setSearchText}
+        placeholder="輸入公司、職稱查詢"
+        onCompanyNameSelected={handleAutocompleteItemSelected}
+      />
+      <button type="submit" className={styles.searchBtn}>
+        <Magnifiner />
+        搜尋
+      </button>
+    </form>
+  );
+};
+
+SearchBar.propTypes = {
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+};
 
 export default withRouter(SearchBar);

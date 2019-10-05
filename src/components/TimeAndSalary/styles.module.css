@@ -16,6 +16,12 @@ $gray: #b4b4b4;
   }
 }
 
+.searchbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .whiteBackground {
   background-color: white;
 }
