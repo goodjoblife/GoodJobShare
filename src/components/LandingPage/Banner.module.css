@@ -21,6 +21,12 @@
       flex-direction: column;
     }
   }
+
+  @media (max-width: 550px) {
+    height: 397px;
+    padding-bottom: 100px;
+    background-position-x: center;
+  }
 }
 
 .image {
