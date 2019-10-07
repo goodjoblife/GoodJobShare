@@ -13,7 +13,7 @@ const ChartWrapper = ({ className, title, to, children }) => (
         看更多&gt;&gt;
       </Link>
     </div>
-    <div>{children}</div>
+    <div className={styles.body}>{children}</div>
   </div>
 );
 
