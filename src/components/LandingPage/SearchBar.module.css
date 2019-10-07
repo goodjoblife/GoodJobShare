@@ -38,6 +38,7 @@ $warning: #d50000;
   border: solid 1px #000;
   cursor: pointer;
   font-size: 14px;
+  background: #fff;
 
   svg {
     margin-right: 4px;

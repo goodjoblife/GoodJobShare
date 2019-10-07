@@ -6,6 +6,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #fffae1 url('https://image.goodjob.life/about-people.png')
+    no-repeat right bottom;
+  background-size: 347px;
 
   > div {
     display: flex;
