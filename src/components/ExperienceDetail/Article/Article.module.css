@@ -4,9 +4,19 @@ $padding: 40px;
 $paddingS: 16px;
 
 .container {
+  position: relative;
   display: flex;
   border: 1px solid border-gray;
   flex-direction: column;
+}
+
+.date {
+  position: absolute;
+  top: 16px;
+  right: 21px;
+  font-size: 14px;
+  line-height: 1.64;
+  color: #969696;
 }
 
 .info {
