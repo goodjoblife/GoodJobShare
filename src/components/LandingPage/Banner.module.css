@@ -9,6 +9,7 @@
   background: #fffae1 url('https://image.goodjob.life/about-people.png')
     no-repeat right bottom;
   background-size: 347px;
+  border-bottom: 1px solid #e5ba00;
 
   > div {
     display: flex;
