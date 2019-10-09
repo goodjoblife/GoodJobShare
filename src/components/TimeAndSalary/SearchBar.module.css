@@ -1,7 +1,4 @@
-$block-gutter-l: 40px;
 $below-small: 850px;
-$below-mobile: 550px;
-$block-gutter-m: 40px;
 $gray: #b4b4b4;
 $warning: #d50000;
 
@@ -19,16 +16,6 @@ $warning: #d50000;
 
   .searchBtn {
     margin-left: 11px;
-  }
-}
-
-.section {
-  padding-top: $block-gutter-l;
-  padding-bottom: $block-gutter-l;
-
-  @media (max-width: $below-small) {
-    padding-top: $block-gutter-m;
-    padding-bottom: $block-gutter-m;
   }
 }
 
