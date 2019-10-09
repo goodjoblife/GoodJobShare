@@ -21,7 +21,7 @@ const AverageWeekWorkTimeView = ({
 );
 
 AverageWeekWorkTimeView.propTypes = {
-  averageWeekWorkTimeHours: PropTypes.number.isRequired,
+  averageWeekWorkHours: PropTypes.number.isRequired,
   frequentOverTimeRatio: PropTypes.number.isRequired,
   fewOverTimeRatio: PropTypes.number.isRequired,
 };
