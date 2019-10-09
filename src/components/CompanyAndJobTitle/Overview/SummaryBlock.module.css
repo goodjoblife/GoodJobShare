@@ -3,6 +3,7 @@
   margin-bottom: 22px;
 
   .barChart,
+  .barChartSm,
   .averageWeekWorkTime {
     display: flex;
     background: #fff;
@@ -10,8 +11,30 @@
     padding: 20px;
   }
 
+  .barChartSm {
+    display: none;
+  }
+
   .averageWeekWorkTime {
     margin-left: 21px;
+  }
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .barChart {
+      display: none;
+    }
+
+    .barChartSm {
+      display: block;
+    }
+
+    .averageWeekWorkTime {
+      margin-left: 0;
+      margin-top: 10px;
+    }
   }
 }
 

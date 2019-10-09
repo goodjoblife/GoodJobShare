@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { BarChart, Bar, XAxis, YAxis } from 'recharts';
 
-const BarChartView = ({ data }) => (
+const BarChartView = ({ data, width = 494, height = 233 }) => (
   <BarChart
-    width={494}
-    height={233}
+    width={width}
+    height={height}
     data={data}
     layout="vertical"
     margin={{ left: 50, bottom: -25 }}
@@ -23,6 +23,8 @@ BarChart.propTypes = {
       salary: PropTypes.number,
     }),
   ).isRequired,
+  width: PropTypes.number,
+  height: PropTypes.number,
 };
 
 export default BarChartView;

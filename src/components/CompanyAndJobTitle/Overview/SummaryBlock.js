@@ -15,6 +15,9 @@ const SummaryBlock = ({
     <div className={styles.barChart}>
       <BarChartView data={crossComparisonSalaryStatistics} />
     </div>
+    <div className={styles.barChartSm}>
+      <BarChartView data={crossComparisonSalaryStatistics} width={300} />
+    </div>
     <div className={styles.averageWeekWorkTime}>
       <AverageWeekWorkTimeView
         averageWeekWorkHours={averageWeekWorkHours}
