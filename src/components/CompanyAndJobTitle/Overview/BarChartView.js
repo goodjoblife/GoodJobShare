@@ -1,14 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { BarChart, Bar, XAxis, YAxis } from 'recharts';
 
-const data = [
-  { name: '軟體工程師', salary: 60000 },
-  { name: '行銷企劃', salary: 40000 },
-  { name: 'UI/UX 設計師', salary: 40000 },
-  { name: 'PM', salary: 50000 },
-];
-
-const BarChartView = () => (
+const BarChartView = ({ data }) => (
   <BarChart
     width={494}
     height={233}
@@ -21,5 +15,14 @@ const BarChartView = () => (
     <Bar dataKey="salary" fill="#fcd406" />
   </BarChart>
 );
+
+BarChart.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      salary: PropTypes.number,
+    }),
+  ).isRequired,
+};
 
 export default BarChartView;

@@ -11,6 +11,10 @@ const Overview = ({
   workExperiences,
   salaryWorkTimes,
   salaryWorkTimeStatistics,
+  crossComparisonSalaryStatistics,
+  averageWeekWorkHours,
+  frequentOverTimeRatio,
+  fewOverTimeRatio,
   status,
   page,
 }) => (
@@ -28,6 +32,10 @@ const Overview = ({
         workExperiences={workExperiences}
         salaryWorkTimes={salaryWorkTimes}
         salaryWorkTimeStatistics={salaryWorkTimeStatistics}
+        crossComparisonSalaryStatistics={crossComparisonSalaryStatistics}
+        averageWeekWorkHours={averageWeekWorkHours}
+        frequentOverTimeRatio={frequentOverTimeRatio}
+        fewOverTimeRatio={fewOverTimeRatio}
         page={page}
       />
     )}
@@ -42,6 +50,9 @@ Overview.propTypes = {
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimeStatistics: PropTypes.object,
+  crossComparisonSalaryStatistics: PropTypes.arrayOf(PropTypes.object),
+  averageWeekWorkHours: PropTypes.number.isRequired,
+  frequentOverTimeRatio: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
 };

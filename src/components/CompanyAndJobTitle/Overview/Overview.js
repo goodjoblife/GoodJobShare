@@ -24,6 +24,10 @@ const Overview = ({
   workExperiences,
   salaryWorkTimes,
   canViewTimeAndSalary,
+  crossComparisonSalaryStatistics,
+  averageWeekWorkHours,
+  frequentOverTimeRatio,
+  fewOverTimeRatio,
 }) => (
   <Section Tag="main" paddingBottom>
     <SnippetBlock
@@ -35,7 +39,12 @@ const Overview = ({
       pageName={pageName}
       tabType={TAB_TYPE.TIME_AND_SALARY}
     >
-      <SummaryBlock />
+      <SummaryBlock
+        crossComparisonSalaryStatistics={crossComparisonSalaryStatistics}
+        averageWeekWorkHours={averageWeekWorkHours}
+        frequentOverTimeRatio={frequentOverTimeRatio}
+        fewOverTimeRatio={fewOverTimeRatio}
+      />
       <WorkingHourTable
         data={salaryWorkTimes.slice(0, SALARY_WORK_TIMES_LIMIT)}
         hideContent={!canViewTimeAndSalary}
@@ -79,6 +88,10 @@ Overview.propTypes = {
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
   canViewTimeAndSalary: PropTypes.bool.isRequired,
+  crossComparisonSalaryStatistics: PropTypes.arrayOf(PropTypes.object),
+  averageWeekWorkHours: PropTypes.number.isRequired,
+  frequentOverTimeRatio: PropTypes.number.isRequired,
+  fewOverTimeRatio: PropTypes.number.isRequired,
 };
 
 const hoc = compose(withPermission);
