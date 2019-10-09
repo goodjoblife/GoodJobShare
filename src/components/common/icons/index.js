@@ -3,6 +3,7 @@ import ArrowGo from './ArrowGo';
 import ArrowLeft from './ArrowLeft';
 import Bad from './Bad';
 import Checked from './Checked';
+import Clock from './Clock';
 import Coin from './Coin';
 import Comment from './Comment';
 import Company from './Company';
@@ -28,6 +29,7 @@ const icons = {
   ArrowLeft,
   Bad,
   Checked,
+  Clock,
   Coin,
   Comment,
   Company,

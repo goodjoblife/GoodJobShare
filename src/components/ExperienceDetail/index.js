@@ -88,7 +88,7 @@ class ExperienceDetail extends Component {
       }),
     }),
     authStatus: PropTypes.string,
-    canViewExperirenceDetail: PropTypes.bool.isRequired,
+    canViewExperienceDetail: PropTypes.bool.isRequired,
     isInspectReportOpen: PropTypes.bool.isRequired,
     toggleReportInspectModal: PropTypes.func.isRequired,
   };
@@ -324,7 +324,7 @@ class ExperienceDetail extends Component {
     const {
       likeExperience,
       likeReply,
-      canViewExperirenceDetail,
+      canViewExperienceDetail,
       isInspectReportOpen,
       toggleReportInspectModal,
     } = this.props;
@@ -375,7 +375,7 @@ class ExperienceDetail extends Component {
                 {this.renderReportZone()}
                 <Article
                   experience={experience}
-                  hideContent={!canViewExperirenceDetail}
+                  hideContent={!canViewExperienceDetail}
                 />
               </Fragment>
             )}
