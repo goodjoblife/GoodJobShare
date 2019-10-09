@@ -78,7 +78,11 @@
   }
 
   .contentWrapper {
-    margin-bottom: 40px;
+    padding-bottom: 64px;
+
+    @media (max-width: 1024px) {
+      padding-bottom: 56px;
+    }
   }
 
   .reaction {
