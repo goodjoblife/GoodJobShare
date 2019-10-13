@@ -23,7 +23,7 @@ const Overview = ({
   salaryWorkTimes,
   canViewTimeAndSalary,
   canViewExperienceDetail,
-  crossComparisonSalaryStatistics,
+  jobTitleAverageSalaries,
   averageWeekWorkHours,
   frequentOverTimeRatio,
   fewOverTimeRatio,
@@ -39,7 +39,7 @@ const Overview = ({
       tabType={TAB_TYPE.TIME_AND_SALARY}
     >
       <SummaryBlock
-        crossComparisonSalaryStatistics={crossComparisonSalaryStatistics}
+        jobTitleAverageSalaries={jobTitleAverageSalaries}
         averageWeekWorkHours={averageWeekWorkHours}
         frequentOverTimeRatio={frequentOverTimeRatio}
         fewOverTimeRatio={fewOverTimeRatio}
@@ -98,7 +98,7 @@ Overview.propTypes = {
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
   canViewTimeAndSalary: PropTypes.bool.isRequired,
   canViewExperienceDetail: PropTypes.bool.isRequired,
-  crossComparisonSalaryStatistics: PropTypes.arrayOf(PropTypes.object),
+  jobTitleAverageSalaries: PropTypes.arrayOf(PropTypes.object),
   averageWeekWorkHours: PropTypes.number.isRequired,
   frequentOverTimeRatio: PropTypes.number.isRequired,
   fewOverTimeRatio: PropTypes.number.isRequired,

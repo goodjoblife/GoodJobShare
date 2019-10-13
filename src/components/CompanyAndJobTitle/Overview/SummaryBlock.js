@@ -6,17 +6,17 @@ import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
 import styles from './SummaryBlock.module.css';
 
 const SummaryBlock = ({
-  crossComparisonSalaryStatistics,
+  jobTitleAverageSalaries,
   averageWeekWorkHours,
   frequentOverTimeRatio,
   fewOverTimeRatio,
 }) => (
   <div className={styles.summaryBlock}>
     <div className={styles.barChart}>
-      <BarChartView data={crossComparisonSalaryStatistics} />
+      <BarChartView data={jobTitleAverageSalaries} />
     </div>
     <div className={styles.barChartSm}>
-      <BarChartView data={crossComparisonSalaryStatistics} width={300} />
+      <BarChartView data={jobTitleAverageSalaries} width={300} />
     </div>
     <div className={styles.averageWeekWorkTime}>
       <AverageWeekWorkTimeView
@@ -29,8 +29,7 @@ const SummaryBlock = ({
 );
 
 SummaryBlock.propTypes = {
-  crossComparisonSalaryStatistics: PropTypes.arrayOf(PropTypes.object)
-    .isRequired,
+  jobTitleAverageSalaries: PropTypes.arrayOf(PropTypes.object).isRequired,
   averageWeekWorkHours: PropTypes.number.isRequired,
   frequentOverTimeRatio: PropTypes.number.isRequired,
   fewOverTimeRatio: PropTypes.number.isRequired,

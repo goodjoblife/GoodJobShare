@@ -31,6 +31,12 @@ export const salaryWorkTimeStatistics = R.pipe(
   R.defaultTo({}),
 );
 
+export const jobTitleAverageSalaries = R.pipe(
+  data,
+  R.when(R.is(Object), R.prop('job_title_average_salaries')),
+  R.defaultTo([]),
+);
+
 export const company = companyName =>
   R.compose(
     R.defaultTo({}),

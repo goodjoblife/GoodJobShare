@@ -22,6 +22,38 @@ export const fetchCompany = companyName => (dispatch, getState, { api }) => {
   return api.company
     .getCompany(companyName)
     .then(data => {
+      data = {
+        ...data,
+        job_title_average_salaries: [
+          {
+            job_title: {
+              name: '軟體工程師',
+            },
+            average_salary: {
+              amount: 76000,
+              type: 'month',
+            },
+          },
+          {
+            job_title: {
+              name: '數位IC設計工程師',
+            },
+            average_salary: {
+              amount: 100000,
+              type: 'month',
+            },
+          },
+          {
+            job_title: {
+              name: '硬體工程師',
+            },
+            average_salary: {
+              amount: 80000,
+              type: 'month',
+            },
+          },
+        ],
+      };
       dispatch(setStatus(companyName, STATUS.FETCHED, data));
     })
     .catch(error => {

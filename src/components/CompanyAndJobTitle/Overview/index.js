@@ -11,7 +11,7 @@ const Overview = ({
   workExperiences,
   salaryWorkTimes,
   salaryWorkTimeStatistics,
-  crossComparisonSalaryStatistics,
+  jobTitleAverageSalaries,
   averageWeekWorkHours,
   frequentOverTimeRatio,
   fewOverTimeRatio,
@@ -34,7 +34,7 @@ const Overview = ({
         workExperiences={workExperiences}
         salaryWorkTimes={salaryWorkTimes}
         salaryWorkTimeStatistics={salaryWorkTimeStatistics}
-        crossComparisonSalaryStatistics={crossComparisonSalaryStatistics}
+        jobTitleAverageSalaries={jobTitleAverageSalaries}
         averageWeekWorkHours={averageWeekWorkHours}
         frequentOverTimeRatio={frequentOverTimeRatio}
         fewOverTimeRatio={fewOverTimeRatio}
@@ -54,7 +54,7 @@ Overview.propTypes = {
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimeStatistics: PropTypes.object,
-  crossComparisonSalaryStatistics: PropTypes.arrayOf(PropTypes.object),
+  jobTitleAverageSalaries: PropTypes.arrayOf(PropTypes.object),
   averageWeekWorkHours: PropTypes.number.isRequired,
   frequentOverTimeRatio: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
