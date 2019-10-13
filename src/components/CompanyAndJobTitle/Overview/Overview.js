@@ -8,6 +8,7 @@ import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import { tabType as TAB_TYPE } from '../../../constants/companyJobTitle';
+import SummaryBlock from './SummaryBlock';
 
 const SALARY_WORK_TIMES_LIMIT = 5;
 const WORK_EXPERIENCES_LIMIT = 3;
@@ -22,6 +23,10 @@ const Overview = ({
   salaryWorkTimes,
   canViewTimeAndSalary,
   canViewExperienceDetail,
+  crossComparisonSalaryStatistics,
+  averageWeekWorkHours,
+  frequentOverTimeRatio,
+  fewOverTimeRatio,
 }) => (
   <Section Tag="main" paddingBottom>
     <SnippetBlock
@@ -33,6 +38,12 @@ const Overview = ({
       pageName={pageName}
       tabType={TAB_TYPE.TIME_AND_SALARY}
     >
+      <SummaryBlock
+        crossComparisonSalaryStatistics={crossComparisonSalaryStatistics}
+        averageWeekWorkHours={averageWeekWorkHours}
+        frequentOverTimeRatio={frequentOverTimeRatio}
+        fewOverTimeRatio={fewOverTimeRatio}
+      />
       <WorkingHourTable
         data={salaryWorkTimes.slice(0, SALARY_WORK_TIMES_LIMIT)}
         hideContent={!canViewTimeAndSalary}
@@ -87,6 +98,10 @@ Overview.propTypes = {
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
   canViewTimeAndSalary: PropTypes.bool.isRequired,
   canViewExperienceDetail: PropTypes.bool.isRequired,
+  crossComparisonSalaryStatistics: PropTypes.arrayOf(PropTypes.object),
+  averageWeekWorkHours: PropTypes.number.isRequired,
+  frequentOverTimeRatio: PropTypes.number.isRequired,
+  fewOverTimeRatio: PropTypes.number.isRequired,
 };
 
 export default Overview;

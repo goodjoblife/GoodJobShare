@@ -120,6 +120,17 @@ const enhance = compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
+  withProps(() => ({
+    crossComparisonSalaryStatistics: [
+      { name: '軟體工程師', salary: 60000 },
+      { name: '行銷企劃', salary: 40000 },
+      { name: 'UI/UX 設計師', salary: 40000 },
+      { name: 'PM', salary: 50000 },
+    ],
+    averageWeekWorkHours: 45,
+    frequentOverTimeRatio: 0.6,
+    fewOverTimeRatio: 0.2,
+  })),
   lifecycle({
     componentDidMount() {
       this.props.fetchCompany(this.props.pageName);
