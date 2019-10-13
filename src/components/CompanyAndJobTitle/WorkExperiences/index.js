@@ -11,6 +11,7 @@ const WorkExperiences = ({
   workExperiences,
   status,
   page,
+  canViewExperienceDetail,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
@@ -24,6 +25,7 @@ const WorkExperiences = ({
         tabType={tabType}
         data={workExperiences}
         page={page}
+        canViewExperienceDetail={canViewExperienceDetail}
       />
     </StatusRenderer>
   </CompanyAndJobTitleWrapper>
@@ -36,6 +38,7 @@ WorkExperiences.propTypes = {
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
+  canViewExperienceDetail: PropTypes.bool.isRequired,
 };
 
 export default WorkExperiences;

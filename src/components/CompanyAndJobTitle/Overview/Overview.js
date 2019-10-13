@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'recompose';
 
-import { withPermission } from 'common/permission-context';
 import { Section } from 'common/base';
 
 import SnippetBlock from './SnippetBlock';
@@ -24,6 +22,7 @@ const Overview = ({
   workExperiences,
   salaryWorkTimes,
   canViewTimeAndSalary,
+  canViewExperienceDetail,
   crossComparisonSalaryStatistics,
   averageWeekWorkHours,
   frequentOverTimeRatio,
@@ -61,7 +60,12 @@ const Overview = ({
       tabType={TAB_TYPE.WORK_EXPERIENCE}
     >
       {workExperiences.slice(0, WORK_EXPERIENCES_LIMIT).map(d => (
-        <WorkExperienceEntry key={d.id} pageType={pageType} data={d} />
+        <WorkExperienceEntry
+          key={d.id}
+          pageType={pageType}
+          data={d}
+          canViewExperienceDetail={canViewExperienceDetail}
+        />
       ))}
     </SnippetBlock>
     <SnippetBlock
@@ -74,7 +78,12 @@ const Overview = ({
       tabType={TAB_TYPE.INTERVIEW_EXPERIENCE}
     >
       {interviewExperiences.slice(0, INTERVIEW_EXPERIENCES_LIMIT).map(d => (
-        <InterviewExperienceEntry key={d.id} pageType={pageType} data={d} />
+        <InterviewExperienceEntry
+          key={d.id}
+          pageType={pageType}
+          data={d}
+          canViewExperienceDetail={canViewExperienceDetail}
+        />
       ))}
     </SnippetBlock>
   </Section>
@@ -88,12 +97,11 @@ Overview.propTypes = {
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
   canViewTimeAndSalary: PropTypes.bool.isRequired,
+  canViewExperienceDetail: PropTypes.bool.isRequired,
   crossComparisonSalaryStatistics: PropTypes.arrayOf(PropTypes.object),
   averageWeekWorkHours: PropTypes.number.isRequired,
   frequentOverTimeRatio: PropTypes.number.isRequired,
   fewOverTimeRatio: PropTypes.number.isRequired,
 };
 
-const hoc = compose(withPermission);
-
-export default hoc(Overview);
+export default Overview;

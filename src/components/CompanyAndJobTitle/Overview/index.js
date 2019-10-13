@@ -17,6 +17,8 @@ const Overview = ({
   fewOverTimeRatio,
   status,
   page,
+  canViewTimeAndSalary,
+  canViewExperienceDetail,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
@@ -37,6 +39,8 @@ const Overview = ({
         frequentOverTimeRatio={frequentOverTimeRatio}
         fewOverTimeRatio={fewOverTimeRatio}
         page={page}
+        canViewTimeAndSalary={canViewTimeAndSalary}
+        canViewExperienceDetail={canViewExperienceDetail}
       />
     )}
   </CompanyAndJobTitleWrapper>
@@ -55,6 +59,8 @@ Overview.propTypes = {
   frequentOverTimeRatio: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
+  canViewTimeAndSalary: PropTypes.bool.isRequired,
+  canViewExperienceDetail: PropTypes.bool.isRequired,
 };
 
 export default Overview;

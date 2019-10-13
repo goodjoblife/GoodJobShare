@@ -1,6 +1,7 @@
 $page-gutter: 40px;
 $page-gutter-s: 15px;
 $block-gutter-m: 40px;
+$block-gutter-l: 40px;
 $inner-wrap-m: 964px;
 $inner-wrap-l: 1264px;
 $below-small: 850px;
@@ -13,6 +14,20 @@ $gray: #b4b4b4;
 .showSearchbarWrapper {
   @media (max-width: $below-small) {
     border-bottom: 1px solid #ddd;
+  }
+}
+
+.searchbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: $block-gutter-l;
+  padding-bottom: $block-gutter-l;
+
+  @media (max-width: $below-small) {
+    padding-top: $block-gutter-m;
+    padding-bottom: $block-gutter-m;
   }
 }
 

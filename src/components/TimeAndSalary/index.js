@@ -83,7 +83,9 @@ class TimeAndSalary extends Component {
         <section className={styles.whiteBackground}>
           <Wrapper size="l" className={styles.showSearchbarWrapper}>
             <CallToShareData />
-            <SearchBar />
+            <div className={styles.searchbar}>
+              <SearchBar />
+            </div>
             {pathname !== '/salary-work-times' && (
               <MobileInfoButtons
                 toggleInfoSalaryModal={this.toggleInfoSalaryModal}
