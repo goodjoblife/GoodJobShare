@@ -12,12 +12,16 @@ const SummaryBlock = ({
   fewOverTimeRatio,
 }) => (
   <div className={styles.summaryBlock}>
-    <div className={styles.barChart}>
-      <BarChartView data={jobTitleAverageSalaries} />
-    </div>
-    <div className={styles.barChartSm}>
-      <BarChartView data={jobTitleAverageSalaries} width={300} />
-    </div>
+    {jobTitleAverageSalaries && (
+      <React.Fragment>
+        <div className={styles.barChart}>
+          <BarChartView data={jobTitleAverageSalaries} />
+        </div>
+        <div className={styles.barChartSm}>
+          <BarChartView data={jobTitleAverageSalaries} width={300} />
+        </div>
+      </React.Fragment>
+    )}
     <div className={styles.averageWeekWorkTime}>
       <AverageWeekWorkTimeView
         averageWeekWorkHours={averageWeekWorkHours}
