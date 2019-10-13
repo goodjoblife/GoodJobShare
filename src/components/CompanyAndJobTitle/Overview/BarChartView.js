@@ -1,6 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BarChart, Bar, XAxis, YAxis } from 'recharts';
+import R from 'ramda';
+
+const maxNameLength = R.compose(
+  R.reduce(R.max, -Infinity),
+  R.map(
+    R.compose(
+      R.length,
+      R.path(['job_title', 'name']),
+    ),
+  ),
+);
 
 const BarChartView = ({ data, width = 494, height = 233 }) => (
   <BarChart
@@ -8,7 +19,7 @@ const BarChartView = ({ data, width = 494, height = 233 }) => (
     height={height}
     data={data}
     layout="vertical"
-    margin={{ left: 50, bottom: -25 }}
+    margin={{ left: maxNameLength(data) * 10, bottom: -25 }}
   >
     <XAxis type="number" label="平均月薪" height={70} />
     <YAxis type="category" dataKey="job_title.name" />
