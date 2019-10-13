@@ -1,25 +1,44 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { BarChart, Bar, XAxis, YAxis } from 'recharts';
+import R from 'ramda';
 
-const data = [
-  { name: '軟體工程師', salary: 60000 },
-  { name: '行銷企劃', salary: 40000 },
-  { name: 'UI/UX 設計師', salary: 40000 },
-  { name: 'PM', salary: 50000 },
-];
+const maxNameLength = R.pipe(
+  R.map(
+    R.pipe(
+      R.path(['job_title', 'name']),
+      R.length,
+    ),
+  ),
+  R.reduce(R.max, -Infinity),
+);
 
-const JobTitleDistributionChart = () => (
+const JobTitleDistributionChart = ({ data }) => (
   <BarChart
     width={494}
     height={233}
     data={data}
     layout="vertical"
-    margin={{ left: 50, bottom: -25 }}
+    margin={{ left: maxNameLength(data) * 10, bottom: -25 }}
   >
     <XAxis type="number" label="平均月薪" height={70} />
-    <YAxis type="category" dataKey="name" />
-    <Bar dataKey="salary" fill="#fcd406" />
+    <YAxis type="category" dataKey="job_title.name" />
+    <Bar dataKey="average_salary.amount" fill="#fcd406" />
   </BarChart>
 );
+
+JobTitleDistributionChart.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      job_title: PropTypes.shape({
+        name: PropTypes.string,
+      }),
+      average_salary: PropTypes.shape({
+        amount: PropTypes.number,
+      }),
+    }),
+  ).isRequired,
+};
 
 export default JobTitleDistributionChart;

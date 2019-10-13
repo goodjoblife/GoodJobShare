@@ -35,6 +35,8 @@ const queryData = lifecycle({
 });
 
 const LandingPage = ({
+  popularCompanyAverageSalary,
+  popularJobTitleSalaryDistribution,
   popularExperiences: popularExperiencesRaw,
   laborRightsMenuEntries,
   timeAndSalaryCount,
@@ -54,7 +56,10 @@ const LandingPage = ({
         timeAndSalaryCount={timeAndSalaryCount}
         laborRightsCount={laborRightsCount}
       />
-      <SummarySection />
+      <SummarySection
+        popularCompanyAverageSalary={popularCompanyAverageSalary}
+        popularJobTitleSalaryDistribution={popularJobTitleSalaryDistribution}
+      />
       <ShareExpSection heading="現在就留下你的資料" />
       <Section padding bg="white">
         <Wrapper size="l">
@@ -102,6 +107,8 @@ const LandingPage = ({
 };
 
 LandingPage.propTypes = {
+  popularCompanyAverageSalary: PropTypes.array.isRequired,
+  popularJobTitleSalaryDistribution: PropTypes.array.isRequired,
   laborRightsMenuEntries: PropTypes.array.isRequired,
   popularExperiences: ImmutablePropTypes.list.isRequired,
   laborRightsCount: PropTypes.number.isRequired,
