@@ -12,7 +12,6 @@ const Overview = ({
   salaryWorkTimes,
   salaryWorkTimeStatistics,
   jobTitleAverageSalaries,
-  averageWeekWorkHours,
   frequentOverTimeRatio,
   fewOverTimeRatio,
   status,
@@ -35,7 +34,6 @@ const Overview = ({
         salaryWorkTimes={salaryWorkTimes}
         salaryWorkTimeStatistics={salaryWorkTimeStatistics}
         jobTitleAverageSalaries={jobTitleAverageSalaries}
-        averageWeekWorkHours={averageWeekWorkHours}
         frequentOverTimeRatio={frequentOverTimeRatio}
         fewOverTimeRatio={fewOverTimeRatio}
         page={page}
@@ -55,7 +53,6 @@ Overview.propTypes = {
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimeStatistics: PropTypes.object,
   jobTitleAverageSalaries: PropTypes.arrayOf(PropTypes.object),
-  averageWeekWorkHours: PropTypes.number.isRequired,
   frequentOverTimeRatio: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,

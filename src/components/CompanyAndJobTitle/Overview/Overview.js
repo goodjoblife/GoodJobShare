@@ -21,10 +21,10 @@ const Overview = ({
   interviewExperiences,
   workExperiences,
   salaryWorkTimes,
+  salaryWorkTimeStatistics,
   canViewTimeAndSalary,
   canViewExperienceDetail,
   jobTitleAverageSalaries,
-  averageWeekWorkHours,
   frequentOverTimeRatio,
   fewOverTimeRatio,
 }) => (
@@ -40,7 +40,7 @@ const Overview = ({
     >
       <SummaryBlock
         jobTitleAverageSalaries={jobTitleAverageSalaries}
-        averageWeekWorkHours={averageWeekWorkHours}
+        averageWeekWorkTime={salaryWorkTimeStatistics.average_week_work_time}
         frequentOverTimeRatio={frequentOverTimeRatio}
         fewOverTimeRatio={fewOverTimeRatio}
       />
@@ -96,10 +96,10 @@ Overview.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
+  salaryWorkTimeStatistics: PropTypes.object.isRequired,
   canViewTimeAndSalary: PropTypes.bool.isRequired,
   canViewExperienceDetail: PropTypes.bool.isRequired,
   jobTitleAverageSalaries: PropTypes.arrayOf(PropTypes.object),
-  averageWeekWorkHours: PropTypes.number.isRequired,
   frequentOverTimeRatio: PropTypes.number.isRequired,
   fewOverTimeRatio: PropTypes.number.isRequired,
 };

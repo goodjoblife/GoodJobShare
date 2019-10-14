@@ -128,7 +128,6 @@ const enhance = compose(
       { name: 'UI/UX 設計師', salary: 40000 },
       { name: 'PM', salary: 50000 },
     ],
-    averageWeekWorkHours: 45,
     frequentOverTimeRatio: 0.6,
     fewOverTimeRatio: 0.2,
   })),

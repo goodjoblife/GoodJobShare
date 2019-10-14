@@ -123,7 +123,6 @@ const enhance = compose(
     mapDispatchToProps,
   ),
   withProps(() => ({
-    averageWeekWorkHours: 45,
     frequentOverTimeRatio: 0.6,
     fewOverTimeRatio: 0.2,
   })),
