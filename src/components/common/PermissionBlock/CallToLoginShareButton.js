@@ -5,16 +5,17 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Link } from 'react-router-dom';
 
 import authStatus from '../../../constants/authStatus';
-import LoginModal from '../../common/LoginModal';
+import styles from './PermissionBlock.module.css';
 
 const isLogin = auth => auth.get('status') === authStatus.CONNECTED;
 
 const CallToLoginShareButton = ({
-  notLoginText,
   isLoginText,
   to,
   auth,
-  loginModal,
+  loginWithFB,
+  FB,
+  loginWithGoogle,
 }) => {
   return (
     <div
@@ -22,28 +23,29 @@ const CallToLoginShareButton = ({
         textAlign: 'center',
       }}
     >
-      <LoginModal
-        isOpen={loginModal.isOpen}
-        close={() => loginModal.setIsOpen(false)}
-        loginModal={loginModal}
-      />
       {isLogin(auth) ? (
         <Link className={cn('buttonCircleM', 'buttonBlack2')} to={to}>
           {isLoginText}
         </Link>
       ) : (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+        <div className={styles.loginBtnContainer}>
           <button
-            className={cn('buttonCircleM', 'buttonBlack2')}
-            onClick={() => loginModal.setIsOpen(true)}
+            className={`${cn('buttonCircleM')} ${styles.btn} ${styles.btnFb}`}
+            onClick={() => {
+              loginWithFB(FB);
+            }}
           >
-            <pre>{notLoginText}</pre>
+            <pre>Facebook 登入</pre>
+          </button>
+          <button
+            className={`${cn('buttonCircleM')} ${styles.btn} ${
+              styles.btnGoogle
+            }`}
+            onClick={async () => {
+              await loginWithGoogle();
+            }}
+          >
+            <pre>Google 登入</pre>
           </button>
         </div>
       )}
@@ -52,11 +54,12 @@ const CallToLoginShareButton = ({
 };
 
 CallToLoginShareButton.propTypes = {
-  notLoginText: PropTypes.string.isRequired,
   isLoginText: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
   auth: ImmutablePropTypes.map,
-  loginModal: PropTypes.object.isRequired,
+  loginWithFB: PropTypes.func.isRequired,
+  FB: PropTypes.object,
+  loginWithGoogle: PropTypes.func.isRequired,
 };
 
 export default CallToLoginShareButton;

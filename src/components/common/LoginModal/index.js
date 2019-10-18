@@ -10,11 +10,12 @@ import authStatus from '../../../constants/authStatus';
 import { GOOGLE_APP_ID } from '../../../config';
 import { withPermission } from '../../common/permission-context';
 import { withFB } from '../../common/facebook';
-import { loginWithFB, loginWithGoogle, logout } from '../../../actions/auth';
+import { withGoogle } from '../../common/google';
+import { loginWithFB } from '../../../actions/auth';
 
 const LoginModal = ({
   onFbBtnClick,
-  onGoogleBtnClick,
+  loginWithGoogle,
   FB,
   loginModal,
   isOpen,
@@ -32,6 +33,7 @@ const LoginModal = ({
     script.src = 'https://apis.google.com/js/platform.js?onload=initGoogle';
     document.body.appendChild(script);
   }, []);
+
   return (
     <Modal isOpen={isOpen} hasColose close={close} closableOnClickOutside>
       <div className={styles.container}>
@@ -53,12 +55,7 @@ const LoginModal = ({
           <button
             className={styles['btn-google']}
             onClick={async () => {
-              if (!window || !window.gapi) return;
-              const { auth2 } = window.gapi;
-              const googleAuth = auth2.getAuthInstance();
-              if (
-                (await onGoogleBtnClick(googleAuth)) === authStatus.CONNECTED
-              ) {
+              if (await loginWithGoogle()) {
                 loginModal.setIsOpen(false);
               }
             }}
@@ -82,8 +79,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       onFbBtnClick: loginWithFB,
-      onGoogleBtnClick: loginWithGoogle,
-      logoutWithFb: logout,
     },
     dispatch,
   );
@@ -91,6 +86,7 @@ const mapDispatchToProps = dispatch =>
 const hoc = compose(
   withPermission,
   withFB,
+  withGoogle,
 );
 
 export default connect(
