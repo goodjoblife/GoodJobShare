@@ -5,6 +5,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Link } from 'react-router-dom';
 
 import authStatus from '../../../constants/authStatus';
+import LoginModal from '../../common/LoginModal';
 
 const isLogin = auth => auth.get('status') === authStatus.CONNECTED;
 
@@ -13,21 +14,19 @@ const CallToLoginShareButton = ({
   isLoginText,
   to,
   auth,
-  login,
-  FB,
+  loginModal,
 }) => {
-  const onClick = () => {
-    login(FB).catch(e => {
-      console.log(e);
-    });
-  };
-
   return (
     <div
       style={{
         textAlign: 'center',
       }}
     >
+      <LoginModal
+        isOpen={loginModal.isOpen}
+        close={() => loginModal.setIsOpen(false)}
+        loginModal={loginModal}
+      />
       {isLogin(auth) ? (
         <Link className={cn('buttonCircleM', 'buttonBlack2')} to={to}>
           {isLoginText}
@@ -42,7 +41,7 @@ const CallToLoginShareButton = ({
         >
           <button
             className={cn('buttonCircleM', 'buttonBlack2')}
-            onClick={onClick}
+            onClick={() => loginModal.setIsOpen(true)}
           >
             <pre>{notLoginText}</pre>
           </button>
@@ -57,8 +56,7 @@ CallToLoginShareButton.propTypes = {
   isLoginText: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
   auth: ImmutablePropTypes.map,
-  login: PropTypes.func.isRequired,
-  FB: PropTypes.object,
+  loginModal: PropTypes.object.isRequired,
 };
 
 export default CallToLoginShareButton;

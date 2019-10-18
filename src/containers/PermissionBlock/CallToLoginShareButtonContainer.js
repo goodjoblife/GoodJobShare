@@ -1,18 +1,13 @@
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
 
-import { withFB } from 'common/facebook';
 import CallToLoginShareButton from 'common/PermissionBlock/CallToLoginShareButton';
-import { loginWithFB } from '../../actions/auth';
+import withModal from '../../components/TimeAndSalary/common/withModal';
 
 const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ login: loginWithFB }, dispatch);
+const hoc = compose(withModal('loginModal'));
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withFB(CallToLoginShareButton));
+export default connect(mapStateToProps)(hoc(CallToLoginShareButton));

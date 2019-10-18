@@ -57,7 +57,6 @@ class BasicPermissionBlock extends React.Component {
       timeAndSalaryCount,
       laborRightsCount,
     } = this.props;
-
     const experienceScale = getScale(experienceCount);
     const timeAndSalaryScale = getScale(timeAndSalaryCount);
 

@@ -18,6 +18,8 @@ import authStatus from '../../../constants/authStatus';
 import { shareLink } from '../../../constants/dataProgress';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import emailStatusMap from '../../../constants/emailStatus';
+import withModal from '../../TimeAndSalary/common/withModal';
+import LoginModal from '../../common/LoginModal';
 
 class Header extends React.Component {
   constructor(props) {
@@ -29,6 +31,8 @@ class Header extends React.Component {
     this.closeNav = this.closeNav.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.openLoginModal = this.openLoginModal.bind(this);
+    this.closeLoginModal = this.closeLoginModal.bind(this);
     this.unlisten = () => {};
   }
 
@@ -67,6 +71,14 @@ class Header extends React.Component {
     this.setState({
       isNavOpen: false,
     });
+  }
+
+  openLoginModal() {
+    this.props.loginModal.setIsOpen(true);
+  }
+
+  closeLoginModal() {
+    this.props.loginModal.setIsOpen(false);
   }
 
   login() {
@@ -140,7 +152,10 @@ class Header extends React.Component {
                 <ShareButton onClick={this.onClickShareData} />
                 <div style={{ position: 'relative' }}>
                   {this.props.auth.getIn(['user', 'name']) === null && (
-                    <button className={styles.loginBtn} onClick={this.login}>
+                    <button
+                      className={styles.loginBtn}
+                      onClick={this.openLoginModal}
+                    >
                       <People />
                       登入
                     </button>
@@ -176,6 +191,11 @@ class Header extends React.Component {
             </nav>
           </Wrapper>
         </header>
+        <LoginModal
+          isOpen={this.props.loginModal.isOpen}
+          close={this.closeLoginModal}
+          loginModal={this.props.loginModal}
+        />
       </div>
     );
   }
@@ -224,6 +244,9 @@ ShareButton.defaultProps = {
   isMobileButton: false,
 };
 
-const hoc = compose(withPermission);
+const hoc = compose(
+  withPermission,
+  withModal('loginModal'),
+);
 
 export default hoc(Header);
