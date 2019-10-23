@@ -7,6 +7,12 @@ const postAuthFacebook = ({ accessToken }) =>
     body: { access_token: accessToken },
   });
 
+const postAuthGoogle = ({ idToken }) =>
+  fetchUtil(`${endpoint}/google`).post({
+    body: { id_token: idToken },
+  });
+
 export default {
   postAuthFacebook,
+  postAuthGoogle,
 };

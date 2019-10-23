@@ -8,6 +8,7 @@ import { PermissionContextProvider } from 'common/permission-context';
 import { FacebookContextProvider } from 'common/facebook';
 
 import App from './App';
+import { activateOptimize } from '../utils/gtm';
 import { GA_ID, PIXEL_ID } from '../config';
 
 const logPageView = location => {
@@ -24,8 +25,12 @@ class Root extends Component {
     ReactPixel.init(PIXEL_ID);
     ReactPixel.pageView();
 
+    // log pageview to Google Analytics
     const { location } = this.props;
     logPageView(location);
+
+    // activate google optimize
+    activateOptimize();
   }
 
   componentDidUpdate(prevProps) {
@@ -33,6 +38,10 @@ class Root extends Component {
     const { location: prevLocation } = prevProps;
     if (location !== prevLocation) {
       logPageView(location);
+
+      // 因為 react 是 SPA，需要在每次 route 改變時
+      // push event 到 window.dataLayer 去觸發 google optimize 實驗
+      activateOptimize();
     }
   }
 

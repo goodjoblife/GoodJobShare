@@ -47,6 +47,26 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
   return Promise.reject('FB should ready');
 };
 
+export const loginWithGoogle = googleAuth => (dispatch, getState, { api }) => {
+  return googleAuth
+    .signIn({
+      scope: 'profile email',
+      prompt: 'select_account',
+    })
+    .then(result => {
+      const { id_token } = result.getAuthResponse();
+      return api.auth
+        .postAuthGoogle({
+          idToken: id_token,
+        })
+        .then(({ token, user: { _id, google_id } }) => {
+          dispatch(loginWithToken(token));
+        })
+        .then(() => authStatus.CONNECTED);
+    })
+    .catch(err => authStatus.NOT_AUTHORIZED);
+};
+
 const getMeInfo = token => (dispatch, getState, { api }) =>
   api.me.getMe({ token }).catch(error => {
     dispatch(logOutAction());

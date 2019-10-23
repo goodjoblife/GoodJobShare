@@ -4,7 +4,10 @@
 module.exports = {
   API_HOST: process.env.RAZZLE_API_HOST || 'https://api-dev.goodjob.life',
   FACEBOOK_APP_ID: process.env.RAZZLE_FACEBOOK_APP_ID || '1750608541889151',
-  GA_ID: process.env.RAZZLE_GA_ID || 'UA-79990667-2',
+  GA_ID: process.env.RAZZLE_GA_ID || 'UA-79990667-7',
+  GOOGLE_APP_ID:
+    process.env.RAZZLE_GOOGLE_APP_ID ||
+    '879657963776-ksbuo26o2svuk8kv7qkmikm1kqqisrb5.apps.googleusercontent.com',
   GTM_ID: process.env.RAZZLE_GTM_ID || 'GTM-K2MRXLG',
   PIXEL_ID: process.env.RAZZLE_PIXEL_ID || '603414113402034',
   SENTRY_DSN: process.env.RAZZLE_SENTRY_DSN,
