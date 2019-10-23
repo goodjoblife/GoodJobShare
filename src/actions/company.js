@@ -24,6 +24,27 @@ export const fetchCompany = companyName => (dispatch, getState, { api }) => {
     .then(data => {
       data = {
         ...data,
+        salary_work_time_statistics: {
+          ...data.salary_work_time_statistics,
+          overtime_frequency_count: [
+            {
+              overtime_frequency: 0,
+              count: 5,
+            },
+            {
+              overtime_frequency: 1,
+              count: 10,
+            },
+            {
+              overtime_frequency: 2,
+              count: 20,
+            },
+            {
+              overtime_frequency: 3,
+              count: 30,
+            },
+          ],
+        },
         job_title_average_salaries: [
           {
             job_title: {

@@ -8,8 +8,7 @@ import styles from './SummaryBlock.module.css';
 const SummaryBlock = ({
   jobTitleAverageSalaries,
   averageWeekWorkTime,
-  frequentOverTimeRatio,
-  fewOverTimeRatio,
+  overtimeFrequencyCount,
 }) => (
   <div className={styles.summaryBlock}>
     {jobTitleAverageSalaries && (
@@ -25,8 +24,7 @@ const SummaryBlock = ({
     <div className={styles.averageWeekWorkTime}>
       <AverageWeekWorkTimeView
         averageWeekWorkTime={averageWeekWorkTime}
-        frequentOverTimeRatio={frequentOverTimeRatio}
-        fewOverTimeRatio={fewOverTimeRatio}
+        overtimeFrequencyCount={overtimeFrequencyCount}
       />
     </div>
   </div>
@@ -35,8 +33,7 @@ const SummaryBlock = ({
 SummaryBlock.propTypes = {
   jobTitleAverageSalaries: PropTypes.arrayOf(PropTypes.object).isRequired,
   averageWeekWorkTime: PropTypes.number.isRequired,
-  frequentOverTimeRatio: PropTypes.number.isRequired,
-  fewOverTimeRatio: PropTypes.number.isRequired,
+  overtimeFrequencyCount: PropTypes.array.isRequired,
 };
 
 export default SummaryBlock;

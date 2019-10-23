@@ -41,8 +41,9 @@ const Overview = ({
       <SummaryBlock
         jobTitleAverageSalaries={jobTitleAverageSalaries}
         averageWeekWorkTime={salaryWorkTimeStatistics.average_week_work_time}
-        frequentOverTimeRatio={frequentOverTimeRatio}
-        fewOverTimeRatio={fewOverTimeRatio}
+        overtimeFrequencyCount={
+          salaryWorkTimeStatistics.overtime_frequency_count
+        }
       />
       <WorkingHourTable
         data={salaryWorkTimes.slice(0, SALARY_WORK_TIMES_LIMIT)}
