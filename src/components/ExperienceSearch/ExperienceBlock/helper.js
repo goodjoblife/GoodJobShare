@@ -3,13 +3,13 @@ import { formatSalaryAmount, formatSalaryType } from 'common/formatter';
 export const formatType = type => {
   switch (type) {
     case 'work':
-      return '工作';
+      return '工作心得';
     case 'interview':
-      return '面試';
+      return '面試心得';
     case 'intern':
-      return '實習';
+      return '實習心得';
     default:
-      return '工作';
+      return '工作心得';
   }
 };
 

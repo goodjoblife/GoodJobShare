@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+
+  .textInput {
+    flex: 1;
+  }
+}
+
+.menu {
+  display: none;
+  position: absolute;
+  z-index: 99;
+  border: 1px solid #b4b4b4;
+  max-height: 150px;
+  overflow-y: scroll;
+  padding: 5px 0;
+  background: #fff;
+
+  &.active {
+    display: block;
+  }
+
+  .item {
+    background: white;
+    padding: 5px 10px;
+    color: #222;
+
+    &.active {
+      background: lightgray;
+      color: black;
+    }
+  }
+}

@@ -5,3 +5,11 @@ export const viewSalaryWorkTimes = `
     }
   }
 `;
+
+export const viewExperiences = `
+  mutation ViewExperiences($input: ViewExperiencesInput!) {
+    viewExperiences(input: $input) {
+      status
+    }
+  }
+`;

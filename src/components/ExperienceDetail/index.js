@@ -30,6 +30,7 @@ import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import { isFetching, isFetched, isError } from '../../constants/status';
 import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
+import ViewLog from '../../containers/ExperienceDetail/ViewLog';
 
 import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
 import { SITE_NAME } from '../../constants/helmetData';
@@ -88,7 +89,7 @@ class ExperienceDetail extends Component {
       }),
     }),
     authStatus: PropTypes.string,
-    canViewExperirenceDetail: PropTypes.bool.isRequired,
+    canViewExperienceDetail: PropTypes.bool.isRequired,
     isInspectReportOpen: PropTypes.bool.isRequired,
     toggleReportInspectModal: PropTypes.func.isRequired,
   };
@@ -324,7 +325,7 @@ class ExperienceDetail extends Component {
     const {
       likeExperience,
       likeReply,
-      canViewExperirenceDetail,
+      canViewExperienceDetail,
       isInspectReportOpen,
       toggleReportInspectModal,
     } = this.props;
@@ -375,7 +376,7 @@ class ExperienceDetail extends Component {
                 {this.renderReportZone()}
                 <Article
                   experience={experience}
-                  hideContent={!canViewExperirenceDetail}
+                  hideContent={!canViewExperienceDetail}
                 />
               </Fragment>
             )}
@@ -412,6 +413,7 @@ class ExperienceDetail extends Component {
         >
           {this.renderModalChildren(modalType, modalPayload)}
         </Modal>
+        {isFetched(experienceStatus) && <ViewLog experienceId={id} />}
       </main>
     );
   }

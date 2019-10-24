@@ -5,7 +5,7 @@ import cn from 'classnames';
 import ReactGA from 'react-ga';
 import { compose } from 'recompose';
 import { Wrapper } from 'common/base';
-import { GjLogo, ArrowGo, People, PeopleFill } from 'common/icons';
+import { GjLogo, Glike } from 'common/icons';
 import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
 import styles from './Header.module.css';
@@ -13,11 +13,14 @@ import SiteMenu from './SiteMenu';
 import Top from './Top';
 import EmailVerificationTop from './Top/EmailVerificationTop';
 import ProgressTop from './Top/ProgressTop';
+import Searchbar from './Searchbar';
 
 import authStatus from '../../../constants/authStatus';
 import { shareLink } from '../../../constants/dataProgress';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import emailStatusMap from '../../../constants/emailStatus';
+import withModal from '../../TimeAndSalary/common/withModal';
+import LoginModal from '../../common/LoginModal';
 
 class Header extends React.Component {
   constructor(props) {
@@ -29,6 +32,8 @@ class Header extends React.Component {
     this.closeNav = this.closeNav.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.openLoginModal = this.openLoginModal.bind(this);
+    this.closeLoginModal = this.closeLoginModal.bind(this);
     this.unlisten = () => {};
   }
 
@@ -67,6 +72,14 @@ class Header extends React.Component {
     this.setState({
       isNavOpen: false,
     });
+  }
+
+  openLoginModal() {
+    this.props.loginModal.setIsOpen(true);
+  }
+
+  closeLoginModal() {
+    this.props.loginModal.setIsOpen(false);
   }
 
   login() {
@@ -127,12 +140,35 @@ class Header extends React.Component {
                 <GjLogo />
               </Link>
             </div>
-            <ShareButton onClick={this.onClickShareData} isMobileButton />
+            <div className={styles.logoSm}>
+              <Link to="/" title="GoodJob 職場透明化運動">
+                <Glike />
+              </Link>
+            </div>
+            <div className={styles.searchbarWrapper}>
+              <Searchbar
+                className={styles.searchbar}
+                placeholder="輸入公司、職稱查詢面試及薪水資料"
+              />
+            </div>
+            <div className={cn(styles.searchbarWrapper, styles.mobile)}>
+              <Searchbar
+                className={styles.searchbar}
+                placeholder="輸入公司、職稱查詢"
+              />
+            </div>
             <nav
               className={cn(styles.nav, {
                 [styles.isNavOpen]: this.state.isNavOpen,
               })}
             >
+              <Link
+                to="/"
+                className={styles.logo}
+                title="GoodJob 職場透明化運動"
+              >
+                <GjLogo />
+              </Link>
               <SiteMenu
                 isLogin={this.props.auth.get('status') === authStatus.CONNECTED}
               />
@@ -140,8 +176,10 @@ class Header extends React.Component {
                 <ShareButton onClick={this.onClickShareData} />
                 <div style={{ position: 'relative' }}>
                   {this.props.auth.getIn(['user', 'name']) === null && (
-                    <button className={styles.loginBtn} onClick={this.login}>
-                      <People />
+                    <button
+                      className={styles.loginBtn}
+                      onClick={this.openLoginModal}
+                    >
                       登入
                     </button>
                   )}
@@ -165,8 +203,7 @@ class Header extends React.Component {
                         </ul>
                       }
                     >
-                      <div className={styles.loginBtn}>
-                        <PeopleFill />
+                      <div className={styles.userNameBtn}>
                         {this.props.auth.getIn(['user', 'name'])}
                       </div>
                     </PopoverToggle>
@@ -176,6 +213,11 @@ class Header extends React.Component {
             </nav>
           </Wrapper>
         </header>
+        <LoginModal
+          isOpen={this.props.loginModal.isOpen}
+          close={this.closeLoginModal}
+          loginModal={this.props.loginModal}
+        />
       </div>
     );
   }
@@ -204,26 +246,22 @@ HeaderButton.propTypes = {
   toggle: PropTypes.func.isRequired,
 };
 
-const ShareButton = ({ isMobileButton, onClick }) => (
+const ShareButton = ({ className, onClick }) => (
   <Link
     to="/share"
-    className={cn(styles.leaveDataBtn, {
-      [styles.isMobileButton]: isMobileButton,
-    })}
+    className={cn(className, styles.leaveDataBtn)}
     onClick={onClick}
   >
     立即分享
-    <ArrowGo />
   </Link>
 );
 ShareButton.propTypes = {
-  isMobileButton: PropTypes.bool,
   onClick: PropTypes.func,
 };
-ShareButton.defaultProps = {
-  isMobileButton: false,
-};
 
-const hoc = compose(withPermission);
+const hoc = compose(
+  withPermission,
+  withModal('loginModal'),
+);
 
 export default hoc(Header);

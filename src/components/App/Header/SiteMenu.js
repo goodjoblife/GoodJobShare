@@ -30,22 +30,8 @@ const onSendGA = action => {
 const SiteMenu = () => (
   <ul className={styles.menu}>
     <Item
-      to="/salary-work-times/latest"
-      text="薪資工時"
-      onClick={() => {
-        onSendGA(GA_ACTION.CLICK_TIME_AND_SALARY);
-      }}
-    />
-    <Item
-      to="/experiences/search"
-      text="職場經驗"
-      onClick={() => {
-        onSendGA(GA_ACTION.CLICK_EXPERIENCE_SEARCH);
-      }}
-    />
-    <Item
       to="/labor-rights"
-      text="勞動小教室"
+      text="職場生存錦囊"
       onClick={() => {
         onSendGA(GA_ACTION.CLICK_LABOR_RIGHTS);
       }}
@@ -55,6 +41,7 @@ const SiteMenu = () => (
         百工寫真
       </a>
     </li>
+    <Item to="/about" text="認識我們" />
   </ul>
 );
 

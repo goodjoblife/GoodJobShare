@@ -13,7 +13,6 @@ import { queryPopularExperiences } from '../../actions/popularExperiences';
 import { queryMenu } from '../../actions/laborRights';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
-import Dashboard from './Dashboard';
 import StaticHelmet from 'common/StaticHelmet';
 import SummarySection from './SummarySection';
 
@@ -52,10 +51,6 @@ const LandingPage = ({
     <main>
       <StaticHelmet.LandingPage />
       <Banner />
-      <Dashboard
-        timeAndSalaryCount={timeAndSalaryCount}
-        laborRightsCount={laborRightsCount}
-      />
       <SummarySection
         popularCompanyAverageSalary={popularCompanyAverageSalary}
         popularJobTitleSalaryDistribution={popularJobTitleSalaryDistribution}
@@ -81,7 +76,7 @@ const LandingPage = ({
       <Section padding>
         <Wrapper size="l">
           <Heading size="l" center marginBottom>
-            最新經驗分享
+            最新面試、工作心得分享
           </Heading>
           <Columns
             Item={ExperienceBlock}

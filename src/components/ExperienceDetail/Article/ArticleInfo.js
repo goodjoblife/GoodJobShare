@@ -6,8 +6,13 @@ import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
 import RateButtons from './RateButtons';
 
+const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth()} 月`;
+
 const InterviewInfoBlocks = ({ experience }) => (
   <Fragment>
+    <div className={styles.date}>
+      {formatDate(new Date(experience.created_at))}
+    </div>
     <InfoBlock label="面試地區">{experience.region}</InfoBlock>
     <InfoBlock label="應徵職稱">{experience.job_title.name}</InfoBlock>
     {experience.experience_in_year && (

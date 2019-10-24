@@ -1,4 +1,8 @@
-import { formatSalaryAmount, formatSalaryType } from 'common/formatter';
+import {
+  formatSalaryAmount,
+  formatSalaryAmountRange,
+  formatSalaryType,
+} from 'common/formatter';
 
 export const formatCreatedAt = createdAt => {
   const date = new Date(Date.parse(createdAt));
@@ -15,4 +19,14 @@ export const formatSalary = salary => {
   const { amount, type } = salary;
 
   return `${formatSalaryAmount(amount)} / ${formatSalaryType(type)}`;
+};
+
+export const formatSalaryRange = salary => {
+  if (!salary) {
+    return '';
+  }
+
+  return `${formatSalaryAmountRange(salary)} / ${formatSalaryType(
+    salary.type,
+  )}`;
 };

@@ -9,7 +9,14 @@ import ExperienceEntry from './ExperienceEntry';
 
 const pageSize = 10;
 
-const InterviewExperiences = ({ pageType, pageName, tabType, data, page }) => {
+const InterviewExperiences = ({
+  pageType,
+  pageName,
+  tabType,
+  data,
+  page,
+  canViewExperienceDetail,
+}) => {
   if (data.length === 0) {
     return <EmptyView pageName={pageName} tabType={tabType} />;
   }
@@ -17,7 +24,12 @@ const InterviewExperiences = ({ pageType, pageName, tabType, data, page }) => {
   return (
     <Section Tag="main" paddingBottom>
       {visibleData.map(d => (
-        <ExperienceEntry key={d.id} pageType={pageType} data={d} />
+        <ExperienceEntry
+          key={d.id}
+          pageType={pageType}
+          data={d}
+          canViewExperienceDetail={canViewExperienceDetail}
+        />
       ))}
       <Pagination
         totalCount={data.length}
@@ -35,6 +47,7 @@ InterviewExperiences.propTypes = {
   tabType: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
+  canViewExperienceDetail: PropTypes.bool.isRequired,
 };
 
 export default InterviewExperiences;

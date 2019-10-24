@@ -1,0 +1,148 @@
+@value yellow-bar, main-yellow, border-gray, main-gray, gray-dark, gray-light, link-blue from "common/variables.module.css";
+
+.container {
+  display: block;
+  background-color: #fff;
+  margin-bottom: 19px;
+  transition-property: background, box-shadow;
+  transition-duration: 0.3s;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 1024px) {
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 550px) {
+    margin-left: calc(page-gutter-s * -1);
+    margin-right: calc(page-gutter-s * -1);
+    margin-bottom: 24px;
+  }
+}
+
+.linkBlock {
+  display: block;
+  width: 100%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+
+  @media (min-width: 1025px) {
+    &:hover {
+      box-shadow: 1px 1px 11px rgba(0, 0, 0, 0.25);
+      .headingBlock {
+        color: link-blue;
+      }
+    }
+  }
+}
+
+.headingWrapper {
+  padding: 15px 24px;
+  border-bottom: 2px solid white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 1024px) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  &.expanded {
+    border-bottom: 1px solid yellow-bar;
+  }
+}
+
+.headingBlock {
+  flex: 1 1 auto;
+  margin-right: 16px;
+  transition: color 0.3s;
+}
+
+.pageTypeBlock {
+  margin-right: 13px;
+
+  .pageTypeBadge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 42px;
+    height: 29px;
+    font-size: 14px;
+    line-height: 2.07;
+    color: #626262;
+    border-radius: 3px;
+    border: solid 1px #bdbdbd;
+    background-color: #ffffff;
+  }
+}
+
+.averageBlock {
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 850px) {
+    flex-basis: auto;
+  }
+}
+
+.averageBlockHeading {
+  font-size: 0.9em;
+  color: main-gray;
+}
+
+.averageBlockValue {
+  font-size: 1.1em;
+  white-space: nowrap;
+}
+
+.content {
+  opacity: 0;
+  height: 0;
+  display: none;
+  transition: all 0.4s ease 0.4s;
+
+  &.expanded {
+    display: block;
+    opacity: 1;
+    height: auto;
+  }
+}
+
+.overtimeBlock {
+  padding: 24px;
+
+  @media (max-width: 1024px) {
+    padding: 16px;
+  }
+}
+
+.overtimeBlockInner {
+  display: flex;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+  }
+}
+
+.overtimeBlockUnit {
+  color: #b4b4b4;
+  text-align: right;
+  font-size: 0.82em;
+  letter-spacing: 0.05em;
+  margin-top: 8px;
+}
+
+.permissionBlockWorkingHour {
+  margin: -24px;
+  padding: 50px 25px;
+
+  width: calc(100% + 48px);
+
+  @media (max-width: 1024px) {
+    margin: -16px;
+    width: calc(100% + 32px);
+  }
+}
