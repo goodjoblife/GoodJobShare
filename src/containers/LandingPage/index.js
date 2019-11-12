@@ -14,12 +14,9 @@ const laborRightsCountSelector = R.compose(
 );
 
 const mapStateToProps = state => ({
-  popularCompanyAverageSalary: state.popularCompanyAverageSalary
-    .get('data')
-    .toJS(),
-  popularJobTitleSalaryDistribution: state.popularJobTitleSalaryDistribution
-    .get('data')
-    .toJS(),
+  popularCompanyAverageSalary: state.popularCompanyAverageSalary.data,
+  popularJobTitleSalaryDistribution:
+    state.popularJobTitleSalaryDistribution.data,
   popularExperiences: state.popularExperiences.get('data'),
   laborRightsMenuEntries: menuEntriesSelector(state).slice(-3),
   laborRightsCount: laborRightsCountSelector(state),

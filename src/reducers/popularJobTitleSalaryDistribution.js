@@ -1,9 +1,8 @@
-import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 
 import fetchingStatus from '../constants/status';
 
-const preloadedState = fromJS({
+const preloadedState = {
   data: [
     {
       job_title: {
@@ -78,6 +77,6 @@ const preloadedState = fromJS({
   ],
   status: fetchingStatus.FETCHED,
   error: null,
-});
+};
 
 export default createReducer(preloadedState, {});
