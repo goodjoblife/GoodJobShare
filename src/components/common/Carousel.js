@@ -5,7 +5,7 @@ import cn from 'classnames';
 
 import styles from './Carousel.module.css';
 
-const Page = ({ children }) => <div>{children}</div>;
+export const CarouselPage = ({ children }) => <div>{children}</div>;
 
 const Carousel = ({ children, selectedIndex, onSelectIndex }) => {
   const handleClickPrevBtn = () => {
@@ -61,11 +61,9 @@ const Carousel = ({ children, selectedIndex, onSelectIndex }) => {
 };
 
 Carousel.propTypes = {
-  children: childrenOfType(Page).isRequired,
+  children: childrenOfType(CarouselPage).isRequired,
   selectedIndex: PropTypes.number.isRequired,
   onSelectIndex: PropTypes.func.isRequired,
 };
-
-Carousel.Page = Page;
 
 export default Carousel;

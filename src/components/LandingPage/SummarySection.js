@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { zip } from 'ramda';
 
-import Carousel from 'common/Carousel';
+import Carousel, { CarouselPage } from 'common/Carousel';
 import ChartWrapper from './ChartWrapper';
 import CompanyDistributionChart from './CompanyDistributionChart';
 import JobTitleDistributionChart from './JobTitleDistrubitionChart';
@@ -22,7 +22,7 @@ const SummarySection = ({
       <Carousel selectedIndex={selectedIndex} onSelectIndex={setSelectedIndex}>
         {dataPairs.map(
           ([companyAverageSalary, jobTitleSalaryDistribution], i) => (
-            <Carousel.Page key={i}>
+            <CarouselPage key={i}>
               <div className={styles.page}>
                 <ChartWrapper
                   className={styles.chartWrapper}
@@ -43,7 +43,7 @@ const SummarySection = ({
                   />
                 </ChartWrapper>
               </div>
-            </Carousel.Page>
+            </CarouselPage>
           ),
         )}
       </Carousel>
