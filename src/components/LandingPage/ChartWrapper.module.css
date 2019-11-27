@@ -1,0 +1,32 @@
+.chartWrapper {
+  .header {
+    margin-bottom: 17px;
+
+    .title {
+      font-size: 22px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .readmore {
+      margin-left: 24px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #325bbd;
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
+    background-color: #fff;
+  }
+}

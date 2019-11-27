@@ -4,6 +4,7 @@ import { Switch } from 'react-router-dom';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
+import qs from 'qs';
 import StepControl from './StepControl';
 import Step1 from './Step1';
 import Step2 from './Step2';
@@ -111,6 +112,40 @@ const defaultForm = {
   interviewSensitiveQuestions: [],
 };
 
+const getDefaultFormFromDraft = () => {
+  try {
+    const { __updatedAt, __idCounterCurrent, ...storedDraft } = JSON.parse(
+      localStorage.getItem(LS_INTERVIEW_STEPS_FORM_KEY),
+    );
+    if (isExpired(__updatedAt)) {
+      console.warn(`Stored draft expired at ${new Date(__updatedAt)}`);
+      localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
+      return null;
+    } else {
+      idCounter = idGenerator(
+        __idCounterCurrent !== undefined
+          ? __idCounterCurrent
+          : getMaxId(storedDraft),
+      );
+      return storedDraft;
+    }
+  } catch (error) {
+    return null;
+  }
+};
+
+const getDefaultFormFromLocation = location => {
+  const companyName = qs.parse(location.search, { ignoreQueryPrefix: true })
+    .companyName;
+  if (companyName) {
+    return {
+      ...defaultForm,
+      companyQuery: companyName,
+    };
+  }
+  return null;
+};
+
 const getMaxId = state => {
   const ids = [...R.keys(state.sections), ...R.keys(state.interviewQas)];
   const maxId = R.reduce(R.max, -Infinity, ids);
@@ -144,27 +179,10 @@ class InterviewForm extends React.Component {
   }
 
   componentDidMount() {
-    let defaultFromDraft;
-
-    try {
-      const { __updatedAt, __idCounterCurrent, ...storedDraft } = JSON.parse(
-        localStorage.getItem(LS_INTERVIEW_STEPS_FORM_KEY),
-      );
-      if (isExpired(__updatedAt)) {
-        console.warn(`Stored draft expired at ${new Date(__updatedAt)}`);
-        localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
-      } else {
-        defaultFromDraft = storedDraft;
-        idCounter = idGenerator(
-          __idCounterCurrent !== undefined
-            ? __idCounterCurrent
-            : getMaxId(storedDraft),
-        );
-      }
-    } catch (error) {
-      defaultFromDraft = null;
-    }
-    const defaultState = defaultFromDraft || defaultForm;
+    const defaultState =
+      getDefaultFormFromLocation(this.props.location) ||
+      getDefaultFormFromDraft() ||
+      defaultForm;
 
     this.setState({
       // eslint-disable-line react/no-did-mount-set-state

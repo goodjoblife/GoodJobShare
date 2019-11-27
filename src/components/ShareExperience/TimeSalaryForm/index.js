@@ -2,6 +2,7 @@ import React from 'react';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
+import qs from 'qs';
 import { Heading } from 'common/base';
 import { People } from 'common/icons';
 import IconHeadingBlock from 'common/IconHeadingBlock';
@@ -59,6 +60,26 @@ const defaultForm = {
   email: '',
 };
 
+const getDefaultFormFromDraft = () => {
+  try {
+    return JSON.parse(localStorage.getItem(LS_TIME_SALARY_FORM_KEY));
+  } catch (error) {
+    return null;
+  }
+};
+
+const getDefaultFormFromLocation = location => {
+  const companyName = qs.parse(location.search, { ignoreQueryPrefix: true })
+    .companyName;
+  if (companyName) {
+    return {
+      ...defaultForm,
+      company: companyName,
+    };
+  }
+  return null;
+};
+
 class TimeSalaryForm extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -77,16 +98,10 @@ class TimeSalaryForm extends React.PureComponent {
   }
 
   componentDidMount() {
-    let defaultFromDraft;
-
-    try {
-      defaultFromDraft = JSON.parse(
-        localStorage.getItem(LS_TIME_SALARY_FORM_KEY),
-      );
-    } catch (error) {
-      defaultFromDraft = null;
-    }
-    const defaultState = defaultFromDraft || defaultForm;
+    const defaultState =
+      getDefaultFormFromLocation(this.props.location) ||
+      getDefaultFormFromDraft() ||
+      defaultForm;
 
     this.setState({
       // eslint-disable-line react/no-did-mount-set-state

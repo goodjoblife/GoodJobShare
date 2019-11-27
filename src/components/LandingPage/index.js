@@ -7,13 +7,14 @@ import { compose, setStatic, lifecycle } from 'recompose';
 import { Section, Wrapper, Heading } from 'common/base';
 import ShareExpSection from 'common/ShareExpSection';
 import Columns from 'common/Columns';
-import FanPageBlock from 'common/FanPageBlock';
 import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
 import { queryPopularExperiences } from '../../actions/popularExperiences';
 import { queryMenu } from '../../actions/laborRights';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
 import StaticHelmet from 'common/StaticHelmet';
+import CallToActionBlock from './CallToActionBlock';
+import SummarySection from './SummarySection';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
   return Promise.all([
@@ -33,6 +34,8 @@ const queryData = lifecycle({
 });
 
 const LandingPage = ({
+  popularCompanyAverageSalary,
+  popularJobTitleSalaryDistribution,
   popularExperiences: popularExperiencesRaw,
   laborRightsMenuEntries,
   timeAndSalaryCount,
@@ -48,6 +51,10 @@ const LandingPage = ({
     <main>
       <StaticHelmet.LandingPage />
       <Banner />
+      <SummarySection
+        popularCompanyAverageSalary={popularCompanyAverageSalary}
+        popularJobTitleSalaryDistribution={popularJobTitleSalaryDistribution}
+      />
       <ShareExpSection heading="現在就留下你的資料" />
       <Section padding bg="white">
         <Wrapper size="l">
@@ -87,14 +94,16 @@ const LandingPage = ({
           </Section>
         </Wrapper>
       </Section>
-      <Section padding bg="white">
-        <FanPageBlock />
+      <Section padding>
+        <CallToActionBlock />
       </Section>
     </main>
   );
 };
 
 LandingPage.propTypes = {
+  popularCompanyAverageSalary: PropTypes.array.isRequired,
+  popularJobTitleSalaryDistribution: PropTypes.array.isRequired,
   laborRightsMenuEntries: PropTypes.array.isRequired,
   popularExperiences: ImmutablePropTypes.list.isRequired,
   laborRightsCount: PropTypes.number.isRequired,

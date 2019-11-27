@@ -1,0 +1,26 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    margin-bottom: 48px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #000;
+  }
+
+  .label {
+    margin-bottom: 10px;
+    font-size: 15px;
+    letter-spacing: 0.86px;
+    color: #000;
+  }
+
+  .input {
+    margin-bottom: 22px;
+  }
+
+  .submit {
+  }
+}

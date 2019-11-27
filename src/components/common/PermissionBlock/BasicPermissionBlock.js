@@ -57,7 +57,6 @@ class BasicPermissionBlock extends React.Component {
       timeAndSalaryCount,
       laborRightsCount,
     } = this.props;
-
     const experienceScale = getScale(experienceCount);
     const timeAndSalaryScale = getScale(timeAndSalaryCount);
 
@@ -97,11 +96,7 @@ class BasicPermissionBlock extends React.Component {
                   <strong>若你已經分享過資訊，登入即可查看全文！</strong>
                 </P>
                 <div className={styles.ctaButtonContainer}>
-                  <CallToLoginShareButton
-                    to={to}
-                    notLoginText="立即登入並分享"
-                    isLoginText="立即分享"
-                  />
+                  <CallToLoginShareButton to={to} isLoginText="立即分享" />
                 </div>
               </Modal>
             </div>
@@ -135,11 +130,7 @@ class BasicPermissionBlock extends React.Component {
             <strong>若你已經分享過資訊，登入即可查看全文！</strong>
           </P>
           <div className={styles.ctaButtonContainer}>
-            <CallToLoginShareButton
-              to={to}
-              notLoginText="立即登入並分享"
-              isLoginText="立即分享"
-            />
+            <CallToLoginShareButton to={to} isLoginText="立即分享" />
           </div>
         </div>
       </div>

@@ -114,9 +114,9 @@ const enhance = compose(
   ssr,
   withRouteParameter,
   withPermission,
-  withProps(({ match: { params: { companyName } } }) => ({
+  withProps(props => ({
     pageType: pageType.COMPANY,
-    pageName: companyName,
+    pageName: getCompanyNameFromParams(props),
   })),
   connect(
     mapStateToProps,
