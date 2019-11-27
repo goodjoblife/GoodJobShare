@@ -3,6 +3,7 @@ import R from 'ramda';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
+import qs from 'qs';
 import { Heading } from 'common/base';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
@@ -86,6 +87,34 @@ const defaultForm = {
   },
 };
 
+const getDefaultFormFromDraft = () => {
+  try {
+    const { __idCounterCurrent, ...storedDraft } = JSON.parse(
+      localStorage.getItem(LS_WORK_EXPERIENCES_FORM_KEY),
+    );
+    idCounter = idGenerator(
+      typeof __idCounterCurrent !== undefined
+        ? __idCounterCurrent
+        : getMaxId(storedDraft),
+    );
+    return storedDraft;
+  } catch (error) {
+    return null;
+  }
+};
+
+const getDefaultFormFromLocation = location => {
+  const companyName = qs.parse(location.search, { ignoreQueryPrefix: true })
+    .companyName;
+  if (companyName) {
+    return {
+      ...defaultForm,
+      companyQuery: companyName,
+    };
+  }
+  return null;
+};
+
 const getMaxId = state => {
   const ids = [...R.keys(state.sections)];
   const maxId = R.max(ids);
@@ -112,23 +141,10 @@ class WorkExperiencesForm extends React.Component {
   }
 
   componentDidMount() {
-    let defaultFromDraft;
-
-    try {
-      const { __idCounterCurrent, ...storedDraft } = JSON.parse(
-        localStorage.getItem(LS_WORK_EXPERIENCES_FORM_KEY),
-      );
-      defaultFromDraft = storedDraft;
-      idCounter = idGenerator(
-        typeof __idCounterCurrent !== undefined
-          ? __idCounterCurrent
-          : getMaxId(storedDraft),
-      );
-    } catch (error) {
-      defaultFromDraft = null;
-    }
-
-    const defaultState = defaultFromDraft || defaultForm;
+    const defaultState =
+      getDefaultFormFromLocation(this.props.location) ||
+      getDefaultFormFromDraft() ||
+      defaultForm;
 
     this.setState({
       // eslint-disable-line react/no-did-mount-set-state

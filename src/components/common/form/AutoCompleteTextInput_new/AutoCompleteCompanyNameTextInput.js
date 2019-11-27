@@ -49,7 +49,9 @@ const AutoCompleteCompanyNameTextInput = ({
   const handleCompanyNameSelected = useCallback(
     companyName => {
       onChange(companyName);
-      onCompanyNameSelected(companyName);
+      if (onCompanyNameSelected) {
+        onCompanyNameSelected(companyName);
+      }
     },
     [onChange, onCompanyNameSelected],
   );
@@ -69,7 +71,7 @@ const AutoCompleteCompanyNameTextInput = ({
 AutoCompleteCompanyNameTextInput.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onCompanyNameSelected: PropTypes.func.isRequired,
+  onCompanyNameSelected: PropTypes.func,
 };
 
 export default AutoCompleteCompanyNameTextInput;
