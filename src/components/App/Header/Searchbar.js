@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { withRouter } from 'react-router-dom';
 import qs from 'qs';
 
-import AutoCompleteCompanyNameTextInput from 'common/form/AutoCompleteTextInput_new/AutoCompleteCompanyNameTextInput';
+import AutoCompleteSearchTextInput from 'common/form/AutoCompleteTextInput_new/AutoCompleteSearchTextInput';
 import Magnifier from '../../common/icons/Magnifiner';
 import styles from './Searchbar.module.css';
 const searchType = 'company';
@@ -52,12 +52,12 @@ const Searchbar = ({ className, placeholder, history, location }) => {
       onFocus={handleFormFocus}
       onBlur={handleFormBlur}
     >
-      <AutoCompleteCompanyNameTextInput
+      <AutoCompleteSearchTextInput
         className={styles.textInput}
         placeholder={placeholder}
         value={searchText}
         onChange={setSearchText}
-        onCompanyNameSelected={gotoSearchResult}
+        onSelected={gotoSearchResult}
       />
       <button type="submit" className={styles.searchBtn}>
         <Magnifier />
