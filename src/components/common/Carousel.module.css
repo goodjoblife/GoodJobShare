@@ -1,0 +1,52 @@
+.carousel {
+}
+
+.page {
+  display: none;
+
+  &.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 24px;
+
+  .prev,
+  .next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    opacity: 0.5;
+    background-color: #e0e0e0;
+    margin: 0 18.5px;
+    color: #1d1d1b;
+    cursor: default;
+
+    &.active {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+
+  .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 9px;
+    background-color: #d8d8d8;
+    margin: 0 10.5px;
+
+    &.active {
+      background-color: #555;
+    }
+  }
+}

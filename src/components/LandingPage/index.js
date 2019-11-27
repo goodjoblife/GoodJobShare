@@ -14,6 +14,7 @@ import { queryMenu } from '../../actions/laborRights';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
 import StaticHelmet from 'common/StaticHelmet';
+import SummarySection from './SummarySection';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
   return Promise.all([
@@ -33,6 +34,8 @@ const queryData = lifecycle({
 });
 
 const LandingPage = ({
+  popularCompanyAverageSalary,
+  popularJobTitleSalaryDistribution,
   popularExperiences: popularExperiencesRaw,
   laborRightsMenuEntries,
   timeAndSalaryCount,
@@ -48,6 +51,10 @@ const LandingPage = ({
     <main>
       <StaticHelmet.LandingPage />
       <Banner />
+      <SummarySection
+        popularCompanyAverageSalary={popularCompanyAverageSalary}
+        popularJobTitleSalaryDistribution={popularJobTitleSalaryDistribution}
+      />
       <ShareExpSection heading="現在就留下你的資料" />
       <Section padding bg="white">
         <Wrapper size="l">
@@ -95,6 +102,8 @@ const LandingPage = ({
 };
 
 LandingPage.propTypes = {
+  popularCompanyAverageSalary: PropTypes.array.isRequired,
+  popularJobTitleSalaryDistribution: PropTypes.array.isRequired,
   laborRightsMenuEntries: PropTypes.array.isRequired,
   popularExperiences: ImmutablePropTypes.list.isRequired,
   laborRightsCount: PropTypes.number.isRequired,
