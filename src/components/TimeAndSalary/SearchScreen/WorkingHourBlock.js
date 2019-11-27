@@ -4,10 +4,7 @@ import { Heading } from 'common/base';
 import { Link } from 'react-router-dom';
 
 import styles from './WorkingHourBlock.module.css';
-import {
-  pageTypeTranslation,
-  pageType,
-} from '../../../constants/companyJobTitle';
+import { pageTypeTranslation } from '../../../constants/companyJobTitle';
 
 class WorkingHourBlock extends Component {
   static propTypes = {
@@ -24,8 +21,7 @@ class WorkingHourBlock extends Component {
           <div className={styles.headingWrapper}>
             <div className={styles.pageTypeBlock}>
               <span className={styles.pageTypeBadge}>
-                {/* TODO: page type of data */}
-                {pageTypeTranslation[pageType.COMPANY]}
+                {pageTypeTranslation[data.pageType]}
               </span>
             </div>
             <Heading size="sm" className={styles.headingBlock}>
