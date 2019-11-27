@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { BarChart, Bar, XAxis, YAxis } from 'recharts';
 import R from 'ramda';
 
-const maxNameLength = R.compose(
-  R.reduce(R.max, -Infinity),
+const maxNameLength = R.pipe(
   R.map(
-    R.compose(
-      R.length,
+    R.pipe(
       R.path(['job_title', 'name']),
+      R.length,
     ),
   ),
+  R.reduce(R.max, -Infinity),
 );
 
-const BarChartView = ({ data, width = 494, height = 233 }) => (
+const JobTitleDistributionChart = ({ data, width = 494, height = 233 }) => (
   <BarChart
     width={width}
     height={height}
@@ -27,7 +28,7 @@ const BarChartView = ({ data, width = 494, height = 233 }) => (
   </BarChart>
 );
 
-BarChart.propTypes = {
+JobTitleDistributionChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       job_title: PropTypes.shape({
@@ -42,4 +43,4 @@ BarChart.propTypes = {
   height: PropTypes.number,
 };
 
-export default BarChartView;
+export default JobTitleDistributionChart;

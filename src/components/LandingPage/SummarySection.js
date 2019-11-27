@@ -4,8 +4,8 @@ import { zip } from 'ramda';
 
 import Carousel, { CarouselPage } from 'common/Carousel';
 import ChartWrapper from './ChartWrapper';
-import CompanyDistributionChart from './CompanyDistributionChart';
-import JobTitleDistributionChart from './JobTitleDistrubitionChart';
+import CompanyDistributionChart from '../common/Charts/CompanyDistributionChart';
+import JobTitleDistributionChart from '../common/Charts/JobTitleDistrubitionChart';
 import styles from './SummarySection.module.css';
 
 const SummarySection = ({
