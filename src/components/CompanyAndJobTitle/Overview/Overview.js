@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'recompose';
 
-import { withPermission } from 'common/permission-context';
 import { Section } from 'common/base';
 
 import SnippetBlock from './SnippetBlock';
@@ -10,6 +8,7 @@ import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import { tabType as TAB_TYPE } from '../../../constants/companyJobTitle';
+import SummaryBlock from './SummaryBlock';
 
 const SALARY_WORK_TIMES_LIMIT = 5;
 const WORK_EXPERIENCES_LIMIT = 3;
@@ -23,6 +22,11 @@ const Overview = ({
   workExperiences,
   salaryWorkTimes,
   canViewTimeAndSalary,
+  canViewExperienceDetail,
+  crossComparisonSalaryStatistics,
+  averageWeekWorkHours,
+  frequentOverTimeRatio,
+  fewOverTimeRatio,
 }) => (
   <Section Tag="main" paddingBottom>
     <SnippetBlock
@@ -34,6 +38,12 @@ const Overview = ({
       pageName={pageName}
       tabType={TAB_TYPE.TIME_AND_SALARY}
     >
+      <SummaryBlock
+        crossComparisonSalaryStatistics={crossComparisonSalaryStatistics}
+        averageWeekWorkHours={averageWeekWorkHours}
+        frequentOverTimeRatio={frequentOverTimeRatio}
+        fewOverTimeRatio={fewOverTimeRatio}
+      />
       <WorkingHourTable
         data={salaryWorkTimes.slice(0, SALARY_WORK_TIMES_LIMIT)}
         hideContent={!canViewTimeAndSalary}
@@ -50,7 +60,12 @@ const Overview = ({
       tabType={TAB_TYPE.WORK_EXPERIENCE}
     >
       {workExperiences.slice(0, WORK_EXPERIENCES_LIMIT).map(d => (
-        <WorkExperienceEntry key={d.id} pageType={pageType} data={d} />
+        <WorkExperienceEntry
+          key={d.id}
+          pageType={pageType}
+          data={d}
+          canViewExperienceDetail={canViewExperienceDetail}
+        />
       ))}
     </SnippetBlock>
     <SnippetBlock
@@ -63,7 +78,12 @@ const Overview = ({
       tabType={TAB_TYPE.INTERVIEW_EXPERIENCE}
     >
       {interviewExperiences.slice(0, INTERVIEW_EXPERIENCES_LIMIT).map(d => (
-        <InterviewExperienceEntry key={d.id} pageType={pageType} data={d} />
+        <InterviewExperienceEntry
+          key={d.id}
+          pageType={pageType}
+          data={d}
+          canViewExperienceDetail={canViewExperienceDetail}
+        />
       ))}
     </SnippetBlock>
   </Section>
@@ -77,8 +97,11 @@ Overview.propTypes = {
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
   canViewTimeAndSalary: PropTypes.bool.isRequired,
+  canViewExperienceDetail: PropTypes.bool.isRequired,
+  crossComparisonSalaryStatistics: PropTypes.arrayOf(PropTypes.object),
+  averageWeekWorkHours: PropTypes.number.isRequired,
+  frequentOverTimeRatio: PropTypes.number.isRequired,
+  fewOverTimeRatio: PropTypes.number.isRequired,
 };
 
-const hoc = compose(withPermission);
-
-export default hoc(Overview);
+export default Overview;

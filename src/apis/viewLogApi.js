@@ -1,5 +1,8 @@
 import graphqlClient from 'utils/graphqlClient';
-import { viewSalaryWorkTimes as viewSalaryWorkTimesGql } from 'graphql/viewLog';
+import {
+  viewSalaryWorkTimes as viewSalaryWorkTimesGql,
+  viewExperiences as viewExperiencesGql,
+} from 'graphql/viewLog';
 
 const viewSalaryWorkTimes = ({ token, contentIds, referrer = null }) =>
   graphqlClient({
@@ -13,6 +16,19 @@ const viewSalaryWorkTimes = ({ token, contentIds, referrer = null }) =>
     },
   });
 
+const viewExperiences = ({ token, contentIds, referrer = null }) =>
+  graphqlClient({
+    query: viewExperiencesGql,
+    token,
+    variables: {
+      input: {
+        content_ids: contentIds,
+        referrer,
+      },
+    },
+  });
+
 export default {
   viewSalaryWorkTimes,
+  viewExperiences,
 };

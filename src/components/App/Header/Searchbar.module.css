@@ -1,0 +1,53 @@
+@value main-yellow from "common/variables.module.css";
+
+.searchbar {
+  display: flex;
+  align-items: center;
+
+  .textInput {
+    width: 276px;
+    height: 32px;
+    border: solid 1px #8c8c8c;
+    background: transparent;
+    padding: 12px 6px;
+    font-size: 14px;
+    letter-spacing: 0.51px;
+    color: #ffffff;
+    line-height: 32px;
+    transition: border-color 0.4s;
+
+    @media (max-width: 850px) {
+      width: 175px;
+    }
+  }
+
+  .searchBtn {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      width: 19px;
+      height: 19px;
+      cursor: pointer;
+      transition-property: fill;
+      transition-duration: 0.3s;
+      fill: #ffffff;
+    }
+  }
+
+  &:hover,
+  &.active {
+    .textInput {
+      border-color: main-yellow;
+    }
+
+    .searchBtn {
+      svg {
+        fill: main-yellow;
+      }
+    }
+  }
+}

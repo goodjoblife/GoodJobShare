@@ -2,79 +2,95 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faLock from '@fortawesome/fontawesome-free-solid/faLock';
+
 import { Heading, P } from 'common/base';
 import i from 'common/icons';
 import styles from './InterviewExperiences.module.css';
-import { formatCreatedAt, formatSalary } from './helper';
-import Label from '../Label';
+import { formatCreatedAt, formatSalary, formatSalaryRange } from './helper';
 import Rating from './Rating';
-import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 
 const createLinkTo = id => ({
   pathname: `/experiences/${id}`,
   state: { backable: true },
 });
 
-const ExperienceEntry = ({ pageType, data, size }) => {
-  const {
+const SNIPPET_SIZE = 30;
+
+const ExperienceEntry = ({
+  pageType,
+  data: {
     id,
     company: { name: companyName } = {},
     job_title: { name: jobTitle } = {},
-    region,
     created_at: createdAt,
     salary,
-    title,
     overall_rating: overallRating,
-  } = data;
-
-  return (
-    <Link to={createLinkTo(id)} className={cn(styles.container, styles[size])}>
-      <section className={styles.contentWrapper}>
-        <P size="s">{formatCreatedAt(createdAt)}</P>
-
-        <Heading
-          Tag="h2"
-          size={size === 'l' ? 'sl' : 'sm'}
-          className={styles.heading}
-        >
-          {title}
-        </Heading>
-
-        <div className={styles.labels}>
-          {pageType !== PAGE_TYPE.COMPANY && (
-            <Label
-              text={companyName}
-              Icon={i.Company}
-              className={styles.company}
-            />
-          )}
-          {pageType !== PAGE_TYPE.JOB_TITLE && (
-            <Label text={jobTitle} Icon={i.User} className={styles.position} />
-          )}
-          {region && (
-            <Label
-              text={region}
-              Icon={i.Location}
-              className={styles.location}
-            />
-          )}
-          {salary && (
-            <Label
-              className={styles.salary}
-              text={formatSalary(salary)}
-              Icon={i.Coin}
-            />
-          )}
+    sections: [section],
+  },
+  size,
+  canViewExperienceDetail,
+}) => (
+  <div className={cn(styles.container, styles[size])}>
+    <section className={styles.contentWrapper}>
+      <div className={styles.labels}>
+        <P size="s" className={styles.date}>
+          面試經驗 · {formatCreatedAt(createdAt)}
+        </P>
+        {salary && (
+          <div
+            className={cn(styles.salary, {
+              [styles.locked]: !canViewExperienceDetail,
+            })}
+          >
+            {canViewExperienceDetail ? (
+              <React.Fragment>
+                <i.Coin />
+                {formatSalary(salary)}
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <FontAwesomeIcon icon={faLock} />
+                {formatSalaryRange(salary)}
+              </React.Fragment>
+            )}
+          </div>
+        )}
+        <div className={styles.rating}>
           <Rating rate={overallRating} />
         </div>
-      </section>
-    </Link>
-  );
-};
+      </div>
+
+      <Heading
+        Tag="h2"
+        size={size === 'l' ? 'sl' : 'sm'}
+        className={styles.heading}
+      >
+        {companyName} {jobTitle}
+      </Heading>
+
+      <div className={styles.snippetWrapper}>
+        <span className={styles.snippet}>
+          {section.content.slice(0, SNIPPET_SIZE)}....
+        </span>
+        <Link
+          to={createLinkTo(id)}
+          className={cn(styles.readmore, {
+            [styles.locked]: !canViewExperienceDetail,
+          })}
+        >
+          {`閱讀更多${canViewExperienceDetail ? '' : '並解鎖'}`}
+        </Link>
+      </div>
+    </section>
+  </div>
+);
 
 ExperienceEntry.propTypes = {
   data: PropTypes.object.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
+  canViewExperienceDetail: PropTypes.bool.isRequired,
 };
 
 ExperienceEntry.defaultProps = {

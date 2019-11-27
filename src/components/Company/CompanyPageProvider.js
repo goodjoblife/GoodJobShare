@@ -11,6 +11,7 @@ import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
 import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
 import NotFound from '../common/NotFound';
+import { withPermission } from 'common/permission-context';
 
 import { tabType, pageType } from '../../constants/companyJobTitle';
 import companyActions from '../../actions/company';
@@ -110,21 +111,41 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
 const enhance = compose(
   ssr,
   withRouteParameter,
-  withProps(({ match: { params: { companyName } } }) => ({
+  withPermission,
+  withProps(props => ({
     pageType: pageType.COMPANY,
-    pageName: companyName,
+    pageName: getCompanyNameFromParams(props),
   })),
   connect(
     mapStateToProps,
     mapDispatchToProps,
   ),
+  withProps(() => ({
+    crossComparisonSalaryStatistics: [
+      { name: '軟體工程師', salary: 60000 },
+      { name: '行銷企劃', salary: 40000 },
+      { name: 'UI/UX 設計師', salary: 40000 },
+      { name: 'PM', salary: 50000 },
+    ],
+    averageWeekWorkHours: 45,
+    frequentOverTimeRatio: 0.6,
+    fewOverTimeRatio: 0.2,
+  })),
   lifecycle({
     componentDidMount() {
       this.props.fetchCompany(this.props.pageName);
+      this.props.fetchPermission();
     },
     componentDidUpdate(prevProps) {
       if (this.props.pageName !== prevProps.pageName) {
         this.props.fetchCompany(this.props.pageName);
+      }
+
+      if (
+        this.props.pageName !== prevProps.pageName ||
+        this.props.pageType !== prevProps.pageType
+      ) {
+        this.props.fetchPermission();
       }
     },
   }),

@@ -36,6 +36,8 @@ const withPermission = compose(
         const laborRightsSingleRegex = /\/labor-rights\/.+/;
         const experienceDetailRegex = /\/experiences\/.+/;
         const salaryWorkTimeRegex = /\/salary-work-times.*/;
+        const companyRegex = /\/companies\/.+/;
+        const jobTitleRegex = /\/job-titles\/.+/;
 
         // 根據路徑，去更新相關的觀看權限 state
         if (laborRightsSingleRegex.test(pathname)) {
@@ -44,16 +46,16 @@ const withPermission = compose(
           return;
         } else if (experienceDetailRegex.test(pathname)) {
           // 假如是單篇經驗分享頁，localStorage 沒值的話，不更新觀看權限 state。因此不會做阻擋，但是馬上就更新 localStorage。
-          const viewedExperirenceDetail = localStorage.getItem(
-            'viewedExperirenceDetail',
+          const viewedExperienceDetail = localStorage.getItem(
+            'viewedExperienceDetail',
           );
 
-          if (viewedExperirenceDetail === null) {
-            localStorage.setItem('viewedExperirenceDetail', true);
-            setCanView({ canViewExperirenceDetail: true });
+          if (viewedExperienceDetail === null) {
+            localStorage.setItem('viewedExperienceDetail', true);
+            setCanView({ canViewExperienceDetail: true });
             return;
           } else {
-            setCanView({ canViewExperirenceDetail: hasPermission });
+            setCanView({ canViewExperienceDetail: hasPermission });
             return;
           }
         } else if (salaryWorkTimeRegex.test(pathname)) {
@@ -69,6 +71,20 @@ const withPermission = compose(
           } else {
             setCanView({ canViewTimeAndSalary: hasPermission });
             return;
+          }
+        } else if (
+          companyRegex.test(pathname) ||
+          jobTitleRegex.test(pathname)
+        ) {
+          // 假如是公司頁面或職稱頁面，依據 localStorage 和權限更新 state。
+          const viewedExperienceDetail = localStorage.getItem(
+            'viewedExperienceDetail',
+          );
+
+          if (viewedExperienceDetail === null) {
+            setCanView({ canViewExperienceDetail: true });
+          } else {
+            setCanView({ canViewExperienceDetail: hasPermission });
           }
         }
       }

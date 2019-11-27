@@ -27,11 +27,31 @@
   height: 100%;
   transition: transform;
   display: flex;
+
+  .searchbar {
+    flex: 1;
+  }
 }
 
-.logo {
-  flex: 0 0 170px;
+.searchbarWrapper {
+  display: flex;
+  align-items: center;
 
+  @media (max-width: 850px) {
+    display: none;
+  }
+
+  &.mobile {
+    display: none;
+
+    @media (max-width: 850px) {
+      display: flex;
+    }
+  }
+}
+
+.logo,
+.logoSm {
   > a {
     display: block;
   }
@@ -40,12 +60,28 @@
     transform: scale(0.8) translateY(6px);
     transform-origin: 0% 50%;
     fill: #fff;
+  }
+}
 
-    @media (max-width: 850px) {
-      transform: scale(1) translateY(0);
-      width: 120px;
-      fill: #fff;
-    }
+.logo {
+  flex: 0 0 170px;
+  display: block;
+
+  @media (max-width: 850px) {
+    display: none;
+  }
+}
+
+.logoSm {
+  display: none;
+
+  @media (max-width: 850px) {
+    display: block;
+  }
+
+  svg {
+    width: 32px;
+    height: 32px;
   }
 }
 
@@ -54,6 +90,11 @@
   flex: 1 0 auto;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  .logo {
+    display: none;
+  }
 
   @media (max-width: 850px) {
     opacity: 0;
@@ -73,6 +114,15 @@
       opacity: 1;
       visibility: visible;
     }
+
+    .logo {
+      display: block;
+      padding: 0;
+      margin: 0;
+      margin-top: 37px;
+      max-height: 40px;
+      width: 130px;
+    }
   }
 }
 
@@ -80,6 +130,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 16px;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+    margin-left: 0;
+
+    .leaveDataBtn {
+      margin-bottom: 17px;
+    }
+  }
 }
 
 .leaveDataBtn {
@@ -109,38 +169,26 @@
       background-color: rgba(255, 255, 255, 0.9);
     }
   }
-
-  @media (max-width: 850px) {
-    display: none;
-  }
-
-  &.isMobileButton {
-    display: none;
-
-    @media (max-width: 850px) {
-      display: flex;
-      position: fixed;
-      top: 9px;
-      height: 32px;
-      right: 60px;
-
-      svg {
-        display: none;
-      }
-    }
-  }
 }
 
-.loginBtn {
+.loginBtn,
+.userNameBtn {
   color: #fff;
+  text-transform: lowercase;
   height: 40px;
   align-items: center;
   justify-content: center;
   display: flex;
-  margin-left: 40px;
+  margin-left: 7px;
   transition-property: color;
   transition-duration: 0.3s;
-  text-transform: lowercase;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.loginBtn {
+  border-radius: 1.5em;
+  border: 1px solid #fff;
 
   svg {
     width: 20px;
@@ -153,6 +201,7 @@
 
   @media (min-width: 851px) {
     &:hover {
+      border-color: main-yellow;
       color: main-yellow;
       svg {
         fill: main-yellow;
@@ -161,6 +210,33 @@
   }
   @media (max-width: 850px) {
     margin-left: 0;
+  }
+}
+
+.userNameBtn {
+  /* Caret */
+  &::after {
+    content: '';
+    display: inline-block;
+    box-sizing: box-model;
+    width: 8px;
+    height: 5px;
+    border: 5px solid transparent;
+    border-top: 5px solid #fff;
+    border-bottom: 0;
+    margin-left: 5.5px;
+  }
+
+  &:hover {
+    color: main-yellow;
+
+    &::after {
+      border-top-color: main-yellow;
+    }
+  }
+
+  @media (max-width: 850px) {
+    padding: 0;
   }
 }
 
