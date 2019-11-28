@@ -15,6 +15,7 @@ import Banner from './Banner';
 import StaticHelmet from 'common/StaticHelmet';
 import CallToActionBlock from './CallToActionBlock';
 import SummarySection from './SummarySection';
+import { isUnfetched } from '../../constants/status';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
   return Promise.all([
@@ -25,6 +26,12 @@ const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
 
 const queryData = lifecycle({
   componentDidMount() {
+    if (isUnfetched(this.props.popularCompanyAverageSalaryStatus)) {
+      this.props.queryPopularCompanyAverageSalary();
+    }
+    if (isUnfetched(this.props.popularJobTitleSalaryDistributionStatus)) {
+      this.props.queryPopularJobTitleSalaryDistribution();
+    }
     if (this.props.popularExperiences.size === 0) {
       this.props.queryPopularExperiences();
     }
