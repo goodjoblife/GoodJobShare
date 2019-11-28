@@ -95,6 +95,16 @@ query($jobTitle: String!) {
         unknown
       }
     }
+    salary_distribution {
+      bins {
+        data_count
+        range {
+          type
+          from
+          to
+        }
+      }
+    }
   }
 }
 `;

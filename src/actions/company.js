@@ -22,59 +22,6 @@ export const fetchCompany = companyName => (dispatch, getState, { api }) => {
   return api.company
     .getCompany(companyName)
     .then(data => {
-      data = {
-        ...data,
-        salary_work_time_statistics: {
-          ...data.salary_work_time_statistics,
-          overtime_frequency_count: [
-            {
-              overtime_frequency: 0,
-              count: 5,
-            },
-            {
-              overtime_frequency: 1,
-              count: 10,
-            },
-            {
-              overtime_frequency: 2,
-              count: 20,
-            },
-            {
-              overtime_frequency: 3,
-              count: 30,
-            },
-          ],
-        },
-        job_title_average_salaries: [
-          {
-            job_title: {
-              name: '軟體工程師',
-            },
-            average_salary: {
-              amount: 76000,
-              type: 'month',
-            },
-          },
-          {
-            job_title: {
-              name: '數位IC設計工程師',
-            },
-            average_salary: {
-              amount: 100000,
-              type: 'month',
-            },
-          },
-          {
-            job_title: {
-              name: '硬體工程師',
-            },
-            average_salary: {
-              amount: 80000,
-              type: 'month',
-            },
-          },
-        ],
-      };
       dispatch(setStatus(companyName, STATUS.FETCHED, data));
     })
     .catch(error => {

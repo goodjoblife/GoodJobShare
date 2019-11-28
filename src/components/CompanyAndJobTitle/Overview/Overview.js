@@ -21,12 +21,12 @@ const Overview = ({
   interviewExperiences,
   workExperiences,
   salaryWorkTimes,
-  salaryWorkTimeStatistics,
+  salaryDistribution,
+  jobAverageSalaries,
+  averageWeekWorkTime,
+  overtimeFrequencyCount,
   canViewTimeAndSalary,
   canViewExperienceDetail,
-  jobTitleAverageSalaries,
-  frequentOverTimeRatio,
-  fewOverTimeRatio,
 }) => (
   <Section Tag="main" paddingBottom>
     <SnippetBlock
@@ -39,11 +39,10 @@ const Overview = ({
       tabType={TAB_TYPE.TIME_AND_SALARY}
     >
       <SummaryBlock
-        jobTitleAverageSalaries={jobTitleAverageSalaries}
-        averageWeekWorkTime={salaryWorkTimeStatistics.average_week_work_time}
-        overtimeFrequencyCount={
-          salaryWorkTimeStatistics.overtime_frequency_count
-        }
+        salaryDistribution={salaryDistribution}
+        jobAverageSalaries={jobAverageSalaries}
+        averageWeekWorkTime={averageWeekWorkTime}
+        overtimeFrequencyCount={overtimeFrequencyCount}
       />
       <WorkingHourTable
         data={salaryWorkTimes.slice(0, SALARY_WORK_TIMES_LIMIT)}
@@ -97,12 +96,12 @@ Overview.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
-  salaryWorkTimeStatistics: PropTypes.object.isRequired,
+  salaryDistribution: PropTypes.array,
+  jobAverageSalaries: PropTypes.array,
+  averageWeekWorkTime: PropTypes.number.isRequired,
+  overtimeFrequencyCount: PropTypes.object.isRequired,
   canViewTimeAndSalary: PropTypes.bool.isRequired,
   canViewExperienceDetail: PropTypes.bool.isRequired,
-  jobTitleAverageSalaries: PropTypes.arrayOf(PropTypes.object),
-  frequentOverTimeRatio: PropTypes.number.isRequired,
-  fewOverTimeRatio: PropTypes.number.isRequired,
 };
 
 export default Overview;

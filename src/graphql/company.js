@@ -91,6 +91,16 @@ query($companyName: String!) {
         no
         unknown
       }
+      job_average_salaries {
+        job_title {
+          name
+        }
+        average_salary {
+          type
+          amount
+        }
+        data_count
+      }
     }
   }
 }

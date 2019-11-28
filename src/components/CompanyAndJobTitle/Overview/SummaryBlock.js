@@ -1,26 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import CompanyDistributionChart from '../../common/Charts/CompanyDistributionChart';
 import JobTitleDistrubitionChart from '../../common/Charts/JobTitleDistrubitionChart';
 import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
 import styles from './SummaryBlock.module.css';
 
 const SummaryBlock = ({
-  jobTitleAverageSalaries,
+  salaryDistribution,
+  jobAverageSalaries,
   averageWeekWorkTime,
   overtimeFrequencyCount,
 }) => (
   <div className={styles.summaryBlock}>
-    {jobTitleAverageSalaries && (
+    {salaryDistribution && (
       <React.Fragment>
         <div className={styles.barChart}>
-          <JobTitleDistrubitionChart data={jobTitleAverageSalaries} />
+          <CompanyDistributionChart data={salaryDistribution} />
         </div>
         <div className={styles.barChartSm}>
-          <JobTitleDistrubitionChart
-            data={jobTitleAverageSalaries}
-            width={300}
-          />
+          <CompanyDistributionChart data={salaryDistribution} width={300} />
+        </div>
+      </React.Fragment>
+    )}
+    {jobAverageSalaries && (
+      <React.Fragment>
+        <div className={styles.barChart}>
+          <JobTitleDistrubitionChart data={jobAverageSalaries} />
+        </div>
+        <div className={styles.barChartSm}>
+          <JobTitleDistrubitionChart data={jobAverageSalaries} width={300} />
         </div>
       </React.Fragment>
     )}
@@ -34,9 +43,10 @@ const SummaryBlock = ({
 );
 
 SummaryBlock.propTypes = {
-  jobTitleAverageSalaries: PropTypes.arrayOf(PropTypes.object).isRequired,
+  salaryDistribution: PropTypes.arrayOf(PropTypes.object),
+  jobAverageSalaries: PropTypes.arrayOf(PropTypes.object),
   averageWeekWorkTime: PropTypes.number.isRequired,
-  overtimeFrequencyCount: PropTypes.array.isRequired,
+  overtimeFrequencyCount: PropTypes.object.isRequired,
 };
 
 export default SummaryBlock;

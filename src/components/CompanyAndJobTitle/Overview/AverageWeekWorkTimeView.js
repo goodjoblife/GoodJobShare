@@ -4,21 +4,17 @@ import R from 'ramda';
 
 import styles from './SummaryBlock.module.css';
 
-const findCountOfOvertimeFrequency = overtimeFrequency =>
+const ratioSelectorOfType = type =>
   R.converge(R.divide, [
-    R.compose(
-      R.prop('count'),
-      R.find(R.propEq('overtime_frequency', overtimeFrequency)),
-    ),
+    R.prop(type),
     R.compose(
       R.sum,
-      R.map(R.prop('count')),
+      R.values,
     ),
   ]);
 
-const almostEverydayOvertimeRatioSelector = findCountOfOvertimeFrequency(3);
-
-const sometimesOvertimeRatioSelector = findCountOfOvertimeFrequency(1);
+const almostEverydayRatioSelector = ratioSelectorOfType('almost_everyday');
+const sometimesRatioSelector = ratioSelectorOfType('sometimes');
 
 const AverageWeekWorkTimeView = ({
   averageWeekWorkTime,
@@ -27,29 +23,25 @@ const AverageWeekWorkTimeView = ({
   <div className={styles.averageWeekWorkTimeView}>
     <span className={styles.title}>平均每週上班</span>
     <span className={styles.body}>
-      <em>{averageWeekWorkTime}</em>小時
+      <em>{averageWeekWorkTime.toFixed(0)}</em>小時
     </span>
     <span className={styles.footer}>
-      {(
-        almostEverydayOvertimeRatioSelector(overtimeFrequencyCount) * 100
-      ).toFixed(0)}
-      % 幾乎每天加班，
-      {(sometimesOvertimeRatioSelector(overtimeFrequencyCount) * 100).toFixed(
-        0,
-      )}
-      % 偶爾加班
+      {(almostEverydayRatioSelector(overtimeFrequencyCount) * 100).toFixed(0)}%
+      幾乎每天加班，
+      {(sometimesRatioSelector(overtimeFrequencyCount) * 100).toFixed(0)}%
+      偶爾加班
     </span>
   </div>
 );
 
 AverageWeekWorkTimeView.propTypes = {
   averageWeekWorkTime: PropTypes.number.isRequired,
-  overtimeFrequencyCount: PropTypes.arrayOf(
-    PropTypes.shape({
-      overtime_frequency: PropTypes.number,
-      count: PropTypes.number,
-    }),
-  ).isRequired,
+  overtimeFrequencyCount: PropTypes.shape({
+    seldom: PropTypes.number,
+    sometimes: PropTypes.number,
+    usually: PropTypes.number,
+    almost_everyday: PropTypes.number,
+  }).isRequired,
 };
 
 export default AverageWeekWorkTimeView;

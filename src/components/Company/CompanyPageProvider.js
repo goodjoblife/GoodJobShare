@@ -20,7 +20,9 @@ import {
   workExperiences,
   salaryWorkTimes,
   salaryWorkTimeStatistics,
-  jobTitleAverageSalaries,
+  jobAverageSalaries,
+  averageWeekWorkTime,
+  overtimeFrequencyCount,
   status,
   company as companySelector,
 } from '../../selectors/companyAndJobTitle';
@@ -84,7 +86,10 @@ CompanyPageProvider.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
-  salaryWorkTimeStatistics: PropTypes.object,
+  salaryWorkTimeStatistics: PropTypes.object.isRequired,
+  jobAverageSalaries: PropTypes.array.isRequired,
+  averageWeekWorkTime: PropTypes.number.isRequired,
+  overtimeFrequencyCount: PropTypes.object.isRequired,
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
 };
@@ -97,7 +102,9 @@ const mapStateToProps = (state, { pageName }) =>
       workExperiences,
       salaryWorkTimes,
       salaryWorkTimeStatistics,
-      jobTitleAverageSalaries,
+      jobAverageSalaries,
+      averageWeekWorkTime,
+      overtimeFrequencyCount,
     }),
     companySelector(pageName),
   )(state);
@@ -122,10 +129,6 @@ const enhance = compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
-  withProps(() => ({
-    frequentOverTimeRatio: 0.6,
-    fewOverTimeRatio: 0.2,
-  })),
   lifecycle({
     componentDidMount() {
       this.props.fetchCompany(this.props.pageName);

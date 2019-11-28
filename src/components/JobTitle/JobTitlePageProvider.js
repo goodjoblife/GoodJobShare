@@ -20,11 +20,13 @@ import {
   workExperiences,
   salaryWorkTimes,
   salaryWorkTimeStatistics,
+  salaryDistribution,
+  averageWeekWorkTime,
+  overtimeFrequencyCount,
   status,
   jobTitle as jobTitleSelector,
 } from '../../selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
-
 import withRouteParameter from '../ExperienceSearch/withRouteParameter';
 
 const getJobTitleFromParams = R.compose(
@@ -84,7 +86,10 @@ JobTitlePageProvider.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
-  salaryWorkTimeStatistics: PropTypes.object,
+  salaryWorkTimeStatistics: PropTypes.object.isRequired,
+  salaryDistribution: PropTypes.array.isRequired,
+  averageWeekWorkTime: PropTypes.number.isRequired,
+  overtimeFrequencyCount: PropTypes.object.isRequired,
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
 };
@@ -97,6 +102,9 @@ const mapStateToProps = (state, { pageName }) =>
       workExperiences,
       salaryWorkTimes,
       salaryWorkTimeStatistics,
+      salaryDistribution,
+      averageWeekWorkTime,
+      overtimeFrequencyCount,
     }),
     jobTitleSelector(pageName),
   )(state);
@@ -121,16 +129,6 @@ const enhance = compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
-  withProps(() => ({
-    crossComparisonSalaryStatistics: [
-      { name: '軟體工程師', salary: 60000 },
-      { name: '行銷企劃', salary: 40000 },
-      { name: 'UI/UX 設計師', salary: 40000 },
-      { name: 'PM', salary: 50000 },
-    ],
-    frequentOverTimeRatio: 0.6,
-    fewOverTimeRatio: 0.2,
-  })),
   lifecycle({
     componentDidMount() {
       this.props.fetchJobTitle(this.props.pageName);
