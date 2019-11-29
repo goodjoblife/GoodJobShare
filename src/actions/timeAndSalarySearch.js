@@ -1,4 +1,5 @@
 import fetchingStatus from '../constants/status';
+import { pageType } from '../constants/companyJobTitle';
 
 export const SET_SEARCH_DATA = '@@timeAndSalarySearch/SET_SEARCH_DATA';
 export const SET_SEARCH_STATUS = '@@timeAndSalarySearch/SET_SEARCH_STATUS';
@@ -44,30 +45,24 @@ export const queryKeyword = ({ searchBy, keyword }) => (
     status: fetchingStatus.FETCHING,
   });
 
-  let promise;
-
-  if (searchBy === 'company') {
-    promise = api.timeAndSalary.fetchSearchCompany({
+  const searchCompanies = api.timeAndSalary
+    .fetchSearchCompany({
       companyName: keyword,
-    });
-  } else if (searchBy === 'job_title') {
-    promise = api.timeAndSalary.fetchSearchJobTitle({
-      jobTitle: keyword,
-    });
-  } else {
-    // TODO: handle unexpected case
-    return dispatch(
-      setSearchData(
-        fetchingStatus.ERROR,
-        searchBy,
-        keyword,
-        [],
-        new Error('Unrecognized parameter: searchBy'),
-      ),
+    })
+    .then(items =>
+      items.map(item => ({ ...item, pageType: pageType.COMPANY })),
     );
-  }
 
-  return promise
+  const searchJobTitles = api.timeAndSalary
+    .fetchSearchJobTitle({
+      jobTitle: keyword,
+    })
+    .then(items =>
+      items.map(item => ({ ...item, pageType: pageType.JOB_TITLE })),
+    );
+
+  return Promise.all([searchCompanies, searchJobTitles])
+    .then(([companyData, jobTitleData]) => [...companyData, ...jobTitleData])
     .then(data => {
       data.sort(
         (a, b) =>

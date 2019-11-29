@@ -5,7 +5,7 @@ import R from 'ramda';
 import ReactPixel from 'react-facebook-pixel';
 import { withRouter } from 'react-router-dom';
 
-import AutoCompleteCompanyNameTextInput from 'common/form/AutoCompleteTextInput_new/AutoCompleteCompanyNameTextInput';
+import AutoCompleteSearchTextInput from 'common/form/AutoCompleteTextInput_new/AutoCompleteSearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
 
 import styles from './SearchBar.module.css';
@@ -60,13 +60,13 @@ const SearchBar = ({ history, location }) => {
       className={cn(styles.section, styles.searchbar)}
       onSubmit={handleFormSubmit}
     >
-      <AutoCompleteCompanyNameTextInput
+      <AutoCompleteSearchTextInput
         wrapperClassName={styles.textInputWrapper}
         className={styles.textInput}
         value={searchText}
         onChange={setSearchText}
         placeholder="輸入公司、職稱查詢"
-        onCompanyNameSelected={handleAutocompleteItemSelected}
+        onSelected={handleAutocompleteItemSelected}
       />
       <button type="submit" className={styles.searchBtn}>
         <Magnifiner />

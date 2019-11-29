@@ -1,41 +1,62 @@
 import React, { useState, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
+import R from 'ramda';
 
 import { debounce } from 'utils/streamUtils';
 import AutoCompleteTextInput from '.';
 
-import { fetchCompanyCandidates } from '../../../../apis/timeAndSalaryApi';
+import {
+  fetchCompanyCandidates,
+  fetchJobTitleCandidates,
+} from '../../../../apis/timeAndSalaryApi';
 
-const AutoCompleteCompanyNameTextInput = ({
+const take5 = R.take(5);
+
+const AutoCompleteSearchTextInput = ({
   value,
   onChange,
-  onCompanyNameSelected,
+  onSelected,
   ...restProps
 }) => {
-  const [companyNames, setCompanyNames] = useState([]);
+  const [candidates, setCandidates] = useState([]);
   const eleRef = useRef(null);
+
+  const searchCompanyNames = useCallback(
+    value => fetchCompanyCandidates({ key: value }),
+    [],
+  );
+  const searchJobTitles = useCallback(
+    value => fetchJobTitleCandidates({ key: value }),
+    [],
+  );
 
   const performSearch = useCallback(
     debounce(async value => {
       if (value) {
         try {
-          const response = await fetchCompanyCandidates({ key: value });
-          const companyNames = response.map(({ _id: { name } }) => name);
+          const [companyNames, jobTitles] = await Promise.all([
+            searchCompanyNames(value),
+            searchJobTitles(value),
+          ]);
+          const candidates = R.uniq([
+            ...take5(companyNames),
+            ...take5(jobTitles),
+          ]);
           if (eleRef.current) {
-            setCompanyNames(companyNames);
+            setCandidates(candidates);
           }
         } catch (err) {
           if (eleRef.current) {
-            setCompanyNames([]);
+            setCandidates([]);
           }
         }
       } else {
         if (eleRef.current) {
-          setCompanyNames([]);
+          setCandidates([]);
         }
       }
     }, 500),
-    [setCompanyNames],
+    [setCandidates],
   );
 
   const handleValueChange = useCallback(
@@ -49,11 +70,11 @@ const AutoCompleteCompanyNameTextInput = ({
   const handleCompanyNameSelected = useCallback(
     companyName => {
       onChange(companyName);
-      if (onCompanyNameSelected) {
-        onCompanyNameSelected(companyName);
+      if (onSelected) {
+        onSelected(companyName);
       }
     },
-    [onChange, onCompanyNameSelected],
+    [onChange, onSelected],
   );
 
   return (
@@ -62,16 +83,16 @@ const AutoCompleteCompanyNameTextInput = ({
       ref={eleRef}
       value={value}
       onChange={handleValueChange}
-      autocompleteItems={companyNames}
+      autocompleteItems={candidates}
       onAutocompleteItemSelected={handleCompanyNameSelected}
     />
   );
 };
 
-AutoCompleteCompanyNameTextInput.propTypes = {
+AutoCompleteSearchTextInput.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onCompanyNameSelected: PropTypes.func,
+  onSelected: PropTypes.func,
 };
 
-export default AutoCompleteCompanyNameTextInput;
+export default AutoCompleteSearchTextInput;

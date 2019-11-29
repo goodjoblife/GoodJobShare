@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
 
-import AutoCompleteCompanyNameTextInput from 'common/form/AutoCompleteTextInput_new/AutoCompleteCompanyNameTextInput';
+import AutoCompleteSearchTextInput from 'common/form/AutoCompleteTextInput_new/AutoCompleteSearchTextInput';
 import Button from 'common/button/ButtonRect';
 import styles from './CallToActionBlock.module.css';
 import textInputStyle from 'common/form/TextInput.module.css';
@@ -24,7 +24,7 @@ const CallToActionBlock = ({ history }) => {
       <div className={styles.title}>分享你的資訊，一起讓職場更透明</div>
       <div className={styles.label}>你面試過的公司</div>
       <div className={styles.input}>
-        <AutoCompleteCompanyNameTextInput
+        <AutoCompleteSearchTextInput
           className={textInputStyle.input}
           value={companyName}
           onChange={setCompanyName}
