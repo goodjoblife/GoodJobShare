@@ -79,6 +79,12 @@ query($jobTitle: String!) {
       count
       average_estimated_hourly_wage
       average_week_work_time
+      overtime_frequency_count {
+        seldom
+        sometimes
+        usually
+        almost_everyday
+      }
       is_overtime_salary_legal_count {
         yes
         no

@@ -53,10 +53,10 @@ export const overtimeFrequencyCount = R.pipe(
   salaryWorkTimeStatistics,
   R.prop('overtime_frequency_count'),
   R.defaultTo({
-    seldom: 1,
-    sometimes: 2,
-    usually: 3,
-    almost_everyday: 4,
+    seldom: 0,
+    sometimes: 0,
+    usually: 0,
+    almost_everyday: 0,
   }),
 );
 
