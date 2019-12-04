@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { toPairs, compose, map } from 'ramda';
 
 import Heading from 'common/base/Heading';
-import StaticHelmet from 'common/StaticHelmet';
 import FanPageBlock from 'common/FanPageBlock';
 
 import {
@@ -21,7 +20,6 @@ const CompanyAndJobTitleWrapper = ({
   pageName,
   tabType,
 }) => {
-  const helmetTitle = `${pageName} ${tabTypeTranslation[tabType]}`;
   const tabLinkOptions = useMemo(
     () =>
       compose(
@@ -39,7 +37,6 @@ const CompanyAndJobTitleWrapper = ({
   );
   return (
     <div>
-      <StaticHelmet.CompanyAndJobTitle title={helmetTitle} />
       <BreadCrumb
         pageType={pageType}
         pageName={pageName}
