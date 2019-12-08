@@ -18,8 +18,6 @@ const getInitialSearchTextFromLocation = R.compose(
   searchKeywordSelector,
 );
 
-const searchType = 'company';
-
 const SearchBar = ({ history, location }) => {
   const [searchText, setSearchText] = useState(
     getInitialSearchTextFromLocation({ location }),
@@ -27,11 +25,7 @@ const SearchBar = ({ history, location }) => {
 
   const gotoSearchResult = useCallback(
     searchText => {
-      history.push(
-        `/salary-work-times?q=${encodeURIComponent(
-          searchText,
-        )}&s_by=${searchType}`, // TODO: undetermined search-type
-      );
+      history.push(`/salary-work-times?q=${encodeURIComponent(searchText)}`);
       ReactPixel.track('Search', {
         search_string: searchText,
         content_category: PIXEL_CONTENT_CATEGORY.SEARCH_TIME_AND_SALARY,

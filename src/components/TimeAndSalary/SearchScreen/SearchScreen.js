@@ -23,11 +23,13 @@ import {
   searchKeywordSelector,
   pageSelector,
 } from '../common/selectors';
+import { pageType } from '../../../constants/companyJobTitle';
 import { validatePage, validateSearchKeyword } from '../common/validators';
 import WorkingHourBlock from './WorkingHourBlock';
 import renderHelmet from './helmet';
 import styles from './SearchScreen.module.css';
 
+const firstDataPageTypeSelector = props => props.data.get(0).get('pageType');
 const firstDataNameSelector = props => props.data.get(0).get('name');
 
 function getTitle(keyword) {
@@ -80,15 +82,15 @@ class SearchScreen extends Component {
 
   redirectOnSingleResult() {
     if (this.props.data.size === 1) {
-      const searchBy = this.props.searchBy;
-      if (searchBy === 'company') {
+      const redirectPageType = firstDataPageTypeSelector(this.props);
+      if (redirectPageType === pageType.COMPANY) {
         const companyName = firstDataNameSelector(this.props);
         this.props.history.replace(
           `/companies/${encodeURIComponent(companyName)}/overview${
             this.props.location.search
           }`,
         );
-      } else if (searchBy === 'job_title') {
+      } else if (redirectPageType === pageType.JOB_TITLE) {
         const jobTitle = firstDataNameSelector(this.props);
         this.props.history.replace(
           `/job-titles/${encodeURIComponent(jobTitle)}/overview${
@@ -100,15 +102,14 @@ class SearchScreen extends Component {
   }
 
   getLinkForData(data) {
-    const searchBy = searchCriteriaSelector(this.props);
-    if (searchBy === 'company') {
+    if (data.pageType === pageType.COMPANY) {
       return `/companies/${encodeURIComponent(
         data.name,
       )}/overview${qs.stringify(
         { ...querySelector(this.props), p: 1 },
         { addQueryPrefix: true },
       )}`;
-    } else if (searchBy === 'job_title') {
+    } else if (data.pageType === pageType.JOB_TITLE) {
       return `/job-titles/${encodeURIComponent(
         data.name,
       )}/overview${qs.stringify(
@@ -168,10 +169,9 @@ class SearchScreen extends Component {
 }
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const searchBy = 'company'; // TODO
   const keyword = validateSearchKeyword(searchKeywordSelector(props));
 
-  return dispatch(queryKeyword({ searchBy, keyword }));
+  return dispatch(queryKeyword({ keyword }));
 });
 
 const hoc = compose(ssr);
