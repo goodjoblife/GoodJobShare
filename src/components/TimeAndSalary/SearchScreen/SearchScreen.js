@@ -58,10 +58,9 @@ class SearchScreen extends Component {
   };
 
   componentDidMount() {
-    const searchBy = 'company'; // TODO
     const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
     this.props
-      .queryKeyword({ searchBy, keyword })
+      .queryKeyword({ keyword })
       .then(() => this.redirectOnSingleResult());
   }
 
@@ -72,10 +71,9 @@ class SearchScreen extends Component {
         searchCriteriaSelector(this.props) ||
       searchKeywordSelector(prevProps) !== searchKeywordSelector(this.props)
     ) {
-      const searchBy = 'company'; // TODO
       const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
       this.props
-        .queryKeyword({ searchBy, keyword })
+        .queryKeyword({ keyword })
         .then(() => this.redirectOnSingleResult());
     }
   }
