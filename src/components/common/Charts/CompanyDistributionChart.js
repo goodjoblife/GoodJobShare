@@ -19,14 +19,14 @@ const CompanyDistributionChart = ({ data }) => (
       height={70}
     />
     <YAxis type="number" label="人數" width={100} />
-    <Bar dataKey="data_num" fill="#fcd406" />
+    <Bar dataKey="data_count" fill="#fcd406" />
   </BarChart>
 );
 
 CompanyDistributionChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      data_num: PropTypes.number,
+      data_count: PropTypes.number,
       range: PropTypes.shape({
         from: PropTypes.number,
         to: PropTypes.number,

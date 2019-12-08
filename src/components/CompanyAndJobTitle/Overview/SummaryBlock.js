@@ -1,39 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import BarChartView from './BarChartView';
+import CompanyDistributionChart from '../../common/Charts/CompanyDistributionChart';
+import JobTitleDistrubitionChart from '../../common/Charts/JobTitleDistrubitionChart';
 import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
 import styles from './SummaryBlock.module.css';
 
 const SummaryBlock = ({
-  crossComparisonSalaryStatistics,
-  averageWeekWorkHours,
-  frequentOverTimeRatio,
-  fewOverTimeRatio,
+  salaryDistribution,
+  jobAverageSalaries,
+  averageWeekWorkTime,
+  overtimeFrequencyCount,
 }) => (
   <div className={styles.summaryBlock}>
-    <div className={styles.barChart}>
-      <BarChartView data={crossComparisonSalaryStatistics} />
-    </div>
-    <div className={styles.barChartSm}>
-      <BarChartView data={crossComparisonSalaryStatistics} width={300} />
-    </div>
+    {salaryDistribution && (
+      <React.Fragment>
+        <div className={styles.barChart}>
+          <CompanyDistributionChart data={salaryDistribution} />
+        </div>
+        <div className={styles.barChartSm}>
+          <CompanyDistributionChart data={salaryDistribution} width={300} />
+        </div>
+      </React.Fragment>
+    )}
+    {jobAverageSalaries && (
+      <React.Fragment>
+        <div className={styles.barChart}>
+          <JobTitleDistrubitionChart data={jobAverageSalaries} />
+        </div>
+        <div className={styles.barChartSm}>
+          <JobTitleDistrubitionChart data={jobAverageSalaries} width={300} />
+        </div>
+      </React.Fragment>
+    )}
     <div className={styles.averageWeekWorkTime}>
       <AverageWeekWorkTimeView
-        averageWeekWorkHours={averageWeekWorkHours}
-        frequentOverTimeRatio={frequentOverTimeRatio}
-        fewOverTimeRatio={fewOverTimeRatio}
+        averageWeekWorkTime={averageWeekWorkTime}
+        overtimeFrequencyCount={overtimeFrequencyCount}
       />
     </div>
   </div>
 );
 
 SummaryBlock.propTypes = {
-  crossComparisonSalaryStatistics: PropTypes.arrayOf(PropTypes.object)
-    .isRequired,
-  averageWeekWorkHours: PropTypes.number.isRequired,
-  frequentOverTimeRatio: PropTypes.number.isRequired,
-  fewOverTimeRatio: PropTypes.number.isRequired,
+  salaryDistribution: PropTypes.arrayOf(PropTypes.object),
+  jobAverageSalaries: PropTypes.arrayOf(PropTypes.object),
+  averageWeekWorkTime: PropTypes.number.isRequired,
+  overtimeFrequencyCount: PropTypes.object.isRequired,
 };
 
 export default SummaryBlock;

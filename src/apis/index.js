@@ -10,6 +10,7 @@ import report from './reportApi';
 import reportsExperiences from './reportsExperiencesApi';
 import timeAndSalary from './timeAndSalaryApi';
 import workExperiences from './workExperiencesApi';
+import popularCompanyAndJobTitle from './popularCompanyAndJobTitle';
 import me from './me';
 import auth from './auth';
 import emailVerify from './emailVerify';
@@ -28,6 +29,7 @@ export default {
   reportsExperiences,
   timeAndSalary,
   workExperiences,
+  popularCompanyAndJobTitle,
   me,
   auth,
   emailVerify,

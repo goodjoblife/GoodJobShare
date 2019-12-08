@@ -14,10 +14,10 @@ const maxNameLength = R.pipe(
   R.reduce(R.max, -Infinity),
 );
 
-const JobTitleDistributionChart = ({ data }) => (
+const JobTitleDistributionChart = ({ data, width = 494, height = 233 }) => (
   <BarChart
-    width={494}
-    height={233}
+    width={width}
+    height={height}
     data={data}
     layout="vertical"
     margin={{ left: maxNameLength(data) * 10, bottom: -25 }}
@@ -39,6 +39,8 @@ JobTitleDistributionChart.propTypes = {
       }),
     }),
   ).isRequired,
+  width: PropTypes.number,
+  height: PropTypes.number,
 };
 
 export default JobTitleDistributionChart;

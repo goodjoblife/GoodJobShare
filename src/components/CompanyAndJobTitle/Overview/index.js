@@ -10,11 +10,10 @@ const Overview = ({
   interviewExperiences,
   workExperiences,
   salaryWorkTimes,
-  salaryWorkTimeStatistics,
-  crossComparisonSalaryStatistics,
-  averageWeekWorkHours,
-  frequentOverTimeRatio,
-  fewOverTimeRatio,
+  salaryDistribution,
+  jobAverageSalaries,
+  averageWeekWorkTime,
+  overtimeFrequencyCount,
   status,
   page,
   canViewTimeAndSalary,
@@ -33,11 +32,10 @@ const Overview = ({
         interviewExperiences={interviewExperiences}
         workExperiences={workExperiences}
         salaryWorkTimes={salaryWorkTimes}
-        salaryWorkTimeStatistics={salaryWorkTimeStatistics}
-        crossComparisonSalaryStatistics={crossComparisonSalaryStatistics}
-        averageWeekWorkHours={averageWeekWorkHours}
-        frequentOverTimeRatio={frequentOverTimeRatio}
-        fewOverTimeRatio={fewOverTimeRatio}
+        salaryDistribution={salaryDistribution}
+        jobAverageSalaries={jobAverageSalaries}
+        averageWeekWorkTime={averageWeekWorkTime}
+        overtimeFrequencyCount={overtimeFrequencyCount}
         page={page}
         canViewTimeAndSalary={canViewTimeAndSalary}
         canViewExperienceDetail={canViewExperienceDetail}
@@ -53,10 +51,10 @@ Overview.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
-  salaryWorkTimeStatistics: PropTypes.object,
-  crossComparisonSalaryStatistics: PropTypes.arrayOf(PropTypes.object),
-  averageWeekWorkHours: PropTypes.number.isRequired,
-  frequentOverTimeRatio: PropTypes.number.isRequired,
+  salaryDistribution: PropTypes.array,
+  jobAverageSalaries: PropTypes.array,
+  averageWeekWorkTime: PropTypes.number.isRequired,
+  overtimeFrequencyCount: PropTypes.object.isRequired,
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
   canViewTimeAndSalary: PropTypes.bool.isRequired,

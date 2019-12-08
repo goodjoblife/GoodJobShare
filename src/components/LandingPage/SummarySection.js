@@ -4,8 +4,8 @@ import { zip } from 'ramda';
 
 import Carousel, { CarouselPage } from 'common/Carousel';
 import ChartWrapper from './ChartWrapper';
-import CompanyDistributionChart from './CompanyDistributionChart';
-import JobTitleDistributionChart from './JobTitleDistrubitionChart';
+import CompanyDistributionChart from '../common/Charts/CompanyDistributionChart';
+import JobTitleDistributionChart from '../common/Charts/JobTitleDistrubitionChart';
 import styles from './SummarySection.module.css';
 
 const SummarySection = ({
@@ -17,6 +17,11 @@ const SummarySection = ({
     () => zip(popularCompanyAverageSalary, popularJobTitleSalaryDistribution),
     [popularCompanyAverageSalary, popularJobTitleSalaryDistribution],
   );
+
+  if (dataPairs.length === 0) {
+    return null;
+  }
+
   return (
     <div className={styles.summarySection}>
       <Carousel selectedIndex={selectedIndex} onSelectIndex={setSelectedIndex}>
@@ -26,20 +31,23 @@ const SummarySection = ({
               <div className={styles.page}>
                 <ChartWrapper
                   className={styles.chartWrapper}
-                  title={`${companyAverageSalary.company.name}的薪水`}
-                  to={`/companies/${companyAverageSalary.company.name}`}
+                  title={`${companyAverageSalary.name}的薪水`}
+                  to={`/companies/${companyAverageSalary.name}`}
                 >
                   <JobTitleDistributionChart
-                    data={companyAverageSalary.average_salaries}
+                    data={
+                      companyAverageSalary.salary_work_time_statistics
+                        .job_average_salaries
+                    }
                   />
                 </ChartWrapper>
                 <ChartWrapper
                   className={styles.chartWrapper}
-                  title={`${jobTitleSalaryDistribution.job_title.name}的薪水分佈`}
-                  to={`/job-titles/${jobTitleSalaryDistribution.job_title.name}`}
+                  title={`${jobTitleSalaryDistribution.name}的薪水分佈`}
+                  to={`/job-titles/${jobTitleSalaryDistribution.name}`}
                 >
                   <CompanyDistributionChart
-                    data={jobTitleSalaryDistribution.bins}
+                    data={jobTitleSalaryDistribution.salary_distribution.bins}
                   />
                 </ChartWrapper>
               </div>

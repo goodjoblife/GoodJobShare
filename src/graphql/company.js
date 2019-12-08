@@ -76,6 +76,12 @@ query($companyName: String!) {
       count
       average_estimated_hourly_wage
       average_week_work_time
+      overtime_frequency_count {
+        seldom
+        sometimes
+        usually
+        almost_everyday
+      }
       is_overtime_salary_legal_count {
         yes
         no
@@ -90,6 +96,16 @@ query($companyName: String!) {
         yes
         no
         unknown
+      }
+      job_average_salaries {
+        job_title {
+          name
+        }
+        average_salary {
+          type
+          amount
+        }
+        data_count
       }
     }
   }

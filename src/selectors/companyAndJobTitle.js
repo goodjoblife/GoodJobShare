@@ -25,10 +25,39 @@ export const salaryWorkTimes = R.pipe(
   R.defaultTo([]),
 );
 
+export const salaryDistribution = R.pipe(
+  data,
+  R.when(R.is(Object), R.path(['salary_distribution', 'bins'])),
+  R.defaultTo([]),
+);
+
 export const salaryWorkTimeStatistics = R.pipe(
   data,
   R.when(R.is(Object), R.prop('salary_work_time_statistics')),
   R.defaultTo({}),
+);
+
+export const jobAverageSalaries = R.pipe(
+  salaryWorkTimeStatistics,
+  R.prop('job_average_salaries'),
+  R.defaultTo([]),
+);
+
+export const averageWeekWorkTime = R.pipe(
+  salaryWorkTimeStatistics,
+  R.prop('average_week_work_time'),
+  R.defaultTo(0),
+);
+
+export const overtimeFrequencyCount = R.pipe(
+  salaryWorkTimeStatistics,
+  R.prop('overtime_frequency_count'),
+  R.defaultTo({
+    seldom: 0,
+    sometimes: 0,
+    usually: 0,
+    almost_everyday: 0,
+  }),
 );
 
 export const company = companyName =>
