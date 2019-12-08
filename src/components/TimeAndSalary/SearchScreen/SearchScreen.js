@@ -29,9 +29,6 @@ import WorkingHourBlock from './WorkingHourBlock';
 import renderHelmet from './helmet';
 import styles from './SearchScreen.module.css';
 
-const firstDataPageTypeSelector = props => props.data.get(0).get('pageType');
-const firstDataNameSelector = props => props.data.get(0).get('name');
-
 function getTitle(keyword) {
   if (keyword) {
     if (keyword.length < keywordMinLength) {
@@ -82,22 +79,8 @@ class SearchScreen extends Component {
 
   redirectOnSingleResult() {
     if (this.props.data.size === 1) {
-      const redirectPageType = firstDataPageTypeSelector(this.props);
-      if (redirectPageType === pageType.COMPANY) {
-        const companyName = firstDataNameSelector(this.props);
-        this.props.history.replace(
-          `/companies/${encodeURIComponent(companyName)}/overview${
-            this.props.location.search
-          }`,
-        );
-      } else if (redirectPageType === pageType.JOB_TITLE) {
-        const jobTitle = firstDataNameSelector(this.props);
-        this.props.history.replace(
-          `/job-titles/${encodeURIComponent(jobTitle)}/overview${
-            this.props.location.search
-          }`,
-        );
-      }
+      const firstData = this.props.data.get(0).toJS();
+      this.props.history.replace(this.getLinkForData(firstData));
     }
   }
 
