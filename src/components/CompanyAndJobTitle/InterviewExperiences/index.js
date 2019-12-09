@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import StatusRenderer from '../StatusRenderer';
 import InterviewExperiencesSection from './InterviewExperiences';
+import Helmet from './Helmet';
 
 const InterviewExperiences = ({
   pageType,
@@ -20,6 +21,12 @@ const InterviewExperiences = ({
     tabType={tabType}
   >
     <StatusRenderer status={status}>
+      <Helmet
+        pageType={pageType}
+        pageName={pageName}
+        interviewExperiences={interviewExperiences}
+        page={page}
+      />
       <InterviewExperiencesSection
         pageType={pageType}
         pageName={pageName}
