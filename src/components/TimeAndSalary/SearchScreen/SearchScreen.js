@@ -23,12 +23,11 @@ import {
   searchKeywordSelector,
   pageSelector,
 } from '../common/selectors';
+import { pageType } from '../../../constants/companyJobTitle';
 import { validatePage, validateSearchKeyword } from '../common/validators';
 import WorkingHourBlock from './WorkingHourBlock';
 import renderHelmet from './helmet';
 import styles from './SearchScreen.module.css';
-
-const firstDataNameSelector = props => props.data.get(0).get('name');
 
 function getTitle(keyword) {
   if (keyword) {
@@ -58,10 +57,9 @@ class SearchScreen extends Component {
   };
 
   componentDidMount() {
-    const searchBy = 'company'; // TODO
     const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
     this.props
-      .queryKeyword({ searchBy, keyword })
+      .queryKeyword({ keyword })
       .then(() => this.redirectOnSingleResult());
   }
 
@@ -72,45 +70,29 @@ class SearchScreen extends Component {
         searchCriteriaSelector(this.props) ||
       searchKeywordSelector(prevProps) !== searchKeywordSelector(this.props)
     ) {
-      const searchBy = 'company'; // TODO
       const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
       this.props
-        .queryKeyword({ searchBy, keyword })
+        .queryKeyword({ keyword })
         .then(() => this.redirectOnSingleResult());
     }
   }
 
   redirectOnSingleResult() {
     if (this.props.data.size === 1) {
-      const searchBy = this.props.searchBy;
-      if (searchBy === 'company') {
-        const companyName = firstDataNameSelector(this.props);
-        this.props.history.replace(
-          `/companies/${encodeURIComponent(companyName)}/overview${
-            this.props.location.search
-          }`,
-        );
-      } else if (searchBy === 'job_title') {
-        const jobTitle = firstDataNameSelector(this.props);
-        this.props.history.replace(
-          `/job-titles/${encodeURIComponent(jobTitle)}/overview${
-            this.props.location.search
-          }`,
-        );
-      }
+      const firstData = this.props.data.get(0).toJS();
+      this.props.history.replace(this.getLinkForData(firstData));
     }
   }
 
   getLinkForData(data) {
-    const searchBy = searchCriteriaSelector(this.props);
-    if (searchBy === 'company') {
+    if (data.pageType === pageType.COMPANY) {
       return `/companies/${encodeURIComponent(
         data.name,
       )}/overview${qs.stringify(
         { ...querySelector(this.props), p: 1 },
         { addQueryPrefix: true },
       )}`;
-    } else if (searchBy === 'job_title') {
+    } else if (data.pageType === pageType.JOB_TITLE) {
       return `/job-titles/${encodeURIComponent(
         data.name,
       )}/overview${qs.stringify(
@@ -170,10 +152,9 @@ class SearchScreen extends Component {
 }
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const searchBy = 'company'; // TODO
   const keyword = validateSearchKeyword(searchKeywordSelector(props));
 
-  return dispatch(queryKeyword({ searchBy, keyword }));
+  return dispatch(queryKeyword({ keyword }));
 });
 
 const hoc = compose(ssr);

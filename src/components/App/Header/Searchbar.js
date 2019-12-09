@@ -7,7 +7,6 @@ import qs from 'qs';
 import AutoCompleteSearchTextInput from 'common/form/AutoCompleteTextInput_new/AutoCompleteSearchTextInput';
 import Magnifier from '../../common/icons/Magnifiner';
 import styles from './Searchbar.module.css';
-const searchType = 'company';
 
 const getInitialSearchTextFromLocation = location =>
   qs.parse(location.search, { ignoreQueryPrefix: true }).q || '';
@@ -28,11 +27,7 @@ const Searchbar = ({ className, placeholder, history, location }) => {
 
   const gotoSearchResult = useCallback(
     searchText => {
-      history.push(
-        `/salary-work-times?q=${encodeURIComponent(
-          searchText,
-        )}&s_by=${searchType}`,
-      );
+      history.push(`/salary-work-times?q=${encodeURIComponent(searchText)}`);
     },
     [history],
   );

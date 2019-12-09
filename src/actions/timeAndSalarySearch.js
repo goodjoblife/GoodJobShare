@@ -4,9 +4,8 @@ import { pageType } from '../constants/companyJobTitle';
 export const SET_SEARCH_DATA = '@@timeAndSalarySearch/SET_SEARCH_DATA';
 export const SET_SEARCH_STATUS = '@@timeAndSalarySearch/SET_SEARCH_STATUS';
 
-export const setSearchData = (status, searchBy, keyword, data, error) => ({
+export const setSearchData = (status, keyword, data, error) => ({
   type: SET_SEARCH_DATA,
-  searchBy,
   keyword,
   status,
   data,
@@ -15,18 +14,9 @@ export const setSearchData = (status, searchBy, keyword, data, error) => ({
 
 export const keywordMinLength = 2;
 
-export const queryKeyword = ({ searchBy, keyword }) => (
-  dispatch,
-  getState,
-  { api },
-) => {
-  if (
-    searchBy !== getState().timeAndSalarySearch.get('searchBy') ||
-    keyword !== getState().timeAndSalarySearch.get('keyword')
-  ) {
-    dispatch(
-      setSearchData(fetchingStatus.UNFETCHED, searchBy, keyword, [], null),
-    );
+export const queryKeyword = ({ keyword }) => (dispatch, getState, { api }) => {
+  if (keyword !== getState().timeAndSalarySearch.get('keyword')) {
+    dispatch(setSearchData(fetchingStatus.UNFETCHED, keyword, [], null));
   }
 
   if (
@@ -69,11 +59,9 @@ export const queryKeyword = ({ searchBy, keyword }) => (
           b.salary_work_time_statistics.count -
           a.salary_work_time_statistics.count,
       );
-      dispatch(
-        setSearchData(fetchingStatus.FETCHED, searchBy, keyword, data, null),
-      );
+      dispatch(setSearchData(fetchingStatus.FETCHED, keyword, data, null));
     })
     .catch(err => {
-      dispatch(setSearchData(fetchingStatus.ERROR, searchBy, keyword, [], err));
+      dispatch(setSearchData(fetchingStatus.ERROR, keyword, [], err));
     });
 };
