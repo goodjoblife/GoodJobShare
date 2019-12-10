@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
+import StatusRenderer from '../StatusRenderer';
 import OverviewSection from './Overview';
+import Helmet from './Helmet';
 
 const Overview = ({
   pageType,
@@ -24,7 +26,14 @@ const Overview = ({
     pageName={pageName}
     tabType={tabType}
   >
-    {status === 'FETCHED' && (
+    <StatusRenderer status={status}>
+      <Helmet
+        pageType={pageType}
+        pageName={pageName}
+        interviewExperiences={interviewExperiences}
+        workExperiences={workExperiences}
+        salaryWorkTimes={salaryWorkTimes}
+      />
       <OverviewSection
         pageType={pageType}
         pageName={pageName}
@@ -40,7 +49,7 @@ const Overview = ({
         canViewTimeAndSalary={canViewTimeAndSalary}
         canViewExperienceDetail={canViewExperienceDetail}
       />
-    )}
+    </StatusRenderer>
   </CompanyAndJobTitleWrapper>
 );
 

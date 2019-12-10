@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import StatusRenderer from '../StatusRenderer';
 import TimeAndSalarySection from './TimeAndSalary';
+import Helmet from './Helmet';
 
 const TimeAndSalary = ({
   pageType,
@@ -20,6 +21,13 @@ const TimeAndSalary = ({
     tabType={tabType}
   >
     <StatusRenderer status={status}>
+      <Helmet
+        pageType={pageType}
+        pageName={pageName}
+        salaryWorkTimes={salaryWorkTimes}
+        salaryWorkTimeStatistics={salaryWorkTimeStatistics}
+        page={page}
+      />
       <TimeAndSalarySection
         pageType={pageType}
         pageName={pageName}

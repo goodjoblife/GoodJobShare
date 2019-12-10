@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import StatusRenderer from '../StatusRenderer';
 import WorkExperiencesSection from './WorkExperiences';
+import Helmet from './Helmet';
 
 const WorkExperiences = ({
   pageType,
@@ -19,6 +20,12 @@ const WorkExperiences = ({
     tabType={tabType}
   >
     <StatusRenderer status={status}>
+      <Helmet
+        pageType={pageType}
+        pageName={pageName}
+        workExperiences={workExperiences}
+        page={page}
+      />
       <WorkExperiencesSection
         pageType={pageType}
         pageName={pageName}

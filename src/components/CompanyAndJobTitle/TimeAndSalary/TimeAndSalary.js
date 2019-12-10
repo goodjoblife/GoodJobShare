@@ -8,7 +8,6 @@ import { Section } from 'common/base';
 
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
-import renderHelmet from './timeAndSalaryHelmet';
 import ViewLog from './ViewLog';
 
 class TimeAndSalary extends Component {
@@ -45,7 +44,6 @@ class TimeAndSalary extends Component {
       salaryWorkTimeStatistics,
       canViewTimeAndSalary,
       page,
-      pathname,
       queryParams,
       pageType,
       pageName,
@@ -53,13 +51,6 @@ class TimeAndSalary extends Component {
     } = this.props;
 
     const pageSize = 10;
-    const title = `${pageName}薪水`;
-
-    const {
-      count: dataNum,
-      average_estimated_hourly_wage: avgHourWage,
-      average_week_work_time: avgWeekWorkTime,
-    } = salaryWorkTimeStatistics;
 
     const currentData = salaryWorkTimes.slice(
       (page - 1) * pageSize,
@@ -68,15 +59,6 @@ class TimeAndSalary extends Component {
 
     return (
       <Section Tag="main" paddingBottom>
-        {renderHelmet({
-          title,
-          pathname,
-          page,
-          pageName,
-          dataNum,
-          avgWeekWorkTime: Math.round(avgWeekWorkTime),
-          avgHourWage: Math.round(avgHourWage),
-        })}
         {(salaryWorkTimes.length > 0 && (
           <React.Fragment>
             <WorkingHourBlock
