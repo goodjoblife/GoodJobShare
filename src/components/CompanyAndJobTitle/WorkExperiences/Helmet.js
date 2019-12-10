@@ -13,7 +13,7 @@ const CompanyWorkExperienceHelmet = ({
   const title = `${companyName} 工作心得列表 - 第${page}頁`;
 
   // description
-  let description = `目前還沒有${companyName}}的工作心得。分享你的工作心得，一起讓職場更透明！`;
+  let description = `目前還沒有${companyName}的工作心得。分享你的工作心得，一起讓職場更透明！`;
   if (workExperiences && workExperiences.length > 0) {
     description = `查看${workExperiences.length}篇${companyName}工作心得`;
   }
@@ -49,11 +49,10 @@ const JobTitleWorkExperienceHelmet = ({ jobTitle, workExperiences, page }) => {
   const title = `${jobTitle} 工作心得列表 - 第${page}頁`;
 
   // description
-  const workExperiencesStr =
-    workExperiences && workExperiences.length > 0
-      ? `${workExperiences.length}篇`
-      : '';
-  const description = `查看${workExperiencesStr}${jobTitle}工作心得`;
+  let description = `目前還沒有${jobTitle}的工作心得。分享你的工作心得，一起讓職場更透明！`;
+  if (workExperiences && workExperiences.length > 0) {
+    description = `查看${workExperiences.length}篇${jobTitle}工作心得`;
+  }
 
   // canonical url
   let url = formatCanonicalPath(`/job-titles/${jobTitle}/work-experiences`);
