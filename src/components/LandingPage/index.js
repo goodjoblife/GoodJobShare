@@ -61,23 +61,6 @@ const LandingPage = ({
         popularCompanyAverageSalary={popularCompanyAverageSalary}
         popularJobTitleSalaryDistribution={popularJobTitleSalaryDistribution}
       />
-      <Section padding bg="white">
-        <Wrapper size="l">
-          <Heading size="l" center marginBottom>
-            職場生存錦囊
-          </Heading>
-          <Columns Item={LaborRightsEntry} items={items} />
-        </Wrapper>
-        <Section center Tag="div">
-          <Link
-            className={cn('buttonCircleL', 'buttonBlack')}
-            to="/labor-rights"
-            title="職場生存錦囊"
-          >
-            看更多
-          </Link>
-        </Section>
-      </Section>
       <Section padding>
         <Wrapper size="l">
           <Heading size="l" center marginBottom>
@@ -99,6 +82,24 @@ const LandingPage = ({
           </Section>
         </Wrapper>
       </Section>
+      <Section padding bg="white">
+        <Wrapper size="l">
+          <Heading size="l" center marginBottom>
+            職場生存錦囊
+          </Heading>
+          <Columns Item={LaborRightsEntry} items={items} />
+        </Wrapper>
+        <Section center Tag="div">
+          <Link
+            className={cn('buttonCircleL', 'buttonBlack')}
+            to="/labor-rights"
+            title="職場生存錦囊"
+          >
+            看更多
+          </Link>
+        </Section>
+      </Section>
+
       <Section padding>
         <Wrapper size="l">
           <CallToActionBlock />
