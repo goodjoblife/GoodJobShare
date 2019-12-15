@@ -34,21 +34,48 @@ const SummarySection = ({
                   title={`${companyAverageSalary.name}的薪水`}
                   to={`/companies/${companyAverageSalary.name}`}
                 >
-                  <JobTitleDistributionChart
-                    data={
-                      companyAverageSalary.salary_work_time_statistics
-                        .job_average_salaries
-                    }
-                  />
+                  <React.Fragment>
+                    <div className={styles.barChart}>
+                      <JobTitleDistributionChart
+                        data={
+                          companyAverageSalary.salary_work_time_statistics
+                            .job_average_salaries
+                        }
+                      />
+                    </div>
+                    <div className={styles.barChartSm}>
+                      <JobTitleDistributionChart
+                        data={
+                          companyAverageSalary.salary_work_time_statistics
+                            .job_average_salaries
+                        }
+                        width={300}
+                      />
+                    </div>
+                  </React.Fragment>
                 </ChartWrapper>
                 <ChartWrapper
                   className={styles.chartWrapper}
                   title={`${jobTitleSalaryDistribution.name}的薪水分佈`}
                   to={`/job-titles/${jobTitleSalaryDistribution.name}`}
                 >
-                  <CompanyDistributionChart
-                    data={jobTitleSalaryDistribution.salary_distribution.bins}
-                  />
+                  <React.Fragment>
+                    <div className={styles.barChart}>
+                      <CompanyDistributionChart
+                        data={
+                          jobTitleSalaryDistribution.salary_distribution.bins
+                        }
+                      />
+                    </div>
+                    <div className={styles.barChartSm}>
+                      <CompanyDistributionChart
+                        data={
+                          jobTitleSalaryDistribution.salary_distribution.bins
+                        }
+                        width={300}
+                      />
+                    </div>
+                  </React.Fragment>
                 </ChartWrapper>
               </div>
             </CarouselPage>
