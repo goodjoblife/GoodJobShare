@@ -64,7 +64,7 @@ const LandingPage = ({
       <Section padding bg="white">
         <Wrapper size="l">
           <Heading size="l" center marginBottom>
-            勞動知識小教室
+            職場生存錦囊
           </Heading>
           <Columns Item={LaborRightsEntry} items={items} />
         </Wrapper>
@@ -72,7 +72,7 @@ const LandingPage = ({
           <Link
             className={cn('buttonCircleL', 'buttonBlack')}
             to="/labor-rights"
-            title="勞動知識小教室"
+            title="職場生存錦囊"
           >
             看更多
           </Link>
@@ -100,7 +100,9 @@ const LandingPage = ({
         </Wrapper>
       </Section>
       <Section padding>
-        <CallToActionBlock />
+        <Wrapper size="l">
+          <CallToActionBlock />
+        </Wrapper>
       </Section>
     </main>
   );
