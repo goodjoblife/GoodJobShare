@@ -1,4 +1,4 @@
-@value main-yellow from "common/variables.module.css";
+@value main-yellow, above-small from "common/variables.module.css";
 
 .group {
   display: inline-flex;
@@ -6,7 +6,7 @@
   border: 1px solid main-yellow;
   background: white;
   flex-direction: column;
-  @media (min-width: 767px) {
+  @media (min-width: above-small) {
     flex-direction: row;
   }
 }
@@ -22,7 +22,7 @@
     border-bottom: 1px solid main-yellow;
   }
 
-  @media (min-width: 767px) {
+  @media (min-width: above-small) {
     &:not(:last-child) {
       border-bottom: 0;
       border-right: 1px solid main-yellow;

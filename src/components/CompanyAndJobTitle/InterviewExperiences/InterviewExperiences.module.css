@@ -1,4 +1,4 @@
-@value page-gutter-s, below-mobile, above-mobile from "common/variables.module.css";
+@value page-gutter-s, below-mobile, above-small from "common/variables.module.css";
 
 .container {
   display: block;
@@ -31,7 +31,7 @@
   display: flex;
   flex-direction: column;
 
-  @media (min-width: above-mobile) {
+  @media (min-width: above-small) {
     flex-direction: row;
   }
 
@@ -40,7 +40,7 @@
     justify-content: space-between;
     margin: 12px 0;
 
-    @media (min-width: above-mobile) {
+    @media (min-width: above-small) {
       margin: 0;
       justify-content: flex-start;
     }
@@ -74,7 +74,7 @@
         width: 24px;
         height: 24px;
       }
-      @media (min-width: above-mobile) {
+      @media (min-width: above-small) {
         margin-left: 35px;
       }
     }
@@ -127,7 +127,7 @@
   display: flex;
   flex-direction: column;
 
-  @media (min-width: above-mobile) {
+  @media (min-width: above-small) {
     align-items: flex-end;
     flex-direction: row;
   }
@@ -145,7 +145,7 @@
     text-decoration: underline;
     margin-top: 8px;
 
-    @media (min-width: above-mobile) {
+    @media (min-width: above-small) {
       margin-top: 0;
     }
 
