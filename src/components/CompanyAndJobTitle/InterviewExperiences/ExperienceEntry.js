@@ -38,27 +38,29 @@ const ExperienceEntry = ({
         <P size="s" className={styles.date}>
           面試經驗 · {formatCreatedAt(createdAt)}
         </P>
-        {salary && (
-          <div
-            className={cn(styles.salary, {
-              [styles.locked]: !canViewExperienceDetail,
-            })}
-          >
-            {canViewExperienceDetail ? (
-              <React.Fragment>
-                <i.Coin />
-                {formatSalary(salary)}
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <FontAwesomeIcon icon={faLock} />
-                {formatSalaryRange(salary)}
-              </React.Fragment>
-            )}
+        <div className={styles.salaryRatingWrapper}>
+          {salary && (
+            <div
+              className={cn(styles.salary, {
+                [styles.locked]: !canViewExperienceDetail,
+              })}
+            >
+              {canViewExperienceDetail ? (
+                <React.Fragment>
+                  <i.Coin />
+                  {formatSalary(salary)}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <FontAwesomeIcon icon={faLock} />
+                  {formatSalaryRange(salary)}
+                </React.Fragment>
+              )}
+            </div>
+          )}
+          <div className={styles.rating}>
+            <Rating rate={overallRating} />
           </div>
-        )}
-        <div className={styles.rating}>
-          <Rating rate={overallRating} />
         </div>
       </div>
 

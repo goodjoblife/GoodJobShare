@@ -1,4 +1,4 @@
-@value gray-dark, main-gray, link-blue, border-gray, page-gutter-s, link-blue, white-light, border-gray, main-yellow, yellow-light from "common/variables.module.css";
+@value page-gutter-s, below-mobile, above-mobile from "common/variables.module.css";
 
 .container {
   display: block;
@@ -12,7 +12,7 @@
     margin-bottom: 0;
   }
 
-  @media (max-width: 550px) {
+  @media (max-width: below-mobile) {
     margin-left: calc(page-gutter-s * -1);
     margin-right: calc(page-gutter-s * -1);
     margin-bottom: 16px;
@@ -29,42 +29,60 @@
 
 .labels {
   display: flex;
+  flex-direction: column;
 
-  .date {
-    flex: 1;
-    color: #adadad;
+  @media (min-width: above-mobile) {
+    flex-direction: row;
   }
 
-  .salary,
-  .rating {
-    margin-left: 35px;
+  > .salaryRatingWrapper {
     display: flex;
-    align-items: center;
-    font-size: 15px;
-    color: #424242;
-  }
+    justify-content: space-between;
+    margin: 12px 0;
 
-  .salary {
-    svg {
-      margin-right: 7px;
-      width: 16px;
-      height: 16px;
-      fill: #adadad;
+    @media (min-width: above-mobile) {
+      margin: 0;
+      justify-content: flex-start;
     }
 
-    &.locked {
+    .salary,
+    .rating {
+      display: flex;
+      align-items: center;
+      font-size: 15px;
+      color: #424242;
+    }
+
+    .salary {
       svg {
-        color: #ed0d5e;
+        margin-right: 7px;
+        width: 16px;
+        height: 16px;
+        fill: #adadad;
+      }
+
+      &.locked {
+        svg {
+          color: #ed0d5e;
+        }
+      }
+    }
+
+    .rating {
+      svg {
+        cursor: auto;
+        width: 24px;
+        height: 24px;
+      }
+      @media (min-width: above-mobile) {
+        margin-left: 35px;
       }
     }
   }
 
-  .rating {
-    svg {
-      cursor: auto;
-      width: 24px;
-      height: 24px;
-    }
+  > .date {
+    flex: 1;
+    color: #adadad;
   }
 }
 
@@ -107,18 +125,28 @@
 
 .snippetWrapper {
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+
+  @media (min-width: above-mobile) {
+    align-items: flex-end;
+    flex-direction: row;
+  }
 
   .snippet {
     flex: 1;
     word-break: break-all;
     padding-right: 1em;
+    line-height: 1.4;
   }
 
   .readmore {
     font-weight: 600;
     color: #325bbd;
     text-decoration: underline;
+    margin-top: 8px;
+    @media (min-width: above-mobile) {
+      margin-top: 0;
+    }
 
     &:hover {
       text-decoration: none;
