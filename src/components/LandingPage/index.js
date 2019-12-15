@@ -5,7 +5,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
 import { compose, setStatic, lifecycle } from 'recompose';
 import { Section, Wrapper, Heading } from 'common/base';
-import ShareExpSection from 'common/ShareExpSection';
 import Columns from 'common/Columns';
 import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
 import { queryPopularExperiences } from '../../actions/popularExperiences';
@@ -62,7 +61,6 @@ const LandingPage = ({
         popularCompanyAverageSalary={popularCompanyAverageSalary}
         popularJobTitleSalaryDistribution={popularJobTitleSalaryDistribution}
       />
-      <ShareExpSection heading="現在就留下你的資料" />
       <Section padding bg="white">
         <Wrapper size="l">
           <Heading size="l" center marginBottom>
