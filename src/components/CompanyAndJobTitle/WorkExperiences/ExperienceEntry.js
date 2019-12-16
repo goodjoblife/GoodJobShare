@@ -68,8 +68,8 @@ const ExperienceEntry = ({
           </div>
         )}
         <div className={styles.recommendToOthers}>
-          {recommendToOthers ? <i.Good /> : <i.Bad />}
-          {recommendToOthers ? '推' : '不推'}
+          {recommendToOthers === 'yes' ? <i.Good /> : <i.Bad />}
+          {recommendToOthers === 'yes' ? '推' : '不推'}
         </div>
       </div>
 
