@@ -1,4 +1,4 @@
-@value below-mobile, above-mobile from "common/variables.module.css";
+@value below-tablet, above-mobile from "common/variables.module.css";
 
 .summaryBlock {
   display: flex;
@@ -21,7 +21,7 @@
     margin-left: 21px;
   }
 
-  @media (max-width: below-mobile) {
+  @media (max-width: below-tablet) {
     flex-direction: column;
     align-items: flex-start;
 
