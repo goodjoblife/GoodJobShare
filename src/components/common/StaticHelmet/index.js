@@ -40,14 +40,14 @@ export default {
     <Helmet defaultTitle={SITE_NAME} titleTemplate={`%s | ${SITE_NAME}`}>
       <meta
         name="description"
-        content="匿名分享你的面試經驗，一起建立台灣最大面試資料庫！"
+        content="這裡是一個勞工互相分享資訊的網站，匿名分享你的薪水、加班狀況、面試心得、工作心得，就可以查詢超過萬筆由其他勞工分享的資訊。"
       />
       <meta
         name="keywords"
-        content="工作時間, 加班狀況, 薪資福利, 面試經驗, 工作心得, 實習經驗, 工作評論, 職場資訊透明化"
+        content="工作時間, 加班狀況, 薪資福利, 薪水, 面試心得, 面試問題, 面談薪資, 工作心得, 職場甘苦談, 實習心得, 工作評論, 職場資訊透明化"
       />
       <meta property="og:title" content={SITE_NAME} />
-      <meta property="og:url" content={formatCanonicalPath('/')} />
+      <meta property="og:url" content={formatCanonicalPath('')} />
       <meta property="og:type" content="website" />
       <meta
         property="og:image"
@@ -55,12 +55,12 @@ export default {
       />
       <meta
         property="og:description"
-        content="匿名分享你的面試經驗，一起建立台灣最大面試資料庫！"
+        content="這裡是一個勞工互相分享資訊的網站，匿名分享你的薪水、加班狀況、面試心得、工作心得，就可以查詢其他勞工分享的所有資訊。"
       />
       <meta property="og:locale" content="zh_TW" />
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="fb:app_id" content={FACEBOOK_APP_ID} />
-      <link rel="canonical" href={formatCanonicalPath('/')} />
+      <link rel="canonical" href={formatCanonicalPath('')} />
     </Helmet>
   ),
   LandingPage: () => (
@@ -88,11 +88,11 @@ export default {
   ShareInterview: () => (
     <Helmet>
       <title itemProp="name" lang="zh-TW">
-        面試經驗分享
+        面試心得分享
       </title>
       <meta
         property="og:title"
-        content={formatTitle('面試經驗分享', SITE_NAME)}
+        content={formatTitle('面試心得分享', SITE_NAME)}
       />
       <meta
         property="og:url"
@@ -108,7 +108,7 @@ export default {
   ShareSalaryWorkTime: () => (
     <Helmet>
       <title itemProp="name" lang="zh-TW">
-        薪資工時分享
+        薪水、加班狀況分享
       </title>
       <meta
         property="og:title"
@@ -132,11 +132,11 @@ export default {
   ShareWork: () => (
     <Helmet>
       <title itemProp="name" lang="zh-TW">
-        工作經驗分享
+        工作心得分享
       </title>
       <meta
         property="og:title"
-        content={formatTitle('工作經驗分享', SITE_NAME)}
+        content={formatTitle('工作心得分享', SITE_NAME)}
       />
       <meta
         property="og:url"
