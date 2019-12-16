@@ -1,4 +1,4 @@
-@value border-gray, above-small from "common/variables.module.css";
+@value border-gray, above-small, above-desktop, below-medium, above-medium from "common/variables.module.css";
 
 .summarySection {
   display: flex;
@@ -33,20 +33,45 @@
   }
 }
 
+/*sm*/
 .barChart {
   display: none;
 }
 
-> .barChartSm {
+.barChartSm {
   display: block;
 }
 
-@media (min-width: above-small) {
-  .barChart {
+.barChartMed {
+  display: none;
+}
+
+/*med*/
+@media (min-width: above-small) and (max-width: below-medium) {
+  .barChartMed {
     display: block;
   }
 
   .barChartSm {
     display: none;
+  }
+
+  .barChart {
+    display: none;
+  }
+}
+
+/*above medium*/
+@media (min-width: above-medium) {
+  .barChartMed {
+    display: none;
+  }
+
+  .barChartSm {
+    display: none;
+  }
+
+  .barChart {
+    display: block;
   }
 }

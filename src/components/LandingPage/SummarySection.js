@@ -43,6 +43,15 @@ const SummarySection = ({
                         }
                       />
                     </div>
+                    <div className={styles.barChartMed}>
+                      <JobTitleDistributionChart
+                        data={
+                          companyAverageSalary.salary_work_time_statistics
+                            .job_average_salaries
+                        }
+                        width={360}
+                      />
+                    </div>
                     <div className={styles.barChartSm}>
                       <JobTitleDistributionChart
                         data={
@@ -65,6 +74,14 @@ const SummarySection = ({
                         data={
                           jobTitleSalaryDistribution.salary_distribution.bins
                         }
+                      />
+                    </div>
+                    <div className={styles.barChartMed}>
+                      <CompanyDistributionChart
+                        data={
+                          jobTitleSalaryDistribution.salary_distribution.bins
+                        }
+                        width={360}
                       />
                     </div>
                     <div className={styles.barChartSm}>
