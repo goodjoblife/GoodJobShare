@@ -22,7 +22,9 @@
   }
 
   .chartWrapper {
-    margin-bottom: 48px;
+    &:not(:last-child) {
+      margin-bottom: 48px;
+    }
     @media (min-width: above-small) {
       &:not(:last-child) {
         margin-right: 46px;
