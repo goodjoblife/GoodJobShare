@@ -120,8 +120,7 @@ class SearchScreen extends Component {
         {isFetching(status) && <Loading size="s" />}
         {isFetched(status) && raw.length === 0 && (
           <P size="l" bold className={styles.searchNoResult}>
-            尚未有 「{keyword}
-            」的訊
+            尚未有 「{keyword} 」的資料
           </P>
         )}
         {raw.map((o, i) => (
