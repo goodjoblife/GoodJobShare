@@ -87,7 +87,7 @@ const LandingPage = ({
           <Heading size="l" center marginBottom>
             職場生存錦囊
           </Heading>
-          <Columns Item={LaborRightsEntry} items={items} />
+          <Columns gutter="s" Item={LaborRightsEntry} items={items} />
         </Wrapper>
         <Section center Tag="div">
           <Link
