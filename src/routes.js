@@ -183,14 +183,23 @@ const routes = [
     component: TimeAndSalary,
     routes: [
       {
-        path: '/salary-work-times',
-        exact: true,
-        component: SalaryWorkTimeSearchScreen,
-      },
-      {
         path: '/salary-work-times/latest',
         exact: true,
         component: TimeAndSalaryBoard,
+      },
+      {
+        component: TimeAndSalaryNotFound,
+      },
+    ],
+  },
+  {
+    path: '/search',
+    component: TimeAndSalary,
+    routes: [
+      {
+        path: '/search',
+        exact: true,
+        component: SalaryWorkTimeSearchScreen,
       },
       {
         component: TimeAndSalaryNotFound,
