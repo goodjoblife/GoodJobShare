@@ -1,4 +1,4 @@
-@value gray-dark, main-gray, link-blue, border-gray, page-gutter-s, link-blue from "common/variables.module.css";
+@value gray-dark, main-gray, link-blue, border-gray, link-blue from "common/variables.module.css";
 
 .container {
   display: block;
@@ -22,8 +22,8 @@
   }
 
   @media (max-width: 550px) {
-    margin-left: calc(page-gutter-s * -1);
-    margin-right: calc(page-gutter-s * -1);
+    margin-left: calc(20px * -1);
+    margin-right: calc(p`20px` * -1);
     margin-bottom: 16px;
   }
 }
