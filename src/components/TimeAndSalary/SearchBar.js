@@ -25,7 +25,7 @@ const SearchBar = ({ history, location }) => {
 
   const gotoSearchResult = useCallback(
     searchText => {
-      history.push(`/salary-work-times?q=${encodeURIComponent(searchText)}`);
+      history.push(`/search?q=${encodeURIComponent(searchText)}`);
       ReactPixel.track('Search', {
         search_string: searchText,
         content_category: PIXEL_CONTENT_CATEGORY.SEARCH_TIME_AND_SALARY,

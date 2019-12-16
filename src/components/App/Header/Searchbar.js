@@ -27,7 +27,7 @@ const Searchbar = ({ className, placeholder, history, location }) => {
 
   const gotoSearchResult = useCallback(
     searchText => {
-      history.push(`/salary-work-times?q=${encodeURIComponent(searchText)}`);
+      history.push(`/search?q=${encodeURIComponent(searchText)}`);
     },
     [history],
   );

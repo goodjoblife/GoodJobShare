@@ -6,12 +6,7 @@ import qs from 'qs';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
-import {
-  querySelector,
-  pathSelector,
-  pathnameSelector,
-  searchSelector,
-} from 'common/routing/selectors';
+import { querySelector, pathSelector } from 'common/routing/selectors';
 import Pagination from 'common/Pagination';
 import {
   queryKeyword,
@@ -26,7 +21,7 @@ import {
 import { pageType } from '../../../constants/companyJobTitle';
 import { validatePage, validateSearchKeyword } from '../common/validators';
 import WorkingHourBlock from './WorkingHourBlock';
-import renderHelmet from './helmet';
+import Helmet from './Helmet';
 import styles from './SearchScreen.module.css';
 
 function getTitle(keyword) {
@@ -105,8 +100,6 @@ class SearchScreen extends Component {
 
   render() {
     const { status } = this.props;
-    const pathname = pathnameSelector(this.props);
-    const search = searchSelector(this.props);
     const page = validatePage(pageSelector(this.props));
     const pageSize = 10;
     const totalNum = this.props.data.size;
@@ -122,13 +115,12 @@ class SearchScreen extends Component {
 
     return (
       <section className={styles.searchResult}>
-        {renderHelmet({ title, pathname, search, page, keyword })}
+        <Helmet keyword={keyword} page={page} />
         <h2 className={styles.heading}>{title}</h2>
         {isFetching(status) && <Loading size="s" />}
         {isFetched(status) && raw.length === 0 && (
           <P size="l" bold className={styles.searchNoResult}>
-            尚未有 「{keyword}
-            」的訊
+            尚未有 「{keyword} 」的資料
           </P>
         )}
         {raw.map((o, i) => (
