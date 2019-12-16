@@ -57,7 +57,7 @@ class Article extends React.Component {
     const { experience, hideContent } = this.props;
     return (
       <div className={styles.container}>
-        <ArticleInfo experience={experience} />
+        <ArticleInfo experience={experience} hideContent={hideContent} />
         <section className={styles.main}>
           <div className={styles.article}>{this.renderSections()}</div>
           {experience.type === 'interview' &&

@@ -46,3 +46,23 @@ export const formatSalaryType = type => {
       return '月';
   }
 };
+
+export const formatSalary = salary => {
+  if (!salary) {
+    return '-';
+  }
+
+  const { amount, type } = salary;
+
+  return `${formatSalaryAmount(amount)} / ${formatSalaryType(type)}`;
+};
+
+export const formatSalaryRange = salary => {
+  if (!salary) {
+    return '';
+  }
+
+  return `${formatSalaryAmountRange(salary)} / ${formatSalaryType(
+    salary.type,
+  )}`;
+};

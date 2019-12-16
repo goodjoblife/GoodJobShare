@@ -7,12 +7,8 @@ import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 import { Heading, P } from 'common/base';
 import i from 'common/icons';
 import styles from './WorkExperiences.module.css';
-import {
-  formatCreatedAt,
-  formatWeekWorkTime,
-  formatSalary,
-  formatSalaryRange,
-} from './helper';
+import { formatSalary, formatSalaryRange } from 'common/formatter';
+import { formatCreatedAt, formatWeekWorkTime } from './helper';
 
 const createLinkTo = id => ({
   pathname: `/experiences/${id}`,

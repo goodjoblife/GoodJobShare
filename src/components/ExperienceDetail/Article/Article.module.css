@@ -75,3 +75,8 @@ $paddingS: 16px;
     padding: 50px 25px;
   }
 }
+
+.lock {
+  margin-right: 5px;
+  color: #ed0d5e;
+}
