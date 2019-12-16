@@ -37,64 +37,65 @@ const ExperienceEntry = ({
   canViewExperienceDetail,
 }) => (
   <div className={cn(styles.container, styles[size])}>
-    <section className={styles.contentWrapper}>
-      <div className={styles.labels}>
-        <P size="s" className={styles.date}>
-          工作經驗 · {formatCreatedAt(createdAt)}
-        </P>
-        {weekWorkTime && canViewExperienceDetail && (
-          <div className={styles.weekWorkTime}>
-            <i.Clock />
-            {formatWeekWorkTime(weekWorkTime)}
+    <Link to={createLinkTo(id)}>
+      <section className={styles.contentWrapper}>
+        <div className={styles.labels}>
+          <P size="s" className={styles.date}>
+            工作經驗 · {formatCreatedAt(createdAt)}
+          </P>
+          {weekWorkTime && canViewExperienceDetail && (
+            <div className={styles.weekWorkTime}>
+              <i.Clock />
+              {formatWeekWorkTime(weekWorkTime)}
+            </div>
+          )}
+          {salary && (
+            <div
+              className={cn(styles.salary, {
+                [styles.locked]: !canViewExperienceDetail,
+              })}
+            >
+              {canViewExperienceDetail ? (
+                <React.Fragment>
+                  <i.Coin />
+                  {formatSalary(salary)}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <FontAwesomeIcon icon={faLock} />
+                  {formatSalaryRange(salary)}
+                </React.Fragment>
+              )}
+            </div>
+          )}
+          <div className={styles.recommendToOthers}>
+            {recommendToOthers === 'yes' ? <i.Good /> : <i.Bad />}
+            {recommendToOthers === 'yes' ? '推' : '不推'}
           </div>
-        )}
-        {salary && (
-          <div
-            className={cn(styles.salary, {
+        </div>
+
+        <Heading
+          Tag="h2"
+          size={size === 'l' ? 'sl' : 'sm'}
+          className={styles.heading}
+        >
+          {companyName} {jobTitle}
+        </Heading>
+
+        <div className={styles.snippetWrapper}>
+          <span className={styles.snippet}>
+            {section.content.slice(0, SNIPPET_SIZE)}....
+          </span>
+          <span
+            className={cn(styles.readmore, {
               [styles.locked]: !canViewExperienceDetail,
             })}
           >
-            {canViewExperienceDetail ? (
-              <React.Fragment>
-                <i.Coin />
-                {formatSalary(salary)}
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <FontAwesomeIcon icon={faLock} />
-                {formatSalaryRange(salary)}
-              </React.Fragment>
-            )}
-          </div>
-        )}
-        <div className={styles.recommendToOthers}>
-          {recommendToOthers === 'yes' ? <i.Good /> : <i.Bad />}
-          {recommendToOthers === 'yes' ? '推' : '不推'}
+            {`閱讀更多${canViewExperienceDetail ? '' : '並解鎖'}`}
+          </span>
         </div>
-      </div>
-
-      <Heading
-        Tag="h2"
-        size={size === 'l' ? 'sl' : 'sm'}
-        className={styles.heading}
-      >
-        {companyName} {jobTitle}
-      </Heading>
-
-      <div className={styles.snippetWrapper}>
-        <span className={styles.snippet}>
-          {section.content.slice(0, SNIPPET_SIZE)}....
-        </span>
-        <Link
-          to={createLinkTo(id)}
-          className={cn(styles.readmore, {
-            [styles.locked]: !canViewExperienceDetail,
-          })}
-        >
-          {`閱讀更多${canViewExperienceDetail ? '' : '並解鎖'}`}
-        </Link>
-      </div>
-    </section>
+      </section>
+    </Link>
   </div>
 );
 
