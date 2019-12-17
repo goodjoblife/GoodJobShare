@@ -1,6 +1,10 @@
 .carousel {
 }
 
+.pageContainer {
+  width: 100%;
+}
+
 .page {
   display: none;
 

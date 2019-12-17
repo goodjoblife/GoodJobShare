@@ -57,10 +57,16 @@ const LandingPage = ({
     <main>
       <StaticHelmet.LandingPage />
       <Banner />
-      <SummarySection
-        popularCompanyAverageSalary={popularCompanyAverageSalary}
-        popularJobTitleSalaryDistribution={popularJobTitleSalaryDistribution}
-      />
+      <Section padding>
+        <Wrapper size="l">
+          <SummarySection
+            popularCompanyAverageSalary={popularCompanyAverageSalary}
+            popularJobTitleSalaryDistribution={
+              popularJobTitleSalaryDistribution
+            }
+          />
+        </Wrapper>
+      </Section>
       <Section padding>
         <Wrapper size="l">
           <Heading size="l" center marginBottom>
