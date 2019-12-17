@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import { BarChart, Bar, XAxis, YAxis } from 'recharts';
 
-const CompanyDistributionChart = ({ data }) => (
+const CompanyDistributionChart = ({ data, width = 494, height = 233 }) => (
   <BarChart
-    width={494}
-    height={233}
+    width={width}
+    height={height}
     data={data}
     margin={{ left: -30, bottom: -25 }}
   >

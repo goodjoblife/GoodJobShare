@@ -8,9 +8,6 @@ import { pathnameSelector } from 'common/routing/selectors';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
-import SearchBar from './SearchBar';
-import CallToShareData from './CallToShareData';
-import MobileInfoButtons from './MobileInfoButtons';
 import InfoTimeModal from './common/InfoTimeModal';
 import InfoSalaryModal from './common/InfoSalaryModal';
 import withModal from './common/withModal';
@@ -75,25 +72,10 @@ class TimeAndSalary extends Component {
 
   render() {
     const { routes } = this.props;
-    const pathname = pathnameSelector(this.props);
 
     return (
       <div className={styles.container}>
         {this.renderHelmet()}
-        <section className={styles.whiteBackground}>
-          <Wrapper size="l" className={styles.showSearchbarWrapper}>
-            <CallToShareData />
-            <div className={styles.searchbar}>
-              <SearchBar />
-            </div>
-            {pathname !== '/salary-work-times' && (
-              <MobileInfoButtons
-                toggleInfoSalaryModal={this.toggleInfoSalaryModal}
-                toggleInfoTimeModal={this.toggleInfoTimeModal}
-              />
-            )}
-          </Wrapper>
-        </section>
         <InfoSalaryModal
           isOpen={this.props.infoSalaryModal.isOpen}
           close={this.toggleInfoSalaryModal}

@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
+import { Heading } from 'common/base';
 
 import AutoCompleteSearchTextInput from 'common/form/AutoCompleteTextInput_new/AutoCompleteSearchTextInput';
 import Button from 'common/button/ButtonRect';
@@ -21,7 +22,9 @@ const CallToActionBlock = ({ history }) => {
 
   return (
     <form className={styles.block} onSubmit={handleSubmit}>
-      <div className={styles.title}>分享你的資訊，一起讓職場更透明</div>
+      <Heading size="l" center marginBottom>
+        分享你的資訊，一起讓職場更透明
+      </Heading>
       <div className={styles.label}>你面試過的公司</div>
       <div className={styles.input}>
         <AutoCompleteSearchTextInput

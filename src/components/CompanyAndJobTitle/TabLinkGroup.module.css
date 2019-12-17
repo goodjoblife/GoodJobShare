@@ -1,31 +1,30 @@
-@value main-yellow from "common/variables.module.css";
+@value main-yellow, above-small from "common/variables.module.css";
 
 .group {
   display: inline-flex;
   border-radius: 5px;
   border: 1px solid main-yellow;
   background: white;
-  flex-direction: column;
-  @media (min-width: 767px) {
-    flex-direction: row;
-  }
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .element {
   display: flex;
+  flex: 0 50%;
   justify-content: center;
   align-items: center;
   width: 170px;
   height: 48px;
 
-  &:not(:last-child) {
-    border-bottom: 1px solid main-yellow;
-  }
+  border-bottom: 1px solid main-yellow;
+  border-right: 1px solid main-yellow;
 
-  @media (min-width: 767px) {
-    &:not(:last-child) {
-      border-bottom: 0;
-      border-right: 1px solid main-yellow;
+  @media (min-width: above-small) {
+    flex: 0 1 auto;
+    border-bottom: 0;
+    &:last-child {
+      border-right: 0;
     }
   }
 }

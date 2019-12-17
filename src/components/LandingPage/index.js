@@ -5,7 +5,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
 import { compose, setStatic, lifecycle } from 'recompose';
 import { Section, Wrapper, Heading } from 'common/base';
-import ShareExpSection from 'common/ShareExpSection';
 import Columns from 'common/Columns';
 import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
 import { queryPopularExperiences } from '../../actions/popularExperiences';
@@ -62,24 +61,6 @@ const LandingPage = ({
         popularCompanyAverageSalary={popularCompanyAverageSalary}
         popularJobTitleSalaryDistribution={popularJobTitleSalaryDistribution}
       />
-      <ShareExpSection heading="現在就留下你的資料" />
-      <Section padding bg="white">
-        <Wrapper size="l">
-          <Heading size="l" center marginBottom>
-            勞動知識小教室
-          </Heading>
-          <Columns Item={LaborRightsEntry} items={items} />
-        </Wrapper>
-        <Section center Tag="div">
-          <Link
-            className={cn('buttonCircleL', 'buttonBlack')}
-            to="/labor-rights"
-            title="勞動知識小教室"
-          >
-            看更多
-          </Link>
-        </Section>
-      </Section>
       <Section padding>
         <Wrapper size="l">
           <Heading size="l" center marginBottom>
@@ -101,8 +82,28 @@ const LandingPage = ({
           </Section>
         </Wrapper>
       </Section>
+      <Section padding bg="white">
+        <Wrapper size="l">
+          <Heading size="l" center marginBottom>
+            職場生存錦囊
+          </Heading>
+          <Columns gutter="s" Item={LaborRightsEntry} items={items} />
+        </Wrapper>
+        <Section center Tag="div">
+          <Link
+            className={cn('buttonCircleL', 'buttonBlack')}
+            to="/labor-rights"
+            title="職場生存錦囊"
+          >
+            看更多
+          </Link>
+        </Section>
+      </Section>
+
       <Section padding>
-        <CallToActionBlock />
+        <Wrapper size="l">
+          <CallToActionBlock />
+        </Wrapper>
       </Section>
     </main>
   );

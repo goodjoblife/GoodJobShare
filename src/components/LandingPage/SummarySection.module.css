@@ -1,21 +1,77 @@
-@value border-gray from "common/variables.module.css";
+@value border-gray, above-small, above-desktop, below-medium, above-medium from "common/variables.module.css";
 
 .summarySection {
   display: flex;
   justify-content: center;
 
-  padding-top: 72px;
-  padding-bottom: 56px;
+  padding: 30px 24px;
 
   border-bottom: solid 1px border-gray;
+  @media (min-width: above-small) {
+    padding-top: 72px;
+    padding-bottom: 56px;
+  }
 }
 
 .page {
   display: flex;
+  flex-direction: column;
+
+  @media (min-width: above-small) {
+    flex-direction: row;
+  }
 
   .chartWrapper {
     &:not(:last-child) {
-      margin-right: 46px;
+      margin-bottom: 48px;
     }
+    @media (min-width: above-small) {
+      &:not(:last-child) {
+        margin-right: 46px;
+      }
+    }
+  }
+}
+
+/*sm*/
+.barChart {
+  display: none;
+}
+
+.barChartSm {
+  display: block;
+}
+
+.barChartMed {
+  display: none;
+}
+
+/*med*/
+@media (min-width: above-small) and (max-width: below-medium) {
+  .barChartMed {
+    display: block;
+  }
+
+  .barChartSm {
+    display: none;
+  }
+
+  .barChart {
+    display: none;
+  }
+}
+
+/*above medium*/
+@media (min-width: above-medium) {
+  .barChartMed {
+    display: none;
+  }
+
+  .barChartSm {
+    display: none;
+  }
+
+  .barChart {
+    display: block;
   }
 }
