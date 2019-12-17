@@ -24,7 +24,11 @@ const SummarySection = ({
 
   return (
     <div className={styles.summarySection}>
-      <Carousel selectedIndex={selectedIndex} onSelectIndex={setSelectedIndex}>
+      <Carousel
+        selectedIndex={selectedIndex}
+        onSelectIndex={setSelectedIndex}
+        className={styles.carousel}
+      >
         {dataPairs.map(
           ([companyAverageSalary, jobTitleSalaryDistribution], i) => (
             <CarouselPage key={i}>
@@ -34,21 +38,31 @@ const SummarySection = ({
                   title={`${companyAverageSalary.name}的薪水`}
                   to={`/companies/${companyAverageSalary.name}`}
                 >
-                  <JobTitleDistributionChart
-                    data={
-                      companyAverageSalary.salary_work_time_statistics
-                        .job_average_salaries
-                    }
-                  />
+                  <React.Fragment>
+                    <div className={styles.barChart}>
+                      <JobTitleDistributionChart
+                        data={
+                          companyAverageSalary.salary_work_time_statistics
+                            .job_average_salaries
+                        }
+                      />
+                    </div>
+                  </React.Fragment>
                 </ChartWrapper>
                 <ChartWrapper
                   className={styles.chartWrapper}
                   title={`${jobTitleSalaryDistribution.name}的薪水分佈`}
                   to={`/job-titles/${jobTitleSalaryDistribution.name}`}
                 >
-                  <CompanyDistributionChart
-                    data={jobTitleSalaryDistribution.salary_distribution.bins}
-                  />
+                  <React.Fragment>
+                    <div className={styles.barChart}>
+                      <CompanyDistributionChart
+                        data={
+                          jobTitleSalaryDistribution.salary_distribution.bins
+                        }
+                      />
+                    </div>
+                  </React.Fragment>
                 </ChartWrapper>
               </div>
             </CarouselPage>

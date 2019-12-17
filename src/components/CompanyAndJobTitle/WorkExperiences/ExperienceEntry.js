@@ -45,28 +45,30 @@ const ExperienceEntry = ({
               {formatWeekWorkTime(weekWorkTime)}
             </div>
           )}
-          {salary && (
-            <div
-              className={cn(styles.salary, {
-                [styles.locked]: !canViewExperienceDetail,
-              })}
-            >
-              {canViewExperienceDetail ? (
-                <React.Fragment>
-                  <i.Coin />
-                  {formatSalary(salary)}
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <FontAwesomeIcon icon={faLock} />
-                  {formatSalaryRange(salary)}
-                </React.Fragment>
-              )}
+          <div className={styles.salaryRecommendWrapper}>
+            {salary && (
+              <div
+                className={cn(styles.salary, {
+                  [styles.locked]: !canViewExperienceDetail,
+                })}
+              >
+                {canViewExperienceDetail ? (
+                  <React.Fragment>
+                    <i.Coin />
+                    {formatSalary(salary)}
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <FontAwesomeIcon icon={faLock} />
+                    {formatSalaryRange(salary)}
+                  </React.Fragment>
+                )}
+              </div>
+            )}
+            <div className={styles.recommendToOthers}>
+              {recommendToOthers === 'yes' ? <i.Good /> : <i.Bad />}
+              {recommendToOthers === 'yes' ? '推' : '不推'}
             </div>
-          )}
-          <div className={styles.recommendToOthers}>
-            {recommendToOthers === 'yes' ? <i.Good /> : <i.Bad />}
-            {recommendToOthers === 'yes' ? '推' : '不推'}
           </div>
         </div>
 

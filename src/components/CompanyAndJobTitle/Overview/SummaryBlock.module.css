@@ -1,3 +1,5 @@
+@value below-tablet, above-mobile from "common/variables.module.css";
+
 .summaryBlock {
   display: flex;
   margin-bottom: 22px;
@@ -11,6 +13,12 @@
     padding: 20px;
   }
 
+  .barChart {
+    flex: 1;
+    max-width: 547px;
+    height: 265px;
+  }
+
   .barChartSm {
     display: none;
   }
@@ -19,7 +27,7 @@
     margin-left: 21px;
   }
 
-  @media (max-width: 550px) {
+  @media (max-width: below-tablet) {
     flex-direction: column;
     align-items: flex-start;
 
@@ -29,9 +37,12 @@
 
     .barChartSm {
       display: block;
+      width: 100%;
+      height: 265px;
     }
 
     .averageWeekWorkTime {
+      width: 100%;
       margin-left: 0;
       margin-top: 10px;
     }
@@ -44,6 +55,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 4px;
+  margin: 0 auto;
 
   .title {
     font-size: 18px;

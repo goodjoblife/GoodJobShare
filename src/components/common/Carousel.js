@@ -5,9 +5,11 @@ import cn from 'classnames';
 
 import styles from './Carousel.module.css';
 
-export const CarouselPage = ({ children }) => <div>{children}</div>;
+export const CarouselPage = ({ children }) => (
+  <div className={styles.pageContainer}>{children}</div>
+);
 
-const Carousel = ({ children, selectedIndex, onSelectIndex }) => {
+const Carousel = ({ children, selectedIndex, onSelectIndex, className }) => {
   const handleClickPrevBtn = () => {
     onSelectIndex(selectedIndex - 1);
   };
@@ -24,7 +26,7 @@ const Carousel = ({ children, selectedIndex, onSelectIndex }) => {
   const isNextBtnClickable = selectedIndex < children.length - 1;
 
   return (
-    <div className={styles.carousel}>
+    <div className={cn(styles.carousel, className)}>
       {Children.map(children, (child, i) => (
         <div
           key={i}
