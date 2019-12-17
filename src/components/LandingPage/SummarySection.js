@@ -24,7 +24,11 @@ const SummarySection = ({
 
   return (
     <div className={styles.summarySection}>
-      <Carousel selectedIndex={selectedIndex} onSelectIndex={setSelectedIndex}>
+      <Carousel
+        selectedIndex={selectedIndex}
+        onSelectIndex={setSelectedIndex}
+        className={styles.carousel}
+      >
         {dataPairs.map(
           ([companyAverageSalary, jobTitleSalaryDistribution], i) => (
             <CarouselPage key={i}>
@@ -43,24 +47,6 @@ const SummarySection = ({
                         }
                       />
                     </div>
-                    <div className={styles.barChartMed}>
-                      <JobTitleDistributionChart
-                        data={
-                          companyAverageSalary.salary_work_time_statistics
-                            .job_average_salaries
-                        }
-                        width={360}
-                      />
-                    </div>
-                    <div className={styles.barChartSm}>
-                      <JobTitleDistributionChart
-                        data={
-                          companyAverageSalary.salary_work_time_statistics
-                            .job_average_salaries
-                        }
-                        width={300}
-                      />
-                    </div>
                   </React.Fragment>
                 </ChartWrapper>
                 <ChartWrapper
@@ -74,22 +60,6 @@ const SummarySection = ({
                         data={
                           jobTitleSalaryDistribution.salary_distribution.bins
                         }
-                      />
-                    </div>
-                    <div className={styles.barChartMed}>
-                      <CompanyDistributionChart
-                        data={
-                          jobTitleSalaryDistribution.salary_distribution.bins
-                        }
-                        width={360}
-                      />
-                    </div>
-                    <div className={styles.barChartSm}>
-                      <CompanyDistributionChart
-                        data={
-                          jobTitleSalaryDistribution.salary_distribution.bins
-                        }
-                        width={300}
                       />
                     </div>
                   </React.Fragment>

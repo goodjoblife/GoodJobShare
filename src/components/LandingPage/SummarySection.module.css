@@ -4,28 +4,34 @@
   display: flex;
   justify-content: center;
 
-  padding: 30px 24px;
+  padding: 30px 0px;
 
   border-bottom: solid 1px border-gray;
-  @media (min-width: above-small) {
+  @media (min-width: above-desktop) {
     padding-top: 72px;
     padding-bottom: 56px;
   }
+}
+
+.carousel {
+  width: 100%;
 }
 
 .page {
   display: flex;
   flex-direction: column;
 
-  @media (min-width: above-small) {
+  @media (min-width: above-desktop) {
     flex-direction: row;
+    justify-content: space-between;
   }
 
   .chartWrapper {
     &:not(:last-child) {
       margin-bottom: 48px;
     }
-    @media (min-width: above-small) {
+    @media (min-width: above-desktop) {
+      flex: 1;
       &:not(:last-child) {
         margin-right: 46px;
       }
@@ -33,45 +39,7 @@
   }
 }
 
-/*sm*/
 .barChart {
-  display: none;
-}
-
-.barChartSm {
-  display: block;
-}
-
-.barChartMed {
-  display: none;
-}
-
-/*med*/
-@media (min-width: above-small) and (max-width: below-medium) {
-  .barChartMed {
-    display: block;
-  }
-
-  .barChartSm {
-    display: none;
-  }
-
-  .barChart {
-    display: none;
-  }
-}
-
-/*above medium*/
-@media (min-width: above-medium) {
-  .barChartMed {
-    display: none;
-  }
-
-  .barChartSm {
-    display: none;
-  }
-
-  .barChart {
-    display: block;
-  }
+  width: 100%;
+  height: 265px;
 }
