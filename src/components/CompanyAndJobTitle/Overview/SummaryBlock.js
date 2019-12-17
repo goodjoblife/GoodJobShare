@@ -19,7 +19,7 @@ const SummaryBlock = ({
           <CompanyDistributionChart data={salaryDistribution} />
         </div>
         <div className={styles.barChartSm}>
-          <CompanyDistributionChart data={salaryDistribution} width={300} />
+          <CompanyDistributionChart data={salaryDistribution} />
         </div>
       </React.Fragment>
     )}
@@ -29,7 +29,7 @@ const SummaryBlock = ({
           <JobTitleDistrubitionChart data={jobAverageSalaries} />
         </div>
         <div className={styles.barChartSm}>
-          <JobTitleDistrubitionChart data={jobAverageSalaries} width={300} />
+          <JobTitleDistrubitionChart data={jobAverageSalaries} />
         </div>
       </React.Fragment>
     )}

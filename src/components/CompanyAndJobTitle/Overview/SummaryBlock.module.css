@@ -13,6 +13,12 @@
     padding: 20px;
   }
 
+  .barChart {
+    flex: 1;
+    max-width: 547px;
+    height: 265px;
+  }
+
   .barChartSm {
     display: none;
   }
@@ -31,6 +37,8 @@
 
     .barChartSm {
       display: block;
+      width: 100%;
+      height: 265px;
     }
 
     .averageWeekWorkTime {
