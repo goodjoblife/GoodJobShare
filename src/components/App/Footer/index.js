@@ -9,7 +9,8 @@ import styles from './Footer.module.css';
 const link1 = [
   { to: '/salary-work-times/latest', text: '薪資工時' },
   { to: '/experiences/search', text: '職場經驗' },
-  { to: '/labor-rights', text: '勞動小教室' },
+  { to: '/labor-rights', text: '勞工法令懶人包' },
+  { to: 'https://media.goodjob.life', text: '部落格' },
 ];
 const link2 = [
   { to: '/faq', text: '常見問答' },
@@ -29,7 +30,9 @@ const Footer = () => (
       <Wrapper size="l" className={styles.inner}>
         <i.GjLogo className={styles.logo} />
         <h1 className={styles.heading}>職場透明化運動</h1>
-        <h5 className={styles.subheading}>—— 共享工時薪資，求職不再面議！</h5>
+        <h5 className={styles.subheading}>
+          —— 共享薪水、面試情報，求職不再面議！
+        </h5>
         <span
           className={cn('fb-like', styles.fbLike)}
           data-href="https://www.facebook.com/goodjob.life/"
@@ -59,7 +62,7 @@ const Footer = () => (
     </Wrapper>
     <div className={styles.footer}>
       <Wrapper size="l" className={styles.inner}>
-        <P size="s">Copyright © GoodJob.life team 2017</P>
+        <P size="s">Copyright © GoodJob.life team 2019</P>
         <div className={styles.g0v}>
           <a href="https://grants.g0v.tw/power/" alt="power by g0v">
             <img
