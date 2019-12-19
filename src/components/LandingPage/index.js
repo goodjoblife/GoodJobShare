@@ -70,7 +70,7 @@ const LandingPage = ({
       <Section padding>
         <Wrapper size="l">
           <Heading size="l" center marginBottom>
-            最新面試、工作心得分享
+            最新面試、工作心得
           </Heading>
           <Columns
             Item={ExperienceBlock}
@@ -91,7 +91,7 @@ const LandingPage = ({
       <Section padding bg="white">
         <Wrapper size="l">
           <Heading size="l" center marginBottom>
-            職場生存錦囊
+            勞工法令懶人包
           </Heading>
           <Columns gutter="s" Item={LaborRightsEntry} items={items} />
         </Wrapper>
@@ -99,7 +99,7 @@ const LandingPage = ({
           <Link
             className={cn('buttonCircleL', 'buttonBlack')}
             to="/labor-rights"
-            title="職場生存錦囊"
+            title="勞工法令懶人包"
           >
             看更多
           </Link>
