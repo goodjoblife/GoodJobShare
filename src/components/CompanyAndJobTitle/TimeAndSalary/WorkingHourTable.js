@@ -155,11 +155,18 @@ class WorkingHourTable extends Component {
     this.setState(state);
   }
 
-  postProcessRows = rows => {
+  postProcessRows = pageType => rows => {
     if (this.props.hideContent) {
+      const filteredColumnProps = columnProps.filter(({ isEnabled }) =>
+        isEnabled ? isEnabled({ pageType }) : true,
+      );
       const hideRange = [
-        R.findIndex(R.propEq('permissionRequiredStart', true))(columnProps),
-        R.findIndex(R.propEq('permissionRequiredEnd', true))(columnProps),
+        R.findIndex(R.propEq('permissionRequiredStart', true))(
+          filteredColumnProps,
+        ),
+        R.findIndex(R.propEq('permissionRequiredEnd', true))(
+          filteredColumnProps,
+        ),
       ];
       injectHideContentBlock(hideRange)(rows);
     }
@@ -173,7 +180,7 @@ class WorkingHourTable extends Component {
         className={styles.companyTable}
         data={data}
         primaryKey="created_at"
-        postProcessRows={this.postProcessRows}
+        postProcessRows={this.postProcessRows(pageType)}
       >
         {columnProps
           .filter(({ isEnabled }) =>

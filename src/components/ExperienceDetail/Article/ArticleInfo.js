@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { formatSalaryType } from 'common/formatter';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faLock from '@fortawesome/fontawesome-free-solid/faLock';
+import { formatSalary, formatSalaryRange } from 'common/formatter';
 import { Good, Bad } from 'common/icons';
 import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
@@ -8,7 +10,7 @@ import RateButtons from './RateButtons';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth()} 月`;
 
-const InterviewInfoBlocks = ({ experience }) => (
+const InterviewInfoBlocks = ({ experience, hideContent }) => (
   <Fragment>
     <div className={styles.date}>
       {formatDate(new Date(experience.created_at))}
@@ -31,9 +33,14 @@ const InterviewInfoBlocks = ({ experience }) => (
     <InfoBlock label="面試結果">{experience.interview_result}</InfoBlock>
     {experience.salary && (
       <InfoBlock label="待遇">
-        {`${experience.salary.amount} / ${formatSalaryType(
-          experience.salary.type,
-        )}`}
+        {hideContent ? (
+          <React.Fragment>
+            <FontAwesomeIcon icon={faLock} className={styles.lock} />
+            {formatSalaryRange(experience.salary)}
+          </React.Fragment>
+        ) : (
+          formatSalary(experience.salary)
+        )}
       </InfoBlock>
     )}
     <InfoBlock label="整體面試滿意度">
@@ -56,7 +63,7 @@ InterviewInfoBlocks.propTypes = {
   experience: PropTypes.object.isRequired,
 };
 
-const WorkInfoBlocks = ({ experience }) => (
+const WorkInfoBlocks = ({ experience, hideContent }) => (
   <Fragment>
     <InfoBlock label="工作地區">{experience.region}</InfoBlock>
     <InfoBlock label="職稱">{experience.job_title.name}</InfoBlock>
@@ -73,9 +80,14 @@ const WorkInfoBlocks = ({ experience }) => (
     )}
     {experience.salary && (
       <InfoBlock label="待遇">
-        {`${experience.salary.amount} / ${formatSalaryType(
-          experience.salary.type,
-        )}`}
+        {hideContent ? (
+          <React.Fragment>
+            <FontAwesomeIcon icon={faLock} className={styles.lock} />
+            {formatSalaryRange(experience.salary)}
+          </React.Fragment>
+        ) : (
+          formatSalary(experience.salary)
+        )}
       </InfoBlock>
     )}
     {experience.recommend_to_others && (
@@ -98,7 +110,7 @@ WorkInfoBlocks.propTypes = {
   experience: PropTypes.object.isRequired,
 };
 
-const InternBlocks = ({ experience }) => (
+const InternBlocks = ({ experience, hideContent }) => (
   <Fragment>
     {experience.region && (
       <InfoBlock label="實習地區">{experience.region}</InfoBlock>
@@ -122,9 +134,14 @@ const InternBlocks = ({ experience }) => (
     )}
     {experience.salary && (
       <InfoBlock label="實習薪資">
-        {`${experience.salary.amount} / ${formatSalaryType(
-          experience.salary.type,
-        )}`}
+        {hideContent ? (
+          <React.Fragment>
+            <FontAwesomeIcon icon={faLock} className={styles.lock} />
+            {formatSalaryRange(experience.salary)}
+          </React.Fragment>
+        ) : (
+          formatSalary(experience.salary)
+        )}
       </InfoBlock>
     )}
     {experience.overall_rating && (
@@ -139,23 +156,26 @@ InternBlocks.propTypes = {
   experience: PropTypes.object.isRequired,
 };
 
-const Aside = ({ experience }) => {
+const Aside = ({ experience, hideContent }) => {
   const { type } = experience;
   return (
     <div className={styles.info}>
       {type === 'interview' && (
         <ul>
-          <InterviewInfoBlocks experience={experience} />
+          <InterviewInfoBlocks
+            experience={experience}
+            hideContent={hideContent}
+          />
         </ul>
       )}
       {type === 'work' && (
         <ul>
-          <WorkInfoBlocks experience={experience} />
+          <WorkInfoBlocks experience={experience} hideContent={hideContent} />
         </ul>
       )}
       {type === 'intern' && (
         <ul>
-          <InternBlocks experience={experience} />
+          <InternBlocks experience={experience} hideContent={hideContent} />
         </ul>
       )}
     </div>
