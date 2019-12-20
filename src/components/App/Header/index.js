@@ -148,13 +148,13 @@ class Header extends React.Component {
             <div className={styles.searchbarWrapper}>
               <Searchbar
                 className={styles.searchbar}
-                placeholder="輸入公司、職稱查詢面試及薪水資料"
+                placeholder="輸入公司 or 職稱，查詢面試、薪水"
               />
             </div>
             <div className={cn(styles.searchbarWrapper, styles.mobile)}>
               <Searchbar
                 className={styles.searchbar}
-                placeholder="輸入公司、職稱查詢"
+                placeholder="輸入公司 or 職稱查詢"
               />
             </div>
             <nav

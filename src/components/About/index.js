@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Section, Wrapper, Heading, P } from 'common/base';
-import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import CallToActionBanner from 'common/CallToAction/CallToActionBanner';
 import { Facebook, Email, Github } from 'common/icons';
 import editorStyles from 'common/Editor.module.css';
@@ -83,9 +82,6 @@ const data2017 = [
 const About = () => (
   <Section Tag="main" pageTop>
     <StaticHelmet.About />
-    <Section paddingBottom>
-      <CallToActionFolder />
-    </Section>
     <Section paddingBottom>
       <Wrapper size="m">
         <Heading size="m" marginBottomS>
@@ -199,11 +195,8 @@ const About = () => (
         <div className={editorStyles.editor}>
           <p>若你有以下任一專長或條件，非常希望你可以加入我們：</p>
           <ul>
-            <li>具行銷企劃專長者</li>
-            <li>瞭解社群經營，或曾有 Facebook 粉絲專頁管理經驗者</li>
-            <li>熟悉商業模式分析，或具備社會企業經營經驗者</li>
-            <li>有資訊設計專長者，以協助設計勞動權益資訊懶人包</li>
-            <li>對於推動工作資訊透明化、改善台灣勞動環境具有熱忱的任何人</li>
+            <li>具備社會企業或非營利組織之創立、經營經驗者</li>
+            <li>對於推動求職市場透明化、改善台灣勞動環境具有熱忱的任何人</li>
           </ul>
         </div>
       </Wrapper>
