@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CompanyDistributionChart from '../../common/Charts/CompanyDistributionChart';
+import SalaryDistributionChart from '../../common/Charts/SalaryDistributionChart';
 import JobTitleDistrubitionChart from '../../common/Charts/JobTitleDistrubitionChart';
 import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
 import styles from './SummaryBlock.module.css';
@@ -16,10 +16,10 @@ const SummaryBlock = ({
     {salaryDistribution && (
       <React.Fragment>
         <div className={styles.barChart}>
-          <CompanyDistributionChart data={salaryDistribution} />
+          <SalaryDistributionChart data={salaryDistribution} />
         </div>
         <div className={styles.barChartSm}>
-          <CompanyDistributionChart data={salaryDistribution} />
+          <SalaryDistributionChart data={salaryDistribution} />
         </div>
       </React.Fragment>
     )}

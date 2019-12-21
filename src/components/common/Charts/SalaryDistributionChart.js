@@ -33,7 +33,7 @@ const CustomizedAxisTick = ({ x, y, stroke, payload }) => {
   );
 };
 
-const CompanyDistributionChart = ({ data }) => {
+const SalaryDistributionChart = ({ data }) => {
   const { width } = useWindowSize();
   return (
     <ResponsiveContainer>
@@ -58,7 +58,7 @@ const CompanyDistributionChart = ({ data }) => {
   );
 };
 
-CompanyDistributionChart.propTypes = {
+SalaryDistributionChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       data_count: PropTypes.number,
@@ -71,4 +71,4 @@ CompanyDistributionChart.propTypes = {
   ).isRequired,
 };
 
-export default CompanyDistributionChart;
+export default SalaryDistributionChart;
