@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
+import throttle from 'lodash/throttle';
 
 import { PermissionContextProvider } from 'common/permission-context';
 import { FacebookContextProvider } from 'common/facebook';
+import { dispatchWindowSizeChange } from '../actions/windowSize';
 
 import App from './App';
 import { activateOptimize } from '../utils/gtm';
@@ -31,6 +35,12 @@ class Root extends Component {
 
     // activate google optimize
     activateOptimize();
+
+    // start detecting window resize event
+    if (window) {
+      window.addEventListener('resize', this.onResize);
+      this.onResize();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -44,6 +54,21 @@ class Root extends Component {
       activateOptimize();
     }
   }
+
+  componentWillUnmount() {
+    if (window) {
+      window.removeEventListener('resize', this.onResize);
+    }
+  }
+
+  onResize = throttle(() => {
+    if (window) {
+      this.props.dispatchWindowSizeChange({
+        width: document.body.clientWidth,
+        height: document.body.clientHeight,
+      });
+    }
+  }, 500);
 
   render() {
     return (
@@ -63,4 +88,16 @@ Root.propTypes = {
   }),
 };
 
-export default withRouter(Root);
+const mapDispatchToProps = {
+  dispatchWindowSizeChange,
+};
+
+const hoc = compose(
+  withRouter,
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
+);
+
+export default hoc(Root);
