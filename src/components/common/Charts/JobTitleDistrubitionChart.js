@@ -26,7 +26,8 @@ const YAxisTickFormatter = (str, perNWord = 4) => {
     } else {
       if (count === perNWord) {
         newStr += ' ';
-        count = 0;
+        newStr = newStr + char;
+        count = 1;
       } else {
         newStr = newStr + char;
         count += 1;
