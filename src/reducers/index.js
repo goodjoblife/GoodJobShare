@@ -21,7 +21,6 @@ import campaignInfo from './campaignInfo';
 import campaignTimeAndSalaryBoard from './campaignTimeAndSalaryBoard';
 import company from './company';
 import jobTitle from './jobTitle';
-import windowSize from './windowSize';
 import { PERSIST_KEY } from '../config';
 
 const persistConfig = {
@@ -50,7 +49,6 @@ const rootReducer = combineReducers({
   campaignTimeAndSalaryBoard,
   company,
   jobTitle,
-  windowSize,
 });
 
 export default persistReducer(persistConfig, rootReducer);
