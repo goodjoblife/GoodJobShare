@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import R from 'ramda';
-
-import WithWindowSize from 'common/windowSize';
+import { useWindowSize } from 'react-use';
 import breakpoints from '../../../constants/breakpoints';
 
 const maxNameLength = R.pipe(
@@ -38,30 +36,31 @@ const YAxisTickFormatter = (str, perNWord = 4) => {
   return newStr;
 };
 
-const JobTitleDistributionChart = ({ data, windowSize }) => (
-  <ResponsiveContainer>
-    <BarChart
-      data={data}
-      layout="vertical"
-      margin={{
-        left:
-          windowSize.width < breakpoints.xs ? null : maxNameLength(data) * 10,
-        bottom: -25,
-      }}
-    >
-      <XAxis type="number" label="平均月薪" height={70} />
-      <YAxis
-        type="category"
-        dataKey="job_title.name"
-        tickFormatter={
-          windowSize.width < breakpoints.xs ? YAxisTickFormatter : null
-        }
-        tick={{ fontSize: windowSize.width < breakpoints.xs ? '12px' : null }}
-      />
-      <Bar dataKey="average_salary.amount" fill="#fcd406" />
-    </BarChart>
-  </ResponsiveContainer>
-);
+const JobTitleDistributionChart = ({ data }) => {
+  const { width } = useWindowSize();
+
+  return (
+    <ResponsiveContainer>
+      <BarChart
+        data={data}
+        layout="vertical"
+        margin={{
+          left: width < breakpoints.xs ? null : maxNameLength(data) * 10,
+          bottom: -25,
+        }}
+      >
+        <XAxis type="number" label="平均月薪" height={70} />
+        <YAxis
+          type="category"
+          dataKey="job_title.name"
+          tickFormatter={width < breakpoints.xs ? YAxisTickFormatter : null}
+          tick={{ fontSize: width < breakpoints.xs ? '12px' : null }}
+        />
+        <Bar dataKey="average_salary.amount" fill="#fcd406" />
+      </BarChart>
+    </ResponsiveContainer>
+  );
+};
 
 JobTitleDistributionChart.propTypes = {
   data: PropTypes.arrayOf(
@@ -76,4 +75,4 @@ JobTitleDistributionChart.propTypes = {
   ).isRequired,
 };
 
-export default WithWindowSize(JobTitleDistributionChart);
+export default JobTitleDistributionChart;
