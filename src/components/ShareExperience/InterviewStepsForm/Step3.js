@@ -134,7 +134,7 @@ class Step3 extends React.Component {
         <Block style={{ marginTop: '35px' }}>
           <Email
             email={state.email}
-            inputTitle="訂閱 GoodJob，我們會寄送最新的薪資、面試資訊給您"
+            inputTitle="留下 E-mail，掌握最新資訊"
             onChange={v => {
               handleState('email')(v);
             }}
