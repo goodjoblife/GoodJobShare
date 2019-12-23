@@ -5,7 +5,7 @@ import { useWindowSize } from 'react-use';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import breakpoints from '../../../constants/breakpoints';
 
-const CustomizedLabel = ({ viewBox: { x, y, width, height } }) => {
+const LabelOnSmallDevice = ({ viewBox: { x, y, width, height } }) => {
   return (
     <g transform={`translate(${x + width / 2},${y + height - 20})`}>
       <text x={0} y={0} dy={16} fill="#000">
@@ -17,7 +17,7 @@ const CustomizedLabel = ({ viewBox: { x, y, width, height } }) => {
   );
 };
 
-const CustomizedAxisTick = ({ x, y, stroke, payload }) => {
+const XAxisOnSmallDevice = ({ x, y, stroke, payload }) => {
   const [from, to] = payload.value.split('~');
   return (
     <g transform={`translate(${x},${y})`}>
@@ -46,9 +46,9 @@ const SalaryDistributionChart = ({ data }) => {
           dataKey={({ range: { from, to } }) =>
             `${Math.floor(from / 1000) / 10}萬~${Math.floor(to / 1000) / 10}萬`
           }
-          label={width < breakpoints.xs ? <CustomizedLabel /> : '月薪'}
+          label={width < breakpoints.xs ? <LabelOnSmallDevice /> : '月薪'}
           height={70}
-          tick={width < breakpoints.xs ? <CustomizedAxisTick /> : {}}
+          tick={width < breakpoints.xs ? <XAxisOnSmallDevice /> : {}}
           interval={0}
         />
         <YAxis type="number" label="人數" width={100} />
