@@ -30,7 +30,6 @@ class Header extends React.Component {
     };
     this.toggleNav = this.toggleNav.bind(this);
     this.closeNav = this.closeNav.bind(this);
-    this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.openLoginModal = this.openLoginModal.bind(this);
     this.closeLoginModal = this.closeLoginModal.bind(this);
@@ -80,11 +79,6 @@ class Header extends React.Component {
 
   closeLoginModal() {
     this.props.loginModal.setIsOpen(false);
-  }
-
-  login() {
-    const { login, FB } = this.props;
-    login(FB);
   }
 
   logout() {
@@ -224,10 +218,8 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  login: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   auth: PropTypes.object,
-  FB: PropTypes.object,
   location: PropTypes.object,
   history: PropTypes.object.isRequired,
   fetchPermission: PropTypes.func.isRequired,

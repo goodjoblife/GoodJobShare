@@ -1,6 +1,7 @@
 import React from 'react';
 import { PermissionContextProvider } from 'common/permission-context';
-import { FacebookContextProvider } from 'common/facebook';
+import FacebookContextProvider from 'common/FacebookContextProvider';
+import GoogleContextProvider from 'common/GoogleContextProvider';
 import useGoogleAnalytics from 'hooks/useGoogleAnalytics';
 import usePixel from 'hooks/usePixel';
 import useGoogleTagManager from 'hooks/useGoogleTagManager';
@@ -16,7 +17,9 @@ const Root = () => {
   return (
     <PermissionContextProvider>
       <FacebookContextProvider>
-        <App />
+        <GoogleContextProvider>
+          <App />
+        </GoogleContextProvider>
       </FacebookContextProvider>
     </PermissionContextProvider>
   );
