@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { activateOptimize } from '../utils/gtm';
+import { activateOptimize } from 'utils/gtm';
 
 export default () => {
   // 因為 react 是 SPA，需要在每次 route 改變時
