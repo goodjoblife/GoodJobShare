@@ -32,7 +32,7 @@ const Carousel = ({ children, selectedIndex, onSelectIndex, className }) => {
           key={i}
           className={cn(styles.page, { [styles.active]: selectedIndex === i })}
         >
-          {child}
+          {selectedIndex === i ? child : null}
         </div>
       ))}
       <div className={styles.nav}>
