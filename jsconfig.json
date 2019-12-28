@@ -5,7 +5,8 @@
             "common/*": ["src/components/common/*"],
             "utils/*": ["src/utils/*"],
             "graphql/*": ["src/graphql/*"],
-            "hooks/*": ["src/hooks/*"]
+            "hooks/*": ["src/hooks/*"],
+            "contexts/*": ["src/contexts/*"]
         }
     },
     "exclude": ["node_modules", "dist"]

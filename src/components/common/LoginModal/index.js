@@ -1,51 +1,23 @@
-import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
-
-import Modal from '../Modal.js';
-import styles from './LoginModal.module.css';
+import React from 'react';
+import useFacebookLogin from 'hooks/login/useFacebookLogin';
+import useGoogleLogin from 'hooks/login/useGoogleLogin';
+import Modal from 'common/Modal.js';
 import authStatus from '../../../constants/authStatus';
-import { GOOGLE_APP_ID } from '../../../config';
-import { withPermission } from '../../common/permission-context';
-import { withFB } from '../../common/facebook';
-import { withGoogle } from '../../common/google';
-import { loginWithFB } from '../../../actions/auth';
+import styles from './LoginModal.module.css';
 
-const LoginModal = ({
-  onFbBtnClick,
-  loginWithGoogle,
-  FB,
-  loginModal,
-  isOpen,
-  close,
-}) => {
-  useEffect(() => {
-    if (!window || window.gapi) return;
-    window.initGoogle = () => {
-      const gapi = window.gapi;
-      gapi.load('auth2', () => {
-        gapi.auth2.init();
-      });
-    };
-    const script = document.createElement('script');
-    script.src = 'https://apis.google.com/js/platform.js?onload=initGoogle';
-    document.body.appendChild(script);
-  }, []);
+const LoginModal = ({ loginModal, isOpen, close }) => {
+  const fbLogin = useFacebookLogin();
+  const googleLogin = useGoogleLogin();
 
   return (
     <Modal isOpen={isOpen} hasColose close={close} closableOnClickOutside>
       <div className={styles.container}>
-        <Helmet>
-          <meta name="google-signin-client_id" content={GOOGLE_APP_ID} />
-        </Helmet>
         <h2 style={{ fontSize: '1.4em' }}>登入</h2>
         <div className={styles.modal}>
           <button
             className={styles['btn-facebook']}
             onClick={async () => {
-              if ((await onFbBtnClick(FB)) === authStatus.CONNECTED) {
+              if ((await fbLogin()) === authStatus.CONNECTED) {
                 loginModal.setIsOpen(false);
               }
             }}
@@ -55,7 +27,7 @@ const LoginModal = ({
           <button
             className={styles['btn-google']}
             onClick={async () => {
-              if (await loginWithGoogle()) {
+              if (await googleLogin()) {
                 loginModal.setIsOpen(false);
               }
             }}
@@ -71,25 +43,4 @@ const LoginModal = ({
   );
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      onFbBtnClick: loginWithFB,
-    },
-    dispatch,
-  );
-
-const hoc = compose(
-  withPermission,
-  withFB,
-  withGoogle,
-);
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(hoc(LoginModal));
+export default LoginModal;

@@ -33,7 +33,8 @@
       "^common(.*)": "<rootDir>/src/components/common$1",
       "^utils(.*)": "<rootDir>/src/utils$1",
       "^graphql(.*)": "<rootDir>/src/graphql$1",
-      "^hooks(.*)": "<rootDir>/src/hooks$1"
+      "^hooks(.*)": "<rootDir>/src/hooks$1",
+      "^contexts(.*)": "<rootDir>/src/contexts$1"
     }
   },
   "devDependencies": {

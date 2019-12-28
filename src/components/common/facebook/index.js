@@ -1,6 +1,5 @@
 // @flow
-import FacebookContext from './FacebookContext';
-import FacebookContextProvider from './FacebookContextProvider';
+import FacebookContext from 'contexts/FacebookContext';
 import withFB from './withFB';
 import FacebookWrapper from './FacebookWrapper';
 export type { FBType } from './Facebook';
@@ -8,9 +7,4 @@ export type { FBType } from './Facebook';
 const FacebookContextConsumer = FacebookContext.Consumer;
 
 export default FacebookContext;
-export {
-  FacebookContextProvider,
-  FacebookContextConsumer,
-  withFB,
-  FacebookWrapper,
-};
+export { FacebookContextConsumer, withFB, FacebookWrapper };
