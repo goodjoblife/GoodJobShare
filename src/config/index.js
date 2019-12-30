@@ -9,6 +9,8 @@ module.exports = {
     process.env.RAZZLE_GOOGLE_APP_ID ||
     '879657963776-ksbuo26o2svuk8kv7qkmikm1kqqisrb5.apps.googleusercontent.com',
   GTM_ID: process.env.RAZZLE_GTM_ID || 'GTM-K2MRXLG',
+  GOOGLE_AD_CLIENT_ID:
+    process.env.GOOGLE_AD_CLIENT_ID || 'ca-pub-1493014011538331',
   PIXEL_ID: process.env.RAZZLE_PIXEL_ID || '603414113402034',
   SENTRY_DSN: process.env.RAZZLE_SENTRY_DSN,
   GIT_SHA1: process.env.RAZZLE_GIT_SHA1,
