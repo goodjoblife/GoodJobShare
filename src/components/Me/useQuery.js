@@ -1,57 +1,14 @@
 import { useCallback } from 'react';
 import { useAsyncFn } from 'react-use';
-import graphqlClient from 'utils/graphqlClient';
 import useToken from 'hooks/useToken';
 import api from '../../apis';
 
-const myPublishesQuery = `
-  query MyPublishes {
-    me {
-      experiences {
-        id
-        type
-        title
-        status
-        archive {
-          is_archived
-          reason
-        }
-      }
-
-      replies {
-        id
-        content
-        experience {
-          id
-          title
-        }
-        status
-      }
-
-      salary_work_times {
-        id
-        company {
-          name
-        }
-        job_title {
-          name
-        }
-        status
-        archive {
-          is_archived
-          reason
-        }
-      }
-    }
-  }
-`;
-
 export const useFetchMyPublishes = () => {
   const token = useToken();
-  const [state, callback] = useAsyncFn(
-    () => graphqlClient({ query: myPublishesQuery, token }),
-    [token],
-  );
+
+  const [state, callback] = useAsyncFn(() => api.me.getMyPublishes({ token }), [
+    token,
+  ]);
 
   return [state, callback];
 };
