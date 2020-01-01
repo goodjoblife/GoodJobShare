@@ -4,6 +4,7 @@ import { Wrapper, Section, Heading } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Loader from 'common/Loader';
 import { Comment2 } from 'common/icons';
+import useFacebookLogin from 'hooks/login/useFacebookLogin';
 import styles from './Me.module.css';
 import ShareBlockElement from './ShareBlockElement';
 import {
@@ -14,11 +15,6 @@ import {
 } from './useQuery';
 
 const Me = props => {
-  const login = () => {
-    const { login, FB } = props;
-    FB && login(FB);
-  };
-
   const [myPublishesState, fetchMyPublishes] = useFetchMyPublishes();
   const toggleExperienceStatus = useToggleExperienceStatus();
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
@@ -27,6 +23,8 @@ const Me = props => {
   useEffect(() => {
     fetchMyPublishes();
   }, [fetchMyPublishes]);
+
+  const facebookLogin = useFacebookLogin();
 
   return (
     <Section pageTop paddingBottom>
@@ -37,7 +35,10 @@ const Me = props => {
               登入以查看個人頁面
             </Heading>
             <div className={styles.loginBtnSection}>
-              <button className="buttonCircleM buttonBlackLine" onClick={login}>
+              <button
+                className="buttonCircleM buttonBlackLine"
+                onClick={() => facebookLogin()}
+              >
                 facebook 登入
               </button>
             </div>
@@ -125,9 +126,7 @@ const Me = props => {
 };
 
 Me.propTypes = {
-  login: PropTypes.func.isRequired,
   auth: PropTypes.object,
-  FB: PropTypes.object,
 };
 
 export default Me;
