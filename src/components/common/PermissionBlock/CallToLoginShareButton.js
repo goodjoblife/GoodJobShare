@@ -3,20 +3,17 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Link } from 'react-router-dom';
-
+import useFacebookLogin from 'hooks/login/useFacebookLogin';
+import useGoogleLogin from 'hooks/login/useGoogleLogin';
 import authStatus from '../../../constants/authStatus';
 import styles from './PermissionBlock.module.css';
 
 const isLogin = auth => auth.get('status') === authStatus.CONNECTED;
 
-const CallToLoginShareButton = ({
-  isLoginText,
-  to,
-  auth,
-  loginWithFB,
-  FB,
-  loginWithGoogle,
-}) => {
+const CallToLoginShareButton = ({ isLoginText, to, auth }) => {
+  const fbLogin = useFacebookLogin();
+  const googleLogin = useGoogleLogin();
+
   return (
     <div
       style={{
@@ -31,8 +28,8 @@ const CallToLoginShareButton = ({
         <div className={styles.loginBtnContainer}>
           <button
             className={`${cn('buttonCircleM')} ${styles.btn} ${styles.btnFb}`}
-            onClick={() => {
-              loginWithFB(FB);
+            onClick={async () => {
+              await fbLogin();
             }}
           >
             <pre>Facebook 登入</pre>
@@ -42,7 +39,7 @@ const CallToLoginShareButton = ({
               styles.btnGoogle
             }`}
             onClick={async () => {
-              await loginWithGoogle();
+              await googleLogin();
             }}
           >
             <pre>Google 登入</pre>
@@ -57,9 +54,6 @@ CallToLoginShareButton.propTypes = {
   isLoginText: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
   auth: ImmutablePropTypes.map,
-  loginWithFB: PropTypes.func.isRequired,
-  FB: PropTypes.object,
-  loginWithGoogle: PropTypes.func.isRequired,
 };
 
 export default CallToLoginShareButton;

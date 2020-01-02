@@ -5,7 +5,6 @@ import { AppRouteWithSubRoutes } from '../route';
 import styles from './App.module.css';
 import Header from '../../containers/App/Header';
 import Footer from './Footer';
-import SyncAuth from '../../containers/App/SyncAuth';
 import StaticHelmet from 'common/StaticHelmet';
 
 import routes from '../../routes';
@@ -17,7 +16,6 @@ const App = () => (
         {({ hasHeader, hasFooter, children }) => (
           <div className={styles.App}>
             {hasHeader ? <Header /> : null}
-            <SyncAuth />
             <StaticHelmet.Default />
             <div className={styles.content}>{children}</div>
             {hasFooter ? <Footer /> : null}

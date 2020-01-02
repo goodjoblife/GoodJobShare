@@ -24,6 +24,9 @@ export const logout = () => (dispatch, getState, { history }) => {
   history.push('/');
 };
 
+/**
+ * Use `hooks/login/useFacebookLogin` as possible
+ */
 export const loginWithFB = FB => (dispatch, getState, { api }) => {
   if (FB) {
     return new Promise(resolve =>
@@ -47,6 +50,9 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
   return Promise.reject('FB should ready');
 };
 
+/**
+ * Use `hooks/login/useGoogleLogin` as possible
+ */
 export const loginWithGoogle = googleAuth => (dispatch, getState, { api }) => {
   return googleAuth
     .signIn({
