@@ -16,7 +16,9 @@ class GraphqlError extends Error {
     this.name = 'GraphqlError';
     this.codes = mapErrorCodes(errors);
     this.paths = mapErrorPaths(errors);
-    Error.captureStackTrace(this, GraphqlError);
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, GraphqlError);
+    }
   }
 }
 
