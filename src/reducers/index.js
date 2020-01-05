@@ -8,7 +8,6 @@ import experienceDetail from './experienceDetail';
 import experienceSearch from './experienceSearch';
 import experiences from './experiences';
 import laborRights from './laborRights';
-import me from './me';
 import timeAndSalary from './timeAndSalary';
 import timeAndSalaryBoard from './timeAndSalaryBoard';
 import timeAndSalarySearch from './timeAndSalarySearch';
@@ -36,7 +35,6 @@ const rootReducer = combineReducers({
   experienceDetail,
   experiences,
   laborRights,
-  me,
   timeAndSalary,
   timeAndSalaryBoard,
   timeAndSalarySearch,
