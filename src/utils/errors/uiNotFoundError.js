@@ -5,7 +5,9 @@ class UiNotFoundError extends Error {
     super(message);
 
     this.name = 'UiNotFoundError';
-    Error.captureStackTrace(this, UiNotFoundError);
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, UiNotFoundError);
+    }
   }
 }
 
