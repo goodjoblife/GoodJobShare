@@ -62,47 +62,6 @@ export const submitComment = (id, comment) => (dispatch, getState, { api }) => {
     });
 };
 
-export const likeExperience = o => (dispatch, getState, { api }) => {
-  const state = getState();
-  const token = tokenSelector(state);
-
-  if (o.liked) {
-    return api.experiences
-      .deleteExperienceLikes({ id: o._id, token })
-      .then(result => {
-        if (result.success) {
-          dispatch(
-            setExperience(
-              Object.assign({}, o, {
-                liked: false,
-                like_count: o.like_count - 1,
-              }),
-            ),
-          );
-          return;
-        }
-        dispatch(setExperience(o));
-      });
-  }
-
-  return api.experiences
-    .postExperienceLikes({ id: o._id, token })
-    .then(result => {
-      if (result.success) {
-        dispatch(
-          setExperience(
-            Object.assign({}, o, {
-              liked: true,
-              like_count: o.like_count + 1,
-            }),
-          ),
-        );
-        return;
-      }
-      dispatch(setExperience(o));
-    });
-};
-
 const setReplyLiked = (replyId, liked) => ({
   type: SET_REPLY_LIKED,
   replyId,
