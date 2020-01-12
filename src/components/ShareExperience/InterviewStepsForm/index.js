@@ -209,7 +209,6 @@ class InterviewForm extends React.Component {
 
   async onSubmit() {
     const valid = interviewFormCheck(getInterviewForm(this.state));
-
     if (valid) {
       localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
       const p = this.props.createInterviewExperience({
@@ -217,7 +216,7 @@ class InterviewForm extends React.Component {
       });
       return p.then(
         response => {
-          const experienceId = response.experience._id;
+          const experienceId = response.createInterviewExperience.experience.id;
 
           ReactGA.event({
             category: GA_CATEGORY.SHARE_INTERVIEW,

@@ -10,6 +10,26 @@ export const handleBlocks = R.compose(
   R.toPairs,
 );
 
+const convertSections = R.compose(
+  sortById,
+  R.map(ele => ele[1]),
+  R.toPairs,
+  R.map(ele => ({
+    subtitle: ele.subtitle,
+    content: ele.content,
+  })),
+);
+
+const convertInterviewQas = R.compose(
+  sortById,
+  R.map(ele => ele[1]),
+  R.toPairs,
+  R.map(ele => ({
+    question: ele.question,
+    answer: ele.answer,
+  })),
+);
+
 const propsInterviewForm = state => {
   const {
     companyQuery,
@@ -31,8 +51,10 @@ const propsInterviewForm = state => {
   } = state;
 
   return {
-    companyQuery,
-    companyId,
+    company: {
+      name: companyQuery,
+      id: companyId,
+    },
     region,
     jobTitle,
     experienceInYear,
@@ -44,8 +66,8 @@ const propsInterviewForm = state => {
     salaryAmount: Number(salaryAmount),
     overallRating,
     title,
-    sections: handleBlocks(sections),
-    interviewQas: handleBlocks(interviewQas),
+    sections: convertSections(sections),
+    interviewQas: convertInterviewQas(interviewQas),
     interviewSensitiveQuestions,
   };
 };
@@ -311,7 +333,7 @@ export const propsWorkExperiencesForm = state => {
     recommendToOthers,
     overallRating,
     title,
-    sections: handleBlocks(sections),
+    sections: convertSections(sections),
   };
 };
 

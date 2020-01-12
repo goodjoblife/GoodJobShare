@@ -90,11 +90,7 @@ export const interviewSensitiveQuestions = R.anyPass([
 const ifFalseLog = ifThenLog(n => n === false);
 
 export const interviewFormCheck = R.allPass([
-  R.compose(
-    ifFalseLog('companyQuery not pass'),
-    companyQuery,
-    R.prop('companyQuery'),
-  ),
+  // FIXME: company
   R.compose(
     ifFalseLog('region not pass'),
     region,

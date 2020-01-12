@@ -46,3 +46,13 @@ query($id:ID!) {
   }
 }
 `;
+
+export const createInterviewExperience = `
+mutation CreateInterviewExperience($input: CreateInterviewExperienceInput!) {
+  createInterviewExperience(input: $input) {
+    success
+    experience {
+      id
+    }
+  }
+}`;
