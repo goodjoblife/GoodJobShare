@@ -1,3 +1,5 @@
+import { isGraphqlError } from 'utils/errors';
+
 import STATUS, { isFetching, isFetched } from '../constants/status';
 import { jobTitleStatus as jobTitleStatusSelector } from '../selectors/companyAndJobTitle';
 
@@ -25,8 +27,12 @@ export const fetchJobTitle = jobTitle => (dispatch, getState, { api }) => {
       dispatch(setStatus(jobTitle, STATUS.FETCHED, data));
     })
     .catch(error => {
-      dispatch(setStatus(jobTitle, STATUS.ERROR, null, error));
-      throw error;
+      if (isGraphqlError(error)) {
+        dispatch(setStatus(jobTitle, STATUS.ERROR, null, error));
+      } else {
+        // Unexpected error
+        throw error;
+      }
     });
 };
 

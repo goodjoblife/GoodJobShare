@@ -1,3 +1,5 @@
+import { isGraphqlError } from 'utils/errors';
+
 import fetchingStatus from '../constants/status';
 import { tokenSelector } from '../selectors/authSelector';
 import { UiNotFoundError } from 'utils/errors';
@@ -118,13 +120,17 @@ export const fetchExperience = id => (dispatch, getState, { api }) => {
       dispatch(setExperience({ _id: id, ...rest }));
     })
     .catch(error => {
-      dispatch({
-        type: SET_EXPERIENCE,
-        experienceStatus: fetchingStatus.ERROR,
-        experienceError: error,
-        experience: null,
-      });
-      throw error;
+      if (isGraphqlError(error)) {
+        dispatch({
+          type: SET_EXPERIENCE,
+          experienceStatus: fetchingStatus.ERROR,
+          experienceError: error,
+          experience: null,
+        });
+      } else {
+        // Unexpected error
+        throw error;
+      }
     });
 };
 
