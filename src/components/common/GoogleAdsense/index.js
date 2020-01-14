@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { GOOGLE_AD_CLIENT_ID } from '../../../config';
+
 /**
  * Google Adsense 廣告的 component
  */
@@ -14,7 +16,7 @@ export default class GoogleAdsense extends React.Component {
       <ins
         className={`${this.props.className} adsbygoogle`}
         style={this.props.style}
-        data-ad-client={this.props.client}
+        data-ad-client={GOOGLE_AD_CLIENT_ID}
         data-ad-slot={this.props.slot}
         data-ad-layout={this.props.layout}
         data-ad-layout-key={this.props.layoutKey}
