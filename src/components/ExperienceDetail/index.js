@@ -13,6 +13,7 @@ import NotFound from 'common/NotFound';
 import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
+import GoogleAdsense from 'common/GoogleAdsense';
 import { isUiNotFoundError } from 'utils/errors';
 import { paramsSelector } from 'common/routing/selectors';
 import useIsLogin from 'hooks/useIsLogin';
@@ -225,7 +226,14 @@ const ExperienceDetail = ({
               )}
             </Wrapper>
           </div>
-          <div className={styles.sideAds} />
+          <div className={styles.sideAds}>
+            <GoogleAdsense
+              style={{ display: 'block' }}
+              slot="6339096692"
+              format="auto"
+              responsive="true"
+            />
+          </div>
         </div>
       </Section>
       <Modal

@@ -41,9 +41,8 @@
 }
 
 .sideAds {
-  width: 300px;
+  width: 160px;
   height: 600px;
-  background-color: lightgray;
   flex-shrink: 0;
   margin-right: 16px;
 
