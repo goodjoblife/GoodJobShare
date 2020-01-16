@@ -6,28 +6,19 @@ const sortById = R.sortBy(R.prop('id'));
 
 export const handleBlocks = R.compose(
   sortById,
-  R.map(ele => ele[1]),
-  R.toPairs,
+  R.values,
 );
 
 const toSectionArray = R.compose(
   sortById,
-  R.map(ele => ele[1]),
-  R.toPairs,
-  R.map(ele => ({
-    subtitle: ele.subtitle,
-    content: ele.content,
-  })),
+  R.values,
+  R.map(R.pick(['subtitle', 'content'])),
 );
 
 const toInterviewQaArray = R.compose(
   sortById,
-  R.map(ele => ele[1]),
-  R.toPairs,
-  R.map(ele => ({
-    question: ele.question,
-    answer: ele.answer,
-  })),
+  R.values,
+  R.map(R.pick(['question', 'answer'])),
 );
 
 const propsInterviewForm = state => {
@@ -318,8 +309,10 @@ export const propsWorkExperiencesForm = state => {
   } = state;
 
   return {
-    companyQuery,
-    companyId,
+    company: {
+      id: companyId,
+      name: companyQuery,
+    },
     region,
     jobTitle,
     experienceInYear,
