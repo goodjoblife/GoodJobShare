@@ -209,6 +209,7 @@ class InterviewForm extends React.Component {
 
   async onSubmit() {
     const valid = interviewFormCheck(getInterviewForm(this.state));
+
     if (valid) {
       localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
       const p = this.props.createInterviewExperience({

@@ -10,7 +10,7 @@ export const handleBlocks = R.compose(
   R.toPairs,
 );
 
-const convertSections = R.compose(
+const toSectionArray = R.compose(
   sortById,
   R.map(ele => ele[1]),
   R.toPairs,
@@ -20,7 +20,7 @@ const convertSections = R.compose(
   })),
 );
 
-const convertInterviewQas = R.compose(
+const toInterviewQaArray = R.compose(
   sortById,
   R.map(ele => ele[1]),
   R.toPairs,
@@ -66,8 +66,8 @@ const propsInterviewForm = state => {
     salaryAmount: Number(salaryAmount),
     overallRating,
     title,
-    sections: convertSections(sections),
-    interviewQas: convertInterviewQas(interviewQas),
+    sections: toSectionArray(sections),
+    interviewQas: toInterviewQaArray(interviewQas),
     interviewSensitiveQuestions,
   };
 };
@@ -333,7 +333,7 @@ export const propsWorkExperiencesForm = state => {
     recommendToOthers,
     overallRating,
     title,
-    sections: convertSections(sections),
+    sections: toSectionArray(sections),
   };
 };
 
