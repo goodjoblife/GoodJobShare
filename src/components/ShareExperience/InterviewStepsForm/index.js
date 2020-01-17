@@ -217,7 +217,7 @@ class InterviewForm extends React.Component {
       });
       return p.then(
         response => {
-          const experienceId = response.experience._id;
+          const experienceId = response.createInterviewExperience.experience.id;
 
           ReactGA.event({
             category: GA_CATEGORY.SHARE_INTERVIEW,
