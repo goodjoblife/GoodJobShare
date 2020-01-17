@@ -29,7 +29,6 @@ import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
 import CompanyPageProvider from './components/Company/CompanyPageProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
-import GoogleAdsenseTestPage from './components/GoogleAdsenseTestPage';
 
 const routes = [
   {
@@ -269,11 +268,6 @@ const routes = [
     component: VerificationPage,
     hasHeader: false,
     hasFooter: false,
-  },
-  {
-    path: '/google-adsense-test',
-    exact: true,
-    component: GoogleAdsenseTestPage,
   },
   {
     component: NotFound,
