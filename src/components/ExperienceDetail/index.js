@@ -13,6 +13,7 @@ import NotFound from 'common/NotFound';
 import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
+import GoogleAdsense from 'common/GoogleAdsense';
 import { isUiNotFoundError } from 'utils/errors';
 import { paramsSelector } from 'common/routing/selectors';
 import useIsLogin from 'hooks/useIsLogin';
@@ -187,41 +188,53 @@ const ExperienceDetail = ({
     <main>
       <Seo experienceState={data} />
       <Section bg="white" paddingBottom className={styles.section}>
-        <Wrapper size="m">
-          {/* 文章區塊  */}
-          {!isFetched(experienceStatus) ? (
-            <Loader />
-          ) : (
-            <Fragment>
-              <div className={styles.headingBlock}>
-                <div>
-                  <BackToList backable={backable} className={styles.back} />
-                </div>
-                <ExperienceHeading experience={experience} />
-              </div>
-              {renderReportZone()}
-              <Article
-                experience={experience}
-                hideContent={!canViewExperienceDetail}
-              />
-            </Fragment>
-          )}
-          <LikeZone experienceId={experienceId} />
-        </Wrapper>
-        <Wrapper size="s">
-          <ScrollElement name={COMMENT_ZONE} />
-          {isFetching(repliesStatus) ? (
-            <Loader size="s" />
-          ) : (
-            <MessageBoard
-              replies={replies}
-              likeReply={likeReply}
-              submitComment={comment => {
-                submitComment(experienceId, comment);
-              }}
+        <div className={styles.container}>
+          <div className={styles.leftContainer}>
+            <Wrapper className={styles.wrapper} size="m">
+              {/* 文章區塊  */}
+              {!isFetched(experienceStatus) ? (
+                <Loader />
+              ) : (
+                <Fragment>
+                  <div className={styles.headingBlock}>
+                    <div>
+                      <BackToList backable={backable} className={styles.back} />
+                    </div>
+                    <ExperienceHeading experience={experience} />
+                  </div>
+                  {renderReportZone()}
+                  <Article
+                    experience={experience}
+                    hideContent={!canViewExperienceDetail}
+                  />
+                </Fragment>
+              )}
+              <LikeZone experienceId={experienceId} />
+            </Wrapper>
+            <Wrapper size="s">
+              <ScrollElement name={COMMENT_ZONE} />
+              {isFetching(repliesStatus) ? (
+                <Loader size="s" />
+              ) : (
+                <MessageBoard
+                  replies={replies}
+                  likeReply={likeReply}
+                  submitComment={comment => {
+                    submitComment(experienceId, comment);
+                  }}
+                />
+              )}
+            </Wrapper>
+          </div>
+          <div className={styles.sideAds}>
+            <GoogleAdsense
+              style={{ display: 'block' }}
+              slot="6339096692"
+              format="auto"
+              responsive="true"
             />
-          )}
-        </Wrapper>
+          </div>
+        </div>
       </Section>
       <Modal
         isOpen={isModalOpen}
