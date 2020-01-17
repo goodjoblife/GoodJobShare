@@ -6,6 +6,7 @@ import { Element as ScrollElement } from 'react-scroll';
 import { compose, setStatic } from 'recompose';
 import cn from 'classnames';
 import { useParams } from 'react-router-dom';
+import { useWindowSize } from 'react-use';
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
@@ -33,6 +34,7 @@ import { isFetching, isFetched, isError } from '../../constants/status';
 import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
+import breakpoints from '../../constants/breakpoints';
 import styles from './ExperienceDetail.module.css';
 
 const MODAL_TYPE = {
@@ -59,6 +61,7 @@ const ExperienceDetail = ({
 }) => {
   const params = useParams();
   const experienceId = params.id;
+  const { width } = useWindowSize();
 
   useEffect(() => {
     fetchExperience(experienceId);
@@ -226,14 +229,16 @@ const ExperienceDetail = ({
               )}
             </Wrapper>
           </div>
-          <div className={styles.sideAds}>
-            <GoogleAdsense
-              style={{ display: 'block' }}
-              slot="6339096692"
-              format="auto"
-              responsive="true"
-            />
-          </div>
+          {width > breakpoints.md ? (
+            <div className={styles.sideAds}>
+              <GoogleAdsense
+                style={{ display: 'block' }}
+                slot="6339096692"
+                format="auto"
+                responsive="true"
+              />
+            </div>
+          ) : null}
         </div>
       </Section>
       <Modal
