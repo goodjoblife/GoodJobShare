@@ -30,7 +30,6 @@ export default class GoogleAdsense extends React.Component {
 GoogleAdsense.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
-  client: PropTypes.string.isRequired,
   slot: PropTypes.string.isRequired,
   layout: PropTypes.string,
   layoutKey: PropTypes.string,
