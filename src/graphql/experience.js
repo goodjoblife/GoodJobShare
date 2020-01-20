@@ -56,3 +56,13 @@ mutation CreateInterviewExperience($input: CreateInterviewExperienceInput!) {
     }
   }
 }`;
+
+export const createWorkExperience = `
+mutation CreateWorkExperience($input: CreateWorkExperienceInput!) {
+  createWorkExperience(input: $input) {
+    success
+    experience {
+      id
+    }
+  }
+}`;

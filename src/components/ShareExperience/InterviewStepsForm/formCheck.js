@@ -93,7 +93,7 @@ export const interviewFormCheck = R.allPass([
   R.compose(
     ifFalseLog('companyQuery not pass'),
     companyQuery,
-    R.path(['company', 'name']),
+    R.path(['company', 'query']),
   ),
   R.compose(
     ifFalseLog('region not pass'),
