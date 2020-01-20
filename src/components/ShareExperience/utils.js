@@ -43,7 +43,7 @@ const propsInterviewForm = state => {
 
   return {
     company: {
-      name: companyQuery,
+      query: companyQuery,
       id: companyId,
     },
     region,
@@ -311,7 +311,7 @@ export const propsWorkExperiencesForm = state => {
   return {
     company: {
       id: companyId,
-      name: companyQuery,
+      query: companyQuery,
     },
     region,
     jobTitle,
