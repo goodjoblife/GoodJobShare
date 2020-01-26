@@ -168,7 +168,7 @@ class WorkExperiencesForm extends React.Component {
       });
       return p.then(
         response => {
-          const experienceId = response.experience._id;
+          const experienceId = response.createWorkExperience.experience.id;
 
           ReactGA.event({
             category: GA_CATEGORY.SHARE_WORK,
