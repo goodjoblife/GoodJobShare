@@ -129,8 +129,6 @@ class TimeSalaryForm extends React.PureComponent {
 
       return p.then(
         response => {
-          const count = response.queries_count;
-
           ReactGA.event({
             category: GA_CATEGORY.SHARE_TIME_SALARY,
             action: GA_ACTION.UPLOAD_SUCCESS,
@@ -143,8 +141,7 @@ class TimeSalaryForm extends React.PureComponent {
 
           return () => (
             <SuccessFeedback
-              info={`您已經上傳 ${count} 次，還有 ${5 -
-                (count || 0)} 次可以上傳。`}
+              info="感謝你分享薪資、工時資訊，讓台灣的職場變得更透明！"
               buttonText="查看最新工時、薪資"
               buttonClick={() => {
                 window.location.replace('/salary-work-times/latest');
