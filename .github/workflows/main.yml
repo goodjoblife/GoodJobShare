@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Lint and Unit test
-        run: npm run test
+        run: CI=true npm run test
       - name: Build js
         run: CI=false npm run build
   docker-production:
