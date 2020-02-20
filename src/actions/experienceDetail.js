@@ -80,18 +80,12 @@ export const likeReply = reply => (dispatch, getState, { api }) => {
     return api.experiences
       .deleteReplyLikes({ id: replyId, token })
       .then(result => {
-        if (result.success) {
-          return dispatch(setReplyLiked(replyId, false));
-        }
-        return Promise.resolve();
+        dispatch(setReplyLiked(replyId, false));
       });
   }
 
   return api.experiences.postReplyLikes({ id: replyId, token }).then(result => {
-    if (result.success) {
-      return dispatch(setReplyLiked(replyId, true));
-    }
-    return Promise.resolve();
+    dispatch(setReplyLiked(replyId, true));
   });
 };
 
