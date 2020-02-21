@@ -11,8 +11,8 @@ import { getJobTitlesSearch } from '../../../apis/jobTitleSearchApi';
 const getItemValue = item => item.label;
 
 const mapToAutocompleteList = l => ({
-  label: l.des,
-  value: l.des,
+  label: l,
+  value: l,
 });
 
 class JobTitle extends React.Component {

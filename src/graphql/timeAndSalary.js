@@ -152,3 +152,9 @@ export const getJobTitleQuery = `
     }
   }
 `;
+
+export const changeSalaryWorkTimeStatus = `
+changeSalaryWorkTimeStatus(input: ChangeSalaryWorkTimeStatusInput!) {
+  salary_work_time
+}
+`;

@@ -1,3 +1,11 @@
+export const queryJobTitles = `
+query($key:String!){
+  job_titles(query:$key, page:0) {
+    name
+  }
+}
+`;
+
 export const getJobTitleQuery = `
 query($jobTitle: String!) {
   job_title(name: $jobTitle) {

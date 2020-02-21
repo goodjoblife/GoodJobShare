@@ -1,16 +1,25 @@
-import fetchUtil from 'utils/fetchUtil';
-
-const endpoint = '/auth';
+import graphqlClient from 'utils/graphqlClient';
+import { facebookLogin, googleLogin } from 'graphql/auth';
 
 const postAuthFacebook = ({ accessToken }) =>
-  fetchUtil(`${endpoint}/facebook`).post({
-    body: { access_token: accessToken },
-  });
+  graphqlClient({
+    query: facebookLogin,
+    variables: {
+      input: {
+        accessToken,
+      },
+    },
+  }).then(({ facebookLogin }) => facebookLogin);
 
 const postAuthGoogle = ({ idToken }) =>
-  fetchUtil(`${endpoint}/google`).post({
-    body: { id_token: idToken },
-  });
+  graphqlClient({
+    query: googleLogin,
+    variables: {
+      input: {
+        idToken,
+      },
+    },
+  }).then(({ googleLogin }) => googleLogin);
 
 export default {
   postAuthFacebook,
