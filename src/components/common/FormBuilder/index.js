@@ -47,6 +47,8 @@ const QuestionShape = shape({
 const FormBuilder = () => {};
 
 FormBuilder.propTypes = {
+  // 表單是否開啟，等於 false 時表單關閉。
+  open: bool.isRequired,
   // 問卷標題
   title: string.isRequired,
   // 問卷描述
@@ -59,8 +61,6 @@ FormBuilder.propTypes = {
   questions: arrayOf(QuestionShape),
   // 排版方式，目前只有一種，就是 typeform
   layout: string.isRequired,
-  // 錯誤訊息的 Modal
-  errorModal: oneOfType([string, element]),
   // 當使用者填寫內容，此函數會被觸發，且 emit 一個 object，包含被修改欄位的 key & value
   onChange: func.isRequired,
   // 當使用者按下送出鈕，且通過所有 question validator 驗證，此函數會被觸發
@@ -77,10 +77,21 @@ FormBuilder.propTypes = {
   onClickCloseBtn: func.isRequired,
   // 真正要關閉表單前觸發的函數（可用於將資料存到 local storage）
   onClose: func,
+
+  // 訊息 Modal 的內容
+  msgModalContent: oneOfType([string, element]),
+  // 訊息 Modal 是否開啟
+  openMsgModal: bool,
+  // 使用者點擊 Modal 的關閉按鈕觸發的函數
+  onCloseMsgModal: func,
+  // 使用者點擊 Modal 的確認按鈕觸發的函數
+  onConfirmMsgModal: func,
 };
 
 FormBuilder.defaultProps = {
+  oepn: true,
   layout: 'typeform',
+  openMsgModal: false,
 };
 
 export default FormBuilder;
