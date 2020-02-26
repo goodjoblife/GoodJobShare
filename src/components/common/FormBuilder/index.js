@@ -44,7 +44,7 @@ const QuestionShape = shape({
   renderCustomizedQuestion: func,
 });
 
-const FormBuilder = () => {};
+const FormBuilder = () => null;
 
 FormBuilder.propTypes = {
   // 表單是否開啟，等於 false 時表單關閉。
@@ -58,7 +58,7 @@ FormBuilder.propTypes = {
   // 上傳按鈕是否可按
   submitButtonEnabled: bool.isRequired,
   // 問題列表
-  questions: arrayOf(QuestionShape),
+  questions: arrayOf(QuestionShape).isRequired,
   // 排版方式，目前只有一種，就是 typeform
   layout: string.isRequired,
   // 當使用者填寫內容，此函數會被觸發，且 emit 一個 object，包含被修改欄位的 key & value
