@@ -22,6 +22,29 @@ const questions = [
     required: true,
     validator: () => true,
   },
+  {
+    title: '工作地區',
+    type: 'radio',
+    dataKey: 'workingArea',
+    required: true,
+    validator: () => true,
+    options: [
+      '台北市',
+      '新北市',
+      '桃園市',
+      '新竹市',
+      '苗栗縣',
+      '台中市',
+      '彰化縣',
+      '雲林縣',
+      '嘉義市',
+      '台南市',
+      '高雄市',
+      '屏東縣',
+      '台東市',
+      '花蓮縣',
+    ],
+  },
 ];
 
 const FormBuilderDemoForm = () => (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, bool, func, oneOf } from 'prop-types';
+import { string, bool, func, oneOf, arrayOf } from 'prop-types';
 
 import Text from './Text';
 import TextArea from './TextArea';
@@ -33,6 +33,7 @@ const QuestionBuilder = ({
   type,
   dataKey,
   required,
+  options,
   validator,
   renderCustomizedQuestion,
 }) => {
@@ -52,6 +53,7 @@ const QuestionBuilder = ({
         dataKey={dataKey}
         required={required}
         validator={validator}
+        options={options}
       />
     );
   } else {
@@ -89,6 +91,8 @@ QuestionBuilder.propTypes = {
   required: bool.isRequired,
   // 驗證內容的函數
   validator: func,
+  // 如果 type=radio 或 type=checkbox，代表此題有選項
+  options: arrayOf(string),
   // 如果 type=customized，代表此題是從外部傳入 render function。
   // 能不用則不用。
   renderCustomizedQuestion: func,
