@@ -7,13 +7,21 @@ const containerStyle = {
   padding: '1em',
 };
 
-const questions = [];
+const questions = [
+  {
+    title: '職業名稱',
+    type: 'input',
+    dataKey: 'title',
+    required: true,
+    validator: () => true,
+  },
+];
 
 const FormBuilderDemoForm = () => (
   <div style={containerStyle}>
     <FormBuilder
       open
-      title="Title"
+      title="請輸入你的一份工作經驗"
       submitButtonText="Submit"
       questions={questions}
       submitButtonEnabled
