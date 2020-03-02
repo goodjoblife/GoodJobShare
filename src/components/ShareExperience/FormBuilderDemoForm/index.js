@@ -15,6 +15,13 @@ const questions = [
     required: true,
     validator: () => true,
   },
+  {
+    title: '我與主管合作的狀況',
+    type: 'textarea',
+    dataKey: 'relationship',
+    required: true,
+    validator: () => true,
+  },
 ];
 
 const FormBuilderDemoForm = () => (
