@@ -45,7 +45,15 @@ const QuestionBuilder = ({
   }
   let Component = getComponent(type);
   if (Component) {
-    return <Component />;
+    return (
+      <Component
+        title={title}
+        description={description}
+        dataKey={dataKey}
+        required={required}
+        validator={validator}
+      />
+    );
   } else {
     return <div>{type}</div>;
   }
