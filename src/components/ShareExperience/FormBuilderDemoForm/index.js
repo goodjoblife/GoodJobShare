@@ -10,7 +10,7 @@ const containerStyle = {
 const questions = [
   {
     title: '職業名稱',
-    type: 'input',
+    type: 'text',
     dataKey: 'title',
     required: true,
     validator: () => true,

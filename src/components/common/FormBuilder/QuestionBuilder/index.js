@@ -1,6 +1,32 @@
 import React from 'react';
 import { string, bool, func, oneOf } from 'prop-types';
 
+import Text from './Text';
+import TextArea from './TextArea';
+import Radio from './Radio';
+import Checkbox from './Checkbox';
+import Rating from './Rating';
+import File from './File';
+
+const getComponent = type => {
+  switch (type) {
+    case 'text':
+      return Text;
+    case 'textarea':
+      return TextArea;
+    case 'radio':
+      return Radio;
+    case 'checkbox':
+      return Checkbox;
+    case 'rating':
+      return Rating;
+    case 'file':
+      return File;
+    default:
+      return null;
+  }
+};
+
 const QuestionBuilder = ({
   title,
   description,
@@ -10,14 +36,23 @@ const QuestionBuilder = ({
   validator,
   renderCustomizedQuestion,
 }) => {
-  switch (type) {
-    default:
-      return <div>{type}</div>;
+  if (type === 'customized') {
+    if (renderCustomizedQuestion) {
+      return renderCustomizedQuestion();
+    } else {
+      return null;
+    }
+  }
+  let Component = getComponent(type);
+  if (Component) {
+    return <Component />;
+  } else {
+    return <div>{type}</div>;
   }
 };
 
 /*
-  type = input            短文字題
+  type = text             短文字題
        = textarea         長文字題
        = radio            單選題
        = checkbox         複選題
@@ -32,7 +67,7 @@ QuestionBuilder.propTypes = {
   description: string,
   // 問題種類
   type: oneOf([
-    'input',
+    'text',
     'textarea',
     'radio',
     'checkbox',
