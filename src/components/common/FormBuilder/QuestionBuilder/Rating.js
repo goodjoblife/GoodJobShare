@@ -1,42 +1,33 @@
 import React from 'react';
-import Text from './Text';
-import TextArea from './TextArea';
-import Radio from './Radio';
-import Checkbox from './Checkbox';
-import Rating from './Rating';
-import File from './File';
+import PropTypes from 'prop-types';
 
-const QustionBuilder = ({
+const Rating = ({
   title,
   description,
-  type,
   dataKey,
   required,
   validator,
-  renderCustomizedQuestion,
-}) => {
-  switch (type) {
-    case 'text':
-      return <Text />;
-    case 'textarea':
-      return <TextArea />;
-    case 'radio':
-      return <Radio />;
-    case 'checkbox':
-      return <Checkbox />;
-    case 'rating':
-      return <Rating />;
-    case 'file':
-      return <File />;
-    case 'customized':
-      if (renderCustomizedQuestion) {
-        return renderCustomizedQuestion();
-      } else {
-        return null;
-      }
-    default:
-      return <div>{type}</div>;
-  }
+  maxRating,
+}) => (
+  <div>
+    {title}
+    {[...Array(maxRating).keys()].map((_, i) => (
+      <input key={i} type="radio" name={dataKey} value={i} />
+    ))}
+  </div>
+);
+
+Rating.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  dataKey: PropTypes.string.isRequired,
+  required: PropTypes.bool,
+  validator: PropTypes.func.isRequired,
+  maxRating: PropTypes.number.isRequired,
 };
 
-export default QustionBuilder;
+Rating.defaultProps = {
+  required: false,
+};
+
+export default Rating;

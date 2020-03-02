@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, bool, func, oneOf, arrayOf } from 'prop-types';
+import { string, bool, number, func, oneOf, arrayOf } from 'prop-types';
 
 import Text from './Text';
 import TextArea from './TextArea';
@@ -35,6 +35,7 @@ const QuestionBuilder = ({
   required,
   options,
   validator,
+  maxRating,
   renderCustomizedQuestion,
 }) => {
   if (type === 'customized') {
@@ -54,6 +55,7 @@ const QuestionBuilder = ({
         required={required}
         validator={validator}
         options={options}
+        maxRating={maxRating}
       />
     );
   } else {
@@ -93,6 +95,8 @@ QuestionBuilder.propTypes = {
   validator: func,
   // 如果 type=radio 或 type=checkbox，代表此題有選項
   options: arrayOf(string),
+  // 如果 type=rating，則此題需要最大值
+  maxRating: number,
   // 如果 type=customized，代表此題是從外部傳入 render function。
   // 能不用則不用。
   renderCustomizedQuestion: func,

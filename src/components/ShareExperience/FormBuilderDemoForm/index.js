@@ -53,6 +53,13 @@ const questions = [
     dataKey: 'verification',
     validator: () => true,
   },
+  {
+    title: '當我需要協助時，主管願意且可以貢獻他的時間協助我',
+    type: 'rating',
+    dataKey: 'support',
+    validator: () => true,
+    maxRating: 5,
+  },
 ];
 
 const FormBuilderDemoForm = () => (
