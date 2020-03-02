@@ -60,6 +60,25 @@ const questions = [
     validator: () => true,
     maxRating: 5,
   },
+  {
+    title: 'Question Title',
+    description: 'Form Description',
+    type: 'customized',
+    dataKey: 'salaryWorkTime',
+    validator: () => true,
+    renderCustomizedQuestion() {
+      return (
+        <div>
+          <select>
+            <option>月薪</option>
+          </select>
+          <label>
+            <input type="text" />元
+          </label>
+        </div>
+      );
+    },
+  },
 ];
 
 const FormBuilderDemoForm = () => (
