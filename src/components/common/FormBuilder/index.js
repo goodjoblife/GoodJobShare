@@ -40,6 +40,7 @@ const FormBuilder = ({
   description,
   submitButtonText,
   submitButtonEnabled,
+  header: commonHeader,
   questions,
   layout,
   onChange,
@@ -69,11 +70,11 @@ const FormBuilder = ({
   if (!question) {
     return null;
   }
+  const { header, ...restOptions } = question;
   return (
     <div>
-      {title}
-      {description}
-      <QuestionBuilder {...question} />
+      <div>{header || commonHeader}</div>
+      <QuestionBuilder {...restOptions} />
       <button onClick={goPrevious} disabled={!hasPrevious}>
         上一題
       </button>
@@ -88,15 +89,18 @@ FormBuilder.propTypes = {
   // 表單是否開啟，等於 false 時表單關閉。
   open: bool.isRequired,
   // 問卷標題
-  title: string.isRequired,
-  // 問卷描述
-  description: oneOfType([string, element]),
+  header: oneOfType([string, element]),
   // 上傳按鈕的文字
   submitButtonText: oneOfType([string, element]).isRequired,
   // 上傳按鈕是否可按
   submitButtonEnabled: bool.isRequired,
   // 問題列表
-  questions: arrayOf(shape(QuestionBuilder.propTypes)).isRequired,
+  questions: arrayOf(
+    shape({
+      header: oneOfType([string, element]),
+      ...QuestionBuilder.propTypes,
+    }),
+  ).isRequired,
   // 排版方式，目前只有一種，就是 typeform
   layout: string.isRequired,
   // 當使用者填寫內容，此函數會被觸發，且 emit 一個 object，包含被修改欄位的 key & value

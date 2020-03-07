@@ -7,6 +7,13 @@ const containerStyle = {
   padding: '1em',
 };
 
+const jobTitleHeader = (
+  <div>
+    <span>工作</span>
+    <span>欣興電子股份有限公司 軟體工程</span>
+  </div>
+);
+
 const questions = [
   {
     title: '職業名稱',
@@ -16,6 +23,7 @@ const questions = [
     validator: () => true,
   },
   {
+    header: jobTitleHeader,
     title: '我與主管合作的狀況',
     type: 'textarea',
     dataKey: 'relationship',
@@ -23,6 +31,7 @@ const questions = [
     validator: () => true,
   },
   {
+    header: jobTitleHeader,
     title: '工作地區',
     type: 'radio',
     dataKey: 'workingArea',
@@ -46,6 +55,7 @@ const questions = [
     ],
   },
   {
+    header: jobTitleHeader,
     title: '身份驗證',
     description:
       '若完成身份驗證，之後分享此份工作的任何資訊，獎勵都是 10 倍！可以拍下你此份工作的 名片/工作證/薪資單，或足以證明你在該公司上班的文件！',
@@ -54,6 +64,7 @@ const questions = [
     validator: () => true,
   },
   {
+    header: jobTitleHeader,
     title: '當我需要協助時，主管願意且可以貢獻他的時間協助我',
     type: 'rating',
     dataKey: 'support',
@@ -61,6 +72,7 @@ const questions = [
     maxRating: 5,
   },
   {
+    header: jobTitleHeader,
     title: 'Question Title',
     description: 'Form Description',
     type: 'customized',
@@ -85,7 +97,7 @@ const FormBuilderDemoForm = () => (
   <div style={containerStyle}>
     <FormBuilder
       open
-      title="請輸入你的一份工作經驗"
+      header="請輸入你的一份工作經驗"
       submitButtonText="Submit"
       questions={questions}
       submitButtonEnabled
