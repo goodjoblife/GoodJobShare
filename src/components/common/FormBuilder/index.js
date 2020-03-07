@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
+import qs from 'qs';
 import {
   string,
   bool,
@@ -10,6 +12,27 @@ import {
 } from 'prop-types';
 
 import QuestionBuilder from './QuestionBuilder';
+
+const useCurrentIndex = () => {
+  const location = useLocation();
+  const query = useMemo(
+    () => qs.parse(location.search, { ignoreQueryPrefix: true }),
+    [location],
+  );
+  const currentIndex = parseInt(query.p, 10) || 0;
+
+  const history = useHistory();
+  const setCurrentIndex = useCallback(
+    index => {
+      history.push({
+        search: qs.stringify({ ...query, p: index }, { addQueryPrefix: true }),
+      });
+    },
+    [history, query],
+  );
+
+  return [currentIndex, setCurrentIndex];
+};
 
 const FormBuilder = ({
   open,
@@ -32,13 +55,31 @@ const FormBuilder = ({
   onCloseMsgModal,
   onConfirmMsgModal,
 }) => {
+  const [currentIndex, setCurrentIndex] = useCurrentIndex();
+  const hasPrevious = currentIndex > 0;
+  const hasNext = currentIndex < questions.length - 1;
+  const goPrevious = () => {
+    setCurrentIndex(currentIndex - 1);
+  };
+  const goNext = () => {
+    setCurrentIndex(currentIndex + 1);
+  };
+
+  const question = questions[currentIndex];
+  if (!question) {
+    return null;
+  }
   return (
     <div>
       {title}
       {description}
-      {questions.map((question, i) => (
-        <QuestionBuilder key={i} {...question} />
-      ))}
+      <QuestionBuilder {...question} />
+      <button onClick={goPrevious} disabled={!hasPrevious}>
+        上一題
+      </button>
+      <button onClick={goNext} disabled={!hasNext}>
+        下一題
+      </button>
     </div>
   );
 };
