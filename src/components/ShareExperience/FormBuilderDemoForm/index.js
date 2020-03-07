@@ -98,6 +98,7 @@ const FormBuilderDemoForm = () => (
     <FormBuilder
       open
       header="請輸入你的一份工作經驗"
+      footer="完成可解鎖全站 2 萬筆資訊 48 小時"
       submitButtonText="Submit"
       questions={questions}
       submitButtonEnabled

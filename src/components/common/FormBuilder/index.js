@@ -41,6 +41,7 @@ const FormBuilder = ({
   submitButtonText,
   submitButtonEnabled,
   header: commonHeader,
+  footer: commonFooter,
   questions,
   layout,
   onChange,
@@ -70,7 +71,7 @@ const FormBuilder = ({
   if (!question) {
     return null;
   }
-  const { header, ...restOptions } = question;
+  const { header, footer, ...restOptions } = question;
   return (
     <div>
       <div>{header || commonHeader}</div>
@@ -81,6 +82,7 @@ const FormBuilder = ({
       <button onClick={goNext} disabled={!hasNext}>
         下一題
       </button>
+      <div>{footer || commonFooter}</div>
     </div>
   );
 };
@@ -88,8 +90,9 @@ const FormBuilder = ({
 FormBuilder.propTypes = {
   // 表單是否開啟，等於 false 時表單關閉。
   open: bool.isRequired,
-  // 問卷標題
+  // 問卷頁首 & 頁尾
   header: oneOfType([string, element]),
+  footer: oneOfType([string, element]),
   // 上傳按鈕的文字
   submitButtonText: oneOfType([string, element]).isRequired,
   // 上傳按鈕是否可按
@@ -98,6 +101,7 @@ FormBuilder.propTypes = {
   questions: arrayOf(
     shape({
       header: oneOfType([string, element]),
+      footer: oneOfType([string, element]),
       ...QuestionBuilder.propTypes,
     }),
   ).isRequired,
