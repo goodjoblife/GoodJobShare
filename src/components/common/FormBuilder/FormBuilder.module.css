@@ -1,0 +1,31 @@
+.container {
+  position: relative;
+  border: 1px solid black;
+  min-width: 360px;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 23px;
+  right: 23px;
+
+  .icon {
+    width: 19px;
+    height: 19px;
+    fill: #5a5a5a;
+  }
+}
+
+.navigationBar {
+  display: flex;
+
+  .progress {
+    width: 100px;
+  }
+
+  .navigator {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
