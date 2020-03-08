@@ -1,6 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
-import qs from 'qs';
+import React from 'react';
 import {
   string,
   bool,
@@ -12,27 +10,7 @@ import {
 } from 'prop-types';
 
 import QuestionBuilder from './QuestionBuilder';
-
-const useCurrentIndex = () => {
-  const location = useLocation();
-  const query = useMemo(
-    () => qs.parse(location.search, { ignoreQueryPrefix: true }),
-    [location],
-  );
-  const currentIndex = parseInt(query.p, 10) || 0;
-
-  const history = useHistory();
-  const setCurrentIndex = useCallback(
-    index => {
-      history.push({
-        search: qs.stringify({ ...query, p: index }, { addQueryPrefix: true }),
-      });
-    },
-    [history, query],
-  );
-
-  return [currentIndex, setCurrentIndex];
-};
+import { usePagination } from './usePagination';
 
 const FormBuilder = ({
   open,
@@ -57,17 +35,17 @@ const FormBuilder = ({
   onCloseMsgModal,
   onConfirmMsgModal,
 }) => {
-  const [currentIndex, setCurrentIndex] = useCurrentIndex();
-  const hasPrevious = currentIndex > 0;
-  const hasNext = currentIndex < questions.length - 1;
+  const [page, setPage] = usePagination();
+  const hasPrevious = page > 0;
+  const hasNext = page < questions.length - 1;
   const goPrevious = () => {
-    setCurrentIndex(currentIndex - 1);
+    setPage(page - 1);
   };
   const goNext = () => {
-    setCurrentIndex(currentIndex + 1);
+    setPage(page + 1);
   };
 
-  const question = questions[currentIndex];
+  const question = questions[page];
   if (!question) {
     return null;
   }
