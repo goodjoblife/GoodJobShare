@@ -29,8 +29,13 @@ const jobTitleHeader = (
       <FontAwesomeIcon icon={faShieldAlt} className={styles.icon} />
     </div>
     <div className={styles.jobTitle}>
-      <span className={styles.badge}>工作</span>
-      <span className={styles.name}>欣興電子股份有限公司 軟體工程</span>
+      <div>
+        <span className={styles.badge}>工作</span>
+      </div>
+      <div className={styles.name}>
+        欣興電子股份有限公司 軟體工程 軟體工程 軟體工程 軟體工程 軟體工程
+        軟體工程 軟體工程 軟體工程
+      </div>
     </div>
   </div>
 );

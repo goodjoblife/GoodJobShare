@@ -2,7 +2,7 @@ $main-color: #fcd406;
 
 .progressBar {
   width: 100%;
-  height: 20px;
+  height: 16px;
   border: 1px solid $main-color;
 
   .done {
@@ -12,6 +12,7 @@ $main-color: #fcd406;
 }
 
 .container {
+  width: 117px;
   display: flex;
   flex-direction: column;
   font-size: 15px;

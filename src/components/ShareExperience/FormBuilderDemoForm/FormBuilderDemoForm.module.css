@@ -1,7 +1,7 @@
 .header {
   box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.11);
   padding: 20px 24px;
-  height: 107px;
+  min-height: 107px;
 
   .privacyPolicy {
     font-size: 14px;
@@ -28,31 +28,40 @@
 }
 
 .jobTitleHeader {
-  .badge {
-    border-radius: 3px;
-    border: solid 1px #cacaca;
-    margin-right: 14px;
-    padding: 0 9px;
-    color: #333333;
-    height: 31px;
-    display: inline-flex;
-    align-items: center;
-  }
+  .jobTitle {
+    display: flex;
 
-  .name {
-    font-size: 17px;
-    font-weight: 600;
-    line-height: 1.29;
-    color: #333333;
+    .badge {
+      border-radius: 3px;
+      border: solid 1px #cacaca;
+      margin-right: 14px;
+      padding: 0 9px;
+      color: #333333;
+      height: 31px;
+      display: inline-flex;
+      align-items: center;
+      font-size: 14px;
+      line-height: 2.07;
+    }
+
+    .name {
+      flex: 1;
+      padding-top: 4px;
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.29;
+      color: #333333;
+    }
   }
 }
 
 .formBuilder {
   padding: 35px 23px;
-  minheight: 430px;
+  min-height: 430px;
 }
 
 .footer {
+  text-align: center;
   font-size: 17px;
   font-weight: 600;
   letter-spacing: 0.97px;
