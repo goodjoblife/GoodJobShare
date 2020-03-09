@@ -9,7 +9,7 @@ import {
   arrayOf,
 } from 'prop-types';
 
-import X from 'common/icons/x';
+import X from 'common/icons/X';
 
 import QuestionBuilder from './QuestionBuilder';
 import { usePagination } from './usePagination';
