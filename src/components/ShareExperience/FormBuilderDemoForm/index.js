@@ -1,5 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faShieldAlt from '@fortawesome/fontawesome-free-solid/faShieldAlt';
 
 import FormBuilder from 'common/FormBuilder';
 
@@ -14,7 +16,7 @@ const containerStyle = {
 const ctaHeader = (
   <div className={cn(styles.header, styles.ctaHeader)}>
     <div className={styles.privacyPolicy}>
-      <img className={styles.icon} alt="" />
+      <FontAwesomeIcon icon={faShieldAlt} className={styles.icon} />
       資訊將受永久匿名保護
     </div>
     <div className={styles.title}>請輸入你的一份工作經驗</div>
@@ -24,7 +26,7 @@ const ctaHeader = (
 const jobTitleHeader = (
   <div className={cn(styles.header, styles.jobTitleHeader)}>
     <div className={styles.privacyPolicy}>
-      <img className={styles.icon} alt="" />
+      <FontAwesomeIcon icon={faShieldAlt} className={styles.icon} />
     </div>
     <div className={styles.jobTitle}>
       <span className={styles.badge}>工作</span>
