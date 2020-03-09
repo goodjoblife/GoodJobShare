@@ -1,64 +1,88 @@
+import React from 'react';
 import {
   string,
   bool,
   func,
   shape,
-  oneOf,
   oneOfType,
   element,
   arrayOf,
 } from 'prop-types';
 
-/*
-  type = input            短文字題
-       = textarea         長文字題
-       = radio            單選題
-       = checkbox         複選題
-       = file             檔案上傳
-       = rating           評分題（1-5分）
-       = customized       複合型題，render function 由外部傳入
-*/
-const QuestionShape = shape({
-  // 問題
-  title: string.isRequired,
-  // 問題描述
-  description: string,
-  // 問題種類
-  type: oneOf([
-    'input',
-    'textarea',
-    'radio',
-    'checkbox',
-    'rating',
-    'file',
-    'customized',
-  ]).isRequired,
-  // 該題的值的 key
-  key: string.isRequired,
-  // 此題是否必填
-  required: bool.isRequired,
-  // 驗證內容的函數
-  validator: func,
-  // 如果 type=customized，代表此題是從外部傳入 render function。
-  // 能不用則不用。
-  renderCustomizedQuestion: func,
-});
+import QuestionBuilder from './QuestionBuilder';
+import { usePagination } from './usePagination';
 
-const FormBuilder = () => {};
+const FormBuilder = ({
+  open,
+  title,
+  description,
+  submitButtonText,
+  submitButtonEnabled,
+  header: commonHeader,
+  footer: commonFooter,
+  questions,
+  layout,
+  onChange,
+  onSubmit,
+  onValidateFail,
+  onNext,
+  onPrev,
+  onClickAgreement,
+  onClickCloseBtn,
+  onClose,
+  msgModalContent,
+  openMsgModal,
+  onCloseMsgModal,
+  onConfirmMsgModal,
+}) => {
+  const [page, setPage] = usePagination();
+  const hasPrevious = page > 0;
+  const hasNext = page < questions.length - 1;
+  const goPrevious = () => {
+    setPage(page - 1);
+  };
+  const goNext = () => {
+    setPage(page + 1);
+  };
+
+  const question = questions[page];
+  if (!question) {
+    return null;
+  }
+  const { header, footer, ...restOptions } = question;
+  return (
+    <div>
+      <div>{header || commonHeader}</div>
+      <QuestionBuilder {...restOptions} />
+      <button onClick={goPrevious} disabled={!hasPrevious}>
+        上一題
+      </button>
+      <button onClick={goNext} disabled={!hasNext}>
+        下一題
+      </button>
+      <div>{footer || commonFooter}</div>
+    </div>
+  );
+};
 
 FormBuilder.propTypes = {
   // 表單是否開啟，等於 false 時表單關閉。
   open: bool.isRequired,
-  // 問卷標題
-  title: string.isRequired,
-  // 問卷描述
-  description: oneOfType([string, element]),
+  // 問卷頁首 & 頁尾
+  header: oneOfType([string, element]),
+  footer: oneOfType([string, element]),
   // 上傳按鈕的文字
   submitButtonText: oneOfType([string, element]).isRequired,
   // 上傳按鈕是否可按
   submitButtonEnabled: bool.isRequired,
   // 問題列表
-  questions: arrayOf(QuestionShape),
+  questions: arrayOf(
+    shape({
+      header: oneOfType([string, element]),
+      footer: oneOfType([string, element]),
+      ...QuestionBuilder.propTypes,
+    }),
+  ).isRequired,
   // 排版方式，目前只有一種，就是 typeform
   layout: string.isRequired,
   // 當使用者填寫內容，此函數會被觸發，且 emit 一個 object，包含被修改欄位的 key & value

@@ -29,6 +29,7 @@ import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
 import CompanyPageProvider from './components/Company/CompanyPageProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
+import FormBuilderDemoForm from './components/ShareExperience/FormBuilderDemoForm';
 
 const routes = [
   {
@@ -273,5 +274,14 @@ const routes = [
     component: NotFound,
   },
 ];
+
+// TODO: Should be removed after form builder is completed
+if (process.env.NODE_ENV === 'development') {
+  routes.splice(0, 0, {
+    path: '/form-builder/demo',
+    exact: true,
+    component: FormBuilderDemoForm,
+  });
+}
 
 export default routes;
