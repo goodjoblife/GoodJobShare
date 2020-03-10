@@ -65,7 +65,9 @@ const FormBuilder = ({
       <div>{header || commonHeader}</div>
       <div className={cn(styles.body, bodyClassName)}>
         <div className={styles.question}>
-          <QuestionBuilder {...restOptions} />
+          <div className={styles.scrollable}>
+            <QuestionBuilder {...restOptions} />
+          </div>
         </div>
         <div className={styles.navigationBar}>
           <div>
