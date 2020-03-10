@@ -201,7 +201,11 @@ const ExperienceDetail = ({
                 <Fragment>
                   <div className={styles.headingBlock}>
                     <div>
-                      <BackToList backable={backable} className={styles.back} />
+                      <BackToList
+                        backable={backable}
+                        className={styles.back}
+                        experience={experience}
+                      />
                     </div>
                     <ExperienceHeading experience={experience} />
                   </div>
