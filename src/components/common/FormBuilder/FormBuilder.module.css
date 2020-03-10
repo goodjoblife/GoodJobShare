@@ -1,0 +1,58 @@
+.container {
+  position: relative;
+  border: 1px solid black;
+  width: 360px;
+  height: 624px;
+  display: flex;
+  flex-direction: column;
+
+  .body {
+    flex: 1;
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+
+  .question {
+    flex: 1;
+    position: relative;
+
+    .scrollable {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      overflow-y: auto;
+    }
+  }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 23px;
+  right: 23px;
+
+  .icon {
+    width: 19px;
+    height: 19px;
+    fill: #5a5a5a;
+  }
+}
+
+.navigationBar {
+  margin-top: 30px;
+  display: flex;
+
+  .progress {
+    width: 100px;
+  }
+
+  .navigator {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

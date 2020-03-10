@@ -8,11 +8,18 @@ import {
   element,
   arrayOf,
 } from 'prop-types';
+import cn from 'classnames';
+
+import X from 'common/icons/X';
 
 import QuestionBuilder from './QuestionBuilder';
 import { usePagination } from './usePagination';
+import ProgressBlock from './ProgressBlock';
+import NavigatorBlock from './NavigatorBlock';
+import styles from './FormBuilder.module.css';
 
 const FormBuilder = ({
+  bodyClassName,
   open,
   title,
   description,
@@ -51,21 +58,38 @@ const FormBuilder = ({
   }
   const { header, footer, ...restOptions } = question;
   return (
-    <div>
+    <div className={styles.container}>
+      <button className={styles.closeBtn}>
+        <X className={styles.icon} />
+      </button>
       <div>{header || commonHeader}</div>
-      <QuestionBuilder {...restOptions} />
-      <button onClick={goPrevious} disabled={!hasPrevious}>
-        上一題
-      </button>
-      <button onClick={goNext} disabled={!hasNext}>
-        下一題
-      </button>
+      <div className={cn(styles.body, bodyClassName)}>
+        <div className={styles.question}>
+          <div className={styles.scrollable}>
+            <QuestionBuilder {...restOptions} />
+          </div>
+        </div>
+        <div className={styles.navigationBar}>
+          <div>
+            <ProgressBlock page={page} totalPages={questions.length} />
+          </div>
+          <div className={styles.navigator}>
+            <NavigatorBlock
+              onPrevious={goPrevious}
+              onNext={goNext}
+              hasPrevious={hasPrevious}
+              hasNext={hasNext}
+            />
+          </div>
+        </div>
+      </div>
       <div>{footer || commonFooter}</div>
     </div>
   );
 };
 
 FormBuilder.propTypes = {
+  className: string,
   // 表單是否開啟，等於 false 時表單關閉。
   open: bool.isRequired,
   // 問卷頁首 & 頁尾

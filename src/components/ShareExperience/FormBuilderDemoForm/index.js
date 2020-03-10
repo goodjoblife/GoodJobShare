@@ -1,5 +1,11 @@
 import React from 'react';
+import cn from 'classnames';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faShieldAlt from '@fortawesome/fontawesome-free-solid/faShieldAlt';
+
 import FormBuilder from 'common/FormBuilder';
+
+import styles from './FormBuilderDemoForm.module.css';
 
 const containerStyle = {
   display: 'flex',
@@ -7,10 +13,37 @@ const containerStyle = {
   padding: '1em',
 };
 
+const ctaHeader = (
+  <div className={cn(styles.header, styles.ctaHeader)}>
+    <div className={styles.privacyPolicy}>
+      <FontAwesomeIcon icon={faShieldAlt} className={styles.icon} />
+      資訊將受永久匿名保護
+    </div>
+    <div className={styles.title}>請輸入你的一份工作經驗</div>
+  </div>
+);
+
 const jobTitleHeader = (
-  <div>
-    <span>工作</span>
-    <span>欣興電子股份有限公司 軟體工程</span>
+  <div className={cn(styles.header, styles.jobTitleHeader)}>
+    <div className={styles.privacyPolicy}>
+      <FontAwesomeIcon icon={faShieldAlt} className={styles.icon} />
+    </div>
+    <div className={styles.jobTitle}>
+      <div>
+        <span className={styles.badge}>工作</span>
+      </div>
+      <div className={styles.name}>
+        欣興電子股份有限公司 軟體工程 軟體工程 軟體工程 軟體工程 軟體工程
+        軟體工程 軟體工程 軟體工程
+      </div>
+    </div>
+  </div>
+);
+
+const footer = (
+  <div className={styles.footer}>
+    完成可解鎖全站 2 萬筆資訊{' '}
+    <span className={styles.unlockDuration}>48 小時</span>
   </div>
 );
 
@@ -96,9 +129,10 @@ const questions = [
 const FormBuilderDemoForm = () => (
   <div style={containerStyle}>
     <FormBuilder
+      bodyClassName={styles.formBuilder}
       open
-      header="請輸入你的一份工作經驗"
-      footer="完成可解鎖全站 2 萬筆資訊 48 小時"
+      header={ctaHeader}
+      footer={footer}
       submitButtonText="Submit"
       questions={questions}
       submitButtonEnabled

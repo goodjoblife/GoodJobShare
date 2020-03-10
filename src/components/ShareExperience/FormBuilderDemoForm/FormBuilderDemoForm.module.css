@@ -1,0 +1,76 @@
+.header {
+  box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.11);
+  padding: 20px 24px;
+  min-height: 107px;
+
+  .privacyPolicy {
+    font-size: 14px;
+    color: #e5ba00;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+
+    .icon {
+      margin-right: 9px;
+      width: 17px;
+      height: 18px;
+    }
+  }
+}
+
+.ctaHeader {
+  .title {
+    font-size: 27px;
+    font-weight: 500;
+    color: #555555;
+  }
+}
+
+.jobTitleHeader {
+  .jobTitle {
+    display: flex;
+
+    .badge {
+      border-radius: 3px;
+      border: solid 1px #cacaca;
+      margin-right: 14px;
+      padding: 0 9px;
+      color: #333333;
+      height: 31px;
+      display: inline-flex;
+      align-items: center;
+      font-size: 14px;
+      line-height: 2.07;
+    }
+
+    .name {
+      flex: 1;
+      padding-top: 4px;
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.29;
+      color: #333333;
+    }
+  }
+}
+
+.formBuilder {
+  padding: 35px 23px;
+}
+
+.footer {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.97px;
+  color: #ec7910;
+  background-color: #fffae1;
+  padding: 5px 29px;
+
+  .unlockDuration {
+    font-size: 15px;
+    font-weight: normal;
+    letter-spacing: normal;
+    color: #ec7910;
+  }
+}
