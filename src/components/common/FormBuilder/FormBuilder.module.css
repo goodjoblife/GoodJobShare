@@ -2,6 +2,22 @@
   position: relative;
   border: 1px solid black;
   width: 360px;
+  height: 624px;
+  display: flex;
+  flex-direction: column;
+
+  .body {
+    flex: 1;
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+
+  .question {
+    flex: 1;
+  }
 }
 
 .closeBtn {

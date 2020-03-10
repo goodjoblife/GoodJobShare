@@ -8,6 +8,7 @@ import {
   element,
   arrayOf,
 } from 'prop-types';
+import cn from 'classnames';
 
 import X from 'common/icons/X';
 
@@ -62,8 +63,10 @@ const FormBuilder = ({
         <X className={styles.icon} />
       </button>
       <div>{header || commonHeader}</div>
-      <div className={bodyClassName}>
-        <QuestionBuilder {...restOptions} />
+      <div className={cn(styles.body, bodyClassName)}>
+        <div className={styles.question}>
+          <QuestionBuilder {...restOptions} />
+        </div>
         <div className={styles.navigationBar}>
           <div>
             <ProgressBlock page={page} totalPages={questions.length} />
