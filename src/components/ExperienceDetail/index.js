@@ -111,7 +111,8 @@ const ExperienceDetail = ({
   const { experience, experienceStatus, experienceError } = data;
   const replies = props.replies.toJS();
   const repliesStatus = props.repliesStatus;
-  const defaultBackToURL = `/job-titles/${experience.job_title.name}/overview`;
+  const getPathForJobTitle = jobTitle => `/job-titles/${jobTitle}/overview`;
+  const defaultBackToURL = getPathForJobTitle(experience.job_title.name);
 
   if (isError(experienceStatus)) {
     if (isUiNotFoundError(experienceError)) {
