@@ -111,6 +111,7 @@ const ExperienceDetail = ({
   const { experience, experienceStatus, experienceError } = data;
   const replies = props.replies.toJS();
   const repliesStatus = props.repliesStatus;
+  const defaultBackToURL = `/job-titles/${experience.job_title.name}/overview`;
 
   if (isError(experienceStatus)) {
     if (isUiNotFoundError(experienceError)) {
@@ -204,7 +205,7 @@ const ExperienceDetail = ({
                       <BackToList
                         backable={backable}
                         className={styles.back}
-                        experience={experience}
+                        defaultBackToURL={defaultBackToURL}
                       />
                     </div>
                     <ExperienceHeading experience={experience} />

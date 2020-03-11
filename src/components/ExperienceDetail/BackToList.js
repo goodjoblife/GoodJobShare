@@ -6,16 +6,16 @@ import { P } from 'common/base';
 import styles from './BackToList.module.css';
 import cn from 'classnames';
 
-const backOrPush = (backable, history, experience) => {
+const backOrPush = (backable, history, defaultBackToURL) => {
   if (backable) {
-    history.push(`/job-titles/${experience.job_title.name}/overview`);
+    return history.goBack();
   }
-  return history.push(`/job-titles/${experience.job_title.name}/overview`);
+  return history.push(defaultBackToURL);
 };
 
-const BackToList = ({ backable, history, className, experience }) => (
+const BackToList = ({ backable, history, className, defaultBackToURL }) => (
   <button
-    onClick={() => backOrPush(backable, history, experience)}
+    onClick={() => backOrPush(backable, history, defaultBackToURL)}
     className={cn(styles.backBtn, className)}
   >
     <i.ArrowGo />
