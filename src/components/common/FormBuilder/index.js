@@ -59,10 +59,12 @@ const FormBuilder = ({
   const { header, footer, ...restOptions } = question;
   return (
     <div className={styles.container}>
-      <button className={styles.closeBtn}>
-        <X className={styles.icon} />
-      </button>
-      <div>{header || commonHeader}</div>
+      <div className={styles.header}>
+        <button className={styles.closeBtn}>
+          <X className={styles.icon} />
+        </button>
+        {header || commonHeader}
+      </div>
       <div className={cn(styles.body, bodyClassName)}>
         <div className={styles.question}>
           <div className={styles.scrollable}>
@@ -142,4 +144,10 @@ FormBuilder.defaultProps = {
   openMsgModal: false,
 };
 
-export default FormBuilder;
+const withBackgroundMask = Modal => props => (
+  <div className={styles.backgroundMask}>
+    <Modal {...props} />
+  </div>
+);
+
+export default withBackgroundMask(FormBuilder);
