@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './TextArea.module.css';
 
 const Textarea = ({ title, description, dataKey, required, validator }) => (
   <div>
-    {title}
-    <textarea />
+    <div className={styles.title}>
+      2. {title}
+      <span className={styles.necessary}> * </span>
+    </div>
+    <textarea className={styles.textarea} />
+    <p className={styles.warning}>最少30字，現在0字</p>
   </div>
 );
 
