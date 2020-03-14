@@ -1,0 +1,39 @@
+.title {
+  width: 315px;
+  height: 25px;
+  font-family: PingFangTC;
+  font-size: 18px;
+  font-weight: 500;
+  color: #555555;
+  margin-bottom: 10px;
+
+  .necessary {
+    color: red;
+  }
+}
+
+.button {
+  display: block;
+  width: 316px;
+  height: 44px;
+  margin-top: 9px;
+  background-color: #f0f0f0;
+  font-family: PingFangTC;
+  font-size: 18px;
+  line-height: 44px;
+  text-align: center;
+  color: #333333;
+}
+
+label span {
+  display: block;
+}
+
+.input {
+  display: none;
+}
+
+input:checked + span {
+  background-color: #626262;
+  color: #ffffff;
+}
