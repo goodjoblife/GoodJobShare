@@ -48,6 +48,8 @@ const experienceIdSelector = R.compose(
   paramsSelector,
 );
 
+const getPathForJobTitle = jobTitle => `/job-titles/${jobTitle}/overview`;
+
 const ExperienceDetail = ({
   submitComment,
   likeReply,
@@ -111,7 +113,6 @@ const ExperienceDetail = ({
   const { experience, experienceStatus, experienceError } = data;
   const replies = props.replies.toJS();
   const repliesStatus = props.repliesStatus;
-  const getPathForJobTitle = jobTitle => `/job-titles/${jobTitle}/overview`;
   const defaultBackToURL = getPathForJobTitle(experience.job_title.name);
 
   if (isError(experienceStatus)) {
