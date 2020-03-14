@@ -1,0 +1,60 @@
+.title {
+  width: 315px;
+  height: 25px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #555555;
+  margin-bottom: 10px;
+
+  .necessary {
+    color: red;
+  }
+}
+
+.description {
+  display: inline-block;
+  width: 310px;
+  height: 46px;
+  font-size: 16px;
+  line-height: normal;
+  color: #555555;
+}
+
+.upload {
+  width: 310px;
+  height: 72px;
+  position: relative;
+  margin-top: 20px;
+  border: solid 2px #bdbdbd;
+  border-style: dashed;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.uploadText {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  width: 75px;
+  height: 24px;
+  font-size: 18px;
+  line-height: 1.33;
+  color: #969696;
+}
+
+.image {
+  display: none;
+}
+
+.icon {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  width: 19px;
+  height: 25px;
+  background-color: #e0e0e0;
+}
