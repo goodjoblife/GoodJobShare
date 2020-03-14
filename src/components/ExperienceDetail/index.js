@@ -48,6 +48,8 @@ const experienceIdSelector = R.compose(
   paramsSelector,
 );
 
+const getPathForJobTitle = jobTitle => `/job-titles/${jobTitle}/overview`;
+
 const ExperienceDetail = ({
   submitComment,
   likeReply,
@@ -111,6 +113,7 @@ const ExperienceDetail = ({
   const { experience, experienceStatus, experienceError } = data;
   const replies = props.replies.toJS();
   const repliesStatus = props.repliesStatus;
+  const defaultBackToURL = getPathForJobTitle(experience.job_title.name);
 
   if (isError(experienceStatus)) {
     if (isUiNotFoundError(experienceError)) {
@@ -201,7 +204,11 @@ const ExperienceDetail = ({
                 <Fragment>
                   <div className={styles.headingBlock}>
                     <div>
-                      <BackToList backable={backable} className={styles.back} />
+                      <BackToList
+                        backable={backable}
+                        className={styles.back}
+                        defaultBackToURL={defaultBackToURL}
+                      />
                     </div>
                     <ExperienceHeading experience={experience} />
                   </div>
