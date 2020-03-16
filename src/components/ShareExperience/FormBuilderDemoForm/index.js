@@ -128,12 +128,8 @@ const questions = [
 
 const FormBuilderDemoForm = () => {
   const [isOpen, setOpen] = useState(true);
-  const open = useCallback(() => {
-    setOpen(true);
-  }, []);
-  const close = useCallback(() => {
-    setOpen(false);
-  }, []);
+  const open = useCallback(() => setOpen(true), []);
+  const close = useCallback(() => setOpen(false), []);
   return (
     <div style={containerStyle}>
       <button onClick={open}>Open</button>
