@@ -14,7 +14,7 @@ const defaultValueForType = type => {
     case 'rating':
       return null;
     case 'file':
-      return null;
+      return '';
     case 'customized':
       return null;
     default:
