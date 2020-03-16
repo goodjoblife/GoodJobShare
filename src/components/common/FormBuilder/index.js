@@ -53,8 +53,8 @@ const FormBuilder = ({
   };
 
   useEffect(() => {
-    if (open) {
-      // Reset on open
+    if (!open) {
+      // Reset on close
       setPage(0);
     }
   }, [open, setPage]);
