@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import cn from 'classnames';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faShieldAlt from '@fortawesome/fontawesome-free-solid/faShieldAlt';
@@ -6,12 +6,6 @@ import faShieldAlt from '@fortawesome/fontawesome-free-solid/faShieldAlt';
 import FormBuilder from 'common/FormBuilder';
 
 import styles from './FormBuilderDemoForm.module.css';
-
-const containerStyle = {
-  display: 'flex',
-  justifyContent: 'center',
-  padding: '1em',
-};
 
 const ctaHeader = (
   <div className={cn(styles.header, styles.ctaHeader)}>
@@ -126,11 +120,15 @@ const questions = [
   },
 ];
 
-const FormBuilderDemoForm = () => (
-  <div style={containerStyle}>
+const FormBuilderDemoForm = () => {
+  const [isOpen, setOpen] = useState(true);
+  const close = useCallback(() => {
+    setOpen(false);
+  }, []);
+  return (
     <FormBuilder
       bodyClassName={styles.formBuilder}
-      open
+      open={isOpen}
       header={ctaHeader}
       footer={footer}
       submitButtonText="Submit"
@@ -138,9 +136,9 @@ const FormBuilderDemoForm = () => (
       submitButtonEnabled
       onChange={console.info}
       onSubmit={console.info}
-      onClickCloseBtn={console.info}
+      onClose={close}
     />
-  </div>
-);
+  );
+};
 
 export default FormBuilderDemoForm;

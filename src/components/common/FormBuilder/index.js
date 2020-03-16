@@ -60,7 +60,7 @@ const FormBuilder = ({
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <button className={styles.closeBtn}>
+        <button className={styles.closeBtn} onClick={onClose}>
           <X className={styles.icon} />
         </button>
         {header || commonHeader}
@@ -92,8 +92,6 @@ const FormBuilder = ({
 
 FormBuilder.propTypes = {
   className: string,
-  // 表單是否開啟，等於 false 時表單關閉。
-  open: bool.isRequired,
   // 問卷頁首 & 頁尾
   header: oneOfType([string, element]),
   footer: oneOfType([string, element]),
@@ -124,9 +122,9 @@ FormBuilder.propTypes = {
   // 點擊使用者條款 checkbox
   onClickAgreement: func,
   // 點擊關閉表單按鈕觸發的函數
-  onClickCloseBtn: func.isRequired,
+  onClickCloseBtn: func,
   // 真正要關閉表單前觸發的函數（可用於將資料存到 local storage）
-  onClose: func,
+  onClose: func.isRequired,
 
   // 訊息 Modal 的內容
   msgModalContent: oneOfType([string, element]),
@@ -139,15 +137,19 @@ FormBuilder.propTypes = {
 };
 
 FormBuilder.defaultProps = {
-  oepn: true,
   layout: 'typeform',
   openMsgModal: false,
 };
 
-const withBackgroundMask = Modal => props => (
-  <div className={styles.backgroundMask}>
+const withBackgroundMask = Modal => ({ open, ...props }) => (
+  <div className={cn(styles.backgroundMask, { [styles.hidden]: !open })}>
     <Modal {...props} />
   </div>
 );
+
+withBackgroundMask.propTypes = {
+  // 表單是否開啟，等於 false 時表單關閉。
+  open: bool.isRequired,
+};
 
 export default withBackgroundMask(FormBuilder);
