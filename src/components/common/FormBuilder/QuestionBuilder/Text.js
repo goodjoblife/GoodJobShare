@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import styles from './Text.module.css';
 
 const Text = ({ title, description, dataKey, required, validator }) => (
   <div>
-    <div className={styles.title}>
+    <div className={cn(styles.title, { [styles.necessary]: required })}>
       1. {title}
-      <span className={styles.necessary}> * </span>
     </div>
     <input
       className={styles.textinput}
