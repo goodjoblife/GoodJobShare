@@ -25,11 +25,11 @@ const Checkbox = ({
     {options.map(option => (
       <label>
         <input
-          type="radio"
+          type="checkbox"
           name={dataKey}
           value={option}
           checked={R.contains(option, values)}
-          onChange={toggle(option, values)}
+          onChange={() => onChange(toggle(option, values))}
         />
         {option}
       </label>
