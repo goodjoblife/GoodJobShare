@@ -1,10 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Text = ({ title, description, dataKey, required, validator }) => (
+const Text = ({
+  title,
+  description,
+  dataKey,
+  required,
+  value,
+  onChange,
+  validator,
+}) => (
   <div>
     {title}
-    <input type="text" />
+    <input type="text" value={value} onChange={e => onChange(e.target.value)} />
   </div>
 );
 
@@ -13,6 +21,8 @@ Text.propTypes = {
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
   validator: PropTypes.func.isRequired,
 };
 
