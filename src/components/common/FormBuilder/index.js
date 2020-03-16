@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   string,
   bool,
@@ -52,6 +52,13 @@ const FormBuilder = ({
     setPage(page + 1);
   };
 
+  useEffect(() => {
+    if (open) {
+      // Reset on open
+      setPage(0);
+    }
+  }, [open, setPage]);
+
   const question = questions[page];
   if (!question) {
     return null;
@@ -92,6 +99,8 @@ const FormBuilder = ({
 
 FormBuilder.propTypes = {
   className: string,
+  // 表單是否開啟，等於 false 時表單關閉。
+  open: bool.isRequired,
   // 問卷頁首 & 頁尾
   header: oneOfType([string, element]),
   footer: oneOfType([string, element]),
@@ -141,15 +150,10 @@ FormBuilder.defaultProps = {
   openMsgModal: false,
 };
 
-const withBackgroundMask = Modal => ({ open, ...props }) => (
-  <div className={cn(styles.backgroundMask, { [styles.hidden]: !open })}>
+const withBackgroundMask = Modal => props => (
+  <div className={cn(styles.backgroundMask, { [styles.hidden]: !props.open })}>
     <Modal {...props} />
   </div>
 );
-
-withBackgroundMask.propTypes = {
-  // 表單是否開啟，等於 false 時表單關閉。
-  open: bool.isRequired,
-};
 
 export default withBackgroundMask(FormBuilder);
