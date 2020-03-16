@@ -30,6 +30,10 @@ const debugStyle = {
   margin: '0.5em 0',
 };
 
+const DebugWindow = ({ children }) => (
+  <pre style={debugStyle}>Debug: {children}</pre>
+);
+
 const FormBuilder = ({
   bodyClassName,
   open,
@@ -82,9 +86,7 @@ const FormBuilder = ({
               value={draft[restOptions.dataKey]}
               onChange={setDraftValue(restOptions.dataKey)}
             />
-            <pre style={debugStyle}>
-              Debug: {JSON.stringify(draft, null, 2)}
-            </pre>
+            <DebugWindow>{JSON.stringify(draft, null, 2)}</DebugWindow>
           </div>
         </div>
         <div className={styles.navigationBar}>
