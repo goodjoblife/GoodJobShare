@@ -19,6 +19,17 @@ import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
 import styles from './FormBuilder.module.css';
 
+const debugStyle = {
+  border: '1px solid gray',
+  color: 'gray',
+  fontSize: '0.8em',
+  padding: '0.5em',
+  lineHeight: 1.5,
+  fontFamily: 'Courier',
+  overflowX: 'scroll',
+  margin: '0.5em 0',
+};
+
 const FormBuilder = ({
   bodyClassName,
   open,
@@ -71,6 +82,9 @@ const FormBuilder = ({
               value={draft[restOptions.dataKey]}
               onChange={setDraftValue(restOptions.dataKey)}
             />
+            <pre style={debugStyle}>
+              Debug: {JSON.stringify(draft, null, 2)}
+            </pre>
           </div>
         </div>
         <div className={styles.navigationBar}>
