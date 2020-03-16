@@ -7,6 +7,12 @@ import FormBuilder from 'common/FormBuilder';
 
 import styles from './FormBuilderDemoForm.module.css';
 
+const containerStyle = {
+  display: 'flex',
+  justifyContent: 'center',
+  padding: '1em',
+};
+
 const ctaHeader = (
   <div className={cn(styles.header, styles.ctaHeader)}>
     <div className={styles.privacyPolicy}>
@@ -122,22 +128,28 @@ const questions = [
 
 const FormBuilderDemoForm = () => {
   const [isOpen, setOpen] = useState(true);
+  const open = useCallback(() => {
+    setOpen(true);
+  }, []);
   const close = useCallback(() => {
     setOpen(false);
   }, []);
   return (
-    <FormBuilder
-      bodyClassName={styles.formBuilder}
-      open={isOpen}
-      header={ctaHeader}
-      footer={footer}
-      submitButtonText="Submit"
-      questions={questions}
-      submitButtonEnabled
-      onChange={console.info}
-      onSubmit={console.info}
-      onClose={close}
-    />
+    <div style={containerStyle}>
+      <button onClick={open}>Open</button>
+      <FormBuilder
+        bodyClassName={styles.formBuilder}
+        open={isOpen}
+        header={ctaHeader}
+        footer={footer}
+        submitButtonText="Submit"
+        questions={questions}
+        submitButtonEnabled
+        onChange={console.info}
+        onSubmit={console.info}
+        onClose={close}
+      />
+    </div>
   );
 };
 
