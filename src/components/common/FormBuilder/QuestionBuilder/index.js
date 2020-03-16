@@ -42,7 +42,7 @@ const QuestionBuilder = ({
 }) => {
   if (type === 'customized') {
     if (renderCustomizedQuestion) {
-      return renderCustomizedQuestion();
+      return renderCustomizedQuestion(value, onChange);
     } else {
       return null;
     }

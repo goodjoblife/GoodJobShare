@@ -111,14 +111,32 @@ const questions = [
     type: 'customized',
     dataKey: 'salaryWorkTime',
     validator: () => true,
-    renderCustomizedQuestion() {
+    renderCustomizedQuestion(object, onChange) {
+      const salaryType = (object && object.type) || null;
+      const salaryAmount = (object && object.amount) || '';
+      const defaultState = { type: null, amount: 0 };
+      const handleChangeFor = field => value =>
+        onChange({ ...defaultState, ...object, [field]: value });
+
       return (
         <div>
-          <select>
-            <option>月薪</option>
+          <select
+            value={salaryType}
+            onChange={e => handleChangeFor('type')(e.target.value)}
+          >
+            <option value="month">月薪</option>
+            <option value="year">年薪</option>
+            <option value="day">日薪</option>
           </select>
           <label>
-            <input type="text" />元
+            <input
+              type="text"
+              value={salaryAmount.toString()}
+              onChange={e =>
+                handleChangeFor('amount')(parseInt(e.target.value, 10))
+              }
+            />
+            元
           </label>
         </div>
       );
