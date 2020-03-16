@@ -33,6 +33,8 @@ const QuestionBuilder = ({
   type,
   dataKey,
   required,
+  value,
+  onChange,
   options,
   validator,
   maxRating,

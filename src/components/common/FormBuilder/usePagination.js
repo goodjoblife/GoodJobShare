@@ -2,7 +2,7 @@ import { useMemo, useCallback } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import qs from 'qs';
 
-export const usePagination = () => {
+const usePagination = () => {
   const location = useLocation();
   const query = useMemo(
     () => qs.parse(location.search, { ignoreQueryPrefix: true }),
@@ -22,3 +22,5 @@ export const usePagination = () => {
 
   return [page, setPage];
 };
+
+export default usePagination;
