@@ -125,7 +125,7 @@ const questions = [
     dataKey: 'salaryWorkTime',
     validator: () => true,
     renderCustomizedQuestion(object, onChange) {
-      const salaryType = (object && object.type) || null;
+      const salaryType = (object && object.type) || '';
       const salaryAmount = (object && object.amount) || '';
       const defaultState = { type: null, amount: 0 };
       const handleChangeFor = field => value =>
