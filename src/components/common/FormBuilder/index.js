@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   string,
   bool,
@@ -20,19 +20,27 @@ import NavigatorBlock from './NavigatorBlock';
 import styles from './FormBuilder.module.css';
 
 const debugStyle = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  background: 'rgba(255,255,255,0.8)',
+  cursor: 'pointer',
   border: '1px solid gray',
   color: 'gray',
   fontSize: '0.8em',
   padding: '0.5em',
-  lineHeight: 1.5,
   fontFamily: 'Courier',
   overflowX: 'scroll',
-  margin: '0.5em 0',
 };
 
-const DebugWindow = ({ children }) => (
-  <pre style={debugStyle}>Debug: {children}</pre>
-);
+const DebugWindow = ({ children }) => {
+  const [isCollapsed, setCollapsed] = useState(false);
+  return (
+    <pre style={debugStyle} onClick={() => setCollapsed(!isCollapsed)}>
+      {isCollapsed ? '+' : '-'} Debug {!isCollapsed && children}
+    </pre>
+  );
+};
 
 const FormBuilder = ({
   bodyClassName,
@@ -74,6 +82,7 @@ const FormBuilder = ({
   const { header, footer, ...restOptions } = question;
   return (
     <div className={styles.container}>
+      <DebugWindow>{JSON.stringify(draft, null, 2)}</DebugWindow>
       <button className={styles.closeBtn}>
         <X className={styles.icon} />
       </button>
@@ -86,7 +95,6 @@ const FormBuilder = ({
               value={draft[restOptions.dataKey]}
               onChange={setDraftValue(restOptions.dataKey)}
             />
-            <DebugWindow>{JSON.stringify(draft, null, 2)}</DebugWindow>
           </div>
         </div>
         <div className={styles.navigationBar}>
