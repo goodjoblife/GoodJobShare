@@ -89,6 +89,19 @@ const questions = [
   },
   {
     header: jobTitleHeader,
+    title: '是否有以下特殊問題？',
+    type: 'checkbox',
+    dataKey: 'specialQuestions',
+    validator: () => true,
+    options: [
+      '詢問家庭狀況',
+      '曾詢問婚姻狀況、生育計畫',
+      '曾要求繳交身分證、保證金',
+      '其他',
+    ],
+  },
+  {
+    header: jobTitleHeader,
     title: '身份驗證',
     description:
       '若完成身份驗證，之後分享此份工作的任何資訊，獎勵都是 10 倍！可以拍下你此份工作的 名片/工作證/薪資單，或足以證明你在該公司上班的文件！',
