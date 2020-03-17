@@ -11,10 +11,9 @@
 }
 
 .textinput {
-  height: 45px;
   border: solid 1px #bdbdbd;
   background-color: #ffffff;
-  padding-left: 15px;
+  padding: 10px 15px;
   font-size: 16px;
 
   ::placeholder {
