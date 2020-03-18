@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './TextArea.module.css';
 
 const Textarea = ({ title, description, dataKey, required, validator }) => (
-  <div>
+  <div className={styles.container}>
     <div className={styles.title}>
       2. {title}
       <span className={styles.necessary}> * </span>

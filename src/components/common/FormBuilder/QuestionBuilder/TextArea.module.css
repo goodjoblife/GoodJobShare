@@ -1,29 +1,32 @@
 .title {
-  width: 315px;
   height: 25px;
-  font-family: PingFangTC;
   font-size: 18px;
   font-weight: 500;
   color: #555555;
-  margin-bottom: 10px;
 
   .necessary {
     color: red;
   }
 }
 
-.textarea {
-  width: 313px;
-  height: 269px;
-  border: solid 1px #bdbdbd;
-  background-color: #ffffff;
-}
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 310px;
+  height: 290px;
 
-.warning {
-  margin-top: 7px;
-  width: 142px;
-  height: 20px;
-  font-family: PingFangTC;
-  font-size: 14px;
-  color: #969696;
+  .textarea {
+    flex: 1;
+    border: solid 1px #bdbdbd;
+    background-color: #ffffff;
+    resize: none;
+  }
+
+  .warning {
+    display: inline;
+    text-align: right;
+    margin-top: 9px;
+    font-size: 14px;
+    color: #969696;
+  }
 }
