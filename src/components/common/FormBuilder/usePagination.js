@@ -6,7 +6,7 @@ export const usePagination = () => {
   const location = useLocation();
   const query = useMemo(
     () => qs.parse(location.search, { ignoreQueryPrefix: true }),
-    [location],
+    [location.search],
   );
   const page = parseInt(query.p, 10) || 0;
 
