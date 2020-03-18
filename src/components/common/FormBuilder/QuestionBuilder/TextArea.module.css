@@ -1,10 +1,11 @@
 .title {
-  height: 25px;
   font-size: 18px;
   font-weight: 500;
   color: #555555;
+  margin-bottom: 10px;
 
-  .necessary {
+  &.necessary::after {
+    content: ' *';
     color: red;
   }
 }
