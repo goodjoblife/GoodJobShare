@@ -35,7 +35,6 @@ const FormBuilder = ({
   onNext,
   onPrev,
   onClickAgreement,
-  onClickCloseBtn,
   onClose,
   msgModalContent,
   openMsgModal,
@@ -130,9 +129,7 @@ FormBuilder.propTypes = {
   onPrev: func,
   // 點擊使用者條款 checkbox
   onClickAgreement: func,
-  // 點擊關閉表單按鈕觸發的函數
-  onClickCloseBtn: func,
-  // 真正要關閉表單前觸發的函數（可用於將資料存到 local storage）
+  // 關閉表單前觸發的函數
   onClose: func.isRequired,
 
   // 訊息 Modal 的內容
