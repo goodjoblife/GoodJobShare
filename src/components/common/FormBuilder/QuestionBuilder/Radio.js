@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import styles from './Radio.module.css';
 
 const Radio = ({
@@ -11,19 +12,20 @@ const Radio = ({
   options,
 }) => (
   <div>
-    <div className={styles.title}>
+    <div className={cn(styles.title, { [styles.necessary]: required })}>
       3. {title}
-      <span className={styles.necessary}> * </span>
     </div>
     {options.map(option => (
-      <label className={styles.button} key={option}>
-        <input
-          className={styles.input}
-          type="radio"
-          name={dataKey}
-          value={option}
-        />
-        <span> {option} </span>
+      <label className={styles.label} key={option}>
+        <div className={styles.button}>
+          <input
+            className={styles.input}
+            type="radio"
+            name={dataKey}
+            value={option}
+          />
+          <span className={styles.span}>{option}</span>
+        </div>
       </label>
     ))}
   </div>
