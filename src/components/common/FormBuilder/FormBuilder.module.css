@@ -81,3 +81,12 @@
     justify-content: flex-end;
   }
 }
+
+.submission {
+  margin-top: 16px;
+  display: none;
+
+  &.visible {
+    display: block;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   string,
   bool,
@@ -9,6 +9,7 @@ import {
   arrayOf,
 } from 'prop-types';
 import cn from 'classnames';
+import R from 'ramda';
 
 import X from 'common/icons/X';
 
@@ -16,6 +17,7 @@ import QuestionBuilder from './QuestionBuilder';
 import { usePagination } from './usePagination';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
+import SubmissionBlock from './SubmissionBlock';
 import styles from './FormBuilder.module.css';
 
 const FormBuilder = ({
@@ -50,6 +52,16 @@ const FormBuilder = ({
   const goNext = () => {
     setPage(page + 1);
   };
+
+  const showsSubmissionAtIndex = useMemo(
+    () => R.findLastIndex(R.prop('required'))(questions),
+    [questions],
+  );
+  const showsSubmission = useMemo(() => page >= showsSubmissionAtIndex, [
+    page,
+    showsSubmissionAtIndex,
+  ]);
+  const isSubmittable = page > showsSubmissionAtIndex; // For demo
 
   useEffect(() => {
     if (!open) {
@@ -89,6 +101,13 @@ const FormBuilder = ({
               hasNext={hasNext}
             />
           </div>
+        </div>
+        <div
+          className={cn(styles.submission, {
+            [styles.visible]: showsSubmission,
+          })}
+        >
+          <SubmissionBlock isSubmittable={isSubmittable} />
         </div>
       </div>
       <div>{footer || commonFooter}</div>
