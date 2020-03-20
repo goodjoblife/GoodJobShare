@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 
 import styles from './SubmissionBlock.module.css';
 
-const SubmissionBlock = ({ isSubmittable }) => {
+const SubmissionBlock = ({ isSubmittable, onSubmit }) => {
   return (
     <div className={styles.container}>
-      <button className={styles.button} disabled={!isSubmittable}>
+      <button
+        className={styles.button}
+        disabled={!isSubmittable}
+        onClick={onSubmit}
+      >
         送出資料並解鎖
       </button>
       <div className={styles.privacyPolicy}>
@@ -16,6 +20,9 @@ const SubmissionBlock = ({ isSubmittable }) => {
   );
 };
 
-SubmissionBlock.propTypes = { isSubmittable: PropTypes.bool.isRequired };
+SubmissionBlock.propTypes = {
+  isSubmittable: PropTypes.bool.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export default SubmissionBlock;

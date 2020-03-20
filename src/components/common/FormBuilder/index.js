@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react';
 import {
   string,
   bool,
@@ -56,11 +56,11 @@ const FormBuilder = ({
     () => R.findLastIndex(R.prop('required'))(questions),
     [questions],
   );
-  const showsSubmission = useMemo(() => page >= showsSubmissionAtIndex, [
-    page,
-    showsSubmissionAtIndex,
-  ]);
+  const showsSubmission = page >= showsSubmissionAtIndex;
   const isSubmittable = page > showsSubmissionAtIndex; // For demo
+  const handleSubmit = useCallback(() => {
+    onSubmit(draft);
+  }, [onSubmit, draft]);
 
   useEffect(() => {
     if (!open) {
@@ -111,7 +111,10 @@ const FormBuilder = ({
             [styles.visible]: showsSubmission,
           })}
         >
-          <SubmissionBlock isSubmittable={isSubmittable} />
+          <SubmissionBlock
+            isSubmittable={isSubmittable}
+            onSubmit={handleSubmit}
+          />
         </div>
       </div>
       <div>{footer || commonFooter}</div>
