@@ -99,6 +99,8 @@ QuestionBuilder.propTypes = {
   required: bool,
   // 驗證內容的函數
   validator: func,
+  // 如果 type=textarea，則此題需要指定最少字數
+  minLength: number,
   // 如果 type=radio 或 type=checkbox，代表此題有選項
   options: arrayOf(string),
   // 如果 type=rating，則此題需要最大值
