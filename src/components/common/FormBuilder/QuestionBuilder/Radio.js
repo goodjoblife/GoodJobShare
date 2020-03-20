@@ -6,6 +6,8 @@ const Radio = ({
   description,
   dataKey,
   required,
+  value,
+  onChange,
   validator,
   options,
 }) => (
@@ -13,7 +15,13 @@ const Radio = ({
     {title}
     {options.map(option => (
       <label key={option}>
-        <input type="radio" name={dataKey} value={option} />
+        <input
+          type="radio"
+          name={dataKey}
+          value={option}
+          checked={option === value}
+          onChange={() => onChange(option)}
+        />
         {option}
       </label>
     ))}
@@ -25,6 +33,8 @@ Radio.propTypes = {
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
   validator: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
