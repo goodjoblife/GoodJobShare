@@ -70,7 +70,7 @@ const questions = [
     type: 'radio',
     dataKey: 'workingArea',
     required: true,
-    validator: () => true,
+    validator: value => !!value,
     options: [
       '台北市',
       '新北市',
