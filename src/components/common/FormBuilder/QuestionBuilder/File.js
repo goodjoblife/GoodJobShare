@@ -8,7 +8,7 @@ import styles from './File.module.css';
 const File = ({ title, description, dataKey, required, validator }) => (
   <div>
     <div className={cn(styles.title, { [styles.necessary]: required })}>
-      <span className={styles.necessary}>4. {title}</span>
+      4. {title}
     </div>
     <div className={styles.description}>{description}</div>
     <label className={styles.upload}>
