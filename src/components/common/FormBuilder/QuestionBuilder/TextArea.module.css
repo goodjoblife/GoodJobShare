@@ -1,0 +1,40 @@
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #555555;
+  margin-bottom: 10px;
+
+  &.necessary::after {
+    content: ' *';
+    color: red;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .textarea {
+    flex: 1;
+    border: solid 1px #bdbdbd;
+    background-color: #ffffff;
+    resize: none;
+    padding: 13px 15px;
+    font-size: 16px;
+    line-height: normal;
+  }
+
+  .warning {
+    display: inline;
+    text-align: right;
+    margin-top: 9px;
+    font-size: 14px;
+    color: #969696;
+    line-height: normal;
+  }
+}

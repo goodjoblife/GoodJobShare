@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
+import styles from './Text.module.css';
 
 const Text = ({
   title,
@@ -11,8 +13,16 @@ const Text = ({
   validator,
 }) => (
   <div>
-    {title}
-    <input type="text" value={value} onChange={e => onChange(e.target.value)} />
+    <div className={cn(styles.title, { [styles.necessary]: required })}>
+      1. {title}
+    </div>
+    <input
+      className={styles.textinput}
+      type="text"
+      placeholder="請輸入職業名稱"
+      value={value}
+      onChange={e => onChange(e.target.value)}
+    />
   </div>
 );
 

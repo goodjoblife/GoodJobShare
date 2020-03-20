@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   string,
   bool,
@@ -36,7 +36,6 @@ const FormBuilder = ({
   onNext,
   onPrev,
   onClickAgreement,
-  onClickCloseBtn,
   onClose,
   msgModalContent,
   openMsgModal,
@@ -51,6 +50,13 @@ const FormBuilder = ({
   const goPrevious = () => setPage(page - 1);
   const goNext = () => setPage(page + 1);
 
+  useEffect(() => {
+    if (!open) {
+      // Reset on close
+      setPage(0);
+    }
+  }, [open, setPage]);
+
   const question = questions[page];
   if (!question) {
     return null;
@@ -59,10 +65,12 @@ const FormBuilder = ({
   const { header, footer, ...restOptions } = question;
   return (
     <div className={styles.container}>
-      <button className={styles.closeBtn}>
-        <X className={styles.icon} />
-      </button>
-      <div>{header || commonHeader}</div>
+      <div className={styles.header}>
+        <button className={styles.closeBtn} onClick={onClose}>
+          <X className={styles.icon} />
+        </button>
+        {header || commonHeader}
+      </div>
       <div className={cn(styles.body, bodyClassName)}>
         <div className={styles.question}>
           <div className={styles.scrollable}>
@@ -125,10 +133,8 @@ FormBuilder.propTypes = {
   onPrev: func,
   // 點擊使用者條款 checkbox
   onClickAgreement: func,
-  // 點擊關閉表單按鈕觸發的函數
-  onClickCloseBtn: func.isRequired,
-  // 真正要關閉表單前觸發的函數（可用於將資料存到 local storage）
-  onClose: func,
+  // 關閉表單前觸發的函數
+  onClose: func.isRequired,
 
   // 訊息 Modal 的內容
   msgModalContent: oneOfType([string, element]),
@@ -141,9 +147,14 @@ FormBuilder.propTypes = {
 };
 
 FormBuilder.defaultProps = {
-  oepn: true,
   layout: 'typeform',
   openMsgModal: false,
 };
 
-export default FormBuilder;
+const withBackgroundMask = Modal => props => (
+  <div className={cn(styles.backgroundMask, { [styles.hidden]: !props.open })}>
+    <Modal {...props} />
+  </div>
+);
+
+export default withBackgroundMask(FormBuilder);

@@ -37,6 +37,7 @@ const QuestionBuilder = ({
   onChange,
   options,
   validator,
+  minLength,
   maxRating,
   renderCustomizedQuestion,
 }) => {
@@ -58,6 +59,7 @@ const QuestionBuilder = ({
         value={value}
         onChange={onChange}
         validator={validator}
+        minLength={minLength}
         options={options}
         maxRating={maxRating}
       />

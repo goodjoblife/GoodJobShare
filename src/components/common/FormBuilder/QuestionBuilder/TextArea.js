@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
+import styles from './TextArea.module.css';
 
 const Textarea = ({
   title,
@@ -9,10 +11,20 @@ const Textarea = ({
   value,
   onChange,
   validator,
+  minLength,
 }) => (
-  <div>
-    {title}
-    <textarea value={value} onChange={e => onChange(e.target.value)} />
+  <div className={styles.container}>
+    <div className={cn(styles.title, { [styles.necessary]: required })}>
+      2. {title}
+    </div>
+    <textarea
+      className={styles.textarea}
+      value={value}
+      onChange={e => onChange(e.target.value)}
+    />
+    <p className={styles.warning}>
+      最少 {minLength} 字，現在 {value.length} 字
+    </p>
   </div>
 );
 
@@ -24,6 +36,7 @@ Textarea.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   validator: PropTypes.func.isRequired,
+  minLength: PropTypes.func.isRequired,
 };
 
 Textarea.defaultProps = {

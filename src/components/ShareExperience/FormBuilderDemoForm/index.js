@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import cn from 'classnames';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faShieldAlt from '@fortawesome/fontawesome-free-solid/faShieldAlt';
@@ -62,6 +62,7 @@ const questions = [
     dataKey: 'relationship',
     required: true,
     validator: () => true,
+    minLength: 30,
   },
   {
     header: jobTitleHeader,
@@ -157,21 +158,27 @@ const questions = [
   },
 ];
 
-const FormBuilderDemoForm = () => (
-  <div style={containerStyle}>
-    <FormBuilder
-      bodyClassName={styles.formBuilder}
-      open
-      header={ctaHeader}
-      footer={footer}
-      submitButtonText="Submit"
-      questions={questions}
-      submitButtonEnabled
-      onChange={console.info}
-      onSubmit={console.info}
-      onClickCloseBtn={console.info}
-    />
-  </div>
-);
+const FormBuilderDemoForm = () => {
+  const [isOpen, setOpen] = useState(true);
+  const open = useCallback(() => setOpen(true), []);
+  const close = useCallback(() => setOpen(false), []);
+  return (
+    <div style={containerStyle}>
+      <button onClick={open}>Open</button>
+      <FormBuilder
+        bodyClassName={styles.formBuilder}
+        open={isOpen}
+        header={ctaHeader}
+        footer={footer}
+        submitButtonText="Submit"
+        questions={questions}
+        submitButtonEnabled
+        onChange={console.info}
+        onSubmit={console.info}
+        onClose={close}
+      />
+    </div>
+  );
+};
 
 export default FormBuilderDemoForm;
