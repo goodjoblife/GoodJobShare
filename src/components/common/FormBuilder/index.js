@@ -57,7 +57,13 @@ const FormBuilder = ({
     [questions],
   );
   const showsSubmission = page >= showsSubmissionAtIndex;
-  const isSubmittable = page > showsSubmissionAtIndex; // For demo
+  const isSubmittable = useMemo(
+    () =>
+      questions.every(({ validator, dataKey }) =>
+        validator ? validator(draft[dataKey]) : true,
+      ),
+    [draft, questions],
+  );
   const handleSubmit = useCallback(() => {
     onSubmit(draft);
   }, [onSubmit, draft]);
