@@ -1,20 +1,17 @@
 .title {
-  width: 315px;
-  height: 25px;
   font-size: 18px;
   font-weight: 500;
   color: #555555;
   margin-bottom: 10px;
 
-  .necessary {
+  & .necessary::after {
+    content: ' *';
     color: red;
   }
 }
 
 .description {
   display: inline-block;
-  width: 310px;
-  height: 46px;
   font-size: 16px;
   line-height: normal;
   color: #555555;
@@ -23,7 +20,10 @@
 .upload {
   width: 310px;
   height: 72px;
-  position: relative;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
   border: solid 2px #bdbdbd;
   border-style: dashed;
@@ -33,12 +33,6 @@
 
 .uploadText {
   display: block;
-  position: absolute;
-  top: 50%;
-  left: 55%;
-  transform: translate(-50%, -50%);
-  width: 75px;
-  height: 24px;
   font-size: 18px;
   line-height: 1.33;
   color: #969696;
@@ -50,11 +44,8 @@
 
 .icon {
   display: block;
-  position: absolute;
-  top: 50%;
-  left: 35%;
-  transform: translate(-50%, -50%);
+  margin-right: 9px;
   width: 19px;
   height: 25px;
-  background-color: #e0e0e0;
+  fill: #e0e0e0;
 }
