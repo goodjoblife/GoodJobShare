@@ -1,15 +1,14 @@
 @value main-yellow from 'common/variables.module.css';
 
 .title {
-  width: 315px;
-  height: 25px;
   font-size: 18px;
   font-weight: 500;
   color: #555555;
-  line-height: normal;
   margin-bottom: 10px;
+  line-height: normal;
 
-  .necessary {
+  &.necessary::after {
+    content: ' *';
     color: red;
   }
 }
@@ -19,28 +18,28 @@
 }
 
 .ratingLabel {
-  margin-top: 33px;
+  margin-top: 20px;
 }
 
 .ratingInput {
   display: none;
 }
 
-.glickContainer {
+.glikeContainer {
   fill: #c5c5c5;
   width: 32px;
   height: 32px;
   transition-property: fill;
   transition-duration: 0.3s;
   cursor: pointer;
-}
 
-.hover {
-  fill: #969696;
-}
+  &:hover {
+    fill: #969696;
+  }
 
-.active {
-  fill: main-yellow;
+  &.active {
+    fill: main-yellow;
+  }
 }
 
 .clickNote {

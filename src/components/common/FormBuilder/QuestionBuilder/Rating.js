@@ -16,25 +16,21 @@ const Rating = ({
   onClick,
 }) => (
   <div className={styles.ratingContainer}>
-    <div className={styles.title}>
+    <div className={cn(styles.title, { [styles.necessary]: required })}>
       5. {title}
-      <span className={styles.necessary}> * </span>
     </div>
     {[...Array(maxRating).keys()].map((_, i) => (
-      <label className={styles.ratingLabel}>
+      <label className={styles.ratingLabel} key={i}>
         <input
           className={styles.ratingInput}
-          key={i}
           type="radio"
           name={dataKey}
           value={i}
         />
         <Glike
-          className={cn(styles.glickContainer, {
-            [styles.hover]: hover,
-            [styles.active]: active,
+          className={cn(styles.glikeContainer, {
+            [styles.active]: i < 3,
           })}
-          onClick={onClick}
         />
       </label>
     ))}
