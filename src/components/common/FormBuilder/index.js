@@ -14,7 +14,8 @@ import R from 'ramda';
 import X from 'common/icons/X';
 
 import QuestionBuilder from './QuestionBuilder';
-import { usePagination } from './usePagination';
+import useDraft from './useDraft';
+import usePagination from './usePagination';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
 import SubmissionBlock from './SubmissionBlock';
@@ -43,15 +44,13 @@ const FormBuilder = ({
   onCloseMsgModal,
   onConfirmMsgModal,
 }) => {
+  const [draft, setDraftValue] = useDraft(questions);
+
   const [page, setPage] = usePagination();
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
-  const goPrevious = () => {
-    setPage(page - 1);
-  };
-  const goNext = () => {
-    setPage(page + 1);
-  };
+  const goPrevious = () => setPage(page - 1);
+  const goNext = () => setPage(page + 1);
 
   const showsSubmissionAtIndex = useMemo(
     () => R.findLastIndex(R.prop('required'))(questions),
@@ -74,6 +73,7 @@ const FormBuilder = ({
   if (!question) {
     return null;
   }
+
   const { header, footer, ...restOptions } = question;
   return (
     <div className={styles.container}>
@@ -86,7 +86,11 @@ const FormBuilder = ({
       <div className={cn(styles.body, bodyClassName)}>
         <div className={styles.question}>
           <div className={styles.scrollable}>
-            <QuestionBuilder {...restOptions} />
+            <QuestionBuilder
+              {...restOptions}
+              value={draft[restOptions.dataKey]}
+              onChange={setDraftValue(restOptions.dataKey)}
+            />
           </div>
         </div>
         <div className={styles.navigationBar}>

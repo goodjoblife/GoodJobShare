@@ -33,14 +33,17 @@ const QuestionBuilder = ({
   type,
   dataKey,
   required,
+  value,
+  onChange,
   options,
   validator,
+  minLength,
   maxRating,
   renderCustomizedQuestion,
 }) => {
   if (type === 'customized') {
     if (renderCustomizedQuestion) {
-      return renderCustomizedQuestion();
+      return renderCustomizedQuestion(value, onChange);
     } else {
       return null;
     }
@@ -53,7 +56,10 @@ const QuestionBuilder = ({
         description={description}
         dataKey={dataKey}
         required={required}
+        value={value}
+        onChange={onChange}
         validator={validator}
+        minLength={minLength}
         options={options}
         maxRating={maxRating}
       />

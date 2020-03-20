@@ -3,7 +3,15 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styles from './Text.module.css';
 
-const Text = ({ title, description, dataKey, required, validator }) => (
+const Text = ({
+  title,
+  description,
+  dataKey,
+  required,
+  value,
+  onChange,
+  validator,
+}) => (
   <div>
     <div className={cn(styles.title, { [styles.necessary]: required })}>
       1. {title}
@@ -12,7 +20,8 @@ const Text = ({ title, description, dataKey, required, validator }) => (
       className={styles.textinput}
       type="text"
       placeholder="請輸入職業名稱"
-      required
+      value={value}
+      onChange={e => onChange(e.target.value)}
     />
   </div>
 );
@@ -22,6 +31,8 @@ Text.propTypes = {
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
   validator: PropTypes.func.isRequired,
 };
 

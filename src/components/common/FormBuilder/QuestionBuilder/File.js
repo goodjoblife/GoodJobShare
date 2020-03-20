@@ -1,11 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const File = ({ title, description, dataKey, required, validator }) => (
+const File = ({
+  title,
+  description,
+  dataKey,
+  required,
+  value,
+  onChange,
+  validator,
+}) => (
   <div>
     {title}
     {description}
-    <input type="file" />
+    <input type="file" value={value} onChange={onChange} />
   </div>
 );
 
@@ -14,6 +22,8 @@ File.propTypes = {
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
   validator: PropTypes.func.isRequired,
 };
 
