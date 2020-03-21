@@ -22,7 +22,7 @@ import SubmissionBlock from './SubmissionBlock';
 import styles from './FormBuilder.module.css';
 
 const findLastRequiredIndex = R.findLastIndex(R.prop('required'));
-const findIfQuestionsApprovesDraft = draft =>
+const findIfQuestionsAcceptDraft = draft =>
   R.all(
     R.ifElse(
       R.has('validator'),
@@ -74,7 +74,7 @@ const FormBuilder = ({
   );
   const showsSubmission = page >= showsSubmissionAtIndex;
   const isSubmittable = useMemo(
-    () => findIfQuestionsApprovesDraft(draft)(questions),
+    () => findIfQuestionsAcceptDraft(draft)(questions),
     [draft, questions],
   );
   const handleSubmit = useCallback(() => {
