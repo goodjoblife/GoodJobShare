@@ -61,6 +61,10 @@ const FormBuilder = ({
   onConfirmMsgModal,
 }) => {
   const [draft, setDraftValue] = useDraft(questions);
+  const handleDraftChange = dataKey => value => {
+    onChange({ dataKey, value });
+    setDraftValue(dataKey)(value);
+  };
 
   const [page, setPage] = usePagination();
   const hasPrevious = page > 0;
@@ -108,7 +112,7 @@ const FormBuilder = ({
             <QuestionBuilder
               {...restOptions}
               value={draft[restOptions.dataKey]}
-              onChange={setDraftValue(restOptions.dataKey)}
+              onChange={handleDraftChange(restOptions.dataKey)}
             />
           </div>
         </div>
