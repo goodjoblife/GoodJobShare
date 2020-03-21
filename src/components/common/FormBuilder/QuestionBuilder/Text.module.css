@@ -1,3 +1,5 @@
+$warning-red: #d0021b;
+
 .title {
   font-size: 18px;
   font-weight: 500;
@@ -21,4 +23,15 @@
     height: 22px;
     color: #c0c0c0;
   }
+
+  &.hasWarning {
+    border-color: $warning-red;
+  }
+}
+
+.warning {
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: 1.07px;
+  color: $warning-red;
 }

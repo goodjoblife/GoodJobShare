@@ -37,6 +37,7 @@ const QuestionBuilder = ({
   onChange,
   options,
   validator,
+  warning,
   minLength,
   maxRating,
   renderCustomizedQuestion,
@@ -58,7 +59,7 @@ const QuestionBuilder = ({
         required={required}
         value={value}
         onChange={onChange}
-        validator={validator}
+        warning={warning}
         minLength={minLength}
         options={options}
         maxRating={maxRating}
@@ -97,8 +98,8 @@ QuestionBuilder.propTypes = {
   dataKey: string.isRequired,
   // 此題是否必填
   required: bool,
-  // 驗證內容的函數
-  validator: func,
+  // 當欄位值未通過檢查時顯示的提示
+  warning: string,
   // 如果 type=radio 或 type=checkbox，代表此題有選項
   options: arrayOf(string),
   // 如果 type=rating，則此題需要最大值

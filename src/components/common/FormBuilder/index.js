@@ -19,6 +19,9 @@ import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
 import styles from './FormBuilder.module.css';
 
+const findWarningAgainstValue = (value, warning, validator) =>
+  validator && !validator(value) ? warning : null;
+
 const FormBuilder = ({
   bodyClassName,
   open,
@@ -62,7 +65,13 @@ const FormBuilder = ({
     return null;
   }
 
-  const { header, footer, ...restOptions } = question;
+  const { header, footer, validator, warning, ...restOptions } = question;
+  const validatedWarning = findWarningAgainstValue(
+    draft[restOptions.dataKey],
+    warning,
+    validator,
+  );
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -78,6 +87,7 @@ const FormBuilder = ({
               {...restOptions}
               value={draft[restOptions.dataKey]}
               onChange={setDraftValue(restOptions.dataKey)}
+              warning={validatedWarning}
             />
           </div>
         </div>
@@ -114,8 +124,13 @@ FormBuilder.propTypes = {
   // 問題列表
   questions: arrayOf(
     shape({
+      // 問卷頁首 & 頁尾，會覆寫共用的頁首 & 頁尾
       header: oneOfType([string, element]),
       footer: oneOfType([string, element]),
+      // 驗證內容的函數
+      validator: func,
+      // 驗證內容失敗時，顯示的警告文字
+      warning: string,
       ...QuestionBuilder.propTypes,
     }),
   ).isRequired,
