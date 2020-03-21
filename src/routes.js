@@ -27,6 +27,7 @@ import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
+import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
 import CompanyPageProvider from './components/Company/CompanyPageProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 
@@ -208,7 +209,7 @@ const routes = [
   },
   {
     path: '/companies/:companyName',
-    component: TimeAndSalary,
+    component: CompanyAndJobTitlePageContainer,
     routes: [
       {
         path: '/companies/:companyName',
@@ -221,7 +222,7 @@ const routes = [
   },
   {
     path: '/job-titles/:jobTitle',
-    component: TimeAndSalary,
+    component: CompanyAndJobTitlePageContainer,
     routes: [
       {
         path: '/job-titles/:jobTitle',
