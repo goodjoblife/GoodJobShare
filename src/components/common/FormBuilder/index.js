@@ -21,6 +21,22 @@ import NavigatorBlock from './NavigatorBlock';
 import SubmissionBlock from './SubmissionBlock';
 import styles from './FormBuilder.module.css';
 
+const findLastRequiredIndex = R.findLastIndex(R.prop('required'));
+const findIfQuestionsApprovesDraft = draft =>
+  R.all(
+    R.ifElse(
+      R.has('validator'),
+      R.converge(R.call, [
+        R.prop('validator'),
+        R.compose(
+          dataKey => draft[dataKey],
+          R.prop('dataKey'),
+        ),
+      ]),
+      R.always(true),
+    ),
+  );
+
 const FormBuilder = ({
   bodyClassName,
   open,
@@ -53,15 +69,12 @@ const FormBuilder = ({
   const goNext = () => setPage(page + 1);
 
   const showsSubmissionAtIndex = useMemo(
-    () => R.findLastIndex(R.prop('required'))(questions),
+    () => findLastRequiredIndex(questions),
     [questions],
   );
   const showsSubmission = page >= showsSubmissionAtIndex;
   const isSubmittable = useMemo(
-    () =>
-      questions.every(({ validator, dataKey }) =>
-        validator ? validator(draft[dataKey]) : true,
-      ),
+    () => findIfQuestionsApprovesDraft(draft)(questions),
     [draft, questions],
   );
   const handleSubmit = useCallback(() => {
