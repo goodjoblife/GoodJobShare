@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   string,
   bool,
@@ -50,6 +50,8 @@ const FormBuilder = ({
   const goPrevious = () => setPage(page - 1);
   const goNext = () => setPage(page + 1);
 
+  const frameRef = useRef(null);
+
   useEffect(() => {
     if (!open) {
       // Reset on close
@@ -57,12 +59,18 @@ const FormBuilder = ({
     }
   }, [open, setPage]);
 
+  useEffect(() => {
+    const frame = frameRef.current;
+    const frameWidth = frame.getBoundingClientRect().width;
+    frameRef.current.scrollTo(frameWidth * page, 0);
+  }, [page]);
+
   const question = questions[page];
   if (!question) {
     return null;
   }
 
-  const { header, footer, ...restOptions } = question;
+  const { header, footer } = question;
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -72,14 +80,20 @@ const FormBuilder = ({
         {header || commonHeader}
       </div>
       <div className={cn(styles.body, bodyClassName)}>
-        <div className={styles.question}>
-          <div className={styles.scrollable}>
-            <QuestionBuilder
-              {...restOptions}
-              value={draft[restOptions.dataKey]}
-              onChange={setDraftValue(restOptions.dataKey)}
-            />
-          </div>
+        <div ref={frameRef} className={styles.frame}>
+          {questions.map(({ header, footer, ...restOptions }) => (
+            <div key={restOptions.dataKey} className={styles.page}>
+              <div className={styles.question}>
+                <div className={styles.scrollable}>
+                  <QuestionBuilder
+                    {...restOptions}
+                    value={draft[restOptions.dataKey]}
+                    onChange={setDraftValue(restOptions.dataKey)}
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
         <div className={styles.navigationBar}>
           <div>
