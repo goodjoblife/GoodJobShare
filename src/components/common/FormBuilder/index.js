@@ -60,7 +60,7 @@ const FormBuilder = ({
   onCloseMsgModal,
   onConfirmMsgModal,
 }) => {
-  const [draft, setDraftValue] = useDraft(questions);
+  const [draft, setDraftValue, resetDraft] = useDraft(questions);
   const handleDraftChange = dataKey => value => {
     onChange({ dataKey, value });
     setDraftValue(dataKey)(value);
@@ -89,8 +89,9 @@ const FormBuilder = ({
     if (!open) {
       // Reset on close
       setPage(0);
+      resetDraft();
     }
-  }, [open, setPage]);
+  }, [open, resetDraft, setPage]);
 
   const question = questions[page];
   if (!question) {
