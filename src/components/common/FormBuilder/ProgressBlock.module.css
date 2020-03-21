@@ -8,6 +8,7 @@ $main-color: #fcd406;
   .done {
     height: 100%;
     background-color: $main-color;
+    transition: width 0.3s;
   }
 }
 
