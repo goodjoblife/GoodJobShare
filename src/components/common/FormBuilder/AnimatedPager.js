@@ -25,7 +25,7 @@ const AnimatedPager = ({ page, children, ...props }) => {
   );
 };
 
-const Page = 'div';
+const Page = props => <div {...props} />;
 
 AnimatedPager.propTypes = {
   children: childrenOfType(Page).isRequired,
