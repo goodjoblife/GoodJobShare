@@ -6,13 +6,21 @@ const Rating = ({
   description,
   dataKey,
   required,
+  value,
+  onChange,
   validator,
   maxRating,
 }) => (
   <div>
     {title}
     {[...Array(maxRating).keys()].map((_, i) => (
-      <input key={i} type="radio" name={dataKey} value={i} />
+      <input
+        key={i}
+        type="checkbox"
+        name={dataKey}
+        checked={i < value}
+        onChange={() => onChange(i + 1)}
+      />
     ))}
   </div>
 );
@@ -22,6 +30,8 @@ Rating.propTypes = {
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
+  value: PropTypes.number,
+  onChange: PropTypes.func.isRequired,
   validator: PropTypes.func.isRequired,
   maxRating: PropTypes.number.isRequired,
 };

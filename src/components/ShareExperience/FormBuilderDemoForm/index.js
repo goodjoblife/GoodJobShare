@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import cn from 'classnames';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faShieldAlt from '@fortawesome/fontawesome-free-solid/faShieldAlt';
@@ -62,6 +62,7 @@ const questions = [
     dataKey: 'relationship',
     required: true,
     validator: () => true,
+    minLength: 30,
   },
   {
     header: jobTitleHeader,
@@ -89,6 +90,19 @@ const questions = [
   },
   {
     header: jobTitleHeader,
+    title: '是否有以下特殊問題？',
+    type: 'checkbox',
+    dataKey: 'specialQuestions',
+    validator: () => true,
+    options: [
+      '詢問家庭狀況',
+      '曾詢問婚姻狀況、生育計畫',
+      '曾要求繳交身分證、保證金',
+      '其他',
+    ],
+  },
+  {
+    header: jobTitleHeader,
     title: '身份驗證',
     description:
       '若完成身份驗證，之後分享此份工作的任何資訊，獎勵都是 10 倍！可以拍下你此份工作的 名片/工作證/薪資單，或足以證明你在該公司上班的文件！',
@@ -111,14 +125,32 @@ const questions = [
     type: 'customized',
     dataKey: 'salaryWorkTime',
     validator: () => true,
-    renderCustomizedQuestion() {
+    renderCustomizedQuestion(object, onChange) {
+      const salaryType = (object && object.type) || '';
+      const salaryAmount = (object && object.amount) || '';
+      const defaultState = { type: null, amount: 0 };
+      const handleChangeFor = field => value =>
+        onChange({ ...defaultState, ...object, [field]: value });
+
       return (
         <div>
-          <select>
-            <option>月薪</option>
+          <select
+            value={salaryType}
+            onChange={e => handleChangeFor('type')(e.target.value)}
+          >
+            <option value="month">月薪</option>
+            <option value="year">年薪</option>
+            <option value="day">日薪</option>
           </select>
           <label>
-            <input type="text" />元
+            <input
+              type="text"
+              value={salaryAmount.toString()}
+              onChange={e =>
+                handleChangeFor('amount')(parseInt(e.target.value, 10))
+              }
+            />
+            元
           </label>
         </div>
       );
@@ -126,21 +158,27 @@ const questions = [
   },
 ];
 
-const FormBuilderDemoForm = () => (
-  <div style={containerStyle}>
-    <FormBuilder
-      bodyClassName={styles.formBuilder}
-      open
-      header={ctaHeader}
-      footer={footer}
-      submitButtonText="Submit"
-      questions={questions}
-      submitButtonEnabled
-      onChange={console.info}
-      onSubmit={console.info}
-      onClickCloseBtn={console.info}
-    />
-  </div>
-);
+const FormBuilderDemoForm = () => {
+  const [isOpen, setOpen] = useState(true);
+  const open = useCallback(() => setOpen(true), []);
+  const close = useCallback(() => setOpen(false), []);
+  return (
+    <div style={containerStyle}>
+      <button onClick={open}>Open</button>
+      <FormBuilder
+        bodyClassName={styles.formBuilder}
+        open={isOpen}
+        header={ctaHeader}
+        footer={footer}
+        submitButtonText="Submit"
+        questions={questions}
+        submitButtonEnabled
+        onChange={console.info}
+        onSubmit={console.info}
+        onClose={close}
+      />
+    </div>
+  );
+};
 
 export default FormBuilderDemoForm;
