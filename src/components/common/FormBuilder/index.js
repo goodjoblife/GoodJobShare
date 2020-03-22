@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import {
   string,
   bool,
@@ -51,6 +51,15 @@ const FormBuilder = ({
   const goNext = () => setPage(page + 1);
 
   const frameRef = useRef(null);
+  const pageOffset = useMemo(() => {
+    const frame = frameRef.current;
+    if (frame) {
+      const frameWidth = frame.getBoundingClientRect().width;
+      return -frameWidth * page;
+    } else {
+      return 0;
+    }
+  }, [page]);
 
   useEffect(() => {
     if (!open) {
@@ -58,12 +67,6 @@ const FormBuilder = ({
       setPage(0);
     }
   }, [open, setPage]);
-
-  useEffect(() => {
-    const frame = frameRef.current;
-    const frameWidth = frame.getBoundingClientRect().width;
-    frameRef.current.scrollTo(frameWidth * page, 0);
-  }, [page]);
 
   const question = questions[page];
   if (!question) {
@@ -82,7 +85,11 @@ const FormBuilder = ({
       <div className={cn(styles.body, bodyClassName)}>
         <div ref={frameRef} className={styles.frame}>
           {questions.map(({ header, footer, ...restOptions }) => (
-            <div key={restOptions.dataKey} className={styles.page}>
+            <div
+              key={restOptions.dataKey}
+              className={styles.page}
+              style={{ left: `${pageOffset}px` }}
+            >
               <div className={styles.question}>
                 <div className={styles.scrollable}>
                   <QuestionBuilder
