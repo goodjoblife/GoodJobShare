@@ -34,7 +34,7 @@ Text.propTypes = {
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
   value: PropTypes.string.isRequired,
-  onConfirm: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   validator: PropTypes.func.isRequired,
 };
