@@ -12,7 +12,7 @@ const File = ({ title, description, dataKey, required, validator }) => (
     </div>
     <div className={styles.description}>{description}</div>
     <label className={styles.upload}>
-      <input id="upload_img" className={styles.image} type="file" />
+      <input className={styles.input} type="file" />
       <FontAwesomeIcon icon={faFile} className={styles.icon} />
       <span className={styles.uploadText}>上傳檔案</span>
     </label>
