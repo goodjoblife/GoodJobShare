@@ -8,6 +8,8 @@ const Radio = ({
   description,
   dataKey,
   required,
+  value,
+  onChange,
   validator,
   options,
 }) => (
@@ -23,6 +25,8 @@ const Radio = ({
             type="radio"
             name={dataKey}
             value={option}
+            checked={option === value}
+            onChange={() => onChange(option)}
           />
           <span className={styles.span}>{option}</span>
         </div>
@@ -36,6 +40,8 @@ Radio.propTypes = {
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
   validator: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
