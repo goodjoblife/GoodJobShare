@@ -5,6 +5,7 @@ import faShieldAlt from '@fortawesome/fontawesome-free-solid/faShieldAlt';
 
 import FormBuilder from 'common/FormBuilder';
 
+import SuccessModal from './SuccessModal';
 import styles from './FormBuilderDemoForm.module.css';
 
 const containerStyle = {
@@ -162,6 +163,10 @@ const FormBuilderDemoForm = () => {
   const [isOpen, setOpen] = useState(true);
   const open = useCallback(() => setOpen(true), []);
   const close = useCallback(() => setOpen(false), []);
+
+  const [isSuccessModalOpen, setSuccessModalOpen] = useState(true);
+  const closeSuccessModal = useCallback(() => setSuccessModalOpen(false), []);
+
   return (
     <div style={containerStyle}>
       <button onClick={open}>Open</button>
@@ -177,6 +182,7 @@ const FormBuilderDemoForm = () => {
         onSubmit={console.info}
         onClose={close}
       />
+      <SuccessModal isOpen={isSuccessModalOpen} close={closeSuccessModal} />
     </div>
   );
 };
