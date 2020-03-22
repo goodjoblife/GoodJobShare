@@ -34,35 +34,14 @@
   display: flex;
   flex-direction: column;
 
-  .frame {
-    flex: 1;
-  }
-}
-
-.frame {
-  position: relative;
-  white-space: nowrap;
-  overflow: hidden;
-
-  .page {
-    width: 100%;
-    height: 100%;
-    white-space: normal;
-  }
-}
-
-.page {
-  position: relative;
-  transition: left 0.3s;
-  display: inline-flex;
-  flex-direction: column;
-
-  .question {
+  .pager {
     flex: 1;
   }
 }
 
 .question {
+  width: 100%;
+  height: 100%;
   position: relative;
 
   .scrollable {

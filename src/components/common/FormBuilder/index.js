@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import {
   string,
   bool,
@@ -17,6 +17,7 @@ import useDraft from './useDraft';
 import usePagination from './usePagination';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
+import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
 
 const FormBuilder = ({
@@ -50,17 +51,6 @@ const FormBuilder = ({
   const goPrevious = () => setPage(page - 1);
   const goNext = () => setPage(page + 1);
 
-  const frameRef = useRef(null);
-  const pageOffset = useMemo(() => {
-    const frame = frameRef.current;
-    if (frame) {
-      const frameWidth = frame.getBoundingClientRect().width;
-      return -frameWidth * page;
-    } else {
-      return 0;
-    }
-  }, [page]);
-
   useEffect(() => {
     if (!open) {
       // Reset on close
@@ -83,13 +73,9 @@ const FormBuilder = ({
         {header || commonHeader}
       </div>
       <div className={cn(styles.body, bodyClassName)}>
-        <div ref={frameRef} className={styles.frame}>
+        <AnimatedPager className={styles.pager} page={page}>
           {questions.map(({ header, footer, ...restOptions }) => (
-            <div
-              key={restOptions.dataKey}
-              className={styles.page}
-              style={{ left: `${pageOffset}px` }}
-            >
+            <AnimatedPager.Page key={restOptions.dataKey}>
               <div className={styles.question}>
                 <div className={styles.scrollable}>
                   <QuestionBuilder
@@ -99,9 +85,9 @@ const FormBuilder = ({
                   />
                 </div>
               </div>
-            </div>
+            </AnimatedPager.Page>
           ))}
-        </div>
+        </AnimatedPager>
         <div className={styles.navigationBar}>
           <div>
             <ProgressBlock page={page} totalPages={questions.length} />
