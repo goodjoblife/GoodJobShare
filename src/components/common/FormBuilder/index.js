@@ -72,11 +72,11 @@ const FormBuilder = ({
   const goPrevious = () => setPage(page - 1);
   const goNext = () => setPage(page + 1);
 
-  const showsSubmissionAtIndex = useMemo(
+  const indexToShowSubmitButton = useMemo(
     () => findLastRequiredIndex(questions),
     [questions],
   );
-  const showsSubmission = page >= showsSubmissionAtIndex;
+  const showsSubmission = page >= indexToShowSubmitButton;
   const isSubmittable = useMemo(
     () => findIfQuestionsAcceptDraft(draft)(questions),
     [draft, questions],
