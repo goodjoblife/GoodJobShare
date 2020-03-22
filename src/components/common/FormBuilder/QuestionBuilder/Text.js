@@ -10,6 +10,7 @@ const Text = ({
   required,
   value,
   onChange,
+  onConfirm,
   validator,
 }) => (
   <div>
@@ -22,6 +23,7 @@ const Text = ({
       placeholder="請輸入職業名稱"
       value={value}
       onChange={e => onChange(e.target.value)}
+      onKeyDown={e => e.key === 'Enter' && onConfirm()}
     />
   </div>
 );
@@ -32,7 +34,8 @@ Text.propTypes = {
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
   validator: PropTypes.func.isRequired,
 };
 
