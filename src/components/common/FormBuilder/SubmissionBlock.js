@@ -16,7 +16,7 @@ const SubmissionBlock = ({ isSubmittable, onSubmit }) => {
       </button>
       <div className={styles.privacyPolicy}>
         我分享的是真實資訊，並遵守中華民國法令，以及本站
-        <Link to="/user-terms" target="_blank">
+        <Link className={styles.link} to="/user-terms" target="_blank">
           使用者條款
         </Link>
       </div>

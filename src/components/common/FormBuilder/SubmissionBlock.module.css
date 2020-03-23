@@ -21,4 +21,8 @@
   margin-top: 4px;
   font-size: 11px;
   color: #555555;
+
+  .link {
+    color: #02309e;
+  }
 }
