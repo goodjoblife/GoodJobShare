@@ -35,6 +35,7 @@ const QuestionBuilder = ({
   required,
   value,
   onChange,
+  onConfirm,
   options,
   validator,
   minLength,
@@ -58,6 +59,7 @@ const QuestionBuilder = ({
         required={required}
         value={value}
         onChange={onChange}
+        onConfirm={onConfirm}
         validator={validator}
         minLength={minLength}
         options={options}

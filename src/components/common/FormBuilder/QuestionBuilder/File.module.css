@@ -1,0 +1,49 @@
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #555555;
+  margin-bottom: 10px;
+
+  &.necessary::after {
+    content: ' *';
+    color: red;
+  }
+}
+
+.description {
+  display: inline-block;
+  font-size: 16px;
+  line-height: normal;
+  color: #555555;
+}
+
+.upload {
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  border: dashed 2px #bdbdbd;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.uploadText {
+  display: block;
+  font-size: 18px;
+  line-height: 1.33;
+  color: #969696;
+}
+
+.input {
+  display: none;
+}
+
+.icon {
+  display: block;
+  margin-right: 9px;
+  width: 19px;
+  height: 25px;
+  fill: #e0e0e0;
+}
