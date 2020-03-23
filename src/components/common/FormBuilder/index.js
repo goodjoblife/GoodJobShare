@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   string,
   bool,
@@ -102,6 +102,8 @@ const FormBuilder = ({
   let validatedWarning;
   let shouldRenderNothing = false;
 
+  const [isWarningShown, setWarningShown] = useState(false);
+
   const question = questions[page];
   if (question) {
     header = question.header;
@@ -116,10 +118,15 @@ const FormBuilder = ({
   }
 
   const handleNext = useCallback(() => {
+    setWarningShown(true);
     if (!validatedWarning) {
       goNext();
     }
   }, [goNext, validatedWarning]);
+
+  useEffect(() => {
+    setWarningShown(false);
+  }, [page]);
 
   if (shouldRenderNothing) {
     return null;
@@ -144,7 +151,7 @@ const FormBuilder = ({
                     value={draft[restOptions.dataKey]}
                     onChange={handleDraftChange(restOptions.dataKey)}
                     onConfirm={handleNext}
-                    warning={validatedWarning}
+                    warning={isWarningShown ? validatedWarning : null}
                   />
                 </div>
               </div>
