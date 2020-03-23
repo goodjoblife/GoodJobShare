@@ -114,6 +114,7 @@ const FormBuilder = ({
               {...restOptions}
               value={draft[restOptions.dataKey]}
               onChange={handleDraftChange(restOptions.dataKey)}
+              onConfirm={goNext}
             />
           </div>
         </div>
