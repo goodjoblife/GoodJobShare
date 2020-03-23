@@ -1,8 +1,27 @@
+.backgroundMask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: hsla(0, 0%, 100%, 0.9);
+  display: flex;
+  justify-content: center;
+  z-index: 999;
+
+  &.hidden {
+    display: none;
+  }
+}
+
 .container {
-  position: relative;
-  border: 1px solid black;
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
   width: 360px;
-  height: 624px;
+  background: #ffffff;
+  box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.2);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 
@@ -30,11 +49,17 @@
   }
 }
 
-.closeBtn {
-  position: absolute;
-  top: 23px;
-  right: 23px;
+.header {
+  position: relative;
 
+  .closeBtn {
+    position: absolute;
+    top: 23px;
+    right: 23px;
+  }
+}
+
+.closeBtn {
   .icon {
     width: 19px;
     height: 19px;

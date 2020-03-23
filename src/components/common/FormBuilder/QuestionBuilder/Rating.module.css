@@ -13,11 +13,11 @@
   }
 }
 
-.ratingContainer {
-  position: relative;
+.flexContainer {
+  display: flex;
 }
 
-.ratingLabel {
+.ratingWrapper {
   margin-top: 20px;
 }
 
@@ -34,20 +34,19 @@
   cursor: pointer;
 
   &:hover {
-    fill: #969696;
-  }
-
-  &.active {
     fill: main-yellow;
   }
 }
 
+.noteContainer {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
 .clickNote {
-  width: 82px;
-  height: 23px;
-  position: absolute;
-  right: 10%;
-  top: 76%;
   font-size: 15px;
   line-height: 1.53;
   color: #000000;
