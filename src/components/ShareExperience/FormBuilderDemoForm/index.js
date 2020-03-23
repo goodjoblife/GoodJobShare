@@ -165,7 +165,7 @@ const FormBuilderDemoForm = () => {
   const close = useCallback(() => setOpen(false), []);
 
   const [draft, setDraft] = useState(null);
-  const [isSuccessModalOpen, setSuccessModalOpen] = useState(true);
+  const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
   const handleCloseSuccessModal = useCallback(() => {
     alert(JSON.stringify(draft));
     setSuccessModalOpen(false);
