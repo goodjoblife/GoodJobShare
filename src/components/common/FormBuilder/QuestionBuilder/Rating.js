@@ -8,6 +8,7 @@ const Rating = ({
   required,
   value,
   onChange,
+  onConfirm,
   validator,
   maxRating,
 }) => (
@@ -19,7 +20,10 @@ const Rating = ({
         type="checkbox"
         name={dataKey}
         checked={i < value}
-        onChange={() => onChange(i + 1)}
+        onChange={() => {
+          onChange(i + 1);
+          onConfirm();
+        }}
       />
     ))}
   </div>
@@ -32,6 +36,7 @@ Rating.propTypes = {
   required: PropTypes.bool,
   value: PropTypes.number,
   onChange: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
   validator: PropTypes.func.isRequired,
   maxRating: PropTypes.number.isRequired,
 };

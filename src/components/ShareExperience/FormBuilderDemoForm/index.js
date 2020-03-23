@@ -71,7 +71,7 @@ const questions = [
     type: 'radio',
     dataKey: 'workingArea',
     required: true,
-    validator: () => true,
+    validator: value => !!value,
     options: [
       '台北市',
       '新北市',
@@ -164,8 +164,18 @@ const FormBuilderDemoForm = () => {
   const open = useCallback(() => setOpen(true), []);
   const close = useCallback(() => setOpen(false), []);
 
+  const [draft, setDraft] = useState(null);
   const [isSuccessModalOpen, setSuccessModalOpen] = useState(true);
-  const closeSuccessModal = useCallback(() => setSuccessModalOpen(false), []);
+  const handleCloseSuccessModal = useCallback(() => {
+    alert(JSON.stringify(draft));
+    setSuccessModalOpen(false);
+    close();
+  }, [close, draft]);
+
+  const handleSubmit = useCallback(draft => {
+    setDraft(draft);
+    setSuccessModalOpen(true);
+  }, []);
 
   return (
     <div style={containerStyle}>
@@ -179,10 +189,13 @@ const FormBuilderDemoForm = () => {
         questions={questions}
         submitButtonEnabled
         onChange={console.info}
-        onSubmit={console.info}
+        onSubmit={handleSubmit}
         onClose={close}
       />
-      <SuccessModal isOpen={isSuccessModalOpen} close={closeSuccessModal} />
+      <SuccessModal
+        isOpen={isSuccessModalOpen}
+        close={handleCloseSuccessModal}
+      />
     </div>
   );
 };
