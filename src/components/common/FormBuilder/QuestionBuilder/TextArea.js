@@ -10,7 +10,7 @@ const Textarea = ({
   required,
   value,
   onChange,
-  validator,
+  warning,
   minLength,
 }) => (
   <div className={styles.container}>
@@ -35,8 +35,8 @@ Textarea.propTypes = {
   required: PropTypes.bool,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  validator: PropTypes.func.isRequired,
-  minLength: PropTypes.func.isRequired,
+  warning: PropTypes.string,
+  minLength: PropTypes.number.isRequired,
 };
 
 Textarea.defaultProps = {

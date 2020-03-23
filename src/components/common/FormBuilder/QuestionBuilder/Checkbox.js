@@ -17,7 +17,7 @@ const Checkbox = ({
   required,
   value: values,
   onChange,
-  validator,
+  warning,
   options,
 }) => (
   <div>
@@ -44,7 +44,7 @@ Checkbox.propTypes = {
   required: PropTypes.bool,
   value: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
-  validator: PropTypes.func.isRequired,
+  warning: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 

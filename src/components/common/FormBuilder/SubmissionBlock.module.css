@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  height: 51px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.86px;
+  text-align: center;
+  color: #ffffff;
+  background-color: #000000;
+
+  &[disabled] {
+    opacity: 0.5;
+  }
+}
+
+.privacyPolicy {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #555555;
+
+  .link {
+    color: #02309e;
+  }
+}

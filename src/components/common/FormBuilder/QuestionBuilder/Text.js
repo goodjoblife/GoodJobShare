@@ -8,9 +8,10 @@ const Text = ({
   description,
   dataKey,
   required,
-  warning,
   value,
   onChange,
+  onConfirm,
+  warning,
 }) => (
   <div>
     <div className={cn(styles.title, { [styles.necessary]: required })}>
@@ -22,6 +23,7 @@ const Text = ({
       placeholder="請輸入職業名稱"
       value={value}
       onChange={e => onChange(e.target.value)}
+      onKeyDown={e => e.key === 'Enter' && onConfirm()}
     />
     <div className={styles.warning}>{warning}</div>
   </div>
@@ -34,6 +36,7 @@ Text.propTypes = {
   required: PropTypes.bool,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
 };
 

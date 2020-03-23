@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faFile from '@fortawesome/fontawesome-free-solid/faFile';
+import styles from './File.module.css';
 
 const File = ({
   title,
@@ -8,12 +12,23 @@ const File = ({
   required,
   value,
   onChange,
-  validator,
+  warning,
 }) => (
   <div>
-    {title}
-    {description}
-    <input type="file" value={value} onChange={onChange} />
+    <div className={cn(styles.title, { [styles.necessary]: required })}>
+      4. {title}
+    </div>
+    <div className={styles.description}>{description}</div>
+    <label className={styles.upload}>
+      <input
+        className={styles.input}
+        type="file"
+        value={value}
+        onChange={onChange}
+      />
+      <FontAwesomeIcon icon={faFile} className={styles.icon} />
+      <span className={styles.uploadText}>上傳檔案</span>
+    </label>
   </div>
 );
 
@@ -24,7 +39,7 @@ File.propTypes = {
   required: PropTypes.bool,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  validator: PropTypes.func.isRequired,
+  warning: PropTypes.string,
 };
 
 File.defaultProps = {

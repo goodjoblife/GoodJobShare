@@ -160,6 +160,14 @@ const FormBuilderDemoForm = () => {
   const [isOpen, setOpen] = useState(true);
   const open = useCallback(() => setOpen(true), []);
   const close = useCallback(() => setOpen(false), []);
+  const handleSubmit = useCallback(
+    draft => {
+      alert(JSON.stringify(draft));
+      close();
+    },
+    [close],
+  );
+
   return (
     <div style={containerStyle}>
       <button onClick={open}>Open</button>
@@ -172,7 +180,7 @@ const FormBuilderDemoForm = () => {
         questions={questions}
         submitButtonEnabled
         onChange={console.info}
-        onSubmit={console.info}
+        onSubmit={handleSubmit}
         onClose={close}
       />
     </div>
