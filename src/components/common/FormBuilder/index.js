@@ -73,8 +73,8 @@ const FormBuilder = ({
   const [page, setPage] = usePagination();
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
-  const goPrevious = () => setPage(page - 1);
-  const goNext = () => setPage(page + 1);
+  const goPrevious = useCallback(() => setPage(page - 1), [page, setPage]);
+  const goNext = useCallback(() => setPage(page + 1), [page, setPage]);
 
   const indexToShowSubmitButton = useMemo(
     () => findLastRequiredIndex(questions),
@@ -97,17 +97,33 @@ const FormBuilder = ({
     }
   }, [open, resetDraft, setPage]);
 
+  let header;
+  let footer;
+  let validatedWarning;
+  let shouldRenderNothing = false;
+
   const question = questions[page];
-  if (!question) {
-    return null;
+  if (question) {
+    header = question.header;
+    footer = question.footer;
+    validatedWarning = findWarningAgainstValue(
+      draft[question.dataKey],
+      question.warning,
+      question.validator,
+    );
+  } else {
+    shouldRenderNothing = true;
   }
 
-  const { header, footer, validator, warning, ...restOptions } = question;
-  const validatedWarning = findWarningAgainstValue(
-    draft[restOptions.dataKey],
-    warning,
-    validator,
-  );
+  const handleNext = useCallback(() => {
+    if (!validatedWarning) {
+      goNext();
+    }
+  }, [goNext, validatedWarning]);
+
+  if (shouldRenderNothing) {
+    return null;
+  }
 
   return (
     <div className={styles.container}>
@@ -127,7 +143,7 @@ const FormBuilder = ({
                     {...restOptions}
                     value={draft[restOptions.dataKey]}
                     onChange={handleDraftChange(restOptions.dataKey)}
-                    onConfirm={goNext}
+                    onConfirm={handleNext}
                     warning={validatedWarning}
                   />
                 </div>
@@ -142,7 +158,7 @@ const FormBuilder = ({
           <div className={styles.navigator}>
             <NavigatorBlock
               onPrevious={goPrevious}
-              onNext={goNext}
+              onNext={handleNext}
               hasPrevious={hasPrevious}
               hasNext={hasNext}
             />
