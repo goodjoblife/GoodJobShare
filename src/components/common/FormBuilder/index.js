@@ -19,6 +19,7 @@ import usePagination from './usePagination';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
 import SubmissionBlock from './SubmissionBlock';
+import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
 
 const findLastRequiredIndex = R.findLastIndex(R.prop('required'));
@@ -98,7 +99,7 @@ const FormBuilder = ({
     return null;
   }
 
-  const { header, footer, ...restOptions } = question;
+  const { header, footer } = question;
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -108,16 +109,22 @@ const FormBuilder = ({
         {header || commonHeader}
       </div>
       <div className={cn(styles.body, bodyClassName)}>
-        <div className={styles.question}>
-          <div className={styles.scrollable}>
-            <QuestionBuilder
-              {...restOptions}
-              value={draft[restOptions.dataKey]}
-              onChange={handleDraftChange(restOptions.dataKey)}
-              onConfirm={goNext}
-            />
-          </div>
-        </div>
+        <AnimatedPager className={styles.pager} page={page}>
+          {questions.map(({ header, footer, ...restOptions }) => (
+            <AnimatedPager.Page key={restOptions.dataKey}>
+              <div className={styles.question}>
+                <div className={styles.scrollable}>
+                  <QuestionBuilder
+                    {...restOptions}
+                    value={draft[restOptions.dataKey]}
+                    onChange={handleDraftChange(restOptions.dataKey)}
+                    onConfirm={goNext}
+                  />
+                </div>
+              </div>
+            </AnimatedPager.Page>
+          ))}
+        </AnimatedPager>
         <div className={styles.navigationBar}>
           <div>
             <ProgressBlock page={page} totalPages={questions.length} />
