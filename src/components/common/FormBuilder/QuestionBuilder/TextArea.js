@@ -36,7 +36,7 @@ Textarea.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   validator: PropTypes.func.isRequired,
-  minLength: PropTypes.func.isRequired,
+  minLength: PropTypes.number.isRequired,
 };
 
 Textarea.defaultProps = {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react';
 import {
   string,
   bool,
@@ -9,6 +9,7 @@ import {
   arrayOf,
 } from 'prop-types';
 import cn from 'classnames';
+import R from 'ramda';
 
 import X from 'common/icons/X';
 
@@ -17,8 +18,25 @@ import useDraft from './useDraft';
 import usePagination from './usePagination';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
+import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
+
+const findLastRequiredIndex = R.findLastIndex(R.prop('required'));
+const findIfQuestionsAcceptDraft = draft =>
+  R.all(
+    R.ifElse(
+      R.has('validator'),
+      R.converge(R.call, [
+        R.prop('validator'),
+        R.compose(
+          dataKey => draft[dataKey],
+          R.prop('dataKey'),
+        ),
+      ]),
+      R.always(true),
+    ),
+  );
 
 const FormBuilder = ({
   bodyClassName,
@@ -43,7 +61,11 @@ const FormBuilder = ({
   onCloseMsgModal,
   onConfirmMsgModal,
 }) => {
-  const [draft, setDraftValue] = useDraft(questions);
+  const [draft, setDraftValue, resetDraft] = useDraft(questions);
+  const handleDraftChange = dataKey => value => {
+    onChange({ dataKey, value });
+    setDraftValue(dataKey)(value);
+  };
 
   const [page, setPage] = usePagination();
   const hasPrevious = page > 0;
@@ -51,12 +73,26 @@ const FormBuilder = ({
   const goPrevious = () => setPage(page - 1);
   const goNext = () => setPage(page + 1);
 
+  const indexToShowSubmitButton = useMemo(
+    () => findLastRequiredIndex(questions),
+    [questions],
+  );
+  const showsSubmission = page >= indexToShowSubmitButton;
+  const isSubmittable = useMemo(
+    () => findIfQuestionsAcceptDraft(draft)(questions),
+    [draft, questions],
+  );
+  const handleSubmit = useCallback(() => {
+    onSubmit(draft);
+  }, [onSubmit, draft]);
+
   useEffect(() => {
     if (!open) {
       // Reset on close
       setPage(0);
+      resetDraft();
     }
-  }, [open, setPage]);
+  }, [open, resetDraft, setPage]);
 
   const question = questions[page];
   if (!question) {
@@ -81,7 +117,7 @@ const FormBuilder = ({
                   <QuestionBuilder
                     {...restOptions}
                     value={draft[restOptions.dataKey]}
-                    onChange={setDraftValue(restOptions.dataKey)}
+                    onChange={handleDraftChange(restOptions.dataKey)}
                     onConfirm={goNext}
                   />
                 </div>
@@ -101,6 +137,16 @@ const FormBuilder = ({
               hasNext={hasNext}
             />
           </div>
+        </div>
+        <div
+          className={cn(styles.submission, {
+            [styles.visible]: showsSubmission,
+          })}
+        >
+          <SubmissionBlock
+            isSubmittable={isSubmittable}
+            onSubmit={handleSubmit}
+          />
         </div>
       </div>
       <div>{footer || commonFooter}</div>
