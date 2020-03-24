@@ -31,6 +31,7 @@
 }
 
 .glikeContainer {
+  fill: #c5c5c5;
   width: 32px;
   height: 32px;
   transition-property: fill;
