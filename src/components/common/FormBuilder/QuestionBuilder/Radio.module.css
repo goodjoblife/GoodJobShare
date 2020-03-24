@@ -21,9 +21,10 @@
     line-height: 44px;
     text-align: center;
     color: #333333;
+    cursor: pointer;
   }
 
-  :checked + .button {
+  .input:checked + .button {
     background-color: #626262;
     color: #ffffff;
   }
