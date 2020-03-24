@@ -23,16 +23,12 @@
     color: #333333;
   }
 
-  .span {
-    display: block;
+  :checked + .button {
+    background-color: #626262;
+    color: #ffffff;
   }
 }
 
 .input {
   display: none;
-
-  &:checked + span {
-    background-color: #626262;
-    color: #ffffff;
-  }
 }

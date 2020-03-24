@@ -19,17 +19,15 @@ const Radio = ({
     </div>
     {options.map(option => (
       <label className={styles.label} key={option}>
-        <div className={styles.button}>
-          <input
-            className={styles.input}
-            type="radio"
-            name={dataKey}
-            value={option}
-            checked={option === value}
-            onChange={() => onChange(option)}
-          />
-          <span className={styles.span}>{option}</span>
-        </div>
+        <input
+          className={styles.input}
+          type="radio"
+          name={dataKey}
+          value={option}
+          checked={option === value}
+          onChange={() => onChange(option)}
+        />
+        <div className={styles.button}>{option}</div>
       </label>
     ))}
   </div>
