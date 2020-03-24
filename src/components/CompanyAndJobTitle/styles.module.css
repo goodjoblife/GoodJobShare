@@ -1,0 +1,41 @@
+@value below-desktop, below-small, below-mobile, page-gutter-s from "common/variables.module.css";
+
+.container {
+  display: flex;
+  justify-content: center;
+  max-width: 1360px;
+  margin: auto;
+  margin-top: 40px;
+
+  /* Overwriting padding between 1024px and 850px*/
+  @media (max-width: below-desktop) {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  @media (max-width: below-mobile) {
+    padding-left: page-gutter-s;
+    padding-right: page-gutter-s;
+  }
+}
+
+.leftContainer {
+  flex-shrink: 1;
+  padding: 0 32px;
+  width: 100%;
+
+  @media (max-width: below-small) {
+    padding: 0;
+  }
+}
+
+.sideAds {
+  width: 160px;
+  height: 600px;
+  flex-shrink: 0;
+  margin-right: 16px;
+
+  @media (max-width: below-small) {
+    display: none;
+  }
+}
