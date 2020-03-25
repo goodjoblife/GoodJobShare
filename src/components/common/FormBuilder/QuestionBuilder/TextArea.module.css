@@ -27,14 +27,21 @@
     padding: 13px 15px;
     font-size: 16px;
     line-height: normal;
+
+    &.hasWarning {
+      border-color: #d50000;
+    }
   }
 
-  .warning {
-    display: inline;
+  .count {
     text-align: right;
     margin-top: 9px;
     font-size: 14px;
     color: #969696;
     line-height: normal;
+
+    &.warning {
+      color: #d50000;
+    }
   }
 }

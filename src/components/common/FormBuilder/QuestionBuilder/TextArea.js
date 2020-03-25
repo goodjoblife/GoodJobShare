@@ -18,11 +18,11 @@ const Textarea = ({
       2. {title}
     </div>
     <textarea
-      className={styles.textarea}
+      className={cn(styles.textarea, { [styles.hasWarning]: !!warning })}
       value={value}
       onChange={e => onChange(e.target.value)}
     />
-    <p className={styles.warning}>
+    <p className={cn(styles.count, { [styles.warning]: !!warning })}>
       最少 {minLength} 字，現在 {value.length} 字
     </p>
   </div>
