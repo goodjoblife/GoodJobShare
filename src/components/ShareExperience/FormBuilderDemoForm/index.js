@@ -4,8 +4,8 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faShieldAlt from '@fortawesome/fontawesome-free-solid/faShieldAlt';
 
 import FormBuilder from 'common/FormBuilder';
+import SuccessModal from 'common/FormBuilder/Modals/SuccessModal';
 
-import SuccessModal from './SuccessModal';
 import styles from './FormBuilderDemoForm.module.css';
 
 const containerStyle = {
