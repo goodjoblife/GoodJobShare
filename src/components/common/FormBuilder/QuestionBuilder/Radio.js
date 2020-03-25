@@ -33,7 +33,7 @@ const Radio = ({
           checked={option === value}
           onChange={() => {
             onChange(option);
-            onConfirm();
+            setTimeout(onConfirm, 300);
           }}
         />
         <div className={styles.button}>{option}</div>

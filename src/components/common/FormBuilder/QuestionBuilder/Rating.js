@@ -40,7 +40,7 @@ const Rating = ({
               checked={i < value}
               onChange={() => {
                 onChange(i + 1);
-                onConfirm();
+                setTimeout(onConfirm, 300);
               }}
             />
             <Glike className={cn(styles.glikeContainer)} />
