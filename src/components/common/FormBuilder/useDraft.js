@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import R from 'ramda';
 
 const defaultValueForType = type => {
@@ -41,11 +41,18 @@ const toDraft = R.compose(
 const useDraft = questions => {
   const [draft, setDraft] = useState(() => toDraft(questions));
 
-  const setDraftValue = dataKey => value => {
-    setDraft({ ...draft, [dataKey]: value });
-  };
+  const setDraftValue = useCallback(
+    dataKey => value => {
+      setDraft({ ...draft, [dataKey]: value });
+    },
+    [draft, setDraft],
+  );
 
-  return [draft, setDraftValue];
+  const resetDraft = useCallback(() => {
+    setDraft(toDraft(questions));
+  }, [questions]);
+
+  return [draft, setDraftValue, resetDraft];
 };
 
 export default useDraft;

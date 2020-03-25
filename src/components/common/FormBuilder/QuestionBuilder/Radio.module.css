@@ -1,0 +1,35 @@
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #555555;
+  margin-bottom: 10px;
+
+  &.necessary::after {
+    content: ' *';
+    color: red;
+  }
+}
+
+.label {
+  display: block;
+
+  .button {
+    display: block;
+    margin-top: 9px;
+    background-color: #f0f0f0;
+    font-size: 18px;
+    line-height: 44px;
+    text-align: center;
+    color: #333333;
+    cursor: pointer;
+  }
+
+  .input:checked + .button {
+    background-color: #626262;
+    color: #ffffff;
+  }
+}
+
+.input {
+  display: none;
+}
