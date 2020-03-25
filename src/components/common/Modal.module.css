@@ -45,6 +45,10 @@ $orange: #ec7910;
 
 .xs {
   width: 249px;
+
+  .content {
+    padding: 40px 18px;
+  }
 }
 
 .s {
