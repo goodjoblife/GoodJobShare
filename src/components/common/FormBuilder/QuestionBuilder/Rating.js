@@ -18,7 +18,7 @@ const Rating = ({
   validator,
   maxRating,
 }) => (
-  <div className={styles.ratingContainer}>
+  <div>
     <div className={cn(styles.title, { [styles.necessary]: required })}>
       5. {title}
     </div>
