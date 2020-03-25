@@ -9,6 +9,7 @@
     line-height: 44px;
     text-align: center;
     color: #333333;
+    transition: color, background-color 0.3s;
     cursor: pointer;
   }
 
