@@ -1,0 +1,52 @@
+@value main-yellow from 'common/variables.module.css';
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #555555;
+  margin-bottom: 10px;
+  line-height: normal;
+
+  &.necessary::after {
+    content: ' *';
+    color: red;
+  }
+}
+
+.flexContainer {
+  display: flex;
+  margin-top: 20px;
+
+  .noteContainer {
+    flex: 1;
+  }
+}
+
+.ratingInput {
+  display: none;
+
+  &:checked + .glikeContainer {
+    fill: main-yellow;
+  }
+}
+
+.glikeContainer {
+  fill: #c5c5c5;
+  width: 32px;
+  height: 32px;
+  transition-property: fill;
+  transition-duration: 0.3s;
+  cursor: pointer;
+}
+
+.noteContainer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.clickNote {
+  font-size: 15px;
+  line-height: 1.53;
+  color: #000000;
+}

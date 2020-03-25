@@ -8,7 +8,9 @@ import styles from './AnimatedPager.module.css';
 const AnimatedPager = ({ page, children, ...props }) => {
   const [frameWidth, setFrameWidth] = useState(0);
   const handleRef = useCallback(node => {
-    setFrameWidth(node.getBoundingClientRect().width);
+    if (node) {
+      setFrameWidth(node.getBoundingClientRect().width);
+    }
   }, []);
 
   return (

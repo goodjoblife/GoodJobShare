@@ -43,6 +43,10 @@ $orange: #ec7910;
   }
 }
 
+.xs {
+  width: 249px;
+}
+
 .s {
   width: 470px;
 

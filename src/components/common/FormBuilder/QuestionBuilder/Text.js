@@ -23,7 +23,12 @@ const Text = ({
       placeholder="請輸入職業名稱"
       value={value}
       onChange={e => onChange(e.target.value)}
-      onKeyDown={e => e.key === 'Enter' && onConfirm()}
+      onKeyDown={e => {
+        if (e.key === 'Enter') {
+          e.target.blur();
+          onConfirm();
+        }
+      }}
     />
     <div className={styles.warning}>{warning}</div>
   </div>
