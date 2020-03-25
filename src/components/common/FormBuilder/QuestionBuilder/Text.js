@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
+
 import styles from './Text.module.css';
+import TitleBlock from '../TitleBlock';
 
 const Text = ({
+  page,
   title,
   description,
   dataKey,
@@ -14,9 +16,12 @@ const Text = ({
   validator,
 }) => (
   <div>
-    <div className={cn(styles.title, { [styles.necessary]: required })}>
-      1. {title}
-    </div>
+    <TitleBlock
+      page={page}
+      title={title}
+      description={description}
+      required={required}
+    />
     <input
       className={styles.textinput}
       type="text"
@@ -34,6 +39,7 @@ const Text = ({
 );
 
 Text.propTypes = {
+  page: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,

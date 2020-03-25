@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
+
 import styles from './Radio.module.css';
+import TitleBlock from '../TitleBlock';
 
 const Radio = ({
+  page,
   title,
   description,
   dataKey,
@@ -15,9 +17,12 @@ const Radio = ({
   options,
 }) => (
   <div>
-    <div className={cn(styles.title, { [styles.necessary]: required })}>
-      3. {title}
-    </div>
+    <TitleBlock
+      page={page}
+      title={title}
+      description={description}
+      required={required}
+    />
     {options.map(option => (
       <label className={styles.label} key={option}>
         <input
@@ -38,6 +43,7 @@ const Radio = ({
 );
 
 Radio.propTypes = {
+  page: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,

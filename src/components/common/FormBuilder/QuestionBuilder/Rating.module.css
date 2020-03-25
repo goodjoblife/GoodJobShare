@@ -1,18 +1,5 @@
 @value main-yellow from 'common/variables.module.css';
 
-.title {
-  font-size: 18px;
-  font-weight: 500;
-  color: #555555;
-  margin-bottom: 10px;
-  line-height: normal;
-
-  &.necessary::after {
-    content: ' *';
-    color: red;
-  }
-}
-
 .flexContainer {
   display: flex;
   margin-top: 20px;

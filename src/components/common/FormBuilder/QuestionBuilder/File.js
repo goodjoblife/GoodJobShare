@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faFile from '@fortawesome/fontawesome-free-solid/faFile';
 import styles from './File.module.css';
+import TitleBlock from '../TitleBlock';
 
 const File = ({
+  page,
   title,
   description,
   dataKey,
@@ -15,10 +16,12 @@ const File = ({
   validator,
 }) => (
   <div>
-    <div className={cn(styles.title, { [styles.necessary]: required })}>
-      4. {title}
-    </div>
-    <div className={styles.description}>{description}</div>
+    <TitleBlock
+      page={page}
+      title={title}
+      description={description}
+      required={required}
+    />
     <label className={styles.upload}>
       <input
         className={styles.input}
@@ -33,6 +36,7 @@ const File = ({
 );
 
 File.propTypes = {
+  page: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
