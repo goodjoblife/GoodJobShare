@@ -4,6 +4,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faShieldAlt from '@fortawesome/fontawesome-free-solid/faShieldAlt';
 
 import FormBuilder from 'common/FormBuilder';
+import SuccessModal from 'common/FormBuilder/Modals/SuccessModal';
 
 import styles from './FormBuilderDemoForm.module.css';
 
@@ -162,13 +163,19 @@ const FormBuilderDemoForm = () => {
   const [isOpen, setOpen] = useState(true);
   const open = useCallback(() => setOpen(true), []);
   const close = useCallback(() => setOpen(false), []);
-  const handleSubmit = useCallback(
-    draft => {
-      alert(JSON.stringify(draft));
-      close();
-    },
-    [close],
-  );
+
+  const [draft, setDraft] = useState(null);
+  const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
+  const handleCloseSuccessModal = useCallback(() => {
+    alert(JSON.stringify(draft));
+    setSuccessModalOpen(false);
+    close();
+  }, [close, draft]);
+
+  const handleSubmit = useCallback(draft => {
+    setDraft(draft);
+    setSuccessModalOpen(true);
+  }, []);
 
   return (
     <div style={containerStyle}>
@@ -184,6 +191,10 @@ const FormBuilderDemoForm = () => {
         onChange={console.info}
         onSubmit={handleSubmit}
         onClose={close}
+      />
+      <SuccessModal
+        isOpen={isSuccessModalOpen}
+        close={handleCloseSuccessModal}
       />
     </div>
   );
