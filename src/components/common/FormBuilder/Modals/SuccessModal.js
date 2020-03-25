@@ -4,7 +4,7 @@ import Modal from 'common/Modal';
 import styles from './SuccessModal.module.css';
 
 const SuccessModal = props => (
-  <Modal {...props} size="xs" contentClassName={styles.modal}>
+  <Modal {...props} size="xs" contentClassName={styles.content}>
     <div className={styles.title}>上傳成功</div>
     <div className={styles.subTitle}>你已解鎖全站資訊 48 小時</div>
     <div className={styles.description}>
