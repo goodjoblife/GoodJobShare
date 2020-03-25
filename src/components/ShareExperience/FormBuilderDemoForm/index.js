@@ -116,6 +116,8 @@ const questions = [
     title: '當我需要協助時，主管願意且可以貢獻他的時間協助我',
     type: 'rating',
     dataKey: 'support',
+    validator: value => !!value,
+    warning: '請點擊做評分',
     maxRating: 5,
   },
   {

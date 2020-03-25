@@ -23,7 +23,9 @@ const Rating = ({
     <div className={cn(styles.title, { [styles.necessary]: required })}>
       5. {title}
     </div>
-    <div className={styles.flexContainer}>
+    <div
+      className={cn(styles.flexContainer, { [styles.hasWarning]: !!warning })}
+    >
       <div className={styles.ratingWrapper}>
         {range(maxRating).map(i => (
           <label className={styles.ratingLabel} key={i}>
@@ -45,6 +47,7 @@ const Rating = ({
         <span className={styles.clickNote}>點擊做評分</span>
       </div>
     </div>
+    <div className={styles.warning}>{warning}</div>
   </div>
 );
 
