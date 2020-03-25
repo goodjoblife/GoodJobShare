@@ -26,10 +26,9 @@ const Rating = ({
     <div className={styles.flexContainer}>
       <div className={styles.ratingWrapper}>
         {range(maxRating).map(i => (
-          <label className={styles.ratingLabel}>
+          <label className={styles.ratingLabel} key={i}>
             <input
               className={styles.ratingInput}
-              key={i}
               type="checkbox"
               name={dataKey}
               checked={i < value}
