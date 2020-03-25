@@ -27,6 +27,26 @@
   border: dashed 2px #bdbdbd;
   background-color: #ffffff;
   cursor: pointer;
+
+  &.finished {
+    .uploadText {
+      color: #333333;
+    }
+
+    .icon {
+      color: #fcd406;
+    }
+  }
+
+  &.error {
+    .uploadText {
+      color: #d50000;
+    }
+
+    .icon {
+      color: #d50000;
+    }
+  }
 }
 
 .uploadText {
@@ -45,5 +65,5 @@
   margin-right: 9px;
   width: 19px;
   height: 25px;
-  fill: #e0e0e0;
+  color: #e0e0e0;
 }
