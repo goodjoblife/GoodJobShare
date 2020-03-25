@@ -6,14 +6,20 @@ import styles from './Scrollable.module.css';
 const Scrollable = ({ children, className }) => {
   const [offset, setOffset] = useState(0);
   const [maxOffset, setMaxOffset] = useState(0);
+
   const handleRef = useCallback(el => {
     if (el) {
-      setMaxOffset(el.scrollHeight - el.offsetHeight);
+      new ResizeObserver(entries => {
+        for (const e of entries) {
+          setMaxOffset(e.target.scrollHeight - e.target.offsetHeight);
+        }
+      }).observe(el);
     }
   }, []);
   const handleScroll = useCallback(e => {
     setOffset(e.target.scrollTop);
   }, []);
+
   return (
     <div
       className={cn(
