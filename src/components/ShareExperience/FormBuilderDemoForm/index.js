@@ -97,6 +97,7 @@ const questions = [
     type: 'checkbox',
     dataKey: 'specialQuestions',
     validator: value => !!value.length,
+    warning: '錯誤訊息',
     options: [
       '詢問家庭狀況',
       '曾詢問婚姻狀況、生育計畫',

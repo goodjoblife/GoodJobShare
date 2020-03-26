@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
+import cn from 'classnames';
 
+import Scrollable from '../Scrollable';
 import styles from './Checkbox.module.css';
 
 const toggle = (value, values) => {
@@ -23,20 +25,25 @@ const Checkbox = ({
   warning,
   options,
 }) => (
-  <div>
-    {options.map(option => (
-      <label key={option} className={styles.label}>
-        <input
-          className={styles.input}
-          type="checkbox"
-          name={dataKey}
-          value={option}
-          checked={R.contains(option, values)}
-          onChange={() => onChange(toggle(option, values))}
-        />
-        <div className={styles.button}>{option}</div>
-      </label>
-    ))}
+  <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
+    <div className={styles.options}>
+      <Scrollable className={styles.optionsContent}>
+        {options.map(option => (
+          <label key={option} className={styles.label}>
+            <input
+              className={styles.input}
+              type="checkbox"
+              name={dataKey}
+              value={option}
+              checked={R.contains(option, values)}
+              onChange={() => onChange(toggle(option, values))}
+            />
+            <div className={styles.button}>{option}</div>
+          </label>
+        ))}
+      </Scrollable>
+    </div>
+    <div className={styles.warning}>{warning}</div>
   </div>
 );
 
