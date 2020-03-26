@@ -73,6 +73,7 @@ const questions = [
     dataKey: 'workingArea',
     required: true,
     validator: value => !!value,
+    warning: '請選擇工作地區',
     options: [
       '台北市',
       '新北市',
