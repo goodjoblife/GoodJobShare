@@ -1,30 +1,29 @@
 import React, { useState, useCallback } from 'react';
 import cn from 'classnames';
+import { useMeasure } from 'react-use';
 
 import styles from './Scrollable.module.css';
 
 const Scrollable = ({ children, className }) => {
-  const [offset, setOffset] = useState(0);
-  const [maxOffset, setMaxOffset] = useState(0);
+  const [ref, { height: frameHeight }] = useMeasure();
+  const [remainOffset, setRemainOffset] = useState(0);
 
-  const handleRef = useCallback(el => {
-    if (el) {
-      new ResizeObserver(entries => {
-        for (const e of entries) {
-          setMaxOffset(e.target.scrollHeight - e.target.offsetHeight);
-        }
-      }).observe(el);
-    }
-  }, []);
+  const handleRef = useCallback(
+    el => {
+      setRemainOffset(el.scrollHeight - el.scrollTop);
+      ref(el);
+    },
+    [ref],
+  );
   const handleScroll = useCallback(e => {
-    setOffset(e.target.scrollTop);
+    setRemainOffset(e.target.scrollHeight - e.target.scrollTop);
   }, []);
 
   return (
     <div
       className={cn(
         styles.frame,
-        { [styles.end]: offset >= maxOffset },
+        { [styles.end]: frameHeight >= remainOffset },
         className,
       )}
     >
