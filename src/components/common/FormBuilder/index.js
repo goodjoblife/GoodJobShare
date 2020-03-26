@@ -116,6 +116,7 @@ const FormBuilder = ({
               <Scrollable className={styles.question}>
                 <QuestionBuilder
                   {...restOptions}
+                  page={page + 1}
                   value={draft[restOptions.dataKey]}
                   onChange={handleDraftChange(restOptions.dataKey)}
                   onConfirm={goNext}

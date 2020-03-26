@@ -2,13 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Glike } from 'common/icons';
+
 import styles from './Rating.module.css';
+import TitleBlock from '../TitleBlock';
 
 const range = n => {
   return [...Array(n).keys()];
 };
 
 const Rating = ({
+  page,
   title,
   description,
   dataKey,
@@ -20,9 +23,12 @@ const Rating = ({
   maxRating,
 }) => (
   <div>
-    <div className={cn(styles.title, { [styles.necessary]: required })}>
-      5. {title}
-    </div>
+    <TitleBlock
+      page={page}
+      title={title}
+      description={description}
+      required={required}
+    />
     <div className={styles.flexContainer}>
       <div className={styles.ratingWrapper}>
         {range(maxRating).map(i => (
@@ -34,7 +40,7 @@ const Rating = ({
               checked={i < value}
               onChange={() => {
                 onChange(i + 1);
-                onConfirm();
+                setTimeout(onConfirm, 300);
               }}
             />
             <Glike className={cn(styles.glikeContainer)} />
@@ -49,6 +55,7 @@ const Rating = ({
 );
 
 Rating.propTypes = {
+  page: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,

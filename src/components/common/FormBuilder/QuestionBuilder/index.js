@@ -28,6 +28,7 @@ const getComponent = type => {
 };
 
 const QuestionBuilder = ({
+  page,
   title,
   description,
   type,
@@ -53,6 +54,7 @@ const QuestionBuilder = ({
   if (Component) {
     return (
       <Component
+        page={page}
         title={title}
         description={description}
         dataKey={dataKey}
