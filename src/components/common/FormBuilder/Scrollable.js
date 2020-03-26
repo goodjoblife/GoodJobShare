@@ -24,7 +24,7 @@ const Scrollable = ({ children, className }) => {
     <div
       className={cn(
         styles.frame,
-        { [styles.end]: offset === maxOffset },
+        { [styles.end]: offset >= maxOffset },
         className,
       )}
     >
