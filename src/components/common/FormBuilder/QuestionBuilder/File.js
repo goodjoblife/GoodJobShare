@@ -5,7 +5,6 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faFile from '@fortawesome/fontawesome-free-solid/faFile';
 
 import styles from './File.module.css';
-import TitleBlock from '../TitleBlock';
 
 const getClassName = (filename, error) => {
   if (!filename && !error) {
@@ -58,13 +57,6 @@ const File = ({
 
   return (
     <div>
-      <TitleBlock
-        page={page}
-        title={title}
-        description={description}
-        required={required}
-      />
-      <div className={styles.description}>{description}</div>
       <label
         className={cn(styles.upload, styles[getClassName(filename, error)])}
         onClick={handleClick}

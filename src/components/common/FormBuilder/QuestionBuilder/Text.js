@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import styles from './Text.module.css';
-import TitleBlock from '../TitleBlock';
 
 const Text = ({
   page,
@@ -17,12 +16,6 @@ const Text = ({
   warning,
 }) => (
   <div>
-    <TitleBlock
-      page={page}
-      title={title}
-      description={description}
-      required={required}
-    />
     <input
       className={cn(styles.textinput, { [styles.hasWarning]: !!warning })}
       type="text"

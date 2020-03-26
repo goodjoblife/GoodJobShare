@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import styles from './TextArea.module.css';
-import TitleBlock from '../TitleBlock';
 
 const Textarea = ({
   page,
@@ -17,12 +16,6 @@ const Textarea = ({
   minLength,
 }) => (
   <div className={styles.container}>
-    <TitleBlock
-      page={page}
-      title={title}
-      description={description}
-      required={required}
-    />
     <textarea
       className={cn(styles.textarea, { [styles.hasWarning]: !!warning })}
       value={value}

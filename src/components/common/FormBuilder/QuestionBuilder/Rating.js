@@ -4,7 +4,6 @@ import cn from 'classnames';
 import { Glike } from 'common/icons';
 
 import styles from './Rating.module.css';
-import TitleBlock from '../TitleBlock';
 
 const range = n => {
   return [...Array(n).keys()];
@@ -23,12 +22,6 @@ const Rating = ({
   maxRating,
 }) => (
   <div>
-    <TitleBlock
-      page={page}
-      title={title}
-      description={description}
-      required={required}
-    />
     <div
       className={cn(styles.flexContainer, { [styles.hasWarning]: !!warning })}
     >

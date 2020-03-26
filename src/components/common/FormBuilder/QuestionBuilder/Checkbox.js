@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 
-import TitleBlock from '../TitleBlock';
 import styles from './Checkbox.module.css';
 
 const toggle = (value, values) => {
@@ -25,12 +24,6 @@ const Checkbox = ({
   options,
 }) => (
   <div>
-    <TitleBlock
-      page={page}
-      title={title}
-      description={description}
-      required={required}
-    />
     {options.map(option => (
       <label key={option} className={styles.label}>
         <input

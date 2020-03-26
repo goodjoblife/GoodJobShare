@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './Radio.module.css';
-import TitleBlock from '../TitleBlock';
 
 const Radio = ({
   page,
@@ -17,12 +16,6 @@ const Radio = ({
   options,
 }) => (
   <div>
-    <TitleBlock
-      page={page}
-      title={title}
-      description={description}
-      required={required}
-    />
     {options.map(option => (
       <label className={styles.label} key={option}>
         <input

@@ -1,10 +1,13 @@
 .label {
   display: block;
+
+  & + .label {
+    margin-top: 9px;
+  }
 }
 
 .button {
   display: block;
-  margin-top: 9px;
   background-color: #f0f0f0;
   font-size: 18px;
   line-height: 44px;

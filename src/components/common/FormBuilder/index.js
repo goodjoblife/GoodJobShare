@@ -16,6 +16,7 @@ import X from 'common/icons/X';
 import QuestionBuilder from './QuestionBuilder';
 import useDraft from './useDraft';
 import usePagination from './usePagination';
+import TitleBlock from './TitleBlock';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
 import SubmissionBlock from './SubmissionBlock';
@@ -145,15 +146,25 @@ const FormBuilder = ({
           {questions.map(({ header, footer, ...restOptions }) => (
             <AnimatedPager.Page key={restOptions.dataKey}>
               <div className={styles.question}>
-                <div className={styles.scrollable}>
-                  <QuestionBuilder
-                    {...restOptions}
+                <div>
+                  <TitleBlock
                     page={page + 1}
-                    value={draft[restOptions.dataKey]}
-                    onChange={handleDraftChange(restOptions.dataKey)}
-                    onConfirm={handleNext}
-                    warning={isWarningShown ? validatedWarning : null}
+                    title={restOptions.title}
+                    description={restOptions.description}
+                    required={restOptions.required}
                   />
+                </div>
+                <div className={styles.answer}>
+                  <div className={styles.scrollable}>
+                    <QuestionBuilder
+                      {...restOptions}
+                      page={page + 1}
+                      value={draft[restOptions.dataKey]}
+                      onChange={handleDraftChange(restOptions.dataKey)}
+                      onConfirm={handleNext}
+                      warning={isWarningShown ? validatedWarning : null}
+                    />
+                  </div>
                 </div>
               </div>
             </AnimatedPager.Page>
