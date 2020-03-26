@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
+
 import styles from './TextArea.module.css';
+import TitleBlock from '../TitleBlock';
 
 const Textarea = ({
+  page,
   title,
   description,
   dataKey,
@@ -14,9 +16,12 @@ const Textarea = ({
   minLength,
 }) => (
   <div className={styles.container}>
-    <div className={cn(styles.title, { [styles.necessary]: required })}>
-      2. {title}
-    </div>
+    <TitleBlock
+      page={page}
+      title={title}
+      description={description}
+      required={required}
+    />
     <textarea
       className={styles.textarea}
       value={value}
@@ -29,6 +34,7 @@ const Textarea = ({
 );
 
 Textarea.propTypes = {
+  page: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,

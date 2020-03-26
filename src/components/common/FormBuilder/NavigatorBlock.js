@@ -5,12 +5,7 @@ import cn from 'classnames';
 import styles from './NavigatorBlock.module.css';
 
 const NavigatorButton = ({ className, ...restProps }) => (
-  <button
-    {...restProps}
-    className={cn(className, styles.btn, {
-      [styles.active]: !restProps.disabled,
-    })}
-  />
+  <button {...restProps} className={cn(className, styles.btn)} />
 );
 
 const NavigatorBlock = ({ onPrevious, onNext, hasPrevious, hasNext }) => (
