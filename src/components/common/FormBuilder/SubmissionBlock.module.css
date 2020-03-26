@@ -12,7 +12,8 @@
   color: #ffffff;
   background-color: #000000;
 
-  &[disabled] {
+  &:disabled {
+    cursor: default;
     opacity: 0.5;
   }
 }

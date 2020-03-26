@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 
+import TitleBlock from '../TitleBlock';
+import styles from './Checkbox.module.css';
+
 const toggle = (value, values) => {
   if (R.contains(value, values)) {
     return R.without(value, values);
@@ -11,6 +14,7 @@ const toggle = (value, values) => {
 };
 
 const Checkbox = ({
+  page,
   title,
   description,
   dataKey,
@@ -21,23 +25,30 @@ const Checkbox = ({
   options,
 }) => (
   <div>
-    {title}
+    <TitleBlock
+      page={page}
+      title={title}
+      description={description}
+      required={required}
+    />
     {options.map(option => (
-      <label key={option}>
+      <label key={option} className={styles.label}>
         <input
+          className={styles.input}
           type="checkbox"
           name={dataKey}
           value={option}
           checked={R.contains(option, values)}
           onChange={() => onChange(toggle(option, values))}
         />
-        {option}
+        <div className={styles.button}>{option}</div>
       </label>
     ))}
   </div>
 );
 
 Checkbox.propTypes = {
+  page: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,

@@ -1,14 +1,16 @@
 .btn {
-  opacity: 0.5;
+  opacity: 1;
   border-radius: 4px;
-  border: solid 1px #979797;
-  color: #979797;
+  border: solid 1px #969696;
+  color: #969696;
   padding: 10px 16px;
+  cursor: pointer;
 
-  &.active {
-    opacity: 1;
-    border-color: #969696;
-    color: #969696;
+  &:disabled {
+    opacity: 0.5;
+    border-color: #979797;
+    color: #979797;
+    cursor: default;
   }
 }
 

@@ -1,17 +1,5 @@
 $warning-red: #d0021b;
 
-.title {
-  font-size: 18px;
-  font-weight: 500;
-  color: #555555;
-  margin-bottom: 10px;
-
-  &.necessary::after {
-    content: ' *';
-    color: red;
-  }
-}
-
 .textinput {
   border: solid 1px #bdbdbd;
   background-color: #ffffff;

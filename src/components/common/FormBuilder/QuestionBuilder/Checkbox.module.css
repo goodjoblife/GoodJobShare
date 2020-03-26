@@ -1,0 +1,24 @@
+.label {
+  display: block;
+}
+
+.button {
+  display: block;
+  margin-top: 9px;
+  background-color: #f0f0f0;
+  font-size: 18px;
+  line-height: 44px;
+  text-align: center;
+  color: #333333;
+  transition: color, background-color 0.3s;
+  cursor: pointer;
+}
+
+.input {
+  display: none;
+
+  &:checked + .button {
+    background-color: #626262;
+    color: #ffffff;
+  }
+}

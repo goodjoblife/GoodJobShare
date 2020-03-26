@@ -1,22 +1,3 @@
-.title {
-  font-size: 18px;
-  font-weight: 500;
-  color: #555555;
-  margin-bottom: 10px;
-
-  &.necessary::after {
-    content: ' *';
-    color: red;
-  }
-}
-
-.description {
-  display: inline-block;
-  font-size: 16px;
-  line-height: normal;
-  color: #555555;
-}
-
 .upload {
   width: 100%;
   height: 72px;
