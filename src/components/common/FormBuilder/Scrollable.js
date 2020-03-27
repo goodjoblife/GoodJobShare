@@ -10,8 +10,10 @@ const Scrollable = ({ children, className }) => {
 
   const handleRef = useCallback(
     el => {
-      setRemainOffset(el.scrollHeight - el.scrollTop);
-      ref(el);
+      if (el) {
+        setRemainOffset(el.scrollHeight - el.scrollTop);
+        ref(el);
+      }
     },
     [ref],
   );
