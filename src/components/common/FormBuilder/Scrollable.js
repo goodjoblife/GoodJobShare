@@ -7,25 +7,32 @@ import styles from './Scrollable.module.css';
 const Scrollable = ({ children, className }) => {
   const [ref, { height: frameHeight }] = useMeasure();
   const [remainOffset, setRemainOffset] = useState(0);
+  const calcRemainOffsetByElement = useCallback(
+    el => setRemainOffset(el.scrollHeight - el.scrollTop),
+    [],
+  );
 
   const handleRef = useCallback(
     el => {
       if (el) {
-        setRemainOffset(el.scrollHeight - el.scrollTop);
+        calcRemainOffsetByElement(el);
         ref(el);
       }
     },
-    [ref],
+    [calcRemainOffsetByElement, ref],
   );
-  const handleScroll = useCallback(e => {
-    setRemainOffset(e.target.scrollHeight - e.target.scrollTop);
-  }, []);
+  const handleScroll = useCallback(
+    e => {
+      calcRemainOffsetByElement(e.target);
+    },
+    [calcRemainOffsetByElement],
+  );
 
   return (
     <div
       className={cn(
         styles.frame,
-        { [styles.end]: frameHeight >= remainOffset },
+        { [styles.end]: remainOffset <= frameHeight },
         className,
       )}
     >
