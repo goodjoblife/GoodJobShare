@@ -114,7 +114,7 @@ const FormBuilder = ({
 
   let header;
   let footer;
-  let validatedWarning;
+  let warning;
   let shouldRenderNothing = false;
 
   const [isWarningShown, setWarningShown] = useState(false);
@@ -123,7 +123,7 @@ const FormBuilder = ({
   if (question) {
     header = question.header;
     footer = question.footer;
-    validatedWarning = findWarningAgainstValue(
+    warning = findWarningAgainstValue(
       draft[question.dataKey],
       question.warning,
       question.validator,
@@ -134,10 +134,10 @@ const FormBuilder = ({
 
   const handleNext = useCallback(() => {
     setWarningShown(true);
-    if (!validatedWarning) {
+    if (!warning) {
       goNext();
     }
-  }, [goNext, validatedWarning]);
+  }, [goNext, warning]);
 
   useEffect(() => {
     setWarningShown(false);
@@ -176,7 +176,7 @@ const FormBuilder = ({
                       value={draft[restOptions.dataKey]}
                       onChange={handleDraftChange(restOptions.dataKey)}
                       onConfirm={handleNext}
-                      warning={isWarningShown ? validatedWarning : null}
+                      warning={isWarningShown ? warning : null}
                     />
                   </div>
                 </div>
