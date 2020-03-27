@@ -9,6 +9,10 @@
   }
 }
 
+.ratingLabel {
+  cursor: pointer;
+}
+
 .ratingInput {
   display: none;
 

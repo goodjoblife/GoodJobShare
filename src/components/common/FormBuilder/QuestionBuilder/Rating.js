@@ -46,6 +46,7 @@ const Rating = ({
         {range(maxRating).map(i => (
           <label
             key={i}
+            className={styles.ratingLabel}
             data-value={i + 1}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
