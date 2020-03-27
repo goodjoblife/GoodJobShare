@@ -27,13 +27,31 @@
 }
 
 .noteContainer {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.clickNote {
   font-size: 15px;
   line-height: 1.53;
   color: #000000;
+
+  &::after {
+    content: '請點擊做評分';
+  }
+
+  &[data-value='1']::after {
+    content: '非常不同意';
+  }
+
+  &[data-value='2']::after {
+    content: '不同意';
+  }
+
+  &[data-value='3']::after {
+    content: '普通';
+  }
+
+  &[data-value='4']::after {
+    content: '同意';
+  }
+
+  &[data-value='5']::after {
+    content: '非常同意';
+  }
 }
