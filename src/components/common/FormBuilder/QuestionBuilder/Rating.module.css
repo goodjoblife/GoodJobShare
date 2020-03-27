@@ -32,6 +32,8 @@
   align-items: center;
   margin-left: 19px;
 
+  /*-- Bubble caret --*/
+
   &::before,
   span {
     display: inline-block;
@@ -49,6 +51,8 @@
     left: 2px;
     border-right-color: #fffae1;
   }
+
+  /*-- Bubble body --*/
 
   &::after {
     content: '請點擊做評分';
