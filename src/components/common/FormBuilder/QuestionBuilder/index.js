@@ -1,5 +1,13 @@
 import React from 'react';
-import { string, bool, number, func, oneOf, arrayOf } from 'prop-types';
+import {
+  string,
+  bool,
+  number,
+  func,
+  oneOf,
+  oneOfType,
+  arrayOf,
+} from 'prop-types';
 
 import Text from './Text';
 import TextArea from './TextArea';
@@ -104,7 +112,7 @@ QuestionBuilder.propTypes = {
   // 此題是否必填
   required: bool,
   // 當欄位值未通過檢查時顯示的提示
-  warning: string,
+  warning: oneOfType([string, func]),
   // 驗證內容的函數
   validator: func,
   // 如果 type=textarea，則此題需要指定最少字數
