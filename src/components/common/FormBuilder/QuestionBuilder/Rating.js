@@ -66,7 +66,9 @@ const Rating = ({
         <div
           className={styles.noteContainer}
           data-value={hoveredValue || value}
-        />
+        >
+          <span />
+        </div>
       </div>
     </div>
   );
