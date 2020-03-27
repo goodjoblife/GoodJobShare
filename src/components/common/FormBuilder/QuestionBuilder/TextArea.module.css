@@ -15,10 +15,10 @@
     padding: 13px 15px;
     font-size: 16px;
     line-height: normal;
+  }
 
-    &.hasWarning {
-      border-color: #d50000;
-    }
+  &.hasWarning .textarea {
+    border-color: #d50000;
   }
 
   .count {

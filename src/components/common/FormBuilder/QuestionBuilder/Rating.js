@@ -21,10 +21,8 @@ const Rating = ({
   warning,
   maxRating,
 }) => (
-  <div>
-    <div
-      className={cn(styles.flexContainer, { [styles.hasWarning]: !!warning })}
-    >
+  <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
+    <div className={styles.flexContainer}>
       <div className={styles.ratingWrapper}>
         {range(maxRating).map(i => (
           <label className={styles.ratingLabel} key={i}>

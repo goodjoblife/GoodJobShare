@@ -1,14 +1,14 @@
 @value main-yellow from 'common/variables.module.css';
 
+.container.hasWarning .flexContainer {
+  border-color: #d50000;
+}
+
 .flexContainer {
   display: flex;
   margin-top: 20px;
   padding: 1px;
   border: solid 1px transparent;
-
-  &.hasWarning {
-    border-color: #d50000;
-  }
 
   .noteContainer {
     flex: 1;

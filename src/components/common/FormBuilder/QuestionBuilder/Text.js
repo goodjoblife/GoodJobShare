@@ -17,9 +17,9 @@ const Text = ({
 }) => {
   const [isComposing, setComposing] = useState(false);
   return (
-    <div>
+    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
       <input
-        className={cn(styles.textinput, { [styles.hasWarning]: !!warning })}
+        className={styles.textinput}
         type="text"
         placeholder="請輸入職業名稱"
         value={value}

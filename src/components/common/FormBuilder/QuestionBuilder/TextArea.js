@@ -15,9 +15,9 @@ const Textarea = ({
   warning,
   minLength,
 }) => (
-  <div className={styles.container}>
+  <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
     <textarea
-      className={cn(styles.textarea, { [styles.hasWarning]: !!warning })}
+      className={styles.textarea}
       value={value}
       onChange={e => onChange(e.target.value)}
     />

@@ -1,5 +1,9 @@
 $warning-red: #d0021b;
 
+.container.hasWarning .textinput {
+  border-color: $warning-red;
+}
+
 .textinput {
   border: solid 1px #bdbdbd;
   background-color: #ffffff;
@@ -10,10 +14,6 @@ $warning-red: #d0021b;
     width: 134px;
     height: 22px;
     color: #c0c0c0;
-  }
-
-  &.hasWarning {
-    border-color: $warning-red;
   }
 }
 
