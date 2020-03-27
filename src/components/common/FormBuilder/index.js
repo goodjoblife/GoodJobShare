@@ -21,6 +21,7 @@ import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
 import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
+import Scrollable from './Scrollable';
 import styles from './FormBuilder.module.css';
 
 const findWarningAgainstValue = (value, warning, validator) => {
@@ -168,18 +169,16 @@ const FormBuilder = ({
                     required={restOptions.required}
                   />
                 </div>
-                <div className={styles.answer}>
-                  <div className={styles.scrollable}>
-                    <QuestionBuilder
-                      {...restOptions}
-                      page={page + 1}
-                      value={draft[restOptions.dataKey]}
-                      onChange={handleDraftChange(restOptions.dataKey)}
-                      onConfirm={handleNext}
-                      warning={isWarningShown ? warning : null}
-                    />
-                  </div>
-                </div>
+                <Scrollable className={styles.answer}>
+                  <QuestionBuilder
+                    {...restOptions}
+                    page={page + 1}
+                    value={draft[restOptions.dataKey]}
+                    onChange={handleDraftChange(restOptions.dataKey)}
+                    onConfirm={handleNext}
+                    warning={isWarningShown ? warning : null}
+                  />
+                </Scrollable>
               </div>
             </AnimatedPager.Page>
           ))}
