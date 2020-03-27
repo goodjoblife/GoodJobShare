@@ -29,7 +29,7 @@ const Scrollable = ({ children, className }) => {
     <div
       className={cn(
         styles.frame,
-        { [styles.end]: remainOffset <= frameHeight },
+        { [styles.end]: remainOffset - frameHeight <= 1 },
         className,
       )}
     >
