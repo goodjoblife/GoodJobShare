@@ -23,8 +23,22 @@ import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
 
-const findWarningAgainstValue = (value, warning, validator) =>
-  validator && !validator(value) ? warning || 'INVALID' : null;
+const findWarningAgainstValue = (value, warning, validator) => {
+  if (validator) {
+    const isValid = validator(value);
+    if (isValid) {
+      return null;
+    } else {
+      if (typeof warning === 'function') {
+        return warning(value);
+      } else {
+        return warning;
+      }
+    }
+  } else {
+    return null;
+  }
+};
 
 const findLastRequiredIndex = R.findLastIndex(R.prop('required'));
 const findIfQuestionsAcceptDraft = draft =>

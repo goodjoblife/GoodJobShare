@@ -64,6 +64,7 @@ const questions = [
     dataKey: 'relationship',
     required: true,
     validator: value => value.length >= 30,
+    warning: value => `最少 30 字，現在 ${value.length} 字`,
     minLength: 30,
   },
   {
