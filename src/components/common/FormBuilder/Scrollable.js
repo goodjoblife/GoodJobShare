@@ -1,32 +1,29 @@
-import React, { useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import cn from 'classnames';
 import { useMeasure } from 'react-use';
 
 import styles from './Scrollable.module.css';
 
 const Scrollable = ({ children, className }) => {
-  const [ref, { height: frameHeight }] = useMeasure();
+  const ref = useRef(null);
+  const [handleMeasureRef, { height: frameHeight }] = useMeasure();
   const [remainOffset, setRemainOffset] = useState(0);
   const calcRemainOffsetByElement = useCallback(
-    el => setRemainOffset(el.scrollHeight - el.scrollTop),
+    () => setRemainOffset(ref.current.scrollHeight - ref.current.scrollTop),
     [],
   );
 
   const handleRef = useCallback(
     el => {
       if (el) {
-        calcRemainOffsetByElement(el);
-        ref(el);
+        ref.current = el;
+        handleMeasureRef(el);
       }
     },
-    [calcRemainOffsetByElement, ref],
+    [handleMeasureRef],
   );
-  const handleScroll = useCallback(
-    e => {
-      calcRemainOffsetByElement(e.target);
-    },
-    [calcRemainOffsetByElement],
-  );
+
+  useEffect(calcRemainOffsetByElement, [frameHeight]);
 
   return (
     <div
@@ -36,7 +33,11 @@ const Scrollable = ({ children, className }) => {
         className,
       )}
     >
-      <div ref={handleRef} onScroll={handleScroll} className={styles.content}>
+      <div
+        ref={handleRef}
+        onScroll={calcRemainOffsetByElement}
+        className={styles.content}
+      >
         {children}
       </div>
     </div>
