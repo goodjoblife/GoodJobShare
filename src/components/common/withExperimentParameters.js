@@ -6,9 +6,8 @@ import React, { Component } from 'react';
  * Using MutationObserver to observe attributes change on element
  * with `elementId`, then pass the newest attributes to WrappedComponent.
  *
- * @param {class} WrappedComponent
+ * @param {Array} attributeListToObserve the array of attributes to observe
  * @param {string} elementId the id of element to observe
- * @param {Array} attributes the array of attributes to observe
  */
 
 export default (
