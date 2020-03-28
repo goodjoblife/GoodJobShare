@@ -129,12 +129,15 @@ const questions = [
     description: 'Form Description',
     type: 'customized',
     dataKey: 'salaryWorkTime',
-    renderCustomizedQuestion(object, onChange) {
-      const salaryType = (object && object.type) || '';
-      const salaryAmount = (object && object.amount) || '';
+    required: true,
+    validator: value => !!value,
+    warning: '錯誤訊息',
+    renderCustomizedQuestion({ value, onChange, warning }) {
+      const salaryType = (value && value.type) || '';
+      const salaryAmount = (value && value.amount) || '';
       const defaultState = { type: null, amount: 0 };
       const handleChangeFor = field => value =>
-        onChange({ ...defaultState, ...object, [field]: value });
+        onChange({ ...defaultState, ...value, [field]: value });
 
       return (
         <div>
@@ -156,6 +159,7 @@ const questions = [
             />
             元
           </label>
+          <div style={{ color: 'red' }}>{warning}</div>
         </div>
       );
     },

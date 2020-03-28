@@ -97,13 +97,6 @@ const FormBuilder = ({
     [questions],
   );
   const showsSubmission = page >= indexToShowSubmitButton;
-  const isSubmittable = useMemo(
-    () => findIfQuestionsAcceptDraft(draft)(questions),
-    [draft, questions],
-  );
-  const handleSubmit = useCallback(() => {
-    onSubmit(draft);
-  }, [onSubmit, draft]);
 
   useEffect(() => {
     if (!open) {
@@ -116,6 +109,7 @@ const FormBuilder = ({
   let header;
   let footer;
   let warning;
+  let isRequired;
   let shouldRenderNothing = false;
 
   const [isWarningShown, setWarningShown] = useState(false);
@@ -129,6 +123,7 @@ const FormBuilder = ({
       question.warning,
       question.validator,
     );
+    isRequired = question.required;
   } else {
     shouldRenderNothing = true;
   }
@@ -139,6 +134,22 @@ const FormBuilder = ({
       goNext();
     }
   }, [goNext, warning]);
+
+  const isSubmittable = useMemo(
+    () =>
+      (!hasNext && isRequired) || findIfQuestionsAcceptDraft(draft)(questions),
+    [draft, hasNext, isRequired, questions],
+  );
+  const handleSubmit = useCallback(() => {
+    if (!hasNext && isRequired) {
+      setWarningShown(true);
+      if (!warning) {
+        onSubmit(draft);
+      }
+      return;
+    }
+    onSubmit(draft);
+  }, [hasNext, isRequired, warning, onSubmit, draft]);
 
   useEffect(() => {
     setWarningShown(false);

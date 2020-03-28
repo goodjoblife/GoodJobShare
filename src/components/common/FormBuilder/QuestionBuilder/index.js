@@ -54,7 +54,21 @@ const QuestionBuilder = ({
 }) => {
   if (type === 'customized') {
     if (renderCustomizedQuestion) {
-      return renderCustomizedQuestion(value, onChange);
+      return renderCustomizedQuestion({
+        page,
+        title,
+        description,
+        dataKey,
+        required,
+        value,
+        onChange,
+        onConfirm,
+        warning,
+        validator,
+        minLength,
+        options,
+        maxRating,
+      });
     } else {
       return null;
     }
