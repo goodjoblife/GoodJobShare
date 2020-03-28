@@ -4,7 +4,6 @@ import cn from 'classnames';
 import { Glike } from 'common/icons';
 
 import styles from './Rating.module.css';
-import TitleBlock from '../TitleBlock';
 
 const range = n => {
   return [...Array(n).keys()];
@@ -30,18 +29,12 @@ const Rating = ({
   value,
   onChange,
   onConfirm,
-  validator,
+  warning,
   maxRating,
 }) => {
   const [hoveredValue, handleMouseOver, handleMouseOut] = useHover();
   return (
-    <div>
-      <TitleBlock
-        page={page}
-        title={title}
-        description={description}
-        required={required}
-      />
+    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
       <div className={styles.flexContainer}>
         {range(maxRating).map(i => (
           <label
@@ -71,6 +64,7 @@ const Rating = ({
           <span />
         </div>
       </div>
+      <div className={styles.warning}>{warning}</div>
     </div>
   );
 };
@@ -84,7 +78,7 @@ Rating.propTypes = {
   value: PropTypes.number,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  validator: PropTypes.func.isRequired,
+  warning: PropTypes.string,
   maxRating: PropTypes.number.isRequired,
 };
 
