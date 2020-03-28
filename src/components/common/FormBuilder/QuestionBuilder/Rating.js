@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Glike } from 'common/icons';
@@ -7,6 +7,17 @@ import styles from './Rating.module.css';
 
 const range = n => {
   return [...Array(n).keys()];
+};
+
+const useHover = () => {
+  const [hoveredValue, setHoveredValue] = useState(null);
+  const handleMouseOver = useCallback(e => {
+    setHoveredValue(parseInt(e.currentTarget.dataset.value, 10));
+  }, []);
+  const handleMouseOut = useCallback(() => {
+    setHoveredValue(null);
+  }, []);
+  return [hoveredValue, handleMouseOver, handleMouseOut];
 };
 
 const Rating = ({
@@ -20,17 +31,24 @@ const Rating = ({
   onConfirm,
   warning,
   maxRating,
-}) => (
-  <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
-    <div className={styles.flexContainer}>
-      <div className={styles.ratingWrapper}>
+}) => {
+  const [hoveredValue, handleMouseOver, handleMouseOut] = useHover();
+  return (
+    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
+      <div className={styles.flexContainer}>
         {range(maxRating).map(i => (
-          <label className={styles.ratingLabel} key={i}>
+          <label
+            key={i}
+            className={styles.ratingLabel}
+            data-value={i + 1}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
+          >
             <input
               className={styles.ratingInput}
               type="checkbox"
               name={dataKey}
-              checked={i < value}
+              checked={hoveredValue ? i < hoveredValue : i < value}
               onChange={() => {
                 onChange(i + 1);
                 setTimeout(onConfirm, 300);
@@ -39,14 +57,17 @@ const Rating = ({
             <Glike className={cn(styles.glikeContainer)} />
           </label>
         ))}
+        <div
+          className={styles.noteContainer}
+          data-value={hoveredValue || value}
+        >
+          <span />
+        </div>
       </div>
-      <div className={styles.noteContainer}>
-        <span className={styles.clickNote}>點擊做評分</span>
-      </div>
+      <div className={styles.warning}>{warning}</div>
     </div>
-    <div className={styles.warning}>{warning}</div>
-  </div>
-);
+  );
+};
 
 Rating.propTypes = {
   page: PropTypes.number.isRequired,
