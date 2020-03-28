@@ -54,7 +54,8 @@ const questions = [
     type: 'text',
     dataKey: 'title',
     required: true,
-    validator: () => true,
+    validator: value => !!value,
+    warning: '請填寫職稱',
   },
   {
     header: jobTitleHeader,
@@ -62,7 +63,8 @@ const questions = [
     type: 'textarea',
     dataKey: 'relationship',
     required: true,
-    validator: () => true,
+    validator: value => value.length >= 30,
+    warning: value => `最少 30 字，現在 ${value.length} 字`,
     minLength: 30,
   },
   {
@@ -72,6 +74,7 @@ const questions = [
     dataKey: 'workingArea',
     required: true,
     validator: value => !!value,
+    warning: '請選擇工作地區',
     options: [
       '台北市',
       '新北市',
@@ -94,7 +97,8 @@ const questions = [
     title: '是否有以下特殊問題？',
     type: 'checkbox',
     dataKey: 'specialQuestions',
-    validator: () => true,
+    validator: value => !!value.length,
+    warning: '錯誤訊息',
     options: [
       '詢問家庭狀況',
       '曾詢問婚姻狀況、生育計畫',
@@ -109,14 +113,14 @@ const questions = [
       '若完成身份驗證，之後分享此份工作的任何資訊，獎勵都是 10 倍！可以拍下你此份工作的 名片/工作證/薪資單，或足以證明你在該公司上班的文件！',
     type: 'file',
     dataKey: 'verification',
-    validator: () => true,
   },
   {
     header: jobTitleHeader,
     title: '當我需要協助時，主管願意且可以貢獻他的時間協助我',
     type: 'rating',
     dataKey: 'support',
-    validator: () => true,
+    validator: value => !!value,
+    warning: '請點擊做評分',
     maxRating: 5,
   },
   {
@@ -125,7 +129,6 @@ const questions = [
     description: 'Form Description',
     type: 'customized',
     dataKey: 'salaryWorkTime',
-    validator: () => true,
     renderCustomizedQuestion(object, onChange) {
       const salaryType = (object && object.type) || '';
       const salaryAmount = (object && object.amount) || '';

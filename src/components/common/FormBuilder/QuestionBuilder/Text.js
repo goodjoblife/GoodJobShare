@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import styles from './Text.module.css';
-import TitleBlock from '../TitleBlock';
 
 const Text = ({
   page,
@@ -13,17 +13,11 @@ const Text = ({
   value,
   onChange,
   onConfirm,
-  validator,
+  warning,
 }) => {
   const [isComposing, setComposing] = useState(false);
   return (
-    <div>
-      <TitleBlock
-        page={page}
-        title={title}
-        description={description}
-        required={required}
-      />
+    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
       <input
         className={styles.textinput}
         type="text"
@@ -39,6 +33,7 @@ const Text = ({
           }
         }}
       />
+      <div className={styles.warning}>{warning}</div>
     </div>
   );
 };
@@ -52,7 +47,7 @@ Text.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  validator: PropTypes.func.isRequired,
+  warning: PropTypes.string,
 };
 
 Text.defaultProps = {

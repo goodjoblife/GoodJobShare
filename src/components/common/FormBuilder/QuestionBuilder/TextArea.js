@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import styles from './TextArea.module.css';
-import TitleBlock from '../TitleBlock';
 
 const Textarea = ({
   page,
@@ -12,23 +12,17 @@ const Textarea = ({
   required,
   value,
   onChange,
-  validator,
+  warning,
   minLength,
 }) => (
-  <div className={styles.container}>
-    <TitleBlock
-      page={page}
-      title={title}
-      description={description}
-      required={required}
-    />
+  <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
     <textarea
       className={styles.textarea}
       value={value}
       onChange={e => onChange(e.target.value)}
     />
-    <p className={styles.warning}>
-      最少 {minLength} 字，現在 {value.length} 字
+    <p className={cn(styles.count, { [styles.warning]: !!warning })}>
+      {warning}
     </p>
   </div>
 );
@@ -41,7 +35,7 @@ Textarea.propTypes = {
   required: PropTypes.bool,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  validator: PropTypes.func.isRequired,
+  warning: PropTypes.string,
   minLength: PropTypes.number.isRequired,
 };
 
