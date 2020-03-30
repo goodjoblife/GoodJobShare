@@ -87,8 +87,4 @@ File.propTypes = {
   warning: PropTypes.string,
 };
 
-File.defaultProps = {
-  required: false,
-};
-
 export default File;

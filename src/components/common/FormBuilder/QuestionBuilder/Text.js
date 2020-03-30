@@ -50,8 +50,4 @@ Text.propTypes = {
   warning: PropTypes.string,
 };
 
-Text.defaultProps = {
-  required: false,
-};
-
 export default Text;

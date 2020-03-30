@@ -59,8 +59,4 @@ Checkbox.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-Checkbox.defaultProps = {
-  required: false,
-};
-
 export default Checkbox;

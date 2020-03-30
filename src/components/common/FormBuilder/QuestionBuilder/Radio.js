@@ -55,8 +55,4 @@ Radio.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-Radio.defaultProps = {
-  required: false,
-};
-
 export default Radio;

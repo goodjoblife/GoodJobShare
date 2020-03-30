@@ -82,8 +82,4 @@ Rating.propTypes = {
   maxRating: PropTypes.number.isRequired,
 };
 
-Rating.defaultProps = {
-  required: false,
-};
-
 export default Rating;

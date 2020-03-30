@@ -39,8 +39,4 @@ Textarea.propTypes = {
   minLength: PropTypes.number.isRequired,
 };
 
-Textarea.defaultProps = {
-  required: false,
-};
-
 export default Textarea;
