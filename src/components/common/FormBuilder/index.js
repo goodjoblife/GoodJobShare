@@ -110,16 +110,16 @@ const FormBuilder = ({
       </div>
       <div className={cn(styles.body, bodyClassName)}>
         <AnimatedPager className={styles.pager} page={page}>
-          {questions.map(({ header, footer, ...restOptions }) => (
+          {questions.map(({ header, footer, ...restOptions }, i) => (
             <AnimatedPager.Page key={restOptions.dataKey}>
               <div className={styles.question}>
                 <div className={styles.scrollable}>
                   <QuestionBuilder
                     {...restOptions}
-                    page={page + 1}
+                    page={i + 1}
                     value={draft[restOptions.dataKey]}
                     onChange={handleDraftChange(restOptions.dataKey)}
-                    onConfirm={goNext}
+                    onConfirm={() => setPage(i + 1)}
                   />
                 </div>
               </div>
