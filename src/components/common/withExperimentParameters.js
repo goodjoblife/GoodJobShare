@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 /**
  * This HOC is for using Google Optimize while doing A/B testing.
@@ -14,75 +14,63 @@ export default (
   attributeListToObserve = [],
   elementId = 'root',
 ) => WrappedComponent => {
-  class WithExperimentParameters extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        parameters: {},
-      };
+  const WithExperimentParameters = props => {
+    let ref = null;
+    let observer = null;
+    let initialParameters = {};
 
-      if (window && 'MutationObserver' in window) {
-        // initialize mutation observer
-        this.observer = new MutationObserver(records => {
-          records.forEach(record => {
-            if (record.type === 'attributes') {
-              const newParameters = {};
-              attributeListToObserve.forEach(attr => {
-                const newAttr = record.target.getAttribute(attr);
-                if (newAttr !== null) {
-                  newParameters[attr] = newAttr;
-                }
-              });
-              this.setState({
-                parameters: newParameters,
-              });
-            }
-          });
+    // get attribute values at this moment
+    if (document) {
+      ref = document.getElementById(elementId);
+      if (ref) {
+        attributeListToObserve.forEach(attr => {
+          const newAttr = ref.getAttribute(attr);
+          if (newAttr !== null) {
+            initialParameters[attr] = newAttr;
+          }
         });
       }
-
-      if (document) {
-        this.ref = document.getElementById(elementId);
-
-        // get attribute values at this moment
-        if (this.ref) {
-          const newParameters = {};
-          attributeListToObserve.forEach(attr => {
-            const newAttr = this.ref.getAttribute(attr);
-            if (newAttr !== null) {
-              newParameters[attr] = newAttr;
-            }
-          });
-          this.state = {
-            parameters: newParameters,
-          };
-        }
-      }
     }
-    componentDidMount() {
+
+    // setup mutation observer
+    if (window && 'MutationObserver' in window) {
+      observer = new MutationObserver(records => {
+        records.forEach(record => {
+          if (record.type === 'attributes') {
+            const newParameters = {};
+            attributeListToObserve.forEach(attr => {
+              const newAttr = record.target.getAttribute(attr);
+              if (newAttr !== null) {
+                newParameters[attr] = newAttr;
+              }
+            });
+            setParameters(newParameters);
+          }
+        });
+      });
+    }
+
+    const [parameters, setParameters] = useState(initialParameters);
+
+    useEffect(() => {
       // start observing target element
-      if (this.observer && this.ref) {
-        this.observer.observe(this.ref, {
+      if (observer && ref) {
+        observer.observe(ref, {
           attributes: true,
         });
       }
-    }
 
-    componentWillUnmount() {
-      if (this.observer) {
-        this.observer.disconnect();
-      }
-    }
+      // unsubscribe observation
+      return function clear() {
+        if (observer) {
+          observer.disconnect();
+        }
+      };
+    });
 
-    render() {
-      return (
-        <WrappedComponent
-          {...this.props}
-          experimentParameters={this.state.parameters}
-        />
-      );
-    }
-  }
+    return <WrappedComponent {...props} experimentParameters={parameters} />;
+  };
+
   const displayName =
     WrappedComponent.displayName || WrappedComponent.name || 'Component';
   WithExperimentParameters.displayName = `WithExperimentParameters(${displayName})`;
