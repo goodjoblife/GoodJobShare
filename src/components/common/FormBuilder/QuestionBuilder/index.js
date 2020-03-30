@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  string,
-  bool,
-  number,
-  func,
-  oneOf,
-  oneOfType,
-  arrayOf,
-} from 'prop-types';
+import { string, bool, number, func, oneOf, arrayOf } from 'prop-types';
 
 import Text from './Text';
 import TextArea from './TextArea';
@@ -46,7 +38,6 @@ const QuestionBuilder = ({
   onChange,
   onConfirm,
   options,
-  validator,
   warning,
   minLength,
   maxRating,
@@ -64,7 +55,6 @@ const QuestionBuilder = ({
         onChange,
         onConfirm,
         warning,
-        validator,
         minLength,
         options,
         maxRating,
@@ -86,7 +76,6 @@ const QuestionBuilder = ({
         onChange={onChange}
         onConfirm={onConfirm}
         warning={warning}
-        validator={validator}
         minLength={minLength}
         options={options}
         maxRating={maxRating}
@@ -126,9 +115,7 @@ QuestionBuilder.propTypes = {
   // 此題是否必填
   required: bool,
   // 當欄位值未通過檢查時顯示的提示
-  warning: oneOfType([string, func]),
-  // 驗證內容的函數
-  validator: func,
+  warning: string,
   // 如果 type=textarea，則此題需要指定最少字數
   minLength: number,
   // 如果 type=radio 或 type=checkbox，代表此題有選項

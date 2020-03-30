@@ -169,12 +169,12 @@ const FormBuilder = ({
       </div>
       <div className={cn(styles.body, bodyClassName)}>
         <AnimatedPager className={styles.pager} page={page}>
-          {questions.map(({ header, footer, ...restOptions }) => (
+          {questions.map(({ header, footer, ...restOptions }, i) => (
             <AnimatedPager.Page key={restOptions.dataKey}>
               <div className={styles.question}>
                 <div>
                   <TitleBlock
-                    page={page + 1}
+                    page={i + 1}
                     title={restOptions.title}
                     description={restOptions.description}
                     required={restOptions.required}
@@ -237,23 +237,23 @@ FormBuilder.propTypes = {
   // 問題列表
   questions: arrayOf(
     shape({
+      ...QuestionBuilder.propTypes,
       // 問卷頁首 & 頁尾，會覆寫共用的頁首 & 頁尾
       header: oneOfType([string, element]),
       footer: oneOfType([string, element]),
       // 驗證內容的函數
       validator: func,
       // 驗證內容失敗時，顯示的警告文字
-      warning: string,
-      ...QuestionBuilder.propTypes,
+      warning: oneOfType([func, string]),
     }),
   ).isRequired,
   // 排版方式，目前只有一種，就是 typeform
   layout: string.isRequired,
   // 當使用者填寫內容，此函數會被觸發，且 emit 一個 object，包含被修改欄位的 key & value
   onChange: func.isRequired,
-  // 當使用者按下送出鈕，且通過所有 question validator 驗證，此函數會被觸發
+  // 當使用者按下送出鈕，且通過所有驗證，此函數會被觸發
   onSubmit: func.isRequired,
-  // 當使用者按下送出鈕，但有 question validator 驗證未過，此函數會被觸發
+  // 當使用者按下送出鈕，但有驗證未過，此函數會被觸發
   onValidateFail: func,
   // 點擊下一步可額外觸發的函數 (可用於數據追蹤)
   onNext: func,
