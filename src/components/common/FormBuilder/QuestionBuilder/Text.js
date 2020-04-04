@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import styles from './Text.module.css';
-import TitleBlock from '../TitleBlock';
 
 const Text = ({
   page,
@@ -13,30 +13,30 @@ const Text = ({
   value,
   onChange,
   onConfirm,
-  validator,
-}) => (
-  <div>
-    <TitleBlock
-      page={page}
-      title={title}
-      description={description}
-      required={required}
-    />
-    <input
-      className={styles.textinput}
-      type="text"
-      placeholder="請輸入職業名稱"
-      value={value}
-      onChange={e => onChange(e.target.value)}
-      onKeyDown={e => {
-        if (e.key === 'Enter') {
-          e.target.blur();
-          onConfirm();
-        }
-      }}
-    />
-  </div>
-);
+  warning,
+}) => {
+  const [isComposing, setComposing] = useState(false);
+  return (
+    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
+      <input
+        className={styles.textinput}
+        type="text"
+        placeholder="請輸入職業名稱"
+        value={value}
+        onCompositionStart={() => setComposing(true)}
+        onCompositionEnd={() => setComposing(false)}
+        onChange={e => onChange(e.target.value)}
+        onKeyDown={e => {
+          if (!isComposing && e.key === 'Enter') {
+            e.target.blur();
+            onConfirm();
+          }
+        }}
+      />
+      <div className={styles.warning}>{warning}</div>
+    </div>
+  );
+};
 
 Text.propTypes = {
   page: PropTypes.number.isRequired,
@@ -47,7 +47,7 @@ Text.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  validator: PropTypes.func.isRequired,
+  warning: PropTypes.string,
 };
 
 Text.defaultProps = {

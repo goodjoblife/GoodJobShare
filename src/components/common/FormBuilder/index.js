@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   string,
   bool,
@@ -16,11 +16,30 @@ import X from 'common/icons/X';
 import QuestionBuilder from './QuestionBuilder';
 import useDraft from './useDraft';
 import usePagination from './usePagination';
+import TitleBlock from './TitleBlock';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
 import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
+import Scrollable from './Scrollable';
 import styles from './FormBuilder.module.css';
+
+const findWarningAgainstValue = (value, warning, validator) => {
+  if (validator) {
+    const isValid = validator(value);
+    if (isValid) {
+      return null;
+    } else {
+      if (typeof warning === 'function') {
+        return warning(value);
+      } else {
+        return warning;
+      }
+    }
+  } else {
+    return null;
+  }
+};
 
 const findLastRequiredIndex = R.findLastIndex(R.prop('required'));
 const findIfQuestionsAcceptDraft = draft =>
@@ -70,8 +89,6 @@ const FormBuilder = ({
   const [page, setPage] = usePagination();
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
-  const goPrevious = () => setPage(page - 1);
-  const goNext = () => setPage(page + 1);
 
   const indexToShowSubmitButton = useMemo(
     () => findLastRequiredIndex(questions),
@@ -94,12 +111,44 @@ const FormBuilder = ({
     }
   }, [open, resetDraft, setPage]);
 
+  let header;
+  let footer;
+  let warning;
+  let shouldRenderNothing = false;
+
+  const [isWarningShown, setWarningShown] = useState(false);
+
   const question = questions[page];
-  if (!question) {
+  if (question) {
+    header = question.header;
+    footer = question.footer;
+    warning = findWarningAgainstValue(
+      draft[question.dataKey],
+      question.warning,
+      question.validator,
+    );
+  } else {
+    shouldRenderNothing = true;
+  }
+
+  const warningBeforeSetPage = useCallback(
+    page => () => {
+      setWarningShown(true);
+      if (!warning) {
+        setPage(page);
+      }
+    },
+    [setPage, warning],
+  );
+
+  useEffect(() => {
+    setWarningShown(false);
+  }, [page]);
+
+  if (shouldRenderNothing) {
     return null;
   }
 
-  const { header, footer } = question;
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -113,15 +162,24 @@ const FormBuilder = ({
           {questions.map(({ header, footer, ...restOptions }, i) => (
             <AnimatedPager.Page key={restOptions.dataKey}>
               <div className={styles.question}>
-                <div className={styles.scrollable}>
+                <div>
+                  <TitleBlock
+                    page={page + 1}
+                    title={restOptions.title}
+                    description={restOptions.description}
+                    required={restOptions.required}
+                  />
+                </div>
+                <Scrollable className={styles.answer}>
                   <QuestionBuilder
                     {...restOptions}
                     page={i + 1}
                     value={draft[restOptions.dataKey]}
                     onChange={handleDraftChange(restOptions.dataKey)}
-                    onConfirm={() => setPage(i + 1)}
+                    onConfirm={warningBeforeSetPage(i + 1)}
+                    warning={isWarningShown ? warning : null}
                   />
-                </div>
+                </Scrollable>
               </div>
             </AnimatedPager.Page>
           ))}
@@ -132,8 +190,8 @@ const FormBuilder = ({
           </div>
           <div className={styles.navigator}>
             <NavigatorBlock
-              onPrevious={goPrevious}
-              onNext={goNext}
+              onPrevious={() => setPage(page - 1)}
+              onNext={warningBeforeSetPage(page + 1)}
               hasPrevious={hasPrevious}
               hasNext={hasNext}
             />
@@ -169,8 +227,13 @@ FormBuilder.propTypes = {
   // 問題列表
   questions: arrayOf(
     shape({
+      // 問卷頁首 & 頁尾，會覆寫共用的頁首 & 頁尾
       header: oneOfType([string, element]),
       footer: oneOfType([string, element]),
+      // 驗證內容的函數
+      validator: func,
+      // 驗證內容失敗時，顯示的警告文字
+      warning: string,
       ...QuestionBuilder.propTypes,
     }),
   ).isRequired,

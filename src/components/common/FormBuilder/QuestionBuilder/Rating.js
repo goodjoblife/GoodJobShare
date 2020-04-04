@@ -1,14 +1,24 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Glike } from 'common/icons';
 
 import styles from './Rating.module.css';
-import TitleBlock from '../TitleBlock';
 import { debounce } from 'utils/streamUtils';
 
 const range = n => {
   return [...Array(n).keys()];
+};
+
+const useHover = () => {
+  const [hoveredValue, setHoveredValue] = useState(null);
+  const handleMouseOver = useCallback(e => {
+    setHoveredValue(parseInt(e.currentTarget.dataset.value, 10));
+  }, []);
+  const handleMouseOut = useCallback(() => {
+    setHoveredValue(null);
+  }, []);
+  return [hoveredValue, handleMouseOver, handleMouseOut];
 };
 
 const Rating = ({
@@ -20,40 +30,43 @@ const Rating = ({
   value,
   onChange,
   onConfirm,
-  validator,
+  warning,
   maxRating,
 }) => {
   const debouncedConfirm = useCallback(debounce(onConfirm, 300), [onConfirm]);
+  const [hoveredValue, handleMouseOver, handleMouseOut] = useHover();
   return (
-    <div>
-      <TitleBlock
-        page={page}
-        title={title}
-        description={description}
-        required={required}
-      />
+    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
       <div className={styles.flexContainer}>
-        <div className={styles.ratingWrapper}>
-          {range(maxRating).map(i => (
-            <label className={styles.ratingLabel} key={i}>
-              <input
-                className={styles.ratingInput}
-                type="checkbox"
-                name={dataKey}
-                checked={i < value}
-                onChange={() => {
-                  onChange(i + 1);
-                  debouncedConfirm();
-                }}
-              />
-              <Glike className={cn(styles.glikeContainer)} />
-            </label>
-          ))}
-        </div>
-        <div className={styles.noteContainer}>
-          <span className={styles.clickNote}>點擊做評分</span>
+        {range(maxRating).map(i => (
+          <label
+            key={i}
+            className={styles.ratingLabel}
+            data-value={i + 1}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
+          >
+            <input
+              className={styles.ratingInput}
+              type="checkbox"
+              name={dataKey}
+              checked={hoveredValue ? i < hoveredValue : i < value}
+              onChange={() => {
+                onChange(i + 1);
+                debouncedConfirm();
+              }}
+            />
+            <Glike className={cn(styles.glikeContainer)} />
+          </label>
+        ))}
+        <div
+          className={styles.noteContainer}
+          data-value={hoveredValue || value}
+        >
+          <span />
         </div>
       </div>
+      <div className={styles.warning}>{warning}</div>
     </div>
   );
 };
@@ -67,7 +80,7 @@ Rating.propTypes = {
   value: PropTypes.number,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  validator: PropTypes.func.isRequired,
+  warning: PropTypes.string,
   maxRating: PropTypes.number.isRequired,
 };
 

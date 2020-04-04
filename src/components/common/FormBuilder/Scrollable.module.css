@@ -1,0 +1,34 @@
+.frame {
+  position: relative;
+
+  .content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    height: 59px;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 3%,
+      #ffffff 100%
+    );
+    opacity: 1;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  &.end::after {
+    opacity: 0;
+  }
+}
