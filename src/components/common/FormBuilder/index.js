@@ -131,8 +131,8 @@ const FormBuilder = ({
     shouldRenderNothing = true;
   }
 
-  const warningBeforeSetPage = useCallback(
-    page => () => {
+  const warnBeforeSetPage = useCallback(
+    page => {
       setWarningShown(true);
       if (!warning) {
         setPage(page);
@@ -176,7 +176,7 @@ const FormBuilder = ({
                     page={i}
                     value={draft[restOptions.dataKey]}
                     onChange={handleDraftChange(restOptions.dataKey)}
-                    onConfirm={warningBeforeSetPage(i + 1)}
+                    onConfirm={() => warnBeforeSetPage(i + 1)}
                     warning={isWarningShown ? warning : null}
                   />
                 </Scrollable>
@@ -191,7 +191,7 @@ const FormBuilder = ({
           <div className={styles.navigator}>
             <NavigatorBlock
               onPrevious={() => setPage(page - 1)}
-              onNext={warningBeforeSetPage(page + 1)}
+              onNext={() => warnBeforeSetPage(page + 1)}
               hasPrevious={hasPrevious}
               hasNext={hasNext}
             />
