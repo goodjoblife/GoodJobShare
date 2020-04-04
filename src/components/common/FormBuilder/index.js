@@ -164,7 +164,7 @@ const FormBuilder = ({
               <div className={styles.question}>
                 <div>
                   <TitleBlock
-                    page={page + 1}
+                    page={i}
                     title={restOptions.title}
                     description={restOptions.description}
                     required={restOptions.required}
@@ -173,7 +173,7 @@ const FormBuilder = ({
                 <Scrollable className={styles.answer}>
                   <QuestionBuilder
                     {...restOptions}
-                    page={i + 1}
+                    page={i}
                     value={draft[restOptions.dataKey]}
                     onChange={handleDraftChange(restOptions.dataKey)}
                     onConfirm={warningBeforeSetPage(i + 1)}
