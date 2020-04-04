@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Glike } from 'common/icons';
 
+import useConfirmValue from '../useConfirmValue';
 import styles from './Rating.module.css';
-import { debounce } from 'utils/streamUtils';
 
 const range = n => {
   return [...Array(n).keys()];
@@ -33,7 +33,7 @@ const Rating = ({
   warning,
   maxRating,
 }) => {
-  const debouncedConfirm = useCallback(debounce(onConfirm, 300), [onConfirm]);
+  const markInputChanged = useConfirmValue(value, onConfirm, 300);
   const [hoveredValue, handleMouseOver, handleMouseOut] = useHover();
   return (
     <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
@@ -52,8 +52,8 @@ const Rating = ({
               name={dataKey}
               checked={hoveredValue ? i < hoveredValue : i < value}
               onChange={() => {
+                markInputChanged();
                 onChange(i + 1);
-                debouncedConfirm();
               }}
             />
             <Glike className={cn(styles.glikeContainer)} />

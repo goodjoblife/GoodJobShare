@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
+import useConfirmValue from '../useConfirmValue';
 import Scrollable from '../Scrollable';
 import styles from './Radio.module.css';
-import { debounce } from 'utils/streamUtils';
 
 const Radio = ({
   page,
@@ -18,7 +18,7 @@ const Radio = ({
   warning,
   options,
 }) => {
-  const debouncedConfirm = useCallback(debounce(onConfirm, 300), [onConfirm]);
+  const markInputChanged = useConfirmValue(value, onConfirm, 300);
   return (
     <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
       <div className={styles.options}>
@@ -32,8 +32,8 @@ const Radio = ({
                 value={option}
                 checked={option === value}
                 onChange={() => {
+                  markInputChanged();
                   onChange(option);
-                  debouncedConfirm();
                 }}
               />
               <div className={styles.button}>{option}</div>
