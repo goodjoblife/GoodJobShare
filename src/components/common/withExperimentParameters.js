@@ -6,12 +6,17 @@ import React, { useState, useEffect } from 'react';
  * Using MutationObserver to observe attributes change on element
  * with `elementId`, then pass the newest attributes to WrappedComponent.
  *
- * @param {Array} attributeListToObserve the array of attributes to observe
+ * Because Google Optimize does not know when react has been loaded, and
+ * we need to give attributes to some html element. So, the element with
+ * `elementId` is typically the root of react, or at least beyond root
+ * component of react.
+ *
+ * @param {Array} attributesToObserve the array of attributes to observe
  * @param {string} elementId the id of element to observe
  */
 
 export default (
-  attributeListToObserve = [],
+  attributesToObserve = [],
   elementId = 'root',
 ) => WrappedComponent => {
   const WithExperimentParameters = props => {
@@ -21,7 +26,7 @@ export default (
       if (document) {
         const ref = document.getElementById(elementId);
         if (ref) {
-          attributeListToObserve.forEach(attr => {
+          attributesToObserve.forEach(attr => {
             const newAttr = ref.getAttribute(attr);
             if (newAttr !== null) {
               parameters[attr] = newAttr;
@@ -45,7 +50,7 @@ export default (
             records.forEach(record => {
               if (record.type === 'attributes') {
                 const newParameters = {};
-                attributeListToObserve.forEach(attr => {
+                attributesToObserve.forEach(attr => {
                   const newAttr = record.target.getAttribute(attr);
                   if (newAttr !== null) {
                     newParameters[attr] = newAttr;
