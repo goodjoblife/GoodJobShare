@@ -15,44 +15,49 @@ export default (
   elementId = 'root',
 ) => WrappedComponent => {
   const WithExperimentParameters = props => {
-    let ref = null;
-    let observer = null;
-    let initialParameters = {};
-
     // get attribute values at this moment
-    if (document) {
-      ref = document.getElementById(elementId);
-      if (ref) {
-        attributeListToObserve.forEach(attr => {
-          const newAttr = ref.getAttribute(attr);
-          if (newAttr !== null) {
-            initialParameters[attr] = newAttr;
-          }
-        });
+    const getInitialParameters = () => {
+      const parameters = {};
+      if (document) {
+        const ref = document.getElementById(elementId);
+        if (ref) {
+          attributeListToObserve.forEach(attr => {
+            const newAttr = ref.getAttribute(attr);
+            if (newAttr !== null) {
+              parameters[attr] = newAttr;
+            }
+          });
+        }
       }
-    }
+      return parameters;
+    };
 
-    // setup mutation observer
-    if (window && 'MutationObserver' in window) {
-      observer = new MutationObserver(records => {
-        records.forEach(record => {
-          if (record.type === 'attributes') {
-            const newParameters = {};
-            attributeListToObserve.forEach(attr => {
-              const newAttr = record.target.getAttribute(attr);
-              if (newAttr !== null) {
-                newParameters[attr] = newAttr;
-              }
-            });
-            setParameters(newParameters);
-          }
-        });
-      });
-    }
-
-    const [parameters, setParameters] = useState(initialParameters);
+    const [parameters, setParameters] = useState(getInitialParameters());
 
     useEffect(() => {
+      let observer = null;
+      let ref = null;
+      // setup mutation observer
+      if (window && 'MutationObserver' in window && document) {
+        ref = document.getElementById(elementId);
+        if (ref) {
+          observer = new MutationObserver(records => {
+            records.forEach(record => {
+              if (record.type === 'attributes') {
+                const newParameters = {};
+                attributeListToObserve.forEach(attr => {
+                  const newAttr = record.target.getAttribute(attr);
+                  if (newAttr !== null) {
+                    newParameters[attr] = newAttr;
+                  }
+                });
+                setParameters(newParameters);
+              }
+            });
+          });
+        }
+      }
+
       // start observing target element
       if (observer && ref) {
         observer.observe(ref, {
@@ -66,7 +71,7 @@ export default (
           observer.disconnect();
         }
       };
-    });
+    }, []);
 
     return <WrappedComponent {...props} experimentParameters={parameters} />;
   };
