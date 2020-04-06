@@ -7,7 +7,7 @@ import styles from './TitleBlock.module.css';
 const TitleBlock = ({ page, title, required, description }) => (
   <div>
     <div className={cn(styles.title, { [styles.necessary]: required })}>
-      {page}. {title}
+      {page + 1}. {title}
     </div>
     <div className={styles.description}>{description}</div>
   </div>
