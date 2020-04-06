@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import useConfirmValue from '../useConfirmValue';
+import useDebouncedConfirm from '../useDebouncedConfirm';
 import Scrollable from '../Scrollable';
 import styles from './Radio.module.css';
 
@@ -18,7 +18,7 @@ const Radio = ({
   warning,
   options,
 }) => {
-  const markInputChanged = useConfirmValue(value, onConfirm, 300);
+  const debouncedConfirm = useDebouncedConfirm(onConfirm, 300);
   return (
     <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
       <div className={styles.options}>
@@ -32,8 +32,8 @@ const Radio = ({
                 value={option}
                 checked={option === value}
                 onChange={() => {
-                  markInputChanged();
                   onChange(option);
+                  debouncedConfirm();
                 }}
               />
               <div className={styles.button}>{option}</div>
