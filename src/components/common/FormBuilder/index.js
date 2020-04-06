@@ -89,8 +89,6 @@ const FormBuilder = ({
   const [page, setPage] = usePagination();
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
-  const goPrevious = useCallback(() => setPage(page - 1), [page, setPage]);
-  const goNext = useCallback(() => setPage(page + 1), [page, setPage]);
 
   const indexToShowSubmitButton = useMemo(
     () => findLastRequiredIndex(questions),
@@ -133,12 +131,15 @@ const FormBuilder = ({
     shouldRenderNothing = true;
   }
 
-  const handleNext = useCallback(() => {
-    setWarningShown(true);
-    if (!warning) {
-      goNext();
-    }
-  }, [goNext, warning]);
+  const warnBeforeSetPage = useCallback(
+    page => {
+      setWarningShown(true);
+      if (!warning) {
+        setPage(page);
+      }
+    },
+    [setPage, warning],
+  );
 
   useEffect(() => {
     setWarningShown(false);
@@ -158,12 +159,12 @@ const FormBuilder = ({
       </div>
       <div className={cn(styles.body, bodyClassName)}>
         <AnimatedPager className={styles.pager} page={page}>
-          {questions.map(({ header, footer, ...restOptions }) => (
+          {questions.map(({ header, footer, ...restOptions }, i) => (
             <AnimatedPager.Page key={restOptions.dataKey}>
               <div className={styles.question}>
                 <div>
                   <TitleBlock
-                    page={page + 1}
+                    page={i}
                     title={restOptions.title}
                     description={restOptions.description}
                     required={restOptions.required}
@@ -172,10 +173,10 @@ const FormBuilder = ({
                 <Scrollable className={styles.answer}>
                   <QuestionBuilder
                     {...restOptions}
-                    page={page + 1}
+                    page={i}
                     value={draft[restOptions.dataKey]}
                     onChange={handleDraftChange(restOptions.dataKey)}
-                    onConfirm={handleNext}
+                    onConfirm={() => warnBeforeSetPage(i + 1)}
                     warning={isWarningShown ? warning : null}
                   />
                 </Scrollable>
@@ -189,8 +190,8 @@ const FormBuilder = ({
           </div>
           <div className={styles.navigator}>
             <NavigatorBlock
-              onPrevious={goPrevious}
-              onNext={handleNext}
+              onPrevious={() => setPage(page - 1)}
+              onNext={() => warnBeforeSetPage(page + 1)}
               hasPrevious={hasPrevious}
               hasNext={hasNext}
             />
