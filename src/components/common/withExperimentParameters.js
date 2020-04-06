@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 /**
  * This HOC is for using Google Optimize while doing A/B testing.
@@ -20,52 +20,50 @@ export default (
   elementId = 'root',
 ) => WrappedComponent => {
   const WithExperimentParameters = props => {
+    const ref = useRef(null);
+    if (document) {
+      ref.current = document.getElementById(elementId);
+    }
+
     // get attribute values at this moment
     const getInitialParameters = () => {
       const parameters = {};
-      if (document) {
-        const ref = document.getElementById(elementId);
-        if (ref) {
-          attributesToObserve.forEach(attr => {
-            const newAttr = ref.getAttribute(attr);
-            if (newAttr !== null) {
-              parameters[attr] = newAttr;
-            }
-          });
-        }
+      if (ref.current) {
+        attributesToObserve.forEach(attr => {
+          const newAttr = ref.current.getAttribute(attr);
+          if (newAttr !== null) {
+            parameters[attr] = newAttr;
+          }
+        });
       }
       return parameters;
     };
 
-    const [parameters, setParameters] = useState(getInitialParameters());
+    const [parameters, setParameters] = useState(getInitialParameters);
 
     useEffect(() => {
       let observer = null;
-      let ref = null;
       // setup mutation observer
-      if (window && 'MutationObserver' in window && document) {
-        ref = document.getElementById(elementId);
-        if (ref) {
-          observer = new MutationObserver(records => {
-            records.forEach(record => {
-              if (record.type === 'attributes') {
-                const newParameters = {};
-                attributesToObserve.forEach(attr => {
-                  const newAttr = record.target.getAttribute(attr);
-                  if (newAttr !== null) {
-                    newParameters[attr] = newAttr;
-                  }
-                });
-                setParameters(newParameters);
-              }
-            });
+      if (window && 'MutationObserver' in window) {
+        observer = new MutationObserver(records => {
+          records.forEach(record => {
+            if (record.type === 'attributes') {
+              const newParameters = {};
+              attributesToObserve.forEach(attr => {
+                const newAttr = record.target.getAttribute(attr);
+                if (newAttr !== null) {
+                  newParameters[attr] = newAttr;
+                }
+              });
+              setParameters(newParameters);
+            }
           });
-        }
+        });
       }
 
       // start observing target element
-      if (observer && ref) {
-        observer.observe(ref, {
+      if (observer && ref.current) {
+        observer.observe(ref.current, {
           attributes: true,
         });
       }
