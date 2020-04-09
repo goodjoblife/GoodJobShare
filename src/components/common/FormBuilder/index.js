@@ -201,7 +201,7 @@ const FormBuilder = ({
           </div>
           <div className={styles.navigator}>
             <NavigatorBlock
-              onPrevious={() => setPage(page - 1)}
+              onPrevious={() => warnBeforeSetPage(page - 1)}
               onNext={() => warnBeforeSetPage(page + 1)}
               hasPrevious={hasPrevious}
               hasNext={hasNext}
