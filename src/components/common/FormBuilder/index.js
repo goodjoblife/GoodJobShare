@@ -142,15 +142,11 @@ const FormBuilder = ({
     [draft, hasNext, isRequired, questions],
   );
   const handleSubmit = useCallback(() => {
-    if (!hasNext && isRequired) {
-      setWarningShown(true);
-      if (!warning) {
-        onSubmit(draft);
-      }
-      return;
+    setWarningShown(true);
+    if (isSubmittable) {
+      onSubmit(draft);
     }
-    onSubmit(draft);
-  }, [hasNext, isRequired, warning, onSubmit, draft]);
+  }, [onSubmit, draft, isSubmittable]);
 
   useEffect(() => {
     setWarningShown(false);
@@ -213,10 +209,7 @@ const FormBuilder = ({
             [styles.visible]: showsSubmission,
           })}
         >
-          <SubmissionBlock
-            isSubmittable={isSubmittable}
-            onSubmit={handleSubmit}
-          />
+          <SubmissionBlock onSubmit={handleSubmit} />
         </div>
       </div>
       <div>{footer || commonFooter}</div>

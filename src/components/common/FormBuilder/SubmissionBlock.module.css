@@ -11,11 +11,6 @@
   text-align: center;
   color: #ffffff;
   background-color: #000000;
-
-  &:disabled {
-    cursor: default;
-    opacity: 0.5;
-  }
 }
 
 .privacyPolicy {
