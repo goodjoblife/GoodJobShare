@@ -15,7 +15,6 @@ import X from 'common/icons/X';
 
 import QuestionBuilder from './QuestionBuilder';
 import useDraft from './useDraft';
-import usePagination from './usePagination';
 import TitleBlock from './TitleBlock';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
@@ -86,7 +85,7 @@ const FormBuilder = ({
     setDraftValue(dataKey)(value);
   };
 
-  const [page, setPage] = usePagination();
+  const [page, setPage] = useState(0);
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
 
