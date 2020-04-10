@@ -30,6 +30,7 @@ const Rating = ({
   onChange,
   onConfirm,
   warning,
+  validator,
   maxRating,
 }) => {
   const [hoveredValue, handleMouseOver, handleMouseOut] = useHover();
@@ -79,6 +80,7 @@ Rating.propTypes = {
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
+  validator: PropTypes.func,
   maxRating: PropTypes.number.isRequired,
 };
 

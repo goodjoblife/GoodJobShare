@@ -15,6 +15,7 @@ const Radio = ({
   onChange,
   onConfirm,
   warning,
+  validator,
   options,
 }) => (
   <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
@@ -52,6 +53,7 @@ Radio.propTypes = {
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
+  validator: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 

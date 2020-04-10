@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
+  number,
   string,
   bool,
   func,
   shape,
+  oneOf,
   oneOfType,
   element,
   arrayOf,
@@ -13,7 +15,7 @@ import R from 'ramda';
 
 import X from 'common/icons/X';
 
-import QuestionBuilder from './QuestionBuilder';
+import QuestionBuilder, { availableTypes } from './QuestionBuilder';
 import useDraft from './useDraft';
 import usePagination from './usePagination';
 import TitleBlock from './TitleBlock';
@@ -69,7 +71,7 @@ const FormBuilder = ({
 }) => {
   const [draft, setDraftValue, resetDraft] = useDraft(questions);
   const handleDraftChange = dataKey => value => {
-    onChange({ dataKey, value });
+    if (onChange) onChange({ dataKey, value });
     setDraftValue(dataKey)(value);
   };
 
@@ -210,22 +212,33 @@ FormBuilder.propTypes = {
   // 問題列表
   questions: arrayOf(
     shape({
-      ...QuestionBuilder.propTypes,
-      // 問卷頁首 & 頁尾，會覆寫共用的頁首 & 頁尾
       header: oneOfType([string, element]),
       footer: oneOfType([string, element]),
-      // 驗證內容的函數
-      validator: func,
-      // 驗證內容失敗時，顯示的警告文字
+      title: string.isRequired,
+      description: string,
+      type: oneOf(availableTypes).isRequired,
+      dataKey: string.isRequired,
+      required: bool,
       warning: oneOfType([func, string]),
+      validator: func,
+      minLength: number,
+      options: arrayOf(string),
+      maxRating: number,
+      renderCustomizedQuestion: func,
     }),
   ).isRequired,
   // 當使用者填寫內容，此函數會被觸發，且 emit 一個 object，包含被修改欄位的 key & value
-  onChange: func.isRequired,
+  onChange: func,
   // 當使用者按下送出鈕，且通過所有驗證，此函數會被觸發
   onSubmit: func.isRequired,
   // 關閉表單前觸發的函數
-  onClose: func.isRequired,
+  onClose: func,
+};
+
+FormBuilder.defaultProps = {
+  open: false,
+  questions: [],
+  onSubmit: alert,
 };
 
 const withBackgroundMask = Modal => props => (

@@ -23,6 +23,7 @@ const Checkbox = ({
   value: values,
   onChange,
   warning,
+  validator,
   options,
 }) => (
   <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
@@ -53,9 +54,10 @@ Checkbox.propTypes = {
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
-  value: PropTypes.array.isRequired,
+  value: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func.isRequired,
   warning: PropTypes.string,
+  validator: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 

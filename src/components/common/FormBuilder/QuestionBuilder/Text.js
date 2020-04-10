@@ -14,6 +14,7 @@ const Text = ({
   onChange,
   onConfirm,
   warning,
+  validator,
 }) => {
   const [isComposing, setComposing] = useState(false);
   return (
@@ -48,6 +49,7 @@ Text.propTypes = {
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
+  validator: PropTypes.func,
 };
 
 export default Text;
