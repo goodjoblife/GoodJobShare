@@ -56,6 +56,7 @@ const questions = [
     required: true,
     validator: value => !!value,
     warning: '請填寫職稱',
+    placeholder: '青輸入職業名稱',
   },
   {
     header: jobTitleHeader,

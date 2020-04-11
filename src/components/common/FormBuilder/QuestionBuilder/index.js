@@ -30,6 +30,7 @@ const QuestionBuilder = ({
   onConfirm,
   warning,
   validator,
+  placeholder,
   minLength,
   options,
   maxRating,
@@ -50,7 +51,7 @@ const QuestionBuilder = ({
   };
   switch (type) {
     case 'text':
-      return <Text {...commonProps} />;
+      return <Text {...commonProps} placeholder={placeholder} />;
     case 'textarea':
       return <TextArea {...commonProps} minLength={minLength} />;
     case 'radio':
@@ -84,6 +85,7 @@ QuestionBuilder.propTypes = {
   warning: string,
   validator: func,
   onConfirm: func.isRequired,
+  placeholder: string,
   minLength: number,
   options: arrayOf(string),
   maxRating: number,
