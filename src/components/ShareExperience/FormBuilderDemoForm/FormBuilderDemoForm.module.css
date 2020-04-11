@@ -1,7 +1,5 @@
 .header {
-  box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.11);
-  padding: 20px 24px;
-  min-height: 107px;
+  min-height: 67px;
 
   .privacyPolicy {
     font-size: 14px;
@@ -52,10 +50,6 @@
       color: #333333;
     }
   }
-}
-
-.formBuilder {
-  padding: 35px 19px;
 }
 
 .footer {

@@ -185,7 +185,6 @@ const FormBuilderDemoForm = () => {
     <div style={containerStyle}>
       <button onClick={open}>Open</button>
       <FormBuilder
-        bodyClassName={styles.formBuilder}
         open={isOpen}
         header={ctaHeader}
         footer={footer}

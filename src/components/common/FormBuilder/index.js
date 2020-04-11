@@ -60,7 +60,6 @@ const findIfQuestionsAcceptDraft = draft =>
   );
 
 const FormBuilder = ({
-  bodyClassName,
   open,
   header: commonHeader,
   footer: commonFooter,
@@ -146,7 +145,7 @@ const FormBuilder = ({
         </button>
         {header || commonHeader}
       </div>
-      <div className={cn(styles.body, bodyClassName)}>
+      <div className={styles.body}>
         <AnimatedPager className={styles.pager} page={page}>
           {questions.map(({ header, footer, ...restOptions }, i) => (
             <AnimatedPager.Page key={restOptions.dataKey}>
@@ -203,7 +202,6 @@ const FormBuilder = ({
 };
 
 FormBuilder.propTypes = {
-  className: string,
   // 表單是否開啟，等於 false 時表單關閉。
   open: bool.isRequired,
   // 問卷頁首 & 頁尾
