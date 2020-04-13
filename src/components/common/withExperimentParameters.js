@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 
 /**
  * This HOC is for using Google Optimize while doing A/B testing.
@@ -19,33 +19,19 @@ export default (
   attributesToObserve = [],
   elementId = 'root',
 ) => WrappedComponent => {
-  const WithExperimentParameters = props => {
-    const ref = useRef(null);
-    if (document && ref.current === null) {
-      ref.current = document.getElementById(elementId);
-    }
-
-    // get attribute values at this moment
-    const getInitialParameters = () => {
-      const parameters = {};
-      if (ref.current) {
-        attributesToObserve.forEach(attr => {
-          const newAttr = ref.current.getAttribute(attr);
-          if (newAttr !== null) {
-            parameters[attr] = newAttr;
-          }
-        });
+  class WithExperimentParameters extends React.Component {
+    constructor(props) {
+      super(props);
+      // get node reference
+      this.nodeRef = null;
+      if (document) {
+        this.nodeRef = document.getElementById(elementId);
       }
-      return parameters;
-    };
 
-    const [parameters, setParameters] = useState(getInitialParameters);
-
-    useEffect(() => {
-      let observer = null;
       // setup mutation observer
+      this.observer = null;
       if (window && 'MutationObserver' in window) {
-        observer = new MutationObserver(records => {
+        this.observer = new MutationObserver(records => {
           records.forEach(record => {
             if (record.type === 'attributes') {
               const newParameters = {};
@@ -55,29 +41,54 @@ export default (
                   newParameters[attr] = newAttr;
                 }
               });
-              setParameters(newParameters);
+              this.setState({ parameters: newParameters });
             }
           });
         });
       }
 
+      // intialize state
+      this.state = {
+        parameters: this.getInitialParameters(),
+      };
+
       // start observing target element
-      if (observer && ref.current) {
-        observer.observe(ref.current, {
+      if (this.observer && this.nodeRef) {
+        this.observer.observe(this.nodeRef, {
           attributes: true,
         });
       }
+    }
 
-      // unsubscribe observation
-      return function clear() {
-        if (observer) {
-          observer.disconnect();
-        }
-      };
-    }, []);
+    // get attribute values at this moment
+    getInitialParameters = () => {
+      const parameters = {};
+      if (this.nodeRef) {
+        attributesToObserve.forEach(attr => {
+          const newAttr = this.nodeRef.getAttribute(attr);
+          if (newAttr !== null) {
+            parameters[attr] = newAttr;
+          }
+        });
+      }
+      return parameters;
+    };
 
-    return <WrappedComponent {...props} experimentParameters={parameters} />;
-  };
+    componentWillUnmount() {
+      if (this.observer) {
+        this.observer.disconnect();
+      }
+    }
+
+    render() {
+      return (
+        <WrappedComponent
+          {...this.props}
+          experimentParameters={this.state.parameters}
+        />
+      );
+    }
+  }
 
   const displayName =
     WrappedComponent.displayName || WrappedComponent.name || 'Component';
