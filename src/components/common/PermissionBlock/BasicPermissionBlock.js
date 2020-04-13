@@ -11,6 +11,7 @@ import { Heading } from 'common/base';
 import withExperimentParameters from 'common/withExperimentParameters';
 import CallToLoginShareButton from '../../../containers/PermissionBlock/CallToLoginShareButtonContainer';
 import getScale from '../../../utils/numberUtils';
+import { pushDataLayer } from '../../../utils/gtm';
 import styles from './PermissionBlock.module.css';
 
 class BasicPermissionBlock extends React.Component {
@@ -50,6 +51,9 @@ class BasicPermissionBlock extends React.Component {
     if (this.props.hasFetchedLaborRightsCount === false) {
       this.props.queryLaborRightsCount();
     }
+
+    // this is for triggering Google Optimize A/B testing
+    pushDataLayer({ event: `optimize.basicPermissionBlockMounted` });
   }
 
   renderModalContent = () => {
