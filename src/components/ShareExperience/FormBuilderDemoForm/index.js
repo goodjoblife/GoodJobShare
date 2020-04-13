@@ -193,6 +193,7 @@ const FormBuilderDemoForm = () => {
         submitButtonEnabled
         onChange={console.info}
         onSubmit={handleSubmit}
+        onValidateFail={console.warn}
         onClose={close}
       />
       <SuccessModal

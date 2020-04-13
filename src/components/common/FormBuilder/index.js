@@ -66,6 +66,7 @@ const FormBuilder = ({
   questions,
   onChange,
   onSubmit,
+  onValidateFail,
   onClose,
 }) => {
   const [draft, setDraftValue, resetDraft] = useDraft(questions);
@@ -101,6 +102,7 @@ const FormBuilder = ({
 
   let header;
   let footer;
+  let dataKey;
   let warning;
   let shouldRenderNothing = false;
 
@@ -110,8 +112,9 @@ const FormBuilder = ({
   if (question) {
     header = question.header;
     footer = question.footer;
+    dataKey = question.dataKey;
     warning = findWarningAgainstValue(
-      draft[question.dataKey],
+      draft[dataKey],
       question.warning,
       question.validator,
     );
@@ -122,11 +125,14 @@ const FormBuilder = ({
   const warnBeforeSetPage = useCallback(
     page => {
       setWarningShown(true);
-      if (!warning) {
+      if (warning) {
+        if (onValidateFail)
+          onValidateFail({ dataKey, value: draft[dataKey], warning });
+      } else {
         setPage(page);
       }
     },
-    [setPage, warning],
+    [dataKey, draft, onValidateFail, setPage, warning],
   );
 
   useEffect(() => {
@@ -202,12 +208,9 @@ const FormBuilder = ({
 };
 
 FormBuilder.propTypes = {
-  // 表單是否開啟，等於 false 時表單關閉。
   open: bool.isRequired,
-  // 問卷頁首 & 頁尾
   header: oneOfType([string, element]),
   footer: oneOfType([string, element]),
-  // 問題列表
   questions: arrayOf(
     shape({
       header: oneOfType([string, element]),
@@ -226,11 +229,9 @@ FormBuilder.propTypes = {
       renderCustomizedQuestion: func,
     }),
   ).isRequired,
-  // 當使用者填寫內容，此函數會被觸發，且 emit 一個 object，包含被修改欄位的 key & value
   onChange: func,
-  // 當使用者按下送出鈕，且通過所有驗證，此函數會被觸發
   onSubmit: func.isRequired,
-  // 關閉表單前觸發的函數
+  onValidateFail: func,
   onClose: func,
 };
 
