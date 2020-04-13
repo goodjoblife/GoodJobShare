@@ -192,6 +192,8 @@ const FormBuilderDemoForm = () => {
         questions={questions}
         submitButtonEnabled
         onChange={console.info}
+        onPrev={() => console.info('prev')}
+        onNext={() => console.info('next')}
         onSubmit={handleSubmit}
         onValidateFail={console.warn}
         onClose={close}

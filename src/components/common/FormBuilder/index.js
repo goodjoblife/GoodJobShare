@@ -65,6 +65,8 @@ const FormBuilder = ({
   footer: commonFooter,
   questions,
   onChange,
+  onPrev,
+  onNext,
   onSubmit,
   onValidateFail,
   onClose,
@@ -170,7 +172,10 @@ const FormBuilder = ({
                     page={i}
                     value={draft[restOptions.dataKey]}
                     onChange={handleDraftChange(restOptions.dataKey)}
-                    onConfirm={() => warnBeforeSetPage(i + 1)}
+                    onConfirm={() => {
+                      if (onNext) onNext();
+                      warnBeforeSetPage(i + 1);
+                    }}
                     warning={isWarningShown ? warning : null}
                   />
                 </Scrollable>
@@ -184,8 +189,14 @@ const FormBuilder = ({
           </div>
           <div className={styles.navigator}>
             <NavigatorBlock
-              onPrevious={() => setPage(page - 1)}
-              onNext={() => warnBeforeSetPage(page + 1)}
+              onPrevious={() => {
+                if (onPrev) onPrev();
+                setPage(page - 1);
+              }}
+              onNext={() => {
+                if (onNext) onNext();
+                warnBeforeSetPage(page + 1);
+              }}
               hasPrevious={hasPrevious}
               hasNext={hasNext}
             />
@@ -230,6 +241,8 @@ FormBuilder.propTypes = {
     }),
   ).isRequired,
   onChange: func,
+  onPrev: func,
+  onNext: func,
   onSubmit: func.isRequired,
   onValidateFail: func,
   onClose: func,
