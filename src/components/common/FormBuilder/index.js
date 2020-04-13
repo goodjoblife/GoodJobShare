@@ -251,7 +251,7 @@ FormBuilder.propTypes = {
 FormBuilder.defaultProps = {
   open: false,
   questions: [],
-  onSubmit: alert,
+  onSubmit: console.log,
 };
 
 const withBackgroundMask = Modal => props => (
