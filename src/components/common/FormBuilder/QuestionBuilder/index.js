@@ -1,5 +1,13 @@
 import React from 'react';
-import { string, bool, number, func, oneOf, arrayOf } from 'prop-types';
+import {
+  string,
+  bool,
+  number,
+  func,
+  oneOf,
+  oneOfType,
+  arrayOf,
+} from 'prop-types';
 
 import Text from './Text';
 import TextArea from './TextArea';
@@ -97,7 +105,7 @@ const QuestionBuilder = ({
 */
 QuestionBuilder.propTypes = {
   // 問題
-  title: string.isRequired,
+  title: oneOfType([string, func]).isRequired,
   // 問題描述
   description: string,
   // 問題種類
