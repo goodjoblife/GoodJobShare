@@ -89,11 +89,14 @@ const FormBuilder = ({
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
 
+  const [isWarningShown, setWarningShown] = useState(false);
+
   useEffect(() => {
     if (!open) {
       // Reset on close
       setPage(0);
       resetDraft();
+      setWarningShown(false);
     }
   }, [open, resetDraft, setPage]);
 
@@ -102,8 +105,6 @@ const FormBuilder = ({
   let warning;
   let isRequired;
   let shouldRenderNothing = false;
-
-  const [isWarningShown, setWarningShown] = useState(false);
 
   const question = questions[page];
   if (question) {
