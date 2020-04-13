@@ -41,7 +41,6 @@ const findWarningAgainstValue = (value, warning, validator) => {
   }
 };
 
-const findLastRequiredIndex = R.findLastIndex(R.prop('required'));
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
     R.ifElse(
@@ -89,12 +88,6 @@ const FormBuilder = ({
   const [page, setPage] = usePagination();
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
-
-  const indexToShowSubmitButton = useMemo(
-    () => findLastRequiredIndex(questions),
-    [questions],
-  );
-  const showsSubmission = page >= indexToShowSubmitButton;
 
   useEffect(() => {
     if (!open) {
@@ -206,7 +199,7 @@ const FormBuilder = ({
         </div>
         <div
           className={cn(styles.submission, {
-            [styles.visible]: showsSubmission,
+            [styles.visible]: !hasNext,
           })}
         >
           <SubmissionBlock onSubmit={handleSubmit} />
