@@ -164,6 +164,13 @@ const questions = [
       );
     },
   },
+  {
+    header: jobTitleHeader,
+    title: () =>
+      '感謝你分享工作心得，按下「送出」， 馬上就可以解鎖全站 2 萬多筆資料 48 小時哦！',
+    type: 'customized',
+    dataKey: 'submit',
+  },
 ];
 
 const FormBuilderDemoForm = () => {
