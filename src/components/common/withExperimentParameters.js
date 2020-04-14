@@ -26,7 +26,7 @@ export default (
     }
 
     // get attribute values at this moment
-    const getInitialParameters = () => {
+    const getCurrentParameters = () => {
       const parameters = {};
       if (ref.current) {
         attributesToObserve.forEach(attr => {
@@ -39,7 +39,7 @@ export default (
       return parameters;
     };
 
-    const [parameters, setParameters] = useState(getInitialParameters);
+    const [parameters, setParameters] = useState(getCurrentParameters);
 
     useEffect(() => {
       let observer = null;
@@ -63,6 +63,8 @@ export default (
 
       // start observing target element
       if (observer && ref.current) {
+        // retrieve latest parameters before observing changes
+        setParameters(getCurrentParameters());
         observer.observe(ref.current, {
           attributes: true,
         });
