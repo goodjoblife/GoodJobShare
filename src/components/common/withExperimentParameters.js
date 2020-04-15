@@ -1,6 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 /**
+ * Utility: return selected attributes of element
+ */
+const getObservedAttributes = (element, attributesToObserve) => {
+  const parameters = {};
+  if (element && element.getAttribute) {
+    attributesToObserve.forEach(attr => {
+      const newAttr = element.getAttribute(attr);
+      if (newAttr !== null) {
+        parameters[attr] = newAttr;
+      }
+    });
+  }
+  return parameters;
+};
+
+/**
  * This HOC is for using Google Optimize while doing A/B testing.
  *
  * Using MutationObserver to observe attributes change on element
@@ -26,20 +42,11 @@ export default (
     }
 
     // get attribute values at this moment
-    const getInitialParameters = () => {
-      const parameters = {};
-      if (ref.current) {
-        attributesToObserve.forEach(attr => {
-          const newAttr = ref.current.getAttribute(attr);
-          if (newAttr !== null) {
-            parameters[attr] = newAttr;
-          }
-        });
-      }
-      return parameters;
+    const getCurrentParameters = () => {
+      return getObservedAttributes(ref.current, attributesToObserve);
     };
 
-    const [parameters, setParameters] = useState(getInitialParameters);
+    const [parameters, setParameters] = useState(getCurrentParameters);
 
     useEffect(() => {
       let observer = null;
@@ -48,13 +55,10 @@ export default (
         observer = new MutationObserver(records => {
           records.forEach(record => {
             if (record.type === 'attributes') {
-              const newParameters = {};
-              attributesToObserve.forEach(attr => {
-                const newAttr = record.target.getAttribute(attr);
-                if (newAttr !== null) {
-                  newParameters[attr] = newAttr;
-                }
-              });
+              const newParameters = getObservedAttributes(
+                record.target,
+                attributesToObserve,
+              );
               setParameters(newParameters);
             }
           });
@@ -63,6 +67,8 @@ export default (
 
       // start observing target element
       if (observer && ref.current) {
+        // retrieve latest parameters before observing changes
+        setParameters(getCurrentParameters());
         observer.observe(ref.current, {
           attributes: true,
         });
