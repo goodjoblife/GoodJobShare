@@ -130,7 +130,10 @@ const questions = [
     description: 'Form Description',
     type: 'customized',
     dataKey: 'salaryWorkTime',
-    renderCustomizedQuestion(object, onChange) {
+    required: true,
+    validator: value => !!value,
+    warning: '錯誤訊息',
+    renderCustomizedQuestion({ value: object, onChange, warning }) {
       const salaryType = (object && object.type) || '';
       const salaryAmount = (object && object.amount) || '';
       const defaultState = { type: null, amount: 0 };
@@ -157,9 +160,17 @@ const questions = [
             />
             元
           </label>
+          <div style={{ color: 'red' }}>{warning}</div>
         </div>
       );
     },
+  },
+  {
+    header: jobTitleHeader,
+    title: () =>
+      '感謝你分享工作心得，按下「送出」， 馬上就可以解鎖全站 2 萬多筆資料 48 小時哦！',
+    type: 'customized',
+    dataKey: 'submit',
   },
 ];
 

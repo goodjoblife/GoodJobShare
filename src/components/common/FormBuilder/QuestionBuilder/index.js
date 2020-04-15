@@ -1,5 +1,14 @@
 import React from 'react';
-import { string, any, bool, number, func, oneOf, arrayOf } from 'prop-types';
+import {
+  string,
+  any,
+  bool,
+  number,
+  func,
+  oneOf,
+  oneOfType,
+  arrayOf,
+} from 'prop-types';
 
 import Text from './Text';
 import TextArea from './TextArea';
@@ -64,7 +73,19 @@ const QuestionBuilder = ({
       return <File {...commonProps} />;
     case 'customized':
       if (renderCustomizedQuestion) {
-        return renderCustomizedQuestion(value, onChange);
+        return renderCustomizedQuestion({
+          page,
+          title,
+          description,
+          type,
+          dataKey,
+          required,
+          value,
+          onChange,
+          onConfirm,
+          warning,
+          validator,
+        });
       } else {
         return null;
       }
@@ -75,7 +96,7 @@ const QuestionBuilder = ({
 
 QuestionBuilder.propTypes = {
   page: number.isRequired,
-  title: string.isRequired,
+  title: oneOfType([string, func]).isRequired,
   description: string,
   type: oneOf(availableTypes).isRequired,
   dataKey: string.isRequired,

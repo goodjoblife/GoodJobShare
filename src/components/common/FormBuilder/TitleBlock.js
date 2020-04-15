@@ -4,17 +4,21 @@ import cn from 'classnames';
 
 import styles from './TitleBlock.module.css';
 
+const defaultFormatter = ({ title, page }) => `${page + 1}. ${title}`;
+
 const TitleBlock = ({ page, title, required, description }) => (
   <div>
     <div className={cn(styles.title, { [styles.necessary]: required })}>
-      {page + 1}. {title}
+      {typeof title === 'function'
+        ? title({ page })
+        : defaultFormatter({ title, page })}
     </div>
     <div className={styles.description}>{description}</div>
   </div>
 );
 
 TitleBlock.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   required: PropTypes.bool.isRequired,
   description: PropTypes.string,
 };

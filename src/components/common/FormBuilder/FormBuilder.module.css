@@ -31,7 +31,7 @@
 }
 
 .body {
-  padding: 35px 19px;
+  padding: 35px 19px 12px 19px;
 
   display: flex;
   flex-direction: column;

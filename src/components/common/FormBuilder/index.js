@@ -43,7 +43,6 @@ const findWarningAgainstValue = (value, warning, validator) => {
   }
 };
 
-const findLastRequiredIndex = R.findLastIndex(R.prop('required'));
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
     R.ifElse(
@@ -81,27 +80,6 @@ const FormBuilder = ({
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
 
-  const indexToShowSubmitButton = useMemo(
-    () => findLastRequiredIndex(questions),
-    [questions],
-  );
-  const showsSubmission = page >= indexToShowSubmitButton;
-  const isSubmittable = useMemo(
-    () => findIfQuestionsAcceptDraft(draft)(questions),
-    [draft, questions],
-  );
-  const handleSubmit = useCallback(() => {
-    onSubmit(draft);
-  }, [onSubmit, draft]);
-
-  useEffect(() => {
-    if (!open) {
-      // Reset on close
-      setPage(0);
-      resetDraft();
-    }
-  }, [open, resetDraft, setPage]);
-
   let header;
   let footer;
   let dataKey;
@@ -109,6 +87,31 @@ const FormBuilder = ({
   let shouldRenderNothing = false;
 
   const [isWarningShown, setWarningShown] = useState(false);
+
+  const isSubmittable = useMemo(
+    () => findIfQuestionsAcceptDraft(draft)(questions),
+    [draft, questions],
+  );
+  const handleSubmit = useCallback(() => {
+    setWarningShown(true);
+    if (warning) {
+      if (onValidateFail)
+        onValidateFail({ dataKey, value: draft[dataKey], warning });
+    } else if (isSubmittable) {
+      onSubmit(draft);
+    } else {
+      console.error(`Not submittable`);
+    }
+  }, [warning, isSubmittable, onValidateFail, dataKey, draft, onSubmit]);
+
+  useEffect(() => {
+    if (!open) {
+      // Reset on close
+      setPage(0);
+      resetDraft();
+      setWarningShown(false);
+    }
+  }, [open, resetDraft, setPage]);
 
   const question = questions[page];
   if (question) {
@@ -191,7 +194,7 @@ const FormBuilder = ({
             <NavigatorBlock
               onPrevious={() => {
                 if (onPrev) onPrev();
-                setPage(page - 1);
+                warnBeforeSetPage(page - 1);
               }}
               onNext={() => {
                 if (onNext) onNext();
@@ -204,13 +207,10 @@ const FormBuilder = ({
         </div>
         <div
           className={cn(styles.submission, {
-            [styles.visible]: showsSubmission,
+            [styles.visible]: !hasNext,
           })}
         >
-          <SubmissionBlock
-            isSubmittable={isSubmittable}
-            onSubmit={handleSubmit}
-          />
+          <SubmissionBlock onSubmit={handleSubmit} />
         </div>
       </div>
       <div>{footer || commonFooter}</div>
@@ -226,7 +226,7 @@ FormBuilder.propTypes = {
     shape({
       header: oneOfType([string, element]),
       footer: oneOfType([string, element]),
-      title: string.isRequired,
+      title: oneOfType([string, func]).isRequired,
       description: string,
       type: oneOf(availableTypes).isRequired,
       dataKey: string.isRequired,
