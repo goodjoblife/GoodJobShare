@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import Scrollable from '../Scrollable';
+import useDebouncedConfirm from '../useDebouncedConfirm';
 import styles from './Radio.module.css';
 
 const Radio = ({
@@ -15,32 +16,36 @@ const Radio = ({
   onChange,
   onConfirm,
   warning,
+  validator,
   options,
-}) => (
-  <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
-    <div className={styles.options}>
-      <Scrollable className={styles.optionsContent}>
-        {options.map(option => (
-          <label className={styles.label} key={option}>
-            <input
-              className={styles.input}
-              type="radio"
-              name={dataKey}
-              value={option}
-              checked={option === value}
-              onChange={() => {
-                onChange(option);
-                setTimeout(onConfirm, 300);
-              }}
-            />
-            <div className={styles.button}>{option}</div>
-          </label>
-        ))}
-      </Scrollable>
+}) => {
+  const debouncedConfirm = useDebouncedConfirm(onConfirm, 300);
+  return (
+    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
+      <div className={styles.options}>
+        <Scrollable className={styles.optionsContent}>
+          {options.map(option => (
+            <label className={styles.label} key={option}>
+              <input
+                className={styles.input}
+                type="radio"
+                name={dataKey}
+                value={option}
+                checked={option === value}
+                onChange={() => {
+                  onChange(option);
+                  debouncedConfirm();
+                }}
+              />
+              <div className={styles.button}>{option}</div>
+            </label>
+          ))}
+        </Scrollable>
+      </div>
+      <div className={styles.warning}>{warning}</div>
     </div>
-    <div className={styles.warning}>{warning}</div>
-  </div>
-);
+  );
+};
 
 Radio.propTypes = {
   page: PropTypes.number.isRequired,
@@ -52,11 +57,8 @@ Radio.propTypes = {
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
+  validator: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-
-Radio.defaultProps = {
-  required: false,
 };
 
 export default Radio;

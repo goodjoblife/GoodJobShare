@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
+  number,
   string,
   bool,
   func,
   shape,
+  oneOf,
   oneOfType,
   element,
   arrayOf,
@@ -13,7 +15,7 @@ import R from 'ramda';
 
 import X from 'common/icons/X';
 
-import QuestionBuilder from './QuestionBuilder';
+import QuestionBuilder, { availableTypes } from './QuestionBuilder';
 import useDraft from './useDraft';
 import usePagination from './usePagination';
 import TitleBlock from './TitleBlock';
@@ -57,31 +59,20 @@ const findIfQuestionsAcceptDraft = draft =>
   );
 
 const FormBuilder = ({
-  bodyClassName,
   open,
-  title,
-  description,
-  submitButtonText,
-  submitButtonEnabled,
   header: commonHeader,
   footer: commonFooter,
   questions,
-  layout,
   onChange,
+  onPrev,
+  onNext,
   onSubmit,
   onValidateFail,
-  onNext,
-  onPrev,
-  onClickAgreement,
   onClose,
-  msgModalContent,
-  openMsgModal,
-  onCloseMsgModal,
-  onConfirmMsgModal,
 }) => {
   const [draft, setDraftValue, resetDraft] = useDraft(questions);
   const handleDraftChange = dataKey => value => {
-    onChange({ dataKey, value });
+    if (onChange) onChange({ dataKey, value });
     setDraftValue(dataKey)(value);
   };
 
@@ -102,6 +93,7 @@ const FormBuilder = ({
 
   let header;
   let footer;
+  let dataKey;
   let warning;
   let isRequired;
   let shouldRenderNothing = false;
@@ -110,8 +102,9 @@ const FormBuilder = ({
   if (question) {
     header = question.header;
     footer = question.footer;
+    dataKey = question.dataKey;
     warning = findWarningAgainstValue(
-      draft[question.dataKey],
+      draft[dataKey],
       question.warning,
       question.validator,
     );
@@ -123,11 +116,14 @@ const FormBuilder = ({
   const warnBeforeSetPage = useCallback(
     page => {
       setWarningShown(true);
-      if (!warning) {
+      if (warning) {
+        if (onValidateFail)
+          onValidateFail({ dataKey, value: draft[dataKey], warning });
+      } else {
         setPage(page);
       }
     },
-    [setPage, warning],
+    [dataKey, draft, onValidateFail, setPage, warning],
   );
 
   const isSubmittable = useMemo(
@@ -158,7 +154,7 @@ const FormBuilder = ({
         </button>
         {header || commonHeader}
       </div>
-      <div className={cn(styles.body, bodyClassName)}>
+      <div className={styles.body}>
         <AnimatedPager className={styles.pager} page={page}>
           {questions.map(({ header, footer, ...restOptions }, i) => (
             <AnimatedPager.Page key={restOptions.dataKey}>
@@ -177,7 +173,10 @@ const FormBuilder = ({
                     page={i}
                     value={draft[restOptions.dataKey]}
                     onChange={handleDraftChange(restOptions.dataKey)}
-                    onConfirm={() => warnBeforeSetPage(i + 1)}
+                    onConfirm={() => {
+                      if (onNext) onNext();
+                      warnBeforeSetPage(i + 1);
+                    }}
                     warning={isWarningShown ? warning : null}
                   />
                 </Scrollable>
@@ -191,8 +190,14 @@ const FormBuilder = ({
           </div>
           <div className={styles.navigator}>
             <NavigatorBlock
-              onPrevious={() => warnBeforeSetPage(page - 1)}
-              onNext={() => warnBeforeSetPage(page + 1)}
+              onPrevious={() => {
+                if (onPrev) onPrev();
+                warnBeforeSetPage(page - 1);
+              }}
+              onNext={() => {
+                if (onNext) onNext();
+                warnBeforeSetPage(page + 1);
+              }}
               hasPrevious={hasPrevious}
               hasNext={hasNext}
             />
@@ -212,59 +217,39 @@ const FormBuilder = ({
 };
 
 FormBuilder.propTypes = {
-  className: string,
-  // 表單是否開啟，等於 false 時表單關閉。
   open: bool.isRequired,
-  // 問卷頁首 & 頁尾
   header: oneOfType([string, element]),
   footer: oneOfType([string, element]),
-  // 上傳按鈕的文字
-  submitButtonText: oneOfType([string, element]).isRequired,
-  // 上傳按鈕是否可按
-  submitButtonEnabled: bool.isRequired,
-  // 問題列表
   questions: arrayOf(
     shape({
-      ...QuestionBuilder.propTypes,
-      // 問卷頁首 & 頁尾，會覆寫共用的頁首 & 頁尾
       header: oneOfType([string, element]),
       footer: oneOfType([string, element]),
-      // 驗證內容的函數
-      validator: func,
-      // 驗證內容失敗時，顯示的警告文字
+      title: oneOfType([string, func]).isRequired,
+      description: string,
+      type: oneOf(availableTypes).isRequired,
+      dataKey: string.isRequired,
+      required: bool,
       warning: oneOfType([func, string]),
+      validator: func,
+      placeholder: string,
+      minLength: number,
+      options: arrayOf(string),
+      maxRating: number,
+      renderCustomizedQuestion: func,
     }),
   ).isRequired,
-  // 排版方式，目前只有一種，就是 typeform
-  layout: string.isRequired,
-  // 當使用者填寫內容，此函數會被觸發，且 emit 一個 object，包含被修改欄位的 key & value
-  onChange: func.isRequired,
-  // 當使用者按下送出鈕，且通過所有驗證，此函數會被觸發
-  onSubmit: func.isRequired,
-  // 當使用者按下送出鈕，但有驗證未過，此函數會被觸發
-  onValidateFail: func,
-  // 點擊下一步可額外觸發的函數 (可用於數據追蹤)
-  onNext: func,
-  // 點擊上一步考額外觸發的函數 (可用於數據追蹤)
+  onChange: func,
   onPrev: func,
-  // 點擊使用者條款 checkbox
-  onClickAgreement: func,
-  // 關閉表單前觸發的函數
-  onClose: func.isRequired,
-
-  // 訊息 Modal 的內容
-  msgModalContent: oneOfType([string, element]),
-  // 訊息 Modal 是否開啟
-  openMsgModal: bool,
-  // 使用者點擊 Modal 的關閉按鈕觸發的函數
-  onCloseMsgModal: func,
-  // 使用者點擊 Modal 的確認按鈕觸發的函數
-  onConfirmMsgModal: func,
+  onNext: func,
+  onSubmit: func.isRequired,
+  onValidateFail: func,
+  onClose: func,
 };
 
 FormBuilder.defaultProps = {
-  layout: 'typeform',
-  openMsgModal: false,
+  open: false,
+  questions: [],
+  onSubmit: console.log,
 };
 
 const withBackgroundMask = Modal => props => (
