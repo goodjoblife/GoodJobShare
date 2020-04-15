@@ -80,18 +80,29 @@ const FormBuilder = ({
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
 
+  let header;
+  let footer;
+  let dataKey;
+  let warning;
+  let shouldRenderNothing = false;
+
+  const [isWarningShown, setWarningShown] = useState(false);
+
   const isSubmittable = useMemo(
     () => findIfQuestionsAcceptDraft(draft)(questions),
     [draft, questions],
   );
   const handleSubmit = useCallback(() => {
     setWarningShown(true);
-    if (isSubmittable) {
+    if (warning) {
+      if (onValidateFail)
+        onValidateFail({ dataKey, value: draft[dataKey], warning });
+    } else if (isSubmittable) {
       onSubmit(draft);
+    } else {
+      console.error(`Not submittable`);
     }
-  }, [onSubmit, draft, isSubmittable]);
-
-  const [isWarningShown, setWarningShown] = useState(false);
+  }, [warning, isSubmittable, onValidateFail, dataKey, draft, onSubmit]);
 
   useEffect(() => {
     if (!open) {
@@ -101,12 +112,6 @@ const FormBuilder = ({
       setWarningShown(false);
     }
   }, [open, resetDraft, setPage]);
-
-  let header;
-  let footer;
-  let dataKey;
-  let warning;
-  let shouldRenderNothing = false;
 
   const question = questions[page];
   if (question) {
