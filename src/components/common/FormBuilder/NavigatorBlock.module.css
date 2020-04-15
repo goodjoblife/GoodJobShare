@@ -7,10 +7,7 @@
   cursor: pointer;
 
   &:disabled {
-    opacity: 0.5;
-    border-color: #979797;
-    color: #979797;
-    cursor: default;
+    display: none;
   }
 }
 

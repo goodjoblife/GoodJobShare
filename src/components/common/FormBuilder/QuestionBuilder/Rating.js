@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Glike } from 'common/icons';
 
+import useDebouncedConfirm from '../useDebouncedConfirm';
 import styles from './Rating.module.css';
 
 const range = n => {
@@ -30,8 +31,10 @@ const Rating = ({
   onChange,
   onConfirm,
   warning,
+  validator,
   maxRating,
 }) => {
+  const debouncedConfirm = useDebouncedConfirm(onConfirm, 300);
   const [hoveredValue, handleMouseOver, handleMouseOut] = useHover();
   return (
     <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
@@ -51,7 +54,7 @@ const Rating = ({
               checked={hoveredValue ? i < hoveredValue : i < value}
               onChange={() => {
                 onChange(i + 1);
-                setTimeout(onConfirm, 300);
+                debouncedConfirm();
               }}
             />
             <Glike className={cn(styles.glikeContainer)} />
@@ -79,11 +82,8 @@ Rating.propTypes = {
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
+  validator: PropTypes.func,
   maxRating: PropTypes.number.isRequired,
-};
-
-Rating.defaultProps = {
-  required: false,
 };
 
 export default Rating;

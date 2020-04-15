@@ -31,6 +31,8 @@
 }
 
 .body {
+  padding: 35px 19px 12px 19px;
+
   display: flex;
   flex-direction: column;
 
@@ -58,6 +60,12 @@
     top: 23px;
     right: 23px;
   }
+}
+
+.header {
+  padding: 20px 24px;
+  min-height: 65px;
+  box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.11);
 }
 
 .closeBtn {

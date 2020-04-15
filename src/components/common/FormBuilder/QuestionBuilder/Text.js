@@ -14,6 +14,8 @@ const Text = ({
   onChange,
   onConfirm,
   warning,
+  validator,
+  placeholder,
 }) => {
   const [isComposing, setComposing] = useState(false);
   return (
@@ -21,7 +23,7 @@ const Text = ({
       <input
         className={styles.textinput}
         type="text"
-        placeholder="請輸入職業名稱"
+        placeholder={placeholder}
         value={value}
         onCompositionStart={() => setComposing(true)}
         onCompositionEnd={() => setComposing(false)}
@@ -48,10 +50,8 @@ Text.propTypes = {
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
-};
-
-Text.defaultProps = {
-  required: false,
+  validator: PropTypes.func,
+  placeholder: PropTypes.string,
 };
 
 export default Text;
