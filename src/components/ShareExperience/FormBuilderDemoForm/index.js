@@ -56,6 +56,7 @@ const questions = [
     required: true,
     validator: value => !!value,
     warning: '請填寫職稱',
+    placeholder: '青輸入職業名稱',
   },
   {
     header: jobTitleHeader,
@@ -184,7 +185,6 @@ const FormBuilderDemoForm = () => {
     <div style={containerStyle}>
       <button onClick={open}>Open</button>
       <FormBuilder
-        bodyClassName={styles.formBuilder}
         open={isOpen}
         header={ctaHeader}
         footer={footer}
@@ -192,7 +192,10 @@ const FormBuilderDemoForm = () => {
         questions={questions}
         submitButtonEnabled
         onChange={console.info}
+        onPrev={() => console.info('prev')}
+        onNext={() => console.info('next')}
         onSubmit={handleSubmit}
+        onValidateFail={console.warn}
         onClose={close}
       />
       <SuccessModal
