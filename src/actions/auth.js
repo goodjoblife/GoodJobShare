@@ -1,4 +1,5 @@
 import authStatus from '../constants/authStatus';
+import { UserModule } from '../utils/eventBasedTracking';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
@@ -94,6 +95,8 @@ export const loginWithToken = token => (dispatch, getState, { api }) => {
     .then(user => {
       dispatch(setUser(user));
       dispatch(setLogin(authStatus.CONNECTED, token));
+      // identify user for amplitude
+      UserModule.identifyUser(user._id);
     })
     .catch(error => {
       console.error(error);
