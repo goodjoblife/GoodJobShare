@@ -1,3 +1,4 @@
+import ReactGA from 'react-ga';
 import authStatus from '../constants/authStatus';
 import { UserModule } from '../utils/eventBasedTracking';
 
@@ -95,8 +96,10 @@ export const loginWithToken = token => (dispatch, getState, { api }) => {
     .then(user => {
       dispatch(setUser(user));
       dispatch(setLogin(authStatus.CONNECTED, token));
-      // identify user for amplitude
+      // identify user for Amplitude
       UserModule.identifyUser(user._id);
+      // identify user for Google Analytics
+      ReactGA.set({ userId: user._id });
     })
     .catch(error => {
       console.error(error);
