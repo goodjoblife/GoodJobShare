@@ -1,3 +1,4 @@
 import UserModule from './user';
+import * as ViewArticleDetailModule from './viewArticleDetail';
 
-export { UserModule };
+export { UserModule, ViewArticleDetailModule };
