@@ -5,6 +5,7 @@ import { compose } from 'recompose';
 import { withPermission } from 'common/permission-context';
 import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
+import { ViewSalaryWorkTimeModule } from 'utils/eventBasedTracking';
 
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
@@ -23,18 +24,37 @@ class TimeAndSalary extends Component {
     pageType: PropTypes.string,
     pageName: PropTypes.string,
     tabType: PropTypes.string,
+    page: PropTypes.number,
   };
 
   componentDidMount() {
     this.props.fetchPermission();
+    ViewSalaryWorkTimeModule.sendEvent({
+      company: this.props.pageName,
+      page: this.props.page,
+      nTotalData: this.props.salaryWorkTimeStatistics.count,
+      hasPermission: this.props.canViewTimeAndSalary,
+    });
   }
 
   componentDidUpdate(prevProps) {
-    const prevCompanyName = prevProps.companyName;
-    const companyName = this.props.companyName;
+    const prevPageName = prevProps.pageName;
+    const pageName = this.props.pageName;
 
-    if (prevCompanyName !== companyName) {
+    if (prevPageName !== pageName) {
       this.props.fetchPermission();
+    }
+
+    if (
+      prevProps.page !== this.props.page ||
+      prevProps.canViewTimeAndSalary !== this.props.canViewTimeAndSalary
+    ) {
+      ViewSalaryWorkTimeModule.sendEvent({
+        company: this.props.pageName,
+        page: this.props.page,
+        nTotalData: this.props.salaryWorkTimeStatistics.count,
+        hasPermission: this.props.canViewTimeAndSalary,
+      });
     }
   }
 
