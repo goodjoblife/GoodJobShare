@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .textarea {
+    flex: 1;
+    border: solid 1px #bdbdbd;
+    background-color: #ffffff;
+    resize: none;
+    padding: 13px 15px;
+    font-size: 16px;
+    line-height: normal;
+  }
+
+  &.hasWarning .textarea {
+    border-color: #d50000;
+  }
+
+  .count {
+    text-align: right;
+    margin-top: 9px;
+    font-size: 14px;
+    color: #969696;
+    line-height: normal;
+
+    &.warning {
+      color: #d50000;
+    }
+  }
+}

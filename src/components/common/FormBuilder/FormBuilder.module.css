@@ -1,0 +1,101 @@
+.backgroundMask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: hsla(0, 0%, 100%, 0.9);
+  display: flex;
+  justify-content: center;
+  z-index: 999;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.container {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  width: 360px;
+  background: #ffffff;
+  box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  .body {
+    flex: 1;
+  }
+}
+
+.body {
+  padding: 35px 19px 12px 19px;
+
+  display: flex;
+  flex-direction: column;
+
+  .pager {
+    flex: 1;
+  }
+}
+
+.question {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .answer {
+    flex: 1;
+  }
+}
+
+.header {
+  position: relative;
+
+  .closeBtn {
+    position: absolute;
+    top: 23px;
+    right: 23px;
+  }
+}
+
+.header {
+  padding: 20px 24px;
+  min-height: 65px;
+  box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.11);
+}
+
+.closeBtn {
+  .icon {
+    width: 19px;
+    height: 19px;
+    fill: #5a5a5a;
+  }
+}
+
+.navigationBar {
+  margin-top: 30px;
+  display: flex;
+
+  .progress {
+    width: 100px;
+  }
+
+  .navigator {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.submission {
+  margin-top: 16px;
+  display: none;
+
+  &.visible {
+    display: block;
+  }
+}

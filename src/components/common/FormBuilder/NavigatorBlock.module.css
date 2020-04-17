@@ -1,0 +1,16 @@
+.btn {
+  opacity: 1;
+  border-radius: 4px;
+  border: solid 1px #969696;
+  color: #969696;
+  padding: 10px 16px;
+  cursor: pointer;
+
+  &:disabled {
+    display: none;
+  }
+}
+
+.btn + .btn {
+  margin-left: 8px;
+}

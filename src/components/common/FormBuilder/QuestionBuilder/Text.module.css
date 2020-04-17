@@ -1,0 +1,25 @@
+$warning-red: #d0021b;
+
+.container.hasWarning .textinput {
+  border-color: $warning-red;
+}
+
+.textinput {
+  border: solid 1px #bdbdbd;
+  background-color: #ffffff;
+  padding: 10px 15px;
+  font-size: 16px;
+
+  ::placeholder {
+    width: 134px;
+    height: 22px;
+    color: #c0c0c0;
+  }
+}
+
+.warning {
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: 1.07px;
+  color: $warning-red;
+}
