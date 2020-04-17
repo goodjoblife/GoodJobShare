@@ -1,5 +1,5 @@
 const getAmplitudeClient = () => {
-  if (window.amplitude) {
+  if (typeof window !== 'undefined' && window.amplitude) {
     const client = window.amplitude.getInstance();
     if (client) {
       return client;
@@ -42,8 +42,11 @@ class EventBasedTrackingClient {
 }
 
 export const getEventBasedTrackingClient = () => {
-  if (!window.eventBasedTrackingClient) {
-    window.eventBasedTrackingClient = new EventBasedTrackingClient();
+  if (typeof window !== 'undefined') {
+    if (!window.eventBasedTrackingClient) {
+      window.eventBasedTrackingClient = new EventBasedTrackingClient();
+    }
+    return window.eventBasedTrackingClient;
   }
-  return window.eventBasedTrackingClient;
+  return null;
 };
