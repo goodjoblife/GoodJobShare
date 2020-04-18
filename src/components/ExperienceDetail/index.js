@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-} from 'react';
+import React, { Fragment, useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
@@ -122,9 +116,8 @@ const ExperienceDetail = ({
   const repliesStatus = props.repliesStatus;
 
   // send event to Amplitude
-  const hasSentAmplitudeEvent = useRef(false);
   useEffect(() => {
-    if (!hasSentAmplitudeEvent.current && experience) {
+    if (experience) {
       const contentLength = experience.sections
         ? experience.sections.reduce((accu, curr) => {
             const subTitleLength = curr.subtitle ? curr.subtitle.length : 0;
@@ -138,10 +131,10 @@ const ExperienceDetail = ({
         contentLength,
         jobTitle: experience.job_title.name,
         company: experience.company.name,
+        hasPermission: canViewExperienceDetail,
       });
-      hasSentAmplitudeEvent.current = true;
     }
-  }, [experience]);
+  }, [canViewExperienceDetail]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (isError(experienceStatus)) {
     if (isUiNotFoundError(experienceError)) {
