@@ -10,9 +10,7 @@ class PermissionContextProvider extends Component {
     };
 
     this.state = {
-      canViewLaborRightsSingle: true,
-      canViewExperienceDetail: true,
-      canViewTimeAndSalary: true,
+      canView: null,
       setCanView: this.setCanView,
     };
   }

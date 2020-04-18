@@ -14,7 +14,7 @@ const WorkExperiences = ({
   tabType,
   data,
   page,
-  canViewExperienceDetail,
+  canView,
 }) => {
   if (data.length === 0) {
     return <EmptyView pageName={pageName} tabType={tabType} />;
@@ -27,7 +27,7 @@ const WorkExperiences = ({
           key={d.id}
           pageType={pageType}
           data={d}
-          canViewExperienceDetail={canViewExperienceDetail}
+          canView={canView}
         />
       ))}
       <Pagination
@@ -46,7 +46,7 @@ WorkExperiences.propTypes = {
   tabType: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
-  canViewExperienceDetail: PropTypes.bool.isRequired,
+  canView: PropTypes.bool,
 };
 
 export default WorkExperiences;

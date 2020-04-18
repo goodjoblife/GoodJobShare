@@ -30,7 +30,7 @@ const ExperienceEntry = ({
     recommend_to_others: recommendToOthers,
   },
   size,
-  canViewExperienceDetail,
+  canView,
 }) => (
   <div className={cn(styles.container, styles[size])}>
     <Link to={createLinkTo(id)}>
@@ -39,7 +39,7 @@ const ExperienceEntry = ({
           <P size="s" className={styles.date}>
             工作經驗 · {formatCreatedAt(createdAt)}
           </P>
-          {weekWorkTime && canViewExperienceDetail && (
+          {weekWorkTime && canView !== false && (
             <div className={styles.weekWorkTime}>
               <i.Clock />
               {formatWeekWorkTime(weekWorkTime)}
@@ -49,10 +49,10 @@ const ExperienceEntry = ({
             {salary && (
               <div
                 className={cn(styles.salary, {
-                  [styles.locked]: !canViewExperienceDetail,
+                  [styles.locked]: canView === false,
                 })}
               >
-                {canViewExperienceDetail ? (
+                {canView !== false ? (
                   <React.Fragment>
                     <i.Coin />
                     {formatSalary(salary)}
@@ -86,10 +86,10 @@ const ExperienceEntry = ({
           </span>
           <span
             className={cn(styles.readmore, {
-              [styles.locked]: !canViewExperienceDetail,
+              [styles.locked]: canView === false,
             })}
           >
-            {`閱讀更多${canViewExperienceDetail ? '' : '並解鎖'}`}
+            {`閱讀更多${canView !== false ? '' : '並解鎖'}`}
           </span>
         </div>
       </section>
@@ -100,7 +100,7 @@ const ExperienceEntry = ({
 ExperienceEntry.propTypes = {
   data: PropTypes.object.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
-  canViewExperienceDetail: PropTypes.bool.isRequired,
+  canView: PropTypes.bool,
 };
 
 ExperienceEntry.defaultProps = {

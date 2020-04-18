@@ -12,7 +12,6 @@ import {
   formatCanonicalPath,
   formatUrl,
 } from 'utils/helmetHelper';
-import { nthIndexOf } from 'utils/stringUtil';
 import { isUiNotFoundError } from 'utils/errors';
 import NotFound from 'common/NotFound';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
@@ -20,7 +19,6 @@ import FanPageBlock from 'common/FanPageBlock';
 import { withPermission } from 'common/permission-context';
 import Body from './Body';
 import Footer from './Footer';
-import LaborRightsPermissionBlock from '../../containers/PermissionBlock/LaborRightsPermissionBlockContainer';
 
 import { queryMenu, queryEntry } from '../../actions/laborRights';
 import {
@@ -29,7 +27,6 @@ import {
   isError,
   isFetched,
 } from '../../constants/status';
-import { MARKDOWN_DIVIDER } from '../../constants/hideContent';
 import { SITE_NAME } from '../../constants/helmetData';
 import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
 
@@ -69,34 +66,13 @@ class LaborRightsSingle extends React.Component {
   }
 
   render() {
-    const {
-      id,
-      title,
-      description,
-      content,
-      coverUrl,
-      nPublicPages,
-      descriptionInPermissionBlock,
-    } = this.props.entry ? this.props.entry : {};
+    const { id, title, description, content, coverUrl, nPublicPages } = this
+      .props.entry
+      ? this.props.entry
+      : {};
     const { seoTitle = title || '', seoDescription, seoText } = this.props.entry
       ? this.props.entry
       : {};
-    const { canViewLaborRightsSingle } = this.props;
-
-    // hide some content if user dosen't have permission
-    // but when bPublicPages === -1, all pages are public
-    let newContent = content;
-    let permissionBlock = null;
-    if (!canViewLaborRightsSingle && nPublicPages > 0 && content) {
-      const endPos = nthIndexOf(content, MARKDOWN_DIVIDER, nPublicPages);
-      newContent = content.substr(0, endPos);
-      permissionBlock = (
-        <LaborRightsPermissionBlock
-          rootClassName={styles.permissionBlockLaborRights}
-          description={descriptionInPermissionBlock || ''}
-        />
-      );
-    }
 
     const { entryStatus, entryError } = this.props;
     return (
@@ -129,11 +105,10 @@ class LaborRightsSingle extends React.Component {
               title={title}
               seoText={seoText}
               description={description}
-              content={newContent}
-              permissionBlock={permissionBlock}
+              content={content}
             />
             <FanPageBlock className={styles.fanPageBlock} />
-            {(canViewLaborRightsSingle || nPublicPages < 0) && (
+            {nPublicPages < 0 && (
               <Section marginTop>
                 <CallToActionFolder />
               </Section>
@@ -161,7 +136,6 @@ LaborRightsSingle.propTypes = {
   nextEntry: PropTypes.object,
   queryMenuIfUnfetched: PropTypes.func.isRequired,
   queryEntryIfUnfetched: PropTypes.func.isRequired,
-  canViewLaborRightsSingle: PropTypes.bool.isRequired,
   fetchPermission: PropTypes.func.isRequired,
 };
 

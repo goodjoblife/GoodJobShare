@@ -53,7 +53,7 @@ const getPathForJobTitle = jobTitle => `/job-titles/${jobTitle}/overview`;
 const ExperienceDetail = ({
   submitComment,
   likeReply,
-  canViewExperienceDetail,
+  canView,
 
   fetchExperience,
   fetchReplies,
@@ -216,7 +216,7 @@ const ExperienceDetail = ({
                   {renderReportZone()}
                   <Article
                     experience={experience}
-                    hideContent={!canViewExperienceDetail}
+                    hideContent={canView === false}
                   />
                 </Fragment>
               )}
@@ -281,7 +281,7 @@ ExperienceDetail.propTypes = {
       backable: PropTypes.bool,
     }),
   }),
-  canViewExperienceDetail: PropTypes.bool.isRequired,
+  canView: PropTypes.bool,
 };
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
