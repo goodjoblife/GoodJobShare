@@ -37,7 +37,7 @@ export default (
 ) => WrappedComponent => {
   const WithExperimentParameters = props => {
     const ref = useRef(null);
-    if (document && ref.current === null) {
+    if (typeof document !== 'undefined' && ref.current === null) {
       ref.current = document.getElementById(elementId);
     }
 
