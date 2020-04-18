@@ -147,13 +147,27 @@ const FormBuilder = ({
     return null;
   }
 
+  let currentHeader = null;
+  if (header) {
+    currentHeader = typeof header === 'function' ? header(draft) : header;
+  } else if (commonHeader) {
+    currentHeader = commonHeader;
+  }
+
+  let currentFooter = null;
+  if (footer) {
+    currentFooter = typeof footer === 'function' ? footer(draft) : footer;
+  } else if (commonFooter) {
+    currentFooter = commonFooter;
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <button className={styles.closeBtn} onClick={onClose}>
           <X className={styles.icon} />
         </button>
-        {header || commonHeader}
+        {currentHeader}
       </div>
       <div className={styles.body}>
         <AnimatedPager className={styles.pager} page={page}>
@@ -212,7 +226,7 @@ const FormBuilder = ({
           <SubmissionBlock onSubmit={handleSubmit} />
         </div>
       </div>
-      <div>{footer || commonFooter}</div>
+      <div>{currentFooter}</div>
     </div>
   );
 };
@@ -223,8 +237,8 @@ FormBuilder.propTypes = {
   footer: oneOfType([string, element]),
   questions: arrayOf(
     shape({
-      header: oneOfType([string, element]),
-      footer: oneOfType([string, element]),
+      header: oneOfType([string, element, func]),
+      footer: oneOfType([string, element, func]),
       title: oneOfType([string, func]).isRequired,
       description: string,
       type: oneOf(availableTypes).isRequired,
