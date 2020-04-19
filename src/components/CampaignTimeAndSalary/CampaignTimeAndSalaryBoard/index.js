@@ -144,7 +144,7 @@ class CampaignTimeAndSalaryBoard extends Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
-    canViewTimeAndSalary: PropTypes.bool.isRequired,
+    canView: PropTypes.bool.isRequired,
     fetchPermission: PropTypes.func.isRequired,
     infoSalaryModal: PropTypes.shape({
       isOpen: PropTypes.bool.isRequired,
@@ -250,7 +250,7 @@ class CampaignTimeAndSalaryBoard extends Component {
   };
 
   createPostProcessRows = campaignName => {
-    if (!this.props.canViewTimeAndSalary) {
+    if (!this.props.canView) {
       return injectPermissionBlock(campaignName);
     }
     return R.identity;
