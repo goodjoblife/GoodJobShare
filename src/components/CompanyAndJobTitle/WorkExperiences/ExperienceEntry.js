@@ -39,7 +39,7 @@ const ExperienceEntry = ({
           <P size="s" className={styles.date}>
             工作經驗 · {formatCreatedAt(createdAt)}
           </P>
-          {weekWorkTime && canView !== false && (
+          {weekWorkTime && canView && (
             <div className={styles.weekWorkTime}>
               <i.Clock />
               {formatWeekWorkTime(weekWorkTime)}
@@ -49,10 +49,10 @@ const ExperienceEntry = ({
             {salary && (
               <div
                 className={cn(styles.salary, {
-                  [styles.locked]: canView === false,
+                  [styles.locked]: !canView,
                 })}
               >
-                {canView !== false ? (
+                {canView ? (
                   <React.Fragment>
                     <i.Coin />
                     {formatSalary(salary)}
@@ -86,10 +86,10 @@ const ExperienceEntry = ({
           </span>
           <span
             className={cn(styles.readmore, {
-              [styles.locked]: canView === false,
+              [styles.locked]: !canView,
             })}
           >
-            {`閱讀更多${canView !== false ? '' : '並解鎖'}`}
+            {`閱讀更多${canView ? '' : '並解鎖'}`}
           </span>
         </div>
       </section>
@@ -100,7 +100,7 @@ const ExperienceEntry = ({
 ExperienceEntry.propTypes = {
   data: PropTypes.object.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
-  canView: PropTypes.bool,
+  canView: PropTypes.bool.isRequired,
 };
 
 ExperienceEntry.defaultProps = {

@@ -45,7 +45,7 @@ WorkExperiences.propTypes = {
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
-  canView: PropTypes.bool,
+  canView: PropTypes.bool.isRequired,
 };
 
 export default WorkExperiences;

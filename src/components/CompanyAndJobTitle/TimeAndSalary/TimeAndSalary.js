@@ -18,7 +18,7 @@ class TimeAndSalary extends Component {
       average_estimated_hourly_wage: PropTypes.number,
       average_week_work_time: PropTypes.number,
     }),
-    canView: PropTypes.bool,
+    canView: PropTypes.bool.isRequired,
     fetchPermission: PropTypes.func.isRequired,
     pageType: PropTypes.string,
     pageName: PropTypes.string,
@@ -66,7 +66,7 @@ class TimeAndSalary extends Component {
               statistics={salaryWorkTimeStatistics}
               pageType={pageType}
               pageName={pageName}
-              hideContent={canView === false}
+              hideContent={!canView}
             />
             <Pagination
               totalCount={salaryWorkTimes.length}

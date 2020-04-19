@@ -214,10 +214,7 @@ const ExperienceDetail = ({
                     <ExperienceHeading experience={experience} />
                   </div>
                   {renderReportZone()}
-                  <Article
-                    experience={experience}
-                    hideContent={canView === false}
-                  />
+                  <Article experience={experience} hideContent={!canView} />
                 </Fragment>
               )}
               <LikeZone experienceId={experienceId} />
@@ -281,7 +278,7 @@ ExperienceDetail.propTypes = {
       backable: PropTypes.bool,
     }),
   }),
-  canView: PropTypes.bool,
+  canView: PropTypes.bool.isRequired,
 };
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {

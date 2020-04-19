@@ -47,7 +47,7 @@ InterviewExperiences.propTypes = {
   tabType: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
-  canView: PropTypes.bool,
+  canView: PropTypes.bool.isRequired,
 };
 
 export default InterviewExperiences;

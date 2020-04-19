@@ -45,7 +45,7 @@ const Overview = ({
       />
       <WorkingHourTable
         data={salaryWorkTimes.slice(0, SALARY_WORK_TIMES_LIMIT)}
-        hideContent={canView === false}
+        hideContent={!canView}
         pageType={pageType}
       />
     </SnippetBlock>
@@ -99,7 +99,7 @@ Overview.propTypes = {
   jobAverageSalaries: PropTypes.array,
   averageWeekWorkTime: PropTypes.number.isRequired,
   overtimeFrequencyCount: PropTypes.object.isRequired,
-  canView: PropTypes.bool,
+  canView: PropTypes.bool.isRequired,
 };
 
 export default Overview;

@@ -64,7 +64,7 @@ Overview.propTypes = {
   overtimeFrequencyCount: PropTypes.object.isRequired,
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
-  canView: PropTypes.bool,
+  canView: PropTypes.bool.isRequired,
 };
 
 export default Overview;

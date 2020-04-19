@@ -26,7 +26,7 @@ const withPermission = compose(
   withPermissionContext,
   withRouter,
   withHandlers({
-    fetchPermission: ({ setCanView, token }) => async () => {
+    fetchPermission: ({ setPermissionState, token }) => async () => {
       const result = await getHasSearchPermission({ token });
       const { hasSearchPermission: hasPermission } = result;
 
@@ -36,10 +36,10 @@ const withPermission = compose(
         if (visitedWebsite === null) {
           // 該裝置第一次進到我們網站，那就給權限
           localStorage.setItem('visitedWebsite', true);
-          setCanView({ canView: true });
+          setPermissionState({ canView: true, fetched: true });
         } else {
           // 該裝置第二次以上進到我們網站，那就根據 api 結果設定權限
-          setCanView({ canView: hasPermission });
+          setPermissionState({ canView: hasPermission, fetched: true });
         }
       }
     },
