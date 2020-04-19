@@ -24,6 +24,8 @@ const logOutAction = () => ({
 export const logout = () => (dispatch, getState, { history }) => {
   dispatch(logOutAction());
   history.push('/');
+  // reset user for Amplitude
+  UserModule.resetUser();
 };
 
 /**
