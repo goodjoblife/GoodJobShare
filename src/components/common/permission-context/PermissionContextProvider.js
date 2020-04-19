@@ -9,7 +9,7 @@ class PermissionContextProvider extends Component {
 
     this.state = {
       canView: true,
-      fetched: false,
+      permissionFetched: false,
       setPermissionState: this.setPermissionState,
     };
   }

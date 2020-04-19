@@ -36,10 +36,13 @@ const withPermission = compose(
         if (visitedWebsite === null) {
           // 該裝置第一次進到我們網站，那就給權限
           localStorage.setItem('visitedWebsite', true);
-          setPermissionState({ canView: true, fetched: true });
+          setPermissionState({ canView: true, permissionFetched: true });
         } else {
           // 該裝置第二次以上進到我們網站，那就根據 api 結果設定權限
-          setPermissionState({ canView: hasPermission, fetched: true });
+          setPermissionState({
+            canView: hasPermission,
+            permissionFetched: true,
+          });
         }
       }
     },
