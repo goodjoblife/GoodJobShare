@@ -1,4 +1,4 @@
-import { getEventBasedTrackingClient } from './client';
+import { getEventBasedTrackingClient } from './__client';
 
 export const types = {
   interview: 'interview',
