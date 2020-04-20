@@ -30,7 +30,7 @@ const ExperienceEntry = ({
     sections: [section],
   },
   size,
-  canViewExperienceDetail,
+  canView,
 }) => (
   <div className={cn(styles.container, styles[size])}>
     <Link to={createLinkTo(id)}>
@@ -43,10 +43,10 @@ const ExperienceEntry = ({
             {salary && (
               <div
                 className={cn(styles.salary, {
-                  [styles.locked]: !canViewExperienceDetail,
+                  [styles.locked]: !canView,
                 })}
               >
-                {canViewExperienceDetail ? (
+                {canView ? (
                   <React.Fragment>
                     <i.Coin />
                     {formatSalary(salary)}
@@ -79,10 +79,10 @@ const ExperienceEntry = ({
           </span>
           <span
             className={cn(styles.readmore, {
-              [styles.locked]: !canViewExperienceDetail,
+              [styles.locked]: !canView,
             })}
           >
-            {`閱讀更多${canViewExperienceDetail ? '' : '並解鎖'}`}
+            {`閱讀更多${canView ? '' : '並解鎖'}`}
           </span>
         </div>
       </section>
@@ -93,7 +93,7 @@ const ExperienceEntry = ({
 ExperienceEntry.propTypes = {
   data: PropTypes.object.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
-  canViewExperienceDetail: PropTypes.bool.isRequired,
+  canView: PropTypes.bool.isRequired,
 };
 
 ExperienceEntry.defaultProps = {

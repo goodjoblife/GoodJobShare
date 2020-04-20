@@ -5,10 +5,12 @@
  * @see {@link https://developers.google.com/tag-manager/devguide}
  */
 export const pushDataLayer = event => {
-  if (window.dataLayer) {
-    window.dataLayer.push(event);
-  } else {
-    window.dataLayer = [event];
+  if (typeof window !== 'undefined') {
+    if (window.dataLayer) {
+      window.dataLayer.push(event);
+    } else {
+      window.dataLayer = [event];
+    }
   }
 };
 

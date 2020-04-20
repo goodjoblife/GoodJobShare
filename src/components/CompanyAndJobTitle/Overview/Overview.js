@@ -25,8 +25,7 @@ const Overview = ({
   jobAverageSalaries,
   averageWeekWorkTime,
   overtimeFrequencyCount,
-  canViewTimeAndSalary,
-  canViewExperienceDetail,
+  canView,
 }) => (
   <Section Tag="main" paddingBottom>
     <SnippetBlock
@@ -46,7 +45,7 @@ const Overview = ({
       />
       <WorkingHourTable
         data={salaryWorkTimes.slice(0, SALARY_WORK_TIMES_LIMIT)}
-        hideContent={!canViewTimeAndSalary}
+        hideContent={!canView}
         pageType={pageType}
       />
     </SnippetBlock>
@@ -64,7 +63,7 @@ const Overview = ({
           key={d.id}
           pageType={pageType}
           data={d}
-          canViewExperienceDetail={canViewExperienceDetail}
+          canView={canView}
         />
       ))}
     </SnippetBlock>
@@ -82,7 +81,7 @@ const Overview = ({
           key={d.id}
           pageType={pageType}
           data={d}
-          canViewExperienceDetail={canViewExperienceDetail}
+          canView={canView}
         />
       ))}
     </SnippetBlock>
@@ -100,8 +99,7 @@ Overview.propTypes = {
   jobAverageSalaries: PropTypes.array,
   averageWeekWorkTime: PropTypes.number.isRequired,
   overtimeFrequencyCount: PropTypes.object.isRequired,
-  canViewTimeAndSalary: PropTypes.bool.isRequired,
-  canViewExperienceDetail: PropTypes.bool.isRequired,
+  canView: PropTypes.bool.isRequired,
 };
 
 export default Overview;
