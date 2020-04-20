@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import { compose } from 'recompose';
@@ -11,105 +11,92 @@ import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
 
-class TimeAndSalary extends Component {
-  static propTypes = {
-    salaryWorkTimes: PropTypes.array,
-    salaryWorkTimeStatistics: PropTypes.shape({
-      count: PropTypes.number,
-      average_estimated_hourly_wage: PropTypes.number,
-      average_week_work_time: PropTypes.number,
-    }),
-    canView: PropTypes.bool.isRequired,
-    fetchPermission: PropTypes.func.isRequired,
-    pageType: PropTypes.string,
-    pageName: PropTypes.string,
-    tabType: PropTypes.string,
-    page: PropTypes.number,
-  };
+const TimeAndSalary = ({
+  salaryWorkTimes,
+  salaryWorkTimeStatistics,
+  pageType,
+  pageName,
+  tabType,
+  page,
+  queryParams,
 
-  componentDidMount() {
-    this.props.fetchPermission();
-    ViewSalaryWorkTimeModule.sendEvent({
-      company: this.props.pageName,
-      page: this.props.page,
-      nTotalData: this.props.salaryWorkTimeStatistics.count,
-      hasPermission: this.props.canViewTimeAndSalary,
-    });
-  }
+  // from withPermission
+  canView,
+  permissionFetched,
+  fetchPermission,
+}) => {
+  useEffect(() => {
+    fetchPermission();
+  }, [fetchPermission]);
 
-  componentDidUpdate(prevProps) {
-    const prevPageName = prevProps.pageName;
-    const pageName = this.props.pageName;
-
-    if (prevPageName !== pageName) {
-      this.props.fetchPermission();
-    }
-
-    if (
-      prevProps.page !== this.props.page ||
-      prevProps.canViewTimeAndSalary !== this.props.canViewTimeAndSalary
-    ) {
+  // Send event to Amplitude
+  useEffect(() => {
+    if (permissionFetched) {
       ViewSalaryWorkTimeModule.sendEvent({
-        company: this.props.pageName,
-        page: this.props.page,
-        nTotalData: this.props.salaryWorkTimeStatistics.count,
-        hasPermission: this.props.canViewTimeAndSalary,
+        company: pageName,
+        page: page,
+        nTotalData: salaryWorkTimeStatistics.count,
+        hasPermission: canView,
       });
     }
-  }
+  }, [permissionFetched, pageName, page]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  render() {
-    const {
-      salaryWorkTimes,
-      salaryWorkTimeStatistics,
-      canView,
-      page,
-      queryParams,
-      pageType,
-      pageName,
-      tabType,
-    } = this.props;
+  const pageSize = 10;
+  const currentData = salaryWorkTimes.slice(
+    (page - 1) * pageSize,
+    page * pageSize,
+  );
 
-    const pageSize = 10;
+  return (
+    <Section Tag="main" paddingBottom>
+      {(salaryWorkTimes.length > 0 && (
+        <React.Fragment>
+          <WorkingHourBlock
+            data={currentData}
+            statistics={salaryWorkTimeStatistics}
+            pageType={pageType}
+            pageName={pageName}
+            hideContent={!canView}
+          />
+          <Pagination
+            totalCount={salaryWorkTimes.length}
+            unit={pageSize}
+            currentPage={page}
+            createPageLinkTo={toPage =>
+              qs.stringify(
+                { ...queryParams, p: toPage },
+                { addQueryPrefix: true },
+              )
+            }
+          />
+        </React.Fragment>
+      )) || <EmptyView pageName={pageName} tabType={tabType} />}
+      <ViewLog
+        pageName={pageName}
+        page={page}
+        contentIds={currentData.map(i => i.id)}
+      />
+    </Section>
+  );
+};
 
-    const currentData = salaryWorkTimes.slice(
-      (page - 1) * pageSize,
-      page * pageSize,
-    );
+TimeAndSalary.propTypes = {
+  salaryWorkTimes: PropTypes.array,
+  salaryWorkTimeStatistics: PropTypes.shape({
+    count: PropTypes.number,
+    average_estimated_hourly_wage: PropTypes.number,
+    average_week_work_time: PropTypes.number,
+  }),
+  pageType: PropTypes.string,
+  pageName: PropTypes.string,
+  tabType: PropTypes.string,
+  page: PropTypes.number,
 
-    return (
-      <Section Tag="main" paddingBottom>
-        {(salaryWorkTimes.length > 0 && (
-          <React.Fragment>
-            <WorkingHourBlock
-              data={currentData}
-              statistics={salaryWorkTimeStatistics}
-              pageType={pageType}
-              pageName={pageName}
-              hideContent={!canView}
-            />
-            <Pagination
-              totalCount={salaryWorkTimes.length}
-              unit={pageSize}
-              currentPage={page}
-              createPageLinkTo={toPage =>
-                qs.stringify(
-                  { ...queryParams, p: toPage },
-                  { addQueryPrefix: true },
-                )
-              }
-            />
-          </React.Fragment>
-        )) || <EmptyView pageName={pageName} tabType={tabType} />}
-        <ViewLog
-          pageName={pageName}
-          page={page}
-          contentIds={currentData.map(i => i.id)}
-        />
-      </Section>
-    );
-  }
-}
+  // from withPermission
+  canView: PropTypes.bool.isRequired,
+  permissionFetched: PropTypes.bool.isRequired,
+  fetchPermission: PropTypes.func.isRequired,
+};
 
 const hoc = compose(withPermission);
 
