@@ -246,6 +246,8 @@ FormBuilder.propTypes = {
       required: bool,
       warning: oneOfType([func, string]),
       validator: func,
+      onSelect: func,
+      search: func,
       placeholder: string,
       minLength: number,
       options: arrayOf(string),

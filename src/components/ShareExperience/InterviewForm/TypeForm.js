@@ -4,6 +4,8 @@ import R from 'ramda';
 import FormBuilder from 'common/FormBuilder';
 import Header, { JobTitleHeader } from '../common/TypeFormHeader';
 import Footer from '../common/TypeFormFooter';
+import { getCompaniesSearch } from '../../../apis/companySearchApi';
+import { getJobTitlesSearch } from '../../../apis/jobTitleSearchApi';
 
 const header = <Header />;
 const footer = <Footer />;
@@ -11,18 +13,44 @@ const footer = <Footer />;
 const experienceInYearOptions = R.range(0, 51).map(String);
 const questions = [
   {
+    title: '公司名稱',
+    type: 'text',
+    dataKey: 'companyQuery',
+    required: true,
+    validator: value => value.length > 0,
+    warning: '請填寫公司名稱',
+    placeholder: 'ＯＯ 股份有限公司',
+    search: value =>
+      getCompaniesSearch({ key: value }).then(
+        R.ifElse(
+          R.compose(
+            R.equals('Array'),
+            R.type,
+          ),
+          R.map(R.prop('name')),
+          R.always([]),
+        ),
+      ),
+  },
+  {
     title: '應徵職稱',
     type: 'text',
     dataKey: 'jobTitle',
     required: true,
     validator: value => value.length > 0,
     warning: '請填寫職稱',
-  },
-  {
-    title: '公司名稱',
-    type: 'text',
-    dataKey: 'companyQuery',
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    placeholder: '軟體工程師',
+    search: value =>
+      getJobTitlesSearch({ key: value }).then(
+        R.when(
+          R.compose(
+            R.not,
+            R.equals('Array'),
+            R.type,
+          ),
+          R.always([]),
+        ),
+      ),
   },
   {
     title: '面試地區',

@@ -67,12 +67,13 @@ AutoCompleteTextInput.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   autocompleteItems: PropTypes.array.isRequired,
-  autocompleteItemKeySelector: PropTypes.func,
-  autocompleteItemLabelSelector: PropTypes.func,
+  autocompleteItemKeySelector: PropTypes.func.isRequired,
+  autocompleteItemLabelSelector: PropTypes.func.isRequired,
   onAutocompleteItemSelected: PropTypes.func.isRequired,
 };
 
 AutoCompleteTextInput.defaultProps = {
+  autocompleteItems: [],
   autocompleteItemKeySelector: x => x,
   autocompleteItemLabelSelector: x => x,
 };
