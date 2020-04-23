@@ -9,6 +9,7 @@ import {
   oneOfType,
   element,
   arrayOf,
+  any,
 } from 'prop-types';
 import cn from 'classnames';
 import R from 'ramda';
@@ -243,6 +244,7 @@ FormBuilder.propTypes = {
       description: string,
       type: oneOf(availableTypes).isRequired,
       dataKey: string.isRequired,
+      defaultValue: any,
       required: bool,
       warning: oneOfType([func, string]),
       validator: func,

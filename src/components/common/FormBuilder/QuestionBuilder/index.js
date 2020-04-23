@@ -16,6 +16,7 @@ import Radio from './Radio';
 import Checkbox from './Checkbox';
 import Rating from './Rating';
 import File from './File';
+import Date from './Date';
 
 export const availableTypes = [
   'text',
@@ -24,6 +25,7 @@ export const availableTypes = [
   'checkbox',
   'rating',
   'file',
+  'date',
   'customized',
 ];
 
@@ -34,6 +36,7 @@ const QuestionBuilder = ({
   type,
   dataKey,
   required,
+  defaultValue,
   value,
   onChange,
   onConfirm,
@@ -54,6 +57,7 @@ const QuestionBuilder = ({
     type,
     dataKey,
     required,
+    defaultValue,
     value,
     onChange,
     onConfirm,
@@ -80,6 +84,8 @@ const QuestionBuilder = ({
       return <Rating {...commonProps} maxRating={maxRating} />;
     case 'file':
       return <File {...commonProps} />;
+    case 'date':
+      return <Date {...commonProps} />;
     case 'customized':
       if (renderCustomizedQuestion) {
         return renderCustomizedQuestion({
@@ -110,6 +116,7 @@ QuestionBuilder.propTypes = {
   type: oneOf(availableTypes).isRequired,
   dataKey: string.isRequired,
   required: bool,
+  defaultValue: any,
   value: any,
   onChange: func.isRequired,
   warning: string,
