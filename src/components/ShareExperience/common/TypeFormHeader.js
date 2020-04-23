@@ -15,20 +15,24 @@ export default () => (
   </div>
 );
 
-export const JobTitleHeader = ({ jobTitle }) => (
+export const CompanyJobTitleHeader = ({ pageName, companyName, jobTitle }) => (
   <div className={cn(styles.header, styles.jobTitleHeader)}>
     <div className={styles.privacyPolicy}>
       <FontAwesomeIcon icon={faShieldAlt} className={styles.icon} />
     </div>
     <div className={styles.jobTitle}>
       <div>
-        <span className={styles.badge}>工作</span>
+        <span className={styles.badge}>{pageName}</span>
       </div>
-      <div className={styles.name}>{jobTitle}</div>
+      <div className={styles.name}>
+        {companyName} {jobTitle}
+      </div>
     </div>
   </div>
 );
 
-JobTitleHeader.propTypes = {
+CompanyJobTitleHeader.propTypes = {
+  pageName: PropTypes.string.isRequired,
+  companyName: PropTypes.string.isRequired,
   jobTitle: PropTypes.string.isRequired,
 };

@@ -2,12 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 import FormBuilder from 'common/FormBuilder';
-import Header, { JobTitleHeader } from '../common/TypeFormHeader';
+import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
 import Footer from '../common/TypeFormFooter';
 import { getCompaniesSearch } from '../../../apis/companySearchApi';
 import { getJobTitlesSearch } from '../../../apis/jobTitleSearchApi';
 
 const header = <Header />;
+const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
+  <CompanyJobTitleHeader
+    pageName="面試"
+    companyName={companyName}
+    jobTitle={jobTitle}
+  />
+);
 const footer = <Footer />;
 
 const experienceInYearOptions = R.range(0, 51).map(String);
@@ -15,7 +22,7 @@ const questions = [
   {
     title: '公司名稱',
     type: 'text',
-    dataKey: 'companyQuery',
+    dataKey: 'companyName',
     required: true,
     validator: value => value.length > 0,
     warning: '請填寫公司名稱',
@@ -80,50 +87,56 @@ const questions = [
       '連江縣',
     ],
     dataKey: 'region',
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '什麼時候去面試的呢？',
     type: 'customized',
     dataKey: 'interviewTime',
     renderCustomizedQuestion: () => null,
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '自身相關職務工作經驗',
     type: 'radio',
     dataKey: 'experienceInYear',
     options: experienceInYearOptions,
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '面試結果',
     type: 'radio',
     dataKey: 'interviewResult',
     options: ['錄取', '未錄取', '沒通知', '其他'],
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '待遇',
     type: 'customized',
     dataKey: 'salary',
     renderCustomizedQuestion: () => null,
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '為這次的面試評個分',
     type: 'rating',
     dataKey: 'overallRating',
     maxRating: 5,
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
-  { title: '面試過程', type: 'textarea', dataKey: 'sections', minLength: 30 },
+  {
+    title: '面試過程',
+    type: 'textarea',
+    dataKey: 'sections',
+    minLength: 30,
+    header: renderCompanyJobTitleHeader,
+  },
   {
     title: '面試中問了什麼問題呢？',
     type: 'textarea',
     dataKey: 'interviewQas',
     minLength: 30,
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '是否有以下特殊問題？',
@@ -135,14 +148,14 @@ const questions = [
       '曾要求繳交身分證、保證金',
       '其他',
     ],
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '給其他面試者的中肯建議',
     type: 'textarea',
     dataKey: 'suggestionSection',
     minLength: 30,
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
 ];
 
