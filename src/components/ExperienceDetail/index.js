@@ -54,11 +54,14 @@ const getPathForJobTitle = jobTitle => `/job-titles/${jobTitle}/overview`;
 const ExperienceDetail = ({
   submitComment,
   likeReply,
-  canView,
 
   fetchExperience,
   fetchReplies,
+
+  // from withPermission
+  canView,
   fetchPermission,
+  permissionFetched,
 
   ...props
 }) => {
@@ -117,7 +120,7 @@ const ExperienceDetail = ({
 
   // send event to Amplitude
   useEffect(() => {
-    if (experience) {
+    if (experience && permissionFetched) {
       const contentLength = experience.sections
         ? experience.sections.reduce((accu, curr) => {
             const subTitleLength = curr.subtitle ? curr.subtitle.length : 0;
@@ -131,10 +134,10 @@ const ExperienceDetail = ({
         contentLength,
         jobTitle: experience.job_title.name,
         company: experience.company.name,
-        hasPermission: canViewExperienceDetail,
+        hasPermission: canView,
       });
     }
-  }, [canViewExperienceDetail]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [experienceId, permissionFetched]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (isError(experienceStatus)) {
     if (isUiNotFoundError(experienceError)) {
