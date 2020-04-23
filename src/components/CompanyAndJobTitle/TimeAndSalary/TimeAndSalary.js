@@ -32,12 +32,21 @@ const TimeAndSalary = ({
   // Send event to Amplitude
   useEffect(() => {
     if (permissionFetched) {
-      ViewSalaryWorkTimeModule.sendEvent({
-        company: pageName,
-        page: page,
-        nTotalData: salaryWorkTimeStatistics.count,
-        hasPermission: canView,
-      });
+      if (pageType === 'COMPANY') {
+        ViewSalaryWorkTimeModule.sendEvent({
+          company: pageName,
+          page: page,
+          nTotalData: salaryWorkTimeStatistics.count,
+          hasPermission: canView,
+        });
+      } else if (pageType === 'JOB_TITLE') {
+        ViewSalaryWorkTimeModule.sendEvent({
+          jobTitle: pageName,
+          page: page,
+          nTotalData: salaryWorkTimeStatistics.count,
+          hasPermission: canView,
+        });
+      }
     }
   }, [permissionFetched, pageName, page]); // eslint-disable-line react-hooks/exhaustive-deps
 
