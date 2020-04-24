@@ -77,7 +77,11 @@ const questions = [
   {
     title: '面試地區',
     type: 'radio',
+    dataKey: 'region',
     defaultValue: null,
+    required: true,
+    validator: value => !!value,
+    warning: '需填寫面試地區',
     options: [
       '基隆市',
       '臺北市',
@@ -102,7 +106,6 @@ const questions = [
       '金門縣',
       '連江縣',
     ],
-    dataKey: 'region',
     header: renderCompanyJobTitleHeader,
   },
   {
