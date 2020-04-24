@@ -122,6 +122,17 @@ const questions = [
     header: renderCompanyJobTitleHeader,
   },
   {
+    title: '為這次的面試經驗評個分吧！',
+    type: 'rating',
+    dataKey: 'overallRating',
+    defaultValue: 0,
+    required: true,
+    validator: value => !!value,
+    warning: '需選取面試滿意程度',
+    maxRating: 5,
+    header: renderCompanyJobTitleHeader,
+  },
+  {
     title: '自身相關職務工作經驗',
     type: 'radio',
     dataKey: 'experienceInYear',
@@ -135,14 +146,6 @@ const questions = [
     dataKey: 'salary',
     defaultValue: null,
     renderCustomizedQuestion: () => null,
-    header: renderCompanyJobTitleHeader,
-  },
-  {
-    title: '為這次的面試評個分',
-    type: 'rating',
-    dataKey: 'overallRating',
-    defaultValue: 0,
-    maxRating: 5,
     header: renderCompanyJobTitleHeader,
   },
   {
