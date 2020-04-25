@@ -12,8 +12,7 @@ import {
 
 import Text from './Text';
 import TextArea from './TextArea';
-import Radio from './Radio';
-import Checkbox from './Checkbox';
+import { Radio, Checkbox } from './Checkbox';
 import Rating from './Rating';
 import File from './File';
 import Date from './Date';
