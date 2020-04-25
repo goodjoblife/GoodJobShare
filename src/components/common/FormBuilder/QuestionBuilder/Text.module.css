@@ -5,14 +5,13 @@ $warning-red: #d0021b;
 }
 
 .textinput {
+  width: 100%;
   border: solid 1px #bdbdbd;
   background-color: #ffffff;
   padding: 10px 15px;
   font-size: 16px;
 
   ::placeholder {
-    width: 134px;
-    height: 22px;
     color: #c0c0c0;
   }
 }

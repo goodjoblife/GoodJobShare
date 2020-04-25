@@ -12,7 +12,7 @@ import {
 
 import Text from './Text';
 import TextArea from './TextArea';
-import { Radio, Checkbox } from './Checkbox';
+import { Radio, RadioElse, Checkbox, CheckboxElse } from './Checkbox';
 import Rating from './Rating';
 import File from './File';
 import Date from './Date';
@@ -21,7 +21,9 @@ export const availableTypes = [
   'text',
   'textarea',
   'radio',
+  'radio-else',
   'checkbox',
+  'checkbox-else',
   'rating',
   'file',
   'date',
@@ -77,8 +79,24 @@ const QuestionBuilder = ({
       return <TextArea {...commonProps} minLength={minLength} />;
     case 'radio':
       return <Radio {...commonProps} options={options} />;
+    case 'radio-else':
+      return (
+        <RadioElse
+          {...commonProps}
+          options={options}
+          placeholder={placeholder}
+        />
+      );
     case 'checkbox':
       return <Checkbox {...commonProps} options={options} />;
+    case 'checkbox-else':
+      return (
+        <CheckboxElse
+          {...commonProps}
+          options={options}
+          placeholder={placeholder}
+        />
+      );
     case 'rating':
       return <Rating {...commonProps} maxRating={maxRating} />;
     case 'file':

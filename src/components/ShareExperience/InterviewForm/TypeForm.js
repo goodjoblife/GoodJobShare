@@ -109,19 +109,24 @@ const questions = [
     header: renderCompanyJobTitleHeader,
   },
   {
+    title: '面試結果',
+    type: 'radio-else',
+    dataKey: 'interviewResult',
+    defaultValue: [null, ''],
+    required: true,
+    validator: ([selected, elseText]) =>
+      selected === '其他' ? !!elseText : !!selected,
+    warning: '需填寫面試結果',
+    options: ['錄取', '未錄取', '沒通知', '其他'],
+    placeholder: '輸入面試結果',
+    header: renderCompanyJobTitleHeader,
+  },
+  {
     title: '自身相關職務工作經驗',
     type: 'radio',
     dataKey: 'experienceInYear',
     defaultValue: null,
     options: experienceInYearOptions,
-    header: renderCompanyJobTitleHeader,
-  },
-  {
-    title: '面試結果',
-    type: 'radio',
-    dataKey: 'interviewResult',
-    defaultValue: null,
-    options: ['錄取', '未錄取', '沒通知', '其他'],
     header: renderCompanyJobTitleHeader,
   },
   {

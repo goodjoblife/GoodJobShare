@@ -1,9 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { useDebounce } from 'react-use';
 import PropTypes from 'prop-types';
+import { useKey } from 'react-use';
 import cn from 'classnames';
 
 import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput_new';
+import useComposition from '../useComposition';
 import styles from './Text.module.css';
 
 const Text = ({
@@ -22,7 +24,11 @@ const Text = ({
   validator,
   placeholder,
 }) => {
-  const [isComposing, setComposing] = useState(false);
+  const [
+    isComposing,
+    handleCompositionStart,
+    handleCompositionEnd,
+  ] = useComposition();
   const [items, setItems] = useState([]);
   const ref = useRef(null);
 
@@ -46,6 +52,18 @@ const Text = ({
     [value],
   );
 
+  useKey(
+    'Enter',
+    e => {
+      if (!isComposing) {
+        e.target.blur();
+        onConfirm();
+      }
+    },
+    { target: ref.current },
+    [isComposing, onConfirm],
+  );
+
   return (
     <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
       <AutoCompleteTextInput
@@ -54,15 +72,9 @@ const Text = ({
         type="text"
         placeholder={placeholder}
         value={value}
-        onCompositionStart={() => setComposing(true)}
-        onCompositionEnd={() => setComposing(false)}
+        onCompositionStart={handleCompositionStart}
+        onCompositionEnd={handleCompositionEnd}
         onChange={e => onChange(e.target.value)}
-        onKeyDown={e => {
-          if (!isComposing && e.key === 'Enter') {
-            e.target.blur();
-            onConfirm();
-          }
-        }}
         autocompleteItems={items}
         onAutocompleteItemSelected={item => {
           onChange(item);
