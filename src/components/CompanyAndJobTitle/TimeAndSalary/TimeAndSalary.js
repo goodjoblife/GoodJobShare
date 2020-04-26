@@ -48,7 +48,7 @@ const TimeAndSalary = ({
         });
       }
     }
-  }, [permissionFetched, pageName, page]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [permissionFetched, canView, pageName, page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pageSize = 10;
   const currentData = salaryWorkTimes.slice(
