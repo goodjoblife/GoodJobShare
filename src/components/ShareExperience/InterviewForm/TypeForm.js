@@ -177,10 +177,19 @@ const questions = [
     header: renderCompanyJobTitleHeader,
   },
   {
-    title: '面試中問了什麼問題呢？',
-    type: 'textarea',
+    title: '面試中問了什麼問題？',
+    type: 'text-list',
     dataKey: 'interviewQas',
-    defaultValue: '',
+    defaultValue: [],
+    validator: value =>
+      value.every(
+        R.compose(
+          R.lt(0),
+          R.length,
+        ),
+      ),
+    warning: '需填寫面試問題',
+    placeholder: '面試問題',
     header: renderCompanyJobTitleHeader,
   },
   {

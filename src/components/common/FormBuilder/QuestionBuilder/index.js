@@ -17,6 +17,7 @@ import Rating from './Rating';
 import File from './File';
 import Date from './Date';
 import SelectText from './SelectText';
+import TextList from './TextList';
 
 export const availableTypes = [
   'text',
@@ -29,6 +30,7 @@ export const availableTypes = [
   'file',
   'date',
   'select-text',
+  'text-list',
   'customized',
 ];
 
@@ -112,6 +114,8 @@ const QuestionBuilder = ({
           options={options}
         />
       );
+    case 'text-list':
+      return <TextList {...commonProps} placeholder={placeholder} />;
     case 'customized':
       if (renderCustomizedQuestion) {
         return renderCustomizedQuestion({
