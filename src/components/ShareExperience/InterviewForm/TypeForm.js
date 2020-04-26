@@ -206,6 +206,13 @@ const questions = [
     placeholder: '輸入敏感問題',
     header: renderCompanyJobTitleHeader,
   },
+  {
+    title: () =>
+      '感謝你分享面試心得，按下「送出」，馬上就可以解鎖全站 2 萬多筆資料 48 小時哦！',
+    type: 'customized',
+    dataKey: '',
+    renderCustomizedQuestion: () => null,
+  },
 ];
 
 const TypeForm = ({ open, onClose }) => {

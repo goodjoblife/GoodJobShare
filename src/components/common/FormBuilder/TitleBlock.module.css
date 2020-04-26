@@ -9,10 +9,6 @@
     content: ' *';
     color: red;
   }
-
-  &.optional::after {
-    content: '（選填）';
-  }
 }
 
 .description {
