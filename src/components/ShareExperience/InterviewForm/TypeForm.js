@@ -168,11 +168,12 @@ const questions = [
     header: renderCompanyJobTitleHeader,
   },
   {
-    title: '待遇',
-    type: 'customized',
+    title: '面談薪資',
+    type: 'select-text',
     dataKey: 'salary',
-    defaultValue: null,
-    renderCustomizedQuestion: () => null,
+    defaultValue: [null, ''],
+    placeholder: '700,000',
+    options: ['年薪', '月薪', '日薪', '時薪'],
     header: renderCompanyJobTitleHeader,
   },
   {

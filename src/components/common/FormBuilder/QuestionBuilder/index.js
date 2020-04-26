@@ -16,6 +16,7 @@ import { Radio, RadioElse, Checkbox, CheckboxElse } from './Checkbox';
 import Rating from './Rating';
 import File from './File';
 import Date from './Date';
+import SelectText from './SelectText';
 
 export const availableTypes = [
   'text',
@@ -27,6 +28,7 @@ export const availableTypes = [
   'rating',
   'file',
   'date',
+  'select-text',
   'customized',
 ];
 
@@ -102,6 +104,14 @@ const QuestionBuilder = ({
       return <File {...commonProps} />;
     case 'date':
       return <Date {...commonProps} />;
+    case 'select-text':
+      return (
+        <SelectText
+          {...commonProps}
+          placeholder={placeholder}
+          options={options}
+        />
+      );
     case 'customized':
       if (renderCustomizedQuestion) {
         return renderCustomizedQuestion({
