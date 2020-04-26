@@ -1,4 +1,10 @@
-import React, { Fragment, useState, useCallback, useEffect } from 'react';
+import React, {
+  Fragment,
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
@@ -119,8 +125,11 @@ const ExperienceDetail = ({
   const repliesStatus = props.repliesStatus;
 
   // send event to Amplitude
+  const experienceDataId = useMemo(() => (experience ? experience._id : null), [
+    experience,
+  ]);
   useEffect(() => {
-    if (experience && permissionFetched) {
+    if (experience && permissionFetched && experienceDataId === experienceId) {
       const contentLength = experience.sections
         ? experience.sections.reduce((accu, curr) => {
             const subTitleLength = curr.subtitle ? curr.subtitle.length : 0;
@@ -137,7 +146,7 @@ const ExperienceDetail = ({
         hasPermission: canView,
       });
     }
-  }, [experienceId, permissionFetched]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [experienceDataId, permissionFetched, canView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (isError(experienceStatus)) {
     if (isUiNotFoundError(experienceError)) {
