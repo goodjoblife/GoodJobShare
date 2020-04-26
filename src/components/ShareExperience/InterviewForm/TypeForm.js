@@ -194,15 +194,16 @@ const questions = [
   },
   {
     title: '是否有以下特殊問題？',
-    type: 'checkbox',
-    dataKey: 'interviewSensitiveQuestions',
-    defaultValue: [],
+    type: 'checkbox-else',
+    dataKey: 'sensitiveQuestions',
+    defaultValue: [[], ''],
     options: [
       '詢問家庭狀況',
       '曾詢問婚姻狀況、生育計畫',
       '曾要求繳交身分證、保證金',
       '其他',
     ],
+    placeholder: '輸入敏感問題',
     header: renderCompanyJobTitleHeader,
   },
 ];

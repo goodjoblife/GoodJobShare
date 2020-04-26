@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
 import { useKey } from 'react-use';
@@ -177,7 +177,13 @@ const SelectElse = ({
   placeholder,
 }) => {
   const elseRef = useRef(null);
-  const hasElse = R.equals(R.last(options), selected);
+  const hasElse = useMemo(() => {
+    if (multiple) {
+      return R.contains(R.last(options), selected);
+    } else {
+      return R.equals(R.last(options), selected);
+    }
+  }, [multiple, options, selected]);
   const handleSelectChange = useCallback(
     selected => onChange([selected, elseText]),
     [elseText, onChange],
@@ -266,6 +272,7 @@ export const CheckboxElse = ({
   defaultValue,
   value,
   onChange,
+  onConfirm,
   warning,
   validator,
   options,
@@ -276,6 +283,7 @@ export const CheckboxElse = ({
       dataKey={dataKey}
       value={value}
       onChange={onChange}
+      onConfirm={onConfirm}
       options={options}
       multiple
       placeholder={placeholder}
@@ -302,6 +310,7 @@ CheckboxElse.propTypes = {
     1: PropTypes.string.isRequired,
   }),
   onChange: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
   validator: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,

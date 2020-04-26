@@ -190,8 +190,10 @@ const FormBuilder = ({
                     value={draft[restOptions.dataKey]}
                     onChange={handleDraftChange(restOptions.dataKey)}
                     onConfirm={() => {
-                      if (onNext) onNext();
-                      warnBeforeSetPage(i + 1);
+                      if (i < questions.length - 1) {
+                        if (onNext) onNext();
+                        warnBeforeSetPage(i + 1);
+                      }
                     }}
                     warning={isWarningShown ? warning : null}
                   />
