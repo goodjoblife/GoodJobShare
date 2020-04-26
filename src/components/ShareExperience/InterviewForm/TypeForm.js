@@ -17,7 +17,6 @@ const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
 );
 const footer = <Footer />;
 
-const experienceInYearOptions = R.range(0, 51).map(String);
 const questions = [
   {
     title: '公司名稱',
@@ -157,11 +156,15 @@ const questions = [
     header: renderCompanyJobTitleHeader,
   },
   {
-    title: '自身相關職務工作經驗',
+    title: '從事軟體工程師相關的工作多久？',
     type: 'radio',
     dataKey: 'experienceInYear',
     defaultValue: null,
-    options: experienceInYearOptions,
+    options: R.range(0, 51)
+      .map(String)
+      .map(
+        R.ifElse(R.equals('0'), R.always('不到 1 年'), R.flip(R.concat)(' 年')),
+      ),
     header: renderCompanyJobTitleHeader,
   },
   {

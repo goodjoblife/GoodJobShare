@@ -8,7 +8,9 @@ const defaultFormatter = ({ title, page }) => `${page + 1}. ${title}`;
 
 const TitleBlock = ({ page, title, required, description }) => (
   <div>
-    <div className={cn(styles.title, { [styles.necessary]: required })}>
+    <div
+      className={cn(styles.title, styles[required ? 'necessary' : 'optional'])}
+    >
       {typeof title === 'function'
         ? title({ page })
         : defaultFormatter({ title, page })}
