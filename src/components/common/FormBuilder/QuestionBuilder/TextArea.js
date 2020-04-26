@@ -15,7 +15,6 @@ const Textarea = ({
   onChange,
   warning,
   validator,
-  minLength,
 }) => (
   <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
     <textarea
@@ -40,7 +39,6 @@ Textarea.propTypes = {
   onChange: PropTypes.func.isRequired,
   warning: PropTypes.string,
   validator: PropTypes.func,
-  minLength: PropTypes.number.isRequired,
 };
 
 export default Textarea;

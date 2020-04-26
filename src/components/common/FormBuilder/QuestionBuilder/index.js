@@ -46,7 +46,6 @@ const QuestionBuilder = ({
   warning,
   validator,
   placeholder,
-  minLength,
   options,
   maxRating,
   renderCustomizedQuestion,
@@ -76,7 +75,7 @@ const QuestionBuilder = ({
         />
       );
     case 'textarea':
-      return <TextArea {...commonProps} minLength={minLength} />;
+      return <TextArea {...commonProps} />;
     case 'radio':
       return <Radio {...commonProps} options={options} />;
     case 'radio-else':
@@ -142,7 +141,6 @@ QuestionBuilder.propTypes = {
   onSelect: func,
   search: func,
   placeholder: string,
-  minLength: number,
   options: arrayOf(string),
   maxRating: number,
   renderCustomizedQuestion: func,

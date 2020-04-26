@@ -251,7 +251,6 @@ FormBuilder.propTypes = {
       onSelect: func,
       search: func,
       placeholder: string,
-      minLength: number,
       options: arrayOf(string),
       maxRating: number,
       renderCustomizedQuestion: func,

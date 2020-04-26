@@ -133,6 +133,30 @@ const questions = [
     header: renderCompanyJobTitleHeader,
   },
   {
+    title: '面試過程',
+    type: 'textarea',
+    dataKey: 'interviewContent',
+    defaultValue: `第一次面試：
+第二次面試：
+工作環境：`,
+    required: true,
+    validator: value => value.replace(/\n/g, '').length >= 50,
+    warning: value => `最少 50 字，現在 ${value.replace(/\n/g, '').length} 字`,
+    header: renderCompanyJobTitleHeader,
+  },
+  {
+    title: '給其他面試者的中肯建議',
+    type: 'textarea',
+    dataKey: 'suggestions',
+    defaultValue: `如何準備面試：
+是否推薦此份工作：
+其他注意事項：`,
+    required: true,
+    validator: value => value.replace(/\n/g, '').length >= 50,
+    warning: value => `最少 50 字，現在 ${value.replace(/\n/g, '').length} 字`,
+    header: renderCompanyJobTitleHeader,
+  },
+  {
     title: '自身相關職務工作經驗',
     type: 'radio',
     dataKey: 'experienceInYear',
@@ -149,19 +173,10 @@ const questions = [
     header: renderCompanyJobTitleHeader,
   },
   {
-    title: '面試過程',
-    type: 'textarea',
-    dataKey: 'sections',
-    defaultValue: '',
-    minLength: 30,
-    header: renderCompanyJobTitleHeader,
-  },
-  {
     title: '面試中問了什麼問題呢？',
     type: 'textarea',
     dataKey: 'interviewQas',
     defaultValue: '',
-    minLength: 30,
     header: renderCompanyJobTitleHeader,
   },
   {
@@ -175,14 +190,6 @@ const questions = [
       '曾要求繳交身分證、保證金',
       '其他',
     ],
-    header: renderCompanyJobTitleHeader,
-  },
-  {
-    title: '給其他面試者的中肯建議',
-    type: 'textarea',
-    dataKey: 'suggestionSection',
-    defaultValue: '',
-    minLength: 30,
     header: renderCompanyJobTitleHeader,
   },
 ];
