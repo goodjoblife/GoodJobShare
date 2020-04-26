@@ -1,4 +1,10 @@
-import React, { Fragment, useState, useCallback, useEffect } from 'react';
+import React, {
+  Fragment,
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
@@ -16,6 +22,7 @@ import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
 import GoogleAdsense from 'common/GoogleAdsense';
 import { isUiNotFoundError } from 'utils/errors';
+import { ViewArticleDetailModule } from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
 import useIsLogin from 'hooks/useIsLogin';
 import useTrace from './hooks/useTrace';
@@ -53,11 +60,14 @@ const getPathForJobTitle = jobTitle => `/job-titles/${jobTitle}/overview`;
 const ExperienceDetail = ({
   submitComment,
   likeReply,
-  canView,
 
   fetchExperience,
   fetchReplies,
+
+  // from withPermission
+  canView,
   fetchPermission,
+  permissionFetched,
 
   ...props
 }) => {
@@ -113,6 +123,30 @@ const ExperienceDetail = ({
   const { experience, experienceStatus, experienceError } = data;
   const replies = props.replies.toJS();
   const repliesStatus = props.repliesStatus;
+
+  // send event to Amplitude
+  const experienceDataId = useMemo(() => (experience ? experience._id : null), [
+    experience,
+  ]);
+  useEffect(() => {
+    if (experience && permissionFetched && experienceDataId === experienceId) {
+      const contentLength = experience.sections
+        ? experience.sections.reduce((accu, curr) => {
+            const subTitleLength = curr.subtitle ? curr.subtitle.length : 0;
+            const contentLength = curr.content ? curr.content.length : 0;
+            return accu + subTitleLength + contentLength;
+          }, 0)
+        : 0;
+      ViewArticleDetailModule.sendEvent({
+        id: experience._id,
+        type: experience.type,
+        contentLength,
+        jobTitle: experience.job_title.name,
+        company: experience.company.name,
+        hasPermission: canView,
+      });
+    }
+  }, [experienceDataId, permissionFetched, canView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (isError(experienceStatus)) {
     if (isUiNotFoundError(experienceError)) {
