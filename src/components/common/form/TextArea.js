@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import styles from './TextInput.module.css';
+import styles from './TextInput/TextInput.module.css';
 
 const TextInput = ({
   value,

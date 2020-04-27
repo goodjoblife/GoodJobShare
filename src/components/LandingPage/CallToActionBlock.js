@@ -5,7 +5,7 @@ import { Heading } from 'common/base';
 import AutoCompleteSearchTextInput from 'common/form/AutoCompleteTextInput_new/AutoCompleteSearchTextInput';
 import Button from 'common/button/ButtonRect';
 import styles from './CallToActionBlock.module.css';
-import textInputStyle from 'common/form/TextInput.module.css';
+import textInputStyle from 'common/form/TextInput/TextInput.module.css';
 
 const CallToActionBlock = ({ history }) => {
   const [companyName, setCompanyName] = useState('');

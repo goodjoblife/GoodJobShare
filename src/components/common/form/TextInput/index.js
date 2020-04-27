@@ -1,9 +1,9 @@
-import React, { forwardRef, useRef, useCallback, useState } from 'react';
+import React, { forwardRef, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
+import useEnterConfirm from './useEnterConfirm';
 import styles from './TextInput.module.css';
-import { useKey } from 'react-use';
 
 const TextInput = forwardRef(
   (
@@ -29,31 +29,16 @@ const TextInput = forwardRef(
       },
       [ref],
     );
-    const [isComposing, setComposing] = useState(false);
-    const handleCompositionStart = useCallback(
-      e => {
-        setComposing(true);
-        if (onCompositionStart) onCompositionStart(e);
+
+    const [handleCompositionStart, handleCompositionEnd] = useEnterConfirm(
+      {
+        onCompositionStart,
+        onCompositionEnd,
+        onEnter,
       },
-      [onCompositionStart],
+      inputRef,
     );
-    const handleCompositionEnd = useCallback(
-      e => {
-        setComposing(false);
-        if (onCompositionEnd) onCompositionEnd(e);
-      },
-      [onCompositionEnd],
-    );
-    useKey(
-      'Enter',
-      e => {
-        if (!isComposing && onEnter) {
-          onEnter(e);
-        }
-      },
-      { target: inputRef.current },
-      [isComposing, onEnter],
-    );
+
     return (
       <div className={cn(styles.wrapper, wrapperClassName)} style={style}>
         <input
