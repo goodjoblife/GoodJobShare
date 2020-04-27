@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 
 import { debounce } from 'utils/streamUtils';
-import AutoCompleteTextInput from '.';
+import AutoCompleteTextInput from '../TextInput';
 
 import {
   fetchCompanyCandidates,

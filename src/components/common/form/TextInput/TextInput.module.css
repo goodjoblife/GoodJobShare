@@ -2,6 +2,13 @@
 
 .wrapper {
   position: relative;
+
+  .menu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 99;
+  }
 }
 
 .input {
@@ -49,4 +56,30 @@
 }
 :-ms-input-placeholder {
   color: main-gray;
+}
+
+/* Autocomplete */
+
+.menu {
+  display: none;
+  border: 1px solid #b4b4b4;
+  max-height: 150px;
+  overflow-y: scroll;
+  background: #fff;
+
+  &.visible {
+    display: block;
+  }
+}
+
+.item {
+  background: white;
+  padding: 5px 10px;
+  color: #222;
+
+  &.active,
+  &:hover {
+    background: lightgray;
+    color: black;
+  }
 }

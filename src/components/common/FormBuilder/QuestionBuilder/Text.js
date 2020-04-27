@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import R from 'ramda';
 
-import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput_new';
+import TextInput from 'common/form/TextInput';
 import styles from './Text.module.css';
 
 const notEquals = x =>
@@ -55,7 +55,7 @@ const Text = ({
 
   return (
     <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
-      <AutoCompleteTextInput
+      <TextInput
         ref={ref}
         className={styles.textinput}
         type="text"
