@@ -25,8 +25,10 @@ const useKeyNavigation = (index, setIndex, isEnabled, target) => {
   useKey(
     'ArrowUp',
     e => {
-      e.preventDefault();
-      if (isEnabled) setIndex(index - 1);
+      if (isEnabled) {
+        e.preventDefault();
+        setIndex(index - 1);
+      }
     },
     { target },
     [isEnabled, index, setIndex],
@@ -34,8 +36,10 @@ const useKeyNavigation = (index, setIndex, isEnabled, target) => {
   useKey(
     'ArrowDown',
     e => {
-      e.preventDefault();
-      if (isEnabled) setIndex(index + 1);
+      if (isEnabled) {
+        e.preventDefault();
+        setIndex(index + 1);
+      }
     },
     { target },
     [isEnabled, index, setIndex],
@@ -104,13 +108,15 @@ const AutoCompleteTextInput = forwardRef(
     inputRef,
   ) => {
     const itemRefs = useRef([]);
-    const [isMenuOpen, setMenuOpen] = useState(false);
+    const [shouldMenuOpen, setMenuOpen] = useState(false);
     const [shouldIgnoreBlur, setIgnoreBlur] = useState(false);
     const [
       highlightedIndex,
       setHighlightedIndex,
       resetHighlightedIndex,
     ] = useBoundedIndex(autocompleteItems.length + 1, autocompleteItems.length);
+
+    const isMenuOpen = shouldMenuOpen && autocompleteItems.length > 0;
 
     const selectItemAt = useCallback(
       index => {
@@ -158,7 +164,7 @@ const AutoCompleteTextInput = forwardRef(
           }}
           {...inputProps}
         />
-        <AutoCompleteMenu open={isMenuOpen && autocompleteItems.length > 0}>
+        <AutoCompleteMenu open={isMenuOpen}>
           {autocompleteItems.map((item, i) => (
             <AutoCompleteOption
               key={autocompleteItemKeySelector(item)}
