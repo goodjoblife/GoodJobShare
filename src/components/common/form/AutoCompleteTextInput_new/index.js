@@ -121,9 +121,9 @@ const AutoCompleteTextInput = forwardRef(
     const selectItemAt = useCallback(
       index => {
         if (index < autocompleteItems.length) {
+          setMenuOpen(false);
           const selectedItem = autocompleteItems[index];
           onAutocompleteItemSelected(selectedItem);
-          setMenuOpen(false);
         }
       },
       [autocompleteItems, onAutocompleteItemSelected],
