@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 
 import { debounce } from 'utils/streamUtils';
-import AutoCompleteTextInput from '../TextInput';
+import TextInput from '.';
 
 import {
   fetchCompanyCandidates,
@@ -12,12 +12,7 @@ import {
 
 const take5 = R.take(5);
 
-const AutoCompleteSearchTextInput = ({
-  value,
-  onChange,
-  onSelected,
-  ...restProps
-}) => {
+const SearchTextInput = ({ value, onChange, onSelected, ...restProps }) => {
   const [candidates, setCandidates] = useState([]);
   const eleRef = useRef(null);
 
@@ -78,7 +73,7 @@ const AutoCompleteSearchTextInput = ({
   );
 
   return (
-    <AutoCompleteTextInput
+    <TextInput
       {...restProps}
       ref={eleRef}
       value={value}
@@ -89,10 +84,10 @@ const AutoCompleteSearchTextInput = ({
   );
 };
 
-AutoCompleteSearchTextInput.propTypes = {
+SearchTextInput.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onSelected: PropTypes.func,
 };
 
-export default AutoCompleteSearchTextInput;
+export default SearchTextInput;
