@@ -26,66 +26,23 @@ const withPermission = compose(
   withPermissionContext,
   withRouter,
   withHandlers({
-    fetchPermission: ({ location, setCanView, token }) => async () => {
+    fetchPermission: ({ setPermissionState, token }) => async () => {
       const result = await getHasSearchPermission({ token });
       const { hasSearchPermission: hasPermission } = result;
 
       if (typeof Storage !== 'undefined') {
-        // check current pathname
-        const { pathname } = location;
-        const laborRightsSingleRegex = /\/labor-rights\/.+/;
-        const experienceDetailRegex = /\/experiences\/.+/;
-        const salaryWorkTimeRegex = /\/salary-work-times.*/;
-        const companyRegex = /\/companies\/.+/;
-        const jobTitleRegex = /\/job-titles\/.+/;
+        const visitedWebsite = localStorage.getItem('visitedWebsite');
 
-        // 根據路徑，去更新相關的觀看權限 state
-        if (laborRightsSingleRegex.test(pathname)) {
-          // 假如是小教室頁，直接更新觀看權限 state
-          setCanView({ canViewLaborRightsSingle: hasPermission });
-          return;
-        } else if (experienceDetailRegex.test(pathname)) {
-          // 假如是單篇經驗分享頁，localStorage 沒值的話，不更新觀看權限 state。因此不會做阻擋，但是馬上就更新 localStorage。
-          const viewedExperienceDetail = localStorage.getItem(
-            'viewedExperienceDetail',
-          );
-
-          if (viewedExperienceDetail === null) {
-            localStorage.setItem('viewedExperienceDetail', true);
-            setCanView({ canViewExperienceDetail: true });
-            return;
-          } else {
-            setCanView({ canViewExperienceDetail: hasPermission });
-            return;
-          }
-        } else if (salaryWorkTimeRegex.test(pathname)) {
-          // 假如是薪資工時查詢頁，localStorage 沒值的話，不更新觀看權限 state。因此不會做阻擋，但是馬上就更新 localStorage。
-          const viewedTimeAndSalary = localStorage.getItem(
-            'viewedTimeAndSalary',
-          );
-
-          if (viewedTimeAndSalary === null) {
-            localStorage.setItem('viewedTimeAndSalary', true);
-            setCanView({ canViewTimeAndSalary: true });
-            return;
-          } else {
-            setCanView({ canViewTimeAndSalary: hasPermission });
-            return;
-          }
-        } else if (
-          companyRegex.test(pathname) ||
-          jobTitleRegex.test(pathname)
-        ) {
-          // 假如是公司頁面或職稱頁面，依據 localStorage 和權限更新 state。
-          const viewedExperienceDetail = localStorage.getItem(
-            'viewedExperienceDetail',
-          );
-
-          if (viewedExperienceDetail === null) {
-            setCanView({ canViewExperienceDetail: true });
-          } else {
-            setCanView({ canViewExperienceDetail: hasPermission });
-          }
+        if (visitedWebsite === null) {
+          // 該裝置第一次進到我們網站，那就給權限
+          localStorage.setItem('visitedWebsite', true);
+          setPermissionState({ canView: true, permissionFetched: true });
+        } else {
+          // 該裝置第二次以上進到我們網站，那就根據 api 結果設定權限
+          setPermissionState({
+            canView: hasPermission,
+            permissionFetched: true,
+          });
         }
       }
     },

@@ -10,7 +10,7 @@ function isEnabled() {
 function initSentry() {
   if (isEnabled()) {
     if (config.SENTRY_DSN) {
-      if (window.Raven) {
+      if (typeof window !== 'undefined' && window.Raven) {
         if (config.GIT_SHA1) {
           window.Raven.config(config.SENTRY_DSN, {
             release: config.GIT_SHA1,

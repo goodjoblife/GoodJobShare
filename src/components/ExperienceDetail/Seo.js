@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import Helmet from 'react-helmet';
+import serialize from 'serialize-javascript';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { isFetched } from '../../constants/status';
 import { SITE_NAME } from '../../constants/helmetData';
@@ -72,7 +73,7 @@ const SeoStructureData = ({ experienceState }) => {
     return (
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+        dangerouslySetInnerHTML={{ __html: serialize(data) }}
       />
     );
   }
