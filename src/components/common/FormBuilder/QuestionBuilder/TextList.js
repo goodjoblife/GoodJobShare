@@ -37,8 +37,8 @@ const TextList = ({
     <div className={cn({ [styles.hasWarning]: !!warning })}>
       <div className={styles.list}>
         {values.map((value, i) => (
-          <div className={styles.item}>
-            <div className={styles.no}>{i}.</div>
+          <div className={styles.item} key={i}>
+            <div className={styles.no}>{i + 1}.</div>
             <div className={styles.inputWrapper}>
               <input
                 ref={ref}
