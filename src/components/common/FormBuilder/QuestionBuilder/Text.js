@@ -5,7 +5,6 @@ import cn from 'classnames';
 import R from 'ramda';
 
 import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput_new';
-import useComposition from '../useComposition';
 import styles from './Text.module.css';
 
 const notEquals = x =>
@@ -30,11 +29,6 @@ const Text = ({
   validator,
   placeholder,
 }) => {
-  const [
-    isComposing,
-    handleCompositionStart,
-    handleCompositionEnd,
-  ] = useComposition();
   const [items, setItems] = useState([]);
   const ref = useRef(null);
 
@@ -67,14 +61,10 @@ const Text = ({
         type="text"
         placeholder={placeholder}
         value={value}
-        onCompositionStart={handleCompositionStart}
-        onCompositionEnd={handleCompositionEnd}
         onChange={e => onChange(e.target.value)}
         onEnter={e => {
-          if (!isComposing) {
-            e.target.blur();
-            onConfirm(e);
-          }
+          e.target.blur();
+          onConfirm(e);
         }}
         autocompleteItems={items}
         onAutocompleteItemSelected={item => {

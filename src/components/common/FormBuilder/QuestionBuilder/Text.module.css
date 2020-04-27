@@ -4,18 +4,6 @@ $warning-red: #d0021b;
   border-color: $warning-red;
 }
 
-.textinput {
-  width: 100%;
-  border: solid 1px #bdbdbd;
-  background-color: #ffffff;
-  padding: 10px 15px;
-  font-size: 16px;
-
-  ::placeholder {
-    color: #c0c0c0;
-  }
-}
-
 .warning {
   font-size: 15px;
   line-height: 1.6;

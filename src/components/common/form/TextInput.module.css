@@ -1,8 +1,12 @@
 @value main-yellow, border-gray, main-gray, warning-red, INPUT_HEIGHT, main-gray from "../variables.module.css";
 
+.wrapper {
+  position: relative;
+}
+
 .input {
   width: 100%;
-  padding: calc(INPUT_HEIGHT / 2) 16px;
+  padding: 13px 16px;
   height: INPUT_HEIGHT;
   line-height: calc(INPUT_HEIGHT / 2);
   border: 1px solid main-gray;

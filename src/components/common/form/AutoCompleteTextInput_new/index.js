@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { useKey } from 'react-use';
 import cn from 'classnames';
 
+import TextInput from '../TextInput';
 import styles from './styles.module.css';
 
 const useBoundedIndex = (bound, initialIndex) => {
@@ -83,9 +84,7 @@ const AutoCompleteTextInput = forwardRef(
   (
     {
       wrapperClassName,
-      className,
       value,
-      onChange,
       onFocus,
       onBlur,
       onEnter,
@@ -140,30 +139,15 @@ const AutoCompleteTextInput = forwardRef(
       inputRef.current,
     );
 
-    const handleEnter = useCallback(
-      e => {
-        if (isMenuOpen && hasHighlight) {
-          selectHighlightedItem();
-        } else if (onEnter) {
-          onEnter(e);
-        }
-      },
-      [hasHighlight, isMenuOpen, onEnter, selectHighlightedItem],
-    );
-
-    useKey('Enter', handleEnter, { target: inputRef.current }, [handleEnter]);
-
     useEffect(resetHighlightedIndex, [resetHighlightedIndex, value]);
 
     useScrollToItem(itemRefs.current[highlightedIndex]);
 
     return (
       <div className={cn(styles.wrapper, wrapperClassName)}>
-        <input
+        <TextInput
           ref={inputRef}
-          className={cn(styles.textInput, className)}
           value={value}
-          onChange={onChange}
           onFocus={e => {
             setFocused(true);
             if (onFocus) onFocus(e);
@@ -172,6 +156,13 @@ const AutoCompleteTextInput = forwardRef(
             if (shouldIgnoreBlur) return;
             setFocused(false);
             if (onBlur) onBlur(e);
+          }}
+          onEnter={e => {
+            if (isMenuOpen && hasHighlight) {
+              selectHighlightedItem();
+            } else if (onEnter) {
+              onEnter(e);
+            }
           }}
           {...inputProps}
         />
@@ -203,9 +194,7 @@ const AutoCompleteTextInput = forwardRef(
 );
 AutoCompleteTextInput.propTypes = {
   wrapperClassName: PropTypes.string,
-  className: PropTypes.string,
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   onEnter: PropTypes.func,
