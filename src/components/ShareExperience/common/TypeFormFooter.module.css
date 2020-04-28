@@ -1,0 +1,16 @@
+.footer {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.97px;
+  color: #ec7910;
+  background-color: #fffae1;
+  padding: 5px 29px;
+
+  .unlockDuration {
+    font-size: 15px;
+    font-weight: normal;
+    letter-spacing: normal;
+    color: #ec7910;
+  }
+}

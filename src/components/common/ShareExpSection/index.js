@@ -16,7 +16,7 @@ const DefaultSubheading = () => (
   </div>
 );
 
-const ShareExpSection = ({ heading, Subheading }) => (
+const ShareExpSection = ({ heading, Subheading, onSelectSalaryWorkTimes }) => (
   <Section padding>
     <Wrapper size="l">
       <Heading size="l" center className={styles.heading} marginBottomS>
@@ -48,7 +48,7 @@ const ShareExpSection = ({ heading, Subheading }) => (
             想推薦工作、爆料的，這邊請！
           </P>
         </Link>
-        <Link to="/share/time-and-salary" className={styles.item}>
+        <button className={styles.item} onClick={onSelectSalaryWorkTimes}>
           <img
             src={SalaryWorkTimeImg}
             alt="留下工時或薪資"
@@ -60,7 +60,7 @@ const ShareExpSection = ({ heading, Subheading }) => (
           <P className={styles.description} size="l">
             常加班、薪水又少嗎？快分享避免他人踩雷！
           </P>
-        </Link>
+        </button>
       </div>
     </Wrapper>
   </Section>
