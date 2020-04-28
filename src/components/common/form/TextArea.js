@@ -5,20 +5,15 @@ import cn from 'classnames';
 import styles from './TextInput/TextInput.module.css';
 
 const TextInput = ({
-  value,
-  placeholder,
   isWarning,
   warningWording,
   wrapperClassName,
   className,
-  style,
   ...props
 }) => (
-  <div className={cn(styles.wrapper, wrapperClassName)} style={style}>
+  <div className={cn(styles.wrapper, wrapperClassName)}>
     <textarea
-      placeholder={placeholder}
       className={cn(isWarning ? styles.warning : styles.input, className)}
-      value={value}
       {...props}
     />
     {warningWording && (
@@ -38,7 +33,6 @@ TextInput.propTypes = {
   warningWording: PropTypes.string,
   wrapperClassName: PropTypes.string,
   className: PropTypes.string,
-  style: PropTypes.oneOfType(PropTypes.string, PropTypes.object),
 };
 
 TextInput.defaultProps = {
