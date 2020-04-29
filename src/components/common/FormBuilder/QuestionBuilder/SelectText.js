@@ -6,7 +6,7 @@ import Select from 'common/form/Select';
 import styles from './SelectText.module.css';
 import textStyles from './Text.module.css';
 
-const SelectAndText = ({
+const SelectText = ({
   page,
   title,
   description,
@@ -43,7 +43,7 @@ const SelectAndText = ({
   </div>
 );
 
-SelectAndText.propTypes = {
+SelectText.propTypes = {
   page: PropTypes.number.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   description: PropTypes.string,
@@ -58,9 +58,9 @@ SelectAndText.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
-SelectAndText.defaultProps = {
+SelectText.defaultProps = {
   value: [null, ''],
   options: [],
 };
 
-export default SelectAndText;
+export default SelectText;
