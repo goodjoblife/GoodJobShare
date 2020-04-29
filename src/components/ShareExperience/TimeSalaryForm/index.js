@@ -6,6 +6,7 @@ import qs from 'qs';
 import { Heading } from 'common/base';
 import { People } from 'common/icons';
 import IconHeadingBlock from 'common/IconHeadingBlock';
+import { EnterFormModule } from 'utils/eventBasedTracking';
 import BasicInfo from './BasicInfo';
 import SalaryInfo from './SalaryInfo';
 import TimeInfo from './TimeInfo';
@@ -110,6 +111,11 @@ class TimeSalaryForm extends React.PureComponent {
 
     ReactPixel.track('InitiateCheckout', {
       content_category: PIXEL_CONTENT_CATEGORY.VISIT_TIME_AND_SALARY_FORM,
+    });
+
+    // Send EnterForm event to Amplitude
+    EnterFormModule.sendEvent({
+      type: EnterFormModule.types.salary,
     });
   }
 

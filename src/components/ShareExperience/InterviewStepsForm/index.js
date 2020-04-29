@@ -21,6 +21,7 @@ import {
 } from '../utils';
 
 import StaticHelmet from 'common/StaticHelmet';
+import { EnterFormModule } from 'utils/eventBasedTracking';
 import {
   INVALID,
   INTERVIEW_FORM_ORDER,
@@ -194,7 +195,7 @@ class InterviewForm extends React.Component {
     });
   }
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (!R.equals(this.state, prevState)) {
       localStorage.setItem(
         LS_INTERVIEW_STEPS_FORM_KEY,
@@ -204,6 +205,23 @@ class InterviewForm extends React.Component {
           __updatedAt: Date.now(),
         }),
       );
+    }
+
+    /** Send EnterForm event to Amplitude */
+    const { pathname } = this.props.location;
+    const { prevPathname } = prevProps.location;
+    if (pathname !== prevPathname) {
+      const pathnameStepMap = {
+        '/share/interview/step1': 1,
+        '/share/interview/step2': 2,
+        '/share/interview/step3': 3,
+      };
+      if (pathnameStepMap[pathname]) {
+        EnterFormModule.sendEvent({
+          step: pathnameStepMap[pathname],
+          type: EnterFormModule.types.interview3Steps,
+        });
+      }
     }
   }
 
