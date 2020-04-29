@@ -10,7 +10,7 @@ import { getJobTitlesSearch } from '../../../apis/jobTitleSearchApi';
 const header = <Header title="請輸入你的一份工作經驗" />;
 const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
   <CompanyJobTitleHeader
-    pageName="面試"
+    label="面試"
     companyName={companyName}
     jobTitle={jobTitle}
   />
