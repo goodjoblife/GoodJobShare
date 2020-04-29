@@ -51,7 +51,7 @@ const QuestionBuilder = ({
   validator,
   placeholder,
   options,
-  maxRating,
+  ratingLabels,
   renderCustomizedQuestion,
 }) => {
   const commonProps = {
@@ -101,7 +101,7 @@ const QuestionBuilder = ({
         />
       );
     case 'rating':
-      return <Rating {...commonProps} maxRating={maxRating} />;
+      return <Rating {...commonProps} ratingLabels={ratingLabels} />;
     case 'file':
       return <File {...commonProps} />;
     case 'date':
@@ -156,7 +156,7 @@ QuestionBuilder.propTypes = {
   search: func,
   placeholder: string,
   options: arrayOf(string),
-  maxRating: number,
+  ratingLabels: arrayOf(string.isRequired),
   renderCustomizedQuestion: func,
 };
 

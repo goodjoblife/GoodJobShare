@@ -128,7 +128,7 @@ const questions = [
     required: true,
     validator: value => !!value,
     warning: '需選取面試滿意程度',
-    maxRating: 5,
+    ratingLabels: ['差', '普通', '不錯啦～', '很好！', '大推！'],
     header: renderCompanyJobTitleHeader,
   },
   {

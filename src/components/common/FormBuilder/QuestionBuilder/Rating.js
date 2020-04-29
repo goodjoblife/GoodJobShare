@@ -33,14 +33,14 @@ const Rating = ({
   onConfirm,
   warning,
   validator,
-  maxRating,
+  ratingLabels,
 }) => {
   const debouncedConfirm = useDebouncedConfirm(onConfirm, 300);
   const [hoveredValue, handleMouseOver, handleMouseOut] = useHover();
   return (
     <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
       <div className={styles.flexContainer}>
-        {range(maxRating).map(i => (
+        {range(ratingLabels.length).map(i => (
           <label
             key={i}
             className={styles.ratingLabel}
@@ -63,7 +63,7 @@ const Rating = ({
         ))}
         <div
           className={styles.noteContainer}
-          data-value={hoveredValue || value}
+          data-label={ratingLabels[(hoveredValue || value) - 1]}
         >
           <span />
         </div>
@@ -85,7 +85,11 @@ Rating.propTypes = {
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
   validator: PropTypes.func,
-  maxRating: PropTypes.number.isRequired,
+  ratingLabels: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+};
+
+Rating.defaultProps = {
+  ratingLabels: [],
 };
 
 export default Rating;

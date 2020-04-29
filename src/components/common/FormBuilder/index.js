@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
-  number,
   string,
   bool,
   func,
@@ -258,7 +257,7 @@ FormBuilder.propTypes = {
       search: func,
       placeholder: string,
       options: arrayOf(string),
-      maxRating: number,
+      ratingLabels: arrayOf(string.isRequired),
       renderCustomizedQuestion: func,
     }),
   ).isRequired,
