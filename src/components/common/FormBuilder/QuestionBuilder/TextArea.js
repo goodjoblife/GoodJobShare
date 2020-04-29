@@ -13,6 +13,7 @@ const Textarea = ({
   defaultValue,
   value,
   onChange,
+  footnote,
   warning,
   validator,
 }) => (
@@ -22,8 +23,8 @@ const Textarea = ({
       value={value}
       onChange={e => onChange(e.target.value)}
     />
-    <p className={cn(styles.count, { [styles.warning]: !!warning })}>
-      {warning}
+    <p className={cn(styles.footnote, { [styles.warning]: !!warning })}>
+      {warning || (typeof footnote === 'function' ? footnote(value) : footnote)}
     </p>
   </div>
 );
@@ -37,6 +38,7 @@ Textarea.propTypes = {
   defaultValue: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  footnote: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   warning: PropTypes.string,
   validator: PropTypes.func,
 };

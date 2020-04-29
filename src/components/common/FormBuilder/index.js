@@ -256,6 +256,7 @@ FormBuilder.propTypes = {
       onSelect: func,
       search: func,
       placeholder: string,
+      footnote: oneOfType([string, func]),
       options: arrayOf(string),
       ratingLabels: arrayOf(string.isRequired),
       renderCustomizedQuestion: func,

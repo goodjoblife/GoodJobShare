@@ -50,6 +50,7 @@ const QuestionBuilder = ({
   warning,
   validator,
   placeholder,
+  footnote,
   options,
   ratingLabels,
   renderCustomizedQuestion,
@@ -79,7 +80,7 @@ const QuestionBuilder = ({
         />
       );
     case 'textarea':
-      return <TextArea {...commonProps} />;
+      return <TextArea {...commonProps} footnote={footnote} />;
     case 'radio':
       return <Radio {...commonProps} options={options} />;
     case 'radio-else':
@@ -155,6 +156,7 @@ QuestionBuilder.propTypes = {
   onSelect: func,
   search: func,
   placeholder: string,
+  footnote: oneOfType([string, func]),
   options: arrayOf(string),
   ratingLabels: arrayOf(string.isRequired),
   renderCustomizedQuestion: func,

@@ -141,6 +141,7 @@ const questions = [
     required: true,
     validator: value => value.replace(/\n/g, '').length >= 50,
     warning: value => `最少 50 字，現在 ${value.replace(/\n/g, '').length} 字`,
+    footnote: value => `最少 50 字，現在 ${value.replace(/\n/g, '').length} 字`,
     header: renderCompanyJobTitleHeader,
   },
   {
@@ -153,6 +154,7 @@ const questions = [
     required: true,
     validator: value => value.replace(/\n/g, '').length >= 50,
     warning: value => `最少 50 字，現在 ${value.replace(/\n/g, '').length} 字`,
+    footnote: value => `最少 50 字，現在 ${value.replace(/\n/g, '').length} 字`,
     header: renderCompanyJobTitleHeader,
   },
   {
