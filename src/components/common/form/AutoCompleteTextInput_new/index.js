@@ -46,14 +46,17 @@ const useKeyNavigation = (index, setIndex, isEnabled, target) => {
   );
 };
 
-const useEnterConfirm = (confirm, isEnabled) => {
+const useEnterConfirm = (confirm, onEnter, isEnabled, target) => {
   useKey(
     'Enter',
-    () => {
-      if (isEnabled) confirm();
+    e => {
+      if (isEnabled) {
+        confirm();
+      }
+      onEnter(e);
     },
-    {},
-    [confirm, isEnabled],
+    { target },
+    [confirm, onEnter, isEnabled],
   );
 };
 
@@ -99,6 +102,7 @@ const AutoCompleteTextInput = forwardRef(
       onChange,
       onFocus,
       onBlur,
+      onEnter,
       autocompleteItems,
       autocompleteItemKeySelector,
       autocompleteItemLabelSelector,
@@ -140,7 +144,12 @@ const AutoCompleteTextInput = forwardRef(
       inputRef.current,
     );
 
-    useEnterConfirm(selectHighlightedItem, isMenuOpen);
+    useEnterConfirm(
+      selectHighlightedItem,
+      onEnter,
+      isMenuOpen,
+      inputRef.current,
+    );
 
     useEffect(resetHighlightedIndex, [resetHighlightedIndex, value]);
 
@@ -197,6 +206,7 @@ AutoCompleteTextInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
+  onEnter: PropTypes.func,
   autocompleteItems: PropTypes.array.isRequired,
   autocompleteItemKeySelector: PropTypes.func.isRequired,
   autocompleteItemLabelSelector: PropTypes.func.isRequired,

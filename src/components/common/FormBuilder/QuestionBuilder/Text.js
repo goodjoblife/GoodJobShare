@@ -1,7 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { useDebounce } from 'react-use';
 import PropTypes from 'prop-types';
-import { useKey } from 'react-use';
 import cn from 'classnames';
 
 import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput_new';
@@ -52,15 +51,13 @@ const Text = ({
     [value],
   );
 
-  useKey(
-    'Enter',
+  const handleEnter = useCallback(
     e => {
       if (!isComposing) {
         e.target.blur();
-        onConfirm();
+        onConfirm(e);
       }
     },
-    { target: ref.current },
     [isComposing, onConfirm],
   );
 
@@ -75,6 +72,7 @@ const Text = ({
         onCompositionStart={handleCompositionStart}
         onCompositionEnd={handleCompositionEnd}
         onChange={e => onChange(e.target.value)}
+        onEnter={handleEnter}
         autocompleteItems={items}
         onAutocompleteItemSelected={item => {
           onChange(item);
