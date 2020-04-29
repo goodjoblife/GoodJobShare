@@ -47,7 +47,7 @@ const Text = ({
         setItems(items);
       }
     },
-    500,
+    300,
     [value],
   );
 
