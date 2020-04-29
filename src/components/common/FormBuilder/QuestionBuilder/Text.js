@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDebounce } from 'react-use';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
@@ -51,16 +51,6 @@ const Text = ({
     [value],
   );
 
-  const handleEnter = useCallback(
-    e => {
-      if (!isComposing) {
-        e.target.blur();
-        onConfirm(e);
-      }
-    },
-    [isComposing, onConfirm],
-  );
-
   return (
     <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
       <AutoCompleteTextInput
@@ -72,7 +62,12 @@ const Text = ({
         onCompositionStart={handleCompositionStart}
         onCompositionEnd={handleCompositionEnd}
         onChange={e => onChange(e.target.value)}
-        onEnter={handleEnter}
+        onEnter={e => {
+          if (!isComposing) {
+            e.target.blur();
+            onConfirm(e);
+          }
+        }}
         autocompleteItems={items}
         onAutocompleteItemSelected={item => {
           onChange(item);
