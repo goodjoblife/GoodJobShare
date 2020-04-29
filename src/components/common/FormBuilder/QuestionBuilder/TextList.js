@@ -2,6 +2,7 @@ import React, { useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
+import Scrollable from '../Scrollable';
 import styles from './TextList.module.css';
 import textStyles from './Text.module.css';
 
@@ -34,34 +35,36 @@ const TextList = ({
   ]);
 
   return (
-    <div className={cn({ [styles.hasWarning]: !!warning })}>
-      <div className={styles.list}>
-        {values.map((value, i) => (
-          <div className={styles.item} key={i}>
-            <div className={styles.no}>{i + 1}.</div>
-            <div className={styles.inputWrapper}>
-              <input
-                ref={ref}
-                className={textStyles.textinput}
-                type="text"
-                placeholder={placeholder}
-                value={value}
-                onChange={e => handleChange(e.target.value, i)}
-              />
+    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
+      <div className={styles.listContainer}>
+        <Scrollable className={styles.list}>
+          {values.map((value, i) => (
+            <div className={styles.item} key={i}>
+              <div className={styles.no}>{i + 1}.</div>
+              <div className={styles.inputWrapper}>
+                <input
+                  ref={ref}
+                  className={textStyles.textinput}
+                  type="text"
+                  placeholder={placeholder}
+                  value={value}
+                  onChange={e => handleChange(e.target.value, i)}
+                />
+              </div>
+              <button
+                className={styles.deleteBtn}
+                onClick={() => handleClickDelete(i)}
+              >
+                刪除
+              </button>
             </div>
-            <button
-              className={styles.deleteBtn}
-              onClick={() => handleClickDelete(i)}
-            >
-              刪除
+          ))}
+          <div className={styles.item}>
+            <button className={styles.addBtn} onClick={handleClickAdd}>
+              增加一題
             </button>
           </div>
-        ))}
-        <div className={styles.item}>
-          <button className={styles.addBtn} onClick={handleClickAdd}>
-            增加一題
-          </button>
-        </div>
+        </Scrollable>
       </div>
       <div className={styles.warning}>{warning}</div>
     </div>
