@@ -25,7 +25,7 @@ import { LS_WORK_EXPERIENCES_FORM_KEY } from '../../../constants/localStorageKey
 import styles from './WorkExperiencesForm.module.css';
 
 import StaticHelmet from 'common/StaticHelmet';
-import { EnterFormModule } from 'utils/eventBasedTracking';
+import { EnterFormModule, SubmitFormModule } from 'utils/eventBasedTracking';
 import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
@@ -185,6 +185,11 @@ class WorkExperiencesForm extends React.Component {
             currency: 'TWD',
             content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_WORK_EXPERIENCE,
           });
+          // send SubmitForm event to Amplitude
+          SubmitFormModule.sendEvent({
+            type: SubmitFormModule.types.work,
+            result: SubmitFormModule.results.success,
+          });
 
           return () => (
             <SuccessFeedback
@@ -198,6 +203,11 @@ class WorkExperiencesForm extends React.Component {
           ReactGA.event({
             category: GA_CATEGORY.SHARE_WORK,
             action: GA_ACTION.UPLOAD_FAIL,
+          });
+          // send SubmitForm event to Amplitude
+          SubmitFormModule.sendEvent({
+            type: SubmitFormModule.types.work,
+            result: SubmitFormModule.results.error,
           });
 
           return ({ buttonClick }) => (

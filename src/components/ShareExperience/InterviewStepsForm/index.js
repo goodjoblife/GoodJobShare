@@ -21,7 +21,7 @@ import {
 } from '../utils';
 
 import StaticHelmet from 'common/StaticHelmet';
-import { EnterFormModule } from 'utils/eventBasedTracking';
+import { EnterFormModule, SubmitFormModule } from 'utils/eventBasedTracking';
 import {
   INVALID,
   INTERVIEW_FORM_ORDER,
@@ -247,6 +247,12 @@ class InterviewForm extends React.Component {
             content_category:
               PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
           });
+          // send SubmitForm event to Amplitude
+          SubmitFormModule.sendEvent({
+            type: SubmitFormModule.types.interview3Steps,
+            result: SubmitFormModule.results.success,
+          });
+
           return () => (
             <SuccessFeedback
               buttonClick={() =>
@@ -259,6 +265,11 @@ class InterviewForm extends React.Component {
           ReactGA.event({
             category: GA_CATEGORY.SHARE_INTERVIEW,
             action: GA_ACTION.UPLOAD_FAIL,
+          });
+          // send SubmitForm event to Amplitude
+          SubmitFormModule.sendEvent({
+            type: SubmitFormModule.types.interview3Steps,
+            result: SubmitFormModule.results.error,
           });
 
           return ({ buttonClick }) => (

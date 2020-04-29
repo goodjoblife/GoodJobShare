@@ -6,7 +6,7 @@ import qs from 'qs';
 import { Heading } from 'common/base';
 import { People } from 'common/icons';
 import IconHeadingBlock from 'common/IconHeadingBlock';
-import { EnterFormModule } from 'utils/eventBasedTracking';
+import { EnterFormModule, SubmitFormModule } from 'utils/eventBasedTracking';
 import BasicInfo from './BasicInfo';
 import SalaryInfo from './SalaryInfo';
 import TimeInfo from './TimeInfo';
@@ -144,6 +144,11 @@ class TimeSalaryForm extends React.PureComponent {
             currency: 'TWD',
             content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_TIME_AND_SALARY,
           });
+          // send SubmitForm event to Amplitude
+          SubmitFormModule.sendEvent({
+            type: SubmitFormModule.types.salary,
+            result: SubmitFormModule.results.success,
+          });
 
           return () => (
             <SuccessFeedback
@@ -159,6 +164,11 @@ class TimeSalaryForm extends React.PureComponent {
           ReactGA.event({
             category: GA_CATEGORY.SHARE_TIME_SALARY,
             action: GA_ACTION.UPLOAD_FAIL,
+          });
+          // send SubmitForm event to Amplitude
+          SubmitFormModule.sendEvent({
+            type: SubmitFormModule.types.salary,
+            result: SubmitFormModule.results.error,
           });
 
           return ({ buttonClick }) => (
