@@ -4,6 +4,7 @@ import cn from 'classnames';
 
 import Select from 'common/form/Select';
 import styles from './Date.module.css';
+import { withShape } from 'airbnb-prop-types';
 
 const monthOptions = Array(12)
   .fill(0)
@@ -71,14 +72,17 @@ DatePicker.propTypes = {
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
   defaultValue: PropTypes.array.isRequired,
-  value: PropTypes.array.isRequired,
+  value: withShape(PropTypes.array.isRequired, {
+    0: PropTypes.number,
+    1: PropTypes.number,
+  }),
   onChange: PropTypes.func.isRequired,
   warning: PropTypes.string,
   validator: PropTypes.func,
 };
 
 DatePicker.defaultProps = {
-  value: [],
+  value: [null, null],
 };
 
 export default DatePicker;
