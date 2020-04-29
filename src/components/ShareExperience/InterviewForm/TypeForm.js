@@ -174,8 +174,8 @@ const questions = [
     type: 'select-text',
     dataKey: 'salary',
     defaultValue: [null, ''],
-    placeholder: '700,000',
     options: ['年薪', '月薪', '日薪', '時薪'],
+    placeholder: '700,000',
     header: renderCompanyJobTitleHeader,
   },
   {
