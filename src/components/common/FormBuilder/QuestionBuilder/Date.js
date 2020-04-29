@@ -66,7 +66,7 @@ const DatePicker = ({
 
 DatePicker.propTypes = {
   page: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,

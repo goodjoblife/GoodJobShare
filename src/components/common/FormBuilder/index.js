@@ -178,7 +178,11 @@ const FormBuilder = ({
                 <div>
                   <TitleBlock
                     page={i}
-                    title={restOptions.title}
+                    title={
+                      typeof restOptions.title === 'function'
+                        ? restOptions.title(draft)
+                        : restOptions.title
+                    }
                     description={restOptions.description}
                     required={restOptions.required}
                   />
