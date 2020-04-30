@@ -6,7 +6,7 @@ import qs from 'qs';
 import { Heading } from 'common/base';
 import { People } from 'common/icons';
 import IconHeadingBlock from 'common/IconHeadingBlock';
-import { EnterFormModule, SubmitFormModule } from 'utils/eventBasedTracking';
+import { EnterFormTracker, SubmitFormTracker } from 'utils/eventBasedTracking';
 import BasicInfo from './BasicInfo';
 import SalaryInfo from './SalaryInfo';
 import TimeInfo from './TimeInfo';
@@ -114,8 +114,8 @@ class TimeSalaryForm extends React.PureComponent {
     });
 
     // Send EnterForm event to Amplitude
-    EnterFormModule.sendEvent({
-      type: EnterFormModule.types.salary,
+    EnterFormTracker.sendEvent({
+      type: EnterFormTracker.types.salary,
     });
   }
 
@@ -145,9 +145,9 @@ class TimeSalaryForm extends React.PureComponent {
             content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_TIME_AND_SALARY,
           });
           // send SubmitForm event to Amplitude
-          SubmitFormModule.sendEvent({
-            type: SubmitFormModule.types.salary,
-            result: SubmitFormModule.results.success,
+          SubmitFormTracker.sendEvent({
+            type: SubmitFormTracker.types.salary,
+            result: SubmitFormTracker.results.success,
           });
 
           return () => (
@@ -166,9 +166,9 @@ class TimeSalaryForm extends React.PureComponent {
             action: GA_ACTION.UPLOAD_FAIL,
           });
           // send SubmitForm event to Amplitude
-          SubmitFormModule.sendEvent({
-            type: SubmitFormModule.types.salary,
-            result: SubmitFormModule.results.error,
+          SubmitFormTracker.sendEvent({
+            type: SubmitFormTracker.types.salary,
+            result: SubmitFormTracker.results.error,
           });
 
           return ({ buttonClick }) => (

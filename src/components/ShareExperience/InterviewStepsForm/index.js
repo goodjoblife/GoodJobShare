@@ -21,7 +21,7 @@ import {
 } from '../utils';
 
 import StaticHelmet from 'common/StaticHelmet';
-import { EnterFormModule, SubmitFormModule } from 'utils/eventBasedTracking';
+import { EnterFormTracker, SubmitFormTracker } from 'utils/eventBasedTracking';
 import {
   INVALID,
   INTERVIEW_FORM_ORDER,
@@ -217,9 +217,9 @@ class InterviewForm extends React.Component {
         '/share/interview/step3': 3,
       };
       if (pathnameStepMap[pathname]) {
-        EnterFormModule.sendEvent({
+        EnterFormTracker.sendEvent({
           step: pathnameStepMap[pathname],
-          type: EnterFormModule.types.interview3Steps,
+          type: EnterFormTracker.types.interview3Steps,
         });
       }
     }
@@ -248,9 +248,9 @@ class InterviewForm extends React.Component {
               PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
           });
           // send SubmitForm event to Amplitude
-          SubmitFormModule.sendEvent({
-            type: SubmitFormModule.types.interview3Steps,
-            result: SubmitFormModule.results.success,
+          SubmitFormTracker.sendEvent({
+            type: SubmitFormTracker.types.interview3Steps,
+            result: SubmitFormTracker.results.success,
           });
 
           return () => (
@@ -267,9 +267,9 @@ class InterviewForm extends React.Component {
             action: GA_ACTION.UPLOAD_FAIL,
           });
           // send SubmitForm event to Amplitude
-          SubmitFormModule.sendEvent({
-            type: SubmitFormModule.types.interview3Steps,
-            result: SubmitFormModule.results.error,
+          SubmitFormTracker.sendEvent({
+            type: SubmitFormTracker.types.interview3Steps,
+            result: SubmitFormTracker.results.error,
           });
 
           return ({ buttonClick }) => (

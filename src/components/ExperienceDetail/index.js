@@ -22,7 +22,7 @@ import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
 import GoogleAdsense from 'common/GoogleAdsense';
 import { isUiNotFoundError } from 'utils/errors';
-import { ViewArticleDetailModule } from 'utils/eventBasedTracking';
+import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
 import useIsLogin from 'hooks/useIsLogin';
 import useTrace from './hooks/useTrace';
@@ -137,7 +137,7 @@ const ExperienceDetail = ({
             return accu + subTitleLength + contentLength;
           }, 0)
         : 0;
-      ViewArticleDetailModule.sendEvent({
+      ViewArticleDetailTracker.sendEvent({
         id: experience._id,
         type: experience.type,
         contentLength,
