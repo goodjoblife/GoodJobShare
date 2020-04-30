@@ -197,7 +197,7 @@ const questions = [
           R.length,
         ),
       ),
-    warning: '需填寫面試問題',
+    warning: '需填寫面試問題內容',
     placeholder: '面試問題',
     header: renderCompanyJobTitleHeader,
   },
@@ -208,7 +208,10 @@ const questions = [
     defaultValue: [[], ''],
     validator: ([selected, elseText]) =>
       !R.contains('其他', selected) || !!elseText,
-    warning: '需填寫特殊問題',
+    warning: ([selected, elseText]) =>
+      R.contains('其他', selected) && !elseText
+        ? '需輸入其他特殊問題內容'
+        : null,
     options: [
       '詢問家庭狀況',
       '曾詢問婚姻狀況、生育計畫',
@@ -220,7 +223,7 @@ const questions = [
   },
   {
     title: () => () =>
-      '感謝你分享面試心得，按下「送出」，馬上就可以解鎖全站 2 萬多筆資料 48 小時哦！',
+      '感謝你分享面試心得，按下「送出」，馬上就可以解鎖全站 2 萬多筆資料哦！',
     type: 'customized',
     dataKey: '',
   },
