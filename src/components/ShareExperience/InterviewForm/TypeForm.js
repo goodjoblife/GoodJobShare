@@ -210,7 +210,7 @@ const questions = [
       !R.contains('其他', selected) || !!elseText,
     warning: ([selected, elseText]) =>
       R.contains('其他', selected) && !elseText
-        ? '需輸入其他特殊問題內容'
+        ? '需填寫其他特殊問題的內容'
         : null,
     options: [
       '詢問家庭狀況',
@@ -218,7 +218,7 @@ const questions = [
       '曾要求繳交身分證、保證金',
       '其他',
     ],
-    placeholder: '輸入敏感問題',
+    placeholder: '輸入其他特殊問題內容',
     header: renderCompanyJobTitleHeader,
   },
   {
