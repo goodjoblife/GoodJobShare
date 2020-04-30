@@ -25,7 +25,7 @@ const SelectText = ({
       <Select
         options={options.map(value => ({ label: value, value }))}
         value={selected}
-        onChange={e => onChange([e.target.value, text])}
+        onChange={e => onChange([e.target.value ? e.target.value : null, text])}
       />
       <div className={cn(styles.inputGroup, styles.text)}>
         <div className={styles.inputWrapper}>

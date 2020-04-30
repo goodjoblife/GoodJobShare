@@ -57,6 +57,31 @@ const findIfQuestionsAcceptDraft = draft =>
     ),
   );
 
+const useQuestion = (question, draft) => {
+  if (question) {
+    const {
+      header,
+      footer,
+      dataKey,
+      defaultValue,
+      required,
+      warning,
+      validator,
+    } = question;
+    return [
+      true,
+      header,
+      footer,
+      dataKey,
+      defaultValue,
+      required,
+      findWarningAgainstValue(draft[dataKey], warning, validator),
+    ];
+  } else {
+    return [false];
+  }
+};
+
 const FormBuilder = ({
   open,
   header: commonHeader,
@@ -79,11 +104,15 @@ const FormBuilder = ({
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
 
-  let header;
-  let footer;
-  let dataKey;
-  let warning;
-  let shouldRenderNothing = false;
+  const [
+    shouldRenderQuestion,
+    header,
+    footer,
+    dataKey,
+    defaultValue,
+    required,
+    warning,
+  ] = useQuestion(questions[page], draft);
 
   const [isWarningShown, setWarningShown] = useState(false);
 
@@ -112,20 +141,6 @@ const FormBuilder = ({
     }
   }, [open, resetDraft, setPage]);
 
-  const question = questions[page];
-  if (question) {
-    header = question.header;
-    footer = question.footer;
-    dataKey = question.dataKey;
-    warning = findWarningAgainstValue(
-      draft[dataKey],
-      question.warning,
-      question.validator,
-    );
-  } else {
-    shouldRenderNothing = true;
-  }
-
   const warnBeforeSetPage = useCallback(
     page => {
       setWarningShown(true);
@@ -143,7 +158,7 @@ const FormBuilder = ({
     setWarningShown(false);
   }, [page]);
 
-  if (shouldRenderNothing) {
+  if (!shouldRenderQuestion) {
     return null;
   }
 
@@ -211,6 +226,7 @@ const FormBuilder = ({
           </div>
           <div className={styles.navigator}>
             <NavigatorBlock
+              skippable={!required && R.equals(draft[dataKey], defaultValue)}
               onPrevious={() => {
                 if (onPrev) onPrev();
                 warnBeforeSetPage(page - 1);
