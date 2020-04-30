@@ -105,6 +105,7 @@ const AutoCompleteTextInput = forwardRef(
       setHighlightedIndex,
       resetHighlightedIndex,
     ] = useBoundedIndex(autocompleteItems.length + 1, autocompleteItems.length);
+    const hasHighlight = highlightedIndex < autocompleteItems.length;
 
     const isMenuOpen = shouldMenuOpen && autocompleteItems.length > 0;
 
@@ -131,7 +132,7 @@ const AutoCompleteTextInput = forwardRef(
     );
 
     const handleEnter = useCallback(e => {
-      if (isMenuOpen) {
+      if (isMenuOpen && hasHighlight) {
         selectHighlightedItem();
       } else if (onEnter) {
         onEnter(e);
