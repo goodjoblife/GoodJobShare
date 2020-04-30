@@ -98,6 +98,7 @@ const AutoCompleteTextInput = forwardRef(
     inputRef,
   ) => {
     const itemRefs = useRef([]);
+    const [isFocused, setFocused] = useState(false);
     const [shouldMenuOpen, setMenuOpen] = useState(false);
     const [shouldIgnoreBlur, setIgnoreBlur] = useState(false);
     const [
@@ -106,6 +107,14 @@ const AutoCompleteTextInput = forwardRef(
       resetHighlightedIndex,
     ] = useBoundedIndex(autocompleteItems.length + 1, autocompleteItems.length);
     const hasHighlight = highlightedIndex < autocompleteItems.length;
+
+    useEffect(() => {
+      setMenuOpen(isFocused);
+    }, [isFocused]);
+
+    useEffect(() => {
+      if (isFocused) setMenuOpen(true);
+    }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const isMenuOpen = shouldMenuOpen && autocompleteItems.length > 0;
 
@@ -153,12 +162,12 @@ const AutoCompleteTextInput = forwardRef(
           value={value}
           onChange={onChange}
           onFocus={e => {
-            setMenuOpen(true);
+            setFocused(true);
             if (onFocus) onFocus(e);
           }}
           onBlur={e => {
             if (shouldIgnoreBlur) return;
-            setMenuOpen(false);
+            setFocused(false);
             if (onBlur) onBlur(e);
           }}
           {...inputProps}
