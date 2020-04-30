@@ -35,6 +35,7 @@ const toggle = (value, values) => {
 
 export const BlockSelect = ({
   dataKey,
+  required,
   value,
   onChange,
   onConfirm,
@@ -57,12 +58,17 @@ export const BlockSelect = ({
     option => {
       if (multiple) {
         onChange(toggle(option, value));
+      } else if (required) {
+        onChange(option);
+        debouncedConfirm();
+      } else if (option === value) {
+        onChange(null);
       } else {
         onChange(option);
         debouncedConfirm();
       }
     },
-    [debouncedConfirm, onChange, multiple, value],
+    [multiple, required, value, onChange, debouncedConfirm],
   );
 
   return options.map(option => (
@@ -82,6 +88,7 @@ export const BlockSelect = ({
 
 BlockSelect.propTypes = {
   dataKey: PropTypes.string.isRequired,
+  required: PropTypes.bool,
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -98,6 +105,7 @@ BlockSelect.defaultProps = {
 
 export const BlockSelectElse = ({
   dataKey,
+  required,
   value: [selected, elseText],
   onChange,
   onConfirm,
@@ -148,6 +156,7 @@ export const BlockSelectElse = ({
     <BlockSelect
       key="select"
       dataKey={dataKey}
+      required={required}
       value={selected}
       onChange={handleSelectChange}
       onConfirm={handleSelectConfirm}
@@ -171,6 +180,7 @@ export const BlockSelectElse = ({
 
 BlockSelectElse.propTypes = {
   dataKey: PropTypes.string.isRequired,
+  required: PropTypes.bool,
   value: withShape(PropTypes.array.isRequired, {
     // option
     0: PropTypes.oneOfType([

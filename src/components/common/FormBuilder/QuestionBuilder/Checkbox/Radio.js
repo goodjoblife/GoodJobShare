@@ -20,6 +20,7 @@ const Radio = ({
   <Wrapper warning={warning}>
     <BlockSelect
       dataKey={dataKey}
+      required={required}
       value={value}
       onChange={onChange}
       onConfirm={onConfirm}

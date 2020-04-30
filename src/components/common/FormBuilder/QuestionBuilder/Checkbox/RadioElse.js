@@ -22,6 +22,7 @@ const RadioElse = ({
   <Wrapper warning={warning}>
     <BlockSelectElse
       dataKey={dataKey}
+      required={required}
       value={value}
       onChange={onChange}
       onConfirm={onConfirm}

@@ -174,6 +174,13 @@ const questions = [
     type: 'select-text',
     dataKey: 'salary',
     defaultValue: [null, ''],
+    validator: ([type, amount]) => (!!type ? !!amount : !amount),
+    warning: ([type, amount]) =>
+      !!type && !amount
+        ? '需填寫薪資'
+        : !type && !!amount
+        ? '需選擇薪水類型'
+        : null,
     options: ['年薪', '月薪', '日薪', '時薪'],
     placeholder: '700,000',
     header: renderCompanyJobTitleHeader,
@@ -199,6 +206,9 @@ const questions = [
     type: 'checkbox-else',
     dataKey: 'sensitiveQuestions',
     defaultValue: [[], ''],
+    validator: ([selected, elseText]) =>
+      !R.contains('其他', selected) || !!elseText,
+    warning: '需填寫特殊問題',
     options: [
       '詢問家庭狀況',
       '曾詢問婚姻狀況、生育計畫',
