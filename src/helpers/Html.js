@@ -90,7 +90,13 @@ export default class Html extends Component {
               ;if(!n._iq.hasOwnProperty(e)){n._iq[e]={_q:[]};v(n._iq[e])}return n._iq[e]}
               ;e.amplitude=n})(window,document);
 
-              amplitude.getInstance().init("${AMPLITUDE_API_KEY}");`,
+              amplitude.getInstance().init("${AMPLITUDE_API_KEY}", null, {
+                // optional configuration options
+                includeGclid: true,
+                includeReferrer: true,
+                includeUtm: true,
+                unsetParamsReferrerOnNewSession: true,
+              });`,
             }}
           />
           <script

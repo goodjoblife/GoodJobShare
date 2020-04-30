@@ -5,7 +5,7 @@ import { compose } from 'recompose';
 import { withPermission } from 'common/permission-context';
 import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
-import { ViewSalaryWorkTimeModule } from 'utils/eventBasedTracking';
+import { ViewSalaryWorkTimeTracker } from 'utils/eventBasedTracking';
 
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
@@ -33,14 +33,14 @@ const TimeAndSalary = ({
   useEffect(() => {
     if (permissionFetched) {
       if (pageType === 'COMPANY') {
-        ViewSalaryWorkTimeModule.sendEvent({
+        ViewSalaryWorkTimeTracker.sendEvent({
           company: pageName,
           page: page,
           nTotalData: salaryWorkTimeStatistics.count,
           hasPermission: canView,
         });
       } else if (pageType === 'JOB_TITLE') {
-        ViewSalaryWorkTimeModule.sendEvent({
+        ViewSalaryWorkTimeTracker.sendEvent({
           jobTitle: pageName,
           page: page,
           nTotalData: salaryWorkTimeStatistics.count,

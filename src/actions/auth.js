@@ -1,6 +1,6 @@
 import ReactGA from 'react-ga';
 import authStatus from '../constants/authStatus';
-import { UserModule } from '../utils/eventBasedTracking';
+import { UserTracker } from '../utils/eventBasedTracking';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
@@ -25,7 +25,7 @@ export const logout = () => (dispatch, getState, { history }) => {
   dispatch(logOutAction());
   history.push('/');
   // reset user for Amplitude
-  UserModule.resetUser();
+  UserTracker.resetUser();
 };
 
 /**
@@ -99,7 +99,7 @@ export const loginWithToken = token => (dispatch, getState, { api }) => {
       dispatch(setUser(user));
       dispatch(setLogin(authStatus.CONNECTED, token));
       // identify user for Amplitude
-      UserModule.identifyUser(user._id);
+      UserTracker.identifyUser(user._id);
       // identify user for Google Analytics
       ReactGA.set({ userId: user._id });
     })
