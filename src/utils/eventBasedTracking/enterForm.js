@@ -7,11 +7,6 @@ export const types = {
   // 只有一頁（一步驟）的表單
   work: 'work',
   salary: 'salary',
-
-  // 一頁一題式（類似 typeform）的表單
-  interviewTypeForm: 'interviewTypeForm',
-  salaryTypeForm: 'salaryTypeForm',
-  workTypeForm: 'workTypeForm',
 };
 
 /**

@@ -209,7 +209,7 @@ class InterviewForm extends React.Component {
 
     /** Send EnterForm event to Amplitude */
     const { pathname } = this.props.location;
-    const { prevPathname } = prevProps.location;
+    const { pathname: prevPathname } = prevProps.location;
     if (pathname !== prevPathname) {
       const pathnameStepMap = {
         '/share/interview/step1': 1,
