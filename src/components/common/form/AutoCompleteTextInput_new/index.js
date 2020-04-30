@@ -46,20 +46,6 @@ const useKeyNavigation = (index, setIndex, isEnabled, target) => {
   );
 };
 
-const useEnterConfirm = (confirm, onEnter, isEnabled, target) => {
-  useKey(
-    'Enter',
-    e => {
-      if (isEnabled) {
-        confirm();
-      }
-      onEnter(e);
-    },
-    { target },
-    [confirm, onEnter, isEnabled],
-  );
-};
-
 const useScrollToItem = itemRef => {
   useEffect(() => {
     if (itemRef) {
@@ -144,12 +130,15 @@ const AutoCompleteTextInput = forwardRef(
       inputRef.current,
     );
 
-    useEnterConfirm(
-      selectHighlightedItem,
-      onEnter,
-      isMenuOpen,
-      inputRef.current,
-    );
+    const handleEnter = useCallback(e => {
+      if (isMenuOpen) {
+        selectHighlightedItem();
+      } else if (onEnter) {
+        onEnter(e);
+      }
+    });
+
+    useKey('Enter', handleEnter, { target: inputRef.current }, [handleEnter]);
 
     useEffect(resetHighlightedIndex, [resetHighlightedIndex, value]);
 
