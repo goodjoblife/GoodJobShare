@@ -70,8 +70,8 @@ const useQuestion = (question, draft) => {
     } = question;
     return [
       true,
-      header,
-      footer,
+      typeof header === 'function' ? header(draft) : header,
+      typeof footer === 'function' ? footer(draft) : footer,
       dataKey,
       defaultValue,
       required,
@@ -162,27 +162,13 @@ const FormBuilder = ({
     return null;
   }
 
-  let currentHeader = null;
-  if (header) {
-    currentHeader = typeof header === 'function' ? header(draft) : header;
-  } else if (commonHeader) {
-    currentHeader = commonHeader;
-  }
-
-  let currentFooter = null;
-  if (footer) {
-    currentFooter = typeof footer === 'function' ? footer(draft) : footer;
-  } else if (commonFooter) {
-    currentFooter = commonFooter;
-  }
-
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <button className={styles.closeBtn} onClick={onClose}>
           <X className={styles.icon} />
         </button>
-        {currentHeader}
+        {header || commonHeader}
       </div>
       <div className={styles.body}>
         <AnimatedPager className={styles.pager} page={page}>
@@ -248,7 +234,7 @@ const FormBuilder = ({
           <SubmissionBlock onSubmit={handleSubmit} />
         </div>
       </div>
-      <div>{currentFooter}</div>
+      <div>{footer || commonFooter}</div>
     </div>
   );
 };
