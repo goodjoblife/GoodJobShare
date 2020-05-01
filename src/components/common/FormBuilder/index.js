@@ -73,9 +73,8 @@ const useQuestion = (question, draft) => {
       typeof header === 'function' ? header(draft) : header,
       typeof footer === 'function' ? footer(draft) : footer,
       dataKey,
-      defaultValue,
-      required,
       findWarningAgainstValue(draft[dataKey], warning, validator),
+      !required && R.equals(draft[dataKey], defaultValue),
     ];
   } else {
     return [false];
@@ -109,9 +108,8 @@ const FormBuilder = ({
     header,
     footer,
     dataKey,
-    defaultValue,
-    required,
     warning,
+    skippable,
   ] = useQuestion(questions[page], draft);
 
   const [isWarningShown, setWarningShown] = useState(false);
@@ -212,7 +210,7 @@ const FormBuilder = ({
           </div>
           <div className={styles.navigator}>
             <NavigatorBlock
-              skippable={!required && R.equals(draft[dataKey], defaultValue)}
+              skippable={skippable}
               onPrevious={() => {
                 if (onPrev) onPrev();
                 warnBeforeSetPage(page - 1);
