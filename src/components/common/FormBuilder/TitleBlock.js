@@ -4,14 +4,15 @@ import cn from 'classnames';
 
 import styles from './TitleBlock.module.css';
 
-const defaultFormatter = ({ title, page }) => `${page + 1}. ${title}`;
+const defaultFormatter = ({ title, page, required }) =>
+  `${page + 1}. ${title}${!required ? '（選填）' : ''}`;
 
 const TitleBlock = ({ page, title, required, description }) => (
   <div>
     <div className={cn(styles.title, { [styles.necessary]: required })}>
       {typeof title === 'function'
-        ? title({ page })
-        : defaultFormatter({ title, page })}
+        ? title({ page, required })
+        : defaultFormatter({ title, page, required })}
     </div>
     <div className={styles.description}>{description}</div>
   </div>

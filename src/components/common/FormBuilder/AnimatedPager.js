@@ -1,18 +1,13 @@
-import React, { Children, useState, useCallback } from 'react';
+import React, { Children } from 'react';
 import PropTypes from 'prop-types';
 import { childrenOfType } from 'airbnb-prop-types';
+import { useMeasure } from 'react-use';
 import cn from 'classnames';
 
 import styles from './AnimatedPager.module.css';
 
 const AnimatedPager = ({ page, children, ...props }) => {
-  const [frameWidth, setFrameWidth] = useState(0);
-  const handleRef = useCallback(node => {
-    if (node) {
-      setFrameWidth(node.getBoundingClientRect().width);
-    }
-  }, []);
-
+  const [handleRef, { width: frameWidth }] = useMeasure();
   return (
     <div ref={handleRef} className={cn(styles.frame, props.className)}>
       {Children.map(children, ({ props: { children } }) => (

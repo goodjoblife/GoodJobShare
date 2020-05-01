@@ -31,6 +31,10 @@
   & + .label {
     margin-top: 9px;
   }
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .button {

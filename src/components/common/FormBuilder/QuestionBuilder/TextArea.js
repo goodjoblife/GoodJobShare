@@ -10,11 +10,12 @@ const Textarea = ({
   description,
   dataKey,
   required,
+  defaultValue,
   value,
   onChange,
+  footnote,
   warning,
   validator,
-  minLength,
 }) => (
   <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
     <textarea
@@ -22,23 +23,24 @@ const Textarea = ({
       value={value}
       onChange={e => onChange(e.target.value)}
     />
-    <p className={cn(styles.count, { [styles.warning]: !!warning })}>
-      {warning}
+    <p className={cn(styles.footnote, { [styles.warning]: !!warning })}>
+      {warning || (typeof footnote === 'function' ? footnote(value) : footnote)}
     </p>
   </div>
 );
 
 Textarea.propTypes = {
   page: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
+  defaultValue: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  footnote: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   warning: PropTypes.string,
   validator: PropTypes.func,
-  minLength: PropTypes.number.isRequired,
 };
 
 export default Textarea;

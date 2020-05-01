@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
-  number,
   string,
   bool,
   func,
@@ -9,6 +8,7 @@ import {
   oneOfType,
   element,
   arrayOf,
+  any,
 } from 'prop-types';
 import cn from 'classnames';
 import R from 'ramda';
@@ -57,6 +57,30 @@ const findIfQuestionsAcceptDraft = draft =>
     ),
   );
 
+const useQuestion = (question, draft) => {
+  if (question) {
+    const {
+      header,
+      footer,
+      dataKey,
+      defaultValue,
+      required,
+      warning,
+      validator,
+    } = question;
+    return [
+      true,
+      typeof header === 'function' ? header(draft) : header,
+      typeof footer === 'function' ? footer(draft) : footer,
+      dataKey,
+      findWarningAgainstValue(draft[dataKey], warning, validator),
+      !required && R.equals(draft[dataKey], defaultValue),
+    ];
+  } else {
+    return [false];
+  }
+};
+
 const FormBuilder = ({
   open,
   header: commonHeader,
@@ -79,11 +103,14 @@ const FormBuilder = ({
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
 
-  let header;
-  let footer;
-  let dataKey;
-  let warning;
-  let shouldRenderNothing = false;
+  const [
+    shouldRenderQuestion,
+    header,
+    footer,
+    dataKey,
+    warning,
+    skippable,
+  ] = useQuestion(questions[page], draft);
 
   const [isWarningShown, setWarningShown] = useState(false);
 
@@ -112,20 +139,6 @@ const FormBuilder = ({
     }
   }, [open, resetDraft, setPage]);
 
-  const question = questions[page];
-  if (question) {
-    header = question.header;
-    footer = question.footer;
-    dataKey = question.dataKey;
-    warning = findWarningAgainstValue(
-      draft[dataKey],
-      question.warning,
-      question.validator,
-    );
-  } else {
-    shouldRenderNothing = true;
-  }
-
   const warnBeforeSetPage = useCallback(
     page => {
       setWarningShown(true);
@@ -143,7 +156,7 @@ const FormBuilder = ({
     setWarningShown(false);
   }, [page]);
 
-  if (shouldRenderNothing) {
+  if (!shouldRenderQuestion) {
     return null;
   }
 
@@ -163,7 +176,11 @@ const FormBuilder = ({
                 <div>
                   <TitleBlock
                     page={i}
-                    title={restOptions.title}
+                    title={
+                      typeof restOptions.title === 'function'
+                        ? restOptions.title(draft)
+                        : restOptions.title
+                    }
                     description={restOptions.description}
                     required={restOptions.required}
                   />
@@ -175,8 +192,10 @@ const FormBuilder = ({
                     value={draft[restOptions.dataKey]}
                     onChange={handleDraftChange(restOptions.dataKey)}
                     onConfirm={() => {
-                      if (onNext) onNext();
-                      warnBeforeSetPage(i + 1);
+                      if (i < questions.length - 1) {
+                        if (onNext) onNext();
+                        warnBeforeSetPage(i + 1);
+                      }
                     }}
                     warning={isWarningShown ? warning : null}
                   />
@@ -191,6 +210,7 @@ const FormBuilder = ({
           </div>
           <div className={styles.navigator}>
             <NavigatorBlock
+              skippable={skippable}
               onPrevious={() => {
                 if (onPrev) onPrev();
                 warnBeforeSetPage(page - 1);
@@ -223,19 +243,22 @@ FormBuilder.propTypes = {
   footer: oneOfType([string, element]),
   questions: arrayOf(
     shape({
-      header: oneOfType([string, element]),
-      footer: oneOfType([string, element]),
+      header: oneOfType([string, element, func]),
+      footer: oneOfType([string, element, func]),
       title: oneOfType([string, func]).isRequired,
       description: string,
       type: oneOf(availableTypes).isRequired,
       dataKey: string.isRequired,
+      defaultValue: any,
       required: bool,
       warning: oneOfType([func, string]),
       validator: func,
+      onSelect: func,
+      search: func,
       placeholder: string,
-      minLength: number,
+      footnote: oneOfType([string, func]),
       options: arrayOf(string),
-      maxRating: number,
+      ratingLabels: arrayOf(string.isRequired),
       renderCustomizedQuestion: func,
     }),
   ).isRequired,
