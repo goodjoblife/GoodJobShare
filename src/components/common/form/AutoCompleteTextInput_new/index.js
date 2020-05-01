@@ -140,13 +140,16 @@ const AutoCompleteTextInput = forwardRef(
       inputRef.current,
     );
 
-    const handleEnter = useCallback(e => {
-      if (isMenuOpen && hasHighlight) {
-        selectHighlightedItem();
-      } else if (onEnter) {
-        onEnter(e);
-      }
-    });
+    const handleEnter = useCallback(
+      e => {
+        if (isMenuOpen && hasHighlight) {
+          selectHighlightedItem();
+        } else if (onEnter) {
+          onEnter(e);
+        }
+      },
+      [hasHighlight, isMenuOpen, onEnter, selectHighlightedItem],
+    );
 
     useKey('Enter', handleEnter, { target: inputRef.current }, [handleEnter]);
 
