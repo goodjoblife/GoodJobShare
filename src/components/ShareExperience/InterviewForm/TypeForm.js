@@ -174,9 +174,10 @@ const questions = [
     type: 'select-text',
     dataKey: 'salary',
     defaultValue: [null, ''],
-    validator: ([type, amount]) => (!!type ? !!amount : !amount),
+    validator: ([type, amount]) =>
+      !!type ? !!amount && !isNaN(Number(amount.replace(/,/g, ''))) : !amount,
     warning: ([type, amount]) =>
-      !!type && !amount
+      !!type && (!amount || isNaN(Number(amount.replace(/,/g, ''))))
         ? '需填寫薪資'
         : !type && !!amount
         ? '需選擇薪水類型'
