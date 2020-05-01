@@ -2,10 +2,17 @@ import React, { useState, useRef } from 'react';
 import { useDebounce } from 'react-use';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import R from 'ramda';
 
 import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput_new';
 import useComposition from '../useComposition';
 import styles from './Text.module.css';
+
+const notEquals = x =>
+  R.compose(
+    R.not,
+    R.equals(x),
+  );
 
 const Text = ({
   page,
@@ -37,6 +44,7 @@ const Text = ({
       if (value && search) {
         try {
           items = await search(value);
+          items = items.filter(notEquals(value));
         } catch (err) {
           items = [];
         }
