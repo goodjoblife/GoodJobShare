@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
+import { useDispatch } from 'react-redux';
+
 import FormBuilder from 'common/FormBuilder';
-import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
-import Footer from '../common/TypeFormFooter';
-import { getCompaniesSearch } from '../../../apis/companySearchApi';
-import { getJobTitlesSearch } from '../../../apis/jobTitleSearchApi';
+import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
+import Footer from '../../common/TypeFormFooter';
+import { getCompaniesSearch } from '../../../../apis/companySearchApi';
+import { getJobTitlesSearch } from '../../../../apis/jobTitleSearchApi';
+import { createInterviewExperience } from '../../../../actions/experiences';
 
 const header = <Header title="請輸入你的一份面試經驗" />;
 const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
@@ -231,6 +234,14 @@ const questions = [
 ];
 
 const TypeForm = ({ open, onClose }) => {
+  const dispatch = useDispatch();
+  const handleSubmit = useCallback(async () => {
+    await dispatch(
+      createInterviewExperience({
+        body: {},
+      }),
+    );
+  }, [dispatch]);
   return (
     <FormBuilder
       open={open}
@@ -238,6 +249,7 @@ const TypeForm = ({ open, onClose }) => {
       questions={questions}
       header={header}
       footer={footer}
+      onSubmit={handleSubmit}
     />
   );
 };
