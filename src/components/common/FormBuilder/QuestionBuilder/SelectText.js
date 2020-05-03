@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
+import TextInput from 'common/form/TextInput';
 import Select from 'common/form/Select';
 import styles from './SelectText.module.css';
-import textStyles from './Text.module.css';
 
 const SelectText = ({
   page,
@@ -15,6 +15,7 @@ const SelectText = ({
   defaultValue,
   value: [selected, text],
   onChange,
+  onConfirm,
   warning,
   validator,
   placeholder,
@@ -29,11 +30,11 @@ const SelectText = ({
       />
       <div className={cn(styles.inputGroup, styles.text)}>
         <div className={styles.inputWrapper}>
-          <input
-            className={textStyles.textinput}
+          <TextInput
             placeholder={placeholder}
             value={text}
             onChange={e => onChange([selected, e.target.value])}
+            onEnter={onConfirm}
           />
         </div>
         <div className={cn(styles.suffixLabel, 'pS')}>元</div>
@@ -52,6 +53,7 @@ SelectText.propTypes = {
   defaultValue: PropTypes.array.isRequired,
   value: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
   validator: PropTypes.func,
   placeholder: PropTypes.string,

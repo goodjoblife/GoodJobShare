@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import Scrollable from '../Scrollable';
+import TextInput from 'common/form/TextInput';
 import styles from './TextList.module.css';
-import textStyles from './Text.module.css';
 
 const TextList = ({
   page,
@@ -42,9 +42,8 @@ const TextList = ({
             <div className={styles.item} key={i}>
               <div className={styles.no}>{i + 1}.</div>
               <div className={styles.inputWrapper}>
-                <input
+                <TextInput
                   ref={ref}
-                  className={textStyles.textinput}
                   type="text"
                   placeholder={placeholder}
                   value={value}

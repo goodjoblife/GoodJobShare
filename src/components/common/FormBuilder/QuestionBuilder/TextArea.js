@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
+import TextAreaInput from 'common/form/TextArea';
 import styles from './TextArea.module.css';
 
 const Textarea = ({
@@ -18,7 +19,8 @@ const Textarea = ({
   validator,
 }) => (
   <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
-    <textarea
+    <TextAreaInput
+      wrapperClassName={styles.wrapper}
       className={styles.textarea}
       value={value}
       onChange={e => onChange(e.target.value)}

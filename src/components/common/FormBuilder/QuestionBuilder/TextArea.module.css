@@ -7,14 +7,13 @@
   left: 0;
   right: 0;
 
-  .textarea {
+  .wrapper {
     flex: 1;
-    border: solid 1px #bdbdbd;
-    background-color: #ffffff;
-    resize: none;
-    padding: 13px 15px;
-    font-size: 16px;
-    line-height: normal;
+
+    .textarea {
+      height: 100%;
+      resize: none;
+    }
   }
 
   &.hasWarning .textarea {

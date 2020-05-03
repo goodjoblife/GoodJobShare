@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Autocomplete from 'react-autocomplete';
 
-import styles from './TextInput.module.css';
+import styles from './TextInput/TextInput.module.css';
 
 const renderItem = (item, isHighlighted) => (
   <div

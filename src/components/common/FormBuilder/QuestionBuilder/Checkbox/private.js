@@ -1,15 +1,13 @@
 import React, { useCallback, useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
-import { useKey } from 'react-use';
 import R from 'ramda';
 import cn from 'classnames';
 
 import Scrollable from '../../Scrollable';
 import useDebouncedConfirm from '../../useDebouncedConfirm';
-import useComposition from '../../useComposition';
 import styles from './private.module.css';
-import textStyles from '../Text.module.css';
+import TextInput from 'common/form/TextInput';
 
 export const Wrapper = ({ warning, children }) => (
   <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
@@ -137,21 +135,6 @@ export const BlockSelectElse = ({
       elseRef.current.focus();
     }
   }, [hasElse]);
-  const [
-    isComposing,
-    handleCompositionStart,
-    handleCompositionEnd,
-  ] = useComposition();
-  useKey(
-    'Enter',
-    e => {
-      if (!isComposing) {
-        onConfirm();
-      }
-    },
-    { target: elseRef.current },
-    [isComposing, onConfirm],
-  );
   return [
     <BlockSelect
       key="select"
@@ -163,16 +146,15 @@ export const BlockSelectElse = ({
       options={options}
       multiple={multiple}
     />,
-    <input
+    <TextInput
       key="else"
       ref={elseRef}
-      className={cn(textStyles.textinput, styles.label, {
+      wrapperClassName={cn(styles.label, {
         [styles.hidden]: !hasElse,
       })}
       value={elseText}
-      onCompositionStart={handleCompositionStart}
-      onCompositionEnd={handleCompositionEnd}
       onChange={handleElseChange}
+      onEnter={onConfirm}
       placeholder={placeholder}
     />,
   ];

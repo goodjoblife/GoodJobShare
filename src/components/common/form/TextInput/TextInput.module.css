@@ -1,8 +1,19 @@
-@value main-yellow, border-gray, main-gray, warning-red, INPUT_HEIGHT, main-gray from "../variables.module.css";
+@value main-yellow, border-gray, main-gray, warning-red, INPUT_HEIGHT, main-gray from "../../variables.module.css";
+
+.wrapper {
+  position: relative;
+
+  .menu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 99;
+  }
+}
 
 .input {
   width: 100%;
-  padding: calc(INPUT_HEIGHT / 2) 16px;
+  padding: 13px 16px;
   height: INPUT_HEIGHT;
   line-height: calc(INPUT_HEIGHT / 2);
   border: 1px solid main-gray;
@@ -45,4 +56,30 @@
 }
 :-ms-input-placeholder {
   color: main-gray;
+}
+
+/* Autocomplete */
+
+.menu {
+  display: none;
+  border: 1px solid #b4b4b4;
+  max-height: 150px;
+  overflow-y: scroll;
+  background: #fff;
+
+  &.visible {
+    display: block;
+  }
+}
+
+.item {
+  background: white;
+  padding: 5px 10px;
+  color: #222;
+
+  &.active,
+  &:hover {
+    background: lightgray;
+    color: black;
+  }
 }
