@@ -233,15 +233,70 @@ const questions = [
   },
 ];
 
+const bodyFromDraft = draft => ({
+  company: { id: '', query: draft.companyName },
+  region: draft.region,
+  job_title: draft.jobTitle,
+  title: '面試經驗分享',
+  sections: [
+    {
+      subtitle: '面試過程',
+      content: draft.interviewContent,
+    },
+    {
+      subtitle: '給其他面試者的中肯建議',
+      content: draft.suggestions,
+    },
+  ],
+  experience_in_year:
+    draft.experienceInYear === '不到 1 年'
+      ? 0
+      : parseInt(draft.experienceInYear, 10),
+  education: '',
+  email: '',
+  interview_time: {
+    year: draft.interviewTime[0],
+    month: draft.interviewTime[1],
+  },
+  interview_result:
+    draft.interviewResult[0] === '其他'
+      ? draft.interviewResult[1]
+      : draft.interviewResult[0],
+  interview_qas: draft.interviewQas.map(question => ({ question, answer: '' })),
+  interview_sensitive_questions: [
+    ...draft.sensitiveQuestions[0].filter(question => question !== '其他'),
+    ...(draft.sensitiveQuestions[0].indexOf('其他') >= 0
+      ? []
+      : [draft.sensitiveQuestions[1]]),
+  ],
+  salary: {
+    type:
+      draft.salary[0] === '年薪'
+        ? 'year'
+        : draft.salary[0] === '月薪'
+        ? 'month'
+        : draft.salary[0] === '日薪'
+        ? 'day'
+        : draft.salary[0] === '時薪'
+        ? 'hour'
+        : '',
+    amount: parseInt(draft.salary[1], 10),
+  },
+  overall_rating: draft.overallRating,
+});
+
 const TypeForm = ({ open, onClose }) => {
   const dispatch = useDispatch();
-  const handleSubmit = useCallback(async () => {
-    await dispatch(
-      createInterviewExperience({
-        body: {},
-      }),
-    );
-  }, [dispatch]);
+  const handleSubmit = useCallback(
+    async draft => {
+      await dispatch(
+        createInterviewExperience({
+          body: bodyFromDraft(draft),
+        }),
+      );
+    },
+    [dispatch],
+  );
   return (
     <FormBuilder
       open={open}
