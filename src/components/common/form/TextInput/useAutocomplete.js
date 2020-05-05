@@ -149,9 +149,10 @@ export default (
     [selectItemAt],
   );
 
-  return [
+  return {
     isMenuOpen,
     highlightedIndex,
+    hasHighlight,
     handleFocus,
     handleBlur,
     handleEnter,
@@ -159,5 +160,5 @@ export default (
     handleMouseEnterItem,
     handleMouseLeaveItem,
     handleMouseClickItem,
-  ];
+  };
 };
