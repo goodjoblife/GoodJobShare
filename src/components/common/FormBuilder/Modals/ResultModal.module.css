@@ -18,6 +18,11 @@
   font-size: 16px;
   font-weight: 600;
   color: #ec7910;
+  display: block;
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .description {
@@ -25,6 +30,7 @@
   margin-bottom: 44px;
   text-align: center;
   font-size: 16px;
+  line-height: normal;
   text-align: center;
   color: #000000;
 }

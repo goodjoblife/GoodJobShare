@@ -51,7 +51,7 @@ Modal.propTypes = {
   children: PropTypes.node,
   isOpen: PropTypes.bool,
   hasClose: PropTypes.bool,
-  close: PropTypes.func,
+  close: PropTypes.func.isRequired,
   size: PropTypes.string,
   onClickOutside: PropTypes.func.isRequired,
 };

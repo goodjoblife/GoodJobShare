@@ -1,9 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 import { useDispatch } from 'react-redux';
 
 import FormBuilder from 'common/FormBuilder';
+import ResultModal from 'common/FormBuilder/Modals/ResultModal';
 import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
 import Footer from '../../common/TypeFormFooter';
 import { getCompaniesSearch } from '../../../../apis/companySearchApi';
@@ -286,26 +287,56 @@ const bodyFromDraft = draft => ({
 });
 
 const TypeForm = ({ open, onClose }) => {
+  const [submitStatus, setSubmitStatus] = useState('unsubmitted');
+  const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
   const handleSubmit = useCallback(
     async draft => {
-      await dispatch(
-        createInterviewExperience({
-          body: bodyFromDraft(draft),
-        }),
-      );
+      try {
+        setSubmitStatus('submitting');
+        await dispatch(
+          createInterviewExperience({
+            body: bodyFromDraft(draft),
+          }),
+        );
+        setSubmitStatus('success');
+      } catch (error) {
+        setErrorMessage(error.message);
+        setSubmitStatus('error');
+      }
     },
     [dispatch],
   );
   return (
-    <FormBuilder
-      open={open}
-      onClose={onClose}
-      questions={questions}
-      header={header}
-      footer={footer}
-      onSubmit={handleSubmit}
-    />
+    <Fragment>
+      <FormBuilder
+        open={open}
+        onClose={onClose}
+        questions={questions}
+        header={header}
+        footer={footer}
+        onSubmit={handleSubmit}
+      />
+      <ResultModal
+        isOpen={submitStatus === 'success'}
+        title="上傳成功"
+        subtitle="你已解鎖全站資訊 48 小時"
+        description="感謝你分享你的資訊，台灣的職場因為有你而變得更好！"
+        close={() => {
+          setSubmitStatus('unsubmitted');
+          onClose();
+        }}
+      />
+      <ResultModal
+        isOpen={submitStatus === 'error'}
+        title="上傳失敗"
+        description={errorMessage}
+        close={() => {
+          setSubmitStatus('unsubmitted');
+          onClose();
+        }}
+      />
+    </Fragment>
   );
 };
 
