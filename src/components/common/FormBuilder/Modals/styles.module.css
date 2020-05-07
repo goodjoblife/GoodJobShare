@@ -1,4 +1,6 @@
 .content {
+  display: flex;
+  flex-direction: column;
   padding: 40px 18px;
 }
 
@@ -25,12 +27,34 @@
   }
 }
 
-.description {
+.description,
+.confirm {
   margin-top: 14px;
-  margin-bottom: 44px;
   text-align: center;
   font-size: 16px;
   line-height: normal;
   text-align: center;
   color: #000000;
+}
+
+.description {
+  margin-bottom: 44px;
+}
+
+.confirm {
+  margin-bottom: 18px;
+}
+
+.btn {
+  height: 45px;
+  background-color: #000000;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.86px;
+  text-align: center;
+  color: #ffffff;
+
+  & + & {
+    margin-top: 8px;
+  }
 }

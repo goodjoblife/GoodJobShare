@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import FormBuilder from 'common/FormBuilder';
 import ResultModal from 'common/FormBuilder/Modals/ResultModal';
+import ConfirmCloseModal from 'common/FormBuilder/Modals/ConfirmCloseModal';
 import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
 import Footer from '../../common/TypeFormFooter';
 import { getCompaniesSearch } from '../../../../apis/companySearchApi';
@@ -311,7 +312,7 @@ const TypeForm = ({ open, onClose }) => {
     <Fragment>
       <FormBuilder
         open={open}
-        onClose={onClose}
+        onClose={() => setSubmitStatus('quitting')}
         questions={questions}
         header={header}
         footer={footer}
@@ -334,6 +335,17 @@ const TypeForm = ({ open, onClose }) => {
         close={() => {
           setSubmitStatus('unsubmitted');
           onClose();
+        }}
+      />
+      <ConfirmCloseModal
+        isOpen={submitStatus === 'quitting'}
+        close={() => setSubmitStatus('unsubmitted')}
+        onClose={() => {
+          setSubmitStatus('unsubmitted');
+          onClose();
+        }}
+        onShareOthers={() => {
+          // TODO
         }}
       />
     </Fragment>

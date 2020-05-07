@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import Modal from 'common/Modal';
-import styles from './ResultModal.module.css';
+import styles from './styles.module.css';
 
 const ResultModal = ({ title, subtitle, description, ...props }) => (
   <Modal {...props} size="xs" contentClassName={styles.content}>
