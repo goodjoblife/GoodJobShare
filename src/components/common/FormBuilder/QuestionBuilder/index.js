@@ -9,6 +9,7 @@ import {
   oneOfType,
   arrayOf,
 } from 'prop-types';
+import cn from 'classnames';
 
 import Text from './Text';
 import TextArea from './TextArea';
@@ -75,72 +76,79 @@ const useQuestionNode = ({
   };
   switch (type) {
     case 'text':
-      return (
+      return [
+        false,
         <Text
           {...commonProps}
           placeholder={placeholder}
           onSelect={onSelect}
           search={search}
-        />
-      );
+        />,
+      ];
     case 'textarea':
-      return <TextArea {...commonProps} footnote={footnote} />;
+      return [true, <TextArea {...commonProps} footnote={footnote} />];
     case 'radio':
-      return <Radio {...commonProps} options={options} />;
+      return [true, <Radio {...commonProps} options={options} />];
     case 'radio-else':
-      return (
+      return [
+        true,
         <RadioElse
           {...commonProps}
           options={options}
           placeholder={placeholder}
-        />
-      );
+        />,
+      ];
     case 'checkbox':
-      return <Checkbox {...commonProps} options={options} />;
+      return [true, <Checkbox {...commonProps} options={options} />];
     case 'checkbox-else':
-      return (
+      return [
+        true,
         <CheckboxElse
           {...commonProps}
           options={options}
           placeholder={placeholder}
-        />
-      );
+        />,
+      ];
     case 'rating':
-      return <Rating {...commonProps} ratingLabels={ratingLabels} />;
+      return [false, <Rating {...commonProps} ratingLabels={ratingLabels} />];
     case 'file':
-      return <File {...commonProps} />;
+      return [false, <File {...commonProps} />];
     case 'date':
-      return <Date {...commonProps} />;
+      return [false, <Date {...commonProps} />];
     case 'select-text':
-      return (
+      return [
+        true,
         <SelectText
           {...commonProps}
           placeholder={placeholder}
           options={options}
-        />
-      );
+        />,
+      ];
     case 'text-list':
-      return <TextList {...commonProps} placeholder={placeholder} />;
+      return [true, <TextList {...commonProps} placeholder={placeholder} />];
     case 'customized':
       if (renderCustomizedQuestion) {
-        return renderCustomizedQuestion({
-          page,
-          title,
-          description,
-          type,
-          dataKey,
-          required,
-          value,
-          onChange,
-          onConfirm,
-          warning,
-          validator,
-        });
+        return [
+          false,
+          renderCustomizedQuestion({
+            page,
+            title,
+            description,
+            type,
+            dataKey,
+            required,
+            value,
+            onChange,
+            onConfirm,
+            warning,
+            validator,
+          }),
+        ];
       } else {
-        return null;
+        return [false, null];
       }
     default:
-      return null;
+      return [false, null];
   }
 };
 
@@ -165,7 +173,7 @@ const QuestionBuilder = ({
   ratingLabels,
   renderCustomizedQuestion,
 }) => {
-  const questionNode = useQuestionNode({
+  const [shouldFillPage, questionNode] = useQuestionNode({
     page,
     title,
     description,
@@ -186,17 +194,32 @@ const QuestionBuilder = ({
     ratingLabels,
     renderCustomizedQuestion,
   });
-  return (
-    <div className={styles.question}>
-      <TitleBlock
-        page={page}
-        title={title}
-        description={description}
-        required={required}
-      />
-      <Scrollable className={styles.answer}>{questionNode}</Scrollable>
-    </div>
-  );
+
+  if (shouldFillPage) {
+    return (
+      <div className={cn(styles.question, styles.fill)}>
+        <TitleBlock
+          page={page}
+          title={title}
+          description={description}
+          required={required}
+        />
+        <Scrollable className={styles.answer}>{questionNode}</Scrollable>
+      </div>
+    );
+  } else {
+    return (
+      <div className={styles.question}>
+        <TitleBlock
+          page={page}
+          title={title}
+          description={description}
+          required={required}
+        />
+        {questionNode}
+      </div>
+    );
+  }
 };
 
 QuestionBuilder.propTypes = {
