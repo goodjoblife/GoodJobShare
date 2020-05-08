@@ -72,7 +72,7 @@ const TextInput = forwardRef(
       handleEnter,
       handleItemRef,
       handleMouseEnterItem,
-      handleMouseLeaveOption,
+      handleMouseLeaveItem,
       handleMouseClickItem,
     } = useAutocomplete(
       {
@@ -118,7 +118,7 @@ const TextInput = forwardRef(
               active={highlightedIndex === i}
               onClick={e => handleMouseClickItem(i)}
               onMouseEnter={e => handleMouseEnterItem(i)}
-              onMouseLeave={e => handleMouseLeaveOption(i)}
+              onMouseLeave={e => handleMouseLeaveItem(i)}
             >
               {autocompleteItemLabelSelector(item)}
             </AutoCompleteOption>
