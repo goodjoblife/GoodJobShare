@@ -8,7 +8,18 @@ const keyByProp = prop =>
   );
 
 const toDraft = R.compose(
-  R.map(R.prop('defaultValue')),
+  R.map(
+    R.compose(
+      R.when(
+        R.compose(
+          R.equals('Function'),
+          R.type,
+        ),
+        R.call,
+      ),
+      R.prop('defaultValue'),
+    ),
+  ),
   keyByProp('dataKey'),
 );
 

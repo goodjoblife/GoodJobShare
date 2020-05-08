@@ -16,7 +16,7 @@ const CallToActionBlock = ({ history }) => {
       if (companyName) {
         history.push(
           true
-            ? '?share=interview'
+            ? `?share=interview&companyName=${companyName}`
             : `/share/interview?companyName=${companyName}`,
         ); // TODO: A/B
       }
