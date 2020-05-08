@@ -19,6 +19,10 @@ import Date from './Date';
 import SelectText from './SelectText';
 import TextList from './TextList';
 
+import TitleBlock from '../TitleBlock';
+import Scrollable from '../Scrollable';
+import styles from './styles.module.css';
+
 export const availableTypes = [
   'text',
   'textarea',
@@ -34,7 +38,7 @@ export const availableTypes = [
   'customized',
 ];
 
-const QuestionBuilder = ({
+const useQuestionNode = ({
   page,
   title,
   description,
@@ -138,6 +142,61 @@ const QuestionBuilder = ({
     default:
       return null;
   }
+};
+
+const QuestionBuilder = ({
+  page,
+  title,
+  description,
+  type,
+  dataKey,
+  required,
+  defaultValue,
+  value,
+  onChange,
+  onConfirm,
+  onSelect,
+  search,
+  warning,
+  validator,
+  placeholder,
+  footnote,
+  options,
+  ratingLabels,
+  renderCustomizedQuestion,
+}) => {
+  const questionNode = useQuestionNode({
+    page,
+    title,
+    description,
+    type,
+    dataKey,
+    required,
+    defaultValue,
+    value,
+    onChange,
+    onConfirm,
+    onSelect,
+    search,
+    warning,
+    validator,
+    placeholder,
+    footnote,
+    options,
+    ratingLabels,
+    renderCustomizedQuestion,
+  });
+  return (
+    <div className={styles.question}>
+      <TitleBlock
+        page={page}
+        title={title}
+        description={description}
+        required={required}
+      />
+      <Scrollable className={styles.answer}>{questionNode}</Scrollable>
+    </div>
+  );
 };
 
 QuestionBuilder.propTypes = {

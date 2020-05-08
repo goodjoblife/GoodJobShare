@@ -17,12 +17,10 @@ import X from 'common/icons/X';
 
 import QuestionBuilder, { availableTypes } from './QuestionBuilder';
 import useDraft from './useDraft';
-import TitleBlock from './TitleBlock';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
 import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
-import Scrollable from './Scrollable';
 import styles from './FormBuilder.module.css';
 
 const findWarningAgainstValue = (value, warning, validator) => {
@@ -172,35 +170,24 @@ const FormBuilder = ({
         <AnimatedPager className={styles.pager} page={page}>
           {questions.map(({ header, footer, ...restOptions }, i) => (
             <AnimatedPager.Page key={restOptions.dataKey}>
-              <div className={styles.question}>
-                <div>
-                  <TitleBlock
-                    page={i}
-                    title={
-                      typeof restOptions.title === 'function'
-                        ? restOptions.title(draft)
-                        : restOptions.title
-                    }
-                    description={restOptions.description}
-                    required={restOptions.required}
-                  />
-                </div>
-                <Scrollable className={styles.answer}>
-                  <QuestionBuilder
-                    {...restOptions}
-                    page={i}
-                    value={draft[restOptions.dataKey]}
-                    onChange={handleDraftChange(restOptions.dataKey)}
-                    onConfirm={() => {
-                      if (i < questions.length - 1) {
-                        if (onNext) onNext();
-                        warnBeforeSetPage(i + 1);
-                      }
-                    }}
-                    warning={isWarningShown ? warning : null}
-                  />
-                </Scrollable>
-              </div>
+              <QuestionBuilder
+                {...restOptions}
+                page={i}
+                title={
+                  typeof restOptions.title === 'function'
+                    ? restOptions.title(draft)
+                    : restOptions.title
+                }
+                value={draft[restOptions.dataKey]}
+                onChange={handleDraftChange(restOptions.dataKey)}
+                onConfirm={() => {
+                  if (i < questions.length - 1) {
+                    if (onNext) onNext();
+                    warnBeforeSetPage(i + 1);
+                  }
+                }}
+                warning={isWarningShown ? warning : null}
+              />
             </AnimatedPager.Page>
           ))}
         </AnimatedPager>
