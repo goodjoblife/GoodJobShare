@@ -105,9 +105,10 @@
     top: 20px;
     bottom: 20px;
     width: 720px;
-  }
-  .body {
-    padding-left: 110px;
-    padding-right: 110px;
+
+    .body {
+      padding-left: 110px;
+      padding-right: 110px;
+    }
   }
 }
