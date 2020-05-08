@@ -244,6 +244,7 @@ const questions = [
       '感謝你分享面試心得，按下「送出」，馬上就可以解鎖全站 2 萬多筆資料哦！',
     type: 'customized',
     dataKey: '',
+    header: renderCompanyJobTitleHeader,
   },
 ];
 
