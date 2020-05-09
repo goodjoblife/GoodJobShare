@@ -7,8 +7,6 @@ import {
   type,
   length,
   replace,
-  isEmpty,
-  isNil,
   join,
   unapply,
   filter,
@@ -21,9 +19,11 @@ export const isArray = compose(
   type,
 );
 
-export const isNotArray = compose(
-  not,
-  isArray,
+export const isNot = curry((fn, value) =>
+  compose(
+    not,
+    fn,
+  )(value),
 );
 
 export const wordCount = compose(
@@ -35,22 +35,10 @@ export const parseSalaryAmount = compose(
   Number,
   replace(/,/g, ''),
 );
-export const isNotSalaryAmount = compose(
-  isNaN,
-  parseSalaryAmount,
-);
 export const isSalaryAmount = compose(
   not,
-  isNotSalaryAmount,
-);
-
-export const isNonEmpty = compose(
-  not,
-  isEmpty,
-);
-export const isNonNil = compose(
-  not,
-  isNil,
+  isNaN,
+  parseSalaryAmount,
 );
 
 export const greaterThan = lt;

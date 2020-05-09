@@ -51,17 +51,14 @@ import {
 } from './constants';
 import {
   isArray,
-  isNotArray,
   wordCount,
-  isNonEmpty,
-  isNonNil,
   isSalaryAmount,
-  isNotSalaryAmount,
   parseSalaryAmount,
   greaterThan,
   greaterThanOrEqualTo,
   joinCompact,
   evolve,
+  isNot,
 } from './utils';
 
 const header = <Header title="請輸入你的一份面試經驗" />;
@@ -81,7 +78,7 @@ const questions = [
     dataKey: DATA_KEY_COMPANY_NAME,
     defaultValue: '',
     required: true,
-    validator: isNonEmpty,
+    validator: isNot(isEmpty),
     warning: '請填寫公司名稱',
     placeholder: 'ＯＯ 股份有限公司',
     search: value =>
@@ -95,11 +92,11 @@ const questions = [
     dataKey: DATA_KEY_JOB_TITLE,
     defaultValue: '',
     required: true,
-    validator: isNonEmpty,
+    validator: isNot(isEmpty),
     warning: '請填寫職稱',
     placeholder: '軟體工程師',
     search: value =>
-      getJobTitlesSearch({ key: value }).then(when(isNotArray, always([]))),
+      getJobTitlesSearch({ key: value }).then(when(isNot(isArray), always([]))),
   },
   {
     title: '什麼時候去面試的呢？',
@@ -107,7 +104,7 @@ const questions = [
     dataKey: DATA_KEY_DATE,
     defaultValue: [null, null],
     required: true,
-    validator: ([year, month]) => isNonNil(year) && isNonNil(month),
+    validator: ([year, month]) => isNot(isNil, year) && isNot(isNil, month),
     warning: ([year, month]) =>
       `需填寫面試${joinCompact(' 及 ')(
         isNil(year) && '年份',
@@ -121,7 +118,7 @@ const questions = [
     dataKey: DATA_KEY_REGION,
     defaultValue: null,
     required: true,
-    validator: isNonNil,
+    validator: isNot(isNil),
     warning: '需填寫面試地區',
     options: REGION_OPTIONS,
     header: renderCompanyJobTitleHeader,
@@ -133,8 +130,10 @@ const questions = [
     defaultValue: [null, ''],
     required: true,
     validator: ([selected, elseText]) =>
-      isNonNil(selected) &&
-      (equals(selected, last(RESULT_OPTIONS)) ? isNonEmpty(elseText) : true),
+      isNot(isNil, selected) &&
+      (equals(selected, last(RESULT_OPTIONS))
+        ? isNot(isEmpty, elseText)
+        : true),
     warning: '需填寫面試結果',
     options: RESULT_OPTIONS,
     placeholder: '輸入面試結果',
@@ -201,13 +200,13 @@ const questions = [
     dataKey: DATA_KEY_SALARY,
     defaultValue: [null, ''],
     validator: ([type, amount]) =>
-      isNonNil(type)
-        ? isNonEmpty(amount) && isSalaryAmount(amount)
+      isNot(isNil, type)
+        ? isNot(isEmpty, amount) && isSalaryAmount(amount)
         : isEmpty(amount),
     warning: ([type, amount]) =>
-      isNonNil(type) && (isEmpty(amount) || isNotSalaryAmount(amount))
+      isNot(isNil, type) && (isEmpty(amount) || isNot(isSalaryAmount(amount)))
         ? '需填寫薪資'
-        : isNil(type) && isNonEmpty(amount)
+        : isNil(type) && isNot(isEmpty, amount)
         ? '需選擇薪水類型'
         : null,
     options: keys(SALARY_TYPE_VALUE_BY_OPTION),
@@ -219,7 +218,7 @@ const questions = [
     type: 'text-list',
     dataKey: DATA_KEY_QUESTIONS,
     defaultValue: [],
-    validator: all(isNonEmpty),
+    validator: all(isNot(isEmpty)),
     warning: '需填寫面試問題內容',
     placeholder: '面試問題',
     header: renderCompanyJobTitleHeader,
@@ -230,7 +229,7 @@ const questions = [
     dataKey: DATA_KEY_SENSITIVE_QUESTIONS,
     defaultValue: [[], ''],
     validator: ([selected, elseText]) =>
-      !contains('其他', selected) || isNonEmpty(elseText),
+      !contains('其他', selected) || isNot(isEmpty, elseText),
     warning: ([selected, elseText]) =>
       contains(last(SENSITIVE_QUESTIONS_OPTIONS), selected) && isEmpty(elseText)
         ? '需填寫其他特殊問題的內容'
