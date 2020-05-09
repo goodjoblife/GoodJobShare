@@ -351,7 +351,6 @@ const TypeForm = ({ open, onClose }) => {
         description={errorMessage}
         close={() => {
           setSubmitStatus('unsubmitted');
-          onClose();
         }}
       />
       <ConfirmCloseModal
