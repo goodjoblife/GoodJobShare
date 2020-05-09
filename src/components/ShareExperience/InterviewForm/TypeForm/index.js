@@ -293,8 +293,11 @@ const bodyFromDraft = evolve({
   },
   salary: draft => {
     const [type, amount] = draft[DATA_KEY_SALARY];
+    if (!type && !amount) {
+      return undefined;
+    }
     return {
-      type: SALARY_TYPE_VALUE_BY_OPTION[type] || '',
+      type: SALARY_TYPE_VALUE_BY_OPTION[type],
       amount: parseSalaryAmount(amount),
     };
   },
