@@ -7,16 +7,15 @@ const keyByProp = prop =>
     R.map(R.converge(R.pair, [R.prop(prop), R.identity])),
   );
 
+const isFunction = R.compose(
+  R.equals('Function'),
+  R.type,
+);
+
 const toDraft = R.compose(
   R.map(
     R.compose(
-      R.when(
-        R.compose(
-          R.equals('Function'),
-          R.type,
-        ),
-        R.call,
-      ),
+      R.when(isFunction, R.call),
       R.prop('defaultValue'),
     ),
   ),
