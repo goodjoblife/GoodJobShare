@@ -116,6 +116,16 @@ export default ({
     [highlightedIndex, isMenuOpen, setHighlightedIndex],
   );
 
+  const handleEscape = useCallback(
+    e => {
+      if (isMenuOpen) {
+        e.preventDefault();
+        setMenuOpen(false);
+      }
+    },
+    [isMenuOpen],
+  );
+
   const handleMouseEnterItem = useCallback(
     i => {
       setIgnoreBlur(true);
@@ -147,6 +157,7 @@ export default ({
     handleEnter,
     handleArrowUp,
     handleArrowDown,
+    handleEscape,
     handleItemRef,
     handleMouseEnterItem,
     handleMouseLeaveItem,

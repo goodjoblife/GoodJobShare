@@ -72,6 +72,7 @@ const TextInput = forwardRef(
       handleEnter,
       handleArrowUp,
       handleArrowDown,
+      handleEscape,
       handleItemRef,
       handleMouseEnterItem,
       handleMouseLeaveItem,
@@ -88,6 +89,7 @@ const TextInput = forwardRef(
       {
         onArrowUp: handleArrowUp,
         onArrowDown: handleArrowDown,
+        onEscape: handleEscape,
       },
       inputRef,
     );
