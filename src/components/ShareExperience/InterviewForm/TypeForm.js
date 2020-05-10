@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
+import { parse } from 'qs';
+
 import FormBuilder from 'common/FormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
 import Footer from '../common/TypeFormFooter';
@@ -22,7 +24,16 @@ const questions = [
     title: '公司名稱',
     type: 'text',
     dataKey: 'companyName',
-    defaultValue: '',
+    defaultValue: () => {
+      const query =
+        typeof document === 'undefined'
+          ? {}
+          : parse(document.location.search, {
+              ignoreQueryPrefix: true,
+            });
+      const companyName = query.companyName || '';
+      return companyName;
+    },
     required: true,
     validator: value => value.length > 0,
     warning: '請填寫公司名稱',

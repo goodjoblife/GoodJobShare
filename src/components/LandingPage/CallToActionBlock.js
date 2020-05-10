@@ -14,7 +14,11 @@ const CallToActionBlock = ({ history }) => {
     e => {
       e.preventDefault();
       if (companyName) {
-        history.push(`/share/interview?companyName=${companyName}`);
+        history.push(
+          true
+            ? `?share=interview&companyName=${companyName}`
+            : `/share/interview?companyName=${companyName}`,
+        ); // TODO: A/B
       }
     },
     [companyName, history],
