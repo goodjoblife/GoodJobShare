@@ -4,6 +4,7 @@ import cn from 'classnames';
 
 import useEnterConfirm from './useEnterConfirm';
 import useAutocomplete from './useAutocomplete';
+import useKeyNavigation from './useKeyNavigation';
 import styles from './TextInput.module.css';
 
 const AutoCompleteMenu = ({ className, open, ...props }) => (
@@ -63,23 +64,30 @@ const TextInput = forwardRef(
       [ref],
     );
 
-    const [
+    const {
       isMenuOpen,
       highlightedIndex,
       handleFocus,
       handleBlur,
       handleEnter,
+      handleArrowUp,
+      handleArrowDown,
       handleItemRef,
       handleMouseEnterItem,
-      handleMouseLeaveOption,
+      handleMouseLeaveItem,
       handleMouseClickItem,
-    ] = useAutocomplete(
+    } = useAutocomplete({
+      value,
+      onFocus,
+      onBlur,
+      autocompleteItems,
+      onAutocompleteItemSelected,
+    });
+
+    useKeyNavigation(
       {
-        value,
-        onFocus,
-        onBlur,
-        autocompleteItems,
-        onAutocompleteItemSelected,
+        onArrowUp: handleArrowUp,
+        onArrowDown: handleArrowDown,
       },
       inputRef,
     );
@@ -117,7 +125,7 @@ const TextInput = forwardRef(
               active={highlightedIndex === i}
               onClick={e => handleMouseClickItem(i)}
               onMouseEnter={e => handleMouseEnterItem(i)}
-              onMouseLeave={e => handleMouseLeaveOption(i)}
+              onMouseLeave={e => handleMouseLeaveItem(i)}
             >
               {autocompleteItemLabelSelector(item)}
             </AutoCompleteOption>

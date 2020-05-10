@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useKey } from 'react-use';
 
 const useBoundedIndex = (bound, initialIndex) => {
   const [index, setIndex] = useState(initialIndex);
@@ -11,31 +10,6 @@ const useBoundedIndex = (bound, initialIndex) => {
   return [index, setBoundedIndex, resetIndex];
 };
 
-const useKeyNavigation = (index, setIndex, isEnabled, target) => {
-  useKey(
-    'ArrowUp',
-    e => {
-      if (isEnabled) {
-        e.preventDefault();
-        setIndex(index - 1);
-      }
-    },
-    { target },
-    [isEnabled, index, setIndex],
-  );
-  useKey(
-    'ArrowDown',
-    e => {
-      if (isEnabled) {
-        e.preventDefault();
-        setIndex(index + 1);
-      }
-    },
-    { target },
-    [isEnabled, index, setIndex],
-  );
-};
-
 const useScrollToItem = itemRef => {
   useEffect(() => {
     if (itemRef) {
@@ -44,10 +18,13 @@ const useScrollToItem = itemRef => {
   }, [itemRef]);
 };
 
-export default (
-  { value, onFocus, onBlur, autocompleteItems, onAutocompleteItemSelected },
-  inputRef,
-) => {
+export default ({
+  value,
+  onFocus,
+  onBlur,
+  autocompleteItems,
+  onAutocompleteItemSelected,
+}) => {
   const itemRefs = useRef([]);
   const [isFocused, setFocused] = useState(false);
   const [shouldMenuOpen, setMenuOpen] = useState(false);
@@ -85,13 +62,6 @@ export default (
     [highlightedIndex, selectItemAt],
   );
 
-  useKeyNavigation(
-    highlightedIndex,
-    setHighlightedIndex,
-    isMenuOpen,
-    inputRef.current,
-  );
-
   useEffect(resetHighlightedIndex, [resetHighlightedIndex, value]);
 
   useScrollToItem(itemRefs.current[highlightedIndex]);
@@ -126,6 +96,26 @@ export default (
     [hasHighlight, isMenuOpen, selectHighlightedItem],
   );
 
+  const handleArrowUp = useCallback(
+    e => {
+      if (isMenuOpen) {
+        e.preventDefault();
+        setHighlightedIndex(highlightedIndex - 1);
+      }
+    },
+    [highlightedIndex, isMenuOpen, setHighlightedIndex],
+  );
+
+  const handleArrowDown = useCallback(
+    e => {
+      if (isMenuOpen) {
+        e.preventDefault();
+        setHighlightedIndex(highlightedIndex + 1);
+      }
+    },
+    [highlightedIndex, isMenuOpen, setHighlightedIndex],
+  );
+
   const handleMouseEnterItem = useCallback(
     i => {
       setIgnoreBlur(true);
@@ -149,15 +139,17 @@ export default (
     [selectItemAt],
   );
 
-  return [
+  return {
     isMenuOpen,
     highlightedIndex,
     handleFocus,
     handleBlur,
     handleEnter,
+    handleArrowUp,
+    handleArrowDown,
     handleItemRef,
     handleMouseEnterItem,
     handleMouseLeaveItem,
     handleMouseClickItem,
-  ];
+  };
 };
