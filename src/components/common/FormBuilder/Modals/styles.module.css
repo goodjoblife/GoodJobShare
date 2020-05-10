@@ -21,10 +21,6 @@
   font-weight: 600;
   color: #ec7910;
   display: block;
-
-  &.hidden {
-    display: none;
-  }
 }
 
 .description,
@@ -57,4 +53,8 @@
   & + & {
     margin-top: 8px;
   }
+}
+
+.hidden {
+  display: none;
 }
