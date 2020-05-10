@@ -13,6 +13,12 @@ import initSentry from 'utils/sentryUtil';
 import Root from './components/Root';
 import configureStore from './store/configureStore';
 
+function shouldUpdateScroll(prevProps, props) {
+  return (
+    (prevProps ? prevProps.location.pathname : '') !== props.location.pathname
+  );
+}
+
 function parseState(window) {
   if (!window.__data) {
     return {};
@@ -49,7 +55,7 @@ hydrate(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <Router history={history}>
-        <ScrollContext>
+        <ScrollContext shouldUpdateScroll={shouldUpdateScroll}>
           <Root />
         </ScrollContext>
       </Router>
@@ -64,7 +70,7 @@ if (module.hot) {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Router history={history}>
-            <ScrollContext>
+            <ScrollContext shouldUpdateScroll={shouldUpdateScroll}>
               <Root />
             </ScrollContext>
           </Router>

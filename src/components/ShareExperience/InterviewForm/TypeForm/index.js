@@ -18,6 +18,7 @@ import {
   reject,
 } from 'ramda';
 import { useDispatch } from 'react-redux';
+import { parse } from 'qs';
 
 import FormBuilder from 'common/FormBuilder';
 import ResultModal from 'common/FormBuilder/Modals/ResultModal';
@@ -76,7 +77,16 @@ const questions = [
     title: '公司名稱',
     type: 'text',
     dataKey: DATA_KEY_COMPANY_NAME,
-    defaultValue: '',
+    defaultValue: () => {
+      const query =
+        typeof document === 'undefined'
+          ? {}
+          : parse(document.location.search, {
+              ignoreQueryPrefix: true,
+            });
+      const companyName = query.companyName || '';
+      return companyName;
+    },
     required: true,
     validator: isNot(isEmpty),
     warning: '請填寫公司名稱',
