@@ -111,9 +111,17 @@ export default ({
       if (isMenuOpen) {
         e.preventDefault();
         setHighlightedIndex(highlightedIndex + 1);
+      } else if (autocompleteItems.length > 0) {
+        setHighlightedIndex(0);
+        setMenuOpen(true);
       }
     },
-    [highlightedIndex, isMenuOpen, setHighlightedIndex],
+    [
+      autocompleteItems.length,
+      highlightedIndex,
+      isMenuOpen,
+      setHighlightedIndex,
+    ],
   );
 
   const handleEscape = useCallback(
