@@ -17,11 +17,13 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => (
     </div>
     <InfoBlock label="面試地區">{experience.region}</InfoBlock>
     <InfoBlock label="應徵職稱">{experience.job_title.name}</InfoBlock>
-    {experience.experience_in_year && (
+    {Number.isInteger(experience.experience_in_year) ? (
       <InfoBlock label="相關職務工作經驗">
-        {experience.experience_in_year} 年
+        {experience.experience_in_year === 0
+          ? '不到 1 年'
+          : `${experience.experience_in_year} 年`}
       </InfoBlock>
-    )}
+    ) : null}
     {experience.education && (
       <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
     )}
