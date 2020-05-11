@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
-import { parse } from 'qs';
 
 import FormBuilder from 'common/FormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
@@ -25,13 +24,11 @@ const questions = [
     type: 'text',
     dataKey: 'companyName',
     defaultValue: () => {
-      const query =
-        typeof document === 'undefined'
+      const state =
+        typeof window === 'undefined'
           ? {}
-          : parse(document.location.search, {
-              ignoreQueryPrefix: true,
-            });
-      const companyName = query.companyName || '';
+          : R.path(['history', 'state', 'state'], window) || {};
+      const companyName = state.companyName || '';
       return companyName;
     },
     required: true,

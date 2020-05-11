@@ -1,6 +1,5 @@
-import React, { Fragment, useMemo, useCallback } from 'react';
+import React, { Fragment, useCallback } from 'react';
 import { Switch, useLocation, useHistory } from 'react-router-dom';
-import { parse, stringify } from 'qs';
 import { omit } from 'ramda';
 
 import { AppRouteWithSubRoutes } from '../route';
@@ -14,15 +13,12 @@ import routes from '../../routes';
 
 const useShare = () => {
   const location = useLocation();
-  const query = useMemo(
-    () => parse(location.search, { ignoreQueryPrefix: true }),
-    [location.search],
-  );
-  const share = query.share;
+  const state = location.state || {};
+  const share = state.share;
   const history = useHistory();
   const exitShare = useCallback(
-    () => history.push(`?${stringify(omit(['share'], query))}`),
-    [history, query],
+    () => history.push({ state: omit(['share'], state) }),
+    [history, state],
   );
   return [share, exitShare];
 };
