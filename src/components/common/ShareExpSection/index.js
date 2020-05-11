@@ -17,7 +17,9 @@ const DefaultSubheading = () => (
 );
 
 const ShareExpSection = ({ heading, Subheading }) => {
-  const shareInterviewPath = true ? '?share=interview' : '/share/interview'; // TODO: A/B
+  const shareInterviewPath = true
+    ? { state: { share: 'interview' } }
+    : '/share/interview'; // TODO: A/B
   return (
     <Section padding>
       <Wrapper size="l">
