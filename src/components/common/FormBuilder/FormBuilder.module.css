@@ -25,6 +25,12 @@
   display: flex;
   flex-direction: column;
 
+  @media (min-width: 850px) {
+    top: 20px;
+    bottom: 20px;
+    width: 720px;
+  }
+
   .body {
     flex: 1;
   }
@@ -35,6 +41,11 @@
 
   display: flex;
   flex-direction: column;
+
+  @media (min-width: 850px) {
+    padding-left: 110px;
+    padding-right: 110px;
+  }
 
   .pager {
     flex: 1;
@@ -86,18 +97,5 @@
 
   &.visible {
     display: block;
-  }
-}
-
-@media (min-width: 850px) {
-  .container {
-    top: 20px;
-    bottom: 20px;
-    width: 720px;
-
-    .body {
-      padding-left: 110px;
-      padding-right: 110px;
-    }
   }
 }
