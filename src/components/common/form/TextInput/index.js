@@ -63,17 +63,18 @@ const TextInput = forwardRef(
       [ref],
     );
 
-    const [
+    const {
       isMenuOpen,
       highlightedIndex,
+      hasHighlight,
       handleFocus,
       handleBlur,
       handleEnter,
       handleItemRef,
       handleMouseEnterItem,
-      handleMouseLeaveOption,
+      handleMouseLeaveItem,
       handleMouseClickItem,
-    ] = useAutocomplete(
+    } = useAutocomplete(
       {
         value,
         onFocus,
@@ -90,7 +91,7 @@ const TextInput = forwardRef(
         onCompositionEnd,
         onEnter: e => {
           handleEnter(e);
-          if (!isMenuOpen && onEnter) onEnter(e);
+          if (!hasHighlight) onEnter(e);
         },
       },
       inputRef,
@@ -117,7 +118,7 @@ const TextInput = forwardRef(
               active={highlightedIndex === i}
               onClick={e => handleMouseClickItem(i)}
               onMouseEnter={e => handleMouseEnterItem(i)}
-              onMouseLeave={e => handleMouseLeaveOption(i)}
+              onMouseLeave={e => handleMouseLeaveItem(i)}
             >
               {autocompleteItemLabelSelector(item)}
             </AutoCompleteOption>
