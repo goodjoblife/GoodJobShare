@@ -60,6 +60,7 @@ import {
   evolve,
   isNot,
 } from './utils';
+import { useHistory } from 'react-router';
 
 const header = <Header title="請輸入你的一份面試經驗" />;
 const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
@@ -312,6 +313,7 @@ const bodyFromDraft = evolve({
 });
 
 const TypeForm = ({ open, onClose }) => {
+  const history = useHistory();
   const [submitStatus, setSubmitStatus] = useState('unsubmitted');
   const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
@@ -373,7 +375,8 @@ const TypeForm = ({ open, onClose }) => {
         }}
         shareText="分享其他資訊"
         share={() => {
-          // TODO
+          setSubmitStatus('unsubmitted');
+          history.push('/share');
         }}
       />
     </Fragment>
