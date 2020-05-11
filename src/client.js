@@ -14,9 +14,18 @@ import Root from './components/Root';
 import configureStore from './store/configureStore';
 
 function shouldUpdateScroll(prevProps, props) {
-  return (
-    (prevProps ? prevProps.location.pathname : '') !== props.location.pathname
+  const getSignature = R.compose(
+    R.omit(['state', 'key']),
+    R.path(['location']),
   );
+  const diffSignature = R.unapply(
+    R.compose(
+      R.not,
+      R.apply(R.equals),
+      R.map(getSignature),
+    ),
+  );
+  return diffSignature(prevProps, props);
 }
 
 function parseState(window) {

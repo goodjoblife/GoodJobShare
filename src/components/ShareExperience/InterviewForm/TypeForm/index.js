@@ -16,9 +16,9 @@ import {
   equals,
   keys,
   reject,
+  path,
 } from 'ramda';
 import { useDispatch } from 'react-redux';
-import { parse } from 'qs';
 
 import FormBuilder from 'common/FormBuilder';
 import ConfirmCloseModal from 'common/FormBuilder/Modals/ConfirmCloseModal';
@@ -77,13 +77,11 @@ const questions = [
     type: 'text',
     dataKey: DATA_KEY_COMPANY_NAME,
     defaultValue: () => {
-      const query =
-        typeof document === 'undefined'
+      const state =
+        typeof window === 'undefined'
           ? {}
-          : parse(document.location.search, {
-              ignoreQueryPrefix: true,
-            });
-      const companyName = query.companyName || '';
+          : path(['history', 'state', 'state'], window) || {};
+      const companyName = state.companyName || '';
       return companyName;
     },
     required: true,
