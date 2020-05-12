@@ -67,6 +67,7 @@ const TextInput = forwardRef(
     const {
       isMenuOpen,
       highlightedIndex,
+      hasHighlight,
       handleFocus,
       handleBlur,
       handleEnter,
@@ -100,7 +101,7 @@ const TextInput = forwardRef(
         onCompositionEnd,
         onEnter: e => {
           handleEnter(e);
-          if (!isMenuOpen && onEnter) onEnter(e);
+          if (!hasHighlight) onEnter(e);
         },
       },
       inputRef,

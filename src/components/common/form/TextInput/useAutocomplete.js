@@ -160,6 +160,7 @@ export default ({
   return {
     isMenuOpen,
     highlightedIndex,
+    hasHighlight,
     handleFocus,
     handleBlur,
     handleEnter,
