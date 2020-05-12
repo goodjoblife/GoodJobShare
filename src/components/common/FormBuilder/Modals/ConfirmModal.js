@@ -5,24 +5,24 @@ import cn from 'classnames';
 import Modal from 'common/Modal';
 import styles from './styles.module.css';
 
-const ConfirmCloseModal = ({
+const ConfirmModal = ({
   title,
   subtitle,
   description,
-  closeText,
-  close,
+  confirmText,
+  confirm,
   shareText,
   share,
   ...props
 }) => (
-  <Modal {...props} size="xs" contentClassName={styles.content} close={close}>
+  <Modal {...props} size="xs" contentClassName={styles.content}>
     <div className={styles.title}>{title}</div>
     <div className={cn(styles.subTitle, { [styles.hidden]: !subtitle })}>
       {subtitle}
     </div>
     <div className={styles.description}>{description}</div>
-    <button className={styles.btn} onClick={close}>
-      {closeText}
+    <button className={styles.btn} onClick={confirm}>
+      {confirmText}
     </button>
     <button
       className={cn(styles.btn, { [styles.hidden]: !shareText })}
@@ -33,14 +33,14 @@ const ConfirmCloseModal = ({
   </Modal>
 );
 
-ConfirmCloseModal.propTypes = {
+ConfirmModal.propTypes = {
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string,
   description: PropTypes.string,
-  closeText: PropTypes.string.isRequired,
-  close: PropTypes.func.isRequired,
+  confirmText: PropTypes.string.isRequired,
+  confirm: PropTypes.func.isRequired,
   shareText: PropTypes.string,
   share: PropTypes.func,
 };
 
-export default ConfirmCloseModal;
+export default ConfirmModal;
