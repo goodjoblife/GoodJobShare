@@ -5,6 +5,7 @@ import { Glike } from 'common/icons';
 
 import useDebouncedConfirm from '../useDebouncedConfirm';
 import styles from './Rating.module.css';
+import commonStyles from './styles.module.css';
 
 const range = n => {
   return [...Array(n).keys()];
@@ -68,7 +69,7 @@ const Rating = ({
           <span />
         </div>
       </div>
-      <div className={styles.warning}>{warning}</div>
+      <div className={commonStyles.warning}>{warning}</div>
     </div>
   );
 };

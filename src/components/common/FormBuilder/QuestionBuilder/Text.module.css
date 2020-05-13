@@ -3,10 +3,3 @@ $warning-red: #d0021b;
 .container.hasWarning .textinput {
   border-color: $warning-red;
 }
-
-.warning {
-  font-size: 15px;
-  line-height: 1.6;
-  letter-spacing: 1.07px;
-  color: $warning-red;
-}

@@ -6,6 +6,7 @@ import R from 'ramda';
 
 import TextInput from 'common/form/TextInput';
 import styles from './Text.module.css';
+import commonStyles from './styles.module.css';
 
 const notEquals = x =>
   R.compose(
@@ -74,7 +75,7 @@ const Text = ({
           }
         }}
       />
-      <div className={styles.warning}>{warning}</div>
+      <div className={commonStyles.warning}>{warning}</div>
     </div>
   );
 };

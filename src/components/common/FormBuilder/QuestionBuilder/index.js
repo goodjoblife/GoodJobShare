@@ -117,7 +117,7 @@ const useQuestionNode = ({
       return [false, <Date {...commonProps} />];
     case 'select-text':
       return [
-        true,
+        false,
         <SelectText
           {...commonProps}
           placeholder={placeholder}

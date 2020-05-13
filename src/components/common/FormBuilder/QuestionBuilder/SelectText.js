@@ -5,6 +5,7 @@ import cn from 'classnames';
 import TextInput from 'common/form/TextInput';
 import Select from 'common/form/Select';
 import styles from './SelectText.module.css';
+import commonStyles from './styles.module.css';
 
 const SelectText = ({
   page,
@@ -40,7 +41,7 @@ const SelectText = ({
         <div className={cn(styles.suffixLabel, 'pS')}>元</div>
       </div>
     </div>
-    <p className={cn(styles.warning, 'pS')}>{warning}</p>
+    <p className={cn(commonStyles.warning, 'pS')}>{warning}</p>
   </div>
 );
 

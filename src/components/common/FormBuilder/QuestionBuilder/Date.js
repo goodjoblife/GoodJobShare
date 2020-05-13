@@ -4,6 +4,7 @@ import cn from 'classnames';
 
 import Select from 'common/form/Select';
 import styles from './Date.module.css';
+import commonStyles from './styles.module.css';
 import { withShape } from 'airbnb-prop-types';
 
 const monthOptions = Array(12)
@@ -61,7 +62,7 @@ const DatePicker = ({
         <div className={cn(styles.suffixLabel, 'pS')}>月</div>
       </div>
     </div>
-    <p className={cn(styles.warning, 'pS')}>{warning}</p>
+    <p className={cn(commonStyles.warning, 'pS')}>{warning}</p>
   </div>
 );
 
