@@ -8,14 +8,14 @@ $warning-red: #d0021b;
   .listContainer {
     flex: 1;
   }
+
+  .warning {
+    position: relative;
+  }
 }
 
 .listContainer {
   border: solid 1px transparent;
-}
-
-.hasWarning .listContainer {
-  border-color: $warning-red;
 }
 
 .list {

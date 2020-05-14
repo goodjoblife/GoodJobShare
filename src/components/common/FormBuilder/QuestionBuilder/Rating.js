@@ -39,8 +39,14 @@ const Rating = ({
   const debouncedConfirm = useDebouncedConfirm(onConfirm, 300);
   const [hoveredValue, handleMouseOver, handleMouseOut] = useHover();
   return (
-    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
-      <div className={styles.flexContainer}>
+    <div
+      className={cn(
+        styles.container,
+        { [commonStyles.hasWarning]: !!warning },
+        commonStyles.container,
+      )}
+    >
+      <div className={cn(styles.flexContainer, commonStyles.flexContainer)}>
         {range(ratingLabels.length).map(i => (
           <label
             key={i}

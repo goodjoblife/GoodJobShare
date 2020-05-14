@@ -26,11 +26,11 @@ const DatePicker = ({
   defaultValue,
   value: [year, month],
   onChange,
-  warning,
+  warning, // object=true or null=false
   validator,
 }) => (
-  <div className={cn({ [styles.hasWarning]: !!warning })}>
-    <div className={styles.inputRow}>
+  <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
+    <div className={cn(styles.inputRow, commonStyles.inputRow)}>
       <div className={styles.inputGroup}>
         <div className={styles.inputWrapper}>
           <Select

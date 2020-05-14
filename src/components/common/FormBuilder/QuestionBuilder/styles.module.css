@@ -24,3 +24,25 @@ $warning-red: #d0021b;
   color: $warning-red;
   position: absolute;
 }
+
+/* rating & text & textArea & TextList hasWarning*/
+.container {
+  &.hasWarning {
+    & .flexContainer,
+    & .textinput,
+    & .textarea {
+      border-color: $warning-red;
+    }
+  }
+}
+
+/* date & selectText hasWarning*/
+.hasWarning {
+  .warning {
+    display: inline;
+  }
+  .inputRow,
+  .listContainer {
+    border-color: $warning-red;
+  }
+}

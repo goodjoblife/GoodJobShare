@@ -24,13 +24,3 @@
     margin: 0 11px;
   }
 }
-
-.hasWarning {
-  .warning {
-    display: inline;
-  }
-
-  .inputRow {
-    border-color: #d0021b;
-  }
-}

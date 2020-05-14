@@ -1,9 +1,5 @@
 @value main-yellow from 'common/variables.module.css';
 
-.container.hasWarning .flexContainer {
-  border-color: #d50000;
-}
-
 .flexContainer {
   display: flex;
   margin-top: 20px;

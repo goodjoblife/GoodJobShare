@@ -16,10 +16,6 @@
     }
   }
 
-  &.hasWarning .textarea {
-    border-color: #d50000;
-  }
-
   .footnote {
     text-align: right;
     margin-top: 9px;

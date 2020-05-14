@@ -5,7 +5,6 @@ import cn from 'classnames';
 import R from 'ramda';
 
 import TextInput from 'common/form/TextInput';
-import styles from './Text.module.css';
 import commonStyles from './styles.module.css';
 
 const notEquals = x =>
@@ -55,10 +54,14 @@ const Text = ({
   );
 
   return (
-    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
+    <div
+      className={cn(commonStyles.container, {
+        [commonStyles.hasWarning]: !!warning,
+      })}
+    >
       <TextInput
         ref={ref}
-        className={styles.textinput}
+        className={commonStyles.textinput}
         type="text"
         placeholder={placeholder}
         value={value}

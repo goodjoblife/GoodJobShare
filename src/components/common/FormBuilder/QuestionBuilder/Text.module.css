@@ -1,5 +1,0 @@
-$warning-red: #d0021b;
-
-.container.hasWarning .textinput {
-  border-color: $warning-red;
-}

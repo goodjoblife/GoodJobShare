@@ -36,8 +36,10 @@ const TextList = ({
   ]);
 
   return (
-    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
-      <div className={styles.listContainer}>
+    <div
+      className={cn(styles.container, { [commonStyles.hasWarning]: !!warning })}
+    >
+      <div className={cn(styles.listContainer, commonStyles.listContainer)}>
         <Scrollable className={styles.list}>
           {values.map((value, i) => (
             <div className={styles.item} key={i}>
@@ -66,7 +68,7 @@ const TextList = ({
           </div>
         </Scrollable>
       </div>
-      <div className={commonStyles.warning}>{warning}</div>
+      <div className={cn(commonStyles.warning, styles.warning)}>{warning}</div>
     </div>
   );
 };
