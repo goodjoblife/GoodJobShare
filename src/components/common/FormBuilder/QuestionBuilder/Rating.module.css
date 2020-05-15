@@ -4,7 +4,6 @@
   display: flex;
   margin-top: 20px;
   padding: 1px;
-  border: solid 1px transparent;
 
   .noteContainer {
     flex: 1;

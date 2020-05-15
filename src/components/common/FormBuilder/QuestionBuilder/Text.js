@@ -55,7 +55,7 @@ const Text = ({
 
   return (
     <div
-      className={cn(commonStyles.container, {
+      className={cn(commonStyles.warnableContainer, {
         [commonStyles.hasWarning]: !!warning,
       })}
     >
@@ -78,7 +78,9 @@ const Text = ({
           }
         }}
       />
-      <div className={commonStyles.warning}>{warning}</div>
+      <div className={cn(commonStyles.warning, commonStyles.isnotFill)}>
+        {warning}
+      </div>
     </div>
   );
 };

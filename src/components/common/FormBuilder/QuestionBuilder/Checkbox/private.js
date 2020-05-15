@@ -7,14 +7,21 @@ import cn from 'classnames';
 import Scrollable from '../../Scrollable';
 import useDebouncedConfirm from '../../useDebouncedConfirm';
 import styles from './private.module.css';
+import commonStyles from '../styles.module.css';
 import TextInput from 'common/form/TextInput';
 
 export const Wrapper = ({ warning, children }) => (
-  <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
-    <div className={styles.options}>
-      <Scrollable className={styles.optionsContent}>{children}</Scrollable>
+  <div className={styles.container}>
+    <div
+      className={cn(styles.warnableContainer, commonStyles.warnableContainer, {
+        [commonStyles.hasWarning]: !!warning,
+      })}
+    >
+      <div className={styles.options}>
+        <Scrollable className={styles.optionsContent}>{children}</Scrollable>
+      </div>
     </div>
-    <div className={styles.warning}>{warning}</div>
+    <div className={commonStyles.warning}>{warning}</div>
   </div>
 );
 

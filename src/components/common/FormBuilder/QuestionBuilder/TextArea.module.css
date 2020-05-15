@@ -7,12 +7,18 @@
   left: 0;
   right: 0;
 
-  .wrapper {
+  .warnableContainer {
+    display: flex;
+    flex-direction: column;
     flex: 1;
 
-    .textarea {
-      height: 100%;
-      resize: none;
+    .wrapper {
+      flex: 1;
+
+      .textarea {
+        height: 100%;
+        resize: none;
+      }
     }
   }
 
@@ -22,9 +28,5 @@
     font-size: 14px;
     color: #969696;
     line-height: normal;
-
-    &.warning {
-      color: #d50000;
-    }
   }
 }

@@ -22,8 +22,12 @@ const SelectText = ({
   placeholder,
   options,
 }) => (
-  <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
-    <div className={cn(styles.inputRow, commonStyles.inputRow)}>
+  <div>
+    <div
+      className={cn(styles.inputRow, commonStyles.warnableContainer, {
+        [commonStyles.hasWarning]: !!warning,
+      })}
+    >
       <Select
         options={options.map(value => ({ label: value, value }))}
         value={selected}
@@ -41,7 +45,9 @@ const SelectText = ({
         <div className={cn(styles.suffixLabel, 'pS')}>元</div>
       </div>
     </div>
-    <p className={cn(commonStyles.warning, 'pS')}>{warning}</p>
+    <p className={cn(commonStyles.warning, commonStyles.isnotFill, 'pS')}>
+      {warning}
+    </p>
   </div>
 );
 

@@ -1,7 +1,6 @@
 .inputRow {
   display: flex;
   align-items: stretch;
-  border: 1px solid transparent;
 
   .text {
     flex: 1;

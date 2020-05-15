@@ -4,14 +4,13 @@
   display: flex;
   flex-direction: column;
 
-  .options {
+  .warnableContainer {
+    display: flex;
+    flex-direction: column;
     flex: 1;
-    border: solid 1px transparent;
-  }
 
-  &.hasWarning {
     .options {
-      border-color: #d0021b;
+      flex: 1;
     }
   }
 }
@@ -55,11 +54,4 @@
     background-color: #626262;
     color: #ffffff;
   }
-}
-
-.warning {
-  font-size: 15px;
-  line-height: 1.6;
-  letter-spacing: 1.07px;
-  color: #d0021b;
 }

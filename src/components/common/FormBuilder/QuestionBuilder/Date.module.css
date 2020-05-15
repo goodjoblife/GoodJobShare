@@ -1,6 +1,5 @@
 .inputRow {
   display: flex;
-  border: 1px solid transparent;
 
   .inputGroup {
     flex: 1;

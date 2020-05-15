@@ -8,10 +8,6 @@ $warning-red: #d0021b;
   .listContainer {
     flex: 1;
   }
-
-  .warning {
-    position: relative;
-  }
 }
 
 .listContainer {

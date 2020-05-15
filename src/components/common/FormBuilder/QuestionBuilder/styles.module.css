@@ -22,27 +22,20 @@ $warning-red: #d0021b;
   line-height: 1.6;
   letter-spacing: 1.07px;
   color: $warning-red;
-  position: absolute;
+
+  &.isnotFill {
+    position: absolute;
+  }
+
+  &.isFill {
+    color: $warning-red !important;
+  }
 }
 
-/* rating & text & textArea & TextList hasWarning*/
-.container {
+.warnableContainer {
+  border: 1px solid transparent;
+
   &.hasWarning {
-    & .flexContainer,
-    & .textinput,
-    & .textarea {
-      border-color: $warning-red;
-    }
-  }
-}
-
-/* date & selectText hasWarning*/
-.hasWarning {
-  .warning {
-    display: inline;
-  }
-  .inputRow,
-  .listContainer {
     border-color: $warning-red;
   }
 }

@@ -26,11 +26,15 @@ const DatePicker = ({
   defaultValue,
   value: [year, month],
   onChange,
-  warning, // object=true or null=false
+  warning,
   validator,
 }) => (
-  <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
-    <div className={cn(styles.inputRow, commonStyles.inputRow)}>
+  <div>
+    <div
+      className={cn(styles.inputRow, commonStyles.warnableContainer, {
+        [commonStyles.hasWarning]: !!warning,
+      })}
+    >
       <div className={styles.inputGroup}>
         <div className={styles.inputWrapper}>
           <Select
@@ -62,7 +66,9 @@ const DatePicker = ({
         <div className={cn(styles.suffixLabel, 'pS')}>月</div>
       </div>
     </div>
-    <p className={cn(commonStyles.warning, 'pS')}>{warning}</p>
+    <p className={cn(commonStyles.warning, commonStyles.isnotFill, 'pS')}>
+      {warning}
+    </p>
   </div>
 );
 
