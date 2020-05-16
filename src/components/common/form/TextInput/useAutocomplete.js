@@ -35,21 +35,36 @@ export default ({
     resetHighlightedIndex,
   ] = useBoundedIndex(autocompleteItems.length + 1, autocompleteItems.length);
   const hasHighlight = highlightedIndex < autocompleteItems.length;
+  const [isHightlightedItemSelected, setHightlightedItemSelected] = useState(
+    false,
+  );
 
   useEffect(() => {
     setMenuOpen(isFocused);
   }, [isFocused]);
 
   useEffect(() => {
-    if (isFocused) setMenuOpen(true);
+    if (isFocused) {
+      if (isHightlightedItemSelected) {
+        setHightlightedItemSelected(false);
+      } else {
+        setMenuOpen(true);
+      }
+    }
   }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (isHightlightedItemSelected) {
+      setMenuOpen(false);
+    }
+  }, [isHightlightedItemSelected]);
 
   const isMenuOpen = shouldMenuOpen && autocompleteItems.length > 0;
 
   const selectItemAt = useCallback(
     index => {
       if (index < autocompleteItems.length) {
-        setMenuOpen(false);
+        setHightlightedItemSelected(true);
         const selectedItem = autocompleteItems[index];
         if (onAutocompleteItemSelected)
           onAutocompleteItemSelected(selectedItem);
