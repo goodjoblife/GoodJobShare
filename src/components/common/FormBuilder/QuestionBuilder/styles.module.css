@@ -17,25 +17,19 @@ $warning-red: #d0021b;
   }
 }
 
-.warning {
-  font-size: 15px;
-  line-height: 1.6;
-  letter-spacing: 1.07px;
-  color: $warning-red;
-
-  &.isnotFill {
-    position: absolute;
+.hasWarning {
+  .warnableContainer {
+    border: 1px solid $warning-red;
   }
 
-  &.isFill {
-    color: $warning-red !important;
-  }
-}
+  .warning {
+    font-size: 15px;
+    line-height: 1.6;
+    letter-spacing: 1.07px;
+    color: $warning-red;
 
-.warnableContainer {
-  border: 1px solid transparent;
-
-  &.hasWarning {
-    border-color: $warning-red;
+    &.isnotFill {
+      position: absolute;
+    }
   }
 }

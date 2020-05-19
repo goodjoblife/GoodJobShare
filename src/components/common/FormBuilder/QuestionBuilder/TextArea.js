@@ -19,31 +19,26 @@ const Textarea = ({
   warning,
   validator,
 }) => (
-  <div>
-    <div className={styles.container}>
-      <div
-        className={cn(
-          styles.warnableContainer,
-          commonStyles.warnableContainer,
-          { [commonStyles.hasWarning]: !!warning },
-        )}
-      >
-        <TextAreaInput
-          wrapperClassName={styles.wrapper}
-          className={cn(styles.textarea)}
-          value={value}
-          onChange={e => onChange(e.target.value)}
-        />
-      </div>
-      <p
-        className={cn(styles.footnote, commonStyles.warning, {
-          [commonStyles.isFill]: !!warning,
-        })}
-      >
-        {warning ||
-          (typeof footnote === 'function' ? footnote(value) : footnote)}
-      </p>
+  <div
+    className={cn(styles.container, { [commonStyles.hasWarning]: !!warning })}
+  >
+    <div
+      className={cn(styles.warnableContainer, commonStyles.warnableContainer)}
+    >
+      <TextAreaInput
+        wrapperClassName={styles.wrapper}
+        className={cn(styles.textarea)}
+        value={value}
+        onChange={e => onChange(e.target.value)}
+      />
     </div>
+    <p
+      className={cn(styles.footnote, {
+        [commonStyles.warning]: !!warning,
+      })}
+    >
+      {warning || (typeof footnote === 'function' ? footnote(value) : footnote)}
+    </p>
   </div>
 );
 

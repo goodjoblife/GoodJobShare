@@ -29,12 +29,8 @@ const DatePicker = ({
   warning,
   validator,
 }) => (
-  <div>
-    <div
-      className={cn(styles.inputRow, commonStyles.warnableContainer, {
-        [commonStyles.hasWarning]: !!warning,
-      })}
-    >
+  <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
+    <div className={cn(styles.inputRow, commonStyles.warnableContainer)}>
       <div className={styles.inputGroup}>
         <div className={styles.inputWrapper}>
           <Select

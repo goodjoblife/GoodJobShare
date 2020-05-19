@@ -54,32 +54,30 @@ const Text = ({
   );
 
   return (
-    <div
-      className={cn(commonStyles.warnableContainer, {
-        [commonStyles.hasWarning]: !!warning,
-      })}
-    >
-      <TextInput
-        ref={ref}
-        className={commonStyles.textinput}
-        type="text"
-        placeholder={placeholder}
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        onEnter={e => {
-          e.target.blur();
-          onConfirm(e);
-        }}
-        autocompleteItems={items}
-        onAutocompleteItemSelected={item => {
-          onChange(item);
-          if (onSelect) {
-            onSelect(item);
-          }
-        }}
-      />
-      <div className={cn(commonStyles.warning, commonStyles.isnotFill)}>
-        {warning}
+    <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
+      <div className={cn(commonStyles.warnableContainer)}>
+        <TextInput
+          ref={ref}
+          className={commonStyles.textinput}
+          type="text"
+          placeholder={placeholder}
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          onEnter={e => {
+            e.target.blur();
+            onConfirm(e);
+          }}
+          autocompleteItems={items}
+          onAutocompleteItemSelected={item => {
+            onChange(item);
+            if (onSelect) {
+              onSelect(item);
+            }
+          }}
+        />
+        <div className={cn(commonStyles.warning, commonStyles.isnotFill)}>
+          {warning}
+        </div>
       </div>
     </div>
   );

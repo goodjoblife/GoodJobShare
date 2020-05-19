@@ -4,7 +4,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: hsla(0, 0%, 100%, 0.9);
+  background: #f8f8f8;
   display: flex;
   justify-content: center;
   z-index: 999;
@@ -26,8 +26,6 @@
   flex-direction: column;
 
   @media (min-width: 850px) {
-    top: 20px;
-    bottom: 20px;
     width: 720px;
   }
 

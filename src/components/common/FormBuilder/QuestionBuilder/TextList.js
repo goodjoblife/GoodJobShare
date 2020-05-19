@@ -36,7 +36,9 @@ const TextList = ({
   ]);
 
   return (
-    <div className={cn(styles.container)}>
+    <div
+      className={cn(styles.container, { [commonStyles.hasWarning]: !!warning })}
+    >
       <div
         className={cn(styles.listContainer, commonStyles.warnableContainer, {
           [commonStyles.hasWarning]: !!warning,

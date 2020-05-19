@@ -26,7 +26,10 @@
     text-align: right;
     margin-top: 9px;
     font-size: 14px;
-    color: #969696;
     line-height: normal;
   }
+}
+
+.footnote {
+  color: #969696;
 }

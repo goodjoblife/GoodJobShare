@@ -22,12 +22,8 @@ const SelectText = ({
   placeholder,
   options,
 }) => (
-  <div>
-    <div
-      className={cn(styles.inputRow, commonStyles.warnableContainer, {
-        [commonStyles.hasWarning]: !!warning,
-      })}
-    >
+  <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
+    <div className={cn(styles.inputRow, commonStyles.warnableContainer)}>
       <Select
         options={options.map(value => ({ label: value, value }))}
         value={selected}

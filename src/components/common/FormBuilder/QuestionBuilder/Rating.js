@@ -39,7 +39,7 @@ const Rating = ({
   const debouncedConfirm = useDebouncedConfirm(onConfirm, 300);
   const [hoveredValue, handleMouseOver, handleMouseOut] = useHover();
   return (
-    <div>
+    <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
       <div
         className={cn(styles.flexContainer, commonStyles.warnableContainer, {
           [commonStyles.hasWarning]: !!warning,

@@ -11,11 +11,11 @@ import commonStyles from '../styles.module.css';
 import TextInput from 'common/form/TextInput';
 
 export const Wrapper = ({ warning, children }) => (
-  <div className={styles.container}>
+  <div
+    className={cn(styles.container, { [commonStyles.hasWarning]: !!warning })}
+  >
     <div
-      className={cn(styles.warnableContainer, commonStyles.warnableContainer, {
-        [commonStyles.hasWarning]: !!warning,
-      })}
+      className={cn(styles.warnableContainer, commonStyles.warnableContainer)}
     >
       <div className={styles.options}>
         <Scrollable className={styles.optionsContent}>{children}</Scrollable>
