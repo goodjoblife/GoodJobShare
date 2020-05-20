@@ -24,7 +24,10 @@ import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
 import GoogleAdsense from 'common/GoogleAdsense';
 import { isUiNotFoundError } from 'utils/errors';
-import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
+import {
+  ViewArticleDetailTracker,
+  ClickPrivateMsgBtnTracker,
+} from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
 import useIsLogin from 'hooks/useIsLogin';
 import useTrace from './hooks/useTrace';
@@ -217,6 +220,10 @@ const ExperienceDetail = ({
             className={styles.topMsgButton}
             onClick={() => {
               handleIsModalOpen(true, MODAL_TYPE.PRIVATE_MESSAGE);
+              ClickPrivateMsgBtnTracker.sendEvent({
+                position:
+                  ClickPrivateMsgBtnTracker.positions.nextToTopReportBtn,
+              });
             }}
           />
           <ReportDetail
@@ -278,6 +285,10 @@ const ExperienceDetail = ({
                     // TOFIX: temporal prop, to be improved
                     onClickMsgButton={() => {
                       handleIsModalOpen(true, MODAL_TYPE.PRIVATE_MESSAGE);
+                      ClickPrivateMsgBtnTracker.sendEvent({
+                        position:
+                          ClickPrivateMsgBtnTracker.positions.articleBottom,
+                      });
                     }}
                   />
                 </Fragment>
