@@ -353,11 +353,15 @@ const TypeForm = ({ open, onClose }) => {
           setSubmitStatus('unsubmitted');
           onClose();
         }}
-        confirmText="確定"
-        confirm={() => {
-          setSubmitStatus('unsubmitted');
-          onClose();
-        }}
+        actions={[
+          [
+            '確定',
+            () => {
+              setSubmitStatus('unsubmitted');
+              onClose();
+            },
+          ],
+        ]}
       />
       <ConfirmModal
         isOpen={submitStatus === 'error'}
@@ -366,10 +370,14 @@ const TypeForm = ({ open, onClose }) => {
         close={() => {
           setSubmitStatus('unsubmitted');
         }}
-        confirmText="確定"
-        confirm={() => {
-          setSubmitStatus('unsubmitted');
-        }}
+        actions={[
+          [
+            '確定',
+            () => {
+              setSubmitStatus('unsubmitted');
+            },
+          ],
+        ]}
       />
       <ConfirmModal
         isOpen={submitStatus === 'quitting'}
@@ -378,16 +386,28 @@ const TypeForm = ({ open, onClose }) => {
         close={() => {
           setSubmitStatus('unsubmitted');
         }}
-        confirmText="確定離開"
-        confirm={() => {
-          setSubmitStatus('unsubmitted');
-          onClose();
-        }}
-        shareText="分享其他資訊"
-        share={() => {
-          setSubmitStatus('unsubmitted');
-          history.push('/share');
-        }}
+        actions={[
+          [
+            '確定離開',
+            () => {
+              setSubmitStatus('unsubmitted');
+              onClose();
+            },
+          ],
+          [
+            '分享其他資訊',
+            () => {
+              setSubmitStatus('unsubmitted');
+              history.push('/share');
+            },
+          ],
+          [
+            '取消',
+            () => {
+              setSubmitStatus('unsubmitted');
+            },
+          ],
+        ]}
       />
     </Fragment>
   );
