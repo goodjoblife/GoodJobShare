@@ -14,8 +14,9 @@ import cn from 'classnames';
 import { useParams } from 'react-router-dom';
 import { useWindowSize } from 'react-use';
 import Loader from 'common/Loader';
-import { Wrapper, Section } from 'common/base';
+import { Wrapper, Section, Heading, P } from 'common/base';
 import MsgButton from 'common/button/MsgButton';
+import Button from 'common/button/Button';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
 import ReportDetail from 'common/reaction/ReportDetail';
@@ -49,6 +50,7 @@ const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
   REPORT_API_ERROR: 'REPORT_API_ERROR',
   REPORT_SUCCESS: 'REPORT_SUCCESS',
+  PRIVATE_MESSAGE: 'PRIVATE_MESSAGE',
 };
 
 const experienceIdSelector = R.compose(
@@ -187,6 +189,21 @@ const ExperienceDetail = ({
         return (
           <ReportSuccessFeedback buttonClick={() => handleIsModalOpen(false)} />
         );
+      // TOFIX: to test how much users need this function
+      case MODAL_TYPE.PRIVATE_MESSAGE:
+        return (
+          <div>
+            <Heading style={{ marginBottom: '25px', textAlign: 'center' }}>
+              私訊功能開發中
+            </Heading>
+            <P style={{ marginBottom: '30px' }}>
+              我們正在努力開發這個功能中，請告訴我們你的需求，讓我可以做得更好！
+            </P>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Button btnStyle="submit">填寫意見回饋</Button>
+            </div>
+          </div>
+        );
       default:
         return null;
     }
@@ -196,7 +213,12 @@ const ExperienceDetail = ({
     return (
       <React.Fragment>
         <div className={styles.functionButtons}>
-          <MsgButton className={styles.topMsgButton} />
+          <MsgButton
+            className={styles.topMsgButton}
+            onClick={() => {
+              handleIsModalOpen(true, MODAL_TYPE.PRIVATE_MESSAGE);
+            }}
+          />
           <ReportDetail
             label="檢舉"
             onClick={() => {
@@ -250,7 +272,14 @@ const ExperienceDetail = ({
                     <ExperienceHeading experience={experience} />
                   </div>
                   {renderReportZone()}
-                  <Article experience={experience} hideContent={!canView} />
+                  <Article
+                    experience={experience}
+                    hideContent={!canView}
+                    // TOFIX: temporal prop, to be improved
+                    onClickMsgButton={() => {
+                      handleIsModalOpen(true, MODAL_TYPE.PRIVATE_MESSAGE);
+                    }}
+                  />
                 </Fragment>
               )}
               <LikeZone experienceId={experienceId} />
@@ -285,7 +314,7 @@ const ExperienceDetail = ({
       <Modal
         isOpen={isModalOpen}
         close={() => handleIsModalOpen(false)}
-        hasClose={false}
+        hasClose={true}
         closableOnClickOutside={closableOnClickOutside}
       >
         {renderModalChildren(modalType, modalPayload)}

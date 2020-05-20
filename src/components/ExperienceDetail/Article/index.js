@@ -55,7 +55,7 @@ class Article extends React.Component {
   };
 
   render() {
-    const { experience, hideContent } = this.props;
+    const { experience, hideContent, onClickMsgButton } = this.props;
     return (
       <div className={styles.container}>
         <ArticleInfo experience={experience} hideContent={hideContent} />
@@ -77,7 +77,7 @@ class Article extends React.Component {
             ) : null}
           </div>
           <div className={styles.btmMsgBtnContainer}>
-            <MsgButton />
+            <MsgButton onClick={onClickMsgButton} />
           </div>
           {hideContent ? (
             <BasicPermissionBlock
