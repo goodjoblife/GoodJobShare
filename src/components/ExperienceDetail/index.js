@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom';
 import { useWindowSize } from 'react-use';
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
+import MsgButton from 'common/button/MsgButton';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
 import ReportDetail from 'common/reaction/ReportDetail';
@@ -195,6 +196,7 @@ const ExperienceDetail = ({
     return (
       <React.Fragment>
         <div className={styles.functionButtons}>
+          <MsgButton className={styles.topMsgButton} />
           <ReportDetail
             label="檢舉"
             onClick={() => {

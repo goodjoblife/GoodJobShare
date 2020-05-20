@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
+import MsgButton from 'common/button/MsgButton';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
 import SectionBlock from './SectionBlock';
@@ -60,19 +61,24 @@ class Article extends React.Component {
         <ArticleInfo experience={experience} hideContent={hideContent} />
         <section className={styles.main}>
           <div className={styles.article}>{this.renderSections()}</div>
-          {experience.type === 'interview' &&
-          experience.interview_qas &&
-          experience.interview_qas.length &&
-          !hideContent ? (
-            <div className={styles.qaWrapper}>
-              <P size="l" bold>
-                面試問答
-              </P>
-              {experience.interview_qas.map(({ question, answer }, idx) => (
-                <QABlock key={idx} question={question} answer={answer} />
-              ))}
-            </div>
-          ) : null}
+          <div>
+            {experience.type === 'interview' &&
+            experience.interview_qas &&
+            experience.interview_qas.length &&
+            !hideContent ? (
+              <div className={styles.qaWrapper}>
+                <P size="l" bold>
+                  面試問答
+                </P>
+                {experience.interview_qas.map(({ question, answer }, idx) => (
+                  <QABlock key={idx} question={question} answer={answer} />
+                ))}
+              </div>
+            ) : null}
+          </div>
+          <div className={styles.btmMsgBtnContainer}>
+            <MsgButton />
+          </div>
           {hideContent ? (
             <BasicPermissionBlock
               rootClassName={styles.permissionBlockArticle}
