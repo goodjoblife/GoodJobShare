@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useKey } from 'react-use';
 
 const useBoundedIndex = (bound, initialIndex) => {
   const [index, setIndex] = useState(initialIndex);
@@ -11,31 +10,6 @@ const useBoundedIndex = (bound, initialIndex) => {
   return [index, setBoundedIndex, resetIndex];
 };
 
-const useKeyNavigation = (index, setIndex, isEnabled, target) => {
-  useKey(
-    'ArrowUp',
-    e => {
-      if (isEnabled) {
-        e.preventDefault();
-        setIndex(index - 1);
-      }
-    },
-    { target },
-    [isEnabled, index, setIndex],
-  );
-  useKey(
-    'ArrowDown',
-    e => {
-      if (isEnabled) {
-        e.preventDefault();
-        setIndex(index + 1);
-      }
-    },
-    { target },
-    [isEnabled, index, setIndex],
-  );
-};
-
 const useScrollToItem = itemRef => {
   useEffect(() => {
     if (itemRef) {
@@ -44,10 +18,13 @@ const useScrollToItem = itemRef => {
   }, [itemRef]);
 };
 
-export default (
-  { value, onFocus, onBlur, autocompleteItems, onAutocompleteItemSelected },
-  inputRef,
-) => {
+export default ({
+  value,
+  onFocus,
+  onBlur,
+  autocompleteItems,
+  onAutocompleteItemSelected,
+}) => {
   const itemRefs = useRef([]);
   const [isFocused, setFocused] = useState(false);
   const [shouldMenuOpen, setMenuOpen] = useState(false);
@@ -58,21 +35,36 @@ export default (
     resetHighlightedIndex,
   ] = useBoundedIndex(autocompleteItems.length + 1, autocompleteItems.length);
   const hasHighlight = highlightedIndex < autocompleteItems.length;
+  const [isHightlightedItemSelected, setHightlightedItemSelected] = useState(
+    false,
+  );
 
   useEffect(() => {
     setMenuOpen(isFocused);
   }, [isFocused]);
 
   useEffect(() => {
-    if (isFocused) setMenuOpen(true);
+    if (isFocused) {
+      if (isHightlightedItemSelected) {
+        setHightlightedItemSelected(false);
+      } else {
+        setMenuOpen(true);
+      }
+    }
   }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (isHightlightedItemSelected) {
+      setMenuOpen(false);
+    }
+  }, [isHightlightedItemSelected]);
 
   const isMenuOpen = shouldMenuOpen && autocompleteItems.length > 0;
 
   const selectItemAt = useCallback(
     index => {
       if (index < autocompleteItems.length) {
-        setMenuOpen(false);
+        setHightlightedItemSelected(true);
         const selectedItem = autocompleteItems[index];
         if (onAutocompleteItemSelected)
           onAutocompleteItemSelected(selectedItem);
@@ -83,13 +75,6 @@ export default (
   const selectHighlightedItem = useCallback(
     () => selectItemAt(highlightedIndex),
     [highlightedIndex, selectItemAt],
-  );
-
-  useKeyNavigation(
-    highlightedIndex,
-    setHighlightedIndex,
-    isMenuOpen,
-    inputRef.current,
   );
 
   useEffect(resetHighlightedIndex, [resetHighlightedIndex, value]);
@@ -126,6 +111,44 @@ export default (
     [hasHighlight, isMenuOpen, selectHighlightedItem],
   );
 
+  const handleArrowUp = useCallback(
+    e => {
+      if (isMenuOpen) {
+        e.preventDefault();
+        setHighlightedIndex(highlightedIndex - 1);
+      }
+    },
+    [highlightedIndex, isMenuOpen, setHighlightedIndex],
+  );
+
+  const handleArrowDown = useCallback(
+    e => {
+      if (isMenuOpen) {
+        e.preventDefault();
+        setHighlightedIndex(highlightedIndex + 1);
+      } else if (autocompleteItems.length > 0) {
+        setHighlightedIndex(0);
+        setMenuOpen(true);
+      }
+    },
+    [
+      autocompleteItems.length,
+      highlightedIndex,
+      isMenuOpen,
+      setHighlightedIndex,
+    ],
+  );
+
+  const handleEscape = useCallback(
+    e => {
+      if (isMenuOpen) {
+        e.preventDefault();
+        setMenuOpen(false);
+      }
+    },
+    [isMenuOpen],
+  );
+
   const handleMouseEnterItem = useCallback(
     i => {
       setIgnoreBlur(true);
@@ -156,6 +179,9 @@ export default (
     handleFocus,
     handleBlur,
     handleEnter,
+    handleArrowUp,
+    handleArrowDown,
+    handleEscape,
     handleItemRef,
     handleMouseEnterItem,
     handleMouseLeaveItem,

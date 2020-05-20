@@ -4,6 +4,7 @@ import cn from 'classnames';
 
 import useEnterConfirm from './useEnterConfirm';
 import useAutocomplete from './useAutocomplete';
+import useKeyNavigation from './useKeyNavigation';
 import styles from './TextInput.module.css';
 
 const AutoCompleteMenu = ({ className, open, ...props }) => (
@@ -70,17 +71,26 @@ const TextInput = forwardRef(
       handleFocus,
       handleBlur,
       handleEnter,
+      handleArrowUp,
+      handleArrowDown,
+      handleEscape,
       handleItemRef,
       handleMouseEnterItem,
       handleMouseLeaveItem,
       handleMouseClickItem,
-    } = useAutocomplete(
+    } = useAutocomplete({
+      value,
+      onFocus,
+      onBlur,
+      autocompleteItems,
+      onAutocompleteItemSelected,
+    });
+
+    useKeyNavigation(
       {
-        value,
-        onFocus,
-        onBlur,
-        autocompleteItems,
-        onAutocompleteItemSelected,
+        onArrowUp: handleArrowUp,
+        onArrowDown: handleArrowDown,
+        onEscape: handleEscape,
       },
       inputRef,
     );
