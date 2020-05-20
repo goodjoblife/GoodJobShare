@@ -353,6 +353,7 @@ const TypeForm = ({ open, onClose }) => {
           setSubmitStatus('unsubmitted');
           onClose();
         }}
+        closableOnClickOutside
         actions={[
           [
             '確定',
@@ -370,6 +371,7 @@ const TypeForm = ({ open, onClose }) => {
         close={() => {
           setSubmitStatus('unsubmitted');
         }}
+        closableOnClickOutside
         actions={[
           [
             '確定',
@@ -386,6 +388,7 @@ const TypeForm = ({ open, onClose }) => {
         close={() => {
           setSubmitStatus('unsubmitted');
         }}
+        closableOnClickOutside
         actions={[
           [
             '確定離開',
