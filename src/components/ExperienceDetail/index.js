@@ -203,7 +203,13 @@ const ExperienceDetail = ({
               我們正在努力開發這個功能中，請告訴我們你的需求，讓我可以做得更好！
             </P>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button btnStyle="submit">填寫意見回饋</Button>
+              <a
+                href="https://forms.gle/QgBDrws9sjpmgEex9"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button btnStyle="submit">填寫意見回饋</Button>
+              </a>
             </div>
           </div>
         );
