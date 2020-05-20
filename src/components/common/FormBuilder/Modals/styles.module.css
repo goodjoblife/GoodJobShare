@@ -23,8 +23,7 @@
   display: block;
 }
 
-.description,
-.confirm {
+.description {
   margin-top: 14px;
   text-align: center;
   font-size: 16px;
@@ -35,10 +34,6 @@
 
 .description {
   margin-bottom: 44px;
-}
-
-.confirm {
-  margin-bottom: 18px;
 }
 
 .btn {
@@ -53,8 +48,4 @@
   & + & {
     margin-top: 8px;
   }
-}
-
-.hidden {
-  display: none;
 }
