@@ -197,10 +197,10 @@ const ExperienceDetail = ({
         return (
           <div>
             <Heading style={{ marginBottom: '25px', textAlign: 'center' }}>
-              私訊功能開發中
+              你想傳什麼訊息給原作者呢？
             </Heading>
             <P style={{ marginBottom: '30px' }}>
-              我們正在努力開發這個功能中，請告訴我們你的需求，讓我可以做得更好！
+              我們正在努力開發這個功能中，不妨偷偷告訴我們你想私訊原作者什麼訊息，讓我們可以打造更好用的功能！
             </P>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <a
@@ -208,7 +208,7 @@ const ExperienceDetail = ({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Button btnStyle="submit">填寫意見回饋</Button>
+                <Button btnStyle="submit">好啊，跟你們說</Button>
               </a>
             </div>
           </div>
