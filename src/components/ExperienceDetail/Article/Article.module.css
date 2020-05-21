@@ -80,3 +80,9 @@ $paddingS: 16px;
   margin-right: 5px;
   color: #ed0d5e;
 }
+
+.btmMsgBtnContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
