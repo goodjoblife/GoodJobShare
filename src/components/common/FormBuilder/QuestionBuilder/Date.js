@@ -62,7 +62,7 @@ const DatePicker = ({
         <div className={cn(styles.suffixLabel, 'pS')}>月</div>
       </div>
     </div>
-    <p className={cn(commonStyles.warning, commonStyles.isnotFill, 'pS')}>
+    <p className={cn(commonStyles.warning, commonStyles.inlineWarning, 'pS')}>
       {warning}
     </p>
   </div>

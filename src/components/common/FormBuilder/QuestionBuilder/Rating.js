@@ -40,11 +40,7 @@ const Rating = ({
   const [hoveredValue, handleMouseOver, handleMouseOut] = useHover();
   return (
     <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
-      <div
-        className={cn(styles.flexContainer, commonStyles.warnableContainer, {
-          [commonStyles.hasWarning]: !!warning,
-        })}
-      >
+      <div className={cn(styles.flexContainer, commonStyles.warnableContainer)}>
         {range(ratingLabels.length).map(i => (
           <label
             key={i}
@@ -73,7 +69,7 @@ const Rating = ({
           <span />
         </div>
       </div>
-      <div className={cn(commonStyles.warning, commonStyles.isnotFill)}>
+      <div className={cn(commonStyles.warning, commonStyles.inlineWarning)}>
         {warning}
       </div>
     </div>

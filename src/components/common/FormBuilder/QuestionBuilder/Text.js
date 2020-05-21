@@ -58,7 +58,6 @@ const Text = ({
       <div className={cn(commonStyles.warnableContainer)}>
         <TextInput
           ref={ref}
-          className={commonStyles.textinput}
           type="text"
           placeholder={placeholder}
           value={value}
@@ -75,7 +74,7 @@ const Text = ({
             }
           }}
         />
-        <div className={cn(commonStyles.warning, commonStyles.isnotFill)}>
+        <div className={cn(commonStyles.warning, commonStyles.inlineWarning)}>
           {warning}
         </div>
       </div>

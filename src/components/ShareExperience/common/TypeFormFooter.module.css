@@ -8,8 +8,7 @@
   padding: 5px 29px;
 
   @media (min-width: 850px) {
-    height: 48px;
-    padding: 17px 220px;
+    padding: 17px;
     margin-top: 10px;
   }
 
