@@ -25,7 +25,10 @@ const CompanyAndJobTitlePageContainer = ({ routes, location }) => {
         </div>
         {width > breakpoints.md ? (
           <div className={styles.sideAds}>
-            <GoogleAdUnit sizes={[160, 600]} adUnit="goodjob_pc_list_sidebar" />
+            <GoogleAdUnit
+              sizes={[[160, 600]]}
+              adUnit="goodjob_pc_list_sidebar"
+            />
           </div>
         ) : null}
       </Wrapper>
