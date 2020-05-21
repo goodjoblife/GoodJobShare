@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
-import MsgButton from 'common/button/MsgButton';
+import PrivateMessageButton from 'common/button/PrivateMessageButton';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
 import SectionBlock from './SectionBlock';
@@ -77,7 +77,7 @@ class Article extends React.Component {
             ) : null}
           </div>
           <div className={styles.btmMsgBtnContainer}>
-            <MsgButton onClick={onClickMsgButton} />
+            <PrivateMessageButton onClick={onClickMsgButton} />
           </div>
           {hideContent ? (
             <BasicPermissionBlock

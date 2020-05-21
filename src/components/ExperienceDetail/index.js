@@ -15,7 +15,7 @@ import { useParams } from 'react-router-dom';
 import { useWindowSize } from 'react-use';
 import Loader from 'common/Loader';
 import { Wrapper, Section, Heading, P } from 'common/base';
-import MsgButton from 'common/button/MsgButton';
+import PrivateMessageButton from 'common/button/PrivateMessageButton';
 import Button from 'common/button/Button';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
@@ -26,7 +26,7 @@ import GoogleAdsense from 'common/GoogleAdsense';
 import { isUiNotFoundError } from 'utils/errors';
 import {
   ViewArticleDetailTracker,
-  ClickPrivateMsgBtnTracker,
+  ClickPrivateMessageButtonTracker,
 } from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
 import useIsLogin from 'hooks/useIsLogin';
@@ -222,13 +222,13 @@ const ExperienceDetail = ({
     return (
       <React.Fragment>
         <div className={styles.functionButtons}>
-          <MsgButton
+          <PrivateMessageButton
             className={styles.topMsgButton}
             onClick={() => {
               handleIsModalOpen(true, MODAL_TYPE.PRIVATE_MESSAGE);
-              ClickPrivateMsgBtnTracker.sendEvent({
+              ClickPrivateMessageButtonTracker.sendEvent({
                 position:
-                  ClickPrivateMsgBtnTracker.positions.nextToTopReportBtn,
+                  ClickPrivateMessageButtonTracker.positions.nextToTopReportBtn,
               });
             }}
           />
@@ -291,9 +291,10 @@ const ExperienceDetail = ({
                     // TOFIX: temporal prop, to be improved
                     onClickMsgButton={() => {
                       handleIsModalOpen(true, MODAL_TYPE.PRIVATE_MESSAGE);
-                      ClickPrivateMsgBtnTracker.sendEvent({
+                      ClickPrivateMessageButtonTracker.sendEvent({
                         position:
-                          ClickPrivateMsgBtnTracker.positions.articleBottom,
+                          ClickPrivateMessageButtonTracker.positions
+                            .articleBottom,
                       });
                     }}
                   />
@@ -331,8 +332,8 @@ const ExperienceDetail = ({
       <Modal
         isOpen={isModalOpen}
         close={() => handleIsModalOpen(false)}
-        hasClose={true}
         closableOnClickOutside={closableOnClickOutside}
+        hasClose
       >
         {renderModalChildren(modalType, modalPayload)}
       </Modal>

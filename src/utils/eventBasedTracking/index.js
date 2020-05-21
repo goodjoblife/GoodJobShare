@@ -4,7 +4,7 @@ import * as ViewSalaryWorkTimeTracker from './viewSalaryWorkTime';
 import * as EnterFormTracker from './enterForm';
 import * as SubmitFormTracker from './submitForm';
 import * as LandPageTracker from './landPage';
-import * as ClickPrivateMsgBtnTracker from './clickPrivateMsgBtn';
+import * as ClickPrivateMessageButtonTracker from './clickPrivateMessageButton';
 
 export {
   UserTracker,
@@ -13,5 +13,5 @@ export {
   EnterFormTracker,
   SubmitFormTracker,
   LandPageTracker,
-  ClickPrivateMsgBtnTracker,
+  ClickPrivateMessageButtonTracker,
 };
