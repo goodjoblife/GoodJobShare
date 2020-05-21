@@ -13,6 +13,7 @@ import { compose, setStatic } from 'recompose';
 import cn from 'classnames';
 import { useParams } from 'react-router-dom';
 import { useWindowSize } from 'react-use';
+
 import Loader from 'common/Loader';
 import { Wrapper, Section, Heading, P } from 'common/base';
 import PrivateMessageButton from 'common/button/PrivateMessageButton';
@@ -22,7 +23,8 @@ import NotFound from 'common/NotFound';
 import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
-import GoogleAdsense from 'common/GoogleAdsense';
+// import GoogleAdsense from 'common/GoogleAdsense';
+import GoogleAdUnit from 'common/GoogleAdUnit';
 import { isUiNotFoundError } from 'utils/errors';
 import {
   ViewArticleDetailTracker,
@@ -319,11 +321,9 @@ const ExperienceDetail = ({
           </div>
           {width > breakpoints.md ? (
             <div className={styles.sideAds}>
-              <GoogleAdsense
-                style={{ display: 'block' }}
-                slot="6339096692"
-                format="auto"
-                responsive="true"
+              <GoogleAdUnit
+                sizes={[160, 600]}
+                adUnit="goodjob_pc_article_sidebar"
               />
             </div>
           ) : null}
