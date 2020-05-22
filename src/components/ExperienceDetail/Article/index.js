@@ -76,11 +76,12 @@ class Article extends React.Component {
               </div>
             ) : null}
           </div>
-          {hideContent ? (
+          {hideContent && (
             <BasicPermissionBlock
               rootClassName={styles.permissionBlockArticle}
             />
-          ) : (
+          )}
+          {!hideContent && (
             <div className={styles.btmMsgBtnContainer}>
               <PrivateMessageButton onClick={onClickMsgButton} />
             </div>
