@@ -54,6 +54,9 @@ const Button = ({
     case 'firstPage':
       cnBtnStyle = 'buttonFirstPage';
       break;
+    case 'blue':
+      cnBtnStyle = 'buttonBlue';
+      break;
     default:
       cnBtnStyle = '';
   }

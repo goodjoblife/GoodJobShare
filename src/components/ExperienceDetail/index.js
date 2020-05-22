@@ -14,7 +14,9 @@ import cn from 'classnames';
 import { useParams } from 'react-router-dom';
 import { useWindowSize } from 'react-use';
 import Loader from 'common/Loader';
-import { Wrapper, Section } from 'common/base';
+import { Wrapper, Section, Heading, P } from 'common/base';
+import PrivateMessageButton from 'common/button/PrivateMessageButton';
+import Button from 'common/button/Button';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
 import ReportDetail from 'common/reaction/ReportDetail';
@@ -22,7 +24,10 @@ import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
 import GoogleAdsense from 'common/GoogleAdsense';
 import { isUiNotFoundError } from 'utils/errors';
-import { ViewArticleDetailModule } from 'utils/eventBasedTracking';
+import {
+  ViewArticleDetailTracker,
+  ClickPrivateMessageButtonTracker,
+} from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
 import useIsLogin from 'hooks/useIsLogin';
 import useTrace from './hooks/useTrace';
@@ -48,6 +53,7 @@ const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
   REPORT_API_ERROR: 'REPORT_API_ERROR',
   REPORT_SUCCESS: 'REPORT_SUCCESS',
+  PRIVATE_MESSAGE: 'PRIVATE_MESSAGE',
 };
 
 const experienceIdSelector = R.compose(
@@ -137,7 +143,7 @@ const ExperienceDetail = ({
             return accu + subTitleLength + contentLength;
           }, 0)
         : 0;
-      ViewArticleDetailModule.sendEvent({
+      ViewArticleDetailTracker.sendEvent({
         id: experience._id,
         type: experience.type,
         contentLength,
@@ -186,6 +192,27 @@ const ExperienceDetail = ({
         return (
           <ReportSuccessFeedback buttonClick={() => handleIsModalOpen(false)} />
         );
+      // TOFIX: to test how much users need this function
+      case MODAL_TYPE.PRIVATE_MESSAGE:
+        return (
+          <div>
+            <Heading style={{ marginBottom: '25px', textAlign: 'center' }}>
+              你想傳什麼訊息給原作者呢？
+            </Heading>
+            <P style={{ marginBottom: '30px' }}>
+              我們正在努力開發這個功能中，不妨偷偷告訴我們你想私訊原作者什麼訊息，讓我們可以打造更好用的功能！
+            </P>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <a
+                href="https://forms.gle/QgBDrws9sjpmgEex9"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button btnStyle="submit">好啊，跟你們說</Button>
+              </a>
+            </div>
+          </div>
+        );
       default:
         return null;
     }
@@ -195,6 +222,16 @@ const ExperienceDetail = ({
     return (
       <React.Fragment>
         <div className={styles.functionButtons}>
+          <PrivateMessageButton
+            className={styles.topMsgButton}
+            onClick={() => {
+              handleIsModalOpen(true, MODAL_TYPE.PRIVATE_MESSAGE);
+              ClickPrivateMessageButtonTracker.sendEvent({
+                position:
+                  ClickPrivateMessageButtonTracker.positions.nextToTopReportBtn,
+              });
+            }}
+          />
           <ReportDetail
             label="檢舉"
             onClick={() => {
@@ -248,7 +285,19 @@ const ExperienceDetail = ({
                     <ExperienceHeading experience={experience} />
                   </div>
                   {renderReportZone()}
-                  <Article experience={experience} hideContent={!canView} />
+                  <Article
+                    experience={experience}
+                    hideContent={!canView}
+                    // TOFIX: temporal prop, to be improved
+                    onClickMsgButton={() => {
+                      handleIsModalOpen(true, MODAL_TYPE.PRIVATE_MESSAGE);
+                      ClickPrivateMessageButtonTracker.sendEvent({
+                        position:
+                          ClickPrivateMessageButtonTracker.positions
+                            .articleBottom,
+                      });
+                    }}
+                  />
                 </Fragment>
               )}
               <LikeZone experienceId={experienceId} />
@@ -283,8 +332,8 @@ const ExperienceDetail = ({
       <Modal
         isOpen={isModalOpen}
         close={() => handleIsModalOpen(false)}
-        hasClose={false}
         closableOnClickOutside={closableOnClickOutside}
+        hasClose
       >
         {renderModalChildren(modalType, modalPayload)}
       </Modal>

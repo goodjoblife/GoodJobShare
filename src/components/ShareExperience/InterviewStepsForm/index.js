@@ -21,6 +21,7 @@ import {
 } from '../utils';
 
 import StaticHelmet from 'common/StaticHelmet';
+import { EnterFormTracker, SubmitFormTracker } from 'utils/eventBasedTracking';
 import {
   INVALID,
   INTERVIEW_FORM_ORDER,
@@ -194,7 +195,7 @@ class InterviewForm extends React.Component {
     });
   }
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (!R.equals(this.state, prevState)) {
       localStorage.setItem(
         LS_INTERVIEW_STEPS_FORM_KEY,
@@ -204,6 +205,23 @@ class InterviewForm extends React.Component {
           __updatedAt: Date.now(),
         }),
       );
+    }
+
+    /** Send EnterForm event to Amplitude */
+    const { pathname } = this.props.location;
+    const { pathname: prevPathname } = prevProps.location;
+    if (pathname !== prevPathname) {
+      const pathnameStepMap = {
+        '/share/interview/step1': 1,
+        '/share/interview/step2': 2,
+        '/share/interview/step3': 3,
+      };
+      if (pathnameStepMap[pathname]) {
+        EnterFormTracker.sendEvent({
+          step: pathnameStepMap[pathname],
+          type: EnterFormTracker.types.interview3Steps,
+        });
+      }
     }
   }
 
@@ -229,6 +247,12 @@ class InterviewForm extends React.Component {
             content_category:
               PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
           });
+          // send SubmitForm event to Amplitude
+          SubmitFormTracker.sendEvent({
+            type: SubmitFormTracker.types.interview3Steps,
+            result: SubmitFormTracker.results.success,
+          });
+
           return () => (
             <SuccessFeedback
               buttonClick={() =>
@@ -241,6 +265,11 @@ class InterviewForm extends React.Component {
           ReactGA.event({
             category: GA_CATEGORY.SHARE_INTERVIEW,
             action: GA_ACTION.UPLOAD_FAIL,
+          });
+          // send SubmitForm event to Amplitude
+          SubmitFormTracker.sendEvent({
+            type: SubmitFormTracker.types.interview3Steps,
+            result: SubmitFormTracker.results.error,
           });
 
           return ({ buttonClick }) => (
