@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import R from 'ramda';
 
 import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
 import PrivateMessageButton from 'common/button/PrivateMessageButton';
+import { formatNumber } from 'utils/stringUtil';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
 import SectionBlock from './SectionBlock';
@@ -11,11 +13,25 @@ import QABlock from './QABlock';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 import { MAX_WORDS_IF_HIDDEN } from '../../../constants/hideContent';
 
+const countSectionWords = sections =>
+  R.reduce(
+    (accu, curr) => {
+      return (
+        accu +
+        R.pathOr(0, ['subtitle', 'length'], curr) +
+        R.pathOr(0, ['content', 'length'], curr)
+      );
+    },
+    0,
+    sections,
+  );
+
 class Article extends React.Component {
   renderSections = () => {
     const { experience, hideContent } = this.props;
     let toHide = false;
     let currentTotalWords = 0;
+    const totalWords = countSectionWords(experience.sections);
 
     if (hideContent) {
       return (
@@ -25,14 +41,17 @@ class Article extends React.Component {
               if (toHide) {
                 return null;
               }
-              currentTotalWords += content.length;
+              currentTotalWords += content.length + subtitle.length;
               if (currentTotalWords > MAX_WORDS_IF_HIDDEN) {
                 toHide = true;
                 const showLength =
                   content.length - (currentTotalWords - MAX_WORDS_IF_HIDDEN);
                 const newContent = `${content.substring(0, showLength)}...`;
                 return (
-                  <GradientMask key={idx}>
+                  <GradientMask
+                    key={idx}
+                    childrenOnMaskBottom={`總共 ${formatNumber(totalWords)} 字`}
+                  >
                     <SectionBlock subtitle={subtitle} content={newContent} />
                   </GradientMask>
                 );
