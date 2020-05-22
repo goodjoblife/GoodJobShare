@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 
@@ -28,13 +28,17 @@ const countSectionWords = sections =>
     sections,
   );
 
-class Article extends React.Component {
-  componentDidMount() {
+const Article = ({
+  experience,
+  hideContent,
+  experimentParameters,
+  onClickMsgButton,
+}) => {
+  useEffect(() => {
     activateOptimize('articleMounted');
-  }
+  }, []);
 
-  renderSections = () => {
-    const { experience, hideContent, experimentParameters } = this.props;
+  const renderSections = () => {
     let toHide = false;
     let currentTotalWords = 0;
     const totalWords = countSectionWords(experience.sections);
@@ -84,43 +88,38 @@ class Article extends React.Component {
     );
   };
 
-  render() {
-    const { experience, hideContent, onClickMsgButton } = this.props;
-    return (
-      <div className={styles.container}>
-        <ArticleInfo experience={experience} hideContent={hideContent} />
-        <section className={styles.main}>
-          <div className={styles.article}>{this.renderSections()}</div>
-          <div>
-            {experience.type === 'interview' &&
-            experience.interview_qas &&
-            experience.interview_qas.length &&
-            !hideContent ? (
-              <div className={styles.qaWrapper}>
-                <P size="l" bold>
-                  面試問答
-                </P>
-                {experience.interview_qas.map(({ question, answer }, idx) => (
-                  <QABlock key={idx} question={question} answer={answer} />
-                ))}
-              </div>
-            ) : null}
-          </div>
-          {hideContent && (
-            <BasicPermissionBlock
-              rootClassName={styles.permissionBlockArticle}
-            />
-          )}
-          {!hideContent && (
-            <div className={styles.btmMsgBtnContainer}>
-              <PrivateMessageButton onClick={onClickMsgButton} />
+  return (
+    <div className={styles.container}>
+      <ArticleInfo experience={experience} hideContent={hideContent} />
+      <section className={styles.main}>
+        <div className={styles.article}>{renderSections()}</div>
+        <div>
+          {experience.type === 'interview' &&
+          experience.interview_qas &&
+          experience.interview_qas.length &&
+          !hideContent ? (
+            <div className={styles.qaWrapper}>
+              <P size="l" bold>
+                面試問答
+              </P>
+              {experience.interview_qas.map(({ question, answer }, idx) => (
+                <QABlock key={idx} question={question} answer={answer} />
+              ))}
             </div>
-          )}
-        </section>
-      </div>
-    );
-  }
-}
+          ) : null}
+        </div>
+        {hideContent && (
+          <BasicPermissionBlock rootClassName={styles.permissionBlockArticle} />
+        )}
+        {!hideContent && (
+          <div className={styles.btmMsgBtnContainer}>
+            <PrivateMessageButton onClick={onClickMsgButton} />
+          </div>
+        )}
+      </section>
+    </div>
+  );
+};
 
 Article.propTypes = {
   experience: PropTypes.object.isRequired,
