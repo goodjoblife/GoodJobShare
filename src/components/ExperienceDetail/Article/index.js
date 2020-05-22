@@ -5,6 +5,8 @@ import R from 'ramda';
 import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
 import PrivateMessageButton from 'common/button/PrivateMessageButton';
+import withExperimentParameters from 'common/withExperimentParameters';
+import { activateOptimize } from 'utils/gtm';
 import { formatNumber } from 'utils/stringUtil';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
@@ -27,8 +29,12 @@ const countSectionWords = sections =>
   );
 
 class Article extends React.Component {
+  componentDidMount() {
+    activateOptimize('articleMounted');
+  }
+
   renderSections = () => {
-    const { experience, hideContent } = this.props;
+    const { experience, hideContent, experimentParameters } = this.props;
     let toHide = false;
     let currentTotalWords = 0;
     const totalWords = countSectionWords(experience.sections);
@@ -50,7 +56,12 @@ class Article extends React.Component {
                 return (
                   <GradientMask
                     key={idx}
-                    childrenOnMaskBottom={`總共 ${formatNumber(totalWords)} 字`}
+                    childrenOnMaskBottom={
+                      experimentParameters.showExperienceDetailWordCount ===
+                      '20200522-B'
+                        ? `總共 ${formatNumber(totalWords)} 字`
+                        : null
+                    }
                   >
                     <SectionBlock subtitle={subtitle} content={newContent} />
                   </GradientMask>
@@ -114,6 +125,10 @@ class Article extends React.Component {
 Article.propTypes = {
   experience: PropTypes.object.isRequired,
   hideContent: PropTypes.bool.isRequired,
+  // from withExperimentParameters HOC
+  experimentParameters: PropTypes.object,
 };
 
-export default Article;
+export default withExperimentParameters(['showExperienceDetailWordCount'])(
+  Article,
+);
