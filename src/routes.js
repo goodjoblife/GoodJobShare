@@ -30,8 +30,14 @@ import VerificationPage from './components/EmailVerification/VerificationPage';
 import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
 import CompanyPageProvider from './components/Company/CompanyPageProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
+import LaborUnionDetail from './components/LaborUnionDetail';
 
 const routes = [
+  {
+    path: '/unions/:id',
+    exact: true,
+    component: LaborUnionDetail,
+  },
   {
     path: '/',
     exact: true,
