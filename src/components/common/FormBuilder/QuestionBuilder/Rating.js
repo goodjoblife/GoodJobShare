@@ -5,6 +5,7 @@ import { Glike } from 'common/icons';
 
 import useDebouncedConfirm from '../useDebouncedConfirm';
 import styles from './Rating.module.css';
+import commonStyles from './styles.module.css';
 
 const range = n => {
   return [...Array(n).keys()];
@@ -38,8 +39,8 @@ const Rating = ({
   const debouncedConfirm = useDebouncedConfirm(onConfirm, 300);
   const [hoveredValue, handleMouseOver, handleMouseOut] = useHover();
   return (
-    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
-      <div className={styles.flexContainer}>
+    <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
+      <div className={cn(styles.flexContainer, commonStyles.warnableContainer)}>
         {range(ratingLabels.length).map(i => (
           <label
             key={i}
@@ -68,7 +69,9 @@ const Rating = ({
           <span />
         </div>
       </div>
-      <div className={styles.warning}>{warning}</div>
+      <div className={cn(commonStyles.warning, commonStyles.inlineWarning)}>
+        {warning}
+      </div>
     </div>
   );
 };

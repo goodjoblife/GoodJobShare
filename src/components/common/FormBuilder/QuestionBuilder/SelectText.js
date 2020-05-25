@@ -5,6 +5,7 @@ import cn from 'classnames';
 import TextInput from 'common/form/TextInput';
 import Select from 'common/form/Select';
 import styles from './SelectText.module.css';
+import commonStyles from './styles.module.css';
 
 const SelectText = ({
   page,
@@ -21,8 +22,8 @@ const SelectText = ({
   placeholder,
   options,
 }) => (
-  <div className={cn({ [styles.hasWarning]: !!warning })}>
-    <div className={styles.inputRow}>
+  <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
+    <div className={cn(styles.inputRow, commonStyles.warnableContainer)}>
       <Select
         options={options.map(value => ({ label: value, value }))}
         value={selected}
@@ -40,7 +41,9 @@ const SelectText = ({
         <div className={cn(styles.suffixLabel, 'pS')}>元</div>
       </div>
     </div>
-    <p className={cn(styles.warning, 'pS')}>{warning}</p>
+    <p className={cn(commonStyles.warning, commonStyles.inlineWarning, 'pS')}>
+      {warning}
+    </p>
   </div>
 );
 

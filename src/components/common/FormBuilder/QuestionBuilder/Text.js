@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import TextInput from 'common/form/TextInput';
-import styles from './Text.module.css';
+import commonStyles from './styles.module.css';
 
 const Text = ({
   page,
@@ -46,27 +46,30 @@ const Text = ({
   );
 
   return (
-    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
-      <TextInput
-        ref={ref}
-        className={styles.textinput}
-        type="text"
-        placeholder={placeholder}
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        onEnter={e => {
-          e.target.blur();
-          onConfirm(e);
-        }}
-        autocompleteItems={items}
-        onAutocompleteItemSelected={item => {
-          onChange(item);
-          if (onSelect) {
-            onSelect(item);
-          }
-        }}
-      />
-      <div className={styles.warning}>{warning}</div>
+    <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
+      <div className={cn(commonStyles.warnableContainer)}>
+        <TextInput
+          ref={ref}
+          type="text"
+          placeholder={placeholder}
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          onEnter={e => {
+            e.target.blur();
+            onConfirm(e);
+          }}
+          autocompleteItems={items}
+          onAutocompleteItemSelected={item => {
+            onChange(item);
+            if (onSelect) {
+              onSelect(item);
+            }
+          }}
+        />
+        <div className={cn(commonStyles.warning, commonStyles.inlineWarning)}>
+          {warning}
+        </div>
+      </div>
     </div>
   );
 };

@@ -17,11 +17,11 @@ import X from 'common/icons/X';
 
 import QuestionBuilder, { availableTypes } from './QuestionBuilder';
 import useDraft from './useDraft';
-import TitleBlock from './TitleBlock';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
 import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
+import TitleBlock from './TitleBlock';
 import Scrollable from './Scrollable';
 import styles from './FormBuilder.module.css';
 

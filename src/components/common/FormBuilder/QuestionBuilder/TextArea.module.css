@@ -7,28 +7,29 @@
   left: 0;
   right: 0;
 
-  .wrapper {
+  .warnableContainer {
+    display: flex;
+    flex-direction: column;
     flex: 1;
 
-    .textarea {
-      height: 100%;
-      resize: none;
-    }
-  }
+    .wrapper {
+      flex: 1;
 
-  &.hasWarning .textarea {
-    border-color: #d50000;
+      .textarea {
+        height: 100%;
+        resize: none;
+      }
+    }
   }
 
   .footnote {
     text-align: right;
     margin-top: 9px;
     font-size: 14px;
-    color: #969696;
     line-height: normal;
-
-    &.warning {
-      color: #d50000;
-    }
   }
+}
+
+.footnote {
+  color: #969696;
 }
