@@ -17,11 +17,11 @@ import X from 'common/icons/X';
 
 import QuestionBuilder, { availableTypes } from './QuestionBuilder';
 import useDraft from './useDraft';
-import TitleBlock from './TitleBlock';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
 import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
+import TitleBlock from './TitleBlock';
 import Scrollable from './Scrollable';
 import styles from './FormBuilder.module.css';
 
@@ -74,7 +74,11 @@ const useQuestion = (question, draft) => {
       typeof footer === 'function' ? footer(draft) : footer,
       dataKey,
       findWarningAgainstValue(draft[dataKey], warning, validator),
-      !required && R.equals(draft[dataKey], defaultValue),
+      !required &&
+        R.equals(
+          draft[dataKey],
+          typeof defaultValue === 'function' ? defaultValue() : defaultValue,
+        ),
     ];
   } else {
     return [false];
@@ -131,7 +135,7 @@ const FormBuilder = ({
   }, [warning, isSubmittable, onValidateFail, dataKey, draft, onSubmit]);
 
   useEffect(() => {
-    if (!open) {
+    if (open) {
       // Reset on close
       setPage(0);
       resetDraft();
@@ -189,6 +193,11 @@ const FormBuilder = ({
                   <QuestionBuilder
                     {...restOptions}
                     page={i}
+                    defaultValue={
+                      typeof restOptions.defaultValue === 'function'
+                        ? restOptions.defaultValue()
+                        : restOptions.defaultValue
+                    }
                     value={draft[restOptions.dataKey]}
                     onChange={handleDraftChange(restOptions.dataKey)}
                     onConfirm={() => {
@@ -249,7 +258,7 @@ FormBuilder.propTypes = {
       description: string,
       type: oneOf(availableTypes).isRequired,
       dataKey: string.isRequired,
-      defaultValue: any,
+      defaultValue: oneOfType([func, any]),
       required: bool,
       warning: oneOfType([func, string]),
       validator: func,

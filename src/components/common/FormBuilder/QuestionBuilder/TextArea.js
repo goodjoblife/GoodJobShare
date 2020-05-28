@@ -4,6 +4,7 @@ import cn from 'classnames';
 
 import TextAreaInput from 'common/form/TextArea';
 import styles from './TextArea.module.css';
+import commonStyles from './styles.module.css';
 
 const Textarea = ({
   page,
@@ -18,14 +19,24 @@ const Textarea = ({
   warning,
   validator,
 }) => (
-  <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
-    <TextAreaInput
-      wrapperClassName={styles.wrapper}
-      className={styles.textarea}
-      value={value}
-      onChange={e => onChange(e.target.value)}
-    />
-    <p className={cn(styles.footnote, { [styles.warning]: !!warning })}>
+  <div
+    className={cn(styles.container, { [commonStyles.hasWarning]: !!warning })}
+  >
+    <div
+      className={cn(styles.warnableContainer, commonStyles.warnableContainer)}
+    >
+      <TextAreaInput
+        wrapperClassName={styles.wrapper}
+        className={cn(styles.textarea)}
+        value={value}
+        onChange={e => onChange(e.target.value)}
+      />
+    </div>
+    <p
+      className={cn(styles.footnote, {
+        [commonStyles.warning]: !!warning,
+      })}
+    >
       {warning || (typeof footnote === 'function' ? footnote(value) : footnote)}
     </p>
   </div>

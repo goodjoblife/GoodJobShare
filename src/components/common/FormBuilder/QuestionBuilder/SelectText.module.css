@@ -1,15 +1,6 @@
-.warning {
-  display: none;
-  font-size: 15px;
-  line-height: 1.6;
-  letter-spacing: 1.07px;
-  color: #d0021b;
-}
-
 .inputRow {
   display: flex;
   align-items: stretch;
-  border: 1px solid transparent;
 
   .text {
     flex: 1;
@@ -28,15 +19,5 @@
 
   .suffixLabel {
     margin: 0 11px;
-  }
-}
-
-.hasWarning {
-  .warning {
-    display: inline;
-  }
-
-  .inputRow {
-    border-color: #d0021b;
   }
 }

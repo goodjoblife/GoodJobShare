@@ -14,10 +14,6 @@ $warning-red: #d0021b;
   border: solid 1px transparent;
 }
 
-.hasWarning .listContainer {
-  border-color: $warning-red;
-}
-
 .list {
   display: flex;
   flex-direction: column;
@@ -75,11 +71,4 @@ $warning-red: #d0021b;
   border-radius: 18.5px;
   border: solid 1px #555555;
   padding: 8px 30px;
-}
-
-.warning {
-  font-size: 15px;
-  line-height: 1.6;
-  letter-spacing: 1.07px;
-  color: $warning-red;
 }

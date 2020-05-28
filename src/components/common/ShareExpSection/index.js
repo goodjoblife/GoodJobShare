@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Section, Wrapper, Heading, P } from 'common/base';
@@ -16,21 +16,10 @@ const DefaultSubheading = () => (
   </div>
 );
 
-const ShareExpSection = ({
-  heading,
-  Subheading,
-  onSelectInterviewExperience,
-}) => {
-  const InterviewLink = useCallback(
-    props => {
-      if (onSelectInterviewExperience) {
-        return <button onClick={onSelectInterviewExperience} {...props} />;
-      } else {
-        return <Link to="/share/interview" {...props} />;
-      }
-    },
-    [onSelectInterviewExperience],
-  );
+const ShareExpSection = ({ heading, Subheading }) => {
+  const shareInterviewPath = true
+    ? { state: { share: 'interview' } }
+    : '/share/interview'; // TODO: A/B
   return (
     <Section padding>
       <Wrapper size="l">
@@ -41,7 +30,7 @@ const ShareExpSection = ({
           <Subheading />
         </P>
         <div className={styles.container}>
-          <InterviewLink className={styles.item}>
+          <Link to={shareInterviewPath} className={styles.item}>
             <img
               src={InterviewImg}
               alt="分享面試經驗"
@@ -53,7 +42,7 @@ const ShareExpSection = ({
             <P className={styles.description} size="l">
               分享你的面試過程、面試問題，減少大家走冤枉路～
             </P>
-          </InterviewLink>
+          </Link>
           <Link to="/share/work-experiences" className={styles.item}>
             <img
               src={WorkExperienceImg}
@@ -89,7 +78,6 @@ const ShareExpSection = ({
 ShareExpSection.propTypes = {
   heading: PropTypes.string.isRequired,
   Subheading: PropTypes.func,
-  onSelectInterviewExperience: PropTypes.func,
 };
 ShareExpSection.defaultProps = {
   heading: '你要分享何種資訊？',

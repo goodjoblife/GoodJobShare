@@ -1,14 +1,9 @@
 @value main-yellow from 'common/variables.module.css';
 
-.container.hasWarning .flexContainer {
-  border-color: #d50000;
-}
-
 .flexContainer {
   display: flex;
   margin-top: 20px;
   padding: 1px;
-  border: solid 1px transparent;
 
   .noteContainer {
     flex: 1;
@@ -78,11 +73,4 @@
   &[data-label]::after {
     content: attr(data-label);
   }
-}
-
-.warning {
-  font-size: 15px;
-  line-height: 1.6;
-  letter-spacing: 1.07px;
-  color: #d0021b;
 }

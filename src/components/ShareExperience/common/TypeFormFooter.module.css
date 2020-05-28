@@ -7,6 +7,11 @@
   background-color: #fffae1;
   padding: 5px 29px;
 
+  @media (min-width: 850px) {
+    padding: 17px;
+    margin-top: 10px;
+  }
+
   .unlockDuration {
     font-size: 15px;
     font-weight: normal;

@@ -5,6 +5,7 @@ import cn from 'classnames';
 import Scrollable from '../Scrollable';
 import TextInput from 'common/form/TextInput';
 import styles from './TextList.module.css';
+import commonStyles from './styles.module.css';
 
 const TextList = ({
   page,
@@ -35,8 +36,10 @@ const TextList = ({
   ]);
 
   return (
-    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
-      <div className={styles.listContainer}>
+    <div
+      className={cn(styles.container, { [commonStyles.hasWarning]: !!warning })}
+    >
+      <div className={cn(styles.listContainer, commonStyles.warnableContainer)}>
         <Scrollable className={styles.list}>
           {values.map((value, i) => (
             <div className={styles.item} key={i}>
@@ -65,7 +68,9 @@ const TextList = ({
           </div>
         </Scrollable>
       </div>
-      <div className={styles.warning}>{warning}</div>
+      <div className={cn(commonStyles.warning, commonStyles.isFill)}>
+        {warning}
+      </div>
     </div>
   );
 };

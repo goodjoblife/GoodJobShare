@@ -5,6 +5,10 @@ $main-color: #fcd406;
   height: 16px;
   border: 1px solid $main-color;
 
+  @media (min-width: 850px) {
+    width: 240px;
+  }
+
   .done {
     height: 100%;
     background-color: $main-color;
