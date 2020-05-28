@@ -1,0 +1,25 @@
+$main-color: #fcd406;
+
+.progressBar {
+  width: 100%;
+  height: 16px;
+  border: 1px solid $main-color;
+
+  .done {
+    height: 100%;
+    background-color: $main-color;
+    transition: width 0.3s;
+  }
+}
+
+.container {
+  width: 117px;
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  color: #969696;
+
+  .label {
+    margin-bottom: 5px;
+  }
+}

@@ -5,7 +5,7 @@ import R from 'ramda';
 import ReactPixel from 'react-facebook-pixel';
 import { withRouter } from 'react-router-dom';
 
-import AutoCompleteSearchTextInput from 'common/form/AutoCompleteTextInput_new/AutoCompleteSearchTextInput';
+import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
 
 import styles from './SearchBar.module.css';
@@ -54,7 +54,7 @@ const SearchBar = ({ history, location }) => {
       className={cn(styles.section, styles.searchbar)}
       onSubmit={handleFormSubmit}
     >
-      <AutoCompleteSearchTextInput
+      <SearchTextInput
         wrapperClassName={styles.textInputWrapper}
         className={styles.textInput}
         value={searchText}

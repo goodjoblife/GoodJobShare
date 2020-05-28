@@ -1,0 +1,44 @@
+.warning {
+  display: none;
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: 1.07px;
+  color: #d0021b;
+}
+
+.inputRow {
+  display: flex;
+  border: 1px solid transparent;
+
+  .inputGroup {
+    flex: 1;
+  }
+
+  .inputGroup + .inputGroup {
+    margin-left: 24px;
+  }
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+
+  .inputWrapper {
+    flex: 1;
+  }
+
+  .suffixLabel {
+    margin: 0 11px;
+  }
+}
+
+.hasWarning {
+  .warning {
+    display: inline;
+  }
+
+  .inputRow {
+    border-color: #d0021b;
+  }
+}

@@ -1,0 +1,20 @@
+.btn {
+  opacity: 1;
+  border-radius: 4px;
+  border: solid 1px #969696;
+  color: #969696;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 82px;
+  height: 38px;
+  cursor: pointer;
+
+  &:disabled {
+    display: none;
+  }
+}
+
+.btn + .btn {
+  margin-left: 8px;
+}

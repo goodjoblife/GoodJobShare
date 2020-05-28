@@ -7,7 +7,15 @@ import Cross from '../images/x.svg';
 import styles from './Modal.module.css';
 import { compose, withHandlers } from 'recompose';
 
-const Modal = ({ children, isOpen, hasClose, close, size, onClickOutside }) => (
+const Modal = ({
+  children,
+  isOpen,
+  hasClose,
+  close,
+  size,
+  onClickOutside,
+  contentClassName,
+}) => (
   <div
     className={cn(styles.modal, {
       [styles.isOpen]: isOpen,
@@ -27,7 +35,10 @@ const Modal = ({ children, isOpen, hasClose, close, size, onClickOutside }) => (
             />
           </div>
         ) : null}
-        <div className={styles.content} onClick={e => e.stopPropagation()}>
+        <div
+          className={cn(styles.content, contentClassName)}
+          onClick={e => e.stopPropagation()}
+        >
           {children}
         </div>
       </div>
@@ -36,6 +47,7 @@ const Modal = ({ children, isOpen, hasClose, close, size, onClickOutside }) => (
 );
 
 Modal.propTypes = {
+  contentClassName: PropTypes.string,
   children: PropTypes.node,
   isOpen: PropTypes.bool,
   hasClose: PropTypes.bool,

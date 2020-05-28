@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .wrapper {
+    flex: 1;
+
+    .textarea {
+      height: 100%;
+      resize: none;
+    }
+  }
+
+  &.hasWarning .textarea {
+    border-color: #d50000;
+  }
+
+  .footnote {
+    text-align: right;
+    margin-top: 9px;
+    font-size: 14px;
+    color: #969696;
+    line-height: normal;
+
+    &.warning {
+      color: #d50000;
+    }
+  }
+}
