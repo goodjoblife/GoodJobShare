@@ -5,8 +5,8 @@ import R from 'ramda';
 import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
 import PrivateMessageButton from 'common/button/PrivateMessageButton';
-import withExperimentParameters from 'common/withExperimentParameters';
 import { activateOptimize } from 'utils/gtm';
+import useExperimentParameters from 'hooks/useExperimentParameters';
 import { formatNumber } from 'utils/stringUtil';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
@@ -31,12 +31,18 @@ const countSectionWords = sections =>
 const Article = ({
   experience,
   hideContent,
-  experimentParameters,
+
   onClickMsgButton,
 }) => {
+  const experimentParameters = useExperimentParameters([
+    'showExperienceDetailWordCount',
+  ]);
+
   useEffect(() => {
     activateOptimize('articleMounted');
   }, []);
+
+  console.log(experimentParameters);
 
   const renderSections = () => {
     let toHide = false;
@@ -128,6 +134,4 @@ Article.propTypes = {
   experimentParameters: PropTypes.object,
 };
 
-export default withExperimentParameters(['showExperienceDetailWordCount'])(
-  Article,
-);
+export default Article;
