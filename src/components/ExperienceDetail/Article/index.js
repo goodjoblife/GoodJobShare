@@ -7,7 +7,7 @@ import GradientMask from 'common/GradientMask';
 import PrivateMessageButton from 'common/button/PrivateMessageButton';
 import { activateOptimize } from 'utils/gtm';
 import useExperimentParameters from 'hooks/useExperimentParameters';
-import { formatNumber } from 'utils/stringUtil';
+import { formatCommaSeparatedNumber } from 'utils/stringUtil';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
 import SectionBlock from './SectionBlock';
@@ -69,7 +69,7 @@ const Article = ({
                     childrenOnMaskBottom={
                       experimentParameters.showExperienceDetailWordCount ===
                       '20200522-B'
-                        ? `總共 ${formatNumber(totalWords)} 字`
+                        ? `總共 ${formatCommaSeparatedNumber(totalWords)} 字`
                         : null
                     }
                   >
