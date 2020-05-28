@@ -69,8 +69,8 @@ const Article = ({
                     childrenOnMaskBottom={
                       experimentParameters.showExperienceDetailWordCount ===
                       '20200522-B'
-                        ? null
-                        : `總共 ${formatNumber(totalWords)} 字`
+                        ? `總共 ${formatNumber(totalWords)} 字`
+                        : null
                     }
                   >
                     <SectionBlock subtitle={subtitle} content={newContent} />
