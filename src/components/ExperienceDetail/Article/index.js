@@ -42,8 +42,6 @@ const Article = ({
     activateOptimize('articleMounted');
   }, []);
 
-  console.log(experimentParameters);
-
   const renderSections = () => {
     let toHide = false;
     let currentTotalWords = 0;
@@ -130,8 +128,6 @@ const Article = ({
 Article.propTypes = {
   experience: PropTypes.object.isRequired,
   hideContent: PropTypes.bool.isRequired,
-  // from withExperimentParameters HOC
-  experimentParameters: PropTypes.object,
 };
 
 export default Article;
