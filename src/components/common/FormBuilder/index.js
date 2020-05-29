@@ -142,9 +142,9 @@ const FormBuilder = ({
   }, [open, resetDraft, setPage]);
 
   const warnBeforeSetPage = useCallback(
-    (page, requireValidate = true) => {
+    page => {
       setWarningShown(true);
-      if (warning && requireValidate) {
+      if (warning) {
         if (onValidateFail)
           onValidateFail({ dataKey, value: draft[dataKey], warning });
       } else {
@@ -204,7 +204,7 @@ const FormBuilder = ({
               skippable={skippable}
               onPrevious={() => {
                 if (onPrev) onPrev();
-                warnBeforeSetPage(page - 1, false);
+                setPage(page - 1);
               }}
               onNext={() => {
                 if (onNext) onNext();
