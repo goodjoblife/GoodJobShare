@@ -34,13 +34,10 @@ const Article = ({
 
   onClickMsgButton,
 }) => {
-  const experimentParameters = useExperimentParameters([
-    'showExperienceDetailWordCount',
-  ]);
-
   useEffect(() => {
-    activateOptimize('articleMounted');
+    activateOptimize('testInterviewFormType');
   }, []);
+  const experimentParameters = useExperimentParameters(['interviewFormType']);
 
   const renderSections = () => {
     let toHide = false;
@@ -64,12 +61,9 @@ const Article = ({
                 return (
                   <GradientMask
                     key={idx}
-                    childrenOnMaskBottom={
-                      experimentParameters.showExperienceDetailWordCount ===
-                      '20200522-B'
-                        ? `總共 ${formatCommaSeparatedNumber(totalWords)} 字`
-                        : null
-                    }
+                    childrenOnMaskBottom={`總共 ${formatCommaSeparatedNumber(
+                      totalWords,
+                    )} 字`}
                   >
                     <SectionBlock subtitle={subtitle} content={newContent} />
                   </GradientMask>
@@ -113,7 +107,14 @@ const Article = ({
           ) : null}
         </div>
         {hideContent && (
-          <BasicPermissionBlock rootClassName={styles.permissionBlockArticle} />
+          <BasicPermissionBlock
+            to={
+              experimentParameters.interviewFormType === '20200530-B-typeform'
+                ? { state: { share: 'interview' } }
+                : '/share/interview/step1'
+            }
+            rootClassName={styles.permissionBlockArticle}
+          />
         )}
         {!hideContent && (
           <div className={styles.btmMsgBtnContainer}>
