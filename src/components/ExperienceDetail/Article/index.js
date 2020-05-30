@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 
 import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
 import PrivateMessageButton from 'common/button/PrivateMessageButton';
-import { activateOptimize } from 'utils/gtm';
-import useExperimentParameters from 'hooks/useExperimentParameters';
+import useShareLink from 'hooks/useShareLink';
 import { formatCommaSeparatedNumber } from 'utils/stringUtil';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
@@ -34,10 +33,8 @@ const Article = ({
 
   onClickMsgButton,
 }) => {
-  useEffect(() => {
-    activateOptimize('testInterviewFormType');
-  }, []);
-  const experimentParameters = useExperimentParameters(['interviewFormType']);
+  // Get share link object according to Google Optimize parameters
+  const shareLink = useShareLink();
 
   const renderSections = () => {
     let toHide = false;
@@ -108,11 +105,7 @@ const Article = ({
         </div>
         {hideContent && (
           <BasicPermissionBlock
-            to={
-              experimentParameters.interviewFormType === '20200530-B-typeform'
-                ? { state: { share: 'interview' } }
-                : '/share/interview/step1'
-            }
+            to={shareLink}
             rootClassName={styles.permissionBlockArticle}
           />
         )}
