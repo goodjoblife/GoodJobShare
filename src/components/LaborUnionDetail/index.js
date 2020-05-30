@@ -1,5 +1,6 @@
 import React from 'react';
 import { Section, Wrapper, Heading } from 'common/base';
+import ButtonRect from 'common/button/ButtonRect';
 import styles from './LaborUnionDetail.module.css';
 
 class LaborUnionDetail extends React.Component {
@@ -19,6 +20,11 @@ class LaborUnionDetail extends React.Component {
             </Heading>
           </Wrapper>
         </Section>
+        <div>
+          <ButtonRect btnStyle="hoverYellow" className={styles.joinBtn}>
+            馬上加入
+          </ButtonRect>
+        </div>
       </Section>
     );
   }
