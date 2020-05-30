@@ -25,6 +25,13 @@ class LaborUnionDetail extends React.Component {
             馬上加入
           </ButtonRect>
         </div>
+        <Section center>
+          <img
+            src="https://s.newtalk.tw/album/news/123/5ae8067d8a13d.JPG"
+            alt="勞權公投"
+            className={styles.banner}
+          />
+        </Section>
       </Section>
     );
   }
