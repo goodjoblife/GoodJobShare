@@ -1,5 +1,5 @@
 import React from 'react';
-import { Section, Wrapper } from 'common/base';
+import { Section, Wrapper, Heading } from 'common/base';
 import styles from './LaborUnionDetail.module.css';
 
 class LaborUnionDetail extends React.Component {
@@ -13,6 +13,10 @@ class LaborUnionDetail extends React.Component {
               className={styles.headingIcon}
               alt="勞權圖示"
             />
+            <Heading>
+              <div className={styles.heading}>台灣電子電機資訊產業公會</div>
+              <div className={styles.heading}>守護科技業勞工權益的第一線</div>
+            </Heading>
           </Wrapper>
         </Section>
       </Section>
