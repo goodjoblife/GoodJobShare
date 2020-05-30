@@ -1,20 +1,20 @@
 import React from 'react';
-import { Section, Wrapper, Heading, P } from 'common/base';
-import Button from 'common/button/Button';
-//import ButtonRect from 'common/button/Button';
-//import i from 'common/icons';
+import { Section, Wrapper } from 'common/base';
+import styles from './LaborUnionDetail.module.css';
 
 class LaborUnionDetail extends React.Component {
   render() {
     return (
-      <Section padding>
-        <Wrapper size="m">
-          <Heading size="l">台灣電子電機資訊產業公會</Heading>
-          <P>test</P>
-          <Button btnStyle="buttonHoverYellow" circleSize="md">
-            馬上加入
-          </Button>
-        </Wrapper>
+      <Section>
+        <Section center>
+          <Wrapper className={styles.welcome}>
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSgEO4b5dyj36gl9Rq1IHDHFfwu2GHMiF6aB6b_U9gQ_zQLujqE&usqp=CAU"
+              className={styles.headingIcon}
+              alt="勞權圖示"
+            />
+          </Wrapper>
+        </Section>
       </Section>
     );
   }
