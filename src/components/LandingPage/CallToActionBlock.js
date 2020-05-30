@@ -1,27 +1,34 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Heading } from 'common/base';
 
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Button from 'common/button/ButtonRect';
+import useExperimentParameters from 'hooks/useExperimentParameters';
+import { activateOptimize } from 'utils/gtm';
 import styles from './CallToActionBlock.module.css';
 import textInputStyle from 'common/form/TextInput/TextInput.module.css';
 
 const CallToActionBlock = ({ history }) => {
   const [companyName, setCompanyName] = useState('');
 
+  useEffect(() => {
+    activateOptimize('testInterviewFormType');
+  }, []);
+  const experimentParameters = useExperimentParameters(['interviewFormType']);
+
   const handleSubmit = useCallback(
     e => {
       e.preventDefault();
       if (companyName) {
         history.push(
-          true
+          experimentParameters.interviewFormType === '20200530-B-typeform'
             ? { state: { share: 'interview', companyName } }
             : `/share/interview?companyName=${companyName}`,
-        ); // TODO: A/B
+        );
       }
     },
-    [companyName, history],
+    [companyName, experimentParameters, history],
   );
 
   return (
