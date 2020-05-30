@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Section, Wrapper, Heading, P } from 'common/base';
+import { activateOptimize } from 'utils/gtm';
+import useExperimentParameters from 'hooks/useExperimentParameters';
 import InterviewImg from './share-2.png';
 import WorkExperienceImg from './share-3.png';
 import SalaryWorkTimeImg from './share-1.png';
@@ -17,9 +19,15 @@ const DefaultSubheading = () => (
 );
 
 const ShareExpSection = ({ heading, Subheading }) => {
-  const shareInterviewPath = true
-    ? { state: { share: 'interview' } }
-    : '/share/interview'; // TODO: A/B
+  useEffect(() => {
+    activateOptimize('testInterviewFormType');
+  }, []);
+  const experimentParameters = useExperimentParameters(['interviewFormType']);
+
+  const shareInterviewPath =
+    experimentParameters.interviewFormType === '20200530-B-typeform'
+      ? { state: { share: 'interview' } }
+      : '/share/interview';
   return (
     <Section padding>
       <Wrapper size="l">
