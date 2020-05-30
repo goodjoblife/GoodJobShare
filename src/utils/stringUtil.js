@@ -24,3 +24,7 @@ export const nthIndexOf = (str, substr, n) => {
   }
   return pos;
 };
+
+// format: 3000 -> "3,000"
+export const formatCommaSeparatedNumber = num =>
+  num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');

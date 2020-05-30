@@ -71,7 +71,7 @@ $paddingS: 16px;
   padding: 50px 50px;
 
   @media (max-width: 550px) {
-    margin-top: -15px;
+    margin-top: -30px;
     padding: 50px 25px;
   }
 }
