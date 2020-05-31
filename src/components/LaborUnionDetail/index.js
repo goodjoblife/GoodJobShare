@@ -8,7 +8,7 @@ class LaborUnionDetail extends React.Component {
     return (
       <Section>
         <Section center>
-          <Wrapper className={styles.welcome}>
+          <Wrapper className={styles.intro}>
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSgEO4b5dyj36gl9Rq1IHDHFfwu2GHMiF6aB6b_U9gQ_zQLujqE&usqp=CAU"
               className={styles.headingIcon}
@@ -20,12 +20,11 @@ class LaborUnionDetail extends React.Component {
             </Heading>
           </Wrapper>
         </Section>
-        <div>
+
+        <Section>
           <ButtonRect btnStyle="hoverYellow" className={styles.joinBtn}>
             馬上加入
           </ButtonRect>
-        </div>
-        <Section center>
           <img
             src="https://s.newtalk.tw/album/news/123/5ae8067d8a13d.JPG"
             alt="勞權公投"
