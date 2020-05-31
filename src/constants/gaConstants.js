@@ -6,6 +6,7 @@ export const GA_CATEGORY = {
   SEARCH_EXPERIENCE: 'search_experience',
   LOGIN: 'login',
   HEADER: 'header',
+  TEST_NEW_FEATURE: 'test_new_feature',
 };
 
 export const GA_ACTION = {
@@ -22,4 +23,5 @@ export const GA_ACTION = {
   CLICK_EXPERIENCE_SEARCH: 'click_experience_search',
   CLICK_LABOR_RIGHTS: 'click_labor_rights',
   CLICK_SHARE_DATA: 'click_share_data',
+  CLICK_PRIVATE_MESSAGE_BUTTON: 'click_private_message_button',
 };
