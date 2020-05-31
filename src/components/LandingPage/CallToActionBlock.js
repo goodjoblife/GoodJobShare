@@ -4,24 +4,22 @@ import { Heading } from 'common/base';
 
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Button from 'common/button/ButtonRect';
+import { useShareLink } from 'hooks/experiments';
 import styles from './CallToActionBlock.module.css';
 import textInputStyle from 'common/form/TextInput/TextInput.module.css';
 
 const CallToActionBlock = ({ history }) => {
   const [companyName, setCompanyName] = useState('');
+  const shareLink = useShareLink(companyName);
 
   const handleSubmit = useCallback(
     e => {
       e.preventDefault();
       if (companyName) {
-        history.push(
-          true
-            ? { state: { share: 'interview', companyName } }
-            : `/share/interview?companyName=${companyName}`,
-        ); // TODO: A/B
+        history.push(shareLink);
       }
     },
-    [companyName, history],
+    [companyName, history, shareLink],
   );
 
   return (

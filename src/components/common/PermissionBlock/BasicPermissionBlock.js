@@ -13,7 +13,7 @@ import styles from './PermissionBlock.module.css';
 
 class BasicPermissionBlock extends React.Component {
   static propTypes = {
-    to: PropTypes.string,
+    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     rootClassName: PropTypes.string,
     simple: PropTypes.bool,
     experienceCount: PropTypes.number.isRequired,
@@ -27,7 +27,6 @@ class BasicPermissionBlock extends React.Component {
   };
 
   static defaultProps = {
-    to: true ? { state: { share: 'interview' } } : '/share/interview/step1', // TODO: A/B
     rootClassName: '',
     simple: false,
   };

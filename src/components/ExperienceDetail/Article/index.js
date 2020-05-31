@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 
 import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
 import PrivateMessageButton from 'common/button/PrivateMessageButton';
-import { activateOptimize } from 'utils/gtm';
-import useExperimentParameters from 'hooks/useExperimentParameters';
+import { useShareLink } from 'hooks/experiments';
 import { formatCommaSeparatedNumber } from 'utils/stringUtil';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
@@ -34,13 +33,8 @@ const Article = ({
 
   onClickMsgButton,
 }) => {
-  const experimentParameters = useExperimentParameters([
-    'showExperienceDetailWordCount',
-  ]);
-
-  useEffect(() => {
-    activateOptimize('articleMounted');
-  }, []);
+  // Get share link object according to Google Optimize parameters
+  const shareLink = useShareLink();
 
   const renderSections = () => {
     let toHide = false;
@@ -64,12 +58,9 @@ const Article = ({
                 return (
                   <GradientMask
                     key={idx}
-                    childrenOnMaskBottom={
-                      experimentParameters.showExperienceDetailWordCount ===
-                      '20200522-B'
-                        ? `總共 ${formatCommaSeparatedNumber(totalWords)} 字`
-                        : null
-                    }
+                    childrenOnMaskBottom={`總共 ${formatCommaSeparatedNumber(
+                      totalWords,
+                    )} 字`}
                   >
                     <SectionBlock subtitle={subtitle} content={newContent} />
                   </GradientMask>
@@ -113,7 +104,10 @@ const Article = ({
           ) : null}
         </div>
         {hideContent && (
-          <BasicPermissionBlock rootClassName={styles.permissionBlockArticle} />
+          <BasicPermissionBlock
+            to={shareLink}
+            rootClassName={styles.permissionBlockArticle}
+          />
         )}
         {!hideContent && (
           <div className={styles.btmMsgBtnContainer}>
