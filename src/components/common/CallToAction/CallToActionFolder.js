@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import { Heading } from 'common/base';
-import useShareLink from 'hooks/useShareLink';
+import { useShareLink } from 'hooks/experiments';
 import FolderBanner from '../FolderBanner';
 import ProgressBarWithDataCount from '../../../containers/ProgressBar';
 import styles from './CallToActionFolder.module.css';

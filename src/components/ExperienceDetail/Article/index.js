@@ -5,7 +5,7 @@ import R from 'ramda';
 import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
 import PrivateMessageButton from 'common/button/PrivateMessageButton';
-import useShareLink from 'hooks/useShareLink';
+import { useShareLink } from 'hooks/experiments';
 import { formatCommaSeparatedNumber } from 'utils/stringUtil';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';

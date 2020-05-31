@@ -5,7 +5,7 @@ import Loader from 'common/Loader';
 import Columns from 'common/Columns';
 import { Section, Wrapper, Heading } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
-import useShareLink from 'hooks/useShareLink';
+import { useShareLink } from 'hooks/experiments';
 import { queryMenu } from '../../actions/laborRights';
 import { isFetching, isError, isFetched } from '../../constants/status';
 import LaborRightsEntry from './LaborRightsEntry';

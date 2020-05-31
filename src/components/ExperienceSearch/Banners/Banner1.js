@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import useShareLink from 'hooks/useShareLink';
+import { useShareLink } from 'hooks/experiments';
 import styles from './Banners.module.css';
 import ProgressBarWithDataCount from '../../../containers/ProgressBar';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import useShareLink from 'hooks/useShareLink';
+import { useShareLink } from 'hooks/experiments';
 import styles from './Banners.module.css';
 
 const Banner2 = () => {
