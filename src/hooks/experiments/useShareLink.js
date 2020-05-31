@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import useExperimentParameters from 'hooks/useExperimentParameters';
 import { activateOptimize } from 'utils/gtm';
 
-export default () => {
+export default companyName => {
   useEffect(() => {
     activateOptimize('testInterviewFormType');
   }, []);
@@ -10,11 +10,19 @@ export default () => {
 
   const link = useMemo(() => {
     if (experimentParameters.interviewFormType === '20200530-B-typeform') {
-      return { state: { share: 'interview' } };
+      if (companyName) {
+        return { state: { share: 'interview', companyName } };
+      } else {
+        return { state: { share: 'interview' } };
+      }
     } else {
-      return '/share/interview/step1';
+      if (companyName) {
+        return `/share/interview?companyName=${companyName}`;
+      } else {
+        return '/share/interview/step1';
+      }
     }
-  }, [experimentParameters]);
+  }, [companyName, experimentParameters.interviewFormType]);
 
   return link;
 };
