@@ -1,4 +1,4 @@
-.welcome {
+.intro {
   display: flex;
   justify-content: center;
   margin: 77px auto 0 auto;
@@ -18,17 +18,23 @@
   color: #000000;
 
   &:nth-child(2) {
-    height: 33px;
-    font-size: 24px;
+    height: 2rem;
+    font-size: 1.5rem;
     letter-spacing: 0.87px;
     color: #000000;
     margin-top: 7px;
   }
 }
 
+.subHeading {
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+}
+
 .joinBtn {
   display: flex;
-  margin: 2em auto 2em auto;
+  margin: 2rem auto 2rem auto;
   justify-content: center;
   align-items: center;
   text-align: center;
