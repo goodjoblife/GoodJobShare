@@ -1,5 +1,5 @@
 import React from 'react';
-import { Section, Wrapper, Heading } from 'common/base';
+import { Section, Wrapper, Heading, P } from 'common/base';
 import ButtonRect from 'common/button/ButtonRect';
 import styles from './LaborUnionDetail.module.css';
 
@@ -29,6 +29,16 @@ const LaborUnionDetail = () => {
           className={styles.banner}
           alt="勞權公投"
         />
+      </Section>
+
+      <Section>
+        <Wrapper>
+          <Heading className={styles.subHeading}>關於我們</Heading>
+          <P className={styles.text}>
+            電資工會於 2011
+            年成立，宗旨在於維護臺灣科技業勞工的權益，與雇主進行團體協商，並進行政策的提倡。讓臺灣科技業的勞工可以活得好，做的巧，在工作與生活之間取得平衡，一起讓臺灣科技業發光發熱。
+          </P>
+        </Wrapper>
       </Section>
     </Section>
   );
