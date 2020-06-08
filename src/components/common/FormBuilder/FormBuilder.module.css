@@ -20,13 +20,12 @@
   bottom: 0px;
   width: 360px;
   background: #ffffff;
-  box-shadow: 0 0 10px hsla(0, 0%, 0%, 0);
   overflow: hidden;
   display: flex;
   flex-direction: column;
 
   @media (max-width: 550px) {
-    max-width: 350px;
+    max-width: 100%;
   }
 
   @media (min-width: 850px) {
