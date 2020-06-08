@@ -16,14 +16,17 @@
 
 .container {
   position: absolute;
-  top: 10px;
-  bottom: 10px;
+  top: 0px;
+  bottom: 0px;
   width: 360px;
   background: #ffffff;
-  box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.2);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 550px) {
+    max-width: 100%;
+  }
 
   @media (min-width: 850px) {
     width: 720px;
