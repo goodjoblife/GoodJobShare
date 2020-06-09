@@ -277,6 +277,11 @@ const routes = [
     component: LaborUnionDetail,
   },
   {
+    path: '/unions/:id',
+    exact: true,
+    component: LaborUnionDetail,
+  },
+  {
     component: NotFound,
   },
 ];
