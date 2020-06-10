@@ -45,8 +45,8 @@ const LaborUnionDetail = () => {
                 className={styles.rectangleImg}
                 alt="維護勞工權益"
               />
-              <P>維護勞工權益</P>
-              <P>休假、加班費不打折</P>
+              <P className={styles.illustration}>維護勞工權益</P>
+              <P className={styles.illustration}>休假、加班費不打折</P>
             </div>
 
             <div>
@@ -55,8 +55,8 @@ const LaborUnionDetail = () => {
                 className={styles.rectangleImg}
                 alt="進行團體協商"
               />
-              <P>進行團體協商</P>
-              <P>爭取更好的福利</P>
+              <P className={styles.illustration}>進行團體協商</P>
+              <P className={styles.illustration}>爭取更好的福利</P>
             </div>
 
             <div>
@@ -65,8 +65,8 @@ const LaborUnionDetail = () => {
                 className={styles.rectangleImg}
                 alt="政策倡議"
               />
-              <P>政策倡議</P>
-              <P>改善產業體質</P>
+              <P className={styles.illustration}>政策倡議</P>
+              <P className={styles.illustration}>改善產業體質</P>
             </div>
           </Wrapper>
         </Wrapper>
