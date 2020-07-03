@@ -71,7 +71,7 @@ $paddingS: 16px;
   padding: 50px 50px;
 
   @media (max-width: 550px) {
-    margin-top: -15px;
+    margin-top: -30px;
     padding: 50px 25px;
   }
 }
@@ -79,4 +79,10 @@ $paddingS: 16px;
 .lock {
   margin-right: 5px;
   color: #ed0d5e;
+}
+
+.btmMsgBtnContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
 }

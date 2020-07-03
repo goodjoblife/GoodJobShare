@@ -1,20 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-
-/**
- * Utility: return selected attributes of element
- */
-const getObservedAttributes = (element, attributesToObserve) => {
-  const parameters = {};
-  if (element && element.getAttribute) {
-    attributesToObserve.forEach(attr => {
-      const newAttr = element.getAttribute(attr);
-      if (newAttr !== null) {
-        parameters[attr] = newAttr;
-      }
-    });
-  }
-  return parameters;
-};
+import React from 'react';
+import useExperimentParameters from 'hooks/useExperimentParameters';
 
 /**
  * This HOC is for using Google Optimize while doing A/B testing.
@@ -36,52 +21,7 @@ export default (
   elementId = 'root',
 ) => WrappedComponent => {
   const WithExperimentParameters = props => {
-    const ref = useRef(null);
-    if (typeof document !== 'undefined' && ref.current === null) {
-      ref.current = document.getElementById(elementId);
-    }
-
-    // get attribute values at this moment
-    const getCurrentParameters = () => {
-      return getObservedAttributes(ref.current, attributesToObserve);
-    };
-
-    const [parameters, setParameters] = useState(getCurrentParameters);
-
-    useEffect(() => {
-      let observer = null;
-      // setup mutation observer
-      if (window && 'MutationObserver' in window) {
-        observer = new MutationObserver(records => {
-          records.forEach(record => {
-            if (record.type === 'attributes') {
-              const newParameters = getObservedAttributes(
-                record.target,
-                attributesToObserve,
-              );
-              setParameters(newParameters);
-            }
-          });
-        });
-      }
-
-      // start observing target element
-      if (observer && ref.current) {
-        // retrieve latest parameters before observing changes
-        setParameters(getCurrentParameters());
-        observer.observe(ref.current, {
-          attributes: true,
-        });
-      }
-
-      // unsubscribe observation
-      return function clear() {
-        if (observer) {
-          observer.disconnect();
-        }
-      };
-    }, []);
-
+    const parameters = useExperimentParameters(attributesToObserve, elementId);
     return <WrappedComponent {...props} experimentParameters={parameters} />;
   };
 
