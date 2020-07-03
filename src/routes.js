@@ -34,11 +34,6 @@ import LaborUnionDetail from './components/LaborUnionDetail';
 
 const routes = [
   {
-    path: '/unions/:id',
-    exact: true,
-    component: LaborUnionDetail,
-  },
-  {
     path: '/',
     exact: true,
     component: LandingPage,
@@ -275,6 +270,16 @@ const routes = [
     component: VerificationPage,
     hasHeader: false,
     hasFooter: false,
+  },
+  {
+    path: '/unions/:id',
+    exact: true,
+    component: LaborUnionDetail,
+  },
+  {
+    path: '/unions/:id',
+    exact: true,
+    component: LaborUnionDetail,
   },
   {
     component: NotFound,

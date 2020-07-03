@@ -4,10 +4,20 @@ import cn from 'classnames';
 
 import styles from './GradientMask.module.css';
 
-const GradientMask = ({ children, rootClassName, show = true }) => (
+const GradientMask = ({
+  children,
+  rootClassName,
+  childrenOnMaskBottom,
+  show = true,
+}) => (
   <div className={cn(styles.container, rootClassName)}>
     {children}
     <div className={cn({ [styles.mask]: show })} />
+    {childrenOnMaskBottom && (
+      <div className={cn({ [styles.maskBottomContainer]: show })}>
+        {childrenOnMaskBottom}
+      </div>
+    )}
   </div>
 );
 

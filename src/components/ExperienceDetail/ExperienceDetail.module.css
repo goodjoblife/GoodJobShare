@@ -37,6 +37,7 @@
   @media (max-width: 550px) {
     border-bottom: 1px solid border-gray;
     border-top: 1px solid border-gray;
+    margin-bottom: 5px;
   }
 }
 
@@ -49,4 +50,9 @@
   @media (max-width: below-small) {
     display: none;
   }
+}
+
+.topMsgButton {
+  margin-right: 5px;
+  flex-shrink: 0;
 }
