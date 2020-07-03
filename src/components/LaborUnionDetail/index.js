@@ -82,7 +82,7 @@ const LaborUnionDetail = () => {
         </Wrapper>
       </Section>
       <Section>
-        <Heading>123456</Heading>
+        <Heading>test</Heading>
       </Section>
     </Section>
   );
