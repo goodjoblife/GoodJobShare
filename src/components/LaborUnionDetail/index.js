@@ -71,6 +71,19 @@ const LaborUnionDetail = () => {
           </Wrapper>
         </Wrapper>
       </Section>
+      <Section className={styles.backGroundGray}>
+        <Wrapper>
+          <Heading className={styles.subHeading}>爭取勞工權益實績</Heading>
+          <div className={styles.text}>
+            <P>1. 協助會員處理勞資爭議，爭取遣散費 ○○○ 元</P>
+            <P>2. 2019 年舉辦三場勞工法律講座，協助會員理解自身勞動權益</P>
+            <P>3. 參與 2018 年五一勞動節大遊行</P>
+          </div>
+        </Wrapper>
+      </Section>
+      <Section>
+        <Heading>123456</Heading>
+      </Section>
     </Section>
   );
 };

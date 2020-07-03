@@ -131,3 +131,12 @@
     }
   }
 }
+
+.backGroundGray {
+  display: flex;
+  position: relative;
+  top: 1.5rem;
+
+  height: 14rem;
+  background-color: #e8e8e8;
+}
