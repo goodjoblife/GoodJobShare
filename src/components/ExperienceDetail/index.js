@@ -13,6 +13,7 @@ import { compose, setStatic } from 'recompose';
 import cn from 'classnames';
 import { useParams } from 'react-router-dom';
 import { useWindowSize } from 'react-use';
+import ReactGA from 'react-ga';
 import Loader from 'common/Loader';
 import { Wrapper, Section, Heading, P } from 'common/base';
 import PrivateMessageButton from 'common/button/PrivateMessageButton';
@@ -47,6 +48,7 @@ import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
 import breakpoints from '../../constants/breakpoints';
+import { GA_CATEGORY, GA_ACTION } from '../../constants/gaConstants';
 import styles from './ExperienceDetail.module.css';
 
 const MODAL_TYPE = {
@@ -230,6 +232,10 @@ const ExperienceDetail = ({
                 position:
                   ClickPrivateMessageButtonTracker.positions.nextToTopReportBtn,
               });
+              ReactGA.event({
+                category: GA_CATEGORY.TEST_NEW_FEATURE,
+                action: GA_ACTION.CLICK_PRIVATE_MESSAGE_BUTTON,
+              });
             }}
           />
           <ReportDetail
@@ -295,6 +301,10 @@ const ExperienceDetail = ({
                         position:
                           ClickPrivateMessageButtonTracker.positions
                             .articleBottom,
+                      });
+                      ReactGA.event({
+                        category: GA_CATEGORY.TEST_NEW_FEATURE,
+                        action: GA_ACTION.CLICK_PRIVATE_MESSAGE_BUTTON,
                       });
                     }}
                   />
