@@ -1,0 +1,42 @@
+$warning-red: #d0021b;
+
+.question {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 850px) {
+    justify-content: center;
+  }
+
+  &.fill {
+    .answer {
+      flex: 1;
+    }
+  }
+}
+
+.warnableContainer {
+  border: 1px solid transparent;
+}
+
+.hasWarning {
+  .warnableContainer {
+    border-color: $warning-red;
+  }
+
+  .warning {
+    color: $warning-red;
+  }
+}
+
+.warning {
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: 1.07px;
+
+  &.inlineWarning {
+    position: absolute;
+  }
+}

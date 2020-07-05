@@ -13,6 +13,21 @@ import initSentry from 'utils/sentryUtil';
 import Root from './components/Root';
 import configureStore from './store/configureStore';
 
+function shouldUpdateScroll(prevProps, props) {
+  const getSignature = R.compose(
+    R.omit(['state', 'key']),
+    R.path(['location']),
+  );
+  const diffSignature = R.unapply(
+    R.compose(
+      R.not,
+      R.apply(R.equals),
+      R.map(getSignature),
+    ),
+  );
+  return diffSignature(prevProps, props);
+}
+
 function parseState(window) {
   if (!window.__data) {
     return {};
@@ -49,7 +64,7 @@ hydrate(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <Router history={history}>
-        <ScrollContext>
+        <ScrollContext shouldUpdateScroll={shouldUpdateScroll}>
           <Root />
         </ScrollContext>
       </Router>
@@ -64,7 +79,7 @@ if (module.hot) {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Router history={history}>
-            <ScrollContext>
+            <ScrollContext shouldUpdateScroll={shouldUpdateScroll}>
               <Root />
             </ScrollContext>
           </Router>

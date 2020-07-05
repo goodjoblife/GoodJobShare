@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .warnableContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    .wrapper {
+      flex: 1;
+
+      .textarea {
+        height: 100%;
+        resize: none;
+      }
+    }
+  }
+
+  .footnote {
+    text-align: right;
+    margin-top: 9px;
+    font-size: 14px;
+    line-height: normal;
+  }
+}
+
+.footnote {
+  color: #969696;
+}

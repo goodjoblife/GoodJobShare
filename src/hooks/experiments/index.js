@@ -1,3 +1,4 @@
+import useShareLink from './useShareLink';
 import usePrivateMessageButtonText from './usePrivateMessageButtonText';
 
-export { usePrivateMessageButtonText };
+export { useShareLink, usePrivateMessageButtonText };
