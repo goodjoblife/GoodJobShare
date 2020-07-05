@@ -259,7 +259,8 @@ const bodyFromDraft = evolve({
   company: draft => ({ id: '', query: draft[DATA_KEY_COMPANY_NAME] }),
   region: draft => draft[DATA_KEY_REGION],
   job_title: draft => draft[DATA_KEY_JOB_TITLE],
-  title: '面試經驗分享',
+  title: draft =>
+    `${draft[DATA_KEY_COMPANY_NAME]} ${draft[DATA_KEY_JOB_TITLE]} 面試經驗分享`,
   sections: draft => [
     {
       subtitle: '面試過程',
