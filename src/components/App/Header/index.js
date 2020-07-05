@@ -19,13 +19,13 @@ import authStatus from '../../../constants/authStatus';
 import { shareLink } from '../../../constants/dataProgress';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import emailStatusMap from '../../../constants/emailStatus';
-import withModal from '../../TimeAndSalary/common/withModal';
 import LoginModal from '../../common/LoginModal';
 
-const Header = ({ auth, loginModal, fetchPermission, logout }) => {
+const Header = ({ auth, fetchPermission, logout }) => {
   const history = useHistory();
   const location = useLocation();
   const [isNavOpen, setNavOpen] = useState(false);
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
 
   useEffect(() => {
     if (auth.get('status') === authStatus.CONNECTED) {
@@ -44,13 +44,9 @@ const Header = ({ auth, loginModal, fetchPermission, logout }) => {
 
   const closeNav = useCallback(() => setNavOpen(false), []);
 
-  const openLoginModal = useCallback(() => loginModal.setIsOpen(true), [
-    loginModal,
-  ]);
+  const openLoginModal = useCallback(() => setLoginModalOpen(true), []);
 
-  const closeLoginModal = useCallback(() => loginModal.setIsOpen(false), [
-    loginModal,
-  ]);
+  const closeLoginModal = useCallback(() => setLoginModalOpen(false), []);
 
   useEffect(() => history.listen(closeNav), [closeNav, history]);
 
@@ -151,11 +147,7 @@ const Header = ({ auth, loginModal, fetchPermission, logout }) => {
           </nav>
         </Wrapper>
       </header>
-      <LoginModal
-        isOpen={loginModal.isOpen}
-        close={closeLoginModal}
-        loginModal={loginModal}
-      />
+      <LoginModal isOpen={isLoginModalOpen} close={closeLoginModal} />
     </div>
   );
 };
@@ -192,9 +184,6 @@ ShareButton.propTypes = {
   onClick: PropTypes.func,
 };
 
-const hoc = compose(
-  withPermission,
-  withModal('loginModal'),
-);
+const hoc = compose(withPermission);
 
 export default hoc(Header);
