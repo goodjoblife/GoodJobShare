@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 import ReactGA from 'react-ga';
-import { compose } from 'recompose';
 import { Wrapper } from 'common/base';
 import { GjLogo, Glike } from 'common/icons';
 import PopoverToggle from 'common/PopoverToggle';
-import { withPermission } from 'common/permission-context';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 import Top from './Top';
@@ -20,13 +18,15 @@ import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import emailStatusMap from '../../../constants/emailStatus';
 import LoginModal from '../../common/LoginModal';
 import useShareLink from '../../../hooks/experiments/useShareLink';
+import usePermission from '../../../hooks/usePermission';
 
-const Header = ({ auth, fetchPermission, logout }) => {
+const Header = ({ auth, logout }) => {
   const history = useHistory();
   const location = useLocation();
   const [isNavOpen, setNavOpen] = useState(false);
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const shareLink = useShareLink();
+  const [, fetchPermission] = usePermission();
 
   useEffect(() => {
     if (auth.get('status') === authStatus.CONNECTED) {
@@ -156,7 +156,6 @@ const Header = ({ auth, fetchPermission, logout }) => {
 Header.propTypes = {
   logout: PropTypes.func.isRequired,
   auth: PropTypes.object,
-  fetchPermission: PropTypes.func.isRequired,
 };
 
 const HeaderButton = ({ isNavOpen, toggle }) => (
@@ -185,6 +184,4 @@ ShareButton.propTypes = {
   onClick: PropTypes.func,
 };
 
-const hoc = compose(withPermission);
-
-export default hoc(Header);
+export default Header;
