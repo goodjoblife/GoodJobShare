@@ -16,16 +16,17 @@ import ProgressTop from './Top/ProgressTop';
 import Searchbar from './Searchbar';
 
 import authStatus from '../../../constants/authStatus';
-import { shareLink } from '../../../constants/dataProgress';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import emailStatusMap from '../../../constants/emailStatus';
 import LoginModal from '../../common/LoginModal';
+import useShareLink from '../../../hooks/experiments/useShareLink';
 
 const Header = ({ auth, fetchPermission, logout }) => {
   const history = useHistory();
   const location = useLocation();
   const [isNavOpen, setNavOpen] = useState(false);
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const shareLink = useShareLink();
 
   useEffect(() => {
     if (auth.get('status') === authStatus.CONNECTED) {
@@ -76,7 +77,7 @@ const Header = ({ auth, fetchPermission, logout }) => {
         <ProgressTop />
       </Top>
     );
-  }, [auth, location.pathname]);
+  }, [auth, location.pathname, shareLink]);
 
   return (
     <div className={styles.root}>
