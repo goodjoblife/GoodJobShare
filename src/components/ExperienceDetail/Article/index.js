@@ -4,7 +4,6 @@ import R from 'ramda';
 
 import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
-import PrivateMessageButton from 'common/button/PrivateMessageButton';
 import { activateOptimize } from 'utils/gtm';
 import useExperimentParameters from 'hooks/useExperimentParameters';
 import { formatCommaSeparatedNumber } from 'utils/stringUtil';
@@ -114,11 +113,6 @@ const Article = ({
         </div>
         {hideContent && (
           <BasicPermissionBlock rootClassName={styles.permissionBlockArticle} />
-        )}
-        {!hideContent && (
-          <div className={styles.btmMsgBtnContainer}>
-            <PrivateMessageButton onClick={onClickMsgButton} />
-          </div>
         )}
       </section>
     </div>
