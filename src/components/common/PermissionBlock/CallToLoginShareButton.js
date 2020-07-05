@@ -10,7 +10,7 @@ import styles from './PermissionBlock.module.css';
 
 const isLogin = auth => auth.get('status') === authStatus.CONNECTED;
 
-const CallToLoginShareButton = ({ isLoginText, to, auth }) => {
+const CallToLoginShareButton = ({ isLoginText, to, onClick, auth }) => {
   const fbLogin = useFacebookLogin();
   const googleLogin = useGoogleLogin();
 
@@ -21,7 +21,11 @@ const CallToLoginShareButton = ({ isLoginText, to, auth }) => {
       }}
     >
       {isLogin(auth) ? (
-        <Link className={cn('buttonCircleM', 'buttonBlack2')} to={to}>
+        <Link
+          className={cn('buttonCircleM', 'buttonBlack2')}
+          to={to}
+          onClick={onClick}
+        >
           {isLoginText}
         </Link>
       ) : (
@@ -53,6 +57,7 @@ const CallToLoginShareButton = ({ isLoginText, to, auth }) => {
 CallToLoginShareButton.propTypes = {
   isLoginText: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
   auth: ImmutablePropTypes.map,
 };
 
