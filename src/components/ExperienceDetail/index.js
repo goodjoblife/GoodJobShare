@@ -20,7 +20,7 @@ import NotFound from 'common/NotFound';
 import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
-import GoogleAdsense from 'common/GoogleAdsense';
+import GoogleAdUnit from 'common/GoogleAdUnit';
 import { isUiNotFoundError } from 'utils/errors';
 import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
@@ -270,11 +270,9 @@ const ExperienceDetail = ({
           </div>
           {width > breakpoints.md ? (
             <div className={styles.sideAds}>
-              <GoogleAdsense
-                style={{ display: 'block' }}
-                slot="6339096692"
-                format="auto"
-                responsive="true"
+              <GoogleAdUnit
+                sizes={[[160, 600]]}
+                adUnit="goodjob_pc_article_sidebar"
               />
             </div>
           ) : null}
