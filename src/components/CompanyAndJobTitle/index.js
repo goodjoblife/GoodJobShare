@@ -10,7 +10,6 @@ import breakpoints from '../../constants/breakpoints';
 
 const CompanyAndJobTitlePageContainer = ({ routes, location }) => {
   const { width } = useWindowSize();
-  console.log(location);
   useEffect(() => {
     GoogleAdManager.reload();
   }, [location.pathname, location.search]);
