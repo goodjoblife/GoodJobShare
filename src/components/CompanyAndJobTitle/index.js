@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-router';
 import { useWindowSize } from 'react-use';
 import Wrapper from 'common/base/Wrapper';
-import GoogleAdsense from 'common/GoogleAdsense';
+import GoogleAdUnit, { Manager as GoogleAdManager } from 'common/GoogleAdUnit';
 import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
 import breakpoints from '../../constants/breakpoints';
 
-const CompanyAndJobTitlePageContainer = ({ routes }) => {
+const CompanyAndJobTitlePageContainer = ({ routes, location }) => {
   const { width } = useWindowSize();
+  useEffect(() => {
+    GoogleAdManager.reload();
+  }, [location.pathname, location.search]);
   return (
     <div>
       <Wrapper size="l" className={styles.container}>
@@ -22,11 +25,9 @@ const CompanyAndJobTitlePageContainer = ({ routes }) => {
         </div>
         {width > breakpoints.md ? (
           <div className={styles.sideAds}>
-            <GoogleAdsense
-              style={{ display: 'block' }}
-              slot="6339096692"
-              format="auto"
-              responsive="true"
+            <GoogleAdUnit
+              sizes={[[160, 600]]}
+              adUnit="goodjob_pc_list_sidebar"
             />
           </div>
         ) : null}

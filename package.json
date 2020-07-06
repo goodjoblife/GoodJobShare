@@ -81,6 +81,7 @@
     "razzle": "^2.4.0",
     "react": "^16.12.0",
     "react-autocomplete": "^1.8.1",
+    "react-dfp": "^0.17.2",
     "react-dom": "^16.12.0",
     "react-facebook-pixel": "^0.1.0",
     "react-ga": "^2.2.0",

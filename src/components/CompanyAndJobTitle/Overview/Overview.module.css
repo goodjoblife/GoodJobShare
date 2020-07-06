@@ -24,3 +24,10 @@
     margin-top: 60px;
   }
 }
+
+.adContainer {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
