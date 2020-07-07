@@ -192,7 +192,7 @@ const FormBuilder = ({
                 onChange={handleDraftChange(restOptions.dataKey)}
                 onConfirm={() => {
                   if (i < questions.length - 1) {
-                    if (onNext) onNext();
+                    if (onNext) onNext(i + 1);
                     warnBeforeSetPage(i + 1);
                   }
                 }}
@@ -209,11 +209,11 @@ const FormBuilder = ({
             <NavigatorBlock
               skippable={skippable}
               onPrevious={() => {
-                if (onPrev) onPrev();
+                if (onPrev) onPrev(page - 1);
                 setPage(page - 1);
               }}
               onNext={() => {
-                if (onNext) onNext();
+                if (onNext) onNext(page + 1);
                 warnBeforeSetPage(page + 1);
               }}
               hasPrevious={hasPrevious}
