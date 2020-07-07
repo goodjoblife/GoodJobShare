@@ -59,6 +59,7 @@ import {
   joinCompact,
   evolve,
   isNot,
+  within,
   isValidSalary,
 } from './utils';
 import { useHistory } from 'react-router';
@@ -141,9 +142,14 @@ const questions = [
     validator: ([selected, elseText]) =>
       isNot(isNil, selected) &&
       (equals(selected, last(RESULT_OPTIONS))
-        ? isNot(isEmpty, elseText)
+        ? within(1, 100, elseText.length)
         : true),
-    warning: '需填寫面試結果',
+    warning: ([selected, elseText]) =>
+      isEmpty(elseText)
+        ? '需填寫面試結果'
+        : !within(1, 100, elseText.length)
+        ? '面試結果僅限 1~100 字！'
+        : null,
     options: RESULT_OPTIONS,
     placeholder: '輸入面試結果',
     header: renderCompanyJobTitleHeader,
