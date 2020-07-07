@@ -59,6 +59,7 @@ import {
   joinCompact,
   evolve,
   isNot,
+  isValidSalary,
 } from './utils';
 import { useHistory } from 'react-router';
 
@@ -209,13 +210,17 @@ const questions = [
     defaultValue: [null, ''],
     validator: ([type, amount]) =>
       isNot(isNil, type)
-        ? isNot(isEmpty, amount) && isSalaryAmount(amount)
+        ? isNot(isEmpty, amount) &&
+          isSalaryAmount(amount) &&
+          isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type], amount)
         : isEmpty(amount),
     warning: ([type, amount]) =>
-      isNot(isNil, type) && (isEmpty(amount) || isNot(isSalaryAmount(amount)))
+      isNot(isNil, type) && (isEmpty(amount) || isNot(isSalaryAmount, amount))
         ? '需填寫薪資'
         : isNil(type) && isNot(isEmpty, amount)
         ? '需選擇薪水類型'
+        : isNot(isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type]), amount)
+        ? '薪資不合理。可能有少填寫 0，或薪資種類(年薪/月薪/日薪/時薪)選擇錯誤，請再檢查一次'
         : null,
     options: keys(SALARY_TYPE_VALUE_BY_OPTION),
     placeholder: '700,000',

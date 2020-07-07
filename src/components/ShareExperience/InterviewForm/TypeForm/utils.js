@@ -1,8 +1,10 @@
 import {
   equals,
   compose,
+  allPass,
   lt,
   lte,
+  gte,
   not,
   type,
   length,
@@ -43,6 +45,7 @@ export const isSalaryAmount = compose(
 
 export const greaterThan = lt;
 export const greaterThanOrEqualTo = lte;
+export const lessThanOrEqualTo = gte;
 
 export const compact = filter(Boolean);
 
@@ -60,3 +63,23 @@ export const evolve = curry((evolvers, value) =>
     evolvers,
   ),
 );
+
+export const within = curry((min, max, value) =>
+  allPass([greaterThanOrEqualTo(min), lessThanOrEqualTo(max)])(value),
+);
+
+export const isValidSalary = curry((type, amount) => {
+  const value = parseSalaryAmount(amount);
+  switch (type) {
+    case 'year':
+      return within(10000, 12000000, value);
+    case 'month':
+      return within(1000, 1000000, value);
+    case 'day':
+      return within(100, 120000, value);
+    case 'hour':
+      return within(10, 10000, value);
+    default:
+      return false;
+  }
+});
