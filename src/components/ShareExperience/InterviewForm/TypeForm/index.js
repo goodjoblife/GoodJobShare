@@ -248,10 +248,12 @@ const questions = [
     dataKey: DATA_KEY_SENSITIVE_QUESTIONS,
     defaultValue: [[], ''],
     validator: ([selected, elseText]) =>
-      !contains('其他', selected) || isNot(isEmpty, elseText),
+      !contains('其他', selected) || within(1, 20, elseText),
     warning: ([selected, elseText]) =>
       contains(last(SENSITIVE_QUESTIONS_OPTIONS), selected) && isEmpty(elseText)
         ? '需填寫其他特殊問題的內容'
+        : !within(1, 20, elseText.length)
+        ? '面試中提及的特別問題僅限 1~20 字！'
         : null,
     options: SENSITIVE_QUESTIONS_OPTIONS,
     placeholder: '輸入其他特殊問題內容',
