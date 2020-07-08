@@ -48,7 +48,7 @@ export const SUGGESTIONS_MIN_LENGTH = 50;
 
 export const JOB_TENURE_OPTIONS = [
   '不到 1 年',
-  ...range(0, 51).map(n => `${n} 年`),
+  ...range(1, 51).map(n => `${n} 年`),
 ];
 
 export const SALARY_TYPE_VALUE_BY_OPTION = {
