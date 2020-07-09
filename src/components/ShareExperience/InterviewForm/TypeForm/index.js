@@ -59,6 +59,8 @@ import {
   joinCompact,
   evolve,
   isNot,
+  within,
+  isValidSalary,
 } from './utils';
 import { useHistory } from 'react-router';
 
@@ -140,9 +142,14 @@ const questions = [
     validator: ([selected, elseText]) =>
       isNot(isNil, selected) &&
       (equals(selected, last(RESULT_OPTIONS))
-        ? isNot(isEmpty, elseText)
+        ? within(1, 100, elseText.length)
         : true),
-    warning: '需填寫面試結果',
+    warning: ([selected, elseText]) =>
+      isEmpty(elseText)
+        ? '需填寫面試結果'
+        : !within(1, 100, elseText.length)
+        ? '面試結果僅限 1~100 字！'
+        : null,
     options: RESULT_OPTIONS,
     placeholder: '輸入面試結果',
     header: renderCompanyJobTitleHeader,
@@ -209,13 +216,17 @@ const questions = [
     defaultValue: [null, ''],
     validator: ([type, amount]) =>
       isNot(isNil, type)
-        ? isNot(isEmpty, amount) && isSalaryAmount(amount)
+        ? isNot(isEmpty, amount) &&
+          isSalaryAmount(amount) &&
+          isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type], amount)
         : isEmpty(amount),
     warning: ([type, amount]) =>
-      isNot(isNil, type) && (isEmpty(amount) || isNot(isSalaryAmount(amount)))
+      isNot(isNil, type) && (isEmpty(amount) || isNot(isSalaryAmount, amount))
         ? '需填寫薪資'
         : isNil(type) && isNot(isEmpty, amount)
         ? '需選擇薪水類型'
+        : isNot(isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type]), amount)
+        ? '薪資不合理。可能有少填寫 0，或薪資種類(年薪/月薪/日薪/時薪)選擇錯誤，請再檢查一次'
         : null,
     options: keys(SALARY_TYPE_VALUE_BY_OPTION),
     placeholder: '700,000',
@@ -237,10 +248,12 @@ const questions = [
     dataKey: DATA_KEY_SENSITIVE_QUESTIONS,
     defaultValue: [[], ''],
     validator: ([selected, elseText]) =>
-      !contains('其他', selected) || isNot(isEmpty, elseText),
+      !contains('其他', selected) || within(1, 20, elseText.length),
     warning: ([selected, elseText]) =>
       contains(last(SENSITIVE_QUESTIONS_OPTIONS), selected) && isEmpty(elseText)
         ? '需填寫其他特殊問題的內容'
+        : !within(1, 20, elseText.length)
+        ? '面試中提及的特別問題僅限 1~20 字！'
         : null,
     options: SENSITIVE_QUESTIONS_OPTIONS,
     placeholder: '輸入其他特殊問題內容',

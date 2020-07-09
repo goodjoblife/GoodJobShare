@@ -80,7 +80,8 @@ Text.propTypes = {
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
-  defaultValue: PropTypes.string.isRequired,
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+    .isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
