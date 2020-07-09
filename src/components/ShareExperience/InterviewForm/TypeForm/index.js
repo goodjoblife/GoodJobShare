@@ -248,7 +248,7 @@ const questions = [
     dataKey: DATA_KEY_SENSITIVE_QUESTIONS,
     defaultValue: [[], ''],
     validator: ([selected, elseText]) =>
-      !contains('其他', selected) || within(1, 20, elseText),
+      !contains('其他', selected) || within(1, 20, elseText.length),
     warning: ([selected, elseText]) =>
       contains(last(SENSITIVE_QUESTIONS_OPTIONS), selected) && isEmpty(elseText)
         ? '需填寫其他特殊問題的內容'
