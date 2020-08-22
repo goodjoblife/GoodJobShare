@@ -42,7 +42,13 @@ import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
 import breakpoints from '../../constants/breakpoints';
+import { pageTypeTranslation, pageType } from '../../constants/companyJobTitle';
 import styles from './ExperienceDetail.module.css';
+import {
+  formatTypeSelector,
+  companyNameSelector,
+  jobTitleSelector,
+} from './experienceSelector';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -120,6 +126,8 @@ const ExperienceDetail = ({
   const { experience, experienceStatus, experienceError } = data;
   const replies = props.replies.toJS();
   const repliesStatus = props.repliesStatus;
+
+  const myPageType = pageType.COMPANY; // TODO
 
   // send event to Amplitude
   const experienceDataId = useMemo(() => (experience ? experience._id : null), [
@@ -237,7 +245,13 @@ const ExperienceDetail = ({
                 <Fragment>
                   <div className={styles.breadCrumb}>
                     <BreadCrumb
-                      labels={['公司', '威聯通科技股份有限公司', '面試經驗']}
+                      labels={[
+                        pageTypeTranslation[myPageType],
+                        (myPageType === pageType.COMPANY
+                          ? companyNameSelector
+                          : jobTitleSelector)(experience),
+                        formatTypeSelector(experience),
+                      ]}
                     />
                   </div>
                   <ExperienceHeading experience={experience} />

@@ -164,3 +164,16 @@ const internMetaDescriptionSelector = experience => {
   }
   return null;
 };
+
+export const formatTypeSelector = experience => {
+  switch (experience.type) {
+    case 'work':
+      return '工作心得';
+    case 'interview':
+      return '面試經驗';
+    case 'intern':
+      return '實習心得';
+    default:
+      return '工作心得';
+  }
+};
