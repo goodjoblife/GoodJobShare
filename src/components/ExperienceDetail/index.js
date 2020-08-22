@@ -245,12 +245,24 @@ const ExperienceDetail = ({
                 <Fragment>
                   <div className={styles.breadCrumb}>
                     <BreadCrumb
-                      labels={[
-                        pageTypeTranslation[myPageType],
-                        (myPageType === pageType.COMPANY
-                          ? companyNameSelector
-                          : jobTitleSelector)(experience),
-                        formatTypeSelector(experience),
+                      data={[
+                        {
+                          label: pageTypeTranslation[myPageType],
+                          to: '/company', // TODO
+                        },
+                        myPageType === pageType.COMPANY
+                          ? {
+                              label: companyNameSelector(experience),
+                              to: `/experience/${experience.id}`, // TODO
+                            }
+                          : {
+                              label: jobTitleSelector(experience),
+                              to: `/experience/${experience.id}`, // TODO
+                            },
+                        {
+                          label: formatTypeSelector(experience),
+                          to: `/experience/${experience.id}`, // TODO
+                        },
                       ]}
                     />
                   </div>
