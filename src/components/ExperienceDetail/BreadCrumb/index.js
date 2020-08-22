@@ -1,10 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './BreadCrumb.module.css';
 
-const BreadCrumb = () => (
-  <div className={styles.breadCrumb}>
-    公司 &gt; 威聯通科技股份有限公司 &gt; 面試經驗
-  </div>
+const BreadCrumb = ({ labels }) => (
+  <div className={styles.breadCrumb}>{labels.join(' > ')}</div>
 );
+
+BreadCrumb.propTypes = {
+  labels: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default BreadCrumb;

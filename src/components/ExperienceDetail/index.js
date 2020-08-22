@@ -236,7 +236,9 @@ const ExperienceDetail = ({
               ) : (
                 <Fragment>
                   <div className={styles.breadCrumb}>
-                    <BreadCrumb />
+                    <BreadCrumb
+                      labels={['公司', '威聯通科技股份有限公司', '面試經驗']}
+                    />
                   </div>
                   <ExperienceHeading experience={experience} />
                   {renderReportZone()}
