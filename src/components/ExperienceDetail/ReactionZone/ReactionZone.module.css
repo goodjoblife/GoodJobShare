@@ -21,7 +21,7 @@
 
 .button,
 .moreButton {
-  padding: 16px 12px;
+  padding: 0 12px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -118,4 +118,8 @@
       }
     }
   }
+}
+
+.reportButton {
+  color: #000000 !important;
 }
