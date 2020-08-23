@@ -22,6 +22,7 @@ import {
 
 import StaticHelmet from 'common/StaticHelmet';
 import { EnterFormTracker, SubmitFormTracker } from 'utils/eventBasedTracking';
+import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
 import {
   INVALID,
   INTERVIEW_FORM_ORDER,
@@ -227,19 +228,26 @@ class InterviewForm extends React.Component {
 
   async onSubmit() {
     const valid = interviewFormCheck(getInterviewForm(this.state));
+    let goalValue;
 
     if (valid) {
       localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
+      const body = portInterviewFormToRequestFormat(
+        getInterviewForm(this.state),
+      );
+      // section 的標題與預設文字 = 4 + 11 + 19 + 25 個字
+      goalValue = calcInterviewExperienceValue(body, 59);
       const p = this.props.createInterviewExperience({
-        body: portInterviewFormToRequestFormat(getInterviewForm(this.state)),
+        body,
       });
+
       return p.then(
         response => {
           const experienceId = response.createInterviewExperience.experience.id;
-
           ReactGA.event({
             category: GA_CATEGORY.SHARE_INTERVIEW,
             action: GA_ACTION.UPLOAD_SUCCESS,
+            value: goalValue,
           });
           ReactPixel.track('Purchase', {
             value: 1,
