@@ -1,7 +1,7 @@
 /**
  * 計算使用者寫的一篇面試經驗的價值，作為 GA 事件的價值
  * @param {Object} experience
- * @param {length} defaultTextLength 預設文字的長度，包含章節的標題、內文
+ * @param {Number} defaultTextLength 預設文字的長度，包含章節的標題、內文
  */
 const calcInterviewExperienceValue = (experience, defaultTextLength = 0) => {
   let value = 0;

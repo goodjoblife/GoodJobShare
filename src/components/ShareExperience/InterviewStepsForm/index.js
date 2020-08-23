@@ -231,7 +231,7 @@ class InterviewForm extends React.Component {
     let goalValue;
 
     if (valid) {
-      // localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
+      localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
       const body = portInterviewFormToRequestFormat(
         getInterviewForm(this.state),
       );
