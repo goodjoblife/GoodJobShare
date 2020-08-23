@@ -358,7 +358,7 @@ const TypeForm = ({ open, onClose }) => {
         });
         // send SubmitForm event to Amplitude
         SubmitFormTracker.sendEvent({
-          type: SubmitFormTracker.types.interview3Steps,
+          type: SubmitFormTracker.types.interviewTypeForm,
           result: SubmitFormTracker.results.success,
         });
         setSubmitStatus('success');
@@ -370,7 +370,7 @@ const TypeForm = ({ open, onClose }) => {
         });
         // send SubmitForm event to Amplitude
         SubmitFormTracker.sendEvent({
-          type: SubmitFormTracker.types.interview3Steps,
+          type: SubmitFormTracker.types.interviewTypeForm,
           result: SubmitFormTracker.results.error,
         });
         setSubmitStatus('error');
