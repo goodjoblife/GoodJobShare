@@ -19,7 +19,12 @@ import {
   path,
 } from 'ramda';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+import ReactGA from 'react-ga';
+import ReactPixel from 'react-facebook-pixel';
 
+import { SubmitFormTracker } from 'utils/eventBasedTracking';
+import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
 import FormBuilder from 'common/FormBuilder';
 import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
 import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
@@ -27,6 +32,8 @@ import Footer from '../../common/TypeFormFooter';
 import { getCompaniesSearch } from '../../../../apis/companySearchApi';
 import { getJobTitlesSearch } from '../../../../apis/jobTitleSearchApi';
 import { createInterviewExperience } from '../../../../actions/experiences';
+import { GA_CATEGORY, GA_ACTION } from '../../../../constants/gaConstants';
+import PIXEL_CONTENT_CATEGORY from '../../../../constants/pixelConstants';
 import {
   DATA_KEY_COMPANY_NAME,
   DATA_KEY_JOB_TITLE,
@@ -62,7 +69,6 @@ import {
   within,
   isValidSalary,
 } from './utils';
-import { useHistory } from 'react-router';
 
 const header = <Header title="請輸入你的一份面試經驗" />;
 const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
@@ -334,20 +340,45 @@ const TypeForm = ({ open, onClose }) => {
   const handleSubmit = useCallback(
     async draft => {
       try {
+        const body = bodyFromDraft(draft);
+        // section 的標題與預設文字 = 4 + 11 + 19 + 25 個字
+        const goalValue = calcInterviewExperienceValue(body, 59);
+
         setSubmitStatus('submitting');
-        await dispatch(
-          createInterviewExperience({
-            body: bodyFromDraft(draft),
-          }),
-        );
+        await dispatch(createInterviewExperience({ body }));
+        ReactGA.event({
+          category: GA_CATEGORY.SHARE_INTERVIEW,
+          action: GA_ACTION.UPLOAD_SUCCESS,
+          value: goalValue,
+        });
+        ReactPixel.track('Purchase', {
+          value: 1,
+          currency: 'TWD',
+          content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
+        });
+        // send SubmitForm event to Amplitude
+        SubmitFormTracker.sendEvent({
+          type: SubmitFormTracker.types.interview3Steps,
+          result: SubmitFormTracker.results.success,
+        });
         setSubmitStatus('success');
       } catch (error) {
         setErrorMessage(error.message);
+        ReactGA.event({
+          category: GA_CATEGORY.SHARE_INTERVIEW,
+          action: GA_ACTION.UPLOAD_FAIL,
+        });
+        // send SubmitForm event to Amplitude
+        SubmitFormTracker.sendEvent({
+          type: SubmitFormTracker.types.interview3Steps,
+          result: SubmitFormTracker.results.error,
+        });
         setSubmitStatus('error');
       }
     },
     [dispatch],
   );
+
   return (
     <Fragment>
       <FormBuilder
