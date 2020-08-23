@@ -28,18 +28,23 @@ const calcInterviewExperienceValue = (experience, defaultTextLength = 0) => {
       value += valueMap[key];
     }
   }
-  const sectionLength = experience.sections.reduce((accuValue, currSection) => {
-    if (currSection.subtitle && currSection.content) {
-      return (
-        accuValue + currSection.subtitle.length + currSection.content.length
-      );
-    } else {
-      return accuValue;
-    }
-  }, 0);
 
-  const qaLength = experience.interview_qas.reduce(
-    (accuValue, currQuestion) => {
+  let sectionLength = 0;
+  if (experience.sections) {
+    sectionLength = experience.sections.reduce((accuValue, currSection) => {
+      if (currSection.subtitle && currSection.content) {
+        return (
+          accuValue + currSection.subtitle.length + currSection.content.length
+        );
+      } else {
+        return accuValue;
+      }
+    }, 0);
+  }
+
+  let qaLength = 0;
+  if (experience.interview_qas) {
+    qaLength = experience.interview_qas.reduce((accuValue, currQuestion) => {
       let value = accuValue;
       if (currQuestion.question) {
         value += currQuestion.question.length;
@@ -48,9 +53,9 @@ const calcInterviewExperienceValue = (experience, defaultTextLength = 0) => {
         value += currQuestion.answer.length;
       }
       return value;
-    },
-    0,
-  );
+    }, 0);
+  }
+
   return value + sectionLength + qaLength - defaultTextLength;
 };
 
