@@ -10,6 +10,7 @@ import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
 import SectionBlock from './SectionBlock';
 import QABlock from './QABlock';
+import ReactionZone from './ReactionZone';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 import { MAX_WORDS_IF_HIDDEN } from '../../../constants/hideContent';
 
@@ -102,6 +103,8 @@ const Article = ({
             </div>
           ) : null}
         </div>
+        <ReactionZone experienceId={experience._id} />
+
         {hideContent && (
           <BasicPermissionBlock
             to={shareLink}

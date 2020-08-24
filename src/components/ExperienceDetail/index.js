@@ -30,7 +30,6 @@ import Article from './Article';
 import MessageBoard from './MessageBoard';
 import BackToList from './BackToList';
 import Seo from './Seo';
-import LikeZone from './LikeZone';
 import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
 import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
 import ExperienceHeading from './Heading';
@@ -251,7 +250,6 @@ const ExperienceDetail = ({
                   <Article experience={experience} hideContent={!canView} />
                 </Fragment>
               )}
-              <LikeZone experienceId={experienceId} />
             </Wrapper>
             <Wrapper size="s">
               <ScrollElement name={COMMENT_ZONE} />
