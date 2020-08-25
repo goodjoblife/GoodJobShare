@@ -1,9 +1,21 @@
 import React from 'react';
-import ExperienceEntry from '../../CompanyAndJobTitle/InterviewExperiences/ExperienceEntry';
+import InterviewExperienceEntry from '../../CompanyAndJobTitle/InterviewExperiences/ExperienceEntry';
+import WorkExperienceEntry from '../../CompanyAndJobTitle/WorkExperiences/ExperienceEntry';
 import { useLocation } from 'react-router';
 import usePermission from 'hooks/usePermission';
 import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 import styles from './MoreExperiencesBlock.module.css';
+
+const ExperienceEntry = props => {
+  switch (props.data.type) {
+    case 'interview':
+      return <InterviewExperienceEntry {...props} />;
+    case 'work':
+      return <WorkExperienceEntry {...props} />;
+    default:
+      return null;
+  }
+};
 
 const MoreExperiencesBlock = ({ experience }) => {
   const location = useLocation();
