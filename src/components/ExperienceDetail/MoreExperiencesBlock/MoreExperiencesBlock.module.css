@@ -1,6 +1,7 @@
 .container {
   margin: 0 auto;
   margin-top: 92px;
+  margin-bottom: 86px;
   max-width: 880px;
 }
 
@@ -11,4 +12,9 @@
   text-align: center;
   color: #555555;
   margin-bottom: 12px;
+}
+
+.loadMoreButton {
+  margin: 0 auto;
+  display: block;
 }
