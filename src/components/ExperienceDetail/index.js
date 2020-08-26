@@ -37,6 +37,7 @@ import ReportInspectModal from './ReactionZone/ReportInspectModal';
 import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
+import ChartsZone from './ChartsZone';
 import { isFetching, isFetched, isError } from '../../constants/status';
 import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
@@ -287,6 +288,12 @@ const ExperienceDetail = ({
                 <MoreExperiencesBlock experience={experience} />
               )}
             </Wrapper>
+            {isFetched(experienceStatus) && (
+              <ChartsZone
+                companyName={experience.company.name}
+                jobTitle={experience.job_title.name}
+              />
+            )}
             <Wrapper size="s">
               <ScrollElement name={COMMENT_ZONE} />
               {isFetching(repliesStatus) ? (
