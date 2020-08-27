@@ -124,7 +124,13 @@ class SearchScreen extends Component {
           </P>
         )}
         {raw.map((o, i) => (
-          <WorkingHourBlock key={i} data={o} to={this.getLinkForData(o)} />
+          <WorkingHourBlock
+            key={i}
+            pageType={o.pageType}
+            name={o.name}
+            to={this.getLinkForData(o)}
+            dataCount={o.salary_work_time_statistics.count}
+          />
         ))}
         <Pagination
           totalCount={totalNum}

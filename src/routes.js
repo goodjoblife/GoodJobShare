@@ -30,6 +30,9 @@ import VerificationPage from './components/EmailVerification/VerificationPage';
 import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
 import CompanyPageProvider from './components/Company/CompanyPageProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
+import CompanyAndJobTitleIndex from './components/CompanyAndJobTitle/CompanyAndJobTitleIndex';
+
+import { pageType } from './constants/companyJobTitle';
 
 const routes = [
   {
@@ -208,9 +211,16 @@ const routes = [
     ],
   },
   {
-    path: '/companies/:companyName',
+    path: '/companies',
     component: CompanyAndJobTitlePageContainer,
     routes: [
+      {
+        path: '/companies',
+        component: () => (
+          <CompanyAndJobTitleIndex pageType={pageType.COMPANY} />
+        ),
+        exact: true,
+      },
       {
         path: '/companies/:companyName',
         component: CompanyPageProvider,
@@ -221,9 +231,16 @@ const routes = [
     ],
   },
   {
-    path: '/job-titles/:jobTitle',
+    path: '/job-titles',
     component: CompanyAndJobTitlePageContainer,
     routes: [
+      {
+        path: '/job-titles',
+        component: () => (
+          <CompanyAndJobTitleIndex pageType={pageType.JOB_TITLE} />
+        ),
+        exact: true,
+      },
       {
         path: '/job-titles/:jobTitle',
         component: JobTitlePageProvider,
