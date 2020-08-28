@@ -1,18 +1,22 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import Pagination from 'common/Pagination';
+import Loader from 'common/Loader';
 import WorkingHourBlock from '../TimeAndSalary/SearchScreen/WorkingHourBlock';
 import {
-  pageType as PAGE_TYPE,
   pageTypeTranslation,
   generatePageURL,
 } from '../../constants/companyJobTitle';
-import { getCompanyNames } from '../../apis/company';
-import { getJobTitles } from '../../apis/jobTitle';
-import Loader from 'common/Loader';
 import styles from './CompanyAndJobTitleIndex.module.css';
+import {
+  pageTypeData,
+  pageTypeStatus,
+} from '../../selectors/companyAndJobTitleIndex';
+import { isFetched } from '../../constants/status';
+import { fetchPageNames } from '../../actions/companyAndJobTitleIndex';
 
 const PAGE_SIZE = 10;
 
@@ -29,25 +33,17 @@ const usePagination = () => {
   return [Number(query.p || 1), getPageLink];
 };
 
-const getNames = pageType => {
-  switch (pageType) {
-    case PAGE_TYPE.COMPANY:
-      return getCompanyNames();
-    case PAGE_TYPE.JOB_TITLE:
-      return getJobTitles();
-    default:
-      return Promise.reject(new Error('Unknown page type'));
-  }
-};
-
 const CompanyAndJobTitleIndex = ({ pageType }) => {
   const [page, getPageLink] = usePagination();
-  const [names, setNames] = useState([]);
-  useEffect(() => {
-    getNames(pageType).then(setNames);
-  }, [pageType]);
+  const status = useSelector(pageTypeStatus(pageType));
+  const dispatch = useDispatch();
+  const pageNames = useSelector(pageTypeData(pageType));
 
-  if (names.length == 0) {
+  useEffect(() => {
+    dispatch(fetchPageNames({ pageType }));
+  }, [dispatch, pageType]);
+
+  if (!isFetched(status)) {
     return <Loader />;
   }
 
@@ -57,17 +53,19 @@ const CompanyAndJobTitleIndex = ({ pageType }) => {
         所有{pageTypeTranslation[pageType]}資料
       </div>
       <div className={styles.index}>
-        {names.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map(name => (
-          <WorkingHourBlock
-            key={name}
-            pageType={pageType}
-            name={name}
-            to={generatePageURL({ pageType, pageName: name })}
-          />
-        ))}
+        {pageNames
+          .slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+          .map(pageName => (
+            <WorkingHourBlock
+              key={pageName}
+              pageType={pageType}
+              name={pageName}
+              to={generatePageURL({ pageType, pageName })}
+            />
+          ))}
       </div>
       <Pagination
-        totalCount={names.length}
+        totalCount={pageNames.length}
         unit={PAGE_SIZE}
         currentPage={page}
         createPageLinkTo={getPageLink}

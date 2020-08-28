@@ -18,4 +18,5 @@ export const getJobTitles = () =>
 
 export default {
   getJobTitle,
+  getJobTitles,
 };

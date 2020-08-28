@@ -15,4 +15,5 @@ export const getCompanyNames = () =>
 
 export default {
   getCompany,
+  getCompanyNames,
 };
