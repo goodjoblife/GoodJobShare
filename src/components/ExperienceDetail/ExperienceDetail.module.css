@@ -20,6 +20,10 @@
   position: relative;
 }
 
+.breadCrumb {
+  margin-bottom: 16px;
+}
+
 .back {
   margin-bottom: 25px;
 }
