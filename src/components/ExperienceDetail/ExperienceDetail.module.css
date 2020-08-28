@@ -16,10 +16,6 @@
   }
 }
 
-.headingBlock {
-  position: relative;
-}
-
 .back {
   margin-bottom: 25px;
 }
@@ -33,6 +29,7 @@
   justify-content: flex-end;
   align-items: center;
   padding: 4px 8px 0 8px;
+  margin-bottom: 20px;
 
   @media (max-width: 550px) {
     border-bottom: 1px solid border-gray;

@@ -28,7 +28,6 @@ import useIsLogin from 'hooks/useIsLogin';
 import useTrace from './hooks/useTrace';
 import Article from './Article';
 import MessageBoard from './MessageBoard';
-import BackToList from './BackToList';
 import Seo from './Seo';
 import LikeZone from './LikeZone';
 import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
@@ -54,8 +53,6 @@ const experienceIdSelector = R.compose(
   params => params.id,
   paramsSelector,
 );
-
-const getPathForJobTitle = jobTitle => `/job-titles/${jobTitle}/overview`;
 
 const ExperienceDetail = ({
   submitComment,
@@ -118,7 +115,6 @@ const ExperienceDetail = ({
 
   useTrace(experienceId);
 
-  const backable = R.pathOr(false, ['location', 'state', 'backable'], props);
   const data = props.experienceDetail.toJS();
   const { experience, experienceStatus, experienceError } = data;
   const replies = props.replies.toJS();
@@ -201,10 +197,13 @@ const ExperienceDetail = ({
               setModalClosableOnClickOutside(false);
               handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
             }}
-            className={cn(styles.button, ReactionZoneStyles.button)}
+            className={cn(
+              ReactionZoneStyles.reportButton,
+              ReactionZoneStyles.button,
+            )}
           />
           <PopoverToggle
-            className={cn(styles.button, ReactionZoneStyles.moreButton)}
+            className={ReactionZoneStyles.moreButton}
             popoverClassName={ReactionZoneStyles.popover}
             popoverContent={
               <ReactionZoneOtherOptions
@@ -235,18 +234,7 @@ const ExperienceDetail = ({
                 <Loader />
               ) : (
                 <Fragment>
-                  <div className={styles.headingBlock}>
-                    <div>
-                      <BackToList
-                        backable={backable}
-                        className={styles.back}
-                        defaultBackToURL={getPathForJobTitle(
-                          experience.job_title.name,
-                        )}
-                      />
-                    </div>
-                    <ExperienceHeading experience={experience} />
-                  </div>
+                  <ExperienceHeading experience={experience} />
                   {renderReportZone()}
                   <Article experience={experience} hideContent={!canView} />
                 </Fragment>
@@ -307,7 +295,6 @@ ExperienceDetail.propTypes = {
   location: PropTypes.shape({
     state: PropTypes.shape({
       replyId: PropTypes.string,
-      backable: PropTypes.bool,
     }),
   }),
   canView: PropTypes.bool.isRequired,
