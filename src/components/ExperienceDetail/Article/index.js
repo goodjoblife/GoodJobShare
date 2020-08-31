@@ -103,7 +103,6 @@ const Article = ({
             </div>
           ) : null}
         </div>
-        <ReactionZone experienceId={experience._id} />
 
         {hideContent && (
           <BasicPermissionBlock
@@ -112,6 +111,7 @@ const Article = ({
           />
         )}
       </section>
+      <ReactionZone experienceId={experience._id} />
     </div>
   );
 };

@@ -14,8 +14,11 @@
   font-weight: 600;
   color: #555555;
 
-  &.active .icon {
-    fill: main-yellow;
+  &.active,
+  &:hover {
+    .icon {
+      fill: main-yellow;
+    }
   }
 }
 
