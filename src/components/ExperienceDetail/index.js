@@ -24,7 +24,7 @@ import GoogleAdUnit from 'common/GoogleAdUnit';
 import { isUiNotFoundError } from 'utils/errors';
 import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
-import useIsLogin from 'hooks/useIsLogin';
+import useLogin from 'hooks/useLogin';
 import useTrace from './hooks/useTrace';
 import Article from './Article';
 import MessageBoard from './MessageBoard';
@@ -79,7 +79,7 @@ const ExperienceDetail = ({
     fetchReplies(experienceId);
   }, [experienceId, fetchExperience, fetchReplies]);
 
-  const isLogin = useIsLogin();
+  const [isLogin] = useLogin();
 
   useEffect(() => {
     if (isLogin) {

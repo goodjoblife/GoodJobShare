@@ -5,10 +5,9 @@ import cn from 'classnames';
 import i from 'common/icons';
 import styles from './ReactionZone.module.css';
 
-import useIsLogin from 'hooks/useIsLogin';
-import useFacebookLogin from 'hooks/login/useFacebookLogin';
 import useGetLike from '../hooks/useGetLike';
 import useToggleLike from '../hooks/useToggleLike';
+import useLogin from 'hooks/useLogin';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
   <button
@@ -34,16 +33,16 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
   const [likeState, getLike] = useGetLike(experienceId);
   const hasLiked = R.path(['experience', 'liked'])(likeState.value);
   const toggleLike = useToggleLike(experienceId);
-  const isLogin = useIsLogin();
-  const facebookLogin = useFacebookLogin();
+
+  const [hasLoggedIn, loginModal, login] = useLogin();
   const handleLike = useCallback(async () => {
-    if (!isLogin) await facebookLogin();
+    if (!hasLoggedIn) await login();
     try {
       await toggleLike(hasLiked);
     } catch (e) {}
 
     await getLike();
-  }, [facebookLogin, getLike, hasLiked, isLogin, toggleLike]);
+  }, [getLike, hasLiked, hasLoggedIn, login, toggleLike]);
   useEffect(() => {
     getLike();
   }, [getLike]);
@@ -65,6 +64,7 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
       >
         留言
       </ReactionButton>
+      {loginModal}
     </div>
   );
 };
