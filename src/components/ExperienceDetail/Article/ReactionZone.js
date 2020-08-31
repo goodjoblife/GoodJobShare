@@ -30,7 +30,7 @@ ReactionButton.propTypes = {
   children: PropTypes.node,
 };
 
-const ReactionZone = ({ experienceId }) => {
+const ReactionZone = ({ experienceId, onClickMsgButton }) => {
   const [likeState, getLike] = useGetLike(experienceId);
   const hasLiked = R.path(['experience', 'liked'])(likeState.value);
   const toggleLike = useToggleLike(experienceId);
@@ -58,7 +58,11 @@ const ReactionZone = ({ experienceId }) => {
       >
         覺得實用
       </ReactionButton>
-      <ReactionButton className={styles.reactionButton} Icon={i.Comment}>
+      <ReactionButton
+        className={styles.reactionButton}
+        Icon={i.Comment}
+        onClick={onClickMsgButton}
+      >
         留言
       </ReactionButton>
     </div>
@@ -67,6 +71,7 @@ const ReactionZone = ({ experienceId }) => {
 
 ReactionZone.propTypes = {
   experienceId: PropTypes.string.isRequired,
+  onClickMsgButton: PropTypes.func.isRequired,
 };
 
 export default ReactionZone;

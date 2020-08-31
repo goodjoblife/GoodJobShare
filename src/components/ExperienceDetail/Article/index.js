@@ -111,7 +111,10 @@ const Article = ({
           />
         )}
       </section>
-      <ReactionZone experienceId={experience._id} />
+      <ReactionZone
+        experienceId={experience._id}
+        onClickMsgButton={onClickMsgButton}
+      />
     </div>
   );
 };
@@ -119,6 +122,7 @@ const Article = ({
 Article.propTypes = {
   experience: PropTypes.object.isRequired,
   hideContent: PropTypes.bool.isRequired,
+  onClickMsgButton: PropTypes.string.isRequired,
 };
 
 export default Article;
