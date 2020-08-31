@@ -33,7 +33,7 @@ const ExperienceEntry = ({
   canView,
 }) => (
   <div className={cn(styles.container, styles[size])}>
-    <Link to={createLinkTo({ pageType, id })}>
+    <Link to={createLinkTo({ id, pageType })}>
       <section className={styles.contentWrapper}>
         <div className={styles.labels}>
           <P size="s" className={styles.date}>
