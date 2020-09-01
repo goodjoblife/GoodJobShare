@@ -37,6 +37,7 @@
   justify-content: flex-end;
   align-items: center;
   padding: 4px 8px 0 8px;
+  margin-top: 8px;
   margin-bottom: 20px;
 
   @media (max-width: 550px) {
