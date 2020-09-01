@@ -11,7 +11,7 @@ export default (...deps) => {
   const offsetState = useRef();
   useEffect(() => {
     window.scrollTo(window.pageXOffset, offsetState.current);
-  }, deps);
+  }, [...deps]);
   const saveOffsetState = useCallback(() => {
     offsetState.current = window.pageYOffset;
   }, []);
