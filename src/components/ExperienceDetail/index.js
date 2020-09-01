@@ -148,7 +148,7 @@ const ExperienceDetail = ({
   }, [experienceDataId, permissionFetched, canView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollToCommentZone = useCallback(() => {
-    scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -10 });
+    scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
   }, []);
 
   if (isError(experienceStatus)) {
