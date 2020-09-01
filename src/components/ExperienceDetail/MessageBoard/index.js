@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'common/button/Button';
 import { P } from 'common/base';
 import ButtonGroup from 'common/button/ButtonGroup';
-import useIsLogin from 'hooks/useIsLogin';
+import useLogin from 'hooks/useLogin';
 import useFacebookLogin from 'hooks/login/useFacebookLogin';
 import CommentBlock from './CommentBlock';
 import styles from './MessageBoard.module.css';
@@ -19,7 +19,7 @@ const recommendedSentences = [
 
 const MessageBoard = ({ replies, likeReply, submitComment }) => {
   const [comment, setComment] = useState('');
-  const isLogin = useIsLogin();
+  const [isLogin] = useLogin();
   const facebookLogin = useFacebookLogin();
 
   return (
