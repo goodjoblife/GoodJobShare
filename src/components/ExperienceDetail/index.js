@@ -253,10 +253,10 @@ const ExperienceDetail = ({
                 </Fragment>
               )}
               <LikeZone experienceId={experienceId} />
+              {isFetched(experienceStatus) && (
+                <MoreExperiencesBlock experience={experience} />
+              )}
             </Wrapper>
-            {isFetched(experienceStatus) && (
-              <MoreExperiencesBlock experience={experience} />
-            )}
             <Wrapper size="s">
               <ScrollElement name={COMMENT_ZONE} />
               {isFetching(repliesStatus) ? (
