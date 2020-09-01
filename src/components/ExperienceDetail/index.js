@@ -8,7 +8,7 @@ import React, {
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
-import { Element as ScrollElement } from 'react-scroll';
+import { Element as ScrollElement, scroller } from 'react-scroll';
 import { compose, setStatic } from 'recompose';
 import cn from 'classnames';
 import { useParams } from 'react-router-dom';
@@ -25,12 +25,11 @@ import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
 import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
-import useIsLogin from 'hooks/useIsLogin';
+import useLogin from 'hooks/useLogin';
 import useTrace from './hooks/useTrace';
 import Article from './Article';
 import MessageBoard from './MessageBoard';
 import Seo from './Seo';
-import LikeZone from './LikeZone';
 import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
 import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
 import ExperienceHeading from './Heading';
@@ -93,7 +92,7 @@ const ExperienceDetail = ({
     fetchReplies(experienceId);
   }, [experienceId, fetchExperience, fetchReplies]);
 
-  const isLogin = useIsLogin();
+  const [isLogin] = useLogin();
 
   useEffect(() => {
     if (isLogin) {
@@ -164,6 +163,10 @@ const ExperienceDetail = ({
       });
     }
   }, [experienceDataId, permissionFetched, canView]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const scrollToCommentZone = useCallback(() => {
+    scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
+  }, []);
 
   const renderModalChildren = useCallback(
     modalType => {
@@ -272,10 +275,13 @@ const ExperienceDetail = ({
                   </div>
                   <ExperienceHeading experience={experience} />
                   {reportZone}
-                  <Article experience={experience} hideContent={!canView} />
+                  <Article
+                    experience={experience}
+                    hideContent={!canView}
+                    onClickMsgButton={scrollToCommentZone}
+                  />
                 </Fragment>
               )}
-              <LikeZone experienceId={experienceId} />
             </Wrapper>
             <Wrapper size="s">
               <ScrollElement name={COMMENT_ZONE} />
