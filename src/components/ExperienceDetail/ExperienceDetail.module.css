@@ -16,6 +16,14 @@
   }
 }
 
+.breadCrumb {
+  margin-bottom: 16px;
+
+  @media (min-width: above-small) {
+    margin-bottom: 32px;
+  }
+}
+
 .back {
   margin-bottom: 25px;
 }

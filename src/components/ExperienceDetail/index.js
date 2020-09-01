@@ -21,6 +21,7 @@ import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
 import GoogleAdUnit from 'common/GoogleAdUnit';
+import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
 import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
@@ -41,6 +42,11 @@ import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
 import breakpoints from '../../constants/breakpoints';
+import {
+  pageType as PAGE_TYPE,
+  tabType as TAB_TYPE,
+} from '../../constants/companyJobTitle';
+import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 
 const MODAL_TYPE = {
@@ -53,6 +59,16 @@ const experienceIdSelector = R.compose(
   params => params.id,
   paramsSelector,
 );
+
+const experienceTypeToTabType = {
+  work: TAB_TYPE.WORK_EXPERIENCE,
+  interview: TAB_TYPE.INTERVIEW_EXPERIENCE,
+};
+
+const pageTypeToNameSelector = {
+  [PAGE_TYPE.COMPANY]: R.path(['company', 'name']),
+  [PAGE_TYPE.JOB_TITLE]: R.path(['job_title', 'name']),
+};
 
 const ExperienceDetail = ({
   submitComment,
@@ -115,6 +131,11 @@ const ExperienceDetail = ({
 
   useTrace(experienceId);
 
+  const pageType = R.pathOr(
+    PAGE_TYPE.COMPANY,
+    ['location', 'state', 'pageType'],
+    props,
+  );
   const data = props.experienceDetail.toJS();
   const { experience, experienceStatus, experienceError } = data;
   const replies = props.replies.toJS();
@@ -234,6 +255,16 @@ const ExperienceDetail = ({
                 <Loader />
               ) : (
                 <Fragment>
+                  <div className={styles.breadCrumb}>
+                    <BreadCrumb
+                      data={generateBreadCrumbData({
+                        pageType,
+                        pageName: pageTypeToNameSelector[pageType](experience),
+                        tabType: experienceTypeToTabType[experience.type],
+                        experience,
+                      })}
+                    />
+                  </div>
                   <ExperienceHeading experience={experience} />
                   {renderReportZone()}
                   <Article experience={experience} hideContent={!canView} />
@@ -295,6 +326,7 @@ ExperienceDetail.propTypes = {
   location: PropTypes.shape({
     state: PropTypes.shape({
       replyId: PropTypes.string,
+      pageType: PropTypes.string,
     }),
   }),
   canView: PropTypes.bool.isRequired,
