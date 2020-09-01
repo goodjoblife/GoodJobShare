@@ -11,9 +11,9 @@ import styles from './InterviewExperiences.module.css';
 import { formatCreatedAt, formatSalary, formatSalaryRange } from './helper';
 import Rating from './Rating';
 
-const createLinkTo = id => ({
+const createLinkTo = ({ id, pageType }) => ({
   pathname: `/experiences/${id}`,
-  state: { backable: true },
+  state: { pageType },
 });
 
 const SNIPPET_SIZE = 30;
@@ -33,7 +33,7 @@ const ExperienceEntry = ({
   canView,
 }) => (
   <div className={cn(styles.container, styles[size])}>
-    <Link to={createLinkTo(id)}>
+    <Link to={createLinkTo({ id, pageType })}>
       <section className={styles.contentWrapper}>
         <div className={styles.labels}>
           <P size="s" className={styles.date}>
