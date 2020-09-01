@@ -105,7 +105,7 @@ const ExperienceDetail = ({
     fetchPermission();
   }, [experienceId, fetchPermission]);
 
-  const [{ isModalOpen, modalType, modalPayload }, setModal] = useState({
+  const [{ isModalOpen, modalType, modalPayload = {} }, setModal] = useState({
     isModalOpen: false,
     modalType: '',
   });
@@ -165,50 +165,48 @@ const ExperienceDetail = ({
     }
   }, [experienceDataId, permissionFetched, canView]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (isError(experienceStatus)) {
-    if (isUiNotFoundError(experienceError)) {
-      return <NotFound />;
-    }
-    return null;
-  }
+  const renderModalChildren = useCallback(
+    modalType => {
+      switch (modalType) {
+        case MODAL_TYPE.REPORT_DETAIL:
+          return (
+            <ReportFormContainer
+              close={() => handleIsModalOpen(false)}
+              id={experienceId}
+              onApiError={pload => {
+                setModalClosableOnClickOutside(false);
+                handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload);
+              }}
+              onSuccess={() => {
+                setModalClosableOnClickOutside(true);
+                handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS);
+              }}
+            />
+          );
+        case MODAL_TYPE.REPORT_API_ERROR:
+          return (
+            <ApiErrorFeedback
+              buttonClick={() => {
+                setModalClosableOnClickOutside(false);
+                handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
+              }}
+              message={modalPayload.message}
+            />
+          );
+        case MODAL_TYPE.REPORT_SUCCESS:
+          return (
+            <ReportSuccessFeedback
+              buttonClick={() => handleIsModalOpen(false)}
+            />
+          );
+        default:
+          return null;
+      }
+    },
+    [experienceId, handleIsModalOpen, modalPayload.message],
+  );
 
-  const renderModalChildren = modalType => {
-    switch (modalType) {
-      case MODAL_TYPE.REPORT_DETAIL:
-        return (
-          <ReportFormContainer
-            close={() => handleIsModalOpen(false)}
-            id={experienceId}
-            onApiError={pload => {
-              setModalClosableOnClickOutside(false);
-              handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload);
-            }}
-            onSuccess={() => {
-              setModalClosableOnClickOutside(true);
-              handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS);
-            }}
-          />
-        );
-      case MODAL_TYPE.REPORT_API_ERROR:
-        return (
-          <ApiErrorFeedback
-            buttonClick={() => {
-              setModalClosableOnClickOutside(false);
-              handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
-            }}
-            message={modalPayload.message}
-          />
-        );
-      case MODAL_TYPE.REPORT_SUCCESS:
-        return (
-          <ReportSuccessFeedback buttonClick={() => handleIsModalOpen(false)} />
-        );
-      default:
-        return null;
-    }
-  };
-
-  const renderReportZone = () => {
+  const reportZone = useMemo(() => {
     return (
       <React.Fragment>
         <div className={styles.functionButtons}>
@@ -241,7 +239,14 @@ const ExperienceDetail = ({
         </div>
       </React.Fragment>
     );
-  };
+  }, [handleIsModalOpen]);
+
+  if (isError(experienceStatus)) {
+    if (isUiNotFoundError(experienceError)) {
+      return <NotFound />;
+    }
+    return null;
+  }
 
   return (
     <main>
@@ -266,7 +271,7 @@ const ExperienceDetail = ({
                     />
                   </div>
                   <ExperienceHeading experience={experience} />
-                  {renderReportZone()}
+                  {reportZone}
                   <Article experience={experience} hideContent={!canView} />
                 </Fragment>
               )}
