@@ -7,11 +7,11 @@ import { useRef, useCallback, useEffect } from 'react';
    This hook restores the scrolling offset when the dependencies change.
    The restored offset is saved when we invoke the callback function returned by this hook. */
 
-export default (...deps) => {
+export default deps => {
   const offsetState = useRef();
   useEffect(() => {
     window.scrollTo(window.pageXOffset, offsetState.current);
-  }, [...deps]);
+  }, deps); // eslint-disable-line react-hooks/exhaustive-deps
   const saveOffsetState = useCallback(() => {
     offsetState.current = window.pageYOffset;
   }, []);
