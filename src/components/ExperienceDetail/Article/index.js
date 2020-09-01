@@ -122,7 +122,7 @@ const Article = ({
 Article.propTypes = {
   experience: PropTypes.object.isRequired,
   hideContent: PropTypes.bool.isRequired,
-  onClickMsgButton: PropTypes.string.isRequired,
+  onClickMsgButton: PropTypes.func.isRequired,
 };
 
 export default Article;
