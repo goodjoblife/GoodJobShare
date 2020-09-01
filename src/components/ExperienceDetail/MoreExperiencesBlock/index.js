@@ -73,9 +73,17 @@ const useExperiences = ({ id, companyName, jobTitle }) => {
   const [experiences, setExperiences] = useState([]);
 
   useEffect(() => {
+    let isCancelled = false;
+
     search({ companyName, jobTitle })
       .then(rejectById(id))
-      .then(setExperiences);
+      .then(experiences => {
+        if (!isCancelled) setExperiences(experiences);
+      });
+
+    return () => {
+      isCancelled = true;
+    };
   }, [companyName, id, jobTitle]);
 
   return experiences;
