@@ -24,6 +24,7 @@ import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
 
 import { SubmitFormTracker } from 'utils/eventBasedTracking';
+import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
 import FormBuilder from 'common/FormBuilder';
 import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
 import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
@@ -65,6 +66,8 @@ import {
   joinCompact,
   evolve,
   isNot,
+  within,
+  isValidSalary,
 } from './utils';
 
 const header = <Header title="請輸入你的一份面試經驗" />;
@@ -145,9 +148,14 @@ const questions = [
     validator: ([selected, elseText]) =>
       isNot(isNil, selected) &&
       (equals(selected, last(RESULT_OPTIONS))
-        ? isNot(isEmpty, elseText)
+        ? within(1, 100, elseText.length)
         : true),
-    warning: '需填寫面試結果',
+    warning: ([selected, elseText]) =>
+      isEmpty(elseText)
+        ? '需填寫面試結果'
+        : !within(1, 100, elseText.length)
+        ? '面試結果僅限 1~100 字！'
+        : null,
     options: RESULT_OPTIONS,
     placeholder: '輸入面試結果',
     header: renderCompanyJobTitleHeader,
@@ -214,13 +222,17 @@ const questions = [
     defaultValue: [null, ''],
     validator: ([type, amount]) =>
       isNot(isNil, type)
-        ? isNot(isEmpty, amount) && isSalaryAmount(amount)
+        ? isNot(isEmpty, amount) &&
+          isSalaryAmount(amount) &&
+          isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type], amount)
         : isEmpty(amount),
     warning: ([type, amount]) =>
-      isNot(isNil, type) && (isEmpty(amount) || isNot(isSalaryAmount(amount)))
+      isNot(isNil, type) && (isEmpty(amount) || isNot(isSalaryAmount, amount))
         ? '需填寫薪資'
         : isNil(type) && isNot(isEmpty, amount)
         ? '需選擇薪水類型'
+        : isNot(isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type]), amount)
+        ? '薪資不合理。可能有少填寫 0，或薪資種類(年薪/月薪/日薪/時薪)選擇錯誤，請再檢查一次'
         : null,
     options: keys(SALARY_TYPE_VALUE_BY_OPTION),
     placeholder: '700,000',
@@ -242,10 +254,12 @@ const questions = [
     dataKey: DATA_KEY_SENSITIVE_QUESTIONS,
     defaultValue: [[], ''],
     validator: ([selected, elseText]) =>
-      !contains('其他', selected) || isNot(isEmpty, elseText),
+      !contains('其他', selected) || within(1, 20, elseText.length),
     warning: ([selected, elseText]) =>
       contains(last(SENSITIVE_QUESTIONS_OPTIONS), selected) && isEmpty(elseText)
         ? '需填寫其他特殊問題的內容'
+        : !within(1, 20, elseText.length)
+        ? '面試中提及的特別問題僅限 1~20 字！'
         : null,
     options: SENSITIVE_QUESTIONS_OPTIONS,
     placeholder: '輸入其他特殊問題內容',
@@ -326,15 +340,16 @@ const TypeForm = ({ open, onClose }) => {
   const handleSubmit = useCallback(
     async draft => {
       try {
+        const body = bodyFromDraft(draft);
+        // section 的標題與預設文字 = 4 + 11 + 19 + 25 個字
+        const goalValue = calcInterviewExperienceValue(body, 59);
+
         setSubmitStatus('submitting');
-        await dispatch(
-          createInterviewExperience({
-            body: bodyFromDraft(draft),
-          }),
-        );
+        await dispatch(createInterviewExperience({ body }));
         ReactGA.event({
           category: GA_CATEGORY.SHARE_INTERVIEW,
           action: GA_ACTION.UPLOAD_SUCCESS,
+          value: goalValue,
         });
         ReactPixel.track('Purchase', {
           value: 1,
@@ -343,7 +358,7 @@ const TypeForm = ({ open, onClose }) => {
         });
         // send SubmitForm event to Amplitude
         SubmitFormTracker.sendEvent({
-          type: SubmitFormTracker.types.interview3Steps,
+          type: SubmitFormTracker.types.interviewTypeForm,
           result: SubmitFormTracker.results.success,
         });
         setSubmitStatus('success');
@@ -355,7 +370,7 @@ const TypeForm = ({ open, onClose }) => {
         });
         // send SubmitForm event to Amplitude
         SubmitFormTracker.sendEvent({
-          type: SubmitFormTracker.types.interview3Steps,
+          type: SubmitFormTracker.types.interviewTypeForm,
           result: SubmitFormTracker.results.error,
         });
         setSubmitStatus('error');

@@ -91,6 +91,7 @@ const FormBuilder = ({
   onChange,
   onPrev,
   onNext,
+  onPageChange,
   onSubmit,
   onValidateFail,
   onClose,
@@ -101,7 +102,7 @@ const FormBuilder = ({
     setDraftValue(dataKey)(value);
   };
 
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(-1);
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
 
@@ -134,10 +135,11 @@ const FormBuilder = ({
 
   useEffect(() => {
     if (open) {
-      // Reset on close
       setPage(0);
       resetDraft();
       setWarningShown(false);
+    } else {
+      setPage(-1);
     }
   }, [open, resetDraft, setPage]);
 
@@ -156,7 +158,11 @@ const FormBuilder = ({
 
   useEffect(() => {
     setWarningShown(false);
-  }, [page]);
+
+    if (page >= 0) {
+      if (onPageChange) onPageChange(page);
+    }
+  }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!shouldRenderQuestion) {
     return null;
@@ -186,7 +192,7 @@ const FormBuilder = ({
                 onChange={handleDraftChange(restOptions.dataKey)}
                 onConfirm={() => {
                   if (i < questions.length - 1) {
-                    if (onNext) onNext();
+                    if (onNext) onNext(i + 1);
                     warnBeforeSetPage(i + 1);
                   }
                 }}
@@ -203,11 +209,11 @@ const FormBuilder = ({
             <NavigatorBlock
               skippable={skippable}
               onPrevious={() => {
-                if (onPrev) onPrev();
+                if (onPrev) onPrev(page - 1);
                 setPage(page - 1);
               }}
               onNext={() => {
-                if (onNext) onNext();
+                if (onNext) onNext(page + 1);
                 warnBeforeSetPage(page + 1);
               }}
               hasPrevious={hasPrevious}
@@ -256,6 +262,7 @@ FormBuilder.propTypes = {
   onChange: func,
   onPrev: func,
   onNext: func,
+  onPageChange: func,
   onSubmit: func.isRequired,
   onValidateFail: func,
   onClose: func,

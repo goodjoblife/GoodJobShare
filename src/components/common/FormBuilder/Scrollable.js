@@ -8,17 +8,16 @@ const Scrollable = ({ children, className }) => {
   const ref = useRef(null);
   const [handleMeasureRef, { height: frameHeight }] = useMeasure();
   const [remainOffset, setRemainOffset] = useState(0);
-  const calcRemainOffsetByElement = useCallback(
-    () => setRemainOffset(ref.current.scrollHeight - ref.current.scrollTop),
-    [],
-  );
+  const calcRemainOffsetByElement = useCallback(() => {
+    if (ref.current) {
+      setRemainOffset(ref.current.scrollHeight - ref.current.scrollTop);
+    }
+  }, []);
 
   const handleRef = useCallback(
     el => {
-      if (el) {
-        ref.current = el;
-        handleMeasureRef(el);
-      }
+      ref.current = el;
+      handleMeasureRef(el);
     },
     [handleMeasureRef],
   );
