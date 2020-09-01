@@ -9,6 +9,7 @@ import { getJobTitle } from '../../../apis/jobTitle';
 import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 import Button from '../../common/button/Button';
 import styles from './MoreExperiencesBlock.module.css';
+import useStableScrollOffset from './useStableScrollOffset';
 
 const rejectById = id => R.reject(R.propEq('id', id));
 
@@ -112,7 +113,11 @@ const MoreExperiencesBlock = ({ experience }) => {
     jobTitle: experience.job_title.name,
   });
   const [n, setN] = useState(5);
-  const handleLoadMore = useCallback(() => setN(n + 5), [n]);
+  const saveOffsetState = useStableScrollOffset([n]);
+  const handleLoadMore = useCallback(() => {
+    saveOffsetState();
+    setN(n + 5);
+  }, [n, saveOffsetState]);
 
   if (experiences.length === 0) {
     return null;
