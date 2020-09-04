@@ -130,7 +130,7 @@ const Header = ({ auth, logout }) => {
                     popoverContent={
                       <ul className={styles.popoverItem}>
                         <li>
-                          <Link to="/me">個人頁面</Link>
+                          <Link to="/me">管理我的資料</Link>
                         </li>
                         <li>
                           <button onClick={logout}>登出</button>
