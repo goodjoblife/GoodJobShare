@@ -10,55 +10,69 @@ import styles from './PermissionBlock.module.css';
 
 const isLogin = auth => auth.get('status') === authStatus.CONNECTED;
 
-const CallToLoginShareButton = ({ isLoginText, to, onClick, auth }) => {
+const AuthenticatedButton = ({ to, onClick, children }) => (
+  <Link
+    className={cn('buttonCircleM', 'buttonBlack2')}
+    to={to}
+    onClick={onClick}
+  >
+    {children}
+  </Link>
+);
+
+AuthenticatedButton.propTypes = {
+  children: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
+const UnauthenticatedButton = () => {
   const fbLogin = useFacebookLogin();
   const googleLogin = useGoogleLogin();
 
   return (
-    <div
-      style={{
-        textAlign: 'center',
-      }}
-    >
-      {isLogin(auth) ? (
-        <Link
-          className={cn('buttonCircleM', 'buttonBlack2')}
-          to={to}
-          onClick={onClick}
-        >
-          {isLoginText}
-        </Link>
-      ) : (
-        <div className={styles.loginBtnContainer}>
-          <button
-            className={`${cn('buttonCircleM')} ${styles.btn} ${styles.btnFb}`}
-            onClick={async () => {
-              await fbLogin();
-            }}
-          >
-            <pre>Facebook 登入</pre>
-          </button>
-          <button
-            className={`${cn('buttonCircleM')} ${styles.btn} ${
-              styles.btnGoogle
-            }`}
-            onClick={async () => {
-              await googleLogin();
-            }}
-          >
-            <pre>Google 登入</pre>
-          </button>
-        </div>
-      )}
+    <div className={styles.loginBtnContainer}>
+      <button
+        className={`${cn('buttonCircleM')} ${styles.btn} ${styles.btnFb}`}
+        onClick={async () => {
+          await fbLogin();
+        }}
+      >
+        <pre>Facebook 登入</pre>
+      </button>
+      <button
+        className={`${cn('buttonCircleM')} ${styles.btn} ${styles.btnGoogle}`}
+        onClick={async () => {
+          await googleLogin();
+        }}
+      >
+        <pre>Google 登入</pre>
+      </button>
     </div>
   );
 };
 
+const CallToLoginShareButton = ({ isLoginText, to, onClick, auth }) => (
+  <div
+    style={{
+      textAlign: 'center',
+    }}
+  >
+    {isLogin(auth) ? (
+      <AuthenticatedButton to={to} onClick={onClick}>
+        {isLoginText}
+      </AuthenticatedButton>
+    ) : (
+      <UnauthenticatedButton />
+    )}
+  </div>
+);
+
 CallToLoginShareButton.propTypes = {
-  isLoginText: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
+  isLoginText: PropTypes.string,
+  to: PropTypes.string,
   onClick: PropTypes.func,
-  auth: ImmutablePropTypes.map,
+  auth: ImmutablePropTypes.map.isRequired,
 };
 
 export default CallToLoginShareButton;

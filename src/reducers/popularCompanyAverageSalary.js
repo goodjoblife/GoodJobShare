@@ -9,10 +9,14 @@ const preloadedState = {
   error: null,
 };
 
-export default createReducer(preloadedState, {
-  [SET_STATUS]: (state, { status, data, error }) => ({
-    status,
-    data,
-    error,
-  }),
-});
+export default createReducer(
+  preloadedState,
+  {
+    [SET_STATUS]: (state, { status, data, error }) => ({
+      status,
+      data,
+      error,
+    }),
+  },
+  { resetOnLogOut: false },
+);

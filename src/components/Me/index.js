@@ -32,7 +32,7 @@ const Me = props => {
         {props.auth.getIn(['user', 'name']) === null && (
           <div>
             <Heading size="l" center>
-              登入以查看個人頁面
+              登入以管理我的資料
             </Heading>
             <div className={styles.loginBtnSection}>
               <button
@@ -47,8 +47,7 @@ const Me = props => {
         {props.auth.getIn(['user', 'name']) !== null && (
           <div>
             <Heading size="l" center>
-              {props.auth.getIn(['user', 'name'])}
-              &nbsp;&nbsp;的個人頁面
+              管理我的資料
             </Heading>
             <IconHeadingBlock
               heading="我分享的資料"
