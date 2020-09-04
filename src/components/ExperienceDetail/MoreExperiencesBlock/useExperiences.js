@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useAsync } from 'react-use';
 import R from 'ramda';
 import { getCompany } from '../../../apis/company';
 import { getJobTitle } from '../../../apis/jobTitle';
@@ -62,23 +62,15 @@ const search = async x => {
 };
 
 const useExperiences = ({ id, companyName, jobTitle }) => {
-  const [experiences, setExperiences] = useState([]);
+  const state = useAsync(() =>
+    search({ companyName, jobTitle }).then(rejectById(id)),
+  );
 
-  useEffect(() => {
-    let isCancelled = false;
-
-    search({ companyName, jobTitle })
-      .then(rejectById(id))
-      .then(experiences => {
-        if (!isCancelled) setExperiences(experiences);
-      });
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [companyName, id, jobTitle]);
-
-  return experiences;
+  if (!state.loading && !state.error) {
+    return state.value;
+  } else {
+    return [];
+  }
 };
 
 export default useExperiences;
