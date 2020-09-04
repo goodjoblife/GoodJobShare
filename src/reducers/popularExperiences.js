@@ -10,11 +10,15 @@ const preloadedState = fromJS({
   error: null,
 });
 
-export default createReducer(preloadedState, {
-  [SET_DATA]: (state, { data, status, error }) =>
-    state
-      .set('data', fromJS(data))
-      .set('status', status)
-      .set('error', error),
-  [SET_STATUS]: (state, { status }) => state.set('status', status),
-});
+export default createReducer(
+  preloadedState,
+  {
+    [SET_DATA]: (state, { data, status, error }) =>
+      state
+        .set('data', fromJS(data))
+        .set('status', status)
+        .set('error', error),
+    [SET_STATUS]: (state, { status }) => state.set('status', status),
+  },
+  { resetOnLogOut: false },
+);
