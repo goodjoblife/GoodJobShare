@@ -29,7 +29,6 @@ import useLogin from 'hooks/useLogin';
 import useTrace from './hooks/useTrace';
 import Article from './Article';
 import MessageBoard from './MessageBoard';
-import BackToList from './BackToList';
 import Seo from './Seo';
 import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
 import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
@@ -70,8 +69,6 @@ const pageTypeToNameSelector = {
   [PAGE_TYPE.JOB_TITLE]: R.path(['job_title', 'name']),
 };
 
-const getPathForJobTitle = jobTitle => `/job-titles/${jobTitle}/overview`;
-
 const ExperienceDetail = ({
   submitComment,
   likeReply,
@@ -107,7 +104,7 @@ const ExperienceDetail = ({
     fetchPermission();
   }, [experienceId, fetchPermission]);
 
-  const [{ isModalOpen, modalType, modalPayload }, setModal] = useState({
+  const [{ isModalOpen, modalType, modalPayload = {} }, setModal] = useState({
     isModalOpen: false,
     modalType: '',
   });
@@ -133,7 +130,6 @@ const ExperienceDetail = ({
 
   useTrace(experienceId);
 
-  const backable = R.pathOr(false, ['location', 'state', 'backable'], props);
   const pageType = R.pathOr(
     PAGE_TYPE.COMPANY,
     ['location', 'state', 'pageType'],
@@ -172,50 +168,48 @@ const ExperienceDetail = ({
     scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
   }, []);
 
-  if (isError(experienceStatus)) {
-    if (isUiNotFoundError(experienceError)) {
-      return <NotFound />;
-    }
-    return null;
-  }
+  const renderModalChildren = useCallback(
+    modalType => {
+      switch (modalType) {
+        case MODAL_TYPE.REPORT_DETAIL:
+          return (
+            <ReportFormContainer
+              close={() => handleIsModalOpen(false)}
+              id={experienceId}
+              onApiError={pload => {
+                setModalClosableOnClickOutside(false);
+                handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload);
+              }}
+              onSuccess={() => {
+                setModalClosableOnClickOutside(true);
+                handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS);
+              }}
+            />
+          );
+        case MODAL_TYPE.REPORT_API_ERROR:
+          return (
+            <ApiErrorFeedback
+              buttonClick={() => {
+                setModalClosableOnClickOutside(false);
+                handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
+              }}
+              message={modalPayload.message}
+            />
+          );
+        case MODAL_TYPE.REPORT_SUCCESS:
+          return (
+            <ReportSuccessFeedback
+              buttonClick={() => handleIsModalOpen(false)}
+            />
+          );
+        default:
+          return null;
+      }
+    },
+    [experienceId, handleIsModalOpen, modalPayload.message],
+  );
 
-  const renderModalChildren = modalType => {
-    switch (modalType) {
-      case MODAL_TYPE.REPORT_DETAIL:
-        return (
-          <ReportFormContainer
-            close={() => handleIsModalOpen(false)}
-            id={experienceId}
-            onApiError={pload => {
-              setModalClosableOnClickOutside(false);
-              handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload);
-            }}
-            onSuccess={() => {
-              setModalClosableOnClickOutside(true);
-              handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS);
-            }}
-          />
-        );
-      case MODAL_TYPE.REPORT_API_ERROR:
-        return (
-          <ApiErrorFeedback
-            buttonClick={() => {
-              setModalClosableOnClickOutside(false);
-              handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
-            }}
-            message={modalPayload.message}
-          />
-        );
-      case MODAL_TYPE.REPORT_SUCCESS:
-        return (
-          <ReportSuccessFeedback buttonClick={() => handleIsModalOpen(false)} />
-        );
-      default:
-        return null;
-    }
-  };
-
-  const renderReportZone = () => {
+  const reportZone = useMemo(() => {
     return (
       <React.Fragment>
         <div className={styles.functionButtons}>
@@ -225,10 +219,13 @@ const ExperienceDetail = ({
               setModalClosableOnClickOutside(false);
               handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
             }}
-            className={cn(styles.button, ReactionZoneStyles.button)}
+            className={cn(
+              ReactionZoneStyles.reportButton,
+              ReactionZoneStyles.button,
+            )}
           />
           <PopoverToggle
-            className={cn(styles.button, ReactionZoneStyles.moreButton)}
+            className={ReactionZoneStyles.moreButton}
             popoverClassName={ReactionZoneStyles.popover}
             popoverContent={
               <ReactionZoneOtherOptions
@@ -245,7 +242,14 @@ const ExperienceDetail = ({
         </div>
       </React.Fragment>
     );
-  };
+  }, [handleIsModalOpen]);
+
+  if (isError(experienceStatus)) {
+    if (isUiNotFoundError(experienceError)) {
+      return <NotFound />;
+    }
+    return null;
+  }
 
   return (
     <main>
@@ -259,31 +263,18 @@ const ExperienceDetail = ({
                 <Loader />
               ) : (
                 <Fragment>
-                  <div className={styles.headingBlock}>
-                    <div>
-                      <BackToList
-                        backable={backable}
-                        className={styles.back}
-                        defaultBackToURL={getPathForJobTitle(
-                          experience.job_title.name,
-                        )}
-                      />
-                    </div>
-                    <div className={styles.breadCrumb}>
-                      <BreadCrumb
-                        data={generateBreadCrumbData({
-                          pageType,
-                          pageName: pageTypeToNameSelector[pageType](
-                            experience,
-                          ),
-                          tabType: experienceTypeToTabType[experience.type],
-                          experience,
-                        })}
-                      />
-                    </div>
-                    <ExperienceHeading experience={experience} />
+                  <div className={styles.breadCrumb}>
+                    <BreadCrumb
+                      data={generateBreadCrumbData({
+                        pageType,
+                        pageName: pageTypeToNameSelector[pageType](experience),
+                        tabType: experienceTypeToTabType[experience.type],
+                        experience,
+                      })}
+                    />
                   </div>
-                  {renderReportZone()}
+                  <ExperienceHeading experience={experience} />
+                  {reportZone}
                   <Article
                     experience={experience}
                     hideContent={!canView}
@@ -346,7 +337,6 @@ ExperienceDetail.propTypes = {
   location: PropTypes.shape({
     state: PropTypes.shape({
       replyId: PropTypes.string,
-      backable: PropTypes.bool,
       pageType: PropTypes.string,
     }),
   }),

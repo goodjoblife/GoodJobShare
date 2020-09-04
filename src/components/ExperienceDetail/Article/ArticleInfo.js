@@ -7,6 +7,10 @@ import { Good, Bad } from 'common/icons';
 import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
 import RateButtons from './RateButtons';
+import {
+  pageType as PAGE_TYPE,
+  generatePageURL,
+} from '../../../constants/companyJobTitle';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth()} 月`;
 const formatExperienceInYear = year => {
@@ -28,8 +32,25 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
       <div className={styles.date}>
         {formatDate(new Date(experience.created_at))}
       </div>
+      <InfoBlock
+        label="公司"
+        to={generatePageURL({
+          pageType: PAGE_TYPE.COMPANY,
+          pageName: experience.company.name,
+        })}
+      >
+        {experience.company.name}
+      </InfoBlock>
       <InfoBlock label="面試地區">{experience.region}</InfoBlock>
-      <InfoBlock label="應徵職稱">{experience.job_title.name}</InfoBlock>
+      <InfoBlock
+        label="應徵職稱"
+        to={generatePageURL({
+          pageType: PAGE_TYPE.JOB_TITLE,
+          pageName: experience.job_title.name,
+        })}
+      >
+        {experience.job_title.name}
+      </InfoBlock>
       {expInYearText !== null ? (
         <InfoBlock label="相關職務工作經驗">{expInYearText}</InfoBlock>
       ) : null}
