@@ -29,10 +29,9 @@ import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
 import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
 import CompanyPageProvider from './components/Company/CompanyPageProvider';
+import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
-import CompanyAndJobTitleIndex from './components/CompanyAndJobTitle/CompanyAndJobTitleIndex';
-
-import { pageType } from './constants/companyJobTitle';
+import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
 
 const routes = [
   {
@@ -216,9 +215,7 @@ const routes = [
     routes: [
       {
         path: '/companies',
-        component: () => (
-          <CompanyAndJobTitleIndex pageType={pageType.COMPANY} />
-        ),
+        component: CompanyIndexProvider,
         exact: true,
       },
       {
@@ -236,9 +233,7 @@ const routes = [
     routes: [
       {
         path: '/job-titles',
-        component: () => (
-          <CompanyAndJobTitleIndex pageType={pageType.JOB_TITLE} />
-        ),
+        component: JobTitleIndexProvider,
         exact: true,
       },
       {

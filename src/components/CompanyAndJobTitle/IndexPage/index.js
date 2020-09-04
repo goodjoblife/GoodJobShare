@@ -1,26 +1,20 @@
-import React, { Fragment, useCallback, useMemo, useEffect } from 'react';
+import React, { Fragment, useCallback, useMemo } from 'react';
 import Helmet from 'react-helmet';
-import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import Pagination from 'common/Pagination';
 import Loader from 'common/Loader';
-import WorkingHourBlock from '../TimeAndSalary/SearchScreen/WorkingHourBlock';
+import WorkingHourBlock from '../../TimeAndSalary/SearchScreen/WorkingHourBlock';
 import {
   pageTypeTranslation,
   generatePageURL,
   generateIndexURL,
-} from '../../constants/companyJobTitle';
+} from '../../../constants/companyJobTitle';
 import styles from './CompanyAndJobTitleIndex.module.css';
-import {
-  pageTypeData,
-  pageTypeStatus,
-} from '../../selectors/companyAndJobTitleIndex';
-import { isFetched } from '../../constants/status';
-import { fetchPageNames } from '../../actions/companyAndJobTitleIndex';
+import { isFetched } from '../../../constants/status';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
-import { SITE_NAME } from '../../constants/helmetData';
+import { SITE_NAME } from '../../../constants/helmetData';
 
 const PAGE_SIZE = 10;
 
@@ -58,15 +52,8 @@ const IndexHelmet = ({ pageType, page }) => {
   );
 };
 
-const CompanyAndJobTitleIndex = ({ pageType }) => {
+const CompanyAndJobTitleIndex = ({ pageType, status, pageNames }) => {
   const [page, getPageLink] = usePagination();
-  const status = useSelector(pageTypeStatus(pageType));
-  const dispatch = useDispatch();
-  const pageNames = useSelector(pageTypeData(pageType));
-
-  useEffect(() => {
-    dispatch(fetchPageNames({ pageType }));
-  }, [dispatch, pageType]);
 
   if (!isFetched(status)) {
     return <Loader />;
@@ -104,6 +91,8 @@ const CompanyAndJobTitleIndex = ({ pageType }) => {
 
 CompanyAndJobTitleIndex.propTypes = {
   pageType: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  pageNames: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default CompanyAndJobTitleIndex;
