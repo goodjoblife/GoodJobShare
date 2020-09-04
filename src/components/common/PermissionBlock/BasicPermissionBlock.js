@@ -13,7 +13,7 @@ import styles from './PermissionBlock.module.css';
 
 class BasicPermissionBlock extends React.Component {
   static propTypes = {
-    to: PropTypes.string,
+    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     rootClassName: PropTypes.string,
     simple: PropTypes.bool,
     experienceCount: PropTypes.number.isRequired,
@@ -27,7 +27,6 @@ class BasicPermissionBlock extends React.Component {
   };
 
   static defaultProps = {
-    to: '/share/interview/step1',
     rootClassName: '',
     simple: false,
   };
@@ -83,7 +82,11 @@ class BasicPermissionBlock extends React.Component {
               >
                 {this.renderModalContent()}
                 <div className={styles.ctaButtonContainer}>
-                  <CallToLoginShareButton to={to} isLoginText="立即分享" />
+                  <CallToLoginShareButton
+                    to={to}
+                    onClick={toggleModal}
+                    isLoginText="立即分享"
+                  />
                 </div>
               </Modal>
             </div>

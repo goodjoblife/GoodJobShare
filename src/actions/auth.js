@@ -51,7 +51,7 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
       return response.status;
     });
   }
-  return Promise.reject('FB should ready');
+  return Promise.reject(new Error('FB is not ready'));
 };
 
 /**

@@ -7,17 +7,19 @@ import i from 'common/icons';
 import styles from './Entry.module.css';
 import StaticHelmet from 'common/StaticHelmet';
 
-const Entry = ({ history }) => (
-  <div>
-    <StaticHelmet.Share />
-    <Wrapper size="l" className={styles.wrapper}>
-      <button onClick={() => history.goBack()} className={styles.closeBtn}>
-        <i.X />
-      </button>
-    </Wrapper>
-    <ShareExpSection />
-  </div>
-);
+const Entry = ({ history }) => {
+  return (
+    <div>
+      <StaticHelmet.Share />
+      <Wrapper size="l" className={styles.wrapper}>
+        <button onClick={() => history.goBack()} className={styles.closeBtn}>
+          <i.X />
+        </button>
+      </Wrapper>
+      <ShareExpSection />
+    </div>
+  );
+};
 
 Entry.propTypes = {
   history: PropTypes.object.isRequired,

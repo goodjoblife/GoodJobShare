@@ -1,0 +1,51 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 18px;
+}
+
+.title {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 30px;
+  line-height: 1.37;
+  letter-spacing: 1.71px;
+  text-align: center;
+  color: #000000;
+}
+
+.subTitle {
+  margin-top: 23px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ec7910;
+  display: block;
+}
+
+.description {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 16px;
+  line-height: normal;
+  text-align: center;
+  color: #000000;
+}
+
+.description {
+  margin-bottom: 44px;
+}
+
+.btn {
+  height: 45px;
+  background-color: #000000;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.86px;
+  text-align: center;
+  color: #ffffff;
+
+  & + & {
+    margin-top: 8px;
+  }
+}

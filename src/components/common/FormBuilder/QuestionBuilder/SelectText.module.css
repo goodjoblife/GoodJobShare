@@ -1,0 +1,23 @@
+.inputRow {
+  display: flex;
+  align-items: stretch;
+
+  .text {
+    flex: 1;
+    margin-left: 24px;
+  }
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+
+  .inputWrapper {
+    flex: 1;
+  }
+
+  .suffixLabel {
+    margin: 0 11px;
+  }
+}
