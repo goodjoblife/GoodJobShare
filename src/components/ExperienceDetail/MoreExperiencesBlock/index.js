@@ -6,7 +6,6 @@ import usePermission from 'hooks/usePermission';
 import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 import Button from '../../common/button/Button';
 import styles from './MoreExperiencesBlock.module.css';
-import useStableScrollOffset from './useStableScrollOffset';
 import useExperiences from './useExperiences';
 
 const ExperienceEntry = props => {
@@ -41,11 +40,7 @@ const MoreExperiencesBlock = ({ experience }) => {
     jobTitle: experience.job_title.name,
   });
   const [n, setN] = useState(5);
-  const saveOffsetState = useStableScrollOffset([n]);
-  const handleLoadMore = useCallback(() => {
-    saveOffsetState();
-    setN(n + 5);
-  }, [n, saveOffsetState]);
+  const handleLoadMore = useCallback(() => setN(n + 5), [n]);
 
   if (experiences.length === 0) {
     return null;

@@ -3,6 +3,7 @@
   margin-top: 92px;
   margin-bottom: 86px;
   max-width: 880px;
+  overflow-anchor: none;
 }
 
 .title {
