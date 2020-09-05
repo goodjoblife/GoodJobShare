@@ -1,15 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { P } from 'common/base';
 import styles from './InfoBlock.module.css';
 
-const InfoBlock = ({ label, children }) => (
+const InfoBlock = ({ label, to, children }) => (
   <li className={styles.block}>
     <P size="m" className={styles.label}>
       {label}：
     </P>
     <P size="m" className={styles.content}>
-      {children}
+      {to ? <Link to={to}>{children}</Link> : children}
     </P>
   </li>
 );

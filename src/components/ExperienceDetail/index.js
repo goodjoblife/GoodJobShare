@@ -8,7 +8,7 @@ import React, {
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
-import { Element as ScrollElement } from 'react-scroll';
+import { Element as ScrollElement, scroller } from 'react-scroll';
 import { compose, setStatic } from 'recompose';
 import cn from 'classnames';
 import { useParams } from 'react-router-dom';
@@ -21,27 +21,32 @@ import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
 import GoogleAdUnit from 'common/GoogleAdUnit';
+import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
 import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
-import useIsLogin from 'hooks/useIsLogin';
+import useLogin from 'hooks/useLogin';
 import useTrace from './hooks/useTrace';
 import Article from './Article';
 import MessageBoard from './MessageBoard';
-import BackToList from './BackToList';
 import Seo from './Seo';
-import LikeZone from './LikeZone';
 import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
 import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
 import ExperienceHeading from './Heading';
 import ReportInspectModal from './ReactionZone/ReportInspectModal';
 import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
+import MoreExperiencesBlock from './MoreExperiencesBlock';
 import { isFetching, isFetched, isError } from '../../constants/status';
 import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
 import breakpoints from '../../constants/breakpoints';
+import {
+  pageType as PAGE_TYPE,
+  tabType as TAB_TYPE,
+} from '../../constants/companyJobTitle';
+import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 
 const MODAL_TYPE = {
@@ -55,7 +60,15 @@ const experienceIdSelector = R.compose(
   paramsSelector,
 );
 
-const getPathForJobTitle = jobTitle => `/job-titles/${jobTitle}/overview`;
+const experienceTypeToTabType = {
+  work: TAB_TYPE.WORK_EXPERIENCE,
+  interview: TAB_TYPE.INTERVIEW_EXPERIENCE,
+};
+
+const pageTypeToNameSelector = {
+  [PAGE_TYPE.COMPANY]: R.path(['company', 'name']),
+  [PAGE_TYPE.JOB_TITLE]: R.path(['job_title', 'name']),
+};
 
 const ExperienceDetail = ({
   submitComment,
@@ -80,7 +93,7 @@ const ExperienceDetail = ({
     fetchReplies(experienceId);
   }, [experienceId, fetchExperience, fetchReplies]);
 
-  const isLogin = useIsLogin();
+  const [isLogin] = useLogin();
 
   useEffect(() => {
     if (isLogin) {
@@ -92,7 +105,7 @@ const ExperienceDetail = ({
     fetchPermission();
   }, [experienceId, fetchPermission]);
 
-  const [{ isModalOpen, modalType, modalPayload }, setModal] = useState({
+  const [{ isModalOpen, modalType, modalPayload = {} }, setModal] = useState({
     isModalOpen: false,
     modalType: '',
   });
@@ -118,7 +131,11 @@ const ExperienceDetail = ({
 
   useTrace(experienceId);
 
-  const backable = R.pathOr(false, ['location', 'state', 'backable'], props);
+  const pageType = R.pathOr(
+    PAGE_TYPE.COMPANY,
+    ['location', 'state', 'pageType'],
+    props,
+  );
   const data = props.experienceDetail.toJS();
   const { experience, experienceStatus, experienceError } = data;
   const replies = props.replies.toJS();
@@ -148,50 +165,52 @@ const ExperienceDetail = ({
     }
   }, [experienceDataId, permissionFetched, canView]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (isError(experienceStatus)) {
-    if (isUiNotFoundError(experienceError)) {
-      return <NotFound />;
-    }
-    return null;
-  }
+  const scrollToCommentZone = useCallback(() => {
+    scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
+  }, []);
 
-  const renderModalChildren = modalType => {
-    switch (modalType) {
-      case MODAL_TYPE.REPORT_DETAIL:
-        return (
-          <ReportFormContainer
-            close={() => handleIsModalOpen(false)}
-            id={experienceId}
-            onApiError={pload => {
-              setModalClosableOnClickOutside(false);
-              handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload);
-            }}
-            onSuccess={() => {
-              setModalClosableOnClickOutside(true);
-              handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS);
-            }}
-          />
-        );
-      case MODAL_TYPE.REPORT_API_ERROR:
-        return (
-          <ApiErrorFeedback
-            buttonClick={() => {
-              setModalClosableOnClickOutside(false);
-              handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
-            }}
-            message={modalPayload.message}
-          />
-        );
-      case MODAL_TYPE.REPORT_SUCCESS:
-        return (
-          <ReportSuccessFeedback buttonClick={() => handleIsModalOpen(false)} />
-        );
-      default:
-        return null;
-    }
-  };
+  const renderModalChildren = useCallback(
+    modalType => {
+      switch (modalType) {
+        case MODAL_TYPE.REPORT_DETAIL:
+          return (
+            <ReportFormContainer
+              close={() => handleIsModalOpen(false)}
+              id={experienceId}
+              onApiError={pload => {
+                setModalClosableOnClickOutside(false);
+                handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload);
+              }}
+              onSuccess={() => {
+                setModalClosableOnClickOutside(true);
+                handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS);
+              }}
+            />
+          );
+        case MODAL_TYPE.REPORT_API_ERROR:
+          return (
+            <ApiErrorFeedback
+              buttonClick={() => {
+                setModalClosableOnClickOutside(false);
+                handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
+              }}
+              message={modalPayload.message}
+            />
+          );
+        case MODAL_TYPE.REPORT_SUCCESS:
+          return (
+            <ReportSuccessFeedback
+              buttonClick={() => handleIsModalOpen(false)}
+            />
+          );
+        default:
+          return null;
+      }
+    },
+    [experienceId, handleIsModalOpen, modalPayload.message],
+  );
 
-  const renderReportZone = () => {
+  const reportZone = useMemo(() => {
     return (
       <React.Fragment>
         <div className={styles.functionButtons}>
@@ -201,10 +220,13 @@ const ExperienceDetail = ({
               setModalClosableOnClickOutside(false);
               handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
             }}
-            className={cn(styles.button, ReactionZoneStyles.button)}
+            className={cn(
+              ReactionZoneStyles.reportButton,
+              ReactionZoneStyles.button,
+            )}
           />
           <PopoverToggle
-            className={cn(styles.button, ReactionZoneStyles.moreButton)}
+            className={ReactionZoneStyles.moreButton}
             popoverClassName={ReactionZoneStyles.popover}
             popoverContent={
               <ReactionZoneOtherOptions
@@ -221,7 +243,14 @@ const ExperienceDetail = ({
         </div>
       </React.Fragment>
     );
-  };
+  }, [handleIsModalOpen]);
+
+  if (isError(experienceStatus)) {
+    if (isUiNotFoundError(experienceError)) {
+      return <NotFound />;
+    }
+    return null;
+  }
 
   return (
     <main>
@@ -235,23 +264,28 @@ const ExperienceDetail = ({
                 <Loader />
               ) : (
                 <Fragment>
-                  <div className={styles.headingBlock}>
-                    <div>
-                      <BackToList
-                        backable={backable}
-                        className={styles.back}
-                        defaultBackToURL={getPathForJobTitle(
-                          experience.job_title.name,
-                        )}
-                      />
-                    </div>
-                    <ExperienceHeading experience={experience} />
+                  <div className={styles.breadCrumb}>
+                    <BreadCrumb
+                      data={generateBreadCrumbData({
+                        pageType,
+                        pageName: pageTypeToNameSelector[pageType](experience),
+                        tabType: experienceTypeToTabType[experience.type],
+                        experience,
+                      })}
+                    />
                   </div>
-                  {renderReportZone()}
-                  <Article experience={experience} hideContent={!canView} />
+                  <ExperienceHeading experience={experience} />
+                  {reportZone}
+                  <Article
+                    experience={experience}
+                    hideContent={!canView}
+                    onClickMsgButton={scrollToCommentZone}
+                  />
                 </Fragment>
               )}
-              <LikeZone experienceId={experienceId} />
+              {isFetched(experienceStatus) && (
+                <MoreExperiencesBlock experience={experience} />
+              )}
             </Wrapper>
             <Wrapper size="s">
               <ScrollElement name={COMMENT_ZONE} />
@@ -307,7 +341,7 @@ ExperienceDetail.propTypes = {
   location: PropTypes.shape({
     state: PropTypes.shape({
       replyId: PropTypes.string,
-      backable: PropTypes.bool,
+      pageType: PropTypes.string,
     }),
   }),
   canView: PropTypes.bool.isRequired,
