@@ -36,6 +36,7 @@ import ExperienceHeading from './Heading';
 import ReportInspectModal from './ReactionZone/ReportInspectModal';
 import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
+import MoreExperiencesBlock from './MoreExperiencesBlock';
 import { isFetching, isFetched, isError } from '../../constants/status';
 import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
@@ -281,6 +282,9 @@ const ExperienceDetail = ({
                     onClickMsgButton={scrollToCommentZone}
                   />
                 </Fragment>
+              )}
+              {isFetched(experienceStatus) && (
+                <MoreExperiencesBlock experience={experience} />
               )}
             </Wrapper>
             <Wrapper size="s">

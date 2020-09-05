@@ -41,6 +41,9 @@ query($jobTitle: String!) {
       company {
         name
       }
+      job_title {
+        name
+      }
     	region
       experience_in_year
       education
