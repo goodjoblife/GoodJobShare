@@ -111,3 +111,11 @@ query($companyName: String!) {
   }
 }
 `;
+
+export const getCompaniesHavingDataQuery = `
+{
+  companies_having_data {
+    name
+  }
+}
+`;
