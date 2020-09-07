@@ -1,7 +1,4 @@
-import { useAsync } from 'react-use';
 import R from 'ramda';
-import { getCompany } from '../../../apis/company';
-import { getJobTitle } from '../../../apis/jobTitle';
 
 const rejectById = id => R.reject(R.propEq('id', id));
 
@@ -26,15 +23,7 @@ const filterAndReorderExperiencesBy = ({ companyName, jobTitle }) =>
     R.uniqBy(R.prop('id')),
   );
 
-const search = async x => {
-  const { companyName, jobTitle } = x;
-  const companyPromise = getCompany(companyName);
-  const jobTitlePromise = getJobTitle(jobTitle);
-
-  const [fetchedCompany, fetchedJobTitle] = await Promise.all([
-    companyPromise,
-    jobTitlePromise,
-  ]);
+const getRelatedExperiences = ({ experience, company, jobTitle }) => {
   const [
     {
       interview_experiences: companyInterviewExperiences = [],
@@ -44,7 +33,7 @@ const search = async x => {
       interview_experiences: jobTitleInterviewExperiences = [],
       work_experiences: jobTitleWorkExperiences = [],
     } = {},
-  ] = [fetchedCompany || {}, fetchedJobTitle || {}];
+  ] = [company || {}, jobTitle || {}];
 
   const experiences = [
     ...companyInterviewExperiences,
@@ -54,23 +43,16 @@ const search = async x => {
   ];
 
   const reorderAndFilterExperiences = filterAndReorderExperiencesBy({
-    companyName,
-    jobTitle,
+    companyName: experience.company.name,
+    jobTitle: experience.job_title.name,
   });
 
-  return reorderAndFilterExperiences(experiences);
+  const rejectCurrentExperience = rejectById(experience._id);
+
+  return R.compose(
+    rejectCurrentExperience,
+    reorderAndFilterExperiences,
+  )(experiences);
 };
 
-const useExperiences = ({ id, companyName, jobTitle }) => {
-  const state = useAsync(() =>
-    search({ companyName, jobTitle }).then(rejectById(id)),
-  );
-
-  if (!state.loading && !state.error) {
-    return state.value;
-  } else {
-    return [];
-  }
-};
-
-export default useExperiences;
+export default getRelatedExperiences;

@@ -49,6 +49,7 @@ import {
 } from '../../constants/companyJobTitle';
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
+import useRelation from './hooks/useRelation';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -246,6 +247,8 @@ const ExperienceDetail = ({
     );
   }, [handleIsModalOpen]);
 
+  const [relatedCompany, relatedJobTitle] = useRelation(experience);
+
   if (isError(experienceStatus)) {
     if (isUiNotFoundError(experienceError)) {
       return <NotFound />;
@@ -297,10 +300,15 @@ const ExperienceDetail = ({
         </div>
         {isFetched(experienceStatus) && (
           <Wrapper size="m">
-            <MoreExperiencesBlock experience={experience} />
+            <MoreExperiencesBlock
+              experience={experience}
+              company={relatedCompany}
+              jobTitle={relatedJobTitle}
+            />
             <ChartsZone
-              companyName={experience.company.name}
-              jobTitle={experience.job_title.name}
+              experience={experience}
+              company={relatedCompany}
+              jobTitle={relatedJobTitle}
             />
           </Wrapper>
         )}
