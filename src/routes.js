@@ -19,7 +19,7 @@ import InterviewForm from './containers/ShareExperience/InterviewStepsFormContai
 import TimeSalaryForm from './containers/ShareExperience/TimeSalaryFormContainer';
 import CampaignTimeAndSalaryForm from './containers/ShareExperience/CampaignTimeAndSalaryFormContainer';
 import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
-import Me from './containers/Me';
+import Me from './components/Me';
 import About from './components/About';
 import Faq from './components/Faq';
 import Guidelines from './components/Guidelines';

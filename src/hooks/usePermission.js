@@ -1,12 +1,10 @@
 import { useContext, useCallback } from 'react';
-import { useSelector } from 'react-redux';
-
-import { getHasSearchPermission } from '../apis/me';
 import PermissionContext from 'common/permission-context/PermissionContext';
-import { tokenSelector } from '../selectors/authSelector';
+import { useToken } from 'hooks/auth';
+import { getHasSearchPermission } from '../apis/me';
 
 export default () => {
-  const token = useSelector(tokenSelector);
+  const token = useToken();
   const { canView, permissionFetched, setPermissionState } = useContext(
     PermissionContext,
   );

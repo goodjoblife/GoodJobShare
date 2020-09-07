@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import useToken from 'hooks/useToken';
+import { useToken } from 'hooks/auth';
 import api from '../../../apis';
 
 const useToggleLike = experienceId => {

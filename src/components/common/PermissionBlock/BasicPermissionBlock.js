@@ -8,7 +8,7 @@ import { compose, withState, withHandlers } from 'recompose';
 import P from 'common/base/P';
 import Modal from 'common/Modal';
 import { Heading } from 'common/base';
-import CallToLoginShareButton from '../../../containers/PermissionBlock/CallToLoginShareButtonContainer';
+import CallToLoginShareButton from './CallToLoginShareButton';
 import styles from './PermissionBlock.module.css';
 
 class BasicPermissionBlock extends React.Component {

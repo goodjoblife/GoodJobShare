@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Link } from 'react-router-dom';
+import { useIsLogin } from 'hooks/auth';
 import useFacebookLogin from 'hooks/login/useFacebookLogin';
 import useGoogleLogin from 'hooks/login/useGoogleLogin';
-import authStatus from '../../../constants/authStatus';
 import styles from './PermissionBlock.module.css';
-
-const isLogin = auth => auth.get('status') === authStatus.CONNECTED;
 
 const AuthenticatedButton = ({ to, onClick, children }) => (
   <Link
@@ -52,27 +49,29 @@ const UnauthenticatedButton = () => {
   );
 };
 
-const CallToLoginShareButton = ({ isLoginText, to, onClick, auth }) => (
-  <div
-    style={{
-      textAlign: 'center',
-    }}
-  >
-    {isLogin(auth) ? (
-      <AuthenticatedButton to={to} onClick={onClick}>
-        {isLoginText}
-      </AuthenticatedButton>
-    ) : (
-      <UnauthenticatedButton />
-    )}
-  </div>
-);
+const CallToLoginShareButton = ({ isLoginText, to, onClick }) => {
+  const isLogin = useIsLogin();
+  return (
+    <div
+      style={{
+        textAlign: 'center',
+      }}
+    >
+      {isLogin ? (
+        <AuthenticatedButton to={to} onClick={onClick}>
+          {isLoginText}
+        </AuthenticatedButton>
+      ) : (
+        <UnauthenticatedButton />
+      )}
+    </div>
+  );
+};
 
 CallToLoginShareButton.propTypes = {
   isLoginText: PropTypes.string,
   to: PropTypes.string,
   onClick: PropTypes.func,
-  auth: ImmutablePropTypes.map.isRequired,
 };
 
 export default CallToLoginShareButton;
