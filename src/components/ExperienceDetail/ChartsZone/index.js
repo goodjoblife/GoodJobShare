@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import R from 'ramda';
+import cn from 'classnames';
 import { generatePath } from 'react-router';
 import ChartWrapper from '../../LandingPage/ChartWrapper';
 import SalaryDistributionChart from '../../common/Charts/SalaryDistributionChart';
@@ -7,6 +8,7 @@ import JobTitleDistributionChart from '../../common/Charts/JobTitleDistrubitionC
 import { getCompany } from '../../../apis/company';
 import { getJobTitle } from '../../../apis/jobTitle';
 import styles from '../../LandingPage/SummarySection.module.css';
+import moduleStyles from './ChartsZone.module.css';
 
 const selectJobAverageSalaries = R.compose(
   R.defaultTo([]),
@@ -27,7 +29,7 @@ const ChartsZone = ({ companyName, jobTitle }) => {
   }, [companyName, jobTitle]);
 
   return (
-    <div className={styles.page}>
+    <div className={cn(styles.page, moduleStyles.container)}>
       <ChartWrapper
         className={styles.chartWrapper}
         title={`${companyName}的薪水`}

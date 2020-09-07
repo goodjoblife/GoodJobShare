@@ -284,29 +284,6 @@ const ExperienceDetail = ({
                   />
                 </Fragment>
               )}
-              {isFetched(experienceStatus) && (
-                <MoreExperiencesBlock experience={experience} />
-              )}
-            </Wrapper>
-            {isFetched(experienceStatus) && (
-              <ChartsZone
-                companyName={experience.company.name}
-                jobTitle={experience.job_title.name}
-              />
-            )}
-            <Wrapper size="s">
-              <ScrollElement name={COMMENT_ZONE} />
-              {isFetching(repliesStatus) ? (
-                <Loader size="s" />
-              ) : (
-                <MessageBoard
-                  replies={replies}
-                  likeReply={likeReply}
-                  submitComment={comment => {
-                    submitComment(experienceId, comment);
-                  }}
-                />
-              )}
             </Wrapper>
           </div>
           {width > breakpoints.md ? (
@@ -318,6 +295,29 @@ const ExperienceDetail = ({
             </div>
           ) : null}
         </div>
+        {isFetched(experienceStatus) && (
+          <Wrapper size="m">
+            <MoreExperiencesBlock experience={experience} />
+            <ChartsZone
+              companyName={experience.company.name}
+              jobTitle={experience.job_title.name}
+            />
+          </Wrapper>
+        )}
+        <Wrapper size="s">
+          <ScrollElement name={COMMENT_ZONE} />
+          {isFetching(repliesStatus) ? (
+            <Loader size="s" />
+          ) : (
+            <MessageBoard
+              replies={replies}
+              likeReply={likeReply}
+              submitComment={comment => {
+                submitComment(experienceId, comment);
+              }}
+            />
+          )}
+        </Wrapper>
       </Section>
       <Modal
         isOpen={isModalOpen}
