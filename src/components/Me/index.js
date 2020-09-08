@@ -4,7 +4,7 @@ import { Wrapper, Section, Heading } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Loader from 'common/Loader';
 import { Comment2 } from 'common/icons';
-import useLogin from 'hooks/useLogin';
+import { useLogin } from 'hooks/login';
 import styles from './Me.module.css';
 import ShareBlockElement from './ShareBlockElement';
 import {
@@ -24,12 +24,12 @@ const Me = () => {
     fetchMyPublishes();
   }, [fetchMyPublishes]);
 
-  const [isLogin, loginModal, login] = useLogin();
+  const [isLoggedIn, loginModal, login] = useLogin();
 
   return (
     <Section pageTop paddingBottom>
       <Wrapper size="m">
-        {!isLogin && (
+        {!isLoggedIn && (
           <div>
             <Heading size="l" center>
               登入以管理我的資料
@@ -44,7 +44,7 @@ const Me = () => {
             </div>
           </div>
         )}
-        {isLogin && (
+        {isLoggedIn && (
           <div>
             <Heading size="l" center>
               管理我的資料

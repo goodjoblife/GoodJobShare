@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 import cn from 'classnames';
 import i from 'common/icons';
+import { useLogin } from 'hooks/login';
 import styles from './ReactionZone.module.css';
-
 import useGetLike from '../hooks/useGetLike';
 import useToggleLike from '../hooks/useToggleLike';
-import useLogin from 'hooks/useLogin';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
   <button

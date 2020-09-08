@@ -1,9 +1,9 @@
 import React, { useMemo, useCallback, useState } from 'react';
-import { useIsLogin } from 'hooks/auth';
+import { useIsLoggedIn } from 'hooks/auth';
 import LoginModal from 'common/LoginModal';
 
 const useLogin = () => {
-  const hasLoggedIn = useIsLogin();
+  const isLoggedIn = useIsLoggedIn();
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const login = useCallback(() => setLoginModalOpen(true), []);
   const cancel = useCallback(() => setLoginModalOpen(false), []);
@@ -11,7 +11,7 @@ const useLogin = () => {
     () => <LoginModal isOpen={isLoginModalOpen} close={cancel} />,
     [cancel, isLoginModalOpen],
   );
-  return [hasLoggedIn, loginModal, login, cancel];
+  return [isLoggedIn, loginModal, login, cancel];
 };
 
 export default useLogin;

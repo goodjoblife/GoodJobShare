@@ -7,5 +7,5 @@ export const getUserName = state => state.auth.getIn(['user', 'name']);
 export const getUserEmail = state => state.auth.getIn(['user', 'email']);
 export const getUserEmailStatus = state =>
   state.auth.getIn(['user', 'email_status']);
-export const isLoginSelector = state =>
+export const isLoggedInSelector = state =>
   statusSelector(state) === AUTH_STATUS.CONNECTED;

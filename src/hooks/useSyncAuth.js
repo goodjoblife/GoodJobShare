@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useEffectOnce } from 'react-use';
 import { useDispatch } from 'react-redux';
-import { useToken, useIsLogin } from 'hooks/auth';
+import { useToken, useIsLoggedIn } from 'hooks/auth';
 import { loginWithToken as loginWithTokenAction } from '../actions/auth';
 
 export default () => {
@@ -12,11 +12,11 @@ export default () => {
     [dispatch],
   );
 
-  const isLogin = useIsLogin();
+  const isLoggedIn = useIsLoggedIn();
   const token = useToken();
 
   useEffectOnce(() => {
-    if (isLogin) {
+    if (isLoggedIn) {
       loginWithToken(token);
     }
   });

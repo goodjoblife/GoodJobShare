@@ -8,9 +8,8 @@ import { GjLogo, Glike } from 'common/icons';
 import PopoverToggle from 'common/PopoverToggle';
 import useShareLink from 'hooks/experiments/useShareLink';
 import usePermission from 'hooks/usePermission';
-import { useAuthUser, useAuthUserEmailStatus, useIsLogin } from 'hooks/auth';
-import useLogin from 'hooks/useLogin';
-import useLogout from 'hooks/login/useLogout';
+import { useAuthUser, useAuthUserEmailStatus, useIsLoggedIn } from 'hooks/auth';
+import { useLogin, useLogout } from 'hooks/login';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 import Top from './Top';
@@ -24,15 +23,15 @@ const HeaderTop = () => {
   const location = useLocation();
   const emailStatus = useAuthUserEmailStatus();
   const isEmailVerified = emailStatus === emailStatusMap.VERIFIED;
-  const isLogin = useIsLogin();
+  const isLoggedIn = useIsLoggedIn();
   const shareLink = useShareLink();
 
   return useMemo(() => {
-    if (!isLogin && location.pathname === '/') {
+    if (!isLoggedIn && location.pathname === '/') {
       return null;
     }
 
-    if (isLogin && !isEmailVerified) {
+    if (isLoggedIn && !isEmailVerified) {
       return (
         <Top>
           <EmailVerificationTop
@@ -49,22 +48,22 @@ const HeaderTop = () => {
         <ProgressTop />
       </Top>
     );
-  }, [emailStatus, isEmailVerified, isLogin, location.pathname, shareLink]);
+  }, [emailStatus, isEmailVerified, isLoggedIn, location.pathname, shareLink]);
 };
 
 const Header = () => {
   const history = useHistory();
   const [isNavOpen, setNavOpen] = useState(false);
-  const [isLogin, loginModal, login] = useLogin();
+  const [isLoggedIn, loginModal, login] = useLogin();
   const [, fetchPermission] = usePermission();
   const user = useAuthUser();
   const logout = useLogout();
 
   useEffect(() => {
-    if (isLogin) {
+    if (isLoggedIn) {
       fetchPermission();
     }
-  }, [isLogin, fetchPermission]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isLoggedIn, fetchPermission]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onClickShareData = useCallback(() => {
     ReactGA.event({
@@ -115,11 +114,11 @@ const Header = () => {
             <Link to="/" className={styles.logo} title="GoodJob 職場透明化運動">
               <GjLogo />
             </Link>
-            <SiteMenu isLogin={isLogin} />
+            <SiteMenu isLogin={isLoggedIn} />
             <div className={styles.buttonsArea}>
               <ShareButton onClick={onClickShareData} />
               <div style={{ position: 'relative' }}>
-                {!isLogin && (
+                {!isLoggedIn && (
                   <button
                     className={styles.loginBtn}
                     onClick={() => {
@@ -129,7 +128,7 @@ const Header = () => {
                     登入
                   </button>
                 )}
-                {isLogin && (
+                {isLoggedIn && (
                   <PopoverToggle
                     popoverClassName={styles.popover}
                     popoverContent={

@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { useIsLogin } from 'hooks/auth';
-import useFacebookLogin from 'hooks/login/useFacebookLogin';
-import useGoogleLogin from 'hooks/login/useGoogleLogin';
+import { useIsLoggedIn } from 'hooks/auth';
+import { useFacebookLogin, useGoogleLogin } from 'hooks/login';
 import styles from './PermissionBlock.module.css';
 
 const AuthenticatedButton = ({ to, onClick, children }) => (
@@ -50,14 +49,14 @@ const UnauthenticatedButton = () => {
 };
 
 const CallToLoginShareButton = ({ isLoginText, to, onClick }) => {
-  const isLogin = useIsLogin();
+  const isLoggedIn = useIsLoggedIn();
   return (
     <div
       style={{
         textAlign: 'center',
       }}
     >
-      {isLogin ? (
+      {isLoggedIn ? (
         <AuthenticatedButton to={to} onClick={onClick}>
           {isLoginText}
         </AuthenticatedButton>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 
-import useFacebookLogin from 'hooks/login/useFacebookLogin';
+import { useFacebookLogin } from 'hooks/login';
 import authStatus from '../../../constants/authStatus';
 import styles from './SubmissionBlock.module.css';
 
