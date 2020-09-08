@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styles from './Top.module.css';
 
-const Top = ({ children, link }) =>
-  link ? (
-    <Link to={link} className={styles.root}>
+const Top = ({ children, to }) =>
+  to ? (
+    <Link to={to} className={styles.root}>
       {children}
     </Link>
   ) : (
@@ -13,7 +13,7 @@ const Top = ({ children, link }) =>
   );
 
 Top.propTypes = {
-  link: PropTypes.string,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default Top;

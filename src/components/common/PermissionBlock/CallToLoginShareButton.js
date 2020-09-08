@@ -10,11 +10,11 @@ import styles from './PermissionBlock.module.css';
 
 const isLogin = auth => auth.get('status') === authStatus.CONNECTED;
 
-const AuthenticatedButton = ({ to, onClick, children }) => (
+const AuthenticatedButton = ({ to, onAuthenticatedClick, children }) => (
   <Link
     className={cn('buttonCircleM', 'buttonBlack2')}
     to={to}
-    onClick={onClick}
+    onAuthenticatedClick={onAuthenticatedClick}
   >
     {children}
   </Link>
@@ -22,8 +22,8 @@ const AuthenticatedButton = ({ to, onClick, children }) => (
 
 AuthenticatedButton.propTypes = {
   children: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  onAuthenticatedClick: PropTypes.func,
 };
 
 const UnauthenticatedButton = () => {
@@ -52,14 +52,19 @@ const UnauthenticatedButton = () => {
   );
 };
 
-const CallToLoginShareButton = ({ isLoginText, to, onClick, auth }) => (
+const CallToLoginShareButton = ({
+  isLoginText,
+  to,
+  onAuthenticatedClick,
+  auth,
+}) => (
   <div
     style={{
       textAlign: 'center',
     }}
   >
     {isLogin(auth) ? (
-      <AuthenticatedButton to={to} onClick={onClick}>
+      <AuthenticatedButton to={to} onAuthenticatedClick={onAuthenticatedClick}>
         {isLoginText}
       </AuthenticatedButton>
     ) : (
@@ -70,8 +75,8 @@ const CallToLoginShareButton = ({ isLoginText, to, onClick, auth }) => (
 
 CallToLoginShareButton.propTypes = {
   isLoginText: PropTypes.string,
-  to: PropTypes.string,
-  onClick: PropTypes.func,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  onAuthenticatedClick: PropTypes.func,
   auth: ImmutablePropTypes.map.isRequired,
 };
 

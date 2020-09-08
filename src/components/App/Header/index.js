@@ -73,7 +73,7 @@ const Header = ({ auth, logout }) => {
     }
 
     return (
-      <Top link={shareLink}>
+      <Top to={shareLink}>
         <ProgressTop />
       </Top>
     );
