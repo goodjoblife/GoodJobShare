@@ -35,10 +35,7 @@ const Me = () => {
               登入以管理我的資料
             </Heading>
             <div className={styles.loginBtnSection}>
-              <button
-                className="buttonCircleM buttonBlackLine"
-                onClick={() => login()}
-              >
+              <button className="buttonCircleM buttonBlackLine" onClick={login}>
                 登入
               </button>
             </div>

@@ -119,12 +119,7 @@ const Header = () => {
               <ShareButton onClick={onClickShareData} />
               <div style={{ position: 'relative' }}>
                 {!isLoggedIn && (
-                  <button
-                    className={styles.loginBtn}
-                    onClick={() => {
-                      login();
-                    }}
-                  >
+                  <button className={styles.loginBtn} onClick={login}>
                     登入
                   </button>
                 )}
