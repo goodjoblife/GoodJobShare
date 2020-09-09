@@ -110,8 +110,7 @@ export const fetchExperience = id => (dispatch, getState, { api }) => {
         });
       }
 
-      const { id, ...rest } = experience;
-      dispatch(setExperience({ _id: id, ...rest }));
+      dispatch(setExperience(experience));
     })
     .catch(error => {
       if (isGraphqlError(error)) {

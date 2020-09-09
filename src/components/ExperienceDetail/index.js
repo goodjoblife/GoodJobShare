@@ -49,7 +49,6 @@ import {
 } from '../../constants/companyJobTitle';
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
-import useRelation from './hooks/useRelation';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -144,7 +143,7 @@ const ExperienceDetail = ({
   const repliesStatus = props.repliesStatus;
 
   // send event to Amplitude
-  const experienceDataId = useMemo(() => (experience ? experience._id : null), [
+  const experienceDataId = useMemo(() => (experience ? experience.id : null), [
     experience,
   ]);
   useEffect(() => {
@@ -157,7 +156,7 @@ const ExperienceDetail = ({
           }, 0)
         : 0;
       ViewArticleDetailTracker.sendEvent({
-        id: experience._id,
+        id: experience.id,
         type: experience.type,
         contentLength,
         jobTitle: experience.job_title.name,
@@ -247,8 +246,6 @@ const ExperienceDetail = ({
     );
   }, [handleIsModalOpen]);
 
-  const [relatedCompany, relatedJobTitle] = useRelation(experience);
-
   if (isError(experienceStatus)) {
     if (isUiNotFoundError(experienceError)) {
       return <NotFound />;
@@ -300,16 +297,8 @@ const ExperienceDetail = ({
         </div>
         {isFetched(experienceStatus) && (
           <Wrapper size="m">
-            <MoreExperiencesBlock
-              experience={experience}
-              company={relatedCompany}
-              jobTitle={relatedJobTitle}
-            />
-            <ChartsZone
-              experience={experience}
-              company={relatedCompany}
-              jobTitle={relatedJobTitle}
-            />
+            <MoreExperiencesBlock experience={experience} />
+            <ChartsZone experience={experience} />
           </Wrapper>
         )}
         <Wrapper size="s">

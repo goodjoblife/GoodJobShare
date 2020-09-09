@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import R from 'ramda';
 import cn from 'classnames';
 import { generatePath } from 'react-router';
 import ChartWrapper from '../../LandingPage/ChartWrapper';
@@ -9,41 +8,43 @@ import JobTitleDistributionChart from '../../common/Charts/JobTitleDistrubitionC
 import styles from '../../LandingPage/SummarySection.module.css';
 import moduleStyles from './ChartsZone.module.css';
 
-const selectJobAverageSalaries = R.compose(
-  R.pathOr([], ['salary_work_time_statistics', 'job_average_salaries']),
-);
-const selectSalaryDistributionBins = R.compose(
-  R.pathOr([], ['salary_distribution', 'bins']),
-);
-
-const ChartsZone = ({ experience, company, jobTitle }) => (
+const ChartsZone = ({
+  experience: {
+    company: {
+      name: companyName,
+      salary_work_time_statistics: { job_average_salaries },
+    },
+    job_title: {
+      name: jobTitle,
+      salary_distribution: { bins },
+    },
+  },
+}) => (
   <div className={cn(styles.page, moduleStyles.container)}>
     <ChartWrapper
       className={styles.chartWrapper}
-      title={`${experience.company.name}的薪水`}
+      title={`${companyName}的薪水`}
       to={generatePath('/companies/:companyName', {
-        companyName: experience.company.name,
+        companyName,
       })}
     >
       <React.Fragment>
         <div className={styles.barChart}>
-          <JobTitleDistributionChart data={selectJobAverageSalaries(company)} />
+          <JobTitleDistributionChart data={job_average_salaries} />
         </div>
       </React.Fragment>
     </ChartWrapper>
 
     <ChartWrapper
       className={styles.chartWrapper}
-      title={`${experience.job_title.name}的薪水分佈`}
+      title={`${jobTitle}的薪水分佈`}
       to={generatePath('/job-titles/:jobTitle', {
-        jobTitle: experience.job_title.name,
+        jobTitle,
       })}
     >
       <React.Fragment>
         <div className={styles.barChart}>
-          <SalaryDistributionChart
-            data={selectSalaryDistributionBins(jobTitle)}
-          />
+          <SalaryDistributionChart data={bins} />
         </div>
       </React.Fragment>
     </ChartWrapper>

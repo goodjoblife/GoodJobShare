@@ -7,7 +7,7 @@ import usePermission from 'hooks/usePermission';
 import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 import Button from '../../common/button/Button';
 import styles from './MoreExperiencesBlock.module.css';
-import getRelatedExperiences from './getRelatedExperiences';
+import relatedExperiencesSelector from './relatedExperiencesSelector';
 
 const ExperienceEntry = props => {
   switch (props.data.type) {
@@ -31,19 +31,13 @@ const LoadMoreButton = ({ children: _, ...props }) => (
   </Button>
 );
 
-const MoreExperiencesBlock = ({ experience, company, jobTitle }) => {
+const MoreExperiencesBlock = ({ experience }) => {
   const location = useLocation();
   const { state: { pageType = PAGE_TYPE.COMPANY } = {} } = location;
   const [, , canView] = usePermission();
-  const experiences = useMemo(
-    () =>
-      getRelatedExperiences({
-        experience,
-        company,
-        jobTitle,
-      }),
-    [company, experience, jobTitle],
-  );
+  const experiences = useMemo(() => relatedExperiencesSelector(experience), [
+    experience,
+  ]);
   const [n, setN] = useState(5);
   const handleLoadMore = useCallback(() => setN(n + 5), [n]);
 
@@ -72,8 +66,6 @@ const MoreExperiencesBlock = ({ experience, company, jobTitle }) => {
 
 MoreExperiencesBlock.propTypes = {
   experience: PropTypes.object.isRequired,
-  company: PropTypes.object,
-  jobTitle: PropTypes.object,
 };
 
 export default MoreExperiencesBlock;

@@ -23,18 +23,19 @@ const filterAndReorderExperiencesBy = ({ companyName, jobTitle }) =>
     R.uniqBy(R.prop('id')),
   );
 
-const getRelatedExperiences = ({ experience, company, jobTitle }) => {
-  const [
-    {
-      interview_experiences: companyInterviewExperiences = [],
-      work_experiences: companyWorkExperiences = [],
-    } = {},
-    {
-      interview_experiences: jobTitleInterviewExperiences = [],
-      work_experiences: jobTitleWorkExperiences = [],
-    } = {},
-  ] = [company || {}, jobTitle || {}];
-
+const relatedExperiencesSelector = ({
+  id,
+  company: {
+    name: companyName,
+    interview_experiences: companyInterviewExperiences,
+    work_experiences: companyWorkExperiences,
+  },
+  job_title: {
+    name: jobTitle,
+    interview_experiences: jobTitleInterviewExperiences,
+    work_experiences: jobTitleWorkExperiences,
+  },
+}) => {
   const experiences = [
     ...companyInterviewExperiences,
     ...companyWorkExperiences,
@@ -43,11 +44,11 @@ const getRelatedExperiences = ({ experience, company, jobTitle }) => {
   ];
 
   const reorderAndFilterExperiences = filterAndReorderExperiencesBy({
-    companyName: experience.company.name,
-    jobTitle: experience.job_title.name,
+    companyName,
+    jobTitle,
   });
 
-  const rejectCurrentExperience = rejectById(experience._id);
+  const rejectCurrentExperience = rejectById(id);
 
   return R.compose(
     rejectCurrentExperience,
@@ -55,4 +56,4 @@ const getRelatedExperiences = ({ experience, company, jobTitle }) => {
   )(experiences);
 };
 
-export default getRelatedExperiences;
+export default relatedExperiencesSelector;
