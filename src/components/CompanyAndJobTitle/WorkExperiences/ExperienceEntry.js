@@ -39,13 +39,13 @@ const ExperienceEntry = ({
           <P size="s" className={styles.date}>
             工作經驗 · {formatCreatedAt(createdAt)}
           </P>
-          {weekWorkTime && canView && (
-            <div className={styles.weekWorkTime}>
-              <i.Clock />
-              {formatWeekWorkTime(weekWorkTime)}
-            </div>
-          )}
           <div className={styles.salaryRecommendWrapper}>
+            {weekWorkTime && canView && (
+              <div className={styles.weekWorkTime}>
+                <i.Clock />
+                {formatWeekWorkTime(weekWorkTime)}
+              </div>
+            )}
             {salary && (
               <div
                 className={cn(styles.salary, {
