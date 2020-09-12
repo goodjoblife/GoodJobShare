@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Element as ScrollElement, scroller } from 'react-scroll';
 import PropTypes from 'prop-types';
 import Button from 'common/button/Button';
 import { P } from 'common/base';
@@ -16,6 +17,8 @@ const recommendedSentences = [
   '很實用！',
   '台灣的職場因為有你變得更好！',
 ];
+
+const REPLIES_BOTTOM = 'REPLIES_BOTTOM';
 
 const MessageBoard = ({ replies, likeReply, submitComment }) => {
   const [comment, setComment] = useState('');
@@ -50,6 +53,8 @@ const MessageBoard = ({ replies, likeReply, submitComment }) => {
               await facebookLogin();
             }
             await submitComment(comment);
+            setComment('');
+            scroller.scrollTo(REPLIES_BOTTOM, { smooth: true, offset: -75 });
           }}
         >
           {isLogin ? '發佈留言' : '以  f  認證，發佈留言'}
@@ -70,6 +75,7 @@ const MessageBoard = ({ replies, likeReply, submitComment }) => {
             }}
           />
         ))}
+        <ScrollElement name={REPLIES_BOTTOM} />
       </div>
     </div>
   );
