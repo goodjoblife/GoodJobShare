@@ -84,7 +84,7 @@ class BasicPermissionBlock extends React.Component {
                 <div className={styles.ctaButtonContainer}>
                   <CallToLoginShareButton
                     to={to}
-                    onClick={toggleModal}
+                    onAuthenticatedClick={toggleModal}
                     isLoginText="立即分享"
                   />
                 </div>

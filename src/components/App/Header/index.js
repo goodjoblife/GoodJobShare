@@ -44,7 +44,7 @@ const HeaderTop = () => {
     }
 
     return (
-      <Top link={shareLink}>
+      <Top to={shareLink}>
         <ProgressTop />
       </Top>
     );

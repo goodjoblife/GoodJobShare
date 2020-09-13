@@ -6,11 +6,11 @@ import { useIsLoggedIn } from 'hooks/auth';
 import { useFacebookLogin, useGoogleLogin } from 'hooks/login';
 import styles from './PermissionBlock.module.css';
 
-const AuthenticatedButton = ({ to, onClick, children }) => (
+const AuthenticatedButton = ({ to, onAuthenticatedClick, children }) => (
   <Link
     className={cn('buttonCircleM', 'buttonBlack2')}
     to={to}
-    onClick={onClick}
+    onAuthenticatedClick={onAuthenticatedClick}
   >
     {children}
   </Link>
@@ -18,8 +18,8 @@ const AuthenticatedButton = ({ to, onClick, children }) => (
 
 AuthenticatedButton.propTypes = {
   children: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  onAuthenticatedClick: PropTypes.func,
 };
 
 const UnauthenticatedButton = () => {
@@ -48,7 +48,7 @@ const UnauthenticatedButton = () => {
   );
 };
 
-const CallToLoginShareButton = ({ isLoginText, to, onClick }) => {
+const CallToLoginShareButton = ({ isLoginText, to, onAuthenticatedClick }) => {
   const isLoggedIn = useIsLoggedIn();
   return (
     <div
@@ -57,7 +57,10 @@ const CallToLoginShareButton = ({ isLoginText, to, onClick }) => {
       }}
     >
       {isLoggedIn ? (
-        <AuthenticatedButton to={to} onClick={onClick}>
+        <AuthenticatedButton
+          to={to}
+          onAuthenticatedClick={onAuthenticatedClick}
+        >
           {isLoginText}
         </AuthenticatedButton>
       ) : (
@@ -69,8 +72,8 @@ const CallToLoginShareButton = ({ isLoginText, to, onClick }) => {
 
 CallToLoginShareButton.propTypes = {
   isLoginText: PropTypes.string,
-  to: PropTypes.string,
-  onClick: PropTypes.func,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  onAuthenticatedClick: PropTypes.func,
 };
 
 export default CallToLoginShareButton;
