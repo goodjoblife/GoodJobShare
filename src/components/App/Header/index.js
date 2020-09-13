@@ -6,61 +6,32 @@ import ReactGA from 'react-ga';
 import { Wrapper } from 'common/base';
 import { GjLogo, Glike } from 'common/icons';
 import PopoverToggle from 'common/PopoverToggle';
+import useShareLink from 'hooks/experiments/useShareLink';
+import usePermission from 'hooks/usePermission';
+import { useAuthUser, useAuthUserEmailStatus, useIsLoggedIn } from 'hooks/auth';
+import { useLogin, useLogout } from 'hooks/login';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 import Top from './Top';
 import EmailVerificationTop from './Top/EmailVerificationTop';
 import ProgressTop from './Top/ProgressTop';
 import Searchbar from './Searchbar';
-
-import authStatus from '../../../constants/authStatus';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import emailStatusMap from '../../../constants/emailStatus';
-import LoginModal from '../../common/LoginModal';
-import useShareLink from '../../../hooks/experiments/useShareLink';
-import usePermission from '../../../hooks/usePermission';
 
-const Header = ({ auth, logout }) => {
-  const history = useHistory();
+const HeaderTop = () => {
   const location = useLocation();
-  const [isNavOpen, setNavOpen] = useState(false);
-  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const emailStatus = useAuthUserEmailStatus();
+  const isEmailVerified = emailStatus === emailStatusMap.VERIFIED;
+  const isLoggedIn = useIsLoggedIn();
   const shareLink = useShareLink();
-  const [, fetchPermission] = usePermission();
 
-  useEffect(() => {
-    if (auth.get('status') === authStatus.CONNECTED) {
-      fetchPermission();
-    }
-  }, [auth.get('status'), fetchPermission]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const onClickShareData = useCallback(() => {
-    ReactGA.event({
-      category: GA_CATEGORY.HEADER,
-      action: GA_ACTION.CLICK_SHARE_DATA,
-    });
-  }, []);
-
-  const toggleNav = useCallback(() => setNavOpen(!isNavOpen), [isNavOpen]);
-
-  const closeNav = useCallback(() => setNavOpen(false), []);
-
-  const openLoginModal = useCallback(() => setLoginModalOpen(true), []);
-
-  const closeLoginModal = useCallback(() => setLoginModalOpen(false), []);
-
-  useEffect(() => history.listen(closeNav), [closeNav, history]);
-
-  const topNode = useMemo(() => {
-    const isLogin = auth.get('status') === authStatus.CONNECTED;
-    const emailStatus = auth.getIn(['user', 'email_status']);
-    const isEmailVerified = emailStatus === emailStatusMap.VERIFIED;
-
-    if (!isLogin && location.pathname === '/') {
+  return useMemo(() => {
+    if (!isLoggedIn && location.pathname === '/') {
       return null;
     }
 
-    if (isLogin && !isEmailVerified) {
+    if (isLoggedIn && !isEmailVerified) {
       return (
         <Top>
           <EmailVerificationTop
@@ -77,11 +48,39 @@ const Header = ({ auth, logout }) => {
         <ProgressTop />
       </Top>
     );
-  }, [auth, location.pathname, shareLink]);
+  }, [emailStatus, isEmailVerified, isLoggedIn, location.pathname, shareLink]);
+};
+
+const Header = () => {
+  const history = useHistory();
+  const [isNavOpen, setNavOpen] = useState(false);
+  const [isLoggedIn, loginModal, login] = useLogin();
+  const [, fetchPermission] = usePermission();
+  const user = useAuthUser();
+  const logout = useLogout();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchPermission();
+    }
+  }, [isLoggedIn, fetchPermission]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onClickShareData = useCallback(() => {
+    ReactGA.event({
+      category: GA_CATEGORY.HEADER,
+      action: GA_ACTION.CLICK_SHARE_DATA,
+    });
+  }, []);
+
+  const toggleNav = useCallback(() => setNavOpen(!isNavOpen), [isNavOpen]);
+
+  const closeNav = useCallback(() => setNavOpen(false), []);
+
+  useEffect(() => history.listen(closeNav), [closeNav, history]);
 
   return (
     <div className={styles.root}>
-      {topNode}
+      <HeaderTop />
       <header className={styles.header}>
         <Wrapper size="l" className={styles.inner}>
           <HeaderButton isNavOpen={isNavOpen} toggle={toggleNav} />
@@ -115,16 +114,16 @@ const Header = ({ auth, logout }) => {
             <Link to="/" className={styles.logo} title="GoodJob 職場透明化運動">
               <GjLogo />
             </Link>
-            <SiteMenu isLogin={auth.get('status') === authStatus.CONNECTED} />
+            <SiteMenu isLogin={isLoggedIn} />
             <div className={styles.buttonsArea}>
               <ShareButton onClick={onClickShareData} />
               <div style={{ position: 'relative' }}>
-                {auth.getIn(['user', 'name']) === null && (
-                  <button className={styles.loginBtn} onClick={openLoginModal}>
+                {!isLoggedIn && (
+                  <button className={styles.loginBtn} onClick={login}>
                     登入
                   </button>
                 )}
-                {auth.getIn(['user', 'name']) !== null && (
+                {isLoggedIn && (
                   <PopoverToggle
                     popoverClassName={styles.popover}
                     popoverContent={
@@ -139,7 +138,7 @@ const Header = ({ auth, logout }) => {
                     }
                   >
                     <div className={styles.userNameBtn}>
-                      {auth.getIn(['user', 'name'])}
+                      {user && user.get('name')}
                     </div>
                   </PopoverToggle>
                 )}
@@ -148,14 +147,9 @@ const Header = ({ auth, logout }) => {
           </nav>
         </Wrapper>
       </header>
-      <LoginModal isOpen={isLoginModalOpen} close={closeLoginModal} />
+      {loginModal}
     </div>
   );
-};
-
-Header.propTypes = {
-  logout: PropTypes.func.isRequired,
-  auth: PropTypes.object,
 };
 
 const HeaderButton = ({ isNavOpen, toggle }) => (

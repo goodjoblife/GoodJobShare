@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useFacebookLogin from 'hooks/login/useFacebookLogin';
-import useGoogleLogin from 'hooks/login/useGoogleLogin';
+import { useFacebookLogin, useGoogleLogin } from 'hooks/login';
 import Modal from 'common/Modal.js';
 import authStatus from '../../../constants/authStatus';
 import styles from './LoginModal.module.css';

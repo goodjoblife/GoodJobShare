@@ -25,7 +25,7 @@ import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
 import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
-import useLogin from 'hooks/useLogin';
+import { useLogin } from 'hooks/login';
 import useTrace from './hooks/useTrace';
 import Article from './Article';
 import MessageBoard from './MessageBoard';
@@ -93,13 +93,13 @@ const ExperienceDetail = ({
     fetchReplies(experienceId);
   }, [experienceId, fetchExperience, fetchReplies]);
 
-  const [isLogin] = useLogin();
+  const [isLoggedIn] = useLogin();
 
   useEffect(() => {
-    if (isLogin) {
+    if (isLoggedIn) {
       fetchReplies(experienceId);
     }
-  }, [isLogin, experienceId, fetchExperience, fetchReplies]);
+  }, [isLoggedIn, experienceId, fetchExperience, fetchReplies]);
 
   useEffect(() => {
     fetchPermission();

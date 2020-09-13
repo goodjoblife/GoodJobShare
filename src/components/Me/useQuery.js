@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useAsyncFn } from 'react-use';
-import useToken from 'hooks/useToken';
+import { useToken } from 'hooks/auth';
 import api from '../../apis';
 
 export const useFetchMyPublishes = () => {
