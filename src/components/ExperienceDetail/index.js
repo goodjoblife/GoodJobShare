@@ -296,7 +296,7 @@ const ExperienceDetail = ({
           ) : null}
         </div>
         {isFetched(experienceStatus) && (
-          <Wrapper size="m">
+          <Wrapper size="l">
             <MoreExperiencesBlock experience={experience} />
             <ChartsZone experience={experience} />
           </Wrapper>
