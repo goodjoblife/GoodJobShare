@@ -33,9 +33,12 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
   const hasLiked = R.path(['experience', 'liked'])(likeState.value);
   const toggleLike = useToggleLike(experienceId);
 
-  const [hasLoggedIn, loginModal, login] = useLogin();
+  const [hasLoggedIn, login] = useLogin();
   const handleLike = useCallback(async () => {
-    if (!hasLoggedIn) await login();
+    if (!hasLoggedIn) {
+      await login();
+      return;
+    }
     try {
       await toggleLike(hasLiked);
     } catch (e) {}
@@ -63,7 +66,6 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
       >
         留言
       </ReactionButton>
-      {loginModal}
     </div>
   );
 };

@@ -1,17 +1,16 @@
-import React, { useMemo, useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useIsLoggedIn } from 'hooks/auth';
-import LoginModal from 'common/LoginModal';
+import { useHistory, useLocation } from 'react-router';
 
 const useLogin = () => {
   const isLoggedIn = useIsLoggedIn();
-  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
-  const login = useCallback(() => setLoginModalOpen(true), []);
-  const cancel = useCallback(() => setLoginModalOpen(false), []);
-  const loginModal = useMemo(
-    () => <LoginModal isOpen={isLoginModalOpen} close={cancel} />,
-    [cancel, isLoginModalOpen],
+  const history = useHistory();
+  const { state } = useLocation();
+  const login = useCallback(
+    () => history.push({ state: { ...state, login: true } }),
+    [history, state],
   );
-  return [isLoggedIn, loginModal, login, cancel];
+  return [isLoggedIn, login];
 };
 
 export default useLogin;

@@ -7,6 +7,7 @@ import styles from './App.module.css';
 import Header from './Header';
 import Footer from './Footer';
 import StaticHelmet from 'common/StaticHelmet';
+import LoginModal from 'common/LoginModal';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 
 import routes from '../../routes';
@@ -23,8 +24,21 @@ const useShare = () => {
   return [share, exitShare];
 };
 
+const useLoginToggle = () => {
+  const location = useLocation();
+  const state = location.state || {};
+  const isLoginOn = state.login;
+  const history = useHistory();
+  const closeLogin = useCallback(
+    () => history.push({ state: omit(['login'], state) }),
+    [history, state],
+  );
+  return [isLoginOn, closeLogin];
+};
+
 const App = () => {
   const [share, exitShare] = useShare();
+  const [isLoginOn, closeLogin] = useLoginToggle();
   return (
     <Fragment>
       <Switch>
@@ -42,6 +56,7 @@ const App = () => {
         ))}
       </Switch>
       <ShareInterviewModal open={share === 'interview'} onClose={exitShare} />
+      <LoginModal isOpen={isLoginOn} close={closeLogin} />
     </Fragment>
   );
 };
