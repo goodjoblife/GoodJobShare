@@ -1,15 +1,13 @@
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import { useIsLoggedIn } from 'hooks/auth';
-import { useHistory, useLocation } from 'react-router';
+import LoginModalContext from '../../contexts/LoginModalContext';
 
 const useLogin = () => {
   const isLoggedIn = useIsLoggedIn();
-  const history = useHistory();
-  const { state } = useLocation();
-  const login = useCallback(
-    () => history.push({ state: { ...state, login: true } }),
-    [history, state],
-  );
+  const { setLoginModalDisplayed } = useContext(LoginModalContext);
+  const login = useCallback(() => setLoginModalDisplayed(true), [
+    setLoginModalDisplayed,
+  ]);
   return [isLoggedIn, login];
 };
 

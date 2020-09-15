@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback } from 'react';
+import React, { Fragment, useCallback, useContext } from 'react';
 import { Switch, useLocation, useHistory } from 'react-router-dom';
 import { omit } from 'ramda';
 
@@ -8,6 +8,7 @@ import Header from './Header';
 import Footer from './Footer';
 import StaticHelmet from 'common/StaticHelmet';
 import LoginModal from 'common/LoginModal';
+import LoginModalContext from '../../contexts/LoginModalContext';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 
 import routes from '../../routes';
@@ -24,21 +25,11 @@ const useShare = () => {
   return [share, exitShare];
 };
 
-const useLoginToggle = () => {
-  const location = useLocation();
-  const state = location.state || {};
-  const isLoginOn = state.login;
-  const history = useHistory();
-  const closeLogin = useCallback(
-    () => history.push({ state: omit(['login'], state) }),
-    [history, state],
-  );
-  return [isLoginOn, closeLogin];
-};
-
 const App = () => {
   const [share, exitShare] = useShare();
-  const [isLoginOn, closeLogin] = useLoginToggle();
+  const { isLoginModalDisplayed, setLoginModalDisplayed } = useContext(
+    LoginModalContext,
+  );
   return (
     <Fragment>
       <Switch>
@@ -56,7 +47,10 @@ const App = () => {
         ))}
       </Switch>
       <ShareInterviewModal open={share === 'interview'} onClose={exitShare} />
-      <LoginModal isOpen={isLoginOn} close={closeLogin} />
+      <LoginModal
+        isOpen={isLoginModalDisplayed}
+        close={() => setLoginModalDisplayed(false)}
+      />
     </Fragment>
   );
 };
