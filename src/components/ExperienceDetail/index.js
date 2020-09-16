@@ -37,6 +37,7 @@ import ReportInspectModal from './ReactionZone/ReportInspectModal';
 import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
+import ChartsZone from './ChartsZone';
 import { isFetching, isFetched, isError } from '../../constants/status';
 import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
@@ -142,7 +143,7 @@ const ExperienceDetail = ({
   const repliesStatus = props.repliesStatus;
 
   // send event to Amplitude
-  const experienceDataId = useMemo(() => (experience ? experience._id : null), [
+  const experienceDataId = useMemo(() => (experience ? experience.id : null), [
     experience,
   ]);
   useEffect(() => {
@@ -155,7 +156,7 @@ const ExperienceDetail = ({
           }, 0)
         : 0;
       ViewArticleDetailTracker.sendEvent({
-        id: experience._id,
+        id: experience.id,
         type: experience.type,
         contentLength,
         jobTitle: experience.job_title.name,
@@ -283,23 +284,6 @@ const ExperienceDetail = ({
                   />
                 </Fragment>
               )}
-              {isFetched(experienceStatus) && (
-                <MoreExperiencesBlock experience={experience} />
-              )}
-            </Wrapper>
-            <Wrapper size="s">
-              <ScrollElement name={COMMENT_ZONE} />
-              {isFetching(repliesStatus) ? (
-                <Loader size="s" />
-              ) : (
-                <MessageBoard
-                  replies={replies}
-                  likeReply={likeReply}
-                  submitComment={comment => {
-                    submitComment(experienceId, comment);
-                  }}
-                />
-              )}
             </Wrapper>
           </div>
           {width > breakpoints.md ? (
@@ -311,6 +295,26 @@ const ExperienceDetail = ({
             </div>
           ) : null}
         </div>
+        {isFetched(experienceStatus) && (
+          <Wrapper size="l">
+            <MoreExperiencesBlock experience={experience} />
+            <ChartsZone experience={experience} />
+          </Wrapper>
+        )}
+        <Wrapper size="s">
+          <ScrollElement name={COMMENT_ZONE} />
+          {isFetching(repliesStatus) ? (
+            <Loader size="s" />
+          ) : (
+            <MessageBoard
+              replies={replies}
+              likeReply={likeReply}
+              submitComment={comment => {
+                submitComment(experienceId, comment);
+              }}
+            />
+          )}
+        </Wrapper>
       </Section>
       <Modal
         isOpen={isModalOpen}

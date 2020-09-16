@@ -1,7 +1,4 @@
-import { useAsync } from 'react-use';
 import R from 'ramda';
-import { getCompany } from '../../../apis/company';
-import { getJobTitle } from '../../../apis/jobTitle';
 
 const rejectById = id => R.reject(R.propEq('id', id));
 
@@ -26,26 +23,19 @@ const filterAndReorderExperiencesBy = ({ companyName, jobTitle }) =>
     R.uniqBy(R.prop('id')),
   );
 
-const search = async x => {
-  const { companyName, jobTitle } = x;
-  const companyPromise = getCompany(companyName);
-  const jobTitlePromise = getJobTitle(jobTitle);
-
-  const [fetchedCompany, fetchedJobTitle] = await Promise.all([
-    companyPromise,
-    jobTitlePromise,
-  ]);
-  const [
-    {
-      interview_experiences: companyInterviewExperiences = [],
-      work_experiences: companyWorkExperiences = [],
-    } = {},
-    {
-      interview_experiences: jobTitleInterviewExperiences = [],
-      work_experiences: jobTitleWorkExperiences = [],
-    } = {},
-  ] = [fetchedCompany || {}, fetchedJobTitle || {}];
-
+const relatedExperiencesSelector = ({
+  id,
+  company: {
+    name: companyName,
+    interview_experiences: companyInterviewExperiences,
+    work_experiences: companyWorkExperiences,
+  },
+  job_title: {
+    name: jobTitle,
+    interview_experiences: jobTitleInterviewExperiences,
+    work_experiences: jobTitleWorkExperiences,
+  },
+}) => {
   const experiences = [
     ...companyInterviewExperiences,
     ...companyWorkExperiences,
@@ -58,19 +48,12 @@ const search = async x => {
     jobTitle,
   });
 
-  return reorderAndFilterExperiences(experiences);
+  const rejectCurrentExperience = rejectById(id);
+
+  return R.compose(
+    rejectCurrentExperience,
+    reorderAndFilterExperiences,
+  )(experiences);
 };
 
-const useExperiences = ({ id, companyName, jobTitle }) => {
-  const state = useAsync(() =>
-    search({ companyName, jobTitle }).then(rejectById(id)),
-  );
-
-  if (!state.loading && !state.error) {
-    return state.value;
-  } else {
-    return [];
-  }
-};
-
-export default useExperiences;
+export default relatedExperiencesSelector;
