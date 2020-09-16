@@ -8,7 +8,7 @@ import Header from './Header';
 import Footer from './Footer';
 import StaticHelmet from 'common/StaticHelmet';
 import LoginModal from 'common/LoginModal';
-import LoginModalContext from '../../contexts/LoginModalContext';
+import LoginModalContext from 'contexts/LoginModalContext';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 
 import routes from '../../routes';

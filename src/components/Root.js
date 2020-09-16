@@ -25,10 +25,10 @@ const Root = () => {
 
   return compose(
     [
-      PermissionContextProvider,
-      FacebookContextProvider,
-      GoogleContextProvider,
       LoginModalContextProvider,
+      GoogleContextProvider,
+      FacebookContextProvider,
+      PermissionContextProvider,
     ],
     <App />,
   );
