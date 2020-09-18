@@ -39,7 +39,6 @@ const YAxisTickFormatter = (str, perNWord = 4) => {
 
 const JobTitleDistributionChart = ({ data }) => {
   const { width } = useWindowSize();
-
   return (
     <ResponsiveContainer>
       <BarChart
