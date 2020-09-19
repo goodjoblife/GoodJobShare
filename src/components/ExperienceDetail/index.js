@@ -257,34 +257,32 @@ const ExperienceDetail = ({
     <main>
       <Seo experienceState={data} />
       <Section bg="white" paddingBottom className={styles.section}>
-        <div className={styles.container}>
+        <Wrapper className={styles.container} size="m">
           <div className={styles.leftContainer}>
-            <Wrapper className={styles.wrapper} size="m">
-              {/* 文章區塊  */}
-              {!isFetched(experienceStatus) ? (
-                <Loader />
-              ) : (
-                <Fragment>
-                  <div className={styles.breadCrumb}>
-                    <BreadCrumb
-                      data={generateBreadCrumbData({
-                        pageType,
-                        pageName: pageTypeToNameSelector[pageType](experience),
-                        tabType: experienceTypeToTabType[experience.type],
-                        experience,
-                      })}
-                    />
-                  </div>
-                  <ExperienceHeading experience={experience} />
-                  {reportZone}
-                  <Article
-                    experience={experience}
-                    hideContent={!canView}
-                    onClickMsgButton={scrollToCommentZone}
+            {/* 文章區塊  */}
+            {!isFetched(experienceStatus) ? (
+              <Loader />
+            ) : (
+              <Fragment>
+                <div className={styles.breadCrumb}>
+                  <BreadCrumb
+                    data={generateBreadCrumbData({
+                      pageType,
+                      pageName: pageTypeToNameSelector[pageType](experience),
+                      tabType: experienceTypeToTabType[experience.type],
+                      experience,
+                    })}
                   />
-                </Fragment>
-              )}
-            </Wrapper>
+                </div>
+                <ExperienceHeading experience={experience} />
+                {reportZone}
+                <Article
+                  experience={experience}
+                  hideContent={!canView}
+                  onClickMsgButton={scrollToCommentZone}
+                />
+              </Fragment>
+            )}
           </div>
           {width > breakpoints.md ? (
             <div className={styles.sideAds}>
@@ -294,12 +292,16 @@ const ExperienceDetail = ({
               />
             </div>
           ) : null}
-        </div>
+        </Wrapper>
         {isFetched(experienceStatus) && (
-          <Wrapper size="l">
-            <MoreExperiencesBlock experience={experience} />
-            <ChartsZone experience={experience} />
-          </Wrapper>
+          <React.Fragment>
+            <Wrapper size="m">
+              <MoreExperiencesBlock experience={experience} />
+            </Wrapper>
+            <Wrapper size="l">
+              <ChartsZone experience={experience} />
+            </Wrapper>
+          </React.Fragment>
         )}
         <Wrapper size="s">
           <ScrollElement name={COMMENT_ZONE} />

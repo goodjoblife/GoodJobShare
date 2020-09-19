@@ -6,14 +6,9 @@
 }
 
 .leftContainer {
-  flex-grow: 1;
   flex-shrink: 1;
-}
-
-.wrapper {
   @media (min-width: above-small) {
-    padding-left: 32px;
-    padding-right: 32px;
+    padding-right: 16px;
   }
 }
 
