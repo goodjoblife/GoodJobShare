@@ -13,6 +13,7 @@ import { compose, setStatic } from 'recompose';
 import cn from 'classnames';
 import { useParams } from 'react-router-dom';
 import { useWindowSize } from 'react-use';
+import { StickyContainer, Sticky } from 'react-sticky';
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
@@ -257,9 +258,9 @@ const ExperienceDetail = ({
     <main>
       <Seo experienceState={data} />
       <Section bg="white" paddingBottom className={styles.section}>
-        <div className={styles.container}>
-          <div className={styles.leftContainer}>
-            <Wrapper className={styles.wrapper} size="m">
+        <Wrapper size="m">
+          <StickyContainer className={styles.container}>
+            <div className={styles.leftContainer}>
               {/* 文章區塊  */}
               {!isFetched(experienceStatus) ? (
                 <Loader />
@@ -284,22 +285,32 @@ const ExperienceDetail = ({
                   />
                 </Fragment>
               )}
-            </Wrapper>
-          </div>
-          {width > breakpoints.md ? (
-            <div className={styles.sideAds}>
-              <GoogleAdUnit
-                sizes={[[160, 600]]}
-                adUnit="goodjob_pc_article_sidebar"
-              />
             </div>
-          ) : null}
-        </div>
+            {width > breakpoints.md ? (
+              <div className={styles.sideAds}>
+                <Sticky>
+                  {({ style }) => (
+                    <div style={style}>
+                      <GoogleAdUnit
+                        sizes={[[160, 600]]}
+                        adUnit="goodjob_pc_article_sidebar"
+                      />
+                    </div>
+                  )}
+                </Sticky>
+              </div>
+            ) : null}
+          </StickyContainer>
+        </Wrapper>
         {isFetched(experienceStatus) && (
-          <Wrapper size="l">
-            <MoreExperiencesBlock experience={experience} />
-            <ChartsZone experience={experience} />
-          </Wrapper>
+          <React.Fragment>
+            <Wrapper size="m">
+              <MoreExperiencesBlock experience={experience} />
+            </Wrapper>
+            <Wrapper size="l">
+              <ChartsZone experience={experience} />
+            </Wrapper>
+          </React.Fragment>
         )}
         <Wrapper size="s">
           <ScrollElement name={COMMENT_ZONE} />
