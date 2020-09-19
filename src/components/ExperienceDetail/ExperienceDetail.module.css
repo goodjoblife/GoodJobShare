@@ -47,7 +47,6 @@
   width: 160px;
   height: 600px;
   flex-shrink: 0;
-  margin-right: 16px;
 
   @media (max-width: below-small) {
     display: none;
