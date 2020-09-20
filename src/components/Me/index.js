@@ -24,7 +24,7 @@ const Me = () => {
     fetchMyPublishes();
   }, [fetchMyPublishes]);
 
-  const [isLoggedIn, loginModal, login] = useLogin();
+  const [isLoggedIn, login] = useLogin();
 
   return (
     <Section pageTop paddingBottom>
@@ -116,7 +116,6 @@ const Me = () => {
             </IconHeadingBlock>
           </div>
         )}
-        {loginModal}
       </Wrapper>
     </Section>
   );
