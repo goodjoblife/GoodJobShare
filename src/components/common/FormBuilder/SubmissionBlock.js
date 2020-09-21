@@ -25,6 +25,10 @@ const SubmissionBlock = ({ onSubmit }) => {
         <Link className={styles.link} to="/user-terms" target="_blank">
           使用者條款
         </Link>
+        以及
+        <Link className={styles.link} to="/guidelines" target="_blank">
+          發文留言規則
+        </Link>
       </div>
     </div>
   );
