@@ -37,7 +37,7 @@ const generateTitleLayer = ({ pageType, experience }) => {
       return {
         label: experience.job_title.name,
         to: {
-          pathname: generatePath('/experiences/:id', { id: experience._id }),
+          pathname: generatePath('/experiences/:id', { id: experience.id }),
           state: { pageType },
         },
       };
@@ -45,7 +45,7 @@ const generateTitleLayer = ({ pageType, experience }) => {
       return {
         label: experience.company.name,
         to: {
-          pathname: generatePath('/experiences/:id', { id: experience._id }),
+          pathname: generatePath('/experiences/:id', { id: experience.id }),
           state: { pageType },
         },
       };

@@ -112,7 +112,7 @@ const Article = ({
         )}
       </section>
       <ReactionZone
-        experienceId={experience._id}
+        experienceId={experience.id}
         onClickMsgButton={onClickMsgButton}
       />
     </div>

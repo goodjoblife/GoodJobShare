@@ -13,6 +13,7 @@ import { compose, setStatic } from 'recompose';
 import cn from 'classnames';
 import { useParams } from 'react-router-dom';
 import { useWindowSize } from 'react-use';
+import { StickyContainer, Sticky } from 'react-sticky';
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
@@ -37,6 +38,7 @@ import ReportInspectModal from './ReactionZone/ReportInspectModal';
 import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
+import ChartsZone from './ChartsZone';
 import { isFetching, isFetched, isError } from '../../constants/status';
 import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
@@ -142,7 +144,7 @@ const ExperienceDetail = ({
   const repliesStatus = props.repliesStatus;
 
   // send event to Amplitude
-  const experienceDataId = useMemo(() => (experience ? experience._id : null), [
+  const experienceDataId = useMemo(() => (experience ? experience.id : null), [
     experience,
   ]);
   useEffect(() => {
@@ -155,7 +157,7 @@ const ExperienceDetail = ({
           }, 0)
         : 0;
       ViewArticleDetailTracker.sendEvent({
-        id: experience._id,
+        id: experience.id,
         type: experience.type,
         contentLength,
         jobTitle: experience.job_title.name,
@@ -256,9 +258,9 @@ const ExperienceDetail = ({
     <main>
       <Seo experienceState={data} />
       <Section bg="white" paddingBottom className={styles.section}>
-        <div className={styles.container}>
-          <div className={styles.leftContainer}>
-            <Wrapper className={styles.wrapper} size="m">
+        <Wrapper size="m">
+          <StickyContainer className={styles.container}>
+            <div className={styles.leftContainer}>
               {/* 文章區塊  */}
               {!isFetched(experienceStatus) ? (
                 <Loader />
@@ -283,34 +285,47 @@ const ExperienceDetail = ({
                   />
                 </Fragment>
               )}
-              {isFetched(experienceStatus) && (
-                <MoreExperiencesBlock experience={experience} />
-              )}
-            </Wrapper>
-            <Wrapper size="s">
-              <ScrollElement name={COMMENT_ZONE} />
-              {isFetching(repliesStatus) ? (
-                <Loader size="s" />
-              ) : (
-                <MessageBoard
-                  replies={replies}
-                  likeReply={likeReply}
-                  submitComment={comment => {
-                    submitComment(experienceId, comment);
-                  }}
-                />
-              )}
-            </Wrapper>
-          </div>
-          {width > breakpoints.md ? (
-            <div className={styles.sideAds}>
-              <GoogleAdUnit
-                sizes={[[160, 600]]}
-                adUnit="goodjob_pc_article_sidebar"
-              />
             </div>
-          ) : null}
-        </div>
+            {width > breakpoints.md ? (
+              <div className={styles.sideAds}>
+                <Sticky>
+                  {({ style }) => (
+                    <div style={style}>
+                      <GoogleAdUnit
+                        sizes={[[160, 600]]}
+                        adUnit="goodjob_pc_article_sidebar"
+                      />
+                    </div>
+                  )}
+                </Sticky>
+              </div>
+            ) : null}
+          </StickyContainer>
+        </Wrapper>
+        {isFetched(experienceStatus) && (
+          <React.Fragment>
+            <Wrapper size="m">
+              <MoreExperiencesBlock experience={experience} />
+            </Wrapper>
+            <Wrapper size="l">
+              <ChartsZone experience={experience} />
+            </Wrapper>
+          </React.Fragment>
+        )}
+        <Wrapper size="s">
+          <ScrollElement name={COMMENT_ZONE} />
+          {isFetching(repliesStatus) ? (
+            <Loader size="s" />
+          ) : (
+            <MessageBoard
+              replies={replies}
+              likeReply={likeReply}
+              submitComment={comment => {
+                submitComment(experienceId, comment);
+              }}
+            />
+          )}
+        </Wrapper>
       </Section>
       <Modal
         isOpen={isModalOpen}

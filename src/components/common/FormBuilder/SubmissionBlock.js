@@ -1,30 +1,20 @@
-import React, { useMemo, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import R from 'ramda';
 
-import { useFacebookLogin } from 'hooks/login';
-import authStatus from '../../../constants/authStatus';
+import { useLogin } from 'hooks/login';
 import styles from './SubmissionBlock.module.css';
 
-const isAuthStatusConnected = R.compose(
-  R.equals(authStatus.CONNECTED),
-  auth => auth.get('status'),
-);
-
 const SubmissionBlock = ({ onSubmit }) => {
-  const auth = useSelector(R.prop('auth'));
-  const login = useFacebookLogin();
-  const hasLoggedIn = useMemo(() => isAuthStatusConnected(auth), [auth]);
-  const btnText = (hasLoggedIn ? '' : '以  f  認證，') + '送出資料並解鎖';
+  const [isLoggedIn, login] = useLogin();
+  const btnText = (isLoggedIn ? '' : '登入帳號，以') + '送出資料並解鎖';
   const handleSubmit = useCallback(async () => {
-    if (hasLoggedIn) {
+    if (isLoggedIn) {
       await onSubmit();
     } else {
-      await login();
+      login();
     }
-  }, [hasLoggedIn, login, onSubmit]);
+  }, [isLoggedIn, login, onSubmit]);
   return (
     <div className={styles.container}>
       <button className={styles.button} onClick={handleSubmit}>
@@ -34,6 +24,10 @@ const SubmissionBlock = ({ onSubmit }) => {
         我分享的是真實資訊，並遵守中華民國法令，以及本站
         <Link className={styles.link} to="/user-terms" target="_blank">
           使用者條款
+        </Link>
+        以及
+        <Link className={styles.link} to="/guidelines" target="_blank">
+          發文留言規則
         </Link>
       </div>
     </div>

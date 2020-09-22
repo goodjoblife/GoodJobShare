@@ -1,9 +1,7 @@
 .container {
   margin: 0 auto;
   margin-top: 92px;
-  margin-bottom: 86px;
   max-width: 880px;
-  overflow-anchor: none;
 }
 
 .title {
@@ -19,4 +17,5 @@
 .loadMoreButton {
   margin: 0 auto;
   display: block;
+  overflow-anchor: none;
 }

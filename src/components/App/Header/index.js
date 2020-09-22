@@ -54,7 +54,7 @@ const HeaderTop = () => {
 const Header = () => {
   const history = useHistory();
   const [isNavOpen, setNavOpen] = useState(false);
-  const [isLoggedIn, loginModal, login] = useLogin();
+  const [isLoggedIn, login] = useLogin();
   const [, fetchPermission] = usePermission();
   const user = useAuthUser();
   const logout = useLogout();
@@ -147,7 +147,6 @@ const Header = () => {
           </nav>
         </Wrapper>
       </header>
-      {loginModal}
     </div>
   );
 };
