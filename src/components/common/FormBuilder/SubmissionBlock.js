@@ -7,12 +7,12 @@ import styles from './SubmissionBlock.module.css';
 
 const SubmissionBlock = ({ onSubmit }) => {
   const [isLoggedIn, login] = useLogin();
-  const btnText = (isLoggedIn ? '' : '登入帳號，') + '送出資料並解鎖';
+  const btnText = (isLoggedIn ? '' : '登入帳號，以') + '送出資料並解鎖';
   const handleSubmit = useCallback(async () => {
     if (isLoggedIn) {
       await onSubmit();
     } else {
-      await login();
+      login();
     }
   }, [isLoggedIn, login, onSubmit]);
   return (
