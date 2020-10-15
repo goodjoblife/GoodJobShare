@@ -60,6 +60,7 @@ query MyUnlockedContents {
       data {
         id
         title
+        type
       }
     }
     unlocked_salary_work_time_records {
