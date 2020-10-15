@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import R from 'ramda';
 import usePagination from 'hooks/usePagination';
 import { useFetchMyUnlockedContents } from './useQuery';
 import Table from 'common/table/Table';
 import Pagination from 'common/Pagination';
+import { Wrapper, Section, Heading, Link } from 'common/base';
+import styles from './MyUnlockedContentsPage.module.css';
 
 const DATA_NUM_PER_PAGE = 20;
 const TYPE_TEXT_MAPPING = {
@@ -20,8 +21,10 @@ const renderUnlockTime = item => (
 
 const renderUnlockData = item => (
   <div>
-    <span>{TYPE_TEXT_MAPPING[item.type]}</span>
-    <Link to={item.url}>{item.title}</Link>
+    <span className={styles.typeBadge}>{TYPE_TEXT_MAPPING[item.type]}</span>
+    <Link to={item.url} className={styles.link}>
+      {item.title}
+    </Link>
   </div>
 );
 
@@ -84,23 +87,36 @@ const MyUnlockedContentsPage = () => {
   }, [transformedRecords, page]);
 
   return (
-    <div>
-      <div>我解鎖的資料</div>
-      <Table data={currentPageRecords} primaryKey="data_id">
-        <Table.Column title="解鎖時間" dataField={renderUnlockTime}>
-          解鎖時間
-        </Table.Column>
-        <Table.Column title="解鎖內容" dataField={renderUnlockData}>
-          解鎖內容
-        </Table.Column>
-      </Table>
-      <Pagination
-        totalCount={transformedRecords ? transformedRecords.length : 0}
-        unit={DATA_NUM_PER_PAGE}
-        currentPage={page}
-        createPageLinkTo={getPageLink}
-      />
-    </div>
+    <Wrapper size="m">
+      <Section paddingTop paddingBottom>
+        <Heading size="sm" marginBottomS>
+          我解鎖的資料
+        </Heading>
+        <div></div>
+        <Table data={currentPageRecords} primaryKey="data_id">
+          <Table.Column
+            className={styles.unlockedTimeCol}
+            title="解鎖時間"
+            dataField={renderUnlockTime}
+          >
+            解鎖時間
+          </Table.Column>
+          <Table.Column
+            className={styles.unlockedDataCol}
+            title="解鎖內容"
+            dataField={renderUnlockData}
+          >
+            解鎖內容
+          </Table.Column>
+        </Table>
+        <Pagination
+          totalCount={transformedRecords ? transformedRecords.length : 0}
+          unit={DATA_NUM_PER_PAGE}
+          currentPage={page}
+          createPageLinkTo={getPageLink}
+        />
+      </Section>
+    </Wrapper>
   );
 };
 

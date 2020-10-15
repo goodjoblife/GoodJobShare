@@ -1,0 +1,19 @@
+.typeBadge {
+  border: 1px solid #bdbdbd;
+  padding: 3px 12px;
+  border-radius: 3px;
+  font-size: 13px;
+  color: #626262;
+}
+
+.link {
+  margin-left: 20px;
+}
+
+.unlockedTimeCol {
+  width: 20%;
+}
+
+.unlockedDataCol {
+  width: 80%;
+}
