@@ -59,7 +59,12 @@ query MyUnlockedContents {
       unlocked_time
       data {
         id
-        title
+        job_title {
+          name
+        }
+        company {
+          name
+        }
         type
       }
     }

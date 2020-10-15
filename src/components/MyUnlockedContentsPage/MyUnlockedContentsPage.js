@@ -59,7 +59,7 @@ const MyUnlockedContentsPage = () => {
           data_id: r.data.id,
           unlocked_time: new Date(r.unlocked_time),
           type: r.data.type,
-          title: r.data.title,
+          title: `${r.data.company.name} ${r.data.job_title.name}`,
           url: `/experiences/${r.data.id}`,
         });
       }
@@ -70,7 +70,7 @@ const MyUnlockedContentsPage = () => {
           data_id: r.data.id,
           unlocked_time: new Date(r.unlocked_time),
           type: 'salary_work_time',
-          title: `${r.data.company.name} ${r.data.job_title.name} 的薪資工時`,
+          title: `${r.data.company.name} ${r.data.job_title.name}`,
           url: `/companies/${r.data.company.name}/salary-work-times`,
         });
       }
