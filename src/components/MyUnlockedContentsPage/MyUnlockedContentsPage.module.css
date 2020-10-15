@@ -1,3 +1,5 @@
+@value below-tablet from "common/variables.module.css";
+
 .typeBadge {
   border: 1px solid #bdbdbd;
   padding: 3px 12px;
@@ -8,6 +10,10 @@
 
 .link {
   margin-left: 20px;
+  @media (max-width: below-tablet) {
+    margin-left: 0px;
+    display: block;
+  }
 }
 
 .unlockedTimeCol {
@@ -16,4 +22,8 @@
 
 .unlockedDataCol {
   width: 80%;
+}
+
+.unlockedDataRow {
+  line-height: 30px;
 }

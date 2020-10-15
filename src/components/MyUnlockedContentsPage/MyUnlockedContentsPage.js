@@ -20,7 +20,7 @@ const renderUnlockTime = item => (
 );
 
 const renderUnlockData = item => (
-  <div>
+  <div className={styles.unlockedDataRow}>
     <span className={styles.typeBadge}>{TYPE_TEXT_MAPPING[item.type]}</span>
     <Link to={item.url} className={styles.link}>
       {item.title}
