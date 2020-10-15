@@ -1,9 +1,29 @@
 import React, { useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import R from 'ramda';
 import usePagination from 'hooks/usePagination';
 import { useFetchMyUnlockedContents } from './useQuery';
+import Table from 'common/table/Table';
+import Pagination from 'common/Pagination';
 
 const DATA_NUM_PER_PAGE = 20;
+const TYPE_TEXT_MAPPING = {
+  work: '工作心得',
+  interview: '面試心得',
+  salary_work_time: '薪資工時',
+};
+
+// render yyyy-mm-dd format
+const renderUnlockTime = item => (
+  <div>{item.unlocked_time.toISOString().slice(0, 10)}</div>
+);
+
+const renderUnlockData = item => (
+  <div>
+    <span>{TYPE_TEXT_MAPPING[item.type]}</span>
+    <Link to={item.url}>{item.title}</Link>
+  </div>
+);
 
 const MyUnlockedContentsPage = () => {
   const [
@@ -48,7 +68,7 @@ const MyUnlockedContentsPage = () => {
           unlocked_time: new Date(r.unlocked_time),
           type: 'salary_work_time',
           title: `${r.data.company.name} ${r.data.job_title.name} 的薪資工時`,
-          url: `/companies/${r.data.company.name}/salary_work_times`,
+          url: `/companies/${r.data.company.name}/salary-work-times`,
         });
       }
     });
@@ -56,7 +76,6 @@ const MyUnlockedContentsPage = () => {
     return records;
   }, [myUnlockedContents]);
 
-  // eslint-disable-next-line
   const currentPageRecords = useMemo(() => {
     return transformedRecords.slice(
       (page - 1) * DATA_NUM_PER_PAGE,
@@ -67,6 +86,20 @@ const MyUnlockedContentsPage = () => {
   return (
     <div>
       <div>我解鎖的資料</div>
+      <Table data={currentPageRecords} primaryKey="data_id">
+        <Table.Column title="解鎖時間" dataField={renderUnlockTime}>
+          解鎖時間
+        </Table.Column>
+        <Table.Column title="解鎖內容" dataField={renderUnlockData}>
+          解鎖內容
+        </Table.Column>
+      </Table>
+      <Pagination
+        totalCount={transformedRecords ? transformedRecords.length : 0}
+        unit={DATA_NUM_PER_PAGE}
+        currentPage={page}
+        createPageLinkTo={getPageLink}
+      />
     </div>
   );
 };
