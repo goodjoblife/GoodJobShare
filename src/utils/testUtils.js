@@ -17,6 +17,10 @@ import { persistStore } from 'redux-persist';
 import { render } from '@testing-library/react';
 import configureStore from '../store/configureStore';
 
+const history = createHistory();
+const store = configureStore({}, history);
+const persistor = persistStore(store);
+
 const AllTheProviders = ({ children }) => {
   return (
     <Provider store={store}>
@@ -27,9 +31,5 @@ const AllTheProviders = ({ children }) => {
   );
 };
 
-const history = createHistory();
-const store = configureStore({}, history);
-const persistor = persistStore(store);
-
-export const customRender = (ui, options) =>
+export const renderWithProviders = (ui, options) =>
   render(ui, { wrapper: AllTheProviders, ...options });
