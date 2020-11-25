@@ -4,7 +4,7 @@ import graphqlClient from 'utils/graphqlClient';
 import {
   getMeQuery,
   getMyPublishesQuery,
-  getMyUnlockedContentsQuery,
+  getMyUnlockedContentsAndPointsQuery,
 } from 'graphql/me';
 
 export const getHasSearchPermission = ({ token }) =>
@@ -16,11 +16,11 @@ const getMe = ({ token }) =>
 const getMyPublishes = ({ token }) =>
   graphqlClient({ query: getMyPublishesQuery, token });
 
-const getMyUnlockedContents = ({ token }) =>
-  graphqlClient({ query: getMyUnlockedContentsQuery, token });
+const getMyUnlockedContentsAndPoints = ({ token }) =>
+  graphqlClient({ query: getMyUnlockedContentsAndPointsQuery, token });
 
 export default {
   getMe,
   getMyPublishes,
-  getMyUnlockedContents,
+  getMyUnlockedContentsAndPoints,
 };

@@ -6,7 +6,7 @@ export const useFetchMyUnlockedContents = () => {
   const token = useToken();
 
   const [state, callback] = useAsyncFn(
-    () => api.me.getMyUnlockedContents({ token }),
+    () => api.me.getMyUnlockedContentsAndPoints({ token }),
     [token],
   );
 
