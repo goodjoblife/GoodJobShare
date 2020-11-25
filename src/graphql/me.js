@@ -52,9 +52,10 @@ export const getMyPublishesQuery = `
   }
 `;
 
-export const getMyUnlockedContentsQuery = `
+export const getMyUnlockedContentsAndPointsQuery = `
 query MyUnlockedContents {
   me {
+    points
     unlocked_experience_records {
       unlocked_time
       data {
