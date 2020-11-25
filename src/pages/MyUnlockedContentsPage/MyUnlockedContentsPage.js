@@ -3,9 +3,7 @@ import usePagination from 'hooks/usePagination';
 import Table from 'common/table/Table';
 import Pagination from 'common/Pagination';
 import { Wrapper, Section, Heading, Link } from 'common/base';
-import FETCH_STATUS from '../../constants/status';
 import styles from './MyUnlockedContentsPage.module.css';
-console.log(FETCH_STATUS);
 
 const DATA_NUM_PER_PAGE = 20;
 const TYPE_TEXT_MAPPING = {
