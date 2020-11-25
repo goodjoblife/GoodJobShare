@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import R from 'ramda';
 import usePagination from 'hooks/usePagination';
-import { useFetchMyUnlockedContents } from './useQuery';
 import Table from 'common/table/Table';
 import Pagination from 'common/Pagination';
 import { Wrapper, Section, Heading, Link } from 'common/base';
@@ -28,32 +26,27 @@ const renderUnlockData = item => (
   </div>
 );
 
-const MyUnlockedContentsPage = () => {
-  const [
-    myUnlockedContents,
-    fetchMyUnlockedContents,
-  ] = useFetchMyUnlockedContents();
+const MyUnlockedContentsPage = ({
+  fetchMyUnlockedContents,
+  hasFetchedMyUnlockedContents,
+  unlockedExperienceRecords,
+  unlockSalaryWorkTimeRecords,
+}) => {
   // eslint-disable-next-line no-unused-vars
   const [page, getPageLink] = usePagination();
 
   useEffect(() => {
-    fetchMyUnlockedContents();
-  }, [fetchMyUnlockedContents]);
+    if (!hasFetchedMyUnlockedContents) {
+      fetchMyUnlockedContents();
+    }
+  }, [fetchMyUnlockedContents, hasFetchedMyUnlockedContents]);
 
   // transform data for rendering
   const transformedRecords = useMemo(() => {
-    const experienceRecords = R.pathOr(
-      [],
-      ['value', 'me', 'unlocked_experience_records'],
-      myUnlockedContents,
-    );
-    const salaryRecords = R.pathOr(
-      [],
-      ['value', 'me', 'unlocked_salary_work_time_records'],
-      myUnlockedContents,
-    );
     const records = [];
-    experienceRecords.forEach(r => {
+    const expRecords = unlockedExperienceRecords || [];
+    const salaryRecords = unlockSalaryWorkTimeRecords || [];
+    expRecords.forEach(r => {
       if (r.data && r.unlocked_time) {
         records.push({
           data_id: r.data.id,
@@ -77,7 +70,7 @@ const MyUnlockedContentsPage = () => {
     });
     records.sort((a, b) => b.unlocked_time - a.unlocked_time);
     return records;
-  }, [myUnlockedContents]);
+  }, [unlockSalaryWorkTimeRecords, unlockedExperienceRecords]);
 
   const currentPageRecords = useMemo(() => {
     return transformedRecords.slice(
