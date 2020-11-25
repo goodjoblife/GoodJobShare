@@ -32,6 +32,7 @@ import CompanyPageProvider from './components/Company/CompanyPageProvider';
 import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
+import MyUnlockedContentsPage from './components/MyUnlockedContentsPage';
 
 const routes = [
   {
@@ -247,8 +248,13 @@ const routes = [
   },
   {
     path: '/me',
-    exact: true,
     component: Me,
+    exact: true,
+  },
+  {
+    path: '/me/unlocked-contents',
+    component: MyUnlockedContentsPage,
+    exact: true,
   },
   {
     path: '/about',

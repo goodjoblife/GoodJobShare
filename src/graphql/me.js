@@ -51,3 +51,35 @@ export const getMyPublishesQuery = `
     }
   }
 `;
+
+export const getMyUnlockedContentsQuery = `
+query MyUnlockedContents {
+  me {
+    unlocked_experience_records {
+      unlocked_time
+      data {
+        id
+        job_title {
+          name
+        }
+        company {
+          name
+        }
+        type
+      }
+    }
+    unlocked_salary_work_time_records {
+      unlocked_time
+      data {
+        id
+        job_title {
+          name
+        }
+        company {
+          name
+        }
+      }
+    }
+  }
+}
+`;
