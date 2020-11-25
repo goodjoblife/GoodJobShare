@@ -32,7 +32,7 @@ import CompanyPageProvider from './components/Company/CompanyPageProvider';
 import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
-import MyUnlockedContentsPage from './components/MyUnlockedContentsPage';
+import MyUnlockedContentsPage from './pages/MyUnlockedContentsPage';
 
 const routes = [
   {
