@@ -1,22 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import usePermission from 'hooks/usePermission';
+
 import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
+
+import { canViewExperience } from 'utils/permissionUtil';
 
 import EmptyView from '../EmptyView';
 import ExperienceEntry from './ExperienceEntry';
 
 const pageSize = 10;
 
-const InterviewExperiences = ({
-  pageType,
-  pageName,
-  tabType,
-  data,
-  page,
-  canView,
-}) => {
+const InterviewExperiences = ({ pageType, pageName, tabType, data, page }) => {
+  const { unlockedExperienceRecords, firstTimeView } = usePermission();
   if (data.length === 0) {
     return <EmptyView pageName={pageName} tabType={tabType} />;
   }
@@ -28,7 +26,11 @@ const InterviewExperiences = ({
           key={d.id}
           pageType={pageType}
           data={d}
-          canView={canView}
+          canView={canViewExperience(
+            d.id,
+            unlockedExperienceRecords,
+            firstTimeView,
+          )}
         />
       ))}
       <Pagination
@@ -47,7 +49,6 @@ InterviewExperiences.propTypes = {
   tabType: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
-  canView: PropTypes.bool.isRequired,
 };
 
 export default InterviewExperiences;

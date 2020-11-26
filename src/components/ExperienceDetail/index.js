@@ -20,13 +20,14 @@ import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
 import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
-import { withPermission } from 'common/permission-context';
 import GoogleAdUnit from 'common/GoogleAdUnit';
 import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
 import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
 import { useLogin } from 'hooks/login';
+import usePermission from 'hooks/usePermission';
+import { canViewExperience } from 'utils/permissionUtil';
 import useTrace from './hooks/useTrace';
 import Article from './Article';
 import MessageBoard from './MessageBoard';
@@ -79,16 +80,23 @@ const ExperienceDetail = ({
   fetchExperience,
   fetchReplies,
 
-  // from withPermission
-  canView,
-  fetchPermission,
-  permissionFetched,
-
   ...props
 }) => {
   const params = useParams();
   const experienceId = params.id;
   const { width } = useWindowSize();
+  const {
+    unlockedExperienceRecords,
+    firstTimeView,
+    permissionFetched,
+  } = usePermission();
+  const canView = useMemo(() => {
+    return canViewExperience(
+      experienceId,
+      unlockedExperienceRecords,
+      firstTimeView,
+    );
+  }, [experienceId, firstTimeView, unlockedExperienceRecords]);
 
   useEffect(() => {
     fetchExperience(experienceId);
@@ -102,10 +110,6 @@ const ExperienceDetail = ({
       fetchReplies(experienceId);
     }
   }, [isLoggedIn, experienceId, fetchExperience, fetchReplies]);
-
-  useEffect(() => {
-    fetchPermission();
-  }, [experienceId, fetchPermission]);
 
   const [{ isModalOpen, modalType, modalPayload = {} }, setModal] = useState({
     isModalOpen: false,
@@ -359,7 +363,6 @@ ExperienceDetail.propTypes = {
       pageType: PropTypes.string,
     }),
   }),
-  canView: PropTypes.bool.isRequired,
 };
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
@@ -367,9 +370,6 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   return dispatch(fetchExperience(experienceId));
 });
 
-const hoc = compose(
-  ssr,
-  withPermission,
-);
+const hoc = compose(ssr);
 
 export default hoc(ExperienceDetail);

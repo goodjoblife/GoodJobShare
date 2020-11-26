@@ -1,5 +1,4 @@
 import R from 'ramda';
-
 import { isFetched } from '../constants/status';
 
 export const myPointsSelector = state => state.permission.get('points');
@@ -10,7 +9,7 @@ export const myUnlockedExperienceRecordsSelector = state =>
 export const myUnlockedSalaryWorkTimeRecordsSelector = state =>
   state.permission.get('unlockedSalaryWorkTimeRecords');
 
-export const hasFetchedMyUnlockedContentSelector = R.compose(
+export const hasFetchedSelector = R.compose(
   isFetched,
   state => state.permission.get('status'),
 );

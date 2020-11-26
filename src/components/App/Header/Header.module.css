@@ -242,7 +242,7 @@
 
 .popover {
   left: calc(50% - 60px);
-  width: 120px;
+  width: 140px;
   top: calc(100% + 4px);
 
   .popoverItem {
