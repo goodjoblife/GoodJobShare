@@ -1,3 +1,3 @@
-import MyUnlockedContentsPage from './MyUnlockedContentsPage.container';
+import MyUnlockedContentsPage from './MyUnlockedContentsPage';
 
 export default MyUnlockedContentsPage;

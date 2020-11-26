@@ -1,8 +1,16 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, Fragment } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import usePagination from 'hooks/usePagination';
 import Table from 'common/table/Table';
 import Pagination from 'common/Pagination';
 import { Wrapper, Section, Heading, Link } from 'common/base';
+import {
+  myUnlockedSalaryWorkTimeRecordsSelector,
+  myUnlockedExperienceRecordsSelector,
+  hasFetchedMyUnlockedContentSelector,
+} from '../../selectors/permissionSelector';
+import { fetchMyUnlockedContentsAndPoints } from '../../actions/permission';
+
 import styles from './MyUnlockedContentsPage.module.css';
 
 const DATA_NUM_PER_PAGE = 20;
@@ -13,11 +21,11 @@ const TYPE_TEXT_MAPPING = {
 };
 
 // render yyyy-mm-dd format
-const renderUnlockTime = item => (
+const renderUnlockedTime = item => (
   <div>{item.unlocked_time.toISOString().slice(0, 10)}</div>
 );
 
-const renderUnlockData = item => (
+const renderUnlockedRecord = item => (
   <div className={styles.unlockedDataRow}>
     <span className={styles.typeBadge}>{TYPE_TEXT_MAPPING[item.type]}</span>
     <Link to={item.url} className={styles.link}>
@@ -26,20 +34,63 @@ const renderUnlockData = item => (
   </div>
 );
 
-const MyUnlockedContentsPage = ({
-  fetchMyUnlockedContents,
-  hasFetchedMyUnlockedContents,
-  unlockedExperienceRecords,
-  unlockSalaryWorkTimeRecords,
-}) => {
-  // eslint-disable-next-line no-unused-vars
-  const [page, getPageLink] = usePagination();
+const renderTable = (records, page, getPageLink) => {
+  if (records && records.length > 0) {
+    return (
+      <Fragment>
+        <Table data={records} primaryKey="data_id">
+          <Table.Column
+            className={styles.unlockedTimeCol}
+            title="解鎖時間"
+            dataField={renderUnlockedTime}
+          >
+            解鎖時間
+          </Table.Column>
+          <Table.Column
+            className={styles.unlockedDataCol}
+            title="解鎖內容"
+            dataField={renderUnlockedRecord}
+          >
+            解鎖內容
+          </Table.Column>
+        </Table>
+        <Pagination
+          totalCount={records ? records.length : 0}
+          unit={DATA_NUM_PER_PAGE}
+          currentPage={page}
+          createPageLinkTo={getPageLink}
+        />
+      </Fragment>
+    );
+  } else {
+    return (
+      <div className={styles.emptyBlock}>
+        <p>目前還沒有解鎖的資料喲！</p>
+        <br />
+        <p>不妨馬上開始搜尋你有興趣的公司，解鎖薪水、工時、和面試心得！</p>
+      </div>
+    );
+  }
+};
+
+const MyUnlockedContentsPage = () => {
+  const dispatch = useDispatch();
+  const hasFetchedMyUnlockedContents = useSelector(
+    hasFetchedMyUnlockedContentSelector,
+  );
+  const unlockedExperienceRecords = useSelector(
+    myUnlockedExperienceRecordsSelector,
+  );
+  const unlockSalaryWorkTimeRecords = useSelector(
+    myUnlockedSalaryWorkTimeRecordsSelector,
+  );
 
   useEffect(() => {
     if (!hasFetchedMyUnlockedContents) {
-      fetchMyUnlockedContents();
+      dispatch(fetchMyUnlockedContentsAndPoints());
     }
-  }, [fetchMyUnlockedContents, hasFetchedMyUnlockedContents]);
+  }, [dispatch, hasFetchedMyUnlockedContents]);
+  const [page, getPageLink] = usePagination();
 
   // transform data for rendering
   const transformedRecords = useMemo(() => {
@@ -85,29 +136,7 @@ const MyUnlockedContentsPage = ({
         <Heading size="sm" marginBottomS>
           我解鎖的資料
         </Heading>
-        <div></div>
-        <Table data={currentPageRecords} primaryKey="data_id">
-          <Table.Column
-            className={styles.unlockedTimeCol}
-            title="解鎖時間"
-            dataField={renderUnlockTime}
-          >
-            解鎖時間
-          </Table.Column>
-          <Table.Column
-            className={styles.unlockedDataCol}
-            title="解鎖內容"
-            dataField={renderUnlockData}
-          >
-            解鎖內容
-          </Table.Column>
-        </Table>
-        <Pagination
-          totalCount={transformedRecords ? transformedRecords.length : 0}
-          unit={DATA_NUM_PER_PAGE}
-          currentPage={page}
-          createPageLinkTo={getPageLink}
-        />
+        {renderTable(currentPageRecords, page, getPageLink)}
       </Section>
     </Wrapper>
   );
