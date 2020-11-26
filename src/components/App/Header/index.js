@@ -10,6 +10,7 @@ import useShareLink from 'hooks/experiments/useShareLink';
 import usePermission from 'hooks/usePermission';
 import { useAuthUser, useAuthUserEmailStatus, useIsLoggedIn } from 'hooks/auth';
 import { useLogin, useLogout } from 'hooks/login';
+import { formatCommaSeparatedNumber } from 'utils/stringUtil';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 import Top from './Top';
@@ -55,15 +56,9 @@ const Header = () => {
   const history = useHistory();
   const [isNavOpen, setNavOpen] = useState(false);
   const [isLoggedIn, login] = useLogin();
-  const [, fetchPermission] = usePermission();
   const user = useAuthUser();
   const logout = useLogout();
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      fetchPermission();
-    }
-  }, [isLoggedIn, fetchPermission]); // eslint-disable-line react-hooks/exhaustive-deps
+  const { myPoints } = usePermission();
 
   const onClickShareData = useCallback(() => {
     ReactGA.event({
@@ -128,6 +123,11 @@ const Header = () => {
                     popoverClassName={styles.popover}
                     popoverContent={
                       <ul className={styles.popoverItem}>
+                        <li>
+                          <Link to="/me/points">{`積分 ${formatCommaSeparatedNumber(
+                            myPoints,
+                          )} 點`}</Link>
+                        </li>
                         <li>
                           <Link to="/me">管理我的資料</Link>
                         </li>
