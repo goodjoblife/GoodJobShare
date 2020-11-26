@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import usePagination from 'hooks/usePagination';
 import Table from 'common/table/Table';
@@ -25,7 +25,7 @@ const renderUnlockTime = item => (
   <div>{item.unlocked_time.toISOString().slice(0, 10)}</div>
 );
 
-const renderUnlockData = item => (
+const renderUnlockRecord = item => (
   <div className={styles.unlockedDataRow}>
     <span className={styles.typeBadge}>{TYPE_TEXT_MAPPING[item.type]}</span>
     <Link to={item.url} className={styles.link}>
@@ -33,6 +33,45 @@ const renderUnlockData = item => (
     </Link>
   </div>
 );
+
+const renderTable = (records, page, getPageLink) => {
+  if (records && records.length > 0) {
+    return (
+      <Fragment>
+        <Table data={records} primaryKey="data_id">
+          <Table.Column
+            className={styles.unlockedTimeCol}
+            title="解鎖時間"
+            dataField={renderUnlockTime}
+          >
+            解鎖時間
+          </Table.Column>
+          <Table.Column
+            className={styles.unlockedDataCol}
+            title="解鎖內容"
+            dataField={renderUnlockRecord}
+          >
+            解鎖內容
+          </Table.Column>
+        </Table>
+        <Pagination
+          totalCount={records ? records.length : 0}
+          unit={DATA_NUM_PER_PAGE}
+          currentPage={page}
+          createPageLinkTo={getPageLink}
+        />
+      </Fragment>
+    );
+  } else {
+    return (
+      <div className={styles.emptyBlock}>
+        <p>目前還沒有解鎖的資料喲！</p>
+        <br />
+        <p>不妨馬上開始搜尋你有興趣的公司，解鎖薪水、工時、和面試心得！</p>
+      </div>
+    );
+  }
+};
 
 const MyUnlockedContentsPage = () => {
   const dispatch = useDispatch();
@@ -97,29 +136,7 @@ const MyUnlockedContentsPage = () => {
         <Heading size="sm" marginBottomS>
           我解鎖的資料
         </Heading>
-        <div></div>
-        <Table data={currentPageRecords} primaryKey="data_id">
-          <Table.Column
-            className={styles.unlockedTimeCol}
-            title="解鎖時間"
-            dataField={renderUnlockTime}
-          >
-            解鎖時間
-          </Table.Column>
-          <Table.Column
-            className={styles.unlockedDataCol}
-            title="解鎖內容"
-            dataField={renderUnlockData}
-          >
-            解鎖內容
-          </Table.Column>
-        </Table>
-        <Pagination
-          totalCount={transformedRecords ? transformedRecords.length : 0}
-          unit={DATA_NUM_PER_PAGE}
-          currentPage={page}
-          createPageLinkTo={getPageLink}
-        />
+        {renderTable(currentPageRecords, page, getPageLink)}
       </Section>
     </Wrapper>
   );
