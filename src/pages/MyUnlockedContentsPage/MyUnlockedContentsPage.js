@@ -1,15 +1,9 @@
-import React, { useEffect, useMemo, Fragment } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useMemo, Fragment } from 'react';
 import usePagination from 'hooks/usePagination';
 import Table from 'common/table/Table';
 import Pagination from 'common/Pagination';
+import usePermission from 'hooks/usePermission';
 import { Wrapper, Section, Heading, Link } from 'common/base';
-import {
-  myUnlockedSalaryWorkTimeRecordsSelector,
-  myUnlockedExperienceRecordsSelector,
-  hasFetchedMyUnlockedContentSelector,
-} from '../../selectors/permissionSelector';
-import { fetchMyUnlockedContentsAndPoints } from '../../actions/permission';
 
 import styles from './MyUnlockedContentsPage.module.css';
 
@@ -74,29 +68,18 @@ const renderTable = (records, page, getPageLink) => {
 };
 
 const MyUnlockedContentsPage = () => {
-  const dispatch = useDispatch();
-  const hasFetchedMyUnlockedContents = useSelector(
-    hasFetchedMyUnlockedContentSelector,
-  );
-  const unlockedExperienceRecords = useSelector(
-    myUnlockedExperienceRecordsSelector,
-  );
-  const unlockSalaryWorkTimeRecords = useSelector(
-    myUnlockedSalaryWorkTimeRecordsSelector,
-  );
+  const {
+    unlockedSalaryWorkTimeRecords,
+    unlockedExperienceRecords,
+  } = usePermission();
 
-  useEffect(() => {
-    if (!hasFetchedMyUnlockedContents) {
-      dispatch(fetchMyUnlockedContentsAndPoints());
-    }
-  }, [dispatch, hasFetchedMyUnlockedContents]);
   const [page, getPageLink] = usePagination();
 
   // transform data for rendering
   const transformedRecords = useMemo(() => {
     const records = [];
     const expRecords = unlockedExperienceRecords || [];
-    const salaryRecords = unlockSalaryWorkTimeRecords || [];
+    const salaryRecords = unlockedSalaryWorkTimeRecords || [];
     expRecords.forEach(r => {
       if (r.data && r.unlocked_time) {
         records.push({
@@ -121,7 +104,7 @@ const MyUnlockedContentsPage = () => {
     });
     records.sort((a, b) => b.unlocked_time - a.unlocked_time);
     return records;
-  }, [unlockSalaryWorkTimeRecords, unlockedExperienceRecords]);
+  }, [unlockedExperienceRecords, unlockedSalaryWorkTimeRecords]);
 
   const currentPageRecords = useMemo(() => {
     return transformedRecords.slice(
