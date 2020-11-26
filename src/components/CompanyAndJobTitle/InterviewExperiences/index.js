@@ -13,7 +13,6 @@ const InterviewExperiences = ({
   interviewExperiences,
   status,
   page,
-  canView,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
@@ -33,7 +32,6 @@ const InterviewExperiences = ({
         tabType={tabType}
         data={interviewExperiences}
         page={page}
-        canView={canView}
       />
     </StatusRenderer>
   </CompanyAndJobTitleWrapper>

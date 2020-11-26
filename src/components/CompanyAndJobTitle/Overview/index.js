@@ -18,7 +18,6 @@ const Overview = ({
   overtimeFrequencyCount,
   status,
   page,
-  canView,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
@@ -45,7 +44,6 @@ const Overview = ({
         averageWeekWorkTime={averageWeekWorkTime}
         overtimeFrequencyCount={overtimeFrequencyCount}
         page={page}
-        canView={canView}
       />
     </StatusRenderer>
   </CompanyAndJobTitleWrapper>
@@ -64,7 +62,6 @@ Overview.propTypes = {
   overtimeFrequencyCount: PropTypes.object.isRequired,
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
-  canView: PropTypes.bool.isRequired,
 };
 
 export default Overview;

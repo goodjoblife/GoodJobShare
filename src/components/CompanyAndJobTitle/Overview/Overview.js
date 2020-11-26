@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useWindowSize } from 'react-use';
 
+import usePermission from 'hooks/usePermission';
 import { Section } from 'common/base';
 import GoogleAdUnit from 'common/GoogleAdUnit';
 
@@ -14,6 +15,7 @@ import breakpoints from '../../../constants/breakpoints';
 import SummaryBlock from './SummaryBlock';
 
 import styles from './Overview.module.css';
+import { canViewExperience } from 'utils/permissionUtil';
 
 const SALARY_WORK_TIMES_LIMIT = 5;
 const WORK_EXPERIENCES_LIMIT = 3;
@@ -30,9 +32,10 @@ const Overview = ({
   jobAverageSalaries,
   averageWeekWorkTime,
   overtimeFrequencyCount,
-  canView,
 }) => {
   const { width } = useWindowSize();
+  const { unlockedExperienceRecords, firstTimeView } = usePermission();
+  const canView = true;
   return (
     <Section Tag="main" paddingBottom>
       <SnippetBlock
@@ -78,7 +81,11 @@ const Overview = ({
             key={d.id}
             pageType={pageType}
             data={d}
-            canView={canView}
+            canView={canViewExperience(
+              d.id,
+              unlockedExperienceRecords,
+              firstTimeView,
+            )}
           />
         ))}
       </SnippetBlock>
@@ -96,7 +103,11 @@ const Overview = ({
             key={d.id}
             pageType={pageType}
             data={d}
-            canView={canView}
+            canView={canViewExperience(
+              d.id,
+              unlockedExperienceRecords,
+              firstTimeView,
+            )}
           />
         ))}
       </SnippetBlock>
@@ -115,7 +126,6 @@ Overview.propTypes = {
   jobAverageSalaries: PropTypes.array,
   averageWeekWorkTime: PropTypes.number.isRequired,
   overtimeFrequencyCount: PropTypes.object.isRequired,
-  canView: PropTypes.bool.isRequired,
 };
 
 export default Overview;

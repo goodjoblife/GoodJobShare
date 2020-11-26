@@ -11,7 +11,6 @@ import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
 import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
 import NotFound from '../common/NotFound';
-import { withPermission } from 'common/permission-context';
 
 import { tabType, pageType } from '../../constants/companyJobTitle';
 import jobTitleActions from '../../actions/jobTitle';
@@ -120,7 +119,6 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
 const enhance = compose(
   ssr,
   withRouteParameter,
-  withPermission,
   withProps(props => ({
     pageType: pageType.JOB_TITLE,
     pageName: getJobTitleFromParams(props),
@@ -132,7 +130,6 @@ const enhance = compose(
   lifecycle({
     componentDidMount() {
       this.props.fetchJobTitle(this.props.pageName);
-      this.props.fetchPermission();
     },
     componentDidUpdate(prevProps) {
       if (this.props.pageName !== prevProps.pageName) {
