@@ -21,11 +21,11 @@ const TYPE_TEXT_MAPPING = {
 };
 
 // render yyyy-mm-dd format
-const renderUnlockTime = item => (
+const renderUnlockedTime = item => (
   <div>{item.unlocked_time.toISOString().slice(0, 10)}</div>
 );
 
-const renderUnlockRecord = item => (
+const renderUnlockedRecord = item => (
   <div className={styles.unlockedDataRow}>
     <span className={styles.typeBadge}>{TYPE_TEXT_MAPPING[item.type]}</span>
     <Link to={item.url} className={styles.link}>
@@ -42,14 +42,14 @@ const renderTable = (records, page, getPageLink) => {
           <Table.Column
             className={styles.unlockedTimeCol}
             title="解鎖時間"
-            dataField={renderUnlockTime}
+            dataField={renderUnlockedTime}
           >
             解鎖時間
           </Table.Column>
           <Table.Column
             className={styles.unlockedDataCol}
             title="解鎖內容"
-            dataField={renderUnlockRecord}
+            dataField={renderUnlockedRecord}
           >
             解鎖內容
           </Table.Column>
