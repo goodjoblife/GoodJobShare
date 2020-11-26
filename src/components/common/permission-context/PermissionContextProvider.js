@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
 import PermissionContext from './PermissionContext';
 
+const firstTimeView = () => {
+  if (typeof Storage !== 'undefined') {
+    return localStorage.getItem('visitedWebsite') === null;
+  }
+  return true;
+};
 class PermissionContextProvider extends Component {
   constructor(props) {
     super(props);
-
-    this.setPermissionState = state => this.setState(state);
-
     this.state = {
-      canView: true,
-      permissionFetched: false,
-      setPermissionState: this.setPermissionState,
+      firstTimeView: firstTimeView(),
     };
+  }
+
+  componentDidMount() {
+    if (typeof Storage !== 'undefined') {
+      const visitedWebsite = localStorage.getItem('visitedWebsite');
+      if (visitedWebsite === null) {
+        localStorage.setItem('visitedWebsite', true);
+      }
+    }
   }
 
   render() {

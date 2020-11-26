@@ -1,32 +1,42 @@
-import { useContext, useCallback } from 'react';
+import { useEffect, useContext, useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLogin } from 'hooks/login';
+import { fetchMyUnlockedContentsAndPointsIfUnfetched } from '../actions/permission';
+import {
+  myPointsSelector,
+  myUnlockedExperienceRecordsSelector,
+  myUnlockedSalaryWorkTimeRecordsSelector,
+  hasFetchedSelector,
+} from '../selectors/permissionSelector';
 import PermissionContext from 'common/permission-context/PermissionContext';
-import { useToken } from 'hooks/auth';
-import { getHasSearchPermission } from '../apis/me';
 
 export default () => {
-  const token = useToken();
-  const { canView, permissionFetched, setPermissionState } = useContext(
-    PermissionContext,
+  const dispatch = useDispatch();
+  const [isLoggedIn] = useLogin();
+  const myPoints = useSelector(myPointsSelector);
+  const unlockedExperienceRecords = useSelector(
+    myUnlockedExperienceRecordsSelector,
   );
-  const fetchPermission = useCallback(async () => {
-    const result = await getHasSearchPermission({ token });
-    const { hasSearchPermission: hasPermission } = result;
+  const unlockedSalaryWorkTimeRecords = useSelector(
+    myUnlockedSalaryWorkTimeRecordsSelector,
+  );
+  const permissionContext = useContext(PermissionContext);
+  const firstTimeView = useMemo(() => permissionContext.firstTimeView, [
+    permissionContext,
+  ]);
+  const permissionFetched = useSelector(hasFetchedSelector);
 
-    if (typeof Storage !== 'undefined') {
-      const visitedWebsite = localStorage.getItem('visitedWebsite');
-
-      if (visitedWebsite === null) {
-        // 該裝置第一次進到我們網站，那就給權限
-        localStorage.setItem('visitedWebsite', true);
-        setPermissionState({ canView: true, permissionFetched: true });
-      } else {
-        // 該裝置第二次以上進到我們網站，那就根據 api 結果設定權限
-        setPermissionState({
-          canView: hasPermission,
-          permissionFetched: true,
-        });
-      }
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(fetchMyUnlockedContentsAndPointsIfUnfetched());
     }
-  }, [setPermissionState, token]);
-  return [permissionFetched, fetchPermission, canView];
+  }, [dispatch, isLoggedIn]);
+
+  return {
+    myPoints,
+    unlockedSalaryWorkTimeRecords,
+    unlockedExperienceRecords,
+    firstTimeView,
+    permissionFetched,
+  };
 };
