@@ -4,6 +4,7 @@ import InterviewExperienceEntry from '../../CompanyAndJobTitle/InterviewExperien
 import WorkExperienceEntry from '../../CompanyAndJobTitle/WorkExperiences/ExperienceEntry';
 import { useLocation } from 'react-router';
 import usePermission from 'hooks/usePermission';
+import { canViewExperience } from 'utils/permissionUtil';
 import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 import Button from '../../common/button/Button';
 import styles from './MoreExperiencesBlock.module.css';
@@ -34,7 +35,7 @@ const LoadMoreButton = ({ children: _, ...props }) => (
 const MoreExperiencesBlock = ({ experience }) => {
   const location = useLocation();
   const { state: { pageType = PAGE_TYPE.COMPANY } = {} } = location;
-  const [, , canView] = usePermission();
+  const { unlockedExperienceRecords, firstTimeView } = usePermission();
   const experiences = useMemo(() => relatedExperiencesSelector(experience), [
     experience,
   ]);
@@ -56,7 +57,11 @@ const MoreExperiencesBlock = ({ experience }) => {
           key={e.id}
           pageType={pageType}
           data={e}
-          canView={canView}
+          canView={canViewExperience(
+            e.id,
+            unlockedExperienceRecords,
+            firstTimeView,
+          )}
         />
       ))}
       {n < experiences.length && <LoadMoreButton onClick={handleLoadMore} />}
