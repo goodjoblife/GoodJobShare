@@ -1,8 +1,16 @@
 import React, { useEffect, useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import usePagination from 'hooks/usePagination';
 import Table from 'common/table/Table';
 import Pagination from 'common/Pagination';
 import { Wrapper, Section, Heading, Link } from 'common/base';
+import {
+  myUnlockedSalaryWorkTimeRecordsSelector,
+  myUnlockedExperienceRecordsSelector,
+  hasFetchedMyUnlockedContentSelector,
+} from '../../selectors/permissionSelector';
+import { fetchMyUnlockedContentsAndPoints } from '../../actions/permission';
+
 import styles from './MyUnlockedContentsPage.module.css';
 
 const DATA_NUM_PER_PAGE = 20;
@@ -26,20 +34,24 @@ const renderUnlockData = item => (
   </div>
 );
 
-const MyUnlockedContentsPage = ({
-  fetchMyUnlockedContents,
-  hasFetchedMyUnlockedContents,
-  unlockedExperienceRecords,
-  unlockSalaryWorkTimeRecords,
-}) => {
-  // eslint-disable-next-line no-unused-vars
-  const [page, getPageLink] = usePagination();
+const MyUnlockedContentsPage = () => {
+  const dispatch = useDispatch();
+  const hasFetchedMyUnlockedContents = useSelector(
+    hasFetchedMyUnlockedContentSelector,
+  );
+  const unlockedExperienceRecords = useSelector(
+    myUnlockedExperienceRecordsSelector,
+  );
+  const unlockSalaryWorkTimeRecords = useSelector(
+    myUnlockedSalaryWorkTimeRecordsSelector,
+  );
 
   useEffect(() => {
     if (!hasFetchedMyUnlockedContents) {
-      fetchMyUnlockedContents();
+      dispatch(fetchMyUnlockedContentsAndPoints());
     }
-  }, [fetchMyUnlockedContents, hasFetchedMyUnlockedContents]);
+  }, [dispatch, hasFetchedMyUnlockedContents]);
+  const [page, getPageLink] = usePagination();
 
   // transform data for rendering
   const transformedRecords = useMemo(() => {
