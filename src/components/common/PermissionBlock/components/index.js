@@ -100,8 +100,11 @@ export const CallToUnlock = ({ reward, dataId }) => {
           contentClassName={styles.confirmToUnlockModal}
         >
           <Heading center size="sm" bold className={styles.heading}>
-            確定要解鎖嗎？ 將使用 {reward.points} 積分兌換
+            確定要解鎖嗎？
           </Heading>
+          <P size="m" className={styles.body}>
+            將使用 {reward.points} 積分兌換
+          </P>
           <Button
             Button
             btnStyle="black"
