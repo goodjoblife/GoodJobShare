@@ -23,6 +23,7 @@ import companyIndex from './companyIndex';
 import jobTitle from './jobTitle';
 import jobTitleIndex from './jobTitleIndex';
 import permission from './permission';
+import taskAndReward from './taskAndReward';
 import { PERSIST_KEY } from '../config';
 
 const persistConfig = {
@@ -53,6 +54,7 @@ const rootReducer = combineReducers({
   jobTitle,
   jobTitleIndex,
   permission,
+  taskAndReward,
 });
 
 export default persistReducer(persistConfig, rootReducer);

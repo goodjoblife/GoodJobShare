@@ -1,120 +1,100 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import cn from 'classnames';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faLock from '@fortawesome/fontawesome-free-solid/faLock';
-import { compose, withState, withHandlers } from 'recompose';
+import usePermission from 'hooks/usePermission';
+import { useLogin } from 'hooks/login';
+import useTaskAndReward from 'hooks/useTaskAndReward';
+import Loading from 'common/Loader';
+import {
+  PointsBlock,
+  LoginBlock,
+  CallToDoTask,
+  CallToUnlock,
+} from './components';
+import {
+  dataTypeToRewardMap,
+  getMainTaskLink,
+  mainTaskId,
+} from '../../../constants/taskAndReward';
 
-import P from 'common/base/P';
-import Modal from 'common/Modal';
-import { Heading } from 'common/base';
-import CallToLoginShareButton from './CallToLoginShareButton';
 import styles from './PermissionBlock.module.css';
 
-class BasicPermissionBlock extends React.Component {
-  static propTypes = {
-    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    rootClassName: PropTypes.string,
-    simple: PropTypes.bool,
-    experienceCount: PropTypes.number.isRequired,
-    timeAndSalaryCount: PropTypes.number.isRequired,
-    hasFetchedExperienceCount: PropTypes.bool.isRequired,
-    hasFetchedTimeAndSalaryCount: PropTypes.bool.isRequired,
-    queryExperienceCount: PropTypes.func.isRequired,
-    queryTimeAndSalaryCount: PropTypes.func.isRequired,
-    isModalOpen: PropTypes.bool.isRequired,
-    toggleModal: PropTypes.func.isRequired,
-  };
-
-  static defaultProps = {
-    rootClassName: '',
-    simple: false,
-  };
-
-  componentDidMount() {
-    if (this.props.hasFetchedExperienceCount === false) {
-      this.props.queryExperienceCount();
-    }
-    if (this.props.hasFetchedTimeAndSalaryCount === false) {
-      this.props.queryTimeAndSalaryCount();
+const CallToActionSection = ({
+  isLogin,
+  myPoints,
+  reward,
+  mainTask,
+  mainTaskLink,
+  dataId,
+}) => {
+  if (!isLogin) {
+    return <LoginBlock />;
+  } else {
+    if (reward) {
+      if (reward.points > myPoints) {
+        return <CallToDoTask task={mainTask} to={mainTaskLink} />;
+      } else {
+        return <CallToUnlock reward={reward} dataId={dataId} />;
+      }
     }
   }
+  return null;
+};
 
-  renderModalContent = () => {
-    const { experienceCount, timeAndSalaryCount } = this.props;
+const PermissionBlock = ({ dataId, dataType, className }) => {
+  const { myPoints } = usePermission();
+  const [isLogin] = useLogin();
+  const { tasks, rewards, fetched: taskAndRewardFetched } = useTaskAndReward();
 
-    return (
-      <React.Fragment>
-        <div className={styles.headingContainer}>
-          <FontAwesomeIcon icon={faLock} className={styles.headingIcon} />
-          <Heading size="sl" Tag="h3">
-            留下一筆資料，馬上解鎖全站資料
-          </Heading>
-        </div>
-        <P size="l" className={styles.ctaText}>
-          解鎖全站共{' '}
-          <strong>
-            {timeAndSalaryCount + experienceCount} 筆薪資、面試資料
-          </strong>
-          。若你已經留過資料，登入即可查看全文！
-        </P>
-      </React.Fragment>
-    );
-  };
-
-  render() {
-    const { simple, to, rootClassName } = this.props;
-
-    if (simple) {
-      const { isModalOpen, toggleModal } = this.props;
-      return (
-        <div
-          className={cn(styles.permissionBlock, rootClassName, styles.simple)}
-          onClick={toggleModal}
-        >
-          <div className={styles.container}>
-            <div className={styles.headingContainer}>
-              <FontAwesomeIcon icon={faLock} className={styles.headingIcon} />
-              <Modal
-                isOpen={isModalOpen}
-                close={toggleModal}
-                closableOnClickOutside
-              >
-                {this.renderModalContent()}
-                <div className={styles.ctaButtonContainer}>
-                  <CallToLoginShareButton
-                    to={to}
-                    onAuthenticatedClick={toggleModal}
-                    isLoginText="立即分享"
-                  />
-                </div>
-              </Modal>
-            </div>
-          </div>
-        </div>
-      );
+  // current reward of this dataType
+  const currentReward = useMemo(() => {
+    if (taskAndRewardFetched && Array.isArray(rewards)) {
+      const rewardId = dataTypeToRewardMap[dataType];
+      return rewards.find(r => r.id === rewardId);
     }
+    return undefined;
+  }, [dataType, rewards, taskAndRewardFetched]);
 
+  // main task of whole website
+  const mainTask = useMemo(() => {
+    if (taskAndRewardFetched && Array.isArray(tasks)) {
+      return tasks.find(t => t.id === mainTaskId);
+    }
+    return undefined;
+  }, [taskAndRewardFetched, tasks]);
+
+  if (!taskAndRewardFetched) {
     return (
-      <div className={cn(styles.permissionBlock, rootClassName)}>
-        <div className={styles.container}>
-          {this.renderModalContent()}
-          <div className={styles.ctaButtonContainer}>
-            <CallToLoginShareButton to={to} isLoginText="立即分享" />
-          </div>
+      <div className={className}>
+        <Loading size="m" />
+      </div>
+    );
+  } else {
+    return (
+      <div className={cn(styles.permissionBlock, className)}>
+        <div className={styles.pointsBlockContainer}>
+          <PointsBlock
+            requiredPoints={currentReward ? currentReward.points : '?'}
+            myPoints={myPoints}
+            isLogin={isLogin}
+          />
         </div>
+        <div className={styles.callToActionSectionContainer}>
+          <CallToActionSection
+            isLogin={isLogin}
+            myPoints={myPoints}
+            reward={currentReward}
+            mainTask={mainTask}
+            mainTaskLink={getMainTaskLink()}
+            dataId={dataId}
+          />
+        </div>
+        <Link to="/me/points">
+          <span className={styles.link}>如何獲得更多積分？</span>
+        </Link>
       </div>
     );
   }
-}
+};
 
-const enhance = compose(
-  withState('isModalOpen', 'setModalOpen', false),
-  withHandlers({
-    toggleModal: ({ isModalOpen, setModalOpen }) => () => {
-      setModalOpen(!isModalOpen);
-    },
-  }),
-);
-
-export default enhance(BasicPermissionBlock);
+export default PermissionBlock;
