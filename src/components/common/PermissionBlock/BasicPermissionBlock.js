@@ -4,7 +4,7 @@ import cn from 'classnames';
 import usePermission from 'hooks/usePermission';
 import { useLogin } from 'hooks/login';
 import useTaskAndReward from 'hooks/useTaskAndReward';
-import Loading from 'common/Loader';
+import Loader from 'common/Loader';
 import {
   PointsBlock,
   LoginBlock,
@@ -66,7 +66,7 @@ const PermissionBlock = ({ dataId, dataType, className }) => {
   if (!taskAndRewardFetched) {
     return (
       <div className={className}>
-        <Loading size="m" />
+        <Loader size="s" />
       </div>
     );
   } else {
