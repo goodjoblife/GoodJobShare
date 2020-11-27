@@ -18,14 +18,15 @@ const setPermission = ({
   error,
 });
 
-export const fetchMyUnlockedContentsAndPointsIfUnfetched = () => (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const fetchMyUnlockedContentsAndPointsIfUnfetched = (
+  options = {
+    forceFetch: false,
+  },
+) => (dispatch, getState, { api }) => {
+  const forceFetch = options.forceFetch || false;
   const state = getState();
   const token = tokenSelector(state);
-  if (isUnfetched(getState().permission.get('status'))) {
+  if (isUnfetched(getState().permission.get('status')) || forceFetch) {
     dispatch(setPermission({ status: fetchingStatus.FETCHING }));
     return api.me
       .getMyUnlockedContentsAndPoints({ token })
