@@ -9,6 +9,7 @@ import laborRights from './laborRightsApi';
 import report from './reportApi';
 import reportsExperiences from './reportsExperiencesApi';
 import timeAndSalary from './timeAndSalaryApi';
+import taskAndReward from './taskAndRewardApi';
 import workExperiences from './workExperiencesApi';
 import popularCompanyAndJobTitle from './popularCompanyAndJobTitle';
 import me from './me';
@@ -28,6 +29,7 @@ export default {
   report,
   reportsExperiences,
   timeAndSalary,
+  taskAndReward,
   workExperiences,
   popularCompanyAndJobTitle,
   me,
