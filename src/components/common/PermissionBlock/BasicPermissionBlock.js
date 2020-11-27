@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import usePermission from 'hooks/usePermission';
 import { useLogin } from 'hooks/login';
 import useTaskAndReward from 'hooks/useTaskAndReward';
+import Loading from 'common/Loader';
 import {
   PointsBlock,
   LoginBlock,
@@ -20,7 +21,6 @@ import {
 const CallToActionSection = ({
   isLogin,
   myPoints,
-  taskAndRewardFetched,
   reward,
   mainTask,
   mainTaskLink,
@@ -29,7 +29,7 @@ const CallToActionSection = ({
   if (!isLogin) {
     return <LoginBlock />;
   } else {
-    if (taskAndRewardFetched && reward) {
+    if (reward) {
       if (reward.points > myPoints) {
         return <CallToDoTask task={mainTask} to={mainTaskLink} />;
       } else {
@@ -37,6 +37,7 @@ const CallToActionSection = ({
       }
     }
   }
+  return null;
 };
 
 const PermissionBlock = ({ dataId, dataType, className }) => {
@@ -44,7 +45,8 @@ const PermissionBlock = ({ dataId, dataType, className }) => {
   const [isLogin] = useLogin();
   const { tasks, rewards, fetched: taskAndRewardFetched } = useTaskAndReward();
 
-  const reward = useMemo(() => {
+  // current reward of this dataType
+  const currentReward = useMemo(() => {
     if (taskAndRewardFetched && Array.isArray(rewards)) {
       const rewardId = dataTypeToRewardMap[dataType];
       return rewards.find(r => r.id === rewardId);
@@ -52,6 +54,7 @@ const PermissionBlock = ({ dataId, dataType, className }) => {
     return undefined;
   }, [dataType, rewards, taskAndRewardFetched]);
 
+  // main task of whole website
   const mainTask = useMemo(() => {
     if (taskAndRewardFetched && Array.isArray(tasks)) {
       return tasks.find(t => t.id === mainTaskId);
@@ -60,20 +63,23 @@ const PermissionBlock = ({ dataId, dataType, className }) => {
   }, [taskAndRewardFetched, tasks]);
 
   if (!taskAndRewardFetched) {
-    return <div className={className}> loading ... </div>;
+    return (
+      <div className={className}>
+        <Loading size="s" />
+      </div>
+    );
   } else {
     return (
       <div className={className}>
         <PointsBlock
-          requiredPoints={reward.points}
+          requiredPoints={currentReward ? currentReward.points : '?'}
           myPoints={myPoints}
           isLogin={isLogin}
         />
         <CallToActionSection
           isLogin={isLogin}
           myPoints={myPoints}
-          taskAndRewardFetched={taskAndRewardFetched}
-          reward={reward}
+          reward={currentReward}
           mainTask={mainTask}
           mainTaskLink={getMainTaskLink()}
           dataId={dataId}
