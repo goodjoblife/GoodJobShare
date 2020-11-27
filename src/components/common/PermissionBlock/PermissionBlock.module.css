@@ -1,73 +1,33 @@
-@value link-blue from "common/variables.module.css";
+@value link-blue, below-mobile from "common/variables.module.css";
 
 .permissionBlock {
-  border: 1px solid #fcd406;
-  border-radius: 0px;
-  background-color: #fffbe8;
-}
-
-.simple {
-  cursor: pointer;
-
-  @media (min-width: 1025px) {
-    &:hover {
-      .headingIcon {
-        color: link-blue;
-      }
-    }
-  }
-}
-
-.container {
-  max-width: 500px;
-  margin: auto;
-}
-
-.ctaText {
-  font-weight: 300;
-}
-
-.ctaButtonContainer {
-  text-align: center;
-  margin-top: 30px;
-}
-
-.descriptionContainer {
-  margin: 20px 10px;
-}
-
-.headingContainer {
+  width: 480px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  border: solid 1px #fcd406;
+  background-color: #ffffff;
+  margin: auto;
+  margin-bottom: 40px;
 
-  & + * {
-    margin-top: 20px;
+  @media (max-width: below-mobile) {
+    width: auto;
   }
 }
 
-.headingIcon {
-  display: inline;
-  font-size: 24px;
-  margin-right: 10px;
-
-  @media (max-width: 850px) {
-    font-size: 16px;
-  }
-}
-
-.heading {
-  display: inline;
+.callToActionSectionContainer {
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .loginBtnContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: nowrap;
 
   @media (max-width: 850px) {
     flex-direction: column;
-    height: 8rem;
+    height: 6rem;
     align-items: center;
   }
 }
@@ -82,4 +42,33 @@
   &Fb {
     background: #4267b2;
   }
+}
+
+.pointsBlockContainer {
+  margin-bottom: 25px;
+}
+
+.heading {
+  margin-bottom: 20px;
+}
+
+.requiredPoints {
+  margin-right: 30px;
+  display: inline-block;
+}
+
+.myPoints {
+  display: inline-block;
+}
+
+.link {
+  color: link-blue;
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.ctaButtonContainer {
+  text-align: center;
 }

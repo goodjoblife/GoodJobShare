@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import cn from 'classnames';
 import usePermission from 'hooks/usePermission';
 import { useLogin } from 'hooks/login';
 import useTaskAndReward from 'hooks/useTaskAndReward';
@@ -16,7 +17,7 @@ import {
   mainTaskId,
 } from '../../../constants/taskAndReward';
 
-// import styles from './PermissionBlock.module.css';
+import styles from './PermissionBlock.module.css';
 
 const CallToActionSection = ({
   isLogin,
@@ -65,26 +66,32 @@ const PermissionBlock = ({ dataId, dataType, className }) => {
   if (!taskAndRewardFetched) {
     return (
       <div className={className}>
-        <Loading size="s" />
+        <Loading size="m" />
       </div>
     );
   } else {
     return (
-      <div className={className}>
-        <PointsBlock
-          requiredPoints={currentReward ? currentReward.points : '?'}
-          myPoints={myPoints}
-          isLogin={isLogin}
-        />
-        <CallToActionSection
-          isLogin={isLogin}
-          myPoints={myPoints}
-          reward={currentReward}
-          mainTask={mainTask}
-          mainTaskLink={getMainTaskLink()}
-          dataId={dataId}
-        />
-        <Link to="/me/points">如何獲得更多積分？</Link>
+      <div className={cn(styles.permissionBlock, className)}>
+        <div className={styles.pointsBlockContainer}>
+          <PointsBlock
+            requiredPoints={currentReward ? currentReward.points : '?'}
+            myPoints={myPoints}
+            isLogin={isLogin}
+          />
+        </div>
+        <div className={styles.callToActionSectionContainer}>
+          <CallToActionSection
+            isLogin={isLogin}
+            myPoints={myPoints}
+            reward={currentReward}
+            mainTask={mainTask}
+            mainTaskLink={getMainTaskLink()}
+            dataId={dataId}
+          />
+        </div>
+        <Link to="/me/points">
+          <span className={styles.link}>如何獲得更多積分？</span>
+        </Link>
       </div>
     );
   }
