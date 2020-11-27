@@ -1,14 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useState } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { useFacebookLogin, useGoogleLogin } from 'hooks/login';
-import { useToken } from 'hooks/auth';
+import useHandleUnlockData from 'hooks/useHandleUnlockData';
 import { Heading, P } from 'common/base';
+import Modal from 'common/Modal';
 import Button from 'common/button/Button';
-import {
-  rewardToApiMap,
-  mainCTAText,
-} from '../../../../constants/taskAndReward';
+import { mainCTAText } from '../../../../constants/taskAndReward';
 
 import styles from '../PermissionBlock.module.css';
 
@@ -76,13 +74,8 @@ export const CallToDoTask = ({ task, to }) => {
 };
 
 export const CallToUnlock = ({ reward, dataId }) => {
-  const token = useToken();
-  const handleUnlock = useCallback(async () => {
-    if (reward) {
-      const api = rewardToApiMap[reward.id];
-      await api({ token, id: dataId });
-    }
-  }, [dataId, reward, token]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const handleUnlockData = useHandleUnlockData({ reward, dataId });
   if (reward) {
     return (
       <div>
@@ -94,11 +87,30 @@ export const CallToUnlock = ({ reward, dataId }) => {
             Button
             btnStyle="black"
             circleSize="md"
-            onClick={handleUnlock}
+            onClick={() => setModalIsOpen(true)}
           >
             解鎖
           </Button>
         </div>
+        <Modal
+          isOpen={modalIsOpen}
+          close={() => setModalIsOpen(false)}
+          hasClose
+          closableOnClickOutside
+          contentClassName={styles.confirmToUnlockModal}
+        >
+          <Heading center size="sm" bold className={styles.heading}>
+            確定要解鎖嗎？ 將使用 {reward.points} 積分兌換
+          </Heading>
+          <Button
+            Button
+            btnStyle="black"
+            circleSize="md"
+            onClick={handleUnlockData}
+          >
+            確定解鎖
+          </Button>
+        </Modal>
       </div>
     );
   }
