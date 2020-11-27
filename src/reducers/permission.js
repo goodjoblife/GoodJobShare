@@ -32,5 +32,5 @@ export default createReducer(
         .set('status', status)
         .set('error', error),
   },
-  { resetOnLogOut: false },
+  { resetOnLogOut: true },
 );
