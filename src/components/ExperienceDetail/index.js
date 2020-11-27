@@ -354,7 +354,6 @@ ExperienceDetail.propTypes = {
   repliesStatus: PropTypes.string,
   fetchExperience: PropTypes.func.isRequired,
   fetchReplies: PropTypes.func.isRequired,
-  fetchPermission: PropTypes.func.isRequired,
   likeReply: PropTypes.func.isRequired,
   submitComment: PropTypes.func.isRequired,
   location: PropTypes.shape({
