@@ -1,4 +1,4 @@
-import dataType from './dataType';
+import { dataType, dataTypeText } from './dataType';
 import { unlockExperience } from '../apis/taskAndRewardApi';
 
 /**
@@ -20,9 +20,9 @@ export const dataTypeToTaskMap = {
 };
 
 export const dataTypeToCTAText = {
-  [dataType.interview]: '分享面試心得',
-  [dataType.work]: '分享工作心得',
-  [dataType.salaryWorkTime]: '分享薪水、工時',
+  [dataType.interview]: `分享${dataTypeText[dataType.interview]}`,
+  [dataType.work]: `分享${dataTypeText[dataType.work]}`,
+  [dataType.salaryWorkTime]: `分享${dataTypeText[dataType.salaryWorkTime]}`,
 };
 
 export const rewardToApiMap = {
