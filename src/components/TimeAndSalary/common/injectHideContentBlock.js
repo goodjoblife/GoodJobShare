@@ -6,7 +6,7 @@ import cn from 'classnames';
 export default hideRange => rows => {
   const hideIndex = hideRange[0];
   const nHides = hideRange.length;
-  const shareLink = '/share';
+  const shareLink = useShareLink();
   rows.forEach(row => {
     row.props.children.splice(
       hideIndex,
