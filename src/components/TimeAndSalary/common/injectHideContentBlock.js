@@ -6,7 +6,7 @@ import cn from 'classnames';
 export default hideRange => rows => {
   const hideIndex = hideRange[0];
   const nHides = hideRange.length;
-
+  const shareLink = '/share';
   rows.forEach(row => {
     row.props.children.splice(
       hideIndex,
@@ -18,6 +18,7 @@ export default hideRange => rows => {
             className: cn(col.props.className, styles.cell, styles.mobile),
           },
           <BasicPermissionBlock
+            to={shareLink}
             rootClassName={styles.hideContentBlock}
             simple
           />,
@@ -35,7 +36,11 @@ export default hideRange => rows => {
         rowSpan={rows.length}
         className={styles.cell}
       >
-        <BasicPermissionBlock rootClassName={styles.hideContentBlock} simple />
+        <BasicPermissionBlock
+          to={shareLink}
+          rootClassName={styles.hideContentBlock}
+          simple
+        />
       </td>,
     );
   }
