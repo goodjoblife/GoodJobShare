@@ -2,11 +2,12 @@ import React from 'react';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 import styles from './injectHideContentBlock.module.css';
 import cn from 'classnames';
+import { useShareLink } from 'hooks/experiments';
 
 export default hideRange => rows => {
   const hideIndex = hideRange[0];
   const nHides = hideRange.length;
-  const shareLink = '/share';
+  const shareLink = useShareLink();
   rows.forEach(row => {
     row.props.children.splice(
       hideIndex,
