@@ -6,11 +6,11 @@ import { useIsLoggedIn } from 'hooks/auth';
 import { useFacebookLogin, useGoogleLogin } from 'hooks/login';
 import styles from './PermissionBlock.module.css';
 
-const AuthenticatedButton = ({ to, onAuthenticatedClick, children }) => (
+const AuthenticatedButton = ({ to, onClick, children }) => (
   <Link
     className={cn('buttonCircleM', 'buttonBlack2')}
     to={to}
-    onAuthenticatedClick={onAuthenticatedClick}
+    onClick={onClick}
   >
     {children}
   </Link>
@@ -57,10 +57,7 @@ const CallToLoginShareButton = ({ isLoginText, to, onAuthenticatedClick }) => {
       }}
     >
       {isLoggedIn ? (
-        <AuthenticatedButton
-          to={to}
-          onAuthenticatedClick={onAuthenticatedClick}
-        >
+        <AuthenticatedButton to={to} onClick={onAuthenticatedClick}>
           {isLoginText}
         </AuthenticatedButton>
       ) : (
