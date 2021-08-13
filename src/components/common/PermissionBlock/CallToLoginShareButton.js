@@ -19,7 +19,7 @@ const AuthenticatedButton = ({ to, onClick, children }) => (
 AuthenticatedButton.propTypes = {
   children: PropTypes.string.isRequired,
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-  onAuthenticatedClick: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 const UnauthenticatedButton = () => {
