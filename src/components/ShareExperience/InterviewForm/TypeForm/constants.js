@@ -36,6 +36,7 @@ export const REGION_OPTIONS = [
   '澎湖縣',
   '金門縣',
   '連江縣',
+  '遠端',
 ];
 
 export const RESULT_OPTIONS = ['錄取', '未錄取', '沒通知', '其他'];
