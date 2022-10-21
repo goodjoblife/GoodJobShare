@@ -14,6 +14,7 @@ export const DATA_KEY_QUESTIONS = 'interviewQas';
 export const DATA_KEY_SENSITIVE_QUESTIONS = 'sensitiveQuestions';
 
 export const REGION_OPTIONS = [
+  '線上面試',
   '基隆市',
   '臺北市',
   '新北市',
@@ -36,7 +37,6 @@ export const REGION_OPTIONS = [
   '澎湖縣',
   '金門縣',
   '連江縣',
-  '遠端',
 ];
 
 export const RESULT_OPTIONS = ['錄取', '未錄取', '沒通知', '其他'];
