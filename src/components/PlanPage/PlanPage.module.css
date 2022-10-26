@@ -1,0 +1,25 @@
+.container {
+  padding: 60px 60px 0 60px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.cardSection {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 20px;
+}
+
+.card {
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+}

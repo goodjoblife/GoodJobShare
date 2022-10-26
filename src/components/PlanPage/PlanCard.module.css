@@ -1,0 +1,15 @@
+@value main-gray from "common/variables.module.css";
+
+.container {
+  width: 200px;
+  height: 200px;
+}
+
+.content {
+  padding: 20px;
+  border: 1px solid main-gray;
+}
+
+.actionButton {
+  margin-top: 16px;
+}
