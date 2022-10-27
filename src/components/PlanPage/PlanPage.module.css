@@ -1,3 +1,5 @@
+@value above-tablet from "common/variables.module.css";
+
 .container {
   padding: 60px 60px 0 60px;
 }
@@ -13,6 +15,11 @@
 }
 
 .cardSection {
-  display: grid;
-  column-gap: 20px;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: above-tablet) {
+    display: grid;
+    column-gap: 20px;
+  }
 }
