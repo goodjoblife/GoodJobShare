@@ -14,12 +14,5 @@
 
 .cardSection {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   column-gap: 20px;
-}
-
-.card {
-  width: 200px;
-  height: 200px;
-  border: 1px solid black;
 }

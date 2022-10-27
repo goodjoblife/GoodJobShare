@@ -6,6 +6,8 @@
 }
 
 .content {
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   border: 1px solid main-gray;
 }
