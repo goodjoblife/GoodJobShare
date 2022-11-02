@@ -11,7 +11,7 @@
 }
 
 .title {
-  margin-bottom: 20px;
+  margin-bottom: 70px;
 }
 
 .card-section {
@@ -20,6 +20,7 @@
 
 .divider {
   display: none;
+  color: #626262;
 
   @media (min-width: above-tablet) {
     display: flex;

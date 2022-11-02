@@ -36,13 +36,14 @@ const PlanPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <Heading className={styles.title} size="m">
+        <Heading className={styles.title} size="l">
           解鎖全站資料方式
         </Heading>
         <div className={styles['card-section']}>
           <CardSection
             plans={groupedPlans['SubmitData']}
             title="留下你的資料幫助其他人："
+            type="SubmitData"
           />
           {groupedPlans['SubmitData'].length > 0 && (
             <div className={styles.divider}>或是</div>
@@ -50,6 +51,7 @@ const PlanPage = () => {
           <CardSection
             plans={groupedPlans['BuySubscription']}
             title="線上付費解鎖全站資料："
+            type="BuySubscription"
           />
         </div>
       </div>

@@ -1,6 +1,6 @@
-@value above-tablet from "common/variables.module.css";
+@value above-tablet, yellow-dark, warning-red from "common/variables.module.css";
 
-.container {
+.card-wrapper {
   display: flex;
   flex-direction: column;
 
@@ -8,4 +8,12 @@
     display: grid;
     column-gap: 20px;
   }
+}
+
+.title-submit-data {
+  color: yellow-dark;
+}
+
+.title-buy-subscription {
+  color: warning-red;
 }

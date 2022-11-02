@@ -1,27 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import P from 'common/base/P';
+
 import PlanCard from './PlanCard';
 import styles from './CardSection.module.css';
 import { getColumns, getActionTitle } from './helpers';
 
-const CardSection = ({ plans, title }) => {
+const getTitleClassName = type => {
+  if (type === 'SubmitData') {
+    return 'title-submit-data';
+  }
+
+  return 'title-buy-subscription';
+};
+
+const CardSection = ({ plans, title, type }) => {
   return (
-    <div
-      className={styles.container}
-      style={{
-        gridTemplateColumns: `repeat(${getColumns(plans)}, 1fr)`,
-      }}
-    >
-      {plans.map(plan => (
-        <PlanCard
-          key={plan.skuId}
-          title={plan.title}
-          description={plan.description}
-          amount={plan.amount}
-          actionTitle={getActionTitle(plan)}
-        />
-      ))}
+    <div>
+      <P
+        className={styles[getTitleClassName(type)]}
+        size="m"
+        style={{
+          marginBottom: '12px',
+        }}
+      >
+        {title}
+      </P>
+      <div
+        className={styles['card-wrapper']}
+        style={{
+          gridTemplateColumns: `repeat(${getColumns(plans)}, 1fr)`,
+        }}
+      >
+        {plans.map(plan => (
+          <PlanCard
+            key={plan.skuId}
+            title={plan.title}
+            description={plan.description}
+            amount={plan.amount}
+            actionTitle={getActionTitle(plan)}
+          />
+        ))}
+      </div>
     </div>
   );
 };
@@ -29,6 +50,7 @@ const CardSection = ({ plans, title }) => {
 CardSection.propTypes = {
   plans: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string,
+  type: PropTypes.string,
 };
 
 export default CardSection;
