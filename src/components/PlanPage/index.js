@@ -3,8 +3,8 @@ import React from 'react';
 import Heading from 'common/base/Heading';
 
 import styles from './PlanPage.module.css';
-import PlanCard from './PlanCard';
-import { getColumns, getActionTitle } from './helpers';
+import CardSection from './CardSection';
+import { groupByPlanType } from './helpers';
 
 const plans = [
   {
@@ -31,27 +31,26 @@ const plans = [
 ];
 
 const PlanPage = () => {
+  const groupedPlans = groupByPlanType(plans);
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <Heading className={styles.title} size="m">
           解鎖全站資料方式
         </Heading>
-        <div
-          className={styles.cardSection}
-          style={{
-            gridTemplateColumns: `repeat(${getColumns(plans)}, 1fr)`,
-          }}
-        >
-          {plans.map(plan => (
-            <PlanCard
-              key={plan.skuId}
-              title={plan.title}
-              description={plan.description}
-              amount={plan.amount}
-              actionTitle={getActionTitle(plan)}
-            />
-          ))}
+        <div className={styles['card-section']}>
+          <CardSection
+            plans={groupedPlans['SubmitData']}
+            title="留下你的資料幫助其他人："
+          />
+          {groupedPlans['SubmitData'].length > 0 && (
+            <div className={styles.divider}>或是</div>
+          )}
+          <CardSection
+            plans={groupedPlans['BuySubscription']}
+            title="線上付費解鎖全站資料："
+          />
         </div>
       </div>
     </div>

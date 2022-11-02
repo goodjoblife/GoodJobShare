@@ -17,7 +17,7 @@ const PlanCard = ({ title, description, amount, actionTitle, actionUrl }) => {
         <P>{description}</P>
         <P>{`${amount} 元`}</P>
       </div>
-      <Button className={styles.actionButton}>{actionTitle}</Button>
+      <Button className={styles['action-button']}>{actionTitle}</Button>
     </div>
   );
 };

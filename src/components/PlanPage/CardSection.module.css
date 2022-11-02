@@ -1,0 +1,11 @@
+@value above-tablet from "common/variables.module.css";
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: above-tablet) {
+    display: grid;
+    column-gap: 20px;
+  }
+}
