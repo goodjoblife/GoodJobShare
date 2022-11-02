@@ -6,8 +6,10 @@ import Heading from 'common/base/Heading';
 import P from 'common/base/P';
 
 import styles from './PlanCard.module.css';
+import { getActionTitle } from './helpers';
 
-const PlanCard = ({ title, description, amount, actionTitle, actionUrl }) => {
+const PlanCard = ({ title, description, amount, actionUrl, type }) => {
+  const actionTitle = getActionTitle(type);
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -16,8 +18,8 @@ const PlanCard = ({ title, description, amount, actionTitle, actionUrl }) => {
         </Heading>
         <P>{description}</P>
         <P>{`${amount} 元`}</P>
+        <Button className={styles['action-button']}>{actionTitle}</Button>
       </div>
-      <Button className={styles['action-button']}>{actionTitle}</Button>
     </div>
   );
 };
@@ -25,7 +27,7 @@ const PlanCard = ({ title, description, amount, actionTitle, actionUrl }) => {
 PlanCard.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
-  actionTitle: PropTypes.string,
+  type: PropTypes.string,
   actionUrl: PropTypes.string,
   amount: PropTypes.number,
 };
@@ -33,7 +35,6 @@ PlanCard.propTypes = {
 PlanCard.defaultProps = {
   title: '',
   description: '',
-  actionTitle: '',
   actionUrl: '',
   amount: 0,
 };

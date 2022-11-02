@@ -5,7 +5,7 @@ import P from 'common/base/P';
 
 import PlanCard from './PlanCard';
 import styles from './CardSection.module.css';
-import { getColumns, getActionTitle } from './helpers';
+import { getColumns } from './helpers';
 
 const getTitleClassName = type => {
   if (type === 'SubmitData') {
@@ -39,7 +39,7 @@ const CardSection = ({ plans, title, type }) => {
             title={plan.title}
             description={plan.description}
             amount={plan.amount}
-            actionTitle={getActionTitle(plan)}
+            type={type}
           />
         ))}
       </div>

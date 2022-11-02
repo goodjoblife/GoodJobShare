@@ -7,8 +7,8 @@ export const getColumns = compose(
   length,
 );
 
-export const getActionTitle = plan => {
-  if (plan.type === 'SubmitData') {
+export const getActionTitle = type => {
+  if (type === 'SubmitData') {
     return '留下資料';
   }
 
