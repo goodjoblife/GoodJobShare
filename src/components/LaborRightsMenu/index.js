@@ -23,30 +23,6 @@ const LaborRightsMenu = ({
     queryMenuIfUnfetched();
   }, [queryMenuIfUnfetched]);
 
-<<<<<<< HEAD
-  render() {
-    const title = '勞動知識小教室';
-    const { menuStatus: status, menuError, menuEntries: entries } = this.props;
-    // eslint-disable-next-line no-shadow
-    const items = entries.map(({ id, title, coverUrl }) => ({
-      link: `/labor-rights/${id}`,
-      coverUrl,
-      title,
-    }));
-    items.splice(4, 0, {
-      link: shareLink,
-      coverUrl: AdvImage,
-      title: '留下你的面試經驗、工作經驗',
-    });
-    return (
-      <Section Tag="main" pageTop>
-        <Wrapper size="l">
-          <StaticHelmet.LaborRightsMenu />
-          {isFetching(status) && <Loader />}
-          {isError(status) && menuError && (
-            <Heading center size="m" Tag="div">
-              {menuError.toString()}
-=======
   const shareLink = useShareLink();
 
   const title = '勞動知識小教室';
@@ -58,7 +34,7 @@ const LaborRightsMenu = ({
   }));
   items.splice(4, 0, {
     link: shareLink,
-    coverUrl: 'https://image.goodjob.life/banners/banner3_2x.jpg',
+    coverUrl: AdvImage,
     title: '留下你的面試經驗、工作經驗',
   });
 
@@ -76,7 +52,6 @@ const LaborRightsMenu = ({
           <section>
             <Heading size="l" center marginBottom>
               {title}
->>>>>>> upstream/master
             </Heading>
             <Columns Item={LaborRightsEntry} items={items} />
           </section>
