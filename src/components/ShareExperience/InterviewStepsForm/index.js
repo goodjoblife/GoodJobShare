@@ -4,6 +4,7 @@ import { Switch } from 'react-router-dom';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
+import qs from 'qs';
 import StepControl from './StepControl';
 import Step1 from './Step1';
 import Step2 from './Step2';
@@ -20,6 +21,8 @@ import {
 } from '../utils';
 
 import StaticHelmet from 'common/StaticHelmet';
+import { EnterFormTracker, SubmitFormTracker } from 'utils/eventBasedTracking';
+import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
 import {
   INVALID,
   INTERVIEW_FORM_ORDER,
@@ -111,6 +114,40 @@ const defaultForm = {
   interviewSensitiveQuestions: [],
 };
 
+const getDefaultFormFromDraft = () => {
+  try {
+    const { __updatedAt, __idCounterCurrent, ...storedDraft } = JSON.parse(
+      localStorage.getItem(LS_INTERVIEW_STEPS_FORM_KEY),
+    );
+    if (isExpired(__updatedAt)) {
+      console.warn(`Stored draft expired at ${new Date(__updatedAt)}`);
+      localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
+      return null;
+    } else {
+      idCounter = idGenerator(
+        __idCounterCurrent !== undefined
+          ? __idCounterCurrent
+          : getMaxId(storedDraft),
+      );
+      return storedDraft;
+    }
+  } catch (error) {
+    return null;
+  }
+};
+
+const getDefaultFormFromLocation = location => {
+  const companyName = qs.parse(location.search, { ignoreQueryPrefix: true })
+    .companyName;
+  if (companyName) {
+    return {
+      ...defaultForm,
+      companyQuery: companyName,
+    };
+  }
+  return null;
+};
+
 const getMaxId = state => {
   const ids = [...R.keys(state.sections), ...R.keys(state.interviewQas)];
   const maxId = R.reduce(R.max, -Infinity, ids);
@@ -144,27 +181,10 @@ class InterviewForm extends React.Component {
   }
 
   componentDidMount() {
-    let defaultFromDraft;
-
-    try {
-      const { __updatedAt, __idCounterCurrent, ...storedDraft } = JSON.parse(
-        localStorage.getItem(LS_INTERVIEW_STEPS_FORM_KEY),
-      );
-      if (isExpired(__updatedAt)) {
-        console.warn(`Stored draft expired at ${new Date(__updatedAt)}`);
-        localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
-      } else {
-        defaultFromDraft = storedDraft;
-        idCounter = idGenerator(
-          __idCounterCurrent !== undefined
-            ? __idCounterCurrent
-            : getMaxId(storedDraft),
-        );
-      }
-    } catch (error) {
-      defaultFromDraft = null;
-    }
-    const defaultState = defaultFromDraft || defaultForm;
+    const defaultState =
+      getDefaultFormFromLocation(this.props.location) ||
+      getDefaultFormFromDraft() ||
+      defaultForm;
 
     this.setState({
       // eslint-disable-line react/no-did-mount-set-state
@@ -176,7 +196,7 @@ class InterviewForm extends React.Component {
     });
   }
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (!R.equals(this.state, prevState)) {
       localStorage.setItem(
         LS_INTERVIEW_STEPS_FORM_KEY,
@@ -187,23 +207,47 @@ class InterviewForm extends React.Component {
         }),
       );
     }
+
+    /** Send EnterForm event to Amplitude */
+    const { pathname } = this.props.location;
+    const { pathname: prevPathname } = prevProps.location;
+    if (pathname !== prevPathname) {
+      const pathnameStepMap = {
+        '/share/interview/step1': 1,
+        '/share/interview/step2': 2,
+        '/share/interview/step3': 3,
+      };
+      if (pathnameStepMap[pathname]) {
+        EnterFormTracker.sendEvent({
+          step: pathnameStepMap[pathname],
+          type: EnterFormTracker.types.interview3Steps,
+        });
+      }
+    }
   }
 
   async onSubmit() {
     const valid = interviewFormCheck(getInterviewForm(this.state));
+    let goalValue;
 
     if (valid) {
       localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
+      const body = portInterviewFormToRequestFormat(
+        getInterviewForm(this.state),
+      );
+      // section 的標題與預設文字 = 4 + 11 + 19 + 25 個字
+      goalValue = calcInterviewExperienceValue(body, 59);
       const p = this.props.createInterviewExperience({
-        body: portInterviewFormToRequestFormat(getInterviewForm(this.state)),
+        body,
       });
+
       return p.then(
         response => {
-          const experienceId = response.experience._id;
-
+          const experienceId = response.createInterviewExperience.experience.id;
           ReactGA.event({
             category: GA_CATEGORY.SHARE_INTERVIEW,
             action: GA_ACTION.UPLOAD_SUCCESS,
+            value: goalValue,
           });
           ReactPixel.track('Purchase', {
             value: 1,
@@ -211,6 +255,12 @@ class InterviewForm extends React.Component {
             content_category:
               PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
           });
+          // send SubmitForm event to Amplitude
+          SubmitFormTracker.sendEvent({
+            type: SubmitFormTracker.types.interview3Steps,
+            result: SubmitFormTracker.results.success,
+          });
+
           return () => (
             <SuccessFeedback
               buttonClick={() =>
@@ -223,6 +273,11 @@ class InterviewForm extends React.Component {
           ReactGA.event({
             category: GA_CATEGORY.SHARE_INTERVIEW,
             action: GA_ACTION.UPLOAD_FAIL,
+          });
+          // send SubmitForm event to Amplitude
+          SubmitFormTracker.sendEvent({
+            type: SubmitFormTracker.types.interview3Steps,
+            result: SubmitFormTracker.results.error,
           });
 
           return ({ buttonClick }) => (

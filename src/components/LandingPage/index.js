@@ -5,16 +5,16 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
 import { compose, setStatic, lifecycle } from 'recompose';
 import { Section, Wrapper, Heading } from 'common/base';
-import ShareExpSection from 'common/ShareExpSection';
 import Columns from 'common/Columns';
-import FanPageBlock from 'common/FanPageBlock';
 import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
 import { queryPopularExperiences } from '../../actions/popularExperiences';
 import { queryMenu } from '../../actions/laborRights';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
-import Dashboard from './Dashboard';
 import StaticHelmet from 'common/StaticHelmet';
+import CallToActionBlock from './CallToActionBlock';
+import SummarySection from './SummarySection';
+import { isUnfetched } from '../../constants/status';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
   return Promise.all([
@@ -25,6 +25,12 @@ const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
 
 const queryData = lifecycle({
   componentDidMount() {
+    if (isUnfetched(this.props.popularCompanyAverageSalaryStatus)) {
+      this.props.queryPopularCompanyAverageSalary();
+    }
+    if (isUnfetched(this.props.popularJobTitleSalaryDistributionStatus)) {
+      this.props.queryPopularJobTitleSalaryDistribution();
+    }
     if (this.props.popularExperiences.size === 0) {
       this.props.queryPopularExperiences();
     }
@@ -34,6 +40,8 @@ const queryData = lifecycle({
 });
 
 const LandingPage = ({
+  popularCompanyAverageSalary,
+  popularJobTitleSalaryDistribution,
   popularExperiences: popularExperiencesRaw,
   laborRightsMenuEntries,
   timeAndSalaryCount,
@@ -49,32 +57,20 @@ const LandingPage = ({
     <main>
       <StaticHelmet.LandingPage />
       <Banner />
-      <Dashboard
-        timeAndSalaryCount={timeAndSalaryCount}
-        laborRightsCount={laborRightsCount}
-      />
-      <ShareExpSection heading="現在就留下你的資料" />
-      <Section padding bg="white">
+      <Section padding>
         <Wrapper size="l">
-          <Heading size="l" center marginBottom>
-            勞動知識小教室
-          </Heading>
-          <Columns Item={LaborRightsEntry} items={items} />
+          <SummarySection
+            popularCompanyAverageSalary={popularCompanyAverageSalary}
+            popularJobTitleSalaryDistribution={
+              popularJobTitleSalaryDistribution
+            }
+          />
         </Wrapper>
-        <Section center Tag="div">
-          <Link
-            className={cn('buttonCircleL', 'buttonBlack')}
-            to="/labor-rights"
-            title="勞動知識小教室"
-          >
-            看更多
-          </Link>
-        </Section>
       </Section>
       <Section padding>
         <Wrapper size="l">
           <Heading size="l" center marginBottom>
-            最新經驗分享
+            最新面試、工作心得
           </Heading>
           <Columns
             Item={ExperienceBlock}
@@ -93,13 +89,35 @@ const LandingPage = ({
         </Wrapper>
       </Section>
       <Section padding bg="white">
-        <FanPageBlock />
+        <Wrapper size="l">
+          <Heading size="l" center marginBottom>
+            勞工法令懶人包
+          </Heading>
+          <Columns gutter="s" Item={LaborRightsEntry} items={items} />
+        </Wrapper>
+        <Section center Tag="div">
+          <Link
+            className={cn('buttonCircleL', 'buttonBlack')}
+            to="/labor-rights"
+            title="勞工法令懶人包"
+          >
+            看更多
+          </Link>
+        </Section>
+      </Section>
+
+      <Section padding>
+        <Wrapper size="l">
+          <CallToActionBlock />
+        </Wrapper>
       </Section>
     </main>
   );
 };
 
 LandingPage.propTypes = {
+  popularCompanyAverageSalary: PropTypes.array.isRequired,
+  popularJobTitleSalaryDistribution: PropTypes.array.isRequired,
   laborRightsMenuEntries: PropTypes.array.isRequired,
   popularExperiences: ImmutablePropTypes.list.isRequired,
   laborRightsCount: PropTypes.number.isRequired,

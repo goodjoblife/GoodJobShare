@@ -4,9 +4,19 @@ $padding: 40px;
 $paddingS: 16px;
 
 .container {
+  position: relative;
   display: flex;
   border: 1px solid border-gray;
   flex-direction: column;
+}
+
+.date {
+  position: absolute;
+  top: 16px;
+  right: 21px;
+  font-size: 14px;
+  line-height: 1.64;
+  color: #969696;
 }
 
 .info {
@@ -61,7 +71,18 @@ $paddingS: 16px;
   padding: 50px 50px;
 
   @media (max-width: 550px) {
-    margin-top: -15px;
+    margin-top: -30px;
     padding: 50px 25px;
   }
+}
+
+.lock {
+  margin-right: 5px;
+  color: #ed0d5e;
+}
+
+.btmMsgBtnContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
 }

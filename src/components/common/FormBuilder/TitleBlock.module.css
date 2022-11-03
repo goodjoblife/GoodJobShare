@@ -1,0 +1,24 @@
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #555555;
+  margin-bottom: 10px;
+  line-height: normal;
+
+  &.necessary::after {
+    content: ' *';
+    color: red;
+  }
+}
+
+.description {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: normal;
+  color: #555555;
+
+  &:empty {
+    display: none;
+  }
+}

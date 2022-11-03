@@ -6,8 +6,19 @@ const sortById = R.sortBy(R.prop('id'));
 
 export const handleBlocks = R.compose(
   sortById,
-  R.map(ele => ele[1]),
-  R.toPairs,
+  R.values,
+);
+
+const toSectionArray = R.compose(
+  sortById,
+  R.values,
+  R.map(R.pick(['subtitle', 'content'])),
+);
+
+const toInterviewQaArray = R.compose(
+  sortById,
+  R.values,
+  R.map(R.pick(['question', 'answer'])),
 );
 
 const propsInterviewForm = state => {
@@ -31,8 +42,10 @@ const propsInterviewForm = state => {
   } = state;
 
   return {
-    companyQuery,
-    companyId,
+    company: {
+      query: companyQuery,
+      id: companyId,
+    },
     region,
     jobTitle,
     experienceInYear,
@@ -44,8 +57,8 @@ const propsInterviewForm = state => {
     salaryAmount: Number(salaryAmount),
     overallRating,
     title,
-    sections: handleBlocks(sections),
-    interviewQas: handleBlocks(interviewQas),
+    sections: toSectionArray(sections),
+    interviewQas: toInterviewQaArray(interviewQas),
     interviewSensitiveQuestions,
   };
 };
@@ -296,8 +309,10 @@ export const propsWorkExperiencesForm = state => {
   } = state;
 
   return {
-    companyQuery,
-    companyId,
+    company: {
+      id: companyId,
+      query: companyQuery,
+    },
     region,
     jobTitle,
     experienceInYear,
@@ -311,7 +326,7 @@ export const propsWorkExperiencesForm = state => {
     recommendToOthers,
     overallRating,
     title,
-    sections: handleBlocks(sections),
+    sections: toSectionArray(sections),
   };
 };
 

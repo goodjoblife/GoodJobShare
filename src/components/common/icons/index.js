@@ -1,13 +1,16 @@
 import Add from './Add';
 import ArrowGo from './ArrowGo';
 import ArrowLeft from './ArrowLeft';
+import Bad from './Bad';
 import Checked from './Checked';
+import Clock from './Clock';
 import Coin from './Coin';
 import Comment from './Comment';
 import Company from './Company';
 import Ellipses from './Ellipses';
 import Exclamation from './Exclamation';
 import GjLogo from './GjLogo';
+import Good from './Good';
 import Like from './Like';
 import Location from './Location';
 import New from './New';
@@ -24,13 +27,16 @@ const icons = {
   Add,
   ArrowGo,
   ArrowLeft,
+  Bad,
   Checked,
+  Clock,
   Coin,
   Comment,
   Company,
   Ellipses,
   Exclamation,
   GjLogo,
+  Good,
   Like,
   Location,
   New,

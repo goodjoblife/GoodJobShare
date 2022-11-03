@@ -3,6 +3,7 @@ import R from 'ramda';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
+import qs from 'qs';
 import { Heading } from 'common/base';
 
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
@@ -24,6 +25,7 @@ import { LS_WORK_EXPERIENCES_FORM_KEY } from '../../../constants/localStorageKey
 import styles from './WorkExperiencesForm.module.css';
 
 import StaticHelmet from 'common/StaticHelmet';
+import { EnterFormTracker, SubmitFormTracker } from 'utils/eventBasedTracking';
 import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
@@ -86,6 +88,34 @@ const defaultForm = {
   },
 };
 
+const getDefaultFormFromDraft = () => {
+  try {
+    const { __idCounterCurrent, ...storedDraft } = JSON.parse(
+      localStorage.getItem(LS_WORK_EXPERIENCES_FORM_KEY),
+    );
+    idCounter = idGenerator(
+      typeof __idCounterCurrent !== undefined
+        ? __idCounterCurrent
+        : getMaxId(storedDraft),
+    );
+    return storedDraft;
+  } catch (error) {
+    return null;
+  }
+};
+
+const getDefaultFormFromLocation = location => {
+  const companyName = qs.parse(location.search, { ignoreQueryPrefix: true })
+    .companyName;
+  if (companyName) {
+    return {
+      ...defaultForm,
+      companyQuery: companyName,
+    };
+  }
+  return null;
+};
+
 const getMaxId = state => {
   const ids = [...R.keys(state.sections)];
   const maxId = R.max(ids);
@@ -112,23 +142,10 @@ class WorkExperiencesForm extends React.Component {
   }
 
   componentDidMount() {
-    let defaultFromDraft;
-
-    try {
-      const { __idCounterCurrent, ...storedDraft } = JSON.parse(
-        localStorage.getItem(LS_WORK_EXPERIENCES_FORM_KEY),
-      );
-      defaultFromDraft = storedDraft;
-      idCounter = idGenerator(
-        typeof __idCounterCurrent !== undefined
-          ? __idCounterCurrent
-          : getMaxId(storedDraft),
-      );
-    } catch (error) {
-      defaultFromDraft = null;
-    }
-
-    const defaultState = defaultFromDraft || defaultForm;
+    const defaultState =
+      getDefaultFormFromLocation(this.props.location) ||
+      getDefaultFormFromDraft() ||
+      defaultForm;
 
     this.setState({
       // eslint-disable-line react/no-did-mount-set-state
@@ -137,6 +154,11 @@ class WorkExperiencesForm extends React.Component {
 
     ReactPixel.track('InitiateCheckout', {
       content_category: PIXEL_CONTENT_CATEGORY.VISIT_WORK_EXPERIENCE_FORM,
+    });
+
+    // Send EnterForm event to Amplitude
+    EnterFormTracker.sendEvent({
+      type: EnterFormTracker.types.work,
     });
   }
 
@@ -152,7 +174,7 @@ class WorkExperiencesForm extends React.Component {
       });
       return p.then(
         response => {
-          const experienceId = response.experience._id;
+          const experienceId = response.createWorkExperience.experience.id;
 
           ReactGA.event({
             category: GA_CATEGORY.SHARE_WORK,
@@ -162,6 +184,11 @@ class WorkExperiencesForm extends React.Component {
             value: 1,
             currency: 'TWD',
             content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_WORK_EXPERIENCE,
+          });
+          // send SubmitForm event to Amplitude
+          SubmitFormTracker.sendEvent({
+            type: SubmitFormTracker.types.work,
+            result: SubmitFormTracker.results.success,
           });
 
           return () => (
@@ -176,6 +203,11 @@ class WorkExperiencesForm extends React.Component {
           ReactGA.event({
             category: GA_CATEGORY.SHARE_WORK,
             action: GA_ACTION.UPLOAD_FAIL,
+          });
+          // send SubmitForm event to Amplitude
+          SubmitFormTracker.sendEvent({
+            type: SubmitFormTracker.types.work,
+            result: SubmitFormTracker.results.error,
           });
 
           return ({ buttonClick }) => (

@@ -1,0 +1,31 @@
+@value main-yellow, border-gray from "common/variables.module.css";
+
+.reactionZone {
+  border-top: 1px solid border-gray;
+
+  .reactionButton {
+    border-right: 1px solid border-gray;
+  }
+}
+
+.reactionButton {
+  padding: 9px 21px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #555555;
+
+  &.active,
+  &:hover {
+    .icon {
+      fill: main-yellow;
+    }
+  }
+}
+
+.icon {
+  width: 26px;
+  height: 26px;
+  fill: #c1c1c1;
+  transition: fill 0.3s;
+  margin-right: 11px;
+}

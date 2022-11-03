@@ -44,7 +44,7 @@ export const workExperiencesFormCheck = R.allPass([
   R.compose(
     ifFalseLog('companyQuery not pass'),
     companyQuery,
-    R.prop('companyQuery'),
+    R.path(['company', 'query']),
   ),
   R.compose(
     ifFalseLog('region not pass'),

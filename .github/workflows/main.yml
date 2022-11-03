@@ -1,0 +1,100 @@
+name: Github Actions CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [12, 14]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install dependencies
+        run: yarn install
+      - name: Lint and Unit test
+        run: CI=true npm run test
+      - name: Build js
+        run: CI=false npm run build
+  docker-production:
+    name: Deploy docker image
+    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    needs:
+      - test
+    env:
+      REGISTRY: docker.pkg.github.com
+      REPO: goodjoblife/goodjobshare/web-server
+      IMAGE: goodjobshare:production
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker login ${REGISTRY} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+      - run: docker-compose -f .github/docker-compose-production.yml build
+      - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:production-${GITHUB_SHA}
+      - run: docker push ${REGISTRY}/${REPO}:production-${GITHUB_SHA}
+  docker-stage:
+    name: Deploy docker image
+    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    needs:
+      - test
+    env:
+      REGISTRY: docker.pkg.github.com
+      REPO: goodjoblife/goodjobshare/web-server-dev
+      IMAGE: goodjobshare:stage
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker login ${REGISTRY} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+      - run: docker-compose -f .github/docker-compose-stage.yml build
+      - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:stage
+      - run: docker push ${REGISTRY}/${REPO}:stage
+  docker-dev:
+    name: Deploy docker image
+    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    needs:
+      - test
+    env:
+      REGISTRY: docker.pkg.github.com
+      REPO: goodjoblife/goodjobshare/web-server-dev
+      IMAGE: goodjobshare:dev
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker login ${REGISTRY} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+      - run: docker-compose -f .github/docker-compose-dev.yml build
+      - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:dev
+      - run: docker push ${REGISTRY}/${REPO}:dev
+  deploy-stage:
+    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    needs:
+      - docker-stage
+    steps:
+      - name: Deploy stage
+        run: |
+          curl --user "${{ secrets.DEPLOY_CI_TOKEN }}" \
+            -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d '{"event_type": "goodjobshare-master-published"}' \
+            https://api.github.com/repos/mark86092/goodjob-deploy-ci/dispatches
+  deploy-dev:
+    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    needs:
+      - docker-dev
+    steps:
+      - name: Deploy dev
+        run: |
+          curl --user "${{ secrets.DEPLOY_CI_TOKEN }}" \
+            -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d '{"event_type": "goodjobshare-dev-published"}' \
+            https://api.github.com/repos/mark86092/goodjob-deploy-ci/dispatches

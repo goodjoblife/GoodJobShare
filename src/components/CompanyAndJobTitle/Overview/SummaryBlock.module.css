@@ -1,0 +1,81 @@
+@value below-tablet, above-mobile from "common/variables.module.css";
+
+.summaryBlock {
+  display: flex;
+  margin-bottom: 22px;
+
+  .barChart,
+  .barChartSm,
+  .averageWeekWorkTime {
+    display: flex;
+    background: #fff;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
+    padding: 20px;
+  }
+
+  .barChart {
+    flex: 1;
+    max-width: 547px;
+    height: 265px;
+  }
+
+  .barChartSm {
+    display: none;
+  }
+
+  .averageWeekWorkTime {
+    margin-left: 21px;
+  }
+
+  @media (max-width: below-tablet) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .barChart {
+      display: none;
+    }
+
+    .barChartSm {
+      display: block;
+      width: 100%;
+      height: 265px;
+    }
+
+    .averageWeekWorkTime {
+      width: 100%;
+      margin-left: 0;
+      margin-top: 10px;
+    }
+  }
+}
+
+.averageWeekWorkTimeView {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px;
+  margin: 0 auto;
+
+  .title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.61;
+    color: #333;
+  }
+
+  .body {
+    font-size: 16px;
+    color: #333;
+
+    em {
+      font-size: 71px;
+    }
+  }
+
+  .footer {
+    font-size: 14px;
+    line-height: 1.64;
+    color: #969696;
+  }
+}

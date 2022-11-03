@@ -1,11 +1,11 @@
 import fetchingStatus from '../constants/status';
+import { pageType } from '../constants/companyJobTitle';
 
 export const SET_SEARCH_DATA = '@@timeAndSalarySearch/SET_SEARCH_DATA';
 export const SET_SEARCH_STATUS = '@@timeAndSalarySearch/SET_SEARCH_STATUS';
 
-export const setSearchData = (status, searchBy, keyword, data, error) => ({
+export const setSearchData = (status, keyword, data, error) => ({
   type: SET_SEARCH_DATA,
-  searchBy,
   keyword,
   status,
   data,
@@ -14,18 +14,9 @@ export const setSearchData = (status, searchBy, keyword, data, error) => ({
 
 export const keywordMinLength = 2;
 
-export const queryKeyword = ({ searchBy, keyword }) => (
-  dispatch,
-  getState,
-  { api },
-) => {
-  if (
-    searchBy !== getState().timeAndSalarySearch.get('searchBy') ||
-    keyword !== getState().timeAndSalarySearch.get('keyword')
-  ) {
-    dispatch(
-      setSearchData(fetchingStatus.UNFETCHED, searchBy, keyword, [], null),
-    );
+export const queryKeyword = ({ keyword }) => (dispatch, getState, { api }) => {
+  if (keyword !== getState().timeAndSalarySearch.get('keyword')) {
+    dispatch(setSearchData(fetchingStatus.UNFETCHED, keyword, [], null));
   }
 
   if (
@@ -44,41 +35,33 @@ export const queryKeyword = ({ searchBy, keyword }) => (
     status: fetchingStatus.FETCHING,
   });
 
-  let promise;
-
-  if (searchBy === 'company') {
-    promise = api.timeAndSalary.fetchSearchCompany({
+  const searchCompanies = api.timeAndSalary
+    .fetchSearchCompany({
       companyName: keyword,
-    });
-  } else if (searchBy === 'job_title') {
-    promise = api.timeAndSalary.fetchSearchJobTitle({
-      jobTitle: keyword,
-    });
-  } else {
-    // TODO: handle unexpected case
-    return dispatch(
-      setSearchData(
-        fetchingStatus.ERROR,
-        searchBy,
-        keyword,
-        [],
-        new Error('Unrecognized parameter: searchBy'),
-      ),
+    })
+    .then(items =>
+      items.map(item => ({ ...item, pageType: pageType.COMPANY })),
     );
-  }
 
-  return promise
+  const searchJobTitles = api.timeAndSalary
+    .fetchSearchJobTitle({
+      jobTitle: keyword,
+    })
+    .then(items =>
+      items.map(item => ({ ...item, pageType: pageType.JOB_TITLE })),
+    );
+
+  return Promise.all([searchCompanies, searchJobTitles])
+    .then(([companyData, jobTitleData]) => [...companyData, ...jobTitleData])
     .then(data => {
       data.sort(
         (a, b) =>
           b.salary_work_time_statistics.count -
           a.salary_work_time_statistics.count,
       );
-      dispatch(
-        setSearchData(fetchingStatus.FETCHED, searchBy, keyword, data, null),
-      );
+      dispatch(setSearchData(fetchingStatus.FETCHED, keyword, data, null));
     })
     .catch(err => {
-      dispatch(setSearchData(fetchingStatus.ERROR, searchBy, keyword, [], err));
+      dispatch(setSearchData(fetchingStatus.ERROR, keyword, [], err));
     });
 };

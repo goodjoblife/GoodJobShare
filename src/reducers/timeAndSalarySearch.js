@@ -8,7 +8,6 @@ import {
 import fetchingStatus from '../constants/status';
 
 const preloadedState = fromJS({
-  searchBy: null,
   keyword: null,
   data: [],
   status: fetchingStatus.UNFETCHED,
@@ -21,7 +20,6 @@ export default createReducer(preloadedState, {
       .set('data', fromJS(data))
       .set('status', status)
       .set('error', error)
-      .set('searchBy', searchBy)
       .set('keyword', keyword),
   [SET_SEARCH_STATUS]: (state, { status }) => state.set('status', status),
 });

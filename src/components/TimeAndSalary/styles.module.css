@@ -1,27 +1,16 @@
-$page-gutter: 40px;
-$page-gutter-s: 15px;
-$block-gutter-m: 40px;
-$inner-wrap-m: 964px;
-$inner-wrap-l: 1264px;
-$below-small: 850px;
-$below-mobile: 550px;
+@value below-small, below-mobile, above-mobile from "common/variables.module.css";
+
 $gray: #b4b4b4;
 
 .container {
 }
 
-.showSearchbarWrapper {
-  @media (max-width: $below-small) {
-    border-bottom: 1px solid #ddd;
-  }
-}
-
-.whiteBackground {
-  background-color: white;
-}
-
 .subRouteWrapper {
-  padding-top: 40px;
+  padding-top: 18px;
+
+  @media (min-width: above-mobile) {
+    padding-top: 40px;
+  }
 }
 
 .status {
@@ -40,7 +29,7 @@ $gray: #b4b4b4;
   color: $gray;
   letter-spacing: 0.1em;
 
-  @media (max-width: $below-mobile) {
+  @media (max-width: below-mobile) {
     min-height: 30vh;
   }
 }

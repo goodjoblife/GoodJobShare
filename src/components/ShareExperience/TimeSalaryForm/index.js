@@ -2,9 +2,11 @@ import React from 'react';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
+import qs from 'qs';
 import { Heading } from 'common/base';
 import { People } from 'common/icons';
 import IconHeadingBlock from 'common/IconHeadingBlock';
+import { EnterFormTracker, SubmitFormTracker } from 'utils/eventBasedTracking';
 import BasicInfo from './BasicInfo';
 import SalaryInfo from './SalaryInfo';
 import TimeInfo from './TimeInfo';
@@ -59,6 +61,26 @@ const defaultForm = {
   email: '',
 };
 
+const getDefaultFormFromDraft = () => {
+  try {
+    return JSON.parse(localStorage.getItem(LS_TIME_SALARY_FORM_KEY));
+  } catch (error) {
+    return null;
+  }
+};
+
+const getDefaultFormFromLocation = location => {
+  const companyName = qs.parse(location.search, { ignoreQueryPrefix: true })
+    .companyName;
+  if (companyName) {
+    return {
+      ...defaultForm,
+      company: companyName,
+    };
+  }
+  return null;
+};
+
 class TimeSalaryForm extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -77,16 +99,10 @@ class TimeSalaryForm extends React.PureComponent {
   }
 
   componentDidMount() {
-    let defaultFromDraft;
-
-    try {
-      defaultFromDraft = JSON.parse(
-        localStorage.getItem(LS_TIME_SALARY_FORM_KEY),
-      );
-    } catch (error) {
-      defaultFromDraft = null;
-    }
-    const defaultState = defaultFromDraft || defaultForm;
+    const defaultState =
+      getDefaultFormFromLocation(this.props.location) ||
+      getDefaultFormFromDraft() ||
+      defaultForm;
 
     this.setState({
       // eslint-disable-line react/no-did-mount-set-state
@@ -95,6 +111,11 @@ class TimeSalaryForm extends React.PureComponent {
 
     ReactPixel.track('InitiateCheckout', {
       content_category: PIXEL_CONTENT_CATEGORY.VISIT_TIME_AND_SALARY_FORM,
+    });
+
+    // Send EnterForm event to Amplitude
+    EnterFormTracker.sendEvent({
+      type: EnterFormTracker.types.salary,
     });
   }
 
@@ -114,8 +135,6 @@ class TimeSalaryForm extends React.PureComponent {
 
       return p.then(
         response => {
-          const count = response.queries_count;
-
           ReactGA.event({
             category: GA_CATEGORY.SHARE_TIME_SALARY,
             action: GA_ACTION.UPLOAD_SUCCESS,
@@ -125,11 +144,15 @@ class TimeSalaryForm extends React.PureComponent {
             currency: 'TWD',
             content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_TIME_AND_SALARY,
           });
+          // send SubmitForm event to Amplitude
+          SubmitFormTracker.sendEvent({
+            type: SubmitFormTracker.types.salary,
+            result: SubmitFormTracker.results.success,
+          });
 
           return () => (
             <SuccessFeedback
-              info={`您已經上傳 ${count} 次，還有 ${5 -
-                (count || 0)} 次可以上傳。`}
+              info="感謝你分享薪資、工時資訊，讓台灣的職場變得更透明！"
               buttonText="查看最新工時、薪資"
               buttonClick={() => {
                 window.location.replace('/salary-work-times/latest');
@@ -141,6 +164,11 @@ class TimeSalaryForm extends React.PureComponent {
           ReactGA.event({
             category: GA_CATEGORY.SHARE_TIME_SALARY,
             action: GA_ACTION.UPLOAD_FAIL,
+          });
+          // send SubmitForm event to Amplitude
+          SubmitFormTracker.sendEvent({
+            type: SubmitFormTracker.types.salary,
+            result: SubmitFormTracker.results.error,
           });
 
           return ({ buttonClick }) => (

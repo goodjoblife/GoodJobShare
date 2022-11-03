@@ -1,20 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import R from 'ramda';
 
 import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
+import { useShareLink } from 'hooks/experiments';
+import { formatCommaSeparatedNumber } from 'utils/stringUtil';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
 import SectionBlock from './SectionBlock';
 import QABlock from './QABlock';
+import ReactionZone from './ReactionZone';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 import { MAX_WORDS_IF_HIDDEN } from '../../../constants/hideContent';
 
-class Article extends React.Component {
-  renderSections = () => {
-    const { experience, hideContent } = this.props;
+const countSectionWords = sections =>
+  R.reduce(
+    (accu, curr) => {
+      return (
+        accu +
+        R.pathOr(0, ['subtitle', 'length'], curr) +
+        R.pathOr(0, ['content', 'length'], curr)
+      );
+    },
+    0,
+    sections,
+  );
+
+const Article = ({
+  experience,
+  hideContent,
+
+  onClickMsgButton,
+}) => {
+  // Get share link object according to Google Optimize parameters
+  const shareLink = useShareLink();
+
+  const renderSections = () => {
     let toHide = false;
     let currentTotalWords = 0;
+    const totalWords = countSectionWords(experience.sections);
 
     if (hideContent) {
       return (
@@ -24,14 +49,19 @@ class Article extends React.Component {
               if (toHide) {
                 return null;
               }
-              currentTotalWords += content.length;
+              currentTotalWords += content.length + subtitle.length;
               if (currentTotalWords > MAX_WORDS_IF_HIDDEN) {
                 toHide = true;
                 const showLength =
                   content.length - (currentTotalWords - MAX_WORDS_IF_HIDDEN);
                 const newContent = `${content.substring(0, showLength)}...`;
                 return (
-                  <GradientMask key={idx}>
+                  <GradientMask
+                    key={idx}
+                    childrenOnMaskBottom={`總共 ${formatCommaSeparatedNumber(
+                      totalWords,
+                    )} 字`}
+                  >
                     <SectionBlock subtitle={subtitle} content={newContent} />
                   </GradientMask>
                 );
@@ -53,13 +83,12 @@ class Article extends React.Component {
     );
   };
 
-  render() {
-    const { experience, hideContent } = this.props;
-    return (
-      <div className={styles.container}>
-        <ArticleInfo experience={experience} />
-        <section className={styles.main}>
-          <div className={styles.article}>{this.renderSections()}</div>
+  return (
+    <div className={styles.container}>
+      <ArticleInfo experience={experience} hideContent={hideContent} />
+      <section className={styles.main}>
+        <div className={styles.article}>{renderSections()}</div>
+        <div>
           {experience.type === 'interview' &&
           experience.interview_qas &&
           experience.interview_qas.length &&
@@ -73,20 +102,27 @@ class Article extends React.Component {
               ))}
             </div>
           ) : null}
-          {hideContent ? (
-            <BasicPermissionBlock
-              rootClassName={styles.permissionBlockArticle}
-            />
-          ) : null}
-        </section>
-      </div>
-    );
-  }
-}
+        </div>
+
+        {hideContent && (
+          <BasicPermissionBlock
+            to={shareLink}
+            rootClassName={styles.permissionBlockArticle}
+          />
+        )}
+      </section>
+      <ReactionZone
+        experienceId={experience.id}
+        onClickMsgButton={onClickMsgButton}
+      />
+    </div>
+  );
+};
 
 Article.propTypes = {
   experience: PropTypes.object.isRequired,
   hideContent: PropTypes.bool.isRequired,
+  onClickMsgButton: PropTypes.func.isRequired,
 };
 
 export default Article;

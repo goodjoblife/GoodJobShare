@@ -13,12 +13,33 @@ import initSentry from 'utils/sentryUtil';
 import Root from './components/Root';
 import configureStore from './store/configureStore';
 
+function shouldUpdateScroll(prevProps, props) {
+  const getSignature = R.compose(
+    R.omit(['state', 'key']),
+    R.path(['location']),
+  );
+  const diffSignature = R.unapply(
+    R.compose(
+      R.not,
+      R.apply(R.equals),
+      R.map(getSignature),
+    ),
+  );
+  return diffSignature(prevProps, props);
+}
+
 function parseState(window) {
   if (!window.__data) {
     return {};
   }
 
-  const shouldNotTransform = R.flip(R.contains)(['laborRights']);
+  const shouldNotTransform = R.flip(R.contains)([
+    'laborRights',
+    'company',
+    'jobTitle',
+    'popularCompanyAverageSalary',
+    'popularJobTitleSalaryDistribution',
+  ]);
   const preloadedState = {};
   Object.keys(window.__data).forEach(key => {
     if (shouldNotTransform(key)) {
@@ -43,7 +64,7 @@ hydrate(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <Router history={history}>
-        <ScrollContext>
+        <ScrollContext shouldUpdateScroll={shouldUpdateScroll}>
           <Root />
         </ScrollContext>
       </Router>
@@ -58,7 +79,7 @@ if (module.hot) {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Router history={history}>
-            <ScrollContext>
+            <ScrollContext shouldUpdateScroll={shouldUpdateScroll}>
               <Root />
             </ScrollContext>
           </Router>

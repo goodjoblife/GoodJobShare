@@ -1,70 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { withState, compose, lifecycle, withHandlers } from 'recompose';
+import { useAsyncFn } from 'react-use';
 import Modal from 'common/Modal';
 import Loader from 'common/Loader';
 import { Heading, P } from 'common/base';
-
+import api from '../../../apis';
 import styles from './ReportInspectModal.module.css';
-import { getReports } from '../../../apis/reportApi';
-import fetchingStatus, {
-  isFetching,
-  isFetched,
-  isError,
-} from '../../../constants/status';
 
-const store = compose(
-  withState('status', 'setStatus', fetchingStatus.UNFETCHED),
-  withState('reports', 'setReports', []),
-  withHandlers({
-    fetchReports: ({ setStatus, setReports }) => id => {
-      setStatus(fetchingStatus.FETCHING);
-      getReports({ id })
-        .then(reports => {
-          setStatus(fetchingStatus.FETCHED);
-          setReports(reports);
-        })
-        .catch(error => {
-          setStatus(fetchingStatus.ERROR);
-          setReports([]);
-        });
-    },
-  }),
-);
+const useGetReports = experienceId => {
+  return useAsyncFn(async () => {
+    return await api.report.getReports({ id: experienceId });
+  }, [experienceId]);
+};
 
-const queryData = lifecycle({
-  componentDidMount() {
-    const { id, fetchReports } = this.props;
-    fetchReports(id);
-  },
-  componentDidUpdate(prevProps) {
-    const { id, fetchReports } = this.props;
-    if (id !== prevProps.id) {
-      const { id } = this.props;
-      fetchReports(id);
+const ReportInspectModal = ({ experienceId, isOpen, setIsOpen }) => {
+  const [reportsState, getReports] = useGetReports(experienceId);
+  useEffect(() => {
+    // get reports when modal is open
+    if (isOpen) {
+      getReports();
     }
-  },
-});
+  }, [getReports, isOpen]);
 
-const ReportInspectModal = ({
-  id,
-  isOpen,
-  toggleReportInspectModal,
-  status,
-  reports,
-}) => {
+  const reports = reportsState.value ? reportsState.value : [];
+
   return (
     <Modal
       isOpen={isOpen}
-      close={() => toggleReportInspectModal(false)}
+      close={() => setIsOpen(false)}
       hasClose
       closableOnClickOutside
     >
       <Heading size="l" marginBottomS center>
         查看檢舉
       </Heading>
-      {isFetching(status) && <Loader size="s" />}
-      {isFetched(status) && (
+      {reportsState.loading && <Loader size="s" />}
+      {!reportsState.loading && reports && (
         <div>
           {reports.length === 0 ? (
             <span>沒有檢舉記錄</span>
@@ -81,7 +52,7 @@ const ReportInspectModal = ({
           ))}
         </div>
       )}
-      {isError(status) && (
+      {reportsState.error && (
         <div>
           <div>Oops! 發生錯誤</div>
         </div>
@@ -91,16 +62,9 @@ const ReportInspectModal = ({
 };
 
 ReportInspectModal.propTypes = {
-  id: PropTypes.string.isRequired,
+  experienceId: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  toggleReportInspectModal: PropTypes.func.isRequired,
-  status: PropTypes.string.isRequired,
-  reports: PropTypes.array.isRequired,
+  setIsOpen: PropTypes.func.isRequired,
 };
 
-const hoc = compose(
-  store,
-  queryData,
-);
-
-export default hoc(ReportInspectModal);
+export default ReportInspectModal;

@@ -32,10 +32,14 @@
     "moduleNameMapper": {
       "^common(.*)": "<rootDir>/src/components/common$1",
       "^utils(.*)": "<rootDir>/src/utils$1",
-      "^graphql(.*)": "<rootDir>/src/graphql$1"
+      "^graphql(.*)": "<rootDir>/src/graphql$1",
+      "^hooks(.*)": "<rootDir>/src/hooks$1",
+      "^contexts(.*)": "<rootDir>/src/contexts$1"
     }
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
     "autoprefixer": "7.1.1",
     "eslint": "4.19.1",
     "eslint-config-prettier": "^2.9.0",
@@ -62,6 +66,7 @@
     "@fortawesome/fontawesome": "^1.1.3",
     "@fortawesome/fontawesome-free-solid": "^5.0.6",
     "@fortawesome/react-fontawesome": "^0.0.17",
+    "airbnb-prop-types": "^2.15.0",
     "classnames": "^2.2.5",
     "express": "^4.16.3",
     "history": "^4.7.2",
@@ -76,26 +81,29 @@
     "qs": "^6.4.0",
     "ramda": "^0.23.0",
     "razzle": "^2.4.0",
-    "react": "^16.8.0",
+    "react": "^16.12.0",
     "react-autocomplete": "^1.8.1",
-    "react-dom": "^16.8.0",
+    "react-dfp": "^0.17.2",
+    "react-dom": "^16.12.0",
     "react-facebook-pixel": "^0.1.0",
     "react-ga": "^2.2.0",
     "react-helmet": "^5.2.0",
     "react-immutable-proptypes": "^2.1.0",
-    "react-redux": "^5.0.7",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
+    "react-redux": "^7.1.3",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
     "react-router-scroll-4": "^1.0.0-beta.1",
     "react-scroll": "^1.5.4",
     "react-sticky": "^6.0.1",
     "react-textarea-autosize": "^4.3.0",
+    "react-use": "^13.12.2",
+    "recharts": "^1.7.1",
     "recompose": "^0.30.0",
-    "redux": "^3.7.2",
+    "redux": "^4.0.4",
     "redux-persist": "^5.10.0",
     "redux-persist-transform-immutable": "^5.0.0",
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.1",
-    "serialize-javascript": "^1.3.0"
+    "serialize-javascript": "^3.1.0"
   }
 }

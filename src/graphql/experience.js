@@ -5,9 +5,113 @@ query($id:ID!) {
     type
     company {
       name
+      interview_experiences {
+        id
+        type
+        company {
+          name
+        }
+        job_title {
+          name
+        }
+        created_at
+        salary {
+          type
+          amount
+        }
+        overall_rating
+        sections {
+          subtitle
+          content
+        }
+      }
+      work_experiences {
+        id
+        type
+        company {
+          name
+        }
+        job_title {
+          name
+        }
+        created_at
+        sections {
+          subtitle
+          content
+        }
+        week_work_time
+        salary {
+          type
+          amount
+        }
+        recommend_to_others
+      }
+      salary_work_time_statistics {
+        job_average_salaries {
+          job_title {
+            name
+          }
+          average_salary {
+            type
+            amount
+          }
+          data_count
+        }
+      }
     }
     job_title {
       name
+      interview_experiences {
+        id
+        type
+        company {
+          name
+        }
+        job_title {
+          name
+        }
+        created_at
+        salary {
+          type
+          amount
+        }
+        overall_rating
+        sections {
+          subtitle
+          content
+        }
+      }
+      work_experiences {
+        id
+        type
+        company {
+          name
+        }
+        job_title {
+          name
+        }
+        created_at
+        sections {
+          subtitle
+          content
+        }
+        week_work_time
+        salary {
+          type
+          amount
+        }
+        recommend_to_others
+      }
+      salary_distribution {
+        bins {
+          data_count
+          range {
+            type
+            from
+            to
+          }
+        }
+      }
     }
     region
     experience_in_year
@@ -23,6 +127,7 @@ query($id:ID!) {
     }
     like_count
     liked
+    created_at
 
     ...on InterviewExperience {
       interview_time {
@@ -45,3 +150,23 @@ query($id:ID!) {
   }
 }
 `;
+
+export const createInterviewExperience = `
+mutation CreateInterviewExperience($input: CreateInterviewExperienceInput!) {
+  createInterviewExperience(input: $input) {
+    success
+    experience {
+      id
+    }
+  }
+}`;
+
+export const createWorkExperience = `
+mutation CreateWorkExperience($input: CreateWorkExperienceInput!) {
+  createWorkExperience(input: $input) {
+    success
+    experience {
+      id
+    }
+  }
+}`;

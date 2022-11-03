@@ -152,3 +152,13 @@ export const getJobTitleQuery = `
     }
   }
 `;
+
+export const changeSalaryWorkTimeStatus = `
+mutation($input:ChangeSalaryWorkTimeStatusInput!) {
+  changeSalaryWorkTimeStatus(input: $input) {
+    salary_work_time {
+      id
+    }
+  }
+}
+`;

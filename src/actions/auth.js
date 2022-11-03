@@ -1,4 +1,6 @@
+import ReactGA from 'react-ga';
 import authStatus from '../constants/authStatus';
+import { UserTracker } from '../utils/eventBasedTracking';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
@@ -22,8 +24,13 @@ const logOutAction = () => ({
 export const logout = () => (dispatch, getState, { history }) => {
   dispatch(logOutAction());
   history.push('/');
+  // reset user for Amplitude
+  UserTracker.resetUser();
 };
 
+/**
+ * Use `hooks/login/useFacebookLogin` as possible
+ */
 export const loginWithFB = FB => (dispatch, getState, { api }) => {
   if (FB) {
     return new Promise(resolve =>
@@ -44,7 +51,30 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
       return response.status;
     });
   }
-  return Promise.reject('FB should ready');
+  return Promise.reject(new Error('FB is not ready'));
+};
+
+/**
+ * Use `hooks/login/useGoogleLogin` as possible
+ */
+export const loginWithGoogle = googleAuth => (dispatch, getState, { api }) => {
+  return googleAuth
+    .signIn({
+      scope: 'profile email',
+      prompt: 'select_account',
+    })
+    .then(result => {
+      const { id_token } = result.getAuthResponse();
+      return api.auth
+        .postAuthGoogle({
+          idToken: id_token,
+        })
+        .then(({ token, user: { _id, google_id } }) => {
+          dispatch(loginWithToken(token));
+        })
+        .then(() => authStatus.CONNECTED);
+    })
+    .catch(err => authStatus.NOT_AUTHORIZED);
 };
 
 const getMeInfo = token => (dispatch, getState, { api }) =>
@@ -68,6 +98,10 @@ export const loginWithToken = token => (dispatch, getState, { api }) => {
     .then(user => {
       dispatch(setUser(user));
       dispatch(setLogin(authStatus.CONNECTED, token));
+      // identify user for Amplitude
+      UserTracker.identifyUser(user._id);
+      // identify user for Google Analytics
+      ReactGA.set({ userId: user._id });
     })
     .catch(error => {
       console.error(error);

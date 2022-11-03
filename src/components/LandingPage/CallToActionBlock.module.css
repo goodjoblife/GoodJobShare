@@ -1,0 +1,28 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    margin-bottom: 48px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #000;
+  }
+
+  .label {
+    margin-bottom: 28px;
+    font-size: 15px;
+    letter-spacing: 0.86px;
+    color: #000;
+  }
+}
+
+.inputGroup {
+  display: flex;
+  margin-bottom: 22px;
+
+  .submit {
+    margin-left: 18px;
+  }
+}

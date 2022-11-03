@@ -1,0 +1,25 @@
+.inputRow {
+  display: flex;
+
+  .inputGroup {
+    flex: 1;
+  }
+
+  .inputGroup + .inputGroup {
+    margin-left: 24px;
+  }
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+
+  .inputWrapper {
+    flex: 1;
+  }
+
+  .suffixLabel {
+    margin: 0 11px;
+  }
+}

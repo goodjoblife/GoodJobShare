@@ -1,0 +1,17 @@
+version: "2"
+services:
+  node:
+    image: goodjobshare:production
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        - RAZZLE_API_HOST=https://api.goodjob.life
+        - RAZZLE_FACEBOOK_APP_ID=1750216878594984
+        - RAZZLE_GA_ID=UA-79990667-1
+        - RAZZLE_PIXEL_ID=603414113402034
+        - RAZZLE_SENTRY_DSN=https://5cacfa2ac0934509a3e563fc0a52275f@sentry.io/1269010
+        - RAZZLE_GIT_SHA1=${CIRCLE_SHA1}
+        - RAZZLE_GTM_ID=GTM-54PH93D
+        - RAZZLE_GOOGLE_APP_ID=879657963776-nb0kdpkb5sfdf0285ov9o353dnt0l5iq.apps.googleusercontent.com
+        - RAZZLE_AMPLITUDE_API_KEY=4d69f09de855a21f8790bf0f42c47cda

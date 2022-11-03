@@ -1,0 +1,154 @@
+@value page-gutter-s, below-mobile, above-small from "common/variables.module.css";
+
+.container {
+  display: block;
+  background-color: #fff;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+  margin-bottom: 24px;
+  transition-property: background, box-shadow;
+  transition-duration: 0.3s;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: below-mobile) {
+    margin-left: calc(page-gutter-s * -1);
+    margin-right: calc(page-gutter-s * -1);
+    margin-bottom: 16px;
+  }
+}
+
+.contentWrapper {
+  padding: 16px 28px;
+
+  @media (max-width: 1024px) {
+    padding: 16px;
+  }
+}
+
+.labels {
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: above-small) {
+    flex-direction: row;
+  }
+
+  .date {
+    flex: 1;
+    color: #adadad;
+  }
+
+  > .salaryRecommendWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 12px 0;
+
+    @media (min-width: above-small) {
+      margin: 0;
+      justify-content: flex-start;
+    }
+
+    .weekWorkTime,
+    .salary,
+    .recommendToOthers {
+      display: flex;
+      align-items: center;
+      font-size: 15px;
+      color: #424242;
+    }
+
+    .salary,
+    .weekWorkTime,
+    .recommendToOthers {
+      margin-left: 35px;
+
+      svg {
+        margin-right: 7px;
+        width: 16px;
+        height: 16px;
+        fill: #adadad;
+      }
+    }
+
+    .salary.locked {
+      svg {
+        color: #ed0d5e;
+      }
+    }
+  }
+}
+
+.heading {
+  margin-bottom: 9px;
+  margin-top: 6px;
+  transition: color, 0.25s;
+}
+
+.m,
+.s {
+  &.container {
+    height: 100%;
+    position: relative;
+  }
+
+  .contentWrapper {
+    margin-bottom: 5px;
+  }
+}
+
+.m,
+.s {
+  &.container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.s {
+  &.container {
+    font-size: 0.9em;
+  }
+
+  .heading {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+}
+
+.snippetWrapper {
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: above-small) {
+    align-items: flex-end;
+    flex-direction: row;
+  }
+
+  .snippet {
+    flex: 1;
+    word-break: break-all;
+    padding-right: 1em;
+    line-height: 1.4;
+  }
+
+  .readmore {
+    font-weight: 600;
+    color: #325bbd;
+    text-decoration: underline;
+    margin-top: 8px;
+
+    @media (min-width: above-small) {
+      margin-top: 0;
+    }
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &.locked {
+      color: #ed0d5e;
+    }
+  }
+}

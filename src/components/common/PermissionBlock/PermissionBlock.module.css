@@ -49,6 +49,7 @@
 .headingIcon {
   display: inline;
   font-size: 24px;
+  margin-right: 10px;
 
   @media (max-width: 850px) {
     font-size: 16px;
@@ -57,4 +58,28 @@
 
 .heading {
   display: inline;
+}
+
+.loginBtnContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+    height: 8rem;
+    align-items: center;
+  }
+}
+
+.btn {
+  color: #fff;
+  width: 12rem;
+
+  &Google {
+    background: #df5f56;
+  }
+  &Fb {
+    background: #4267b2;
+  }
 }

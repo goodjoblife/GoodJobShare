@@ -11,5 +11,7 @@
 module.name_mapper='^common\/\(.*\)$' -> '<PROJECT_ROOT>/src/components/common/\1'
 module.name_mapper='^utils\/\(.*\)$' -> '<PROJECT_ROOT>/src/utils/\1'
 module.name_mapper='^graphql\/\(.*\)$' -> '<PROJECT_ROOT>/src/graphql/\1'
+module.name_mapper='^hooks\/\(.*\)$' -> '<PROJECT_ROOT>/src/hooks/\1'
+module.name_mapper='^contexts\/\(.*\)$' -> '<PROJECT_ROOT>/src/contexts/\1'
 
 [strict]

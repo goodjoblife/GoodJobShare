@@ -7,19 +7,24 @@ import {
   getCompanyQuery,
   getJobTitleQuery,
   getSearchJobTitleQuery,
+  changeSalaryWorkTimeStatus,
 } from 'graphql/timeAndSalary';
 
 const endpoint = '/workings';
 
 export const fetchCompanyCandidates = ({ key }) =>
-  fetchUtil(`${endpoint}/companies/search`).get({
-    query: { key },
-  });
+  fetchUtil(`${endpoint}/companies/search`)
+    .get({
+      query: { key },
+    })
+    .then(items => items.map(item => item._id.name));
 
 export const fetchJobTitleCandidates = ({ key }) =>
-  fetchUtil(`${endpoint}/jobs/search`).get({
-    query: { key },
-  });
+  fetchUtil(`${endpoint}/jobs/search`)
+    .get({
+      query: { key },
+    })
+    .then(items => items.map(item => item._id));
 
 export const fetchTimeAndSalary = ({ start, limit }) =>
   graphqlClient({
@@ -68,10 +73,9 @@ export const postWorkings = ({ body, token }) =>
   fetchUtil(endpoint).post({ body, token });
 
 const patchWorking = ({ id, status, token }) =>
-  fetchUtil(`/workings/${id}`).patch({
-    body: {
-      status,
-    },
+  graphqlClient({
+    query: changeSalaryWorkTimeStatus,
+    variables: { input: { id, status } },
     token,
   });
 

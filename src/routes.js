@@ -5,8 +5,7 @@ import LaborRightsSingle from './containers/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/SalaryWorkTime/TimeAndSalaryBoard';
 import SalaryWorkTimeSearchScreen from './containers/SalaryWorkTime/SearchScreen';
-import CompanySalaryWorkTimeScreen from './containers/Company/SalaryWorkTimeScreen';
-import JobTitleSalaryWorkTimeScreen from './containers/JobTitle/SalaryWorkTimeScreen';
+
 import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
 import CampaignTimeAndSalary from './containers/CampaignTimeAndSalary';
 import CampaignTimeAndSalaryBoard from './containers/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
@@ -20,7 +19,7 @@ import InterviewForm from './containers/ShareExperience/InterviewStepsFormContai
 import TimeSalaryForm from './containers/ShareExperience/TimeSalaryFormContainer';
 import CampaignTimeAndSalaryForm from './containers/ShareExperience/CampaignTimeAndSalaryFormContainer';
 import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
-import Me from './containers/Me';
+import Me from './components/Me';
 import About from './components/About';
 import Faq from './components/Faq';
 import Guidelines from './components/Guidelines';
@@ -28,6 +27,11 @@ import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
+import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
+import CompanyPageProvider from './components/Company/CompanyPageProvider';
+import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
+import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
+import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
 
 const routes = [
   {
@@ -80,7 +84,9 @@ const routes = [
             exact: true,
           },
           {
-            component: () => <Redirect to="/share/interview/step1" />,
+            component: ({ location: { search } }) => (
+              <Redirect to={`/share/interview/step1${search}`} />
+            ),
           },
         ],
       },
@@ -180,11 +186,6 @@ const routes = [
     component: TimeAndSalary,
     routes: [
       {
-        path: '/salary-work-times',
-        exact: true,
-        component: SalaryWorkTimeSearchScreen,
-      },
-      {
         path: '/salary-work-times/latest',
         exact: true,
         component: TimeAndSalaryBoard,
@@ -195,26 +196,52 @@ const routes = [
     ],
   },
   {
-    path: '/companies/:companyName/salary-work-times',
-    exact: true,
+    path: '/search',
     component: TimeAndSalary,
     routes: [
       {
-        path: '/companies/:companyName/salary-work-times',
+        path: '/search',
         exact: true,
-        component: CompanySalaryWorkTimeScreen,
+        component: SalaryWorkTimeSearchScreen,
+      },
+      {
+        component: TimeAndSalaryNotFound,
       },
     ],
   },
   {
-    path: '/job-titles/:jobTitle/salary-work-times',
-    exact: true,
-    component: TimeAndSalary,
+    path: '/companies',
+    component: CompanyAndJobTitlePageContainer,
     routes: [
       {
-        path: '/job-titles/:jobTitle/salary-work-times',
+        path: '/companies',
+        component: CompanyIndexProvider,
         exact: true,
-        component: JobTitleSalaryWorkTimeScreen,
+      },
+      {
+        path: '/companies/:companyName',
+        component: CompanyPageProvider,
+      },
+      {
+        component: NotFound,
+      },
+    ],
+  },
+  {
+    path: '/job-titles',
+    component: CompanyAndJobTitlePageContainer,
+    routes: [
+      {
+        path: '/job-titles',
+        component: JobTitleIndexProvider,
+        exact: true,
+      },
+      {
+        path: '/job-titles/:jobTitle',
+        component: JobTitlePageProvider,
+      },
+      {
+        component: NotFound,
       },
     ],
   },

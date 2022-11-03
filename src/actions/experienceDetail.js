@@ -1,3 +1,5 @@
+import { isGraphqlError } from 'utils/errors';
+
 import fetchingStatus from '../constants/status';
 import { tokenSelector } from '../selectors/authSelector';
 import { UiNotFoundError } from 'utils/errors';
@@ -62,47 +64,6 @@ export const submitComment = (id, comment) => (dispatch, getState, { api }) => {
     });
 };
 
-export const likeExperience = o => (dispatch, getState, { api }) => {
-  const state = getState();
-  const token = tokenSelector(state);
-
-  if (o.liked) {
-    return api.experiences
-      .deleteExperienceLikes({ id: o._id, token })
-      .then(result => {
-        if (result.success) {
-          dispatch(
-            setExperience(
-              Object.assign({}, o, {
-                liked: false,
-                like_count: o.like_count - 1,
-              }),
-            ),
-          );
-          return;
-        }
-        dispatch(setExperience(o));
-      });
-  }
-
-  return api.experiences
-    .postExperienceLikes({ id: o._id, token })
-    .then(result => {
-      if (result.success) {
-        dispatch(
-          setExperience(
-            Object.assign({}, o, {
-              liked: true,
-              like_count: o.like_count + 1,
-            }),
-          ),
-        );
-        return;
-      }
-      dispatch(setExperience(o));
-    });
-};
-
 const setReplyLiked = (replyId, liked) => ({
   type: SET_REPLY_LIKED,
   replyId,
@@ -119,18 +80,12 @@ export const likeReply = reply => (dispatch, getState, { api }) => {
     return api.experiences
       .deleteReplyLikes({ id: replyId, token })
       .then(result => {
-        if (result.success) {
-          return dispatch(setReplyLiked(replyId, false));
-        }
-        return Promise.resolve();
+        dispatch(setReplyLiked(replyId, false));
       });
   }
 
   return api.experiences.postReplyLikes({ id: replyId, token }).then(result => {
-    if (result.success) {
-      return dispatch(setReplyLiked(replyId, true));
-    }
-    return Promise.resolve();
+    dispatch(setReplyLiked(replyId, true));
   });
 };
 
@@ -155,17 +110,20 @@ export const fetchExperience = id => (dispatch, getState, { api }) => {
         });
       }
 
-      const { id, ...rest } = experience;
-      dispatch(setExperience({ _id: id, ...rest }));
+      dispatch(setExperience(experience));
     })
     .catch(error => {
-      dispatch({
-        type: SET_EXPERIENCE,
-        experienceStatus: fetchingStatus.ERROR,
-        experienceError: error,
-        experience: null,
-      });
-      throw error;
+      if (isGraphqlError(error)) {
+        dispatch({
+          type: SET_EXPERIENCE,
+          experienceStatus: fetchingStatus.ERROR,
+          experienceError: error,
+          experience: null,
+        });
+      } else {
+        // Unexpected error
+        throw error;
+      }
     });
 };
 

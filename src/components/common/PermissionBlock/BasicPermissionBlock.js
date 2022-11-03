@@ -6,32 +6,27 @@ import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 import { compose, withState, withHandlers } from 'recompose';
 
 import P from 'common/base/P';
-import { Heading } from 'common/base';
-import CallToLoginShareButton from '../../../containers/PermissionBlock/CallToLoginShareButtonContainer';
-import getScale from '../../../utils/numberUtils';
-import styles from './PermissionBlock.module.css';
 import Modal from 'common/Modal';
+import { Heading } from 'common/base';
+import CallToLoginShareButton from './CallToLoginShareButton';
+import styles from './PermissionBlock.module.css';
 
 class BasicPermissionBlock extends React.Component {
   static propTypes = {
-    to: PropTypes.string,
+    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     rootClassName: PropTypes.string,
     simple: PropTypes.bool,
     experienceCount: PropTypes.number.isRequired,
     timeAndSalaryCount: PropTypes.number.isRequired,
-    laborRightsCount: PropTypes.number.isRequired,
     hasFetchedExperienceCount: PropTypes.bool.isRequired,
     hasFetchedTimeAndSalaryCount: PropTypes.bool.isRequired,
-    hasFetchedLaborRightsCount: PropTypes.bool.isRequired,
     queryExperienceCount: PropTypes.func.isRequired,
     queryTimeAndSalaryCount: PropTypes.func.isRequired,
-    queryLaborRightsCount: PropTypes.func.isRequired,
     isModalOpen: PropTypes.bool.isRequired,
     toggleModal: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
-    to: '/share/time-and-salary',
     rootClassName: '',
     simple: false,
   };
@@ -43,23 +38,32 @@ class BasicPermissionBlock extends React.Component {
     if (this.props.hasFetchedTimeAndSalaryCount === false) {
       this.props.queryTimeAndSalaryCount();
     }
-    if (this.props.hasFetchedLaborRightsCount === false) {
-      this.props.queryLaborRightsCount();
-    }
   }
 
-  render() {
-    const {
-      simple,
-      to,
-      rootClassName,
-      experienceCount,
-      timeAndSalaryCount,
-      laborRightsCount,
-    } = this.props;
+  renderModalContent = () => {
+    const { experienceCount, timeAndSalaryCount } = this.props;
 
-    const experienceScale = getScale(experienceCount);
-    const timeAndSalaryScale = getScale(timeAndSalaryCount);
+    return (
+      <React.Fragment>
+        <div className={styles.headingContainer}>
+          <FontAwesomeIcon icon={faLock} className={styles.headingIcon} />
+          <Heading size="sl" Tag="h3">
+            留下一筆資料，馬上解鎖全站資料
+          </Heading>
+        </div>
+        <P size="l" className={styles.ctaText}>
+          解鎖全站共{' '}
+          <strong>
+            {timeAndSalaryCount + experienceCount} 筆薪資、面試資料
+          </strong>
+          。若你已經留過資料，登入即可查看全文！
+        </P>
+      </React.Fragment>
+    );
+  };
+
+  render() {
+    const { simple, to, rootClassName } = this.props;
 
     if (simple) {
       const { isModalOpen, toggleModal } = this.props;
@@ -76,30 +80,11 @@ class BasicPermissionBlock extends React.Component {
                 close={toggleModal}
                 closableOnClickOutside
               >
-                <div className={styles.headingContainer}>
-                  <Heading size="sl" Tag="h3">
-                    你暫時沒有查看完整資訊的權限
-                  </Heading>
-                </div>
-                <P size="l" className={styles.ctaText}>
-                  只需幾分鐘，
-                  <strong>分享你的職場資訊</strong>
-                  ，不僅幫助其他人不再踩雷，更能
-                  <strong>{`查看全站超過 ${timeAndSalaryScale} 筆`}</strong>
-                  薪資工時資訊、
-                  <strong>{`${experienceScale}+ 篇`}</strong>
-                  面試及工作經驗分享，以及
-                  <strong>{` ${laborRightsCount} 篇`}</strong>
-                  勞動權益懶人包哦！
-                </P>
-                <br />
-                <P size="l">
-                  <strong>若你已經分享過資訊，登入即可查看全文！</strong>
-                </P>
+                {this.renderModalContent()}
                 <div className={styles.ctaButtonContainer}>
                   <CallToLoginShareButton
                     to={to}
-                    notLoginText="立即登入並分享"
+                    onAuthenticatedClick={toggleModal}
                     isLoginText="立即分享"
                   />
                 </div>
@@ -113,33 +98,9 @@ class BasicPermissionBlock extends React.Component {
     return (
       <div className={cn(styles.permissionBlock, rootClassName)}>
         <div className={styles.container}>
-          <div className={styles.headingContainer}>
-            <FontAwesomeIcon icon={faLock} className={styles.headingIcon} />
-            <Heading size="sl" Tag="h3">
-              你暫時沒有查看完整資訊的權限
-            </Heading>
-          </div>
-          <P size="l" className={styles.ctaText}>
-            只需幾分鐘，
-            <strong>分享你的職場資訊</strong>
-            ，不僅幫助其他人不再踩雷，更能
-            <strong>{`查看全站超過 ${timeAndSalaryScale} 筆`}</strong>
-            薪資工時資訊、
-            <strong>{`${experienceScale}+ 篇`}</strong>
-            面試及工作經驗分享，以及
-            <strong>{` ${laborRightsCount} 篇`}</strong>
-            勞動權益懶人包哦！
-          </P>
-          <br />
-          <P size="l">
-            <strong>若你已經分享過資訊，登入即可查看全文！</strong>
-          </P>
+          {this.renderModalContent()}
           <div className={styles.ctaButtonContainer}>
-            <CallToLoginShareButton
-              to={to}
-              notLoginText="立即登入並分享"
-              isLoginText="立即分享"
-            />
+            <CallToLoginShareButton to={to} isLoginText="立即分享" />
           </div>
         </div>
       </div>

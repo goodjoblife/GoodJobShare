@@ -1,3 +1,5 @@
+import { isGraphqlError } from 'utils/errors';
+
 import statusConstant from '../constants/status';
 
 export const SET_SEARCH_BY = 'SET_SEARCH_BY';
@@ -65,8 +67,12 @@ export const fetchExperiences = (
       dispatch(setSortAndExperiences(payload));
     })
     .catch(error => {
-      dispatch(setLoadingStatus(statusConstant.ERROR, error));
-      throw error;
+      if (isGraphqlError(error)) {
+        dispatch(setLoadingStatus(statusConstant.ERROR, error));
+      } else {
+        // Unexpected error
+        throw error;
+      }
     });
 };
 

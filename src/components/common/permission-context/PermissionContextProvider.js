@@ -5,15 +5,12 @@ class PermissionContextProvider extends Component {
   constructor(props) {
     super(props);
 
-    this.setCanView = state => {
-      this.setState(state);
-    };
+    this.setPermissionState = state => this.setState(state);
 
     this.state = {
-      canViewLaborRightsSingle: true,
-      canViewExperirenceDetail: true,
-      canViewTimeAndSalary: true,
-      setCanView: this.setCanView,
+      canView: true,
+      permissionFetched: false,
+      setPermissionState: this.setPermissionState,
     };
   }
 

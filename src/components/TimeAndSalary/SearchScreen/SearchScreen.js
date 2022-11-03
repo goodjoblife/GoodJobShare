@@ -2,17 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { compose, setStatic } from 'recompose';
-import R from 'ramda';
 import qs from 'qs';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
-import {
-  querySelector,
-  pathSelector,
-  pathnameSelector,
-  searchSelector,
-} from 'common/routing/selectors';
+import { querySelector, pathSelector } from 'common/routing/selectors';
 import Pagination from 'common/Pagination';
 import {
   queryKeyword,
@@ -24,31 +18,18 @@ import {
   searchKeywordSelector,
   pageSelector,
 } from '../common/selectors';
-import {
-  validatePage,
-  validateSearchCriteria,
-  validateSearchKeyword,
-} from '../common/validators';
-import { searchOptions } from '../SearchBar';
+import { pageType } from '../../../constants/companyJobTitle';
+import { validatePage, validateSearchKeyword } from '../common/validators';
 import WorkingHourBlock from './WorkingHourBlock';
-import renderHelmet from './helmet';
+import Helmet from './Helmet';
 import styles from './SearchScreen.module.css';
-
-const firstDataNameSelector = props => props.data.get(0).get('name');
-
-const searchCriteriaText = searchBy =>
-  R.compose(
-    R.prop('label'),
-    R.head,
-    R.filter(R.propEq('value', searchBy)),
-  )(searchOptions);
 
 function getTitle(keyword) {
   if (keyword) {
     if (keyword.length < keywordMinLength) {
       return '請輸入更長的搜尋關鍵字';
     } else {
-      return `查詢「${keyword}」薪水的結果`;
+      return `查詢「${keyword}」的結果`;
     }
   } else {
     return '請輸入搜尋條件！';
@@ -71,10 +52,9 @@ class SearchScreen extends Component {
   };
 
   componentDidMount() {
-    const searchBy = validateSearchCriteria(searchCriteriaSelector(this.props));
     const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
     this.props
-      .queryKeyword({ searchBy, keyword })
+      .queryKeyword({ keyword })
       .then(() => this.redirectOnSingleResult());
   }
 
@@ -85,50 +65,32 @@ class SearchScreen extends Component {
         searchCriteriaSelector(this.props) ||
       searchKeywordSelector(prevProps) !== searchKeywordSelector(this.props)
     ) {
-      const searchBy = validateSearchCriteria(
-        searchCriteriaSelector(this.props),
-      );
       const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
       this.props
-        .queryKeyword({ searchBy, keyword })
+        .queryKeyword({ keyword })
         .then(() => this.redirectOnSingleResult());
     }
   }
 
   redirectOnSingleResult() {
     if (this.props.data.size === 1) {
-      const searchBy = this.props.searchBy;
-      if (searchBy === 'company') {
-        const companyName = firstDataNameSelector(this.props);
-        this.props.history.replace(
-          `/companies/${encodeURIComponent(companyName)}/salary-work-times${
-            this.props.location.search
-          }`,
-        );
-      } else if (searchBy === 'job_title') {
-        const jobTitle = firstDataNameSelector(this.props);
-        this.props.history.replace(
-          `/job-titles/${encodeURIComponent(jobTitle)}/salary-work-times${
-            this.props.location.search
-          }`,
-        );
-      }
+      const firstData = this.props.data.get(0).toJS();
+      this.props.history.replace(this.getLinkForData(firstData));
     }
   }
 
   getLinkForData(data) {
-    const searchBy = searchCriteriaSelector(this.props);
-    if (searchBy === 'company') {
+    if (data.pageType === pageType.COMPANY) {
       return `/companies/${encodeURIComponent(
         data.name,
-      )}/salary-work-times${qs.stringify(
+      )}/overview${qs.stringify(
         { ...querySelector(this.props), p: 1 },
         { addQueryPrefix: true },
       )}`;
-    } else if (searchBy === 'job_title') {
+    } else if (data.pageType === pageType.JOB_TITLE) {
       return `/job-titles/${encodeURIComponent(
         data.name,
-      )}/salary-work-times${qs.stringify(
+      )}/overview${qs.stringify(
         { ...querySelector(this.props), p: 1 },
         { addQueryPrefix: true },
       )}`;
@@ -138,8 +100,6 @@ class SearchScreen extends Component {
 
   render() {
     const { status } = this.props;
-    const pathname = pathnameSelector(this.props);
-    const search = searchSelector(this.props);
     const page = validatePage(pageSelector(this.props));
     const pageSize = 10;
     const totalNum = this.props.data.size;
@@ -155,21 +115,22 @@ class SearchScreen extends Component {
 
     return (
       <section className={styles.searchResult}>
-        {renderHelmet({ title, pathname, search, page, keyword })}
+        <Helmet keyword={keyword} page={page} />
         <h2 className={styles.heading}>{title}</h2>
         {isFetching(status) && <Loading size="s" />}
         {isFetched(status) && raw.length === 0 && (
           <P size="l" bold className={styles.searchNoResult}>
-            尚未有
-            {searchCriteriaText(
-              validateSearchCriteria(searchCriteriaSelector(this.props)),
-            )}
-            「{keyword}
-            」的薪時資訊
+            尚未有 「{keyword} 」的資料
           </P>
         )}
         {raw.map((o, i) => (
-          <WorkingHourBlock key={i} data={o} to={this.getLinkForData(o)} />
+          <WorkingHourBlock
+            key={i}
+            pageType={o.pageType}
+            name={o.name}
+            to={this.getLinkForData(o)}
+            dataCount={o.salary_work_time_statistics.count}
+          />
         ))}
         <Pagination
           totalCount={totalNum}
@@ -189,10 +150,9 @@ class SearchScreen extends Component {
 }
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const searchBy = validateSearchCriteria(searchCriteriaSelector(props));
   const keyword = validateSearchKeyword(searchKeywordSelector(props));
 
-  return dispatch(queryKeyword({ searchBy, keyword }));
+  return dispatch(queryKeyword({ keyword }));
 });
 
 const hoc = compose(ssr);

@@ -5,6 +5,7 @@ import fetchUtil from 'utils/fetchUtil';
 import graphqlClient from 'utils/graphqlClient';
 import { getExperienceQuery } from 'graphql/experience';
 import { getPopularExperiencesQuery } from 'graphql/popularExperience';
+import { deleteReplyLike, createReplyLike } from 'graphql/reply';
 
 const endpoint = '/experiences';
 
@@ -74,10 +75,18 @@ export const postExperienceLikes = ({ id, token }) =>
   fetchUtil(`/experiences/${id}/likes`).post({ token });
 
 export const deleteReplyLikes = ({ id, token }) =>
-  fetchUtil(`/replies/${id}/likes`).delete({ token });
+  graphqlClient({
+    query: deleteReplyLike,
+    variables: { input: { reply_id: id } },
+    token,
+  });
 
 export const postReplyLikes = ({ id, token }) =>
-  fetchUtil(`/replies/${id}/likes`).post({ token });
+  graphqlClient({
+    query: createReplyLike,
+    variables: { input: { reply_id: id } },
+    token,
+  });
 
 const patchReply = ({ id, status, token }) =>
   fetchUtil(`/replies/${id}`).patch({

@@ -1,13 +1,19 @@
-import React, { Component, Fragment } from 'react';
+import React, {
+  Fragment,
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
-import Helmet from 'react-helmet';
-import ReactPixel from 'react-facebook-pixel';
-import { Element as ScrollElement } from 'react-scroll';
-import { compose, setStatic, withState, withHandlers } from 'recompose';
+import { Element as ScrollElement, scroller } from 'react-scroll';
+import { compose, setStatic } from 'recompose';
 import cn from 'classnames';
-
+import { useParams } from 'react-router-dom';
+import { useWindowSize } from 'react-use';
+import { StickyContainer, Sticky } from 'react-sticky';
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
@@ -15,222 +21,220 @@ import NotFound from 'common/NotFound';
 import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
+import GoogleAdUnit from 'common/GoogleAdUnit';
+import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
-
+import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
+import { paramsSelector } from 'common/routing/selectors';
+import { useLogin } from 'hooks/login';
+import useTrace from './hooks/useTrace';
 import Article from './Article';
-import MessageBoard from '../../containers/ExperienceDetail/MessageBoard';
-import BackToList from './BackToList';
+import MessageBoard from './MessageBoard';
+import Seo from './Seo';
 import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
 import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
 import ExperienceHeading from './Heading';
 import ReportInspectModal from './ReactionZone/ReportInspectModal';
 import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
-
+import MoreExperiencesBlock from './MoreExperiencesBlock';
+import ChartsZone from './ChartsZone';
 import { isFetching, isFetched, isError } from '../../constants/status';
 import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
-
-import { formatTitle, formatCanonicalPath } from '../../utils/helmetHelper';
-import { SITE_NAME } from '../../constants/helmetData';
-import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
-
-import authStatus from '../../constants/authStatus';
 import { COMMENT_ZONE } from '../../constants/formElements';
-
-import { paramsSelector } from 'common/routing/selectors';
-
-import LikeZone from '../../containers/ExperienceDetail/LikeZone';
+import breakpoints from '../../constants/breakpoints';
+import {
+  pageType as PAGE_TYPE,
+  tabType as TAB_TYPE,
+} from '../../constants/companyJobTitle';
+import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
+
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
   REPORT_API_ERROR: 'REPORT_API_ERROR',
   REPORT_SUCCESS: 'REPORT_SUCCESS',
 };
 
-function getPosition(obj) {
-  let top = 0;
-  let parent = obj;
-  while (parent) {
-    top += parent.offsetTop;
-    parent = parent.offsetParent;
-  }
-  return top - 54; // deduct header
-}
-
 const experienceIdSelector = R.compose(
   params => params.id,
   paramsSelector,
 );
 
-class ExperienceDetail extends Component {
-  static propTypes = {
-    experienceDetail: ImmutablePropTypes.map.isRequired,
-    replies: ImmutablePropTypes.list.isRequired,
-    repliesStatus: PropTypes.string,
-    fetchExperience: PropTypes.func.isRequired,
-    fetchReplies: PropTypes.func.isRequired,
-    fetchPermission: PropTypes.func.isRequired,
-    likeExperience: PropTypes.func.isRequired,
-    likeReply: PropTypes.func.isRequired,
-    submitComment: PropTypes.func.isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.object.isRequired,
-    }),
-    location: PropTypes.shape({
-      state: PropTypes.shape({
-        replyId: PropTypes.string,
-        backable: PropTypes.bool,
-      }),
-    }),
-    authStatus: PropTypes.string,
-    canViewExperirenceDetail: PropTypes.bool.isRequired,
-    isInspectReportOpen: PropTypes.bool.isRequired,
-    toggleReportInspectModal: PropTypes.func.isRequired,
-  };
+const experienceTypeToTabType = {
+  work: TAB_TYPE.WORK_EXPERIENCE,
+  interview: TAB_TYPE.INTERVIEW_EXPERIENCE,
+};
 
-  constructor(props) {
-    super(props);
-    this.goTo = true;
-  }
+const pageTypeToNameSelector = {
+  [PAGE_TYPE.COMPANY]: R.path(['company', 'name']),
+  [PAGE_TYPE.JOB_TITLE]: R.path(['job_title', 'name']),
+};
 
-  state = {
+const ExperienceDetail = ({
+  submitComment,
+  likeReply,
+
+  fetchExperience,
+  fetchReplies,
+
+  // from withPermission
+  canView,
+  fetchPermission,
+  permissionFetched,
+
+  ...props
+}) => {
+  const params = useParams();
+  const experienceId = params.id;
+  const { width } = useWindowSize();
+
+  useEffect(() => {
+    fetchExperience(experienceId);
+    fetchReplies(experienceId);
+  }, [experienceId, fetchExperience, fetchReplies]);
+
+  const [isLoggedIn] = useLogin();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchReplies(experienceId);
+    }
+  }, [isLoggedIn, experienceId, fetchExperience, fetchReplies]);
+
+  useEffect(() => {
+    fetchPermission();
+  }, [experienceId, fetchPermission]);
+
+  const [{ isModalOpen, modalType, modalPayload = {} }, setModal] = useState({
     isModalOpen: false,
     modalType: '',
-    ModalClosableOnClickOutside: true,
-  };
+  });
 
-  componentDidMount() {
-    const experienceId = experienceIdSelector(this.props);
+  const handleIsModalOpen = useCallback(
+    (isModalOpen, modalType, modalPayload = {}) => {
+      setModal({
+        isModalOpen,
+        modalType,
+        modalPayload,
+      });
+    },
+    [],
+  );
 
-    this.props.fetchExperience(experienceId);
-    this.props.fetchReplies(experienceId);
-    this.props.fetchPermission();
+  const [reportInspectModalIsOpen, setReportInspectModalIsOpen] = useState(
+    false,
+  );
 
-    // send Facebook Pixel 'ViewContent' event
-    ReactPixel.track('ViewContent', {
-      content_ids: [experienceId],
-      content_category: PIXEL_CONTENT_CATEGORY.VIEW_EXPERIENCE,
-    });
-  }
+  const [closableOnClickOutside, setModalClosableOnClickOutside] = useState(
+    true,
+  );
 
-  componentDidUpdate(prevProps) {
-    const prevExperienceId = experienceIdSelector(prevProps);
-    const experienceId = experienceIdSelector(this.props);
-    // if params changes due to route, we should refetch target experience
-    if (prevExperienceId !== experienceId) {
-      this.props.fetchExperience(experienceId);
-      this.props.fetchReplies(experienceId);
-      this.props.fetchPermission();
-    }
+  useTrace(experienceId);
 
-    if (
-      prevProps.authStatus !== this.props.authStatus &&
-      this.props.authStatus === authStatus.CONNECTED
-    ) {
-      this.props.fetchExperience(experienceId);
-      this.props.fetchReplies(experienceId);
-    }
+  const pageType = R.pathOr(
+    PAGE_TYPE.COMPANY,
+    ['location', 'state', 'pageType'],
+    props,
+  );
+  const data = props.experienceDetail.toJS();
+  const { experience, experienceStatus, experienceError } = data;
+  const replies = props.replies.toJS();
+  const repliesStatus = props.repliesStatus;
 
-    if (
-      window &&
-      this.goTo &&
-      this.props.location.state &&
-      this.props.location.state.replyId
-    ) {
-      const id = `reply-${this.props.location.state.replyId}`;
-      if (document.getElementById(id)) {
-        window.scrollTo(0, getPosition(document.getElementById(id)));
-        this.goTo = false;
-      }
-    }
-
-    // send Facebook Pixel 'ViewContent' event if goto reading another experience
-    if (prevExperienceId !== experienceId) {
-      ReactPixel.track('ViewContent', {
-        content_ids: [experienceId],
-        content_category: PIXEL_CONTENT_CATEGORY.VIEW_EXPERIENCE,
+  // send event to Amplitude
+  const experienceDataId = useMemo(() => (experience ? experience.id : null), [
+    experience,
+  ]);
+  useEffect(() => {
+    if (experience && permissionFetched && experienceDataId === experienceId) {
+      const contentLength = experience.sections
+        ? experience.sections.reduce((accu, curr) => {
+            const subTitleLength = curr.subtitle ? curr.subtitle.length : 0;
+            const contentLength = curr.content ? curr.content.length : 0;
+            return accu + subTitleLength + contentLength;
+          }, 0)
+        : 0;
+      ViewArticleDetailTracker.sendEvent({
+        id: experience.id,
+        type: experience.type,
+        contentLength,
+        jobTitle: experience.job_title.name,
+        company: experience.company.name,
+        hasPermission: canView,
       });
     }
-  }
+  }, [experienceDataId, permissionFetched, canView]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  submitComment = comment => {
-    const experienceId = experienceIdSelector(this.props);
-    this.props.submitComment(experienceId, comment);
-  };
+  const scrollToCommentZone = useCallback(() => {
+    scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
+  }, []);
 
-  handleIsModalOpen = (isModalOpen, modalType, modalPayload = {}) =>
-    this.setState({
-      isModalOpen,
-      modalType,
-      modalPayload,
-    });
+  const renderModalChildren = useCallback(
+    modalType => {
+      switch (modalType) {
+        case MODAL_TYPE.REPORT_DETAIL:
+          return (
+            <ReportFormContainer
+              close={() => handleIsModalOpen(false)}
+              id={experienceId}
+              onApiError={pload => {
+                setModalClosableOnClickOutside(false);
+                handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload);
+              }}
+              onSuccess={() => {
+                setModalClosableOnClickOutside(true);
+                handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS);
+              }}
+            />
+          );
+        case MODAL_TYPE.REPORT_API_ERROR:
+          return (
+            <ApiErrorFeedback
+              buttonClick={() => {
+                setModalClosableOnClickOutside(false);
+                handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
+              }}
+              message={modalPayload.message}
+            />
+          );
+        case MODAL_TYPE.REPORT_SUCCESS:
+          return (
+            <ReportSuccessFeedback
+              buttonClick={() => handleIsModalOpen(false)}
+            />
+          );
+        default:
+          return null;
+      }
+    },
+    [experienceId, handleIsModalOpen, modalPayload.message],
+  );
 
-  setModalClosableOnClickOutside = closableOnClickOutside => {
-    this.setState({
-      closableOnClickOutside,
-    });
-  };
-
-  renderModalChildren = modalType => {
-    const { modalPayload } = this.state;
-
-    switch (modalType) {
-      case MODAL_TYPE.REPORT_DETAIL:
-        return (
-          <ReportFormContainer
-            close={() => this.handleIsModalOpen(false)}
-            id={experienceIdSelector(this.props)}
-            onApiError={pload => {
-              this.setModalClosableOnClickOutside(false);
-              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload);
-            }}
-            onSuccess={() => {
-              this.setModalClosableOnClickOutside(true);
-              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS);
-            }}
-          />
-        );
-      case MODAL_TYPE.REPORT_API_ERROR:
-        return (
-          <ApiErrorFeedback
-            buttonClick={() => {
-              this.setModalClosableOnClickOutside(false);
-              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
-            }}
-            message={modalPayload.message}
-          />
-        );
-      case MODAL_TYPE.REPORT_SUCCESS:
-        return (
-          <ReportSuccessFeedback
-            buttonClick={() => this.handleIsModalOpen(false)}
-          />
-        );
-      default:
-        return null;
-    }
-  };
-
-  renderReportZone = () => {
-    const { toggleReportInspectModal } = this.props;
+  const reportZone = useMemo(() => {
     return (
       <React.Fragment>
         <div className={styles.functionButtons}>
           <ReportDetail
             label="檢舉"
             onClick={() => {
-              this.setModalClosableOnClickOutside(false);
-              this.handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
+              setModalClosableOnClickOutside(false);
+              handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
             }}
-            className={cn(styles.button, ReactionZoneStyles.button)}
+            className={cn(
+              ReactionZoneStyles.reportButton,
+              ReactionZoneStyles.button,
+            )}
           />
           <PopoverToggle
-            className={cn(styles.button, ReactionZoneStyles.moreButton)}
+            className={ReactionZoneStyles.moreButton}
             popoverClassName={ReactionZoneStyles.popover}
             popoverContent={
               <ReactionZoneOtherOptions
-                toggleReportInspectModal={toggleReportInspectModal}
+                toggleReportInspectModal={() => {
+                  setReportInspectModalIsOpen(true);
+                }}
               />
             }
           >
@@ -241,148 +245,122 @@ class ExperienceDetail extends Component {
         </div>
       </React.Fragment>
     );
-  };
+  }, [handleIsModalOpen]);
 
-  renderHelmet = () => {
-    const data = this.props.experienceDetail.toJS();
-    const { experience, experienceStatus } = data;
-
-    if (isFetched(experienceStatus)) {
-      const id = experience._id;
-      const title = experience.title;
-      const company = experience.company.name;
-      const jobTitle = experience.job_title.name;
-      const type = experience.type;
-      const subtitle = experience.sections[0].subtitle
-        ? experience.sections[0].subtitle.replace(/(\r\n|\n|\r)/gm, ' ')
-        : '';
-      const content = experience.sections[0].content.replace(
-        /(\r\n|\n|\r)/gm,
-        ' ',
-      );
-      const mapping = {
-        interview: '面試經驗分享',
-        work: '工作經驗分享',
-        intern: '實習經驗分享',
-      };
-      const description = `${company} ${jobTitle} 的${mapping[type]}。 ${subtitle}：${content}`;
-      return (
-        <Helmet>
-          <title itemProp="name" lang="zh-TW">
-            {title}
-          </title>
-          <meta name="description" content={description} />
-          <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
-          <meta property="og:description" content={description} />
-          <meta
-            property="og:url"
-            content={formatCanonicalPath(`/experiences/${id}`)}
-          />
-          <link
-            rel="canonical"
-            href={formatCanonicalPath(`/experiences/${id}`)}
-          />
-        </Helmet>
-      );
+  if (isError(experienceStatus)) {
+    if (isUiNotFoundError(experienceError)) {
+      return <NotFound />;
     }
     return null;
-  };
+  }
 
-  render() {
-    const {
-      likeExperience,
-      likeReply,
-      canViewExperirenceDetail,
-      isInspectReportOpen,
-      toggleReportInspectModal,
-    } = this.props;
-    const id = experienceIdSelector(this.props);
-
-    const {
-      isModalOpen,
-      modalType,
-      modalPayload,
-      closableOnClickOutside,
-    } = this.state;
-
-    const backable = R.pathOr(
-      false,
-      ['location', 'state', 'backable'],
-      this.props,
-    );
-    const data = this.props.experienceDetail.toJS();
-
-    const { experience, experienceStatus, experienceError } = data;
-    const replies = this.props.replies.toJS();
-    const repliesStatus = this.props.repliesStatus;
-
-    if (isError(experienceStatus)) {
-      if (isUiNotFoundError(experienceError)) {
-        return <NotFound />;
-      }
-      return null;
-    }
-
-    return (
-      <main>
-        {this.renderHelmet()}
-        <Section bg="white" paddingBottom className={styles.section}>
-          <Wrapper size="m">
-            {/* 文章區塊  */}
-            {!isFetched(experienceStatus) ? (
-              <Loader />
-            ) : (
-              <Fragment>
-                <div className={styles.headingBlock}>
-                  <div>
-                    <BackToList backable={backable} className={styles.back} />
+  return (
+    <main>
+      <Seo experienceState={data} />
+      <Section bg="white" paddingBottom className={styles.section}>
+        <Wrapper size="m">
+          <StickyContainer className={styles.container}>
+            <div className={styles.leftContainer}>
+              {/* 文章區塊  */}
+              {!isFetched(experienceStatus) ? (
+                <Loader />
+              ) : (
+                <Fragment>
+                  <div className={styles.breadCrumb}>
+                    <BreadCrumb
+                      data={generateBreadCrumbData({
+                        pageType,
+                        pageName: pageTypeToNameSelector[pageType](experience),
+                        tabType: experienceTypeToTabType[experience.type],
+                        experience,
+                      })}
+                    />
                   </div>
                   <ExperienceHeading experience={experience} />
-                </div>
-                {this.renderReportZone()}
-                <Article
-                  experience={experience}
-                  hideContent={!canViewExperirenceDetail}
-                />
-              </Fragment>
-            )}
-            <ReportInspectModal
-              id={id}
-              isOpen={isInspectReportOpen}
-              toggleReportInspectModal={toggleReportInspectModal}
+                  {reportZone}
+                  <Article
+                    experience={experience}
+                    hideContent={!canView}
+                    onClickMsgButton={scrollToCommentZone}
+                  />
+                </Fragment>
+              )}
+            </div>
+            {width > breakpoints.md ? (
+              <div className={styles.sideAds}>
+                <Sticky>
+                  {({ style }) => (
+                    <div style={style}>
+                      <GoogleAdUnit
+                        sizes={[[160, 600]]}
+                        adUnit="goodjob_pc_article_sidebar"
+                      />
+                    </div>
+                  )}
+                </Sticky>
+              </div>
+            ) : null}
+          </StickyContainer>
+        </Wrapper>
+        {isFetched(experienceStatus) && (
+          <React.Fragment>
+            <Wrapper size="m">
+              <MoreExperiencesBlock experience={experience} />
+            </Wrapper>
+            <Wrapper size="l">
+              <ChartsZone experience={experience} />
+            </Wrapper>
+          </React.Fragment>
+        )}
+        <Wrapper size="s">
+          <ScrollElement name={COMMENT_ZONE} />
+          {isFetching(repliesStatus) ? (
+            <Loader size="s" />
+          ) : (
+            <MessageBoard
+              replies={replies}
+              likeReply={likeReply}
+              submitComment={comment => {
+                submitComment(experienceId, comment);
+              }}
             />
-            {isFetched(experienceStatus) && (
-              <LikeZone
-                experience={experience}
-                likeExperience={likeExperience}
-              />
-            )}
-          </Wrapper>
-          <Wrapper size="s">
-            <ScrollElement name={COMMENT_ZONE} />
-            {isFetching(repliesStatus) ? (
-              <Loader size="s" />
-            ) : (
-              <MessageBoard
-                replies={replies}
-                likeReply={likeReply}
-                submitComment={this.submitComment}
-              />
-            )}
-          </Wrapper>
-        </Section>
-        <Modal
-          isOpen={isModalOpen}
-          close={() => this.handleIsModalOpen(false)}
-          hasClose={false}
-          closableOnClickOutside={closableOnClickOutside}
-        >
-          {this.renderModalChildren(modalType, modalPayload)}
-        </Modal>
-      </main>
-    );
-  }
-}
+          )}
+        </Wrapper>
+      </Section>
+      <Modal
+        isOpen={isModalOpen}
+        close={() => handleIsModalOpen(false)}
+        closableOnClickOutside={closableOnClickOutside}
+        hasClose
+      >
+        {renderModalChildren(modalType, modalPayload)}
+      </Modal>
+      <ReportInspectModal
+        experienceId={experienceId}
+        isOpen={reportInspectModalIsOpen}
+        setIsOpen={setReportInspectModalIsOpen}
+      />
+    </main>
+  );
+};
+
+ExperienceDetail.propTypes = {
+  experienceDetail: ImmutablePropTypes.map.isRequired,
+  replies: ImmutablePropTypes.list.isRequired,
+  repliesStatus: PropTypes.string,
+  fetchExperience: PropTypes.func.isRequired,
+  fetchReplies: PropTypes.func.isRequired,
+  fetchPermission: PropTypes.func.isRequired,
+  likeReply: PropTypes.func.isRequired,
+  submitComment: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      replyId: PropTypes.string,
+      pageType: PropTypes.string,
+    }),
+  }),
+  canView: PropTypes.bool.isRequired,
+};
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   const experienceId = experienceIdSelector(props);
@@ -392,15 +370,6 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
 const hoc = compose(
   ssr,
   withPermission,
-  withState('isInspectReportOpen', 'setIsInspectReportOpen', false),
-  withHandlers({
-    toggleReportInspectModal: ({
-      isInspectReportOpen,
-      setIsInspectReportOpen,
-    }) => () => {
-      setIsInspectReportOpen(!isInspectReportOpen);
-    },
-  }),
 );
 
 export default hoc(ExperienceDetail);

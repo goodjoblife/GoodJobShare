@@ -8,15 +8,20 @@ import experienceDetail from './experienceDetail';
 import experienceSearch from './experienceSearch';
 import experiences from './experiences';
 import laborRights from './laborRights';
-import me from './me';
 import timeAndSalary from './timeAndSalary';
 import timeAndSalaryBoard from './timeAndSalaryBoard';
 import timeAndSalarySearch from './timeAndSalarySearch';
 import timeAndSalaryCompany from './timeAndSalaryCompany';
 import timeAndSalaryJobTitle from './timeAndSalaryJobTitle';
+import popularCompanyAverageSalary from './popularCompanyAverageSalary';
+import popularJobTitleSalaryDistribution from './popularJobTitleSalaryDistribution';
 import popularExperiences from './popularExperiences';
 import campaignInfo from './campaignInfo';
 import campaignTimeAndSalaryBoard from './campaignTimeAndSalaryBoard';
+import company from './company';
+import companyIndex from './companyIndex';
+import jobTitle from './jobTitle';
+import jobTitleIndex from './jobTitleIndex';
 import { PERSIST_KEY } from '../config';
 
 const persistConfig = {
@@ -32,15 +37,20 @@ const rootReducer = combineReducers({
   experienceDetail,
   experiences,
   laborRights,
-  me,
   timeAndSalary,
   timeAndSalaryBoard,
   timeAndSalarySearch,
   timeAndSalaryCompany,
   timeAndSalaryJobTitle,
+  popularCompanyAverageSalary,
+  popularJobTitleSalaryDistribution,
   popularExperiences,
   campaignInfo,
   campaignTimeAndSalaryBoard,
+  company,
+  companyIndex,
+  jobTitle,
+  jobTitleIndex,
 });
 
 export default persistReducer(persistConfig, rootReducer);

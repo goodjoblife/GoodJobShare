@@ -4,7 +4,9 @@
         "paths": {
             "common/*": ["src/components/common/*"],
             "utils/*": ["src/utils/*"],
-            "graphql": ["src/graphql/*"]
+            "graphql/*": ["src/graphql/*"],
+            "hooks/*": ["src/hooks/*"],
+            "contexts/*": ["src/contexts/*"]
         }
     },
     "exclude": ["node_modules", "dist"]
