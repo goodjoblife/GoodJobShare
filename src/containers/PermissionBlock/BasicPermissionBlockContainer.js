@@ -5,11 +5,13 @@ import BasicPermissionBlock from '../../components/common/PermissionBlock/BasicP
 import { queryTimeAndSalaryCountIfUnfetched } from '../../actions/timeAndSalary';
 import { queryExperienceCountIfUnfetched } from '../../actions/experiences';
 import {
-  experienceCountSelector,
   hasFetchedexperienceCountSelector,
-  timeAndSalaryCountSelector,
   hasFetchedTimeAndSalaryCountSelector,
 } from './selectors';
+import {
+  experienceCountSelector,
+  timeAndSalaryCountSelector,
+} from '../../selectors/countSelector';
 
 const mapStateToProps = state => ({
   experienceCount: experienceCountSelector(state),
