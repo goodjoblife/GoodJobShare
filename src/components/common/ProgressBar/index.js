@@ -1,4 +1,3 @@
-export { default as ProgressBar } from './ProgressBar';
-export {
-  default as ProgressBarWithDataCount,
-} from './ProgressBarWithDataCount';
+import ProgressBar from './ProgressBar';
+
+export default ProgressBar;
