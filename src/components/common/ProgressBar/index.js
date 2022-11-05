@@ -1,3 +1,4 @@
+// UI component
 import ProgressBar from './ProgressBar';
 
 export default ProgressBar;
