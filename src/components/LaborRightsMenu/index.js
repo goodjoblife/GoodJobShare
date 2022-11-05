@@ -11,6 +11,7 @@ import { isFetching, isError, isFetched } from '../../constants/status';
 import LaborRightsEntry from './LaborRightsEntry';
 import StaticHelmet from 'common/StaticHelmet';
 import styles from './LaborRightsEntry.module.css';
+import AdvImage from './banner3_2x.jpg';
 
 const LaborRightsMenu = ({
   queryMenuIfUnfetched,
@@ -33,7 +34,7 @@ const LaborRightsMenu = ({
   }));
   items.splice(4, 0, {
     link: shareLink,
-    coverUrl: 'https://image.goodjob.life/banners/banner3_2x.jpg',
+    coverUrl: AdvImage,
     title: '留下你的面試經驗、工作經驗',
   });
 

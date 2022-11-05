@@ -6,6 +6,7 @@ import { P } from 'common/base';
 import { FacebookWrapper } from 'common/facebook';
 
 import styles from './FanPageBlock.module.css';
+import FollowUsOnFacebookImage from './follow-us-on-facebook.png';
 
 class FanPageBlock extends React.Component {
   static propTypes = {
@@ -21,7 +22,7 @@ class FanPageBlock extends React.Component {
       <div className={cn(styles.fanPageBlock, this.props.className)}>
         <div>
           <img
-            src="https://image.goodjob.life/follow-us-on-facebook.png"
+            src={FollowUsOnFacebookImage}
             alt="follow"
             className={styles.img}
           />
