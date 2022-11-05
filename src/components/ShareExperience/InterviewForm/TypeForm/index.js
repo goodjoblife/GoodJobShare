@@ -340,6 +340,9 @@ const TypeForm = ({ open, onClose }) => {
   const handleSubmit = useCallback(
     async draft => {
       try {
+        if (submitStatus === 'submitting') {
+          return;
+        }
         const body = bodyFromDraft(draft);
         // section 的標題與預設文字 = 4 + 11 + 19 + 25 個字
         const goalValue = calcInterviewExperienceValue(body, 59);
@@ -376,7 +379,7 @@ const TypeForm = ({ open, onClose }) => {
         setSubmitStatus('error');
       }
     },
-    [dispatch],
+    [dispatch, submitStatus],
   );
 
   return (
