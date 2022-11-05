@@ -84,7 +84,7 @@ jobs:
             -X POST \
             -H "Accept: application/vnd.github.v3+json" \
             -d '{"event_type": "goodjobshare-master-published"}' \
-            https://api.github.com/repos/mark86092/goodjob-deploy-ci/dispatches
+            https://api.github.com/repos/goodjoblife/goodjob-deploy-ci/dispatches
   deploy-dev:
     if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
@@ -97,4 +97,4 @@ jobs:
             -X POST \
             -H "Accept: application/vnd.github.v3+json" \
             -d '{"event_type": "goodjobshare-dev-published"}' \
-            https://api.github.com/repos/mark86092/goodjob-deploy-ci/dispatches
+            https://api.github.com/repos/goodjoblife/goodjob-deploy-ci/dispatches
