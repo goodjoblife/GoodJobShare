@@ -28,19 +28,20 @@ const CardSection = ({ plans, title, type }) => {
         {title}
       </P>
       <div
-        className={styles['card-wrapper']}
+        className={styles['card-container']}
         style={{
           gridTemplateColumns: `repeat(${getColumns(plans)}, 1fr)`,
         }}
       >
         {plans.map(plan => (
-          <PlanCard
-            key={plan.skuId}
-            title={plan.title}
-            description={plan.description}
-            amount={plan.amount}
-            type={type}
-          />
+          <div key={plan.skuId} className={styles['card-wrapper']}>
+            <PlanCard
+              title={plan.title}
+              description={plan.description}
+              amount={plan.amount}
+              type={type}
+            />
+          </div>
         ))}
       </div>
     </div>

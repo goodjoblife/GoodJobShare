@@ -11,11 +11,22 @@
 }
 
 .title {
-  margin-bottom: 70px;
+  margin-bottom: 24px;
+
+  @media (min-width: above-tablet) {
+    margin-bottom: 70px;
+  }
 }
 
 .card-section {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 16px;
+
+  @media (min-width: above-tablet) {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .divider {

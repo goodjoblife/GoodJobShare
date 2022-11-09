@@ -13,11 +13,18 @@ const PlanCard = ({ title, description, amount, actionUrl, type }) => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <Heading Tag="h3" size="sm">
+        <Heading Tag="h3" size="sm" className={styles.title} bold>
           {title}
         </Heading>
-        <P>{description}</P>
-        <P>{`${amount} 元`}</P>
+        <P className={styles.description}>{description}</P>
+        <div className={styles['amount-section']}>
+          <P className={styles.amount} bold>
+            {amount}
+          </P>
+          <P className={styles.unit} bold>
+            元
+          </P>
+        </div>
         <Button className={styles['action-button']}>{actionTitle}</Button>
       </div>
     </div>

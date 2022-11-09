@@ -1,17 +1,36 @@
-@value main-gray from "common/variables.module.css";
+@value above-tablet, main-gray from "common/variables.module.css";
 
 .container {
-  width: 200px;
-  height: 200px;
+  padding: 26px 78px;
+  border: 1px solid main-gray;
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  padding: 26px 0;
-  border: 1px solid main-gray;
+  align-items: center;
 }
 
 .action-button {
   margin-top: 16px;
+}
+
+.title {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.description {
+  margin-bottom: 56px;
+}
+
+.amount-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 82px;
+}
+
+.amount {
+  font-size: 56px;
+  margin-right: 20px;
 }

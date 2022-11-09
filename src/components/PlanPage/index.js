@@ -33,6 +33,7 @@ const plans = [
 const PlanPage = () => {
   const groupedPlans = groupByPlanType(plans);
 
+  const hasSubmitDataPlan = groupedPlans['SubmitData'].length > 0;
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -45,9 +46,7 @@ const PlanPage = () => {
             title="留下你的資料幫助其他人："
             type="SubmitData"
           />
-          {groupedPlans['SubmitData'].length > 0 && (
-            <div className={styles.divider}>或是</div>
-          )}
+          {hasSubmitDataPlan && <div className={styles.divider}>或是</div>}
           <CardSection
             plans={groupedPlans['BuySubscription']}
             title="線上付費解鎖全站資料："

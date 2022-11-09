@@ -1,12 +1,20 @@
 @value above-tablet, yellow-dark, warning-red from "common/variables.module.css";
 
-.card-wrapper {
+.card-container {
   display: flex;
   flex-direction: column;
 
   @media (min-width: above-tablet) {
     display: grid;
     column-gap: 20px;
+  }
+}
+
+.card-wrapper {
+  margin-bottom: 16px;
+
+  @media (min-width: above-tablet) {
+    margin-bottom: 0;
   }
 }
 
