@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Button from 'common/button/Button';
 import Heading from 'common/base/Heading';
@@ -32,12 +33,14 @@ const PlanCard = ({ title, description, amount, actionUrl, type }) => {
             元
           </P>
         </div>
-        <Button
-          className={styles['action-button']}
-          btnStyle={getButtonType(type)}
-        >
-          {actionTitle}
-        </Button>
+        <Link to={actionUrl}>
+          <Button
+            className={styles['action-button']}
+            btnStyle={getButtonType(type)}
+          >
+            {actionTitle}
+          </Button>
+        </Link>
       </div>
     </div>
   );

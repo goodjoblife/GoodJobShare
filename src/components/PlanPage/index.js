@@ -13,6 +13,7 @@ const plans = [
     title: '留下一筆資料',
     description: '解鎖全站 7 天',
     amount: 0,
+    url: '/',
   },
   {
     skuId: 2,
@@ -20,6 +21,7 @@ const plans = [
     title: '包月方案',
     description: '解鎖全站 1 個月',
     amount: 99,
+    url: '/',
   },
   {
     skuId: 3,
@@ -27,6 +29,7 @@ const plans = [
     title: '包季方案',
     description: '解鎖全站 3 個月',
     amount: 149,
+    url: '/',
   },
 ];
 
