@@ -8,6 +8,13 @@ import P from 'common/base/P';
 import styles from './PlanCard.module.css';
 import { getActionTitle } from './helpers';
 
+const getButtonType = type => {
+  if (type === 'SubmitData') {
+    return 'yellow';
+  }
+  return 'hollowRed';
+};
+
 const PlanCard = ({ title, description, amount, actionUrl, type }) => {
   const actionTitle = getActionTitle(type);
   return (
@@ -25,7 +32,12 @@ const PlanCard = ({ title, description, amount, actionUrl, type }) => {
             元
           </P>
         </div>
-        <Button className={styles['action-button']}>{actionTitle}</Button>
+        <Button
+          className={styles['action-button']}
+          btnStyle={getButtonType(type)}
+        >
+          {actionTitle}
+        </Button>
       </div>
     </div>
   );
