@@ -10,10 +10,10 @@ import { getColumns } from './helpers';
 
 const getTitleClassName = type => {
   if (type === subscriptionType.submitData) {
-    return 'title-submit-data';
+    return 'titleSubmitData';
   }
 
-  return 'title-buy-subscription';
+  return 'titleBuySubscription';
 };
 
 const CardSection = ({ plans, title, type }) => {
@@ -29,13 +29,13 @@ const CardSection = ({ plans, title, type }) => {
         {title}
       </P>
       <div
-        className={styles['card-container']}
+        className={styles.cardContainer}
         style={{
           gridTemplateColumns: `repeat(${getColumns(plans)}, 1fr)`,
         }}
       >
         {plans.map(plan => (
-          <div key={plan.skuId} className={styles['card-wrapper']}>
+          <div key={plan.skuId} className={styles.cardWrapper}>
             <PlanCard
               title={plan.title}
               description={plan.description}

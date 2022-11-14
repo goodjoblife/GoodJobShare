@@ -26,7 +26,7 @@ const PlanCard = ({ title, description, amount, actionUrl, type }) => {
           {title}
         </Heading>
         <P className={styles.description}>{description}</P>
-        <div className={styles['amount-section']}>
+        <div className={styles.amountSection}>
           <P className={styles.amount} bold>
             {amount}
           </P>
@@ -36,7 +36,7 @@ const PlanCard = ({ title, description, amount, actionUrl, type }) => {
         </div>
         <Link to={actionUrl}>
           <Button
-            className={styles['action-button']}
+            className={styles.actionButton}
             btnStyle={getButtonType(type)}
           >
             {actionTitle}

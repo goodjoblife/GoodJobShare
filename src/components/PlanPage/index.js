@@ -46,7 +46,7 @@ const PlanPage = () => {
         <Heading className={styles.title} size="l">
           解鎖全站資料方式
         </Heading>
-        <div className={styles['card-section']}>
+        <div className={styles['cardSection']}>
           <CardSection
             plans={groupedPlans[subscriptionType.submitData]}
             title="留下你的資料幫助其他人："

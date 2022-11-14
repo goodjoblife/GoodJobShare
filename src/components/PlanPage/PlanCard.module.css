@@ -11,7 +11,7 @@
   align-items: center;
 }
 
-.action-button {
+.actionButton {
   margin-top: 16px;
 }
 
@@ -24,7 +24,7 @@
   margin-bottom: 56px;
 }
 
-.amount-section {
+.amountSection {
   display: flex;
   align-items: center;
   margin-bottom: 82px;

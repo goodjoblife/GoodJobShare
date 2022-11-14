@@ -1,6 +1,6 @@
 @value above-tablet, yellow-dark, warning-red from "common/variables.module.css";
 
-.card-container {
+.cardContainer {
   display: flex;
   flex-direction: column;
 
@@ -10,7 +10,7 @@
   }
 }
 
-.card-wrapper {
+.cardWrapper {
   margin-bottom: 16px;
 
   @media (min-width: above-tablet) {
@@ -18,10 +18,10 @@
   }
 }
 
-.title-submit-data {
+.titleSubmitData {
   color: yellow-dark;
 }
 
-.title-buy-subscription {
+.titleBuySubscription {
   color: warning-red;
 }
