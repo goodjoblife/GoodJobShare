@@ -32,6 +32,7 @@ import CompanyPageProvider from './components/Company/CompanyPageProvider';
 import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
+import PlanPage from './components/PlanPage';
 
 const routes = [
   {
@@ -281,6 +282,11 @@ const routes = [
     component: VerificationPage,
     hasHeader: false,
     hasFooter: false,
+  },
+  {
+    path: '/plans',
+    exact: true,
+    component: PlanPage,
   },
   {
     component: NotFound,

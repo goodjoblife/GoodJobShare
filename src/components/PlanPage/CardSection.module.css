@@ -1,0 +1,27 @@
+@value above-tablet, yellow-dark, warning-red from "common/variables.module.css";
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: above-tablet) {
+    display: grid;
+    column-gap: 20px;
+  }
+}
+
+.cardWrapper {
+  margin-bottom: 16px;
+
+  @media (min-width: above-tablet) {
+    margin-bottom: 0;
+  }
+}
+
+.titleSubmitData {
+  color: yellow-dark;
+}
+
+.titleBuySubscription {
+  color: warning-red;
+}

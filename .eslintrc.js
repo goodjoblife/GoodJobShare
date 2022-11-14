@@ -44,6 +44,7 @@ module.exports = {
               graphql: path.resolve('./src/graphql'),
               hooks: path.resolve('./src/hooks'),
               contexts: path.resolve('./src/contexts'),
+              constants: path.resolve('./src/constants'),
             },
           },
         },

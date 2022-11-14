@@ -1,0 +1,36 @@
+@value above-tablet, main-gray from "common/variables.module.css";
+
+.container {
+  padding: 26px 78px;
+  border: 1px solid main-gray;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.actionButton {
+  margin-top: 16px;
+}
+
+.title {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.description {
+  margin-bottom: 56px;
+}
+
+.amountSection {
+  display: flex;
+  align-items: center;
+  margin-bottom: 82px;
+}
+
+.amount {
+  font-size: 56px;
+  margin-right: 20px;
+}
