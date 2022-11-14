@@ -1,22 +1,9 @@
-import R from 'ramda';
 import React, { useCallback, useState } from 'react';
 import { Section, Heading, P } from 'common/base';
 import Checkbox from 'common/form/Checkbox';
 import Button from 'common/button/ButtonRect';
-import useTappay, { fields } from 'hooks/tappay/useTappay';
-
-const TappayElement = ({ id }) => (
-  <div
-    id={R.drop(1, id)}
-    style={{ display: 'inline-block', width: '300px', height: '30px' }}
-  />
-);
-
-const CardNumber = () => <TappayElement id={fields.number.element} />;
-const CardExpirationDate = () => (
-  <TappayElement id={fields.expirationDate.element} />
-);
-const CardCCV = () => <TappayElement id={fields.ccv.element} />;
+import useTappay from 'hooks/tappay/useTappay';
+import { CardCCV, CardExpirationDate, CardNumber } from './TappayElement';
 
 const PaymentSection = () => {
   const [isPrimary, setPrimary] = useState(false);

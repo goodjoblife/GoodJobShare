@@ -3,7 +3,6 @@ import useScript from 'hooks/useScript';
 
 export const fields = {
   number: {
-    // css selector
     element: '#card-number',
     placeholder: '**** **** **** ****',
   },
@@ -49,6 +48,7 @@ const useTappay = ({ handlePrime }) => {
 
   /* global TPDirect */
 
+  // 載入SDK
   useScript({
     id: 'tappay',
     src: 'https://js.tappaysdk.com/tpdirect/v5.12.3',
@@ -58,6 +58,7 @@ const useTappay = ({ handlePrime }) => {
     },
   });
 
+  // 設定 Tappay 參數
   useEffect(() => {
     if (!directCardSetup && tappaySDKLoaded) {
       TPDirect.card.setup({
@@ -69,6 +70,7 @@ const useTappay = ({ handlePrime }) => {
     }
   }, [directCardSetup, tappaySDKLoaded]);
 
+  // 註冊 Tappay listener
   useEffect(() => {
     if (tappaySDKLoaded) {
       TPDirect.card.onUpdate(update => {
@@ -78,6 +80,7 @@ const useTappay = ({ handlePrime }) => {
     }
   }, [tappaySDKLoaded]);
 
+  // 送出 Tappay 表單
   const submit = useCallback(() => {
     // 取得 TapPay Fields 的 status
     const tappayStatus = TPDirect.card.getTappayFieldsStatus();
