@@ -5,12 +5,13 @@ import { Link } from 'react-router-dom';
 import Button from 'common/button/Button';
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
+import { subscriptionType } from 'constants/subscription';
 
 import styles from './PlanCard.module.css';
 import { getActionTitle } from './helpers';
 
 const getButtonType = type => {
-  if (type === 'SubmitData') {
+  if (type === subscriptionType.submitData) {
     return 'yellow';
   }
   return 'hollowRed';

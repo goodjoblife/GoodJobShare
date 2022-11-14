@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import P from 'common/base/P';
+import { subscriptionType } from 'constants/subscription';
 
 import PlanCard from './PlanCard';
 import styles from './CardSection.module.css';
 import { getColumns } from './helpers';
 
 const getTitleClassName = type => {
-  if (type === 'SubmitData') {
+  if (type === subscriptionType.submitData) {
     return 'title-submit-data';
   }
 

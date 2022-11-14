@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Heading from 'common/base/Heading';
+import { subscriptionType } from 'constants/subscription';
 
 import styles from './PlanPage.module.css';
 import CardSection from './CardSection';
@@ -36,7 +37,9 @@ const plans = [
 const PlanPage = () => {
   const groupedPlans = groupByPlanType(plans);
 
-  const hasSubmitDataPlan = groupedPlans['SubmitData'].length > 0;
+  const hasSubmitDataPlan =
+    groupedPlans[subscriptionType.submitData].length > 0;
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -45,15 +48,15 @@ const PlanPage = () => {
         </Heading>
         <div className={styles['card-section']}>
           <CardSection
-            plans={groupedPlans['SubmitData']}
+            plans={groupedPlans[subscriptionType.submitData]}
             title="留下你的資料幫助其他人："
-            type="SubmitData"
+            type={subscriptionType.submitData}
           />
           {hasSubmitDataPlan && <div className={styles.divider}>或是</div>}
           <CardSection
-            plans={groupedPlans['BuySubscription']}
+            plans={groupedPlans[subscriptionType.buySubscription]}
             title="線上付費解鎖全站資料："
-            type="BuySubscription"
+            type={subscriptionType.buySubscription}
           />
         </div>
       </div>
