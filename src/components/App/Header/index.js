@@ -138,7 +138,7 @@ const Header = () => {
                     }
                   >
                     <div className={styles.userNameBtn}>
-                      {user && user.get('name')}
+                      {user && user.name}
                     </div>
                   </PopoverToggle>
                 )}
