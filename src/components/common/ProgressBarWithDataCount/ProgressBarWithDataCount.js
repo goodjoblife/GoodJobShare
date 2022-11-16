@@ -16,7 +16,7 @@ const ProgressBarWithDataCount = props => {
   return <ProgressBar dataNum={experienceCount} goalNum={goalNum} {...props} />;
 };
 
-ProgressBarWithDataCount.feetchData = ({ store: { dispatch } }) => {
+ProgressBarWithDataCount.fetchData = ({ store: { dispatch } }) => {
   return dispatch(queryExperienceCount());
 };
 
