@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styles from './RoundCard.module.css';
 
-const RoundCard = ({ children, className, ...props }) => (
-  <div className={cn(styles.container, className)} {...props}>
+const RoundCard = ({ children, className, checked, ...props }) => (
+  <div
+    className={cn(styles.container, { [styles.checked]: checked }, className)}
+    {...props}
+  >
     {children}
   </div>
 );
@@ -12,6 +15,7 @@ const RoundCard = ({ children, className, ...props }) => (
 RoundCard.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
+  checked: PropTypes.bool,
 };
 
 export default RoundCard;

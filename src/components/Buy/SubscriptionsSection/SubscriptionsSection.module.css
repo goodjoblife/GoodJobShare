@@ -15,22 +15,3 @@
     margin-left: 10px;
   }
 }
-
-.plan {
-  position: relative;
-
-  &.active:before {
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    width: 20px;
-    height: 20px;
-    background-color: black;
-    content: 'V';
-    color: white;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}

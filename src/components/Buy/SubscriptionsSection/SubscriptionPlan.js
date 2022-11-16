@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
 import { P } from 'common/base';
-import styles from './SubscriptionsSection.module.css';
+import RoundCard from 'common/RoundCard';
 
 const SubscriptionPlan = ({
   className,
@@ -12,17 +11,13 @@ const SubscriptionPlan = ({
   active,
   onClick,
 }) => (
-  /* TODO: Component guide */
-  <button
-    className={cn(className, { [styles.active]: active })}
-    onClick={onClick}
-  >
+  <RoundCard className={className} checked={active} onClick={onClick}>
     <P bold>{name}</P>
     <P bold>{price}元</P>
     <P bold>
       解鎖全站 {duration.amount} 個{duration.unit}
     </P>
-  </button>
+  </RoundCard>
 );
 
 SubscriptionPlan.propTypes = {
