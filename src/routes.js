@@ -20,6 +20,7 @@ import TimeSalaryForm from './containers/ShareExperience/TimeSalaryFormContainer
 import CampaignTimeAndSalaryForm from './containers/ShareExperience/CampaignTimeAndSalaryFormContainer';
 import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
 import Me from './components/Me';
+import Buy from './components/Buy';
 import About from './components/About';
 import Faq from './components/Faq';
 import Guidelines from './components/Guidelines';
@@ -245,6 +246,11 @@ const routes = [
         component: NotFound,
       },
     ],
+  },
+  {
+    path: '/buy',
+    exact: true,
+    component: Buy,
   },
   {
     path: '/me',

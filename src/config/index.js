@@ -19,4 +19,6 @@ module.exports = {
   SENTRY_DSN: process.env.RAZZLE_SENTRY_DSN,
   GIT_SHA1: process.env.RAZZLE_GIT_SHA1,
   PERSIST_KEY: process.env.PERSIST_KEY || 'goodjob',
+  TAP_PAY_APP_ID: process.env.NEXT_PUBLIC_TAP_PAY_APP_ID,
+  TAP_PAY_APP_KEY: process.env.NEXT_PUBLIC_TAP_PAY_APP_KEY,
 };
