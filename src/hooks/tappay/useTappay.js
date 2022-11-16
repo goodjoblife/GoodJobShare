@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import useScript from 'hooks/useScript';
+import { TAP_PAY_APP_ID, TAP_PAY_APP_KEY } from '../../config';
 
 export const fields = {
   number: {
@@ -42,9 +43,6 @@ const styles = {
 const useTappay = ({ handlePrime }) => {
   const [tappaySDKLoaded, setTappySDKLoad] = useState(false);
   const [directCardSetup, setDirectCardSetup] = useState(false);
-
-  const TAP_PAY_APP_ID = process.env.NEXT_PUBLIC_TAP_PAY_APP_ID;
-  const TAP_PAY_APP_KEY = process.env.NEXT_PUBLIC_TAP_PAY_APP_KEY;
 
   /* global TPDirect */
 
