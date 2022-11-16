@@ -31,7 +31,7 @@ SubscriptionPlanCollection.propTypes = {
       }).isRequired,
     }),
   ),
-  selectedId: PropTypes.number.isRequired,
+  selectedId: PropTypes.string.isRequired,
   setSelectedId: PropTypes.func.isRequired,
 };
 
