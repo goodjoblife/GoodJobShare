@@ -1,0 +1,7 @@
+@value card-border-gray from "common/variables.module.css";
+
+.container {
+  padding: 26px 78px;
+  border: 1px solid card-border-gray;
+  border-radius: 8px;
+}

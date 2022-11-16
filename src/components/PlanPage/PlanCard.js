@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import RoundCard from 'common/RoundCard';
 import Button from 'common/button/Button';
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
@@ -20,7 +21,7 @@ const getButtonType = type => {
 const PlanCard = ({ title, description, amount, actionUrl, type }) => {
   const actionTitle = getActionTitle(type);
   return (
-    <div className={styles.container}>
+    <RoundCard>
       <div className={styles.content}>
         <Heading Tag="h3" size="sm" className={styles.title} bold>
           {title}
@@ -43,7 +44,7 @@ const PlanCard = ({ title, description, amount, actionUrl, type }) => {
           </Button>
         </Link>
       </div>
-    </div>
+    </RoundCard>
   );
 };
 
