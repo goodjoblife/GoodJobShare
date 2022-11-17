@@ -45,6 +45,7 @@ const ProgressBar = ({
     </div>
   );
 };
+
 ProgressBar.propTypes = {
   dataNum: PropTypes.number,
   goalNum: PropTypes.number.isRequired,
@@ -52,6 +53,7 @@ ProgressBar.propTypes = {
   rootClassName: PropTypes.string,
   theme: PropTypes.oneOf(themeOptions),
 };
+
 ProgressBar.defaultProps = {
   dataNum: 0,
   size: 'l',
