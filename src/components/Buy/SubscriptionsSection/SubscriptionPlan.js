@@ -9,15 +9,24 @@ const SubscriptionPlan = ({
   price,
   duration,
   active,
-  onClick,
+  onChange,
 }) => (
-  <RoundCard className={className} checked={active} onClick={onClick}>
-    <P bold>{name}</P>
-    <P bold>{price}元</P>
-    <P bold>
-      解鎖全站 {duration.amount} 個{duration.unit}
-    </P>
-  </RoundCard>
+  <label>
+    <input
+      name="plan"
+      type="radio"
+      className={className}
+      style={{ display: 'none' }}
+      onChange={onChange}
+    ></input>
+    <RoundCard checked={active}>
+      <P bold>{name}</P>
+      <P bold>{price}元</P>
+      <P bold>
+        解鎖全站 {duration.amount} 個{duration.unit}
+      </P>
+    </RoundCard>
+  </label>
 );
 
 SubscriptionPlan.propTypes = {
@@ -29,7 +38,7 @@ SubscriptionPlan.propTypes = {
     unit: PropTypes.string.isRequired,
   }).isRequired,
   active: PropTypes.bool.isRequired,
-  onClick: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default SubscriptionPlan;
