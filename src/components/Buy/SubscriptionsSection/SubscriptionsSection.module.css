@@ -1,3 +1,7 @@
+.captain {
+  margin-top: 16px;
+}
+
 .plans {
   display: flex;
   flex-direction: row;
