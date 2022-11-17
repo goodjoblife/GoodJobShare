@@ -22,7 +22,7 @@ const styles = {
     color: 'gray',
   },
   'input.ccv': {
-    'font-size': '16px',
+    'font-size': '15px',
   },
   ':focus': {
     color: 'black',
