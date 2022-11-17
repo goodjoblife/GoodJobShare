@@ -7,7 +7,9 @@ const Buy = () => {
   return (
     <Section paddingTop paddingBottom>
       <Wrapper size="s">
-        <Heading center>付費解鎖全站</Heading>
+        <Heading size="l" center>
+          付費解鎖全站
+        </Heading>
         <SubscriptionsSection />
         <PaymentSection />
       </Wrapper>
