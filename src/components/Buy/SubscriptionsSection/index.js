@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Checkbox from 'common/form/Checkbox';
-import { Section, P } from 'common/base';
+import { Section, P, Link } from 'common/base';
 import SubscriptionPlanCollection from './SubscriptionPlanCollection';
 import styles from './SubscriptionsSection.module.css';
 
@@ -22,7 +20,6 @@ const plans = [
 
 const SubscriptionsSection = () => {
   const [selectedId, setSelectedId] = useState(plans[0].id);
-  const [tosChecked, setTosChecked] = useState(false);
   return (
     <Section paddingTop>
       <SubscriptionPlanCollection
@@ -33,17 +30,10 @@ const SubscriptionsSection = () => {
       <Section className={styles.captain}>
         <P>解鎖範圍：全站 8,393 筆面試、薪資資料，及期間內新增的資料</P>
         <P>使用期間：現在 ~ 2022.01.30 23:59</P>
+        <P>
+          付款及同意<Link to="/user-terms">使用條款</Link>
+        </P>
       </Section>
-      <Checkbox
-        label={
-          <span>
-            我同意 <Link to="/user-terms">使用條款</Link>
-          </span>
-        }
-        checked={tosChecked}
-        value="tos"
-        onChange={e => setTosChecked(e.target.checked)}
-      />
     </Section>
   );
 };
