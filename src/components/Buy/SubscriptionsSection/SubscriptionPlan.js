@@ -11,7 +11,7 @@ const SubscriptionPlan = ({
   active,
   onChange,
 }) => (
-  <label>
+  <label className={className}>
     <input
       name="plan"
       type="radio"

@@ -1,17 +1,18 @@
 .plans {
   display: flex;
   flex-direction: row;
+
+  .plan {
+    flex: 1;
+  }
 }
 
 .plan {
-  width: 200px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  border: 1px solid black;
+  align-items: stretch;
 
   + .plan {
-    margin-left: 10px;
+    margin-left: 24px;
   }
 }

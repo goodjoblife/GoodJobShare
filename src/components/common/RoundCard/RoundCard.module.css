@@ -8,6 +8,7 @@
   &.checked {
     border-width: 2px;
     border-color: warning-red;
+    padding: 25px 77px;
   }
 }
 
