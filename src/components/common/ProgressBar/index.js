@@ -1,4 +1,4 @@
-export { default as ProgressBar } from './ProgressBar';
-export {
-  default as ProgressBarWithDataCount,
-} from './ProgressBarWithDataCount';
+// UI component
+import ProgressBar from './ProgressBar';
+
+export default ProgressBar;
