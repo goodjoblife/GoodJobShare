@@ -5,7 +5,7 @@ import Button from 'common/button/ButtonRect';
 import useTappay from 'hooks/tappay/useTappay';
 import { CardCCV, CardExpirationDate, CardNumber } from './TappayElement';
 
-const PaymentSection = () => {
+const PaymentSection = ({ ...props }) => {
   const [isPrimary, setPrimary] = useState(false);
   const submit = useTappay({
     handlePrime: prime => {
@@ -22,7 +22,7 @@ const PaymentSection = () => {
   );
 
   return (
-    <Section paddingTop>
+    <Section {...props}>
       <Heading size="sl">填寫信用卡資料</Heading>
       <form onSubmit={onSubmit}>
         <P bold>

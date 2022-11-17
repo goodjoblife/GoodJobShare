@@ -18,10 +18,10 @@ const plans = [
   },
 ];
 
-const SubscriptionsSection = () => {
+const SubscriptionsSection = ({ ...props }) => {
   const [selectedId, setSelectedId] = useState(plans[0].id);
   return (
-    <Section paddingTop>
+    <Section {...props}>
       <SubscriptionPlanCollection
         plans={plans}
         selectedId={selectedId}
