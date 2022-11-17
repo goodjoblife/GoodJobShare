@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { P } from 'common/base';
 import RoundCard from 'common/RoundCard';
+import { formatSalaryType } from 'common/formatter';
+import styles from './SubscriptionsSection.module.css';
 
 const SubscriptionPlan = ({
   className,
@@ -19,11 +21,18 @@ const SubscriptionPlan = ({
       style={{ display: 'none' }}
       onChange={onChange}
     ></input>
-    <RoundCard checked={active}>
-      <P bold>{name}</P>
-      <P bold>{price}元</P>
+    <RoundCard className={styles.content} checked={active}>
+      <P className={styles.title} size="l" bold>
+        {name}
+      </P>
+      <P className={styles.subtitle} size="l">
+        解鎖全站 {duration.amount} 個{formatSalaryType(duration.unit)}
+      </P>
       <P bold>
-        解鎖全站 {duration.amount} 個{duration.unit}
+        <P className={styles.price} Tag="span">
+          {price}
+        </P>
+        元
       </P>
     </RoundCard>
   </label>

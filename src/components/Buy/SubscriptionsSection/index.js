@@ -9,13 +9,13 @@ const plans = [
     id: 'month',
     name: '包月方案',
     price: 99,
-    duration: { amount: 1, unit: 'MONTH' },
+    duration: { amount: 1, unit: 'month' },
   },
   {
     id: 'quarter',
     name: '包季方案',
     price: 149,
-    duration: { amount: 3, unit: 'MONTH' },
+    duration: { amount: 3, unit: 'month' },
   },
 ];
 

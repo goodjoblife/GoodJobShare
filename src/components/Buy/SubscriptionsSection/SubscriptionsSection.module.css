@@ -4,15 +4,28 @@
 
   .plan {
     flex: 1;
+
+    + .plan {
+      margin-left: 24px;
+    }
   }
 }
 
-.plan {
+.content {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
 
-  + .plan {
-    margin-left: 24px;
+  .title {
+    margin-bottom: 16px;
+  }
+
+  .subtitle {
+    margin-bottom: 22px;
+  }
+
+  .price {
+    font-size: 56px;
+    margin-right: 10px;
   }
 }
