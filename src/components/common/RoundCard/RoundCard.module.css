@@ -22,13 +22,7 @@
     left: -16px;
     width: 40px;
     height: 40px;
-    border: 2px solid warning-red;
-    border-radius: 20px;
-    background-color: white;
-    content: '✓';
-    color: warning-red;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-image: url('../../images/checked.svg');
+    content: ' ';
   }
 }
