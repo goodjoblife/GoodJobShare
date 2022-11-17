@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Section, Heading, P } from 'common/base';
+import { Section, Subheading, P } from 'common/base';
 import Checkbox from 'common/form/Checkbox';
 import Button from 'common/button/ButtonRect';
 import useTappay from 'hooks/tappay/useTappay';
@@ -23,7 +23,7 @@ const PaymentSection = ({ ...props }) => {
 
   return (
     <Section {...props}>
-      <Heading size="sl">填寫信用卡資料</Heading>
+      <Subheading size="l">填寫信用卡資料</Subheading>
       <form onSubmit={onSubmit}>
         <P bold>
           卡號

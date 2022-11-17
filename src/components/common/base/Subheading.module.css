@@ -1,0 +1,19 @@
+.l {
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.87px;
+
+  .bold {
+    font-weight: 600;
+  }
+}
+
+.m {
+  color: rgba(51, 51, 51, 1);
+  font-size: 22px;
+  font-weight: 400;
+
+  .bold {
+    font-weight: 600;
+  }
+}
