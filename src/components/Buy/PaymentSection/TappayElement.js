@@ -1,11 +1,13 @@
-import R from 'ramda';
+import { replace } from 'ramda';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { fields } from 'hooks/tappay/useTappay';
 import textStyles from 'common/form/TextInput/TextInput.module.css';
 
+const dropLeadingSymbol = replace(/^#/, '');
+
 const TappayElement = ({ id }) => (
-  <div id={R.drop(1, id)} className={textStyles.input} />
+  <div id={dropLeadingSymbol(id)} className={textStyles.input} />
 );
 
 TappayElement.propTypes = {
