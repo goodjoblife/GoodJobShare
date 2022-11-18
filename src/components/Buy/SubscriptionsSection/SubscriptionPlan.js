@@ -17,7 +17,6 @@ const SubscriptionPlan = ({
     <input
       name="plan"
       type="radio"
-      className={className}
       style={{ display: 'none' }}
       onChange={onChange}
     ></input>
