@@ -52,3 +52,8 @@ export const generatePageURL = ({ pageName, pageType }) =>
     pageTypeURL: pageTypeURLMap[pageType],
     pageName,
   });
+
+export const generateIndexURL = ({ pageType }) =>
+  generatePath('/:pageTypeURL', {
+    pageTypeURL: pageTypeURLMap[pageType],
+  });

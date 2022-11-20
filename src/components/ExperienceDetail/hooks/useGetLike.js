@@ -1,6 +1,6 @@
 import { useAsyncFn } from 'react-use';
 import graphqlClient from 'utils/graphqlClient';
-import useToken from 'hooks/useToken';
+import { useToken } from 'hooks/auth';
 
 const getLikeQuery = `
   query Like($id: ID!) {

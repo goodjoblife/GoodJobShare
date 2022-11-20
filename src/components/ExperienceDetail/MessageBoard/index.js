@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { Element as ScrollElement, scroller } from 'react-scroll';
 import PropTypes from 'prop-types';
 import Button from 'common/button/Button';
 import { P } from 'common/base';
 import ButtonGroup from 'common/button/ButtonGroup';
-import useIsLogin from 'hooks/useIsLogin';
-import useFacebookLogin from 'hooks/login/useFacebookLogin';
+import { useLogin, useFacebookLogin } from 'hooks/login';
 import CommentBlock from './CommentBlock';
 import styles from './MessageBoard.module.css';
 
@@ -17,9 +17,11 @@ const recommendedSentences = [
   '台灣的職場因為有你變得更好！',
 ];
 
+const REPLIES_BOTTOM = 'REPLIES_BOTTOM';
+
 const MessageBoard = ({ replies, likeReply, submitComment }) => {
   const [comment, setComment] = useState('');
-  const isLogin = useIsLogin();
+  const [isLoggedIn] = useLogin();
   const facebookLogin = useFacebookLogin();
 
   return (
@@ -46,13 +48,15 @@ const MessageBoard = ({ replies, likeReply, submitComment }) => {
           btnStyle="submit"
           disabled={!comment}
           onClick={async () => {
-            if (!isLogin) {
+            if (!isLoggedIn) {
               await facebookLogin();
             }
             await submitComment(comment);
+            setComment('');
+            scroller.scrollTo(REPLIES_BOTTOM, { smooth: true, offset: -75 });
           }}
         >
-          {isLogin ? '發佈留言' : '以  f  認證，發佈留言'}
+          {isLoggedIn ? '發佈留言' : '以  f  認證，發佈留言'}
         </Button>
       </div>
       <div className={styles.commentBlocks}>
@@ -63,13 +67,14 @@ const MessageBoard = ({ replies, likeReply, submitComment }) => {
             key={reply._id}
             reply={reply}
             toggleReplyLike={async () => {
-              if (!isLogin) {
+              if (!isLoggedIn) {
                 await facebookLogin();
               }
               await likeReply(reply);
             }}
           />
         ))}
+        <ScrollElement name={REPLIES_BOTTOM} />
       </div>
     </div>
   );

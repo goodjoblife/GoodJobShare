@@ -19,7 +19,7 @@ import InterviewForm from './containers/ShareExperience/InterviewStepsFormContai
 import TimeSalaryForm from './containers/ShareExperience/TimeSalaryFormContainer';
 import CampaignTimeAndSalaryForm from './containers/ShareExperience/CampaignTimeAndSalaryFormContainer';
 import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
-import Me from './containers/Me';
+import Me from './components/Me';
 import About from './components/About';
 import Faq from './components/Faq';
 import Guidelines from './components/Guidelines';
@@ -29,7 +29,9 @@ import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
 import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
 import CompanyPageProvider from './components/Company/CompanyPageProvider';
+import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
+import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
 
 const routes = [
   {
@@ -208,9 +210,14 @@ const routes = [
     ],
   },
   {
-    path: '/companies/:companyName',
+    path: '/companies',
     component: CompanyAndJobTitlePageContainer,
     routes: [
+      {
+        path: '/companies',
+        component: CompanyIndexProvider,
+        exact: true,
+      },
       {
         path: '/companies/:companyName',
         component: CompanyPageProvider,
@@ -221,9 +228,14 @@ const routes = [
     ],
   },
   {
-    path: '/job-titles/:jobTitle',
+    path: '/job-titles',
     component: CompanyAndJobTitlePageContainer,
     routes: [
+      {
+        path: '/job-titles',
+        component: JobTitleIndexProvider,
+        exact: true,
+      },
       {
         path: '/job-titles/:jobTitle',
         component: JobTitlePageProvider,

@@ -17,6 +17,6 @@ export const setUserProperties = (userId, userProperties) => {
 export const resetUser = () => {
   const client = getEventBasedTrackingClient();
   if (client) {
-    client.identify(null);
+    client.identifyUser(null);
   }
 };

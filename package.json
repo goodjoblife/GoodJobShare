@@ -34,10 +34,13 @@
       "^utils(.*)": "<rootDir>/src/utils$1",
       "^graphql(.*)": "<rootDir>/src/graphql$1",
       "^hooks(.*)": "<rootDir>/src/hooks$1",
-      "^contexts(.*)": "<rootDir>/src/contexts$1"
+      "^contexts(.*)": "<rootDir>/src/contexts$1",
+      "^constants(.*)": "<rootDir>/src/constants$1"
     }
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
     "autoprefixer": "7.1.1",
     "eslint": "4.19.1",
     "eslint-config-prettier": "^2.9.0",
@@ -81,6 +84,7 @@
     "razzle": "^2.4.0",
     "react": "^16.12.0",
     "react-autocomplete": "^1.8.1",
+    "react-dfp": "^0.17.2",
     "react-dom": "^16.12.0",
     "react-facebook-pixel": "^0.1.0",
     "react-ga": "^2.2.0",
@@ -98,9 +102,8 @@
     "recompose": "^0.30.0",
     "redux": "^4.0.4",
     "redux-persist": "^5.10.0",
-    "redux-persist-transform-immutable": "^5.0.0",
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.1",
-    "serialize-javascript": "^2.1.1"
+    "serialize-javascript": "^3.1.0"
   }
 }

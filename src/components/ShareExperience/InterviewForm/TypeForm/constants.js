@@ -14,6 +14,7 @@ export const DATA_KEY_QUESTIONS = 'interviewQas';
 export const DATA_KEY_SENSITIVE_QUESTIONS = 'sensitiveQuestions';
 
 export const REGION_OPTIONS = [
+  '線上面試',
   '基隆市',
   '臺北市',
   '新北市',
@@ -48,7 +49,7 @@ export const SUGGESTIONS_MIN_LENGTH = 50;
 
 export const JOB_TENURE_OPTIONS = [
   '不到 1 年',
-  ...range(0, 51).map(n => `${n} 年`),
+  ...range(1, 51).map(n => `${n} 年`),
 ];
 
 export const SALARY_TYPE_VALUE_BY_OPTION = {

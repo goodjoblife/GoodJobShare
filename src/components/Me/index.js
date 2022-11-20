@@ -4,7 +4,7 @@ import { Wrapper, Section, Heading } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Loader from 'common/Loader';
 import { Comment2 } from 'common/icons';
-import useFacebookLogin from 'hooks/login/useFacebookLogin';
+import { useLogin } from 'hooks/login';
 import styles from './Me.module.css';
 import ShareBlockElement from './ShareBlockElement';
 import {
@@ -14,7 +14,7 @@ import {
   useToggleReplyStatus,
 } from './useQuery';
 
-const Me = props => {
+const Me = () => {
   const [myPublishesState, fetchMyPublishes] = useFetchMyPublishes();
   const toggleExperienceStatus = useToggleExperienceStatus();
   const toggleSalaryWorkTimeStatus = useToggleSalaryWorkTimeStatus();
@@ -24,31 +24,27 @@ const Me = props => {
     fetchMyPublishes();
   }, [fetchMyPublishes]);
 
-  const facebookLogin = useFacebookLogin();
+  const [isLoggedIn, login] = useLogin();
 
   return (
     <Section pageTop paddingBottom>
       <Wrapper size="m">
-        {props.auth.getIn(['user', 'name']) === null && (
+        {!isLoggedIn && (
           <div>
             <Heading size="l" center>
-              登入以查看個人頁面
+              登入以管理我的資料
             </Heading>
             <div className={styles.loginBtnSection}>
-              <button
-                className="buttonCircleM buttonBlackLine"
-                onClick={() => facebookLogin()}
-              >
-                facebook 登入
+              <button className="buttonCircleM buttonBlackLine" onClick={login}>
+                登入
               </button>
             </div>
           </div>
         )}
-        {props.auth.getIn(['user', 'name']) !== null && (
+        {isLoggedIn && (
           <div>
             <Heading size="l" center>
-              {props.auth.getIn(['user', 'name'])}
-              &nbsp;&nbsp;的個人頁面
+              管理我的資料
             </Heading>
             <IconHeadingBlock
               heading="我分享的資料"

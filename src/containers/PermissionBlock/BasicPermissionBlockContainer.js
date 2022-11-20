@@ -6,16 +6,12 @@ import { queryTimeAndSalaryCountIfUnfetched } from '../../actions/timeAndSalary'
 import { queryExperienceCountIfUnfetched } from '../../actions/experiences';
 import {
   experienceCountSelector,
-  hasFetchedexperienceCountSelector,
   timeAndSalaryCountSelector,
-  hasFetchedTimeAndSalaryCountSelector,
-} from './selectors';
+} from '../../selectors/countSelector';
 
 const mapStateToProps = state => ({
   experienceCount: experienceCountSelector(state),
   timeAndSalaryCount: timeAndSalaryCountSelector(state),
-  hasFetchedExperienceCount: hasFetchedexperienceCountSelector(state),
-  hasFetchedTimeAndSalaryCount: hasFetchedTimeAndSalaryCountSelector(state),
 });
 
 const mapDispatchToProps = dispatch =>

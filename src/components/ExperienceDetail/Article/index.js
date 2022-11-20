@@ -4,13 +4,13 @@ import R from 'ramda';
 
 import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
-import PrivateMessageButton from 'common/button/PrivateMessageButton';
 import { useShareLink } from 'hooks/experiments';
 import { formatCommaSeparatedNumber } from 'utils/stringUtil';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
 import SectionBlock from './SectionBlock';
 import QABlock from './QABlock';
+import ReactionZone from './ReactionZone';
 import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
 import { MAX_WORDS_IF_HIDDEN } from '../../../constants/hideContent';
 
@@ -103,18 +103,18 @@ const Article = ({
             </div>
           ) : null}
         </div>
+
         {hideContent && (
           <BasicPermissionBlock
             to={shareLink}
             rootClassName={styles.permissionBlockArticle}
           />
         )}
-        {!hideContent && (
-          <div className={styles.btmMsgBtnContainer}>
-            <PrivateMessageButton onClick={onClickMsgButton} />
-          </div>
-        )}
       </section>
+      <ReactionZone
+        experienceId={experience.id}
+        onClickMsgButton={onClickMsgButton}
+      />
     </div>
   );
 };
@@ -122,6 +122,7 @@ const Article = ({
 Article.propTypes = {
   experience: PropTypes.object.isRequired,
   hideContent: PropTypes.bool.isRequired,
+  onClickMsgButton: PropTypes.func.isRequired,
 };
 
 export default Article;

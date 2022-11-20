@@ -7,17 +7,17 @@
 
 .leftContainer {
   flex-shrink: 1;
-}
-
-.wrapper {
   @media (min-width: above-small) {
-    padding-left: 32px;
-    padding-right: 32px;
+    padding-right: 16px;
   }
 }
 
-.headingBlock {
-  position: relative;
+.breadCrumb {
+  margin-bottom: 16px;
+
+  @media (min-width: above-small) {
+    margin-bottom: 32px;
+  }
 }
 
 .back {
@@ -33,6 +33,8 @@
   justify-content: flex-end;
   align-items: center;
   padding: 4px 8px 0 8px;
+  margin-top: 8px;
+  margin-bottom: 20px;
 
   @media (max-width: 550px) {
     border-bottom: 1px solid border-gray;
@@ -45,7 +47,6 @@
   width: 160px;
   height: 600px;
   flex-shrink: 0;
-  margin-right: 16px;
 
   @media (max-width: below-small) {
     display: none;

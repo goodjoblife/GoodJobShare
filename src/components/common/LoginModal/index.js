@@ -1,11 +1,11 @@
 import React from 'react';
-import useFacebookLogin from 'hooks/login/useFacebookLogin';
-import useGoogleLogin from 'hooks/login/useGoogleLogin';
+import PropTypes from 'prop-types';
+import { useFacebookLogin, useGoogleLogin } from 'hooks/login';
 import Modal from 'common/Modal.js';
 import authStatus from '../../../constants/authStatus';
 import styles from './LoginModal.module.css';
 
-const LoginModal = ({ loginModal, isOpen, close }) => {
+const LoginModal = ({ isOpen, close }) => {
   const fbLogin = useFacebookLogin();
   const googleLogin = useGoogleLogin();
 
@@ -18,7 +18,7 @@ const LoginModal = ({ loginModal, isOpen, close }) => {
             className={styles['btn-facebook']}
             onClick={async () => {
               if ((await fbLogin()) === authStatus.CONNECTED) {
-                loginModal.setIsOpen(false);
+                close();
               }
             }}
           >
@@ -28,7 +28,7 @@ const LoginModal = ({ loginModal, isOpen, close }) => {
             className={styles['btn-google']}
             onClick={async () => {
               if (await googleLogin()) {
-                loginModal.setIsOpen(false);
+                close();
               }
             }}
           >
@@ -41,6 +41,11 @@ const LoginModal = ({ loginModal, isOpen, close }) => {
       </div>
     </Modal>
   );
+};
+
+LoginModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired,
 };
 
 export default LoginModal;

@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import immutableTransform from 'redux-persist-transform-immutable';
 
 import auth from './auth';
 import experienceDetail from './experienceDetail';
@@ -19,14 +18,15 @@ import popularExperiences from './popularExperiences';
 import campaignInfo from './campaignInfo';
 import campaignTimeAndSalaryBoard from './campaignTimeAndSalaryBoard';
 import company from './company';
+import companyIndex from './companyIndex';
 import jobTitle from './jobTitle';
+import jobTitleIndex from './jobTitleIndex';
 import { PERSIST_KEY } from '../config';
 
 const persistConfig = {
   key: PERSIST_KEY,
   storage,
   whitelist: ['auth'],
-  transforms: [immutableTransform()],
 };
 
 const rootReducer = combineReducers({
@@ -46,7 +46,9 @@ const rootReducer = combineReducers({
   campaignInfo,
   campaignTimeAndSalaryBoard,
   company,
+  companyIndex,
   jobTitle,
+  jobTitleIndex,
 });
 
 export default persistReducer(persistConfig, rootReducer);

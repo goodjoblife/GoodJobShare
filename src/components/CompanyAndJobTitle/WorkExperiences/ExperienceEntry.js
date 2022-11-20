@@ -10,9 +10,9 @@ import styles from './WorkExperiences.module.css';
 import { formatSalary, formatSalaryRange } from 'common/formatter';
 import { formatCreatedAt, formatWeekWorkTime } from './helper';
 
-const createLinkTo = id => ({
+const createLinkTo = ({ pageType, id }) => ({
   pathname: `/experiences/${id}`,
-  state: { backable: true },
+  state: { pageType },
 });
 
 const SNIPPET_SIZE = 30;
@@ -33,19 +33,19 @@ const ExperienceEntry = ({
   canView,
 }) => (
   <div className={cn(styles.container, styles[size])}>
-    <Link to={createLinkTo(id)}>
+    <Link to={createLinkTo({ id, pageType })}>
       <section className={styles.contentWrapper}>
         <div className={styles.labels}>
           <P size="s" className={styles.date}>
             工作經驗 · {formatCreatedAt(createdAt)}
           </P>
-          {weekWorkTime && canView && (
-            <div className={styles.weekWorkTime}>
-              <i.Clock />
-              {formatWeekWorkTime(weekWorkTime)}
-            </div>
-          )}
           <div className={styles.salaryRecommendWrapper}>
+            {weekWorkTime && canView && (
+              <div className={styles.weekWorkTime}>
+                <i.Clock />
+                {formatWeekWorkTime(weekWorkTime)}
+              </div>
+            )}
             {salary && (
               <div
                 className={cn(styles.salary, {

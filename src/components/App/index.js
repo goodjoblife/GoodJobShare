@@ -1,12 +1,14 @@
-import React, { Fragment, useCallback } from 'react';
+import React, { Fragment, useCallback, useContext } from 'react';
 import { Switch, useLocation, useHistory } from 'react-router-dom';
 import { omit } from 'ramda';
 
 import { AppRouteWithSubRoutes } from '../route';
 import styles from './App.module.css';
-import Header from '../../containers/App/Header';
+import Header from './Header';
 import Footer from './Footer';
 import StaticHelmet from 'common/StaticHelmet';
+import LoginModal from 'common/LoginModal';
+import LoginModalContext from 'contexts/LoginModalContext';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 
 import routes from '../../routes';
@@ -25,6 +27,9 @@ const useShare = () => {
 
 const App = () => {
   const [share, exitShare] = useShare();
+  const { isLoginModalDisplayed, setLoginModalDisplayed } = useContext(
+    LoginModalContext,
+  );
   return (
     <Fragment>
       <Switch>
@@ -42,6 +47,10 @@ const App = () => {
         ))}
       </Switch>
       <ShareInterviewModal open={share === 'interview'} onClose={exitShare} />
+      <LoginModal
+        isOpen={isLoginModalDisplayed}
+        close={() => setLoginModalDisplayed(false)}
+      />
     </Fragment>
   );
 };

@@ -13,7 +13,7 @@ const SeoHelmet = ({ experienceState }) => {
   const { experience, experienceStatus } = experienceState;
 
   if (isFetched(experienceStatus)) {
-    const id = experience._id;
+    const id = experience.id;
     const title = metaTitleSelector(experience);
     let description = metaDescriptionSelector(experience);
     description = description.slice(0, 160);
@@ -43,7 +43,7 @@ const SeoStructureData = ({ experienceState }) => {
   const { experience, experienceStatus } = experienceState;
 
   if (isFetched(experienceStatus)) {
-    const id = experience._id;
+    const id = experience.id;
     const title = metaTitleSelector(experience);
     const description = metaDescriptionSelector(experience);
     const data = {
