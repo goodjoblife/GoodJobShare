@@ -28,10 +28,7 @@ const SubscriptionPlan = ({
         解鎖全站 {duration.amount} 個{formatSalaryType(duration.unit)}
       </P>
       <P bold>
-        <P className={styles.price} Tag="span">
-          {price}
-        </P>
-        元
+        <span className={styles.price}>{price}</span>元
       </P>
     </RoundCard>
   </label>
