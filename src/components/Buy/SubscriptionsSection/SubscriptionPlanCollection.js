@@ -13,7 +13,7 @@ const SubscriptionPlanCollection = ({ plans, selectedId, setSelectedId }) => (
         price={plan.price}
         duration={plan.duration}
         active={selectedId === plan.id}
-        onClick={e => setSelectedId(plan.id)}
+        onChange={e => e.target.checked && setSelectedId(plan.id)}
       />
     ))}
   </div>

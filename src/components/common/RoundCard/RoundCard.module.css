@@ -1,0 +1,28 @@
+@value card-border-gray, warning-red from "common/variables.module.css";
+
+.container {
+  padding: 26px 78px;
+  border: 1px solid card-border-gray;
+  border-radius: 8px;
+  background-color: white;
+
+  &.checked {
+    border-width: 2px;
+    border-color: warning-red;
+    padding: 25px 77px;
+  }
+}
+
+.container {
+  position: relative;
+
+  &.checked:before {
+    position: absolute;
+    top: -16px;
+    left: -16px;
+    width: 40px;
+    height: 40px;
+    background-image: url('../../images/checked.svg');
+    content: ' ';
+  }
+}

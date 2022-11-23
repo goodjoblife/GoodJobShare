@@ -1,15 +1,21 @@
 import React from 'react';
-import { Section, Wrapper, Heading } from 'common/base';
+import { Section, Wrapper } from 'common/base';
 import SubscriptionsSection from './SubscriptionsSection';
 import PaymentSection from './PaymentSection';
+import TitleSection from './TitleSection';
+import styles from './Buy.module.css';
 
 const Buy = () => {
   return (
-    <Section paddingTop paddingBottom>
+    <Section>
       <Wrapper size="s">
-        <Heading center>付費解鎖全站</Heading>
-        <SubscriptionsSection />
-        <PaymentSection />
+        <TitleSection paddingTop />
+        <SubscriptionsSection paddingTop paddingBottom />
+        <PaymentSection
+          className={styles.topDivider}
+          paddingTop
+          paddingBottom
+        />
       </Wrapper>
     </Section>
   );

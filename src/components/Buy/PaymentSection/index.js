@@ -1,11 +1,15 @@
 import React, { useCallback, useState } from 'react';
-import { Section, Heading, P } from 'common/base';
+import { Section, Subheading, P } from 'common/base';
 import Checkbox from 'common/form/Checkbox';
 import Button from 'common/button/ButtonRect';
+import Card from 'common/Card';
+import Label from 'common/form/Label';
 import useTappay from 'hooks/tappay/useTappay';
 import { CardCCV, CardExpirationDate, CardNumber } from './TappayElement';
+import Row from './Row';
+import styles from './PaymentSection.module.css';
 
-const PaymentSection = () => {
+const PaymentSection = ({ ...props }) => {
   const [isPrimary, setPrimary] = useState(false);
   const submit = useTappay({
     handlePrime: prime => {
@@ -22,34 +26,54 @@ const PaymentSection = () => {
   );
 
   return (
-    <Section paddingTop>
-      <Heading size="sl">填寫信用卡資料</Heading>
+    <Section {...props}>
+      <Subheading className={styles.title} size="l">
+        填寫信用卡資料
+      </Subheading>
       <form onSubmit={onSubmit}>
-        <P bold>
-          卡號
-          <CardNumber />
-        </P>
-        <P bold>
-          卡片到期日
-          <CardExpirationDate />
-        </P>
-        <P bold>
-          安全碼
-          <CardCCV />
-        </P>
+        <Card className={styles.form}>
+          <div className={styles.inputSection}>
+            <Row>
+              <Label className={styles.label} isRequired>
+                卡號
+              </Label>
+              <CardNumber />
+            </Row>
+            <Row half>
+              <Label className={styles.label} isRequired>
+                到期日 (MM/YY)
+              </Label>
+              <CardExpirationDate />
+            </Row>
+            <Row half>
+              <Label className={styles.label} isRequired>
+                安全碼
+              </Label>
+              <CardCCV />
+            </Row>
+            <Row>
+              <Checkbox
+                label="設為主要付款方式"
+                checked={isPrimary}
+                value="primary"
+                onChange={e => setPrimary(e.target.checked)}
+                margin=""
+              />
+            </Row>
+          </div>
+          <div className={styles.submitSection}>
+            <Row>
+              <Button>付款</Button>
+            </Row>
+            <Row>
+              <P className={styles.note} size="s">
+                本站採用 TapPay 金流交易系統，資料傳輸以 SSL 2048bit
+                加密技術保護
+              </P>
+            </Row>
+          </div>
+        </Card>
       </form>
-      <P>
-        <Checkbox
-          label="設為主要付款方式"
-          checked={isPrimary}
-          value="primary"
-          onChange={e => setPrimary(e.target.checked)}
-        />
-      </P>
-      <P size="s">本站使用 TapPay 服務，皆以 2048 bits 進行加密</P>
-      <P>
-        <Button>付款</Button>
-      </P>
     </Section>
   );
 };

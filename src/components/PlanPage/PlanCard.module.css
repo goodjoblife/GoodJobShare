@@ -1,10 +1,5 @@
 @value above-tablet, main-gray from "common/variables.module.css";
 
-.container {
-  padding: 26px 78px;
-  border: 1px solid main-gray;
-}
-
 .content {
   display: flex;
   flex-direction: column;

@@ -1,0 +1,43 @@
+.title {
+  padding-bottom: 24px;
+}
+
+.form {
+  padding: 38px;
+
+  .row {
+    padding: 0 8px;
+
+    .label {
+      padding-bottom: 4px;
+    }
+
+    & + .row {
+      padding-top: 20px;
+    }
+
+    &.full {
+      width: 100%;
+    }
+
+    &.half {
+      width: 50%;
+    }
+  }
+}
+
+.inputSection {
+  display: flex;
+  flex-wrap: wrap;
+  width: 340px;
+}
+
+.submitSection {
+  padding-top: 60px;
+
+  .note {
+    padding-top: 16px;
+    color: #626262;
+    font-size: 13px;
+  }
+}
