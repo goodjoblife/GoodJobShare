@@ -16,6 +16,8 @@
 
 .actionButton {
   margin-top: 16px;
+  width: 140px;
+  height: 45px;
 }
 
 .title {
@@ -24,7 +26,6 @@
 }
 
 .description {
-  margin-bottom: 56px;
 }
 
 .amountSection {
@@ -51,4 +52,8 @@
 
 .helperText {
   color: yellow-dark;
+}
+
+.helperContainer {
+  min-height: 20px;
 }

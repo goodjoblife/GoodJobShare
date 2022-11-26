@@ -40,17 +40,18 @@ const PlanCard = ({ title, description, amount, actionUrl, type }) => {
           </P>
         </div>
         <div className={styles.bottomArea}>
-          {isSubmitData && (
-            <div>
+          <div className={styles.helperContainer}>
+            {isSubmitData && (
               <P className={styles.helperText} size="s">
                 \ 留下你的資料幫助其他人 /
               </P>
-            </div>
-          )}
+            )}
+          </div>
           <Link to={actionUrl}>
             <Button
               className={styles.actionButton}
               btnStyle={getButtonType(type)}
+              circleSize="lg"
             >
               {actionTitle}
             </Button>
