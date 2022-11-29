@@ -7,9 +7,6 @@
 
 .leftContainer {
   flex-shrink: 1;
-  @media (min-width: above-small) {
-    padding-right: 16px;
-  }
 }
 
 .breadCrumb {

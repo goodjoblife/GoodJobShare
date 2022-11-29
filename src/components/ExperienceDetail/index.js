@@ -12,8 +12,7 @@ import { Element as ScrollElement, scroller } from 'react-scroll';
 import { compose, setStatic } from 'recompose';
 import cn from 'classnames';
 import { useParams } from 'react-router-dom';
-import { useWindowSize } from 'react-use';
-import { StickyContainer, Sticky } from 'react-sticky';
+import { StickyContainer } from 'react-sticky';
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
@@ -21,7 +20,6 @@ import NotFound from 'common/NotFound';
 import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
-import GoogleAdUnit from 'common/GoogleAdUnit';
 import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
 import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
@@ -43,7 +41,6 @@ import { isFetching, isFetched, isError } from '../../constants/status';
 import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
-import breakpoints from '../../constants/breakpoints';
 import {
   pageType as PAGE_TYPE,
   tabType as TAB_TYPE,
@@ -88,7 +85,6 @@ const ExperienceDetail = ({
 }) => {
   const params = useParams();
   const experienceId = params.id;
-  const { width } = useWindowSize();
 
   useEffect(() => {
     fetchExperience(experienceId);
@@ -286,20 +282,6 @@ const ExperienceDetail = ({
                 </Fragment>
               )}
             </div>
-            {width > breakpoints.md ? (
-              <div className={styles.sideAds}>
-                <Sticky>
-                  {({ style }) => (
-                    <div style={style}>
-                      <GoogleAdUnit
-                        sizes={[[160, 600]]}
-                        adUnit="goodjob_pc_article_sidebar"
-                      />
-                    </div>
-                  )}
-                </Sticky>
-              </div>
-            ) : null}
           </StickyContainer>
         </Wrapper>
         {isFetched(experienceStatus) && (

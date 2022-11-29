@@ -4,7 +4,6 @@ import { toPairs, compose, map } from 'ramda';
 
 import Heading from 'common/base/Heading';
 import FanPageBlock from 'common/FanPageBlock';
-import GoogleAdsense from 'common/GoogleAdsense';
 import BreadCrumb from 'common/BreadCrumb';
 
 import {
@@ -55,11 +54,6 @@ const CompanyAndJobTitleWrapper = ({
       />
       {children}
       <FanPageBlock className={styles.fanPageBlock} />
-      <GoogleAdsense
-        className={styles.adBeforeFanPageBlock}
-        slot="2116582901"
-        responsive="true"
-      />
     </div>
   );
 };
