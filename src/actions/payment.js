@@ -1,12 +1,16 @@
-export const SET_BACK_URL = '@@PAYMENT/SET_BACK_URL';
+export const SET_FROM_URL = '@@PAYMENT/SET_FROM_URL';
 export const SET_PAYMENT_RECORD = '@@PAYMENT/SET_PAYMENT_RECORD';
 
-export const setBackUrl = url => ({
-  type: SET_BACK_URL,
+export const setFromUrl = url => ({
+  type: SET_FROM_URL,
   url,
 });
 
-export const setPaymentRecord = paymentId => (dispatch, getState, { api }) => {
+export const fetchPaymentRecord = paymentId => (
+  dispatch,
+  getState,
+  { api },
+) => {
   return Promise.resolve({
     id: 1,
     publicId: '221116-123456',
