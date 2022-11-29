@@ -1,9 +1,13 @@
+@value above-small from "common/variables.module.css";
+
 .title {
   padding-bottom: 24px;
 }
 
 .form {
-  padding: 38px;
+  @media (min-width: above-small) {
+    padding: 38px;
+  }
 
   .row {
     padding: 0 8px;
@@ -30,6 +34,7 @@
   display: flex;
   flex-wrap: wrap;
   width: 340px;
+  max-width: 100%;
 }
 
 .submitSection {

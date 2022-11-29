@@ -1,3 +1,5 @@
+@value below-mobile from "common/variables.module.css";
+
 .captain {
   margin-top: 16px;
 }
@@ -6,11 +8,21 @@
   display: flex;
   flex-direction: row;
 
+  @media (max-width: below-mobile) {
+    flex-direction: column;
+    padding: 0 27px;
+  }
+
   .plan {
     flex: 1;
 
     + .plan {
       margin-left: 24px;
+
+      @media (max-width: below-mobile) {
+        margin-left: 0;
+        margin-top: 16px;
+      }
     }
   }
 }
@@ -20,6 +32,8 @@
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  padding-top: 26px;
+  padding-bottom: 26px;
 
   .title {
     margin-bottom: 16px;
