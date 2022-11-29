@@ -1,4 +1,4 @@
-import { compose, length, min, groupBy, prop } from 'ramda';
+import { compose, length, min } from 'ramda';
 import { subscriptionType } from 'constants/subscription';
 
 const MAX_COLUMN = 3;
@@ -15,5 +15,3 @@ export const getActionTitle = type => {
 
   return '付費解鎖';
 };
-
-export const groupByPlanType = groupBy(prop('type'));
