@@ -12,7 +12,11 @@ import styles from './PaymentSection.module.css';
 
 const PaymentSection = ({ ...props }) => {
   const [isPrimary, setPrimary] = useState(false);
+  const [activeCardType, setActiveCardType] = useState('unknown');
   const submit = useTappay({
+    handleUpdate: update => {
+      setActiveCardType(update.cardType);
+    },
     handlePrime: prime => {
       alert('get prime 成功，prime: ' + prime);
       alert('creditCard', { prime });
@@ -40,7 +44,7 @@ const PaymentSection = ({ ...props }) => {
               </Label>
               <div className={styles.cardNumberGroup}>
                 <div className={styles.cardIcons}>
-                  <CreditCards />
+                  <CreditCards activeCardType={activeCardType} />
                 </div>
                 <CardNumber />
               </div>

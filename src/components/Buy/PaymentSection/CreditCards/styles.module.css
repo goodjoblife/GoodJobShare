@@ -5,4 +5,11 @@
   & + .creditCard {
     margin-left: 8px;
   }
+
+  opacity: 0.3;
+  transition: opacity 0.3s;
+
+  &.active {
+    opacity: 1;
+  }
 }
