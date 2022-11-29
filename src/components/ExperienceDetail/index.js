@@ -256,7 +256,7 @@ const ExperienceDetail = ({
       <Section bg="white" paddingBottom className={styles.section}>
         <Wrapper size="m">
           <StickyContainer className={styles.container}>
-            <div className={styles.leftContainer}>
+            <div>
               {/* 文章區塊  */}
               {!isFetched(experienceStatus) ? (
                 <Loader />
