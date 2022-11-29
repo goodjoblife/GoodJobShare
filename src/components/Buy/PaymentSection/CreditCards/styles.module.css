@@ -1,0 +1,8 @@
+.creditCard {
+  width: auto;
+  height: 22px;
+
+  & + .creditCard {
+    margin-left: 8px;
+  }
+}

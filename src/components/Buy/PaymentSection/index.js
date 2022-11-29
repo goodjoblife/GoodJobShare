@@ -7,6 +7,7 @@ import Label from 'common/form/Label';
 import useTappay from 'hooks/tappay/useTappay';
 import { CardCCV, CardExpirationDate, CardNumber } from './TappayElement';
 import Row from './Row';
+import CreditCards from './CreditCards';
 import styles from './PaymentSection.module.css';
 
 const PaymentSection = ({ ...props }) => {
@@ -37,7 +38,12 @@ const PaymentSection = ({ ...props }) => {
               <Label className={styles.label} isRequired>
                 卡號
               </Label>
-              <CardNumber />
+              <div className={styles.cardNumberGroup}>
+                <div className={styles.cardIcons}>
+                  <CreditCards />
+                </div>
+                <CardNumber />
+              </div>
             </Row>
             <Row half>
               <Label className={styles.label} isRequired>
