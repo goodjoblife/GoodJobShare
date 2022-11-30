@@ -35,9 +35,9 @@ const MessageBoard = ({ experienceId }) => {
     fetchReplies();
   }, [fetchReplies]);
 
-  const [, likeReply] = useLikeReply();
+  const likeReply = useLikeReply();
 
-  const [, createReply] = useCreateReply(experienceId);
+  const createReply = useCreateReply(experienceId);
 
   return (
     <div className={styles.container}>
