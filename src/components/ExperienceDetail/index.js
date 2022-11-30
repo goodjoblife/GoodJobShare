@@ -41,9 +41,6 @@ import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
-import useFetchReplies from './hooks/useFetchReplies';
-import useLikeReply from './hooks/useLikeReply';
-import useCreateReply from './hooks/useCreateReply';
 import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import {
@@ -224,14 +221,6 @@ const ExperienceDetail = ({ fetchExperience, ...props }) => {
     );
   }, [handleIsModalOpen]);
 
-  // 留言
-  const [repliesState, fetchReplies] = useFetchReplies(experienceId);
-  useEffect(() => {
-    fetchReplies();
-  }, [fetchReplies]);
-  const [, likeReply] = useLikeReply();
-  const [, createReply] = useCreateReply(experienceId);
-
   if (isError(experienceStatus)) {
     if (isUiNotFoundError(experienceError)) {
       return <NotFound />;
@@ -299,21 +288,7 @@ const ExperienceDetail = ({ fetchExperience, ...props }) => {
         )}
         <Wrapper size="s">
           <ScrollElement name={COMMENT_ZONE} />
-          {repliesState.loading || !repliesState.value ? (
-            <Loader size="s" />
-          ) : (
-            <MessageBoard
-              replies={repliesState.value}
-              likeReply={async reply => {
-                await likeReply(reply);
-                await fetchReplies();
-              }}
-              submitComment={async comment => {
-                await createReply(comment);
-                await fetchReplies();
-              }}
-            />
-          )}
+          <MessageBoard experienceId={experienceDataId} />
         </Wrapper>
       </Section>
       <Modal
