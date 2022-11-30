@@ -1,10 +1,10 @@
-import { useAsyncFn } from 'react-use';
+import { useCallback } from 'react';
 import { useToken } from 'hooks/auth';
 import api from '../../../apis';
 
 const useLikeReply = () => {
   const token = useToken();
-  return useAsyncFn(
+  return useCallback(
     async reply => {
       const { _id: replyId, liked } = reply;
       if (liked) {
