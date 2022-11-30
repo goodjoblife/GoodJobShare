@@ -6,8 +6,6 @@ import * as ExperienceDetailActions from '../../actions/experienceDetail';
 
 const mapStateToProps = state => ({
   experienceDetail: state.experienceDetail,
-  replies: state.experienceDetail.get('replies'),
-  repliesStatus: state.experienceDetail.get('replyStatus'),
 });
 
 const mapDispatchToProps = dispatch =>

@@ -20,13 +20,15 @@ import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
 import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
-import { withPermission } from 'common/permission-context';
 import GoogleAdUnit from 'common/GoogleAdUnit';
 import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
 import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
-import { useLogin } from 'hooks/login';
+import usePermission from 'hooks/usePermission';
+import { isFetched, isError } from 'constants/status';
+import { COMMENT_ZONE } from 'constants/formElements';
+import breakpoints from 'constants/breakpoints';
 import useTrace from './hooks/useTrace';
 import Article from './Article';
 import MessageBoard from './MessageBoard';
@@ -39,15 +41,15 @@ import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
-import { isFetching, isFetched, isError } from '../../constants/status';
+import useFetchReplies from './hooks/useFetchReplies';
+import useLikeReply from './hooks/useLikeReply';
+import useCreateReply from './hooks/useCreateReply';
 import { fetchExperience } from '../../actions/experienceDetail';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
-import { COMMENT_ZONE } from '../../constants/formElements';
-import breakpoints from '../../constants/breakpoints';
 import {
   pageType as PAGE_TYPE,
   tabType as TAB_TYPE,
-} from '../../constants/companyJobTitle';
+} from 'constants/companyJobTitle';
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 
@@ -57,10 +59,7 @@ const MODAL_TYPE = {
   REPORT_SUCCESS: 'REPORT_SUCCESS',
 };
 
-const experienceIdSelector = R.compose(
-  params => params.id,
-  paramsSelector,
-);
+const experienceIdSelector = R.compose(params => params.id);
 
 const experienceTypeToTabType = {
   work: TAB_TYPE.WORK_EXPERIENCE,
@@ -72,36 +71,16 @@ const pageTypeToNameSelector = {
   [PAGE_TYPE.JOB_TITLE]: R.path(['job_title', 'name']),
 };
 
-const ExperienceDetail = ({
-  submitComment,
-  likeReply,
-
-  fetchExperience,
-  fetchReplies,
-
-  // from withPermission
-  canView,
-  fetchPermission,
-  permissionFetched,
-
-  ...props
-}) => {
+const ExperienceDetail = ({ fetchExperience, ...props }) => {
   const params = useParams();
-  const experienceId = params.id;
+  const experienceId = experienceIdSelector(params);
   const { width } = useWindowSize();
 
   useEffect(() => {
     fetchExperience(experienceId);
-    fetchReplies(experienceId);
-  }, [experienceId, fetchExperience, fetchReplies]);
+  }, [experienceId, fetchExperience]);
 
-  const [isLoggedIn] = useLogin();
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      fetchReplies(experienceId);
-    }
-  }, [isLoggedIn, experienceId, fetchExperience, fetchReplies]);
+  const [permissionFetched, fetchPermission, canView] = usePermission();
 
   useEffect(() => {
     fetchPermission();
@@ -140,8 +119,6 @@ const ExperienceDetail = ({
   );
   const data = props.experienceDetail.toJS();
   const { experience, experienceStatus, experienceError } = data;
-  const replies = props.replies.toJS();
-  const repliesStatus = props.repliesStatus;
 
   // send event to Amplitude
   const experienceDataId = useMemo(() => (experience ? experience.id : null), [
@@ -247,6 +224,14 @@ const ExperienceDetail = ({
     );
   }, [handleIsModalOpen]);
 
+  // 留言
+  const [repliesState, fetchReplies] = useFetchReplies(experienceId);
+  useEffect(() => {
+    fetchReplies();
+  }, [fetchReplies]);
+  const [, likeReply] = useLikeReply();
+  const [, createReply] = useCreateReply(experienceId);
+
   if (isError(experienceStatus)) {
     if (isUiNotFoundError(experienceError)) {
       return <NotFound />;
@@ -314,14 +299,18 @@ const ExperienceDetail = ({
         )}
         <Wrapper size="s">
           <ScrollElement name={COMMENT_ZONE} />
-          {isFetching(repliesStatus) ? (
+          {repliesState.loading || !repliesState.value ? (
             <Loader size="s" />
           ) : (
             <MessageBoard
-              replies={replies}
-              likeReply={likeReply}
-              submitComment={comment => {
-                submitComment(experienceId, comment);
+              replies={repliesState.value}
+              likeReply={async reply => {
+                await likeReply(reply);
+                await fetchReplies();
+              }}
+              submitComment={async comment => {
+                await createReply(comment);
+                await fetchReplies();
               }}
             />
           )}
@@ -346,30 +335,21 @@ const ExperienceDetail = ({
 
 ExperienceDetail.propTypes = {
   experienceDetail: ImmutablePropTypes.map.isRequired,
-  replies: ImmutablePropTypes.list.isRequired,
-  repliesStatus: PropTypes.string,
   fetchExperience: PropTypes.func.isRequired,
-  fetchReplies: PropTypes.func.isRequired,
-  fetchPermission: PropTypes.func.isRequired,
-  likeReply: PropTypes.func.isRequired,
-  submitComment: PropTypes.func.isRequired,
   location: PropTypes.shape({
     state: PropTypes.shape({
       replyId: PropTypes.string,
       pageType: PropTypes.string,
     }),
   }),
-  canView: PropTypes.bool.isRequired,
 };
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const experienceId = experienceIdSelector(props);
+  const params = paramsSelector(props);
+  const experienceId = experienceIdSelector(params);
   return dispatch(fetchExperience(experienceId));
 });
 
-const hoc = compose(
-  ssr,
-  withPermission,
-);
+const hoc = compose(ssr);
 
 export default hoc(ExperienceDetail);
