@@ -97,7 +97,6 @@ const MessageBoard = ({ experienceId }) => {
             ))}
           </Fragment>
         )}
-
         <ScrollElement name={REPLIES_BOTTOM} />
       </div>
     </div>
