@@ -12,7 +12,6 @@ import { Element as ScrollElement, scroller } from 'react-scroll';
 import { compose, setStatic } from 'recompose';
 import cn from 'classnames';
 import { useParams } from 'react-router-dom';
-import { StickyContainer } from 'react-sticky';
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
@@ -255,34 +254,32 @@ const ExperienceDetail = ({
       <Seo experienceState={data} />
       <Section bg="white" paddingBottom className={styles.section}>
         <Wrapper size="m">
-          <StickyContainer className={styles.container}>
-            <div>
-              {/* 文章區塊  */}
-              {!isFetched(experienceStatus) ? (
-                <Loader />
-              ) : (
-                <Fragment>
-                  <div className={styles.breadCrumb}>
-                    <BreadCrumb
-                      data={generateBreadCrumbData({
-                        pageType,
-                        pageName: pageTypeToNameSelector[pageType](experience),
-                        tabType: experienceTypeToTabType[experience.type],
-                        experience,
-                      })}
-                    />
-                  </div>
-                  <ExperienceHeading experience={experience} />
-                  {reportZone}
-                  <Article
-                    experience={experience}
-                    hideContent={!canView}
-                    onClickMsgButton={scrollToCommentZone}
+          <div>
+            {/* 文章區塊  */}
+            {!isFetched(experienceStatus) ? (
+              <Loader />
+            ) : (
+              <Fragment>
+                <div className={styles.breadCrumb}>
+                  <BreadCrumb
+                    data={generateBreadCrumbData({
+                      pageType,
+                      pageName: pageTypeToNameSelector[pageType](experience),
+                      tabType: experienceTypeToTabType[experience.type],
+                      experience,
+                    })}
                   />
-                </Fragment>
-              )}
-            </div>
-          </StickyContainer>
+                </div>
+                <ExperienceHeading experience={experience} />
+                {reportZone}
+                <Article
+                  experience={experience}
+                  hideContent={!canView}
+                  onClickMsgButton={scrollToCommentZone}
+                />
+              </Fragment>
+            )}
+          </div>
         </Wrapper>
         {isFetched(experienceStatus) && (
           <React.Fragment>

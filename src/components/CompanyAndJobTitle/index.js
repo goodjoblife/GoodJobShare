@@ -5,7 +5,7 @@ import Wrapper from 'common/base/Wrapper';
 import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
 
-const CompanyAndJobTitlePageContainer = ({ routes, location }) => {
+const CompanyAndJobTitlePageContainer = ({ routes }) => {
   return (
     <div>
       <Wrapper size="l" className={styles.container}>
