@@ -17,14 +17,18 @@ const cardTypeSrc = {
   unionpay: UnionPay,
 };
 
+const cardTypes = keys(cardTypeSrc);
+
+const isUnknownCardType = cardType => cardTypes.includes(cardType) === false;
+
 const CreditCards = ({ activeCardType }) => (
   <React.Fragment>
-    {keys(cardTypeSrc).map(cardType => (
+    {cardTypes.map(cardType => (
       <img
         key={cardType}
         className={cn(styles.creditCard, {
           [styles.active]:
-            activeCardType === cardType || activeCardType === 'unknown',
+            activeCardType === cardType || isUnknownCardType(activeCardType),
         })}
         src={cardTypeSrc[cardType]}
         alt=""
