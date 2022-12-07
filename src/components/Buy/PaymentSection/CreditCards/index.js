@@ -31,7 +31,7 @@ const CreditCards = ({ activeCardType }) => (
             activeCardType === cardType || isUnknownCardType(activeCardType),
         })}
         src={cardTypeSrc[cardType]}
-        alt=""
+        alt={cardType}
       />
     ))}
   </React.Fragment>
