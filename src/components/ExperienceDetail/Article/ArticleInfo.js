@@ -12,7 +12,7 @@ import {
   generatePageURL,
 } from '../../../constants/companyJobTitle';
 
-const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth()} 月`;
+const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
   if (Number.isInteger(year)) {
     if (year === 0) {
