@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 
 export default ({ id, src, onLoad }) => {
-  useEffect(() => {
-    const fjs = document.getElementsByTagName('script')[0];
+  const loadScript = useCallback(() => {
     if (document.getElementById(id)) return;
+
+    const fjs = document.getElementsByTagName('script')[0];
     const js = document.createElement('script');
     js.id = id;
     js.src = src;
@@ -11,4 +12,6 @@ export default ({ id, src, onLoad }) => {
 
     js.onload = onLoad;
   }, [id, onLoad, src]);
+
+  return loadScript;
 };
