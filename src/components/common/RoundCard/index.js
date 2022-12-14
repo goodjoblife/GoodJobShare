@@ -5,10 +5,10 @@ import styles from './RoundCard.module.css';
 
 const RoundCard = ({ children, className, checked, ...props }) => (
   <div
-    className={cn(styles.container, { [styles.checked]: checked }, className)}
+    className={cn(styles.container, { [styles.checked]: checked })}
     {...props}
   >
-    {children}
+    <div className={className}>{children}</div>
   </div>
 );
 
