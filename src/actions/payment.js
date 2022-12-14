@@ -6,12 +6,12 @@ const setRedirectUrl = redirectUrl => ({
   redirectUrl,
 });
 
-export const navigateToBuy = (redirectUrl, skuId) => (
+export const navigateToBuy = (redirectUrl, actionUrl) => (
   dispatch,
   getState,
   { history },
 ) => {
-  history.push(`/buy?skuId=${skuId}`);
+  history.push(actionUrl);
   dispatch(setRedirectUrl(redirectUrl));
 };
 

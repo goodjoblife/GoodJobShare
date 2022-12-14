@@ -20,12 +20,12 @@ const getButtonType = type => {
   return 'hollowRed';
 };
 
-const PlanCard = ({ title, description, amount, actionUrl, type, skuId }) => {
+const PlanCard = ({ title, description, amount, type, skuId }) => {
   const actionTitle = getActionTitle(type);
 
   const history = useHistory();
   const redirectUrl = history.location.pathname;
-  const toBuy = useToBuy(redirectUrl, skuId, false);
+  const { toBuy, actionUrl } = useToBuy(redirectUrl, skuId, false);
   const onButtonClick = useCallback(
     evt => {
       evt.preventDefault();
@@ -66,7 +66,6 @@ PlanCard.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   type: PropTypes.string,
-  actionUrl: PropTypes.string,
   amount: PropTypes.number,
   skuId: PropTypes.string,
 };
@@ -74,7 +73,6 @@ PlanCard.propTypes = {
 PlanCard.defaultProps = {
   title: '',
   description: '',
-  actionUrl: '',
   amount: 0,
 };
 
