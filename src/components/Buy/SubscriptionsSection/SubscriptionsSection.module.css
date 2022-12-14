@@ -16,6 +16,7 @@
 }
 
 .content {
+  padding: 26px 78px;
   display: flex;
   flex-direction: column;
   align-items: center;

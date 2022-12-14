@@ -7,15 +7,22 @@ import Label from 'common/form/Label';
 import useTappay from 'hooks/tappay/useTappay';
 import { CardCCV, CardExpirationDate, CardNumber } from './TappayElement';
 import Row from './Row';
+import CreditCards from './CreditCards';
 import styles from './PaymentSection.module.css';
 
 const PaymentSection = ({ ...props }) => {
   const [isPrimary, setPrimary] = useState(false);
+  const [activeCardType, setActiveCardType] = useState('unknown');
+  const handleUpdate = useCallback(update => {
+    setActiveCardType(update.cardType);
+  }, []);
+  const handlePrime = useCallback(prime => {
+    alert('get prime 成功，prime: ' + prime);
+    alert('creditCard', { prime });
+  }, []);
   const submit = useTappay({
-    handlePrime: prime => {
-      alert('get prime 成功，prime: ' + prime);
-      alert('creditCard', { prime });
-    },
+    handleUpdate,
+    handlePrime,
   });
   const onSubmit = useCallback(
     e => {
@@ -37,7 +44,12 @@ const PaymentSection = ({ ...props }) => {
               <Label className={styles.label} isRequired>
                 卡號
               </Label>
-              <CardNumber />
+              <div className={styles.cardNumberGroup}>
+                <div className={styles.cardIcons}>
+                  <CreditCards activeCardType={activeCardType} />
+                </div>
+                <CardNumber />
+              </div>
             </Row>
             <Row half>
               <Label className={styles.label} isRequired>

@@ -1,19 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useWindowSize } from 'react-use';
 
 import { Section } from 'common/base';
-import GoogleAdUnit from 'common/GoogleAdUnit';
 
 import SnippetBlock from './SnippetBlock';
 import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import { tabType as TAB_TYPE } from '../../../constants/companyJobTitle';
-import breakpoints from '../../../constants/breakpoints';
 import SummaryBlock from './SummaryBlock';
-
-import styles from './Overview.module.css';
 
 const SALARY_WORK_TIMES_LIMIT = 5;
 const WORK_EXPERIENCES_LIMIT = 3;
@@ -32,7 +27,6 @@ const Overview = ({
   overtimeFrequencyCount,
   canView,
 }) => {
-  const { width } = useWindowSize();
   return (
     <Section Tag="main" paddingBottom>
       <SnippetBlock
@@ -50,14 +44,6 @@ const Overview = ({
           averageWeekWorkTime={averageWeekWorkTime}
           overtimeFrequencyCount={overtimeFrequencyCount}
         />
-        {width <= breakpoints.xs ? (
-          <div className={styles.adContainer}>
-            <GoogleAdUnit
-              sizes={[[300, 250]]}
-              adUnit="goodjob_m_list_above_300x250"
-            />
-          </div>
-        ) : null}
         <WorkingHourTable
           data={salaryWorkTimes.slice(0, SALARY_WORK_TIMES_LIMIT)}
           hideContent={!canView}

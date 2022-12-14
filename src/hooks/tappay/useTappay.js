@@ -40,7 +40,7 @@ const styles = {
   },
 };
 
-const useTappay = ({ handlePrime }) => {
+const useTappay = ({ handleUpdate, handlePrime }) => {
   const [tappaySDKLoaded, setTappySDKLoad] = useState(false);
   const [directCardSetup, setDirectCardSetup] = useState(false);
 
@@ -73,10 +73,10 @@ const useTappay = ({ handlePrime }) => {
     if (tappaySDKLoaded) {
       TPDirect.card.onUpdate(update => {
         // 即時反應每個行為
-        console.log(update);
+        handleUpdate(update);
       });
     }
-  }, [tappaySDKLoaded]);
+  }, [handleUpdate, tappaySDKLoaded]);
 
   // 送出 Tappay 表單
   const submit = useCallback(() => {

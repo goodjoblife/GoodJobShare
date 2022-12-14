@@ -34,17 +34,19 @@ const PlanCard = ({ title, description, amount, type, skuId }) => {
     [toBuy],
   );
 
-  const isPurchasePlan = type === subscriptionType.buySubscription;
+  const isSubmitData = type === subscriptionType.submitData;
 
-  const linkUrl = isPurchasePlan ? actionUrl : '/share';
+  const linkUrl = isSubmitData ? '/share' : actionUrl;
 
   return (
-    <RoundCard>
+    <RoundCard className={styles.container}>
       <div className={styles.content}>
-        <Heading Tag="h3" size="sm" className={styles.title} bold>
-          {title}
-        </Heading>
-        <P className={styles.description}>{description}</P>
+        <div className={styles.topArea}>
+          <Heading Tag="h3" size="sm" className={styles.title} bold>
+            {title}
+          </Heading>
+          <P className={styles.description}>{description}</P>
+        </div>
         <div className={styles.amountSection}>
           <P className={styles.amount} bold>
             {amount}
@@ -53,14 +55,24 @@ const PlanCard = ({ title, description, amount, type, skuId }) => {
             元
           </P>
         </div>
-        <Link to={linkUrl} onClick={isPurchasePlan ? onButtonClick : null}>
-          <Button
-            className={styles.actionButton}
-            btnStyle={getButtonType(type)}
-          >
-            {actionTitle}
-          </Button>
-        </Link>
+        <div className={styles.bottomArea}>
+          <div className={styles.helperContainer}>
+            {isSubmitData && (
+              <P className={styles.helperText} size="s">
+                \ 留下你的資料幫助其他人 /
+              </P>
+            )}
+          </div>
+          <Link to={linkUrl} onClick={isSubmitData ? null : onButtonClick}>
+            <Button
+              className={styles.actionButton}
+              btnStyle={getButtonType(type)}
+              circleSize="lg"
+            >
+              {actionTitle}
+            </Button>
+          </Link>
+        </div>
       </div>
     </RoundCard>
   );
