@@ -20,13 +20,17 @@ const getButtonType = type => {
 
 const PlanCard = ({ title, description, amount, actionUrl, type }) => {
   const actionTitle = getActionTitle(type);
+
+  const isSubmitData = type === subscriptionType.submitData;
   return (
-    <RoundCard>
+    <RoundCard className={styles.container}>
       <div className={styles.content}>
-        <Heading Tag="h3" size="sm" className={styles.title} bold>
-          {title}
-        </Heading>
-        <P className={styles.description}>{description}</P>
+        <div className={styles.topArea}>
+          <Heading Tag="h3" size="sm" className={styles.title} bold>
+            {title}
+          </Heading>
+          <P className={styles.description}>{description}</P>
+        </div>
         <div className={styles.amountSection}>
           <P className={styles.amount} bold>
             {amount}
@@ -35,14 +39,24 @@ const PlanCard = ({ title, description, amount, actionUrl, type }) => {
             元
           </P>
         </div>
-        <Link to={actionUrl}>
-          <Button
-            className={styles.actionButton}
-            btnStyle={getButtonType(type)}
-          >
-            {actionTitle}
-          </Button>
-        </Link>
+        <div className={styles.bottomArea}>
+          <div className={styles.helperContainer}>
+            {isSubmitData && (
+              <P className={styles.helperText} size="s">
+                \ 留下你的資料幫助其他人 /
+              </P>
+            )}
+          </div>
+          <Link to={actionUrl}>
+            <Button
+              className={styles.actionButton}
+              btnStyle={getButtonType(type)}
+              circleSize="lg"
+            >
+              {actionTitle}
+            </Button>
+          </Link>
+        </div>
       </div>
     </RoundCard>
   );

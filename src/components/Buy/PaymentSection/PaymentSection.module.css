@@ -46,3 +46,16 @@
     font-size: 13px;
   }
 }
+
+.cardNumberGroup {
+  position: relative;
+
+  .cardIcons {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    height: 100%;
+    left: 100%;
+    margin-left: 8.75px;
+  }
+}

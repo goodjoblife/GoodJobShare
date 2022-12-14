@@ -6,7 +6,7 @@
 
   @media (min-width: above-tablet) {
     display: grid;
-    column-gap: 20px;
+    column-gap: 32px;
   }
 }
 
@@ -16,12 +16,4 @@
   @media (min-width: above-tablet) {
     margin-bottom: 0;
   }
-}
-
-.titleSubmitData {
-  color: yellow-dark;
-}
-
-.titleBuySubscription {
-  color: warning-red;
 }
