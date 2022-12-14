@@ -90,6 +90,7 @@ PlanCard.defaultProps = {
   title: '',
   description: '',
   amount: 0,
+  skuId: '',
 };
 
 export default PlanCard;
