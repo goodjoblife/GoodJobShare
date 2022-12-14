@@ -1,20 +1,21 @@
 import { useSelector } from 'react-redux';
 
 import {
-  fromUrlSelector,
+  redirectUrlSelector,
   paymentRecordSelector,
 } from '../../selectors/payment';
 
-export const usePaymentRecord = () => useSelector(paymentRecordSelector);
-export const useFromUrl = () => useSelector(fromUrlSelector);
+export const usePaymentRecordSelector = () =>
+  useSelector(paymentRecordSelector);
+export const useRedirectUrlSelector = () => useSelector(redirectUrlSelector);
 
 const usePayment = () => {
-  const paymentRecord = useSelector(paymentRecordSelector);
-  const fromUrl = useSelector(fromUrlSelector);
+  const paymentRecord = usePaymentRecordSelector();
+  const redirectUrl = useRedirectUrlSelector();
 
   return {
     paymentRecord,
-    fromUrl,
+    redirectUrl,
   };
 };
 

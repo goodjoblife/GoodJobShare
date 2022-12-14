@@ -1,16 +1,18 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-import { setFromUrl } from '../../actions/payment';
+import { setRedirectUrl } from '../../actions/payment';
 
 const useToBuy = () => {
-  const fromUrl = '';
-
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const redirectUrl = history.location.pathname;
 
   const toBuy = useCallback(() => {
-    dispatch(setFromUrl(fromUrl));
-  }, [dispatch, fromUrl]);
+    dispatch(setRedirectUrl(redirectUrl));
+  }, [dispatch, redirectUrl]);
 
   return toBuy;
 };
