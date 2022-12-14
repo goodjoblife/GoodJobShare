@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 
 import RoundCard from 'common/RoundCard';
@@ -25,7 +25,15 @@ const PlanCard = ({ title, description, amount, actionUrl, type, skuId }) => {
 
   const history = useHistory();
   const redirectUrl = history.location.pathname;
-  const toBuy = useToBuy(redirectUrl, skuId);
+  const toBuy = useToBuy(redirectUrl, skuId, false);
+  const onButtonClick = useCallback(
+    evt => {
+      evt.preventDefault();
+      toBuy();
+    },
+    [toBuy],
+  );
+
   return (
     <RoundCard>
       <div className={styles.content}>
@@ -41,13 +49,14 @@ const PlanCard = ({ title, description, amount, actionUrl, type, skuId }) => {
             元
           </P>
         </div>
-        <Button
-          className={styles.actionButton}
-          btnStyle={getButtonType(type)}
-          onClick={toBuy}
-        >
-          {actionTitle}
-        </Button>
+        <Link to={actionUrl} onClick={onButtonClick}>
+          <Button
+            className={styles.actionButton}
+            btnStyle={getButtonType(type)}
+          >
+            {actionTitle}
+          </Button>
+        </Link>
       </div>
     </RoundCard>
   );
