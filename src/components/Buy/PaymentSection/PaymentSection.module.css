@@ -1,4 +1,4 @@
-@value above-small from "common/variables.module.css";
+@value above-small, below-small from "common/variables.module.css";
 
 .title {
   padding-bottom: 24px;
@@ -47,15 +47,31 @@
   }
 }
 
-.cardNumberGroup {
-  position: relative;
+.cardIcons {
+  display: flex;
+  align-items: center;
+}
 
-  .cardIcons {
+@media (min-width: above-small) {
+  .cardNumberGroup {
+    position: relative;
+
+    .cardIcons {
+      position: absolute;
+      height: 100%;
+      left: 100%;
+      margin-left: 8.75px;
+    }
+  }
+}
+
+@media (max-width: below-small) {
+  .cardNumberGroup {
     display: flex;
-    align-items: center;
-    position: absolute;
-    height: 100%;
-    left: 100%;
-    margin-left: 8.75px;
+    flex-direction: column-reverse;
+
+    .cardIcons {
+      margin-topt: 1.83px;
+    }
   }
 }
