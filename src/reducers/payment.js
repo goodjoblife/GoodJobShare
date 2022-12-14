@@ -8,9 +8,9 @@ const preloadedState = {
 };
 
 export default createReducer(preloadedState, {
-  [SET_REDIRECT_URL]: (state, { url }) => ({
+  [SET_REDIRECT_URL]: (state, { redirectUrl }) => ({
     ...state,
-    redirectUrl: url,
+    redirectUrl,
   }),
   [SET_PAYMENT_RECORD]: (state, { paymentRecord }) => ({
     ...state,

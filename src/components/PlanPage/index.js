@@ -9,7 +9,7 @@ import { groupByPlanType } from './helpers';
 
 const plans = [
   {
-    skuId: 1,
+    skuId: 'submit-data',
     type: 'SubmitData',
     title: '留下一筆資料',
     description: '解鎖全站 7 天',
@@ -17,7 +17,7 @@ const plans = [
     url: '/',
   },
   {
-    skuId: 2,
+    skuId: '1-months-subscription',
     type: 'BuySubscription',
     title: '包月方案',
     description: '解鎖全站 1 個月',
@@ -25,7 +25,7 @@ const plans = [
     url: '/',
   },
   {
-    skuId: 3,
+    skuId: '3-months-subscription',
     type: 'BuySubscription',
     title: '包季方案',
     description: '解鎖全站 3 個月',

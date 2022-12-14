@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import RoundCard from 'common/RoundCard';
 import Button from 'common/button/Button';
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
 import { subscriptionType } from 'constants/subscription';
+import useToBuy from 'hooks/payment/useToBuy';
 
 import styles from './PlanCard.module.css';
 import { getActionTitle } from './helpers';
@@ -18,8 +20,12 @@ const getButtonType = type => {
   return 'hollowRed';
 };
 
-const PlanCard = ({ title, description, amount, actionUrl, type }) => {
+const PlanCard = ({ title, description, amount, actionUrl, type, skuId }) => {
   const actionTitle = getActionTitle(type);
+
+  const history = useHistory();
+  const redirectUrl = history.location.pathname;
+  const toBuy = useToBuy(redirectUrl, skuId);
   return (
     <RoundCard>
       <div className={styles.content}>
@@ -35,14 +41,13 @@ const PlanCard = ({ title, description, amount, actionUrl, type }) => {
             元
           </P>
         </div>
-        <Link to={actionUrl}>
-          <Button
-            className={styles.actionButton}
-            btnStyle={getButtonType(type)}
-          >
-            {actionTitle}
-          </Button>
-        </Link>
+        <Button
+          className={styles.actionButton}
+          btnStyle={getButtonType(type)}
+          onClick={toBuy}
+        >
+          {actionTitle}
+        </Button>
       </div>
     </RoundCard>
   );
@@ -54,6 +59,7 @@ PlanCard.propTypes = {
   type: PropTypes.string,
   actionUrl: PropTypes.string,
   amount: PropTypes.number,
+  skuId: PropTypes.string,
 };
 
 PlanCard.defaultProps = {

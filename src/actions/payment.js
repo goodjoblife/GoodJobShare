@@ -1,17 +1,17 @@
 export const SET_REDIRECT_URL = '@@PAYMENT/SET_REDIRECT_URL';
 export const SET_PAYMENT_RECORD = '@@PAYMENT/SET_PAYMENT_RECORD';
 
-export const setRedirectUrl = url => ({
+const setRedirectUrl = redirectUrl => ({
   type: SET_REDIRECT_URL,
-  url,
+  redirectUrl,
 });
 
-export const navigateToBuy = redirectUrl => (
+export const navigateToBuy = (redirectUrl, skuId) => (
   dispatch,
   getState,
   { history },
 ) => {
-  history.push('/buy');
+  history.push(`/buy?skuId=${skuId}`);
   dispatch(setRedirectUrl(redirectUrl));
 };
 

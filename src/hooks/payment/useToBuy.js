@@ -1,18 +1,14 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
-import { setRedirectUrl } from '../../actions/payment';
+import { navigateToBuy } from '../../actions/payment';
 
-const useToBuy = () => {
+const useToBuy = (redirectUrl = '/', skuId = null) => {
   const dispatch = useDispatch();
-  const history = useHistory();
-
-  const redirectUrl = history.location.pathname;
 
   const toBuy = useCallback(() => {
-    dispatch(setRedirectUrl(redirectUrl));
-  }, [dispatch, redirectUrl]);
+    dispatch(navigateToBuy(redirectUrl, skuId));
+  }, [dispatch, redirectUrl, skuId]);
 
   return toBuy;
 };
