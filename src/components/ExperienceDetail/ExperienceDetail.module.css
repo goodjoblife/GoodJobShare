@@ -1,17 +1,5 @@
 @value below-small, above-small from "common/variables.module.css";
 
-.container {
-  display: flex;
-  justify-content: center;
-}
-
-.leftContainer {
-  flex-shrink: 1;
-  @media (min-width: above-small) {
-    padding-right: 16px;
-  }
-}
-
 .breadCrumb {
   margin-bottom: 16px;
 
