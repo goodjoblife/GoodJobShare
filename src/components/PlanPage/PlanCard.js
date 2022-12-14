@@ -34,6 +34,10 @@ const PlanCard = ({ title, description, amount, type, skuId }) => {
     [toBuy],
   );
 
+  const isPurchasePlan = type === subscriptionType.buySubscription;
+
+  const linkUrl = isPurchasePlan ? actionUrl : '/share';
+
   return (
     <RoundCard>
       <div className={styles.content}>
@@ -49,7 +53,7 @@ const PlanCard = ({ title, description, amount, type, skuId }) => {
             元
           </P>
         </div>
-        <Link to={actionUrl} onClick={onButtonClick}>
+        <Link to={linkUrl} onClick={isPurchasePlan ? onButtonClick : null}>
           <Button
             className={styles.actionButton}
             btnStyle={getButtonType(type)}
