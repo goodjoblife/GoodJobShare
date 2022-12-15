@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Section } from 'common/base';
 import SubscriptionPlanCollection from './SubscriptionPlanCollection';
 import Captain from './Captain';
+import { useLocation } from 'react-router';
+import qs from 'qs';
+import { contains, head, prop } from 'ramda';
 
 const plans = [
   {
@@ -18,8 +21,22 @@ const plans = [
   },
 ];
 
+const sanitizeSkuId = skuId => {
+  const skuIds = plans.map(prop('id'));
+  if (contains(skuId, skuIds)) {
+    return skuId;
+  }
+  return head(skuIds);
+};
+
 const SubscriptionsSection = ({ ...props }) => {
-  const [selectedId, setSelectedId] = useState(plans[0].id);
+  const location = useLocation();
+  const query = useMemo(
+    () => qs.parse(location.search, { ignoreQueryPrefix: true }),
+    [location.search],
+  );
+  const skuId = sanitizeSkuId(query.sku_id);
+  const [selectedId, setSelectedId] = useState(skuId);
   return (
     <Section {...props}>
       <SubscriptionPlanCollection
