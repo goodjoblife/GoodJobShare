@@ -5,13 +5,13 @@ import Captain from './Captain';
 
 const plans = [
   {
-    id: 'month',
+    id: '2',
     name: '包月方案',
     price: 99,
     duration: { amount: 1, unit: 'month' },
   },
   {
-    id: 'quarter',
+    id: '3',
     name: '包季方案',
     price: 149,
     duration: { amount: 3, unit: 'month' },
