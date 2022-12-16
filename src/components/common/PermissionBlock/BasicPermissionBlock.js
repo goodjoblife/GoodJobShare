@@ -18,8 +18,6 @@ class BasicPermissionBlock extends React.Component {
     simple: PropTypes.bool,
     experienceCount: PropTypes.number.isRequired,
     timeAndSalaryCount: PropTypes.number.isRequired,
-    hasFetchedExperienceCount: PropTypes.bool.isRequired,
-    hasFetchedTimeAndSalaryCount: PropTypes.bool.isRequired,
     queryExperienceCount: PropTypes.func.isRequired,
     queryTimeAndSalaryCount: PropTypes.func.isRequired,
     isModalOpen: PropTypes.bool.isRequired,
@@ -32,12 +30,8 @@ class BasicPermissionBlock extends React.Component {
   };
 
   componentDidMount() {
-    if (this.props.hasFetchedExperienceCount === false) {
-      this.props.queryExperienceCount();
-    }
-    if (this.props.hasFetchedTimeAndSalaryCount === false) {
-      this.props.queryTimeAndSalaryCount();
-    }
+    this.props.queryExperienceCount();
+    this.props.queryTimeAndSalaryCount();
   }
 
   renderModalContent = () => {

@@ -1,6 +1,5 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import R from 'ramda';
 
 import LandingPage from '../../components/LandingPage';
 import { queryMenuIfUnfetched } from '../../actions/laborRights';
@@ -9,11 +8,7 @@ import { queryPopularCompanyAverageSalary } from '../../actions/popularCompanyAv
 import { queryPopularJobTitleSalaryDistribution } from '../../actions/popularJobTitleSalaryDistribution';
 import { queryTimeAndSalaryCountIfUnfetched } from '../../actions/timeAndSalary';
 import { menuEntriesSelector } from '../../selectors/laborRightsSelector';
-
-const laborRightsCountSelector = R.compose(
-  R.length,
-  menuEntriesSelector,
-);
+import { laborRightsCountSelector } from '../../selectors/countSelector';
 
 const mapStateToProps = state => ({
   popularCompanyAverageSalary: state.popularCompanyAverageSalary.data,

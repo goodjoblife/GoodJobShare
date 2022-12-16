@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import ProgressBarWithDataCount from 'common/ProgressBarWithDataCount';
 import { useShareLink } from 'hooks/experiments';
 import styles from './Banners.module.css';
-import ProgressBarWithDataCount from '../../../containers/ProgressBar';
 
 const Banner1 = ({ className }) => {
   const shareLink = useShareLink();

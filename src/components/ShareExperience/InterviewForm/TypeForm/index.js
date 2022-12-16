@@ -1,4 +1,4 @@
-import React, { useCallback, Fragment, useState } from 'react';
+import React, { useCallback, Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   isNil,
@@ -18,7 +18,7 @@ import {
   reject,
   path,
 } from 'ramda';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import ReactGA from 'react-ga';
 import ReactPixel from 'react-facebook-pixel';
@@ -31,7 +31,15 @@ import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
 import Footer from '../../common/TypeFormFooter';
 import { getCompaniesSearch } from '../../../../apis/companySearchApi';
 import { getJobTitlesSearch } from '../../../../apis/jobTitleSearchApi';
-import { createInterviewExperience } from '../../../../actions/experiences';
+import {
+  experienceCountSelector,
+  timeAndSalaryCountSelector,
+} from '../../../../selectors/countSelector';
+import {
+  createInterviewExperience,
+  queryExperienceCountIfUnfetched,
+} from '../../../../actions/experiences';
+import { queryTimeAndSalaryCountIfUnfetched } from '../../../../actions/timeAndSalary';
 import { GA_CATEGORY, GA_ACTION } from '../../../../constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from '../../../../constants/pixelConstants';
 import {
@@ -78,7 +86,6 @@ const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
     jobTitle={jobTitle}
   />
 );
-const footer = <Footer />;
 
 const questions = [
   {
@@ -340,6 +347,9 @@ const TypeForm = ({ open, onClose }) => {
   const handleSubmit = useCallback(
     async draft => {
       try {
+        if (submitStatus === 'submitting') {
+          return;
+        }
         const body = bodyFromDraft(draft);
         // section 的標題與預設文字 = 4 + 11 + 19 + 25 個字
         const goalValue = calcInterviewExperienceValue(body, 59);
@@ -376,8 +386,15 @@ const TypeForm = ({ open, onClose }) => {
         setSubmitStatus('error');
       }
     },
-    [dispatch],
+    [dispatch, submitStatus],
   );
+
+  const experienceCount = useSelector(experienceCountSelector);
+  const salaryCount = useSelector(timeAndSalaryCountSelector);
+  useEffect(() => {
+    dispatch(queryExperienceCountIfUnfetched());
+    dispatch(queryTimeAndSalaryCountIfUnfetched());
+  }, [dispatch]);
 
   return (
     <Fragment>
@@ -386,7 +403,7 @@ const TypeForm = ({ open, onClose }) => {
         onClose={() => setSubmitStatus('quitting')}
         questions={questions}
         header={header}
-        footer={footer}
+        footer={<Footer dataNum={salaryCount + experienceCount} />}
         onSubmit={handleSubmit}
       />
       <ConfirmModal
