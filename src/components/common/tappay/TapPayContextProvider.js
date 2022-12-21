@@ -1,13 +1,21 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import useScript from 'hooks/useScript';
 import TapPayContext from './TapPayContext';
-import { TAP_PAY_APP_ID, TAP_PAY_APP_KEY } from '../../../config';
+import {
+  TAP_PAY_APP_ID,
+  TAP_PAY_APP_KEY,
+  TAP_PAY_SERVER_TYPE,
+} from '../../../config';
 
 const TapPayContextProvider = ({ children }) => {
   // 初始化 TapPay 實例
   const [tapPay, setTapPay] = useState(null);
   const onLoad = useCallback(() => {
-    window.TPDirect.setupSDK(TAP_PAY_APP_ID, TAP_PAY_APP_KEY, 'sandbox');
+    window.TPDirect.setupSDK(
+      TAP_PAY_APP_ID,
+      TAP_PAY_APP_KEY,
+      TAP_PAY_SERVER_TYPE,
+    );
     setTapPay(window.TPDirect);
   }, []);
   const loadTapPay = useScript({
