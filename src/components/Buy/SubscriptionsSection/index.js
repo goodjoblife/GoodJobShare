@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Section } from 'common/base';
 import SubscriptionPlanCollection from './SubscriptionPlanCollection';
 import Captain from './Captain';
-import { useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import qs from 'qs';
 import { contains, head, prop } from 'ramda';
 
@@ -35,8 +35,19 @@ const SubscriptionsSection = ({ ...props }) => {
     () => qs.parse(location.search, { ignoreQueryPrefix: true }),
     [location.search],
   );
-  const skuId = sanitizeSkuId(query.sku_id);
-  const [selectedId, setSelectedId] = useState(skuId);
+  const selectedId = sanitizeSkuId(query.sku_id);
+  const history = useHistory();
+  const setSelectedId = useCallback(
+    selectedId => {
+      history.push(
+        qs.stringify(
+          { ...query, sku_id: selectedId },
+          { addQueryPrefix: true },
+        ),
+      );
+    },
+    [history, query],
+  );
   return (
     <Section {...props}>
       <SubscriptionPlanCollection
