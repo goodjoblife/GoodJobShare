@@ -25,7 +25,7 @@ const PlanCard = ({ title, description, amount, type, skuId }) => {
 
   const history = useHistory();
   const redirectUrl = history.location.pathname;
-  const { toBuy, actionUrl } = useToBuy(redirectUrl, skuId, false);
+  const { toBuy, actionUrl } = useToBuy(redirectUrl, skuId);
   const onButtonClick = useCallback(
     evt => {
       evt.preventDefault();
