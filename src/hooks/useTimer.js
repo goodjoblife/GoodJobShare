@@ -2,11 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 
 const stopwatchUnit = 1000;
 
-const useTimer = (callback, time, counting, repeat = false) => {
+const useTimer = (callback, time, counting) => {
   const [duration, setDuration] = useState(0);
-
-  const setTimerFunc = repeat ? setInterval : setTimeout;
-  const clearTimerFunc = repeat ? clearInterval : clearTimeout;
 
   const resetDuration = useCallback(() => {
     setDuration(0);
@@ -36,10 +33,10 @@ const useTimer = (callback, time, counting, repeat = false) => {
     }
 
     resetDuration();
-    const timerId = setTimerFunc(callback, time);
+    const timerId = setTimeout(callback, time);
 
-    return () => clearTimerFunc(timerId);
-  }, [setTimerFunc, clearTimerFunc, callback, resetDuration, time, counting]);
+    return () => clearTimeout(timerId);
+  }, [callback, resetDuration, time, counting]);
 
   return { duration };
 };

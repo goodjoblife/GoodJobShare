@@ -11,7 +11,11 @@ const BuyResultPage = () => {
 
   return (
     <div className={styles.container}>
-      <PaymentResult buyStatus={buyStatus} publicId={paymentRecordId} />
+      <PaymentResult
+        buyStatus={buyStatus}
+        publicId={paymentRecordId}
+        expiredAt={new Date(2022, 11, 31)}
+      />
     </div>
   );
 };
