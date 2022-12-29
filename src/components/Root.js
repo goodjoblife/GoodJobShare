@@ -3,6 +3,7 @@ import { PermissionContextProvider } from 'common/permission-context';
 import FacebookContextProvider from 'common/FacebookContextProvider';
 import GoogleContextProvider from 'common/GoogleContextProvider';
 import LoginModalContextProvider from 'common/LoginModalContextProvider';
+import TapPayContextProvider from 'common/tappay/TapPayContextProvider';
 import useGoogleAnalytics from 'hooks/useGoogleAnalytics';
 import usePixel from 'hooks/usePixel';
 import useGoogleTagManager from 'hooks/useGoogleTagManager';
@@ -29,6 +30,7 @@ const Root = () => {
       GoogleContextProvider,
       FacebookContextProvider,
       PermissionContextProvider,
+      TapPayContextProvider,
     ],
     <App />,
   );

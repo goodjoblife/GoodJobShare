@@ -1,29 +1,39 @@
 import React, { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Section, Subheading, P } from 'common/base';
 import Checkbox from 'common/form/Checkbox';
 import Button from 'common/button/ButtonRect';
 import Card from 'common/Card';
 import Label from 'common/form/Label';
-import useTappay from 'hooks/tappay/useTappay';
+import TapPayContext from 'common/tappay/TapPayContext';
 import { CardCCV, CardExpirationDate, CardNumber } from './TappayElement';
 import Row from './Row';
 import CreditCards from './CreditCards';
 import styles from './PaymentSection.module.css';
+import useTapPay from './useTapPay';
 
-const PaymentSection = ({ ...props }) => {
+const PaymentSection = ({ tapPayCard, loadTapPayCard, ...props }) => {
   const [isPrimary, setPrimary] = useState(false);
   const [activeCardType, setActiveCardType] = useState('unknown');
+  const [canGetPrime, setCanGetPrime] = useState(false);
+
   const handleUpdate = useCallback(update => {
     setActiveCardType(update.cardType);
+    setCanGetPrime(update.canGetPrime);
   }, []);
+
   const handlePrime = useCallback(prime => {
     alert('get prime 成功，prime: ' + prime);
     alert('creditCard', { prime });
   }, []);
-  const submit = useTappay({
+
+  const submit = useTapPay({
+    tapPayCard,
+    loadTapPayCard,
     handleUpdate,
     handlePrime,
   });
+
   const onSubmit = useCallback(
     e => {
       e.preventDefault();
@@ -75,7 +85,7 @@ const PaymentSection = ({ ...props }) => {
           </div>
           <div className={styles.submitSection}>
             <Row>
-              <Button>付款</Button>
+              <Button disabled={!canGetPrime}>付款</Button>
             </Row>
             <Row>
               <P className={styles.note} size="s">
@@ -90,4 +100,15 @@ const PaymentSection = ({ ...props }) => {
   );
 };
 
-export default PaymentSection;
+PaymentSection.propTypes = {
+  tapPayCard: PropTypes.object,
+  loadTapPayCard: PropTypes.func.isRequired,
+};
+
+export default () => (
+  <TapPayContext.Consumer>
+    {({ loadTapPayCard, tapPayCard }) => (
+      <PaymentSection loadTapPayCard={loadTapPayCard} tapPayCard={tapPayCard} />
+    )}
+  </TapPayContext.Consumer>
+);
