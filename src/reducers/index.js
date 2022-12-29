@@ -21,12 +21,13 @@ import company from './company';
 import companyIndex from './companyIndex';
 import jobTitle from './jobTitle';
 import jobTitleIndex from './jobTitleIndex';
+import payment from './payment';
 import { PERSIST_KEY } from '../config';
 
 const persistConfig = {
   key: PERSIST_KEY,
   storage,
-  whitelist: ['auth'],
+  whitelist: ['auth', 'payment'],
 };
 
 const rootReducer = combineReducers({
@@ -49,6 +50,7 @@ const rootReducer = combineReducers({
   companyIndex,
   jobTitle,
   jobTitleIndex,
+  payment,
 });
 
 export default persistReducer(persistConfig, rootReducer);
