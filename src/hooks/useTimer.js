@@ -9,6 +9,7 @@ const useTimer = (callback, time, counting) => {
     setDuration(0);
   }, []);
 
+  // stopwatch; for duration
   useEffect(() => {
     if (duration >= time) {
       return;
@@ -27,6 +28,7 @@ const useTimer = (callback, time, counting) => {
     };
   }, [duration, time]);
 
+  // for callback
   useEffect(() => {
     if (!counting) {
       return;
