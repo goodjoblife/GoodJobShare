@@ -10,9 +10,11 @@ import styles from './PaymentResult.module.css';
 import { renderCountdown } from './helpers';
 
 const waitingTime = 3000;
+const timeLimit = 30000;
 
 const InProgress = ({ paymentRecordId, fetchingStatus }) => {
   const [counting, setCounting] = useState(true);
+  const [isTimerEnable, setIsTimerEnable] = useState(true);
   const fetch = useFetchPaymentRecord(paymentRecordId);
 
   useEffect(() => {
@@ -26,9 +28,17 @@ const InProgress = ({ paymentRecordId, fetchingStatus }) => {
     fetch();
   }, [fetch]);
 
-  const { duration } = useTimer(action, waitingTime, counting);
+  const stopFetching = useCallback(() => {
+    setIsTimerEnable(false);
+  }, []);
 
-  const countdown = renderCountdown(waitingTime, duration);
+  // timer for fetch loop
+  const { duration } = useTimer(stopFetching, timeLimit, isTimerEnable);
+
+  // timer for fetch
+  useTimer(action, waitingTime, counting);
+
+  const countdown = renderCountdown(timeLimit, duration);
 
   return (
     <div className={styles.content}>
