@@ -2,33 +2,41 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { buyStatus as buyStatusMap } from 'constants/payment';
+import { fetchBoxPropType } from 'utils/fetchBox';
 
 import { paymentRecordStatusToBuyStatus } from './helpers';
 import Success from './Success';
 import Failure from './Failure';
 import InProgress from './InProgress';
 
-const PaymentResult = ({ paymentRecord, redirectUrl, paymentRecordId }) => {
+const PaymentResult = ({ paymentRecord, paymentRecordId }) => {
   const buyStatus = paymentRecordStatusToBuyStatus(paymentRecord);
 
-  if (buyStatus === buyStatusMap.successful) {
-    const expiredAt = paymentRecord;
+  const paymentRecordData = paymentRecord.data;
+  const fetchingStatus = paymentRecord.status;
 
-    return <Success expiredAt={expiredAt} redirectUrl={redirectUrl} />;
+  if (buyStatus === buyStatusMap.successful) {
+    const { expiredAt } = paymentRecordData;
+
+    return <Success expiredAt={expiredAt} />;
   }
   if (buyStatus === buyStatusMap.inProgress) {
-    return <InProgress paymentRecordId={paymentRecordId} />;
+    return (
+      <InProgress
+        paymentRecordId={paymentRecordId}
+        fetchingStatus={fetchingStatus}
+      />
+    );
   }
 
-  const { publicId } = paymentRecord;
+  const publicId = paymentRecordData;
 
   return <Failure publicId={publicId} />;
 };
 
 PaymentResult.propTypes = {
   paymentRecordId: PropTypes.string,
-  paymentRecord: PropTypes.object,
-  redirectUrl: PropTypes.string,
+  paymentRecord: fetchBoxPropType,
 };
 
 PaymentResult.defaultProps = {

@@ -1,10 +1,11 @@
 import createReducer from 'utils/createReducer';
+import { getUnfetched } from 'utils/fetchBox';
 
 import { SET_REDIRECT_URL, SET_PAYMENT_RECORD } from '../actions/payment';
 
 const preloadedState = {
   redirectUrl: null,
-  paymentRecord: null,
+  paymentRecord: getUnfetched(),
 };
 
 export default createReducer(preloadedState, {

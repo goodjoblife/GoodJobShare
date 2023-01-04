@@ -5,6 +5,7 @@ import Heading from 'common/base/Heading';
 import P from 'common/base/P';
 import Button from 'common/button/Button';
 import useTimer from 'hooks/useTimer';
+import useToRedirectUrl from 'hooks/payment/useToRedirectUrl';
 
 import styles from './PaymentResult.module.css';
 import { renderCountdown } from './helpers';
@@ -13,18 +14,14 @@ const waitingTime = 3000;
 
 const timeTemplateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
-const Success = ({ expiredAt, redirectUrl }) => {
+const Success = ({ expiredAt }) => {
   const [counting, setCounting] = useState(true);
+  const toRedirectUrl = useToRedirectUrl();
 
-  const action = useCallback(async () => {
+  const action = useCallback(() => {
     setCounting(false);
-    return new Promise(resolve => {
-      setTimeout(() => {
-        console.log('hits');
-        resolve();
-      }, 5000);
-    });
-  }, []);
+    toRedirectUrl();
+  }, [toRedirectUrl]);
 
   const { duration } = useTimer(action, waitingTime, counting);
 
@@ -53,6 +50,10 @@ const Success = ({ expiredAt, redirectUrl }) => {
 Success.propTypes = {
   expiredAt: PropTypes.instanceOf(Date),
   redirectUrl: PropTypes.string,
+};
+
+Success.defaultProps = {
+  expiredAt: new Date(),
 };
 
 export default Success;

@@ -9,14 +9,13 @@ import styles from './BuyResultPage.module.css';
 
 const BuyResultPage = () => {
   const { paymentRecordId } = useParams();
-  const { paymentRecord, redirectUrl } = usePayment();
+  const { paymentRecord } = usePayment();
 
   return (
     <div className={styles.container}>
       <RoundCard className={styles.card}>
         <PaymentResult
           paymentRecord={paymentRecord}
-          redirectUrl={redirectUrl}
           paymentRecordId={paymentRecordId}
         />
       </RoundCard>

@@ -1,28 +1,30 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import P from 'common/base/P';
 import useTimer from 'hooks/useTimer';
+import useFetchPaymentRecord from 'hooks/payment/useFetchPaymentRecord';
+import fetchingStatusMap from 'constants/status';
 
 import styles from './PaymentResult.module.css';
 import { renderCountdown } from './helpers';
 
 const waitingTime = 3000;
 
-const InProgress = ({ paymentRecordId }) => {
+const InProgress = ({ paymentRecordId, fetchingStatus }) => {
   const [counting, setCounting] = useState(true);
+  const fetch = useFetchPaymentRecord(paymentRecordId);
 
-  const action = useCallback(async () => {
-    setCounting(false);
-    return new Promise(resolve => {
-      setTimeout(() => {
-        console.log('hits');
-        resolve();
-      }, 5000);
-    }).then(() => {
+  useEffect(() => {
+    if (fetchingStatus === fetchingStatusMap.FETCHED) {
       setCounting(true);
-    });
-  }, []);
+    }
+  }, [fetchingStatus]);
+
+  const action = useCallback(() => {
+    setCounting(false);
+    fetch();
+  }, [fetch]);
 
   const { duration } = useTimer(action, waitingTime, counting);
 
@@ -40,6 +42,7 @@ const InProgress = ({ paymentRecordId }) => {
 
 InProgress.propTypes = {
   paymentRecordId: PropTypes.string,
+  fetchingStatus: PropTypes.oneOf(Object.values(fetchingStatusMap)),
 };
 
 export default InProgress;
