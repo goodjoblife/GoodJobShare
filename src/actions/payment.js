@@ -55,8 +55,8 @@ export const fetchPaymentRecord = paymentRecordId => (
   return Promise.resolve({
     id: 1,
     publicId: '221116-123456',
-    // status: 'PendingAuthorization',
-    status: 'Authorized',
+    status: 'PendingAuthorization',
+    // status: 'Authorized',
     paymentMethodSnapshot: {},
     amount: 399,
     createdAt: new Date(),

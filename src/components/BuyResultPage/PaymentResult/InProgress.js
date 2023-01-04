@@ -14,14 +14,14 @@ const timeLimit = 30000;
 
 const InProgress = ({ paymentRecordId, fetchingStatus }) => {
   const [counting, setCounting] = useState(true);
-  const [isTimerEnable, setIsTimerEnable] = useState(true);
+  const [isTimerEnabled, setIsTimerEnabled] = useState(true);
   const fetch = useFetchPaymentRecord(paymentRecordId);
 
   useEffect(() => {
-    if (fetchingStatus === fetchingStatusMap.FETCHED) {
+    if (isTimerEnabled && fetchingStatus === fetchingStatusMap.FETCHED) {
       setCounting(true);
     }
-  }, [fetchingStatus]);
+  }, [fetchingStatus, isTimerEnabled]);
 
   const action = useCallback(() => {
     setCounting(false);
@@ -29,11 +29,12 @@ const InProgress = ({ paymentRecordId, fetchingStatus }) => {
   }, [fetch]);
 
   const stopFetching = useCallback(() => {
-    setIsTimerEnable(false);
+    setIsTimerEnabled(false);
+    setCounting(false);
   }, []);
 
   // timer for fetch loop
-  const { duration } = useTimer(stopFetching, timeLimit, isTimerEnable);
+  const { duration } = useTimer(stopFetching, timeLimit, isTimerEnabled);
 
   // timer for fetch
   useTimer(action, waitingTime, counting);
@@ -44,7 +45,9 @@ const InProgress = ({ paymentRecordId, fetchingStatus }) => {
     <div className={styles.content}>
       <div className={styles.icon}></div>
       <P className={styles.description}>
-        {`交易確認中，請勿離開，至多 ${countdown} 秒...`}
+        {isTimerEnabled
+          ? `交易確認中，請勿離開，至多 ${countdown} 秒...`
+          : `請稍待再重新整理`}
       </P>
     </div>
   );
