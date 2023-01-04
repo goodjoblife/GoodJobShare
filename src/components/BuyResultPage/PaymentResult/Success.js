@@ -13,7 +13,7 @@ const waitingTime = 3000;
 
 const timeTemplateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
-const Success = ({ expiredAt }) => {
+const Success = ({ expiredAt, redirectUrl }) => {
   const [counting, setCounting] = useState(true);
 
   const action = useCallback(async () => {
@@ -52,6 +52,7 @@ const Success = ({ expiredAt }) => {
 
 Success.propTypes = {
   expiredAt: PropTypes.instanceOf(Date),
+  redirectUrl: PropTypes.string,
 };
 
 export default Success;

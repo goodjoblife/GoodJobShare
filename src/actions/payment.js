@@ -15,7 +15,7 @@ export const navigateToBuy = (redirectUrl, actionUrl) => (
   dispatch(setRedirectUrl(redirectUrl));
 };
 
-export const fetchPaymentRecord = paymentId => (
+export const fetchPaymentRecord = paymentRecordId => (
   dispatch,
   getState,
   { api },

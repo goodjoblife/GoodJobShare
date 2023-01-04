@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
 
 import P from 'common/base/P';
 import useTimer from 'hooks/useTimer';
@@ -8,7 +9,7 @@ import { renderCountdown } from './helpers';
 
 const waitingTime = 3000;
 
-const InProgress = () => {
+const InProgress = ({ paymentRecordId }) => {
   const [counting, setCounting] = useState(true);
 
   const action = useCallback(async () => {
@@ -35,6 +36,10 @@ const InProgress = () => {
       </P>
     </div>
   );
+};
+
+InProgress.propTypes = {
+  paymentRecordId: PropTypes.string,
 };
 
 export default InProgress;

@@ -2,38 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { buyStatus as buyStatusMap } from 'constants/payment';
-import RoundCard from 'common/RoundCard';
 
+import { paymentRecordStatusToBuyStatus } from './helpers';
 import Success from './Success';
 import Failure from './Failure';
 import InProgress from './InProgress';
-import styles from './PaymentResult.module.css';
 
-const getContentComponent = buyStatus => {
+const PaymentResult = ({ paymentRecord, redirectUrl, paymentRecordId }) => {
+  const buyStatus = paymentRecordStatusToBuyStatus(paymentRecord);
+
   if (buyStatus === buyStatusMap.successful) {
-    return Success;
+    const expiredAt = paymentRecord;
+
+    return <Success expiredAt={expiredAt} redirectUrl={redirectUrl} />;
   }
   if (buyStatus === buyStatusMap.inProgress) {
-    return InProgress;
+    return <InProgress paymentRecordId={paymentRecordId} />;
   }
 
-  return Failure;
-};
+  const { publicId } = paymentRecord;
 
-const PaymentResult = ({ publicId, buyStatus, expiredAt }) => {
-  const Content = getContentComponent(buyStatus);
-
-  return (
-    <RoundCard className={styles.container}>
-      <Content publicId={publicId} expiredAt={expiredAt} />
-    </RoundCard>
-  );
+  return <Failure publicId={publicId} />;
 };
 
 PaymentResult.propTypes = {
-  publicId: PropTypes.string,
-  buyStatus: PropTypes.oneOf(Object.values(buyStatusMap)),
-  expiredAt: PropTypes.instanceOf(Date),
+  paymentRecordId: PropTypes.string,
+  paymentRecord: PropTypes.object,
+  redirectUrl: PropTypes.string,
 };
 
 PaymentResult.defaultProps = {

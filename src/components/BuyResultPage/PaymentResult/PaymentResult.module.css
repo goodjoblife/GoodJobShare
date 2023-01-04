@@ -1,14 +1,5 @@
 @value above-tablet, main-yellow from "common/variables.module.css";
 
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 600px;
-  height: 400px;
-}
-
 .title {
   color: #333333;
   font-size: 22px;
