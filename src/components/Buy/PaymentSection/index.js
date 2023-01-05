@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useStore } from 'react-redux';
 import { Section, Subheading, P } from 'common/base';
 import Checkbox from 'common/form/Checkbox';
 import Button from 'common/button/ButtonRect';
@@ -11,48 +10,16 @@ import { CardCCV, CardExpirationDate, CardNumber } from './TappayElement';
 import Row from './Row';
 import CreditCards from './CreditCards';
 import styles from './PaymentSection.module.css';
-import useTapPay from './useTapPay';
-import { checkoutSubscriptionWithPrime } from '../../../apis/payment';
-import { tokenSelector } from '../../../selectors/authSelector';
+import useForm from './useForm';
 
 const PaymentSection = ({ tapPayCard, loadTapPayCard, skuId, ...props }) => {
   const [isPrimary, setPrimary] = useState(false);
-  const [activeCardType, setActiveCardType] = useState('unknown');
-  const [canGetPrime, setCanGetPrime] = useState(false);
-
-  const handleUpdate = useCallback(update => {
-    setActiveCardType(update.cardType);
-    setCanGetPrime(update.canGetPrime);
-  }, []);
-
-  const store = useStore();
-  const token = tokenSelector(store.getState());
-
-  const handlePrime = useCallback(
-    async prime => {
-      try {
-        const paymentUrl = await checkoutSubscriptionWithPrime({
-          token,
-          prime,
-          skuId,
-          isPrimary,
-        });
-        window.location = paymentUrl;
-      } catch (error) {
-        // TODO: Error handling
-        console.error(error);
-      }
-    },
-    [isPrimary, skuId, token],
-  );
-
-  const submit = useTapPay({
+  const { activeCardType, canGetPrime, submit } = useForm({
     tapPayCard,
     loadTapPayCard,
-    handleUpdate,
-    handlePrime,
+    skuId,
+    isPrimary,
   });
-
   const onSubmit = useCallback(
     e => {
       e.preventDefault();
