@@ -5,7 +5,7 @@ import {
   redirectUrlSelector,
 } from '../selectors/payment';
 
-export const SET_REDIRECT_URL = '@@PAYMENT/SET_REDIRECT_URL';
+export const SET_REDIRECT_URL = '@@PAYMENT_PERSIST/SET_REDIRECT_URL';
 export const SET_PAYMENT_RECORD = '@@PAYMENT/SET_PAYMENT_RECORD';
 
 const setRedirectUrl = redirectUrl => ({
