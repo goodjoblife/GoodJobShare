@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useStore } from 'react-redux';
 import { Section, Subheading, P } from 'common/base';
 import Checkbox from 'common/form/Checkbox';
 import Button from 'common/button/ButtonRect';
@@ -11,8 +12,10 @@ import Row from './Row';
 import CreditCards from './CreditCards';
 import styles from './PaymentSection.module.css';
 import useTapPay from './useTapPay';
+import { checkoutSubscriptionWithPrime } from '../../../apis/payment';
+import { tokenSelector } from '../../../selectors/authSelector';
 
-const PaymentSection = ({ tapPayCard, loadTapPayCard, ...props }) => {
+const PaymentSection = ({ tapPayCard, loadTapPayCard, skuId, ...props }) => {
   const [isPrimary, setPrimary] = useState(false);
   const [activeCardType, setActiveCardType] = useState('unknown');
   const [canGetPrime, setCanGetPrime] = useState(false);
@@ -22,10 +25,26 @@ const PaymentSection = ({ tapPayCard, loadTapPayCard, ...props }) => {
     setCanGetPrime(update.canGetPrime);
   }, []);
 
-  const handlePrime = useCallback(prime => {
-    alert('get prime 成功，prime: ' + prime);
-    alert('creditCard', { prime });
-  }, []);
+  const store = useStore();
+  const token = tokenSelector(store.getState());
+
+  const handlePrime = useCallback(
+    async prime => {
+      try {
+        const paymentUrl = await checkoutSubscriptionWithPrime({
+          token,
+          prime,
+          skuId,
+          isPrimary,
+        });
+        window.location = paymentUrl;
+      } catch (error) {
+        // TODO: Error handling
+        console.error(error);
+      }
+    },
+    [isPrimary, skuId, token],
+  );
 
   const submit = useTapPay({
     tapPayCard,
@@ -85,7 +104,9 @@ const PaymentSection = ({ tapPayCard, loadTapPayCard, ...props }) => {
           </div>
           <div className={styles.submitSection}>
             <Row>
-              <Button disabled={!canGetPrime}>付款</Button>
+              <Button type="submit" disabled={!canGetPrime}>
+                付款
+              </Button>
             </Row>
             <Row>
               <P className={styles.note} size="s">
@@ -103,12 +124,17 @@ const PaymentSection = ({ tapPayCard, loadTapPayCard, ...props }) => {
 PaymentSection.propTypes = {
   tapPayCard: PropTypes.object,
   loadTapPayCard: PropTypes.func.isRequired,
+  skuId: PropTypes.string.isRequired,
 };
 
-export default () => (
+export default ({ skuId }) => (
   <TapPayContext.Consumer>
     {({ loadTapPayCard, tapPayCard }) => (
-      <PaymentSection loadTapPayCard={loadTapPayCard} tapPayCard={tapPayCard} />
+      <PaymentSection
+        loadTapPayCard={loadTapPayCard}
+        tapPayCard={tapPayCard}
+        skuId={skuId}
+      />
     )}
   </TapPayContext.Consumer>
 );

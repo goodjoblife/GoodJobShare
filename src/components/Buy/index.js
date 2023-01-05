@@ -10,7 +10,7 @@ import styles from './Buy.module.css';
 
 const plans = [
   {
-    id: '2',
+    id: 'plan_30_days',
     name: '包月方案',
     price: 99,
     duration: { amount: 1, unit: 'month' },
@@ -53,6 +53,7 @@ const Buy = () => {
           className={styles.topDivider}
           paddingTop
           paddingBottom
+          skuId={selectedId}
         />
       </Wrapper>
     </Section>
