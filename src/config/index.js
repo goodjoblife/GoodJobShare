@@ -15,7 +15,9 @@ module.exports = {
   SENTRY_DSN: process.env.RAZZLE_SENTRY_DSN,
   GIT_SHA1: process.env.RAZZLE_GIT_SHA1,
   PERSIST_KEY: process.env.PERSIST_KEY || 'goodjob',
-  TAP_PAY_APP_ID: process.env.RAZZLE_TAP_PAY_APP_ID,
-  TAP_PAY_APP_KEY: process.env.RAZZLE_TAP_PAY_APP_KEY,
+  TAP_PAY_APP_ID: process.env.RAZZLE_TAP_PAY_APP_ID || '125271',
+  TAP_PAY_APP_KEY:
+    process.env.RAZZLE_TAP_PAY_APP_KEY ||
+    'app_WBWcR9mkiSMUQ3qZV5tUidkq7vfamUzmdWi5QR33ksT6ttbiZ9BJxbz5Fvma',
   TAP_PAY_SERVER_TYPE: process.env.RAZZLE_TAP_PAY_SERVER_TYPE || 'sandbox',
 };
