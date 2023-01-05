@@ -29,7 +29,7 @@ const PaymentResult = ({ paymentRecord, paymentRecordId }) => {
     );
   }
 
-  const publicId = paymentRecordData;
+  const { publicId } = paymentRecordData;
 
   return <Failure publicId={publicId} />;
 };
