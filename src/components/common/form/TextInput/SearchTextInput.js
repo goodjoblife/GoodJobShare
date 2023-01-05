@@ -3,12 +3,8 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 
 import { debounce } from 'utils/streamUtils';
+import timeAndSalaryApi from 'apis/timeAndSalaryApi';
 import TextInput from '.';
-
-import {
-  fetchCompanyCandidates,
-  fetchJobTitleCandidates,
-} from '../../../../apis/timeAndSalaryApi';
 
 const take5 = R.take(5);
 
@@ -17,11 +13,11 @@ const SearchTextInput = ({ value, onChange, onSelected, ...restProps }) => {
   const eleRef = useRef(null);
 
   const searchCompanyNames = useCallback(
-    value => fetchCompanyCandidates({ key: value }),
+    value => timeAndSalaryApi.fetchCompanyCandidates({ key: value }),
     [],
   );
   const searchJobTitles = useCallback(
-    value => fetchJobTitleCandidates({ key: value }),
+    value => timeAndSalaryApi.fetchJobTitleCandidates({ key: value }),
     [],
   );
 

@@ -29,8 +29,8 @@ import FormBuilder from 'common/FormBuilder';
 import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
 import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
 import Footer from '../../common/TypeFormFooter';
-import { getCompaniesSearch } from '../../../../apis/companySearchApi';
-import { getJobTitlesSearch } from '../../../../apis/jobTitleSearchApi';
+import { getCompaniesSearch } from 'apis/companySearchApi';
+import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
 import {
   experienceCountSelector,
   timeAndSalaryCountSelector,

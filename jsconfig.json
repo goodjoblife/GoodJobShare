@@ -7,7 +7,8 @@
             "graphql/*": ["src/graphql/*"],
             "hooks/*": ["src/hooks/*"],
             "contexts/*": ["src/contexts/*"],
-            "constants/*": ["src/constants/*"]
+            "constants/*": ["src/constants/*"],
+            "apis/*": ["src/apis/*"]
         }
     },
     "exclude": ["node_modules", "dist"]

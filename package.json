@@ -35,7 +35,8 @@
       "^graphql(.*)": "<rootDir>/src/graphql$1",
       "^hooks(.*)": "<rootDir>/src/hooks$1",
       "^contexts(.*)": "<rootDir>/src/contexts$1",
-      "^constants(.*)": "<rootDir>/src/constants$1"
+      "^constants(.*)": "<rootDir>/src/constants$1",
+      "^apis(.*)": "<rootDir>/src/apis$1"
     }
   },
   "devDependencies": {

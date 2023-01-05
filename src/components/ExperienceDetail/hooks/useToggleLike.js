@@ -1,18 +1,18 @@
 import { useCallback } from 'react';
 import { useToken } from 'hooks/auth';
-import api from '../../../apis';
+import experiencesApi from 'apis/experiencesApi';
 
 const useToggleLike = experienceId => {
   const token = useToken();
   return useCallback(
     liked => {
       if (liked) {
-        return api.experiences.deleteExperienceLikes({
+        return experiencesApi.deleteExperienceLikes({
           id: experienceId,
           token,
         });
       } else {
-        return api.experiences.postExperienceLikes({
+        return experiencesApi.postExperienceLikes({
           id: experienceId,
           token,
         });

@@ -1,42 +1,22 @@
-import React, { Component } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import withFB from './withFB';
+import FacebookContext from 'contexts/FacebookContext';
 
-class FacebookWrapper extends Component {
-  constructor(props) {
-    super(props);
-    this.container = null;
-    this.handleContainer = this.handleContainer.bind(this);
-  }
+const FacebookWrapper = ({ children }) => {
+  const FB = useContext(FacebookContext);
+  const container = useRef(null);
 
-  componentDidMount() {
-    if (this.props.FB && this.container) {
-      this.props.FB.XFBML.parse(this.container);
+  useEffect(() => {
+    if (FB && container) {
+      FB.XFBML.parse(container.current);
     }
-  }
+  });
 
-  // 讓 FB 重新 parse children
-  componentDidUpdate() {
-    // if FB instance
-    if (this.props.FB && this.container) {
-      this.props.FB.XFBML.parse(this.container);
-    }
-  }
-
-  handleContainer(container) {
-    this.container = container;
-  }
-
-  render() {
-    const { children } = this.props;
-
-    return <div ref={this.handleContainer}>{children}</div>;
-  }
-}
+  return <div ref={container}>{children}</div>;
+};
 
 FacebookWrapper.propTypes = {
   children: PropTypes.node,
-  FB: PropTypes.object,
 };
 
-export default withFB(FacebookWrapper);
+export default FacebookWrapper;
