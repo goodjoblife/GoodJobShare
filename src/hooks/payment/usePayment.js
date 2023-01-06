@@ -5,13 +5,12 @@ import {
   paymentRecordSelector,
 } from '../../selectors/payment';
 
-export const usePaymentRecordSelector = () =>
-  useSelector(paymentRecordSelector);
-export const useRedirectUrlSelector = () => useSelector(redirectUrlSelector);
+export const usePaymentRecord = () => useSelector(paymentRecordSelector);
+export const useRedirectUrl = () => useSelector(redirectUrlSelector);
 
 const usePayment = () => {
-  const paymentRecord = usePaymentRecordSelector();
-  const redirectUrl = useRedirectUrlSelector();
+  const paymentRecord = usePaymentRecord();
+  const redirectUrl = useRedirectUrl();
 
   return {
     paymentRecord,
