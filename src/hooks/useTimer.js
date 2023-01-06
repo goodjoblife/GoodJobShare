@@ -2,21 +2,31 @@ import { useState, useEffect, useCallback } from 'react';
 
 const stopwatchUnit = 1000;
 
+export const countingStatusMap = {
+  counting: 'counting',
+  pause: 'pause',
+  stop: 'stop',
+};
+
 // when counting is false, the stopwatch would stop and reset the timer
-const useTimer = (callback, time, counting) => {
+const useTimer = (callback, time, countingStatus) => {
   const [duration, setDuration] = useState(0);
+  const [counting, setCounting] = useState(
+    countingStatus === countingStatusMap.counting,
+  );
 
   const resetDuration = useCallback(() => {
     setDuration(0);
   }, []);
 
-  // stopwatch; for duration
+  // trigger timer
   useEffect(() => {
-    if (duration >= time) {
+    if (!counting) {
       return;
     }
 
     const stopwatch = setInterval(() => {
+      console.debug('tick');
       setDuration(dur => {
         const nextDur = dur + stopwatchUnit;
 
@@ -27,19 +37,35 @@ const useTimer = (callback, time, counting) => {
     return () => {
       clearInterval(stopwatch);
     };
-  }, [duration, time]);
+  }, [time, counting]);
 
-  // for callback
+  // connection between caller and callee
   useEffect(() => {
-    if (!counting) {
+    console.debug('countingStatus changed', countingStatus);
+    if (countingStatus === countingStatusMap.counting) {
+      setCounting(true);
       return;
     }
 
-    resetDuration();
-    const timerId = setTimeout(callback, time);
+    if (countingStatus === countingStatusMap.stop) {
+      setCounting(false);
+      resetDuration();
+      return;
+    }
 
-    return () => clearTimeout(timerId);
-  }, [callback, resetDuration, time, counting]);
+    if (countingStatus === countingStatusMap.pause) {
+      setCounting(false);
+      return;
+    }
+  }, [countingStatus, resetDuration]);
+
+  // for timing to fire the callback
+  useEffect(() => {
+    if (duration >= time) {
+      setCounting(false);
+      callback();
+    }
+  }, [callback, time, duration]);
 
   return { duration };
 };

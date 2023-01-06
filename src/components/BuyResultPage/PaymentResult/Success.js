@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
 import Button from 'common/button/Button';
-import useTimer from 'hooks/useTimer';
+import useTimer, { countingStatusMap } from 'hooks/useTimer';
 import useToRedirectUrl from 'hooks/payment/useToRedirectUrl';
 
 import styles from './PaymentResult.module.css';
@@ -15,15 +15,17 @@ const waitingTime = 3000;
 const timeTemplateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
 const Success = ({ expiredAt }) => {
-  const [counting, setCounting] = useState(true);
+  const [countingStatus, setCountingStatus] = useState(
+    countingStatusMap.counting,
+  );
   const toRedirectUrl = useToRedirectUrl();
 
   const action = useCallback(() => {
-    setCounting(false);
+    setCountingStatus(countingStatusMap.stop);
     toRedirectUrl();
   }, [toRedirectUrl]);
 
-  const { duration } = useTimer(action, waitingTime, counting);
+  const { duration } = useTimer(action, waitingTime, countingStatus);
 
   const countdown = renderCountdown(waitingTime, duration);
 

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import P from 'common/base/P';
-import useTimer from 'hooks/useTimer';
+import useTimer, { countingStatusMap } from 'hooks/useTimer';
 import useFetchPaymentRecord from 'hooks/payment/useFetchPaymentRecord';
 import fetchingStatusMap from 'constants/status';
 
@@ -13,31 +13,37 @@ const waitingTime = 3000;
 const timeLimit = 30000;
 
 const InProgress = ({ paymentRecordId, fetchingStatus }) => {
-  const [counting, setCounting] = useState(true);
-  const [isTimerEnabled, setIsTimerEnabled] = useState(true);
+  const [loopFetchCounting, setLoopFetchCounting] = useState(
+    countingStatusMap.counting,
+  );
+  const [fetchingCounting, setFetchingCounting] = useState(
+    countingStatusMap.counting,
+  );
+  const isTimerEnabled = fetchingCounting === countingStatusMap.counting;
+
   const fetch = useFetchPaymentRecord(paymentRecordId);
 
   useEffect(() => {
     if (isTimerEnabled && fetchingStatus === fetchingStatusMap.FETCHED) {
-      setCounting(true);
+      setLoopFetchCounting(countingStatusMap.counting);
     }
   }, [fetchingStatus, isTimerEnabled]);
 
   const action = useCallback(() => {
-    setCounting(false);
+    setLoopFetchCounting(countingStatusMap.stop);
     fetch();
   }, [fetch]);
 
   const stopFetching = useCallback(() => {
-    setIsTimerEnabled(false);
-    setCounting(false);
+    setFetchingCounting(countingStatusMap.stop);
+    setLoopFetchCounting(countingStatusMap.stop);
   }, []);
 
   // timer for fetch loop
-  const { duration } = useTimer(stopFetching, timeLimit, isTimerEnabled);
+  const { duration } = useTimer(stopFetching, timeLimit, fetchingCounting);
 
   // timer for fetch
-  useTimer(action, waitingTime, counting);
+  useTimer(action, waitingTime, loopFetchCounting);
 
   const countdown = renderCountdown(timeLimit, duration);
 

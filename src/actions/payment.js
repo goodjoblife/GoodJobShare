@@ -52,16 +52,21 @@ export const fetchPaymentRecord = paymentRecordId => (
     paymentRecord: toFetching(paymentRecord),
   });
 
-  return Promise.resolve({
-    id: 1,
-    publicId: '221116-123456',
-    // status: 'PendingAuthorization',
-    // status: 'Authorized',
-    status: 'Error',
-    paymentMethodSnapshot: {},
-    amount: 399,
-    createdAt: new Date(),
-    updated_at: new Date(),
+  return new Promise(resolve => {
+    setTimeout(() => {
+      console.log('resolve');
+      resolve({
+        id: paymentRecordId,
+        publicId: '221116-123456',
+        status: 'PendingAuthorization',
+        // status: 'Authorized',
+        // status: 'Error',
+        paymentMethodSnapshot: {},
+        amount: 399,
+        createdAt: new Date(),
+        updated_at: new Date(),
+      });
+    }, 3000);
   })
     .then(paymentRecord => {
       dispatch({
