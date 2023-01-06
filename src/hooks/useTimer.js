@@ -8,7 +8,6 @@ export const countingStatusMap = {
   stop: 'stop',
 };
 
-// when counting is false, the stopwatch would stop and reset the timer
 const useTimer = (callback, time, countingStatus) => {
   const [duration, setDuration] = useState(0);
   const [counting, setCounting] = useState(
