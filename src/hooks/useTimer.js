@@ -19,26 +19,6 @@ const useTimer = (callback, time, countingStatus) => {
     setDuration(0);
   }, []);
 
-  // trigger timer
-  useEffect(() => {
-    if (!counting) {
-      return;
-    }
-
-    const stopwatch = setInterval(() => {
-      console.debug('tick');
-      setDuration(dur => {
-        const nextDur = dur + stopwatchUnit;
-
-        return nextDur > time ? time : nextDur;
-      });
-    }, stopwatchUnit);
-
-    return () => {
-      clearInterval(stopwatch);
-    };
-  }, [time, counting]);
-
   // connection between caller and callee
   useEffect(() => {
     console.debug('countingStatus changed', countingStatus);
@@ -58,6 +38,26 @@ const useTimer = (callback, time, countingStatus) => {
       return;
     }
   }, [countingStatus, resetDuration]);
+
+  // trigger timer
+  useEffect(() => {
+    if (!counting) {
+      return;
+    }
+
+    const stopwatch = setInterval(() => {
+      console.debug('tick');
+      setDuration(dur => {
+        const nextDur = dur + stopwatchUnit;
+
+        return nextDur > time ? time : nextDur;
+      });
+    }, stopwatchUnit);
+
+    return () => {
+      clearInterval(stopwatch);
+    };
+  }, [time, counting]);
 
   // for timing to fire the callback
   useEffect(() => {
