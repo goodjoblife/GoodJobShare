@@ -39,10 +39,10 @@ const InProgress = ({ paymentRecordId, fetchingStatus }) => {
     setLoopFetchCounting(countingStatusMap.stop);
   }, []);
 
-  // timer for fetch loop
+  // timer for keeping fetching
   const { duration } = useTimer(stopFetching, timeLimit, fetchingCounting);
 
-  // timer for fetch
+  // timer for fetching looping
   useTimer(action, waitingTime, loopFetchCounting);
 
   const countdown = renderCountdown(timeLimit, duration);
