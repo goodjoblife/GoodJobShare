@@ -8,8 +8,6 @@ export const countingStatusMap = {
   stop: 'stop',
 };
 
-const debugLog = (...msg) => console.debug('useTimer:', ...msg);
-
 const useTimer = (callback, time, countingStatus) => {
   const [duration, setDuration] = useState(0);
   const [counting, setCounting] = useState(
@@ -22,7 +20,6 @@ const useTimer = (callback, time, countingStatus) => {
 
   // connection between caller and callee
   useEffect(() => {
-    debugLog('countingStatus changed', countingStatus);
     if (countingStatus === countingStatusMap.counting) {
       setCounting(true);
       return;
@@ -47,7 +44,6 @@ const useTimer = (callback, time, countingStatus) => {
     }
 
     const stopwatch = setInterval(() => {
-      debugLog('tick');
       setDuration(dur => {
         const nextDur = dur + stopwatchUnit;
 
