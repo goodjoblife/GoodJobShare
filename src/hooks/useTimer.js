@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 const stopwatchUnit = 1000;
 
+// when counting is false, the stopwatch would stop and reset the timer
 const useTimer = (callback, time, counting) => {
   const [duration, setDuration] = useState(0);
 
