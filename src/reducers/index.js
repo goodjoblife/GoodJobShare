@@ -21,7 +21,8 @@ import company from './company';
 import companyIndex from './companyIndex';
 import jobTitle from './jobTitle';
 import jobTitleIndex from './jobTitleIndex';
-import payment, { persistRedcuer as paymentPersist } from './payment';
+import payment from './payment';
+import paymentPersist from './paymentPersist';
 import { PERSIST_KEY } from '../config';
 
 const persistConfig = {
