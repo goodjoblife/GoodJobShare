@@ -154,7 +154,7 @@ TextInput.propTypes = {
   type: PropTypes.string,
   wrapperClassName: PropTypes.string,
   className: PropTypes.string,
-  style: PropTypes.oneOfType(PropTypes.string, PropTypes.object),
+  style: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   value: PropTypes.string.isRequired,
   onCompositionStart: PropTypes.func,
   onCompositionEnd: PropTypes.func,
