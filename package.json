@@ -16,12 +16,10 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ],
     "*.css": [
-      "stylelint --fix",
-      "git add"
+      "stylelint --fix"
     ]
   },
   "jest": {
@@ -51,7 +49,7 @@
     "eslint-plugin-react-hooks": "^1.6.0",
     "flow-bin": "^0.95.1",
     "husky": "^8.0.3",
-    "lint-staged": "^8.1.5",
+    "lint-staged": "^13.1.0",
     "prettier": "^1.14.2",
     "razzle-plugin-flow": "^1.0.0",
     "redux-logger": "^2.7.4",
