@@ -101,7 +101,9 @@ const TextInput = forwardRef(
         onCompositionEnd,
         onEnter: e => {
           handleEnter(e);
-          if (!hasHighlight) onEnter(e);
+          if (!hasHighlight) {
+            onEnter && onEnter(e);
+          }
         },
       },
       inputRef,
