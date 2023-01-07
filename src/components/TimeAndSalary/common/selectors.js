@@ -1,17 +1,17 @@
 import { compose } from 'ramda';
 import { querySelector } from 'common/routing/selectors';
 
-export const searchKeywordSelector = compose(
-  params => params.q,
-  querySelector,
-);
+// TODO: 可以重新改寫這個 query
 
-export const searchCriteriaSelector = compose(
-  params => params.s_by,
+export const keywordFromQuerySelector = query => query.q;
+export const pageFromQuerySelector = query => query.p;
+
+export const searchKeywordSelector = compose(
+  keywordFromQuerySelector,
   querySelector,
 );
 
 export const pageSelector = compose(
-  params => params.p,
+  pageFromQuerySelector,
   querySelector,
 );
