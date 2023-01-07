@@ -1,25 +1,25 @@
 import React, { useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { compose } from 'recompose';
 import qs from 'qs';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import { querySelector } from 'common/routing/selectors';
 import Pagination from 'common/Pagination';
-import { isFetching, isFetched } from 'constants/status';
+import { isFetching, isFetched, isUnfetched } from 'constants/status';
 import { pageType } from 'constants/companyJobTitle';
 import { useQuery } from 'hooks/routing';
 import {
   queryKeyword,
   keywordMinLength,
 } from '../../../actions/timeAndSalarySearch';
-import { validatePage, validateSearchKeyword } from '../common/validators';
 import {
-  keywordFromQuerySelector,
-  pageFromQuerySelector,
-} from '../common/selectors';
+  keywordSelector,
+  pageSelector,
+  dataSelector,
+  statusSelector,
+} from './selectors';
 import WorkingHourBlock from './WorkingHourBlock';
 import Helmet from './Helmet';
 import styles from './SearchScreen.module.css';
@@ -51,46 +51,30 @@ function getLinkForData(query, data) {
   return '';
 }
 
-const keywordSelector = compose(
-  validateSearchKeyword,
-  keywordFromQuerySelector,
-);
-
-const pageSelector = compose(
-  validatePage,
-  pageFromQuerySelector,
-);
-
 const SearchScreen = () => {
+  const history = useHistory();
+
+  const dispath = useDispatch();
   const query = useQuery();
   const keyword = useMemo(() => keywordSelector(query), [query]);
   const page = useMemo(() => pageSelector(query), [query]);
-
-  const dispath = useDispatch();
-
-  const keywordFromRedux = useSelector(state =>
-    state.timeAndSalarySearch.get('keyword'),
-  );
-  const data = useSelector(state => state.timeAndSalarySearch.get('data'));
-  const status = useSelector(state => state.timeAndSalarySearch.get('status'));
-
-  const history = useHistory();
+  const data = useSelector(dataSelector(keyword));
+  const status = useSelector(statusSelector(keyword));
 
   useEffect(() => {
-    dispath(queryKeyword({ keyword }));
-  }, [dispath, keyword]);
+    if (isUnfetched(status)) {
+      dispath(queryKeyword({ keyword }));
+    }
+  }, [dispath, keyword, status]);
 
   const pageSize = 10;
   const totalNum = data.size;
-
   const title = getTitle(keyword);
-
   const raw = data.slice((page - 1) * pageSize, page * pageSize).toJS();
 
-  if (isFetched(status) && data.size === 1 && keyword === keywordFromRedux) {
+  if (data.size === 1) {
     const firstData = data.get(0).toJS();
     history.replace(getLinkForData(query, firstData));
-    console.log('push!?');
     return null;
   }
 
