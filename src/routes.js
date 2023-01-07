@@ -34,6 +34,7 @@ import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
 import PlanPage from './components/PlanPage';
+import BuyResultPage from './components/BuyResultPage';
 
 const routes = [
   {
@@ -293,6 +294,11 @@ const routes = [
     path: '/plans',
     exact: true,
     component: PlanPage,
+  },
+  {
+    path: '/buy/result/:paymentRecordId',
+    exact: true,
+    component: BuyResultPage,
   },
   {
     component: NotFound,

@@ -1,0 +1,29 @@
+@value above-tablet, main-yellow from "common/variables.module.css";
+
+.title {
+  color: #333333;
+  font-size: 22px;
+  margin-bottom: 32px;
+}
+
+.icon {
+  width: 80px;
+  height: 80px;
+  background-color: main-yellow;
+  margin-bottom: 60px;
+}
+
+.description {
+  font-size: 16px;
+  color: #333333;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.action {
+  margin-top: 24px;
+}

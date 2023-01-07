@@ -39,6 +39,9 @@ function parseState(window) {
     'jobTitle',
     'popularCompanyAverageSalary',
     'popularJobTitleSalaryDistribution',
+    'auth',
+    'payment',
+    'paymentPersist',
   ]);
   const preloadedState = {};
   Object.keys(window.__data).forEach(key => {
