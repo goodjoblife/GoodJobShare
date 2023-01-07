@@ -20,6 +20,7 @@ import {
   dataSelector,
   statusSelector,
 } from './selectors';
+import * as urlBuilder from './urlBuilder';
 import WorkingHourBlock from './WorkingHourBlock';
 import Helmet from './Helmet';
 import styles from './SearchScreen.module.css';
@@ -38,22 +39,15 @@ function getTitle(keyword) {
 
 function getLinkForData(query, data) {
   if (data.pageType === pageType.COMPANY) {
-    return `/companies/${encodeURIComponent(data.name)}/overview${qs.stringify(
-      { ...query, p: 1 },
-      { addQueryPrefix: true },
-    )}`;
+    return urlBuilder.companyPageOverview(data.name, 1, query);
   } else if (data.pageType === pageType.JOB_TITLE) {
-    return `/job-titles/${encodeURIComponent(data.name)}/overview${qs.stringify(
-      { ...query, p: 1 },
-      { addQueryPrefix: true },
-    )}`;
+    return urlBuilder.jobTitlePageOverview(data.name, 1, query);
   }
   return '';
 }
 
 const SearchScreen = () => {
   const history = useHistory();
-
   const dispath = useDispatch();
   const query = useQuery();
   const keyword = useMemo(() => keywordSelector(query), [query]);
