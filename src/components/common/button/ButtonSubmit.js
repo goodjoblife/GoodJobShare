@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
 import Modal from 'common/Modal';
-
-import authStatus from '../../../constants/authStatus';
+import authStatus from 'constants/authStatus';
 
 import WhyFacebookAuth from './WhyFacebookAuth';
-
 import styles from './ButtonSubmit.module.css';
 
-const isLogin = auth => auth.get('status') === authStatus.CONNECTED;
+// TODO: deprecated, should use hooks or selector to get isLogin
+const isLogin = auth => auth.status === authStatus.CONNECTED;
 
 const getWhyFacebookAuth = onClick => <WhyFacebookAuth buttonClick={onClick} />;
 
