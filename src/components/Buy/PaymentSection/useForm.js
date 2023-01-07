@@ -1,8 +1,7 @@
 import { useCallback, useState } from 'react';
-import { useStore } from 'react-redux';
+import { useToken } from 'hooks/auth';
 import useTapPay from './useTapPay';
 import { checkoutSubscriptionWithPrime } from '../../../apis/payment';
-import { tokenSelector } from '../../../selectors/authSelector';
 
 const useForm = ({ tapPayCard, loadTapPayCard, skuId, isPrimary }) => {
   const [activeCardType, setActiveCardType] = useState('unknown');
@@ -13,9 +12,7 @@ const useForm = ({ tapPayCard, loadTapPayCard, skuId, isPrimary }) => {
     setCanGetPrime(update.canGetPrime);
   }, []);
 
-  const store = useStore();
-  const token = tokenSelector(store.getState());
-
+  const token = useToken();
   const handlePrime = useCallback(
     async prime => {
       try {
