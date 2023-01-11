@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux';
 
 import Heading from 'common/base/Heading';
 import { useSubscriptionPlans } from 'hooks/payment/usePayment';
+import { isFetched } from 'utils/fetchBox';
+import Loading from 'common/Loader';
 
 import { fetchSubscriptionPlans } from '../../actions/payment';
 import styles from './PlanPage.module.css';
@@ -15,12 +17,19 @@ const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
 
 const PlanPage = () => {
   const dispatch = useDispatch();
+  const subscriptionPlansBox = useSubscriptionPlans();
+
+  const isReady = isFetched(subscriptionPlansBox);
 
   useEffect(() => {
-    dispatch(fetchSubscriptionPlans());
-  }, [dispatch]);
+    if (!isReady) {
+      dispatch(fetchSubscriptionPlans());
+    }
+  }, [dispatch, isReady]);
 
-  const subscriptionPlansBox = useSubscriptionPlans();
+  if (!isReady) {
+    return <Loading size="l" />;
+  }
 
   const plans = subscriptionPlansBox.data;
 
