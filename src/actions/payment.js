@@ -81,7 +81,7 @@ export const fetchPaymentRecord = paymentRecordId => (
     })
     .catch(error => {
       console.error(error);
-      dispatch(getError(error));
+      dispatch(setPaymentRecord(getError(error)));
     });
 };
 
