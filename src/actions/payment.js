@@ -3,12 +3,12 @@ import { getError, getFetched, getUnfetched, toFetching } from 'utils/fetchBox';
 import {
   paymentRecordSelector,
   redirectUrlSelector,
-  plansSelector,
+  subscriptionPlansSelector,
 } from '../selectors/payment';
 
 export const SET_REDIRECT_URL = '@@PAYMENT_PERSIST/SET_REDIRECT_URL';
 export const SET_PAYMENT_RECORD = '@@PAYMENT/SET_PAYMENT_RECORD';
-export const SET_PLANS = '@@PAYMENT/SET_PLANS';
+export const SET_SUBSCRIPTION_PLANS = '@@PAYMENT/SET_PLANS';
 
 const setRedirectUrl = redirectUrl => ({
   type: SET_REDIRECT_URL,
@@ -20,9 +20,9 @@ const setPaymentRecord = paymentRecord => ({
   paymentRecord,
 });
 
-const setPlans = plans => ({
-  type: SET_PLANS,
-  plans,
+const setSubscriptionPlans = subscriptionPlans => ({
+  type: SET_SUBSCRIPTION_PLANS,
+  subscriptionPlans,
 });
 
 export const navigateToBuy = (redirectUrl, actionUrl) => (
@@ -85,19 +85,19 @@ export const fetchPaymentRecord = paymentRecordId => (
     });
 };
 
-export const fetchPlans = () => (dispatch, getState, { api }) => {
+export const fetchSubscriptionPlans = () => (dispatch, getState, { api }) => {
   const state = getState();
-  const plans = plansSelector(state);
+  const plans = subscriptionPlansSelector(state);
 
-  dispatch(setPlans(toFetching(plans)));
+  dispatch(setSubscriptionPlans(toFetching(plans)));
 
   return api.payment
-    .getPlans()
+    .getSubscriptionPlans()
     .then(plans => {
-      dispatch(setPlans(getFetched(plans)));
+      dispatch(setSubscriptionPlans(getFetched(plans)));
     })
     .catch(error => {
       console.error(error);
-      dispatch(setPlans(getError(plans)));
+      dispatch(setSubscriptionPlans(getError(plans)));
     });
 };

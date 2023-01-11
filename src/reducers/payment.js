@@ -1,11 +1,11 @@
 import createReducer from 'utils/createReducer';
 import { getUnfetched } from 'utils/fetchBox';
 
-import { SET_PAYMENT_RECORD, SET_PLANS } from '../actions/payment';
+import { SET_PAYMENT_RECORD, SET_SUBSCRIPTION_PLANS } from '../actions/payment';
 
 const preloadedState = {
   paymentRecord: getUnfetched(),
-  plans: getUnfetched(),
+  subscriptionPlans: getUnfetched(),
 };
 
 export default createReducer(preloadedState, {
@@ -13,8 +13,8 @@ export default createReducer(preloadedState, {
     ...state,
     paymentRecord,
   }),
-  [SET_PLANS]: (state, { plans }) => ({
+  [SET_SUBSCRIPTION_PLANS]: (state, { subscriptionPlans }) => ({
     ...state,
-    plans,
+    subscriptionPlans,
   }),
 });

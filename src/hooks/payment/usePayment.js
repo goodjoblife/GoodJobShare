@@ -3,22 +3,23 @@ import { useSelector } from 'react-redux';
 import {
   redirectUrlSelector,
   paymentRecordSelector,
-  plansSelector,
+  subscriptionPlansSelector,
 } from '../../selectors/payment';
 
 export const usePaymentRecord = () => useSelector(paymentRecordSelector);
 export const useRedirectUrl = () => useSelector(redirectUrlSelector);
-export const usePlans = () => useSelector(plansSelector);
+export const useSubscriptionPlans = () =>
+  useSelector(subscriptionPlansSelector);
 
 const usePayment = () => {
   const paymentRecord = usePaymentRecord();
   const redirectUrl = useRedirectUrl();
-  const plans = usePlans();
+  const subscriptionPlans = useSubscriptionPlans();
 
   return {
     paymentRecord,
     redirectUrl,
-    plans,
+    subscriptionPlans,
   };
 };
 

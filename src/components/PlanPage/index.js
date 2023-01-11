@@ -3,27 +3,50 @@ import { setStatic } from 'recompose';
 import { useDispatch } from 'react-redux';
 
 import Heading from 'common/base/Heading';
-import { subscriptionType } from 'constants/subscription';
-import { usePlans } from 'hooks/payment/usePayment';
+import { useSubscriptionPlans } from 'hooks/payment/usePayment';
 
-import { fetchPlans } from '../../actions/payment';
+import { fetchSubscriptionPlans } from '../../actions/payment';
 import styles from './PlanPage.module.css';
 import CardSection from './CardSection';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
-  return Promise.all([dispatch(fetchPlans())]);
+  return Promise.all([dispatch(fetchSubscriptionPlans())]);
 });
+
+// Promise.resolve([
+//   {
+//     skuId: 'submit-data',
+//     type: 'SubmitData',
+//     title: '留下一筆資料',
+//     description: '解鎖全站 7 天',
+//     amount: 0,
+//   },
+//   {
+//     skuId: '1-months-subscription',
+//     type: 'BuySubscription',
+//     title: '包月方案',
+//     description: '解鎖全站 1 個月',
+//     amount: 99,
+//   },
+//   {
+//     skuId: '3-months-subscription',
+//     type: 'BuySubscription',
+//     title: '包季方案',
+//     description: '解鎖全站 3 個月',
+//     amount: 149,
+//   },
+// ]);
 
 const PlanPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchPlans());
+    dispatch(fetchSubscriptionPlans());
   }, [dispatch]);
 
-  const plansBox = usePlans();
+  const subscriptionPlansBox = useSubscriptionPlans();
 
-  const plans = plansBox.data;
+  const plans = subscriptionPlansBox.data;
 
   return (
     <div className={styles.container}>
@@ -32,11 +55,7 @@ const PlanPage = () => {
           解鎖全站資料方式
         </Heading>
         <div className={styles['cardSection']}>
-          <CardSection
-            plans={plans}
-            title="留下你的資料幫助其他人："
-            type={subscriptionType.submitData}
-          />
+          <CardSection plans={plans} />
         </div>
       </div>
     </div>
