@@ -33,22 +33,29 @@ function parseState(window) {
     return {};
   }
 
-  const shouldNotTransform = R.flip(R.contains)([
-    'laborRights',
-    'company',
-    'jobTitle',
-    'popularCompanyAverageSalary',
-    'popularJobTitleSalaryDistribution',
-    'auth',
-    'payment',
-    'paymentPersist',
+  // 禁止增加新的 KEY
+  // deprecated: we will sunset immutable in the future
+  // see https://github.com/goodjoblife/GoodJobShare/milestone/12
+  const shouldTransform = R.flip(R.contains)([
+    'experienceSearch',
+    'experienceDetail',
+    'experiences',
+    'timeAndSalary',
+    'timeAndSalaryBoard',
+    'timeAndSalarySearch',
+    'timeAndSalaryCompany',
+    'timeAndSalaryJobTitle',
+    'popularExperiences',
+    'campaignInfo',
+    'campaignTimeAndSalaryBoard',
   ]);
+
   const preloadedState = {};
   Object.keys(window.__data).forEach(key => {
-    if (shouldNotTransform(key)) {
-      preloadedState[key] = window.__data[key];
-    } else {
+    if (shouldTransform(key)) {
       preloadedState[key] = fromJS(window.__data[key]);
+    } else {
+      preloadedState[key] = window.__data[key];
     }
   });
   // delete window.__data;
