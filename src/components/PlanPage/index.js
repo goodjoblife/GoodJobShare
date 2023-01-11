@@ -2,9 +2,15 @@ import React from 'react';
 
 import Heading from 'common/base/Heading';
 import { subscriptionType } from 'constants/subscription';
+import { setStatic } from 'recompose';
+import { fetchPlans } from '../../actions/payment';
 
 import styles from './PlanPage.module.css';
 import CardSection from './CardSection';
+
+const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
+  return Promise.all([dispatch(fetchPlans())]);
+});
 
 const plans = [
   {
@@ -49,4 +55,4 @@ const PlanPage = () => {
   );
 };
 
-export default PlanPage;
+export default ssr(PlanPage);

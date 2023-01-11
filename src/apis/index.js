@@ -15,6 +15,7 @@ import me from './me';
 import auth from './auth';
 import emailVerify from './emailVerify';
 import viewLog from './viewLogApi';
+import payment from './payment';
 
 export default {
   campaignInfo,
@@ -34,4 +35,5 @@ export default {
   auth,
   emailVerify,
   viewLog,
+  payment,
 };
