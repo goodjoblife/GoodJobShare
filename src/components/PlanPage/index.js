@@ -12,7 +12,7 @@ import styles from './PlanPage.module.css';
 import CardSection from './CardSection';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
-  return Promise.all([dispatch(fetchSubscriptionPlans())]);
+  return dispatch(fetchSubscriptionPlans());
 });
 
 const PlanPage = () => {
