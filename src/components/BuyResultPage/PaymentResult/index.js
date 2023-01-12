@@ -9,11 +9,11 @@ import Success from './Success';
 import Failure from './Failure';
 import InProgress from './InProgress';
 
-const PaymentResult = ({ paymentRecord, paymentRecordId }) => {
-  const buyStatus = paymentRecordToBuyStatus(paymentRecord);
+const PaymentResult = ({ paymentRecordBox, paymentRecordId }) => {
+  const buyStatus = paymentRecordToBuyStatus(paymentRecordBox);
 
-  const paymentRecordData = paymentRecord.data;
-  const fetchingStatus = paymentRecord.status;
+  const paymentRecordData = paymentRecordBox.data;
+  const fetchingStatus = paymentRecordBox.status;
 
   if (buyStatus === buyStatusMap.successful) {
     const { expiredAt } = paymentRecordData;
@@ -36,7 +36,7 @@ const PaymentResult = ({ paymentRecord, paymentRecordId }) => {
 
 PaymentResult.propTypes = {
   paymentRecordId: PropTypes.string,
-  paymentRecord: fetchBoxPropType,
+  paymentRecordBox: fetchBoxPropType,
 };
 
 PaymentResult.defaultProps = {
