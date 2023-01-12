@@ -10,30 +10,16 @@ import { CardCCV, CardExpirationDate, CardNumber } from './TappayElement';
 import Row from './Row';
 import CreditCards from './CreditCards';
 import styles from './PaymentSection.module.css';
-import useTapPay from './useTapPay';
+import useForm from './useForm';
 
-const PaymentSection = ({ tapPayCard, loadTapPayCard, ...props }) => {
+const PaymentSection = ({ tapPayCard, loadTapPayCard, skuId, ...props }) => {
   const [isPrimary, setPrimary] = useState(false);
-  const [activeCardType, setActiveCardType] = useState('unknown');
-  const [canGetPrime, setCanGetPrime] = useState(false);
-
-  const handleUpdate = useCallback(update => {
-    setActiveCardType(update.cardType);
-    setCanGetPrime(update.canGetPrime);
-  }, []);
-
-  const handlePrime = useCallback(prime => {
-    alert('get prime 成功，prime: ' + prime);
-    alert('creditCard', { prime });
-  }, []);
-
-  const submit = useTapPay({
+  const { activeCardType, canGetPrime, submit } = useForm({
     tapPayCard,
     loadTapPayCard,
-    handleUpdate,
-    handlePrime,
+    skuId,
+    isPrimary,
   });
-
   const onSubmit = useCallback(
     e => {
       e.preventDefault();
@@ -85,7 +71,9 @@ const PaymentSection = ({ tapPayCard, loadTapPayCard, ...props }) => {
           </div>
           <div className={styles.submitSection}>
             <Row>
-              <Button disabled={!canGetPrime}>付款</Button>
+              <Button type="submit" disabled={!canGetPrime}>
+                付款
+              </Button>
             </Row>
             <Row>
               <P className={styles.note} size="s">
@@ -103,12 +91,17 @@ const PaymentSection = ({ tapPayCard, loadTapPayCard, ...props }) => {
 PaymentSection.propTypes = {
   tapPayCard: PropTypes.object,
   loadTapPayCard: PropTypes.func.isRequired,
+  skuId: PropTypes.string.isRequired,
 };
 
-export default () => (
+export default ({ skuId }) => (
   <TapPayContext.Consumer>
     {({ loadTapPayCard, tapPayCard }) => (
-      <PaymentSection loadTapPayCard={loadTapPayCard} tapPayCard={tapPayCard} />
+      <PaymentSection
+        loadTapPayCard={loadTapPayCard}
+        tapPayCard={tapPayCard}
+        skuId={skuId}
+      />
     )}
   </TapPayContext.Consumer>
 );
