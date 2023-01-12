@@ -5,3 +5,15 @@ export const checkoutSubscriptionWithPrimeMutation = `
     }
   }
 `;
+
+export const subscriptionPlans = `
+  query {
+    subscriptionPlans {
+      skuId
+      title
+      description
+      type
+      amount
+    }
+  }
+`;

@@ -3,14 +3,26 @@ import { getError, getFetched, getUnfetched, toFetching } from 'utils/fetchBox';
 import {
   paymentRecordSelector,
   redirectUrlSelector,
+  subscriptionPlansSelector,
 } from '../selectors/payment';
 
 export const SET_REDIRECT_URL = '@@PAYMENT_PERSIST/SET_REDIRECT_URL';
 export const SET_PAYMENT_RECORD = '@@PAYMENT/SET_PAYMENT_RECORD';
+export const SET_SUBSCRIPTION_PLANS = '@@PAYMENT/SET_PLANS';
 
 const setRedirectUrl = redirectUrl => ({
   type: SET_REDIRECT_URL,
   redirectUrl,
+});
+
+const setPaymentRecord = paymentRecord => ({
+  type: SET_PAYMENT_RECORD,
+  paymentRecord,
+});
+
+const setSubscriptionPlans = subscriptionPlans => ({
+  type: SET_SUBSCRIPTION_PLANS,
+  subscriptionPlans,
 });
 
 export const navigateToBuy = (redirectUrl, actionUrl) => (
@@ -47,10 +59,7 @@ export const fetchPaymentRecord = paymentRecordId => (
   const state = getState();
   const paymentRecord = paymentRecordSelector(state);
 
-  dispatch({
-    type: SET_PAYMENT_RECORD,
-    paymentRecord: toFetching(paymentRecord),
-  });
+  dispatch(setPaymentRecord(toFetching(paymentRecord)));
 
   return new Promise(resolve => {
     setTimeout(() => {
@@ -68,16 +77,27 @@ export const fetchPaymentRecord = paymentRecordId => (
     }, 3000);
   })
     .then(paymentRecord => {
-      dispatch({
-        type: SET_PAYMENT_RECORD,
-        paymentRecord: getFetched(paymentRecord),
-      });
+      dispatch(setPaymentRecord(getFetched(paymentRecord)));
     })
     .catch(error => {
       console.error(error);
-      dispatch({
-        type: SET_PAYMENT_RECORD,
-        paymentRecord: getError(error),
-      });
+      dispatch(setPaymentRecord(getError(error)));
+    });
+};
+
+export const fetchSubscriptionPlans = () => (dispatch, getState, { api }) => {
+  const state = getState();
+  const plans = subscriptionPlansSelector(state);
+
+  dispatch(setSubscriptionPlans(toFetching(plans)));
+
+  return api.payment
+    .getSubscriptionPlans()
+    .then(plans => {
+      dispatch(setSubscriptionPlans(getFetched(plans)));
+    })
+    .catch(error => {
+      console.error(error);
+      dispatch(setSubscriptionPlans(getError(plans)));
     });
 };

@@ -1,36 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { setStatic } from 'recompose';
+import { useDispatch } from 'react-redux';
 
 import Heading from 'common/base/Heading';
-import { subscriptionType } from 'constants/subscription';
+import { useSubscriptionPlans } from 'hooks/payment/usePayment';
+import { isFetched } from 'utils/fetchBox';
+import Loading from 'common/Loader';
 
+import { fetchSubscriptionPlans } from '../../actions/payment';
 import styles from './PlanPage.module.css';
 import CardSection from './CardSection';
 
-const plans = [
-  {
-    skuId: 'submit-data',
-    type: 'SubmitData',
-    title: '留下一筆資料',
-    description: '解鎖全站 7 天',
-    amount: 0,
-  },
-  {
-    skuId: '1-months-subscription',
-    type: 'BuySubscription',
-    title: '包月方案',
-    description: '解鎖全站 1 個月',
-    amount: 99,
-  },
-  {
-    skuId: '3-months-subscription',
-    type: 'BuySubscription',
-    title: '包季方案',
-    description: '解鎖全站 3 個月',
-    amount: 149,
-  },
-];
+const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
+  return dispatch(fetchSubscriptionPlans());
+});
 
 const PlanPage = () => {
+  const dispatch = useDispatch();
+  const subscriptionPlansBox = useSubscriptionPlans();
+
+  const isReady = isFetched(subscriptionPlansBox);
+
+  useEffect(() => {
+    if (!isReady) {
+      dispatch(fetchSubscriptionPlans());
+    }
+  }, [dispatch, isReady]);
+
+  if (!isReady) {
+    return <Loading size="l" />;
+  }
+
+  const plans = subscriptionPlansBox.data;
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -38,15 +40,11 @@ const PlanPage = () => {
           解鎖全站資料方式
         </Heading>
         <div className={styles['cardSection']}>
-          <CardSection
-            plans={plans}
-            title="留下你的資料幫助其他人："
-            type={subscriptionType.submitData}
-          />
+          <CardSection plans={plans} />
         </div>
       </div>
     </div>
   );
 };
 
-export default PlanPage;
+export default ssr(PlanPage);

@@ -1,6 +1,12 @@
 import PropTypes from 'prop-types';
+import { compose, prop } from 'ramda';
 
-import fetchingStatus from 'constants/status';
+import fetchingStatus, {
+  isError as constIsError,
+  isFetched as constIsFetched,
+  isUnfetched as constIsUnfetched,
+  isFetching as constIsFetching,
+} from 'constants/status';
 
 // please don't make it public; it should be a naive data type generator
 const initFetchBox = (
@@ -18,6 +24,28 @@ export const fetchBoxPropType = PropTypes.shape({
   status: PropTypes.oneOf(Object.values(fetchingStatus)),
   error: PropTypes.any,
 });
+
+const getStatus = prop('status');
+
+export const isError = compose(
+  constIsError,
+  getStatus,
+);
+
+export const isUnfetched = compose(
+  constIsUnfetched,
+  getStatus,
+);
+
+export const isFetched = compose(
+  constIsFetched,
+  getStatus,
+);
+
+export const isFetching = compose(
+  constIsFetching,
+  getStatus,
+);
 
 // the FetchBox is always immutable
 

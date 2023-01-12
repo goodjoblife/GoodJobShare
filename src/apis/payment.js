@@ -1,5 +1,15 @@
 import graphqlClient from 'utils/graphqlClient';
-import { checkoutSubscriptionWithPrimeMutation } from 'graphql/payment';
+import {
+  subscriptionPlans,
+  checkoutSubscriptionWithPrimeMutation,
+} from 'graphql/payment';
+
+const getSubscriptionPlans = () =>
+  graphqlClient({
+    query: subscriptionPlans,
+  }).then(({ subscriptionPlans }) => {
+    return subscriptionPlans;
+  });
 
 export const checkoutSubscriptionWithPrime = ({
   prime,
@@ -21,4 +31,5 @@ export const checkoutSubscriptionWithPrime = ({
 
 export default {
   checkoutSubscriptionWithPrime,
+  getSubscriptionPlans,
 };
