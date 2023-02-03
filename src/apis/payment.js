@@ -2,6 +2,7 @@ import graphqlClient from 'utils/graphqlClient';
 import {
   subscriptionPlans,
   checkoutSubscriptionWithPrimeMutation,
+  paymentRecord,
 } from 'graphql/payment';
 
 const getSubscriptionPlans = () =>
@@ -29,7 +30,17 @@ export const checkoutSubscriptionWithPrime = ({
     token,
   }).then(({ checkoutSubscriptionWithPrime: { paymentUrl } }) => paymentUrl);
 
+const getPaymentRecord = token => paymentRecordId =>
+  graphqlClient({
+    query: paymentRecord,
+    variables: {
+      id: paymentRecordId,
+    },
+    token,
+  }).then(({ paymentRecord }) => paymentRecord);
+
 export default {
   checkoutSubscriptionWithPrime,
   getSubscriptionPlans,
+  getPaymentRecord,
 };

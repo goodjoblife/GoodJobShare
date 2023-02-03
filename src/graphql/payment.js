@@ -17,3 +17,39 @@ export const subscriptionPlans = `
     }
   }
 `;
+
+export const paymentRecord = `
+  query($id: ID) {
+    paymentRecord(id: $id) {
+      id
+      userId
+      publicId
+      status
+      paymentMethodSnapshot {
+        id
+        createdAt
+      }
+      subscription {
+        id
+        startedAt
+        expiredAt
+        createdAt
+        status
+        subscriptionPlan {
+          skuId
+          title
+          description
+          type
+          amount
+          duration {
+            type
+            amount
+          }
+        }
+      }
+      amount
+      createdAt
+      updatedAt
+    }
+  }
+`;
