@@ -68,35 +68,13 @@ export const fetchPaymentRecord = paymentRecordId => (
 
   return fetcher(paymentRecordId)
     .then(paymentRecord => {
+      console.log('fetchPaymentRecord - paymentRecord', paymentRecord);
       dispatch(setPaymentRecord(getFetched(paymentRecord)));
     })
     .catch(error => {
       console.error(error);
       dispatch(setPaymentRecord(getError(error)));
     });
-
-  // return new Promise(resolve => {
-  //   setTimeout(() => {
-  //     resolve({
-  //       id: paymentRecordId,
-  //       publicId: '221116-123456',
-  //       // status: 'PendingAuthorization',
-  //       status: 'Authorized',
-  //       // status: 'Error',
-  //       paymentMethodSnapshot: {},
-  //       amount: 399,
-  //       createdAt: new Date(),
-  //       updated_at: new Date(),
-  //     });
-  //   }, 3000);
-  // })
-  //   .then(paymentRecord => {
-  //     dispatch(setPaymentRecord(getFetched(paymentRecord)));
-  //   })
-  //   .catch(error => {
-  //     console.error(error);
-  //     dispatch(setPaymentRecord(getError(error)));
-  //   });
 };
 
 export const fetchSubscriptionPlans = () => (dispatch, getState, { api }) => {

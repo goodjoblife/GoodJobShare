@@ -19,7 +19,7 @@ export const subscriptionPlans = `
 `;
 
 export const paymentRecord = `
-  query($id: ID) {
+  query($id: ID!) {
     paymentRecord(id: $id) {
       id
       userId
@@ -27,13 +27,11 @@ export const paymentRecord = `
       status
       paymentMethodSnapshot {
         id
-        createdAt
       }
       subscription {
         id
         startedAt
         expiredAt
-        createdAt
         status
         subscriptionPlan {
           skuId
@@ -48,8 +46,6 @@ export const paymentRecord = `
         }
       }
       amount
-      createdAt
-      updatedAt
     }
   }
 `;
