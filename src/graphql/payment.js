@@ -14,6 +14,10 @@ export const subscriptionPlans = `
       description
       type
       amount
+      duration {
+        type
+        amount
+      }
     }
   }
 `;

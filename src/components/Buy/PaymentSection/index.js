@@ -91,7 +91,7 @@ const PaymentSection = ({ tapPayCard, loadTapPayCard, skuId, ...props }) => {
 PaymentSection.propTypes = {
   tapPayCard: PropTypes.object,
   loadTapPayCard: PropTypes.func.isRequired,
-  skuId: PropTypes.string.isRequired,
+  skuId: PropTypes.string,
 };
 
 export default ({ skuId }) => (
