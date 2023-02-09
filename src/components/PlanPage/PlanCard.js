@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 
 import RoundCard from 'common/RoundCard';
 import Button from 'common/button/Button';
@@ -23,9 +22,7 @@ const getButtonType = type => {
 const PlanCard = ({ title, description, amount, type, skuId }) => {
   const actionTitle = getActionTitle(type);
 
-  const history = useHistory();
-  const redirectUrl = history.location.pathname;
-  const { toBuy, actionUrl } = useToBuy(redirectUrl, skuId);
+  const { toBuy, actionUrl } = useToBuy(null, skuId);
   const onButtonClick = useCallback(
     evt => {
       evt.preventDefault();

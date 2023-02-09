@@ -68,7 +68,6 @@ export const fetchPaymentRecord = paymentRecordId => (
 
   return fetcher(paymentRecordId)
     .then(paymentRecord => {
-      console.log('fetchPaymentRecord - paymentRecord', paymentRecord);
       dispatch(setPaymentRecord(getFetched(paymentRecord)));
     })
     .catch(error => {
