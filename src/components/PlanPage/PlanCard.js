@@ -22,7 +22,7 @@ const getButtonType = type => {
 const PlanCard = ({ title, description, amount, type, skuId }) => {
   const actionTitle = getActionTitle(type);
 
-  const { toBuy, actionUrl } = useToBuy(null, skuId);
+  const { toBuy, actionUrl } = useToBuy('/', skuId);
   const onButtonClick = useCallback(
     evt => {
       evt.preventDefault();
