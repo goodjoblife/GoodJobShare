@@ -6,6 +6,8 @@ import {
   subscriptionPlansSelector,
 } from '../selectors/payment';
 
+import { tokenSelector } from '../selectors/authSelector';
+
 export const SET_REDIRECT_URL = '@@PAYMENT_PERSIST/SET_REDIRECT_URL';
 export const SET_PAYMENT_RECORD = '@@PAYMENT/SET_PAYMENT_RECORD';
 export const SET_SUBSCRIPTION_PLANS = '@@PAYMENT/SET_PLANS';
@@ -58,24 +60,13 @@ export const fetchPaymentRecord = paymentRecordId => (
 ) => {
   const state = getState();
   const paymentRecord = paymentRecordSelector(state);
+  const token = tokenSelector(state);
 
   dispatch(setPaymentRecord(toFetching(paymentRecord)));
 
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve({
-        id: paymentRecordId,
-        publicId: '221116-123456',
-        // status: 'PendingAuthorization',
-        status: 'Authorized',
-        // status: 'Error',
-        paymentMethodSnapshot: {},
-        amount: 399,
-        createdAt: new Date(),
-        updated_at: new Date(),
-      });
-    }, 3000);
-  })
+  const fetcher = api.payment.getPaymentRecord(token);
+
+  return fetcher(paymentRecordId)
     .then(paymentRecord => {
       dispatch(setPaymentRecord(getFetched(paymentRecord)));
     })

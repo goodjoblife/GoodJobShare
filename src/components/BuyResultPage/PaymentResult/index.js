@@ -16,9 +16,11 @@ const PaymentResult = ({ paymentRecordBox, paymentRecordId }) => {
   const fetchingStatus = paymentRecordBox.status;
 
   if (buyStatus === buyStatusMap.successful) {
-    const { expiredAt } = paymentRecordData;
+    const {
+      subscription: { expiredAt },
+    } = paymentRecordData;
 
-    return <Success expiredAt={expiredAt} />;
+    return <Success expiredAt={new Date(expiredAt)} />;
   }
   if (buyStatus === buyStatusMap.inProgress) {
     return (
