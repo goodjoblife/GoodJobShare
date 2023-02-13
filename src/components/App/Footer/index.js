@@ -17,7 +17,7 @@ const link2 = [
   { to: '/guidelines', text: '發文留言規則' },
   { to: '/privacy-policy', text: '隱私權政策' },
   { to: '/user-terms', text: '使用者條款' },
-  { to: '/product-and-refund', text: '商品與退款政策' }
+  { to: '/product-and-refund', text: '商品與退款政策' },
 ];
 const link3 = [
   { to: '/about', text: '關於我們' },
