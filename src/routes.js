@@ -24,6 +24,7 @@ import About from './components/About';
 import Faq from './components/Faq';
 import Guidelines from './components/Guidelines';
 import Privacy from './components/Privacy';
+import ProductAndRefundPolicy from './components/ProductAndRefundPolicy';
 import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
@@ -276,6 +277,11 @@ const routes = [
     path: '/privacy-policy',
     exact: true,
     component: Privacy,
+  },
+  {
+    path: '/product-and-refund',
+    exact: true,
+    component: ProductAndRefundPolicy,
   },
   {
     path: '/user-terms',

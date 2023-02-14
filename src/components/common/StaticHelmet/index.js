@@ -207,6 +207,23 @@ export default {
       <link rel="canonical" href={formatCanonicalPath('/privacy-policy')} />
     </Helmet>
   ),
+  ProductAndRefundPolicy: () => (
+    <Helmet>
+      <title itemProp="name" lang="zh-TW">
+        商品與退款政策
+      </title>
+      <meta name="description" content="" />
+      <meta
+        property="og:title"
+        content={formatTitle('商品與退款政策', SITE_NAME)}
+      />
+      <meta
+        property="og:url"
+        content={formatCanonicalPath('/product-and-refund')}
+      />
+      <link rel="canonical" href={formatCanonicalPath('/product-and-refund')} />
+    </Helmet>
+  ),
   UserTerms: () => (
     <Helmet>
       <title itemProp="name" lang="zh-TW">
