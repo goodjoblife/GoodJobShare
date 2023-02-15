@@ -14,6 +14,7 @@ module.exports = config => {
     hooks: path.resolve('./src/hooks'),
     contexts: path.resolve('./src/contexts'),
     constants: path.resolve('./src/constants'),
+    actions: path.resolve('./src/actions'),
   };
   return config;
 };

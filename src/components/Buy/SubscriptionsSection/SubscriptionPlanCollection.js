@@ -7,12 +7,12 @@ const SubscriptionPlanCollection = ({ plans, selectedId, setSelectedId }) => (
   <div className={styles.plans}>
     {plans.map(plan => (
       <SubscriptionPlan
-        key={plan.id}
+        key={plan.skuId}
         className={styles.plan}
-        name={plan.name}
-        price={plan.price}
+        title={plan.title}
+        amount={plan.amount}
         duration={plan.duration}
-        active={selectedId === plan.id}
+        active={selectedId === plan.skuId}
         onChange={e => e.target.checked && setSelectedId(plan.id)}
       />
     ))}
@@ -22,16 +22,16 @@ const SubscriptionPlanCollection = ({ plans, selectedId, setSelectedId }) => (
 SubscriptionPlanCollection.propTypes = {
   plans: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
+      skuId: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
       duration: PropTypes.shape({
         amount: PropTypes.number.isRequired,
-        unit: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
       }).isRequired,
     }),
   ),
-  selectedId: PropTypes.string.isRequired,
+  selectedId: PropTypes.string,
   setSelectedId: PropTypes.func.isRequired,
 };
 

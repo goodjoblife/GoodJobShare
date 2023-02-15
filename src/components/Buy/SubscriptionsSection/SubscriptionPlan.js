@@ -7,8 +7,8 @@ import styles from './SubscriptionsSection.module.css';
 
 const SubscriptionPlan = ({
   className,
-  name,
-  price,
+  title,
+  amount,
   duration,
   active,
   onChange,
@@ -22,13 +22,13 @@ const SubscriptionPlan = ({
     ></input>
     <RoundCard className={styles.content} checked={active}>
       <P className={styles.title} size="l" bold>
-        {name}
+        {title}
       </P>
       <P className={styles.subtitle} size="l">
-        解鎖全站 {duration.amount} 個{formatSalaryType(duration.unit)}
+        解鎖全站 {duration.amount} 個{formatSalaryType(duration.type)}
       </P>
       <P bold>
-        <span className={styles.price}>{price}</span>元
+        <span className={styles.price}>{amount}</span>元
       </P>
     </RoundCard>
   </label>
@@ -36,11 +36,11 @@ const SubscriptionPlan = ({
 
 SubscriptionPlan.propTypes = {
   className: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  amount: PropTypes.number.isRequired,
   duration: PropTypes.shape({
     amount: PropTypes.number.isRequired,
-    unit: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
   }).isRequired,
   active: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
