@@ -7,6 +7,7 @@ import Button from 'common/button/Button';
 import useTimer, { countingStatusMap } from 'hooks/useTimer';
 import useToRedirectUrl from 'hooks/payment/useToRedirectUrl';
 
+import CheckedIcon from './checked.svg';
 import styles from './PaymentResult.module.css';
 import { renderCountdown } from './helpers';
 
@@ -32,7 +33,7 @@ const Success = ({ expiredAt }) => {
   return (
     <div className={styles.content}>
       <Heading className={styles.title}>交易成功</Heading>
-      <div className={styles.icon}></div>
+      <img className={styles.icon} src={CheckedIcon} alt="successful" />
       <P Tag="p" className={styles.description}>
         {`解鎖有效日期至 ${expiredAt.toLocaleDateString(
           undefined,

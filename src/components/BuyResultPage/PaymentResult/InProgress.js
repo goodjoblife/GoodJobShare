@@ -6,6 +6,7 @@ import useTimer, { countingStatusMap } from 'hooks/useTimer';
 import useFetchPaymentRecord from 'hooks/payment/useFetchPaymentRecord';
 import fetchingStatusMap from 'constants/status';
 
+import TransactionIcon from './transaction.svg';
 import styles from './PaymentResult.module.css';
 import { renderCountdown } from './helpers';
 
@@ -49,7 +50,7 @@ const InProgress = ({ paymentRecordId, fetchingStatus }) => {
 
   return (
     <div className={styles.content}>
-      <div className={styles.icon}></div>
+      <img className={styles.icon} src={TransactionIcon} alt="in progress" />
       <P className={styles.description}>
         {isTimerEnabled
           ? `交易確認中，請勿離開，至多 ${countdown} 秒...`
