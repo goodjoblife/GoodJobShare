@@ -1,6 +1,6 @@
-export const getPermissionQuery = `
+export const getMyPermissionQuery = `
   {
-    permission {
+    myPermission {
       hasAllPermission
     }
   }
