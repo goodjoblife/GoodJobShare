@@ -6,20 +6,34 @@ import { useIsLoggedIn } from 'hooks/auth';
 import { useFacebookLogin, useGoogleLogin } from 'hooks/login';
 import styles from './PermissionBlock.module.css';
 
-const AuthenticatedButton = ({ to, onClick, children }) => (
-  <Link
-    className={cn('buttonCircleM', 'buttonBlack2')}
-    to={to}
-    onClick={onClick}
-  >
+const AuthenticatedButton = ({ className, to, onClick, children }) => (
+  <Link className={cn('buttonCircleM', className)} to={to} onClick={onClick}>
     {children}
   </Link>
+);
+
+const AuthenticatedButtonGroup = ({ to, share }) => (
+  <div className={styles.authenticatedGroup}>
+    <AuthenticatedButton
+      className={cn('buttonYellow', styles.button)}
+      to={to}
+      onClick={share}
+    >
+      留下一筆資料
+    </AuthenticatedButton>
+    <AuthenticatedButton
+      className={cn('buttonHollowRed', styles.button)}
+      to="/buy"
+    >
+      或以 99 元解鎖全站 1 個月
+    </AuthenticatedButton>
+  </div>
 );
 
 AuthenticatedButton.propTypes = {
   children: PropTypes.string.isRequired,
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-  onClick: PropTypes.func,
+  share: PropTypes.func,
 };
 
 const UnauthenticatedButton = () => {
@@ -48,7 +62,7 @@ const UnauthenticatedButton = () => {
   );
 };
 
-const CallToLoginShareButton = ({ isLoginText, to, onAuthenticatedClick }) => {
+const CallToLoginShareButton = ({ to, share }) => {
   const isLoggedIn = useIsLoggedIn();
   return (
     <div
@@ -57,9 +71,7 @@ const CallToLoginShareButton = ({ isLoginText, to, onAuthenticatedClick }) => {
       }}
     >
       {isLoggedIn ? (
-        <AuthenticatedButton to={to} onClick={onAuthenticatedClick}>
-          {isLoginText}
-        </AuthenticatedButton>
+        <AuthenticatedButtonGroup to={to} share={share} />
       ) : (
         <UnauthenticatedButton />
       )}
@@ -68,9 +80,8 @@ const CallToLoginShareButton = ({ isLoginText, to, onAuthenticatedClick }) => {
 };
 
 CallToLoginShareButton.propTypes = {
-  isLoginText: PropTypes.string,
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  onAuthenticatedClick: PropTypes.func,
+  share: PropTypes.func,
 };
 
 export default CallToLoginShareButton;

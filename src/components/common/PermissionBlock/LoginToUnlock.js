@@ -29,21 +29,17 @@ const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
   return (
     <React.Fragment>
       <div className={styles.headingContainer}>
-        <FontAwesomeIcon icon={faLock} className={styles.headingIcon} />
         <Heading size="sl" Tag="h3">
-          留下一筆資料，馬上解鎖全站資料
+          留下一筆資料，馬上解鎖全站資料 7 天
         </Heading>
       </div>
       <P size="l" className={styles.ctaText}>
-        解鎖全站共{' '}
-        <strong>{timeAndSalaryCount + experienceCount} 筆薪資、面試資料</strong>
-        。若你已經留過資料，登入即可查看全文！
+        解鎖全站共 {timeAndSalaryCount + experienceCount} 筆薪資、面試資料
       </P>
       <div className={styles.ctaButtonContainer}>
         <CallToLoginShareButton
           to={to}
           onAuthenticatedClick={onAuthenticatedClick}
-          isLoginText="立即分享"
         />
       </div>
     </React.Fragment>
