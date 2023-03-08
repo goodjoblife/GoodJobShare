@@ -1,5 +1,5 @@
 import React from 'react';
-import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
+import BasicPermissionBlock from 'common/PermissionBlock/BasicPermissionBlock';
 import styles from './injectHideContentBlock.module.css';
 import cn from 'classnames';
 import { useShareLink } from 'hooks/experiments';

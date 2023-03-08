@@ -11,7 +11,7 @@ import ArticleInfo from './ArticleInfo';
 import SectionBlock from './SectionBlock';
 import QABlock from './QABlock';
 import ReactionZone from './ReactionZone';
-import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
+import BasicPermissionBlock from 'common/PermissionBlock/BasicPermissionBlock';
 import { MAX_WORDS_IF_HIDDEN } from '../../../constants/hideContent';
 
 const countSectionWords = sections =>
