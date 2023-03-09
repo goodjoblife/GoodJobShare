@@ -5,7 +5,6 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 
 import Modal from 'common/Modal';
-import CallToLoginShareButton from './CallToLoginShareButton';
 import styles from './PermissionBlock.module.css';
 import LoginToUnlock from './LoginToUnlock';
 
@@ -28,14 +27,7 @@ const BasicPermissionSimpleBlock = ({ rootClassName, to }) => {
             close={toggleModal}
             closableOnClickOutside
           >
-            <LoginToUnlock />
-            <div className={styles.ctaButtonContainer}>
-              <CallToLoginShareButton
-                to={to}
-                onAuthenticatedClick={toggleModal}
-                isLoginText="立即分享"
-              />
-            </div>
+            <LoginToUnlock to={to} onAuthenticatedClick={toggleModal} />
           </Modal>
         </div>
       </div>
