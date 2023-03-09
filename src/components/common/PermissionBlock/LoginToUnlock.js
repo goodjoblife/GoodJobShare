@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 
-import P from 'common/base/P';
-import { Heading } from 'common/base';
+import { Heading, P, Link } from 'common/base';
 import {
   experienceCountSelector,
   timeAndSalaryCountSelector,
@@ -14,6 +11,7 @@ import { queryExperienceCountIfUnfetched } from 'actions/experiences';
 import { queryTimeAndSalaryCountIfUnfetched } from 'actions/timeAndSalary';
 import styles from './PermissionBlock.module.css';
 import CallToLoginShareButton from './CallToLoginShareButton';
+import { useIsLoggedIn } from 'hooks/auth';
 
 const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
   const dispatch = useDispatch();
@@ -26,6 +24,8 @@ const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
   const experienceCount = useSelector(experienceCountSelector);
   const timeAndSalaryCount = useSelector(timeAndSalaryCountSelector);
 
+  const isLoggedIn = useIsLoggedIn();
+
   return (
     <React.Fragment>
       <div className={styles.headingContainer}>
@@ -36,6 +36,11 @@ const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
       <P size="l" className={styles.ctaText}>
         解鎖全站共 {timeAndSalaryCount + experienceCount} 筆薪資、面試資料
       </P>
+      {!isLoggedIn && (
+        <P Tag={Link} size="l" className={styles.ctaText} bold>
+          若已有權限，登入即可查看全文
+        </P>
+      )}
       <div className={styles.ctaButtonContainer}>
         <CallToLoginShareButton
           to={to}
