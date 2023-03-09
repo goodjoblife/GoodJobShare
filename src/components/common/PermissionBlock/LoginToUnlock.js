@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
@@ -12,8 +13,9 @@ import {
 import { queryExperienceCountIfUnfetched } from 'actions/experiences';
 import { queryTimeAndSalaryCountIfUnfetched } from 'actions/timeAndSalary';
 import styles from './PermissionBlock.module.css';
+import CallToLoginShareButton from './CallToLoginShareButton';
 
-const LoginToUnlock = () => {
+const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,8 +39,20 @@ const LoginToUnlock = () => {
         <strong>{timeAndSalaryCount + experienceCount} 筆薪資、面試資料</strong>
         。若你已經留過資料，登入即可查看全文！
       </P>
+      <div className={styles.ctaButtonContainer}>
+        <CallToLoginShareButton
+          to={to}
+          onAuthenticatedClick={onAuthenticatedClick}
+          isLoginText="立即分享"
+        />
+      </div>
     </React.Fragment>
   );
+};
+
+LoginToUnlock.propTypes = {
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  onAuthenticatedClick: PropTypes.func,
 };
 
 export default LoginToUnlock;
