@@ -13,7 +13,7 @@ import { queryExperienceCountIfUnfetched } from 'actions/experiences';
 import { queryTimeAndSalaryCountIfUnfetched } from 'actions/timeAndSalary';
 import styles from './PermissionBlock.module.css';
 
-const ModalContent = () => {
+const LoginToUnlock = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -41,4 +41,4 @@ const ModalContent = () => {
   );
 };
 
-export default ModalContent;
+export default LoginToUnlock;
