@@ -1,5 +1,5 @@
 import React from 'react';
-import BasicPermissionBlock from 'common/PermissionBlock/BasicPermissionBlock';
+import { BasicPermissionSimpleBlock } from 'common/PermissionBlock';
 import styles from './injectHideContentBlock.module.css';
 import cn from 'classnames';
 import { useShareLink } from 'hooks/experiments';
@@ -18,10 +18,9 @@ export default hideRange => rows => {
           {
             className: cn(col.props.className, styles.cell, styles.mobile),
           },
-          <BasicPermissionBlock
+          <BasicPermissionSimpleBlock
             to={shareLink}
             rootClassName={styles.hideContentBlock}
-            simple
           />,
         );
       }),
@@ -37,10 +36,9 @@ export default hideRange => rows => {
         rowSpan={rows.length}
         className={styles.cell}
       >
-        <BasicPermissionBlock
+        <BasicPermissionSimpleBlock
           to={shareLink}
           rootClassName={styles.hideContentBlock}
-          simple
         />
       </td>,
     );
