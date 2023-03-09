@@ -13,6 +13,7 @@ import styles from './PermissionBlock.module.css';
 import CallToLoginShareButton from './CallToLoginShareButton';
 import { useIsLoggedIn } from 'hooks/auth';
 import LoginModal from './LoginModal';
+import useUnlockedDescriptionBySubmission from './useUnlockedDescriptionBySubmission';
 
 const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
   const dispatch = useDispatch();
@@ -38,12 +39,14 @@ const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
     }
   }, [isLoggedIn, isModalOpen]);
 
+  const unlockedDescription = useUnlockedDescriptionBySubmission();
+
   return (
     <React.Fragment>
       <LoginModal isOpen={isModalOpen} close={toggleModalOpen} />
       <div className={styles.headingContainer}>
         <Heading size="sl" Tag="h3">
-          留下一筆資料，馬上解鎖全站資料 7 天
+          留下一筆資料，馬上{unlockedDescription}
         </Heading>
       </div>
       <P size="l" className={styles.ctaText}>
