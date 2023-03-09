@@ -27,7 +27,7 @@
 }
 
 .ctaText {
-  font-weight: 300;
+  display: block;
   text-align: center;
 
   & + .ctaText {
