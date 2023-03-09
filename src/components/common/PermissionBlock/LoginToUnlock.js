@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,6 +12,7 @@ import { queryTimeAndSalaryCountIfUnfetched } from 'actions/timeAndSalary';
 import styles from './PermissionBlock.module.css';
 import CallToLoginShareButton from './CallToLoginShareButton';
 import { useIsLoggedIn } from 'hooks/auth';
+import LoginModal from './LoginModal';
 
 const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
   const dispatch = useDispatch();
@@ -25,9 +26,21 @@ const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
   const timeAndSalaryCount = useSelector(timeAndSalaryCountSelector);
 
   const isLoggedIn = useIsLoggedIn();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const toggleModalOpen = useCallback(() => setModalOpen(!isModalOpen), [
+    isModalOpen,
+  ]);
+
+  useEffect(() => {
+    if (isLoggedIn && isModalOpen) {
+      // Close the login modal on logged in
+      setModalOpen(false);
+    }
+  }, [isLoggedIn, isModalOpen]);
 
   return (
     <React.Fragment>
+      <LoginModal isOpen={isModalOpen} close={toggleModalOpen} />
       <div className={styles.headingContainer}>
         <Heading size="sl" Tag="h3">
           留下一筆資料，馬上解鎖全站資料 7 天
@@ -37,7 +50,13 @@ const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
         解鎖全站共 {timeAndSalaryCount + experienceCount} 筆薪資、面試資料
       </P>
       {!isLoggedIn && (
-        <P Tag={Link} size="l" className={styles.ctaText} bold>
+        <P
+          Tag={Link}
+          size="l"
+          className={styles.ctaText}
+          bold
+          onClick={toggleModalOpen}
+        >
           若已有權限，登入即可查看全文
         </P>
       )}
