@@ -4,6 +4,25 @@
   display: inline-block;
   border-radius: 0px;
   background-color: white;
+
+  .container {
+    border: 1px solid #fcd406;
+    border-radius: 4px;
+    background-color: white;
+    padding: 50px 40px;
+    margin: auto;
+  }
+}
+
+.permissionSimpleBlock {
+  border: 1px solid #fcd406;
+  border-radius: 0px;
+  background-color: #fffbe8;
+
+  .container {
+    max-width: 500px;
+    margin: auto;
+  }
 }
 
 .simple {
@@ -16,14 +35,6 @@
       }
     }
   }
-}
-
-.container {
-  border: 1px solid #fcd406;
-  border-radius: 4px;
-  background-color: white;
-  padding: 50px 40px;
-  margin: auto;
 }
 
 .ctaText {

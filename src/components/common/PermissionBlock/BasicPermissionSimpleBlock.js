@@ -16,7 +16,7 @@ const BasicPermissionSimpleBlock = ({ rootClassName, to }) => {
 
   return (
     <div
-      className={cn(styles.permissionBlock, rootClassName, styles.simple)}
+      className={cn(styles.permissionSimpleBlock, rootClassName, styles.simple)}
       onClick={toggleModal}
     >
       <div className={styles.container}>
