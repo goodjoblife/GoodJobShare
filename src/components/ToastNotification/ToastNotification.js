@@ -1,18 +1,16 @@
 import React from 'react';
 
 import useNotificationData from 'hooks/toastNotification/useNotificationData';
-import styles from './toastNotification.module.css';
 
-const Notification = ({ type, content }) => {
-  return <div>{`${type} - ${content}`}</div>;
-};
+import Notification from './Notification';
+import styles from './ToastNotification.module.css';
 
 const ToastNotification = () => {
   const notifications = useNotificationData();
   return (
     <div className={styles.container}>
-      {notifications.map(({ id, content, type }) => (
-        <Notification key={id} content={content} type={type} />
+      {notifications.map(({ id, content, type }, index) => (
+        <Notification key={id} index={index} content={content} type={type} />
       ))}
     </div>
   );
