@@ -1,8 +1,16 @@
 import createReducer from 'utils/createReducer';
+import { generateNotification } from 'utils/toastNotification';
+import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 
 import { PUSH } from '../actions/toastNotification';
 
-const preloadedState = { notificationIds: [], notificationMap: {} };
+const preloadedState = {
+  notifications: [
+    generateNotification(NOTIFICATION_TYPE.INFO, 'this is notification 1'),
+    generateNotification(NOTIFICATION_TYPE.WARNING, 'this is a notification 2'),
+    generateNotification(NOTIFICATION_TYPE.INFO, 'this is a notification 3'),
+  ],
+};
 
 // enum NotificationType {
 //   INFO,
@@ -18,12 +26,9 @@ const preloadedState = { notificationIds: [], notificationMap: {} };
 
 export default createReducer(preloadedState, {
   [PUSH]: (state, { notification }) => {
-    const { id } = notification;
-
     return {
       ...state,
-      notificationIds: [id, ...state.notificationIds],
-      notificationMap: { ...state.notificationMap, [id]: notification },
+      notifications: [notification, ...state.notifications],
     };
   },
 });
