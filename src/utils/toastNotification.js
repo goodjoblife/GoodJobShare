@@ -10,7 +10,6 @@ const generateRandomString = () => {
 
 export const generateNotification = (type, content) => {
   const id = generateRandomString();
-  console.log(id);
 
   const notificationType = defaultToInfo(NOTIFICATION_TYPE[type]);
 

@@ -19,6 +19,7 @@ const Notification = ({ index, type, content }) => {
       className={styles.container}
       style={{
         transform: `translateY(${offsetY})`,
+        transition: 'transform 0.6s ease-in',
       }}
     >{`${type} - ${content}`}</div>
   );
