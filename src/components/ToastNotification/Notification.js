@@ -50,7 +50,7 @@ const Notification = ({ index, type, content, id }) => {
       }}
     >
       <div>
-        <button onClick={toSunset}>
+        <button type="button" onClick={toSunset}>
           <Close />
         </button>
       </div>

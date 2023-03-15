@@ -12,7 +12,8 @@ const ToastNotification = () => {
   return (
     <div className={styles.container}>
       <button
-        style={{ position: 'fixed', top: '200px', left: '100px' }}
+        type="button"
+        style={{ position: 'fixed', top: '200px', left: '100px', zIndex: 100 }}
         onClick={() => toast('INFO', 'message from the user')}
       >
         ADD

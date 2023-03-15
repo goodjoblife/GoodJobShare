@@ -1,4 +1,5 @@
 .container {
+  z-index: 100;
   position: absolute;
   top: 0;
   right: 0;

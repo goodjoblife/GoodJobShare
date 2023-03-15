@@ -7,7 +7,7 @@
   position: relative;
   min-height: 100vh;
   @media (max-width: 850px) {
-    padding-top: NAV_MOBILE_HEIGHT;
+    margin-top: NAV_MOBILE_HEIGHT;
   }
 }
 
