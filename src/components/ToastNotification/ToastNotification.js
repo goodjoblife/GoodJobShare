@@ -18,7 +18,13 @@ const ToastNotification = () => {
         ADD
       </button>
       {notifications.map(({ id, content, type }, index) => (
-        <Notification key={id} index={index} content={content} type={type} />
+        <Notification
+          key={id}
+          index={index}
+          content={content}
+          type={type}
+          id={id}
+        />
       ))}
     </div>
   );

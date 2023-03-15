@@ -11,3 +11,8 @@ export const pushNotification = (type, content) => {
     notification,
   };
 };
+
+export const removeNotification = id => ({
+  type: REMOVE,
+  id,
+});
