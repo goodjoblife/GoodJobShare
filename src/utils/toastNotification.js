@@ -19,3 +19,10 @@ export const generateNotification = (type, content) => {
     content,
   };
 };
+
+export const createToastLocationState = (type, content) => ({
+  toastNotification: {
+    type,
+    content,
+  },
+});

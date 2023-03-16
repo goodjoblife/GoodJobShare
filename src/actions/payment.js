@@ -1,4 +1,6 @@
 import { getError, getFetched, getUnfetched, toFetching } from 'utils/fetchBox';
+import { createToastLocationState } from 'utils/toastNotification';
+import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 
 import {
   paymentRecordSelector,
@@ -44,7 +46,10 @@ export const navigateToRedirectUrl = () => (
   const state = getState();
   const redirectUrl = redirectUrlSelector(state) || '/';
 
-  history.push(redirectUrl);
+  history.push(
+    redirectUrl,
+    createToastLocationState(NOTIFICATION_TYPE.INFO, '成功解鎖'),
+  );
 
   dispatch(setRedirectUrl(null));
   dispatch({
