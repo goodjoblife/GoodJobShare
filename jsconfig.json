@@ -8,7 +8,8 @@
             "hooks/*": ["src/hooks/*"],
             "contexts/*": ["src/contexts/*"],
             "constants/*": ["src/constants/*"],
-            "actions/*": ["src/actions/*"]
+            "actions/*": ["src/actions/*"],
+            "selectors/*": ["src/selectors/*"]
         }
     },
     "exclude": ["node_modules", "dist"]
