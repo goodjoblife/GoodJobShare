@@ -6,7 +6,7 @@
   top: calc(NAV_MOBILE_HEIGHT);
   right: 0;
 
-  padding-right: 20px;
+  padding-right: 0;
   padding-top: 30px;
 
   @media (min-width: above-small) {

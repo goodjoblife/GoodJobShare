@@ -5,9 +5,10 @@ import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 import useRemoveNotification from 'hooks/toastNotification/useRemoveToast';
 import useTimer, { countingStatusMap } from 'hooks/useTimer';
 import CloseNoCircle from 'common/icons/CloseNoCircle';
+import Checked from 'common/icons/Checked';
 import { P } from 'common/base';
 
-import { getOffsetY, statusMap } from './helpers';
+import { getOffsetY, statusMap, getIconColor } from './helpers';
 import styles from './Notification.module.css';
 
 const FADE_OUT_TIME = 3000;
@@ -41,6 +42,8 @@ const Notification = ({ index, type, content, id }) => {
   const offsetY = `${calOffsetY(index)}px`;
   const opacity = status === statusMap.ACTIVE ? 100 : 0;
 
+  const iconColor = getIconColor(type);
+
   return (
     <div
       className={styles.container}
@@ -52,10 +55,8 @@ const Notification = ({ index, type, content, id }) => {
       }}
     >
       <div className={styles.left}>
-        <P
-          tag="p"
-          className={styles.message}
-        >{`${id}: ${type} - ${content}`}</P>
+        <Checked className={styles.icon} style={{ fill: iconColor }} />
+        <P tag="p" className={styles.message} title={content}>{`${content}`}</P>
       </div>
       <div className={styles.right}>
         <button className={styles.close} type="button" onClick={toSunset}>
