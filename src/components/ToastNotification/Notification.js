@@ -11,7 +11,7 @@ import { P } from 'common/base';
 import { getOffsetY, statusMap, getIconColor } from './helpers';
 import styles from './Notification.module.css';
 
-const FADE_OUT_TIME = 3000;
+const FADE_OUT_TIME = 10000;
 const SUNSET_TIME_IN_SEC = 0.6;
 const HEIGHT = 80;
 const MARGIN_Y = 20;
