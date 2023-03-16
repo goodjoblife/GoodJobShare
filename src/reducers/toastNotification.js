@@ -1,20 +1,11 @@
 import { propEq, reject } from 'ramda';
 
 import createReducer from 'utils/createReducer';
-import { generateNotification } from 'utils/toastNotification';
-import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 
 import { PUSH, REMOVE } from '../actions/toastNotification';
 
 const preloadedState = {
-  notifications: [
-    generateNotification(
-      NOTIFICATION_TYPE.INFO,
-      'this is notification 1 and it should be too long',
-    ),
-    generateNotification(NOTIFICATION_TYPE.WARNING, 'this is a notification 2'),
-    generateNotification(NOTIFICATION_TYPE.ALERT, 'this is a notification 3'),
-  ],
+  notifications: [],
 };
 
 // enum NotificationType {
