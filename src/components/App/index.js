@@ -38,12 +38,10 @@ const App = () => {
           <AppRouteWithSubRoutes key={i} {...route}>
             {({ hasHeader, hasFooter, children }) => (
               <div className={styles.App}>
+                <ToastNotification />
                 {hasHeader ? <Header /> : null}
                 <StaticHelmet.Default />
-                <div className={styles.content}>
-                  <ToastNotification />
-                  {children}
-                </div>
+                <div className={styles.content}>{children}</div>
                 {hasFooter ? <Footer /> : null}
               </div>
             )}

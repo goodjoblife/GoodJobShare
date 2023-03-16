@@ -12,7 +12,7 @@ import styles from './Notification.module.css';
 
 const FADE_OUT_TIME = 3000;
 const SUNSET_TIME_IN_SEC = 0.6;
-const HEIGHT = 100;
+const HEIGHT = 80;
 const MARGIN_Y = 20;
 
 const calOffsetY = getOffsetY(HEIGHT)(MARGIN_Y);
@@ -45,6 +45,7 @@ const Notification = ({ index, type, content, id }) => {
     <div
       className={styles.container}
       style={{
+        height: `${HEIGHT}px`,
         transform: `translateY(${offsetY})`,
         opacity,
         transition: `transform 0.6s ease-in, opacity ${SUNSET_TIME_IN_SEC}s ease-in`,

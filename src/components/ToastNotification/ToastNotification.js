@@ -11,22 +11,29 @@ const ToastNotification = () => {
   const toast = useToast();
   return (
     <div className={styles.container}>
-      <button
-        type="button"
-        style={{ position: 'fixed', top: '200px', left: '100px', zIndex: 100 }}
-        onClick={() => toast('INFO', 'message from the user')}
-      >
-        ADD
-      </button>
-      {notifications.map(({ id, content, type }, index) => (
-        <Notification
-          key={id}
-          index={index}
-          content={content}
-          type={type}
-          id={id}
-        />
-      ))}
+      <div className={styles.wrapper}>
+        <button
+          type="button"
+          style={{
+            position: 'fixed',
+            top: '200px',
+            left: '100px',
+            zIndex: 100,
+          }}
+          onClick={() => toast('INFO', 'message from the user')}
+        >
+          ADD
+        </button>
+        {notifications.map(({ id, content, type }, index) => (
+          <Notification
+            key={id}
+            index={index}
+            content={content}
+            type={type}
+            id={id}
+          />
+        ))}
+      </div>
     </div>
   );
 };

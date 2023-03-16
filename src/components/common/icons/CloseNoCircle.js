@@ -10,14 +10,8 @@ const CloseNoCircle = props => (
     {...props}
   >
     <title>x</title>
-    <g
-      id="icons"
-      stroke="none"
-      stroke-width="1"
-      fill="none"
-      fill-rule="evenodd"
-    >
-      <g id="x" fill="#000000" fill-rule="nonzero">
+    <g id="icons" stroke="none" stroke-width="1" fill-rule="evenodd">
+      <g id="x" fill-rule="nonzero">
         <path
           d={`M145.29003,2.7097656 C143.570709,0.975547058 141.229771,1.49332653e-16 138.787634,
 0 C136.345497,-1.50064675e-16 134.004559,0.975547058 132.285237,2.7097656 L74,60.9906013 L15.7147626,
