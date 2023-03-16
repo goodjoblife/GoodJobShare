@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 import useRemoveNotification from 'hooks/toastNotification/useRemoveToast';
 import useTimer, { countingStatusMap } from 'hooks/useTimer';
-import Close from 'common/icons/Close';
+import CloseNoCircle from 'common/icons/CloseNoCircle';
+import { P } from 'common/base';
 
 import { getOffsetY, statusMap } from './helpers';
 import styles from './Notification.module.css';
@@ -49,12 +50,17 @@ const Notification = ({ index, type, content, id }) => {
         transition: `transform 0.6s ease-in, opacity ${SUNSET_TIME_IN_SEC}s ease-in`,
       }}
     >
-      <div>
-        <button type="button" onClick={toSunset}>
-          <Close />
+      <div className={styles.left}>
+        <P
+          tag="p"
+          className={styles.message}
+        >{`${id}: ${type} - ${content}`}</P>
+      </div>
+      <div className={styles.right}>
+        <button className={styles.close} type="button" onClick={toSunset}>
+          <CloseNoCircle width="12px" height="12px" />
         </button>
       </div>
-      {`${id}: ${type} - ${content}`}
     </div>
   );
 };

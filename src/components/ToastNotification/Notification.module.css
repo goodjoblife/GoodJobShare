@@ -1,10 +1,37 @@
+@value border-gray, above-small, above-desktop, below-medium, above-medium from "common/variables.module.css";
+
 .container {
   z-index: 100;
+  display: flex;
   position: absolute;
   top: 0;
   right: 0;
-  background: #c6ff00;
-  width: 200px;
-  height: 100px;
-  padding: 24px 40px;
+  border-radius: 4px;
+  padding: 0 16px 0 40px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+  background-color: white;
+}
+
+.left {
+  display: flex;
+  margin-right: 20px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.right {
+  margin-top: 12px;
+}
+
+.close {
+  &:active {
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.message {
+  width: 240px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
