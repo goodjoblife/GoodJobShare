@@ -1,3 +1,5 @@
+@value above-small from "common/variables.module.css";
+
 .container {
   display: flex;
   position: absolute;
@@ -28,10 +30,14 @@
 }
 
 .message {
-  width: 240px;
+  width: 200px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+
+  @media (min-width: above-small) {
+    width: 240px;
+  }
 }
 
 .icon {

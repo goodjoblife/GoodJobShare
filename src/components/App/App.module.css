@@ -4,7 +4,6 @@
 @value primary-font, white-light, border-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
 
 .content {
-  position: relative;
   min-height: 100vh;
   @media (max-width: 850px) {
     margin-top: NAV_MOBILE_HEIGHT;
