@@ -27,9 +27,11 @@ const Notification = ({ index, type, content, id }) => {
 
   useEffect(() => {
     if (status === statusMap.SUNSET) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setStatus(statusMap.INACTIVE);
       }, SUNSET_TIME_IN_SEC * 1000);
+
+      return () => clearTimeout(timer);
     }
 
     if (status === statusMap.INACTIVE) {
