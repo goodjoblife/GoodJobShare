@@ -4,7 +4,7 @@ import { isNil } from 'ramda';
 
 import usePushToast from 'hooks/toastNotification/usePushToast';
 
-const useLocStateToastEffect = () => {
+const useLocStateToastObserver = () => {
   const location = useLocation();
   const pushToast = usePushToast();
 
@@ -27,4 +27,4 @@ const useLocStateToastEffect = () => {
   }, [location, pushToast]);
 };
 
-export default useLocStateToastEffect;
+export default useLocStateToastObserver;

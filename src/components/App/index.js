@@ -5,7 +5,7 @@ import { omit } from 'ramda';
 import StaticHelmet from 'common/StaticHelmet';
 import LoginModal from 'common/LoginModal';
 import LoginModalContext from 'contexts/LoginModalContext';
-import useLocStateToastEffect from 'hooks/toastNotification/useLocStateToastEffect';
+import useLocStateToastObserver from 'hooks/toastNotification/useLocStateToastObserver';
 
 import ToastNotification from '../ToastNotification/ToastNotification';
 import { AppRouteWithSubRoutes } from '../route';
@@ -33,7 +33,7 @@ const App = () => {
     LoginModalContext,
   );
 
-  useLocStateToastEffect();
+  useLocStateToastObserver();
   return (
     <Fragment>
       <Switch>
