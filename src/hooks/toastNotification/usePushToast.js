@@ -3,17 +3,17 @@ import { useDispatch } from 'react-redux';
 
 import { pushNotification } from '../../actions/toastNotification';
 
-const useToast = () => {
+const usePushToast = () => {
   const dispatch = useDispatch();
 
-  const toast = useCallback(
+  const pushToast = useCallback(
     (type, content) => {
       dispatch(pushNotification(type, content));
     },
     [dispatch],
   );
 
-  return toast;
+  return pushToast;
 };
 
-export default useToast;
+export default usePushToast;

@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { isNil } from 'ramda';
 
-import useToast from 'hooks/toastNotification/useToast';
+import usePushToast from 'hooks/toastNotification/usePushToast';
 
 const useLocStateToastEffect = () => {
   const location = useLocation();
-  const toast = useToast();
+  const pushToast = usePushToast();
 
   useEffect(() => {
     const state = location.state || {};
@@ -23,8 +23,8 @@ const useLocStateToastEffect = () => {
       return;
     }
 
-    toast(type, content);
-  }, [location, toast]);
+    pushToast(type, content);
+  }, [location, pushToast]);
 };
 
 export default useLocStateToastEffect;
