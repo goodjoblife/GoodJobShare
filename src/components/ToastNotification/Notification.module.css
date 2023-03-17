@@ -1,18 +1,28 @@
 @value above-small from "common/variables.module.css";
 
+@value mobile_width: 320px;
+@value desktop_width: 360px;
+
 .container {
   display: flex;
   position: absolute;
   top: 0;
-  right: 0;
+  right: calc(50% - mobile_width / 2);
   border-radius: 4px;
   padding: 0 16px 0 40px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
   background-color: white;
+  width: mobile_width;
+
+  @media (min-width: above-small) {
+    right: 0;
+    width: desktop_width;
+  }
 }
 
 .left {
   display: flex;
+  flex: 1;
   margin-right: 20px;
   margin-top: 24px;
   margin-bottom: 24px;
@@ -30,14 +40,9 @@
 }
 
 .message {
-  width: 200px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-
-  @media (min-width: above-small) {
-    width: 240px;
-  }
 }
 
 .icon {
