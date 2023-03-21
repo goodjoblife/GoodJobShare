@@ -7,12 +7,17 @@ import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 import Modal from 'common/Modal';
 import styles from './PermissionBlock.module.css';
 import LoginToUnlock from './LoginToUnlock';
+import { useShareLinkChange } from 'hooks/experiments/useShareLink';
 
 const BasicPermissionSimpleBlock = ({ rootClassName, to }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const toggleModal = useCallback(() => setModalOpen(!isModalOpen), [
     isModalOpen,
   ]);
+
+  useShareLinkChange(() => {
+    if (isModalOpen) setModalOpen(false);
+  });
 
   return (
     <div
