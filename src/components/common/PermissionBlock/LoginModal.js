@@ -17,17 +17,13 @@ const LoginModal = ({ ...props }) => {
       <div className={styles.loginBtnContainer}>
         <button
           className={`${cn('buttonCircleM')} ${styles.btn} ${styles.btnFb}`}
-          onClick={async () => {
-            await fbLogin();
-          }}
+          onClick={() => fbLogin()}
         >
           <pre>Facebook 登入</pre>
         </button>
         <button
           className={`${cn('buttonCircleM')} ${styles.btn} ${styles.btnGoogle}`}
-          onClick={async () => {
-            await googleLogin();
-          }}
+          onClick={() => googleLogin()}
         >
           <pre>Google 登入</pre>
         </button>
