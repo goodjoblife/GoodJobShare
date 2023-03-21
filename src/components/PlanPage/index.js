@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import Heading from 'common/base/Heading';
 import { useSubscriptionPlans } from 'hooks/payment/usePayment';
-import { isFetched } from 'utils/fetchBox';
+import { isUnfetched, isFetched } from 'utils/fetchBox';
 import Loading from 'common/Loader';
 
 import { fetchSubscriptionPlans } from '../../actions/payment';
@@ -19,13 +19,14 @@ const PlanPage = () => {
   const dispatch = useDispatch();
   const subscriptionPlansBox = useSubscriptionPlans();
 
+  const needsFetching = isUnfetched(subscriptionPlansBox);
   const isReady = isFetched(subscriptionPlansBox);
 
   useEffect(() => {
-    if (!isReady) {
+    if (needsFetching) {
       dispatch(fetchSubscriptionPlans());
     }
-  }, [dispatch, isReady]);
+  }, [dispatch, needsFetching]);
 
   if (!isReady) {
     return <Loading size="l" />;
