@@ -2,15 +2,17 @@ import React, { Fragment, useCallback, useContext } from 'react';
 import { Switch, useLocation, useHistory } from 'react-router-dom';
 import { omit } from 'ramda';
 
+import StaticHelmet from 'common/StaticHelmet';
+import LoginModal from 'common/LoginModal';
+import LoginModalContext from 'contexts/LoginModalContext';
+import useLocStateToastObserver from 'hooks/toastNotification/useLocStateToastObserver';
+
+import ToastNotification from '../ToastNotification/ToastNotification';
 import { AppRouteWithSubRoutes } from '../route';
 import styles from './App.module.css';
 import Header from './Header';
 import Footer from './Footer';
-import StaticHelmet from 'common/StaticHelmet';
-import LoginModal from 'common/LoginModal';
-import LoginModalContext from 'contexts/LoginModalContext';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
-
 import routes from '../../routes';
 
 const useShare = () => {
@@ -30,6 +32,8 @@ const App = () => {
   const { isLoginModalDisplayed, setLoginModalDisplayed } = useContext(
     LoginModalContext,
   );
+
+  useLocStateToastObserver();
   return (
     <Fragment>
       <Switch>
@@ -37,6 +41,7 @@ const App = () => {
           <AppRouteWithSubRoutes key={i} {...route}>
             {({ hasHeader, hasFooter, children }) => (
               <div className={styles.App}>
+                <ToastNotification />
                 {hasHeader ? <Header /> : null}
                 <StaticHelmet.Default />
                 <div className={styles.content}>{children}</div>

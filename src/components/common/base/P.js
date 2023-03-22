@@ -13,6 +13,7 @@ const P = ({
   children,
   style,
   className,
+  title,
   ...props
 }) => (
   <Tag
@@ -21,6 +22,7 @@ const P = ({
       [styles.center]: center,
     })}
     style={style}
+    title={title}
     {...props}
   >
     {children}
@@ -34,6 +36,7 @@ P.propTypes = {
   center: PropTypes.bool,
   style: PropTypes.object,
   className: PropTypes.string,
+  title: PropTypes.string,
 };
 P.defaultProps = {
   children: '',
