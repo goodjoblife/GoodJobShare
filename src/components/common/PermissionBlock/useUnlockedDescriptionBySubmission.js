@@ -23,7 +23,7 @@ const useUnlockedDescriptionBySubmission = () => {
   const plans = subscriptionPlansBox.data;
   const plan = plans.find(plan => plan.type === subscriptionType.submitData);
   if (!plan) {
-    return '';
+    return '解鎖全站 7 天';
   }
   return plan.description;
 };
