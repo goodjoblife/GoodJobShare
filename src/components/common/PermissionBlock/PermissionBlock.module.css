@@ -1,9 +1,28 @@
 @value link-blue from "common/variables.module.css";
 
 .permissionBlock {
+  display: inline-block;
+  border-radius: 0px;
+  background-color: white;
+
+  .container {
+    border: 1px solid #fcd406;
+    border-radius: 4px;
+    background-color: white;
+    padding: 50px 40px;
+    margin: auto;
+  }
+}
+
+.permissionSimpleBlock {
   border: 1px solid #fcd406;
   border-radius: 0px;
   background-color: #fffbe8;
+
+  .container {
+    max-width: 500px;
+    margin: auto;
+  }
 }
 
 .simple {
@@ -18,13 +37,13 @@
   }
 }
 
-.container {
-  max-width: 500px;
-  margin: auto;
-}
-
 .ctaText {
-  font-weight: 300;
+  display: block;
+  text-align: center;
+
+  & + .ctaText {
+    margin-top: 23px;
+  }
 }
 
 .ctaButtonContainer {
@@ -82,4 +101,19 @@
   &Fb {
     background: #4267b2;
   }
+}
+
+.authenticatedGroup {
+  .button {
+    font-size: 1em;
+    font-weight: 700;
+
+    & + .button {
+      margin-left: 10px;
+    }
+  }
+}
+
+.loginTitle {
+  margin-bottom: 34px;
 }

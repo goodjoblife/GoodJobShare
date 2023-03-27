@@ -2,18 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import CallToLoginShareButton from './CallToLoginShareButton';
 import styles from './PermissionBlock.module.css';
-import ModalContent from './ModalContent';
+import LoginToUnlock from './LoginToUnlock';
 
 const BasicPermissionBlock = ({ rootClassName, to }) => {
   return (
     <div className={cn(styles.permissionBlock, rootClassName)}>
       <div className={styles.container}>
-        <ModalContent />
-        <div className={styles.ctaButtonContainer}>
-          <CallToLoginShareButton to={to} isLoginText="立即分享" />
-        </div>
+        <LoginToUnlock to={to} />
       </div>
     </div>
   );

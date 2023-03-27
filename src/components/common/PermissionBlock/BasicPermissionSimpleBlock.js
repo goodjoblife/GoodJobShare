@@ -5,9 +5,9 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 
 import Modal from 'common/Modal';
-import CallToLoginShareButton from './CallToLoginShareButton';
 import styles from './PermissionBlock.module.css';
-import ModalContent from './ModalContent';
+import LoginToUnlock from './LoginToUnlock';
+import { useShareLinkChange } from 'hooks/experiments/useShareLink';
 
 const BasicPermissionSimpleBlock = ({ rootClassName, to }) => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -15,9 +15,13 @@ const BasicPermissionSimpleBlock = ({ rootClassName, to }) => {
     isModalOpen,
   ]);
 
+  useShareLinkChange(() => {
+    if (isModalOpen) setModalOpen(false);
+  });
+
   return (
     <div
-      className={cn(styles.permissionBlock, rootClassName, styles.simple)}
+      className={cn(styles.permissionSimpleBlock, rootClassName, styles.simple)}
       onClick={toggleModal}
     >
       <div className={styles.container}>
@@ -28,14 +32,7 @@ const BasicPermissionSimpleBlock = ({ rootClassName, to }) => {
             close={toggleModal}
             closableOnClickOutside
           >
-            <ModalContent />
-            <div className={styles.ctaButtonContainer}>
-              <CallToLoginShareButton
-                to={to}
-                onAuthenticatedClick={toggleModal}
-                isLoginText="立即分享"
-              />
-            </div>
+            <LoginToUnlock to={to} onAuthenticatedClick={toggleModal} />
           </Modal>
         </div>
       </div>
