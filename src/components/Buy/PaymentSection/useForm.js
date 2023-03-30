@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useHistory } from 'react-router';
 import { useToken } from 'hooks/auth';
 import useTapPay from './useTapPay';
 import { checkoutSubscriptionWithPrime } from '../../../apis/payment';
@@ -15,23 +16,33 @@ const useForm = ({ tapPayCard, loadTapPayCard, skuId, isPrimary }) => {
   }, []);
 
   const pushToast = usePushToast();
+  const history = useHistory();
 
   const token = useToken();
   const handlePrime = useCallback(
     async prime => {
       try {
-        const paymentUrl = await checkoutSubscriptionWithPrime({
+        const [
+          error,
+          paymentId,
+          paymentUrl,
+        ] = await checkoutSubscriptionWithPrime({
           token,
           prime,
           skuId,
           isPrimary,
         });
+        if (error) {
+          // Some error arises.
+          history.push(`/buy/result/${paymentId}`);
+          return;
+        }
         window.location = paymentUrl;
       } catch (error) {
         pushToast(NOTIFICATION_TYPE.ALERT, '發生未知錯誤。');
       }
     },
-    [isPrimary, pushToast, skuId, token],
+    [history, isPrimary, pushToast, skuId, token],
   );
 
   const submit = useTapPay({
