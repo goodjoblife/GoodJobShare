@@ -2,6 +2,8 @@ import { useCallback, useState } from 'react';
 import { useToken } from 'hooks/auth';
 import useTapPay from './useTapPay';
 import { checkoutSubscriptionWithPrime } from '../../../apis/payment';
+import usePushToast from 'hooks/toastNotification/usePushToast';
+import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 
 const useForm = ({ tapPayCard, loadTapPayCard, skuId, isPrimary }) => {
   const [activeCardType, setActiveCardType] = useState('unknown');
@@ -11,6 +13,8 @@ const useForm = ({ tapPayCard, loadTapPayCard, skuId, isPrimary }) => {
     setActiveCardType(update.cardType);
     setCanGetPrime(update.canGetPrime);
   }, []);
+
+  const pushToast = usePushToast();
 
   const token = useToken();
   const handlePrime = useCallback(
@@ -24,11 +28,10 @@ const useForm = ({ tapPayCard, loadTapPayCard, skuId, isPrimary }) => {
         });
         window.location = paymentUrl;
       } catch (error) {
-        // TODO: Error handling
-        console.error(error);
+        pushToast(NOTIFICATION_TYPE.ALERT, '發生未知錯誤。');
       }
     },
-    [isPrimary, skuId, token],
+    [isPrimary, pushToast, skuId, token],
   );
 
   const submit = useTapPay({
