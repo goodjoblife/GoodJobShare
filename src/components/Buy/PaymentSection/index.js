@@ -94,10 +94,11 @@ PaymentSection.propTypes = {
   skuId: PropTypes.string,
 };
 
-export default ({ skuId }) => (
+export default ({ skuId, ...restProps }) => (
   <TapPayContext.Consumer>
     {({ loadTapPayCard, tapPayCard }) => (
       <PaymentSection
+        {...restProps}
         loadTapPayCard={loadTapPayCard}
         tapPayCard={tapPayCard}
         skuId={skuId}
