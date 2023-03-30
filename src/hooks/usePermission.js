@@ -1,7 +1,7 @@
 import { useContext, useCallback } from 'react';
 import PermissionContext from 'common/permission-context/PermissionContext';
 import { useToken } from 'hooks/auth';
-import { getHasSearchPermission } from '../apis/permission';
+import api from '../apis';
 
 export default () => {
   const token = useToken();
@@ -9,7 +9,7 @@ export default () => {
     PermissionContext,
   );
   const fetchPermission = useCallback(async () => {
-    const result = await getHasSearchPermission({ token });
+    const result = await api.me.getHasSearchPermission({ token });
     const { hasSearchPermission: hasPermission } = result;
 
     if (typeof Storage !== 'undefined') {
