@@ -7,7 +7,7 @@ import {
 } from 'graphql/me';
 
 const getHasSearchPermission = ({ token }) =>
-  graphqlClient({ query: getMyPermissionQuery, token }).map(
+  graphqlClient({ query: getMyPermissionQuery, token }).then(
     ({
       me: {
         permission: { hasAllPermission },
