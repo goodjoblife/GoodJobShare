@@ -1,0 +1,17 @@
+@value above-mobile from 'common/variables.module.css';
+
+.loginBtnContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+
+  @media (max-width: above-mobile) {
+    flex-direction: column;
+    height: 8rem;
+    align-items: center;
+  }
+}
+
+.loginTitle {
+  margin-bottom: 34px;
+}

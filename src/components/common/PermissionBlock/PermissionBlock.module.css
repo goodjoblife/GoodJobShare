@@ -91,18 +91,6 @@
   }
 }
 
-.btn {
-  color: #fff;
-  width: 12rem;
-
-  &Google {
-    background: #df5f56;
-  }
-  &Fb {
-    background: #4267b2;
-  }
-}
-
 .authenticatedGroup {
   .button {
     font-size: 1em;

@@ -1,4 +1,4 @@
-@value main-yellow, main-black, border-gray, main-gray NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-tablet from "common/variables.module.css";
+@value main-yellow, main-black, border-gray, main-gray NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small from "common/variables.module.css";
 
 .root {
   @media (max-width: 850px) {
@@ -182,7 +182,7 @@
   transition-duration: 0.3s;
   margin-bottom: 17px;
 
-  @media (min-width: above-tablet) {
+  @media (min-width: above-small) {
     margin-right: 20px;
     margin-bottom: 0;
   }
