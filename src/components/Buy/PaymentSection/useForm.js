@@ -40,6 +40,7 @@ const useForm = ({ tapPayCard, loadTapPayCard, skuId, isPrimary }) => {
         window.location = paymentUrl;
       } catch (error) {
         pushToast(NOTIFICATION_TYPE.ALERT, '發生未知錯誤。');
+        console.error(error);
       }
     },
     [history, isPrimary, pushToast, skuId, token],
