@@ -3,14 +3,24 @@ import PermissionContext from 'common/permission-context/PermissionContext';
 import { useToken } from 'hooks/auth';
 import api from '../apis';
 
+const useGetSearchPermission = ({ token }) => {
+  return useCallback(async () => {
+    if (token === null) return false;
+    // Get permission only when token available
+    const result = await api.me.getHasSearchPermission({ token });
+    const { hasSearchPermission } = result;
+    return hasSearchPermission;
+  }, [token]);
+};
+
 export default () => {
   const token = useToken();
   const { canView, permissionFetched, setPermissionState } = useContext(
     PermissionContext,
   );
+  const getSearchPermission = useGetSearchPermission({ token });
   const fetchPermission = useCallback(async () => {
-    const result = await api.me.getHasSearchPermission({ token });
-    const { hasSearchPermission: hasPermission } = result;
+    const hasPermission = await getSearchPermission();
 
     if (typeof Storage !== 'undefined') {
       const visitedWebsite = localStorage.getItem('visitedWebsite');
@@ -27,6 +37,6 @@ export default () => {
         });
       }
     }
-  }, [setPermissionState, token]);
+  }, [getSearchPermission, setPermissionState]);
   return [permissionFetched, fetchPermission, canView];
 };
