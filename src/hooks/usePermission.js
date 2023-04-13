@@ -7,9 +7,7 @@ const useGetSearchPermission = ({ token }) => {
   return useCallback(async () => {
     if (token === null) return false;
     // Get permission only when token available
-    const result = await api.me.getHasSearchPermission({ token });
-    const { hasSearchPermission } = result;
-    return hasSearchPermission;
+    return await api.me.getHasSearchPermission({ token });
   }, [token]);
 };
 
