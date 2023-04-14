@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 import { InfoButton } from 'common/Modal';
@@ -123,25 +123,32 @@ const WorkingHourTable = ({ data, hideContent, pageType }) => {
     setInfoTiimeModalOpen(!isInfoTimeModalOpen);
   }, [isInfoTimeModalOpen]);
 
+  const filteredColumnProps = useMemo(
+    () =>
+      columnProps.filter(({ isEnabled }) =>
+        isEnabled ? isEnabled({ pageType }) : true,
+      ),
+    [pageType],
+  );
+
+  const hideRange = useMemo(
+    () => [
+      R.findIndex(R.propEq('permissionRequiredStart', true))(
+        filteredColumnProps,
+      ),
+      R.findIndex(R.propEq('permissionRequiredEnd', true))(filteredColumnProps),
+    ],
+    [filteredColumnProps],
+  );
+
   const postProcessRows = useCallback(
     rows => {
       if (hideContent) {
-        const filteredColumnProps = columnProps.filter(({ isEnabled }) =>
-          isEnabled ? isEnabled({ pageType }) : true,
-        );
-        const hideRange = [
-          R.findIndex(R.propEq('permissionRequiredStart', true))(
-            filteredColumnProps,
-          ),
-          R.findIndex(R.propEq('permissionRequiredEnd', true))(
-            filteredColumnProps,
-          ),
-        ];
         injectHideContentBlock(hideRange)(rows);
       }
       return rows;
     },
-    [hideContent, pageType],
+    [hideContent, hideRange],
   );
 
   return (
