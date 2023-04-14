@@ -27,7 +27,7 @@ const columnProps = [
     title: '職稱',
     dataField: 'job_title',
     dataFormatter: getNameAsJobTitle,
-    renderChildren: () => '職稱',
+    Children: () => '職稱',
     isEnabled: ({ pageType }) => pageType === pageTypeMapping.COMPANY,
   },
   {
@@ -35,7 +35,7 @@ const columnProps = [
     title: '公司名稱',
     dataField: 'company',
     dataFormatter: getNameAsCompanyName,
-    renderChildren: () => '公司名稱',
+    Children: () => '公司名稱',
     isEnabled: ({ pageType }) => pageType === pageTypeMapping.JOB_TITLE,
   },
   {
@@ -43,40 +43,40 @@ const columnProps = [
     title: '職務型態',
     dataField: 'employment_type',
     dataFormatter: getEmploymentType,
-    renderChildren: () => '職務型態',
+    Children: () => '職務型態',
   },
   {
     className: styles.colDayTime,
     title: '表訂 / 實際工時',
     dataField: 'day_promised_work_time',
     dataFormatter: getWorkingHour,
-    renderChildren: () => '表訂 / 實際工時',
+    Children: () => '表訂 / 實際工時',
   },
   {
     className: styles.colWeekTime,
     title: '一週總工時',
     dataField: getWeekWorkTime,
-    renderChildren: () => '一週總工時',
+    Children: () => '一週總工時',
   },
   {
     className: styles.colFrequency,
     title: '加班頻率',
     dataField: getFrequency,
-    renderChildren: () => '加班頻率',
+    Children: () => '加班頻率',
   },
   {
     className: styles.colExperience,
     title: '業界工作經歷',
     dataField: 'experience_in_year',
     dataFormatter: getYear,
-    renderChildren: () => '業界工作經歷',
+    Children: () => '業界工作經歷',
   },
   {
     className: styles.colSalary,
     title: '薪資',
     dataField: getSalary,
     alignRight: true,
-    renderChildren: () => '薪資',
+    Children: () => '薪資',
     permissionRequiredStart: true,
   },
   {
@@ -84,7 +84,7 @@ const columnProps = [
     title: '估計時薪',
     dataField: R.compose(formatWage, R.prop('estimated_hourly_wage')),
     alignRight: true,
-    renderChildren: ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
+    Children: ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
       <React.Fragment>
         <InfoSalaryModal
           isOpen={isInfoSalaryModalOpen}
@@ -99,7 +99,7 @@ const columnProps = [
     className: styles.colDataTime,
     title: '參考時間',
     dataField: R.compose(formatDate, R.prop('data_time')),
-    renderChildren: ({ isInfoTimeModalOpen, toggleInfoTimeModal }) => (
+    Children: ({ isInfoTimeModalOpen, toggleInfoTimeModal }) => (
       <React.Fragment>
         <InfoTimeModal
           isOpen={isInfoTimeModalOpen}
@@ -153,17 +153,15 @@ const WorkingHourTable = ({ data, hideContent, pageType }) => {
     >
       {columnProps
         .filter(({ isEnabled }) => (isEnabled ? isEnabled({ pageType }) : true))
-        .map(({ renderChildren, ...props }) => (
-          <Table.Column
-            key={props.title}
-            {...props}
-            children={renderChildren({
-              isInfoSalaryModalOpen,
-              toggleInfoSalaryModal,
-              isInfoTimeModalOpen,
-              toggleInfoTimeModal,
-            })}
-          />
+        .map(({ Children, ...props }) => (
+          <Table.Column key={props.title} {...props}>
+            <Children
+              isInfoSalaryModalOpen={isInfoSalaryModalOpen}
+              toggleInfoSalaryModal={toggleInfoSalaryModal}
+              isInfoTimeModalOpen={isInfoTimeModalOpen}
+              toggleInfoTimeModal={toggleInfoTimeModal}
+            />
+          </Table.Column>
         ))}
     </Table>
   );
