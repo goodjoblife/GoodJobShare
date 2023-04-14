@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 import { InfoButton } from 'common/Modal';
@@ -82,20 +82,15 @@ const columnProps = [
   {
     className: styles.colHourly,
     title: '估計時薪',
-    dataField: R.compose(
-      formatWage,
-      R.prop('estimated_hourly_wage'),
-    ),
+    dataField: R.compose(formatWage, R.prop('estimated_hourly_wage')),
     alignRight: true,
-    renderChildren: context => (
+    renderChildren: ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
       <React.Fragment>
         <InfoSalaryModal
-          isOpen={context.state.infoSalaryModal.isOpen}
-          close={context.toggleInfoSalaryModal}
+          isOpen={isInfoSalaryModalOpen}
+          close={toggleInfoSalaryModal}
         />
-        <InfoButton onClick={context.toggleInfoSalaryModal}>
-          估計時薪
-        </InfoButton>
+        <InfoButton onClick={toggleInfoSalaryModal}>估計時薪</InfoButton>
       </React.Fragment>
     ),
     permissionRequiredEnd: true,
@@ -103,99 +98,84 @@ const columnProps = [
   {
     className: styles.colDataTime,
     title: '參考時間',
-    dataField: R.compose(
-      formatDate,
-      R.prop('data_time'),
-    ),
-    renderChildren: context => (
+    dataField: R.compose(formatDate, R.prop('data_time')),
+    renderChildren: ({ isInfoTimeModalOpen, toggleInfoTimeModal }) => (
       <React.Fragment>
         <InfoTimeModal
-          isOpen={context.state.infoTimeModal.isOpen}
-          close={context.toggleInfoTimeModal}
+          isOpen={isInfoTimeModalOpen}
+          close={toggleInfoTimeModal}
         />
-        <InfoButton onClick={context.toggleInfoTimeModal}>參考時間</InfoButton>
+        <InfoButton onClick={toggleInfoTimeModal}>參考時間</InfoButton>
       </React.Fragment>
     ),
   },
 ];
 
-class WorkingHourTable extends Component {
-  static propTypes = {
-    data: PropTypes.array.isRequired,
-    hideContent: PropTypes.bool.isRequired,
-    pageType: PropTypes.oneOf([
-      pageTypeMapping.COMPANY,
-      pageTypeMapping.JOB_TITLE,
-    ]),
-  };
+const WorkingHourTable = ({ data, hideContent, pageType }) => {
+  const [isInfoSalaryModalOpen, setInfoSalaryModalOpen] = useState(false);
+  const [isInfoTimeModalOpen, setInfoTiimeModalOpen] = useState(false);
 
-  constructor(props) {
-    super(props);
-    this.toggleInfoSalaryModal = this.toggleInfoSalaryModal.bind(this);
-    this.toggleInfoTimeModal = this.toggleInfoTimeModal.bind(this);
-    this.state = {
-      infoSalaryModal: {
-        isOpen: false,
-      },
-      infoTimeModal: {
-        isOpen: false,
-      },
-    };
-  }
+  const toggleInfoSalaryModal = useCallback(() => {
+    setInfoSalaryModalOpen(!isInfoSalaryModalOpen);
+  }, [isInfoSalaryModalOpen]);
 
-  toggleInfoSalaryModal() {
-    const state = this.state;
-    state.infoSalaryModal.isOpen = !state.infoSalaryModal.isOpen;
-    this.setState(state);
-  }
+  const toggleInfoTimeModal = useCallback(() => {
+    setInfoTiimeModalOpen(!isInfoTimeModalOpen);
+  }, [isInfoTimeModalOpen]);
 
-  toggleInfoTimeModal() {
-    const state = this.state;
-    state.infoTimeModal.isOpen = !state.infoTimeModal.isOpen;
-    this.setState(state);
-  }
+  const postProcessRows = useCallback(
+    rows => {
+      if (hideContent) {
+        const filteredColumnProps = columnProps.filter(({ isEnabled }) =>
+          isEnabled ? isEnabled({ pageType }) : true,
+        );
+        const hideRange = [
+          R.findIndex(R.propEq('permissionRequiredStart', true))(
+            filteredColumnProps,
+          ),
+          R.findIndex(R.propEq('permissionRequiredEnd', true))(
+            filteredColumnProps,
+          ),
+        ];
+        injectHideContentBlock(hideRange)(rows);
+      }
+      return rows;
+    },
+    [hideContent, pageType],
+  );
 
-  postProcessRows = pageType => rows => {
-    if (this.props.hideContent) {
-      const filteredColumnProps = columnProps.filter(({ isEnabled }) =>
-        isEnabled ? isEnabled({ pageType }) : true,
-      );
-      const hideRange = [
-        R.findIndex(R.propEq('permissionRequiredStart', true))(
-          filteredColumnProps,
-        ),
-        R.findIndex(R.propEq('permissionRequiredEnd', true))(
-          filteredColumnProps,
-        ),
-      ];
-      injectHideContentBlock(hideRange)(rows);
-    }
-    return rows;
-  };
+  return (
+    <Table
+      className={styles.companyTable}
+      data={data}
+      primaryKey="created_at"
+      postProcessRows={postProcessRows}
+    >
+      {columnProps
+        .filter(({ isEnabled }) => (isEnabled ? isEnabled({ pageType }) : true))
+        .map(({ renderChildren, ...props }) => (
+          <Table.Column
+            key={props.title}
+            {...props}
+            children={renderChildren({
+              isInfoSalaryModalOpen,
+              toggleInfoSalaryModal,
+              isInfoTimeModalOpen,
+              toggleInfoTimeModal,
+            })}
+          />
+        ))}
+    </Table>
+  );
+};
 
-  render() {
-    const { data, pageType } = this.props;
-    return (
-      <Table
-        className={styles.companyTable}
-        data={data}
-        primaryKey="created_at"
-        postProcessRows={this.postProcessRows(pageType)}
-      >
-        {columnProps
-          .filter(({ isEnabled }) =>
-            isEnabled ? isEnabled({ pageType }) : true,
-          )
-          .map(({ renderChildren, ...props }) => (
-            <Table.Column
-              key={props.title}
-              {...props}
-              children={renderChildren(this)}
-            />
-          ))}
-      </Table>
-    );
-  }
-}
+WorkingHourTable.propTypes = {
+  data: PropTypes.array.isRequired,
+  hideContent: PropTypes.bool.isRequired,
+  pageType: PropTypes.oneOf([
+    pageTypeMapping.COMPANY,
+    pageTypeMapping.JOB_TITLE,
+  ]),
+};
 
 export default WorkingHourTable;
