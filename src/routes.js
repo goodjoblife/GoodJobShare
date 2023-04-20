@@ -35,8 +35,8 @@ import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
 import PlanPage from './components/PlanPage';
 import BuyResultPage from './components/BuyResultPage';
-import MyCurrentPlanPage from './components/MyPlans/MyCurrentPlanPage';
-import MyPlansHistoryPage from './components/MyPlans/MyPlansHistoryPage';
+import CurrentPlanPage from './components/Me/CurrentPlanPage';
+import PlansHistoryPage from './components/Me/PlansHistoryPage';
 
 const routes = [
   {
@@ -263,12 +263,12 @@ const routes = [
   {
     path: '/me/plans',
     exact: true,
-    component: MyCurrentPlanPage,
+    component: CurrentPlanPage,
   },
   {
     path: '/me/plans-history',
     exact: true,
-    component: MyPlansHistoryPage,
+    component: PlansHistoryPage,
   },
   {
     path: '/about',

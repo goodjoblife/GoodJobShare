@@ -5,8 +5,8 @@ const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
   return dispatch();
 });
 
-const MyPlansWrapper = ({ children }) => {
+const PlansWrapper = ({ children }) => {
   return <div>{children}</div>;
 };
 
-export default ssr(MyPlansWrapper);
+export default ssr(PlansWrapper);
