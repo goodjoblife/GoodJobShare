@@ -33,7 +33,7 @@ export const checkoutSubscriptionWithPrime = ({
       checkoutSubscriptionWithPrime: {
         paymentRecord: { id },
         paymentUrl,
-        error: { message },
+        error: { message } = {},
       },
     }) => [message, id, paymentUrl],
   );
