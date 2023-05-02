@@ -1,23 +1,23 @@
 import React from 'react';
+
 import { P } from 'common/base';
 import FacebookLoginButton from 'common/Login/FacebookLoginButton';
 import GoogleLoginButton from 'common/Login/GoogleLoginButton';
 
-import styles from './PermissionBlock.module.css';
-import Modal from '../Modal';
+import styles from './LoginSection.module.css';
 
-const LoginModal = ({ ...props }) => {
+const LoginSection = () => {
   return (
-    <Modal closableOnClickOutside {...props}>
+    <div>
       <P className={styles.loginTitle} center bold size="l">
-        登入以查看文章權限
+        登入後以信用卡付款
       </P>
       <div className={styles.loginBtnContainer}>
         <FacebookLoginButton />
         <GoogleLoginButton />
       </div>
-    </Modal>
+    </div>
   );
 };
 
-export default LoginModal;
+export default LoginSection;
