@@ -33,9 +33,9 @@ export const checkoutSubscriptionWithPrime = ({
       checkoutSubscriptionWithPrime: {
         paymentRecord: { id },
         paymentUrl,
-        error: { message } = {},
+        error,
       },
-    }) => [message, id, paymentUrl],
+    }) => [error ? error.message : null, id, paymentUrl],
   );
 
 const getPaymentRecord = token => paymentRecordId =>
