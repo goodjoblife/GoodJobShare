@@ -9,7 +9,7 @@
 .popover {
   position: absolute;
   display: block;
-  z-index: 10;
+  z-index: 999;
   background-color: #fff;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
   visibility: hidden;

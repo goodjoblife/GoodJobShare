@@ -1,4 +1,4 @@
-@value above-small, above-desktop, main-yellow, link-blue from "common/variables.module.css";
+@value above-small, below-small, above-desktop, main-yellow, link-blue from "common/variables.module.css";
 
 .permissionBlock {
   display: inline-block;
@@ -87,12 +87,26 @@
 }
 
 .authenticatedGroup {
+  @media (max-width: below-small) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .button {
     font-size: 1em;
     font-weight: 700;
 
-    & + .button {
-      margin-left: 10px;
+    @media (min-width: above-small) {
+      & + .button {
+        margin-left: 10px;
+      }
+    }
+
+    @media (max-width: below-small) {
+      & + .button {
+        margin-top: 16px;
+      }
     }
   }
 }
