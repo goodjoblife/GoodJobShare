@@ -23,7 +23,7 @@ const useForm = ({ tapPayCard, loadTapPayCard, skuId, isPrimary }) => {
     async prime => {
       try {
         const [
-          error,
+          errorMessage,
           paymentId,
           paymentUrl,
         ] = await checkoutSubscriptionWithPrime({
@@ -32,7 +32,7 @@ const useForm = ({ tapPayCard, loadTapPayCard, skuId, isPrimary }) => {
           skuId,
           isPrimary,
         });
-        if (error) {
+        if (errorMessage) {
           // Some error arises.
           history.push(`/buy/result/${paymentId}`);
           return;
