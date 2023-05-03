@@ -6,7 +6,7 @@ import AuthMask from './AuthMask';
 const CurrentPlanPage = () => {
   return (
     <AuthMask>
-      <PlansWrapper></PlansWrapper>
+      <PlansWrapper>Current Plan Page</PlansWrapper>
     </AuthMask>
   );
 };

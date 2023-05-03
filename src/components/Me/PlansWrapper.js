@@ -32,7 +32,7 @@ const PlansWrapper = ({ children }) => {
   return (
     <div className={styles.container}>
       <Heading as="h1">方案</Heading>
-      <div>
+      <div style={{ marginTop: '18px', marginBottom: '48px' }}>
         <PlanPageTab tabs={tabs} currentTabId={currentTabId} />
       </div>
       <div>{children}</div>

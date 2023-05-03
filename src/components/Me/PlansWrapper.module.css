@@ -1,9 +1,13 @@
-@value above-tablet from "common/variables.module.css";
+@value above-medium, above-mobile from "common/variables.module.css";
 
 .container {
-  padding: 60px 100px 0 100px;
+  padding: 20px 10px 0 10px;
 
-  @media (min-width: above-tablet) {
+  @media (min-width: above-mobile) {
+    padding: 60px 100px 0 100px;
+  }
+
+  @media (min-width: above-medium) {
     padding: 120px 340px 0 340px;
   }
 }

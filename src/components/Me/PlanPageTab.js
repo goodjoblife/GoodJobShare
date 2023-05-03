@@ -7,13 +7,17 @@ import styles from './PlanPageTab.module.css';
 
 const PlansPageTab = ({ currentTabId, tabs }) => {
   return (
-    <div role="tablist" aria-label="Plans Page Tablist">
+    <div
+      className={styles.container}
+      role="tablist"
+      aria-label="Plans Page Tablist"
+    >
       {tabs.map(tab => {
         const active = tab.id === currentTabId;
         return (
           <Link key={tab.id} to={tab.url}>
             <button
-              className={cls({ [styles.active]: active })}
+              className={cls({ [styles.active]: active, [styles.tab]: true })}
               id={tab.id}
               role="tab"
               aria-selected={active}

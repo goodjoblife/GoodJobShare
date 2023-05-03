@@ -1,5 +1,19 @@
 @value main-yellow from "common/variables.module.css";
 
+.container {
+  display: inline-flex;
+  border-radius: 4px;
+  border: 1px solid main-yellow;
+}
+
+.tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 48px;
+}
+
 .active {
   background: main-yellow;
 }
