@@ -1,0 +1,9 @@
+@value above-tablet from "common/variables.module.css";
+
+.container {
+  padding: 60px 100px 0 100px;
+
+  @media (min-width: above-tablet) {
+    padding: 120px 340px 0 340px;
+  }
+}
