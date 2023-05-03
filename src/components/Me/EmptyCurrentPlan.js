@@ -1,4 +1,6 @@
 import React from 'react';
+import cn from 'classnames';
+import { Link } from 'react-router-dom';
 
 import RoundCard from 'common/RoundCard';
 
@@ -8,6 +10,11 @@ const EmptyCurrentPlan = () => {
   return (
     <div className={styles.container}>
       <RoundCard className={styles.card}>無付費方案</RoundCard>
+      <div style={{ marginTop: '32px' }}>
+        <Link className={cn('buttonCircleL', 'buttonBlack')} to="/plans">
+          解鎖方式
+        </Link>
+      </div>
     </div>
   );
 };

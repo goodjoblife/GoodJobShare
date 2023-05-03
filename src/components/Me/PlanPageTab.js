@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import cls from 'classnames';
+import cn from 'classnames';
 
 import styles from './PlanPageTab.module.css';
 
@@ -17,7 +17,7 @@ const PlansPageTab = ({ currentTabId, tabs }) => {
         return (
           <Link key={tab.id} to={tab.url}>
             <button
-              className={cls({ [styles.active]: active, [styles.tab]: true })}
+              className={cn({ [styles.active]: active, [styles.tab]: true })}
               id={tab.id}
               role="tab"
               aria-selected={active}
