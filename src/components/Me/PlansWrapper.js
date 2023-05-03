@@ -35,7 +35,7 @@ const PlansWrapper = ({ children }) => {
       <div style={{ marginTop: '18px', marginBottom: '48px' }}>
         <PlanPageTab tabs={tabs} currentTabId={currentTabId} />
       </div>
-      <div>{children}</div>
+      <div style={{ display: 'inline-block' }}>{children}</div>
     </div>
   );
 };
