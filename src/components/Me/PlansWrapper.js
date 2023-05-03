@@ -1,21 +1,43 @@
 import React from 'react';
-import { setStatic } from 'recompose';
+import { useLocation } from 'react-router-dom';
+import { indexBy, prop } from 'ramda';
 
 import Heading from 'common/base/Heading';
 
+import PlanPageTab from './PlanPageTab';
 import styles from './PlansWrapper.module.css';
 
-const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
-  return dispatch();
-});
+const tabs = [
+  {
+    id: 'my-current-subscription',
+    title: '我的方案',
+    panelId: 'my-current-subscription-panel',
+    url: '/me/plans',
+  },
+  {
+    id: 'my-plan-history',
+    title: '方案紀錄',
+    panelId: 'my-plan-history-panel',
+    url: '/me/plans-history',
+  },
+];
+
+const tabUrlMap = indexBy(prop('url'), tabs);
 
 const PlansWrapper = ({ children }) => {
+  const location = useLocation();
+
+  const currentTabId = tabUrlMap[location.pathname].id;
+
   return (
     <div className={styles.container}>
-      <Heading as="h1">我的方案</Heading>
+      <Heading as="h1">方案</Heading>
+      <div>
+        <PlanPageTab tabs={tabs} currentTabId={currentTabId} />
+      </div>
       <div>{children}</div>
     </div>
   );
 };
 
-export default ssr(PlansWrapper);
+export default PlansWrapper;

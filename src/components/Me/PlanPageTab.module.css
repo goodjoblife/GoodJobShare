@@ -1,0 +1,5 @@
+@value main-yellow from "common/variables.module.css";
+
+.active {
+  background: main-yellow;
+}
