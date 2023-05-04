@@ -1,4 +1,5 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState, useContext } from 'react';
+import TapPayContext from 'common/tappay/TapPayContext';
 import { fields, styles } from './constants';
 
 const useTapPay = ({
@@ -7,8 +8,13 @@ const useTapPay = ({
   handleUpdate,
   handlePrime,
 }) => {
+
+
+  const [tapPayCard, setTapPayCard] = useState();
+
   // 載入 Tappay
   useEffect(() => {
+
     if (loadTapPayCard) loadTapPayCard({ fields, styles });
   }, [loadTapPayCard]);
 
