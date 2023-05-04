@@ -13,6 +13,7 @@ class TapPayHelper {
     }
 
     TapPayHelper.loadingPromise = new Promise(resolve => {
+      console.log('tappay init');
       const fjs = document.getElementsByTagName('script')[0];
       const js = document.createElement('script');
       js.id = 'tappay';

@@ -1,22 +1,28 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import TapPayHelper from 'common/tappay/TapPayHelper';
 import { fields, styles } from './constants';
 
-const useTapPay = ({ handleUpdate }) => {
+const useTapPayCard = ({ opt, onUpdate }) => {
   const [tapPayCard, setTapPayCard] = useState();
 
   // 載入 Tappay
   useEffect(() => {
     TapPayHelper.init().then(tapPay => {
-      tapPay.card.setup({ fields, styles });
-      tapPay.card.onUpdate(update => {
-        // 即時反應每個行為
-        handleUpdate(update);
-      });
-
+      tapPay.card.setup(opt);
+      tapPay.card.onUpdate(onUpdate);
       setTapPayCard(tapPay.card);
     });
-  }, [handleUpdate]);
+  }, [onUpdate, opt]);
+
+  return tapPayCard;
+};
+
+const useTapPay = ({ handleUpdate }) => {
+  const opt = useMemo(() => ({ fields, styles }));
+  const onUpdate = useCallback(update => {
+    handleUpdate(update);
+  });
+  const tapPayCard = useTapPayCard({ opt, onUpdate });
 
   const getPrime = useCallback(() => {
     return new Promise((resolve, reject) => {
