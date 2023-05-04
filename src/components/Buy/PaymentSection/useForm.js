@@ -46,10 +46,36 @@ const useForm = ({ skuId, isPrimary }) => {
     [history, isPrimary, pushToast, skuId, token],
   );
 
-  const [submit] = useTapPay({
+  const [, getPrime] = useTapPay({
     handleUpdate,
     handlePrime,
   });
+
+  const submit = useCallback(async () => {
+    console.log('submit');
+    try {
+      const prime = await getPrime();
+      const [
+        errorMessage,
+        paymentId,
+        paymentUrl,
+      ] = await checkoutSubscriptionWithPrime({
+        token,
+        prime,
+        skuId,
+        isPrimary,
+      });
+      if (errorMessage) {
+        // Some error arises.
+        history.push(`/buy/result/${paymentId}`);
+        return;
+      }
+      window.location = paymentUrl;
+    } catch (error) {
+      pushToast(NOTIFICATION_TYPE.ALERT, '發生未知錯誤。');
+      console.error(error);
+    }
+  }, [getPrime, history, isPrimary, pushToast, skuId, token]);
 
   return {
     activeCardType,

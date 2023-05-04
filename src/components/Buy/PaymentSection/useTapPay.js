@@ -20,6 +20,7 @@ const useTapPay = ({ handleUpdate, handlePrime }) => {
 
   // 送出 Tappay 表單
   const submit = useCallback(() => {
+    console.log(tapPayCard);
     if (!tapPayCard) return;
 
     // 取得 TapPay Fields 的 status
@@ -44,28 +45,35 @@ const useTapPay = ({ handleUpdate, handlePrime }) => {
 
   const getPrime = useCallback(() => {
     return new Promise((resolve, reject) => {
-      if (!tapPayCard) return;
+      console.log(tapPayCard);
+      if (!tapPayCard) {
+        resolve();
+        return;
+      }
 
       // 取得 TapPay Fields 的 status
       const tappayStatus = tapPayCard.getTappayFieldsStatus();
 
       // 確認是否可以 getPrime
       if (tappayStatus.canGetPrime === false) {
-        alert('can not get prime');
+        reject('can not get prime');
         return;
       }
 
+      console.log('async getPrime');
       // Get prime
       tapPayCard.getPrime(result => {
         if (result.status !== 0) {
-          alert('get prime error ' + result.msg);
+          reject('get prime error ' + result.msg);
           return;
         }
 
-        handlePrime(result.card.prime);
+        resolve(result.card.prime);
       });
     });
-  });
+  }, [tapPayCard]);
+
+  console.log('useTapPay', tapPayCard, getPrime);
 
   return [submit, getPrime];
 };
