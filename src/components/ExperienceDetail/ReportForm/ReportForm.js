@@ -1,21 +1,18 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
 import Button from 'common/button/Button';
+import authStatus from 'constants/authStatus';
 
 import ReasonCategory from './ReasonCategory';
 import Reason from './Reason';
 import styles from './ReportForm.module.css';
-
-import authStatus from '../../../constants/authStatus';
-
 import { handleToApiParams } from './helper';
-
 import { validReasomForm, validReason, isReasonLimit } from './formCheck';
 
-const isLogin = auth => auth.get('status') === authStatus.CONNECTED;
+// TODO: deprecated, should use hooks or selector to get isLogin
+const isLogin = auth => auth.status === authStatus.CONNECTED;
 
 export const reasonCategoryOptions = [
   {
