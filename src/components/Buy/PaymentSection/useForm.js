@@ -6,7 +6,7 @@ import { checkoutSubscriptionWithPrime } from '../../../apis/payment';
 import usePushToast from 'hooks/toastNotification/usePushToast';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 
-const useForm = ({ tapPayCard, loadTapPayCard, skuId, isPrimary }) => {
+const useForm = ({ skuId, isPrimary }) => {
   const [activeCardType, setActiveCardType] = useState('unknown');
   const [canGetPrime, setCanGetPrime] = useState(false);
 
@@ -46,9 +46,7 @@ const useForm = ({ tapPayCard, loadTapPayCard, skuId, isPrimary }) => {
     [history, isPrimary, pushToast, skuId, token],
   );
 
-  const submit = useTapPay({
-    tapPayCard,
-    loadTapPayCard,
+  const [submit] = useTapPay({
     handleUpdate,
     handlePrime,
   });

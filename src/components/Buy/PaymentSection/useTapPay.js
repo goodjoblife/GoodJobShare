@@ -1,32 +1,22 @@
-import { useCallback, useEffect, useState, useContext } from 'react';
-import TapPayContext from 'common/tappay/TapPayContext';
+import { useCallback, useEffect, useState } from 'react';
+import TapPayHelper from 'common/tappay/TapPayHelper';
 import { fields, styles } from './constants';
 
-const useTapPay = ({
-  tapPayCard,
-  loadTapPayCard,
-  handleUpdate,
-  handlePrime,
-}) => {
-
-
+const useTapPay = ({ handleUpdate, handlePrime }) => {
   const [tapPayCard, setTapPayCard] = useState();
 
   // 載入 Tappay
   useEffect(() => {
+    TapPayHelper.init().then(tapPay => {
+      tapPay.card.setup({ fields, styles });
+      tapPay.card.onUpdate(update => {
+        // 即時反應每個行為
+        handleUpdate(update);
+      });
 
-    if (loadTapPayCard) loadTapPayCard({ fields, styles });
-  }, [loadTapPayCard]);
-
-  // 註冊 Tappay listener
-  useEffect(() => {
-    if (!tapPayCard) return;
-
-    tapPayCard.onUpdate(update => {
-      // 即時反應每個行為
-      handleUpdate(update);
+      setTapPayCard(tapPay.card);
     });
-  }, [handleUpdate, tapPayCard]);
+  }, [handleUpdate]);
 
   // 送出 Tappay 表單
   const submit = useCallback(() => {
@@ -52,7 +42,32 @@ const useTapPay = ({
     });
   }, [handlePrime, tapPayCard]);
 
-  return submit;
+  const getPrime = useCallback(() => {
+    return new Promise((resolve, reject) => {
+      if (!tapPayCard) return;
+
+      // 取得 TapPay Fields 的 status
+      const tappayStatus = tapPayCard.getTappayFieldsStatus();
+
+      // 確認是否可以 getPrime
+      if (tappayStatus.canGetPrime === false) {
+        alert('can not get prime');
+        return;
+      }
+
+      // Get prime
+      tapPayCard.getPrime(result => {
+        if (result.status !== 0) {
+          alert('get prime error ' + result.msg);
+          return;
+        }
+
+        handlePrime(result.card.prime);
+      });
+    });
+  });
+
+  return [submit, getPrime];
 };
 
 export default useTapPay;
