@@ -1,4 +1,4 @@
-@value above-small, below-small, link-blue from "common/variables.module.css";
+@value above-small, below-small, above-desktop, main-yellow, link-blue from "common/variables.module.css";
 
 .permissionBlock {
   display: inline-block;
@@ -15,9 +15,8 @@
 }
 
 .permissionSimpleBlock {
-  border: 1px solid #fcd406;
-  border-radius: 0px;
-  background-color: #fffbe8;
+  border: 1px solid main-yellow;
+  border-radius: 4px;
 
   .container {
     max-width: 500px;
@@ -28,7 +27,7 @@
 .simple {
   cursor: pointer;
 
-  @media (min-width: 1025px) {
+  @media (min-width: above-desktop) {
     &:hover {
       .headingIcon {
         color: link-blue;
@@ -67,12 +66,7 @@
 
 .headingIcon {
   display: inline;
-  font-size: 24px;
-  margin-right: 10px;
-
-  @media (max-width: 850px) {
-    font-size: 16px;
-  }
+  font-size: 16px;
 }
 
 .heading {
@@ -84,7 +78,7 @@
   justify-content: space-around;
   flex-wrap: nowrap;
 
-  @media (max-width: 850px) {
+  @media (max-width: above-small) {
     flex-direction: column;
     height: 8rem;
     align-items: center;
