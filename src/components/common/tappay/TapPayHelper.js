@@ -8,11 +8,9 @@ class TapPayHelper {
   loadingPromise = null;
 
   static init() {
-    console.log('TapPay init', TapPayHelper.loadingPromise);
     if (TapPayHelper.loadingPromise) {
       return TapPayHelper.loadingPromise;
     }
-    console.log('TapPay init');
 
     TapPayHelper.loadingPromise = new Promise(resolve => {
       const fjs = document.getElementsByTagName('script')[0];
