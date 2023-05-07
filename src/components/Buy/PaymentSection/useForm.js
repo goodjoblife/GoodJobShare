@@ -41,6 +41,9 @@ const useForm = ({ tapPayCard, loadTapPayCard, skuId, isPrimary }) => {
       } catch (error) {
         pushToast(NOTIFICATION_TYPE.ALERT, '發生未知錯誤。');
         console.error(error);
+        if (window && window.Raven) {
+          window.Raven.captureException(error);
+        }
       }
     },
     [history, isPrimary, pushToast, skuId, token],

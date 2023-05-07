@@ -7,7 +7,11 @@ const useGetSearchPermission = ({ token }) => {
   return useCallback(async () => {
     if (token === null) return false;
     // Get permission only when token available
-    return await api.me.getHasSearchPermission({ token });
+    return await api.me.getHasSearchPermission({ token }).catch(error => {
+      if (window && window.Raven) {
+        window.Raven.captureException(error);
+      }
+    });
   }, [token]);
 };
 

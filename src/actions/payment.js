@@ -78,6 +78,9 @@ export const fetchPaymentRecord = paymentRecordId => (
     .catch(error => {
       console.error(error);
       dispatch(setPaymentRecord(getError(error)));
+      if (window && window.Raven) {
+        window.Raven.captureException(error);
+      }
     });
 };
 
@@ -95,5 +98,8 @@ export const fetchSubscriptionPlans = () => (dispatch, getState, { api }) => {
     .catch(error => {
       console.error(error);
       dispatch(setSubscriptionPlans(getError(plans)));
+      if (window && window.Raven) {
+        window.Raven.captureException(error);
+      }
     });
 };
