@@ -1,27 +1,32 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { useHistory } from 'react-router';
 import { useToken } from 'hooks/auth';
 import useTapPay from './useTapPay';
 import { checkoutSubscriptionWithPrime } from '../../../apis/payment';
 import usePushToast from 'hooks/toastNotification/usePushToast';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
+import { fields, styles } from './constants';
 
 const useForm = ({ skuId, isPrimary }) => {
   const [activeCardType, setActiveCardType] = useState('unknown');
   const [canGetPrime, setCanGetPrime] = useState(false);
 
-  const handleUpdate = useCallback(update => {
+  // init tappay and register callback
+  const opt = useMemo(() => ({ fields, styles }), []);
+  const onUpdate = useCallback(update => {
     setActiveCardType(update.cardType);
     setCanGetPrime(update.canGetPrime);
   }, []);
+  const [getPrime] = useTapPay({
+    opt,
+    onUpdate,
+  });
 
   const pushToast = usePushToast();
+
   const history = useHistory();
 
   const token = useToken();
-  const [getPrime] = useTapPay({
-    handleUpdate,
-  });
 
   const submit = useCallback(async () => {
     try {

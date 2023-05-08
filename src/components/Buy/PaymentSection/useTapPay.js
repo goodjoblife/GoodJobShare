@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useState, useMemo } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import TapPayHelper from 'common/tappay/TapPayHelper';
-import { fields, styles } from './constants';
 
 const useTapPayCard = ({ opt, onUpdate }) => {
   // setup tapPay.card
@@ -19,10 +18,7 @@ const useTapPayCard = ({ opt, onUpdate }) => {
   return tapPayCard;
 };
 
-const useTapPay = ({ handleUpdate }) => {
-  const opt = useMemo(() => ({ fields, styles }), []);
-  const onUpdate = useCallback(update => handleUpdate(update), [handleUpdate]);
-
+const useTapPay = ({ opt, onUpdate }) => {
   const tapPayCard = useTapPayCard({ opt, onUpdate });
 
   const getPrime = useCallback(() => {
