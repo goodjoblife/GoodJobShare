@@ -3,6 +3,8 @@ import TapPayHelper from 'common/tappay/TapPayHelper';
 import { fields, styles } from './constants';
 
 const useTapPayCard = ({ opt, onUpdate }) => {
+  // setup tapPay.card
+  // when opt and onUpdate change, we resetup it.
   const [tapPayCard, setTapPayCard] = useState();
 
   // 載入 Tappay
@@ -18,17 +20,18 @@ const useTapPayCard = ({ opt, onUpdate }) => {
 };
 
 const useTapPay = ({ handleUpdate }) => {
-  const opt = useMemo(() => ({ fields, styles }));
-  const onUpdate = useCallback(update => {
-    handleUpdate(update);
-  });
+  const opt = useMemo(() => ({ fields, styles }), []);
+  const onUpdate = useCallback(update => handleUpdate(update), [handleUpdate]);
+
   const tapPayCard = useTapPayCard({ opt, onUpdate });
 
   const getPrime = useCallback(() => {
+    // getPrime is a Promise
+    // resolve: when success, return prime
+    // reject: for any reason, we cannot get a prime
     return new Promise((resolve, reject) => {
-      console.log(tapPayCard);
       if (!tapPayCard) {
-        resolve();
+        reject('tapPayCard is not ready');
         return;
       }
 
@@ -41,7 +44,6 @@ const useTapPay = ({ handleUpdate }) => {
         return;
       }
 
-      console.log('async getPrime');
       // Get prime
       tapPayCard.getPrime(result => {
         if (result.status !== 0) {
