@@ -17,10 +17,7 @@ const useForm = ({ skuId, isPrimary }) => {
     setActiveCardType(update.cardType);
     setCanGetPrime(update.canGetPrime);
   }, []);
-  const [getPrime] = useTapPay({
-    opt,
-    onUpdate,
-  });
+  const [getPrime] = useTapPay({ opt, onUpdate });
 
   const pushToast = usePushToast();
 
@@ -29,6 +26,7 @@ const useForm = ({ skuId, isPrimary }) => {
   const token = useToken();
 
   const submit = useCallback(async () => {
+    // FIXME: ＃1096
     try {
       const prime = await getPrime();
       const [
@@ -46,6 +44,7 @@ const useForm = ({ skuId, isPrimary }) => {
         history.push(`/buy/result/${paymentId}`);
         return;
       }
+      // FIXME: #1097, paymentUrl = ''
       window.location = paymentUrl;
     } catch (error) {
       // 目前有這些地方可能發生錯誤：
