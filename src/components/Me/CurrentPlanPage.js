@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { isNil } from 'ramda';
 
 import { fetchMyCurrentSubscription } from 'actions/payment';
 import { isUnfetched, isFetched } from 'utils/fetchBox';
@@ -31,9 +32,7 @@ const CurrentPlanPage = () => {
     );
   }
 
-  const emptySubscription = false;
-
-  if (emptySubscription) {
+  if (isNil(myCurrentSubscriptionBox)) {
     return (
       <PlansWrapper>
         <EmptySubscription />
@@ -42,12 +41,21 @@ const CurrentPlanPage = () => {
   }
 
   const subscription = myCurrentSubscriptionBox.data;
-  console.log({ subscription });
-  console.log({ subscriptionPlan: subscription.subscriptionPlan });
+
+  if (subscription.status !== 'OK') {
+    return (
+      <PlansWrapper>
+        <EmptySubscription />
+      </PlansWrapper>
+    );
+  }
 
   return (
     <PlansWrapper>
-      <CurrentSubscription subscriptionPlan={subscription.subscriptionPlan} />
+      <CurrentSubscription
+        subscriptionPlan={subscription.subscriptionPlan}
+        expiredAt={subscription.expiredAt}
+      />
     </PlansWrapper>
   );
 };

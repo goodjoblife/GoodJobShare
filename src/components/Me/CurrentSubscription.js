@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import PlanCard from '../PlanPage/PlanCard';
 
-const CurrentSubscription = ({ subscriptionPlan, expiredTime }) => {
+const CurrentSubscription = ({ subscriptionPlan, expiredAt }) => {
   return (
     <div>
       <PlanCard
@@ -13,6 +13,7 @@ const CurrentSubscription = ({ subscriptionPlan, expiredTime }) => {
         type={subscriptionPlan.type}
         hideCta={true}
       />
+      {expiredAt}
     </div>
   );
 };
@@ -24,6 +25,7 @@ CurrentSubscription.propTypes = {
     type: PropTypes.string,
     amount: PropTypes.number,
   }),
+  expiredAt: PropTypes.string,
 };
 
 export default CurrentSubscription;
