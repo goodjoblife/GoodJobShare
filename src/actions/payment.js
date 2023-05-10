@@ -6,6 +6,7 @@ import {
   paymentRecordSelector,
   redirectUrlSelector,
   subscriptionPlansSelector,
+  myCurrentSubscriptionSelector,
 } from '../selectors/payment';
 
 import { tokenSelector } from '../selectors/authSelector';
@@ -13,6 +14,8 @@ import { tokenSelector } from '../selectors/authSelector';
 export const SET_REDIRECT_URL = '@@PAYMENT_PERSIST/SET_REDIRECT_URL';
 export const SET_PAYMENT_RECORD = '@@PAYMENT/SET_PAYMENT_RECORD';
 export const SET_SUBSCRIPTION_PLANS = '@@PAYMENT/SET_PLANS';
+export const SET_MY_CURRENT_SUBSCRIPTION =
+  '@@PAYMENT/SET_MY_CURRENT_SUBSCRIPTION';
 
 const setRedirectUrl = redirectUrl => ({
   type: SET_REDIRECT_URL,
@@ -27,6 +30,11 @@ const setPaymentRecord = paymentRecord => ({
 const setSubscriptionPlans = subscriptionPlans => ({
   type: SET_SUBSCRIPTION_PLANS,
   subscriptionPlans,
+});
+
+const setMyCurrentSubscription = currentSubscription => ({
+  type: SET_MY_CURRENT_SUBSCRIPTION,
+  currentSubscription,
 });
 
 export const navigateToBuy = (redirectUrl, actionUrl) => (
@@ -95,5 +103,28 @@ export const fetchSubscriptionPlans = () => (dispatch, getState, { api }) => {
     .catch(error => {
       console.error(error);
       dispatch(setSubscriptionPlans(getError(plans)));
+    });
+};
+
+export const fetchMyCurrentSubscription = () => (
+  dispatch,
+  getState,
+  { api },
+) => {
+  const state = getState();
+  const myCurrentSubscription = myCurrentSubscriptionSelector(state);
+  const token = tokenSelector(state);
+
+  dispatch(setMyCurrentSubscription(toFetching(myCurrentSubscription)));
+
+  const fetcher = api.payment.getMyCurrentSubscription(token);
+
+  return fetcher()
+    .then(currentSubscription => {
+      dispatch(setMyCurrentSubscription(getFetched(currentSubscription)));
+    })
+    .catch(error => {
+      console.error(error);
+      dispatch(setMyCurrentSubscription(getError(error)));
     });
 };
