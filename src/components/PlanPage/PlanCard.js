@@ -19,7 +19,7 @@ const getButtonType = type => {
   return 'hollowRed';
 };
 
-const PlanCard = ({ title, description, amount, type, skuId }) => {
+const PlanCard = ({ title, description, amount, type, skuId, hideCta }) => {
   const actionTitle = getActionTitle(type);
 
   const { toBuy, actionUrl } = useToBuy('/', skuId);
@@ -52,24 +52,26 @@ const PlanCard = ({ title, description, amount, type, skuId }) => {
             元
           </P>
         </div>
-        <div className={styles.bottomArea}>
-          <div className={styles.helperContainer}>
-            {isSubmitData && (
-              <P className={styles.helperText} size="s">
-                \ 留下你的資料幫助其他人 /
-              </P>
-            )}
+        {!hideCta && (
+          <div className={styles.bottomArea}>
+            <div className={styles.helperContainer}>
+              {isSubmitData && (
+                <P className={styles.helperText} size="s">
+                  \ 留下你的資料幫助其他人 /
+                </P>
+              )}
+            </div>
+            <Link to={linkUrl} onClick={isSubmitData ? null : onButtonClick}>
+              <Button
+                className={styles.actionButton}
+                btnStyle={getButtonType(type)}
+                circleSize="lg"
+              >
+                {actionTitle}
+              </Button>
+            </Link>
           </div>
-          <Link to={linkUrl} onClick={isSubmitData ? null : onButtonClick}>
-            <Button
-              className={styles.actionButton}
-              btnStyle={getButtonType(type)}
-              circleSize="lg"
-            >
-              {actionTitle}
-            </Button>
-          </Link>
-        </div>
+        )}
       </div>
     </RoundCard>
   );
@@ -81,6 +83,7 @@ PlanCard.propTypes = {
   type: PropTypes.string,
   amount: PropTypes.number,
   skuId: PropTypes.string,
+  hideCta: PropTypes.bool,
 };
 
 PlanCard.defaultProps = {
@@ -88,6 +91,7 @@ PlanCard.defaultProps = {
   description: '',
   amount: 0,
   skuId: '',
+  hideCta: false,
 };
 
 export default PlanCard;

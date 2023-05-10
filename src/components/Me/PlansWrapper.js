@@ -4,6 +4,7 @@ import { indexBy, prop } from 'ramda';
 
 import Heading from 'common/base/Heading';
 
+import AuthMask from './AuthMask';
 import PlanPageTab from './PlanPageTab';
 import styles from './PlansWrapper.module.css';
 
@@ -30,13 +31,15 @@ const PlansWrapper = ({ children }) => {
   const currentTabId = tabUrlMap[location.pathname].id;
 
   return (
-    <div className={styles.container}>
-      <Heading as="h1">方案</Heading>
-      <div style={{ marginTop: '18px', marginBottom: '48px' }}>
-        <PlanPageTab tabs={tabs} currentTabId={currentTabId} />
+    <AuthMask title="登入以查看我的方案">
+      <div className={styles.container}>
+        <Heading as="h1">方案</Heading>
+        <div style={{ marginTop: '18px', marginBottom: '48px' }}>
+          <PlanPageTab tabs={tabs} currentTabId={currentTabId} />
+        </div>
+        <div style={{ display: 'inline-block' }}>{children}</div>
       </div>
-      <div style={{ display: 'inline-block' }}>{children}</div>
-    </div>
+    </AuthMask>
   );
 };
 

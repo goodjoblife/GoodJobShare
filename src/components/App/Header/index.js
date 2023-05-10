@@ -138,6 +138,9 @@ const Header = () => {
                     popoverContent={
                       <ul className={styles.popoverItem}>
                         <li>
+                          <Link to="/me/plans">我的方案</Link>
+                        </li>
+                        <li>
                           <Link to="/me">管理我的資料</Link>
                         </li>
                         <li>

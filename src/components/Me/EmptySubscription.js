@@ -6,7 +6,7 @@ import RoundCard from 'common/RoundCard';
 
 import styles from './CurrentPlan.module.css';
 
-const EmptyCurrentPlan = () => {
+const EmptySubscription = () => {
   return (
     <div className={styles.container}>
       <RoundCard className={styles.card}>無付費方案</RoundCard>
@@ -19,4 +19,4 @@ const EmptyCurrentPlan = () => {
   );
 };
 
-export default EmptyCurrentPlan;
+export default EmptySubscription;

@@ -1,7 +1,7 @@
 @value above-tablet, main-gray, yellow-dark from "common/variables.module.css";
 
 .container {
-  height: 390px;
+  min-height: 300px;
   width: 300px;
   padding: 26px 0;
 }
@@ -42,6 +42,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 52px;
 }
 
 .bottomArea {

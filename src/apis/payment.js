@@ -44,7 +44,7 @@ const getMyCurrentSubscription = token => () =>
   graphqlClient({
     query: myCurrentSubscriptionQuery,
     token,
-  });
+  }).then(({ myCurrentSubscription }) => myCurrentSubscription);
 
 export default {
   checkoutSubscriptionWithPrime,

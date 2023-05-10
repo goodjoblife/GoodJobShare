@@ -7,8 +7,8 @@ import { useMyCurrentSubscription } from 'hooks/payment/usePayment';
 import Loading from 'common/Loader';
 
 import PlansWrapper from './PlansWrapper';
-import AuthMask from './AuthMask';
-import EmptyCurrentPlan from './EmptyCurrentPlan';
+import EmptySubscription from './EmptySubscription';
+import CurrentSubscription from './CurrentSubscription';
 
 const CurrentPlanPage = () => {
   const dispatch = useDispatch();
@@ -25,20 +25,30 @@ const CurrentPlanPage = () => {
 
   if (!isReady) {
     return (
-      <AuthMask>
-        <PlansWrapper>
-          <Loading size="l" />;
-        </PlansWrapper>
-      </AuthMask>
+      <PlansWrapper>
+        <Loading size="l" />;
+      </PlansWrapper>
     );
   }
 
-  return (
-    <AuthMask>
+  const emptySubscription = false;
+
+  if (emptySubscription) {
+    return (
       <PlansWrapper>
-        <EmptyCurrentPlan />
+        <EmptySubscription />
       </PlansWrapper>
-    </AuthMask>
+    );
+  }
+
+  const subscription = myCurrentSubscriptionBox.data;
+  console.log({ subscription });
+  console.log({ subscriptionPlan: subscription.subscriptionPlan });
+
+  return (
+    <PlansWrapper>
+      <CurrentSubscription subscriptionPlan={subscription.subscriptionPlan} />
+    </PlansWrapper>
   );
 };
 

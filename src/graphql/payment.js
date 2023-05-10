@@ -60,9 +60,6 @@ query {
     id
     status
     expiredAt
-    paymentRecord {
-      amount
-    }
     subscriptionPlan {
       title
       description
