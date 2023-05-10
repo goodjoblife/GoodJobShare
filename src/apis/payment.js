@@ -29,7 +29,15 @@ export const checkoutSubscriptionWithPrime = ({
       },
     },
     token,
-  }).then(({ checkoutSubscriptionWithPrime: { paymentUrl } }) => paymentUrl);
+  }).then(
+    ({
+      checkoutSubscriptionWithPrime: {
+        paymentRecord: { id },
+        paymentUrl,
+        error,
+      },
+    }) => [error ? error.message : null, id, paymentUrl],
+  );
 
 const getPaymentRecord = token => paymentRecordId =>
   graphqlClient({

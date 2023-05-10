@@ -45,7 +45,7 @@ const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
     <React.Fragment>
       <LoginModal isOpen={isModalOpen} close={toggleModalOpen} />
       <div className={styles.headingContainer}>
-        <Heading size="sl" Tag="h3">
+        <Heading size="sl" Tag="h3" center>
           留下一筆資料，馬上{unlockedDescription}
         </Heading>
       </div>

@@ -7,7 +7,7 @@
   display: flex;
   position: absolute;
   top: 0;
-  right: calc(50% - mobile_width / 2);
+  right: calc(50vw - mobile_width / 2);
   border-radius: 4px;
   padding: 0 16px 0 40px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
