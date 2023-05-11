@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import PlanCard from '../PlanPage/PlanCard';
+import { P } from 'common/base';
 
+import PlanCard from '../PlanPage/PlanCard';
 import styles from './CurrentSubscription.module.css';
 
 const CurrentSubscription = ({ subscriptionPlan, expiredAt }) => {
+  const count = 8393;
   return (
     <div>
       <div className={styles.card}>
@@ -17,7 +19,8 @@ const CurrentSubscription = ({ subscriptionPlan, expiredAt }) => {
           hideCta={true}
         />
       </div>
-      {expiredAt}
+      <P tag="p">{`解鎖範圍：全站 ${count} 筆面試、薪資資料，及期間內新增的資料`}</P>
+      <P tag="p">{`使用期間：現在 ~ ${expiredAt}`}</P>
     </div>
   );
 };
