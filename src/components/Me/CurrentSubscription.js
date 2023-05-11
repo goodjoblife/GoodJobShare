@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { P } from 'common/base';
+import { useTotalCount } from 'hooks/useCount';
 
 import PlanCard from '../PlanPage/PlanCard';
 import styles from './CurrentSubscription.module.css';
 
 const CurrentSubscription = ({ subscriptionPlan, expiredAt }) => {
-  const count = 8393;
+  const count = useTotalCount();
+
   return (
     <div>
       <div className={styles.card}>
