@@ -10,6 +10,8 @@ import styles from './CurrentSubscription.module.css';
 const CurrentSubscription = ({ subscriptionPlan, expiredAt }) => {
   const count = useTotalCount();
 
+  const expiredDate = new Date(expiredAt);
+
   return (
     <div>
       <div className={styles.card}>
@@ -22,7 +24,7 @@ const CurrentSubscription = ({ subscriptionPlan, expiredAt }) => {
         />
       </div>
       <P tag="p">{`解鎖範圍：全站 ${count} 筆面試、薪資資料，及期間內新增的資料`}</P>
-      <P tag="p">{`使用期間：現在 ~ ${expiredAt}`}</P>
+      <P tag="p">{`使用期間：現在 ~ ${expiredDate.toLocaleString('zh-TW')}`}</P>
     </div>
   );
 };
