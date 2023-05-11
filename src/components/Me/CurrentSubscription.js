@@ -3,16 +3,20 @@ import PropTypes from 'prop-types';
 
 import PlanCard from '../PlanPage/PlanCard';
 
+import styles from './CurrentSubscription.module.css';
+
 const CurrentSubscription = ({ subscriptionPlan, expiredAt }) => {
   return (
     <div>
-      <PlanCard
-        title={subscriptionPlan.title}
-        description={subscriptionPlan.description}
-        amount={subscriptionPlan.amount}
-        type={subscriptionPlan.type}
-        hideCta={true}
-      />
+      <div className={styles.card}>
+        <PlanCard
+          title={subscriptionPlan.title}
+          description={subscriptionPlan.description}
+          amount={subscriptionPlan.amount}
+          type={subscriptionPlan.type}
+          hideCta={true}
+        />
+      </div>
       {expiredAt}
     </div>
   );

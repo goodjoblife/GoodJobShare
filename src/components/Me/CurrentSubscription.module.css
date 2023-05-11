@@ -9,5 +9,6 @@
   justify-content: center;
   align-items: center;
   width: 300px;
-  height: 220px;
+  min-height: 220px;
+  margin-bottom: 24px;
 }

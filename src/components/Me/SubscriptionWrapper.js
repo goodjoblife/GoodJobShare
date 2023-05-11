@@ -27,8 +27,9 @@ const SubscriptionWrapper = ({ children }) => {
   return (
     <AuthMask title="登入以查看我的方案">
       <div className={styles.container}>
-        <Heading as="h1">我的方案</Heading>
-        <div style={{ marginTop: '18px', marginBottom: '48px' }}></div>
+        <Heading as="h1" style={{ marginBottom: '48px' }}>
+          我的方案
+        </Heading>
         <div style={{ display: 'inline-block' }}>{children}</div>
       </div>
     </AuthMask>
