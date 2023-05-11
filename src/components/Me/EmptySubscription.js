@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import RoundCard from 'common/RoundCard';
 
-import styles from './CurrentPlan.module.css';
+import styles from './CurrentSubscription.module.css';
 
 const EmptySubscription = () => {
   return (

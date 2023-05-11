@@ -35,8 +35,7 @@ import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
 import PlanPage from './components/PlanPage';
 import BuyResultPage from './components/BuyResultPage';
-import CurrentPlanPage from './components/Me/CurrentPlanPage';
-import PlansHistoryPage from './components/Me/PlansHistoryPage';
+import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
 
 const routes = [
   {
@@ -261,14 +260,9 @@ const routes = [
     component: Me,
   },
   {
-    path: '/me/plans',
+    path: '/me/subscriptions',
     exact: true,
-    component: CurrentPlanPage,
-  },
-  {
-    path: '/me/plans-history',
-    exact: true,
-    component: PlansHistoryPage,
+    component: CurrentSubscriptionPage,
   },
   {
     path: '/about',

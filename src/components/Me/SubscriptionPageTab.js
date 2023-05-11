@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
-import styles from './PlanPageTab.module.css';
+import styles from './SubscriptionPageTab.module.css';
 
-const PlansPageTab = ({ currentTabId, tabs }) => {
+const SubscriptionPageTab = ({ currentTabId, tabs }) => {
   return (
     <div
       className={styles.container}
       role="tablist"
-      aria-label="Plans Page Tablist"
+      aria-label="Subscription Page Tablist"
     >
       {tabs.map(tab => {
         const active = tab.id === currentTabId;
@@ -33,7 +33,7 @@ const PlansPageTab = ({ currentTabId, tabs }) => {
   );
 };
 
-PlansPageTab.propTypes = {
+SubscriptionPageTab.propTypes = {
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -45,4 +45,4 @@ PlansPageTab.propTypes = {
   currentTabId: PropTypes.string,
 };
 
-export default PlansPageTab;
+export default SubscriptionPageTab;

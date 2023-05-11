@@ -7,11 +7,11 @@ import { isUnfetched, isFetched } from 'utils/fetchBox';
 import { useMyCurrentSubscription } from 'hooks/payment/usePayment';
 import Loading from 'common/Loader';
 
-import PlansWrapper from './PlansWrapper';
+import SubscriptionWrapper from './SubscriptionWrapper';
 import EmptySubscription from './EmptySubscription';
 import CurrentSubscription from './CurrentSubscription';
 
-const CurrentPlanPage = () => {
+const CurrentSubscriptionPage = () => {
   const dispatch = useDispatch();
   const myCurrentSubscriptionBox = useMyCurrentSubscription();
 
@@ -26,17 +26,17 @@ const CurrentPlanPage = () => {
 
   if (!isReady) {
     return (
-      <PlansWrapper>
+      <SubscriptionWrapper>
         <Loading size="l" />;
-      </PlansWrapper>
+      </SubscriptionWrapper>
     );
   }
 
   if (isNil(myCurrentSubscriptionBox)) {
     return (
-      <PlansWrapper>
+      <SubscriptionWrapper>
         <EmptySubscription />
-      </PlansWrapper>
+      </SubscriptionWrapper>
     );
   }
 
@@ -44,20 +44,20 @@ const CurrentPlanPage = () => {
 
   if (subscription.status !== 'OK') {
     return (
-      <PlansWrapper>
+      <SubscriptionWrapper>
         <EmptySubscription />
-      </PlansWrapper>
+      </SubscriptionWrapper>
     );
   }
 
   return (
-    <PlansWrapper>
+    <SubscriptionWrapper>
       <CurrentSubscription
         subscriptionPlan={subscription.subscriptionPlan}
         expiredAt={subscription.expiredAt}
       />
-    </PlansWrapper>
+    </SubscriptionWrapper>
   );
 };
 
-export default CurrentPlanPage;
+export default CurrentSubscriptionPage;
