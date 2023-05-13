@@ -19,6 +19,7 @@ module.exports = {
   SENTRY_DSN:
     process.env.RAZZLE_SENTRY_DSN ||
     'https://5cacfa2ac0934509a3e563fc0a52275f@sentry.io/1269010',
-  GIT_SHA1: process.env.RAZZLE_GIT_SHA1,
+  SENTRY_ENVIRONMENT: process.env.RAZZLE_SENTRY_ENVIRONMENT || 'localhost',
+  GIT_SHA1: process.env.RAZZLE_GIT_SHA1 || 'none',
   PERSIST_KEY: process.env.PERSIST_KEY || 'goodjob',
 };
