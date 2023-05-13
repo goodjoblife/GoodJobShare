@@ -17,6 +17,7 @@ module.exports = {
   AMPLITUDE_API_KEY:
     process.env.RAZZLE_AMPLITUDE_API_KEY || '22a596db91e9000a6d19ed6a29865cbd',
   SENTRY_DSN: process.env.RAZZLE_SENTRY_DSN,
-  GIT_SHA1: process.env.RAZZLE_GIT_SHA1,
+  SENTRY_ENVIRONMENT: process.env.RAZZLE_SENTRY_ENVIRONMENT || 'localhost',
+  GIT_SHA1: process.env.RAZZLE_GIT_SHA1 || 'none',
   PERSIST_KEY: process.env.PERSIST_KEY || 'goodjob',
 };
