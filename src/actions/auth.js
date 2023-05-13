@@ -57,24 +57,16 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
 /**
  * Use `hooks/login/useGoogleLogin` as possible
  */
-export const loginWithGoogle = googleAuth => (dispatch, getState, { api }) => {
-  return googleAuth
-    .signIn({
-      scope: 'profile email',
-      prompt: 'select_account',
-    })
-    .then(result => {
-      const { id_token } = result.getAuthResponse();
-      return api.auth
-        .postAuthGoogle({
-          idToken: id_token,
-        })
-        .then(({ token, user: { _id, google_id } }) => {
-          dispatch(loginWithToken(token));
-        })
-        .then(() => authStatus.CONNECTED);
-    })
-    .catch(err => authStatus.NOT_AUTHORIZED);
+export const loginWithGoogle = credentialResponse => async (
+  dispatch,
+  getState,
+  { api },
+) => {
+  const idToken = credentialResponse.credential;
+  const { token } = await api.auth.postAuthGoogle({
+    idToken,
+  });
+  await dispatch(loginWithToken(token));
 };
 
 const getMeInfo = token => (dispatch, getState, { api }) =>

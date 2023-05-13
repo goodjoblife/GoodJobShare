@@ -101,6 +101,11 @@ export default class Html extends Component {
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
           ></script>
+          <script
+            src="https://accounts.google.com/gsi/client"
+            async={true}
+            defer={true}
+          ></script>
         </head>
         <body>
           {/* install google tag manager */}
