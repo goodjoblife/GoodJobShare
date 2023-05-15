@@ -27,7 +27,7 @@ const useTapPay = ({ opt, onUpdate }) => {
     // reject: for any reason, we cannot get a prime
     return new Promise((resolve, reject) => {
       if (!tapPayCard) {
-        reject('tapPayCard is not ready');
+        reject(new Error('tapPayCard is not ready'));
         return;
       }
 

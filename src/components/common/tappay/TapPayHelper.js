@@ -5,7 +5,7 @@ import {
 } from '../../../config';
 
 class TapPayHelper {
-  loadingPromise = null;
+  static loadingPromise = null;
 
   static init() {
     if (TapPayHelper.loadingPromise) {
