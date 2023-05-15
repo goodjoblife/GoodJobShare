@@ -36,14 +36,14 @@ const useTapPay = ({ opt, onUpdate }) => {
 
       // 確認是否可以 getPrime
       if (tappayStatus.canGetPrime === false) {
-        reject('can not get prime');
+        reject(new Error('can not get prime'));
         return;
       }
 
       // Get prime
       tapPayCard.getPrime(result => {
         if (result.status !== 0) {
-          reject('get prime error ' + result.msg);
+          reject(new Error('get prime error ' + result.msg));
           return;
         }
 
