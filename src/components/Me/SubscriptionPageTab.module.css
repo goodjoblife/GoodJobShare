@@ -1,28 +1,28 @@
-@value main-yellow, yellow-light from "common/variables.module.css";
-
-.container {
-  display: inline-flex;
-  border-radius: 4px;
-  border: 1px solid main-yellow;
-}
-
-.tab {
-  background: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 180px;
-  height: 48px;
-
-  &:hover {
-    background: yellow-light;
-  }
-}
-
-.active {
-  background: main-yellow;
-
-  &:hover {
-    background: main-yellow;
-  }
-}
+/* @value main-yellow, yellow-light from "common/variables.module.css"; */
+/**/
+/* .container { */
+/*   display: inline-flex; */
+/*   border-radius: 4px; */
+/*   border: 1px solid main-yellow; */
+/* } */
+/**/
+/* .tab { */
+/*   background: white; */
+/*   display: flex; */
+/*   justify-content: center; */
+/*   align-items: center; */
+/*   width: 180px; */
+/*   height: 48px; */
+/**/
+/*   &:hover { */
+/*     background: yellow-light; */
+/*   } */
+/* } */
+/**/
+/* .active { */
+/*   background: main-yellow; */
+/**/
+/*   &:hover { */
+/*     background: main-yellow; */
+/*   } */
+/* } */
