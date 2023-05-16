@@ -11,9 +11,9 @@ import SubscriptionWrapper from './SubscriptionWrapper';
 import EmptySubscription from './EmptySubscription';
 import CurrentSubscription from './CurrentSubscription';
 
-const EmptyContent = () => (
+const withSubscriptionWrapper = Component => props => (
   <SubscriptionWrapper>
-    <EmptySubscription />
+    <Component {...props} />
   </SubscriptionWrapper>
 );
 
@@ -31,35 +31,29 @@ const CurrentSubscriptionPage = () => {
   }, [dispatch, needsFetching]);
 
   if (!isReady) {
-    return (
-      <SubscriptionWrapper>
-        <Loading size="l" />;
-      </SubscriptionWrapper>
-    );
+    return <Loading size="l" />;
   }
 
   if (isNil(myCurrentSubscriptionBox)) {
-    return <EmptyContent />;
+    return <EmptySubscription />;
   }
 
   const subscription = myCurrentSubscriptionBox.data;
 
   if (isNil(subscription)) {
-    return <EmptyContent />;
+    return <EmptySubscription />;
   }
 
   if (subscription.status !== 'OK') {
-    return <EmptyContent />;
+    return <EmptySubscription />;
   }
 
   return (
-    <SubscriptionWrapper>
-      <CurrentSubscription
-        subscriptionPlan={subscription.subscriptionPlan}
-        expiredAt={subscription.expiredAt}
-      />
-    </SubscriptionWrapper>
+    <CurrentSubscription
+      subscriptionPlan={subscription.subscriptionPlan}
+      expiredAt={subscription.expiredAt}
+    />
   );
 };
 
-export default CurrentSubscriptionPage;
+export default withSubscriptionWrapper(CurrentSubscriptionPage);
