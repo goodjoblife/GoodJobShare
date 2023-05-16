@@ -1,52 +1,58 @@
-import { useCallback, useEffect } from 'react';
-import { fields, styles } from './constants';
+import { useCallback, useEffect, useState } from 'react';
+import TapPayHelper from 'common/tappay/TapPayHelper';
 
-const useTapPay = ({
-  tapPayCard,
-  loadTapPayCard,
-  handleUpdate,
-  handlePrime,
-}) => {
+const useTapPayCard = ({ opt, onUpdate }) => {
+  // setup tapPay.card
+  // when opt and onUpdate change, we resetup it.
+  const [tapPayCard, setTapPayCard] = useState();
+
   // 載入 Tappay
   useEffect(() => {
-    if (loadTapPayCard) loadTapPayCard({ fields, styles });
-  }, [loadTapPayCard]);
-
-  // 註冊 Tappay listener
-  useEffect(() => {
-    if (!tapPayCard) return;
-
-    tapPayCard.onUpdate(update => {
-      // 即時反應每個行為
-      handleUpdate(update);
+    TapPayHelper.init().then(tapPay => {
+      tapPay.card.setup(opt);
+      tapPay.card.onUpdate(onUpdate);
+      setTapPayCard(tapPay.card);
     });
-  }, [handleUpdate, tapPayCard]);
+  }, [onUpdate, opt]);
 
-  // 送出 Tappay 表單
-  const submit = useCallback(() => {
-    if (!tapPayCard) return;
+  return tapPayCard;
+};
 
-    // 取得 TapPay Fields 的 status
-    const tappayStatus = tapPayCard.getTappayFieldsStatus();
+const useTapPay = ({ opt, onUpdate }) => {
+  const tapPayCard = useTapPayCard({ opt, onUpdate });
 
-    // 確認是否可以 getPrime
-    if (tappayStatus.canGetPrime === false) {
-      alert('can not get prime');
-      return;
-    }
-
-    // Get prime
-    tapPayCard.getPrime(result => {
-      if (result.status !== 0) {
-        alert('get prime error ' + result.msg);
+  const getPrime = useCallback(() => {
+    // getPrime is a Promise
+    // resolve: when success, return prime
+    // reject: for any reason, we cannot get a prime
+    return new Promise((resolve, reject) => {
+      if (!tapPayCard) {
+        reject(new Error('tapPayCard is not ready'));
         return;
       }
 
-      handlePrime(result.card.prime);
-    });
-  }, [handlePrime, tapPayCard]);
+      // 取得 TapPay Fields 的 status
+      const tappayStatus = tapPayCard.getTappayFieldsStatus();
 
-  return submit;
+      // 確認是否可以 getPrime
+      if (tappayStatus.canGetPrime === false) {
+        reject(new Error('can not get prime'));
+        return;
+      }
+
+      // Get prime
+      tapPayCard.getPrime(result => {
+        if (result.status !== 0) {
+          reject(new Error('get prime error ' + result.msg));
+          return;
+        }
+
+        resolve(result.card.prime);
+      });
+    });
+  }, [tapPayCard]);
+
+  return [getPrime];
 };
 
 export default useTapPay;
