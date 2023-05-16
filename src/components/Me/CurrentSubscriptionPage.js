@@ -11,6 +11,12 @@ import SubscriptionWrapper from './SubscriptionWrapper';
 import EmptySubscription from './EmptySubscription';
 import CurrentSubscription from './CurrentSubscription';
 
+const EmptyContent = () => (
+  <SubscriptionWrapper>
+    <EmptySubscription />
+  </SubscriptionWrapper>
+);
+
 const CurrentSubscriptionPage = () => {
   const dispatch = useDispatch();
   const myCurrentSubscriptionBox = useMyCurrentSubscription();
@@ -33,21 +39,17 @@ const CurrentSubscriptionPage = () => {
   }
 
   if (isNil(myCurrentSubscriptionBox)) {
-    return (
-      <SubscriptionWrapper>
-        <EmptySubscription />
-      </SubscriptionWrapper>
-    );
+    return <EmptyContent />;
   }
 
   const subscription = myCurrentSubscriptionBox.data;
 
+  if (isNil(subscription)) {
+    return <EmptyContent />;
+  }
+
   if (subscription.status !== 'OK') {
-    return (
-      <SubscriptionWrapper>
-        <EmptySubscription />
-      </SubscriptionWrapper>
-    );
+    return <EmptyContent />;
   }
 
   return (
