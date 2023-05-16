@@ -12,7 +12,7 @@ const EmptySubscription = () => {
     <div className={styles.container}>
       <RoundCard className={styles.card}>
         <P tag="p" size="l">
-          無付費方案
+          無方案
         </P>
       </RoundCard>
       <div style={{ marginTop: '32px' }}>
