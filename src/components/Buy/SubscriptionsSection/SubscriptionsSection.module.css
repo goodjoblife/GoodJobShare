@@ -25,6 +25,10 @@
   }
 }
 
+.plan {
+  cursor: pointer;
+}
+
 .content {
   padding: 26px 78px;
   display: flex;
@@ -46,8 +50,4 @@
     font-size: 56px;
     margin-right: 10px;
   }
-}
-
-.card {
-  cursor: pointer;
 }

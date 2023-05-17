@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
 import PlanCard from '../../PlanPage/PlanCard';
-import styles from './SubscriptionsSection.module.css';
 import { subscriptionTypes } from 'constants/subscription';
 
 const SubscriptionPlan = ({
@@ -14,7 +12,7 @@ const SubscriptionPlan = ({
   active,
   onChange,
 }) => (
-  <label className={cn(styles.card, className)}>
+  <label className={className}>
     <input
       name="plan"
       type="radio"
