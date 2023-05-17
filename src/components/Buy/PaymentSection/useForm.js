@@ -46,10 +46,12 @@ const useForm = ({ skuId, isPrimary }) => {
         return;
       }
 
-      // paymentUrl 為空，表示非 3D 驗證的成功交易，修改本地跳轉的網址
-      if (isEmpty(paymentUrl)) paymentUrl = `/buy/result/${paymentId}`;
-
-      window.location = paymentUrl;
+      if (isEmpty(paymentUrl)) {
+        // paymentUrl 為空，表示非 3D 驗證的成功交易，修改本地跳轉的網址
+        history.push(`/buy/result/${paymentId}`);
+      } else {
+        window.location = paymentUrl;
+      }
     } catch (error) {
       // 目前有這些地方可能發生錯誤：
       // getPrime reject
