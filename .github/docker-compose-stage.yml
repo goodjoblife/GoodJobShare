@@ -10,5 +10,5 @@ services:
         - RAZZLE_FACEBOOK_APP_ID=1750216878594984
         - RAZZLE_GA_ID=UA-79990667-2
         - RAZZLE_GTM_ID=GTM-KVZ7DZQ
-        - RAZZLE_GOOGLE_APP_ID=879657963776-d8j1hq8dk38alp456ncvnq6mqh4f6bua.apps.googleusercontent.com
+        - RAZZLE_GOOGLE_APP_ID=879657963776-nb0kdpkb5sfdf0285ov9o353dnt0l5iq.apps.googleusercontent.com
         - RAZZLE_AMPLITUDE_API_KEY=d0b279a29601ca776f6557710220b79a
