@@ -14,8 +14,6 @@
   }
 
   .plan {
-    flex: 1;
-
     + .plan {
       margin-left: 24px;
 
@@ -48,4 +46,8 @@
     font-size: 56px;
     margin-right: 10px;
   }
+}
+
+.card {
+  cursor: pointer;
 }
