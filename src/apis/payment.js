@@ -3,6 +3,7 @@ import {
   subscriptionPlans,
   checkoutSubscriptionWithPrimeMutation,
   paymentRecord,
+  myCurrentSubscription as myCurrentSubscriptionQuery,
 } from 'graphql/payment';
 
 const getSubscriptionPlans = () =>
@@ -47,8 +48,15 @@ const getPaymentRecord = token => paymentRecordId =>
     token,
   }).then(({ paymentRecord }) => paymentRecord);
 
+const getMyCurrentSubscription = token => () =>
+  graphqlClient({
+    query: myCurrentSubscriptionQuery,
+    token,
+  }).then(({ myCurrentSubscription }) => myCurrentSubscription);
+
 export default {
   checkoutSubscriptionWithPrime,
   getSubscriptionPlans,
   getPaymentRecord,
+  getMyCurrentSubscription,
 };

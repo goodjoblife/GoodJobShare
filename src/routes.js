@@ -35,6 +35,7 @@ import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
 import PlanPage from './components/PlanPage';
 import BuyResultPage from './components/BuyResultPage';
+import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
 
 const routes = [
   {
@@ -257,6 +258,11 @@ const routes = [
     path: '/me',
     exact: true,
     component: Me,
+  },
+  {
+    path: '/me/subscriptions',
+    exact: true,
+    component: CurrentSubscriptionPage,
   },
   {
     path: '/about',

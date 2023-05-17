@@ -59,3 +59,19 @@ export const paymentRecord = `
     }
   }
 `;
+
+export const myCurrentSubscription = `
+query {
+  myCurrentSubscription {
+    id
+    status
+    expiredAt
+    subscriptionPlan {
+      title
+      description
+      type
+      amount
+    }
+  }
+}
+`;
