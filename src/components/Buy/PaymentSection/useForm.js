@@ -1,5 +1,6 @@
 import { useCallback, useState, useMemo } from 'react';
 import { useHistory } from 'react-router';
+import { isEmpty } from 'ramda';
 import { useToken } from 'hooks/auth';
 import useTapPay from './useTapPay';
 import { checkoutSubscriptionWithPrime } from '../../../apis/payment';
@@ -29,7 +30,7 @@ const useForm = ({ skuId, isPrimary }) => {
     // FIXME: ＃1096
     try {
       const prime = await getPrime();
-      const [
+      let [
         errorMessage,
         paymentId,
         paymentUrl,
@@ -44,8 +45,13 @@ const useForm = ({ skuId, isPrimary }) => {
         history.push(`/buy/result/${paymentId}`);
         return;
       }
-      // FIXME: #1097, paymentUrl = ''
-      window.location = paymentUrl;
+
+      if (isEmpty(paymentUrl)) {
+        // paymentUrl 為空，表示非 3D 驗證的成功交易，修改本地跳轉的網址
+        history.push(`/buy/result/${paymentId}`);
+      } else {
+        window.location = paymentUrl;
+      }
     } catch (error) {
       // 目前有這些地方可能發生錯誤：
       // getPrime reject
