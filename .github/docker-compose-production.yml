@@ -15,3 +15,4 @@ services:
         - RAZZLE_GTM_ID=GTM-54PH93D
         - RAZZLE_GOOGLE_APP_ID=879657963776-nb0kdpkb5sfdf0285ov9o353dnt0l5iq.apps.googleusercontent.com
         - RAZZLE_AMPLITUDE_API_KEY=4d69f09de855a21f8790bf0f42c47cda
+        - RAZZLE_SENTRY_ENVIRONMENT=production
