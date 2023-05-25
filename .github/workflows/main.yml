@@ -72,9 +72,6 @@ jobs:
       - run: docker-compose -f .github/docker-compose-dev.yml build
       - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:dev
       - run: docker push ${REGISTRY}/${REPO}:dev
-      - run: docker-compose -f .github/docker-compose-dev2.yml build
-      - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:dev2
-      - run: docker push ${REGISTRY}/${REPO}:dev2
   deploy-stage:
     if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
