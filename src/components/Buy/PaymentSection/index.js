@@ -1,7 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Section, Subheading, P } from 'common/base';
-import Checkbox from 'common/form/Checkbox';
 import Button from 'common/button/ButtonRect';
 import Card from 'common/Card';
 import Label from 'common/form/Label';
@@ -11,14 +10,12 @@ import { CardCCV, CardExpirationDate, CardNumber } from './TappayElement';
 import Row from './Row';
 import CreditCards from './CreditCards';
 import styles from './PaymentSection.module.css';
-import useForm from './useForm';
+import useForm, { FORM_STATE } from './useForm';
 import LoginSection from '../LoginSection';
 
 const Form = ({ skuId }) => {
-  const [isPrimary, setPrimary] = useState(false);
-  const { activeCardType, canGetPrime, submit } = useForm({
+  const { activeCardType, formState, submit } = useForm({
     skuId,
-    isPrimary,
   });
   const onSubmit = useCallback(
     e => {
@@ -27,6 +24,8 @@ const Form = ({ skuId }) => {
     },
     [submit],
   );
+
+  const submitDisabed = formState !== FORM_STATE.NORMAL;
 
   return (
     <form onSubmit={onSubmit}>
@@ -54,19 +53,10 @@ const Form = ({ skuId }) => {
           </Label>
           <CardCCV />
         </Row>
-        <Row>
-          <Checkbox
-            label="設為主要付款方式"
-            checked={isPrimary}
-            value="primary"
-            onChange={e => setPrimary(e.target.checked)}
-            margin=""
-          />
-        </Row>
       </div>
       <div className={styles.submitSection}>
         <Row>
-          <Button type="submit" disabled={!canGetPrime}>
+          <Button type="submit" disabled={submitDisabed}>
             付款
           </Button>
         </Row>

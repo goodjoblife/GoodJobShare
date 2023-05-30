@@ -8,16 +8,24 @@ import usePushToast from 'hooks/toastNotification/usePushToast';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 import { fields, styles } from './constants';
 
-const useForm = ({ skuId, isPrimary }) => {
+export const FORM_STATE = {
+  NORMAL: 'NORMAL',
+  LOADING: 'LOADING',
+  DISABLED: 'DISABLED',
+};
+
+const useForm = ({ skuId }) => {
   const [activeCardType, setActiveCardType] = useState('unknown');
-  const [canGetPrime, setCanGetPrime] = useState(false);
+  const [formState, setFormState] = useState(FORM_STATE.NORMAL);
 
   // init tappay and register callback
   const opt = useMemo(() => ({ fields, styles }), []);
   const onUpdate = useCallback(update => {
     setActiveCardType(update.cardType);
-    setCanGetPrime(update.canGetPrime);
+
+    setFormState(update.canGetPrime ? FORM_STATE.NORMAL : FORM_STATE.DISABLED);
   }, []);
+
   const [getPrime] = useTapPay({ opt, onUpdate });
 
   const pushToast = usePushToast();
@@ -29,6 +37,8 @@ const useForm = ({ skuId, isPrimary }) => {
   const submit = useCallback(async () => {
     // FIXME: ＃1096
     try {
+      setFormState(FORM_STATE.LOADING);
+
       const prime = await getPrime();
       let [
         errorMessage,
@@ -38,8 +48,9 @@ const useForm = ({ skuId, isPrimary }) => {
         token,
         prime,
         skuId,
-        isPrimary,
+        isPrimary: false,
       });
+
       if (errorMessage) {
         // Some error arises.
         history.push(`/buy/result/${paymentId}`);
@@ -64,12 +75,13 @@ const useForm = ({ skuId, isPrimary }) => {
       // checkoutSubscriptionWithPrime reject
       //    --> **屬於未知錯誤**
       pushToast(NOTIFICATION_TYPE.ALERT, '發生未知錯誤。');
+      setFormState(FORM_STATE.NORMAL);
     }
-  }, [getPrime, history, isPrimary, pushToast, skuId, token]);
+  }, [getPrime, history, pushToast, skuId, token]);
 
   return {
     activeCardType,
-    canGetPrime,
+    formState,
     submit,
   };
 };
