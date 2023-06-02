@@ -1,9 +1,12 @@
-@value above-tablet, main-gray, yellow-dark from "common/variables.module.css";
+@value above-tablet, above-small, main-gray, yellow-dark from "common/variables.module.css";
 
 .container {
   min-height: 300px;
-  width: 300px;
   padding: 26px 0;
+
+  @media (min-width: above-small) {
+    width: 300px;
+  }
 }
 
 .content {
