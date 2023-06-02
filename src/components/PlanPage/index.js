@@ -32,7 +32,12 @@ const PlanPage = () => {
     return <Loading size="l" />;
   }
 
-  const plans = subscriptionPlansBox.data;
+  let plans = subscriptionPlansBox.data;
+  if (Array.isArray(plans)) {
+    plans = plans.filter(plan =>
+      ['BuySubscription', 'SubmitData'].includes(plan.type),
+    );
+  }
 
   return (
     <div className={styles.container}>
