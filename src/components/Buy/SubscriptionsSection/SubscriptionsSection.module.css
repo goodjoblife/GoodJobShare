@@ -14,8 +14,6 @@
   }
 
   .plan {
-    flex: 1;
-
     + .plan {
       margin-left: 24px;
 
@@ -25,6 +23,10 @@
       }
     }
   }
+}
+
+.plan {
+  cursor: pointer;
 }
 
 .content {

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './SubscriptionsSection.module.css';
 import SubscriptionPlan from './SubscriptionPlan';
+import { subscriptionTypes } from 'constants/subscription';
 
 const SubscriptionPlanCollection = ({ plans, selectedId, setSelectedId }) => (
   <div className={styles.plans}>
@@ -10,10 +11,11 @@ const SubscriptionPlanCollection = ({ plans, selectedId, setSelectedId }) => (
         key={plan.skuId}
         className={styles.plan}
         title={plan.title}
+        description={plan.description}
         amount={plan.amount}
-        duration={plan.duration}
+        type={plan.type}
         active={selectedId === plan.skuId}
-        onChange={e => e.target.checked && setSelectedId(plan.id)}
+        onChange={e => e.target.checked && setSelectedId(plan.skuId)}
       />
     ))}
   </div>
@@ -24,11 +26,9 @@ SubscriptionPlanCollection.propTypes = {
     PropTypes.shape({
       skuId: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
       amount: PropTypes.number.isRequired,
-      duration: PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        type: PropTypes.string.isRequired,
-      }).isRequired,
+      type: PropTypes.oneOf(subscriptionTypes).isRequired,
     }),
   ),
   selectedId: PropTypes.string,

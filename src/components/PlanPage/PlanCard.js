@@ -19,7 +19,15 @@ const getButtonType = type => {
   return 'hollowRed';
 };
 
-const PlanCard = ({ title, description, amount, type, skuId, hideCta }) => {
+const PlanCard = ({
+  title,
+  description,
+  amount,
+  type,
+  skuId,
+  hideCta,
+  checked,
+}) => {
   const actionTitle = getActionTitle(type);
 
   const { toBuy, actionUrl } = useToBuy('/', skuId);
@@ -36,7 +44,7 @@ const PlanCard = ({ title, description, amount, type, skuId, hideCta }) => {
   const linkUrl = isSubmitData ? '/share' : actionUrl;
 
   return (
-    <RoundCard className={styles.container}>
+    <RoundCard className={styles.container} checked={checked}>
       <div className={styles.content}>
         <div className={styles.topArea}>
           <Heading Tag="h3" size="sm" className={styles.title} bold>
@@ -84,6 +92,7 @@ PlanCard.propTypes = {
   amount: PropTypes.number,
   skuId: PropTypes.string,
   hideCta: PropTypes.bool,
+  checked: PropTypes.bool.isRequired,
 };
 
 PlanCard.defaultProps = {
@@ -92,6 +101,7 @@ PlanCard.defaultProps = {
   amount: 0,
   skuId: '',
   hideCta: false,
+  checked: false,
 };
 
 export default PlanCard;
