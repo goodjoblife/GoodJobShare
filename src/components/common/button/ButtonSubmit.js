@@ -1,22 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
 import Modal from 'common/Modal';
-import authStatus from 'constants/authStatus';
 
 import WhyFacebookAuth from './WhyFacebookAuth';
 import styles from './ButtonSubmit.module.css';
 import { useState } from 'react';
-
-// TODO: deprecated, should use hooks or selector to get isLogin
-const isLogin = auth => auth.status === authStatus.CONNECTED;
+import { useLogin } from 'hooks/login';
 
 const getWhyFacebookAuth = onClick => <WhyFacebookAuth buttonClick={onClick} />;
 
-const ButtonSubmit = ({ text, onSubmit, disabled, auth, login }) => {
+const ButtonSubmit = ({ text, onSubmit, disabled }) => {
   const [isOpen, setOpen] = useState(false);
   const [feedback, setFeedback] = useState(null);
+  const [hasLoggedIn, login] = useLogin();
 
   return (
     <div
@@ -24,7 +21,7 @@ const ButtonSubmit = ({ text, onSubmit, disabled, auth, login }) => {
         textAlign: 'center',
       }}
     >
-      {isLogin(auth) ? (
+      {hasLoggedIn ? (
         <button
           className={styles.container}
           onClick={onSubmit}
@@ -45,7 +42,7 @@ const ButtonSubmit = ({ text, onSubmit, disabled, auth, login }) => {
             onClick={login}
             disabled={disabled}
           >
-            <pre>{`以  f  認證，${text}`}</pre>
+            <pre>{`登入以${text}`}</pre>
           </button>
           <div
             style={{
@@ -79,8 +76,6 @@ ButtonSubmit.propTypes = {
   text: PropTypes.string,
   onSubmit: PropTypes.func,
   disabled: PropTypes.bool,
-  auth: ImmutablePropTypes.map,
-  login: PropTypes.func.isRequired,
 };
 
 export default ButtonSubmit;
