@@ -62,6 +62,7 @@
     "@sentry/react": "^7.51.2",
     "airbnb-prop-types": "^2.15.0",
     "classnames": "^2.2.5",
+    "date-fns": "^2.30.0",
     "express": "^4.16.3",
     "history": "^4.7.2",
     "immutable": "^3.8.1",
