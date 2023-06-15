@@ -43,7 +43,12 @@ const Success = ({ expiredAt }) => {
       <P Tag="p" className={styles.description}>
         {`將於 ${countdown} 秒後跳轉回原內容頁面`}
       </P>
-      <Button btnStyle="gray" circleSize="md" className={styles.action}>
+      <Button
+        btnStyle="gray"
+        circleSize="md"
+        className={styles.action}
+        onClick={toRedirectUrl}
+      >
         馬上回原頁面
       </Button>
     </div>
