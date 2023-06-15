@@ -1,10 +1,11 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import { isNil } from 'ramda';
 
 import { navigateToBuy } from '../../actions/payment';
 
 const useToBuy = (redirectUrl = '/', skuId = null) => {
-  const actionUrl = `/buy?skuId=${skuId}`;
+  const actionUrl = isNil(skuId) ? '/buy' : `/buy?skuId=${skuId}`;
   const dispatch = useDispatch();
 
   const toBuy = useCallback(() => {
