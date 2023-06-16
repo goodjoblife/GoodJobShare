@@ -15,7 +15,7 @@ const Captain = ({ dataCount, endDateTime }) => (
     </P>
     <P>
       進行付款即代表同意本站
-      <Link to="/product-and-refund" target="_blank">
+      <Link to="/product-and-refund" target="_blank" rel="noreferrer noopenner">
         商品及退款政策
       </Link>
     </P>
