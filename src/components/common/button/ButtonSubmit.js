@@ -55,7 +55,7 @@ const ButtonSubmit = ({ text, onSubmit, disabled }) => {
             }}
           >
             <p className={cn('pMbold', styles.whyFB)}>
-              為什麼需要 Facebook 帳戶驗證？
+              為什麼需要 Facebook / Google 帳戶驗證？
             </p>
           </div>
         </div>
