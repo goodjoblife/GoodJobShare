@@ -2,11 +2,8 @@
 
 .container {
   min-height: 300px;
+  width: 300px;
   padding: 26px 0;
-
-  @media (min-width: above-small) {
-    width: 300px;
-  }
 }
 
 .content {
