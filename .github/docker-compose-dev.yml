@@ -9,9 +9,8 @@ services:
         - RAZZLE_API_HOST=https://api-dev.goodjob.life
         - RAZZLE_FACEBOOK_APP_ID=1844389232511081
         - RAZZLE_GA_ID=UA-79990667-2
-        - RAZZLE_SENTRY_DSN=https://5cacfa2ac0934509a3e563fc0a52275f@sentry.io/1269010
         - RAZZLE_GIT_SHA1=${GITHUB_SHA}
         - RAZZLE_GTM_ID=GTM-KVZ7DZQ
         - RAZZLE_GOOGLE_APP_ID=879657963776-d8j1hq8dk38alp456ncvnq6mqh4f6bua.apps.googleusercontent.com
         - RAZZLE_AMPLITUDE_API_KEY=d0b279a29601ca776f6557710220b79a
-        - RAZZLE_SENTRY_ENVIRONMENT=dev
+
