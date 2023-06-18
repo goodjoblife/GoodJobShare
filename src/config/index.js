@@ -17,4 +17,7 @@ module.exports = {
   AMPLITUDE_API_KEY:
     process.env.RAZZLE_AMPLITUDE_API_KEY || '22a596db91e9000a6d19ed6a29865cbd',
   PERSIST_KEY: process.env.PERSIST_KEY || 'goodjob',
+  ENV: process.env.RAZZLE_ENV || 'localhost',
+  // All environment share same rollbar access token
+  ROLLBAR_ACCESS_TOKEN: '620cc11dfc5d46bfa4e8430ac62bb954',
 };
