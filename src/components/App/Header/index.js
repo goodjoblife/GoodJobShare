@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import cn from 'classnames';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { Wrapper } from 'common/base';
 import { GjLogo, Glike } from 'common/icons';
 import PopoverToggle from 'common/PopoverToggle';

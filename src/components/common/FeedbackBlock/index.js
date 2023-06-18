@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 import { Heading } from 'common/base';
 import Button from 'common/button/Button';

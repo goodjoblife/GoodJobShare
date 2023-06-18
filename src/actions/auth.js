@@ -1,4 +1,4 @@
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import authStatus from '../constants/authStatus';
 import { UserTracker } from '../utils/eventBasedTracking';
 
