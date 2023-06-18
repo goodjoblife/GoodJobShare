@@ -56,7 +56,6 @@ class Step3 extends React.Component {
       editQa,
       changeValidationStatus,
       onSubmit,
-      auth,
       agree,
       handleAgree,
       isOpen,
@@ -64,7 +63,6 @@ class Step3 extends React.Component {
       hasClose,
       closableOnClickOutside,
       isSubmitting,
-      login,
       handleIsOpen,
     } = this.props;
 
@@ -189,8 +187,6 @@ class Step3 extends React.Component {
               text="送出資料"
               onSubmit={onSubmit}
               disabled={isSubmitting || !agree}
-              auth={auth}
-              login={login}
             />
           </div>
           <Modal
