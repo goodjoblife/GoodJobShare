@@ -10,15 +10,7 @@ export const errorHandlingMiddleware = ({
   // if it's a promise.
   if (isPromise(result)) {
     return result.catch(error => {
-      // it's unexpected, send to sentry
       console.error(error);
-      if (typeof window !== 'undefined' && window.Raven) {
-        window.Raven.captureException(error, {
-          extra: {
-            state: getState(), // dump application state
-          },
-        });
-      }
       throw error;
     });
   }

@@ -20,7 +20,7 @@ import {
 } from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
 
 import { SubmitFormTracker } from 'utils/eventBasedTracking';
