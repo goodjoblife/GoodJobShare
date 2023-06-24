@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { useIsLoggedIn } from 'hooks/auth';
-import { useFacebookLogin, useGoogleLogin } from 'hooks/login';
+import { useFacebookLogin } from 'hooks/login';
+import GoogleLoginButton from 'common/Auth/GoogleLoginButton';
 import styles from './PermissionBlock.module.css';
 
 const AuthenticatedButton = ({ to, onClick, children }) => (
@@ -24,7 +25,6 @@ AuthenticatedButton.propTypes = {
 
 const UnauthenticatedButton = () => {
   const fbLogin = useFacebookLogin();
-  const googleLogin = useGoogleLogin();
 
   return (
     <div className={styles.loginBtnContainer}>
@@ -38,11 +38,8 @@ const UnauthenticatedButton = () => {
       </button>
       <button
         className={`${cn('buttonCircleM')} ${styles.btn} ${styles.btnGoogle}`}
-        onClick={async () => {
-          await googleLogin();
-        }}
       >
-        <pre>Google 登入</pre>
+        <GoogleLoginButton onSuccess={() => {}} />
       </button>
     </div>
   );

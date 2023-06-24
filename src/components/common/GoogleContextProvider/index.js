@@ -5,6 +5,8 @@ import { GOOGLE_APP_ID } from '../../../config';
 import { loginWithGoogle } from '../../../actions/auth';
 
 const GoogleContextProvider = ({ children }) => {
+  // initialize google sdk
+  // when login status change, google will call callback
   const dispatch = useDispatch();
   const [googleAuth, setGoogleAuth] = useState(null);
 
@@ -16,9 +18,10 @@ const GoogleContextProvider = ({ children }) => {
           await dispatch(loginWithGoogle(response));
         },
       });
+
       setGoogleAuth(window.google.accounts.id);
     };
-  });
+  }, [dispatch]);
 
   return (
     <GoogleContext.Provider value={googleAuth}>

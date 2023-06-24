@@ -1,24 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
-import GoogleContext from 'contexts/GoogleContext';
 import { useFacebookLogin } from 'hooks/login';
 import Modal from 'common/Modal.js';
+import GoogleLoginButton from 'common/Auth/GoogleLoginButton';
 import authStatus from '../../../constants/authStatus';
 import styles from './LoginModal.module.css';
-
-const GoogleLogin = ({ children }) => {
-  const googleAuth = useContext(GoogleContext);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    if (googleAuth && ref.current) {
-      googleAuth.renderButton(ref.current, {});
-    }
-  }, [googleAuth]);
-
-  return <div ref={ref}>{children}</div>;
-};
 
 const LoginModal = ({ isOpen, close }) => {
   const fbLogin = useFacebookLogin();
@@ -39,7 +25,11 @@ const LoginModal = ({ isOpen, close }) => {
             Facebook 登入
           </button>
           <div className={styles['btn-google']}>
-            <GoogleLogin>Google 登入</GoogleLogin>
+            <GoogleLoginButton
+              onSuccess={() => {
+                close();
+              }}
+            />
           </div>
           <p className={styles['login-tips']}>
             為了避免使用者大量輸入假資訊，我們會以你的帳戶做驗證。但別擔心！您的帳戶資訊不會以任何形式被揭露、顯示。

@@ -55,7 +55,11 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
 };
 
 /**
- * Use `hooks/login/useGoogleLogin` as possible
+ * Google prevent user to customize login button
+ * Use `common/Auth/GoogleLoginButton` as possible
+ * GoogleLoginButton wraps the "Google button flow" with react to render
+ * "Sign in with Google" buttons
+ * https://developers.google.com/identity/gsi/web/guides/integrate#button_customization
  */
 export const loginWithGoogle = credentialResponse => async (
   dispatch,
