@@ -1,10 +1,19 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { equals, path, compose } from 'ramda';
+
 import { Section, Subheading, P } from 'common/base';
 import Button from 'common/button/ButtonRect';
 import Card from 'common/Card';
 import Label from 'common/form/Label';
+import Loading from 'common/Loader';
+
 import { useIsLoggedIn } from 'hooks/auth';
+import { useMyCurrentSubscription } from 'hooks/payment/usePayment';
+import { fetchMyCurrentSubscription } from 'actions/payment';
+import { isUnfetched, isFetched } from 'utils/fetchBox';
 
 import { CardCCV, CardExpirationDate, CardNumber } from './TappayElement';
 import Row from './Row';
@@ -70,18 +79,69 @@ const Form = ({ skuId }) => {
   );
 };
 
-const PaymentSection = ({ skuId, ...props }) => {
-  const isLoggedIn = useIsLoggedIn();
-
+const TemplateSection = ({ title, children, ...props }) => {
   return (
     <Section {...props}>
       <Subheading className={styles.title} size="l">
-        填寫信用卡資料
+        {title}
       </Subheading>
-      <Card className={styles.form}>
-        {isLoggedIn ? <Form skuId={skuId} /> : <LoginSection />}
-      </Card>
+      <Card className={styles.form}>{children}</Card>
     </Section>
+  );
+};
+
+const isSubscriptionStatusOK = compose(
+  equals('OK'),
+  path(['data', 'status'])
+);
+
+const PaymentSection = ({ skuId, ...props }) => {
+  const isLoggedIn = useIsLoggedIn();
+  const myCurrentSubscriptionBox = useMyCurrentSubscription();
+  const dispatch = useDispatch();
+
+  const needsFetching = isUnfetched(myCurrentSubscriptionBox);
+  const isReady = isFetched(myCurrentSubscriptionBox);
+
+  const history = useHistory();
+  const goToMySubscription = useCallback(() => {
+    history.push('/me/subscriptions');
+  }, [history]);
+
+  useEffect(() => {
+    if (needsFetching) {
+      dispatch(fetchMyCurrentSubscription());
+    }
+  }, [dispatch, needsFetching]);
+
+  if (!isLoggedIn) {
+    return (
+      <TemplateSection title="填寫信用卡資料" {...props}>
+        <LoginSection />
+      </TemplateSection>
+    );
+  }
+
+  if (!isReady) {
+    return <Loading size="l" />;
+  }
+
+  if (isSubscriptionStatusOK(myCurrentSubscriptionBox)) {
+    return (
+      <TemplateSection title="你已經有目前方案，無需另外付費解鎖！" {...props}>
+        <center>
+          <Button type="submit" onClick={goToMySubscription}>
+            前往我的方案
+          </Button>
+        </center>
+      </TemplateSection>
+    );
+  }
+
+  return (
+    <TemplateSection title="填寫信用卡資料" {...props}>
+      <Form skuId={skuId} />
+    </TemplateSection>
   );
 };
 
