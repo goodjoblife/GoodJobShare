@@ -92,7 +92,7 @@ const TemplateSection = ({ title, children, ...props }) => {
 
 const isSubscriptionStatusOK = compose(
   equals('OK'),
-  path(['data', 'status'])
+  path(['data', 'status']),
 );
 
 const PaymentSection = ({ skuId, ...props }) => {
