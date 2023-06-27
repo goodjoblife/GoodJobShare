@@ -109,10 +109,10 @@ const PaymentSection = ({ skuId, ...props }) => {
   }, [history]);
 
   useEffect(() => {
-    if (needsFetching) {
+    if (isLoggedIn && needsFetching) {
       dispatch(fetchMyCurrentSubscription());
     }
-  }, [dispatch, needsFetching]);
+  }, [dispatch, isLoggedIn, needsFetching]);
 
   if (!isLoggedIn) {
     return (
