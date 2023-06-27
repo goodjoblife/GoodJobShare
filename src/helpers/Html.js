@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/server';
 import serialize from 'serialize-javascript';
 import Helmet from 'react-helmet';
 
-import { GTM_ID, GOOGLE_AD_CLIENT_ID, AMPLITUDE_API_KEY } from '../config';
+import { GTM_ID, AMPLITUDE_API_KEY } from '../config';
 
 /**
  * Wrapper component containing HTML metadata and boilerplate tags.
@@ -91,11 +91,6 @@ export default class Html extends Component {
               });`,
             }}
           />
-          <script
-            data-ad-client={GOOGLE_AD_CLIENT_ID}
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-          ></script>
         </head>
         <body>
           {/* install google tag manager */}

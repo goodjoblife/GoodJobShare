@@ -21,7 +21,7 @@ import timeAndSalaryBannerStyles from '../../TimeAndSalary/Banner.module.css';
 import timeAndSalaryCommonStyles from '../../TimeAndSalary/views/view.module.css';
 import fetchingStatus, { isFetched } from '../../../constants/status';
 import { MAX_ROWS_IF_HIDDEN } from '../../../constants/hideContent';
-import BasicPermissionBlock from '../../../containers/PermissionBlock/BasicPermissionBlockContainer';
+import { BasicPermissionBlock } from 'common/PermissionBlock';
 import styles from '../CampaignTimeAndSalary.module.css';
 
 import { queryCampaignInfoList } from '../../../actions/campaignInfo';

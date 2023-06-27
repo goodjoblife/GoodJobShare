@@ -1,0 +1,46 @@
+@value above-tablet from "common/variables.module.css";
+
+.container {
+  padding-top: 20px;
+
+  @media (min-width: above-tablet) {
+    padding-top: 50px;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  display: none;
+
+  @media (min-width: above-tablet) {
+    display: block;
+    margin-bottom: 70px;
+  }
+}
+
+.cardSection {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 16px;
+
+  @media (min-width: above-tablet) {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.divider {
+  display: none;
+  color: #626262;
+
+  @media (min-width: above-tablet) {
+    display: flex;
+    align-items: center;
+    margin: 0 40px;
+  }
+}

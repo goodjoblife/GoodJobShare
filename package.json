@@ -28,7 +28,9 @@
       "^graphql(.*)": "<rootDir>/src/graphql$1",
       "^hooks(.*)": "<rootDir>/src/hooks$1",
       "^contexts(.*)": "<rootDir>/src/contexts$1",
-      "^constants(.*)": "<rootDir>/src/constants$1"
+      "^constants(.*)": "<rootDir>/src/constants$1",
+      "^actions(.*)": "<rootDir>/src/actions$1",
+      "^selectors(.*)": "<rootDir>/src/selectors$1"
     }
   },
   "devDependencies": {
@@ -59,6 +61,7 @@
     "@fortawesome/react-fontawesome": "^0.0.17",
     "airbnb-prop-types": "^2.15.0",
     "classnames": "^2.2.5",
+    "date-fns": "^2.30.0",
     "express": "^4.16.3",
     "history": "^4.7.2",
     "immutable": "^3.8.1",
@@ -74,7 +77,6 @@
     "razzle": "^2.4.0",
     "react": "^16.12.0",
     "react-autocomplete": "^1.8.1",
-    "react-dfp": "^0.17.2",
     "react-dom": "^16.12.0",
     "react-facebook-pixel": "^0.1.0",
     "react-ga4": "^2.1.0",

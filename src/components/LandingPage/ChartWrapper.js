@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
-
+import Card from 'common/Card';
 import styles from './ChartWrapper.module.css';
 
 const ChartWrapper = ({ className, title, to, children }) => (
@@ -13,7 +13,7 @@ const ChartWrapper = ({ className, title, to, children }) => (
         看更多&gt;&gt;
       </Link>
     </div>
-    <div className={styles.body}>{children}</div>
+    <Card className={styles.body}>{children}</Card>
   </div>
 );
 

@@ -1,0 +1,81 @@
+@value above-small, below-small from "common/variables.module.css";
+
+.title {
+  padding-bottom: 24px;
+}
+
+.form {
+  @media (min-width: above-small) {
+    padding: 38px;
+  }
+
+  .row {
+    padding: 0 8px;
+
+    .label {
+      padding-bottom: 4px;
+    }
+
+    & + .row {
+      padding-top: 20px;
+    }
+
+    &.full {
+      width: 100%;
+    }
+
+    &.half {
+      width: 50%;
+    }
+  }
+}
+
+.inputSection {
+  display: flex;
+  flex-wrap: wrap;
+  width: 340px;
+  max-width: 100%;
+}
+
+.submitSection {
+  padding-top: 60px;
+
+  .note {
+    padding-top: 16px;
+    color: #626262;
+    font-size: 13px;
+  }
+}
+
+.cardIcons {
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: above-small) {
+  .cardNumberGroup {
+    position: relative;
+
+    .cardIcons {
+      position: absolute;
+      height: 100%;
+      left: 100%;
+      margin-left: 8.75px;
+    }
+  }
+}
+
+@media (max-width: below-small) {
+  .cardNumberGroup {
+    display: flex;
+    flex-direction: column-reverse;
+
+    .cardIcons {
+      margin-topt: 1.83px;
+    }
+  }
+}
+
+.center {
+  text-align: center;
+}

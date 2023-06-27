@@ -19,6 +19,13 @@ import Searchbar from './Searchbar';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import emailStatusMap from '../../../constants/emailStatus';
 
+const onClickShareData = () => {
+  ReactGA.event({
+    category: GA_CATEGORY.HEADER,
+    action: GA_ACTION.CLICK_SHARE_DATA,
+  });
+};
+
 const HeaderTop = () => {
   const location = useLocation();
   const emailStatus = useAuthUserEmailStatus();
@@ -65,13 +72,6 @@ const Header = () => {
     }
   }, [isLoggedIn, fetchPermission]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onClickShareData = useCallback(() => {
-    ReactGA.event({
-      category: GA_CATEGORY.HEADER,
-      action: GA_ACTION.CLICK_SHARE_DATA,
-    });
-  }, []);
-
   const toggleNav = useCallback(() => setNavOpen(!isNavOpen), [isNavOpen]);
 
   const closeNav = useCallback(() => setNavOpen(false), []);
@@ -116,7 +116,16 @@ const Header = () => {
             </Link>
             <SiteMenu isLogin={isLoggedIn} />
             <div className={styles.buttonsArea}>
-              <ShareButton onClick={onClickShareData} />
+              <Link to="/plans" className={styles.plansLink}>
+                解鎖方式
+              </Link>
+              <Link
+                to="/share"
+                className={styles.leaveDataBtn}
+                onClick={onClickShareData}
+              >
+                分享經驗
+              </Link>
               <div style={{ position: 'relative' }}>
                 {!isLoggedIn && (
                   <button className={styles.loginBtn} onClick={login}>
@@ -128,6 +137,9 @@ const Header = () => {
                     popoverClassName={styles.popover}
                     popoverContent={
                       <ul className={styles.popoverItem}>
+                        <li>
+                          <Link to="/me/subscriptions">我的方案</Link>
+                        </li>
                         <li>
                           <Link to="/me">管理我的資料</Link>
                         </li>
@@ -162,19 +174,6 @@ const HeaderButton = ({ isNavOpen, toggle }) => (
 HeaderButton.propTypes = {
   isNavOpen: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
-};
-
-const ShareButton = ({ className, onClick }) => (
-  <Link
-    to="/share"
-    className={cn(className, styles.leaveDataBtn)}
-    onClick={onClick}
-  >
-    立即分享
-  </Link>
-);
-ShareButton.propTypes = {
-  onClick: PropTypes.func,
 };
 
 export default Header;

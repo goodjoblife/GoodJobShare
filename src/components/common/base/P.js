@@ -5,13 +5,25 @@ import styles from './P.module.css';
 
 const sizeOptions = ['l', 'm', 's'];
 
-const P = ({ Tag, size, bold, center, children, style, className }) => (
+const P = ({
+  Tag,
+  size,
+  bold,
+  center,
+  children,
+  style,
+  className,
+  title,
+  ...props
+}) => (
   <Tag
     className={cn(styles[size], className, {
       [styles.bold]: bold,
       [styles.center]: center,
     })}
     style={style}
+    title={title}
+    {...props}
   >
     {children}
   </Tag>
@@ -24,6 +36,7 @@ P.propTypes = {
   center: PropTypes.bool,
   style: PropTypes.object,
   className: PropTypes.string,
+  title: PropTypes.string,
 };
 P.defaultProps = {
   children: '',
