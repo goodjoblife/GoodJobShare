@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { equals, path, compose } from 'ramda';
+import cn from 'classnames';
 
 import { Section, Subheading, P } from 'common/base';
 import Button from 'common/button/ButtonRect';
@@ -79,13 +80,15 @@ const Form = ({ skuId }) => {
   );
 };
 
-const TemplateSection = ({ title, children, ...props }) => {
+const TemplateSection = ({ title, children, center, ...props }) => {
   return (
     <Section {...props}>
       <Subheading className={styles.title} size="l">
         {title}
       </Subheading>
-      <Card className={styles.form}>{children}</Card>
+      <Card className={cn(styles.form, { [styles.center]: center })}>
+        {children}
+      </Card>
     </Section>
   );
 };
@@ -128,12 +131,14 @@ const PaymentSection = ({ skuId, ...props }) => {
 
   if (isSubscriptionStatusOK(myCurrentSubscriptionBox)) {
     return (
-      <TemplateSection title="你已經有目前方案，無需另外付費解鎖！" {...props}>
-        <center>
-          <Button type="submit" onClick={goToMySubscription}>
-            前往我的方案
-          </Button>
-        </center>
+      <TemplateSection
+        title="你已經有目前方案，無需另外付費解鎖！"
+        center
+        {...props}
+      >
+        <Button type="submit" onClick={goToMySubscription}>
+          前往我的方案
+        </Button>
       </TemplateSection>
     );
   }
