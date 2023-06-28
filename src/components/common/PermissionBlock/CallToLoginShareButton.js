@@ -1,73 +1,59 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { useIsLoggedIn } from 'hooks/auth';
-import { useFacebookLogin } from 'hooks/login';
-import GoogleLoginButton from 'common/Auth/GoogleLoginButton';
+import { useLocation } from 'react-router';
+
+import useToBuy from 'hooks/payment/useToBuy';
+
 import styles from './PermissionBlock.module.css';
 
-const AuthenticatedButton = ({ to, onClick, children }) => (
-  <Link
-    className={cn('buttonCircleM', 'buttonBlack2')}
-    to={to}
-    onClick={onClick}
-  >
+const AuthenticatedButton = ({ className, to, onClick, children }) => (
+  <Link className={cn('buttonCircleM', className)} to={to} onClick={onClick}>
     {children}
   </Link>
 );
 
-AuthenticatedButton.propTypes = {
-  children: PropTypes.string.isRequired,
-  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-  onClick: PropTypes.func,
-};
-
-const UnauthenticatedButton = () => {
-  const fbLogin = useFacebookLogin();
-
-  return (
-    <div className={styles.loginBtnContainer}>
-      <button
-        className={`${cn('buttonCircleM')} ${styles.btn} ${styles.btnFb}`}
-        onClick={async () => {
-          await fbLogin();
-        }}
-      >
-        <pre>Facebook 登入</pre>
-      </button>
-      <button
-        className={`${cn('buttonCircleM')} ${styles.btn} ${styles.btnGoogle}`}
-      >
-        <GoogleLoginButton onSuccess={() => {}} />
-      </button>
-    </div>
+const CallToLoginShareButton = ({ to, share }) => {
+  const location = useLocation();
+  const { toBuy, actionUrl } = useToBuy(location.pathname);
+  const onBuyClick = useCallback(
+    evt => {
+      evt.preventDefault();
+      toBuy();
+    },
+    [toBuy],
   );
-};
 
-const CallToLoginShareButton = ({ isLoginText, to, onAuthenticatedClick }) => {
-  const isLoggedIn = useIsLoggedIn();
   return (
     <div
       style={{
         textAlign: 'center',
       }}
     >
-      {isLoggedIn ? (
-        <AuthenticatedButton to={to} onClick={onAuthenticatedClick}>
-          {isLoginText}
+      <div className={styles.authenticatedGroup}>
+        <AuthenticatedButton
+          className={cn('buttonYellow', styles.button)}
+          to={to}
+          onClick={share}
+        >
+          留下一筆資料
         </AuthenticatedButton>
-      ) : (
-        <UnauthenticatedButton />
-      )}
+        <AuthenticatedButton
+          className={cn('buttonHollowRed', styles.button)}
+          to={actionUrl}
+          onClick={onBuyClick}
+        >
+          或以 99 元解鎖全站 1 個月
+        </AuthenticatedButton>
+      </div>
     </div>
   );
 };
 
 CallToLoginShareButton.propTypes = {
-  isLoginText: PropTypes.string,
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  onAuthenticatedClick: PropTypes.func,
+  share: PropTypes.func,
 };
 
 export default CallToLoginShareButton;

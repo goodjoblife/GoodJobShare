@@ -1,3 +1,12 @@
+export const getMyPermissionQuery = `
+  {
+    me {
+      permission {
+        hasAllPermission
+      }
+    }
+  }
+`;
 export const getMeQuery = `
   {
     me {

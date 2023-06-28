@@ -1,0 +1,15 @@
+@value warning-red from "common/variables.module.css";
+
+.label {
+  display: block;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+
+  &.isRequired::after {
+    content: '*';
+    display: inline-block;
+    margin-left: 6px;
+    color: warning-red;
+  }
+}

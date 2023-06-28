@@ -45,6 +45,8 @@ module.exports = {
               hooks: path.resolve('./src/hooks'),
               contexts: path.resolve('./src/contexts'),
               constants: path.resolve('./src/constants'),
+              actions: path.resolve('./src/actions'),
+              selectors: path.resolve('./src/selectors'),
             },
           },
         },
