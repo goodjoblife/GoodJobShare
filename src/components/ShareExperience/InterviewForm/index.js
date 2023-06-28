@@ -1,7 +1,7 @@
 import React from 'react';
 import R from 'ramda';
 import { scroller } from 'react-scroll';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
 import { Heading } from 'common/base';
 

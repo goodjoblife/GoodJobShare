@@ -9,7 +9,6 @@ import { ScrollContext } from 'react-router-scroll-4';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 
-import initSentry from 'utils/sentryUtil';
 import Root from './components/Root';
 import configureStore from './store/configureStore';
 
@@ -61,8 +60,6 @@ function parseState(window) {
   // delete window.__data;
   return preloadedState;
 }
-
-initSentry();
 
 const preloadedState = parseState(window);
 

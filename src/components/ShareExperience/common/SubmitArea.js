@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Link } from 'react-router-dom';
 
 import ButtonSubmit from 'common/button/ButtonSubmit';
@@ -8,7 +7,6 @@ import Checkbox from 'common/form/Checkbox';
 import Modal from 'common/Modal';
 
 const SubmitArea = ({
-  auth,
   agree,
   handleAgree,
   isOpen,
@@ -17,7 +15,6 @@ const SubmitArea = ({
   closableOnClickOutside,
   isSubmitting,
   onSubmit,
-  login,
   handleIsOpen,
 }) => (
   <div
@@ -77,8 +74,6 @@ const SubmitArea = ({
         text="送出資料"
         onSubmit={onSubmit}
         disabled={isSubmitting || !agree}
-        auth={auth}
-        login={login}
       />
     </div>
     <Modal
@@ -93,7 +88,6 @@ const SubmitArea = ({
 );
 
 SubmitArea.propTypes = {
-  auth: ImmutablePropTypes.map.isRequired,
   agree: PropTypes.bool.isRequired,
   handleAgree: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
@@ -102,7 +96,6 @@ SubmitArea.propTypes = {
   closableOnClickOutside: PropTypes.bool.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired,
   handleIsOpen: PropTypes.func.isRequired,
 };
 

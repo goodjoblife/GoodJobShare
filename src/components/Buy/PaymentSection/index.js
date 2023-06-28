@@ -1,24 +1,31 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { equals, path, compose } from 'ramda';
+import cn from 'classnames';
+
 import { Section, Subheading, P } from 'common/base';
-import Checkbox from 'common/form/Checkbox';
 import Button from 'common/button/ButtonRect';
 import Card from 'common/Card';
 import Label from 'common/form/Label';
+import Loading from 'common/Loader';
+
 import { useIsLoggedIn } from 'hooks/auth';
+import { useMyCurrentSubscription } from 'hooks/payment/usePayment';
+import { fetchMyCurrentSubscription } from 'actions/payment';
+import { isUnfetched, isFetched } from 'utils/fetchBox';
 
 import { CardCCV, CardExpirationDate, CardNumber } from './TappayElement';
 import Row from './Row';
 import CreditCards from './CreditCards';
 import styles from './PaymentSection.module.css';
-import useForm from './useForm';
+import useForm, { FORM_STATE } from './useForm';
 import LoginSection from '../LoginSection';
 
 const Form = ({ skuId }) => {
-  const [isPrimary, setPrimary] = useState(false);
-  const { activeCardType, canGetPrime, submit } = useForm({
+  const { activeCardType, formState, submit } = useForm({
     skuId,
-    isPrimary,
   });
   const onSubmit = useCallback(
     e => {
@@ -27,6 +34,8 @@ const Form = ({ skuId }) => {
     },
     [submit],
   );
+
+  const submitDisabed = formState !== FORM_STATE.NORMAL;
 
   return (
     <form onSubmit={onSubmit}>
@@ -54,19 +63,10 @@ const Form = ({ skuId }) => {
           </Label>
           <CardCCV />
         </Row>
-        <Row>
-          <Checkbox
-            label="設為主要付款方式"
-            checked={isPrimary}
-            value="primary"
-            onChange={e => setPrimary(e.target.checked)}
-            margin=""
-          />
-        </Row>
       </div>
       <div className={styles.submitSection}>
         <Row>
-          <Button type="submit" disabled={!canGetPrime}>
+          <Button type="submit" disabled={submitDisabed}>
             付款
           </Button>
         </Row>
@@ -80,18 +80,73 @@ const Form = ({ skuId }) => {
   );
 };
 
-const PaymentSection = ({ skuId, ...props }) => {
-  const isLoggedIn = useIsLoggedIn();
-
+const TemplateSection = ({ title, children, center, ...props }) => {
   return (
     <Section {...props}>
       <Subheading className={styles.title} size="l">
-        填寫信用卡資料
+        {title}
       </Subheading>
-      <Card className={styles.form}>
-        {isLoggedIn ? <Form skuId={skuId} /> : <LoginSection />}
+      <Card className={cn(styles.form, { [styles.center]: center })}>
+        {children}
       </Card>
     </Section>
+  );
+};
+
+const isSubscriptionStatusOK = compose(
+  equals('OK'),
+  path(['data', 'status']),
+);
+
+const PaymentSection = ({ skuId, ...props }) => {
+  const isLoggedIn = useIsLoggedIn();
+  const myCurrentSubscriptionBox = useMyCurrentSubscription();
+  const dispatch = useDispatch();
+
+  const needsFetching = isUnfetched(myCurrentSubscriptionBox);
+  const isReady = isFetched(myCurrentSubscriptionBox);
+
+  const history = useHistory();
+  const goToMySubscription = useCallback(() => {
+    history.push('/me/subscriptions');
+  }, [history]);
+
+  useEffect(() => {
+    if (isLoggedIn && needsFetching) {
+      dispatch(fetchMyCurrentSubscription());
+    }
+  }, [dispatch, isLoggedIn, needsFetching]);
+
+  if (!isLoggedIn) {
+    return (
+      <TemplateSection title="填寫信用卡資料" {...props}>
+        <LoginSection />
+      </TemplateSection>
+    );
+  }
+
+  if (!isReady) {
+    return <Loading size="l" />;
+  }
+
+  if (isSubscriptionStatusOK(myCurrentSubscriptionBox)) {
+    return (
+      <TemplateSection
+        title="你已經有目前方案，無需另外付費解鎖！"
+        center
+        {...props}
+      >
+        <Button type="submit" onClick={goToMySubscription}>
+          前往我的方案
+        </Button>
+      </TemplateSection>
+    );
+  }
+
+  return (
+    <TemplateSection title="填寫信用卡資料" {...props}>
+      <Form skuId={skuId} />
+    </TemplateSection>
   );
 };
 

@@ -10,12 +10,11 @@
 
   @media (max-width: below-mobile) {
     flex-direction: column;
+    align-items: center;
     padding: 0 27px;
   }
 
   .plan {
-    flex: 1;
-
     + .plan {
       margin-left: 24px;
 
@@ -25,6 +24,10 @@
       }
     }
   }
+}
+
+.plan {
+  cursor: pointer;
 }
 
 .content {
