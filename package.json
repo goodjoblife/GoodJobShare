@@ -51,7 +51,7 @@
     "lint-staged": "^13.1.0",
     "prettier": "^1.14.2",
     "redux-logger": "^2.7.4",
-    "stylelint": "^9.10.1",
+    "stylelint": "^15.10.1",
     "stylelint-config-prettier": "^4.0.0",
     "stylelint-prettier": "^1.0.6"
   },
