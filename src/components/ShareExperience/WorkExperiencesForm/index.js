@@ -25,7 +25,6 @@ import { LS_WORK_EXPERIENCES_FORM_KEY } from '../../../constants/localStorageKey
 import styles from './WorkExperiencesForm.module.css';
 
 import StaticHelmet from 'common/StaticHelmet';
-import { EnterFormTracker, SubmitFormTracker } from 'utils/eventBasedTracking';
 import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
@@ -155,11 +154,6 @@ class WorkExperiencesForm extends React.Component {
     ReactPixel.track('InitiateCheckout', {
       content_category: PIXEL_CONTENT_CATEGORY.VISIT_WORK_EXPERIENCE_FORM,
     });
-
-    // Send EnterForm event to Amplitude
-    EnterFormTracker.sendEvent({
-      type: EnterFormTracker.types.work,
-    });
   }
 
   onSubmit() {
@@ -185,11 +179,6 @@ class WorkExperiencesForm extends React.Component {
             currency: 'TWD',
             content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_WORK_EXPERIENCE,
           });
-          // send SubmitForm event to Amplitude
-          SubmitFormTracker.sendEvent({
-            type: SubmitFormTracker.types.work,
-            result: SubmitFormTracker.results.success,
-          });
 
           return () => (
             <SuccessFeedback
@@ -203,11 +192,6 @@ class WorkExperiencesForm extends React.Component {
           ReactGA.event({
             category: GA_CATEGORY.SHARE_WORK,
             action: GA_ACTION.UPLOAD_FAIL,
-          });
-          // send SubmitForm event to Amplitude
-          SubmitFormTracker.sendEvent({
-            type: SubmitFormTracker.types.work,
-            result: SubmitFormTracker.results.error,
           });
 
           return ({ buttonClick }) => (
