@@ -54,7 +54,7 @@ const InProgress = ({ paymentRecordId, fetchingStatus }) => {
       <P className={styles.description}>
         {isTimerEnabled ? (
           <span>
-            交易確認中，<span className={styles.alert}>請勿關閉此頁面</span>
+            交易確認中，<span className={styles.alert}>請勿離開此頁面</span>
             ，至多 {countdown} 秒...
           </span>
         ) : (
