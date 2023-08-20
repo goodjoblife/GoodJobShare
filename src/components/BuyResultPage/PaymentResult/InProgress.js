@@ -52,9 +52,14 @@ const InProgress = ({ paymentRecordId, fetchingStatus }) => {
     <div className={styles.content}>
       <img className={styles.icon} src={TransactionIcon} alt="in progress" />
       <P className={styles.description}>
-        {isTimerEnabled
-          ? `交易確認中，請勿離開，至多 ${countdown} 秒...`
-          : `請稍待再重新整理`}
+        {isTimerEnabled ? (
+          <span>
+            交易確認中，<span className={styles.alert}>請勿關閉此頁面</span>
+            ，至多 {countdown} 秒...
+          </span>
+        ) : (
+          `請稍待再重新整理`
+        )}
       </P>
     </div>
   );
