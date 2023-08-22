@@ -10,4 +10,8 @@
   @media (min-width: above-medium) {
     padding: 60px 340px 0 340px;
   }
+
+  .tabs {
+    margin-bottom: 24px;
+  }
 }

@@ -1,10 +1,22 @@
 import React from 'react';
 
 import Heading from 'common/base/Heading';
+import TabLinkGroup from 'common/TabLinkGroup';
 
 import AuthMask from './AuthMask';
 
 import styles from './SubscriptionWrapper.module.css';
+
+const options = [
+  {
+    label: '我的方案',
+    to: '/me/subscriptions/current',
+  },
+  {
+    label: '方案紀錄',
+    to: '/me/subscriptions',
+  },
+];
 
 const SubscriptionWrapper = ({ children }) => {
   return (
@@ -13,7 +25,10 @@ const SubscriptionWrapper = ({ children }) => {
         <Heading as="h1" style={{ marginBottom: '48px' }}>
           我的方案
         </Heading>
-        <div style={{ display: 'inline-block' }}>{children}</div>
+        <TabLinkGroup className={styles.tabs} options={options} />
+        <div>
+          <div style={{ display: 'inline-block' }}>{children}</div>
+        </div>
       </div>
     </AuthMask>
   );

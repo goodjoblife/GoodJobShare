@@ -12,7 +12,7 @@ import {
 } from '../../constants/companyJobTitle';
 import { generateBreadCrumbData } from './utils';
 
-import TabLinkGroup from './TabLinkGroup';
+import TabLinkGroup from '../common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
 
 const CompanyAndJobTitleWrapper = ({
