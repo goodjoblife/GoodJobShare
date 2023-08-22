@@ -62,7 +62,7 @@ export const getFetched = data => {
 };
 
 export const toFetching = fetchBox => {
-  const { data } = fetchBox;
+  const { data } = fetchBox || {};
 
   return initFetchBox(data, fetchingStatus.FETCHING);
 };

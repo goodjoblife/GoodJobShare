@@ -75,3 +75,11 @@ query {
   }
 }
 `;
+
+export const mySubscriptions = `
+query {
+  mySubscriptions {
+    id
+  }
+}
+`;
