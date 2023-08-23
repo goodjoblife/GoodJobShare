@@ -1,14 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import SubscriptionWrapper from './SubscriptionWrapper';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchMySubscriptions } from 'actions/payment';
-import { mySubscriptionsSelector } from 'selectors/payment';
-import { isFetched, isFetching } from 'utils/fetchBox';
+import {
+  getError,
+  getFetched,
+  getUnfetched,
+  isFetched,
+  isFetching,
+  toFetching,
+} from 'utils/fetchBox';
 import Loader from 'common/Loader';
 import Table from 'common/table/Table';
 import subscriptionStatus from './subscriptionStatus';
 import styles from './SubscriptionsPage.module.css';
+import { useToken } from 'hooks/auth';
+import apis from '../../apis';
 
 const formatCreatedAt = value => format(new Date(value), 'yyyy/MM/dd');
 const formatTitle = ({ subscriptionPlan: { title, description } }) =>
@@ -24,20 +30,31 @@ const formatAmount = value => `$${value}`;
 const formatStatus = value => subscriptionStatus[value];
 
 const Subscriptions = () => {
-  const subscriptionsBox = useSelector(mySubscriptionsSelector);
-  const dispatch = useDispatch();
+  const [mySubscriptions, setMySubscriptions] = useState(getUnfetched());
+  const token = useToken();
 
   useEffect(() => {
-    dispatch(fetchMySubscriptions());
-  }, [dispatch]);
+    setMySubscriptions(toFetching(mySubscriptions));
 
-  if (!subscriptionsBox) return null;
+    const fetcher = apis.payment.getMySubscriptions(token);
 
-  if (isFetching(subscriptionsBox)) return <Loader />;
+    fetcher()
+      .then(subscriptions => {
+        setMySubscriptions(getFetched(subscriptions));
+      })
+      .catch(error => {
+        console.error(error);
+        setMySubscriptions(getError(error));
+      });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!isFetched(subscriptionsBox)) return null;
+  if (!mySubscriptions) return null;
 
-  const { data } = subscriptionsBox;
+  if (isFetching(mySubscriptions)) return <Loader />;
+
+  if (!isFetched(mySubscriptions)) return null;
+
+  const { data } = mySubscriptions;
 
   return (
     <Table className={styles.subscriptions} data={data} primaryKey="id">

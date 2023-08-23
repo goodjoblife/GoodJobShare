@@ -7,4 +7,3 @@ export const myCurrentSubscriptionSelector = path([
   'payment',
   'myCurrentSubscription',
 ]);
-export const mySubscriptionsSelector = path(['payment', 'mySubscriptions']);
