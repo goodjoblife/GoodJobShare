@@ -1,4 +1,8 @@
 .subscriptions {
+  td {
+    word-wrap: break-word;
+  }
+
   .m {
     width: 10%;
   }
