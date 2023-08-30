@@ -11,3 +11,7 @@
     width: 20%;
   }
 }
+
+.failed {
+  color: #ed5555;
+}

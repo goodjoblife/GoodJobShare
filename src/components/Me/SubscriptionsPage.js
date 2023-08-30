@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import cn from 'classnames';
 import { format } from 'date-fns';
 import SubscriptionWrapper from './SubscriptionWrapper';
 import {
@@ -11,7 +12,7 @@ import {
 } from 'utils/fetchBox';
 import Loader from 'common/Loader';
 import Table from 'common/table/Table';
-import subscriptionStatus from './subscriptionStatus';
+import { subscriptionStatus, isFailed } from './subscriptionUtils';
 import styles from './SubscriptionsPage.module.css';
 import { useToken } from 'hooks/auth';
 import apis from '../../apis';
@@ -27,7 +28,11 @@ const formatDuration = ({ startedAt, expiredAt }) => (
   </span>
 );
 const formatAmount = value => value && `$${value}`;
-const formatStatus = value => subscriptionStatus[value];
+const formatStatus = value => (
+  <span className={cn({ [styles.failed]: isFailed(value) })}>
+    {subscriptionStatus[value]}
+  </span>
+);
 
 const Subscriptions = () => {
   const [mySubscriptions, setMySubscriptions] = useState(getUnfetched());
