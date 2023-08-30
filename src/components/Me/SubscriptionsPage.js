@@ -26,7 +26,7 @@ const formatDuration = ({ startedAt, expiredAt }) => (
     {format(new Date(expiredAt), 'yyyy-MM-dd hh:mm a')}
   </span>
 );
-const formatAmount = value => `$${value}`;
+const formatAmount = value => value && `$${value}`;
 const formatStatus = value => subscriptionStatus[value];
 
 const Subscriptions = () => {
