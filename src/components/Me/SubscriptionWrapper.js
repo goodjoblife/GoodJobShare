@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Section, Wrapper } from 'common/base';
 import Heading from 'common/base/Heading';
 import TabLinkGroup from 'common/TabLinkGroup';
 
@@ -18,20 +19,20 @@ const options = [
   },
 ];
 
-const SubscriptionWrapper = ({ children }) => {
-  return (
-    <AuthMask title="登入以查看我的方案">
-      <div className={styles.container}>
-        <Heading as="h1" style={{ marginBottom: '48px' }}>
+const SubscriptionWrapper = ({ children }) => (
+  <Section paddingTop paddingBottom>
+    <Wrapper size="l">
+      <AuthMask title="登入以查看我的方案">
+        <Heading as="h1" marginBottom>
           我的方案
         </Heading>
         <TabLinkGroup className={styles.tabs} options={options} />
         <div>
           <div style={{ display: 'inline-block' }}>{children}</div>
         </div>
-      </div>
-    </AuthMask>
-  );
-};
+      </AuthMask>
+    </Wrapper>
+  </Section>
+);
 
 export default SubscriptionWrapper;
