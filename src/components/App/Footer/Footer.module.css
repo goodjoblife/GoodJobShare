@@ -48,7 +48,7 @@
 }
 
 .logo {
-  fill: #fff;
+  filter: invert(1);
   width: 120px;
   margin-right: 8px;
 }

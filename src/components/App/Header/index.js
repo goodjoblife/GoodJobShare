@@ -4,7 +4,8 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 import ReactGA from 'react-ga4';
 import { Wrapper } from 'common/base';
-import { GjLogo, Glike } from 'common/icons';
+import GjLogo from 'common/icons/GjLogo.svg';
+import Glike from 'common/icons/Glike.svg';
 import PopoverToggle from 'common/PopoverToggle';
 import useShareLink from 'hooks/experiments/useShareLink';
 import usePermission from 'hooks/usePermission';
@@ -86,12 +87,12 @@ const Header = () => {
           <HeaderButton isNavOpen={isNavOpen} toggle={toggleNav} />
           <div className={styles.logo}>
             <Link to="/" title="GoodJob 職場透明化運動">
-              <GjLogo />
+              <img src={GjLogo} alt="Goodjob" />
             </Link>
           </div>
           <div className={styles.logoSm}>
             <Link to="/" title="GoodJob 職場透明化運動">
-              <Glike />
+              <img src={Glike} alt="Goodjob" />
             </Link>
           </div>
           <div className={styles.searchbarWrapper}>
@@ -112,7 +113,7 @@ const Header = () => {
             })}
           >
             <Link to="/" className={styles.logo} title="GoodJob 職場透明化運動">
-              <GjLogo />
+              <img src={GjLogo} alt="Goodjob" />
             </Link>
             <SiteMenu isLogin={isLoggedIn} />
             <div className={styles.buttonsArea}>
