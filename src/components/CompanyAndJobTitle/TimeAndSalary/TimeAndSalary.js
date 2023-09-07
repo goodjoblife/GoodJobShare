@@ -5,7 +5,6 @@ import { compose } from 'recompose';
 import { withPermission } from 'common/permission-context';
 import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
-import { ViewSalaryWorkTimeTracker } from 'utils/eventBasedTracking';
 
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
@@ -28,27 +27,6 @@ const TimeAndSalary = ({
   useEffect(() => {
     fetchPermission();
   }, [fetchPermission]);
-
-  // Send event to Amplitude
-  useEffect(() => {
-    if (permissionFetched) {
-      if (pageType === 'COMPANY') {
-        ViewSalaryWorkTimeTracker.sendEvent({
-          company: pageName,
-          page: page,
-          nTotalData: salaryWorkTimeStatistics.count,
-          hasPermission: canView,
-        });
-      } else if (pageType === 'JOB_TITLE') {
-        ViewSalaryWorkTimeTracker.sendEvent({
-          jobTitle: pageName,
-          page: page,
-          nTotalData: salaryWorkTimeStatistics.count,
-          hasPermission: canView,
-        });
-      }
-    }
-  }, [permissionFetched, canView, pageName, page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pageSize = 10;
   const currentData = salaryWorkTimes.slice(

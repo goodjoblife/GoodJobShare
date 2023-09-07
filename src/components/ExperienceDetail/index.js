@@ -21,7 +21,6 @@ import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
 import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
-import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
 import { useLogin } from 'hooks/login';
 import useTrace from './hooks/useTrace';
@@ -137,30 +136,6 @@ const ExperienceDetail = ({
   const { experience, experienceStatus, experienceError } = data;
   const replies = props.replies.toJS();
   const repliesStatus = props.repliesStatus;
-
-  // send event to Amplitude
-  const experienceDataId = useMemo(() => (experience ? experience.id : null), [
-    experience,
-  ]);
-  useEffect(() => {
-    if (experience && permissionFetched && experienceDataId === experienceId) {
-      const contentLength = experience.sections
-        ? experience.sections.reduce((accu, curr) => {
-            const subTitleLength = curr.subtitle ? curr.subtitle.length : 0;
-            const contentLength = curr.content ? curr.content.length : 0;
-            return accu + subTitleLength + contentLength;
-          }, 0)
-        : 0;
-      ViewArticleDetailTracker.sendEvent({
-        id: experience.id,
-        type: experience.type,
-        contentLength,
-        jobTitle: experience.job_title.name,
-        company: experience.company.name,
-        hasPermission: canView,
-      });
-    }
-  }, [experienceDataId, permissionFetched, canView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollToCommentZone = useCallback(() => {
     scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
