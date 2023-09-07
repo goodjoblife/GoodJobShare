@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ProgressBarWithDataCount from 'common/ProgressBarWithDataCount';
 import { useShareLink } from 'hooks/experiments';
+import Banner1Img from './banner2_2x.jpg';
 import styles from './Banners.module.css';
 
 const Banner1 = ({ className }) => {
@@ -10,7 +11,7 @@ const Banner1 = ({ className }) => {
   return (
     <Link to={shareLink} className={className}>
       <img
-        src="https://image.goodjob.life/banners/banner2_2x.jpg"
+        src={Banner1Img}
         alt="職場透明化運動進行中"
         className={styles.banner1}
       />

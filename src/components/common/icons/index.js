@@ -9,7 +9,6 @@ import Comment from './Comment';
 import Company from './Company';
 import Ellipses from './Ellipses';
 import Exclamation from './Exclamation';
-import GjLogo from './GjLogo';
 import Good from './Good';
 import Like from './Like';
 import Location from './Location';
@@ -35,7 +34,6 @@ const icons = {
   Company,
   Ellipses,
   Exclamation,
-  GjLogo,
   Good,
   Like,
   Location,
@@ -64,7 +62,6 @@ export { default as Facebook } from './Facebook';
 export { default as Github } from './Github';
 export { default as Good } from './Good';
 export { default as Glike } from './Glike';
-export { default as GjLogo } from './GjLogo';
 export { default as Star } from './Star';
 export { default as Sort } from './Sort';
 export { default as Twitter } from './Twitter';
