@@ -35,8 +35,9 @@ import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
-import { isFetching, isFetched, isError } from '../../constants/status';
-import { fetchExperience } from '../../actions/experienceDetail';
+import { isFetching, isFetched, isError } from 'constants/status';
+import { fetchExperience } from 'actions/experienceDetail';
+import { queryRelatedExperiencesOnExperience } from 'actions/experience';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
 import {
@@ -318,7 +319,10 @@ ExperienceDetail.propTypes = {
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   const experienceId = experienceIdSelector(props);
-  return dispatch(fetchExperience(experienceId));
+  return Promise.all([
+    dispatch(fetchExperience(experienceId)),
+    dispatch(queryRelatedExperiencesOnExperience(experienceId)),
+  ]);
 });
 
 const hoc = compose(
