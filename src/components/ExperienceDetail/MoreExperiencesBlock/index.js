@@ -1,9 +1,12 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import InterviewExperienceEntry from '../../CompanyAndJobTitle/InterviewExperiences/ExperienceEntry';
 import WorkExperienceEntry from '../../CompanyAndJobTitle/WorkExperiences/ExperienceEntry';
 import { useLocation } from 'react-router';
 import usePermission from 'hooks/usePermission';
+import { queryRelatedExperiencesOnExperience } from 'actions/experience';
+import { relatedExperiencesStateSelector } from 'selectors/experienceSelector';
 import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
 import Button from '../../common/button/Button';
 import styles from './MoreExperiencesBlock.module.css';
@@ -32,6 +35,16 @@ const LoadMoreButton = ({ children: _, ...props }) => (
 );
 
 const MoreExperiencesBlock = ({ experience }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(queryRelatedExperiencesOnExperience(experience.id));
+  }, [dispatch, experience.id]);
+
+  const relatedExperiencesState = useSelector(relatedExperiencesStateSelector);
+
+  console.log(relatedExperiencesState);
+
   const location = useLocation();
   const { state: { pageType = PAGE_TYPE.COMPANY } = {} } = location;
   const [, , canView] = usePermission();

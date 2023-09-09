@@ -170,3 +170,39 @@ mutation CreateWorkExperience($input: CreateWorkExperienceInput!) {
     }
   }
 }`;
+
+export const queryRelatedExperiencesGql = /* GraphQL */ `
+  query($id: ID!, $start: Int!, $limit: Int!) {
+    experience(id: $id) {
+      id
+      relatedExperiences(start: $start, limit: $limit) {
+        id
+        type
+        company {
+          name
+        }
+        job_title {
+          name
+        }
+        created_at
+        salary {
+          type
+          amount
+        }
+        sections {
+          subtitle
+          content
+        }
+
+        ... on InterviewExperience {
+          overall_rating
+        }
+
+        ... on WorkExperience {
+          week_work_time
+          recommend_to_others
+        }
+      }
+    }
+  }
+`;

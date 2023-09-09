@@ -2,7 +2,7 @@
  * Default environment for development
  */
 module.exports = {
-  API_HOST: process.env.RAZZLE_API_HOST || 'https://api-dev.goodjob.life',
+  API_HOST: process.env.RAZZLE_API_HOST || 'http://pooh.markchen.space:4000',
   FACEBOOK_APP_ID: process.env.RAZZLE_FACEBOOK_APP_ID || '1844389232511081',
   GA_MEASUREMENT_ID: process.env.RAZZLE_GA_MEASUREMENT_ID || 'G-QDG81J6ESN',
   GOOGLE_APP_ID:
