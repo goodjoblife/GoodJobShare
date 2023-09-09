@@ -69,7 +69,7 @@ export const loadMoreRelatedExperiences = () => async (
   const state = relatedExperiencesStateSelector(getState()); // FetchBox
 
   // 判斷 isFetching
-  if (isFetching(relatedExperiencesStateSelector(getState()))) {
+  if (isFetching(state)) {
     return;
   }
 
