@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import InterviewExperienceEntry from '../../CompanyAndJobTitle/InterviewExperiences/ExperienceEntry';
@@ -48,6 +48,10 @@ const MoreExperiencesBlock = ({ experience }) => {
   const location = useLocation();
   const { state: { pageType = PAGE_TYPE.COMPANY } = {} } = location;
   const [, , canView] = usePermission();
+  const handleLoadMore = useCallback(
+    () => dispatch(loadMoreRelatedExperiences()),
+    [dispatch],
+  );
 
   // we still want to show data even when Fetching
   if (
@@ -78,13 +82,7 @@ const MoreExperiencesBlock = ({ experience }) => {
           canView={canView}
         />
       ))}
-      {hasMore && (
-        <LoadMoreButton
-          onClick={() => {
-            dispatch(loadMoreRelatedExperiences());
-          }}
-        />
-      )}
+      {hasMore && <LoadMoreButton onClick={handleLoadMore} />}
     </div>
   );
 };
