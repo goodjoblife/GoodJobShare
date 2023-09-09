@@ -16,8 +16,6 @@ export const queryRelatedExperiencesOnExperience = experienceId => async (
 ) => {
   const page = 0;
 
-  // 判斷 isFetching
-
   dispatch(
     setRelatedExperiencesState(
       // this is an work around
