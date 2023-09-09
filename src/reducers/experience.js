@@ -8,6 +8,7 @@ import { SET_RELATED_EXPERIENCES } from 'actions/experience';
  *   experienceId
  *   page
  *   relatedExperiences
+ *   hasMore
  * status
  * error
  */
