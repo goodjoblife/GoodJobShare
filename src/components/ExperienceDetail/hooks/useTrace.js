@@ -16,7 +16,6 @@ const useView = experienceId => {
   useEffect(() => {
     const contentIds = [experienceId];
     const referrer = window.location.href;
-    console.log({ contentIds, referrer });
     viewExperiences({ contentIds, referrer });
   }, [experienceId, viewExperiences]);
 };
