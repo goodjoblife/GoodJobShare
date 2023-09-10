@@ -1,8 +1,8 @@
 import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 
-import { SET_COUNT_DATA } from '../actions/experiences';
-import fetchingStatus from '../constants/status';
+import { SET_COUNT_DATA } from 'actions/experiences';
+import fetchingStatus from 'constants/status';
 
 const preloadedState = fromJS({
   count: 0,

@@ -1,12 +1,12 @@
 import { Map, fromJS } from 'immutable';
 
 import createReducer from 'utils/createReducer';
-import statusConstant from '../constants/status';
+import statusConstant from 'constants/status';
 import {
   SET_KEYWORDS,
   SET_SORT_AND_EXPERIENCES,
   SET_LOADING_STATUS,
-} from '../actions/experienceSearch';
+} from 'actions/experienceSearch';
 
 const preloadedState = Map({
   sort: 'created_at',
