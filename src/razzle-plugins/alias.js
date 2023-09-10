@@ -15,13 +15,6 @@ module.exports = config => {
     contexts: path.resolve('./src/contexts'),
     graphql: path.resolve('./src/graphql'),
     hooks: path.resolve('./src/hooks'),
-<<<<<<< HEAD
-    contexts: path.resolve('./src/contexts'),
-    constants: path.resolve('./src/constants'),
-    apis: path.resolve('./src/apis'),
-    actions: path.resolve('./src/actions'),
-=======
->>>>>>> upstream/dev
     selectors: path.resolve('./src/selectors'),
     utils: path.resolve('./src/utils'),
   };
