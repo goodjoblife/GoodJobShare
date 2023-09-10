@@ -1,4 +1,4 @@
-@value above-mobile, above-small from "common/variables.module.css";
+@value above-mobile from "common/variables.module.css";
 
 .chartWrapper {
   .header {
@@ -39,12 +39,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
-    background-color: #fff;
-
-    @media (min-width: above-small) {
-      padding: 20px;
-    }
   }
 }

@@ -3,7 +3,10 @@ import R from 'ramda';
 import fetchUtil from 'utils/fetchUtil';
 
 import graphqlClient from 'utils/graphqlClient';
-import { getExperienceQuery } from 'graphql/experience';
+import {
+  getExperienceQuery,
+  queryRelatedExperiencesGql,
+} from 'graphql/experience';
 import { getPopularExperiencesQuery } from 'graphql/popularExperience';
 import { deleteReplyLike, createReplyLike } from 'graphql/reply';
 
@@ -120,6 +123,14 @@ const patchExperience = ({ id, status, token }) =>
     token,
   });
 
+export const queryRelatedExperiences = async ({ id, start, limit }) => {
+  const data = await graphqlClient({
+    query: queryRelatedExperiencesGql,
+    variables: { id, start, limit },
+  });
+  return data.experience.relatedExperiences;
+};
+
 export default {
   getExperience,
   getPopularExperiences,
@@ -134,4 +145,5 @@ export default {
   newExperienceSearchBy,
   patchExperience,
   patchReply,
+  queryRelatedExperiences,
 };

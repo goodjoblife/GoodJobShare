@@ -10,7 +10,7 @@ const mapErrorPaths = R.map(R.prop('path'));
 
 class GraphqlError extends Error {
   constructor(errors) {
-    const message = `GraphqlError: ${mapErrorMessages(errors)}`;
+    const message = mapErrorMessages(errors);
     super(message);
 
     this.name = 'GraphqlError';

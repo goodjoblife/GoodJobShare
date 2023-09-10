@@ -1,0 +1,62 @@
+@value above-tablet, above-small, main-gray, yellow-dark from "common/variables.module.css";
+
+.container {
+  min-height: 300px;
+  width: 300px;
+  padding: 26px 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.actionButton {
+  margin-top: 16px;
+  width: 140px;
+  height: 45px;
+}
+
+.title {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.description {
+}
+
+.amountSection {
+  display: flex;
+  align-items: center;
+}
+
+.amount {
+  font-size: 56px;
+  margin-right: 20px;
+}
+
+.topArea {
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 52px;
+  padding: 0 40px;
+}
+
+.bottomArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.helperText {
+  color: yellow-dark;
+}
+
+.helperContainer {
+  min-height: 20px;
+}

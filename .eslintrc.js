@@ -46,6 +46,8 @@ module.exports = {
               contexts: path.resolve('./src/contexts'),
               constants: path.resolve('./src/constants'),
               apis: path.resolve('./src/apis'),
+              actions: path.resolve('./src/actions'),
+              selectors: path.resolve('./src/selectors'),
             },
           },
         },

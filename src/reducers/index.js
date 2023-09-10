@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 
 import auth from './auth';
 import experienceDetail from './experienceDetail';
+import experience from './experience';
 import experienceSearch from './experienceSearch';
 import experiences from './experiences';
 import laborRights from './laborRights';
@@ -21,18 +22,22 @@ import company from './company';
 import companyIndex from './companyIndex';
 import jobTitle from './jobTitle';
 import jobTitleIndex from './jobTitleIndex';
+import payment from './payment';
+import paymentPersist from './paymentPersist';
+import toastNotification from './toastNotification';
 import { PERSIST_KEY } from '../config';
 
 const persistConfig = {
   key: PERSIST_KEY,
   storage,
-  whitelist: ['auth'],
+  whitelist: ['auth', 'paymentPersist'],
 };
 
 const rootReducer = combineReducers({
   auth,
   experienceSearch,
   experienceDetail,
+  experience,
   experiences,
   laborRights,
   timeAndSalary,
@@ -49,6 +54,9 @@ const rootReducer = combineReducers({
   companyIndex,
   jobTitle,
   jobTitleIndex,
+  payment,
+  paymentPersist,
+  toastNotification,
 });
 
 export default persistReducer(persistConfig, rootReducer);

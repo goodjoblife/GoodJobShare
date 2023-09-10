@@ -2,7 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import { Switch } from 'react-router-dom';
 import { scroller } from 'react-scroll';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
 import qs from 'qs';
 import StepControl from './StepControl';
@@ -21,7 +21,6 @@ import {
 } from '../utils';
 
 import StaticHelmet from 'common/StaticHelmet';
-import { EnterFormTracker, SubmitFormTracker } from 'utils/eventBasedTracking';
 import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
 import {
   INVALID,
@@ -207,23 +206,6 @@ class InterviewForm extends React.Component {
         }),
       );
     }
-
-    /** Send EnterForm event to Amplitude */
-    const { pathname } = this.props.location;
-    const { pathname: prevPathname } = prevProps.location;
-    if (pathname !== prevPathname) {
-      const pathnameStepMap = {
-        '/share/interview/step1': 1,
-        '/share/interview/step2': 2,
-        '/share/interview/step3': 3,
-      };
-      if (pathnameStepMap[pathname]) {
-        EnterFormTracker.sendEvent({
-          step: pathnameStepMap[pathname],
-          type: EnterFormTracker.types.interview3Steps,
-        });
-      }
-    }
   }
 
   async onSubmit() {
@@ -255,11 +237,6 @@ class InterviewForm extends React.Component {
             content_category:
               PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
           });
-          // send SubmitForm event to Amplitude
-          SubmitFormTracker.sendEvent({
-            type: SubmitFormTracker.types.interview3Steps,
-            result: SubmitFormTracker.results.success,
-          });
 
           return () => (
             <SuccessFeedback
@@ -273,11 +250,6 @@ class InterviewForm extends React.Component {
           ReactGA.event({
             category: GA_CATEGORY.SHARE_INTERVIEW,
             action: GA_ACTION.UPLOAD_FAIL,
-          });
-          // send SubmitForm event to Amplitude
-          SubmitFormTracker.sendEvent({
-            type: SubmitFormTracker.types.interview3Steps,
-            result: SubmitFormTracker.results.error,
           });
 
           return ({ buttonClick }) => (

@@ -4,8 +4,8 @@ import { Wrapper, Section, Heading } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Loader from 'common/Loader';
 import { Comment2 } from 'common/icons';
-import { useLogin } from 'hooks/login';
-import styles from './Me.module.css';
+
+import AuthMask from './AuthMask';
 import ShareBlockElement from './ShareBlockElement';
 import {
   useFetchMyPublishes,
@@ -24,24 +24,10 @@ const Me = () => {
     fetchMyPublishes();
   }, [fetchMyPublishes]);
 
-  const [isLoggedIn, login] = useLogin();
-
   return (
     <Section pageTop paddingBottom>
       <Wrapper size="m">
-        {!isLoggedIn && (
-          <div>
-            <Heading size="l" center>
-              登入以管理我的資料
-            </Heading>
-            <div className={styles.loginBtnSection}>
-              <button className="buttonCircleM buttonBlackLine" onClick={login}>
-                登入
-              </button>
-            </div>
-          </div>
-        )}
-        {isLoggedIn && (
+        <AuthMask>
           <div>
             <Heading size="l" center>
               管理我的資料
@@ -115,7 +101,7 @@ const Me = () => {
               </div>
             </IconHeadingBlock>
           </div>
-        )}
+        </AuthMask>
       </Wrapper>
     </Section>
   );

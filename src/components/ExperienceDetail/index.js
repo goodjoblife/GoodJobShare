@@ -12,8 +12,6 @@ import { Element as ScrollElement, scroller } from 'react-scroll';
 import { compose, setStatic } from 'recompose';
 import cn from 'classnames';
 import { useParams } from 'react-router-dom';
-import { useWindowSize } from 'react-use';
-import { StickyContainer, Sticky } from 'react-sticky';
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
@@ -21,10 +19,8 @@ import NotFound from 'common/NotFound';
 import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
-import GoogleAdUnit from 'common/GoogleAdUnit';
 import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
-import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
 import { useLogin } from 'hooks/login';
 import useTrace from './hooks/useTrace';
@@ -39,11 +35,11 @@ import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
-import { isFetching, isFetched, isError } from '../../constants/status';
-import { fetchExperience } from '../../actions/experienceDetail';
+import { isFetching, isFetched, isError } from 'constants/status';
+import { fetchExperience } from 'actions/experienceDetail';
+import { queryRelatedExperiencesOnExperience } from 'actions/experience';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
-import breakpoints from '../../constants/breakpoints';
 import {
   pageType as PAGE_TYPE,
   tabType as TAB_TYPE,
@@ -88,7 +84,6 @@ const ExperienceDetail = ({
 }) => {
   const params = useParams();
   const experienceId = params.id;
-  const { width } = useWindowSize();
 
   useEffect(() => {
     fetchExperience(experienceId);
@@ -142,30 +137,6 @@ const ExperienceDetail = ({
   const { experience, experienceStatus, experienceError } = data;
   const replies = props.replies.toJS();
   const repliesStatus = props.repliesStatus;
-
-  // send event to Amplitude
-  const experienceDataId = useMemo(() => (experience ? experience.id : null), [
-    experience,
-  ]);
-  useEffect(() => {
-    if (experience && permissionFetched && experienceDataId === experienceId) {
-      const contentLength = experience.sections
-        ? experience.sections.reduce((accu, curr) => {
-            const subTitleLength = curr.subtitle ? curr.subtitle.length : 0;
-            const contentLength = curr.content ? curr.content.length : 0;
-            return accu + subTitleLength + contentLength;
-          }, 0)
-        : 0;
-      ViewArticleDetailTracker.sendEvent({
-        id: experience.id,
-        type: experience.type,
-        contentLength,
-        jobTitle: experience.job_title.name,
-        company: experience.company.name,
-        hasPermission: canView,
-      });
-    }
-  }, [experienceDataId, permissionFetched, canView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollToCommentZone = useCallback(() => {
     scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
@@ -259,48 +230,32 @@ const ExperienceDetail = ({
       <Seo experienceState={data} />
       <Section bg="white" paddingBottom className={styles.section}>
         <Wrapper size="m">
-          <StickyContainer className={styles.container}>
-            <div className={styles.leftContainer}>
-              {/* 文章區塊  */}
-              {!isFetched(experienceStatus) ? (
-                <Loader />
-              ) : (
-                <Fragment>
-                  <div className={styles.breadCrumb}>
-                    <BreadCrumb
-                      data={generateBreadCrumbData({
-                        pageType,
-                        pageName: pageTypeToNameSelector[pageType](experience),
-                        tabType: experienceTypeToTabType[experience.type],
-                        experience,
-                      })}
-                    />
-                  </div>
-                  <ExperienceHeading experience={experience} />
-                  {reportZone}
-                  <Article
-                    experience={experience}
-                    hideContent={!canView}
-                    onClickMsgButton={scrollToCommentZone}
+          <div>
+            {/* 文章區塊  */}
+            {!isFetched(experienceStatus) ? (
+              <Loader />
+            ) : (
+              <Fragment>
+                <div className={styles.breadCrumb}>
+                  <BreadCrumb
+                    data={generateBreadCrumbData({
+                      pageType,
+                      pageName: pageTypeToNameSelector[pageType](experience),
+                      tabType: experienceTypeToTabType[experience.type],
+                      experience,
+                    })}
                   />
-                </Fragment>
-              )}
-            </div>
-            {width > breakpoints.md ? (
-              <div className={styles.sideAds}>
-                <Sticky>
-                  {({ style }) => (
-                    <div style={style}>
-                      <GoogleAdUnit
-                        sizes={[[160, 600]]}
-                        adUnit="goodjob_pc_article_sidebar"
-                      />
-                    </div>
-                  )}
-                </Sticky>
-              </div>
-            ) : null}
-          </StickyContainer>
+                </div>
+                <ExperienceHeading experience={experience} />
+                {reportZone}
+                <Article
+                  experience={experience}
+                  hideContent={!canView}
+                  onClickMsgButton={scrollToCommentZone}
+                />
+              </Fragment>
+            )}
+          </div>
         </Wrapper>
         {isFetched(experienceStatus) && (
           <React.Fragment>
@@ -364,7 +319,10 @@ ExperienceDetail.propTypes = {
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   const experienceId = experienceIdSelector(props);
-  return dispatch(fetchExperience(experienceId));
+  return Promise.all([
+    dispatch(fetchExperience(experienceId)),
+    dispatch(queryRelatedExperiencesOnExperience(experienceId)),
+  ]);
 });
 
 const hoc = compose(

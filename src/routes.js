@@ -1,11 +1,10 @@
 import React from 'react';
 import LandingPage from './containers/LandingPage';
 import LaborRightsMenu from './containers/LaborRightsMenu';
-import LaborRightsSingle from './containers/LaborRightsSingle';
+import LaborRightsSingle from './components/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/SalaryWorkTime/TimeAndSalaryBoard';
-import SalaryWorkTimeSearchScreen from './containers/SalaryWorkTime/SearchScreen';
-
+import SalaryWorkTimeSearchScreen from './components/TimeAndSalary/SearchScreen';
 import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
 import CampaignTimeAndSalary from './containers/CampaignTimeAndSalary';
 import CampaignTimeAndSalaryBoard from './containers/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
@@ -20,10 +19,12 @@ import TimeSalaryForm from './containers/ShareExperience/TimeSalaryFormContainer
 import CampaignTimeAndSalaryForm from './containers/ShareExperience/CampaignTimeAndSalaryFormContainer';
 import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
 import Me from './components/Me';
+import Buy from './components/Buy';
 import About from './components/About';
 import Faq from './components/Faq';
 import Guidelines from './components/Guidelines';
 import Privacy from './components/Privacy';
+import ProductAndRefundPolicy from './components/ProductAndRefundPolicy';
 import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
@@ -32,6 +33,10 @@ import CompanyPageProvider from './components/Company/CompanyPageProvider';
 import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
+import PlanPage from './components/PlanPage';
+import BuyResultPage from './components/BuyResultPage';
+import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
+import SubscriptionsPage from './components/Me/SubscriptionsPage';
 
 const routes = [
   {
@@ -246,9 +251,24 @@ const routes = [
     ],
   },
   {
+    path: '/buy',
+    exact: true,
+    component: Buy,
+  },
+  {
     path: '/me',
     exact: true,
     component: Me,
+  },
+  {
+    path: '/me/subscriptions',
+    exact: true,
+    component: SubscriptionsPage,
+  },
+  {
+    path: '/me/subscriptions/current',
+    exact: true,
+    component: CurrentSubscriptionPage,
   },
   {
     path: '/about',
@@ -271,6 +291,11 @@ const routes = [
     component: Privacy,
   },
   {
+    path: '/product-and-refund',
+    exact: true,
+    component: ProductAndRefundPolicy,
+  },
+  {
     path: '/user-terms',
     exact: true,
     component: Terms,
@@ -281,6 +306,16 @@ const routes = [
     component: VerificationPage,
     hasHeader: false,
     hasFooter: false,
+  },
+  {
+    path: '/plans',
+    exact: true,
+    component: PlanPage,
+  },
+  {
+    path: '/buy/result/:paymentRecordId',
+    exact: true,
+    component: BuyResultPage,
   },
   {
     component: NotFound,
