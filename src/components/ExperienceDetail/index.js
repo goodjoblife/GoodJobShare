@@ -18,11 +18,6 @@ import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
 import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
-<<<<<<< HEAD
-import GoogleAdUnit from 'common/GoogleAdUnit';
-=======
-import { withPermission } from 'common/permission-context';
->>>>>>> upstream/master
 import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
 import { paramsSelector } from 'common/routing/selectors';
@@ -79,12 +74,7 @@ const pageTypeToNameSelector = {
 
 const ExperienceDetail = ({ fetchExperience, ...props }) => {
   const params = useParams();
-<<<<<<< HEAD
   const experienceId = experienceIdSelector(params);
-  const { width } = useWindowSize();
-=======
-  const experienceId = params.id;
->>>>>>> upstream/master
 
   useEffect(() => {
     fetchExperience(experienceId);
@@ -293,17 +283,12 @@ ExperienceDetail.propTypes = {
 };
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-<<<<<<< HEAD
   const params = paramsSelector(props);
   const experienceId = experienceIdSelector(params);
-  return dispatch(fetchExperience(experienceId));
-=======
-  const experienceId = experienceIdSelector(props);
   return Promise.all([
     dispatch(fetchExperience(experienceId)),
     dispatch(queryRelatedExperiencesOnExperience(experienceId)),
   ]);
->>>>>>> upstream/master
 });
 
 const hoc = compose(ssr);
