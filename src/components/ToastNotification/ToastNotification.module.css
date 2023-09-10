@@ -1,0 +1,20 @@
+@value NAV_HEIGHT, NAV_MOBILE_HEIGHT, TOP_HEIGHT, above-small from "common/variables.module.css";
+
+.container {
+  z-index: 99;
+  position: fixed;
+  top: calc(NAV_MOBILE_HEIGHT);
+  right: 0;
+
+  padding-right: 0;
+  padding-top: 30px;
+
+  @media (min-width: above-small) {
+    padding-right: 40px;
+    top: calc(NAV_HEIGHT + TOP_HEIGHT);
+  }
+}
+
+.wrapper {
+  position: relative;
+}

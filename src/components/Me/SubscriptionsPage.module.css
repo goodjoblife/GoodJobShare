@@ -1,0 +1,17 @@
+.subscriptions {
+  td {
+    word-wrap: break-word;
+  }
+
+  .m {
+    width: 10%;
+  }
+
+  .l {
+    width: 20%;
+  }
+}
+
+.failed {
+  color: #ed5555;
+}

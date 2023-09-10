@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import R from 'ramda';
 import qs from 'qs';
 import { compose, withHandlers, setStatic, lifecycle } from 'recompose';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
 import Loader from 'common/Loader';
 import { Section, Wrapper, Heading, P } from 'common/base';

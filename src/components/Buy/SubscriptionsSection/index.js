@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { Section } from 'common/base';
+import { useTotalCount } from 'hooks/useCount';
+import { calcEndTime } from 'utils/dateUtil';
 import SubscriptionPlanCollection from './SubscriptionPlanCollection';
 import Captain from './Captain';
 
-const plans = [
-  {
-    id: 'month',
-    name: '包月方案',
-    price: 99,
-    duration: { amount: 1, unit: 'month' },
-  },
-  {
-    id: 'quarter',
-    name: '包季方案',
-    price: 149,
-    duration: { amount: 3, unit: 'month' },
-  },
-];
+const SubscriptionsSection = ({
+  plans,
+  selectedId,
+  setSelectedId,
+  ...props
+}) => {
+  const dataCount = useTotalCount();
+  const endDateTime = useMemo(() => {
+    if (Array.isArray(plans) && selectedId !== undefined) {
+      const currentPlan = plans.find(plan => plan.skuId === selectedId);
+      if (currentPlan && currentPlan.duration) {
+        const { type, amount } = currentPlan.duration;
+        return calcEndTime(new Date(), type, amount);
+      }
+    }
+    return new Date();
+  }, [plans, selectedId]);
 
-const SubscriptionsSection = ({ ...props }) => {
-  const [selectedId, setSelectedId] = useState(plans[0].id);
   return (
     <Section {...props}>
       <SubscriptionPlanCollection
@@ -27,9 +31,25 @@ const SubscriptionsSection = ({ ...props }) => {
         selectedId={selectedId}
         setSelectedId={setSelectedId}
       />
-      <Captain />
+      <Captain dataCount={dataCount} endDateTime={endDateTime} />
     </Section>
   );
+};
+
+SubscriptionsSection.propTypes = {
+  plans: PropTypes.arrayOf(
+    PropTypes.shape({
+      skuId: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
+      duration: PropTypes.shape({
+        amount: PropTypes.number.isRequired,
+        type: PropTypes.string.isRequired,
+      }),
+    }),
+  ),
+  selectedId: PropTypes.string,
+  setSelectedId: PropTypes.func.isRequired,
 };
 
 export default SubscriptionsSection;

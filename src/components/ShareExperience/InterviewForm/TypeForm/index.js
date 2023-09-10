@@ -1,4 +1,4 @@
-import React, { useCallback, Fragment, useState } from 'react';
+import React, { useCallback, Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   isNil,
@@ -18,12 +18,11 @@ import {
   reject,
   path,
 } from 'ramda';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
 
-import { SubmitFormTracker } from 'utils/eventBasedTracking';
 import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
 import FormBuilder from 'common/FormBuilder';
 import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
@@ -31,7 +30,15 @@ import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
 import Footer from '../../common/TypeFormFooter';
 import { getCompaniesSearch } from '../../../../apis/companySearchApi';
 import { getJobTitlesSearch } from '../../../../apis/jobTitleSearchApi';
-import { createInterviewExperience } from '../../../../actions/experiences';
+import {
+  experienceCountSelector,
+  timeAndSalaryCountSelector,
+} from '../../../../selectors/countSelector';
+import {
+  createInterviewExperience,
+  queryExperienceCountIfUnfetched,
+} from '../../../../actions/experiences';
+import { queryTimeAndSalaryCountIfUnfetched } from '../../../../actions/timeAndSalary';
 import { GA_CATEGORY, GA_ACTION } from '../../../../constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from '../../../../constants/pixelConstants';
 import {
@@ -78,7 +85,6 @@ const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
     jobTitle={jobTitle}
   />
 );
-const footer = <Footer />;
 
 const questions = [
   {
@@ -359,11 +365,6 @@ const TypeForm = ({ open, onClose }) => {
           currency: 'TWD',
           content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
         });
-        // send SubmitForm event to Amplitude
-        SubmitFormTracker.sendEvent({
-          type: SubmitFormTracker.types.interviewTypeForm,
-          result: SubmitFormTracker.results.success,
-        });
         setSubmitStatus('success');
       } catch (error) {
         setErrorMessage(error.message);
@@ -371,16 +372,18 @@ const TypeForm = ({ open, onClose }) => {
           category: GA_CATEGORY.SHARE_INTERVIEW,
           action: GA_ACTION.UPLOAD_FAIL,
         });
-        // send SubmitForm event to Amplitude
-        SubmitFormTracker.sendEvent({
-          type: SubmitFormTracker.types.interviewTypeForm,
-          result: SubmitFormTracker.results.error,
-        });
         setSubmitStatus('error');
       }
     },
     [dispatch, submitStatus],
   );
+
+  const experienceCount = useSelector(experienceCountSelector);
+  const salaryCount = useSelector(timeAndSalaryCountSelector);
+  useEffect(() => {
+    dispatch(queryExperienceCountIfUnfetched());
+    dispatch(queryTimeAndSalaryCountIfUnfetched());
+  }, [dispatch]);
 
   return (
     <Fragment>
@@ -389,7 +392,7 @@ const TypeForm = ({ open, onClose }) => {
         onClose={() => setSubmitStatus('quitting')}
         questions={questions}
         header={header}
-        footer={footer}
+        footer={<Footer dataNum={salaryCount + experienceCount} />}
         onSubmit={handleSubmit}
       />
       <ConfirmModal

@@ -1,11 +1,10 @@
 import React from 'react';
 import LandingPage from './containers/LandingPage';
 import LaborRightsMenu from './containers/LaborRightsMenu';
-import LaborRightsSingle from './containers/LaborRightsSingle';
+import LaborRightsSingle from './components/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/SalaryWorkTime/TimeAndSalaryBoard';
-import SalaryWorkTimeSearchScreen from './containers/SalaryWorkTime/SearchScreen';
-
+import SalaryWorkTimeSearchScreen from './components/TimeAndSalary/SearchScreen';
 import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
 import CampaignTimeAndSalary from './containers/CampaignTimeAndSalary';
 import CampaignTimeAndSalaryBoard from './containers/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
@@ -25,6 +24,7 @@ import About from './components/About';
 import Faq from './components/Faq';
 import Guidelines from './components/Guidelines';
 import Privacy from './components/Privacy';
+import ProductAndRefundPolicy from './components/ProductAndRefundPolicy';
 import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
@@ -34,6 +34,9 @@ import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
 import PlanPage from './components/PlanPage';
+import BuyResultPage from './components/BuyResultPage';
+import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
+import SubscriptionsPage from './components/Me/SubscriptionsPage';
 
 const routes = [
   {
@@ -258,6 +261,16 @@ const routes = [
     component: Me,
   },
   {
+    path: '/me/subscriptions',
+    exact: true,
+    component: SubscriptionsPage,
+  },
+  {
+    path: '/me/subscriptions/current',
+    exact: true,
+    component: CurrentSubscriptionPage,
+  },
+  {
     path: '/about',
     exact: true,
     component: About,
@@ -278,6 +291,11 @@ const routes = [
     component: Privacy,
   },
   {
+    path: '/product-and-refund',
+    exact: true,
+    component: ProductAndRefundPolicy,
+  },
+  {
     path: '/user-terms',
     exact: true,
     component: Terms,
@@ -293,6 +311,11 @@ const routes = [
     path: '/plans',
     exact: true,
     component: PlanPage,
+  },
+  {
+    path: '/buy/result/:paymentRecordId',
+    exact: true,
+    component: BuyResultPage,
   },
   {
     component: NotFound,

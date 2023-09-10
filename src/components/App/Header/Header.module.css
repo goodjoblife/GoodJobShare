@@ -1,4 +1,4 @@
-@value main-yellow, main-black, border-gray, main-gray NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
+@value main-yellow, main-black, border-gray, main-gray NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small from "common/variables.module.css";
 
 .root {
   @media (max-width: 850px) {
@@ -56,10 +56,12 @@
     display: block;
   }
 
-  svg {
+  img {
+    width: 160px;
+    height: 47px;
     transform: scale(0.8) translateY(6px);
     transform-origin: 0% 50%;
-    fill: #fff;
+    filter: invert(1);
   }
 }
 
@@ -79,7 +81,7 @@
     display: block;
   }
 
-  svg {
+  img {
     width: 32px;
     height: 32px;
   }
@@ -168,6 +170,27 @@
     &:hover {
       background-color: rgba(255, 255, 255, 0.9);
     }
+  }
+}
+
+.plansLink {
+  color: #fff;
+  text-transform: lowercase;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  transition-property: color;
+  transition-duration: 0.3s;
+  margin-bottom: 17px;
+
+  @media (min-width: above-small) {
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    color: main-yellow;
   }
 }
 

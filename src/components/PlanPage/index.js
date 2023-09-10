@@ -1,39 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { setStatic } from 'recompose';
+import { useDispatch } from 'react-redux';
+import R from 'ramda';
 
 import Heading from 'common/base/Heading';
+import { useSubscriptionPlans } from 'hooks/payment/usePayment';
+import { isUnfetched, isFetched } from 'utils/fetchBox';
+import Loading from 'common/Loader';
 import { subscriptionType } from 'constants/subscription';
 
+import { fetchSubscriptionPlans } from '../../actions/payment';
 import styles from './PlanPage.module.css';
 import CardSection from './CardSection';
 
-const plans = [
-  {
-    skuId: 1,
-    type: 'SubmitData',
-    title: '留下一筆資料',
-    description: '解鎖全站 7 天',
-    amount: 0,
-    url: '/',
-  },
-  {
-    skuId: 2,
-    type: 'BuySubscription',
-    title: '包月方案',
-    description: '解鎖全站 1 個月',
-    amount: 99,
-    url: '/',
-  },
-  {
-    skuId: 3,
-    type: 'BuySubscription',
-    title: '包季方案',
-    description: '解鎖全站 3 個月',
-    amount: 149,
-    url: '/',
-  },
-];
+const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
+  return dispatch(fetchSubscriptionPlans());
+});
 
 const PlanPage = () => {
+  const dispatch = useDispatch();
+  const subscriptionPlansBox = useSubscriptionPlans();
+
+  const needsFetching = isUnfetched(subscriptionPlansBox);
+  const isReady = isFetched(subscriptionPlansBox);
+
+  useEffect(() => {
+    if (needsFetching) {
+      dispatch(fetchSubscriptionPlans());
+    }
+  }, [dispatch, needsFetching]);
+
+  if (!isReady) {
+    return <Loading size="l" />;
+  }
+
+  let plans = subscriptionPlansBox.data;
+  if (Array.isArray(plans)) {
+    const planTypes = R.values(subscriptionType);
+    plans = plans.filter(plan => planTypes.includes(plan.type));
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -41,15 +47,11 @@ const PlanPage = () => {
           解鎖全站資料方式
         </Heading>
         <div className={styles['cardSection']}>
-          <CardSection
-            plans={plans}
-            title="留下你的資料幫助其他人："
-            type={subscriptionType.submitData}
-          />
+          <CardSection plans={plans} />
         </div>
       </div>
     </div>
   );
 };
 
-export default PlanPage;
+export default ssr(PlanPage);

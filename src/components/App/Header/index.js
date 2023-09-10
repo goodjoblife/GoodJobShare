@@ -2,9 +2,10 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import cn from 'classnames';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { Wrapper } from 'common/base';
-import { GjLogo, Glike } from 'common/icons';
+import GjLogo from 'common/icons/GjLogo.svg';
+import Glike from 'common/icons/Glike.svg';
 import PopoverToggle from 'common/PopoverToggle';
 import useShareLink from 'hooks/experiments/useShareLink';
 import usePermission from 'hooks/usePermission';
@@ -18,6 +19,13 @@ import ProgressTop from './Top/ProgressTop';
 import Searchbar from './Searchbar';
 import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
 import emailStatusMap from '../../../constants/emailStatus';
+
+const onClickShareData = () => {
+  ReactGA.event({
+    category: GA_CATEGORY.HEADER,
+    action: GA_ACTION.CLICK_SHARE_DATA,
+  });
+};
 
 const HeaderTop = () => {
   const location = useLocation();
@@ -65,13 +73,6 @@ const Header = () => {
     }
   }, [isLoggedIn, fetchPermission]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onClickShareData = useCallback(() => {
-    ReactGA.event({
-      category: GA_CATEGORY.HEADER,
-      action: GA_ACTION.CLICK_SHARE_DATA,
-    });
-  }, []);
-
   const toggleNav = useCallback(() => setNavOpen(!isNavOpen), [isNavOpen]);
 
   const closeNav = useCallback(() => setNavOpen(false), []);
@@ -86,12 +87,12 @@ const Header = () => {
           <HeaderButton isNavOpen={isNavOpen} toggle={toggleNav} />
           <div className={styles.logo}>
             <Link to="/" title="GoodJob 職場透明化運動">
-              <GjLogo />
+              <img src={GjLogo} alt="Goodjob" />
             </Link>
           </div>
           <div className={styles.logoSm}>
             <Link to="/" title="GoodJob 職場透明化運動">
-              <Glike />
+              <img src={Glike} alt="Goodjob" />
             </Link>
           </div>
           <div className={styles.searchbarWrapper}>
@@ -112,11 +113,20 @@ const Header = () => {
             })}
           >
             <Link to="/" className={styles.logo} title="GoodJob 職場透明化運動">
-              <GjLogo />
+              <img src={GjLogo} alt="Goodjob" />
             </Link>
             <SiteMenu isLogin={isLoggedIn} />
             <div className={styles.buttonsArea}>
-              <ShareButton onClick={onClickShareData} />
+              <Link to="/plans" className={styles.plansLink}>
+                解鎖方式
+              </Link>
+              <Link
+                to="/share"
+                className={styles.leaveDataBtn}
+                onClick={onClickShareData}
+              >
+                分享經驗
+              </Link>
               <div style={{ position: 'relative' }}>
                 {!isLoggedIn && (
                   <button className={styles.loginBtn} onClick={login}>
@@ -128,6 +138,9 @@ const Header = () => {
                     popoverClassName={styles.popover}
                     popoverContent={
                       <ul className={styles.popoverItem}>
+                        <li>
+                          <Link to="/me/subscriptions/current">我的方案</Link>
+                        </li>
                         <li>
                           <Link to="/me">管理我的資料</Link>
                         </li>
@@ -162,19 +175,6 @@ const HeaderButton = ({ isNavOpen, toggle }) => (
 HeaderButton.propTypes = {
   isNavOpen: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
-};
-
-const ShareButton = ({ className, onClick }) => (
-  <Link
-    to="/share"
-    className={cn(className, styles.leaveDataBtn)}
-    onClick={onClick}
-  >
-    立即分享
-  </Link>
-);
-ShareButton.propTypes = {
-  onClick: PropTypes.func,
 };
 
 export default Header;

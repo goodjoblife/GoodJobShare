@@ -4,7 +4,6 @@ import { toPairs, compose, map } from 'ramda';
 
 import Heading from 'common/base/Heading';
 import FanPageBlock from 'common/FanPageBlock';
-import GoogleAdsense from 'common/GoogleAdsense';
 import BreadCrumb from 'common/BreadCrumb';
 
 import {
@@ -13,7 +12,7 @@ import {
 } from '../../constants/companyJobTitle';
 import { generateBreadCrumbData } from './utils';
 
-import TabLinkGroup from './TabLinkGroup';
+import TabLinkGroup from '../common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
 
 const CompanyAndJobTitleWrapper = ({
@@ -55,11 +54,6 @@ const CompanyAndJobTitleWrapper = ({
       />
       {children}
       <FanPageBlock className={styles.fanPageBlock} />
-      <GoogleAdsense
-        className={styles.adBeforeFanPageBlock}
-        slot="2116582901"
-        responsive="true"
-      />
     </div>
   );
 };

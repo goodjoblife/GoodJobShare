@@ -20,8 +20,8 @@ const CardSection = ({ plans }) => {
               title={plan.title}
               description={plan.description}
               amount={plan.amount}
-              actionUrl={plan.url}
               type={plan.type}
+              skuId={plan.skuId}
             />
           </div>
         ))}
