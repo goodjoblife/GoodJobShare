@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { viewSalaryWorkTimes } from '../../../actions/viewLog';
+import { viewSalaryWorkTimes } from 'actions/viewLog';
 
 class ViewLog extends Component {
   componentDidMount() {

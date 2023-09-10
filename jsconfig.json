@@ -2,14 +2,15 @@
     "compilerOptions": {
         "baseUrl": "./",
         "paths": {
+            "actions/*": ["src/actions/*"],
+            "apis/*": ["src/apis/*"],
             "common/*": ["src/components/common/*"],
-            "utils/*": ["src/utils/*"],
+            "constants/*": ["src/constants/*"],
+            "contexts/*": ["src/contexts/*"],
             "graphql/*": ["src/graphql/*"],
             "hooks/*": ["src/hooks/*"],
-            "contexts/*": ["src/contexts/*"],
-            "constants/*": ["src/constants/*"],
-            "actions/*": ["src/actions/*"],
-            "selectors/*": ["src/selectors/*"]
+            "selectors/*": ["src/selectors/*"],
+            "utils/*": ["src/utils/*"]
         }
     },
     "exclude": ["node_modules", "dist"]

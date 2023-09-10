@@ -1,11 +1,11 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { queryMenuIfUnfetched } from '../actions/laborRights';
+import { queryMenuIfUnfetched } from 'actions/laborRights';
 import {
   menuEntriesSelector,
   menuStatusSelector,
   menuErrorSelector,
-} from '../selectors/laborRightsSelector';
+} from 'selectors/laborRightsSelector';
 import LaborRightsMenu from '../components/LaborRightsMenu';
 
 const mapStateToProps = state => ({

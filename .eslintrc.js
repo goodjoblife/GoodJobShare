@@ -39,14 +39,15 @@ module.exports = {
         config: {
           resolve: {
             alias: {
+              actions: path.resolve('./src/actions'),
+              apis: path.resolve('./src/apis'),
               common: path.resolve('./src/components/common'),
-              utils: path.resolve('./src/utils'),
+              constants: path.resolve('./src/constants'),
+              contexts: path.resolve('./src/contexts'),
               graphql: path.resolve('./src/graphql'),
               hooks: path.resolve('./src/hooks'),
-              contexts: path.resolve('./src/contexts'),
-              constants: path.resolve('./src/constants'),
-              actions: path.resolve('./src/actions'),
               selectors: path.resolve('./src/selectors'),
+              utils: path.resolve('./src/utils'),
             },
           },
         },

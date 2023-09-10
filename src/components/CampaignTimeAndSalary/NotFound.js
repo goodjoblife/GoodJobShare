@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import CommonNotFound from 'common/NotFound';
 import Redirect from 'common/routing/Redirect';
-import { queryCampaignInfoList } from '../../actions/campaignInfo';
-import { isFetched } from '../../constants/status';
+import { queryCampaignInfoList } from 'actions/campaignInfo';
+import { isFetched } from 'constants/status';
 
 class NotFound extends Component {
   static fetchData({ store: { dispatch } }) {
