@@ -22,9 +22,6 @@ import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
 import { paramsSelector } from 'common/routing/selectors';
 import usePermission from 'hooks/usePermission';
-import { isFetched, isError } from 'constants/status';
-import { COMMENT_ZONE } from 'constants/formElements';
-import breakpoints from 'constants/breakpoints';
 import useTrace from './hooks/useTrace';
 import Article from './Article';
 import MessageBoard from './MessageBoard';
@@ -37,20 +34,15 @@ import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
-<<<<<<< HEAD
-import { fetchExperience } from '../../actions/experienceDetail';
-import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
-=======
-import { isFetching, isFetched, isError } from 'constants/status';
+import { isFetched, isError } from 'constants/status';
 import { fetchExperience } from 'actions/experienceDetail';
 import { queryRelatedExperiencesOnExperience } from 'actions/experience';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
->>>>>>> upstream/master
 import {
   pageType as PAGE_TYPE,
   tabType as TAB_TYPE,
-} from 'constants/companyJobTitle';
+} from '../../constants/companyJobTitle';
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 
@@ -60,7 +52,12 @@ const MODAL_TYPE = {
   REPORT_SUCCESS: 'REPORT_SUCCESS',
 };
 
-const experienceIdSelector = R.compose(params => params.id);
+// from params
+const experienceIdSelector = R.prop('id');
+const useExperienceId = () => {
+  const params = useParams();
+  return experienceIdSelector(params);
+};
 
 const experienceTypeToTabType = {
   work: TAB_TYPE.WORK_EXPERIENCE,
@@ -73,14 +70,13 @@ const pageTypeToNameSelector = {
 };
 
 const ExperienceDetail = ({ fetchExperience, ...props }) => {
-  const params = useParams();
-  const experienceId = experienceIdSelector(params);
+  const experienceId = useExperienceId();
 
   useEffect(() => {
     fetchExperience(experienceId);
   }, [experienceId, fetchExperience]);
 
-  const [permissionFetched, fetchPermission, canView] = usePermission();
+  const [, fetchPermission, canView] = usePermission();
 
   useEffect(() => {
     fetchPermission();
@@ -251,7 +247,7 @@ const ExperienceDetail = ({ fetchExperience, ...props }) => {
         )}
         <Wrapper size="s">
           <ScrollElement name={COMMENT_ZONE} />
-          <MessageBoard experienceId={experienceDataId} />
+          <MessageBoard experienceId={experienceId} />
         </Wrapper>
       </Section>
       <Modal
