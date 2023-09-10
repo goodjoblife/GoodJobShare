@@ -1,7 +1,7 @@
 import createReducer from 'utils/createReducer';
 
-import { SET_STATUS } from '../actions/popularJobTitleSalaryDistribution';
-import fetchingStatus from '../constants/status';
+import { SET_STATUS } from 'actions/popularJobTitleSalaryDistribution';
+import fetchingStatus from 'constants/status';
 
 const preloadedState = {
   data: [],

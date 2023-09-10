@@ -33,14 +33,14 @@ import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
 import {
   experienceCountSelector,
   timeAndSalaryCountSelector,
-} from '../../../../selectors/countSelector';
+} from 'selectors/countSelector';
 import {
   createInterviewExperience,
   queryExperienceCountIfUnfetched,
-} from '../../../../actions/experiences';
-import { queryTimeAndSalaryCountIfUnfetched } from '../../../../actions/timeAndSalary';
-import { GA_CATEGORY, GA_ACTION } from '../../../../constants/gaConstants';
-import PIXEL_CONTENT_CATEGORY from '../../../../constants/pixelConstants';
+} from 'actions/experiences';
+import { queryTimeAndSalaryCountIfUnfetched } from 'actions/timeAndSalary';
+import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
+import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 import {
   DATA_KEY_COMPANY_NAME,
   DATA_KEY_JOB_TITLE,

@@ -6,8 +6,8 @@ import {
   SET_ENTRY_QUERY_START,
   SET_ENTRY_QUERY_DONE,
   SET_ENTRY_QUERY_ERROR,
-} from '../actions/laborRights';
-import fetchingStatus from '../constants/status';
+} from 'actions/laborRights';
+import fetchingStatus from 'constants/status';
 
 // menuEntries: [{id, title, coverUrl}]
 // entries: {id: {data, status, error}}

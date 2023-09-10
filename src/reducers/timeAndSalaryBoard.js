@@ -6,8 +6,8 @@ import {
   SET_BOARD_STATUS,
   SET_BOARD_EXTREME_DATA,
   SET_BOARD_EXTREME_STATUS,
-} from '../actions/timeAndSalaryBoard';
-import fetchingStatus from '../constants/status';
+} from 'actions/timeAndSalaryBoard';
+import fetchingStatus from 'constants/status';
 
 const preloadedState = fromJS({
   data: [],

@@ -19,11 +19,11 @@ import AboutThisJobModal from '../common/AboutThisJobModal';
 import withModal from '../common/withModal';
 import styles from './TimeAndSalaryBoard.module.css';
 import commonStyles from '../views/view.module.css';
-import { isFetching, isFetched } from '../../../constants/status';
-import { queryTimeAndSalary } from '../../../actions/timeAndSalaryBoard';
+import { isFetching, isFetched } from 'constants/status';
+import { queryTimeAndSalary } from 'actions/timeAndSalaryBoard';
 import DashBoardTable from '../common/DashBoardTable';
 import { toQsString, queryParser } from './helper';
-import { DATA_NUM_PER_PAGE } from '../../../constants/timeAndSalarSearch';
+import { DATA_NUM_PER_PAGE } from 'constants/timeAndSalarSearch';
 import renderHelmet from './helmet';
 
 const pathParameters = {

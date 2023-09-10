@@ -10,11 +10,11 @@ import Overview from '../CompanyAndJobTitle/Overview';
 import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
 import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
-import NotFound from '../common/NotFound';
+import NotFound from 'common/NotFound';
 import { withPermission } from 'common/permission-context';
 
-import { tabType, pageType } from '../../constants/companyJobTitle';
-import jobTitleActions from '../../actions/jobTitle';
+import { tabType, pageType } from 'constants/companyJobTitle';
+import jobTitleActions from 'actions/jobTitle';
 import {
   interviewExperiences,
   workExperiences,
@@ -25,7 +25,7 @@ import {
   overtimeFrequencyCount,
   status,
   jobTitle as jobTitleSelector,
-} from '../../selectors/companyAndJobTitle';
+} from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
 import withRouteParameter from '../ExperienceSearch/withRouteParameter';
 
