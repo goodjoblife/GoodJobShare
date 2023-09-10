@@ -4,8 +4,8 @@ import createReducer from 'utils/createReducer';
 import {
   SET_BOARD_DATA,
   SET_BOARD_STATUS,
-} from '../actions/campaignTimeAndSalaryBoard';
-import fetchingStatus from '../constants/status';
+} from 'actions/campaignTimeAndSalaryBoard';
+import fetchingStatus from 'constants/status';
 
 const preloadedState = fromJS({
   campaignName: '',

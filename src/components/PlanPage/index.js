@@ -9,7 +9,7 @@ import { isUnfetched, isFetched } from 'utils/fetchBox';
 import Loading from 'common/Loader';
 import { subscriptionType } from 'constants/subscription';
 
-import { fetchSubscriptionPlans } from '../../actions/payment';
+import { fetchSubscriptionPlans } from 'actions/payment';
 import styles from './PlanPage.module.css';
 import CardSection from './CardSection';
 

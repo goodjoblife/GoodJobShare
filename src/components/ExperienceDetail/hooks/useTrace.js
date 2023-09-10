@@ -2,7 +2,7 @@ import { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import ReactPixel from 'react-facebook-pixel';
 import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
-import { viewExperiences as viewExperiencesAction } from '../../../actions/viewLog';
+import { viewExperiences as viewExperiencesAction } from 'actions/viewLog';
 
 const useView = experienceId => {
   const dispatch = useDispatch();

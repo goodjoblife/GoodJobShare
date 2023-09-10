@@ -9,7 +9,7 @@ import GjLogo from 'common/icons/GjLogo.svg';
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
 
-import { verifyEmail } from '../../actions/emailVerify';
+import { verifyEmail } from 'actions/emailVerify';
 
 import VerificationSuccess from './VerificationSuccess';
 import VerificationFailure from './VerificationFailure';

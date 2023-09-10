@@ -15,7 +15,7 @@ import {
   queryEntry,
   queryMenuIfUnfetched,
   queryEntryIfUnfetched,
-} from '../../actions/laborRights';
+} from 'actions/laborRights';
 import useEntry, { useNeighborEntry } from './useEntry';
 import useTracking from './useTracking';
 import Body from './Body';

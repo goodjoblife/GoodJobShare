@@ -5,7 +5,7 @@ import {
   SET_PAYMENT_RECORD,
   SET_SUBSCRIPTION_PLANS,
   SET_MY_CURRENT_SUBSCRIPTION,
-} from '../actions/payment';
+} from 'actions/payment';
 
 const preloadedState = {
   paymentRecord: getUnfetched(),
