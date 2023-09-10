@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput';
+
 import { debounce } from 'utils/streamUtils';
-import companySearchApi from 'apis/companySearchApi';
 
 import InputTitle from './InputTitle';
+import { getCompaniesSearch } from '../../../apis/companySearchApi';
 
 const getItemValue = item => item.label;
 
@@ -25,8 +26,7 @@ class CompanyQuery extends React.Component {
 
   search = debounce((e, value) => {
     if (value) {
-      return companySearchApi
-        .getCompaniesSearch({ key: value })
+      return getCompaniesSearch({ key: value })
         .then(r =>
           Array.isArray(r)
             ? this.handleAutocompleteItems(r.map(mapToAutocompleteList))

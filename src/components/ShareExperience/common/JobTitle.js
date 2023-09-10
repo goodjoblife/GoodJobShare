@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput';
+
 import { debounce } from 'utils/streamUtils';
-import jobTitleSearchApi from 'apis/jobTitleSearchApi';
 
 import InputTitle from './InputTitle';
+import { getJobTitlesSearch } from '../../../apis/jobTitleSearchApi';
 
 const getItemValue = item => item.label;
 
@@ -25,8 +26,7 @@ class JobTitle extends React.Component {
 
   search = debounce((e, value) => {
     if (value) {
-      return jobTitleSearchApi
-        .getJobTitlesSearch({ key: value })
+      return getJobTitlesSearch({ key: value })
         .then(r =>
           Array.isArray(r)
             ? this.handleAutocompleteItems(r.map(mapToAutocompleteList))
