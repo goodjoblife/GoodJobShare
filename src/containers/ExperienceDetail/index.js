@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import ExperienceDetail from '../../components/ExperienceDetail';
-import { fetchExperience } from '../../actions/experienceDetail';
+import { fetchExperience } from 'actions/experienceDetail';
 
 const mapStateToProps = state => ({
   experienceDetail: state.experienceDetail,

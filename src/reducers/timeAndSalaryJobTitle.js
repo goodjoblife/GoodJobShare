@@ -4,8 +4,8 @@ import createReducer from 'utils/createReducer';
 import {
   SET_JOB_TITLE_DATA,
   SET_JOB_TITLE_STATUS,
-} from '../actions/timeAndSalaryJobTitle';
-import fetchingStatus from '../constants/status';
+} from 'actions/timeAndSalaryJobTitle';
+import fetchingStatus from 'constants/status';
 
 const preloadedState = fromJS({
   jobTitle: null,

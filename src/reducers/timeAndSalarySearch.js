@@ -4,8 +4,8 @@ import createReducer from 'utils/createReducer';
 import {
   SET_SEARCH_DATA,
   SET_SEARCH_STATUS,
-} from '../actions/timeAndSalarySearch';
-import fetchingStatus from '../constants/status';
+} from 'actions/timeAndSalarySearch';
+import fetchingStatus from 'constants/status';
 
 const preloadedState = fromJS({
   keyword: null,

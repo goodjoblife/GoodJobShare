@@ -1,5 +1,5 @@
 import createReducer from 'utils/createReducer';
-import { SET_STATUS } from '../actions/company';
+import { SET_STATUS } from 'actions/company';
 
 const preloadedState = {};
 

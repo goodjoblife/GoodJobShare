@@ -13,14 +13,14 @@ import NotFound from 'common/NotFound';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import TextInput from 'common/form/TextInput';
 import TextArea from 'common/form/TextArea';
-import fetchingStatus from '../../../constants/status';
+import fetchingStatus from 'constants/status';
 import BasicInfo from '../TimeSalaryForm/BasicInfo';
 import SalaryInfo from '../TimeSalaryForm/SalaryInfo';
 import TimeInfo from '../TimeSalaryForm/TimeInfo';
 import InputTitle from '../common/InputTitle';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 import MarkdownParser from '../../LaborRightsSingle/MarkdownParser';
-import { queryCampaignInfoList } from '../../../actions/campaignInfo';
+import { queryCampaignInfoList } from 'actions/campaignInfo';
 
 import timeAndSalaryFormStyles from '../TimeSalaryForm/TimeSalaryForm.module.css';
 import styles from '../CampaignTimeAndSalaryForm/CampaignTimeAndSalaryForm.module.css';

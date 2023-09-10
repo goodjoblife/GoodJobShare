@@ -1,10 +1,10 @@
 import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
-import fetchingStatus from '../constants/status';
+import fetchingStatus from 'constants/status';
 import {
   SET_EXPERIENCE,
   SET_EXPERIENCE_STATUS,
-} from '../actions/experienceDetail';
+} from 'actions/experienceDetail';
 
 const preloadedState = fromJS({
   experienceStatus: fetchingStatus.UNFETCHED,

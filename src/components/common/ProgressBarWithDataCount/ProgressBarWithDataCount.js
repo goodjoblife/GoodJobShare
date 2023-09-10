@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ProgressBar from 'common/ProgressBar';
 import { goalNum } from '../../../constants/dataProgress';
-import { queryExperienceCountIfUnfetched as queryExperienceCount } from '../../../actions/experiences';
-import { experienceCountSelector } from '../../../selectors/countSelector';
+import { queryExperienceCountIfUnfetched as queryExperienceCount } from 'actions/experiences';
+import { experienceCountSelector } from 'selectors/countSelector';
 
 const ProgressBarWithDataCount = props => {
   const experienceCount = useSelector(experienceCountSelector);
