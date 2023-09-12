@@ -1,12 +1,20 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useContext,
+  Fragment,
+} from 'react';
 import { Element as ScrollElement, scroller } from 'react-scroll';
 import PropTypes from 'prop-types';
 import Button from 'common/button/Button';
 import { P } from 'common/base';
 import ButtonGroup from 'common/button/ButtonGroup';
 import Loader from 'common/Loader';
-import { useLogin, useFacebookLogin } from 'hooks/login';
-import useFetchReplies from '../hooks/useFetchReplies';
+import { useLogin } from 'hooks/login';
+import LoginModalContext from 'contexts/LoginModalContext';
+import useQueryReplies from '../hooks/useQueryReplies';
 import useLikeReply from '../hooks/useLikeReply';
 import useCreateReply from '../hooks/useCreateReply';
 import CommentBlock from './CommentBlock';
@@ -23,24 +31,81 @@ const recommendedSentences = [
 
 const REPLIES_BOTTOM = 'REPLIES_BOTTOM';
 
-const MessageBoard = ({ experienceId }) => {
-  const [comment, setComment] = useState('');
+const useLoginFlow = callback => {
+  const [state, setState] = useState('init');
   const [isLoggedIn] = useLogin();
-  const facebookLogin = useFacebookLogin();
+  const { isLoginModalDisplayed, setLoginModalDisplayed } = useContext(
+    LoginModalContext,
+  );
 
-  const [repliesState, fetchReplies] = useFetchReplies(experienceId);
+  console.log(
+    state,
+    'isLoggedIn',
+    isLoggedIn,
+    'isLoginModalDisplayed',
+    isLoginModalDisplayed,
+  );
 
-  // fetch when experienceId change
   useEffect(() => {
-    fetchReplies();
-  }, [fetchReplies]);
+    if (state === 'submitting_check_logged_in' && isLoggedIn) {
+      setState('submitting');
+    }
+  }, [callback, isLoggedIn, state]);
 
-  const likeReply = useLikeReply();
+  useEffect(() => {
+    if (state === 'submitting') {
+      setState('submitting_check_api');
+      callback().then(() => {
+        setState('init');
+      });
+    }
+  }, [callback, state]);
 
+  useEffect(() => {
+    if (state === 'submitting_check_logged_in' && !isLoggedIn) {
+      setState('init');
+    }
+  }, [isLoggedIn, state]);
+
+  useEffect(() => {
+    if (state === 'submitting_open_modal' && !isLoginModalDisplayed) {
+      // 當 modal 關閉，檢查登入狀態
+      setState('submitting_check_logged_in');
+    }
+  }, [isLoginModalDisplayed, state]);
+
+  const startFlow = useCallback(() => {
+    if (!isLoggedIn) {
+      setLoginModalDisplayed(true);
+      setState('submitting_open_modal');
+    } else {
+      setState('submitting');
+    }
+  }, [isLoggedIn, setLoginModalDisplayed]);
+
+  const isRunning = useMemo(() => state !== 'init', [state]);
+
+  return [startFlow, isRunning];
+};
+
+const SubmitCommentBlock = ({ experienceId }) => {
+  const [comment, setComment] = useState('');
   const createReply = useCreateReply(experienceId);
+  const [, queryReplies] = useQueryReplies(experienceId);
+
+  const submitCommentCallback = useCallback(async () => {
+    await createReply(comment);
+    await queryReplies();
+    setComment('');
+    scroller.scrollTo(REPLIES_BOTTOM, { smooth: true, offset: -75 });
+  }, [comment, createReply, queryReplies]);
+
+  const [submitComment, isSubmitting] = useLoginFlow(submitCommentCallback);
+
+  console.log('comment', comment);
 
   return (
-    <div className={styles.container}>
+    <Fragment>
       <textarea
         rows="5"
         placeholder="寫下您的留言、意見"
@@ -61,20 +126,31 @@ const MessageBoard = ({ experienceId }) => {
       <div className={`formLabel ${styles.termsOfService}`}>
         <Button
           btnStyle="submit"
-          disabled={!comment}
-          onClick={async () => {
-            if (!isLoggedIn) {
-              await facebookLogin();
-            }
-            await createReply(comment);
-            await fetchReplies();
-            setComment('');
-            scroller.scrollTo(REPLIES_BOTTOM, { smooth: true, offset: -75 });
+          disabled={!comment || isSubmitting}
+          onClick={() => {
+            submitComment();
           }}
         >
-          {isLoggedIn ? '發佈留言' : '以  f  認證，發佈留言'}
+          發佈留言
         </Button>
       </div>
+    </Fragment>
+  );
+};
+
+const MessageBoard = ({ experienceId }) => {
+  const [repliesState, queryReplies] = useQueryReplies(experienceId);
+
+  // fetch when experienceId change
+  useEffect(() => {
+    queryReplies();
+  }, [queryReplies]);
+
+  const likeReply = useLikeReply();
+
+  return (
+    <div className={styles.container}>
+      <SubmitCommentBlock experienceId={experienceId} />
       <div className={styles.commentBlocks}>
         {repliesState.loading || !repliesState.value ? (
           <Loader size="s" />
@@ -87,11 +163,8 @@ const MessageBoard = ({ experienceId }) => {
                 key={reply._id}
                 reply={reply}
                 toggleReplyLike={async () => {
-                  if (!isLoggedIn) {
-                    await facebookLogin();
-                  }
                   await likeReply(reply);
-                  await fetchReplies();
+                  await queryReplies();
                 }}
               />
             ))}

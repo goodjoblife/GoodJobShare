@@ -14,6 +14,21 @@ export const setExperience = experience => ({
   experience,
 });
 
+export const createReply = (experienceId, comment) => (
+  dispatch,
+  getState,
+  { api },
+) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
+  return api.experiences.postExperienceReply({
+    id: experienceId,
+    comment,
+    token,
+  });
+};
+
 export const fetchExperience = id => (dispatch, getState, { api }) => {
   const state = getState();
   const token = tokenSelector(state);

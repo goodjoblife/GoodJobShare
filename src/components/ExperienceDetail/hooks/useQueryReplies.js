@@ -2,7 +2,7 @@ import { useAsyncFn } from 'react-use';
 import { useToken } from 'hooks/auth';
 import api from '../../../apis';
 
-const useFetchReplies = experienceId => {
+const useQueryReplies = experienceId => {
   const token = useToken();
   return useAsyncFn(async () => {
     const result = await api.experiences.getExperienceReply({
@@ -16,4 +16,4 @@ const useFetchReplies = experienceId => {
   }, [experienceId, token]);
 };
 
-export default useFetchReplies;
+export default useQueryReplies;

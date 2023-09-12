@@ -9,6 +9,8 @@ const LoginModal = ({ isOpen, close }) => {
   const fbLogin = useFacebookLogin();
   const googleLogin = useGoogleLogin();
 
+  // 當 login status 改變再關
+
   return (
     <Modal isOpen={isOpen} hasColose close={close} closableOnClickOutside>
       <div className={styles.container}>
