@@ -1,10 +1,9 @@
-import React, { Fragment, useCallback, useContext } from 'react';
+import React, { Fragment, useCallback } from 'react';
 import { Switch, useLocation, useHistory } from 'react-router-dom';
 import { omit } from 'ramda';
 
 import StaticHelmet from 'common/StaticHelmet';
 import LoginModal from 'common/LoginModal';
-import LoginModalContext from 'contexts/LoginModalContext';
 import useLocStateToastObserver from 'hooks/toastNotification/useLocStateToastObserver';
 
 import ToastNotification from '../ToastNotification/ToastNotification';
@@ -29,9 +28,6 @@ const useShare = () => {
 
 const App = () => {
   const [share, exitShare] = useShare();
-  const { isLoginModalDisplayed, setLoginModalDisplayed } = useContext(
-    LoginModalContext,
-  );
 
   useLocStateToastObserver();
   return (
@@ -52,10 +48,7 @@ const App = () => {
         ))}
       </Switch>
       <ShareInterviewModal open={share === 'interview'} onClose={exitShare} />
-      <LoginModal
-        isOpen={isLoginModalDisplayed}
-        close={() => setLoginModalDisplayed(false)}
-      />
+      <LoginModal />
     </Fragment>
   );
 };
