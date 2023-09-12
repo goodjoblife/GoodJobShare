@@ -63,6 +63,7 @@ export const loginWithGoogle = credentialResponse => async (
   getState,
   { api },
 ) => {
+  //  TODO: 當登入失敗
   const idToken = credentialResponse.credential;
   const { token } = await api.auth.postAuthGoogle({
     idToken,

@@ -11,7 +11,8 @@ const GoogleContextProvider = ({ children }) => {
   const [googleAuth, setGoogleAuth] = useState(null);
 
   useEffect(() => {
-    window.onload = function() {
+    // do it once
+    window.addEventListener('load', function() {
       window.google.accounts.id.initialize({
         client_id: GOOGLE_APP_ID,
         callback: async response => {
@@ -20,7 +21,7 @@ const GoogleContextProvider = ({ children }) => {
       });
 
       setGoogleAuth(window.google.accounts.id);
-    };
+    });
   }, [dispatch]);
 
   return (
