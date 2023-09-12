@@ -4,16 +4,13 @@ import { connect } from 'react-redux';
 import cls from 'classnames';
 
 import { Wrapper } from 'common/base';
+import Modal from 'common/Modal';
 
+import { getUserName, getUserEmail } from 'selectors/authSelector';
+import { sendVerifyEmail } from 'actions/emailVerify';
 import topStyles from './Top.module.css';
 import styles from './EmailVerificationTop.module.css';
-
-import Modal from '../../../common/Modal';
 import VerifyEmailForm from '../../../EmailVerification/VerifyEmailForm';
-
-import { getUserName, getUserEmail } from '../../../../selectors/authSelector';
-
-import { sendVerifyEmail } from '../../../../actions/emailVerify';
 
 const EmailVerificationTop = ({
   isSentVerificationEmail,

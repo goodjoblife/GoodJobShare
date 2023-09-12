@@ -7,7 +7,11 @@ const FacebookWrapper = ({ children }) => {
   const container = useRef(null);
 
   useEffect(() => {
+<<<<<<< HEAD
     if (FB && container) {
+=======
+    if (FB && container.current) {
+>>>>>>> upstream/dev
       FB.XFBML.parse(container.current);
     }
   });

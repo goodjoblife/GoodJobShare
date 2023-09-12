@@ -4,8 +4,8 @@ import createReducer from 'utils/createReducer';
 import {
   SET_COMPANY_DATA,
   SET_COMPANY_STATUS,
-} from '../actions/timeAndSalaryCompany';
-import fetchingStatus from '../constants/status';
+} from 'actions/timeAndSalaryCompany';
+import fetchingStatus from 'constants/status';
 
 const preloadedState = fromJS({
   companyName: null,

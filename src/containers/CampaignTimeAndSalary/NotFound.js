@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import NotFound from '../../components/CampaignTimeAndSalary/NotFound';
-import { queryCampaignInfoListIfNeeded } from '../../actions/campaignInfo';
+import { queryCampaignInfoListIfNeeded } from 'actions/campaignInfo';
 import {
   campaignNameSelector,
   campaignEntriesSelector,
   campaignEntriesStatusSelector,
   campaignEntriesErrorSelector,
-} from '../../selectors/campaignSelector';
+} from 'selectors/campaignSelector';
 
 const mapStateToProps = (state, { match }) => ({
   campaignName: campaignNameSelector(match),

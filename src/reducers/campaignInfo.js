@@ -2,8 +2,8 @@ import R from 'ramda';
 import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 
-import { SET_LIST_DATA, SET_LIST_STATUS } from '../actions/campaignInfo';
-import fetchingStatus from '../constants/status';
+import { SET_LIST_DATA, SET_LIST_STATUS } from 'actions/campaignInfo';
+import fetchingStatus from 'constants/status';
 
 /*
  * entries: name ->
