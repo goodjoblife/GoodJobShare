@@ -1,19 +1,15 @@
 import { useContext, useCallback } from 'react';
 import PermissionContext from 'common/permission-context/PermissionContext';
 import { useToken } from 'hooks/auth';
-<<<<<<< HEAD
 import { getHasSearchPermission } from 'apis/me';
-=======
-import api from '../apis';
 
 const useGetSearchPermission = ({ token }) => {
   return useCallback(async () => {
     if (token === null) return false;
     // Get permission only when token available
-    return await api.me.getHasSearchPermission({ token });
+    return await getHasSearchPermission({ token });
   }, [token]);
 };
->>>>>>> upstream/master
 
 export default () => {
   const token = useToken();

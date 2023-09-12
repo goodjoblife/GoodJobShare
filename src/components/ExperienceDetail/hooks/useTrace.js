@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
 import ReactPixel from 'react-facebook-pixel';
-<<<<<<< HEAD
-import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
-=======
 import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
->>>>>>> upstream/dev
 import { useViewExperiences } from 'hooks/viewLog';
 
 const useTrace = experienceId => {
