@@ -120,6 +120,13 @@ export const loadMoreRelatedExperiences = () => async (
       );
     }
   } catch (error) {
-    dispatch(setRelatedExperiencesState(getError(error)));
+    const previousState = relatedExperiencesStateSelector(getState()); // FetchBox
+
+    if (
+      experienceId === previousState.data.experienceId &&
+      page === previousState.data.page
+    ) {
+      dispatch(setRelatedExperiencesState(getError(error)));
+    }
   }
 };
