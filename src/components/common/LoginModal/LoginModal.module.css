@@ -1,42 +1,30 @@
+@value above-small from "common/variables.module.css";
 $above-desktop: 1025px;
 
 .container {
-  font-size: 22px;
   margin: 0 auto;
   text-align: center;
 }
 
-.modal {
-  margin: 0 auto;
-  width: 80%;
-  @media (min-width: $above-desktop) {
-    width: 358px;
+.loginBtnContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+
+  @media (max-width: above-small) {
+    flex-direction: column;
+    height: 8rem;
+    align-items: center;
   }
 }
 
-.btn {
-  width: 100%;
-  height: 61px;
-  color: #fff;
-  text-align: center;
-  margin-top: 1.4em;
-  display: block;
-}
-
-.btn-google {
-  composes: btn;
-  background: #df5f56;
-  margin-top: 0.8em;
-}
-
-.btn-facebook {
-  composes: btn;
-  background: #4267b2;
-}
-
 .login-tips {
-  font-size: 0.6em;
+  font-size: 0.8em;
   color: #969696;
   margin-top: 0.8em;
   line-height: 1.5em;
+}
+
+.loginTitle {
+  margin-bottom: 34px;
 }

@@ -1,10 +1,9 @@
 import React from 'react';
 import { P } from 'common/base';
+import Modal from 'common/Modal';
 import FacebookLoginButton from 'common/Login/FacebookLoginButton';
 import GoogleLoginButton from 'common/Login/GoogleLoginButton';
-
 import styles from './PermissionBlock.module.css';
-import Modal from '../Modal';
 
 const LoginModal = ({ ...props }) => {
   return (
