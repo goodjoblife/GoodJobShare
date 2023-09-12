@@ -19,12 +19,8 @@ $above-desktop: 1025px;
 }
 
 .login-tips {
-  font-size: 0.8em;
+  font-size: 0.825em;
   color: #969696;
   margin-top: 0.8em;
   line-height: 1.5em;
-}
-
-.loginTitle {
-  margin-bottom: 34px;
 }

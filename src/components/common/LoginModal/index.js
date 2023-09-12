@@ -2,7 +2,6 @@ import React, { useCallback, useContext, useEffect } from 'react';
 import { useIsLoggedIn } from 'hooks/auth';
 import LoginModalContext from 'contexts/LoginModalContext';
 import Modal from 'common/Modal.js';
-import { P } from 'common/base';
 import FacebookLoginButton from 'common/Login/FacebookLoginButton';
 import GoogleLoginButton from 'common/Login/GoogleLoginButton';
 import styles from './LoginModal.module.css';
@@ -26,9 +25,7 @@ const LoginModal = () => {
   return (
     <Modal isOpen={isOpen} hasClose close={close} closableOnClickOutside>
       <div className={styles.container}>
-        <P className={styles.loginTitle} center bold size="l">
-          登入
-        </P>
+        <h2 style={{ fontSize: '1.4em', marginBottom: '34px' }}>登入</h2>
         <div className={styles.loginBtnContainer}>
           <FacebookLoginButton />
           <GoogleLoginButton />
