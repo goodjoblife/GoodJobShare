@@ -23,7 +23,6 @@ import { useHistory } from 'react-router';
 import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
 
-import { SubmitFormTracker } from 'utils/eventBasedTracking';
 import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
 import FormBuilder from 'common/FormBuilder';
 import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
@@ -366,22 +365,12 @@ const TypeForm = ({ open, onClose }) => {
           currency: 'TWD',
           content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
         });
-        // send SubmitForm event to Amplitude
-        SubmitFormTracker.sendEvent({
-          type: SubmitFormTracker.types.interviewTypeForm,
-          result: SubmitFormTracker.results.success,
-        });
         setSubmitStatus('success');
       } catch (error) {
         setErrorMessage(error.message);
         ReactGA.event({
           category: GA_CATEGORY.SHARE_INTERVIEW,
           action: GA_ACTION.UPLOAD_FAIL,
-        });
-        // send SubmitForm event to Amplitude
-        SubmitFormTracker.sendEvent({
-          type: SubmitFormTracker.types.interviewTypeForm,
-          result: SubmitFormTracker.results.error,
         });
         setSubmitStatus('error');
       }

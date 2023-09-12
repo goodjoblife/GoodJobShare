@@ -29,7 +29,7 @@ const matchRoutes = (pathname, routes) => {
 const server = Express();
 server
   .disable('x-powered-by')
-  .use(Express.static(process.env.RAZZLE_PUBLIC_DIR));
+  .use(Express.static(process.env.RAZZLE_PUBLIC_DIR, { maxAge: '14d' }));
 
 const wrap = fn => (req, res, next) => fn(req, res).catch(err => next(err));
 server.get(

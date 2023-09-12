@@ -21,7 +21,6 @@ import PopoverToggle from 'common/PopoverToggle';
 import { withPermission } from 'common/permission-context';
 import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
-import { ViewArticleDetailTracker } from 'utils/eventBasedTracking';
 import { paramsSelector } from 'common/routing/selectors';
 import { useLogin } from 'hooks/login';
 import useTrace from './hooks/useTrace';
@@ -36,8 +35,9 @@ import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
-import { isFetching, isFetched, isError } from '../../constants/status';
-import { fetchExperience } from '../../actions/experienceDetail';
+import { isFetching, isFetched, isError } from 'constants/status';
+import { fetchExperience } from 'actions/experienceDetail';
+import { queryRelatedExperiencesOnExperience } from 'actions/experience';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
 import {
@@ -137,30 +137,6 @@ const ExperienceDetail = ({
   const { experience, experienceStatus, experienceError } = data;
   const replies = props.replies.toJS();
   const repliesStatus = props.repliesStatus;
-
-  // send event to Amplitude
-  const experienceDataId = useMemo(() => (experience ? experience.id : null), [
-    experience,
-  ]);
-  useEffect(() => {
-    if (experience && permissionFetched && experienceDataId === experienceId) {
-      const contentLength = experience.sections
-        ? experience.sections.reduce((accu, curr) => {
-            const subTitleLength = curr.subtitle ? curr.subtitle.length : 0;
-            const contentLength = curr.content ? curr.content.length : 0;
-            return accu + subTitleLength + contentLength;
-          }, 0)
-        : 0;
-      ViewArticleDetailTracker.sendEvent({
-        id: experience.id,
-        type: experience.type,
-        contentLength,
-        jobTitle: experience.job_title.name,
-        company: experience.company.name,
-        hasPermission: canView,
-      });
-    }
-  }, [experienceDataId, permissionFetched, canView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollToCommentZone = useCallback(() => {
     scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
@@ -343,7 +319,10 @@ ExperienceDetail.propTypes = {
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   const experienceId = experienceIdSelector(props);
-  return dispatch(fetchExperience(experienceId));
+  return Promise.all([
+    dispatch(fetchExperience(experienceId)),
+    dispatch(queryRelatedExperiencesOnExperience(experienceId)),
+  ]);
 });
 
 const hoc = compose(
