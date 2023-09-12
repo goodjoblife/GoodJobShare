@@ -9,16 +9,8 @@
             "contexts/*": ["src/contexts/*"],
             "graphql/*": ["src/graphql/*"],
             "hooks/*": ["src/hooks/*"],
-<<<<<<< HEAD
-            "contexts/*": ["src/contexts/*"],
-            "constants/*": ["src/constants/*"],
-            "apis/*": ["src/apis/*"],
-            "actions/*": ["src/actions/*"],
-            "selectors/*": ["src/selectors/*"]
-=======
             "selectors/*": ["src/selectors/*"],
             "utils/*": ["src/utils/*"]
->>>>>>> upstream/dev
         }
     },
     "exclude": ["node_modules", "dist"]
