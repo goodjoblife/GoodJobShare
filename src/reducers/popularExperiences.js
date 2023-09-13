@@ -1,8 +1,8 @@
 import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 
-import { SET_DATA, SET_STATUS } from '../actions/popularExperiences';
-import fetchingStatus from '../constants/status';
+import { SET_DATA, SET_STATUS } from 'actions/popularExperiences';
+import fetchingStatus from 'constants/status';
 
 const preloadedState = fromJS({
   data: [],

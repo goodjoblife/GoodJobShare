@@ -19,17 +19,17 @@ import AboutThisJobModal from '../../TimeAndSalary/common/AboutThisJobModal';
 import timeAndSalaryBoardStyles from '../../TimeAndSalary/TimeAndSalaryBoard/TimeAndSalaryBoard.module.css';
 import timeAndSalaryBannerStyles from '../../TimeAndSalary/Banner.module.css';
 import timeAndSalaryCommonStyles from '../../TimeAndSalary/views/view.module.css';
-import fetchingStatus, { isFetched } from '../../../constants/status';
-import { MAX_ROWS_IF_HIDDEN } from '../../../constants/hideContent';
+import fetchingStatus, { isFetched } from 'constants/status';
+import { MAX_ROWS_IF_HIDDEN } from 'constants/hideContent';
 import { BasicPermissionBlock } from 'common/PermissionBlock';
 import styles from '../CampaignTimeAndSalary.module.css';
 
-import { queryCampaignInfoList } from '../../../actions/campaignInfo';
-import { queryCampaignTimeAndSalary } from '../../../actions/campaignTimeAndSalaryBoard';
-import GradientMask from '../../common/GradientMask';
+import { queryCampaignInfoList } from 'actions/campaignInfo';
+import { queryCampaignTimeAndSalary } from 'actions/campaignTimeAndSalaryBoard';
+import GradientMask from 'common/GradientMask';
 
 import DashBoardTable from '../../TimeAndSalary/common/DashBoardTable';
-import { campaignEntriesSelector } from '../../../selectors/campaignSelector';
+import { campaignEntriesSelector } from 'selectors/campaignSelector';
 
 import {
   pathSelector,

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CompanyAndJobTitleIndexPage from '../CompanyAndJobTitle/IndexPage';
-import { pageType } from '../../constants/companyJobTitle';
-import { fetchJobTitles } from '../../actions/jobTitle';
+import { pageType } from 'constants/companyJobTitle';
+import { fetchJobTitles } from 'actions/jobTitle';
 import {
   jobTitlesStatus as jobTitlesStatusSelector,
   jobTitles as jobTitlesSelector,
