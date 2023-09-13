@@ -15,6 +15,7 @@ import { SET_EXPERIENCE, SET_RELATED_EXPERIENCES } from 'actions/experience';
 const preloadedState = {
   experience: {
     experienceId: null,
+    // state is related to experienceId
     state: getUnfetched(),
   },
 

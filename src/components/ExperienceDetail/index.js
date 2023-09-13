@@ -37,11 +37,7 @@ import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
 import { isFetching } from 'constants/status';
-import {
-  isError,
-  isFetching as fetchBoxIsFetching,
-  isFetched,
-} from 'utils/fetchBox';
+import { isError, isFetched } from 'utils/fetchBox';
 import { fetchExperience } from 'actions/experienceDetail';
 import { queryExperience } from 'actions/experience';
 import { queryRelatedExperiencesOnExperience } from 'actions/experience';
@@ -53,7 +49,7 @@ import {
 } from '../../constants/companyJobTitle';
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
-import { experienceSelector } from 'selectors/experienceSelector';
+import { experienceStateSelector } from 'selectors/experienceSelector';
 import { experienceV2Selector } from 'selectors/experienceSelector';
 
 const MODAL_TYPE = {
@@ -93,7 +89,7 @@ const ExperienceDetail = ({
   const params = useParams();
   const experienceId = params.id;
 
-  const experienceState = useSelector(experienceV2Selector);
+  const experienceState = useSelector(experienceStateSelector);
 
   console.log('state.experience.experience', experienceState);
   console.log(experienceId);
@@ -236,8 +232,8 @@ const ExperienceDetail = ({
     );
   }, [handleIsModalOpen]);
 
-  if (isError(experienceState.state)) {
-    if (isUiNotFoundError(experienceState.state.error)) {
+  if (isError(experienceState)) {
+    if (isUiNotFoundError(experienceState.error)) {
       return <NotFound />;
     }
     return null;
@@ -247,15 +243,15 @@ const ExperienceDetail = ({
     <main>
       <Seo
         experienceState={{
-          experienceStatus: experienceState.state.status,
-          experience: experienceState.state.data,
+          experienceStatus: experienceState.status,
+          experience: experienceState.data,
         }}
       />
       <Section bg="white" paddingBottom className={styles.section}>
         <Wrapper size="m">
           <div>
             {/* 文章區塊  */}
-            {!isFetched(experienceState.state) ? (
+            {!isFetched(experienceState) ? (
               <Loader />
             ) : (
               <Fragment>
@@ -264,20 +260,18 @@ const ExperienceDetail = ({
                     data={generateBreadCrumbData({
                       pageType,
                       pageName: pageTypeToNameSelector[pageType](
-                        experienceState.state.data,
+                        experienceState.data,
                       ),
                       tabType:
-                        experienceTypeToTabType[
-                          experienceState.state.data.type
-                        ],
-                      experience: experienceState.state.data,
+                        experienceTypeToTabType[experienceState.data.type],
+                      experience: experienceState.data,
                     })}
                   />
                 </div>
-                <ExperienceHeading experience={experienceState.state.data} />
+                <ExperienceHeading experience={experienceState.data} />
                 {reportZone}
                 <Article
-                  experience={experienceState.state.data}
+                  experience={experienceState.data}
                   hideContent={!canView}
                   onClickMsgButton={scrollToCommentZone}
                 />
@@ -288,10 +282,10 @@ const ExperienceDetail = ({
         {isFetched(experienceState) && (
           <React.Fragment>
             <Wrapper size="m">
-              <MoreExperiencesBlock experience={experienceState.state.data} />
+              <MoreExperiencesBlock experience={experienceState.data} />
             </Wrapper>
             <Wrapper size="l">
-              <ChartsZone experience={experienceState.state.data} />
+              <ChartsZone experience={experienceState.data} />
             </Wrapper>
           </React.Fragment>
         )}

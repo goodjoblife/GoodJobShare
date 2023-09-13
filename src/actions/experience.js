@@ -11,9 +11,13 @@ import { isGraphqlError, UiNotFoundError } from 'utils/errors';
 export const SET_EXPERIENCE = '@@EXPERIENCE/SET_EXPERIENCE';
 export const SET_RELATED_EXPERIENCES = '@@EXPERIENCE/SET_RELATED_EXPERIENCES';
 
-const setExperience = experience => ({
+// state is related to experienceId
+const setExperience = (experienceId, state) => ({
   type: SET_EXPERIENCE,
-  experience,
+  experience: {
+    experienceId,
+    state,
+  },
 });
 
 export const queryExperience = experienceId => async (
@@ -24,12 +28,7 @@ export const queryExperience = experienceId => async (
   const state = getState();
   const token = tokenSelector(state);
 
-  dispatch(
-    setExperience({
-      experienceId,
-      state: toFetching(),
-    }),
-  );
+  dispatch(setExperience(experienceId, toFetching()));
 
   try {
     const experience = await api.experiences.getExperience({
@@ -40,30 +39,17 @@ export const queryExperience = experienceId => async (
     const previousState = experienceV2Selector(getState()); // FetchBox
     if (experienceId === previousState.experienceId) {
       if (experience === null) {
-        dispatch(
-          setExperience({
-            experienceId,
-            state: getError(new UiNotFoundError()),
-          }),
-        );
+        dispatch(setExperience(experienceId, getError(new UiNotFoundError())));
         return;
       }
 
-      return dispatch(
-        setExperience({
-          experienceId,
-          state: getFetched(experience),
-        }),
-      );
+      return dispatch(setExperience(experienceId, getFetched(experience)));
     }
   } catch (error) {
     const previousState = experienceV2Selector(getState()); // FetchBox
     if (experienceId === previousState.experienceId) {
       if (isGraphqlError(error)) {
-        dispatch({
-          experienceId,
-          state: getError(error),
-        });
+        dispatch(setExperience(experienceId, getError(error)));
         return;
       }
 
