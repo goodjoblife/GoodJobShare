@@ -1,8 +1,77 @@
 import { concat } from 'ramda';
 import { getError, getFetched, toFetching, isFetching } from 'utils/fetchBox';
-import { relatedExperiencesStateSelector } from 'selectors/experienceSelector';
+import { tokenSelector } from 'selectors/authSelector';
+import {
+  experienceV2Selector,
+  relatedExperiencesStateSelector,
+} from 'selectors/experienceSelector';
 
+import { isGraphqlError, UiNotFoundError } from 'utils/errors';
+
+export const SET_EXPERIENCE = '@@EXPERIENCE/SET_EXPERIENCE';
 export const SET_RELATED_EXPERIENCES = '@@EXPERIENCE/SET_RELATED_EXPERIENCES';
+
+const setExperience = experience => ({
+  type: SET_EXPERIENCE,
+  experience,
+});
+
+export const queryExperience = experienceId => async (
+  dispatch,
+  getState,
+  { api },
+) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
+  dispatch(
+    setExperience({
+      experienceId,
+      state: toFetching(),
+    }),
+  );
+
+  try {
+    const experience = await api.experiences.getExperience({
+      id: experienceId,
+      token,
+    });
+
+    const previousState = experienceV2Selector(getState()); // FetchBox
+    if (experienceId === previousState.experienceId) {
+      if (experience === null) {
+        dispatch(
+          setExperience({
+            experienceId,
+            state: getError(new UiNotFoundError()),
+          }),
+        );
+        return;
+      }
+
+      return dispatch(
+        setExperience({
+          experienceId,
+          state: getFetched(experience),
+        }),
+      );
+    }
+  } catch (error) {
+    const previousState = experienceV2Selector(getState()); // FetchBox
+    if (experienceId === previousState.experienceId) {
+      if (isGraphqlError(error)) {
+        dispatch({
+          experienceId,
+          state: getError(error),
+        });
+        return;
+      }
+
+      // Unexpected error
+      throw error;
+    }
+  }
+};
 
 const setRelatedExperiencesState = relatedExperiencesState => ({
   type: SET_RELATED_EXPERIENCES,

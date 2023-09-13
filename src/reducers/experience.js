@@ -1,6 +1,6 @@
 import createReducer from 'utils/createReducer';
 import { getUnfetched } from 'utils/fetchBox';
-import { SET_RELATED_EXPERIENCES } from 'actions/experience';
+import { SET_EXPERIENCE, SET_RELATED_EXPERIENCES } from 'actions/experience';
 
 /*
  * relatedExperiencesState
@@ -13,10 +13,19 @@ import { SET_RELATED_EXPERIENCES } from 'actions/experience';
  * error
  */
 const preloadedState = {
+  experience: {
+    experienceId: null,
+    state: getUnfetched(),
+  },
+
   relatedExperiencesState: getUnfetched(),
 };
 
 export default createReducer(preloadedState, {
+  [SET_EXPERIENCE]: (state, { experience }) => ({
+    ...state,
+    experience,
+  }),
   [SET_RELATED_EXPERIENCES]: (state, { relatedExperiencesState }) => ({
     ...state,
     relatedExperiencesState,

@@ -36,8 +36,14 @@ import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
-import { isFetching, isFetched, isError } from 'constants/status';
+import { isFetching } from 'constants/status';
+import {
+  isError,
+  isFetching as fetchBoxIsFetching,
+  isFetched,
+} from 'utils/fetchBox';
 import { fetchExperience } from 'actions/experienceDetail';
+import { queryExperience } from 'actions/experience';
 import { queryRelatedExperiencesOnExperience } from 'actions/experience';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
@@ -48,6 +54,7 @@ import {
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceSelector } from 'selectors/experienceSelector';
+import { experienceV2Selector } from 'selectors/experienceSelector';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -85,27 +92,18 @@ const ExperienceDetail = ({
 }) => {
   const params = useParams();
   const experienceId = params.id;
-  const data = useSelector(experienceSelector);
-  const { experience, experienceStatus, experienceError } = data.toJS();
+
+  const experienceState = useSelector(experienceV2Selector);
+
+  console.log('state.experience.experience', experienceState);
+  console.log(experienceId);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (
-      !experience ||
-      experience.id !== experienceId ||
-      experienceStatus !== 'FETCHED'
-    ) {
-      dispatch(fetchExperience(experienceId));
-    }
-  }, [
-    dispatch,
-    experience,
-    experience.id,
-    experienceId,
-    experienceStatus,
-    fetchReplies,
-  ]);
+    console.log('DIFF');
+    dispatch(queryExperience(experienceId));
+  }, [dispatch, experienceId]);
 
   useEffect(() => {
     fetchReplies(experienceId);
@@ -238,8 +236,8 @@ const ExperienceDetail = ({
     );
   }, [handleIsModalOpen]);
 
-  if (isError(experienceStatus)) {
-    if (isUiNotFoundError(experienceError)) {
+  if (isError(experienceState.state)) {
+    if (isUiNotFoundError(experienceState.state.error)) {
       return <NotFound />;
     }
     return null;
@@ -247,12 +245,17 @@ const ExperienceDetail = ({
 
   return (
     <main>
-      <Seo experienceState={data} />
+      <Seo
+        experienceState={{
+          experienceStatus: experienceState.state.status,
+          experience: experienceState.state.data,
+        }}
+      />
       <Section bg="white" paddingBottom className={styles.section}>
         <Wrapper size="m">
           <div>
             {/* 文章區塊  */}
-            {!isFetched(experienceStatus) ? (
+            {!isFetched(experienceState.state) ? (
               <Loader />
             ) : (
               <Fragment>
@@ -260,16 +263,21 @@ const ExperienceDetail = ({
                   <BreadCrumb
                     data={generateBreadCrumbData({
                       pageType,
-                      pageName: pageTypeToNameSelector[pageType](experience),
-                      tabType: experienceTypeToTabType[experience.type],
-                      experience,
+                      pageName: pageTypeToNameSelector[pageType](
+                        experienceState.state.data,
+                      ),
+                      tabType:
+                        experienceTypeToTabType[
+                          experienceState.state.data.type
+                        ],
+                      experience: experienceState.state.data,
                     })}
                   />
                 </div>
-                <ExperienceHeading experience={experience} />
+                <ExperienceHeading experience={experienceState.state.data} />
                 {reportZone}
                 <Article
-                  experience={experience}
+                  experience={experienceState.state.data}
                   hideContent={!canView}
                   onClickMsgButton={scrollToCommentZone}
                 />
@@ -277,13 +285,13 @@ const ExperienceDetail = ({
             )}
           </div>
         </Wrapper>
-        {isFetched(experienceStatus) && (
+        {isFetched(experienceState) && (
           <React.Fragment>
             <Wrapper size="m">
-              <MoreExperiencesBlock experience={experience} />
+              <MoreExperiencesBlock experience={experienceState.state.data} />
             </Wrapper>
             <Wrapper size="l">
-              <ChartsZone experience={experience} />
+              <ChartsZone experience={experienceState.state.data} />
             </Wrapper>
           </React.Fragment>
         )}
