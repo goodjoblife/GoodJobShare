@@ -1,5 +1,5 @@
 import ReactGA from 'react-ga4';
-import authStatus from '../constants/authStatus';
+import authStatus from 'constants/authStatus';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
