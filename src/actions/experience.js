@@ -31,7 +31,7 @@ export const queryExperience = experienceId => async (
   dispatch(setExperience(experienceId, toFetching()));
 
   try {
-    const experience = await api.experiences.getExperience({
+    const experience = await api.experiences.queryExperience({
       id: experienceId,
       token,
     });

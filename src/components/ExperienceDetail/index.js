@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
 import { Element as ScrollElement, scroller } from 'react-scroll';
 import { compose, setStatic } from 'recompose';
@@ -35,14 +34,8 @@ import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
-<<<<<<< HEAD
-import { isFetching } from 'constants/status';
 import { isError, isFetched } from 'utils/fetchBox';
 import { queryExperience } from 'actions/experience';
-=======
-import { isFetched, isError } from 'constants/status';
-import { fetchExperience } from 'actions/experienceDetail';
->>>>>>> upstream/master
 import { queryRelatedExperiencesOnExperience } from 'actions/experience';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
@@ -77,26 +70,8 @@ const pageTypeToNameSelector = {
   [PAGE_TYPE.JOB_TITLE]: R.path(['job_title', 'name']),
 };
 
-<<<<<<< HEAD
-const ExperienceDetail = ({
-  submitComment,
-  likeReply,
-
-  fetchReplies,
-
-  // from withPermission
-  canView,
-  fetchPermission,
-  permissionFetched,
-
-  ...props
-}) => {
-  const params = useParams();
-  const experienceId = params.id;
-=======
-const ExperienceDetail = ({ fetchExperience, ...props }) => {
+const ExperienceDetail = ({ ...props }) => {
   const experienceId = useExperienceId();
->>>>>>> upstream/master
 
   const experienceState = useSelector(experienceStateSelector);
 
@@ -106,24 +81,7 @@ const ExperienceDetail = ({ fetchExperience, ...props }) => {
     dispatch(queryExperience(experienceId));
   }, [dispatch, experienceId]);
 
-  useEffect(() => {
-<<<<<<< HEAD
-    fetchReplies(experienceId);
-  }, [experienceId, fetchReplies]);
-
-  const [isLoggedIn] = useLogin();
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      fetchReplies(experienceId);
-    }
-  }, [isLoggedIn, experienceId, fetchReplies]);
-=======
-    fetchExperience(experienceId);
-  }, [experienceId, fetchExperience]);
-
   const [, fetchPermission, canView] = usePermission();
->>>>>>> upstream/master
 
   useEffect(() => {
     fetchPermission();
@@ -160,14 +118,6 @@ const ExperienceDetail = ({ fetchExperience, ...props }) => {
     ['location', 'state', 'pageType'],
     props,
   );
-<<<<<<< HEAD
-
-  const replies = props.replies.toJS();
-  const repliesStatus = props.repliesStatus;
-=======
-  const data = props.experienceDetail.toJS();
-  const { experience, experienceStatus, experienceError } = data;
->>>>>>> upstream/master
 
   const scrollToCommentZone = useCallback(() => {
     scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
@@ -329,17 +279,6 @@ const ExperienceDetail = ({ fetchExperience, ...props }) => {
 };
 
 ExperienceDetail.propTypes = {
-<<<<<<< HEAD
-  replies: ImmutablePropTypes.list.isRequired,
-  repliesStatus: PropTypes.string,
-  fetchReplies: PropTypes.func.isRequired,
-  fetchPermission: PropTypes.func.isRequired,
-  likeReply: PropTypes.func.isRequired,
-  submitComment: PropTypes.func.isRequired,
-=======
-  experienceDetail: ImmutablePropTypes.map.isRequired,
-  fetchExperience: PropTypes.func.isRequired,
->>>>>>> upstream/master
   location: PropTypes.shape({
     state: PropTypes.shape({
       replyId: PropTypes.string,

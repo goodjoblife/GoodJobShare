@@ -1,4 +1,4 @@
-export const getExperienceQueryGql = /* GraphQL */ `
+export const queryExperienceGql = /* GraphQL */ `
   query($id: ID!) {
     experience(id: $id) {
       id

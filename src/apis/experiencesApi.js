@@ -4,7 +4,7 @@ import fetchUtil from 'utils/fetchUtil';
 
 import graphqlClient from 'utils/graphqlClient';
 import {
-  getExperienceQueryGql,
+  queryExperienceGql,
   queryExperienceLikeGql,
   queryRelatedExperiencesGql,
 } from 'graphql/experience';
@@ -100,9 +100,9 @@ const patchReply = ({ id, status, token }) =>
     token,
   });
 
-export const getExperience = ({ id }) =>
+export const queryExperience = ({ id }) =>
   graphqlClient({
-    query: getExperienceQueryGql,
+    query: queryExperienceGql,
     variables: { id },
   }).then(data => data.experience);
 
@@ -142,7 +142,7 @@ export const queryRelatedExperiences = async ({ id, start, limit }) => {
 };
 
 export default {
-  getExperience,
+  queryExperience,
   getPopularExperiences,
   getExperiencesRecommended,
   getExperiences,
