@@ -1,18 +1,13 @@
 import { useCallback } from 'react';
-import { useToken } from 'hooks/auth';
-import api from '../../../apis';
+import { useDispatch } from 'react-redux';
+import { createReply } from 'actions/experienceDetail';
 
 const useCreateReply = experienceId => {
-  const token = useToken();
-  return useCallback(
-    comment =>
-      api.experiences.postExperienceReply({
-        id: experienceId,
-        comment,
-        token,
-      }),
-    [experienceId, token],
-  );
+  const dispatch = useDispatch();
+  return useCallback(comment => dispatch(createReply(experienceId, comment)), [
+    dispatch,
+    experienceId,
+  ]);
 };
 
 export default useCreateReply;
