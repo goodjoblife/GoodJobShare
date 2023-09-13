@@ -2,17 +2,12 @@ import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 import fetchingStatus from 'constants/status';
 import {
-  SET_EXPERIENCE,
-  SET_EXPERIENCE_STATUS,
   SET_REPLIES_STATUS,
   SET_REPLIES_DATA,
   SET_REPLY_LIKED,
 } from 'actions/experienceDetail';
 
 const preloadedState = fromJS({
-  experienceStatus: fetchingStatus.UNFETCHED,
-  experienceError: null,
-  experience: null,
   repliesExperienceId: null,
   replyStatus: fetchingStatus.UNFETCHED,
   replyError: null,
@@ -20,16 +15,6 @@ const preloadedState = fromJS({
 });
 
 const experienceDetail = createReducer(preloadedState, {
-  [SET_EXPERIENCE]: (state, action) =>
-    state.merge({
-      experienceStatus: action.experienceStatus,
-      experienceError: action.experienceError,
-      experience: fromJS(action.experience),
-    }),
-
-  [SET_EXPERIENCE_STATUS]: (state, action) =>
-    state.update('experienceStatus', () => action.status),
-
   [SET_REPLIES_STATUS]: (state, { status }) => state.set('replyStatus', status),
 
   [SET_REPLIES_DATA]: (state, { experienceId, status, replies, error }) =>
