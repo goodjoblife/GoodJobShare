@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useMemo,
 } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
@@ -46,6 +47,7 @@ import {
 } from '../../constants/companyJobTitle';
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
+import { experienceSelector } from 'selectors/experienceSelector';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -72,7 +74,6 @@ const ExperienceDetail = ({
   submitComment,
   likeReply,
 
-  fetchExperience,
   fetchReplies,
 
   // from withPermission
@@ -84,11 +85,18 @@ const ExperienceDetail = ({
 }) => {
   const params = useParams();
   const experienceId = params.id;
+  const data = useSelector(experienceSelector);
+  const { experience, experienceStatus, experienceError } = data.toJS();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchExperience(experienceId);
+    if (experienceStatus !== 'FETCHED' || experience.id !== experienceId) {
+      dispatch(fetchExperience(experienceId));
+    }
+
     fetchReplies(experienceId);
-  }, [experienceId, fetchExperience, fetchReplies]);
+  }, [dispatch, experience.id, experienceId, experienceStatus, fetchReplies]);
 
   const [isLoggedIn] = useLogin();
 
@@ -96,7 +104,7 @@ const ExperienceDetail = ({
     if (isLoggedIn) {
       fetchReplies(experienceId);
     }
-  }, [isLoggedIn, experienceId, fetchExperience, fetchReplies]);
+  }, [isLoggedIn, experienceId, fetchReplies]);
 
   useEffect(() => {
     fetchPermission();
@@ -133,8 +141,7 @@ const ExperienceDetail = ({
     ['location', 'state', 'pageType'],
     props,
   );
-  const data = props.experienceDetail.toJS();
-  const { experience, experienceStatus, experienceError } = data;
+
   const replies = props.replies.toJS();
   const repliesStatus = props.repliesStatus;
 
