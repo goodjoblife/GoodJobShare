@@ -50,7 +50,6 @@ import {
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceStateSelector } from 'selectors/experienceSelector';
-import { experienceV2Selector } from 'selectors/experienceSelector';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',

@@ -2,7 +2,7 @@ import { concat } from 'ramda';
 import { getError, getFetched, toFetching, isFetching } from 'utils/fetchBox';
 import { tokenSelector } from 'selectors/authSelector';
 import {
-  experienceV2Selector,
+  experienceSelector,
   relatedExperiencesStateSelector,
 } from 'selectors/experienceSelector';
 
@@ -36,7 +36,7 @@ export const queryExperience = experienceId => async (
       token,
     });
 
-    const previousState = experienceV2Selector(getState()); // FetchBox
+    const previousState = experienceSelector(getState()); // FetchBox
     if (experienceId === previousState.experienceId) {
       if (experience === null) {
         dispatch(setExperience(experienceId, getError(new UiNotFoundError())));
@@ -46,7 +46,7 @@ export const queryExperience = experienceId => async (
       return dispatch(setExperience(experienceId, getFetched(experience)));
     }
   } catch (error) {
-    const previousState = experienceV2Selector(getState()); // FetchBox
+    const previousState = experienceSelector(getState()); // FetchBox
     if (experienceId === previousState.experienceId) {
       if (isGraphqlError(error)) {
         dispatch(setExperience(experienceId, getError(error)));

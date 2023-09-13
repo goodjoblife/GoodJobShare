@@ -1,8 +1,6 @@
 import { path } from 'ramda';
 
-export const experienceSelector = path(['experienceDetail']);
-
-export const experienceV2Selector = path(['experience', 'experience']);
+export const experienceSelector = path(['experience', 'experience']);
 
 export const experienceStateSelector = path([
   'experience',
