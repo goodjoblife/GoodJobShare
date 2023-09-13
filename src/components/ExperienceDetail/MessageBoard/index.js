@@ -23,16 +23,22 @@ const recommendedSentences = [
 
 const REPLIES_BOTTOM = 'REPLIES_BOTTOM';
 
-const SubmitCommentBlock = ({ experienceId }) => {
+const MessageBoard = ({ experienceId }) => {
   const [comment, setComment] = useState('');
   const [isLoggedIn] = useLogin();
   const facebookLogin = useFacebookLogin();
-
   const createReply = useCreateReply(experienceId);
-  const [, queryReplies] = useQueryReplies(experienceId);
+  const [repliesState, queryReplies] = useQueryReplies(experienceId);
+
+  // fetch when experienceId change
+  useEffect(() => {
+    queryReplies();
+  }, [queryReplies]);
+
+  const likeReply = useLikeReply();
 
   return (
-    <Fragment>
+    <div className={styles.container}>
       <textarea
         rows="5"
         placeholder="寫下您的留言、意見"
@@ -67,23 +73,6 @@ const SubmitCommentBlock = ({ experienceId }) => {
           發佈留言
         </Button>
       </div>
-    </Fragment>
-  );
-};
-
-const MessageBoard = ({ experienceId }) => {
-  const [repliesState, queryReplies] = useQueryReplies(experienceId);
-
-  // fetch when experienceId change
-  useEffect(() => {
-    queryReplies();
-  }, [queryReplies]);
-
-  const likeReply = useLikeReply();
-
-  return (
-    <div className={styles.container}>
-      <SubmitCommentBlock experienceId={experienceId} />
       <div className={styles.commentBlocks}>
         {repliesState.loading || !repliesState.value ? (
           <Loader size="s" />
