@@ -1,8 +1,15 @@
 import { concat } from 'ramda';
-import { getError, getFetched, toFetching, isFetching } from 'utils/fetchBox';
+import {
+  getError,
+  getFetched,
+  toFetching,
+  isFetching,
+  isFetched,
+} from 'utils/fetchBox';
 import { tokenSelector } from 'selectors/authSelector';
 import {
   experienceSelector,
+  experienceStateSelector,
   relatedExperiencesStateSelector,
 } from 'selectors/experienceSelector';
 
@@ -19,6 +26,23 @@ const setExperience = (experienceId, state) => ({
     state,
   },
 });
+
+export const queryExperienceIfUnfetched = experienceId => async (
+  dispatch,
+  getState,
+  { api },
+) => {
+  const previousState = experienceSelector(getState()); // FetchBox
+
+  if (
+    experienceId === previousState.experienceId &&
+    isFetched(experienceStateSelector(getState()))
+  ) {
+    return;
+  }
+
+  dispatch(queryExperience(experienceId));
+};
 
 export const queryExperience = experienceId => async (
   dispatch,

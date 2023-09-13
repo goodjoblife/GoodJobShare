@@ -35,8 +35,11 @@ import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
 import { isError, isFetched } from 'utils/fetchBox';
-import { queryExperience } from 'actions/experience';
-import { queryRelatedExperiencesOnExperience } from 'actions/experience';
+import {
+  queryExperience,
+  queryExperienceIfUnfetched,
+  queryRelatedExperiencesOnExperience,
+} from 'actions/experience';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
 import {
@@ -78,7 +81,7 @@ const ExperienceDetail = ({ ...props }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(queryExperience(experienceId));
+    dispatch(queryExperienceIfUnfetched(experienceId));
   }, [dispatch, experienceId]);
 
   const [, fetchPermission, canView] = usePermission();
