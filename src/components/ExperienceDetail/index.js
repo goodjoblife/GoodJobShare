@@ -91,12 +91,25 @@ const ExperienceDetail = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (experienceStatus !== 'FETCHED' || experience.id !== experienceId) {
+    if (
+      !experience ||
+      experience.id !== experienceId ||
+      experienceStatus !== 'FETCHED'
+    ) {
       dispatch(fetchExperience(experienceId));
     }
+  }, [
+    dispatch,
+    experience,
+    experience.id,
+    experienceId,
+    experienceStatus,
+    fetchReplies,
+  ]);
 
+  useEffect(() => {
     fetchReplies(experienceId);
-  }, [dispatch, experience.id, experienceId, experienceStatus, fetchReplies]);
+  }, [experienceId, fetchReplies]);
 
   const [isLoggedIn] = useLogin();
 
