@@ -10,10 +10,7 @@ import Pagination from 'common/Pagination';
 import { isFetching, isFetched, isUnfetched } from 'constants/status';
 import { pageType } from 'constants/companyJobTitle';
 import { useQuery } from 'hooks/routing';
-import {
-  queryKeyword,
-  keywordMinLength,
-} from '../../../actions/timeAndSalarySearch';
+import { queryKeyword, keywordMinLength } from 'actions/timeAndSalarySearch';
 import {
   keywordSelector,
   pageSelector,

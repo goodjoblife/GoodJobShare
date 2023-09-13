@@ -10,11 +10,11 @@ import Overview from '../CompanyAndJobTitle/Overview';
 import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
 import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
-import NotFound from '../common/NotFound';
+import NotFound from 'common/NotFound';
 import { withPermission } from 'common/permission-context';
 
-import { tabType, pageType } from '../../constants/companyJobTitle';
-import companyActions from '../../actions/company';
+import { tabType, pageType } from 'constants/companyJobTitle';
+import companyActions from 'actions/company';
 import {
   interviewExperiences,
   workExperiences,

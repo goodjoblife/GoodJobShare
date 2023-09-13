@@ -1,7 +1,7 @@
 import createReducer from 'utils/createReducer';
 
-import { SET_STATUS } from '../actions/popularCompanyAverageSalary';
-import fetchingStatus from '../constants/status';
+import { SET_STATUS } from 'actions/popularCompanyAverageSalary';
+import fetchingStatus from 'constants/status';
 
 const preloadedState = {
   data: [],
