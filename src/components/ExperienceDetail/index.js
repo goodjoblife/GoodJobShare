@@ -38,7 +38,6 @@ import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
 import { isFetching } from 'constants/status';
 import { isError, isFetched } from 'utils/fetchBox';
-import { fetchExperience } from 'actions/experienceDetail';
 import { queryExperience } from 'actions/experience';
 import { queryRelatedExperiencesOnExperience } from 'actions/experience';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
@@ -90,13 +89,9 @@ const ExperienceDetail = ({
 
   const experienceState = useSelector(experienceStateSelector);
 
-  console.log('state.experience.experience', experienceState);
-  console.log(experienceId);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('DIFF');
     dispatch(queryExperience(experienceId));
   }, [dispatch, experienceId]);
 
@@ -321,10 +316,8 @@ const ExperienceDetail = ({
 };
 
 ExperienceDetail.propTypes = {
-  experienceDetail: ImmutablePropTypes.map.isRequired,
   replies: ImmutablePropTypes.list.isRequired,
   repliesStatus: PropTypes.string,
-  fetchExperience: PropTypes.func.isRequired,
   fetchReplies: PropTypes.func.isRequired,
   fetchPermission: PropTypes.func.isRequired,
   likeReply: PropTypes.func.isRequired,
@@ -341,7 +334,7 @@ ExperienceDetail.propTypes = {
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   const experienceId = experienceIdSelector(props);
   return Promise.all([
-    dispatch(fetchExperience(experienceId)),
+    dispatch(queryExperience(experienceId)),
     dispatch(queryRelatedExperiencesOnExperience(experienceId)),
   ]);
 });
