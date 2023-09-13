@@ -52,6 +52,11 @@ export default class Html extends Component {
               })(window,document,'script','dataLayer','${GTM_ID}');`,
             }}
           />
+          <script
+            src="https://accounts.google.com/gsi/client"
+            async={true}
+            defer={true}
+          ></script>
         </head>
         <body>
           {/* install google tag manager */}

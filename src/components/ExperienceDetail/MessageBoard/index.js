@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Element as ScrollElement, scroller } from 'react-scroll';
 import PropTypes from 'prop-types';
 import Button from 'common/button/Button';
 import { P } from 'common/base';
 import ButtonGroup from 'common/button/ButtonGroup';
 import { useLogin, useFacebookLogin } from 'hooks/login';
+import Loader from 'common/Loader';
+import useQueryReplies from '../hooks/useQueryReplies';
+import useLikeReply from '../hooks/useLikeReply';
+import useCreateReply from '../hooks/useCreateReply';
 import CommentBlock from './CommentBlock';
 import styles from './MessageBoard.module.css';
 
@@ -19,10 +23,19 @@ const recommendedSentences = [
 
 const REPLIES_BOTTOM = 'REPLIES_BOTTOM';
 
-const MessageBoard = ({ replies, likeReply, submitComment }) => {
+const MessageBoard = ({ experienceId }) => {
   const [comment, setComment] = useState('');
   const [isLoggedIn] = useLogin();
   const facebookLogin = useFacebookLogin();
+  const createReply = useCreateReply(experienceId);
+  const [repliesState, queryReplies] = useQueryReplies(experienceId);
+
+  // fetch when experienceId change
+  useEffect(() => {
+    queryReplies();
+  }, [queryReplies]);
+
+  const likeReply = useLikeReply();
 
   return (
     <div className={styles.container}>
@@ -51,29 +64,34 @@ const MessageBoard = ({ replies, likeReply, submitComment }) => {
             if (!isLoggedIn) {
               await facebookLogin();
             }
-            await submitComment(comment);
+            await createReply(comment);
+            await queryReplies();
             setComment('');
             scroller.scrollTo(REPLIES_BOTTOM, { smooth: true, offset: -75 });
           }}
         >
-          {isLoggedIn ? '發佈留言' : '以  f  認證，發佈留言'}
+          發佈留言
         </Button>
       </div>
       <div className={styles.commentBlocks}>
-        <P size="m">共 {replies.length} 則回應</P>
-        <hr />
-        {replies.map(reply => (
-          <CommentBlock
-            key={reply._id}
-            reply={reply}
-            toggleReplyLike={async () => {
-              if (!isLoggedIn) {
-                await facebookLogin();
-              }
-              await likeReply(reply);
-            }}
-          />
-        ))}
+        {repliesState.loading || !repliesState.value ? (
+          <Loader size="s" />
+        ) : (
+          <Fragment>
+            <P size="m">共 {repliesState.value.length} 則回應</P>
+            <hr />
+            {repliesState.value.map(reply => (
+              <CommentBlock
+                key={reply._id}
+                reply={reply}
+                toggleReplyLike={async () => {
+                  await likeReply(reply);
+                  await queryReplies();
+                }}
+              />
+            ))}
+          </Fragment>
+        )}
         <ScrollElement name={REPLIES_BOTTOM} />
       </div>
     </div>
@@ -81,9 +99,7 @@ const MessageBoard = ({ replies, likeReply, submitComment }) => {
 };
 
 MessageBoard.propTypes = {
-  replies: PropTypes.array.isRequired,
-  likeReply: PropTypes.func.isRequired,
-  submitComment: PropTypes.func.isRequired,
+  experienceId: PropTypes.string.isRequired,
 };
 
 export default MessageBoard;

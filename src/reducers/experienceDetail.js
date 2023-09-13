@@ -2,6 +2,7 @@ import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 import fetchingStatus from 'constants/status';
 import {
+<<<<<<< HEAD
   SET_REPLIES_STATUS,
   SET_REPLIES_DATA,
   SET_REPLY_LIKED,
@@ -38,6 +39,28 @@ const experienceDetail = createReducer(preloadedState, {
         .update('like_count', v => (liked === true ? v + 1 : v - 1)),
     );
   },
+=======
+  SET_EXPERIENCE,
+  SET_EXPERIENCE_STATUS,
+} from 'actions/experienceDetail';
+
+const preloadedState = fromJS({
+  experienceStatus: fetchingStatus.UNFETCHED,
+  experienceError: null,
+  experience: null,
+});
+
+const experienceDetail = createReducer(preloadedState, {
+  [SET_EXPERIENCE]: (state, action) =>
+    state.merge({
+      experienceStatus: action.experienceStatus,
+      experienceError: action.experienceError,
+      experience: fromJS(action.experience),
+    }),
+
+  [SET_EXPERIENCE_STATUS]: (state, action) =>
+    state.update('experienceStatus', () => action.status),
+>>>>>>> upstream/master
 });
 
 export default experienceDetail;
