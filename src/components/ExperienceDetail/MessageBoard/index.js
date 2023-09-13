@@ -1,19 +1,11 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-  useContext,
-  Fragment,
-} from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Element as ScrollElement, scroller } from 'react-scroll';
 import PropTypes from 'prop-types';
 import Button from 'common/button/Button';
 import { P } from 'common/base';
 import ButtonGroup from 'common/button/ButtonGroup';
+import { useLogin, useFacebookLogin } from 'hooks/login';
 import Loader from 'common/Loader';
-import { useLogin } from 'hooks/login';
-import LoginModalContext from 'contexts/LoginModalContext';
 import useQueryReplies from '../hooks/useQueryReplies';
 import useLikeReply from '../hooks/useLikeReply';
 import useCreateReply from '../hooks/useCreateReply';
@@ -31,78 +23,13 @@ const recommendedSentences = [
 
 const REPLIES_BOTTOM = 'REPLIES_BOTTOM';
 
-const useLoginFlow = callback => {
-  const [state, setState] = useState('init');
-  const [isLoggedIn] = useLogin();
-  const { isLoginModalDisplayed, setLoginModalDisplayed } = useContext(
-    LoginModalContext,
-  );
-
-  console.log(
-    state,
-    'isLoggedIn',
-    isLoggedIn,
-    'isLoginModalDisplayed',
-    isLoginModalDisplayed,
-  );
-
-  useEffect(() => {
-    if (state === 'submitting_check_logged_in' && isLoggedIn) {
-      setState('submitting');
-    }
-  }, [callback, isLoggedIn, state]);
-
-  useEffect(() => {
-    if (state === 'submitting') {
-      setState('submitting_check_api');
-      callback().then(() => {
-        setState('init');
-      });
-    }
-  }, [callback, state]);
-
-  useEffect(() => {
-    if (state === 'submitting_check_logged_in' && !isLoggedIn) {
-      setState('init');
-    }
-  }, [isLoggedIn, state]);
-
-  useEffect(() => {
-    if (state === 'submitting_open_modal' && !isLoginModalDisplayed) {
-      // 當 modal 關閉，檢查登入狀態
-      setState('submitting_check_logged_in');
-    }
-  }, [isLoginModalDisplayed, state]);
-
-  const startFlow = useCallback(() => {
-    if (!isLoggedIn) {
-      setLoginModalDisplayed(true);
-      setState('submitting_open_modal');
-    } else {
-      setState('submitting');
-    }
-  }, [isLoggedIn, setLoginModalDisplayed]);
-
-  const isRunning = useMemo(() => state !== 'init', [state]);
-
-  return [startFlow, isRunning];
-};
-
 const SubmitCommentBlock = ({ experienceId }) => {
   const [comment, setComment] = useState('');
+  const [isLoggedIn] = useLogin();
+  const facebookLogin = useFacebookLogin();
+
   const createReply = useCreateReply(experienceId);
   const [, queryReplies] = useQueryReplies(experienceId);
-
-  const submitCommentCallback = useCallback(async () => {
-    await createReply(comment);
-    await queryReplies();
-    setComment('');
-    scroller.scrollTo(REPLIES_BOTTOM, { smooth: true, offset: -75 });
-  }, [comment, createReply, queryReplies]);
-
-  const [submitComment, isSubmitting] = useLoginFlow(submitCommentCallback);
-
-  console.log('comment', comment);
 
   return (
     <Fragment>
@@ -126,9 +53,15 @@ const SubmitCommentBlock = ({ experienceId }) => {
       <div className={`formLabel ${styles.termsOfService}`}>
         <Button
           btnStyle="submit"
-          disabled={!comment || isSubmitting}
-          onClick={() => {
-            submitComment();
+          disabled={!comment}
+          onClick={async () => {
+            if (!isLoggedIn) {
+              await facebookLogin();
+            }
+            await createReply(comment);
+            await queryReplies();
+            setComment('');
+            scroller.scrollTo(REPLIES_BOTTOM, { smooth: true, offset: -75 });
           }}
         >
           發佈留言
