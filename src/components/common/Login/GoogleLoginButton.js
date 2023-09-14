@@ -10,7 +10,6 @@ const GoogleLoginButton = () => {
 
   useEffect(() => {
     if (googleAuth && ref.current) {
-      console.log('renderButton');
       googleAuth.renderButton(ref.current, {});
     }
   }, [googleAuth]);

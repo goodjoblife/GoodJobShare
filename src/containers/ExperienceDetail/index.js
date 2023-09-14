@@ -2,19 +2,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import ExperienceDetail from '../../components/ExperienceDetail';
-import { fetchExperience } from 'actions/experienceDetail';
 
-const mapStateToProps = state => ({
-  experienceDetail: state.experienceDetail,
-});
+const mapStateToProps = state => ({});
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      fetchExperience,
-    },
-    dispatch,
-  );
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 export default connect(
   mapStateToProps,
