@@ -211,12 +211,7 @@ const ExperienceDetail = ({ ...props }) => {
 
   return (
     <main>
-      <Seo
-        experienceState={{
-          experienceStatus: experienceState.status,
-          experience: experienceState.data,
-        }}
-      />
+      {isFetched(experienceState) && <Seo experience={experienceState.data} />}
       <Section bg="white" paddingBottom className={styles.section}>
         <Wrapper size="m">
           <div>
