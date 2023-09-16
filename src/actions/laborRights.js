@@ -1,30 +1,18 @@
-import {
-  menuStatusSelector,
-  entryStatusSelector,
-} from '../selectors/laborRightsSelector';
-import { isUnfetched } from '../constants/status';
+import { entryStatusSelector } from 'selectors/laborRightsSelector';
+import { getError, getFetched, toFetching, isUnfetched } from 'utils/fetchBox';
+import { isUnfetched as isUnfetched2 } from 'constants/status';
+import { menuStateSelector } from 'selectors/laborRightsSelector';
 import { isGraphqlError, UiNotFoundError } from 'utils/errors';
 
-export const SET_MENU_QUERY_START = '@@LABOR_RIGHTS/SET_MENU_QUERY_START';
-export const SET_MENU_QUERY_DONE = '@@LABOR_RIGHTS/SET_MENU_QUERY_DONE';
-export const SET_MENU_QUERY_ERROR = '@@LABOR_RIGHTS/SET_MENU_QUERY_ERROR';
+export const SET_MENU = '@@LABOR_RIGHTS/SET_MENU';
 
 export const SET_ENTRY_QUERY_START = '@@LABOR_RIGHTS/SET_ENTRY_QUERY_START';
 export const SET_ENTRY_QUERY_DONE = '@@LABOR_RIGHTS/SET_ENTRY_QUERY_DONE';
 export const SET_ENTRY_QUERY_ERROR = '@@LABOR_RIGHTS/SET_ENTRY_QUERY_ERROR';
 
-const setMenuQueryStart = () => ({
-  type: SET_MENU_QUERY_START,
-});
-
-const setMenuQueryDone = entries => ({
-  type: SET_MENU_QUERY_DONE,
-  entries,
-});
-
-const setMenuQueryError = error => ({
-  type: SET_MENU_QUERY_ERROR,
-  error,
+const setMenu = state => ({
+  type: SET_MENU,
+  menuState: state,
 });
 
 const setEntryQueryStart = entryId => ({
@@ -44,25 +32,23 @@ const setEntryQueryError = (entryId, error) => ({
   error,
 });
 
-export const queryMenu = () => (dispatch, getState, { api }) => {
-  dispatch(setMenuQueryStart());
+export const queryMenu = () => async (dispatch, getState, { api }) => {
+  dispatch(setMenu(toFetching()));
 
-  return api.laborRights
-    .getMenuEntries()
-    .then(entries => {
-      dispatch(setMenuQueryDone(entries));
-    })
-    .catch(error => {
-      dispatch(setMenuQueryError(error));
-      throw error;
-    });
+  try {
+    const entries = await api.laborRights.getMenuEntries();
+    return dispatch(setMenu(getFetched(entries)));
+  } catch (error) {
+    dispatch(setMenu(getError(error)));
+    throw error;
+  }
 };
 
-export const queryMenuIfUnfetched = () => (dispatch, getState) => {
-  if (isUnfetched(menuStatusSelector(getState()))) {
+export const queryMenuIfUnfetched = () => async (dispatch, getState) => {
+  const state = menuStateSelector(getState());
+  if (isUnfetched(state)) {
     return dispatch(queryMenu());
   }
-  return Promise.resolve();
 };
 
 export const queryEntry = entryId => (dispatch, getState, { api }) => {
@@ -84,7 +70,7 @@ export const queryEntry = entryId => (dispatch, getState, { api }) => {
 };
 
 export const queryEntryIfUnfetched = entryId => (dispatch, getState) => {
-  if (isUnfetched(entryStatusSelector(entryId)(getState()))) {
+  if (isUnfetched2(entryStatusSelector(entryId)(getState()))) {
     return dispatch(queryEntry(entryId));
   }
   return Promise.resolve();
