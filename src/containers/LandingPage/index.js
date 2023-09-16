@@ -2,10 +2,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import LandingPage from '../../components/LandingPage';
-import { queryPopularExperiences } from '../../actions/popularExperiences';
-import { queryPopularCompanyAverageSalary } from '../../actions/popularCompanyAverageSalary';
-import { queryPopularJobTitleSalaryDistribution } from '../../actions/popularJobTitleSalaryDistribution';
-import { queryTimeAndSalaryCountIfUnfetched } from '../../actions/timeAndSalary';
+import { queryPopularExperiences } from 'actions/popularExperiences';
+import { queryPopularCompanyAverageSalary } from 'actions/popularCompanyAverageSalary';
+import { queryPopularJobTitleSalaryDistribution } from 'actions/popularJobTitleSalaryDistribution';
 
 const mapStateToProps = state => ({
   popularCompanyAverageSalary: state.popularCompanyAverageSalary.data,
@@ -15,7 +14,6 @@ const mapStateToProps = state => ({
   popularJobTitleSalaryDistributionStatus:
     state.popularJobTitleSalaryDistribution.status,
   popularExperiences: state.popularExperiences.get('data'),
-  timeAndSalaryCount: state.timeAndSalary.get('count'),
 });
 
 const mapDispatchToProps = dispatch =>
@@ -24,7 +22,6 @@ const mapDispatchToProps = dispatch =>
       queryPopularExperiences,
       queryPopularCompanyAverageSalary,
       queryPopularJobTitleSalaryDistribution,
-      queryTimeAndSalaryCount: queryTimeAndSalaryCountIfUnfetched,
     },
     dispatch,
   );
