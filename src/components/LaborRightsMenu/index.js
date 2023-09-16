@@ -34,14 +34,6 @@ const LaborRightsMenu = () => {
 
   const title = '勞動知識小教室';
 
-  console.log(
-    R.insert(4, {
-      link: shareLink,
-      coverUrl: AdvImage,
-      title: '留下你的面試經驗、工作經驗',
-    })(R.map(entryToProps)(menuState.data || [])),
-  );
-
   const entriesToItems = useMemo(() => {
     return R.compose(
       R.insert(4, {
