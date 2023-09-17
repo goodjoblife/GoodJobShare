@@ -91,7 +91,7 @@
     "react-sticky": "^6.0.1",
     "react-textarea-autosize": "^4.3.0",
     "react-use": "^13.12.2",
-    "recharts": "^1.7.1",
+    "recharts": "^2.8.0",
     "recompose": "^0.30.0",
     "redux": "^4.0.4",
     "redux-persist": "^5.10.0",

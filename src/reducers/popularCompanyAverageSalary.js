@@ -18,7 +18,7 @@ const preloadedState = getUnfetched();
 export default createReducer(
   preloadedState,
   {
-    [SET_STATE]: (_, { state }) => ({ state }),
+    [SET_STATE]: (_, { state }) => state,
   },
   { resetOnLogOut: false },
 );
