@@ -1,5 +1,5 @@
 import React from 'react';
-import LandingPage from './containers/LandingPage';
+import LandingPage from './components/LandingPage';
 import LaborRightsMenu from './components/LaborRightsMenu';
 import LaborRightsSingle from './components/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
