@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
 import { compose, setStatic, lifecycle } from 'recompose';
 import { Section, Wrapper, Heading } from 'common/base';
 import Columns from 'common/Columns';
 import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
-import { queryPopularExperiences } from 'actions/popularExperiences';
+import {
+  queryPopularExperiences,
+  queryPopularExperiencesIfUnfetched,
+} from 'actions/experience';
+import { queryPopularCompanyAverageSalary } from 'actions/popularCompanyAverageSalary';
+import { queryPopularJobTitleSalaryDistribution } from 'actions/popularJobTitleSalaryDistribution';
 import { queryMenu } from 'actions/laborRights';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
 import StaticHelmet from 'common/StaticHelmet';
 import CallToActionBlock from './CallToActionBlock';
 import SummarySection from './SummarySection';
-import { isUnfetched } from '../../constants/status';
+import { isFetched, isUnfetched } from 'utils/fetchBox';
+import { popularExperiencesStateSelector } from 'selectors/experienceSelector';
+import { popularCompanyAverageSalaryStateSelector } from 'selectors/popularCompanyAverageSalary';
+import { popularJobTitleSalaryDistributionStateSelector } from 'selectors/popularJobTitleSalaryDistribution';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
   return Promise.all([
@@ -25,29 +33,37 @@ const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
 
 const queryData = lifecycle({
   componentDidMount() {
-    if (isUnfetched(this.props.popularCompanyAverageSalaryStatus)) {
-      this.props.queryPopularCompanyAverageSalary();
-    }
-    if (isUnfetched(this.props.popularJobTitleSalaryDistributionStatus)) {
-      this.props.queryPopularJobTitleSalaryDistribution();
-    }
-    if (this.props.popularExperiences.size === 0) {
-      this.props.queryPopularExperiences();
-    }
     this.props.queryMenuIfUnfetched();
-    this.props.queryTimeAndSalaryCount();
   },
 });
 
-const LandingPage = ({
-  popularCompanyAverageSalary,
-  popularJobTitleSalaryDistribution,
-  popularExperiences: popularExperiencesRaw,
-  laborRightsMenuEntries,
-  timeAndSalaryCount,
-  laborRightsCount,
-}) => {
-  const popularExperiences = popularExperiencesRaw.toJS() || [];
+const LandingPage = ({ laborRightsMenuEntries }) => {
+  const dispatch = useDispatch();
+
+  const popularExperiencesState = useSelector(popularExperiencesStateSelector);
+  const popularExperiences = popularExperiencesState.data || [];
+  useEffect(() => {
+    dispatch(queryPopularExperiencesIfUnfetched());
+  }, [dispatch]);
+
+  const popularCompanyAverageSalaryState = useSelector(
+    popularCompanyAverageSalaryStateSelector,
+  );
+  useEffect(() => {
+    if (isUnfetched(popularCompanyAverageSalaryState)) {
+      dispatch(queryPopularCompanyAverageSalary());
+    }
+  }, [dispatch, popularCompanyAverageSalaryState]);
+
+  const popularJobTitleSalaryDistributionState = useSelector(
+    popularJobTitleSalaryDistributionStateSelector,
+  );
+  useEffect(() => {
+    if (isUnfetched(popularJobTitleSalaryDistributionState)) {
+      dispatch(queryPopularJobTitleSalaryDistribution());
+    }
+  }, [dispatch, popularJobTitleSalaryDistributionState]);
+
   const items = laborRightsMenuEntries.map(({ id, title, coverUrl }) => ({
     link: `/labor-rights/${id}`,
     coverUrl,
@@ -59,12 +75,17 @@ const LandingPage = ({
       <Banner />
       <Section padding>
         <Wrapper size="l">
-          <SummarySection
-            popularCompanyAverageSalary={popularCompanyAverageSalary}
-            popularJobTitleSalaryDistribution={
-              popularJobTitleSalaryDistribution
-            }
-          />
+          {isFetched(popularCompanyAverageSalaryState) &&
+            isFetched(popularJobTitleSalaryDistributionState) && (
+              <SummarySection
+                popularCompanyAverageSalary={
+                  popularCompanyAverageSalaryState.data
+                }
+                popularJobTitleSalaryDistribution={
+                  popularJobTitleSalaryDistributionState.data
+                }
+              />
+            )}
         </Wrapper>
       </Section>
       <Section padding>
@@ -116,10 +137,7 @@ const LandingPage = ({
 };
 
 LandingPage.propTypes = {
-  popularCompanyAverageSalary: PropTypes.array.isRequired,
-  popularJobTitleSalaryDistribution: PropTypes.array.isRequired,
   laborRightsMenuEntries: PropTypes.array.isRequired,
-  popularExperiences: ImmutablePropTypes.list.isRequired,
   laborRightsCount: PropTypes.number.isRequired,
   timeAndSalaryCount: PropTypes.number.isRequired,
 };

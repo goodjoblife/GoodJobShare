@@ -1,22 +1,24 @@
 import createReducer from 'utils/createReducer';
+import { getUnfetched } from 'utils/fetchBox';
+import { SET_STATE } from 'actions/popularJobTitleSalaryDistribution';
 
-import { SET_STATUS } from 'actions/popularJobTitleSalaryDistribution';
-import fetchingStatus from 'constants/status';
+/*
+  PropTypes.arrayOf(
+    PropTypes.shape({
+      job_title: PropTypes.shape({
+        name: PropTypes.string,
+      }),
+      bins: PropTypes.array,
+    }),
+  )
+*/
 
-const preloadedState = {
-  data: [],
-  status: fetchingStatus.UNFETCHED,
-  error: null,
-};
+const preloadedState = getUnfetched();
 
 export default createReducer(
   preloadedState,
   {
-    [SET_STATUS]: (state, { status, data, error }) => ({
-      status,
-      data,
-      error,
-    }),
+    [SET_STATE]: (_, { state }) => ({ state }),
   },
   { resetOnLogOut: false },
 );

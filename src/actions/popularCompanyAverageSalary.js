@@ -1,31 +1,21 @@
-import fetchingStatus from '../constants/status';
+import { getError, getFetched, toFetching } from 'utils/fetchBox';
 
-export const SET_STATUS = '@@popularCompanyAverageSalary/SET_STATUS';
+export const SET_STATE = '@@POPULAR_COMPANY_AVERAGE_SALARY/SET_STATE';
 
-const setStatus = ({ status, data = [], error = null }) => ({
-  type: SET_STATUS,
-  status,
-  data,
-  error,
-});
+const setState = state => ({ type: SET_STATE, state });
 
-export const queryPopularCompanyAverageSalary = () => (
+export const queryPopularCompanyAverageSalary = () => async (
   dispatch,
   getState,
   { api },
 ) => {
-  dispatch(setStatus({ status: fetchingStatus.FETCHING }));
-  return api.popularCompanyAndJobTitle
-    .getPopularCompanyAverageSalary()
-    .then(popularCompanyAverageSalary => {
-      dispatch(
-        setStatus({
-          status: fetchingStatus.FETCHED,
-          data: popularCompanyAverageSalary,
-        }),
-      );
-    })
-    .catch(error => {
-      dispatch(setStatus({ status: fetchingStatus.ERROR, error }));
-    });
+  dispatch(setState(toFetching()));
+
+  const popularCompanyAverageSalary = await api.popularCompanyAndJobTitle.getPopularCompanyAverageSalary();
+
+  try {
+    dispatch(setState(getFetched(popularCompanyAverageSalary)));
+  } catch (error) {
+    dispatch(setState(getError(error)));
+  }
 };

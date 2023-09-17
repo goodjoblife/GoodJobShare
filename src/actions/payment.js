@@ -7,9 +7,9 @@ import {
   redirectUrlSelector,
   subscriptionPlansSelector,
   myCurrentSubscriptionSelector,
-} from '../selectors/payment';
+} from 'selectors/payment';
 
-import { tokenSelector } from '../selectors/authSelector';
+import { tokenSelector } from 'selectors/authSelector';
 
 export const SET_REDIRECT_URL = '@@PAYMENT_PERSIST/SET_REDIRECT_URL';
 export const SET_PAYMENT_RECORD = '@@PAYMENT/SET_PAYMENT_RECORD';

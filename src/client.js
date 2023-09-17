@@ -43,7 +43,6 @@ function parseState(window) {
     'timeAndSalarySearch',
     'timeAndSalaryCompany',
     'timeAndSalaryJobTitle',
-    'popularExperiences',
     'campaignInfo',
     'campaignTimeAndSalaryBoard',
   ]);
