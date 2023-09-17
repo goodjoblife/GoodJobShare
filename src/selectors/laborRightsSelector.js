@@ -2,7 +2,7 @@ import R, { path } from 'ramda';
 
 import fetchingStatus from '../constants/status';
 
-export const menuBoxSelector = path(['laborRights', 'menuBox']);
+export const menuBoxSelector = path(['laborRights', 'menu']);
 
 export const entryDataSelector = entryId =>
   R.path(['laborRights', 'entries', entryId, 'data']);

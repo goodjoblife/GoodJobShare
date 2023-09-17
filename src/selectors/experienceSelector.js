@@ -19,7 +19,7 @@ export const relatedExperiencesStateSelector = path([
   'state',
 ]);
 
-export const popularExperiencesStateSelector = path([
+export const popularExperiencesBoxSelector = path([
   'experience',
   'popularExperiences',
 ]);

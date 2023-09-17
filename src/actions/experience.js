@@ -14,7 +14,7 @@ import {
   experienceStateSelector,
   relatedExperiencesCabinSelector,
   relatedExperiencesStateSelector,
-  popularExperiencesStateSelector,
+  popularExperiencesBoxSelector,
 } from 'selectors/experienceSelector';
 
 export const SET_EXPERIENCE = '@@EXPERIENCE/SET_EXPERIENCE';
@@ -173,9 +173,9 @@ export const loadMoreRelatedExperiences = () => async (
   }
 };
 
-const setPopularExperiences = state => ({
+const setPopularExperiences = box => ({
   type: SET_POPULAR_EXPERIENCES,
-  popularExperiences: state,
+  popularExperiences: box,
 });
 
 export const queryPopularExperiences = () => async (
@@ -209,9 +209,9 @@ export const queryPopularExperiencesIfUnfetched = experienceId => async (
   getState,
   { api },
 ) => {
-  const state = popularExperiencesStateSelector(getState());
+  const box = popularExperiencesBoxSelector(getState());
 
-  if (isUnfetched(state)) {
+  if (isUnfetched(box)) {
     return dispatch(queryPopularExperiences(experienceId));
   }
 };

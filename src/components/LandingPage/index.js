@@ -20,7 +20,7 @@ import StaticHelmet from 'common/StaticHelmet';
 import CallToActionBlock from './CallToActionBlock';
 import SummarySection from './SummarySection';
 import { isFetching, isFetched, isUnfetched } from 'utils/fetchBox';
-import { popularExperiencesStateSelector } from 'selectors/experienceSelector';
+import { popularExperiencesBoxSelector } from 'selectors/experienceSelector';
 import { popularCompanyAverageSalaryStateSelector } from 'selectors/popularCompanyAverageSalary';
 import { popularJobTitleSalaryDistributionStateSelector } from 'selectors/popularJobTitleSalaryDistribution';
 import { menuBoxSelector } from 'selectors/laborRightsSelector';
@@ -41,8 +41,8 @@ const entryToProps = ({ id, title, coverUrl }) => ({
 const LandingPage = ({ laborRightsMenuEntries }) => {
   const dispatch = useDispatch();
 
-  const popularExperiencesState = useSelector(popularExperiencesStateSelector);
-  const popularExperiences = popularExperiencesState.data || [];
+  const popularExperiencesBox = useSelector(popularExperiencesBoxSelector);
+  const popularExperiences = popularExperiencesBox.data || [];
   useEffect(() => {
     dispatch(queryPopularExperiencesIfUnfetched());
   }, [dispatch]);
