@@ -8,7 +8,7 @@ import { Section, Wrapper, Heading } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import { useShareLink } from 'hooks/experiments';
 import { queryMenu, queryMenuIfUnfetched } from 'actions/laborRights';
-import { menuStateSelector } from 'selectors/laborRightsSelector';
+import { menuBoxSelector } from 'selectors/laborRightsSelector';
 import { isFetching, isError, isFetched } from 'utils/fetchBox';
 import LaborRightsEntry from './LaborRightsEntry';
 import StaticHelmet from 'common/StaticHelmet';
@@ -28,7 +28,7 @@ const LaborRightsMenu = () => {
     dispatch(queryMenuIfUnfetched());
   }, [dispatch]);
 
-  const menuState = useSelector(menuStateSelector);
+  const menuBox = useSelector(menuBoxSelector);
 
   const shareLink = useShareLink();
 
@@ -53,12 +53,12 @@ const LaborRightsMenu = () => {
           <Heading size="l" center marginBottom>
             {title}
           </Heading>
-          {isFetching(menuState) && <Loader />}
-          {isError(menuState) && menuState.error.toString()}
-          {isFetched(menuState) && (
+          {isFetching(menuBox) && <Loader />}
+          {isError(menuBox) && menuBox.error.toString()}
+          {isFetched(menuBox) && (
             <Columns
               Item={LaborRightsEntry}
-              items={entriesToItems(menuState.data)}
+              items={entriesToItems(menuBox.data)}
             />
           )}
         </section>

@@ -1,7 +1,7 @@
 import { entryStatusSelector } from 'selectors/laborRightsSelector';
 import { getError, getFetched, toFetching, isUnfetched } from 'utils/fetchBox';
 import { isUnfetched as isUnfetched2 } from 'constants/status';
-import { menuStateSelector } from 'selectors/laborRightsSelector';
+import { menuBoxSelector } from 'selectors/laborRightsSelector';
 import { isGraphqlError, UiNotFoundError } from 'utils/errors';
 
 export const SET_MENU = '@@LABOR_RIGHTS/SET_MENU';
@@ -10,9 +10,9 @@ export const SET_ENTRY_QUERY_START = '@@LABOR_RIGHTS/SET_ENTRY_QUERY_START';
 export const SET_ENTRY_QUERY_DONE = '@@LABOR_RIGHTS/SET_ENTRY_QUERY_DONE';
 export const SET_ENTRY_QUERY_ERROR = '@@LABOR_RIGHTS/SET_ENTRY_QUERY_ERROR';
 
-const setMenu = state => ({
+const setMenu = box => ({
   type: SET_MENU,
-  menuState: state,
+  menu: box,
 });
 
 const setEntryQueryStart = entryId => ({
@@ -45,8 +45,8 @@ export const queryMenu = () => async (dispatch, getState, { api }) => {
 };
 
 export const queryMenuIfUnfetched = () => async (dispatch, getState) => {
-  const state = menuStateSelector(getState());
-  if (isUnfetched(state)) {
+  const box = menuBoxSelector(getState());
+  if (isUnfetched(box)) {
     return dispatch(queryMenu());
   }
 };

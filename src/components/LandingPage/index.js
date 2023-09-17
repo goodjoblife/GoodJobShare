@@ -23,7 +23,7 @@ import { isFetching, isFetched, isUnfetched } from 'utils/fetchBox';
 import { popularExperiencesStateSelector } from 'selectors/experienceSelector';
 import { popularCompanyAverageSalaryStateSelector } from 'selectors/popularCompanyAverageSalary';
 import { popularJobTitleSalaryDistributionStateSelector } from 'selectors/popularJobTitleSalaryDistribution';
-import { menuStateSelector } from 'selectors/laborRightsSelector';
+import { menuBoxSelector } from 'selectors/laborRightsSelector';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
   return Promise.all([
@@ -69,7 +69,7 @@ const LandingPage = ({ laborRightsMenuEntries }) => {
   useEffect(() => {
     dispatch(queryMenuIfUnfetched());
   }, [dispatch]);
-  const menuState = useSelector(menuStateSelector);
+  const menuBox = useSelector(menuBoxSelector);
 
   return (
     <main>
@@ -116,12 +116,12 @@ const LandingPage = ({ laborRightsMenuEntries }) => {
           <Heading size="l" center marginBottom>
             勞工法令懶人包
           </Heading>
-          {isFetching(menuState) && <Loader />}
-          {isFetched(menuState) && (
+          {isFetching(menuBox) && <Loader />}
+          {isFetched(menuBox) && (
             <Columns
               gutter="s"
               Item={LaborRightsEntry}
-              items={menuState.data.slice(-3).map(entryToProps)}
+              items={menuBox.data.slice(-3).map(entryToProps)}
             />
           )}
         </Wrapper>

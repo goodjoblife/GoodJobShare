@@ -8,14 +8,12 @@ import {
 } from 'actions/laborRights';
 import fetchingStatus from 'constants/status';
 
-// menuEntries: [{id, title, coverUrl}]
 // entries: {id: {data, status, error}}
 const preloadedState = {
-  menuEntries: [],
   menuStatus: fetchingStatus.UNFETCHED,
   menuError: null,
   entries: {},
-  menuState: getUnfetched(),
+  menu: getUnfetched(),
 };
 
 export default createReducer(
@@ -66,9 +64,9 @@ export default createReducer(
         },
       };
     },
-    [SET_MENU]: (state, { menuState }) => ({
+    [SET_MENU]: (state, { menu }) => ({
       ...state,
-      menuState,
+      menu,
     }),
   },
   { resetOnLogOut: false },
