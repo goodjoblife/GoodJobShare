@@ -5,6 +5,7 @@ import {
   toFetching,
   isFetching,
   isFetched,
+  isUnfetched,
 } from 'utils/fetchBox';
 import { isGraphqlError, UiNotFoundError } from 'utils/errors';
 import { tokenSelector } from 'selectors/authSelector';
@@ -13,10 +14,12 @@ import {
   experienceStateSelector,
   relatedExperiencesCabinSelector,
   relatedExperiencesStateSelector,
+  popularExperiencesBoxSelector,
 } from 'selectors/experienceSelector';
 
 export const SET_EXPERIENCE = '@@EXPERIENCE/SET_EXPERIENCE';
 export const SET_RELATED_EXPERIENCES = '@@EXPERIENCE/SET_RELATED_EXPERIENCES';
+export const SET_POPULAR_EXPERIENCES = '@@EXPERIENCE/SET_POPULAR_EXPERIENCES';
 
 // state is related to experienceId
 const setExperience = (experienceId, state) => ({
@@ -167,5 +170,48 @@ export const loadMoreRelatedExperiences = () => async (
     if (experienceId === prev.experienceId && page === prev.page) {
       dispatch(setRelatedExperiences(getError(error)));
     }
+  }
+};
+
+const setPopularExperiences = box => ({
+  type: SET_POPULAR_EXPERIENCES,
+  popularExperiences: box,
+});
+
+export const queryPopularExperiences = () => async (
+  dispatch,
+  getState,
+  { api },
+) => {
+  dispatch(setPopularExperiences(toFetching()));
+
+  try {
+    const experiences = await api.experiences.getPopularExperiences();
+    dispatch(
+      setPopularExperiences(
+        getFetched(
+          experiences.map(({ id, job_title, ...rest }) => ({
+            // TODO 未來 migrate 掉
+            _id: id,
+            job_title: job_title.name,
+            ...rest,
+          })),
+        ),
+      ),
+    );
+  } catch (error) {
+    dispatch(setPopularExperiences(getError(error)));
+  }
+};
+
+export const queryPopularExperiencesIfUnfetched = experienceId => async (
+  dispatch,
+  getState,
+  { api },
+) => {
+  const box = popularExperiencesBoxSelector(getState());
+
+  if (isUnfetched(box)) {
+    return dispatch(queryPopularExperiences(experienceId));
   }
 };

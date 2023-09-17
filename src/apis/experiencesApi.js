@@ -116,10 +116,9 @@ export const queryExperienceLike = async ({ id, token }) => {
   return data.experience.liked;
 };
 
-export const getPopularExperiences = ({ token }) =>
+export const getPopularExperiences = () =>
   graphqlClient({
     query: getPopularExperiencesQuery,
-    token,
   }).then(data => data.popular_experiences);
 
 export const newExperienceSearchBy = ({ body }) =>
