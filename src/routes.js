@@ -1,6 +1,6 @@
 import React from 'react';
 import LandingPage from './containers/LandingPage';
-import LaborRightsMenu from './containers/LaborRightsMenu';
+import LaborRightsMenu from './components/LaborRightsMenu';
 import LaborRightsSingle from './components/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/SalaryWorkTime/TimeAndSalaryBoard';

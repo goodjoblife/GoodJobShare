@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
-import { compose, setStatic, lifecycle } from 'recompose';
+import { compose, setStatic } from 'recompose';
 import { Section, Wrapper, Heading } from 'common/base';
 import Columns from 'common/Columns';
+import Loader from 'common/Loader';
 import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
 import {
   queryPopularExperiences,
@@ -13,16 +13,17 @@ import {
 } from 'actions/experience';
 import { queryPopularCompanyAverageSalary } from 'actions/popularCompanyAverageSalary';
 import { queryPopularJobTitleSalaryDistribution } from 'actions/popularJobTitleSalaryDistribution';
-import { queryMenu } from 'actions/laborRights';
+import { queryMenu, queryMenuIfUnfetched } from 'actions/laborRights';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
 import StaticHelmet from 'common/StaticHelmet';
 import CallToActionBlock from './CallToActionBlock';
 import SummarySection from './SummarySection';
-import { isFetched, isUnfetched } from 'utils/fetchBox';
+import { isFetching, isFetched, isUnfetched } from 'utils/fetchBox';
 import { popularExperiencesStateSelector } from 'selectors/experienceSelector';
 import { popularCompanyAverageSalaryStateSelector } from 'selectors/popularCompanyAverageSalary';
 import { popularJobTitleSalaryDistributionStateSelector } from 'selectors/popularJobTitleSalaryDistribution';
+import { menuStateSelector } from 'selectors/laborRightsSelector';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
   return Promise.all([
@@ -31,10 +32,10 @@ const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
   ]);
 });
 
-const queryData = lifecycle({
-  componentDidMount() {
-    this.props.queryMenuIfUnfetched();
-  },
+const entryToProps = ({ id, title, coverUrl }) => ({
+  link: `/labor-rights/${id}`,
+  coverUrl,
+  title,
 });
 
 const LandingPage = ({ laborRightsMenuEntries }) => {
@@ -64,11 +65,12 @@ const LandingPage = ({ laborRightsMenuEntries }) => {
     }
   }, [dispatch, popularJobTitleSalaryDistributionState]);
 
-  const items = laborRightsMenuEntries.map(({ id, title, coverUrl }) => ({
-    link: `/labor-rights/${id}`,
-    coverUrl,
-    title,
-  }));
+  // 勞工法令懶人包
+  useEffect(() => {
+    dispatch(queryMenuIfUnfetched());
+  }, [dispatch]);
+  const menuState = useSelector(menuStateSelector);
+
   return (
     <main>
       <StaticHelmet.LandingPage />
@@ -114,7 +116,14 @@ const LandingPage = ({ laborRightsMenuEntries }) => {
           <Heading size="l" center marginBottom>
             勞工法令懶人包
           </Heading>
-          <Columns gutter="s" Item={LaborRightsEntry} items={items} />
+          {isFetching(menuState) && <Loader />}
+          {isFetched(menuState) && (
+            <Columns
+              gutter="s"
+              Item={LaborRightsEntry}
+              items={menuState.data.slice(-3).map(entryToProps)}
+            />
+          )}
         </Wrapper>
         <Section center Tag="div">
           <Link
@@ -126,7 +135,6 @@ const LandingPage = ({ laborRightsMenuEntries }) => {
           </Link>
         </Section>
       </Section>
-
       <Section padding>
         <Wrapper size="l">
           <CallToActionBlock />
@@ -136,15 +144,6 @@ const LandingPage = ({ laborRightsMenuEntries }) => {
   );
 };
 
-LandingPage.propTypes = {
-  laborRightsMenuEntries: PropTypes.array.isRequired,
-  laborRightsCount: PropTypes.number.isRequired,
-  timeAndSalaryCount: PropTypes.number.isRequired,
-};
-
-const hoc = compose(
-  ssr,
-  queryData,
-);
+const hoc = compose(ssr);
 
 export default hoc(LandingPage);
