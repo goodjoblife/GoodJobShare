@@ -10,8 +10,6 @@ import fetchingStatus from 'constants/status';
 
 // entries: {id: {data, status, error}}
 const preloadedState = {
-  menuStatus: fetchingStatus.UNFETCHED,
-  menuError: null,
   entries: {},
   menu: getUnfetched(),
 };
