@@ -1,5 +1,5 @@
 import { path } from 'ramda';
 
-export const popularCompanyAverageSalaryStateSelector = path([
+export const popularCompanyAverageSalaryBoxSelector = path([
   'popularCompanyAverageSalary',
 ]);

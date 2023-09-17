@@ -21,8 +21,8 @@ import CallToActionBlock from './CallToActionBlock';
 import SummarySection from './SummarySection';
 import { isFetching, isFetched, isUnfetched } from 'utils/fetchBox';
 import { popularExperiencesBoxSelector } from 'selectors/experienceSelector';
-import { popularCompanyAverageSalaryStateSelector } from 'selectors/popularCompanyAverageSalary';
-import { popularJobTitleSalaryDistributionStateSelector } from 'selectors/popularJobTitleSalaryDistribution';
+import { popularCompanyAverageSalaryBoxSelector } from 'selectors/popularCompanyAverageSalary';
+import { popularJobTitleSalaryDistributionBoxSelector } from 'selectors/popularJobTitleSalaryDistribution';
 import { menuBoxSelector } from 'selectors/laborRightsSelector';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
@@ -47,23 +47,23 @@ const LandingPage = ({ laborRightsMenuEntries }) => {
     dispatch(queryPopularExperiencesIfUnfetched());
   }, [dispatch]);
 
-  const popularCompanyAverageSalaryState = useSelector(
-    popularCompanyAverageSalaryStateSelector,
+  const popularCompanyAverageSalaryBox = useSelector(
+    popularCompanyAverageSalaryBoxSelector,
   );
   useEffect(() => {
-    if (isUnfetched(popularCompanyAverageSalaryState)) {
+    if (isUnfetched(popularCompanyAverageSalaryBox)) {
       dispatch(queryPopularCompanyAverageSalary());
     }
-  }, [dispatch, popularCompanyAverageSalaryState]);
+  }, [dispatch, popularCompanyAverageSalaryBox]);
 
-  const popularJobTitleSalaryDistributionState = useSelector(
-    popularJobTitleSalaryDistributionStateSelector,
+  const popularJobTitleSalaryDistributionBox = useSelector(
+    popularJobTitleSalaryDistributionBoxSelector,
   );
   useEffect(() => {
-    if (isUnfetched(popularJobTitleSalaryDistributionState)) {
+    if (isUnfetched(popularJobTitleSalaryDistributionBox)) {
       dispatch(queryPopularJobTitleSalaryDistribution());
     }
-  }, [dispatch, popularJobTitleSalaryDistributionState]);
+  }, [dispatch, popularJobTitleSalaryDistributionBox]);
 
   // 勞工法令懶人包
   useEffect(() => {
@@ -77,14 +77,14 @@ const LandingPage = ({ laborRightsMenuEntries }) => {
       <Banner />
       <Section padding>
         <Wrapper size="l">
-          {isFetched(popularCompanyAverageSalaryState) &&
-            isFetched(popularJobTitleSalaryDistributionState) && (
+          {isFetched(popularCompanyAverageSalaryBox) &&
+            isFetched(popularJobTitleSalaryDistributionBox) && (
               <SummarySection
                 popularCompanyAverageSalary={
-                  popularCompanyAverageSalaryState.data
+                  popularCompanyAverageSalaryBox.data
                 }
                 popularJobTitleSalaryDistribution={
-                  popularJobTitleSalaryDistributionState.data
+                  popularJobTitleSalaryDistributionBox.data
                 }
               />
             )}
