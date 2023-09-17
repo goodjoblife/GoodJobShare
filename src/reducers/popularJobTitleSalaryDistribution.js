@@ -1,6 +1,6 @@
 import createReducer from 'utils/createReducer';
 import { getUnfetched } from 'utils/fetchBox';
-import { SET_STATE } from 'actions/popularJobTitleSalaryDistribution';
+import { SET_POPULAR_JOB_TITLE_SALARY_DISTRIBUTION } from 'actions/popularJobTitleSalaryDistribution';
 
 /*
   PropTypes.arrayOf(
@@ -18,7 +18,10 @@ const preloadedState = getUnfetched();
 export default createReducer(
   preloadedState,
   {
-    [SET_STATE]: (_, { state }) => state,
+    [SET_POPULAR_JOB_TITLE_SALARY_DISTRIBUTION]: (
+      _,
+      { popularJobTitleSalaryDistribution },
+    ) => popularJobTitleSalaryDistribution,
   },
   { resetOnLogOut: false },
 );
