@@ -1,16 +1,16 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import { Element as ScrollElement, scroller } from 'react-scroll';
 import PropTypes from 'prop-types';
 import Button from 'common/button/Button';
 import { P } from 'common/base';
 import ButtonGroup from 'common/button/ButtonGroup';
-import { useLogin, useFacebookLogin } from 'hooks/login';
 import Loader from 'common/Loader';
 import useQueryReplies from '../hooks/useQueryReplies';
 import useLikeReply from '../hooks/useLikeReply';
 import useCreateReply from '../hooks/useCreateReply';
 import CommentBlock from './CommentBlock';
 import styles from './MessageBoard.module.css';
+import useLoginFlow from '../hooks/useLoginFlow';
 
 const recommendedSentences = [
   '詳細給推',
@@ -25,10 +25,17 @@ const REPLIES_BOTTOM = 'REPLIES_BOTTOM';
 
 const MessageBoard = ({ experienceId }) => {
   const [comment, setComment] = useState('');
-  const [isLoggedIn] = useLogin();
-  const facebookLogin = useFacebookLogin();
   const createReply = useCreateReply(experienceId);
   const [repliesState, queryReplies] = useQueryReplies(experienceId);
+
+  const submitCommentCallback = useCallback(async () => {
+    await createReply(comment);
+    await queryReplies();
+    setComment('');
+    scroller.scrollTo(REPLIES_BOTTOM, { smooth: true, offset: -75 });
+  }, [comment, createReply, queryReplies]);
+
+  const [submitComment, isSubmitting] = useLoginFlow(submitCommentCallback);
 
   // fetch when experienceId change
   useEffect(() => {
@@ -59,15 +66,9 @@ const MessageBoard = ({ experienceId }) => {
       <div className={`formLabel ${styles.termsOfService}`}>
         <Button
           btnStyle="submit"
-          disabled={!comment}
-          onClick={async () => {
-            if (!isLoggedIn) {
-              await facebookLogin();
-            }
-            await createReply(comment);
-            await queryReplies();
-            setComment('');
-            scroller.scrollTo(REPLIES_BOTTOM, { smooth: true, offset: -75 });
+          disabled={!comment || isSubmitting}
+          onClick={() => {
+            submitComment();
           }}
         >
           發佈留言
