@@ -1,9 +1,6 @@
-import { isGraphqlError } from 'utils/errors';
-
-import fetchingStatus from '../constants/status';
 import { tokenSelector } from '../selectors/authSelector';
-import { UiNotFoundError } from 'utils/errors';
 
+<<<<<<< HEAD
 export const SET_EXPERIENCE = '@@experienceDetail/SET_EXPERIENCE';
 export const SET_EXPERIENCE_STATUS = '@@experienceDetail/SET_EXPERIENCE_STATUS';
 
@@ -14,6 +11,8 @@ export const setExperience = experience => ({
   experience,
 });
 
+=======
+>>>>>>> upstream/master
 export const createReply = (experienceId, comment) => (
   dispatch,
   getState,
@@ -28,6 +27,7 @@ export const createReply = (experienceId, comment) => (
     token,
   });
 };
+<<<<<<< HEAD
 
 export const fetchExperience = id => (dispatch, getState, { api }) => {
   const state = getState();
@@ -66,3 +66,5 @@ export const fetchExperience = id => (dispatch, getState, { api }) => {
       }
     });
 };
+=======
+>>>>>>> upstream/master

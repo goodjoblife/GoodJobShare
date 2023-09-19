@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, {
   useState,
   useEffect,
@@ -6,14 +7,22 @@ import React, {
   useContext,
   Fragment,
 } from 'react';
+=======
+import React, { useState, useEffect, Fragment } from 'react';
+>>>>>>> upstream/master
 import { Element as ScrollElement, scroller } from 'react-scroll';
 import PropTypes from 'prop-types';
 import Button from 'common/button/Button';
 import { P } from 'common/base';
 import ButtonGroup from 'common/button/ButtonGroup';
+<<<<<<< HEAD
 import Loader from 'common/Loader';
 import { useLogin } from 'hooks/login';
 import LoginModalContext from 'contexts/LoginModalContext';
+=======
+import { useLogin, useFacebookLogin } from 'hooks/login';
+import Loader from 'common/Loader';
+>>>>>>> upstream/master
 import useQueryReplies from '../hooks/useQueryReplies';
 import useLikeReply from '../hooks/useLikeReply';
 import useCreateReply from '../hooks/useCreateReply';
@@ -31,6 +40,7 @@ const recommendedSentences = [
 
 const REPLIES_BOTTOM = 'REPLIES_BOTTOM';
 
+<<<<<<< HEAD
 const useLoginFlow = callback => {
   const [state, setState] = useState('init');
   const [isLoggedIn] = useLogin();
@@ -103,6 +113,21 @@ const SubmitCommentBlock = ({ experienceId }) => {
   const [submitComment, isSubmitting] = useLoginFlow(submitCommentCallback);
 
   console.log('comment', comment);
+=======
+const MessageBoard = ({ experienceId }) => {
+  const [comment, setComment] = useState('');
+  const [isLoggedIn] = useLogin();
+  const facebookLogin = useFacebookLogin();
+  const createReply = useCreateReply(experienceId);
+  const [repliesState, queryReplies] = useQueryReplies(experienceId);
+
+  // fetch when experienceId change
+  useEffect(() => {
+    queryReplies();
+  }, [queryReplies]);
+
+  const likeReply = useLikeReply();
+>>>>>>> upstream/master
 
   return (
     <Fragment>
@@ -126,9 +151,21 @@ const SubmitCommentBlock = ({ experienceId }) => {
       <div className={`formLabel ${styles.termsOfService}`}>
         <Button
           btnStyle="submit"
+<<<<<<< HEAD
           disabled={!comment || isSubmitting}
           onClick={() => {
             submitComment();
+=======
+          disabled={!comment}
+          onClick={async () => {
+            if (!isLoggedIn) {
+              await facebookLogin();
+            }
+            await createReply(comment);
+            await queryReplies();
+            setComment('');
+            scroller.scrollTo(REPLIES_BOTTOM, { smooth: true, offset: -75 });
+>>>>>>> upstream/master
           }}
         >
           發佈留言

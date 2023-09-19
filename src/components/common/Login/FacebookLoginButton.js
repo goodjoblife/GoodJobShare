@@ -7,10 +7,7 @@ const FacebookLoginButton = () => {
   const fbLogin = useFacebookLogin();
 
   return (
-    <button
-      className={cn('buttonCircleM', styles.btn, styles.btnFb)}
-      onClick={fbLogin}
-    >
+    <button className={cn(styles.btn, styles.btnFb)} onClick={fbLogin}>
       <pre>Facebook 登入</pre>
     </button>
   );

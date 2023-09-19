@@ -5,8 +5,8 @@ import React, {
   useEffect,
   useMemo,
 } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
 import { Element as ScrollElement, scroller } from 'react-scroll';
 import { compose, setStatic } from 'recompose';
@@ -34,9 +34,18 @@ import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
+<<<<<<< HEAD
 import { isFetched, isError } from 'constants/status';
 import { fetchExperience } from 'actions/experienceDetail';
 import { queryRelatedExperiencesOnExperience } from 'actions/experience';
+=======
+import { isError, isFetched } from 'utils/fetchBox';
+import {
+  queryExperience,
+  queryExperienceIfUnfetched,
+  queryRelatedExperiencesOnExperience,
+} from 'actions/experience';
+>>>>>>> upstream/master
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
 import {
@@ -45,6 +54,7 @@ import {
 } from '../../constants/companyJobTitle';
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
+import { experienceStateSelector } from 'selectors/experienceSelector';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -69,12 +79,25 @@ const pageTypeToNameSelector = {
   [PAGE_TYPE.JOB_TITLE]: R.path(['job_title', 'name']),
 };
 
+<<<<<<< HEAD
 const ExperienceDetail = ({ fetchExperience, ...props }) => {
   const experienceId = useExperienceId();
 
   useEffect(() => {
     fetchExperience(experienceId);
   }, [experienceId, fetchExperience]);
+=======
+const ExperienceDetail = ({ ...props }) => {
+  const experienceId = useExperienceId();
+
+  const experienceState = useSelector(experienceStateSelector);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(queryExperienceIfUnfetched(experienceId));
+  }, [dispatch, experienceId]);
+>>>>>>> upstream/master
 
   const [, fetchPermission, canView] = usePermission();
 
@@ -113,8 +136,11 @@ const ExperienceDetail = ({ fetchExperience, ...props }) => {
     ['location', 'state', 'pageType'],
     props,
   );
+<<<<<<< HEAD
   const data = props.experienceDetail.toJS();
   const { experience, experienceStatus, experienceError } = data;
+=======
+>>>>>>> upstream/master
 
   const scrollToCommentZone = useCallback(() => {
     scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
@@ -196,8 +222,8 @@ const ExperienceDetail = ({ fetchExperience, ...props }) => {
     );
   }, [handleIsModalOpen]);
 
-  if (isError(experienceStatus)) {
-    if (isUiNotFoundError(experienceError)) {
+  if (isError(experienceState)) {
+    if (isUiNotFoundError(experienceState.error)) {
       return <NotFound />;
     }
     return null;
@@ -205,12 +231,12 @@ const ExperienceDetail = ({ fetchExperience, ...props }) => {
 
   return (
     <main>
-      <Seo experienceState={data} />
+      {isFetched(experienceState) && <Seo experience={experienceState.data} />}
       <Section bg="white" paddingBottom className={styles.section}>
         <Wrapper size="m">
           <div>
             {/* 文章區塊  */}
-            {!isFetched(experienceStatus) ? (
+            {!isFetched(experienceState) ? (
               <Loader />
             ) : (
               <Fragment>
@@ -218,16 +244,19 @@ const ExperienceDetail = ({ fetchExperience, ...props }) => {
                   <BreadCrumb
                     data={generateBreadCrumbData({
                       pageType,
-                      pageName: pageTypeToNameSelector[pageType](experience),
-                      tabType: experienceTypeToTabType[experience.type],
-                      experience,
+                      pageName: pageTypeToNameSelector[pageType](
+                        experienceState.data,
+                      ),
+                      tabType:
+                        experienceTypeToTabType[experienceState.data.type],
+                      experience: experienceState.data,
                     })}
                   />
                 </div>
-                <ExperienceHeading experience={experience} />
+                <ExperienceHeading experience={experienceState.data} />
                 {reportZone}
                 <Article
-                  experience={experience}
+                  experience={experienceState.data}
                   hideContent={!canView}
                   onClickMsgButton={scrollToCommentZone}
                 />
@@ -235,13 +264,13 @@ const ExperienceDetail = ({ fetchExperience, ...props }) => {
             )}
           </div>
         </Wrapper>
-        {isFetched(experienceStatus) && (
+        {isFetched(experienceState) && (
           <React.Fragment>
             <Wrapper size="m">
-              <MoreExperiencesBlock experience={experience} />
+              <MoreExperiencesBlock experience={experienceState.data} />
             </Wrapper>
             <Wrapper size="l">
-              <ChartsZone experience={experience} />
+              <ChartsZone experience={experienceState.data} />
             </Wrapper>
           </React.Fragment>
         )}
@@ -268,8 +297,11 @@ const ExperienceDetail = ({ fetchExperience, ...props }) => {
 };
 
 ExperienceDetail.propTypes = {
+<<<<<<< HEAD
   experienceDetail: ImmutablePropTypes.map.isRequired,
   fetchExperience: PropTypes.func.isRequired,
+=======
+>>>>>>> upstream/master
   location: PropTypes.shape({
     state: PropTypes.shape({
       replyId: PropTypes.string,
@@ -282,7 +314,7 @@ const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   const params = paramsSelector(props);
   const experienceId = experienceIdSelector(params);
   return Promise.all([
-    dispatch(fetchExperience(experienceId)),
+    dispatch(queryExperience(experienceId)),
     dispatch(queryRelatedExperiencesOnExperience(experienceId)),
   ]);
 });

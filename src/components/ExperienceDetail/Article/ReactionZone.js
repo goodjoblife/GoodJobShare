@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import R from 'ramda';
 import cn from 'classnames';
 import i from 'common/icons';
 import { useLogin } from 'hooks/login';
 import styles from './ReactionZone.module.css';
-import useGetLike from '../hooks/useGetLike';
+import useQueryLike from '../hooks/useQueryLike';
 import useToggleLike from '../hooks/useToggleLike';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
@@ -29,8 +28,9 @@ ReactionButton.propTypes = {
 };
 
 const ReactionZone = ({ experienceId, onClickMsgButton }) => {
-  const [likeState, getLike] = useGetLike(experienceId);
-  const hasLiked = R.path(['experience', 'liked'])(likeState.value);
+  const [likeState, queryLike] = useQueryLike(experienceId);
+
+  const hasLiked = likeState.value ? true : false;
   const toggleLike = useToggleLike(experienceId);
 
   const [hasLoggedIn, login] = useLogin();
@@ -43,11 +43,12 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
       await toggleLike(hasLiked);
     } catch (e) {}
 
-    await getLike();
-  }, [getLike, hasLiked, hasLoggedIn, login, toggleLike]);
+    await queryLike();
+  }, [hasLiked, hasLoggedIn, login, queryLike, toggleLike]);
+
   useEffect(() => {
-    getLike();
-  }, [getLike]);
+    queryLike();
+  }, [queryLike]);
 
   return (
     <div className={styles.reactionZone}>

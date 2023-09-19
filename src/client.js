@@ -37,14 +37,12 @@ function parseState(window) {
   // see https://github.com/goodjoblife/GoodJobShare/milestone/12
   const shouldTransform = R.flip(R.contains)([
     'experienceSearch',
-    'experienceDetail',
     'experiences',
     'timeAndSalary',
     'timeAndSalaryBoard',
     'timeAndSalarySearch',
     'timeAndSalaryCompany',
     'timeAndSalaryJobTitle',
-    'popularExperiences',
     'campaignInfo',
     'campaignTimeAndSalaryBoard',
   ]);

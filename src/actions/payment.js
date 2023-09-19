@@ -1,4 +1,10 @@
-import { getError, getFetched, getUnfetched, toFetching } from 'utils/fetchBox';
+import {
+  getError,
+  getFetched,
+  getUnfetched,
+  toFetching,
+  isFetching,
+} from 'utils/fetchBox';
 import { createToastLocationState } from 'utils/toastNotification';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 
@@ -7,9 +13,9 @@ import {
   redirectUrlSelector,
   subscriptionPlansSelector,
   myCurrentSubscriptionSelector,
-} from '../selectors/payment';
+} from 'selectors/payment';
 
-import { tokenSelector } from '../selectors/authSelector';
+import { tokenSelector } from 'selectors/authSelector';
 
 export const SET_REDIRECT_URL = '@@PAYMENT_PERSIST/SET_REDIRECT_URL';
 export const SET_PAYMENT_RECORD = '@@PAYMENT/SET_PAYMENT_RECORD';
@@ -89,21 +95,27 @@ export const fetchPaymentRecord = paymentRecordId => (
     });
 };
 
-export const fetchSubscriptionPlans = () => (dispatch, getState, { api }) => {
+export const fetchSubscriptionPlans = () => async (
+  dispatch,
+  getState,
+  { api },
+) => {
   const state = getState();
-  const plans = subscriptionPlansSelector(state);
+  const plansBox = subscriptionPlansSelector(state);
 
-  dispatch(setSubscriptionPlans(toFetching(plans)));
+  if (isFetching(plansBox)) {
+    return;
+  }
 
-  return api.payment
-    .getSubscriptionPlans()
-    .then(plans => {
-      dispatch(setSubscriptionPlans(getFetched(plans)));
-    })
-    .catch(error => {
-      console.error(error);
-      dispatch(setSubscriptionPlans(getError(plans)));
-    });
+  dispatch(setSubscriptionPlans(toFetching(plansBox)));
+
+  try {
+    const plans = await api.payment.getSubscriptionPlans();
+    dispatch(setSubscriptionPlans(getFetched(plans)));
+  } catch (error) {
+    console.error(error);
+    dispatch(setSubscriptionPlans(getError(error)));
+  }
 };
 
 export const fetchMyCurrentSubscription = () => (

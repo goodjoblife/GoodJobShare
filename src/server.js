@@ -95,6 +95,17 @@ server.get(
       res.status(context.status);
     }
 
+    /**
+     * https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid
+     * > The Referrer-Policy header must also be set to no-referrer-when-downgrade when using http and localhost.
+     *
+     * When we develop in localhost
+     * npm run start run in `development` environment
+     */
+    if (process.env.NODE_ENV === 'development') {
+      res.set('Referrer-Policy', 'no-referrer-when-downgrade');
+    }
+
     // TODO handle 301/302
 
     res.send(`<!doctype html>\n${html}`);

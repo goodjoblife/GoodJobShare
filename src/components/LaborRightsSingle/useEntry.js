@@ -4,11 +4,13 @@ import {
   entryDataSelector,
   entryStatusSelector,
   entryErrorSelector,
-  menuEntriesSelector,
-} from '../../selectors/laborRightsSelector';
+  menuBoxSelector,
+} from 'selectors/laborRightsSelector';
 
 export const useNeighborEntry = entryId => {
-  const menuEntries = useSelector(menuEntriesSelector);
+  const menuBox = useSelector(menuBoxSelector);
+  const menuEntries = menuBox.data || [];
+
   const index = R.findIndex(R.propEq('id', entryId))(menuEntries);
   const prevEntry = index > 0 ? menuEntries[index - 1] : undefined;
   const nextEntry =
