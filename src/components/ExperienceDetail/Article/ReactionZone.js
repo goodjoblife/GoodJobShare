@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import i from 'common/icons';
-import { useLogin } from 'hooks/login';
 import styles from './ReactionZone.module.css';
 import useQueryLike from '../hooks/useQueryLike';
 import useToggleLike from '../hooks/useToggleLike';
+import useLoginFlow from '../hooks/useLoginFlow';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
   <button
@@ -28,34 +28,36 @@ ReactionButton.propTypes = {
 };
 
 const ReactionZone = ({ experienceId, onClickMsgButton }) => {
+  // use state to quick response to toggle
+  const [liked, setLiked] = useState(false);
+
   const [likeState, queryLike] = useQueryLike(experienceId);
 
-  const hasLiked = likeState.value ? true : false;
   const toggleLike = useToggleLike(experienceId);
-
-  const [hasLoggedIn, login] = useLogin();
-  const handleLike = useCallback(async () => {
-    if (!hasLoggedIn) {
-      await login();
-      return;
-    }
-    try {
-      await toggleLike(hasLiked);
-    } catch (e) {}
-
+  const handleLikeCallback = useCallback(async () => {
+    setLiked(!liked);
+    await toggleLike(liked);
     await queryLike();
-  }, [hasLiked, hasLoggedIn, login, queryLike, toggleLike]);
+  }, [liked, queryLike, toggleLike]);
+  const [handleLike] = useLoginFlow(handleLikeCallback);
 
   useEffect(() => {
     queryLike();
   }, [queryLike]);
+
+  // update state when api ready
+  useEffect(() => {
+    if (!likeState.loading) {
+      setLiked(likeState.value ? true : false);
+    }
+  }, [likeState.loading, likeState.value]);
 
   return (
     <div className={styles.reactionZone}>
       <ReactionButton
         className={styles.reactionButton}
         Icon={i.Like}
-        active={hasLiked}
+        active={liked}
         onClick={handleLike}
       >
         覺得實用

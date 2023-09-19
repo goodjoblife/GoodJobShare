@@ -10,7 +10,7 @@ import useLikeReply from '../hooks/useLikeReply';
 import useCreateReply from '../hooks/useCreateReply';
 import CommentBlock from './CommentBlock';
 import styles from './MessageBoard.module.css';
-import useLoginFlow from './useLoginFlow';
+import useLoginFlow from '../hooks/useLoginFlow';
 
 const recommendedSentences = [
   '詳細給推',
