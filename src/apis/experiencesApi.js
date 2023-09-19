@@ -3,7 +3,11 @@ import R from 'ramda';
 import fetchUtil from 'utils/fetchUtil';
 
 import graphqlClient from 'utils/graphqlClient';
-import { getExperienceQuery } from 'graphql/experience';
+import {
+  queryExperienceGql,
+  queryExperienceLikeGql,
+  queryRelatedExperiencesGql,
+} from 'graphql/experience';
 import { getPopularExperiencesQuery } from 'graphql/popularExperience';
 import { deleteReplyLike, createReplyLike } from 'graphql/reply';
 
@@ -96,17 +100,25 @@ const patchReply = ({ id, status, token }) =>
     token,
   });
 
-export const getExperience = ({ id, token }) =>
+export const queryExperience = ({ id }) =>
   graphqlClient({
-    query: getExperienceQuery,
+    query: queryExperienceGql,
     variables: { id },
-    token,
   }).then(data => data.experience);
 
-export const getPopularExperiences = ({ token }) =>
+export const queryExperienceLike = async ({ id, token }) => {
+  const data = await graphqlClient({
+    query: queryExperienceLikeGql,
+    variables: { id },
+    token,
+  });
+
+  return data.experience.liked;
+};
+
+export const getPopularExperiences = () =>
   graphqlClient({
     query: getPopularExperiencesQuery,
-    token,
   }).then(data => data.popular_experiences);
 
 export const newExperienceSearchBy = ({ body }) =>
@@ -120,8 +132,16 @@ const patchExperience = ({ id, status, token }) =>
     token,
   });
 
+export const queryRelatedExperiences = async ({ id, start, limit }) => {
+  const data = await graphqlClient({
+    query: queryRelatedExperiencesGql,
+    variables: { id, start, limit },
+  });
+  return data.experience.relatedExperiences;
+};
+
 export default {
-  getExperience,
+  queryExperience,
   getPopularExperiences,
   getExperiencesRecommended,
   getExperiences,
@@ -134,4 +154,5 @@ export default {
   newExperienceSearchBy,
   patchExperience,
   patchReply,
+  queryRelatedExperiences,
 };

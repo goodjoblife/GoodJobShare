@@ -5,8 +5,8 @@ import React, {
   useEffect,
   useMemo,
 } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import R from 'ramda';
 import { Element as ScrollElement, scroller } from 'react-scroll';
 import { compose, setStatic } from 'recompose';
@@ -18,11 +18,10 @@ import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
 import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
-import { withPermission } from 'common/permission-context';
 import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
 import { paramsSelector } from 'common/routing/selectors';
-import { useLogin } from 'hooks/login';
+import usePermission from 'hooks/usePermission';
 import useTrace from './hooks/useTrace';
 import Article from './Article';
 import MessageBoard from './MessageBoard';
@@ -35,8 +34,12 @@ import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
-import { isFetching, isFetched, isError } from '../../constants/status';
-import { fetchExperience } from '../../actions/experienceDetail';
+import { isError, isFetched } from 'utils/fetchBox';
+import {
+  queryExperience,
+  queryExperienceIfUnfetched,
+  queryRelatedExperiencesOnExperience,
+} from 'actions/experience';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
 import {
@@ -45,6 +48,7 @@ import {
 } from '../../constants/companyJobTitle';
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
+import { experienceStateSelector } from 'selectors/experienceSelector';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -52,10 +56,12 @@ const MODAL_TYPE = {
   REPORT_SUCCESS: 'REPORT_SUCCESS',
 };
 
-const experienceIdSelector = R.compose(
-  params => params.id,
-  paramsSelector,
-);
+// from params
+const experienceIdSelector = R.prop('id');
+const useExperienceId = () => {
+  const params = useParams();
+  return experienceIdSelector(params);
+};
 
 const experienceTypeToTabType = {
   work: TAB_TYPE.WORK_EXPERIENCE,
@@ -67,35 +73,18 @@ const pageTypeToNameSelector = {
   [PAGE_TYPE.JOB_TITLE]: R.path(['job_title', 'name']),
 };
 
-const ExperienceDetail = ({
-  submitComment,
-  likeReply,
+const ExperienceDetail = ({ ...props }) => {
+  const experienceId = useExperienceId();
 
-  fetchExperience,
-  fetchReplies,
+  const experienceState = useSelector(experienceStateSelector);
 
-  // from withPermission
-  canView,
-  fetchPermission,
-  permissionFetched,
-
-  ...props
-}) => {
-  const params = useParams();
-  const experienceId = params.id;
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchExperience(experienceId);
-    fetchReplies(experienceId);
-  }, [experienceId, fetchExperience, fetchReplies]);
+    dispatch(queryExperienceIfUnfetched(experienceId));
+  }, [dispatch, experienceId]);
 
-  const [isLoggedIn] = useLogin();
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      fetchReplies(experienceId);
-    }
-  }, [isLoggedIn, experienceId, fetchExperience, fetchReplies]);
+  const [, fetchPermission, canView] = usePermission();
 
   useEffect(() => {
     fetchPermission();
@@ -132,10 +121,6 @@ const ExperienceDetail = ({
     ['location', 'state', 'pageType'],
     props,
   );
-  const data = props.experienceDetail.toJS();
-  const { experience, experienceStatus, experienceError } = data;
-  const replies = props.replies.toJS();
-  const repliesStatus = props.repliesStatus;
 
   const scrollToCommentZone = useCallback(() => {
     scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
@@ -217,8 +202,8 @@ const ExperienceDetail = ({
     );
   }, [handleIsModalOpen]);
 
-  if (isError(experienceStatus)) {
-    if (isUiNotFoundError(experienceError)) {
+  if (isError(experienceState)) {
+    if (isUiNotFoundError(experienceState.error)) {
       return <NotFound />;
     }
     return null;
@@ -226,12 +211,12 @@ const ExperienceDetail = ({
 
   return (
     <main>
-      <Seo experienceState={data} />
+      {isFetched(experienceState) && <Seo experience={experienceState.data} />}
       <Section bg="white" paddingBottom className={styles.section}>
         <Wrapper size="m">
           <div>
             {/* 文章區塊  */}
-            {!isFetched(experienceStatus) ? (
+            {!isFetched(experienceState) ? (
               <Loader />
             ) : (
               <Fragment>
@@ -239,16 +224,19 @@ const ExperienceDetail = ({
                   <BreadCrumb
                     data={generateBreadCrumbData({
                       pageType,
-                      pageName: pageTypeToNameSelector[pageType](experience),
-                      tabType: experienceTypeToTabType[experience.type],
-                      experience,
+                      pageName: pageTypeToNameSelector[pageType](
+                        experienceState.data,
+                      ),
+                      tabType:
+                        experienceTypeToTabType[experienceState.data.type],
+                      experience: experienceState.data,
                     })}
                   />
                 </div>
-                <ExperienceHeading experience={experience} />
+                <ExperienceHeading experience={experienceState.data} />
                 {reportZone}
                 <Article
-                  experience={experience}
+                  experience={experienceState.data}
                   hideContent={!canView}
                   onClickMsgButton={scrollToCommentZone}
                 />
@@ -256,29 +244,19 @@ const ExperienceDetail = ({
             )}
           </div>
         </Wrapper>
-        {isFetched(experienceStatus) && (
+        {isFetched(experienceState) && (
           <React.Fragment>
             <Wrapper size="m">
-              <MoreExperiencesBlock experience={experience} />
+              <MoreExperiencesBlock experience={experienceState.data} />
             </Wrapper>
             <Wrapper size="l">
-              <ChartsZone experience={experience} />
+              <ChartsZone experience={experienceState.data} />
             </Wrapper>
           </React.Fragment>
         )}
         <Wrapper size="s">
           <ScrollElement name={COMMENT_ZONE} />
-          {isFetching(repliesStatus) ? (
-            <Loader size="s" />
-          ) : (
-            <MessageBoard
-              replies={replies}
-              likeReply={likeReply}
-              submitComment={comment => {
-                submitComment(experienceId, comment);
-              }}
-            />
-          )}
+          <MessageBoard experienceId={experienceId} />
         </Wrapper>
       </Section>
       <Modal
@@ -299,31 +277,23 @@ const ExperienceDetail = ({
 };
 
 ExperienceDetail.propTypes = {
-  experienceDetail: ImmutablePropTypes.map.isRequired,
-  replies: ImmutablePropTypes.list.isRequired,
-  repliesStatus: PropTypes.string,
-  fetchExperience: PropTypes.func.isRequired,
-  fetchReplies: PropTypes.func.isRequired,
-  fetchPermission: PropTypes.func.isRequired,
-  likeReply: PropTypes.func.isRequired,
-  submitComment: PropTypes.func.isRequired,
   location: PropTypes.shape({
     state: PropTypes.shape({
       replyId: PropTypes.string,
       pageType: PropTypes.string,
     }),
   }),
-  canView: PropTypes.bool.isRequired,
 };
 
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const experienceId = experienceIdSelector(props);
-  return dispatch(fetchExperience(experienceId));
+  const params = paramsSelector(props);
+  const experienceId = experienceIdSelector(params);
+  return Promise.all([
+    dispatch(queryExperience(experienceId)),
+    dispatch(queryRelatedExperiencesOnExperience(experienceId)),
+  ]);
 });
 
-const hoc = compose(
-  ssr,
-  withPermission,
-);
+const hoc = compose(ssr);
 
 export default hoc(ExperienceDetail);

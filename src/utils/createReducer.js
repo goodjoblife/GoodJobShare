@@ -1,4 +1,4 @@
-import { LOG_OUT } from '../actions/auth';
+import { LOG_OUT } from 'actions/auth';
 
 const createReducer = (
   initialState,

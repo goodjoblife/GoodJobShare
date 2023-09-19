@@ -1,5 +1,5 @@
 import ReactGA from 'react-ga4';
-import authStatus from '../constants/authStatus';
+import authStatus from 'constants/authStatus';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
@@ -52,26 +52,23 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
 };
 
 /**
- * Use `hooks/login/useGoogleLogin` as possible
+ * Google prevent user to customize login button
+ * Use `common/Auth/GoogleLoginButton` as possible
+ * GoogleLoginButton wraps the "Google button flow" with react to render
+ * "Sign in with Google" buttons
+ * https://developers.google.com/identity/gsi/web/guides/integrate#button_customization
  */
-export const loginWithGoogle = googleAuth => (dispatch, getState, { api }) => {
-  return googleAuth
-    .signIn({
-      scope: 'profile email',
-      prompt: 'select_account',
-    })
-    .then(result => {
-      const { id_token } = result.getAuthResponse();
-      return api.auth
-        .postAuthGoogle({
-          idToken: id_token,
-        })
-        .then(({ token, user: { _id, google_id } }) => {
-          dispatch(loginWithToken(token));
-        })
-        .then(() => authStatus.CONNECTED);
-    })
-    .catch(err => authStatus.NOT_AUTHORIZED);
+export const loginWithGoogle = credentialResponse => async (
+  dispatch,
+  getState,
+  { api },
+) => {
+  //  TODO: 當登入失敗
+  const idToken = credentialResponse.credential;
+  const { token } = await api.auth.postAuthGoogle({
+    idToken,
+  });
+  await dispatch(loginWithToken(token));
 };
 
 const getMeInfo = token => (dispatch, getState, { api }) =>

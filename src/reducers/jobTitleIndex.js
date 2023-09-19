@@ -1,5 +1,5 @@
 import createReducer from 'utils/createReducer';
-import { SET_INDEX_STATUS } from '../actions/jobTitle';
+import { SET_INDEX_STATUS } from 'actions/jobTitle';
 
 const preloadedState = {};
 

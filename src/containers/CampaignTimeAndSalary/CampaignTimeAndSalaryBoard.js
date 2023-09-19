@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CampaignTimeAndSalaryBoard from '../../components/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
-import { queryCampaignInfoListIfNeeded } from '../../actions/campaignInfo';
-import { queryCampaignTimeAndSalary } from '../../actions/campaignTimeAndSalaryBoard';
+import { queryCampaignInfoListIfNeeded } from 'actions/campaignInfo';
+import { queryCampaignTimeAndSalary } from 'actions/campaignTimeAndSalaryBoard';
 import {
   campaignNameSelector,
   campaignEntriesSelector,
   campaignEntriesStatusSelector,
   campaignEntriesErrorSelector,
-} from '../../selectors/campaignSelector';
+} from 'selectors/campaignSelector';
 
 const mapStateToProps = (state, { match }) => ({
   campaignName: campaignNameSelector(match),

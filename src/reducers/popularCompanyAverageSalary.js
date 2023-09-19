@@ -1,22 +1,27 @@
 import createReducer from 'utils/createReducer';
+import { getUnfetched } from 'utils/fetchBox';
+import { SET_POPULAR_COMPANY_AVERAGE_SALARY } from 'actions/popularCompanyAverageSalary';
 
-import { SET_STATUS } from '../actions/popularCompanyAverageSalary';
-import fetchingStatus from '../constants/status';
+/*
+  PropTypes.arrayOf(
+    PropTypes.shape({
+      company: PropTypes.shape({
+        name: PropTypes.string,
+      }),
+      average_salaries: PropTypes.array,
+    })
+  )
+*/
 
-const preloadedState = {
-  data: [],
-  status: fetchingStatus.UNFETCHED,
-  error: null,
-};
+const preloadedState = getUnfetched();
 
 export default createReducer(
   preloadedState,
   {
-    [SET_STATUS]: (state, { status, data, error }) => ({
-      status,
-      data,
-      error,
-    }),
+    [SET_POPULAR_COMPANY_AVERAGE_SALARY]: (
+      _,
+      { popularCompanyAverageSalary },
+    ) => popularCompanyAverageSalary,
   },
   { resetOnLogOut: false },
 );

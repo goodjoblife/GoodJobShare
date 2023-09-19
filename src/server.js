@@ -29,7 +29,7 @@ const matchRoutes = (pathname, routes) => {
 const server = Express();
 server
   .disable('x-powered-by')
-  .use(Express.static(process.env.RAZZLE_PUBLIC_DIR));
+  .use(Express.static(process.env.RAZZLE_PUBLIC_DIR, { maxAge: '14d' }));
 
 const wrap = fn => (req, res, next) => fn(req, res).catch(err => next(err));
 server.get(
@@ -93,6 +93,17 @@ server.get(
 
     if (context.status) {
       res.status(context.status);
+    }
+
+    /**
+     * https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid
+     * > The Referrer-Policy header must also be set to no-referrer-when-downgrade when using http and localhost.
+     *
+     * When we develop in localhost
+     * npm run start run in `development` environment
+     */
+    if (process.env.NODE_ENV === 'development') {
+      res.set('Referrer-Policy', 'no-referrer-when-downgrade');
     }
 
     // TODO handle 301/302

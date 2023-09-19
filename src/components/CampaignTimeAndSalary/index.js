@@ -16,7 +16,7 @@ import InfoSalaryModal from '../TimeAndSalary/common/InfoSalaryModal';
 import withModal from '../TimeAndSalary/common/withModal';
 import styles from './CampaignTimeAndSalary.module.css';
 
-import { queryCampaignInfoList } from '../../actions/campaignInfo';
+import { queryCampaignInfoList } from 'actions/campaignInfo';
 
 const campaignListFromEntries = campaignEntries =>
   campaignEntries

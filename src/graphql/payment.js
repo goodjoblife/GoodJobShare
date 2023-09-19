@@ -75,3 +75,23 @@ query {
   }
 }
 `;
+
+export const mySubscriptions = `
+query {
+  mySubscriptions {
+    id
+    startedAt
+    expiredAt
+    createdAt
+    status
+    paymentRecord {
+      publicId
+      amount
+    }
+    subscriptionPlan {
+      title
+      description
+    }
+  }
+}
+`;

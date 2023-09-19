@@ -56,10 +56,12 @@
     display: block;
   }
 
-  svg {
+  img {
+    width: 160px;
+    height: 47px;
     transform: scale(0.8) translateY(6px);
     transform-origin: 0% 50%;
-    fill: #fff;
+    filter: invert(1);
   }
 }
 
@@ -79,7 +81,7 @@
     display: block;
   }
 
-  svg {
+  img {
     width: 32px;
     height: 32px;
   }

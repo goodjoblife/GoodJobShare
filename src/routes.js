@@ -1,6 +1,6 @@
 import React from 'react';
-import LandingPage from './containers/LandingPage';
-import LaborRightsMenu from './containers/LaborRightsMenu';
+import LandingPage from './components/LandingPage';
+import LaborRightsMenu from './components/LaborRightsMenu';
 import LaborRightsSingle from './components/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/SalaryWorkTime/TimeAndSalaryBoard';
@@ -36,6 +36,7 @@ import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
 import PlanPage from './components/PlanPage';
 import BuyResultPage from './components/BuyResultPage';
 import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
+import SubscriptionsPage from './components/Me/SubscriptionsPage';
 
 const routes = [
   {
@@ -261,6 +262,11 @@ const routes = [
   },
   {
     path: '/me/subscriptions',
+    exact: true,
+    component: SubscriptionsPage,
+  },
+  {
+    path: '/me/subscriptions/current',
     exact: true,
     component: CurrentSubscriptionPage,
   },
