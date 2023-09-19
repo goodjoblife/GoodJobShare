@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import i from 'common/icons';
+import CommentIcon from 'common/icons/Comment';
 import Base from './Base';
 
 const Comment = ({ onClick, ...restProps }) => (
   <Base {...restProps} onClick={onClick}>
-    <i.Comment />
+    <CommentIcon />
   </Base>
 );
 

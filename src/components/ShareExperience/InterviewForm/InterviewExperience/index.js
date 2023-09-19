@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ButtonAdd from 'common/button/ButtonAdd';
 import AddButton from 'common/button/AddButton';
-import { Comment2 } from 'common/icons';
+import Comment2 from 'common/icons/Comment2';
 import subscribeValidation from 'common/subscribeValidation';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 

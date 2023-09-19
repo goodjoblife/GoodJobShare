@@ -7,7 +7,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { compose, setStatic } from 'recompose';
-import { Star } from 'common/icons';
+import Star from 'common/icons/Star';
 import Select from 'common/form/Select';
 import Pagination from 'common/Pagination';
 import CommonNotFound from 'common/NotFound';

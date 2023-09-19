@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { People } from 'common/icons';
+import People from 'common/icons/People';
 import subscribeValidation from 'common/subscribeValidation';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 

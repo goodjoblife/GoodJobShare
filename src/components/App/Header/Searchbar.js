@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import qs from 'qs';
 
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
-import Magnifier from '../../common/icons/Magnifiner';
+import Magnifiner from 'common/icons/Magnifiner';
 import styles from './Searchbar.module.css';
 
 const getInitialSearchTextFromLocation = location =>
@@ -55,7 +55,7 @@ const Searchbar = ({ className, placeholder, history, location }) => {
         onSelected={gotoSearchResult}
       />
       <button type="submit" className={styles.searchBtn}>
-        <Magnifier />
+        <Magnifiner />
       </button>
     </form>
   );

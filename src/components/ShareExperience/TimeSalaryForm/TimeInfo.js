@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Clock } from 'common/icons';
+import Clock from 'common/icons/Clock';
 import { P } from 'common/base';
 import TextInput from 'common/form/TextInput';
 import RadioButton from 'common/form/RadioButton';
