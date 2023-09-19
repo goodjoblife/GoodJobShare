@@ -22,8 +22,6 @@ const LoginModal = () => {
     }
   }, [close, isLoggedIn, isOpen]);
 
-  // 當 login status 改變再關
-
   return (
     <Modal isOpen={isOpen} hasClose close={close} closableOnClickOutside>
       <div className={styles.container}>

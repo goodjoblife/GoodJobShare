@@ -34,18 +34,12 @@ import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
 import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
-<<<<<<< HEAD
-import { isFetched, isError } from 'constants/status';
-import { fetchExperience } from 'actions/experienceDetail';
-import { queryRelatedExperiencesOnExperience } from 'actions/experience';
-=======
 import { isError, isFetched } from 'utils/fetchBox';
 import {
   queryExperience,
   queryExperienceIfUnfetched,
   queryRelatedExperiencesOnExperience,
 } from 'actions/experience';
->>>>>>> upstream/master
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
 import { COMMENT_ZONE } from '../../constants/formElements';
 import {
@@ -79,14 +73,6 @@ const pageTypeToNameSelector = {
   [PAGE_TYPE.JOB_TITLE]: R.path(['job_title', 'name']),
 };
 
-<<<<<<< HEAD
-const ExperienceDetail = ({ fetchExperience, ...props }) => {
-  const experienceId = useExperienceId();
-
-  useEffect(() => {
-    fetchExperience(experienceId);
-  }, [experienceId, fetchExperience]);
-=======
 const ExperienceDetail = ({ ...props }) => {
   const experienceId = useExperienceId();
 
@@ -97,7 +83,6 @@ const ExperienceDetail = ({ ...props }) => {
   useEffect(() => {
     dispatch(queryExperienceIfUnfetched(experienceId));
   }, [dispatch, experienceId]);
->>>>>>> upstream/master
 
   const [, fetchPermission, canView] = usePermission();
 
@@ -136,11 +121,6 @@ const ExperienceDetail = ({ ...props }) => {
     ['location', 'state', 'pageType'],
     props,
   );
-<<<<<<< HEAD
-  const data = props.experienceDetail.toJS();
-  const { experience, experienceStatus, experienceError } = data;
-=======
->>>>>>> upstream/master
 
   const scrollToCommentZone = useCallback(() => {
     scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
@@ -297,11 +277,6 @@ const ExperienceDetail = ({ ...props }) => {
 };
 
 ExperienceDetail.propTypes = {
-<<<<<<< HEAD
-  experienceDetail: ImmutablePropTypes.map.isRequired,
-  fetchExperience: PropTypes.func.isRequired,
-=======
->>>>>>> upstream/master
   location: PropTypes.shape({
     state: PropTypes.shape({
       replyId: PropTypes.string,
