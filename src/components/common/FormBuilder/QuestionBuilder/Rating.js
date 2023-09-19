@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { Glike } from 'common/icons';
+import Glike from 'common/icons/Glike';
 
 import useDebouncedConfirm from '../useDebouncedConfirm';
 import styles from './Rating.module.css';

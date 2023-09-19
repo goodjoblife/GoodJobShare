@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Wrapper, Section, Heading } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Loader from 'common/Loader';
-import { Comment2 } from 'common/icons';
+import Comment2 from 'common/icons/Comment2';
 
 import AuthMask from './AuthMask';
 import ShareBlockElement from './ShareBlockElement';

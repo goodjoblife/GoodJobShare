@@ -7,7 +7,7 @@ import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
 import StaticHelmet from 'common/StaticHelmet';
 import { Heading } from 'common/base';
-import { People } from 'common/icons';
+import People from 'common/icons/People';
 import Loader from 'common/Loader';
 import NotFound from 'common/NotFound';
 import IconHeadingBlock from 'common/IconHeadingBlock';

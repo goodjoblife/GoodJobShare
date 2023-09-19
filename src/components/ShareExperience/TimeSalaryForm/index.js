@@ -4,7 +4,7 @@ import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
 import qs from 'qs';
 import { Heading } from 'common/base';
-import { People } from 'common/icons';
+import People from 'common/icons/People';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import BasicInfo from './BasicInfo';
 import SalaryInfo from './SalaryInfo';

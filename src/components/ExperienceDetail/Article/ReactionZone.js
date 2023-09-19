@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import i from 'common/icons';
+import Like from 'common/icons/Like';
+import Comment from 'common/icons/Comment';
 import { useLogin } from 'hooks/login';
 import styles from './ReactionZone.module.css';
 import useQueryLike from '../hooks/useQueryLike';
@@ -54,7 +55,7 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
     <div className={styles.reactionZone}>
       <ReactionButton
         className={styles.reactionButton}
-        Icon={i.Like}
+        Icon={Like}
         active={hasLiked}
         onClick={handleLike}
       >
@@ -62,7 +63,7 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
       </ReactionButton>
       <ReactionButton
         className={styles.reactionButton}
-        Icon={i.Comment}
+        Icon={Comment}
         onClick={onClickMsgButton}
       >
         留言

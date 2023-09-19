@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { Glike } from 'common/icons';
+import Glike from 'common/icons/Glike';
 import rateButtonStyles from 'common/button/RateButtonElement.module.css';
 import styles from './InterviewExperiences.module.css';
 

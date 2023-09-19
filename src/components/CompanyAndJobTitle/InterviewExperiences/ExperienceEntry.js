@@ -6,7 +6,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 
 import { Heading, P } from 'common/base';
-import i from 'common/icons';
+import Coin from 'common/icons/Coin';
 import styles from './InterviewExperiences.module.css';
 import { formatCreatedAt, formatSalary, formatSalaryRange } from './helper';
 import Rating from './Rating';
@@ -48,7 +48,7 @@ const ExperienceEntry = ({
               >
                 {canView ? (
                   <React.Fragment>
-                    <i.Coin />
+                    <Coin />
                     {formatSalary(salary)}
                   </React.Fragment>
                 ) : (
