@@ -60,38 +60,38 @@ export const paymentRecord = `
   }
 `;
 
-export const myCurrentSubscription = `
-query {
-  myCurrentSubscription {
-    id
-    status
-    expiredAt
-    subscriptionPlan {
-      title
-      description
-      type
-      amount
+export const queryMyCurrentSubscriptionGql = /* GraphQL */ `
+  query {
+    myCurrentSubscription {
+      id
+      status
+      expiredAt
+      subscriptionPlan {
+        title
+        description
+        type
+        amount
+      }
     }
   }
-}
 `;
 
-export const mySubscriptions = `
-query {
-  mySubscriptions {
-    id
-    startedAt
-    expiredAt
-    createdAt
-    status
-    paymentRecord {
-      publicId
-      amount
-    }
-    subscriptionPlan {
-      title
-      description
+export const queryMySubscriptionsGql = /* GraphQL */ `
+  query {
+    mySubscriptions {
+      id
+      startedAt
+      expiredAt
+      createdAt
+      status
+      paymentRecord {
+        publicId
+        amount
+      }
+      subscriptionPlan {
+        title
+        description
+      }
     }
   }
-}
 `;

@@ -15,7 +15,7 @@ import JobTitle from '../../common/JobTitle';
 
 import shareStyles from '../../common/share.module.css';
 
-import { COMPANY, REGION, JOB_TITLE } from '../../../../constants/formElements';
+import { COMPANY, REGION, JOB_TITLE } from 'constants/formElements';
 
 const CompanyQueryWithValidation = subscribeValidation(
   CompanyQuery,

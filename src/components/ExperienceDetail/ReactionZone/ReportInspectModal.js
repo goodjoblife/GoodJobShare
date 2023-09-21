@@ -4,12 +4,12 @@ import { useAsyncFn } from 'react-use';
 import Modal from 'common/Modal';
 import Loader from 'common/Loader';
 import { Heading, P } from 'common/base';
-import api from '../../../apis';
 import styles from './ReportInspectModal.module.css';
+import { getReports as getReportsApi } from 'apis/reportApi';
 
 const useGetReports = experienceId => {
   return useAsyncFn(async () => {
-    return await api.report.getReports({ id: experienceId });
+    return await getReportsApi({ id: experienceId });
   }, [experienceId]);
 };
 

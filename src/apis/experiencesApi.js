@@ -92,7 +92,7 @@ export const postReplyLikes = ({ id, token }) =>
     token,
   });
 
-const patchReply = ({ id, status, token }) =>
+export const patchReply = ({ id, status, token }) =>
   fetchUtil(`/replies/${id}`).patch({
     body: {
       status,
@@ -124,7 +124,7 @@ export const getPopularExperiences = () =>
 export const newExperienceSearchBy = ({ body }) =>
   fetchUtil('/graphql').post({ body });
 
-const patchExperience = ({ id, status, token }) =>
+export const patchExperience = ({ id, status, token }) =>
   fetchUtil(`/experiences/${id}`).patch({
     body: {
       status,
@@ -138,21 +138,4 @@ export const queryRelatedExperiences = async ({ id, start, limit }) => {
     variables: { id, start, limit },
   });
   return data.experience.relatedExperiences;
-};
-
-export default {
-  queryExperience,
-  getPopularExperiences,
-  getExperiencesRecommended,
-  getExperiences,
-  getExperienceReply,
-  postExperienceReply,
-  deleteExperienceLikes,
-  postExperienceLikes,
-  deleteReplyLikes,
-  postReplyLikes,
-  newExperienceSearchBy,
-  patchExperience,
-  patchReply,
-  queryRelatedExperiences,
 };

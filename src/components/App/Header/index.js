@@ -17,8 +17,8 @@ import Top from './Top';
 import EmailVerificationTop from './Top/EmailVerificationTop';
 import ProgressTop from './Top/ProgressTop';
 import Searchbar from './Searchbar';
-import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
-import emailStatusMap from '../../../constants/emailStatus';
+import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
+import emailStatusMap from 'constants/emailStatus';
 
 const onClickShareData = () => {
   ReactGA.event({

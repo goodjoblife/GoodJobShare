@@ -1,13 +1,13 @@
 import graphqlClient from 'utils/graphqlClient';
 
 import {
-  getMeQuery,
-  getMyPublishesQuery,
-  getMyPermissionQuery,
+  queryMeGql,
+  queryMyPublishesGql,
+  queryMyPermissionGql,
 } from 'graphql/me';
 
-const getHasSearchPermission = ({ token }) =>
-  graphqlClient({ query: getMyPermissionQuery, token }).then(
+export const queryHasSearchPermissionApi = ({ token }) =>
+  graphqlClient({ query: queryMyPermissionGql, token }).then(
     ({
       me: {
         permission: { hasAllPermission },
@@ -15,14 +15,8 @@ const getHasSearchPermission = ({ token }) =>
     }) => hasAllPermission,
   );
 
-const getMe = ({ token }) =>
-  graphqlClient({ query: getMeQuery, token }).then(data => data.me);
+export const queryMeApi = ({ token }) =>
+  graphqlClient({ query: queryMeGql, token }).then(data => data.me);
 
-const getMyPublishes = ({ token }) =>
-  graphqlClient({ query: getMyPublishesQuery, token });
-
-export default {
-  getHasSearchPermission,
-  getMe,
-  getMyPublishes,
-};
+export const queryMyPublishesApi = ({ token }) =>
+  graphqlClient({ query: queryMyPublishesGql, token });

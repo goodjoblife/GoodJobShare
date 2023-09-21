@@ -1,4 +1,8 @@
 import { entryStatusSelector } from 'selectors/laborRightsSelector';
+import {
+  getMenuEntries as queryMenuApi,
+  getEntry as queryEntryApi,
+} from 'apis/laborRightsApi';
 import { getError, getFetched, toFetching, isUnfetched } from 'utils/fetchBox';
 import { isUnfetched as isUnfetched2 } from 'constants/status';
 import { menuBoxSelector } from 'selectors/laborRightsSelector';
@@ -32,11 +36,11 @@ const setEntryQueryError = (entryId, error) => ({
   error,
 });
 
-export const queryMenu = () => async (dispatch, getState, { api }) => {
+export const queryMenu = () => async (dispatch, getState) => {
   dispatch(setMenu(toFetching()));
 
   try {
-    const entries = await api.laborRights.getMenuEntries();
+    const entries = await queryMenuApi();
     return dispatch(setMenu(getFetched(entries)));
   } catch (error) {
     dispatch(setMenu(getError(error)));
@@ -51,11 +55,10 @@ export const queryMenuIfUnfetched = () => async (dispatch, getState) => {
   }
 };
 
-export const queryEntry = entryId => (dispatch, getState, { api }) => {
+export const queryEntry = entryId => (dispatch, getState) => {
   dispatch(setEntryQueryStart(entryId));
 
-  return api.laborRights
-    .getEntry({ entryId })
+  return queryEntryApi({ entryId })
     .then(entry => {
       dispatch(setEntryQueryDone(entryId, entry));
     })

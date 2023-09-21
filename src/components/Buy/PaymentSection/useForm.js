@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { isEmpty } from 'ramda';
 import { useToken } from 'hooks/auth';
 import useTapPay from './useTapPay';
-import { checkoutSubscriptionWithPrime } from '../../../apis/payment';
+import { checkoutSubscriptionWithPrime } from 'apis/payment';
 import usePushToast from 'hooks/toastNotification/usePushToast';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 import { fields, styles } from './constants';

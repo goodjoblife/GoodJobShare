@@ -22,7 +22,7 @@ import {
   jobTitle as jobTitleValidator,
 } from '../formCheck';
 
-import { COMPANY, REGION, JOB_TITLE } from '../../../../constants/formElements';
+import { COMPANY, REGION, JOB_TITLE } from 'constants/formElements';
 
 const CompanyQueryWithValidation = subscribeValidation(
   CompanyQuery,

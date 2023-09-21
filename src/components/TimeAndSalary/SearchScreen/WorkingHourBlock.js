@@ -4,7 +4,7 @@ import { Heading } from 'common/base';
 import { Link } from 'react-router-dom';
 
 import styles from './WorkingHourBlock.module.css';
-import { pageTypeTranslation } from '../../../constants/companyJobTitle';
+import { pageTypeTranslation } from 'constants/companyJobTitle';
 
 const WorkingHourBlock = ({ pageType, name, to, dataCount }) => (
   <section className={styles.container}>

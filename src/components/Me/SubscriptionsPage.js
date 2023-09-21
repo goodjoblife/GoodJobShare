@@ -15,7 +15,7 @@ import Table from 'common/table/Table';
 import { subscriptionStatus, isFailed } from './subscriptionUtils';
 import styles from './SubscriptionsPage.module.css';
 import { useToken } from 'hooks/auth';
-import apis from '../../apis';
+import { queryMySubscriptionsApi } from 'apis/payment';
 
 const formatCreatedAt = value => format(new Date(value), 'yyyy/MM/dd');
 const formatTitle = ({ subscriptionPlan: { title, description } }) =>
@@ -41,7 +41,7 @@ const Subscriptions = () => {
   useEffect(() => {
     setMySubscriptions(toFetching(mySubscriptions));
 
-    const fetcher = apis.payment.getMySubscriptions(token);
+    const fetcher = queryMySubscriptionsApi(token);
 
     fetcher()
       .then(subscriptions => {

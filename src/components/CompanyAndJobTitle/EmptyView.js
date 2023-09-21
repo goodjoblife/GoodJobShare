@@ -1,7 +1,7 @@
 import React from 'react';
 import { Section, P } from 'common/base';
 import styles from './EmptyView.module.css';
-import { tabTypeTranslation } from '../../constants/companyJobTitle';
+import { tabTypeTranslation } from 'constants/companyJobTitle';
 
 const formatTabName = tabType => tabTypeTranslation[tabType] || '資料';
 

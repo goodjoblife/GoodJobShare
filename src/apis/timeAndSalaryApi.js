@@ -72,24 +72,9 @@ export const fetchJobTitle = ({ jobTitle }) =>
 export const postWorkings = ({ body, token }) =>
   fetchUtil(endpoint).post({ body, token });
 
-const patchWorking = ({ id, status, token }) =>
+export const patchWorking = ({ id, status, token }) =>
   graphqlClient({
     query: changeSalaryWorkTimeStatus,
     variables: { input: { id, status } },
     token,
   });
-
-export default {
-  fetchCompanyCandidates,
-  fetchJobTitleCandidates,
-  fetchTimeAndSalary,
-  fetchTimeAndSalaryCount,
-  fetchTimeAndSalaryExtreme,
-  fetchCampaignTimeAndSalary,
-  fetchSearchCompany,
-  fetchSearchJobTitle,
-  fetchCompany,
-  fetchJobTitle,
-  postWorkings,
-  patchWorking,
-};

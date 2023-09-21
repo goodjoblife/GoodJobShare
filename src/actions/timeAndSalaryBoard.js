@@ -1,7 +1,11 @@
 import R from 'ramda';
 
-import fetchingStatus from '../constants/status';
-import { DATA_NUM_PER_PAGE } from '../constants/timeAndSalarSearch';
+import fetchingStatus from 'constants/status';
+import { DATA_NUM_PER_PAGE } from 'constants/timeAndSalarSearch';
+import {
+  fetchTimeAndSalary as fetchTimeAndSalaryApi,
+  fetchTimeAndSalaryExtreme as fetchTimeAndSalaryExtremeApi,
+} from 'apis/timeAndSalaryApi';
 
 export const SET_BOARD_DATA = '@@timeAndSalary/SET_BOARD_DATA';
 export const SET_BOARD_STATUS = '@@timeAndSalary/SET_BOARD_STATUS';
@@ -45,11 +49,7 @@ const setBoardData = ({
   });
 };
 
-export const queryTimeAndSalary = ({ page }) => (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const queryTimeAndSalary = ({ page }) => (dispatch, getState) => {
   if (page !== pageSelector(getState())) {
     dispatch(resetBoard({ page }));
   }
@@ -66,8 +66,7 @@ export const queryTimeAndSalary = ({ page }) => (
   const start = (page - 1) * DATA_NUM_PER_PAGE;
   const limit = DATA_NUM_PER_PAGE;
 
-  return api.timeAndSalary
-    .fetchTimeAndSalary({ start, limit })
+  return fetchTimeAndSalaryApi({ start, limit })
     .then(rawData => {
       const { salary_work_time_count, salary_work_times } = rawData;
       // 將Array公司名稱轉換成String
@@ -131,11 +130,7 @@ const setBoardExtremeData = (
   });
 };
 
-export const queryExtremeTimeAndSalary = () => (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const queryExtremeTimeAndSalary = () => (dispatch, getState) => {
   // extreme data only available for data sorted by estimated_hourly_wage and week_work_time
   if (
     sortBySelector(getState()) !== 'estimated_hourly_wage' &&
@@ -158,8 +153,7 @@ export const queryExtremeTimeAndSalary = () => (
     order,
   };
 
-  return api.timeAndSalary
-    .fetchTimeAndSalaryExtreme({ opt })
+  return fetchTimeAndSalaryExtremeApi({ opt })
     .then(rawData => {
       // 將Array公司名稱轉換成String
       const takeFirstFromArrayCompanyName = R.over(

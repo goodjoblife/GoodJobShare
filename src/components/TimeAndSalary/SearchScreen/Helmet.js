@@ -2,7 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import qs from 'qs';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
-import { SITE_NAME } from '../../../constants/helmetData';
+import { SITE_NAME } from 'constants/helmetData';
 
 const SearchScreenHelmet = ({ keyword, page }) => {
   const title = `查詢${keyword}的結果 - 第${page}頁`;

@@ -4,5 +4,3 @@ const endpoint = '/companies/search';
 
 export const getCompaniesSearch = ({ key }) =>
   fetchUtil(endpoint).get({ query: { key } });
-
-export default { getCompaniesSearch };

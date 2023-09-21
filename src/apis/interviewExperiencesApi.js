@@ -9,7 +9,3 @@ export const postInterviewExperience = ({ body, token }) =>
       input: body,
     },
   });
-
-export default {
-  postInterviewExperience,
-};

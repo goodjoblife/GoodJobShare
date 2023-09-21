@@ -1,30 +1,30 @@
 import { tokenSelector } from '../selectors/authSelector';
 import { loginWithToken } from './auth';
+import {
+  sendVerifyEmail as sendVerifyEmailApi,
+  verifyEmail as verifyEmailApi,
+} from 'graphql/emailVerification';
 
 export const sendVerifyEmail = ({ email, redirectUrl }) => (
   dispatch,
   getState,
-  { api },
 ) => {
   const state = getState();
   const token = tokenSelector(state);
-  return api.emailVerify
-    .sendVerifyEmail({ token, email, redirectUrl })
-    .catch(error => {
-      console.error(error);
-      throw error;
-    });
+  return sendVerifyEmailApi({ token, email, redirectUrl }).catch(error => {
+    console.error(error);
+    throw error;
+  });
 };
 
 export const verifyEmail = ({ verifyToken }) => (
   dispatch,
   getState,
-  { api, history },
+  { history },
 ) => {
   const state = getState();
   const token = tokenSelector(state);
-  return api.emailVerify
-    .verifyEmail({ token, verifyToken })
+  return verifyEmailApi({ token, verifyToken })
     .then(({ verifyEmail: { token, redirect_url } }) => {
       dispatch(loginWithToken(token));
       history.push(redirect_url);
