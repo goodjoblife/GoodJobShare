@@ -3,11 +3,11 @@ import {
   subscriptionPlans,
   checkoutSubscriptionWithPrimeMutation,
   paymentRecord,
-  myCurrentSubscription as myCurrentSubscriptionQuery,
-  mySubscriptions as mySubscriptionsQuery,
+  queryMyCurrentSubscriptionGql,
+  queryMySubscriptionsGql,
 } from 'graphql/payment';
 
-const getSubscriptionPlans = () =>
+export const getSubscriptionPlans = () =>
   graphqlClient({
     query: subscriptionPlans,
   }).then(({ subscriptionPlans }) => {
@@ -40,7 +40,7 @@ export const checkoutSubscriptionWithPrime = ({
     }) => [error ? error.message : null, id, paymentUrl],
   );
 
-const getPaymentRecord = token => paymentRecordId =>
+export const getPaymentRecord = token => paymentRecordId =>
   graphqlClient({
     query: paymentRecord,
     variables: {
@@ -49,22 +49,14 @@ const getPaymentRecord = token => paymentRecordId =>
     token,
   }).then(({ paymentRecord }) => paymentRecord);
 
-const getMyCurrentSubscription = token => () =>
+export const queryMyCurrentSubscriptionApi = token => () =>
   graphqlClient({
-    query: myCurrentSubscriptionQuery,
+    query: queryMyCurrentSubscriptionGql,
     token,
   }).then(({ myCurrentSubscription }) => myCurrentSubscription);
 
-const getMySubscriptions = token => () =>
+export const queryMySubscriptionsApi = token => () =>
   graphqlClient({
-    query: mySubscriptionsQuery,
+    query: queryMySubscriptionsGql,
     token,
   }).then(({ mySubscriptions }) => mySubscriptions);
-
-export default {
-  checkoutSubscriptionWithPrime,
-  getSubscriptionPlans,
-  getPaymentRecord,
-  getMyCurrentSubscription,
-  getMySubscriptions,
-};

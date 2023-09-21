@@ -1,12 +1,17 @@
 import { useCallback } from 'react';
 import { useAsyncFn } from 'react-use';
 import { useToken } from 'hooks/auth';
-import api from '../../apis';
+import { queryMyPublishesApi } from 'apis/me';
+import {
+  patchExperience as patchExperienceApi,
+  patchReply as patchReplyApi,
+} from 'apis/experiencesApi';
+import { patchWorking as patchWorkingApi } from 'apis/timeAndSalaryApi';
 
 export const useFetchMyPublishes = () => {
   const token = useToken();
 
-  const [state, callback] = useAsyncFn(() => api.me.getMyPublishes({ token }), [
+  const [state, callback] = useAsyncFn(() => queryMyPublishesApi({ token }), [
     token,
   ]);
 
@@ -17,7 +22,7 @@ export const useToggleExperienceStatus = () => {
   const token = useToken();
   return useCallback(
     o => {
-      return api.experiences.patchExperience({
+      return patchExperienceApi({
         id: o.id,
         status: o.status === 'published' ? 'hidden' : 'published',
         token,
@@ -31,7 +36,7 @@ export const useToggleSalaryWorkTimeStatus = () => {
   const token = useToken();
   return useCallback(
     o => {
-      return api.timeAndSalary.patchWorking({
+      return patchWorkingApi({
         id: o.id,
         status: o.status === 'published' ? 'hidden' : 'published',
         token,
@@ -45,7 +50,7 @@ export const useToggleReplyStatus = () => {
   const token = useToken();
   return useCallback(
     o => {
-      return api.experiences.patchReply({
+      return patchReplyApi({
         id: o.id,
         status: o.status === 'published' ? 'hidden' : 'published',
         token,

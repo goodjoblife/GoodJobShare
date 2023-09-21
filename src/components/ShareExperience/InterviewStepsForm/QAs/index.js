@@ -13,7 +13,7 @@ import { interviewSensitiveQuestions as interviewSensitiveQuestionsValidator } f
 import {
   INTERVIEW_SENSITIVE_QUESTIONS,
   INTERVIEW_QAS,
-} from '../../../../constants/formElements';
+} from 'constants/formElements';
 
 const InterviewQasWithValidation = subscribeValidation(
   InterviewQas,

@@ -11,7 +11,7 @@ import Magnifiner from 'common/icons/Magnifiner';
 import styles from './SearchBar.module.css';
 import { searchKeywordSelector } from './common/selectors';
 
-import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
+import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 
 const getInitialSearchTextFromLocation = R.compose(
   R.defaultTo(''),

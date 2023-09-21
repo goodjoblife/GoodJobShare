@@ -8,7 +8,3 @@ export const getJobTitlesSearch = ({ key }) =>
       key,
     },
   }).then(({ job_titles }) => job_titles.map(({ name }) => name));
-
-export default {
-  getJobTitlesSearch,
-};

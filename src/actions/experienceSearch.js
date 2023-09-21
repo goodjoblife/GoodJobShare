@@ -1,6 +1,9 @@
 import { isGraphqlError } from 'utils/errors';
-
-import statusConstant from '../constants/status';
+import statusConstant from 'constants/status';
+import {
+  getExperiences as getExperiencesApi,
+  newExperienceSearchBy as newExperienceSearchByApi,
+} from 'apis/experiencesApi';
 
 export const SET_SEARCH_BY = 'SET_SEARCH_BY';
 export const SET_KEYWORDS = 'SET_KEYWORDS';
@@ -27,7 +30,7 @@ export const fetchExperiences = (
   searchBy,
   searchQuery,
   searchType,
-) => (dispatch, getState, { api }) => {
+) => (dispatch, getState) => {
   const start = (page - 1) * limit;
   const query = {
     limit,
@@ -55,8 +58,7 @@ export const fetchExperiences = (
     }),
   );
 
-  return api.experiences
-    .getExperiences(query)
+  return getExperiencesApi(query)
     .then(result => {
       const payload = {
         ...objCond,
@@ -81,11 +83,7 @@ const setKeywords = keywords => ({
   keywords,
 });
 
-export const getNewSearchBy = searchBy => async (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const getNewSearchBy = searchBy => async (dispatch, getState) => {
   const keywordName =
     searchBy === 'company' ? 'company_keywords' : 'job_title_keywords';
   const body = {
@@ -95,7 +93,7 @@ export const getNewSearchBy = searchBy => async (
   };
 
   try {
-    const result = await api.experiences.newExperienceSearchBy({ body });
+    const result = await newExperienceSearchByApi({ body });
     if (!result.data) {
       throw new Error(result.error);
     }

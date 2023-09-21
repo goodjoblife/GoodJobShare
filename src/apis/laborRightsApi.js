@@ -1,21 +1,21 @@
 import graphqlClient from 'utils/graphqlClient';
 
-const getMenuEntriesGql = `
+const getMenuEntriesGql = /* GraphQL */ `
   query {
     labor_rights {
       id
       title
       coverUrl
-    }  
+    }
   }
 `;
 
-const getMenuEntries = () =>
+export const getMenuEntries = () =>
   graphqlClient({
     query: getMenuEntriesGql,
   }).then(data => data.labor_rights);
 
-const getEntryGql = `
+const getEntryGql = /* GraphQL */ `
   query($id: ID!) {
     labor_right(id: $id) {
       id
@@ -29,7 +29,7 @@ const getEntryGql = `
       coverUrl
       nPublicPages
       descriptionInPermissionBlock
-    }  
+    }
   }
 `;
 
@@ -40,8 +40,3 @@ export const getEntry = ({ entryId }) =>
       id: entryId,
     },
   }).then(data => data.labor_right);
-
-export default {
-  getMenuEntries,
-  getEntry,
-};

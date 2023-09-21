@@ -6,7 +6,7 @@ import ProgressBarWithDataCount from 'common/ProgressBarWithDataCount';
 import { useShareLink } from 'hooks/experiments';
 import FolderBanner from '../FolderBanner';
 import styles from './CallToActionFolder.module.css';
-import { goalNum } from '../../../constants/dataProgress';
+import { goalNum } from 'constants/dataProgress';
 
 const CallToActionFolder = () => {
   const shareLink = useShareLink();

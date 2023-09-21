@@ -16,6 +16,11 @@ import {
 } from 'selectors/payment';
 
 import { tokenSelector } from 'selectors/authSelector';
+import {
+  getPaymentRecord as getPaymentRecordApi,
+  getSubscriptionPlans as getSubscriptionPlansApi,
+  queryMyCurrentSubscriptionApi,
+} from 'apis/payment';
 
 export const SET_REDIRECT_URL = '@@PAYMENT_PERSIST/SET_REDIRECT_URL';
 export const SET_PAYMENT_RECORD = '@@PAYMENT/SET_PAYMENT_RECORD';
@@ -72,18 +77,14 @@ export const navigateToRedirectUrl = () => (
   });
 };
 
-export const fetchPaymentRecord = paymentRecordId => (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const fetchPaymentRecord = paymentRecordId => (dispatch, getState) => {
   const state = getState();
   const paymentRecord = paymentRecordSelector(state);
   const token = tokenSelector(state);
 
   dispatch(setPaymentRecord(toFetching(paymentRecord)));
 
-  const fetcher = api.payment.getPaymentRecord(token);
+  const fetcher = getPaymentRecordApi(token);
 
   return fetcher(paymentRecordId)
     .then(paymentRecord => {
@@ -95,11 +96,7 @@ export const fetchPaymentRecord = paymentRecordId => (
     });
 };
 
-export const fetchSubscriptionPlans = () => async (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const fetchSubscriptionPlans = () => async (dispatch, getState) => {
   const state = getState();
   const plansBox = subscriptionPlansSelector(state);
 
@@ -110,7 +107,7 @@ export const fetchSubscriptionPlans = () => async (
   dispatch(setSubscriptionPlans(toFetching(plansBox)));
 
   try {
-    const plans = await api.payment.getSubscriptionPlans();
+    const plans = await getSubscriptionPlansApi();
     dispatch(setSubscriptionPlans(getFetched(plans)));
   } catch (error) {
     console.error(error);
@@ -118,18 +115,14 @@ export const fetchSubscriptionPlans = () => async (
   }
 };
 
-export const fetchMyCurrentSubscription = () => (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const fetchMyCurrentSubscription = () => (dispatch, getState) => {
   const state = getState();
   const myCurrentSubscription = myCurrentSubscriptionSelector(state);
   const token = tokenSelector(state);
 
   dispatch(setMyCurrentSubscription(toFetching(myCurrentSubscription)));
 
-  const fetcher = api.payment.getMyCurrentSubscription(token);
+  const fetcher = queryMyCurrentSubscriptionApi(token);
 
   return fetcher()
     .then(currentSubscription => {

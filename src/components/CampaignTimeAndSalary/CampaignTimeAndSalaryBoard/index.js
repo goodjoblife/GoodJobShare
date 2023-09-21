@@ -42,7 +42,7 @@ import {
   toQsString,
   queryParser,
 } from '../../TimeAndSalary/TimeAndSalaryBoard/helper';
-import { DATA_NUM_PER_PAGE } from '../../../constants/timeAndSalarSearch';
+import { DATA_NUM_PER_PAGE } from 'constants/timeAndSalarSearch';
 
 import renderHelmet from './helmet';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';

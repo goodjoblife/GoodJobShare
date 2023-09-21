@@ -8,7 +8,7 @@ import TextInput from '.';
 import {
   fetchCompanyCandidates,
   fetchJobTitleCandidates,
-} from '../../../../apis/timeAndSalaryApi';
+} from 'apis/timeAndSalaryApi';
 
 const take5 = R.take(5);
 

@@ -1,6 +1,6 @@
 import R, { path } from 'ramda';
 
-import fetchingStatus from '../constants/status';
+import fetchingStatus from 'constants/status';
 
 export const menuBoxSelector = path(['laborRights', 'menu']);
 

@@ -1,4 +1,5 @@
 import { getError, getFetched, toFetching } from 'utils/fetchBox';
+import { getPopularCompanyAverageSalary as getPopularCompanyAverageSalaryApi } from 'apis/popularCompanyAndJobTitle';
 
 export const SET_POPULAR_COMPANY_AVERAGE_SALARY =
   '@@POPULAR_COMPANY_AVERAGE_SALARY/SET_BOX';
@@ -11,11 +12,10 @@ const setPopularCompanyAverageSalary = box => ({
 export const queryPopularCompanyAverageSalary = () => async (
   dispatch,
   getState,
-  { api },
 ) => {
   dispatch(setPopularCompanyAverageSalary(toFetching()));
 
-  const popularCompanyAverageSalary = await api.popularCompanyAndJobTitle.getPopularCompanyAverageSalary();
+  const popularCompanyAverageSalary = await getPopularCompanyAverageSalaryApi();
 
   try {
     dispatch(

@@ -1,6 +1,9 @@
 import { useCallback } from 'react';
 import { useToken } from 'hooks/auth';
-import api from '../../../apis';
+import {
+  deleteReplyLikes as deleteReplyLikesApi,
+  postReplyLikes as postReplyLikesApi,
+} from 'apis/experiencesApi';
 
 const useLikeReply = () => {
   const token = useToken();
@@ -8,9 +11,9 @@ const useLikeReply = () => {
     async reply => {
       const { _id: replyId, liked } = reply;
       if (liked) {
-        await api.experiences.deleteReplyLikes({ id: replyId, token });
+        await deleteReplyLikesApi({ id: replyId, token });
       } else {
-        await api.experiences.postReplyLikes({ id: replyId, token });
+        await postReplyLikesApi({ id: replyId, token });
       }
     },
     [token],

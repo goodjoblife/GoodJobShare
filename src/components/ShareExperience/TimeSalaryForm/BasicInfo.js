@@ -18,11 +18,7 @@ import {
   employmentType as employmentTypeValidator,
 } from './formCheck';
 
-import {
-  COMPANY,
-  JOB_TITLE,
-  EMPLOYMENT_TYPE,
-} from '../../../constants/formElements';
+import { COMPANY, JOB_TITLE, EMPLOYMENT_TYPE } from 'constants/formElements';
 
 const CompanyWithValidation = subscribeValidation(
   CompanyQuery,

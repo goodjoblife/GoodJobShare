@@ -1,7 +1,7 @@
 import graphqlClient from 'utils/graphqlClient';
 import { facebookLogin, googleLogin } from 'graphql/auth';
 
-const postAuthFacebook = ({ accessToken }) =>
+export const postAuthFacebook = ({ accessToken }) =>
   graphqlClient({
     query: facebookLogin,
     variables: {
@@ -11,7 +11,7 @@ const postAuthFacebook = ({ accessToken }) =>
     },
   }).then(({ facebookLogin }) => facebookLogin);
 
-const postAuthGoogle = ({ idToken }) =>
+export const postAuthGoogle = ({ idToken }) =>
   graphqlClient({
     query: googleLogin,
     variables: {
@@ -20,8 +20,3 @@ const postAuthGoogle = ({ idToken }) =>
       },
     },
   }).then(({ googleLogin }) => googleLogin);
-
-export default {
-  postAuthFacebook,
-  postAuthGoogle,
-};

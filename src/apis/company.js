@@ -12,8 +12,3 @@ export const getCompanyNames = () =>
   graphqlClient({ query: getCompaniesHavingDataQuery })
     .then(R.prop('companies_having_data'))
     .then(R.map(R.prop('name')));
-
-export default {
-  getCompany,
-  getCompanyNames,
-};

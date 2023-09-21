@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { formatSalaryAmount, formatSalaryType } from 'common/formatter';
 import MagnifierPlus from 'common/icons/MagnifierPlus';
-import employmentType from '../../../constants/employmentType';
+import employmentType from 'constants/employmentType';
 import styles from './formatter.module.css';
 
 export const getCompany = item => (
