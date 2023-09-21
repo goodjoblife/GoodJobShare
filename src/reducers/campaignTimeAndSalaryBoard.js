@@ -1,4 +1,3 @@
-import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 
 import {
@@ -7,7 +6,7 @@ import {
 } from 'actions/campaignTimeAndSalaryBoard';
 import fetchingStatus from 'constants/status';
 
-const preloadedState = fromJS({
+const preloadedState = {
   campaignName: '',
   sortBy: null,
   order: null,
@@ -16,21 +15,25 @@ const preloadedState = fromJS({
   currentPage: 0,
   status: fetchingStatus.UNFETCHED,
   error: null,
-});
+};
 
 export default createReducer(preloadedState, {
   [SET_BOARD_DATA]: (
     state,
     { campaignName, sortBy, order, data, total, currentPage, status, error },
-  ) =>
-    state
-      .set('campaignName', campaignName)
-      .set('data', fromJS(data))
-      .set('total', total)
-      .set('currentPage', currentPage)
-      .set('status', status)
-      .set('error', error)
-      .set('sortBy', sortBy)
-      .set('order', order),
-  [SET_BOARD_STATUS]: (state, { status }) => state.set('status', status),
+  ) => ({
+    ...state,
+    campaignName,
+    data,
+    total,
+    currentPage,
+    status,
+    error,
+    sortBy,
+    order,
+  }),
+  [SET_BOARD_STATUS]: (state, { status }) => ({
+    ...state,
+    status,
+  }),
 });

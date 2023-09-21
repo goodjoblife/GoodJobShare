@@ -2,7 +2,6 @@ import React from 'react';
 import { hydrate } from 'react-dom';
 import { createBrowserHistory as createHistory } from 'history';
 import R from 'ramda';
-import { fromJS } from 'immutable';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { ScrollContext } from 'react-router-scroll-4';
@@ -32,29 +31,9 @@ function parseState(window) {
     return {};
   }
 
-  // 禁止增加新的 KEY
-  // deprecated: we will sunset immutable in the future
-  // see https://github.com/goodjoblife/GoodJobShare/milestone/12
-  const shouldTransform = R.flip(R.contains)([
-    'experienceSearch',
-    'experiences',
-    'timeAndSalary',
-    'timeAndSalaryBoard',
-    'timeAndSalarySearch',
-    'timeAndSalaryCompany',
-    'timeAndSalaryJobTitle',
-    'campaignInfo',
-    'campaignTimeAndSalaryBoard',
-  ]);
-
-  const preloadedState = {};
-  Object.keys(window.__data).forEach(key => {
-    if (shouldTransform(key)) {
-      preloadedState[key] = fromJS(window.__data[key]);
-    } else {
-      preloadedState[key] = window.__data[key];
-    }
-  });
+  const preloadedState = {
+    ...window.__data,
+  };
   // delete window.__data;
   return preloadedState;
 }

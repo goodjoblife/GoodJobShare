@@ -32,7 +32,7 @@ export const queryExperienceCount = () => (dispatch, getState, { api }) => {
 };
 
 export const queryExperienceCountIfUnfetched = () => (dispatch, getState) => {
-  if (isUnfetched(getState().experiences.get('countStatus'))) {
+  if (isUnfetched(getState().experiences.countStatus)) {
     return dispatch(queryExperienceCount());
   }
   return Promise.resolve();

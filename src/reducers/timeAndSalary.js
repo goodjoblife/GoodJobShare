@@ -1,19 +1,19 @@
-import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 
-import { SET_COUNT_DATA } from 'actions/timeAndSalary';
+import { SET_SALARY_WORK_TIME_COUNT } from 'actions/timeAndSalary';
 import fetchingStatus from 'constants/status';
 
-const preloadedState = fromJS({
+const preloadedState = {
   count: 0,
   countStatus: fetchingStatus.UNFETCHED,
   countError: null,
-});
+};
 
 export default createReducer(preloadedState, {
-  [SET_COUNT_DATA]: (state, { count, status, error }) =>
-    state
-      .set('count', count)
-      .set('countStatus', status)
-      .set('countError', error),
+  [SET_SALARY_WORK_TIME_COUNT]: (state, { count, status, error }) => ({
+    ...state,
+    count,
+    countStatus: status,
+    countError: error,
+  }),
 });

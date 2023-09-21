@@ -1,4 +1,4 @@
-import React, { useCallback, Fragment, useState, useEffect } from 'react';
+import React, { useCallback, Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   isNil,
@@ -18,7 +18,7 @@ import {
   reject,
   path,
 } from 'ramda';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
@@ -30,15 +30,8 @@ import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
 import Footer from '../../common/TypeFormFooter';
 import { getCompaniesSearch } from 'apis/companySearchApi';
 import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
-import {
-  experienceCountSelector,
-  timeAndSalaryCountSelector,
-} from 'selectors/countSelector';
-import {
-  createInterviewExperience,
-  queryExperienceCountIfUnfetched,
-} from 'actions/experiences';
-import { queryTimeAndSalaryCountIfUnfetched } from 'actions/timeAndSalary';
+import { createInterviewExperience } from 'actions/experiences';
+import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 import {
@@ -378,12 +371,8 @@ const TypeForm = ({ open, onClose }) => {
     [dispatch, submitStatus],
   );
 
-  const experienceCount = useSelector(experienceCountSelector);
-  const salaryCount = useSelector(timeAndSalaryCountSelector);
-  useEffect(() => {
-    dispatch(queryExperienceCountIfUnfetched());
-    dispatch(queryTimeAndSalaryCountIfUnfetched());
-  }, [dispatch]);
+  const experienceCount = useExperienceCount();
+  const salaryCount = useSalaryWorkTimeCount();
 
   return (
     <Fragment>

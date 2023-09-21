@@ -9,12 +9,11 @@ export const SET_BOARD_EXTREME_DATA = '@@timeAndSalary/SET_BOARD_EXTREME_DATA';
 export const SET_BOARD_EXTREME_STATUS =
   '@@timeAndSalary/SET_BOARD_EXTREME_STATUS';
 
-const sortBySelector = state => state.timeAndSalaryBoard.get('sortBy');
-const orderSelector = state => state.timeAndSalaryBoard.get('order');
-const pageSelector = state => state.timeAndSalaryBoard.get('currentPage');
-const statusSelector = state => state.timeAndSalaryBoard.get('status');
-const extremeStatusSelector = state =>
-  state.timeAndSalaryBoard.get('extremeStatus');
+const sortBySelector = state => state.timeAndSalaryBoard.sortBy;
+const orderSelector = state => state.timeAndSalaryBoard.order;
+const pageSelector = state => state.timeAndSalaryBoard.currentPage;
+const statusSelector = state => state.timeAndSalaryBoard.status;
+const extremeStatusSelector = state => state.timeAndSalaryBoard.extremeStatus;
 
 const resetBoard = ({ page }) => ({
   type: SET_BOARD_DATA,
