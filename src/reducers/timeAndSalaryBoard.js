@@ -1,4 +1,3 @@
-import { fromJS } from 'immutable';
 import createReducer from 'utils/createReducer';
 
 import {
@@ -9,7 +8,7 @@ import {
 } from 'actions/timeAndSalaryBoard';
 import fetchingStatus from 'constants/status';
 
-const preloadedState = fromJS({
+const preloadedState = {
   data: [],
   total: 0,
   currentPage: 0,
@@ -18,25 +17,32 @@ const preloadedState = fromJS({
   extremeData: [],
   extremeStatus: fetchingStatus.UNFETCHED,
   extremeError: null,
-});
+};
 
 export default createReducer(preloadedState, {
-  [SET_BOARD_DATA]: (state, { data, total, currentPage, status, error }) =>
-    state
-      .set('data', fromJS(data))
-      .set('total', total)
-      .set('currentPage', currentPage)
-      .set('status', status)
-      .set('error', error),
-  [SET_BOARD_STATUS]: (state, { status }) => state.set('status', status),
+  [SET_BOARD_DATA]: (state, { data, total, currentPage, status, error }) => ({
+    ...state,
+    data,
+    total,
+    currentPage,
+    status,
+    error,
+  }),
+  [SET_BOARD_STATUS]: (state, { status }) => ({
+    ...state,
+    status,
+  }),
   [SET_BOARD_EXTREME_DATA]: (
     state,
     { extremeData, extremeStatus, extremeError },
-  ) =>
-    state
-      .set('extremeData', fromJS(extremeData))
-      .set('extremeStatus', extremeStatus)
-      .set('extremeError', extremeError),
-  [SET_BOARD_EXTREME_STATUS]: (state, { extremeStatus }) =>
-    state.set('extremeStatus', extremeStatus),
+  ) => ({
+    ...state,
+    extremeData,
+    extremeStatus,
+    extremeError,
+  }),
+  [SET_BOARD_EXTREME_STATUS]: (state, { extremeStatus }) => ({
+    ...state,
+    extremeStatus,
+  }),
 });

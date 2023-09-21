@@ -1,4 +1,5 @@
-export const experienceCountSelector = state => state.experiences.get('count');
+import { path } from 'ramda';
 
-export const timeAndSalaryCountSelector = state =>
-  state.timeAndSalary.get('count');
+export const experienceCountSelector = path(['experiences', 'count']);
+
+export const salaryWorkTimeCountSelector = path(['timeAndSalary', 'count']);

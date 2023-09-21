@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import R from 'ramda';
 import qs from 'qs';
@@ -48,7 +47,7 @@ const BANNER_LOCATION = 10;
 
 class ExperienceSearch extends Component {
   static propTypes = {
-    experienceSearch: ImmutablePropTypes.map.isRequired,
+    experienceSearch: PropTypes.object.isRequired,
     location: PropTypes.shape({
       pathname: PropTypes.string,
     }),
@@ -178,7 +177,7 @@ class ExperienceSearch extends Component {
     // TODO 將邏輯拆成 1. 公司職稱搜尋 2. 非搜尋，減少 if/else
     const { searchType, searchQuery, sortBy, page } = this.props;
 
-    const count = this.props.experienceSearch.get('experienceCount');
+    const count = this.props.experienceSearch.experienceCount;
     const scale = getScale(count);
     const url = this.getCanonicalUrl();
     const searchTypeName = searchType
@@ -225,8 +224,7 @@ class ExperienceSearch extends Component {
 
   render() {
     const { experienceSearch, loadingStatus } = this.props;
-    const data = experienceSearch.toJS();
-    const experiences = data.experiences || [];
+    const experiences = experienceSearch.experiences || [];
 
     const { searchQuery, searchBy, sort, searchType, page } = this.props;
 
@@ -249,7 +247,7 @@ class ExperienceSearch extends Component {
             <section className={styles.content}>
               <Searchbar
                 className={styles.searcbarLarge}
-                keywords={data.keywords}
+                keywords={experienceSearch.keywords}
                 searchBy={searchBy}
                 searchQuery={searchQuery}
                 onKeywordClick={this.handleSearchbarKeywordClick}
@@ -257,28 +255,29 @@ class ExperienceSearch extends Component {
                 onSubmit={this.handleSearchbarSubmit}
               />
 
-              {data.searchQuery && data.experienceCount > 0 && (
-                <div className={styles.searchResult}>
-                  <Heading size="m" bold>
-                    「{data.searchQuery}
-                    」的面試經驗、工作經驗
-                  </Heading>
-                </div>
-              )}
+              {experienceSearch.searchQuery &&
+                experienceSearch.experienceCount > 0 && (
+                  <div className={styles.searchResult}>
+                    <Heading size="m" bold>
+                      「{experienceSearch.searchQuery}
+                      」的面試經驗、工作經驗
+                    </Heading>
+                  </div>
+                )}
 
               <Pagination
-                totalCount={data.experienceCount}
+                totalCount={experienceSearch.experienceCount}
                 unit={PAGE_COUNT}
                 currentPage={page}
                 createPageLinkTo={this.createPageLinkTo}
               />
 
-              {data.searchQuery &&
-                data.experienceCount === 0 &&
+              {experienceSearch.searchQuery &&
+                experienceSearch.experienceCount === 0 &&
                 loadingStatus !== status.FETCHING && (
                   <P size="l" bold className={styles.searchNoResult}>
                     尚未有「
-                    {data.searchQuery}
+                    {experienceSearch.searchQuery}
                     」的經驗分享
                   </P>
                 )}
@@ -290,7 +289,7 @@ class ExperienceSearch extends Component {
               )}
 
               <Pagination
-                totalCount={data.experienceCount}
+                totalCount={experienceSearch.experienceCount}
                 unit={PAGE_COUNT}
                 currentPage={page}
                 createPageLinkTo={this.createPageLinkTo}

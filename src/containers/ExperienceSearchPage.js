@@ -5,10 +5,13 @@ import { createStructuredSelector } from 'reselect';
 import ExperienceSearch from '../components/ExperienceSearch';
 import * as ExperienceSearchActions from 'actions/experienceSearch';
 
-import { loadingStatusSelector } from 'selectors/experienceSearchSelector';
+import {
+  experienceSearchSelector,
+  loadingStatusSelector,
+} from 'selectors/experienceSearchSelector';
 
 const mapStateToProps = createStructuredSelector({
-  experienceSearch: state => state.experienceSearch,
+  experienceSearch: experienceSearchSelector,
   loadingStatus: loadingStatusSelector,
 });
 

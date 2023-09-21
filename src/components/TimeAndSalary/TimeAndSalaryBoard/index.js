@@ -2,7 +2,6 @@ import React, { Component, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 import Loading from 'common/Loader';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
 import { compose, setStatic } from 'recompose';
 import Pagination from 'common/Pagination';
@@ -62,7 +61,7 @@ const injectExtremeDividerAt = nthRow => onClick =>
 
 class TimeAndSalaryBoard extends Component {
   static propTypes = {
-    data: ImmutablePropTypes.list,
+    data: PropTypes.array,
     totalCount: PropTypes.number,
     currentPage: PropTypes.number,
     location: PropTypes.object.isRequired,
@@ -75,7 +74,7 @@ class TimeAndSalaryBoard extends Component {
     queryExtremeTimeAndSalary: PropTypes.func.isRequired,
     resetBoardExtremeData: PropTypes.func.isRequired,
     extremeStatus: PropTypes.string,
-    extremeData: ImmutablePropTypes.list,
+    extremeData: PropTypes.array,
     infoSalaryModal: PropTypes.shape({
       isOpen: PropTypes.bool.isRequired,
       setIsOpen: PropTypes.func.isRequired,
@@ -151,7 +150,7 @@ class TimeAndSalaryBoard extends Component {
     }
     // here, the first {nExtremeRows} rows are extreme data
     // we would like to highlight them with the right style
-    const nExtremeRows = this.props.extremeData.size;
+    const nExtremeRows = this.props.extremeData.length;
     const mapIndexed = R.addIndex(R.map);
     const IfExtremeRow = then => (row, i) =>
       i < nExtremeRows ? then(row) : row;
@@ -196,9 +195,9 @@ class TimeAndSalaryBoard extends Component {
     const { showExtreme } = this.state;
     let raw;
     if (showExtreme && isFetched(extremeStatus)) {
-      raw = extremeData.concat(data).toJS();
+      raw = R.concat(extremeData, data);
     } else {
-      raw = data.toJS();
+      raw = data;
     }
 
     return (

@@ -5,15 +5,15 @@ import {
   queryTimeAndSalary,
   resetBoardExtremeData,
   queryExtremeTimeAndSalary,
-} from '../../actions/timeAndSalaryBoard';
+} from 'actions/timeAndSalaryBoard';
 
 const mapStateToProps = state => ({
-  data: state.timeAndSalaryBoard.get('data'),
-  totalCount: state.timeAndSalaryBoard.get('total'),
-  currentPage: state.timeAndSalaryBoard.get('currentPage'),
-  status: state.timeAndSalaryBoard.get('status'),
-  extremeStatus: state.timeAndSalaryBoard.get('extremeStatus'),
-  extremeData: state.timeAndSalaryBoard.get('extremeData'),
+  data: state.timeAndSalaryBoard.data,
+  totalCount: state.timeAndSalaryBoard.total,
+  currentPage: state.timeAndSalaryBoard.currentPage,
+  status: state.timeAndSalaryBoard.status,
+  extremeStatus: state.timeAndSalaryBoard.extremeStatus,
+  extremeData: state.timeAndSalaryBoard.extremeData,
 });
 
 const mapDispatchToProps = dispatch =>

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import R from 'ramda';
 import Loading from 'common/Loader';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { compose, setStatic } from 'recompose';
@@ -31,7 +30,11 @@ import { queryCampaignTimeAndSalary } from 'actions/campaignTimeAndSalaryBoard';
 import GradientMask from 'common/GradientMask';
 
 import DashBoardTable from '../../TimeAndSalary/common/DashBoardTable';
-import { campaignEntriesSelector } from 'selectors/campaignSelector';
+import {
+  campaignEntriesSelector,
+  campaignEntriesStatusSelector,
+  campaignEntriesErrorSelector,
+} from 'selectors/campaignSelector';
 
 import { querySelector } from 'common/routing/selectors';
 
@@ -123,12 +126,7 @@ const injectPermissionBlock = campaignName => rows => {
   return newRows;
 };
 
-const queryJobTitlesFromCampaignEntries = (campaignEntries, campaignName) => {
-  const campaignInfo = campaignEntries.get(campaignName);
-  return campaignInfo ? campaignInfo.toJS().queryJobTitles : [];
-};
-
-const queryJobTitlesFromCampaignEntries2 = (campaignBox, campaignName) => {
+const queryJobTitlesFromCampaignBox = (campaignBox, campaignName) => {
   return campaignBox.data[campaignName].queryJobTitles;
 };
 
@@ -191,7 +189,7 @@ const CampaignTimeAndSalaryBoard = ({
 
   useEffect(() => {
     if (isFetched(campaignBox)) {
-      const jobTitles = queryJobTitlesFromCampaignEntries2(
+      const jobTitles = queryJobTitlesFromCampaignBox(
         campaignBox,
         campaignName,
       );
@@ -248,8 +246,6 @@ const CampaignTimeAndSalaryBoard = ({
     return R.identity;
   };
 
-  const raw = data.toJS();
-
   // 如果 campaignName 不在清單中，代表 Not Found
   if (isFetched(campaignBox) && !R.has(campaignName, campaignBox.data)) {
     return <CommonNotFound />;
@@ -298,7 +294,7 @@ const CampaignTimeAndSalaryBoard = ({
           </div>
         ) : (
           <DashBoardTable
-            data={raw}
+            data={data}
             postProcessRows={createPostProcessRows(campaignName)}
             toggleInfoSalaryModal={toggleInfoSalaryModal}
             toggleInfoTimeModal={toggleInfoTimeModal}
@@ -340,9 +336,15 @@ const ssr = setStatic(
     const { page } = queryParser(querySelector(props));
 
     return dispatch(queryCampaignInfoList()).then(() => {
-      const campaignEntries = campaignEntriesSelector(getState());
-      const jobTitles = queryJobTitlesFromCampaignEntries(
-        campaignEntries,
+      // TODO: work around
+      const campaignBox = {
+        data: campaignEntriesSelector(getState()),
+        status: campaignEntriesStatusSelector(getState()),
+        error: campaignEntriesErrorSelector(getState()),
+      };
+
+      const jobTitles = queryJobTitlesFromCampaignBox(
+        campaignBox,
         campaignName,
       );
       return dispatch(
@@ -363,7 +365,7 @@ const hoc = compose(
 );
 
 CampaignTimeAndSalaryBoard.propTypes = {
-  data: ImmutablePropTypes.list,
+  data: PropTypes.array,
   totalCount: PropTypes.number,
   currentPage: PropTypes.number,
   status: PropTypes.string,

@@ -5,10 +5,11 @@ import {
   fetchTimeAndSalaryCount as fetchTimeAndSalaryCountApi,
 } from 'apis/timeAndSalaryApi';
 
-export const SET_COUNT_DATA = '@@TIME_AND_SALARY/SET_COUNT_DATA';
+export const SET_SALARY_WORK_TIME_COUNT =
+  '@@TIME_AND_SALARY/SET_SALARY_WORK_TIME_COUNT';
 
 const setCountData = (count, status, error = null) => ({
-  type: SET_COUNT_DATA,
+  type: SET_SALARY_WORK_TIME_COUNT,
   count,
   status,
   error,
@@ -31,7 +32,7 @@ export const queryTimeAndSalaryCountIfUnfetched = () => (
   dispatch,
   getState,
 ) => {
-  if (isUnfetched(getState().timeAndSalary.get('countStatus'))) {
+  if (isUnfetched(getState().timeAndSalary.countStatus)) {
     return dispatch(queryTimeAndSalaryCount());
   }
   return Promise.resolve();

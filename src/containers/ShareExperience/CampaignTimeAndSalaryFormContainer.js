@@ -3,11 +3,16 @@ import { bindActionCreators } from 'redux';
 import CampaignTimeAndSalaryForm from '../../components/ShareExperience/CampaignTimeAndSalaryForm';
 import { queryCampaignInfoListIfNeeded } from '../../actions/campaignInfo';
 import { createSalaryWorkTime } from '../../actions/timeAndSalary';
+import {
+  campaignEntriesSelector,
+  campaignEntriesStatusSelector,
+  campaignEntriesErrorSelector,
+} from 'selectors/campaignSelector';
 
 const mapStateToProps = state => ({
-  campaignEntries: state.campaignInfo.get('entries'),
-  campaignEntriesStatus: state.campaignInfo.get('entriesStatus'),
-  campaignEntriesError: state.campaignInfo.get('entriesError'),
+  campaignEntries: campaignEntriesSelector(state),
+  campaignEntriesStatus: campaignEntriesStatusSelector(state),
+  campaignEntriesError: campaignEntriesErrorSelector(state),
 });
 
 const mapDispatchToProps = dispatch =>

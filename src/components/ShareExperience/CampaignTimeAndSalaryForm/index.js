@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import Helmet from 'react-helmet';
 import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
@@ -88,7 +87,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
   }
 
   static propTypes = {
-    campaignEntries: ImmutablePropTypes.map.isRequired,
+    campaignEntries: PropTypes.object.isRequired,
     campaignEntriesStatus: PropTypes.string.isRequired,
     queryCampaignInfoListIfNeeded: PropTypes.func.isRequired,
     createSalaryWorkTime: PropTypes.func.isRequired,
@@ -209,10 +208,10 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
         params: { campaign_name: campaignName },
       },
     } = this.props;
-    const campaignInfo = campaignEntries.get(campaignName);
+    const campaignInfo = campaignEntries[campaignName];
     if (campaignInfo) {
       this.setState({ campaignName });
-      this.setCampaignInfo(campaignInfo.toJS());
+      this.setCampaignInfo(campaignInfo);
     }
   }
 
@@ -294,7 +293,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
   renderHelmet = () => {
     if (this.props.campaignEntriesStatus === fetchingStatus.FETCHED) {
       const campaignName = this.props.match.params.campaign_name;
-      const campaignInfo = this.props.campaignEntries.get(campaignName).toJS();
+      const campaignInfo = this.props.campaignEntries[campaignName];
       const { formTitle, metaDescription, ogImgUrl } = campaignInfo;
       return (
         <Helmet>
@@ -339,7 +338,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       return <Loader />;
     }
 
-    const campaignInfo = campaignEntries.get(campaignName);
+    const campaignInfo = campaignEntries[campaignName];
     if (!campaignInfo) {
       return <NotFound />;
     }
@@ -349,7 +348,7 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
       formIntroduction,
       formEnding,
       extraFields,
-    } = campaignInfo.toJS();
+    } = campaignInfo;
 
     const {
       submitted,
