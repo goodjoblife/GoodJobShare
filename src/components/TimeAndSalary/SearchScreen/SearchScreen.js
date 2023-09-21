@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
+import { slice, head } from 'ramda';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import qs from 'qs';
@@ -59,12 +60,12 @@ const SearchScreen = () => {
   }, [dispath, keyword, status]);
 
   const pageSize = 10;
-  const totalNum = data.size;
+  const totalNum = data.length;
   const title = getTitle(keyword);
-  const raw = data.slice((page - 1) * pageSize, page * pageSize).toJS();
+  const raw = slice((page - 1) * pageSize, page * pageSize)(data);
 
-  if (data.size === 1) {
-    const firstData = data.get(0).toJS();
+  if (data.length === 1) {
+    const firstData = head(data);
     history.replace(getLinkForData(query, firstData));
     return null;
   }

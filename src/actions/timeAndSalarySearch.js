@@ -15,13 +15,11 @@ export const setSearchData = (status, keyword, data, error) => ({
 export const keywordMinLength = 2;
 
 export const queryKeyword = ({ keyword }) => (dispatch, getState, { api }) => {
-  if (keyword !== getState().timeAndSalarySearch.get('keyword')) {
+  if (keyword !== getState().timeAndSalarySearch.keyword) {
     dispatch(setSearchData(fetchingStatus.UNFETCHED, keyword, [], null));
   }
 
-  if (
-    getState().timeAndSalarySearch.get('status') === fetchingStatus.FETCHING
-  ) {
+  if (getState().timeAndSalarySearch.status === fetchingStatus.FETCHING) {
     return Promise.resolve();
   }
 

@@ -1,14 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-
 import { Heading, P, Link } from 'common/base';
-import {
-  experienceCountSelector,
-  timeAndSalaryCountSelector,
-} from 'selectors/countSelector';
-import { queryExperienceCountIfUnfetched } from 'actions/experiences';
-import { queryTimeAndSalaryCountIfUnfetched } from 'actions/timeAndSalary';
+import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
 import styles from './PermissionBlock.module.css';
 import CallToLoginShareButton from './CallToLoginShareButton';
 import { useIsLoggedIn } from 'hooks/auth';
@@ -16,15 +9,8 @@ import LoginModal from './LoginModal';
 import useUnlockedDescriptionBySubmission from './useUnlockedDescriptionBySubmission';
 
 const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(queryExperienceCountIfUnfetched());
-    dispatch(queryTimeAndSalaryCountIfUnfetched());
-  }, [dispatch]);
-
-  const experienceCount = useSelector(experienceCountSelector);
-  const timeAndSalaryCount = useSelector(timeAndSalaryCountSelector);
+  const experienceCount = useExperienceCount();
+  const timeAndSalaryCount = useSalaryWorkTimeCount();
 
   const isLoggedIn = useIsLoggedIn();
   const [isModalOpen, setModalOpen] = useState(false);

@@ -1,18 +1,31 @@
-import R from 'ramda';
-
-import fetchingStatus from '../constants/status';
-import { DATA_NUM_PER_PAGE } from '../constants/timeAndSalarSearch';
+import R, { prop, compose } from 'ramda';
+import { campaignTimeAndSalaryBoardSelector } from 'selectors/campaignTimeAndSalaryBoardSelector';
+import fetchingStatus from 'constants/status';
+import { DATA_NUM_PER_PAGE } from 'constants/timeAndSalarSearch';
 
 export const SET_BOARD_DATA = '@@campaignTimeAndSalary/SET_BOARD_DATA';
 export const SET_BOARD_STATUS = '@@campaignTimeAndSalary/SET_BOARD_STATUS';
 
-const campaignNameSelector = state =>
-  state.campaignTimeAndSalaryBoard.get('campaignName');
-const sortBySelector = state => state.campaignTimeAndSalaryBoard.get('sortBy');
-const orderSelector = state => state.campaignTimeAndSalaryBoard.get('order');
-const pageSelector = state =>
-  state.campaignTimeAndSalaryBoard.get('currentPage');
-const statusSelector = state => state.campaignTimeAndSalaryBoard.get('status');
+const campaignNameSelector = compose(
+  prop('campaignName'),
+  campaignTimeAndSalaryBoardSelector,
+);
+const sortBySelector = compose(
+  prop('sortBy'),
+  campaignTimeAndSalaryBoardSelector,
+);
+const orderSelector = compose(
+  prop('order'),
+  campaignTimeAndSalaryBoardSelector,
+);
+const pageSelector = compose(
+  prop('currentPage'),
+  campaignTimeAndSalaryBoardSelector,
+);
+const statusSelector = compose(
+  prop('status'),
+  campaignTimeAndSalaryBoardSelector,
+);
 
 const resetBoard = ({ campaignName, sortBy, order, page }) => ({
   type: SET_BOARD_DATA,

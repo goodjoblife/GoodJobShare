@@ -13,7 +13,7 @@ const useCampaignInfoBox = () => {
 
   return useMemo(
     () => ({
-      data: data.toJS(),
+      data,
       status,
       error,
     }),
