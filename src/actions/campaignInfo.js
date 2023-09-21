@@ -1,5 +1,6 @@
-import fetchingStatus, { isUnfetched } from '../constants/status';
-import { campaignEntriesStatusSelector } from '../selectors/campaignSelector';
+import fetchingStatus, { isUnfetched } from 'constants/status';
+import { campaignEntriesStatusSelector } from 'selectors/campaignSelector';
+import { fetchCampaignList as fetchCampaignListApi } from 'apis/campaignInfoApi';
 
 export const SET_LIST_DATA = '@@campaignInfo/SET_LIST_DATA';
 export const SET_LIST_STATUS = '@@campaignInfo/SET_LIST_STATUS';
@@ -11,14 +12,13 @@ const setListData = (campaignList, status, error = null) => ({
   error,
 });
 
-export const queryCampaignInfoList = () => (dispatch, getState, { api }) => {
+export const queryCampaignInfoList = () => (dispatch, getState) => {
   dispatch({
     type: SET_LIST_STATUS,
     status: fetchingStatus.FETCHING,
   });
 
-  return api.campaignInfo
-    .fetchCampaignList()
+  return fetchCampaignListApi()
     .then(rawData => {
       dispatch(setListData(rawData, fetchingStatus.FETCHED));
     })

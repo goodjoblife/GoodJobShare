@@ -24,7 +24,7 @@ import {
   SALARY_TYPE,
   SALARY_AMOUNT,
   EXPERIENCE_IN_YEAR,
-} from '../../../constants/formElements';
+} from 'constants/formElements';
 
 import styles from './TimeSalaryForm.module.css';
 

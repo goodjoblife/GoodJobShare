@@ -18,7 +18,7 @@ import {
   sections as sectionsValidator,
 } from '../formCheck';
 
-import { TITLE, SECTIONS } from '../../../../constants/formElements';
+import { TITLE, SECTIONS } from 'constants/formElements';
 
 const TitleWithValidation = subscribeValidation(
   Title,

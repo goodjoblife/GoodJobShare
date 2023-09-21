@@ -1,4 +1,5 @@
-import fetchingStatus from '../constants/status';
+import fetchingStatus from 'constants/status';
+import { fetchJobTitle as fetchJobTitleApi } from 'apis/timeAndSalaryApi';
 
 export const SET_JOB_TITLE_DATA = '@@timeAndSalaryJobTitle/SET_JOB_TITLE_DATA';
 export const SET_JOB_TITLE_STATUS =
@@ -12,11 +13,7 @@ export const setJobTitleData = (status, jobTitle, data, error) => ({
   error,
 });
 
-export const queryJobTitle = ({ jobTitle }) => (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const queryJobTitle = ({ jobTitle }) => (dispatch, getState) => {
   if (jobTitle !== getState().timeAndSalaryJobTitle.get('jobTitle')) {
     dispatch(setJobTitleData(fetchingStatus.UNFETCHED, jobTitle, null, null));
   }
@@ -32,8 +29,7 @@ export const queryJobTitle = ({ jobTitle }) => (
     status: fetchingStatus.FETCHING,
   });
 
-  return api.timeAndSalary
-    .fetchJobTitle({ jobTitle })
+  return fetchJobTitleApi({ jobTitle })
     .then(data => {
       if (!data) throw new Error('No such job title');
       dispatch(setJobTitleData(fetchingStatus.FETCHED, jobTitle, data, null));

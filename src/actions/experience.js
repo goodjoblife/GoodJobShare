@@ -16,6 +16,11 @@ import {
   relatedExperiencesStateSelector,
   popularExperiencesBoxSelector,
 } from 'selectors/experienceSelector';
+import {
+  queryExperience as queryExperienceApi,
+  queryRelatedExperiences as queryRelatedExperiencesApi,
+  getPopularExperiences as queryPopularExperiencesApi,
+} from 'apis/experiencesApi';
 
 export const SET_EXPERIENCE = '@@EXPERIENCE/SET_EXPERIENCE';
 export const SET_RELATED_EXPERIENCES = '@@EXPERIENCE/SET_RELATED_EXPERIENCES';
@@ -33,7 +38,6 @@ const setExperience = (experienceId, state) => ({
 export const queryExperienceIfUnfetched = experienceId => async (
   dispatch,
   getState,
-  { api },
 ) => {
   const cabin = experienceCabinSelector(getState());
   const state = experienceStateSelector(getState());
@@ -45,18 +49,14 @@ export const queryExperienceIfUnfetched = experienceId => async (
   dispatch(queryExperience(experienceId));
 };
 
-export const queryExperience = experienceId => async (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const queryExperience = experienceId => async (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
 
   dispatch(setExperience(experienceId, toFetching()));
 
   try {
-    const experience = await api.experiences.queryExperience({
+    const experience = await queryExperienceApi({
       id: experienceId,
       token,
     });
@@ -96,13 +96,12 @@ const setRelatedExperiences = (experienceId, page, state) => ({
 export const queryRelatedExperiencesOnExperience = experienceId => async (
   dispatch,
   getState,
-  { api },
 ) => {
   const page = 0;
   dispatch(setRelatedExperiences(experienceId, page, toFetching()));
 
   try {
-    const relatedExperiences = await api.experiences.queryRelatedExperiences({
+    const relatedExperiences = await queryRelatedExperiencesApi({
       id: experienceId,
       start: page * 5,
       limit: 5,
@@ -124,11 +123,7 @@ export const queryRelatedExperiencesOnExperience = experienceId => async (
   }
 };
 
-export const loadMoreRelatedExperiences = () => async (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const loadMoreRelatedExperiences = () => async (dispatch, getState) => {
   const cabin = relatedExperiencesCabinSelector(getState());
   const state = relatedExperiencesStateSelector(getState()); // FetchBox
 
@@ -143,7 +138,7 @@ export const loadMoreRelatedExperiences = () => async (
   dispatch(setRelatedExperiences(experienceId, page, toFetching(state)));
 
   try {
-    const relatedExperiences = await api.experiences.queryRelatedExperiences({
+    const relatedExperiences = await queryRelatedExperiencesApi({
       id: experienceId,
       start: page * 5,
       limit: 5,
@@ -178,15 +173,11 @@ const setPopularExperiences = box => ({
   popularExperiences: box,
 });
 
-export const queryPopularExperiences = () => async (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const queryPopularExperiences = () => async (dispatch, getState) => {
   dispatch(setPopularExperiences(toFetching()));
 
   try {
-    const experiences = await api.experiences.getPopularExperiences();
+    const experiences = await queryPopularExperiencesApi();
     dispatch(
       setPopularExperiences(
         getFetched(
@@ -207,7 +198,6 @@ export const queryPopularExperiences = () => async (
 export const queryPopularExperiencesIfUnfetched = experienceId => async (
   dispatch,
   getState,
-  { api },
 ) => {
   const box = popularExperiencesBoxSelector(getState());
 

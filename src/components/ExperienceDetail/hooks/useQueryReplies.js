@@ -1,11 +1,11 @@
 import { useAsyncFn } from 'react-use';
 import { useToken } from 'hooks/auth';
-import api from '../../../apis';
+import { getExperienceReply as getExperienceReplyApi } from 'apis/experiencesApi';
 
 const useQueryReplies = experienceId => {
   const token = useToken();
   return useAsyncFn(async () => {
-    const result = await api.experiences.getExperienceReply({
+    const result = await getExperienceReplyApi({
       experienceId,
       start: 0,
       limit: 100,

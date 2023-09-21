@@ -1,4 +1,5 @@
-import fetchingStatus from '../constants/status';
+import fetchingStatus from 'constants/status';
+import { fetchCompany as fetchCompanyApi } from 'apis/timeAndSalaryApi';
 
 export const SET_COMPANY_DATA = '@@timeAndSalaryCompany/SET_COMPANY_DATA';
 export const SET_COMPANY_STATUS = '@@timeAndSalaryCompany/SET_COMPANY_STATUS';
@@ -11,11 +12,7 @@ export const setCompanyData = (status, companyName, data, error) => ({
   error,
 });
 
-export const queryCompany = ({ companyName }) => (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const queryCompany = ({ companyName }) => (dispatch, getState) => {
   if (companyName !== getState().timeAndSalaryCompany.get('companyName')) {
     dispatch(setCompanyData(fetchingStatus.UNFETCHED, companyName, null, null));
   }
@@ -31,8 +28,7 @@ export const queryCompany = ({ companyName }) => (
     status: fetchingStatus.FETCHING,
   });
 
-  return api.timeAndSalary
-    .fetchCompany({ companyName })
+  return fetchCompanyApi({ companyName })
     .then(data => {
       if (!data) throw new Error('No such company');
       dispatch(setCompanyData(fetchingStatus.FETCHED, companyName, data, null));

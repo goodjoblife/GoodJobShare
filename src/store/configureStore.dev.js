@@ -2,7 +2,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import api from '../apis';
 
 import rootReducer from '../reducers';
 
@@ -19,7 +18,7 @@ const configureStore = (preloadedState, history) => {
     rootReducer,
     preloadedState,
     composeEnhancers(
-      applyMiddleware(thunk.withExtraArgument({ api, history }), logger),
+      applyMiddleware(thunk.withExtraArgument({ history }), logger),
     ),
   );
 

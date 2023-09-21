@@ -5,7 +5,7 @@ import {
   verifyEmail as verifyEmailGql,
 } from 'graphql/emailVerification';
 
-const sendVerifyEmail = ({ token, email, redirectUrl }) =>
+export const sendVerifyEmail = ({ token, email, redirectUrl }) =>
   graphqlClient({
     query: sendVerifyEmailGql,
     token,
@@ -17,7 +17,7 @@ const sendVerifyEmail = ({ token, email, redirectUrl }) =>
     },
   });
 
-const verifyEmail = ({ token, verifyToken }) =>
+export const verifyEmail = ({ token, verifyToken }) =>
   graphqlClient({
     query: verifyEmailGql,
     token,
@@ -27,8 +27,3 @@ const verifyEmail = ({ token, verifyToken }) =>
       },
     },
   });
-
-export default {
-  sendVerifyEmail,
-  verifyEmail,
-};

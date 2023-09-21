@@ -6,7 +6,7 @@ import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput';
 import { debounce } from 'utils/streamUtils';
 
 import InputTitle from './InputTitle';
-import { getJobTitlesSearch } from '../../../apis/jobTitleSearchApi';
+import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
 
 const getItemValue = item => item.label;
 

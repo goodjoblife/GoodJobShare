@@ -25,7 +25,7 @@ import {
   TITLE,
   SECTIONS,
   INTERVIEW_SENSITIVE_QUESTIONS,
-} from '../../../../constants/formElements';
+} from 'constants/formElements';
 
 const TitleWithValidation = subscribeValidation(
   Title,

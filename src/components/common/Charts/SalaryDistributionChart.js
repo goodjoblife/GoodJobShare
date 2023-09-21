@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useWindowSize } from 'react-use';
 
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
-import breakpoints from '../../../constants/breakpoints';
+import breakpoints from 'constants/breakpoints';
 
 const LabelOnSmallDevice = ({ viewBox: { x, y, width, height } }) => {
   return (

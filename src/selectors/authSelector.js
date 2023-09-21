@@ -1,6 +1,6 @@
 import { path } from 'ramda';
 
-import AUTH_STATUS from '../constants/authStatus';
+import AUTH_STATUS from 'constants/authStatus';
 
 export const statusSelector = state => state.auth.status;
 export const tokenSelector = state => state.auth.token;

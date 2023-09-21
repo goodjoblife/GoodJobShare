@@ -1,5 +1,5 @@
 import R from 'ramda';
-import STATUS from '../constants/status';
+import STATUS from 'constants/status';
 
 export const status = R.compose(
   R.defaultTo(STATUS.UNFETCHED),

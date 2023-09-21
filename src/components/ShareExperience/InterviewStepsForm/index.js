@@ -26,10 +26,10 @@ import {
   INVALID,
   INTERVIEW_FORM_ORDER,
   INTERVIEW_FORM_STEPS,
-} from '../../../constants/formElements';
-import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
-import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
-import { LS_INTERVIEW_STEPS_FORM_KEY } from '../../../constants/localStorageKey';
+} from 'constants/formElements';
+import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
+import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
+import { LS_INTERVIEW_STEPS_FORM_KEY } from 'constants/localStorageKey';
 
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';

@@ -1,4 +1,4 @@
-export const getMyPermissionQuery = `
+export const queryMyPermissionGql = /* GraphQL */ `
   {
     me {
       permission {
@@ -7,7 +7,7 @@ export const getMyPermissionQuery = `
     }
   }
 `;
-export const getMeQuery = `
+export const queryMeGql = /* GraphQL */ `
   {
     me {
       _id
@@ -19,7 +19,7 @@ export const getMeQuery = `
   }
 `;
 
-export const getMyPublishesQuery = `
+export const queryMyPublishesGql = /* GraphQL */ `
   query MyPublishes {
     me {
       experiences {

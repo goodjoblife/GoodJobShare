@@ -1,4 +1,9 @@
 import ReactGA from 'react-ga4';
+import {
+  postAuthFacebook as postAuthFacebookApi,
+  postAuthGoogle as postAuthGoogleApi,
+} from 'apis/auth';
+import { queryMeApi } from 'apis/me';
 import authStatus from 'constants/authStatus';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
@@ -28,16 +33,15 @@ export const logout = () => (dispatch, getState, { history }) => {
 /**
  * Use `hooks/login/useFacebookLogin` as possible
  */
-export const loginWithFB = FB => (dispatch, getState, { api }) => {
+export const loginWithFB = FB => (dispatch, getState) => {
   if (FB) {
     return new Promise(resolve =>
       FB.login(response => resolve(response), { scope: 'email' }),
     ).then(response => {
       if (response.status === authStatus.CONNECTED) {
-        return api.auth
-          .postAuthFacebook({
-            accessToken: response.authResponse.accessToken,
-          })
+        return postAuthFacebookApi({
+          accessToken: response.authResponse.accessToken,
+        })
           .then(({ token, user: { _id, facebook_id } }) =>
             dispatch(loginWithToken(token)),
           )
@@ -61,18 +65,15 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
 export const loginWithGoogle = credentialResponse => async (
   dispatch,
   getState,
-  { api },
 ) => {
   //  TODO: 當登入失敗
   const idToken = credentialResponse.credential;
-  const { token } = await api.auth.postAuthGoogle({
-    idToken,
-  });
+  const { token } = await postAuthGoogleApi({ idToken });
   await dispatch(loginWithToken(token));
 };
 
-const getMeInfo = token => (dispatch, getState, { api }) =>
-  api.me.getMe({ token }).catch(error => {
+const getMeInfo = token => (dispatch, getState) =>
+  queryMeApi({ token }).catch(error => {
     dispatch(logOutAction());
     throw error;
   });
@@ -87,7 +88,7 @@ const getMeInfo = token => (dispatch, getState, { api }) =>
  *                               logout  --|
  *                                         |
  */
-export const loginWithToken = token => (dispatch, getState, { api }) => {
+export const loginWithToken = token => (dispatch, getState) => {
   dispatch(getMeInfo(token))
     .then(user => {
       dispatch(setUser(user));

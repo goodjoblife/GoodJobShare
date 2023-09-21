@@ -20,7 +20,7 @@ import {
   INTERVIEW_TIME,
   INTERVIEW_RESULT,
   OVERALL_RATING,
-} from '../../../../constants/formElements';
+} from 'constants/formElements';
 
 const InterviewTimeWithValidation = subscribeValidation(
   InterviewTime,

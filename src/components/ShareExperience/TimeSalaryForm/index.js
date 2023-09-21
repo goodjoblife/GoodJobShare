@@ -29,10 +29,10 @@ import {
   INVALID,
   TIME_SALARY_BASIC_ORDER,
   TIME_SALARY_EXT_ORDER,
-} from '../../../constants/formElements';
-import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
-import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
-import { LS_TIME_SALARY_FORM_KEY } from '../../../constants/localStorageKey';
+} from 'constants/formElements';
+import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
+import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
+import { LS_TIME_SALARY_FORM_KEY } from 'constants/localStorageKey';
 
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';

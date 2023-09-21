@@ -1,7 +1,7 @@
 import createReducer from 'utils/createReducer';
 import { SET_LOGIN, SET_USER } from '../actions/auth';
 
-import authStatus from '../constants/authStatus';
+import authStatus from 'constants/authStatus';
 
 const preloadedState = {
   status: authStatus.UNKNOWN,

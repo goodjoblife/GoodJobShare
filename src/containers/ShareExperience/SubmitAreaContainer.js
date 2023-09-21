@@ -6,8 +6,8 @@ import { compose } from 'recompose';
 import { withFB } from 'common/facebook';
 import SubmitArea from '../../components/ShareExperience/common/SubmitArea';
 import FacebookFail from '../../components/ShareExperience/common/FacebookFail';
-import { loginWithFB } from '../../actions/auth';
-import authStatus from '../../constants/authStatus';
+import { loginWithFB } from 'actions/auth';
+import authStatus from 'constants/authStatus';
 
 const getFacebookFail = buttonClick => (
   <FacebookFail buttonClick={buttonClick} />

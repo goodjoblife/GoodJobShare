@@ -1,4 +1,4 @@
-export const viewSalaryWorkTimes = `
+export const viewSalaryWorkTimesGql = /* GraphQL */ `
   mutation ViewSalaryWorkTimes($input: ViewSalaryWorkTimesInput!) {
     viewSalaryWorkTimes(input: $input) {
       status
@@ -6,7 +6,7 @@ export const viewSalaryWorkTimes = `
   }
 `;
 
-export const viewExperiences = `
+export const viewExperiencesGql = /* GraphQL */ `
   mutation ViewExperiences($input: ViewExperiencesInput!) {
     viewExperiences(input: $input) {
       status

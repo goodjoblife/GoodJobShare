@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
-import { IMG_HOST, SITE_NAME } from '../../../constants/helmetData';
+import { IMG_HOST, SITE_NAME } from 'constants/helmetData';
 import { toQsString } from './helper';
 
 export default ({ title, pathname, page, dataNum }) => {

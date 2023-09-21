@@ -1,5 +1,9 @@
-import fetchingStatus from '../constants/status';
-import { pageType } from '../constants/companyJobTitle';
+import fetchingStatus from 'constants/status';
+import { pageType } from 'constants/companyJobTitle';
+import {
+  fetchSearchCompany as fetchSearchCompanyApi,
+  fetchSearchJobTitle as fetchSearchJobTitleApi,
+} from 'apis/timeAndSalaryApi';
 
 export const SET_SEARCH_DATA = '@@timeAndSalarySearch/SET_SEARCH_DATA';
 export const SET_SEARCH_STATUS = '@@timeAndSalarySearch/SET_SEARCH_STATUS';
@@ -14,7 +18,7 @@ export const setSearchData = (status, keyword, data, error) => ({
 
 export const keywordMinLength = 2;
 
-export const queryKeyword = ({ keyword }) => (dispatch, getState, { api }) => {
+export const queryKeyword = ({ keyword }) => (dispatch, getState) => {
   if (keyword !== getState().timeAndSalarySearch.get('keyword')) {
     dispatch(setSearchData(fetchingStatus.UNFETCHED, keyword, [], null));
   }
@@ -35,21 +39,17 @@ export const queryKeyword = ({ keyword }) => (dispatch, getState, { api }) => {
     status: fetchingStatus.FETCHING,
   });
 
-  const searchCompanies = api.timeAndSalary
-    .fetchSearchCompany({
-      companyName: keyword,
-    })
-    .then(items =>
-      items.map(item => ({ ...item, pageType: pageType.COMPANY })),
-    );
+  const searchCompanies = fetchSearchCompanyApi({
+    companyName: keyword,
+  }).then(items =>
+    items.map(item => ({ ...item, pageType: pageType.COMPANY })),
+  );
 
-  const searchJobTitles = api.timeAndSalary
-    .fetchSearchJobTitle({
-      jobTitle: keyword,
-    })
-    .then(items =>
-      items.map(item => ({ ...item, pageType: pageType.JOB_TITLE })),
-    );
+  const searchJobTitles = fetchSearchJobTitleApi({
+    jobTitle: keyword,
+  }).then(items =>
+    items.map(item => ({ ...item, pageType: pageType.JOB_TITLE })),
+  );
 
   return Promise.all([searchCompanies, searchJobTitles])
     .then(([companyData, jobTitleData]) => [...companyData, ...jobTitleData])
