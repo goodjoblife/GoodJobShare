@@ -2,11 +2,11 @@ import React from 'react';
 import { Section, Wrapper } from 'common/base';
 import PageBanner from 'common/PageBanner';
 import editorStyles from 'common/Editor.module.css';
-import StaticHelmet from 'common/StaticHelmet';
+import Helmet from './Helmet';
 
 const GuideLines = () => (
   <main>
-    <StaticHelmet.Guidelines />
+    <Helmet />
     <PageBanner heading="發文留言規則" />
     <Section padding>
       <Wrapper size="m" className={editorStyles.editor}>

@@ -30,6 +30,7 @@
       "^contexts(.*)": "<rootDir>/src/contexts$1",
       "^graphql(.*)": "<rootDir>/src/graphql$1",
       "^hooks(.*)": "<rootDir>/src/hooks$1",
+      "^pages(.*)": "<rootDir>/src/pages$1",
       "^selectors(.*)": "<rootDir>/src/selectors$1",
       "^utils(.*)": "<rootDir>/src/utils$1"
     }

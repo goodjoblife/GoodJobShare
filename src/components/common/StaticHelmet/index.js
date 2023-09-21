@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import { FACEBOOK_APP_ID } from '../../../config';
 import { SITE_NAME, IMG_HOST } from '../../../constants/helmetData';
 import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';
+import PropTypes from 'prop-types';
 /*
   This file will organize most of STATIC meta data information.
   For those DYNAMIC meta data information, will be generated in each component
@@ -238,30 +239,29 @@ export default {
       <link rel="canonical" href={formatCanonicalPath('/user-terms')} />
     </Helmet>
   ),
-  Faq: () => (
+};
+
+export const CommonHelmet = ({ title, description, keywords, path, image }) => {
+  return (
     <Helmet>
       <title itemProp="name" lang="zh-TW">
-        常見問答
+        {title}
       </title>
-      <meta name="description" content="" />
-      <meta property="og:title" content={formatTitle('常見問答', SITE_NAME)} />
-      <meta property="og:url" content={formatCanonicalPath('/faq')} />
-      <meta property="og:image" content={`${IMG_HOST}/og/faq.jpg`} />
-      <link rel="canonical" href={formatCanonicalPath('/faq')} />
+      {description && <meta name="description" content={description} />}
+      {keywords && <meta name="keywords" content={keywords} />}
+      <link rel="canonical" href={formatCanonicalPath(path)} />
+      <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
+      <meta property="og:url" content={formatCanonicalPath(path)} />
+      {image && <meta property="og:image" content={image} />}
+      {description && <meta property="og:description" content={description} />}
     </Helmet>
-  ),
-  Guidelines: () => (
-    <Helmet>
-      <title itemProp="name" lang="zh-TW">
-        發文留言規則
-      </title>
-      <meta name="description" content="" />
-      <meta
-        property="og:title"
-        content={formatTitle('發文留言規則', SITE_NAME)}
-      />
-      <meta property="og:url" content={formatCanonicalPath('/guidelines')} />
-      <link rel="canonical" href={formatCanonicalPath('/guidelines')} />
-    </Helmet>
-  ),
+  );
+};
+
+CommonHelmet.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  keywords: PropTypes.string,
+  path: PropTypes.string.isRequired,
+  image: PropTypes.string,
 };

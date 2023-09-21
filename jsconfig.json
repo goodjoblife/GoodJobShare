@@ -9,6 +9,7 @@
             "contexts/*": ["src/contexts/*"],
             "graphql/*": ["src/graphql/*"],
             "hooks/*": ["src/hooks/*"],
+            "pages/*": ["src/pages/*"],
             "selectors/*": ["src/selectors/*"],
             "utils/*": ["src/utils/*"]
         }

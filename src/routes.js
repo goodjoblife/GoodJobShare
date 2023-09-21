@@ -21,8 +21,8 @@ import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFor
 import Me from './components/Me';
 import Buy from './components/Buy';
 import About from './components/About';
-import Faq from './components/Faq';
-import Guidelines from './components/Guidelines';
+import Faq, { generatePath as generateFaqPath } from './pages/Faq';
+import Guidelines from './pages/Guidelines';
 import Privacy from './components/Privacy';
 import ProductAndRefundPolicy from './components/ProductAndRefundPolicy';
 import Terms from './components/Terms';
@@ -276,7 +276,7 @@ const routes = [
     component: About,
   },
   {
-    path: '/faq',
+    path: generateFaqPath(),
     exact: true,
     component: Faq,
   },
