@@ -4,6 +4,8 @@ import fetchUtil from 'utils/fetchUtil';
 
 import graphqlClient from 'utils/graphqlClient';
 import {
+  deleteExpereinceLikeGql,
+  createExperienceLikeGql,
   queryExperienceGql,
   queryExperienceLikeGql,
   queryRelatedExperiencesGql,
@@ -72,11 +74,19 @@ export const postExperienceReply = ({ id, comment, token }) =>
     token,
   });
 
-export const deleteExperienceLikes = ({ id, token }) =>
-  fetchUtil(`/experiences/${id}/likes`).delete({ token });
+export const deleteExperienceLikesApi = ({ id, token }) =>
+  graphqlClient({
+    query: deleteExpereinceLikeGql,
+    variables: { input: { experience_id: id } },
+    token,
+  });
 
-export const postExperienceLikes = ({ id, token }) =>
-  fetchUtil(`/experiences/${id}/likes`).post({ token });
+export const createExperienceLikeApi = ({ id, token }) =>
+  graphqlClient({
+    query: createExperienceLikeGql,
+    variables: { input: { experience_id: id } },
+    token,
+  });
 
 export const deleteReplyLikes = ({ id, token }) =>
   graphqlClient({
