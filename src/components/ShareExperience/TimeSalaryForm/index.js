@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router';
 import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
@@ -80,7 +81,8 @@ const getDefaultFormFromLocation = location => {
   return null;
 };
 
-const TimeSalaryForm = ({ createSalaryWorkTime, location }) => {
+const TimeSalaryForm = ({ createSalaryWorkTime }) => {
+  const location = useLocation();
   const [form, setForm] = useState({ ...defaultForm });
   const [submitted, setSubmitted] = useState(false);
   const [salaryHint, setSalaryHint] = useState(null);
