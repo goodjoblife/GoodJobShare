@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
@@ -22,7 +22,7 @@ import {
   portTimeSalaryFormToRequestFormat,
 } from '../utils';
 
-import salaryHint from '../../../utils/formUtils';
+import getSalaryHint from '../../../utils/formUtils';
 
 import StaticHelmet from 'common/StaticHelmet';
 import {
@@ -80,51 +80,63 @@ const getDefaultFormFromLocation = location => {
   return null;
 };
 
-class TimeSalaryForm extends React.PureComponent {
-  constructor(props) {
-    super(props);
+const TimeSalaryForm = ({ createSalaryWorkTime, location }) => {
+  const [form, setForm] = useState({ ...defaultForm });
+  const [submitted, setSubmitted] = useState(false);
+  const [salaryHint, setSalaryHint] = useState(null);
+  const [showSalaryWarning, setShowSalaryWarning] = useState(false);
+  const basicElValidationStatus = useRef({});
+  const extElValidationStatus = useRef({});
 
-    this.handleState = this.handleState.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.state = {
-      ...defaultForm,
-      submitted: false,
-      // for handling salary hint
-      salaryHint: null,
-      showSalaryWarning: false,
-    };
-    this.basicElValidationStatus = {};
-    this.extElValidationStatus = {};
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     const defaultState =
-      getDefaultFormFromLocation(this.props.location) ||
+      getDefaultFormFromLocation(location) ||
       getDefaultFormFromDraft() ||
       defaultForm;
 
-    this.setState({
-      // eslint-disable-line react/no-did-mount-set-state
+    setForm({
       ...defaultState,
     });
 
     ReactPixel.track('InitiateCheckout', {
       content_category: PIXEL_CONTENT_CATEGORY.VISIT_TIME_AND_SALARY_FORM,
     });
-  }
+  }, [location]);
 
-  onSubmit() {
-    const valid = basicFormCheck(getBasicForm(this.state));
-    const valid2 = salaryFormCheck(getSalaryForm(this.state));
-    const valid3 = timeFormCheck(getTimeForm(this.state));
+  const getTopInvalidElement = useCallback(() => {
+    const basic = TIME_SALARY_BASIC_ORDER;
+    const ext = TIME_SALARY_EXT_ORDER;
+    for (let i = 0, el; i <= basic.length; i += 1) {
+      el = basic[i];
+      if (
+        basicElValidationStatus.current[el] &&
+        basicElValidationStatus.current[el] === INVALID
+      ) {
+        return el;
+      }
+    }
+    for (let i = 0, el; i <= ext.length; i += 1) {
+      el = ext[i];
+      if (
+        extElValidationStatus.current[el] &&
+        extElValidationStatus.current[el] === INVALID
+      ) {
+        return el;
+      }
+    }
+    return null;
+  }, []);
+
+  const onSubmit = useCallback(() => {
+    const valid = basicFormCheck(getBasicForm(form));
+    const valid2 = salaryFormCheck(getSalaryForm(form));
+    const valid3 = timeFormCheck(getTimeForm(form));
 
     if (valid && (valid2 || valid3)) {
       localStorage.removeItem(LS_TIME_SALARY_FORM_KEY);
 
-      const p = this.props.createSalaryWorkTime({
-        body: portTimeSalaryFormToRequestFormat(
-          getTimeAndSalaryForm(this.state),
-        ),
+      const p = createSalaryWorkTime({
+        body: portTimeSalaryFormToRequestFormat(getTimeAndSalaryForm(form)),
       });
 
       return p.then(
@@ -161,8 +173,8 @@ class TimeSalaryForm extends React.PureComponent {
         },
       );
     }
-    this.handleState('submitted')(true);
-    const topInvalidElement = this.getTopInvalidElement();
+    setSubmitted(true);
+    const topInvalidElement = getTopInvalidElement();
     if (topInvalidElement !== null) {
       scroller.scrollTo(topInvalidElement, {
         duration: 1000,
@@ -172,161 +184,141 @@ class TimeSalaryForm extends React.PureComponent {
       });
     }
     return Promise.reject();
-  }
+  }, [createSalaryWorkTime, form, getTopInvalidElement]);
 
-  getTopInvalidElement = () => {
-    const basic = TIME_SALARY_BASIC_ORDER;
-    const ext = TIME_SALARY_EXT_ORDER;
-    for (let i = 0, el; i <= basic.length; i += 1) {
-      el = basic[i];
-      if (
-        this.basicElValidationStatus[el] &&
-        this.basicElValidationStatus[el] === INVALID
-      ) {
-        return el;
+  const changeBasicElValidationStatus = useCallback((elementId, status) => {
+    basicElValidationStatus.current[elementId] = status;
+  }, []);
+
+  const changeExtElValidationStatus = useCallback((elementId, status) => {
+    extElValidationStatus.current[elementId] = status;
+  }, []);
+
+  const {
+    company,
+    isCurrentlyEmployed,
+    jobEndingTimeYear,
+    jobEndingTimeMonth,
+    jobTitle,
+    sector,
+    employmentType,
+    gender,
+    salaryType,
+    salaryAmount,
+    experienceInYear,
+    dayPromisedWorkTime,
+    dayRealWorkTime,
+    weekWorkTime,
+    overtimeFrequency,
+    hasOvertimeSalary,
+    isOvertimeSalaryLegal,
+    hasCompensatoryDayoff,
+  } = form;
+
+  const handleSalaryHint = useCallback(
+    (key, value) => {
+      let inputSalaryAmount;
+      let inputSalaryType;
+      if (key === 'salaryType') {
+        inputSalaryAmount = salaryAmount;
+        inputSalaryType = value;
+      } else if (key === 'salaryAmount') {
+        inputSalaryAmount = value;
+        inputSalaryType = salaryType;
       }
-    }
-    for (let i = 0, el; i <= ext.length; i += 1) {
-      el = ext[i];
-      if (
-        this.extElValidationStatus[el] &&
-        this.extElValidationStatus[el] === INVALID
-      ) {
-        return el;
-      }
-    }
-    return null;
-  };
+      const { showWarning, hint } = getSalaryHint(
+        inputSalaryType,
+        inputSalaryAmount,
+      );
+      setShowSalaryWarning(showWarning);
+      setSalaryHint(hint);
+    },
+    [salaryAmount, salaryType],
+  );
 
-  changeBasicElValidationStatus = (elementId, status) => {
-    this.basicElValidationStatus[elementId] = status;
-  };
+  const handleState = useCallback(
+    key => {
+      return value => {
+        const updateState = {
+          [key]: value,
+        };
+        const state = {
+          ...form,
+          ...updateState,
+        };
+        setForm(state);
+        localStorage.setItem(LS_TIME_SALARY_FORM_KEY, JSON.stringify(state));
 
-  changeExtElValidationStatus = (elementId, status) => {
-    this.extElValidationStatus[elementId] = status;
-  };
-
-  handleSalaryHint = (key, value) => {
-    let salaryAmount;
-    let salaryType;
-    if (key === 'salaryType') {
-      salaryAmount = this.state.salaryAmount;
-      salaryType = value;
-    } else if (key === 'salaryAmount') {
-      salaryAmount = value;
-      salaryType = this.state.salaryType;
-    }
-    const { showWarning, hint } = salaryHint(salaryType, salaryAmount);
-    this.setState({
-      showSalaryWarning: showWarning,
-      salaryHint: hint,
-    });
-  };
-
-  handleState(key) {
-    return value => {
-      const updateState = {
-        [key]: value,
+        // handle salary hint
+        if (['salaryType', 'salaryAmount'].indexOf(key) >= 0) {
+          handleSalaryHint(key, value);
+        }
       };
-      this.setState(updateState);
-      const state = {
-        ...this.state,
-        ...updateState,
-      };
-      localStorage.setItem(LS_TIME_SALARY_FORM_KEY, JSON.stringify(state));
+    },
+    [form, handleSalaryHint],
+  );
 
-      // handle salary hint
-      if (['salaryType', 'salaryAmount'].indexOf(key) >= 0) {
-        this.handleSalaryHint(key, value);
-      }
-    };
-  }
+  return (
+    <div>
+      <StaticHelmet.ShareSalaryWorkTime />
+      <Heading size="l" marginBottomS center>
+        薪資工時分享
+      </Heading>
+      {submitted ? (
+        <div
+          style={{
+            marginTop: '20px',
+          }}
+          className={styles.warning__wording}
+        >
+          oops! 請檢查底下紅框內的內容是否正確
+        </div>
+      ) : null}
 
-  render() {
-    const {
-      submitted,
-      company,
-      isCurrentlyEmployed,
-      jobEndingTimeYear,
-      jobEndingTimeMonth,
-      jobTitle,
-      sector,
-      employmentType,
-      gender,
-      salaryType,
-      salaryAmount,
-      experienceInYear,
-      dayPromisedWorkTime,
-      dayRealWorkTime,
-      weekWorkTime,
-      overtimeFrequency,
-      hasOvertimeSalary,
-      isOvertimeSalaryLegal,
-      hasCompensatoryDayoff,
-    } = this.state;
+      <IconHeadingBlock heading="薪資工時資訊" Icon={People} requiredText>
+        <BasicInfo
+          handleState={handleState}
+          company={company}
+          isCurrentlyEmployed={isCurrentlyEmployed}
+          jobEndingTimeYear={jobEndingTimeYear}
+          jobEndingTimeMonth={jobEndingTimeMonth}
+          jobTitle={jobTitle}
+          sector={sector}
+          employmentType={employmentType}
+          gender={gender}
+          submitted={submitted}
+          changeValidationStatus={changeBasicElValidationStatus}
+        />
 
-    return (
-      <div>
-        <StaticHelmet.ShareSalaryWorkTime />
-        <Heading size="l" marginBottomS center>
-          薪資工時分享
-        </Heading>
-        {submitted ? (
-          <div
-            style={{
-              marginTop: '20px',
-            }}
-            className={styles.warning__wording}
-          >
-            oops! 請檢查底下紅框內的內容是否正確
-          </div>
-        ) : null}
+        <br />
+        <h5 className={styles.pleaseSelectOne}>以下薪資 / 工時擇一必填</h5>
 
-        <IconHeadingBlock heading="薪資工時資訊" Icon={People} requiredText>
-          <BasicInfo
-            handleState={this.handleState}
-            company={company}
-            isCurrentlyEmployed={isCurrentlyEmployed}
-            jobEndingTimeYear={jobEndingTimeYear}
-            jobEndingTimeMonth={jobEndingTimeMonth}
-            jobTitle={jobTitle}
-            sector={sector}
-            employmentType={employmentType}
-            gender={gender}
-            submitted={submitted}
-            changeValidationStatus={this.changeBasicElValidationStatus}
-          />
+        <SalaryInfo
+          handleState={handleState}
+          salaryType={salaryType}
+          salaryAmount={salaryAmount}
+          experienceInYear={experienceInYear}
+          submitted={submitted}
+          changeValidationStatus={changeExtElValidationStatus}
+          showWarning={showSalaryWarning}
+          hint={salaryHint}
+        />
 
-          <br />
-          <h5 className={styles.pleaseSelectOne}>以下薪資 / 工時擇一必填</h5>
+        <TimeInfo
+          handleState={handleState}
+          dayPromisedWorkTime={dayPromisedWorkTime}
+          dayRealWorkTime={dayRealWorkTime}
+          weekWorkTime={weekWorkTime}
+          overtimeFrequency={overtimeFrequency}
+          hasOvertimeSalary={hasOvertimeSalary}
+          isOvertimeSalaryLegal={isOvertimeSalaryLegal}
+          hasCompensatoryDayoff={hasCompensatoryDayoff}
+        />
+      </IconHeadingBlock>
 
-          <SalaryInfo
-            handleState={this.handleState}
-            salaryType={salaryType}
-            salaryAmount={salaryAmount}
-            experienceInYear={experienceInYear}
-            submitted={submitted}
-            changeValidationStatus={this.changeExtElValidationStatus}
-            showWarning={this.state.showSalaryWarning}
-            hint={this.state.salaryHint}
-          />
-
-          <TimeInfo
-            handleState={this.handleState}
-            dayPromisedWorkTime={dayPromisedWorkTime}
-            dayRealWorkTime={dayRealWorkTime}
-            weekWorkTime={weekWorkTime}
-            overtimeFrequency={overtimeFrequency}
-            hasOvertimeSalary={hasOvertimeSalary}
-            isOvertimeSalaryLegal={isOvertimeSalaryLegal}
-            hasCompensatoryDayoff={hasCompensatoryDayoff}
-          />
-        </IconHeadingBlock>
-
-        <SubmitArea onSubmit={this.onSubmit} />
-      </div>
-    );
-  }
-}
+      <SubmitArea onSubmit={onSubmit} />
+    </div>
+  );
+};
 
 export default TimeSalaryForm;
