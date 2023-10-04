@@ -28,6 +28,20 @@ import {
 
 import styles from './TimeSalaryForm.module.css';
 
+const Hint = ({ hint, showWarning }) => {
+  if (hint === null) {
+    return null;
+  } else if (showWarning) {
+    return (
+      <div className={cn([styles.warning__wording, styles.salaryHint])}>
+        {hint}
+        ，確定嗎？
+      </div>
+    );
+  }
+  return <div className={cn(styles.salaryHint)}>{hint}</div>;
+};
+
 const SalaryInfo = ({
   hint,
   showWarning,
@@ -38,20 +52,6 @@ const SalaryInfo = ({
   submitted,
   changeValidationStatus,
 }) => {
-  const renderHint = useCallback(() => {
-    if (hint === null) {
-      return null;
-    } else if (showWarning) {
-      return (
-        <div className={cn([styles.warning__wording, styles.salaryHint])}>
-          {hint}
-          ，確定嗎？
-        </div>
-      );
-    }
-    return <div className={cn(styles.salaryHint)}>{hint}</div>;
-  }, [hint, showWarning]);
-
   const changeSalaryTypeStatus = useCallback(
     val => {
       changeValidationStatus(
@@ -130,7 +130,7 @@ const SalaryInfo = ({
                   />
                   <span className={styles.unit}> 元</span>
                 </div>
-                {renderHint()}
+                <Hint hint={hint} showWarning={showWarning} />
               </div>
             </div>
             {isSalarySetWarning && (
