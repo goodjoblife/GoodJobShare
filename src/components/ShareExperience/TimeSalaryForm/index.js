@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router';
+import { useDispatch } from 'react-redux';
 import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
@@ -37,6 +38,8 @@ import { LS_TIME_SALARY_FORM_KEY } from 'constants/localStorageKey';
 
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
+
+import { createSalaryWorkTime } from 'actions/timeAndSalary';
 
 const defaultForm = {
   company: '',
@@ -81,7 +84,8 @@ const getDefaultFormFromLocation = location => {
   return null;
 };
 
-const TimeSalaryForm = ({ createSalaryWorkTime }) => {
+const TimeSalaryForm = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const [form, setForm] = useState({ ...defaultForm });
   const [submitted, setSubmitted] = useState(false);
@@ -137,9 +141,11 @@ const TimeSalaryForm = ({ createSalaryWorkTime }) => {
     if (valid && (valid2 || valid3)) {
       localStorage.removeItem(LS_TIME_SALARY_FORM_KEY);
 
-      const p = createSalaryWorkTime({
-        body: portTimeSalaryFormToRequestFormat(getTimeAndSalaryForm(form)),
-      });
+      const p = dispatch(
+        createSalaryWorkTime({
+          body: portTimeSalaryFormToRequestFormat(getTimeAndSalaryForm(form)),
+        }),
+      );
 
       return p.then(
         response => {
@@ -186,7 +192,7 @@ const TimeSalaryForm = ({ createSalaryWorkTime }) => {
       });
     }
     return Promise.reject();
-  }, [createSalaryWorkTime, form, getTopInvalidElement]);
+  }, [dispatch, form, getTopInvalidElement]);
 
   const changeBasicElValidationStatus = useCallback((elementId, status) => {
     basicElValidationStatus.current[elementId] = status;
