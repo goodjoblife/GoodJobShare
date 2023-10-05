@@ -20,23 +20,11 @@ export const experienceInYear = R.allPass([
   n => n <= 50,
 ]);
 
-export const dayPromisedWorkTime = R.allPass([
-  notStrEmpty,
-  n => n >= 0,
-  n => n <= 24,
-]);
+export const dayPromisedWorkTime = R.allPass([notStrEmpty]);
 
-export const dayRealWorkTime = R.allPass([
-  notStrEmpty,
-  n => n >= 0,
-  n => n <= 24,
-]);
+export const dayRealWorkTime = R.allPass([notStrEmpty]);
 
-export const weekWorkTime = R.allPass([
-  notStrEmpty,
-  n => n >= 0,
-  n => n <= 168,
-]);
+export const weekWorkTime = R.allPass([notStrEmpty]);
 
 export const overtimeFrequency = R.allPass([t => t !== null]);
 
