@@ -57,10 +57,7 @@ const BasicInfo = ({
         <div className={styles.formGroupTwo}>
           <CompanyWithValidation
             companyQuery={company}
-            onChange={v => {
-              handleState('company')(v);
-              handleState('title')(`${v} 薪資工時分享`);
-            }}
+            onChange={handleState('company')}
             onCompanyId={handleState('companyId')}
             validator={companyValidator}
             submitted={submitted}

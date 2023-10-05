@@ -266,6 +266,10 @@ const TimeSalaryForm = () => {
     [form, handleSalaryHint],
   );
 
+  useEffect(() => {
+    handleState('title')(`${company} 薪資工時分享`);
+  }, [company]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <div>
       <StaticHelmet.ShareSalaryWorkTime />
