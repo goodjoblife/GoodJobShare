@@ -325,6 +325,7 @@ const TimeSalaryForm = () => {
           hasOvertimeSalary={hasOvertimeSalary}
           isOvertimeSalaryLegal={isOvertimeSalaryLegal}
           hasCompensatoryDayoff={hasCompensatoryDayoff}
+          submitted={submitted}
         />
       </IconHeadingBlock>
 

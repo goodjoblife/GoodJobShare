@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import Clock from 'common/icons/Clock';
 import { P } from 'common/base';
 import TextInput from 'common/form/TextInput';
@@ -7,8 +8,18 @@ import RadioButton from 'common/form/RadioButton';
 import Radio from 'common/form/Radio';
 
 import InputTitle from '../common/InputTitle';
+import {
+  dayPromisedWorkTime as checkDayPromisedWorkTime,
+  dayRealWorkTime as checkDayRealWorkTime,
+  weekWorkTime as checkWeekWorkTime,
+} from './formCheck';
 
 import styles from './TimeSalaryForm.module.css';
+import Hint from './Hint';
+
+const formatWorkTimeHour = hours => `${hours} 小時`;
+const validOrFormat = valid => format => value =>
+  value && !valid ? format(value) : null;
 
 const TimeInfo = ({
   handleState,
@@ -19,9 +30,31 @@ const TimeInfo = ({
   hasOvertimeSalary,
   isOvertimeSalaryLegal,
   hasCompensatoryDayoff,
+  submitted,
 }) => {
   const [showInfo1, setShowInfo1] = useState(false);
   const [showInfo2, setShowInfo2] = useState(false);
+
+  const isDayPromisedWorkTimeValid = checkDayPromisedWorkTime(
+    dayPromisedWorkTime,
+  );
+  const isDayRealWorkTimeValid = checkDayRealWorkTime(dayRealWorkTime);
+  const isWeekWorkTimeValid = checkWeekWorkTime(weekWorkTime);
+
+  const dayPromisedWorkTimeHint = validOrFormat(isDayPromisedWorkTimeValid)(
+    formatWorkTimeHour,
+  )(dayPromisedWorkTime);
+  const dayRealWorkTimeHint = validOrFormat(isDayRealWorkTimeValid)(
+    formatWorkTimeHour,
+  )(dayRealWorkTime);
+  const weekWorkTimeHint = validOrFormat(isWeekWorkTimeValid)(
+    formatWorkTimeHour,
+  )(weekWorkTime);
+
+  const shouldSetDayPromisedWorkTimeWarning =
+    submitted && !isDayPromisedWorkTimeValid;
+  const shouldSetDayRealWorkTimeWarning = submitted && !isDayRealWorkTimeValid;
+  const shouldSetWeekWorkTimeWarning = submitted && !isWeekWorkTimeValid;
 
   return (
     <section id="formSectionWorkTime">
@@ -33,7 +66,11 @@ const TimeInfo = ({
         <div className={styles.formGroupTwo}>
           <div className={styles.formGroup}>
             <InputTitle text="工作日表訂工時" must />
-            <div className={styles.inputUnit}>
+            <div
+              className={cn(styles.inputUnit, {
+                [styles.warning]: shouldSetDayPromisedWorkTimeWarning,
+              })}
+            >
               <TextInput
                 value={dayPromisedWorkTime}
                 placeholder="8 或 8.5"
@@ -43,10 +80,15 @@ const TimeInfo = ({
               />
               <span className={styles.unit}> 小時</span>
             </div>
+            <Hint hint={dayPromisedWorkTimeHint} showWarning />
           </div>
           <div className={styles.formGroup}>
             <InputTitle text="實際平均工時" must />
-            <div className={styles.inputUnit}>
+            <div
+              className={cn(styles.inputUnit, {
+                [styles.warning]: shouldSetDayRealWorkTimeWarning,
+              })}
+            >
               <TextInput
                 value={dayRealWorkTime}
                 placeholder="10 或 10.5"
@@ -54,6 +96,7 @@ const TimeInfo = ({
               />
               <span className={styles.unit}> 小時</span>
             </div>
+            <Hint hint={dayRealWorkTimeHint} showWarning />
           </div>
         </div>
         <div className={styles.formInfo}>
@@ -84,7 +127,11 @@ const TimeInfo = ({
       <div className={styles.formSection}>
         <div className={styles.formGroup}>
           <InputTitle text="一週總工時" must />
-          <div className={styles.inputUnit}>
+          <div
+            className={cn(styles.inputUnit, {
+              [styles.warning]: shouldSetWeekWorkTimeWarning,
+            })}
+          >
             <TextInput
               value={weekWorkTime}
               placeholder="40 或 40.5"
@@ -92,6 +139,7 @@ const TimeInfo = ({
             />
             <span className={styles.unit}> 小時</span>
           </div>
+          <Hint hint={weekWorkTimeHint} showWarning />
         </div>
         <div className={styles.formInfo}>
           <P size="s">
