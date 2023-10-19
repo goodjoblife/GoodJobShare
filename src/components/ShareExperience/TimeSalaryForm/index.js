@@ -138,7 +138,7 @@ const TimeSalaryForm = () => {
     const valid2 = salaryFormCheck(getSalaryForm(form));
     const valid3 = timeFormCheck(getTimeForm(form));
 
-    if (valid && (valid2 || valid3)) {
+    if (valid && valid2 && valid3) {
       localStorage.removeItem(LS_TIME_SALARY_FORM_KEY);
 
       const p = dispatch(
