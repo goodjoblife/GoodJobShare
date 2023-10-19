@@ -12,7 +12,6 @@ import InputTitle from '../common/InputTitle';
 
 import styles from './TimeSalaryForm.module.css';
 import Hint from './Hint';
-import useValidationStatus from './useValidationStatus';
 
 const TimeInfo = ({
   handleState,
@@ -23,20 +22,10 @@ const TimeInfo = ({
   hasOvertimeSalary,
   isOvertimeSalaryLegal,
   hasCompensatoryDayoff,
-  submitted,
+  validationStatus,
 }) => {
   const [showInfo1, setShowInfo1] = useState(false);
   const [showInfo2, setShowInfo2] = useState(false);
-
-  const validationStatus = useValidationStatus(
-    {
-      dayPromisedWorkTime,
-      dayRealWorkTime,
-      weekWorkTime,
-      overtimeFrequency,
-    },
-    submitted,
-  );
 
   return (
     <section id="formSectionWorkTime">

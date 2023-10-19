@@ -13,6 +13,7 @@ import SalaryInfo from './SalaryInfo';
 import TimeInfo from './TimeInfo';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 import styles from './TimeSalaryForm.module.css';
+import useValidationStatus from './useValidationStatus';
 
 import { basicFormCheck, salaryFormCheck, timeFormCheck } from './formCheck';
 
@@ -223,6 +224,16 @@ const TimeSalaryForm = () => {
     hasCompensatoryDayoff,
   } = form;
 
+  const validationStatus = useValidationStatus(
+    {
+      dayPromisedWorkTime,
+      dayRealWorkTime,
+      weekWorkTime,
+      overtimeFrequency,
+    },
+    submitted,
+  );
+
   const handleSalaryHint = useCallback(
     (key, value) => {
       let inputSalaryAmount;
@@ -324,7 +335,7 @@ const TimeSalaryForm = () => {
           hasOvertimeSalary={hasOvertimeSalary}
           isOvertimeSalaryLegal={isOvertimeSalaryLegal}
           hasCompensatoryDayoff={hasCompensatoryDayoff}
-          submitted={submitted}
+          validationStatus={validationStatus}
         />
       </IconHeadingBlock>
 
