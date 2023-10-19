@@ -8,6 +8,7 @@ import RadioButton from 'common/form/RadioButton';
 import Radio from 'common/form/Radio';
 
 import InputTitle from '../common/InputTitle';
+
 import styles from './TimeSalaryForm.module.css';
 import Hint from './Hint';
 import useFormCheckStatus from './useFormCheckStatus';
