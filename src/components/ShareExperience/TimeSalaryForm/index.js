@@ -303,7 +303,6 @@ const TimeSalaryForm = () => {
         />
 
         <br />
-        <h5 className={styles.pleaseSelectOne}>以下薪資 / 工時擇一必填</h5>
 
         <SalaryInfo
           handleState={handleState}
