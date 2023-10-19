@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
 import Clock from 'common/icons/Clock';
 import { P } from 'common/base';
 import TextInput from 'common/form/TextInput';
@@ -10,8 +9,6 @@ import Radio from 'common/form/Radio';
 import InputTitle from '../common/InputTitle';
 
 import styles from './TimeSalaryForm.module.css';
-import Hint from './Hint';
-import useFormCheckStatus from './useFormCheckStatus';
 
 const TimeInfo = ({
   handleState,
@@ -22,20 +19,9 @@ const TimeInfo = ({
   hasOvertimeSalary,
   isOvertimeSalaryLegal,
   hasCompensatoryDayoff,
-  submitted,
 }) => {
   const [showInfo1, setShowInfo1] = useState(false);
   const [showInfo2, setShowInfo2] = useState(false);
-
-  const checkStatus = useFormCheckStatus(
-    {
-      dayPromisedWorkTime,
-      dayRealWorkTime,
-      weekWorkTime,
-      overtimeFrequency,
-    },
-    submitted,
-  );
 
   return (
     <section id="formSectionWorkTime">
@@ -47,12 +33,7 @@ const TimeInfo = ({
         <div className={styles.formGroupTwo}>
           <div className={styles.formGroup}>
             <InputTitle text="工作日表訂工時" must />
-            <div
-              className={cn(styles.inputUnit, {
-                [styles.warning]:
-                  checkStatus.dayPromisedWorkTime.shouldSetWarning,
-              })}
-            >
+            <div className={styles.inputUnit}>
               <TextInput
                 value={dayPromisedWorkTime}
                 placeholder="8 或 8.5"
@@ -62,15 +43,10 @@ const TimeInfo = ({
               />
               <span className={styles.unit}> 小時</span>
             </div>
-            <Hint hint={checkStatus.dayPromisedWorkTime.hint} showWarning />
           </div>
           <div className={styles.formGroup}>
             <InputTitle text="實際平均工時" must />
-            <div
-              className={cn(styles.inputUnit, {
-                [styles.warning]: checkStatus.dayRealWorkTime.shouldSetWarning,
-              })}
-            >
+            <div className={styles.inputUnit}>
               <TextInput
                 value={dayRealWorkTime}
                 placeholder="10 或 10.5"
@@ -78,7 +54,6 @@ const TimeInfo = ({
               />
               <span className={styles.unit}> 小時</span>
             </div>
-            <Hint hint={checkStatus.dayRealWorkTime.hint} showWarning />
           </div>
         </div>
         <div className={styles.formInfo}>
@@ -109,11 +84,7 @@ const TimeInfo = ({
       <div className={styles.formSection}>
         <div className={styles.formGroup}>
           <InputTitle text="一週總工時" must />
-          <div
-            className={cn(styles.inputUnit, {
-              [styles.warning]: checkStatus.weekWorkTime.shouldSetWarning,
-            })}
-          >
+          <div className={styles.inputUnit}>
             <TextInput
               value={weekWorkTime}
               placeholder="40 或 40.5"
@@ -121,7 +92,6 @@ const TimeInfo = ({
             />
             <span className={styles.unit}> 小時</span>
           </div>
-          <Hint hint={checkStatus.weekWorkTime.hint} showWarning />
         </div>
         <div className={styles.formInfo}>
           <P size="s">
@@ -144,11 +114,7 @@ const TimeInfo = ({
       </div>
 
       <InputTitle text="加班頻率" must />
-      <div
-        className={cn(styles.radioButton, {
-          [styles.warning]: checkStatus.overtimeFrequency.shouldSetWarning,
-        })}
-      >
+      <div className={styles.radioButton}>
         {[
           { label: '幾乎不', value: '0' },
           { label: '偶爾', value: '1' },

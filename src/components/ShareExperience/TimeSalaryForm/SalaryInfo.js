@@ -27,7 +27,20 @@ import {
 } from 'constants/formElements';
 
 import styles from './TimeSalaryForm.module.css';
-import Hint from './Hint';
+
+const Hint = ({ hint, showWarning }) => {
+  if (hint === null) {
+    return null;
+  } else if (showWarning) {
+    return (
+      <div className={cn([styles.warning__wording, styles.salaryHint])}>
+        {hint}
+        ，確定嗎？
+      </div>
+    );
+  }
+  return <div className={cn(styles.salaryHint)}>{hint}</div>;
+};
 
 const SalaryInfo = ({
   hint,
