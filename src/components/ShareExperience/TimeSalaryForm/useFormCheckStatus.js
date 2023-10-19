@@ -1,20 +1,27 @@
 import { useMemo } from 'react';
 import {
-  dayPromisedWorkTime as checkDayPromisedWorkTime,
-  dayRealWorkTime as checkDayRealWorkTime,
-  weekWorkTime as checkWeekWorkTime,
+  dayPromisedWorkTime,
+  dayRealWorkTime,
+  weekWorkTime,
+  overtimeFrequency,
 } from './formCheck';
 
 const formatWorkTimeHour = hours => `${hours} 小時`;
-const validOrFormat = valid => format => value =>
-  value && !valid ? format(value) : null;
+const validOrFormat = valid => format => value => {
+  if (!value) return null;
+  if (valid) return null;
+
+  // We return (formatted) value only when the value is present and invalid
+  return format ? format(value) : value;
+};
 
 const useFormCheckStatus = (form, submitted) => {
   return useMemo(() => {
     const checks = {
-      dayPromisedWorkTime: checkDayPromisedWorkTime,
-      dayRealWorkTime: checkDayRealWorkTime,
-      weekWorkTime: checkWeekWorkTime,
+      dayPromisedWorkTime,
+      dayRealWorkTime,
+      weekWorkTime,
+      overtimeFrequency,
     };
 
     const formats = {
