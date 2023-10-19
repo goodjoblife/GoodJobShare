@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Element as ScrollElement } from 'react-scroll';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import Clock from 'common/icons/Clock';
@@ -47,6 +48,7 @@ const TimeInfo = ({
         <div className={styles.formGroupTwo}>
           <div className={styles.formGroup}>
             <InputTitle text="工作日表訂工時" must />
+            <ScrollElement name="dayPromisedWorkTime" />
             <div
               className={cn(styles.inputUnit, {
                 [styles.warning]:
@@ -69,6 +71,7 @@ const TimeInfo = ({
           </div>
           <div className={styles.formGroup}>
             <InputTitle text="實際平均工時" must />
+            <ScrollElement name="dayRealWorkTime" />
             <div
               className={cn(styles.inputUnit, {
                 [styles.warning]:
@@ -113,6 +116,7 @@ const TimeInfo = ({
       <div className={styles.formSection}>
         <div className={styles.formGroup}>
           <InputTitle text="一週總工時" must />
+          <ScrollElement name="weekWorkTime" />
           <div
             className={cn(styles.inputUnit, {
               [styles.warning]: validationStatus.weekWorkTime.shouldSetWarning,
@@ -148,6 +152,7 @@ const TimeInfo = ({
       </div>
 
       <InputTitle text="加班頻率" must />
+      <ScrollElement name="overtimeFrequency" />
       <div
         className={cn(styles.radioButton, {
           [styles.warning]: validationStatus.overtimeFrequency.shouldSetWarning,
