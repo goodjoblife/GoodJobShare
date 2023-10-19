@@ -8,18 +8,9 @@ import RadioButton from 'common/form/RadioButton';
 import Radio from 'common/form/Radio';
 
 import InputTitle from '../common/InputTitle';
-import {
-  dayPromisedWorkTime as checkDayPromisedWorkTime,
-  dayRealWorkTime as checkDayRealWorkTime,
-  weekWorkTime as checkWeekWorkTime,
-} from './formCheck';
-
 import styles from './TimeSalaryForm.module.css';
 import Hint from './Hint';
-
-const formatWorkTimeHour = hours => `${hours} 小時`;
-const validOrFormat = valid => format => value =>
-  value && !valid ? format(value) : null;
+import useFormCheckStatus from './useFormCheckStatus';
 
 const TimeInfo = ({
   handleState,
@@ -35,26 +26,14 @@ const TimeInfo = ({
   const [showInfo1, setShowInfo1] = useState(false);
   const [showInfo2, setShowInfo2] = useState(false);
 
-  const isDayPromisedWorkTimeValid = checkDayPromisedWorkTime(
-    dayPromisedWorkTime,
+  const checkStatus = useFormCheckStatus(
+    {
+      dayPromisedWorkTime,
+      dayRealWorkTime,
+      weekWorkTime,
+    },
+    submitted,
   );
-  const isDayRealWorkTimeValid = checkDayRealWorkTime(dayRealWorkTime);
-  const isWeekWorkTimeValid = checkWeekWorkTime(weekWorkTime);
-
-  const dayPromisedWorkTimeHint = validOrFormat(isDayPromisedWorkTimeValid)(
-    formatWorkTimeHour,
-  )(dayPromisedWorkTime);
-  const dayRealWorkTimeHint = validOrFormat(isDayRealWorkTimeValid)(
-    formatWorkTimeHour,
-  )(dayRealWorkTime);
-  const weekWorkTimeHint = validOrFormat(isWeekWorkTimeValid)(
-    formatWorkTimeHour,
-  )(weekWorkTime);
-
-  const shouldSetDayPromisedWorkTimeWarning =
-    submitted && !isDayPromisedWorkTimeValid;
-  const shouldSetDayRealWorkTimeWarning = submitted && !isDayRealWorkTimeValid;
-  const shouldSetWeekWorkTimeWarning = submitted && !isWeekWorkTimeValid;
 
   return (
     <section id="formSectionWorkTime">
@@ -68,7 +47,8 @@ const TimeInfo = ({
             <InputTitle text="工作日表訂工時" must />
             <div
               className={cn(styles.inputUnit, {
-                [styles.warning]: shouldSetDayPromisedWorkTimeWarning,
+                [styles.warning]:
+                  checkStatus.dayPromisedWorkTime.shouldSetWarning,
               })}
             >
               <TextInput
@@ -80,13 +60,13 @@ const TimeInfo = ({
               />
               <span className={styles.unit}> 小時</span>
             </div>
-            <Hint hint={dayPromisedWorkTimeHint} showWarning />
+            <Hint hint={checkStatus.dayPromisedWorkTime.hint} showWarning />
           </div>
           <div className={styles.formGroup}>
             <InputTitle text="實際平均工時" must />
             <div
               className={cn(styles.inputUnit, {
-                [styles.warning]: shouldSetDayRealWorkTimeWarning,
+                [styles.warning]: checkStatus.dayRealWorkTime.shouldSetWarning,
               })}
             >
               <TextInput
@@ -96,7 +76,7 @@ const TimeInfo = ({
               />
               <span className={styles.unit}> 小時</span>
             </div>
-            <Hint hint={dayRealWorkTimeHint} showWarning />
+            <Hint hint={checkStatus.dayRealWorkTime.hint} showWarning />
           </div>
         </div>
         <div className={styles.formInfo}>
@@ -129,7 +109,7 @@ const TimeInfo = ({
           <InputTitle text="一週總工時" must />
           <div
             className={cn(styles.inputUnit, {
-              [styles.warning]: shouldSetWeekWorkTimeWarning,
+              [styles.warning]: checkStatus.weekWorkTime.shouldSetWarning,
             })}
           >
             <TextInput
@@ -139,7 +119,7 @@ const TimeInfo = ({
             />
             <span className={styles.unit}> 小時</span>
           </div>
-          <Hint hint={weekWorkTimeHint} showWarning />
+          <Hint hint={checkStatus.weekWorkTime.hint} showWarning />
         </div>
         <div className={styles.formInfo}>
           <P size="s">
