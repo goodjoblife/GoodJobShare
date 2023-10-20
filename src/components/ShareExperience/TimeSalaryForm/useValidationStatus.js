@@ -3,11 +3,17 @@ import {
   dayPromisedWorkTime,
   dayRealWorkTime,
   weekWorkTime,
+  overtimeFrequency,
 } from './formCheck';
 
 const formatWorkTimeHour = hours => `${hours} 小時`;
-const validOrFormat = valid => format => value =>
-  value && !valid ? format(value) : null;
+const validOrFormat = valid => format => value => {
+  if (!value) return null;
+  if (valid) return null;
+
+  // We return (formatted) value only when the value is present and invalid
+  return format ? format(value) : value;
+};
 
 const useValidationStatus = (form, submitted) => {
   return useMemo(() => {
@@ -15,6 +21,7 @@ const useValidationStatus = (form, submitted) => {
       dayPromisedWorkTime,
       dayRealWorkTime,
       weekWorkTime,
+      overtimeFrequency,
     };
 
     const formats = {

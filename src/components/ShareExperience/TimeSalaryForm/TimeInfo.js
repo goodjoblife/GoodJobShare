@@ -32,6 +32,7 @@ const TimeInfo = ({
       dayPromisedWorkTime,
       dayRealWorkTime,
       weekWorkTime,
+      overtimeFrequency,
     },
     submitted,
   );
@@ -147,7 +148,11 @@ const TimeInfo = ({
       </div>
 
       <InputTitle text="加班頻率" must />
-      <div className={styles.radioButton}>
+      <div
+        className={cn(styles.radioButton, {
+          [styles.warning]: validationStatus.overtimeFrequency.shouldSetWarning,
+        })}
+      >
         {[
           { label: '幾乎不', value: '0' },
           { label: '偶爾', value: '1' },
