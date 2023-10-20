@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Element as ScrollElement } from 'react-scroll';
@@ -6,11 +6,6 @@ import Coin2 from 'common/icons/Coin2';
 import { P } from 'common/base';
 import TextInput from 'common/form/TextInput';
 import Select from 'common/form/Select';
-import {
-  salaryType as salaryTypeValidator,
-  salaryAmount as salaryAmountValidator,
-  experienceInYear as experienceInYearValidator,
-} from './formCheck';
 import InputTitle from '../common/InputTitle';
 
 import {
@@ -20,7 +15,6 @@ import {
 
 import {
   VALID,
-  INVALID,
   SALARY_TYPE,
   SALARY_AMOUNT,
   EXPERIENCE_IN_YEAR,
@@ -37,47 +31,16 @@ const SalaryInfo = ({
   salaryAmount,
   experienceInYear,
   submitted,
-  changeValidationStatus,
+  extElValidationStatus,
 }) => {
-  const changeSalaryTypeStatus = useCallback(
-    val => {
-      changeValidationStatus(
-        SALARY_TYPE,
-        salaryTypeValidator(val) ? VALID : INVALID,
-      );
-    },
-    [changeValidationStatus],
-  );
-  const changeSalaryAmountStatus = useCallback(
-    val => {
-      changeValidationStatus(
-        SALARY_AMOUNT,
-        salaryAmountValidator(val) ? VALID : INVALID,
-      );
-    },
-    [changeValidationStatus],
-  );
-  const changeExperienceInYearStatus = useCallback(
-    val => {
-      changeValidationStatus(
-        EXPERIENCE_IN_YEAR,
-        experienceInYearValidator(val) ? VALID : INVALID,
-      );
-    },
-    [changeValidationStatus],
-  );
-
-  const isSalaryTypeValid = salaryTypeValidator(salaryType);
-  const isSalaryAmountValid = salaryAmountValidator(salaryAmount);
+  const isSalaryTypeValid = extElValidationStatus[SALARY_TYPE] === VALID;
+  const isSalaryAmountValid = extElValidationStatus[SALARY_AMOUNT] === VALID;
   const isSalarySetWarning =
     submitted && (!isSalaryTypeValid || !isSalaryAmountValid);
 
-  const isExperienceInYearValid = experienceInYearValidator(experienceInYear);
+  const isExperienceInYearValid =
+    extElValidationStatus[EXPERIENCE_IN_YEAR] === VALID;
   const isExperienceInYearWarning = submitted && !isExperienceInYearValid;
-
-  changeSalaryTypeStatus(salaryType);
-  changeSalaryAmountStatus(salaryAmount);
-  changeExperienceInYearStatus(experienceInYear);
 
   return (
     <section className={styles.formSectionSalary}>
@@ -99,7 +62,6 @@ const SalaryInfo = ({
                 value={salaryType}
                 options={salaryTypeOptions}
                 onChange={e => {
-                  changeSalaryTypeStatus(e.target.value);
                   return handleState('salaryType')(e.target.value);
                 }}
               />
@@ -111,7 +73,6 @@ const SalaryInfo = ({
                     value={salaryAmount}
                     placeholder="22000"
                     onChange={e => {
-                      changeSalaryAmountStatus(e.target.value);
                       return handleState('salaryAmount')(e.target.value);
                     }}
                   />
@@ -144,7 +105,6 @@ const SalaryInfo = ({
                 value={experienceInYear}
                 options={experienceInYearOptions2}
                 onChange={e => {
-                  changeExperienceInYearStatus(e.target.value);
                   return handleState('experienceInYear')(e.target.value);
                 }}
               />

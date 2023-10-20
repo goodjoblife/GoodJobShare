@@ -1,10 +1,20 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import {
+  salaryType as salaryTypeValidator,
+  salaryAmount as salaryAmountValidator,
+  experienceInYear as experienceInYearValidator,
   dayPromisedWorkTime,
   dayRealWorkTime,
   weekWorkTime,
   overtimeFrequency,
 } from './formCheck';
+import {
+  VALID,
+  INVALID,
+  SALARY_TYPE,
+  SALARY_AMOUNT,
+  EXPERIENCE_IN_YEAR,
+} from 'constants/formElements';
 
 const formatWorkTimeHour = hours => `${hours} 小時`;
 const validOrFormat = valid => format => value => {
@@ -15,7 +25,44 @@ const validOrFormat = valid => format => value => {
   return format ? format(value) : value;
 };
 
-const useValidationStatus = (form, submitted) => {
+const useValidationStatus = (
+  form,
+  { submitted, changeExtElValidationStatus },
+) => {
+  const { salaryType, salaryAmount, experienceInYear } = form;
+
+  const changeSalaryTypeStatus = useCallback(
+    val => {
+      changeExtElValidationStatus(
+        SALARY_TYPE,
+        salaryTypeValidator(val) ? VALID : INVALID,
+      );
+    },
+    [changeExtElValidationStatus],
+  );
+  const changeSalaryAmountStatus = useCallback(
+    val => {
+      changeExtElValidationStatus(
+        SALARY_AMOUNT,
+        salaryAmountValidator(val) ? VALID : INVALID,
+      );
+    },
+    [changeExtElValidationStatus],
+  );
+  const changeExperienceInYearStatus = useCallback(
+    val => {
+      changeExtElValidationStatus(
+        EXPERIENCE_IN_YEAR,
+        experienceInYearValidator(val) ? VALID : INVALID,
+      );
+    },
+    [changeExtElValidationStatus],
+  );
+
+  changeSalaryTypeStatus(salaryType);
+  changeSalaryAmountStatus(salaryAmount);
+  changeExperienceInYearStatus(experienceInYear);
+
   return useMemo(() => {
     const checks = {
       dayPromisedWorkTime,

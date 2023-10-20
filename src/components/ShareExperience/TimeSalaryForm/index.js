@@ -226,12 +226,15 @@ const TimeSalaryForm = () => {
 
   const validationStatus = useValidationStatus(
     {
+      salaryType,
+      salaryAmount,
+      experienceInYear,
       dayPromisedWorkTime,
       dayRealWorkTime,
       weekWorkTime,
       overtimeFrequency,
     },
-    submitted,
+    { submitted, changeExtElValidationStatus },
   );
 
   const handleSalaryHint = useCallback(
@@ -321,9 +324,9 @@ const TimeSalaryForm = () => {
           salaryAmount={salaryAmount}
           experienceInYear={experienceInYear}
           submitted={submitted}
-          changeValidationStatus={changeExtElValidationStatus}
           showWarning={showSalaryWarning}
           hint={salaryHint}
+          extElValidationStatus={extElValidationStatus.current}
         />
 
         <TimeInfo
