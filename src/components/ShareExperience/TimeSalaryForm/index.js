@@ -110,6 +110,48 @@ const TimeSalaryForm = () => {
     });
   }, [location]);
 
+  const changeBasicElValidationStatus = useCallback((elementId, status) => {
+    basicElValidationStatus.current[elementId] = status;
+  }, []);
+
+  const changeExtElValidationStatus = useCallback((elementId, status) => {
+    extElValidationStatus.current[elementId] = status;
+  }, []);
+
+  const {
+    company,
+    isCurrentlyEmployed,
+    jobEndingTimeYear,
+    jobEndingTimeMonth,
+    jobTitle,
+    sector,
+    employmentType,
+    gender,
+    salaryType,
+    salaryAmount,
+    experienceInYear,
+    dayPromisedWorkTime,
+    dayRealWorkTime,
+    weekWorkTime,
+    overtimeFrequency,
+    hasOvertimeSalary,
+    isOvertimeSalaryLegal,
+    hasCompensatoryDayoff,
+  } = form;
+
+  const validationStatus = useValidationStatus(
+    {
+      salaryType,
+      salaryAmount,
+      experienceInYear,
+      dayPromisedWorkTime,
+      dayRealWorkTime,
+      weekWorkTime,
+      overtimeFrequency,
+    },
+    { submitted, changeExtElValidationStatus },
+  );
+
   const getTopInvalidElement = useCallback(() => {
     const basic = TIME_SALARY_BASIC_ORDER;
     const ext = TIME_SALARY_EXT_ORDER;
@@ -194,48 +236,6 @@ const TimeSalaryForm = () => {
     }
     return Promise.reject();
   }, [dispatch, form, getTopInvalidElement]);
-
-  const changeBasicElValidationStatus = useCallback((elementId, status) => {
-    basicElValidationStatus.current[elementId] = status;
-  }, []);
-
-  const changeExtElValidationStatus = useCallback((elementId, status) => {
-    extElValidationStatus.current[elementId] = status;
-  }, []);
-
-  const {
-    company,
-    isCurrentlyEmployed,
-    jobEndingTimeYear,
-    jobEndingTimeMonth,
-    jobTitle,
-    sector,
-    employmentType,
-    gender,
-    salaryType,
-    salaryAmount,
-    experienceInYear,
-    dayPromisedWorkTime,
-    dayRealWorkTime,
-    weekWorkTime,
-    overtimeFrequency,
-    hasOvertimeSalary,
-    isOvertimeSalaryLegal,
-    hasCompensatoryDayoff,
-  } = form;
-
-  const validationStatus = useValidationStatus(
-    {
-      salaryType,
-      salaryAmount,
-      experienceInYear,
-      dayPromisedWorkTime,
-      dayRealWorkTime,
-      weekWorkTime,
-      overtimeFrequency,
-    },
-    { submitted, changeExtElValidationStatus },
-  );
 
   const handleSalaryHint = useCallback(
     (key, value) => {
