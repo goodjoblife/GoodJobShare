@@ -28,11 +28,7 @@ import {
 import getSalaryHint from '../../../utils/formUtils';
 
 import StaticHelmet from 'common/StaticHelmet';
-import {
-  INVALID,
-  TIME_SALARY_BASIC_ORDER,
-  TIME_SALARY_EXT_ORDER,
-} from 'constants/formElements';
+import { INVALID, TIME_SALARY_EXT_ORDER } from 'constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 import { LS_TIME_SALARY_FORM_KEY } from 'constants/localStorageKey';
@@ -141,6 +137,9 @@ const TimeSalaryForm = () => {
 
   const validationStatus = useValidationStatus(
     {
+      company,
+      jobTitle,
+      employmentType,
       salaryType,
       salaryAmount,
       experienceInYear,
@@ -149,11 +148,11 @@ const TimeSalaryForm = () => {
       weekWorkTime,
       overtimeFrequency,
     },
-    { submitted, changeExtElValidationStatus },
+    { submitted, changeBasicElValidationStatus, changeExtElValidationStatus },
   );
 
   const getTopInvalidElement = useCallback(() => {
-    const basic = TIME_SALARY_BASIC_ORDER;
+    const basic = ['company', 'jobTitle', 'employmentType'];
     const ext = TIME_SALARY_EXT_ORDER;
     for (let i = 0, el; i <= basic.length; i += 1) {
       el = basic[i];

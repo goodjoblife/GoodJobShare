@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import subscribeValidation from 'common/subscribeValidation';
+import withScrollElement from './withScrollElement';
 import Select from 'common/form/Select';
 import TextInput from 'common/form/TextInput';
 
@@ -18,24 +18,13 @@ import {
   employmentType as employmentTypeValidator,
 } from './formCheck';
 
-import { COMPANY, JOB_TITLE, EMPLOYMENT_TYPE } from 'constants/formElements';
+const CompanyWithValidation = withScrollElement(CompanyQuery, 'company');
 
-const CompanyWithValidation = subscribeValidation(
-  CompanyQuery,
-  props => props.validator(props.companyQuery),
-  COMPANY,
-);
+const JobTitleWithValidation = withScrollElement(JobTitle, 'jobTitle');
 
-const JobTitleWithValidation = subscribeValidation(
-  JobTitle,
-  props => props.validator(props.jobTitle),
-  JOB_TITLE,
-);
-
-const EmploymentTypeWithValidation = subscribeValidation(
+const EmploymentTypeWithValidation = withScrollElement(
   EmploymentType,
-  props => props.validator(props.employmentType),
-  EMPLOYMENT_TYPE,
+  'employmentType',
 );
 
 const BasicInfo = ({
@@ -61,7 +50,6 @@ const BasicInfo = ({
             onCompanyId={handleState('companyId')}
             validator={companyValidator}
             submitted={submitted}
-            changeValidationStatus={changeValidationStatus}
           />
         </div>
       </div>
@@ -89,7 +77,6 @@ const BasicInfo = ({
               onChange={handleState('jobTitle')}
               validator={jobTitleValidator}
               submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div className={styles.formGroup}>
@@ -112,7 +99,6 @@ const BasicInfo = ({
               onChange={handleState('employmentType')}
               validator={employmentTypeValidator}
               submitted={submitted}
-              changeValidationStatus={changeValidationStatus}
             />
           </div>
           <div className={styles.formGroup}>
