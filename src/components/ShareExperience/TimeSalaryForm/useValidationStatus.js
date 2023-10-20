@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo } from 'react';
 import {
   salaryType as salaryTypeValidator,
   salaryAmount as salaryAmountValidator,
@@ -8,13 +8,6 @@ import {
   weekWorkTime,
   overtimeFrequency,
 } from './formCheck';
-import {
-  VALID,
-  INVALID,
-  SALARY_TYPE,
-  SALARY_AMOUNT,
-  EXPERIENCE_IN_YEAR,
-} from 'constants/formElements';
 
 const formatWorkTimeHour = hours => `${hours} 小時`;
 const validOrFormat = valid => format => value => {
@@ -25,45 +18,32 @@ const validOrFormat = valid => format => value => {
   return format ? format(value) : value;
 };
 
-const useValidationStatus = (
-  form,
-  { submitted, changeExtElValidationStatus },
-) => {
+const useValidationStatus = (form, { submitted }) => {
   const { salaryType, salaryAmount, experienceInYear } = form;
 
-  const changeSalaryTypeStatus = useCallback(
-    val => {
-      changeExtElValidationStatus(
-        SALARY_TYPE,
-        salaryTypeValidator(val) ? VALID : INVALID,
-      );
-    },
-    [changeExtElValidationStatus],
-  );
-  const changeSalaryAmountStatus = useCallback(
-    val => {
-      changeExtElValidationStatus(
-        SALARY_AMOUNT,
-        salaryAmountValidator(val) ? VALID : INVALID,
-      );
-    },
-    [changeExtElValidationStatus],
-  );
-  const changeExperienceInYearStatus = useCallback(
-    val => {
-      changeExtElValidationStatus(
-        EXPERIENCE_IN_YEAR,
-        experienceInYearValidator(val) ? VALID : INVALID,
-      );
-    },
-    [changeExtElValidationStatus],
-  );
+  const isSalaryTypeValid = salaryTypeValidator(salaryType);
+  const isSalaryAmountValid = salaryAmountValidator(salaryAmount);
+  const isSalaryValid = isSalaryTypeValid && isSalaryAmountValid;
+  const isSalarySetWarning = submitted && !isSalaryValid;
 
-  changeSalaryTypeStatus(salaryType);
-  changeSalaryAmountStatus(salaryAmount);
-  changeExperienceInYearStatus(experienceInYear);
+  const isExperienceInYearValid = experienceInYearValidator(experienceInYear);
+  const isExperienceInYearWarning = submitted && !isExperienceInYearValid;
 
   return useMemo(() => {
+    const validationStatus = {};
+
+    // Compute check status of salary info
+    validationStatus.salary = {
+      isValid: isSalaryValid,
+      shouldSetWarning: isSalarySetWarning,
+    };
+
+    validationStatus.experienceInYear = {
+      isValid: isExperienceInYearValid,
+      shouldSetWarning: isExperienceInYearWarning,
+    };
+
+    // Compute check status of time info
     const checks = {
       dayPromisedWorkTime,
       dayRealWorkTime,
@@ -77,7 +57,6 @@ const useValidationStatus = (
       weekWorkTime: formatWorkTimeHour,
     };
 
-    const validationStatus = {};
     for (const key in checks) {
       const value = form[key];
       const check = checks[key];
@@ -95,7 +74,14 @@ const useValidationStatus = (
     }
 
     return validationStatus;
-  }, [form, submitted]);
+  }, [
+    form,
+    isExperienceInYearValid,
+    isExperienceInYearWarning,
+    isSalarySetWarning,
+    isSalaryValid,
+    submitted,
+  ]);
 };
 
 export default useValidationStatus;

@@ -13,13 +13,6 @@ import {
   experienceInYearOptions2,
 } from '../common/optionMap';
 
-import {
-  VALID,
-  SALARY_TYPE,
-  SALARY_AMOUNT,
-  EXPERIENCE_IN_YEAR,
-} from 'constants/formElements';
-
 import styles from './TimeSalaryForm.module.css';
 import Hint from './Hint';
 
@@ -30,17 +23,12 @@ const SalaryInfo = ({
   salaryType,
   salaryAmount,
   experienceInYear,
-  submitted,
-  extElValidationStatus,
+  validationStatus,
 }) => {
-  const isSalaryTypeValid = extElValidationStatus[SALARY_TYPE] === VALID;
-  const isSalaryAmountValid = extElValidationStatus[SALARY_AMOUNT] === VALID;
-  const isSalarySetWarning =
-    submitted && (!isSalaryTypeValid || !isSalaryAmountValid);
+  const isSalarySetWarning = validationStatus.salary.shouldSetWarning;
 
-  const isExperienceInYearValid =
-    extElValidationStatus[EXPERIENCE_IN_YEAR] === VALID;
-  const isExperienceInYearWarning = submitted && !isExperienceInYearValid;
+  const isExperienceInYearWarning =
+    validationStatus.experienceInYear.shouldSetWarning;
 
   return (
     <section className={styles.formSectionSalary}>
@@ -57,7 +45,7 @@ const SalaryInfo = ({
                 [styles.warning]: isSalarySetWarning,
               })}
             >
-              <ScrollElement name={SALARY_TYPE} />
+              <ScrollElement name="salaryType" />
               <Select
                 value={salaryType}
                 options={salaryTypeOptions}
@@ -68,7 +56,7 @@ const SalaryInfo = ({
               <div style={{ width: '15px' }} />
               <div>
                 <div className={styles.inputUnit}>
-                  <ScrollElement name={SALARY_AMOUNT} />
+                  <ScrollElement name="salaryAmount" />
                   <TextInput
                     value={salaryAmount}
                     placeholder="22000"
@@ -87,7 +75,7 @@ const SalaryInfo = ({
                   className={`pS ${styles.warning__wording}`}
                   style={{ textAlign: 'left', margin: '10px 0 0 0' }}
                 >
-                  需填寫薪資
+                  薪資(或下方的工時)需擇一填寫
                 </p>
               </div>
             )}
@@ -100,7 +88,7 @@ const SalaryInfo = ({
                 [styles.warning]: isExperienceInYearWarning,
               })}
             >
-              <ScrollElement name={EXPERIENCE_IN_YEAR} />
+              <ScrollElement name="experienceInYear" />
               <Select
                 value={experienceInYear}
                 options={experienceInYearOptions2}

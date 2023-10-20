@@ -164,6 +164,12 @@ const TimeSalaryForm = () => {
         return el;
       }
     }
+    const order = ['salaryType', 'salaryAmount', 'experienceInYear'];
+    for (const el of order) {
+      if (validationStatus[el] && validationStatus[el].shouldSetWarning) {
+        return el;
+      }
+    }
     for (let i = 0, el; i <= ext.length; i += 1) {
       el = ext[i];
       if (
@@ -174,7 +180,7 @@ const TimeSalaryForm = () => {
       }
     }
     return null;
-  }, []);
+  }, [validationStatus]);
 
   const onSubmit = useCallback(() => {
     const valid = basicFormCheck(getBasicForm(form));
@@ -323,10 +329,9 @@ const TimeSalaryForm = () => {
           salaryType={salaryType}
           salaryAmount={salaryAmount}
           experienceInYear={experienceInYear}
-          submitted={submitted}
           showWarning={showSalaryWarning}
           hint={salaryHint}
-          extElValidationStatus={extElValidationStatus.current}
+          validationStatus={validationStatus}
         />
 
         <TimeInfo
