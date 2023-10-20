@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
 import ReactGA from 'react-ga4';
@@ -28,7 +28,6 @@ import {
 import getSalaryHint from '../../../utils/formUtils';
 
 import StaticHelmet from 'common/StaticHelmet';
-import { INVALID, TIME_SALARY_EXT_ORDER } from 'constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 import { LS_TIME_SALARY_FORM_KEY } from 'constants/localStorageKey';
@@ -85,11 +84,10 @@ const TimeSalaryForm = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [form, setForm] = useState({ ...defaultForm });
-  const [submitted, setSubmitted] = useState(false);
+  const [submissionCount, setSubmissionCount] = useState(0);
+  const submitted = submissionCount > 0;
   const [salaryHint, setSalaryHint] = useState(null);
   const [showSalaryWarning, setShowSalaryWarning] = useState(false);
-  const basicElValidationStatus = useRef({});
-  const extElValidationStatus = useRef({});
 
   useEffect(() => {
     const defaultState =
@@ -105,14 +103,6 @@ const TimeSalaryForm = () => {
       content_category: PIXEL_CONTENT_CATEGORY.VISIT_TIME_AND_SALARY_FORM,
     });
   }, [location]);
-
-  const changeBasicElValidationStatus = useCallback((elementId, status) => {
-    basicElValidationStatus.current[elementId] = status;
-  }, []);
-
-  const changeExtElValidationStatus = useCallback((elementId, status) => {
-    extElValidationStatus.current[elementId] = status;
-  }, []);
 
   const {
     company,
@@ -148,33 +138,24 @@ const TimeSalaryForm = () => {
       weekWorkTime,
       overtimeFrequency,
     },
-    { submitted, changeBasicElValidationStatus, changeExtElValidationStatus },
+    { submitted },
   );
 
   const getTopInvalidElement = useCallback(() => {
-    const basic = ['company', 'jobTitle', 'employmentType'];
-    const ext = TIME_SALARY_EXT_ORDER;
-    for (let i = 0, el; i <= basic.length; i += 1) {
-      el = basic[i];
-      if (
-        basicElValidationStatus.current[el] &&
-        basicElValidationStatus.current[el] === INVALID
-      ) {
-        return el;
-      }
-    }
-    const order = ['salaryType', 'salaryAmount', 'experienceInYear'];
+    const order = [
+      'company',
+      'jobTitle',
+      'employmentType',
+      'salaryType',
+      'salaryAmount',
+      'experienceInYear',
+      'dayPromisedWorkTime',
+      'dayRealWorkTime',
+      'weekWorkTime',
+      'overtimeFrequency',
+    ];
     for (const el of order) {
       if (validationStatus[el] && validationStatus[el].shouldSetWarning) {
-        return el;
-      }
-    }
-    for (let i = 0, el; i <= ext.length; i += 1) {
-      el = ext[i];
-      if (
-        extElValidationStatus.current[el] &&
-        extElValidationStatus.current[el] === INVALID
-      ) {
         return el;
       }
     }
@@ -229,18 +210,23 @@ const TimeSalaryForm = () => {
         },
       );
     }
-    setSubmitted(true);
-    const topInvalidElement = getTopInvalidElement();
-    if (topInvalidElement !== null) {
-      scroller.scrollTo(topInvalidElement, {
-        duration: 1000,
-        delay: 100,
-        offset: -100,
-        smooth: true,
-      });
-    }
+    setSubmissionCount(submissionCount + 1);
     return Promise.reject();
-  }, [dispatch, form, getTopInvalidElement]);
+  }, [dispatch, form, submissionCount]);
+
+  useEffect(() => {
+    if (submitted) {
+      const topInvalidElement = getTopInvalidElement();
+      if (topInvalidElement !== null) {
+        scroller.scrollTo(topInvalidElement, {
+          duration: 1000,
+          delay: 100,
+          offset: -100,
+          smooth: true,
+        });
+      }
+    }
+  }, [submissionCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSalaryHint = useCallback(
     (key, value) => {
@@ -318,7 +304,6 @@ const TimeSalaryForm = () => {
           employmentType={employmentType}
           gender={gender}
           submitted={submitted}
-          changeValidationStatus={changeBasicElValidationStatus}
         />
 
         <br />

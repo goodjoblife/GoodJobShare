@@ -38,7 +38,6 @@ const BasicInfo = ({
   employmentType,
   gender,
   submitted,
-  changeValidationStatus,
 }) => {
   return (
     <div>
