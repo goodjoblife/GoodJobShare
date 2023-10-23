@@ -138,7 +138,7 @@ const TimeSalaryForm = () => {
     const valid2 = salaryFormCheck(getSalaryForm(form));
     const valid3 = timeFormCheck(getTimeForm(form));
 
-    if (valid && (valid2 || valid3)) {
+    if (valid && valid2 && valid3) {
       localStorage.removeItem(LS_TIME_SALARY_FORM_KEY);
 
       const p = dispatch(
@@ -303,7 +303,6 @@ const TimeSalaryForm = () => {
         />
 
         <br />
-        <h5 className={styles.pleaseSelectOne}>以下薪資 / 工時擇一必填</h5>
 
         <SalaryInfo
           handleState={handleState}
