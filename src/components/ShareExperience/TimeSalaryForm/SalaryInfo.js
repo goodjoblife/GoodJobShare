@@ -75,7 +75,7 @@ const SalaryInfo = ({
                   className={`pS ${styles.warning__wording}`}
                   style={{ textAlign: 'left', margin: '10px 0 0 0' }}
                 >
-                  薪資(或下方的工時)需擇一填寫
+                  需填寫薪資
                 </p>
               </div>
             )}
