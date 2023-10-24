@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
 import ReactGA from 'react-ga4';
@@ -13,6 +13,7 @@ import SalaryInfo from './SalaryInfo';
 import TimeInfo from './TimeInfo';
 import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
 import styles from './TimeSalaryForm.module.css';
+import useValidationStatus from './useValidationStatus';
 
 import { basicFormCheck, salaryFormCheck, timeFormCheck } from './formCheck';
 
@@ -27,11 +28,6 @@ import {
 import getSalaryHint from '../../../utils/formUtils';
 
 import StaticHelmet from 'common/StaticHelmet';
-import {
-  INVALID,
-  TIME_SALARY_BASIC_ORDER,
-  TIME_SALARY_EXT_ORDER,
-} from 'constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 import { LS_TIME_SALARY_FORM_KEY } from 'constants/localStorageKey';
@@ -88,11 +84,10 @@ const TimeSalaryForm = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [form, setForm] = useState({ ...defaultForm });
-  const [submitted, setSubmitted] = useState(false);
+  const [submissionCount, setSubmissionCount] = useState(0);
+  const submitted = submissionCount > 0;
   const [salaryHint, setSalaryHint] = useState(null);
   const [showSalaryWarning, setShowSalaryWarning] = useState(false);
-  const basicElValidationStatus = useRef({});
-  const extElValidationStatus = useRef({});
 
   useEffect(() => {
     const defaultState =
@@ -109,29 +104,63 @@ const TimeSalaryForm = () => {
     });
   }, [location]);
 
+  const {
+    company,
+    isCurrentlyEmployed,
+    jobEndingTimeYear,
+    jobEndingTimeMonth,
+    jobTitle,
+    sector,
+    employmentType,
+    gender,
+    salaryType,
+    salaryAmount,
+    experienceInYear,
+    dayPromisedWorkTime,
+    dayRealWorkTime,
+    weekWorkTime,
+    overtimeFrequency,
+    hasOvertimeSalary,
+    isOvertimeSalaryLegal,
+    hasCompensatoryDayoff,
+  } = form;
+
+  const validationStatus = useValidationStatus(
+    {
+      company,
+      jobTitle,
+      employmentType,
+      salaryType,
+      salaryAmount,
+      experienceInYear,
+      dayPromisedWorkTime,
+      dayRealWorkTime,
+      weekWorkTime,
+      overtimeFrequency,
+    },
+    { submitted },
+  );
+
   const getTopInvalidElement = useCallback(() => {
-    const basic = TIME_SALARY_BASIC_ORDER;
-    const ext = TIME_SALARY_EXT_ORDER;
-    for (let i = 0, el; i <= basic.length; i += 1) {
-      el = basic[i];
-      if (
-        basicElValidationStatus.current[el] &&
-        basicElValidationStatus.current[el] === INVALID
-      ) {
-        return el;
-      }
-    }
-    for (let i = 0, el; i <= ext.length; i += 1) {
-      el = ext[i];
-      if (
-        extElValidationStatus.current[el] &&
-        extElValidationStatus.current[el] === INVALID
-      ) {
+    const order = [
+      'company',
+      'jobTitle',
+      'employmentType',
+      'salaryType',
+      'salaryAmount',
+      'experienceInYear',
+      'dayPromisedWorkTime',
+      'dayRealWorkTime',
+      'weekWorkTime',
+      'overtimeFrequency',
+    ];
+    for (const el of order) {
+      if (validationStatus[el] && validationStatus[el].shouldSetWarning) {
         return el;
       }
     }
     return null;
-  }, []);
+  }, [validationStatus]);
 
   const onSubmit = useCallback(() => {
     const valid = basicFormCheck(getBasicForm(form));
@@ -181,47 +210,23 @@ const TimeSalaryForm = () => {
         },
       );
     }
-    setSubmitted(true);
-    const topInvalidElement = getTopInvalidElement();
-    if (topInvalidElement !== null) {
-      scroller.scrollTo(topInvalidElement, {
-        duration: 1000,
-        delay: 100,
-        offset: -100,
-        smooth: true,
-      });
-    }
+    setSubmissionCount(submissionCount + 1);
     return Promise.reject();
-  }, [dispatch, form, getTopInvalidElement]);
+  }, [dispatch, form, submissionCount]);
 
-  const changeBasicElValidationStatus = useCallback((elementId, status) => {
-    basicElValidationStatus.current[elementId] = status;
-  }, []);
-
-  const changeExtElValidationStatus = useCallback((elementId, status) => {
-    extElValidationStatus.current[elementId] = status;
-  }, []);
-
-  const {
-    company,
-    isCurrentlyEmployed,
-    jobEndingTimeYear,
-    jobEndingTimeMonth,
-    jobTitle,
-    sector,
-    employmentType,
-    gender,
-    salaryType,
-    salaryAmount,
-    experienceInYear,
-    dayPromisedWorkTime,
-    dayRealWorkTime,
-    weekWorkTime,
-    overtimeFrequency,
-    hasOvertimeSalary,
-    isOvertimeSalaryLegal,
-    hasCompensatoryDayoff,
-  } = form;
+  useEffect(() => {
+    if (submitted) {
+      const topInvalidElement = getTopInvalidElement();
+      if (topInvalidElement !== null) {
+        scroller.scrollTo(topInvalidElement, {
+          duration: 1000,
+          delay: 100,
+          offset: -100,
+          smooth: true,
+        });
+      }
+    }
+  }, [submissionCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSalaryHint = useCallback(
     (key, value) => {
@@ -299,7 +304,6 @@ const TimeSalaryForm = () => {
           employmentType={employmentType}
           gender={gender}
           submitted={submitted}
-          changeValidationStatus={changeBasicElValidationStatus}
         />
 
         <br />
@@ -309,10 +313,9 @@ const TimeSalaryForm = () => {
           salaryType={salaryType}
           salaryAmount={salaryAmount}
           experienceInYear={experienceInYear}
-          submitted={submitted}
-          changeValidationStatus={changeExtElValidationStatus}
           showWarning={showSalaryWarning}
           hint={salaryHint}
+          validationStatus={validationStatus}
         />
 
         <TimeInfo
@@ -324,6 +327,7 @@ const TimeSalaryForm = () => {
           hasOvertimeSalary={hasOvertimeSalary}
           isOvertimeSalaryLegal={isOvertimeSalaryLegal}
           hasCompensatoryDayoff={hasCompensatoryDayoff}
+          validationStatus={validationStatus}
         />
       </IconHeadingBlock>
 

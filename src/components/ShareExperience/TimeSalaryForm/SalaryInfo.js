@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Element as ScrollElement } from 'react-scroll';
@@ -6,11 +6,6 @@ import Coin2 from 'common/icons/Coin2';
 import { P } from 'common/base';
 import TextInput from 'common/form/TextInput';
 import Select from 'common/form/Select';
-import {
-  salaryType as salaryTypeValidator,
-  salaryAmount as salaryAmountValidator,
-  experienceInYear as experienceInYearValidator,
-} from './formCheck';
 import InputTitle from '../common/InputTitle';
 
 import {
@@ -18,29 +13,8 @@ import {
   experienceInYearOptions2,
 } from '../common/optionMap';
 
-import {
-  VALID,
-  INVALID,
-  SALARY_TYPE,
-  SALARY_AMOUNT,
-  EXPERIENCE_IN_YEAR,
-} from 'constants/formElements';
-
 import styles from './TimeSalaryForm.module.css';
-
-const Hint = ({ hint, showWarning }) => {
-  if (hint === null) {
-    return null;
-  } else if (showWarning) {
-    return (
-      <div className={cn([styles.warning__wording, styles.salaryHint])}>
-        {hint}
-        ，確定嗎？
-      </div>
-    );
-  }
-  return <div className={cn(styles.salaryHint)}>{hint}</div>;
-};
+import Hint from './Hint';
 
 const SalaryInfo = ({
   hint,
@@ -49,48 +23,12 @@ const SalaryInfo = ({
   salaryType,
   salaryAmount,
   experienceInYear,
-  submitted,
-  changeValidationStatus,
+  validationStatus,
 }) => {
-  const changeSalaryTypeStatus = useCallback(
-    val => {
-      changeValidationStatus(
-        SALARY_TYPE,
-        salaryTypeValidator(val) ? VALID : INVALID,
-      );
-    },
-    [changeValidationStatus],
-  );
-  const changeSalaryAmountStatus = useCallback(
-    val => {
-      changeValidationStatus(
-        SALARY_AMOUNT,
-        salaryAmountValidator(val) ? VALID : INVALID,
-      );
-    },
-    [changeValidationStatus],
-  );
-  const changeExperienceInYearStatus = useCallback(
-    val => {
-      changeValidationStatus(
-        EXPERIENCE_IN_YEAR,
-        experienceInYearValidator(val) ? VALID : INVALID,
-      );
-    },
-    [changeValidationStatus],
-  );
+  const isSalarySetWarning = validationStatus.salary.shouldSetWarning;
 
-  const isSalaryTypeValid = salaryTypeValidator(salaryType);
-  const isSalaryAmountValid = salaryAmountValidator(salaryAmount);
-  const isSalarySetWarning =
-    submitted && (!isSalaryTypeValid || !isSalaryAmountValid);
-
-  const isExperienceInYearValid = experienceInYearValidator(experienceInYear);
-  const isExperienceInYearWarning = submitted && !isExperienceInYearValid;
-
-  changeSalaryTypeStatus(salaryType);
-  changeSalaryAmountStatus(salaryAmount);
-  changeExperienceInYearStatus(experienceInYear);
+  const isExperienceInYearWarning =
+    validationStatus.experienceInYear.shouldSetWarning;
 
   return (
     <section className={styles.formSectionSalary}>
@@ -107,24 +45,22 @@ const SalaryInfo = ({
                 [styles.warning]: isSalarySetWarning,
               })}
             >
-              <ScrollElement name={SALARY_TYPE} />
+              <ScrollElement name="salaryType" />
               <Select
                 value={salaryType}
                 options={salaryTypeOptions}
                 onChange={e => {
-                  changeSalaryTypeStatus(e.target.value);
                   return handleState('salaryType')(e.target.value);
                 }}
               />
               <div style={{ width: '15px' }} />
               <div>
                 <div className={styles.inputUnit}>
-                  <ScrollElement name={SALARY_AMOUNT} />
+                  <ScrollElement name="salaryAmount" />
                   <TextInput
                     value={salaryAmount}
                     placeholder="22000"
                     onChange={e => {
-                      changeSalaryAmountStatus(e.target.value);
                       return handleState('salaryAmount')(e.target.value);
                     }}
                   />
@@ -152,12 +88,11 @@ const SalaryInfo = ({
                 [styles.warning]: isExperienceInYearWarning,
               })}
             >
-              <ScrollElement name={EXPERIENCE_IN_YEAR} />
+              <ScrollElement name="experienceInYear" />
               <Select
                 value={experienceInYear}
                 options={experienceInYearOptions2}
                 onChange={e => {
-                  changeExperienceInYearStatus(e.target.value);
                   return handleState('experienceInYear')(e.target.value);
                 }}
               />
