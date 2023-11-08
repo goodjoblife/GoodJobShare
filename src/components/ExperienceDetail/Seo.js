@@ -47,6 +47,7 @@ const SeoStructureData = ({ experience }) => {
     author: {
       '@type': 'Organization',
       name: 'GoodJob 職場透明化運動',
+      url: formatCanonicalPath('/'),
     },
     publisher: {
       '@type': 'Organization',
