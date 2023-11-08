@@ -15,6 +15,11 @@ const toInterspersedLinkNodes = R.compose(
   )),
 );
 
+const formatItem = R.compose(
+  formatCanonicalPath,
+  R.when(R.is(Object), R.prop('pathname')),
+);
+
 const StructureData = ({ items }) => {
   const data = {
     '@context': 'https://schema.org',
@@ -23,7 +28,7 @@ const StructureData = ({ items }) => {
       '@type': 'ListItem',
       position: i + 1,
       name: label,
-      item: formatCanonicalPath(to),
+      item: formatItem(to),
     })),
   };
 
