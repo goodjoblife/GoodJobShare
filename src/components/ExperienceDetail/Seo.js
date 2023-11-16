@@ -59,17 +59,14 @@ const getStructureData = ({ experience }) => {
     },
     description,
   };
-  return <SeoStructure data={data} />;
+  return data;
 };
 
 const Seo = ({ experienceState, experience }) => {
   return (
     <Fragment>
       <SeoHelmet experienceState={experienceState} experience={experience} />
-      <SeoStructure
-        experienceState={experienceState}
-        experience={getStructureData({ experience })}
-      />
+      <SeoStructure data={getStructureData({ experience })} />
     </Fragment>
   );
 };
