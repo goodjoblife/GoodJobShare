@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Helmet from 'react-helmet';
-import serialize from 'serialize-javascript';
+import SeoStructure from 'common/Seo/SeoStructure';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
 import {
@@ -30,7 +30,7 @@ const SeoHelmet = ({ experience }) => {
   );
 };
 
-const SeoStructureData = ({ experience }) => {
+const getStructureData = ({ experience }) => {
   const id = experience.id;
   const title = metaTitleSelector(experience);
   const description = metaDescriptionSelector(experience);
@@ -58,21 +58,16 @@ const SeoStructureData = ({ experience }) => {
     },
     description,
   };
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: serialize(data) }}
-    />
-  );
+  return <SeoStructure data={data} />;
 };
 
 const Seo = ({ experienceState, experience }) => {
   return (
     <Fragment>
       <SeoHelmet experienceState={experienceState} experience={experience} />
-      <SeoStructureData
+      <SeoStructure
         experienceState={experienceState}
-        experience={experience}
+        experience={getStructureData({ experience })}
       />
     </Fragment>
   );

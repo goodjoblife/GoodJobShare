@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 import styles from './BreadCrumb.module.css';
 import { Link } from 'react-router-dom';
-import serialize from 'serialize-javascript';
+import SeoStructure from '../Seo/SeoStructure';
 import { formatCanonicalPath } from 'utils/helmetHelper';
 
 const toInterspersedLinkNodes = R.compose(
@@ -20,29 +20,20 @@ const formatItem = R.compose(
   R.when(R.is(Object), R.prop('pathname')),
 );
 
-const StructureData = ({ items }) => {
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: items.map(({ label, to }, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      name: label,
-      item: formatItem(to),
-    })),
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: serialize(data) }}
-    />
-  );
-};
+const getStructureData = ({ items }) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map(({ label, to }, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: label,
+    item: formatItem(to),
+  })),
+});
 
 const BreadCrumb = ({ data }) => (
   <Fragment>
-    <StructureData items={data}></StructureData>
+    <SeoStructure data={getStructureData({ items: data })} />
     <div className={styles.breadCrumb}>{toInterspersedLinkNodes(data)}</div>
   </Fragment>
 );
