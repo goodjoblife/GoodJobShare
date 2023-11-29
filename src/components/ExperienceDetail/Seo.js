@@ -47,7 +47,7 @@ const getStructureData = ({ experience }) => {
     author: {
       '@type': 'Organization',
       name: 'GoodJob 職場透明化運動',
-      url: formatCanonicalPath('/'),
+      url: formatCanonicalPath('/about'),
     },
     publisher: {
       '@type': 'Organization',
