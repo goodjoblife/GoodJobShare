@@ -1,3 +1,4 @@
+import { formatSimpleDate } from 'utils/dateUtil';
 import {
   pageTypeTranslation,
   tabTypeTranslation,
@@ -32,26 +33,16 @@ const generateTabTypeLayer = ({ pageType, pageName, tabType }) => ({
 });
 
 const generateTitleLayer = ({ pageType, experience }) => {
-  switch (pageType) {
-    case PAGE_TYPE.COMPANY:
-      return {
-        label: experience.job_title.name,
-        to: {
-          pathname: generatePath('/experiences/:id', { id: experience.id }),
-          state: { pageType },
-        },
-      };
-    case PAGE_TYPE.JOB_TITLE:
-      return {
-        label: experience.company.name,
-        to: {
-          pathname: generatePath('/experiences/:id', { id: experience.id }),
-          state: { pageType },
-        },
-      };
-    default:
-      return { label: '', to: '' };
-  }
+  const companyName = experience.company.name;
+  const jobTitle = experience.job_title.name;
+  const createdAt = formatSimpleDate(new Date(experience.created_at));
+  return {
+    label: `${companyName} ${jobTitle} 面試經驗 ${createdAt}`,
+    to: {
+      pathname: generatePath('/experiences/:id', { id: experience.id }),
+      state: { pageType },
+    },
+  };
 };
 
 export const generateBreadCrumbData = ({
