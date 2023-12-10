@@ -36,6 +36,7 @@ import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
 
 import { createSalaryWorkTime } from 'actions/timeAndSalary';
+import { sendEvent } from 'utils/hotjarUtil';
 
 const defaultForm = {
   company: '',
@@ -102,6 +103,9 @@ const TimeSalaryForm = () => {
     ReactPixel.track('InitiateCheckout', {
       content_category: PIXEL_CONTENT_CATEGORY.VISIT_TIME_AND_SALARY_FORM,
     });
+
+    // send hotjar event for recording
+    sendEvent('enter_salary_form');
   }, [location]);
 
   const {
