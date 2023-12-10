@@ -31,6 +31,7 @@ import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
+import { sendEvent } from 'utils/hotjarUtil';
 
 const createSection = id => (
   subtitle,
@@ -154,6 +155,9 @@ class WorkExperiencesForm extends React.Component {
     ReactPixel.track('InitiateCheckout', {
       content_category: PIXEL_CONTENT_CATEGORY.VISIT_WORK_EXPERIENCE_FORM,
     });
+
+    // send hotjar event for recording
+    sendEvent('enter_work_form');
   }
 
   onSubmit() {
