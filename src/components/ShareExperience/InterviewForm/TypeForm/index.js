@@ -1,4 +1,4 @@
-import React, { useCallback, Fragment, useState } from 'react';
+import React, { useCallback, Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   isNil,
@@ -69,6 +69,7 @@ import {
   within,
   isValidSalary,
 } from './utils';
+import { sendEvent } from 'utils/hotjarUtil';
 
 const header = <Header title="請輸入你的一份面試經驗" />;
 const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
@@ -373,6 +374,17 @@ const TypeForm = ({ open, onClose }) => {
 
   const experienceCount = useExperienceCount();
   const salaryCount = useSalaryWorkTimeCount();
+
+  useEffect(() => {
+    // send hotjar event for recording
+    sendEvent('enter_interview_form');
+
+    // send to GA for tracking conversion rate
+    ReactGA.event({
+      category: GA_CATEGORY.SHARE_INTERVIEW,
+      action: GA_ACTION.START_WRITING,
+    });
+  }, []);
 
   return (
     <Fragment>
