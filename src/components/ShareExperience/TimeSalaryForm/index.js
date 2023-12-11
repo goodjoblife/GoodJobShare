@@ -106,6 +106,12 @@ const TimeSalaryForm = () => {
 
     // send hotjar event for recording
     sendEvent('enter_salary_form');
+
+    // send to GA for tracking conversion rate
+    ReactGA.event({
+      category: GA_CATEGORY.SHARE_TIME_SALARY,
+      action: GA_ACTION.START_WRITING,
+    });
   }, [location]);
 
   const {

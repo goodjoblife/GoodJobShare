@@ -29,8 +29,6 @@ import { LS_INTERVIEW_FORM_KEY } from 'constants/localStorageKey';
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
 
-import { sendEvent } from 'utils/hotjarUtil';
-
 const createSection = id => (
   subtitle,
   placeholder = '',
@@ -148,9 +146,6 @@ class InterviewForm extends React.Component {
     ReactPixel.track('InitiateCheckout', {
       content_category: PIXEL_CONTENT_CATEGORY.VISIT_INTERVIEW_FORM,
     });
-
-    // send hotjar event for recording
-    sendEvent('enter_interview_form');
   }
 
   onSubmit() {
