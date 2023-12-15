@@ -376,15 +376,17 @@ const TypeForm = ({ open, onClose }) => {
   const salaryCount = useSalaryWorkTimeCount();
 
   useEffect(() => {
-    // send hotjar event for recording
-    sendEvent('enter_interview_form');
+    if (open) {
+      // send hotjar event for recording
+      sendEvent('enter_interview_form');
 
-    // send to GA for tracking conversion rate
-    ReactGA.event({
-      category: GA_CATEGORY.SHARE_INTERVIEW,
-      action: GA_ACTION.START_WRITING,
-    });
-  }, []);
+      // send to GA for tracking conversion rate
+      ReactGA.event({
+        category: GA_CATEGORY.SHARE_INTERVIEW,
+        action: GA_ACTION.START_WRITING,
+      });
+    }
+  }, [open]);
 
   return (
     <Fragment>
