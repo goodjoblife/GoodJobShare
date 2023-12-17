@@ -142,7 +142,8 @@ describe('title test', () => {
 describe('singleSection and sections tests', () => {
   const normalSection = {
     subtitle: 'test',
-    content: 'test',
+    content:
+      '一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十',
   };
 
   const sectionTooLongSubtitle = {
@@ -305,7 +306,8 @@ describe('interviewFormCheck tests', () => {
       sections: {
         1: {
           subtitle: 'test',
-          content: 'test',
+          content:
+            '一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十',
         },
       },
       interviewQas: {
@@ -333,7 +335,8 @@ describe('interviewFormCheck tests', () => {
       sections: {
         1: {
           subtitle: 'test',
-          content: 'test',
+          content:
+            '一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十',
         },
       },
     };
