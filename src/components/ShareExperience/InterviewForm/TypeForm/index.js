@@ -348,11 +348,13 @@ const TypeForm = ({ open, onClose }) => {
         const goalValue = calcInterviewExperienceValue(body, 59);
 
         setSubmitStatus('submitting');
-        await dispatch(createInterviewExperience({ body }));
+        const resBody = await dispatch(createInterviewExperience({ body }));
+        const experienceId = resBody.createInterviewExperience.experience.id;
         ReactGA.event({
           category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
           action: GA_ACTION.UPLOAD_SUCCESS,
           value: goalValue,
+          label: experienceId,
         });
         ReactPixel.track('Purchase', {
           value: 1,

@@ -234,6 +234,7 @@ class InterviewForm extends React.Component {
             category: GA_CATEGORY.SHARE_INTERVIEW_3_STEPS,
             action: GA_ACTION.UPLOAD_SUCCESS,
             value: goalValue,
+            label: experienceId,
           });
           ReactPixel.track('Purchase', {
             value: 1,
@@ -248,7 +249,7 @@ class InterviewForm extends React.Component {
                 setTimeout(() => {
                   // add delay to more ensure event being sent to GA.
                   window.location.replace(`/experiences/${experienceId}`);
-                }, 2000);
+                }, 1500);
               }}
             />
           );

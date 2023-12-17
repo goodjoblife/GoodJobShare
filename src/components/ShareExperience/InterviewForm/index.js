@@ -167,6 +167,7 @@ class InterviewForm extends React.Component {
           ReactGA.event({
             category: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
             action: GA_ACTION.UPLOAD_SUCCESS,
+            label: experienceId,
           });
           ReactPixel.track('Purchase', {
             value: 1,
@@ -180,7 +181,7 @@ class InterviewForm extends React.Component {
                 // add delay to more ensure event being sent to GA.
                 setTimeout(() => {
                   window.location.replace(`/experiences/${experienceId}`);
-                }, 2000);
+                }, 1500);
               }}
             />
           );
