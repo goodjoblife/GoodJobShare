@@ -31,6 +31,7 @@ import FailFeedback from '../common/FailFeedback';
 
 const createSection = id => (
   subtitle,
+  content = '',
   placeholder = '',
   titlePlaceholder = '段落標題，例：面試方式',
 ) => {
@@ -39,13 +40,14 @@ const createSection = id => (
     subtitle,
     placeholder,
     titlePlaceholder,
-    content: '',
+    content,
     isSubtitleEditable: false,
   };
   if (subtitle === '自訂段落' || !subtitle) {
     return {
       ...section,
-      subtitle: '',
+      subtitle,
+      content,
       isSubtitleEditable: true,
       placeholder,
       titlePlaceholder,
@@ -70,6 +72,7 @@ let idCounter = idGenerator();
 const isBlockRemovable = blocks => R.length(R.keys(blocks)) > 1;
 
 const firstSectionId = idCounter();
+const secondSectionId = idCounter();
 const firstQaId = idCounter();
 
 const defaultForm = {
@@ -87,7 +90,14 @@ const defaultForm = {
   overallRating: 0,
   title: '面試經驗分享',
   sections: {
-    [firstSectionId]: createBlock.sections(firstSectionId)(),
+    [firstSectionId]: createBlock.sections(firstSectionId)(
+      '面試過程',
+      '第一次面試：\n第二次面試：\n工作環境：',
+    ),
+    [secondSectionId]: createBlock.sections(secondSectionId)(
+      '給其他面試者的中肯建議',
+      '如何準備面試：\n是否推薦此份工作：\n其他注意事項：',
+    ),
   },
   interviewQas: {
     [firstQaId]: createBlock.interviewQas(firstQaId)(),
