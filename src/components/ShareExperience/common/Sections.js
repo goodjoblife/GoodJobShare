@@ -31,7 +31,7 @@ const Sections = ({
       ))}
       {isWarning ? (
         <p className={cn(styles.warning__wording, 'pS')}>
-          需至少填寫一個段落，且內文需超過 50 字
+          需至少填寫一個段落，且每個段落內文需超過 50 字
         </p>
       ) : null}
     </div>
