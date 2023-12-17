@@ -348,11 +348,13 @@ const TypeForm = ({ open, onClose }) => {
         const goalValue = calcInterviewExperienceValue(body, 59);
 
         setSubmitStatus('submitting');
-        await dispatch(createInterviewExperience({ body }));
+        const resBody = await dispatch(createInterviewExperience({ body }));
+        const experienceId = resBody.createInterviewExperience.experience.id;
         ReactGA.event({
-          category: GA_CATEGORY.SHARE_INTERVIEW,
+          category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
           action: GA_ACTION.UPLOAD_SUCCESS,
           value: goalValue,
+          label: experienceId,
         });
         ReactPixel.track('Purchase', {
           value: 1,
@@ -363,7 +365,7 @@ const TypeForm = ({ open, onClose }) => {
       } catch (error) {
         setErrorMessage(error.message);
         ReactGA.event({
-          category: GA_CATEGORY.SHARE_INTERVIEW,
+          category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
           action: GA_ACTION.UPLOAD_FAIL,
         });
         setSubmitStatus('error');
@@ -382,7 +384,7 @@ const TypeForm = ({ open, onClose }) => {
 
       // send to GA for tracking conversion rate
       ReactGA.event({
-        category: GA_CATEGORY.SHARE_INTERVIEW,
+        category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
         action: GA_ACTION.START_WRITING,
       });
     }

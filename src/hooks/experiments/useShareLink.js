@@ -4,16 +4,16 @@ import { path } from 'ramda';
 
 const ACTIONS = [
   {
+    prob: 0.33,
+    type: 'INTERVIEW_FORM_ONE_PAGE',
+  },
+  {
+    prob: 0.33,
+    type: 'INTERVIEW_FORM_3_STEPS',
+  },
+  {
     prob: 0.34,
-    type: 'INTERVIEW_FORM',
-  },
-  {
-    prob: 0.33,
-    type: 'SALARY_FORM',
-  },
-  {
-    prob: 0.33,
-    type: 'WORK_FORM',
+    type: 'INTERVIEW_FORM_TYPE_FORM',
   },
 ];
 
@@ -31,7 +31,15 @@ const randomAction = actions => {
 
 export default companyName => {
   const action = randomAction(ACTIONS);
-  if (action.type === 'INTERVIEW_FORM') {
+  if (action.type === 'INTERVIEW_FORM_ONE_PAGE') {
+    return `/share/interview-one-page`;
+  } else if (action.type === 'INTERVIEW_FORM_3_STEPS') {
+    if (companyName) {
+      return `/share/interview?companyName=${companyName}`;
+    } else {
+      return '/share/interview/step1';
+    }
+  } else if (action.type === 'INTERVIEW_FORM_TYPE_FORM') {
     if (companyName) {
       return { state: { share: 'interview', companyName } };
     } else {

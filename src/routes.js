@@ -37,6 +37,7 @@ import PlanPage from './components/PlanPage';
 import BuyResultPage from './components/BuyResultPage';
 import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
 import SubscriptionsPage from './components/Me/SubscriptionsPage';
+import InterviewFormContainer from './containers/ShareExperience/InterviewFormContainer';
 
 const routes = [
   {
@@ -94,6 +95,11 @@ const routes = [
             ),
           },
         ],
+      },
+      {
+        path: '/share/interview-one-page',
+        exact: true,
+        component: InterviewFormContainer,
       },
       {
         path: '/share/time-and-salary',
