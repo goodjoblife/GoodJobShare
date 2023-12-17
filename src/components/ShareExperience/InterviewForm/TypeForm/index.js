@@ -350,7 +350,7 @@ const TypeForm = ({ open, onClose }) => {
         setSubmitStatus('submitting');
         await dispatch(createInterviewExperience({ body }));
         ReactGA.event({
-          category: GA_CATEGORY.SHARE_INTERVIEW,
+          category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
           action: GA_ACTION.UPLOAD_SUCCESS,
           value: goalValue,
         });
@@ -363,7 +363,7 @@ const TypeForm = ({ open, onClose }) => {
       } catch (error) {
         setErrorMessage(error.message);
         ReactGA.event({
-          category: GA_CATEGORY.SHARE_INTERVIEW,
+          category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
           action: GA_ACTION.UPLOAD_FAIL,
         });
         setSubmitStatus('error');
@@ -382,7 +382,7 @@ const TypeForm = ({ open, onClose }) => {
 
       // send to GA for tracking conversion rate
       ReactGA.event({
-        category: GA_CATEGORY.SHARE_INTERVIEW,
+        category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
         action: GA_ACTION.START_WRITING,
       });
     }

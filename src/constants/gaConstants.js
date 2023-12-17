@@ -1,5 +1,8 @@
 export const GA_CATEGORY = {
   SHARE_INTERVIEW: 'share_interview',
+  SHARE_INTERVIEW_ONE_PAGE: 'share_interview_one_page',
+  SHARE_INTERVIEW_3_STEPS: 'share_interview_3_steps',
+  SHARE_INTERVIEW_TYPE_FORM: 'share_interview_type_form',
   SHARE_TIME_SALARY: 'share_time_salary',
   SHARE_WORK: 'share_work',
   FORM_TIME: 'form_time',

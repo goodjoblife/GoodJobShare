@@ -143,6 +143,10 @@ class InterviewForm extends React.Component {
       ...defaultState,
     });
 
+    ReactGA.event({
+      category: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
+      action: GA_ACTION.START_WRITING,
+    });
     ReactPixel.track('InitiateCheckout', {
       content_category: PIXEL_CONTENT_CATEGORY.VISIT_INTERVIEW_FORM,
     });
@@ -158,10 +162,10 @@ class InterviewForm extends React.Component {
       });
       return p.then(
         response => {
-          const experienceId = response.experience._id;
+          const experienceId = response.createInterviewExperience.experience.id;
 
           ReactGA.event({
-            category: GA_CATEGORY.SHARE_INTERVIEW,
+            category: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
             action: GA_ACTION.UPLOAD_SUCCESS,
           });
           ReactPixel.track('Purchase', {
@@ -172,15 +176,18 @@ class InterviewForm extends React.Component {
           });
           return () => (
             <SuccessFeedback
-              buttonClick={() =>
-                window.location.replace(`/experiences/${experienceId}`)
-              }
+              buttonClick={() => {
+                // add delay to more ensure event being sent to GA.
+                setTimeout(() => {
+                  window.location.replace(`/experiences/${experienceId}`);
+                }, 2000);
+              }}
             />
           );
         },
         error => {
           ReactGA.event({
-            category: GA_CATEGORY.SHARE_INTERVIEW,
+            category: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
             action: GA_ACTION.UPLOAD_FAIL,
           });
 
