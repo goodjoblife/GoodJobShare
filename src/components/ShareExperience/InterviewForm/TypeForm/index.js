@@ -184,9 +184,9 @@ const questions = [
       wordCount,
     ),
     warning: value =>
-      `最少 ${COURSE_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
+      `至少 ${COURSE_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
     footnote: value =>
-      `最少 ${COURSE_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
+      `至少 ${COURSE_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
     header: renderCompanyJobTitleHeader,
   },
   {
@@ -202,9 +202,9 @@ const questions = [
       wordCount,
     ),
     warning: value =>
-      `最少 ${SUGGESTIONS_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
+      `至少 ${SUGGESTIONS_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
     footnote: value =>
-      `最少 ${SUGGESTIONS_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
+      `至少 ${SUGGESTIONS_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
     header: renderCompanyJobTitleHeader,
   },
   {

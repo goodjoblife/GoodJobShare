@@ -43,7 +43,7 @@ const sectionSubtitle = R.compose(
 );
 
 const sectionContent = R.compose(
-  R.allPass([lteLength(5000), gtLength(50)]),
+  R.allPass([lteLength(5000), gteLength(50)]),
   R.prop('content'),
 );
 
