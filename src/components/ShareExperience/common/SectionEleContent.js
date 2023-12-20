@@ -68,7 +68,9 @@ const SectionEleContent = ({
           minHeight: '40px',
         }}
       />
-      <div className={styles.wordCount}>最少 {contentMinLength} 字</div>
+      <div className={styles.wordCount}>
+        至少 {contentMinLength} 字，現在 {section.content.length} 字
+      </div>
       {isWarning ? (
         <div
           style={{
