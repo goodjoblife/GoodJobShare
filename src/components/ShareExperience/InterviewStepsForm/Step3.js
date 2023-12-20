@@ -107,7 +107,7 @@ class Step3 extends React.Component {
             key={section.id}
             section={section}
             isSubtitleEditable
-            contentMinLength={30}
+            contentMinLength={50}
             editSection={editSection}
             removeSection={removeSection}
             submitted={state.submitted}
