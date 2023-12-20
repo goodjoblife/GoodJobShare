@@ -49,6 +49,7 @@ const SectionEle = ({
         minHeight: '40px',
       }}
     />
+    <div className={styles.wordCount}>至少 50 字，現在 {content.length} 字</div>
   </div>
 );
 
