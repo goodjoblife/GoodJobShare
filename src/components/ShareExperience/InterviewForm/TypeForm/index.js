@@ -70,6 +70,9 @@ import {
   isValidSalary,
 } from './utils';
 import { sendEvent } from 'utils/hotjarUtil';
+import { getUserPseudoId } from 'utils/GAUtils';
+
+import { GA_MEASUREMENT_ID } from '../../../../config';
 
 const header = <Header title="請輸入你的一份面試經驗" />;
 const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
@@ -344,6 +347,11 @@ const TypeForm = ({ open, onClose }) => {
           return;
         }
         const body = bodyFromDraft(draft);
+        const ga_user_pseudo_id = await getUserPseudoId(GA_MEASUREMENT_ID);
+        body.extra = {
+          form_type: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
+          ga_user_pseudo_id,
+        };
         // section 的標題與預設文字 = 4 + 11 + 19 + 25 個字
         const goalValue = calcInterviewExperienceValue(body, 59);
 

@@ -4,15 +4,15 @@ import { path } from 'ramda';
 
 const ACTIONS = [
   {
-    prob: 0.33,
+    prob: 0.3333,
     type: 'INTERVIEW_FORM_ONE_PAGE',
   },
   {
-    prob: 0.33,
+    prob: 0.3333,
     type: 'INTERVIEW_FORM_3_STEPS',
   },
   {
-    prob: 0.34,
+    prob: 0.3334,
     type: 'INTERVIEW_FORM_TYPE_FORM',
   },
 ];
