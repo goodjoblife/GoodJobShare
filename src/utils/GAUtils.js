@@ -7,7 +7,7 @@
  * @param {*} ga_measurement_id
  * @returns
  */
-export const getUserPseudoId = async ga_measurement_id => {
+export const getUserPseudoId = ga_measurement_id => {
   return new Promise((resolve, reject) => {
     try {
       if (typeof window !== 'undefined' && typeof window.gtag !== 'undefined') {
