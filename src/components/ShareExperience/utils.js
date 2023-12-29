@@ -202,7 +202,7 @@ export const getCampaignTimeAndSalaryForm = (
   ...getCampaignExtendedForm(extraFields, defaultContent)(state),
 });
 
-export const portInterviewFormToRequestFormat = interviewForm => {
+export const portInterviewFormToRequestFormat = (interviewForm, extra) => {
   let body = {
     ...interviewForm,
     interviewTime: {
@@ -229,7 +229,7 @@ export const portInterviewFormToRequestFormat = interviewForm => {
   ])(body);
 
   body = transferKeyToSnakecase(body);
-
+  body.extra = extra;
   return body;
 };
 

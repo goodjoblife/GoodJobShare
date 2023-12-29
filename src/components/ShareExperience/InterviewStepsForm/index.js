@@ -22,6 +22,7 @@ import {
 
 import StaticHelmet from 'common/StaticHelmet';
 import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
+import { getUserPseudoId } from 'utils/GAUtils';
 import {
   INVALID,
   INTERVIEW_FORM_ORDER,
@@ -34,6 +35,8 @@ import { LS_INTERVIEW_STEPS_FORM_KEY } from 'constants/localStorageKey';
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
 import RouteWithSubRoutes from '../../route';
+
+import { GA_MEASUREMENT_ID } from '../../../config';
 
 function isExpired(ts) {
   return Date.now() - ts > 1000 * 60 * 60 * 24 * 3; // 3 days
@@ -218,8 +221,14 @@ class InterviewForm extends React.Component {
 
     if (valid) {
       localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
+      const ga_user_pseudo_id = await getUserPseudoId(GA_MEASUREMENT_ID);
+      const extra = {
+        form_type: GA_CATEGORY.SHARE_INTERVIEW_3_STEPS,
+        ga_user_pseudo_id,
+      };
       const body = portInterviewFormToRequestFormat(
         getInterviewForm(this.state),
+        extra,
       );
       // section 的標題與預設文字 = 4 + 11 + 19 + 25 個字
       goalValue = calcInterviewExperienceValue(body, 59);

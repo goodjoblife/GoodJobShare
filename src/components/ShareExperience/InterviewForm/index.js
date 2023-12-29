@@ -26,8 +26,11 @@ import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 import { LS_INTERVIEW_FORM_KEY } from 'constants/localStorageKey';
 
+import { getUserPseudoId } from 'utils/GAUtils';
+
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
+import { GA_MEASUREMENT_ID } from '../../../config';
 
 const createSection = id => (
   subtitle,
@@ -162,64 +165,70 @@ class InterviewForm extends React.Component {
     });
   }
 
-  onSubmit() {
+  onSubmit = async () => {
     const valid = interviewFormCheck(getInterviewForm(this.state));
 
     if (valid) {
       localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
-      const p = this.props.createInterviewExperience({
-        body: portInterviewFormToRequestFormat(getInterviewForm(this.state)),
-      });
-      return p.then(
-        response => {
-          const experienceId = response.createInterviewExperience.experience.id;
+      const ga_user_pseudo_id = await getUserPseudoId(GA_MEASUREMENT_ID);
+      const extra = {
+        form_type: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
+        ga_user_pseudo_id,
+      };
 
-          ReactGA.event({
-            category: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
-            action: GA_ACTION.UPLOAD_SUCCESS,
-            label: experienceId,
-          });
-          ReactPixel.track('Purchase', {
-            value: 1,
-            currency: 'TWD',
-            content_category:
-              PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
-          });
-          return () => (
-            <SuccessFeedback
-              buttonClick={() => {
-                // add delay to more ensure event being sent to GA.
-                setTimeout(() => {
-                  window.location.replace(`/experiences/${experienceId}`);
-                }, 1500);
-              }}
-            />
-          );
-        },
-        error => {
-          ReactGA.event({
-            category: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
-            action: GA_ACTION.UPLOAD_FAIL,
-          });
+      try {
+        const response = await this.props.createInterviewExperience({
+          body: portInterviewFormToRequestFormat(
+            getInterviewForm(this.state),
+            extra,
+          ),
+        });
+        const experienceId = response.createInterviewExperience.experience.id;
 
-          return ({ buttonClick }) => (
-            <FailFeedback info={error.message} buttonClick={buttonClick} />
-          );
-        },
-      );
+        ReactGA.event({
+          category: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
+          action: GA_ACTION.UPLOAD_SUCCESS,
+          label: experienceId,
+        });
+        ReactPixel.track('Purchase', {
+          value: 1,
+          currency: 'TWD',
+          content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
+        });
+        return () => (
+          <SuccessFeedback
+            buttonClick={() => {
+              // add delay to more ensure event being sent to GA.
+              setTimeout(() => {
+                window.location.replace(`/experiences/${experienceId}`);
+              }, 1500);
+            }}
+          />
+        );
+      } catch (error) {
+        ReactGA.event({
+          category: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
+          action: GA_ACTION.UPLOAD_FAIL,
+        });
+
+        return ({ buttonClick }) => (
+          <FailFeedback info={error.message} buttonClick={buttonClick} />
+        );
+      }
+    } else {
+      this.handleState('submitted')(true);
+      const topInvalidElement = this.getTopInvalidElement();
+      if (topInvalidElement !== null) {
+        scroller.scrollTo(topInvalidElement, {
+          duration: 1000,
+          delay: 100,
+          offset: -100,
+          smooth: true,
+        });
+      }
+      return Promise.reject();
     }
-    this.handleState('submitted')(true);
-    const topInvalidElement = this.getTopInvalidElement();
-    if (topInvalidElement !== null) {
-      scroller.scrollTo(topInvalidElement, {
-        duration: 1000,
-        delay: 100,
-        offset: -100,
-        smooth: true,
-      });
-    }
-    return Promise.reject();
-  }
+  };
 
   getTopInvalidElement = () => {
     const order = INTERVIEW_FORM_ORDER;
