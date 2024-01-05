@@ -1,25 +1,24 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { compose, setStatic } from 'recompose';
+import React, { useEffect, useMemo } from 'react';
+import { slice, head } from 'ramda';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import qs from 'qs';
 import Loading from 'common/Loader';
 import { P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
-import { querySelector, pathSelector } from 'common/routing/selectors';
+import { querySelector } from 'common/routing/selectors';
 import Pagination from 'common/Pagination';
+import { isFetching, isFetched, isUnfetched } from 'constants/status';
+import { pageType } from 'constants/companyJobTitle';
+import { useQuery } from 'hooks/routing';
+import { queryKeyword, keywordMinLength } from 'actions/timeAndSalarySearch';
 import {
-  queryKeyword,
-  keywordMinLength,
-} from '../../../actions/timeAndSalarySearch';
-import { isFetching, isFetched } from '../../../constants/status';
-import {
-  searchCriteriaSelector,
-  searchKeywordSelector,
+  keywordSelector,
   pageSelector,
-} from '../common/selectors';
-import { pageType } from '../../../constants/companyJobTitle';
-import { validatePage, validateSearchKeyword } from '../common/validators';
+  dataSelector,
+  statusSelector,
+} from './selectors';
+import * as urlBuilder from './urlBuilder';
 import WorkingHourBlock from './WorkingHourBlock';
 import Helmet from './Helmet';
 import styles from './SearchScreen.module.css';
@@ -36,119 +35,77 @@ function getTitle(keyword) {
   }
 }
 
-class SearchScreen extends Component {
-  static propTypes = {
-    data: ImmutablePropTypes.list,
-    status: PropTypes.string,
-    // eslint-disable-next-line react/no-unused-prop-types
-    match: PropTypes.shape({
-      path: PropTypes.string.isRequired,
-      params: PropTypes.object.isRequired,
-    }),
-    queryKeyword: PropTypes.func,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-  };
-
-  componentDidMount() {
-    const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
-    this.props
-      .queryKeyword({ keyword })
-      .then(() => this.redirectOnSingleResult());
+function getLinkForData(query, data) {
+  if (data.pageType === pageType.COMPANY) {
+    return urlBuilder.companyPageOverview(data.name, 1, query);
+  } else if (data.pageType === pageType.JOB_TITLE) {
+    return urlBuilder.jobTitlePageOverview(data.name, 1, query);
   }
-
-  componentDidUpdate(prevProps) {
-    if (
-      pathSelector(prevProps) !== pathSelector(this.props) ||
-      searchCriteriaSelector(prevProps) !==
-        searchCriteriaSelector(this.props) ||
-      searchKeywordSelector(prevProps) !== searchKeywordSelector(this.props)
-    ) {
-      const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
-      this.props
-        .queryKeyword({ keyword })
-        .then(() => this.redirectOnSingleResult());
-    }
-  }
-
-  redirectOnSingleResult() {
-    if (this.props.data.size === 1) {
-      const firstData = this.props.data.get(0).toJS();
-      this.props.history.replace(this.getLinkForData(firstData));
-    }
-  }
-
-  getLinkForData(data) {
-    if (data.pageType === pageType.COMPANY) {
-      return `/companies/${encodeURIComponent(
-        data.name,
-      )}/overview${qs.stringify(
-        { ...querySelector(this.props), p: 1 },
-        { addQueryPrefix: true },
-      )}`;
-    } else if (data.pageType === pageType.JOB_TITLE) {
-      return `/job-titles/${encodeURIComponent(
-        data.name,
-      )}/overview${qs.stringify(
-        { ...querySelector(this.props), p: 1 },
-        { addQueryPrefix: true },
-      )}`;
-    }
-    return '';
-  }
-
-  render() {
-    const { status } = this.props;
-    const page = validatePage(pageSelector(this.props));
-    const pageSize = 10;
-    const totalNum = this.props.data.size;
-
-    const keyword = validateSearchKeyword(searchKeywordSelector(this.props));
-    const title = getTitle(keyword);
-
-    const queryParams = querySelector(this.props);
-
-    const raw = this.props.data
-      .slice((page - 1) * pageSize, page * pageSize)
-      .toJS();
-
-    return (
-      <section className={styles.searchResult}>
-        <Helmet keyword={keyword} page={page} />
-        <h2 className={styles.heading}>{title}</h2>
-        {isFetching(status) && <Loading size="s" />}
-        {isFetched(status) && raw.length === 0 && (
-          <P size="l" bold className={styles.searchNoResult}>
-            尚未有 「{keyword} 」的資料
-          </P>
-        )}
-        {raw.map((o, i) => (
-          <WorkingHourBlock key={i} data={o} to={this.getLinkForData(o)} />
-        ))}
-        <Pagination
-          totalCount={totalNum}
-          unit={pageSize}
-          currentPage={page}
-          createPageLinkTo={toPage =>
-            qs.stringify(
-              { ...queryParams, p: toPage },
-              { addQueryPrefix: true },
-            )
-          }
-        />
-        <FanPageBlock className={styles.fanPageBlock} />
-      </section>
-    );
-  }
+  return '';
 }
 
-const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const keyword = validateSearchKeyword(searchKeywordSelector(props));
+const SearchScreen = () => {
+  const history = useHistory();
+  const dispath = useDispatch();
+  const query = useQuery();
+  const keyword = useMemo(() => keywordSelector(query), [query]);
+  const page = useMemo(() => pageSelector(query), [query]);
+  const data = useSelector(dataSelector(keyword));
+  const status = useSelector(statusSelector(keyword));
 
+  useEffect(() => {
+    if (isUnfetched(status)) {
+      dispath(queryKeyword({ keyword }));
+    }
+  }, [dispath, keyword, status]);
+
+  const pageSize = 10;
+  const totalNum = data.length;
+  const title = getTitle(keyword);
+  const raw = slice((page - 1) * pageSize, page * pageSize)(data);
+
+  if (data.length === 1) {
+    const firstData = head(data);
+    history.replace(getLinkForData(query, firstData));
+    return null;
+  }
+
+  return (
+    <section className={styles.searchResult}>
+      <Helmet keyword={keyword} page={page} />
+      <h2 className={styles.heading}>{title}</h2>
+      {isFetching(status) && <Loading size="s" />}
+      {isFetched(status) && raw.length === 0 && (
+        <P size="l" bold className={styles.searchNoResult}>
+          尚未有 「{keyword} 」的資料
+        </P>
+      )}
+      {raw.map((o, i) => (
+        <WorkingHourBlock
+          key={i}
+          pageType={o.pageType}
+          name={o.name}
+          to={getLinkForData(query, o)}
+          dataCount={o.salary_work_time_statistics.count}
+        />
+      ))}
+      <Pagination
+        totalCount={totalNum}
+        unit={pageSize}
+        currentPage={page}
+        createPageLinkTo={toPage =>
+          qs.stringify({ ...query, p: toPage }, { addQueryPrefix: true })
+        }
+      />
+      <FanPageBlock className={styles.fanPageBlock} />
+    </section>
+  );
+};
+
+SearchScreen.fetchData = ({ store: { dispatch }, ...props }) => {
+  const query = querySelector(props);
+  const keyword = keywordSelector(query);
   return dispatch(queryKeyword({ keyword }));
-});
+};
 
-const hoc = compose(ssr);
-
-export default hoc(SearchScreen);
+export default SearchScreen;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import subscribeValidation from 'common/subscribeValidation';
 
 import ButtonAdd from 'common/button/ButtonAdd';
-import { Comment2 } from 'common/icons';
+import Comment2 from 'common/icons/Comment2';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 
 import Title from '../../common/Title';
@@ -18,7 +18,7 @@ import {
   sections as sectionsValidator,
 } from '../formCheck';
 
-import { TITLE, SECTIONS } from '../../../../constants/formElements';
+import { TITLE, SECTIONS } from 'constants/formElements';
 
 const TitleWithValidation = subscribeValidation(
   Title,

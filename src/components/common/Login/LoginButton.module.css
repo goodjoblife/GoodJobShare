@@ -1,0 +1,12 @@
+.btn {
+  font-size: 0.95em;
+  height: 40px;
+  width: 192px;
+
+  &Fb {
+    border-radius: 5px;
+    border: 1px solid #4267b2;
+    color: #4267b2;
+    text-align: center;
+  }
+}

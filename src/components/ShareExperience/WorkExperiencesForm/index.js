@@ -1,7 +1,7 @@
 import React from 'react';
 import R from 'ramda';
 import { scroller } from 'react-scroll';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
 import qs from 'qs';
 import { Heading } from 'common/base';
@@ -20,14 +20,14 @@ import {
 
 import { workExperiencesFormCheck } from './formCheck';
 
-import { LS_WORK_EXPERIENCES_FORM_KEY } from '../../../constants/localStorageKey';
+import { LS_WORK_EXPERIENCES_FORM_KEY } from 'constants/localStorageKey';
 
 import styles from './WorkExperiencesForm.module.css';
 
 import StaticHelmet from 'common/StaticHelmet';
-import { INVALID, WORK_FORM_ORDER } from '../../../constants/formElements';
-import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
-import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
+import { INVALID, WORK_FORM_ORDER } from 'constants/formElements';
+import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
+import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';

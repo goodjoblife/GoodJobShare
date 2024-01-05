@@ -7,9 +7,9 @@ import cn from 'classnames';
 import styles from './AnimatedPager.module.css';
 
 const AnimatedPager = ({ page, children, ...props }) => {
-  const [handleMeasureRef, { width: frameWidth }] = useMeasure();
+  const [handleRef, { width: frameWidth }] = useMeasure();
   return (
-    <div ref={handleMeasureRef} className={cn(styles.frame, props.className)}>
+    <div ref={handleRef} className={cn(styles.frame, props.className)}>
       {Children.map(children, ({ props: { children } }) => (
         <div
           className={styles.page}

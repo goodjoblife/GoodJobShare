@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import subscribeValidation from 'common/subscribeValidation';
-import { People } from 'common/icons';
+import People from 'common/icons/People';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 
 import FormGroup from '../../common/FormGroup';
@@ -22,7 +22,7 @@ import {
   jobTitle as jobTitleValidator,
 } from '../formCheck';
 
-import { COMPANY, REGION, JOB_TITLE } from '../../../../constants/formElements';
+import { COMPANY, REGION, JOB_TITLE } from 'constants/formElements';
 
 const CompanyQueryWithValidation = subscribeValidation(
   CompanyQuery,

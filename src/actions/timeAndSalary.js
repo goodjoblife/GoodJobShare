@@ -1,20 +1,24 @@
-import fetchingStatus, { isUnfetched } from '../constants/status';
+import fetchingStatus, { isUnfetched } from 'constants/status';
 import { tokenSelector } from '../selectors/authSelector';
+import {
+  postWorkings as postWorkingsApi,
+  fetchTimeAndSalaryCount as fetchTimeAndSalaryCountApi,
+} from 'apis/timeAndSalaryApi';
 
-export const SET_COUNT_DATA = '@@TIME_AND_SALARY/SET_COUNT_DATA';
+export const SET_SALARY_WORK_TIME_COUNT =
+  '@@TIME_AND_SALARY/SET_SALARY_WORK_TIME_COUNT';
 
 const setCountData = (count, status, error = null) => ({
-  type: SET_COUNT_DATA,
+  type: SET_SALARY_WORK_TIME_COUNT,
   count,
   status,
   error,
 });
 
-export const queryTimeAndSalaryCount = () => (dispatch, getState, { api }) => {
+export const queryTimeAndSalaryCount = () => (dispatch, getState) => {
   dispatch(setCountData(0, fetchingStatus.FETCHING));
 
-  return api.timeAndSalary
-    .fetchTimeAndSalaryCount()
+  return fetchTimeAndSalaryCountApi()
     .then(count => {
       dispatch(setCountData(count, fetchingStatus.FETCHED));
     })
@@ -28,21 +32,17 @@ export const queryTimeAndSalaryCountIfUnfetched = () => (
   dispatch,
   getState,
 ) => {
-  if (isUnfetched(getState().timeAndSalary.get('countStatus'))) {
+  if (isUnfetched(getState().timeAndSalary.countStatus)) {
     return dispatch(queryTimeAndSalaryCount());
   }
   return Promise.resolve();
 };
 
-export const createSalaryWorkTime = ({ body }) => (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const createSalaryWorkTime = ({ body }) => (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
 
-  return api.timeAndSalary.postWorkings({
+  return postWorkingsApi({
     body,
     token,
   });

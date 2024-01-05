@@ -59,29 +59,22 @@
       color: #424242;
     }
 
-    .salary {
-      svg {
-        margin-right: 7px;
-        width: 16px;
-        height: 16px;
-        fill: #adadad;
-      }
-
-      &.locked {
-        svg {
-          color: #ed0d5e;
-        }
-      }
-    }
-
+    .salary,
     .weekWorkTime,
     .recommendToOthers {
       margin-left: 35px;
+
       svg {
         margin-right: 7px;
         width: 16px;
         height: 16px;
         fill: #adadad;
+      }
+    }
+
+    .salary.locked {
+      svg {
+        color: #ed0d5e;
       }
     }
   }

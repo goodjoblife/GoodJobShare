@@ -1,106 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import cn from 'classnames';
-import ReactGA from 'react-ga';
-import { compose } from 'recompose';
+import ReactGA from 'react-ga4';
 import { Wrapper } from 'common/base';
-import { GjLogo, Glike } from 'common/icons';
+import GjLogo from 'common/icons/GjLogo.svg';
+import Glike from 'common/icons/Glike.svg';
 import PopoverToggle from 'common/PopoverToggle';
-import { withPermission } from 'common/permission-context';
+import useShareLink from 'hooks/experiments/useShareLink';
+import usePermission from 'hooks/usePermission';
+import { useAuthUser, useAuthUserEmailStatus, useIsLoggedIn } from 'hooks/auth';
+import { useLogin, useLogout } from 'hooks/login';
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 import Top from './Top';
 import EmailVerificationTop from './Top/EmailVerificationTop';
 import ProgressTop from './Top/ProgressTop';
 import Searchbar from './Searchbar';
+import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
+import emailStatusMap from 'constants/emailStatus';
 
-import authStatus from '../../../constants/authStatus';
-import { shareLink } from '../../../constants/dataProgress';
-import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
-import emailStatusMap from '../../../constants/emailStatus';
-import withModal from '../../TimeAndSalary/common/withModal';
-import LoginModal from '../../common/LoginModal';
+const onClickShareData = () => {
+  ReactGA.event({
+    category: GA_CATEGORY.HEADER,
+    action: GA_ACTION.CLICK_SHARE_DATA,
+  });
+};
 
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isNavOpen: false,
-    };
-    this.toggleNav = this.toggleNav.bind(this);
-    this.closeNav = this.closeNav.bind(this);
-    this.logout = this.logout.bind(this);
-    this.openLoginModal = this.openLoginModal.bind(this);
-    this.closeLoginModal = this.closeLoginModal.bind(this);
-    this.unlisten = () => {};
-  }
+const HeaderTop = () => {
+  const location = useLocation();
+  const emailStatus = useAuthUserEmailStatus();
+  const isEmailVerified = emailStatus === emailStatusMap.VERIFIED;
+  const isLoggedIn = useIsLoggedIn();
+  const shareLink = useShareLink();
 
-  componentDidMount() {
-    const { history } = this.props;
-    this.unlisten = history.listen(this.closeNav);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.auth.get('status') !== this.props.auth.get('status') &&
-      this.props.auth.get('status') === authStatus.CONNECTED
-    ) {
-      this.props.fetchPermission();
-    }
-  }
-
-  componentWillUnmount() {
-    this.unlisten();
-  }
-
-  onClickShareData = () => {
-    ReactGA.event({
-      category: GA_CATEGORY.HEADER,
-      action: GA_ACTION.CLICK_SHARE_DATA,
-    });
-  };
-
-  toggleNav() {
-    this.setState({
-      isNavOpen: !this.state.isNavOpen,
-    });
-  }
-
-  closeNav() {
-    this.setState({
-      isNavOpen: false,
-    });
-  }
-
-  openLoginModal() {
-    this.props.loginModal.setIsOpen(true);
-  }
-
-  closeLoginModal() {
-    this.props.loginModal.setIsOpen(false);
-  }
-
-  logout() {
-    const { logout } = this.props;
-    logout();
-  }
-
-  renderTop = () => {
-    const {
-      auth,
-      location: { pathname },
-    } = this.props;
-
-    const isLogin = auth.get('status') === authStatus.CONNECTED;
-    const emailStatus = auth.getIn(['user', 'email_status']);
-    const isEmailVerified = emailStatus === emailStatusMap.VERIFIED;
-
-    if (!isLogin && pathname === '/') {
+  return useMemo(() => {
+    if (!isLoggedIn && location.pathname === '/') {
       return null;
     }
 
-    if (isLogin && !isEmailVerified) {
+    if (isLoggedIn && !isEmailVerified) {
       return (
         <Top>
           <EmailVerificationTop
@@ -113,116 +52,116 @@ class Header extends React.Component {
     }
 
     return (
-      <Top link={shareLink}>
+      <Top to={shareLink}>
         <ProgressTop />
       </Top>
     );
-  };
+  }, [emailStatus, isEmailVerified, isLoggedIn, location.pathname, shareLink]);
+};
 
-  render() {
-    return (
-      <div className={styles.root}>
-        {this.renderTop()}
-        <header className={styles.header}>
-          <Wrapper size="l" className={styles.inner}>
-            <HeaderButton
-              isNavOpen={this.state.isNavOpen}
-              toggle={this.toggleNav}
+const Header = () => {
+  const history = useHistory();
+  const [isNavOpen, setNavOpen] = useState(false);
+  const [isLoggedIn, login] = useLogin();
+  const [, fetchPermission] = usePermission();
+  const user = useAuthUser();
+  const logout = useLogout();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchPermission();
+    }
+  }, [isLoggedIn, fetchPermission]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const toggleNav = useCallback(() => setNavOpen(!isNavOpen), [isNavOpen]);
+
+  const closeNav = useCallback(() => setNavOpen(false), []);
+
+  useEffect(() => history.listen(closeNav), [closeNav, history]);
+
+  return (
+    <div className={styles.root}>
+      <HeaderTop />
+      <header className={styles.header}>
+        <Wrapper size="l" className={styles.inner}>
+          <HeaderButton isNavOpen={isNavOpen} toggle={toggleNav} />
+          <div className={styles.logo}>
+            <Link to="/" title="GoodJob 職場透明化運動">
+              <img src={GjLogo} alt="Goodjob" />
+            </Link>
+          </div>
+          <div className={styles.logoSm}>
+            <Link to="/" title="GoodJob 職場透明化運動">
+              <img src={Glike} alt="Goodjob" />
+            </Link>
+          </div>
+          <div className={styles.searchbarWrapper}>
+            <Searchbar
+              className={styles.searchbar}
+              placeholder="輸入公司 or 職稱，查詢面試、薪水"
             />
-            <div className={styles.logo}>
-              <Link to="/" title="GoodJob 職場透明化運動">
-                <GjLogo />
+          </div>
+          <div className={cn(styles.searchbarWrapper, styles.mobile)}>
+            <Searchbar
+              className={styles.searchbar}
+              placeholder="輸入公司 or 職稱查詢"
+            />
+          </div>
+          <nav
+            className={cn(styles.nav, {
+              [styles.isNavOpen]: isNavOpen,
+            })}
+          >
+            <Link to="/" className={styles.logo} title="GoodJob 職場透明化運動">
+              <img src={GjLogo} alt="Goodjob" />
+            </Link>
+            <SiteMenu isLogin={isLoggedIn} />
+            <div className={styles.buttonsArea}>
+              <Link to="/plans" className={styles.plansLink}>
+                解鎖方式
               </Link>
-            </div>
-            <div className={styles.logoSm}>
-              <Link to="/" title="GoodJob 職場透明化運動">
-                <Glike />
-              </Link>
-            </div>
-            <div className={styles.searchbarWrapper}>
-              <Searchbar
-                className={styles.searchbar}
-                placeholder="輸入公司 or 職稱，查詢面試、薪水"
-              />
-            </div>
-            <div className={cn(styles.searchbarWrapper, styles.mobile)}>
-              <Searchbar
-                className={styles.searchbar}
-                placeholder="輸入公司 or 職稱查詢"
-              />
-            </div>
-            <nav
-              className={cn(styles.nav, {
-                [styles.isNavOpen]: this.state.isNavOpen,
-              })}
-            >
               <Link
-                to="/"
-                className={styles.logo}
-                title="GoodJob 職場透明化運動"
+                to="/share"
+                className={styles.leaveDataBtn}
+                onClick={onClickShareData}
               >
-                <GjLogo />
+                分享經驗
               </Link>
-              <SiteMenu
-                isLogin={this.props.auth.get('status') === authStatus.CONNECTED}
-              />
-              <div className={styles.buttonsArea}>
-                <ShareButton onClick={this.onClickShareData} />
-                <div style={{ position: 'relative' }}>
-                  {this.props.auth.getIn(['user', 'name']) === null && (
-                    <button
-                      className={styles.loginBtn}
-                      onClick={this.openLoginModal}
-                    >
-                      登入
-                    </button>
-                  )}
-                  {this.props.auth.getIn(['user', 'name']) !== null && (
-                    <PopoverToggle
-                      popoverClassName={styles.popover}
-                      popoverContent={
-                        <ul className={styles.popoverItem}>
-                          <li>
-                            <Link to="/me">個人頁面</Link>
-                          </li>
-                          <li>
-                            <button
-                              onClick={() => {
-                                this.logout();
-                              }}
-                            >
-                              登出
-                            </button>
-                          </li>
-                        </ul>
-                      }
-                    >
-                      <div className={styles.userNameBtn}>
-                        {this.props.auth.getIn(['user', 'name'])}
-                      </div>
-                    </PopoverToggle>
-                  )}
-                </div>
+              <div style={{ position: 'relative' }}>
+                {!isLoggedIn && (
+                  <button className={styles.loginBtn} onClick={login}>
+                    登入
+                  </button>
+                )}
+                {isLoggedIn && (
+                  <PopoverToggle
+                    popoverClassName={styles.popover}
+                    popoverContent={
+                      <ul className={styles.popoverItem}>
+                        <li>
+                          <Link to="/me/subscriptions/current">我的方案</Link>
+                        </li>
+                        <li>
+                          <Link to="/me">管理我的資料</Link>
+                        </li>
+                        <li>
+                          <button onClick={logout}>登出</button>
+                        </li>
+                      </ul>
+                    }
+                  >
+                    <div className={styles.userNameBtn}>
+                      {user && user.name}
+                    </div>
+                  </PopoverToggle>
+                )}
               </div>
-            </nav>
-          </Wrapper>
-        </header>
-        <LoginModal
-          isOpen={this.props.loginModal.isOpen}
-          close={this.closeLoginModal}
-          loginModal={this.props.loginModal}
-        />
-      </div>
-    );
-  }
-}
-
-Header.propTypes = {
-  logout: PropTypes.func.isRequired,
-  auth: PropTypes.object,
-  location: PropTypes.object,
-  history: PropTypes.object.isRequired,
-  fetchPermission: PropTypes.func.isRequired,
+            </div>
+          </nav>
+        </Wrapper>
+      </header>
+    </div>
+  );
 };
 
 const HeaderButton = ({ isNavOpen, toggle }) => (
@@ -238,22 +177,4 @@ HeaderButton.propTypes = {
   toggle: PropTypes.func.isRequired,
 };
 
-const ShareButton = ({ className, onClick }) => (
-  <Link
-    to="/share"
-    className={cn(className, styles.leaveDataBtn)}
-    onClick={onClick}
-  >
-    立即分享
-  </Link>
-);
-ShareButton.propTypes = {
-  onClick: PropTypes.func,
-};
-
-const hoc = compose(
-  withPermission,
-  withModal('loginModal'),
-);
-
-export default hoc(Header);
+export default Header;

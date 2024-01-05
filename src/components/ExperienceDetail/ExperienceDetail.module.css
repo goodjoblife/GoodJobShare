@@ -1,23 +1,11 @@
 @value below-small, above-small from "common/variables.module.css";
 
-.container {
-  display: flex;
-  justify-content: center;
-}
+.breadCrumb {
+  margin-bottom: 16px;
 
-.leftContainer {
-  flex-shrink: 1;
-}
-
-.wrapper {
   @media (min-width: above-small) {
-    padding-left: 32px;
-    padding-right: 32px;
+    margin-bottom: 32px;
   }
-}
-
-.headingBlock {
-  position: relative;
 }
 
 .back {
@@ -33,10 +21,13 @@
   justify-content: flex-end;
   align-items: center;
   padding: 4px 8px 0 8px;
+  margin-top: 8px;
+  margin-bottom: 20px;
 
   @media (max-width: 550px) {
     border-bottom: 1px solid border-gray;
     border-top: 1px solid border-gray;
+    margin-bottom: 5px;
   }
 }
 
@@ -44,9 +35,13 @@
   width: 160px;
   height: 600px;
   flex-shrink: 0;
-  margin-right: 16px;
 
   @media (max-width: below-small) {
     display: none;
   }
+}
+
+.topMsgButton {
+  margin-right: 5px;
+  flex-shrink: 0;
 }

@@ -1,20 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import cn from 'classnames';
-import { compose, setStatic, lifecycle } from 'recompose';
+import { compose, setStatic } from 'recompose';
 import { Section, Wrapper, Heading } from 'common/base';
 import Columns from 'common/Columns';
+import Loader from 'common/Loader';
 import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
-import { queryPopularExperiences } from '../../actions/popularExperiences';
-import { queryMenu } from '../../actions/laborRights';
+import {
+  queryPopularExperiences,
+  queryPopularExperiencesIfUnfetched,
+} from 'actions/experience';
+import { queryPopularCompanyAverageSalary } from 'actions/popularCompanyAverageSalary';
+import { queryPopularJobTitleSalaryDistribution } from 'actions/popularJobTitleSalaryDistribution';
+import { queryMenu, queryMenuIfUnfetched } from 'actions/laborRights';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
 import StaticHelmet from 'common/StaticHelmet';
 import CallToActionBlock from './CallToActionBlock';
 import SummarySection from './SummarySection';
-import { isUnfetched } from '../../constants/status';
+import { isFetching, isFetched, isUnfetched } from 'utils/fetchBox';
+import { popularExperiencesBoxSelector } from 'selectors/experienceSelector';
+import { popularCompanyAverageSalaryBoxSelector } from 'selectors/popularCompanyAverageSalary';
+import { popularJobTitleSalaryDistributionBoxSelector } from 'selectors/popularJobTitleSalaryDistribution';
+import { menuBoxSelector } from 'selectors/laborRightsSelector';
 
 const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
   return Promise.all([
@@ -23,48 +32,62 @@ const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
   ]);
 });
 
-const queryData = lifecycle({
-  componentDidMount() {
-    if (isUnfetched(this.props.popularCompanyAverageSalaryStatus)) {
-      this.props.queryPopularCompanyAverageSalary();
-    }
-    if (isUnfetched(this.props.popularJobTitleSalaryDistributionStatus)) {
-      this.props.queryPopularJobTitleSalaryDistribution();
-    }
-    if (this.props.popularExperiences.size === 0) {
-      this.props.queryPopularExperiences();
-    }
-    this.props.queryMenuIfUnfetched();
-    this.props.queryTimeAndSalaryCount();
-  },
+const entryToProps = ({ id, title, coverUrl }) => ({
+  link: `/labor-rights/${id}`,
+  coverUrl,
+  title,
 });
 
-const LandingPage = ({
-  popularCompanyAverageSalary,
-  popularJobTitleSalaryDistribution,
-  popularExperiences: popularExperiencesRaw,
-  laborRightsMenuEntries,
-  timeAndSalaryCount,
-  laborRightsCount,
-}) => {
-  const popularExperiences = popularExperiencesRaw.toJS() || [];
-  const items = laborRightsMenuEntries.map(({ id, title, coverUrl }) => ({
-    link: `/labor-rights/${id}`,
-    coverUrl,
-    title,
-  }));
+const LandingPage = ({ laborRightsMenuEntries }) => {
+  const dispatch = useDispatch();
+
+  const popularExperiencesBox = useSelector(popularExperiencesBoxSelector);
+  const popularExperiences = popularExperiencesBox.data || [];
+  useEffect(() => {
+    dispatch(queryPopularExperiencesIfUnfetched());
+  }, [dispatch]);
+
+  const popularCompanyAverageSalaryBox = useSelector(
+    popularCompanyAverageSalaryBoxSelector,
+  );
+  useEffect(() => {
+    if (isUnfetched(popularCompanyAverageSalaryBox)) {
+      dispatch(queryPopularCompanyAverageSalary());
+    }
+  }, [dispatch, popularCompanyAverageSalaryBox]);
+
+  const popularJobTitleSalaryDistributionBox = useSelector(
+    popularJobTitleSalaryDistributionBoxSelector,
+  );
+  useEffect(() => {
+    if (isUnfetched(popularJobTitleSalaryDistributionBox)) {
+      dispatch(queryPopularJobTitleSalaryDistribution());
+    }
+  }, [dispatch, popularJobTitleSalaryDistributionBox]);
+
+  // 勞工法令懶人包
+  useEffect(() => {
+    dispatch(queryMenuIfUnfetched());
+  }, [dispatch]);
+  const menuBox = useSelector(menuBoxSelector);
+
   return (
     <main>
       <StaticHelmet.LandingPage />
       <Banner />
       <Section padding>
         <Wrapper size="l">
-          <SummarySection
-            popularCompanyAverageSalary={popularCompanyAverageSalary}
-            popularJobTitleSalaryDistribution={
-              popularJobTitleSalaryDistribution
-            }
-          />
+          {isFetched(popularCompanyAverageSalaryBox) &&
+            isFetched(popularJobTitleSalaryDistributionBox) && (
+              <SummarySection
+                popularCompanyAverageSalary={
+                  popularCompanyAverageSalaryBox.data
+                }
+                popularJobTitleSalaryDistribution={
+                  popularJobTitleSalaryDistributionBox.data
+                }
+              />
+            )}
         </Wrapper>
       </Section>
       <Section padding>
@@ -93,7 +116,14 @@ const LandingPage = ({
           <Heading size="l" center marginBottom>
             勞工法令懶人包
           </Heading>
-          <Columns gutter="s" Item={LaborRightsEntry} items={items} />
+          {isFetching(menuBox) && <Loader />}
+          {isFetched(menuBox) && (
+            <Columns
+              gutter="s"
+              Item={LaborRightsEntry}
+              items={menuBox.data.slice(-3).map(entryToProps)}
+            />
+          )}
         </Wrapper>
         <Section center Tag="div">
           <Link
@@ -105,7 +135,6 @@ const LandingPage = ({
           </Link>
         </Section>
       </Section>
-
       <Section padding>
         <Wrapper size="l">
           <CallToActionBlock />
@@ -115,18 +144,6 @@ const LandingPage = ({
   );
 };
 
-LandingPage.propTypes = {
-  popularCompanyAverageSalary: PropTypes.array.isRequired,
-  popularJobTitleSalaryDistribution: PropTypes.array.isRequired,
-  laborRightsMenuEntries: PropTypes.array.isRequired,
-  popularExperiences: ImmutablePropTypes.list.isRequired,
-  laborRightsCount: PropTypes.number.isRequired,
-  timeAndSalaryCount: PropTypes.number.isRequired,
-};
-
-const hoc = compose(
-  ssr,
-  queryData,
-);
+const hoc = compose(ssr);
 
 export default hoc(LandingPage);

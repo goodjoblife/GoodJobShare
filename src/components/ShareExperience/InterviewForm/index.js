@@ -1,7 +1,7 @@
 import React from 'react';
 import R from 'ramda';
 import { scroller } from 'react-scroll';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
 import { Heading } from 'common/base';
 
@@ -21,10 +21,10 @@ import {
 } from '../utils';
 
 import StaticHelmet from 'common/StaticHelmet';
-import { INVALID, INTERVIEW_FORM_ORDER } from '../../../constants/formElements';
-import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
-import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
-import { LS_INTERVIEW_FORM_KEY } from '../../../constants/localStorageKey';
+import { INVALID, INTERVIEW_FORM_ORDER } from 'constants/formElements';
+import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
+import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
+import { LS_INTERVIEW_FORM_KEY } from 'constants/localStorageKey';
 
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';

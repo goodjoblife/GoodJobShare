@@ -1,72 +1,77 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useMemo } from 'react';
+import R from 'ramda';
+import { useDispatch, useSelector } from 'react-redux';
 import { compose, setStatic } from 'recompose';
 import Loader from 'common/Loader';
 import Columns from 'common/Columns';
 import { Section, Wrapper, Heading } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
-import { queryMenu } from '../../actions/laborRights';
-import { isFetching, isError, isFetched } from '../../constants/status';
-import { shareLink } from '../../constants/dataProgress';
+import { useShareLink } from 'hooks/experiments';
+import { queryMenu, queryMenuIfUnfetched } from 'actions/laborRights';
+import { menuBoxSelector } from 'selectors/laborRightsSelector';
+import { isFetching, isError, isFetched } from 'utils/fetchBox';
 import LaborRightsEntry from './LaborRightsEntry';
 import StaticHelmet from 'common/StaticHelmet';
 import styles from './LaborRightsEntry.module.css';
+import AdvImage from './banner3_2x.jpg';
 
-class LaborRightsMenu extends React.Component {
-  componentDidMount() {
-    this.props.queryMenuIfUnfetched();
-  }
+const entryToProps = ({ id, title, coverUrl }) => ({
+  link: `/labor-rights/${id}`,
+  coverUrl,
+  title,
+});
 
-  render() {
-    const title = '勞動知識小教室';
-    const { menuStatus: status, menuError, menuEntries: entries } = this.props;
-    // eslint-disable-next-line no-shadow
-    const items = entries.map(({ id, title, coverUrl }) => ({
-      link: `/labor-rights/${id}`,
-      coverUrl,
-      title,
-    }));
-    items.splice(4, 0, {
-      link: shareLink,
-      coverUrl: 'https://image.goodjob.life/banners/banner3_2x.jpg',
-      title: '留下你的面試經驗、工作經驗',
-    });
-    return (
-      <Section Tag="main" pageTop>
-        <Wrapper size="l">
-          <StaticHelmet.LaborRightsMenu />
-          {isFetching(status) && <Loader />}
-          {isError(status) && menuError && (
-            <Heading center size="m" Tag="div">
-              {menuError.toString()}
-            </Heading>
-          )}
-          {isFetched(status) && (
-            <section>
-              <Heading size="l" center marginBottom>
-                {title}
-              </Heading>
-              <Columns Item={LaborRightsEntry} items={items} />
-            </section>
-          )}
-        </Wrapper>
-        <Wrapper size="s">
-          <FanPageBlock className={styles.fanPageBlock} />
-        </Wrapper>
-      </Section>
+const LaborRightsMenu = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(queryMenuIfUnfetched());
+  }, [dispatch]);
+
+  const menuBox = useSelector(menuBoxSelector);
+
+  const shareLink = useShareLink();
+
+  const title = '勞動知識小教室';
+
+  const entriesToItems = useMemo(() => {
+    return R.compose(
+      R.insert(4, {
+        link: shareLink,
+        coverUrl: AdvImage,
+        title: '留下你的面試經驗、工作經驗',
+      }),
+      R.map(entryToProps),
     );
-  }
-}
+  }, [shareLink]);
 
-LaborRightsMenu.propTypes = {
-  menuEntries: PropTypes.array.isRequired,
-  menuStatus: PropTypes.string.isRequired,
-  menuError: PropTypes.object,
-  queryMenuIfUnfetched: PropTypes.func.isRequired,
+  return (
+    <Section Tag="main" pageTop>
+      <Wrapper size="l">
+        <StaticHelmet.LaborRightsMenu />
+        <section>
+          <Heading size="l" center marginBottom>
+            {title}
+          </Heading>
+          {isFetching(menuBox) && <Loader />}
+          {isError(menuBox) && menuBox.error.toString()}
+          {isFetched(menuBox) && (
+            <Columns
+              Item={LaborRightsEntry}
+              items={entriesToItems(menuBox.data)}
+            />
+          )}
+        </section>
+      </Wrapper>
+      <Wrapper size="s">
+        <FanPageBlock className={styles.fanPageBlock} />
+      </Wrapper>
+    </Section>
+  );
 };
 
-const ssr = setStatic('fetchData', ({ store }) => {
-  return store.dispatch(queryMenu());
+const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
+  return dispatch(queryMenu());
 });
 
 const hoc = compose(ssr);

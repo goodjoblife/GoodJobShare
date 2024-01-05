@@ -8,18 +8,25 @@ const NavigatorButton = ({ className, ...restProps }) => (
   <button {...restProps} className={cn(className, styles.btn)} />
 );
 
-const NavigatorBlock = ({ onPrevious, onNext, hasPrevious, hasNext }) => (
+const NavigatorBlock = ({
+  skippable,
+  onPrevious,
+  onNext,
+  hasPrevious,
+  hasNext,
+}) => (
   <div className={styles.container}>
     <NavigatorButton onClick={onPrevious} disabled={!hasPrevious}>
       上一題
     </NavigatorButton>
     <NavigatorButton onClick={onNext} disabled={!hasNext}>
-      下一題
+      {skippable ? '跳過' : '下一題'}
     </NavigatorButton>
   </div>
 );
 
 NavigatorBlock.propTypes = {
+  skippable: PropTypes.bool.isRequired,
   onPrevious: PropTypes.func.isRequired,
   onNext: PropTypes.func.isRequired,
   hasPrevious: PropTypes.bool.isRequired,

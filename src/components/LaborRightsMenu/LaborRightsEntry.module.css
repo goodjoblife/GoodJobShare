@@ -36,6 +36,7 @@
 .cover img {
   position: relative;
   z-index: 9;
+  aspect-ratio: auto 1.4;
 }
 
 .title {

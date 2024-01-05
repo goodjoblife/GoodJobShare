@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { useDebounce } from 'react-use';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import styles from './Text.module.css';
+import TextInput from 'common/form/TextInput';
+import commonStyles from './styles.module.css';
 
 const Text = ({
   page,
@@ -10,45 +12,81 @@ const Text = ({
   description,
   dataKey,
   required,
+  defaultValue,
   value,
   onChange,
   onConfirm,
+  onSelect,
+  search,
   warning,
   validator,
   placeholder,
 }) => {
-  const [isComposing, setComposing] = useState(false);
+  const [items, setItems] = useState([]);
+  const ref = useRef(null);
+
+  useDebounce(
+    async () => {
+      let items;
+      if (value && search) {
+        try {
+          items = await search(value);
+        } catch (err) {
+          items = [];
+        }
+      } else {
+        items = [];
+      }
+      if (ref.current) {
+        setItems(items);
+      }
+    },
+    300,
+    [value],
+  );
+
   return (
-    <div className={cn(styles.container, { [styles.hasWarning]: !!warning })}>
-      <input
-        className={styles.textinput}
-        type="text"
-        placeholder={placeholder}
-        value={value}
-        onCompositionStart={() => setComposing(true)}
-        onCompositionEnd={() => setComposing(false)}
-        onChange={e => onChange(e.target.value)}
-        onKeyDown={e => {
-          if (!isComposing && e.key === 'Enter') {
+    <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
+      <div className={cn(commonStyles.warnableContainer)}>
+        <TextInput
+          ref={ref}
+          type="text"
+          placeholder={placeholder}
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          onEnter={e => {
             e.target.blur();
-            onConfirm();
-          }
-        }}
-      />
-      <div className={styles.warning}>{warning}</div>
+            onConfirm(e);
+          }}
+          autocompleteItems={items}
+          onAutocompleteItemSelected={item => {
+            onChange(item);
+            if (onSelect) {
+              onSelect(item);
+            }
+          }}
+        />
+        <div className={cn(commonStyles.warning, commonStyles.inlineWarning)}>
+          {warning}
+        </div>
+      </div>
     </div>
   );
 };
 
 Text.propTypes = {
   page: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+    .isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
+  onSelect: PropTypes.func,
+  search: PropTypes.func,
   warning: PropTypes.string,
   validator: PropTypes.func,
   placeholder: PropTypes.string,

@@ -1,47 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
-import styles from './TextInput.module.css';
+import styles from './TextInput/TextInput.module.css';
 
 const TextInput = ({
-  value,
-  placeholder,
-  onChange,
   isWarning,
   warningWording,
-  style,
+  wrapperClassName,
+  className,
+  ...props
 }) => (
-  <div
-    style={{
-      position: 'relative',
-      ...style,
-    }}
-  >
+  <div className={cn(styles.wrapper, wrapperClassName)}>
     <textarea
-      placeholder={placeholder}
-      className={isWarning ? styles.warning : styles.input}
-      value={value}
-      onChange={onChange}
+      className={cn(isWarning ? styles.warning : styles.input, className)}
+      {...props}
     />
-    {warningWording ? (
+    {warningWording && (
       <p
-        className={`
-            pS ${styles.warning__text} ${isWarning ? styles.isWarning : ''}
-          `}
+        className={cn('pS', styles.warning__text, {
+          [styles.isWarning]: isWarning,
+        })}
       >
         {warningWording}
       </p>
-    ) : null}
+    )}
   </div>
 );
 
 TextInput.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  placeholder: PropTypes.string,
-  onChange: PropTypes.func,
   isWarning: PropTypes.bool,
   warningWording: PropTypes.string,
-  style: PropTypes.object,
+  wrapperClassName: PropTypes.string,
+  className: PropTypes.string,
 };
 
 TextInput.defaultProps = {

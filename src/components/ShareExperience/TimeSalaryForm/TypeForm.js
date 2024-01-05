@@ -1,13 +1,21 @@
 import React from 'react';
 import R from 'ramda';
 import FormBuilder from 'common/FormBuilder';
-import Header, { JobTitleHeader } from '../common/TypeFormHeader';
+import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
 import Footer from '../common/TypeFormFooter';
 
 import employmentType from '../../../constants/employmentType';
 
-const header = <Header />;
+const header = <Header title="請輸入你的一份薪資工時" />;
 const footer = <Footer />;
+
+const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
+  <CompanyJobTitleHeader
+    label="薪時"
+    companyName={companyName}
+    jobTitle={jobTitle}
+  />
+);
 
 const experienceInYearOptions = R.range(0, 51).map(String);
 const questions = [
@@ -15,6 +23,7 @@ const questions = [
     title: '職稱',
     type: 'text',
     dataKey: 'jobTitle',
+    defaultValue: '',
     required: true,
     validator: value => value.length > 0,
     warning: '請填寫職稱',
@@ -22,88 +31,101 @@ const questions = [
   {
     title: '公司名稱',
     type: 'text',
-    dataKey: 'title',
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    dataKey: 'companyName',
+    defaultValue: '',
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '你現在在職嗎？',
     type: 'radio',
     dataKey: 'isCurrentlyEmployed',
+    defaultValue: null,
     options: ['在職', '已離職'],
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '廠區/門市/分公司',
     type: 'text',
     dataKey: 'sector',
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    defaultValue: '',
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '職務型態',
     type: 'radio',
     dataKey: 'employmentType',
+    defaultValue: null,
     options: R.values(employmentType),
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '性別',
     type: 'radio',
     dataKey: 'gender',
+    defaultValue: null,
     options: ['男', '女', '其他'],
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '薪資',
     type: 'customized',
     dataKey: 'salary',
+    defaultValue: null,
     renderCustomizedQuestion: () => null,
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '當時業界工作經歷',
     type: 'radio',
     dataKey: 'experienceInYear',
+    defaultValue: null,
     options: experienceInYearOptions,
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '工作日表訂工時',
     type: 'text',
     dataKey: 'dayPromisedWorkTime',
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    defaultValue: '',
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '實際平均工時',
     type: 'text',
     dataKey: 'dayRealWorkTime',
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    defaultValue: '',
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '一週總工時',
     type: 'text',
     dataKey: 'weekWorkTime',
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    defaultValue: '',
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '加班頻率',
     type: 'radio',
     dataKey: 'overtimeFrequency',
+    defaultValue: null,
     options: ['幾乎不', '偶爾', '經常', '幾乎每天'],
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '加班有無加班費',
     type: 'radio',
     dataKey: 'hasOvertimeSalary',
+    defaultValue: null,
     options: ['有', '無', '不知道'],
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
   {
     title: '加班有無補休',
     type: 'radio',
     dataKey: 'hasCompensatoryDayoff',
+    defaultValue: null,
     options: ['有', '無', '不知道'],
-    header: ({ jobTitle }) => <JobTitleHeader jobTitle={jobTitle} />,
+    header: renderCompanyJobTitleHeader,
   },
 ];
 

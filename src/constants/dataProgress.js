@@ -1,2 +1,1 @@
-export const goalNum = 10000;
-export const shareLink = '/share/interview/step1';
+export const goalNum = 50000;

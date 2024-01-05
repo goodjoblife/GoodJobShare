@@ -1,6 +1,6 @@
 import R from 'ramda';
 import graphqlClient from 'utils/graphqlClient';
-import { getCompanyQuery } from 'graphql/company';
+import { getCompanyQuery, getCompaniesHavingDataQuery } from 'graphql/company';
 
 export const getCompany = companyName =>
   graphqlClient({
@@ -8,6 +8,7 @@ export const getCompany = companyName =>
     variables: { companyName },
   }).then(R.prop('company'));
 
-export default {
-  getCompany,
-};
+export const getCompanyNames = () =>
+  graphqlClient({ query: getCompaniesHavingDataQuery })
+    .then(R.prop('companies_having_data'))
+    .then(R.map(R.prop('name')));

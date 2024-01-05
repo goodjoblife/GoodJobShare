@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 
-import { Bookmark } from 'common/icons';
+import Bookmark from 'common/icons/Bookmark';
 import { Heading, P } from 'common/base';
 import Modal from 'common/Modal';
 import styles from './ShareBlockElement.module.css';

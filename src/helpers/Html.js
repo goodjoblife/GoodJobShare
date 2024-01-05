@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/server';
 import serialize from 'serialize-javascript';
 import Helmet from 'react-helmet';
 
-import { GTM_ID, GOOGLE_AD_CLIENT_ID } from '../config';
+import { GTM_ID } from '../config';
 
 /**
  * Wrapper component containing HTML metadata and boilerplate tags.
@@ -36,20 +36,12 @@ export default class Html extends Component {
           {head.link.toComponent()}
           {head.script.toComponent()}
 
-          <link
-            rel="shortcut icon"
-            href="https://image.goodjob.life/favicon.ico"
-          />
+          <link rel="shortcut icon" href="/favicon.ico" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta charSet="UTF-8" />
           {assets.client.css && (
             <link rel="stylesheet" href={assets.client.css} />
           )}
-          {/* include Sentry library for reporting website error --> */}
-          <script
-            src="https://cdn.ravenjs.com/3.26.4/raven.min.js"
-            crossOrigin="anonymous"
-          />
           {/* install google tag manager */}
           <script
             dangerouslySetInnerHTML={{
@@ -61,9 +53,9 @@ export default class Html extends Component {
             }}
           />
           <script
-            data-ad-client={GOOGLE_AD_CLIENT_ID}
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            src="https://accounts.google.com/gsi/client"
+            async={true}
+            defer={true}
           ></script>
         </head>
         <body>

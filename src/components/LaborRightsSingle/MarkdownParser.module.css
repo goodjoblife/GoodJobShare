@@ -41,6 +41,7 @@
   img {
     max-width: 100%;
     margin-bottom: 10px;
+    aspect-ratio: auto 1.4;
   }
 
   /* blueLink */

@@ -1,31 +1,27 @@
-import fetchingStatus from '../constants/status';
+import { getError, getFetched, toFetching } from 'utils/fetchBox';
+import { getPopularCompanyAverageSalary as getPopularCompanyAverageSalaryApi } from 'apis/popularCompanyAndJobTitle';
 
-export const SET_STATUS = '@@popularCompanyAverageSalary/SET_STATUS';
+export const SET_POPULAR_COMPANY_AVERAGE_SALARY =
+  '@@POPULAR_COMPANY_AVERAGE_SALARY/SET_BOX';
 
-const setStatus = ({ status, data = [], error = null }) => ({
-  type: SET_STATUS,
-  status,
-  data,
-  error,
+const setPopularCompanyAverageSalary = box => ({
+  type: SET_POPULAR_COMPANY_AVERAGE_SALARY,
+  popularCompanyAverageSalary: box,
 });
 
-export const queryPopularCompanyAverageSalary = () => (
+export const queryPopularCompanyAverageSalary = () => async (
   dispatch,
   getState,
-  { api },
 ) => {
-  dispatch(setStatus({ status: fetchingStatus.FETCHING }));
-  return api.popularCompanyAndJobTitle
-    .getPopularCompanyAverageSalary()
-    .then(popularCompanyAverageSalary => {
-      dispatch(
-        setStatus({
-          status: fetchingStatus.FETCHED,
-          data: popularCompanyAverageSalary,
-        }),
-      );
-    })
-    .catch(error => {
-      dispatch(setStatus({ status: fetchingStatus.ERROR, error }));
-    });
+  dispatch(setPopularCompanyAverageSalary(toFetching()));
+
+  const popularCompanyAverageSalary = await getPopularCompanyAverageSalaryApi();
+
+  try {
+    dispatch(
+      setPopularCompanyAverageSalary(getFetched(popularCompanyAverageSalary)),
+    );
+  } catch (error) {
+    dispatch(setPopularCompanyAverageSalary(getError(error)));
+  }
 };

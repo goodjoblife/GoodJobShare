@@ -32,6 +32,7 @@ const File = ({
   description,
   dataKey,
   required,
+  defaultValue,
   value,
   onChange,
   warning,
@@ -79,11 +80,12 @@ const File = ({
 
 File.propTypes = {
   page: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
-  value: PropTypes.string,
+  defaultValue: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   warning: PropTypes.string,
   validator: PropTypes.func,

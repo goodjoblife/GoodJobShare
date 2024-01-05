@@ -2,7 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import { Switch } from 'react-router-dom';
 import { scroller } from 'react-scroll';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
 import qs from 'qs';
 import StepControl from './StepControl';
@@ -21,14 +21,15 @@ import {
 } from '../utils';
 
 import StaticHelmet from 'common/StaticHelmet';
+import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
 import {
   INVALID,
   INTERVIEW_FORM_ORDER,
   INTERVIEW_FORM_STEPS,
-} from '../../../constants/formElements';
-import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
-import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
-import { LS_INTERVIEW_STEPS_FORM_KEY } from '../../../constants/localStorageKey';
+} from 'constants/formElements';
+import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
+import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
+import { LS_INTERVIEW_STEPS_FORM_KEY } from 'constants/localStorageKey';
 
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
@@ -194,7 +195,7 @@ class InterviewForm extends React.Component {
     });
   }
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (!R.equals(this.state, prevState)) {
       localStorage.setItem(
         LS_INTERVIEW_STEPS_FORM_KEY,
@@ -209,19 +210,26 @@ class InterviewForm extends React.Component {
 
   async onSubmit() {
     const valid = interviewFormCheck(getInterviewForm(this.state));
+    let goalValue;
 
     if (valid) {
       localStorage.removeItem(LS_INTERVIEW_STEPS_FORM_KEY);
+      const body = portInterviewFormToRequestFormat(
+        getInterviewForm(this.state),
+      );
+      // section 的標題與預設文字 = 4 + 11 + 19 + 25 個字
+      goalValue = calcInterviewExperienceValue(body, 59);
       const p = this.props.createInterviewExperience({
-        body: portInterviewFormToRequestFormat(getInterviewForm(this.state)),
+        body,
       });
+
       return p.then(
         response => {
           const experienceId = response.createInterviewExperience.experience.id;
-
           ReactGA.event({
             category: GA_CATEGORY.SHARE_INTERVIEW,
             action: GA_ACTION.UPLOAD_SUCCESS,
+            value: goalValue,
           });
           ReactPixel.track('Purchase', {
             value: 1,
@@ -229,6 +237,7 @@ class InterviewForm extends React.Component {
             content_category:
               PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
           });
+
           return () => (
             <SuccessFeedback
               buttonClick={() =>

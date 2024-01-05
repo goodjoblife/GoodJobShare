@@ -5,5 +5,3 @@ const fetch = id => fetchUtil(getEndpoint(id));
 
 export const postExperiencesReports = ({ id, body, token }) =>
   fetch(id).post({ body, token });
-
-export default { postExperiencesReports };

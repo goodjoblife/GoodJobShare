@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Element as ScrollElement } from 'react-scroll';
-import { Coin2 } from 'common/icons';
+import Coin2 from 'common/icons/Coin2';
 import { P } from 'common/base';
 import TextInput from 'common/form/TextInput';
 import Select from 'common/form/Select';
@@ -24,7 +24,7 @@ import {
   SALARY_TYPE,
   SALARY_AMOUNT,
   EXPERIENCE_IN_YEAR,
-} from '../../../constants/formElements';
+} from 'constants/formElements';
 
 import styles from './TimeSalaryForm.module.css';
 

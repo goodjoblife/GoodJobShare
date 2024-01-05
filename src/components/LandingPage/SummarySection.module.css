@@ -20,13 +20,16 @@
 .page {
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   @media (min-width: above-desktop) {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
   }
 
   .chartWrapper {
+    max-width: 545px;
+    width: 100%;
     &:not(:last-child) {
       margin-bottom: 48px;
     }
@@ -34,6 +37,7 @@
       flex: 1;
       &:not(:last-child) {
         margin-right: 46px;
+        margin-bottom: 0;
       }
     }
   }

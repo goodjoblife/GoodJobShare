@@ -1,6 +1,9 @@
 import R from 'ramda';
-import fetchingStatus, { isUnfetched } from '../constants/status';
-import { tokenSelector } from '../selectors/authSelector';
+import fetchingStatus, { isUnfetched } from 'constants/status';
+import { tokenSelector } from 'selectors/authSelector';
+import { getExperiences as getExperiencesApi } from 'apis/experiencesApi';
+import { postInterviewExperience as postInterviewExperienceApi } from 'apis/interviewExperiencesApi';
+import { postWorkExperience as postWorkExperienceApi } from 'apis/workExperiencesApi';
 
 export const SET_COUNT_DATA = '@@EXPERIENCES/SET_COUNT_DATA';
 
@@ -11,7 +14,7 @@ const setCountData = (count, status, error = null) => ({
   error,
 });
 
-export const queryExperienceCount = () => (dispatch, getState, { api }) => {
+export const queryExperienceCount = () => (dispatch, getState) => {
   dispatch(setCountData(0, fetchingStatus.FETCHING));
   const opt = {
     searchType: ['interview', 'work', 'intern'],
@@ -20,8 +23,7 @@ export const queryExperienceCount = () => (dispatch, getState, { api }) => {
     sort: 'created_at',
   };
 
-  return api.experiences
-    .getExperiences(opt)
+  return getExperiencesApi(opt)
     .then(rawData => {
       const count = R.prop('total')(rawData);
       dispatch(setCountData(count, fetchingStatus.FETCHED));
@@ -32,35 +34,27 @@ export const queryExperienceCount = () => (dispatch, getState, { api }) => {
 };
 
 export const queryExperienceCountIfUnfetched = () => (dispatch, getState) => {
-  if (isUnfetched(getState().experiences.get('countStatus'))) {
+  if (isUnfetched(getState().experiences.countStatus)) {
     return dispatch(queryExperienceCount());
   }
   return Promise.resolve();
 };
 
-export const createInterviewExperience = ({ body }) => (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const createInterviewExperience = ({ body }) => (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
 
-  return api.interviewExperiences.postInterviewExperience({
+  return postInterviewExperienceApi({
     body,
     token,
   });
 };
 
-export const createWorkExperience = ({ body }) => (
-  dispatch,
-  getState,
-  { api },
-) => {
+export const createWorkExperience = ({ body }) => (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
 
-  return api.workExperiences.postWorkExperience({
+  return postWorkExperienceApi({
     body,
     token,
   });

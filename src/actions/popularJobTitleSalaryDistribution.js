@@ -1,31 +1,29 @@
-import fetchingStatus from '../constants/status';
+import { getError, getFetched, toFetching } from 'utils/fetchBox';
+import { getPopularJobTitleSalaryDistribution as getPopularJobTitleSalaryDistributionApi } from 'apis/popularCompanyAndJobTitle';
 
-export const SET_STATUS = '@@popularJobTitleSalaryDistribution/SET_STATUS';
+export const SET_POPULAR_JOB_TITLE_SALARY_DISTRIBUTION =
+  '@@POPULAR_JOB_TITLE_SALARY_DISTRIBUTION/SET_BOX';
 
-const setStatus = ({ status, data = [], error = null }) => ({
-  type: SET_STATUS,
-  status,
-  data,
-  error,
+const setPopularJobTitleSalaryDistribution = box => ({
+  type: SET_POPULAR_JOB_TITLE_SALARY_DISTRIBUTION,
+  popularJobTitleSalaryDistribution: box,
 });
 
-export const queryPopularJobTitleSalaryDistribution = () => (
+export const queryPopularJobTitleSalaryDistribution = () => async (
   dispatch,
   getState,
-  { api },
 ) => {
-  dispatch(setStatus({ status: fetchingStatus.FETCHING }));
-  return api.popularCompanyAndJobTitle
-    .getPopularJobTitleSalaryDistribution()
-    .then(popularJobTitleSalaryDistribution => {
-      dispatch(
-        setStatus({
-          status: fetchingStatus.FETCHED,
-          data: popularJobTitleSalaryDistribution,
-        }),
-      );
-    })
-    .catch(error => {
-      dispatch(setStatus({ status: fetchingStatus.ERROR, error }));
-    });
+  dispatch(setPopularJobTitleSalaryDistribution(toFetching()));
+
+  const popularJobTitleSalaryDistribution = await getPopularJobTitleSalaryDistributionApi();
+
+  try {
+    dispatch(
+      setPopularJobTitleSalaryDistribution(
+        getFetched(popularJobTitleSalaryDistribution),
+      ),
+    );
+  } catch (error) {
+    dispatch(setPopularJobTitleSalaryDistribution(getError(error)));
+  }
 };

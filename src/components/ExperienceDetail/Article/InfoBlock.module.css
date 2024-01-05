@@ -18,6 +18,10 @@
   word-wrap: break-word;
   color: #333333;
 
+  a {
+    text-decoration: underline;
+  }
+
   > ul {
     margin-left: 1.3em;
     > li {

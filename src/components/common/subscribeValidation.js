@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Element as ScrollElement } from 'react-scroll';
 
-import { VALID, INVALID } from '../../constants/formElements';
+import { VALID, INVALID } from 'constants/formElements';
 
 /**
  *

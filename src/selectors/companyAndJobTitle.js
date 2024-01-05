@@ -1,5 +1,5 @@
 import R from 'ramda';
-import STATUS from '../constants/status';
+import STATUS from 'constants/status';
 
 export const status = R.compose(
   R.defaultTo(STATUS.UNFETCHED),
@@ -81,3 +81,27 @@ export const jobTitleStatus = jobTitleName =>
     status,
     jobTitle(jobTitleName),
   );
+
+const companyIndex = R.prop('companyIndex');
+
+export const companyNamesStatus = R.compose(
+  status,
+  companyIndex,
+);
+
+export const companyNames = R.compose(
+  data,
+  companyIndex,
+);
+
+const jobTitleIndex = R.prop('jobTitleIndex');
+
+export const jobTitlesStatus = R.compose(
+  status,
+  jobTitleIndex,
+);
+
+export const jobTitles = R.compose(
+  data,
+  jobTitleIndex,
+);

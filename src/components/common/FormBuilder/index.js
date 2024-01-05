@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
-  number,
   string,
   bool,
   func,
@@ -9,6 +8,7 @@ import {
   oneOfType,
   element,
   arrayOf,
+  any,
 } from 'prop-types';
 import cn from 'classnames';
 import R from 'ramda';
@@ -17,12 +17,10 @@ import X from 'common/icons/X';
 
 import QuestionBuilder, { availableTypes } from './QuestionBuilder';
 import useDraft from './useDraft';
-import TitleBlock from './TitleBlock';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
 import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
-import Scrollable from './Scrollable';
 import styles from './FormBuilder.module.css';
 
 const findWarningAgainstValue = (value, warning, validator) => {
@@ -57,6 +55,34 @@ const findIfQuestionsAcceptDraft = draft =>
     ),
   );
 
+const useQuestion = (question, draft) => {
+  if (question) {
+    const {
+      header,
+      footer,
+      dataKey,
+      defaultValue,
+      required,
+      warning,
+      validator,
+    } = question;
+    return [
+      true,
+      typeof header === 'function' ? header(draft) : header,
+      typeof footer === 'function' ? footer(draft) : footer,
+      dataKey,
+      findWarningAgainstValue(draft[dataKey], warning, validator),
+      !required &&
+        R.equals(
+          draft[dataKey],
+          typeof defaultValue === 'function' ? defaultValue() : defaultValue,
+        ),
+    ];
+  } else {
+    return [false];
+  }
+};
+
 const FormBuilder = ({
   open,
   header: commonHeader,
@@ -65,6 +91,7 @@ const FormBuilder = ({
   onChange,
   onPrev,
   onNext,
+  onPageChange,
   onSubmit,
   onValidateFail,
   onClose,
@@ -75,15 +102,18 @@ const FormBuilder = ({
     setDraftValue(dataKey)(value);
   };
 
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(-1);
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
 
-  let header;
-  let footer;
-  let dataKey;
-  let warning;
-  let shouldRenderNothing = false;
+  const [
+    shouldRenderQuestion,
+    header,
+    footer,
+    dataKey,
+    warning,
+    skippable,
+  ] = useQuestion(questions[page], draft);
 
   const [isWarningShown, setWarningShown] = useState(false);
 
@@ -104,27 +134,14 @@ const FormBuilder = ({
   }, [warning, isSubmittable, onValidateFail, dataKey, draft, onSubmit]);
 
   useEffect(() => {
-    if (!open) {
-      // Reset on close
+    if (open) {
       setPage(0);
       resetDraft();
       setWarningShown(false);
+    } else {
+      setPage(-1);
     }
   }, [open, resetDraft, setPage]);
-
-  const question = questions[page];
-  if (question) {
-    header = question.header;
-    footer = question.footer;
-    dataKey = question.dataKey;
-    warning = findWarningAgainstValue(
-      draft[dataKey],
-      question.warning,
-      question.validator,
-    );
-  } else {
-    shouldRenderNothing = true;
-  }
 
   const warnBeforeSetPage = useCallback(
     page => {
@@ -141,9 +158,13 @@ const FormBuilder = ({
 
   useEffect(() => {
     setWarningShown(false);
-  }, [page]);
 
-  if (shouldRenderNothing) {
+    if (page >= 0) {
+      if (onPageChange) onPageChange(page);
+    }
+  }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (!shouldRenderQuestion) {
     return null;
   }
 
@@ -173,29 +194,24 @@ const FormBuilder = ({
         <AnimatedPager className={styles.pager} page={page}>
           {questions.map(({ header, footer, ...restOptions }, i) => (
             <AnimatedPager.Page key={restOptions.dataKey}>
-              <div className={styles.question}>
-                <div>
-                  <TitleBlock
-                    page={i}
-                    title={restOptions.title}
-                    description={restOptions.description}
-                    required={restOptions.required}
-                  />
-                </div>
-                <Scrollable className={styles.answer}>
-                  <QuestionBuilder
-                    {...restOptions}
-                    page={i}
-                    value={draft[restOptions.dataKey]}
-                    onChange={handleDraftChange(restOptions.dataKey)}
-                    onConfirm={() => {
-                      if (onNext) onNext();
-                      warnBeforeSetPage(i + 1);
-                    }}
-                    warning={isWarningShown ? warning : null}
-                  />
-                </Scrollable>
-              </div>
+              <QuestionBuilder
+                {...restOptions}
+                page={i}
+                title={
+                  typeof restOptions.title === 'function'
+                    ? restOptions.title(draft)
+                    : restOptions.title
+                }
+                value={draft[restOptions.dataKey]}
+                onChange={handleDraftChange(restOptions.dataKey)}
+                onConfirm={() => {
+                  if (i < questions.length - 1) {
+                    if (onNext) onNext(i + 1);
+                    warnBeforeSetPage(i + 1);
+                  }
+                }}
+                warning={isWarningShown ? warning : null}
+              />
             </AnimatedPager.Page>
           ))}
         </AnimatedPager>
@@ -205,12 +221,13 @@ const FormBuilder = ({
           </div>
           <div className={styles.navigator}>
             <NavigatorBlock
+              skippable={skippable}
               onPrevious={() => {
-                if (onPrev) onPrev();
-                warnBeforeSetPage(page - 1);
+                if (onPrev) onPrev(page - 1);
+                setPage(page - 1);
               }}
               onNext={() => {
-                if (onNext) onNext();
+                if (onNext) onNext(page + 1);
                 warnBeforeSetPage(page + 1);
               }}
               hasPrevious={hasPrevious}
@@ -243,19 +260,23 @@ FormBuilder.propTypes = {
       description: string,
       type: oneOf(availableTypes).isRequired,
       dataKey: string.isRequired,
+      defaultValue: oneOfType([func, any]),
       required: bool,
       warning: oneOfType([func, string]),
       validator: func,
+      onSelect: func,
+      search: func,
       placeholder: string,
-      minLength: number,
+      footnote: oneOfType([string, func]),
       options: arrayOf(string),
-      maxRating: number,
+      ratingLabels: arrayOf(string.isRequired),
       renderCustomizedQuestion: func,
     }),
   ).isRequired,
   onChange: func,
   onPrev: func,
   onNext: func,
+  onPageChange: func,
   onSubmit: func.isRequired,
   onValidateFail: func,
   onClose: func,

@@ -4,8 +4,8 @@ import cn from 'classnames';
 import { withRouter } from 'react-router-dom';
 import qs from 'qs';
 
-import AutoCompleteSearchTextInput from 'common/form/AutoCompleteTextInput_new/AutoCompleteSearchTextInput';
-import Magnifier from '../../common/icons/Magnifiner';
+import SearchTextInput from 'common/form/TextInput/SearchTextInput';
+import Magnifiner from 'common/icons/Magnifiner';
 import styles from './Searchbar.module.css';
 
 const getInitialSearchTextFromLocation = location =>
@@ -47,7 +47,7 @@ const Searchbar = ({ className, placeholder, history, location }) => {
       onFocus={handleFormFocus}
       onBlur={handleFormBlur}
     >
-      <AutoCompleteSearchTextInput
+      <SearchTextInput
         className={styles.textInput}
         placeholder={placeholder}
         value={searchText}
@@ -55,7 +55,7 @@ const Searchbar = ({ className, placeholder, history, location }) => {
         onSelected={gotoSearchResult}
       />
       <button type="submit" className={styles.searchBtn}>
-        <Magnifier />
+        <Magnifiner />
       </button>
     </form>
   );

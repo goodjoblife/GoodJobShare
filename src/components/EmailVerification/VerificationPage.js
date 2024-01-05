@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 
 import Loading from 'common/Loader';
-import GjLogo from 'common/icons/GjLogo';
+import GjLogo from 'common/icons/GjLogo.svg';
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
 
-import { verifyEmail } from '../../actions/emailVerify';
+import { verifyEmail } from 'actions/emailVerify';
 
 import VerificationSuccess from './VerificationSuccess';
 import VerificationFailure from './VerificationFailure';
@@ -82,8 +82,10 @@ const VerificationPage = ({ location: { search }, verifyEmail }) => {
   return (
     <div className={styles.root}>
       <Link className={styles.titleArea} to="/" title="GoodJob 職場透明化運動">
-        <GjLogo
+        <img
+          src={GjLogo}
           style={{ height: '30px', width: '100px', marginRight: '16px' }}
+          alt="Goodjob"
         />
         <Heading size="sm">職場透明化運動</Heading>
       </Link>

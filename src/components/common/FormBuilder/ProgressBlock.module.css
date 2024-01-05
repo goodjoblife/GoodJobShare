@@ -19,6 +19,14 @@ $main-color: #fcd406;
   font-size: 15px;
   color: #969696;
 
+  @media (max-width: 550px) {
+    width: 100px;
+  }
+
+  @media (min-width: 850px) {
+    width: 240px;
+  }
+
   .label {
     margin-bottom: 5px;
   }

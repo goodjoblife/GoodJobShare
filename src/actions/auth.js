@@ -1,4 +1,10 @@
-import authStatus from '../constants/authStatus';
+import ReactGA from 'react-ga4';
+import {
+  postAuthFacebook as postAuthFacebookApi,
+  postAuthGoogle as postAuthGoogleApi,
+} from 'apis/auth';
+import { queryMeApi } from 'apis/me';
+import authStatus from 'constants/authStatus';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
@@ -27,16 +33,15 @@ export const logout = () => (dispatch, getState, { history }) => {
 /**
  * Use `hooks/login/useFacebookLogin` as possible
  */
-export const loginWithFB = FB => (dispatch, getState, { api }) => {
+export const loginWithFB = FB => (dispatch, getState) => {
   if (FB) {
     return new Promise(resolve =>
       FB.login(response => resolve(response), { scope: 'email' }),
     ).then(response => {
       if (response.status === authStatus.CONNECTED) {
-        return api.auth
-          .postAuthFacebook({
-            accessToken: response.authResponse.accessToken,
-          })
+        return postAuthFacebookApi({
+          accessToken: response.authResponse.accessToken,
+        })
           .then(({ token, user: { _id, facebook_id } }) =>
             dispatch(loginWithToken(token)),
           )
@@ -47,34 +52,28 @@ export const loginWithFB = FB => (dispatch, getState, { api }) => {
       return response.status;
     });
   }
-  return Promise.reject('FB should ready');
+  return Promise.reject(new Error('FB is not ready'));
 };
 
 /**
- * Use `hooks/login/useGoogleLogin` as possible
+ * Google prevent user to customize login button
+ * Use `common/Auth/GoogleLoginButton` as possible
+ * GoogleLoginButton wraps the "Google button flow" with react to render
+ * "Sign in with Google" buttons
+ * https://developers.google.com/identity/gsi/web/guides/integrate#button_customization
  */
-export const loginWithGoogle = googleAuth => (dispatch, getState, { api }) => {
-  return googleAuth
-    .signIn({
-      scope: 'profile email',
-      prompt: 'select_account',
-    })
-    .then(result => {
-      const { id_token } = result.getAuthResponse();
-      return api.auth
-        .postAuthGoogle({
-          idToken: id_token,
-        })
-        .then(({ token, user: { _id, google_id } }) => {
-          dispatch(loginWithToken(token));
-        })
-        .then(() => authStatus.CONNECTED);
-    })
-    .catch(err => authStatus.NOT_AUTHORIZED);
+export const loginWithGoogle = credentialResponse => async (
+  dispatch,
+  getState,
+) => {
+  //  TODO: 當登入失敗
+  const idToken = credentialResponse.credential;
+  const { token } = await postAuthGoogleApi({ idToken });
+  await dispatch(loginWithToken(token));
 };
 
-const getMeInfo = token => (dispatch, getState, { api }) =>
-  api.me.getMe({ token }).catch(error => {
+const getMeInfo = token => (dispatch, getState) =>
+  queryMeApi({ token }).catch(error => {
     dispatch(logOutAction());
     throw error;
   });
@@ -89,11 +88,13 @@ const getMeInfo = token => (dispatch, getState, { api }) =>
  *                               logout  --|
  *                                         |
  */
-export const loginWithToken = token => (dispatch, getState, { api }) => {
+export const loginWithToken = token => (dispatch, getState) => {
   dispatch(getMeInfo(token))
     .then(user => {
       dispatch(setUser(user));
       dispatch(setLogin(authStatus.CONNECTED, token));
+      // identify user for Google Analytics
+      ReactGA.set({ userId: user._id });
     })
     .catch(error => {
       console.error(error);

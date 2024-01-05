@@ -1,0 +1,5 @@
+export const NOTIFICATION_TYPE = {
+  INFO: 'INFO',
+  WARNING: 'WARNING',
+  ALERT: 'ALERT',
+};

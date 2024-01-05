@@ -5,7 +5,12 @@
   letter-spacing: 0.97px;
   color: #ec7910;
   background-color: #fffae1;
-  padding: 5px 29px;
+  padding: 9px 29px;
+
+  @media (min-width: 850px) {
+    padding: 17px;
+    margin-top: 10px;
+  }
 
   .unlockDuration {
     font-size: 15px;

@@ -5,14 +5,17 @@ import cn from 'classnames';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 import { Heading, P } from 'common/base';
-import i from 'common/icons';
+import Clock from 'common/icons/Clock';
+import Coin from 'common/icons/Coin';
+import Good from 'common/icons/Good';
+import Bad from 'common/icons/Bad';
 import styles from './WorkExperiences.module.css';
 import { formatSalary, formatSalaryRange } from 'common/formatter';
 import { formatCreatedAt, formatWeekWorkTime } from './helper';
 
-const createLinkTo = id => ({
+const createLinkTo = ({ pageType, id }) => ({
   pathname: `/experiences/${id}`,
-  state: { backable: true },
+  state: { pageType },
 });
 
 const SNIPPET_SIZE = 30;
@@ -30,31 +33,31 @@ const ExperienceEntry = ({
     recommend_to_others: recommendToOthers,
   },
   size,
-  canViewExperienceDetail,
+  canView,
 }) => (
   <div className={cn(styles.container, styles[size])}>
-    <Link to={createLinkTo(id)}>
+    <Link to={createLinkTo({ id, pageType })}>
       <section className={styles.contentWrapper}>
         <div className={styles.labels}>
           <P size="s" className={styles.date}>
             工作經驗 · {formatCreatedAt(createdAt)}
           </P>
-          {weekWorkTime && canViewExperienceDetail && (
-            <div className={styles.weekWorkTime}>
-              <i.Clock />
-              {formatWeekWorkTime(weekWorkTime)}
-            </div>
-          )}
           <div className={styles.salaryRecommendWrapper}>
+            {weekWorkTime && canView && (
+              <div className={styles.weekWorkTime}>
+                <Clock />
+                {formatWeekWorkTime(weekWorkTime)}
+              </div>
+            )}
             {salary && (
               <div
                 className={cn(styles.salary, {
-                  [styles.locked]: !canViewExperienceDetail,
+                  [styles.locked]: !canView,
                 })}
               >
-                {canViewExperienceDetail ? (
+                {canView ? (
                   <React.Fragment>
-                    <i.Coin />
+                    <Coin />
                     {formatSalary(salary)}
                   </React.Fragment>
                 ) : (
@@ -66,7 +69,7 @@ const ExperienceEntry = ({
               </div>
             )}
             <div className={styles.recommendToOthers}>
-              {recommendToOthers === 'yes' ? <i.Good /> : <i.Bad />}
+              {recommendToOthers === 'yes' ? <Good /> : <Bad />}
               {recommendToOthers === 'yes' ? '推' : '不推'}
             </div>
           </div>
@@ -86,10 +89,10 @@ const ExperienceEntry = ({
           </span>
           <span
             className={cn(styles.readmore, {
-              [styles.locked]: !canViewExperienceDetail,
+              [styles.locked]: !canView,
             })}
           >
-            {`閱讀更多${canViewExperienceDetail ? '' : '並解鎖'}`}
+            {`閱讀更多${canView ? '' : '並解鎖'}`}
           </span>
         </div>
       </section>
@@ -100,7 +103,7 @@ const ExperienceEntry = ({
 ExperienceEntry.propTypes = {
   data: PropTypes.object.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
-  canViewExperienceDetail: PropTypes.bool.isRequired,
+  canView: PropTypes.bool.isRequired,
 };
 
 ExperienceEntry.defaultProps = {

@@ -4,14 +4,15 @@ import { toPairs, compose, map } from 'ramda';
 
 import Heading from 'common/base/Heading';
 import FanPageBlock from 'common/FanPageBlock';
+import BreadCrumb from 'common/BreadCrumb';
 
 import {
   tabTypeTranslation,
   generateTabURL,
 } from '../../constants/companyJobTitle';
+import { generateBreadCrumbData } from './utils';
 
-import BreadCrumb from './BreadCrumb';
-import TabLinkGroup from './TabLinkGroup';
+import TabLinkGroup from '../common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
 
 const CompanyAndJobTitleWrapper = ({
@@ -37,12 +38,11 @@ const CompanyAndJobTitleWrapper = ({
   );
   return (
     <div>
-      <BreadCrumb
-        pageType={pageType}
-        pageName={pageName}
-        tabType={tabType}
-        style={{ marginBottom: '20px' }}
-      />
+      <div style={{ marginBottom: '20px' }}>
+        <BreadCrumb
+          data={generateBreadCrumbData({ pageType, pageName, tabType })}
+        />
+      </div>
       <Heading style={{ color: '#000000', marginBottom: '30px' }}>
         {pageName}
       </Heading>

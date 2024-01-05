@@ -6,14 +6,14 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 
 import { Heading, P } from 'common/base';
-import i from 'common/icons';
+import Coin from 'common/icons/Coin';
 import styles from './InterviewExperiences.module.css';
 import { formatCreatedAt, formatSalary, formatSalaryRange } from './helper';
 import Rating from './Rating';
 
-const createLinkTo = id => ({
+const createLinkTo = ({ id, pageType }) => ({
   pathname: `/experiences/${id}`,
-  state: { backable: true },
+  state: { pageType },
 });
 
 const SNIPPET_SIZE = 30;
@@ -30,10 +30,10 @@ const ExperienceEntry = ({
     sections: [section],
   },
   size,
-  canViewExperienceDetail,
+  canView,
 }) => (
   <div className={cn(styles.container, styles[size])}>
-    <Link to={createLinkTo(id)}>
+    <Link to={createLinkTo({ id, pageType })}>
       <section className={styles.contentWrapper}>
         <div className={styles.labels}>
           <P size="s" className={styles.date}>
@@ -43,12 +43,12 @@ const ExperienceEntry = ({
             {salary && (
               <div
                 className={cn(styles.salary, {
-                  [styles.locked]: !canViewExperienceDetail,
+                  [styles.locked]: !canView,
                 })}
               >
-                {canViewExperienceDetail ? (
+                {canView ? (
                   <React.Fragment>
-                    <i.Coin />
+                    <Coin />
                     {formatSalary(salary)}
                   </React.Fragment>
                 ) : (
@@ -79,10 +79,10 @@ const ExperienceEntry = ({
           </span>
           <span
             className={cn(styles.readmore, {
-              [styles.locked]: !canViewExperienceDetail,
+              [styles.locked]: !canView,
             })}
           >
-            {`閱讀更多${canViewExperienceDetail ? '' : '並解鎖'}`}
+            {`閱讀更多${canView ? '' : '並解鎖'}`}
           </span>
         </div>
       </section>
@@ -93,7 +93,7 @@ const ExperienceEntry = ({
 ExperienceEntry.propTypes = {
   data: PropTypes.object.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
-  canViewExperienceDetail: PropTypes.bool.isRequired,
+  canView: PropTypes.bool.isRequired,
 };
 
 ExperienceEntry.defaultProps = {

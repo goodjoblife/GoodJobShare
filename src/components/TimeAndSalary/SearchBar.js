@@ -5,13 +5,13 @@ import R from 'ramda';
 import ReactPixel from 'react-facebook-pixel';
 import { withRouter } from 'react-router-dom';
 
-import AutoCompleteSearchTextInput from 'common/form/AutoCompleteTextInput_new/AutoCompleteSearchTextInput';
+import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
 
 import styles from './SearchBar.module.css';
 import { searchKeywordSelector } from './common/selectors';
 
-import PIXEL_CONTENT_CATEGORY from '../../constants/pixelConstants';
+import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 
 const getInitialSearchTextFromLocation = R.compose(
   R.defaultTo(''),
@@ -54,7 +54,7 @@ const SearchBar = ({ history, location }) => {
       className={cn(styles.section, styles.searchbar)}
       onSubmit={handleFormSubmit}
     >
-      <AutoCompleteSearchTextInput
+      <SearchTextInput
         wrapperClassName={styles.textInputWrapper}
         className={styles.textInput}
         value={searchText}

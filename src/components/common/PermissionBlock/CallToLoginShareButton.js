@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Link } from 'react-router-dom';
-import useFacebookLogin from 'hooks/login/useFacebookLogin';
-import useGoogleLogin from 'hooks/login/useGoogleLogin';
-import authStatus from '../../../constants/authStatus';
+import { useLocation } from 'react-router';
+
+import useToBuy from 'hooks/payment/useToBuy';
+
 import styles from './PermissionBlock.module.css';
 
-const isLogin = auth => auth.get('status') === authStatus.CONNECTED;
+const AuthenticatedButton = ({ className, to, onClick, children }) => (
+  <Link className={cn('buttonCircleM', className)} to={to} onClick={onClick}>
+    {children}
+  </Link>
+);
 
-const CallToLoginShareButton = ({ isLoginText, to, auth }) => {
-  const fbLogin = useFacebookLogin();
-  const googleLogin = useGoogleLogin();
+const CallToLoginShareButton = ({ to, share }) => {
+  const location = useLocation();
+  const { toBuy, actionUrl } = useToBuy(location.pathname);
+  const onBuyClick = useCallback(
+    evt => {
+      evt.preventDefault();
+      toBuy();
+    },
+    [toBuy],
+  );
 
   return (
     <div
@@ -20,40 +31,29 @@ const CallToLoginShareButton = ({ isLoginText, to, auth }) => {
         textAlign: 'center',
       }}
     >
-      {isLogin(auth) ? (
-        <Link className={cn('buttonCircleM', 'buttonBlack2')} to={to}>
-          {isLoginText}
-        </Link>
-      ) : (
-        <div className={styles.loginBtnContainer}>
-          <button
-            className={`${cn('buttonCircleM')} ${styles.btn} ${styles.btnFb}`}
-            onClick={async () => {
-              await fbLogin();
-            }}
-          >
-            <pre>Facebook 登入</pre>
-          </button>
-          <button
-            className={`${cn('buttonCircleM')} ${styles.btn} ${
-              styles.btnGoogle
-            }`}
-            onClick={async () => {
-              await googleLogin();
-            }}
-          >
-            <pre>Google 登入</pre>
-          </button>
-        </div>
-      )}
+      <div className={styles.authenticatedGroup}>
+        <AuthenticatedButton
+          className={cn('buttonYellow', styles.button)}
+          to={to}
+          onClick={share}
+        >
+          留下一筆資料
+        </AuthenticatedButton>
+        <AuthenticatedButton
+          className={cn('buttonHollowRed', styles.button)}
+          to={actionUrl}
+          onClick={onBuyClick}
+        >
+          或以 99 元解鎖全站 1 個月
+        </AuthenticatedButton>
+      </div>
     </div>
   );
 };
 
 CallToLoginShareButton.propTypes = {
-  isLoginText: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-  auth: ImmutablePropTypes.map,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  share: PropTypes.func,
 };
 
 export default CallToLoginShareButton;

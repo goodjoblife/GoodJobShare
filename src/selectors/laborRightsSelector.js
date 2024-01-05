@@ -1,18 +1,8 @@
-import R from 'ramda';
-import { fromJS } from 'immutable';
-import fetchingStatus from '../constants/status';
+import R, { path } from 'ramda';
 
-export const menuEntriesSelector = R.path(['laborRights', 'menuEntries']);
+import fetchingStatus from 'constants/status';
 
-export const menuStatusSelector = R.pipe(
-  R.path(['laborRights', 'menuStatus']),
-  fromJS,
-);
-
-export const menuErrorSelector = R.pipe(
-  R.path(['laborRights', 'menuError']),
-  fromJS,
-);
+export const menuBoxSelector = path(['laborRights', 'menu']);
 
 export const entryDataSelector = entryId =>
   R.path(['laborRights', 'entries', entryId, 'data']);

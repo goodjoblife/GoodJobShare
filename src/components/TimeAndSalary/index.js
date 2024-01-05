@@ -11,7 +11,7 @@ import styles from './styles.module.css';
 import InfoTimeModal from './common/InfoTimeModal';
 import InfoSalaryModal from './common/InfoSalaryModal';
 import withModal from './common/withModal';
-import { IMG_HOST, SITE_NAME } from '../../constants/helmetData';
+import { IMG_HOST, SITE_NAME } from 'constants/helmetData';
 
 class TimeAndSalary extends Component {
   static propTypes = {

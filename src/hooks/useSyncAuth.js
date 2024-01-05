@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
 import { useEffectOnce } from 'react-use';
-import { useSelector, useDispatch } from 'react-redux';
-import { statusSelector, tokenSelector } from '../selectors/authSelector';
+import { useDispatch } from 'react-redux';
+import { useToken, useIsLoggedIn } from 'hooks/auth';
 import { loginWithToken as loginWithTokenAction } from '../actions/auth';
-import AuthStatus from '../constants/authStatus';
 
 export default () => {
   // Sync token at first glance
@@ -13,11 +12,11 @@ export default () => {
     [dispatch],
   );
 
-  const authStatus = useSelector(statusSelector);
-  const token = useSelector(tokenSelector);
+  const isLoggedIn = useIsLoggedIn();
+  const token = useToken();
 
   useEffectOnce(() => {
-    if (authStatus === AuthStatus.CONNECTED) {
+    if (isLoggedIn) {
       loginWithToken(token);
     }
   });

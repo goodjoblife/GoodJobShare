@@ -1,50 +1,78 @@
-export const getExperienceQuery = `
-query($id:ID!) {
-  experience(id:$id) {
-    id
-    type
-    company {
-      name
-    }
-    job_title {
-      name
-    }
-    region
-    experience_in_year
-    education
-    salary {
+export const queryExperienceGql = /* GraphQL */ `
+  query($id: ID!) {
+    experience(id: $id) {
+      id
       type
-      amount
-    }
-    title
-    sections {
-      subtitle
-      content
-    }
-    like_count
-    liked
-    created_at
-
-    ...on InterviewExperience {
-      interview_time {
-        year
-        month
+      company {
+        name
+        salary_work_time_statistics {
+          job_average_salaries {
+            job_title {
+              name
+            }
+            average_salary {
+              type
+              amount
+            }
+            data_count
+          }
+        }
       }
-      interview_result
-      overall_rating
-      interview_qas {
-        question
-        answer
+      job_title {
+        name
+        salary_distribution {
+          bins {
+            data_count
+            range {
+              type
+              from
+              to
+            }
+          }
+        }
       }
-      interview_sensitive_questions
-    }
+      region
+      experience_in_year
+      education
+      salary {
+        type
+        amount
+      }
+      title
+      sections {
+        subtitle
+        content
+      }
+      created_at
 
-    ...on WorkExperience {
-      week_work_time
-      recommend_to_others
+      ... on InterviewExperience {
+        interview_time {
+          year
+          month
+        }
+        interview_result
+        overall_rating
+        interview_qas {
+          question
+          answer
+        }
+        interview_sensitive_questions
+      }
+
+      ... on WorkExperience {
+        week_work_time
+        recommend_to_others
+      }
     }
   }
-}
+`;
+
+export const queryExperienceLikeGql = /* GraphQL */ `
+  query($id: ID!) {
+    experience(id: $id) {
+      liked
+    }
+  }
 `;
 
 export const createInterviewExperience = `
@@ -66,3 +94,39 @@ mutation CreateWorkExperience($input: CreateWorkExperienceInput!) {
     }
   }
 }`;
+
+export const queryRelatedExperiencesGql = /* GraphQL */ `
+  query($id: ID!, $start: Int!, $limit: Int!) {
+    experience(id: $id) {
+      id
+      relatedExperiences(start: $start, limit: $limit) {
+        id
+        type
+        company {
+          name
+        }
+        job_title {
+          name
+        }
+        created_at
+        salary {
+          type
+          amount
+        }
+        sections {
+          subtitle
+          content
+        }
+
+        ... on InterviewExperience {
+          overall_rating
+        }
+
+        ... on WorkExperience {
+          week_work_time
+          recommend_to_others
+        }
+      }
+    }
+  }
+`;

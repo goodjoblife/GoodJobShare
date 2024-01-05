@@ -4,7 +4,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: hsla(0, 0%, 100%, 0.9);
+  background: #f8f8f8;
   display: flex;
   justify-content: center;
   z-index: 999;
@@ -16,14 +16,21 @@
 
 .container {
   position: absolute;
-  top: 10px;
-  bottom: 10px;
+  top: 0px;
+  bottom: 0px;
   width: 360px;
   background: #ffffff;
-  box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.2);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 550px) {
+    max-width: 100%;
+  }
+
+  @media (min-width: 850px) {
+    width: 720px;
+  }
 
   .body {
     flex: 1;
@@ -36,18 +43,12 @@
   display: flex;
   flex-direction: column;
 
-  .pager {
-    flex: 1;
+  @media (min-width: 850px) {
+    padding-left: 110px;
+    padding-right: 110px;
   }
-}
 
-.question {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-
-  .answer {
+  .pager {
     flex: 1;
   }
 }

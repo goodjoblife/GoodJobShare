@@ -1,46 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import CommonNotFound from 'common/NotFound';
+import React from 'react';
 import Redirect from 'common/routing/Redirect';
-import { queryCampaignInfoList } from '../../actions/campaignInfo';
-import { isFetched } from '../../constants/status';
+import { generatePath } from 'react-router';
+import useCampaignName from './hooks/useCampaignName';
 
-class NotFound extends Component {
-  static fetchData({ store: { dispatch } }) {
-    return dispatch(queryCampaignInfoList());
-  }
+const CampaignTimeAndSalaryNotFound = () => {
+  const campaignName = useCampaignName();
 
-  componentDidMount() {
-    this.props.queryCampaignInfoList();
-  }
-
-  render() {
-    const { campaignName, campaignEntries, campaignEntriesStatus } = this.props;
-
-    if (
-      isFetched(campaignEntriesStatus) &&
-      !campaignEntries.has(campaignName)
-    ) {
-      return <CommonNotFound />;
-    }
-
-    return (
-      <Redirect
-        to={'/time-and-salary/campaigns/:campaign_name/latest'.replace(
-          ':campaign_name',
-          campaignName,
-        )}
-      />
-    );
-  }
-}
-
-NotFound.propTypes = {
-  campaignName: PropTypes.string.isRequired,
-  campaignEntries: ImmutablePropTypes.map.isRequired,
-  campaignEntriesStatus: PropTypes.string.isRequired,
-  queryCampaignInfoList: PropTypes.func.isRequired,
+  return (
+    <Redirect
+      to={generatePath('/time-and-salary/campaigns/:campaignName/latest', {
+        campaignName,
+      })}
+    />
+  );
 };
 
-export default NotFound;
+export default CampaignTimeAndSalaryNotFound;
