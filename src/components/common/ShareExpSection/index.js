@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Section, Wrapper, Heading, P } from 'common/base';
-import { useShareLink } from 'hooks/experiments';
 import InterviewImg from './share-2.png';
 import WorkExperienceImg from './share-3.png';
 import SalaryWorkTimeImg from './share-1.png';
@@ -18,8 +17,7 @@ const DefaultSubheading = () => (
 );
 
 const ShareExpSection = ({ heading, Subheading }) => {
-  // Get share link object according to Google Optimize parameters
-  const shareLink = useShareLink();
+  const shareLink = { state: { share: 'interview' } };
   return (
     <Section padding>
       <Wrapper size="l">
