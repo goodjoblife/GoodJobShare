@@ -13,6 +13,7 @@ import Header from './Header';
 import Footer from './Footer';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 import routes from '../../routes';
+import NetPromoter from 'common/QuestionnaireLabel/NetPromoter';
 
 const useShare = () => {
   const location = useLocation();
@@ -49,6 +50,7 @@ const App = () => {
       </Switch>
       <ShareInterviewModal open={share === 'interview'} onClose={exitShare} />
       <LoginModal />
+      <NetPromoter />
     </Fragment>
   );
 };

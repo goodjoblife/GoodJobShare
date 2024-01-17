@@ -1,0 +1,107 @@
+@value main-yellow, main-black from "common/variables.module.css";
+
+.content {
+  height: 218px;
+  width: 367px;
+  background-color: #fff;
+  border: 1px solid main-black;
+  overflow: hidden;
+  position: relative;
+  padding: 20px 24px 0px 24px;
+  z-index: 10;
+}
+
+.question {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 23px;
+}
+
+.nextStepContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 40px;
+}
+
+.nextStep {
+  width: 83px;
+  height: 28px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 21px;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 15px;
+    height: 3px;
+    background-color: #000;
+  }
+
+  &:before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &:after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}
+
+.range {
+  position: relative;
+  width: 311px;
+  margin-top: 30px;
+}
+
+.range input[type='range'] {
+  width: 100%;
+  position: relative;
+}
+
+.ticks {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  left: 4px;
+  width: 100%;
+  top: -20px;
+}
+
+.tick {
+  width: 2px;
+  height: 10px;
+  background: black;
+}
+
+.rangeLabels {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  width: 100%;
+  bottom: -20px;
+  left: 0;
+}
+
+.rangeLabels span {
+  font-size: 12px;
+}
