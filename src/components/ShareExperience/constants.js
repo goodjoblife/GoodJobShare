@@ -2,6 +2,9 @@ import { range } from 'ramda';
 
 export const DATA_KEY_COMPANY_NAME = 'companyName';
 export const DATA_KEY_JOB_TITLE = 'jobTitle';
+export const DATA_KEY_CURRENTLY_EMPLOYED = 'isCurrentlyEmployed';
+export const DATA_KEY_SECTOR = 'sector';
+export const DATA_KEY_EMPLOY_TYPE = 'employType';
 export const DATA_KEY_DATE = 'interviewTime';
 export const DATA_KEY_REGION = 'region';
 export const DATA_KEY_RESULT = 'interviewResult';

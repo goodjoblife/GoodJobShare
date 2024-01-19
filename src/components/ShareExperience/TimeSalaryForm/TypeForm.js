@@ -3,10 +3,12 @@ import R from 'ramda';
 import SubmittableTypeForm from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
 
-import employmentType from '../../../constants/employmentType';
 import {
   createCompanyQuestion,
   createJobTitleQuestion,
+  createCurrentlyEmployedQuestion,
+  createEmployTypeQuestion,
+  createSectorQuestion,
 } from '../questionCreators';
 
 const header = <Header title="請輸入你的一份薪資工時" />;
@@ -23,29 +25,9 @@ const experienceInYearOptions = R.range(0, 51).map(String);
 const questions = [
   createCompanyQuestion({ header }),
   createJobTitleQuestion({ header }),
-  {
-    title: '你現在在職嗎？',
-    type: 'radio',
-    dataKey: 'isCurrentlyEmployed',
-    defaultValue: null,
-    options: ['在職', '已離職'],
-    header: renderCompanyJobTitleHeader,
-  },
-  {
-    title: '廠區/門市/分公司',
-    type: 'text',
-    dataKey: 'sector',
-    defaultValue: '',
-    header: renderCompanyJobTitleHeader,
-  },
-  {
-    title: '職務型態',
-    type: 'radio',
-    dataKey: 'employmentType',
-    defaultValue: null,
-    options: R.values(employmentType),
-    header: renderCompanyJobTitleHeader,
-  },
+  createCurrentlyEmployedQuestion(),
+  createSectorQuestion(),
+  createEmployTypeQuestion(),
   {
     title: '性別',
     type: 'radio',
@@ -129,7 +111,7 @@ const TypeForm = ({ open, onClose }) => {
     <SubmittableTypeForm
       open={open}
       questions={questions}
-      header={header}
+      header={renderCompanyJobTitleHeader}
       onSubmit={onSubmit}
       onSubmitError={onSubmitError}
       onClose={onClose}

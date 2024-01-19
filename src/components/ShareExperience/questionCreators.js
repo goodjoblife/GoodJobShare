@@ -13,6 +13,7 @@ import {
   equals,
   keys,
   path,
+  values,
 } from 'ramda';
 import {
   DATA_KEY_COMPANY_NAME,
@@ -35,6 +36,9 @@ import {
   SENSITIVE_QUESTIONS_OPTIONS,
   COURSE_MIN_LENGTH,
   SUGGESTIONS_MIN_LENGTH,
+  DATA_KEY_CURRENTLY_EMPLOYED,
+  DATA_KEY_SECTOR,
+  DATA_KEY_EMPLOY_TYPE,
 } from './constants';
 import {
   isArray,
@@ -49,6 +53,7 @@ import {
 } from './utils';
 import { getCompaniesSearch } from 'apis/companySearchApi';
 import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
+import employmentType from '../../constants/employmentType';
 
 export const createCompanyQuestion = ({ header }) => ({
   title: '公司名稱',
@@ -85,6 +90,35 @@ export const createJobTitleQuestion = ({ header }) => ({
   search: value =>
     getJobTitlesSearch({ key: value }).then(when(isNot(isArray), always([]))),
   header,
+});
+
+export const createCurrentlyEmployedQuestion = () => ({
+  title: '你現在在職嗎？',
+  type: 'radio',
+  dataKey: DATA_KEY_CURRENTLY_EMPLOYED,
+  required: true,
+  defaultValue: null,
+  options: ['在職', '已離職'],
+  validator: isNot(isNil),
+  warning: '請填寫是否在職',
+});
+
+export const createSectorQuestion = () => ({
+  title: '廠區/門市/分公司',
+  type: 'text',
+  dataKey: DATA_KEY_SECTOR,
+  defaultValue: '',
+});
+
+export const createEmployTypeQuestion = () => ({
+  title: '職務型態',
+  type: 'radio',
+  dataKey: DATA_KEY_EMPLOY_TYPE,
+  required: true,
+  defaultValue: null,
+  options: values(employmentType),
+  validator: isNot(isNil),
+  warning: '請填寫職務型態',
 });
 
 export const createInterviewDateQuestion = () => ({
