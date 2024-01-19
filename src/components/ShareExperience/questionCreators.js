@@ -87,7 +87,7 @@ export const createJobTitleQuestion = ({ header }) => ({
   header,
 });
 
-export const createInterviewDateQuestion = ({ header }) => ({
+export const createInterviewDateQuestion = () => ({
   title: '什麼時候去面試的呢？',
   type: 'date',
   dataKey: DATA_KEY_DATE,
@@ -99,10 +99,9 @@ export const createInterviewDateQuestion = ({ header }) => ({
       isNil(year) && '年份',
       isNil(month) && '月份',
     )}`,
-  header,
 });
 
-export const createInterviewRegionQuestion = ({ header }) => ({
+export const createInterviewRegionQuestion = () => ({
   title: '面試地區',
   type: 'radio',
   dataKey: DATA_KEY_REGION,
@@ -111,10 +110,9 @@ export const createInterviewRegionQuestion = ({ header }) => ({
   validator: isNot(isNil),
   warning: '需填寫面試地區',
   options: REGION_OPTIONS,
-  header,
 });
 
-export const createInterviewResultQuestion = ({ header }) => ({
+export const createInterviewResultQuestion = () => ({
   title: '面試結果',
   type: 'radio-else',
   dataKey: DATA_KEY_RESULT,
@@ -133,10 +131,9 @@ export const createInterviewResultQuestion = ({ header }) => ({
       : null,
   options: RESULT_OPTIONS,
   placeholder: '輸入面試結果',
-  header,
 });
 
-export const createInterviewRatingQuestion = ({ header }) => ({
+export const createInterviewRatingQuestion = () => ({
   title: '為這次的面試經驗評個分吧！',
   type: 'rating',
   dataKey: DATA_KEY_RATING,
@@ -145,10 +142,9 @@ export const createInterviewRatingQuestion = ({ header }) => ({
   validator: greaterThan(0),
   warning: '需選取面試滿意程度',
   ratingLabels: RATING_LABELS,
-  header,
 });
 
-export const createInterviewCourseQuestion = ({ header }) => ({
+export const createInterviewCourseQuestion = () => ({
   title: '面試過程',
   type: 'textarea',
   dataKey: DATA_KEY_COURSE,
@@ -163,10 +159,9 @@ export const createInterviewCourseQuestion = ({ header }) => ({
   warning: value => `至少 ${COURSE_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
   footnote: value =>
     `至少 ${COURSE_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
-  header,
 });
 
-export const createInterviewSuggestionsQuestion = ({ header }) => ({
+export const createInterviewSuggestionsQuestion = () => ({
   title: '給其他面試者的中肯建議',
   type: 'textarea',
   dataKey: DATA_KEY_SUGGESTIONS,
@@ -182,19 +177,17 @@ export const createInterviewSuggestionsQuestion = ({ header }) => ({
     `至少 ${SUGGESTIONS_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
   footnote: value =>
     `至少 ${SUGGESTIONS_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
-  header,
 });
 
-export const createJobTenureQuestion = ({ header }) => ({
+export const createJobTenureQuestion = () => ({
   title: ({ jobTitle }) => `從事${jobTitle}相關的工作多久？`,
   type: 'radio',
   dataKey: DATA_KEY_JOB_TENURE,
   defaultValue: null,
   options: JOB_TENURE_OPTIONS,
-  header,
 });
 
-export const createSalaryQuestion = ({ header }) => ({
+export const createSalaryQuestion = () => ({
   title: '面談薪資',
   type: 'select-text',
   dataKey: DATA_KEY_SALARY,
@@ -215,10 +208,9 @@ export const createSalaryQuestion = ({ header }) => ({
       : null,
   options: keys(SALARY_TYPE_VALUE_BY_OPTION),
   placeholder: '700,000',
-  header,
 });
 
-export const createQuestionsQuestion = ({ header }) => ({
+export const createQuestionsQuestion = () => ({
   title: '面試中問了什麼問題？',
   type: 'text-list',
   dataKey: DATA_KEY_QUESTIONS,
@@ -226,10 +218,9 @@ export const createQuestionsQuestion = ({ header }) => ({
   validator: all(isNot(isEmpty)),
   warning: '需填寫面試問題內容',
   placeholder: '面試問題',
-  header,
 });
 
-export const createSensitiveQuestionsQuestion = ({ header }) => ({
+export const createSensitiveQuestionsQuestion = () => ({
   title: '是否有以下特殊問題？',
   type: 'checkbox-else',
   dataKey: DATA_KEY_SENSITIVE_QUESTIONS,
@@ -244,13 +235,11 @@ export const createSensitiveQuestionsQuestion = ({ header }) => ({
       : null,
   options: SENSITIVE_QUESTIONS_OPTIONS,
   placeholder: '輸入其他特殊問題內容',
-  header,
 });
 
-export const createSubmitQuestion = ({ header }) => ({
+export const createSubmitQuestion = () => ({
   title: () => () =>
     '感謝你分享面試心得，按下「送出」，馬上就可以解鎖全站 2 萬多筆資料哦！',
   type: 'customized',
   dataKey: '',
-  header,
 });

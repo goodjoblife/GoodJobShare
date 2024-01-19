@@ -66,17 +66,17 @@ const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
 const questions = [
   createCompanyQuestion({ header }),
   createJobTitleQuestion({ header }),
-  createInterviewDateQuestion({ header: renderCompanyJobTitleHeader }),
-  createInterviewRegionQuestion({ header: renderCompanyJobTitleHeader }),
-  createInterviewResultQuestion({ header: renderCompanyJobTitleHeader }),
-  createInterviewRatingQuestion({ header: renderCompanyJobTitleHeader }),
-  createInterviewCourseQuestion({ header: renderCompanyJobTitleHeader }),
-  createInterviewSuggestionsQuestion({ header: renderCompanyJobTitleHeader }),
-  createJobTenureQuestion({ header: renderCompanyJobTitleHeader }),
-  createSalaryQuestion({ header: renderCompanyJobTitleHeader }),
-  createQuestionsQuestion({ header: renderCompanyJobTitleHeader }),
-  createSensitiveQuestionsQuestion({ header: renderCompanyJobTitleHeader }),
-  createSubmitQuestion({ header: renderCompanyJobTitleHeader }),
+  createInterviewDateQuestion(),
+  createInterviewRegionQuestion(),
+  createInterviewResultQuestion(),
+  createInterviewRatingQuestion(),
+  createInterviewCourseQuestion(),
+  createInterviewSuggestionsQuestion(),
+  createJobTenureQuestion(),
+  createSalaryQuestion(),
+  createQuestionsQuestion(),
+  createSensitiveQuestionsQuestion(),
+  createSubmitQuestion(),
 ];
 
 const bodyFromDraft = evolve({
@@ -206,7 +206,7 @@ const TypeForm = ({ open, onClose }) => {
         open={open}
         onClose={() => setSubmitStatus('quitting')}
         questions={questions}
-        header={header}
+        header={renderCompanyJobTitleHeader}
         footer={<Footer dataNum={salaryCount + experienceCount} />}
         onSubmit={handleSubmit}
       />
