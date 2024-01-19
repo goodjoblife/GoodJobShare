@@ -4,6 +4,10 @@ import SubmittableTypeForm from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
 
 import employmentType from '../../../constants/employmentType';
+import {
+  createCompanyQuestion,
+  createJobTitleQuestion,
+} from '../questionCreators';
 
 const header = <Header title="請輸入你的一份薪資工時" />;
 
@@ -17,22 +21,8 @@ const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
 
 const experienceInYearOptions = R.range(0, 51).map(String);
 const questions = [
-  {
-    title: '職稱',
-    type: 'text',
-    dataKey: 'jobTitle',
-    defaultValue: '',
-    required: true,
-    validator: value => value.length > 0,
-    warning: '請填寫職稱',
-  },
-  {
-    title: '公司名稱',
-    type: 'text',
-    dataKey: 'companyName',
-    defaultValue: '',
-    header: renderCompanyJobTitleHeader,
-  },
+  createCompanyQuestion({ header }),
+  createJobTitleQuestion({ header }),
   {
     title: '你現在在職嗎？',
     type: 'radio',
