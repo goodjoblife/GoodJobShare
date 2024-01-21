@@ -14,6 +14,9 @@ import {
   createDayPromisedWorkTimeQuestion,
   createDayRealWorkTimeQuestion,
   createWeekWorkTimeQuestion,
+  createOvertimeFrequencyQuestion,
+  createOvertimeSalaryQuestion,
+  createCompensatoryDayOffQuestion,
 } from '../questionCreators';
 
 const header = <Header title="請輸入你的一份薪資工時" />;
@@ -38,30 +41,9 @@ const questions = [
   createDayPromisedWorkTimeQuestion(),
   createDayRealWorkTimeQuestion(),
   createWeekWorkTimeQuestion(),
-  {
-    title: '加班頻率',
-    type: 'radio',
-    dataKey: 'overtimeFrequency',
-    defaultValue: null,
-    options: ['幾乎不', '偶爾', '經常', '幾乎每天'],
-    header: renderCompanyJobTitleHeader,
-  },
-  {
-    title: '加班有無加班費',
-    type: 'radio',
-    dataKey: 'hasOvertimeSalary',
-    defaultValue: null,
-    options: ['有', '無', '不知道'],
-    header: renderCompanyJobTitleHeader,
-  },
-  {
-    title: '加班有無補休',
-    type: 'radio',
-    dataKey: 'hasCompensatoryDayoff',
-    defaultValue: null,
-    options: ['有', '無', '不知道'],
-    header: renderCompanyJobTitleHeader,
-  },
+  createOvertimeFrequencyQuestion(),
+  createOvertimeSalaryQuestion(),
+  createCompensatoryDayOffQuestion(),
 ];
 
 const TypeForm = ({ open, onClose }) => {

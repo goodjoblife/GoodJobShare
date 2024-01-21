@@ -24,6 +24,7 @@ import TextList from './TextList';
 import TitleBlock from '../TitleBlock';
 import Scrollable from '../Scrollable';
 import styles from './styles.module.css';
+import { OptionPropType } from './Checkbox/PropTypes';
 
 export const availableTypes = [
   'text',
@@ -246,8 +247,7 @@ QuestionBuilder.propTypes = {
   search: func,
   placeholder: string,
   footnote: oneOfType([string, node, func]),
-  options: arrayOf(string),
-  ratingLabels: arrayOf(string.isRequired),
+  options: arrayOf(OptionPropType),
 };
 
 QuestionBuilder.defaultProps = {

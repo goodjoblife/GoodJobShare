@@ -4,6 +4,7 @@ import { withShape } from 'airbnb-prop-types';
 
 import Wrapper from './private/Wrapper';
 import BlockSelectElse from './private/BlockSelectElse';
+import { OptionPropType, ValuePropType } from './PropTypes';
 
 const RadioElse = ({
   page,
@@ -41,13 +42,13 @@ RadioElse.propTypes = {
   required: PropTypes.bool,
   defaultValue: withShape(PropTypes.array.isRequired, {
     // option
-    0: PropTypes.string,
+    0: ValuePropType,
     // else
     1: PropTypes.string.isRequired,
   }),
   value: withShape(PropTypes.array.isRequired, {
     // option
-    0: PropTypes.string,
+    0: ValuePropType,
     // else
     1: PropTypes.string.isRequired,
   }),
@@ -55,7 +56,7 @@ RadioElse.propTypes = {
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
   validator: PropTypes.func,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
   placeholder: PropTypes.string,
 };
 

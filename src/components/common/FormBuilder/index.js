@@ -23,6 +23,7 @@ import NavigatorBlock from './NavigatorBlock';
 import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
+import { OptionPropType } from './QuestionBuilder/Checkbox/PropTypes';
 
 const findWarningAgainstValue = (value, warning, validator) => {
   if (validator) {
@@ -262,7 +263,7 @@ FormBuilder.propTypes = {
       search: func,
       placeholder: string,
       footnote: oneOfType([string, node, func]),
-      options: arrayOf(string),
+      options: arrayOf(OptionPropType),
       ratingLabels: arrayOf(string.isRequired),
       renderCustomizedQuestion: func,
     }),

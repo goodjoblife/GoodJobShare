@@ -46,6 +46,9 @@ import {
   DATA_KEY_DAY_PROMISED_WORK_TIME,
   DATA_KEY_DAY_REAL_WORK_TIME,
   DATA_KEY_WEEK_WORK_TIME,
+  DATA_KEY_OVERTIME_FREQUENCY,
+  DATA_KEY_HAS_OVERTIME_SALARY,
+  DATA_KEY_HAS_COMPENSATORY_DAYOFF,
 } from './constants';
 import {
   isArray,
@@ -342,6 +345,46 @@ export const createWeekWorkTimeQuestion = () => ({
       </WorkTimeExample>
     </Fragment>
   ),
+});
+
+const OVERTIME_FREQUENCY_LABELS = ['幾乎不', '偶爾', '經常', '幾乎每天'];
+
+export const createOvertimeFrequencyQuestion = () => ({
+  title: '加班頻率',
+  type: 'radio',
+  dataKey: DATA_KEY_OVERTIME_FREQUENCY,
+  required: true,
+  defaultValue: null,
+  options: OVERTIME_FREQUENCY_LABELS.map((label, index) => ({
+    label,
+    value: index,
+  })),
+  validator: isNot(isNil),
+  warning: '需填寫加班頻率',
+});
+
+export const createOvertimeSalaryQuestion = () => ({
+  title: '加班有無加班費',
+  type: 'radio',
+  dataKey: DATA_KEY_HAS_OVERTIME_SALARY,
+  defaultValue: null,
+  options: [
+    { label: '有', value: 'yes' },
+    { label: '沒有', value: 'no' },
+    { label: '不知道', value: "don't know" },
+  ],
+});
+
+export const createCompensatoryDayOffQuestion = () => ({
+  title: '加班有無補休',
+  type: 'radio',
+  dataKey: DATA_KEY_HAS_COMPENSATORY_DAYOFF,
+  defaultValue: null,
+  options: [
+    { label: '有', value: 'yes' },
+    { label: '沒有', value: 'no' },
+    { label: '不知道', value: "don't know" },
+  ],
 });
 
 export const createQuestionsQuestion = () => ({

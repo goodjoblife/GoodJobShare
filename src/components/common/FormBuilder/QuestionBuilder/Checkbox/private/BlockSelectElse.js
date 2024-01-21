@@ -7,6 +7,8 @@ import cn from 'classnames';
 import styles from './private.module.css';
 import TextInput from 'common/form/TextInput';
 import BlockSelect from './BlockSelect';
+import { OptionPropType, ValuePropType } from '../PropTypes';
+import { normalizeOptions } from './utils';
 
 const BlockSelectElse = ({
   dataKey,
@@ -18,14 +20,20 @@ const BlockSelectElse = ({
   multiple,
   placeholder,
 }) => {
+  options = normalizeOptions(options);
+
   const elseRef = useRef(null);
+  const lastOptionValue = R.compose(
+    R.prop('value'),
+    R.last,
+  )(options);
   const hasElse = useMemo(() => {
     if (multiple) {
-      return R.contains(R.last(options), selected);
+      return R.contains(lastOptionValue, selected);
     } else {
-      return R.equals(R.last(options), selected);
+      return R.equals(lastOptionValue, selected);
     }
-  }, [multiple, options, selected]);
+  }, [lastOptionValue, multiple, selected]);
   const handleSelectChange = useCallback(
     selected => onChange([selected, elseText]),
     [elseText, onChange],
@@ -73,15 +81,15 @@ BlockSelectElse.propTypes = {
   value: withShape(PropTypes.array.isRequired, {
     // option
     0: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+      ValuePropType,
+      PropTypes.arrayOf(ValuePropType).isRequired,
     ]),
     // else
     1: PropTypes.string.isRequired,
   }),
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
   multiple: PropTypes.bool.isRequired,
   placeholder: PropTypes.string,
 };
