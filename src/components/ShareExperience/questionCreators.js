@@ -230,28 +230,46 @@ export const createJobTenureQuestion = () => ({
   options: JOB_TENURE_OPTIONS,
 });
 
-export const createSalaryQuestion = () => ({
-  title: '面談薪資',
+export const createRequiredSalaryQuestion = () => ({
+  title: '薪資',
   type: 'select-text',
   dataKey: DATA_KEY_SALARY,
   defaultValue: [null, ''],
+  required: true,
   validator: ([type, amount]) =>
-    isNot(isNil, type)
-      ? isNot(isEmpty, amount) &&
-        isSalaryAmount(amount) &&
-        isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type], amount)
-      : isEmpty(amount),
+    isNot(isNil, type) &&
+    isNot(isEmpty, amount) &&
+    isSalaryAmount(amount) &&
+    isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type], amount),
   warning: ([type, amount]) =>
-    isNot(isNil, type) && (isEmpty(amount) || isNot(isSalaryAmount, amount))
-      ? '需填寫薪資'
-      : isNil(type) && isNot(isEmpty, amount)
+    isNil(type)
       ? '需選擇薪水類型'
-      : isNot(isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type]), amount)
+      : isNot(isEmpty, amount) &&
+        isNot(isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type]), amount)
       ? '薪資不合理。可能有少填寫 0，或薪資種類(年薪/月薪/日薪/時薪)選擇錯誤，請再檢查一次'
-      : null,
+      : '需填寫薪資',
   options: keys(SALARY_TYPE_VALUE_BY_OPTION),
   placeholder: '700,000',
+  suffix: '元',
+  footnote:
+    '薪資請以包含平常的薪資、分紅、年終、績效獎金等實質上獲得的價值去計算。',
 });
+
+export const createSalaryQuestion = () => {
+  const {
+    required,
+    validator,
+    warning,
+    ...question
+  } = createRequiredSalaryQuestion();
+  return {
+    ...question,
+    validator: ([type, amount]) =>
+      (isNil(type) && isEmpty(amount)) || validator([type, amount]),
+    warning: ([type, amount]) =>
+      isNil(type) && isEmpty(amount) ? null : warning([type, amount]),
+  };
+};
 
 export const createQuestionsQuestion = () => ({
   title: '面試中問了什麼問題？',

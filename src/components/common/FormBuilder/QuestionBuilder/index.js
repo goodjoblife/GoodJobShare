@@ -56,6 +56,7 @@ const useQuestionNode = ({
   warning,
   validator,
   placeholder,
+  suffix,
   footnote,
   options,
   ratingLabels,
@@ -123,6 +124,8 @@ const useQuestionNode = ({
           {...commonProps}
           placeholder={placeholder}
           options={options}
+          suffix={suffix}
+          footnote={footnote}
         />,
       ];
     case 'text-list':
@@ -169,6 +172,7 @@ const QuestionBuilder = ({
   warning,
   validator,
   placeholder,
+  suffix,
   footnote,
   options,
   ratingLabels,
@@ -190,6 +194,7 @@ const QuestionBuilder = ({
     warning,
     validator,
     placeholder,
+    suffix,
     footnote,
     options,
     ratingLabels,

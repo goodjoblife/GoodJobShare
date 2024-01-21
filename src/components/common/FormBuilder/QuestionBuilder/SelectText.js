@@ -20,6 +20,8 @@ const SelectText = ({
   warning,
   validator,
   placeholder,
+  suffix,
+  footnote,
   options,
 }) => (
   <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
@@ -38,9 +40,10 @@ const SelectText = ({
             onEnter={onConfirm}
           />
         </div>
-        <div className={cn(styles.suffixLabel, 'pS')}>元</div>
+        <div className={cn(styles.suffixLabel, 'pS')}>{suffix}</div>
       </div>
     </div>
+    {footnote && <p className={commonStyles.footnote}>{footnote}</p>}
     <p className={cn(commonStyles.warning, commonStyles.inlineWarning, 'pS')}>
       {warning}
     </p>
@@ -60,6 +63,8 @@ SelectText.propTypes = {
   warning: PropTypes.string,
   validator: PropTypes.func,
   placeholder: PropTypes.string,
+  suffix: PropTypes.string,
+  footnote: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
