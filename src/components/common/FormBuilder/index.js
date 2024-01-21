@@ -67,20 +67,21 @@ const useQuestion = (question, draft) => {
       warning,
       validator,
     } = question;
-    return [
-      true,
-      typeof header === 'function' ? header(draft) : header,
-      typeof footer === 'function' ? footer(draft) : footer,
+    return {
+      shouldRenderQuestion: true,
+      questionHeader: typeof header === 'function' ? header(draft) : header,
+      questionFooter: typeof footer === 'function' ? footer(draft) : footer,
       dataKey,
-      findWarningAgainstValue(draft[dataKey], warning, validator),
-      !required &&
+      warning: findWarningAgainstValue(draft[dataKey], warning, validator),
+      skippable:
+        !required &&
         R.equals(
           draft[dataKey],
           typeof defaultValue === 'function' ? defaultValue() : defaultValue,
         ),
-    ];
+    };
   } else {
-    return [false];
+    return { shouldRenderQuestion: false };
   }
 };
 
@@ -107,14 +108,14 @@ const FormBuilder = ({
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
 
-  const [
+  const {
     shouldRenderQuestion,
     questionHeader,
     questionFooter,
     dataKey,
     warning,
     skippable,
-  ] = useQuestion(questions[page], draft);
+  } = useQuestion(questions[page], draft);
 
   const [isWarningShown, setWarningShown] = useState(false);
 
