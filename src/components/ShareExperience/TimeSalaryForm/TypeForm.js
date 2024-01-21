@@ -17,7 +17,9 @@ import {
   createOvertimeFrequencyQuestion,
   createOvertimeSalaryQuestion,
   createCompensatoryDayOffQuestion,
+  createSubmitQuestion,
 } from '../questionCreators';
+import { tabType } from '../../../constants/companyJobTitle';
 
 const header = <Header title="請輸入你的一份薪資工時" />;
 
@@ -44,6 +46,7 @@ const questions = [
   createOvertimeFrequencyQuestion(),
   createOvertimeSalaryQuestion(),
   createCompensatoryDayOffQuestion(),
+  createSubmitQuestion({ type: tabType.TIME_AND_SALARY }),
 ];
 
 const TypeForm = ({ open, onClose }) => {

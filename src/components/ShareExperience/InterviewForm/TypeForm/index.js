@@ -49,6 +49,7 @@ import { sendEvent } from 'utils/hotjarUtil';
 import { getUserPseudoId } from 'utils/GAUtils';
 
 import { GA_MEASUREMENT_ID } from '../../../../config';
+import { tabType } from '../../../../constants/companyJobTitle';
 
 const header = <Header title="請輸入你的一份面試經驗" />;
 const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
@@ -72,7 +73,7 @@ const questions = [
   createSalaryQuestion(),
   createQuestionsQuestion(),
   createSensitiveQuestionsQuestion(),
-  createSubmitQuestion(),
+  createSubmitQuestion({ type: tabType.INTERVIEW_EXPERIENCE }),
 ];
 
 const bodyFromDraft = evolve({

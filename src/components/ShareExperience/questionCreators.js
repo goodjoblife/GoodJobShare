@@ -67,6 +67,7 @@ import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
 import employmentType from '../../constants/employmentType';
 import WorkTimeExample from './WorkTimeExample';
 import Emoji from '../common/icons/Emoji';
+import { tabTypeTranslation } from '../../constants/companyJobTitle';
 
 export const createCompanyQuestion = ({ header }) => ({
   title: '公司名稱',
@@ -440,9 +441,9 @@ export const createSensitiveQuestionsQuestion = () => ({
   placeholder: '輸入其他特殊問題內容',
 });
 
-export const createSubmitQuestion = () => ({
+export const createSubmitQuestion = ({ type }) => ({
   title: () => () =>
-    '感謝你分享面試心得，按下「送出」，馬上就可以解鎖全站 2 萬多筆資料哦！',
+    `感謝你分享${tabTypeTranslation[type]}，按下「送出」，馬上就可以解鎖全站 2 萬多筆資料哦！`,
   type: 'customized',
   dataKey: '',
 });
