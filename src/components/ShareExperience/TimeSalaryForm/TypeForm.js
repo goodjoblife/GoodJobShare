@@ -9,6 +9,7 @@ import {
   createCurrentlyEmployedQuestion,
   createEmployTypeQuestion,
   createSectorQuestion,
+  createGenderQuestion,
 } from '../questionCreators';
 
 const header = <Header title="請輸入你的一份薪資工時" />;
@@ -28,14 +29,7 @@ const questions = [
   createCurrentlyEmployedQuestion(),
   createSectorQuestion(),
   createEmployTypeQuestion(),
-  {
-    title: '性別',
-    type: 'radio',
-    dataKey: 'gender',
-    defaultValue: null,
-    options: ['男', '女', '其他'],
-    header: renderCompanyJobTitleHeader,
-  },
+  createGenderQuestion(),
   {
     title: '薪資',
     type: 'customized',

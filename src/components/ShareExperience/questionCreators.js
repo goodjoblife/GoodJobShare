@@ -39,6 +39,7 @@ import {
   DATA_KEY_CURRENTLY_EMPLOYED,
   DATA_KEY_SECTOR,
   DATA_KEY_EMPLOY_TYPE,
+  DATA_KEY_GENDER,
 } from './constants';
 import {
   isArray,
@@ -119,6 +120,14 @@ export const createEmployTypeQuestion = () => ({
   options: values(employmentType),
   validator: isNot(isNil),
   warning: '請填寫職務型態',
+});
+
+export const createGenderQuestion = () => ({
+  title: '性別',
+  type: 'radio',
+  dataKey: DATA_KEY_GENDER,
+  defaultValue: null,
+  options: ['男', '女', '其他'],
 });
 
 export const createInterviewDateQuestion = () => ({
