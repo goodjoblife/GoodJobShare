@@ -15,6 +15,9 @@ export const DATA_KEY_SUGGESTIONS = 'suggestions';
 export const DATA_KEY_JOB_TENURE = 'experienceInYear';
 export const DATA_KEY_SALARY = 'salary';
 export const DATA_KEY_EXPERIENCE_IN_YEAR = 'experienceInYear';
+export const DATA_KEY_DAY_PROMISED_WORK_TIME = 'dayPromisedWorkTime';
+export const DATA_KEY_DAY_REAL_WORK_TIME = 'dayRealWorkTime';
+export const DATA_KEY_WEEK_WORK_TIME = 'weekWorkTime';
 export const DATA_KEY_QUESTIONS = 'interviewQas';
 export const DATA_KEY_SENSITIVE_QUESTIONS = 'sensitiveQuestions';
 

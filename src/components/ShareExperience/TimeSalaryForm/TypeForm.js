@@ -11,6 +11,9 @@ import {
   createGenderQuestion,
   createRequiredSalaryQuestion,
   createExperienceInYearQuestion,
+  createDayPromisedWorkTimeQuestion,
+  createDayRealWorkTimeQuestion,
+  createWeekWorkTimeQuestion,
 } from '../questionCreators';
 
 const header = <Header title="請輸入你的一份薪資工時" />;
@@ -32,27 +35,9 @@ const questions = [
   createGenderQuestion(),
   createRequiredSalaryQuestion(),
   createExperienceInYearQuestion(),
-  {
-    title: '工作日表訂工時',
-    type: 'text',
-    dataKey: 'dayPromisedWorkTime',
-    defaultValue: '',
-    header: renderCompanyJobTitleHeader,
-  },
-  {
-    title: '實際平均工時',
-    type: 'text',
-    dataKey: 'dayRealWorkTime',
-    defaultValue: '',
-    header: renderCompanyJobTitleHeader,
-  },
-  {
-    title: '一週總工時',
-    type: 'text',
-    dataKey: 'weekWorkTime',
-    defaultValue: '',
-    header: renderCompanyJobTitleHeader,
-  },
+  createDayPromisedWorkTimeQuestion(),
+  createDayRealWorkTimeQuestion(),
+  createWeekWorkTimeQuestion(),
   {
     title: '加班頻率',
     type: 'radio',

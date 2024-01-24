@@ -85,6 +85,7 @@ const useQuestionNode = ({
           placeholder={placeholder}
           onSelect={onSelect}
           search={search}
+          footnote={footnote}
         />,
       ];
     case 'textarea':

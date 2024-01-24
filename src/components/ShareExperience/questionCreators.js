@@ -1,3 +1,4 @@
+import React, { Fragment } from 'react';
 import {
   isNil,
   isEmpty,
@@ -42,6 +43,9 @@ import {
   DATA_KEY_EMPLOY_TYPE,
   DATA_KEY_GENDER,
   DATA_KEY_EXPERIENCE_IN_YEAR,
+  DATA_KEY_DAY_PROMISED_WORK_TIME,
+  DATA_KEY_DAY_REAL_WORK_TIME,
+  DATA_KEY_WEEK_WORK_TIME,
 } from './constants';
 import {
   isArray,
@@ -53,10 +57,12 @@ import {
   isNot,
   within,
   isValidSalary,
+  isNumber,
 } from './utils';
 import { getCompaniesSearch } from 'apis/companySearchApi';
 import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
 import employmentType from '../../constants/employmentType';
+import WorkTimeExample from './WorkTimeExample';
 
 export const createCompanyQuestion = ({ header }) => ({
   title: '公司名稱',
@@ -282,6 +288,60 @@ export const createExperienceInYearQuestion = () => ({
   options: ['不到 1 年', ...range(1, 51).map(n => `${n} 年`)],
   validator: isNot(isNil),
   warning: '需填寫工作經歷',
+});
+
+export const createDayPromisedWorkTimeQuestion = () => ({
+  title: '工作日表訂工時',
+  type: 'text',
+  dataKey: DATA_KEY_DAY_PROMISED_WORK_TIME,
+  required: true,
+  defaultValue: '',
+  validator: isNumber,
+  warning: '請填寫表定工時',
+  placeholder: '8 或 8.5',
+  footnote: '工作日指與雇主約定的上班日，或是排班排定的日子。',
+});
+
+export const createDayRealWorkTimeQuestion = () => ({
+  title: '實際平均工時',
+  type: 'text',
+  dataKey: DATA_KEY_DAY_REAL_WORK_TIME,
+  required: true,
+  defaultValue: '',
+  validator: isNumber,
+  warning: '請填寫實際工時',
+  placeholder: '8 或 8.5',
+  footnote: (
+    <Fragment>
+      實際平均工時包含在家工作、待命的時間。
+      <WorkTimeExample>
+        例如: 公司規定 9:00上班，18:00 下班，午休 1 小時。 那麼表訂工作時間為
+        (18:00-9:00)-1=8 小時。 若實際上平均 20:00 才下班，則實際工作時間為
+        (20:00-9:00)-1=10 小時。
+      </WorkTimeExample>
+    </Fragment>
+  ),
+});
+
+export const createWeekWorkTimeQuestion = () => ({
+  title: '一週總工時',
+  type: 'text',
+  dataKey: DATA_KEY_WEEK_WORK_TIME,
+  required: true,
+  defaultValue: '',
+  validator: isNumber,
+  warning: '請填寫週總工時',
+  placeholder: '40 或 40.5',
+  footnote: (
+    <Fragment>
+      請您留下最近一週的「實際工作時數（不含休息時間，如：午休）」。
+      <WorkTimeExample>
+        例如: 週一至週五工作 10 小時，週六加班 8 小時，則最近一週工時為 10x5+8 =
+        58 小時。
+        若您為每月排班，您可以考慮將整個月個工時加總，除上該月天數，再乘上七估算。
+      </WorkTimeExample>
+    </Fragment>
+  ),
 });
 
 export const createQuestionsQuestion = () => ({
