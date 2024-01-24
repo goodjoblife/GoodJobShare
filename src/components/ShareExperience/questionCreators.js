@@ -66,6 +66,7 @@ import { getCompaniesSearch } from 'apis/companySearchApi';
 import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
 import employmentType from '../../constants/employmentType';
 import WorkTimeExample from './WorkTimeExample';
+import Emoji from '../common/icons/Emoji';
 
 export const createCompanyQuestion = ({ header }) => ({
   title: '公司名稱',
@@ -347,6 +348,13 @@ export const createWeekWorkTimeQuestion = () => ({
   ),
 });
 
+const OptionEmoji = ({ value, children }) => (
+  <Fragment>
+    {children}
+    <Emoji emoji={`emoji-${value}`} style={{ width: '25px', height: '25px', leftMargin: '4px' }} />
+  </Fragment>
+);
+
 const OVERTIME_FREQUENCY_LABELS = ['幾乎不', '偶爾', '經常', '幾乎每天'];
 
 export const createOvertimeFrequencyQuestion = () => ({
@@ -356,7 +364,7 @@ export const createOvertimeFrequencyQuestion = () => ({
   required: true,
   defaultValue: null,
   options: OVERTIME_FREQUENCY_LABELS.map((label, index) => ({
-    label,
+    label: <OptionEmoji value={index}>{label}</OptionEmoji>,
     value: index,
   })),
   validator: isNot(isNil),
