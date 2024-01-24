@@ -8,6 +8,7 @@ import {
   oneOf,
   oneOfType,
   arrayOf,
+  node,
 } from 'prop-types';
 import cn from 'classnames';
 
@@ -238,10 +239,9 @@ QuestionBuilder.propTypes = {
   onSelect: func,
   search: func,
   placeholder: string,
-  footnote: oneOfType([string, func]),
+  footnote: oneOfType([string, node, func]),
   options: arrayOf(string),
   ratingLabels: arrayOf(string.isRequired),
-  renderCustomizedQuestion: func,
 };
 
 QuestionBuilder.defaultProps = {
