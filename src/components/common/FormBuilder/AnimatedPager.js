@@ -10,8 +10,9 @@ const AnimatedPager = ({ page, children, ...props }) => {
   const [handleRef, { width: frameWidth }] = useMeasure();
   return (
     <div ref={handleRef} className={cn(styles.frame, props.className)}>
-      {Children.map(children, ({ props: { children } }) => (
+      {Children.map(children, ({ props: { children } }, i) => (
         <div
+          key={i}
           className={styles.page}
           style={{ left: `${-frameWidth * page}px` }}
         >
