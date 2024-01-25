@@ -264,6 +264,7 @@ FormBuilder.propTypes = {
       placeholder: string,
       footnote: oneOfType([string, node, func]),
       options: arrayOf(OptionPropType),
+      elseOptions: arrayOf(OptionPropType),
       ratingLabels: arrayOf(string.isRequired),
       renderCustomizedQuestion: func,
     }),

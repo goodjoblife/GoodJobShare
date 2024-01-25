@@ -19,6 +19,7 @@ const RadioElse = ({
   warning,
   validator,
   options,
+  elseOptionValue,
   placeholder,
 }) => (
   <Wrapper warning={warning}>
@@ -29,6 +30,7 @@ const RadioElse = ({
       onChange={onChange}
       onConfirm={onConfirm}
       options={options}
+      elseOptionValue={elseOptionValue}
       placeholder={placeholder}
     />
   </Wrapper>
@@ -57,6 +59,7 @@ RadioElse.propTypes = {
   warning: PropTypes.string,
   validator: PropTypes.func,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
+  elseOptionValue: ValuePropType.isRequired,
   placeholder: PropTypes.string,
 };
 

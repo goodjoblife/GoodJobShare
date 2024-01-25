@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
 
 import Wrapper from './private/Wrapper';
-import BlockSelectElse from './private/BlockSelectElse';
+import BlockSelectElseRadio from './private/BlockSelectElseRadio';
 import { OptionPropType, ValuePropType } from './PropTypes';
 
-const CheckboxElse = ({
+const RadioElseRadio = ({
   page,
   title,
   description,
@@ -20,23 +20,25 @@ const CheckboxElse = ({
   validator,
   options,
   elseOptionValue,
+  elseOptions,
   placeholder,
 }) => (
   <Wrapper warning={warning}>
-    <BlockSelectElse
+    <BlockSelectElseRadio
       dataKey={dataKey}
+      required={required}
       value={value}
       onChange={onChange}
       onConfirm={onConfirm}
       options={options}
       elseOptionValue={elseOptionValue}
-      multiple
+      elseOptions={elseOptions}
       placeholder={placeholder}
     />
   </Wrapper>
 );
 
-CheckboxElse.propTypes = {
+RadioElseRadio.propTypes = {
   page: PropTypes.number.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   description: PropTypes.string,
@@ -44,15 +46,15 @@ CheckboxElse.propTypes = {
   required: PropTypes.bool,
   defaultValue: withShape(PropTypes.array.isRequired, {
     // option
-    0: PropTypes.arrayOf(ValuePropType.isRequired).isRequired,
+    0: ValuePropType,
     // else
-    1: PropTypes.string.isRequired,
+    1: ValuePropType,
   }),
   value: withShape(PropTypes.array.isRequired, {
     // option
-    0: PropTypes.arrayOf(ValuePropType.isRequired).isRequired,
+    0: ValuePropType,
     // else
-    1: PropTypes.string.isRequired,
+    1: ValuePropType,
   }),
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
@@ -60,7 +62,8 @@ CheckboxElse.propTypes = {
   validator: PropTypes.func,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
   elseOptionValue: ValuePropType.isRequired,
+  elseOptions: PropTypes.arrayOf(OptionPropType).isRequired,
   placeholder: PropTypes.string,
 };
 
-export default CheckboxElse;
+export default RadioElseRadio;

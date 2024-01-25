@@ -1,29 +1,30 @@
-import React, { useCallback, useRef, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
 import R from 'ramda';
 import cn from 'classnames';
 
 import styles from './private.module.css';
-import TextInput from 'common/form/TextInput';
+import Radio from 'common/form/Radio';
 import BlockSelect from './BlockSelect';
 import { OptionPropType, ValuePropType } from '../PropTypes';
 import { normalizeOptions } from './utils';
+import useDebouncedConfirm from '../../../useDebouncedConfirm';
 
-const BlockSelectElse = ({
+const BlockSelectElseRadio = ({
   dataKey,
   required,
-  value: [selected, elseText],
+  value: [selected, elseValue],
   onChange,
   onConfirm,
   options,
   elseOptionValue,
+  elseOptions,
   multiple,
   placeholder,
 }) => {
   options = normalizeOptions(options);
 
-  const elseRef = useRef(null);
   const hasElse = useMemo(() => {
     if (multiple) {
       return R.contains(elseOptionValue, selected);
@@ -32,21 +33,21 @@ const BlockSelectElse = ({
     }
   }, [elseOptionValue, multiple, selected]);
   const handleSelectChange = useCallback(
-    selected => onChange([selected, elseText]),
-    [elseText, onChange],
+    selected => onChange([selected, elseValue]),
+    [elseValue, onChange],
   );
+
+  const debouncedConfirm = useDebouncedConfirm(onConfirm, 300);
   const handleElseChange = useCallback(
-    e => onChange([selected, e.target.value]),
-    [onChange, selected],
+    e => {
+      onChange([selected, e.target.value]);
+      debouncedConfirm();
+    },
+    [debouncedConfirm, onChange, selected],
   );
   const handleSelectConfirm = useCallback(() => {
     if (!hasElse) onConfirm();
   }, [hasElse, onConfirm]);
-  useEffect(() => {
-    if (hasElse) {
-      elseRef.current.focus();
-    }
-  }, [hasElse]);
   return [
     <BlockSelect
       key="select"
@@ -58,21 +59,27 @@ const BlockSelectElse = ({
       options={options}
       multiple={multiple}
     />,
-    <TextInput
+    <div
       key="else"
-      ref={elseRef}
-      wrapperClassName={cn(styles.label, {
+      className={cn(styles.label, {
         [styles.hidden]: !hasElse,
       })}
-      value={elseText}
-      onChange={handleElseChange}
-      onEnter={onConfirm}
-      placeholder={placeholder}
-    />,
+    >
+      {elseOptions.map(({ label, value }) => (
+        <Radio
+          key={value}
+          label={label}
+          value={value}
+          margin="10px 0 5px 0"
+          checked={value === elseValue}
+          onChange={handleElseChange}
+        />
+      ))}
+    </div>,
   ];
 };
 
-BlockSelectElse.propTypes = {
+BlockSelectElseRadio.propTypes = {
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
   value: withShape(PropTypes.array.isRequired, {
@@ -82,19 +89,20 @@ BlockSelectElse.propTypes = {
       PropTypes.arrayOf(ValuePropType).isRequired,
     ]),
     // else
-    1: PropTypes.string.isRequired,
+    1: ValuePropType,
   }),
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
   elseOptionValue: ValuePropType.isRequired,
+  elseOptions: PropTypes.arrayOf(OptionPropType).isRequired,
   multiple: PropTypes.bool.isRequired,
   placeholder: PropTypes.string,
 };
 
-BlockSelectElse.defaultProps = {
+BlockSelectElseRadio.defaultProps = {
   value: [null, ''],
   multiple: false,
 };
 
-export default BlockSelectElse;
+export default BlockSelectElseRadio;

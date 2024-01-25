@@ -185,6 +185,7 @@ export const createInterviewResultQuestion = () => ({
       ? '面試結果僅限 1~100 字！'
       : null,
   options: RESULT_OPTIONS,
+  elseOptionValue: last(RESULT_OPTIONS),
   placeholder: '輸入面試結果',
 });
 
@@ -351,7 +352,10 @@ export const createWeekWorkTimeQuestion = () => ({
 const OptionEmoji = ({ value, children }) => (
   <Fragment>
     {children}
-    <Emoji emoji={`emoji-${value}`} style={{ width: '25px', height: '25px', leftMargin: '4px' }} />
+    <Emoji
+      emoji={`emoji-${value}`}
+      style={{ width: '25px', height: '25px', leftMargin: '4px' }}
+    />
   </Fragment>
 );
 
@@ -373,13 +377,25 @@ export const createOvertimeFrequencyQuestion = () => ({
 
 export const createOvertimeSalaryQuestion = () => ({
   title: '加班有無加班費',
-  type: 'radio',
+  type: 'radio-else-radio',
   dataKey: DATA_KEY_HAS_OVERTIME_SALARY,
-  defaultValue: null,
+  defaultValue: [null, null],
+  validator: ([selected, elseValue]) =>
+    selected === 'yes' ? elseValue !== null : true,
+  warning: ([selected, elseValue]) =>
+    selected === 'yes' && elseValue === null
+      ? '需填寫加班費是否符合勞基法'
+      : null,
   options: [
     { label: '有', value: 'yes' },
     { label: '沒有', value: 'no' },
     { label: '不知道', value: "don't know" },
+  ],
+  elseOptionValue: 'yes',
+  elseOptions: [
+    { label: '有，優於或符合勞基法', value: 'yes' },
+    { label: '有，不符合勞基法', value: 'no' },
+    { label: '有，不清楚是否符合勞基法', value: "don't know" },
   ],
 });
 
@@ -411,7 +427,8 @@ export const createSensitiveQuestionsQuestion = () => ({
   dataKey: DATA_KEY_SENSITIVE_QUESTIONS,
   defaultValue: [[], ''],
   validator: ([selected, elseText]) =>
-    !contains('其他', selected) || within(1, 20, elseText.length),
+    !contains(last(SENSITIVE_QUESTIONS_OPTIONS), selected) ||
+    within(1, 20, elseText.length),
   warning: ([selected, elseText]) =>
     contains(last(SENSITIVE_QUESTIONS_OPTIONS), selected) && isEmpty(elseText)
       ? '需填寫其他特殊問題的內容'
@@ -419,6 +436,7 @@ export const createSensitiveQuestionsQuestion = () => ({
       ? '面試中提及的特別問題僅限 1~20 字！'
       : null,
   options: SENSITIVE_QUESTIONS_OPTIONS,
+  elseOptionValue: last(SENSITIVE_QUESTIONS_OPTIONS),
   placeholder: '輸入其他特殊問題內容',
 });
 

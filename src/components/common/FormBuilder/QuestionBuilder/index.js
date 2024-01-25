@@ -25,12 +25,14 @@ import TitleBlock from '../TitleBlock';
 import Scrollable from '../Scrollable';
 import styles from './styles.module.css';
 import { OptionPropType } from './Checkbox/PropTypes';
+import RadioElseRadio from './Checkbox/RadioElseRadio';
 
 export const availableTypes = [
   'text',
   'textarea',
   'radio',
   'radio-else',
+  'radio-else-radio',
   'checkbox',
   'checkbox-else',
   'rating',
@@ -60,6 +62,8 @@ const useQuestionNode = ({
   suffix,
   footnote,
   options,
+  elseOptionValue,
+  elseOptions,
   ratingLabels,
   renderCustomizedQuestion,
 }) => {
@@ -99,6 +103,18 @@ const useQuestionNode = ({
         <RadioElse
           {...commonProps}
           options={options}
+          elseOptionValue={elseOptionValue}
+          placeholder={placeholder}
+        />,
+      ];
+    case 'radio-else-radio':
+      return [
+        true,
+        <RadioElseRadio
+          {...commonProps}
+          options={options}
+          elseOptionValue={elseOptionValue}
+          elseOptions={elseOptions}
           placeholder={placeholder}
         />,
       ];
@@ -110,6 +126,7 @@ const useQuestionNode = ({
         <CheckboxElse
           {...commonProps}
           options={options}
+          elseOptionValue={elseOptionValue}
           placeholder={placeholder}
         />,
       ];
@@ -177,6 +194,8 @@ const QuestionBuilder = ({
   suffix,
   footnote,
   options,
+  elseOptionValue,
+  elseOptions,
   ratingLabels,
   renderCustomizedQuestion,
 }) => {
@@ -199,6 +218,8 @@ const QuestionBuilder = ({
     suffix,
     footnote,
     options,
+    elseOptionValue,
+    elseOptions,
     ratingLabels,
     renderCustomizedQuestion,
   });
@@ -248,6 +269,7 @@ QuestionBuilder.propTypes = {
   placeholder: string,
   footnote: oneOfType([string, node, func]),
   options: arrayOf(OptionPropType),
+  elseOptions: arrayOf(OptionPropType),
   ratingLabels: arrayOf(string.isRequired),
   renderCustomizedQuestion: func,
 };
