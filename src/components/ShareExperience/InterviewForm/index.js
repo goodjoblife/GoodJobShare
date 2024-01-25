@@ -26,11 +26,15 @@ import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 import { LS_INTERVIEW_FORM_KEY } from 'constants/localStorageKey';
 
+import { getUserPseudoId } from 'utils/GAUtils';
+
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
+import { GA_MEASUREMENT_ID } from '../../../config';
 
 const createSection = id => (
   subtitle,
+  content = '',
   placeholder = '',
   titlePlaceholder = '段落標題，例：面試方式',
 ) => {
@@ -39,13 +43,14 @@ const createSection = id => (
     subtitle,
     placeholder,
     titlePlaceholder,
-    content: '',
+    content,
     isSubtitleEditable: false,
   };
   if (subtitle === '自訂段落' || !subtitle) {
     return {
       ...section,
-      subtitle: '',
+      subtitle,
+      content,
       isSubtitleEditable: true,
       placeholder,
       titlePlaceholder,
@@ -70,6 +75,7 @@ let idCounter = idGenerator();
 const isBlockRemovable = blocks => R.length(R.keys(blocks)) > 1;
 
 const firstSectionId = idCounter();
+const secondSectionId = idCounter();
 const firstQaId = idCounter();
 
 const defaultForm = {
@@ -87,7 +93,14 @@ const defaultForm = {
   overallRating: 0,
   title: '面試經驗分享',
   sections: {
-    [firstSectionId]: createBlock.sections(firstSectionId)(),
+    [firstSectionId]: createBlock.sections(firstSectionId)(
+      '面試過程',
+      '第一次面試：\n第二次面試：\n工作環境：',
+    ),
+    [secondSectionId]: createBlock.sections(secondSectionId)(
+      '給其他面試者的中肯建議',
+      '如何準備面試：\n是否推薦此份工作：\n其他注意事項：',
+    ),
   },
   interviewQas: {
     [firstQaId]: createBlock.interviewQas(firstQaId)(),
@@ -143,65 +156,79 @@ class InterviewForm extends React.Component {
       ...defaultState,
     });
 
+    ReactGA.event({
+      category: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
+      action: GA_ACTION.START_WRITING,
+    });
     ReactPixel.track('InitiateCheckout', {
       content_category: PIXEL_CONTENT_CATEGORY.VISIT_INTERVIEW_FORM,
     });
   }
 
-  onSubmit() {
+  onSubmit = async () => {
     const valid = interviewFormCheck(getInterviewForm(this.state));
 
     if (valid) {
       localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
-      const p = this.props.createInterviewExperience({
-        body: portInterviewFormToRequestFormat(getInterviewForm(this.state)),
-      });
-      return p.then(
-        response => {
-          const experienceId = response.experience._id;
+      const ga_user_pseudo_id = await getUserPseudoId(GA_MEASUREMENT_ID);
+      const extra = {
+        form_type: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
+        ga_user_pseudo_id,
+      };
 
-          ReactGA.event({
-            category: GA_CATEGORY.SHARE_INTERVIEW,
-            action: GA_ACTION.UPLOAD_SUCCESS,
-          });
-          ReactPixel.track('Purchase', {
-            value: 1,
-            currency: 'TWD',
-            content_category:
-              PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
-          });
-          return () => (
-            <SuccessFeedback
-              buttonClick={() =>
-                window.location.replace(`/experiences/${experienceId}`)
-              }
-            />
-          );
-        },
-        error => {
-          ReactGA.event({
-            category: GA_CATEGORY.SHARE_INTERVIEW,
-            action: GA_ACTION.UPLOAD_FAIL,
-          });
+      try {
+        const response = await this.props.createInterviewExperience({
+          body: portInterviewFormToRequestFormat(
+            getInterviewForm(this.state),
+            extra,
+          ),
+        });
+        const experienceId = response.createInterviewExperience.experience.id;
 
-          return ({ buttonClick }) => (
-            <FailFeedback info={error.message} buttonClick={buttonClick} />
-          );
-        },
-      );
+        ReactGA.event({
+          category: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
+          action: GA_ACTION.UPLOAD_SUCCESS,
+          label: experienceId,
+        });
+        ReactPixel.track('Purchase', {
+          value: 1,
+          currency: 'TWD',
+          content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
+        });
+        return () => (
+          <SuccessFeedback
+            buttonClick={() => {
+              // add delay to more ensure event being sent to GA.
+              setTimeout(() => {
+                window.location.replace(`/experiences/${experienceId}`);
+              }, 1500);
+            }}
+          />
+        );
+      } catch (error) {
+        ReactGA.event({
+          category: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
+          action: GA_ACTION.UPLOAD_FAIL,
+        });
+
+        return ({ buttonClick }) => (
+          <FailFeedback info={error.message} buttonClick={buttonClick} />
+        );
+      }
+    } else {
+      this.handleState('submitted')(true);
+      const topInvalidElement = this.getTopInvalidElement();
+      if (topInvalidElement !== null) {
+        scroller.scrollTo(topInvalidElement, {
+          duration: 1000,
+          delay: 100,
+          offset: -100,
+          smooth: true,
+        });
+      }
+      return Promise.reject();
     }
-    this.handleState('submitted')(true);
-    const topInvalidElement = this.getTopInvalidElement();
-    if (topInvalidElement !== null) {
-      scroller.scrollTo(topInvalidElement, {
-        duration: 1000,
-        delay: 100,
-        offset: -100,
-        smooth: true,
-      });
-    }
-    return Promise.reject();
-  }
+  };
 
   getTopInvalidElement = () => {
     const order = INTERVIEW_FORM_ORDER;

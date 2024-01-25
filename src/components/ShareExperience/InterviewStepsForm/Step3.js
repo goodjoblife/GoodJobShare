@@ -72,7 +72,7 @@ class Step3 extends React.Component {
           isRequired
           section={sections[0]}
           subHeading="回想一下，不論是流程、對話、工作環境、薪資福利，都可以分享哦！"
-          contentMinLength={30}
+          contentMinLength={50}
           editSection={editSection}
           submitted={state.submitted}
           changeValidationStatus={changeValidationStatus}
@@ -96,7 +96,7 @@ class Step3 extends React.Component {
         <Section
           isRequired
           section={sections[1]}
-          contentMinLength={30}
+          contentMinLength={50}
           editSection={editSection}
           submitted={state.submitted}
           changeValidationStatus={changeValidationStatus}
@@ -107,7 +107,7 @@ class Step3 extends React.Component {
             key={section.id}
             section={section}
             isSubtitleEditable
-            contentMinLength={30}
+            contentMinLength={50}
             editSection={editSection}
             removeSection={removeSection}
             submitted={state.submitted}

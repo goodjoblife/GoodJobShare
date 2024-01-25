@@ -411,9 +411,6 @@ class CampaignTimeAndSalaryForm extends React.PureComponent {
           />
 
           <br />
-          <h5 className={timeAndSalaryFormStyles.pleaseSelectOne}>
-            以下薪資 / 工時擇一必填
-          </h5>
 
           <SalaryInfo
             handleState={this.handleState}

@@ -26,7 +26,7 @@ const CallToActionFolder = () => {
           <span className={styles.content}>
             目標{' '}
             <strong className={styles['strong-text']}>{goalNum} 筆資料</strong>
-            ，將你的面試經驗分享給更多人，一起建立台灣最大面試資料庫！
+            ，將你的薪水＆面試分享給更多人，一起建立台灣最大薪水、面試資料庫！
           </span>
         </div>
         <Link

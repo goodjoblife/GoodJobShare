@@ -12,3 +12,6 @@ export const calcEndTime = (current, unit, amount) => {
   }
   return;
 };
+
+export const formatSimpleDate = date =>
+  `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
