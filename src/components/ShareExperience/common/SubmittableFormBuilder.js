@@ -51,7 +51,7 @@ const SubmittableTypeForm = ({
     setSubmitStatus('unsubmitted');
   }, []);
 
-  const onClose = useCallback(() => {
+  const onQuit = useCallback(() => {
     setSubmitStatus('unsubmitted');
     onClose();
   }, [onClose]);
@@ -92,7 +92,7 @@ const SubmittableTypeForm = ({
         }}
         closableOnClickOutside
         actions={[
-          ['確定離開', onClose],
+          ['確定離開', onQuit],
           [
             '分享其他資訊',
             () => {
