@@ -12,7 +12,6 @@ import {
   contains,
   all,
   equals,
-  keys,
   path,
   range,
 } from 'ramda';
@@ -33,7 +32,6 @@ import {
   RESULT_OPTIONS,
   RATING_LABELS,
   JOB_TENURE_OPTIONS,
-  SALARY_TYPE_VALUE_BY_OPTION,
   SENSITIVE_QUESTIONS_OPTIONS,
   COURSE_MIN_LENGTH,
   SUGGESTIONS_MIN_LENGTH,
@@ -63,7 +61,7 @@ import {
 } from './utils';
 import { getCompaniesSearch } from 'apis/companySearchApi';
 import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
-import { employmentTypeOptions } from './common/optionMap';
+import { employmentTypeOptions, salaryTypeOptions } from './common/optionMap';
 import WorkTimeExample from './WorkTimeExample';
 import Emoji from '../common/icons/Emoji';
 import { tabTypeTranslation } from '../../constants/companyJobTitle';
@@ -277,15 +275,14 @@ export const createRequiredSalaryQuestion = () => ({
     isNot(isNil, type) &&
     isNot(isEmpty, amount) &&
     isSalaryAmount(amount) &&
-    isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type], amount),
+    isValidSalary(type, amount),
   warning: ([type, amount]) =>
     isNil(type)
       ? '需選擇薪水類型'
-      : isNot(isEmpty, amount) &&
-        isNot(isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type]), amount)
+      : isNot(isEmpty, amount) && isNot(isValidSalary(type), amount)
       ? '薪資不合理。可能有少填寫 0，或薪資種類(年薪/月薪/日薪/時薪)選擇錯誤，請再檢查一次'
       : '需填寫薪資',
-  options: keys(SALARY_TYPE_VALUE_BY_OPTION),
+  options: salaryTypeOptions,
   placeholder: '700,000',
   suffix: '元',
   footnote:

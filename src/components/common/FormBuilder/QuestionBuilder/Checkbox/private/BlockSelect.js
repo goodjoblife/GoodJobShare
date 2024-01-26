@@ -4,7 +4,8 @@ import R from 'ramda';
 
 import useDebouncedConfirm from '../../../useDebouncedConfirm';
 import styles from './private.module.css';
-import { normalizeOptions, toggle } from './utils';
+import { toggle } from './utils';
+import { normalizeOptions } from './utils';
 import { OptionPropType, ValuePropType } from '../PropTypes';
 
 const BlockSelect = ({
