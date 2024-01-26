@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import R from 'ramda';
 import SubmittableTypeForm from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
 
@@ -11,6 +10,7 @@ import {
   createSectorQuestion,
   createGenderQuestion,
   createRequiredSalaryQuestion,
+  createExperienceInYearQuestion,
 } from '../questionCreators';
 
 const header = <Header title="請輸入你的一份薪資工時" />;
@@ -23,7 +23,6 @@ const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
   />
 );
 
-const experienceInYearOptions = R.range(0, 51).map(String);
 const questions = [
   createCompanyQuestion({ header }),
   createJobTitleQuestion({ header }),
@@ -32,14 +31,7 @@ const questions = [
   createEmployTypeQuestion(),
   createGenderQuestion(),
   createRequiredSalaryQuestion(),
-  {
-    title: '當時業界工作經歷',
-    type: 'radio',
-    dataKey: 'experienceInYear',
-    defaultValue: null,
-    options: experienceInYearOptions,
-    header: renderCompanyJobTitleHeader,
-  },
+  createExperienceInYearQuestion(),
   {
     title: '工作日表訂工時',
     type: 'text',

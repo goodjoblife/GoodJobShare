@@ -14,6 +14,7 @@ import {
   keys,
   path,
   values,
+  range,
 } from 'ramda';
 import {
   DATA_KEY_COMPANY_NAME,
@@ -40,6 +41,7 @@ import {
   DATA_KEY_SECTOR,
   DATA_KEY_EMPLOY_TYPE,
   DATA_KEY_GENDER,
+  DATA_KEY_EXPERIENCE_IN_YEAR,
 } from './constants';
 import {
   isArray,
@@ -270,6 +272,17 @@ export const createSalaryQuestion = () => {
       isNil(type) && isEmpty(amount) ? null : warning([type, amount]),
   };
 };
+
+export const createExperienceInYearQuestion = () => ({
+  title: '當時業界工作經歷',
+  type: 'radio',
+  dataKey: DATA_KEY_EXPERIENCE_IN_YEAR,
+  required: true,
+  defaultValue: null,
+  options: ['不到 1 年', ...range(1, 51).map(n => `${n} 年`)],
+  validator: isNot(isNil),
+  warning: '需填寫工作經歷',
+});
 
 export const createQuestionsQuestion = () => ({
   title: '面試中問了什麼問題？',
