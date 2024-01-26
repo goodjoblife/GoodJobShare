@@ -6,6 +6,7 @@ import FormBuilder from 'common/FormBuilder';
 import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
 import Footer from './TypeFormFooter';
 import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
+import { QuestionPropType } from '../../common/FormBuilder';
 
 const SubmittableTypeForm = ({
   open,
@@ -110,6 +111,13 @@ const SubmittableTypeForm = ({
 
 SubmittableTypeForm.propTypes = {
   open: PropTypes.bool.isRequired,
+  questions: PropTypes.arrayOf(QuestionPropType).isRequired,
+  header: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.func,
+  ]),
+  onSubmitError: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

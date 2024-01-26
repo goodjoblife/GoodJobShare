@@ -240,31 +240,31 @@ const FormBuilder = ({
   );
 };
 
+export const QuestionPropType = shape({
+  header: oneOfType([string, element, func]),
+  footer: oneOfType([string, element, func]),
+  title: oneOfType([string, func]).isRequired,
+  description: string,
+  type: oneOf(availableTypes).isRequired,
+  dataKey: string.isRequired,
+  defaultValue: oneOfType([func, any]),
+  required: bool,
+  warning: oneOfType([func, string]),
+  validator: func,
+  onSelect: func,
+  search: func,
+  placeholder: string,
+  footnote: oneOfType([string, func]),
+  options: arrayOf(string),
+  ratingLabels: arrayOf(string.isRequired),
+  renderCustomizedQuestion: func,
+});
+
 FormBuilder.propTypes = {
   open: bool.isRequired,
   header: oneOfType([string, element, func]),
   footer: oneOfType([string, element, func]),
-  questions: arrayOf(
-    shape({
-      header: oneOfType([string, element, func]),
-      footer: oneOfType([string, element, func]),
-      title: oneOfType([string, func]).isRequired,
-      description: string,
-      type: oneOf(availableTypes).isRequired,
-      dataKey: string.isRequired,
-      defaultValue: oneOfType([func, any]),
-      required: bool,
-      warning: oneOfType([func, string]),
-      validator: func,
-      onSelect: func,
-      search: func,
-      placeholder: string,
-      footnote: oneOfType([string, func]),
-      options: arrayOf(string),
-      ratingLabels: arrayOf(string.isRequired),
-      renderCustomizedQuestion: func,
-    }),
-  ).isRequired,
+  questions: arrayOf(QuestionPropType).isRequired,
   onChange: func,
   onPrev: func,
   onNext: func,
