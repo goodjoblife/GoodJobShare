@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import SubmittableTypeForm from '../common/SubmittableFormBuilder';
+import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
 
 import {
@@ -58,7 +58,7 @@ const TypeForm = ({ open, onClose }) => {
   }, []);
 
   return (
-    <SubmittableTypeForm
+    <SubmittableFormBuilder
       open={open}
       questions={questions}
       header={renderCompanyJobTitleHeader}
