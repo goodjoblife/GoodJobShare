@@ -41,6 +41,10 @@ const SubmittableTypeForm = ({
   const experienceCount = useExperienceCount();
   const salaryCount = useSalaryWorkTimeCount();
 
+  const onTryClosing = useCallback(() => {
+    setSubmitStatus('quitting');
+  }, []);
+
   const onSuccessClose = useCallback(() => {
     setSubmitStatus('unsubmitted');
     onClose();
@@ -49,11 +53,25 @@ const SubmittableTypeForm = ({
     }
   }, [onClose, redirectPathnameOnSuccess]);
 
+  const onResume = useCallback(() => {
+    setSubmitStatus('unsubmitted');
+  }, []);
+
+  const onQuit = useCallback(() => {
+    setSubmitStatus('unsubmitted');
+    onClose();
+  }, [onClose]);
+
+  const onGoToShare = useCallback(() => {
+    setSubmitStatus('unsubmitted');
+    history.push('/share');
+  }, [history]);
+
   return (
     <Fragment>
       <FormBuilder
         open={open}
-        onClose={() => setSubmitStatus('quitting')}
+        onClose={onTryClosing}
         questions={questions}
         header={header}
         footer={<Footer dataNum={salaryCount + experienceCount} />}
@@ -72,48 +90,20 @@ const SubmittableTypeForm = ({
         isOpen={submitStatus === 'error'}
         title="上傳失敗"
         description={errorMessage}
-        close={() => {
-          setSubmitStatus('unsubmitted');
-        }}
+        close={onResume}
         closableOnClickOutside
-        actions={[
-          [
-            '確定',
-            () => {
-              setSubmitStatus('unsubmitted');
-            },
-          ],
-        ]}
+        actions={[['確定', onResume]]}
       />
       <ConfirmModal
         isOpen={submitStatus === 'quitting'}
         title="確定要離開？"
         description="離開之後資訊將會消失"
-        close={() => {
-          setSubmitStatus('unsubmitted');
-        }}
+        close={onResume}
         closableOnClickOutside
         actions={[
-          [
-            '確定離開',
-            () => {
-              setSubmitStatus('unsubmitted');
-              onClose();
-            },
-          ],
-          [
-            '分享其他資訊',
-            () => {
-              setSubmitStatus('unsubmitted');
-              history.push('/share');
-            },
-          ],
-          [
-            '取消',
-            () => {
-              setSubmitStatus('unsubmitted');
-            },
-          ],
+          ['確定離開', onQuit],
+          ['分享其他資訊', onGoToShare],
+          ['取消', onResume],
         ]}
       />
     </Fragment>
