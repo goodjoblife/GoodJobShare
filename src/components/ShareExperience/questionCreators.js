@@ -150,7 +150,20 @@ export const createGenderQuestion = () => ({
   type: 'radio',
   dataKey: DATA_KEY_GENDER,
   defaultValue: null,
-  options: ['男', '女', '其他'],
+  options: [
+    {
+      label: '男',
+      value: 'male',
+    },
+    {
+      label: '女',
+      value: 'female',
+    },
+    {
+      label: '其他',
+      value: 'other',
+    },
+  ],
 });
 
 export const createInterviewDateQuestion = () => ({
