@@ -51,20 +51,21 @@ const useQuestion = (question, draft) => {
       required,
       validate,
     } = question;
-    return [
-      true,
-      typeof header === 'function' ? header(draft) : header,
-      typeof footer === 'function' ? footer(draft) : footer,
+    return {
+      shouldRenderQuestion: true,
+      questionHeader: header,
+      questionFooter: footer,
       dataKey,
-      validate && validate(draft[dataKey]),
-      !required &&
+      warning: validate && validate(draft[dataKey]),
+      skippable:
+        !required &&
         R.equals(
           draft[dataKey],
           typeof defaultValue === 'function' ? defaultValue() : defaultValue,
         ),
-    ];
+    };
   } else {
-    return [false];
+    return { shouldRenderQuestion: false };
   }
 };
 
@@ -91,14 +92,14 @@ const FormBuilder = ({
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
 
-  const [
+  const {
     shouldRenderQuestion,
     questionHeader,
     questionFooter,
     dataKey,
     warning,
     skippable,
-  ] = useQuestion(questions[page], draft);
+  } = useQuestion(questions[page], draft);
 
   const [isWarningShown, setWarningShown] = useState(false);
 
