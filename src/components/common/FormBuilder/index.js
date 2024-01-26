@@ -70,8 +70,8 @@ const useQuestion = (question, draft) => {
     } = question;
     return {
       shouldRenderQuestion: true,
-      questionHeader: typeof header === 'function' ? header(draft) : header,
-      questionFooter: typeof footer === 'function' ? footer(draft) : footer,
+      questionHeader: header,
+      questionFooter: footer,
       dataKey,
       warning: findWarningAgainstValue(draft[dataKey], warning, validator),
       skippable:
