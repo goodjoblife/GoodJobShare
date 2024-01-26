@@ -393,7 +393,7 @@ export const createOvertimeFrequencyQuestion = () => ({
   defaultValue: null,
   options: OVERTIME_FREQUENCY_LABELS.map((label, index) => ({
     label: <OptionEmoji value={index}>{label}</OptionEmoji>,
-    value: index,
+    value: `${index}`,
   })),
   validator: isNot(isNil),
   warning: '需填寫加班頻率',

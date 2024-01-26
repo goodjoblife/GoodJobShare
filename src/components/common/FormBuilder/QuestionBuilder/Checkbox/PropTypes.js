@@ -1,9 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const ValuePropType = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.number,
-]);
+export const ValuePropType = PropTypes.oneOfType([PropTypes.string]);
 
 export const OptionPropType = PropTypes.oneOfType([
   ValuePropType,
