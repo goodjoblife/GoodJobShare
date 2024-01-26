@@ -56,6 +56,10 @@ const SubmittableTypeForm = ({
     onClose();
   }, [onClose]);
 
+  const onResume = useCallback(() => {
+    setSubmitStatus('unsubmitted');
+  }, []);
+
   return (
     <Fragment>
       <FormBuilder
@@ -87,9 +91,7 @@ const SubmittableTypeForm = ({
         isOpen={submitStatus === 'quitting'}
         title="確定要離開？"
         description="離開之後資訊將會消失"
-        close={() => {
-          setSubmitStatus('unsubmitted');
-        }}
+        close={onResume}
         closableOnClickOutside
         actions={[
           ['確定離開', onQuit],
@@ -100,12 +102,7 @@ const SubmittableTypeForm = ({
               history.push('/share');
             },
           ],
-          [
-            '取消',
-            () => {
-              setSubmitStatus('unsubmitted');
-            },
-          ],
+          ['取消', onResume],
         ]}
       />
     </Fragment>
