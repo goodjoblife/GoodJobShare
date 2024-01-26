@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import R from 'ramda';
-import FormBuilder from 'common/FormBuilder';
+import SubmittableTypeForm from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
-import Footer from '../common/TypeFormFooter';
 
 import employmentType from '../../../constants/employmentType';
 
 const header = <Header title="請輸入你的一份薪資工時" />;
-const footer = <Footer />;
 
 const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
   <CompanyJobTitleHeader
@@ -130,13 +128,21 @@ const questions = [
 ];
 
 const TypeForm = ({ open, onClose }) => {
+  const onSubmit = useCallback(async draft => {
+    console.info(draft); // TODO
+  }, []);
+  const onSubmitError = useCallback(async error => {
+    console.error(error); // TODO
+  }, []);
+
   return (
-    <FormBuilder
+    <SubmittableTypeForm
       open={open}
-      onClose={onClose}
-      header={header}
-      footer={footer}
       questions={questions}
+      header={header}
+      onSubmit={onSubmit}
+      onSubmitError={onSubmitError}
+      onClose={onClose}
     />
   );
 };
