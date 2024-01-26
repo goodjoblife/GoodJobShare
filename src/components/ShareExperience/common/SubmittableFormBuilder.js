@@ -47,6 +47,10 @@ const SubmittableTypeForm = ({
     }
   }, [onClose]);
 
+  const onFailClose = useCallback(() => {
+    setSubmitStatus('unsubmitted');
+  }, []);
+
   return (
     <Fragment>
       <FormBuilder
@@ -70,18 +74,9 @@ const SubmittableTypeForm = ({
         isOpen={submitStatus === 'error'}
         title="上傳失敗"
         description={errorMessage}
-        close={() => {
-          setSubmitStatus('unsubmitted');
-        }}
+        close={onFailClose}
         closableOnClickOutside
-        actions={[
-          [
-            '確定',
-            () => {
-              setSubmitStatus('unsubmitted');
-            },
-          ],
-        ]}
+        actions={[['確定', onFailClose]]}
       />
       <ConfirmModal
         isOpen={submitStatus === 'quitting'}
