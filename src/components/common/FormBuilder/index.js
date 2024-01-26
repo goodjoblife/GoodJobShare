@@ -26,14 +26,17 @@ import styles from './FormBuilder.module.css';
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
     R.ifElse(
-      R.has('validator'),
-      R.converge(R.call, [
-        R.prop('validator'),
-        R.compose(
-          dataKey => draft[dataKey],
-          R.prop('dataKey'),
-        ),
-      ]),
+      R.has('validate'),
+      R.compose(
+        R.isNil,
+        R.converge(R.call, [
+          R.prop('validate'),
+          R.compose(
+            dataKey => draft[dataKey],
+            R.prop('dataKey'),
+          ),
+        ]),
+      ),
       R.always(true),
     ),
   );
