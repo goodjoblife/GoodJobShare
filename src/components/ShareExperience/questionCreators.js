@@ -108,13 +108,24 @@ export const createJobTitleQuestion = ({ header }) => ({
 
 export const createCurrentlyEmployedQuestion = () => ({
   title: '你現在在職嗎？',
-  type: 'radio',
+  type: 'radio-else-date',
   dataKey: DATA_KEY_CURRENTLY_EMPLOYED,
   required: true,
-  defaultValue: null,
-  options: ['在職', '已離職'],
-  validator: isNot(isNil),
-  warning: '請填寫是否在職',
+  defaultValue: [null, [null, null]],
+  options: [{ label: '在職', value: 'yes' }, { label: '已離職', value: 'no' }],
+  elseOptionValue: 'no',
+  validator: ([value, [year, month]]) =>
+    isNot(isNil, value) &&
+    (value === 'no' ? isNot(isNil, year) && isNot(isNil, month) : true),
+  warning: ([value, [year, month]]) =>
+    isNil(value)
+      ? '請填寫是否在職'
+      : value === 'no' && (isNil(year) || isNil(month))
+      ? `需填寫離職${joinCompact(' 及 ')(
+          isNil(year) && '年份',
+          isNil(month) && '月份',
+        )}`
+      : null,
 });
 
 export const createSectorQuestion = () => ({

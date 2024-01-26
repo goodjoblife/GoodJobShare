@@ -14,7 +14,14 @@ import cn from 'classnames';
 
 import Text from './Text';
 import TextArea from './TextArea';
-import { Radio, RadioElse, Checkbox, CheckboxElse } from './Checkbox';
+import {
+  Radio,
+  RadioElse,
+  RadioElseRadio,
+  RadioElseDate,
+  Checkbox,
+  CheckboxElse,
+} from './Checkbox';
 import Rating from './Rating';
 import File from './File';
 import Date from './Date';
@@ -25,7 +32,6 @@ import TitleBlock from '../TitleBlock';
 import Scrollable from '../Scrollable';
 import styles from './styles.module.css';
 import { OptionPropType } from './Checkbox/PropTypes';
-import RadioElseRadio from './Checkbox/RadioElseRadio';
 
 export const availableTypes = [
   'text',
@@ -33,6 +39,7 @@ export const availableTypes = [
   'radio',
   'radio-else',
   'radio-else-radio',
+  'radio-else-date',
   'checkbox',
   'checkbox-else',
   'rating',
@@ -115,7 +122,15 @@ const useQuestionNode = ({
           options={options}
           elseOptionValue={elseOptionValue}
           elseOptions={elseOptions}
-          placeholder={placeholder}
+        />,
+      ];
+    case 'radio-else-date':
+      return [
+        true,
+        <RadioElseDate
+          {...commonProps}
+          options={options}
+          elseOptionValue={elseOptionValue}
         />,
       ];
     case 'checkbox':

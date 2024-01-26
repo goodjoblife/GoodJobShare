@@ -18,6 +18,7 @@ const yearOptions = Array(12)
   .map(n => ({ value: n, label: n }));
 
 const DatePicker = ({
+  className,
   page,
   title,
   description,
@@ -29,7 +30,7 @@ const DatePicker = ({
   warning,
   validator,
 }) => (
-  <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
+  <div className={cn({ [commonStyles.hasWarning]: !!warning }, className)}>
     <div className={cn(styles.inputRow, commonStyles.warnableContainer)}>
       <div className={styles.inputGroup}>
         <div className={styles.inputWrapper}>
@@ -68,6 +69,11 @@ const DatePicker = ({
   </div>
 );
 
+export const DatePropType = withShape(PropTypes.array.isRequired, {
+  0: PropTypes.number,
+  1: PropTypes.number,
+});
+
 DatePicker.propTypes = {
   page: PropTypes.number.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
@@ -75,10 +81,7 @@ DatePicker.propTypes = {
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
   defaultValue: PropTypes.array.isRequired,
-  value: withShape(PropTypes.array.isRequired, {
-    0: PropTypes.number,
-    1: PropTypes.number,
-  }),
+  value: DatePropType,
   onChange: PropTypes.func.isRequired,
   warning: PropTypes.string,
   validator: PropTypes.func,

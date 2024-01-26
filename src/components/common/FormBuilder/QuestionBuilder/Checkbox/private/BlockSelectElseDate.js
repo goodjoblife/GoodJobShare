@@ -5,21 +5,22 @@ import R from 'ramda';
 import cn from 'classnames';
 
 import styles from './private.module.css';
-import Radio from 'common/form/Radio';
 import BlockSelect from './BlockSelect';
+import DatePicker, { DatePropType } from '../../Date';
 import { OptionPropType, ValuePropType } from '../PropTypes';
 import { normalizeOptions } from './utils';
-import useDebouncedConfirm from '../../../useDebouncedConfirm';
 
-const BlockSelectElseRadio = ({
+const BlockSelectElseDate = ({
+  page,
+  title,
   dataKey,
   required,
+  defaultValue: [defaultSelected, defaultElseValue],
   value: [selected, elseValue],
   onChange,
   onConfirm,
   options,
   elseOptionValue,
-  elseOptions,
   multiple,
 }) => {
   options = normalizeOptions(options);
@@ -36,13 +37,11 @@ const BlockSelectElseRadio = ({
     [elseValue, onChange],
   );
 
-  const debouncedConfirm = useDebouncedConfirm(onConfirm, 300);
   const handleElseChange = useCallback(
-    e => {
-      onChange([selected, e.target.value]);
-      debouncedConfirm();
+    elseValue => {
+      onChange([selected, elseValue]);
     },
-    [debouncedConfirm, onChange, selected],
+    [onChange, selected],
   );
   const handleSelectConfirm = useCallback(() => {
     if (!hasElse) onConfirm();
@@ -58,27 +57,24 @@ const BlockSelectElseRadio = ({
       options={options}
       multiple={multiple}
     />,
-    <div
+    <DatePicker
       key="else"
       className={cn(styles.label, {
         [styles.hidden]: !hasElse,
       })}
-    >
-      {elseOptions.map(({ label, value }) => (
-        <Radio
-          key={value}
-          label={label}
-          value={value}
-          margin="10px 0 5px 0"
-          checked={value === elseValue}
-          onChange={handleElseChange}
-        />
-      ))}
-    </div>,
+      page={page}
+      title={title}
+      dataKey={dataKey}
+      defaultValue={defaultElseValue}
+      value={elseValue}
+      onChange={handleElseChange}
+    />,
   ];
 };
 
-BlockSelectElseRadio.propTypes = {
+BlockSelectElseDate.propTypes = {
+  page: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
   value: withShape(PropTypes.array.isRequired, {
@@ -88,19 +84,18 @@ BlockSelectElseRadio.propTypes = {
       PropTypes.arrayOf(ValuePropType).isRequired,
     ]),
     // else
-    1: ValuePropType,
+    1: DatePropType,
   }),
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
   elseOptionValue: ValuePropType.isRequired,
-  elseOptions: PropTypes.arrayOf(OptionPropType).isRequired,
   multiple: PropTypes.bool.isRequired,
 };
 
-BlockSelectElseRadio.defaultProps = {
+BlockSelectElseDate.defaultProps = {
   value: [null, ''],
   multiple: false,
 };
 
-export default BlockSelectElseRadio;
+export default BlockSelectElseDate;
