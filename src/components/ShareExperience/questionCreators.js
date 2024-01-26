@@ -355,7 +355,7 @@ const OptionEmoji = ({ value, children }) => (
     {children}
     <Emoji
       emoji={`emoji-${value}`}
-      style={{ width: '25px', height: '25px', leftMargin: '4px' }}
+      style={{ width: '25px', height: '25px', marginLeft: '4px' }}
     />
   </Fragment>
 );
