@@ -39,6 +39,10 @@ const SubmittableTypeForm = ({
   const experienceCount = useExperienceCount();
   const salaryCount = useSalaryWorkTimeCount();
 
+  const onTryClosing = useCallback(() => {
+    setSubmitStatus('quitting');
+  }, []);
+
   const onSuccessClose = useCallback(() => {
     setSubmitStatus('unsubmitted');
     onClose();
@@ -65,7 +69,7 @@ const SubmittableTypeForm = ({
     <Fragment>
       <FormBuilder
         open={open}
-        onClose={() => setSubmitStatus('quitting')}
+        onClose={onTryClosing}
         questions={questions}
         header={header}
         footer={<Footer dataNum={salaryCount + experienceCount} />}
