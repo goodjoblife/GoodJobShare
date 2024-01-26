@@ -47,7 +47,7 @@ const SubmittableTypeForm = ({
     }
   }, [onClose]);
 
-  const onFailClose = useCallback(() => {
+  const onResume = useCallback(() => {
     setSubmitStatus('unsubmitted');
   }, []);
 
@@ -55,10 +55,6 @@ const SubmittableTypeForm = ({
     setSubmitStatus('unsubmitted');
     onClose();
   }, [onClose]);
-
-  const onResume = useCallback(() => {
-    setSubmitStatus('unsubmitted');
-  }, []);
 
   const onGoToShare = useCallback(() => {
     setSubmitStatus('unsubmitted');
@@ -88,9 +84,9 @@ const SubmittableTypeForm = ({
         isOpen={submitStatus === 'error'}
         title="上傳失敗"
         description={errorMessage}
-        close={onFailClose}
+        close={onResume}
         closableOnClickOutside
-        actions={[['確定', onFailClose]]}
+        actions={[['確定', onResume]]}
       />
       <ConfirmModal
         isOpen={submitStatus === 'quitting'}
