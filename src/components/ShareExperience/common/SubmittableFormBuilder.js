@@ -60,6 +60,11 @@ const SubmittableTypeForm = ({
     setSubmitStatus('unsubmitted');
   }, []);
 
+  const onGoToShare = useCallback(() => {
+    setSubmitStatus('unsubmitted');
+    history.push('/share');
+  }, [history]);
+
   return (
     <Fragment>
       <FormBuilder
@@ -95,13 +100,7 @@ const SubmittableTypeForm = ({
         closableOnClickOutside
         actions={[
           ['確定離開', onQuit],
-          [
-            '分享其他資訊',
-            () => {
-              setSubmitStatus('unsubmitted');
-              history.push('/share');
-            },
-          ],
+          ['分享其他資訊', onGoToShare],
           ['取消', onResume],
         ]}
       />
