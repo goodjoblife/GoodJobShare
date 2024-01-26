@@ -14,7 +14,6 @@ import {
   equals,
   keys,
   path,
-  values,
   range,
 } from 'ramda';
 import {
@@ -64,7 +63,7 @@ import {
 } from './utils';
 import { getCompaniesSearch } from 'apis/companySearchApi';
 import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
-import employmentType from '../../constants/employmentType';
+import { employmentTypeOptions } from './common/optionMap';
 import WorkTimeExample from './WorkTimeExample';
 import Emoji from '../common/icons/Emoji';
 import { tabTypeTranslation } from '../../constants/companyJobTitle';
@@ -141,7 +140,7 @@ export const createEmployTypeQuestion = () => ({
   dataKey: DATA_KEY_EMPLOY_TYPE,
   required: true,
   defaultValue: null,
-  options: values(employmentType),
+  options: employmentTypeOptions,
   validator: isNot(isNil),
   warning: '請填寫職務型態',
 });
