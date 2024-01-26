@@ -6,6 +6,7 @@ import FormBuilder from 'common/FormBuilder';
 import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
 import Footer from './TypeFormFooter';
 import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
+import { QuestionPropType } from '../../common/FormBuilder';
 
 const SubmittableTypeForm = ({
   open,
@@ -39,6 +40,14 @@ const SubmittableTypeForm = ({
   const experienceCount = useExperienceCount();
   const salaryCount = useSalaryWorkTimeCount();
 
+  const onSuccessClose = useCallback(() => {
+    setSubmitStatus('unsubmitted');
+    onClose();
+    if (typeof window !== 'undefined') {
+      window.location.reload();
+    }
+  }, [onClose]);
+
   return (
     <Fragment>
       <FormBuilder
@@ -54,26 +63,9 @@ const SubmittableTypeForm = ({
         title="上傳成功"
         subtitle="你已解鎖全站資訊囉！"
         description="感謝你分享你的資訊，台灣的職場因為有你而變得更好！"
-        close={() => {
-          setSubmitStatus('unsubmitted');
-          onClose();
-          if (typeof window !== 'undefined') {
-            window.location.reload();
-          }
-        }}
+        close={onSuccessClose}
         closableOnClickOutside
-        actions={[
-          [
-            '確定',
-            () => {
-              setSubmitStatus('unsubmitted');
-              onClose();
-              if (typeof window !== 'undefined') {
-                window.location.reload();
-              }
-            },
-          ],
-        ]}
+        actions={[['確定', onSuccessClose]]}
       />
       <ConfirmModal
         isOpen={submitStatus === 'error'}
@@ -129,6 +121,14 @@ const SubmittableTypeForm = ({
 
 SubmittableTypeForm.propTypes = {
   open: PropTypes.bool.isRequired,
+  questions: PropTypes.arrayOf(QuestionPropType).isRequired,
+  header: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.func,
+  ]),
+  onSubmit: PropTypes.func.isRequired,
+  onSubmitError: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
