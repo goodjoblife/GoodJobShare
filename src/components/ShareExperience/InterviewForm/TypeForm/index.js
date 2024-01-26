@@ -1,18 +1,14 @@
-import React, { useCallback, Fragment, useState, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { last, contains, head, equals, reject } from 'ramda';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
 import ReactGA from 'react-ga4';
 import ReactPixel from 'react-facebook-pixel';
 
 import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
-import FormBuilder from 'common/FormBuilder';
-import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
 import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
-import Footer from '../../common/TypeFormFooter';
+import SubmittableFormBuilder from '../../common/SubmittableFormBuilder';
 import { createInterviewExperience } from 'actions/experiences';
-import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 import {
@@ -138,54 +134,41 @@ const bodyFromDraft = evolve({
 });
 
 const TypeForm = ({ open, onClose }) => {
-  const history = useHistory();
-  const [submitStatus, setSubmitStatus] = useState('unsubmitted');
-  const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
-  const handleSubmit = useCallback(
+  const onSubmit = useCallback(
     async draft => {
-      try {
-        if (submitStatus === 'submitting') {
-          return;
-        }
-        const body = bodyFromDraft(draft);
-        const ga_user_pseudo_id = await getUserPseudoId(GA_MEASUREMENT_ID);
-        body.extra = {
-          form_type: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
-          ga_user_pseudo_id,
-        };
-        // section 的標題與預設文字 = 4 + 11 + 19 + 25 個字
-        const goalValue = calcInterviewExperienceValue(body, 59);
+      const body = bodyFromDraft(draft);
+      const ga_user_pseudo_id = await getUserPseudoId(GA_MEASUREMENT_ID);
+      body.extra = {
+        form_type: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
+        ga_user_pseudo_id,
+      };
+      // section 的標題與預設文字 = 4 + 11 + 19 + 25 個字
+      const goalValue = calcInterviewExperienceValue(body, 59);
 
-        setSubmitStatus('submitting');
-        const resBody = await dispatch(createInterviewExperience({ body }));
-        const experienceId = resBody.createInterviewExperience.experience.id;
-        ReactGA.event({
-          category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
-          action: GA_ACTION.UPLOAD_SUCCESS,
-          value: goalValue,
-          label: experienceId,
-        });
-        ReactPixel.track('Purchase', {
-          value: 1,
-          currency: 'TWD',
-          content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
-        });
-        setSubmitStatus('success');
-      } catch (error) {
-        setErrorMessage(error.message);
-        ReactGA.event({
-          category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
-          action: GA_ACTION.UPLOAD_FAIL,
-        });
-        setSubmitStatus('error');
-      }
+      const resBody = await dispatch(createInterviewExperience({ body }));
+      const experienceId = resBody.createInterviewExperience.experience.id;
+      ReactGA.event({
+        category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
+        action: GA_ACTION.UPLOAD_SUCCESS,
+        value: goalValue,
+        label: experienceId,
+      });
+      ReactPixel.track('Purchase', {
+        value: 1,
+        currency: 'TWD',
+        content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
+      });
     },
-    [dispatch, submitStatus],
+    [dispatch],
   );
 
-  const experienceCount = useExperienceCount();
-  const salaryCount = useSalaryWorkTimeCount();
+  const onSubmitError = useCallback(async () => {
+    ReactGA.event({
+      category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
+      action: GA_ACTION.UPLOAD_FAIL,
+    });
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -201,90 +184,14 @@ const TypeForm = ({ open, onClose }) => {
   }, [open]);
 
   return (
-    <Fragment>
-      <FormBuilder
-        open={open}
-        onClose={() => setSubmitStatus('quitting')}
-        questions={questions}
-        header={renderCompanyJobTitleHeader}
-        footer={<Footer dataNum={salaryCount + experienceCount} />}
-        onSubmit={handleSubmit}
-      />
-      <ConfirmModal
-        isOpen={submitStatus === 'success'}
-        title="上傳成功"
-        subtitle="你已解鎖全站資訊囉！"
-        description="感謝你分享你的資訊，台灣的職場因為有你而變得更好！"
-        close={() => {
-          setSubmitStatus('unsubmitted');
-          onClose();
-          if (typeof window !== 'undefined') {
-            window.location.reload();
-          }
-        }}
-        closableOnClickOutside
-        actions={[
-          [
-            '確定',
-            () => {
-              setSubmitStatus('unsubmitted');
-              onClose();
-              if (typeof window !== 'undefined') {
-                window.location.reload();
-              }
-            },
-          ],
-        ]}
-      />
-      <ConfirmModal
-        isOpen={submitStatus === 'error'}
-        title="上傳失敗"
-        description={errorMessage}
-        close={() => {
-          setSubmitStatus('unsubmitted');
-        }}
-        closableOnClickOutside
-        actions={[
-          [
-            '確定',
-            () => {
-              setSubmitStatus('unsubmitted');
-            },
-          ],
-        ]}
-      />
-      <ConfirmModal
-        isOpen={submitStatus === 'quitting'}
-        title="確定要離開？"
-        description="離開之後資訊將會消失"
-        close={() => {
-          setSubmitStatus('unsubmitted');
-        }}
-        closableOnClickOutside
-        actions={[
-          [
-            '確定離開',
-            () => {
-              setSubmitStatus('unsubmitted');
-              onClose();
-            },
-          ],
-          [
-            '分享其他資訊',
-            () => {
-              setSubmitStatus('unsubmitted');
-              history.push('/share');
-            },
-          ],
-          [
-            '取消',
-            () => {
-              setSubmitStatus('unsubmitted');
-            },
-          ],
-        ]}
-      />
-    </Fragment>
+    <SubmittableFormBuilder
+      open={open}
+      questions={questions}
+      header={renderCompanyJobTitleHeader}
+      onSubmit={onSubmit}
+      onSubmitError={onSubmitError}
+      onClose={onClose}
+    />
   );
 };
 

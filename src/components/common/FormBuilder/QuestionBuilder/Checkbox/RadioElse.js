@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
 
-import { Wrapper, BlockSelectElse } from './private';
+import Wrapper from './private/Wrapper';
+import BlockSelectElse from './private/BlockSelectElse';
 
 const RadioElse = ({
   page,
