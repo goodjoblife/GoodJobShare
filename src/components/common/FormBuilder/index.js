@@ -108,8 +108,8 @@ const FormBuilder = ({
 
   const [
     shouldRenderQuestion,
-    header,
-    footer,
+    questionHeader,
+    questionFooter,
     dataKey,
     warning,
     skippable,
@@ -168,13 +168,19 @@ const FormBuilder = ({
     return null;
   }
 
+  let header = questionHeader || commonHeader;
+  if (typeof header === 'function') header = header(draft);
+
+  let footer = questionFooter || commonFooter;
+  if (typeof footer === 'function') footer = footer(draft);
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <button className={styles.closeBtn} onClick={onClose}>
           <X className={styles.icon} />
         </button>
-        {header || commonHeader}
+        {header}
       </div>
       <div className={styles.body}>
         <AnimatedPager className={styles.pager} page={page}>
@@ -229,15 +235,15 @@ const FormBuilder = ({
           <SubmissionBlock onSubmit={handleSubmit} />
         </div>
       </div>
-      <div>{footer || commonFooter}</div>
+      <div>{footer}</div>
     </div>
   );
 };
 
 FormBuilder.propTypes = {
   open: bool.isRequired,
-  header: oneOfType([string, element]),
-  footer: oneOfType([string, element]),
+  header: oneOfType([string, element, func]),
+  footer: oneOfType([string, element, func]),
   questions: arrayOf(
     shape({
       header: oneOfType([string, element, func]),
