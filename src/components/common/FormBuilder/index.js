@@ -25,34 +25,20 @@ import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
 import { OptionPropType } from './QuestionBuilder/Checkbox/PropTypes';
 
-const findWarningAgainstValue = (value, warning, validator) => {
-  if (validator) {
-    const isValid = validator(value);
-    if (isValid) {
-      return null;
-    } else {
-      if (typeof warning === 'function') {
-        return warning(value);
-      } else {
-        return warning;
-      }
-    }
-  } else {
-    return null;
-  }
-};
-
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
     R.ifElse(
-      R.has('validator'),
-      R.converge(R.call, [
-        R.prop('validator'),
-        R.compose(
-          dataKey => draft[dataKey],
-          R.prop('dataKey'),
-        ),
-      ]),
+      R.has('validate'),
+      R.compose(
+        R.isNil,
+        R.converge(R.call, [
+          R.prop('validate'),
+          R.compose(
+            dataKey => draft[dataKey],
+            R.prop('dataKey'),
+          ),
+        ]),
+      ),
       R.always(true),
     ),
   );
@@ -65,15 +51,14 @@ const useQuestion = (question, draft) => {
       dataKey,
       defaultValue,
       required,
-      warning,
-      validator,
+      validate,
     } = question;
     return {
       shouldRenderQuestion: true,
       questionHeader: header,
       questionFooter: footer,
       dataKey,
-      warning: findWarningAgainstValue(draft[dataKey], warning, validator),
+      warning: validate && validate(draft[dataKey]),
       skippable:
         !required &&
         R.equals(
@@ -205,7 +190,7 @@ const FormBuilder = ({
                     warnBeforeSetPage(i + 1);
                   }
                 }}
-                warning={isWarningShown ? warning : null}
+                warning={(isWarningShown && warning) || null}
               />
             </AnimatedPager.Page>
           ))}
@@ -252,8 +237,7 @@ export const QuestionPropType = shape({
   dataKey: string.isRequired,
   defaultValue: oneOfType([func, any]),
   required: bool,
-  warning: oneOfType([func, string]),
-  validator: func,
+  validate: func,
   onSelect: func,
   search: func,
   placeholder: string,

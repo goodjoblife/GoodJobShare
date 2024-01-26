@@ -19,7 +19,6 @@ const Text = ({
   onSelect,
   search,
   warning,
-  validator,
   placeholder,
   footnote,
 }) => {
@@ -90,7 +89,6 @@ Text.propTypes = {
   onSelect: PropTypes.func,
   search: PropTypes.func,
   warning: PropTypes.string,
-  validator: PropTypes.func,
   placeholder: PropTypes.string,
   footnote: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 };

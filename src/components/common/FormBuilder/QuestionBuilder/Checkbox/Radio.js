@@ -16,7 +16,6 @@ const Radio = ({
   onChange,
   onConfirm,
   warning,
-  validator,
   options,
 }) => (
   <Wrapper warning={warning}>
@@ -42,7 +41,6 @@ Radio.propTypes = {
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
-  validator: PropTypes.func,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
 };
 

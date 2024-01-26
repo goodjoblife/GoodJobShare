@@ -10,7 +10,7 @@ import {
   last,
   compose,
   contains,
-  all,
+  any,
   equals,
   path,
   range,
@@ -51,8 +51,7 @@ import {
   isArray,
   wordCount,
   isSalaryAmount,
-  greaterThan,
-  greaterThanOrEqualTo,
+  lessThan,
   joinCompact,
   isNot,
   within,
@@ -79,8 +78,7 @@ export const createCompanyQuestion = ({ header }) => ({
     return companyName;
   },
   required: true,
-  validator: isNot(isEmpty),
-  warning: '請填寫公司名稱',
+  validate: value => isEmpty(value) && '請填寫公司名稱',
   placeholder: 'ＯＯ 股份有限公司',
   search: value =>
     getCompaniesSearch({ key: value }).then(
@@ -95,8 +93,7 @@ export const createJobTitleQuestion = ({ header }) => ({
   dataKey: DATA_KEY_JOB_TITLE,
   defaultValue: '',
   required: true,
-  validator: isNot(isEmpty),
-  warning: '請填寫職稱',
+  validate: value => isEmpty(value) && '請填寫職稱',
   placeholder: '軟體工程師',
   search: value =>
     getJobTitlesSearch({ key: value }).then(when(isNot(isArray), always([]))),
@@ -111,10 +108,7 @@ export const createCurrentlyEmployedQuestion = () => ({
   defaultValue: [null, [null, null]],
   options: [{ label: '在職', value: 'yes' }, { label: '已離職', value: 'no' }],
   elseOptionValue: 'no',
-  validator: ([value, [year, month]]) =>
-    isNot(isNil, value) &&
-    (value === 'no' ? isNot(isNil, year) && isNot(isNil, month) : true),
-  warning: ([value, [year, month]]) =>
+  validate: ([value, [year, month]]) =>
     isNil(value)
       ? '請填寫是否在職'
       : value === 'no' && (isNil(year) || isNil(month))
@@ -139,8 +133,7 @@ export const createEmployTypeQuestion = () => ({
   required: true,
   defaultValue: null,
   options: employmentTypeOptions,
-  validator: isNot(isNil),
-  warning: '請填寫職務型態',
+  validate: value => isNil(value) && '請填寫職務型態',
 });
 
 export const createGenderQuestion = () => ({
@@ -170,8 +163,8 @@ export const createInterviewDateQuestion = () => ({
   dataKey: DATA_KEY_DATE,
   defaultValue: [null, null],
   required: true,
-  validator: ([year, month]) => isNot(isNil, year) && isNot(isNil, month),
-  warning: ([year, month]) =>
+  validate: ([year, month]) =>
+    (isNil(year) || isNil(month)) &&
     `需填寫面試${joinCompact(' 及 ')(
       isNil(year) && '年份',
       isNil(month) && '月份',
@@ -184,8 +177,7 @@ export const createInterviewRegionQuestion = () => ({
   dataKey: DATA_KEY_REGION,
   defaultValue: null,
   required: true,
-  validator: isNot(isNil),
-  warning: '需填寫面試地區',
+  validate: value => isNil(value) && '需填寫面試地區',
   options: REGION_OPTIONS,
 });
 
@@ -195,17 +187,14 @@ export const createInterviewResultQuestion = () => ({
   dataKey: DATA_KEY_RESULT,
   defaultValue: [null, ''],
   required: true,
-  validator: ([selected, elseText]) =>
-    isNot(isNil, selected) &&
-    (equals(selected, last(RESULT_OPTIONS))
-      ? within(1, 100, elseText.length)
-      : true),
-  warning: ([selected, elseText]) =>
-    isEmpty(elseText)
-      ? '需填寫面試結果'
-      : !within(1, 100, elseText.length)
-      ? '面試結果僅限 1~100 字！'
-      : null,
+  validate: ([selected, elseText]) => {
+    if (isNil(selected)) return '需填寫面試結果';
+    if (equals(selected, last(RESULT_OPTIONS))) {
+      if (isEmpty(elseText)) return '需填寫面試結果';
+      if (!within(1, 100, elseText.length)) return '面試結果僅限 1~100 字！';
+    }
+    return null;
+  },
   options: RESULT_OPTIONS,
   elseOptionValue: last(RESULT_OPTIONS),
   placeholder: '輸入面試結果',
@@ -217,8 +206,7 @@ export const createInterviewRatingQuestion = () => ({
   dataKey: DATA_KEY_RATING,
   defaultValue: 0,
   required: true,
-  validator: greaterThan(0),
-  warning: '需選取面試滿意程度',
+  validate: value => equals(0, value) && '需選取面試滿意程度',
   ratingLabels: RATING_LABELS,
 });
 
@@ -230,11 +218,11 @@ export const createInterviewCourseQuestion = () => ({
 第二次面試：
 工作環境：`,
   required: true,
-  validator: compose(
-    greaterThanOrEqualTo(COURSE_MIN_LENGTH),
-    wordCount,
-  ),
-  warning: value => `至少 ${COURSE_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
+  validate: value =>
+    compose(
+      lessThan(COURSE_MIN_LENGTH),
+      wordCount,
+    )(value) && `至少 ${COURSE_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
   footnote: value =>
     `至少 ${COURSE_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
 });
@@ -247,11 +235,11 @@ export const createInterviewSuggestionsQuestion = () => ({
 是否推薦此份工作：
 其他注意事項：`,
   required: true,
-  validator: compose(
-    greaterThanOrEqualTo(SUGGESTIONS_MIN_LENGTH),
-    wordCount,
-  ),
-  warning: value =>
+  validate: value =>
+    compose(
+      lessThan(SUGGESTIONS_MIN_LENGTH),
+      wordCount,
+    )(value) &&
     `至少 ${SUGGESTIONS_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
   footnote: value =>
     `至少 ${SUGGESTIONS_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
@@ -271,17 +259,14 @@ export const createRequiredSalaryQuestion = () => ({
   dataKey: DATA_KEY_SALARY,
   defaultValue: [null, ''],
   required: true,
-  validator: ([type, amount]) =>
-    isNot(isNil, type) &&
-    isNot(isEmpty, amount) &&
-    isSalaryAmount(amount) &&
-    isValidSalary(type, amount),
-  warning: ([type, amount]) =>
+  validate: ([type, amount]) =>
     isNil(type)
       ? '需選擇薪水類型'
-      : isNot(isEmpty, amount) && isNot(isValidSalary(type), amount)
+      : isEmpty(amount) || isNot(isSalaryAmount, amount)
+      ? '需填寫薪資'
+      : isNot(isValidSalary(type), amount)
       ? '薪資不合理。可能有少填寫 0，或薪資種類(年薪/月薪/日薪/時薪)選擇錯誤，請再檢查一次'
-      : '需填寫薪資',
+      : null,
   options: salaryTypeOptions,
   placeholder: '700,000',
   suffix: '元',
@@ -290,18 +275,11 @@ export const createRequiredSalaryQuestion = () => ({
 });
 
 export const createSalaryQuestion = () => {
-  const {
-    required,
-    validator,
-    warning,
-    ...question
-  } = createRequiredSalaryQuestion();
+  const { required, validate, ...question } = createRequiredSalaryQuestion();
   return {
     ...question,
-    validator: ([type, amount]) =>
-      (isNil(type) && isEmpty(amount)) || validator([type, amount]),
-    warning: ([type, amount]) =>
-      isNil(type) && isEmpty(amount) ? null : warning([type, amount]),
+    validate: ([type, amount]) =>
+      isNil(type) && isEmpty(amount) ? null : validate([type, amount]),
   };
 };
 
@@ -312,8 +290,7 @@ export const createExperienceInYearQuestion = () => ({
   required: true,
   defaultValue: null,
   options: ['不到 1 年', ...range(1, 51).map(n => `${n} 年`)],
-  validator: isNot(isNil),
-  warning: '需填寫工作經歷',
+  validate: value => isNil(value) && '需填寫工作經歷',
 });
 
 export const createDayPromisedWorkTimeQuestion = () => ({
@@ -322,8 +299,7 @@ export const createDayPromisedWorkTimeQuestion = () => ({
   dataKey: DATA_KEY_DAY_PROMISED_WORK_TIME,
   required: true,
   defaultValue: '',
-  validator: isNumber,
-  warning: '請填寫表定工時',
+  validate: value => isNot(isNumber, value) && '請填寫表定工時',
   placeholder: '8 或 8.5',
   footnote: '工作日指與雇主約定的上班日，或是排班排定的日子。',
 });
@@ -334,8 +310,7 @@ export const createDayRealWorkTimeQuestion = () => ({
   dataKey: DATA_KEY_DAY_REAL_WORK_TIME,
   required: true,
   defaultValue: '',
-  validator: isNumber,
-  warning: '請填寫實際工時',
+  validate: value => isNot(isNumber, value) && '請填寫實際工時',
   placeholder: '8 或 8.5',
   footnote: (
     <Fragment>
@@ -355,8 +330,7 @@ export const createWeekWorkTimeQuestion = () => ({
   dataKey: DATA_KEY_WEEK_WORK_TIME,
   required: true,
   defaultValue: '',
-  validator: isNumber,
-  warning: '請填寫週總工時',
+  validate: value => isNot(isNumber, value) && '請填寫週總工時',
   placeholder: '40 或 40.5',
   footnote: (
     <Fragment>
@@ -392,8 +366,7 @@ export const createOvertimeFrequencyQuestion = () => ({
     label: <OptionEmoji value={index}>{label}</OptionEmoji>,
     value: `${index}`,
   })),
-  validator: isNot(isNil),
-  warning: '需填寫加班頻率',
+  validate: value => isNil(value) && '需填寫加班頻率',
 });
 
 export const createOvertimeSalaryQuestion = () => ({
@@ -401,9 +374,7 @@ export const createOvertimeSalaryQuestion = () => ({
   type: 'radio-else-radio',
   dataKey: DATA_KEY_HAS_OVERTIME_SALARY,
   defaultValue: [null, null],
-  validator: ([selected, elseValue]) =>
-    selected === 'yes' ? elseValue !== null : true,
-  warning: ([selected, elseValue]) =>
+  validate: ([selected, elseValue]) =>
     selected === 'yes' && elseValue === null
       ? '需填寫加班費是否符合勞基法'
       : null,
@@ -437,8 +408,7 @@ export const createQuestionsQuestion = () => ({
   type: 'text-list',
   dataKey: DATA_KEY_QUESTIONS,
   defaultValue: [],
-  validator: all(isNot(isEmpty)),
-  warning: '需填寫面試問題內容',
+  validate: value => any(isEmpty, value) && '需填寫面試問題內容',
   placeholder: '面試問題',
 });
 
@@ -447,15 +417,13 @@ export const createSensitiveQuestionsQuestion = () => ({
   type: 'checkbox-else',
   dataKey: DATA_KEY_SENSITIVE_QUESTIONS,
   defaultValue: [[], ''],
-  validator: ([selected, elseText]) =>
-    !contains(last(SENSITIVE_QUESTIONS_OPTIONS), selected) ||
-    within(1, 20, elseText.length),
-  warning: ([selected, elseText]) =>
-    contains(last(SENSITIVE_QUESTIONS_OPTIONS), selected) && isEmpty(elseText)
+  validate: ([selected, elseText]) =>
+    contains(last(SENSITIVE_QUESTIONS_OPTIONS), selected) &&
+    (isEmpty(elseText)
       ? '需填寫其他特殊問題的內容'
       : !within(1, 20, elseText.length)
       ? '面試中提及的特別問題僅限 1~20 字！'
-      : null,
+      : null),
   options: SENSITIVE_QUESTIONS_OPTIONS,
   elseOptionValue: last(SENSITIVE_QUESTIONS_OPTIONS),
   placeholder: '輸入其他特殊問題內容',
