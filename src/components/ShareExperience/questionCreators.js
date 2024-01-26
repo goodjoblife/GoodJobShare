@@ -9,7 +9,7 @@ import {
   last,
   compose,
   contains,
-  all,
+  any,
   equals,
   keys,
   path,
@@ -40,8 +40,7 @@ import {
   isArray,
   wordCount,
   isSalaryAmount,
-  greaterThan,
-  greaterThanOrEqualTo,
+  lessThan,
   joinCompact,
   isNot,
   within,
@@ -63,8 +62,7 @@ export const createCompanyQuestion = ({ header }) => ({
     return companyName;
   },
   required: true,
-  validator: isNot(isEmpty),
-  warning: '請填寫公司名稱',
+  validate: value => isEmpty(value) && '請填寫公司名稱',
   placeholder: 'ＯＯ 股份有限公司',
   search: value =>
     getCompaniesSearch({ key: value }).then(
@@ -79,8 +77,7 @@ export const createJobTitleQuestion = ({ header }) => ({
   dataKey: DATA_KEY_JOB_TITLE,
   defaultValue: '',
   required: true,
-  validator: isNot(isEmpty),
-  warning: '請填寫職稱',
+  validate: value => isEmpty(value) && '請填寫職稱',
   placeholder: '軟體工程師',
   search: value =>
     getJobTitlesSearch({ key: value }).then(when(isNot(isArray), always([]))),
@@ -93,8 +90,8 @@ export const createInterviewDateQuestion = () => ({
   dataKey: DATA_KEY_DATE,
   defaultValue: [null, null],
   required: true,
-  validator: ([year, month]) => isNot(isNil, year) && isNot(isNil, month),
-  warning: ([year, month]) =>
+  validate: ([year, month]) =>
+    (isNil(year) || isNil(month)) &&
     `需填寫面試${joinCompact(' 及 ')(
       isNil(year) && '年份',
       isNil(month) && '月份',
@@ -107,8 +104,7 @@ export const createInterviewRegionQuestion = () => ({
   dataKey: DATA_KEY_REGION,
   defaultValue: null,
   required: true,
-  validator: isNot(isNil),
-  warning: '需填寫面試地區',
+  validate: value => isNil(value) && '需填寫面試地區',
   options: REGION_OPTIONS,
 });
 
@@ -118,17 +114,14 @@ export const createInterviewResultQuestion = () => ({
   dataKey: DATA_KEY_RESULT,
   defaultValue: [null, ''],
   required: true,
-  validator: ([selected, elseText]) =>
-    isNot(isNil, selected) &&
-    (equals(selected, last(RESULT_OPTIONS))
-      ? within(1, 100, elseText.length)
-      : true),
-  warning: ([selected, elseText]) =>
-    isEmpty(elseText)
-      ? '需填寫面試結果'
-      : !within(1, 100, elseText.length)
-      ? '面試結果僅限 1~100 字！'
-      : null,
+  validate: ([selected, elseText]) => {
+    if (isNil(selected)) return '需填寫面試結果';
+    if (equals(selected, last(RESULT_OPTIONS))) {
+      if (isEmpty(elseText)) return '需填寫面試結果';
+      if (!within(1, 100, elseText.length)) return '面試結果僅限 1~100 字！';
+    }
+    return null;
+  },
   options: RESULT_OPTIONS,
   placeholder: '輸入面試結果',
 });
@@ -139,8 +132,7 @@ export const createInterviewRatingQuestion = () => ({
   dataKey: DATA_KEY_RATING,
   defaultValue: 0,
   required: true,
-  validator: greaterThan(0),
-  warning: '需選取面試滿意程度',
+  validate: value => equals(0, value) && '需選取面試滿意程度',
   ratingLabels: RATING_LABELS,
 });
 
@@ -152,11 +144,11 @@ export const createInterviewCourseQuestion = () => ({
 第二次面試：
 工作環境：`,
   required: true,
-  validator: compose(
-    greaterThanOrEqualTo(COURSE_MIN_LENGTH),
-    wordCount,
-  ),
-  warning: value => `至少 ${COURSE_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
+  validate: value =>
+    compose(
+      lessThan(COURSE_MIN_LENGTH),
+      wordCount,
+    )(value) && `至少 ${COURSE_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
   footnote: value =>
     `至少 ${COURSE_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
 });
@@ -169,11 +161,11 @@ export const createInterviewSuggestionsQuestion = () => ({
 是否推薦此份工作：
 其他注意事項：`,
   required: true,
-  validator: compose(
-    greaterThanOrEqualTo(SUGGESTIONS_MIN_LENGTH),
-    wordCount,
-  ),
-  warning: value =>
+  validate: value =>
+    compose(
+      lessThan(SUGGESTIONS_MIN_LENGTH),
+      wordCount,
+    )(value) &&
     `至少 ${SUGGESTIONS_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
   footnote: value =>
     `至少 ${SUGGESTIONS_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
@@ -192,18 +184,13 @@ export const createSalaryQuestion = () => ({
   type: 'select-text',
   dataKey: DATA_KEY_SALARY,
   defaultValue: [null, ''],
-  validator: ([type, amount]) =>
-    isNot(isNil, type)
-      ? isNot(isEmpty, amount) &&
-        isSalaryAmount(amount) &&
-        isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type], amount)
-      : isEmpty(amount),
-  warning: ([type, amount]) =>
+  validate: ([type, amount]) =>
     isNot(isNil, type) && (isEmpty(amount) || isNot(isSalaryAmount, amount))
       ? '需填寫薪資'
       : isNil(type) && isNot(isEmpty, amount)
       ? '需選擇薪水類型'
-      : isNot(isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type]), amount)
+      : isNot(isNil, type) &&
+        isNot(isValidSalary(SALARY_TYPE_VALUE_BY_OPTION[type]), amount)
       ? '薪資不合理。可能有少填寫 0，或薪資種類(年薪/月薪/日薪/時薪)選擇錯誤，請再檢查一次'
       : null,
   options: keys(SALARY_TYPE_VALUE_BY_OPTION),
@@ -215,8 +202,7 @@ export const createQuestionsQuestion = () => ({
   type: 'text-list',
   dataKey: DATA_KEY_QUESTIONS,
   defaultValue: [],
-  validator: all(isNot(isEmpty)),
-  warning: '需填寫面試問題內容',
+  validate: value => any(isEmpty, value) && '需填寫面試問題內容',
   placeholder: '面試問題',
 });
 
@@ -225,14 +211,13 @@ export const createSensitiveQuestionsQuestion = () => ({
   type: 'checkbox-else',
   dataKey: DATA_KEY_SENSITIVE_QUESTIONS,
   defaultValue: [[], ''],
-  validator: ([selected, elseText]) =>
-    !contains('其他', selected) || within(1, 20, elseText.length),
-  warning: ([selected, elseText]) =>
-    contains(last(SENSITIVE_QUESTIONS_OPTIONS), selected) && isEmpty(elseText)
+  validate: ([selected, elseText]) =>
+    contains(last(SENSITIVE_QUESTIONS_OPTIONS), selected) &&
+    (isEmpty(elseText)
       ? '需填寫其他特殊問題的內容'
       : !within(1, 20, elseText.length)
       ? '面試中提及的特別問題僅限 1~20 字！'
-      : null,
+      : null),
   options: SENSITIVE_QUESTIONS_OPTIONS,
   placeholder: '輸入其他特殊問題內容',
 });

@@ -16,7 +16,6 @@ const RadioElse = ({
   onChange,
   onConfirm,
   warning,
-  validator,
   options,
   placeholder,
 }) => (
@@ -54,7 +53,6 @@ RadioElse.propTypes = {
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
-  validator: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
   placeholder: PropTypes.string,
 };

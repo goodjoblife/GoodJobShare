@@ -23,23 +23,6 @@ import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
 
-const findWarningAgainstValue = (value, warning, validator) => {
-  if (validator) {
-    const isValid = validator(value);
-    if (isValid) {
-      return null;
-    } else {
-      if (typeof warning === 'function') {
-        return warning(value);
-      } else {
-        return warning;
-      }
-    }
-  } else {
-    return null;
-  }
-};
-
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
     R.ifElse(
@@ -63,15 +46,14 @@ const useQuestion = (question, draft) => {
       dataKey,
       defaultValue,
       required,
-      warning,
-      validator,
+      validate,
     } = question;
     return [
       true,
       typeof header === 'function' ? header(draft) : header,
       typeof footer === 'function' ? footer(draft) : footer,
       dataKey,
-      findWarningAgainstValue(draft[dataKey], warning, validator),
+      validate && validate(draft[dataKey]),
       !required &&
         R.equals(
           draft[dataKey],
@@ -202,7 +184,7 @@ const FormBuilder = ({
                     warnBeforeSetPage(i + 1);
                   }
                 }}
-                warning={isWarningShown ? warning : null}
+                warning={(isWarningShown && warning) || null}
               />
             </AnimatedPager.Page>
           ))}
@@ -254,8 +236,7 @@ FormBuilder.propTypes = {
       dataKey: string.isRequired,
       defaultValue: oneOfType([func, any]),
       required: bool,
-      warning: oneOfType([func, string]),
-      validator: func,
+      validate: func,
       onSelect: func,
       search: func,
       placeholder: string,
