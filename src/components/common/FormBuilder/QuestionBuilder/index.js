@@ -10,6 +10,7 @@ import {
   arrayOf,
 } from 'prop-types';
 import cn from 'classnames';
+import { values } from 'ramda';
 
 import Text from './Text';
 import TextArea from './TextArea';
@@ -24,20 +25,22 @@ import TitleBlock from '../TitleBlock';
 import Scrollable from '../Scrollable';
 import styles from './styles.module.css';
 
-export const availableTypes = [
-  'text',
-  'textarea',
-  'radio',
-  'radio-else',
-  'checkbox',
-  'checkbox-else',
-  'rating',
-  'file',
-  'date',
-  'select-text',
-  'text-list',
-  'customized',
-];
+export const QUESTION_TYPE = {
+  TEXT: 'TEXT',
+  TEXTAREA: 'TEXTAREA',
+  RADIO: 'RADIO',
+  RADIO_ELSE: 'RADIO_ELSE',
+  CHECKBOX: 'CHECKBOX',
+  CHECKBOX_ELSE: 'CHECKBOX_ELSE',
+  RATING: 'RATING',
+  FILE: 'FILE',
+  DATE: 'DATE',
+  SELECT_TEXT: 'SELECT_TEXT',
+  TEXT_LIST: 'TEXT_LIST',
+  CUSTOMIZED: 'CUSTOMIZED',
+};
+
+export const QuestionTypePropType = oneOf(values(QUESTION_TYPE));
 
 const useQuestionNode = ({
   page,
@@ -75,7 +78,7 @@ const useQuestionNode = ({
     validator,
   };
   switch (type) {
-    case 'text':
+    case QUESTION_TYPE.TEXT:
       return [
         false,
         <Text
@@ -85,11 +88,11 @@ const useQuestionNode = ({
           search={search}
         />,
       ];
-    case 'textarea':
+    case QUESTION_TYPE.TEXTAREA:
       return [true, <TextArea {...commonProps} footnote={footnote} />];
-    case 'radio':
+    case QUESTION_TYPE.RADIO:
       return [true, <Radio {...commonProps} options={options} />];
-    case 'radio-else':
+    case QUESTION_TYPE.RADIO_ELSE:
       return [
         true,
         <RadioElse
@@ -98,9 +101,9 @@ const useQuestionNode = ({
           placeholder={placeholder}
         />,
       ];
-    case 'checkbox':
+    case QUESTION_TYPE.CHECKBOX:
       return [true, <Checkbox {...commonProps} options={options} />];
-    case 'checkbox-else':
+    case QUESTION_TYPE.CHECKBOX_ELSE:
       return [
         true,
         <CheckboxElse
@@ -109,13 +112,13 @@ const useQuestionNode = ({
           placeholder={placeholder}
         />,
       ];
-    case 'rating':
+    case QUESTION_TYPE.RATING:
       return [false, <Rating {...commonProps} ratingLabels={ratingLabels} />];
-    case 'file':
+    case QUESTION_TYPE.FILE:
       return [false, <File {...commonProps} />];
-    case 'date':
+    case QUESTION_TYPE.DATE:
       return [false, <Date {...commonProps} />];
-    case 'select-text':
+    case QUESTION_TYPE.SELECT_TEXT:
       return [
         false,
         <SelectText
@@ -124,9 +127,9 @@ const useQuestionNode = ({
           options={options}
         />,
       ];
-    case 'text-list':
+    case QUESTION_TYPE.TEXT_LIST:
       return [true, <TextList {...commonProps} placeholder={placeholder} />];
-    case 'customized':
+    case QUESTION_TYPE.CUSTOMIZED:
       if (renderCustomizedQuestion) {
         return [
           false,
@@ -226,7 +229,7 @@ QuestionBuilder.propTypes = {
   page: number.isRequired,
   title: oneOfType([string, func]).isRequired,
   description: string,
-  type: oneOf(availableTypes).isRequired,
+  type: QuestionTypePropType.isRequired,
   dataKey: string.isRequired,
   required: bool,
   defaultValue: any,
