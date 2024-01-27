@@ -40,8 +40,6 @@ export const QUESTION_TYPE = {
   CUSTOMIZED: 'CUSTOMIZED',
 };
 
-export const QuestionTypePropType = oneOf(values(QUESTION_TYPE));
-
 const useQuestionNode = ({
   page,
   title,
@@ -224,6 +222,8 @@ const QuestionBuilder = ({
     );
   }
 };
+
+export const QuestionTypePropType = oneOf(values(QUESTION_TYPE));
 
 QuestionBuilder.propTypes = {
   page: number.isRequired,
