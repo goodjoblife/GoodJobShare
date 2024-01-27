@@ -240,9 +240,11 @@ const FormBuilder = ({
   );
 };
 
+export const PageEndPropType = oneOfType([string, element, func]);
+
 export const QuestionPropType = shape({
-  header: oneOfType([string, element, func]),
-  footer: oneOfType([string, element, func]),
+  header: PageEndPropType,
+  footer: PageEndPropType,
   title: oneOfType([string, func]).isRequired,
   description: string,
   type: oneOf(availableTypes).isRequired,
@@ -262,8 +264,8 @@ export const QuestionPropType = shape({
 
 FormBuilder.propTypes = {
   open: bool.isRequired,
-  header: oneOfType([string, element, func]),
-  footer: oneOfType([string, element, func]),
+  header: PageEndPropType,
+  footer: PageEndPropType,
   questions: arrayOf(QuestionPropType).isRequired,
   onChange: func,
   onPrev: func,
