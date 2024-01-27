@@ -117,6 +117,7 @@ SubmittableTypeForm.propTypes = {
     PropTypes.element,
     PropTypes.func,
   ]),
+  onSubmit: PropTypes.func.isRequired,
   onSubmitError: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
