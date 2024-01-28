@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Wrapper, BlockSelect } from './private';
+import Wrapper from './private/Wrapper';
+import BlockSelect from './private/BlockSelect';
 
 const Checkbox = ({
   page,
