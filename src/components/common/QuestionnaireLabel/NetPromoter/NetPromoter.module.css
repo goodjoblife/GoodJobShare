@@ -4,11 +4,14 @@
   height: 218px;
   width: 367px;
   background-color: #fff;
-  border: 1px solid main-black;
+  border: 4px solid main-yellow;
   overflow: hidden;
   position: relative;
   padding: 20px 24px 0px 24px;
-  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 2.5rem;
 }
 
 .question {
@@ -17,16 +20,31 @@
   line-height: 23px;
 }
 
+.question span {
+  font-size: 14px;
+  color: #626262;
+}
+
 .nextStepContainer {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: flex-end;
-  margin-top: 40px;
+  height: 104px;
+}
+
+.nextStepContainer img {
+  width: auto;
+  height: auto;
+  max-width: 216px;
+  max-height: 86px;
+  position: absolute;
+  left: -4px;
+  bottom: -10px;
 }
 
 .nextStep {
-  width: 83px;
-  height: 28px;
+  width: 118px;
+  height: 40px;
   font-size: 15px;
   font-weight: 600;
   line-height: 21px;
@@ -35,6 +53,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 15px;
 }
 
 .closeButton {
@@ -53,9 +72,9 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 15px;
-    height: 3px;
-    background-color: #000;
+    width: 16px;
+    height: 2px;
+    background-color: #5a5a5a;
   }
 
   &:before {
@@ -76,6 +95,7 @@
 .range input[type='range'] {
   width: 100%;
   position: relative;
+  cursor: pointer;
 }
 
 .ticks {
