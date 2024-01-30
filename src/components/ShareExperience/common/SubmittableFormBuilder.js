@@ -2,11 +2,13 @@ import React, { useCallback, Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 
-import FormBuilder from 'common/FormBuilder';
+import FormBuilder, {
+  PageEndPropType,
+  QuestionPropType,
+} from 'common/FormBuilder';
 import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
 import Footer from './TypeFormFooter';
 import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
-import { QuestionPropType } from '../../common/FormBuilder';
 
 const SubmittableTypeForm = ({
   open,
@@ -113,11 +115,8 @@ const SubmittableTypeForm = ({
 SubmittableTypeForm.propTypes = {
   open: PropTypes.bool.isRequired,
   questions: PropTypes.arrayOf(QuestionPropType).isRequired,
-  header: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.element,
-    PropTypes.func,
-  ]),
+  header: PageEndPropType,
+  onSubmit: PropTypes.func.isRequired,
   onSubmitError: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   redirectPathnameOnSuccess: PropTypes.string,

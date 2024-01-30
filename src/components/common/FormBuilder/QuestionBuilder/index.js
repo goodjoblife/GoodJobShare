@@ -11,6 +11,7 @@ import {
   node,
 } from 'prop-types';
 import cn from 'classnames';
+import { values } from 'ramda';
 
 import Text from './Text';
 import TextArea from './TextArea';
@@ -33,22 +34,22 @@ import Scrollable from '../Scrollable';
 import styles from './styles.module.css';
 import { OptionPropType } from './Checkbox/PropTypes';
 
-export const availableTypes = [
-  'text',
-  'textarea',
-  'radio',
-  'radio-else',
-  'radio-else-radio',
-  'radio-else-date',
-  'checkbox',
-  'checkbox-else',
-  'rating',
-  'file',
-  'date',
-  'select-text',
-  'text-list',
-  'customized',
-];
+export const QUESTION_TYPE = {
+  TEXT: 'TEXT',
+  TEXTAREA: 'TEXTAREA',
+  RADIO: 'RADIO',
+  RADIO_ELSE: 'RADIO_ELSE',
+  RADIO_ELSE_RADIO: 'RADIO_ELSE_RADIO',
+  RADIO_ELSE_DATE: 'RADIO_ELSE_DATE',
+  CHECKBOX: 'CHECKBOX',
+  CHECKBOX_ELSE: 'CHECKBOX_ELSE',
+  RATING: 'RATING',
+  FILE: 'FILE',
+  DATE: 'DATE',
+  SELECT_TEXT: 'SELECT_TEXT',
+  TEXT_LIST: 'TEXT_LIST',
+  CUSTOMIZED: 'CUSTOMIZED',
+};
 
 const useQuestionNode = ({
   page,
@@ -87,7 +88,7 @@ const useQuestionNode = ({
     warning,
   };
   switch (type) {
-    case 'text':
+    case QUESTION_TYPE.TEXT:
       return [
         false,
         <Text
@@ -98,11 +99,11 @@ const useQuestionNode = ({
           footnote={footnote}
         />,
       ];
-    case 'textarea':
+    case QUESTION_TYPE.TEXTAREA:
       return [true, <TextArea {...commonProps} footnote={footnote} />];
-    case 'radio':
+    case QUESTION_TYPE.RADIO:
       return [true, <Radio {...commonProps} options={options} />];
-    case 'radio-else':
+    case QUESTION_TYPE.RADIO_ELSE:
       return [
         true,
         <RadioElse
@@ -112,7 +113,7 @@ const useQuestionNode = ({
           placeholder={placeholder}
         />,
       ];
-    case 'radio-else-radio':
+    case QUESTION_TYPE.RADIO_ELSE_RADIO:
       return [
         true,
         <RadioElseRadio
@@ -122,7 +123,7 @@ const useQuestionNode = ({
           elseOptions={elseOptions}
         />,
       ];
-    case 'radio-else-date':
+    case QUESTION_TYPE.RADIO_ELSE_DATE:
       return [
         true,
         <RadioElseDate
@@ -131,9 +132,9 @@ const useQuestionNode = ({
           elseOptionValue={elseOptionValue}
         />,
       ];
-    case 'checkbox':
+    case QUESTION_TYPE.CHECKBOX:
       return [true, <Checkbox {...commonProps} options={options} />];
-    case 'checkbox-else':
+    case QUESTION_TYPE.CHECKBOX_ELSE:
       return [
         true,
         <CheckboxElse
@@ -143,13 +144,13 @@ const useQuestionNode = ({
           placeholder={placeholder}
         />,
       ];
-    case 'rating':
+    case QUESTION_TYPE.RATING:
       return [false, <Rating {...commonProps} ratingLabels={ratingLabels} />];
-    case 'file':
+    case QUESTION_TYPE.FILE:
       return [false, <File {...commonProps} />];
-    case 'date':
+    case QUESTION_TYPE.DATE:
       return [false, <Date {...commonProps} />];
-    case 'select-text':
+    case QUESTION_TYPE.SELECT_TEXT:
       return [
         false,
         <SelectText
@@ -160,9 +161,9 @@ const useQuestionNode = ({
           footnote={footnote}
         />,
       ];
-    case 'text-list':
+    case QUESTION_TYPE.TEXT_LIST:
       return [true, <TextList {...commonProps} placeholder={placeholder} />];
-    case 'customized':
+    case QUESTION_TYPE.CUSTOMIZED:
       if (renderCustomizedQuestion) {
         return [
           false,
@@ -261,11 +262,13 @@ const QuestionBuilder = ({
   }
 };
 
+export const QuestionTypePropType = oneOf(values(QUESTION_TYPE));
+
 QuestionBuilder.propTypes = {
   page: number.isRequired,
   title: oneOfType([string, func]).isRequired,
   description: string,
-  type: oneOf(availableTypes).isRequired,
+  type: QuestionTypePropType.isRequired,
   dataKey: string.isRequired,
   required: bool,
   defaultValue: any,

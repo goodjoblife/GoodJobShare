@@ -4,7 +4,6 @@ import {
   bool,
   func,
   shape,
-  oneOf,
   oneOfType,
   element,
   arrayOf,
@@ -16,7 +15,7 @@ import R from 'ramda';
 
 import X from 'common/icons/X';
 
-import QuestionBuilder, { availableTypes } from './QuestionBuilder';
+import QuestionBuilder, { QuestionTypePropType } from './QuestionBuilder';
 import useDraft from './useDraft';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
@@ -228,16 +227,19 @@ const FormBuilder = ({
   );
 };
 
+export const PageEndPropType = oneOfType([string, element, func]);
+
 export const QuestionPropType = shape({
-  header: oneOfType([string, element, func]),
-  footer: oneOfType([string, element, func]),
+  header: PageEndPropType,
+  footer: PageEndPropType,
   title: oneOfType([string, func]).isRequired,
   description: string,
-  type: oneOf(availableTypes).isRequired,
+  type: QuestionTypePropType.isRequired,
   dataKey: string.isRequired,
   defaultValue: oneOfType([func, any]),
   required: bool,
-  validate: func,
+  warning: oneOfType([func, string]),
+  validator: func,
   onSelect: func,
   search: func,
   placeholder: string,
@@ -250,8 +252,8 @@ export const QuestionPropType = shape({
 
 FormBuilder.propTypes = {
   open: bool.isRequired,
-  header: oneOfType([string, element, func]),
-  footer: oneOfType([string, element, func]),
+  header: PageEndPropType,
+  footer: PageEndPropType,
   questions: arrayOf(QuestionPropType).isRequired,
   onChange: func,
   onPrev: func,
