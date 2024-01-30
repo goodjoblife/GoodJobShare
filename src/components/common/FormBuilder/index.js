@@ -4,7 +4,6 @@ import {
   bool,
   func,
   shape,
-  oneOf,
   oneOfType,
   element,
   arrayOf,
@@ -15,7 +14,7 @@ import R from 'ramda';
 
 import X from 'common/icons/X';
 
-import QuestionBuilder, { availableTypes } from './QuestionBuilder';
+import QuestionBuilder, { QuestionTypePropType } from './QuestionBuilder';
 import useDraft from './useDraft';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
@@ -226,30 +225,32 @@ const FormBuilder = ({
   );
 };
 
+export const PageEndPropType = oneOfType([string, element, func]);
+
+export const QuestionPropType = shape({
+  header: PageEndPropType,
+  footer: PageEndPropType,
+  title: oneOfType([string, func]).isRequired,
+  description: string,
+  type: QuestionTypePropType.isRequired,
+  dataKey: string.isRequired,
+  defaultValue: oneOfType([func, any]),
+  required: bool,
+  validate: func,
+  onSelect: func,
+  search: func,
+  placeholder: string,
+  footnote: oneOfType([string, func]),
+  options: arrayOf(string),
+  ratingLabels: arrayOf(string.isRequired),
+  renderCustomizedQuestion: func,
+});
+
 FormBuilder.propTypes = {
   open: bool.isRequired,
-  header: oneOfType([string, element, func]),
-  footer: oneOfType([string, element, func]),
-  questions: arrayOf(
-    shape({
-      header: oneOfType([string, element, func]),
-      footer: oneOfType([string, element, func]),
-      title: oneOfType([string, func]).isRequired,
-      description: string,
-      type: oneOf(availableTypes).isRequired,
-      dataKey: string.isRequired,
-      defaultValue: oneOfType([func, any]),
-      required: bool,
-      validate: func,
-      onSelect: func,
-      search: func,
-      placeholder: string,
-      footnote: oneOfType([string, func]),
-      options: arrayOf(string),
-      ratingLabels: arrayOf(string.isRequired),
-      renderCustomizedQuestion: func,
-    }),
-  ).isRequired,
+  header: PageEndPropType,
+  footer: PageEndPropType,
+  questions: arrayOf(QuestionPropType).isRequired,
   onChange: func,
   onPrev: func,
   onNext: func,

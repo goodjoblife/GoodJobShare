@@ -48,10 +48,11 @@ import {
 } from './utils';
 import { getCompaniesSearch } from 'apis/companySearchApi';
 import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
+import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
 
 export const createCompanyQuestion = ({ header }) => ({
   title: '公司名稱',
-  type: 'text',
+  type: QUESTION_TYPE.TEXT,
   dataKey: DATA_KEY_COMPANY_NAME,
   defaultValue: () => {
     const state =
@@ -73,7 +74,7 @@ export const createCompanyQuestion = ({ header }) => ({
 
 export const createJobTitleQuestion = ({ header }) => ({
   title: '應徵職稱',
-  type: 'text',
+  type: QUESTION_TYPE.TEXT,
   dataKey: DATA_KEY_JOB_TITLE,
   defaultValue: '',
   required: true,
@@ -86,7 +87,7 @@ export const createJobTitleQuestion = ({ header }) => ({
 
 export const createInterviewDateQuestion = () => ({
   title: '什麼時候去面試的呢？',
-  type: 'date',
+  type: QUESTION_TYPE.DATE,
   dataKey: DATA_KEY_DATE,
   defaultValue: [null, null],
   required: true,
@@ -100,7 +101,7 @@ export const createInterviewDateQuestion = () => ({
 
 export const createInterviewRegionQuestion = () => ({
   title: '面試地區',
-  type: 'radio',
+  type: QUESTION_TYPE.RADIO,
   dataKey: DATA_KEY_REGION,
   defaultValue: null,
   required: true,
@@ -110,7 +111,7 @@ export const createInterviewRegionQuestion = () => ({
 
 export const createInterviewResultQuestion = () => ({
   title: '面試結果',
-  type: 'radio-else',
+  type: QUESTION_TYPE.RADIO_ELSE,
   dataKey: DATA_KEY_RESULT,
   defaultValue: [null, ''],
   required: true,
@@ -128,7 +129,7 @@ export const createInterviewResultQuestion = () => ({
 
 export const createInterviewRatingQuestion = () => ({
   title: '為這次的面試經驗評個分吧！',
-  type: 'rating',
+  type: QUESTION_TYPE.RATING,
   dataKey: DATA_KEY_RATING,
   defaultValue: 0,
   required: true,
@@ -138,7 +139,7 @@ export const createInterviewRatingQuestion = () => ({
 
 export const createInterviewCourseQuestion = () => ({
   title: '面試過程',
-  type: 'textarea',
+  type: QUESTION_TYPE.TEXTAREA,
   dataKey: DATA_KEY_COURSE,
   defaultValue: `第一次面試：
 第二次面試：
@@ -155,7 +156,7 @@ export const createInterviewCourseQuestion = () => ({
 
 export const createInterviewSuggestionsQuestion = () => ({
   title: '給其他面試者的中肯建議',
-  type: 'textarea',
+  type: QUESTION_TYPE.TEXTAREA,
   dataKey: DATA_KEY_SUGGESTIONS,
   defaultValue: `如何準備面試：
 是否推薦此份工作：
@@ -173,7 +174,7 @@ export const createInterviewSuggestionsQuestion = () => ({
 
 export const createJobTenureQuestion = () => ({
   title: ({ jobTitle }) => `從事${jobTitle}相關的工作多久？`,
-  type: 'radio',
+  type: QUESTION_TYPE.RADIO,
   dataKey: DATA_KEY_JOB_TENURE,
   defaultValue: null,
   options: JOB_TENURE_OPTIONS,
@@ -181,7 +182,7 @@ export const createJobTenureQuestion = () => ({
 
 export const createSalaryQuestion = () => ({
   title: '面談薪資',
-  type: 'select-text',
+  type: QUESTION_TYPE.SELECT_TEXT,
   dataKey: DATA_KEY_SALARY,
   defaultValue: [null, ''],
   validate: ([type, amount]) =>
@@ -199,7 +200,7 @@ export const createSalaryQuestion = () => ({
 
 export const createQuestionsQuestion = () => ({
   title: '面試中問了什麼問題？',
-  type: 'text-list',
+  type: QUESTION_TYPE.TEXT_LIST,
   dataKey: DATA_KEY_QUESTIONS,
   defaultValue: [],
   validate: value => any(isEmpty, value) && '需填寫面試問題內容',
@@ -208,7 +209,7 @@ export const createQuestionsQuestion = () => ({
 
 export const createSensitiveQuestionsQuestion = () => ({
   title: '是否有以下特殊問題？',
-  type: 'checkbox-else',
+  type: QUESTION_TYPE.CHECKBOX_ELSE,
   dataKey: DATA_KEY_SENSITIVE_QUESTIONS,
   defaultValue: [[], ''],
   validate: ([selected, elseText]) =>
@@ -225,6 +226,6 @@ export const createSensitiveQuestionsQuestion = () => ({
 export const createSubmitQuestion = () => ({
   title: () => () =>
     '感謝你分享面試心得，按下「送出」，馬上就可以解鎖全站 2 萬多筆資料哦！',
-  type: 'customized',
+  type: QUESTION_TYPE.CUSTOMIZED,
   dataKey: '',
 });
