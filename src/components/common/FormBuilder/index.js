@@ -4,7 +4,6 @@ import {
   bool,
   func,
   shape,
-  oneOf,
   oneOfType,
   element,
   arrayOf,
@@ -15,7 +14,7 @@ import R from 'ramda';
 
 import X from 'common/icons/X';
 
-import QuestionBuilder, { availableTypes } from './QuestionBuilder';
+import QuestionBuilder, { QuestionTypePropType } from './QuestionBuilder';
 import useDraft from './useDraft';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
@@ -250,7 +249,7 @@ FormBuilder.propTypes = {
       footer: oneOfType([string, element, func]),
       title: oneOfType([string, func]).isRequired,
       description: string,
-      type: oneOf(availableTypes).isRequired,
+      type: QuestionTypePropType.isRequired,
       dataKey: string.isRequired,
       defaultValue: oneOfType([func, any]),
       required: bool,
