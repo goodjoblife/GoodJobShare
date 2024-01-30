@@ -158,7 +158,7 @@ const TimeInfo = ({
             label={o.label}
             value={o.value}
             name="overtimeFrequency"
-            emoji={`emoji${o.value}`}
+            emoji={`emoji-${o.value}`}
             id={`overtimeFrequency-${o.value}`}
             checked={overtimeFrequency === o.value}
             onChange={e => {
