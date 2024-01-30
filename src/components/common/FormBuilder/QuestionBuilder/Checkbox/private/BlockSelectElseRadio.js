@@ -99,7 +99,7 @@ BlockSelectElseRadio.propTypes = {
 };
 
 BlockSelectElseRadio.defaultProps = {
-  value: [null, ''],
+  value: [null, null],
   multiple: false,
 };
 

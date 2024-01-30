@@ -94,7 +94,7 @@ BlockSelectElseDate.propTypes = {
 };
 
 BlockSelectElseDate.defaultProps = {
-  value: [null, ''],
+  value: [null, null],
   multiple: false,
 };
 
