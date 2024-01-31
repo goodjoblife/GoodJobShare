@@ -57,7 +57,7 @@ const useQuestion = (question, draft) => {
       questionHeader: header,
       questionFooter: footer,
       dataKey,
-      warning: (warning && warning(draft[dataKey])) || null,
+      warning: (warning && warning(draft[dataKey], question)) || null,
       skippable:
         !required &&
         R.equals(

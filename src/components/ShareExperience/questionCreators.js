@@ -109,10 +109,10 @@ export const createCurrentlyEmployedQuestion = () => ({
   defaultValue: [null, [null, null]],
   options: [{ label: '在職', value: 'yes' }, { label: '已離職', value: 'no' }],
   elseOptionValue: 'no',
-  warning: ([value, [year, month]]) =>
+  warning: ([value, [year, month]], { elseOptionValue }) =>
     isNil(value)
       ? '請填寫是否在職'
-      : value === 'no' && (isNil(year) || isNil(month))
+      : value === elseOptionValue && (isNil(year) || isNil(month))
       ? `需填寫離職${joinCompact(' 及 ')(
           isNil(year) && '年份',
           isNil(month) && '月份',
@@ -188,9 +188,9 @@ export const createInterviewResultQuestion = () => ({
   dataKey: DATA_KEY_RESULT,
   defaultValue: [null, ''],
   required: true,
-  warning: ([selected, elseText]) => {
+  warning: ([selected, elseText], { elseOptionValue }) => {
     if (isNil(selected)) return '需填寫面試結果';
-    if (equals(selected, last(RESULT_OPTIONS))) {
+    if (equals(selected, elseOptionValue)) {
       if (isEmpty(elseText)) return '需填寫面試結果';
       if (!within(1, 100, elseText.length)) return '面試結果僅限 1~100 字！';
     }
@@ -377,8 +377,8 @@ export const createOvertimeSalaryQuestion = () => ({
   type: QUESTION_TYPE.RADIO_ELSE_RADIO,
   dataKey: DATA_KEY_HAS_OVERTIME_SALARY,
   defaultValue: [null, null],
-  warning: ([selected, elseValue]) =>
-    selected === 'yes' && elseValue === null
+  warning: ([selected, elseValue], { elseOptionValue }) =>
+    selected === elseOptionValue && elseValue === null
       ? '需填寫加班費是否符合勞基法'
       : null,
   options: [
@@ -420,8 +420,8 @@ export const createSensitiveQuestionsQuestion = () => ({
   type: QUESTION_TYPE.CHECKBOX_ELSE,
   dataKey: DATA_KEY_SENSITIVE_QUESTIONS,
   defaultValue: [[], ''],
-  warning: ([selected, elseText]) =>
-    contains(last(SENSITIVE_QUESTIONS_OPTIONS), selected) &&
+  warning: ([selected, elseText], { elseOptionValue }) =>
+    contains(elseOptionValue, selected) &&
     (isEmpty(elseText)
       ? '需填寫其他特殊問題的內容'
       : !within(1, 20, elseText.length)
