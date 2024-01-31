@@ -27,11 +27,11 @@ import { OptionPropType } from './QuestionBuilder/Checkbox/PropTypes';
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
     R.ifElse(
-      R.has('validate'),
+      R.has('warning'),
       R.compose(
         R.isNil,
         R.converge(R.call, [
-          R.prop('validate'),
+          R.prop('warning'),
           R.compose(
             dataKey => draft[dataKey],
             R.prop('dataKey'),
@@ -50,14 +50,14 @@ const useQuestion = (question, draft) => {
       dataKey,
       defaultValue,
       required,
-      validate,
+      warning,
     } = question;
     return {
       shouldRenderQuestion: true,
       questionHeader: header,
       questionFooter: footer,
       dataKey,
-      warning: validate && validate(draft[dataKey]),
+      warning: warning && warning(draft[dataKey]),
       skippable:
         !required &&
         R.equals(
@@ -238,8 +238,7 @@ export const QuestionPropType = shape({
   dataKey: string.isRequired,
   defaultValue: oneOfType([func, any]),
   required: bool,
-  warning: oneOfType([func, string]),
-  validator: func,
+  warning: func,
   onSelect: func,
   search: func,
   placeholder: string,
