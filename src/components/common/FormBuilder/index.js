@@ -55,7 +55,7 @@ const useQuestion = (question, draft) => {
       questionHeader: header,
       questionFooter: footer,
       dataKey,
-      warning: warning && warning(draft[dataKey]),
+      warning: (warning && warning(draft[dataKey])) || null,
       skippable:
         !required &&
         R.equals(
@@ -187,7 +187,7 @@ const FormBuilder = ({
                     warnBeforeSetPage(i + 1);
                   }
                 }}
-                warning={(isWarningShown && warning) || null}
+                warning={isWarningShown ? warning : null}
               />
             </AnimatedPager.Page>
           ))}
