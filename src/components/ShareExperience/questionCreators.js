@@ -63,7 +63,7 @@ export const createCompanyQuestion = ({ header }) => ({
     return companyName;
   },
   required: true,
-  warning: value => isEmpty(value) && '請填寫公司名稱',
+  validateOrWarn: value => isEmpty(value) && '請填寫公司名稱',
   placeholder: 'ＯＯ 股份有限公司',
   search: value =>
     getCompaniesSearch({ key: value }).then(
@@ -78,7 +78,7 @@ export const createJobTitleQuestion = ({ header }) => ({
   dataKey: DATA_KEY_JOB_TITLE,
   defaultValue: '',
   required: true,
-  warning: value => isEmpty(value) && '請填寫職稱',
+  validateOrWarn: value => isEmpty(value) && '請填寫職稱',
   placeholder: '軟體工程師',
   search: value =>
     getJobTitlesSearch({ key: value }).then(when(isNot(isArray), always([]))),
@@ -91,7 +91,7 @@ export const createInterviewDateQuestion = () => ({
   dataKey: DATA_KEY_DATE,
   defaultValue: [null, null],
   required: true,
-  warning: ([year, month]) =>
+  validateOrWarn: ([year, month]) =>
     (isNil(year) || isNil(month)) &&
     `需填寫面試${joinCompact(' 及 ')(
       isNil(year) && '年份',
@@ -105,7 +105,7 @@ export const createInterviewRegionQuestion = () => ({
   dataKey: DATA_KEY_REGION,
   defaultValue: null,
   required: true,
-  warning: value => isNil(value) && '需填寫面試地區',
+  validateOrWarn: value => isNil(value) && '需填寫面試地區',
   options: REGION_OPTIONS,
 });
 
@@ -115,7 +115,7 @@ export const createInterviewResultQuestion = () => ({
   dataKey: DATA_KEY_RESULT,
   defaultValue: [null, ''],
   required: true,
-  warning: ([selected, elseText]) => {
+  validateOrWarn: ([selected, elseText]) => {
     if (isNil(selected)) return '需填寫面試結果';
     if (equals(selected, last(RESULT_OPTIONS))) {
       if (isEmpty(elseText)) return '需填寫面試結果';
@@ -133,7 +133,7 @@ export const createInterviewRatingQuestion = () => ({
   dataKey: DATA_KEY_RATING,
   defaultValue: 0,
   required: true,
-  warning: value => equals(0, value) && '需選取面試滿意程度',
+  validateOrWarn: value => equals(0, value) && '需選取面試滿意程度',
   ratingLabels: RATING_LABELS,
 });
 
@@ -145,7 +145,7 @@ export const createInterviewCourseQuestion = () => ({
 第二次面試：
 工作環境：`,
   required: true,
-  warning: value =>
+  validateOrWarn: value =>
     compose(
       lessThan(COURSE_MIN_LENGTH),
       wordCount,
@@ -162,7 +162,7 @@ export const createInterviewSuggestionsQuestion = () => ({
 是否推薦此份工作：
 其他注意事項：`,
   required: true,
-  warning: value =>
+  validateOrWarn: value =>
     compose(
       lessThan(SUGGESTIONS_MIN_LENGTH),
       wordCount,
@@ -185,7 +185,7 @@ export const createSalaryQuestion = () => ({
   type: QUESTION_TYPE.SELECT_TEXT,
   dataKey: DATA_KEY_SALARY,
   defaultValue: [null, ''],
-  warning: ([type, amount]) =>
+  validateOrWarn: ([type, amount]) =>
     isNot(isNil, type) && (isEmpty(amount) || isNot(isSalaryAmount, amount))
       ? '需填寫薪資'
       : isNil(type) && isNot(isEmpty, amount)
@@ -203,7 +203,7 @@ export const createQuestionsQuestion = () => ({
   type: QUESTION_TYPE.TEXT_LIST,
   dataKey: DATA_KEY_QUESTIONS,
   defaultValue: [],
-  warning: value => any(isEmpty, value) && '需填寫面試問題內容',
+  validateOrWarn: value => any(isEmpty, value) && '需填寫面試問題內容',
   placeholder: '面試問題',
 });
 
@@ -212,7 +212,7 @@ export const createSensitiveQuestionsQuestion = () => ({
   type: QUESTION_TYPE.CHECKBOX_ELSE,
   dataKey: DATA_KEY_SENSITIVE_QUESTIONS,
   defaultValue: [[], ''],
-  warning: ([selected, elseText]) =>
+  validateOrWarn: ([selected, elseText]) =>
     contains(last(SENSITIVE_QUESTIONS_OPTIONS), selected) &&
     (isEmpty(elseText)
       ? '需填寫其他特殊問題的內容'

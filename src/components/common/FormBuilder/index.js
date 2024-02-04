@@ -25,11 +25,11 @@ import styles from './FormBuilder.module.css';
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
     R.ifElse(
-      R.has('warning'),
+      R.has('validateOrWarn'),
       R.compose(
         R.isNil,
         R.converge(R.call, [
-          R.prop('warning'),
+          R.prop('validateOrWarn'),
           R.compose(
             dataKey => draft[dataKey],
             R.prop('dataKey'),
@@ -48,14 +48,14 @@ const useQuestion = (question, draft) => {
       dataKey,
       defaultValue,
       required,
-      warning,
+      validateOrWarn,
     } = question;
     return {
       shouldRenderQuestion: true,
       questionHeader: header,
       questionFooter: footer,
       dataKey,
-      warning: (warning && warning(draft[dataKey])) || null,
+      warning: (validateOrWarn && validateOrWarn(draft[dataKey])) || null,
       skippable:
         !required &&
         R.equals(
@@ -236,7 +236,7 @@ export const QuestionPropType = shape({
   dataKey: string.isRequired,
   defaultValue: oneOfType([func, any]),
   required: bool,
-  warning: func,
+  validateOrWarn: func,
   onSelect: func,
   search: func,
   placeholder: string,
