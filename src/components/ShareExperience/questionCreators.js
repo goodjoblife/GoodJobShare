@@ -79,7 +79,7 @@ export const createCompanyQuestion = ({ header }) => ({
     return companyName;
   },
   required: true,
-  warning: value => isEmpty(value) && '請填寫公司名稱',
+  validateOrWarn: value => isEmpty(value) && '請填寫公司名稱',
   placeholder: 'ＯＯ 股份有限公司',
   search: value =>
     getCompaniesSearch({ key: value }).then(
@@ -94,7 +94,7 @@ export const createJobTitleQuestion = ({ header }) => ({
   dataKey: DATA_KEY_JOB_TITLE,
   defaultValue: '',
   required: true,
-  warning: value => isEmpty(value) && '請填寫職稱',
+  validateOrWarn: value => isEmpty(value) && '請填寫職稱',
   placeholder: '軟體工程師',
   search: value =>
     getJobTitlesSearch({ key: value }).then(when(isNot(isArray), always([]))),
@@ -109,7 +109,7 @@ export const createCurrentlyEmployedQuestion = () => ({
   defaultValue: [null, [null, null]],
   options: [{ label: '在職', value: 'yes' }, { label: '已離職', value: 'no' }],
   elseOptionValue: 'no',
-  warning: ([value, [year, month]], { elseOptionValue }) =>
+  validateOrWarn: ([value, [year, month]], { elseOptionValue }) =>
     isNil(value)
       ? '請填寫是否在職'
       : value === elseOptionValue && (isNil(year) || isNil(month))
@@ -134,7 +134,7 @@ export const createEmployTypeQuestion = () => ({
   required: true,
   defaultValue: null,
   options: employmentTypeOptions,
-  warning: value => isNil(value) && '請填寫職務型態',
+  validateOrWarn: value => isNil(value) && '請填寫職務型態',
 });
 
 export const createGenderQuestion = () => ({
@@ -164,7 +164,7 @@ export const createInterviewDateQuestion = () => ({
   dataKey: DATA_KEY_DATE,
   defaultValue: [null, null],
   required: true,
-  warning: ([year, month]) =>
+  validateOrWarn: ([year, month]) =>
     (isNil(year) || isNil(month)) &&
     `需填寫面試${joinCompact(' 及 ')(
       isNil(year) && '年份',
@@ -178,7 +178,7 @@ export const createInterviewRegionQuestion = () => ({
   dataKey: DATA_KEY_REGION,
   defaultValue: null,
   required: true,
-  warning: value => isNil(value) && '需填寫面試地區',
+  validateOrWarn: value => isNil(value) && '需填寫面試地區',
   options: REGION_OPTIONS,
 });
 
@@ -188,7 +188,7 @@ export const createInterviewResultQuestion = () => ({
   dataKey: DATA_KEY_RESULT,
   defaultValue: [null, ''],
   required: true,
-  warning: ([selected, elseText], { elseOptionValue }) => {
+  validateOrWarn: ([selected, elseText], { elseOptionValue }) => {
     if (isNil(selected)) return '需填寫面試結果';
     if (equals(selected, elseOptionValue)) {
       if (isEmpty(elseText)) return '需填寫面試結果';
@@ -207,7 +207,7 @@ export const createInterviewRatingQuestion = () => ({
   dataKey: DATA_KEY_RATING,
   defaultValue: 0,
   required: true,
-  warning: value => equals(0, value) && '需選取面試滿意程度',
+  validateOrWarn: value => equals(0, value) && '需選取面試滿意程度',
   ratingLabels: RATING_LABELS,
 });
 
@@ -219,7 +219,7 @@ export const createInterviewCourseQuestion = () => ({
 第二次面試：
 工作環境：`,
   required: true,
-  warning: value =>
+  validateOrWarn: value =>
     compose(
       lessThan(COURSE_MIN_LENGTH),
       wordCount,
@@ -236,7 +236,7 @@ export const createInterviewSuggestionsQuestion = () => ({
 是否推薦此份工作：
 其他注意事項：`,
   required: true,
-  warning: value =>
+  validateOrWarn: value =>
     compose(
       lessThan(SUGGESTIONS_MIN_LENGTH),
       wordCount,
@@ -260,7 +260,7 @@ export const createRequiredSalaryQuestion = () => ({
   dataKey: DATA_KEY_SALARY,
   defaultValue: [null, ''],
   required: true,
-  warning: ([type, amount]) =>
+  validateOrWarn: ([type, amount]) =>
     isNot(isNil, type) && (isEmpty(amount) || isNot(isSalaryAmount, amount))
       ? '需填寫薪資'
       : isNil(type) && isNot(isEmpty, amount)
@@ -278,11 +278,15 @@ export const createRequiredSalaryQuestion = () => ({
 });
 
 export const createSalaryQuestion = () => {
-  const { required, warning, ...question } = createRequiredSalaryQuestion();
+  const {
+    required,
+    validateOrWarn,
+    ...question
+  } = createRequiredSalaryQuestion();
   return {
     ...question,
-    warning: ([type, amount]) =>
-      isNil(type) && isEmpty(amount) ? null : warning([type, amount]),
+    validateOrWarn: ([type, amount]) =>
+      isNil(type) && isEmpty(amount) ? null : validateOrWarn([type, amount]),
   };
 };
 
@@ -293,7 +297,7 @@ export const createExperienceInYearQuestion = () => ({
   required: true,
   defaultValue: null,
   options: ['不到 1 年', ...range(1, 51).map(n => `${n} 年`)],
-  warning: value => isNil(value) && '需填寫工作經歷',
+  validateOrWarn: value => isNil(value) && '需填寫工作經歷',
 });
 
 export const createDayPromisedWorkTimeQuestion = () => ({
@@ -302,7 +306,7 @@ export const createDayPromisedWorkTimeQuestion = () => ({
   dataKey: DATA_KEY_DAY_PROMISED_WORK_TIME,
   required: true,
   defaultValue: '',
-  warning: value => isNot(isNumber, value) && '請填寫表定工時',
+  validateOrWarn: value => isNot(isNumber, value) && '請填寫表定工時',
   placeholder: '8 或 8.5',
   footnote: '工作日指與雇主約定的上班日，或是排班排定的日子。',
 });
@@ -313,7 +317,7 @@ export const createDayRealWorkTimeQuestion = () => ({
   dataKey: DATA_KEY_DAY_REAL_WORK_TIME,
   required: true,
   defaultValue: '',
-  warning: value => isNot(isNumber, value) && '請填寫實際工時',
+  validateOrWarn: value => isNot(isNumber, value) && '請填寫實際工時',
   placeholder: '8 或 8.5',
   footnote: (
     <Fragment>
@@ -333,7 +337,7 @@ export const createWeekWorkTimeQuestion = () => ({
   dataKey: DATA_KEY_WEEK_WORK_TIME,
   required: true,
   defaultValue: '',
-  warning: value => isNot(isNumber, value) && '請填寫週總工時',
+  validateOrWarn: value => isNot(isNumber, value) && '請填寫週總工時',
   placeholder: '40 或 40.5',
   footnote: (
     <Fragment>
@@ -369,7 +373,7 @@ export const createOvertimeFrequencyQuestion = () => ({
     label: <OptionEmoji value={index}>{label}</OptionEmoji>,
     value: `${index}`,
   })),
-  warning: value => isNil(value) && '需填寫加班頻率',
+  validateOrWarn: value => isNil(value) && '需填寫加班頻率',
 });
 
 export const createOvertimeSalaryQuestion = () => ({
@@ -377,7 +381,7 @@ export const createOvertimeSalaryQuestion = () => ({
   type: QUESTION_TYPE.RADIO_ELSE_RADIO,
   dataKey: DATA_KEY_HAS_OVERTIME_SALARY,
   defaultValue: [null, null],
-  warning: ([selected, elseValue], { elseOptionValue }) =>
+  validateOrWarn: ([selected, elseValue], { elseOptionValue }) =>
     selected === elseOptionValue && elseValue === null
       ? '需填寫加班費是否符合勞基法'
       : null,
@@ -411,7 +415,7 @@ export const createQuestionsQuestion = () => ({
   type: QUESTION_TYPE.TEXT_LIST,
   dataKey: DATA_KEY_QUESTIONS,
   defaultValue: [],
-  warning: value => any(isEmpty, value) && '需填寫面試問題內容',
+  validateOrWarn: value => any(isEmpty, value) && '需填寫面試問題內容',
   placeholder: '面試問題',
 });
 
@@ -420,7 +424,7 @@ export const createSensitiveQuestionsQuestion = () => ({
   type: QUESTION_TYPE.CHECKBOX_ELSE,
   dataKey: DATA_KEY_SENSITIVE_QUESTIONS,
   defaultValue: [[], ''],
-  warning: ([selected, elseText], { elseOptionValue }) =>
+  validateOrWarn: ([selected, elseText], { elseOptionValue }) =>
     contains(elseOptionValue, selected) &&
     (isEmpty(elseText)
       ? '需填寫其他特殊問題的內容'
