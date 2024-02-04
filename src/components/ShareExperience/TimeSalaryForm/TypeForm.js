@@ -82,11 +82,11 @@ const bodyFromDraft = evolve({
   isCurrentlyEmployed: draft => draft[DATA_KEY_CURRENTLY_EMPLOYED][0],
   jobEndingTimeYear: draft =>
     draft[DATA_KEY_CURRENTLY_EMPLOYED][0] === 'no'
-      ? draft[DATA_KEY_CURRENTLY_EMPLOYED][1][0]
+      ? draft[DATA_KEY_CURRENTLY_EMPLOYED][1][0].toString()
       : null,
   jobEndingTimeMonth: draft =>
     draft[DATA_KEY_CURRENTLY_EMPLOYED][0] === 'no'
-      ? draft[DATA_KEY_CURRENTLY_EMPLOYED][1][1]
+      ? draft[DATA_KEY_CURRENTLY_EMPLOYED][1][1].toString()
       : null,
   jobTitle: draft => draft[DATA_KEY_JOB_TITLE],
   sector: draft => draft[DATA_KEY_SECTOR],
