@@ -48,6 +48,7 @@ import {
 } from './utils';
 import { getCompaniesSearch } from 'apis/companySearchApi';
 import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
+import { tabTypeTranslation } from '../../constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
 
 export const createCompanyQuestion = ({ header }) => ({
@@ -223,9 +224,9 @@ export const createSensitiveQuestionsQuestion = () => ({
   placeholder: '輸入其他特殊問題內容',
 });
 
-export const createSubmitQuestion = () => ({
+export const createSubmitQuestion = ({ type }) => ({
   title: () => () =>
-    '感謝你分享面試心得，按下「送出」，馬上就可以解鎖全站 2 萬多筆資料哦！',
+    `感謝你分享${tabTypeTranslation[type]}，按下「送出」，馬上就可以解鎖全站 2 萬多筆資料哦！`,
   type: QUESTION_TYPE.CUSTOMIZED,
   dataKey: '',
 });

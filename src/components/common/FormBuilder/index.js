@@ -27,7 +27,8 @@ const findIfQuestionsAcceptDraft = draft =>
     R.ifElse(
       R.has('validateOrWarn'),
       R.compose(
-        R.isNil,
+        R.equals(true),
+        R.not,
         R.converge(R.call, [
           R.prop('validateOrWarn'),
           R.compose(
