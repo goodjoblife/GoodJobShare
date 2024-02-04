@@ -54,7 +54,6 @@ const useQuestionNode = ({
   onSelect,
   search,
   warning,
-  validator,
   placeholder,
   footnote,
   options,
@@ -73,7 +72,6 @@ const useQuestionNode = ({
     onChange,
     onConfirm,
     warning,
-    validator,
   };
   switch (type) {
     case QUESTION_TYPE.TEXT:
@@ -142,7 +140,6 @@ const useQuestionNode = ({
             onChange,
             onConfirm,
             warning,
-            validator,
           }),
         ];
       } else {
@@ -167,7 +164,6 @@ const QuestionBuilder = ({
   onSelect,
   search,
   warning,
-  validator,
   placeholder,
   footnote,
   options,
@@ -188,7 +184,6 @@ const QuestionBuilder = ({
     onSelect,
     search,
     warning,
-    validator,
     placeholder,
     footnote,
     options,
@@ -236,7 +231,6 @@ QuestionBuilder.propTypes = {
   value: any,
   onChange: func.isRequired,
   warning: string,
-  validator: func,
   onConfirm: func.isRequired,
   onSelect: func,
   search: func,

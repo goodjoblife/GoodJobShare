@@ -27,7 +27,6 @@ const DatePicker = ({
   value: [year, month],
   onChange,
   warning,
-  validator,
 }) => (
   <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
     <div className={cn(styles.inputRow, commonStyles.warnableContainer)}>
@@ -81,7 +80,6 @@ DatePicker.propTypes = {
   }),
   onChange: PropTypes.func.isRequired,
   warning: PropTypes.string,
-  validator: PropTypes.func,
 };
 
 DatePicker.defaultProps = {

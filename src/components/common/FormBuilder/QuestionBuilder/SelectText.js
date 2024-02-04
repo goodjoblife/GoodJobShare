@@ -18,7 +18,6 @@ const SelectText = ({
   onChange,
   onConfirm,
   warning,
-  validator,
   placeholder,
   options,
 }) => (
@@ -58,7 +57,6 @@ SelectText.propTypes = {
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
-  validator: PropTypes.func,
   placeholder: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };

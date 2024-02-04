@@ -14,7 +14,6 @@ const Checkbox = ({
   value,
   onChange,
   warning,
-  validator,
   options,
 }) => (
   <Wrapper warning={warning}>
@@ -38,7 +37,6 @@ Checkbox.propTypes = {
   value: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func.isRequired,
   warning: PropTypes.string,
-  validator: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 

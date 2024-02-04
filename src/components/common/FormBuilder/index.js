@@ -22,34 +22,20 @@ import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
 
-const findWarningAgainstValue = (value, warning, validator) => {
-  if (validator) {
-    const isValid = validator(value);
-    if (isValid) {
-      return null;
-    } else {
-      if (typeof warning === 'function') {
-        return warning(value);
-      } else {
-        return warning;
-      }
-    }
-  } else {
-    return null;
-  }
-};
-
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
     R.ifElse(
-      R.has('validator'),
-      R.converge(R.call, [
-        R.prop('validator'),
-        R.compose(
-          dataKey => draft[dataKey],
-          R.prop('dataKey'),
-        ),
-      ]),
+      R.has('validateOrWarn'),
+      R.compose(
+        R.isNil,
+        R.converge(R.call, [
+          R.prop('validateOrWarn'),
+          R.compose(
+            dataKey => draft[dataKey],
+            R.prop('dataKey'),
+          ),
+        ]),
+      ),
       R.always(true),
     ),
   );
@@ -62,23 +48,23 @@ const useQuestion = (question, draft) => {
       dataKey,
       defaultValue,
       required,
-      warning,
-      validator,
+      validateOrWarn,
     } = question;
-    return [
-      true,
-      typeof header === 'function' ? header(draft) : header,
-      typeof footer === 'function' ? footer(draft) : footer,
+    return {
+      shouldRenderQuestion: true,
+      questionHeader: header,
+      questionFooter: footer,
       dataKey,
-      findWarningAgainstValue(draft[dataKey], warning, validator),
-      !required &&
+      warning: (validateOrWarn && validateOrWarn(draft[dataKey])) || null,
+      skippable:
+        !required &&
         R.equals(
           draft[dataKey],
           typeof defaultValue === 'function' ? defaultValue() : defaultValue,
         ),
-    ];
+    };
   } else {
-    return [false];
+    return { shouldRenderQuestion: false };
   }
 };
 
@@ -105,14 +91,14 @@ const FormBuilder = ({
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
 
-  const [
+  const {
     shouldRenderQuestion,
     questionHeader,
     questionFooter,
     dataKey,
     warning,
     skippable,
-  ] = useQuestion(questions[page], draft);
+  } = useQuestion(questions[page], draft);
 
   const [isWarningShown, setWarningShown] = useState(false);
 
@@ -250,8 +236,7 @@ export const QuestionPropType = shape({
   dataKey: string.isRequired,
   defaultValue: oneOfType([func, any]),
   required: bool,
-  warning: oneOfType([func, string]),
-  validator: func,
+  validateOrWarn: func,
   onSelect: func,
   search: func,
   placeholder: string,

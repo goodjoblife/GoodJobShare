@@ -4,6 +4,7 @@ import R, {
   allPass,
   lt,
   lte,
+  gt,
   gte,
   not,
   type,
@@ -46,6 +47,7 @@ export const isSalaryAmount = compose(
 
 export const greaterThan = lt;
 export const greaterThanOrEqualTo = lte;
+export const lessThan = gt;
 export const lessThanOrEqualTo = gte;
 
 export const compact = filter(Boolean);
