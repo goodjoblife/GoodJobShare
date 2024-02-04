@@ -21,6 +21,7 @@ import NavigatorBlock from './NavigatorBlock';
 import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
+import { OptionPropType } from './QuestionBuilder/Checkbox/PropTypes';
 
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
@@ -34,6 +35,7 @@ const findIfQuestionsAcceptDraft = draft =>
             dataKey => draft[dataKey],
             R.prop('dataKey'),
           ),
+          R.identity,
         ]),
       ),
       R.always(true),
@@ -55,7 +57,8 @@ const useQuestion = (question, draft) => {
       questionHeader: header,
       questionFooter: footer,
       dataKey,
-      warning: (validateOrWarn && validateOrWarn(draft[dataKey])) || null,
+      warning:
+        (validateOrWarn && validateOrWarn(draft[dataKey], question)) || null,
       skippable:
         !required &&
         R.equals(
@@ -241,7 +244,7 @@ export const QuestionPropType = shape({
   search: func,
   placeholder: string,
   footnote: oneOfType([string, func]),
-  options: arrayOf(string),
+  options: arrayOf(OptionPropType),
   ratingLabels: arrayOf(string.isRequired),
   renderCustomizedQuestion: func,
 });

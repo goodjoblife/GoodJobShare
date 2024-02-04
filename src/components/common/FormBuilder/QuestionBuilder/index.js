@@ -24,6 +24,7 @@ import TextList from './TextList';
 import TitleBlock from '../TitleBlock';
 import Scrollable from '../Scrollable';
 import styles from './styles.module.css';
+import { OptionPropType, ValuePropType } from './Checkbox/PropTypes';
 
 export const QUESTION_TYPE = {
   TEXT: 'TEXT',
@@ -57,6 +58,7 @@ const useQuestionNode = ({
   placeholder,
   footnote,
   options,
+  elseOptionValue,
   ratingLabels,
   renderCustomizedQuestion,
 }) => {
@@ -94,6 +96,7 @@ const useQuestionNode = ({
         <RadioElse
           {...commonProps}
           options={options}
+          elseOptionValue={elseOptionValue}
           placeholder={placeholder}
         />,
       ];
@@ -105,6 +108,7 @@ const useQuestionNode = ({
         <CheckboxElse
           {...commonProps}
           options={options}
+          elseOptionValue={elseOptionValue}
           placeholder={placeholder}
         />,
       ];
@@ -167,6 +171,7 @@ const QuestionBuilder = ({
   placeholder,
   footnote,
   options,
+  elseOptionValue,
   ratingLabels,
   renderCustomizedQuestion,
 }) => {
@@ -187,6 +192,7 @@ const QuestionBuilder = ({
     placeholder,
     footnote,
     options,
+    elseOptionValue,
     ratingLabels,
     renderCustomizedQuestion,
   });
@@ -235,8 +241,8 @@ QuestionBuilder.propTypes = {
   onSelect: func,
   search: func,
   placeholder: string,
-  footnote: oneOfType([string, func]),
-  options: arrayOf(string),
+  options: arrayOf(OptionPropType),
+  elseOptionValue: ValuePropType,
   ratingLabels: arrayOf(string.isRequired),
   renderCustomizedQuestion: func,
 };

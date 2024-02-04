@@ -4,6 +4,7 @@ import { withShape } from 'airbnb-prop-types';
 
 import Wrapper from './private/Wrapper';
 import BlockSelectElse from './private/BlockSelectElse';
+import { OptionPropType, ValuePropType } from './PropTypes';
 
 const CheckboxElse = ({
   page,
@@ -17,6 +18,7 @@ const CheckboxElse = ({
   onConfirm,
   warning,
   options,
+  elseOptionValue,
   placeholder,
 }) => (
   <Wrapper warning={warning}>
@@ -26,6 +28,7 @@ const CheckboxElse = ({
       onChange={onChange}
       onConfirm={onConfirm}
       options={options}
+      elseOptionValue={elseOptionValue}
       multiple
       placeholder={placeholder}
     />
@@ -40,20 +43,21 @@ CheckboxElse.propTypes = {
   required: PropTypes.bool,
   defaultValue: withShape(PropTypes.array.isRequired, {
     // option
-    0: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    0: PropTypes.arrayOf(ValuePropType.isRequired).isRequired,
     // else
     1: PropTypes.string.isRequired,
   }),
   value: withShape(PropTypes.array.isRequired, {
     // option
-    0: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    0: PropTypes.arrayOf(ValuePropType.isRequired).isRequired,
     // else
     1: PropTypes.string.isRequired,
   }),
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
+  elseOptionValue: ValuePropType.isRequired,
   placeholder: PropTypes.string,
 };
 

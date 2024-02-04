@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Wrapper from './private/Wrapper';
 import BlockSelect from './private/BlockSelect';
+import { OptionPropType, ValuePropType } from './PropTypes';
 
 const Checkbox = ({
   page,
@@ -33,11 +34,11 @@ Checkbox.propTypes = {
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
-  defaultValue: PropTypes.arrayOf(PropTypes.string).isRequired,
-  value: PropTypes.arrayOf(PropTypes.string).isRequired,
+  defaultValue: PropTypes.arrayOf(ValuePropType).isRequired,
+  value: PropTypes.arrayOf(ValuePropType).isRequired,
   onChange: PropTypes.func.isRequired,
   warning: PropTypes.string,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
 };
 
 export default Checkbox;

@@ -7,3 +7,5 @@ export const toggle = (value, values) => {
     return R.append(value, values);
   }
 };
+
+export { normalizeOptions } from '../../utils';
