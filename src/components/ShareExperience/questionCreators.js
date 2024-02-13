@@ -109,15 +109,19 @@ export const createCurrentlyEmployedQuestion = () => ({
   defaultValue: [null, [null, null]],
   options: [{ label: '在職', value: 'yes' }, { label: '已離職', value: 'no' }],
   elseOptionValue: 'no',
-  validateOrWarn: ([value, [year, month]], { elseOptionValue }) =>
-    isNil(value)
-      ? '請填寫是否在職'
-      : value === elseOptionValue && (isNil(year) || isNil(month))
-      ? `需填寫離職${joinCompact(' 及 ')(
+  validateOrWarn: ([value, [year, month]], { elseOptionValue }) => {
+    if (isNil(value)) return '請填寫是否在職';
+    if (value === elseOptionValue) {
+      if (isNil(year) || isNil(month))
+        return `需填寫離職${joinCompact(' 及 ')(
           isNil(year) && '年份',
           isNil(month) && '月份',
-        )}`
-      : null,
+        )}`;
+      if (new Date(year, month - 1, 1) > new Date())
+        return '離職年月不可以超過現在時間';
+    }
+    return null;
+  },
 });
 
 export const createSectorQuestion = () => ({
