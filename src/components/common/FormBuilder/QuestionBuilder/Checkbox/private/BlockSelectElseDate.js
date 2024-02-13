@@ -5,6 +5,7 @@ import R from 'ramda';
 import cn from 'classnames';
 
 import styles from './private.module.css';
+import commonStyles from '../../styles.module.css';
 import BlockSelect from './BlockSelect';
 import DatePicker, { DatePropType } from '../../Date';
 import { OptionPropType, ValuePropType } from '../PropTypes';
@@ -59,9 +60,13 @@ const BlockSelectElseDate = ({
     />,
     <DatePicker
       key="else"
-      className={cn(styles.label, {
-        [styles.hidden]: !hasElse,
-      })}
+      className={cn(
+        styles.label,
+        {
+          [styles.hidden]: !hasElse,
+        },
+        commonStyles.noWarning,
+      )}
       page={page}
       title={title}
       dataKey={dataKey}

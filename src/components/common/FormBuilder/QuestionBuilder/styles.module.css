@@ -33,6 +33,12 @@ $warning-red: #d0021b;
   }
 }
 
+.noWarning {
+  .warnableContainer {
+    border-color: transparent !important;
+  }
+}
+
 .warning {
   font-size: 15px;
   line-height: 1.6;
