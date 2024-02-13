@@ -26,7 +26,6 @@ import {
   DATA_KEY_SENSITIVE_QUESTIONS,
   RESULT_OPTIONS,
   JOB_TENURE_OPTIONS,
-  SALARY_TYPE_VALUE_BY_OPTION,
   SENSITIVE_QUESTIONS_OPTIONS,
 } from '../../constants';
 import { parseSalaryAmount, evolve } from '../../utils';
@@ -127,7 +126,7 @@ const bodyFromDraft = evolve({
       return undefined;
     }
     return {
-      type: SALARY_TYPE_VALUE_BY_OPTION[type],
+      type,
       amount: parseSalaryAmount(amount),
     };
   },

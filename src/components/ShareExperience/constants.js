@@ -63,13 +63,6 @@ export const JOB_TENURE_OPTIONS = [
   ...range(1, 51).map(n => `${n} 年`),
 ];
 
-export const SALARY_TYPE_VALUE_BY_OPTION = {
-  年薪: 'year',
-  月薪: 'month',
-  日薪: 'day',
-  時薪: 'hour',
-};
-
 export const SENSITIVE_QUESTIONS_OPTIONS = [
   '詢問家庭狀況',
   '曾詢問婚姻狀況、生育計畫',
