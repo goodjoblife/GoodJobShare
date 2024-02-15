@@ -65,6 +65,7 @@ import WorkTimeExample from './WorkTimeExample';
 import Emoji from '../common/icons/Emoji';
 import { tabTypeTranslation } from '../../constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
+import { salaryHint } from 'utils/formUtils';
 
 export const createCompanyQuestion = ({ header }) => ({
   title: '公司名稱',
@@ -277,6 +278,12 @@ export const createRequiredSalaryQuestion = () => ({
   options: salaryTypeOptions,
   placeholder: '700,000',
   suffix: '元',
+  hint: ([type, amount]) => {
+    const { showWarning, hint } = salaryHint(type, amount);
+    if (showWarning)
+      return <span style={{ color: '#d0021b' }}>{hint}，確定嗎？</span>;
+    else return hint;
+  },
   footnote:
     '薪資請以包含平常的薪資、分紅、年終、績效獎金等實質上獲得的價值去計算。',
 });

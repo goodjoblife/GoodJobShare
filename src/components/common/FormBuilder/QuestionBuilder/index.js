@@ -65,6 +65,7 @@ const useQuestionNode = ({
   onSelect,
   search,
   warning,
+  hint,
   placeholder,
   suffix,
   footnote,
@@ -156,6 +157,7 @@ const useQuestionNode = ({
         <SelectText
           {...commonProps}
           placeholder={placeholder}
+          hint={hint}
           options={options}
           suffix={suffix}
           footnote={footnote}
@@ -202,6 +204,7 @@ const QuestionBuilder = ({
   onSelect,
   search,
   warning,
+  hint,
   placeholder,
   suffix,
   footnote,
@@ -227,6 +230,7 @@ const QuestionBuilder = ({
     warning,
     placeholder,
     suffix,
+    hint,
     footnote,
     options,
     elseOptionValue,
@@ -275,6 +279,7 @@ QuestionBuilder.propTypes = {
   value: any,
   onChange: func.isRequired,
   warning: string,
+  hint: oneOfType([string, func]),
   onConfirm: func.isRequired,
   onSelect: func,
   search: func,

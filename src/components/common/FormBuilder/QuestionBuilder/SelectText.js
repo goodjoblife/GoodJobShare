@@ -18,6 +18,7 @@ const SelectText = ({
   value: [selected, text],
   onChange,
   onConfirm,
+  hint,
   warning,
   placeholder,
   suffix,
@@ -45,7 +46,8 @@ const SelectText = ({
     </div>
     {footnote && <p className={commonStyles.footnote}>{footnote}</p>}
     <p className={cn(commonStyles.warning, commonStyles.inlineWarning, 'pS')}>
-      {warning}
+      {warning ||
+        (hint && (typeof hint === 'function' ? hint([selected, text]) : hint))}
     </p>
   </div>
 );
@@ -69,6 +71,7 @@ SelectText.propTypes = {
   value: PropTypes.arrayOf(ValuePropType).isRequired,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
+  hint: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   warning: PropTypes.string,
   placeholder: PropTypes.string,
   suffix: PropTypes.string,
