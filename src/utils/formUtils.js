@@ -52,7 +52,7 @@ const shouldShowSalaryWarning = (salaryType, salaryAmount) => {
  * @param {String} salaryAmount the amount of salary
  */
 export const salaryHint = (salaryType, salaryAmount) => {
-  const amount = parseInt(salaryAmount, 10);
+  const amount = parseInt(salaryAmount.replace(/,/g, ''), 10);
   if (isNaN(amount)) {
     return { showWarning: false, hint: null };
   }
