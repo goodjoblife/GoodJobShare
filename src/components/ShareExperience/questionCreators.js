@@ -90,7 +90,7 @@ export const createCompanyQuestion = ({ header }) => ({
 });
 
 export const createJobTitleQuestion = ({ header }) => ({
-  title: '應徵職稱',
+  title: '職稱',
   type: QUESTION_TYPE.TEXT,
   dataKey: DATA_KEY_JOB_TITLE,
   defaultValue: '',
@@ -323,7 +323,7 @@ export const createDayPromisedWorkTimeQuestion = () => ({
 });
 
 export const createDayRealWorkTimeQuestion = () => ({
-  title: '實際平均工時',
+  title: '工作日實際平均工時',
   type: QUESTION_TYPE.TEXT,
   dataKey: DATA_KEY_DAY_REAL_WORK_TIME,
   required: true,
