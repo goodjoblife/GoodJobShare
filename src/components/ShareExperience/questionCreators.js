@@ -307,7 +307,10 @@ export const createExperienceInYearQuestion = () => ({
   dataKey: DATA_KEY_EXPERIENCE_IN_YEAR,
   required: true,
   defaultValue: null,
-  options: ['不到 1 年', ...range(1, 51).map(n => `${n} 年`)],
+  options: range(0, 51).map(n => ({
+    label: n === 0 ? '不到 1 年' : `${n} 年`,
+    value: n,
+  })),
   validateOrWarn: value => isNil(value) && '需填寫工作經歷',
 });
 
@@ -382,7 +385,7 @@ export const createOvertimeFrequencyQuestion = () => ({
   defaultValue: null,
   options: OVERTIME_FREQUENCY_LABELS.map((label, index) => ({
     label: <OptionEmoji value={index}>{label}</OptionEmoji>,
-    value: `${index}`,
+    value: index,
   })),
   validateOrWarn: value => isNil(value) && '需填寫加班頻率',
 });
