@@ -6,6 +6,7 @@ import TextInput from 'common/form/TextInput';
 import Select from 'common/form/Select';
 import styles from './SelectText.module.css';
 import commonStyles from './styles.module.css';
+import { normalizeOptions } from './utils';
 
 const SelectText = ({
   page,
@@ -17,14 +18,17 @@ const SelectText = ({
   value: [selected, text],
   onChange,
   onConfirm,
+  hint,
   warning,
   placeholder,
+  suffix,
+  footnote,
   options,
 }) => (
   <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
     <div className={cn(styles.inputRow, commonStyles.warnableContainer)}>
       <Select
-        options={options.map(value => ({ label: value, value }))}
+        options={normalizeOptions(options)}
         value={selected}
         onChange={e => onChange([e.target.value ? e.target.value : null, text])}
       />
@@ -37,14 +41,25 @@ const SelectText = ({
             onEnter={onConfirm}
           />
         </div>
-        <div className={cn(styles.suffixLabel, 'pS')}>元</div>
+        <div className={cn(styles.suffixLabel, 'pS')}>{suffix}</div>
       </div>
     </div>
+    {footnote && <p className={commonStyles.footnote}>{footnote}</p>}
     <p className={cn(commonStyles.warning, commonStyles.inlineWarning, 'pS')}>
-      {warning}
+      {warning ||
+        (hint && (typeof hint === 'function' ? hint([selected, text]) : hint))}
     </p>
   </div>
 );
+
+export const ValuePropType = PropTypes.oneOfType([PropTypes.string]);
+export const OptionPropType = PropTypes.oneOfType([
+  ValuePropType,
+  PropTypes.shape({
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+    value: ValuePropType.isRequired,
+  }),
+]);
 
 SelectText.propTypes = {
   page: PropTypes.number.isRequired,
@@ -52,13 +67,16 @@ SelectText.propTypes = {
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
-  defaultValue: PropTypes.array.isRequired,
-  value: PropTypes.array.isRequired,
+  defaultValue: PropTypes.arrayOf(ValuePropType).isRequired,
+  value: PropTypes.arrayOf(ValuePropType).isRequired,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
+  hint: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   warning: PropTypes.string,
   placeholder: PropTypes.string,
-  options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  suffix: PropTypes.string,
+  footnote: PropTypes.string,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
 };
 
 SelectText.defaultProps = {

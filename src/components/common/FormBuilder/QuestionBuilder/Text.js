@@ -20,6 +20,7 @@ const Text = ({
   search,
   warning,
   placeholder,
+  footnote,
 }) => {
   const [items, setItems] = useState([]);
   const ref = useRef(null);
@@ -65,9 +66,10 @@ const Text = ({
             }
           }}
         />
-        <div className={cn(commonStyles.warning, commonStyles.inlineWarning)}>
-          {warning}
-        </div>
+      </div>
+      {footnote && <div className={commonStyles.footnote}>{footnote}</div>}
+      <div className={cn(commonStyles.warning, commonStyles.inlineWarning)}>
+        {warning}
       </div>
     </div>
   );
@@ -88,6 +90,7 @@ Text.propTypes = {
   search: PropTypes.func,
   warning: PropTypes.string,
   placeholder: PropTypes.string,
+  footnote: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 };
 
 export default Text;

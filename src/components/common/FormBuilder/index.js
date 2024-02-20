@@ -8,6 +8,7 @@ import {
   element,
   arrayOf,
   any,
+  node,
 } from 'prop-types';
 import cn from 'classnames';
 import R from 'ramda';
@@ -21,19 +22,22 @@ import NavigatorBlock from './NavigatorBlock';
 import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
+import { OptionPropType } from './QuestionBuilder/Checkbox/PropTypes';
 
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
     R.ifElse(
       R.has('validateOrWarn'),
       R.compose(
-        R.isNil,
+        R.equals(true),
+        R.not,
         R.converge(R.call, [
           R.prop('validateOrWarn'),
           R.compose(
             dataKey => draft[dataKey],
             R.prop('dataKey'),
           ),
+          R.identity,
         ]),
       ),
       R.always(true),
@@ -55,7 +59,8 @@ const useQuestion = (question, draft) => {
       questionHeader: header,
       questionFooter: footer,
       dataKey,
-      warning: (validateOrWarn && validateOrWarn(draft[dataKey])) || null,
+      warning:
+        (validateOrWarn && validateOrWarn(draft[dataKey], question)) || null,
       skippable:
         !required &&
         R.equals(
@@ -240,8 +245,9 @@ export const QuestionPropType = shape({
   onSelect: func,
   search: func,
   placeholder: string,
-  footnote: oneOfType([string, func]),
-  options: arrayOf(string),
+  footnote: oneOfType([string, node, func]),
+  options: arrayOf(OptionPropType),
+  elseOptions: arrayOf(OptionPropType),
   ratingLabels: arrayOf(string.isRequired),
   renderCustomizedQuestion: func,
 });

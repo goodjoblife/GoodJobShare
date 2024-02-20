@@ -26,7 +26,6 @@ import {
   DATA_KEY_SENSITIVE_QUESTIONS,
   RESULT_OPTIONS,
   JOB_TENURE_OPTIONS,
-  SALARY_TYPE_VALUE_BY_OPTION,
   SENSITIVE_QUESTIONS_OPTIONS,
 } from '../../constants';
 import { parseSalaryAmount, evolve } from '../../utils';
@@ -49,6 +48,7 @@ import { sendEvent } from 'utils/hotjarUtil';
 import { getUserPseudoId } from 'utils/GAUtils';
 
 import { GA_MEASUREMENT_ID } from '../../../../config';
+import { tabType } from '../../../../constants/companyJobTitle';
 
 const header = <Header title="請輸入你的一份面試經驗" />;
 const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
@@ -72,7 +72,7 @@ const questions = [
   createSalaryQuestion(),
   createQuestionsQuestion(),
   createSensitiveQuestionsQuestion(),
-  createSubmitQuestion(),
+  createSubmitQuestion({ type: tabType.INTERVIEW_EXPERIENCE }),
 ];
 
 const bodyFromDraft = evolve({
@@ -126,7 +126,7 @@ const bodyFromDraft = evolve({
       return undefined;
     }
     return {
-      type: SALARY_TYPE_VALUE_BY_OPTION[type],
+      type,
       amount: parseSalaryAmount(amount),
     };
   },

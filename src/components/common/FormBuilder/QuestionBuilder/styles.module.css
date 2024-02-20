@@ -1,3 +1,5 @@
+@value yellow-dark from '../../variables.module.css';
+
 $warning-red: #d0021b;
 
 .question {
@@ -31,6 +33,12 @@ $warning-red: #d0021b;
   }
 }
 
+.noWarning {
+  .warnableContainer {
+    border-color: transparent !important;
+  }
+}
+
 .warning {
   font-size: 15px;
   line-height: 1.6;
@@ -39,4 +47,11 @@ $warning-red: #d0021b;
   &.inlineWarning {
     position: absolute;
   }
+}
+
+.footnote {
+  color: yellow-dark;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-top: 12px;
 }

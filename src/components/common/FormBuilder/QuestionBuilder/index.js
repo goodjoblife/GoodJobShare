@@ -8,13 +8,21 @@ import {
   oneOf,
   oneOfType,
   arrayOf,
+  node,
 } from 'prop-types';
 import cn from 'classnames';
 import { values } from 'ramda';
 
 import Text from './Text';
 import TextArea from './TextArea';
-import { Radio, RadioElse, Checkbox, CheckboxElse } from './Checkbox';
+import {
+  Radio,
+  RadioElse,
+  RadioElseRadio,
+  RadioElseDate,
+  Checkbox,
+  CheckboxElse,
+} from './Checkbox';
 import Rating from './Rating';
 import File from './File';
 import Date from './Date';
@@ -24,12 +32,15 @@ import TextList from './TextList';
 import TitleBlock from '../TitleBlock';
 import Scrollable from '../Scrollable';
 import styles from './styles.module.css';
+import { OptionPropType } from './Checkbox/PropTypes';
 
 export const QUESTION_TYPE = {
   TEXT: 'TEXT',
   TEXTAREA: 'TEXTAREA',
   RADIO: 'RADIO',
   RADIO_ELSE: 'RADIO_ELSE',
+  RADIO_ELSE_RADIO: 'RADIO_ELSE_RADIO',
+  RADIO_ELSE_DATE: 'RADIO_ELSE_DATE',
   CHECKBOX: 'CHECKBOX',
   CHECKBOX_ELSE: 'CHECKBOX_ELSE',
   RATING: 'RATING',
@@ -54,9 +65,13 @@ const useQuestionNode = ({
   onSelect,
   search,
   warning,
+  hint,
   placeholder,
+  suffix,
   footnote,
   options,
+  elseOptionValue,
+  elseOptions,
   ratingLabels,
   renderCustomizedQuestion,
 }) => {
@@ -82,6 +97,7 @@ const useQuestionNode = ({
           placeholder={placeholder}
           onSelect={onSelect}
           search={search}
+          footnote={footnote}
         />,
       ];
     case QUESTION_TYPE.TEXTAREA:
@@ -94,7 +110,27 @@ const useQuestionNode = ({
         <RadioElse
           {...commonProps}
           options={options}
+          elseOptionValue={elseOptionValue}
           placeholder={placeholder}
+        />,
+      ];
+    case QUESTION_TYPE.RADIO_ELSE_RADIO:
+      return [
+        true,
+        <RadioElseRadio
+          {...commonProps}
+          options={options}
+          elseOptionValue={elseOptionValue}
+          elseOptions={elseOptions}
+        />,
+      ];
+    case QUESTION_TYPE.RADIO_ELSE_DATE:
+      return [
+        true,
+        <RadioElseDate
+          {...commonProps}
+          options={options}
+          elseOptionValue={elseOptionValue}
         />,
       ];
     case QUESTION_TYPE.CHECKBOX:
@@ -105,6 +141,7 @@ const useQuestionNode = ({
         <CheckboxElse
           {...commonProps}
           options={options}
+          elseOptionValue={elseOptionValue}
           placeholder={placeholder}
         />,
       ];
@@ -120,7 +157,10 @@ const useQuestionNode = ({
         <SelectText
           {...commonProps}
           placeholder={placeholder}
+          hint={hint}
           options={options}
+          suffix={suffix}
+          footnote={footnote}
         />,
       ];
     case QUESTION_TYPE.TEXT_LIST:
@@ -164,9 +204,13 @@ const QuestionBuilder = ({
   onSelect,
   search,
   warning,
+  hint,
   placeholder,
+  suffix,
   footnote,
   options,
+  elseOptionValue,
+  elseOptions,
   ratingLabels,
   renderCustomizedQuestion,
 }) => {
@@ -185,8 +229,12 @@ const QuestionBuilder = ({
     search,
     warning,
     placeholder,
+    suffix,
+    hint,
     footnote,
     options,
+    elseOptionValue,
+    elseOptions,
     ratingLabels,
     renderCustomizedQuestion,
   });
@@ -231,12 +279,14 @@ QuestionBuilder.propTypes = {
   value: any,
   onChange: func.isRequired,
   warning: string,
+  hint: oneOfType([string, func]),
   onConfirm: func.isRequired,
   onSelect: func,
   search: func,
   placeholder: string,
-  footnote: oneOfType([string, func]),
-  options: arrayOf(string),
+  footnote: oneOfType([string, node, func]),
+  options: arrayOf(OptionPropType),
+  elseOptions: arrayOf(OptionPropType),
   ratingLabels: arrayOf(string.isRequired),
   renderCustomizedQuestion: func,
 };

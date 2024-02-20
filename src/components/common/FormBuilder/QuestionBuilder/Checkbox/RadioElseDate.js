@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
 
 import Wrapper from './private/Wrapper';
-import BlockSelectElse from './private/BlockSelectElse';
+import BlockSelectElseDate from './private/BlockSelectElseDate';
 import { OptionPropType, ValuePropType } from './PropTypes';
+import { DatePropType } from '../Date';
 
-const RadioElse = ({
+const RadioElseDate = ({
   page,
   title,
   description,
@@ -19,23 +20,24 @@ const RadioElse = ({
   warning,
   options,
   elseOptionValue,
-  placeholder,
 }) => (
   <Wrapper warning={warning}>
-    <BlockSelectElse
+    <BlockSelectElseDate
+      page={page}
+      title={title}
       dataKey={dataKey}
       required={required}
+      defaultValue={defaultValue}
       value={value}
       onChange={onChange}
       onConfirm={onConfirm}
       options={options}
       elseOptionValue={elseOptionValue}
-      placeholder={placeholder}
     />
   </Wrapper>
 );
 
-RadioElse.propTypes = {
+RadioElseDate.propTypes = {
   page: PropTypes.number.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   description: PropTypes.string,
@@ -45,20 +47,19 @@ RadioElse.propTypes = {
     // option
     0: ValuePropType,
     // else
-    1: PropTypes.string.isRequired,
+    1: DatePropType,
   }),
   value: withShape(PropTypes.array.isRequired, {
     // option
     0: ValuePropType,
     // else
-    1: PropTypes.string.isRequired,
+    1: DatePropType,
   }),
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
   elseOptionValue: ValuePropType.isRequired,
-  placeholder: PropTypes.string,
 };
 
-export default RadioElse;
+export default RadioElseDate;

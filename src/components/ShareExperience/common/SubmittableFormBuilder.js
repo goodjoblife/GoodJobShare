@@ -17,6 +17,7 @@ const SubmittableTypeForm = ({
   onSubmit,
   onSubmitError,
   onClose,
+  redirectPathnameOnSuccess,
 }) => {
   const history = useHistory();
   const [submitStatus, setSubmitStatus] = useState('unsubmitted');
@@ -49,10 +50,10 @@ const SubmittableTypeForm = ({
   const onSuccessClose = useCallback(() => {
     setSubmitStatus('unsubmitted');
     onClose();
-    if (typeof window !== 'undefined') {
-      window.location.reload();
+    if (typeof window !== 'undefined' && redirectPathnameOnSuccess) {
+      window.location.replace(redirectPathnameOnSuccess);
     }
-  }, [onClose]);
+  }, [onClose, redirectPathnameOnSuccess]);
 
   const onResume = useCallback(() => {
     setSubmitStatus('unsubmitted');
@@ -118,6 +119,7 @@ SubmittableTypeForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onSubmitError: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  redirectPathnameOnSuccess: PropTypes.string,
 };
 
 export default SubmittableTypeForm;

@@ -1,0 +1,14 @@
+@value main-orange from '../common/variables.module.css';
+
+.example {
+  color: main-orange;
+  margin-top: 8px;
+
+  .icon {
+    width: 1em;
+    height: 1em;
+    margin-right: 4px;
+    fill: main-orange;
+    vertical-align: top;
+  }
+}

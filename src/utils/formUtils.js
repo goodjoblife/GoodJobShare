@@ -51,8 +51,8 @@ const shouldShowSalaryWarning = (salaryType, salaryAmount) => {
  * @param {String} salaryType the type of salary (hour, day, month, year)
  * @param {String} salaryAmount the amount of salary
  */
-const salaryHint = (salaryType, salaryAmount) => {
-  const amount = parseInt(salaryAmount, 10);
+export const salaryHint = (salaryType, salaryAmount) => {
+  const amount = parseInt(salaryAmount.replace(/,/g, ''), 10);
   if (isNaN(amount)) {
     return { showWarning: false, hint: null };
   }

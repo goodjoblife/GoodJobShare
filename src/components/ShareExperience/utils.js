@@ -15,6 +15,9 @@ import R, {
   filter,
   map,
   curry,
+  ifElse,
+  isEmpty,
+  always,
 } from 'ramda';
 import { transferKeyToSnakecase } from 'utils/objectUtil';
 
@@ -43,6 +46,16 @@ export const isSalaryAmount = compose(
   not,
   isNaN,
   parseSalaryAmount,
+);
+
+export const isNumber = ifElse(
+  isEmpty,
+  always(false),
+  compose(
+    not,
+    isNaN,
+    Number,
+  ),
 );
 
 export const greaterThan = lt;

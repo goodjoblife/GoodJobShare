@@ -5,6 +5,8 @@ import R from 'ramda';
 import useDebouncedConfirm from '../../../useDebouncedConfirm';
 import styles from './private.module.css';
 import { toggle } from './utils';
+import { normalizeOptions } from './utils';
+import { OptionPropType, ValuePropType } from '../PropTypes';
 
 const BlockSelect = ({
   dataKey,
@@ -15,6 +17,8 @@ const BlockSelect = ({
   options,
   multiple,
 }) => {
+  options = normalizeOptions(options);
+
   const isChecked = useCallback(
     option => {
       if (multiple) {
@@ -44,17 +48,17 @@ const BlockSelect = ({
     [multiple, required, value, onChange, debouncedConfirm],
   );
 
-  return options.map(option => (
-    <label key={option} className={styles.label}>
+  return options.map(({ label, value }) => (
+    <label key={value} className={styles.label}>
       <input
         className={styles.input}
         type="checkbox"
         name={dataKey}
-        value={option}
-        checked={isChecked(option)}
-        onChange={() => handleChange(option)}
+        value={value}
+        checked={isChecked(value)}
+        onChange={() => handleChange(value)}
       />
-      <div className={styles.button}>{option}</div>
+      <div className={styles.button}>{label}</div>
     </label>
   ));
 };
@@ -63,12 +67,12 @@ BlockSelect.propTypes = {
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
   value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string).isRequired,
+    ValuePropType,
+    PropTypes.arrayOf(ValuePropType).isRequired,
   ]),
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
   multiple: PropTypes.bool.isRequired,
 };
 
