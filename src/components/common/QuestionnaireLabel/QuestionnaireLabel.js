@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './QuestionnaireLabel.module.css';
 
-const QuestionnaireLabel = ({ title = '給我們回饋', contentComponent }) => {
+const QuestionnaireLabel = ({ title = '給我們回饋', children }) => {
   const [isExpand, setIsExpand] = useState(false);
 
   const handleExpandModal = () => {
@@ -10,11 +10,7 @@ const QuestionnaireLabel = ({ title = '給我們回饋', contentComponent }) => 
 
   return (
     <div className={styles.container} onClick={handleExpandModal}>
-      {isExpand ? (
-        contentComponent
-      ) : (
-        <div className={styles.label}>{title}</div>
-      )}
+      {isExpand ? children : <div className={styles.label}>{title}</div>}
     </div>
   );
 };

@@ -3,7 +3,11 @@ import QuestionnaireLabel from '../QuestionnaireLabel';
 import NetPromoterContent from './NetPromoterContent';
 
 const NetPromoter = () => {
-  return <QuestionnaireLabel contentComponent={<NetPromoterContent />} />;
+  return (
+    <QuestionnaireLabel>
+      <NetPromoterContent />
+    </QuestionnaireLabel>
+  );
 };
 
 export default NetPromoter;
