@@ -14,7 +14,8 @@ import Footer from './Footer';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
 import routes from '../../routes';
-import NetPromoter from 'common/QuestionnaireLabel/NetPromoter';
+import LabelWrapper from 'common/QuestionnaireLabel/LabelWrapper';
+import NetPromoterContent from 'common/QuestionnaireLabel/NetPromoter';
 
 const useShare = () => {
   const location = useLocation();
@@ -55,7 +56,9 @@ const App = () => {
         onClose={exitShare}
       />
       <LoginModal />
-      <NetPromoter />
+      <LabelWrapper>
+        <NetPromoterContent />
+      </LabelWrapper>
     </Fragment>
   );
 };
