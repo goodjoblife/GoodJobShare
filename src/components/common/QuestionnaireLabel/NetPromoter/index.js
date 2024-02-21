@@ -98,17 +98,22 @@ const NetPromoter = () => {
   if (!isShowQuestion) return null;
 
   return (
-    <div className={styles.container}>
-      <button
-        className={styles.closeButton}
-        onClick={handleCloseQuestion}
-      ></button>
-      <Question
-        title={title}
-        titleExplanation={titleExplanation}
-        section={section}
-      />
-      <NextStepButton handleNext={handleNext} isLastQuestion={isLastQuestion} />
+    <div className={styles.overlay}>
+      <div className={styles.container}>
+        <button
+          className={styles.closeButton}
+          onClick={handleCloseQuestion}
+        ></button>
+        <Question
+          title={title}
+          titleExplanation={titleExplanation}
+          section={section}
+        />
+        <NextStepButton
+          handleNext={handleNext}
+          isLastQuestion={isLastQuestion}
+        />
+      </div>
     </div>
   );
 };

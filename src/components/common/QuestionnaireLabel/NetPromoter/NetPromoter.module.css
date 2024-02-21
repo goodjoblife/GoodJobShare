@@ -20,6 +20,15 @@
 }
 
 @media (max-width: 767px) {
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(248, 248, 248, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .container {
     right: 0;
     left: 0;
