@@ -98,7 +98,7 @@ const NetPromoter = () => {
   if (!isShowQuestion) return null;
 
   return (
-    <div className={styles.content}>
+    <div className={styles.container}>
       <button
         className={styles.closeButton}
         onClick={handleCloseQuestion}
