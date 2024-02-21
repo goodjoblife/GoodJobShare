@@ -83,6 +83,8 @@ const NextStepButton = ({ handleNext, isLastQuestion }) => {
 const NetPromoter = () => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [isShowQuestion, setIsShowQuestion] = useState(true);
+  const question = questionList[questionIndex];
+  const { title, titleExplanation, section } = question;
   const isLastQuestion = questionIndex === questionList.length - 1;
 
   const handleNext = () => {
@@ -101,17 +103,11 @@ const NetPromoter = () => {
         className={styles.closeButton}
         onClick={handleCloseQuestion}
       ></button>
-      {questionList.map(
-        ({ title, titleExplanation, section, id }, index) =>
-          questionIndex === index && (
-            <Question
-              key={id}
-              title={title}
-              titleExplanation={titleExplanation}
-              section={section}
-            />
-          ),
-      )}
+      <Question
+        title={title}
+        titleExplanation={titleExplanation}
+        section={section}
+      />
       <NextStepButton handleNext={handleNext} isLastQuestion={isLastQuestion} />
     </div>
   );
