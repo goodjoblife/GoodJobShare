@@ -80,7 +80,7 @@ const NextStepButton = ({ handleNext, isLastQuestion }) => {
   );
 };
 
-const NetPromoterContent = () => {
+const NetPromoter = () => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [isShowQuestion, setIsShowQuestion] = useState(true);
   const isLastQuestion = questionIndex === questionList.length - 1;
@@ -117,4 +117,4 @@ const NetPromoterContent = () => {
   );
 };
 
-export default NetPromoterContent;
+export default NetPromoter;

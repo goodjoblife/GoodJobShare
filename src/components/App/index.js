@@ -15,7 +15,7 @@ import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
 import routes from '../../routes';
 import LabelWrapper from 'common/QuestionnaireLabel/LabelWrapper';
-import NetPromoterContent from 'common/QuestionnaireLabel/NetPromoter';
+import NetPromoter from 'common/QuestionnaireLabel/NetPromoter';
 
 const useShare = () => {
   const location = useLocation();
@@ -57,7 +57,7 @@ const App = () => {
       />
       <LoginModal />
       <LabelWrapper>
-        <NetPromoterContent />
+        <NetPromoter />
       </LabelWrapper>
     </Fragment>
   );
