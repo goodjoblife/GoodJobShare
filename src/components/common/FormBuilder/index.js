@@ -4,53 +4,42 @@ import {
   bool,
   func,
   shape,
-  oneOf,
   oneOfType,
   element,
   arrayOf,
   any,
+  node,
 } from 'prop-types';
 import cn from 'classnames';
 import R from 'ramda';
 
 import X from 'common/icons/X';
 
-import QuestionBuilder, { availableTypes } from './QuestionBuilder';
+import QuestionBuilder, { QuestionTypePropType } from './QuestionBuilder';
 import useDraft from './useDraft';
 import ProgressBlock from './ProgressBlock';
 import NavigatorBlock from './NavigatorBlock';
 import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
-
-const findWarningAgainstValue = (value, warning, validator) => {
-  if (validator) {
-    const isValid = validator(value);
-    if (isValid) {
-      return null;
-    } else {
-      if (typeof warning === 'function') {
-        return warning(value);
-      } else {
-        return warning;
-      }
-    }
-  } else {
-    return null;
-  }
-};
+import { OptionPropType } from './QuestionBuilder/Checkbox/PropTypes';
 
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
     R.ifElse(
-      R.has('validator'),
-      R.converge(R.call, [
-        R.prop('validator'),
-        R.compose(
-          dataKey => draft[dataKey],
-          R.prop('dataKey'),
-        ),
-      ]),
+      R.has('validateOrWarn'),
+      R.compose(
+        R.equals(true),
+        R.not,
+        R.converge(R.call, [
+          R.prop('validateOrWarn'),
+          R.compose(
+            dataKey => draft[dataKey],
+            R.prop('dataKey'),
+          ),
+          R.identity,
+        ]),
+      ),
       R.always(true),
     ),
   );
@@ -63,23 +52,24 @@ const useQuestion = (question, draft) => {
       dataKey,
       defaultValue,
       required,
-      warning,
-      validator,
+      validateOrWarn,
     } = question;
-    return [
-      true,
-      typeof header === 'function' ? header(draft) : header,
-      typeof footer === 'function' ? footer(draft) : footer,
+    return {
+      shouldRenderQuestion: true,
+      questionHeader: header,
+      questionFooter: footer,
       dataKey,
-      findWarningAgainstValue(draft[dataKey], warning, validator),
-      !required &&
+      warning:
+        (validateOrWarn && validateOrWarn(draft[dataKey], question)) || null,
+      skippable:
+        !required &&
         R.equals(
           draft[dataKey],
           typeof defaultValue === 'function' ? defaultValue() : defaultValue,
         ),
-    ];
+    };
   } else {
-    return [false];
+    return { shouldRenderQuestion: false };
   }
 };
 
@@ -106,14 +96,14 @@ const FormBuilder = ({
   const hasPrevious = page > 0;
   const hasNext = page < questions.length - 1;
 
-  const [
+  const {
     shouldRenderQuestion,
     questionHeader,
     questionFooter,
     dataKey,
     warning,
     skippable,
-  ] = useQuestion(questions[page], draft);
+  } = useQuestion(questions[page], draft);
 
   const [isWarningShown, setWarningShown] = useState(false);
 
@@ -240,31 +230,33 @@ const FormBuilder = ({
   );
 };
 
+export const PageEndPropType = oneOfType([string, element, func]);
+
+export const QuestionPropType = shape({
+  header: PageEndPropType,
+  footer: PageEndPropType,
+  title: oneOfType([string, func]).isRequired,
+  description: string,
+  type: QuestionTypePropType.isRequired,
+  dataKey: string.isRequired,
+  defaultValue: oneOfType([func, any]),
+  required: bool,
+  validateOrWarn: func,
+  onSelect: func,
+  search: func,
+  placeholder: string,
+  footnote: oneOfType([string, node, func]),
+  options: arrayOf(OptionPropType),
+  elseOptions: arrayOf(OptionPropType),
+  ratingLabels: arrayOf(string.isRequired),
+  renderCustomizedQuestion: func,
+});
+
 FormBuilder.propTypes = {
   open: bool.isRequired,
-  header: oneOfType([string, element, func]),
-  footer: oneOfType([string, element, func]),
-  questions: arrayOf(
-    shape({
-      header: oneOfType([string, element, func]),
-      footer: oneOfType([string, element, func]),
-      title: oneOfType([string, func]).isRequired,
-      description: string,
-      type: oneOf(availableTypes).isRequired,
-      dataKey: string.isRequired,
-      defaultValue: oneOfType([func, any]),
-      required: bool,
-      warning: oneOfType([func, string]),
-      validator: func,
-      onSelect: func,
-      search: func,
-      placeholder: string,
-      footnote: oneOfType([string, func]),
-      options: arrayOf(string),
-      ratingLabels: arrayOf(string.isRequired),
-      renderCustomizedQuestion: func,
-    }),
-  ).isRequired,
+  header: PageEndPropType,
+  footer: PageEndPropType,
+  questions: arrayOf(QuestionPropType).isRequired,
   onChange: func,
   onPrev: func,
   onNext: func,

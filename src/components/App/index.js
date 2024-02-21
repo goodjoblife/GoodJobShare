@@ -12,6 +12,7 @@ import styles from './App.module.css';
 import Header from './Header';
 import Footer from './Footer';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
+import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
 import routes from '../../routes';
 import NetPromoter from 'common/QuestionnaireLabel/NetPromoter';
 
@@ -49,6 +50,10 @@ const App = () => {
         ))}
       </Switch>
       <ShareInterviewModal open={share === 'interview'} onClose={exitShare} />
+      <ShareSalaryWorkTimesModal
+        open={share === 'salary-work-times'}
+        onClose={exitShare}
+      />
       <LoginModal />
       <NetPromoter />
     </Fragment>

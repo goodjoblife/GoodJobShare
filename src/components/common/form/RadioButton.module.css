@@ -128,17 +128,6 @@ input[type='radio']:checked + .radioSquare {
 
 .radioSquareIcon {
   display: block;
-  margin: 0 auto;
-  margin-bottom: 10px;
-  width: 45px;
-  height: 45px;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  @media (max-width: 550px) {
-    width: 30px;
-    height: 30px;
-    margin-bottom: 5px;
-  }
 }
 
 .btnRadioClear {
@@ -174,17 +163,4 @@ input[type='radio']:checked + .radioSquare {
   @media (max-width: 550px) {
     padding: 20px 10px;
   }
-}
-
-.emoji0 {
-  background-image: url('https://image.goodjob.life/emoji-0.svg');
-}
-.emoji1 {
-  background-image: url('https://image.goodjob.life/emoji-1.svg');
-}
-.emoji2 {
-  background-image: url('https://image.goodjob.life/emoji-2.svg');
-}
-.emoji3 {
-  background-image: url('https://image.goodjob.life/emoji-3.svg');
 }

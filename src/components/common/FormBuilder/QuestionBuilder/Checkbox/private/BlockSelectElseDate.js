@@ -1,29 +1,31 @@
-import React, { useCallback, useRef, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
 import R from 'ramda';
 import cn from 'classnames';
 
 import styles from './private.module.css';
-import TextInput from 'common/form/TextInput';
+import commonStyles from '../../styles.module.css';
 import BlockSelect from './BlockSelect';
+import DatePicker, { DatePropType } from '../../Date';
 import { OptionPropType, ValuePropType } from '../PropTypes';
 import { normalizeOptions } from './utils';
 
-const BlockSelectElse = ({
+const BlockSelectElseDate = ({
+  page,
+  title,
   dataKey,
   required,
-  value: [selected, elseText],
+  defaultValue: [defaultSelected, defaultElseValue],
+  value: [selected, elseValue],
   onChange,
   onConfirm,
   options,
   elseOptionValue,
   multiple,
-  placeholder,
 }) => {
   options = normalizeOptions(options);
 
-  const elseRef = useRef(null);
   const hasElse = useMemo(() => {
     if (multiple) {
       return R.contains(elseOptionValue, selected);
@@ -32,21 +34,19 @@ const BlockSelectElse = ({
     }
   }, [elseOptionValue, multiple, selected]);
   const handleSelectChange = useCallback(
-    selected => onChange([selected, elseText]),
-    [elseText, onChange],
+    selected => onChange([selected, elseValue]),
+    [elseValue, onChange],
   );
+
   const handleElseChange = useCallback(
-    e => onChange([selected, e.target.value]),
+    elseValue => {
+      onChange([selected, elseValue]);
+    },
     [onChange, selected],
   );
   const handleSelectConfirm = useCallback(() => {
     if (!hasElse) onConfirm();
   }, [hasElse, onConfirm]);
-  useEffect(() => {
-    if (hasElse) {
-      elseRef.current.focus();
-    }
-  }, [hasElse]);
   return [
     <BlockSelect
       key="select"
@@ -58,21 +58,28 @@ const BlockSelectElse = ({
       options={options}
       multiple={multiple}
     />,
-    <TextInput
+    <DatePicker
       key="else"
-      ref={elseRef}
-      wrapperClassName={cn(styles.label, {
-        [styles.hidden]: !hasElse,
-      })}
-      value={elseText}
+      className={cn(
+        styles.label,
+        {
+          [styles.hidden]: !hasElse,
+        },
+        commonStyles.noWarning,
+      )}
+      page={page}
+      title={title}
+      dataKey={dataKey}
+      defaultValue={defaultElseValue}
+      value={elseValue}
       onChange={handleElseChange}
-      onEnter={onConfirm}
-      placeholder={placeholder}
     />,
   ];
 };
 
-BlockSelectElse.propTypes = {
+BlockSelectElseDate.propTypes = {
+  page: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
   value: withShape(PropTypes.array.isRequired, {
@@ -82,19 +89,18 @@ BlockSelectElse.propTypes = {
       PropTypes.arrayOf(ValuePropType).isRequired,
     ]),
     // else
-    1: PropTypes.string.isRequired,
+    1: DatePropType,
   }),
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
   elseOptionValue: ValuePropType.isRequired,
   multiple: PropTypes.bool.isRequired,
-  placeholder: PropTypes.string,
 };
 
-BlockSelectElse.defaultProps = {
-  value: [null, ''],
+BlockSelectElseDate.defaultProps = {
+  value: [null, null],
   multiple: false,
 };
 
-export default BlockSelectElse;
+export default BlockSelectElseDate;

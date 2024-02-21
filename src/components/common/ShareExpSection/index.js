@@ -54,7 +54,10 @@ const ShareExpSection = ({ heading, Subheading }) => {
               想推薦工作、爆料的，這邊請！
             </P>
           </Link>
-          <Link to="/share/time-and-salary" className={styles.item}>
+          <Link
+            to={{ state: { share: 'salary-work-times' } }}
+            className={styles.item}
+          >
             <img
               src={SalaryWorkTimeImg}
               alt="留下工時或薪資"

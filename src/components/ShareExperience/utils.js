@@ -4,6 +4,7 @@ import R, {
   allPass,
   lt,
   lte,
+  gt,
   gte,
   not,
   type,
@@ -14,6 +15,9 @@ import R, {
   filter,
   map,
   curry,
+  ifElse,
+  isEmpty,
+  always,
 } from 'ramda';
 import { transferKeyToSnakecase } from 'utils/objectUtil';
 
@@ -44,8 +48,19 @@ export const isSalaryAmount = compose(
   parseSalaryAmount,
 );
 
+export const isNumber = ifElse(
+  isEmpty,
+  always(false),
+  compose(
+    not,
+    isNaN,
+    Number,
+  ),
+);
+
 export const greaterThan = lt;
 export const greaterThanOrEqualTo = lte;
+export const lessThan = gt;
 export const lessThanOrEqualTo = gte;
 
 export const compact = filter(Boolean);
