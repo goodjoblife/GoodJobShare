@@ -72,7 +72,7 @@ const NextStepButton = ({ handleNext, isLastQuestion }) => {
 
   return (
     <div className={styles.nextStepContainer}>
-      <img src={laborImage} />
+      <img src={laborImage} alt="laborImage" />
       <button onClick={handleNextQuestion} className={styles.nextStep}>
         {buttonText}
       </button>
