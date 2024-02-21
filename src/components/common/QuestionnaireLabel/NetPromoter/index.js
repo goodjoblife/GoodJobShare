@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styles from './NetPromoter.module.css';
 import laborImage from './laborImage.png';
 
@@ -59,16 +59,16 @@ const Question = ({ title, titleExplanation, section }) => {
 const NextStepButton = ({ handleNext, isLastQuestion }) => {
   const buttonText = isLastQuestion ? '送出' : '下一步';
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     console.log('handleSubmit');
-  };
-  const handleNextQuestion = () => {
+  }, []);
+  const handleNextQuestion = useCallback(() => {
     if (!isLastQuestion) {
       handleNext();
       return;
     }
     handleSubmit();
-  };
+  }, [handleNext, isLastQuestion, handleSubmit]);
 
   return (
     <div className={styles.nextStepContainer}>
@@ -87,9 +87,9 @@ const NetPromoter = () => {
   const { title, titleExplanation, section } = question;
   const isLastQuestion = questionIndex === questionList.length - 1;
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setQuestionIndex(prev => prev + 1);
-  };
+  }, [setQuestionIndex]);
 
   const handleCloseQuestion = () => {
     setIsShowQuestion(false);
