@@ -149,7 +149,7 @@ const VerifyEmailForm = ({
               marginBottom: '20px',
             }}
           >
-            填寫你的 Email，立即掌握最新的薪資福利、面試經驗資訊
+            填寫你的 Email，立即掌握最新的薪資福利、面試經驗資訊
           </P>
           <div className={styles.inputArea}>
             <label htmlFor="verifiy-email-input">
