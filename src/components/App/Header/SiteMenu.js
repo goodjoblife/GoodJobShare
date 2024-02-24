@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { NavLink } from 'react-router-dom';
+
 import styles from './SiteMenu.module.css';
 
 const Item = ({ to, text, className, onClick }) => (

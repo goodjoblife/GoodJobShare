@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
+
 import GjLogo from 'common/icons/GjLogo.svg';
 import { Wrapper, P } from 'common/base';
+
 import LinkItem from './LinkItem';
 import styles from './Footer.module.css';
 import MediasImg from './medias.jpg';

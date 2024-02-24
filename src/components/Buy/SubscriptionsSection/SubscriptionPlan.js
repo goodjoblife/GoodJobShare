@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PlanCard from '../../PlanPage/PlanCard';
+
 import { subscriptionTypes } from 'constants/subscription';
+
+import PlanCard from '../../PlanPage/PlanCard';
 
 const SubscriptionPlan = ({
   className,

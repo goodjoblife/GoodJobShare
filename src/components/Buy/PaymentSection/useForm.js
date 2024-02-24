@@ -1,11 +1,13 @@
 import { useCallback, useState, useMemo } from 'react';
 import { useHistory } from 'react-router';
 import { isEmpty } from 'ramda';
+
 import { useToken } from 'hooks/auth';
-import useTapPay from './useTapPay';
 import { checkoutSubscriptionWithPrime } from 'apis/payment';
 import usePushToast from 'hooks/toastNotification/usePushToast';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
+
+import useTapPay from './useTapPay';
 import { fields, styles } from './constants';
 
 export const FORM_STATE = {

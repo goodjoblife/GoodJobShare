@@ -1,4 +1,5 @@
 import R from 'ramda';
+
 import graphqlClient from 'utils/graphqlClient';
 import { getCompanyQuery, getCompaniesHavingDataQuery } from 'graphql/company';
 

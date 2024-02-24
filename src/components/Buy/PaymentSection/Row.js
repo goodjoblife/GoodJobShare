@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+
 import styles from './PaymentSection.module.css';
 
 const Row = ({ className, half, ...props }) => (
