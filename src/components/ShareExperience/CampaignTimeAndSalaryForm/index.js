@@ -41,18 +41,18 @@ import {
   portTimeSalaryFormToRequestFormat,
 } from '../utils';
 
-import salaryHint from '../../../utils/formUtils';
+import salaryHint from 'utils/formUtils';
 
-import { SITE_NAME } from '../../../constants/helmetData';
-import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';
+import { SITE_NAME } from 'constants/helmetData';
+import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 
 import {
   INVALID,
   TIME_SALARY_BASIC_ORDER,
   TIME_SALARY_EXT_ORDER,
-} from '../../../constants/formElements';
-import { GA_CATEGORY, GA_ACTION } from '../../../constants/gaConstants';
-import PIXEL_CONTENT_CATEGORY from '../../../constants/pixelConstants';
+} from 'constants/formElements';
+import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
+import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';

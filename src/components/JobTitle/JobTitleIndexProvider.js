@@ -6,7 +6,7 @@ import { fetchJobTitles } from 'actions/jobTitle';
 import {
   jobTitlesStatus as jobTitlesStatusSelector,
   jobTitles as jobTitlesSelector,
-} from '../../selectors/companyAndJobTitle';
+} from 'selectors/companyAndJobTitle';
 
 const JobTitleIndexProvider = () => {
   const status = useSelector(jobTitlesStatusSelector);

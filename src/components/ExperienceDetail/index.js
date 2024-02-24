@@ -41,11 +41,11 @@ import {
   queryRelatedExperiencesOnExperience,
 } from 'actions/experience';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
-import { COMMENT_ZONE } from '../../constants/formElements';
+import { COMMENT_ZONE } from 'constants/formElements';
 import {
   pageType as PAGE_TYPE,
   tabType as TAB_TYPE,
-} from '../../constants/companyJobTitle';
+} from 'constants/companyJobTitle';
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceStateSelector } from 'selectors/experienceSelector';

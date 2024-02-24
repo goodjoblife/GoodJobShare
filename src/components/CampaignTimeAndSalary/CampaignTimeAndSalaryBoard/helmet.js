@@ -1,6 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';
+import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
 
 export default ({ title, campaignInfo, pathname, page }) => {

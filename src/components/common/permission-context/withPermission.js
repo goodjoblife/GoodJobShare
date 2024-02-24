@@ -1,7 +1,7 @@
 import React from 'react';
 import { wrapDisplayName, setDisplayName, compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
-import usePermission from '../../../hooks/usePermission';
+import usePermission from 'hooks/usePermission';
 
 const withPermissionProps = Component => {
   const hoc = setDisplayName(wrapDisplayName(Component, 'withPermission'));

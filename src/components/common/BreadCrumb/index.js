@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 import styles from './BreadCrumb.module.css';
 import { Link } from 'react-router-dom';
-import SeoStructure from '../Seo/SeoStructure';
+import SeoStructure from 'common/Seo/SeoStructure';
 import { formatCanonicalPath } from 'utils/helmetHelper';
 
 const toInterspersedLinkNodes = R.compose(

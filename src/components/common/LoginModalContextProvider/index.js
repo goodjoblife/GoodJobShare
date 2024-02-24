@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import LoginModalContext from '../../../contexts/LoginModalContext';
+import LoginModalContext from 'contexts/LoginModalContext';
 
 const LoginModalContextProvider = ({ children }) => {
   const [isLoginModalDisplayed, setLoginModalDisplayed] = useState(false);

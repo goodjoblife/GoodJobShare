@@ -5,7 +5,7 @@ import {
   paymentRecordSelector,
   subscriptionPlansSelector,
   myCurrentSubscriptionSelector,
-} from '../../selectors/payment';
+} from 'selectors/payment';
 
 export const usePaymentRecord = () => useSelector(paymentRecordSelector);
 export const useRedirectUrl = () => useSelector(redirectUrlSelector);

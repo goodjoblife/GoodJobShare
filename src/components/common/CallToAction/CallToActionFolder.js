@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { Heading } from 'common/base';
 import ProgressBarWithDataCount from 'common/ProgressBarWithDataCount';
 import { useShareLink } from 'hooks/experiments';
-import FolderBanner from '../FolderBanner';
+import FolderBanner from 'common/FolderBanner';
 import styles from './CallToActionFolder.module.css';
 import { goalNum } from 'constants/dataProgress';
 

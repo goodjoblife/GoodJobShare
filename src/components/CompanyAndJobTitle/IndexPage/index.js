@@ -10,11 +10,11 @@ import {
   pageTypeTranslation,
   generatePageURL,
   generateIndexURL,
-} from '../../../constants/companyJobTitle';
+} from 'constants/companyJobTitle';
 import styles from './CompanyAndJobTitleIndex.module.css';
-import { isFetched } from '../../../constants/status';
+import { isFetched } from 'constants/status';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
-import { SITE_NAME } from '../../../constants/helmetData';
+import { SITE_NAME } from 'constants/helmetData';
 
 const PAGE_SIZE = 10;
 

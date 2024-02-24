@@ -2,8 +2,8 @@ import React from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
 import { FACEBOOK_APP_ID } from '../../../config';
-import { SITE_NAME, IMG_HOST } from '../../../constants/helmetData';
-import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';
+import { SITE_NAME, IMG_HOST } from 'constants/helmetData';
+import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 /*
   This file will organize most of STATIC meta data information.
   For those DYNAMIC meta data information, will be generated in each component

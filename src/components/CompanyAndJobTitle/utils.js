@@ -5,7 +5,7 @@ import {
   pageType as PAGE_TYPE,
   generatePageURL,
   generateTabURL,
-} from '../../constants/companyJobTitle';
+} from 'constants/companyJobTitle';
 import { generatePath } from 'react-router';
 
 const generateRootLayer = () => ({

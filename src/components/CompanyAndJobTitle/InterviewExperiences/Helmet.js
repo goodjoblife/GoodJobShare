@@ -1,8 +1,8 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
-import { SITE_NAME } from '../../../constants/helmetData';
-import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
+import { SITE_NAME } from 'constants/helmetData';
+import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
 const CompanyInterviewExperienceHelmet = ({
   companyName,

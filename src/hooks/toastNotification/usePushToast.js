@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { pushNotification } from '../../actions/toastNotification';
+import { pushNotification } from 'actions/toastNotification';
 
 const usePushToast = () => {
   const dispatch = useDispatch();
