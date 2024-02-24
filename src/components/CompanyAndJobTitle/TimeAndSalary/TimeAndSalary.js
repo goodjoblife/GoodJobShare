@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import { compose } from 'recompose';
@@ -10,6 +10,7 @@ import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
 import OvertimeSection from './OvertimeSection';
+import Searchbar from './Searchbar';
 
 const TimeAndSalary = ({
   salaryWorkTimes,
@@ -29,8 +30,20 @@ const TimeAndSalary = ({
     fetchPermission();
   }, [fetchPermission]);
 
+  const [filter, setFilter] = useState('');
+  const handleSearchText = useCallback(searchText => {
+    setFilter(searchText);
+  }, []);
+
   const pageSize = 10;
-  const currentData = salaryWorkTimes.slice(
+  const filteredData = useMemo(
+    () =>
+      salaryWorkTimes.filter(({ job_title: { name } }) =>
+        name.toLowerCase().includes(filter.toLowerCase()),
+      ),
+    [filter, salaryWorkTimes],
+  );
+  const currentData = filteredData.slice(
     (page - 1) * pageSize,
     page * pageSize,
   );
@@ -40,6 +53,7 @@ const TimeAndSalary = ({
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
           <OvertimeSection statistics={salaryWorkTimeStatistics} />
+          <Searchbar onSubmit={handleSearchText} />
           <WorkingHourBlock
             data={currentData}
             pageType={pageType}
