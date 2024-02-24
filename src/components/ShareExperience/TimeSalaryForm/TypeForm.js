@@ -48,6 +48,11 @@ import { transferKeyToSnakecase } from 'utils/objectUtil';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 
+import { sendEvent } from 'utils/hotjarUtil';
+import { getUserPseudoId } from 'utils/GAUtils';
+
+import { GA_MEASUREMENT_ID } from '../../../config';
+
 const header = <Header title="請輸入你的一份薪資工時" />;
 
 const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
@@ -105,23 +110,32 @@ const bodyFromDraft = evolve({
   hasCompensatoryDayoff: draft => draft[DATA_KEY_HAS_COMPENSATORY_DAYOFF],
 });
 
-const TypeForm = ({ open, onClose }) => {
+const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
   useEffect(() => {
-    ReactPixel.track('InitiateCheckout', {
-      content_category: PIXEL_CONTENT_CATEGORY.VISIT_TIME_AND_SALARY_FORM,
-    });
+    if (open) {
+      // send hotjar event for recording
+      sendEvent('enter_salary_form');
 
-    // send to GA for tracking conversion rate
-    ReactGA.event({
-      category: GA_CATEGORY.SHARE_TIME_SALARY,
-      action: GA_ACTION.START_WRITING,
-    });
-  }, []);
+      // send to GA for tracking conversion rate
+      ReactGA.event({
+        category: GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
+        action: GA_ACTION.START_WRITING,
+      });
+    }
+  }, [open]);
 
   const dispatch = useDispatch();
   const onSubmit = useCallback(
     async draft => {
-      const body = transferKeyToSnakecase(bodyFromDraft(draft));
+      const ga_user_pseudo_id = await getUserPseudoId(GA_MEASUREMENT_ID);
+      const extra = {
+        form_type: GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
+        ga_user_pseudo_id,
+      };
+      const body = {
+        ...transferKeyToSnakecase(bodyFromDraft(draft)),
+        extra,
+      };
       await dispatch(
         createSalaryWorkTime({
           body,
@@ -129,7 +143,7 @@ const TypeForm = ({ open, onClose }) => {
       );
 
       ReactGA.event({
-        category: GA_CATEGORY.SHARE_TIME_SALARY,
+        category: GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
         action: GA_ACTION.UPLOAD_SUCCESS,
       });
       ReactPixel.track('Purchase', {
@@ -142,7 +156,7 @@ const TypeForm = ({ open, onClose }) => {
   );
   const onSubmitError = useCallback(async error => {
     ReactGA.event({
-      category: GA_CATEGORY.SHARE_TIME_SALARY,
+      category: GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
       action: GA_ACTION.UPLOAD_FAIL,
     });
   }, []);
@@ -156,6 +170,7 @@ const TypeForm = ({ open, onClose }) => {
       onSubmitError={onSubmitError}
       onClose={onClose}
       redirectPathnameOnSuccess="/salary-work-times/latest"
+      hideProgressBar={hideProgressBar}
     />
   );
 };
