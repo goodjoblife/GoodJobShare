@@ -1,5 +1,5 @@
 import fetchingStatus, { isUnfetched } from 'constants/status';
-import { tokenSelector } from '../selectors/authSelector';
+import { tokenSelector } from 'selectors/authSelector';
 import {
   postWorkings as postWorkingsApi,
   fetchTimeAndSalaryCount as fetchTimeAndSalaryCountApi,

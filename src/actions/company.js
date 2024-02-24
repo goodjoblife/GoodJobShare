@@ -1,5 +1,4 @@
 import { isGraphqlError } from 'utils/errors';
-
 import STATUS, { isFetching, isFetched } from 'constants/status';
 import {
   companyStatus as companyStatusSelector,

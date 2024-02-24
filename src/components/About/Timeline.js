@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { P } from 'common/base';
+
 import styles from './Timeline.module.css';
 
 const Timeline = ({ year, data }) => (

@@ -1,9 +1,9 @@
-import { tokenSelector } from '../selectors/authSelector';
-import { loginWithToken } from './auth';
+import { tokenSelector } from 'selectors/authSelector';
 import {
   sendVerifyEmail as sendVerifyEmailApi,
   verifyEmail as verifyEmailApi,
 } from 'graphql/emailVerification';
+import { loginWithToken } from './auth';
 
 export const sendVerifyEmail = ({ email, redirectUrl }) => (
   dispatch,

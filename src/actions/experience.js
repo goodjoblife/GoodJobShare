@@ -1,4 +1,5 @@
 import { concat } from 'ramda';
+
 import {
   getError,
   getFetched,

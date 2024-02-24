@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import { Section, Wrapper, Heading, P } from 'common/base';
 import CallToActionBanner from 'common/CallToAction/CallToActionBanner';
 import Facebook from 'common/icons/Facebook';
@@ -7,6 +8,7 @@ import Email from 'common/icons/Email';
 import Github from 'common/icons/Github';
 import editorStyles from 'common/Editor.module.css';
 import StaticHelmet from 'common/StaticHelmet';
+
 import styles from './About.module.css';
 import Timeline from './Timeline';
 

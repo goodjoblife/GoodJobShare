@@ -1,10 +1,9 @@
 import { isGraphqlError } from 'utils/errors';
-
 import STATUS, { isFetching, isFetched } from 'constants/status';
 import {
   jobTitleStatus as jobTitleStatusSelector,
   jobTitlesStatus as jobTitlesStatusSelector,
-} from '../selectors/companyAndJobTitle';
+} from 'selectors/companyAndJobTitle';
 import {
   getJobTitle as getJobTitleApi,
   getJobTitles as getJobTitlesApi,

@@ -7,14 +7,12 @@ import {
 } from 'utils/fetchBox';
 import { createToastLocationState } from 'utils/toastNotification';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
-
 import {
   paymentRecordSelector,
   redirectUrlSelector,
   subscriptionPlansSelector,
   myCurrentSubscriptionSelector,
 } from 'selectors/payment';
-
 import { tokenSelector } from 'selectors/authSelector';
 import {
   getPaymentRecord as getPaymentRecordApi,
