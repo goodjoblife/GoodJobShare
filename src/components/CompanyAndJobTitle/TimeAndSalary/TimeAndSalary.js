@@ -9,6 +9,7 @@ import { Section } from 'common/base';
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
+import OvertimeSection from './OvertimeSection';
 
 const TimeAndSalary = ({
   salaryWorkTimes,
@@ -38,9 +39,9 @@ const TimeAndSalary = ({
     <Section Tag="main" paddingBottom>
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
+          <OvertimeSection statistics={salaryWorkTimeStatistics} />
           <WorkingHourBlock
             data={currentData}
-            statistics={salaryWorkTimeStatistics}
             pageType={pageType}
             pageName={pageName}
             hideContent={!canView}
