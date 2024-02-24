@@ -1,4 +1,5 @@
 import graphqlClient from 'utils/graphqlClient';
+
 import {
   sendVerifyEmail as sendVerifyEmailGql,
   verifyEmail as verifyEmailGql,

@@ -1,6 +1,7 @@
 import R from 'ramda';
 
 import fetchUtil from 'utils/fetchUtil';
+
 import graphqlClient from 'utils/graphqlClient';
 import {
   queryExperienceGql,
