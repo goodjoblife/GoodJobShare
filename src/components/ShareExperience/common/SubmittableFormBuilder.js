@@ -18,6 +18,7 @@ const SubmittableTypeForm = ({
   onSubmitError,
   onClose,
   redirectPathnameOnSuccess,
+  hideProgressBar,
 }) => {
   const history = useHistory();
   const [submitStatus, setSubmitStatus] = useState('unsubmitted');
@@ -78,6 +79,7 @@ const SubmittableTypeForm = ({
         header={header}
         footer={<Footer dataNum={salaryCount + experienceCount} />}
         onSubmit={handleSubmit}
+        hideProgressBar={hideProgressBar}
       />
       <ConfirmModal
         isOpen={submitStatus === 'success'}

@@ -85,6 +85,7 @@ const FormBuilder = ({
   onSubmit,
   onValidateFail,
   onClose,
+  hideProgressBar,
 }) => {
   const [draft, setDraftValue, resetDraft] = useDraft(questions);
   const handleDraftChange = dataKey => value => {
@@ -198,9 +199,11 @@ const FormBuilder = ({
           ))}
         </AnimatedPager>
         <div className={styles.navigationBar}>
-          <div>
-            <ProgressBlock page={page} totalPages={questions.length} />
-          </div>
+          {hideProgressBar ? null : (
+            <div>
+              <ProgressBlock page={page} totalPages={questions.length} />
+            </div>
+          )}
           <div className={styles.navigator}>
             <NavigatorBlock
               skippable={skippable}

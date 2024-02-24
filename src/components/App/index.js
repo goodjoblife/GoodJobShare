@@ -50,8 +50,12 @@ const App = () => {
       </Switch>
       <ShareInterviewModal open={share === 'interview'} onClose={exitShare} />
       <ShareSalaryWorkTimesModal
-        open={share === 'salary-work-times'}
+        open={
+          share === 'salary-work-times' ||
+          share === 'salary-work-times-no-progress-bar'
+        }
         onClose={exitShare}
+        hideProgressBar={share === 'salary-work-times-no-progress-bar'}
       />
       <LoginModal />
     </Fragment>
