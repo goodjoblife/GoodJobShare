@@ -1,6 +1,5 @@
-import R from 'ramda';
-
 import fetchUtil from 'utils/fetchUtil';
+import R from 'ramda';
 
 export const getReports = ({ id }) =>
   fetchUtil(`/experiences/${id}/reports`)

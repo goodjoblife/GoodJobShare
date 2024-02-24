@@ -6,7 +6,6 @@ import qs from 'qs';
 
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
-
 import styles from './Searchbar.module.css';
 
 const getInitialSearchTextFromLocation = location =>

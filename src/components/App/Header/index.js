@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 import ReactGA from 'react-ga4';
-
 import { Wrapper } from 'common/base';
 import GjLogo from 'common/icons/GjLogo.svg';
 import Glike from 'common/icons/Glike.svg';
@@ -12,15 +11,14 @@ import useShareLink from 'hooks/experiments/useShareLink';
 import usePermission from 'hooks/usePermission';
 import { useAuthUser, useAuthUserEmailStatus, useIsLoggedIn } from 'hooks/auth';
 import { useLogin, useLogout } from 'hooks/login';
-import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import emailStatusMap from 'constants/emailStatus';
-
 import styles from './Header.module.css';
 import SiteMenu from './SiteMenu';
 import Top from './Top';
 import EmailVerificationTop from './Top/EmailVerificationTop';
 import ProgressTop from './Top/ProgressTop';
 import Searchbar from './Searchbar';
+import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
+import emailStatusMap from 'constants/emailStatus';
 
 const onClickShareData = () => {
   ReactGA.event({
