@@ -1,5 +1,4 @@
 import R, { prop, compose } from 'ramda';
-
 import { campaignTimeAndSalaryBoardSelector } from 'selectors/campaignTimeAndSalaryBoardSelector';
 import fetchingStatus from 'constants/status';
 import { DATA_NUM_PER_PAGE } from 'constants/timeAndSalarSearch';
