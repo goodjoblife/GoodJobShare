@@ -118,18 +118,22 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
 
       // send to GA for tracking conversion rate
       ReactGA.event({
-        category: GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
+        category: hideProgressBar
+          ? GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM_HIDE_PROGRESS_BAR
+          : GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
         action: GA_ACTION.START_WRITING,
       });
     }
-  }, [open]);
+  }, [hideProgressBar, open]);
 
   const dispatch = useDispatch();
   const onSubmit = useCallback(
     async draft => {
       const ga_user_pseudo_id = await getUserPseudoId(GA_MEASUREMENT_ID);
       const extra = {
-        form_type: GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
+        form_type: hideProgressBar
+          ? GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM_HIDE_PROGRESS_BAR
+          : GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
         ga_user_pseudo_id,
       };
       const body = {
@@ -143,7 +147,9 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
       );
 
       ReactGA.event({
-        category: GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
+        category: hideProgressBar
+          ? GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM_HIDE_PROGRESS_BAR
+          : GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
         action: GA_ACTION.UPLOAD_SUCCESS,
       });
       ReactPixel.track('Purchase', {
@@ -152,14 +158,19 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
         content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_TIME_AND_SALARY,
       });
     },
-    [dispatch],
+    [dispatch, hideProgressBar],
   );
-  const onSubmitError = useCallback(async error => {
-    ReactGA.event({
-      category: GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
-      action: GA_ACTION.UPLOAD_FAIL,
-    });
-  }, []);
+  const onSubmitError = useCallback(
+    async error => {
+      ReactGA.event({
+        category: hideProgressBar
+          ? GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM_HIDE_PROGRESS_BAR
+          : GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
+        action: GA_ACTION.UPLOAD_FAIL,
+      });
+    },
+    [hideProgressBar],
+  );
 
   return (
     <SubmittableFormBuilder

@@ -20,7 +20,7 @@ const DefaultSubheading = () => (
 const ShareExpSection = ({ heading, Subheading }) => {
   const shareInterviewLink = { state: { share: 'interview' } };
   // TODO: after AB testing, should update it.
-  const shareSalaryLink = useShareLink;
+  const shareSalaryLink = useShareLink();
   return (
     <Section padding>
       <Wrapper size="l">
