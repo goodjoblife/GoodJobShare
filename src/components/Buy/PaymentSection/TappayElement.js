@@ -1,10 +1,8 @@
 import { replace } from 'ramda';
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import textStyles from 'common/form/TextInput/TextInput.module.css';
-
 import { fields } from './constants';
+import textStyles from 'common/form/TextInput/TextInput.module.css';
 
 const dropLeadingSymbol = replace(/^#/, '');
 

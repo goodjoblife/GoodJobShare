@@ -1,10 +1,8 @@
 import React from 'react';
 import { format } from 'date-fns';
-
 import { Section, P, Link } from 'common/base';
-import { formatCommaSeparatedNumber } from 'utils/stringUtil';
-
 import styles from './SubscriptionsSection.module.css';
+import { formatCommaSeparatedNumber } from 'utils/stringUtil';
 
 const Captain = ({ dataCount, endDateTime }) => (
   <Section className={styles.captain}>

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { keys } from 'ramda';
-
 import Amex from './amex.svg';
 import Jcb from './jcb.svg';
 import MasterCard from './mastercard.svg';
