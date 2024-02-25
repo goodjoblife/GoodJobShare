@@ -10,7 +10,6 @@ import { useDebounce } from 'react-use';
 import {
   pageType as pageTypes,
   pageTypeTranslation,
-  searchingPageType,
   tabTypeTranslation,
 } from 'constants/companyJobTitle';
 
@@ -18,9 +17,19 @@ const useSearchbarHelper = ({ pageType, tabType }) => {
   const [filter, setFilter] = useState('');
 
   const translatedPageType = pageTypeTranslation[pageType];
-  const translatedSearchingPageType =
-    pageTypeTranslation[searchingPageType[pageType]];
   const translatedTabType = tabTypeTranslation[tabType];
+
+  const searchingPageType = (() => {
+    switch (pageType) {
+      case pageTypes.COMPANY:
+        return pageTypes.JOB_TITLE;
+      case pageTypes.JOB_TITLE:
+        return pageTypes.COMPANY;
+      default:
+        return null;
+    }
+  })();
+  const translatedSearchingPageType = pageTypeTranslation[searchingPageType];
 
   const label = `搜尋${translatedSearchingPageType}：`;
   const placeholder = `搜該${translatedPageType}指定${translatedSearchingPageType}${translatedTabType}`;
