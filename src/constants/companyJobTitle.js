@@ -8,6 +8,10 @@ export const pageTypeTranslation = {
   [JOB_TITLE]: '職稱',
   [COMPANY]: '公司',
 };
+export const searchingPageType = {
+  [JOB_TITLE]: COMPANY,
+  [COMPANY]: JOB_TITLE,
+};
 
 const pageTypeURLMap = {
   [JOB_TITLE]: 'job-titles',

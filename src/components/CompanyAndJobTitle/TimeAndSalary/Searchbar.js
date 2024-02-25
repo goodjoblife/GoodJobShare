@@ -7,7 +7,7 @@ import Magnifiner from 'common/icons/Magnifiner';
 import styles from './Searchbar.module.css';
 import { useDebounce } from 'react-use';
 
-const Searchbar = ({ className, onSubmit }) => {
+const Searchbar = ({ className, label, placeholder, onSubmit }) => {
   const [searchText, setSearchText] = useState('');
   const ref = useRef(null);
 
@@ -33,11 +33,11 @@ const Searchbar = ({ className, onSubmit }) => {
       className={cn(className, styles.searchbar)}
       onSubmit={handleFormSubmit}
     >
-      職稱搜尋：
+      {label}
       <TextInput
         ref={ref}
         className={styles.textInput}
-        placeholder="搜該公司指定職稱薪水"
+        placeholder={placeholder}
         value={searchText}
         onChange={e => setSearchText(e.target.value)}
       />
@@ -50,6 +50,8 @@ const Searchbar = ({ className, onSubmit }) => {
 
 Searchbar.propTypes = {
   className: PropTypes.string,
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
 };
 

@@ -11,6 +11,51 @@ import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
 import OvertimeSection from './OvertimeSection';
 import Searchbar from './Searchbar';
+import {
+  pageType as pageTypes,
+  pageTypeTranslation,
+  searchingPageType,
+} from 'constants/companyJobTitle';
+
+const useFilter = ({ pageType }) => {
+  const [filter, setFilter] = useState('');
+
+  const translated = pageTypeTranslation[pageType];
+  const translatedSearching = pageTypeTranslation[searchingPageType[pageType]];
+
+  const label = `搜尋${translated}：`;
+  const placeholder = `搜該${translated}指定${translatedSearching}薪水`;
+
+  const getSearchingValue = useCallback(
+    ({ company, job_title }) => {
+      switch (pageType) {
+        case pageTypes.COMPANY:
+          return job_title.name;
+        case pageTypes.JOB_TITLE:
+          return company.name;
+        default:
+          return null;
+      }
+    },
+    [pageType],
+  );
+
+  const matchesFilter = useCallback(
+    data => {
+      const value = getSearchingValue(data);
+      if (!value) return false;
+      return value.toLowerCase().includes(filter.toLowerCase());
+    },
+    [filter, getSearchingValue],
+  );
+
+  return {
+    label,
+    placeholder,
+    setFilter,
+    matchesFilter,
+  };
+};
 
 const TimeAndSalary = ({
   salaryWorkTimes,
@@ -30,19 +75,15 @@ const TimeAndSalary = ({
     fetchPermission();
   }, [fetchPermission]);
 
-  const [filter, setFilter] = useState('');
-  const handleSearchText = useCallback(searchText => {
-    setFilter(searchText);
-  }, []);
+  const { label, placeholder, setFilter, matchesFilter } = useFilter({
+    pageType,
+  });
 
   const pageSize = 10;
-  const filteredData = useMemo(
-    () =>
-      salaryWorkTimes.filter(({ job_title: { name } }) =>
-        name.toLowerCase().includes(filter.toLowerCase()),
-      ),
-    [filter, salaryWorkTimes],
-  );
+  const filteredData = useMemo(() => salaryWorkTimes.filter(matchesFilter), [
+    matchesFilter,
+    salaryWorkTimes,
+  ]);
   const currentData = filteredData.slice(
     (page - 1) * pageSize,
     page * pageSize,
@@ -53,7 +94,11 @@ const TimeAndSalary = ({
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
           <OvertimeSection statistics={salaryWorkTimeStatistics} />
-          <Searchbar onSubmit={handleSearchText} />
+          <Searchbar
+            label={label}
+            placeholder={placeholder}
+            onSubmit={setFilter}
+          />
           <WorkingHourBlock
             data={currentData}
             pageType={pageType}
