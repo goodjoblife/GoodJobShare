@@ -37,7 +37,7 @@ const Searchbar = ({ className, onSubmit }) => {
       <TextInput
         ref={ref}
         className={styles.textInput}
-        placeholder="搜尋這間公司職稱"
+        placeholder="搜該公司指定職稱薪水"
         value={searchText}
         onChange={e => setSearchText(e.target.value)}
       />
