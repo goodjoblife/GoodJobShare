@@ -33,7 +33,6 @@ const Rating = ({
   onChange,
   onConfirm,
   warning,
-  validator,
   ratingLabels,
 }) => {
   const debouncedConfirm = useDebouncedConfirm(onConfirm, 300);
@@ -87,7 +86,6 @@ Rating.propTypes = {
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
-  validator: PropTypes.func,
   ratingLabels: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
