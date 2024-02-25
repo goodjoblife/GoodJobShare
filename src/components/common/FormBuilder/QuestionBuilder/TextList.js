@@ -17,7 +17,6 @@ const TextList = ({
   value: values,
   onChange,
   warning,
-  validator,
   placeholder,
 }) => {
   const ref = useRef(null);
@@ -85,7 +84,6 @@ TextList.propTypes = {
   value: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onChange: PropTypes.func.isRequired,
   warning: PropTypes.string,
-  validator: PropTypes.func,
   placeholder: PropTypes.string,
 };
 

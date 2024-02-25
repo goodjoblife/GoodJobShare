@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Wrapper, BlockSelect } from './private';
+import Wrapper from './private/Wrapper';
+import BlockSelect from './private/BlockSelect';
+import { OptionPropType, ValuePropType } from './PropTypes';
 
 const Radio = ({
   page,
@@ -14,7 +16,6 @@ const Radio = ({
   onChange,
   onConfirm,
   warning,
-  validator,
   options,
 }) => (
   <Wrapper warning={warning}>
@@ -35,13 +36,12 @@ Radio.propTypes = {
   description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
   required: PropTypes.bool,
-  defaultValue: PropTypes.string,
-  value: PropTypes.string,
+  defaultValue: ValuePropType,
+  value: ValuePropType,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
-  validator: PropTypes.func,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
 };
 
 export default Radio;

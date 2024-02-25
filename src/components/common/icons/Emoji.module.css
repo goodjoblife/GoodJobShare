@@ -1,0 +1,15 @@
+.radioSquareIcon {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  width: 45px;
+  height: 45px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  @media (max-width: 550px) {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
+  }
+}

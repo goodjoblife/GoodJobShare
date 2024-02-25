@@ -4,12 +4,16 @@ import { path } from 'ramda';
 
 const ACTIONS = [
   {
-    prob: 0.5,
-    type: 'INTERVIEW_FORM_TYPE_FORM',
+    prob: 0.34,
+    type: 'SALARY_FORM_ONE_PAGE',
   },
   {
-    prob: 0.5,
-    type: 'SALARY_FORM',
+    prob: 0.33,
+    type: 'SALARY_FORM_TYPE_FORM',
+  },
+  {
+    prob: 0.33,
+    type: 'SALARY_FORM_TYPE_FORM_NO_PROGRESS',
   },
 ];
 
@@ -41,8 +45,16 @@ export default companyName => {
     } else {
       return { state: { share: 'interview' } };
     }
-  } else if (action.type === 'SALARY_FORM') {
+  } else if (action.type === 'SALARY_FORM_ONE_PAGE') {
     return '/share/time-and-salary';
+  } else if (action.type === 'SALARY_FORM_TYPE_FORM') {
+    return { state: { share: 'salary-work-times' } };
+  } else if (action.type === 'SALARY_FORM_TYPE_FORM_NO_PROGRESS') {
+    return {
+      state: {
+        share: 'salary-work-times-no-progress-bar',
+      },
+    };
   } else if (action.type === 'WORK_FORM') {
     return '/share/work-experiences';
   }

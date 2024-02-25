@@ -17,7 +17,6 @@ const Textarea = ({
   onChange,
   footnote,
   warning,
-  validator,
 }) => (
   <div
     className={cn(styles.container, { [commonStyles.hasWarning]: !!warning })}
@@ -51,9 +50,12 @@ Textarea.propTypes = {
   defaultValue: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  footnote: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  footnote: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.func,
+  ]),
   warning: PropTypes.string,
-  validator: PropTypes.func,
 };
 
 export default Textarea;

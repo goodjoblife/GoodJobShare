@@ -36,7 +36,6 @@ const File = ({
   value,
   onChange,
   warning,
-  validator,
 }) => {
   const [filename, setFilename] = useState(null);
   const [error, setError] = useState(null);
@@ -88,7 +87,6 @@ File.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   warning: PropTypes.string,
-  validator: PropTypes.func,
 };
 
 export default File;
