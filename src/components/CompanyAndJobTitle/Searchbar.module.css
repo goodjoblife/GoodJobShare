@@ -3,6 +3,7 @@
 .searchbar {
   display: flex;
   align-items: center;
+  margin-bottom: 18px;
 
   .textInput {
     width: 276px;
