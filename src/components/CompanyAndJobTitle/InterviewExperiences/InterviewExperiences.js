@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import Pagination from 'common/Pagination';
@@ -6,6 +6,8 @@ import { Section } from 'common/base';
 
 import EmptyView from '../EmptyView';
 import ExperienceEntry from './ExperienceEntry';
+
+import useSearchbar from '../useSearchbar';
 
 const pageSize = 10;
 
@@ -17,12 +19,26 @@ const InterviewExperiences = ({
   page,
   canView,
 }) => {
+  const { searchbar, matchesFilter } = useSearchbar({
+    pageType,
+    tabType,
+  });
+
+  const filteredData = useMemo(() => data.filter(matchesFilter), [
+    data,
+    matchesFilter,
+  ]);
+
   if (data.length === 0) {
     return <EmptyView pageName={pageName} tabType={tabType} />;
   }
-  const visibleData = data.slice((page - 1) * pageSize, page * pageSize);
+  const visibleData = filteredData.slice(
+    (page - 1) * pageSize,
+    page * pageSize,
+  );
   return (
     <Section Tag="main" paddingBottom>
+      {searchbar}
       {visibleData.map(d => (
         <ExperienceEntry
           key={d.id}

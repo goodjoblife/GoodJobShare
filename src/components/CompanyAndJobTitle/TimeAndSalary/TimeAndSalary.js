@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import { compose } from 'recompose';
@@ -10,52 +10,7 @@ import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
 import OvertimeSection from './OvertimeSection';
-import Searchbar from './Searchbar';
-import {
-  pageType as pageTypes,
-  pageTypeTranslation,
-  searchingPageType,
-} from 'constants/companyJobTitle';
-
-const useFilter = ({ pageType }) => {
-  const [filter, setFilter] = useState('');
-
-  const translated = pageTypeTranslation[pageType];
-  const translatedSearching = pageTypeTranslation[searchingPageType[pageType]];
-
-  const label = `搜尋${translated}：`;
-  const placeholder = `搜該${translated}指定${translatedSearching}薪水`;
-
-  const getSearchingValue = useCallback(
-    ({ company, job_title }) => {
-      switch (pageType) {
-        case pageTypes.COMPANY:
-          return job_title.name;
-        case pageTypes.JOB_TITLE:
-          return company.name;
-        default:
-          return null;
-      }
-    },
-    [pageType],
-  );
-
-  const matchesFilter = useCallback(
-    data => {
-      const value = getSearchingValue(data);
-      if (!value) return false;
-      return value.toLowerCase().includes(filter.toLowerCase());
-    },
-    [filter, getSearchingValue],
-  );
-
-  return {
-    label,
-    placeholder,
-    setFilter,
-    matchesFilter,
-  };
-};
+import useSearchbar from '../useSearchbar';
 
 const TimeAndSalary = ({
   salaryWorkTimes,
@@ -75,8 +30,9 @@ const TimeAndSalary = ({
     fetchPermission();
   }, [fetchPermission]);
 
-  const { label, placeholder, setFilter, matchesFilter } = useFilter({
+  const { searchbar, matchesFilter } = useSearchbar({
     pageType,
+    tabType,
   });
 
   const pageSize = 10;
@@ -94,11 +50,7 @@ const TimeAndSalary = ({
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
           <OvertimeSection statistics={salaryWorkTimeStatistics} />
-          <Searchbar
-            label={label}
-            placeholder={placeholder}
-            onSubmit={setFilter}
-          />
+          {searchbar}
           <WorkingHourBlock
             data={currentData}
             pageType={pageType}
