@@ -1,4 +1,4 @@
-@value above-small from "common/variables.module.css";
+@value above-small from "../common/variables.module.css";
 
 @value mobile_width: 320px;
 @value desktop_width: 360px;

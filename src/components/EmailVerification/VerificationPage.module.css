@@ -1,4 +1,4 @@
-@value main-yellow, main-orange from "common/variables.module.css";
+@value main-yellow, main-orange from "../common/variables.module.css";
 
 .root {
   padding-top: 100px;

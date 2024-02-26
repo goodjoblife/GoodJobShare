@@ -1,4 +1,4 @@
-@value main-yellow, main-gray, gray-dark, gray-light, border-gray from "common/variables.module.css";
+@value main-yellow, main-gray, gray-dark, gray-light, border-gray from "../common/variables.module.css";
 
 .searchbar {
   display: flex;

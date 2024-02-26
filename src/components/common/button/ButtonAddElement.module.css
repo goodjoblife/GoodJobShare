@@ -1,4 +1,4 @@
-@value yellow-dark from 'common/variables.module.css';
+@value yellow-dark from '../variables.module.css';
 
 .button {
   padding: 0 16px;

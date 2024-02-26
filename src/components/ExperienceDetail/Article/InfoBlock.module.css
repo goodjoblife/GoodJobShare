@@ -1,4 +1,4 @@
-@value gray-dark from "common/variables.module.css";
+@value gray-dark from "../../common/variables.module.css";
 
 .block {
   display: flex;

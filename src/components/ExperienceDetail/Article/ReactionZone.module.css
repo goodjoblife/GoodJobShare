@@ -1,4 +1,4 @@
-@value main-yellow, border-gray from "common/variables.module.css";
+@value main-yellow, border-gray from "../../common/variables.module.css";
 
 .reactionZone {
   border-top: 1px solid border-gray;

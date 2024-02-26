@@ -1,4 +1,4 @@
-@value PAGE_TOP, PAGE_TOP_S, inner-wrap-l, inner-wrap-m, inner-wrap-s, inner-wrap-m-s, page-gutter, page-gutter-s from "common/variables.module.css";
+@value PAGE_TOP, PAGE_TOP_S, inner-wrap-l, inner-wrap-m, inner-wrap-s, inner-wrap-m-s, page-gutter, page-gutter-s from "../variables.module.css";
 
 .l {
   width: 100%;

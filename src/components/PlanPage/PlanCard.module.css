@@ -1,4 +1,4 @@
-@value above-tablet, above-small, main-gray, yellow-dark from "common/variables.module.css";
+@value above-tablet, above-small, main-gray, yellow-dark from "../common/variables.module.css";
 
 .container {
   min-height: 300px;
