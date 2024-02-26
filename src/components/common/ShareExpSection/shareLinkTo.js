@@ -6,6 +6,7 @@ export const STATE_SHARE = {
   SALARY_WORK_TIME_NO_PROGRESS_BAR: 'salary-work-times-no-progress-bar',
 };
 
+// please follow the convention: () => To (react-router)
 export const generateShareInterviewOnePage = () => '/share/interview-one-page';
 export const generateShareInterview3Steps = ({ companyName } = {}) => {
   if (companyName) {
