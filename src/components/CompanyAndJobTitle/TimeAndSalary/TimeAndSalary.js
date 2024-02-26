@@ -30,7 +30,7 @@ const TimeAndSalary = ({
     fetchPermission();
   }, [fetchPermission]);
 
-  const { searchbar, matchesFilter } = useSearchbar({
+  const { Searchbar, matchesFilter } = useSearchbar({
     pageType,
     tabType,
   });
@@ -50,7 +50,7 @@ const TimeAndSalary = ({
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
           <OvertimeSection statistics={salaryWorkTimeStatistics} />
-          {searchbar}
+          <Searchbar />
           <WorkingHourBlock
             data={currentData}
             pageType={pageType}

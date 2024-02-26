@@ -119,12 +119,15 @@ const useSearchbar = ({ pageType, tabType }) => {
     tabType,
   });
 
-  const searchbar = (
-    <Searchbar label={label} placeholder={placeholder} onSubmit={setFilter} />
+  const WrappedSearchbar = useCallback(
+    () => (
+      <Searchbar label={label} placeholder={placeholder} onSubmit={setFilter} />
+    ),
+    [label, placeholder, setFilter],
   );
 
   return {
-    searchbar,
+    Searchbar: WrappedSearchbar,
     matchesFilter,
   };
 };

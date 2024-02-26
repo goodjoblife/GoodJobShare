@@ -19,7 +19,7 @@ const InterviewExperiences = ({
   page,
   canView,
 }) => {
-  const { searchbar, matchesFilter } = useSearchbar({
+  const { Searchbar, matchesFilter } = useSearchbar({
     pageType,
     tabType,
   });
@@ -38,7 +38,7 @@ const InterviewExperiences = ({
   );
   return (
     <Section Tag="main" paddingBottom>
-      {searchbar}
+      <Searchbar />
       {visibleData.map(d => (
         <ExperienceEntry
           key={d.id}
