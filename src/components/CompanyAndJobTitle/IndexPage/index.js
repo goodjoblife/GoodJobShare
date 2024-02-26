@@ -34,11 +34,11 @@ const usePagination = () => {
 const IndexHelmet = ({ pageType, page }) => {
   const title = `所有${pageTypeTranslation[pageType]}資料 - 第${page}頁`;
 
-  let path = generateIndexURL({
-    pageType,
+  const path = generateIndexURL({ pageType });
+  const search = qs.stringify(page > 1 ? { p: page } : null, {
+    addQueryPrefix: true,
   });
-  if (page > 1) path = `${path}?p=${page}`;
-  const canonicalURL = formatCanonicalPath(path);
+  const canonicalURL = `${formatCanonicalPath(path)}${search}`;
 
   return (
     <Helmet>

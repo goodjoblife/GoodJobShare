@@ -26,7 +26,7 @@ class FeedbackBlock extends React.Component {
     question: '請問您是否覺得以上的資訊實用？ 感到滿意？',
     placeholders: {
       yes: '說說為什麼你覺得很實用？',
-      no: '說說為什麼你覺得不實用？ 或是有任何其他的回饋？',
+      no: '說說為什麼你覺得不實用？ 或是有任何其他的回饋？',
     },
     className: '',
   };
