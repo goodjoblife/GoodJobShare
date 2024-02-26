@@ -13,58 +13,6 @@ import {
   tabTypeTranslation,
 } from 'constants/companyJobTitle';
 
-const useSearchbarHelper = ({ pageType, tabType }) => {
-  const [filter, setFilter] = useState('');
-
-  const translatedPageType = pageTypeTranslation[pageType];
-  const translatedTabType = tabTypeTranslation[tabType];
-
-  const searchingPageType = (() => {
-    switch (pageType) {
-      case pageTypes.COMPANY:
-        return pageTypes.JOB_TITLE;
-      case pageTypes.JOB_TITLE:
-        return pageTypes.COMPANY;
-      default:
-        return null;
-    }
-  })();
-  const translatedSearchingPageType = pageTypeTranslation[searchingPageType];
-
-  const label = `搜尋${translatedSearchingPageType}：`;
-  const placeholder = `搜該${translatedPageType}指定${translatedSearchingPageType}${translatedTabType}`;
-
-  const getSearchingValue = useCallback(
-    ({ company, job_title }) => {
-      switch (pageType) {
-        case pageTypes.COMPANY:
-          return job_title.name;
-        case pageTypes.JOB_TITLE:
-          return company.name;
-        default:
-          return null;
-      }
-    },
-    [pageType],
-  );
-
-  const matchesFilter = useCallback(
-    data => {
-      const value = getSearchingValue(data);
-      if (!value) return false;
-      return value.toLowerCase().includes(filter.toLowerCase());
-    },
-    [filter, getSearchingValue],
-  );
-
-  return {
-    label,
-    placeholder,
-    setFilter,
-    matchesFilter,
-  };
-};
-
 const Searchbar = ({ className, label, placeholder, onSubmit }) => {
   const [searchText, setSearchText] = useState('');
   const ref = useRef(null);
@@ -114,10 +62,48 @@ Searchbar.propTypes = {
 };
 
 const useSearchbar = ({ pageType, tabType }) => {
-  const { label, placeholder, setFilter, matchesFilter } = useSearchbarHelper({
-    pageType,
-    tabType,
-  });
+  const [filter, setFilter] = useState('');
+
+  const translatedPageType = pageTypeTranslation[pageType];
+  const translatedTabType = tabTypeTranslation[tabType];
+
+  const searchingPageType = (() => {
+    switch (pageType) {
+      case pageTypes.COMPANY:
+        return pageTypes.JOB_TITLE;
+      case pageTypes.JOB_TITLE:
+        return pageTypes.COMPANY;
+      default:
+        return null;
+    }
+  })();
+  const translatedSearchingPageType = pageTypeTranslation[searchingPageType];
+
+  const label = `搜尋${translatedSearchingPageType}：`;
+  const placeholder = `搜該${translatedPageType}指定${translatedSearchingPageType}${translatedTabType}`;
+
+  const getSearchingValue = useCallback(
+    ({ company, job_title }) => {
+      switch (pageType) {
+        case pageTypes.COMPANY:
+          return job_title.name;
+        case pageTypes.JOB_TITLE:
+          return company.name;
+        default:
+          return null;
+      }
+    },
+    [pageType],
+  );
+
+  const matchesFilter = useCallback(
+    data => {
+      const value = getSearchingValue(data);
+      if (!value) return false;
+      return value.toLowerCase().includes(filter.toLowerCase());
+    },
+    [filter, getSearchingValue],
+  );
 
   const WrappedSearchbar = useCallback(
     () => (
