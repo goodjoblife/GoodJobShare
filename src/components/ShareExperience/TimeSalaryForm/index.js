@@ -37,6 +37,9 @@ import FailFeedback from '../common/FailFeedback';
 
 import { createSalaryWorkTime } from 'actions/timeAndSalary';
 import { sendEvent } from 'utils/hotjarUtil';
+import { getUserPseudoId } from 'utils/GAUtils';
+
+import { GA_MEASUREMENT_ID } from '../../../config';
 
 const defaultForm = {
   company: '',
@@ -109,7 +112,7 @@ const TimeSalaryForm = () => {
 
     // send to GA for tracking conversion rate
     ReactGA.event({
-      category: GA_CATEGORY.SHARE_TIME_SALARY,
+      category: GA_CATEGORY.SHARE_TIME_SALARY_ONE_PAGE,
       action: GA_ACTION.START_WRITING,
     });
   }, [location]);
@@ -172,24 +175,31 @@ const TimeSalaryForm = () => {
     return null;
   }, [validationStatus]);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback(async () => {
     const valid = basicFormCheck(getBasicForm(form));
     const valid2 = salaryFormCheck(getSalaryForm(form));
     const valid3 = timeFormCheck(getTimeForm(form));
 
     if (valid && valid2 && valid3) {
       localStorage.removeItem(LS_TIME_SALARY_FORM_KEY);
-
+      const ga_user_pseudo_id = await getUserPseudoId(GA_MEASUREMENT_ID);
+      const extra = {
+        form_type: GA_CATEGORY.SHARE_TIME_SALARY_ONE_PAGE,
+        ga_user_pseudo_id,
+      };
       const p = dispatch(
         createSalaryWorkTime({
-          body: portTimeSalaryFormToRequestFormat(getTimeAndSalaryForm(form)),
+          body: portTimeSalaryFormToRequestFormat(
+            getTimeAndSalaryForm(form),
+            extra,
+          ),
         }),
       );
 
       return p.then(
         response => {
           ReactGA.event({
-            category: GA_CATEGORY.SHARE_TIME_SALARY,
+            category: GA_CATEGORY.SHARE_TIME_SALARY_ONE_PAGE,
             action: GA_ACTION.UPLOAD_SUCCESS,
           });
           ReactPixel.track('Purchase', {
@@ -210,7 +220,7 @@ const TimeSalaryForm = () => {
         },
         error => {
           ReactGA.event({
-            category: GA_CATEGORY.SHARE_TIME_SALARY,
+            category: GA_CATEGORY.SHARE_TIME_SALARY_ONE_PAGE,
             action: GA_ACTION.UPLOAD_FAIL,
           });
 

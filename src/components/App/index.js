@@ -12,6 +12,7 @@ import styles from './App.module.css';
 import Header from './Header';
 import Footer from './Footer';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
+import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
 import routes from '../../routes';
 
 const useShare = () => {
@@ -48,6 +49,14 @@ const App = () => {
         ))}
       </Switch>
       <ShareInterviewModal open={share === 'interview'} onClose={exitShare} />
+      <ShareSalaryWorkTimesModal
+        open={
+          share === 'salary-work-times' ||
+          share === 'salary-work-times-no-progress-bar'
+        }
+        onClose={exitShare}
+        hideProgressBar={share === 'salary-work-times-no-progress-bar'}
+      />
       <LoginModal />
     </Fragment>
   );

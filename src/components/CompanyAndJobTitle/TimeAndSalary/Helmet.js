@@ -1,5 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import { generatePath } from 'react-router';
+import qs from 'qs';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { IMG_HOST, SITE_NAME } from 'constants/helmetData';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
@@ -16,16 +18,16 @@ const CompanySalaryWorkTimeHelmet = ({
   // description
   let description = `目前還沒有${companyName}的薪水、加班狀況資料。分享你的薪水、加班狀況，一起讓職場更透明。`;
   if (salaryWorkTimes && salaryWorkTimes.length > 0) {
-    description = `查看${salaryWorkTimes.length}筆由${companyName}內部員工提供的薪水、加班狀況資料。`;
+    description = `查看${salaryWorkTimes.length}筆由${companyName}內部員工提供的薪水、加班狀況資料。`;
   }
 
   // canonical url
-  let url = formatCanonicalPath(`/companies/${companyName}/salary-work-times`);
-  if (page > 1) {
-    url = formatCanonicalPath(
-      `/companies/${companyName}/salary-work-times?p=${page}`,
-    );
-  }
+  const path = generatePath('/companies/:companyName/salary-work-times', {
+    companyName,
+  });
+  const search =
+    page > 1 ? qs.stringify({ p: page }, { addQueryPrefix: true }) : '';
+  const url = formatCanonicalPath(`${path}${search}`);
 
   return (
     <Helmet>
@@ -61,16 +63,17 @@ const JobTitleSalaryWorkTimeHelmet = ({
   // description
   let description = `目前還沒有${jobTitle}的薪水、加班狀況資料。分享你的薪水、加班狀況，一起讓職場更透明。`;
   if (salaryWorkTimes && salaryWorkTimes.length > 0) {
-    description = `查看${salaryWorkTimes.length}筆由${jobTitle}提供的薪水、加班狀況資料。`;
+    description = `查看${salaryWorkTimes.length}筆由${jobTitle}提供的薪水、加班狀況資料。`;
   }
 
   // canonical url
-  let url = formatCanonicalPath(`/job-titles/${jobTitle}/salary-work-times`);
-  if (page > 1) {
-    url = formatCanonicalPath(
-      `/job-titles/${jobTitle}/salary-work-times?p=${page}`,
-    );
-  }
+  const path = generatePath('/job-titles/:jobTitle/salary-work-times', {
+    jobTitle,
+  });
+  const search =
+    page > 1 ? qs.stringify({ p: page }, { addQueryPrefix: true }) : '';
+  const url = formatCanonicalPath(`${path}${search}`);
+
   return (
     <Helmet>
       <title itemProp="name" lang="zh-TW">
