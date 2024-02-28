@@ -47,10 +47,10 @@ const TimeAndSalary = ({
 
   return (
     <Section Tag="main" paddingBottom>
+      <OvertimeSection statistics={salaryWorkTimeStatistics} />
+      <Searchbar />
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
-          <OvertimeSection statistics={salaryWorkTimeStatistics} />
-          <Searchbar />
           <WorkingHourBlock
             data={currentData}
             pageType={pageType}
@@ -70,6 +70,7 @@ const TimeAndSalary = ({
           />
         </React.Fragment>
       )) || <EmptyView pageName={pageName} tabType={tabType} />}
+
       <ViewLog
         pageName={pageName}
         page={page}

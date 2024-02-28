@@ -27,7 +27,12 @@ const InterviewExperiences = ({
   data = useMemo(() => data.filter(matchesFilter), [data, matchesFilter]);
 
   if (data.length === 0) {
-    return <EmptyView pageName={pageName} tabType={tabType} />;
+    return (
+      <Section Tag="main" paddingBottom>
+        <Searchbar />
+        <EmptyView pageName={pageName} tabType={tabType} />
+      </Section>
+    );
   }
   const visibleData = data.slice((page - 1) * pageSize, page * pageSize);
   return (
