@@ -70,7 +70,6 @@ const TimeAndSalary = ({
           />
         </React.Fragment>
       )) || <EmptyView pageName={pageName} tabType={tabType} />}
-
       <ViewLog
         pageName={pageName}
         page={page}
