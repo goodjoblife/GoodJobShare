@@ -36,11 +36,11 @@ const TimeAndSalary = ({
   });
 
   const pageSize = 10;
-  const filteredData = useMemo(() => salaryWorkTimes.filter(matchesFilter), [
+  salaryWorkTimes = useMemo(() => salaryWorkTimes.filter(matchesFilter), [
     matchesFilter,
     salaryWorkTimes,
   ]);
-  const currentData = filteredData.slice(
+  const currentData = salaryWorkTimes.slice(
     (page - 1) * pageSize,
     page * pageSize,
   );
