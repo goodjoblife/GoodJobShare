@@ -17,7 +17,7 @@
     transition: border-color 0.4s;
 
     @media (max-width: 850px) {
-      width: 175px;
+      width: 200px;
     }
   }
 
