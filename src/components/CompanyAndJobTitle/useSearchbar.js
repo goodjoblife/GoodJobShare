@@ -21,7 +21,7 @@ const Searchbar = ({ className, label, placeholder, onSubmit }) => {
     () => {
       onSubmit(searchText);
     },
-    1000,
+    300,
     [searchText],
   );
 
