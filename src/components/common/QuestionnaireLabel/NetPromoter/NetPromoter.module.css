@@ -124,7 +124,7 @@
 
 /* Chrome, Safari, Opera and Edge Chromium styles */
 .range input[type='range']::-webkit-slider-runnable-track {
-  background-color: #main-yellow;
+  background-color: main-yellow;
   border-radius: 0.5rem;
   height: 5px;
 }
@@ -141,7 +141,7 @@
 
 /* Firefox styles */
 .range input[type='range']::-moz-range-track {
-  background-color: #main-yellow;
+  background-color: main-yellow;
   border-radius: 0.5rem;
   height: 5px;
 }
