@@ -116,9 +116,42 @@
 }
 
 .range input[type='range'] {
+  -webkit-appearance: none;
   width: 100%;
   position: relative;
   cursor: pointer;
+}
+
+/* Chrome, Safari, Opera and Edge Chromium styles */
+.range input[type='range']::-webkit-slider-runnable-track {
+  background-color: #main-yellow;
+  border-radius: 0.5rem;
+  height: 5px;
+}
+
+.range input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  margin-top: -6.5px; /* Centers thumb on the track */
+  background-color: main-black;
+  border-radius: 1rem;
+  height: 18px;
+  width: 18px;
+}
+
+/* Firefox styles */
+.range input[type='range']::-moz-range-track {
+  background-color: #main-yellow;
+  border-radius: 0.5rem;
+  height: 5px;
+}
+
+.range input[type='range']::-moz-range-thumb {
+  background-color: main-black;
+  border: none; /* Removes extra border that FF applies */
+  border-radius: 1rem;
+  height: 18px;
+  width: 18px;
 }
 
 .ticks {
@@ -128,12 +161,6 @@
   left: 4px;
   width: 100%;
   top: -20px;
-}
-
-.tick {
-  width: 2px;
-  height: 10px;
-  background: black;
 }
 
 .rangeLabels {
