@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
-import styles from './CollapsedPanel.module.css';
+import styles from './CollapsedDrawer.module.css';
 
-const CollapsedPanel = ({ title = '給我們回饋', children }) => {
+const CollapsedDrawer = ({ title = '給我們回饋', children }) => {
   const [isExpand, setIsExpand] = useState(false);
 
   const handleExpandModal = () => {
@@ -17,4 +17,4 @@ const CollapsedPanel = ({ title = '給我們回饋', children }) => {
   );
 };
 
-export default CollapsedPanel;
+export default CollapsedDrawer;
