@@ -1,25 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import styles from './NetPromoter.module.css';
-import { ScoreRange } from './ScoreRange';
 import { Question } from './Question';
 import { NextStepButton } from './NextStepButton';
+import { questionList } from '../questionList';
 
-const questionList = [
-  {
-    id: 1,
-    title: '你認為 GoodJob 網站對你找工作有幫助嗎？',
-    titleExplanation: null,
-    section: <ScoreRange />,
-  },
-  {
-    id: 2,
-    title: '你認為 GoodJob 有哪些地方可以做得更好嗎？',
-    titleExplanation: '(e.g.新增ＯＯ功能，優化ＸＸ功能)',
-    section: null,
-  },
-];
-
-const NetPromoter = () => {
+export const ExpandedModal = () => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [isShowQuestion, setIsShowQuestion] = useState(true);
   const question = questionList[questionIndex];
@@ -56,5 +41,3 @@ const NetPromoter = () => {
     </div>
   );
 };
-
-export default NetPromoter;

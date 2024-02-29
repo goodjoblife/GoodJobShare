@@ -16,7 +16,7 @@ import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
 import routes from '../../routes';
 import CollapsedPanel from 'common/QuestionnaireLabel/CollapsedPanel';
-import NetPromoter from 'common/QuestionnaireLabel/NetPromoter';
+import { ExpandedModal as NetPromoter } from 'common/QuestionnaireLabel/ExpandedModal';
 
 const useShare = () => {
   const location = useLocation();
