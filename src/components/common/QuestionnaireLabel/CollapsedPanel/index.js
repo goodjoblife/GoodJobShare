@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
-import styles from './QuestionnaireLabel.module.css';
+import styles from './CollapsedPanel.module.css';
 
-const QuestionnaireLabel = ({ title = '給我們回饋', children }) => {
+const CollapsedPanel = ({ title = '給我們回饋', children }) => {
   const [isExpand, setIsExpand] = useState(false);
 
   const handleExpandModal = () => {
@@ -17,4 +17,4 @@ const QuestionnaireLabel = ({ title = '給我們回饋', children }) => {
   );
 };
 
-export default QuestionnaireLabel;
+export default CollapsedPanel;
