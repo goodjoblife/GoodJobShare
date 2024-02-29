@@ -1,30 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import styles from './NetPromoter.module.css';
-import laborImage from './laborImage.png';
-
-const ScoreRange = () => {
-  const [score, setScore] = useState(5);
-  const handleScoreChange = e => setScore(e.target.value);
-  const ticks = Array.from({ length: 11 }, (_, i) => <div key={i}>{i}</div>);
-
-  return (
-    <div className={styles.range}>
-      <div className={styles.ticks}>{ticks}</div>
-      <input
-        type="range"
-        min={0}
-        max={10}
-        value={score}
-        step={1}
-        onChange={handleScoreChange}
-      />
-      <div className={styles.rangeLabels}>
-        <span>完全沒幫助</span>
-        <span>非常有幫助</span>
-      </div>
-    </div>
-  );
-};
+import { ScoreRange } from './ScoreRange';
+import { Question } from './Question';
+import { NextStepButton } from './NextStepButton';
 
 const questionList = [
   {
@@ -40,42 +18,6 @@ const questionList = [
     section: null,
   },
 ];
-
-const Question = ({ title, titleExplanation, section }) => {
-  return (
-    <React.Fragment>
-      <div className={styles.question}>
-        {title}
-        {titleExplanation && <span>{titleExplanation}</span>}
-      </div>
-      {section}
-    </React.Fragment>
-  );
-};
-
-const NextStepButton = ({ handleNext, isLastQuestion }) => {
-  const buttonText = isLastQuestion ? '送出' : '下一步';
-
-  const handleSubmit = useCallback(() => {
-    console.log('handleSubmit');
-  }, []);
-  const handleNextQuestion = useCallback(() => {
-    if (!isLastQuestion) {
-      handleNext();
-      return;
-    }
-    handleSubmit();
-  }, [handleNext, isLastQuestion, handleSubmit]);
-
-  return (
-    <div className={styles.nextStepContainer}>
-      <img src={laborImage} alt="laborImage" />
-      <button onClick={handleNextQuestion} className={styles.nextStep}>
-        {buttonText}
-      </button>
-    </div>
-  );
-};
 
 const NetPromoter = () => {
   const [questionIndex, setQuestionIndex] = useState(0);
