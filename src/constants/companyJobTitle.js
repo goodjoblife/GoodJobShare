@@ -40,12 +40,16 @@ const tabTypeURLMap = {
   [INTERVIEW_EXPERIENCE]: 'interview-experiences',
 };
 
-export const generateTabURL = ({ pageType, pageName, tabType }) =>
-  generatePath('/:pageTypeURL/:pageName/:tabTypeURL', {
+export const generateTabURL = ({ pageType, pageName, tabType }) => {
+  if (tabType === OVERVIEW) {
+    return generatePageURL({ pageType, pageName });
+  }
+  return generatePath('/:pageTypeURL/:pageName/:tabTypeURL', {
     pageTypeURL: pageTypeURLMap[pageType],
     pageName,
     tabTypeURL: tabTypeURLMap[tabType],
   });
+};
 
 export const generatePageURL = ({ pageName, pageType }) =>
   generatePath('/:pageTypeURL/:pageName', {

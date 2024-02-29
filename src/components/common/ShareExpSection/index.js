@@ -7,6 +7,10 @@ import WorkExperienceImg from './share-3.png';
 import SalaryWorkTimeImg from './share-1.png';
 import styles from './ShareExpSection.module.css';
 import { useShareLink } from 'hooks/experiments';
+import {
+  generateShareInterviewTypeForm,
+  generateShareWork,
+} from './shareLinkTo';
 
 const DefaultSubheading = () => (
   <div>
@@ -18,7 +22,6 @@ const DefaultSubheading = () => (
 );
 
 const ShareExpSection = ({ heading, Subheading }) => {
-  const shareInterviewLink = { state: { share: 'interview' } };
   // TODO: after AB testing, should update it.
   const shareSalaryLink = useShareLink();
   return (
@@ -31,7 +34,7 @@ const ShareExpSection = ({ heading, Subheading }) => {
           <Subheading />
         </P>
         <div className={styles.container}>
-          <Link to={shareInterviewLink} className={styles.item}>
+          <Link to={generateShareInterviewTypeForm()} className={styles.item}>
             <img
               src={InterviewImg}
               alt="分享面試經驗"
@@ -44,7 +47,7 @@ const ShareExpSection = ({ heading, Subheading }) => {
               分享你的面試過程、面試問題，減少大家走冤枉路～
             </P>
           </Link>
-          <Link to="/share/work-experiences" className={styles.item}>
+          <Link to={generateShareWork()} className={styles.item}>
             <img
               src={WorkExperienceImg}
               alt="分享工作經驗"

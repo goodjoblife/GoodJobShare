@@ -130,3 +130,21 @@ export const queryRelatedExperiencesGql = /* GraphQL */ `
     }
   }
 `;
+
+export const createExperienceLikeGql = /* GraphQL */ `
+  mutation($input: CreateExperienceLikeInput!) {
+    createExperienceLike(input: $input) {
+      experienceLike {
+        id
+      }
+    }
+  }
+`;
+
+export const deleteExpereinceLikeGql = /* GraphQL */ `
+  mutation($input: DeleteExperienceLikeInput!) {
+    deleteExperienceLike(input: $input) {
+      deletedExperienceId
+    }
+  }
+`;

@@ -1,10 +1,13 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import qs from 'qs';
 import { formatTitle, formatCanonicalPath } from '../../../utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
 
 export default ({ title, campaignInfo, pathname, page }) => {
-  const search = page === 1 ? '' : `?p=${page}`;
+  const search = qs.stringify(page === 1 ? null : { p: page }, {
+    addQueryPrefix: true,
+  });
   const url = `${formatCanonicalPath(pathname)}${search}`;
   const { title: campaignTitle, ogImgUrl } = campaignInfo;
   const newTitle = `${campaignTitle}的${title}`;
