@@ -9,6 +9,7 @@ const ScoreRange = () => {
       {i}
     </div>
   ));
+  const handleScoreChange = e => setScore(e.target.value);
 
   return (
     <div className={styles.range}>
@@ -19,7 +20,7 @@ const ScoreRange = () => {
         max={10}
         value={score}
         step={1}
-        onChange={e => setScore(e.target.value)}
+        onChange={handleScoreChange}
       />
       <div className={styles.rangeLabels}>
         <span>完全沒幫助</span>
