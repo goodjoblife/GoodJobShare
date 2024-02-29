@@ -15,9 +15,9 @@ export const ExpandedModal = () => {
     setQuestionIndex(prev => prev + 1);
   }, [setQuestionIndex]);
 
-  const handleCloseQuestion = () => {
+  const handleCloseQuestion = useCallback(() => {
     setIsShowQuestion(false);
-  };
+  }, []);
 
   if (!isShowQuestion) return null;
 
