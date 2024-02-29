@@ -4,12 +4,8 @@ import laborImage from './laborImage.png';
 
 const ScoreRange = () => {
   const [score, setScore] = useState(5);
-  const ticks = Array.from({ length: 11 }, (_, i) => (
-    <div key={i} className="tick">
-      {i}
-    </div>
-  ));
   const handleScoreChange = e => setScore(e.target.value);
+  const ticks = Array.from({ length: 11 }, (_, i) => <div key={i}>{i}</div>);
 
   return (
     <div className={styles.range}>
