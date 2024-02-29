@@ -5,12 +5,14 @@ import { createStructuredSelector } from 'reselect';
 import { withProps, lifecycle, compose, setStatic } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { generatePath } from 'react-router';
+import { Switch, Route } from 'react-router-dom';
 import Overview from '../CompanyAndJobTitle/Overview';
 import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
 import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
 import NotFound from 'common/NotFound';
+import Redirect from 'common/routing/Redirect';
 import { withPermission } from 'common/permission-context';
 
 import { tabType, pageType } from 'constants/companyJobTitle';
@@ -40,14 +42,17 @@ const CompanyPageProvider = props => (
     <Route
       path="/companies/:companyName"
       exact
-      render={({ location: { pathname } }) => (
-        <Redirect to={`${pathname}/overview`} />
-      )}
+      render={() => <Overview {...props} tabType={tabType.OVERVIEW} />}
     />
+    {/* 相容舊網址 */}
     <Route
       path="/companies/:companyName/overview"
       exact
-      render={() => <Overview {...props} tabType={tabType.OVERVIEW} />}
+      render={({ match: { params } }) => {
+        const companyName = decodeURIComponent(params.companyName);
+        const path = generatePath('/companies/:companyName', { companyName });
+        return <Redirect to={path} />;
+      }}
     />
     <Route
       path="/companies/:companyName/salary-work-times"

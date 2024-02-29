@@ -1,5 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import { generatePath } from 'react-router';
+import qs from 'qs';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from '../../../constants/helmetData';
 import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
@@ -19,12 +21,12 @@ const CompanyWorkExperienceHelmet = ({
   }
 
   // canonical url
-  let url = formatCanonicalPath(`/companies/${companyName}/work-experiences`);
-  if (page > 1) {
-    url = formatCanonicalPath(
-      `/companies/${companyName}/work-experiences?p=${page}`,
-    );
-  }
+  const path = generatePath('/companies/:companyName/work-experiences', {
+    companyName,
+  });
+  const search =
+    page > 1 ? qs.stringify({ p: page }, { addQueryPrefix: true }) : '';
+  const url = formatCanonicalPath(`${path}${search}`);
 
   return (
     <Helmet>
@@ -55,12 +57,12 @@ const JobTitleWorkExperienceHelmet = ({ jobTitle, workExperiences, page }) => {
   }
 
   // canonical url
-  let url = formatCanonicalPath(`/job-titles/${jobTitle}/work-experiences`);
-  if (page > 1) {
-    url = formatCanonicalPath(
-      `/job-titles/${jobTitle}/work-experiences?p=${page}`,
-    );
-  }
+  const path = generatePath('/job-titles/:jobTitle/work-experiences', {
+    jobTitle,
+  });
+  const search =
+    page > 1 ? qs.stringify({ p: page }, { addQueryPrefix: true }) : '';
+  const url = formatCanonicalPath(`${path}${search}`);
 
   return (
     <Helmet>

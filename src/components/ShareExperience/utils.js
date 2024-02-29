@@ -331,7 +331,7 @@ export const portInterviewFormToRequestFormat = (interviewForm, extra) => {
   return body;
 };
 
-export const portTimeSalaryFormToRequestFormat = form => {
+export const portTimeSalaryFormToRequestFormat = (form, extra) => {
   const isEmployed = form.isCurrentlyEmployed === 'yes';
   let body = Object.assign({}, form, {
     jobEndingTimeYear: form.jobEndingTimeYear.toString(),
@@ -342,7 +342,10 @@ export const portTimeSalaryFormToRequestFormat = form => {
     body = R.omit(['jobEndingTimeYear', 'jobEndingTimeMonth'])(body);
   }
 
-  return transferKeyToSnakecase(body);
+  return {
+    ...transferKeyToSnakecase(body),
+    extra,
+  };
 };
 
 const portWorkExperiencesFormToRequestFormat = workExperiencesForm => {

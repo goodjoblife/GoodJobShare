@@ -5,6 +5,7 @@ import { omit } from 'ramda';
 import StaticHelmet from 'common/StaticHelmet';
 import LoginModal from 'common/LoginModal';
 import useLocStateToastObserver from 'hooks/toastNotification/useLocStateToastObserver';
+import { STATE_SHARE } from 'common/ShareExpSection/shareLinkTo';
 
 import ToastNotification from '../ToastNotification/ToastNotification';
 import { AppRouteWithSubRoutes } from '../route';
@@ -50,10 +51,17 @@ const App = () => {
           </AppRouteWithSubRoutes>
         ))}
       </Switch>
-      <ShareInterviewModal open={share === 'interview'} onClose={exitShare} />
-      <ShareSalaryWorkTimesModal
-        open={share === 'salary-work-times'}
+      <ShareInterviewModal
+        open={share === STATE_SHARE.INTERVIEW}
         onClose={exitShare}
+      />
+      <ShareSalaryWorkTimesModal
+        open={
+          share === STATE_SHARE.SALARY_WORK_TIME ||
+          share === STATE_SHARE.SALARY_WORK_TIME_NO_PROGRESS_BAR
+        }
+        onClose={exitShare}
+        hideProgressBar={share === STATE_SHARE.SALARY_WORK_TIME_NO_PROGRESS_BAR}
       />
       <LoginModal />
       <LabelWrapper>

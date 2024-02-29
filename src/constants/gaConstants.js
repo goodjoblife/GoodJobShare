@@ -4,6 +4,10 @@ export const GA_CATEGORY = {
   SHARE_INTERVIEW_3_STEPS: 'share_interview_3_steps',
   SHARE_INTERVIEW_TYPE_FORM: 'share_interview_type_form',
   SHARE_TIME_SALARY: 'share_time_salary',
+  SHARE_TIME_SALARY_ONE_PAGE: 'share_time_salary_one_page',
+  SHARE_TIME_SALARY_TYPE_FORM: 'share_time_salary_type_form',
+  SHARE_TIME_SALARY_TYPE_FORM_HIDE_PROGRESS_BAR:
+    'share_time_salary_type_form_hide_progress_bar',
   SHARE_WORK: 'share_work',
   FORM_TIME: 'form_time',
   SEARCH_EXPERIENCE: 'search_experience',
