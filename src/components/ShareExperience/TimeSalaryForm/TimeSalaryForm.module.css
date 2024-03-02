@@ -1,4 +1,4 @@
-@value warning-red, main-gray, main-orange, main-yellow, yellow-bg, yellow-bar, page-gutter, page-gutter-s, below-desktop, below-mobile, below-small, INPUT_HEIGHT from "common/variables.module.css";
+@value warning-red, main-gray, main-orange, main-yellow, yellow-bg, yellow-bar, page-gutter, page-gutter-s, below-desktop, below-mobile, below-small, INPUT_HEIGHT from "../../common/variables.module.css";
 
 .warning {
   border: 1px solid warning-red;

@@ -1,4 +1,4 @@
-@value above-small from "common/variables.module.css";
+@value above-small from "../variables.module.css";
 $above-desktop: 1025px;
 
 .container {

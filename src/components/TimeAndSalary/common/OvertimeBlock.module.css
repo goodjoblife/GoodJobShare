@@ -1,4 +1,4 @@
-@value main-yellow, main-gray, white-light, gray-dark from "common/variables.module.css";
+@value main-yellow, main-gray, white-light, gray-dark from "../../common/variables.module.css";
 
 .overtimeBlock {
   flex: 0 0 48%;

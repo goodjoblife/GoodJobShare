@@ -1,4 +1,4 @@
-@value yellow-dark, main-black, main-yellow, main-gray from 'common/variables.module.css';
+@value yellow-dark, main-black, main-yellow, main-gray from '../variables.module.css';
 
 .root {
   display: flex;

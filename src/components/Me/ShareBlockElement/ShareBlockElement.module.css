@@ -1,4 +1,4 @@
-@value main-yellow, border-gray, link-bule, white-light from "common/variables.module.css";
+@value main-yellow, border-gray, link-bule, white-light from "../../common/variables.module.css";
 
 .badge {
   border-radius: 3px;

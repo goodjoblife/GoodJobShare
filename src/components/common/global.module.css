@@ -1,4 +1,4 @@
-@value warning-red, inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, gray-dark, main-black, main-yellow, link-blue, main-gray, gray-light, white-light, border-gray from "common/variables.module.css";
+@value warning-red, inner-wrap-l, inner-wrap-m, inner-wrap-m=s, page-gutter, page-gutter-s, gray-dark, main-black, main-yellow, link-blue, main-gray, gray-light, white-light, border-gray from "./variables.module.css";
 
 :global {
   /* font */

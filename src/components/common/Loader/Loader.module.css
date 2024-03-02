@@ -1,4 +1,4 @@
-@value main-yellow, yellow-bg from "common/variables.module.css";
+@value main-yellow, yellow-bg from "../variables.module.css";
 
 .wrapper {
   width: 100%;

@@ -1,4 +1,4 @@
-@value border-gray, gray-dark, link-blue from "common/variables.module.css";
+@value border-gray, gray-dark, link-blue from "../variables.module.css";
 
 $below-small: 850px;
 $above-small: 851px;

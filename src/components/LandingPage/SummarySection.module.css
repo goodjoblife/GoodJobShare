@@ -1,4 +1,4 @@
-@value border-gray, above-small, above-desktop, below-medium, above-medium from "common/variables.module.css";
+@value border-gray, above-small, above-desktop, below-medium, above-medium from "../common/variables.module.css";
 
 .summarySection {
   display: flex;

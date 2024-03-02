@@ -1,4 +1,4 @@
-@value main-yellow, main-black, gray-dark, main-gray, main-orange, yellow-dark from "common/variables.module.css";
+@value main-yellow, main-black, gray-dark, main-gray, main-orange, yellow-dark from "../variables.module.css";
 @value diameter: 32px;
 
 .addQa,

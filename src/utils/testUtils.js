@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import { createBrowserHistory as createHistory } from 'history';
+import { createMemoryHistory as createHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';

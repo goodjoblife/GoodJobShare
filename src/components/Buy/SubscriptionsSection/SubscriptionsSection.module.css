@@ -1,4 +1,4 @@
-@value below-mobile from "common/variables.module.css";
+@value below-mobile from "../../common/variables.module.css";
 
 .captain {
   margin-top: 16px;

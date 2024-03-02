@@ -1,4 +1,4 @@
-@value below-small, above-small from "common/variables.module.css";
+@value below-small, above-small from "../../common/variables.module.css";
 
 td.cell {
   position: relative;

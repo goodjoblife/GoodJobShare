@@ -1,4 +1,4 @@
-@value below-small, below-mobile, above-mobile from "common/variables.module.css";
+@value below-small, below-mobile, above-mobile from "../common/variables.module.css";
 
 $gray: #b4b4b4;
 

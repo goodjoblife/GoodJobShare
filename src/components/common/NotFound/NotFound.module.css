@@ -1,4 +1,4 @@
-@value link-blue from "common/variables.module.css";
+@value link-blue from "../variables.module.css";
 
 .heading {
   text-align: center;

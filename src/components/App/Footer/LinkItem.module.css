@@ -1,4 +1,4 @@
-@value main-yellow from "common/variables.module.css";
+@value main-yellow from "../../common/variables.module.css";
 
 .linkItem {
   flex-basis: 160px;

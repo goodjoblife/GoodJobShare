@@ -1,4 +1,4 @@
-@value border-gray, border-gray from "common/variables.module.css";
+@value border-gray, border-gray from "../variables.module.css";
 
 .popoverToggle {
   position: relative;

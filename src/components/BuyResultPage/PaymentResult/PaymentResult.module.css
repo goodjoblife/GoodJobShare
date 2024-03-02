@@ -1,4 +1,4 @@
-@value above-tablet, main-yellow from "common/variables.module.css";
+@value above-tablet, main-yellow from "../../common/variables.module.css";
 
 .title {
   color: #333333;

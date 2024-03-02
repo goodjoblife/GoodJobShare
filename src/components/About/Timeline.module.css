@@ -1,4 +1,4 @@
-@value border-gray, main-yellow, link-blue from 'common/variables.module.css';
+@value border-gray, main-yellow, link-blue from '../common/variables.module.css';
 
 .timeline {
   margin-top: 24px;

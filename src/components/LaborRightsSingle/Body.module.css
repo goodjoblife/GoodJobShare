@@ -1,4 +1,4 @@
-@value PAGE_TOP, PAGE_TOP_S from "common/variables.module.css";
+@value PAGE_TOP, PAGE_TOP_S from "../common/variables.module.css";
 .description {
   margin-bottom: 40px;
 }

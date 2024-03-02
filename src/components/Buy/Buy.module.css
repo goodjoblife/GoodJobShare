@@ -1,4 +1,4 @@
-@value line-gray from "common/variables.module.css";
+@value line-gray from "../common/variables.module.css";
 
 .topDivider {
   border: 0px solid line-gray;

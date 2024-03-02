@@ -1,4 +1,4 @@
-@value above-small, below-small from "common/variables.module.css";
+@value above-small, below-small from "../../common/variables.module.css";
 
 .title {
   padding-bottom: 24px;

@@ -1,4 +1,4 @@
-@value warning-red from "common/variables.module.css";
+@value warning-red from "../../common/variables.module.css";
 
 .section {
   margin-bottom: 40px;

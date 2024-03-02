@@ -1,4 +1,4 @@
-@value border-gray, main-orange from "common/variables.module.css";
+@value border-gray, main-orange from "../../common/variables.module.css";
 
 .container {
   border-bottom: 1px solid border-gray;
