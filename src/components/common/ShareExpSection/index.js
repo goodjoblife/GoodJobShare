@@ -6,9 +6,9 @@ import InterviewImg from './share-2.png';
 import WorkExperienceImg from './share-3.png';
 import SalaryWorkTimeImg from './share-1.png';
 import styles from './ShareExpSection.module.css';
-import { useShareLink } from 'hooks/experiments';
 import {
   generateShareInterviewTypeForm,
+  generateShareTimeSalaryTypeForm,
   generateShareWork,
 } from './shareLinkTo';
 
@@ -22,8 +22,6 @@ const DefaultSubheading = () => (
 );
 
 const ShareExpSection = ({ heading, Subheading }) => {
-  // TODO: after AB testing, should update it.
-  const shareSalaryLink = useShareLink();
   return (
     <Section padding>
       <Wrapper size="l">
@@ -60,7 +58,7 @@ const ShareExpSection = ({ heading, Subheading }) => {
               想推薦工作、爆料的，這邊請！
             </P>
           </Link>
-          <Link to={shareSalaryLink} className={styles.item}>
+          <Link to={generateShareTimeSalaryTypeForm()} className={styles.item}>
             <img
               src={SalaryWorkTimeImg}
               alt="留下工時或薪資"
