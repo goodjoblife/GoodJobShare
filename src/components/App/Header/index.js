@@ -98,13 +98,13 @@ const Header = () => {
           <div className={styles.searchbarWrapper}>
             <Searchbar
               className={styles.searchbar}
-              placeholder="輸入公司 or 職稱，查詢面試、薪水"
+              placeholder="搜全站薪水/面試/評價"
             />
           </div>
           <div className={cn(styles.searchbarWrapper, styles.mobile)}>
             <Searchbar
               className={styles.searchbar}
-              placeholder="輸入公司 or 職稱查詢"
+              placeholder="搜全站薪水/面試/評價"
             />
           </div>
           <nav

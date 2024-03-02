@@ -59,7 +59,7 @@ const SearchBar = ({ history, location }) => {
         className={styles.textInput}
         value={searchText}
         onChange={setSearchText}
-        placeholder="輸入公司 or 職稱查詢"
+        placeholder="搜全站薪水/面試/評價"
         onSelected={handleAutocompleteItemSelected}
       />
       <button type="submit" className={styles.searchBtn}>
