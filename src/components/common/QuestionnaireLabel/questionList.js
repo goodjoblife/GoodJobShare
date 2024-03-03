@@ -1,5 +1,7 @@
 import React from 'react';
 import { ScoreRange } from './ExpandedModal/ScoreRange';
+import TextArea from 'common/form/TextArea';
+import styles from './ExpandedModal/NetPromoter.module.css';
 
 export const questionList = [
   {
@@ -12,6 +14,6 @@ export const questionList = [
     id: 2,
     title: '你認為 GoodJob 有哪些地方可以做得更好嗎？',
     titleExplanation: '(e.g.新增ＯＯ功能，優化ＸＸ功能)',
-    section: null,
+    section: <TextArea className={styles.textArea} />,
   },
 ];

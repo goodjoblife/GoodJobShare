@@ -159,6 +159,13 @@
   font-size: 12px;
 }
 
+.textArea {
+  height: 100%;
+  max-height: 97px;
+  resize: none;
+  background-color: #f9f9f9;
+}
+
 @media (max-width: 767px) {
   .overlay {
     position: fixed;
