@@ -25,7 +25,6 @@ export const ScoreRange = () => {
 
   return (
     <div className={styles.range}>
-      <div className={styles.ticks}>{ticks}</div>
       <input
         ref={rangeRef}
         type="range"
@@ -35,6 +34,7 @@ export const ScoreRange = () => {
         step={1}
         onChange={handleScoreChange}
       />
+      <div className={styles.ticks}>{ticks}</div>
       <div className={styles.rangeLabels}>
         <span>完全沒幫助</span>
         <span>非常有幫助</span>

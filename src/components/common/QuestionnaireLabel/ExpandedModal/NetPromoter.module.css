@@ -43,8 +43,9 @@
   max-width: 216px;
   max-height: 86px;
   position: absolute;
-  left: -10px;
-  bottom: -10px;
+  left: -16px;
+  bottom: -12px;
+  scale: 0.9;
 }
 
 .nextStep {
@@ -95,7 +96,7 @@
 .range {
   position: relative;
   width: 311px;
-  margin-top: 30px;
+  margin-top: -20px;
 }
 
 .range input[type='range'] {
@@ -140,7 +141,7 @@
   position: absolute;
   left: 4px;
   width: 100%;
-  top: -20px;
+  top: 28px;
 }
 
 .rangeLabels {
@@ -148,7 +149,7 @@
   justify-content: space-between;
   position: absolute;
   width: 100%;
-  bottom: -20px;
+  bottom: -50px;
   left: 0;
 }
 
