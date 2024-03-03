@@ -19,25 +19,6 @@
   box-shadow: 0px 0px 19px 0px rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 767px) {
-  .overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(248, 248, 248, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9;
-  }
-
-  .container {
-    right: 0;
-    left: 0;
-    margin: 0 7px;
-    width: auto;
-  }
-}
-
 .question {
   font-size: 18px;
   font-weight: 600;
@@ -176,6 +157,25 @@
 
 .rangeLabels span {
   font-size: 12px;
+}
+
+@media (max-width: 767px) {
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(248, 248, 248, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9;
+  }
+
+  .container {
+    right: 0;
+    left: 0;
+    margin: 0 7px;
+    width: auto;
+  }
 }
 
 @media (max-width: 360px) {
