@@ -1,17 +1,21 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useCallback } from 'react';
 import styles from './CollapsedDrawer.module.css';
 
 const CollapsedDrawer = ({ title = '給我們回饋', children }) => {
-  const [isExpand, setIsExpand] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  const handleExpandModal = () => {
-    setIsExpand(true);
-  };
+  const handleToggleModalOpen = useCallback(() => {
+    setIsExpanded(prev => !prev);
+  }, []);
 
-  if (isExpand) return <Fragment>{children}</Fragment>;
+  const childrenWithProps = React.Children.map(children, child =>
+    React.cloneElement(child, { handleToggleModalOpen }),
+  );
+
+  if (isExpanded) return <Fragment>{childrenWithProps}</Fragment>;
 
   return (
-    <div className={styles.container} onClick={handleExpandModal}>
+    <div className={styles.container} onClick={handleToggleModalOpen}>
       <div className={styles.label}>{title}</div>
     </div>
   );

@@ -4,9 +4,8 @@ import { Question } from './Question';
 import { NextStepButton } from './NextStepButton';
 import { questionList } from '../questionList';
 
-export const ExpandedModal = () => {
+export const ExpandedModal = ({ handleToggleModalOpen }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [isShowQuestion, setIsShowQuestion] = useState(true);
   const question = questionList[questionIndex];
   const { title, titleExplanation, section } = question;
   const isLastQuestion = questionIndex === questionList.length - 1;
@@ -15,18 +14,12 @@ export const ExpandedModal = () => {
     setQuestionIndex(prev => prev + 1);
   }, [setQuestionIndex]);
 
-  const handleCloseQuestion = useCallback(() => {
-    setIsShowQuestion(false);
-  }, []);
-
-  if (!isShowQuestion) return null;
-
   return (
     <div className={styles.overlay}>
       <div className={styles.container}>
         <button
           className={styles.closeButton}
-          onClick={handleCloseQuestion}
+          onClick={handleToggleModalOpen}
         ></button>
         <Question
           title={title}
