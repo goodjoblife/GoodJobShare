@@ -9,11 +9,10 @@ export const NextStepButton = ({ handleNext, isLastQuestion }) => {
     console.log('handleSubmit');
   }, []);
   const handleNextQuestion = useCallback(() => {
-    if (!isLastQuestion) {
-      handleNext();
-      return;
+    if (isLastQuestion) {
+      handleSubmit();
     }
-    handleSubmit();
+    handleNext();
   }, [handleNext, isLastQuestion, handleSubmit]);
 
   return (
