@@ -1,14 +1,16 @@
-import React, { useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import styles from './NetPromoter.module.css';
 import { Question } from './Question';
 import { NextStepButton } from './NextStepButton';
 import { questionList } from '../questionList';
+import { AppreciationContent } from '../ExpandedModal/AppreciationContent';
 
 export const ExpandedModal = ({ handleToggleModalOpen }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
-  const question = questionList[questionIndex];
+  const question = questionList[questionIndex] || {};
   const { title, titleExplanation, section } = question;
   const isLastQuestion = questionIndex === questionList.length - 1;
+  const isCompletedQuestion = questionIndex > questionList.length - 1;
 
   const handleNext = useCallback(() => {
     setQuestionIndex(prev => prev + 1);
@@ -21,15 +23,21 @@ export const ExpandedModal = ({ handleToggleModalOpen }) => {
           className={styles.closeButton}
           onClick={handleToggleModalOpen}
         ></button>
-        <Question
-          title={title}
-          titleExplanation={titleExplanation}
-          section={section}
-        />
-        <NextStepButton
-          handleNext={handleNext}
-          isLastQuestion={isLastQuestion}
-        />
+        {isCompletedQuestion ? (
+          <AppreciationContent />
+        ) : (
+          <Fragment>
+            <Question
+              title={title}
+              titleExplanation={titleExplanation}
+              section={section}
+            />
+            <NextStepButton
+              handleNext={handleNext}
+              isLastQuestion={isLastQuestion}
+            />
+          </Fragment>
+        )}
       </div>
     </div>
   );

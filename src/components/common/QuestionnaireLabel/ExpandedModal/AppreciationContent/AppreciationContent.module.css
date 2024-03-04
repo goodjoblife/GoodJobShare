@@ -1,0 +1,20 @@
+.appreciationTitle {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 23px;
+  margin-top: 26px;
+  position: relative;
+}
+
+.appreciationTitle img {
+  position: absolute;
+  width: 26px;
+  height: 24px;
+  right: 55px;
+  top: -10px;
+}
+
+.appreciationTitle + img {
+  transform: scaleX(-1);
+}
