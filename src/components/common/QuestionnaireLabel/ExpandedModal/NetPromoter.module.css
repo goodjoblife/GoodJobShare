@@ -27,7 +27,7 @@
 }
 
 .question span {
-  font-size: 14px;
+  font-size: 10px;
   color: #626262;
 }
 
@@ -187,10 +187,6 @@
 }
 
 @media (max-width: 374px) {
-  .question span {
-    font-size: 12px;
-  }
-
   .nextStepContainer img {
     left: -24px;
   }

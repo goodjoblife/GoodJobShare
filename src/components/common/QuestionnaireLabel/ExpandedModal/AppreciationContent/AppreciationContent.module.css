@@ -17,4 +17,5 @@
 
 .appreciationTitle + img {
   transform: scaleX(-1);
+  margin-bottom: -10px;
 }
