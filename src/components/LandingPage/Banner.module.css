@@ -6,7 +6,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #fffae1 url('./about-people-colored.png') no-repeat right bottom;
+  background: #fffae1 url('../images/about-people-colored.png') no-repeat right
+    bottom;
   background-size: 347px;
   border-bottom: 1px solid #e5ba00;
 
