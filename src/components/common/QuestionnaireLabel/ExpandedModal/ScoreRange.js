@@ -16,7 +16,6 @@ const ScoreRange = () => {
   const handleScoreChange = e => {
     const newScore = Number(e.target.value);
     setScore(newScore);
-    updateTrackColor();
   };
 
   useEffect(() => {
