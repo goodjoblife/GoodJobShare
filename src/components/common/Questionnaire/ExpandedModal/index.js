@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback, useState } from 'react';
 import styles from './NetPromoter.module.css';
 import Question from './Question';
-import NextStepButton from './NextStepButton';
+import NextButton from './NextButton';
 import questionList from '../questionList';
 import AppreciationContent from './AppreciationContent';
 
@@ -12,9 +12,22 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
   const isLastQuestion = questionIndex === questionList.length - 1;
   const isCompletedQuestion = questionIndex > questionList.length - 1;
 
-  const handleNext = useCallback(() => {
+  const handleNextStep = () => {
     setQuestionIndex(prev => prev + 1);
-  }, [setQuestionIndex]);
+  };
+
+  const handleSubmit = () => {
+    console.log('handleSubmit');
+  };
+
+  const handleNext = useCallback(() => {
+    if (isLastQuestion) {
+      handleSubmit();
+    }
+    handleNextStep();
+  }, [isLastQuestion]);
+
+  const buttonText = isLastQuestion ? '送出' : '下一步';
 
   return (
     <div className={styles.overlay}>
@@ -32,10 +45,7 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
               titleExplanation={titleExplanation}
               section={section}
             />
-            <NextStepButton
-              handleNext={handleNext}
-              isLastQuestion={isLastQuestion}
-            />
+            <NextButton handleNext={handleNext} buttonText={buttonText} />
           </Fragment>
         )}
       </div>
