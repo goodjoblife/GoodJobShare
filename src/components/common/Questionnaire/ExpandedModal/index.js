@@ -3,7 +3,7 @@ import styles from './NetPromoter.module.css';
 import Question from './Question';
 import NextStepButton from './NextStepButton';
 import questionList from '../questionList';
-import AppreciationContent from '../ExpandedModal/AppreciationContent';
+import AppreciationContent from './AppreciationContent';
 
 const ExpandedModal = ({ handleToggleModalOpen }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
