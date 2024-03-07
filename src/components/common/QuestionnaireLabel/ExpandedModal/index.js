@@ -1,11 +1,11 @@
 import React, { Fragment, useCallback, useState } from 'react';
 import styles from './NetPromoter.module.css';
-import { Question } from './Question';
-import { NextStepButton } from './NextStepButton';
-import { questionList } from '../questionList';
-import { AppreciationContent } from '../ExpandedModal/AppreciationContent';
+import Question from './Question';
+import NextStepButton from './NextStepButton';
+import questionList from '../questionList';
+import AppreciationContent from '../ExpandedModal/AppreciationContent';
 
-export const ExpandedModal = ({ handleToggleModalOpen }) => {
+const ExpandedModal = ({ handleToggleModalOpen }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const question = questionList[questionIndex] || {};
   const { title, titleExplanation, section } = question;
@@ -42,3 +42,5 @@ export const ExpandedModal = ({ handleToggleModalOpen }) => {
     </div>
   );
 };
+
+export default ExpandedModal;

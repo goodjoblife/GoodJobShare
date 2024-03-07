@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styles from './NetPromoter.module.css';
 
-export const ScoreRange = () => {
+const ScoreRange = () => {
   const [score, setScore] = useState(5);
   const rangeRef = useRef(null);
   const ticks = Array.from({ length: 11 }, (_, i) => <div key={i}>{i}</div>);
@@ -42,3 +42,5 @@ export const ScoreRange = () => {
     </div>
   );
 };
+
+export default ScoreRange;

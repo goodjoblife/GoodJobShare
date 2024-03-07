@@ -3,7 +3,7 @@ import styles from './AppreciationContent.module.css';
 import flowerImage from './flower.png';
 import aboutPeopleImage from '../../../../images/about-people-colored.png'; // 是否要改成絕對路徑？
 
-export const AppreciationContent = () => {
+const AppreciationContent = () => {
   return (
     <Fragment>
       <div className={styles.appreciationTitle}>
@@ -15,3 +15,5 @@ export const AppreciationContent = () => {
     </Fragment>
   );
 };
+
+export default AppreciationContent;

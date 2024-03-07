@@ -1,9 +1,9 @@
 import React from 'react';
-import { ScoreRange } from './ExpandedModal/ScoreRange';
+import ScoreRange from './ExpandedModal/ScoreRange';
 import TextArea from 'common/form/TextArea';
 import styles from './ExpandedModal/NetPromoter.module.css';
 
-export const questionList = [
+const questionList = [
   {
     id: 1,
     title: '1. 你認為 GoodJob 網站對你找工作有幫助嗎？',
@@ -17,3 +17,5 @@ export const questionList = [
     section: <TextArea className={styles.textArea} />,
   },
 ];
+
+export default questionList;

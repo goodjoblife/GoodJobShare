@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './NetPromoter.module.css';
 
-export const Question = ({ title, titleExplanation, section }) => {
+const Question = ({ title, titleExplanation, section }) => {
   return (
     <React.Fragment>
       <div className={styles.question}>
@@ -12,3 +12,5 @@ export const Question = ({ title, titleExplanation, section }) => {
     </React.Fragment>
   );
 };
+
+export default Question;
