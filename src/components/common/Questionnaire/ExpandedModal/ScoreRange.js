@@ -1,37 +1,37 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import styles from './NetPromoter.module.css';
+
+const inputRange = {
+  min: 0,
+  max: 10,
+};
 
 const ScoreRange = () => {
   const [score, setScore] = useState(5);
-  const rangeRef = useRef(null);
-  const ticks = Array.from({ length: 11 }, (_, i) => <div key={i}>{i}</div>);
-
-  const updateTrackColor = useCallback(() => {
-    const min = Number(rangeRef.current.min);
-    const max = Number(rangeRef.current.max);
-    const percentage = ((score - min) / (max - min)) * 100;
-    rangeRef.current.style.background = `linear-gradient(to right, #fcd406 ${percentage}%, #C5C5C5 ${percentage}%)`;
-  }, [score]);
+  const [rangePercentage, setRangePercentage] = useState(50);
+  const ticks = Array.from({ length: inputRange.max + 1 }, (_, i) => (
+    <div key={i}>{i}</div>
+  ));
 
   const handleScoreChange = e => {
     const newScore = Number(e.target.value);
+    const percentage = (newScore / (inputRange.max - inputRange.min)) * 100;
     setScore(newScore);
+    setRangePercentage(percentage);
   };
-
-  useEffect(() => {
-    updateTrackColor();
-  }, [score, updateTrackColor]);
 
   return (
     <div className={styles.range}>
       <input
-        ref={rangeRef}
         type="range"
         min={0}
         max={10}
         value={score}
         step={1}
         onChange={handleScoreChange}
+        style={{
+          background: `linear-gradient(to right, #fcd406 ${rangePercentage}%, #C5C5C5 ${rangePercentage}%)`,
+        }}
       />
       <div className={styles.ticks}>{ticks}</div>
       <div className={styles.rangeLabels}>
