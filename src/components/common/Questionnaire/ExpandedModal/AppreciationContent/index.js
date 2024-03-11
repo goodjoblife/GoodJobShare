@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import styles from './AppreciationContent.module.css';
 import flowerImage from './flower.png';
-import aboutPeopleImage from '../../../../images/about-people-colored.png'; // 是否要改成絕對路徑？
+import aboutPeopleImage from 'images/about-people-colored.png';
 
 const AppreciationContent = () => {
   return (

@@ -43,6 +43,7 @@ module.exports = {
               actions: path.resolve('./src/actions'),
               apis: path.resolve('./src/apis'),
               common: path.resolve('./src/components/common'),
+              images: path.resolve('./src/components/images'),
               constants: path.resolve('./src/constants'),
               contexts: path.resolve('./src/contexts'),
               graphql: path.resolve('./src/graphql'),

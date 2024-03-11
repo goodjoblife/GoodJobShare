@@ -5,6 +5,7 @@
             "actions/*": ["src/actions/*"],
             "apis/*": ["src/apis/*"],
             "common/*": ["src/components/common/*"],
+			"images/*": ["src/components/images/*"],
             "constants/*": ["src/constants/*"],
             "contexts/*": ["src/contexts/*"],
             "graphql/*": ["src/graphql/*"],
