@@ -24,8 +24,8 @@ const ScoreRange = () => {
     <div className={styles.range}>
       <input
         type="range"
-        min={0}
-        max={10}
+        min={inputRange.min}
+        max={inputRange.max}
         value={score}
         step={1}
         onChange={handleScoreChange}
