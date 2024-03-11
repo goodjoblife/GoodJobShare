@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './NetPromoter.module.css';
-import laborImage from './laborImage.png';
+import laborImage from './laborImage.png'; // TEST
 
 const NextButton = ({ handleNext, buttonText }) => (
   <div className={styles.nextStepContainer}>
