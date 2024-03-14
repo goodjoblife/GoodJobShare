@@ -6,7 +6,7 @@ const inputRange = {
   max: 10,
 };
 
-const ScoreRange = () => {
+const ScoreRange = ({ handleRecordFeedback }) => {
   const [score, setScore] = useState(5);
   const [rangePercentage, setRangePercentage] = useState(50);
   const ticks = Array.from({ length: inputRange.max + 1 }, (_, i) => (

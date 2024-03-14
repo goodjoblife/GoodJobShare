@@ -12,6 +12,8 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
   const isLastQuestion = questionIndex === questionList.length - 1;
   const isCompletedQuestion = questionIndex > questionList.length - 1;
 
+  const handleRecordFeedback = () => {};
+
   const handleNextStep = () => {
     setQuestionIndex(prev => prev + 1);
   };
@@ -44,6 +46,7 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
               title={title}
               titleExplanation={titleExplanation}
               section={section}
+              handleRecordFeedback={handleRecordFeedback}
             />
             <NextButton handleNext={handleNext} buttonText={buttonText} />
           </Fragment>
