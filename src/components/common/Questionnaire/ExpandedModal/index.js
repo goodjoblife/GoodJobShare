@@ -4,8 +4,10 @@ import Question from './Question';
 import NextButton from './NextButton';
 import questionList from '../questionList';
 import AppreciationContent from './AppreciationContent';
+import { postUserFeedback } from 'actions/userFeedback';
+import { connect } from 'react-redux';
 
-const ExpandedModal = ({ handleToggleModalOpen }) => {
+const ExpandedModal = ({ handleToggleModalOpen, postUserFeedback }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const question = questionList[questionIndex] || {};
   const { title, titleExplanation, section } = question;
@@ -20,6 +22,8 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
 
   const handleSubmit = () => {
     console.log('handleSubmit');
+
+    postUserFeedback({ npsScore: 10, content: 'test' });
   };
 
   const handleNext = useCallback(() => {
@@ -27,7 +31,7 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
       handleSubmit();
     }
     handleNextStep();
-  }, [isLastQuestion]);
+  }, [handleSubmit, isLastQuestion]);
 
   const buttonText = isLastQuestion ? '送出' : '下一步';
 
@@ -56,4 +60,15 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
   );
 };
 
-export default ExpandedModal;
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = {
+  postUserFeedback,
+};
+
+const hoc = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default hoc(ExpandedModal);

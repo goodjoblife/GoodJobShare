@@ -1,12 +1,15 @@
 import graphqlClient from 'utils/graphqlClient';
 import { createUserFeedback as createUserFeedbackGql } from 'graphql/userFeedback';
 
-export const postUserFeedback = ({ body, token }) =>
+export const postUserFeedback = ({ npsScore, content, token }) =>
   graphqlClient({
     query: createUserFeedbackGql,
     token,
     variables: {
-      input: body,
+      input: {
+        content,
+        npsScore,
+      },
     },
   });
 
