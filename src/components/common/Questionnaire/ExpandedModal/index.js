@@ -5,14 +5,15 @@ import NextButton from './NextButton';
 import questionList from '../questionList';
 import AppreciationContent from './AppreciationContent';
 import { postUserFeedback } from 'actions/userFeedback';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-const ExpandedModal = ({ handleToggleModalOpen, postUserFeedback }) => {
+const ExpandedModal = ({ handleToggleModalOpen }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const question = questionList[questionIndex] || {};
   const { title, titleExplanation, section } = question;
   const isLastQuestion = questionIndex === questionList.length - 1;
   const isCompletedQuestion = questionIndex > questionList.length - 1;
+  const dispatch = useDispatch();
 
   const handleRecordFeedback = () => {};
 
@@ -20,10 +21,9 @@ const ExpandedModal = ({ handleToggleModalOpen, postUserFeedback }) => {
     setQuestionIndex(prev => prev + 1);
   };
 
-  const handleSubmit = useCallback(
-    () => postUserFeedback({ npsScore: 10, content: 'test' }),
-    [postUserFeedback],
-  );
+  const handleSubmit = useCallback(() => {
+    dispatch(postUserFeedback({ npsScore: 10, content: 'test' }));
+  }, [dispatch]);
 
   const handleNext = useCallback(() => {
     if (isLastQuestion) {
@@ -59,15 +59,4 @@ const ExpandedModal = ({ handleToggleModalOpen, postUserFeedback }) => {
   );
 };
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = {
-  postUserFeedback,
-};
-
-const hoc = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-
-export default hoc(ExpandedModal);
+export default ExpandedModal;
