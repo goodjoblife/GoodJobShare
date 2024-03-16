@@ -1,9 +1,9 @@
 export const createUserFeedback = `
 mutation CreateUserFeedback($input: CreateUserFeedbackInput!) {
   createUserFeedback(input: $input) {
-	npsScore
-	content
-	id
+    npsScore
+    content
+    id
     userId
   }
 }`;
