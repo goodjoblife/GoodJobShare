@@ -1,0 +1,24 @@
+@value main-black from "common/variables.module.css";
+
+.container {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 9;
+}
+
+.label {
+  border: 1px solid main-black;
+  border-radius: 20px 0px 0px 20px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: black;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  padding: 2rem 0.5rem;
+  letter-spacing: 0.3rem;
+  line-height: 19px;
+  box-shadow: 0px 0px 7px 0px main-black;
+}
