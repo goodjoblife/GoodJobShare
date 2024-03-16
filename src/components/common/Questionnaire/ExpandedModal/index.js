@@ -20,11 +20,10 @@ const ExpandedModal = ({ handleToggleModalOpen, postUserFeedback }) => {
     setQuestionIndex(prev => prev + 1);
   };
 
-  const handleSubmit = () => {
-    console.log('handleSubmit');
-
-    postUserFeedback({ npsScore: 10, content: 'test' });
-  };
+  const handleSubmit = useCallback(
+    () => postUserFeedback({ npsScore: 10, content: 'test' }),
+    [postUserFeedback],
+  );
 
   const handleNext = useCallback(() => {
     if (isLastQuestion) {
