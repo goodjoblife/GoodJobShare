@@ -10,20 +10,28 @@ import { useDispatch } from 'react-redux';
 const ExpandedModal = ({ handleToggleModalOpen }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const question = questionList[questionIndex] || {};
-  const { title, titleExplanation, section } = question;
+  const { title, titleExplanation, section, defaultFeedback = {} } = question;
+  const { key, value } = defaultFeedback;
+  const [userFeedback, setUserFeedback] = useState({ [key]: value });
   const isLastQuestion = questionIndex === questionList.length - 1;
   const isCompletedQuestion = questionIndex > questionList.length - 1;
   const dispatch = useDispatch();
-
-  const handleRecordFeedback = () => {};
 
   const handleNextStep = () => {
     setQuestionIndex(prev => prev + 1);
   };
 
+  const handleUserFeedback = feedback => {
+    setUserFeedback(prev => ({ ...prev, ...feedback }));
+  };
+
+  const handleChange = (e, feedback = e.target.value) => {
+    handleUserFeedback({ [key]: feedback });
+  };
+
   const handleSubmit = useCallback(() => {
-    dispatch(postUserFeedback({ npsScore: 10, content: 'test' }));
-  }, [dispatch]);
+    dispatch(postUserFeedback({ ...userFeedback }));
+  }, [dispatch, userFeedback]);
 
   const handleNext = useCallback(() => {
     if (isLastQuestion) {
@@ -49,7 +57,7 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
               title={title}
               titleExplanation={titleExplanation}
               section={section}
-              handleRecordFeedback={handleRecordFeedback}
+              onChange={handleChange}
             />
             <NextButton handleNext={handleNext} buttonText={buttonText} />
           </Fragment>
