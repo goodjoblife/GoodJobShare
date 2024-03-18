@@ -6,6 +6,7 @@ import questionList from '../questionList';
 import AppreciationContent from './AppreciationContent';
 import { postUserFeedback } from 'actions/userFeedback';
 import { useDispatch } from 'react-redux';
+import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey';
 
 const ExpandedModal = ({ handleToggleModalOpen }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -29,6 +30,11 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
   );
 
   const handleSubmit = useCallback(() => {
+    const lastSubmissionTime = new Date().getTime();
+    localStorage.setItem(
+      LS_USER_FEEDBACK_SUBMISSION_TIME_KEY,
+      lastSubmissionTime,
+    );
     dispatch(postUserFeedback({ ...userFeedback }));
   }, [dispatch, userFeedback]);
 
