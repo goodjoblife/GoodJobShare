@@ -25,9 +25,12 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
     setUserFeedback(prev => ({ ...prev, ...feedback }));
   };
 
-  const handleChange = (e, feedback = e.target.value) => {
-    handleUserFeedback({ [key]: feedback });
-  };
+  const handleChange = useCallback(
+    (e, feedback = e.target.value) => {
+      handleUserFeedback({ [key]: feedback });
+    },
+    [key],
+  );
 
   const handleSubmit = useCallback(() => {
     dispatch(postUserFeedback({ ...userFeedback }));
