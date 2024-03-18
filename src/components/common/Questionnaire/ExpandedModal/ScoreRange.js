@@ -6,7 +6,7 @@ const inputRange = {
   max: 10,
 };
 
-const ScoreRange = ({ onChange: handleUserFeedback }) => {
+const ScoreRange = ({ handleUserFeedback }) => {
   const [score, setScore] = useState(5);
   const [rangePercentage, setRangePercentage] = useState(50);
   const ticks = Array.from({ length: inputRange.max + 1 }, (_, i) => (
@@ -18,7 +18,7 @@ const ScoreRange = ({ onChange: handleUserFeedback }) => {
     const percentage = (newScore / (inputRange.max - inputRange.min)) * 100;
     setScore(newScore);
     setRangePercentage(percentage);
-    handleUserFeedback(e, newScore);
+    handleUserFeedback(newScore);
   };
 
   return (

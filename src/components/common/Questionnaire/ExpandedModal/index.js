@@ -21,13 +21,9 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
     setQuestionIndex(prev => prev + 1);
   };
 
-  const handleUserFeedback = feedback => {
-    setUserFeedback(prev => ({ ...prev, ...feedback }));
-  };
-
-  const handleChange = useCallback(
-    (e, feedback = e.target.value) => {
-      handleUserFeedback({ [key]: feedback });
+  const handleUserFeedback = useCallback(
+    feedback => {
+      setUserFeedback(prev => ({ ...prev, [key]: feedback }));
     },
     [key],
   );
@@ -60,7 +56,7 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
               title={title}
               titleExplanation={titleExplanation}
               section={section}
-              onChange={handleChange}
+              onChange={handleUserFeedback}
             />
             <NextButton handleNext={handleNext} buttonText={buttonText} />
           </Fragment>
