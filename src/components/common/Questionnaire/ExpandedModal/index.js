@@ -33,13 +33,13 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
     [key],
   );
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback(async () => {
     const lastSubmissionTime = new Date().getTime();
     setLocalStorageValue(
       LS_USER_FEEDBACK_SUBMISSION_TIME_KEY,
       lastSubmissionTime,
     );
-    dispatch(postUserFeedback({ ...userFeedback }));
+    await dispatch(postUserFeedback({ ...userFeedback }));
   }, [dispatch, setLocalStorageValue, userFeedback]);
 
   const handleNext = useCallback(() => {
