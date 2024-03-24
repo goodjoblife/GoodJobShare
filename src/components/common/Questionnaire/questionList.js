@@ -21,7 +21,7 @@ const questionList = [
         onChange={e => onChange(e.target.value)}
       />
     ),
-    defaultFeedback: { key: 'content', value: '' },
+    defaultFeedback: { key: 'content', value: null },
   },
 ];
 
