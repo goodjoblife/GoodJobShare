@@ -7,8 +7,8 @@ const inputRange = {
 };
 
 const ScoreRange = ({ handleUserFeedback }) => {
-  const [score, setScore] = useState(5);
-  const [rangePercentage, setRangePercentage] = useState(50);
+  const [score, setScore] = useState(0);
+  const [rangePercentage, setRangePercentage] = useState(0);
   const ticks = Array.from({ length: inputRange.max + 1 }, (_, i) => (
     <div key={i}>{i}</div>
   ));
