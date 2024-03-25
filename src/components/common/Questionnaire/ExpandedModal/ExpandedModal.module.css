@@ -94,47 +94,6 @@
   }
 }
 
-.range {
-  position: relative;
-  width: 100%;
-  max-width: 311px;
-  margin-top: -20px;
-}
-
-.buttons {
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  width: 100%;
-}
-
-.button {
-  border: 1.1px solid main-black;
-  border-radius: 3px;
-  width: 22px;
-  height: 22px;
-  text-align: center;
-}
-
-.activeButton {
-  background-color: main-black;
-  color: #fff;
-}
-
-.rangeLabels {
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  width: 100%;
-  bottom: -50px;
-  left: 0;
-}
-
-.rangeLabels span {
-  font-size: 12px;
-  margin: 0px 1px;
-}
-
 .textArea {
   height: 100%;
   max-height: 97px;
@@ -175,11 +134,6 @@
 @media (max-width: 359px) {
   .nextStepContainer {
     height: 90px;
-  }
-
-  .buttons .button {
-    width: 19px;
-    height: 24px;
   }
 
   .textArea {

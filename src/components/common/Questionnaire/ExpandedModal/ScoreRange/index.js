@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './NetPromoter.module.css';
+import styles from './ScoreRange.module.css';
 
 const scoreRange = {
   min: 0,
