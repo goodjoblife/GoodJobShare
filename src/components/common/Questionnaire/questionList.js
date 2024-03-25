@@ -9,7 +9,7 @@ const questionList = [
     title: '1. 你認為 GoodJob 網站對你找工作有幫助嗎？',
     titleExplanation: null,
     section: ({ onChange }) => <ScoreRange handleUserFeedback={onChange} />,
-    defaultFeedback: { key: 'npsScore', value: 0 },
+    defaultFeedback: { key: 'npsScore', value: null },
   },
   {
     id: 2,
