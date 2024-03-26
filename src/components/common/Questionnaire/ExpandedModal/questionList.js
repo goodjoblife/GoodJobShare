@@ -1,7 +1,7 @@
 import React from 'react';
-import ScoreRange from './ExpandedModal/ScoreRange';
+import ScoreRange from './ScoreRange';
 import TextArea from 'common/form/TextArea';
-import styles from './ExpandedModal/NetPromoter.module.css';
+import styles from './ExpandedModal.module.css';
 
 const questionList = [
   {

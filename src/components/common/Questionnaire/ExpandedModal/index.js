@@ -1,8 +1,8 @@
 import React, { Fragment, useCallback, useState } from 'react';
-import styles from './NetPromoter.module.css';
+import styles from './ExpandedModal.module.css';
 import Question from './Question';
 import NextButton from './NextButton';
-import questionList from '../questionList';
+import questionList from './questionList';
 import AppreciationContent from './AppreciationContent';
 import { postUserFeedback } from 'actions/userFeedback';
 import { useDispatch } from 'react-redux';

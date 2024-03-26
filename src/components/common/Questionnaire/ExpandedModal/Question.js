@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './NetPromoter.module.css';
+import styles from './ExpandedModal.module.css';
 
 const Question = ({ title, titleExplanation, section, onChange }) => {
   return (

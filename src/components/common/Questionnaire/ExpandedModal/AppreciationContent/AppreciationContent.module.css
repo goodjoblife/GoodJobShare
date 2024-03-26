@@ -19,3 +19,9 @@
   transform: scaleX(-1);
   margin-bottom: -10px;
 }
+
+@media (max-width: 359px) {
+  .appreciationTitle img {
+    display: none;
+  }
+}
