@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './ScoreRange.module.css';
+import cn from 'classnames';
 
 const scoreRange = {
   min: 0,
@@ -15,7 +16,7 @@ const ScoreRange = ({ handleUserFeedback }) => {
   };
   const scoreButtons = Array.from({ length: scoreRange.max + 1 }, (_, i) => (
     <button
-      className={`${styles.button} ${score === i ? styles.activeButton : ''}`}
+      className={cn(styles.button, { [styles.activeButton]: score === i })}
       key={i}
       onClick={handleScoreClick}
     >
