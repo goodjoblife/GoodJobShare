@@ -1,14 +1,21 @@
-import React, { useState, Fragment, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styles from './CollapsedDrawer.module.css';
 import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey';
+import cn from 'classnames';
 
 const THIRTY_DAYS_IN_MILLISECONDS = 1000 * 60 * 60 * 24 * 30;
 
 const CollapsedDrawer = ({ title = '給我們回饋', children }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isApplyStyle, setIsApplyStyle] = useState(false);
+
   const handleToggleModalOpen = useCallback(() => {
     setIsExpanded(prev => !prev);
   }, []);
+
+  useEffect(() => {
+    setIsApplyStyle(!isExpanded);
+  }, [isExpanded]);
 
   if (typeof window !== 'undefined') {
     const lastSubmissionTime = Number(
@@ -27,13 +34,16 @@ const CollapsedDrawer = ({ title = '給我們回饋', children }) => {
   }
 
   const childrenWithProps = React.Children.map(children, child =>
-    React.cloneElement(child, { handleToggleModalOpen }),
+    React.cloneElement(child, { handleToggleModalOpen, isExpanded }),
   );
 
-  if (isExpanded) return <Fragment>{childrenWithProps}</Fragment>;
+  if (isExpanded) return childrenWithProps;
 
   return (
-    <div className={styles.container} onClick={handleToggleModalOpen}>
+    <div
+      className={cn(styles.container, { [styles.applyStyle]: isApplyStyle })}
+      onClick={handleToggleModalOpen}
+    >
       <div className={styles.label}>{title}</div>
     </div>
   );
