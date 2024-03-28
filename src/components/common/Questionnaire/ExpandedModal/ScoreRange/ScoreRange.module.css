@@ -1,0 +1,66 @@
+@value main-black from "common/variables.module.css";
+
+.range {
+  position: relative;
+  width: 100%;
+  max-width: 311px;
+  margin-top: -20px;
+}
+
+.range input[type='range'] {
+  -webkit-appearance: none;
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+/* Chrome, Safari, Opera and Edge Chromium styles */
+.range input[type='range']::-webkit-slider-runnable-track {
+  height: 5px;
+}
+
+.range input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  margin-top: -6.5px; /* Centers thumb on the track */
+  background-color: main-black;
+  border-radius: 1rem;
+  height: 18px;
+  width: 18px;
+}
+
+/* Firefox styles */
+.range input[type='range']::-moz-range-track {
+  height: 5px;
+}
+
+.range input[type='range']::-moz-range-thumb {
+  background-color: main-black;
+  border: none; /* Removes extra border that FF applies */
+  border-radius: 1rem;
+  height: 18px;
+  width: 18px;
+}
+
+.ticks {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  left: 4px;
+  width: 100%;
+  top: 28px;
+}
+
+.rangeLabels {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  width: 100%;
+  bottom: -50px;
+  left: 0;
+}
+
+.rangeLabels span {
+  font-size: 12px;
+}

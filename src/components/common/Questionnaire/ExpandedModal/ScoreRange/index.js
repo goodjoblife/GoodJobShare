@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import styles from './NetPromoter.module.css';
+import styles from './ScoreRange.module.css';
 
 const inputRange = {
   min: 0,
   max: 10,
 };
 
-const ScoreRange = ({ handleRecordFeedback }) => {
-  const [score, setScore] = useState(5);
-  const [rangePercentage, setRangePercentage] = useState(50);
+const ScoreRange = ({ handleUserFeedback }) => {
+  const [score, setScore] = useState(0);
+  const [rangePercentage, setRangePercentage] = useState(0);
   const ticks = Array.from({ length: inputRange.max + 1 }, (_, i) => (
     <div key={i}>{i}</div>
   ));
@@ -18,6 +18,7 @@ const ScoreRange = ({ handleRecordFeedback }) => {
     const percentage = (newScore / (inputRange.max - inputRange.min)) * 100;
     setScore(newScore);
     setRangePercentage(percentage);
+    handleUserFeedback(newScore);
   };
 
   return (

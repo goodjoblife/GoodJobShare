@@ -1,29 +1,43 @@
 import React, { Fragment, useCallback, useState } from 'react';
-import styles from './NetPromoter.module.css';
+import styles from './ExpandedModal.module.css';
 import Question from './Question';
 import NextButton from './NextButton';
-import questionList from '../questionList';
+import questionList from './questionList';
 import AppreciationContent from './AppreciationContent';
 import { postUserFeedback } from 'actions/userFeedback';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey';
+import { useLocalStorage } from 'react-use';
 
-const ExpandedModal = ({ handleToggleModalOpen, postUserFeedback }) => {
+const ExpandedModal = ({ handleToggleModalOpen }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const question = questionList[questionIndex] || {};
-  const { title, titleExplanation, section } = question;
+  const { title, titleExplanation, section, defaultFeedback = {} } = question;
+  const { key, value } = defaultFeedback;
+  const [userFeedback, setUserFeedback] = useState({ [key]: value });
   const isLastQuestion = questionIndex === questionList.length - 1;
   const isCompletedQuestion = questionIndex > questionList.length - 1;
-
-  const handleRecordFeedback = () => {};
+  const dispatch = useDispatch();
+  const [, setLocalStorageValue] = useLocalStorage(
+    LS_USER_FEEDBACK_SUBMISSION_TIME_KEY,
+  );
 
   const handleNextStep = () => {
     setQuestionIndex(prev => prev + 1);
   };
 
-  const handleSubmit = useCallback(
-    () => postUserFeedback({ npsScore: 10, content: 'test' }),
-    [postUserFeedback],
+  const handleUserFeedback = useCallback(
+    feedback => {
+      setUserFeedback(prev => ({ ...prev, [key]: feedback }));
+    },
+    [key],
   );
+
+  const handleSubmit = useCallback(async () => {
+    const lastSubmissionTime = new Date().getTime();
+    setLocalStorageValue(lastSubmissionTime);
+    await dispatch(postUserFeedback({ ...userFeedback }));
+  }, [dispatch, setLocalStorageValue, userFeedback]);
 
   const handleNext = useCallback(() => {
     if (isLastQuestion) {
@@ -49,7 +63,7 @@ const ExpandedModal = ({ handleToggleModalOpen, postUserFeedback }) => {
               title={title}
               titleExplanation={titleExplanation}
               section={section}
-              handleRecordFeedback={handleRecordFeedback}
+              onChange={handleUserFeedback}
             />
             <NextButton handleNext={handleNext} buttonText={buttonText} />
           </Fragment>
@@ -59,15 +73,4 @@ const ExpandedModal = ({ handleToggleModalOpen, postUserFeedback }) => {
   );
 };
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = {
-  postUserFeedback,
-};
-
-const hoc = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-
-export default hoc(ExpandedModal);
+export default ExpandedModal;
