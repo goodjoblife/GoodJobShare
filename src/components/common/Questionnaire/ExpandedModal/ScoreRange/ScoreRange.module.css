@@ -13,6 +13,7 @@
   position: relative;
   cursor: pointer;
   border-radius: 8px;
+  height: 5px;
 }
 
 /* Chrome, Safari, Opera and Edge Chromium styles */
@@ -31,10 +32,6 @@
 }
 
 /* Firefox styles */
-.range input[type='range']::-moz-range-track {
-  height: 5px;
-}
-
 .range input[type='range']::-moz-range-thumb {
   background-color: main-black;
   border: none; /* Removes extra border that FF applies */
