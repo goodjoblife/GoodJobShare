@@ -3,9 +3,10 @@
 .container {
   position: fixed;
   top: 50%;
-  right: 0;
   transform: translateY(-50%);
   z-index: 9;
+  right: 0;
+  display: flex;
 }
 
 .label {
@@ -20,5 +21,17 @@
   padding: 2rem 0.5rem;
   letter-spacing: 0.3rem;
   line-height: 19px;
+  transform: translateX(2px);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.label:hover {
   box-shadow: 0px 0px 7px 0px main-black;
+  transform: translateX(0px);
+}
+
+@-moz-document url-prefix() {
+  .container {
+    transform: translateX(-100%) translateY(-50%);
+  }
 }

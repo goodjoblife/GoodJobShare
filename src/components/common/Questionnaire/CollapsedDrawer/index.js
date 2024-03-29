@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import styles from './CollapsedDrawer.module.css';
 import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey';
 
@@ -6,6 +6,7 @@ const THIRTY_DAYS_IN_MILLISECONDS = 1000 * 60 * 60 * 24 * 30;
 
 const CollapsedDrawer = ({ title = '給我們回饋', children }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
   const handleToggleModalOpen = useCallback(() => {
     setIsExpanded(prev => !prev);
   }, []);
@@ -30,7 +31,7 @@ const CollapsedDrawer = ({ title = '給我們回饋', children }) => {
     React.cloneElement(child, { handleToggleModalOpen }),
   );
 
-  if (isExpanded) return <Fragment>{childrenWithProps}</Fragment>;
+  if (isExpanded) return childrenWithProps;
 
   return (
     <div className={styles.container} onClick={handleToggleModalOpen}>
