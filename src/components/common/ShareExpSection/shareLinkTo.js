@@ -2,6 +2,7 @@ import qs from 'qs';
 
 export const STATE_SHARE = {
   INTERVIEW: 'interview',
+  WORK_EXPERIENCE: 'work-experience',
   SALARY_WORK_TIME: 'salary-work-times',
   SALARY_WORK_TIME_NO_PROGRESS_BAR: 'salary-work-times-no-progress-bar',
 };
@@ -28,4 +29,6 @@ export const generateShareTimeSalaryTypeForm = () => ({
 export const generateShareTimeSalaryTypeFormHideProgressBar = () => ({
   state: { share: STATE_SHARE.SALARY_WORK_TIME_NO_PROGRESS_BAR },
 });
-export const generateShareWork = () => '/share/work-experiences';
+export const generateShareWork = () => ({
+  state: { share: STATE_SHARE.WORK_EXPERIENCE },
+});

@@ -13,6 +13,7 @@ import styles from './App.module.css';
 import Header from './Header';
 import Footer from './Footer';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
+import ShareWorkExperienceModal from '../ShareExperience/WorkExperiencesForm/TypeForm';
 import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
 import routes from '../../routes';
 import CollapsedDrawer from 'common/Questionnaire/CollapsedDrawer';
@@ -53,6 +54,10 @@ const App = () => {
       </Switch>
       <ShareInterviewModal
         open={share === STATE_SHARE.INTERVIEW}
+        onClose={exitShare}
+      />
+      <ShareWorkExperienceModal
+        open={share === STATE_SHARE.WORK_EXPERIENCE}
         onClose={exitShare}
       />
       <ShareSalaryWorkTimesModal

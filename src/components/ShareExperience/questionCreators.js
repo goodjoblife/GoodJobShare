@@ -184,7 +184,17 @@ export const createInterviewRegionQuestion = () => ({
   defaultValue: null,
   required: true,
   validateOrWarn: value => isNil(value) && '需填寫面試地區',
-  options: REGION_OPTIONS,
+  options: ['線上面試'].concat(REGION_OPTIONS),
+});
+
+export const createWorkRegionQuestion = () => ({
+  title: '工作地區',
+  type: QUESTION_TYPE.RADIO,
+  dataKey: DATA_KEY_REGION,
+  defaultValue: null,
+  required: true,
+  validateOrWarn: value => isNil(value) && '需填寫工作地區',
+  options: ['全遠端'].concat(REGION_OPTIONS),
 });
 
 export const createInterviewResultQuestion = () => ({
