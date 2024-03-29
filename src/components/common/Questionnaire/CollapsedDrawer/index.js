@@ -28,7 +28,7 @@ const CollapsedDrawer = ({ title = '給我們回饋', children }) => {
   }
 
   const childrenWithProps = React.Children.map(children, child =>
-    React.cloneElement(child, { handleToggleModalOpen, isExpanded }),
+    React.cloneElement(child, { handleToggleModalOpen }),
   );
 
   if (isExpanded) return childrenWithProps;
