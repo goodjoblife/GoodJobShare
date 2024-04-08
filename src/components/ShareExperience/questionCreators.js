@@ -58,7 +58,7 @@ import {
   isValidSalary,
   isNumber,
 } from './utils';
-import { getCompaniesSearch } from 'apis/companySearchApi';
+import { fetchSearchCompany } from 'apis/timeAndSalaryApi';
 import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
 import { employmentTypeOptions, salaryTypeOptions } from './common/optionMap';
 import WorkTimeExample from './WorkTimeExample';
@@ -83,7 +83,7 @@ export const createCompanyQuestion = ({ header }) => ({
   validateOrWarn: value => isEmpty(value) && '請填寫公司名稱',
   placeholder: 'ＯＯ 股份有限公司',
   search: value =>
-    getCompaniesSearch({ key: value }).then(
+    fetchSearchCompany({ companyName: value }).then(
       ifElse(isArray, map(prop('name')), always([])),
     ),
   header,
