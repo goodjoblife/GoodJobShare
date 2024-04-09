@@ -6,7 +6,7 @@ import { debounce } from 'utils/streamUtils';
 import TextInput from '.';
 
 import {
-  fetchCompanyCandidates,
+  fetchSearchCompany,
   fetchJobTitleCandidates,
 } from 'apis/timeAndSalaryApi';
 
@@ -17,7 +17,10 @@ const SearchTextInput = ({ value, onChange, onSelected, ...restProps }) => {
   const eleRef = useRef(null);
 
   const searchCompanyNames = useCallback(
-    value => fetchCompanyCandidates({ key: value }),
+    value =>
+      fetchSearchCompany({ companyName: value }).then(companies =>
+        companies.map(({ name }) => name),
+      ),
     [],
   );
   const searchJobTitles = useCallback(
