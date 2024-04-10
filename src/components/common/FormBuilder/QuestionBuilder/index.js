@@ -28,6 +28,7 @@ import File from './File';
 import Date from './Date';
 import SelectText from './SelectText';
 import TextList from './TextList';
+import CheckboxRatingTextAreaList from './CheckboxRatingTextAreaList';
 
 import TitleBlock from '../TitleBlock';
 import Scrollable from '../Scrollable';
@@ -134,6 +135,8 @@ const useQuestionNode = ({
           elseOptionValue={elseOptionValue}
         />,
       ];
+    case QUESTION_TYPE.RADIO_RATING_TEXTAREA_LIST:
+      return [true, <CheckboxRatingTextAreaList {...commonProps} />];
     case QUESTION_TYPE.CHECKBOX:
       return [true, <Checkbox {...commonProps} options={options} />];
     case QUESTION_TYPE.CHECKBOX_ELSE:
