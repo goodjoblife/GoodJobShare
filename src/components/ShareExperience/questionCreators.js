@@ -46,6 +46,7 @@ import {
   DATA_KEY_OVERTIME_FREQUENCY,
   DATA_KEY_HAS_OVERTIME_SALARY,
   DATA_KEY_HAS_COMPENSATORY_DAYOFF,
+  DATA_KEY_SECTIONS,
 } from './constants';
 import {
   isArray,
@@ -373,6 +374,15 @@ export const createWeekWorkTimeQuestion = () => ({
       </WorkTimeExample>
     </Fragment>
   ),
+});
+
+export const createSectionsQuestion = () => ({
+  title: '至少評價兩個面向',
+  type: QUESTION_TYPE.RADIO_RATING_TEXTAREA_LIST,
+  dataKey: DATA_KEY_SECTIONS,
+  required: true,
+  defaultValue: [],
+  validateOrWarn: value => value.length < 2 && '至少評價一個面向',
 });
 
 const OptionEmoji = ({ value, children }) => (
