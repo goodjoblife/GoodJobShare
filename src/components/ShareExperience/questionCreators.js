@@ -194,7 +194,7 @@ export const createWorkRegionQuestion = () => ({
   defaultValue: null,
   required: true,
   validateOrWarn: value => isNil(value) && '需填寫工作地區',
-  options: ['全遠端'].concat(REGION_OPTIONS),
+  options: REGION_OPTIONS,
 });
 
 export const createInterviewResultQuestion = () => ({
