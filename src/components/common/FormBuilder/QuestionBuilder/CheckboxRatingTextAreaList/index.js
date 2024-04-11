@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
 import { OptionPropType, ValuePropType } from '../Checkbox/PropTypes';
 import Options from './Options';
+import ActiveItem from './ActiveItem';
 
 const CheckboxRatingTextAreaList = ({
   value: items,
@@ -10,30 +11,35 @@ const CheckboxRatingTextAreaList = ({
   options,
   elseOptionValue,
 }) => {
-  const selectedOptionValues = items.map(([optionValue]) => optionValue);
-  const onOptionValuesChange = useCallback(
-    optionValues => {
-      onChange(optionValues.map(optionValue => [optionValue]));
-    },
-    [onChange],
+  const [activeOptionIndex, setActiveOptionIndex] = useState(null);
+  const activeOption = options[activeOptionIndex];
+
+  const resetOptionValue = useCallback(() => setActiveOptionIndex(null), []);
+
+  if (activeOption) {
+    return <ActiveItem option={activeOption} onCancel={resetOptionValue} />;
+  }
+
+  const elseOptionIndex = options.findIndex(
+    ({ value }) => value === elseOptionValue,
   );
 
   return (
     <Options
-      value={selectedOptionValues}
-      onChange={onOptionValuesChange}
+      onSelectIndex={setActiveOptionIndex}
       options={options}
-      elseOptionValue={elseOptionValue}
+      elseOptionIndex={elseOptionIndex}
     />
   );
 };
 
+const CheckboxRatingTextAreaValuePropType = withShape(PropTypes.array, {
+  0: ValuePropType,
+});
+
 CheckboxRatingTextAreaList.propTypes = {
-  value: PropTypes.arrayOf(
-    withShape(PropTypes.array, {
-      0: ValuePropType,
-    }),
-  ).isRequired,
+  value: PropTypes.arrayOf(CheckboxRatingTextAreaValuePropType).isRequired,
+  onChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
   elseOptionValue: ValuePropType,
 };

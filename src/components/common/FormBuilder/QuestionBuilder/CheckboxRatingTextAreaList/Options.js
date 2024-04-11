@@ -1,29 +1,18 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Option from './Option';
-import { OptionPropType, ValuePropType } from '../Checkbox/PropTypes';
+import { OptionPropType } from '../Checkbox/PropTypes';
 import styles from './styles.module.css';
 
-const Options = ({ value: values, onChange, options, elseOptionValue }) => {
-  const onClick = useCallback(
-    value => {
-      if (values.includes(value)) {
-        onChange(values.filter(v => v !== value));
-      } else {
-        onChange([...values, value]);
-      }
-    },
-    [onChange, values],
-  );
+const Options = ({ onSelectIndex, options, elseOptionIndex }) => {
   return (
     <div className={styles.container}>
-      {options.map(({ label, value }) => {
+      {options.map(({ label }, index) => {
         return (
-          <div key={value} className={styles.cell}>
+          <div key={index} className={styles.cell}>
             <Option
-              onClick={() => onClick(value)}
-              selected={values.includes(value)}
-              isElse={value === elseOptionValue}
+              onClick={() => onSelectIndex(index)}
+              isElse={index === elseOptionIndex}
             >
               {label}
             </Option>
@@ -35,10 +24,9 @@ const Options = ({ value: values, onChange, options, elseOptionValue }) => {
 };
 
 Options.propTypes = {
-  value: PropTypes.arrayOf(ValuePropType).isRequired,
-  onChange: PropTypes.func.isRequired,
+  onSelectIndex: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
-  elseOptionValue: ValuePropType,
+  elseOptionIndex: PropTypes.number,
 };
 
 export default Options;
