@@ -1,4 +1,4 @@
-@value main-yellow from "common/variables.module.css";
+@value main-yellow, white-light from "common/variables.module.css";
 
 @keyframes slideIn {
   from {
@@ -51,14 +51,14 @@
   color: #626262;
 }
 
-.nextStepContainer {
+.nextStepButtonContainer {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
   height: 104px;
 }
 
-.nextStepContainer img {
+.nextStepButtonContainer img {
   width: auto;
   height: auto;
   max-width: 216px;
@@ -69,19 +69,20 @@
   scale: 0.9;
 }
 
-.nextStep {
+.nextStepButton {
   width: 118px;
   height: 40px;
   font-size: 15px;
   font-weight: 600;
   line-height: 21px;
-  background-color: #000;
-  color: #fff;
+  background-color: #ccc;
+  color: #666;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 15px;
   z-index: 9;
+  cursor: default;
 }
 
 .closeButton {
@@ -121,6 +122,13 @@
   background-color: #f9f9f9;
 }
 
+.active {
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
 @media (max-width: 767px) {
   .overlay {
     position: fixed;
@@ -143,17 +151,17 @@
 }
 
 @media (max-width: 374px) {
-  .nextStepContainer img {
+  .nextStepButtonContainer img {
     left: -24px;
   }
 
-  .nextStepContainer img {
+  .nextStepButtonContainer img {
     display: none;
   }
 }
 
 @media (max-width: 359px) {
-  .nextStepContainer {
+  .nextStepButtonContainer {
     height: 90px;
   }
 
