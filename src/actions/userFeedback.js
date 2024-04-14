@@ -1,10 +1,7 @@
 import { tokenSelector } from 'selectors/authSelector';
 import { postUserFeedback as postUserFeedbackApi } from 'apis/userFeedbackApi';
 
-export const postUserFeedback = ({ content, npsScore }) => (
-  dispatch,
-  getState,
-) => {
+export const postUserFeedback = ({ content, npsScore }) => (_, getState) => {
   const state = getState();
   const token = tokenSelector(state);
 
