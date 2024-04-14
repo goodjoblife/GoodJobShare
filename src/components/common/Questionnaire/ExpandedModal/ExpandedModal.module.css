@@ -126,7 +126,7 @@
   background-color: #f9f9f9;
 }
 
-.active {
+.enabled {
   background-color: #000;
   color: #fff;
   cursor: pointer;

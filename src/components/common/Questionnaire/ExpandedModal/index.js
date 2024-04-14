@@ -27,7 +27,7 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
   const [, setLocalStorageValue] = useLocalStorage(
     LS_USER_FEEDBACK_SUBMISSION_TIME_KEY,
   );
-  const [isActive, setIsActive] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
 
   const handleNextStep = () => {
     setQuestionIndex(prev => prev + 1);
@@ -36,7 +36,7 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
   const handleUserFeedback = useCallback(
     feedback => {
       setUserFeedback(prev => ({ ...prev, [key]: feedback }));
-      if (isRequired) setIsActive(true);
+      if (isRequired) setIsEnabled(true);
     },
     [isRequired, key],
   );
@@ -49,8 +49,8 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
 
   const handleNext = useCallback(() => {
     if (isLastQuestion) handleSubmit();
-    if (isActive) handleNextStep();
-  }, [handleSubmit, isLastQuestion, isActive]);
+    if (isEnabled) handleNextStep();
+  }, [handleSubmit, isLastQuestion, isEnabled]);
 
   const buttonText = isLastQuestion ? '送出' : '下一步';
 
@@ -75,7 +75,7 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
             <NextButton
               handleNext={handleNext}
               buttonText={buttonText}
-              isActive={isActive}
+              isEnabled={isEnabled}
             />
           </Fragment>
         )}
