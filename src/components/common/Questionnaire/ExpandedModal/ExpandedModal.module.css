@@ -46,9 +46,13 @@
   line-height: 23px;
 }
 
-.question span {
+.titleExplanation {
   font-size: 10px;
   color: #626262;
+}
+
+.requiredStar {
+  color: #c72929;
 }
 
 .nextStepButtonContainer {

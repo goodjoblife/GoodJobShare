@@ -70,6 +70,7 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
               titleExplanation={titleExplanation}
               section={section}
               onChange={handleUserFeedback}
+              isRequired={isRequired}
             />
             <NextButton
               handleNext={handleNext}
