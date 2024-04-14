@@ -130,7 +130,6 @@
   background-color: #000;
   color: #fff;
   cursor: pointer;
-  animation: fadeIn 0.5s ease-in-out;
 }
 
 @media (max-width: 767px) {
