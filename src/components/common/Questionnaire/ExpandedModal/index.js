@@ -49,8 +49,8 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
 
   const handleNext = useCallback(() => {
     if (isLastQuestion) handleSubmit();
-    if (isEnabled) handleNextStep();
-  }, [handleSubmit, isLastQuestion, isEnabled]);
+    handleNextStep();
+  }, [handleSubmit, isLastQuestion]);
 
   const buttonText = isLastQuestion ? '送出' : '下一步';
 

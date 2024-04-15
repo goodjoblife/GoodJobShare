@@ -9,6 +9,7 @@ const NextButton = ({ handleNext, buttonText, isEnabled }) => (
     <button
       onClick={handleNext}
       className={cn(styles.nextStepButton, { [styles.enabled]: isEnabled })}
+      disabled={!isEnabled}
     >
       {buttonText}
     </button>
