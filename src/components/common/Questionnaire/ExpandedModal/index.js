@@ -27,7 +27,7 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
   const [, setLocalStorageValue] = useLocalStorage(
     LS_USER_FEEDBACK_SUBMISSION_TIME_KEY,
   );
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [hasEditedRequired, setEditedRequired] = useState(false);
 
   const handleNextStep = () => {
     setQuestionIndex(prev => prev + 1);
@@ -36,7 +36,7 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
   const handleUserFeedback = useCallback(
     feedback => {
       setUserFeedback(prev => ({ ...prev, [key]: feedback }));
-      if (isRequired) setIsEnabled(true);
+      if (isRequired) setEditedRequired(true);
     },
     [isRequired, key],
   );
@@ -75,7 +75,7 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
             <NextButton
               handleNext={handleNext}
               buttonText={buttonText}
-              isEnabled={isEnabled}
+              isEnabled={hasEditedRequired}
             />
           </Fragment>
         )}
