@@ -7,6 +7,7 @@ import LinkItem from './LinkItem';
 import styles from './Footer.module.css';
 import MediasImg from './medias.jpg';
 import LogoG0vImg from './logo-g0v-white.svg';
+import UserFeedbackItem from './UserFeedbackItem';
 
 const link1 = [
   { to: '/salary-work-times/latest', text: '薪資工時' },
@@ -25,6 +26,11 @@ const link3 = [
   { to: '/about', text: '關於我們' },
   { to: '/about#contact', text: '聯絡我們' },
   { to: '/about#joinUs', text: '加入我們' },
+  {
+    actionItem: ({ index, className }) => (
+      <UserFeedbackItem key={index} className={className} />
+    ),
+  },
 ];
 
 const Footer = () => (

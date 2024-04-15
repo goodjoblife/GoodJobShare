@@ -9,7 +9,10 @@ const LinkItem = ({ title, items }) => (
     <h4 size="l" className={styles.heading}>
       {title}
     </h4>
-    {items.map(({ to, text, anchor }, index) => {
+    {items.map(({ to, text, anchor, actionItem }, index) => {
+      if (!to) {
+        return actionItem({ index, className: styles.actionItem });
+      }
       if (anchor || to.startsWith('http')) {
         return (
           <a key={index} href={to} className={styles.link}>
