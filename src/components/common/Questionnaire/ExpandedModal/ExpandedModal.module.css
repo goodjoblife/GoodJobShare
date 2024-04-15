@@ -126,7 +126,7 @@
   background-color: #f9f9f9;
 }
 
-.enabled {
+.nextStepButton:not(:disabled) {
   background-color: #000;
   color: #fff;
   cursor: pointer;
