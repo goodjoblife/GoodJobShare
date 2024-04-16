@@ -22,6 +22,7 @@ import payment from './payment';
 import paymentPersist from './paymentPersist';
 import toastNotification from './toastNotification';
 import { PERSIST_KEY } from '../config';
+import expandedModal from './expandedModal';
 
 const persistConfig = {
   key: PERSIST_KEY,
@@ -49,6 +50,7 @@ const rootReducer = combineReducers({
   payment,
   paymentPersist,
   toastNotification,
+  expandedModal,
 });
 
 export default persistReducer(persistConfig, rootReducer);
