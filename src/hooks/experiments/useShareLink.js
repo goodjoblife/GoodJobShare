@@ -8,11 +8,11 @@ import {
 
 const ACTIONS = [
   {
-    prob: 0.75,
+    prob: 0.5,
     generateTo: generateShareTimeSalaryTypeForm,
   },
   {
-    prob: 0.25,
+    prob: 0.5,
     generateTo: generateShareInterviewTypeForm,
   },
 ];
