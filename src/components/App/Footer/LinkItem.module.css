@@ -21,11 +21,13 @@
   color: #999;
 }
 
-.link {
+.link,
+.actionItem {
   display: block;
   font-size: 0.9375em;
   font-weight: 300;
   margin-bottom: 16px;
+  cursor: pointer;
 
   @media (min-width: 851px) {
     transition-duration: 0.3s;

@@ -10,6 +10,7 @@ const questionList = [
     titleExplanation: null,
     section: ({ onChange }) => <ScoreRange handleUserFeedback={onChange} />,
     defaultFeedback: { key: 'npsScore', value: 0 },
+    isRequired: true,
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ const questionList = [
       />
     ),
     defaultFeedback: { key: 'content', value: null },
+    isRequired: false,
   },
 ];
 
