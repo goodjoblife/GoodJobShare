@@ -16,7 +16,7 @@ import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
-import ReportDetail from 'common/reaction/ReportDetail';
+//import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
@@ -49,6 +49,7 @@ import {
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceStateSelector } from 'selectors/experienceSelector';
+import Button from '../common/button/Button';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -171,17 +172,20 @@ const ExperienceDetail = ({ ...props }) => {
     return (
       <React.Fragment>
         <div className={styles.functionButtons}>
-          <ReportDetail
-            label="檢舉"
+          <Button
+            circleSize="md"
+            btnStyle="black"
             onClick={() => {
               setModalClosableOnClickOutside(false);
               handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
             }}
             className={cn(
-              ReactionZoneStyles.reportButton,
               ReactionZoneStyles.button,
+              ReactionZoneStyles.reportButton,
             )}
-          />
+          >
+            檢舉
+          </Button>
           <PopoverToggle
             className={ReactionZoneStyles.moreButton}
             popoverClassName={ReactionZoneStyles.popover}
