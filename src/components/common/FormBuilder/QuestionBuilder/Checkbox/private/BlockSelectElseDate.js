@@ -9,7 +9,6 @@ import commonStyles from '../../styles.module.css';
 import BlockSelect from './BlockSelect';
 import DatePicker, { DatePropType } from '../../Date';
 import { OptionPropType, ValuePropType } from '../PropTypes';
-import { normalizeOptions } from './utils';
 
 const BlockSelectElseDate = ({
   page,
@@ -24,8 +23,6 @@ const BlockSelectElseDate = ({
   elseOptionValue,
   multiple,
 }) => {
-  options = normalizeOptions(options);
-
   const hasElse = useMemo(() => {
     if (multiple) {
       return R.contains(elseOptionValue, selected);

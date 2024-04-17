@@ -34,6 +34,7 @@ import TitleBlock from '../TitleBlock';
 import Scrollable from '../Scrollable';
 import styles from './styles.module.css';
 import { OptionPropType } from './Checkbox/PropTypes';
+import { normalizeOptions } from './utils';
 
 export const QUESTION_TYPE = {
   TEXT: 'TEXT',
@@ -90,6 +91,9 @@ const useQuestionNode = ({
     onConfirm,
     warning,
   };
+
+  if (options) options = normalizeOptions(options);
+
   switch (type) {
     case QUESTION_TYPE.TEXT:
       return [
@@ -136,7 +140,14 @@ const useQuestionNode = ({
         />,
       ];
     case QUESTION_TYPE.RADIO_RATING_TEXTAREA_LIST:
-      return [true, <CheckboxRatingTextAreaList {...commonProps} />];
+      return [
+        true,
+        <CheckboxRatingTextAreaList
+          {...commonProps}
+          options={options}
+          elseOptionValue={elseOptionValue}
+        />,
+      ];
     case QUESTION_TYPE.CHECKBOX:
       return [true, <Checkbox {...commonProps} options={options} />];
     case QUESTION_TYPE.CHECKBOX_ELSE:

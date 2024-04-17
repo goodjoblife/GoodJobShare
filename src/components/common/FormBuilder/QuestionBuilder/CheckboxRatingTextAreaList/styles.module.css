@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & + .cell {
+    margin-top: 11px;
+  }
+}
+
+.button {
+  width: 160px;
+  padding: 0;
+
+  svg {
+    margin-right: 5px;
+  }
+}

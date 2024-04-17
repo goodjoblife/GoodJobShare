@@ -383,6 +383,15 @@ export const createSectionsQuestion = () => ({
   required: true,
   defaultValue: [],
   validateOrWarn: value => value.length < 2 && '至少評價一個面向',
+  options: [
+    '實際工作內容',
+    '工時狀況',
+    '公司管理方式',
+    '性別友善度',
+    '薪資福利',
+    '自訂面向',
+  ],
+  elseOptionValue: '自訂面向',
 });
 
 const OptionEmoji = ({ value, children }) => (
