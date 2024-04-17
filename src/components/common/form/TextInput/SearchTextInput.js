@@ -5,10 +5,7 @@ import R from 'ramda';
 import { debounce } from 'utils/streamUtils';
 import TextInput from '.';
 
-import {
-  fetchCompanyCandidates,
-  fetchJobTitleCandidates,
-} from 'apis/timeAndSalaryApi';
+import { fetchSearchCompany, fetchSearchJobTitle } from 'apis/timeAndSalaryApi';
 
 const take5 = R.take(5);
 
@@ -17,11 +14,17 @@ const SearchTextInput = ({ value, onChange, onSelected, ...restProps }) => {
   const eleRef = useRef(null);
 
   const searchCompanyNames = useCallback(
-    value => fetchCompanyCandidates({ key: value }),
+    value =>
+      fetchSearchCompany({ companyName: value }).then(companies =>
+        companies.map(({ name }) => name),
+      ),
     [],
   );
   const searchJobTitles = useCallback(
-    value => fetchJobTitleCandidates({ key: value }),
+    value =>
+      fetchSearchJobTitle({ jobTitle: value }).then(jobTitles =>
+        jobTitles.map(({ name }) => name),
+      ),
     [],
   );
 

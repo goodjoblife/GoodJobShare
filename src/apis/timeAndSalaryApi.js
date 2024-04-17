@@ -12,20 +12,6 @@ import {
 
 const endpoint = '/workings';
 
-export const fetchCompanyCandidates = ({ key }) =>
-  fetchUtil(`${endpoint}/companies/search`)
-    .get({
-      query: { key },
-    })
-    .then(items => items.map(item => item._id.name));
-
-export const fetchJobTitleCandidates = ({ key }) =>
-  fetchUtil(`${endpoint}/jobs/search`)
-    .get({
-      query: { key },
-    })
-    .then(items => items.map(item => item._id));
-
 export const fetchTimeAndSalary = ({ start, limit }) =>
   graphqlClient({
     query: getSalaryWorkTimes,
