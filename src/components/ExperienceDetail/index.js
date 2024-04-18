@@ -16,7 +16,6 @@ import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
-//import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
@@ -180,8 +179,8 @@ const ExperienceDetail = ({ ...props }) => {
               handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
             }}
             className={cn(
-              ReactionZoneStyles.button,
               ReactionZoneStyles.reportButton,
+              ReactionZoneStyles.button,
             )}
           >
             檢舉

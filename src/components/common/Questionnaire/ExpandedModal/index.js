@@ -12,7 +12,13 @@ import { useLocalStorage } from 'react-use';
 const ExpandedModal = ({ handleToggleModalOpen }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const question = questionList[questionIndex] || {};
-  const { title, titleExplanation, section, defaultFeedback = {} } = question;
+  const {
+    title,
+    titleExplanation,
+    section,
+    defaultFeedback = {},
+    isRequired,
+  } = question;
   const { key, value } = defaultFeedback;
   const [userFeedback, setUserFeedback] = useState({ [key]: value });
   const isLastQuestion = questionIndex === questionList.length - 1;
@@ -21,6 +27,7 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
   const [, setLocalStorageValue] = useLocalStorage(
     LS_USER_FEEDBACK_SUBMISSION_TIME_KEY,
   );
+  const [hasEditedRequired, setEditedRequired] = useState(false);
 
   const handleNextStep = () => {
     setQuestionIndex(prev => prev + 1);
@@ -29,8 +36,9 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
   const handleUserFeedback = useCallback(
     feedback => {
       setUserFeedback(prev => ({ ...prev, [key]: feedback }));
+      if (isRequired) setEditedRequired(true);
     },
-    [key],
+    [isRequired, key],
   );
 
   const handleSubmit = useCallback(async () => {
@@ -40,9 +48,7 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
   }, [dispatch, setLocalStorageValue, userFeedback]);
 
   const handleNext = useCallback(() => {
-    if (isLastQuestion) {
-      handleSubmit();
-    }
+    if (isLastQuestion) handleSubmit();
     handleNextStep();
   }, [handleSubmit, isLastQuestion]);
 
@@ -64,8 +70,13 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
               titleExplanation={titleExplanation}
               section={section}
               onChange={handleUserFeedback}
+              isRequired={isRequired}
             />
-            <NextButton handleNext={handleNext} buttonText={buttonText} />
+            <NextButton
+              handleNext={handleNext}
+              buttonText={buttonText}
+              isEnabled={hasEditedRequired}
+            />
           </Fragment>
         )}
       </div>
