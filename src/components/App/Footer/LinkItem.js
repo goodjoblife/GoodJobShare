@@ -15,7 +15,7 @@ const LinkItem = ({ title, items }) => {
         if (typeof to === 'function') {
           const onClick = () => to({ dispatch });
           return (
-            <button key={index} className={styles.actionItem} onClick={onClick}>
+            <button key={index} className={styles.link} onClick={onClick}>
               {text}
             </button>
           );
