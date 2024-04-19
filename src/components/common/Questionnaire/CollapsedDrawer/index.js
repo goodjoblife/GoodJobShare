@@ -4,7 +4,7 @@ import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey'
 import { toggleModalOpen } from 'actions/questionnaireExpandedModal';
 import { useDispatch, useSelector } from 'react-redux';
 
-const MILLISECONDS_IN_30_DAYS = 1000 * 60 * 60 * 24 * 30;
+const MILLISECONDS_OF_TWO_SUBMISSION_SPAN = 1000 * 60 * 60 * 24 * 30;
 
 const CollapsedDrawer = ({ title = '給我們回饋', children }) => {
   const isOpen = useSelector(state => state.questionnaireExpandedModal.isOpen);
@@ -21,7 +21,7 @@ const CollapsedDrawer = ({ title = '給我們回饋', children }) => {
     if (lastSubmissionTime) {
       const currentTime = new Date().getTime();
       const isWithin30Days =
-        currentTime < lastSubmissionTime + MILLISECONDS_IN_30_DAYS;
+        currentTime < lastSubmissionTime + MILLISECONDS_OF_TWO_SUBMISSION_SPAN;
 
       if (isWithin30Days) {
         return null;
