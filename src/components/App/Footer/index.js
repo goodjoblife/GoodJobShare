@@ -7,7 +7,7 @@ import LinkItem from './LinkItem';
 import styles from './Footer.module.css';
 import MediasImg from './medias.jpg';
 import LogoG0vImg from './logo-g0v-white.svg';
-import { openModal } from 'actions/expandedModal';
+import { openModal } from 'actions/questionnaireExpandedModal';
 import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey';
 
 const link1 = [
