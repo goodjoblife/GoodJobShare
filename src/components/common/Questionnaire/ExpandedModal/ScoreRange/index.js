@@ -31,6 +31,7 @@ const ScoreRange = ({ handleUserFeedback }) => {
         step={1}
         onChange={handleScoreUpdate}
         onClick={handleScoreUpdate}
+        onTouchStart={handleScoreUpdate}
         style={{
           background: `linear-gradient(to right, #fcd406 ${rangePercentage}%, #C5C5C5 ${rangePercentage}%)`,
         }}
