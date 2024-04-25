@@ -98,52 +98,48 @@ const useQuestionNode = ({
 
   switch (type) {
     case QUESTION_TYPE.TEXT:
-      return [
-        false,
+      return (
         <Text
           {...commonProps}
           placeholder={placeholder}
           onSelect={onSelect}
           search={search}
           footnote={footnote}
-        />,
-      ];
+        />
+      );
     case QUESTION_TYPE.TEXTAREA:
-      return [true, <TextArea {...commonProps} footnote={footnote} />];
+      return <TextArea {...commonProps} footnote={footnote} />;
     case QUESTION_TYPE.RADIO:
-      return [true, <Radio {...commonProps} options={options} />];
+      return <Radio {...commonProps} options={options} />;
     case QUESTION_TYPE.RADIO_ELSE:
-      return [
-        true,
+      return (
         <RadioElse
           {...commonProps}
           options={options}
           elseOptionValue={elseOptionValue}
           placeholder={placeholder}
-        />,
-      ];
+        />
+      );
+
     case QUESTION_TYPE.RADIO_ELSE_RADIO:
-      return [
-        true,
+      return (
         <RadioElseRadio
           {...commonProps}
           options={options}
           elseOptionValue={elseOptionValue}
           elseOptions={elseOptions}
-        />,
-      ];
+        />
+      );
     case QUESTION_TYPE.RADIO_ELSE_DATE:
-      return [
-        true,
+      return (
         <RadioElseDate
           {...commonProps}
           options={options}
           elseOptionValue={elseOptionValue}
-        />,
-      ];
+        />
+      );
     case QUESTION_TYPE.RADIO_RATING_TEXTAREA_LIST:
-      return [
-        true,
+      return (
         <CheckboxRatingTextAreaList
           {...commonProps}
           options={options}
@@ -151,29 +147,27 @@ const useQuestionNode = ({
           placeholder={placeholder}
           ratingLabels={ratingLabels}
           footnote={footnote}
-        />,
-      ];
+        />
+      );
     case QUESTION_TYPE.CHECKBOX:
-      return [true, <Checkbox {...commonProps} options={options} />];
+      return <Checkbox {...commonProps} options={options} />;
     case QUESTION_TYPE.CHECKBOX_ELSE:
-      return [
-        true,
+      return (
         <CheckboxElse
           {...commonProps}
           options={options}
           elseOptionValue={elseOptionValue}
           placeholder={placeholder}
-        />,
-      ];
+        />
+      );
     case QUESTION_TYPE.RATING:
-      return [false, <Rating {...commonProps} ratingLabels={ratingLabels} />];
+      return <Rating {...commonProps} ratingLabels={ratingLabels} />;
     case QUESTION_TYPE.FILE:
-      return [false, <File {...commonProps} />];
+      return <File {...commonProps} />;
     case QUESTION_TYPE.DATE:
-      return [false, <Date {...commonProps} />];
+      return <Date {...commonProps} />;
     case QUESTION_TYPE.SELECT_TEXT:
-      return [
-        false,
+      return (
         <SelectText
           {...commonProps}
           placeholder={placeholder}
@@ -181,32 +175,46 @@ const useQuestionNode = ({
           options={options}
           suffix={suffix}
           footnote={footnote}
-        />,
-      ];
+        />
+      );
     case QUESTION_TYPE.TEXT_LIST:
-      return [true, <TextList {...commonProps} placeholder={placeholder} />];
+      return <TextList {...commonProps} placeholder={placeholder} />;
     case QUESTION_TYPE.CUSTOMIZED:
       if (renderCustomizedQuestion) {
-        return [
-          false,
-          renderCustomizedQuestion({
-            page,
-            title,
-            description,
-            type,
-            dataKey,
-            required,
-            value,
-            onChange,
-            onConfirm,
-            warning,
-          }),
-        ];
+        return renderCustomizedQuestion({
+          page,
+          title,
+          description,
+          type,
+          dataKey,
+          required,
+          value,
+          onChange,
+          onConfirm,
+          warning,
+        });
       } else {
-        return [false, null];
+        return null;
       }
     default:
-      return [false, null];
+      return null;
+  }
+};
+
+const useFillMode = ({ type }) => {
+  switch (type) {
+    case QUESTION_TYPE.TEXTAREA:
+    case QUESTION_TYPE.RADIO:
+    case QUESTION_TYPE.RADIO_ELSE:
+    case QUESTION_TYPE.RADIO_ELSE_RADIO:
+    case QUESTION_TYPE.RADIO_ELSE_DATE:
+    case QUESTION_TYPE.RADIO_RATING_TEXTAREA_LIST:
+    case QUESTION_TYPE.CHECKBOX:
+    case QUESTION_TYPE.CHECKBOX_ELSE:
+    case QUESTION_TYPE.TEXT_LIST:
+      return true;
+    default:
+      return false;
   }
 };
 
@@ -235,7 +243,8 @@ const QuestionBuilder = ({
   ratingLabels,
   renderCustomizedQuestion,
 }) => {
-  const [shouldFillPage, questionNode] = useQuestionNode({
+  const shouldFillPage = useFillMode({ type });
+  const questionNode = useQuestionNode({
     page,
     title,
     description,
