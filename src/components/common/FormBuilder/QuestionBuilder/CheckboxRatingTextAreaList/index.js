@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
 import { OptionPropType, ValuePropType } from '../Checkbox/PropTypes';
@@ -23,6 +23,7 @@ const CheckboxRatingTextAreaList = ({
   defaultValue,
   value: items,
   onChange,
+  setShowsNavigation,
   options,
   elseOptionValue,
   ratingLabels,
@@ -33,6 +34,10 @@ const CheckboxRatingTextAreaList = ({
   const [activeOptionIndex, setActiveOptionIndex] = useState(null);
   const activeOption = options[activeOptionIndex];
   const resetOptionValue = useCallback(() => setActiveOptionIndex(null), []);
+
+  useEffect(() => {
+    setShowsNavigation(activeOptionIndex === null);
+  }, [activeOptionIndex, setShowsNavigation]);
 
   const activeItemIndex = itemIndices[activeOptionIndex];
   const setActiveItem = useCallback(
@@ -103,6 +108,7 @@ CheckboxRatingTextAreaList.propTypes = {
     .isRequired,
   value: PropTypes.arrayOf(CheckboxRatingTextAreaValuePropType).isRequired,
   onChange: PropTypes.func.isRequired,
+  setShowsNavigation: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
   elseOptionValue: ValuePropType,
   ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,

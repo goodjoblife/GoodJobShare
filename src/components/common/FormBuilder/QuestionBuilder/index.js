@@ -68,6 +68,7 @@ const useQuestionNode = ({
   onSelect,
   search,
   warning,
+  setShowsNavigation,
   hint,
   placeholder,
   suffix,
@@ -90,6 +91,7 @@ const useQuestionNode = ({
     onChange,
     onConfirm,
     warning,
+    setShowsNavigation,
   };
 
   if (options) options = normalizeOptions(options);
@@ -221,6 +223,7 @@ const QuestionBuilder = ({
   onSelect,
   search,
   warning,
+  setShowsNavigation,
   hint,
   placeholder,
   suffix,
@@ -245,6 +248,7 @@ const QuestionBuilder = ({
     onSelect,
     search,
     warning,
+    setShowsNavigation,
     placeholder,
     suffix,
     hint,
@@ -296,6 +300,7 @@ QuestionBuilder.propTypes = {
   value: any,
   onChange: func.isRequired,
   warning: string,
+  setShowsNavigation: func.isRequired,
   hint: oneOfType([string, func]),
   onConfirm: func.isRequired,
   onSelect: func,

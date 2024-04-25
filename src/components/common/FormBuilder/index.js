@@ -107,6 +107,7 @@ const FormBuilder = ({
   } = useQuestion(questions[page], draft);
 
   const [isWarningShown, setWarningShown] = useState(false);
+  const [showsNavigation, setShowsNavigation] = useState(true);
 
   const isSubmittable = useMemo(
     () => findIfQuestionsAcceptDraft(draft)(questions),
@@ -194,11 +195,16 @@ const FormBuilder = ({
                   }
                 }}
                 warning={isWarningShown ? warning : null}
+                setShowsNavigation={setShowsNavigation}
               />
             </AnimatedPager.Page>
           ))}
         </AnimatedPager>
-        <div className={styles.navigationBar}>
+        <div
+          className={cn(styles.navigationBar, {
+            [styles.hidden]: !showsNavigation,
+          })}
+        >
           {hideProgressBar ? null : (
             <div>
               <ProgressBlock page={page} totalPages={questions.length} />
