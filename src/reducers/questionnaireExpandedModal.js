@@ -1,11 +1,11 @@
 import createReducer from 'utils/createReducer';
-import { TOGGLE, OPEN } from 'actions/expandedModal';
+import { TOGGLE, OPEN } from 'actions/questionnaireExpandedModal';
 
 const preloadedState = {
   isOpen: false,
 };
 
-const expandedModal = createReducer(preloadedState, {
+export default createReducer(preloadedState, {
   [TOGGLE]: state => {
     return {
       ...state,
@@ -19,5 +19,3 @@ const expandedModal = createReducer(preloadedState, {
     };
   },
 });
-
-export default expandedModal;

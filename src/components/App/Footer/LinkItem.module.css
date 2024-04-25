@@ -21,8 +21,7 @@
   color: #999;
 }
 
-.link,
-.actionItem {
+.link {
   display: block;
   font-size: 0.9375em;
   font-weight: 300;
