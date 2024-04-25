@@ -404,6 +404,7 @@ export const createSectionsQuestion = () => ({
     '自訂面向',
   ],
   elseOptionValue: '自訂面向',
+  placeholder: '請輸入自訂標題（例如：環境整潔度）',
   ratingLabels: RATING_LABELS,
   footnote: value =>
     `至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,

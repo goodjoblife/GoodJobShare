@@ -6,12 +6,46 @@ import Options from './Options';
 import ActiveItem from './ActiveItem';
 
 // Returns the array whose elements are the indices of the items that correspond to the options
-const useItemIndices = ({ items, options }) => {
+const useExtendedOptionsAndItemIndices = ({
+  items,
+  options,
+  elseOptionValue,
+}) => {
   return useMemo(() => {
-    return options.map(({ value }) =>
+    const extendedOptions = [...options];
+
+    // Remove the else option from the options
+    let elseOption;
+    let elseOptionIndex = extendedOptions.findIndex(
+      ({ value }) => value === elseOptionValue,
+    );
+    if (elseOptionIndex >= 0)
+      [elseOption] = extendedOptions.splice(elseOptionIndex, 1);
+
+    // Get the indices of the items that correspond to the options
+    const itemIndices = extendedOptions.map(({ value }) =>
       items.findIndex(([subject]) => subject === value),
     );
-  }, [items, options]);
+
+    // Add the subjects that are not in the options to the extended options
+    for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
+      const item = items[itemIndex];
+      if (itemIndices.includes(itemIndex)) continue;
+
+      // Add the subject to the extended options
+      const [subject] = item;
+      extendedOptions.push({ value: subject, label: subject });
+      itemIndices.push(itemIndex);
+    }
+
+    // Add the else option back to the end of the options
+    if (elseOption) {
+      extendedOptions.push(elseOption);
+      elseOptionIndex = extendedOptions.length - 1;
+    }
+
+    return { extendedOptions, itemIndices, elseOptionIndex };
+  }, [elseOptionValue, items, options]);
 };
 
 const CheckboxRatingTextAreaList = ({
@@ -27,13 +61,18 @@ const CheckboxRatingTextAreaList = ({
   setShowsNavigation,
   options,
   elseOptionValue,
+  placeholder,
   ratingLabels,
   footnote,
 }) => {
-  const itemIndices = useItemIndices({ items, options });
+  const {
+    extendedOptions,
+    itemIndices,
+    elseOptionIndex,
+  } = useExtendedOptionsAndItemIndices({ items, options, elseOptionValue });
 
   const [activeOptionIndex, setActiveOptionIndex] = useState(null);
-  const activeOption = options[activeOptionIndex];
+  const activeOption = extendedOptions[activeOptionIndex];
   const resetOptionValue = useCallback(() => setActiveOptionIndex(null), []);
 
   useEffect(() => {
@@ -68,6 +107,7 @@ const CheckboxRatingTextAreaList = ({
 
   if (activeOption) {
     const activeItem = items[activeItemIndex];
+    const isElseOption = activeOptionIndex === elseOptionIndex;
     return (
       <ActiveItem
         page={page}
@@ -75,26 +115,26 @@ const CheckboxRatingTextAreaList = ({
         dataKey={dataKey}
         defaultValue={activeItem}
         option={activeOption}
+        isElseOption={isElseOption}
+        value={activeItem}
         onChange={setActiveItem}
         onCancel={resetOptionValue}
+        placeholder={placeholder}
         ratingLabels={ratingLabels}
         footnote={footnote}
       />
     );
   }
 
-  const selectedOptionIndices = options
+  const selectedOptionIndices = extendedOptions
     .map((_, index) => (itemIndices[index] >= 0 ? index : null))
     .filter(index => index !== null);
-  const elseOptionIndex = options.findIndex(
-    ({ value }) => value === elseOptionValue,
-  );
 
   return (
     <Options
       selectedIndices={selectedOptionIndices}
       onSelectIndex={setActiveOptionIndex}
-      options={options}
+      options={extendedOptions}
       elseOptionIndex={elseOptionIndex}
       warning={warning}
     />
@@ -120,6 +160,7 @@ CheckboxRatingTextAreaList.propTypes = {
   setShowsNavigation: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
   elseOptionValue: ValuePropType,
+  placeholder: PropTypes.string,
   ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
   footnote: PropTypes.oneOfType([
     PropTypes.string,

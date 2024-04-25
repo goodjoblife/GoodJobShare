@@ -10,6 +10,7 @@ import styles from './styles.module.css';
 import commonStyles from '../styles.module.css';
 import formStyles from '../../FormBuilder.module.css';
 import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
+import Text from '../Text';
 
 // item values = [rating, text]
 const defaultItemValues = [0, ''];
@@ -22,13 +23,16 @@ const ActiveItem = ({
   onChange,
   onCancel,
   option: { value: optionValue },
+  isElseOption,
+  placeholder,
   ratingLabels,
   footnote,
 }) => {
-  const [, defaultRating, defaultText] = defaultValue || [
-    optionValue,
+  const [defaultSubject, defaultRating, defaultText] = defaultValue || [
+    isElseOption ? '' : optionValue,
     ...defaultItemValues,
   ];
+  const [subject, setSubject] = useState(defaultSubject);
   const [rating, setRating] = useState(defaultRating);
   const [text, setText] = useState(defaultText);
 
@@ -37,12 +41,12 @@ const ActiveItem = ({
   }, [onChange]);
 
   const onConfirm = useCallback(() => {
-    if (rating || text) {
-      onChange([optionValue, rating, text]);
+    if ((isElseOption && subject) || rating || text) {
+      onChange([subject, rating, text]);
     } else {
       onClear();
     }
-  }, [onChange, onClear, optionValue, rating, text]);
+  }, [isElseOption, onChange, onClear, rating, subject, text]);
 
   return (
     <div className={cn(styles.root, commonStyles.warnableContainer)}>
@@ -50,6 +54,18 @@ const ActiveItem = ({
         <div className={styles.cell}>
           <Option selected>{optionValue}</Option>
         </div>
+        {isElseOption && (
+          <Text
+            className={styles.subject}
+            page={page}
+            title={title}
+            dataKey={dataKey}
+            defaultValue={defaultSubject}
+            value={subject}
+            onChange={setSubject}
+            placeholder={placeholder}
+          />
+        )}
         <Rating
           page={page}
           title={title}
@@ -93,6 +109,8 @@ ActiveItem.propTypes = {
   onChange: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   option: OptionPropType.isRequired,
+  isElseOption: PropTypes.bool.isRequired,
+  placeholder: PropTypes.string,
   ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
   footnote: PropTypes.oneOfType([
     PropTypes.string,

@@ -42,6 +42,10 @@
   }
 }
 
+.subject {
+  padding-top: 11px;
+}
+
 .textarea {
   position: relative;
   margin-top: 18px;

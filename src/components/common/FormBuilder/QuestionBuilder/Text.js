@@ -7,6 +7,7 @@ import TextInput from 'common/form/TextInput';
 import commonStyles from './styles.module.css';
 
 const Text = ({
+  className,
   page,
   title,
   description,
@@ -46,7 +47,7 @@ const Text = ({
   );
 
   return (
-    <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
+    <div className={cn({ [commonStyles.hasWarning]: !!warning }, className)}>
       <div className={cn(commonStyles.warnableContainer)}>
         <TextInput
           ref={ref}
@@ -56,7 +57,7 @@ const Text = ({
           onChange={e => onChange(e.target.value)}
           onEnter={e => {
             e.target.blur();
-            onConfirm(e);
+            if (onConfirm) onConfirm(e);
           }}
           autocompleteItems={items}
           onAutocompleteItemSelected={item => {
@@ -76,6 +77,7 @@ const Text = ({
 };
 
 Text.propTypes = {
+  className: PropTypes.string,
   page: PropTypes.number.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   description: PropTypes.string,
@@ -85,7 +87,7 @@ Text.propTypes = {
     .isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func,
   onSelect: PropTypes.func,
   search: PropTypes.func,
   warning: PropTypes.string,

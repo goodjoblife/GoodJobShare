@@ -148,6 +148,7 @@ const useQuestionNode = ({
           {...commonProps}
           options={options}
           elseOptionValue={elseOptionValue}
+          placeholder={placeholder}
           ratingLabels={ratingLabels}
           footnote={footnote}
         />,
