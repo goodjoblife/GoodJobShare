@@ -40,6 +40,16 @@
   svg {
     margin-right: 5px;
   }
+
+  &.link {
+    color: #325bbd !important;
+    text-decoration: underline;
+
+    &:hover {
+      color: #fff !important;
+      text-decoration: none;
+    }
+  }
 }
 
 .subject {
