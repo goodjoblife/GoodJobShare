@@ -26,6 +26,7 @@ const CheckboxRatingTextAreaList = ({
   options,
   elseOptionValue,
   ratingLabels,
+  footnote,
 }) => {
   const itemIndices = useItemIndices({ items, options });
 
@@ -65,6 +66,7 @@ const CheckboxRatingTextAreaList = ({
         onChange={setActiveItem}
         onCancel={resetOptionValue}
         ratingLabels={ratingLabels}
+        footnote={footnote}
       />
     );
   }
@@ -104,6 +106,11 @@ CheckboxRatingTextAreaList.propTypes = {
   options: PropTypes.arrayOf(OptionPropType).isRequired,
   elseOptionValue: ValuePropType,
   ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  footnote: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.func,
+  ]),
 };
 
 export default CheckboxRatingTextAreaList;

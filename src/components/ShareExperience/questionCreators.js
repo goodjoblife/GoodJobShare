@@ -393,6 +393,8 @@ export const createSectionsQuestion = () => ({
   ],
   elseOptionValue: '自訂面向',
   ratingLabels: RATING_LABELS,
+  footnote: value =>
+    `至少 ${SUGGESTIONS_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
 });
 
 const OptionEmoji = ({ value, children }) => (

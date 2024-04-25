@@ -147,6 +147,7 @@ const useQuestionNode = ({
           options={options}
           elseOptionValue={elseOptionValue}
           ratingLabels={ratingLabels}
+          footnote={footnote}
         />,
       ];
     case QUESTION_TYPE.CHECKBOX:

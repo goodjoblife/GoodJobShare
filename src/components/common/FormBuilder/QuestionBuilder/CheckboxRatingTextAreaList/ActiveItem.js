@@ -4,10 +4,11 @@ import { withShape } from 'airbnb-prop-types';
 import { OptionPropType } from '../Checkbox/PropTypes';
 import Option from './Option';
 import Rating from '../Rating';
+import Textarea from '../TextArea';
 import styles from './styles.module.css';
 
-// item values = [rating]
-const defaultItemValues = [0];
+// item values = [rating, text]
+const defaultItemValues = [0, ''];
 
 const ActiveItem = ({
   page,
@@ -18,9 +19,14 @@ const ActiveItem = ({
   onCancel,
   option: { value: optionValue },
   ratingLabels,
+  footnote,
 }) => {
-  const [, defaultRating] = defaultValue || [optionValue, ...defaultItemValues];
+  const [, defaultRating, defaultText] = defaultValue || [
+    optionValue,
+    ...defaultItemValues,
+  ];
   const [rating, setRating] = useState(defaultRating);
+  const [text, setText] = useState(defaultText);
   const [completed, setCompleted] = useState(false);
 
   const onRatingChange = useCallback(rating => {
@@ -30,9 +36,9 @@ const ActiveItem = ({
 
   useEffect(() => {
     if (completed) {
-      onChange([optionValue, rating]);
+      onChange([optionValue, rating, text]);
     }
-  }, [completed, onChange, optionValue, rating]);
+  }, [completed, onChange, optionValue, rating, text]);
 
   return (
     <div className={styles.container}>
@@ -50,6 +56,16 @@ const ActiveItem = ({
         onChange={onRatingChange}
         ratingLabels={ratingLabels}
       />
+      <Textarea
+        className={styles.textarea}
+        page={page}
+        title={title}
+        dataKey={dataKey}
+        defaultValue={defaultText}
+        value={text}
+        onChange={setText}
+        footnote={footnote}
+      />
     </div>
   );
 };
@@ -61,11 +77,17 @@ ActiveItem.propTypes = {
   defaultValue: withShape(PropTypes.array, {
     0: PropTypes.string,
     1: PropTypes.number,
+    2: PropTypes.string,
   }),
   onChange: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   option: OptionPropType.isRequired,
   ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  footnote: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.func,
+  ]),
 };
 
 export default ActiveItem;
