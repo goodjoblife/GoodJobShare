@@ -258,7 +258,6 @@ export const QuestionPropType = shape({
   options: arrayOf(OptionPropType),
   elseOptions: arrayOf(OptionPropType),
   ratingLabels: arrayOf(string.isRequired),
-  renderCustomizedQuestion: func,
 });
 
 FormBuilder.propTypes = {

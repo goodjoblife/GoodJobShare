@@ -51,7 +51,6 @@ export const QUESTION_TYPE = {
   DATE: 'DATE',
   SELECT_TEXT: 'SELECT_TEXT',
   TEXT_LIST: 'TEXT_LIST',
-  CUSTOMIZED: 'CUSTOMIZED',
 };
 
 const useQuestionNode = ({
@@ -77,7 +76,6 @@ const useQuestionNode = ({
   elseOptionValue,
   elseOptions,
   ratingLabels,
-  renderCustomizedQuestion,
 }) => {
   const commonProps = {
     page,
@@ -179,23 +177,6 @@ const useQuestionNode = ({
       );
     case QUESTION_TYPE.TEXT_LIST:
       return <TextList {...commonProps} placeholder={placeholder} />;
-    case QUESTION_TYPE.CUSTOMIZED:
-      if (renderCustomizedQuestion) {
-        return renderCustomizedQuestion({
-          page,
-          title,
-          description,
-          type,
-          dataKey,
-          required,
-          value,
-          onChange,
-          onConfirm,
-          warning,
-        });
-      } else {
-        return null;
-      }
     default:
       return null;
   }
@@ -241,7 +222,6 @@ const QuestionBuilder = ({
   elseOptionValue,
   elseOptions,
   ratingLabels,
-  renderCustomizedQuestion,
 }) => {
   const shouldFillPage = useFillMode({ type });
   const questionNode = useQuestionNode({
@@ -267,7 +247,6 @@ const QuestionBuilder = ({
     elseOptionValue,
     elseOptions,
     ratingLabels,
-    renderCustomizedQuestion,
   });
 
   if (shouldFillPage) {
@@ -320,7 +299,6 @@ QuestionBuilder.propTypes = {
   options: arrayOf(OptionPropType),
   elseOptions: arrayOf(OptionPropType),
   ratingLabels: arrayOf(string.isRequired),
-  renderCustomizedQuestion: func,
 };
 
 QuestionBuilder.defaultProps = {

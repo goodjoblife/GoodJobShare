@@ -498,6 +498,5 @@ export const createSensitiveQuestionsQuestion = () => ({
 export const createSubmitQuestion = ({ type }) => ({
   title: () => () =>
     `感謝你分享${tabTypeTranslation[type]}，按下「送出」，馬上就可以解鎖全站 13 萬多筆資料哦！`,
-  type: QUESTION_TYPE.CUSTOMIZED,
   dataKey: '',
 });
