@@ -37,3 +37,8 @@
   position: relative;
   margin-top: 18px;
 }
+
+.activeCtaButtonGroup {
+  display: flex;
+  justify-content: center;
+}

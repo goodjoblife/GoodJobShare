@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
+import cn from 'classnames';
 import { OptionPropType } from '../Checkbox/PropTypes';
 import Option from './Option';
 import Rating from '../Rating';
 import Textarea from '../TextArea';
 import styles from './styles.module.css';
+import formStyles from '../../FormBuilder.module.css';
+import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
 
 // item values = [rating, text]
 const defaultItemValues = [0, ''];
@@ -27,25 +30,23 @@ const ActiveItem = ({
   ];
   const [rating, setRating] = useState(defaultRating);
   const [text, setText] = useState(defaultText);
-  const [completed, setCompleted] = useState(false);
 
-  const onRatingChange = useCallback(rating => {
-    setRating(rating);
-    setCompleted(true);
-  }, []);
+  const onClear = useCallback(() => {
+    onChange(null);
+  }, [onChange]);
 
-  useEffect(() => {
-    if (completed) {
+  const onConfirm = useCallback(() => {
+    if (rating || text) {
       onChange([optionValue, rating, text]);
+    } else {
+      onClear();
     }
-  }, [completed, onChange, optionValue, rating, text]);
+  }, [onChange, onClear, optionValue, rating, text]);
 
   return (
     <div className={styles.container}>
       <div className={styles.cell}>
-        <Option selected onClick={onCancel}>
-          {optionValue}
-        </Option>
+        <Option selected>{optionValue}</Option>
       </div>
       <Rating
         page={page}
@@ -53,7 +54,7 @@ const ActiveItem = ({
         dataKey={dataKey}
         defaultValue={defaultRating}
         value={rating}
-        onChange={onRatingChange}
+        onChange={setRating}
         ratingLabels={ratingLabels}
       />
       <Textarea
@@ -66,6 +67,13 @@ const ActiveItem = ({
         onChange={setText}
         footnote={footnote}
       />
+      <div
+        className={cn(formStyles.navigationBar, styles.activeCtaButtonGroup)}
+      >
+        <NavigatorButton onClick={onClear}>清除</NavigatorButton>
+        <NavigatorButton onClick={onCancel}>取消</NavigatorButton>
+        <NavigatorButton onClick={onConfirm}>儲存</NavigatorButton>
+      </div>
     </div>
   );
 };

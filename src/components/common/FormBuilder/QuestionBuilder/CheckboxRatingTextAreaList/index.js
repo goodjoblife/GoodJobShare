@@ -44,10 +44,16 @@ const CheckboxRatingTextAreaList = ({
     updatedItem => {
       const updatedItems = [...items];
 
-      if (activeItemIndex >= 0) {
-        updatedItems[activeItemIndex] = updatedItem;
+      if (updatedItem) {
+        if (activeItemIndex >= 0) {
+          updatedItems[activeItemIndex] = updatedItem;
+        } else {
+          updatedItems.push(updatedItem);
+        }
       } else {
-        updatedItems.push(updatedItem);
+        if (activeItemIndex >= 0) {
+          updatedItems.splice(activeItemIndex, 1);
+        }
       }
 
       // Commit the changes
