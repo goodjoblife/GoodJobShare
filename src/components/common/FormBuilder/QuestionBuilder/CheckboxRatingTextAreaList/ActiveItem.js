@@ -7,6 +7,7 @@ import Option from './Option';
 import Rating from '../Rating';
 import Textarea from '../TextArea';
 import styles from './styles.module.css';
+import commonStyles from '../styles.module.css';
 import formStyles from '../../FormBuilder.module.css';
 import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
 
@@ -44,35 +45,37 @@ const ActiveItem = ({
   }, [onChange, onClear, optionValue, rating, text]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.cell}>
-        <Option selected>{optionValue}</Option>
-      </div>
-      <Rating
-        page={page}
-        title={title}
-        dataKey={dataKey}
-        defaultValue={defaultRating}
-        value={rating}
-        onChange={setRating}
-        ratingLabels={ratingLabels}
-      />
-      <Textarea
-        className={styles.textarea}
-        page={page}
-        title={title}
-        dataKey={dataKey}
-        defaultValue={defaultText}
-        value={text}
-        onChange={setText}
-        footnote={footnote}
-      />
-      <div
-        className={cn(formStyles.navigationBar, styles.activeCtaButtonGroup)}
-      >
-        <NavigatorButton onClick={onClear}>清除</NavigatorButton>
-        <NavigatorButton onClick={onCancel}>取消</NavigatorButton>
-        <NavigatorButton onClick={onConfirm}>儲存</NavigatorButton>
+    <div className={cn(styles.root, commonStyles.warnableContainer)}>
+      <div className={styles.container}>
+        <div className={styles.cell}>
+          <Option selected>{optionValue}</Option>
+        </div>
+        <Rating
+          page={page}
+          title={title}
+          dataKey={dataKey}
+          defaultValue={defaultRating}
+          value={rating}
+          onChange={setRating}
+          ratingLabels={ratingLabels}
+        />
+        <Textarea
+          className={styles.textarea}
+          page={page}
+          title={title}
+          dataKey={dataKey}
+          defaultValue={defaultText}
+          value={text}
+          onChange={setText}
+          footnote={footnote}
+        />
+        <div
+          className={cn(formStyles.navigationBar, styles.activeCtaButtonGroup)}
+        >
+          <NavigatorButton onClick={onClear}>清除</NavigatorButton>
+          <NavigatorButton onClick={onCancel}>取消</NavigatorButton>
+          <NavigatorButton onClick={onConfirm}>儲存</NavigatorButton>
+        </div>
       </div>
     </div>
   );

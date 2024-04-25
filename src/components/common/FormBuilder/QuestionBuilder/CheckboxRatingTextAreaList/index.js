@@ -23,6 +23,7 @@ const CheckboxRatingTextAreaList = ({
   defaultValue,
   value: items,
   onChange,
+  warning,
   setShowsNavigation,
   options,
   elseOptionValue,
@@ -95,6 +96,7 @@ const CheckboxRatingTextAreaList = ({
       onSelectIndex={setActiveOptionIndex}
       options={options}
       elseOptionIndex={elseOptionIndex}
+      warning={warning}
     />
   );
 };
@@ -114,6 +116,7 @@ CheckboxRatingTextAreaList.propTypes = {
     .isRequired,
   value: PropTypes.arrayOf(CheckboxRatingTextAreaValuePropType).isRequired,
   onChange: PropTypes.func.isRequired,
+  warning: PropTypes.string,
   setShowsNavigation: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
   elseOptionValue: ValuePropType,

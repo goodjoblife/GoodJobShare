@@ -58,6 +58,8 @@ export const COURSE_MIN_LENGTH = 50;
 
 export const SUGGESTIONS_MIN_LENGTH = 50;
 
+export const SECTION_MIN_LENGTH = 30;
+
 export const JOB_TENURE_OPTIONS = [
   '不到 1 年',
   ...range(1, 51).map(n => `${n} 年`),

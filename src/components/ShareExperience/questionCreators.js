@@ -47,6 +47,7 @@ import {
   DATA_KEY_HAS_OVERTIME_SALARY,
   DATA_KEY_HAS_COMPENSATORY_DAYOFF,
   DATA_KEY_SECTIONS,
+  SECTION_MIN_LENGTH,
 } from './constants';
 import {
   isArray,
@@ -382,7 +383,18 @@ export const createSectionsQuestion = () => ({
   dataKey: DATA_KEY_SECTIONS,
   required: true,
   defaultValue: [],
-  validateOrWarn: value => value.length < 2 && '至少評價一個面向',
+  validateOrWarn: items => {
+    if (items.length < 2) return '至少評價兩個面向';
+    for (const [subject, rating, text] of items) {
+      if (rating === 0) return `${subject}：需選取滿意程度`;
+      if (wordCount(text) < SECTION_MIN_LENGTH) {
+        return `${subject}：至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(
+          text,
+        )} 字`;
+      }
+    }
+    return null;
+  },
   options: [
     '實際工作內容',
     '工時狀況',
@@ -394,7 +406,7 @@ export const createSectionsQuestion = () => ({
   elseOptionValue: '自訂面向',
   ratingLabels: RATING_LABELS,
   footnote: value =>
-    `至少 ${SUGGESTIONS_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
+    `至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
 });
 
 const OptionEmoji = ({ value, children }) => (
