@@ -392,6 +392,7 @@ export const createSectionsQuestion = () => ({
     '自訂面向',
   ],
   elseOptionValue: '自訂面向',
+  ratingLabels: RATING_LABELS,
 });
 
 const OptionEmoji = ({ value, children }) => (

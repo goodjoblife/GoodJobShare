@@ -146,6 +146,7 @@ const useQuestionNode = ({
           {...commonProps}
           options={options}
           elseOptionValue={elseOptionValue}
+          ratingLabels={ratingLabels}
         />,
       ];
     case QUESTION_TYPE.CHECKBOX:

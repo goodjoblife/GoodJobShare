@@ -84,7 +84,7 @@ Rating.propTypes = {
   defaultValue: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func,
   warning: PropTypes.string,
   ratingLabels: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
