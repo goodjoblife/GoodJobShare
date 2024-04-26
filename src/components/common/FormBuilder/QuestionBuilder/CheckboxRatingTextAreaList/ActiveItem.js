@@ -12,9 +12,6 @@ import formStyles from '../../FormBuilder.module.css';
 import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
 import Text from '../Text';
 
-// item values = [rating, text]
-const defaultItemValues = [0, ''];
-
 const ActiveItem = ({
   page,
   title,
@@ -30,8 +27,10 @@ const ActiveItem = ({
 }) => {
   const [defaultSubject, defaultRating, defaultText] = defaultValue || [
     isElseOption ? '' : optionValue,
-    ...defaultItemValues,
+    0,
+    '',
   ];
+
   const [subject, setSubject] = useState(defaultSubject);
   const [rating, setRating] = useState(defaultRating);
   const [text, setText] = useState(defaultText);
