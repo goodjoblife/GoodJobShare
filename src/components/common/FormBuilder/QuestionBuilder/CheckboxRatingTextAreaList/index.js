@@ -104,9 +104,9 @@ const CheckboxRatingTextAreaList = ({
       onChange(updatedItems);
 
       // Reset the active option value
-      setActiveOptionIndex(null);
+      resetOptionValue();
     },
-    [activeItemIndex, items, onChange],
+    [activeItemIndex, items, onChange, resetOptionValue],
   );
 
   if (activeOption) {
