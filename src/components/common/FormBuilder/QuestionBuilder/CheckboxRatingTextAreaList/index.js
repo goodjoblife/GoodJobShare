@@ -132,9 +132,9 @@ const CheckboxRatingTextAreaList = ({
 
   return (
     <Options
-      selectedIndices={selectedOptionIndices}
-      onSelectIndex={setActiveOptionIndex}
       options={extendedOptions}
+      selectedOptionIndices={selectedOptionIndices}
+      onSelectOptionIndex={setActiveOptionIndex}
       elseOptionIndex={elseOptionIndex}
       warning={warning}
     />

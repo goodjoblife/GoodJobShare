@@ -8,9 +8,9 @@ import commonStyles from '../styles.module.css';
 import Scrollable from 'common/FormBuilder/Scrollable';
 
 const Options = ({
-  selectedIndices,
-  onSelectIndex,
   options,
+  selectedOptionIndices,
+  onSelectOptionIndex,
   elseOptionIndex,
   warning,
 }) => {
@@ -27,8 +27,8 @@ const Options = ({
           return (
             <div key={index} className={styles.cell}>
               <Option
-                onClick={() => onSelectIndex(index)}
-                selected={selectedIndices.includes(index)}
+                onClick={() => onSelectOptionIndex(index)}
+                selected={selectedOptionIndices.includes(index)}
                 isElse={index === elseOptionIndex}
               >
                 {label}
@@ -43,9 +43,9 @@ const Options = ({
 };
 
 Options.propTypes = {
-  selectedIndices: PropTypes.arrayOf(PropTypes.number).isRequired,
-  onSelectIndex: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
+  selectedOptionIndices: PropTypes.arrayOf(PropTypes.number).isRequired,
+  onSelectOptionIndex: PropTypes.func.isRequired,
   elseOptionIndex: PropTypes.number,
   warning: PropTypes.string,
 };
