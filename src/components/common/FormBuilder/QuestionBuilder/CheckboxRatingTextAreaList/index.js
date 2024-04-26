@@ -8,11 +8,11 @@ import ActiveItem from './ActiveItem';
 // Returns the array whose elements are the indices of the items that correspond to the options
 const useExtendedOptionsAndItemIndices = ({
   items,
-  options,
+  baseOptions,
   elseOptionValue,
 }) => {
   return useMemo(() => {
-    const extendedOptions = [...options];
+    const extendedOptions = [...baseOptions];
 
     // Remove the else option from the options
     let elseOption;
@@ -45,7 +45,7 @@ const useExtendedOptionsAndItemIndices = ({
     }
 
     return { extendedOptions, itemIndices, elseOptionIndex };
-  }, [elseOptionValue, items, options]);
+  }, [baseOptions, elseOptionValue, items]);
 };
 
 const CheckboxRatingTextAreaList = ({
@@ -59,7 +59,7 @@ const CheckboxRatingTextAreaList = ({
   onChange,
   warning,
   setShowsNavigation,
-  options,
+  options: baseOptions,
   elseOptionValue,
   placeholder,
   ratingLabels,
@@ -69,7 +69,7 @@ const CheckboxRatingTextAreaList = ({
     extendedOptions,
     itemIndices,
     elseOptionIndex,
-  } = useExtendedOptionsAndItemIndices({ items, options, elseOptionValue });
+  } = useExtendedOptionsAndItemIndices({ items, baseOptions, elseOptionValue });
 
   const [activeOptionIndex, setActiveOptionIndex] = useState(null);
   const activeOption = extendedOptions[activeOptionIndex];
