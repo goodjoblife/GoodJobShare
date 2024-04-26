@@ -5,7 +5,8 @@ import { OptionPropType, ValuePropType } from '../Checkbox/PropTypes';
 import Options from './Options';
 import ActiveItem from './ActiveItem';
 
-// Returns the array whose elements are the indices of the items that correspond to the options
+// This hook extends the options with the subjects that are not in the options
+// and returns the indices of the items that correspond to the options
 const useExtendedOptionsAndItemIndices = ({
   items,
   baseOptions,
@@ -86,12 +87,15 @@ const CheckboxRatingTextAreaList = ({
 
       if (updatedItem) {
         if (activeItemIndex >= 0) {
+          // Update the existing item
           updatedItems[activeItemIndex] = updatedItem;
         } else {
+          // Add the new item
           updatedItems.push(updatedItem);
         }
       } else {
         if (activeItemIndex >= 0) {
+          // Remove the existing item
           updatedItems.splice(activeItemIndex, 1);
         }
       }
@@ -106,6 +110,7 @@ const CheckboxRatingTextAreaList = ({
   );
 
   if (activeOption) {
+    // Show the active item
     const activeItem = items[activeItemIndex];
     const isElseOption = activeOptionIndex === elseOptionIndex;
     return (
@@ -126,6 +131,7 @@ const CheckboxRatingTextAreaList = ({
     );
   }
 
+  // Show the options
   const selectedOptionIndices = extendedOptions
     .map((_, index) => (itemIndices[index] >= 0 ? index : null))
     .filter(index => index !== null);
