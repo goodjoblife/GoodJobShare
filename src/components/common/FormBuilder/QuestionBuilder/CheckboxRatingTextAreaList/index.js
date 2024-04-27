@@ -88,7 +88,7 @@ const CheckboxRatingTextAreaList = ({
     setShowsNavigation,
   });
   const activeOption = extendedOptions[activeOptionIndex];
-  const resetOptionValue = useCallback(() => setActiveOptionIndex(null), [
+  const resetActiveOptionIndex = useCallback(() => setActiveOptionIndex(null), [
     setActiveOptionIndex,
   ]);
 
@@ -115,10 +115,10 @@ const CheckboxRatingTextAreaList = ({
       // Commit the changes
       onChange(updatedItems);
 
-      // Reset the active option value
-      resetOptionValue();
+      // Reset the active option
+      resetActiveOptionIndex();
     },
-    [activeItemIndex, items, onChange, resetOptionValue],
+    [activeItemIndex, items, onChange, resetActiveOptionIndex],
   );
 
   if (activeOption) {
@@ -135,7 +135,7 @@ const CheckboxRatingTextAreaList = ({
         isElseOption={isElseOption}
         value={activeItem}
         onChange={setActiveItem}
-        onCancel={resetOptionValue}
+        onCancel={resetActiveOptionIndex}
         placeholder={placeholder}
         ratingLabels={ratingLabels}
         footnote={footnote}
