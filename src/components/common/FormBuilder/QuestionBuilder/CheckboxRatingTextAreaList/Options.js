@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import Option from './Option';
@@ -14,6 +14,21 @@ const Options = ({
   elseOptionIndex,
   warning,
 }) => {
+  const transitionDuration = 0.3;
+
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
+  const onConfirm = useCallback(
+    index => {
+      if (selectedOptionIndex !== null) return;
+
+      setSelectedOptionIndex(index);
+      setTimeout(() => {
+        onSelectOptionIndex(index);
+      }, transitionDuration * 1000);
+    },
+    [onSelectOptionIndex, selectedOptionIndex],
+  );
+
   return (
     <div className={cn(styles.root, { [commonStyles.hasWarning]: !!warning })}>
       <Scrollable
@@ -24,11 +39,20 @@ const Options = ({
         )}
       >
         {options.map(({ label }, index) => {
+          const shouldHide =
+            selectedOptionIndex !== null && index !== selectedOptionIndex;
           return (
-            <div key={index} className={styles.cell}>
+            <div
+              key={index}
+              className={cn(styles.cell, { [styles.hidden]: shouldHide })}
+              style={{ transitionDuration: `${transitionDuration}s` }}
+            >
               <Option
-                onClick={() => onSelectOptionIndex(index)}
-                selected={selectedOptionIndices.includes(index)}
+                onClick={() => onConfirm(index)}
+                selected={
+                  selectedOptionIndices.includes(index) ||
+                  selectedOptionIndex === index
+                }
                 isElse={index === elseOptionIndex}
               >
                 {label}

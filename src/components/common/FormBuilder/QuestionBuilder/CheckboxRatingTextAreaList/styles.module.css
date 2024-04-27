@@ -27,9 +27,28 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
 
-  & + .cell {
+.cell {
+  transition: margin-top, max-height, opacity;
+
+  &:not(.hidden) + .cell {
     margin-top: 11px;
+
+    &.hidden {
+      margin-top: 0;
+    }
+  }
+
+  overflow: hidden;
+  max-height: 100px;
+  &.hidden {
+    max-height: 0;
+  }
+
+  opacity: 1;
+  &.hidden {
+    opacity: 0;
   }
 }
 
