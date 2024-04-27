@@ -51,6 +51,7 @@ export const QUESTION_TYPE = {
   DATE: 'DATE',
   SELECT_TEXT: 'SELECT_TEXT',
   TEXT_LIST: 'TEXT_LIST',
+  EMPTY: 'EMPTY',
 };
 
 const useQuestionNode = ({
@@ -177,7 +178,10 @@ const useQuestionNode = ({
       );
     case QUESTION_TYPE.TEXT_LIST:
       return <TextList {...commonProps} placeholder={placeholder} />;
+    case QUESTION_TYPE.EMPTY:
+      return null;
     default:
+      // Should not happen
       return null;
   }
 };
