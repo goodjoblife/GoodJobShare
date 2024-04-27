@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useEffect, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
 import { OptionPropType, ValuePropType } from '../Checkbox/PropTypes';
@@ -49,6 +49,18 @@ const useExtendedOptionsAndItemIndices = ({
   }, [baseOptions, elseOptionValue, items]);
 };
 
+const useActiveOptionIndex = ({ setShowsNavigation }) => {
+  const [activeOptionIndex, setActiveOptionIndex] = useState(null);
+  const handleSelectOptionIndex = useCallback(
+    index => {
+      setActiveOptionIndex(index);
+      setShowsNavigation(index === null);
+    },
+    [setShowsNavigation],
+  );
+  return [activeOptionIndex, handleSelectOptionIndex];
+};
+
 const CheckboxRatingTextAreaList = ({
   page,
   title,
@@ -72,13 +84,13 @@ const CheckboxRatingTextAreaList = ({
     elseOptionIndex,
   } = useExtendedOptionsAndItemIndices({ items, baseOptions, elseOptionValue });
 
-  const [activeOptionIndex, setActiveOptionIndex] = useState(null);
+  const [activeOptionIndex, setActiveOptionIndex] = useActiveOptionIndex({
+    setShowsNavigation,
+  });
   const activeOption = extendedOptions[activeOptionIndex];
-  const resetOptionValue = useCallback(() => setActiveOptionIndex(null), []);
-
-  useEffect(() => {
-    setShowsNavigation(activeOptionIndex === null);
-  }, [activeOptionIndex, setShowsNavigation]);
+  const resetOptionValue = useCallback(() => setActiveOptionIndex(null), [
+    setActiveOptionIndex,
+  ]);
 
   const activeItemIndex = itemIndices[activeOptionIndex];
   const setActiveItem = useCallback(
