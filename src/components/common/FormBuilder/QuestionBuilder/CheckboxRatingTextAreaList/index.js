@@ -4,6 +4,7 @@ import { withShape } from 'airbnb-prop-types';
 import { OptionPropType, ValuePropType } from '../Checkbox/PropTypes';
 import Options from './Options';
 import ActiveItem from './ActiveItem';
+import { usePrevious } from 'react-use';
 
 // This hook extends the options with the subjects that are not in the options
 // and returns the indices of the items that correspond to the options
@@ -87,6 +88,7 @@ const CheckboxRatingTextAreaList = ({
   const [activeOptionIndex, setActiveOptionIndex] = useActiveOptionIndex({
     setShowsNavigation,
   });
+  const lastActiveOptionIndex = usePrevious(activeOptionIndex);
   const activeOption = extendedOptions[activeOptionIndex];
   const resetActiveOptionIndex = useCallback(() => setActiveOptionIndex(null), [
     setActiveOptionIndex,
@@ -154,6 +156,7 @@ const CheckboxRatingTextAreaList = ({
       selectedOptionIndices={selectedOptionIndices}
       onSelectOptionIndex={setActiveOptionIndex}
       elseOptionIndex={elseOptionIndex}
+      lastSelectedOptionIndex={lastActiveOptionIndex}
       warning={warning}
     />
   );

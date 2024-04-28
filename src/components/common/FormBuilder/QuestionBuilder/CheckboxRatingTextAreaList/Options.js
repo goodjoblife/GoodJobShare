@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import Option from './Option';
@@ -12,11 +12,21 @@ const Options = ({
   selectedOptionIndices,
   onSelectOptionIndex,
   elseOptionIndex,
+  lastSelectedOptionIndex,
   warning,
 }) => {
   const transitionDuration = 0.3;
 
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(
+    lastSelectedOptionIndex,
+  );
+
+  useEffect(() => {
+    if (lastSelectedOptionIndex !== null) {
+      setSelectedOptionIndex(null);
+    }
+  }, [lastSelectedOptionIndex]);
+
   const onConfirm = useCallback(
     index => {
       if (selectedOptionIndex !== null) return;
@@ -71,6 +81,7 @@ Options.propTypes = {
   selectedOptionIndices: PropTypes.arrayOf(PropTypes.number).isRequired,
   onSelectOptionIndex: PropTypes.func.isRequired,
   elseOptionIndex: PropTypes.number,
+  lastSelectedOptionIndex: PropTypes.number,
   warning: PropTypes.string,
 };
 
