@@ -7,20 +7,19 @@ import styles from './styles.module.css';
 import commonStyles from '../styles.module.css';
 import Scrollable from 'common/FormBuilder/Scrollable';
 
-const Options = ({
-  options,
-  selectedOptionIndices,
-  onSelectOptionIndex,
-  elseOptionIndex,
+const useAnimatedSelectedOptionIndex = ({
   lastSelectedOptionIndex,
-  warning,
+  onSelectOptionIndex,
 }) => {
   const transitionDuration = 0.3;
 
+  // Temporary state to animate the options.
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(
     lastSelectedOptionIndex,
   );
 
+  // Reset the selected index for non-null last selected index
+  // to animate the options from the selected state.
   useEffect(() => {
     if (lastSelectedOptionIndex !== null) {
       setSelectedOptionIndex(null);
@@ -31,6 +30,7 @@ const Options = ({
     index => {
       if (selectedOptionIndex !== null) return;
 
+      // Set the selected index to animate the options.
       setSelectedOptionIndex(index);
       setTimeout(() => {
         onSelectOptionIndex(index);
@@ -38,6 +38,26 @@ const Options = ({
     },
     [onSelectOptionIndex, selectedOptionIndex],
   );
+
+  return [selectedOptionIndex, onConfirm, { transitionDuration }];
+};
+
+const Options = ({
+  options,
+  selectedOptionIndices,
+  onSelectOptionIndex,
+  elseOptionIndex,
+  lastSelectedOptionIndex,
+  warning,
+}) => {
+  const [
+    selectedOptionIndex,
+    setSelectedOptionIndex,
+    { transitionDuration },
+  ] = useAnimatedSelectedOptionIndex({
+    lastSelectedOptionIndex,
+    onSelectOptionIndex,
+  });
 
   return (
     <div className={cn(styles.root, { [commonStyles.hasWarning]: !!warning })}>
@@ -58,7 +78,7 @@ const Options = ({
               style={{ transitionDuration: `${transitionDuration}s` }}
             >
               <Option
-                onClick={() => onConfirm(index)}
+                onClick={() => setSelectedOptionIndex(index)}
                 selected={
                   selectedOptionIndices.includes(index) ||
                   selectedOptionIndex === index
