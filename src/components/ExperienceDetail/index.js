@@ -48,7 +48,7 @@ import {
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceStateSelector } from 'selectors/experienceSelector';
-import Button from '../common/button/Button';
+import Button from 'common/button/Button';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
