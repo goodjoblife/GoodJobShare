@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import Modal from 'common/Modal';
 import { Heading } from 'common/base';
+import { LS_HAS_READ_FB_LOGIN_ISSUE_ANNOUNCEMENT_KEY } from 'constants/localStorageKey';
+import { useLocalStorage } from 'react-use';
 
 const AnnoucementModal = () => {
     const [isOpen, setIsOpen] = useState(true)
+    const [hasReadFbLoginIssueAnnoucement, setHasReadFbLoginIssueAnnoucement] = useLocalStorage(
+        LS_HAS_READ_FB_LOGIN_ISSUE_ANNOUNCEMENT_KEY
+    );
     return (
         <Modal
-            isOpen={isOpen}
+            isOpen={isOpen && !hasReadFbLoginIssueAnnoucement}
             hasClose={true}
-            close={() => { setIsOpen(false) }}
+            close={() => {
+                setIsOpen(false)
+                setHasReadFbLoginIssueAnnoucement(true)
+            }}
             closableOnClickOutside={true}
             size="m"
         >
