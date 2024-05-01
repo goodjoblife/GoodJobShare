@@ -57,7 +57,9 @@ export const loginWithFB = FB => (dispatch, getState) => {
                   '[ER0000] 登入時發生錯誤，若持續發生，請聯繫 findyourgoodjob@gmail.com',
                 ),
               );
-              rollbar.error(`Graphql mutation facebookLogin failed: ${error}`);
+              rollbar.error(
+                `[ER0000] Graphql mutation facebookLogin failed: ${error}`,
+              );
             });
         } else if (response.status === authStatus.NOT_AUTHORIZED) {
           dispatch(
@@ -66,7 +68,7 @@ export const loginWithFB = FB => (dispatch, getState) => {
               '[ER0001] 登入時發生錯誤，若持續發生，請聯繫 findyourgoodjob@gmail.com',
             ),
           );
-          rollbar.error(`FB login failed: unauthorized`);
+          rollbar.error(`[ER0001] FB login failed: unauthorized`);
           dispatch(setLogin(authStatus.NOT_AUTHORIZED));
         }
         return response.status;
@@ -78,7 +80,7 @@ export const loginWithFB = FB => (dispatch, getState) => {
             '[ER0002] 登入時發生錯誤，若持續發生，請聯繫 findyourgoodjob@gmail.com',
           ),
         );
-        rollbar.error(`FB login failed: ${error}`);
+        rollbar.error(`[ER0002] FB login failed: ${error}`);
       });
   }
   dispatch(
@@ -87,7 +89,7 @@ export const loginWithFB = FB => (dispatch, getState) => {
       '[ER0003] 登入時發生錯誤，若持續發生，請聯繫 findyourgoodjob@gmail.com',
     ),
   );
-  rollbar.error('FB SDK is not ready');
+  rollbar.error('[ER0003] FB SDK is not ready');
   return Promise.reject(new Error('FB is not ready'));
 };
 
