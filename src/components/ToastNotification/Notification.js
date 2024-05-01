@@ -6,6 +6,8 @@ import useRemoveNotification from 'hooks/toastNotification/useRemoveToast';
 import useTimer, { countingStatusMap } from 'hooks/useTimer';
 import CloseNoCircle from 'common/icons/CloseNoCircle';
 import Checked from 'common/icons/Checked';
+import Close from 'common/icons/Close';
+import Exclamation from 'common/icons/Exclamation';
 import { P } from 'common/base';
 
 import { getOffsetY, statusMap, getIconColor } from './helpers';
@@ -46,18 +48,29 @@ const Notification = ({ index, type, content, id }) => {
 
   const iconColor = getIconColor(type);
 
+  const renderIcon = () => {
+    if (type == NOTIFICATION_TYPE.INFO) {
+      return <Checked className={styles.icon} style={{ fill: iconColor }} />;
+    } else if (type == NOTIFICATION_TYPE.WARNING) {
+      return (
+        <Exclamation className={styles.icon} style={{ fill: iconColor }} />
+      );
+    } else {
+      return <Close className={styles.icon} style={{ fill: iconColor }} />;
+    }
+  };
+
   return (
     <div
       className={styles.container}
       style={{
-        height: `${HEIGHT}px`,
         transform: `translateY(${offsetY})`,
         opacity,
         transition: `transform 0.6s ease-in, opacity ${SUNSET_TIME_IN_SEC}s ease-in`,
       }}
     >
       <div className={styles.left}>
-        <Checked className={styles.icon} style={{ fill: iconColor }} />
+        {renderIcon()}
         <P tag="p" className={styles.message} title={content}>{`${content}`}</P>
       </div>
       <div className={styles.right}>

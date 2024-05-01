@@ -5,6 +5,9 @@ import {
 } from 'apis/auth';
 import { queryMeApi } from 'apis/me';
 import authStatus from 'constants/authStatus';
+import rollbar from 'utils/rollbar';
+import { NOTIFICATION_TYPE } from 'constants/toastNotification';
+import { pushNotification } from '../actions/toastNotification';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
@@ -35,23 +38,56 @@ export const logout = () => (dispatch, getState, { history }) => {
  */
 export const loginWithFB = FB => (dispatch, getState) => {
   if (FB) {
-    return new Promise(resolve =>
-      FB.login(response => resolve(response), { scope: 'email' }),
-    ).then(response => {
-      if (response.status === authStatus.CONNECTED) {
-        return postAuthFacebookApi({
-          accessToken: response.authResponse.accessToken,
-        })
-          .then(({ token, user: { _id, facebook_id } }) =>
-            dispatch(loginWithToken(token)),
-          )
-          .then(() => authStatus.CONNECTED);
-      } else if (response.status === authStatus.NOT_AUTHORIZED) {
-        dispatch(setLogin(authStatus.NOT_AUTHORIZED));
-      }
-      return response.status;
-    });
+    return new Promise(resolve => {
+      return FB.login(response => resolve(response), { scope: 'email' });
+    })
+      .then(response => {
+        if (response.status === authStatus.CONNECTED) {
+          return postAuthFacebookApi({
+            accessToken: response.authResponse.accessToken,
+          })
+            .then(({ token, user: { _id, facebook_id } }) => {
+              return dispatch(loginWithToken(token));
+            })
+            .then(() => authStatus.CONNECTED)
+            .catch(error => {
+              dispatch(
+                pushNotification(
+                  NOTIFICATION_TYPE.ALERT,
+                  '[ER0000] 登入時發生錯誤，若持續發生，請聯繫 findyourgoodjob@gmail.com',
+                ),
+              );
+              rollbar.error(`Graphql mutation facebookLogin failed: ${error}`);
+            });
+        } else if (response.status === authStatus.NOT_AUTHORIZED) {
+          dispatch(
+            pushNotification(
+              NOTIFICATION_TYPE.ALERT,
+              '[ER0001] 登入時發生錯誤，若持續發生，請聯繫 findyourgoodjob@gmail.com',
+            ),
+          );
+          rollbar.error(`FB login failed: unauthorized`);
+          dispatch(setLogin(authStatus.NOT_AUTHORIZED));
+        }
+        return response.status;
+      })
+      .catch(error => {
+        dispatch(
+          pushNotification(
+            NOTIFICATION_TYPE.ALERT,
+            '[ER0002] 登入時發生錯誤，若持續發生，請聯繫 findyourgoodjob@gmail.com',
+          ),
+        );
+        rollbar.error(`FB login failed: ${error}`);
+      });
   }
+  dispatch(
+    pushNotification(
+      NOTIFICATION_TYPE.ALERT,
+      '[ER0003] 登入時發生錯誤，若持續發生，請聯繫 findyourgoodjob@gmail.com',
+    ),
+  );
+  rollbar.error('FB SDK is not ready');
   return Promise.reject(new Error('FB is not ready'));
 };
 
