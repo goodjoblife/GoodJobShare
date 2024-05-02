@@ -102,11 +102,11 @@ jobs:
     env:
       REGISTRY: docker.pkg.github.com
       REPO: goodjoblife/goodjobshare/web-server-dev
-      IMAGE: goodjobshare:dev
+      IMAGE: goodjobshare:stage
     steps:
       - uses: actions/checkout@v4
       - run: docker login ${REGISTRY} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-      - run: docker-compose -f .github/docker-compose-dev.yml build
+      - run: docker-compose -f .github/docker-compose-stage.yml build
       - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:dev-razzle-3
       - run: docker push ${REGISTRY}/${REPO}:dev-razzle-3
   deploy-stage:
