@@ -1,0 +1,26 @@
+name: Update dev Branch
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.DEPLOY_CI_TOKEN }}
+
+      - name: Setup Git User
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "findyourgoodjob@gmail.com"
+
+      - name: Update dev Branch
+        run: |
+          git fetch --all
+          git checkout dev
+          git merge origin/dev
+          git merge origin/master --ff-only
+          git push origin dev

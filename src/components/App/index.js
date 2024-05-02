@@ -15,6 +15,9 @@ import Footer from './Footer';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
 import routes from '../../routes';
+import CollapsedDrawer from 'common/Questionnaire/CollapsedDrawer';
+import NetPromoter from 'common/Questionnaire/ExpandedModal';
+import AnnoucementModal from '../Annoucement';
 
 const useShare = () => {
   const location = useLocation();
@@ -62,6 +65,10 @@ const App = () => {
         hideProgressBar={share === STATE_SHARE.SALARY_WORK_TIME_NO_PROGRESS_BAR}
       />
       <LoginModal />
+      <CollapsedDrawer>
+        <NetPromoter />
+      </CollapsedDrawer>
+      <AnnoucementModal />
     </Fragment>
   );
 };

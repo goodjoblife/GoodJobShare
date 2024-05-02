@@ -2,26 +2,18 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-use';
 import { path } from 'ramda';
 import {
-  generateShareTimeSalaryOnePage,
   generateShareTimeSalaryTypeForm,
-  generateShareTimeSalaryTypeFormHideProgressBar,
+  generateShareInterviewTypeForm,
 } from 'common/ShareExpSection/shareLinkTo';
 
 const ACTIONS = [
   {
-    prob: 0.34,
-    type: 'SALARY_FORM_ONE_PAGE',
-    generateTo: generateShareTimeSalaryOnePage,
-  },
-  {
-    prob: 0.33,
-    type: 'SALARY_FORM_TYPE_FORM',
+    prob: 0.5,
     generateTo: generateShareTimeSalaryTypeForm,
   },
   {
-    prob: 0.33,
-    type: 'SALARY_FORM_TYPE_FORM_NO_PROGRESS',
-    generateTo: generateShareTimeSalaryTypeFormHideProgressBar,
+    prob: 0.5,
+    generateTo: generateShareInterviewTypeForm,
   },
 ];
 
