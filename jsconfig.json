@@ -2,7 +2,8 @@
     "compilerOptions": {
         "baseUrl": "src",
         "paths": {
-            "common/*": ["components/common/*"]
+            "common/*": ["components/common/*"],
+            "images/*": ["components/images/*"]
         }
     },
     "include": ["src"]

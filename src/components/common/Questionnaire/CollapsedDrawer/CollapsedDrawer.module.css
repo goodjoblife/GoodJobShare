@@ -1,4 +1,4 @@
-@value main-black from "common/variables.module.css";
+@value main-black from "../../variables.module.css";
 
 .container {
   position: fixed;
