@@ -17,6 +17,7 @@ import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeFor
 import routes from '../../routes';
 import CollapsedDrawer from 'common/Questionnaire/CollapsedDrawer';
 import NetPromoter from 'common/Questionnaire/ExpandedModal';
+import AnnoucementModal from '../Annoucement';
 
 const useShare = () => {
   const location = useLocation();
@@ -67,6 +68,7 @@ const App = () => {
       <CollapsedDrawer>
         <NetPromoter />
       </CollapsedDrawer>
+      <AnnoucementModal />
     </Fragment>
   );
 };

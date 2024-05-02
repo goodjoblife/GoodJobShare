@@ -7,7 +7,7 @@ import LinkItem from './LinkItem';
 import styles from './Footer.module.css';
 import MediasImg from './medias.jpg';
 import LogoG0vImg from './logo-g0v-white.svg';
-import { openModal } from 'actions/expandedModal';
+import { openModal } from 'actions/questionnaireExpandedModal';
 import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey';
 
 const link1 = [
@@ -71,7 +71,10 @@ const Footer = () => (
     </Wrapper>
     <div className={styles.footer}>
       <Wrapper size="l" className={styles.inner}>
-        <P size="s">Copyright © GoodJob.life team 2019</P>
+        <P size="s">Copyright © GoodJob.life team 2024</P>
+        <P size="s" style={{ paddingLeft: '10px' }}>
+          網站負責人：陳韋銘 findyourgoodjob@gmail.com
+        </P>
         <div className={styles.g0v}>
           <a href="https://grants.g0v.tw/power/" alt="power by g0v">
             <img src={LogoG0vImg} alt="g0v" />
