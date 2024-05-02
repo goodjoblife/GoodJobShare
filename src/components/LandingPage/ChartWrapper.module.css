@@ -1,4 +1,4 @@
-@value above-mobile from "common/variables.module.css";
+@value above-mobile from "../common/variables.module.css";
 
 .chartWrapper {
   .header {

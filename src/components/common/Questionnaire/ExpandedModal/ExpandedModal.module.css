@@ -1,4 +1,4 @@
-@value main-yellow, white-light from "common/variables.module.css";
+@value main-yellow, white-light from "../../variables.module.css";
 
 @keyframes slideIn {
   from {

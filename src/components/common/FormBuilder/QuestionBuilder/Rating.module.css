@@ -1,4 +1,4 @@
-@value main-yellow from 'common/variables.module.css';
+@value main-yellow from '../../variables.module.css';
 
 .flexContainer {
   display: flex;
