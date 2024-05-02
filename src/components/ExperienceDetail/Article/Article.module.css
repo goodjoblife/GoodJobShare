@@ -1,4 +1,4 @@
-@value white-light, border-gray, main-yellow, yellow-light from "common/variables.module.css";
+@value white-light, border-gray, main-yellow, yellow-light from "../../common/variables.module.css";
 
 $padding: 40px;
 $paddingS: 16px;

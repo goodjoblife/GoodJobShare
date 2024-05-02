@@ -1,4 +1,4 @@
-@value main-yellow, above-desktop from "common/variables.module.css";
+@value main-yellow, above-desktop from "../variables.module.css";
 
 .group {
   display: inline-flex;

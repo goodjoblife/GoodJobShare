@@ -1,4 +1,4 @@
-@value main-yellow, gray-dark from "common/variables.module.css";
+@value main-yellow, gray-dark from "../variables.module.css";
 
 .subheading {
   max-width: 500px;

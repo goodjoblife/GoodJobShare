@@ -1,4 +1,4 @@
-@value yellow-bar, gray-dark, main-gray, main-yellow, warning-red from "common/variables.module.css";
+@value yellow-bar, gray-dark, main-gray, main-yellow, warning-red from "../../common/variables.module.css";
 $below-mobile: 550px;
 $below-small: 850px;
 $above-desktop: 1025px;

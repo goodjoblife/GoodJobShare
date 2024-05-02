@@ -1,4 +1,4 @@
-@value TOP_HEIGHT from 'common/variables.module.css';
+@value TOP_HEIGHT from '../../../common/variables.module.css';
 
 .root {
   display: block;
