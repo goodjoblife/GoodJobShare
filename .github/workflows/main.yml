@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - dev
+      - dev-razzle-3
   pull_request:
 
 jobs:
