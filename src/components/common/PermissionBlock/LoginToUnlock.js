@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import cn from 'classnames';
 import PropTypes from 'prop-types';
-import { Heading, P, Link } from 'common/base';
+import { Heading, P } from 'common/base';
 import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
 import styles from './PermissionBlock.module.css';
+import linkStyles from 'common/base/Link.module.css';
 import CallToLoginShareButton from './CallToLoginShareButton';
 import { useIsLoggedIn } from 'hooks/auth';
 import LoginModal from './LoginModal';
@@ -40,9 +42,8 @@ const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
       </P>
       {!isLoggedIn && (
         <P
-          Tag={Link}
           size="l"
-          className={styles.ctaText}
+          className={cn(linkStyles.link, styles.ctaText)}
           bold
           onClick={toggleModalOpen}
         >

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import { compose } from 'recompose';
@@ -9,6 +9,8 @@ import { Section } from 'common/base';
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
+import OvertimeSection from './OvertimeSection';
+import useSearchbar from '../useSearchbar';
 
 const TimeAndSalary = ({
   salaryWorkTimes,
@@ -28,7 +30,16 @@ const TimeAndSalary = ({
     fetchPermission();
   }, [fetchPermission]);
 
+  const { Searchbar, matchesFilter } = useSearchbar({
+    pageType,
+    tabType,
+  });
+
   const pageSize = 10;
+  salaryWorkTimes = useMemo(() => salaryWorkTimes.filter(matchesFilter), [
+    matchesFilter,
+    salaryWorkTimes,
+  ]);
   const currentData = salaryWorkTimes.slice(
     (page - 1) * pageSize,
     page * pageSize,
@@ -36,11 +47,12 @@ const TimeAndSalary = ({
 
   return (
     <Section Tag="main" paddingBottom>
+      <OvertimeSection statistics={salaryWorkTimeStatistics} />
+      <Searchbar />
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
           <WorkingHourBlock
             data={currentData}
-            statistics={salaryWorkTimeStatistics}
             pageType={pageType}
             pageName={pageName}
             hideContent={!canView}

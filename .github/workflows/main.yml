@@ -2,6 +2,9 @@ name: Github Actions CI
 
 on:
   push:
+    branches:
+      - master
+      - dev
   pull_request:
 
 jobs:
@@ -12,10 +15,27 @@ jobs:
       matrix:
         node: [14, 16]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Setup node
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install dependencies
+        run: yarn install
+      - name: Lint and Unit test
+        run: CI=true npm run test
+      - name: Build js
+        run: CI=false npm run build
+  test-future:
+    name: test future node
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: "--openssl-legacy-provider"
+    strategy:
+      matrix:
+        node: [18, 20]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
       - name: Install dependencies
@@ -35,7 +55,7 @@ jobs:
       REPO: goodjoblife/goodjobshare/web-server
       IMAGE: goodjobshare:production
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: docker login ${REGISTRY} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
       - run: docker-compose -f .github/docker-compose-production.yml build
       - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:production-${GITHUB_SHA}
@@ -51,7 +71,7 @@ jobs:
       REPO: goodjoblife/goodjobshare/web-server-dev
       IMAGE: goodjobshare:stage
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: docker login ${REGISTRY} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
       - run: docker-compose -f .github/docker-compose-stage.yml build
       - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:stage
@@ -67,7 +87,7 @@ jobs:
       REPO: goodjoblife/goodjobshare/web-server-dev
       IMAGE: goodjobshare:dev
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: docker login ${REGISTRY} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
       - run: docker-compose -f .github/docker-compose-dev.yml build
       - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:dev

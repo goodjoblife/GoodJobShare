@@ -1,5 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import { generatePath } from 'react-router';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from '../../../constants/helmetData';
 import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
@@ -36,6 +37,9 @@ const CompanyOverviewHelmet = ({
   const workExperiencesStr = formatDataCount(workExperiences, '篇', '');
   const description = `查看由${companyName}內部員工分享的${salaryWorkTimesStr}薪水及加班數據、${workExperiencesStr}工作心得，以及由面試者分享的${interviewExperiencesStr}面試經驗。`;
 
+  const path = generatePath('/companies/:companyName', { companyName });
+  const url = formatCanonicalPath(path);
+
   return (
     <Helmet>
       <title itemProp="name" lang="zh-TW">
@@ -45,14 +49,8 @@ const CompanyOverviewHelmet = ({
       <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
       <meta property="og:description" content={description} />
       <meta name="keywords" content={formatKeyword(companyName)} />
-      <meta
-        property="og:url"
-        content={formatCanonicalPath(`/companies/${companyName}/overview`)}
-      />
-      <link
-        rel="canonical"
-        href={formatCanonicalPath(`/companies/${companyName}/overview`)}
-      />
+      <meta property="og:url" content={url} />
+      <link rel="canonical" href={url} />
     </Helmet>
   );
 };
@@ -76,6 +74,9 @@ const JobTitleOverviewHelmet = ({
   const workExperiencesStr = formatDataCount(workExperiences, '篇', '');
   const description = `查看由${jobTitle}分享的${salaryWorkTimesStr}薪水及加班數據、${workExperiencesStr}工作心得，以及由面試者分享的${interviewExperiencesStr}面試經驗。`;
 
+  const path = generatePath('/job-titles/:jobTitle', { jobTitle });
+  const url = formatCanonicalPath(path);
+
   return (
     <Helmet>
       <title itemProp="name" lang="zh-TW">
@@ -85,14 +86,8 @@ const JobTitleOverviewHelmet = ({
       <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
       <meta property="og:description" content={description} />
       <meta name="keywords" content={formatKeyword(jobTitle)} />
-      <meta
-        property="og:url"
-        content={formatCanonicalPath(`/job-titles/${jobTitle}/overview`)}
-      />
-      <link
-        rel="canonical"
-        href={formatCanonicalPath(`/job-titles/${jobTitle}/overview`)}
-      />
+      <meta property="og:url" content={url} />
+      <link rel="canonical" href={url} />
     </Helmet>
   );
 };

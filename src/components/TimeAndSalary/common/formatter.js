@@ -7,7 +7,7 @@ import styles from './formatter.module.css';
 
 export const getCompany = item => (
   <div>
-    <Link to={`/companies/${encodeURIComponent(item.company.name)}/overview`}>
+    <Link to={`/companies/${encodeURIComponent(item.company.name)}`}>
       {item.company.name}
     </Link>
   </div>
@@ -17,7 +17,7 @@ export const getJobTitle = item => {
   const { job_title: jobTitle, sector } = item;
   return (
     <div>
-      <Link to={`/job-titles/${encodeURIComponent(jobTitle.name)}/overview`}>
+      <Link to={`/job-titles/${encodeURIComponent(jobTitle.name)}`}>
         {jobTitle.name}
       </Link>{' '}
       <span className={`pM ${styles.sector}`}>{sector}</span>
@@ -26,13 +26,13 @@ export const getJobTitle = item => {
 };
 
 export const getNameAsCompanyName = (o, row) => (
-  <Link to={`/companies/${encodeURIComponent(o.name)}/overview`}>
+  <Link to={`/companies/${encodeURIComponent(o.name)}`}>
     {o.name} <span className={`pM ${styles.sector}`}>{row.sector}</span>
   </Link>
 );
 
 export const getNameAsJobTitle = (o, row) => (
-  <Link to={`/job-titles/${encodeURIComponent(o.name)}/overview`}>
+  <Link to={`/job-titles/${encodeURIComponent(o.name)}`}>
     {o.name} <span className={`pM ${styles.sector}`}>{row.sector}</span>
   </Link>
 );
