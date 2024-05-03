@@ -13,6 +13,9 @@ export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
 export const LOG_OUT = '@@auth/LOG_OUT';
 
+const LOGIN_ERROR_MSG =
+  '登入時發生錯誤，若持續發生，請聯繫 findyourgoodjob@gmail.com';
+
 const setLogin = (status, token = null) => ({
   type: SET_LOGIN,
   status,
@@ -33,64 +36,77 @@ export const logout = () => (dispatch, getState, { history }) => {
   history.push('/');
 };
 
+// Wrap FB SDK login as promise
+const FBSDKLogin = async FB => {
+  return new Promise(resolve => {
+    return FB.login(response => resolve(response), { scope: 'email' });
+  });
+};
+
+const dispatchLoginErrorToast = (dispatch, message) => {
+  dispatch(pushNotification(NOTIFICATION_TYPE.ALERT, message));
+};
+
 /**
  * Use `hooks/login/useFacebookLogin` as possible
  */
-export const loginWithFB = FB => (dispatch, getState) => {
-  if (FB) {
-    return new Promise(resolve => {
-      return FB.login(response => resolve(response), { scope: 'email' });
-    })
-      .then(response => {
-        if (response.status === authStatus.CONNECTED) {
-          return postAuthFacebookApi({
-            accessToken: response.authResponse.accessToken,
-          })
-            .then(({ token, user: { _id, facebook_id } }) => {
-              return dispatch(loginWithToken(token));
-            })
-            .then(() => authStatus.CONNECTED)
-            .catch(error => {
-              dispatch(
-                pushNotification(
-                  NOTIFICATION_TYPE.ALERT,
-                  '[ER0000] 登入時發生錯誤，若持續發生，請聯繫 findyourgoodjob@gmail.com',
-                ),
-              );
-              rollbar.error(
-                `[ER0000] Graphql mutation facebookLogin failed: ${error}`,
-              );
-            });
-        } else if (response.status === authStatus.NOT_AUTHORIZED) {
-          dispatch(
-            pushNotification(
-              NOTIFICATION_TYPE.ALERT,
-              '[ER0001] 登入時發生錯誤，若持續發生，請聯繫 findyourgoodjob@gmail.com',
-            ),
-          );
-          rollbar.error(`[ER0001] FB login failed: unauthorized`);
-          dispatch(setLogin(authStatus.NOT_AUTHORIZED));
-        }
-        return response.status;
-      })
-      .catch(error => {
-        dispatch(
-          pushNotification(
-            NOTIFICATION_TYPE.ALERT,
-            '[ER0002] 登入時發生錯誤，若持續發生，請聯繫 findyourgoodjob@gmail.com',
-          ),
-        );
-        rollbar.error(`[ER0002] FB login failed: ${error}`);
-      });
+export const loginWithFB = FBSDK => async (dispatch, getState) => {
+  if (!FBSDK) {
+    dispatchLoginErrorToast(dispatch, `[ER0001] ${LOGIN_ERROR_MSG}`);
+    rollbar.error('[ER0001] FB SDK is not ready');
+    throw new Error('[ER0001] FB SDK is not ready');
   }
-  dispatch(
-    pushNotification(
-      NOTIFICATION_TYPE.ALERT,
-      '[ER0003] 登入時發生錯誤，若持續發生，請聯繫 findyourgoodjob@gmail.com',
-    ),
-  );
-  rollbar.error('[ER0003] FB SDK is not ready');
-  return Promise.reject(new Error('FB is not ready'));
+
+  let fbLoginResponse = null;
+  try {
+    // invoke FB SDK Login to get FB-issued access token
+    fbLoginResponse = await FBSDKLogin(FBSDK);
+  } catch (error) {
+    dispatchLoginErrorToast(dispatch, `[ER0002] ${LOGIN_ERROR_MSG}`);
+    rollbar.error(`[ER0002] FB SDK login failed: ${error}`);
+    throw new Error(`[ER0002] FB SDK login failed: ${error}`);
+  }
+
+  if (!fbLoginResponse || !fbLoginResponse.status) {
+    dispatchLoginErrorToast(dispatch, `[ER0003] ${LOGIN_ERROR_MSG}`);
+    rollbar.error(
+      `[ER0003] FB login response is empty or does not have status field`,
+    );
+    throw new Error(
+      `[ER0003] FB login response is empty or does not have status field`,
+    );
+  }
+
+  if (fbLoginResponse.status === authStatus.NOT_AUTHORIZED) {
+    dispatchLoginErrorToast(dispatch, `[ER0004] ${LOGIN_ERROR_MSG}`);
+    rollbar.error(`[ER0004] FB login failed: unauthorized`);
+    dispatch(setLogin(authStatus.NOT_AUTHORIZED));
+    throw new Error(`[ER0004] FB login failed: unauthorized`);
+  }
+
+  if (fbLoginResponse.status === authStatus.CONNECTED) {
+    try {
+      // call GoodJob GraphQL API to get JWT token issued by GoodJob
+      const { token } = await postAuthFacebookApi({
+        accessToken: fbLoginResponse.authResponse.accessToken,
+      });
+      await dispatch(loginWithToken(token));
+    } catch (error) {
+      dispatchLoginErrorToast(dispatch, `[ER0005] ${LOGIN_ERROR_MSG}`);
+      rollbar.error(`[ER0005] Graphql mutation facebookLogin failed: ${error}`);
+      throw new Error(
+        `[ER0005] Graphql mutation facebookLogin failed: ${error}`,
+      );
+    }
+  } else {
+    dispatchLoginErrorToast(dispatch, `[ER0006] ${LOGIN_ERROR_MSG}`);
+    rollbar.error(
+      `[ER0006] FB login failed: unknown auth status: ${fbLoginResponse.status}`,
+    );
+    throw new Error(
+      `[ER0006] FB login failed: unknown auth status: ${fbLoginResponse.status}`,
+    );
+  }
 };
 
 /**
