@@ -7,14 +7,12 @@ import { queryMeApi } from 'apis/me';
 import authStatus from 'constants/authStatus';
 import rollbar from 'utils/rollbar';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
+import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import { pushNotification } from '../actions/toastNotification';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
 export const LOG_OUT = '@@auth/LOG_OUT';
-
-const LOGIN_ERROR_MSG =
-  '登入時發生錯誤，若持續發生，請聯繫 findyourgoodjob@gmail.com';
 
 const setLogin = (status, token = null) => ({
   type: SET_LOGIN,
@@ -37,14 +35,35 @@ export const logout = () => (dispatch, getState, { history }) => {
 };
 
 // Wrap FB SDK login as promise
-const FBSDKLogin = async FB => {
+const FBSDKLogin = FB => {
   return new Promise(resolve => {
     return FB.login(response => resolve(response), { scope: 'email' });
   });
 };
 
-const dispatchLoginErrorToast = (dispatch, message) => {
-  dispatch(pushNotification(NOTIFICATION_TYPE.ALERT, message));
+const composeErrMsg = (code, message, error) => {
+  if (error) {
+    return `[${code}] ${message}: ${error}`;
+  } else {
+    return `[${code}] ${message}`;
+  }
+};
+const loginErrorToast = (code, message) =>
+  pushNotification(NOTIFICATION_TYPE.ALERT, composeErrMsg(code, message));
+
+const dispatchNotificationAndRollbarAndThrowError = (
+  dispatch,
+  errorCode,
+  error,
+) => {
+  dispatch(loginErrorToast(errorCode, ERROR_CODE_MSG[errorCode].external));
+  const internalMsg = composeErrMsg(
+    errorCode,
+    ERROR_CODE_MSG[errorCode].internal,
+    error,
+  );
+  rollbar.error(internalMsg);
+  throw new Error(internalMsg);
 };
 
 /**
@@ -52,9 +71,7 @@ const dispatchLoginErrorToast = (dispatch, message) => {
  */
 export const loginWithFB = FBSDK => async (dispatch, getState) => {
   if (!FBSDK) {
-    dispatchLoginErrorToast(dispatch, `[ER0001] ${LOGIN_ERROR_MSG}`);
-    rollbar.error('[ER0001] FB SDK is not ready');
-    throw new Error('[ER0001] FB SDK is not ready');
+    dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0001');
   }
 
   let fbLoginResponse = null;
@@ -62,26 +79,20 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
     // invoke FB SDK Login to get FB-issued access token
     fbLoginResponse = await FBSDKLogin(FBSDK);
   } catch (error) {
-    dispatchLoginErrorToast(dispatch, `[ER0002] ${LOGIN_ERROR_MSG}`);
-    rollbar.error(`[ER0002] FB SDK login failed: ${error}`);
-    throw new Error(`[ER0002] FB SDK login failed: ${error}`);
+    dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0002', error);
   }
 
   if (!fbLoginResponse || !fbLoginResponse.status) {
-    dispatchLoginErrorToast(dispatch, `[ER0003] ${LOGIN_ERROR_MSG}`);
-    rollbar.error(
-      `[ER0003] FB login response is empty or does not have status field`,
-    );
-    throw new Error(
-      `[ER0003] FB login response is empty or does not have status field`,
-    );
+    dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0003');
+  }
+
+  if (fbLoginResponse.status === authStatus.CANCELED) {
+    return;
   }
 
   if (fbLoginResponse.status === authStatus.NOT_AUTHORIZED) {
-    dispatchLoginErrorToast(dispatch, `[ER0004] ${LOGIN_ERROR_MSG}`);
-    rollbar.error(`[ER0004] FB login failed: unauthorized`);
     dispatch(setLogin(authStatus.NOT_AUTHORIZED));
-    throw new Error(`[ER0004] FB login failed: unauthorized`);
+    dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0004');
   }
 
   if (fbLoginResponse.status === authStatus.CONNECTED) {
@@ -92,20 +103,10 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
       });
       await dispatch(loginWithToken(token));
     } catch (error) {
-      dispatchLoginErrorToast(dispatch, `[ER0005] ${LOGIN_ERROR_MSG}`);
-      rollbar.error(`[ER0005] Graphql mutation facebookLogin failed: ${error}`);
-      throw new Error(
-        `[ER0005] Graphql mutation facebookLogin failed: ${error}`,
-      );
+      dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0005', error);
     }
   } else {
-    dispatchLoginErrorToast(dispatch, `[ER0006] ${LOGIN_ERROR_MSG}`);
-    rollbar.error(
-      `[ER0006] FB login failed: unknown auth status: ${fbLoginResponse.status}`,
-    );
-    throw new Error(
-      `[ER0006] FB login failed: unknown auth status: ${fbLoginResponse.status}`,
-    );
+    dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0006');
   }
 };
 
