@@ -40,13 +40,7 @@
 }
 
 .message {
-  white-space: nowrap;
+  word-break: break-all;
   text-overflow: ellipsis;
   overflow: hidden;
-}
-
-.icon {
-  height: 24px;
-  width: 24px;
-  margin-right: 14px;
 }
