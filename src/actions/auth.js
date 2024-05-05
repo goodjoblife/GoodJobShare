@@ -86,27 +86,26 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
     dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0003');
   }
 
-  if (fbLoginResponse.status === authStatus.CANCELED) {
-    return;
-  }
-
-  if (fbLoginResponse.status === authStatus.NOT_AUTHORIZED) {
-    dispatch(setLogin(authStatus.NOT_AUTHORIZED));
-    dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0004');
-  }
-
-  if (fbLoginResponse.status === authStatus.CONNECTED) {
-    try {
-      // call GoodJob GraphQL API to get JWT token issued by GoodJob
-      const { token } = await postAuthFacebookApi({
-        accessToken: fbLoginResponse.authResponse.accessToken,
-      });
-      await dispatch(loginWithToken(token));
-    } catch (error) {
-      dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0005', error);
-    }
-  } else {
-    dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0006');
+  switch (fbLoginResponse.status) {
+    case authStatus.CANCELED:
+      return;
+    case authStatus.NOT_AUTHORIZED:
+      dispatch(setLogin(authStatus.NOT_AUTHORIZED));
+      dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0004');
+      break;
+    case authStatus.CONNECTED:
+      try {
+        // call GoodJob GraphQL API to get JWT token issued by GoodJob
+        const { token } = await postAuthFacebookApi({
+          accessToken: fbLoginResponse.authResponse.accessToken,
+        });
+        await dispatch(loginWithToken(token));
+      } catch (error) {
+        dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0005', error);
+      }
+      break;
+    default:
+      dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0006');
   }
 };
 
