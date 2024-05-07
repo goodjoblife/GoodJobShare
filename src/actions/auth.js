@@ -55,6 +55,7 @@ const dispatchNotificationAndRollbarAndThrowError = (
   dispatch,
   errorCode,
   error,
+  extra,
 ) => {
   dispatch(loginErrorToast(errorCode, ERROR_CODE_MSG[errorCode].external));
   const internalMsg = composeErrMsg(
@@ -62,7 +63,11 @@ const dispatchNotificationAndRollbarAndThrowError = (
     ERROR_CODE_MSG[errorCode].internal,
     error,
   );
-  rollbar.error(internalMsg);
+  if (!extra) {
+    rollbar.error(internalMsg);
+  } else {
+    rollbar.error(internalMsg, extra);
+  }
   throw new Error(internalMsg);
 };
 
@@ -105,7 +110,12 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
       }
       break;
     default:
-      dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0006');
+      dispatchNotificationAndRollbarAndThrowError(
+        dispatch,
+        'ER0006',
+        null,
+        fbLoginResponse,
+      );
   }
 };
 
