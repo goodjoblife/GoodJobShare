@@ -51,11 +51,9 @@ const composeErrMsg = (code, message, error) => {
 const loginErrorToast = (code, message) =>
   pushNotification(NOTIFICATION_TYPE.ALERT, composeErrMsg(code, message));
 
-const dispatchNotificationAndRollbarAndThrowError = (
+const toastNotificationAndRollbarAndThrowError = (errorCode, error, extra) => (
   dispatch,
-  errorCode,
-  error,
-  extra,
+  getState,
 ) => {
   dispatch(loginErrorToast(errorCode, ERROR_CODE_MSG[errorCode].external));
   const internalMsg = composeErrMsg(
@@ -76,7 +74,7 @@ const dispatchNotificationAndRollbarAndThrowError = (
  */
 export const loginWithFB = FBSDK => async (dispatch, getState) => {
   if (!FBSDK) {
-    dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0001');
+    dispatch(toastNotificationAndRollbarAndThrowError('ER0001'));
   }
 
   let fbLoginResponse = null;
@@ -84,11 +82,11 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
     // invoke FB SDK Login to get FB-issued access token
     fbLoginResponse = await FBSDKLogin(FBSDK);
   } catch (error) {
-    dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0002', error);
+    dispatch(toastNotificationAndRollbarAndThrowError('ER0002', error));
   }
 
   if (!fbLoginResponse || !fbLoginResponse.status) {
-    dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0003');
+    dispatch(toastNotificationAndRollbarAndThrowError('ER0003'));
   }
 
   switch (fbLoginResponse.status) {
@@ -96,7 +94,7 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
       return;
     case authStatus.NOT_AUTHORIZED:
       dispatch(setLogin(authStatus.NOT_AUTHORIZED));
-      dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0004');
+      dispatch(toastNotificationAndRollbarAndThrowError('ER0004'));
       break;
     case authStatus.CONNECTED:
       try {
@@ -106,15 +104,16 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
         });
         await dispatch(loginWithToken(token));
       } catch (error) {
-        dispatchNotificationAndRollbarAndThrowError(dispatch, 'ER0005', error);
+        dispatch(toastNotificationAndRollbarAndThrowError('ER0005', error));
       }
       break;
     default:
-      dispatchNotificationAndRollbarAndThrowError(
-        dispatch,
-        'ER0006',
-        null,
-        fbLoginResponse,
+      dispatch(
+        toastNotificationAndRollbarAndThrowError(
+          'ER0006',
+          null,
+          fbLoginResponse,
+        ),
       );
   }
 };
