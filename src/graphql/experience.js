@@ -148,3 +148,9 @@ export const deleteExpereinceLikeGql = /* GraphQL */ `
     }
   }
 `;
+
+export const queryExperienceCountGql = /* GraphQL */ `
+  query {
+    experienceCount
+  }
+`;
