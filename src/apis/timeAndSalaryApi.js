@@ -32,10 +32,12 @@ export const fetchTimeAndSalary = ({ start, limit }) =>
     variables: { start, limit },
   });
 
-export const fetchTimeAndSalaryCount = () =>
-  graphqlClient({
+export const querySalaryWorkTimeCountApi = async () => {
+  const data = await graphqlClient({
     query: getSalaryWorkTimeCount,
-  }).then(data => data.salary_work_time_count);
+  });
+  return data.salaryWorkTimeCount;
+};
 
 export const fetchTimeAndSalaryExtreme = ({ opt }) =>
   fetchUtil(`${endpoint}/extreme`).get({ query: opt });

@@ -1,7 +1,7 @@
-export const getSalaryWorkTimeCount = `
-{
-  salary_work_time_count
-}
+export const getSalaryWorkTimeCount = /* GraphQL */ `
+  query {
+    salaryWorkTimeCount
+  }
 `;
 
 export const getSalaryWorkTimes = `

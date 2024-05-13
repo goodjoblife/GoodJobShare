@@ -1,41 +1,35 @@
-import fetchingStatus, { isUnfetched } from 'constants/status';
+import { getError, getFetched, toFetching, isUnfetched } from 'utils/fetchBox';
 import { tokenSelector } from '../selectors/authSelector';
+import { salaryWorkTimeCountBoxSelector } from 'selectors/countSelector';
 import {
   postWorkings as postWorkingsApi,
-  fetchTimeAndSalaryCount as fetchTimeAndSalaryCountApi,
+  querySalaryWorkTimeCountApi,
 } from 'apis/timeAndSalaryApi';
 
-export const SET_SALARY_WORK_TIME_COUNT =
-  '@@TIME_AND_SALARY/SET_SALARY_WORK_TIME_COUNT';
+export const SET_COUNT = '@@SALARY_WORK_TIME/SET_COUNT';
 
-const setCountData = (count, status, error = null) => ({
-  type: SET_SALARY_WORK_TIME_COUNT,
-  count,
-  status,
-  error,
+const setCount = countBox => ({
+  type: SET_COUNT,
+  countBox,
 });
 
-export const queryTimeAndSalaryCount = () => (dispatch, getState) => {
-  dispatch(setCountData(0, fetchingStatus.FETCHING));
-
-  return fetchTimeAndSalaryCountApi()
-    .then(count => {
-      dispatch(setCountData(count, fetchingStatus.FETCHED));
-    })
-    .catch(error => {
-      dispatch(setCountData(0, fetchingStatus.ERROR, error));
-      throw error;
-    });
+export const queryTimeAndSalaryCount = () => async (dispatch, getState) => {
+  dispatch(setCount(toFetching()));
+  try {
+    const count = await querySalaryWorkTimeCountApi();
+    dispatch(setCount(getFetched(count)));
+  } catch (error) {
+    dispatch(setCount(getError(error)));
+  }
 };
 
-export const queryTimeAndSalaryCountIfUnfetched = () => (
+export const queryTimeAndSalaryCountIfUnfetched = () => async (
   dispatch,
   getState,
 ) => {
-  if (isUnfetched(getState().timeAndSalary.countStatus)) {
+  if (isUnfetched(salaryWorkTimeCountBoxSelector(getState()))) {
     return dispatch(queryTimeAndSalaryCount());
   }
-  return Promise.resolve();
 };
 
 export const createSalaryWorkTime = ({ body }) => (dispatch, getState) => {
