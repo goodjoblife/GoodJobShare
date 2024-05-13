@@ -1,10 +1,8 @@
 import { getError, getFetched, toFetching, isUnfetched } from 'utils/fetchBox';
 import { tokenSelector } from '../selectors/authSelector';
 import { salaryWorkTimeCountBoxSelector } from 'selectors/countSelector';
-import {
-  postWorkings as postWorkingsApi,
-  querySalaryWorkTimeCountApi,
-} from 'apis/timeAndSalaryApi';
+import { postWorkings as postWorkingsApi } from 'apis/timeAndSalaryApi';
+import { querySalaryWorkTimeCountApi } from 'apis/salaryWorkTimeApi';
 
 export const SET_COUNT = '@@SALARY_WORK_TIME/SET_COUNT';
 

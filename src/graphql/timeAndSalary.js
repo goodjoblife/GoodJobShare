@@ -1,9 +1,3 @@
-export const querySalaryWorkTimeCountGql = /* GraphQL */ `
-  query {
-    salaryWorkTimeCount
-  }
-`;
-
 export const getSalaryWorkTimes = /* GraphQL */ `
   query($start: Int!, $limit: Int!) {
     salaryWorkTimeCount
