@@ -4,31 +4,31 @@ export const querySalaryWorkTimeCountGql = /* GraphQL */ `
   }
 `;
 
-export const getSalaryWorkTimes = `
-query($start: Int!, $limit: Int!) {
-  salaryWorkTimeCount
-  salary_work_times(start: $start, limit: $limit) {
-    company {
-      name
+export const getSalaryWorkTimes = /* GraphQL */ `
+  query($start: Int!, $limit: Int!) {
+    salaryWorkTimeCount
+    salary_work_times(start: $start, limit: $limit) {
+      company {
+        name
+      }
+      job_title {
+        name
+      }
+      overtime_frequency
+      salary {
+        type
+        amount
+      }
+      sector
+      week_work_time
+      data_time {
+        year
+        month
+      }
+      estimated_hourly_wage
+      about_this_job
     }
-    job_title {
-      name
-    }
-    overtime_frequency
-    salary {
-      type
-      amount
-    }
-    sector
-    week_work_time
-    data_time {
-      year
-      month
-    }
-    estimated_hourly_wage
-    about_this_job
   }
-}
 `;
 
 export const getSearchCompanyQuery = `
