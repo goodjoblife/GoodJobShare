@@ -13,7 +13,7 @@ const setCount = countBox => ({
   countBox,
 });
 
-export const queryTimeAndSalaryCount = () => async (dispatch, getState) => {
+export const querySalaryWorkTimeCount = () => async (dispatch, getState) => {
   dispatch(setCount(toFetching()));
   try {
     const count = await querySalaryWorkTimeCountApi();
@@ -23,12 +23,12 @@ export const queryTimeAndSalaryCount = () => async (dispatch, getState) => {
   }
 };
 
-export const queryTimeAndSalaryCountIfUnfetched = () => async (
+export const querySalaryWorkTimeCountIfUnfetched = () => async (
   dispatch,
   getState,
 ) => {
   if (isUnfetched(salaryWorkTimeCountBoxSelector(getState()))) {
-    return dispatch(queryTimeAndSalaryCount());
+    return dispatch(querySalaryWorkTimeCount());
   }
 };
 
