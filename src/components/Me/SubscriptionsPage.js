@@ -12,7 +12,9 @@ import {
 } from 'utils/fetchBox';
 import Loader from 'common/Loader';
 import Table from 'common/table/Table';
-import { subscriptionStatus, isFailed } from './subscriptionUtils';
+import { SubscriptionStatus } from 'constants/subscription';
+import { PaymentRecordStatus } from 'constants/payment';
+import { subscriptionStatusWording, isFailed } from './subscriptionUtils';
 import styles from './SubscriptionsPage.module.css';
 import { useToken } from 'hooks/auth';
 import { queryMySubscriptionsApi } from 'apis/payment';
@@ -28,11 +30,19 @@ const formatDuration = ({ startedAt, expiredAt }) => (
   </span>
 );
 const formatAmount = value => value && `$${value}`;
-const formatStatus = value => (
-  <span className={cn({ [styles.failed]: isFailed(value) })}>
-    {subscriptionStatus[value]}
-  </span>
-);
+const formatStatus = (status, d) => {
+  let text = subscriptionStatusWording[status];
+  if (
+    status === SubscriptionStatus.FAILED &&
+    d.paymentRecord &&
+    d.paymentRecord.status === PaymentRecordStatus.refunded
+  ) {
+    text = '退款';
+  }
+  return (
+    <span className={cn({ [styles.failed]: isFailed(status) })}>{text}</span>
+  );
+};
 
 const Subscriptions = () => {
   const [mySubscriptions, setMySubscriptions] = useState(getUnfetched());
