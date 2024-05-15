@@ -11,7 +11,7 @@ import RateButtons from './RateButtons';
 import {
   pageType as PAGE_TYPE,
   generatePageURL,
-} from '../../../constants/companyJobTitle';
+} from 'constants/companyJobTitle';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {

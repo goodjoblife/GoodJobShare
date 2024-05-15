@@ -6,13 +6,10 @@ import Heading from 'common/base/Heading';
 import FanPageBlock from 'common/FanPageBlock';
 import BreadCrumb from 'common/BreadCrumb';
 
-import {
-  tabTypeTranslation,
-  generateTabURL,
-} from '../../constants/companyJobTitle';
+import { tabTypeTranslation, generateTabURL } from 'constants/companyJobTitle';
 import { generateBreadCrumbData } from './utils';
 
-import TabLinkGroup from '../common/TabLinkGroup';
+import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
 
 const CompanyAndJobTitleWrapper = ({

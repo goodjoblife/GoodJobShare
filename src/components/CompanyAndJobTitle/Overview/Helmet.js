@@ -2,8 +2,8 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { generatePath } from 'react-router';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
-import { SITE_NAME } from '../../../constants/helmetData';
-import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
+import { SITE_NAME } from 'constants/helmetData';
+import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
 // if length of given array > 0, return `${array length}${unit}`
 // otherwise return defaultStr

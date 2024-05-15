@@ -1,7 +1,7 @@
 import { useContext, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import FacebookContext from 'contexts/FacebookContext';
-import { loginWithFB } from '../../actions/auth';
+import { loginWithFB } from 'actions/auth';
 
 const useFacebookLogin = () => {
   const FB = useContext(FacebookContext);

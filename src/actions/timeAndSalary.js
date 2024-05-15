@@ -1,41 +1,33 @@
-import fetchingStatus, { isUnfetched } from 'constants/status';
-import { tokenSelector } from '../selectors/authSelector';
-import {
-  postWorkings as postWorkingsApi,
-  fetchTimeAndSalaryCount as fetchTimeAndSalaryCountApi,
-} from 'apis/timeAndSalaryApi';
+import { getError, getFetched, toFetching, isUnfetched } from 'utils/fetchBox';
+import { tokenSelector } from 'selectors/authSelector';
+import { salaryWorkTimeCountBoxSelector } from 'selectors/countSelector';
+import { postWorkings as postWorkingsApi } from 'apis/timeAndSalaryApi';
+import { querySalaryWorkTimeCountApi } from 'apis/salaryWorkTimeApi';
 
-export const SET_SALARY_WORK_TIME_COUNT =
-  '@@TIME_AND_SALARY/SET_SALARY_WORK_TIME_COUNT';
+export const SET_COUNT = '@@SALARY_WORK_TIME/SET_COUNT';
 
-const setCountData = (count, status, error = null) => ({
-  type: SET_SALARY_WORK_TIME_COUNT,
-  count,
-  status,
-  error,
+const setCount = countBox => ({
+  type: SET_COUNT,
+  countBox,
 });
 
-export const queryTimeAndSalaryCount = () => (dispatch, getState) => {
-  dispatch(setCountData(0, fetchingStatus.FETCHING));
-
-  return fetchTimeAndSalaryCountApi()
-    .then(count => {
-      dispatch(setCountData(count, fetchingStatus.FETCHED));
-    })
-    .catch(error => {
-      dispatch(setCountData(0, fetchingStatus.ERROR, error));
-      throw error;
-    });
+export const querySalaryWorkTimeCount = () => async (dispatch, getState) => {
+  dispatch(setCount(toFetching()));
+  try {
+    const count = await querySalaryWorkTimeCountApi();
+    dispatch(setCount(getFetched(count)));
+  } catch (error) {
+    dispatch(setCount(getError(error)));
+  }
 };
 
-export const queryTimeAndSalaryCountIfUnfetched = () => (
+export const querySalaryWorkTimeCountIfUnfetched = () => async (
   dispatch,
   getState,
 ) => {
-  if (isUnfetched(getState().timeAndSalary.countStatus)) {
-    return dispatch(queryTimeAndSalaryCount());
+  if (isUnfetched(salaryWorkTimeCountBoxSelector(getState()))) {
+    return dispatch(querySalaryWorkTimeCount());
   }
-  return Promise.resolve();
 };
 
 export const createSalaryWorkTime = ({ body }) => (dispatch, getState) => {

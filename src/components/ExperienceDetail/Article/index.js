@@ -12,7 +12,7 @@ import SectionBlock from './SectionBlock';
 import QABlock from './QABlock';
 import ReactionZone from './ReactionZone';
 import { BasicPermissionBlock } from 'common/PermissionBlock';
-import { MAX_WORDS_IF_HIDDEN } from '../../../constants/hideContent';
+import { MAX_WORDS_IF_HIDDEN } from 'constants/hideContent';
 
 const countSectionWords = sections =>
   R.reduce(
