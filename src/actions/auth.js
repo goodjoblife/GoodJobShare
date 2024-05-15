@@ -8,7 +8,7 @@ import authStatus from 'constants/authStatus';
 import rollbar from 'utils/rollbar';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
-import { pushNotification } from '../actions/toastNotification';
+import { pushNotification } from 'actions/toastNotification';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
