@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CampaignTimeAndSalaryForm from '../../components/ShareExperience/CampaignTimeAndSalaryForm';
-import { queryCampaignInfoListIfNeeded } from '../../actions/campaignInfo';
-import { createSalaryWorkTime } from '../../actions/timeAndSalary';
+import { queryCampaignInfoListIfNeeded } from 'actions/campaignInfo';
+import { createSalaryWorkTime } from 'actions/timeAndSalary';
 import {
   campaignEntriesSelector,
   campaignEntriesStatusSelector,

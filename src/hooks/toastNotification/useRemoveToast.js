@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { removeNotification } from '../../actions/toastNotification';
+import { removeNotification } from 'actions/toastNotification';
 
 const useRemoveToast = () => {
   const dispatch = useDispatch();

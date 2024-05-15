@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createInterviewExperience } from '../../actions/experiences';
+import { createInterviewExperience } from 'actions/experiences';
 import InterviewForm from '../../components/ShareExperience/InterviewForm';
 
 const mapStateToProps = () => ({});

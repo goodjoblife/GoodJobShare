@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import R from 'ramda';
 import { useWindowSize } from 'react-use';
-import breakpoints from '../../../constants/breakpoints';
+import breakpoints from 'constants/breakpoints';
 
 const maxNameLength = R.pipe(
   R.map(

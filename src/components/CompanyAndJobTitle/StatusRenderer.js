@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loader from 'common/Loader';
-import { isUnfetched, isFetching, isError } from '../../constants/status';
+import { isUnfetched, isFetching, isError } from 'constants/status';
 
 const StatusRenderer = ({ status, children, ...props }) => {
   if (isUnfetched(status)) {
