@@ -1,4 +1,4 @@
-@value page-gutter-s, below-mobile, above-small from "common/variables.module.css";
+@value page-gutter-s, below-mobile, above-small from "../../common/variables.module.css";
 
 .container {
   display: block;

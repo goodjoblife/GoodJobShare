@@ -1,19 +1,14 @@
 import createReducer from 'utils/createReducer';
-
-import { SET_SALARY_WORK_TIME_COUNT } from 'actions/timeAndSalary';
-import fetchingStatus from 'constants/status';
+import { getUnfetched } from 'utils/fetchBox';
+import { SET_COUNT } from 'actions/timeAndSalary';
 
 const preloadedState = {
-  count: 0,
-  countStatus: fetchingStatus.UNFETCHED,
-  countError: null,
+  countBox: getUnfetched(),
 };
 
 export default createReducer(preloadedState, {
-  [SET_SALARY_WORK_TIME_COUNT]: (state, { count, status, error }) => ({
+  [SET_COUNT]: (state, { countBox }) => ({
     ...state,
-    count,
-    countStatus: status,
-    countError: error,
+    countBox,
   }),
 });

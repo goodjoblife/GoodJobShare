@@ -1,4 +1,4 @@
-@value above-tablet from "common/variables.module.css";
+@value above-tablet from "../common/variables.module.css";
 
 .container {
   padding-top: 20px;

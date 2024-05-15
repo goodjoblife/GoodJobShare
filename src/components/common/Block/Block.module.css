@@ -1,4 +1,4 @@
-@value main-yellow, warning-red, gray-dark from "common/variables.module.css";
+@value main-yellow, warning-red, gray-dark from "../variables.module.css";
 
 .heading {
   display: flex;

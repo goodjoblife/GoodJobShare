@@ -3,6 +3,7 @@ import {
   pageTypeTranslation,
   tabTypeTranslation,
   pageType as PAGE_TYPE,
+  tabType as TAG_TYPE,
   generatePageURL,
   generateTabURL,
 } from 'constants/companyJobTitle';
@@ -55,8 +56,14 @@ export const generateBreadCrumbData = ({
     generateRootLayer(),
     generatePageTypeLayer({ pageType }),
     generatePageNameLayer({ pageType, pageName }),
-    generateTabTypeLayer({ pageType, pageName, tabType }),
   ];
+
+  // TODO: adhoc solution if the page is OVERVIEW
+  if (tabType === TAG_TYPE.OVERVIEW) {
+    return data;
+  }
+
+  data.push(generateTabTypeLayer({ pageType, pageName, tabType }));
 
   if (experience) {
     data.push(

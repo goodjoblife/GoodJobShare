@@ -1,4 +1,4 @@
-@value above-tablet, yellow-dark, warning-red from "common/variables.module.css";
+@value above-tablet, yellow-dark, warning-red from "../common/variables.module.css";
 
 .cardContainer {
   display: flex;

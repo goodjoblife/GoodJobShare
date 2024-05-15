@@ -26,6 +26,7 @@
       "^actions(.*)": "<rootDir>/src/actions$1",
       "^apis(.*)": "<rootDir>/src/apis$1",
       "^common(.*)": "<rootDir>/src/components/common$1",
+      "^images(.*)": "<rootDir>/src/components/images$1",
       "^constants(.*)": "<rootDir>/src/constants$1",
       "^contexts(.*)": "<rootDir>/src/contexts$1",
       "^graphql(.*)": "<rootDir>/src/graphql$1",

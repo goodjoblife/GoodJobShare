@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { withProps, lifecycle, compose, setStatic } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { generatePath } from 'react-router';
 import { Switch, Route } from 'react-router-dom';
 import Overview from '../CompanyAndJobTitle/Overview';
 import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
@@ -41,14 +42,17 @@ const JobTitlePageProvider = props => (
     <Route
       path="/job-titles/:jobTitle"
       exact
-      render={({ location: { pathname } }) => (
-        <Redirect to={`${pathname}/overview`} />
-      )}
+      render={() => <Overview {...props} tabType={tabType.OVERVIEW} />}
     />
+    {/* 相容舊網址 */}
     <Route
       path="/job-titles/:jobTitle/overview"
       exact
-      render={() => <Overview {...props} tabType={tabType.OVERVIEW} />}
+      render={({ match: { params } }) => {
+        const jobTitle = decodeURIComponent(params.jobTitle);
+        const path = generatePath('/job-titles/:jobTitle', { jobTitle });
+        return <Redirect to={path} />;
+      }}
     />
     <Route
       path="/job-titles/:jobTitle/salary-work-times"

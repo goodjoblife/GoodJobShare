@@ -1,4 +1,4 @@
-@value main-yellow from "common/variables.module.css";
+@value main-yellow from "../../common/variables.module.css";
 
 .linkItem {
   flex-basis: 160px;
@@ -26,6 +26,7 @@
   font-size: 0.9375em;
   font-weight: 300;
   margin-bottom: 16px;
+  cursor: pointer;
 
   @media (min-width: 851px) {
     transition-duration: 0.3s;

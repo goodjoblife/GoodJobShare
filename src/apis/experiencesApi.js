@@ -4,9 +4,12 @@ import fetchUtil from 'utils/fetchUtil';
 
 import graphqlClient from 'utils/graphqlClient';
 import {
+  deleteExpereinceLikeGql,
+  createExperienceLikeGql,
   queryExperienceGql,
   queryExperienceLikeGql,
   queryRelatedExperiencesGql,
+  queryExperienceCountGql,
 } from 'graphql/experience';
 import { getPopularExperiencesQuery } from 'graphql/popularExperience';
 import { deleteReplyLike, createReplyLike } from 'graphql/reply';
@@ -72,11 +75,19 @@ export const postExperienceReply = ({ id, comment, token }) =>
     token,
   });
 
-export const deleteExperienceLikes = ({ id, token }) =>
-  fetchUtil(`/experiences/${id}/likes`).delete({ token });
+export const deleteExperienceLikesApi = ({ id, token }) =>
+  graphqlClient({
+    query: deleteExpereinceLikeGql,
+    variables: { input: { experience_id: id } },
+    token,
+  });
 
-export const postExperienceLikes = ({ id, token }) =>
-  fetchUtil(`/experiences/${id}/likes`).post({ token });
+export const createExperienceLikeApi = ({ id, token }) =>
+  graphqlClient({
+    query: createExperienceLikeGql,
+    variables: { input: { experience_id: id } },
+    token,
+  });
 
 export const deleteReplyLikes = ({ id, token }) =>
   graphqlClient({
@@ -138,4 +149,11 @@ export const queryRelatedExperiences = async ({ id, start, limit }) => {
     variables: { id, start, limit },
   });
   return data.experience.relatedExperiences;
+};
+
+export const queryExperienceCountApi = async () => {
+  const data = await graphqlClient({
+    query: queryExperienceCountGql,
+  });
+  return data.experienceCount;
 };

@@ -126,7 +126,6 @@ export default {
         rel="canonical"
         href={formatCanonicalPath('/share/time-and-salary')}
       />
-      ],
     </Helmet>
   ),
   ShareWork: () => (

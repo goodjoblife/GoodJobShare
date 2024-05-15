@@ -1,4 +1,4 @@
-@value above-small, below-small, above-desktop, main-yellow, link-blue from "common/variables.module.css";
+@value above-small, below-small, above-desktop, main-yellow, link-blue from "../variables.module.css";
 
 .permissionBlock {
   display: inline-block;

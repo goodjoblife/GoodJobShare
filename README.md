@@ -34,7 +34,7 @@ yarn install
 
 ### build
 ```
-npm build
+npm run build
 ```
 
 ### start

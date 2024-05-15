@@ -1,4 +1,4 @@
-@value gray-dark, main-gray from "common/variables.module.css";
+@value gray-dark, main-gray from "../../common/variables.module.css";
 
 .container {
   padding-top: 24px;

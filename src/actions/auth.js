@@ -5,6 +5,10 @@ import {
 } from 'apis/auth';
 import { queryMeApi } from 'apis/me';
 import authStatus from 'constants/authStatus';
+import rollbar from 'utils/rollbar';
+import { NOTIFICATION_TYPE } from 'constants/toastNotification';
+import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+import { pushNotification } from '../actions/toastNotification';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
@@ -30,29 +34,88 @@ export const logout = () => (dispatch, getState, { history }) => {
   history.push('/');
 };
 
+// Wrap FB SDK login as promise
+const FBSDKLogin = FB => {
+  return new Promise(resolve => {
+    return FB.login(response => resolve(response), { scope: 'email' });
+  });
+};
+
+const composeErrMsg = (code, message, error) => {
+  if (error) {
+    return `[${code}] ${message}: ${error}`;
+  } else {
+    return `[${code}] ${message}`;
+  }
+};
+const loginErrorToast = (code, message) =>
+  pushNotification(NOTIFICATION_TYPE.ALERT, composeErrMsg(code, message));
+
+const toastNotificationAndRollbarAndThrowError = (errorCode, error, extra) => (
+  dispatch,
+  getState,
+) => {
+  dispatch(loginErrorToast(errorCode, ERROR_CODE_MSG[errorCode].external));
+  const internalMsg = composeErrMsg(
+    errorCode,
+    ERROR_CODE_MSG[errorCode].internal,
+    error,
+  );
+  if (!extra) {
+    rollbar.error(internalMsg);
+  } else {
+    rollbar.error(internalMsg, extra);
+  }
+  throw new Error(internalMsg);
+};
+
 /**
  * Use `hooks/login/useFacebookLogin` as possible
  */
-export const loginWithFB = FB => (dispatch, getState) => {
-  if (FB) {
-    return new Promise(resolve =>
-      FB.login(response => resolve(response), { scope: 'email' }),
-    ).then(response => {
-      if (response.status === authStatus.CONNECTED) {
-        return postAuthFacebookApi({
-          accessToken: response.authResponse.accessToken,
-        })
-          .then(({ token, user: { _id, facebook_id } }) =>
-            dispatch(loginWithToken(token)),
-          )
-          .then(() => authStatus.CONNECTED);
-      } else if (response.status === authStatus.NOT_AUTHORIZED) {
-        dispatch(setLogin(authStatus.NOT_AUTHORIZED));
-      }
-      return response.status;
-    });
+export const loginWithFB = FBSDK => async (dispatch, getState) => {
+  if (!FBSDK) {
+    dispatch(toastNotificationAndRollbarAndThrowError('ER0001'));
   }
-  return Promise.reject(new Error('FB is not ready'));
+
+  let fbLoginResponse = null;
+  try {
+    // invoke FB SDK Login to get FB-issued access token
+    fbLoginResponse = await FBSDKLogin(FBSDK);
+  } catch (error) {
+    dispatch(toastNotificationAndRollbarAndThrowError('ER0002', error));
+  }
+
+  if (!fbLoginResponse || !fbLoginResponse.status) {
+    dispatch(toastNotificationAndRollbarAndThrowError('ER0003'));
+  }
+
+  switch (fbLoginResponse.status) {
+    case authStatus.CANCELED:
+      return;
+    case authStatus.NOT_AUTHORIZED:
+      dispatch(setLogin(authStatus.NOT_AUTHORIZED));
+      dispatch(toastNotificationAndRollbarAndThrowError('ER0004'));
+      break;
+    case authStatus.CONNECTED:
+      try {
+        // call GoodJob GraphQL API to get JWT token issued by GoodJob
+        const { token } = await postAuthFacebookApi({
+          accessToken: fbLoginResponse.authResponse.accessToken,
+        });
+        await dispatch(loginWithToken(token));
+      } catch (error) {
+        dispatch(toastNotificationAndRollbarAndThrowError('ER0005', error));
+      }
+      break;
+    default:
+      dispatch(
+        toastNotificationAndRollbarAndThrowError(
+          'ER0006',
+          null,
+          fbLoginResponse,
+        ),
+      );
+  }
 };
 
 /**

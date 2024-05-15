@@ -1,4 +1,4 @@
-@value border-gray from "common/variables.module.css";
+@value border-gray from "../../common/variables.module.css";
 
 .heading {
   display: flex;

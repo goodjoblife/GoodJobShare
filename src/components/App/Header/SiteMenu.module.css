@@ -1,4 +1,4 @@
-@value main-yellow, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "common/variables.module.css";
+@value main-yellow, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "../../common/variables.module.css";
 
 .menu {
   @media (min-width: 851px) {

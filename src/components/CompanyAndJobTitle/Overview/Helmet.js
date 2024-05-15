@@ -37,9 +37,7 @@ const CompanyOverviewHelmet = ({
   const workExperiencesStr = formatDataCount(workExperiences, '篇', '');
   const description = `查看由${companyName}內部員工分享的${salaryWorkTimesStr}薪水及加班數據、${workExperiencesStr}工作心得，以及由面試者分享的${interviewExperiencesStr}面試經驗。`;
 
-  const path = generatePath('/companies/:companyName/overview', {
-    companyName,
-  });
+  const path = generatePath('/companies/:companyName', { companyName });
   const url = formatCanonicalPath(path);
 
   return (
@@ -76,9 +74,7 @@ const JobTitleOverviewHelmet = ({
   const workExperiencesStr = formatDataCount(workExperiences, '篇', '');
   const description = `查看由${jobTitle}分享的${salaryWorkTimesStr}薪水及加班數據、${workExperiencesStr}工作心得，以及由面試者分享的${interviewExperiencesStr}面試經驗。`;
 
-  const path = generatePath('/job-titles/:jobTitle/overview', {
-    jobTitle,
-  });
+  const path = generatePath('/job-titles/:jobTitle', { jobTitle });
   const url = formatCanonicalPath(path);
 
   return (

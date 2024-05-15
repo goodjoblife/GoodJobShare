@@ -31,7 +31,7 @@ const P = ({
 P.propTypes = {
   children: PropTypes.node.isRequired,
   size: PropTypes.oneOf(sizeOptions).isRequired,
-  Tag: PropTypes.string,
+  Tag: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   bold: PropTypes.bool,
   center: PropTypes.bool,
   style: PropTypes.object,
