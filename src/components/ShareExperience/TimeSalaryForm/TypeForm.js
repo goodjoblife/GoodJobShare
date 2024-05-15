@@ -41,7 +41,7 @@ import {
 } from '../constants';
 
 import { evolve } from '../utils';
-import { tabType } from '../../../constants/companyJobTitle';
+import { tabType } from 'constants/companyJobTitle';
 
 import { createSalaryWorkTime } from 'actions/timeAndSalary';
 import { transferKeyToSnakecase } from 'utils/objectUtil';

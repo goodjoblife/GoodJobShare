@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SalaryDistributionChart from '../../common/Charts/SalaryDistributionChart';
-import JobTitleDistrubitionChart from '../../common/Charts/JobTitleDistrubitionChart';
+import SalaryDistributionChart from 'common/Charts/SalaryDistributionChart';
+import JobTitleDistrubitionChart from 'common/Charts/JobTitleDistrubitionChart';
 import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
 import styles from './SummaryBlock.module.css';
 

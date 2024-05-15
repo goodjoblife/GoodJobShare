@@ -4,8 +4,8 @@ import cn from 'classnames';
 import { generatePath } from 'react-router';
 import R from 'ramda';
 import ChartWrapper from '../../LandingPage/ChartWrapper';
-import SalaryDistributionChart from '../../common/Charts/SalaryDistributionChart';
-import JobTitleDistributionChart from '../../common/Charts/JobTitleDistrubitionChart';
+import SalaryDistributionChart from 'common/Charts/SalaryDistributionChart';
+import JobTitleDistributionChart from 'common/Charts/JobTitleDistrubitionChart';
 import styles from '../../LandingPage/SummarySection.module.css';
 import moduleStyles from './ChartsZone.module.css';
 

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { fetchPaymentRecord } from '../../actions/payment';
+import { fetchPaymentRecord } from 'actions/payment';
 
 const useFetchPaymentRecord = paymentRecordId => {
   const dispatch = useDispatch();

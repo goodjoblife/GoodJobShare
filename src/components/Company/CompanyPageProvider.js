@@ -27,7 +27,7 @@ import {
   overtimeFrequencyCount,
   status,
   company as companySelector,
-} from '../../selectors/companyAndJobTitle';
+} from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
 import withRouteParameter from '../ExperienceSearch/withRouteParameter';
 

@@ -9,6 +9,7 @@ import {
   queryExperienceGql,
   queryExperienceLikeGql,
   queryRelatedExperiencesGql,
+  queryExperienceCountGql,
 } from 'graphql/experience';
 import { getPopularExperiencesQuery } from 'graphql/popularExperience';
 import { deleteReplyLike, createReplyLike } from 'graphql/reply';
@@ -148,4 +149,11 @@ export const queryRelatedExperiences = async ({ id, start, limit }) => {
     variables: { id, start, limit },
   });
   return data.experience.relatedExperiences;
+};
+
+export const queryExperienceCountApi = async () => {
+  const data = await graphqlClient({
+    query: queryExperienceCountGql,
+  });
+  return data.experienceCount;
 };

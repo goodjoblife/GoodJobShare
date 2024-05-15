@@ -3,8 +3,8 @@ import Helmet from 'react-helmet';
 import { generatePath } from 'react-router';
 import qs from 'qs';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
-import { SITE_NAME } from '../../../constants/helmetData';
-import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
+import { SITE_NAME } from 'constants/helmetData';
+import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
 const CompanyWorkExperienceHelmet = ({
   companyName,
