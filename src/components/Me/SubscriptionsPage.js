@@ -14,7 +14,11 @@ import Loader from 'common/Loader';
 import Table from 'common/table/Table';
 import { SubscriptionStatus } from 'constants/subscription';
 import { PaymentRecordStatus } from 'constants/payment';
-import { subscriptionStatusWording, isFailed } from './subscriptionUtils';
+import {
+  subscriptionStatusWording,
+  WordingRefunded,
+  isFailed,
+} from './subscriptionUtils';
 import styles from './SubscriptionsPage.module.css';
 import { useToken } from 'hooks/auth';
 import { queryMySubscriptionsApi } from 'apis/payment';
@@ -37,7 +41,7 @@ const formatStatus = (status, d) => {
     d.paymentRecord &&
     d.paymentRecord.status === PaymentRecordStatus.refunded
   ) {
-    text = '退款';
+    text = WordingRefunded;
   }
   return (
     <span className={cn({ [styles.failed]: isFailed(status) })}>{text}</span>

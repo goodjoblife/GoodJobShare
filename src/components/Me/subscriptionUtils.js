@@ -7,6 +7,8 @@ export const subscriptionStatusWording = {
   [SubscriptionStatus.SUSPENDED]: '停權',
 };
 
+export const WordingRefunded = '退款';
+
 export const isFailed = status =>
   status === SubscriptionStatus.FAILED ||
   status === SubscriptionStatus.SUSPENDED;
