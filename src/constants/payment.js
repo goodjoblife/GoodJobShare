@@ -4,7 +4,7 @@ export const buyStatus = {
   inProgress: 'IN_PROGRESS',
 };
 
-const paymentRecordStatus = {
+export const PaymentRecordStatus = {
   pendingAuthorization: 'PendingAuthorization',
   authorized: 'Authorized',
   paid: 'Paid',
@@ -13,9 +13,9 @@ const paymentRecordStatus = {
 };
 
 export const recordStatusToBuyStatus = {
-  [paymentRecordStatus.pendingAuthorization]: buyStatus.inProgress,
-  [paymentRecordStatus.authorized]: buyStatus.successful,
-  [paymentRecordStatus.paid]: buyStatus.successful,
-  [paymentRecordStatus.refunded]: buyStatus.successful,
-  [paymentRecordStatus.error]: buyStatus.failed,
+  [PaymentRecordStatus.pendingAuthorization]: buyStatus.inProgress,
+  [PaymentRecordStatus.authorized]: buyStatus.successful,
+  [PaymentRecordStatus.paid]: buyStatus.successful,
+  [PaymentRecordStatus.refunded]: buyStatus.successful,
+  [PaymentRecordStatus.error]: buyStatus.failed,
 };

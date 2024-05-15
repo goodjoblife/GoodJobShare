@@ -6,3 +6,10 @@ export const subscriptionType = {
 };
 
 export const subscriptionTypes = values(subscriptionType);
+
+export const SubscriptionStatus = {
+  INIT: 'INIT',
+  OK: 'OK',
+  FAILED: 'FAILED',
+  SUSPENDED: 'SUSPENDED',
+};
