@@ -14,6 +14,10 @@ const formatCompany = name => {
   return null;
 };
 
+export const originalCompanyNameSelector = R.compose(
+  formatCompany,
+  R.pathOr(null, ['originalCompanyName']),
+);
 export const companyNameSelector = R.compose(
   formatCompany,
   R.pathOr(null, ['company', 'name']),
