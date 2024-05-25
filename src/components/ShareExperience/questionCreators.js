@@ -66,6 +66,7 @@ import Emoji from '../common/icons/Emoji';
 import { tabTypeTranslation } from '../../constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
 import { salaryHint } from 'utils/formUtils';
+import { useTotalCount } from 'hooks/useCount';
 
 export const createCompanyQuestion = ({ header }) => ({
   title: '公司名稱',
@@ -450,9 +451,18 @@ export const createSensitiveQuestionsQuestion = () => ({
   placeholder: '輸入其他特殊問題內容',
 });
 
+const Count = () => {
+  const count = useTotalCount();
+  return <span>{parseInt(count / 10000)}</span>;
+};
+
 export const createSubmitQuestion = ({ type }) => ({
-  title: () => () =>
-    `感謝你分享${tabTypeTranslation[type]}，按下「送出」，馬上就可以解鎖全站 13 萬多筆資料哦！`,
+  title: () => () => (
+    <span>
+      感謝你分享{tabTypeTranslation[type]}，按下「送出」，馬上就可以解鎖全站{' '}
+      <Count /> 萬多筆資料哦！
+    </span>
+  ),
   type: QUESTION_TYPE.CUSTOMIZED,
   dataKey: '',
 });
