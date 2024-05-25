@@ -42,7 +42,7 @@ export const salaryAmountSelector = R.pathOr(null, ['salary', 'amount']);
 export const salaryTypeSelector = R.pathOr(null, ['salary', 'type']);
 
 export const metaTitleSelector = experience => {
-  return `${companyNameSelector(experience)} ${jobTitleSelector(
+  return `${originalCompanyNameSelector(experience)} ${jobTitleSelector(
     experience,
   )} ${typeSelector(experience)} ${dateSelector(experience)}`;
 };
