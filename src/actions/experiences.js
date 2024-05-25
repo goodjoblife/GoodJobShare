@@ -4,6 +4,8 @@ import { experienceCountBoxSelector } from 'selectors/countSelector';
 import { queryExperienceCountApi } from 'apis/experiencesApi';
 import { postInterviewExperience as postInterviewExperienceApi } from 'apis/interviewExperiencesApi';
 import { postWorkExperience as postWorkExperienceApi } from 'apis/workExperiencesApi';
+import { pushNotification } from './toastNotification';
+import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 
 export const SET_COUNT = '@@EXPERIENCES/SET_COUNT';
 
@@ -31,22 +33,42 @@ export const queryExperienceCountIfUnfetched = () => async (
   }
 };
 
-export const createInterviewExperience = ({ body }) => (dispatch, getState) => {
+export const createInterviewExperience = ({ body }) => async (
+  dispatch,
+  getState,
+) => {
   const state = getState();
   const token = tokenSelector(state);
 
-  return postInterviewExperienceApi({
-    body,
-    token,
-  });
+  try {
+    await postInterviewExperienceApi({
+      body,
+      token,
+    });
+  } catch (error) {
+    if (error.statusCode === 422) {
+      dispatch(pushNotification(NOTIFICATION_TYPE.ALERT, '短時間留太多資料'));
+    }
+    throw error;
+  }
 };
 
-export const createWorkExperience = ({ body }) => (dispatch, getState) => {
+export const createWorkExperience = ({ body }) => async (
+  dispatch,
+  getState,
+) => {
   const state = getState();
   const token = tokenSelector(state);
 
-  return postWorkExperienceApi({
-    body,
-    token,
-  });
+  try {
+    await postWorkExperienceApi({
+      body,
+      token,
+    });
+  } catch (error) {
+    if (error.statusCode === 422) {
+      dispatch(pushNotification(NOTIFICATION_TYPE.ALERT, '短時間留太多資料'));
+    }
+    throw error;
+  }
 };
