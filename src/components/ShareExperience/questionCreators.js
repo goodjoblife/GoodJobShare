@@ -453,7 +453,7 @@ export const createSensitiveQuestionsQuestion = () => ({
 
 const Count = () => {
   const count = useTotalCount();
-  return <span>{parseInt(count / 10000)}</span>;
+  return <span>{Math.floor(count / 10000)}</span>;
 };
 
 export const createSubmitQuestion = ({ type }) => ({
