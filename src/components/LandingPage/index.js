@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
-import { compose, setStatic } from 'recompose';
 import { Section, Wrapper, Heading } from 'common/base';
 import Columns from 'common/Columns';
 import Loader from 'common/Loader';
@@ -24,13 +23,6 @@ import { popularExperiencesBoxSelector } from 'selectors/experienceSelector';
 import { popularCompanyAverageSalaryBoxSelector } from 'selectors/popularCompanyAverageSalary';
 import { popularJobTitleSalaryDistributionBoxSelector } from 'selectors/popularJobTitleSalaryDistribution';
 import { menuBoxSelector } from 'selectors/laborRightsSelector';
-
-const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
-  return Promise.all([
-    dispatch(queryPopularExperiences()),
-    dispatch(queryMenu()),
-  ]);
-});
 
 const entryToProps = ({ id, title, coverUrl }) => ({
   link: `/labor-rights/${id}`,
@@ -144,6 +136,11 @@ const LandingPage = ({ laborRightsMenuEntries }) => {
   );
 };
 
-const hoc = compose(ssr);
+LandingPage.fetchData = ({ store: { dispatch } }) => {
+  return Promise.all([
+    dispatch(queryPopularExperiences()),
+    dispatch(queryMenu()),
+  ]);
+};
 
-export default hoc(LandingPage);
+export default LandingPage;

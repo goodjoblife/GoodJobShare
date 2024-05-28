@@ -1,10 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import { compose } from 'recompose';
-import { withPermission } from 'common/permission-context';
 import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
+import usePermission from 'hooks/usePermission';
 
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
@@ -20,12 +19,8 @@ const TimeAndSalary = ({
   tabType,
   page,
   queryParams,
-
-  // from withPermission
-  canView,
-  permissionFetched,
-  fetchPermission,
 }) => {
+  const [, fetchPermission, canView] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [fetchPermission]);
@@ -90,13 +85,6 @@ TimeAndSalary.propTypes = {
   pageName: PropTypes.string,
   tabType: PropTypes.string,
   page: PropTypes.number,
-
-  // from withPermission
-  canView: PropTypes.bool.isRequired,
-  permissionFetched: PropTypes.bool.isRequired,
-  fetchPermission: PropTypes.func.isRequired,
 };
 
-const hoc = compose(withPermission);
-
-export default hoc(TimeAndSalary);
+export default TimeAndSalary;
