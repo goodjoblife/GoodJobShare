@@ -143,11 +143,6 @@ JobTitlePageProvider.propTypes = {
   page: PropTypes.number.isRequired,
 };
 
-JobTitlePageProvider.fetchData = ({ store: { dispatch }, ...props }) => {
-  const jobTitle = getJobTitleFromParams(props);
-  return dispatch(fetchJobTitle(jobTitle));
-};
-
 const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   const jobTitle = getJobTitleFromParams(props);
   return dispatch(fetchJobTitle(jobTitle));

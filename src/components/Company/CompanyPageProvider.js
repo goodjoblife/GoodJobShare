@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
-import { withProps, compose } from 'recompose';
+import { withProps, compose, setStatic } from 'recompose';
 import { useSelector, useDispatch } from 'react-redux';
 import { generatePath } from 'react-router';
 import { Switch, Route } from 'react-router-dom';
@@ -143,12 +143,13 @@ CompanyPageProvider.propTypes = {
   page: PropTypes.number.isRequired,
 };
 
-CompanyPageProvider.fetchData = ({ store: { dispatch }, ...props }) => {
+const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
   const companyName = getCompanyNameFromParams(props);
   return dispatch(fetchCompany(companyName));
-};
+});
 
 const enhance = compose(
+  ssr,
   withRouteParameter,
   withProps(props => ({
     pageType: pageType.COMPANY,
