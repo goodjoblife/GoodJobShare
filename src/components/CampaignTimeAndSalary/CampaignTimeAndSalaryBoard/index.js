@@ -5,12 +5,11 @@ import R from 'ramda';
 import Loading from 'common/Loader';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { compose, setStatic } from 'recompose';
 import Star from 'common/icons/Star';
 import Select from 'common/form/Select';
 import Pagination from 'common/Pagination';
 import CommonNotFound from 'common/NotFound';
-import { withPermission } from 'common/permission-context';
+import usePermission from 'hooks/usePermission';
 import InfoTimeModal from '../../TimeAndSalary/common/InfoTimeModal';
 import InfoSalaryModal from '../../TimeAndSalary/common/InfoSalaryModal';
 import AboutThisJobModal from '../../TimeAndSalary/common/AboutThisJobModal';
@@ -152,12 +151,10 @@ const usePage = () => {
 };
 
 const CampaignTimeAndSalaryBoard = ({
-  canView,
   status,
   data,
   totalCount,
   currentPage,
-  fetchPermission,
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -179,6 +176,7 @@ const CampaignTimeAndSalaryBoard = ({
   });
 
   // refresh permission
+  const [, fetchPermission, canView] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [fetchPermission, path, campaignName]);
@@ -328,49 +326,40 @@ const CampaignTimeAndSalaryBoard = ({
   );
 };
 
-const ssr = setStatic(
-  'fetchData',
-  ({ store: { dispatch, getState }, match, ...props }) => {
-    const campaignName = campaignNameSelector(match);
-    const { sortBy, order } = pathParameterSelector(match);
-    const { page } = queryParser(querySelector(props));
+CampaignTimeAndSalaryBoard.fetchData = ({
+  store: { dispatch, getState },
+  match,
+  ...props
+}) => {
+  const campaignName = campaignNameSelector(match);
+  const { sortBy, order } = pathParameterSelector(match);
+  const { page } = queryParser(querySelector(props));
 
-    return dispatch(queryCampaignInfoList()).then(() => {
-      // TODO: work around
-      const campaignBox = {
-        data: campaignEntriesSelector(getState()),
-        status: campaignEntriesStatusSelector(getState()),
-        error: campaignEntriesErrorSelector(getState()),
-      };
+  return dispatch(queryCampaignInfoList()).then(() => {
+    // TODO: work around
+    const campaignBox = {
+      data: campaignEntriesSelector(getState()),
+      status: campaignEntriesStatusSelector(getState()),
+      error: campaignEntriesErrorSelector(getState()),
+    };
 
-      const jobTitles = queryJobTitlesFromCampaignBox(
-        campaignBox,
-        campaignName,
-      );
-      return dispatch(
-        queryCampaignTimeAndSalary(campaignName, {
-          sortBy,
-          order,
-          jobTitles,
-          page,
-        }),
-      );
-    });
-  },
-);
-
-const hoc = compose(
-  ssr,
-  withPermission,
-);
+    const jobTitles = queryJobTitlesFromCampaignBox(campaignBox, campaignName);
+    return dispatch(
+      queryCampaignTimeAndSalary(campaignName, {
+        sortBy,
+        order,
+        jobTitles,
+        page,
+      }),
+    );
+  });
+};
 
 CampaignTimeAndSalaryBoard.propTypes = {
   data: PropTypes.array,
   totalCount: PropTypes.number,
   currentPage: PropTypes.number,
   status: PropTypes.string,
-  canView: PropTypes.bool.isRequired,
-  fetchPermission: PropTypes.func.isRequired,
 };
 
-export default hoc(CampaignTimeAndSalaryBoard);
+export default CampaignTimeAndSalaryBoard;
