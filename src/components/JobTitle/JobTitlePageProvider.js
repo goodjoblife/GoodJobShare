@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
-import { createStructuredSelector } from 'reselect';
 import { withProps, compose } from 'recompose';
 import { useSelector, useDispatch } from 'react-redux';
 import { generatePath } from 'react-router';
@@ -47,21 +46,23 @@ const JobTitlePageProvider = ({ pageType, pageName, page }) => {
     fetchPermission();
   }, [pageType, pageName, fetchPermission]);
 
-  const data = useSelector(
-    R.compose(
-      createStructuredSelector({
-        status,
-        interviewExperiences,
-        workExperiences,
-        salaryWorkTimes,
-        salaryWorkTimeStatistics,
-        salaryDistribution,
-        averageWeekWorkTime,
-        overtimeFrequencyCount,
-      }),
-      jobTitleSelector(pageName),
-    ),
+  const selector = useCallback(
+    state => {
+      const jobTitle = jobTitleSelector(pageName)(state);
+      return {
+        status: status(jobTitle),
+        interviewExperiences: interviewExperiences(jobTitle),
+        workExperiences: workExperiences(jobTitle),
+        salaryWorkTimes: salaryWorkTimes(jobTitle),
+        salaryWorkTimeStatistics: salaryWorkTimeStatistics(jobTitle),
+        salaryDistribution: salaryDistribution(jobTitle),
+        averageWeekWorkTime: averageWeekWorkTime(jobTitle),
+        overtimeFrequencyCount: overtimeFrequencyCount(jobTitle),
+      };
+    },
+    [pageName],
   );
+  const data = useSelector(selector);
 
   return (
     <Switch>
