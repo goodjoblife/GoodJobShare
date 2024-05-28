@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
-import { withProps, compose } from 'recompose';
+import { withProps, compose, setStatic } from 'recompose';
 import { useSelector, useDispatch } from 'react-redux';
 import { generatePath } from 'react-router';
 import { Switch, Route } from 'react-router-dom';
@@ -148,7 +148,13 @@ JobTitlePageProvider.fetchData = ({ store: { dispatch }, ...props }) => {
   return dispatch(fetchJobTitle(jobTitle));
 };
 
+const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
+  const jobTitle = getJobTitleFromParams(props);
+  return dispatch(fetchJobTitle(jobTitle));
+});
+
 const enhance = compose(
+  ssr,
   withRouteParameter,
   withProps(props => ({
     pageType: pageType.JOB_TITLE,
