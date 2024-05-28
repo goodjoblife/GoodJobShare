@@ -1,5 +1,5 @@
 import { useContext, useCallback } from 'react';
-import PermissionContext from 'common/permission-context/PermissionContext';
+import PermissionContext from 'hooks/PermissionContext';
 import { useToken } from 'hooks/auth';
 import { queryHasSearchPermissionApi } from 'apis/me';
 

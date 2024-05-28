@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PermissionContext from './PermissionContext';
+import PermissionContext from '../../../contexts/PermissionContext';
 
 class PermissionContextProvider extends Component {
   constructor(props) {
