@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionContextProvider } from 'common/permission-context';
+import PermissionContextProvider from 'common/PermissionContextProvider';
 import FacebookContextProvider from 'common/FacebookContextProvider';
 import GoogleContextProvider from 'common/GoogleContextProvider';
 import LoginModalContextProvider from 'common/LoginModalContextProvider';
