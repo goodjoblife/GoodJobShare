@@ -1,4 +1,4 @@
-@value yellow-bar, main-yellow, border-gray, main-gray, gray-dark, gray-light, link-blue from "common/variables.module.css";
+@value yellow-bar, main-yellow, border-gray, main-gray, gray-dark, gray-light, link-blue, page-gutter-s from "../../common/variables.module.css";
 
 .container {
   display: block;

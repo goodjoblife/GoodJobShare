@@ -1,4 +1,4 @@
-@value main-yellow, yellow-bg from "common/variables.module.css";
+@value main-yellow, yellow-bg from "../../common/variables.module.css";
 
 .dialog {
   display: flex;

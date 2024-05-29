@@ -60,7 +60,7 @@ import {
   isValidSalary,
   isNumber,
 } from './utils';
-import { getCompaniesSearch } from 'apis/companySearchApi';
+import { fetchSearchCompany } from 'apis/timeAndSalaryApi';
 import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
 import { employmentTypeOptions, salaryTypeOptions } from './common/optionMap';
 import WorkTimeExample from './WorkTimeExample';
@@ -68,6 +68,7 @@ import Emoji from '../common/icons/Emoji';
 import { tabTypeTranslation } from '../../constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
 import { salaryHint } from 'utils/formUtils';
+import { useTotalCount } from 'hooks/useCount';
 
 export const createCompanyQuestion = ({ header }) => ({
   title: '公司名稱',
@@ -85,7 +86,7 @@ export const createCompanyQuestion = ({ header }) => ({
   validateOrWarn: value => isEmpty(value) && '請填寫公司名稱',
   placeholder: 'ＯＯ 股份有限公司',
   search: value =>
-    getCompaniesSearch({ key: value }).then(
+    fetchSearchCompany({ companyName: value }).then(
       ifElse(isArray, map(prop('name')), always([])),
     ),
   header,
@@ -495,9 +496,18 @@ export const createSensitiveQuestionsQuestion = () => ({
   placeholder: '輸入其他特殊問題內容',
 });
 
+const Count = () => {
+  const count = useTotalCount();
+  return <span>{Math.floor(count / 10000)}</span>;
+};
+
 export const createSubmitQuestion = ({ type }) => ({
-  title: () => () =>
-    `感謝你分享${tabTypeTranslation[type]}，按下「送出」，馬上就可以解鎖全站 13 萬多筆資料哦！`,
+  title: () => () => (
+    <span>
+      感謝你分享{tabTypeTranslation[type]}，按下「送出」，馬上就可以解鎖全站{' '}
+      <Count /> 萬多筆資料哦！
+    </span>
+  ),
   type: QUESTION_TYPE.EMPTY,
   dataKey: '',
 });

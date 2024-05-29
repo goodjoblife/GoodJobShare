@@ -1,4 +1,4 @@
-@value warning-red from "common/variables.module.css";
+@value warning-red from "../../common/variables.module.css";
 
 .header {
   display: flex;

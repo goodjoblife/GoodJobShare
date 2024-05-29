@@ -10,8 +10,8 @@ import {
   loadMoreRelatedExperiences,
 } from 'actions/experience';
 import { relatedExperiencesStateSelector } from 'selectors/experienceSelector';
-import { pageType as PAGE_TYPE } from '../../../constants/companyJobTitle';
-import Button from '../../common/button/Button';
+import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import Button from 'common/button/Button';
 import styles from './MoreExperiencesBlock.module.css';
 
 const ExperienceEntry = props => {

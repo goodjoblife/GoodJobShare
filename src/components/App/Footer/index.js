@@ -7,6 +7,8 @@ import LinkItem from './LinkItem';
 import styles from './Footer.module.css';
 import MediasImg from './medias.jpg';
 import LogoG0vImg from './logo-g0v-white.svg';
+import { openModal } from 'actions/questionnaireExpandedModal';
+import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey';
 
 const link1 = [
   { to: '/salary-work-times/latest', text: '薪資工時' },
@@ -25,6 +27,13 @@ const link3 = [
   { to: '/about', text: '關於我們' },
   { to: '/about#contact', text: '聯絡我們' },
   { to: '/about#joinUs', text: '加入我們' },
+  {
+    to: ({ dispatch }) => {
+      localStorage.removeItem(LS_USER_FEEDBACK_SUBMISSION_TIME_KEY);
+      dispatch(openModal());
+    },
+    text: '給我們回饋',
+  },
 ];
 
 const Footer = () => (
@@ -62,7 +71,10 @@ const Footer = () => (
     </Wrapper>
     <div className={styles.footer}>
       <Wrapper size="l" className={styles.inner}>
-        <P size="s">Copyright © GoodJob.life team 2019</P>
+        <P size="s">Copyright © GoodJob.life team 2024</P>
+        <P size="s" style={{ paddingLeft: '10px' }}>
+          網站負責人：陳韋銘 findyourgoodjob@gmail.com
+        </P>
         <div className={styles.g0v}>
           <a href="https://grants.g0v.tw/power/" alt="power by g0v">
             <img src={LogoG0vImg} alt="g0v" />

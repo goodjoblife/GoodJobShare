@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import R from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
-import { compose, setStatic } from 'recompose';
 import Loader from 'common/Loader';
 import Columns from 'common/Columns';
 import { Section, Wrapper, Heading } from 'common/base';
@@ -70,10 +69,8 @@ const LaborRightsMenu = () => {
   );
 };
 
-const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
+LaborRightsMenu.fetchData = ({ store: { dispatch } }) => {
   return dispatch(queryMenu());
-});
+};
 
-const hoc = compose(ssr);
-
-export default hoc(LaborRightsMenu);
+export default LaborRightsMenu;

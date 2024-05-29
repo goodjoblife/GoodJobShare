@@ -6,7 +6,7 @@ import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput';
 import { debounce } from 'utils/streamUtils';
 
 import InputTitle from './InputTitle';
-import { getCompaniesSearch } from 'apis/companySearchApi';
+import { fetchSearchCompany } from 'apis/timeAndSalaryApi';
 
 const getItemValue = item => item.label;
 
@@ -26,7 +26,7 @@ class CompanyQuery extends React.Component {
 
   search = debounce((e, value) => {
     if (value) {
-      return getCompaniesSearch({ key: value })
+      return fetchSearchCompany({ companyName: value })
         .then(r =>
           Array.isArray(r)
             ? this.handleAutocompleteItems(r.map(mapToAutocompleteList))

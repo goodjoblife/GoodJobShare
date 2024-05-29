@@ -3,6 +3,7 @@ export const queryExperienceGql = /* GraphQL */ `
     experience(id: $id) {
       id
       type
+      originalCompanyName
       company {
         name
         salary_work_time_statistics {
@@ -146,5 +147,11 @@ export const deleteExpereinceLikeGql = /* GraphQL */ `
     deleteExperienceLike(input: $input) {
       deletedExperienceId
     }
+  }
+`;
+
+export const queryExperienceCountGql = /* GraphQL */ `
+  query {
+    experienceCount
   }
 `;

@@ -1,5 +1,5 @@
 import createReducer from 'utils/createReducer';
-import { SET_LOGIN, SET_USER } from '../actions/auth';
+import { SET_LOGIN, SET_USER } from 'actions/auth';
 
 import authStatus from 'constants/authStatus';
 

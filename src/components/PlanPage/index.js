@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { setStatic } from 'recompose';
 import { useDispatch } from 'react-redux';
 import R from 'ramda';
 
@@ -12,10 +11,6 @@ import { subscriptionType } from 'constants/subscription';
 import { fetchSubscriptionPlans } from 'actions/payment';
 import styles from './PlanPage.module.css';
 import CardSection from './CardSection';
-
-const ssr = setStatic('fetchData', ({ store: { dispatch } }) => {
-  return dispatch(fetchSubscriptionPlans());
-});
 
 const PlanPage = () => {
   const dispatch = useDispatch();
@@ -54,4 +49,8 @@ const PlanPage = () => {
   );
 };
 
-export default ssr(PlanPage);
+PlanPage.fetchData = ({ store: { dispatch } }) => {
+  return dispatch(fetchSubscriptionPlans());
+};
+
+export default PlanPage;

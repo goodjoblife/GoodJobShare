@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { zip } from 'ramda';
 import Carousel, { CarouselPage } from 'common/Carousel';
 import ChartWrapper from './ChartWrapper';
-import SalaryDistributionChart from '../common/Charts/SalaryDistributionChart';
-import JobTitleDistributionChart from '../common/Charts/JobTitleDistrubitionChart';
+import SalaryDistributionChart from 'common/Charts/SalaryDistributionChart';
+import JobTitleDistributionChart from 'common/Charts/JobTitleDistrubitionChart';
 import styles from './SummarySection.module.css';
 
 const SummarySection = ({

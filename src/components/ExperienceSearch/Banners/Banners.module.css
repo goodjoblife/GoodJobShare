@@ -1,4 +1,4 @@
-@value page-gutter-s from 'common/variables.module.css';
+@value page-gutter-s from '../../common/variables.module.css';
 
 .banner1 {
   @media (max-width: 850px) {

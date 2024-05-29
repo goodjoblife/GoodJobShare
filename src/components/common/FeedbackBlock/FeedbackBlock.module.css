@@ -1,4 +1,4 @@
-@value border-gray from "common/variables.module.css";
+@value border-gray from "../variables.module.css";
 
 .doneBlock {
   display: flex;

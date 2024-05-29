@@ -5,7 +5,7 @@ import {
   tokenSelector,
   getUserName,
   getUserEmailStatus,
-} from '../../selectors/authSelector';
+} from 'selectors/authSelector';
 
 export const useIsLoggedIn = () => useSelector(isLoggedInSelector);
 export const useAuthUser = () => useSelector(userSelector);

@@ -25,7 +25,7 @@ import {
   portTimeSalaryFormToRequestFormat,
 } from '../utils';
 
-import getSalaryHint from '../../../utils/formUtils';
+import getSalaryHint from 'utils/formUtils';
 
 import StaticHelmet from 'common/StaticHelmet';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';

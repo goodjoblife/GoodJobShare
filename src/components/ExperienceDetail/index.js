@@ -9,14 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 import { Element as ScrollElement, scroller } from 'react-scroll';
-import { compose, setStatic } from 'recompose';
 import cn from 'classnames';
 import { useParams } from 'react-router-dom';
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
-import ReportDetail from 'common/reaction/ReportDetail';
 import PopoverToggle from 'common/PopoverToggle';
 import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
@@ -41,14 +39,15 @@ import {
   queryRelatedExperiencesOnExperience,
 } from 'actions/experience';
 import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
-import { COMMENT_ZONE } from '../../constants/formElements';
+import { COMMENT_ZONE } from 'constants/formElements';
 import {
   pageType as PAGE_TYPE,
   tabType as TAB_TYPE,
-} from '../../constants/companyJobTitle';
+} from 'constants/companyJobTitle';
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceStateSelector } from 'selectors/experienceSelector';
+import Button from 'common/button/Button';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -171,8 +170,9 @@ const ExperienceDetail = ({ ...props }) => {
     return (
       <React.Fragment>
         <div className={styles.functionButtons}>
-          <ReportDetail
-            label="檢舉"
+          <Button
+            circleSize="md"
+            btnStyle="black"
             onClick={() => {
               setModalClosableOnClickOutside(false);
               handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
@@ -181,7 +181,9 @@ const ExperienceDetail = ({ ...props }) => {
               ReactionZoneStyles.reportButton,
               ReactionZoneStyles.button,
             )}
-          />
+          >
+            檢舉
+          </Button>
           <PopoverToggle
             className={ReactionZoneStyles.moreButton}
             popoverClassName={ReactionZoneStyles.popover}
@@ -285,15 +287,13 @@ ExperienceDetail.propTypes = {
   }),
 };
 
-const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
+ExperienceDetail.fetchData = ({ store: { dispatch }, ...props }) => {
   const params = paramsSelector(props);
   const experienceId = experienceIdSelector(params);
   return Promise.all([
     dispatch(queryExperience(experienceId)),
     dispatch(queryRelatedExperiencesOnExperience(experienceId)),
   ]);
-});
+};
 
-const hoc = compose(ssr);
-
-export default hoc(ExperienceDetail);
+export default ExperienceDetail;

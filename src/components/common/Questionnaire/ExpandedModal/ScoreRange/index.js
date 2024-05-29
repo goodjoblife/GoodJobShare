@@ -13,7 +13,7 @@ const ScoreRange = ({ handleUserFeedback }) => {
     <div key={i}>{i}</div>
   ));
 
-  const handleScoreChange = e => {
+  const handleScoreUpdate = e => {
     const newScore = Number(e.target.value);
     const percentage = (newScore / (inputRange.max - inputRange.min)) * 100;
     setScore(newScore);
@@ -29,7 +29,9 @@ const ScoreRange = ({ handleUserFeedback }) => {
         max={inputRange.max}
         value={score}
         step={1}
-        onChange={handleScoreChange}
+        onChange={handleScoreUpdate}
+        onClick={handleScoreUpdate}
+        onTouchStart={handleScoreUpdate}
         style={{
           background: `linear-gradient(to right, #fcd406 ${rangePercentage}%, #C5C5C5 ${rangePercentage}%)`,
         }}

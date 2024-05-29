@@ -1,4 +1,4 @@
-import { tokenSelector } from '../selectors/authSelector';
+import { tokenSelector } from 'selectors/authSelector';
 import { loginWithToken } from './auth';
 import {
   sendVerifyEmail as sendVerifyEmailApi,

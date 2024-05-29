@@ -87,6 +87,7 @@ export const queryMySubscriptionsGql = /* GraphQL */ `
       paymentRecord {
         publicId
         amount
+        status
       }
       subscriptionPlan {
         title

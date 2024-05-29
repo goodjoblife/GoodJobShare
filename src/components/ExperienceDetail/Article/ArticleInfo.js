@@ -11,7 +11,8 @@ import RateButtons from './RateButtons';
 import {
   pageType as PAGE_TYPE,
   generatePageURL,
-} from '../../../constants/companyJobTitle';
+} from 'constants/companyJobTitle';
+import { originalCompanyNameSelector } from '../experienceSelector';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
@@ -40,7 +41,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
           pageName: experience.company.name,
         })}
       >
-        {experience.company.name}
+        {originalCompanyNameSelector(experience)}
       </InfoBlock>
       <InfoBlock label="面試地區">{experience.region}</InfoBlock>
       <InfoBlock

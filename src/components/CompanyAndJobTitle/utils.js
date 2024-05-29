@@ -1,4 +1,3 @@
-import { formatSimpleDate } from 'utils/dateUtil';
 import {
   pageTypeTranslation,
   tabTypeTranslation,
@@ -6,8 +5,7 @@ import {
   tabType as TAG_TYPE,
   generatePageURL,
   generateTabURL,
-} from '../../constants/companyJobTitle';
-import { generatePath } from 'react-router';
+} from 'constants/companyJobTitle';
 
 const generateRootLayer = () => ({
   label: 'GoodJob',
@@ -33,19 +31,6 @@ const generateTabTypeLayer = ({ pageType, pageName, tabType }) => ({
   }),
 });
 
-const generateTitleLayer = ({ pageType, experience }) => {
-  const companyName = experience.company.name;
-  const jobTitle = experience.job_title.name;
-  const createdAt = formatSimpleDate(new Date(experience.created_at));
-  return {
-    label: `${companyName} ${jobTitle} 面試經驗 ${createdAt}`,
-    to: {
-      pathname: generatePath('/experiences/:id', { id: experience.id }),
-      state: { pageType },
-    },
-  };
-};
-
 export const generateBreadCrumbData = ({
   pageType,
   pageName,
@@ -64,15 +49,6 @@ export const generateBreadCrumbData = ({
   }
 
   data.push(generateTabTypeLayer({ pageType, pageName, tabType }));
-
-  if (experience) {
-    data.push(
-      generateTitleLayer({
-        pageType,
-        experience,
-      }),
-    );
-  }
 
   return data;
 };

@@ -1,4 +1,4 @@
-@value gray-light from "common/variables.module.css";
+@value gray-light from "../variables.module.css";
 
 .pageBanner {
   background-color: #fff;

@@ -2,7 +2,6 @@ import fetchUtil from 'utils/fetchUtil';
 import graphqlClient from 'utils/graphqlClient';
 import {
   getSalaryWorkTimes,
-  getSalaryWorkTimeCount,
   getSearchCompanyQuery,
   getCompanyQuery,
   getJobTitleQuery,
@@ -12,30 +11,11 @@ import {
 
 const endpoint = '/workings';
 
-export const fetchCompanyCandidates = ({ key }) =>
-  fetchUtil(`${endpoint}/companies/search`)
-    .get({
-      query: { key },
-    })
-    .then(items => items.map(item => item._id.name));
-
-export const fetchJobTitleCandidates = ({ key }) =>
-  fetchUtil(`${endpoint}/jobs/search`)
-    .get({
-      query: { key },
-    })
-    .then(items => items.map(item => item._id));
-
 export const fetchTimeAndSalary = ({ start, limit }) =>
   graphqlClient({
     query: getSalaryWorkTimes,
     variables: { start, limit },
   });
-
-export const fetchTimeAndSalaryCount = () =>
-  graphqlClient({
-    query: getSalaryWorkTimeCount,
-  }).then(data => data.salary_work_time_count);
 
 export const fetchTimeAndSalaryExtreme = ({ opt }) =>
   fetchUtil(`${endpoint}/extreme`).get({ query: opt });
