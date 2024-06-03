@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import ReactGA from 'react-ga4';
-import ReactPixel from 'react-facebook-pixel';
 
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
@@ -46,7 +45,6 @@ import { tabType } from 'constants/companyJobTitle';
 import { createSalaryWorkTime } from 'actions/timeAndSalary';
 import { transferKeyToSnakecase } from 'utils/objectUtil';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 
 import { sendEvent } from 'utils/hotjarUtil';
 import { getUserPseudoId } from 'utils/GAUtils';
@@ -151,11 +149,6 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
           ? GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM_HIDE_PROGRESS_BAR
           : GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
         action: GA_ACTION.UPLOAD_SUCCESS,
-      });
-      ReactPixel.track('Purchase', {
-        value: 1,
-        currency: 'TWD',
-        content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_TIME_AND_SALARY,
       });
     },
     [dispatch, hideProgressBar],

@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
 import ReactGA from 'react-ga4';
-import ReactPixel from 'react-facebook-pixel';
 import { scroller } from 'react-scroll';
 import qs from 'qs';
 import { Heading } from 'common/base';
@@ -29,7 +28,6 @@ import getSalaryHint from 'utils/formUtils';
 
 import StaticHelmet from 'common/StaticHelmet';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 import { LS_TIME_SALARY_FORM_KEY } from 'constants/localStorageKey';
 
 import SuccessFeedback from '../common/SuccessFeedback';
@@ -101,10 +99,6 @@ const TimeSalaryForm = () => {
 
     setForm({
       ...defaultState,
-    });
-
-    ReactPixel.track('InitiateCheckout', {
-      content_category: PIXEL_CONTENT_CATEGORY.VISIT_TIME_AND_SALARY_FORM,
     });
 
     // send hotjar event for recording
@@ -201,11 +195,6 @@ const TimeSalaryForm = () => {
           ReactGA.event({
             category: GA_CATEGORY.SHARE_TIME_SALARY_ONE_PAGE,
             action: GA_ACTION.UPLOAD_SUCCESS,
-          });
-          ReactPixel.track('Purchase', {
-            value: 1,
-            currency: 'TWD',
-            content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_TIME_AND_SALARY,
           });
 
           return () => (
