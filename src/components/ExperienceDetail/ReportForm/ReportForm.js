@@ -1,18 +1,18 @@
-import React, { PureComponent } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
 import Button from 'common/button/Button';
-import authStatus from 'constants/authStatus';
+import Loader from 'common/Loader';
+import { useLogin } from 'hooks/login';
+import { createReport } from 'actions/reports';
 
 import ReasonCategory from './ReasonCategory';
 import Reason from './Reason';
 import styles from './ReportForm.module.css';
 import { handleToApiParams } from './helper';
 import { validReasomForm, validReason, isReasonLimit } from './formCheck';
-
-// TODO: deprecated, should use hooks or selector to get isLogin
-const isLogin = auth => auth.status === authStatus.CONNECTED;
 
 export const reasonCategoryOptions = [
   {
@@ -33,122 +33,118 @@ export const reasonCategoryOptions = [
   },
 ];
 
-class ReportForm extends PureComponent {
-  constructor(props) {
-    super(props);
+const ReportForm = ({ close, onApiError, onSuccess, id }) => {
+  const dispatch = useDispatch();
+  const [isLoggedIn, login] = useLogin();
 
-    this.state = {
-      reasonCategory: reasonCategoryOptions[0].value,
-      reason: '',
-      submitted: false,
-    };
-  }
+  const [reasonCategory, setReasonCategory] = useState(
+    reasonCategoryOptions[0].value,
+  );
+  const [reason, setReason] = useState('');
+  useEffect(() => {
+    if (reason !== '') {
+      setReasonCategory('其他');
+    }
+  }, [reason]);
 
-  onSubmit = () => {
-    const { onApiError, onSuccess, close, id } = this.props;
-    const { createReport } = this.props;
-    this.setState({
-      submitted: true,
-    });
-    const valid = validReasomForm(this.state);
+  // to show the validation hint
+  const [submitted, setSubmitted] = useState(false);
+  // to show the progress to user
+  const [submitting, setSubmitting] = useState(false);
+
+  const submit = async () => {
+    setSubmitted(true);
+    setSubmitting(true);
+
+    const valid = validReasomForm({ reason, reasonCategory });
 
     if (valid) {
-      return createReport({
-        experienceId: id,
-        body: handleToApiParams(this.state),
-      })
-        .then(close)
-        .then(onSuccess)
-        .catch(e =>
-          onApiError({
-            message: e.message,
+      try {
+        await dispatch(
+          createReport({
+            experienceId: id,
+            body: handleToApiParams({ reason, reasonCategory }),
           }),
         );
+        close();
+        onSuccess();
+      } catch (e) {
+        onApiError({
+          message: e.message,
+        });
+      }
     }
 
-    return null;
+    setSubmitting(false);
   };
 
-  handleReasonCategory = reasonCategory =>
-    this.setState({
-      reasonCategory,
-    });
-
-  handleReason = reason =>
-    this.setState({
-      reason,
-    });
-
-  login = () => this.props.login(this.props.FB).then(this.onSubmit);
-
-  render() {
-    const { reasonCategory, reason, submitted } = this.state;
-
-    const { close, auth } = this.props;
-
+  if (submitting) {
     return (
-      <section>
-        <Heading Tag="h2" size="l" marginBottomS center>
-          檢舉此篇文章
+      <Fragment>
+        <Heading size="l" marginBottomS center>
+          上傳中
         </Heading>
-        <ReasonCategory
-          reasonCategoryOptions={reasonCategoryOptions}
-          reasonCategory={reasonCategory}
-          handleReasonCategory={this.handleReasonCategory}
-        />
-        <Reason
-          reason={reason}
-          onChange={e => this.handleReason(e.target.value)}
-          invalid={
-            submitted && !validReason(isReasonLimit(reasonCategory))(reason)
-          }
-        />
-        <P
-          size="s"
-          style={{
-            marginBottom: '16px',
-          }}
-        >
-          請盡量詳細說明為何這則內容不妥或不實，以供我們評估，您也可以在被檢舉的內容下方留言，
-          讓其他使用者知道您的不同意見。
-        </P>
-        <div
-          className={isLogin(auth) ? styles.buttons : styles.notLoginButtons}
-        >
-          {isLogin(auth) ? (
-            <Button
-              circleSize="md"
-              btnStyle="black"
-              style={{
-                marginRight: '20px',
-              }}
-              onClick={this.onSubmit}
-            >
-              送出
-            </Button>
-          ) : (
-            <Button circleSize="md" btnStyle="black" onClick={this.login}>
-              <pre>{'以 f 認證，並送出檢舉'}</pre>
-            </Button>
-          )}
-          <Button circleSize="md" btnStyle="grayLine" onClick={close}>
-            取消
-          </Button>
-        </div>
-      </section>
+        <Loader size="s" />
+      </Fragment>
     );
   }
-}
+
+  return (
+    <section>
+      <Heading Tag="h2" size="l" marginBottomS center>
+        檢舉此篇文章
+      </Heading>
+      <ReasonCategory
+        reasonCategoryOptions={reasonCategoryOptions}
+        reasonCategory={reasonCategory}
+        handleReasonCategory={setReasonCategory}
+      />
+      <Reason
+        reason={reason}
+        onChange={e => setReason(e.target.value)}
+        invalid={
+          submitted && !validReason(isReasonLimit(reasonCategory))(reason)
+        }
+      />
+      <P
+        size="s"
+        style={{
+          marginBottom: '16px',
+        }}
+      >
+        請盡量詳細說明為何這則內容不妥或不實，以供我們評估，您也可以在被檢舉的內容下方留言，
+        讓其他使用者知道您的不同意見。
+      </P>
+      <div className={isLoggedIn ? styles.buttons : styles.notLoginButtons}>
+        {isLoggedIn ? (
+          <Button
+            circleSize="md"
+            btnStyle="black"
+            style={{
+              marginRight: '20px',
+            }}
+            onClick={submit}
+          >
+            送出
+          </Button>
+        ) : (
+          <Button circleSize="md" btnStyle="black" onClick={login}>
+            登入
+          </Button>
+        )}
+        <Button circleSize="md" btnStyle="grayLine" onClick={close}>
+          取消
+        </Button>
+      </div>
+    </section>
+  );
+};
 
 ReportForm.propTypes = {
   close: PropTypes.func,
   id: PropTypes.string,
-  auth: PropTypes.object,
-  login: PropTypes.func,
-  FB: PropTypes.object,
   onApiError: PropTypes.func,
   onSuccess: PropTypes.func,
-  createReport: PropTypes.func,
 };
 
 export default ReportForm;

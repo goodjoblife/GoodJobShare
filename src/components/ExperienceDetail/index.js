@@ -38,7 +38,7 @@ import {
   queryExperienceIfUnfetched,
   queryRelatedExperiencesOnExperience,
 } from 'actions/experience';
-import ReportFormContainer from '../../containers/ExperienceDetail/ReportFormContainer';
+import ReportForm from './ReportForm';
 import { COMMENT_ZONE } from 'constants/formElements';
 import {
   pageType as PAGE_TYPE,
@@ -130,7 +130,7 @@ const ExperienceDetail = ({ ...props }) => {
       switch (modalType) {
         case MODAL_TYPE.REPORT_DETAIL:
           return (
-            <ReportFormContainer
+            <ReportForm
               close={() => handleIsModalOpen(false)}
               id={experienceId}
               onApiError={pload => {
