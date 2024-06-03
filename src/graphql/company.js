@@ -122,7 +122,6 @@ export const queryCompaniesHavingDataGql = /* GraphQL */ `
   query($start: Int!, $limit: Int!) {
     companiesHavingData(start: $start, limit: $limit) {
       name
-      dataCount
     }
     companiesHavingDataCount
   }

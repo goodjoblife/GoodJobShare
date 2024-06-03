@@ -11,10 +11,9 @@ import {
   generateIndexURL,
 } from 'constants/companyJobTitle';
 import styles from './CompanyAndJobTitleIndex.module.css';
-import { isFetched } from 'constants/status';
+import { isFetched } from 'utils/fetchBox';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
-import usePagination from './usePagination';
 
 const PAGE_SIZE = 10;
 
@@ -41,13 +40,12 @@ const IndexHelmet = ({ pageType, page }) => {
 
 const CompanyAndJobTitleIndex = ({
   pageType,
-  status,
-  pageNames,
   totalCount,
+  indexesBox,
+  page,
+  getPageLink,
 }) => {
-  const [page, getPageLink] = usePagination();
-
-  if (!isFetched(status)) {
+  if (!isFetched(indexesBox)) {
     return <Loader />;
   }
 
@@ -59,7 +57,7 @@ const CompanyAndJobTitleIndex = ({
           所有{pageTypeTranslation[pageType]}資料 - 第 {page} 頁
         </div>
         <div className={styles.index}>
-          {pageNames.map((pageIndex, i) => (
+          {indexesBox.data.map((pageIndex, i) => (
             <WorkingHourBlock
               key={i}
               pageType={pageType}
@@ -81,10 +79,20 @@ const CompanyAndJobTitleIndex = ({
 };
 
 CompanyAndJobTitleIndex.propTypes = {
+  totalCount: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  // TODO
-  pageNames: PropTypes.arrayOf(PropTypes.string),
+  indexesBox: PropTypes.shape({
+    status: PropTypes.string.isRequired,
+    data: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      }),
+    ),
+    error: PropTypes.any,
+  }),
+  // pagination usage
+  page: PropTypes.number.isRequired,
+  getPageLink: PropTypes.func.isRequired,
 };
 
 export default CompanyAndJobTitleIndex;

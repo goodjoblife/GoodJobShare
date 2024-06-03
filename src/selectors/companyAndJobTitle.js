@@ -92,25 +92,11 @@ export const companiesCountSelector = state => {
   return isFetched(indexCountBox) ? indexCountBox.data : 0;
 };
 
-const jobTitleIndex = R.prop('jobTitleIndex');
-
-export const jobTitlesStatus = R.compose(
-  status,
-  jobTitleIndex,
-);
-
-export const jobTitlesSelector = R.compose(
-  data,
-  jobTitleIndex,
-);
-
 export const jobTitleIndexesBoxSelector = page => state => {
-  const status = jobTitlesStatus(state);
-  const jobTitles = jobTitlesSelector(state) || [];
-  return { status, data: jobTitles };
+  return state.jobTitleIndex.indexes[page] || getUnfetched();
 };
 
 export const jobTitlesCountSelector = state => {
-  const jobTitles = jobTitlesSelector(state);
-  return jobTitles ? jobTitles.length : 0;
+  const indexCountBox = state.jobTitleIndex.indexCountBox;
+  return isFetched(indexCountBox) ? indexCountBox.data : 0;
 };

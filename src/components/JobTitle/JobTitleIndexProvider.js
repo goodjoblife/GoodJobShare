@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { querySelector } from 'common/routing/selectors';
 import CompanyAndJobTitleIndexPage from '../CompanyAndJobTitle/IndexPage';
 import usePagination from '../CompanyAndJobTitle/IndexPage/usePagination';
 import { pageType } from 'constants/companyJobTitle';
@@ -12,32 +13,31 @@ import {
 const PAGE_SIZE = 10;
 
 const JobTitleIndexProvider = () => {
-  const [page] = usePagination();
+  const [page, getPageLink] = usePagination();
   const selector = useMemo(() => jobTitleIndexesBoxSelector(page), [page]);
   const jobTitleIndexesBox = useSelector(selector);
   const totalCount = useSelector(jobTitlesCountSelector);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchJobTitles());
-  }, [dispatch]);
-
-  console.log(jobTitleIndexesBox);
+    dispatch(fetchJobTitles(page, PAGE_SIZE));
+  }, [dispatch, page]);
 
   return (
     <CompanyAndJobTitleIndexPage
+      totalCount={totalCount}
       pageType={pageType.JOB_TITLE}
       status={jobTitleIndexesBox.status}
-      pageNames={jobTitleIndexesBox.data.slice(
-        (page - 1) * PAGE_SIZE,
-        page * PAGE_SIZE,
-      )}
-      totalCount={totalCount}
+      indexesBox={jobTitleIndexesBox}
+      page={page}
+      getPageLink={getPageLink}
     />
   );
 };
 
-JobTitleIndexProvider.fetchData = ({ store: { dispatch } }) =>
-  dispatch(fetchJobTitles());
+JobTitleIndexProvider.fetchData = async ({ store: { dispatch }, ...props }) => {
+  const page = Number(querySelector(props).p || 1);
+  await dispatch(fetchJobTitles(page, PAGE_SIZE));
+};
 
 export default JobTitleIndexProvider;

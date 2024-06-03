@@ -13,7 +13,7 @@ import {
 const PAGE_SIZE = 10;
 
 const CompanyIndexProvider = () => {
-  const [page] = usePagination();
+  const [page, getPageLink] = usePagination();
   const selector = useMemo(() => companyIndexesBoxSelector(page), [page]);
   const companyIndexesBox = useSelector(selector);
   const totalCount = useSelector(companiesCountSelector);
@@ -28,7 +28,9 @@ const CompanyIndexProvider = () => {
       totalCount={totalCount}
       pageType={pageType.COMPANY}
       status={companyIndexesBox.status}
-      pageNames={companyIndexesBox.data}
+      indexesBox={companyIndexesBox}
+      page={page}
+      getPageLink={getPageLink}
     />
   );
 };
