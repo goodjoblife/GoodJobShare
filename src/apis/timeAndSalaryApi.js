@@ -34,11 +34,6 @@ export const fetchTimeAndSalary = ({ start, limit }) =>
 export const fetchTimeAndSalaryExtreme = ({ opt }) =>
   fetchUtil(`${endpoint}/extreme`).get({ query: opt });
 
-export const fetchCampaignTimeAndSalary = ({ campaignName, opt }) =>
-  fetchUtil(`${endpoint}/campaigns/${campaignName}`).get({
-    query: opt,
-  });
-
 export const fetchSearchCompany = ({ companyName }) =>
   graphqlClient({
     query: getSearchCompanyQuery,
