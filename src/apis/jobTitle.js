@@ -12,6 +12,6 @@ export const getJobTitle = jobTitle =>
   }).then(R.prop('job_title'));
 
 export const getJobTitles = () =>
-  graphqlClient({ query: getJobTitlesHavingDataQuery })
-    .then(R.prop('job_titles_having_data'))
-    .then(R.map(R.prop('name')));
+  graphqlClient({ query: getJobTitlesHavingDataQuery }).then(
+    R.prop('job_titles_having_data'),
+  );

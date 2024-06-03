@@ -1,17 +1,21 @@
 import { isGraphqlError } from 'utils/errors';
-
-import STATUS, { isFetching, isFetched } from 'constants/status';
+import STATUS from 'constants/status';
+import {
+  isFetching,
+  isFetched,
+  toFetching,
+  getFetched,
+  getError,
+} from 'utils/fetchBox';
 import {
   companyStatus as companyStatusSelector,
-  companyNamesStatus as companyNamesStatusSelector,
+  companyIndexesBoxSelector,
 } from 'selectors/companyAndJobTitle';
-import {
-  getCompany as getCompanyApi,
-  getCompanyNames as getCompanyNamesApi,
-} from 'apis/company';
+import { getCompany as getCompanyApi, queryCompaniesApi } from 'apis/company';
 
 export const SET_STATUS = '@@company/SET_STATUS';
-export const SET_INDEX_STATUS = '@@company/SET_INDEX_STATUS';
+export const SET_INDEX = '@@COMPANY/SET_INDEX';
+export const SET_INDEX_COUNT = '@@COMPANY/SET_INDEX_COUNT';
 
 const setStatus = (companyName, status, data = null, error = null) => ({
   type: SET_STATUS,
@@ -23,7 +27,7 @@ const setStatus = (companyName, status, data = null, error = null) => ({
 
 export const fetchCompany = companyName => (dispatch, getState) => {
   const status = companyStatusSelector(companyName)(getState());
-  if (isFetching(status) || isFetched(status)) {
+  if (status === STATUS.FETCHING || status === STATUS.FETCHED) {
     return;
   }
 
@@ -43,29 +47,38 @@ export const fetchCompany = companyName => (dispatch, getState) => {
     });
 };
 
-const setIndexStatus = (status, data = null, error = null) => ({
-  type: SET_INDEX_STATUS,
-  status,
-  data,
-  error,
+const setIndex = (page, box) => ({
+  type: SET_INDEX,
+  page,
+  box,
 });
 
-export const fetchCompanyNames = () => async (dispatch, getState) => {
-  const status = companyNamesStatusSelector(getState());
-  if (isFetching(status) || isFetched(status)) {
+const setIndexCount = box => ({
+  type: SET_INDEX_COUNT,
+  box,
+});
+
+export const fetchCompanyNames = (page, pageSize) => async (
+  dispatch,
+  getState,
+) => {
+  const box = companyIndexesBoxSelector(page)(getState());
+  if (isFetching(box) || isFetched(box)) {
     return;
   }
 
-  dispatch(setIndexStatus(STATUS.FETCHING));
+  dispatch(setIndex(page, toFetching()));
+  dispatch(setIndexCount(toFetching()));
+
   try {
-    const companyNames = await getCompanyNamesApi();
-    dispatch(setIndexStatus(STATUS.FETCHED, companyNames));
+    const data = await queryCompaniesApi((page - 1) * pageSize, pageSize);
+    dispatch(setIndex(page, getFetched(data.companiesHavingData)));
+    dispatch(setIndexCount(getFetched(data.companiesHavingDataCount)));
   } catch (error) {
     if (isGraphqlError(error)) {
-      dispatch(setIndexStatus(STATUS.ERROR, null, error));
-    } else {
-      throw error;
+      return dispatch(setIndex(page, getError(error)));
     }
+    throw error;
   }
 };
 

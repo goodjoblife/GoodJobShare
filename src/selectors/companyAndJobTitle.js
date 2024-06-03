@@ -1,5 +1,6 @@
 import R from 'ramda';
 import STATUS from 'constants/status';
+import { getUnfetched, isFetched } from 'utils/fetchBox';
 
 export const status = R.compose(
   R.defaultTo(STATUS.UNFETCHED),
@@ -82,17 +83,14 @@ export const jobTitleStatus = jobTitleName =>
     jobTitle(jobTitleName),
   );
 
-const companyIndex = R.prop('companyIndex');
+export const companyIndexesBoxSelector = page => state => {
+  return state.companyIndex.indexes[page] || getUnfetched();
+};
 
-export const companyNamesStatus = R.compose(
-  status,
-  companyIndex,
-);
-
-export const companyNames = R.compose(
-  data,
-  companyIndex,
-);
+export const companiesCountSelector = state => {
+  const indexCountBox = state.companyIndex.indexCountBox;
+  return isFetched(indexCountBox) ? indexCountBox.data : 0;
+};
 
 const jobTitleIndex = R.prop('jobTitleIndex');
 
@@ -101,7 +99,18 @@ export const jobTitlesStatus = R.compose(
   jobTitleIndex,
 );
 
-export const jobTitles = R.compose(
+export const jobTitlesSelector = R.compose(
   data,
   jobTitleIndex,
 );
+
+export const jobTitleIndexesBoxSelector = page => state => {
+  const status = jobTitlesStatus(state);
+  const jobTitles = jobTitlesSelector(state) || [];
+  return { status, data: jobTitles };
+};
+
+export const jobTitlesCountSelector = state => {
+  const jobTitles = jobTitlesSelector(state);
+  return jobTitles ? jobTitles.length : 0;
+};

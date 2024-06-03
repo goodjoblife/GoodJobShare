@@ -118,10 +118,12 @@ query($companyName: String!) {
 }
 `;
 
-export const getCompaniesHavingDataQuery = `
-{
-  companies_having_data {
-    name
+export const queryCompaniesHavingDataGql = /* GraphQL */ `
+  query($start: Int!, $limit: Int!) {
+    companiesHavingData(start: $start, limit: $limit) {
+      name
+      dataCount
+    }
+    companiesHavingDataCount
   }
-}
 `;
