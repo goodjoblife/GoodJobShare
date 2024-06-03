@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Heading from 'common/base/Heading';
@@ -36,10 +36,17 @@ export const reasonCategoryOptions = [
 const ReportForm = ({ close, onApiError, onSuccess, id }) => {
   const dispatch = useDispatch();
   const [isLoggedIn, login] = useLogin();
-  const [formState, setFormState] = useState({
-    reasonCategory: reasonCategoryOptions[0].value,
-    reason: '',
-  });
+
+  const [reasonCategory, setReasonCategory] = useState(
+    reasonCategoryOptions[0].value,
+  );
+  const [reason, setReason] = useState('');
+  useEffect(() => {
+    if (reason !== '') {
+      setReasonCategory('其他');
+    }
+  }, [reason]);
+
   // to show the validation hint
   const [submitted, setSubmitted] = useState(false);
   // to show the progress to user
@@ -49,14 +56,14 @@ const ReportForm = ({ close, onApiError, onSuccess, id }) => {
     setSubmitted(true);
     setSubmitting(true);
 
-    const valid = validReasomForm(formState);
+    const valid = validReasomForm({ reason, reasonCategory });
 
     if (valid) {
       try {
         await dispatch(
           createReport({
             experienceId: id,
-            body: handleToApiParams(formState),
+            body: handleToApiParams({ reason, reasonCategory }),
           }),
         );
         close();
@@ -89,29 +96,14 @@ const ReportForm = ({ close, onApiError, onSuccess, id }) => {
       </Heading>
       <ReasonCategory
         reasonCategoryOptions={reasonCategoryOptions}
-        reasonCategory={formState.reasonCategory}
-        handleReasonCategory={reasonCategory =>
-          setFormState(state => ({
-            ...state,
-            reasonCategory,
-          }))
-        }
+        reasonCategory={reasonCategory}
+        handleReasonCategory={setReasonCategory}
       />
       <Reason
-        reason={formState.reason}
-        onChange={e => {
-          const reason = e.target.value;
-          setFormState(state => ({
-            ...state,
-            reasonCategory: '其他',
-            reason,
-          }));
-        }}
+        reason={reason}
+        onChange={e => setReason(e.target.value)}
         invalid={
-          submitted &&
-          !validReason(isReasonLimit(formState.reasonCategory))(
-            formState.reason,
-          )
+          submitted && !validReason(isReasonLimit(reasonCategory))(reason)
         }
       />
       <P
