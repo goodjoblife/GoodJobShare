@@ -4,7 +4,6 @@ import FacebookContextProvider from 'common/FacebookContextProvider';
 import GoogleContextProvider from 'common/GoogleContextProvider';
 import LoginModalContextProvider from 'common/LoginModalContextProvider';
 import useGoogleAnalytics from 'hooks/useGoogleAnalytics';
-import usePixel from 'hooks/usePixel';
 import useGoogleTagManager from 'hooks/useGoogleTagManager';
 import useSyncAuth from 'hooks/useSyncAuth';
 import App from './App';
@@ -17,7 +16,6 @@ const compose = (providers, node) =>
 
 const Root = () => {
   useGoogleAnalytics();
-  usePixel();
   useGoogleTagManager();
   useSyncAuth();
 

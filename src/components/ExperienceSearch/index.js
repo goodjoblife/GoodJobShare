@@ -5,7 +5,6 @@ import R from 'ramda';
 import qs from 'qs';
 import { compose, withHandlers, setStatic, lifecycle } from 'recompose';
 import ReactGA from 'react-ga4';
-import ReactPixel from 'react-facebook-pixel';
 import Loader from 'common/Loader';
 import { Section, Wrapper, Heading, P } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
@@ -15,7 +14,6 @@ import getScale from 'utils/numberUtils';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { fetchExperiences as fetchExperiencesAction } from 'actions/experienceSearch';
 import { IMG_HOST, SITE_NAME } from 'constants/helmetData';
-import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 import { PAGE_COUNT } from 'constants/experienceSearch';
 import status from 'constants/status';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
@@ -103,11 +101,6 @@ class ExperienceSearch extends Component {
       category: GA_CATEGORY.SEARCH_EXPERIENCE,
       action: `${GA_ACTION.SEARCH_BY}_${searchBy}`,
       value: searchQuery,
-    });
-
-    ReactPixel.track('Search', {
-      search_string: searchQuery,
-      content_category: PIXEL_CONTENT_CATEGORY.SEARCH_EXPERIENCES,
     });
   };
 
