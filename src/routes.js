@@ -24,16 +24,21 @@ import ProductAndRefundPolicy from './components/ProductAndRefundPolicy';
 import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
+
 import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
 import CompanyPageProvider from './components/Company/CompanyPageProvider';
 import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
+import CompanyOverviewProvider from 'components/Company/CompanyOverviewProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
+import JobTitleOverviewProvider from 'components/JobTitle/JobTitleOverviewProvider';
+
 import PlanPage from './components/PlanPage';
 import BuyResultPage from './components/BuyResultPage';
 import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
 import SubscriptionsPage from './components/Me/SubscriptionsPage';
 import InterviewFormContainer from './containers/ShareExperience/InterviewFormContainer';
+import { jobTitleOverviewPath, companyOverviewPath } from 'common/linkTo';
 
 const routes = [
   {
@@ -182,6 +187,11 @@ const routes = [
         exact: true,
       },
       {
+        path: companyOverviewPath,
+        component: CompanyOverviewProvider,
+        exact: true,
+      },
+      {
         path: '/companies/:companyName',
         component: CompanyPageProvider,
       },
@@ -197,6 +207,11 @@ const routes = [
       {
         path: '/job-titles',
         component: JobTitleIndexProvider,
+        exact: true,
+      },
+      {
+        path: jobTitleOverviewPath,
+        component: JobTitleOverviewProvider,
         exact: true,
       },
       {
