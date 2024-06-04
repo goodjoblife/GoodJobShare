@@ -4,7 +4,7 @@ import { SET_INDEX_COUNT, SET_INDEX } from 'actions/jobTitle';
 
 const preloadedState = {
   // page --> indexBox
-  indexes: {},
+  indexesByPage: {},
   indexCountBox: getUnfetched(),
 };
 
@@ -16,8 +16,8 @@ const reducer = createReducer(preloadedState, {
   [SET_INDEX]: (state, { page, box }) => {
     return {
       ...state,
-      indexes: {
-        ...state.indexes,
+      indexesByPage: {
+        ...state.indexesByPage,
         [page]: box,
       },
     };
