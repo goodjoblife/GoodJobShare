@@ -83,7 +83,7 @@ export const jobTitleStatus = jobTitleName =>
     jobTitle(jobTitleName),
   );
 
-export const companyIndexesBoxSelector = page => state => {
+export const companyIndexesBoxSelectorAtPage = page => state => {
   return state.companyIndex.indexes[page] || getUnfetched();
 };
 
@@ -92,7 +92,7 @@ export const companiesCountSelector = state => {
   return isFetched(indexCountBox) ? indexCountBox.data : 0;
 };
 
-export const jobTitleIndexesBoxSelector = page => state => {
+export const jobTitleIndexesBoxSelectorAtPage = page => state => {
   return state.jobTitleIndex.indexes[page] || getUnfetched();
 };
 

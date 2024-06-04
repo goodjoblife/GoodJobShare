@@ -9,7 +9,7 @@ import {
 } from 'utils/fetchBox';
 import {
   jobTitleStatus as jobTitleStatusSelector,
-  jobTitleIndexesBoxSelector,
+  jobTitleIndexesBoxSelectorAtPage,
 } from 'selectors/companyAndJobTitle';
 import {
   getJobTitle as getJobTitleApi,
@@ -61,11 +61,11 @@ const setIndexCount = box => ({
   box,
 });
 
-export const fetchJobTitles = (page, pageSize) => async (
+export const fetchJobTitles = ({ page, pageSize }) => async (
   dispatch,
   getState,
 ) => {
-  const box = jobTitleIndexesBoxSelector(page)(getState());
+  const box = jobTitleIndexesBoxSelectorAtPage(page)(getState());
   if (isFetching(box) || isFetched(box)) {
     return;
   }
@@ -74,7 +74,10 @@ export const fetchJobTitles = (page, pageSize) => async (
   dispatch(setIndexCount(toFetching()));
 
   try {
-    const data = await queryJobTitlesApi((page - 1) * pageSize, pageSize);
+    const data = await queryJobTitlesApi({
+      start: (page - 1) * pageSize,
+      limit: pageSize,
+    });
     dispatch(setIndex(page, getFetched(data.jobTitlesHavingData)));
     dispatch(setIndexCount(getFetched(data.jobTitlesHavingDataCount)));
   } catch (error) {

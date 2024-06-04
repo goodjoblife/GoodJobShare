@@ -9,7 +9,7 @@ import {
 } from 'utils/fetchBox';
 import {
   companyStatus as companyStatusSelector,
-  companyIndexesBoxSelector,
+  companyIndexesBoxSelectorAtPage,
 } from 'selectors/companyAndJobTitle';
 import { getCompany as getCompanyApi, queryCompaniesApi } from 'apis/company';
 
@@ -58,11 +58,11 @@ const setIndexCount = box => ({
   box,
 });
 
-export const fetchCompanyNames = (page, pageSize) => async (
+export const fetchCompanyNames = ({ page, pageSize }) => async (
   dispatch,
   getState,
 ) => {
-  const box = companyIndexesBoxSelector(page)(getState());
+  const box = companyIndexesBoxSelectorAtPage(page)(getState());
   if (isFetching(box) || isFetched(box)) {
     return;
   }

@@ -11,7 +11,7 @@ export const getJobTitle = jobTitle =>
     variables: { jobTitle },
   }).then(R.prop('job_title'));
 
-export const queryJobTitlesApi = (start, limit) =>
+export const queryJobTitlesApi = ({ start, limit }) =>
   graphqlClient({
     query: queryJobTitlesHavingDataGql,
     variables: { start, limit },

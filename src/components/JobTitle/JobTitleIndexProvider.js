@@ -6,7 +6,7 @@ import usePagination from '../CompanyAndJobTitle/IndexPage/usePagination';
 import { pageType } from 'constants/companyJobTitle';
 import { fetchJobTitles } from 'actions/jobTitle';
 import {
-  jobTitleIndexesBoxSelector,
+  jobTitleIndexesBoxSelectorAtPage,
   jobTitlesCountSelector,
 } from 'selectors/companyAndJobTitle';
 
@@ -14,13 +14,15 @@ const PAGE_SIZE = 10;
 
 const JobTitleIndexProvider = () => {
   const [page, getPageLink] = usePagination();
-  const selector = useMemo(() => jobTitleIndexesBoxSelector(page), [page]);
+  const selector = useMemo(() => jobTitleIndexesBoxSelectorAtPage(page), [
+    page,
+  ]);
   const jobTitleIndexesBox = useSelector(selector);
   const totalCount = useSelector(jobTitlesCountSelector);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchJobTitles(page, PAGE_SIZE));
+    dispatch(fetchJobTitles({ page, pageSize: PAGE_SIZE }));
   }, [dispatch, page]);
 
   return (
@@ -37,7 +39,7 @@ const JobTitleIndexProvider = () => {
 
 JobTitleIndexProvider.fetchData = async ({ store: { dispatch }, ...props }) => {
   const page = Number(querySelector(props).p || 1);
-  await dispatch(fetchJobTitles(page, PAGE_SIZE));
+  await dispatch(fetchJobTitles({ page, pageSize: PAGE_SIZE }));
 };
 
 export default JobTitleIndexProvider;
