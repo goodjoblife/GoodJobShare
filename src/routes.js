@@ -38,7 +38,7 @@ import BuyResultPage from './components/BuyResultPage';
 import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
 import SubscriptionsPage from './components/Me/SubscriptionsPage';
 import InterviewFormContainer from './containers/ShareExperience/InterviewFormContainer';
-import { jobTitleOverviewPath, companyOverviewPath } from 'common/linkTo';
+import { jobTitleOverviewPath, companyOverviewPath } from 'constants/linkTo';
 
 const routes = [
   {
