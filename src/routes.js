@@ -6,9 +6,6 @@ import TimeAndSalary from './components/TimeAndSalary';
 import TimeAndSalaryBoard from './containers/SalaryWorkTime/TimeAndSalaryBoard';
 import SalaryWorkTimeSearchScreen from './components/TimeAndSalary/SearchScreen';
 import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
-import CampaignTimeAndSalary from './components/CampaignTimeAndSalary';
-import CampaignTimeAndSalaryBoard from './containers/CampaignTimeAndSalary/CampaignTimeAndSalaryBoard';
-import CampaignTimeAndSalaryNotFound from './components/CampaignTimeAndSalary/NotFound';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
 import ExperienceDetail from './containers/ExperienceDetail';
 import NotFound from './components/common/NotFound';
@@ -16,7 +13,6 @@ import ShareExperience from './components/ShareExperience';
 import ShareExperienceEntry from './components/ShareExperience/Entry';
 import InterviewForm from './containers/ShareExperience/InterviewStepsFormContainer';
 import TimeSalaryForm from './components/ShareExperience/TimeSalaryForm';
-import CampaignTimeAndSalaryForm from './containers/ShareExperience/CampaignTimeAndSalaryFormContainer';
 import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
 import Me from './components/Me';
 import Buy from './components/Buy';
@@ -107,56 +103,12 @@ const routes = [
         component: TimeSalaryForm,
       },
       {
-        path: '/share/time-and-salary/campaigns/:campaign_name',
-        exact: true,
-        component: CampaignTimeAndSalaryForm,
-      },
-      {
         path: '/share/work-experiences',
         exact: true,
         component: WorkExperiencesForm,
       },
       {
         component: NotFound,
-      },
-    ],
-  },
-  {
-    path: '/time-and-salary/campaigns/:campaign_name',
-    component: CampaignTimeAndSalary,
-    routes: [
-      {
-        path: '/time-and-salary/campaigns/:campaign_name/latest',
-        exact: true,
-        component: CampaignTimeAndSalaryBoard,
-      },
-      {
-        path: '/time-and-salary/campaigns/:campaign_name/sort/time-asc',
-        exact: true,
-        component: CampaignTimeAndSalaryBoard,
-      },
-      {
-        path: '/time-and-salary/campaigns/:campaign_name/work-time-dashboard',
-        exact: true,
-        component: CampaignTimeAndSalaryBoard,
-      },
-      {
-        path: '/time-and-salary/campaigns/:campaign_name/sort/work-time-asc',
-        exact: true,
-        component: CampaignTimeAndSalaryBoard,
-      },
-      {
-        path: '/time-and-salary/campaigns/:campaign_name/salary-dashboard',
-        exact: true,
-        component: CampaignTimeAndSalaryBoard,
-      },
-      {
-        path: '/time-and-salary/campaigns/:campaign_name/sort/salary-asc',
-        exact: true,
-        component: CampaignTimeAndSalaryBoard,
-      },
-      {
-        component: CampaignTimeAndSalaryNotFound,
       },
     ],
   },
