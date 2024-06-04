@@ -1,18 +1,16 @@
-import { useCallback, useMemo } from 'react';
-import { useLocation } from 'react-router';
+import { useCallback } from 'react';
 import qs from 'qs';
+import { useQuery } from 'hooks/routing';
+import { usePage } from 'hooks/routing/page';
 
 const usePagination = () => {
-  const location = useLocation();
-  const query = useMemo(
-    () => qs.parse(location.search, { ignoreQueryPrefix: true }),
-    [location.search],
-  );
+  const query = useQuery();
+  const page = usePage();
   const getPageLink = useCallback(
     p => qs.stringify({ ...query, p }, { addQueryPrefix: true }),
     [query],
   );
-  return [Number(query.p || 1), getPageLink];
+  return [page, getPageLink];
 };
 
 export default usePagination;
