@@ -8,14 +8,14 @@ import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
 import NotFound from 'common/NotFound';
 import Redirect from 'common/routing/Redirect';
 import { paramsSelector } from 'common/routing/selectors';
+import usePermission from 'hooks/usePermission';
+import { usePage } from 'hooks/routing/page';
+import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import {
   jobTitleSalaryWorkTimesPath,
   jobTitleInterviewExperiencesPath,
   jobTitleWorkExperiencesPath,
-} from 'common/linkTo';
-import usePermission from 'hooks/usePermission';
-import { usePage } from 'hooks/routing/page';
-import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+} from 'constants/linkTo';
 import { fetchJobTitle } from 'actions/jobTitle';
 import {
   interviewExperiences,
