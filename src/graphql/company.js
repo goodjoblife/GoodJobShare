@@ -5,6 +5,9 @@ query($companyName: String!) {
       id
       type
       originalCompanyName
+      company {
+        name
+      }
       job_title {
         name
       }
@@ -29,6 +32,9 @@ query($companyName: String!) {
       id
       type
       originalCompanyName
+      company {
+        name
+      }
       job_title {
         name
       }
