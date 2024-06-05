@@ -1,11 +1,13 @@
 import createReducer from 'utils/createReducer';
 import { getUnfetched } from 'utils/fetchBox';
-import { SET_INDEX_COUNT, SET_INDEX } from 'actions/jobTitle';
+import { SET_INDEX_COUNT, SET_INDEX, SET_OVERVIEW } from 'actions/jobTitle';
 
 const preloadedState = {
   // page --> indexBox
   indexesByPage: {},
   indexCountBox: getUnfetched(),
+  // jobTitle --> overviewBox
+  overviewByName: {},
 };
 
 const reducer = createReducer(preloadedState, {
@@ -19,6 +21,15 @@ const reducer = createReducer(preloadedState, {
       indexesByPage: {
         ...state.indexesByPage,
         [page]: box,
+      },
+    };
+  },
+  [SET_OVERVIEW]: (state, { jobTitle, box }) => {
+    return {
+      ...state,
+      overviewByName: {
+        ...state.overviewByName,
+        [jobTitle]: box,
       },
     };
   },

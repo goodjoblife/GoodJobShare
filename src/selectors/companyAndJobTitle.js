@@ -92,6 +92,10 @@ export const companiesCountSelector = state => {
   return isFetched(indexCountBox) ? indexCountBox.data : 0;
 };
 
+export const companyOverviewBoxSelectorByName = companyName => state => {
+  return state.companyIndex.overviewByName[companyName] || getUnfetched();
+};
+
 export const jobTitleIndexesBoxSelectorAtPage = page => state => {
   return state.jobTitleIndex.indexesByPage[page] || getUnfetched();
 };
@@ -99,4 +103,8 @@ export const jobTitleIndexesBoxSelectorAtPage = page => state => {
 export const jobTitlesCountSelector = state => {
   const indexCountBox = state.jobTitleIndex.indexCountBox;
   return isFetched(indexCountBox) ? indexCountBox.data : 0;
+};
+
+export const jobTitleOverviewBoxSelectorByName = jobTitle => state => {
+  return state.jobTitleIndex.overviewByName[jobTitle] || getUnfetched();
 };

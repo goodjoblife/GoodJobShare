@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { querySelector } from 'common/routing/selectors';
+import { pageFromQuerySelector } from 'common/routing/page';
 import CompanyAndJobTitleIndexPage from '../CompanyAndJobTitle/IndexPage';
 import usePagination from '../CompanyAndJobTitle/IndexPage/usePagination';
 import { pageType } from 'constants/companyJobTitle';
@@ -36,7 +37,8 @@ const CompanyIndexProvider = () => {
 };
 
 CompanyIndexProvider.fetchData = async ({ store: { dispatch }, ...props }) => {
-  const page = Number(querySelector(props).p || 1);
+  const query = querySelector(props);
+  const page = pageFromQuerySelector(query);
   await dispatch(fetchCompanyNames({ page, pageSize: PAGE_SIZE }));
 };
 

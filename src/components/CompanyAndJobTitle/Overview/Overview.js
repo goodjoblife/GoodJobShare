@@ -10,17 +10,15 @@ import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import { tabType as TAB_TYPE, generateTabURL } from 'constants/companyJobTitle';
 import SummaryBlock from './SummaryBlock';
 
-const SALARY_WORK_TIMES_LIMIT = 5;
-const WORK_EXPERIENCES_LIMIT = 3;
-const INTERVIEW_EXPERIENCES_LIMIT = 3;
-
 const Overview = ({
   pageType,
   pageName,
-  tabType,
   interviewExperiences,
+  interviewExperiencesCount,
   workExperiences,
+  workExperiencesCount,
   salaryWorkTimes,
+  salaryWorkTimesCount,
   salaryDistribution,
   jobAverageSalaries,
   averageWeekWorkTime,
@@ -31,13 +29,13 @@ const Overview = ({
     <Section Tag="main" paddingBottom>
       <SnippetBlock
         title="薪水&加班狀況"
-        linkText={`查看 ${salaryWorkTimes.length} 筆完整的薪水、加班數據資料 >>`}
+        linkText={`查看 ${salaryWorkTimesCount} 筆完整的薪水、加班數據資料 >>`}
         linkTo={generateTabURL({
           pageType,
           pageName,
           tabType: TAB_TYPE.TIME_AND_SALARY,
         })}
-        isEmpty={salaryWorkTimes.length === 0}
+        isEmpty={salaryWorkTimesCount === 0}
         pageType={pageType}
         pageName={pageName}
         tabType={TAB_TYPE.TIME_AND_SALARY}
@@ -49,25 +47,25 @@ const Overview = ({
           overtimeFrequencyCount={overtimeFrequencyCount}
         />
         <WorkingHourTable
-          data={salaryWorkTimes.slice(0, SALARY_WORK_TIMES_LIMIT)}
+          data={salaryWorkTimes}
           hideContent={!canView}
           pageType={pageType}
         />
       </SnippetBlock>
       <SnippetBlock
         title="工作心得"
-        linkText={`查看 ${workExperiences.length} 篇完整的工作心得 >>`}
+        linkText={`查看 ${workExperiencesCount} 篇完整的工作心得 >>`}
         linkTo={generateTabURL({
           pageType,
           pageName,
           tabType: TAB_TYPE.WORK_EXPERIENCE,
         })}
-        isEmpty={workExperiences.length === 0}
+        isEmpty={workExperiencesCount === 0}
         pageType={pageType}
         pageName={pageName}
         tabType={TAB_TYPE.WORK_EXPERIENCE}
       >
-        {workExperiences.slice(0, WORK_EXPERIENCES_LIMIT).map(d => (
+        {workExperiences.map(d => (
           <WorkExperienceEntry
             key={d.id}
             pageType={pageType}
@@ -78,18 +76,18 @@ const Overview = ({
       </SnippetBlock>
       <SnippetBlock
         title="面試心得"
-        linkText={`查看 ${interviewExperiences.length} 篇完整的面試心得 >>`}
+        linkText={`查看 ${interviewExperiencesCount} 篇完整的面試心得 >>`}
         linkTo={generateTabURL({
           pageType,
           pageName,
           tabType: TAB_TYPE.INTERVIEW_EXPERIENCE,
         })}
-        isEmpty={interviewExperiences.length === 0}
+        isEmpty={interviewExperiencesCount === 0}
         pageType={pageType}
         pageName={pageName}
         tabType={TAB_TYPE.INTERVIEW_EXPERIENCE}
       >
-        {interviewExperiences.slice(0, INTERVIEW_EXPERIENCES_LIMIT).map(d => (
+        {interviewExperiences.map(d => (
           <InterviewExperienceEntry
             key={d.id}
             pageType={pageType}
@@ -105,10 +103,12 @@ const Overview = ({
 Overview.propTypes = {
   pageType: PropTypes.string.isRequired,
   pageName: PropTypes.string.isRequired,
-  tabType: PropTypes.string.isRequired,
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
+  interviewExperiencesCount: PropTypes.number.isRequired,
   workExperiences: PropTypes.arrayOf(PropTypes.object),
+  workExperiencesCount: PropTypes.number.isRequired,
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
+  salaryWorkTimesCount: PropTypes.number.isRequired,
   salaryDistribution: PropTypes.array,
   jobAverageSalaries: PropTypes.array,
   averageWeekWorkTime: PropTypes.number.isRequired,
