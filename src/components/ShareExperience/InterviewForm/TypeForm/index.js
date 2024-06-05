@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import { last, contains, head, equals, reject } from 'ramda';
 import { useDispatch } from 'react-redux';
 import ReactGA from 'react-ga4';
-import ReactPixel from 'react-facebook-pixel';
 
 import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
 import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
 import SubmittableFormBuilder from '../../common/SubmittableFormBuilder';
 import { createInterviewExperience } from 'actions/experiences';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 import {
   DATA_KEY_COMPANY_NAME,
   DATA_KEY_JOB_TITLE,
@@ -153,11 +151,6 @@ const TypeForm = ({ open, onClose }) => {
         action: GA_ACTION.UPLOAD_SUCCESS,
         value: goalValue,
         label: experienceId,
-      });
-      ReactPixel.track('Purchase', {
-        value: 1,
-        currency: 'TWD',
-        content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
       });
     },
     [dispatch],

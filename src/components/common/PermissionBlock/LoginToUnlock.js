@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import { Heading, P } from 'common/base';
@@ -6,32 +6,17 @@ import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
 import styles from './PermissionBlock.module.css';
 import linkStyles from 'common/base/Link.module.css';
 import CallToLoginShareButton from './CallToLoginShareButton';
-import { useIsLoggedIn } from 'hooks/auth';
-import LoginModal from './LoginModal';
+import { useLogin } from 'hooks/login';
 import useUnlockedDescriptionBySubmission from './useUnlockedDescriptionBySubmission';
 
 const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
   const experienceCount = useExperienceCount();
   const timeAndSalaryCount = useSalaryWorkTimeCount();
-
-  const isLoggedIn = useIsLoggedIn();
-  const [isModalOpen, setModalOpen] = useState(false);
-  const toggleModalOpen = useCallback(() => setModalOpen(!isModalOpen), [
-    isModalOpen,
-  ]);
-
-  useEffect(() => {
-    if (isLoggedIn && isModalOpen) {
-      // Close the login modal on logged in
-      setModalOpen(false);
-    }
-  }, [isLoggedIn, isModalOpen]);
-
+  const [isLoggedIn, login] = useLogin();
   const unlockedDescription = useUnlockedDescriptionBySubmission();
 
   return (
     <React.Fragment>
-      <LoginModal isOpen={isModalOpen} close={toggleModalOpen} />
       <div className={styles.headingContainer}>
         <Heading size="sl" Tag="h3" center>
           留下一筆資料，馬上{unlockedDescription}
@@ -45,7 +30,7 @@ const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
           size="l"
           className={cn(linkStyles.link, styles.ctaText)}
           bold
-          onClick={toggleModalOpen}
+          onClick={login}
         >
           若已有權限，登入即可查看全文
         </P>

@@ -3,7 +3,6 @@ import R from 'ramda';
 import { Switch } from 'react-router-dom';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga4';
-import ReactPixel from 'react-facebook-pixel';
 import qs from 'qs';
 import StepControl from './StepControl';
 import Step1 from './Step1';
@@ -29,7 +28,6 @@ import {
   INTERVIEW_FORM_STEPS,
 } from 'constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 import { LS_INTERVIEW_STEPS_FORM_KEY } from 'constants/localStorageKey';
 
 import SuccessFeedback from '../common/SuccessFeedback';
@@ -197,9 +195,6 @@ class InterviewForm extends React.Component {
       category: GA_CATEGORY.SHARE_INTERVIEW_3_STEPS,
       action: GA_ACTION.START_WRITING,
     });
-    ReactPixel.track('InitiateCheckout', {
-      content_category: PIXEL_CONTENT_CATEGORY.VISIT_INTERVIEW_FORM,
-    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -244,12 +239,6 @@ class InterviewForm extends React.Component {
             action: GA_ACTION.UPLOAD_SUCCESS,
             value: goalValue,
             label: experienceId,
-          });
-          ReactPixel.track('Purchase', {
-            value: 1,
-            currency: 'TWD',
-            content_category:
-              PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
           });
 
           return () => (

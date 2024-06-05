@@ -73,18 +73,6 @@
   display: inline;
 }
 
-.loginBtnContainer {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: nowrap;
-
-  @media (max-width: above-small) {
-    flex-direction: column;
-    height: 8rem;
-    align-items: center;
-  }
-}
-
 .authenticatedGroup {
   @media (max-width: below-small) {
     display: flex;
@@ -108,8 +96,4 @@
       }
     }
   }
-}
-
-.loginTitle {
-  margin-bottom: 34px;
 }

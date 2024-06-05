@@ -126,10 +126,11 @@ query($jobTitle: String!) {
 }
 `;
 
-export const getJobTitlesHavingDataQuery = `
-{
-  job_titles_having_data {
-    name
+export const queryJobTitlesHavingDataGql = /* GraphQL */ `
+  query($start: Int!, $limit: Int!) {
+    jobTitlesHavingData(start: $start, limit: $limit) {
+      name
+    }
+    jobTitlesHavingDataCount
   }
-}
 `;

@@ -1,14 +1,27 @@
 import createReducer from 'utils/createReducer';
-import { SET_INDEX_STATUS } from 'actions/company';
+import { getUnfetched } from 'utils/fetchBox';
+import { SET_INDEX_COUNT, SET_INDEX } from 'actions/company';
 
-const preloadedState = {};
+const preloadedState = {
+  // page --> indexBox
+  indexesByPage: {},
+  indexCountBox: getUnfetched(),
+};
 
 const reducer = createReducer(preloadedState, {
-  [SET_INDEX_STATUS]: (state, { status, data, error }) => ({
-    status,
-    data,
-    error,
+  [SET_INDEX_COUNT]: (state, { box }) => ({
+    ...state,
+    indexCountBox: box,
   }),
+  [SET_INDEX]: (state, { page, box }) => {
+    return {
+      ...state,
+      indexesByPage: {
+        ...state.indexesByPage,
+        [page]: box,
+      },
+    };
+  },
 });
 
 export default reducer;

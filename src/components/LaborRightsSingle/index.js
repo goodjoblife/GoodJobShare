@@ -17,7 +17,6 @@ import {
   queryEntryIfUnfetched,
 } from 'actions/laborRights';
 import useEntry, { useNeighborEntry } from './useEntry';
-import useTracking from './useTracking';
 import Body from './Body';
 import Footer from './Footer';
 import Helmet from './Helmet';
@@ -28,9 +27,6 @@ const entryIdSelector = params => params.id;
 const LaborRightsSingle = () => {
   const params = useParams();
   const entryId = entryIdSelector(params);
-
-  useTracking(entryId);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
