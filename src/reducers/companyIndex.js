@@ -1,11 +1,13 @@
 import createReducer from 'utils/createReducer';
 import { getUnfetched } from 'utils/fetchBox';
-import { SET_INDEX_COUNT, SET_INDEX } from 'actions/company';
+import { SET_INDEX_COUNT, SET_INDEX, SET_OVERVIEW } from 'actions/company';
 
 const preloadedState = {
   // page --> indexBox
   indexesByPage: {},
   indexCountBox: getUnfetched(),
+  // companyName --> overviewBox
+  overviewByName: {},
 };
 
 const reducer = createReducer(preloadedState, {
@@ -19,6 +21,15 @@ const reducer = createReducer(preloadedState, {
       indexesByPage: {
         ...state.indexesByPage,
         [page]: box,
+      },
+    };
+  },
+  [SET_OVERVIEW]: (state, { companyName, box }) => {
+    return {
+      ...state,
+      overviewByName: {
+        ...state.overviewByName,
+        [companyName]: box,
       },
     };
   },

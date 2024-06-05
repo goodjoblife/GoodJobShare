@@ -8,7 +8,7 @@ export const getCompany = companyName =>
     variables: { companyName },
   }).then(R.prop('company'));
 
-export const queryCompaniesApi = (start, limit) =>
+export const queryCompaniesApi = ({ start, limit }) =>
   graphqlClient({
     query: queryCompaniesHavingDataGql,
     variables: { start, limit },

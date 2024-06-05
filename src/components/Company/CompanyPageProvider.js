@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { generatePath } from 'react-router';
 import { Switch, Route } from 'react-router-dom';
-import Overview from '../CompanyAndJobTitle/Overview';
 import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
 import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
@@ -13,7 +12,6 @@ import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import {
-  companyOverviewPath,
   companySalaryWorkTimesPath,
   companyInterviewExperiencesPath,
   companyWorkExperiencesPath,
@@ -67,20 +65,6 @@ const CompanyPageProvider = () => {
 
   return (
     <Switch>
-      <Route
-        path={companyOverviewPath}
-        exact
-        render={() => (
-          <Overview
-            {...data}
-            pageType={pageType}
-            pageName={pageName}
-            page={page}
-            canView={canView}
-            tabType={tabType.OVERVIEW}
-          />
-        )}
-      />
       {/* 相容舊網址 */}
       <Route
         path="/companies/:companyName/overview"
