@@ -1,6 +1,7 @@
 export const getCompanyQuery = `
 query($companyName: String!) {
   company(name: $companyName) {
+    name
     interview_experiences {
       id
       type

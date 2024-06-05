@@ -9,6 +9,7 @@ query($key:String!){
 export const getJobTitleQuery = `
 query($jobTitle: String!) {
   job_title(name: $jobTitle) {
+    name
     interview_experiences {
       id
       type
