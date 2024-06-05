@@ -4,6 +4,7 @@ query($companyName: String!) {
     interview_experiences {
       id
       type
+      originalCompanyName
       company {
         name
       }
@@ -30,6 +31,7 @@ query($companyName: String!) {
     work_experiences {
       id
       type
+      originalCompanyName
       company {
         name
       }
