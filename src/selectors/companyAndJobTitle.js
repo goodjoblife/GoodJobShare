@@ -93,7 +93,7 @@ export const companiesCountSelector = state => {
 };
 
 export const companyOverviewBoxSelectorByName = companyName => state => {
-  return state.companyIndex.overviewMap[companyName] || getUnfetched();
+  return state.companyIndex.overviewByName[companyName] || getUnfetched();
 };
 
 export const jobTitleIndexesBoxSelectorAtPage = page => state => {
@@ -106,5 +106,5 @@ export const jobTitlesCountSelector = state => {
 };
 
 export const jobTitleOverviewBoxSelectorByName = jobTitle => state => {
-  return state.jobTitleIndex.overviewMap[jobTitle] || getUnfetched();
+  return state.jobTitleIndex.overviewByName[jobTitle] || getUnfetched();
 };

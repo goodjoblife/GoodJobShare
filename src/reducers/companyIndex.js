@@ -7,7 +7,7 @@ const preloadedState = {
   indexesByPage: {},
   indexCountBox: getUnfetched(),
   // companyName --> overviewBox
-  overviewMap: {},
+  overviewByName: {},
 };
 
 const reducer = createReducer(preloadedState, {
@@ -27,8 +27,8 @@ const reducer = createReducer(preloadedState, {
   [SET_OVERVIEW]: (state, { companyName, box }) => {
     return {
       ...state,
-      overviewMap: {
-        ...state.overviewMap,
+      overviewByName: {
+        ...state.overviewByName,
         [companyName]: box,
       },
     };

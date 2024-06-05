@@ -73,7 +73,10 @@ export const fetchCompanyNames = ({ page, pageSize }) => async (
   dispatch(setIndexCount(toFetching()));
 
   try {
-    const data = await queryCompaniesApi((page - 1) * pageSize, pageSize);
+    const data = await queryCompaniesApi({
+      start: (page - 1) * pageSize,
+      limit: pageSize,
+    });
     dispatch(setIndex(page, getFetched(data.companiesHavingData)));
     dispatch(setIndexCount(getFetched(data.companiesHavingDataCount)));
   } catch (error) {
