@@ -1,7 +1,4 @@
 import React, { useCallback, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import R from 'ramda';
-import { withProps, compose, setStatic } from 'recompose';
 import { useSelector, useDispatch } from 'react-redux';
 import { generatePath } from 'react-router';
 import { Switch, Route } from 'react-router-dom';
@@ -11,8 +8,16 @@ import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
 import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
 import NotFound from 'common/NotFound';
 import Redirect from 'common/routing/Redirect';
+import { paramsSelector } from 'common/routing/selectors';
 import usePermission from 'hooks/usePermission';
-import { tabType, pageType } from 'constants/companyJobTitle';
+import { usePage } from 'hooks/routing/page';
+import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import {
+  jobTitleOverviewPath,
+  jobTitleSalaryWorkTimesPath,
+  jobTitleInterviewExperiencesPath,
+  jobTitleWorkExperiencesPath,
+} from 'constants/linkTo';
 import { fetchJobTitle } from 'actions/jobTitle';
 import {
   interviewExperiences,
@@ -25,17 +30,13 @@ import {
   status,
   jobTitle as jobTitleSelector,
 } from 'selectors/companyAndJobTitle';
-import { paramsSelector } from 'common/routing/selectors';
-import withRouteParameter from '../ExperienceSearch/withRouteParameter';
+import { usePageName, pageNameSelector } from './usePageName';
 
-const getJobTitleFromParams = R.compose(
-  decodeURIComponent,
-  params => params.jobTitle,
-  paramsSelector,
-);
-
-const JobTitlePageProvider = ({ pageType, pageName, page }) => {
+const JobTitlePageProvider = () => {
   const dispatch = useDispatch();
+  const pageType = PAGE_TYPE.JOB_TITLE;
+  const pageName = usePageName();
+  const page = usePage();
 
   useEffect(() => {
     dispatch(fetchJobTitle(pageName));
@@ -67,7 +68,7 @@ const JobTitlePageProvider = ({ pageType, pageName, page }) => {
   return (
     <Switch>
       <Route
-        path="/job-titles/:jobTitle"
+        path={jobTitleOverviewPath}
         exact
         render={() => (
           <Overview
@@ -85,13 +86,13 @@ const JobTitlePageProvider = ({ pageType, pageName, page }) => {
         path="/job-titles/:jobTitle/overview"
         exact
         render={({ match: { params } }) => {
-          const jobTitle = decodeURIComponent(params.jobTitle);
+          const jobTitle = pageNameSelector(params);
           const path = generatePath('/job-titles/:jobTitle', { jobTitle });
           return <Redirect to={path} />;
         }}
       />
       <Route
-        path="/job-titles/:jobTitle/salary-work-times"
+        path={jobTitleSalaryWorkTimesPath}
         exact
         render={() => (
           <CompanyJobTitleTimeAndSalary
@@ -105,7 +106,7 @@ const JobTitlePageProvider = ({ pageType, pageName, page }) => {
         )}
       />
       <Route
-        path="/job-titles/:jobTitle/interview-experiences"
+        path={jobTitleInterviewExperiencesPath}
         exact
         render={() => (
           <InterviewExperiences
@@ -119,7 +120,7 @@ const JobTitlePageProvider = ({ pageType, pageName, page }) => {
         )}
       />
       <Route
-        path="/job-titles/:jobTitle/work-experiences"
+        path={jobTitleWorkExperiencesPath}
         exact
         render={() => (
           <WorkExperiences
@@ -137,24 +138,10 @@ const JobTitlePageProvider = ({ pageType, pageName, page }) => {
   );
 };
 
-JobTitlePageProvider.propTypes = {
-  pageType: PropTypes.string.isRequired,
-  pageName: PropTypes.string.isRequired,
-  page: PropTypes.number.isRequired,
+JobTitlePageProvider.fetchData = ({ store: { dispatch }, ...props }) => {
+  const params = paramsSelector(props);
+  const pageName = pageNameSelector(params);
+  return dispatch(fetchJobTitle(pageName));
 };
 
-const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const jobTitle = getJobTitleFromParams(props);
-  return dispatch(fetchJobTitle(jobTitle));
-});
-
-const enhance = compose(
-  ssr,
-  withRouteParameter,
-  withProps(props => ({
-    pageType: pageType.JOB_TITLE,
-    pageName: getJobTitleFromParams(props),
-  })),
-);
-
-export default enhance(JobTitlePageProvider);
+export default JobTitlePageProvider;
