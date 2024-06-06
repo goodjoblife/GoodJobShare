@@ -1,0 +1,25 @@
+@value above-small from "../common/variables.module.css";
+
+.container {
+  display: flex;
+
+  .name {
+    flex: 1;
+
+    @media (max-width: above-small) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.badge {
+  display: inline-block;
+  margin: 0;
+  margin-right: 6px;
+  padding: 0 2px;
+  border: solid 0.2px black;
+  line-height: 14px;
+  font-size: 10px;
+  vertical-align: middle;
+}
