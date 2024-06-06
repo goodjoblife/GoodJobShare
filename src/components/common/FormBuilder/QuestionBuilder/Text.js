@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { useDebounce } from 'react-use';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
@@ -45,6 +45,15 @@ const Text = ({
     [value],
   );
 
+  const itemKeySelector = useCallback(
+    item => (typeof item === 'string' ? item : item.value),
+    [],
+  );
+  const itemLabelSelector = useCallback(
+    item => (typeof item === 'string' ? item : item.label),
+    [],
+  );
+
   return (
     <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
       <div className={cn(commonStyles.warnableContainer)}>
@@ -60,11 +69,14 @@ const Text = ({
           }}
           autocompleteItems={items}
           onAutocompleteItemSelected={item => {
-            onChange(item);
+            const value = itemKeySelector(item);
+            onChange(value);
             if (onSelect) {
-              onSelect(item);
+              onSelect(value);
             }
           }}
+          autocompleteItemKeySelector={itemKeySelector}
+          autocompleteItemLabelSelector={itemLabelSelector}
         />
       </div>
       {footnote && <div className={commonStyles.footnote}>{footnote}</div>}

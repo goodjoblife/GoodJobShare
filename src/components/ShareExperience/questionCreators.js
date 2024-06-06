@@ -2,9 +2,7 @@ import React, { Fragment } from 'react';
 import {
   isNil,
   isEmpty,
-  ifElse,
   map,
-  prop,
   always,
   when,
   last,
@@ -67,6 +65,7 @@ import { tabTypeTranslation } from '../../constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
 import { salaryHint } from 'utils/formUtils';
 import { useTotalCount } from 'hooks/useCount';
+import CompanyAutoCompleteItem from './CompanyAutoCompleteItem';
 
 export const createCompanyQuestion = ({ header }) => ({
   title: '公司名稱',
@@ -85,7 +84,15 @@ export const createCompanyQuestion = ({ header }) => ({
   placeholder: 'ＯＯ 股份有限公司',
   search: value =>
     fetchSearchCompany({ companyName: value }).then(
-      ifElse(isArray, map(prop('name')), always([])),
+      map(({ name, businessNumber }) => ({
+        label: (
+          <CompanyAutoCompleteItem
+            name={name}
+            businessNumber={businessNumber}
+          />
+        ),
+        value: name,
+      })),
     ),
   header,
 });
