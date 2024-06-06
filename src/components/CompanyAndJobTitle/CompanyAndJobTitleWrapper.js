@@ -18,9 +18,9 @@ import {
 import { generateBreadCrumbData } from './utils';
 
 import {
-  name as nameSelectorFromEntity,
-  company as companySelectorByPageName,
-  jobTitle as jobSelectorByPageName,
+  name as nameSelectorFromBox,
+  company as companyBoxSelectorByPageName,
+  jobTitle as jobTitleBoxSelectorByPageName,
   companyOverviewBoxSelectorByName,
   jobTitleOverviewBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
@@ -28,19 +28,19 @@ import {
 import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
 
-const useEntitySelector = ({ pageType, pageName, tabType }) => {
+const useBoxSelector = ({ pageType, pageName, tabType }) => {
   switch (pageType) {
     case PAGE_TYPE.COMPANY:
       if (tabType === TAB_TYPE.OVERVIEW) {
         return companyOverviewBoxSelectorByName(pageName);
       }
-      return companySelectorByPageName(pageName);
+      return companyBoxSelectorByPageName(pageName);
 
     case PAGE_TYPE.JOB_TITLE:
       if (tabType === TAB_TYPE.OVERVIEW) {
         return jobTitleOverviewBoxSelectorByName(pageName);
       }
-      return jobSelectorByPageName(pageName);
+      return jobTitleBoxSelectorByPageName(pageName);
 
     default:
       return null;
@@ -65,10 +65,10 @@ const useCanonicalPath = ({ pageType, name }) => {
 };
 
 const useRedirectPath = ({ pageType, pageName, tabType }) => {
-  const entitySelector = useEntitySelector({ pageType, pageName, tabType });
+  const boxSelector = useBoxSelector({ pageType, pageName, tabType });
   const nameSelector = compose(
-    nameSelectorFromEntity,
-    entitySelector,
+    nameSelectorFromBox,
+    boxSelector,
   );
   const name = useSelector(nameSelector);
   const canonicalPath = useCanonicalPath({ pageType, name });
