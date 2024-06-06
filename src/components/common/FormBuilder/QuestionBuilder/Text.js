@@ -45,11 +45,13 @@ const Text = ({
     [value],
   );
 
-  const itemKeySelector = useCallback(item =>
-    typeof item === 'string' ? item : item.value,
+  const itemKeySelector = useCallback(
+    item => (typeof item === 'string' ? item : item.value),
+    [],
   );
-  const itemLabelSelector = useCallback(item =>
-    typeof item === 'string' ? item : item.label,
+  const itemLabelSelector = useCallback(
+    item => (typeof item === 'string' ? item : item.label),
+    [],
   );
 
   return (
