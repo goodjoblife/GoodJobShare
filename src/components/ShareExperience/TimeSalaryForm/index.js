@@ -38,6 +38,7 @@ import { sendEvent } from 'utils/hotjarUtil';
 import { getUserPseudoId } from 'utils/GAUtils';
 
 import { GA_MEASUREMENT_ID } from '../../../config';
+import { generateTabURL, pageType, tabType } from 'constants/companyJobTitle';
 
 const defaultForm = {
   company: '',
@@ -202,7 +203,13 @@ const TimeSalaryForm = () => {
               info="感謝你分享薪資、工時資訊，讓台灣的職場變得更透明！"
               buttonText="查看最新工時、薪資"
               buttonClick={() => {
-                window.location.replace('/salary-work-times/latest');
+                window.location.replace(
+                  generateTabURL({
+                    pageType: pageType.COMPANY,
+                    pageName: company,
+                    tabType: tabType.TIME_AND_SALARY,
+                  }),
+                );
               }}
             />
           );

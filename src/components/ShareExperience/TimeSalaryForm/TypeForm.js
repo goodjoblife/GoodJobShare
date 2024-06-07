@@ -40,7 +40,7 @@ import {
 } from '../constants';
 
 import { evolve } from '../utils';
-import { tabType } from 'constants/companyJobTitle';
+import { generateTabURL, pageType, tabType } from 'constants/companyJobTitle';
 
 import { createSalaryWorkTime } from 'actions/timeAndSalary';
 import { transferKeyToSnakecase } from 'utils/objectUtil';
@@ -173,7 +173,13 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
       onSubmit={onSubmit}
       onSubmitError={onSubmitError}
       onClose={onClose}
-      redirectPathnameOnSuccess="/salary-work-times/latest"
+      redirectPathnameOnSuccess={draft =>
+        generateTabURL({
+          pageType: pageType.COMPANY,
+          pageName: draft[DATA_KEY_COMPANY_NAME],
+          tabType: tabType.TIME_AND_SALARY,
+        })
+      }
       hideProgressBar={hideProgressBar}
     />
   );
