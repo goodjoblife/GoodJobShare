@@ -11,7 +11,6 @@ export const generateShareInterviewTypeForm = ({ companyName } = {}) => {
   }
   return { state: { share: STATE_SHARE.INTERVIEW } };
 };
-export const generateShareTimeSalaryOnePage = () => '/share/time-and-salary';
 export const generateShareTimeSalaryTypeForm = () => ({
   state: { share: STATE_SHARE.SALARY_WORK_TIME },
 });
