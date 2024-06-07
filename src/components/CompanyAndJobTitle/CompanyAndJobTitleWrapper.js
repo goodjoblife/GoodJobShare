@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { generatePath, useRouteMatch } from 'react-router';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { toPairs, compose, map } from 'ramda';
@@ -47,23 +46,6 @@ const useBoxSelector = ({ pageType, pageName, tabType }) => {
   }
 };
 
-const useCanonicalPath = ({ pageType, name }) => {
-  const { path } = useRouteMatch();
-
-  if (!name) return null;
-
-  switch (pageType) {
-    case PAGE_TYPE.COMPANY:
-      return generatePath(path, { companyName: name });
-
-    case PAGE_TYPE.JOB_TITLE:
-      return generatePath(path, { jobTitle: name });
-
-    default:
-      return null;
-  }
-};
-
 const useRedirectPath = ({ pageType, pageName, tabType }) => {
   const boxSelector = useBoxSelector({ pageType, pageName, tabType });
   const nameSelector = compose(
@@ -71,13 +53,13 @@ const useRedirectPath = ({ pageType, pageName, tabType }) => {
     boxSelector,
   );
   const name = useSelector(nameSelector);
-  const canonicalPath = useCanonicalPath({ pageType, name });
+  if (!name) return null;
 
   // No need to redirect if the name is the same as the pageName
   if (name === pageName) return null;
 
   // Redirect to the canonical path
-  return canonicalPath;
+  return generateTabURL({ pageType, pageName: name, tabType });
 };
 
 const CompanyAndJobTitleWrapper = ({
