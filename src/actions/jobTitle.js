@@ -139,8 +139,3 @@ export const queryJobTitleOverview = jobTitle => async (dispatch, getState) => {
     throw error;
   }
 };
-
-export default {
-  fetchJobTitle,
-  fetchJobTitles,
-};

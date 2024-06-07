@@ -34,26 +34,4 @@ module.exports = {
     'prettier/prettier': 'error',
     'no-use-before-define': 'error',
   },
-  settings: {
-    'import/resolver': {
-      webpack: {
-        config: {
-          resolve: {
-            alias: {
-              actions: path.resolve('./src/actions'),
-              apis: path.resolve('./src/apis'),
-              common: path.resolve('./src/components/common'),
-              images: path.resolve('./src/components/images'),
-              constants: path.resolve('./src/constants'),
-              contexts: path.resolve('./src/contexts'),
-              graphql: path.resolve('./src/graphql'),
-              hooks: path.resolve('./src/hooks'),
-              selectors: path.resolve('./src/selectors'),
-              utils: path.resolve('./src/utils'),
-            },
-          },
-        },
-      },
-    },
-  },
 };
