@@ -6,6 +6,8 @@ import { debounce } from 'utils/streamUtils';
 import TextInput from '.';
 
 import { fetchSearchCompany, fetchSearchJobTitle } from 'apis/timeAndSalaryApi';
+import AutoCompleteItem from 'components/ShareExperience/CompanyAutoCompleteItem';
+import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
 const take5 = R.take(5);
 
@@ -37,8 +39,18 @@ const SearchTextInput = ({ value, onChange, onSelected, ...restProps }) => {
             searchJobTitles(value),
           ]);
           const candidates = R.uniq([
-            ...take5(companyNames),
-            ...take5(jobTitles),
+            ...take5(companyNames).map(name => ({
+              label: (
+                <AutoCompleteItem pageType={PAGE_TYPE.COMPANY} name={name} />
+              ),
+              value: name,
+            })),
+            ...take5(jobTitles).map(name => ({
+              label: (
+                <AutoCompleteItem pageType={PAGE_TYPE.JOB_TITLE} name={name} />
+              ),
+              value: name,
+            })),
           ]);
           if (eleRef.current) {
             setCandidates(candidates);
@@ -66,7 +78,8 @@ const SearchTextInput = ({ value, onChange, onSelected, ...restProps }) => {
   );
 
   const handleCompanyNameSelected = useCallback(
-    companyName => {
+    item => {
+      const companyName = item.value;
       onChange(companyName);
       if (onSelected) {
         onSelected(companyName);
@@ -83,6 +96,8 @@ const SearchTextInput = ({ value, onChange, onSelected, ...restProps }) => {
       onChange={handleValueChange}
       autocompleteItems={candidates}
       onAutocompleteItemSelected={handleCompanyNameSelected}
+      autocompleteItemKeySelector={R.prop('value')}
+      autocompleteItemLabelSelector={R.prop('label')}
     />
   );
 };

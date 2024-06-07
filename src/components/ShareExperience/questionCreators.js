@@ -61,7 +61,10 @@ import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
 import { employmentTypeOptions, salaryTypeOptions } from './common/optionMap';
 import WorkTimeExample from './WorkTimeExample';
 import Emoji from '../common/icons/Emoji';
-import { tabTypeTranslation } from '../../constants/companyJobTitle';
+import {
+  pageType as PAGE_TYPE,
+  tabTypeTranslation,
+} from '../../constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
 import { salaryHint } from 'utils/formUtils';
 import { useTotalCount } from 'hooks/useCount';
@@ -87,6 +90,7 @@ export const createCompanyQuestion = ({ header }) => ({
       map(({ name, businessNumber }) => ({
         label: (
           <CompanyAutoCompleteItem
+            pageType={PAGE_TYPE.COMPANY}
             name={name}
             businessNumber={businessNumber}
           />
