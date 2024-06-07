@@ -126,6 +126,7 @@ export const queryCompaniesHavingDataGql = /* GraphQL */ `
     companiesHavingData(start: $start, limit: $limit) {
       name
       businessNumber
+      dataCount
     }
     companiesHavingDataCount
   }
