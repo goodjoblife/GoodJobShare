@@ -11,7 +11,6 @@ import ExperienceDetail from './containers/ExperienceDetail';
 import NotFound from './components/common/NotFound';
 import ShareExperience from './components/ShareExperience';
 import ShareExperienceEntry from './components/ShareExperience/Entry';
-import TimeSalaryForm from './components/ShareExperience/TimeSalaryForm';
 import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
 import Me from './components/Me';
 import Buy from './components/Buy';
@@ -72,11 +71,6 @@ const routes = [
     path: '/share',
     component: ShareExperience,
     routes: [
-      {
-        path: '/share/time-and-salary',
-        exact: true,
-        component: TimeSalaryForm,
-      },
       {
         path: '/share/work-experiences',
         exact: true,
