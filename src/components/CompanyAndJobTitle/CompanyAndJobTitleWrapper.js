@@ -50,7 +50,8 @@ const useBoxSelector = ({ pageType, pageName, tabType }) => {
   }, [pageType, pageName, tabType]);
 };
 
-const useNameSelector = ({ boxSelector }) => {
+const useNameSelector = ({ pageType, pageName, tabType }) => {
+  const boxSelector = useBoxSelector({ pageType, pageName, tabType });
   return useMemo(
     () =>
       compose(
@@ -69,8 +70,7 @@ const useNameSelector = ({ boxSelector }) => {
 };
 
 const useRedirectPath = ({ pageType, pageName, tabType }) => {
-  const boxSelector = useBoxSelector({ pageType, pageName, tabType });
-  const nameSelector = useNameSelector({ boxSelector });
+  const nameSelector = useNameSelector({ pageType, pageName, tabType });
   const name = useSelector(nameSelector);
   if (!name) return null;
 
