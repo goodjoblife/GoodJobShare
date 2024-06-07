@@ -9,6 +9,11 @@ export const status = R.compose(
 
 const data = state => state.data;
 
+export const name = R.pipe(
+  data,
+  R.when(R.is(Object), R.prop('name')),
+);
+
 export const interviewExperiences = R.pipe(
   data,
   R.when(R.is(Object), R.prop('interview_experiences')),
