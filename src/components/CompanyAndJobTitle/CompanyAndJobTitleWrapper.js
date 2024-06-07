@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { toPairs, compose, map } from 'ramda';
+import { toPairs, compose, map, ifElse, always } from 'ramda';
 
 import Heading from 'common/base/Heading';
 import FanPageBlock from 'common/FanPageBlock';
@@ -17,6 +17,7 @@ import {
 import { generateBreadCrumbData } from './utils';
 
 import {
+  status as statusSelectorFromBox,
   name as nameSelectorFromBox,
   company as companyBoxSelectorByPageName,
   jobTitle as jobTitleBoxSelectorByPageName,
@@ -26,6 +27,7 @@ import {
 
 import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
+import { isFetched } from 'constants/status';
 
 const useBoxSelector = ({ pageType, pageName, tabType }) => {
   return useMemo(() => {
@@ -48,12 +50,27 @@ const useBoxSelector = ({ pageType, pageName, tabType }) => {
   }, [pageType, pageName, tabType]);
 };
 
+const useNameSelector = ({ boxSelector }) => {
+  return useMemo(
+    () =>
+      compose(
+        ifElse(
+          compose(
+            isFetched,
+            statusSelectorFromBox,
+          ),
+          nameSelectorFromBox,
+          always(null),
+        ),
+        boxSelector,
+      ),
+    [boxSelector],
+  );
+};
+
 const useRedirectPath = ({ pageType, pageName, tabType }) => {
   const boxSelector = useBoxSelector({ pageType, pageName, tabType });
-  const nameSelector = compose(
-    nameSelectorFromBox,
-    boxSelector,
-  );
+  const nameSelector = useNameSelector({ boxSelector });
   const name = useSelector(nameSelector);
   if (!name) return null;
 
