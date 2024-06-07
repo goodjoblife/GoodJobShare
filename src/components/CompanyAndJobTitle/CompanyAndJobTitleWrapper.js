@@ -28,22 +28,24 @@ import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
 
 const useBoxSelector = ({ pageType, pageName, tabType }) => {
-  switch (pageType) {
-    case PAGE_TYPE.COMPANY:
-      if (tabType === TAB_TYPE.OVERVIEW) {
-        return companyOverviewBoxSelectorByName(pageName);
-      }
-      return companyBoxSelectorByPageName(pageName);
+  return useMemo(() => {
+    switch (pageType) {
+      case PAGE_TYPE.COMPANY:
+        if (tabType === TAB_TYPE.OVERVIEW) {
+          return companyOverviewBoxSelectorByName(pageName);
+        }
+        return companyBoxSelectorByPageName(pageName);
 
-    case PAGE_TYPE.JOB_TITLE:
-      if (tabType === TAB_TYPE.OVERVIEW) {
-        return jobTitleOverviewBoxSelectorByName(pageName);
-      }
-      return jobTitleBoxSelectorByPageName(pageName);
+      case PAGE_TYPE.JOB_TITLE:
+        if (tabType === TAB_TYPE.OVERVIEW) {
+          return jobTitleOverviewBoxSelectorByName(pageName);
+        }
+        return jobTitleBoxSelectorByPageName(pageName);
 
-    default:
-      return null;
-  }
+      default:
+        return null;
+    }
+  }, [pageType, pageName, tabType]);
 };
 
 const useRedirectPath = ({ pageType, pageName, tabType }) => {
