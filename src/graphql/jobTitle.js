@@ -82,6 +82,7 @@ query($jobTitle: String!) {
       company {
         name
       }
+      originalCompanyName
       data_time {
         month
         year

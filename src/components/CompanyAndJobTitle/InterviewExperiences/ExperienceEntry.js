@@ -93,7 +93,7 @@ const ExperienceEntry = ({
 ExperienceEntry.propTypes = {
   data: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    originalCompanyName: PropTypes.string.isRequired,
+    originalCompanyName: PropTypes.string,
     job_title: PropTypes.shape({ name: PropTypes.string.isRequired })
       .isRequired,
     created_at: PropTypes.string.isRequired,
