@@ -12,7 +12,7 @@ import { AppRouteWithSubRoutes } from '../route';
 import styles from './App.module.css';
 import Header from './Header';
 import Footer from './Footer';
-import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
+import ShareInterviewModal from '../ShareExperience/InterviewForm';
 import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
 import routes from '../../routes';
 import CollapsedDrawer from 'common/Questionnaire/CollapsedDrawer';

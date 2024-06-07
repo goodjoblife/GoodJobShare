@@ -1,358 +1,196 @@
-import React from 'react';
-import R from 'ramda';
-import { scroller } from 'react-scroll';
+import React, { useCallback, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { last, contains, head, equals, reject } from 'ramda';
+import { useDispatch } from 'react-redux';
 import ReactGA from 'react-ga4';
-import { Heading } from 'common/base';
 
-import SubmitArea from '../../../containers/ShareExperience/SubmitAreaContainer';
-
-import styles from './InterviewForm.module.css';
-
-import InterviewInfo from './InterviewInfo';
-import InterviewExperience from './InterviewExperience';
-import { interviewFormCheck } from './formCheck';
-
-import {
-  handleBlocks,
-  getInterviewForm,
-  portInterviewFormToRequestFormat,
-  idGenerator,
-} from '../utils';
-
-import StaticHelmet from 'common/StaticHelmet';
-import { INVALID, INTERVIEW_FORM_ORDER } from 'constants/formElements';
+import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
+import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
+import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
+import { createInterviewExperience } from 'actions/experiences';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import { LS_INTERVIEW_FORM_KEY } from 'constants/localStorageKey';
-
+import {
+  DATA_KEY_COMPANY_NAME,
+  DATA_KEY_JOB_TITLE,
+  DATA_KEY_DATE,
+  DATA_KEY_REGION,
+  DATA_KEY_RESULT,
+  DATA_KEY_RATING,
+  DATA_KEY_COURSE,
+  DATA_KEY_SUGGESTIONS,
+  DATA_KEY_JOB_TENURE,
+  DATA_KEY_SALARY,
+  DATA_KEY_QUESTIONS,
+  DATA_KEY_SENSITIVE_QUESTIONS,
+  RESULT_OPTIONS,
+  JOB_TENURE_OPTIONS,
+  SENSITIVE_QUESTIONS_OPTIONS,
+} from '../constants';
+import { parseSalaryAmount, evolve } from '../utils';
+import {
+  createCompanyQuestion,
+  createJobTitleQuestion,
+  createInterviewDateQuestion,
+  createInterviewRegionQuestion,
+  createInterviewResultQuestion,
+  createInterviewRatingQuestion,
+  createInterviewCourseQuestion,
+  createInterviewSuggestionsQuestion,
+  createJobTenureQuestion,
+  createSalaryQuestion,
+  createQuestionsQuestion,
+  createSensitiveQuestionsQuestion,
+  createSubmitQuestion,
+} from '../questionCreators';
+import { sendEvent } from 'utils/hotjarUtil';
 import { getUserPseudoId } from 'utils/GAUtils';
 
-import SuccessFeedback from '../common/SuccessFeedback';
-import FailFeedback from '../common/FailFeedback';
 import { GA_MEASUREMENT_ID } from '../../../config';
+import { tabType } from '../../../constants/companyJobTitle';
 
-const createSection = id => (
-  subtitle,
-  content = '',
-  placeholder = '',
-  titlePlaceholder = '段落標題，例：面試方式',
-) => {
-  const section = {
-    id,
-    subtitle,
-    placeholder,
-    titlePlaceholder,
-    content,
-    isSubtitleEditable: false,
-  };
-  if (subtitle === '自訂段落' || !subtitle) {
+const header = <Header title="請輸入你的一份面試經驗" />;
+const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
+  <CompanyJobTitleHeader
+    label="面試"
+    companyName={companyName}
+    jobTitle={jobTitle}
+  />
+);
+
+const questions = [
+  createCompanyQuestion({ header }),
+  createJobTitleQuestion({ header }),
+  createInterviewDateQuestion(),
+  createInterviewRegionQuestion(),
+  createInterviewResultQuestion(),
+  createInterviewRatingQuestion(),
+  createInterviewCourseQuestion(),
+  createInterviewSuggestionsQuestion(),
+  createJobTenureQuestion(),
+  createSalaryQuestion(),
+  createQuestionsQuestion(),
+  createSensitiveQuestionsQuestion(),
+  createSubmitQuestion({ type: tabType.INTERVIEW_EXPERIENCE }),
+];
+
+const bodyFromDraft = evolve({
+  company: draft => ({ id: '', query: draft[DATA_KEY_COMPANY_NAME] }),
+  region: draft => draft[DATA_KEY_REGION],
+  job_title: draft => draft[DATA_KEY_JOB_TITLE],
+  title: draft =>
+    `${draft[DATA_KEY_COMPANY_NAME]} ${draft[DATA_KEY_JOB_TITLE]} 面試經驗分享`,
+  sections: draft => [
+    {
+      subtitle: '面試過程',
+      content: draft[DATA_KEY_COURSE],
+    },
+    {
+      subtitle: '給其他面試者的中肯建議',
+      content: draft[DATA_KEY_SUGGESTIONS],
+    },
+  ],
+  experience_in_year: draft => {
+    const value = draft[DATA_KEY_JOB_TENURE];
+    return value === head(JOB_TENURE_OPTIONS) ? 0 : parseInt(value, 10);
+  },
+  education: '',
+  email: '',
+  interview_time: draft => {
+    const [year, month] = draft[DATA_KEY_DATE];
     return {
-      ...section,
-      subtitle,
-      content,
-      isSubtitleEditable: true,
-      placeholder,
-      titlePlaceholder,
+      year,
+      month,
     };
-  }
-  return section;
-};
-
-const createInterviewQa = id => (question = '') => ({
-  id,
-  question,
-  answer: '',
+  },
+  interview_result: draft => {
+    const [selected, elseText] = draft[DATA_KEY_RESULT];
+    return selected === last(RESULT_OPTIONS) ? elseText : selected;
+  },
+  interview_qas: draft =>
+    draft[DATA_KEY_QUESTIONS].map(question => ({
+      question,
+      answer: '',
+    })),
+  interview_sensitive_questions: draft => {
+    const [selected, elseText] = draft[DATA_KEY_SENSITIVE_QUESTIONS];
+    const lastOption = last(SENSITIVE_QUESTIONS_OPTIONS);
+    const selectedWithoutLast = reject(equals(lastOption), selected);
+    const hasSelectedLast = contains(lastOption, selected);
+    return [...selectedWithoutLast, ...(hasSelectedLast ? [elseText] : [])];
+  },
+  salary: draft => {
+    const [type, amount] = draft[DATA_KEY_SALARY];
+    if (!type && !amount) {
+      return undefined;
+    }
+    return {
+      type,
+      amount: parseSalaryAmount(amount),
+    };
+  },
+  overall_rating: draft => draft[DATA_KEY_RATING],
 });
 
-const createBlock = {
-  sections: createSection,
-  interviewQas: createInterviewQa,
-};
-
-let idCounter = idGenerator();
-
-const isBlockRemovable = blocks => R.length(R.keys(blocks)) > 1;
-
-const firstSectionId = idCounter();
-const secondSectionId = idCounter();
-const firstQaId = idCounter();
-
-const defaultForm = {
-  companyQuery: '',
-  companyId: '',
-  region: '',
-  jobTitle: '',
-  experienceInYear: null,
-  education: null,
-  interviewTimeYear: null,
-  interviewTimeMonth: null,
-  interviewResult: null,
-  salaryType: 'month',
-  salaryAmount: '',
-  overallRating: 0,
-  title: '面試經驗分享',
-  sections: {
-    [firstSectionId]: createBlock.sections(firstSectionId)(
-      '面試過程',
-      '第一次面試：\n第二次面試：\n工作環境：',
-    ),
-    [secondSectionId]: createBlock.sections(secondSectionId)(
-      '給其他面試者的中肯建議',
-      '如何準備面試：\n是否推薦此份工作：\n其他注意事項：',
-    ),
-  },
-  interviewQas: {
-    [firstQaId]: createBlock.interviewQas(firstQaId)(),
-  },
-  interviewSensitiveQuestions: [],
-};
-
-const getMaxId = state => {
-  const ids = [...R.keys(state.sections), ...R.keys(state.interviewQas)];
-  const maxId = R.reduce(R.max, -Infinity, ids);
-  if (maxId === undefined) return -1;
-  return maxId;
-};
-
-class InterviewForm extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleState = this.handleState.bind(this);
-    this.appendBlock = this.appendBlock.bind(this);
-    this.removeBlock = this.removeBlock.bind(this);
-    this.editBlock = this.editBlock.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-
-    this.state = {
-      ...defaultForm,
-      submitted: false,
-    };
-
-    this.elementValidationStatus = {};
-  }
-
-  componentDidMount() {
-    let defaultFromDraft;
-
-    try {
-      const { __idCounterCurrent, ...storedDraft } = JSON.parse(
-        localStorage.getItem(LS_INTERVIEW_FORM_KEY),
-      );
-      defaultFromDraft = storedDraft;
-      idCounter = idGenerator(
-        typeof __idCounterCurrent !== undefined
-          ? __idCounterCurrent
-          : getMaxId(storedDraft),
-      );
-    } catch (error) {
-      defaultFromDraft = null;
-    }
-    const defaultState = defaultFromDraft || defaultForm;
-
-    this.setState({
-      // eslint-disable-line react/no-did-mount-set-state
-      ...defaultState,
-    });
-
-    ReactGA.event({
-      category: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
-      action: GA_ACTION.START_WRITING,
-    });
-  }
-
-  onSubmit = async () => {
-    const valid = interviewFormCheck(getInterviewForm(this.state));
-
-    if (valid) {
-      localStorage.removeItem(LS_INTERVIEW_FORM_KEY);
+const TypeForm = ({ open, onClose }) => {
+  const dispatch = useDispatch();
+  const onSubmit = useCallback(
+    async draft => {
+      const body = bodyFromDraft(draft);
       const ga_user_pseudo_id = await getUserPseudoId(GA_MEASUREMENT_ID);
-      const extra = {
-        form_type: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
+      body.extra = {
+        form_type: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
         ga_user_pseudo_id,
       };
+      // section 的標題與預設文字 = 4 + 11 + 19 + 25 個字
+      const goalValue = calcInterviewExperienceValue(body, 59);
 
-      try {
-        const response = await this.props.createInterviewExperience({
-          body: portInterviewFormToRequestFormat(
-            getInterviewForm(this.state),
-            extra,
-          ),
-        });
-        const experienceId = response.createInterviewExperience.experience.id;
-
-        ReactGA.event({
-          category: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
-          action: GA_ACTION.UPLOAD_SUCCESS,
-          label: experienceId,
-        });
-        return () => (
-          <SuccessFeedback
-            buttonClick={() => {
-              // add delay to more ensure event being sent to GA.
-              setTimeout(() => {
-                window.location.replace(`/experiences/${experienceId}`);
-              }, 1500);
-            }}
-          />
-        );
-      } catch (error) {
-        ReactGA.event({
-          category: GA_CATEGORY.SHARE_INTERVIEW_ONE_PAGE,
-          action: GA_ACTION.UPLOAD_FAIL,
-        });
-
-        return ({ buttonClick }) => (
-          <FailFeedback info={error.message} buttonClick={buttonClick} />
-        );
-      }
-    } else {
-      this.handleState('submitted')(true);
-      const topInvalidElement = this.getTopInvalidElement();
-      if (topInvalidElement !== null) {
-        scroller.scrollTo(topInvalidElement, {
-          duration: 1000,
-          delay: 100,
-          offset: -100,
-          smooth: true,
-        });
-      }
-      return Promise.reject();
-    }
-  };
-
-  getTopInvalidElement = () => {
-    const order = INTERVIEW_FORM_ORDER;
-    for (let i = 0; i <= order.length; i += 1) {
-      if (
-        this.elementValidationStatus[order[i]] &&
-        this.elementValidationStatus[order[i]] === INVALID
-      ) {
-        return order[i];
-      }
-    }
-    return null;
-  };
-
-  changeValidationStatus = (elementId, status) => {
-    this.elementValidationStatus[elementId] = status;
-  };
-
-  handleState(key) {
-    return value => {
-      const updateState = {
-        [key]: value,
-      };
-      this.setState(updateState);
-      const state = {
-        ...this.state,
-        ...updateState,
-      };
-      localStorage.setItem(
-        LS_INTERVIEW_FORM_KEY,
-        JSON.stringify({
-          ...state,
-          __idCounterCurrent: idCounter.getCurrent(),
-        }),
-      );
-    };
-  }
-
-  appendBlock(blockKey) {
-    return (subtitle, placeholder, titlePlaceholder) => {
-      const id = idCounter();
-      return this.setState(state => ({
-        [blockKey]: {
-          ...state[blockKey],
-          [id]: createBlock[blockKey](id)(
-            subtitle,
-            placeholder,
-            titlePlaceholder,
-          ),
-        },
-      }));
-    };
-  }
-
-  removeBlock(blockKey) {
-    return id =>
-      this.setState(state => {
-        if (isBlockRemovable(state[blockKey])) {
-          return {
-            [blockKey]: R.filter(block => block.id !== id)(state[blockKey]),
-          };
-        }
-
-        return null;
+      const resBody = await dispatch(createInterviewExperience({ body }));
+      const experienceId = resBody.createInterviewExperience.experience.id;
+      ReactGA.event({
+        category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
+        action: GA_ACTION.UPLOAD_SUCCESS,
+        value: goalValue,
+        label: experienceId,
       });
-  }
+    },
+    [dispatch],
+  );
 
-  editBlock(blockKey) {
-    return id => key => value =>
-      this.setState(state => ({
-        [blockKey]: {
-          ...state[blockKey],
-          [id]: {
-            ...state[blockKey][id],
-            [key]: value,
-          },
-        },
-      }));
-  }
+  const onSubmitError = useCallback(async () => {
+    ReactGA.event({
+      category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
+      action: GA_ACTION.UPLOAD_FAIL,
+    });
+  }, []);
 
-  render() {
-    return (
-      <div>
-        <StaticHelmet.ShareInterview />
-        <Heading size="l" marginBottomS center>
-          面試經驗分享
-        </Heading>
-        {this.state.submitted ? (
-          <div
-            style={{
-              marginTop: '20px',
-            }}
-            className={styles.warning__wording}
-          >
-            oops! 請檢查底下紅框內的內容是否正確
-          </div>
-        ) : null}
-        <InterviewInfo
-          handleState={this.handleState}
-          companyQuery={this.state.companyQuery}
-          region={this.state.region}
-          jobTitle={this.state.jobTitle}
-          experienceInYear={this.state.experienceInYear}
-          education={this.state.education}
-          interviewTimeYear={this.state.interviewTimeYear}
-          interviewTimeMonth={this.state.interviewTimeMonth}
-          interviewResult={this.state.interviewResult}
-          salaryType={this.state.salaryType}
-          salaryAmount={this.state.salaryAmount}
-          overallRating={this.state.overallRating}
-          submitted={this.state.submitted}
-          changeValidationStatus={this.changeValidationStatus}
-        />
-        <InterviewExperience
-          handleState={this.handleState}
-          title={this.state.title}
-          sections={handleBlocks(this.state.sections)}
-          appendSection={this.appendBlock('sections')}
-          removeSection={this.removeBlock('sections')}
-          editSection={this.editBlock('sections')}
-          interviewQas={handleBlocks(this.state.interviewQas)}
-          appendQa={this.appendBlock('interviewQas')}
-          removeQa={this.removeBlock('interviewQas')}
-          editQa={this.editBlock('interviewQas')}
-          interviewSensitiveQuestions={this.state.interviewSensitiveQuestions}
-          submitted={this.state.submitted}
-          changeValidationStatus={this.changeValidationStatus}
-        />
-        <SubmitArea onSubmit={this.onSubmit} />
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    if (open) {
+      // send hotjar event for recording
+      sendEvent('enter_interview_form');
 
-InterviewForm.propTypes = {};
+      // send to GA for tracking conversion rate
+      ReactGA.event({
+        category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
+        action: GA_ACTION.START_WRITING,
+      });
+    }
+  }, [open]);
 
-export default InterviewForm;
+  return (
+    <SubmittableFormBuilder
+      open={open}
+      questions={questions}
+      header={renderCompanyJobTitleHeader}
+      onSubmit={onSubmit}
+      onSubmitError={onSubmitError}
+      onClose={onClose}
+    />
+  );
+};
+
+TypeForm.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+
+export default TypeForm;

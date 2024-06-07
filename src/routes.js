@@ -36,7 +36,6 @@ import PlanPage from './components/PlanPage';
 import BuyResultPage from './components/BuyResultPage';
 import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
 import SubscriptionsPage from './components/Me/SubscriptionsPage';
-import InterviewFormContainer from './containers/ShareExperience/InterviewFormContainer';
 import { jobTitleOverviewPath, companyOverviewPath } from 'constants/linkTo';
 
 const routes = [
@@ -73,11 +72,6 @@ const routes = [
     path: '/share',
     component: ShareExperience,
     routes: [
-      {
-        path: '/share/interview-one-page',
-        exact: true,
-        component: InterviewFormContainer,
-      },
       {
         path: '/share/time-and-salary',
         exact: true,

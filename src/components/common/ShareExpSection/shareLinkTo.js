@@ -5,7 +5,6 @@ export const STATE_SHARE = {
 };
 
 // please follow the convention: () => To (react-router)
-export const generateShareInterviewOnePage = () => '/share/interview-one-page';
 export const generateShareInterviewTypeForm = ({ companyName } = {}) => {
   if (companyName) {
     return { state: { share: STATE_SHARE.INTERVIEW, companyName } };
