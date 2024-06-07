@@ -11,7 +11,6 @@ import ExperienceDetail from './containers/ExperienceDetail';
 import NotFound from './components/common/NotFound';
 import ShareExperience from './components/ShareExperience';
 import ShareExperienceEntry from './components/ShareExperience/Entry';
-import InterviewForm from './containers/ShareExperience/InterviewStepsFormContainer';
 import TimeSalaryForm from './components/ShareExperience/TimeSalaryForm';
 import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
 import Me from './components/Me';
@@ -74,29 +73,6 @@ const routes = [
     path: '/share',
     component: ShareExperience,
     routes: [
-      {
-        path: '/share/interview',
-        component: InterviewForm,
-        routes: [
-          {
-            path: '/share/interview/step1',
-            exact: true,
-          },
-          {
-            path: '/share/interview/step2',
-            exact: true,
-          },
-          {
-            path: '/share/interview/step3',
-            exact: true,
-          },
-          {
-            component: ({ location: { search } }) => (
-              <Redirect to={`/share/interview/step1${search}`} />
-            ),
-          },
-        ],
-      },
       {
         path: '/share/interview-one-page',
         exact: true,
