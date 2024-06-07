@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './CompanyAutoCompleteItem.module.css';
+import styles from './AutoCompleteItem.module.css';
 import { pageTypeTranslation } from 'constants/companyJobTitle';
 
-const CompanyAutoCompleteItem = ({ pageType, name, businessNumber }) => (
+const AutoCompleteItem = ({ pageType, name, businessNumber }) => (
   <div className={styles.container}>
     <div>
       <span className={styles.badge}>{pageTypeTranslation[pageType]}</span>
@@ -14,4 +14,4 @@ const CompanyAutoCompleteItem = ({ pageType, name, businessNumber }) => (
   </div>
 );
 
-export default CompanyAutoCompleteItem;
+export default AutoCompleteItem;

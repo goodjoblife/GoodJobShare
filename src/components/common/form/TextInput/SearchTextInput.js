@@ -6,7 +6,7 @@ import { debounce } from 'utils/streamUtils';
 import TextInput from '.';
 
 import { fetchSearchCompany, fetchSearchJobTitle } from 'apis/timeAndSalaryApi';
-import AutoCompleteItem from 'components/ShareExperience/CompanyAutoCompleteItem';
+import AutoCompleteItem from 'components/ShareExperience/AutoCompleteItem';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
 const take5 = R.take(5);
