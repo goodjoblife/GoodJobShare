@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import ReactGA from 'react-ga4';
 
 import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
-import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
-import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
+import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
+import SubmittableFormBuilder from '../../common/SubmittableFormBuilder';
 import { createInterviewExperience } from 'actions/experiences';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import {
@@ -25,8 +25,8 @@ import {
   RESULT_OPTIONS,
   JOB_TENURE_OPTIONS,
   SENSITIVE_QUESTIONS_OPTIONS,
-} from '../constants';
-import { parseSalaryAmount, evolve } from '../utils';
+} from '../../constants';
+import { parseSalaryAmount, evolve } from '../../utils';
 import {
   createCompanyQuestion,
   createJobTitleQuestion,
@@ -41,12 +41,12 @@ import {
   createQuestionsQuestion,
   createSensitiveQuestionsQuestion,
   createSubmitQuestion,
-} from '../questionCreators';
+} from '../../questionCreators';
 import { sendEvent } from 'utils/hotjarUtil';
 import { getUserPseudoId } from 'utils/GAUtils';
 
-import { GA_MEASUREMENT_ID } from '../../../config';
-import { tabType } from '../../../constants/companyJobTitle';
+import { GA_MEASUREMENT_ID } from '../../../../config';
+import { tabType } from '../../../../constants/companyJobTitle';
 
 const header = <Header title="請輸入你的一份面試經驗" />;
 const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
