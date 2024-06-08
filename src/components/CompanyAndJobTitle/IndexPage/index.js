@@ -62,6 +62,7 @@ const CompanyAndJobTitleIndex = ({
               key={i}
               pageType={pageType}
               name={pageIndex.name}
+              businessNumber={pageIndex.businessNumber}
               dataCount={pageIndex.dataCount}
               to={generatePageURL({ pageType, pageName: pageIndex.name })}
             />
