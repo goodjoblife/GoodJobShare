@@ -27,7 +27,8 @@ export const getJobTitle = item => {
 
 export const getNameAsCompanyName = (o, row) => (
   <Link to={`/companies/${encodeURIComponent(o.name)}`}>
-    {o.name} <span className={`pM ${styles.sector}`}>{row.sector}</span>
+    {row.originalCompanyName}{' '}
+    <span className={`pM ${styles.sector}`}>{row.sector}</span>
   </Link>
 );
 
