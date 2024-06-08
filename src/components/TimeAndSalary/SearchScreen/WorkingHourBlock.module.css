@@ -58,6 +58,14 @@
   flex: 1 1 auto;
   margin-right: 16px;
   transition: color 0.3s;
+
+  .businessNumber {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 16px;
+    color: #8c8c8c;
+    font-weight: 400;
+  }
 }
 
 .pageTypeBlock {
