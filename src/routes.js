@@ -72,6 +72,20 @@ const routes = [
     component: ShareExperience,
     routes: [
       {
+        path: '/share/interview',
+        component: () => <Redirect to="/share" />,
+      },
+      {
+        path: '/share/interview-one-page',
+        exact: true,
+        component: () => <Redirect to="/share" />,
+      },
+      {
+        path: '/share/time-and-salary',
+        exact: true,
+        component: () => <Redirect to="/share" />,
+      },
+      {
         path: '/share/work-experiences',
         exact: true,
         component: WorkExperiencesForm,
