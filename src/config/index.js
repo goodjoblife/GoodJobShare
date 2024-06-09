@@ -9,7 +9,6 @@ module.exports = {
     process.env.RAZZLE_GOOGLE_APP_ID ||
     '879657963776-d8j1hq8dk38alp456ncvnq6mqh4f6bua.apps.googleusercontent.com',
   GTM_ID: process.env.RAZZLE_GTM_ID || 'GTM-K2MRXLG',
-  PIXEL_ID: process.env.RAZZLE_PIXEL_ID || '603414113402034',
   PERSIST_KEY: process.env.PERSIST_KEY || 'goodjob',
   ENVIRONMENT: process.env.RAZZLE_ENVIRONMENT || 'localhost',
   // All environment share same rollbar access token

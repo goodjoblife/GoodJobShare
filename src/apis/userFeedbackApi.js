@@ -12,7 +12,3 @@ export const postUserFeedback = ({ npsScore, content, token }) =>
       },
     },
   });
-
-export default {
-  postUserFeedback,
-};

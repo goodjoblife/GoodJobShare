@@ -14,5 +14,3 @@ export const postUserFeedback = ({ content, npsScore }) => (_, getState) => {
     throw error;
   });
 };
-
-export default { postUserFeedback };

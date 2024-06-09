@@ -3,16 +3,12 @@ import LandingPage from './components/LandingPage';
 import LaborRightsMenu from './components/LaborRightsMenu';
 import LaborRightsSingle from './components/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
-import TimeAndSalaryBoard from './containers/SalaryWorkTime/TimeAndSalaryBoard';
 import SalaryWorkTimeSearchScreen from './components/TimeAndSalary/SearchScreen';
-import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
 import ExperienceDetail from './containers/ExperienceDetail';
 import NotFound from './components/common/NotFound';
 import ShareExperience from './components/ShareExperience';
 import ShareExperienceEntry from './components/ShareExperience/Entry';
-import InterviewForm from './containers/ShareExperience/InterviewStepsFormContainer';
-import TimeSalaryForm from './components/ShareExperience/TimeSalaryForm';
 import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
 import Me from './components/Me';
 import Buy from './components/Buy';
@@ -37,7 +33,6 @@ import PlanPage from './components/PlanPage';
 import BuyResultPage from './components/BuyResultPage';
 import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
 import SubscriptionsPage from './components/Me/SubscriptionsPage';
-import InterviewFormContainer from './containers/ShareExperience/InterviewFormContainer';
 import { jobTitleOverviewPath, companyOverviewPath } from 'constants/linkTo';
 
 const routes = [
@@ -76,36 +71,17 @@ const routes = [
     routes: [
       {
         path: '/share/interview',
-        component: InterviewForm,
-        routes: [
-          {
-            path: '/share/interview/step1',
-            exact: true,
-          },
-          {
-            path: '/share/interview/step2',
-            exact: true,
-          },
-          {
-            path: '/share/interview/step3',
-            exact: true,
-          },
-          {
-            component: ({ location: { search } }) => (
-              <Redirect to={`/share/interview/step1${search}`} />
-            ),
-          },
-        ],
+        component: () => <Redirect to="/share" />,
       },
       {
         path: '/share/interview-one-page',
         exact: true,
-        component: InterviewFormContainer,
+        component: () => <Redirect to="/share" />,
       },
       {
         path: '/share/time-and-salary',
         exact: true,
-        component: TimeSalaryForm,
+        component: () => <Redirect to="/share" />,
       },
       {
         path: '/share/work-experiences',
@@ -118,62 +94,15 @@ const routes = [
     ],
   },
   {
-    path: '/time-and-salary',
-    component: TimeAndSalary,
-    routes: [
-      {
-        path: '/time-and-salary/company/:keyword',
-        exact: false,
-        component: ({ match }) => (
-          <Redirect
-            to={`/salary-work-times?q=${match.params.keyword}&s_by=company`}
-          />
-        ),
-      },
-      {
-        path: '/time-and-salary/job-title/:keyword',
-        exact: false,
-        component: ({ match }) => (
-          <Redirect
-            to={`/salary-work-times?q=${match.params.keyword}&s_by=job_title`}
-          />
-        ),
-      },
-      {
-        path: '/time-and-salary',
-        exact: false,
-        component: () => <Redirect to="/salary-work-times/latest" />,
-      },
-      {
-        component: TimeAndSalaryNotFound,
-      },
-    ],
-  },
-  {
-    path: '/salary-work-times',
-    component: TimeAndSalary,
-    routes: [
-      {
-        path: '/salary-work-times/latest',
-        exact: true,
-        component: TimeAndSalaryBoard,
-      },
-      {
-        component: TimeAndSalaryNotFound,
-      },
-    ],
-  },
-  {
     path: '/search',
+    exact: true,
+    // TODO: remove TimeAndSalary
     component: TimeAndSalary,
     routes: [
       {
         path: '/search',
         exact: true,
         component: SalaryWorkTimeSearchScreen,
-      },
-      {
-        component: TimeAndSalaryNotFound,
       },
     ],
   },

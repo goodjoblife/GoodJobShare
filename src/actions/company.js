@@ -139,8 +139,3 @@ export const queryCompanyOverview = companyName => async (
     throw error;
   }
 };
-
-export default {
-  fetchCompany,
-  fetchCompanyNames,
-};
