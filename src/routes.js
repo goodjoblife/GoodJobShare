@@ -4,7 +4,6 @@ import LaborRightsMenu from './components/LaborRightsMenu';
 import LaborRightsSingle from './components/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
 import SalaryWorkTimeSearchScreen from './components/TimeAndSalary/SearchScreen';
-import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
 import ExperienceDetail from './containers/ExperienceDetail';
 import NotFound from './components/common/NotFound';
@@ -117,43 +116,15 @@ const routes = [
     ],
   },
   {
-    path: '/time-and-salary',
-    component: TimeAndSalary,
-    routes: [
-      {
-        path: '/time-and-salary/company/:keyword',
-        exact: false,
-        component: ({ match }) => (
-          <Redirect
-            to={`/salary-work-times?q=${match.params.keyword}&s_by=company`}
-          />
-        ),
-      },
-      {
-        path: '/time-and-salary/job-title/:keyword',
-        exact: false,
-        component: ({ match }) => (
-          <Redirect
-            to={`/salary-work-times?q=${match.params.keyword}&s_by=job_title`}
-          />
-        ),
-      },
-      {
-        component: TimeAndSalaryNotFound,
-      },
-    ],
-  },
-  {
     path: '/search',
+    exact: true,
+    // TODO: remove TimeAndSalary
     component: TimeAndSalary,
     routes: [
       {
         path: '/search',
         exact: true,
         component: SalaryWorkTimeSearchScreen,
-      },
-      {
-        component: TimeAndSalaryNotFound,
       },
     ],
   },
