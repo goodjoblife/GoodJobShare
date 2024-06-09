@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { Section, Wrapper, Heading } from 'common/base';
 import Columns from 'common/Columns';
 import Loader from 'common/Loader';
-import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
+import ExperienceBlock from './ExperienceBlock';
 import {
   queryPopularExperiences,
   queryPopularExperiencesIfUnfetched,
