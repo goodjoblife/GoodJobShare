@@ -1,6 +1,8 @@
 @value link-blue from "../common/variables.module.css";
 
 .md {
+  word-break: break-word;
+
   /* PL */
   p {
     font-size: 1.1em;
