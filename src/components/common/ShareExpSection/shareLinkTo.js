@@ -1,5 +1,3 @@
-import qs from 'qs';
-
 export const STATE_SHARE = {
   INTERVIEW: 'interview',
   SALARY_WORK_TIME: 'salary-work-times',
@@ -7,21 +5,12 @@ export const STATE_SHARE = {
 };
 
 // please follow the convention: () => To (react-router)
-export const generateShareInterviewOnePage = () => '/share/interview-one-page';
-export const generateShareInterview3Steps = ({ companyName } = {}) => {
-  if (companyName) {
-    const search = qs.stringify({ companyName }, { addQueryPrefix: true });
-    return `/share/interview${search}`;
-  }
-  return '/share/interview/step1';
-};
 export const generateShareInterviewTypeForm = ({ companyName } = {}) => {
   if (companyName) {
     return { state: { share: STATE_SHARE.INTERVIEW, companyName } };
   }
   return { state: { share: STATE_SHARE.INTERVIEW } };
 };
-export const generateShareTimeSalaryOnePage = () => '/share/time-and-salary';
 export const generateShareTimeSalaryTypeForm = () => ({
   state: { share: STATE_SHARE.SALARY_WORK_TIME },
 });
