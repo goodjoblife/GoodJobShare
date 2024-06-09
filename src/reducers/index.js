@@ -4,7 +4,6 @@ import storage from 'redux-persist/lib/storage';
 
 import auth from './auth';
 import experience from './experience';
-import experienceSearch from './experienceSearch';
 import experiences from './experiences';
 import laborRights from './laborRights';
 import timeAndSalary from './timeAndSalary';
@@ -29,7 +28,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth,
-  experienceSearch,
   experience,
   experiences,
   laborRights,
