@@ -57,8 +57,8 @@ InfoModal.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export const InfoTimeModal = ({ isOpen, close }) => (
-  <InfoModal isOpen={isOpen} close={close} title="參考時間">
+export const InfoTimeModal = props => (
+  <InfoModal title="參考時間" {...props}>
     若分享該筆資料的使用者已離職，則參考時間為
     <strong>離職年、月</strong>。<br />
     若尚在職，則為
@@ -66,13 +66,8 @@ export const InfoTimeModal = ({ isOpen, close }) => (
   </InfoModal>
 );
 
-InfoTimeModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  close: PropTypes.func.isRequired,
-};
-
-export const InfoSalaryModal = ({ isOpen, close }) => (
-  <InfoModal isOpen={isOpen} close={close} title="時薪估計方式">
+export const InfoSalaryModal = props => (
+  <InfoModal title="時薪估計方式" {...props}>
     <ul>
       <li>當薪資種類為「時薪」：無需估算</li>
       <li>
@@ -96,8 +91,3 @@ export const InfoSalaryModal = ({ isOpen, close }) => (
     </ul>
   </InfoModal>
 );
-
-InfoSalaryModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  close: PropTypes.func.isRequired,
-};
