@@ -4,7 +4,7 @@ import R from 'ramda';
 
 import Table from 'common/table/Table';
 import { InfoButton } from 'common/Modal';
-import styles from '../TimeAndSalaryBoard/TimeAndSalaryBoard.module.css';
+import styles from './DashboardTable.module.css';
 
 import {
   getCompany,

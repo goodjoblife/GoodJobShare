@@ -3,7 +3,6 @@ import LandingPage from './components/LandingPage';
 import LaborRightsMenu from './components/LaborRightsMenu';
 import LaborRightsSingle from './components/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
-import TimeAndSalaryBoard from './containers/SalaryWorkTime/TimeAndSalaryBoard';
 import SalaryWorkTimeSearchScreen from './components/TimeAndSalary/SearchScreen';
 import TimeAndSalaryNotFound from './components/TimeAndSalary/NotFound';
 import ExperienceSearchPage from './containers/ExperienceSearchPage';
@@ -116,25 +115,6 @@ const routes = [
             to={`/salary-work-times?q=${match.params.keyword}&s_by=job_title`}
           />
         ),
-      },
-      {
-        path: '/time-and-salary',
-        exact: false,
-        component: () => <Redirect to="/salary-work-times/latest" />,
-      },
-      {
-        component: TimeAndSalaryNotFound,
-      },
-    ],
-  },
-  {
-    path: '/salary-work-times',
-    component: TimeAndSalary,
-    routes: [
-      {
-        path: '/salary-work-times/latest',
-        exact: true,
-        component: TimeAndSalaryBoard,
       },
       {
         component: TimeAndSalaryNotFound,
