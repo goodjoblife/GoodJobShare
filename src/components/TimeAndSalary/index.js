@@ -8,8 +8,7 @@ import { pathnameSelector } from 'common/routing/selectors';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
-import InfoTimeModal from './common/InfoTimeModal';
-import InfoSalaryModal from './common/InfoSalaryModal';
+import { InfoSalaryModal, InfoTimeModal } from './common/InfoModal';
 import withModal from './common/withModal';
 import { IMG_HOST, SITE_NAME } from 'constants/helmetData';
 
