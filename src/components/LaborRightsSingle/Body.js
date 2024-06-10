@@ -6,7 +6,7 @@ import { Section, Wrapper, Heading } from 'common/base';
 import GradientMask from 'common/GradientMask';
 import MarkdownParser from './MarkdownParser';
 import styles from './Body.module.css';
-import LeftBanner from '../ExperienceSearch/Banners/Banner1';
+import LeftBanner from './Banners/Banner1';
 
 const Body = ({ title, seoText, description, content, permissionBlock }) => (
   <Section Tag="main" pageTop>

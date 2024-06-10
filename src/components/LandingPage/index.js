@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { Section, Wrapper, Heading } from 'common/base';
 import Columns from 'common/Columns';
 import Loader from 'common/Loader';
-import ExperienceBlock from '../ExperienceSearch/ExperienceBlock';
+import ExperienceBlock from './ExperienceBlock';
 import {
   queryPopularExperiences,
   queryPopularExperiencesIfUnfetched,
@@ -23,6 +23,7 @@ import { popularExperiencesBoxSelector } from 'selectors/experienceSelector';
 import { popularCompanyAverageSalaryBoxSelector } from 'selectors/popularCompanyAverageSalary';
 import { popularJobTitleSalaryDistributionBoxSelector } from 'selectors/popularJobTitleSalaryDistribution';
 import { menuBoxSelector } from 'selectors/laborRightsSelector';
+import SearchBar from 'components/TimeAndSalary/SearchBar';
 
 const entryToProps = ({ id, title, coverUrl }) => ({
   link: `/labor-rights/${id}`,
@@ -93,13 +94,7 @@ const LandingPage = ({ laborRightsMenuEntries }) => {
             gutter="s"
           />
           <Section center Tag="div">
-            <Link
-              className={cn('buttonCircleL', 'buttonBlack')}
-              to="/experiences/search"
-              title="面試工作經驗"
-            >
-              看更多
-            </Link>
+            <SearchBar />
           </Section>
         </Wrapper>
       </Section>

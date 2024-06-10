@@ -4,8 +4,10 @@ import R from 'ramda';
 import { InfoButton } from 'common/Modal';
 import Table from 'common/table/Table';
 import { pageType as pageTypeMapping } from 'constants/companyJobTitle';
-import InfoSalaryModal from '../../TimeAndSalary/common/InfoSalaryModal';
-import InfoTimeModal from '../../TimeAndSalary/common/InfoTimeModal';
+import {
+  InfoSalaryModal,
+  InfoTimeModal,
+} from '../../TimeAndSalary/common/InfoModal';
 import styles from '../../TimeAndSalary/common/WorkingHourTable.module.css';
 import {
   getNameAsJobTitle,
