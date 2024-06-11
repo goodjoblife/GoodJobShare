@@ -33,5 +33,6 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'prettier/prettier': 'error',
     'no-use-before-define': 'error',
+    'react/sort-prop-types': 'error',
   },
 };

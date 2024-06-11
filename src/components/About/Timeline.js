@@ -23,11 +23,11 @@ const Timeline = ({ year, data }) => (
   </div>
 );
 Timeline.propTypes = {
-  year: PropTypes.number,
   data: PropTypes.shape({
     month: PropTypes.number.isRequired,
     Content: PropTypes.func.isRequired,
   }),
+  year: PropTypes.number,
 };
 
 export default Timeline;

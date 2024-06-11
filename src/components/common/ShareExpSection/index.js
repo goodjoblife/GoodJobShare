@@ -78,8 +78,8 @@ const ShareExpSection = ({ heading, Subheading }) => {
 };
 
 ShareExpSection.propTypes = {
-  heading: PropTypes.string.isRequired,
   Subheading: PropTypes.func,
+  heading: PropTypes.string.isRequired,
 };
 ShareExpSection.defaultProps = {
   heading: '你要分享何種資訊？',

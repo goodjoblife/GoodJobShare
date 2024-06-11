@@ -65,10 +65,10 @@ const Salary = ({ salaryType, salaryAmount, onSalaryType, onSalaryAmount }) => (
 );
 
 Salary.propTypes = {
-  salaryType: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  salaryAmount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onSalaryType: PropTypes.func,
   onSalaryAmount: PropTypes.func,
+  onSalaryType: PropTypes.func,
+  salaryAmount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  salaryType: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default Salary;

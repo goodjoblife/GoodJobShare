@@ -27,6 +27,9 @@ const Select = ({
 );
 
 Select.propTypes = {
+  hasNullOption: PropTypes.bool,
+  nullOptionText: PropTypes.string,
+  onChange: PropTypes.func,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -34,9 +37,6 @@ Select.propTypes = {
     }),
   ),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  hasNullOption: PropTypes.bool,
-  nullOptionText: PropTypes.string,
-  onChange: PropTypes.func,
 };
 
 Select.defaultProps = {

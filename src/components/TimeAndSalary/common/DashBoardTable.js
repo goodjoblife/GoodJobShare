@@ -99,9 +99,9 @@ const DashBoardTable = ({
 DashBoardTable.propTypes = {
   data: PropTypes.array.isRequired,
   postProcessRows: PropTypes.func.isRequired,
+  toggleAboutThisJobModal: PropTypes.func.isRequired,
   toggleInfoSalaryModal: PropTypes.func.isRequired,
   toggleInfoTimeModal: PropTypes.func.isRequired,
-  toggleAboutThisJobModal: PropTypes.func.isRequired,
 };
 
 export default DashBoardTable;

@@ -97,20 +97,20 @@ const ShareBlock = ({
   </section>
 );
 ShareBlock.propTypes = {
-  options: PropTypes.object,
-  type: PropTypes.string.isRequired,
-  heading: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-  position: PropTypes.string,
-  comment: PropTypes.string,
-  disabled: PropTypes.bool,
-  publishHandler: PropTypes.func.isRequired,
   archive: PropTypes.shape({
     is_archived: PropTypes.bool,
     reason: PropTypes.string,
   }),
+  comment: PropTypes.string,
+  disabled: PropTypes.bool,
+  heading: PropTypes.string.isRequired,
   isArchiveModalOpen: PropTypes.bool.isRequired,
+  options: PropTypes.object,
+  position: PropTypes.string,
+  publishHandler: PropTypes.func.isRequired,
   setArchiveModalOpen: PropTypes.func.isRequired,
+  to: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 class ShareBlockWithState extends React.Component {

@@ -74,14 +74,14 @@ export const DatePropType = withShape(PropTypes.array.isRequired, {
 });
 
 DatePicker.propTypes = {
-  page: PropTypes.number.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
-  description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
-  required: PropTypes.bool,
   defaultValue: PropTypes.array.isRequired,
-  value: DatePropType,
+  description: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  required: PropTypes.bool,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+  value: DatePropType,
   warning: PropTypes.string,
 };
 

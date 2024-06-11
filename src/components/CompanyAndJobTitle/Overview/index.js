@@ -66,9 +66,7 @@ const Overview = ({
 );
 
 Overview.propTypes = {
-  pageType: PropTypes.string,
-  pageName: PropTypes.string,
-  tabType: PropTypes.string,
+  canView: PropTypes.bool.isRequired,
   overviewBox: PropTypes.shape({
     status: PropTypes.string.isRequired,
     data: PropTypes.shape({
@@ -83,7 +81,9 @@ Overview.propTypes = {
     error: PropTypes.any,
   }).isRequired,
   page: PropTypes.number.isRequired,
-  canView: PropTypes.bool.isRequired,
+  pageName: PropTypes.string,
+  pageType: PropTypes.string,
+  tabType: PropTypes.string,
 };
 
 export default Overview;

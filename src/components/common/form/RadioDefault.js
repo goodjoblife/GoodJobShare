@@ -44,12 +44,12 @@ class RadioDefault extends React.PureComponent {
 }
 
 RadioDefault.propTypes = {
+  checked: PropTypes.bool.isRequired,
   idPrefix: PropTypes.string,
   label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  checked: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
   name: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default RadioDefault;

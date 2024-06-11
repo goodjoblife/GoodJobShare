@@ -29,10 +29,10 @@ const TextInput = ({
 );
 
 TextInput.propTypes = {
+  className: PropTypes.string,
   isWarning: PropTypes.bool,
   warningWording: PropTypes.string,
   wrapperClassName: PropTypes.string,
-  className: PropTypes.string,
 };
 
 TextInput.defaultProps = {

@@ -101,19 +101,19 @@ const Overview = ({
 };
 
 Overview.propTypes = {
-  pageType: PropTypes.string.isRequired,
-  pageName: PropTypes.string.isRequired,
+  averageWeekWorkTime: PropTypes.number.isRequired,
+  canView: PropTypes.bool.isRequired,
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   interviewExperiencesCount: PropTypes.number.isRequired,
-  workExperiences: PropTypes.arrayOf(PropTypes.object),
-  workExperiencesCount: PropTypes.number.isRequired,
+  jobAverageSalaries: PropTypes.array,
+  overtimeFrequencyCount: PropTypes.object.isRequired,
+  pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
+  salaryDistribution: PropTypes.array,
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
   salaryWorkTimesCount: PropTypes.number.isRequired,
-  salaryDistribution: PropTypes.array,
-  jobAverageSalaries: PropTypes.array,
-  averageWeekWorkTime: PropTypes.number.isRequired,
-  overtimeFrequencyCount: PropTypes.object.isRequired,
-  canView: PropTypes.bool.isRequired,
+  workExperiences: PropTypes.arrayOf(PropTypes.object),
+  workExperiencesCount: PropTypes.number.isRequired,
 };
 
 export default Overview;

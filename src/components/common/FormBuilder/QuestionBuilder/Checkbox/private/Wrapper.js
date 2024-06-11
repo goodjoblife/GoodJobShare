@@ -22,8 +22,8 @@ const Wrapper = ({ warning, children }) => (
 );
 
 Wrapper.propTypes = {
-  warning: PropTypes.string,
   children: PropTypes.node,
+  warning: PropTypes.string,
 };
 
 export default Wrapper;

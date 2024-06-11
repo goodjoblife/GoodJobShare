@@ -56,8 +56,8 @@ const CompanyAndJobTitleWrapper = ({
 };
 
 CompanyAndJobTitleWrapper.propTypes = {
-  pageType: PropTypes.string,
   pageName: PropTypes.string,
+  pageType: PropTypes.string,
   tabType: PropTypes.string,
 };
 export default CompanyAndJobTitleWrapper;

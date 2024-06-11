@@ -30,11 +30,11 @@ const CallToActionBanner = ({
   </Section>
 );
 CallToActionBanner.propTypes = {
+  bgColor: PropTypes.string,
+  buttonText: PropTypes.string.isRequired,
   heading: PropTypes.string.isRequired,
   headingSize: PropTypes.string.isRequired,
-  buttonText: PropTypes.string.isRequired,
   imgSrc: PropTypes.string.isRequired,
-  bgColor: PropTypes.string,
   marginTop: PropTypes.bool,
 };
 CallToActionBanner.defaultProps = {

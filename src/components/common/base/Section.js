@@ -33,15 +33,15 @@ const Section = ({
 );
 Section.propTypes = {
   Tag: PropTypes.string,
-  children: PropTypes.node,
-  pageTop: PropTypes.bool,
-  padding: PropTypes.bool,
-  paddingTop: PropTypes.bool,
-  paddingBottom: PropTypes.bool,
-  center: PropTypes.bool,
-  marginTop: PropTypes.bool,
   bg: PropTypes.string,
+  center: PropTypes.bool,
+  children: PropTypes.node,
   className: PropTypes.string,
+  marginTop: PropTypes.bool,
+  padding: PropTypes.bool,
+  paddingBottom: PropTypes.bool,
+  paddingTop: PropTypes.bool,
+  pageTop: PropTypes.bool,
 };
 Section.defaultProps = {
   Tag: 'section',

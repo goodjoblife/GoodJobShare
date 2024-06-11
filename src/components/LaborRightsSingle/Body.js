@@ -40,11 +40,11 @@ const Body = ({ title, seoText, description, content, permissionBlock }) => (
 );
 
 Body.propTypes = {
-  title: PropTypes.string,
-  seoText: PropTypes.string,
-  description: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   permissionBlock: PropTypes.element,
+  seoText: PropTypes.string,
+  title: PropTypes.string,
 };
 Body.defaultProps = {
   title: '',

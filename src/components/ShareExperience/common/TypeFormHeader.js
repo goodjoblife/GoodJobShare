@@ -38,7 +38,7 @@ export const CompanyJobTitleHeader = ({ label, companyName, jobTitle }) => (
 );
 
 CompanyJobTitleHeader.propTypes = {
-  label: PropTypes.string.isRequired,
   companyName: PropTypes.string.isRequired,
   jobTitle: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
 };

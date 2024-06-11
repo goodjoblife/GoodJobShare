@@ -39,12 +39,12 @@ const IconHeadingBlock = ({
 );
 
 IconHeadingBlock.propTypes = {
-  heading: PropTypes.string.isRequired,
   Icon: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  heading: PropTypes.string.isRequired,
   marginTop: PropTypes.bool,
   noPadding: PropTypes.bool,
   requiredText: PropTypes.bool,
-  children: PropTypes.node.isRequired,
 };
 
 export default IconHeadingBlock;

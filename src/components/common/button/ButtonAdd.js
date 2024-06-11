@@ -72,6 +72,7 @@ class ButtonAdd extends React.PureComponent {
 }
 
 ButtonAdd.propTypes = {
+  appendBlock: PropTypes.func,
   custimizedValues: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   ),
@@ -84,7 +85,6 @@ ButtonAdd.propTypes = {
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     }),
   ),
-  appendBlock: PropTypes.func,
 };
 ButtonAdd.defaultProps = {
   custimizedValues: [],

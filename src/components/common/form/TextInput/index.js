@@ -151,22 +151,22 @@ const TextInput = forwardRef(
 );
 
 TextInput.propTypes = {
-  isWarning: PropTypes.bool,
-  warningWording: PropTypes.string,
-  type: PropTypes.string,
-  wrapperClassName: PropTypes.string,
-  className: PropTypes.string,
-  style: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  value: PropTypes.string.isRequired,
-  onCompositionStart: PropTypes.func,
-  onCompositionEnd: PropTypes.func,
-  onEnter: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  autocompleteItems: PropTypes.array.isRequired,
   autocompleteItemKeySelector: PropTypes.func.isRequired,
   autocompleteItemLabelSelector: PropTypes.func.isRequired,
+  autocompleteItems: PropTypes.array.isRequired,
+  className: PropTypes.string,
+  isWarning: PropTypes.bool,
   onAutocompleteItemSelected: PropTypes.func,
+  onBlur: PropTypes.func,
+  onCompositionEnd: PropTypes.func,
+  onCompositionStart: PropTypes.func,
+  onEnter: PropTypes.func,
+  onFocus: PropTypes.func,
+  style: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  type: PropTypes.string,
+  value: PropTypes.string.isRequired,
+  warningWording: PropTypes.string,
+  wrapperClassName: PropTypes.string,
 };
 
 TextInput.defaultProps = {

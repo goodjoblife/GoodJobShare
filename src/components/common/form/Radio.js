@@ -38,14 +38,14 @@ const Radio = ({
 Radio.marginBlock = '20px 0 0 0';
 Radio.marginInline = '0 30px 0 0';
 Radio.propTypes = {
-  id: PropTypes.string,
-  name: PropTypes.string,
-  label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  inline: PropTypes.bool,
   checked: PropTypes.bool.isRequired,
+  id: PropTypes.string,
+  inline: PropTypes.bool,
+  label: PropTypes.string.isRequired,
   margin: PropTypes.string,
+  name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default Radio;

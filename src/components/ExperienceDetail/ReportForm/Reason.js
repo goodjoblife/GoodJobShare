@@ -43,8 +43,8 @@ const Reason = ({ invalid, reason, onChange }) => (
 
 Reason.propTypes = {
   invalid: PropTypes.bool,
-  reason: PropTypes.string,
   onChange: PropTypes.func,
+  reason: PropTypes.string,
 };
 
 export default Reason;

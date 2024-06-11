@@ -46,11 +46,11 @@ const Region = ({ region, inputTitle, onChange, validator, submitted }) => {
 };
 
 Region.propTypes = {
-  region: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   inputTitle: PropTypes.string,
   onChange: PropTypes.func,
-  validator: PropTypes.func,
+  region: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   submitted: PropTypes.bool,
+  validator: PropTypes.func,
 };
 
 Region.defaultProps = {

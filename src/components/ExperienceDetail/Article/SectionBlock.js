@@ -17,8 +17,8 @@ const SectionBlock = ({ subtitle, content }) => (
 );
 
 SectionBlock.propTypes = {
-  subtitle: PropTypes.string,
   content: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
 };
 
 export default SectionBlock;

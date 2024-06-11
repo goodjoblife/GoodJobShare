@@ -12,10 +12,10 @@ const Item = ({ to, text, className, onClick }) => (
   </li>
 );
 Item.propTypes = {
-  to: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
   className: PropTypes.string,
   onClick: PropTypes.func,
+  text: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
 };
 
 const SiteMenu = () => (

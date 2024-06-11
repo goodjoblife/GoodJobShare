@@ -74,6 +74,12 @@ const BlockSelectElse = ({
 
 BlockSelectElse.propTypes = {
   dataKey: PropTypes.string.isRequired,
+  elseOptionValue: ValuePropType.isRequired,
+  multiple: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
+  placeholder: PropTypes.string,
   required: PropTypes.bool,
   value: withShape(PropTypes.array.isRequired, {
     // option
@@ -84,12 +90,6 @@ BlockSelectElse.propTypes = {
     // else
     1: PropTypes.string.isRequired,
   }),
-  onChange: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func,
-  options: PropTypes.arrayOf(OptionPropType).isRequired,
-  elseOptionValue: ValuePropType.isRequired,
-  multiple: PropTypes.bool.isRequired,
-  placeholder: PropTypes.string,
 };
 
 BlockSelectElse.defaultProps = {

@@ -78,10 +78,15 @@ const BlockSelectElseDate = ({
 };
 
 BlockSelectElseDate.propTypes = {
-  page: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
   dataKey: PropTypes.string.isRequired,
+  elseOptionValue: ValuePropType.isRequired,
+  multiple: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
+  page: PropTypes.number.isRequired,
   required: PropTypes.bool,
+  title: PropTypes.string.isRequired,
   value: withShape(PropTypes.array.isRequired, {
     // option
     0: PropTypes.oneOfType([
@@ -91,11 +96,6 @@ BlockSelectElseDate.propTypes = {
     // else
     1: DatePropType,
   }),
-  onChange: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func,
-  options: PropTypes.arrayOf(OptionPropType).isRequired,
-  elseOptionValue: ValuePropType.isRequired,
-  multiple: PropTypes.bool.isRequired,
 };
 
 BlockSelectElseDate.defaultProps = {

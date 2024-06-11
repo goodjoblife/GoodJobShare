@@ -26,11 +26,11 @@ const NavigatorBlock = ({
 );
 
 NavigatorBlock.propTypes = {
-  skippable: PropTypes.bool.isRequired,
-  onPrevious: PropTypes.func.isRequired,
-  onNext: PropTypes.func.isRequired,
-  hasPrevious: PropTypes.bool.isRequired,
   hasNext: PropTypes.bool.isRequired,
+  hasPrevious: PropTypes.bool.isRequired,
+  onNext: PropTypes.func.isRequired,
+  onPrevious: PropTypes.func.isRequired,
+  skippable: PropTypes.bool.isRequired,
 };
 
 export default NavigatorBlock;

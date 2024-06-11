@@ -119,12 +119,12 @@ const SubmittableTypeForm = ({
 };
 
 SubmittableTypeForm.propTypes = {
-  open: PropTypes.bool.isRequired,
-  questions: PropTypes.arrayOf(QuestionPropType).isRequired,
   header: PageEndPropType,
+  onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onSubmitError: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  questions: PropTypes.arrayOf(QuestionPropType).isRequired,
   redirectPathnameOnSuccess: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.func,

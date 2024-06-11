@@ -256,17 +256,17 @@ export const QuestionPropType = shape({
 });
 
 FormBuilder.propTypes = {
-  open: bool.isRequired,
-  header: PageEndPropType,
   footer: PageEndPropType,
-  questions: arrayOf(QuestionPropType).isRequired,
+  header: PageEndPropType,
   onChange: func,
-  onPrev: func,
+  onClose: func,
   onNext: func,
   onPageChange: func,
+  onPrev: func,
   onSubmit: func.isRequired,
   onValidateFail: func,
-  onClose: func,
+  open: bool.isRequired,
+  questions: arrayOf(QuestionPropType).isRequired,
 };
 
 FormBuilder.defaultProps = {

@@ -65,15 +65,15 @@ const BlockSelect = ({
 
 BlockSelect.propTypes = {
   dataKey: PropTypes.string.isRequired,
+  multiple: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
   required: PropTypes.bool,
   value: PropTypes.oneOfType([
     ValuePropType,
     PropTypes.arrayOf(ValuePropType).isRequired,
   ]),
-  onChange: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func,
-  options: PropTypes.arrayOf(OptionPropType).isRequired,
-  multiple: PropTypes.bool.isRequired,
 };
 
 BlockSelect.defaultProps = {

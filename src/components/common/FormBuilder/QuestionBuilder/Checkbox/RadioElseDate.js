@@ -38,28 +38,28 @@ const RadioElseDate = ({
 );
 
 RadioElseDate.propTypes = {
-  page: PropTypes.number.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
-  description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
-  required: PropTypes.bool,
   defaultValue: withShape(PropTypes.array.isRequired, {
     // option
     0: ValuePropType,
     // else
     1: DatePropType,
   }),
+  description: PropTypes.string,
+  elseOptionValue: ValuePropType.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
+  page: PropTypes.number.isRequired,
+  required: PropTypes.bool,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   value: withShape(PropTypes.array.isRequired, {
     // option
     0: ValuePropType,
     // else
     1: DatePropType,
   }),
-  onChange: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
   warning: PropTypes.string,
-  options: PropTypes.arrayOf(OptionPropType).isRequired,
-  elseOptionValue: ValuePropType.isRequired,
 };
 
 export default RadioElseDate;

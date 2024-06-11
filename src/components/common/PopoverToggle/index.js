@@ -16,9 +16,9 @@ const Popover = ({ active, className, children }) => (
 );
 
 Popover.propTypes = {
+  active: PropTypes.bool,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  active: PropTypes.bool,
 };
 
 Popover.defaultProps = {
@@ -28,11 +28,11 @@ Popover.defaultProps = {
 
 class PopoverToggle extends Component {
   static propTypes = {
-    className: PropTypes.string,
-    popoverClassName: PropTypes.string,
     children: PropTypes.node.isRequired,
-    popoverContent: PropTypes.node,
+    className: PropTypes.string,
     history: PropTypes.object.isRequired,
+    popoverClassName: PropTypes.string,
+    popoverContent: PropTypes.node,
   };
 
   static defaultProps = {

@@ -87,6 +87,8 @@ const SectionEleContent = ({
 };
 
 SectionEleContent.propTypes = {
+  contentMinLength: PropTypes.number.isRequired,
+  editSection: PropTypes.func.isRequired,
   isRequired: PropTypes.bool,
   placeholder: PropTypes.string,
   section: PropTypes.shape({
@@ -94,10 +96,8 @@ SectionEleContent.propTypes = {
     subtitle: PropTypes.string,
     content: PropTypes.string,
   }).isRequired,
-  contentMinLength: PropTypes.number.isRequired,
-  editSection: PropTypes.func.isRequired,
-  validator: PropTypes.func.isRequired,
   submitted: PropTypes.bool.isRequired,
+  validator: PropTypes.func.isRequired,
 };
 
 export default SectionEleContent;
