@@ -39,9 +39,9 @@ const WorkExperiences = ({
 );
 
 WorkExperiences.propTypes = {
-  pageType: PropTypes.string,
-  pageName: PropTypes.string,
-  tabType: PropTypes.string,
+  pageType: PropTypes.string.isRequired,
+  pageName: PropTypes.string.isRequired,
+  tabType: PropTypes.string.isRequired,
   workExperiences: PropTypes.arrayOf(PropTypes.object),
   status: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,

@@ -38,6 +38,11 @@ const IndexHelmet = ({ pageType, page }) => {
   );
 };
 
+IndexHelmet.propTypes = {
+  pageType: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+};
+
 const CompanyAndJobTitleIndex = ({
   pageType,
   totalCount,

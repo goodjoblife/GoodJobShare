@@ -1,5 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import PropTypes from 'prop-types';
 import { generatePath } from 'react-router';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
@@ -55,6 +56,13 @@ const CompanyOverviewHelmet = ({
   );
 };
 
+CompanyOverviewHelmet.propTypes = {
+  companyName: PropTypes.string.isRequired,
+  salaryWorkTimesCount: PropTypes.number.isRequired,
+  interviewExperiencesCount: PropTypes.number.isRequired,
+  workExperiencesCount: PropTypes.number.isRequired,
+};
+
 const JobTitleOverviewHelmet = ({
   jobTitle,
   salaryWorkTimesCount,
@@ -92,7 +100,14 @@ const JobTitleOverviewHelmet = ({
   );
 };
 
-export default props => {
+JobTitleOverviewHelmet.propTypes = {
+  jobTitle: PropTypes.string.isRequired,
+  salaryWorkTimesCount: PropTypes.number.isRequired,
+  interviewExperiencesCount: PropTypes.number.isRequired,
+  workExperiencesCount: PropTypes.number.isRequired,
+};
+
+const OverviewHelmet = props => {
   if (props.pageType === PAGE_TYPE.JOB_TITLE) {
     return <JobTitleOverviewHelmet {...props} jobTitle={props.pageName} />;
   } else if (props.pageType === PAGE_TYPE.COMPANY) {
@@ -101,3 +116,10 @@ export default props => {
     return null;
   }
 };
+
+OverviewHelmet.propTypes = {
+  pageType: PropTypes.string.isRequired,
+  pageName: PropTypes.string.isRequired,
+};
+
+export default OverviewHelmet;

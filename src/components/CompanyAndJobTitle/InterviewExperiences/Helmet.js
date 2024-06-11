@@ -1,5 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import PropTypes from 'prop-types';
 import { generatePath } from 'react-router';
 import qs from 'qs';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
@@ -46,6 +47,12 @@ const CompanyInterviewExperienceHelmet = ({
   );
 };
 
+CompanyInterviewExperienceHelmet.propTypes = {
+  companyName: PropTypes.string.isRequired,
+  interviewExperiences: PropTypes.array,
+  page: PropTypes.number.isRequired,
+};
+
 const JobTitleInterviewExperienceHelmet = ({
   jobTitle,
   interviewExperiences,
@@ -86,7 +93,13 @@ const JobTitleInterviewExperienceHelmet = ({
   );
 };
 
-export default props => {
+JobTitleInterviewExperienceHelmet.propTypes = {
+  jobTitle: PropTypes.string.isRequired,
+  interviewExperiences: PropTypes.array,
+  page: PropTypes.number.isRequired,
+};
+
+const InterviewExperienceHelmet = props => {
   if (props.pageType === PAGE_TYPE.JOB_TITLE) {
     return (
       <JobTitleInterviewExperienceHelmet {...props} jobTitle={props.pageName} />
@@ -102,3 +115,10 @@ export default props => {
     return null;
   }
 };
+
+InterviewExperienceHelmet.propTypes = {
+  pageType: PropTypes.string.isRequired,
+  pageName: PropTypes.string.isRequired,
+};
+
+export default InterviewExperienceHelmet;

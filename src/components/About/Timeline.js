@@ -24,10 +24,12 @@ const Timeline = ({ year, data }) => (
 );
 Timeline.propTypes = {
   year: PropTypes.number,
-  data: PropTypes.shape({
-    month: PropTypes.number.isRequired,
-    Content: PropTypes.func.isRequired,
-  }),
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      month: PropTypes.number.isRequired,
+      Content: PropTypes.func.isRequired,
+    }),
+  ),
 };
 
 export default Timeline;

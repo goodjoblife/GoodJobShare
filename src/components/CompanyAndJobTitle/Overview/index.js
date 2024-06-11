@@ -66,15 +66,18 @@ const Overview = ({
 );
 
 Overview.propTypes = {
-  pageType: PropTypes.string,
-  pageName: PropTypes.string,
-  tabType: PropTypes.string,
+  pageType: PropTypes.string.isRequired,
+  pageName: PropTypes.string.isRequired,
+  tabType: PropTypes.string.isRequired,
   overviewBox: PropTypes.shape({
     status: PropTypes.string.isRequired,
     data: PropTypes.shape({
-      interviewExperiences: PropTypes.arrayOf(PropTypes.object),
-      workExperiences: PropTypes.arrayOf(PropTypes.object),
-      salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
+      interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
+      interviewExperiencesCount: PropTypes.number.isRequired,
+      workExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
+      workExperiencesCount: PropTypes.number.isRequired,
+      salaryWorkTimes: PropTypes.arrayOf(PropTypes.object).isRequired,
+      salaryWorkTimesCount: PropTypes.number.isRequired,
       salaryDistribution: PropTypes.array,
       jobAverageSalaries: PropTypes.array,
       averageWeekWorkTime: PropTypes.number.isRequired,
