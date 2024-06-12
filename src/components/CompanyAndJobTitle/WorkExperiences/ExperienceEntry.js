@@ -101,9 +101,9 @@ const ExperienceEntry = ({
 );
 
 ExperienceEntry.propTypes = {
+  canView: PropTypes.bool.isRequired,
   data: PropTypes.object.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
-  canView: PropTypes.bool.isRequired,
 };
 
 ExperienceEntry.defaultProps = {

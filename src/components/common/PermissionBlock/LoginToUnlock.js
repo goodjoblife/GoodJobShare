@@ -46,8 +46,8 @@ const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
 };
 
 LoginToUnlock.propTypes = {
-  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onAuthenticatedClick: PropTypes.func,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default LoginToUnlock;

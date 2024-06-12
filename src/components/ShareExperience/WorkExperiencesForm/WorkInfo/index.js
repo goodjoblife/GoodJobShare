@@ -145,21 +145,21 @@ class WorkInfo extends React.PureComponent {
 }
 
 WorkInfo.propTypes = {
-  handleState: PropTypes.func,
-  companyQuery: PropTypes.string,
-  region: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  jobTitle: PropTypes.string,
-  experienceInYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  education: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  isCurrentlyEmployed: PropTypes.string,
-  jobEndingTimeYear: PropTypes.number,
-  jobEndingTimeMonth: PropTypes.number,
-  salaryType: PropTypes.string,
-  salaryAmount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  weekWorkTime: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  recommendToOthers: PropTypes.string,
-  submitted: PropTypes.bool,
   changeValidationStatus: PropTypes.func,
+  companyQuery: PropTypes.string,
+  education: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  experienceInYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  handleState: PropTypes.func,
+  isCurrentlyEmployed: PropTypes.string,
+  jobEndingTimeMonth: PropTypes.number,
+  jobEndingTimeYear: PropTypes.number,
+  jobTitle: PropTypes.string,
+  recommendToOthers: PropTypes.string,
+  region: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  salaryAmount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  salaryType: PropTypes.string,
+  submitted: PropTypes.bool,
+  weekWorkTime: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default WorkInfo;

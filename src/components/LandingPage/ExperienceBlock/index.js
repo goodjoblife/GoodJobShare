@@ -51,9 +51,9 @@ const ExperienceBlock = ({ data, size, backable }) => {
 };
 
 ExperienceBlock.propTypes = {
+  backable: PropTypes.bool,
   data: PropTypes.object.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
-  backable: PropTypes.bool,
 };
 
 ExperienceBlock.defaultProps = {

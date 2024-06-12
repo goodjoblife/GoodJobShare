@@ -42,19 +42,19 @@ const Textarea = ({
 );
 
 Textarea.propTypes = {
-  page: PropTypes.number.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
-  description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
-  required: PropTypes.bool,
   defaultValue: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  description: PropTypes.string,
   footnote: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,
     PropTypes.func,
   ]),
+  onChange: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  required: PropTypes.bool,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+  value: PropTypes.string.isRequired,
   warning: PropTypes.string,
 };
 

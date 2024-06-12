@@ -52,8 +52,8 @@ const CallToLoginShareButton = ({ to, share }) => {
 };
 
 CallToLoginShareButton.propTypes = {
-  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   share: PropTypes.func,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default CallToLoginShareButton;

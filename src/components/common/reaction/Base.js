@@ -31,12 +31,12 @@ const Base = ({ className, style, children, label, count, onClick }) => (
 );
 
 Base.propTypes = {
-  className: PropTypes.string,
   children: PropTypes.node,
-  label: PropTypes.string,
+  className: PropTypes.string,
   count: PropTypes.number,
-  style: PropTypes.object,
+  label: PropTypes.string,
   onClick: PropTypes.func,
+  style: PropTypes.object,
 };
 
 export default Base;

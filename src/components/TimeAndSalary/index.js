@@ -14,16 +14,6 @@ import { IMG_HOST, SITE_NAME } from 'constants/helmetData';
 
 class TimeAndSalary extends Component {
   static propTypes = {
-    routes: PropTypes.array,
-    location: PropTypes.shape({
-      pathname: PropTypes.string,
-    }),
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        keyword: PropTypes.string,
-      }),
-    }),
-    staticContext: PropTypes.object,
     infoSalaryModal: PropTypes.shape({
       isOpen: PropTypes.bool.isRequired,
       setIsOpen: PropTypes.func.isRequired,
@@ -32,6 +22,16 @@ class TimeAndSalary extends Component {
       isOpen: PropTypes.bool.isRequired,
       setIsOpen: PropTypes.func.isRequired,
     }).isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        keyword: PropTypes.string,
+      }),
+    }),
+    routes: PropTypes.array,
+    staticContext: PropTypes.object,
   };
 
   toggleInfoSalaryModal = () => {

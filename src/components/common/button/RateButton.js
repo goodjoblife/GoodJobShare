@@ -66,8 +66,8 @@ class RateButton extends React.PureComponent {
 
 RateButton.propTypes = {
   max: PropTypes.number,
-  rating: PropTypes.number,
   onChange: PropTypes.func,
+  rating: PropTypes.number,
 };
 
 export default RateButton;

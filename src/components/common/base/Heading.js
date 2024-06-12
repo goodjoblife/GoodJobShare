@@ -31,16 +31,16 @@ const Heading = ({
   </Tag>
 );
 Heading.propTypes = {
-  children: PropTypes.node.isRequired,
-  size: PropTypes.oneOf(sizeOptions).isRequired,
   Tag: PropTypes.string,
   bold: PropTypes.bool,
-  light: PropTypes.bool,
   center: PropTypes.bool,
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  light: PropTypes.bool,
   marginBottom: PropTypes.bool,
   marginBottomS: PropTypes.bool,
+  size: PropTypes.oneOf(sizeOptions).isRequired,
   style: PropTypes.object,
-  className: PropTypes.string,
 };
 Heading.defaultProps = {
   children: '',

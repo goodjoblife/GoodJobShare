@@ -11,8 +11,8 @@ const Comment = ({ onClick, ...restProps }) => (
 );
 
 Comment.propTypes = {
-  label: PropTypes.string,
   count: PropTypes.number,
+  label: PropTypes.string,
   onClick: PropTypes.func,
 };
 

@@ -25,8 +25,8 @@ const QABlock = ({ question, answer }) => (
 );
 
 QABlock.propTypes = {
-  question: PropTypes.string.isRequired,
   answer: PropTypes.string,
+  question: PropTypes.string.isRequired,
 };
 
 export default QABlock;

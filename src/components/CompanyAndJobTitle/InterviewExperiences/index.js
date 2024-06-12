@@ -40,13 +40,13 @@ const InterviewExperiences = ({
 );
 
 InterviewExperiences.propTypes = {
-  pageType: PropTypes.string.isRequired,
-  pageName: PropTypes.string.isRequired,
-  tabType: PropTypes.string.isRequired,
-  interviewExperiences: PropTypes.arrayOf(PropTypes.object),
-  status: PropTypes.string.isRequired,
-  page: PropTypes.number.isRequired,
   canView: PropTypes.bool.isRequired,
+  interviewExperiences: PropTypes.arrayOf(PropTypes.object),
+  page: PropTypes.number.isRequired,
+  pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  tabType: PropTypes.string.isRequired,
 };
 
 export default InterviewExperiences;

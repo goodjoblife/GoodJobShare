@@ -94,8 +94,11 @@ class WorkExperience extends React.PureComponent {
 }
 
 WorkExperience.propTypes = {
+  appendSection: PropTypes.func,
+  changeValidationStatus: PropTypes.func,
+  editSection: PropTypes.func,
   handleState: PropTypes.func,
-  title: PropTypes.string,
+  removeSection: PropTypes.func,
   sections: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -103,11 +106,8 @@ WorkExperience.propTypes = {
       content: PropTypes.string,
     }),
   ),
-  appendSection: PropTypes.func,
-  removeSection: PropTypes.func,
-  editSection: PropTypes.func,
   submitted: PropTypes.bool,
-  changeValidationStatus: PropTypes.func,
+  title: PropTypes.string,
 };
 
 export default WorkExperience;

@@ -15,9 +15,9 @@ const SuccessFeedback = ({ buttonClick, info, buttonText }) => (
 );
 
 SuccessFeedback.propTypes = {
-  info: PropTypes.string,
-  buttonText: PropTypes.string,
   buttonClick: PropTypes.func,
+  buttonText: PropTypes.string,
+  info: PropTypes.string,
 };
 
 export default SuccessFeedback;

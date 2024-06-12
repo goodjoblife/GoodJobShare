@@ -22,7 +22,6 @@ const Timeline = ({ year, data }) => (
     </div>
   </div>
 );
-Timeline.propTypes = {
   year: PropTypes.number,
   data: PropTypes.arrayOf(
     PropTypes.shape({

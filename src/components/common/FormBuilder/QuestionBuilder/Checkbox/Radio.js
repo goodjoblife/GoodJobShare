@@ -31,17 +31,17 @@ const Radio = ({
 );
 
 Radio.propTypes = {
-  page: PropTypes.number.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
-  description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
-  required: PropTypes.bool,
   defaultValue: ValuePropType,
-  value: ValuePropType,
+  description: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  warning: PropTypes.string,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
+  page: PropTypes.number.isRequired,
+  required: PropTypes.bool,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+  value: ValuePropType,
+  warning: PropTypes.string,
 };
 
 export default Radio;

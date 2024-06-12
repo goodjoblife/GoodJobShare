@@ -49,8 +49,8 @@ const ProgressBar = ({
 ProgressBar.propTypes = {
   dataNum: PropTypes.number,
   goalNum: PropTypes.number.isRequired,
-  size: PropTypes.oneOf(sizeOptions),
   rootClassName: PropTypes.string,
+  size: PropTypes.oneOf(sizeOptions),
   theme: PropTypes.oneOf(themeOptions),
 };
 

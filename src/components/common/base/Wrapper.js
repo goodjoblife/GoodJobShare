@@ -13,8 +13,8 @@ const Wrapper = ({ Tag, size, children, className, onClick }) => (
 Wrapper.propTypes = {
   Tag: PropTypes.string,
   children: PropTypes.node,
-  size: PropTypes.oneOf(sizeOptions).isRequired,
   className: PropTypes.string,
+  size: PropTypes.oneOf(sizeOptions).isRequired,
 };
 Wrapper.defaultProps = {
   size: 'l',

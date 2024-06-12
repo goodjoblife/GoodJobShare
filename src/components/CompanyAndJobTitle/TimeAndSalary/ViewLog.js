@@ -15,11 +15,11 @@ const ViewLog = ({ pageName, page, contentIds }) => {
 };
 
 ViewLog.propTypes = {
-  // key
-  pageName: PropTypes.string.isRequired,
+  contentIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   page: PropTypes.number.isRequired,
 
-  contentIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  // key
+  pageName: PropTypes.string.isRequired,
 };
 
 export default ViewLog;

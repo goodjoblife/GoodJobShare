@@ -63,8 +63,8 @@ const ChartsZone = ({
 };
 
 ChartsZone.propTypes = {
-  experience: PropTypes.object.isRequired,
   company: PropTypes.object,
+  experience: PropTypes.object.isRequired,
   jobTitle: PropTypes.object,
 };
 

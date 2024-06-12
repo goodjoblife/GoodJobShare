@@ -39,13 +39,13 @@ const WorkExperiences = ({
 );
 
 WorkExperiences.propTypes = {
-  pageType: PropTypes.string.isRequired,
+  canView: PropTypes.bool.isRequired,
+  page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
   workExperiences: PropTypes.arrayOf(PropTypes.object),
-  status: PropTypes.string.isRequired,
-  page: PropTypes.number.isRequired,
-  canView: PropTypes.bool.isRequired,
 };
 
 export default WorkExperiences;

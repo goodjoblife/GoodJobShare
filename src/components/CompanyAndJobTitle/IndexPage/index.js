@@ -84,8 +84,7 @@ const CompanyAndJobTitleIndex = ({
 };
 
 CompanyAndJobTitleIndex.propTypes = {
-  totalCount: PropTypes.number.isRequired,
-  pageType: PropTypes.string.isRequired,
+  getPageLink: PropTypes.func.isRequired,
   indexesBox: PropTypes.shape({
     status: PropTypes.string.isRequired,
     data: PropTypes.arrayOf(
@@ -97,7 +96,8 @@ CompanyAndJobTitleIndex.propTypes = {
   }),
   // pagination usage
   page: PropTypes.number.isRequired,
-  getPageLink: PropTypes.func.isRequired,
+  pageType: PropTypes.string.isRequired,
+  totalCount: PropTypes.number.isRequired,
 };
 
 export default CompanyAndJobTitleIndex;

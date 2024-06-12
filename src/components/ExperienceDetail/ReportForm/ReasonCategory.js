@@ -26,6 +26,7 @@ const ReasonCategory = ({
 );
 
 ReasonCategory.propTypes = {
+  handleReasonCategory: PropTypes.func,
   reasonCategory: PropTypes.string,
   reasonCategoryOptions: PropTypes.arrayOf(
     PropTypes.shape({
@@ -33,7 +34,6 @@ ReasonCategory.propTypes = {
       value: PropTypes.string,
     }),
   ),
-  handleReasonCategory: PropTypes.func,
 };
 
 export default ReasonCategory;

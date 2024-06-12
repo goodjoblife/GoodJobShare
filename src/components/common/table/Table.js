@@ -7,11 +7,11 @@ import Column from './Column';
 
 class Table extends Component {
   static propTypes = {
-    data: PropTypes.array.isRequired,
-    primaryKey: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
+    data: PropTypes.array.isRequired,
     postProcessRows: PropTypes.func,
+    primaryKey: PropTypes.string.isRequired,
   };
 
   static defaultProps = {

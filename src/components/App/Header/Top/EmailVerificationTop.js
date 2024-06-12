@@ -57,8 +57,8 @@ const EmailVerificationTop = ({
 
 EmailVerificationTop.propTypes = {
   isSentVerificationEmail: PropTypes.bool,
-  userName: PropTypes.string,
   sendVerifyEmail: PropTypes.func,
+  userName: PropTypes.string,
 };
 
 const mapStateToProps = (state, ownProps) => ({

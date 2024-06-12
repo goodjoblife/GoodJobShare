@@ -78,14 +78,14 @@ const File = ({
 };
 
 File.propTypes = {
-  page: PropTypes.number.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
-  description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
-  required: PropTypes.bool,
   defaultValue: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  description: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  required: PropTypes.bool,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+  value: PropTypes.string.isRequired,
   warning: PropTypes.string,
 };
 

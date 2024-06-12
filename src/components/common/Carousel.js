@@ -64,8 +64,8 @@ const Carousel = ({ children, selectedIndex, onSelectIndex, className }) => {
 
 Carousel.propTypes = {
   children: childrenOfType(CarouselPage).isRequired,
-  selectedIndex: PropTypes.number.isRequired,
   onSelectIndex: PropTypes.func.isRequired,
+  selectedIndex: PropTypes.number.isRequired,
 };
 
 export default Carousel;

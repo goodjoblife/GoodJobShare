@@ -16,8 +16,8 @@ const Columns = ({ Item, items, gutter }) => (
 
 Columns.propTypes = {
   Item: PropTypes.func.isRequired,
-  items: PropTypes.array.isRequired,
   gutter: PropTypes.oneOf(['s', 'm', 'l']),
+  items: PropTypes.array.isRequired,
 };
 Columns.defaultProps = {
   gutter: 'm',

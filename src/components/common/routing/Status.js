@@ -15,8 +15,8 @@ const Status = ({ status, children }) => (
 );
 
 Status.propTypes = {
-  status: PropTypes.number.isRequired,
   children: PropTypes.node,
+  status: PropTypes.number.isRequired,
 };
 
 Status.defaultProps = {

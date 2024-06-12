@@ -45,8 +45,8 @@ const ExperienceInYear = ({ jobTitle, experienceInYear, onChange }) => (
 );
 
 ExperienceInYear.propTypes = {
-  jobTitle: PropTypes.string.isRequired,
   experienceInYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  jobTitle: PropTypes.string.isRequired,
   onChange: PropTypes.func,
 };
 
