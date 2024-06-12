@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Section, P } from 'common/base';
 import styles from './EmptyView.module.css';
 import { tabTypeTranslation } from 'constants/companyJobTitle';
@@ -17,5 +18,10 @@ const EmptyView = ({ pageName, tabType }) => (
     </P>
   </Section>
 );
+
+EmptyView.propTypes = {
+  pageName: PropTypes.string.isRequired,
+  tabType: PropTypes.string.isRequired,
+};
 
 export default EmptyView;

@@ -103,6 +103,7 @@ const ExperienceEntry = ({
 ExperienceEntry.propTypes = {
   canView: PropTypes.bool.isRequired,
   data: PropTypes.object.isRequired,
+  pageType: PropTypes.string.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
 };
 
