@@ -22,13 +22,15 @@ const Timeline = ({ year, data }) => (
     </div>
   </div>
 );
-  year: PropTypes.number,
+
+Timeline.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       month: PropTypes.number.isRequired,
       Content: PropTypes.func.isRequired,
     }),
   ),
+  year: PropTypes.number,
 };
 
 export default Timeline;
