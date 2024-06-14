@@ -80,6 +80,10 @@ const Form = ({ skuId }) => {
   );
 };
 
+Form.propTypes = {
+  skuId: PropTypes.string,
+};
+
 const TemplateSection = ({ title, children, center, ...props }) => {
   return (
     <Section {...props}>
@@ -91,6 +95,13 @@ const TemplateSection = ({ title, children, center, ...props }) => {
       </Card>
     </Section>
   );
+};
+
+TemplateSection.propTypes = {
+  center: PropTypes.bool,
+  children: PropTypes.node,
+  skuId: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const isSubscriptionStatusOK = compose(

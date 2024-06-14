@@ -196,7 +196,8 @@ VerifyEmailForm.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }),
-  onSumbit: PropTypes.func,
+  onSubmit: PropTypes.func,
+  userEmail: PropTypes.string,
 };
 
 export default withRouter(VerifyEmailForm);
