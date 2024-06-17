@@ -103,23 +103,23 @@ const ExperienceEntry = ({
 ExperienceEntry.propTypes = {
   canView: PropTypes.bool.isRequired,
   data: PropTypes.shape({
+    created_at: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    originalCompanyName: PropTypes.string.isRequired,
     job_title: PropTypes.shape({ name: PropTypes.string.isRequired })
       .isRequired,
-    created_at: PropTypes.string.isRequired,
+    originalCompanyName: PropTypes.string.isRequired,
+    recommend_to_others: PropTypes.string,
+    salary: PropTypes.shape({
+      amount: PropTypes.number.isRequired,
+      type: PropTypes.string.isRequired,
+    }),
     sections: PropTypes.arrayOf(
       PropTypes.shape({
-        subtitle: PropTypes.string,
         content: PropTypes.string.isRequired,
+        subtitle: PropTypes.string,
       }),
     ).isRequired,
     week_work_time: PropTypes.number,
-    salary: PropTypes.shape({
-      type: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-    }),
-    recommend_to_others: PropTypes.string,
   }).isRequired,
   pageType: PropTypes.string.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),

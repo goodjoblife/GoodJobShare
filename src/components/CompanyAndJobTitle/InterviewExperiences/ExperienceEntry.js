@@ -93,20 +93,20 @@ const ExperienceEntry = ({
 ExperienceEntry.propTypes = {
   canView: PropTypes.bool.isRequired,
   data: PropTypes.shape({
+    created_at: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    originalCompanyName: PropTypes.string,
     job_title: PropTypes.shape({ name: PropTypes.string.isRequired })
       .isRequired,
-    created_at: PropTypes.string.isRequired,
-    salary: PropTypes.shape({
-      type: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-    }),
+    originalCompanyName: PropTypes.string,
     overall_rating: PropTypes.number.isRequired,
+    salary: PropTypes.shape({
+      amount: PropTypes.number.isRequired,
+      type: PropTypes.string.isRequired,
+    }),
     sections: PropTypes.arrayOf(
       PropTypes.shape({
-        subtitle: PropTypes.string,
         content: PropTypes.string.isRequired,
+        subtitle: PropTypes.string,
       }),
     ).isRequired,
   }).isRequired,
