@@ -22,7 +22,6 @@ const WorkingHourBlock = ({ data, hideContent, pageType }) => {
 WorkingHourBlock.propTypes = {
   data: PropTypes.array,
   hideContent: PropTypes.bool.isRequired,
-  pageName: PropTypes.string,
   pageType: PropTypes.string,
 };
 

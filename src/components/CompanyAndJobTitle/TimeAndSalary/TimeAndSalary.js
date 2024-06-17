@@ -78,6 +78,7 @@ TimeAndSalary.propTypes = {
   page: PropTypes.number,
   pageName: PropTypes.string,
   pageType: PropTypes.string,
+  queryParams: PropTypes.object,
   salaryWorkTimeStatistics: PropTypes.shape({
     count: PropTypes.number,
     average_estimated_hourly_wage: PropTypes.number,
