@@ -101,6 +101,7 @@ const ExperienceEntry = ({
 );
 
 ExperienceEntry.propTypes = {
+  canView: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     id: PropTypes.string.isRequired,
     originalCompanyName: PropTypes.string,
@@ -120,8 +121,8 @@ ExperienceEntry.propTypes = {
     }),
     recommend_to_others: PropTypes.string,
   }).isRequired,
+  pageType: PropTypes.string.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
-  canView: PropTypes.bool.isRequired,
 };
 
 ExperienceEntry.defaultProps = {

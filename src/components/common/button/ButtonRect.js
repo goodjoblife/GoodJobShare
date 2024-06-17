@@ -12,7 +12,8 @@ const ButtonRect = ({ Tag, className, ...restProps }) => (
 );
 
 ButtonRect.propTypes = {
-  className: PropTypes.string,
+  Tag: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+  className: PropTypes.string.isRequired,
 };
 
 ButtonRect.defaultProps = {

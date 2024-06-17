@@ -30,8 +30,8 @@ class ButtonGroupMultiElement extends React.PureComponent {
 
 ButtonGroupMultiElement.propTypes = {
   checked: PropTypes.bool,
-  last: PropTypes.bool,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  last: PropTypes.bool,
   onChange: PropTypes.func,
 };
 

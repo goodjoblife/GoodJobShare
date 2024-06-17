@@ -31,14 +31,14 @@ const SnippetBlock = ({
 );
 
 SnippetBlock.propTypes = {
-  title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  isEmpty: PropTypes.bool,
   linkText: PropTypes.string.isRequired,
   linkTo: PropTypes.string.isRequired,
-  isEmpty: PropTypes.bool,
-  pageType: PropTypes.string.isRequired,
   pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 SnippetBlock.defaultProps = {

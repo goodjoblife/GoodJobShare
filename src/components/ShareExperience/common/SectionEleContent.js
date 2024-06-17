@@ -87,17 +87,20 @@ const SectionEleContent = ({
 };
 
 SectionEleContent.propTypes = {
+  contentMinLength: PropTypes.number.isRequired,
+  editSection: PropTypes.func.isRequired,
   isRequired: PropTypes.bool,
+  isSubtitleEditable: PropTypes.bool,
   placeholder: PropTypes.string,
+  removeSection: PropTypes.func,
   section: PropTypes.shape({
     id: PropTypes.number,
     subtitle: PropTypes.string,
     content: PropTypes.string,
   }).isRequired,
-  contentMinLength: PropTypes.number.isRequired,
-  editSection: PropTypes.func.isRequired,
-  validator: PropTypes.func.isRequired,
   submitted: PropTypes.bool.isRequired,
+  titlePlaceholder: PropTypes.string,
+  validator: PropTypes.func.isRequired,
 };
 
 export default SectionEleContent;

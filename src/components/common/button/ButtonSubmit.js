@@ -73,9 +73,9 @@ const ButtonSubmit = ({ text, onSubmit, disabled }) => {
 };
 
 ButtonSubmit.propTypes = {
-  text: PropTypes.string,
-  onSubmit: PropTypes.func,
   disabled: PropTypes.bool,
+  onSubmit: PropTypes.func,
+  text: PropTypes.string,
 };
 
 export default ButtonSubmit;

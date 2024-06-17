@@ -122,15 +122,15 @@ class AutoCompleteTextInput extends React.PureComponent {
 }
 
 AutoCompleteTextInput.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  placeholder: PropTypes.string,
-  onChange: PropTypes.func,
-  isWarning: PropTypes.bool,
-  warningWording: PropTypes.string,
-  type: PropTypes.string,
   getItemValue: PropTypes.func,
+  isWarning: PropTypes.bool,
   items: PropTypes.array,
+  onChange: PropTypes.func,
   onSelect: PropTypes.func,
+  placeholder: PropTypes.string,
+  type: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  warningWording: PropTypes.string,
 };
 
 AutoCompleteTextInput.defaultProps = {

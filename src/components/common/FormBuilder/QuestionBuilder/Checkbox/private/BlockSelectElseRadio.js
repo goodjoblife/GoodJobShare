@@ -80,6 +80,12 @@ const BlockSelectElseRadio = ({
 
 BlockSelectElseRadio.propTypes = {
   dataKey: PropTypes.string.isRequired,
+  elseOptionValue: ValuePropType.isRequired,
+  elseOptions: PropTypes.arrayOf(OptionPropType).isRequired,
+  multiple: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
   required: PropTypes.bool,
   value: withShape(PropTypes.array.isRequired, {
     // option
@@ -90,12 +96,6 @@ BlockSelectElseRadio.propTypes = {
     // else
     1: ValuePropType,
   }),
-  onChange: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func,
-  options: PropTypes.arrayOf(OptionPropType).isRequired,
-  elseOptionValue: ValuePropType.isRequired,
-  elseOptions: PropTypes.arrayOf(OptionPropType).isRequired,
-  multiple: PropTypes.bool.isRequired,
 };
 
 BlockSelectElseRadio.defaultProps = {

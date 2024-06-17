@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import {
   isNil,
   isEmpty,
@@ -386,6 +387,11 @@ const OptionEmoji = ({ value, children }) => (
     />
   </Fragment>
 );
+
+OptionEmoji.propTypes = {
+  children: PropTypes.node.isRequired,
+  value: PropTypes.number.isRequired,
+};
 
 const OVERTIME_FREQUENCY_LABELS = ['幾乎不', '偶爾', '經常', '幾乎每天'];
 

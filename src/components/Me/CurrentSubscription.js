@@ -30,13 +30,13 @@ const CurrentSubscription = ({ subscriptionPlan, expiredAt }) => {
 };
 
 CurrentSubscription.propTypes = {
+  expiredAt: PropTypes.string,
   subscriptionPlan: PropTypes.shape({
     title: PropTypes.string,
     description: PropTypes.string,
     type: PropTypes.string,
     amount: PropTypes.number,
   }),
-  expiredAt: PropTypes.string,
 };
 
 export default CurrentSubscription;

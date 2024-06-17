@@ -23,11 +23,11 @@ const Feedback = ({ buttonClick, heading, info, buttonText, Icon }) => (
 );
 
 Feedback.propTypes = {
+  Icon: PropTypes.func,
   buttonClick: PropTypes.func.isRequired,
+  buttonText: PropTypes.string.isRequired,
   heading: PropTypes.string.isRequired,
   info: PropTypes.string,
-  buttonText: PropTypes.string.isRequired,
-  Icon: PropTypes.func,
 };
 Feedback.defaultProps = {
   Icon: Warning,

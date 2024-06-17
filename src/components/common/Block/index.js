@@ -25,10 +25,10 @@ const Block = ({ heading, requiredText, children, className, style }) => (
 );
 
 Block.propTypes = {
-  heading: PropTypes.string,
-  requiredText: PropTypes.bool,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  heading: PropTypes.string,
+  requiredText: PropTypes.bool,
   style: PropTypes.object,
 };
 

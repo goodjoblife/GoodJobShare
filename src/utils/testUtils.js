@@ -16,6 +16,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { render } from '@testing-library/react';
 import configureStore from '../store/configureStore';
+import PropTypes from 'prop-types';
 
 const history = createHistory();
 const store = configureStore({}, history);
@@ -29,6 +30,10 @@ const AllTheProviders = ({ children }) => {
       </PersistGate>
     </Provider>
   );
+};
+
+AllTheProviders.propTypes = {
+  children: PropTypes.node,
 };
 
 export const renderWithProviders = (ui, options) =>

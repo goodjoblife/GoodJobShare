@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import {
   formatTitle,
@@ -27,6 +28,13 @@ const EntryHelmet = ({ entryId, seoTitle, seoDescription, coverUrl }) => {
       />
     </Helmet>
   );
+};
+
+EntryHelmet.propTypes = {
+  coverUrl: PropTypes.string.isRequired,
+  entryId: PropTypes.string.isRequired,
+  seoDescription: PropTypes.string.isRequired,
+  seoTitle: PropTypes.string.isRequired,
 };
 
 export default EntryHelmet;

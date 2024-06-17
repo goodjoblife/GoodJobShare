@@ -13,10 +13,10 @@ const ButtonAddElement = ({ text, onClick, custimized, disabled }) => (
 );
 
 ButtonAddElement.propTypes = {
-  text: PropTypes.string,
-  onClick: PropTypes.func,
   custimized: PropTypes.bool,
   disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+  text: PropTypes.string,
 };
 
 export default ButtonAddElement;

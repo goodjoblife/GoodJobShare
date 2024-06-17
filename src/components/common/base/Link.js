@@ -1,8 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link as ReactRouterLink } from 'react-router-dom';
 import styles from './Link.module.css';
 
-export default ({ className, ...props }) => (
-  <Link className={cn(styles.link, className)} {...props}></Link>
+const Link = ({ className, ...props }) => (
+  <ReactRouterLink className={cn(styles.link, className)} {...props} />
 );
+
+Link.propTypes = {
+  className: PropTypes.string,
+};
+
+export default Link;

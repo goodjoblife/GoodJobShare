@@ -16,4 +16,9 @@ const PrivateMessageButton = ({ className, onClick }) => {
   );
 };
 
+PrivateMessageButton.propTypes = {
+  className: Button.propTypes.className,
+  onClick: Button.propTypes.onClick,
+};
+
 export default PrivateMessageButton;

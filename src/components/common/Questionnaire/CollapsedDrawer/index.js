@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import styles from './CollapsedDrawer.module.css';
 import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey';
 import { toggleModalOpen } from 'actions/questionnaireExpandedModal';
@@ -40,6 +41,11 @@ const CollapsedDrawer = ({ title = '給我們回饋', children }) => {
       <div className={styles.label}>{title}</div>
     </div>
   );
+};
+
+CollapsedDrawer.propTypes = {
+  children: PropTypes.node.isRequired,
+  title: PropTypes.string,
 };
 
 export default CollapsedDrawer;

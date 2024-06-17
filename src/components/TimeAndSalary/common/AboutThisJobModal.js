@@ -17,10 +17,10 @@ const AboutThisJobModal = ({ isOpen, close, title, aboutThisJob }) => (
 );
 
 AboutThisJobModal.propTypes = {
-  isOpen: PropTypes.bool,
-  close: PropTypes.func,
-  title: PropTypes.string.isRequired,
   aboutThisJob: PropTypes.string.isRequired,
+  close: PropTypes.func,
+  isOpen: PropTypes.bool,
+  title: PropTypes.string.isRequired,
 };
 
 export default AboutThisJobModal;

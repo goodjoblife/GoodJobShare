@@ -22,10 +22,10 @@ const ReactionButton = ({ className, Icon, active, children, ...props }) => (
 );
 
 ReactionButton.propTypes = {
-  className: PropTypes.string,
   Icon: PropTypes.func.isRequired,
   active: PropTypes.bool,
   children: PropTypes.node,
+  className: PropTypes.string,
 };
 
 const ReactionZone = ({ experienceId, onClickMsgButton }) => {

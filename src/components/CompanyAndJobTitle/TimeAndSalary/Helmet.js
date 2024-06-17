@@ -1,5 +1,6 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import PropTypes from 'prop-types';
+import ReactHelmet from 'react-helmet';
 import { generatePath } from 'react-router';
 import qs from 'qs';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
@@ -30,7 +31,7 @@ const CompanySalaryWorkTimeHelmet = ({
   const url = formatCanonicalPath(`${path}${search}`);
 
   return (
-    <Helmet>
+    <ReactHelmet>
       <title itemProp="name" lang="zh-TW">
         {title}
       </title>
@@ -47,8 +48,15 @@ const CompanySalaryWorkTimeHelmet = ({
         content={`${IMG_HOST}/og/time-and-salary.jpg`}
       />
       <link rel="canonical" href={url} />
-    </Helmet>
+    </ReactHelmet>
   );
+};
+
+CompanySalaryWorkTimeHelmet.propTypes = {
+  companyName: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+  salaryWorkTimeStatistics: PropTypes.object,
+  salaryWorkTimes: PropTypes.array,
 };
 
 const JobTitleSalaryWorkTimeHelmet = ({
@@ -75,7 +83,7 @@ const JobTitleSalaryWorkTimeHelmet = ({
   const url = formatCanonicalPath(`${path}${search}`);
 
   return (
-    <Helmet>
+    <ReactHelmet>
       <title itemProp="name" lang="zh-TW">
         {title}
       </title>
@@ -92,11 +100,18 @@ const JobTitleSalaryWorkTimeHelmet = ({
         content={`${IMG_HOST}/og/time-and-salary.jpg`}
       />
       <link rel="canonical" href={url} />
-    </Helmet>
+    </ReactHelmet>
   );
 };
 
-export default props => {
+JobTitleSalaryWorkTimeHelmet.propTypes = {
+  jobTitle: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+  salaryWorkTimeStatistics: PropTypes.object,
+  salaryWorkTimes: PropTypes.array,
+};
+
+const Helmet = props => {
   if (props.pageType === PAGE_TYPE.JOB_TITLE) {
     return (
       <JobTitleSalaryWorkTimeHelmet {...props} jobTitle={props.pageName} />
@@ -109,3 +124,13 @@ export default props => {
     return null;
   }
 };
+
+Helmet.propTypes = {
+  page: PropTypes.number.isRequired,
+  pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
+  salaryWorkTimeStatistics: PropTypes.object,
+  salaryWorkTimes: PropTypes.array,
+};
+
+export default Helmet;

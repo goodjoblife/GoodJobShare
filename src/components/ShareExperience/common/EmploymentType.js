@@ -51,8 +51,8 @@ EmploymentType.propTypes = {
   employmentType: PropTypes.string,
   inputTitle: PropTypes.string,
   onChange: PropTypes.func,
-  validator: PropTypes.func,
   submitted: PropTypes.bool,
+  validator: PropTypes.func,
 };
 
 EmploymentType.defaultProps = {

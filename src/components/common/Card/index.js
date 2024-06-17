@@ -8,8 +8,8 @@ const Card = ({ className, children }) => (
 );
 
 Card.propTypes = {
-  className: PropTypes.string,
   children: PropTypes.node,
+  className: PropTypes.string,
 };
 
 export default Card;

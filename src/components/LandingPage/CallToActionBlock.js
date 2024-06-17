@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Heading } from 'common/base';
 
@@ -43,6 +44,10 @@ const CallToActionBlock = ({ history }) => {
       </div>
     </form>
   );
+};
+
+CallToActionBlock.propTypes = {
+  history: PropTypes.object.isRequired,
 };
 
 export default withRouter(CallToActionBlock);

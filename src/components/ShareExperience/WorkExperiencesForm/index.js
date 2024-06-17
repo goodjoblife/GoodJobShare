@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga4';
@@ -358,5 +359,13 @@ class WorkExperiencesForm extends React.Component {
     );
   }
 }
+
+WorkExperiencesForm.propTypes = {
+  buttonClick: PropTypes.func,
+  createWorkExperience: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string,
+  }).isRequired,
+};
 
 export default WorkExperiencesForm;

@@ -17,6 +17,15 @@ const LabelOnSmallDevice = ({ viewBox: { x, y, width, height } }) => {
   );
 };
 
+LabelOnSmallDevice.propTypes = {
+  viewBox: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+  }).isRequired,
+};
+
 const XAxisOnSmallDevice = ({ x, y, stroke, payload }) => {
   const [from, to] = payload.value.split('~');
   return (
@@ -31,6 +40,15 @@ const XAxisOnSmallDevice = ({ x, y, stroke, payload }) => {
       </text>
     </g>
   );
+};
+
+XAxisOnSmallDevice.propTypes = {
+  payload: PropTypes.shape({
+    value: PropTypes.string.isRequired,
+  }).isRequired,
+  stroke: PropTypes.string.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
 };
 
 const SalaryDistributionChart = ({ data }) => {

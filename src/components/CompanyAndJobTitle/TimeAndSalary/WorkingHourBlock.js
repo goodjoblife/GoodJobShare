@@ -21,9 +21,8 @@ const WorkingHourBlock = ({ data, hideContent, pageType }) => {
 
 WorkingHourBlock.propTypes = {
   data: PropTypes.array,
-  pageType: PropTypes.string,
-  pageName: PropTypes.string,
   hideContent: PropTypes.bool.isRequired,
+  pageType: PropTypes.string,
 };
 
 export default WorkingHourBlock;

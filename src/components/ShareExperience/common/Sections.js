@@ -39,6 +39,8 @@ const Sections = ({
 };
 
 Sections.propTypes = {
+  editSection: PropTypes.func,
+  removeSection: PropTypes.func,
   sections: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -49,10 +51,8 @@ Sections.propTypes = {
       isSubtitleEditable: PropTypes.bool,
     }),
   ),
-  removeSection: PropTypes.func,
-  editSection: PropTypes.func,
-  validator: PropTypes.func,
   submitted: PropTypes.bool,
+  validator: PropTypes.func,
 };
 
 export default Sections;

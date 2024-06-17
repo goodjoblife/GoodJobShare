@@ -57,8 +57,8 @@ const Searchbar = ({ className, label, placeholder, onSubmit }) => {
 Searchbar.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
-  placeholder: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
 };
 
 const useSearchbar = ({ pageType, tabType }) => {

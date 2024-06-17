@@ -75,16 +75,16 @@ const TextList = ({
 };
 
 TextList.propTypes = {
-  page: PropTypes.number.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
-  description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
-  required: PropTypes.bool,
   defaultValue: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  value: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  description: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  warning: PropTypes.string,
+  page: PropTypes.number.isRequired,
   placeholder: PropTypes.string,
+  required: PropTypes.bool,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+  value: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  warning: PropTypes.string,
 };
 
 export default TextList;

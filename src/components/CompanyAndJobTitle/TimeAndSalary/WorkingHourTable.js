@@ -23,6 +23,33 @@ import {
 } from '../../TimeAndSalary/common/formatter';
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
 
+const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
+  <React.Fragment>
+    <InfoSalaryModal
+      isOpen={isInfoSalaryModalOpen}
+      close={toggleInfoSalaryModal}
+    />
+    <InfoButton onClick={toggleInfoSalaryModal}>估計時薪</InfoButton>
+  </React.Fragment>
+);
+
+SalaryHeader.propTypes = {
+  isInfoSalaryModalOpen: PropTypes.bool.isRequired,
+  toggleInfoSalaryModal: PropTypes.func.isRequired,
+};
+
+const TimeHeader = ({ isInfoTimeModalOpen, toggleInfoTimeModal }) => (
+  <React.Fragment>
+    <InfoTimeModal isOpen={isInfoTimeModalOpen} close={toggleInfoTimeModal} />
+    <InfoButton onClick={toggleInfoTimeModal}>參考時間</InfoButton>
+  </React.Fragment>
+);
+
+TimeHeader.propTypes = {
+  isInfoTimeModalOpen: PropTypes.bool.isRequired,
+  toggleInfoTimeModal: PropTypes.func.isRequired,
+};
+
 const columnProps = [
   {
     className: styles.colPosition,
@@ -89,15 +116,7 @@ const columnProps = [
       R.prop('estimated_hourly_wage'),
     ),
     alignRight: true,
-    Children: ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
-      <React.Fragment>
-        <InfoSalaryModal
-          isOpen={isInfoSalaryModalOpen}
-          close={toggleInfoSalaryModal}
-        />
-        <InfoButton onClick={toggleInfoSalaryModal}>估計時薪</InfoButton>
-      </React.Fragment>
-    ),
+    Children: SalaryHeader,
     permissionRequiredEnd: true,
   },
   {
@@ -107,15 +126,7 @@ const columnProps = [
       formatDate,
       R.prop('data_time'),
     ),
-    Children: ({ isInfoTimeModalOpen, toggleInfoTimeModal }) => (
-      <React.Fragment>
-        <InfoTimeModal
-          isOpen={isInfoTimeModalOpen}
-          close={toggleInfoTimeModal}
-        />
-        <InfoButton onClick={toggleInfoTimeModal}>參考時間</InfoButton>
-      </React.Fragment>
-    ),
+    Children: TimeHeader,
   },
 ];
 
@@ -169,6 +180,7 @@ const WorkingHourTable = ({ data, hideContent, pageType }) => {
       {columnProps
         .filter(({ isEnabled }) => (isEnabled ? isEnabled({ pageType }) : true))
         .map(({ Children, ...props }) => (
+          // eslint-disable-next-line react/prop-types
           <Table.Column key={props.title} {...props}>
             <Children
               isInfoSalaryModalOpen={isInfoSalaryModalOpen}

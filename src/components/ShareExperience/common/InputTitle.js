@@ -29,8 +29,8 @@ const InputTitle = ({ text, must }) => (
 );
 
 InputTitle.propTypes = {
-  text: PropTypes.string,
   must: PropTypes.bool,
+  text: PropTypes.string,
 };
 
 export default InputTitle;

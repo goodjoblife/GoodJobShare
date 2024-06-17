@@ -32,16 +32,16 @@ const Subheading = ({
 );
 
 Subheading.propTypes = {
-  children: PropTypes.node,
-  size: PropTypes.oneOf(sizeOptions).isRequired,
   Tag: PropTypes.string.isRequired,
   bold: PropTypes.bool,
-  light: PropTypes.bool,
   center: PropTypes.bool,
+  children: PropTypes.node,
+  className: PropTypes.string,
+  light: PropTypes.bool,
   marginBottom: PropTypes.bool,
   marginBottomS: PropTypes.bool,
+  size: PropTypes.oneOf(sizeOptions).isRequired,
   style: PropTypes.object,
-  className: PropTypes.string,
 };
 
 Subheading.defaultProps = {

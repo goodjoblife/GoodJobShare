@@ -64,8 +64,6 @@ const ChartsZone = ({
 
 ChartsZone.propTypes = {
   experience: PropTypes.object.isRequired,
-  company: PropTypes.object,
-  jobTitle: PropTypes.object,
 };
 
 export default ChartsZone;

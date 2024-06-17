@@ -50,8 +50,8 @@ const Footer = ({ id, prev, next }) => (
 
 Footer.propTypes = {
   id: PropTypes.string.isRequired,
-  prev: PropTypes.object,
   next: PropTypes.object,
+  prev: PropTypes.object,
 };
 
 const Pager = ({ className, id, title }) => (

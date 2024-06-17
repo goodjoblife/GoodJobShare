@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './ExpandedModal.module.css';
 import laborImage from './laborImage.png';
 
@@ -14,5 +15,11 @@ const NextButton = ({ handleNext, buttonText, isEnabled }) => (
     </button>
   </div>
 );
+
+NextButton.propTypes = {
+  buttonText: PropTypes.string.isRequired,
+  handleNext: PropTypes.func.isRequired,
+  isEnabled: PropTypes.bool.isRequired,
+};
 
 export default NextButton;

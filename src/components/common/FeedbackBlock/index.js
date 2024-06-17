@@ -14,12 +14,12 @@ import styles from './FeedbackBlock.module.css';
 class FeedbackBlock extends React.Component {
   static propTypes = {
     category: PropTypes.string.isRequired,
-    question: PropTypes.string,
+    className: PropTypes.string,
     placeholders: PropTypes.shape({
       yes: PropTypes.string,
       no: PropTypes.string,
     }),
-    className: PropTypes.string,
+    question: PropTypes.string,
   };
 
   static defaultProps = {

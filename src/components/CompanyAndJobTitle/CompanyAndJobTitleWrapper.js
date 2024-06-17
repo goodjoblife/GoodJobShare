@@ -131,8 +131,10 @@ const CompanyAndJobTitleWrapper = ({
 };
 
 CompanyAndJobTitleWrapper.propTypes = {
-  pageType: PropTypes.string,
-  pageName: PropTypes.string,
-  tabType: PropTypes.string,
+  children: PropTypes.node,
+  pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
+  tabType: PropTypes.string.isRequired,
 };
+
 export default CompanyAndJobTitleWrapper;

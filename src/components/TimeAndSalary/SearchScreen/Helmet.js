@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import qs from 'qs';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
@@ -25,6 +26,11 @@ const SearchScreenHelmet = ({ keyword, page }) => {
       <link rel="canonical" href={url} />
     </Helmet>
   );
+};
+
+SearchScreenHelmet.propTypes = {
+  keyword: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
 };
 
 export default SearchScreenHelmet;
