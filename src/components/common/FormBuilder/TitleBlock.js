@@ -20,6 +20,7 @@ const TitleBlock = ({ page, title, required, description }) => (
 
 TitleBlock.propTypes = {
   description: PropTypes.string,
+  page: PropTypes.number.isRequired,
   required: PropTypes.bool.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
 };

@@ -35,6 +35,10 @@ const FooterP = ({ style, ...restProps }) => (
   />
 );
 
+FooterP.propTypes = {
+  style: PropTypes.object,
+};
+
 const VerificationPage = ({ location: { search }, verifyEmail }) => {
   const { token: verifyToken } = qs.parse(search, {
     ignoreQueryPrefix: true,

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import ReactGA from 'react-ga4';
 
@@ -183,6 +184,12 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
       hideProgressBar={hideProgressBar}
     />
   );
+};
+
+TypeForm.propTypes = {
+  hideProgressBar: PropTypes.bool,
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
 export default TypeForm;

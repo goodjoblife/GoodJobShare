@@ -90,13 +90,16 @@ SectionEleContent.propTypes = {
   contentMinLength: PropTypes.number.isRequired,
   editSection: PropTypes.func.isRequired,
   isRequired: PropTypes.bool,
+  isSubtitleEditable: PropTypes.bool,
   placeholder: PropTypes.string,
+  removeSection: PropTypes.func,
   section: PropTypes.shape({
     id: PropTypes.number,
     subtitle: PropTypes.string,
     content: PropTypes.string,
   }).isRequired,
   submitted: PropTypes.bool.isRequired,
+  titlePlaceholder: PropTypes.string,
   validator: PropTypes.func.isRequired,
 };
 

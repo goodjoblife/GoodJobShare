@@ -29,7 +29,7 @@ ConfirmModal.propTypes = {
     }),
   ),
   description: PropTypes.string,
-  subTitle: PropTypes.string,
+  subtitle: PropTypes.string,
   title: PropTypes.string.isRequired,
 };
 

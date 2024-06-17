@@ -258,6 +258,7 @@ export const QuestionPropType = shape({
 FormBuilder.propTypes = {
   footer: PageEndPropType,
   header: PageEndPropType,
+  hideProgressBar: bool,
   onChange: func,
   onClose: func,
   onNext: func,
@@ -275,10 +276,20 @@ FormBuilder.defaultProps = {
   onSubmit: console.log,
 };
 
-const withBackgroundMask = Modal => props => (
-  <div className={cn(styles.backgroundMask, { [styles.hidden]: !props.open })}>
-    <Modal {...props} />
-  </div>
-);
+const withBackgroundMask = Modal => {
+  const Component = props => (
+    <div
+      className={cn(styles.backgroundMask, { [styles.hidden]: !props.open })}
+    >
+      <Modal {...props} />
+    </div>
+  );
+
+  Component.propTypes = {
+    open: bool.isRequired,
+  };
+
+  return Component;
+};
 
 export default withBackgroundMask(FormBuilder);

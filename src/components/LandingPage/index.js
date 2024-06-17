@@ -31,7 +31,7 @@ const entryToProps = ({ id, title, coverUrl }) => ({
   title,
 });
 
-const LandingPage = ({ laborRightsMenuEntries }) => {
+const LandingPage = () => {
   const dispatch = useDispatch();
 
   const popularExperiencesBox = useSelector(popularExperiencesBoxSelector);

@@ -18,6 +18,7 @@ const InfoBlock = ({ label, to, children }) => (
 InfoBlock.propTypes = {
   children: PropTypes.node,
   label: PropTypes.string.isRequired,
+  to: PropTypes.string,
 };
 
 export default InfoBlock;

@@ -20,6 +20,11 @@ const AutoCompleteMenu = ({ className, open, ...props }) => (
   />
 );
 
+AutoCompleteMenu.propTypes = {
+  className: PropTypes.string,
+  open: PropTypes.bool,
+};
+
 const AutoCompleteOption = forwardRef(({ active, ...props }, ref) => (
   <div
     ref={ref}
@@ -31,6 +36,10 @@ const AutoCompleteOption = forwardRef(({ active, ...props }, ref) => (
     {...props}
   />
 ));
+
+AutoCompleteOption.propTypes = {
+  active: PropTypes.bool,
+};
 
 const TextInput = forwardRef(
   (

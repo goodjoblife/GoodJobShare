@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './TypeFormFooter.module.css';
 
 const getNumberNext = dataNum => {
@@ -19,5 +20,9 @@ const TypeFormFooter = ({ dataNum }) => (
     <span className={styles.unlockDuration}></span>
   </div>
 );
+
+TypeFormFooter.propTypes = {
+  dataNum: PropTypes.number.isRequired,
+};
 
 export default TypeFormFooter;

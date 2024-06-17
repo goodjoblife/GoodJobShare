@@ -39,8 +39,8 @@ const IndexHelmet = ({ pageType, page }) => {
 };
 
 IndexHelmet.propTypes = {
-  pageType: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
+  pageType: PropTypes.string.isRequired,
 };
 
 const CompanyAndJobTitleIndex = ({

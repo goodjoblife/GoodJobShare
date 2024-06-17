@@ -58,8 +58,8 @@ const CompanyOverviewHelmet = ({
 
 CompanyOverviewHelmet.propTypes = {
   companyName: PropTypes.string.isRequired,
-  salaryWorkTimesCount: PropTypes.number.isRequired,
   interviewExperiencesCount: PropTypes.number.isRequired,
+  salaryWorkTimesCount: PropTypes.number.isRequired,
   workExperiencesCount: PropTypes.number.isRequired,
 };
 
@@ -101,9 +101,9 @@ const JobTitleOverviewHelmet = ({
 };
 
 JobTitleOverviewHelmet.propTypes = {
+  interviewExperiencesCount: PropTypes.number.isRequired,
   jobTitle: PropTypes.string.isRequired,
   salaryWorkTimesCount: PropTypes.number.isRequired,
-  interviewExperiencesCount: PropTypes.number.isRequired,
   workExperiencesCount: PropTypes.number.isRequired,
 };
 
@@ -118,8 +118,8 @@ const OverviewHelmet = props => {
 };
 
 OverviewHelmet.propTypes = {
-  pageType: PropTypes.string.isRequired,
   pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
 };
 
 export default OverviewHelmet;

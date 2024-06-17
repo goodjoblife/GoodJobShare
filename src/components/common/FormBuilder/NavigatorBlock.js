@@ -8,6 +8,10 @@ const NavigatorButton = ({ className, ...restProps }) => (
   <button {...restProps} className={cn(className, styles.btn)} />
 );
 
+NavigatorButton.propTypes = {
+  className: PropTypes.string,
+};
+
 const NavigatorBlock = ({
   skippable,
   onPrevious,

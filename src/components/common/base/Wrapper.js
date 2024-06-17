@@ -14,6 +14,7 @@ Wrapper.propTypes = {
   Tag: PropTypes.string,
   children: PropTypes.node,
   className: PropTypes.string,
+  onClick: PropTypes.func,
   size: PropTypes.oneOf(sizeOptions).isRequired,
 };
 Wrapper.defaultProps = {

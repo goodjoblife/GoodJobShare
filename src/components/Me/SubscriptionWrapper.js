@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Section, Wrapper } from 'common/base';
 import Heading from 'common/base/Heading';
@@ -34,5 +35,9 @@ const SubscriptionWrapper = ({ children }) => (
     </Wrapper>
   </Section>
 );
+
+SubscriptionWrapper.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default SubscriptionWrapper;

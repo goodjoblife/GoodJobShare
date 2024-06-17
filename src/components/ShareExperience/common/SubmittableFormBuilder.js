@@ -120,6 +120,7 @@ const SubmittableTypeForm = ({
 
 SubmittableTypeForm.propTypes = {
   header: PageEndPropType,
+  hideProgressBar: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onSubmitError: PropTypes.func.isRequired,

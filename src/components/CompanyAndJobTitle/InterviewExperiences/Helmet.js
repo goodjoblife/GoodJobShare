@@ -94,8 +94,8 @@ const JobTitleInterviewExperienceHelmet = ({
 };
 
 JobTitleInterviewExperienceHelmet.propTypes = {
-  jobTitle: PropTypes.string.isRequired,
   interviewExperiences: PropTypes.array,
+  jobTitle: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
 };
 
@@ -117,8 +117,8 @@ const InterviewExperienceHelmet = props => {
 };
 
 InterviewExperienceHelmet.propTypes = {
-  pageType: PropTypes.string.isRequired,
   pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
 };
 
 export default InterviewExperienceHelmet;

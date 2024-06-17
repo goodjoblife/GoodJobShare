@@ -22,6 +22,7 @@ const StatusRenderer = ({ status, error, children, render, ...props }) => {
 
 StatusRenderer.propTypes = {
   children: PropTypes.node,
+  error: PropTypes.object,
   render: PropTypes.func,
   status: PropTypes.string.isRequired,
 };

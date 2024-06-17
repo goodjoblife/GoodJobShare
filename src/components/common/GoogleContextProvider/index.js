@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import GoogleContext from 'contexts/GoogleContext';
 import { loginWithGoogle } from 'actions/auth';
@@ -29,6 +30,10 @@ const GoogleContextProvider = ({ children }) => {
       {children}
     </GoogleContext.Provider>
   );
+};
+
+GoogleContextProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default GoogleContextProvider;

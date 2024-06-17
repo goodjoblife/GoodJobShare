@@ -14,6 +14,13 @@ const AuthenticatedButton = ({ className, to, onClick, children }) => (
   </Link>
 );
 
+AuthenticatedButton.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+};
+
 const CallToLoginShareButton = ({ to, share }) => {
   const location = useLocation();
   const { toBuy, actionUrl } = useToBuy(location.pathname);
