@@ -104,7 +104,7 @@ ExperienceEntry.propTypes = {
   canView: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    originalCompanyName: PropTypes.string,
+    originalCompanyName: PropTypes.string.isRequired,
     job_title: PropTypes.shape({ name: PropTypes.string.isRequired })
       .isRequired,
     created_at: PropTypes.string.isRequired,
