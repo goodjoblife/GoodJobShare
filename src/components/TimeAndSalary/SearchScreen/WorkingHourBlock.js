@@ -40,6 +40,7 @@ const WorkingHourBlock = ({
 );
 
 WorkingHourBlock.propTypes = {
+  businessNumber: PropTypes.string,
   dataCount: PropTypes.number,
   name: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
