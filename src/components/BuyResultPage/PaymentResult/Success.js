@@ -57,7 +57,6 @@ const Success = ({ expiredAt }) => {
 
 Success.propTypes = {
   expiredAt: PropTypes.instanceOf(Date),
-  redirectUrl: PropTypes.string,
 };
 
 Success.defaultProps = {

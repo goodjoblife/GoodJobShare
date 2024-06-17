@@ -11,7 +11,6 @@ import { IMG_HOST, SITE_NAME } from 'constants/helmetData';
 
 class TimeAndSalary extends Component {
   static propTypes = {
-    routes: PropTypes.array,
     location: PropTypes.shape({
       pathname: PropTypes.string,
     }),
@@ -20,6 +19,7 @@ class TimeAndSalary extends Component {
         keyword: PropTypes.string,
       }),
     }),
+    routes: PropTypes.array,
     staticContext: PropTypes.object,
   };
 

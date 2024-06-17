@@ -21,8 +21,8 @@ const NotFound = ({ status, heading }) => (
 );
 
 NotFound.propTypes = {
-  status: PropTypes.number.isRequired,
   heading: PropTypes.string,
+  status: PropTypes.number.isRequired,
 };
 
 NotFound.defaultProps = {

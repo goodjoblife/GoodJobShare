@@ -101,9 +101,10 @@ const ExperienceEntry = ({
 );
 
 ExperienceEntry.propTypes = {
-  data: PropTypes.object.isRequired,
-  size: PropTypes.oneOf(['s', 'm', 'l']),
   canView: PropTypes.bool.isRequired,
+  data: PropTypes.object.isRequired,
+  pageType: PropTypes.string.isRequired,
+  size: PropTypes.oneOf(['s', 'm', 'l']),
 };
 
 ExperienceEntry.defaultProps = {

@@ -256,17 +256,18 @@ export const QuestionPropType = shape({
 });
 
 FormBuilder.propTypes = {
-  open: bool.isRequired,
-  header: PageEndPropType,
   footer: PageEndPropType,
-  questions: arrayOf(QuestionPropType).isRequired,
+  header: PageEndPropType,
+  hideProgressBar: bool,
   onChange: func,
-  onPrev: func,
+  onClose: func,
   onNext: func,
   onPageChange: func,
+  onPrev: func,
   onSubmit: func.isRequired,
   onValidateFail: func,
-  onClose: func,
+  open: bool.isRequired,
+  questions: arrayOf(QuestionPropType).isRequired,
 };
 
 FormBuilder.defaultProps = {
@@ -275,10 +276,20 @@ FormBuilder.defaultProps = {
   onSubmit: console.log,
 };
 
-const withBackgroundMask = Modal => props => (
-  <div className={cn(styles.backgroundMask, { [styles.hidden]: !props.open })}>
-    <Modal {...props} />
-  </div>
-);
+const withBackgroundMask = Modal => {
+  const Component = props => (
+    <div
+      className={cn(styles.backgroundMask, { [styles.hidden]: !props.open })}
+    >
+      <Modal {...props} />
+    </div>
+  );
+
+  Component.propTypes = {
+    open: bool.isRequired,
+  };
+
+  return Component;
+};
 
 export default withBackgroundMask(FormBuilder);

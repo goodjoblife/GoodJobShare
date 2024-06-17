@@ -70,12 +70,12 @@ class ButtonGroupImageEle extends React.PureComponent {
 
 ButtonGroupImageEle.propTypes = {
   checked: PropTypes.bool,
-  onChange: PropTypes.func,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  icon: PropTypes.node,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   last: PropTypes.bool,
-  icon: PropTypes.node,
+  onChange: PropTypes.func,
   theme: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 ButtonGroupImageEle.defaultProps = {
@@ -106,7 +106,7 @@ const ButtonGroupImage = ({
 );
 
 ButtonGroupImage.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  className: PropTypes.string,
   onChange: PropTypes.func,
   options: PropTypes.arrayOf(
     PropTypes.shape({
@@ -115,8 +115,8 @@ ButtonGroupImage.propTypes = {
       icon: PropTypes.node,
     }),
   ),
-  className: PropTypes.string,
   theme: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 ButtonGroupImage.defaultProps = {

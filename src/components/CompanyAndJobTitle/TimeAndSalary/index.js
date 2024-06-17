@@ -41,17 +41,17 @@ const TimeAndSalary = ({
 );
 
 TimeAndSalary.propTypes = {
-  pageType: PropTypes.string,
+  page: PropTypes.number.isRequired,
   pageName: PropTypes.string,
-  tabType: PropTypes.string,
-  salaryWorkTimes: PropTypes.array,
+  pageType: PropTypes.string,
   salaryWorkTimeStatistics: PropTypes.shape({
     count: PropTypes.number,
     average_estimated_hourly_wage: PropTypes.number,
     average_week_work_time: PropTypes.number,
   }),
+  salaryWorkTimes: PropTypes.array,
   status: PropTypes.string.isRequired,
-  page: PropTypes.number.isRequired,
+  tabType: PropTypes.string,
 };
 
 export default TimeAndSalary;

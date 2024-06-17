@@ -50,12 +50,12 @@ const Modal = ({
 );
 
 Modal.propTypes = {
-  contentClassName: PropTypes.string,
   children: PropTypes.node,
-  isOpen: PropTypes.bool,
-  hasClose: PropTypes.bool,
-  close: PropTypes.func.isRequired,
   closableOnClickOutside: PropTypes.bool,
+  close: PropTypes.func.isRequired,
+  contentClassName: PropTypes.string,
+  hasClose: PropTypes.bool,
+  isOpen: PropTypes.bool,
   size: PropTypes.string,
 };
 

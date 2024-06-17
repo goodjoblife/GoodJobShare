@@ -63,9 +63,9 @@ const Searchbar = ({ className, placeholder, history, location }) => {
 
 Searchbar.propTypes = {
   className: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  placeholder: PropTypes.string,
 };
 
 export default withRouter(Searchbar);

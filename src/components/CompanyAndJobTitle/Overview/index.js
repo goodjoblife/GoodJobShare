@@ -66,15 +66,16 @@ const Overview = ({
 );
 
 Overview.propTypes = {
-  pageType: PropTypes.string,
-  pageName: PropTypes.string,
-  tabType: PropTypes.string,
+  canView: PropTypes.bool.isRequired,
   overviewBox: PropTypes.shape({
     status: PropTypes.string.isRequired,
     data: PropTypes.shape({
-      interviewExperiences: PropTypes.arrayOf(PropTypes.object),
-      workExperiences: PropTypes.arrayOf(PropTypes.object),
-      salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
+      interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
+      interviewExperiencesCount: PropTypes.number.isRequired,
+      workExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
+      workExperiencesCount: PropTypes.number.isRequired,
+      salaryWorkTimes: PropTypes.arrayOf(PropTypes.object).isRequired,
+      salaryWorkTimesCount: PropTypes.number.isRequired,
       salaryDistribution: PropTypes.array,
       jobAverageSalaries: PropTypes.array,
       averageWeekWorkTime: PropTypes.number.isRequired,
@@ -83,7 +84,9 @@ Overview.propTypes = {
     error: PropTypes.any,
   }).isRequired,
   page: PropTypes.number.isRequired,
-  canView: PropTypes.bool.isRequired,
+  pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
+  tabType: PropTypes.string.isRequired,
 };
 
 export default Overview;

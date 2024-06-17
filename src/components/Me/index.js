@@ -1,5 +1,4 @@
 import React, { useEffect, Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { Wrapper, Section, Heading } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
 import Loader from 'common/Loader';
@@ -105,10 +104,6 @@ const Me = () => {
       </Wrapper>
     </Section>
   );
-};
-
-Me.propTypes = {
-  auth: PropTypes.object,
 };
 
 export default Me;

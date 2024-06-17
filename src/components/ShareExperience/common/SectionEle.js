@@ -54,13 +54,13 @@ const SectionEle = ({
 );
 
 SectionEle.propTypes = {
-  subtitle: PropTypes.string,
-  placeholder: PropTypes.string,
-  titlePlaceholder: PropTypes.string,
   content: PropTypes.string,
-  isSubtitleEditable: PropTypes.bool,
   editSection: PropTypes.func,
+  isSubtitleEditable: PropTypes.bool,
+  placeholder: PropTypes.string,
   removeSection: PropTypes.func,
+  subtitle: PropTypes.string,
+  titlePlaceholder: PropTypes.string,
 };
 
 export default SectionEle;

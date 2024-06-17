@@ -32,8 +32,8 @@ const ExperienceHeading = ({ experience, className }) => (
 );
 
 ExperienceHeading.propTypes = {
-  experience: PropTypes.object,
   className: PropTypes.string,
+  experience: PropTypes.object,
 };
 
 export default ExperienceHeading;

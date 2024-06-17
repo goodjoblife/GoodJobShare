@@ -67,10 +67,10 @@ const Notification = ({ index, type, content, id }) => {
 };
 
 Notification.propTypes = {
-  index: PropTypes.number,
-  type: PropTypes.oneOf(Object.values(NOTIFICATION_TYPE)),
   content: PropTypes.string,
   id: PropTypes.string,
+  index: PropTypes.number,
+  type: PropTypes.oneOf(Object.values(NOTIFICATION_TYPE)),
 };
 
 export default Notification;

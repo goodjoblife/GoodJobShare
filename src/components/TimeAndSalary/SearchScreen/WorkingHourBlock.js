@@ -29,10 +29,10 @@ const WorkingHourBlock = ({ pageType, name, to, dataCount }) => (
 );
 
 WorkingHourBlock.propTypes = {
-  pageType: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
   dataCount: PropTypes.number,
+  name: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
 };
 
 export default WorkingHourBlock;

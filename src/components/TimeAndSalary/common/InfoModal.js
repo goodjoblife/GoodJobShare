@@ -51,10 +51,10 @@ const InfoModal = ({ isOpen, close, title, children }) => (
 );
 
 InfoModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  close: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  close: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export const InfoTimeModal = props => (

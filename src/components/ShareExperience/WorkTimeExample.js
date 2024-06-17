@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Question from 'common/icons/Question';
 import commonStyles from './styles.module.css';
 
@@ -14,6 +15,10 @@ const WorkTimeExample = ({ children }) => {
       {showsExample && <p>{children}</p>}
     </div>
   );
+};
+
+WorkTimeExample.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default WorkTimeExample;

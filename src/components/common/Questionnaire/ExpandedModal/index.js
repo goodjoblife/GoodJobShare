@@ -1,4 +1,5 @@
 import React, { Fragment, useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
 import styles from './ExpandedModal.module.css';
 import Question from './Question';
 import NextButton from './NextButton';
@@ -82,6 +83,10 @@ const ExpandedModal = ({ handleToggleModalOpen }) => {
       </div>
     </div>
   );
+};
+
+ExpandedModal.propTypes = {
+  handleToggleModalOpen: PropTypes.func.isRequired,
 };
 
 export default ExpandedModal;

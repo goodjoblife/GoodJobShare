@@ -1,5 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import PropTypes from 'prop-types';
 import { generatePath } from 'react-router';
 import qs from 'qs';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
@@ -46,6 +47,12 @@ const CompanyWorkExperienceHelmet = ({
   );
 };
 
+CompanyWorkExperienceHelmet.propTypes = {
+  companyName: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+  workExperiences: PropTypes.arrayOf(PropTypes.object),
+};
+
 const JobTitleWorkExperienceHelmet = ({ jobTitle, workExperiences, page }) => {
   // title
   const title = `${jobTitle} 工作心得列表 - 第${page}頁`;
@@ -82,7 +89,13 @@ const JobTitleWorkExperienceHelmet = ({ jobTitle, workExperiences, page }) => {
   );
 };
 
-export default props => {
+JobTitleWorkExperienceHelmet.propTypes = {
+  jobTitle: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+  workExperiences: PropTypes.arrayOf(PropTypes.object),
+};
+
+const WorkExperienceHelmet = props => {
   if (props.pageType === PAGE_TYPE.JOB_TITLE) {
     return (
       <JobTitleWorkExperienceHelmet {...props} jobTitle={props.pageName} />
@@ -95,3 +108,12 @@ export default props => {
     return null;
   }
 };
+
+WorkExperienceHelmet.propTypes = {
+  page: PropTypes.number.isRequired,
+  pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
+  workExperiences: PropTypes.arrayOf(PropTypes.object),
+};
+
+export default WorkExperienceHelmet;

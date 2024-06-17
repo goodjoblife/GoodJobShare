@@ -27,6 +27,7 @@ const Page = props => <div {...props} />;
 
 AnimatedPager.propTypes = {
   children: childrenOfType(Page).isRequired,
+  className: PropTypes.string,
   page: PropTypes.number.isRequired,
 };
 

@@ -21,11 +21,11 @@ const AddButton = ({ active, onClick, addSection, addQa, deleteBtn }) => (
 );
 
 AddButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
   active: PropTypes.bool,
-  addSection: PropTypes.bool,
   addQa: PropTypes.bool,
+  addSection: PropTypes.bool,
   deleteBtn: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default AddButton;

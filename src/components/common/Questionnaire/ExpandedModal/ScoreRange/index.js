@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styles from './ScoreRange.module.css';
 
 const inputRange = {
@@ -43,6 +44,10 @@ const ScoreRange = ({ handleUserFeedback }) => {
       </div>
     </div>
   );
+};
+
+ScoreRange.propTypes = {
+  handleUserFeedback: PropTypes.func.isRequired,
 };
 
 export default ScoreRange;

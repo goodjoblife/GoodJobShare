@@ -22,15 +22,15 @@ const ConfirmModal = ({ title, subtitle, description, actions, ...props }) => (
 );
 
 ConfirmModal.propTypes = {
-  title: PropTypes.string.isRequired,
-  subTitle: PropTypes.string,
-  description: PropTypes.string,
   actions: PropTypes.arrayOf(
     withShape(PropTypes.array.isRequired, {
       0: PropTypes.string.isRequired,
       1: PropTypes.func.isRequired,
     }),
   ),
+  description: PropTypes.string,
+  subtitle: PropTypes.string,
+  title: PropTypes.string.isRequired,
 };
 
 export default ConfirmModal;

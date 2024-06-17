@@ -37,8 +37,8 @@ const LinkItem = ({ title, items }) => {
   );
 };
 LinkItem.propTypes = {
-  title: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default LinkItem;

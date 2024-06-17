@@ -7,8 +7,8 @@ const NotFound = ({ status, children }) => (
 );
 
 NotFound.propTypes = {
-  status: PropTypes.number.isRequired,
   children: PropTypes.node,
+  status: PropTypes.number.isRequired,
 };
 
 NotFound.defaultProps = {

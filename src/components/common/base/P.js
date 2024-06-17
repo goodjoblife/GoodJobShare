@@ -29,13 +29,13 @@ const P = ({
   </Tag>
 );
 P.propTypes = {
-  children: PropTypes.node.isRequired,
-  size: PropTypes.oneOf(sizeOptions).isRequired,
   Tag: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   bold: PropTypes.bool,
   center: PropTypes.bool,
-  style: PropTypes.object,
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  size: PropTypes.oneOf(sizeOptions).isRequired,
+  style: PropTypes.object,
   title: PropTypes.string,
 };
 P.defaultProps = {

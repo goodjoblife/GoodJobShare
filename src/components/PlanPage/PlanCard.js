@@ -86,13 +86,13 @@ const PlanCard = ({
 };
 
 PlanCard.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
-  type: PropTypes.string,
   amount: PropTypes.number,
-  skuId: PropTypes.string,
-  hideCta: PropTypes.bool,
   checked: PropTypes.bool.isRequired,
+  description: PropTypes.string,
+  hideCta: PropTypes.bool,
+  skuId: PropTypes.string,
+  title: PropTypes.string,
+  type: PropTypes.string,
 };
 
 PlanCard.defaultProps = {

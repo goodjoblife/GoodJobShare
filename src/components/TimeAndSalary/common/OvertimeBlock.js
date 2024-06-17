@@ -81,9 +81,9 @@ const OvertimeBlock = ({ type, heading, statistics }) => (
 );
 
 OvertimeBlock.propTypes = {
-  type: PropTypes.oneOf(['salary', 'dayoff']).isRequired,
-  statistics: PropTypes.object.isRequired,
   heading: PropTypes.string.isRequired,
+  statistics: PropTypes.object.isRequired,
+  type: PropTypes.oneOf(['salary', 'dayoff']).isRequired,
 };
 
 OvertimeBlock.defaultProps = {

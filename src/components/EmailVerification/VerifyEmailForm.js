@@ -192,11 +192,12 @@ const VerifyEmailForm = ({
 };
 
 VerifyEmailForm.propTypes = {
-  onSumbit: PropTypes.func,
   closeModal: PropTypes.func,
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }),
+  onSubmit: PropTypes.func,
+  userEmail: PropTypes.string,
 };
 
 export default withRouter(VerifyEmailForm);

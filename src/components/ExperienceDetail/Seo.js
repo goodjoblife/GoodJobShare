@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import SeoStructure from 'common/Seo/SeoStructure';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
@@ -28,6 +29,10 @@ const SeoHelmet = ({ experience }) => {
       <link rel="canonical" href={formatCanonicalPath(`/experiences/${id}`)} />
     </Helmet>
   );
+};
+
+SeoHelmet.propTypes = {
+  experience: PropTypes.object.isRequired,
 };
 
 const getStructureData = ({ experience }) => {
@@ -69,6 +74,11 @@ const Seo = ({ experienceState, experience }) => {
       <SeoStructure data={getStructureData({ experience })} />
     </Fragment>
   );
+};
+
+Seo.propTypes = {
+  experience: PropTypes.object.isRequired,
+  experienceState: PropTypes.object.isRequired,
 };
 
 export default Seo;

@@ -9,6 +9,10 @@ export const CarouselPage = ({ children }) => (
   <div className={styles.pageContainer}>{children}</div>
 );
 
+CarouselPage.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 const Carousel = ({ children, selectedIndex, onSelectIndex, className }) => {
   const handleClickPrevBtn = () => {
     onSelectIndex(selectedIndex - 1);
@@ -64,8 +68,9 @@ const Carousel = ({ children, selectedIndex, onSelectIndex, className }) => {
 
 Carousel.propTypes = {
   children: childrenOfType(CarouselPage).isRequired,
-  selectedIndex: PropTypes.number.isRequired,
+  className: PropTypes.string,
   onSelectIndex: PropTypes.func.isRequired,
+  selectedIndex: PropTypes.number.isRequired,
 };
 
 export default Carousel;

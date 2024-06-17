@@ -39,15 +39,15 @@ Checkbox.defaultProps = {
 };
 
 Checkbox.propTypes = {
-  id: PropTypes.string,
-  name: PropTypes.string,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-  value: PropTypes.string.isRequired,
   checked: PropTypes.bool.isRequired,
   disabled: PropTypes.bool,
+  id: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   margin: PropTypes.string,
+  name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   style: PropTypes.object,
+  value: PropTypes.string.isRequired,
 };
 
 export default Checkbox;

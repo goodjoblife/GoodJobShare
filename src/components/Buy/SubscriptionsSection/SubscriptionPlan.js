@@ -31,13 +31,13 @@ const SubscriptionPlan = ({
 );
 
 SubscriptionPlan.propTypes = {
-  className: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  amount: PropTypes.number.isRequired,
-  type: PropTypes.oneOf(subscriptionTypes).isRequired,
   active: PropTypes.bool.isRequired,
+  amount: PropTypes.number.isRequired,
+  className: PropTypes.string,
+  description: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(subscriptionTypes).isRequired,
 };
 
 export default SubscriptionPlan;

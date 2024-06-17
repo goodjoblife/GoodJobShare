@@ -13,6 +13,7 @@ const Top = ({ children, to }) =>
   );
 
 Top.propTypes = {
+  children: PropTypes.node,
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 

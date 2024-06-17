@@ -196,8 +196,8 @@ const TypeForm = ({ open, onClose }) => {
 };
 
 TypeForm.propTypes = {
-  open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
 export default TypeForm;

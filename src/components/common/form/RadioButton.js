@@ -22,13 +22,13 @@ const RadioButton = ({ id, label, name, value, checked, onChange, emoji }) => (
 );
 
 RadioButton.propTypes = {
-  id: PropTypes.string,
-  name: PropTypes.string,
-  label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
   checked: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
   emoji: PropTypes.string,
+  id: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default RadioButton;
