@@ -24,10 +24,10 @@ const SubscriptionPlanCollection = ({ plans, selectedId, setSelectedId }) => (
 SubscriptionPlanCollection.propTypes = {
   plans: PropTypes.arrayOf(
     PropTypes.shape({
+      amount: PropTypes.number.isRequired,
+      description: PropTypes.string.isRequired,
       skuId: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
       type: PropTypes.oneOf(subscriptionTypes).isRequired,
     }),
   ),

@@ -19,10 +19,10 @@ const LabelOnSmallDevice = ({ viewBox: { x, y, width, height } }) => {
 
 LabelOnSmallDevice.propTypes = {
   viewBox: PropTypes.shape({
+    height: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
   }).isRequired,
 };
 

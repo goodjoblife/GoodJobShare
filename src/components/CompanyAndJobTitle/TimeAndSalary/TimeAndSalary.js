@@ -80,9 +80,9 @@ TimeAndSalary.propTypes = {
   pageType: PropTypes.string,
   queryParams: PropTypes.object,
   salaryWorkTimeStatistics: PropTypes.shape({
-    count: PropTypes.number,
     average_estimated_hourly_wage: PropTypes.number,
     average_week_work_time: PropTypes.number,
+    count: PropTypes.number,
   }),
   salaryWorkTimes: PropTypes.array,
   tabType: PropTypes.string,

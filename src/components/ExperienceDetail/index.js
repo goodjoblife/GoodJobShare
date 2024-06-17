@@ -281,8 +281,8 @@ const ExperienceDetail = ({ ...props }) => {
 ExperienceDetail.propTypes = {
   location: PropTypes.shape({
     state: PropTypes.shape({
-      replyId: PropTypes.string,
       pageType: PropTypes.string,
+      replyId: PropTypes.string,
     }),
   }),
 };

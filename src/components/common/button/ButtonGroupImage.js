@@ -110,9 +110,9 @@ ButtonGroupImage.propTypes = {
   onChange: PropTypes.func,
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       icon: PropTypes.node,
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     }),
   ),
   theme: PropTypes.string,
