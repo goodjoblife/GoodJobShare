@@ -168,26 +168,26 @@ const CheckboxRatingTextAreaValuePropType = withShape(PropTypes.array, {
 });
 
 CheckboxRatingTextAreaList.propTypes = {
-  page: PropTypes.number.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
-  description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
-  required: PropTypes.bool,
   defaultValue: PropTypes.arrayOf(CheckboxRatingTextAreaValuePropType)
     .isRequired,
-  value: PropTypes.arrayOf(CheckboxRatingTextAreaValuePropType).isRequired,
-  onChange: PropTypes.func.isRequired,
-  warning: PropTypes.string,
-  setShowsNavigation: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(OptionPropType).isRequired,
+  description: PropTypes.string,
   elseOptionValue: ValuePropType,
-  placeholder: PropTypes.string,
-  ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
   footnote: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,
     PropTypes.func,
   ]),
+  onChange: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
+  page: PropTypes.number.isRequired,
+  placeholder: PropTypes.string,
+  ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  required: PropTypes.bool,
+  setShowsNavigation: PropTypes.func.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+  value: PropTypes.arrayOf(CheckboxRatingTextAreaValuePropType).isRequired,
+  warning: PropTypes.string,
 };
 
 export default CheckboxRatingTextAreaList;

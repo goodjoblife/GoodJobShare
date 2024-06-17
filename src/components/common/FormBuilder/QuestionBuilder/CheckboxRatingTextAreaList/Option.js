@@ -21,9 +21,9 @@ const Option = ({ children, onClick, selected, isElse }) => {
 
 Option.propTypes = {
   children: ValuePropType.isRequired,
+  isElse: PropTypes.bool,
   onClick: PropTypes.func,
   selected: PropTypes.bool,
-  isElse: PropTypes.bool,
 };
 
 export default Option;

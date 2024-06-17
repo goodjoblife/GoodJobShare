@@ -97,25 +97,25 @@ const ActiveItem = ({
 };
 
 ActiveItem.propTypes = {
-  page: PropTypes.number.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   dataKey: PropTypes.string.isRequired,
   defaultValue: withShape(PropTypes.array, {
     0: PropTypes.string,
     1: PropTypes.number,
     2: PropTypes.string,
   }),
-  onChange: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-  option: OptionPropType.isRequired,
-  isElseOption: PropTypes.bool.isRequired,
-  placeholder: PropTypes.string,
-  ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
   footnote: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,
     PropTypes.func,
   ]),
+  isElseOption: PropTypes.bool.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  option: OptionPropType.isRequired,
+  page: PropTypes.number.isRequired,
+  placeholder: PropTypes.string,
+  ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
 };
 
 export default ActiveItem;

@@ -97,11 +97,11 @@ const Options = ({
 };
 
 Options.propTypes = {
-  options: PropTypes.arrayOf(OptionPropType).isRequired,
-  selectedOptionIndices: PropTypes.arrayOf(PropTypes.number).isRequired,
-  onSelectOptionIndex: PropTypes.func.isRequired,
   elseOptionIndex: PropTypes.number,
   lastSelectedOptionIndex: PropTypes.number,
+  onSelectOptionIndex: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(OptionPropType).isRequired,
+  selectedOptionIndices: PropTypes.arrayOf(PropTypes.number).isRequired,
   warning: PropTypes.string,
 };
 
