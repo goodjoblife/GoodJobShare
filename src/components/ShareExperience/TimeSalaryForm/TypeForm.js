@@ -39,6 +39,7 @@ import {
   DATA_KEY_HAS_OVERTIME_SALARY,
   DATA_KEY_HAS_COMPENSATORY_DAYOFF,
 } from '../constants';
+import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 
 import { evolve } from '../utils';
 import { generateTabURL, pageType, tabType } from 'constants/companyJobTitle';
@@ -49,6 +50,7 @@ import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 
 import { sendEvent } from 'utils/hotjarUtil';
 import { getUserPseudoId } from 'utils/GAUtils';
+import rollbar from 'utils/rollbar';
 
 import { GA_MEASUREMENT_ID } from '../../../config';
 
@@ -154,6 +156,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
     },
     [dispatch, hideProgressBar],
   );
+
   const onSubmitError = useCallback(
     async error => {
       ReactGA.event({
@@ -162,6 +165,11 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
           : GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
         action: GA_ACTION.UPLOAD_FAIL,
       });
+      const errorCode = 'ER0007';
+      rollbar.error(
+        `[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal} ${error.message}`,
+        error,
+      );
     },
     [hideProgressBar],
   );

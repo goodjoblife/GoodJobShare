@@ -30,4 +30,10 @@ export const ERROR_CODE_MSG = {
     external: LOGIN_ERROR_MSG_CLEAN_BROWSER_DATA,
     internal: 'FB login failed: unknown auth status',
   },
+  ER0007: {
+    internal: 'Submit salary failed',
+  },
+  ER0008: {
+    internal: 'Submit interview failed',
+  },
 };
