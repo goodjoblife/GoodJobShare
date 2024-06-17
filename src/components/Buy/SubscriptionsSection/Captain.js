@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { Section, P, Link } from 'common/base';
 import styles from './SubscriptionsSection.module.css';
@@ -21,5 +22,10 @@ const Captain = ({ dataCount, endDateTime }) => (
     </P>
   </Section>
 );
+
+Captain.propTypes = {
+  dataCount: PropTypes.number.isRequired,
+  endDateTime: PropTypes.instanceOf(Date).isRequired,
+};
 
 export default Captain;

@@ -22,17 +22,10 @@
     ]
   },
   "jest": {
+    "moduleDirectories": ["node_modules", "src"],
     "moduleNameMapper": {
-      "^actions(.*)": "<rootDir>/src/actions$1",
-      "^apis(.*)": "<rootDir>/src/apis$1",
       "^common(.*)": "<rootDir>/src/components/common$1",
-      "^images(.*)": "<rootDir>/src/components/images$1",
-      "^constants(.*)": "<rootDir>/src/constants$1",
-      "^contexts(.*)": "<rootDir>/src/contexts$1",
-      "^graphql(.*)": "<rootDir>/src/graphql$1",
-      "^hooks(.*)": "<rootDir>/src/hooks$1",
-      "^selectors(.*)": "<rootDir>/src/selectors$1",
-      "^utils(.*)": "<rootDir>/src/utils$1"
+      "^images(.*)": "<rootDir>/src/components/images$1"
     }
   },
   "devDependencies": {
@@ -81,7 +74,6 @@
     "react": "^16.12.0",
     "react-autocomplete": "^1.8.1",
     "react-dom": "^16.12.0",
-    "react-facebook-pixel": "^0.1.0",
     "react-ga4": "^2.1.0",
     "react-helmet": "^5.2.0",
     "react-redux": "^7.1.3",

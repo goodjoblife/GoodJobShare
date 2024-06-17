@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import {
   isNil,
   isEmpty,
-  ifElse,
   map,
-  prop,
   always,
   when,
   last,
@@ -65,10 +64,14 @@ import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
 import { employmentTypeOptions, salaryTypeOptions } from './common/optionMap';
 import WorkTimeExample from './WorkTimeExample';
 import Emoji from '../common/icons/Emoji';
-import { tabTypeTranslation } from '../../constants/companyJobTitle';
+import {
+  pageType as PAGE_TYPE,
+  tabTypeTranslation,
+} from '../../constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
 import { salaryHint } from 'utils/formUtils';
 import { useTotalCount } from 'hooks/useCount';
+import AutoCompleteItem from './AutoCompleteItem';
 
 export const createCompanyQuestion = ({ header }) => ({
   title: '公司名稱',
@@ -87,7 +90,16 @@ export const createCompanyQuestion = ({ header }) => ({
   placeholder: 'ＯＯ 股份有限公司',
   search: value =>
     fetchSearchCompany({ companyName: value }).then(
-      ifElse(isArray, map(prop('name')), always([])),
+      map(({ name, businessNumber }) => ({
+        label: (
+          <AutoCompleteItem
+            pageType={PAGE_TYPE.COMPANY}
+            name={name}
+            businessNumber={businessNumber}
+          />
+        ),
+        value: name,
+      })),
     ),
   header,
 });
@@ -420,6 +432,11 @@ const OptionEmoji = ({ value, children }) => (
     />
   </Fragment>
 );
+
+OptionEmoji.propTypes = {
+  children: PropTypes.node.isRequired,
+  value: PropTypes.number.isRequired,
+};
 
 const OVERTIME_FREQUENCY_LABELS = ['幾乎不', '偶爾', '經常', '幾乎每天'];
 

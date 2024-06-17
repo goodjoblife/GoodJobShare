@@ -1,5 +1,3 @@
-import R from 'ramda';
-
 import fetchUtil from 'utils/fetchUtil';
 
 import graphqlClient from 'utils/graphqlClient';
@@ -13,35 +11,6 @@ import {
 } from 'graphql/experience';
 import { getPopularExperiencesQuery } from 'graphql/popularExperience';
 import { deleteReplyLike, createReplyLike } from 'graphql/reply';
-
-const endpoint = '/experiences';
-
-const getEndpoint = ({ id, limit = 3 }) =>
-  `${endpoint}/${id}/recommended?limit=${limit}`;
-const fetch = ({ id, limit }) => fetchUtil(getEndpoint({ id, limit }));
-
-export const getExperiencesRecommended = ({ id, limit }) =>
-  fetch({ id, limit }).get();
-
-export const getExperiences = ({
-  start,
-  limit,
-  searchBy,
-  searchQuery,
-  sort,
-  searchType = ['interview', 'work'],
-}) => {
-  const queryObj = {
-    start,
-    limit,
-    search_by: searchBy,
-    search_query: searchQuery,
-    sort,
-    type: R.join(',', searchType),
-  };
-
-  return fetchUtil(endpoint).get({ query: queryObj });
-};
 
 const getExperienceReplyOptions = {
   start: 0,
@@ -131,9 +100,6 @@ export const getPopularExperiences = () =>
   graphqlClient({
     query: getPopularExperiencesQuery,
   }).then(data => data.popular_experiences);
-
-export const newExperienceSearchBy = ({ body }) =>
-  fetchUtil('/graphql').post({ body });
 
 export const patchExperience = ({ id, status, token }) =>
   fetchUtil(`/experiences/${id}`).patch({

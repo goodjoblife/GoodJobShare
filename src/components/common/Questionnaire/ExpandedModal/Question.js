@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './ExpandedModal.module.css';
 
 const Question = ({
@@ -20,6 +21,14 @@ const Question = ({
       {section({ onChange })}
     </React.Fragment>
   );
+};
+
+Question.propTypes = {
+  isRequired: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+  section: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  titleExplanation: PropTypes.string,
 };
 
 export default Question;

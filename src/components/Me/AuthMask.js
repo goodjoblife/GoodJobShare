@@ -28,6 +28,7 @@ const AuthMask = ({ children, title }) => {
 };
 
 AuthMask.propTypes = {
+  children: PropTypes.node.isRequired,
   title: PropTypes.string,
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { useDebounce } from 'react-use';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
@@ -46,6 +46,15 @@ const Text = ({
     [value],
   );
 
+  const itemKeySelector = useCallback(
+    item => (typeof item === 'string' ? item : item.value),
+    [],
+  );
+  const itemLabelSelector = useCallback(
+    item => (typeof item === 'string' ? item : item.label),
+    [],
+  );
+
   return (
     <div className={cn({ [commonStyles.hasWarning]: !!warning }, className)}>
       <div className={cn(commonStyles.warnableContainer)}>
@@ -61,11 +70,14 @@ const Text = ({
           }}
           autocompleteItems={items}
           onAutocompleteItemSelected={item => {
-            onChange(item);
+            const value = itemKeySelector(item);
+            onChange(value);
             if (onSelect) {
-              onSelect(item);
+              onSelect(value);
             }
           }}
+          autocompleteItemKeySelector={itemKeySelector}
+          autocompleteItemLabelSelector={itemLabelSelector}
         />
       </div>
       {footnote && <div className={commonStyles.footnote}>{footnote}</div>}
@@ -78,21 +90,21 @@ const Text = ({
 
 Text.propTypes = {
   className: PropTypes.string,
-  page: PropTypes.number.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
-  description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
-  required: PropTypes.bool,
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
     .isRequired,
-  value: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  footnote: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func,
   onSelect: PropTypes.func,
-  search: PropTypes.func,
-  warning: PropTypes.string,
+  page: PropTypes.number.isRequired,
   placeholder: PropTypes.string,
-  footnote: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  required: PropTypes.bool,
+  search: PropTypes.func,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+  value: PropTypes.string.isRequired,
+  warning: PropTypes.string,
 };
 
 export default Text;

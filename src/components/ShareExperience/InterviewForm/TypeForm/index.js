@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { last, contains, head, equals, reject } from 'ramda';
 import { useDispatch } from 'react-redux';
 import ReactGA from 'react-ga4';
-import ReactPixel from 'react-facebook-pixel';
 
 import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
 import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
 import SubmittableFormBuilder from '../../common/SubmittableFormBuilder';
 import { createInterviewExperience } from 'actions/experiences';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
+import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import {
   DATA_KEY_COMPANY_NAME,
   DATA_KEY_JOB_TITLE,
@@ -46,6 +45,7 @@ import {
 } from '../../questionCreators';
 import { sendEvent } from 'utils/hotjarUtil';
 import { getUserPseudoId } from 'utils/GAUtils';
+import rollbar from 'utils/rollbar';
 
 import { GA_MEASUREMENT_ID } from '../../../../config';
 import { tabType } from '../../../../constants/companyJobTitle';
@@ -154,20 +154,20 @@ const TypeForm = ({ open, onClose }) => {
         value: goalValue,
         label: experienceId,
       });
-      ReactPixel.track('Purchase', {
-        value: 1,
-        currency: 'TWD',
-        content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_INTERVIEW_EXPERIENCE,
-      });
     },
     [dispatch],
   );
 
-  const onSubmitError = useCallback(async () => {
+  const onSubmitError = useCallback(async error => {
     ReactGA.event({
       category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
       action: GA_ACTION.UPLOAD_FAIL,
     });
+    const errorCode = 'ER0008';
+    rollbar.error(
+      `[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal} ${error.message}`,
+      error,
+    );
   }, []);
 
   useEffect(() => {
@@ -196,8 +196,8 @@ const TypeForm = ({ open, onClose }) => {
 };
 
 TypeForm.propTypes = {
-  open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
 export default TypeForm;

@@ -61,21 +61,21 @@ export const OptionPropType = PropTypes.oneOfType([
 ]);
 
 SelectText.propTypes = {
-  page: PropTypes.number.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
-  description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
-  required: PropTypes.bool,
   defaultValue: PropTypes.arrayOf(ValuePropType).isRequired,
-  value: PropTypes.arrayOf(ValuePropType).isRequired,
+  description: PropTypes.string,
+  footnote: PropTypes.string,
+  hint: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  hint: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  warning: PropTypes.string,
-  placeholder: PropTypes.string,
-  suffix: PropTypes.string,
-  footnote: PropTypes.string,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
+  page: PropTypes.number.isRequired,
+  placeholder: PropTypes.string,
+  required: PropTypes.bool,
+  suffix: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+  value: PropTypes.arrayOf(ValuePropType).isRequired,
+  warning: PropTypes.string,
 };
 
 SelectText.defaultProps = {

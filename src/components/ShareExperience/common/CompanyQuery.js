@@ -83,8 +83,8 @@ CompanyQuery.propTypes = {
   companyQuery: PropTypes.string,
   onChange: PropTypes.func,
   onCompanyId: PropTypes.func,
-  validator: PropTypes.func,
   submitted: PropTypes.bool,
+  validator: PropTypes.func,
 };
 
 CompanyQuery.defaultProps = {

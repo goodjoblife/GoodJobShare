@@ -14,9 +14,9 @@ const LaborRightsEntry = ({ link, title, coverUrl }) => (
 );
 
 LaborRightsEntry.propTypes = {
+  coverUrl: PropTypes.string,
   link: PropTypes.string,
   title: PropTypes.string,
-  coverUrl: PropTypes.string,
 };
 
 export default LaborRightsEntry;

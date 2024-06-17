@@ -1,17 +1,23 @@
 import { isGraphqlError } from 'utils/errors';
-
-import STATUS, { isFetching, isFetched } from 'constants/status';
+import STATUS from 'constants/status';
+import {
+  isFetching,
+  isFetched,
+  toFetching,
+  getFetched,
+  getError,
+} from 'utils/fetchBox';
 import {
   companyStatus as companyStatusSelector,
-  companyNamesStatus as companyNamesStatusSelector,
+  companyIndexesBoxSelectorAtPage,
+  companyOverviewBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
-import {
-  getCompany as getCompanyApi,
-  getCompanyNames as getCompanyNamesApi,
-} from 'apis/company';
+import { getCompany as getCompanyApi, queryCompaniesApi } from 'apis/company';
 
 export const SET_STATUS = '@@company/SET_STATUS';
-export const SET_INDEX_STATUS = '@@company/SET_INDEX_STATUS';
+export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
+export const SET_INDEX = '@@COMPANY/SET_INDEX';
+export const SET_INDEX_COUNT = '@@COMPANY/SET_INDEX_COUNT';
 
 const setStatus = (companyName, status, data = null, error = null) => ({
   type: SET_STATUS,
@@ -23,7 +29,7 @@ const setStatus = (companyName, status, data = null, error = null) => ({
 
 export const fetchCompany = companyName => (dispatch, getState) => {
   const status = companyStatusSelector(companyName)(getState());
-  if (isFetching(status) || isFetched(status)) {
+  if (status === STATUS.FETCHING || status === STATUS.FETCHED) {
     return;
   }
 
@@ -43,33 +49,93 @@ export const fetchCompany = companyName => (dispatch, getState) => {
     });
 };
 
-const setIndexStatus = (status, data = null, error = null) => ({
-  type: SET_INDEX_STATUS,
-  status,
-  data,
-  error,
+const setIndex = (page, box) => ({
+  type: SET_INDEX,
+  page,
+  box,
 });
 
-export const fetchCompanyNames = () => async (dispatch, getState) => {
-  const status = companyNamesStatusSelector(getState());
-  if (isFetching(status) || isFetched(status)) {
+const setIndexCount = box => ({
+  type: SET_INDEX_COUNT,
+  box,
+});
+
+export const fetchCompanyNames = ({ page, pageSize }) => async (
+  dispatch,
+  getState,
+) => {
+  const box = companyIndexesBoxSelectorAtPage(page)(getState());
+  if (isFetching(box) || isFetched(box)) {
     return;
   }
 
-  dispatch(setIndexStatus(STATUS.FETCHING));
+  dispatch(setIndex(page, toFetching()));
+  dispatch(setIndexCount(toFetching()));
+
   try {
-    const companyNames = await getCompanyNamesApi();
-    dispatch(setIndexStatus(STATUS.FETCHED, companyNames));
+    const data = await queryCompaniesApi({
+      start: (page - 1) * pageSize,
+      limit: pageSize,
+    });
+    dispatch(setIndex(page, getFetched(data.companiesHavingData)));
+    dispatch(setIndexCount(getFetched(data.companiesHavingDataCount)));
   } catch (error) {
     if (isGraphqlError(error)) {
-      dispatch(setIndexStatus(STATUS.ERROR, null, error));
-    } else {
-      throw error;
+      return dispatch(setIndex(page, getError(error)));
     }
+    throw error;
   }
 };
 
-export default {
-  fetchCompany,
-  fetchCompanyNames,
+const SALARY_WORK_TIMES_LIMIT = 5;
+const WORK_EXPERIENCES_LIMIT = 3;
+const INTERVIEW_EXPERIENCES_LIMIT = 3;
+
+const setOverview = (companyName, box) => ({
+  type: SET_OVERVIEW,
+  companyName,
+  box,
+});
+
+export const queryCompanyOverview = companyName => async (
+  dispatch,
+  getState,
+) => {
+  const box = companyOverviewBoxSelectorByName(companyName)(getState());
+  if (isFetching(box) || isFetched(box)) {
+    return;
+  }
+
+  dispatch(setOverview(companyName, toFetching()));
+
+  try {
+    // TODO: rewrite to use api with pagination
+    const data = await getCompanyApi(companyName);
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setOverview(companyName, getFetched(data)));
+    }
+
+    const overviewData = {
+      name: data.name,
+      salaryWorkTimes: data.salary_work_times.slice(0, SALARY_WORK_TIMES_LIMIT),
+      salaryWorkTimesCount: data.salary_work_times.length,
+      salary_work_time_statistics: data.salary_work_time_statistics,
+      interviewExperiences: data.interview_experiences.slice(
+        0,
+        INTERVIEW_EXPERIENCES_LIMIT,
+      ),
+      interviewExperiencesCount: data.interview_experiences.length,
+      workExperiences: data.work_experiences.slice(0, WORK_EXPERIENCES_LIMIT),
+      workExperiencesCount: data.work_experiences.length,
+    };
+
+    dispatch(setOverview(companyName, getFetched(overviewData)));
+  } catch (error) {
+    if (isGraphqlError(error)) {
+      dispatch(setOverview(companyName, getError(error)));
+    }
+    throw error;
+  }
 };

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import ReactGA from 'react-ga4';
-import ReactPixel from 'react-facebook-pixel';
 
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
@@ -39,17 +39,18 @@ import {
   DATA_KEY_HAS_OVERTIME_SALARY,
   DATA_KEY_HAS_COMPENSATORY_DAYOFF,
 } from '../constants';
+import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 
 import { evolve } from '../utils';
-import { tabType } from 'constants/companyJobTitle';
+import { generateTabURL, pageType, tabType } from 'constants/companyJobTitle';
 
 import { createSalaryWorkTime } from 'actions/timeAndSalary';
 import { transferKeyToSnakecase } from 'utils/objectUtil';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 
 import { sendEvent } from 'utils/hotjarUtil';
 import { getUserPseudoId } from 'utils/GAUtils';
+import rollbar from 'utils/rollbar';
 
 import { GA_MEASUREMENT_ID } from '../../../config';
 
@@ -152,14 +153,10 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
           : GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
         action: GA_ACTION.UPLOAD_SUCCESS,
       });
-      ReactPixel.track('Purchase', {
-        value: 1,
-        currency: 'TWD',
-        content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_TIME_AND_SALARY,
-      });
     },
     [dispatch, hideProgressBar],
   );
+
   const onSubmitError = useCallback(
     async error => {
       ReactGA.event({
@@ -168,6 +165,11 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
           : GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
         action: GA_ACTION.UPLOAD_FAIL,
       });
+      const errorCode = 'ER0007';
+      rollbar.error(
+        `[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal} ${error.message}`,
+        error,
+      );
     },
     [hideProgressBar],
   );
@@ -180,10 +182,22 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
       onSubmit={onSubmit}
       onSubmitError={onSubmitError}
       onClose={onClose}
-      redirectPathnameOnSuccess="/salary-work-times/latest"
+      redirectPathnameOnSuccess={draft =>
+        generateTabURL({
+          pageType: pageType.COMPANY,
+          pageName: draft[DATA_KEY_COMPANY_NAME],
+          tabType: tabType.TIME_AND_SALARY,
+        })
+      }
       hideProgressBar={hideProgressBar}
     />
   );
+};
+
+TypeForm.propTypes = {
+  hideProgressBar: PropTypes.bool,
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
 export default TypeForm;

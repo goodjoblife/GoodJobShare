@@ -2,7 +2,7 @@ import R from 'ramda';
 import graphqlClient from 'utils/graphqlClient';
 import {
   getJobTitleQuery,
-  getJobTitlesHavingDataQuery,
+  queryJobTitlesHavingDataGql,
 } from 'graphql/jobTitle';
 
 export const getJobTitle = jobTitle =>
@@ -11,7 +11,8 @@ export const getJobTitle = jobTitle =>
     variables: { jobTitle },
   }).then(R.prop('job_title'));
 
-export const getJobTitles = () =>
-  graphqlClient({ query: getJobTitlesHavingDataQuery })
-    .then(R.prop('job_titles_having_data'))
-    .then(R.map(R.prop('name')));
+export const queryJobTitlesApi = ({ start, limit }) =>
+  graphqlClient({
+    query: queryJobTitlesHavingDataGql,
+    variables: { start, limit },
+  });

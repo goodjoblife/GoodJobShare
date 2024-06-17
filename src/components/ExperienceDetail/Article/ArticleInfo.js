@@ -96,6 +96,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
 
 InterviewInfoBlocks.propTypes = {
   experience: PropTypes.object.isRequired,
+  hideContent: PropTypes.bool,
 };
 
 const WorkInfoBlocks = ({ experience, hideContent }) => {
@@ -144,6 +145,7 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
 
 WorkInfoBlocks.propTypes = {
   experience: PropTypes.object.isRequired,
+  hideContent: PropTypes.bool,
 };
 
 const InternBlocks = ({ experience, hideContent }) => (
@@ -190,6 +192,7 @@ const InternBlocks = ({ experience, hideContent }) => (
 
 InternBlocks.propTypes = {
   experience: PropTypes.object.isRequired,
+  hideContent: PropTypes.bool,
 };
 
 const Aside = ({ experience, hideContent }) => {
@@ -220,6 +223,7 @@ const Aside = ({ experience, hideContent }) => {
 
 Aside.propTypes = {
   experience: PropTypes.object.isRequired,
+  hideContent: PropTypes.bool,
 };
 
 export default Aside;

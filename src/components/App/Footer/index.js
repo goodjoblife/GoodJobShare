@@ -11,8 +11,6 @@ import { openModal } from 'actions/questionnaireExpandedModal';
 import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey';
 
 const link1 = [
-  { to: '/salary-work-times/latest', text: '薪資工時' },
-  { to: '/experiences/search', text: '職場經驗' },
   { to: '/labor-rights', text: '勞工法令懶人包' },
   { to: 'https://media.goodjob.life', text: '部落格' },
 ];

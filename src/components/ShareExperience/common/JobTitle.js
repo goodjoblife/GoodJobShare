@@ -84,8 +84,8 @@ JobTitle.propTypes = {
   inputTitle: PropTypes.string,
   jobTitle: PropTypes.string,
   onChange: PropTypes.func,
-  validator: PropTypes.func,
   submitted: PropTypes.bool,
+  validator: PropTypes.func,
 };
 
 JobTitle.defaultProps = {

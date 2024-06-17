@@ -22,6 +22,7 @@ const SubmittableTypeForm = ({
 }) => {
   const history = useHistory();
   const [submitStatus, setSubmitStatus] = useState('unsubmitted');
+  const [submittedDraft, setSubmittedDraft] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = useCallback(
     async draft => {
@@ -31,6 +32,7 @@ const SubmittableTypeForm = ({
         }
         setSubmitStatus('submitting');
         await onSubmit(draft);
+        setSubmittedDraft(draft);
         setSubmitStatus('success');
       } catch (error) {
         setErrorMessage(error.message);
@@ -52,9 +54,11 @@ const SubmittableTypeForm = ({
     setSubmitStatus('unsubmitted');
     onClose();
     if (typeof window !== 'undefined' && redirectPathnameOnSuccess) {
-      window.location.replace(redirectPathnameOnSuccess);
+      let pathname = redirectPathnameOnSuccess;
+      if (typeof pathname === 'function') pathname = pathname(submittedDraft);
+      window.location.replace(pathname);
     }
-  }, [onClose, redirectPathnameOnSuccess]);
+  }, [onClose, redirectPathnameOnSuccess, submittedDraft]);
 
   const onResume = useCallback(() => {
     setSubmitStatus('unsubmitted');
@@ -115,13 +119,17 @@ const SubmittableTypeForm = ({
 };
 
 SubmittableTypeForm.propTypes = {
-  open: PropTypes.bool.isRequired,
-  questions: PropTypes.arrayOf(QuestionPropType).isRequired,
   header: PageEndPropType,
+  hideProgressBar: PropTypes.bool,
+  onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onSubmitError: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-  redirectPathnameOnSuccess: PropTypes.string,
+  open: PropTypes.bool.isRequired,
+  questions: PropTypes.arrayOf(QuestionPropType).isRequired,
+  redirectPathnameOnSuccess: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
 };
 
 export default SubmittableTypeForm;

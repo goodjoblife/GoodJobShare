@@ -76,17 +76,17 @@ const Rating = ({
 };
 
 Rating.propTypes = {
-  page: PropTypes.number.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
-  description: PropTypes.string,
   dataKey: PropTypes.string.isRequired,
-  required: PropTypes.bool,
   defaultValue: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
+  description: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func,
-  warning: PropTypes.string,
+  page: PropTypes.number.isRequired,
   ratingLabels: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  required: PropTypes.bool,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+  value: PropTypes.number.isRequired,
+  warning: PropTypes.string,
 };
 
 Rating.defaultProps = {

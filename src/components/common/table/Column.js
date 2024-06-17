@@ -10,10 +10,10 @@ const Column = ({ children, title, className, alignRight }) => (
 );
 
 Column.propTypes = {
-  children: PropTypes.node,
-  title: PropTypes.string,
-  className: PropTypes.string,
   alignRight: PropTypes.bool,
+  children: PropTypes.node,
+  className: PropTypes.string,
+  title: PropTypes.string,
 };
 
 Column.defaultProps = {

@@ -1,6 +1,5 @@
-import React, { Fragment, useCallback, useMemo } from 'react';
+import React, { Fragment } from 'react';
 import Helmet from 'react-helmet';
-import { useLocation } from 'react-router';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import Pagination from 'common/Pagination';
@@ -12,24 +11,11 @@ import {
   generateIndexURL,
 } from 'constants/companyJobTitle';
 import styles from './CompanyAndJobTitleIndex.module.css';
-import { isFetched } from 'constants/status';
+import { isFetched } from 'utils/fetchBox';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
 
 const PAGE_SIZE = 10;
-
-const usePagination = () => {
-  const location = useLocation();
-  const query = useMemo(
-    () => qs.parse(location.search, { ignoreQueryPrefix: true }),
-    [location.search],
-  );
-  const getPageLink = useCallback(
-    p => qs.stringify({ ...query, p }, { addQueryPrefix: true }),
-    [query],
-  );
-  return [Number(query.p || 1), getPageLink];
-};
 
 const IndexHelmet = ({ pageType, page }) => {
   const title = `所有${pageTypeTranslation[pageType]}資料 - 第${page}頁`;
@@ -52,10 +38,19 @@ const IndexHelmet = ({ pageType, page }) => {
   );
 };
 
-const CompanyAndJobTitleIndex = ({ pageType, status, pageNames }) => {
-  const [page, getPageLink] = usePagination();
+IndexHelmet.propTypes = {
+  page: PropTypes.number.isRequired,
+  pageType: PropTypes.string.isRequired,
+};
 
-  if (!isFetched(status)) {
+const CompanyAndJobTitleIndex = ({
+  pageType,
+  totalCount,
+  indexesBox,
+  page,
+  getPageLink,
+}) => {
+  if (!isFetched(indexesBox)) {
     return <Loader />;
   }
 
@@ -67,19 +62,19 @@ const CompanyAndJobTitleIndex = ({ pageType, status, pageNames }) => {
           所有{pageTypeTranslation[pageType]}資料 - 第 {page} 頁
         </div>
         <div className={styles.index}>
-          {pageNames
-            .slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
-            .map(pageName => (
-              <WorkingHourBlock
-                key={pageName}
-                pageType={pageType}
-                name={pageName}
-                to={generatePageURL({ pageType, pageName })}
-              />
-            ))}
+          {indexesBox.data.map((pageIndex, i) => (
+            <WorkingHourBlock
+              key={i}
+              pageType={pageType}
+              name={pageIndex.name}
+              businessNumber={pageIndex.businessNumber}
+              dataCount={pageIndex.dataCount}
+              to={generatePageURL({ pageType, pageName: pageIndex.name })}
+            />
+          ))}
         </div>
         <Pagination
-          totalCount={pageNames.length}
+          totalCount={totalCount}
           unit={PAGE_SIZE}
           currentPage={page}
           createPageLinkTo={getPageLink}
@@ -90,9 +85,20 @@ const CompanyAndJobTitleIndex = ({ pageType, status, pageNames }) => {
 };
 
 CompanyAndJobTitleIndex.propTypes = {
+  getPageLink: PropTypes.func.isRequired,
+  indexesBox: PropTypes.shape({
+    status: PropTypes.string.isRequired,
+    data: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      }),
+    ),
+    error: PropTypes.any,
+  }),
+  // pagination usage
+  page: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  pageNames: PropTypes.arrayOf(PropTypes.string),
+  totalCount: PropTypes.number.isRequired,
 };
 
 export default CompanyAndJobTitleIndex;

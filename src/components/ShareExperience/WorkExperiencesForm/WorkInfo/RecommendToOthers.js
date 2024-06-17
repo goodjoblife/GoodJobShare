@@ -47,8 +47,8 @@ const RecommendToOthers = ({ recommendToOthers, onChange }) => (
 );
 
 RecommendToOthers.propTypes = {
-  recommendToOthers: PropTypes.string,
   onChange: PropTypes.func,
+  recommendToOthers: PropTypes.string,
 };
 
 export default RecommendToOthers;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Checked from 'common/icons/Checked';
 import Close from 'common/icons/Close';
 import Exclamation from 'common/icons/Exclamation';
@@ -16,6 +17,10 @@ const NotificationIcon = ({ type }) => {
   } else {
     return <Close className={styles.icon} style={{ fill: iconColor }} />;
   }
+};
+
+NotificationIcon.propTypes = {
+  type: PropTypes.oneOf(Object.values(NOTIFICATION_TYPE)).isRequired,
 };
 
 export default NotificationIcon;

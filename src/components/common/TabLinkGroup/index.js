@@ -29,6 +29,7 @@ const TabLinkGroup = ({ className, options, style }) => (
 );
 
 TabLinkGroup.propTypes = {
+  className: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
@@ -43,6 +44,7 @@ TabLinkGroup.propTypes = {
       ]),
     }),
   ),
+  style: PropTypes.object,
 };
 
 export default TabLinkGroup;

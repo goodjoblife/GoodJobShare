@@ -13,9 +13,9 @@ const RoundCard = ({ children, className, checked, ...props }) => (
 );
 
 RoundCard.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node,
   checked: PropTypes.bool,
+  children: PropTypes.node,
+  className: PropTypes.string,
 };
 
 export default RoundCard;

@@ -1,18 +1,21 @@
 import React, { useCallback, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import R from 'ramda';
-import { withProps, compose, setStatic } from 'recompose';
 import { useSelector, useDispatch } from 'react-redux';
 import { generatePath } from 'react-router';
 import { Switch, Route } from 'react-router-dom';
-import Overview from '../CompanyAndJobTitle/Overview';
 import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
 import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
 import NotFound from 'common/NotFound';
 import Redirect from 'common/routing/Redirect';
+import { paramsSelector } from 'common/routing/selectors';
 import usePermission from 'hooks/usePermission';
-import { tabType, pageType } from 'constants/companyJobTitle';
+import { usePage } from 'hooks/routing/page';
+import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import {
+  companySalaryWorkTimesPath,
+  companyInterviewExperiencesPath,
+  companyWorkExperiencesPath,
+} from 'constants/linkTo';
 import { fetchCompany } from 'actions/company';
 import {
   interviewExperiences,
@@ -25,17 +28,13 @@ import {
   status,
   company as companySelector,
 } from 'selectors/companyAndJobTitle';
-import { paramsSelector } from 'common/routing/selectors';
-import withRouteParameter from '../ExperienceSearch/withRouteParameter';
+import { usePageName, pageNameSelector } from './usePageName';
 
-const getCompanyNameFromParams = R.compose(
-  decodeURIComponent,
-  params => params.companyName,
-  paramsSelector,
-);
-
-const CompanyPageProvider = ({ pageType, pageName, page }) => {
+const CompanyPageProvider = () => {
   const dispatch = useDispatch();
+  const pageType = PAGE_TYPE.COMPANY;
+  const pageName = usePageName();
+  const page = usePage();
 
   useEffect(() => {
     dispatch(fetchCompany(pageName));
@@ -66,32 +65,18 @@ const CompanyPageProvider = ({ pageType, pageName, page }) => {
 
   return (
     <Switch>
-      <Route
-        path="/companies/:companyName"
-        exact
-        render={() => (
-          <Overview
-            {...data}
-            pageType={pageType}
-            pageName={pageName}
-            page={page}
-            canView={canView}
-            tabType={tabType.OVERVIEW}
-          />
-        )}
-      />
       {/* 相容舊網址 */}
       <Route
         path="/companies/:companyName/overview"
         exact
         render={({ match: { params } }) => {
-          const companyName = decodeURIComponent(params.companyName);
+          const companyName = pageNameSelector(params);
           const path = generatePath('/companies/:companyName', { companyName });
           return <Redirect to={path} />;
         }}
       />
       <Route
-        path="/companies/:companyName/salary-work-times"
+        path={companySalaryWorkTimesPath}
         exact
         render={() => (
           <CompanyJobTitleTimeAndSalary
@@ -105,7 +90,7 @@ const CompanyPageProvider = ({ pageType, pageName, page }) => {
         )}
       />
       <Route
-        path="/companies/:companyName/interview-experiences"
+        path={companyInterviewExperiencesPath}
         exact
         render={() => (
           <InterviewExperiences
@@ -119,7 +104,7 @@ const CompanyPageProvider = ({ pageType, pageName, page }) => {
         )}
       />
       <Route
-        path="/companies/:companyName/work-experiences"
+        path={companyWorkExperiencesPath}
         exact
         render={() => (
           <WorkExperiences
@@ -137,24 +122,10 @@ const CompanyPageProvider = ({ pageType, pageName, page }) => {
   );
 };
 
-CompanyPageProvider.propTypes = {
-  pageType: PropTypes.string.isRequired,
-  pageName: PropTypes.string.isRequired,
-  page: PropTypes.number.isRequired,
+CompanyPageProvider.fetchData = ({ store: { dispatch }, ...props }) => {
+  const params = paramsSelector(props);
+  const pageName = pageNameSelector(params);
+  return dispatch(fetchCompany(pageName));
 };
 
-const ssr = setStatic('fetchData', ({ store: { dispatch }, ...props }) => {
-  const companyName = getCompanyNameFromParams(props);
-  return dispatch(fetchCompany(companyName));
-});
-
-const enhance = compose(
-  ssr,
-  withRouteParameter,
-  withProps(props => ({
-    pageType: pageType.COMPANY,
-    pageName: getCompanyNameFromParams(props),
-  })),
-);
-
-export default enhance(CompanyPageProvider);
+export default CompanyPageProvider;

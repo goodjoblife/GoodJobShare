@@ -2,20 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Switch } from 'react-router';
-import { compose } from 'recompose';
 import Wrapper from 'common/base/Wrapper';
 import { pathnameSelector } from 'common/routing/selectors';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
-import InfoTimeModal from './common/InfoTimeModal';
-import InfoSalaryModal from './common/InfoSalaryModal';
-import withModal from './common/withModal';
 import { IMG_HOST, SITE_NAME } from 'constants/helmetData';
 
 class TimeAndSalary extends Component {
   static propTypes = {
-    routes: PropTypes.array,
     location: PropTypes.shape({
       pathname: PropTypes.string,
     }),
@@ -24,25 +19,8 @@ class TimeAndSalary extends Component {
         keyword: PropTypes.string,
       }),
     }),
+    routes: PropTypes.array,
     staticContext: PropTypes.object,
-    infoSalaryModal: PropTypes.shape({
-      isOpen: PropTypes.bool.isRequired,
-      setIsOpen: PropTypes.func.isRequired,
-    }).isRequired,
-    infoTimeModal: PropTypes.shape({
-      isOpen: PropTypes.bool.isRequired,
-      setIsOpen: PropTypes.func.isRequired,
-    }).isRequired,
-  };
-
-  toggleInfoSalaryModal = () => {
-    const { infoSalaryModal } = this.props;
-    infoSalaryModal.setIsOpen(!infoSalaryModal.isOpen);
-  };
-
-  toggleInfoTimeModal = () => {
-    const { infoTimeModal } = this.props;
-    infoTimeModal.setIsOpen(!infoTimeModal.isOpen);
   };
 
   renderHelmet = () => {
@@ -76,14 +54,6 @@ class TimeAndSalary extends Component {
     return (
       <div className={styles.container}>
         {this.renderHelmet()}
-        <InfoSalaryModal
-          isOpen={this.props.infoSalaryModal.isOpen}
-          close={this.toggleInfoSalaryModal}
-        />
-        <InfoTimeModal
-          isOpen={this.props.infoTimeModal.isOpen}
-          close={this.toggleInfoTimeModal}
-        />
         <Wrapper size="l" className={styles.subRouteWrapper}>
           <Switch>
             {routes.map((route, i) => (
@@ -96,9 +66,4 @@ class TimeAndSalary extends Component {
   }
 }
 
-const hoc = compose(
-  withModal('infoSalaryModal'),
-  withModal('infoTimeModal'),
-);
-
-export default hoc(TimeAndSalary);
+export default TimeAndSalary;

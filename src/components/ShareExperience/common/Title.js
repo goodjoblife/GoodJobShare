@@ -19,11 +19,11 @@ const Title = ({ title, onChange, placeholder, validator, submitted }) => (
 );
 
 Title.propTypes = {
-  title: PropTypes.string,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
-  validator: PropTypes.func,
   submitted: PropTypes.bool,
+  title: PropTypes.string,
+  validator: PropTypes.func,
 };
 
 export default Title;

@@ -1,5 +1,6 @@
 import R from 'ramda';
 import STATUS from 'constants/status';
+import { getUnfetched, isFetched } from 'utils/fetchBox';
 
 export const status = R.compose(
   R.defaultTo(STATUS.UNFETCHED),
@@ -7,6 +8,11 @@ export const status = R.compose(
 );
 
 const data = state => state.data;
+
+export const name = R.pipe(
+  data,
+  R.when(R.is(Object), R.prop('name')),
+);
 
 export const interviewExperiences = R.pipe(
   data,
@@ -82,26 +88,28 @@ export const jobTitleStatus = jobTitleName =>
     jobTitle(jobTitleName),
   );
 
-const companyIndex = R.prop('companyIndex');
+export const companyIndexesBoxSelectorAtPage = page => state => {
+  return state.companyIndex.indexesByPage[page] || getUnfetched();
+};
 
-export const companyNamesStatus = R.compose(
-  status,
-  companyIndex,
-);
+export const companiesCountSelector = state => {
+  const indexCountBox = state.companyIndex.indexCountBox;
+  return isFetched(indexCountBox) ? indexCountBox.data : 0;
+};
 
-export const companyNames = R.compose(
-  data,
-  companyIndex,
-);
+export const companyOverviewBoxSelectorByName = companyName => state => {
+  return state.companyIndex.overviewByName[companyName] || getUnfetched();
+};
 
-const jobTitleIndex = R.prop('jobTitleIndex');
+export const jobTitleIndexesBoxSelectorAtPage = page => state => {
+  return state.jobTitleIndex.indexesByPage[page] || getUnfetched();
+};
 
-export const jobTitlesStatus = R.compose(
-  status,
-  jobTitleIndex,
-);
+export const jobTitlesCountSelector = state => {
+  const indexCountBox = state.jobTitleIndex.indexCountBox;
+  return isFetched(indexCountBox) ? indexCountBox.data : 0;
+};
 
-export const jobTitles = R.compose(
-  data,
-  jobTitleIndex,
-);
+export const jobTitleOverviewBoxSelectorByName = jobTitle => state => {
+  return state.jobTitleIndex.overviewByName[jobTitle] || getUnfetched();
+};

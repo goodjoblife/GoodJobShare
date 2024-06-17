@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import R from 'ramda';
-import ReactPixel from 'react-facebook-pixel';
 import { withRouter } from 'react-router-dom';
 
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
@@ -10,8 +9,6 @@ import Magnifiner from 'common/icons/Magnifiner';
 
 import styles from './SearchBar.module.css';
 import { searchKeywordSelector } from './common/selectors';
-
-import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 
 const getInitialSearchTextFromLocation = R.compose(
   R.defaultTo(''),
@@ -26,10 +23,6 @@ const SearchBar = ({ history, location }) => {
   const gotoSearchResult = useCallback(
     searchText => {
       history.push(`/search?q=${encodeURIComponent(searchText)}`);
-      ReactPixel.track('Search', {
-        search_string: searchText,
-        content_category: PIXEL_CONTENT_CATEGORY.SEARCH_TIME_AND_SALARY,
-      });
     },
     [history],
   );

@@ -18,10 +18,10 @@ const ChartWrapper = ({ className, title, to, children }) => (
 );
 
 ChartWrapper.propTypes = {
+  children: PropTypes.node,
   className: PropTypes.string,
   title: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
-  children: PropTypes.node,
 };
 
 export default ChartWrapper;

@@ -37,8 +37,8 @@ const PaymentResult = ({ paymentRecordBox, paymentRecordId }) => {
 };
 
 PaymentResult.propTypes = {
-  paymentRecordId: PropTypes.string,
   paymentRecordBox: fetchBoxPropType,
+  paymentRecordId: PropTypes.string,
 };
 
 PaymentResult.defaultProps = {

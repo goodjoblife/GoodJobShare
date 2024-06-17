@@ -1,5 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import PropTypes from 'prop-types';
 import { generatePath } from 'react-router';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
@@ -7,9 +8,9 @@ import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
 // if length of given array > 0, return `${array length}${unit}`
 // otherwise return defaultStr
-const formatDataCount = (data, unit, defaultStr) => {
-  if (data && typeof Array.isArray(data) && data.length > 0) {
-    return `${data.length}${unit}`;
+const formatDataCount = (dataCount, unit, defaultStr) => {
+  if (dataCount > 0) {
+    return `${dataCount}${unit}`;
   } else {
     return defaultStr;
   }
@@ -20,21 +21,21 @@ const formatKeyword = name =>
 
 const CompanyOverviewHelmet = ({
   companyName,
-  salaryWorkTimes,
-  interviewExperiences,
-  workExperiences,
+  salaryWorkTimesCount,
+  interviewExperiencesCount,
+  workExperiencesCount,
 }) => {
   // title
   const title = `${companyName} 總覽`;
 
   // description
-  const salaryWorkTimesStr = formatDataCount(salaryWorkTimes, '筆', '');
+  const salaryWorkTimesStr = formatDataCount(salaryWorkTimesCount, '筆', '');
   const interviewExperiencesStr = formatDataCount(
-    interviewExperiences,
+    interviewExperiencesCount,
     '篇',
     '',
   );
-  const workExperiencesStr = formatDataCount(workExperiences, '篇', '');
+  const workExperiencesStr = formatDataCount(workExperiencesCount, '篇', '');
   const description = `查看由${companyName}內部員工分享的${salaryWorkTimesStr}薪水及加班數據、${workExperiencesStr}工作心得，以及由面試者分享的${interviewExperiencesStr}面試經驗。`;
 
   const path = generatePath('/companies/:companyName', { companyName });
@@ -55,23 +56,30 @@ const CompanyOverviewHelmet = ({
   );
 };
 
+CompanyOverviewHelmet.propTypes = {
+  companyName: PropTypes.string.isRequired,
+  interviewExperiencesCount: PropTypes.number.isRequired,
+  salaryWorkTimesCount: PropTypes.number.isRequired,
+  workExperiencesCount: PropTypes.number.isRequired,
+};
+
 const JobTitleOverviewHelmet = ({
   jobTitle,
-  salaryWorkTimes,
-  interviewExperiences,
-  workExperiences,
+  salaryWorkTimesCount,
+  interviewExperiencesCount,
+  workExperiencesCount,
 }) => {
   // title
   const title = `${jobTitle} 總覽`;
 
   // description
-  const salaryWorkTimesStr = formatDataCount(salaryWorkTimes, '筆', '');
+  const salaryWorkTimesStr = formatDataCount(salaryWorkTimesCount, '筆', '');
   const interviewExperiencesStr = formatDataCount(
-    interviewExperiences,
+    interviewExperiencesCount,
     '篇',
     '',
   );
-  const workExperiencesStr = formatDataCount(workExperiences, '篇', '');
+  const workExperiencesStr = formatDataCount(workExperiencesCount, '篇', '');
   const description = `查看由${jobTitle}分享的${salaryWorkTimesStr}薪水及加班數據、${workExperiencesStr}工作心得，以及由面試者分享的${interviewExperiencesStr}面試經驗。`;
 
   const path = generatePath('/job-titles/:jobTitle', { jobTitle });
@@ -92,7 +100,14 @@ const JobTitleOverviewHelmet = ({
   );
 };
 
-export default props => {
+JobTitleOverviewHelmet.propTypes = {
+  interviewExperiencesCount: PropTypes.number.isRequired,
+  jobTitle: PropTypes.string.isRequired,
+  salaryWorkTimesCount: PropTypes.number.isRequired,
+  workExperiencesCount: PropTypes.number.isRequired,
+};
+
+const OverviewHelmet = props => {
   if (props.pageType === PAGE_TYPE.JOB_TITLE) {
     return <JobTitleOverviewHelmet {...props} jobTitle={props.pageName} />;
   } else if (props.pageType === PAGE_TYPE.COMPANY) {
@@ -101,3 +116,10 @@ export default props => {
     return null;
   }
 };
+
+OverviewHelmet.propTypes = {
+  pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
+};
+
+export default OverviewHelmet;

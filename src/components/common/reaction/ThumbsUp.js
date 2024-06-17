@@ -12,10 +12,10 @@ const ThumbsUp = ({ onClick, toggled, ...restProps }) => (
 );
 
 ThumbsUp.propTypes = {
-  label: PropTypes.string,
   count: PropTypes.number,
-  toggled: PropTypes.bool,
+  label: PropTypes.string,
   onClick: PropTypes.func,
+  toggled: PropTypes.bool,
 };
 
 export default ThumbsUp;

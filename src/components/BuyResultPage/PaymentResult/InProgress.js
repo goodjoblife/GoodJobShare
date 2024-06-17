@@ -66,8 +66,8 @@ const InProgress = ({ paymentRecordId, fetchingStatus }) => {
 };
 
 InProgress.propTypes = {
-  paymentRecordId: PropTypes.string,
   fetchingStatus: PropTypes.oneOf(Object.values(fetchingStatusMap)),
+  paymentRecordId: PropTypes.string,
 };
 
 export default InProgress;

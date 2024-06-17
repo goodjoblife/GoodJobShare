@@ -25,6 +25,10 @@ const ExperienceEntry = props => {
   }
 };
 
+ExperienceEntry.propTypes = {
+  data: PropTypes.object.isRequired,
+};
+
 const LoadMoreButton = ({ ...props }) => (
   <Button
     circleSize="md"

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import StatusRenderer from '../StatusRenderer';
 import InterviewExperiencesSection from './InterviewExperiences';
-import Helmet from './Helmet';
+import InterviewExperienceHelmet from './Helmet';
 
 const InterviewExperiences = ({
   pageType,
@@ -21,7 +20,7 @@ const InterviewExperiences = ({
     tabType={tabType}
   >
     <StatusRenderer status={status}>
-      <Helmet
+      <InterviewExperienceHelmet
         pageType={pageType}
         pageName={pageName}
         interviewExperiences={interviewExperiences}
@@ -40,13 +39,13 @@ const InterviewExperiences = ({
 );
 
 InterviewExperiences.propTypes = {
-  pageType: PropTypes.string,
-  pageName: PropTypes.string,
-  tabType: PropTypes.string,
-  interviewExperiences: PropTypes.arrayOf(PropTypes.object),
-  status: PropTypes.string.isRequired,
-  page: PropTypes.number.isRequired,
   canView: PropTypes.bool.isRequired,
+  interviewExperiences: PropTypes.arrayOf(PropTypes.object),
+  page: PropTypes.number.isRequired,
+  pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  tabType: PropTypes.string.isRequired,
 };
 
 export default InterviewExperiences;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -15,6 +16,13 @@ const getFacebookFail = buttonClick => (
 
 const withSubmit = Component =>
   class extends React.PureComponent {
+    static propTypes = {
+      FB: PropTypes.object.isRequired,
+      auth: PropTypes.object.isRequired,
+      login: PropTypes.func.isRequired,
+      onSubmit: PropTypes.func.isRequired,
+    };
+
     state = {
       agree: false,
       isOpen: false,

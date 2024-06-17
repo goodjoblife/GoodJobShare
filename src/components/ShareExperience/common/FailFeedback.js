@@ -15,8 +15,8 @@ const FailFeedback = ({ info, buttonClick }) => (
 );
 
 FailFeedback.propTypes = {
-  info: PropTypes.string,
   buttonClick: PropTypes.func,
+  info: PropTypes.string,
 };
 
 export default FailFeedback;

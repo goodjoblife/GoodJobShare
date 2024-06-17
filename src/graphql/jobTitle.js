@@ -9,6 +9,7 @@ query($key:String!){
 export const getJobTitleQuery = `
 query($jobTitle: String!) {
   job_title(name: $jobTitle) {
+    name
     interview_experiences {
       id
       type
@@ -81,6 +82,7 @@ query($jobTitle: String!) {
       company {
         name
       }
+      originalCompanyName
       data_time {
         month
         year
@@ -126,10 +128,11 @@ query($jobTitle: String!) {
 }
 `;
 
-export const getJobTitlesHavingDataQuery = `
-{
-  job_titles_having_data {
-    name
+export const queryJobTitlesHavingDataGql = /* GraphQL */ `
+  query($start: Int!, $limit: Int!) {
+    jobTitlesHavingData(start: $start, limit: $limit) {
+      name
+    }
+    jobTitlesHavingDataCount
   }
-}
 `;

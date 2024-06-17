@@ -85,49 +85,6 @@ export default {
       <link rel="canonical" href={formatCanonicalPath('/share')} />
     </Helmet>
   ),
-  ShareInterview: () => (
-    <Helmet>
-      <title itemProp="name" lang="zh-TW">
-        面試心得分享
-      </title>
-      <meta
-        property="og:title"
-        content={formatTitle('面試心得分享', SITE_NAME)}
-      />
-      <meta
-        property="og:url"
-        content={formatCanonicalPath('/share/interview')}
-      />
-      <meta
-        property="og:image"
-        content={`${IMG_HOST}/og/share-interview.jpg`}
-      />
-      <link rel="canonical" href={formatCanonicalPath('/share/interview')} />
-    </Helmet>
-  ),
-  ShareSalaryWorkTime: () => (
-    <Helmet>
-      <title itemProp="name" lang="zh-TW">
-        薪水、加班狀況分享
-      </title>
-      <meta
-        property="og:title"
-        content={formatTitle('薪資工時分享', SITE_NAME)}
-      />
-      <meta
-        property="og:url"
-        content={formatCanonicalPath('/share/time-and-salary')}
-      />
-      <meta
-        property="og:image"
-        content={`${IMG_HOST}/og/share-time-and-salary.jpg`}
-      />
-      <link
-        rel="canonical"
-        href={formatCanonicalPath('/share/time-and-salary')}
-      />
-    </Helmet>
-  ),
   ShareWork: () => (
     <Helmet>
       <title itemProp="name" lang="zh-TW">

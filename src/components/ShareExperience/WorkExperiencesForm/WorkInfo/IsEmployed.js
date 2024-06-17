@@ -65,11 +65,11 @@ const IsEmployed = ({
 IsEmployed.propTypes = {
   idPrefix4Radio: PropTypes.string,
   isCurrentlyEmployed: PropTypes.string,
-  jobEndingTimeYear: PropTypes.number,
   jobEndingTimeMonth: PropTypes.number,
+  jobEndingTimeYear: PropTypes.number,
   onIsCurrentlyEmployed: PropTypes.func,
-  onJobEndingTimeYear: PropTypes.func,
   onJobEndingTimeMonth: PropTypes.func,
+  onJobEndingTimeYear: PropTypes.func,
 };
 
 export default IsEmployed;

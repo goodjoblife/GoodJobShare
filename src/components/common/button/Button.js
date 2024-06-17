@@ -83,13 +83,13 @@ const Button = ({
 };
 
 Button.propTypes = {
-  circleSize: PropTypes.string,
   btnStyle: PropTypes.string,
-  disabled: PropTypes.bool,
   children: PropTypes.node,
+  circleSize: PropTypes.string,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
   onClick: PropTypes.func,
   style: PropTypes.object,
-  className: PropTypes.string,
 };
 
 export default Button;

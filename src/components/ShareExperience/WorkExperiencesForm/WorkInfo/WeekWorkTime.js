@@ -48,8 +48,8 @@ const WeekWorkTime = ({ weekWorkTime, onChange }) => (
 );
 
 WeekWorkTime.propTypes = {
-  weekWorkTime: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onChange: PropTypes.func,
+  weekWorkTime: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default WeekWorkTime;

@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import { scroller } from 'react-scroll';
 import ReactGA from 'react-ga4';
-import ReactPixel from 'react-facebook-pixel';
 import qs from 'qs';
 import { Heading } from 'common/base';
 
@@ -27,7 +27,6 @@ import styles from './WorkExperiencesForm.module.css';
 import StaticHelmet from 'common/StaticHelmet';
 import { INVALID, WORK_FORM_ORDER } from 'constants/formElements';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import PIXEL_CONTENT_CATEGORY from 'constants/pixelConstants';
 
 import SuccessFeedback from '../common/SuccessFeedback';
 import FailFeedback from '../common/FailFeedback';
@@ -152,10 +151,6 @@ class WorkExperiencesForm extends React.Component {
       ...defaultState,
     });
 
-    ReactPixel.track('InitiateCheckout', {
-      content_category: PIXEL_CONTENT_CATEGORY.VISIT_WORK_EXPERIENCE_FORM,
-    });
-
     // send hotjar event for recording
     sendEvent('enter_work_form');
 
@@ -183,11 +178,6 @@ class WorkExperiencesForm extends React.Component {
           ReactGA.event({
             category: GA_CATEGORY.SHARE_WORK,
             action: GA_ACTION.UPLOAD_SUCCESS,
-          });
-          ReactPixel.track('Purchase', {
-            value: 1,
-            currency: 'TWD',
-            content_category: PIXEL_CONTENT_CATEGORY.UPLOAD_WORK_EXPERIENCE,
           });
 
           return () => (
@@ -369,5 +359,13 @@ class WorkExperiencesForm extends React.Component {
     );
   }
 }
+
+WorkExperiencesForm.propTypes = {
+  buttonClick: PropTypes.func,
+  createWorkExperience: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string,
+  }).isRequired,
+};
 
 export default WorkExperiencesForm;

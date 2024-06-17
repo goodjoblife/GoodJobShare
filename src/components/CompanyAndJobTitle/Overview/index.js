@@ -1,22 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import StatusRenderer from '../StatusRenderer';
+import EmptyView from '../EmptyView';
 import OverviewSection from './Overview';
 import Helmet from './Helmet';
+import NotFoundStatus from 'common/routing/NotFound';
 
 const Overview = ({
   pageType,
   pageName,
   tabType,
-  interviewExperiences,
-  workExperiences,
-  salaryWorkTimes,
-  salaryDistribution,
-  jobAverageSalaries,
-  averageWeekWorkTime,
-  overtimeFrequencyCount,
-  status,
+  overviewBox,
   page,
   canView,
 }) => (
@@ -25,46 +20,73 @@ const Overview = ({
     pageName={pageName}
     tabType={tabType}
   >
-    <StatusRenderer status={status}>
-      <Helmet
-        pageType={pageType}
-        pageName={pageName}
-        interviewExperiences={interviewExperiences}
-        workExperiences={workExperiences}
-        salaryWorkTimes={salaryWorkTimes}
-      />
-      <OverviewSection
-        pageType={pageType}
-        pageName={pageName}
-        tabType={tabType}
-        interviewExperiences={interviewExperiences}
-        workExperiences={workExperiences}
-        salaryWorkTimes={salaryWorkTimes}
-        salaryDistribution={salaryDistribution}
-        jobAverageSalaries={jobAverageSalaries}
-        averageWeekWorkTime={averageWeekWorkTime}
-        overtimeFrequencyCount={overtimeFrequencyCount}
-        page={page}
-        canView={canView}
-      />
-    </StatusRenderer>
+    <StatusRenderer
+      status={overviewBox.status}
+      render={() => {
+        const data = overviewBox.data;
+
+        if (data == null) {
+          return (
+            <NotFoundStatus status={404}>
+              <EmptyView pageName={pageName} />
+            </NotFoundStatus>
+          );
+        }
+
+        return (
+          <Fragment>
+            <Helmet
+              pageType={pageType}
+              pageName={pageName}
+              interviewExperiencesCount={data.interviewExperiencesCount}
+              workExperiencesCount={data.workExperiencesCount}
+              salaryWorkTimesCount={data.salaryWorkTimesCount}
+            />
+            <OverviewSection
+              pageType={pageType}
+              pageName={pageName}
+              interviewExperiences={data.interviewExperiences}
+              interviewExperiencesCount={data.interviewExperiencesCount}
+              workExperiences={data.workExperiences}
+              workExperiencesCount={data.workExperiencesCount}
+              salaryWorkTimes={data.salaryWorkTimes}
+              salaryWorkTimesCount={data.salaryWorkTimesCount}
+              salaryDistribution={data.salaryDistribution}
+              jobAverageSalaries={data.jobAverageSalaries}
+              averageWeekWorkTime={data.averageWeekWorkTime}
+              overtimeFrequencyCount={data.overtimeFrequencyCount}
+              page={page}
+              canView={canView}
+            />
+          </Fragment>
+        );
+      }}
+    ></StatusRenderer>
   </CompanyAndJobTitleWrapper>
 );
 
 Overview.propTypes = {
-  pageType: PropTypes.string,
-  pageName: PropTypes.string,
-  tabType: PropTypes.string,
-  interviewExperiences: PropTypes.arrayOf(PropTypes.object),
-  workExperiences: PropTypes.arrayOf(PropTypes.object),
-  salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
-  salaryDistribution: PropTypes.array,
-  jobAverageSalaries: PropTypes.array,
-  averageWeekWorkTime: PropTypes.number.isRequired,
-  overtimeFrequencyCount: PropTypes.object.isRequired,
-  status: PropTypes.string.isRequired,
-  page: PropTypes.number.isRequired,
   canView: PropTypes.bool.isRequired,
+  overviewBox: PropTypes.shape({
+    status: PropTypes.string.isRequired,
+    data: PropTypes.shape({
+      interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
+      interviewExperiencesCount: PropTypes.number.isRequired,
+      workExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
+      workExperiencesCount: PropTypes.number.isRequired,
+      salaryWorkTimes: PropTypes.arrayOf(PropTypes.object).isRequired,
+      salaryWorkTimesCount: PropTypes.number.isRequired,
+      salaryDistribution: PropTypes.array,
+      jobAverageSalaries: PropTypes.array,
+      averageWeekWorkTime: PropTypes.number.isRequired,
+      overtimeFrequencyCount: PropTypes.object.isRequired,
+    }),
+    error: PropTypes.any,
+  }).isRequired,
+  page: PropTypes.number.isRequired,
+  pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
+  tabType: PropTypes.string.isRequired,
 };
 
 export default Overview;

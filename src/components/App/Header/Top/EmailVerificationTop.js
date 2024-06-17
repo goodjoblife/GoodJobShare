@@ -14,7 +14,6 @@ import VerifyEmailForm from '../../../EmailVerification/VerifyEmailForm';
 
 const EmailVerificationTop = ({
   isSentVerificationEmail,
-  userName,
   userEmail,
   sendVerifyEmail,
 }) => {
@@ -57,8 +56,8 @@ const EmailVerificationTop = ({
 
 EmailVerificationTop.propTypes = {
   isSentVerificationEmail: PropTypes.bool,
-  userName: PropTypes.string,
   sendVerifyEmail: PropTypes.func,
+  userEmail: PropTypes.string,
 };
 
 const mapStateToProps = (state, ownProps) => ({

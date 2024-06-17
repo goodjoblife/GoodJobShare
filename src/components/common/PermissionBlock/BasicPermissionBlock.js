@@ -16,8 +16,8 @@ const BasicPermissionBlock = ({ rootClassName, to }) => {
 };
 
 BasicPermissionBlock.propTypes = {
-  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   rootClassName: PropTypes.string,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default BasicPermissionBlock;

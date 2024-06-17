@@ -6,7 +6,13 @@ import { Link } from 'react-router-dom';
 import styles from './WorkingHourBlock.module.css';
 import { pageTypeTranslation } from 'constants/companyJobTitle';
 
-const WorkingHourBlock = ({ pageType, name, to, dataCount }) => (
+const WorkingHourBlock = ({
+  pageType,
+  name,
+  businessNumber,
+  to,
+  dataCount,
+}) => (
   <section className={styles.container}>
     <Link className={styles.linkBlock} to={to}>
       <div className={styles.headingWrapper}>
@@ -17,6 +23,11 @@ const WorkingHourBlock = ({ pageType, name, to, dataCount }) => (
         </div>
         <Heading size="sm" className={styles.headingBlock}>
           {name}
+          {businessNumber && (
+            <span className={styles.businessNumber}>
+              （統編：{businessNumber}）
+            </span>
+          )}
         </Heading>
         {typeof dataCount !== 'undefined' && (
           <div className={styles.averageBlock}>
@@ -29,10 +40,11 @@ const WorkingHourBlock = ({ pageType, name, to, dataCount }) => (
 );
 
 WorkingHourBlock.propTypes = {
-  pageType: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
+  businessNumber: PropTypes.string,
   dataCount: PropTypes.number,
+  name: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
 };
 
 export default WorkingHourBlock;

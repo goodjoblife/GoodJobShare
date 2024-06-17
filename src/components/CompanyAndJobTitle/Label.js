@@ -14,9 +14,9 @@ const Label = ({ Icon, text, className }) => (
 );
 
 Label.propTypes = {
-  Icon: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
+  Icon: PropTypes.elementType.isRequired,
   className: PropTypes.string,
+  text: PropTypes.string.isRequired,
 };
 
 export default Label;

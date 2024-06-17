@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import PermissionContext from 'contexts/PermissionContext';
 
 class PermissionContextProvider extends Component {
@@ -22,5 +23,9 @@ class PermissionContextProvider extends Component {
     );
   }
 }
+
+PermissionContextProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default PermissionContextProvider;

@@ -89,14 +89,14 @@ const SubmitArea = ({
 
 SubmitArea.propTypes = {
   agree: PropTypes.bool.isRequired,
-  handleAgree: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  feedback: PropTypes.node,
-  hasClose: PropTypes.bool.isRequired,
   closableOnClickOutside: PropTypes.bool.isRequired,
+  feedback: PropTypes.node,
+  handleAgree: PropTypes.func.isRequired,
+  handleIsOpen: PropTypes.func.isRequired,
+  hasClose: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  handleIsOpen: PropTypes.func.isRequired,
 };
 
 export default SubmitArea;

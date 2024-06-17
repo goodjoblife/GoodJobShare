@@ -1,4 +1,5 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { useMeasure } from 'react-use';
 
@@ -41,6 +42,11 @@ const Scrollable = ({ children, className }) => {
       </div>
     </div>
   );
+};
+
+Scrollable.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
 };
 
 export default Scrollable;

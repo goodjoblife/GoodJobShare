@@ -43,10 +43,10 @@ const SummaryBlock = ({
 );
 
 SummaryBlock.propTypes = {
-  salaryDistribution: PropTypes.arrayOf(PropTypes.object),
-  jobAverageSalaries: PropTypes.arrayOf(PropTypes.object),
   averageWeekWorkTime: PropTypes.number.isRequired,
+  jobAverageSalaries: PropTypes.arrayOf(PropTypes.object),
   overtimeFrequencyCount: PropTypes.object.isRequired,
+  salaryDistribution: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default SummaryBlock;

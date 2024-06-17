@@ -50,13 +50,6 @@ class ButtonGroup extends React.PureComponent {
 }
 
 ButtonGroup.propTypes = {
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    ),
-  ]),
   onChange: PropTypes.func,
   options: PropTypes.arrayOf(
     PropTypes.shape({
@@ -64,6 +57,13 @@ ButtonGroup.propTypes = {
       label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     }),
   ),
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    ),
+  ]),
 };
 
 ButtonGroup.defaultProps = {

@@ -9,7 +9,3 @@ export const postWorkExperience = ({ body, token }) =>
       input: body,
     },
   });
-
-export default {
-  postWorkExperience,
-};

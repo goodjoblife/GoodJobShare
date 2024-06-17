@@ -74,10 +74,10 @@ const Pagination = ({ totalCount, unit, currentPage, createPageLinkTo }) => {
 };
 
 Pagination.propTypes = {
+  createPageLinkTo: PropTypes.func.isRequired,
+  currentPage: PropTypes.number,
   totalCount: PropTypes.number,
   unit: PropTypes.number,
-  currentPage: PropTypes.number,
-  createPageLinkTo: PropTypes.func.isRequired,
 };
 
 export default Pagination;
