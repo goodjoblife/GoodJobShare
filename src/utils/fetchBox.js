@@ -21,8 +21,8 @@ const initFetchBox = (
 
 export const fetchBoxPropType = PropTypes.shape({
   data: PropTypes.any,
-  status: PropTypes.oneOf(Object.values(fetchingStatus)),
   error: PropTypes.any,
+  status: PropTypes.oneOf(Object.values(fetchingStatus)),
 });
 
 const getStatus = prop('status');

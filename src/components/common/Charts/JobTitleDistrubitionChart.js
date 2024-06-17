@@ -65,11 +65,11 @@ const JobTitleDistributionChart = ({ data }) => {
 JobTitleDistributionChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      job_title: PropTypes.shape({
-        name: PropTypes.string,
-      }),
       average_salary: PropTypes.shape({
         amount: PropTypes.number,
+      }),
+      job_title: PropTypes.shape({
+        name: PropTypes.string,
       }),
     }),
   ).isRequired,

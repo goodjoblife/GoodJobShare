@@ -39,13 +39,13 @@ const SubscriptionsSection = ({
 SubscriptionsSection.propTypes = {
   plans: PropTypes.arrayOf(
     PropTypes.shape({
-      skuId: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
       amount: PropTypes.number.isRequired,
       duration: PropTypes.shape({
         amount: PropTypes.number.isRequired,
         type: PropTypes.string.isRequired,
       }),
+      skuId: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
     }),
   ),
   selectedId: PropTypes.string,

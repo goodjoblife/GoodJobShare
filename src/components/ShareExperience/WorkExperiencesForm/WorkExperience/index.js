@@ -101,9 +101,9 @@ WorkExperience.propTypes = {
   removeSection: PropTypes.func,
   sections: PropTypes.arrayOf(
     PropTypes.shape({
+      content: PropTypes.string,
       id: PropTypes.number,
       subtitle: PropTypes.string,
-      content: PropTypes.string,
     }),
   ),
   submitted: PropTypes.bool,

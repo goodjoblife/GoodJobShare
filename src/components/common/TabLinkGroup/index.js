@@ -36,9 +36,9 @@ TabLinkGroup.propTypes = {
       to: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.shape({
+          hash: PropTypes.string,
           pathname: PropTypes.string,
           search: PropTypes.string,
-          hash: PropTypes.string,
           state: PropTypes.object,
         }),
       ]),
