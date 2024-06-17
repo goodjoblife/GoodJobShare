@@ -87,13 +87,13 @@ const CompanyAndJobTitleIndex = ({
 CompanyAndJobTitleIndex.propTypes = {
   getPageLink: PropTypes.func.isRequired,
   indexesBox: PropTypes.shape({
-    status: PropTypes.string.isRequired,
     data: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
       }),
     ),
     error: PropTypes.any,
+    status: PropTypes.string.isRequired,
   }),
   // pagination usage
   page: PropTypes.number.isRequired,

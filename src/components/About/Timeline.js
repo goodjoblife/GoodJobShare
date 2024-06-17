@@ -26,8 +26,8 @@ const Timeline = ({ year, data }) => (
 Timeline.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      month: PropTypes.number.isRequired,
       Content: PropTypes.func.isRequired,
+      month: PropTypes.number.isRequired,
     }),
   ),
   year: PropTypes.number,

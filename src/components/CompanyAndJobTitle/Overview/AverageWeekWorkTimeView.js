@@ -37,10 +37,10 @@ const AverageWeekWorkTimeView = ({
 AverageWeekWorkTimeView.propTypes = {
   averageWeekWorkTime: PropTypes.number.isRequired,
   overtimeFrequencyCount: PropTypes.shape({
+    almost_everyday: PropTypes.number,
     seldom: PropTypes.number,
     sometimes: PropTypes.number,
     usually: PropTypes.number,
-    almost_everyday: PropTypes.number,
   }).isRequired,
 };
 

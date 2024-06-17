@@ -16,8 +16,8 @@ class FeedbackBlock extends React.Component {
     category: PropTypes.string.isRequired,
     className: PropTypes.string,
     placeholders: PropTypes.shape({
-      yes: PropTypes.string,
       no: PropTypes.string,
+      yes: PropTypes.string,
     }),
     question: PropTypes.string,
   };

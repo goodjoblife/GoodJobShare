@@ -94,9 +94,9 @@ SectionEleContent.propTypes = {
   placeholder: PropTypes.string,
   removeSection: PropTypes.func,
   section: PropTypes.shape({
+    content: PropTypes.string,
     id: PropTypes.number,
     subtitle: PropTypes.string,
-    content: PropTypes.string,
   }).isRequired,
   submitted: PropTypes.bool.isRequired,
   titlePlaceholder: PropTypes.string,

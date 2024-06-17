@@ -43,12 +43,12 @@ Sections.propTypes = {
   removeSection: PropTypes.func,
   sections: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
-      subtitle: PropTypes.string,
-      placeholder: PropTypes.string,
-      titlePlaceholder: PropTypes.string,
       content: PropTypes.string,
+      id: PropTypes.number,
       isSubtitleEditable: PropTypes.bool,
+      placeholder: PropTypes.string,
+      subtitle: PropTypes.string,
+      titlePlaceholder: PropTypes.string,
     }),
   ),
   submitted: PropTypes.bool,

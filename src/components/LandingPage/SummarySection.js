@@ -75,18 +75,18 @@ const SummarySection = ({
 SummarySection.propTypes = {
   popularCompanyAverageSalary: PropTypes.arrayOf(
     PropTypes.shape({
+      average_salaries: PropTypes.array,
       company: PropTypes.shape({
         name: PropTypes.string,
       }),
-      average_salaries: PropTypes.array,
     }),
   ).isRequired,
   popularJobTitleSalaryDistribution: PropTypes.arrayOf(
     PropTypes.shape({
+      bins: PropTypes.array,
       job_title: PropTypes.shape({
         name: PropTypes.string,
       }),
-      bins: PropTypes.array,
     }),
   ).isRequired,
 };
