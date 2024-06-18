@@ -103,6 +103,7 @@ export const queryRelatedExperiencesGql = /* GraphQL */ `
       relatedExperiences(start: $start, limit: $limit) {
         id
         type
+        originalCompanyName
         company {
           name
         }
