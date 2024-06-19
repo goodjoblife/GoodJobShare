@@ -111,6 +111,7 @@ InterviewInfoBlocks.propTypes = {
     job_title: PropTypes.shape({
       name: PropTypes.string,
     }),
+    originalCompanyName: PropTypes.string.isRequired,
     overall_rating: PropTypes.number,
     region: PropTypes.string,
     salary: PropTypes.shape({
@@ -192,6 +193,7 @@ WorkInfoBlocks.propTypes = {
     job_title: PropTypes.shape({
       name: PropTypes.string,
     }),
+    originalCompanyName: PropTypes.string.isRequired,
     recommend_to_others: PropTypes.string,
     region: PropTypes.string,
     salary: PropTypes.shape({
@@ -307,6 +309,7 @@ Aside.propTypes = {
     job_title: PropTypes.shape({
       name: PropTypes.string,
     }),
+    originalCompanyName: PropTypes.string.isRequired,
     overall_rating: PropTypes.number,
     period: PropTypes.number,
     recommend_to_others: PropTypes.string,
