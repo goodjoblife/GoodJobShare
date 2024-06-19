@@ -1,24 +1,16 @@
 import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
-import R from 'ramda';
-import { withRouter } from 'react-router-dom';
-
+import { useHistory } from 'react-router-dom';
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
-
+import { useQuery } from 'hooks/routing';
 import styles from './SearchBar.module.css';
-import { searchKeywordSelector } from './common/selectors';
+import { keywordFromQuerySelector } from 'selectors/routing/keyword';
 
-const getInitialSearchTextFromLocation = R.compose(
-  R.defaultTo(''),
-  searchKeywordSelector,
-);
-
-const SearchBar = ({ history, location }) => {
-  const [searchText, setSearchText] = useState(
-    getInitialSearchTextFromLocation({ location }),
-  );
+const SearchBar = () => {
+  const history = useHistory();
+  const query = useQuery();
+  const [searchText, setSearchText] = useState(keywordFromQuerySelector(query));
 
   const gotoSearchResult = useCallback(
     searchText => {
@@ -63,9 +55,4 @@ const SearchBar = ({ history, location }) => {
   );
 };
 
-SearchBar.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-};
-
-export default withRouter(SearchBar);
+export default SearchBar;
