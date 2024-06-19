@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import {
   isNil,
   isEmpty,
-  ifElse,
   map,
-  prop,
   always,
   when,
   last,
@@ -15,6 +13,7 @@ import {
   equals,
   path,
   range,
+  prop,
 } from 'ramda';
 import {
   DATA_KEY_COMPANY_NAME,
@@ -59,7 +58,7 @@ import {
   isValidSalary,
   isNumber,
 } from './utils';
-import { getCompaniesSearch } from 'apis/companySearchApi';
+import { fetchSearchCompany } from 'apis/timeAndSalaryApi';
 import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
 import { employmentTypeOptions, salaryTypeOptions } from './common/optionMap';
 import WorkTimeExample from './WorkTimeExample';
@@ -85,8 +84,8 @@ export const createCompanyQuestion = ({ header }) => ({
   validateOrWarn: value => isEmpty(value) && '請填寫公司名稱',
   placeholder: 'ＯＯ 股份有限公司',
   search: value =>
-    getCompaniesSearch({ key: value }).then(
-      ifElse(isArray, map(prop('name')), always([])),
+    fetchSearchCompany({ companyName: value, hasData: false }).then(
+      map(prop('name')),
     ),
   header,
 });

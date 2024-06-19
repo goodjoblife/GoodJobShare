@@ -1,6 +1,6 @@
 export const getSearchCompanyQuery = `
-  query($companyName:String!) {
-    search_companies(query:$companyName) {
+  query($companyName:String!, $hasData:Boolean!) {
+    search_companies(query:$companyName, hasData:$hasData) {
       name
       salary_work_time_statistics {
         count

@@ -22,10 +22,10 @@ export const fetchJobTitleCandidates = ({ key }) =>
     })
     .then(items => items.map(item => item._id));
 
-export const fetchSearchCompany = ({ companyName }) =>
+export const fetchSearchCompany = ({ companyName, hasData }) =>
   graphqlClient({
     query: getSearchCompanyQuery,
-    variables: { companyName },
+    variables: { companyName, hasData },
   }).then(data => data.search_companies);
 
 export const fetchSearchJobTitle = ({ jobTitle }) =>
