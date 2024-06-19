@@ -75,7 +75,7 @@ const MoreExperiencesBlock = ({ experience }) => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>
-        更多{experience.company.name}、{experience.job_title.name}
+        更多{experience.originalCompanyName}、{experience.job_title.name}
         的面試及工作心得...
       </div>
       {experiences.map(e => (
@@ -92,7 +92,13 @@ const MoreExperiencesBlock = ({ experience }) => {
 };
 
 MoreExperiencesBlock.propTypes = {
-  experience: PropTypes.object.isRequired,
+  experience: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    job_title: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    originalCompanyName: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default MoreExperiencesBlock;
