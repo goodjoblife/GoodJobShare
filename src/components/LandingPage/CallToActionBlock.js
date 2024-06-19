@@ -1,15 +1,14 @@
 import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Heading } from 'common/base';
-
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Button from 'common/button/ButtonRect';
 import { useShareLink } from 'hooks/experiments';
 import styles from './CallToActionBlock.module.css';
 import textInputStyle from 'common/form/TextInput/TextInput.module.css';
 
-const CallToActionBlock = ({ history }) => {
+const CallToActionBlock = () => {
+  const history = useHistory();
   const [companyName, setCompanyName] = useState('');
   const shareLink = useShareLink(companyName);
 
@@ -46,8 +45,4 @@ const CallToActionBlock = ({ history }) => {
   );
 };
 
-CallToActionBlock.propTypes = {
-  history: PropTypes.object.isRequired,
-};
-
-export default withRouter(CallToActionBlock);
+export default CallToActionBlock;

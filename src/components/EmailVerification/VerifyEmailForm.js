@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { withRouter } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
@@ -19,12 +19,10 @@ const stageMap = {
   LOADING: 'LOADING',
 };
 
-const VerifyEmailForm = ({
-  userEmail,
-  onSubmit,
-  closeModal,
-  location: { pathname },
-}) => {
+const VerifyEmailForm = ({ userEmail, onSubmit, closeModal }) => {
+  const location = useLocation();
+  const pathname = location.pathname;
+
   const [emailValue, setEmailValue] = useState(userEmail || '');
   const [stage, setStage] = useState(stageMap.FORM);
   const [emailValueFormatValid, setEmailValueFormatValid] = useState(true);
@@ -193,11 +191,8 @@ const VerifyEmailForm = ({
 
 VerifyEmailForm.propTypes = {
   closeModal: PropTypes.func,
-  location: PropTypes.shape({
-    pathname: PropTypes.string,
-  }),
   onSubmit: PropTypes.func,
   userEmail: PropTypes.string,
 };
 
-export default withRouter(VerifyEmailForm);
+export default VerifyEmailForm;

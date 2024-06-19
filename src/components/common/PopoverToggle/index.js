@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import cn from 'classnames';
 import styles from './Popover.module.css';
 
@@ -26,76 +26,66 @@ Popover.defaultProps = {
   active: false,
 };
 
-class PopoverToggle extends Component {
-  static propTypes = {
-    children: PropTypes.node.isRequired,
-    className: PropTypes.string,
-    history: PropTypes.object.isRequired,
-    popoverClassName: PropTypes.string,
-    popoverContent: PropTypes.node,
-  };
+const PopoverToggle = ({
+  className,
+  popoverClassName,
+  popoverContent,
+  children,
+}) => {
+  const history = useHistory();
+  const dropdown = useRef();
 
-  static defaultProps = {
-    className: '',
-    popoverClassName: '',
-    popoverContent: '',
-  };
+  const [isOpen, setIsOpen] = useState(false);
+  const close = useCallback(() => setIsOpen(false), []);
 
-  constructor(props) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-    this.close = this.close.bind(this);
-    this.outsideHook = this.outsideHook.bind(this);
-    this.unlisten = () => {};
-  }
+  // close when click outside of dropdown
+  const outsideHandler = useCallback(
+    e => {
+      if (!dropdown.current.contains(e.target)) {
+        if (isOpen) {
+          close();
+        }
+      }
+    },
+    [close, isOpen],
+  );
+  useEffect(() => {
+    document.addEventListener('click', outsideHandler);
+    return () => {
+      document.removeEventListener('click', outsideHandler);
+    };
+  }, [outsideHandler]);
 
-  state = {
-    isOpen: false,
-  };
+  // close when routing change
+  useEffect(() => {
+    return history.listen(close);
+  }, [close, history]);
 
-  componentDidMount() {
-    document.addEventListener('click', this.outsideHook);
-    this.unlisten = this.props.history.listen(this.close);
-  }
+  return (
+    <div
+      ref={dropdown}
+      className={cn(className, styles.popoverToggle)}
+      onClick={() => setIsOpen(isOpen => !isOpen)}
+    >
+      <Popover className={popoverClassName} active={isOpen}>
+        {popoverContent}
+      </Popover>
+      {children}
+    </div>
+  );
+};
 
-  componentWillUnmount() {
-    document.removeEventListener('click', this.outsideHook);
-    this.unlisten();
-  }
+PopoverToggle.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  popoverClassName: PropTypes.string,
+  popoverContent: PropTypes.node,
+};
 
-  outsideHook(e) {
-    if (!this.dropdown.contains(e.target)) {
-      if (this.state.isOpen) this.toggle();
-    }
-  }
+PopoverToggle.defaultProps = {
+  className: '',
+  popoverClassName: '',
+  popoverContent: '',
+};
 
-  close() {
-    this.setState({ isOpen: false });
-  }
-
-  toggle() {
-    this.setState({ isOpen: !this.state.isOpen });
-  }
-
-  render() {
-    return (
-      <div
-        ref={node => {
-          this.dropdown = node;
-        }}
-        className={cn(this.props.className, styles.popoverToggle)}
-        onClick={this.toggle}
-      >
-        <Popover
-          className={this.props.popoverClassName}
-          active={this.state.isOpen}
-        >
-          {this.props.popoverContent}
-        </Popover>
-        {this.props.children}
-      </div>
-    );
-  }
-}
-
-export default withRouter(PopoverToggle);
+export default PopoverToggle;

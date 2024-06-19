@@ -1,13 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router';
 import { Wrapper } from 'common/base';
 import ShareExpSection from 'common/ShareExpSection';
 import X from 'common/icons/X';
 import styles from './Entry.module.css';
 import StaticHelmet from 'common/StaticHelmet';
 
-const Entry = ({ history }) => {
+const Entry = () => {
+  const history = useHistory();
+
   return (
     <div>
       <StaticHelmet.Share />
@@ -21,8 +22,4 @@ const Entry = ({ history }) => {
   );
 };
 
-Entry.propTypes = {
-  history: PropTypes.object.isRequired,
-};
-
-export default withRouter(Entry);
+export default Entry;
