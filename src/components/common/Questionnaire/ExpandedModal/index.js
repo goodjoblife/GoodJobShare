@@ -89,8 +89,4 @@ ExpandedModal.propTypes = {
   handleToggleModalOpen: PropTypes.func.isRequired,
 };
 
-ExpandedModal.defaultProps = {
-  handleToggleModalOpen: () => {},
-};
-
 export default ExpandedModal;
