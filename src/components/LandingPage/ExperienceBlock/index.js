@@ -34,7 +34,7 @@ const ExperienceBlock = ({ data, size, backable }) => {
           size={size === 'l' ? 'sl' : 'sm'}
           className={styles.heading}
         >
-          {data.company.name} {data.job_title}
+          {data.originalCompanyName} {data.job_title}
         </Heading>
 
         {size === 'l' || size === 'm' ? (
@@ -51,9 +51,18 @@ const ExperienceBlock = ({ data, size, backable }) => {
 };
 
 ExperienceBlock.propTypes = {
-  backable: PropTypes.bool,
-  data: PropTypes.object.isRequired,
-  size: PropTypes.oneOf(['s', 'm', 'l']),
+  backable: PropTypes.bool.isRequired,
+  data: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    created_at: PropTypes.string.isRequired,
+    job_title: PropTypes.string.isRequired,
+    like_count: PropTypes.number.isRequired,
+    originalCompanyName: PropTypes.string.isRequired,
+    preview: PropTypes.string.isRequired,
+    reply_count: PropTypes.number.isRequired,
+    type: PropTypes.string.isRequired,
+  }).isRequired,
+  size: PropTypes.oneOf(['s', 'm', 'l']).isRequired,
 };
 
 ExperienceBlock.defaultProps = {
