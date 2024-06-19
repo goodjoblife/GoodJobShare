@@ -6,7 +6,8 @@ import StaticHelmet from 'common/StaticHelmet';
 import LoginModal from 'common/LoginModal';
 import useLocStateToastObserver from 'hooks/toastNotification/useLocStateToastObserver';
 import { STATE_SHARE } from 'common/ShareExpSection/shareLinkTo';
-
+import CollapsedDrawer from 'common/Questionnaire/CollapsedDrawer';
+import ExpandedModal from 'common/Questionnaire/ExpandedModal';
 import ToastNotification from '../ToastNotification/ToastNotification';
 import { AppRouteWithSubRoutes } from '../route';
 import styles from './App.module.css';
@@ -15,8 +16,6 @@ import Footer from './Footer';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
 import routes from '../../routes';
-import CollapsedDrawer from 'common/Questionnaire/CollapsedDrawer';
-import NetPromoter from 'common/Questionnaire/ExpandedModal';
 
 const useShare = () => {
   const location = useLocation();
@@ -64,9 +63,11 @@ const App = () => {
         hideProgressBar={share === STATE_SHARE.SALARY_WORK_TIME_NO_PROGRESS_BAR}
       />
       <LoginModal />
-      <CollapsedDrawer>
-        <NetPromoter />
-      </CollapsedDrawer>
+      <CollapsedDrawer
+        render={({ handleToggleModalOpen }) => (
+          <ExpandedModal handleToggleModalOpen={handleToggleModalOpen} />
+        )}
+      ></CollapsedDrawer>
     </Fragment>
   );
 };
