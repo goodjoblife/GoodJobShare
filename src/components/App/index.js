@@ -67,7 +67,7 @@ const App = () => {
         render={({ handleToggleModalOpen }) => (
           <ExpandedModal handleToggleModalOpen={handleToggleModalOpen} />
         )}
-      ></CollapsedDrawer>
+      />
     </Fragment>
   );
 };
