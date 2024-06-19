@@ -11,7 +11,7 @@ import { formatType, formatCreatedAt } from './helper';
 
 const ExperienceBlock = ({ data, size, backable }) => {
   const {
-    _id,
+    id,
     type,
     created_at: createdAt,
     like_count: likeCount,
@@ -21,7 +21,7 @@ const ExperienceBlock = ({ data, size, backable }) => {
 
   return (
     <Link
-      to={{ pathname: `/experiences/${_id}`, state: { backable } }}
+      to={{ pathname: `/experiences/${id}`, state: { backable } }}
       className={cn(styles.container, styles[size])}
     >
       <section className={styles.contentWrapper}>
@@ -53,8 +53,8 @@ const ExperienceBlock = ({ data, size, backable }) => {
 ExperienceBlock.propTypes = {
   backable: PropTypes.bool.isRequired,
   data: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
     created_at: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     job_title: PropTypes.string.isRequired,
     like_count: PropTypes.number.isRequired,
     originalCompanyName: PropTypes.string.isRequired,

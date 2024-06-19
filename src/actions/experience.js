@@ -182,8 +182,7 @@ export const queryPopularExperiences = () => async (dispatch, getState) => {
       setPopularExperiences(
         getFetched(
           experiences.map(({ id, job_title, ...rest }) => ({
-            // TODO 未來 migrate 掉
-            _id: id,
+            id,
             job_title: job_title.name,
             ...rest,
           })),
