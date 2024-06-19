@@ -34,7 +34,7 @@ const ExperienceBlock = ({ data, size, backable }) => {
           size={size === 'l' ? 'sl' : 'sm'}
           className={styles.heading}
         >
-          {data.originalCompanyName} {data.job_title}
+          {data.originalCompanyName} {data.job_title.name}
         </Heading>
 
         {size === 'l' || size === 'm' ? (
@@ -55,7 +55,9 @@ ExperienceBlock.propTypes = {
   data: PropTypes.shape({
     created_at: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    job_title: PropTypes.string.isRequired,
+    job_title: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
     like_count: PropTypes.number.isRequired,
     originalCompanyName: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
