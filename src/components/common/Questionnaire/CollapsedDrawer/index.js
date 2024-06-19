@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const MILLISECONDS_OF_TWO_SUBMISSION_SPAN = 1000 * 60 * 60 * 24 * 30;
 
-const CollapsedDrawer = ({ title = '給我們回饋', children }) => {
+const CollapsedDrawer = ({ title, render }) => {
   const isOpen = useSelector(state => state.questionnaireExpandedModal.isOpen);
   const dispatch = useDispatch();
   const handleToggleModalOpen = useCallback(() => {
@@ -30,11 +30,9 @@ const CollapsedDrawer = ({ title = '給我們回饋', children }) => {
     }
   }
 
-  const childrenWithProps = React.Children.map(children, child =>
-    React.cloneElement(child, { handleToggleModalOpen }),
-  );
-
-  if (isOpen) return childrenWithProps;
+  if (isOpen) {
+    return render({ handleToggleModalOpen });
+  }
 
   return (
     <div className={styles.container} onClick={handleToggleModalOpen}>
@@ -44,8 +42,12 @@ const CollapsedDrawer = ({ title = '給我們回饋', children }) => {
 };
 
 CollapsedDrawer.propTypes = {
-  children: PropTypes.node.isRequired,
+  render: PropTypes.func.isRequired,
   title: PropTypes.string,
+};
+
+CollapsedDrawer.defaultProps = {
+  title: '給我們回饋',
 };
 
 export default CollapsedDrawer;
