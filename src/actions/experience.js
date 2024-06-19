@@ -178,18 +178,7 @@ export const queryPopularExperiences = () => async (dispatch, getState) => {
 
   try {
     const experiences = await queryPopularExperiencesApi();
-    dispatch(
-      setPopularExperiences(
-        getFetched(
-          experiences.map(({ id, job_title, ...rest }) => ({
-            // TODO 未來 migrate 掉
-            _id: id,
-            job_title: job_title.name,
-            ...rest,
-          })),
-        ),
-      ),
-    );
+    dispatch(setPopularExperiences(getFetched(experiences)));
   } catch (error) {
     dispatch(setPopularExperiences(getError(error)));
   }

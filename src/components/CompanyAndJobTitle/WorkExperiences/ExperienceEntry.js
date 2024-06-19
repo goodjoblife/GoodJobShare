@@ -24,7 +24,7 @@ const ExperienceEntry = ({
   pageType,
   data: {
     id,
-    company: { name: companyName } = {},
+    originalCompanyName,
     job_title: { name: jobTitle } = {},
     created_at: createdAt,
     sections: [section],
@@ -80,7 +80,7 @@ const ExperienceEntry = ({
           size={size === 'l' ? 'sl' : 'sm'}
           className={styles.heading}
         >
-          {companyName} {jobTitle}
+          {originalCompanyName} {jobTitle}
         </Heading>
 
         <div className={styles.snippetWrapper}>
@@ -102,7 +102,25 @@ const ExperienceEntry = ({
 
 ExperienceEntry.propTypes = {
   canView: PropTypes.bool.isRequired,
-  data: PropTypes.object.isRequired,
+  data: PropTypes.shape({
+    created_at: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    job_title: PropTypes.shape({ name: PropTypes.string.isRequired })
+      .isRequired,
+    originalCompanyName: PropTypes.string.isRequired,
+    recommend_to_others: PropTypes.string,
+    salary: PropTypes.shape({
+      amount: PropTypes.number.isRequired,
+      type: PropTypes.string.isRequired,
+    }),
+    sections: PropTypes.arrayOf(
+      PropTypes.shape({
+        content: PropTypes.string.isRequired,
+        subtitle: PropTypes.string,
+      }),
+    ).isRequired,
+    week_work_time: PropTypes.number,
+  }).isRequired,
   pageType: PropTypes.string.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
 };

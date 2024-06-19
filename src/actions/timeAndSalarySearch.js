@@ -53,11 +53,7 @@ export const queryKeyword = ({ keyword }) => (dispatch, getState) => {
   return Promise.all([searchCompanies, searchJobTitles])
     .then(([companyData, jobTitleData]) => [...companyData, ...jobTitleData])
     .then(data => {
-      data.sort(
-        (a, b) =>
-          b.salary_work_time_statistics.count -
-          a.salary_work_time_statistics.count,
-      );
+      data.sort((a, b) => (b.dataCount || 0) - (a.dataCount || 0));
       dispatch(setSearchData(fetchingStatus.FETCHED, keyword, data, null));
     })
     .catch(err => {

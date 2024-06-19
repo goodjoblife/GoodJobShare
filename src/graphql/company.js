@@ -1,9 +1,11 @@
 export const getCompanyQuery = `
 query($companyName: String!) {
   company(name: $companyName) {
+    name
     interview_experiences {
       id
       type
+      originalCompanyName
       company {
         name
       }
@@ -30,6 +32,7 @@ query($companyName: String!) {
     work_experiences {
       id
       type
+      originalCompanyName
       company {
         name
       }
@@ -122,6 +125,8 @@ export const queryCompaniesHavingDataGql = /* GraphQL */ `
   query($start: Int!, $limit: Int!) {
     companiesHavingData(start: $start, limit: $limit) {
       name
+      businessNumber
+      dataCount
     }
     companiesHavingDataCount
   }

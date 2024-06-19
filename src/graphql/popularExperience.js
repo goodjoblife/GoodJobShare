@@ -9,6 +9,7 @@ export const getPopularExperiencesQuery = `
     job_title {
       name
     }
+    originalCompanyName
     company {
       name
     }

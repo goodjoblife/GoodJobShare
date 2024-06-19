@@ -14,6 +14,10 @@ const formatCompany = name => {
   return null;
 };
 
+export const originalCompanyNameSelector = R.compose(
+  formatCompany,
+  R.pathOr(null, ['originalCompanyName']),
+);
 export const companyNameSelector = R.compose(
   formatCompany,
   R.pathOr(null, ['company', 'name']),
@@ -38,7 +42,7 @@ export const salaryAmountSelector = R.pathOr(null, ['salary', 'amount']);
 export const salaryTypeSelector = R.pathOr(null, ['salary', 'type']);
 
 export const metaTitleSelector = experience => {
-  return `${companyNameSelector(experience)} ${jobTitleSelector(
+  return `${originalCompanyNameSelector(experience)} ${jobTitleSelector(
     experience,
   )} ${typeSelector(experience)} ${dateSelector(experience)}`;
 };

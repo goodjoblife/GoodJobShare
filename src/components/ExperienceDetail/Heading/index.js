@@ -4,7 +4,10 @@ import { Heading, P } from 'common/base';
 import cn from 'classnames';
 
 import styles from './Heading.module.css';
-import { companyNameSelector, jobTitleSelector } from '../experienceSelector';
+import {
+  originalCompanyNameSelector,
+  jobTitleSelector,
+} from '../experienceSelector';
 
 const formatType = type => {
   switch (type) {
@@ -26,7 +29,9 @@ const ExperienceHeading = ({ experience, className }) => (
     </P>
     <Heading size="l">
       {experience &&
-        `${companyNameSelector(experience)} ${jobTitleSelector(experience)}`}
+        `${originalCompanyNameSelector(experience)} ${jobTitleSelector(
+          experience,
+        )}`}
     </Heading>
   </div>
 );

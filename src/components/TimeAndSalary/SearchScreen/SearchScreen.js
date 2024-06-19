@@ -82,8 +82,9 @@ const SearchScreen = () => {
           key={i}
           pageType={o.pageType}
           name={o.name}
+          businessNumber={o.businessNumber}
           to={getLinkForData(query, o)}
-          dataCount={o.salary_work_time_statistics.count}
+          dataCount={o.dataCount}
         />
       ))}
       <Pagination
