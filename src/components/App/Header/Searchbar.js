@@ -1,20 +1,17 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { withRouter } from 'react-router-dom';
-import qs from 'qs';
-
+import { useHistory } from 'react-router-dom';
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
+import { keywordFromQuerySelector } from 'selectors/routing/keyword';
+import { useQuery } from 'hooks/routing';
 import styles from './Searchbar.module.css';
 
-const getInitialSearchTextFromLocation = location =>
-  qs.parse(location.search, { ignoreQueryPrefix: true }).q || '';
-
-const Searchbar = ({ className, placeholder, history, location }) => {
-  const [searchText, setSearchText] = useState(
-    getInitialSearchTextFromLocation(location),
-  );
+const Searchbar = ({ className, placeholder }) => {
+  const history = useHistory();
+  const query = useQuery();
+  const [searchText, setSearchText] = useState(keywordFromQuerySelector(query));
   const [isActive, setActive] = useState(false);
 
   const handleFormFocus = useCallback(() => {
@@ -63,9 +60,7 @@ const Searchbar = ({ className, placeholder, history, location }) => {
 
 Searchbar.propTypes = {
   className: PropTypes.string.isRequired,
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   placeholder: PropTypes.string,
 };
 
-export default withRouter(Searchbar);
+export default Searchbar;

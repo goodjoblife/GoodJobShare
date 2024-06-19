@@ -1,7 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
-import qs from 'qs';
 import { contains, head, prop } from 'ramda';
 import { Section, Wrapper } from 'common/base';
 import SubscriptionsSection from './SubscriptionsSection';
@@ -9,6 +7,7 @@ import PaymentSection from './PaymentSection';
 import TitleSection from './TitleSection';
 import styles from './Buy.module.css';
 import { useSubscriptionPlans } from 'hooks/payment/usePayment';
+import { useQuery } from 'hooks/routing';
 import { isFetched } from 'utils/fetchBox';
 import Loading from 'common/Loader';
 import { subscriptionType } from 'constants/subscription';
@@ -23,11 +22,7 @@ const sanitizeSkuId = plans => skuId => {
 };
 
 const Buy = () => {
-  const location = useLocation();
-  const query = useMemo(
-    () => qs.parse(location.search, { ignoreQueryPrefix: true }),
-    [location.search],
-  );
+  const query = useQuery();
   const plansBox = useSubscriptionPlans();
   const ready = isFetched(plansBox);
   const plans = useMemo(() => {

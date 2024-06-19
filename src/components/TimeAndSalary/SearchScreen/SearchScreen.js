@@ -11,13 +11,10 @@ import Pagination from 'common/Pagination';
 import { isFetching, isFetched, isUnfetched } from 'constants/status';
 import { pageType } from 'constants/companyJobTitle';
 import { useQuery } from 'hooks/routing';
+import { usePage } from 'hooks/routing/page';
 import { queryKeyword, keywordMinLength } from 'actions/timeAndSalarySearch';
-import {
-  keywordSelector,
-  pageSelector,
-  dataSelector,
-  statusSelector,
-} from './selectors';
+import { keywordFromQuerySelector } from 'selectors/routing/keyword';
+import { dataSelector, statusSelector } from './selectors';
 import * as urlBuilder from './urlBuilder';
 import WorkingHourBlock from './WorkingHourBlock';
 import Helmet from './Helmet';
@@ -48,8 +45,8 @@ const SearchScreen = () => {
   const history = useHistory();
   const dispath = useDispatch();
   const query = useQuery();
-  const keyword = useMemo(() => keywordSelector(query), [query]);
-  const page = useMemo(() => pageSelector(query), [query]);
+  const keyword = useMemo(() => keywordFromQuerySelector(query), [query]);
+  const page = usePage();
   const data = useSelector(dataSelector(keyword));
   const status = useSelector(statusSelector(keyword));
 
@@ -104,7 +101,7 @@ const SearchScreen = () => {
 
 SearchScreen.fetchData = ({ store: { dispatch }, ...props }) => {
   const query = querySelector(props);
-  const keyword = keywordSelector(query);
+  const keyword = keywordFromQuerySelector(query);
   return dispatch(queryKeyword({ keyword }));
 };
 
