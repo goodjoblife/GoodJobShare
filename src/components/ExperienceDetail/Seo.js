@@ -67,10 +67,10 @@ const getStructureData = ({ experience }) => {
   return data;
 };
 
-const Seo = ({ experienceState, experience }) => {
+const Seo = ({ experience }) => {
   return (
     <Fragment>
-      <SeoHelmet experienceState={experienceState} experience={experience} />
+      <SeoHelmet experience={experience} />
       <SeoStructure data={getStructureData({ experience })} />
     </Fragment>
   );
@@ -78,7 +78,6 @@ const Seo = ({ experienceState, experience }) => {
 
 Seo.propTypes = {
   experience: PropTypes.object.isRequired,
-  experienceState: PropTypes.object.isRequired,
 };
 
 export default Seo;
