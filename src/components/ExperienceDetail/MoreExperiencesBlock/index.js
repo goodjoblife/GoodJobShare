@@ -93,6 +93,9 @@ const MoreExperiencesBlock = ({ experience }) => {
 
 MoreExperiencesBlock.propTypes = {
   experience: PropTypes.shape({
+    company: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
     id: PropTypes.string.isRequired,
     job_title: PropTypes.shape({
       name: PropTypes.string.isRequired,
