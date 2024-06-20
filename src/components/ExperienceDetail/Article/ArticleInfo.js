@@ -56,16 +56,16 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
       {expInYearText !== null ? (
         <InfoBlock label="相關職務工作經驗">{expInYearText}</InfoBlock>
       ) : null}
-      {experience.education && (
+      {experience.education ? (
         <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
-      )}
-      {experience.interview_time && (
+      ) : null}
+      {experience.interview_time ? (
         <InfoBlock label="面試時間">
           {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
         </InfoBlock>
-      )}
+      ) : null}
       <InfoBlock label="面試結果">{experience.interview_result}</InfoBlock>
-      {experience.salary && (
+      {experience.salary ? (
         <InfoBlock label="待遇">
           {hideContent ? (
             <React.Fragment>
@@ -76,20 +76,20 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
             formatSalary(experience.salary)
           )}
         </InfoBlock>
-      )}
+      ) : null}
       <InfoBlock label="整體面試滿意度">
         <RateButtons rate={experience.overall_rating} />
       </InfoBlock>
       {experience.interview_sensitive_questions &&
-        experience.interview_sensitive_questions.length > 0 && (
-          <InfoBlock label="有以下特殊問題">
-            <ul>
-              {experience.interview_sensitive_questions.map((o, idx) => (
-                <li key={idx}>{o}</li>
-              ))}
-            </ul>
-          </InfoBlock>
-        )}
+      experience.interview_sensitive_questions.length ? (
+        <InfoBlock label="有以下特殊問題">
+          <ul>
+            {experience.interview_sensitive_questions.map((o, idx) => (
+              <li key={idx}>{o}</li>
+            ))}
+          </ul>
+        </InfoBlock>
+      ) : null}
     </Fragment>
   );
 };
@@ -145,16 +145,16 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
       >
         {experience.job_title.name}
       </InfoBlock>
-      {expInYearText !== null && (
+      {expInYearText ? (
         <InfoBlock label="自身相關職務工作經驗">{expInYearText}</InfoBlock>
-      )}
-      {experience.education && (
+      ) : null}
+      {experience.education ? (
         <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
-      )}
-      {experience.week_work_time > 0 && (
+      ) : null}
+      {experience.week_work_time ? (
         <InfoBlock label="一週工時">{experience.week_work_time}</InfoBlock>
-      )}
-      {experience.salary && (
+      ) : null}
+      {experience.salary ? (
         <InfoBlock label="待遇">
           {hideContent ? (
             <React.Fragment>
@@ -165,8 +165,8 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
             formatSalary(experience.salary)
           )}
         </InfoBlock>
-      )}
-      {experience.recommend_to_others && (
+      ) : null}
+      {experience.recommend_to_others ? (
         <InfoBlock label="是否推薦此工作">
           {experience.recommend_to_others === 'yes' ? (
             <div className={styles.recommendIcon}>
@@ -178,7 +178,7 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
             </div>
           )}
         </InfoBlock>
-      )}
+      ) : null}
     </Fragment>
   );
 };
@@ -207,27 +207,27 @@ WorkInfoBlocks.propTypes = {
 
 const InternBlocks = ({ experience, hideContent }) => (
   <Fragment>
-    {experience.region && (
+    {experience.region ? (
       <InfoBlock label="實習地區">{experience.region}</InfoBlock>
-    )}
-    {experience.job_title && (
+    ) : null}
+    {experience.job_title ? (
       <InfoBlock label="職稱">{experience.job_title.name}</InfoBlock>
-    )}
-    {experience.education && (
+    ) : null}
+    {experience.education ? (
       <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
-    )}
-    {experience.starting_year > 0 && (
+    ) : null}
+    {experience.starting_year ? (
       <InfoBlock label="實習開始的年份">
         {experience.starting_year} 年
       </InfoBlock>
-    )}
-    {experience.period > 0 && (
+    ) : null}
+    {experience.period ? (
       <InfoBlock label="實習長度">{experience.period} 月</InfoBlock>
-    )}
-    {experience.week_work_time > 0 && (
+    ) : null}
+    {experience.week_work_time ? (
       <InfoBlock label="一週工時">{experience.week_work_time}</InfoBlock>
-    )}
-    {experience.salary && (
+    ) : null}
+    {experience.salary ? (
       <InfoBlock label="實習薪資">
         {hideContent ? (
           <React.Fragment>
@@ -238,12 +238,12 @@ const InternBlocks = ({ experience, hideContent }) => (
           formatSalary(experience.salary)
         )}
       </InfoBlock>
-    )}
-    {experience.overall_rating > 0 && (
+    ) : null}
+    {experience.overall_rating ? (
       <InfoBlock label="實習整體滿意度">
         <RateButtons rate={experience.overall_rating} />
       </InfoBlock>
-    )}
+    ) : null}
   </Fragment>
 );
 
