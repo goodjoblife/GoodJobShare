@@ -17,8 +17,8 @@ const SearchTextInput = ({ value, onChange, onSelected, ...restProps }) => {
 
   const searchCompanyNames = useCallback(
     value =>
-      fetchSearchCompany({ companyName: value }).then(companies =>
-        companies.map(({ name }) => name),
+      fetchSearchCompany({ companyName: value, hasData: true }).then(
+        R.map(R.prop('name')),
       ),
     [],
   );
