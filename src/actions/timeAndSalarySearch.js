@@ -39,6 +39,7 @@ export const queryKeyword = ({ keyword }) => (dispatch, getState) => {
 
   const searchCompanies = fetchSearchCompanyApi({
     companyName: keyword,
+    hasData: true,
   }).then(items =>
     items.map(item => ({ ...item, pageType: pageType.COMPANY })),
   );
