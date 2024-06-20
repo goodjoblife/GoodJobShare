@@ -26,7 +26,7 @@ class CompanyQuery extends React.Component {
 
   search = debounce((e, value) => {
     if (value) {
-      return fetchSearchCompany({ companyName: value })
+      return fetchSearchCompany({ companyName: value, hasData: false })
         .then(r =>
           Array.isArray(r)
             ? this.handleAutocompleteItems(r.map(mapToAutocompleteList))
