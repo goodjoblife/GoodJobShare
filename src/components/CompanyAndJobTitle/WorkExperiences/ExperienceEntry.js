@@ -7,11 +7,10 @@ import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 import { Heading, P } from 'common/base';
 import Clock from 'common/icons/Clock';
 import Coin from 'common/icons/Coin';
-import Good from 'common/icons/Good';
-import Bad from 'common/icons/Bad';
 import styles from './WorkExperiences.module.css';
 import { formatSalary, formatSalaryRange } from 'common/formatter';
 import { formatCreatedAt, formatWeekWorkTime } from './helper';
+import OverallRating from 'common/OverallRating';
 
 const createLinkTo = ({ pageType, id }) => ({
   pathname: `/experiences/${id}`,
@@ -68,10 +67,10 @@ const ExperienceEntry = ({
                 )}
               </div>
             )}
-            <div className={styles.recommendToOthers}>
-              {recommendToOthers === 'yes' ? <Good /> : <Bad />}
-              {recommendToOthers === 'yes' ? '推' : '不推'}
-            </div>
+            <OverallRating
+              rate={3.8} // for temporary use
+              isShowRatingLabel={false}
+            />
           </div>
         </div>
 
