@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import Thumbs from './Thumb';
+import Thumbs from './Thumbs';
 import { Rating, RatingLabel } from './Rating';
 import styles from './Rating.module.css';
 
