@@ -11,7 +11,7 @@
 }
 
 .rating {
-  margin: 0 1rem 0.25rem 0;
+  margin: 0 1rem 0 0;
 }
 
 .textYellow {
@@ -52,5 +52,9 @@
   .overallRating {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .rating {
+    margin: 0 0 2px 0;
   }
 }
