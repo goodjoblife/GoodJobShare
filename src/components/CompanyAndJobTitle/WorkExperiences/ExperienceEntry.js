@@ -7,6 +7,8 @@ import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 import { Heading, P } from 'common/base';
 import Clock from 'common/icons/Clock';
 import Coin from 'common/icons/Coin';
+import Good from 'common/icons/Good';
+import Bad from 'common/icons/Bad';
 import styles from './WorkExperiences.module.css';
 import { formatSalary, formatSalaryRange } from 'common/formatter';
 import { formatCreatedAt, formatWeekWorkTime } from './helper';
@@ -18,6 +20,8 @@ const createLinkTo = ({ pageType, id }) => ({
 });
 
 const SNIPPET_SIZE = 30;
+
+const averageSectionRating = 3.8; // for temporary use
 
 const ExperienceEntry = ({
   pageType,
@@ -67,12 +71,19 @@ const ExperienceEntry = ({
                 )}
               </div>
             )}
-            <div className={styles.overallRatingWrapper}>
-              <OverallRating
-                rate={3.8} // for temporary use
-                isShowRatingLabel={false}
-              />
-            </div>
+            {averageSectionRating !== null ? (
+              <div className={styles.overallRatingWrapper}>
+                <OverallRating
+                  rate={averageSectionRating}
+                  isShowRatingLabel={false}
+                />
+              </div>
+            ) : (
+              <div className={styles.recommendToOthers}>
+                {recommendToOthers === 'yes' ? <Good /> : <Bad />}
+                {recommendToOthers === 'yes' ? '推' : '不推'}
+              </div>
+            )}
           </div>
         </div>
 

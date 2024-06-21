@@ -11,7 +11,7 @@ import {
   generatePageURL,
 } from 'constants/companyJobTitle';
 import { originalCompanyNameSelector } from '../experienceSelector';
-import OverallRating from 'common/OverallRating';
+import RatingInfo from './RatingInfo';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
@@ -166,9 +166,10 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
           )}
         </InfoBlock>
       ) : null}
-      <InfoBlock label="整體評價">
-        <OverallRating rate={averageSectionRating} />
-      </InfoBlock>
+      <RatingInfo
+        rating={averageSectionRating}
+        recommend={experience.recommend_to_others}
+      />
     </Fragment>
   );
 };
