@@ -51,7 +51,8 @@
     }
 
     .weekWorkTime,
-    .salary {
+    .salary,
+    .recommendToOthers {
       display: flex;
       align-items: center;
       font-size: 15px;
@@ -59,7 +60,8 @@
     }
 
     .salary,
-    .weekWorkTime {
+    .weekWorkTime,
+    .recommendToOthers {
       margin-left: 35px;
 
       svg {
@@ -149,8 +151,4 @@
       color: #ed0d5e;
     }
   }
-}
-
-.overallRatingWrapper {
-  margin-left: 1.5rem;
 }
