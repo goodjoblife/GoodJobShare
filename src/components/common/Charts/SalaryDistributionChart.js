@@ -26,6 +26,15 @@ LabelOnSmallDevice.propTypes = {
   }).isRequired,
 };
 
+LabelOnSmallDevice.defaultProps = {
+  viewBox: {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  },
+};
+
 const XAxisOnSmallDevice = ({ x, y, stroke, payload }) => {
   const [from, to] = payload.value.split('~');
   return (
@@ -49,6 +58,15 @@ XAxisOnSmallDevice.propTypes = {
   stroke: PropTypes.string.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
+};
+
+XAxisOnSmallDevice.defaultProps = {
+  x: 0,
+  y: 0,
+  stroke: '#666',
+  payload: {
+    value: '',
+  },
 };
 
 const SalaryDistributionChart = ({ data }) => {
