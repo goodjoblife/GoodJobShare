@@ -66,10 +66,12 @@ const ExperienceEntry = ({
                 )}
               </div>
             )}
-            <OverallRating
-              rate={3.8} // for temporary use
-              isShowRatingLabel={false}
-            />
+            <div className={styles.overallRatingWrapper}>
+              <OverallRating
+                rate={3.8} // for temporary use
+                isShowRatingLabel={false}
+              />
+            </div>
           </div>
         </div>
 
