@@ -6,25 +6,28 @@ import PropTypes from 'prop-types';
 
 const thumbs = Array.from({ length: 5 }, (_, i) => i + 1);
 
-const OverallRating = ({ rate, isShowRatingLabel = true }) => {
+const OverallRating = ({ rate, hasRatingLabel }) => {
   const renderThumbs = thumbs.map(element => {
     return <RatingThumb key={element} rate={rate} element={element} />;
   });
-
   return (
     <OverallRatingContainer>
-      <Rating rate={rate} textYellow={isShowRatingLabel} />
+      <Rating rate={rate} textYellow={hasRatingLabel} />
       <div className={styles.ratingInfo}>
         <ThumbsContainer>{renderThumbs}</ThumbsContainer>
-        {isShowRatingLabel && <RatingLabel rate={rate} />}
+        {hasRatingLabel && <RatingLabel rate={rate} />}
       </div>
     </OverallRatingContainer>
   );
 };
 
 OverallRating.propTypes = {
-  isShowRatingLabel: PropTypes.bool,
+  hasRatingLabel: PropTypes.bool,
   rate: PropTypes.number.isRequired,
+};
+
+OverallRating.defaultProps = {
+  hasRatingLabel: false,
 };
 
 export default OverallRating;
