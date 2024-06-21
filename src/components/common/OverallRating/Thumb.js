@@ -29,15 +29,15 @@ YellowThumb.propTypes = {
   style: PropTypes.object,
 };
 
-const calculateClipX = ({ rate, element }) => {
-  const fraction = Math.round((rate % 1) * 100);
-  if (element <= rate) return 100;
-  if (rate + 1 > element) return fraction;
+const calculateClipX = ({ rating, element }) => {
+  const fraction = Math.round((rating % 1) * 100);
+  if (element <= rating) return 100;
+  if (rating + 1 > element) return fraction;
   return 0;
 };
 
-const RatingThumb = ({ rate, element }) => {
-  const clipX = calculateClipX({ rate, element });
+const RatingThumb = ({ rating, element }) => {
+  const clipX = calculateClipX({ rating, element });
   return (
     <div className={styles.thumbContainer}>
       <GrayThumb />
@@ -48,7 +48,7 @@ const RatingThumb = ({ rate, element }) => {
 
 RatingThumb.propTypes = {
   element: PropTypes.number.isRequired,
-  rate: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
 };
 
 const ThumbsContainer = ({ children }) => {
@@ -59,10 +59,10 @@ ThumbsContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Thumbs = ({ rate, maxRating }) => {
+const Thumbs = ({ rating, maxRating }) => {
   const thumbs = Array.from({ length: maxRating }, (_, i) => i + 1);
   const renderThumbs = thumbs.map(element => {
-    return <RatingThumb key={element} rate={rate} element={element} />;
+    return <RatingThumb key={element} rating={rating} element={element} />;
   });
 
   return <ThumbsContainer>{renderThumbs}</ThumbsContainer>;
@@ -70,7 +70,7 @@ const Thumbs = ({ rate, maxRating }) => {
 
 Thumbs.propTypes = {
   maxRating: PropTypes.number.isRequired,
-  rate: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
 };
 
 Thumbs.defaultProps = {

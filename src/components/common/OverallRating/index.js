@@ -5,13 +5,13 @@ import Thumbs from './Thumb';
 import { Rating, RatingLabel } from './Rating';
 import styles from './Rating.module.css';
 
-const OverallRating = ({ rate, hasRatingLabel }) => {
+const OverallRating = ({ rating, hasRatingLabel }) => {
   return (
     <div className={cn(styles.overallRating)}>
-      <Rating rate={rate} textYellow={hasRatingLabel} />
+      <Rating rating={rating} textYellow={hasRatingLabel} />
       <div className={styles.ratingInfo}>
-        <Thumbs rate={rate} />
-        {hasRatingLabel && <RatingLabel rate={rate} />}
+        <Thumbs rating={rating} />
+        {hasRatingLabel && <RatingLabel rating={rating} />}
       </div>
     </div>
   );
@@ -19,7 +19,7 @@ const OverallRating = ({ rate, hasRatingLabel }) => {
 
 OverallRating.propTypes = {
   hasRatingLabel: PropTypes.bool,
-  rate: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
 };
 
 OverallRating.defaultProps = {

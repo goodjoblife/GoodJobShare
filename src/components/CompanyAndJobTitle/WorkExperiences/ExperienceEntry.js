@@ -73,7 +73,7 @@ const ExperienceEntry = ({
             )}
             {averageSectionRating !== null ? (
               <div className={styles.overallRatingWrapper}>
-                <OverallRating rate={averageSectionRating} />
+                <OverallRating rating={averageSectionRating} />
               </div>
             ) : (
               <div className={styles.recommendToOthers}>

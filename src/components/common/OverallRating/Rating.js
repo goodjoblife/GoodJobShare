@@ -4,31 +4,31 @@ import cn from 'classnames';
 import { overallRatingDialogMap } from 'components/ShareExperience/common/optionMap';
 import PropTypes from 'prop-types';
 
-const Rating = ({ rate, textYellow }) => (
+const Rating = ({ rating, textYellow }) => (
   <div
     className={cn(styles.rating, {
       [styles.textYellow]: !textYellow,
     })}
   >
-    {rate} 分
+    {rating} 分
   </div>
 );
 
 Rating.propTypes = {
-  rate: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
   textYellow: PropTypes.bool,
 };
 
-const RatingLabel = ({ rate }) => {
+const RatingLabel = ({ rating }) => {
   return (
     <div className={styles.ratingLabel}>
-      {overallRatingDialogMap[Math.floor(rate)]}
+      {overallRatingDialogMap[Math.floor(rating)]}
     </div>
   );
 };
 
 RatingLabel.propTypes = {
-  rate: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
 };
 
 export { Rating, RatingLabel };

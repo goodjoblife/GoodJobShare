@@ -28,7 +28,7 @@ const RatingInfo = ({ rating, recommend }) => {
   if (rating !== null) {
     return (
       <InfoBlock label="整體評價">
-        <OverallRating rate={rating} hasRatingLabel />
+        <OverallRating rating={rating} hasRatingLabel />
       </InfoBlock>
     );
   }
