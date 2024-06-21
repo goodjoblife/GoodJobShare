@@ -4,14 +4,6 @@ import cn from 'classnames';
 import { overallRatingDialogMap } from 'components/ShareExperience/common/optionMap';
 import PropTypes from 'prop-types';
 
-const OverallRatingContainer = ({ children }) => (
-  <div className={cn(styles.overallRating)}>{children}</div>
-);
-
-OverallRatingContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
 const Rating = ({ rate, textYellow }) => (
   <div
     className={cn(styles.rating, {
@@ -39,4 +31,4 @@ RatingLabel.propTypes = {
   rate: PropTypes.number.isRequired,
 };
 
-export { OverallRatingContainer, Rating, RatingLabel };
+export { Rating, RatingLabel };

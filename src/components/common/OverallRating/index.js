@@ -1,18 +1,19 @@
 import React from 'react';
-import Thumbs from './Thumb';
-import { OverallRatingContainer, Rating, RatingLabel } from './Rating';
-import styles from './Rating.module.css';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
+import Thumbs from './Thumb';
+import { Rating, RatingLabel } from './Rating';
+import styles from './Rating.module.css';
 
 const OverallRating = ({ rate, hasRatingLabel }) => {
   return (
-    <OverallRatingContainer>
+    <div className={cn(styles.overallRating)}>
       <Rating rate={rate} textYellow={hasRatingLabel} />
       <div className={styles.ratingInfo}>
         <Thumbs rate={rate} />
         {hasRatingLabel && <RatingLabel rate={rate} />}
       </div>
-    </OverallRatingContainer>
+    </div>
   );
 };
 
