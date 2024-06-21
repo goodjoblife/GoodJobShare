@@ -7,12 +7,20 @@ import { debounce } from 'utils/streamUtils';
 
 import InputTitle from './InputTitle';
 import { fetchSearchCompany } from 'apis/timeAndSalaryApi';
+import AutoCompleteItem from '../AutoCompleteItem';
+import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
 const getItemValue = item => item.label;
 
-const mapToAutocompleteList = l => ({
-  label: Array.isArray(l.name) ? l.name[0] : l.name,
-  value: l.id,
+const mapToAutocompleteList = ({ name, businessNumber }) => ({
+  label: (
+    <AutoCompleteItem
+      pageType={PAGE_TYPE.COMPANY}
+      name={name}
+      businessNumber={businessNumber}
+    />
+  ),
+  value: name,
 });
 
 class CompanyQuery extends React.Component {
