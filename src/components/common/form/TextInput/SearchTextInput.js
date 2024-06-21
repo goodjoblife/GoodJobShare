@@ -31,12 +31,12 @@ const SearchTextInput = ({ value, onChange, onSelected, ...restProps }) => {
     debounce(async value => {
       if (value) {
         try {
-          const [companyNames, jobTitles] = await Promise.all([
+          const [companies, jobTitles] = await Promise.all([
             searchCompanyNames(value),
             searchJobTitles(value),
           ]);
-          const candidates = R.uniq([
-            ...take5(companyNames).map(({ name, businessNumber }) => ({
+          const candidates = R.uniqBy(R.prop('value'), [
+            ...take5(companies).map(({ name, businessNumber }) => ({
               label: (
                 <AutoCompleteItem
                   pageType={PAGE_TYPE.COMPANY}
