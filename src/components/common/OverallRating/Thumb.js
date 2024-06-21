@@ -59,4 +59,22 @@ ThumbsContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export { ThumbsContainer, RatingThumb };
+const Thumbs = ({ rate, maxRating }) => {
+  const thumbs = Array.from({ length: maxRating }, (_, i) => i + 1);
+  const renderThumbs = thumbs.map(element => {
+    return <RatingThumb key={element} rate={rate} element={element} />;
+  });
+
+  return <ThumbsContainer>{renderThumbs}</ThumbsContainer>;
+};
+
+Thumbs.propTypes = {
+  maxRating: PropTypes.number.isRequired,
+  rate: PropTypes.number.isRequired,
+};
+
+Thumbs.defaultProps = {
+  maxRating: 5,
+};
+
+export default Thumbs;
