@@ -184,7 +184,6 @@ WorkInfoBlocks.propTypes = {
       name: PropTypes.string,
     }),
     originalCompanyName: PropTypes.string.isRequired,
-    recommend_to_others: PropTypes.string,
     region: PropTypes.string,
     salary: PropTypes.shape({
       amount: PropTypes.number,

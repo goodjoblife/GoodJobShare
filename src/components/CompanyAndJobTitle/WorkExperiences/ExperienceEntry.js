@@ -29,7 +29,6 @@ const ExperienceEntry = ({
     sections: [section],
     week_work_time: weekWorkTime,
     salary,
-    recommend_to_others: recommendToOthers,
   },
   size,
   canView,
@@ -107,7 +106,6 @@ ExperienceEntry.propTypes = {
     job_title: PropTypes.shape({ name: PropTypes.string.isRequired })
       .isRequired,
     originalCompanyName: PropTypes.string.isRequired,
-    recommend_to_others: PropTypes.string,
     salary: PropTypes.shape({
       amount: PropTypes.number.isRequired,
       type: PropTypes.string.isRequired,
