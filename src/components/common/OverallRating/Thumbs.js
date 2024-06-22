@@ -29,15 +29,15 @@ YellowThumb.propTypes = {
   style: PropTypes.object,
 };
 
-const calculateClipX = ({ rating, element }) => {
+const calculateClipX = ({ rating, order }) => {
   const fraction = Math.round((rating % 1) * 100);
-  if (element <= rating) return 100;
-  if (rating + 1 > element) return fraction;
+  if (order <= rating) return 100;
+  if (rating + 1 > order) return fraction;
   return 0;
 };
 
-const RatingThumb = ({ rating, element }) => {
-  const clipX = calculateClipX({ rating, element });
+const RatingThumb = ({ rating, order }) => {
+  const clipX = calculateClipX({ rating, order });
   return (
     <div className={styles.thumbContainer}>
       <GrayThumb />
@@ -47,7 +47,7 @@ const RatingThumb = ({ rating, element }) => {
 };
 
 RatingThumb.propTypes = {
-  element: PropTypes.number.isRequired,
+  order: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
 };
 
@@ -61,9 +61,9 @@ ThumbsContainer.propTypes = {
 
 const Thumbs = ({ rating, maxRating }) => {
   const thumbs = Array.from({ length: maxRating }, (_, i) => i + 1);
-  const renderThumbs = thumbs.map(element => {
-    return <RatingThumb key={element} rating={rating} element={element} />;
-  });
+  const renderThumbs = thumbs.map(order => (
+    <RatingThumb key={order} rating={rating} order={order} />
+  ));
 
   return <ThumbsContainer>{renderThumbs}</ThumbsContainer>;
 };
