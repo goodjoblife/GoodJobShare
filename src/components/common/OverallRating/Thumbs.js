@@ -51,21 +51,13 @@ RatingThumb.propTypes = {
   rating: PropTypes.number.isRequired,
 };
 
-const ThumbsContainer = ({ children }) => {
-  return <div className={styles.thumbsContainer}>{children}</div>;
-};
-
-ThumbsContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
 const Thumbs = ({ rating, maxRating }) => {
   const thumbs = Array.from({ length: maxRating }, (_, i) => i + 1);
   const renderThumbs = thumbs.map(order => (
     <RatingThumb key={order} rating={rating} order={order} />
   ));
 
-  return <ThumbsContainer>{renderThumbs}</ThumbsContainer>;
+  return <div className={styles.thumbsContainer}>{renderThumbs}</div>;
 };
 
 Thumbs.propTypes = {
