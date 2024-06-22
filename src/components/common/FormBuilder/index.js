@@ -155,6 +155,16 @@ const FormBuilder = ({
     }
   }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    if (!open) return;
+
+    const handler = e => {
+      if (e.key.toLowerCase() === 'tab') e.preventDefault();
+    };
+    window.document.addEventListener('keydown', handler);
+    return () => window.document.removeEventListener('keydown', handler);
+  }, [open]);
+
   if (!shouldRenderQuestion) {
     return null;
   }
