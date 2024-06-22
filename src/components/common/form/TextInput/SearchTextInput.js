@@ -16,10 +16,7 @@ const SearchTextInput = ({ value, onChange, onSelected, ...restProps }) => {
   const eleRef = useRef(null);
 
   const searchCompanyNames = useCallback(
-    value =>
-      fetchSearchCompany({ companyName: value, hasData: true }).then(
-        R.map(R.prop('name')),
-      ),
+    value => fetchSearchCompany({ companyName: value, hasData: true }),
     [],
   );
   const searchJobTitles = useCallback(
@@ -34,14 +31,18 @@ const SearchTextInput = ({ value, onChange, onSelected, ...restProps }) => {
     debounce(async value => {
       if (value) {
         try {
-          const [companyNames, jobTitles] = await Promise.all([
+          const [companies, jobTitles] = await Promise.all([
             searchCompanyNames(value),
             searchJobTitles(value),
           ]);
-          const candidates = R.uniq([
-            ...take5(companyNames).map(name => ({
+          const candidates = R.uniqBy(R.prop('value'), [
+            ...take5(companies).map(({ name, businessNumber }) => ({
               label: (
-                <AutoCompleteItem pageType={PAGE_TYPE.COMPANY} name={name} />
+                <AutoCompleteItem
+                  pageType={PAGE_TYPE.COMPANY}
+                  name={name}
+                  businessNumber={businessNumber}
+                />
               ),
               value: name,
             })),
