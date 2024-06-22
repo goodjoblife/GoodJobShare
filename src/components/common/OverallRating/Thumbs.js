@@ -1,7 +1,7 @@
 import React from 'react';
 import ThumbImage from './thumb.svg';
 import cn from 'classnames';
-import styles from './Thumb.module.css';
+import styles from './Thumbs.module.css';
 import PropTypes from 'prop-types';
 
 const GrayThumb = () => {
