@@ -11,7 +11,7 @@ export const postWorkExperience = ({ body, token }) =>
     variables: {
       input: body,
     },
-  });
+  }).then(({ createWorkExperience }) => createWorkExperience);
 
 export const postWorkExperienceWithRating = ({ body, token }) =>
   graphqlClient({
@@ -20,4 +20,6 @@ export const postWorkExperienceWithRating = ({ body, token }) =>
     variables: {
       input: body,
     },
-  });
+  }).then(
+    ({ createWorkExperienceWithRating }) => createWorkExperienceWithRating,
+  );

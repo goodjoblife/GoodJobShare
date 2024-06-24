@@ -119,7 +119,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
       const body = {
         ...transferKeyToSnakecase(bodyFromDraft(draft)),
       };
-      await dispatch(
+      const res = await dispatch(
         createWorkExperienceWithRating({
           body,
         }),
@@ -128,6 +128,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
         category: GA_CATEGORY.SHARE_WORK,
         action: GA_ACTION.UPLOAD_SUCCESS,
       });
+      return res;
     },
     [dispatch],
   );
@@ -147,6 +148,9 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
       onSubmitError={onSubmitError}
       onClose={onClose}
       hideProgressBar={hideProgressBar}
+      redirectPathnameOnSuccess={({ experience: { id } }) =>
+        `/experiences/${id}`
+      }
     />
   );
 };
