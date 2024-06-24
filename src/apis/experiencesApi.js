@@ -80,11 +80,21 @@ export const patchReply = ({ id, status, token }) =>
     token,
   });
 
+const renameSectionSubtitle = ({ sections, ...rest }) => ({
+  ...rest,
+  sections: sections.map(({ interview_subtitle, subtitle, ...rest }) => ({
+    subtitle: interview_subtitle || subtitle,
+    ...rest,
+  })),
+});
+
 export const queryExperience = ({ id }) =>
   graphqlClient({
     query: queryExperienceGql,
     variables: { id },
-  }).then(data => data.experience);
+  })
+    .then(data => data.experience)
+    .then(renameSectionSubtitle);
 
 export const queryExperienceLike = async ({ id, token }) => {
   const data = await graphqlClient({
@@ -114,7 +124,8 @@ export const queryRelatedExperiences = async ({ id, start, limit }) => {
     query: queryRelatedExperiencesGql,
     variables: { id, start, limit },
   });
-  return data.experience.relatedExperiences;
+  const relatedExperiences = data.experience.relatedExperiences;
+  return relatedExperiences.map(renameSectionSubtitle);
 };
 
 export const queryExperienceCountApi = async () => {
