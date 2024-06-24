@@ -82,8 +82,8 @@ export const patchReply = ({ id, status, token }) =>
 
 const renameSectionSubtitle = ({ sections, ...rest }) => ({
   ...rest,
-  sections: sections.map(({ interview_subtitle, subtitle, ...rest }) => ({
-    subtitle: interview_subtitle || subtitle,
+  sections: sections.map(({ interview_subtitle, work_subtitle, ...rest }) => ({
+    subtitle: interview_subtitle || work_subtitle,
     ...rest,
   })),
 });

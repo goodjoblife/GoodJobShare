@@ -62,7 +62,7 @@ export const queryExperienceGql = /* GraphQL */ `
 
       ... on WorkExperience {
         sections {
-          subtitle
+          work_subtitle: subtitle
           content
         }
         week_work_time
@@ -130,7 +130,7 @@ export const queryRelatedExperiencesGql = /* GraphQL */ `
 
         ... on WorkExperience {
           sections {
-            subtitle
+            work_subtitle: subtitle
             content
           }
           week_work_time
