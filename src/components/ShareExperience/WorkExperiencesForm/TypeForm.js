@@ -34,7 +34,7 @@ import {
 import { parseSalaryAmount, evolve } from '../utils';
 import { tabType } from '../../../constants/companyJobTitle';
 
-import { createWorkExperience } from 'actions/experiences';
+import { createWorkExperienceWithRating } from 'actions/experiences';
 import { transferKeyToSnakecase } from 'utils/objectUtil';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 
@@ -67,17 +67,18 @@ const bodyFromDraft = evolve({
   company: draft => ({ id: '', query: draft[DATA_KEY_COMPANY_NAME] }),
   region: draft => draft[DATA_KEY_REGION],
   job_title: draft => draft[DATA_KEY_JOB_TITLE],
-  title: '工作經驗分享', // TODO
+  title: draft =>
+    `${draft[DATA_KEY_COMPANY_NAME]} ${draft[DATA_KEY_JOB_TITLE]}`,
   sections: draft =>
-    draft[DATA_KEY_SECTIONS].map(([subtitle, _, content]) => ({
+    draft[DATA_KEY_SECTIONS].map(([subtitle, rating, content]) => ({
       subtitle,
       content,
-    })), // TODO: rating
+      rating,
+    })),
   experience_in_year: draft => {
     const value = draft[DATA_KEY_EXPERIENCE_IN_YEAR];
     return value === head(JOB_TENURE_OPTIONS) ? 0 : parseInt(value, 10);
   },
-  education: '',
   is_currently_employed: draft => draft[DATA_KEY_CURRENTLY_EMPLOYED][0],
   job_ending_time: draft =>
     draft[DATA_KEY_CURRENTLY_EMPLOYED][0] === 'no'
@@ -97,7 +98,6 @@ const bodyFromDraft = evolve({
     };
   },
   week_work_time: draft => parseInt(draft[DATA_KEY_WEEK_WORK_TIME], 10),
-  recommend_to_others: null,
 });
 
 const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
@@ -120,7 +120,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
         ...transferKeyToSnakecase(bodyFromDraft(draft)),
       };
       await dispatch(
-        createWorkExperience({
+        createWorkExperienceWithRating({
           body,
         }),
       );
