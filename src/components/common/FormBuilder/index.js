@@ -155,6 +155,11 @@ const FormBuilder = ({
     }
   }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Prevent tabbing within the modal so we don't jump between pages
+  // -- which is NOT ideal, as it's not a11y friendly.
+  //
+  // We will need to revisit this later after we are able to not render
+  // all questions at once but the active one only.
   useEffect(() => {
     if (!open) return;
 
