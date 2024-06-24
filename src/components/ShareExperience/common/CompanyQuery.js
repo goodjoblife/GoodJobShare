@@ -21,6 +21,7 @@ const mapToAutocompleteList = ({ name, businessNumber }) => ({
     />
   ),
   value: name,
+  businessNumber,
 });
 
 class CompanyQuery extends React.Component {
@@ -76,8 +77,8 @@ class CompanyQuery extends React.Component {
           onChange={this.handleOnChange}
           onSelect={(value, item) => {
             this.handleAutocompleteItems([]);
-            onCompanyId(item.value);
-            return onChange(value);
+            onCompanyId(item.businessNumber);
+            return onChange(item.value);
           }}
           isWarning={submitted && !validator(companyQuery)}
           warningWording="需填寫公司/單位"
