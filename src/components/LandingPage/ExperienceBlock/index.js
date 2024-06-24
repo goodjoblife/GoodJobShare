@@ -11,7 +11,7 @@ import { formatType, formatCreatedAt } from './helper';
 
 const ExperienceBlock = ({ data, size, backable }) => {
   const {
-    _id,
+    id,
     type,
     created_at: createdAt,
     like_count: likeCount,
@@ -21,7 +21,7 @@ const ExperienceBlock = ({ data, size, backable }) => {
 
   return (
     <Link
-      to={{ pathname: `/experiences/${_id}`, state: { backable } }}
+      to={{ pathname: `/experiences/${id}`, state: { backable } }}
       className={cn(styles.container, styles[size])}
     >
       <section className={styles.contentWrapper}>
@@ -34,7 +34,7 @@ const ExperienceBlock = ({ data, size, backable }) => {
           size={size === 'l' ? 'sl' : 'sm'}
           className={styles.heading}
         >
-          {data.company.name} {data.job_title}
+          {data.originalCompanyName} {data.job_title.name}
         </Heading>
 
         {size === 'l' || size === 'm' ? (
@@ -51,9 +51,20 @@ const ExperienceBlock = ({ data, size, backable }) => {
 };
 
 ExperienceBlock.propTypes = {
-  backable: PropTypes.bool,
-  data: PropTypes.object.isRequired,
-  size: PropTypes.oneOf(['s', 'm', 'l']),
+  backable: PropTypes.bool.isRequired,
+  data: PropTypes.shape({
+    created_at: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    job_title: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    like_count: PropTypes.number.isRequired,
+    originalCompanyName: PropTypes.string.isRequired,
+    preview: PropTypes.string.isRequired,
+    reply_count: PropTypes.number.isRequired,
+    type: PropTypes.string.isRequired,
+  }).isRequired,
+  size: PropTypes.oneOf(['s', 'm', 'l']).isRequired,
 };
 
 ExperienceBlock.defaultProps = {

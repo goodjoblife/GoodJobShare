@@ -12,6 +12,7 @@ import {
   pageType as PAGE_TYPE,
   generatePageURL,
 } from 'constants/companyJobTitle';
+import { originalCompanyNameSelector } from '../experienceSelector';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
@@ -40,7 +41,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
           pageName: experience.company.name,
         })}
       >
-        {experience.company.name}
+        {originalCompanyNameSelector(experience)}
       </InfoBlock>
       <InfoBlock label="面試地區">{experience.region}</InfoBlock>
       <InfoBlock
@@ -55,16 +56,16 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
       {expInYearText !== null ? (
         <InfoBlock label="相關職務工作經驗">{expInYearText}</InfoBlock>
       ) : null}
-      {experience.education && (
+      {experience.education ? (
         <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
-      )}
-      {experience.interview_time && (
+      ) : null}
+      {experience.interview_time ? (
         <InfoBlock label="面試時間">
           {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
         </InfoBlock>
-      )}
+      ) : null}
       <InfoBlock label="面試結果">{experience.interview_result}</InfoBlock>
-      {experience.salary && (
+      {experience.salary ? (
         <InfoBlock label="待遇">
           {hideContent ? (
             <React.Fragment>
@@ -75,7 +76,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
             formatSalary(experience.salary)
           )}
         </InfoBlock>
-      )}
+      ) : null}
       <InfoBlock label="整體面試滿意度">
         <RateButtons rate={experience.overall_rating} />
       </InfoBlock>
@@ -94,7 +95,30 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
 };
 
 InterviewInfoBlocks.propTypes = {
-  experience: PropTypes.object.isRequired,
+  experience: PropTypes.shape({
+    company: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    created_at: PropTypes.string,
+    education: PropTypes.string,
+    experience_in_year: PropTypes.number,
+    interview_result: PropTypes.string,
+    interview_sensitive_questions: PropTypes.arrayOf(PropTypes.string),
+    interview_time: PropTypes.shape({
+      month: PropTypes.number,
+      year: PropTypes.number,
+    }),
+    job_title: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    originalCompanyName: PropTypes.string.isRequired,
+    overall_rating: PropTypes.number,
+    region: PropTypes.string,
+    salary: PropTypes.shape({
+      amount: PropTypes.number,
+      type: PropTypes.string,
+    }),
+  }).isRequired,
   hideContent: PropTypes.bool,
 };
 
@@ -102,18 +126,35 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
+      <InfoBlock
+        label="公司"
+        to={generatePageURL({
+          pageType: PAGE_TYPE.COMPANY,
+          pageName: experience.company.name,
+        })}
+      >
+        {originalCompanyNameSelector(experience)}
+      </InfoBlock>
       <InfoBlock label="工作地區">{experience.region}</InfoBlock>
-      <InfoBlock label="職稱">{experience.job_title.name}</InfoBlock>
-      {expInYearText !== null && (
+      <InfoBlock
+        label="職稱"
+        to={generatePageURL({
+          pageType: PAGE_TYPE.JOB_TITLE,
+          pageName: experience.job_title.name,
+        })}
+      >
+        {experience.job_title.name}
+      </InfoBlock>
+      {expInYearText ? (
         <InfoBlock label="自身相關職務工作經驗">{expInYearText}</InfoBlock>
-      )}
-      {experience.education && (
+      ) : null}
+      {experience.education ? (
         <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
-      )}
-      {experience.week_work_time && (
+      ) : null}
+      {experience.week_work_time ? (
         <InfoBlock label="一週工時">{experience.week_work_time}</InfoBlock>
-      )}
-      {experience.salary && (
+      ) : null}
+      {experience.salary ? (
         <InfoBlock label="待遇">
           {hideContent ? (
             <React.Fragment>
@@ -124,8 +165,8 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
             formatSalary(experience.salary)
           )}
         </InfoBlock>
-      )}
-      {experience.recommend_to_others && (
+      ) : null}
+      {experience.recommend_to_others ? (
         <InfoBlock label="是否推薦此工作">
           {experience.recommend_to_others === 'yes' ? (
             <div className={styles.recommendIcon}>
@@ -137,39 +178,56 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
             </div>
           )}
         </InfoBlock>
-      )}
+      ) : null}
     </Fragment>
   );
 };
 
 WorkInfoBlocks.propTypes = {
-  experience: PropTypes.object.isRequired,
+  experience: PropTypes.shape({
+    company: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    education: PropTypes.string,
+    experience_in_year: PropTypes.number,
+    job_title: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    originalCompanyName: PropTypes.string.isRequired,
+    recommend_to_others: PropTypes.string,
+    region: PropTypes.string,
+    salary: PropTypes.shape({
+      amount: PropTypes.number,
+      type: PropTypes.string,
+    }),
+    week_work_time: PropTypes.number,
+  }).isRequired,
   hideContent: PropTypes.bool,
 };
 
 const InternBlocks = ({ experience, hideContent }) => (
   <Fragment>
-    {experience.region && (
+    {experience.region ? (
       <InfoBlock label="實習地區">{experience.region}</InfoBlock>
-    )}
-    {experience.job_title && (
+    ) : null}
+    {experience.job_title ? (
       <InfoBlock label="職稱">{experience.job_title.name}</InfoBlock>
-    )}
-    {experience.education && (
+    ) : null}
+    {experience.education ? (
       <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
-    )}
-    {experience.starting_year && (
+    ) : null}
+    {experience.starting_year ? (
       <InfoBlock label="實習開始的年份">
         {experience.starting_year} 年
       </InfoBlock>
-    )}
-    {experience.period && (
+    ) : null}
+    {experience.period ? (
       <InfoBlock label="實習長度">{experience.period} 月</InfoBlock>
-    )}
-    {experience.week_work_time && (
+    ) : null}
+    {experience.week_work_time ? (
       <InfoBlock label="一週工時">{experience.week_work_time}</InfoBlock>
-    )}
-    {experience.salary && (
+    ) : null}
+    {experience.salary ? (
       <InfoBlock label="實習薪資">
         {hideContent ? (
           <React.Fragment>
@@ -180,17 +238,31 @@ const InternBlocks = ({ experience, hideContent }) => (
           formatSalary(experience.salary)
         )}
       </InfoBlock>
-    )}
-    {experience.overall_rating && (
+    ) : null}
+    {experience.overall_rating ? (
       <InfoBlock label="實習整體滿意度">
         <RateButtons rate={experience.overall_rating} />
       </InfoBlock>
-    )}
+    ) : null}
   </Fragment>
 );
 
 InternBlocks.propTypes = {
-  experience: PropTypes.object.isRequired,
+  experience: PropTypes.shape({
+    education: PropTypes.string,
+    job_title: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    overall_rating: PropTypes.number,
+    period: PropTypes.number,
+    region: PropTypes.string,
+    salary: PropTypes.shape({
+      amount: PropTypes.number,
+      type: PropTypes.string,
+    }),
+    starting_year: PropTypes.number,
+    week_work_time: PropTypes.string,
+  }).isRequired,
   hideContent: PropTypes.bool,
 };
 
@@ -221,7 +293,35 @@ const Aside = ({ experience, hideContent }) => {
 };
 
 Aside.propTypes = {
-  experience: PropTypes.object.isRequired,
+  experience: PropTypes.shape({
+    company: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    created_at: PropTypes.string,
+    education: PropTypes.string,
+    experience_in_year: PropTypes.number,
+    interview_result: PropTypes.string,
+    interview_sensitive_questions: PropTypes.arrayOf(PropTypes.string),
+    interview_time: PropTypes.shape({
+      month: PropTypes.number,
+      year: PropTypes.number,
+    }),
+    job_title: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    originalCompanyName: PropTypes.string.isRequired,
+    overall_rating: PropTypes.number,
+    period: PropTypes.number,
+    recommend_to_others: PropTypes.string,
+    region: PropTypes.string,
+    salary: PropTypes.shape({
+      amount: PropTypes.number,
+      type: PropTypes.string,
+    }),
+    starting_year: PropTypes.number,
+    type: PropTypes.string.isRequired,
+    week_work_time: PropTypes.number,
+  }).isRequired,
   hideContent: PropTypes.bool,
 };
 

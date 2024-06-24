@@ -6,13 +6,22 @@ import AutoCompleteTextInput from 'common/form/AutoCompleteTextInput';
 import { debounce } from 'utils/streamUtils';
 
 import InputTitle from './InputTitle';
-import { getCompaniesSearch } from 'apis/companySearchApi';
+import { fetchSearchCompany } from 'apis/timeAndSalaryApi';
+import AutoCompleteItem from '../AutoCompleteItem';
+import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
 const getItemValue = item => item.label;
 
-const mapToAutocompleteList = l => ({
-  label: Array.isArray(l.name) ? l.name[0] : l.name,
-  value: l.id,
+const mapToAutocompleteList = ({ name, businessNumber }) => ({
+  label: (
+    <AutoCompleteItem
+      pageType={PAGE_TYPE.COMPANY}
+      name={name}
+      businessNumber={businessNumber}
+    />
+  ),
+  value: name,
+  businessNumber,
 });
 
 class CompanyQuery extends React.Component {
@@ -26,7 +35,7 @@ class CompanyQuery extends React.Component {
 
   search = debounce((e, value) => {
     if (value) {
-      return getCompaniesSearch({ key: value })
+      return fetchSearchCompany({ companyName: value, hasData: false })
         .then(r =>
           Array.isArray(r)
             ? this.handleAutocompleteItems(r.map(mapToAutocompleteList))
@@ -68,8 +77,8 @@ class CompanyQuery extends React.Component {
           onChange={this.handleOnChange}
           onSelect={(value, item) => {
             this.handleAutocompleteItems([]);
-            onCompanyId(item.value);
-            return onChange(value);
+            onCompanyId(item.businessNumber);
+            return onChange(item.value);
           }}
           isWarning={submitted && !validator(companyQuery)}
           warningWording="需填寫公司/單位"

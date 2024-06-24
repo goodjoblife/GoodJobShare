@@ -23,7 +23,7 @@ const GradientMask = ({
 
 GradientMask.propTypes = {
   children: PropTypes.element,
-  childrenOnMaskBottom: PropTypes.element,
+  childrenOnMaskBottom: PropTypes.any,
   rootClassName: PropTypes.string,
   show: PropTypes.bool,
 };

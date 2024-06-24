@@ -118,6 +118,7 @@ export const queryJobTitleOverview = jobTitle => async (dispatch, getState) => {
     }
 
     const overviewData = {
+      name: data.name,
       salaryWorkTimes: data.salary_work_times.slice(0, SALARY_WORK_TIMES_LIMIT),
       salaryWorkTimesCount: data.salary_work_times.length,
       salary_distribution: data.salary_distribution,

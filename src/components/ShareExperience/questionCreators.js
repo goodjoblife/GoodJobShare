@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import {
   isNil,
   isEmpty,
-  ifElse,
   map,
-  prop,
   always,
   when,
   last,
@@ -59,15 +57,19 @@ import {
   isValidSalary,
   isNumber,
 } from './utils';
-import { getCompaniesSearch } from 'apis/companySearchApi';
+import { fetchSearchCompany } from 'apis/timeAndSalaryApi';
 import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
 import { employmentTypeOptions, salaryTypeOptions } from './common/optionMap';
 import WorkTimeExample from './WorkTimeExample';
 import Emoji from '../common/icons/Emoji';
-import { tabTypeTranslation } from '../../constants/companyJobTitle';
+import {
+  pageType as PAGE_TYPE,
+  tabTypeTranslation,
+} from '../../constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
 import { salaryHint } from 'utils/formUtils';
 import { useTotalCount } from 'hooks/useCount';
+import AutoCompleteItem from './AutoCompleteItem';
 
 export const createCompanyQuestion = ({ header }) => ({
   title: '公司名稱',
@@ -85,8 +87,17 @@ export const createCompanyQuestion = ({ header }) => ({
   validateOrWarn: value => isEmpty(value) && '請填寫公司名稱',
   placeholder: 'ＯＯ 股份有限公司',
   search: value =>
-    getCompaniesSearch({ key: value }).then(
-      ifElse(isArray, map(prop('name')), always([])),
+    fetchSearchCompany({ companyName: value, hasData: false }).then(
+      map(({ name, businessNumber }) => ({
+        label: (
+          <AutoCompleteItem
+            pageType={PAGE_TYPE.COMPANY}
+            name={name}
+            businessNumber={businessNumber}
+          />
+        ),
+        value: name,
+      })),
     ),
   header,
 });
