@@ -80,11 +80,26 @@ export const patchReply = ({ id, status, token }) =>
     token,
   });
 
-const renameSectionSubtitle = ({ sections, ...rest }) => ({
+const resolveSubtitle = ({ __typename, interview_subtitle, work_subtitle }) => {
+  switch (__typename) {
+    case 'InterviewExperience':
+      return interview_subtitle;
+    case 'WorkExperience':
+      return work_subtitle;
+    default:
+      return null;
+  }
+};
+
+const renameSectionSubtitle = ({ __typename, sections, ...rest }) => ({
   ...rest,
   sections: sections.map(({ interview_subtitle, work_subtitle, ...rest }) => ({
-    subtitle: interview_subtitle || work_subtitle,
     ...rest,
+    subtitle: resolveSubtitle({
+      __typename,
+      interview_subtitle,
+      work_subtitle,
+    }),
   })),
 });
 

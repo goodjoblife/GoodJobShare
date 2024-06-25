@@ -42,6 +42,8 @@ export const queryExperienceGql = /* GraphQL */ `
       title
       created_at
 
+      __typename
+
       ... on InterviewExperience {
         sections {
           interview_subtitle: subtitle
@@ -119,6 +121,8 @@ export const queryRelatedExperiencesGql = /* GraphQL */ `
           type
           amount
         }
+
+        __typename
 
         ... on InterviewExperience {
           sections {
