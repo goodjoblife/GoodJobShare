@@ -80,7 +80,11 @@ export const patchReply = ({ id, status, token }) =>
     token,
   });
 
-const resolveSubtitle = ({ __typename, interview_subtitle, work_subtitle }) => {
+const resolveSubtitleInSection = ({
+  __typename,
+  interview_subtitle,
+  work_subtitle,
+}) => {
   switch (__typename) {
     case 'InterviewExperience':
       return interview_subtitle;
@@ -91,11 +95,11 @@ const resolveSubtitle = ({ __typename, interview_subtitle, work_subtitle }) => {
   }
 };
 
-const renameSectionSubtitle = ({ __typename, sections, ...rest }) => ({
+const resolveSubtitlesInExperience = ({ __typename, sections, ...rest }) => ({
   ...rest,
   sections: sections.map(({ interview_subtitle, work_subtitle, ...rest }) => ({
     ...rest,
-    subtitle: resolveSubtitle({
+    subtitle: resolveSubtitleInSection({
       __typename,
       interview_subtitle,
       work_subtitle,
@@ -109,7 +113,7 @@ export const queryExperience = ({ id }) =>
     variables: { id },
   })
     .then(data => data.experience)
-    .then(renameSectionSubtitle);
+    .then(resolveSubtitlesInExperience);
 
 export const queryExperienceLike = async ({ id, token }) => {
   const data = await graphqlClient({
@@ -140,7 +144,7 @@ export const queryRelatedExperiences = async ({ id, start, limit }) => {
     variables: { id, start, limit },
   });
   const relatedExperiences = data.experience.relatedExperiences;
-  return relatedExperiences.map(renameSectionSubtitle);
+  return relatedExperiences.map(resolveSubtitlesInExperience);
 };
 
 export const queryExperienceCountApi = async () => {
