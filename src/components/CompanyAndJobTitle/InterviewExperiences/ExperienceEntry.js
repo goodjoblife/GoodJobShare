@@ -106,7 +106,7 @@ ExperienceEntry.propTypes = {
     sections: PropTypes.arrayOf(
       PropTypes.shape({
         content: PropTypes.string.isRequired,
-        subtitle: PropTypes.string,
+        subtitle: PropTypes.string.isRequired,
       }),
     ).isRequired,
   }).isRequired,

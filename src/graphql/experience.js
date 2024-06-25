@@ -40,13 +40,15 @@ export const queryExperienceGql = /* GraphQL */ `
         amount
       }
       title
-      sections {
-        subtitle
-        content
-      }
       created_at
 
+      __typename
+
       ... on InterviewExperience {
+        sections {
+          interview_subtitle: subtitle
+          content
+        }
         interview_time {
           year
           month
@@ -61,6 +63,10 @@ export const queryExperienceGql = /* GraphQL */ `
       }
 
       ... on WorkExperience {
+        sections {
+          work_subtitle: subtitle
+          content
+        }
         week_work_time
         recommend_to_others
       }
@@ -115,16 +121,22 @@ export const queryRelatedExperiencesGql = /* GraphQL */ `
           type
           amount
         }
-        sections {
-          subtitle
-          content
-        }
+
+        __typename
 
         ... on InterviewExperience {
+          sections {
+            interview_subtitle: subtitle
+            content
+          }
           overall_rating
         }
 
         ... on WorkExperience {
+          sections {
+            work_subtitle: subtitle
+            content
+          }
           week_work_time
           recommend_to_others
         }
