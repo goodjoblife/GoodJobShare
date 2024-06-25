@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import loadable from '@loadable/component';
 
-import SalaryDistributionChart from 'common/Charts/SalaryDistributionChart';
-import JobTitleDistrubitionChart from 'common/Charts/JobTitleDistrubitionChart';
 import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
 import styles from './SummaryBlock.module.css';
+
+const SalaryDistributionChart = loadable(() =>
+  import('common/Charts/SalaryDistributionChart'),
+);
+const JobTitleDistributionChart = loadable(() =>
+  import('common/Charts/JobTitleDistributionChart'),
+);
 
 const SummaryBlock = ({
   salaryDistribution,
@@ -26,10 +32,10 @@ const SummaryBlock = ({
     {jobAverageSalaries && (
       <React.Fragment>
         <div className={styles.barChart}>
-          <JobTitleDistrubitionChart data={jobAverageSalaries} />
+          <JobTitleDistributionChart data={jobAverageSalaries} />
         </div>
         <div className={styles.barChartSm}>
-          <JobTitleDistrubitionChart data={jobAverageSalaries} />
+          <JobTitleDistributionChart data={jobAverageSalaries} />
         </div>
       </React.Fragment>
     )}
