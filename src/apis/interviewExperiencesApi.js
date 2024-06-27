@@ -8,4 +8,4 @@ export const postInterviewExperience = ({ body, token }) =>
     variables: {
       input: body,
     },
-  });
+  }).then(({ createInterviewExperience }) => createInterviewExperience);

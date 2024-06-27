@@ -8,7 +8,6 @@ import styles from './private.module.css';
 import Radio from 'common/form/Radio';
 import BlockSelect from './BlockSelect';
 import { OptionPropType, ValuePropType } from '../PropTypes';
-import { normalizeOptions } from './utils';
 import useDebouncedConfirm from '../../../useDebouncedConfirm';
 
 const BlockSelectElseRadio = ({
@@ -22,8 +21,6 @@ const BlockSelectElseRadio = ({
   elseOptions,
   multiple,
 }) => {
-  options = normalizeOptions(options);
-
   const hasElse = useMemo(() => {
     if (multiple) {
       return R.contains(elseOptionValue, selected);

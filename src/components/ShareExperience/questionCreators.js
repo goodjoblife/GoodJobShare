@@ -45,6 +45,8 @@ import {
   DATA_KEY_OVERTIME_FREQUENCY,
   DATA_KEY_HAS_OVERTIME_SALARY,
   DATA_KEY_HAS_COMPENSATORY_DAYOFF,
+  DATA_KEY_SECTIONS,
+  SECTION_MIN_LENGTH,
 } from './constants';
 import {
   isArray,
@@ -197,6 +199,16 @@ export const createInterviewRegionQuestion = () => ({
   defaultValue: null,
   required: true,
   validateOrWarn: value => isNil(value) && '需填寫面試地區',
+  options: ['線上面試'].concat(REGION_OPTIONS),
+});
+
+export const createWorkRegionQuestion = () => ({
+  title: '工作地區',
+  type: QUESTION_TYPE.RADIO,
+  dataKey: DATA_KEY_REGION,
+  defaultValue: null,
+  required: true,
+  validateOrWarn: value => isNil(value) && '需填寫工作地區',
   options: REGION_OPTIONS,
 });
 
@@ -378,6 +390,39 @@ export const createWeekWorkTimeQuestion = () => ({
   ),
 });
 
+export const createSectionsQuestion = () => ({
+  title: '至少評價兩個面向',
+  type: QUESTION_TYPE.RADIO_RATING_TEXTAREA_LIST,
+  dataKey: DATA_KEY_SECTIONS,
+  required: true,
+  defaultValue: [],
+  validateOrWarn: items => {
+    if (items.length < 2) return '至少評價兩個面向';
+    for (const [subject, rating, text] of items) {
+      if (rating === 0) return `${subject}：需選取滿意程度`;
+      if (wordCount(text) < SECTION_MIN_LENGTH) {
+        return `${subject}：至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(
+          text,
+        )} 字`;
+      }
+    }
+    return null;
+  },
+  options: [
+    '實際工作內容',
+    '工時狀況',
+    '公司管理方式',
+    '性別友善度',
+    '薪資福利',
+    '自訂面向',
+  ],
+  elseOptionValue: '自訂面向',
+  placeholder: '請輸入自訂標題（例如：環境整潔度）',
+  ratingLabels: RATING_LABELS,
+  footnote: value =>
+    `至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
+});
+
 const OptionEmoji = ({ value, children }) => (
   <Fragment>
     {children}
@@ -480,6 +525,6 @@ export const createSubmitQuestion = ({ type }) => ({
       <Count /> 萬多筆資料哦！
     </span>
   ),
-  type: QUESTION_TYPE.CUSTOMIZED,
+  type: QUESTION_TYPE.EMPTY,
   dataKey: '',
 });

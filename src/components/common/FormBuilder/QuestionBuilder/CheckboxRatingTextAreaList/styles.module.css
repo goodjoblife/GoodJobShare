@@ -1,0 +1,86 @@
+.root {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  .container {
+    flex: 1;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  .textarea {
+    flex: 1;
+  }
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cell {
+  transition: margin-top, max-height, opacity;
+
+  &:not(.hidden) + .cell {
+    margin-top: 11px;
+
+    &.hidden {
+      margin-top: 0;
+    }
+  }
+
+  overflow: hidden;
+  max-height: 100px;
+  &.hidden {
+    max-height: 0;
+  }
+
+  opacity: 1;
+  &.hidden {
+    opacity: 0;
+  }
+}
+
+.button {
+  width: 160px;
+  padding: 0;
+
+  svg {
+    margin-right: 5px;
+  }
+
+  &.link {
+    color: #325bbd !important;
+    text-decoration: underline;
+
+    &:hover {
+      color: #fff !important;
+      text-decoration: none;
+    }
+  }
+}
+
+.subject {
+  padding-top: 11px;
+}
+
+.textarea {
+  position: relative;
+  margin-top: 18px;
+}
+
+.activeCtaButtonGroup {
+  display: flex;
+  justify-content: center;
+}

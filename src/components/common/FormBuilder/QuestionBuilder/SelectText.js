@@ -6,7 +6,6 @@ import TextInput from 'common/form/TextInput';
 import Select from 'common/form/Select';
 import styles from './SelectText.module.css';
 import commonStyles from './styles.module.css';
-import { normalizeOptions } from './utils';
 
 const SelectText = ({
   page,
@@ -28,7 +27,7 @@ const SelectText = ({
   <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
     <div className={cn(styles.inputRow, commonStyles.warnableContainer)}>
       <Select
-        options={normalizeOptions(options)}
+        options={options}
         value={selected}
         onChange={e => onChange([e.target.value ? e.target.value : null, text])}
       />
