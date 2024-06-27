@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { replace } from 'ramda';
 import styles from './AutoCompleteItem.module.css';
 import { pageTypeTranslation } from 'constants/companyJobTitle';
+
+const dropBusinessNumber = replace(/ \(\d+\)$/, '');
 
 const AutoCompleteItem = ({ pageType, name, businessNumber }) => (
   <div className={styles.container}>
@@ -9,7 +12,7 @@ const AutoCompleteItem = ({ pageType, name, businessNumber }) => (
       <span className={styles.badge}>{pageTypeTranslation[pageType]}</span>
     </div>
     <div className={styles.name}>
-      <span>{name}</span>
+      <span>{dropBusinessNumber(name)}</span>
       <span>{businessNumber && `（統編：${businessNumber}）`}</span>
     </div>
   </div>
