@@ -12,8 +12,8 @@ const AutoCompleteItem = ({ pageType, name, businessNumber }) => (
       <span className={styles.badge}>{pageTypeTranslation[pageType]}</span>
     </div>
     <div className={styles.name}>
-      <span>{dropBusinessNumber(name)}</span>
-      <span>{businessNumber && `（統編：${businessNumber}）`}</span>
+      {dropBusinessNumber(name)}{' '}
+      {businessNumber && `（統編：${businessNumber}）`}
     </div>
   </div>
 );
