@@ -1,3 +1,4 @@
+import { ifElse, isNil, identity } from 'ramda';
 import fetchUtil from 'utils/fetchUtil';
 
 import graphqlClient from 'utils/graphqlClient';
@@ -113,7 +114,7 @@ export const queryExperience = ({ id }) =>
     variables: { id },
   })
     .then(data => data.experience)
-    .then(resolveSubtitlesInExperience);
+    .then(ifElse(isNil, identity, resolveSubtitlesInExperience));
 
 export const queryExperienceLike = async ({ id, token }) => {
   const data = await graphqlClient({
