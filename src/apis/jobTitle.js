@@ -3,7 +3,7 @@ import graphqlClient from 'utils/graphqlClient';
 import {
   getJobTitleQuery,
   queryJobTitlesHavingDataGql,
-} from 'graphql/jobTitle';
+} from '../graphql/jobTitle';
 
 export const getJobTitle = jobTitle =>
   graphqlClient({

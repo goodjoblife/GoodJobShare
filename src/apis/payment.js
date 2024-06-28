@@ -5,7 +5,7 @@ import {
   paymentRecord,
   queryMyCurrentSubscriptionGql,
   queryMySubscriptionsGql,
-} from 'graphql/payment';
+} from '../graphql/payment';
 
 export const getSubscriptionPlans = () =>
   graphqlClient({

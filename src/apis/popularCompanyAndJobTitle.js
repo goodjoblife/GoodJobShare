@@ -3,7 +3,7 @@ import graphqlClient from 'utils/graphqlClient';
 import {
   getPopularCompanyAverageSalaryQuery,
   getPopularJobTitleSalaryDistributionQuery,
-} from 'graphql/popularCompanyAndJobTitle';
+} from '../graphql/popularCompanyAndJobTitle';
 
 export const getPopularCompanyAverageSalary = () =>
   graphqlClient({

@@ -3,7 +3,7 @@ import { loginWithToken } from './auth';
 import {
   sendVerifyEmail as sendVerifyEmailApi,
   verifyEmail as verifyEmailApi,
-} from 'graphql/emailVerification';
+} from '../graphql/emailVerification';
 
 export const sendVerifyEmail = ({ email, redirectUrl }) => (
   dispatch,

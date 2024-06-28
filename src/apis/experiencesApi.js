@@ -9,9 +9,9 @@ import {
   queryExperienceLikeGql,
   queryRelatedExperiencesGql,
   queryExperienceCountGql,
-} from 'graphql/experience';
-import { getPopularExperiencesQuery } from 'graphql/popularExperience';
-import { deleteReplyLike, createReplyLike } from 'graphql/reply';
+} from '../graphql/experience';
+import { getPopularExperiencesQuery } from '../graphql/popularExperience';
+import { deleteReplyLike, createReplyLike } from '../graphql/reply';
 
 const getExperienceReplyOptions = {
   start: 0,

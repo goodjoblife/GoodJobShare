@@ -3,7 +3,7 @@ import graphqlClient from 'utils/graphqlClient';
 import {
   sendVerifyEmail as sendVerifyEmailGql,
   verifyEmail as verifyEmailGql,
-} from 'graphql/emailVerification';
+} from '../graphql/emailVerification';
 
 export const sendVerifyEmail = ({ token, email, redirectUrl }) =>
   graphqlClient({

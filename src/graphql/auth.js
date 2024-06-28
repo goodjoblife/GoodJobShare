@@ -1,14 +1,4 @@
-export const facebookLogin = `
-mutation($input: FacebookLoginInput!) {
-  facebookLogin(input: $input) {
-    user {
-      _id
-      facebook_id
-    }
-    token
-  }
-}
-`;
+export { default as facebookLogin } from './facebookLogin.gql';
 
 export const googleLogin = `
 mutation($input: GoogleLoginInput!) {

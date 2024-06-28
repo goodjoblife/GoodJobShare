@@ -4,7 +4,7 @@ import {
   queryMeGql,
   queryMyPublishesGql,
   queryMyPermissionGql,
-} from 'graphql/me';
+} from '../graphql/me';
 
 export const queryHasSearchPermissionApi = ({ token }) =>
   graphqlClient({ query: queryMyPermissionGql, token }).then(

@@ -1,5 +1,5 @@
 import graphqlClient from 'utils/graphqlClient';
-import { createUserFeedback as createUserFeedbackGql } from 'graphql/userFeedback';
+import { createUserFeedback as createUserFeedbackGql } from '../graphql/userFeedback';
 
 export const postUserFeedback = ({ npsScore, content, token }) =>
   graphqlClient({

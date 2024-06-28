@@ -4,7 +4,7 @@ import {
   getSearchCompanyQuery,
   getSearchJobTitleQuery,
   changeSalaryWorkTimeStatus,
-} from 'graphql/timeAndSalary';
+} from '../graphql/timeAndSalary';
 
 const endpoint = '/workings';
 

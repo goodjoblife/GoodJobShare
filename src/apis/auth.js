@@ -1,5 +1,5 @@
 import graphqlClient from 'utils/graphqlClient';
-import { facebookLogin, googleLogin } from 'graphql/auth';
+import { facebookLogin, googleLogin } from '../graphql/auth';
 
 export const postAuthFacebook = ({ accessToken }) =>
   graphqlClient({
