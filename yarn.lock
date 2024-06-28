@@ -1826,6 +1826,11 @@
   resolved "https://registry.npmjs.org/@types/minimatch/-/minimatch-3.0.3.tgz"
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
+"@types/moo@^0.5.9":
+  version "0.5.9"
+  resolved "https://registry.yarnpkg.com/@types/moo/-/moo-0.5.9.tgz#940c6870d85e8eb26b94797ea1b7d4099d099b2a"
+  integrity sha512-ZsFVecFi66jGQ6L41TonEaBhsIVeVftTz6iQKWTctzacHhzYHWvv9S0IyAJi4BhN7vb9qCQ3+kpStP2vbZqmDg==
+
 "@types/node@*":
   version "12.0.10"
   resolved "https://registry.npmjs.org/@types/node/-/node-12.0.10.tgz"
@@ -6079,6 +6084,14 @@ gopd@^1.0.1:
   dependencies:
     get-intrinsic "^1.1.3"
 
+gqlmin@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/gqlmin/-/gqlmin-0.2.2.tgz#e810b833c34d6c133b1ced6023629cb48849c82c"
+  integrity sha512-H2uvEMvDEky+EB1oejqOtU67xNypanfJuy38TPB9D4idMkQdN1hTEDqW3+dHw/xDrt9eaGKJHAuFr+VpeiI5QQ==
+  dependencies:
+    "@types/moo" "^0.5.9"
+    moo "^0.5.2"
+
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.15"
   resolved "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.1.15.tgz"
@@ -8547,6 +8560,11 @@ mkdirp@^0.5.3, mkdirp@^0.5.6:
   integrity sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==
   dependencies:
     minimist "^1.2.6"
+
+moo@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/moo/-/moo-0.5.2.tgz#f9fe82473bc7c184b0d32e2215d3f6e67278733c"
+  integrity sha512-iSAJLHYKnX41mKcJKjqvnAN9sf0LMDTXDEvFv+ffuRR9a1MIuXLjMNL6EsnDHSkKLTWNqQQ5uo61P4EbU4NU+Q==
 
 move-concurrently@^1.0.1:
   version "1.0.1"

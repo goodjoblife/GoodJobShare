@@ -1,10 +1,10 @@
 import R from 'ramda';
 import graphqlClient from 'utils/graphqlClient';
-import { getCompanyQuery, queryCompaniesHavingDataGql } from 'graphql/company';
+import { queryCompanyGql, queryCompaniesHavingDataGql } from 'graphql/company';
 
 export const getCompany = companyName =>
   graphqlClient({
-    query: getCompanyQuery,
+    query: queryCompanyGql,
     variables: { companyName },
   }).then(R.prop('company'));
 
