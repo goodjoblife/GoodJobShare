@@ -1,0 +1,36 @@
+.thumbsContainer {
+  display: flex;
+  align-items: center;
+  width: 9rem;
+  justify-content: space-between;
+  margin-right: 1.5rem;
+}
+
+.thumb {
+  width: 18px;
+  height: 28px;
+}
+
+.thumbContainer {
+  position: relative;
+}
+
+.grayThumb {
+  filter: grayscale(100%) brightness(0.95);
+}
+
+.yellowThumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(0 0, var(--clip-x) 0, var(--clip-x) 100%, 0 100%);
+}
+
+@media (max-width: 430px) {
+  .thumbsContainer {
+    width: 8rem;
+    margin-right: 0.5rem;
+  }
+}

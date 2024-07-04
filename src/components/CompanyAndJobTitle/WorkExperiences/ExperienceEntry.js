@@ -12,6 +12,7 @@ import Bad from 'common/icons/Bad';
 import styles from './WorkExperiences.module.css';
 import { formatSalary, formatSalaryRange } from 'common/formatter';
 import { formatCreatedAt, formatWeekWorkTime } from './helper';
+import OverallRating from 'common/OverallRating';
 
 const createLinkTo = ({ pageType, id }) => ({
   pathname: `/experiences/${id}`,
@@ -19,6 +20,8 @@ const createLinkTo = ({ pageType, id }) => ({
 });
 
 const SNIPPET_SIZE = 30;
+
+const averageSectionRating = 3.8; // for temporary use
 
 const ExperienceEntry = ({
   pageType,
@@ -68,10 +71,16 @@ const ExperienceEntry = ({
                 )}
               </div>
             )}
-            <div className={styles.recommendToOthers}>
-              {recommendToOthers === 'yes' ? <Good /> : <Bad />}
-              {recommendToOthers === 'yes' ? '推' : '不推'}
-            </div>
+            {averageSectionRating !== null ? (
+              <div className={styles.overallRatingWrapper}>
+                <OverallRating rating={averageSectionRating} />
+              </div>
+            ) : (
+              <div className={styles.recommendToOthers}>
+                {recommendToOthers === 'yes' ? <Good /> : <Bad />}
+                {recommendToOthers === 'yes' ? '推' : '不推'}
+              </div>
+            )}
           </div>
         </div>
 

@@ -1,0 +1,60 @@
+@value main-yellow, yellow-light from "../../common/variables.module.css";
+
+.overallRating {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.ratingInfo {
+  display: flex;
+}
+
+.rating {
+  margin: 0 1rem 0 0;
+}
+
+.textYellow {
+  color: main-yellow;
+}
+
+.ratingLabel {
+  margin-left: 10px;
+  display: inline-block;
+  padding: 4px 16px;
+  background-color: yellow-light;
+  border: 1px solid main-yellow;
+  border-radius: 5px;
+  position: relative;
+}
+
+.ratingLabel::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 8px solid transparent;
+  border-right-color: main-yellow;
+}
+
+.ratingLabel::after {
+  content: '';
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 8px solid transparent;
+  border-right-color: yellow-light;
+}
+
+@media (max-width: 430px) {
+  .overallRating {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .rating {
+    margin: 0 0 2px 0;
+  }
+}
