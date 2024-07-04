@@ -7,7 +7,7 @@ import { SITE_NAME } from 'constants/helmetData';
 
 const SearchScreenHelmet = ({ keyword, page }) => {
   const title = `查詢${keyword}的結果 - 第${page}頁`;
-  const description = `查詢${keyword}的薪水、加班狀況、面試心得、工作心得資料的結果`;
+  const description = `查詢${keyword}的薪水、加班狀況、面試心得、評價資料的結果`;
 
   const query = page > 1 ? { q: keyword, p: page } : { q: keyword };
   const url = formatCanonicalPath(
