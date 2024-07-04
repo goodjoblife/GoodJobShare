@@ -5,11 +5,7 @@
 
   .name {
     flex: 1;
-
-    @media (max-width: above-small) {
-      display: flex;
-      flex-direction: column;
-    }
+    word-break: break-all;
   }
 }
 
