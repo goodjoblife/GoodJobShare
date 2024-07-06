@@ -1,17 +1,17 @@
-export const createReplyLike = `
-mutation($input:CreateReplyLikeInput!) {
-  createReplyLike(input: $input) {
-    replyLike {
-      id
+export const createReplyLike = /* GraphQL */ `
+  mutation($input: CreateReplyLikeInput!) {
+    createReplyLike(input: $input) {
+      replyLike {
+        id
+      }
     }
   }
-}
 `;
 
-export const deleteReplyLike = `
-mutation($input:DeleteReplyLikeInput!) {
-  deleteReplyLike(input: $input) {
-    deletedReplyId
+export const deleteReplyLike = /* GraphQL */ `
+  mutation($input: DeleteReplyLikeInput!) {
+    deleteReplyLike(input: $input) {
+      deletedReplyId
+    }
   }
-}
 `;
