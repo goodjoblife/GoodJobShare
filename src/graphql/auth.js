@@ -1,23 +1,23 @@
-export const facebookLogin = `
-mutation($input: FacebookLoginInput!) {
-  facebookLogin(input: $input) {
-    user {
-      _id
-      facebook_id
+export const facebookLogin = /* GraphQL */ `
+  mutation($input: FacebookLoginInput!) {
+    facebookLogin(input: $input) {
+      user {
+        _id
+        facebook_id
+      }
+      token
     }
-    token
   }
-}
 `;
 
-export const googleLogin = `
-mutation($input: GoogleLoginInput!) {
-  googleLogin(input: $input) {
-    user {
-      _id
-      google_id
+export const googleLogin = /* GraphQL */ `
+  mutation($input: GoogleLoginInput!) {
+    googleLogin(input: $input) {
+      user {
+        _id
+        google_id
+      }
+      token
     }
-    token
   }
-}
 `;

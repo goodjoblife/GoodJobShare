@@ -82,25 +82,27 @@ export const queryExperienceLikeGql = /* GraphQL */ `
   }
 `;
 
-export const createInterviewExperience = `
-mutation CreateInterviewExperience($input: CreateInterviewExperienceInput!) {
-  createInterviewExperience(input: $input) {
-    success
-    experience {
-      id
+export const createInterviewExperience = /* GraphQL */ `
+  mutation CreateInterviewExperience($input: CreateInterviewExperienceInput!) {
+    createInterviewExperience(input: $input) {
+      success
+      experience {
+        id
+      }
     }
   }
-}`;
+`;
 
-export const createWorkExperience = `
-mutation CreateWorkExperience($input: CreateWorkExperienceInput!) {
-  createWorkExperience(input: $input) {
-    success
-    experience {
-      id
+export const createWorkExperience = /* GraphQL */ `
+  mutation CreateWorkExperience($input: CreateWorkExperienceInput!) {
+    createWorkExperience(input: $input) {
+      success
+      experience {
+        id
+      }
     }
   }
-}`;
+`;
 
 export const queryRelatedExperiencesGql = /* GraphQL */ `
   query($id: ID!, $start: Int!, $limit: Int!) {
