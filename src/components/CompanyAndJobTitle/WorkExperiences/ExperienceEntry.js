@@ -43,7 +43,7 @@ const ExperienceEntry = ({
       <section className={styles.contentWrapper}>
         <div className={styles.labels}>
           <P size="s" className={styles.date}>
-            工作經驗 · {formatCreatedAt(createdAt)}
+            評價 · {formatCreatedAt(createdAt)}
           </P>
           <div className={styles.salaryRecommendWrapper}>
             {weekWorkTime && canView && (
