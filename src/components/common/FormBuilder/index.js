@@ -253,7 +253,7 @@ export const QuestionPropType = shape({
   validateOrWarn: func,
   onSelect: func,
   search: func,
-  placeholder: string,
+  placeholder: oneOfType([string, func]),
   footnote: oneOfType([string, node, func]),
   options: arrayOf(OptionPropType),
   elseOptions: arrayOf(OptionPropType),

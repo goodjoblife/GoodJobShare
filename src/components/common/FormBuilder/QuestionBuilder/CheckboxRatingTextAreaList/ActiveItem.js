@@ -47,6 +47,11 @@ const ActiveItem = ({
     }
   }, [isElseOption, onChange, onClear, rating, subject, text]);
 
+  placeholder =
+    typeof placeholder === 'function'
+      ? placeholder([subject, rating, text])
+      : placeholder;
+
   return (
     <div className={cn(styles.root, commonStyles.warnableContainer)}>
       <div className={styles.container}>
@@ -62,7 +67,7 @@ const ActiveItem = ({
             defaultValue={defaultSubject}
             value={subject}
             onChange={setSubject}
-            placeholder={placeholder}
+            placeholder={isElseOption ? placeholder : null}
           />
         )}
         <Rating
@@ -80,6 +85,7 @@ const ActiveItem = ({
           title={title}
           dataKey={dataKey}
           defaultValue={defaultText}
+          placeholder={!isElseOption ? placeholder : null}
           value={text}
           onChange={setText}
           footnote={footnote}
@@ -113,7 +119,7 @@ ActiveItem.propTypes = {
   onChange: PropTypes.func.isRequired,
   option: OptionPropType.isRequired,
   page: PropTypes.number.isRequired,
-  placeholder: PropTypes.string,
+  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
 };

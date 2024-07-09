@@ -181,7 +181,7 @@ CheckboxRatingTextAreaList.propTypes = {
   onChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
   page: PropTypes.number.isRequired,
-  placeholder: PropTypes.string,
+  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
   required: PropTypes.bool,
   setShowsNavigation: PropTypes.func.isRequired,

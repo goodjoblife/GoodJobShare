@@ -18,6 +18,7 @@ const Textarea = ({
   onChange,
   footnote,
   warning,
+  ...props
 }) => (
   <div className={className}>
     <div
@@ -31,6 +32,7 @@ const Textarea = ({
           className={cn(styles.textarea)}
           value={value}
           onChange={e => onChange(e.target.value)}
+          {...props}
         />
       </div>
       <p

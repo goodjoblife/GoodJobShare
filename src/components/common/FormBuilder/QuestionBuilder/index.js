@@ -295,7 +295,7 @@ QuestionBuilder.propTypes = {
   onSelect: func,
   options: arrayOf(OptionPropType),
   page: number.isRequired,
-  placeholder: string,
+  placeholder: oneOfType([string, func]),
   ratingLabels: arrayOf(string.isRequired),
   required: bool,
   search: func,
