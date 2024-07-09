@@ -35,11 +35,19 @@ const ActiveItem = ({
   const [rating, setRating] = useState(defaultRating);
   const [text, setText] = useState(defaultText);
 
+  const [hasConfirmed, setConfirmed] = useState(false);
+  const ratingWarning = !rating && text ? '請填寫評分' : null;
+  const textWarning = rating && !text ? '請填寫評論' : null;
+
   const onClear = useCallback(() => {
     onChange(null);
   }, [onChange]);
 
   const onConfirm = useCallback(() => {
+    if (ratingWarning || textWarning) {
+      setConfirmed(true);
+      return;
+    }
     if ((isElseOption && subject) || rating || text) {
       onChange([subject, rating, text]);
     } else {
@@ -78,6 +86,7 @@ const ActiveItem = ({
           value={rating}
           onChange={setRating}
           ratingLabels={ratingLabels}
+          warning={hasConfirmed ? ratingWarning : null}
         />
         <Textarea
           className={styles.textarea}
@@ -89,6 +98,7 @@ const ActiveItem = ({
           value={text}
           onChange={setText}
           footnote={footnote}
+          warning={hasConfirmed ? textWarning : null}
         />
         <div
           className={cn(formStyles.navigationBar, styles.activeCtaButtonGroup)}
