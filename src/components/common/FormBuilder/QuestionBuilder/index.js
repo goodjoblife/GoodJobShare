@@ -69,6 +69,7 @@ const useQuestionNode = ({
   search,
   warning,
   setShowsNavigation,
+  validateOrWarnItem,
   hint,
   placeholder,
   suffix,
@@ -146,6 +147,7 @@ const useQuestionNode = ({
           placeholder={placeholder}
           ratingLabels={ratingLabels}
           footnote={footnote}
+          validateOrWarnItem={validateOrWarnItem}
         />
       );
     case QUESTION_TYPE.CHECKBOX:
@@ -218,6 +220,7 @@ const QuestionBuilder = ({
   search,
   warning,
   setShowsNavigation,
+  validateOrWarnItem,
   hint,
   placeholder,
   suffix,
@@ -243,6 +246,7 @@ const QuestionBuilder = ({
     search,
     warning,
     setShowsNavigation,
+    validateOrWarnItem,
     placeholder,
     suffix,
     hint,
@@ -303,6 +307,7 @@ QuestionBuilder.propTypes = {
   suffix: string,
   title: oneOfType([string, func]).isRequired,
   type: QuestionTypePropType.isRequired,
+  validateOrWarnItem: func,
   value: any,
   warning: string,
 };

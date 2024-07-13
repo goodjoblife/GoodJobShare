@@ -73,6 +73,7 @@ const CheckboxRatingTextAreaList = ({
   onChange,
   warning,
   setShowsNavigation,
+  validateOrWarnItem,
   options: baseOptions,
   elseOptionValue,
   placeholder,
@@ -138,6 +139,7 @@ const CheckboxRatingTextAreaList = ({
         value={activeItem}
         onChange={setActiveItem}
         onCancel={resetActiveOptionIndex}
+        validateOrWarnItem={validateOrWarnItem}
         placeholder={placeholder}
         ratingLabels={ratingLabels}
         footnote={footnote}
@@ -186,6 +188,7 @@ CheckboxRatingTextAreaList.propTypes = {
   required: PropTypes.bool,
   setShowsNavigation: PropTypes.func.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+  validateOrWarnItem: PropTypes.func.isRequired,
   value: PropTypes.arrayOf(CheckboxRatingTextAreaValuePropType).isRequired,
   warning: PropTypes.string,
 };

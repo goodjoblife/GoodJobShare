@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
 import cn from 'classnames';
@@ -24,6 +24,7 @@ const ActiveItem = ({
   placeholder,
   ratingLabels,
   footnote,
+  validateOrWarnItem,
 }) => {
   const [defaultSubject, defaultRating, defaultText] = defaultValue || [
     isElseOption ? '' : optionValue,
@@ -35,17 +36,20 @@ const ActiveItem = ({
   const [rating, setRating] = useState(defaultRating);
   const [text, setText] = useState(defaultText);
 
-  const [hasConfirmed, setConfirmed] = useState(false);
-  const ratingWarning = !rating && text ? '請填寫評分' : null;
-  const textWarning = rating && !text ? '請填寫評論' : null;
+  const [warning, setWarning] = useState(null);
 
   const onClear = useCallback(() => {
     onChange(null);
   }, [onChange]);
 
+  useEffect(() => {
+    setWarning(null);
+  }, [subject, rating, text]);
+
   const onConfirm = useCallback(() => {
-    if (ratingWarning || textWarning) {
-      setConfirmed(true);
+    const warning = validateOrWarnItem([subject, rating, text]);
+    if (warning) {
+      setWarning(warning);
       return;
     }
     if ((isElseOption && subject) || rating || text) {
@@ -53,7 +57,15 @@ const ActiveItem = ({
     } else {
       onClear();
     }
-  }, [isElseOption, onChange, onClear, rating, subject, text]);
+  }, [
+    validateOrWarnItem,
+    isElseOption,
+    onChange,
+    onClear,
+    rating,
+    subject,
+    text,
+  ]);
 
   placeholder =
     typeof placeholder === 'function'
@@ -61,7 +73,11 @@ const ActiveItem = ({
       : placeholder;
 
   return (
-    <div className={cn(styles.root, commonStyles.warnableContainer)}>
+    <div
+      className={cn(styles.root, commonStyles.warnableContainer, {
+        [commonStyles.hasWarning]: !!warning,
+      })}
+    >
       <div className={styles.container}>
         <div className={styles.cell}>
           <Option selected>{optionValue}</Option>
@@ -86,7 +102,6 @@ const ActiveItem = ({
           value={rating}
           onChange={setRating}
           ratingLabels={ratingLabels}
-          warning={hasConfirmed ? ratingWarning : null}
         />
         <Textarea
           className={styles.textarea}
@@ -98,7 +113,7 @@ const ActiveItem = ({
           value={text}
           onChange={setText}
           footnote={footnote}
-          warning={hasConfirmed ? textWarning : null}
+          warning={warning}
         />
         <div
           className={cn(formStyles.navigationBar, styles.activeCtaButtonGroup)}
@@ -132,6 +147,7 @@ ActiveItem.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+  validateOrWarnItem: PropTypes.func.isRequired,
 };
 
 export default ActiveItem;

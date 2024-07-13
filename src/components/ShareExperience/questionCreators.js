@@ -396,15 +396,20 @@ export const createSectionsQuestion = () => ({
   dataKey: DATA_KEY_SECTIONS,
   required: true,
   defaultValue: [],
-  validateOrWarn: items => {
+  validateOrWarn: (items, { validateOrWarnItem }) => {
     if (items.length < 2) return '至少評價兩個面向';
-    for (const [subject, rating, text] of items) {
-      if (rating === 0) return `${subject}：需選取滿意程度`;
-      if (wordCount(text) < SECTION_MIN_LENGTH) {
-        return `${subject}：至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(
-          text,
-        )} 字`;
+    for (const item of items) {
+      const warning = validateOrWarnItem(item);
+      if (warning) {
+        const [subject] = item;
+        return `${subject}：${warning}`;
       }
+    }
+  },
+  validateOrWarnItem: ([subject, rating, text]) => {
+    if (rating === 0) return '需選取滿意程度';
+    if (wordCount(text) < SECTION_MIN_LENGTH) {
+      return `至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(text)} 字`;
     }
     return null;
   },
