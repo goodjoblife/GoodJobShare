@@ -3,7 +3,10 @@ import { tokenSelector } from 'selectors/authSelector';
 import { experienceCountBoxSelector } from 'selectors/countSelector';
 import { queryExperienceCountApi } from 'apis/experiencesApi';
 import { postInterviewExperience as postInterviewExperienceApi } from 'apis/interviewExperiencesApi';
-import { postWorkExperience as postWorkExperienceApi } from 'apis/workExperiencesApi';
+import {
+  postWorkExperience as postWorkExperienceApi,
+  postWorkExperienceWithRating as postWorkExperienceWithRatingApi,
+} from 'apis/workExperiencesApi';
 
 export const SET_COUNT = '@@EXPERIENCES/SET_COUNT';
 
@@ -46,6 +49,19 @@ export const createWorkExperience = ({ body }) => (dispatch, getState) => {
   const token = tokenSelector(state);
 
   return postWorkExperienceApi({
+    body,
+    token,
+  });
+};
+
+export const createWorkExperienceWithRating = ({ body }) => (
+  dispatch,
+  getState,
+) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
+  return postWorkExperienceWithRatingApi({
     body,
     token,
   });

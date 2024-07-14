@@ -107,6 +107,7 @@ const FormBuilder = ({
   } = useQuestion(questions[page], draft);
 
   const [isWarningShown, setWarningShown] = useState(false);
+  const [showsNavigation, setShowsNavigation] = useState(true);
 
   const isSubmittable = useMemo(
     () => findIfQuestionsAcceptDraft(draft)(questions),
@@ -209,11 +210,16 @@ const FormBuilder = ({
                   }
                 }}
                 warning={isWarningShown ? warning : null}
+                setShowsNavigation={setShowsNavigation}
               />
             </AnimatedPager.Page>
           ))}
         </AnimatedPager>
-        <div className={styles.navigationBar}>
+        <div
+          className={cn(styles.navigationBar, {
+            [styles.hidden]: !showsNavigation,
+          })}
+        >
           {hideProgressBar ? null : (
             <div>
               <ProgressBlock page={page} totalPages={questions.length} />
@@ -262,12 +268,11 @@ export const QuestionPropType = shape({
   validateOrWarn: func,
   onSelect: func,
   search: func,
-  placeholder: string,
+  placeholder: oneOfType([string, func]),
   footnote: oneOfType([string, node, func]),
   options: arrayOf(OptionPropType),
   elseOptions: arrayOf(OptionPropType),
   ratingLabels: arrayOf(string.isRequired),
-  renderCustomizedQuestion: func,
 });
 
 FormBuilder.propTypes = {

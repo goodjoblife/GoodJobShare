@@ -141,7 +141,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
         ...transferKeyToSnakecase(bodyFromDraft(draft)),
         extra,
       };
-      await dispatch(
+      const res = await dispatch(
         createSalaryWorkTime({
           body,
         }),
@@ -153,6 +153,8 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
           : GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
         action: GA_ACTION.UPLOAD_SUCCESS,
       });
+
+      return res;
     },
     [dispatch, hideProgressBar],
   );
@@ -182,7 +184,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
       onSubmit={onSubmit}
       onSubmitError={onSubmitError}
       onClose={onClose}
-      redirectPathnameOnSuccess={draft =>
+      redirectPathnameOnSuccess={(_, draft) =>
         generateTabURL({
           pageType: pageType.COMPANY,
           pageName: draft[DATA_KEY_COMPANY_NAME],
