@@ -7,11 +7,8 @@ import {
 } from 'actions/experience';
 
 const preloadedState = {
-  experience: {
-    experienceId: null,
-    // state is related to experienceId
-    state: getUnfetched(),
-  },
+  // id --> box
+  experienceById: {},
 
   relatedExperiences: {
     experienceId: null,
@@ -24,9 +21,12 @@ const preloadedState = {
 };
 
 export default createReducer(preloadedState, {
-  [SET_EXPERIENCE]: (state, { experience }) => ({
+  [SET_EXPERIENCE]: (state, { experienceId, box }) => ({
     ...state,
-    experience,
+    experienceById: {
+      ...state.experienceById,
+      [experienceId]: box,
+    },
   }),
   [SET_RELATED_EXPERIENCES]: (state, { relatedExperiences }) => ({
     ...state,
