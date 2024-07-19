@@ -9,6 +9,7 @@ import rollbar from 'utils/rollbar';
 import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import { pushNotification } from 'actions/toastNotification';
+import { GraphqlError } from 'utils/errors';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
@@ -104,7 +105,17 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
         });
         await dispatch(loginWithToken(token));
       } catch (error) {
-        dispatch(toastNotificationAndRollbarAndThrowError('ER0005', error));
+        if (error instanceof GraphqlError) {
+          if (error && error.codes) {
+            if (error.codes[0] === 'UNAUTHENTICATED') {
+              dispatch(toastNotificationAndRollbarAndThrowError('ER0014'));
+            } else if (error.codes[0] === 'FORBIDDEN') {
+              dispatch(toastNotificationAndRollbarAndThrowError('ER0015'));
+            }
+          }
+        } else {
+          dispatch(toastNotificationAndRollbarAndThrowError('ER0016', error));
+        }
       }
       break;
     default:
@@ -130,9 +141,29 @@ export const loginWithGoogle = credentialResponse => async (
   getState,
 ) => {
   //  TODO: 當登入失敗
+  if (!credentialResponse || !credentialResponse.credential) {
+    dispatch(toastNotificationAndRollbarAndThrowError('ER0009'));
+  }
   const idToken = credentialResponse.credential;
-  const { token } = await postAuthGoogleApi({ idToken });
-  await dispatch(loginWithToken(token));
+  try {
+    const response = await postAuthGoogleApi({ idToken });
+    if (!response || !response.token) {
+      dispatch(toastNotificationAndRollbarAndThrowError('ER0010'));
+    }
+    await dispatch(loginWithToken(response.token));
+  } catch (error) {
+    if (error instanceof GraphqlError) {
+      if (error && error.codes) {
+        if (error.codes[0] === 'UNAUTHENTICATED') {
+          dispatch(toastNotificationAndRollbarAndThrowError('ER0011'));
+        } else if (error.codes[0] === 'FORBIDDEN') {
+          dispatch(toastNotificationAndRollbarAndThrowError('ER0012'));
+        }
+      }
+    } else {
+      dispatch(toastNotificationAndRollbarAndThrowError('ER0013', error));
+    }
+  }
 };
 
 const getMeInfo = token => (dispatch, getState) =>

@@ -36,4 +36,40 @@ export const ERROR_CODE_MSG = {
   ER0008: {
     internal: 'Submit interview failed',
   },
+  ER0009: {
+    external: LOGIN_ERROR_MSG,
+    internal: 'Cannot get id_token from Google auth API',
+  },
+  ER0010: {
+    external: LOGIN_ERROR_MSG,
+    internal: 'Cannot get token from Graphql googleLogin mutation response',
+  },
+  ER0011: {
+    external: LOGIN_ERROR_MSG,
+    internal:
+      'Graphql googleLogin mutation API failed with codes=UNAUTHENTICATED',
+  },
+  ER0012: {
+    external: LOGIN_ERROR_MSG,
+    internal:
+      'Graphql googleLogin mutation API failed with codes=FORBIDDEN, probably this user is deactivated',
+  },
+  ER0013: {
+    external: LOGIN_ERROR_MSG,
+    internal: 'Unknown error during Graphql googleLogin mutation',
+  },
+  ER0014: {
+    external: LOGIN_ERROR_MSG,
+    internal:
+      'Graphql facebookLogin mutation API failed with codes=UNAUTHENTICATED',
+  },
+  ER0015: {
+    external: LOGIN_ERROR_MSG,
+    internal:
+      'Graphql facebookLogin mutation API failed with codes=FORBIDDEN, probably this user is deactivated',
+  },
+  ER0016: {
+    external: LOGIN_ERROR_MSG,
+    internal: 'Unknown error during Graphql facebookLogin mutation',
+  },
 };
