@@ -105,17 +105,16 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
         });
         await dispatch(loginWithToken(token));
       } catch (error) {
-        if (error instanceof GraphqlError) {
-          if (error && error.codes) {
-            if (error.codes[0] === 'UNAUTHENTICATED') {
-              dispatch(toastNotificationAndRollbarAndThrowError('ER0014'));
-            } else if (error.codes[0] === 'FORBIDDEN') {
-              dispatch(toastNotificationAndRollbarAndThrowError('ER0015'));
-            }
+        if (error instanceof GraphqlError && error.codes) {
+          if (error.codes[0] === 'UNAUTHENTICATED') {
+            dispatch(toastNotificationAndRollbarAndThrowError('ER0014'));
+            break;
+          } else if (error.codes[0] === 'FORBIDDEN') {
+            dispatch(toastNotificationAndRollbarAndThrowError('ER0015'));
+            break;
           }
-        } else {
-          dispatch(toastNotificationAndRollbarAndThrowError('ER0016', error));
         }
+        dispatch(toastNotificationAndRollbarAndThrowError('ER0016', error));
       }
       break;
     default:
@@ -147,22 +146,22 @@ export const loginWithGoogle = credentialResponse => async (
   const idToken = credentialResponse.credential;
   try {
     const response = await postAuthGoogleApi({ idToken });
-    if (!response || !response.token) {
+    if (response && response.token) {
+      await dispatch(loginWithToken(response.token));
+    } else {
       dispatch(toastNotificationAndRollbarAndThrowError('ER0010'));
     }
-    await dispatch(loginWithToken(response.token));
   } catch (error) {
-    if (error instanceof GraphqlError) {
-      if (error && error.codes) {
-        if (error.codes[0] === 'UNAUTHENTICATED') {
-          dispatch(toastNotificationAndRollbarAndThrowError('ER0011'));
-        } else if (error.codes[0] === 'FORBIDDEN') {
-          dispatch(toastNotificationAndRollbarAndThrowError('ER0012'));
-        }
+    if (error instanceof GraphqlError && error.codes) {
+      if (error.codes[0] === 'UNAUTHENTICATED') {
+        dispatch(toastNotificationAndRollbarAndThrowError('ER0011'));
+        return;
+      } else if (error.codes[0] === 'FORBIDDEN') {
+        dispatch(toastNotificationAndRollbarAndThrowError('ER0012'));
+        return;
       }
-    } else {
-      dispatch(toastNotificationAndRollbarAndThrowError('ER0013', error));
     }
+    dispatch(toastNotificationAndRollbarAndThrowError('ER0013', error));
   }
 };
 
