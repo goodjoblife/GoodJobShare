@@ -4,12 +4,18 @@ import cn from 'classnames';
 import { generatePath } from 'react-router';
 import R from 'ramda';
 import ChartWrapper from '../../LandingPage/ChartWrapper';
-import SalaryDistributionChart from 'common/Charts/SalaryDistributionChart';
-import JobTitleDistributionChart from 'common/Charts/JobTitleDistrubitionChart';
+import loadable from '@loadable/component';
 import styles from '../../LandingPage/SummarySection.module.css';
 import moduleStyles from './ChartsZone.module.css';
 
 const isEmptyOrNull = R.either(R.isEmpty, R.isNil);
+
+const SalaryDistributionChart = loadable(() =>
+  import('common/Charts/SalaryDistributionChart'),
+);
+const JobTitleDistributionChart = loadable(() =>
+  import('common/Charts/JobTitleDistributionChart'),
+);
 
 const ChartsZone = ({
   experience: {
