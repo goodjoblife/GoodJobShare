@@ -21,8 +21,6 @@ const createLinkTo = ({ pageType, id }) => ({
 
 const SNIPPET_SIZE = 30;
 
-const averageSectionRating = 3.8; // for temporary use
-
 const ExperienceEntry = ({
   pageType,
   data: {
@@ -34,6 +32,7 @@ const ExperienceEntry = ({
     week_work_time: weekWorkTime,
     salary,
     recommend_to_others: recommendToOthers,
+    averageSectionRating,
   },
   size,
   canView,
@@ -71,7 +70,7 @@ const ExperienceEntry = ({
                 )}
               </div>
             )}
-            {averageSectionRating !== null ? (
+            {averageSectionRating ? (
               <div className={styles.overallRatingWrapper}>
                 <OverallRating rating={averageSectionRating} />
               </div>
@@ -112,6 +111,7 @@ const ExperienceEntry = ({
 ExperienceEntry.propTypes = {
   canView: PropTypes.bool.isRequired,
   data: PropTypes.shape({
+    averageSectionRating: PropTypes.number,
     created_at: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     job_title: PropTypes.shape({ name: PropTypes.string.isRequired })
