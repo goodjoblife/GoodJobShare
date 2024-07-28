@@ -5,7 +5,9 @@ import Thumbs from './Thumbs';
 import { Rating, RatingLabel } from './Rating';
 import styles from './Rating.module.css';
 
-const OverallRating = ({ rating, hasRatingLabel }) => {
+const OverallRating = ({ rating: rawRating, hasRatingLabel }) => {
+  const rating = Math.round(rawRating * 100) / 100;
+
   return (
     <div className={cn(styles.overallRating)}>
       <Rating rating={rating} textYellow={hasRatingLabel} />
