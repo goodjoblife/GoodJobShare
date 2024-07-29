@@ -6,7 +6,7 @@ import { Rating, RatingLabel } from './Rating';
 import styles from './Rating.module.css';
 
 const OverallRating = ({ rating: rawRating, hasRatingLabel }) => {
-  const rating = Math.round(rawRating * 100) / 100;
+  const rating = Number(rawRating.toFixed(1));
 
   return (
     <div className={cn(styles.overallRating)}>
