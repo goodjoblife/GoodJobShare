@@ -57,7 +57,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker login ${REGISTRY} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-      - run: docker-compose -f .github/docker-compose-production.yml build
+      - run: docker compose -f .github/docker-compose-production.yml build
       - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:production-${GITHUB_SHA}
       - run: docker push ${REGISTRY}/${REPO}:production-${GITHUB_SHA}
   docker-stage:
@@ -73,7 +73,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker login ${REGISTRY} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-      - run: docker-compose -f .github/docker-compose-stage.yml build
+      - run: docker compose -f .github/docker-compose-stage.yml build
       - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:stage
       - run: docker push ${REGISTRY}/${REPO}:stage
   docker-dev:
@@ -89,7 +89,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker login ${REGISTRY} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-      - run: docker-compose -f .github/docker-compose-dev.yml build
+      - run: docker compose -f .github/docker-compose-dev.yml build
       - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:dev
       - run: docker push ${REGISTRY}/${REPO}:dev
   deploy-stage:
