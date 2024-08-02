@@ -3,6 +3,7 @@
 .block {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   &:not(:last-child) {
     margin-bottom: 20px;
   }

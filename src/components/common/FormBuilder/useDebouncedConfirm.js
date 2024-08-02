@@ -12,7 +12,7 @@ const useDebouncedConfirm = (onConfirm, delay) => {
     if (debouncedConfirmed) {
       setConfirmed(false);
       setDebouncedConfirmed(false);
-      onConfirm();
+      if (onConfirm) onConfirm();
     }
   }, [debouncedConfirmed]); // eslint-disable-line react-hooks/exhaustive-deps
 

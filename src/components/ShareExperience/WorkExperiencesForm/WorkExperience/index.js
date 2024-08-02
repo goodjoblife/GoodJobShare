@@ -46,12 +46,7 @@ class WorkExperience extends React.PureComponent {
     } = this.props;
 
     return (
-      <IconHeadingBlock
-        heading="工作經驗"
-        Icon={Comment2}
-        marginTop
-        requiredText
-      >
+      <IconHeadingBlock heading="評價" Icon={Comment2} marginTop requiredText>
         <div
           style={{
             marginBottom: '24px',
@@ -60,7 +55,7 @@ class WorkExperience extends React.PureComponent {
           <TitleWithValidation
             title={title}
             onChange={handleState('title')}
-            placeholder="ＯＯ 股份有限公司工作經驗分享"
+            placeholder="ＯＯ 股份有限公司評價分享"
             validator={titleValidator}
             submitted={submitted}
             changeValidationStatus={changeValidationStatus}

@@ -12,13 +12,13 @@ import {
 const formatType = type => {
   switch (type) {
     case 'work':
-      return '工作心得';
+      return '評價';
     case 'interview':
       return '面試經驗';
     case 'intern':
       return '實習心得';
     default:
-      return '工作心得';
+      return '評價';
   }
 };
 

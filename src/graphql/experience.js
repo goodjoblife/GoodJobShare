@@ -104,6 +104,16 @@ export const createWorkExperience = /* GraphQL */ `
   }
 `;
 
+export const createWorkExperienceWithRating = `
+mutation CreateWorkExperienceWithRating($input: CreateWorkExperienceWithRatingInput!) {
+  createWorkExperienceWithRating(input: $input) {
+    success
+    experience {
+      id
+    }
+  }
+}`;
+
 export const queryRelatedExperiencesGql = /* GraphQL */ `
   query($id: ID!, $start: Int!, $limit: Int!) {
     experience(id: $id) {

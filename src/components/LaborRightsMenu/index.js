@@ -38,7 +38,7 @@ const LaborRightsMenu = () => {
       R.insert(4, {
         link: shareLink,
         coverUrl: AdvImage,
-        title: '留下你的面試經驗、工作經驗',
+        title: '留下你的面試經驗、評價',
       }),
       R.map(entryToProps),
     );

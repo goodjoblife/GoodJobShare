@@ -53,8 +53,8 @@ const Overview = ({
         />
       </SnippetBlock>
       <SnippetBlock
-        title="工作心得"
-        linkText={`查看 ${workExperiencesCount} 篇完整的工作心得 >>`}
+        title="評價"
+        linkText={`查看 ${workExperiencesCount} 篇完整的評價 >>`}
         linkTo={generateTabURL({
           pageType,
           pageName,

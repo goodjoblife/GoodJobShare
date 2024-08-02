@@ -48,11 +48,11 @@ const ShareExpSection = ({ heading, Subheading }) => {
           <Link to={generateShareWork()} className={styles.item}>
             <img
               src={WorkExperienceImg}
-              alt="分享工作經驗"
+              alt="分享評價"
               className={styles.image}
             />
             <P size="l" Tag="h3" bold className={styles.button}>
-              工作經驗
+              評價
             </P>
             <P className={styles.description} size="l">
               想推薦工作、爆料的，這邊請！

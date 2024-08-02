@@ -81,7 +81,7 @@ const defaultForm = {
   salaryAmount: '',
   weekWorkTime: '',
   recommendToOthers: null,
-  title: '工作經驗分享',
+  title: '評價分享',
   sections: {
     [firstSectionId]: createBlock.sections(firstSectionId)(),
   },
@@ -315,7 +315,7 @@ class WorkExperiencesForm extends React.Component {
       <div>
         <StaticHelmet.ShareWork />
         <Heading size="l" marginBottomS center>
-          工作經驗分享
+          評價分享
         </Heading>
         {this.state.submitted ? (
           <div

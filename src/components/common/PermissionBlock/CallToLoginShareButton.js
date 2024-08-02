@@ -40,7 +40,11 @@ const CallToLoginShareButton = ({ to, share }) => {
     >
       <div className={styles.authenticatedGroup}>
         <AuthenticatedButton
-          className={cn('buttonYellow', styles.button)}
+          className={cn(
+            'buttonYellow',
+            'buttonCircleLoginShare',
+            styles.button,
+          )}
           to={to}
           onClick={share}
         >

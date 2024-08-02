@@ -8,7 +8,6 @@ import styles from './private.module.css';
 import TextInput from 'common/form/TextInput';
 import BlockSelect from './BlockSelect';
 import { OptionPropType, ValuePropType } from '../PropTypes';
-import { normalizeOptions } from './utils';
 
 const BlockSelectElse = ({
   dataKey,
@@ -21,8 +20,6 @@ const BlockSelectElse = ({
   multiple,
   placeholder,
 }) => {
-  options = normalizeOptions(options);
-
   const elseRef = useRef(null);
   const hasElse = useMemo(() => {
     if (multiple) {

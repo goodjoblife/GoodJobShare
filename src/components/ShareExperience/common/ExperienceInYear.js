@@ -12,9 +12,7 @@ const ExperienceInYear = ({ jobTitle, experienceInYear, onChange }) => (
   <div>
     <InputTitle
       text={
-        jobTitle
-          ? `當時已經有幾年擔任${jobTitle}的經驗？`
-          : '自身相關職務工作經驗'
+        jobTitle ? `當時已經有幾年擔任${jobTitle}的經驗？` : '自身相關職務評價'
       }
     />
     <div

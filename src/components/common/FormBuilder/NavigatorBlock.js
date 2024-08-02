@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import styles from './NavigatorBlock.module.css';
 
-const NavigatorButton = ({ className, ...restProps }) => (
+export const NavigatorButton = ({ className, ...restProps }) => (
   <button {...restProps} className={cn(className, styles.btn)} />
 );
 

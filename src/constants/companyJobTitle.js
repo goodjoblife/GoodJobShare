@@ -29,7 +29,7 @@ export const tabType = {
 export const tabTypeTranslation = {
   [OVERVIEW]: '總覽',
   [TIME_AND_SALARY]: '薪水&加班狀況',
-  [WORK_EXPERIENCE]: '工作心得',
+  [WORK_EXPERIENCE]: '評價',
   [INTERVIEW_EXPERIENCE]: '面試心得',
 };
 

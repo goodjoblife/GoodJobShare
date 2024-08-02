@@ -156,6 +156,17 @@
     }
   }
 
+  .buttonLightGray {
+    background-color: gray-light;
+    color: black;
+    @media (min-width: 1025px) {
+      &:hover {
+        color: #fff;
+        background-color: #424242;
+      }
+    }
+  }
+
   .buttonHoverYellow {
     background-color: transparent;
     color: black;
@@ -277,6 +288,10 @@
 
   .buttonYellow {
     background-color: main-yellow;
+    color: black;
+  }
+
+  .buttonCircleLoginShare {
     height: 36px;
     border: 1px solid transparent;
     border-radius: 1.5em;

@@ -23,9 +23,9 @@ export const DATA_KEY_HAS_OVERTIME_SALARY = 'hasOvertimeSalary';
 export const DATA_KEY_HAS_COMPENSATORY_DAYOFF = 'hasCompensatoryDayoff';
 export const DATA_KEY_QUESTIONS = 'interviewQas';
 export const DATA_KEY_SENSITIVE_QUESTIONS = 'sensitiveQuestions';
+export const DATA_KEY_SECTIONS = 'sections';
 
 export const REGION_OPTIONS = [
-  '線上面試',
   '基隆市',
   '臺北市',
   '新北市',
@@ -57,6 +57,8 @@ export const RATING_LABELS = ['差', '普通', '不錯啦～', '很好！', '大
 export const COURSE_MIN_LENGTH = 50;
 
 export const SUGGESTIONS_MIN_LENGTH = 50;
+
+export const SECTION_MIN_LENGTH = 30;
 
 export const JOB_TENURE_OPTIONS = [
   '不到 1 年',

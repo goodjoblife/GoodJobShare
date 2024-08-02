@@ -166,7 +166,7 @@ describe('interviewFormCheck tests', () => {
     salaryAmount: 0,
     weekWorkTime: '',
     recommendToOthers: null,
-    title: '工作經驗分享',
+    title: '評價分享',
     sections: {
       1: {
         subtitle: 'test',
@@ -192,7 +192,7 @@ describe('interviewFormCheck tests', () => {
       education: '大學',
       salaryType: 'month',
       salaryAmount: 50000,
-      title: '工作經驗分享',
+      title: '評價分享',
       weekWorkTime: 40,
       recommendToOthers: 'no',
       sections: {
@@ -211,7 +211,7 @@ describe('interviewFormCheck tests', () => {
       companyQuery: '台積電',
       region: '台北市',
       jobTitle: '硬體工程師',
-      title: '工作經驗分享',
+      title: '評價分享',
       sections: {
         1: {
           subtitle: 'test',

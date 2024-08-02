@@ -86,7 +86,7 @@ const LandingPage = () => {
       <Section padding>
         <Wrapper size="l">
           <Heading size="l" center marginBottom>
-            最新面試、工作心得
+            最新面試、評價
           </Heading>
           <Columns
             Item={ExperienceBlock}
