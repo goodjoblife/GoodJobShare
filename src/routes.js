@@ -4,7 +4,7 @@ import LaborRightsMenu from './components/LaborRightsMenu';
 import LaborRightsSingle from './components/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
 import SalaryWorkTimeSearchScreen from './components/TimeAndSalary/SearchScreen';
-import ExperienceDetail from './containers/ExperienceDetail';
+import ExperienceDetail from './components/ExperienceDetail';
 import NotFound from './components/common/NotFound';
 import ShareExperience from './components/ShareExperience';
 import ShareExperienceEntry from './components/ShareExperience/Entry';

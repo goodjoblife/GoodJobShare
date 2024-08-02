@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import ReactGA from 'react-ga4';
 
 import TextInput from 'common/form/TextInput';
 import Magnifiner from 'common/icons/Magnifiner';
@@ -12,14 +13,33 @@ import {
   pageTypeTranslation,
   tabTypeTranslation,
 } from 'constants/companyJobTitle';
+import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 
-const Searchbar = ({ className, label, placeholder, onSubmit }) => {
+const Searchbar = ({ className, label, placeholder, onSubmit, pageType }) => {
   const [searchText, setSearchText] = useState('');
   const ref = useRef(null);
 
   useDebounce(
     () => {
       onSubmit(searchText);
+      switch (pageType) {
+        case pageTypes.COMPANY:
+          ReactGA.event({
+            category: GA_CATEGORY.COMPANY_PAGE,
+            action: GA_ACTION.SEARCH_JOB_TITLE,
+            label: searchText,
+          });
+          break;
+        case pageTypes.JOB_TITLE:
+          ReactGA.event({
+            category: GA_CATEGORY.JOB_TITLE_PAGE,
+            action: GA_ACTION.SEARCH_COMPANY,
+            label: searchText,
+          });
+          break;
+        default:
+          break;
+      }
     },
     300,
     [searchText],
@@ -58,6 +78,7 @@ Searchbar.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
+  pageType: PropTypes.string,
   placeholder: PropTypes.string,
 };
 
@@ -107,7 +128,12 @@ const useSearchbar = ({ pageType, tabType }) => {
 
   const WrappedSearchbar = useCallback(
     () => (
-      <Searchbar label={label} placeholder={placeholder} onSubmit={setFilter} />
+      <Searchbar
+        label={label}
+        placeholder={placeholder}
+        onSubmit={setFilter}
+        pageType={pageType}
+      />
     ),
     [label, placeholder, setFilter],
   );

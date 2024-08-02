@@ -1,12 +1,9 @@
 import { path } from 'ramda';
+import { getUnfetched } from 'utils/fetchBox';
 
-export const experienceCabinSelector = path(['experience', 'experience']);
-
-export const experienceStateSelector = path([
-  'experience',
-  'experience',
-  'state',
-]);
+export const experienceBoxSelectorAtId = experienceId => state => {
+  return state.experience.experienceById[experienceId] || getUnfetched();
+};
 
 export const relatedExperiencesCabinSelector = path([
   'experience',
