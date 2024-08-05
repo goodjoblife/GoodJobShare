@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 import { Element as ScrollElement, scroller } from 'react-scroll';
 import cn from 'classnames';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
 import Modal from 'common/Modal';
@@ -46,7 +46,7 @@ import {
 } from 'constants/companyJobTitle';
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
-import { experienceStateSelector } from 'selectors/experienceSelector';
+import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import Button from 'common/button/Button';
 
 const MODAL_TYPE = {
@@ -72,10 +72,16 @@ const pageTypeToNameSelector = {
   [PAGE_TYPE.JOB_TITLE]: R.path(['job_title', 'name']),
 };
 
+const useExperienceBox = experienceId => {
+  const selector = useMemo(() => experienceBoxSelectorAtId(experienceId), [
+    experienceId,
+  ]);
+  return useSelector(selector);
+};
+
 const ExperienceDetail = ({ ...props }) => {
   const experienceId = useExperienceId();
-
-  const experienceState = useSelector(experienceStateSelector);
+  const experienceBox = useExperienceBox(experienceId);
 
   const dispatch = useDispatch();
 
@@ -115,11 +121,8 @@ const ExperienceDetail = ({ ...props }) => {
 
   useTrace(experienceId);
 
-  const pageType = R.pathOr(
-    PAGE_TYPE.COMPANY,
-    ['location', 'state', 'pageType'],
-    props,
-  );
+  const location = useLocation();
+  const pageType = R.pathOr(PAGE_TYPE.COMPANY, ['state', 'pageType'], location);
 
   const scrollToCommentZone = useCallback(() => {
     scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
@@ -204,8 +207,8 @@ const ExperienceDetail = ({ ...props }) => {
     );
   }, [handleIsModalOpen]);
 
-  if (isError(experienceState)) {
-    if (isUiNotFoundError(experienceState.error)) {
+  if (isError(experienceBox)) {
+    if (isUiNotFoundError(experienceBox.error)) {
       return <NotFound />;
     }
     return null;
@@ -213,12 +216,12 @@ const ExperienceDetail = ({ ...props }) => {
 
   return (
     <main>
-      {isFetched(experienceState) && <Seo experience={experienceState.data} />}
+      {isFetched(experienceBox) && <Seo experience={experienceBox.data} />}
       <Section bg="white" paddingBottom className={styles.section}>
         <Wrapper size="m">
           <div>
             {/* 文章區塊  */}
-            {!isFetched(experienceState) ? (
+            {!isFetched(experienceBox) ? (
               <Loader />
             ) : (
               <Fragment>
@@ -227,18 +230,17 @@ const ExperienceDetail = ({ ...props }) => {
                     data={generateBreadCrumbData({
                       pageType,
                       pageName: pageTypeToNameSelector[pageType](
-                        experienceState.data,
+                        experienceBox.data,
                       ),
-                      tabType:
-                        experienceTypeToTabType[experienceState.data.type],
-                      experience: experienceState.data,
+                      tabType: experienceTypeToTabType[experienceBox.data.type],
+                      experience: experienceBox.data,
                     })}
                   />
                 </div>
-                <ExperienceHeading experience={experienceState.data} />
+                <ExperienceHeading experience={experienceBox.data} />
                 {reportZone}
                 <Article
-                  experience={experienceState.data}
+                  experience={experienceBox.data}
                   hideContent={!canView}
                   onClickMsgButton={scrollToCommentZone}
                 />
@@ -246,13 +248,13 @@ const ExperienceDetail = ({ ...props }) => {
             )}
           </div>
         </Wrapper>
-        {isFetched(experienceState) && (
+        {isFetched(experienceBox) && (
           <React.Fragment>
             <Wrapper size="m">
-              <MoreExperiencesBlock experience={experienceState.data} />
+              <MoreExperiencesBlock experience={experienceBox.data} />
             </Wrapper>
             <Wrapper size="l">
-              <ChartsZone experience={experienceState.data} />
+              <ChartsZone experience={experienceBox.data} />
             </Wrapper>
           </React.Fragment>
         )}
