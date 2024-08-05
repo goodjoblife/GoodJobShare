@@ -69,6 +69,7 @@ export const queryExperienceGql = /* GraphQL */ `
         }
         week_work_time
         recommend_to_others
+        averageSectionRating
       }
     }
   }
@@ -151,6 +152,7 @@ export const queryRelatedExperiencesGql = /* GraphQL */ `
           }
           week_work_time
           recommend_to_others
+          averageSectionRating
         }
       }
     }

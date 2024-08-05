@@ -10,7 +10,7 @@ const Rating = ({ rating, textYellow }) => (
       [styles.textYellow]: !textYellow,
     })}
   >
-    {rating} 分
+    {rating.toFixed(1)} 分
   </div>
 );
 

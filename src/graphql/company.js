@@ -55,6 +55,7 @@ export const getCompanyQuery = /* GraphQL */ `
         reply_count
         like_count
         recommend_to_others
+        averageSectionRating
       }
       salary_work_times {
         id
