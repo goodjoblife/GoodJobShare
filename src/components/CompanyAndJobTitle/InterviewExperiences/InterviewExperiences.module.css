@@ -37,7 +37,8 @@
 
   > .salaryRatingWrapper {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
     margin: 12px 0;
 
     @media (min-width: above-small) {

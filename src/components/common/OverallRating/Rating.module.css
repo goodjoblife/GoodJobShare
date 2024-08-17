@@ -1,4 +1,4 @@
-@value main-yellow, yellow-light from "../../common/variables.module.css";
+@value below-mobile, main-yellow, yellow-light from "../../common/variables.module.css";
 
 .overallRating {
   display: flex;
@@ -11,7 +11,7 @@
 }
 
 .rating {
-  margin: 0 1rem 0 0;
+  margin: 0 0.5rem 0 0;
 }
 
 .textYellow {
@@ -19,7 +19,7 @@
 }
 
 .ratingLabel {
-  margin-left: 10px;
+  margin-left: 1.5rem;
   display: inline-block;
   padding: 4px 16px;
   background-color: yellow-light;
@@ -48,13 +48,11 @@
   border-right-color: yellow-light;
 }
 
-@media (max-width: 430px) {
+@media (max-width: below-mobile) {
   .overallRating {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
   }
-
-  .rating {
-    margin: 0 0 2px 0;
+  .ratingLabel {
+    margin-left: 0.5rem;
   }
 }

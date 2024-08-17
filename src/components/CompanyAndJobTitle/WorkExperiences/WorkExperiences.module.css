@@ -42,13 +42,8 @@
 
   > .salaryRecommendWrapper {
     display: flex;
-    justify-content: space-between;
     margin: 12px 0;
-
-    @media (min-width: above-small) {
-      margin: 0;
-      justify-content: flex-start;
-    }
+    flex-direction: column;
 
     .weekWorkTime,
     .salary,
@@ -57,12 +52,6 @@
       align-items: center;
       font-size: 15px;
       color: #424242;
-    }
-
-    .salary,
-    .weekWorkTime,
-    .recommendToOthers {
-      margin-left: 35px;
 
       svg {
         margin-right: 7px;
@@ -75,6 +64,22 @@
     .salary.locked {
       svg {
         color: #ed0d5e;
+      }
+    }
+
+    .rowWrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: flex-start;
+    }
+
+    @media (min-width: above-small) {
+      margin: 0;
+      justify-content: flex-start;
+
+      .rowWrapper {
+        gap: 2.5rem;
       }
     }
   }
@@ -154,5 +159,5 @@
 }
 
 .overallRatingWrapper {
-  margin-left: 1.5rem;
+  margin: 0;
 }

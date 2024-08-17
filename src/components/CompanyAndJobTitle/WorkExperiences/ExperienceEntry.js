@@ -45,41 +45,44 @@ const ExperienceEntry = ({
             評價 · {formatCreatedAt(createdAt)}
           </P>
           <div className={styles.salaryRecommendWrapper}>
-            {weekWorkTime && canView && (
-              <div className={styles.weekWorkTime}>
-                <Clock />
-                {formatWeekWorkTime(weekWorkTime)}
-              </div>
-            )}
-            {salary && (
-              <div
-                className={cn(styles.salary, {
-                  [styles.locked]: !canView,
-                })}
-              >
-                {canView ? (
-                  <React.Fragment>
-                    <Coin />
-                    {formatSalary(salary)}
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    <FontAwesomeIcon icon={faLock} />
-                    {formatSalaryRange(salary)}
-                  </React.Fragment>
-                )}
-              </div>
-            )}
-            {averageSectionRating ? (
-              <div className={styles.overallRatingWrapper}>
-                <OverallRating rating={averageSectionRating} />
-              </div>
-            ) : (
-              <div className={styles.recommendToOthers}>
-                {recommendToOthers === 'yes' ? <Good /> : <Bad />}
-                {recommendToOthers === 'yes' ? '推' : '不推'}
-              </div>
-            )}
+            <div className={styles.rowWrapper}>
+              {weekWorkTime && canView && (
+                <div className={styles.weekWorkTime}>
+                  <Clock />
+                  {formatWeekWorkTime(weekWorkTime)}
+                </div>
+              )}
+              {salary && (
+                <div
+                  className={cn(styles.salary, {
+                    [styles.locked]: !canView,
+                  })}
+                >
+                  {canView ? (
+                    <React.Fragment>
+                      <Coin />
+                      {formatSalary(salary)}
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      <FontAwesomeIcon icon={faLock} />
+                      {formatSalaryRange(salary)}
+                    </React.Fragment>
+                  )}
+                </div>
+              )}
+
+              {averageSectionRating ? (
+                <div className={styles.overallRatingWrapper}>
+                  <OverallRating rating={averageSectionRating} />
+                </div>
+              ) : (
+                <div className={styles.recommendToOthers}>
+                  {recommendToOthers === 'yes' ? <Good /> : <Bad />}
+                  {recommendToOthers === 'yes' ? '推' : '不推'}
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

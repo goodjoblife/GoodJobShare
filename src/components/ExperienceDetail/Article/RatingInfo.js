@@ -27,7 +27,7 @@ RecommendationIcon.propTypes = {
 const RatingInfo = ({ rating, recommend }) => {
   if (rating > 0) {
     return (
-      <InfoBlock label="整體評價">
+      <InfoBlock label="整體評價" noMargin>
         <OverallRating rating={rating} hasRatingLabel />
       </InfoBlock>
     );
