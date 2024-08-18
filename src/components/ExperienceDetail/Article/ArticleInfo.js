@@ -123,7 +123,6 @@ InterviewInfoBlocks.propTypes = {
 
 const WorkInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
-  const averageSectionRating = 3.62; // for temporary use
   return (
     <Fragment>
       <InfoBlock
@@ -167,7 +166,7 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
         </InfoBlock>
       ) : null}
       <RatingInfo
-        rating={averageSectionRating}
+        rating={experience.averageSectionRating}
         recommend={experience.recommend_to_others}
       />
     </Fragment>
@@ -176,6 +175,7 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
 
 WorkInfoBlocks.propTypes = {
   experience: PropTypes.shape({
+    averageSectionRating: PropTypes.number,
     company: PropTypes.shape({
       name: PropTypes.string,
     }),
