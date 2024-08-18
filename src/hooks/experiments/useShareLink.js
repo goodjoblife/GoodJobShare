@@ -4,19 +4,23 @@ import { path } from 'ramda';
 import {
   generateShareTimeSalaryTypeForm,
   generateShareInterviewTypeForm,
+  generateShareWork,
 } from 'common/ShareExpSection/shareLinkTo';
 
 const ACTIONS = [
   {
-    prob: 0.5,
+    prob: 0.25,
     generateTo: generateShareTimeSalaryTypeForm,
   },
   {
-    prob: 0.5,
+    prob: 0.25,
     generateTo: generateShareInterviewTypeForm,
   },
+  {
+    prob: 0.5,
+    generateTo: generateShareWork,
+  },
 ];
-
 const randomAction = actions => {
   const r = Math.random();
   let accuProb = 0.0;
