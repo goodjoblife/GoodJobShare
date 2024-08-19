@@ -84,7 +84,6 @@ const JobTitlePageProvider = () => {
             pageType={pageType}
             pageName={pageName}
             page={page}
-            canView={canView}
             tabType={tabType.TIME_AND_SALARY}
           />
         )}
