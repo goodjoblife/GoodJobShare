@@ -30,7 +30,7 @@ module.exports = {
     'no-unused-vars': 'error',
     'react/no-deprecated': 'error',
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
+    'react-hooks/exhaustive-deps': 'error',
     'prettier/prettier': 'error',
     'no-use-before-define': 'error',
     'react/prop-types': 'error',
