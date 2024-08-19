@@ -71,7 +71,7 @@ const questions = [
   createSectorQuestion(),
   createEmployTypeQuestion(),
   createGenderQuestion(),
-  createRequiredSalaryQuestion(),
+  createRequiredSalaryQuestion({ type: tabType.TIME_AND_SALARY }),
   createExperienceInYearQuestion(),
   createDayPromisedWorkTimeQuestion(),
   createDayRealWorkTimeQuestion(),
