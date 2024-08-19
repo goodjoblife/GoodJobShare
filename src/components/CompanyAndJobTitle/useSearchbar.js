@@ -135,7 +135,7 @@ const useSearchbar = ({ pageType, tabType }) => {
         pageType={pageType}
       />
     ),
-    [label, placeholder, setFilter],
+    [label, placeholder, setFilter, pageType],
   );
 
   return {
