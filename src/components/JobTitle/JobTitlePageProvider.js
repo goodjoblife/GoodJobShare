@@ -18,14 +18,11 @@ import {
 } from 'constants/linkTo';
 import { fetchJobTitle } from 'actions/jobTitle';
 import {
-  interviewExperiences,
-  workExperiences,
-  salaryWorkTimes,
-  salaryWorkTimeStatistics,
-  salaryDistribution,
-  averageWeekWorkTime,
-  overtimeFrequencyCount,
-  status,
+  interviewExperiences as interviewExperiencesSelector,
+  workExperiences as workExperiencesSelector,
+  salaryWorkTimes as salaryWorkTimesSelector,
+  salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
+  status as statusSelector,
   jobTitle as jobTitleSelector,
 } from 'selectors/companyAndJobTitle';
 import { usePageName, pageNameSelector } from './usePageName';
@@ -49,19 +46,22 @@ const JobTitlePageProvider = () => {
     state => {
       const jobTitle = jobTitleSelector(pageName)(state);
       return {
-        status: status(jobTitle),
-        interviewExperiences: interviewExperiences(jobTitle),
-        workExperiences: workExperiences(jobTitle),
-        salaryWorkTimes: salaryWorkTimes(jobTitle),
-        salaryWorkTimeStatistics: salaryWorkTimeStatistics(jobTitle),
-        salaryDistribution: salaryDistribution(jobTitle),
-        averageWeekWorkTime: averageWeekWorkTime(jobTitle),
-        overtimeFrequencyCount: overtimeFrequencyCount(jobTitle),
+        status: statusSelector(jobTitle),
+        interviewExperiences: interviewExperiencesSelector(jobTitle),
+        workExperiences: workExperiencesSelector(jobTitle),
+        salaryWorkTimes: salaryWorkTimesSelector(jobTitle),
+        salaryWorkTimeStatistics: salaryWorkTimeStatisticsSelector(jobTitle),
       };
     },
     [pageName],
   );
-  const data = useSelector(selector);
+  const {
+    status,
+    interviewExperiences,
+    workExperiences,
+    salaryWorkTimes,
+    salaryWorkTimeStatistics,
+  } = useSelector(selector);
 
   return (
     <Switch>
@@ -80,11 +80,13 @@ const JobTitlePageProvider = () => {
         exact
         render={() => (
           <CompanyJobTitleTimeAndSalary
-            {...data}
             pageType={pageType}
             pageName={pageName}
             page={page}
             tabType={tabType.TIME_AND_SALARY}
+            status={status}
+            salaryWorkTimes={salaryWorkTimes}
+            salaryWorkTimeStatistics={salaryWorkTimeStatistics}
           />
         )}
       />
@@ -93,12 +95,13 @@ const JobTitlePageProvider = () => {
         exact
         render={() => (
           <InterviewExperiences
-            {...data}
             pageType={pageType}
             pageName={pageName}
             page={page}
             canView={canView}
             tabType={tabType.INTERVIEW_EXPERIENCE}
+            interviewExperiences={interviewExperiences}
+            status={status}
           />
         )}
       />
@@ -107,12 +110,13 @@ const JobTitlePageProvider = () => {
         exact
         render={() => (
           <WorkExperiences
-            {...data}
             pageType={pageType}
             pageName={pageName}
             page={page}
             canView={canView}
             tabType={tabType.WORK_EXPERIENCE}
+            workExperiences={workExperiences}
+            status={status}
           />
         )}
       />
