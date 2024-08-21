@@ -4,12 +4,12 @@ import TimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
-import { fetchCompany } from 'actions/company';
+import { queryCompanyTimeAndSalary } from 'actions/company';
 import {
   salaryWorkTimes as salaryWorkTimesSelector,
   salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
   status as statusSelector,
-  company as companySelector,
+  companyTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
 import { usePageName, pageNameSelector } from './usePageName';
@@ -17,7 +17,7 @@ import { usePageName, pageNameSelector } from './usePageName';
 const useTimeAndSalaryBox = pageName => {
   const selector = useCallback(
     state => {
-      const company = companySelector(pageName)(state);
+      const company = timeAndSalaryBoxSelectorByName(pageName)(state);
       return {
         status: statusSelector(company),
         salaryWorkTimes: salaryWorkTimesSelector(company),
@@ -37,7 +37,7 @@ const CompanyTimeAndSalaryProvider = () => {
   const page = usePage();
 
   useEffect(() => {
-    dispatch(fetchCompany(pageName));
+    dispatch(queryCompanyTimeAndSalary(pageName));
   }, [dispatch, pageName]);
 
   const [, fetchPermission] = usePermission();
@@ -70,7 +70,7 @@ CompanyTimeAndSalaryProvider.fetchData = ({
 }) => {
   const params = paramsSelector(props);
   const pageName = pageNameSelector(params);
-  return dispatch(fetchCompany(pageName));
+  return dispatch(queryCompanyTimeAndSalary(pageName));
 };
 
 export default CompanyTimeAndSalaryProvider;
