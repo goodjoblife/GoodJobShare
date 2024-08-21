@@ -67,6 +67,7 @@ import Emoji from '../common/icons/Emoji';
 import {
   pageType as PAGE_TYPE,
   tabTypeTranslation,
+  tabType,
 } from '../../constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
 import { salaryHint } from 'utils/formUtils';
@@ -284,8 +285,8 @@ export const createJobTenureQuestion = () => ({
   options: JOB_TENURE_OPTIONS,
 });
 
-export const createRequiredSalaryQuestion = () => ({
-  title: '薪資',
+export const createRequiredSalaryQuestion = ({ type }) => ({
+  title: type === tabType.INTERVIEW_EXPERIENCE ? '面談薪資' : '薪資',
   type: QUESTION_TYPE.SELECT_TEXT,
   dataKey: DATA_KEY_SALARY,
   defaultValue: [null, ''],
@@ -310,15 +311,17 @@ export const createRequiredSalaryQuestion = () => ({
     else return hint;
   },
   footnote:
-    '薪資請以包含平常的薪資、分紅、年終、績效獎金等實質上獲得的價值去計算。',
+    type === tabType.INTERVIEW_EXPERIENCE
+      ? '若錄取，請以包含平常的薪資、分紅、年終、獎金等預期會獲得的價值計算'
+      : '薪資請以包含平常的薪資、分紅、年終、績效獎金等實質上獲得的價值去計算。',
 });
 
-export const createSalaryQuestion = () => {
+export const createSalaryQuestion = ({ type }) => {
   const {
     required,
     validateOrWarn,
     ...question
-  } = createRequiredSalaryQuestion();
+  } = createRequiredSalaryQuestion({ type });
   return {
     ...question,
     validateOrWarn: ([type, amount]) =>
