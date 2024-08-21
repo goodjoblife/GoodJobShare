@@ -4,7 +4,6 @@ import { generatePath } from 'react-router';
 import { Switch, Route } from 'react-router-dom';
 import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
-import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
 import NotFound from 'common/NotFound';
 import Redirect from 'common/routing/Redirect';
 import { paramsSelector } from 'common/routing/selectors';
@@ -12,7 +11,6 @@ import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import {
-  companySalaryWorkTimesPath,
   companyInterviewExperiencesPath,
   companyWorkExperiencesPath,
 } from 'constants/linkTo';
@@ -55,13 +53,9 @@ const CompanyPageProvider = () => {
     },
     [pageName],
   );
-  const {
-    status,
-    interviewExperiences,
-    workExperiences,
-    salaryWorkTimes,
-    salaryWorkTimeStatistics,
-  } = useSelector(selector);
+  const { status, interviewExperiences, workExperiences } = useSelector(
+    selector,
+  );
 
   return (
     <Switch>
@@ -74,21 +68,6 @@ const CompanyPageProvider = () => {
           const path = generatePath('/companies/:companyName', { companyName });
           return <Redirect to={path} />;
         }}
-      />
-      <Route
-        path={companySalaryWorkTimesPath}
-        exact
-        render={() => (
-          <CompanyJobTitleTimeAndSalary
-            pageType={pageType}
-            pageName={pageName}
-            page={page}
-            tabType={tabType.TIME_AND_SALARY}
-            status={status}
-            salaryWorkTimes={salaryWorkTimes}
-            salaryWorkTimeStatistics={salaryWorkTimeStatistics}
-          />
-        )}
       />
       <Route
         path={companyInterviewExperiencesPath}
