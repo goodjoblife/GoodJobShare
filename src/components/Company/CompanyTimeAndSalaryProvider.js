@@ -7,6 +7,7 @@ import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import { queryCompanyTimeAndSalary } from 'actions/company';
 import {
   salaryWorkTimes as salaryWorkTimesSelector,
+  salaryWorkTimesCount as salaryWorkTimesCountSelector,
   salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
   status as statusSelector,
   companyTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
@@ -22,6 +23,7 @@ const useTimeAndSalaryBox = pageName => {
       return {
         status: statusSelector(company),
         salaryWorkTimes: salaryWorkTimesSelector(company),
+        salaryWorkTimesCount: salaryWorkTimesCountSelector(company),
         salaryWorkTimeStatistics: salaryWorkTimeStatisticsSelector(company),
       };
     },
@@ -55,6 +57,7 @@ const CompanyTimeAndSalaryProvider = () => {
   const {
     status,
     salaryWorkTimes,
+    salaryWorkTimesCount,
     salaryWorkTimeStatistics,
   } = useTimeAndSalaryBox(pageName);
 
@@ -63,6 +66,8 @@ const CompanyTimeAndSalaryProvider = () => {
       pageType={pageType}
       pageName={pageName}
       page={page}
+      pageSize={PAGE_SIZE}
+      totalCount={salaryWorkTimesCount}
       tabType={tabType.TIME_AND_SALARY}
       status={status}
       salaryWorkTimes={salaryWorkTimes}

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import Pagination from 'common/Pagination';
@@ -18,6 +18,8 @@ const TimeAndSalary = ({
   pageName,
   tabType,
   page,
+  pageSize,
+  totalCount,
   queryParams,
 }) => {
   const [, fetchPermission, canView] = usePermission();
@@ -25,20 +27,10 @@ const TimeAndSalary = ({
     fetchPermission();
   }, [fetchPermission]);
 
-  const { Searchbar, matchesFilter } = useSearchbar({
+  const { Searchbar /* TODO: matchesFilter */ } = useSearchbar({
     pageType,
     tabType,
   });
-
-  const pageSize = 10;
-  salaryWorkTimes = useMemo(() => salaryWorkTimes.filter(matchesFilter), [
-    matchesFilter,
-    salaryWorkTimes,
-  ]);
-  const currentData = salaryWorkTimes.slice(
-    (page - 1) * pageSize,
-    page * pageSize,
-  );
 
   return (
     <Section Tag="main" paddingBottom>
@@ -47,13 +39,13 @@ const TimeAndSalary = ({
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
           <WorkingHourBlock
-            data={currentData}
+            data={salaryWorkTimes}
             pageType={pageType}
             pageName={pageName}
             hideContent={!canView}
           />
           <Pagination
-            totalCount={salaryWorkTimes.length}
+            totalCount={totalCount}
             unit={pageSize}
             currentPage={page}
             createPageLinkTo={toPage =>
@@ -68,7 +60,7 @@ const TimeAndSalary = ({
       <ViewLog
         pageName={pageName}
         page={page}
-        contentIds={currentData.map(i => i.id)}
+        contentIds={salaryWorkTimes.map(i => i.id)}
       />
     </Section>
   );
@@ -77,6 +69,7 @@ const TimeAndSalary = ({
 TimeAndSalary.propTypes = {
   page: PropTypes.number,
   pageName: PropTypes.string,
+  pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string,
   queryParams: PropTypes.object,
   salaryWorkTimeStatistics: PropTypes.shape({
@@ -86,6 +79,7 @@ TimeAndSalary.propTypes = {
   }),
   salaryWorkTimes: PropTypes.array,
   tabType: PropTypes.string,
+  totalCount: PropTypes.number.isRequired,
 };
 
 export default TimeAndSalary;

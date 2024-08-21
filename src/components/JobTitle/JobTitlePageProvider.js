@@ -27,6 +27,8 @@ import {
 } from 'selectors/companyAndJobTitle';
 import { usePageName, pageNameSelector } from './usePageName';
 
+const PAGE_SIZE = 10;
+
 const JobTitlePageProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.JOB_TITLE;
@@ -83,9 +85,14 @@ const JobTitlePageProvider = () => {
             pageType={pageType}
             pageName={pageName}
             page={page}
+            pageSize={PAGE_SIZE}
+            totalCount={salaryWorkTimes.length}
             tabType={tabType.TIME_AND_SALARY}
             status={status}
-            salaryWorkTimes={salaryWorkTimes}
+            salaryWorkTimes={salaryWorkTimes.slice(
+              (page - 1) * PAGE_SIZE,
+              page * PAGE_SIZE,
+            )}
             salaryWorkTimeStatistics={salaryWorkTimeStatistics}
           />
         )}

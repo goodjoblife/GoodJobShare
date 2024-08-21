@@ -31,6 +31,12 @@ export const salaryWorkTimes = R.pipe(
   R.defaultTo([]),
 );
 
+export const salaryWorkTimesCount = R.pipe(
+  data,
+  R.when(R.is(Object), R.prop('salary_work_times_count')),
+  R.defaultTo(0),
+);
+
 export const salaryDistribution = R.pipe(
   data,
   R.when(R.is(Object), R.path(['salary_distribution', 'bins'])),
