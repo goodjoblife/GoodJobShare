@@ -13,7 +13,11 @@ import {
   companyOverviewBoxSelectorByName,
   companyTimeAndSalaryBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
-import { getCompany as getCompanyApi, queryCompaniesApi } from 'apis/company';
+import {
+  getCompany as getCompanyApi,
+  getCompanyTimeAndSalary,
+  queryCompaniesApi,
+} from 'apis/company';
 
 export const SET_STATUS = '@@company/SET_STATUS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
@@ -148,19 +152,23 @@ const setTimeAndSalary = (companyName, box) => ({
   box,
 });
 
-export const queryCompanyTimeAndSalary = companyName => async (
-  dispatch,
-  getState,
-) => {
+export const queryCompanyTimeAndSalary = ({
+  companyName,
+  start,
+  limit,
+}) => async (dispatch, getState) => {
   const box = companyTimeAndSalaryBoxSelectorByName(companyName)(getState());
-  if (isFetching(box) || isFetched(box)) {
+  if (
+    isFetching(box) ||
+    (isFetched(box) && box.data.start === start && box.data.limit === limit)
+  ) {
     return;
   }
 
   dispatch(setTimeAndSalary(companyName, toFetching()));
 
   try {
-    const data = await getCompanyApi(companyName);
+    const data = await getCompanyTimeAndSalary({ companyName, start, limit });
 
     // Not found case
     if (data == null) {
@@ -169,11 +177,10 @@ export const queryCompanyTimeAndSalary = companyName => async (
 
     const timeAndSalaryData = {
       name: data.name,
-      salary_work_times: data.salary_work_times.slice(
-        0,
-        SALARY_WORK_TIMES_LIMIT,
-      ),
-      salary_work_times_count: data.salary_work_times.length,
+      start,
+      limit,
+      salary_work_times: data.salaryWorkTimesResult.salaryWorkTimes,
+      salary_work_times_count: data.salaryWorkTimesResult.count,
       salary_work_time_statistics: data.salary_work_time_statistics,
     };
 

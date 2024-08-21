@@ -122,6 +122,78 @@ export const getCompanyQuery = /* GraphQL */ `
   }
 `;
 
+export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
+  query($companyName: String!, $start: Int!, $limit: Int!) {
+    company(name: $companyName) {
+      name
+      salaryWorkTimesResult(start: $start, limit: $limit) {
+        count
+        salaryWorkTimes {
+          id
+          week_work_time
+          salary {
+            type
+            amount
+          }
+          sector
+          day_real_work_time
+          day_promised_work_time
+          experience_in_year
+          estimated_hourly_wage
+          overtime_frequency
+          employment_type
+          job_title {
+            name
+          }
+          company {
+            name
+          }
+          data_time {
+            month
+            year
+          }
+        }
+      }
+      salary_work_time_statistics {
+        count
+        average_estimated_hourly_wage
+        average_week_work_time
+        overtime_frequency_count {
+          seldom
+          sometimes
+          usually
+          almost_everyday
+        }
+        is_overtime_salary_legal_count {
+          yes
+          no
+          unknown
+        }
+        has_compensatory_dayoff_count {
+          yes
+          no
+          unknown
+        }
+        has_overtime_salary_count {
+          yes
+          no
+          unknown
+        }
+        job_average_salaries {
+          job_title {
+            name
+          }
+          average_salary {
+            type
+            amount
+          }
+          data_count
+        }
+      }
+    }
+  }
+`;
+
 export const queryCompaniesHavingDataGql = /* GraphQL */ `
   query($start: Int!, $limit: Int!) {
     companiesHavingData(start: $start, limit: $limit) {

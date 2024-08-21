@@ -11,8 +11,9 @@ import {
   status as statusSelector,
   companyTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
-import { paramsSelector } from 'common/routing/selectors';
+import { paramsSelector, querySelector } from 'common/routing/selectors';
 import { usePageName, pageNameSelector } from './usePageName';
+import { pageFromQuerySelector } from 'selectors/routing/page';
 
 const useTimeAndSalaryBox = pageName => {
   const selector = useCallback(
@@ -30,15 +31,21 @@ const useTimeAndSalaryBox = pageName => {
   return useSelector(selector);
 };
 
+const PAGE_SIZE = 10;
+
 const CompanyTimeAndSalaryProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.COMPANY;
   const pageName = usePageName();
   const page = usePage();
+  const start = (page - 1) * PAGE_SIZE;
+  const limit = PAGE_SIZE;
 
   useEffect(() => {
-    dispatch(queryCompanyTimeAndSalary(pageName));
-  }, [dispatch, pageName]);
+    dispatch(
+      queryCompanyTimeAndSalary({ companyName: pageName, start, limit }),
+    );
+  }, [dispatch, pageName, start, limit]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -70,7 +77,11 @@ CompanyTimeAndSalaryProvider.fetchData = ({
 }) => {
   const params = paramsSelector(props);
   const pageName = pageNameSelector(params);
-  return dispatch(queryCompanyTimeAndSalary(pageName));
+  const query = querySelector(props);
+  const page = pageFromQuerySelector(query);
+  const start = (page - 1) * PAGE_SIZE;
+  const limit = PAGE_SIZE;
+  return dispatch(queryCompanyTimeAndSalary({ pageName, start, limit }));
 };
 
 export default CompanyTimeAndSalaryProvider;
