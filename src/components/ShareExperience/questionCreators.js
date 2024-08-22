@@ -330,28 +330,38 @@ export const createExperienceInYearQuestion = () => ({
   validateOrWarn: value => isNil(value) && '需填寫工作經歷',
 });
 
+const validateWorkingTime = (fieldName, min, max) => value => {
+  if (isNot(isNumber, value)) {
+    return `請填寫${fieldName}`;
+  }
+  if (value < min || value > max) {
+    return `${fieldName}必須在${min}~${max}之間`;
+  }
+};
+
 export const createDayPromisedWorkTimeQuestion = () => ({
-  title: '工作日表訂工時',
+  title: '工作日表訂工時(一日)',
   type: QUESTION_TYPE.TEXT,
   dataKey: DATA_KEY_DAY_PROMISED_WORK_TIME,
   required: true,
   defaultValue: '',
-  validateOrWarn: value => isNot(isNumber, value) && '請填寫表定工時',
+  validateOrWarn: validateWorkingTime('工作日表訂工時', 0, 24),
   placeholder: '8 或 8.5',
-  footnote: '工作日指與雇主約定的上班日，或是排班排定的日子。',
+  footnote:
+    '工作日指與雇主約定的上班日，或是排班排定的日子。一天表訂要工作多久。',
 });
 
 export const createDayRealWorkTimeQuestion = () => ({
-  title: '工作日實際平均工時',
+  title: '工作日實際平均工時(一日)',
   type: QUESTION_TYPE.TEXT,
   dataKey: DATA_KEY_DAY_REAL_WORK_TIME,
   required: true,
   defaultValue: '',
-  validateOrWarn: value => isNot(isNumber, value) && '請填寫實際工時',
+  validateOrWarn: validateWorkingTime('工作日實際平均工時', 0, 24),
   placeholder: '8 或 8.5',
   footnote: (
     <Fragment>
-      實際平均工時包含在家工作、待命的時間。
+      一天實際平均工時，包含在家工作、待命的時間。
       <WorkTimeExample>
         例如: 公司規定 9:00上班，18:00 下班，午休 1 小時。 那麼表訂工作時間為
         (18:00-9:00)-1=8 小時。 若實際上平均 20:00 才下班，則實際工作時間為
@@ -367,7 +377,7 @@ export const createWeekWorkTimeQuestion = () => ({
   dataKey: DATA_KEY_WEEK_WORK_TIME,
   required: true,
   defaultValue: '',
-  validateOrWarn: value => isNot(isNumber, value) && '請填寫週總工時',
+  validateOrWarn: validateWorkingTime('一週總工時', 0, 168),
   placeholder: '40 或 40.5',
   footnote: (
     <Fragment>
