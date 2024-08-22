@@ -23,6 +23,8 @@ import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
 import { OptionPropType } from './QuestionBuilder/Checkbox/PropTypes';
+import rollbar from 'utils/rollbar';
+import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
@@ -120,6 +122,12 @@ const FormBuilder = ({
     } else if (isSubmittable) {
       onSubmit(draft);
     } else {
+      const errorCode = 'ER0019';
+      rollbar.error(
+        `[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal}`,
+        null,
+        draft,
+      );
       console.error(`Not submittable`);
     }
   }, [warning, isSubmittable, onValidateFail, dataKey, draft, onSubmit]);
