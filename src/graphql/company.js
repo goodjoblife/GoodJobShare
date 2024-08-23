@@ -123,10 +123,10 @@ export const getCompanyQuery = /* GraphQL */ `
 `;
 
 export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
-  query($companyName: String!, $start: Int!, $limit: Int!) {
+  query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
     company(name: $companyName) {
       name
-      salaryWorkTimesResult(start: $start, limit: $limit) {
+      salaryWorkTimesResult(jobTitle: $jobTitle, start: $start, limit: $limit) {
         count
         salaryWorkTimes {
           id

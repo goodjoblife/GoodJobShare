@@ -154,13 +154,17 @@ const setTimeAndSalary = (companyName, box) => ({
 
 export const queryCompanyTimeAndSalary = ({
   companyName,
+  jobTitle,
   start,
   limit,
 }) => async (dispatch, getState) => {
   const box = companyTimeAndSalaryBoxSelectorByName(companyName)(getState());
   if (
     isFetching(box) ||
-    (isFetched(box) && box.data.start === start && box.data.limit === limit)
+    (isFetched(box) &&
+      box.data.jobTitle === jobTitle &&
+      box.data.start === start &&
+      box.data.limit === limit)
   ) {
     return;
   }
@@ -168,7 +172,12 @@ export const queryCompanyTimeAndSalary = ({
   dispatch(setTimeAndSalary(companyName, toFetching()));
 
   try {
-    const data = await getCompanyTimeAndSalary({ companyName, start, limit });
+    const data = await getCompanyTimeAndSalary({
+      companyName,
+      jobTitle,
+      start,
+      limit,
+    });
 
     // Not found case
     if (data == null) {
@@ -177,6 +186,7 @@ export const queryCompanyTimeAndSalary = ({
 
     const timeAndSalaryData = {
       name: data.name,
+      jobTitle,
       start,
       limit,
       salary_work_times: data.salaryWorkTimesResult.salaryWorkTimes,

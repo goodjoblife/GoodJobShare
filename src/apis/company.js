@@ -12,10 +12,15 @@ export const getCompany = companyName =>
     variables: { companyName },
   }).then(R.prop('company'));
 
-export const getCompanyTimeAndSalary = ({ companyName, start, limit }) =>
+export const getCompanyTimeAndSalary = ({
+  companyName,
+  jobTitle,
+  start,
+  limit,
+}) =>
   graphqlClient({
     query: getCompanyTimeAndSalaryQuery,
-    variables: { companyName, start, limit },
+    variables: { companyName, jobTitle, start, limit },
   }).then(R.prop('company'));
 
 export const queryCompaniesApi = ({ start, limit }) =>
