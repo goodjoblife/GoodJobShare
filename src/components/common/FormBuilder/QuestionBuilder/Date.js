@@ -12,7 +12,7 @@ const monthOptions = Array(12)
   .map((_, i) => i + 1)
   .map(n => ({ value: n, label: n }));
 
-const yearOptions = Array(12)
+const yearOptions = Array(10)
   .fill(0)
   .map((_, i) => new Date().getFullYear() - i)
   .map(n => ({ value: n, label: n }));

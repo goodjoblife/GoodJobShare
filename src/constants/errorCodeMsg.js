@@ -72,4 +72,10 @@ export const ERROR_CODE_MSG = {
     external: LOGIN_ERROR_MSG,
     internal: 'Unknown error during Graphql facebookLogin mutation',
   },
+  ER0018: {
+    internal: 'Unexpected error during submitting form data',
+  },
+  ER0019: {
+    internal: 'Not submittable',
+  },
 };
