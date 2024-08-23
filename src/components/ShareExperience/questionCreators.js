@@ -88,7 +88,7 @@ export const createCompanyQuestion = ({ header }) => ({
   validateOrWarn: value => isEmpty(value) && '請填寫公司名稱',
   placeholder: 'ＯＯ 股份有限公司',
   search: value =>
-    fetchSearchCompany({ companyName: value, hasData: false }).then(
+    fetchSearchCompany({ companyName: value, hasData: false, limit: 10 }).then(
       map(({ name, businessNumber }) => ({
         label: (
           <AutoCompleteItem
