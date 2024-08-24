@@ -75,8 +75,8 @@ const JobTitlePageProvider = () => {
             page={page}
             canView={canView}
             tabType={tabType.INTERVIEW_EXPERIENCE}
-            interviewExperiences={interviewExperiences}
             status={status}
+            interviewExperiences={interviewExperiences}
           />
         )}
       />
@@ -90,8 +90,8 @@ const JobTitlePageProvider = () => {
             page={page}
             canView={canView}
             tabType={tabType.WORK_EXPERIENCE}
-            workExperiences={workExperiences}
             status={status}
+            workExperiences={workExperiences}
           />
         )}
       />
