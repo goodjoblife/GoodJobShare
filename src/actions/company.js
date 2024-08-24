@@ -11,11 +11,17 @@ import {
   companyStatus as companyStatusSelector,
   companyIndexesBoxSelectorAtPage,
   companyOverviewBoxSelectorByName,
+  companyInterviewExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
-import { getCompany as getCompanyApi, queryCompaniesApi } from 'apis/company';
+import {
+  getCompany as getCompanyApi,
+  getCompanyInterviewExperiences,
+  queryCompaniesApi,
+} from 'apis/company';
 
 export const SET_STATUS = '@@company/SET_STATUS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
+export const SET_INTERVIEW_EXPERIENCES = '@@COMPANY/SET_INTERVIEW_EXPERIENCES';
 export const SET_INDEX = '@@COMPANY/SET_INDEX';
 export const SET_INDEX_COUNT = '@@COMPANY/SET_INDEX_COUNT';
 
@@ -136,6 +142,70 @@ export const queryCompanyOverview = companyName => async (
     if (isGraphqlError(error)) {
       dispatch(setOverview(companyName, getError(error)));
     }
+    throw error;
+  }
+};
+
+const setInterviewExperiences = (companyName, box) => ({
+  type: SET_INTERVIEW_EXPERIENCES,
+  companyName,
+  box,
+});
+
+export const queryCompanyInterviewExperiences = ({
+  companyName,
+  jobTitle,
+  start,
+  limit,
+}) => async (dispatch, getState) => {
+  const box = companyInterviewExperiencesBoxSelectorByName(companyName)(
+    getState(),
+  );
+  if (
+    isFetching(box) ||
+    (isFetched(box) &&
+      box.data.jobTitle === jobTitle &&
+      box.data.start === start &&
+      box.data.limit === limit)
+  ) {
+    return;
+  }
+
+  dispatch(setInterviewExperiences(companyName, toFetching()));
+
+  try {
+    const data = await getCompanyInterviewExperiences({
+      companyName,
+      jobTitle,
+      start,
+      limit,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setInterviewExperiences(companyName, getFetched(data)));
+    }
+
+    const interviewExperiencesData = {
+      jobTitle,
+      start,
+      limit,
+      name: data.name,
+      interview_experiences: data.interviewExperiencesResult.interviewExperiences.slice(
+        0,
+        INTERVIEW_EXPERIENCES_LIMIT,
+      ),
+      interview_experiences_count: data.interviewExperiencesResult.count,
+    };
+
+    dispatch(
+      setInterviewExperiences(
+        companyName,
+        getFetched(interviewExperiencesData),
+      ),
+    );
+  } catch (error) {
+    dispatch(setInterviewExperiences(companyName, getError(error)));
     throw error;
   }
 };

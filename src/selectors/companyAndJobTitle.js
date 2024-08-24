@@ -101,6 +101,12 @@ export const companyOverviewBoxSelectorByName = companyName => state => {
   return state.companyIndex.overviewByName[companyName] || getUnfetched();
 };
 
+export const companyInterviewExperiencesBoxSelectorByName = companyName => state => {
+  return (
+    state.companyIndex.interviewExperiencesByName[companyName] || getUnfetched()
+  );
+};
+
 export const jobTitleIndexesBoxSelectorAtPage = page => state => {
   return state.jobTitleIndex.indexesByPage[page] || getUnfetched();
 };

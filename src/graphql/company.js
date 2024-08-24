@@ -122,6 +122,48 @@ export const getCompanyQuery = /* GraphQL */ `
   }
 `;
 
+export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
+  query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
+    company(name: $companyName) {
+      name
+      interviewExperiencesResult(
+        jobTitle: $jobTitle
+        start: $start
+        limit: $limit
+      ) {
+        count
+        interviewExperiences {
+          id
+          type
+          originalCompanyName
+          company {
+            name
+          }
+          job_title {
+            name
+          }
+          region
+          experience_in_year
+          education
+          salary {
+            amount
+            type
+          }
+          title
+          sections {
+            subtitle
+            content
+          }
+          created_at
+          reply_count
+          like_count
+          overall_rating
+        }
+      }
+    }
+  }
+`;
+
 export const queryCompaniesHavingDataGql = /* GraphQL */ `
   query($start: Int!, $limit: Int!) {
     companiesHavingData(start: $start, limit: $limit) {
