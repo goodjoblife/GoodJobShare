@@ -123,3 +123,7 @@ export const jobTitlesCountSelector = state => {
 export const jobTitleOverviewBoxSelectorByName = jobTitle => state => {
   return state.jobTitleIndex.overviewByName[jobTitle] || getUnfetched();
 };
+
+export const jobTitleTimeAndSalaryBoxSelectorByName = jobTitle => state => {
+  return state.jobTitleIndex.timeAndSalaryByName[jobTitle] || getUnfetched();
+};

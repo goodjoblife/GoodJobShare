@@ -4,7 +4,6 @@ import { generatePath } from 'react-router';
 import { Switch, Route } from 'react-router-dom';
 import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
-import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
 import NotFound from 'common/NotFound';
 import Redirect from 'common/routing/Redirect';
 import { paramsSelector } from 'common/routing/selectors';
@@ -12,7 +11,6 @@ import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import {
-  jobTitleSalaryWorkTimesPath,
   jobTitleInterviewExperiencesPath,
   jobTitleWorkExperiencesPath,
 } from 'constants/linkTo';
@@ -26,8 +24,6 @@ import {
   jobTitle as jobTitleSelector,
 } from 'selectors/companyAndJobTitle';
 import { usePageName, pageNameSelector } from './usePageName';
-
-const PAGE_SIZE = 10;
 
 const JobTitlePageProvider = () => {
   const dispatch = useDispatch();
@@ -57,13 +53,9 @@ const JobTitlePageProvider = () => {
     },
     [pageName],
   );
-  const {
-    status,
-    interviewExperiences,
-    workExperiences,
-    salaryWorkTimes,
-    salaryWorkTimeStatistics,
-  } = useSelector(selector);
+  const { status, interviewExperiences, workExperiences } = useSelector(
+    selector,
+  );
 
   return (
     <Switch>
@@ -76,26 +68,6 @@ const JobTitlePageProvider = () => {
           const path = generatePath('/job-titles/:jobTitle', { jobTitle });
           return <Redirect to={path} />;
         }}
-      />
-      <Route
-        path={jobTitleSalaryWorkTimesPath}
-        exact
-        render={() => (
-          <CompanyJobTitleTimeAndSalary
-            pageType={pageType}
-            pageName={pageName}
-            page={page}
-            pageSize={PAGE_SIZE}
-            totalCount={salaryWorkTimes.length}
-            tabType={tabType.TIME_AND_SALARY}
-            status={status}
-            salaryWorkTimes={salaryWorkTimes.slice(
-              (page - 1) * PAGE_SIZE,
-              page * PAGE_SIZE,
-            )}
-            salaryWorkTimeStatistics={salaryWorkTimeStatistics}
-          />
-        )}
       />
       <Route
         path={jobTitleInterviewExperiencesPath}
