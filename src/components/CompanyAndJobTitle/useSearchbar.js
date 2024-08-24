@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
@@ -107,6 +107,7 @@ Searchbar.propTypes = {
 
 const useSearchbar = ({ pageType, tabType }) => {
   const [filter, setFilter] = useSearchTextFromQuery();
+
   const translatedPageType = pageTypeTranslation[pageType];
   const translatedTabType = tabTypeTranslation[tabType];
 
