@@ -27,7 +27,7 @@ const TimeAndSalary = ({
     fetchPermission();
   }, [fetchPermission]);
 
-  const Searchbar = useSearchbar({
+  const { Searchbar } = useSearchbar({
     pageType,
     tabType,
   });
