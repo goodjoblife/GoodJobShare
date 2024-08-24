@@ -57,7 +57,7 @@ const questions = [
   createExperienceInYearQuestion(),
   createWorkRegionQuestion(),
   createEmployTypeQuestion(),
-  createRequiredSalaryQuestion(),
+  createRequiredSalaryQuestion({ type: tabType.WORK_EXPERIENCE }),
   createWeekWorkTimeQuestion(),
   createSectionsQuestion(),
   createSubmitQuestion({ type: tabType.WORK_EXPERIENCE }),

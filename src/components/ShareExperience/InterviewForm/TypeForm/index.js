@@ -69,7 +69,7 @@ const questions = [
   createInterviewCourseQuestion(),
   createInterviewSuggestionsQuestion(),
   createJobTenureQuestion(),
-  createSalaryQuestion(),
+  createSalaryQuestion({ type: tabType.INTERVIEW_EXPERIENCE }),
   createQuestionsQuestion(),
   createSensitiveQuestionsQuestion(),
   createSubmitQuestion({ type: tabType.INTERVIEW_EXPERIENCE }),

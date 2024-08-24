@@ -30,9 +30,6 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
-      <div className={styles.date}>
-        {formatDate(new Date(experience.created_at))}
-      </div>
       <InfoBlock
         label="公司"
         to={generatePageURL({
@@ -61,6 +58,11 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
       {experience.interview_time ? (
         <InfoBlock label="面試時間">
           {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
+        </InfoBlock>
+      ) : null}
+      {experience.created_at ? (
+        <InfoBlock label="填寫時間">
+          {formatDate(new Date(experience.created_at))}
         </InfoBlock>
       ) : null}
       <InfoBlock label="面試結果">{experience.interview_result}</InfoBlock>
@@ -144,6 +146,11 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
       >
         {experience.job_title.name}
       </InfoBlock>
+      {experience.created_at ? (
+        <InfoBlock label="填寫時間">
+          {formatDate(new Date(experience.created_at))}
+        </InfoBlock>
+      ) : null}
       {expInYearText ? (
         <InfoBlock label="自身相關職務評價">{expInYearText}</InfoBlock>
       ) : null}
@@ -179,6 +186,7 @@ WorkInfoBlocks.propTypes = {
     company: PropTypes.shape({
       name: PropTypes.string,
     }),
+    created_at: PropTypes.string,
     education: PropTypes.string,
     experience_in_year: PropTypes.number,
     job_title: PropTypes.shape({

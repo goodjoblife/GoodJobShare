@@ -9,6 +9,8 @@ import FormBuilder, {
 import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
 import Footer from './TypeFormFooter';
 import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
+import rollbar from 'utils/rollbar';
+import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 
 const SubmittableTypeForm = ({
   open,
@@ -36,6 +38,11 @@ const SubmittableTypeForm = ({
         setSubmittedDraft(draft);
         setSubmitStatus('success');
       } catch (error) {
+        const errorCode = 'ER0018';
+        rollbar.error(
+          `[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal} ${error}`,
+          error,
+        );
         setErrorMessage(error.message);
         setSubmitStatus('error');
         await onSubmitError(error);
