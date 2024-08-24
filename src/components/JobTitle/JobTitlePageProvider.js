@@ -18,8 +18,6 @@ import { fetchJobTitle } from 'actions/jobTitle';
 import {
   interviewExperiences as interviewExperiencesSelector,
   workExperiences as workExperiencesSelector,
-  salaryWorkTimes as salaryWorkTimesSelector,
-  salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
   status as statusSelector,
   jobTitle as jobTitleSelector,
 } from 'selectors/companyAndJobTitle';
@@ -47,8 +45,6 @@ const JobTitlePageProvider = () => {
         status: statusSelector(jobTitle),
         interviewExperiences: interviewExperiencesSelector(jobTitle),
         workExperiences: workExperiencesSelector(jobTitle),
-        salaryWorkTimes: salaryWorkTimesSelector(jobTitle),
-        salaryWorkTimeStatistics: salaryWorkTimeStatisticsSelector(jobTitle),
       };
     },
     [pageName],

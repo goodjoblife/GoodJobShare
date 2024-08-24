@@ -18,8 +18,6 @@ import { fetchCompany } from 'actions/company';
 import {
   interviewExperiences as interviewExperiencesSelector,
   workExperiences as workExperiencesSelector,
-  salaryWorkTimes as salaryWorkTimesSelector,
-  salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
   status as statusSelector,
   company as companySelector,
 } from 'selectors/companyAndJobTitle';
@@ -47,8 +45,6 @@ const CompanyPageProvider = () => {
         status: statusSelector(company),
         interviewExperiences: interviewExperiencesSelector(company),
         workExperiences: workExperiencesSelector(company),
-        salaryWorkTimes: salaryWorkTimesSelector(company),
-        salaryWorkTimeStatistics: salaryWorkTimeStatisticsSelector(company),
       };
     },
     [pageName],
