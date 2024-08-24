@@ -27,7 +27,8 @@ export const useSearchTextFromQuery = () => {
   const setSearchText = useCallback(
     nextSearchText => {
       if (searchText === nextSearchText) return;
-      const nextQuery = { ...query, q: nextSearchText };
+      const { q, p, ...restQuery } = query; // remove page when search text changes
+      const nextQuery = { ...restQuery, q: nextSearchText };
       const nextUrl = qs.stringify(nextQuery, { addQueryPrefix: true });
       history.push(nextUrl);
     },
