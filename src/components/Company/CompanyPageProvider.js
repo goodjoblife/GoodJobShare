@@ -90,8 +90,8 @@ const CompanyPageProvider = () => {
             page={page}
             canView={canView}
             tabType={tabType.WORK_EXPERIENCE}
-            workExperiences={workExperiences}
             status={status}
+            workExperiences={workExperiences}
           />
         )}
       />
