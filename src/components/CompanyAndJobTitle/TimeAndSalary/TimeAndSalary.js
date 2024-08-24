@@ -10,6 +10,7 @@ import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
 import OvertimeSection from './OvertimeSection';
 import useSearchbar from '../useSearchbar';
+import { useQuery } from 'hooks/routing';
 
 const TimeAndSalary = ({
   salaryWorkTimes,
@@ -20,7 +21,6 @@ const TimeAndSalary = ({
   page,
   pageSize,
   totalCount,
-  queryParams,
 }) => {
   const [, fetchPermission, canView] = usePermission();
   useEffect(() => {
@@ -31,6 +31,8 @@ const TimeAndSalary = ({
     pageType,
     tabType,
   });
+
+  const queryParams = useQuery();
 
   return (
     <Section Tag="main" paddingBottom>
@@ -71,7 +73,6 @@ TimeAndSalary.propTypes = {
   pageName: PropTypes.string,
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string,
-  queryParams: PropTypes.object,
   salaryWorkTimeStatistics: PropTypes.shape({
     average_estimated_hourly_wage: PropTypes.number,
     average_week_work_time: PropTypes.number,
