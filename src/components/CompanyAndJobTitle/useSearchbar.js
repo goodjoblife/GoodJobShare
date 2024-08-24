@@ -37,17 +37,14 @@ export const useSearchTextFromQuery = () => {
   return [searchText, setSearchText];
 };
 
-const Searchbar = ({ className, label, placeholder, pageType }) => {
-  const [
-    searchTextFromQuery,
-    setSearchTextFromQuery,
-  ] = useSearchTextFromQuery();
+const Searchbar = ({ className, label, placeholder, onSubmit, pageType }) => {
+  const [searchTextFromQuery] = useSearchTextFromQuery();
   const [searchText, setSearchText] = useState(searchTextFromQuery);
   const ref = useRef(null);
 
   useDebounce(
     () => {
-      setSearchTextFromQuery(searchText);
+      onSubmit(searchText);
       switch (pageType) {
         case pageTypes.COMPANY:
           ReactGA.event({
@@ -74,10 +71,10 @@ const Searchbar = ({ className, label, placeholder, pageType }) => {
   const handleFormSubmit = useCallback(
     e => {
       e.preventDefault();
-      setSearchTextFromQuery(searchText);
+      onSubmit(searchText);
       if (ref.current) ref.current.blur();
     },
-    [setSearchTextFromQuery, searchText],
+    [onSubmit, searchText],
   );
 
   return (
@@ -103,12 +100,13 @@ const Searchbar = ({ className, label, placeholder, pageType }) => {
 Searchbar.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired,
   pageType: PropTypes.string,
   placeholder: PropTypes.string,
 };
 
 const useSearchbar = ({ pageType, tabType }) => {
-  const [filter] = useSearchTextFromQuery();
+  const [filter, setFilter] = useSearchTextFromQuery();
   const translatedPageType = pageTypeTranslation[pageType];
   const translatedTabType = tabTypeTranslation[tabType];
 
@@ -152,9 +150,14 @@ const useSearchbar = ({ pageType, tabType }) => {
 
   const WrappedSearchbar = useCallback(
     () => (
-      <Searchbar label={label} placeholder={placeholder} pageType={pageType} />
+      <Searchbar
+        label={label}
+        placeholder={placeholder}
+        onSubmit={setFilter}
+        pageType={pageType}
+      />
     ),
-    [label, placeholder, pageType],
+    [label, placeholder, setFilter, pageType],
   );
 
   return {
