@@ -1,5 +1,7 @@
 .heading {
   margin-bottom: 8px;
+  display: flex;
+  gap: 1rem;
 }
 
 .content {
