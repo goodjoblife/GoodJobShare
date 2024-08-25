@@ -1,3 +1,5 @@
+@value below-mobile from "../../common/variables.module.css";
+
 .heading {
   margin-bottom: 8px;
   display: flex;
@@ -8,4 +10,10 @@
   margin-bottom: 1.5em;
   white-space: pre-line;
   word-break: break-word;
+}
+
+@media (max-width: below-mobile) {
+  .heading {
+    flex-direction: column;
+  }
 }
