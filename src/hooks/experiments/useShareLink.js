@@ -21,6 +21,7 @@ const ACTIONS = [
     generateTo: generateShareWork,
   },
 ];
+
 const randomAction = actions => {
   const r = Math.random();
   let accuProb = 0.0;
