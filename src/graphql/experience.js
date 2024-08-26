@@ -66,6 +66,8 @@ export const queryExperienceGql = /* GraphQL */ `
         sections {
           work_subtitle: subtitle
           content
+          aspect
+          rating
         }
         week_work_time
         recommend_to_others
@@ -149,6 +151,8 @@ export const queryRelatedExperiencesGql = /* GraphQL */ `
           sections {
             work_subtitle: subtitle
             content
+            aspect
+            rating
           }
           week_work_time
           recommend_to_others

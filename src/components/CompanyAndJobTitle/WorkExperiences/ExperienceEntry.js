@@ -74,7 +74,10 @@ const ExperienceEntry = ({
 
               {averageSectionRating ? (
                 <div className={styles.overallRatingWrapper}>
-                  <OverallRating rating={averageSectionRating} />
+                  <OverallRating
+                    rating={averageSectionRating}
+                    hasRatingNumber
+                  />
                 </div>
               ) : (
                 <div className={styles.recommendToOthers}>
