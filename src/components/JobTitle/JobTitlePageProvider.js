@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { generatePath } from 'react-router';
 import { Switch, Route } from 'react-router-dom';
-import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
 import NotFound from 'common/NotFound';
 import Redirect from 'common/routing/Redirect';
@@ -10,13 +9,9 @@ import { paramsSelector } from 'common/routing/selectors';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
-import {
-  jobTitleInterviewExperiencesPath,
-  jobTitleWorkExperiencesPath,
-} from 'constants/linkTo';
+import { jobTitleWorkExperiencesPath } from 'constants/linkTo';
 import { fetchJobTitle } from 'actions/jobTitle';
 import {
-  interviewExperiences as interviewExperiencesSelector,
   workExperiences as workExperiencesSelector,
   status as statusSelector,
   jobTitle as jobTitleSelector,
@@ -43,15 +38,12 @@ const JobTitlePageProvider = () => {
       const jobTitle = jobTitleSelector(pageName)(state);
       return {
         status: statusSelector(jobTitle),
-        interviewExperiences: interviewExperiencesSelector(jobTitle),
         workExperiences: workExperiencesSelector(jobTitle),
       };
     },
     [pageName],
   );
-  const { status, interviewExperiences, workExperiences } = useSelector(
-    selector,
-  );
+  const { status, workExperiences } = useSelector(selector);
 
   return (
     <Switch>
@@ -64,21 +56,6 @@ const JobTitlePageProvider = () => {
           const path = generatePath('/job-titles/:jobTitle', { jobTitle });
           return <Redirect to={path} />;
         }}
-      />
-      <Route
-        path={jobTitleInterviewExperiencesPath}
-        exact
-        render={() => (
-          <InterviewExperiences
-            pageType={pageType}
-            pageName={pageName}
-            page={page}
-            canView={canView}
-            tabType={tabType.INTERVIEW_EXPERIENCE}
-            status={status}
-            interviewExperiences={interviewExperiences}
-          />
-        )}
       />
       <Route
         path={jobTitleWorkExperiencesPath}

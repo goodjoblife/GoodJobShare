@@ -23,7 +23,7 @@ export const interviewExperiences = R.pipe(
 export const interviewExperiencesCount = R.pipe(
   data,
   R.when(R.is(Object), R.prop('interview_experiences_count')),
-  R.defaultTo([]),
+  R.defaultTo(0),
 );
 
 export const workExperiences = R.pipe(
@@ -139,4 +139,10 @@ export const jobTitleOverviewBoxSelectorByName = jobTitle => state => {
 
 export const jobTitleTimeAndSalaryBoxSelectorByName = jobTitle => state => {
   return state.jobTitleIndex.timeAndSalaryByName[jobTitle] || getUnfetched();
+};
+
+export const jobTitleInterviewExperiencesBoxSelectorByName = jobTitle => state => {
+  return (
+    state.jobTitleIndex.interviewExperiencesByName[jobTitle] || getUnfetched()
+  );
 };
