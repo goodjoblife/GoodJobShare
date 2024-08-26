@@ -9,7 +9,7 @@ const SectionBlock = ({ subtitle, content, rating }) => (
     {subtitle && (
       <P size="l" bold className={styles.heading}>
         <div>{subtitle}</div>
-        {rating && <OverallRating rating={rating} />}
+        {rating ? <OverallRating rating={rating} /> : null}
       </P>
     )}
     <P size="l" className={styles.content}>
