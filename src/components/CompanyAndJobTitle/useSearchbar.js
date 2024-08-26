@@ -1,8 +1,11 @@
 import React, { useState, useCallback, useRef } from 'react';
+import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import qs from 'qs';
 import ReactGA from 'react-ga4';
 
+import { useQuery } from 'hooks/routing';
 import TextInput from 'common/form/TextInput';
 import Magnifiner from 'common/icons/Magnifiner';
 import styles from './Searchbar.module.css';
@@ -15,8 +18,28 @@ import {
 } from 'constants/companyJobTitle';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 
+export const searchTextFromQuerySelector = query => query.q || '';
+
+export const useSearchTextFromQuery = () => {
+  const history = useHistory();
+  const query = useQuery();
+  const searchText = searchTextFromQuerySelector(query);
+  const setSearchText = useCallback(
+    nextSearchText => {
+      if (searchText === nextSearchText) return;
+      const { q, p, ...restQuery } = query; // remove page when search text changes
+      const nextQuery = { ...restQuery, q: nextSearchText };
+      const nextUrl = qs.stringify(nextQuery, { addQueryPrefix: true });
+      history.push(nextUrl);
+    },
+    [searchText, query, history],
+  );
+  return [searchText, setSearchText];
+};
+
 const Searchbar = ({ className, label, placeholder, onSubmit, pageType }) => {
-  const [searchText, setSearchText] = useState('');
+  const [searchTextFromQuery] = useSearchTextFromQuery();
+  const [searchText, setSearchText] = useState(searchTextFromQuery);
   const ref = useRef(null);
 
   useDebounce(
@@ -83,7 +106,7 @@ Searchbar.propTypes = {
 };
 
 const useSearchbar = ({ pageType, tabType }) => {
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useSearchTextFromQuery();
 
   const translatedPageType = pageTypeTranslation[pageType];
   const translatedTabType = tabTypeTranslation[tabType];

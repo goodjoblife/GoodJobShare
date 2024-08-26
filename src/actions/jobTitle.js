@@ -11,14 +11,17 @@ import {
   jobTitleStatus as jobTitleStatusSelector,
   jobTitleIndexesBoxSelectorAtPage,
   jobTitleOverviewBoxSelectorByName,
+  jobTitleTimeAndSalaryBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   getJobTitle as getJobTitleApi,
+  getJobTitleTimeAndSalary,
   queryJobTitlesApi,
 } from 'apis/jobTitle';
 
-export const SET_STATUS = '@@jobTitle/SET_STATUS';
+export const SET_STATUS = '@@JOB_TITLE/SET_STATUS';
 export const SET_OVERVIEW = '@@JOB_TITLE/SET_OVERVIEW';
+export const SET_TIME_AND_SALARY = '@@JOB_TITLE/SET_TIME_AND_SALARY';
 export const SET_INDEX = '@@JOB_TITLE/SET_INDEX';
 export const SET_INDEX_COUNT = '@@JOB_TITLE/SET_INDEX_COUNT';
 
@@ -138,5 +141,59 @@ export const queryJobTitleOverview = jobTitle => async (dispatch, getState) => {
       dispatch(setOverview(jobTitle, getError(error)));
     }
     throw error;
+  }
+};
+
+const setTimeAndSalary = (jobTitle, box) => ({
+  type: SET_TIME_AND_SALARY,
+  jobTitle,
+  box,
+});
+
+export const queryJobTitleTimeAndSalary = ({
+  companyName,
+  jobTitle,
+  start,
+  limit,
+}) => async (dispatch, getState) => {
+  const box = jobTitleTimeAndSalaryBoxSelectorByName(jobTitle)(getState());
+  if (
+    isFetching(box) ||
+    (isFetched(box) &&
+      box.data.companyName === companyName &&
+      box.data.start === start &&
+      box.data.limit === limit)
+  ) {
+    return;
+  }
+
+  dispatch(setTimeAndSalary(jobTitle, toFetching()));
+
+  try {
+    const data = await getJobTitleTimeAndSalary({
+      jobTitle,
+      companyName,
+      start,
+      limit,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setTimeAndSalary(jobTitle, getFetched(data)));
+    }
+
+    const timeAndSalaryData = {
+      name: data.name,
+      companyName,
+      start,
+      limit,
+      salary_work_times: data.salaryWorkTimesResult.salaryWorkTimes,
+      salary_work_times_count: data.salaryWorkTimesResult.count,
+      salary_work_time_statistics: data.salary_work_time_statistics,
+    };
+
+    dispatch(setTimeAndSalary(jobTitle, getFetched(timeAndSalaryData)));
+  } catch (error) {
+    dispatch(setTimeAndSalary(jobTitle, getError(error)));
   }
 };

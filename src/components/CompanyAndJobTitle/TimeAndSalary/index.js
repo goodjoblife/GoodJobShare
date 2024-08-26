@@ -14,6 +14,8 @@ const TimeAndSalary = ({
   salaryWorkTimeStatistics,
   status,
   page,
+  pageSize,
+  totalCount,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
@@ -35,6 +37,8 @@ const TimeAndSalary = ({
         salaryWorkTimes={salaryWorkTimes}
         salaryWorkTimeStatistics={salaryWorkTimeStatistics}
         page={page}
+        pageSize={pageSize}
+        totalCount={totalCount}
       />
     </StatusRenderer>
   </CompanyAndJobTitleWrapper>
@@ -43,6 +47,7 @@ const TimeAndSalary = ({
 TimeAndSalary.propTypes = {
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string,
+  pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string,
   salaryWorkTimeStatistics: PropTypes.shape({
     average_estimated_hourly_wage: PropTypes.number,
@@ -52,6 +57,7 @@ TimeAndSalary.propTypes = {
   salaryWorkTimes: PropTypes.array,
   status: PropTypes.string.isRequired,
   tabType: PropTypes.string,
+  totalCount: PropTypes.number.isRequired,
 };
 
 export default TimeAndSalary;

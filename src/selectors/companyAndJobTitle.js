@@ -31,6 +31,12 @@ export const salaryWorkTimes = R.pipe(
   R.defaultTo([]),
 );
 
+export const salaryWorkTimesCount = R.pipe(
+  data,
+  R.when(R.is(Object), R.prop('salary_work_times_count')),
+  R.defaultTo(0),
+);
+
 export const salaryDistribution = R.pipe(
   data,
   R.when(R.is(Object), R.path(['salary_distribution', 'bins'])),
@@ -101,6 +107,10 @@ export const companyOverviewBoxSelectorByName = companyName => state => {
   return state.companyIndex.overviewByName[companyName] || getUnfetched();
 };
 
+export const companyTimeAndSalaryBoxSelectorByName = companyName => state => {
+  return state.companyIndex.timeAndSalaryByName[companyName] || getUnfetched();
+};
+
 export const jobTitleIndexesBoxSelectorAtPage = page => state => {
   return state.jobTitleIndex.indexesByPage[page] || getUnfetched();
 };
@@ -112,4 +122,8 @@ export const jobTitlesCountSelector = state => {
 
 export const jobTitleOverviewBoxSelectorByName = jobTitle => state => {
   return state.jobTitleIndex.overviewByName[jobTitle] || getUnfetched();
+};
+
+export const jobTitleTimeAndSalaryBoxSelectorByName = jobTitle => state => {
+  return state.jobTitleIndex.timeAndSalaryByName[jobTitle] || getUnfetched();
 };
