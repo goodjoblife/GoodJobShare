@@ -30,6 +30,7 @@ import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
 import JobTitleOverviewProvider from 'components/JobTitle/JobTitleOverviewProvider';
 import JobTitleTimeAndSalaryProvider from 'components/JobTitle/JobTitleTimeAndSalaryProvider';
+import JobTitleWorkExperiencesProvider from 'components/JobTitle/JobTitleWorkExperiencesProvider';
 
 import PlanPage from './components/PlanPage';
 import BuyResultPage from './components/BuyResultPage';
@@ -38,6 +39,7 @@ import SubscriptionsPage from './components/Me/SubscriptionsPage';
 import {
   jobTitleOverviewPath,
   jobTitleSalaryWorkTimesPath,
+  jobTitleWorkExperiencesPath,
   companyOverviewPath,
   companySalaryWorkTimesPath,
   companyWorkExperiencesPath,
@@ -159,6 +161,11 @@ const routes = [
       {
         path: jobTitleSalaryWorkTimesPath,
         component: JobTitleTimeAndSalaryProvider,
+        exact: true,
+      },
+      {
+        path: jobTitleWorkExperiencesPath,
+        component: JobTitleWorkExperiencesProvider,
         exact: true,
       },
       {

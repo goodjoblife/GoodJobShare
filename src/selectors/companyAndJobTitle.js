@@ -139,3 +139,7 @@ export const jobTitleOverviewBoxSelectorByName = jobTitle => state => {
 export const jobTitleTimeAndSalaryBoxSelectorByName = jobTitle => state => {
   return state.jobTitleIndex.timeAndSalaryByName[jobTitle] || getUnfetched();
 };
+
+export const jobTitleWorkExperiencesBoxSelectorByName = jobTitle => state => {
+  return state.jobTitleIndex.workExperiencesByName[jobTitle] || getUnfetched();
+};
