@@ -4,16 +4,21 @@ import { path } from 'ramda';
 import {
   generateShareTimeSalaryTypeForm,
   generateShareInterviewTypeForm,
+  generateShareWork,
 } from 'common/ShareExpSection/shareLinkTo';
 
 const ACTIONS = [
   {
-    prob: 0.5,
+    prob: 0.45,
     generateTo: generateShareTimeSalaryTypeForm,
   },
   {
-    prob: 0.5,
+    prob: 0.45,
     generateTo: generateShareInterviewTypeForm,
+  },
+  {
+    prob: 0.1,
+    generateTo: generateShareWork,
   },
 ];
 
