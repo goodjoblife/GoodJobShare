@@ -171,6 +171,7 @@ export const queryCompanyTimeAndSalary = ({
   if (
     isFetching(box) ||
     (isFetched(box) &&
+      box.data.name === companyName &&
       box.data.jobTitle === jobTitle &&
       box.data.start === start &&
       box.data.limit === limit)
@@ -221,6 +222,7 @@ export const queryCompanyInterviewExperiences = ({
   if (
     isFetching(box) ||
     (isFetched(box) &&
+      box.data.name === companyName &&
       box.data.jobTitle === jobTitle &&
       box.data.start === start &&
       box.data.limit === limit)
@@ -244,14 +246,12 @@ export const queryCompanyInterviewExperiences = ({
     }
 
     const interviewExperiencesData = {
+      name: data.name,
       jobTitle,
       start,
       limit,
-      name: data.name,
-      interview_experiences: data.interviewExperiencesResult.interviewExperiences.slice(
-        0,
-        INTERVIEW_EXPERIENCES_LIMIT,
-      ),
+      interview_experiences:
+        data.interviewExperiencesResult.interviewExperiences,
       interview_experiences_count: data.interviewExperiencesResult.count,
     };
 
