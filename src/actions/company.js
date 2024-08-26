@@ -11,16 +11,19 @@ import {
   companyStatus as companyStatusSelector,
   companyIndexesBoxSelectorAtPage,
   companyOverviewBoxSelectorByName,
+  companyTimeAndSalaryBoxSelectorByName,
   companyInterviewExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   getCompany as getCompanyApi,
+  getCompanyTimeAndSalary,
   getCompanyInterviewExperiences,
   queryCompaniesApi,
 } from 'apis/company';
 
 export const SET_STATUS = '@@company/SET_STATUS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
+export const SET_TIME_AND_SALARY = '@@COMPANY/SET_TIME_AND_SALARY';
 export const SET_INTERVIEW_EXPERIENCES = '@@COMPANY/SET_INTERVIEW_EXPERIENCES';
 export const SET_INDEX = '@@COMPANY/SET_INDEX';
 export const SET_INDEX_COUNT = '@@COMPANY/SET_INDEX_COUNT';
@@ -146,11 +149,65 @@ export const queryCompanyOverview = companyName => async (
   }
 };
 
+const setTimeAndSalary = (companyName, box) => ({
+  type: SET_TIME_AND_SALARY,
+  companyName,
+  box,
+});
+
 const setInterviewExperiences = (companyName, box) => ({
   type: SET_INTERVIEW_EXPERIENCES,
   companyName,
   box,
 });
+
+export const queryCompanyTimeAndSalary = ({
+  companyName,
+  jobTitle,
+  start,
+  limit,
+}) => async (dispatch, getState) => {
+  const box = companyTimeAndSalaryBoxSelectorByName(companyName)(getState());
+  if (
+    isFetching(box) ||
+    (isFetched(box) &&
+      box.data.jobTitle === jobTitle &&
+      box.data.start === start &&
+      box.data.limit === limit)
+  ) {
+    return;
+  }
+
+  dispatch(setTimeAndSalary(companyName, toFetching()));
+
+  try {
+    const data = await getCompanyTimeAndSalary({
+      companyName,
+      jobTitle,
+      start,
+      limit,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setTimeAndSalary(companyName, getFetched(data)));
+    }
+
+    const timeAndSalaryData = {
+      name: data.name,
+      jobTitle,
+      start,
+      limit,
+      salary_work_times: data.salaryWorkTimesResult.salaryWorkTimes,
+      salary_work_times_count: data.salaryWorkTimesResult.count,
+      salary_work_time_statistics: data.salary_work_time_statistics,
+    };
+
+    dispatch(setTimeAndSalary(companyName, getFetched(timeAndSalaryData)));
+  } catch (error) {
+    dispatch(setTimeAndSalary(companyName, getError(error)));
+  }
+};
 
 export const queryCompanyInterviewExperiences = ({
   companyName,

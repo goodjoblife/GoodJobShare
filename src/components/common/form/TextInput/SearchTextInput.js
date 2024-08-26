@@ -16,7 +16,8 @@ const SearchTextInput = ({ value, onChange, onSelected, ...restProps }) => {
   const eleRef = useRef(null);
 
   const searchCompanyNames = useCallback(
-    value => fetchSearchCompany({ companyName: value, hasData: true }),
+    value =>
+      fetchSearchCompany({ companyName: value, hasData: true, limit: 5 }),
     [],
   );
   const searchJobTitles = useCallback(

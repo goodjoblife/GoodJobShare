@@ -1,6 +1,6 @@
 export const getSearchCompanyQuery = /* GraphQL */ `
-  query($companyName: String!, $hasData: Boolean!) {
-    search_companies(query: $companyName, hasData: $hasData) {
+  query($companyName: String!, $hasData: Boolean!, $limit: Int) {
+    search_companies(query: $companyName, hasData: $hasData, limit: $limit) {
       name
       businessNumber
       dataCount

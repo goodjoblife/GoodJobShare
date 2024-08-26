@@ -4,7 +4,6 @@ import { generatePath } from 'react-router';
 import { Switch, Route } from 'react-router-dom';
 import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
 import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
-import CompanyJobTitleTimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
 import NotFound from 'common/NotFound';
 import Redirect from 'common/routing/Redirect';
 import { paramsSelector } from 'common/routing/selectors';
@@ -12,20 +11,14 @@ import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import {
-  jobTitleSalaryWorkTimesPath,
   jobTitleInterviewExperiencesPath,
   jobTitleWorkExperiencesPath,
 } from 'constants/linkTo';
 import { fetchJobTitle } from 'actions/jobTitle';
 import {
-  interviewExperiences,
-  workExperiences,
-  salaryWorkTimes,
-  salaryWorkTimeStatistics,
-  salaryDistribution,
-  averageWeekWorkTime,
-  overtimeFrequencyCount,
-  status,
+  interviewExperiences as interviewExperiencesSelector,
+  workExperiences as workExperiencesSelector,
+  status as statusSelector,
   jobTitle as jobTitleSelector,
 } from 'selectors/companyAndJobTitle';
 import { usePageName, pageNameSelector } from './usePageName';
@@ -49,19 +42,16 @@ const JobTitlePageProvider = () => {
     state => {
       const jobTitle = jobTitleSelector(pageName)(state);
       return {
-        status: status(jobTitle),
-        interviewExperiences: interviewExperiences(jobTitle),
-        workExperiences: workExperiences(jobTitle),
-        salaryWorkTimes: salaryWorkTimes(jobTitle),
-        salaryWorkTimeStatistics: salaryWorkTimeStatistics(jobTitle),
-        salaryDistribution: salaryDistribution(jobTitle),
-        averageWeekWorkTime: averageWeekWorkTime(jobTitle),
-        overtimeFrequencyCount: overtimeFrequencyCount(jobTitle),
+        status: statusSelector(jobTitle),
+        interviewExperiences: interviewExperiencesSelector(jobTitle),
+        workExperiences: workExperiencesSelector(jobTitle),
       };
     },
     [pageName],
   );
-  const data = useSelector(selector);
+  const { status, interviewExperiences, workExperiences } = useSelector(
+    selector,
+  );
 
   return (
     <Switch>
@@ -76,30 +66,17 @@ const JobTitlePageProvider = () => {
         }}
       />
       <Route
-        path={jobTitleSalaryWorkTimesPath}
-        exact
-        render={() => (
-          <CompanyJobTitleTimeAndSalary
-            {...data}
-            pageType={pageType}
-            pageName={pageName}
-            page={page}
-            canView={canView}
-            tabType={tabType.TIME_AND_SALARY}
-          />
-        )}
-      />
-      <Route
         path={jobTitleInterviewExperiencesPath}
         exact
         render={() => (
           <InterviewExperiences
-            {...data}
             pageType={pageType}
             pageName={pageName}
             page={page}
             canView={canView}
             tabType={tabType.INTERVIEW_EXPERIENCE}
+            status={status}
+            interviewExperiences={interviewExperiences}
           />
         )}
       />
@@ -108,12 +85,13 @@ const JobTitlePageProvider = () => {
         exact
         render={() => (
           <WorkExperiences
-            {...data}
             pageType={pageType}
             pageName={pageName}
             page={page}
             canView={canView}
             tabType={tabType.WORK_EXPERIENCE}
+            status={status}
+            workExperiences={workExperiences}
           />
         )}
       />

@@ -4,6 +4,7 @@ import {
   SET_INDEX_COUNT,
   SET_INDEX,
   SET_OVERVIEW,
+  SET_TIME_AND_SALARY,
   SET_INTERVIEW_EXPERIENCES,
 } from 'actions/company';
 
@@ -13,6 +14,7 @@ const preloadedState = {
   indexCountBox: getUnfetched(),
   // companyName --> overviewBox
   overviewByName: {},
+  timeAndSalaryByName: {},
   interviewExperiencesByName: {},
 };
 
@@ -35,6 +37,15 @@ const reducer = createReducer(preloadedState, {
       ...state,
       overviewByName: {
         ...state.overviewByName,
+        [companyName]: box,
+      },
+    };
+  },
+  [SET_TIME_AND_SALARY]: (state, { companyName, box }) => {
+    return {
+      ...state,
+      timeAndSalaryByName: {
+        ...state.timeAndSalaryByName,
         [companyName]: box,
       },
     };

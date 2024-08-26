@@ -24,10 +24,12 @@ import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
 import CompanyPageProvider from './components/Company/CompanyPageProvider';
 import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
 import CompanyOverviewProvider from 'components/Company/CompanyOverviewProvider';
+import CompanyTimeAndSalaryProvider from 'components/Company/CompanyTimeAndSalaryProvider';
 import CompanyInterviewExperiencesProvider from 'components/Company/CompanyInterviewExperiencesProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
 import JobTitleOverviewProvider from 'components/JobTitle/JobTitleOverviewProvider';
+import JobTitleTimeAndSalaryProvider from 'components/JobTitle/JobTitleTimeAndSalaryProvider';
 
 import PlanPage from './components/PlanPage';
 import BuyResultPage from './components/BuyResultPage';
@@ -35,7 +37,9 @@ import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
 import SubscriptionsPage from './components/Me/SubscriptionsPage';
 import {
   jobTitleOverviewPath,
+  jobTitleSalaryWorkTimesPath,
   companyOverviewPath,
+  companySalaryWorkTimesPath,
   companyInterviewExperiencesPath,
 } from 'constants/linkTo';
 
@@ -120,6 +124,11 @@ const routes = [
         exact: true,
       },
       {
+        path: companySalaryWorkTimesPath,
+        component: CompanyTimeAndSalaryProvider,
+        exact: true,
+      },
+      {
         path: companyInterviewExperiencesPath,
         component: CompanyInterviewExperiencesProvider,
         exact: true,
@@ -145,6 +154,11 @@ const routes = [
       {
         path: jobTitleOverviewPath,
         component: JobTitleOverviewProvider,
+        exact: true,
+      },
+      {
+        path: jobTitleSalaryWorkTimesPath,
+        component: JobTitleTimeAndSalaryProvider,
         exact: true,
       },
       {
