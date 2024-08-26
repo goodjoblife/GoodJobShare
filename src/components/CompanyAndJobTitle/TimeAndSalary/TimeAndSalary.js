@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import Pagination from 'common/Pagination';
@@ -10,6 +10,7 @@ import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
 import OvertimeSection from './OvertimeSection';
 import useSearchbar from '../useSearchbar';
+import { useQuery } from 'hooks/routing';
 
 const TimeAndSalary = ({
   salaryWorkTimes,
@@ -18,27 +19,20 @@ const TimeAndSalary = ({
   pageName,
   tabType,
   page,
-  queryParams,
+  pageSize,
+  totalCount,
 }) => {
   const [, fetchPermission, canView] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [fetchPermission]);
 
-  const { Searchbar, matchesFilter } = useSearchbar({
+  const { Searchbar } = useSearchbar({
     pageType,
     tabType,
   });
 
-  const pageSize = 10;
-  salaryWorkTimes = useMemo(() => salaryWorkTimes.filter(matchesFilter), [
-    matchesFilter,
-    salaryWorkTimes,
-  ]);
-  const currentData = salaryWorkTimes.slice(
-    (page - 1) * pageSize,
-    page * pageSize,
-  );
+  const queryParams = useQuery();
 
   return (
     <Section Tag="main" paddingBottom>
@@ -47,13 +41,13 @@ const TimeAndSalary = ({
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
           <WorkingHourBlock
-            data={currentData}
+            data={salaryWorkTimes}
             pageType={pageType}
             pageName={pageName}
             hideContent={!canView}
           />
           <Pagination
-            totalCount={salaryWorkTimes.length}
+            totalCount={totalCount}
             unit={pageSize}
             currentPage={page}
             createPageLinkTo={toPage =>
@@ -68,7 +62,7 @@ const TimeAndSalary = ({
       <ViewLog
         pageName={pageName}
         page={page}
-        contentIds={currentData.map(i => i.id)}
+        contentIds={salaryWorkTimes.map(i => i.id)}
       />
     </Section>
   );
@@ -77,8 +71,8 @@ const TimeAndSalary = ({
 TimeAndSalary.propTypes = {
   page: PropTypes.number,
   pageName: PropTypes.string,
+  pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string,
-  queryParams: PropTypes.object,
   salaryWorkTimeStatistics: PropTypes.shape({
     average_estimated_hourly_wage: PropTypes.number,
     average_week_work_time: PropTypes.number,
@@ -86,6 +80,7 @@ TimeAndSalary.propTypes = {
   }),
   salaryWorkTimes: PropTypes.array,
   tabType: PropTypes.string,
+  totalCount: PropTypes.number.isRequired,
 };
 
 export default TimeAndSalary;
