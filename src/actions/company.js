@@ -12,16 +12,19 @@ import {
   companyIndexesBoxSelectorAtPage,
   companyOverviewBoxSelectorByName,
   companyTimeAndSalaryBoxSelectorByName,
+  companyWorkExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   getCompany as getCompanyApi,
   getCompanyTimeAndSalary,
+  getCompanyWorkExperiences,
   queryCompaniesApi,
 } from 'apis/company';
 
 export const SET_STATUS = '@@company/SET_STATUS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
 export const SET_TIME_AND_SALARY = '@@COMPANY/SET_TIME_AND_SALARY';
+export const SET_WORK_EXPERIENCES = '@@COMPANY/SET_WORK_EXPERIENCES';
 export const SET_INDEX = '@@COMPANY/SET_INDEX';
 export const SET_INDEX_COUNT = '@@COMPANY/SET_INDEX_COUNT';
 
@@ -162,6 +165,7 @@ export const queryCompanyTimeAndSalary = ({
   if (
     isFetching(box) ||
     (isFetched(box) &&
+      box.name === companyName &&
       box.data.jobTitle === jobTitle &&
       box.data.start === start &&
       box.data.limit === limit)
@@ -197,5 +201,59 @@ export const queryCompanyTimeAndSalary = ({
     dispatch(setTimeAndSalary(companyName, getFetched(timeAndSalaryData)));
   } catch (error) {
     dispatch(setTimeAndSalary(companyName, getError(error)));
+  }
+};
+
+const setWorkExperiences = (companyName, box) => ({
+  type: SET_WORK_EXPERIENCES,
+  companyName,
+  box,
+});
+
+export const queryCompanyWorkExperiences = ({
+  companyName,
+  jobTitle,
+  start,
+  limit,
+}) => async (dispatch, getState) => {
+  const box = companyWorkExperiencesBoxSelectorByName(companyName)(getState());
+  if (
+    isFetching(box) ||
+    (isFetched(box) &&
+      box.data.name === companyName &&
+      box.data.jobTitle === jobTitle &&
+      box.data.start === start &&
+      box.data.limit === limit)
+  ) {
+    return;
+  }
+
+  dispatch(setWorkExperiences(companyName, toFetching()));
+
+  try {
+    const data = await getCompanyWorkExperiences({
+      companyName,
+      jobTitle,
+      start,
+      limit,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setWorkExperiences(companyName, getFetched(data)));
+    }
+
+    const workExperiencesData = {
+      name: data.name,
+      jobTitle,
+      start,
+      limit,
+      work_experiences: data.workExperiencesResult.workExperiences,
+      work_experiences_count: data.workExperiencesResult.count,
+    };
+
+    dispatch(setWorkExperiences(companyName, getFetched(workExperiencesData)));
+  } catch (error) {
+    dispatch(setWorkExperiences(companyName, getError(error)));
   }
 };

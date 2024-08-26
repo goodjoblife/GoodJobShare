@@ -25,6 +25,7 @@ import CompanyPageProvider from './components/Company/CompanyPageProvider';
 import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
 import CompanyOverviewProvider from 'components/Company/CompanyOverviewProvider';
 import CompanyTimeAndSalaryProvider from 'components/Company/CompanyTimeAndSalaryProvider';
+import CompanyWorkExperiencesProvider from 'components/Company/CompanyWorkExperiencesProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
 import JobTitleOverviewProvider from 'components/JobTitle/JobTitleOverviewProvider';
@@ -39,6 +40,7 @@ import {
   jobTitleSalaryWorkTimesPath,
   companyOverviewPath,
   companySalaryWorkTimesPath,
+  companyWorkExperiencesPath,
 } from 'constants/linkTo';
 
 const routes = [
@@ -124,6 +126,11 @@ const routes = [
       {
         path: companySalaryWorkTimesPath,
         component: CompanyTimeAndSalaryProvider,
+        exact: true,
+      },
+      {
+        path: companyWorkExperiencesPath,
+        component: CompanyWorkExperiencesProvider,
         exact: true,
       },
       {
