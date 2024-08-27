@@ -363,7 +363,6 @@ export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
           reply_count
           like_count
           recommend_to_others
-          averageSectionRating
         }
       }
     }
