@@ -184,7 +184,6 @@ const routes = [
           return <Redirect to={path} />;
         },
       },
-
       {
         path: jobTitleSalaryWorkTimesPath,
         component: JobTitleTimeAndSalaryProvider,
