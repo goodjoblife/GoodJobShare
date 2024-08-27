@@ -4,10 +4,7 @@ import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
-import {
-  queryCompanyTimeAndSalary,
-  queryCompanyWorkExperiences,
-} from 'actions/company';
+import { queryCompanyWorkExperiences } from 'actions/company';
 import {
   workExperiences as workExperiencesSelector,
   workExperiencesCount as workExperiencesCountSelector,
@@ -98,7 +95,7 @@ CompanyWorkExperiencesProvider.fetchData = ({
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   return dispatch(
-    queryCompanyTimeAndSalary({
+    queryCompanyWorkExperiences({
       companyName: pageName,
       jobTitle,
       start,
