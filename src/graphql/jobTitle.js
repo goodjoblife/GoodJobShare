@@ -306,6 +306,14 @@ export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
           }
         }
       }
+    }
+  }
+`;
+
+export const getJobTitleTimeAndSalaryStatisticsQuery = /* GraphQL */ `
+  query($jobTitle: String!) {
+    job_title(name: $jobTitle) {
+      name
       salary_work_time_statistics {
         count
         average_estimated_hourly_wage

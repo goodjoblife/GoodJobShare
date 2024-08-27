@@ -291,6 +291,14 @@ export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
           }
         }
       }
+    }
+  }
+`;
+
+export const getCompanyTimeAndSalaryStatisticsQuery = /* GraphQL */ `
+  query($companyName: String!) {
+    company(name: $companyName) {
+      name
       salary_work_time_statistics {
         count
         average_estimated_hourly_wage
