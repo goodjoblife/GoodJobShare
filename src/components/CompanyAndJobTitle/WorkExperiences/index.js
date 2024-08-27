@@ -12,6 +12,8 @@ const WorkExperiences = ({
   workExperiences,
   status,
   page,
+  pageSize,
+  totalCount,
   canView,
 }) => (
   <CompanyAndJobTitleWrapper
@@ -32,6 +34,8 @@ const WorkExperiences = ({
         tabType={tabType}
         data={workExperiences}
         page={page}
+        pageSize={pageSize}
+        totalCount={totalCount}
         canView={canView}
       />
     </StatusRenderer>
@@ -42,9 +46,11 @@ WorkExperiences.propTypes = {
   canView: PropTypes.bool.isRequired,
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
+  pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
+  totalCount: PropTypes.number.isRequired,
   workExperiences: PropTypes.arrayOf(PropTypes.object),
 };
 

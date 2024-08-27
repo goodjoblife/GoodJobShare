@@ -333,6 +333,45 @@ export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
   }
 `;
 
+export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
+  query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
+    company(name: $companyName) {
+      name
+      workExperiencesResult(jobTitle: $jobTitle, start: $start, limit: $limit) {
+        count
+        workExperiences {
+          id
+          type
+          originalCompanyName
+          company {
+            name
+          }
+          job_title {
+            name
+          }
+          region
+          experience_in_year
+          education
+          salary {
+            amount
+            type
+          }
+          title
+          sections {
+            subtitle
+            content
+          }
+          created_at
+          reply_count
+          like_count
+          recommend_to_others
+          averageSectionRating
+        }
+      }
+    }
+  }
+`;
+
 export const queryCompaniesHavingDataGql = /* GraphQL */ `
   query($start: Int!, $limit: Int!) {
     companiesHavingData(start: $start, limit: $limit) {

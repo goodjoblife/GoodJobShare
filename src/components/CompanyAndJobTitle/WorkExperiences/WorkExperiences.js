@@ -1,13 +1,13 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import qs from 'qs';
 import ExperienceEntry from './ExperienceEntry';
 import EmptyView from '../EmptyView';
 
 import { Section } from 'common/base';
 import Pagination from 'common/Pagination';
 import useSearchbar from '../useSearchbar';
-
-const pageSize = 10;
+import { useQuery } from 'hooks/routing';
 
 const WorkExperiences = ({
   pageType,
@@ -15,14 +15,15 @@ const WorkExperiences = ({
   tabType,
   data,
   page,
+  pageSize,
+  totalCount,
   canView,
 }) => {
-  const { Searchbar, matchesFilter } = useSearchbar({
+  const queryParams = useQuery();
+  const { Searchbar } = useSearchbar({
     pageType,
     tabType,
   });
-
-  data = useMemo(() => data.filter(matchesFilter), [data, matchesFilter]);
 
   if (data.length === 0) {
     return (
@@ -32,11 +33,10 @@ const WorkExperiences = ({
       </Section>
     );
   }
-  const visibleData = data.slice((page - 1) * pageSize, page * pageSize);
   return (
     <Section Tag="main" paddingBottom>
       <Searchbar />
-      {visibleData.map(d => (
+      {data.map(d => (
         <ExperienceEntry
           key={d.id}
           pageType={pageType}
@@ -45,10 +45,12 @@ const WorkExperiences = ({
         />
       ))}
       <Pagination
-        totalCount={data.length}
+        totalCount={totalCount}
         unit={pageSize}
         currentPage={page}
-        createPageLinkTo={page => `?p=${page}`}
+        createPageLinkTo={p =>
+          qs.stringify({ ...queryParams, p }, { addQueryPrefix: true })
+        }
       />
     </Section>
   );
@@ -59,8 +61,10 @@ WorkExperiences.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
+  pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
+  totalCount: PropTypes.number.isRequired,
 };
 
 export default WorkExperiences;

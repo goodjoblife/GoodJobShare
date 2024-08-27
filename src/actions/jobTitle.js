@@ -12,17 +12,20 @@ import {
   jobTitleIndexesBoxSelectorAtPage,
   jobTitleOverviewBoxSelectorByName,
   jobTitleTimeAndSalaryBoxSelectorByName,
+  jobTitleWorkExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   getJobTitle as getJobTitleApi,
   queryJobTitleOverview as queryJobTitleOverviewApi,
   getJobTitleTimeAndSalary,
+  getJobTitleWorkExperiences,
   queryJobTitlesApi,
 } from 'apis/jobTitle';
 
 export const SET_STATUS = '@@JOB_TITLE/SET_STATUS';
 export const SET_OVERVIEW = '@@JOB_TITLE/SET_OVERVIEW';
 export const SET_TIME_AND_SALARY = '@@JOB_TITLE/SET_TIME_AND_SALARY';
+export const SET_WORK_EXPERIENCES = '@@JOB_TITLE/SET_WORK_EXPERIENCES';
 export const SET_INDEX = '@@JOB_TITLE/SET_INDEX';
 export const SET_INDEX_COUNT = '@@JOB_TITLE/SET_INDEX_COUNT';
 
@@ -163,6 +166,7 @@ export const queryJobTitleTimeAndSalary = ({
   if (
     isFetching(box) ||
     (isFetched(box) &&
+      box.data.name === jobTitle &&
       box.data.companyName === companyName &&
       box.data.start === start &&
       box.data.limit === limit)
@@ -198,5 +202,59 @@ export const queryJobTitleTimeAndSalary = ({
     dispatch(setTimeAndSalary(jobTitle, getFetched(timeAndSalaryData)));
   } catch (error) {
     dispatch(setTimeAndSalary(jobTitle, getError(error)));
+  }
+};
+
+const setWorkExperiences = (jobTitle, box) => ({
+  type: SET_WORK_EXPERIENCES,
+  jobTitle,
+  box,
+});
+
+export const queryJobTitleWorkExperiences = ({
+  companyName,
+  jobTitle,
+  start,
+  limit,
+}) => async (dispatch, getState) => {
+  const box = jobTitleWorkExperiencesBoxSelectorByName(jobTitle)(getState());
+  if (
+    isFetching(box) ||
+    (isFetched(box) &&
+      box.data.name === jobTitle &&
+      box.data.companyName === companyName &&
+      box.data.start === start &&
+      box.data.limit === limit)
+  ) {
+    return;
+  }
+
+  dispatch(setWorkExperiences(jobTitle, toFetching()));
+
+  try {
+    const data = await getJobTitleWorkExperiences({
+      jobTitle,
+      companyName,
+      start,
+      limit,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setWorkExperiences(jobTitle, getFetched(data)));
+    }
+
+    const workExperiencesData = {
+      name: data.name,
+      companyName,
+      start,
+      limit,
+      work_experiences: data.workExperiencesResult.workExperiences,
+      work_experiences_count: data.workExperiencesResult.count,
+    };
+
+    dispatch(setWorkExperiences(jobTitle, getFetched(workExperiencesData)));
+  } catch (error) {
+    dispatch(setWorkExperiences(jobTitle, getError(error)));
   }
 };
