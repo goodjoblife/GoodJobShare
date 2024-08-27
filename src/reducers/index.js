@@ -10,9 +10,7 @@ import timeAndSalary from './timeAndSalary';
 import timeAndSalarySearch from './timeAndSalarySearch';
 import popularCompanyAverageSalary from './popularCompanyAverageSalary';
 import popularJobTitleSalaryDistribution from './popularJobTitleSalaryDistribution';
-import company from './company';
 import companyIndex from './companyIndex';
-import jobTitle from './jobTitle';
 import jobTitleIndex from './jobTitleIndex';
 import payment from './payment';
 import paymentPersist from './paymentPersist';
@@ -35,9 +33,7 @@ const rootReducer = combineReducers({
   timeAndSalarySearch,
   popularCompanyAverageSalary,
   popularJobTitleSalaryDistribution,
-  company,
   companyIndex,
-  jobTitle,
   jobTitleIndex,
   payment,
   paymentPersist,
