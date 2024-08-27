@@ -8,7 +8,6 @@ import { Section } from 'common/base';
 import EmptyView from '../EmptyView';
 import ExperienceEntry from './ExperienceEntry';
 
-import Searchbar from '../Searchbar';
 import { useQuery } from 'hooks/routing';
 
 const InterviewExperiences = ({
@@ -26,14 +25,12 @@ const InterviewExperiences = ({
   if (data.length === 0) {
     return (
       <Section Tag="main" paddingBottom>
-        <Searchbar pageType={pageType} tabType={tabType} />
         <EmptyView pageName={pageName} tabType={tabType} />
       </Section>
     );
   }
   return (
     <Section Tag="main" paddingBottom>
-      <Searchbar pageType={pageType} tabType={tabType} />
       {data.map(d => (
         <ExperienceEntry
           key={d.id}

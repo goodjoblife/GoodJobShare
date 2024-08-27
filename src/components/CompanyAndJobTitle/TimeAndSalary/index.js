@@ -5,6 +5,8 @@ import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import StatusRenderer from '../StatusRenderer';
 import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';
+import OvertimeSection from './OvertimeSection';
+import Searchbar from '../Searchbar';
 
 const TimeAndSalary = ({
   pageType,
@@ -22,14 +24,16 @@ const TimeAndSalary = ({
     pageName={pageName}
     tabType={tabType}
   >
+    <Helmet
+      pageType={pageType}
+      pageName={pageName}
+      salaryWorkTimes={salaryWorkTimes}
+      salaryWorkTimeStatistics={salaryWorkTimeStatistics}
+      page={page}
+    />
+    <OvertimeSection statistics={salaryWorkTimeStatistics} />
+    <Searchbar pageType={pageType} tabType={tabType} />
     <StatusRenderer status={status}>
-      <Helmet
-        pageType={pageType}
-        pageName={pageName}
-        salaryWorkTimes={salaryWorkTimes}
-        salaryWorkTimeStatistics={salaryWorkTimeStatistics}
-        page={page}
-      />
       <TimeAndSalarySection
         pageType={pageType}
         pageName={pageName}

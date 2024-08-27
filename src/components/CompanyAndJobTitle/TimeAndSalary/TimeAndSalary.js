@@ -8,8 +8,6 @@ import usePermission from 'hooks/usePermission';
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
-import OvertimeSection from './OvertimeSection';
-import Searchbar from '../Searchbar';
 import { useQuery } from 'hooks/routing';
 
 const TimeAndSalary = ({
@@ -31,8 +29,6 @@ const TimeAndSalary = ({
 
   return (
     <Section Tag="main" paddingBottom>
-      <OvertimeSection statistics={salaryWorkTimeStatistics} />
-      <Searchbar pageType={pageType} tabType={tabType} />
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
           <WorkingHourBlock

@@ -4,6 +4,7 @@ import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import StatusRenderer from '../StatusRenderer';
 import WorkExperiencesSection from './WorkExperiences';
 import Helmet from './Helmet';
+import Searchbar from '../Searchbar';
 
 const WorkExperiences = ({
   pageType,
@@ -21,13 +22,14 @@ const WorkExperiences = ({
     pageName={pageName}
     tabType={tabType}
   >
+    <Helmet
+      pageType={pageType}
+      pageName={pageName}
+      workExperiences={workExperiences}
+      page={page}
+    />
+    <Searchbar pageType={pageType} tabType={tabType} />
     <StatusRenderer status={status}>
-      <Helmet
-        pageType={pageType}
-        pageName={pageName}
-        workExperiences={workExperiences}
-        page={page}
-      />
       <WorkExperiencesSection
         pageType={pageType}
         pageName={pageName}
