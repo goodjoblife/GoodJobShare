@@ -14,7 +14,7 @@ export const getJobTitle = jobTitle =>
     variables: { jobTitle },
   }).then(R.prop('job_title'));
 
-export const queryJobTitleOverviewApi = ({
+export const queryJobTitleOverview = ({
   jobTitle,
   interviewExperiencesLimit,
   workExperiencesLimit,

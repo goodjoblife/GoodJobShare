@@ -14,7 +14,7 @@ export const getCompany = companyName =>
     variables: { companyName },
   }).then(R.prop('company'));
 
-export const queryCompanyOverviewApi = ({
+export const queryCompanyOverview = ({
   companyName,
   interviewExperiencesLimit,
   workExperiencesLimit,

@@ -15,7 +15,7 @@ import {
 } from 'selectors/companyAndJobTitle';
 import {
   getJobTitle as getJobTitleApi,
-  queryJobTitleOverviewApi,
+  queryJobTitleOverview as queryJobTitleOverviewApi,
   getJobTitleTimeAndSalary,
   queryJobTitlesApi,
 } from 'apis/jobTitle';
