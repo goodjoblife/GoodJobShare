@@ -25,11 +25,13 @@ import CompanyPageProvider from './components/Company/CompanyPageProvider';
 import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
 import CompanyOverviewProvider from 'components/Company/CompanyOverviewProvider';
 import CompanyTimeAndSalaryProvider from 'components/Company/CompanyTimeAndSalaryProvider';
+import CompanyInterviewExperiencesProvider from 'components/Company/CompanyInterviewExperiencesProvider';
 import CompanyWorkExperiencesProvider from 'components/Company/CompanyWorkExperiencesProvider';
 import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
 import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
 import JobTitleOverviewProvider from 'components/JobTitle/JobTitleOverviewProvider';
 import JobTitleTimeAndSalaryProvider from 'components/JobTitle/JobTitleTimeAndSalaryProvider';
+import JobTitleInterviewExperiencesProvider from 'components/JobTitle/JobTitleInterviewExperiencesProvider';
 import JobTitleWorkExperiencesProvider from 'components/JobTitle/JobTitleWorkExperiencesProvider';
 
 import PlanPage from './components/PlanPage';
@@ -39,9 +41,11 @@ import SubscriptionsPage from './components/Me/SubscriptionsPage';
 import {
   jobTitleOverviewPath,
   jobTitleSalaryWorkTimesPath,
+  jobTitleInterviewExperiencesPath,
   jobTitleWorkExperiencesPath,
   companyOverviewPath,
   companySalaryWorkTimesPath,
+  companyInterviewExperiencesPath,
   companyWorkExperiencesPath,
 } from 'constants/linkTo';
 
@@ -131,6 +135,11 @@ const routes = [
         exact: true,
       },
       {
+        path: companyInterviewExperiencesPath,
+        component: CompanyInterviewExperiencesProvider,
+        exact: true,
+      },
+      {
         path: companyWorkExperiencesPath,
         component: CompanyWorkExperiencesProvider,
         exact: true,
@@ -161,6 +170,11 @@ const routes = [
       {
         path: jobTitleSalaryWorkTimesPath,
         component: JobTitleTimeAndSalaryProvider,
+        exact: true,
+      },
+      {
+        path: jobTitleInterviewExperiencesPath,
+        component: JobTitleInterviewExperiencesProvider,
         exact: true,
       },
       {

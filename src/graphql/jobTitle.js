@@ -346,6 +346,48 @@ export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
   }
 `;
 
+export const getJobTitleInterviewExperiencesQuery = /* GraphQL */ `
+  query($jobTitle: String!, $companyName: String, $start: Int!, $limit: Int!) {
+    job_title(name: $jobTitle) {
+      name
+      interviewExperiencesResult(
+        companyQuery: $companyName
+        start: $start
+        limit: $limit
+      ) {
+        count
+        interviewExperiences {
+          id
+          type
+          originalCompanyName
+          company {
+            name
+          }
+          job_title {
+            name
+          }
+          region
+          experience_in_year
+          education
+          salary {
+            amount
+            type
+          }
+          title
+          sections {
+            subtitle
+            content
+          }
+          created_at
+          reply_count
+          like_count
+          overall_rating
+        }
+      }
+    }
+  }
+`;
+
 export const getJobTitleWorkExperiencesQuery = /* GraphQL */ `
   query($jobTitle: String!, $companyName: String, $start: Int!, $limit: Int!) {
     job_title(name: $jobTitle) {

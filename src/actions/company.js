@@ -12,12 +12,14 @@ import {
   companyIndexesBoxSelectorAtPage,
   companyOverviewBoxSelectorByName,
   companyTimeAndSalaryBoxSelectorByName,
+  companyInterviewExperiencesBoxSelectorByName,
   companyWorkExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   getCompany as getCompanyApi,
   queryCompanyOverview as queryCompanyOverviewApi,
   getCompanyTimeAndSalary,
+  getCompanyInterviewExperiences,
   getCompanyWorkExperiences,
   queryCompaniesApi,
 } from 'apis/company';
@@ -25,6 +27,7 @@ import {
 export const SET_STATUS = '@@company/SET_STATUS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
 export const SET_TIME_AND_SALARY = '@@COMPANY/SET_TIME_AND_SALARY';
+export const SET_INTERVIEW_EXPERIENCES = '@@COMPANY/SET_INTERVIEW_EXPERIENCES';
 export const SET_WORK_EXPERIENCES = '@@COMPANY/SET_WORK_EXPERIENCES';
 export const SET_INDEX = '@@COMPANY/SET_INDEX';
 export const SET_INDEX_COUNT = '@@COMPANY/SET_INDEX_COUNT';
@@ -158,6 +161,12 @@ const setTimeAndSalary = (companyName, box) => ({
   box,
 });
 
+const setInterviewExperiences = (companyName, box) => ({
+  type: SET_INTERVIEW_EXPERIENCES,
+  companyName,
+  box,
+});
+
 export const queryCompanyTimeAndSalary = ({
   companyName,
   jobTitle,
@@ -168,7 +177,7 @@ export const queryCompanyTimeAndSalary = ({
   if (
     isFetching(box) ||
     (isFetched(box) &&
-      box.name === companyName &&
+      box.data.name === companyName &&
       box.data.jobTitle === jobTitle &&
       box.data.start === start &&
       box.data.limit === limit)
@@ -204,6 +213,63 @@ export const queryCompanyTimeAndSalary = ({
     dispatch(setTimeAndSalary(companyName, getFetched(timeAndSalaryData)));
   } catch (error) {
     dispatch(setTimeAndSalary(companyName, getError(error)));
+  }
+};
+
+export const queryCompanyInterviewExperiences = ({
+  companyName,
+  jobTitle,
+  start,
+  limit,
+}) => async (dispatch, getState) => {
+  const box = companyInterviewExperiencesBoxSelectorByName(companyName)(
+    getState(),
+  );
+  if (
+    isFetching(box) ||
+    (isFetched(box) &&
+      box.data.name === companyName &&
+      box.data.jobTitle === jobTitle &&
+      box.data.start === start &&
+      box.data.limit === limit)
+  ) {
+    return;
+  }
+
+  dispatch(setInterviewExperiences(companyName, toFetching()));
+
+  try {
+    const data = await getCompanyInterviewExperiences({
+      companyName,
+      jobTitle,
+      start,
+      limit,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setInterviewExperiences(companyName, getFetched(data)));
+    }
+
+    const interviewExperiencesData = {
+      name: data.name,
+      jobTitle,
+      start,
+      limit,
+      interview_experiences:
+        data.interviewExperiencesResult.interviewExperiences,
+      interview_experiences_count: data.interviewExperiencesResult.count,
+    };
+
+    dispatch(
+      setInterviewExperiences(
+        companyName,
+        getFetched(interviewExperiencesData),
+      ),
+    );
+  } catch (error) {
+    dispatch(setInterviewExperiences(companyName, getError(error)));
+    throw error;
   }
 };
 

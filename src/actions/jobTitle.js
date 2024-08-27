@@ -12,12 +12,14 @@ import {
   jobTitleIndexesBoxSelectorAtPage,
   jobTitleOverviewBoxSelectorByName,
   jobTitleTimeAndSalaryBoxSelectorByName,
+  jobTitleInterviewExperiencesBoxSelectorByName,
   jobTitleWorkExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   getJobTitle as getJobTitleApi,
   queryJobTitleOverview as queryJobTitleOverviewApi,
   getJobTitleTimeAndSalary,
+  getJobTitleInterviewExperiences,
   getJobTitleWorkExperiences,
   queryJobTitlesApi,
 } from 'apis/jobTitle';
@@ -25,6 +27,8 @@ import {
 export const SET_STATUS = '@@JOB_TITLE/SET_STATUS';
 export const SET_OVERVIEW = '@@JOB_TITLE/SET_OVERVIEW';
 export const SET_TIME_AND_SALARY = '@@JOB_TITLE/SET_TIME_AND_SALARY';
+export const SET_INTERVIEW_EXPERIENCES =
+  '@@JOB_TITLE/SET_INTERVIEW_EXPERIENCES';
 export const SET_WORK_EXPERIENCES = '@@JOB_TITLE/SET_WORK_EXPERIENCES';
 export const SET_INDEX = '@@JOB_TITLE/SET_INDEX';
 export const SET_INDEX_COUNT = '@@JOB_TITLE/SET_INDEX_COUNT';
@@ -202,6 +206,64 @@ export const queryJobTitleTimeAndSalary = ({
     dispatch(setTimeAndSalary(jobTitle, getFetched(timeAndSalaryData)));
   } catch (error) {
     dispatch(setTimeAndSalary(jobTitle, getError(error)));
+  }
+};
+
+const setInterviewExperiences = (jobTitle, box) => ({
+  type: SET_INTERVIEW_EXPERIENCES,
+  jobTitle,
+  box,
+});
+
+export const queryJobTitleInterviewExperiences = ({
+  companyName,
+  jobTitle,
+  start,
+  limit,
+}) => async (dispatch, getState) => {
+  const box = jobTitleInterviewExperiencesBoxSelectorByName(jobTitle)(
+    getState(),
+  );
+  if (
+    isFetching(box) ||
+    (isFetched(box) &&
+      box.data.companyName === companyName &&
+      box.data.start === start &&
+      box.data.limit === limit)
+  ) {
+    return;
+  }
+
+  dispatch(setInterviewExperiences(jobTitle, toFetching()));
+
+  try {
+    const data = await getJobTitleInterviewExperiences({
+      jobTitle,
+      companyName,
+      start,
+      limit,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setInterviewExperiences(jobTitle, getFetched(data)));
+    }
+
+    const interviewExperiencesyData = {
+      name: data.name,
+      companyName,
+      start,
+      limit,
+      interview_experiences:
+        data.interviewExperiencesResult.interviewExperiences,
+      interview_experiences_count: data.interviewExperiencesResult.count,
+    };
+
+    dispatch(
+      setInterviewExperiences(jobTitle, getFetched(interviewExperiencesyData)),
+    );
+  } catch (error) {
+    dispatch(setInterviewExperiences(jobTitle, getError(error)));
   }
 };
 

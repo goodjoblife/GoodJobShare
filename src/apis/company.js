@@ -4,6 +4,7 @@ import {
   getCompanyQuery,
   queryCompanyOverviewGql,
   getCompanyTimeAndSalaryQuery,
+  getCompanyInterviewExperiencesQuery,
   getCompanyWorkExperiencesQuery,
   queryCompaniesHavingDataGql,
 } from 'graphql/company';
@@ -39,6 +40,17 @@ export const getCompanyTimeAndSalary = ({
 }) =>
   graphqlClient({
     query: getCompanyTimeAndSalaryQuery,
+    variables: { companyName, jobTitle, start, limit },
+  }).then(R.prop('company'));
+
+export const getCompanyInterviewExperiences = ({
+  companyName,
+  jobTitle,
+  start,
+  limit,
+}) =>
+  graphqlClient({
+    query: getCompanyInterviewExperiencesQuery,
     variables: { companyName, jobTitle, start, limit },
   }).then(R.prop('company'));
 

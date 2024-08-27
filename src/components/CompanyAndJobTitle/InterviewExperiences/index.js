@@ -12,6 +12,8 @@ const InterviewExperiences = ({
   interviewExperiences,
   status,
   page,
+  pageSize,
+  totalCount,
   canView,
 }) => (
   <CompanyAndJobTitleWrapper
@@ -32,6 +34,8 @@ const InterviewExperiences = ({
         tabType={tabType}
         data={interviewExperiences}
         page={page}
+        pageSize={pageSize}
+        totalCount={totalCount}
         canView={canView}
       />
     </StatusRenderer>
@@ -43,9 +47,11 @@ InterviewExperiences.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
+  pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
+  totalCount: PropTypes.number.isRequired,
 };
 
 export default InterviewExperiences;
