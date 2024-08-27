@@ -15,6 +15,7 @@ import {
 } from 'selectors/companyAndJobTitle';
 import {
   getCompany as getCompanyApi,
+  queryCompanyOverviewApi,
   getCompanyTimeAndSalary,
   queryCompaniesApi,
 } from 'apis/company';
@@ -115,8 +116,12 @@ export const queryCompanyOverview = companyName => async (
   dispatch(setOverview(companyName, toFetching()));
 
   try {
-    // TODO: rewrite to use api with pagination
-    const data = await getCompanyApi(companyName);
+    const data = await queryCompanyOverviewApi({
+      companyName,
+      interviewExperiencesLimit: INTERVIEW_EXPERIENCES_LIMIT,
+      workExperiencesLimit: WORK_EXPERIENCES_LIMIT,
+      salaryWorkTimesLimit: SALARY_WORK_TIMES_LIMIT,
+    });
 
     // Not found case
     if (data == null) {
@@ -125,16 +130,14 @@ export const queryCompanyOverview = companyName => async (
 
     const overviewData = {
       name: data.name,
-      salaryWorkTimes: data.salary_work_times.slice(0, SALARY_WORK_TIMES_LIMIT),
-      salaryWorkTimesCount: data.salary_work_times.length,
+      salaryWorkTimes: data.salaryWorkTimesResult.salaryWorkTimes,
+      salaryWorkTimesCount: data.salaryWorkTimesResult.count,
       salary_work_time_statistics: data.salary_work_time_statistics,
-      interviewExperiences: data.interview_experiences.slice(
-        0,
-        INTERVIEW_EXPERIENCES_LIMIT,
-      ),
-      interviewExperiencesCount: data.interview_experiences.length,
-      workExperiences: data.work_experiences.slice(0, WORK_EXPERIENCES_LIMIT),
-      workExperiencesCount: data.work_experiences.length,
+      interviewExperiences:
+        data.interviewExperiencesResult.interviewExperiences,
+      interviewExperiencesCount: data.interviewExperiencesResult.count,
+      workExperiences: data.workExperiencesResult.workExperiences,
+      workExperiencesCount: data.workExperiencesResult.count,
     };
 
     dispatch(setOverview(companyName, getFetched(overviewData)));
