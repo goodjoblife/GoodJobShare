@@ -5,6 +5,7 @@ import {
   SET_INDEX,
   SET_OVERVIEW,
   SET_TIME_AND_SALARY,
+  SET_WORK_EXPERIENCES,
 } from 'actions/company';
 
 const preloadedState = {
@@ -14,6 +15,7 @@ const preloadedState = {
   // companyName --> overviewBox
   overviewByName: {},
   timeAndSalaryByName: {},
+  workExperiencesByName: {},
 };
 
 const reducer = createReducer(preloadedState, {
@@ -44,6 +46,15 @@ const reducer = createReducer(preloadedState, {
       ...state,
       timeAndSalaryByName: {
         ...state.timeAndSalaryByName,
+        [companyName]: box,
+      },
+    };
+  },
+  [SET_WORK_EXPERIENCES]: (state, { companyName, box }) => {
+    return {
+      ...state,
+      workExperiencesByName: {
+        ...state.workExperiencesByName,
         [companyName]: box,
       },
     };

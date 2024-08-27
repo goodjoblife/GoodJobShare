@@ -25,6 +25,12 @@ export const workExperiences = R.pipe(
   R.defaultTo([]),
 );
 
+export const workExperiencesCount = R.pipe(
+  data,
+  R.when(R.is(Object), R.prop('work_experiences_count')),
+  R.defaultTo(0),
+);
+
 export const salaryWorkTimes = R.pipe(
   data,
   R.when(R.is(Object), R.prop('salary_work_times')),
@@ -111,6 +117,12 @@ export const companyTimeAndSalaryBoxSelectorByName = companyName => state => {
   return state.companyIndex.timeAndSalaryByName[companyName] || getUnfetched();
 };
 
+export const companyWorkExperiencesBoxSelectorByName = companyName => state => {
+  return (
+    state.companyIndex.workExperiencesByName[companyName] || getUnfetched()
+  );
+};
+
 export const jobTitleIndexesBoxSelectorAtPage = page => state => {
   return state.jobTitleIndex.indexesByPage[page] || getUnfetched();
 };
@@ -126,4 +138,8 @@ export const jobTitleOverviewBoxSelectorByName = jobTitle => state => {
 
 export const jobTitleTimeAndSalaryBoxSelectorByName = jobTitle => state => {
   return state.jobTitleIndex.timeAndSalaryByName[jobTitle] || getUnfetched();
+};
+
+export const jobTitleWorkExperiencesBoxSelectorByName = jobTitle => state => {
+  return state.jobTitleIndex.workExperiencesByName[jobTitle] || getUnfetched();
 };
