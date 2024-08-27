@@ -5,6 +5,7 @@ import {
   SET_INDEX,
   SET_OVERVIEW,
   SET_TIME_AND_SALARY,
+  SET_INTERVIEW_EXPERIENCES,
   SET_WORK_EXPERIENCES,
 } from 'actions/jobTitle';
 
@@ -15,6 +16,7 @@ const preloadedState = {
   // jobTitle --> overviewBox
   overviewByName: {},
   timeAndSalaryByName: {},
+  interviewExperiencesByName: {},
   workExperiencesByName: {},
 };
 
@@ -46,6 +48,15 @@ const reducer = createReducer(preloadedState, {
       ...state,
       timeAndSalaryByName: {
         ...state.timeAndSalaryByName,
+        [jobTitle]: box,
+      },
+    };
+  },
+  [SET_INTERVIEW_EXPERIENCES]: (state, { jobTitle, box }) => {
+    return {
+      ...state,
+      interviewExperiencesByName: {
+        ...state.interviewExperiencesByName,
         [jobTitle]: box,
       },
     };
