@@ -77,6 +77,13 @@ const CompanyAndJobTitleWrapper = ({
     [pageType, pageName],
   );
 
+  /* TODO: 這邊可以考慮將底下情況一起處理
+   * 1. 當 fetching                   --> 應顯示 Loading (目前由 StatusRenderer 處理)
+   * 2. 當 box.data === null          --> 應顯示 NotFoundStatus
+   * 3. 當 box.data.name !== pageName --> 應 Redirect (done)
+   * 4. 當 box.data.count === 0       --> 應顯示 NotFoundStatus (後端有公司，只是無資料)
+   * 5. 當 box.data.資料 === []        --> 應顯示 NotFoundStatus (通常是 pagination 超出範圍)
+   */
   const box = useBox({ pageType, pageName, tabType });
   if (isFetched(box)) {
     // all the box should have data in form of
