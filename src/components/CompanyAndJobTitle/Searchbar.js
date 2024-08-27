@@ -64,7 +64,7 @@ const Searchbar = ({ className, label, placeholder, onSubmit, pageType }) => {
           break;
       }
     },
-    300,
+    1500,
     [searchText],
   );
 
