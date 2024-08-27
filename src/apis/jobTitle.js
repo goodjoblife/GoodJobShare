@@ -2,19 +2,11 @@ import R from 'ramda';
 import graphqlClient from 'utils/graphqlClient';
 import {
   getJobTitleInterviewExperiencesQuery,
-  getJobTitleQuery,
   queryJobTitleOverviewGql,
   getJobTitleTimeAndSalaryQuery,
   getJobTitleWorkExperiencesQuery,
   queryJobTitlesHavingDataGql,
 } from 'graphql/jobTitle';
-
-// TODO: DEPRECATED
-export const getJobTitle = jobTitle =>
-  graphqlClient({
-    query: getJobTitleQuery,
-    variables: { jobTitle },
-  }).then(R.prop('job_title'));
 
 export const queryJobTitleOverview = ({
   jobTitle,
