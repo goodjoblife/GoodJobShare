@@ -43,7 +43,6 @@ const useTimeAndSalaryBox = pageName => {
         status: statusSelector(company),
         salaryWorkTimes: salaryWorkTimesSelector(company),
         salaryWorkTimesCount: salaryWorkTimesCountSelector(company),
-        salaryWorkTimeStatistics: salaryWorkTimeStatisticsSelector(company),
       };
     },
     [pageName],
