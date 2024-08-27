@@ -13,11 +13,14 @@ import {
   companyOverviewBoxSelectorByName,
   companyTimeAndSalaryBoxSelectorByName,
   companyInterviewExperiencesBoxSelectorByName,
+  companyWorkExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   getCompany as getCompanyApi,
+  queryCompanyOverview as queryCompanyOverviewApi,
   getCompanyTimeAndSalary,
   getCompanyInterviewExperiences,
+  getCompanyWorkExperiences,
   queryCompaniesApi,
 } from 'apis/company';
 
@@ -25,6 +28,7 @@ export const SET_STATUS = '@@company/SET_STATUS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
 export const SET_TIME_AND_SALARY = '@@COMPANY/SET_TIME_AND_SALARY';
 export const SET_INTERVIEW_EXPERIENCES = '@@COMPANY/SET_INTERVIEW_EXPERIENCES';
+export const SET_WORK_EXPERIENCES = '@@COMPANY/SET_WORK_EXPERIENCES';
 export const SET_INDEX = '@@COMPANY/SET_INDEX';
 export const SET_INDEX_COUNT = '@@COMPANY/SET_INDEX_COUNT';
 
@@ -118,8 +122,12 @@ export const queryCompanyOverview = companyName => async (
   dispatch(setOverview(companyName, toFetching()));
 
   try {
-    // TODO: rewrite to use api with pagination
-    const data = await getCompanyApi(companyName);
+    const data = await queryCompanyOverviewApi({
+      companyName,
+      interviewExperiencesLimit: INTERVIEW_EXPERIENCES_LIMIT,
+      workExperiencesLimit: WORK_EXPERIENCES_LIMIT,
+      salaryWorkTimesLimit: SALARY_WORK_TIMES_LIMIT,
+    });
 
     // Not found case
     if (data == null) {
@@ -128,16 +136,14 @@ export const queryCompanyOverview = companyName => async (
 
     const overviewData = {
       name: data.name,
-      salaryWorkTimes: data.salary_work_times.slice(0, SALARY_WORK_TIMES_LIMIT),
-      salaryWorkTimesCount: data.salary_work_times.length,
+      salaryWorkTimes: data.salaryWorkTimesResult.salaryWorkTimes,
+      salaryWorkTimesCount: data.salaryWorkTimesResult.count,
       salary_work_time_statistics: data.salary_work_time_statistics,
-      interviewExperiences: data.interview_experiences.slice(
-        0,
-        INTERVIEW_EXPERIENCES_LIMIT,
-      ),
-      interviewExperiencesCount: data.interview_experiences.length,
-      workExperiences: data.work_experiences.slice(0, WORK_EXPERIENCES_LIMIT),
-      workExperiencesCount: data.work_experiences.length,
+      interviewExperiences:
+        data.interviewExperiencesResult.interviewExperiences,
+      interviewExperiencesCount: data.interviewExperiencesResult.count,
+      workExperiences: data.workExperiencesResult.workExperiences,
+      workExperiencesCount: data.workExperiencesResult.count,
     };
 
     dispatch(setOverview(companyName, getFetched(overviewData)));
@@ -264,5 +270,59 @@ export const queryCompanyInterviewExperiences = ({
   } catch (error) {
     dispatch(setInterviewExperiences(companyName, getError(error)));
     throw error;
+  }
+};
+
+const setWorkExperiences = (companyName, box) => ({
+  type: SET_WORK_EXPERIENCES,
+  companyName,
+  box,
+});
+
+export const queryCompanyWorkExperiences = ({
+  companyName,
+  jobTitle,
+  start,
+  limit,
+}) => async (dispatch, getState) => {
+  const box = companyWorkExperiencesBoxSelectorByName(companyName)(getState());
+  if (
+    isFetching(box) ||
+    (isFetched(box) &&
+      box.data.name === companyName &&
+      box.data.jobTitle === jobTitle &&
+      box.data.start === start &&
+      box.data.limit === limit)
+  ) {
+    return;
+  }
+
+  dispatch(setWorkExperiences(companyName, toFetching()));
+
+  try {
+    const data = await getCompanyWorkExperiences({
+      companyName,
+      jobTitle,
+      start,
+      limit,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setWorkExperiences(companyName, getFetched(data)));
+    }
+
+    const workExperiencesData = {
+      name: data.name,
+      jobTitle,
+      start,
+      limit,
+      work_experiences: data.workExperiencesResult.workExperiences,
+      work_experiences_count: data.workExperiencesResult.count,
+    };
+
+    dispatch(setWorkExperiences(companyName, getFetched(workExperiencesData)));
+  } catch (error) {
+    dispatch(setWorkExperiences(companyName, getError(error)));
   }
 };
