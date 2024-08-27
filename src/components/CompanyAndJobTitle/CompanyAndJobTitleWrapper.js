@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { toPairs, compose, map, ifElse, always } from 'ramda';
+import { toPairs, compose, map } from 'ramda';
 
 import Heading from 'common/base/Heading';
 import FanPageBlock from 'common/FanPageBlock';
@@ -17,68 +17,42 @@ import {
 import { generateBreadCrumbData } from './utils';
 
 import {
-  status as statusSelectorFromBox,
-  name as nameSelectorFromBox,
-  company as companyBoxSelectorByPageName,
-  jobTitle as jobTitleBoxSelectorByPageName,
   companyOverviewBoxSelectorByName,
+  companyTimeAndSalaryBoxSelectorByName,
+  companyInterviewExperiencesBoxSelectorByName,
+  companyWorkExperiencesBoxSelectorByName,
   jobTitleOverviewBoxSelectorByName,
+  jobTitleTimeAndSalaryBoxSelectorByName,
+  jobTitleInterviewExperiencesBoxSelectorByName,
+  jobTitleWorkExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 
 import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
-import { isFetched } from 'constants/status';
+import { isFetched } from 'utils/fetchBox';
 
-const useBoxSelector = ({ pageType, pageName, tabType }) => {
-  return useMemo(() => {
-    switch (pageType) {
-      case PAGE_TYPE.COMPANY:
-        if (tabType === TAB_TYPE.OVERVIEW) {
-          return companyOverviewBoxSelectorByName(pageName);
-        }
-        return companyBoxSelectorByPageName(pageName);
-
-      case PAGE_TYPE.JOB_TITLE:
-        if (tabType === TAB_TYPE.OVERVIEW) {
-          return jobTitleOverviewBoxSelectorByName(pageName);
-        }
-        return jobTitleBoxSelectorByPageName(pageName);
-
-      default:
-        return null;
-    }
-  }, [pageType, pageName, tabType]);
+const selectorMapping = {
+  [PAGE_TYPE.COMPANY]: {
+    [TAB_TYPE.OVERVIEW]: companyOverviewBoxSelectorByName,
+    [TAB_TYPE.TIME_AND_SALARY]: companyTimeAndSalaryBoxSelectorByName,
+    [TAB_TYPE.INTERVIEW_EXPERIENCE]: companyInterviewExperiencesBoxSelectorByName,
+    [TAB_TYPE.WORK_EXPERIENCE]: companyWorkExperiencesBoxSelectorByName,
+  },
+  [PAGE_TYPE.JOB_TITLE]: {
+    [TAB_TYPE.OVERVIEW]: jobTitleOverviewBoxSelectorByName,
+    [TAB_TYPE.TIME_AND_SALARY]: jobTitleTimeAndSalaryBoxSelectorByName,
+    [TAB_TYPE.INTERVIEW_EXPERIENCE]: jobTitleInterviewExperiencesBoxSelectorByName,
+    [TAB_TYPE.WORK_EXPERIENCE]: jobTitleWorkExperiencesBoxSelectorByName,
+  },
 };
 
-const useNameSelector = ({ pageType, pageName, tabType }) => {
-  const boxSelector = useBoxSelector({ pageType, pageName, tabType });
-  return useMemo(
-    () =>
-      compose(
-        ifElse(
-          compose(
-            isFetched,
-            statusSelectorFromBox,
-          ),
-          nameSelectorFromBox,
-          always(null),
-        ),
-        boxSelector,
-      ),
-    [boxSelector],
+const useBox = ({ pageType, pageName, tabType }) => {
+  const boxSelector = useMemo(
+    () => selectorMapping[pageType][tabType](pageName),
+    [pageType, pageName, tabType],
   );
-};
-
-const useRedirectPath = ({ pageType, pageName, tabType }) => {
-  const nameSelector = useNameSelector({ pageType, pageName, tabType });
-  const name = useSelector(nameSelector);
-  if (!name) return null;
-
-  // No need to redirect if the name is the same as the pageName
-  if (name === pageName) return null;
-
-  // Redirect to the canonical path
-  return generateTabURL({ pageType, pageName: name, tabType });
+  const box = useSelector(boxSelector);
+  return box;
 };
 
 const CompanyAndJobTitleWrapper = ({
@@ -103,9 +77,19 @@ const CompanyAndJobTitleWrapper = ({
     [pageType, pageName],
   );
 
-  const redirectPath = useRedirectPath({ pageType, pageName, tabType });
-  if (redirectPath) {
-    return <Redirect to={redirectPath} />;
+  const box = useBox({ pageType, pageName, tabType });
+  if (isFetched(box)) {
+    // all the box should have data in form of
+    // 1. null --> means no such company or jobTitle
+    // 2. { name }
+    if (box.data !== null && box.data.name !== pageName) {
+      const path = generateTabURL({
+        pageType,
+        pageName: box.data.name,
+        tabType,
+      });
+      return <Redirect to={path} />;
+    }
   }
 
   return (
