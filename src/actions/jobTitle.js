@@ -15,6 +15,7 @@ import {
 } from 'selectors/companyAndJobTitle';
 import {
   getJobTitle as getJobTitleApi,
+  queryJobTitleOverview as queryJobTitleOverviewApi,
   getJobTitleTimeAndSalary,
   queryJobTitlesApi,
 } from 'apis/jobTitle';
@@ -112,8 +113,12 @@ export const queryJobTitleOverview = jobTitle => async (dispatch, getState) => {
   dispatch(setOverview(jobTitle, toFetching()));
 
   try {
-    // TODO: rewrite to use api with pagination
-    const data = await getJobTitleApi(jobTitle);
+    const data = await queryJobTitleOverviewApi({
+      jobTitle,
+      interviewExperiencesLimit: INTERVIEW_EXPERIENCES_LIMIT,
+      workExperiencesLimit: WORK_EXPERIENCES_LIMIT,
+      salaryWorkTimesLimit: SALARY_WORK_TIMES_LIMIT,
+    });
 
     // Not found case
     if (data == null) {
@@ -122,17 +127,15 @@ export const queryJobTitleOverview = jobTitle => async (dispatch, getState) => {
 
     const overviewData = {
       name: data.name,
-      salaryWorkTimes: data.salary_work_times.slice(0, SALARY_WORK_TIMES_LIMIT),
-      salaryWorkTimesCount: data.salary_work_times.length,
+      salaryWorkTimes: data.salaryWorkTimesResult.salaryWorkTimes,
+      salaryWorkTimesCount: data.salaryWorkTimesResult.count,
       salary_distribution: data.salary_distribution,
       salary_work_time_statistics: data.salary_work_time_statistics,
-      interviewExperiences: data.interview_experiences.slice(
-        0,
-        INTERVIEW_EXPERIENCES_LIMIT,
-      ),
-      interviewExperiencesCount: data.interview_experiences.length,
-      workExperiences: data.work_experiences.slice(0, WORK_EXPERIENCES_LIMIT),
-      workExperiencesCount: data.work_experiences.length,
+      interviewExperiences:
+        data.interviewExperiencesResult.interviewExperiences,
+      interviewExperiencesCount: data.interviewExperiencesResult.count,
+      workExperiences: data.workExperiencesResult.workExperiences,
+      workExperiencesCount: data.workExperiencesResult.count,
     };
 
     dispatch(setOverview(jobTitle, getFetched(overviewData)));

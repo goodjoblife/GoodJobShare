@@ -2,14 +2,32 @@ import R from 'ramda';
 import graphqlClient from 'utils/graphqlClient';
 import {
   getCompanyQuery,
+  queryCompanyOverviewGql,
   getCompanyTimeAndSalaryQuery,
   queryCompaniesHavingDataGql,
 } from 'graphql/company';
 
+// TODO: DEPRECATED
 export const getCompany = companyName =>
   graphqlClient({
     query: getCompanyQuery,
     variables: { companyName },
+  }).then(R.prop('company'));
+
+export const queryCompanyOverview = ({
+  companyName,
+  interviewExperiencesLimit,
+  workExperiencesLimit,
+  salaryWorkTimesLimit,
+}) =>
+  graphqlClient({
+    query: queryCompanyOverviewGql,
+    variables: {
+      companyName,
+      interviewExperiencesLimit,
+      workExperiencesLimit,
+      salaryWorkTimesLimit,
+    },
   }).then(R.prop('company'));
 
 export const getCompanyTimeAndSalary = ({
