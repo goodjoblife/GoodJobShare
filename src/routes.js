@@ -137,7 +137,7 @@ const routes = [
         exact: true,
         render: ({ match: { params } }) => {
           const companyName = companyPageNameSelector(params);
-          const path = generatePath('/companies/:companyName', { companyName });
+          const path = generatePath(companyOverviewPath, { companyName });
           return <Redirect to={path} />;
         },
       },
@@ -180,7 +180,7 @@ const routes = [
         exact: true,
         render: ({ match: { params } }) => {
           const jobTitle = jobTitlePageNameSelector(params);
-          const path = generatePath('/job-titles/:jobTitle', { jobTitle });
+          const path = generatePath(jobTitleOverviewPath, { jobTitle });
           return <Redirect to={path} />;
         },
       },
