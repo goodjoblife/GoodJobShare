@@ -9,7 +9,7 @@ import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
 import OvertimeSection from './OvertimeSection';
-import useSearchbar from '../useSearchbar';
+import Searchbar from '../Searchbar';
 import { useQuery } from 'hooks/routing';
 
 const TimeAndSalary = ({
@@ -27,17 +27,12 @@ const TimeAndSalary = ({
     fetchPermission();
   }, [fetchPermission]);
 
-  const { Searchbar } = useSearchbar({
-    pageType,
-    tabType,
-  });
-
   const queryParams = useQuery();
 
   return (
     <Section Tag="main" paddingBottom>
       <OvertimeSection statistics={salaryWorkTimeStatistics} />
-      <Searchbar />
+      <Searchbar pageType={pageType} tabType={tabType} />
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
           <WorkingHourBlock

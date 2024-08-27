@@ -8,7 +8,7 @@ import { Section } from 'common/base';
 import EmptyView from '../EmptyView';
 import ExperienceEntry from './ExperienceEntry';
 
-import useSearchbar from '../useSearchbar';
+import Searchbar from '../Searchbar';
 import { useQuery } from 'hooks/routing';
 
 const InterviewExperiences = ({
@@ -22,22 +22,18 @@ const InterviewExperiences = ({
   canView,
 }) => {
   const queryParams = useQuery();
-  const { Searchbar } = useSearchbar({
-    pageType,
-    tabType,
-  });
 
   if (data.length === 0) {
     return (
       <Section Tag="main" paddingBottom>
-        <Searchbar />
+        <Searchbar pageType={pageType} tabType={tabType} />
         <EmptyView pageName={pageName} tabType={tabType} />
       </Section>
     );
   }
   return (
     <Section Tag="main" paddingBottom>
-      <Searchbar />
+      <Searchbar pageType={pageType} tabType={tabType} />
       {data.map(d => (
         <ExperienceEntry
           key={d.id}

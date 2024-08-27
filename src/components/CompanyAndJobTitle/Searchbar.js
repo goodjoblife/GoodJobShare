@@ -105,7 +105,7 @@ Searchbar.propTypes = {
   placeholder: PropTypes.string,
 };
 
-const useSearchbar = ({ pageType, tabType }) => {
+const WrappedSearchbar = ({ pageType, tabType }) => {
   const [, setFilter] = useSearchTextFromQuery();
 
   const translatedPageType = pageTypeTranslation[pageType];
@@ -126,21 +126,19 @@ const useSearchbar = ({ pageType, tabType }) => {
   const label = `搜尋${translatedSearchingPageType}：`;
   const placeholder = `搜該${translatedPageType}指定${translatedSearchingPageType}${translatedTabType}`;
 
-  const WrappedSearchbar = useCallback(
-    () => (
-      <Searchbar
-        label={label}
-        placeholder={placeholder}
-        onSubmit={setFilter}
-        pageType={pageType}
-      />
-    ),
-    [label, placeholder, setFilter, pageType],
+  return (
+    <Searchbar
+      label={label}
+      placeholder={placeholder}
+      onSubmit={setFilter}
+      pageType={pageType}
+    />
   );
-
-  return {
-    Searchbar: WrappedSearchbar,
-  };
 };
 
-export default useSearchbar;
+WrappedSearchbar.propTypes = {
+  pageType: PropTypes.string.isRequired,
+  tabType: PropTypes.string.isRequired,
+};
+
+export default WrappedSearchbar;
