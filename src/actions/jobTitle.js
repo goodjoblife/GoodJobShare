@@ -1,5 +1,4 @@
 import { isGraphqlError } from 'utils/errors';
-import STATUS from 'constants/status';
 import {
   isFetching,
   isFetched,
@@ -8,7 +7,6 @@ import {
   getError,
 } from 'utils/fetchBox';
 import {
-  jobTitleStatus as jobTitleStatusSelector,
   jobTitleIndexesBoxSelectorAtPage,
   jobTitleOverviewBoxSelectorByName,
   jobTitleTimeAndSalaryBoxSelectorByName,
@@ -17,7 +15,6 @@ import {
   jobTitleWorkExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
-  getJobTitle as getJobTitleApi,
   queryJobTitleOverview as queryJobTitleOverviewApi,
   getJobTitleTimeAndSalary,
   getJobTitleTimeAndSalaryStatistics,
@@ -26,7 +23,6 @@ import {
   queryJobTitlesApi,
 } from 'apis/jobTitle';
 
-export const SET_STATUS = '@@JOB_TITLE/SET_STATUS';
 export const SET_OVERVIEW = '@@JOB_TITLE/SET_OVERVIEW';
 export const SET_TIME_AND_SALARY = '@@JOB_TITLE/SET_TIME_AND_SALARY';
 export const SET_TIME_AND_SALARY_STATISTICS =
@@ -36,36 +32,6 @@ export const SET_INTERVIEW_EXPERIENCES =
 export const SET_WORK_EXPERIENCES = '@@JOB_TITLE/SET_WORK_EXPERIENCES';
 export const SET_INDEX = '@@JOB_TITLE/SET_INDEX';
 export const SET_INDEX_COUNT = '@@JOB_TITLE/SET_INDEX_COUNT';
-
-const setStatus = (jobTitle, status, data = null, error = null) => ({
-  type: SET_STATUS,
-  jobTitle,
-  status,
-  data,
-  error,
-});
-
-export const fetchJobTitle = jobTitle => (dispatch, getState) => {
-  const status = jobTitleStatusSelector(jobTitle)(getState());
-  if (status === STATUS.FETCHING || status === STATUS.FETCHED) {
-    return;
-  }
-
-  dispatch(setStatus(jobTitle, STATUS.FETCHING));
-
-  return getJobTitleApi(jobTitle)
-    .then(data => {
-      dispatch(setStatus(jobTitle, STATUS.FETCHED, data));
-    })
-    .catch(error => {
-      if (isGraphqlError(error)) {
-        dispatch(setStatus(jobTitle, STATUS.ERROR, null, error));
-      } else {
-        // Unexpected error
-        throw error;
-      }
-    });
-};
 
 const setIndex = (page, box) => ({
   type: SET_INDEX,
