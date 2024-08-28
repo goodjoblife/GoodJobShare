@@ -1,5 +1,4 @@
 import { isGraphqlError } from 'utils/errors';
-import STATUS from 'constants/status';
 import {
   isFetching,
   isFetched,
@@ -8,59 +7,30 @@ import {
   getError,
 } from 'utils/fetchBox';
 import {
-  companyStatus as companyStatusSelector,
   companyIndexesBoxSelectorAtPage,
   companyOverviewBoxSelectorByName,
   companyTimeAndSalaryBoxSelectorByName,
+  companyTimeAndSalaryStatisticsBoxSelectorByName,
   companyInterviewExperiencesBoxSelectorByName,
   companyWorkExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
-  getCompany as getCompanyApi,
   queryCompanyOverview as queryCompanyOverviewApi,
   getCompanyTimeAndSalary,
   getCompanyInterviewExperiences,
   getCompanyWorkExperiences,
   queryCompaniesApi,
+  getCompanyTimeAndSalaryStatistics,
 } from 'apis/company';
 
-export const SET_STATUS = '@@company/SET_STATUS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
 export const SET_TIME_AND_SALARY = '@@COMPANY/SET_TIME_AND_SALARY';
+export const SET_TIME_AND_SALARY_STATISTICS =
+  '@@COMPANY/SET_TIME_AND_SALARY_STATISTICS';
 export const SET_INTERVIEW_EXPERIENCES = '@@COMPANY/SET_INTERVIEW_EXPERIENCES';
 export const SET_WORK_EXPERIENCES = '@@COMPANY/SET_WORK_EXPERIENCES';
 export const SET_INDEX = '@@COMPANY/SET_INDEX';
 export const SET_INDEX_COUNT = '@@COMPANY/SET_INDEX_COUNT';
-
-const setStatus = (companyName, status, data = null, error = null) => ({
-  type: SET_STATUS,
-  companyName,
-  status,
-  data,
-  error,
-});
-
-export const fetchCompany = companyName => (dispatch, getState) => {
-  const status = companyStatusSelector(companyName)(getState());
-  if (status === STATUS.FETCHING || status === STATUS.FETCHED) {
-    return;
-  }
-
-  dispatch(setStatus(companyName, STATUS.FETCHING));
-
-  return getCompanyApi(companyName)
-    .then(data => {
-      dispatch(setStatus(companyName, STATUS.FETCHED, data));
-    })
-    .catch(error => {
-      if (isGraphqlError(error)) {
-        dispatch(setStatus(companyName, STATUS.ERROR, null, error));
-      } else {
-        // Unexpected error
-        throw error;
-      }
-    });
-};
 
 const setIndex = (page, box) => ({
   type: SET_INDEX,
@@ -207,12 +177,58 @@ export const queryCompanyTimeAndSalary = ({
       limit,
       salary_work_times: data.salaryWorkTimesResult.salaryWorkTimes,
       salary_work_times_count: data.salaryWorkTimesResult.count,
-      salary_work_time_statistics: data.salary_work_time_statistics,
     };
 
     dispatch(setTimeAndSalary(companyName, getFetched(timeAndSalaryData)));
   } catch (error) {
     dispatch(setTimeAndSalary(companyName, getError(error)));
+  }
+};
+
+const setTimeAndSalaryStatistics = (companyName, box) => ({
+  type: SET_TIME_AND_SALARY_STATISTICS,
+  companyName,
+  box,
+});
+
+export const queryCompanyTimeAndSalaryStatistics = ({ companyName }) => async (
+  dispatch,
+  getState,
+) => {
+  const box = companyTimeAndSalaryStatisticsBoxSelectorByName(companyName)(
+    getState(),
+  );
+  if (isFetching(box) || (isFetched(box) && box.data.name === companyName)) {
+    return;
+  }
+
+  dispatch(setTimeAndSalaryStatistics(companyName, toFetching()));
+
+  try {
+    const data = await getCompanyTimeAndSalaryStatistics({
+      companyName,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(
+        setTimeAndSalaryStatistics(companyName, getFetched(data)),
+      );
+    }
+
+    const timeAndSalaryStatisticsData = {
+      name: data.name,
+      salary_work_time_statistics: data.salary_work_time_statistics,
+    };
+
+    dispatch(
+      setTimeAndSalaryStatistics(
+        companyName,
+        getFetched(timeAndSalaryStatisticsData),
+      ),
+    );
+  } catch (error) {
+    dispatch(setTimeAndSalaryStatistics(companyName, getError(error)));
   }
 };
 

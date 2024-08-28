@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import StatusRenderer from '../StatusRenderer';
+import { BoxStatusRenderer } from '../StatusRenderer';
 import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';
+import OvertimeSection from './OvertimeSection';
+import Searchbar from '../Searchbar';
 
 const TimeAndSalary = ({
   pageType,
@@ -12,7 +14,6 @@ const TimeAndSalary = ({
   tabType,
   salaryWorkTimes,
   salaryWorkTimeStatistics,
-  status,
   page,
   pageSize,
   totalCount,
@@ -22,25 +23,35 @@ const TimeAndSalary = ({
     pageName={pageName}
     tabType={tabType}
   >
-    <StatusRenderer status={status}>
-      <Helmet
-        pageType={pageType}
-        pageName={pageName}
-        salaryWorkTimes={salaryWorkTimes}
-        salaryWorkTimeStatistics={salaryWorkTimeStatistics}
-        page={page}
-      />
-      <TimeAndSalarySection
-        pageType={pageType}
-        pageName={pageName}
-        tabType={tabType}
-        salaryWorkTimes={salaryWorkTimes}
-        salaryWorkTimeStatistics={salaryWorkTimeStatistics}
-        page={page}
-        pageSize={pageSize}
-        totalCount={totalCount}
-      />
-    </StatusRenderer>
+    <OvertimeSection statistics={salaryWorkTimeStatistics} />
+    <Searchbar pageType={pageType} tabType={tabType} />
+    <BoxStatusRenderer
+      pageType={pageType}
+      pageName={pageName}
+      tabType={tabType}
+      render={() => {
+        return (
+          <Fragment>
+            <Helmet
+              pageType={pageType}
+              pageName={pageName}
+              totalCount={totalCount}
+              page={page}
+            />
+            <TimeAndSalarySection
+              pageType={pageType}
+              pageName={pageName}
+              tabType={tabType}
+              salaryWorkTimes={salaryWorkTimes}
+              salaryWorkTimeStatistics={salaryWorkTimeStatistics}
+              page={page}
+              pageSize={pageSize}
+              totalCount={totalCount}
+            />
+          </Fragment>
+        );
+      }}
+    />
   </CompanyAndJobTitleWrapper>
 );
 
@@ -49,13 +60,8 @@ TimeAndSalary.propTypes = {
   pageName: PropTypes.string,
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string,
-  salaryWorkTimeStatistics: PropTypes.shape({
-    average_estimated_hourly_wage: PropTypes.number,
-    average_week_work_time: PropTypes.number,
-    count: PropTypes.number,
-  }),
+  salaryWorkTimeStatistics: PropTypes.object.isRequired,
   salaryWorkTimes: PropTypes.array,
-  status: PropTypes.string.isRequired,
   tabType: PropTypes.string,
   totalCount: PropTypes.number.isRequired,
 };

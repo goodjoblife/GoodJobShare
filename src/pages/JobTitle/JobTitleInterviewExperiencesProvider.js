@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
+import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
-import { queryJobTitleWorkExperiences } from 'actions/jobTitle';
+import { queryJobTitleInterviewExperiences } from 'actions/jobTitle';
 import {
-  workExperiences as workExperiencesSelector,
-  workExperiencesCount as workExperiencesCountSelector,
+  interviewExperiences as interviewExperiencesSelector,
+  interviewExperiencesCount as interviewExperiencesCountSelector,
   status as statusSelector,
-  jobTitleWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName,
+  jobTitleInterviewExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import { usePageName, pageNameSelector } from './usePageName';
@@ -17,16 +17,18 @@ import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
-} from 'components/CompanyAndJobTitle/useSearchbar';
+} from 'components/CompanyAndJobTitle/Searchbar';
 
-const useWorkExperiencesBox = pageName => {
+const useInterviewExperiencesBox = pageName => {
   const selector = useCallback(
     state => {
-      const jobTitle = workExperiencesBoxSelectorByName(pageName)(state);
+      const jobTitle = jobTitleInterviewExperiencesBoxSelectorByName(pageName)(
+        state,
+      );
       return {
         status: statusSelector(jobTitle),
-        workExperiences: workExperiencesSelector(jobTitle),
-        workExperiencesCount: workExperiencesCountSelector(jobTitle),
+        interviewExperiences: interviewExperiencesSelector(jobTitle),
+        interviewExperiencesCount: interviewExperiencesCountSelector(jobTitle),
       };
     },
     [pageName],
@@ -37,7 +39,7 @@ const useWorkExperiencesBox = pageName => {
 
 const PAGE_SIZE = 10;
 
-const JobTitleWorkExperiencesProvider = () => {
+const JobTitleTimeAndSalaryProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.JOB_TITLE;
   const pageName = usePageName();
@@ -48,7 +50,7 @@ const JobTitleWorkExperiencesProvider = () => {
 
   useEffect(() => {
     dispatch(
-      queryJobTitleWorkExperiences({
+      queryJobTitleInterviewExperiences({
         jobTitle: pageName,
         companyName: companyName || undefined,
         start,
@@ -64,26 +66,26 @@ const JobTitleWorkExperiencesProvider = () => {
 
   const {
     status,
-    workExperiences,
-    workExperiencesCount,
-  } = useWorkExperiencesBox(pageName);
+    interviewExperiences,
+    interviewExperiencesCount,
+  } = useInterviewExperiencesBox(pageName);
 
   return (
-    <WorkExperiences
+    <InterviewExperiences
       pageType={pageType}
       pageName={pageName}
       page={page}
       pageSize={PAGE_SIZE}
-      totalCount={workExperiencesCount}
+      totalCount={interviewExperiencesCount}
       canView={canView}
-      tabType={tabType.WORK_EXPERIENCE}
+      tabType={tabType.INTERVIEW_EXPERIENCE}
       status={status}
-      workExperiences={workExperiences}
+      interviewExperiences={interviewExperiences}
     />
   );
 };
 
-JobTitleWorkExperiencesProvider.fetchData = ({
+JobTitleTimeAndSalaryProvider.fetchData = ({
   store: { dispatch },
   ...props
 }) => {
@@ -95,7 +97,7 @@ JobTitleWorkExperiencesProvider.fetchData = ({
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   return dispatch(
-    queryJobTitleWorkExperiences({
+    queryJobTitleInterviewExperiences({
       jobTitle: pageName,
       companyName,
       start,
@@ -104,4 +106,4 @@ JobTitleWorkExperiencesProvider.fetchData = ({
   );
 };
 
-export default JobTitleWorkExperiencesProvider;
+export default JobTitleTimeAndSalaryProvider;

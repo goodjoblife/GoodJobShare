@@ -6,7 +6,7 @@ import EmptyView from '../EmptyView';
 
 import { Section } from 'common/base';
 import Pagination from 'common/Pagination';
-import useSearchbar from '../useSearchbar';
+import NotFoundStatus from 'common/routing/NotFound';
 import { useQuery } from 'hooks/routing';
 
 const WorkExperiences = ({
@@ -20,22 +20,18 @@ const WorkExperiences = ({
   canView,
 }) => {
   const queryParams = useQuery();
-  const { Searchbar } = useSearchbar({
-    pageType,
-    tabType,
-  });
 
   if (data.length === 0) {
     return (
       <Section Tag="main" paddingBottom>
-        <Searchbar />
-        <EmptyView pageName={pageName} tabType={tabType} />
+        <NotFoundStatus>
+          <EmptyView pageName={pageName} tabType={tabType} />
+        </NotFoundStatus>
       </Section>
     );
   }
   return (
     <Section Tag="main" paddingBottom>
-      <Searchbar />
       {data.map(d => (
         <ExperienceEntry
           key={d.id}

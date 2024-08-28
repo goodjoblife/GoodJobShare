@@ -1,20 +1,13 @@
 import R from 'ramda';
 import graphqlClient from 'utils/graphqlClient';
 import {
-  getCompanyQuery,
   queryCompanyOverviewGql,
   getCompanyTimeAndSalaryQuery,
   getCompanyInterviewExperiencesQuery,
   getCompanyWorkExperiencesQuery,
   queryCompaniesHavingDataGql,
+  getCompanyTimeAndSalaryStatisticsQuery,
 } from 'graphql/company';
-
-// TODO: DEPRECATED
-export const getCompany = companyName =>
-  graphqlClient({
-    query: getCompanyQuery,
-    variables: { companyName },
-  }).then(R.prop('company'));
 
 export const queryCompanyOverview = ({
   companyName,
@@ -41,6 +34,12 @@ export const getCompanyTimeAndSalary = ({
   graphqlClient({
     query: getCompanyTimeAndSalaryQuery,
     variables: { companyName, jobTitle, start, limit },
+  }).then(R.prop('company'));
+
+export const getCompanyTimeAndSalaryStatistics = ({ companyName }) =>
+  graphqlClient({
+    query: getCompanyTimeAndSalaryStatisticsQuery,
+    variables: { companyName },
   }).then(R.prop('company'));
 
 export const getCompanyInterviewExperiences = ({

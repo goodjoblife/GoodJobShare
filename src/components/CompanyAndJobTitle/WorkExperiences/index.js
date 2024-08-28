@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import StatusRenderer from '../StatusRenderer';
+import { BoxStatusRenderer } from '../StatusRenderer';
 import WorkExperiencesSection from './WorkExperiences';
 import Helmet from './Helmet';
+import Searchbar from '../Searchbar';
 
 const WorkExperiences = ({
   pageType,
   pageName,
   tabType,
   workExperiences,
-  status,
   page,
   pageSize,
   totalCount,
@@ -21,24 +21,34 @@ const WorkExperiences = ({
     pageName={pageName}
     tabType={tabType}
   >
-    <StatusRenderer status={status}>
-      <Helmet
-        pageType={pageType}
-        pageName={pageName}
-        workExperiences={workExperiences}
-        page={page}
-      />
-      <WorkExperiencesSection
-        pageType={pageType}
-        pageName={pageName}
-        tabType={tabType}
-        data={workExperiences}
-        page={page}
-        pageSize={pageSize}
-        totalCount={totalCount}
-        canView={canView}
-      />
-    </StatusRenderer>
+    <Searchbar pageType={pageType} tabType={tabType} />
+    <BoxStatusRenderer
+      pageType={pageType}
+      pageName={pageName}
+      tabType={tabType}
+      render={() => {
+        return (
+          <Fragment>
+            <Helmet
+              pageType={pageType}
+              pageName={pageName}
+              totalCount={totalCount}
+              page={page}
+            />
+            <WorkExperiencesSection
+              pageType={pageType}
+              pageName={pageName}
+              tabType={tabType}
+              data={workExperiences}
+              page={page}
+              pageSize={pageSize}
+              totalCount={totalCount}
+              canView={canView}
+            />
+          </Fragment>
+        );
+      }}
+    />
   </CompanyAndJobTitleWrapper>
 );
 
@@ -48,7 +58,6 @@ WorkExperiences.propTypes = {
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
   totalCount: PropTypes.number.isRequired,
   workExperiences: PropTypes.arrayOf(PropTypes.object),
