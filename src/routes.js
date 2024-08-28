@@ -21,7 +21,7 @@ import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
 
-import CompanyAndJobTitlePageContainer from 'components/CompanyAndJobTitle';
+import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
 import CompanyIndexProvider from 'pages/Company/CompanyIndexProvider';
 import CompanyOverviewProvider from 'pages/Company/CompanyOverviewProvider';
 import CompanyTimeAndSalaryProvider from 'pages/Company/CompanyTimeAndSalaryProvider';
