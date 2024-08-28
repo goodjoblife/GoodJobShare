@@ -83,17 +83,17 @@ const OvertimeBlock = ({ type, heading, statistics }) => (
 OvertimeBlock.propTypes = {
   heading: PropTypes.string.isRequired,
   statistics: PropTypes.shape({
-    count: PropTypes.number.isRequired,
+    count: PropTypes.number,
     has_compensatory_dayoff_count: PropTypes.shape({
       no: PropTypes.number.isRequired,
       unknown: PropTypes.number.isRequired,
       yes: PropTypes.number.isRequired,
-    }).isRequired,
+    }),
     has_overtime_salary_count: PropTypes.shape({
       no: PropTypes.number.isRequired,
       unknown: PropTypes.number.isRequired,
       yes: PropTypes.number.isRequired,
-    }).isRequired,
+    }),
     is_overtime_salary_legal_count: PropTypes.shape({
       no: PropTypes.number.isRequired,
       unknown: PropTypes.number.isRequired,
