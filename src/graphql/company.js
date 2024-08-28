@@ -96,29 +96,12 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
         }
       }
       salary_work_time_statistics {
-        count
-        average_estimated_hourly_wage
         average_week_work_time
         overtime_frequency_count {
           seldom
           sometimes
           usually
           almost_everyday
-        }
-        is_overtime_salary_legal_count {
-          yes
-          no
-          unknown
-        }
-        has_compensatory_dayoff_count {
-          yes
-          no
-          unknown
-        }
-        has_overtime_salary_count {
-          yes
-          no
-          unknown
         }
         job_average_salaries {
           job_title {
@@ -178,13 +161,6 @@ export const getCompanyTimeAndSalaryStatisticsQuery = /* GraphQL */ `
       salary_work_time_statistics {
         count
         average_estimated_hourly_wage
-        average_week_work_time
-        overtime_frequency_count {
-          seldom
-          sometimes
-          usually
-          almost_everyday
-        }
         is_overtime_salary_legal_count {
           yes
           no
@@ -199,16 +175,6 @@ export const getCompanyTimeAndSalaryStatisticsQuery = /* GraphQL */ `
           yes
           no
           unknown
-        }
-        job_average_salaries {
-          job_title {
-            name
-          }
-          average_salary {
-            type
-            amount
-          }
-          data_count
         }
       }
     }
