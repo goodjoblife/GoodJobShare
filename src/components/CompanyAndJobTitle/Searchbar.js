@@ -64,7 +64,7 @@ const Searchbar = ({ className, label, placeholder, onSubmit, pageType }) => {
           break;
       }
     },
-    300,
+    1500,
     [searchText],
   );
 
@@ -105,8 +105,8 @@ Searchbar.propTypes = {
   placeholder: PropTypes.string,
 };
 
-const useSearchbar = ({ pageType, tabType }) => {
-  const [filter, setFilter] = useSearchTextFromQuery();
+const WrappedSearchbar = ({ pageType, tabType }) => {
+  const [, setFilter] = useSearchTextFromQuery();
 
   const translatedPageType = pageTypeTranslation[pageType];
   const translatedTabType = tabTypeTranslation[tabType];
@@ -126,45 +126,19 @@ const useSearchbar = ({ pageType, tabType }) => {
   const label = `搜尋${translatedSearchingPageType}：`;
   const placeholder = `搜該${translatedPageType}指定${translatedSearchingPageType}${translatedTabType}`;
 
-  const getSearchingValue = useCallback(
-    ({ company, job_title }) => {
-      switch (pageType) {
-        case pageTypes.COMPANY:
-          return job_title.name;
-        case pageTypes.JOB_TITLE:
-          return company.name;
-        default:
-          return null;
-      }
-    },
-    [pageType],
+  return (
+    <Searchbar
+      label={label}
+      placeholder={placeholder}
+      onSubmit={setFilter}
+      pageType={pageType}
+    />
   );
-
-  const matchesFilter = useCallback(
-    data => {
-      const value = getSearchingValue(data);
-      if (!value) return false;
-      return value.toLowerCase().includes(filter.toLowerCase());
-    },
-    [filter, getSearchingValue],
-  );
-
-  const WrappedSearchbar = useCallback(
-    () => (
-      <Searchbar
-        label={label}
-        placeholder={placeholder}
-        onSubmit={setFilter}
-        pageType={pageType}
-      />
-    ),
-    [label, placeholder, setFilter, pageType],
-  );
-
-  return {
-    Searchbar: WrappedSearchbar,
-    matchesFilter,
-  };
 };
 
-export default useSearchbar;
+WrappedSearchbar.propTypes = {
+  pageType: PropTypes.string.isRequired,
+  tabType: PropTypes.string.isRequired,
+};
+
+export default WrappedSearchbar;

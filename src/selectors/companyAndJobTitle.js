@@ -102,6 +102,13 @@ export const companyTimeAndSalaryBoxSelectorByName = companyName => state => {
   return state.companyIndex.timeAndSalaryByName[companyName] || getUnfetched();
 };
 
+export const companyTimeAndSalaryStatisticsBoxSelectorByName = companyName => state => {
+  return (
+    state.companyIndex.timeAndSalaryStatisticsByName[companyName] ||
+    getUnfetched()
+  );
+};
+
 export const companyInterviewExperiencesBoxSelectorByName = companyName => state => {
   return (
     state.companyIndex.interviewExperiencesByName[companyName] || getUnfetched()
@@ -129,6 +136,13 @@ export const jobTitleOverviewBoxSelectorByName = jobTitle => state => {
 
 export const jobTitleTimeAndSalaryBoxSelectorByName = jobTitle => state => {
   return state.jobTitleIndex.timeAndSalaryByName[jobTitle] || getUnfetched();
+};
+
+export const jobTitleTimeAndSalaryStatisticsBoxSelectorByName = jobTitle => state => {
+  return (
+    state.jobTitleIndex.timeAndSalaryStatisticsByName[jobTitle] ||
+    getUnfetched()
+  );
 };
 
 export const jobTitleInterviewExperiencesBoxSelectorByName = jobTitle => state => {

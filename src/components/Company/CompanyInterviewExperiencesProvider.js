@@ -16,7 +16,7 @@ import { usePageName, pageNameSelector } from './usePageName';
 import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
-} from 'components/CompanyAndJobTitle/useSearchbar';
+} from 'components/CompanyAndJobTitle/Searchbar';
 import { pageFromQuerySelector } from 'selectors/routing/page';
 
 const useInterviewExperiencesBox = pageName => {
