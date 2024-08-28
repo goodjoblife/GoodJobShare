@@ -7,19 +7,14 @@ import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { IMG_HOST, SITE_NAME } from 'constants/helmetData';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
-const CompanySalaryWorkTimeHelmet = ({
-  companyName,
-  salaryWorkTimes,
-  salaryWorkTimeStatistics,
-  page,
-}) => {
+const CompanySalaryWorkTimeHelmet = ({ companyName, page, totalCount }) => {
   // title
   const title = `${companyName} 薪水&加班狀況 - 第${page}頁`;
 
   // description
   let description = `目前還沒有${companyName}的薪水、加班狀況資料。分享你的薪水、加班狀況，一起讓職場更透明。`;
-  if (salaryWorkTimes && salaryWorkTimes.length > 0) {
-    description = `查看${salaryWorkTimes.length}筆由${companyName}內部員工提供的薪水、加班狀況資料。`;
+  if (totalCount > 0) {
+    description = `查看${totalCount}筆由${companyName}內部員工提供的薪水、加班狀況資料。`;
   }
 
   // canonical url
@@ -55,23 +50,17 @@ const CompanySalaryWorkTimeHelmet = ({
 CompanySalaryWorkTimeHelmet.propTypes = {
   companyName: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
-  salaryWorkTimeStatistics: PropTypes.object,
-  salaryWorkTimes: PropTypes.array,
+  totalCount: PropTypes.number.isRequired,
 };
 
-const JobTitleSalaryWorkTimeHelmet = ({
-  jobTitle,
-  salaryWorkTimes,
-  salaryWorkTimeStatistics,
-  page,
-}) => {
+const JobTitleSalaryWorkTimeHelmet = ({ jobTitle, page, totalCount }) => {
   // title
   const title = `${jobTitle} 薪水&加班狀況 - 第${page}頁`;
 
   // description
   let description = `目前還沒有${jobTitle}的薪水、加班狀況資料。分享你的薪水、加班狀況，一起讓職場更透明。`;
-  if (salaryWorkTimes && salaryWorkTimes.length > 0) {
-    description = `查看${salaryWorkTimes.length}筆由${jobTitle}提供的薪水、加班狀況資料。`;
+  if (totalCount > 0) {
+    description = `查看${totalCount}筆由${jobTitle}提供的薪水、加班狀況資料。`;
   }
 
   // canonical url
@@ -107,8 +96,7 @@ const JobTitleSalaryWorkTimeHelmet = ({
 JobTitleSalaryWorkTimeHelmet.propTypes = {
   jobTitle: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
-  salaryWorkTimeStatistics: PropTypes.object,
-  salaryWorkTimes: PropTypes.array,
+  totalCount: PropTypes.number.isRequired,
 };
 
 const Helmet = props => {
@@ -129,8 +117,7 @@ Helmet.propTypes = {
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
-  salaryWorkTimeStatistics: PropTypes.object,
-  salaryWorkTimes: PropTypes.array,
+  totalCount: PropTypes.number.isRequired,
 };
 
 export default Helmet;

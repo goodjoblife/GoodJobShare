@@ -7,18 +7,14 @@ import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
-const CompanyWorkExperienceHelmet = ({
-  companyName,
-  workExperiences,
-  page,
-}) => {
+const CompanyWorkExperienceHelmet = ({ companyName, page, totalCount }) => {
   // title
   const title = `${companyName} 工作心得列表 - 第${page}頁`;
 
   // description
   let description = `目前還沒有${companyName}的工作心得。分享你的工作心得，一起讓職場更透明！`;
-  if (workExperiences && workExperiences.length > 0) {
-    description = `查看${workExperiences.length}篇${companyName}工作心得`;
+  if (totalCount > 0) {
+    description = `查看${totalCount}篇${companyName}工作心得`;
   }
 
   // canonical url
@@ -50,17 +46,17 @@ const CompanyWorkExperienceHelmet = ({
 CompanyWorkExperienceHelmet.propTypes = {
   companyName: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
-  workExperiences: PropTypes.arrayOf(PropTypes.object),
+  totalCount: PropTypes.number.isRequired,
 };
 
-const JobTitleWorkExperienceHelmet = ({ jobTitle, workExperiences, page }) => {
+const JobTitleWorkExperienceHelmet = ({ jobTitle, page, totalCount }) => {
   // title
   const title = `${jobTitle} 工作心得列表 - 第${page}頁`;
 
   // description
   let description = `目前還沒有${jobTitle}的工作心得。分享你的工作心得，一起讓職場更透明！`;
-  if (workExperiences && workExperiences.length > 0) {
-    description = `查看${workExperiences.length}篇${jobTitle}工作心得`;
+  if (totalCount > 0) {
+    description = `查看${totalCount}篇${jobTitle}工作心得`;
   }
 
   // canonical url
@@ -92,7 +88,7 @@ const JobTitleWorkExperienceHelmet = ({ jobTitle, workExperiences, page }) => {
 JobTitleWorkExperienceHelmet.propTypes = {
   jobTitle: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
-  workExperiences: PropTypes.arrayOf(PropTypes.object),
+  totalCount: PropTypes.number.isRequired,
 };
 
 const WorkExperienceHelmet = props => {
@@ -113,7 +109,7 @@ WorkExperienceHelmet.propTypes = {
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
-  workExperiences: PropTypes.arrayOf(PropTypes.object),
+  totalCount: PropTypes.number.isRequired,
 };
 
 export default WorkExperienceHelmet;

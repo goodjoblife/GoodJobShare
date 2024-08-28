@@ -27,8 +27,7 @@ const TimeAndSalary = ({
     <Helmet
       pageType={pageType}
       pageName={pageName}
-      salaryWorkTimes={salaryWorkTimes}
-      salaryWorkTimeStatistics={salaryWorkTimeStatistics}
+      totalCount={totalCount}
       page={page}
     />
     <OvertimeSection statistics={salaryWorkTimeStatistics} />

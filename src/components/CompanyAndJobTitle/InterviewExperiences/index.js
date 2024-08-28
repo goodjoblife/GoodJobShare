@@ -25,7 +25,7 @@ const InterviewExperiences = ({
     <InterviewExperienceHelmet
       pageType={pageType}
       pageName={pageName}
-      interviewExperiences={interviewExperiences}
+      totalCount={totalCount}
       page={page}
     />
     <Searchbar pageType={pageType} tabType={tabType} />

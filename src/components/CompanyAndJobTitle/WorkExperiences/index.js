@@ -25,7 +25,7 @@ const WorkExperiences = ({
     <Helmet
       pageType={pageType}
       pageName={pageName}
-      workExperiences={workExperiences}
+      totalCount={totalCount}
       page={page}
     />
     <Searchbar pageType={pageType} tabType={tabType} />
