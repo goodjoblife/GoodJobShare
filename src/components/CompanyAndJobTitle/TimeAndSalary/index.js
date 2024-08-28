@@ -53,10 +53,7 @@ TimeAndSalary.propTypes = {
   pageName: PropTypes.string,
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string,
-  salaryWorkTimeStatistics: PropTypes.shape({
-    average_week_work_time: PropTypes.number,
-    count: PropTypes.number,
-  }),
+  salaryWorkTimeStatistics: PropTypes.object.isRequired,
   salaryWorkTimes: PropTypes.array,
   status: PropTypes.string.isRequired,
   tabType: PropTypes.string,

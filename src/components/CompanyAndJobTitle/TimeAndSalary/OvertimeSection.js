@@ -30,19 +30,7 @@ const OvertimeSection = ({ statistics }) => {
 };
 
 OvertimeSection.propTypes = {
-  statistics: PropTypes.shape({
-    count: PropTypes.number.isRequired,
-    has_compensatory_dayoff_count: PropTypes.shape({
-      no: PropTypes.number.isRequired,
-      unknown: PropTypes.number.isRequired,
-      yes: PropTypes.number.isRequired,
-    }).isRequired,
-    is_overtime_salary_legal_count: PropTypes.shape({
-      no: PropTypes.number.isRequired,
-      unknown: PropTypes.number.isRequired,
-      yes: PropTypes.number.isRequired,
-    }).isRequired,
-  }).isRequired,
+  statistics: PropTypes.object.isRequired,
 };
 
 export default OvertimeSection;
