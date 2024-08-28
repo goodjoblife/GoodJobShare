@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
+import NotFoundStatus from 'common/routing/NotFound';
 import usePermission from 'hooks/usePermission';
 
 import EmptyView from '../EmptyView';
@@ -48,7 +49,11 @@ const TimeAndSalary = ({
             }
           />
         </React.Fragment>
-      )) || <EmptyView pageName={pageName} tabType={tabType} />}
+      )) || (
+        <NotFoundStatus>
+          <EmptyView pageName={pageName} tabType={tabType} />
+        </NotFoundStatus>
+      )}
       <ViewLog
         pageName={pageName}
         page={page}
