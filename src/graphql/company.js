@@ -160,7 +160,6 @@ export const getCompanyTimeAndSalaryStatisticsQuery = /* GraphQL */ `
       name
       salary_work_time_statistics {
         count
-        average_estimated_hourly_wage
         is_overtime_salary_legal_count {
           yes
           no

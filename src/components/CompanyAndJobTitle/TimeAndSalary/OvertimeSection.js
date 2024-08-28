@@ -31,7 +31,6 @@ const OvertimeSection = ({ statistics }) => {
 
 OvertimeSection.propTypes = {
   statistics: PropTypes.shape({
-    average_estimated_hourly_wage: PropTypes.number.isRequired,
     count: PropTypes.number.isRequired,
     has_compensatory_dayoff_count: PropTypes.shape({
       no: PropTypes.number.isRequired,
