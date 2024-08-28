@@ -1,11 +1,9 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import StatusRenderer from '../StatusRenderer';
-import EmptyView from '../EmptyView';
+import { BoxStatusRenderer } from '../StatusRenderer';
 import OverviewSection from './Overview';
 import Helmet from './Helmet';
-import NotFoundStatus from 'common/routing/NotFound';
 
 const Overview = ({
   pageType,
@@ -20,18 +18,12 @@ const Overview = ({
     pageName={pageName}
     tabType={tabType}
   >
-    <StatusRenderer
-      status={overviewBox.status}
+    <BoxStatusRenderer
+      pageType={pageType}
+      pageName={pageName}
+      tabType={tabType}
       render={() => {
         const data = overviewBox.data;
-
-        if (data == null) {
-          return (
-            <NotFoundStatus status={404}>
-              <EmptyView pageName={pageName} />
-            </NotFoundStatus>
-          );
-        }
 
         return (
           <Fragment>
@@ -61,7 +53,7 @@ const Overview = ({
           </Fragment>
         );
       }}
-    ></StatusRenderer>
+    />
   </CompanyAndJobTitleWrapper>
 );
 

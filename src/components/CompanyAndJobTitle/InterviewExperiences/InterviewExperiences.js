@@ -4,6 +4,7 @@ import qs from 'qs';
 
 import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
+import NotFoundStatus from 'common/routing/NotFound';
 
 import EmptyView from '../EmptyView';
 import ExperienceEntry from './ExperienceEntry';
@@ -25,7 +26,9 @@ const InterviewExperiences = ({
   if (data.length === 0) {
     return (
       <Section Tag="main" paddingBottom>
-        <EmptyView pageName={pageName} tabType={tabType} />
+        <NotFoundStatus>
+          <EmptyView pageName={pageName} tabType={tabType} />
+        </NotFoundStatus>
       </Section>
     );
   }
