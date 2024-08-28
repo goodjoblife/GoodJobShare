@@ -32,7 +32,7 @@ const InterviewExperiences = ({
             <InterviewExperienceHelmet
               pageType={pageType}
               pageName={pageName}
-              interviewExperiences={interviewExperiences}
+              totalCount={totalCount}
               page={page}
             />
             <InterviewExperiencesSection

@@ -32,7 +32,7 @@ const WorkExperiences = ({
             <Helmet
               pageType={pageType}
               pageName={pageName}
-              workExperiences={workExperiences}
+              totalCount={totalCount}
               page={page}
             />
             <WorkExperiencesSection
