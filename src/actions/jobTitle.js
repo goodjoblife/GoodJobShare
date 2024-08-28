@@ -10,12 +10,14 @@ import {
   jobTitleIndexesBoxSelectorAtPage,
   jobTitleOverviewBoxSelectorByName,
   jobTitleTimeAndSalaryBoxSelectorByName,
+  jobTitleTimeAndSalaryStatisticsBoxSelectorByName,
   jobTitleInterviewExperiencesBoxSelectorByName,
   jobTitleWorkExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   queryJobTitleOverview as queryJobTitleOverviewApi,
   getJobTitleTimeAndSalary,
+  getJobTitleTimeAndSalaryStatistics,
   getJobTitleInterviewExperiences,
   getJobTitleWorkExperiences,
   queryJobTitlesApi,
@@ -23,6 +25,8 @@ import {
 
 export const SET_OVERVIEW = '@@JOB_TITLE/SET_OVERVIEW';
 export const SET_TIME_AND_SALARY = '@@JOB_TITLE/SET_TIME_AND_SALARY';
+export const SET_TIME_AND_SALARY_STATISTICS =
+  '@@JOB_TITLE/SET_TIME_AND_SALARY_STATISTICS';
 export const SET_INTERVIEW_EXPERIENCES =
   '@@JOB_TITLE/SET_INTERVIEW_EXPERIENCES';
 export const SET_WORK_EXPERIENCES = '@@JOB_TITLE/SET_WORK_EXPERIENCES';
@@ -166,12 +170,56 @@ export const queryJobTitleTimeAndSalary = ({
       limit,
       salary_work_times: data.salaryWorkTimesResult.salaryWorkTimes,
       salary_work_times_count: data.salaryWorkTimesResult.count,
-      salary_work_time_statistics: data.salary_work_time_statistics,
     };
 
     dispatch(setTimeAndSalary(jobTitle, getFetched(timeAndSalaryData)));
   } catch (error) {
     dispatch(setTimeAndSalary(jobTitle, getError(error)));
+  }
+};
+
+const setTimeAndSalaryStatistics = (jobTitle, box) => ({
+  type: SET_TIME_AND_SALARY_STATISTICS,
+  jobTitle,
+  box,
+});
+
+export const queryJobTitleTimeAndSalaryStatistics = ({ jobTitle }) => async (
+  dispatch,
+  getState,
+) => {
+  const box = jobTitleTimeAndSalaryStatisticsBoxSelectorByName(jobTitle)(
+    getState(),
+  );
+  if (isFetching(box) || (isFetched(box) && box.data.name === jobTitle)) {
+    return;
+  }
+
+  dispatch(setTimeAndSalaryStatistics(jobTitle, toFetching()));
+
+  try {
+    const data = await getJobTitleTimeAndSalaryStatistics({
+      jobTitle,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setTimeAndSalaryStatistics(jobTitle, getFetched(data)));
+    }
+
+    const timeAndSalaryStatisticsData = {
+      name: data.name,
+      salary_work_time_statistics: data.salary_work_time_statistics,
+    };
+
+    dispatch(
+      setTimeAndSalaryStatistics(
+        jobTitle,
+        getFetched(timeAndSalaryStatisticsData),
+      ),
+    );
+  } catch (error) {
+    dispatch(setTimeAndSalaryStatistics(jobTitle, getError(error)));
   }
 };
 

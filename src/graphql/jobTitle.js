@@ -105,29 +105,12 @@ export const queryJobTitleOverviewGql = /* GraphQL */ `
         }
       }
       salary_work_time_statistics {
-        count
-        average_estimated_hourly_wage
         average_week_work_time
         overtime_frequency_count {
           seldom
           sometimes
           usually
           almost_everyday
-        }
-        is_overtime_salary_legal_count {
-          yes
-          no
-          unknown
-        }
-        has_compensatory_dayoff_count {
-          yes
-          no
-          unknown
-        }
-        has_overtime_salary_count {
-          yes
-          no
-          unknown
         }
       }
       salary_distribution {
@@ -181,16 +164,16 @@ export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
           }
         }
       }
+    }
+  }
+`;
+
+export const getJobTitleTimeAndSalaryStatisticsQuery = /* GraphQL */ `
+  query($jobTitle: String!) {
+    job_title(name: $jobTitle) {
+      name
       salary_work_time_statistics {
         count
-        average_estimated_hourly_wage
-        average_week_work_time
-        overtime_frequency_count {
-          seldom
-          sometimes
-          usually
-          almost_everyday
-        }
         is_overtime_salary_legal_count {
           yes
           no
@@ -205,16 +188,6 @@ export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
           yes
           no
           unknown
-        }
-      }
-      salary_distribution {
-        bins {
-          data_count
-          range {
-            type
-            from
-            to
-          }
         }
       }
     }
