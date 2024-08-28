@@ -118,7 +118,12 @@ CompanyTimeAndSalaryProvider.fetchData = ({
   const jobTitle = searchTextFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
-  return dispatch(
+  const dispatchTimeAndSalaryStatistics = dispatch(
+    queryCompanyTimeAndSalaryStatistics({
+      companyName: pageName,
+    }),
+  );
+  const dispatchTimeAndSalary = dispatch(
     queryCompanyTimeAndSalary({
       companyName: pageName,
       jobTitle,
@@ -126,6 +131,7 @@ CompanyTimeAndSalaryProvider.fetchData = ({
       limit,
     }),
   );
+  return Promise.all([dispatchTimeAndSalary, dispatchTimeAndSalaryStatistics]);
 };
 
 export default CompanyTimeAndSalaryProvider;
