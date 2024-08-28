@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Overview from '../CompanyAndJobTitle/Overview';
+import Overview from 'components/CompanyAndJobTitle/Overview';
 import usePermission from 'hooks/usePermission';
 import {
   tabType as TAB_TYPE,

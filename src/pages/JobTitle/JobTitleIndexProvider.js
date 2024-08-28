@@ -2,8 +2,8 @@ import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { querySelector } from 'common/routing/selectors';
 import { pageFromQuerySelector } from 'selectors/routing/page';
-import CompanyAndJobTitleIndexPage from '../CompanyAndJobTitle/IndexPage';
-import usePagination from '../CompanyAndJobTitle/IndexPage/usePagination';
+import CompanyAndJobTitleIndexPage from 'components/CompanyAndJobTitle/IndexPage';
+import usePagination from 'components/CompanyAndJobTitle/IndexPage/usePagination';
 import { pageType as PAGE_TYPE, PAGE_SIZE } from 'constants/companyJobTitle';
 import { fetchJobTitles } from 'actions/jobTitle';
 import {

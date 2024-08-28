@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import TimeAndSalary from '../CompanyAndJobTitle/TimeAndSalary';
+import TimeAndSalary from 'components/CompanyAndJobTitle/TimeAndSalary';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import {

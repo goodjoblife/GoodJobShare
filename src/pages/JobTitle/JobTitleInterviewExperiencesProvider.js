@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
+import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import {
