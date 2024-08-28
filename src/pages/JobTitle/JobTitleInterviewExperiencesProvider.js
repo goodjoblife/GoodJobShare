@@ -1,62 +1,63 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
-import { paramsSelector, querySelector } from 'common/routing/selectors';
+import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
-import { queryCompanyInterviewExperiences } from 'actions/company';
+import { queryJobTitleInterviewExperiences } from 'actions/jobTitle';
 import {
   interviewExperiences as interviewExperiencesSelector,
   interviewExperiencesCount as interviewExperiencesCountSelector,
   status as statusSelector,
-  companyInterviewExperiencesBoxSelectorByName,
+  jobTitleInterviewExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
+import { paramsSelector, querySelector } from 'common/routing/selectors';
 import { usePageName, pageNameSelector } from './usePageName';
+import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
-import { pageFromQuerySelector } from 'selectors/routing/page';
 
 const useInterviewExperiencesBox = pageName => {
   const selector = useCallback(
     state => {
-      const company = companyInterviewExperiencesBoxSelectorByName(pageName)(
+      const jobTitle = jobTitleInterviewExperiencesBoxSelectorByName(pageName)(
         state,
       );
       return {
-        status: statusSelector(company),
-        interviewExperiences: interviewExperiencesSelector(company),
-        interviewExperiencesCount: interviewExperiencesCountSelector(company),
+        status: statusSelector(jobTitle),
+        interviewExperiences: interviewExperiencesSelector(jobTitle),
+        interviewExperiencesCount: interviewExperiencesCountSelector(jobTitle),
       };
     },
     [pageName],
   );
+
   return useSelector(selector);
 };
 
 const PAGE_SIZE = 10;
 
-const CompanyInterviewExperiencesProvider = () => {
+const JobTitleTimeAndSalaryProvider = () => {
   const dispatch = useDispatch();
-  const pageType = PAGE_TYPE.COMPANY;
+  const pageType = PAGE_TYPE.JOB_TITLE;
   const pageName = usePageName();
-  const [jobTitle] = useSearchTextFromQuery();
+  const [companyName] = useSearchTextFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
 
   useEffect(() => {
     dispatch(
-      queryCompanyInterviewExperiences({
-        companyName: pageName,
-        jobTitle: jobTitle || undefined,
+      queryJobTitleInterviewExperiences({
+        jobTitle: pageName,
+        companyName: companyName || undefined,
         start,
         limit,
       }),
     );
-  }, [dispatch, pageName, jobTitle, start, limit]);
+  }, [dispatch, pageName, companyName, start, limit]);
 
   const [, fetchPermission, canView] = usePermission();
   useEffect(() => {
@@ -84,7 +85,7 @@ const CompanyInterviewExperiencesProvider = () => {
   );
 };
 
-CompanyInterviewExperiencesProvider.fetchData = ({
+JobTitleTimeAndSalaryProvider.fetchData = ({
   store: { dispatch },
   ...props
 }) => {
@@ -92,17 +93,17 @@ CompanyInterviewExperiencesProvider.fetchData = ({
   const pageName = pageNameSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
-  const jobTitle = searchTextFromQuerySelector(query) || undefined;
+  const companyName = searchTextFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   return dispatch(
-    queryCompanyInterviewExperiences({
-      companyName: pageName,
-      jobTitle,
+    queryJobTitleInterviewExperiences({
+      jobTitle: pageName,
+      companyName,
       start,
       limit,
     }),
   );
 };
 
-export default CompanyInterviewExperiencesProvider;
+export default JobTitleTimeAndSalaryProvider;
