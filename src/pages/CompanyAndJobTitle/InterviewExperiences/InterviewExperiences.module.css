@@ -1,4 +1,4 @@
-@value page-gutter-s, below-mobile, above-small from "../../common/variables.module.css";
+@value page-gutter-s, below-mobile, above-small from "../../../components/common/variables.module.css";
 
 .container {
   display: block;
@@ -35,12 +35,7 @@
     flex-direction: row;
   }
 
-  .date {
-    flex: 1;
-    color: #adadad;
-  }
-
-  > .salaryRecommendWrapper {
+  > .salaryRatingWrapper {
     display: flex;
     justify-content: space-between;
     margin: 12px 0;
@@ -50,33 +45,44 @@
       justify-content: flex-start;
     }
 
-    .weekWorkTime,
     .salary,
-    .recommendToOthers {
+    .rating {
       display: flex;
       align-items: center;
       font-size: 15px;
       color: #424242;
     }
 
-    .salary,
-    .weekWorkTime,
-    .recommendToOthers {
-      margin-left: 35px;
-
+    .salary {
       svg {
         margin-right: 7px;
         width: 16px;
         height: 16px;
         fill: #adadad;
       }
-    }
 
-    .salary.locked {
-      svg {
-        color: #ed0d5e;
+      &.locked {
+        svg {
+          color: #ed0d5e;
+        }
       }
     }
+
+    .rating {
+      svg {
+        cursor: auto;
+        width: 24px;
+        height: 24px;
+      }
+      @media (min-width: above-small) {
+        margin-left: 35px;
+      }
+    }
+  }
+
+  > .date {
+    flex: 1;
+    color: #adadad;
   }
 }
 

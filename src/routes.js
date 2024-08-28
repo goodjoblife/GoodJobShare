@@ -21,17 +21,17 @@ import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
 
-import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
-import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
-import CompanyOverviewProvider from 'components/Company/CompanyOverviewProvider';
-import CompanyTimeAndSalaryProvider from 'components/Company/CompanyTimeAndSalaryProvider';
-import CompanyInterviewExperiencesProvider from 'components/Company/CompanyInterviewExperiencesProvider';
-import CompanyWorkExperiencesProvider from 'components/Company/CompanyWorkExperiencesProvider';
-import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
-import JobTitleOverviewProvider from 'components/JobTitle/JobTitleOverviewProvider';
-import JobTitleTimeAndSalaryProvider from 'components/JobTitle/JobTitleTimeAndSalaryProvider';
-import JobTitleInterviewExperiencesProvider from 'components/JobTitle/JobTitleInterviewExperiencesProvider';
-import JobTitleWorkExperiencesProvider from 'components/JobTitle/JobTitleWorkExperiencesProvider';
+import CompanyAndJobTitlePageContainer from 'pages/CompanyAndJobTitle';
+import CompanyIndexProvider from 'pages/Company/CompanyIndexProvider';
+import CompanyOverviewProvider from 'pages/Company/CompanyOverviewProvider';
+import CompanyTimeAndSalaryProvider from 'pages/Company/CompanyTimeAndSalaryProvider';
+import CompanyInterviewExperiencesProvider from 'pages/Company/CompanyInterviewExperiencesProvider';
+import CompanyWorkExperiencesProvider from 'pages/Company/CompanyWorkExperiencesProvider';
+import JobTitleIndexProvider from 'pages/JobTitle/JobTitleIndexProvider';
+import JobTitleOverviewProvider from 'pages/JobTitle/JobTitleOverviewProvider';
+import JobTitleTimeAndSalaryProvider from 'pages/JobTitle/JobTitleTimeAndSalaryProvider';
+import JobTitleInterviewExperiencesProvider from 'pages/JobTitle/JobTitleInterviewExperiencesProvider';
+import JobTitleWorkExperiencesProvider from 'pages/JobTitle/JobTitleWorkExperiencesProvider';
 
 import PlanPage from './components/PlanPage';
 import BuyResultPage from './components/BuyResultPage';
@@ -49,8 +49,8 @@ import {
   companyOverviewLegacyPath,
   jobTitleOverviewLegacyPath,
 } from 'constants/linkTo';
-import { pageNameSelector as companyPageNameSelector } from 'components/Company/usePageName';
-import { pageNameSelector as jobTitlePageNameSelector } from 'components/JobTitle/usePageName';
+import { pageNameSelector as companyPageNameSelector } from 'pages/Company/usePageName';
+import { pageNameSelector as jobTitlePageNameSelector } from 'pages/JobTitle/usePageName';
 
 const routes = [
   {

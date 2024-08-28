@@ -1,4 +1,4 @@
-@value below-tablet, above-mobile from "../../common/variables.module.css";
+@value below-tablet, above-mobile from "../../../components/common/variables.module.css";
 
 .summaryBlock {
   display: flex;

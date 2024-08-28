@@ -44,7 +44,7 @@ import {
   pageType as PAGE_TYPE,
   tabType as TAB_TYPE,
 } from 'constants/companyJobTitle';
-import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
+import { generateBreadCrumbData } from 'pages/CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import Button from 'common/button/Button';

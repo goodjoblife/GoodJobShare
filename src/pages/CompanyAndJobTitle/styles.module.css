@@ -1,4 +1,4 @@
-@value below-desktop, below-small, below-mobile, page-gutter-s from "../common/variables.module.css";
+@value below-desktop, below-small, below-mobile, page-gutter-s from "../../components/common/variables.module.css";
 
 .container {
   display: flex;

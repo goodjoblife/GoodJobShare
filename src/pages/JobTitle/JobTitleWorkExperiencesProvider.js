@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
+import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
-import { queryJobTitleInterviewExperiences } from 'actions/jobTitle';
+import { queryJobTitleWorkExperiences } from 'actions/jobTitle';
 import {
-  interviewExperiences as interviewExperiencesSelector,
-  interviewExperiencesCount as interviewExperiencesCountSelector,
+  workExperiences as workExperiencesSelector,
+  workExperiencesCount as workExperiencesCountSelector,
   status as statusSelector,
-  jobTitleInterviewExperiencesBoxSelectorByName,
+  jobTitleWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import { usePageName, pageNameSelector } from './usePageName';
@@ -17,18 +17,16 @@ import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
-} from 'components/CompanyAndJobTitle/useSearchbar';
+} from 'pages/CompanyAndJobTitle/useSearchbar';
 
-const useInterviewExperiencesBox = pageName => {
+const useWorkExperiencesBox = pageName => {
   const selector = useCallback(
     state => {
-      const jobTitle = jobTitleInterviewExperiencesBoxSelectorByName(pageName)(
-        state,
-      );
+      const jobTitle = workExperiencesBoxSelectorByName(pageName)(state);
       return {
         status: statusSelector(jobTitle),
-        interviewExperiences: interviewExperiencesSelector(jobTitle),
-        interviewExperiencesCount: interviewExperiencesCountSelector(jobTitle),
+        workExperiences: workExperiencesSelector(jobTitle),
+        workExperiencesCount: workExperiencesCountSelector(jobTitle),
       };
     },
     [pageName],
@@ -39,7 +37,7 @@ const useInterviewExperiencesBox = pageName => {
 
 const PAGE_SIZE = 10;
 
-const JobTitleTimeAndSalaryProvider = () => {
+const JobTitleWorkExperiencesProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.JOB_TITLE;
   const pageName = usePageName();
@@ -50,7 +48,7 @@ const JobTitleTimeAndSalaryProvider = () => {
 
   useEffect(() => {
     dispatch(
-      queryJobTitleInterviewExperiences({
+      queryJobTitleWorkExperiences({
         jobTitle: pageName,
         companyName: companyName || undefined,
         start,
@@ -66,26 +64,26 @@ const JobTitleTimeAndSalaryProvider = () => {
 
   const {
     status,
-    interviewExperiences,
-    interviewExperiencesCount,
-  } = useInterviewExperiencesBox(pageName);
+    workExperiences,
+    workExperiencesCount,
+  } = useWorkExperiencesBox(pageName);
 
   return (
-    <InterviewExperiences
+    <WorkExperiences
       pageType={pageType}
       pageName={pageName}
       page={page}
       pageSize={PAGE_SIZE}
-      totalCount={interviewExperiencesCount}
+      totalCount={workExperiencesCount}
       canView={canView}
-      tabType={tabType.INTERVIEW_EXPERIENCE}
+      tabType={tabType.WORK_EXPERIENCE}
       status={status}
-      interviewExperiences={interviewExperiences}
+      workExperiences={workExperiences}
     />
   );
 };
 
-JobTitleTimeAndSalaryProvider.fetchData = ({
+JobTitleWorkExperiencesProvider.fetchData = ({
   store: { dispatch },
   ...props
 }) => {
@@ -97,7 +95,7 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   return dispatch(
-    queryJobTitleInterviewExperiences({
+    queryJobTitleWorkExperiences({
       jobTitle: pageName,
       companyName,
       start,
@@ -106,4 +104,4 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   );
 };
 
-export default JobTitleTimeAndSalaryProvider;
+export default JobTitleWorkExperiencesProvider;

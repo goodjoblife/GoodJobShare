@@ -1,4 +1,4 @@
-@value main-yellow from "../common/variables.module.css";
+@value main-yellow from "../../components/common/variables.module.css";
 
 .searchbar {
   display: flex;

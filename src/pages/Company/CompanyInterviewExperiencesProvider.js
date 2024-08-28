@@ -1,43 +1,44 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
+import InterviewExperiences from '../CompanyAndJobTitle/InterviewExperiences';
+import { paramsSelector, querySelector } from 'common/routing/selectors';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
-import { queryCompanyWorkExperiences } from 'actions/company';
+import { queryCompanyInterviewExperiences } from 'actions/company';
 import {
-  workExperiences as workExperiencesSelector,
-  workExperiencesCount as workExperiencesCountSelector,
+  interviewExperiences as interviewExperiencesSelector,
+  interviewExperiencesCount as interviewExperiencesCountSelector,
   status as statusSelector,
-  companyWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName,
+  companyInterviewExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
-import { paramsSelector, querySelector } from 'common/routing/selectors';
 import { usePageName, pageNameSelector } from './usePageName';
-import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
-} from 'components/CompanyAndJobTitle/useSearchbar';
+} from 'pages/CompanyAndJobTitle/useSearchbar';
+import { pageFromQuerySelector } from 'selectors/routing/page';
 
-const useWorkExperiencesBox = pageName => {
+const useInterviewExperiencesBox = pageName => {
   const selector = useCallback(
     state => {
-      const company = workExperiencesBoxSelectorByName(pageName)(state);
+      const company = companyInterviewExperiencesBoxSelectorByName(pageName)(
+        state,
+      );
       return {
         status: statusSelector(company),
-        workExperiences: workExperiencesSelector(company),
-        workExperiencesCount: workExperiencesCountSelector(company),
+        interviewExperiences: interviewExperiencesSelector(company),
+        interviewExperiencesCount: interviewExperiencesCountSelector(company),
       };
     },
     [pageName],
   );
-
   return useSelector(selector);
 };
 
 const PAGE_SIZE = 10;
 
-const CompanyWorkExperiencesProvider = () => {
+const CompanyInterviewExperiencesProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.COMPANY;
   const pageName = usePageName();
@@ -48,7 +49,7 @@ const CompanyWorkExperiencesProvider = () => {
 
   useEffect(() => {
     dispatch(
-      queryCompanyWorkExperiences({
+      queryCompanyInterviewExperiences({
         companyName: pageName,
         jobTitle: jobTitle || undefined,
         start,
@@ -64,26 +65,26 @@ const CompanyWorkExperiencesProvider = () => {
 
   const {
     status,
-    workExperiences,
-    workExperiencesCount,
-  } = useWorkExperiencesBox(pageName);
+    interviewExperiences,
+    interviewExperiencesCount,
+  } = useInterviewExperiencesBox(pageName);
 
   return (
-    <WorkExperiences
+    <InterviewExperiences
       pageType={pageType}
       pageName={pageName}
       page={page}
       pageSize={PAGE_SIZE}
-      totalCount={workExperiencesCount}
+      totalCount={interviewExperiencesCount}
       canView={canView}
-      tabType={tabType.WORK_EXPERIENCE}
+      tabType={tabType.INTERVIEW_EXPERIENCE}
       status={status}
-      workExperiences={workExperiences}
+      interviewExperiences={interviewExperiences}
     />
   );
 };
 
-CompanyWorkExperiencesProvider.fetchData = ({
+CompanyInterviewExperiencesProvider.fetchData = ({
   store: { dispatch },
   ...props
 }) => {
@@ -95,7 +96,7 @@ CompanyWorkExperiencesProvider.fetchData = ({
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   return dispatch(
-    queryCompanyWorkExperiences({
+    queryCompanyInterviewExperiences({
       companyName: pageName,
       jobTitle,
       start,
@@ -104,4 +105,4 @@ CompanyWorkExperiencesProvider.fetchData = ({
   );
 };
 
-export default CompanyWorkExperiencesProvider;
+export default CompanyInterviewExperiencesProvider;

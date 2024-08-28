@@ -17,8 +17,8 @@ import {
   getWeekWorkTime,
   formatWage,
   formatDate,
-} from '../../TimeAndSalary/common/formatter';
-import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
+} from 'components/TimeAndSalary/common/formatter';
+import injectHideContentBlock from 'components/TimeAndSalary/common/injectHideContentBlock';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
