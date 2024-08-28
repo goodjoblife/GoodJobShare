@@ -7,6 +7,9 @@ import Heading from 'common/base/Heading';
 import FanPageBlock from 'common/FanPageBlock';
 import BreadCrumb from 'common/BreadCrumb';
 import Redirect from 'common/routing/Redirect';
+import Loader from 'common/Loader';
+
+import NotFoundStatus from 'common/routing/NotFound';
 
 import {
   tabTypeTranslation,
@@ -15,6 +18,7 @@ import {
   tabType as TAB_TYPE,
 } from 'constants/companyJobTitle';
 import { generateBreadCrumbData } from './utils';
+import EmptyView from './EmptyView';
 
 import {
   companyOverviewBoxSelectorByName,
@@ -29,7 +33,7 @@ import {
 
 import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
-import { isFetched } from 'utils/fetchBox';
+import { isUnfetched, isFetching, isError, isFetched } from 'utils/fetchBox';
 
 const selectorMapping = {
   [PAGE_TYPE.COMPANY]: {
@@ -125,6 +129,123 @@ CompanyAndJobTitleWrapper.propTypes = {
   children: PropTypes.node,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
+  tabType: PropTypes.string.isRequired,
+};
+
+export const BoxStatusRenderer = ({
+  pageName,
+  pageType,
+  tabType,
+  box,
+  render,
+}) => {
+  if (isUnfetched(box)) {
+    return null;
+  }
+  if (isFetching(box)) {
+    return <Loader size="s" />;
+  }
+  if (isError(box)) {
+    return null;
+  }
+  if (isFetched(box)) {
+    const data = box.data;
+    if (data === null) {
+      return (
+        <NotFoundStatus status={404}>
+          <EmptyView pageName={pageName} />
+        </NotFoundStatus>
+      );
+    }
+    if (data.name !== pageName) {
+      const path = generateTabURL({
+        pageType,
+        pageName: box.data.name,
+        tabType,
+      });
+      return <Redirect to={path} />;
+    }
+  }
+
+  return render();
+};
+
+BoxStatusRenderer.propTypes = {
+  box: PropTypes.shape({
+    data: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }),
+    error: PropTypes.any,
+    status: PropTypes.string.isRequired,
+  }).isRequired,
+  pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
+  render: PropTypes.func.isRequired,
+  tabType: PropTypes.string.isRequired,
+};
+
+export const CompanyAndJobTitleWrapper2 = ({
+  pageType,
+  pageName,
+  tabType,
+  box,
+  render,
+}) => {
+  const tabLinkOptions = useMemo(
+    () =>
+      compose(
+        map(([type, label]) => ({
+          label,
+          to: generateTabURL({
+            pageType,
+            pageName,
+            tabType: type,
+          }),
+        })),
+        toPairs,
+      )(tabTypeTranslation),
+    [pageType, pageName],
+  );
+
+  return (
+    <div>
+      <div style={{ marginBottom: '20px' }}>
+        <BreadCrumb
+          data={generateBreadCrumbData({ pageType, pageName, tabType })}
+        />
+      </div>
+      <Heading style={{ color: '#000000', marginBottom: '30px' }}>
+        {pageName}
+      </Heading>
+      <TabLinkGroup
+        options={tabLinkOptions}
+        style={{
+          marginBottom: '24px',
+        }}
+      />
+      <BoxStatusRenderer
+        pageName={pageName}
+        pageType={pageType}
+        tabType={tabType}
+        box={box}
+        render={render}
+      />
+      <FanPageBlock className={styles.fanPageBlock} />
+    </div>
+  );
+};
+
+CompanyAndJobTitleWrapper2.propTypes = {
+  box: PropTypes.shape({
+    data: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }),
+    error: PropTypes.any,
+    status: PropTypes.string.isRequired,
+  }).isRequired,
+  pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
+  render: PropTypes.func.isRequired,
   tabType: PropTypes.string.isRequired,
 };
 
