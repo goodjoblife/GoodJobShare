@@ -1,4 +1,4 @@
-@value border-gray from '../../components/common/variables.module.css';
+@value border-gray from '../common/variables.module.css';
 
 .searchNoResult {
   background-color: #f2f2f2;

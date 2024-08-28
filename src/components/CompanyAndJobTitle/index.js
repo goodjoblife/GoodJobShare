@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-router';
 import Wrapper from 'common/base/Wrapper';
-import RouteWithSubRoutes from 'components/route';
+import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
 
 const CompanyAndJobTitlePageContainer = ({ routes }) => {

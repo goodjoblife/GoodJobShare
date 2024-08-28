@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import InterviewExperienceEntry from 'pages/CompanyAndJobTitle/InterviewExperiences/ExperienceEntry';
-import WorkExperienceEntry from 'pages/CompanyAndJobTitle/WorkExperiences/ExperienceEntry';
+import InterviewExperienceEntry from '../../CompanyAndJobTitle/InterviewExperiences/ExperienceEntry';
+import WorkExperienceEntry from '../../CompanyAndJobTitle/WorkExperiences/ExperienceEntry';
 import { useLocation } from 'react-router';
 import usePermission from 'hooks/usePermission';
 import {

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import Pagination from 'common/Pagination';
 import Loader from 'common/Loader';
-import WorkingHourBlock from 'components/TimeAndSalary/SearchScreen/WorkingHourBlock';
+import WorkingHourBlock from '../../TimeAndSalary/SearchScreen/WorkingHourBlock';
 import {
   pageTypeTranslation,
   generatePageURL,

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import WorkExperiences from '../CompanyAndJobTitle/WorkExperiences';
+import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
@@ -17,7 +17,7 @@ import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
-} from 'pages/CompanyAndJobTitle/useSearchbar';
+} from 'components/CompanyAndJobTitle/useSearchbar';
 
 const useWorkExperiencesBox = pageName => {
   const selector = useCallback(
