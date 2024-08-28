@@ -7,14 +7,7 @@ import OverviewSection from './Overview';
 import Helmet from './Helmet';
 import NotFoundStatus from 'common/routing/NotFound';
 
-const Overview = ({
-  pageType,
-  pageName,
-  tabType,
-  overviewBox,
-  page,
-  canView,
-}) => (
+const Overview = ({ pageType, pageName, tabType, overviewBox, canView }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
     pageName={pageName}
@@ -55,7 +48,6 @@ const Overview = ({
               jobAverageSalaries={data.jobAverageSalaries}
               averageWeekWorkTime={data.averageWeekWorkTime}
               overtimeFrequencyCount={data.overtimeFrequencyCount}
-              page={page}
               canView={canView}
             />
           </Fragment>
@@ -83,7 +75,6 @@ Overview.propTypes = {
     error: PropTypes.any,
     status: PropTypes.string.isRequired,
   }).isRequired,
-  page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,

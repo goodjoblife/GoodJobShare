@@ -2,8 +2,10 @@ import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Overview from '../CompanyAndJobTitle/Overview';
 import usePermission from 'hooks/usePermission';
-import { usePage } from 'hooks/routing/page';
-import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import {
+  tabType as TAB_TYPE,
+  pageType as PAGE_TYPE,
+} from 'constants/companyJobTitle';
 import { queryJobTitleOverview } from 'actions/jobTitle';
 import {
   salaryDistribution,
@@ -42,7 +44,6 @@ const JobTitleOverviewProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.JOB_TITLE;
   const pageName = usePageName();
-  const page = usePage();
 
   useEffect(() => {
     dispatch(queryJobTitleOverview(pageName));
@@ -59,9 +60,8 @@ const JobTitleOverviewProvider = () => {
     <Overview
       pageType={pageType}
       pageName={pageName}
-      tabType={tabType.OVERVIEW}
+      tabType={TAB_TYPE.OVERVIEW}
       overviewBox={overviewBox}
-      page={page}
       canView={canView}
     />
   );
