@@ -26,7 +26,6 @@ const CompanyIndexProvider = () => {
     <CompanyAndJobTitleIndexPage
       totalCount={totalCount}
       pageType={PAGE_TYPE.COMPANY}
-      status={companyIndexesBox.status}
       indexesBox={companyIndexesBox}
       page={page}
       getPageLink={getPageLink}
