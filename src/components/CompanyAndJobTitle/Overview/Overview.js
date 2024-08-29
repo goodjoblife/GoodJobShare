@@ -103,16 +103,16 @@ const Overview = ({
 Overview.propTypes = {
   averageWeekWorkTime: PropTypes.number.isRequired,
   canView: PropTypes.bool.isRequired,
-  interviewExperiences: PropTypes.arrayOf(PropTypes.object),
+  interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
   interviewExperiencesCount: PropTypes.number.isRequired,
   jobAverageSalaries: PropTypes.array,
   overtimeFrequencyCount: PropTypes.object.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
   salaryDistribution: PropTypes.array,
-  salaryWorkTimes: PropTypes.arrayOf(PropTypes.object),
+  salaryWorkTimes: PropTypes.arrayOf(PropTypes.object).isRequired,
   salaryWorkTimesCount: PropTypes.number.isRequired,
-  workExperiences: PropTypes.arrayOf(PropTypes.object),
+  workExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
   workExperiencesCount: PropTypes.number.isRequired,
 };
 

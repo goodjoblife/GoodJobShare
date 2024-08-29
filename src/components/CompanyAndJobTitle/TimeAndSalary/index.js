@@ -60,7 +60,24 @@ TimeAndSalary.propTypes = {
   pageName: PropTypes.string,
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string,
-  salaryWorkTimeStatistics: PropTypes.object.isRequired,
+  salaryWorkTimeStatistics: PropTypes.shape({
+    count: PropTypes.number,
+    has_compensatory_dayoff_count: PropTypes.shape({
+      no: PropTypes.number.isRequired,
+      unknown: PropTypes.number.isRequired,
+      yes: PropTypes.number.isRequired,
+    }),
+    has_overtime_salary_count: PropTypes.shape({
+      no: PropTypes.number.isRequired,
+      unknown: PropTypes.number.isRequired,
+      yes: PropTypes.number.isRequired,
+    }),
+    is_overtime_salary_legal_count: PropTypes.shape({
+      no: PropTypes.number.isRequired,
+      unknown: PropTypes.number.isRequired,
+      yes: PropTypes.number.isRequired,
+    }),
+  }).isRequired,
   salaryWorkTimes: PropTypes.array,
   tabType: PropTypes.string,
   totalCount: PropTypes.number.isRequired,
