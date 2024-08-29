@@ -6,6 +6,7 @@ import EmptyView from '../EmptyView';
 
 import { Section } from 'common/base';
 import Pagination from 'common/Pagination';
+import NotFoundStatus from 'common/routing/NotFound';
 import { useQuery } from 'hooks/routing';
 
 const WorkExperiences = ({
@@ -23,7 +24,9 @@ const WorkExperiences = ({
   if (data.length === 0) {
     return (
       <Section Tag="main" paddingBottom>
-        <EmptyView pageName={pageName} tabType={tabType} />
+        <NotFoundStatus>
+          <EmptyView pageName={pageName} tabType={tabType} />
+        </NotFoundStatus>
       </Section>
     );
   }
