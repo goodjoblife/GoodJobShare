@@ -43,7 +43,6 @@ const TimeAndSalary = ({
               pageName={pageName}
               tabType={tabType}
               salaryWorkTimes={salaryWorkTimes}
-              salaryWorkTimeStatistics={salaryWorkTimeStatistics}
               page={page}
               pageSize={pageSize}
               totalCount={totalCount}
@@ -57,29 +56,12 @@ const TimeAndSalary = ({
 
 TimeAndSalary.propTypes = {
   page: PropTypes.number.isRequired,
-  pageName: PropTypes.string,
+  pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
-  pageType: PropTypes.string,
-  salaryWorkTimeStatistics: PropTypes.shape({
-    count: PropTypes.number,
-    has_compensatory_dayoff_count: PropTypes.shape({
-      no: PropTypes.number.isRequired,
-      unknown: PropTypes.number.isRequired,
-      yes: PropTypes.number.isRequired,
-    }),
-    has_overtime_salary_count: PropTypes.shape({
-      no: PropTypes.number.isRequired,
-      unknown: PropTypes.number.isRequired,
-      yes: PropTypes.number.isRequired,
-    }),
-    is_overtime_salary_legal_count: PropTypes.shape({
-      no: PropTypes.number.isRequired,
-      unknown: PropTypes.number.isRequired,
-      yes: PropTypes.number.isRequired,
-    }),
-  }).isRequired,
+  pageType: PropTypes.string.isRequired,
+  salaryWorkTimeStatistics: PropTypes.object.isRequired,
   salaryWorkTimes: PropTypes.array,
-  tabType: PropTypes.string,
+  tabType: PropTypes.string.isRequired,
   totalCount: PropTypes.number.isRequired,
 };
 
