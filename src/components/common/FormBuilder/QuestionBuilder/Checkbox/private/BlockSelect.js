@@ -5,7 +5,6 @@ import R from 'ramda';
 import useDebouncedConfirm from '../../../useDebouncedConfirm';
 import styles from './private.module.css';
 import { toggle } from './utils';
-import { normalizeOptions } from './utils';
 import { OptionPropType, ValuePropType } from '../PropTypes';
 
 const BlockSelect = ({
@@ -17,8 +16,6 @@ const BlockSelect = ({
   options,
   multiple,
 }) => {
-  options = normalizeOptions(options);
-
   const isChecked = useCallback(
     option => {
       if (multiple) {

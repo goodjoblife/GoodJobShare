@@ -45,6 +45,8 @@ import {
   DATA_KEY_OVERTIME_FREQUENCY,
   DATA_KEY_HAS_OVERTIME_SALARY,
   DATA_KEY_HAS_COMPENSATORY_DAYOFF,
+  DATA_KEY_SECTIONS,
+  SECTION_MIN_LENGTH,
 } from './constants';
 import {
   isArray,
@@ -198,6 +200,16 @@ export const createInterviewRegionQuestion = () => ({
   defaultValue: null,
   required: true,
   validateOrWarn: value => isNil(value) && '需填寫面試地區',
+  options: ['線上面試'].concat(REGION_OPTIONS),
+});
+
+export const createWorkRegionQuestion = () => ({
+  title: '工作地區',
+  type: QUESTION_TYPE.RADIO,
+  dataKey: DATA_KEY_REGION,
+  defaultValue: null,
+  required: true,
+  validateOrWarn: value => isNil(value) && '需填寫工作地區',
   options: REGION_OPTIONS,
 });
 
@@ -391,6 +403,68 @@ export const createWeekWorkTimeQuestion = () => ({
   ),
 });
 
+export const createSectionsQuestion = () => ({
+  title: '至少評價兩個面向',
+  type: QUESTION_TYPE.RADIO_RATING_TEXTAREA_LIST,
+  dataKey: DATA_KEY_SECTIONS,
+  required: true,
+  defaultValue: [],
+  validateOrWarn: (items, { validateOrWarnItem }) => {
+    if (items.length < 2) return '至少評價兩個面向';
+    for (const item of items) {
+      const warning = validateOrWarnItem(item);
+      if (warning) {
+        const [subject] = item;
+        return `${subject}：${warning}`;
+      }
+    }
+  },
+  validateOrWarnItem: ([subject, rating, text]) => {
+    if (rating === 0) return '需選取滿意程度';
+    if (wordCount(text) < SECTION_MIN_LENGTH) {
+      return `至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(text)} 字`;
+    }
+    return null;
+  },
+  options: [
+    '薪資福利',
+    '性別友善度',
+    '工作內容',
+    '工時狀況',
+    '公司/團隊文化',
+    '公司管理方式',
+    '獲得的成長',
+    '升遷制度',
+    '自訂面向',
+  ],
+  elseOptionValue: '自訂面向',
+  placeholder: ([subject, rating, text]) => {
+    switch (subject) {
+      case '薪資福利':
+        return '底薪、績效獎金、年終獎金、三節獎金、分紅、津貼補助...等。';
+      case '性別友善度':
+        return '公司對請生理假、產假或育嬰假的態度？ 職場上對非主流性別或性傾向友善度？是否遇過性別歧視或騷擾的狀況？';
+      case '工作內容':
+        return '實際工作內容是什麼呢？與當初面試時說明的有不同嗎？';
+      case '工時狀況':
+        return '上下班時間、加班頻率如何？下班要收訊息嗎？';
+      case '公司/團隊文化':
+        return '上司的領導與溝通能力如何？同事間相處融洽嗎？團隊的氣氛讓人安心愉快嗎？';
+      case '公司管理方式':
+        return '是否符合勞基法？公司制度完不完善？管理方式讓員工感到舒適自在嗎？';
+      case '獲得的成長':
+        return '專業技術、管理團隊的經驗、對市場的瞭解、對廠商的溝通的技能等等。';
+      case '升遷制度':
+        return '是否有明確升遷、加薪制度？考核的標準透明嗎？';
+      default:
+        return '請輸入自訂標題（例如：環境整潔度）';
+    }
+  },
+  ratingLabels: RATING_LABELS,
+  footnote: value =>
+    `至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
+});
+
 const OptionEmoji = ({ value, children }) => (
   <Fragment>
     {children}
@@ -493,6 +567,6 @@ export const createSubmitQuestion = ({ type }) => ({
       <Count /> 萬多筆資料哦！
     </span>
   ),
-  type: QUESTION_TYPE.CUSTOMIZED,
+  type: QUESTION_TYPE.EMPTY,
   dataKey: '',
 });

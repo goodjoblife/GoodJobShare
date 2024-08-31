@@ -77,7 +77,7 @@ const data2017 = [
   },
   {
     month: 8,
-    Content: () => <div>工作經驗、面試經驗分享上線</div>,
+    Content: () => <div>評價、面試經驗分享上線</div>,
   },
 ];
 

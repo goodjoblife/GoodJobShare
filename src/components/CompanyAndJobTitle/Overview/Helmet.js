@@ -17,7 +17,7 @@ const formatDataCount = (dataCount, unit, defaultStr) => {
 };
 
 const formatKeyword = name =>
-  `${name}薪水, ${name}加班情況, ${name}工時, ${name}工作心得, ${name}面試心得`;
+  `${name}薪水, ${name}加班情況, ${name}工時, ${name}評價, ${name}面試心得`;
 
 const CompanyOverviewHelmet = ({
   companyName,
@@ -36,7 +36,7 @@ const CompanyOverviewHelmet = ({
     '',
   );
   const workExperiencesStr = formatDataCount(workExperiencesCount, '篇', '');
-  const description = `查看由${companyName}內部員工分享的${salaryWorkTimesStr}薪水及加班數據、${workExperiencesStr}工作心得，以及由面試者分享的${interviewExperiencesStr}面試經驗。`;
+  const description = `查看由${companyName}內部員工分享的${salaryWorkTimesStr}薪水及加班數據、${workExperiencesStr}評價，以及由面試者分享的${interviewExperiencesStr}面試經驗。`;
 
   const path = generatePath('/companies/:companyName', { companyName });
   const url = formatCanonicalPath(path);
@@ -80,7 +80,7 @@ const JobTitleOverviewHelmet = ({
     '',
   );
   const workExperiencesStr = formatDataCount(workExperiencesCount, '篇', '');
-  const description = `查看由${jobTitle}分享的${salaryWorkTimesStr}薪水及加班數據、${workExperiencesStr}工作心得，以及由面試者分享的${interviewExperiencesStr}面試經驗。`;
+  const description = `查看由${jobTitle}分享的${salaryWorkTimesStr}薪水及加班數據、${workExperiencesStr}評價，以及由面試者分享的${interviewExperiencesStr}面試經驗。`;
 
   const path = generatePath('/job-titles/:jobTitle', { jobTitle });
   const url = formatCanonicalPath(path);

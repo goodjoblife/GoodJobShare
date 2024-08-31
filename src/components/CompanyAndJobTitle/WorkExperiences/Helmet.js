@@ -9,12 +9,12 @@ import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
 const CompanyWorkExperienceHelmet = ({ companyName, page, totalCount }) => {
   // title
-  const title = `${companyName} 工作心得列表 - 第${page}頁`;
+  const title = `${companyName} 評價列表 - 第${page}頁`;
 
   // description
-  let description = `目前還沒有${companyName}的工作心得。分享你的工作心得，一起讓職場更透明！`;
+  let description = `目前還沒有${companyName}的評價。分享你的評價，一起讓職場更透明！`;
   if (totalCount > 0) {
-    description = `查看${totalCount}篇${companyName}工作心得`;
+    description = `查看${totalCount}篇${companyName}評價`;
   }
 
   // canonical url
@@ -35,7 +35,7 @@ const CompanyWorkExperienceHelmet = ({ companyName, page, totalCount }) => {
       <meta property="og:description" content={description} />
       <meta
         name="keywords"
-        content={`${companyName}工作心得, ${companyName}內部實況, ${companyName}企業文化, ${companyName}職場甘苦談`}
+        content={`${companyName}評價, ${companyName}內部實況, ${companyName}企業文化, ${companyName}職場甘苦談`}
       />
       <meta property="og:url" content={url} />
       <link rel="canonical" href={url} />
@@ -51,12 +51,12 @@ CompanyWorkExperienceHelmet.propTypes = {
 
 const JobTitleWorkExperienceHelmet = ({ jobTitle, page, totalCount }) => {
   // title
-  const title = `${jobTitle} 工作心得列表 - 第${page}頁`;
+  const title = `${jobTitle} 評價列表 - 第${page}頁`;
 
   // description
-  let description = `目前還沒有${jobTitle}的工作心得。分享你的工作心得，一起讓職場更透明！`;
+  let description = `目前還沒有${jobTitle}的評價。分享你的評價，一起讓職場更透明！`;
   if (totalCount > 0) {
-    description = `查看${totalCount}篇${jobTitle}工作心得`;
+    description = `查看${totalCount}篇${jobTitle}評價`;
   }
 
   // canonical url
@@ -77,7 +77,7 @@ const JobTitleWorkExperienceHelmet = ({ jobTitle, page, totalCount }) => {
       <meta property="og:description" content={description} />
       <meta
         name="keywords"
-        content={`${jobTitle}工作心得, ${jobTitle}職場甘苦談`}
+        content={`${jobTitle}評價, ${jobTitle}職場甘苦談`}
       />
       <meta property="og:url" content={url} />
       <link rel="canonical" href={url} />
