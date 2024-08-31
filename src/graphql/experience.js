@@ -66,9 +66,12 @@ export const queryExperienceGql = /* GraphQL */ `
         sections {
           work_subtitle: subtitle
           content
+          aspect
+          rating
         }
         week_work_time
         recommend_to_others
+        averageSectionRating
       }
     }
   }
@@ -104,6 +107,16 @@ export const createWorkExperience = /* GraphQL */ `
   }
 `;
 
+export const createWorkExperienceWithRating = `
+mutation CreateWorkExperienceWithRating($input: CreateWorkExperienceWithRatingInput!) {
+  createWorkExperienceWithRating(input: $input) {
+    success
+    experience {
+      id
+    }
+  }
+}`;
+
 export const queryRelatedExperiencesGql = /* GraphQL */ `
   query($id: ID!, $start: Int!, $limit: Int!) {
     experience(id: $id) {
@@ -138,9 +151,12 @@ export const queryRelatedExperiencesGql = /* GraphQL */ `
           sections {
             work_subtitle: subtitle
             content
+            aspect
+            rating
           }
           week_work_time
           recommend_to_others
+          averageSectionRating
         }
       }
     }

@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import cn from 'classnames';
 
 import RoundCard from 'common/RoundCard';
 import Button from 'common/button/Button';
@@ -71,7 +72,7 @@ const PlanCard = ({
             </div>
             <Link to={linkUrl} onClick={isSubmitData ? null : onButtonClick}>
               <Button
-                className={styles.actionButton}
+                className={cn('buttonCircleLoginShare', styles.actionButton)}
                 btnStyle={getButtonType(type)}
                 circleSize="lg"
               >

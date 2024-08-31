@@ -25,6 +25,7 @@ const SubmittableTypeForm = ({
   const history = useHistory();
   const [submitStatus, setSubmitStatus] = useState('unsubmitted');
   const [submittedDraft, setSubmittedDraft] = useState(null);
+  const [submitResult, setSubmitResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = useCallback(
     async draft => {
@@ -33,7 +34,7 @@ const SubmittableTypeForm = ({
           return;
         }
         setSubmitStatus('submitting');
-        await onSubmit(draft);
+        setSubmitResult(await onSubmit(draft));
         setSubmittedDraft(draft);
         setSubmitStatus('success');
       } catch (error) {
@@ -62,10 +63,11 @@ const SubmittableTypeForm = ({
     onClose();
     if (typeof window !== 'undefined' && redirectPathnameOnSuccess) {
       let pathname = redirectPathnameOnSuccess;
-      if (typeof pathname === 'function') pathname = pathname(submittedDraft);
+      if (typeof pathname === 'function')
+        pathname = pathname(submitResult, submittedDraft);
       window.location.replace(pathname);
     }
-  }, [onClose, redirectPathnameOnSuccess, submittedDraft]);
+  }, [onClose, redirectPathnameOnSuccess, submittedDraft, submitResult]);
 
   const onResume = useCallback(() => {
     setSubmitStatus('unsubmitted');
@@ -136,7 +138,7 @@ SubmittableTypeForm.propTypes = {
   redirectPathnameOnSuccess: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.func,
-  ]),
+  ]).isRequired,
 };
 
 export default SubmittableTypeForm;

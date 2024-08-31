@@ -147,13 +147,15 @@ const TypeForm = ({ open, onClose }) => {
       const goalValue = calcInterviewExperienceValue(body, 59);
 
       const resBody = await dispatch(createInterviewExperience({ body }));
-      const experienceId = resBody.createInterviewExperience.experience.id;
+      const experienceId = resBody.experience.id;
       ReactGA.event({
         category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
         action: GA_ACTION.UPLOAD_SUCCESS,
         value: goalValue,
         label: experienceId,
       });
+
+      return resBody;
     },
     [dispatch],
   );
@@ -191,6 +193,9 @@ const TypeForm = ({ open, onClose }) => {
       onSubmit={onSubmit}
       onSubmitError={onSubmitError}
       onClose={onClose}
+      redirectPathnameOnSuccess={({ experience: { id } }) =>
+        `/experiences/${id}`
+      }
     />
   );
 };

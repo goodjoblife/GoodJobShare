@@ -27,12 +27,7 @@ const countSectionWords = sections =>
     sections,
   );
 
-const Article = ({
-  experience,
-  hideContent,
-
-  onClickMsgButton,
-}) => {
+const Article = ({ experience, hideContent, onClickMsgButton }) => {
   // Get share link object according to Google Optimize parameters
   const shareLink = useShareLink();
 
@@ -76,8 +71,13 @@ const Article = ({
     return (
       <div>
         {experience.sections &&
-          experience.sections.map(({ subtitle, content }, idx) => (
-            <SectionBlock key={idx} subtitle={subtitle} content={content} />
+          experience.sections.map(({ subtitle, content, rating }, idx) => (
+            <SectionBlock
+              key={idx}
+              subtitle={subtitle}
+              content={content}
+              rating={rating}
+            />
           ))}
       </div>
     );
