@@ -78,4 +78,7 @@ export const ERROR_CODE_MSG = {
   ER0019: {
     internal: 'Not submittable',
   },
+  ER0020: {
+    internal: 'Submit work experience failed',
+  },
 };
