@@ -73,6 +73,7 @@ export const queryJobTitleOverviewGql = /* GraphQL */ `
           reply_count
           like_count
           recommend_to_others
+          averageSectionRating
         }
       }
       salaryWorkTimesResult(start: 0, limit: $salaryWorkTimesLimit) {
@@ -272,6 +273,7 @@ export const getJobTitleWorkExperiencesQuery = /* GraphQL */ `
           reply_count
           like_count
           recommend_to_others
+          averageSectionRating
         }
       }
     }
