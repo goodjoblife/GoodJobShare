@@ -19,6 +19,16 @@ export const queryMeGql = /* GraphQL */ `
   }
 `;
 
+export const queryMyExperienceIdsGql = /* GraphQL */ `
+  query MyPublishes {
+    me {
+      experiences {
+        id
+      }
+    }
+  }
+`;
+
 export const queryMyPublishesGql = /* GraphQL */ `
   query MyPublishes {
     me {
