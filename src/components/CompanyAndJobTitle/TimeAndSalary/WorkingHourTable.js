@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 import { InfoButton } from 'common/Modal';
@@ -19,9 +19,7 @@ import {
   formatDate,
 } from '../../TimeAndSalary/common/formatter';
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
-import { queryMySalaryWorkTimesIdsApi } from 'apis/me';
-import { useToken } from 'hooks/auth';
-import { useAsyncFn } from 'react-use';
+import useIsMySalaryWorkTimeId from './useIsMySalaryWorkTimeId';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
@@ -160,19 +158,7 @@ const WorkingHourTable = ({ data, hideContent, pageType }) => {
     [filteredColumnProps],
   );
 
-  const token = useToken();
-
-  const [{ value: mySalaryWorkTimeIds }, fetchMySalaryWorkTimeIds] = useAsyncFn(
-    () =>
-      queryMySalaryWorkTimesIdsApi({
-        token,
-      }),
-    [token],
-  );
-
-  useEffect(() => {
-    fetchMySalaryWorkTimeIds();
-  }, [fetchMySalaryWorkTimeIds]);
+  const isMySalaryWorkTimeId = useIsMySalaryWorkTimeId();
 
   const postProcessRows = useCallback(
     (rows, data) => {
@@ -182,12 +168,12 @@ const WorkingHourTable = ({ data, hideContent, pageType }) => {
           data,
           fromCol,
           toCol,
-          mySalaryWorkTimeIds,
+          isMySalaryWorkTimeId,
         });
       }
       return rows;
     },
-    [hideContent, fromCol, toCol, mySalaryWorkTimeIds],
+    [hideContent, fromCol, toCol, isMySalaryWorkTimeId],
   );
 
   return (

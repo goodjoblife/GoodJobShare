@@ -48,9 +48,7 @@ import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import Button from 'common/button/Button';
-import { queryMyExperienceIdsApi } from 'apis/me';
-import { useToken } from 'hooks/auth';
-import { useAsyncFn } from 'react-use';
+import useIsMyExperienceId from './useIsMyExperienceId';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -83,24 +81,12 @@ const useExperienceBox = experienceId => {
 };
 
 const useHideContent = ({ experienceId }) => {
-  const token = useToken();
+  const isMyExperienceId = useIsMyExperienceId();
 
-  const [{ value: myExperienceIds }, fetchMyExperienceIds] = useAsyncFn(
-    () =>
-      queryMyExperienceIdsApi({
-        token,
-      }),
-    [token],
-  );
-
-  useEffect(() => {
-    fetchMyExperienceIds();
-  }, [fetchMyExperienceIds]);
-
-  const isMyPublish = useMemo(
-    () => myExperienceIds && myExperienceIds.includes(experienceId),
-    [myExperienceIds, experienceId],
-  );
+  const isMyPublish = useMemo(() => isMyExperienceId(experienceId), [
+    isMyExperienceId,
+    experienceId,
+  ]);
 
   const [, fetchPermission, canView] = usePermission();
 
