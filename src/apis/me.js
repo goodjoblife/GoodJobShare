@@ -3,6 +3,7 @@ import graphqlClient from 'utils/graphqlClient';
 import {
   queryMeGql,
   queryMyExperienceIdsGql,
+  queryMySalaryWorkTimesIdsGql,
   queryMyPublishesGql,
   queryMyPermissionGql,
 } from 'graphql/me';
@@ -22,6 +23,11 @@ export const queryMeApi = ({ token }) =>
 export const queryMyExperienceIdsApi = ({ token }) =>
   graphqlClient({ query: queryMyExperienceIdsGql, token }).then(data =>
     data.me.experiences.map(({ id }) => id),
+  );
+
+export const queryMySalaryWorkTimesIdsApi = ({ token }) =>
+  graphqlClient({ query: queryMySalaryWorkTimesIdsGql, token }).then(data =>
+    data.me.salary_work_times.map(({ id }) => id),
   );
 
 export const queryMyPublishesApi = ({ token }) =>

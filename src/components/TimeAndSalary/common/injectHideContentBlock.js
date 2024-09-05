@@ -4,18 +4,22 @@ import styles from './injectHideContentBlock.module.css';
 import cn from 'classnames';
 import { useShareLink } from 'hooks/experiments';
 
-export default hideRange => rows => {
-  const hideIndex = hideRange[0];
-  const nHides = hideRange.length;
+export default ({ rows, data, fromCol, toCol, mySalaryWorkTimeIds }) => {
+  const nHides = toCol - fromCol + 1;
   const shareLink = useShareLink();
 
   // Replace original cells with locked cells
   // on small screens
-  rows.forEach(row => {
+  rows.forEach((row, i) => {
+    const d = data[i];
+    const isMySalaryWorkTime =
+      mySalaryWorkTimeIds && mySalaryWorkTimeIds.includes(d.id);
+    if (isMySalaryWorkTime) return;
+
     row.props.children.splice(
-      hideIndex,
+      fromCol,
       nHides,
-      ...row.props.children.slice(hideIndex, hideIndex + nHides).map(col => {
+      ...row.props.children.slice(fromCol, fromCol + nHides).map(col => {
         return React.cloneElement(
           col,
           {
@@ -34,8 +38,14 @@ export default hideRange => rows => {
   // that spans multiple columns
   if (rows.length > 0) {
     for (let i = 0; i < rows.length; i++) {
-      rows[i].props.children.splice(
-        hideIndex,
+      const d = data[i];
+      const isMySalaryWorkTime =
+        mySalaryWorkTimeIds && mySalaryWorkTimeIds.includes(d.id);
+      if (isMySalaryWorkTime) continue;
+
+      const row = rows[i];
+      row.props.children.splice(
+        fromCol,
         0,
         <td key="__hideContent" colSpan={nHides} className={styles.cell}>
           <BasicPermissionSimpleBlock
