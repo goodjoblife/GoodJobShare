@@ -13,6 +13,7 @@ import { relatedExperiencesStateSelector } from 'selectors/experienceSelector';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import Button from 'common/button/Button';
 import styles from './MoreExperiencesBlock.module.css';
+import useIsMyExperienceId from '../useIsMyExperienceId';
 
 const ExperienceEntry = props => {
   switch (props.data.type) {
@@ -57,6 +58,8 @@ const MoreExperiencesBlock = ({ experience }) => {
     [dispatch],
   );
 
+  const isMyExperienceId = useIsMyExperienceId();
+
   // we still want to show data even when Fetching
   if (
     !relatedExperiencesState.data ||
@@ -83,7 +86,7 @@ const MoreExperiencesBlock = ({ experience }) => {
           key={e.id}
           pageType={pageType}
           data={e}
-          canView={canView}
+          canView={isMyExperienceId(e.id) || canView}
         />
       ))}
       {hasMore && <LoadMoreButton onClick={handleLoadMore} />}
