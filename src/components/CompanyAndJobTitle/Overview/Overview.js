@@ -9,6 +9,7 @@ import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import { tabType as TAB_TYPE, generateTabURL } from 'constants/companyJobTitle';
 import SummaryBlock from './SummaryBlock';
+import useIsMyExperienceId from 'components/ExperienceDetail/useIsMyExperienceId';
 
 const Overview = ({
   pageType,
@@ -25,6 +26,8 @@ const Overview = ({
   overtimeFrequencyCount,
   canView,
 }) => {
+  const isMyExperienceId = useIsMyExperienceId();
+
   return (
     <Section Tag="main" paddingBottom>
       <SnippetBlock
@@ -70,7 +73,7 @@ const Overview = ({
             key={d.id}
             pageType={pageType}
             data={d}
-            canView={canView}
+            canView={isMyExperienceId(d.id) || canView}
           />
         ))}
       </SnippetBlock>
@@ -92,7 +95,7 @@ const Overview = ({
             key={d.id}
             pageType={pageType}
             data={d}
-            canView={canView}
+            canView={isMyExperienceId(d.id) || canView}
           />
         ))}
       </SnippetBlock>
