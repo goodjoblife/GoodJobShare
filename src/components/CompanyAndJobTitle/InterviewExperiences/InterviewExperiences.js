@@ -10,6 +10,7 @@ import EmptyView from '../EmptyView';
 import ExperienceEntry from './ExperienceEntry';
 
 import { useQuery } from 'hooks/routing';
+import useIsMyExperienceId from 'components/ExperienceDetail/useIsMyExperienceId';
 
 const InterviewExperiences = ({
   pageType,
@@ -22,6 +23,7 @@ const InterviewExperiences = ({
   canView,
 }) => {
   const queryParams = useQuery();
+  const isMyExperienceId = useIsMyExperienceId();
 
   if (data.length === 0) {
     return (
@@ -39,7 +41,7 @@ const InterviewExperiences = ({
           key={d.id}
           pageType={pageType}
           data={d}
-          canView={canView}
+          canView={isMyExperienceId(d.id) || canView}
         />
       ))}
       <Pagination

@@ -8,6 +8,7 @@ import { Section } from 'common/base';
 import Pagination from 'common/Pagination';
 import NotFoundStatus from 'common/routing/NotFound';
 import { useQuery } from 'hooks/routing';
+import useIsMyExperienceId from 'components/ExperienceDetail/useIsMyExperienceId';
 
 const WorkExperiences = ({
   pageType,
@@ -20,6 +21,7 @@ const WorkExperiences = ({
   canView,
 }) => {
   const queryParams = useQuery();
+  const isMyExperienceId = useIsMyExperienceId();
 
   if (data.length === 0) {
     return (
@@ -37,7 +39,7 @@ const WorkExperiences = ({
           key={d.id}
           pageType={pageType}
           data={d}
-          canView={canView}
+          canView={isMyExperienceId(d.id) || canView}
         />
       ))}
       <Pagination
