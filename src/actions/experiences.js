@@ -7,6 +7,7 @@ import {
   postWorkExperience as postWorkExperienceApi,
   postWorkExperienceWithRating as postWorkExperienceWithRatingApi,
 } from 'apis/workExperiencesApi';
+import { queryMyPublishIds } from './me';
 
 export const SET_COUNT = '@@EXPERIENCES/SET_COUNT';
 
@@ -34,35 +35,53 @@ export const queryExperienceCountIfUnfetched = () => async (
   }
 };
 
-export const createInterviewExperience = ({ body }) => (dispatch, getState) => {
-  const state = getState();
-  const token = tokenSelector(state);
-
-  return postInterviewExperienceApi({
-    body,
-    token,
-  });
-};
-
-export const createWorkExperience = ({ body }) => (dispatch, getState) => {
-  const state = getState();
-  const token = tokenSelector(state);
-
-  return postWorkExperienceApi({
-    body,
-    token,
-  });
-};
-
-export const createWorkExperienceWithRating = ({ body }) => (
+export const createInterviewExperience = ({ body }) => async (
   dispatch,
   getState,
 ) => {
   const state = getState();
   const token = tokenSelector(state);
 
-  return postWorkExperienceWithRatingApi({
+  const result = await postInterviewExperienceApi({
     body,
     token,
   });
+
+  await dispatch(queryMyPublishIds());
+
+  return result;
+};
+
+export const createWorkExperience = ({ body }) => async (
+  dispatch,
+  getState,
+) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
+  const result = await postWorkExperienceApi({
+    body,
+    token,
+  });
+
+  await dispatch(queryMyPublishIds());
+
+  return result;
+};
+
+export const createWorkExperienceWithRating = ({ body }) => async (
+  dispatch,
+  getState,
+) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
+  const result = await postWorkExperienceWithRatingApi({
+    body,
+    token,
+  });
+
+  await dispatch(queryMyPublishIds());
+
+  return result;
 };
