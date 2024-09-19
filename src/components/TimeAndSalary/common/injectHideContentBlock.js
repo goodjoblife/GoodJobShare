@@ -4,7 +4,7 @@ import styles from './injectHideContentBlock.module.css';
 import cn from 'classnames';
 import { useShareLink } from 'hooks/experiments';
 
-export default ({ rows, data, fromCol, toCol, isMySalaryWorkTimeId }) => {
+export default ({ rows, data, fromCol, toCol, isMyPublishId }) => {
   const nHides = toCol - fromCol + 1;
   const shareLink = useShareLink();
 
@@ -12,8 +12,8 @@ export default ({ rows, data, fromCol, toCol, isMySalaryWorkTimeId }) => {
   // on small screens
   rows.forEach((row, i) => {
     const d = data[i];
-    const isMySalaryWorkTime = isMySalaryWorkTimeId(d.id);
-    if (isMySalaryWorkTime) return;
+    const isMyPublish = isMyPublishId(d.id);
+    if (isMyPublish) return;
 
     row.props.children.splice(
       fromCol,
@@ -38,8 +38,8 @@ export default ({ rows, data, fromCol, toCol, isMySalaryWorkTimeId }) => {
   if (rows.length > 0) {
     for (let i = 0; i < rows.length; i++) {
       const d = data[i];
-      const isMySalaryWorkTime = isMySalaryWorkTimeId(d.id);
-      if (isMySalaryWorkTime) continue;
+      const isMyPublish = isMyPublishId(d.id);
+      if (isMyPublish) continue;
 
       const row = rows[i];
       row.props.children.splice(

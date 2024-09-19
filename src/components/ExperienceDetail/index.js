@@ -48,7 +48,7 @@ import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import Button from 'common/button/Button';
-import useIsMyExperienceId from './useIsMyExperienceId';
+import useIsMyPublishId from 'hooks/useIsMyPublishId';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -81,7 +81,7 @@ const useExperienceBox = experienceId => {
 };
 
 const useHideContent = ({ experienceId }) => {
-  const isMyExperienceId = useIsMyExperienceId();
+  const isMyExperienceId = useIsMyPublishId();
 
   const isMyPublish = useMemo(() => isMyExperienceId(experienceId), [
     isMyExperienceId,

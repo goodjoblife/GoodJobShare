@@ -19,19 +19,12 @@ export const queryMeGql = /* GraphQL */ `
   }
 `;
 
-export const queryMyExperienceIdsGql = /* GraphQL */ `
+export const queryMyPublishIdsGql = /* GraphQL */ `
   query MyPublishes {
     me {
       experiences {
         id
       }
-    }
-  }
-`;
-
-export const queryMySalaryWorkTimesIdsGql = /* GraphQL */ `
-  query MyPublishes {
-    me {
       salary_work_times {
         id
       }

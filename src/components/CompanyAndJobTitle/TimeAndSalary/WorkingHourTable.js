@@ -19,7 +19,7 @@ import {
   formatDate,
 } from '../../TimeAndSalary/common/formatter';
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
-import useIsMySalaryWorkTimeId from './useIsMySalaryWorkTimeId';
+import useIsMyPublishId from 'hooks/useIsMyPublishId';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
@@ -158,7 +158,7 @@ const WorkingHourTable = ({ data, hideContent, pageType }) => {
     [filteredColumnProps],
   );
 
-  const isMySalaryWorkTimeId = useIsMySalaryWorkTimeId();
+  const isMyPublishId = useIsMyPublishId();
 
   const postProcessRows = useCallback(
     (rows, data) => {
@@ -168,12 +168,12 @@ const WorkingHourTable = ({ data, hideContent, pageType }) => {
           data,
           fromCol,
           toCol,
-          isMySalaryWorkTimeId,
+          isMyPublishId,
         });
       }
       return rows;
     },
-    [hideContent, fromCol, toCol, isMySalaryWorkTimeId],
+    [hideContent, fromCol, toCol, isMyPublishId],
   );
 
   return (

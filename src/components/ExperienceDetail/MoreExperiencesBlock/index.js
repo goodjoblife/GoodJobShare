@@ -13,7 +13,7 @@ import { relatedExperiencesStateSelector } from 'selectors/experienceSelector';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import Button from 'common/button/Button';
 import styles from './MoreExperiencesBlock.module.css';
-import useIsMyExperienceId from '../useIsMyExperienceId';
+import useIsMyPublishId from 'hooks/useIsMyPublishId';
 
 const ExperienceEntry = props => {
   switch (props.data.type) {
@@ -58,7 +58,7 @@ const MoreExperiencesBlock = ({ experience }) => {
     [dispatch],
   );
 
-  const isMyExperienceId = useIsMyExperienceId();
+  const isMyExperienceId = useIsMyPublishId();
 
   // we still want to show data even when Fetching
   if (
