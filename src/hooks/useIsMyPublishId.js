@@ -21,10 +21,6 @@ const useIsMyPublishId = () => {
       }
 
       const myPublishIds = myPublishIdsBox.data;
-      if (!myPublishIds) {
-        return false;
-      }
-
       return myPublishIds.includes(publishId);
     },
     [myPublishIdsBox],
