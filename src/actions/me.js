@@ -11,6 +11,11 @@ const setMyPublishIds = box => ({
 
 export const queryMyPublishIds = () => async (dispatch, getState) => {
   const token = tokenSelector(getState());
+  if (!token) {
+    dispatch(setMyPublishIds(getFetched([])));
+    return;
+  }
+
   dispatch(setMyPublishIds(toFetching()));
   try {
     const myPublishIds = await queryMyPublishIdsApi({ token });
