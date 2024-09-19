@@ -48,7 +48,6 @@ import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import Button from 'common/button/Button';
-import useIsMyPublishId from 'hooks/useIsMyPublishId';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -80,27 +79,6 @@ const useExperienceBox = experienceId => {
   return useSelector(selector);
 };
 
-const useHideContent = ({ experienceId }) => {
-  const isMyExperienceId = useIsMyPublishId();
-
-  const isMyPublish = useMemo(() => isMyExperienceId(experienceId), [
-    isMyExperienceId,
-    experienceId,
-  ]);
-
-  const [, fetchPermission, canView] = usePermission();
-
-  useEffect(() => {
-    fetchPermission();
-  }, [experienceId, fetchPermission]);
-
-  const hideContent = useMemo(() => {
-    return !isMyPublish && !canView;
-  }, [isMyPublish, canView]);
-
-  return hideContent;
-};
-
 const ExperienceDetail = ({ ...props }) => {
   const experienceId = useExperienceId();
   const experienceBox = useExperienceBox(experienceId);
@@ -111,7 +89,7 @@ const ExperienceDetail = ({ ...props }) => {
     dispatch(queryExperienceIfUnfetched(experienceId));
   }, [dispatch, experienceId]);
 
-  const hideContent = useHideContent({ experienceId });
+  const [, , canView] = usePermission({ publishId: experienceId });
 
   const [{ isModalOpen, modalType, modalPayload = {} }, setModal] = useState({
     isModalOpen: false,
@@ -259,7 +237,7 @@ const ExperienceDetail = ({ ...props }) => {
                 {reportZone}
                 <Article
                   experience={experienceBox.data}
-                  hideContent={hideContent}
+                  hideContent={!canView}
                   onClickMsgButton={scrollToCommentZone}
                 />
               </Fragment>
