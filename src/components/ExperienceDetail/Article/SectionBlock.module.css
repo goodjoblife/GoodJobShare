@@ -15,5 +15,6 @@
 @media (max-width: below-mobile) {
   .heading {
     flex-direction: column;
+    gap: 0.5rem;
   }
 }
