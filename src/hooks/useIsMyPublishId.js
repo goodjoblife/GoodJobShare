@@ -10,7 +10,7 @@ const useIsMyPublishId = () => {
 
   useEffect(() => {
     dispatch(queryMyPublishIdsIfNeeded());
-  }, [dispatch, myPublishIdsBox]);
+  }, [dispatch]);
 
   const useIsMyPublishId = useCallback(
     publishId => {
