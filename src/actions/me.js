@@ -12,6 +12,7 @@ const setMyPublishIds = box => ({
 export const queryMyPublishIds = () => async (dispatch, getState) => {
   const token = tokenSelector(getState());
   if (!token) {
+    // If user has not logged in, it's assumed to have no publishes.
     dispatch(setMyPublishIds(getFetched([])));
     return;
   }
