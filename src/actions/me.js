@@ -1,6 +1,13 @@
 import { queryMyPublishIdsApi } from 'apis/me';
 import { tokenSelector } from 'selectors/authSelector';
-import { getError, getFetched, toFetching } from 'utils/fetchBox';
+import { myPublishIdsSelector } from 'selectors/me';
+import {
+  isUnfetched,
+  isError,
+  getError,
+  getFetched,
+  toFetching,
+} from 'utils/fetchBox';
 
 export const SET_MY_PUBLISH_IDS = '@@me/SET_MY_PUBLISH_IDS';
 
@@ -8,6 +15,14 @@ const setMyPublishIds = box => ({
   type: SET_MY_PUBLISH_IDS,
   box,
 });
+
+export const queryMyPublishIdsIfNeeded = () => async (dispatch, getState) => {
+  const myPublishIdsBox = myPublishIdsSelector(getState());
+
+  if (isUnfetched(myPublishIdsBox) || isError(myPublishIdsBox)) {
+    dispatch(queryMyPublishIds());
+  }
+};
 
 export const queryMyPublishIds = () => async (dispatch, getState) => {
   const token = tokenSelector(getState());
