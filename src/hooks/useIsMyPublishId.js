@@ -12,7 +12,7 @@ const useIsMyPublishId = () => {
     dispatch(queryMyPublishIdsIfNeeded());
   }, [dispatch]);
 
-  const useIsMyPublishId = useCallback(
+  const isMyPublishId = useCallback(
     publishId => {
       if (!isFetched(myPublishIdsBox)) {
         return false;
@@ -24,7 +24,7 @@ const useIsMyPublishId = () => {
     [myPublishIdsBox],
   );
 
-  return useIsMyPublishId;
+  return isMyPublishId;
 };
 
 export default useIsMyPublishId;
