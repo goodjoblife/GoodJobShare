@@ -10,7 +10,7 @@ import EmptyView from '../EmptyView';
 import ExperienceEntry from './ExperienceEntry';
 
 import { useQuery } from 'hooks/routing';
-import useIsMyPublishId from 'hooks/useIsMyPublishId';
+import usePermission from 'hooks/usePermission';
 
 const InterviewExperiences = ({
   pageType,
@@ -20,10 +20,9 @@ const InterviewExperiences = ({
   page,
   pageSize,
   totalCount,
-  canView,
 }) => {
   const queryParams = useQuery();
-  const isMyExperienceId = useIsMyPublishId();
+  const [, , canViewPublishId] = usePermission();
 
   if (data.length === 0) {
     return (
@@ -41,7 +40,7 @@ const InterviewExperiences = ({
           key={d.id}
           pageType={pageType}
           data={d}
-          canView={isMyExperienceId(d.id) || canView}
+          canView={canViewPublishId(d.id)}
         />
       ))}
       <Pagination
@@ -57,7 +56,6 @@ const InterviewExperiences = ({
 };
 
 InterviewExperiences.propTypes = {
-  canView: PropTypes.bool.isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,

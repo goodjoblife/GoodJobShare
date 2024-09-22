@@ -89,7 +89,7 @@ const ExperienceDetail = ({ ...props }) => {
     dispatch(queryExperienceIfUnfetched(experienceId));
   }, [dispatch, experienceId]);
 
-  const [, fetchPermission, canView] = usePermission({
+  const [, fetchPermission, canViewPublishId] = usePermission({
     publishId: experienceId,
   });
 
@@ -243,7 +243,7 @@ const ExperienceDetail = ({ ...props }) => {
                 {reportZone}
                 <Article
                   experience={experienceBox.data}
-                  hideContent={!canView}
+                  hideContent={!canViewPublishId(experienceBox.data.id)}
                   onClickMsgButton={scrollToCommentZone}
                 />
               </Fragment>

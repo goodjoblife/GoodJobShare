@@ -20,7 +20,7 @@ const TimeAndSalary = ({
   pageSize,
   totalCount,
 }) => {
-  const [, fetchPermission, canView] = usePermission();
+  const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [fetchPermission]);
@@ -31,12 +31,7 @@ const TimeAndSalary = ({
     <Section Tag="main" paddingBottom>
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
-          <WorkingHourBlock
-            data={salaryWorkTimes}
-            pageType={pageType}
-            pageName={pageName}
-            hideContent={!canView}
-          />
+          <WorkingHourBlock data={salaryWorkTimes} pageType={pageType} />
           <Pagination
             totalCount={totalCount}
             unit={pageSize}

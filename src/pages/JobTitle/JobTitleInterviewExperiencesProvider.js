@@ -59,7 +59,7 @@ const JobTitleTimeAndSalaryProvider = () => {
     );
   }, [dispatch, pageName, companyName, start, limit]);
 
-  const [, fetchPermission, canView] = usePermission();
+  const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [pageType, pageName, fetchPermission]);
@@ -77,7 +77,6 @@ const JobTitleTimeAndSalaryProvider = () => {
       page={page}
       pageSize={PAGE_SIZE}
       totalCount={interviewExperiencesCount}
-      canView={canView}
       tabType={tabType.INTERVIEW_EXPERIENCE}
       status={status}
       interviewExperiences={interviewExperiences}

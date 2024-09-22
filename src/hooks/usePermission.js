@@ -1,4 +1,4 @@
-import { useContext, useCallback, useMemo } from 'react';
+import { useContext, useCallback } from 'react';
 import PermissionContext from 'contexts/PermissionContext';
 import { useToken } from 'hooks/auth';
 import { queryHasSearchPermissionApi } from 'apis/me';
@@ -12,13 +12,7 @@ const useGetSearchPermission = ({ token }) => {
   }, [token]);
 };
 
-const usePermission = ({ publishId } = {}) => {
-  const isMyPublishId = useIsMyPublishId();
-  const isMyPublish = useMemo(() => !!publishId && isMyPublishId(publishId), [
-    isMyPublishId,
-    publishId,
-  ]);
-
+const usePermission = () => {
   const token = useToken();
   const { canView, permissionFetched, setPermissionState } = useContext(
     PermissionContext,
@@ -43,7 +37,15 @@ const usePermission = ({ publishId } = {}) => {
       }
     }
   }, [getSearchPermission, setPermissionState]);
-  return [permissionFetched, fetchPermission, isMyPublish || canView];
+
+  const isMyPublishId = useIsMyPublishId();
+
+  const canViewPublishId = useCallback(
+    publishId => isMyPublishId(publishId) || canView,
+    [canView, isMyPublishId],
+  );
+
+  return [permissionFetched, fetchPermission, canViewPublishId];
 };
 
 export default usePermission;

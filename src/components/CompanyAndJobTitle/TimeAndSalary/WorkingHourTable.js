@@ -19,7 +19,7 @@ import {
   formatDate,
 } from '../../TimeAndSalary/common/formatter';
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
-import useIsMyPublishId from 'hooks/useIsMyPublishId';
+import usePermission from 'hooks/usePermission';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
@@ -128,7 +128,7 @@ const columnProps = [
   },
 ];
 
-const WorkingHourTable = ({ data, hideContent, pageType }) => {
+const WorkingHourTable = ({ data, pageType }) => {
   const [isInfoSalaryModalOpen, setInfoSalaryModalOpen] = useState(false);
   const [isInfoTimeModalOpen, setInfoTiimeModalOpen] = useState(false);
 
@@ -158,22 +158,20 @@ const WorkingHourTable = ({ data, hideContent, pageType }) => {
     [filteredColumnProps],
   );
 
-  const isMyPublishId = useIsMyPublishId();
+  const [, , canViewPublishId] = usePermission();
 
   const postProcessRows = useCallback(
     (rows, data) => {
-      if (hideContent) {
-        injectHideContentBlock({
-          rows,
-          data,
-          fromCol,
-          toCol,
-          isMyPublishId,
-        });
-      }
+      injectHideContentBlock({
+        rows,
+        data,
+        fromCol,
+        toCol,
+        canViewPublishId,
+      });
       return rows;
     },
-    [hideContent, fromCol, toCol, isMyPublishId],
+    [canViewPublishId, fromCol, toCol],
   );
 
   return (
@@ -202,7 +200,6 @@ const WorkingHourTable = ({ data, hideContent, pageType }) => {
 
 WorkingHourTable.propTypes = {
   data: PropTypes.array.isRequired,
-  hideContent: PropTypes.bool.isRequired,
   pageType: PropTypes.oneOf([
     pageTypeMapping.COMPANY,
     pageTypeMapping.JOB_TITLE,

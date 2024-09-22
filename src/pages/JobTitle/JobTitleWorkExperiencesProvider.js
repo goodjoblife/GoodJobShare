@@ -57,7 +57,7 @@ const JobTitleWorkExperiencesProvider = () => {
     );
   }, [dispatch, pageName, companyName, start, limit]);
 
-  const [, fetchPermission, canView] = usePermission();
+  const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [pageType, pageName, fetchPermission]);
@@ -75,7 +75,6 @@ const JobTitleWorkExperiencesProvider = () => {
       page={page}
       pageSize={PAGE_SIZE}
       totalCount={workExperiencesCount}
-      canView={canView}
       tabType={tabType.WORK_EXPERIENCE}
       status={status}
       workExperiences={workExperiences}

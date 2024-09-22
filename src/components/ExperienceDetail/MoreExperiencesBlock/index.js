@@ -13,7 +13,6 @@ import { relatedExperiencesStateSelector } from 'selectors/experienceSelector';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import Button from 'common/button/Button';
 import styles from './MoreExperiencesBlock.module.css';
-import useIsMyPublishId from 'hooks/useIsMyPublishId';
 
 const ExperienceEntry = props => {
   switch (props.data.type) {
@@ -52,13 +51,11 @@ const MoreExperiencesBlock = ({ experience }) => {
 
   const location = useLocation();
   const { state: { pageType = PAGE_TYPE.COMPANY } = {} } = location;
-  const [, , canView] = usePermission();
+  const [, , canViewPublishId] = usePermission();
   const handleLoadMore = useCallback(
     () => dispatch(loadMoreRelatedExperiences()),
     [dispatch],
   );
-
-  const isMyExperienceId = useIsMyPublishId();
 
   // we still want to show data even when Fetching
   if (
@@ -86,7 +83,7 @@ const MoreExperiencesBlock = ({ experience }) => {
           key={e.id}
           pageType={pageType}
           data={e}
-          canView={isMyExperienceId(e.id) || canView}
+          canView={canViewPublishId(e.id)}
         />
       ))}
       {hasMore && <LoadMoreButton onClick={handleLoadMore} />}

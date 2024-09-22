@@ -9,7 +9,7 @@ import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import { tabType as TAB_TYPE, generateTabURL } from 'constants/companyJobTitle';
 import SummaryBlock from './SummaryBlock';
-import useIsMyPublishId from 'hooks/useIsMyPublishId';
+import usePermission from 'hooks/usePermission';
 
 const Overview = ({
   pageType,
@@ -24,9 +24,8 @@ const Overview = ({
   jobAverageSalaries,
   averageWeekWorkTime,
   overtimeFrequencyCount,
-  canView,
 }) => {
-  const isMyExperienceId = useIsMyPublishId();
+  const [, , canViewPublishId] = usePermission();
 
   return (
     <Section Tag="main" paddingBottom>
@@ -49,11 +48,7 @@ const Overview = ({
           averageWeekWorkTime={averageWeekWorkTime}
           overtimeFrequencyCount={overtimeFrequencyCount}
         />
-        <WorkingHourTable
-          data={salaryWorkTimes}
-          hideContent={!canView}
-          pageType={pageType}
-        />
+        <WorkingHourTable data={salaryWorkTimes} pageType={pageType} />
       </SnippetBlock>
       <SnippetBlock
         title="評價"
@@ -73,7 +68,7 @@ const Overview = ({
             key={d.id}
             pageType={pageType}
             data={d}
-            canView={isMyExperienceId(d.id) || canView}
+            canView={canViewPublishId(d.id)}
           />
         ))}
       </SnippetBlock>
@@ -95,7 +90,7 @@ const Overview = ({
             key={d.id}
             pageType={pageType}
             data={d}
-            canView={isMyExperienceId(d.id) || canView}
+            canView={canViewPublishId(d.id)}
           />
         ))}
       </SnippetBlock>
@@ -105,7 +100,6 @@ const Overview = ({
 
 Overview.propTypes = {
   averageWeekWorkTime: PropTypes.number.isRequired,
-  canView: PropTypes.bool.isRequired,
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   interviewExperiencesCount: PropTypes.number.isRequired,
   jobAverageSalaries: PropTypes.array,
