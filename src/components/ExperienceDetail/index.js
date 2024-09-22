@@ -89,7 +89,13 @@ const ExperienceDetail = ({ ...props }) => {
     dispatch(queryExperienceIfUnfetched(experienceId));
   }, [dispatch, experienceId]);
 
-  const [, , canView] = usePermission({ publishId: experienceId });
+  const [, fetchPermission, canView] = usePermission({
+    publishId: experienceId,
+  });
+
+  useEffect(() => {
+    fetchPermission();
+  }, [experienceId, fetchPermission]);
 
   const [{ isModalOpen, modalType, modalPayload = {} }, setModal] = useState({
     isModalOpen: false,
