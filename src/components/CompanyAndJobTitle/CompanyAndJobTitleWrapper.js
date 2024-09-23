@@ -37,11 +37,11 @@ const AverageRating = ({ pageName }) => {
 
   const { averageRating, ratingCount } = data;
   return (
-    <>
+    <div className={styles.ratingStatistics}>
       <span className={styles.averageRating}>{averageRating}</span>
       <Glike className={styles.icon} />
       <span className={styles.ratingCount}>({ratingCount})</span>
-    </>
+    </div>
   );
 };
 
@@ -78,10 +78,7 @@ const CompanyAndJobTitleWrapper = ({
           data={generateBreadCrumbData({ pageType, pageName, tabType })}
         />
       </div>
-      <Heading
-        className={styles.heading}
-        style={{ color: '#000000', marginBottom: '30px' }}
-      >
+      <Heading style={{ color: '#000000', marginBottom: '30px' }}>
         {pageName}
         <AverageRating pageName={pageName} />
       </Heading>

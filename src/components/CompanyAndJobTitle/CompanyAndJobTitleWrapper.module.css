@@ -1,3 +1,5 @@
+@value below-small, above-small from '../common/variables.module.css';
+
 .fanPageBlock {
   margin-bottom: 60px;
 }
@@ -7,10 +9,20 @@
   margin-bottom: 30px;
 }
 
-.heading {
-  .averageRating {
-    display: inline-block;
+.ratingStatistics {
+  align-items: center;
+
+  @media (max-width: below-small) {
+    display: flex;
+    margin-top: 16px;
+  }
+
+  @media (min-width: above-small) {
+    display: inline-flex;
     margin-left: 34px;
+  }
+
+  .averageRating {
     font-size: 17px;
     font-weight: 500;
   }
