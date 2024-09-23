@@ -1,3 +1,19 @@
+export const queryCompanyRatingStatisticsGql = /* GraphQL */ `
+  query($companyName: String!) {
+    company(name: $companyName) {
+      name
+      companyStatistics {
+        averageRating
+        ratingDistribution {
+          rating
+          count
+        }
+        ratingCount
+      }
+    }
+  }
+`;
+
 export const queryCompanyOverviewGql = /* GraphQL */ `
   query(
     $companyName: String!

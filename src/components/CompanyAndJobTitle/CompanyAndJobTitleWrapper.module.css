@@ -6,3 +6,21 @@
   margin-top: -30px;
   margin-bottom: 30px;
 }
+
+.heading {
+  .averageRating {
+    display: inline-block;
+    margin-left: 34px;
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .ratingCount {
+    font-size: 15px;
+  }
+}
