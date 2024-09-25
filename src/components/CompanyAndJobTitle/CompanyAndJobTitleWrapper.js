@@ -9,7 +9,11 @@ import BreadCrumb from 'common/BreadCrumb';
 
 import { queryRatingStatistcs } from 'actions/company';
 import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import { tabTypeTranslation, generateTabURL } from 'constants/companyJobTitle';
+import {
+  tabTypeTranslation,
+  generateTabURL,
+  pageType as PAGE_TYPE,
+} from 'constants/companyJobTitle';
 import { isFetched } from 'utils/fetchBox';
 import { generateBreadCrumbData } from './utils';
 
@@ -17,14 +21,16 @@ import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
 import Glike from 'common/icons/Glike';
 
-const AverageRating = ({ pageName }) => {
+const AverageRating = ({ pageType, pageName }) => {
   const ratingStatistcsBox = useSelector(
     companyRatingStatisticsBoxSelectorByName(pageName),
   );
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(queryRatingStatistcs(pageName));
-  }, [dispatch, pageName]);
+    if (pageType === PAGE_TYPE.COMPANY) {
+      dispatch(queryRatingStatistcs(pageName));
+    }
+  }, [dispatch, pageType, pageName]);
 
   if (!isFetched(ratingStatistcsBox)) {
     return null;
@@ -47,6 +53,7 @@ const AverageRating = ({ pageName }) => {
 
 AverageRating.propTypes = {
   pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
 };
 
 const CompanyAndJobTitleWrapper = ({
@@ -80,7 +87,7 @@ const CompanyAndJobTitleWrapper = ({
       </div>
       <Heading style={{ color: '#000000', marginBottom: '30px' }}>
         {pageName}
-        <AverageRating pageName={pageName} />
+        <AverageRating pageType={pageType} pageName={pageName} />
       </Heading>
       <TabLinkGroup
         options={tabLinkOptions}
