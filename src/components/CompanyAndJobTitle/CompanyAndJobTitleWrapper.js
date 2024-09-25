@@ -44,7 +44,7 @@ const AverageRating = ({ pageType, pageName }) => {
   const { averageRating, ratingCount } = data;
   return (
     <div className={styles.ratingStatistics}>
-      <span className={styles.averageRating}>{averageRating}</span>
+      <span className={styles.averageRating}>{averageRating.toFixed(1)}</span>
       <Glike className={styles.icon} />
       <span className={styles.ratingCount}>({ratingCount})</span>
     </div>
