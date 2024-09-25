@@ -38,7 +38,7 @@ const usePermission = () => {
     }
   }, [getSearchPermission, setPermissionState]);
 
-  const isMyPublishId = useIsMyPublishId();
+  const isMyPublishId = useIsMyPublishId({ token });
 
   const canViewPublishId = useCallback(
     publishId => isMyPublishId(publishId) || canView,

@@ -4,13 +4,13 @@ import { myPublishIdsSelector } from 'selectors/me';
 import { queryMyPublishIdsIfNeeded } from 'actions/me';
 import { isFetched } from 'utils/fetchBox';
 
-const useIsMyPublishId = () => {
+const useIsMyPublishId = ({ token }) => {
   const myPublishIdsBox = useSelector(myPublishIdsSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(queryMyPublishIdsIfNeeded());
-  }, [dispatch]);
+    dispatch(queryMyPublishIdsIfNeeded({ token }));
+  }, [dispatch, token]);
 
   const isMyPublishId = useCallback(
     publishId => {
