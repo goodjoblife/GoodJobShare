@@ -47,7 +47,7 @@ export const createInterviewExperience = ({ body }) => async (
     token,
   });
 
-  await dispatch({ token });
+  await dispatch(queryMyPublishIds({ token }));
 
   return result;
 };
