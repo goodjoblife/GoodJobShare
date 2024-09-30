@@ -3,14 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { myPublishIdsSelector } from 'selectors/me';
 import { queryMyPublishIdsIfNeeded } from 'actions/me';
 import { isFetched } from 'utils/fetchBox';
+import { useLogin } from './login';
 
-const useIsMyPublishId = ({ token }) => {
+const useIsMyPublishId = () => {
+  const [isLoggedIn] = useLogin();
   const myPublishIdsBox = useSelector(myPublishIdsSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(queryMyPublishIdsIfNeeded({ token }));
-  }, [dispatch, token]);
+    dispatch(queryMyPublishIdsIfNeeded());
+  }, [dispatch, isLoggedIn]);
 
   const isMyPublishId = useCallback(
     publishId => {

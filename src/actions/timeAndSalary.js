@@ -43,7 +43,7 @@ export const createSalaryWorkTime = ({ body }) => async (
     token,
   });
 
-  await dispatch(queryMyPublishIds({ token }));
+  await dispatch(queryMyPublishIds());
 
   return result;
 };

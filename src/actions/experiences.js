@@ -47,7 +47,7 @@ export const createInterviewExperience = ({ body }) => async (
     token,
   });
 
-  await dispatch(queryMyPublishIds({ token }));
+  await dispatch(queryMyPublishIds());
 
   return result;
 };
@@ -64,7 +64,7 @@ export const createWorkExperience = ({ body }) => async (
     token,
   });
 
-  await dispatch(queryMyPublishIds({ token }));
+  await dispatch(queryMyPublishIds());
 
   return result;
 };
@@ -81,7 +81,7 @@ export const createWorkExperienceWithRating = ({ body }) => async (
     token,
   });
 
-  await dispatch(queryMyPublishIds({ token }));
+  await dispatch(queryMyPublishIds());
 
   return result;
 };

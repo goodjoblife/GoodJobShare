@@ -1,4 +1,5 @@
 import { queryMyPublishIdsApi } from 'apis/me';
+import { tokenSelector } from 'selectors/authSelector';
 import { myPublishIdsSelector } from 'selectors/me';
 import {
   isUnfetched,
@@ -15,22 +16,17 @@ const setMyPublishIds = box => ({
   box,
 });
 
-// We don't obtain the token from the state but from the argument
-// to indicate the need to be called on token change.
-export const queryMyPublishIdsIfNeeded = ({ token }) => async (
-  dispatch,
-  getState,
-) => {
+export const queryMyPublishIdsIfNeeded = () => async (dispatch, getState) => {
   const myPublishIdsBox = myPublishIdsSelector(getState());
 
   if (isUnfetched(myPublishIdsBox) || isError(myPublishIdsBox)) {
-    dispatch(queryMyPublishIds({ token }));
+    dispatch(queryMyPublishIds());
   }
 };
 
-// We don't obtain the token from the state but from the argument
-// to indicate the need to be called on token change.
-export const queryMyPublishIds = ({ token }) => async dispatch => {
+export const queryMyPublishIds = () => async (dispatch, getState) => {
+  const token = tokenSelector(getState());
+
   if (!token) {
     // If user has not logged in, it's assumed to have no publishes.
     dispatch(setMyPublishIds(getFetched([])));
