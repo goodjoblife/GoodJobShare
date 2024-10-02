@@ -7,6 +7,7 @@ import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import {
   queryCompanyTimeAndSalary,
   queryCompanyTimeAndSalaryStatistics,
+  queryRatingStatistics,
 } from 'actions/company';
 import {
   salaryWorkTimes as salaryWorkTimesSelector,
@@ -131,7 +132,12 @@ CompanyTimeAndSalaryProvider.fetchData = ({
       limit,
     }),
   );
-  return Promise.all([dispatchTimeAndSalary, dispatchTimeAndSalaryStatistics]);
+  const dispatchRatingStatistics = dispatch(queryRatingStatistics(pageName));
+  return Promise.all([
+    dispatchTimeAndSalary,
+    dispatchTimeAndSalaryStatistics,
+    dispatchRatingStatistics,
+  ]);
 };
 
 export default CompanyTimeAndSalaryProvider;

@@ -20,6 +20,7 @@ import { generateBreadCrumbData } from './utils';
 import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
 import Glike from 'common/icons/Glike';
+import Seo from 'common/Seo/SeoStructure';
 
 const AverageRating = ({ pageType, pageName }) => {
   const ratingStatistcsBox = useSelector(
@@ -32,7 +33,7 @@ const AverageRating = ({ pageType, pageName }) => {
     }
   }, [dispatch, pageType, pageName]);
 
-  if (!isFetched(ratingStatistcsBox)) {
+  if (pageType !== PAGE_TYPE.COMPANY || !isFetched(ratingStatistcsBox)) {
     return null;
   }
 
@@ -44,6 +45,18 @@ const AverageRating = ({ pageType, pageName }) => {
   const { averageRating, ratingCount } = data;
   return (
     <div className={styles.ratingStatistics}>
+      <Seo
+        data={{
+          '@context': 'https://schema.org/',
+          '@type': 'EmployerAggregateRating',
+          itemReviewed: {
+            '@type': 'Organization',
+            name: pageName,
+          },
+          ratingValue: averageRating,
+          ratingCount: ratingCount,
+        }}
+      />
       <span className={styles.averageRating}>{averageRating.toFixed(1)}</span>
       <Glike className={styles.icon} />
       <span className={styles.ratingCount}>({ratingCount})</span>

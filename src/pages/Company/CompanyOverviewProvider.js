@@ -4,7 +4,7 @@ import Overview from 'components/CompanyAndJobTitle/Overview';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
-import { queryCompanyOverview } from 'actions/company';
+import { queryCompanyOverview, queryRatingStatistics } from 'actions/company';
 import {
   jobAverageSalaries,
   averageWeekWorkTime,
@@ -70,7 +70,10 @@ const CompanyOverviewProvider = () => {
 CompanyOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
   const params = paramsSelector(props);
   const pageName = pageNameSelector(params);
-  return dispatch(queryCompanyOverview(pageName));
+  return Promise.all([
+    dispatch(queryCompanyOverview(pageName)),
+    dispatch(queryRatingStatistics(pageName)),
+  ]);
 };
 
 export default CompanyOverviewProvider;
