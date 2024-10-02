@@ -79,7 +79,7 @@ const setRatingStatistcs = (companyName, box) => ({
   box,
 });
 
-export const queryRatingStatistcs = pageName => async (dispatch, getState) => {
+export const queryRatingStatistics = pageName => async (dispatch, getState) => {
   const box = companyRatingStatisticsBoxSelectorByName(pageName)(getState());
   if (isFetching(box) || isFetched(box)) {
     return;

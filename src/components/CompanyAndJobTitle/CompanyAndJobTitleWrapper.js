@@ -7,7 +7,7 @@ import Heading from 'common/base/Heading';
 import FanPageBlock from 'common/FanPageBlock';
 import BreadCrumb from 'common/BreadCrumb';
 
-import { queryRatingStatistcs } from 'actions/company';
+import { queryRatingStatistics } from 'actions/company';
 import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import {
   tabTypeTranslation,
@@ -28,7 +28,7 @@ const AverageRating = ({ pageType, pageName }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (pageType === PAGE_TYPE.COMPANY) {
-      dispatch(queryRatingStatistcs(pageName));
+      dispatch(queryRatingStatistics(pageName));
     }
   }, [dispatch, pageType, pageName]);
 
