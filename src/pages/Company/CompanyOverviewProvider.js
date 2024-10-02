@@ -45,6 +45,10 @@ const CompanyOverviewProvider = () => {
   const page = usePage();
 
   useEffect(() => {
+    dispatch(queryRatingStatistics(pageName));
+  }, [dispatch, pageName]);
+
+  useEffect(() => {
     dispatch(queryCompanyOverview(pageName));
   }, [dispatch, pageName]);
 

@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { toPairs, compose, map } from 'ramda';
 
@@ -7,7 +7,6 @@ import Heading from 'common/base/Heading';
 import FanPageBlock from 'common/FanPageBlock';
 import BreadCrumb from 'common/BreadCrumb';
 
-import { queryRatingStatistics } from 'actions/company';
 import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import {
   tabTypeTranslation,
@@ -26,12 +25,6 @@ const AverageRating = ({ pageType, pageName }) => {
   const ratingStatistcsBox = useSelector(
     companyRatingStatisticsBoxSelectorByName(pageName),
   );
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (pageType === PAGE_TYPE.COMPANY) {
-      dispatch(queryRatingStatistics(pageName));
-    }
-  }, [dispatch, pageType, pageName]);
 
   if (pageType !== PAGE_TYPE.COMPANY || !isFetched(ratingStatistcsBox)) {
     return null;

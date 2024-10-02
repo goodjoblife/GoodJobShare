@@ -51,6 +51,10 @@ const CompanyInterviewExperiencesProvider = () => {
   const limit = PAGE_SIZE;
 
   useEffect(() => {
+    dispatch(queryRatingStatistics(pageName));
+  }, [dispatch, pageName]);
+
+  useEffect(() => {
     dispatch(
       queryCompanyInterviewExperiences({
         companyName: pageName,
