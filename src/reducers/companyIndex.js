@@ -16,7 +16,7 @@ const preloadedState = {
   indexesByPage: {},
   indexCountBox: getUnfetched(),
   // companyName --> box
-  ratingStatisticsByName: {},
+  copmanyRatingStatisticsByName: {},
   overviewByName: {},
   timeAndSalaryByName: {},
   timeAndSalaryStatisticsByName: {},
@@ -41,8 +41,8 @@ const reducer = createReducer(preloadedState, {
   [SET_RATING_STATISTICS]: (state, { companyName, box }) => {
     return {
       ...state,
-      ratingStatisticsByName: {
-        ...state.ratingStatisticsByName,
+      copmanyRatingStatisticsByName: {
+        ...state.copmanyRatingStatisticsByName,
         [companyName]: box,
       },
     };

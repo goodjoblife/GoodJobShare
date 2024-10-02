@@ -14,7 +14,7 @@ export const queryCompanyRatingStatisticsApi = ({ companyName }) =>
   graphqlClient({
     query: queryCompanyRatingStatisticsGql,
     variables: { companyName },
-  }).then(R.path(['company', 'companyStatistics']));
+  }).then(R.path(['company', 'companyRatingStatistics']));
 
 export const queryCompanyOverview = ({
   companyName,

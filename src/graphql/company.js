@@ -2,7 +2,7 @@ export const queryCompanyRatingStatisticsGql = /* GraphQL */ `
   query($companyName: String!) {
     company(name: $companyName) {
       name
-      companyStatistics {
+      companyRatingStatistics {
         averageRating
         ratingDistribution {
           rating

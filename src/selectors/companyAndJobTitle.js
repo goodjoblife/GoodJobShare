@@ -96,7 +96,8 @@ export const companiesCountSelector = state => {
 
 export const companyRatingStatisticsBoxSelectorByName = companyName => state => {
   return (
-    state.companyIndex.ratingStatisticsByName[companyName] || getUnfetched()
+    state.companyIndex.copmanyRatingStatisticsByName[companyName] ||
+    getUnfetched()
   );
 };
 
