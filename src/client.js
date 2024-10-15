@@ -2,6 +2,7 @@ import React from 'react';
 import { hydrate } from 'react-dom';
 import { createBrowserHistory as createHistory } from 'history';
 import R from 'ramda';
+import qs from 'qs';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { ScrollContext } from 'react-router-scroll-4';
@@ -12,7 +13,13 @@ import Root from './components/Root';
 import configureStore from './store/configureStore';
 
 function shouldUpdateScroll(prevProps, props) {
+  const mapSearch = ({ search, ...rest }) => {
+    let s = qs.parse(search, { ignoreQueryPrefix: true });
+    s = R.omit(['q'], s); // We don't reset scroll on search query change
+    return { search: s, ...rest };
+  };
   const getSignature = R.compose(
+    mapSearch,
     R.omit(['state', 'key']),
     R.path(['location']),
   );
