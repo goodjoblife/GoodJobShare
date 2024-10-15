@@ -8,6 +8,7 @@ import { Section } from 'common/base';
 import Pagination from 'common/Pagination';
 import NotFoundStatus from 'common/routing/NotFound';
 import { useQuery } from 'hooks/routing';
+import usePermission from 'hooks/usePermission';
 
 const WorkExperiences = ({
   pageType,
@@ -17,9 +18,9 @@ const WorkExperiences = ({
   page,
   pageSize,
   totalCount,
-  canView,
 }) => {
   const queryParams = useQuery();
+  const [, , canViewPublishId] = usePermission();
 
   if (data.length === 0) {
     return (
@@ -37,7 +38,7 @@ const WorkExperiences = ({
           key={d.id}
           pageType={pageType}
           data={d}
-          canView={canView}
+          canView={canViewPublishId(d.id)}
         />
       ))}
       <Pagination
@@ -53,7 +54,6 @@ const WorkExperiences = ({
 };
 
 WorkExperiences.propTypes = {
-  canView: PropTypes.bool.isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,

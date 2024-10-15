@@ -14,7 +14,6 @@ const InterviewExperiences = ({
   page,
   pageSize,
   totalCount,
-  canView,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
@@ -43,7 +42,6 @@ const InterviewExperiences = ({
               page={page}
               pageSize={pageSize}
               totalCount={totalCount}
-              canView={canView}
             />
           </Fragment>
         );
@@ -53,7 +51,6 @@ const InterviewExperiences = ({
 );
 
 InterviewExperiences.propTypes = {
-  canView: PropTypes.bool.isRequired,
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,

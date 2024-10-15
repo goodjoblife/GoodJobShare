@@ -19,6 +19,19 @@ export const queryMeGql = /* GraphQL */ `
   }
 `;
 
+export const queryMyPublishIdsGql = /* GraphQL */ `
+  query MyPublishes {
+    me {
+      experiences {
+        id
+      }
+      salary_work_times {
+        id
+      }
+    }
+  }
+`;
+
 export const queryMyPublishesGql = /* GraphQL */ `
   query MyPublishes {
     me {
