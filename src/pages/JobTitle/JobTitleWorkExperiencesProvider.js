@@ -3,7 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
-import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import {
+  tabType as TAB_TYPE,
+  pageType as PAGE_TYPE,
+  PAGE_SIZE,
+} from 'constants/companyJobTitle';
 import { queryJobTitleWorkExperiences } from 'actions/jobTitle';
 import {
   workExperiences as workExperiencesSelector,
@@ -34,8 +38,6 @@ const useWorkExperiencesBox = pageName => {
 
   return useSelector(selector);
 };
-
-const PAGE_SIZE = 10;
 
 const JobTitleWorkExperiencesProvider = () => {
   const dispatch = useDispatch();
@@ -75,7 +77,7 @@ const JobTitleWorkExperiencesProvider = () => {
       page={page}
       pageSize={PAGE_SIZE}
       totalCount={workExperiencesCount}
-      tabType={tabType.WORK_EXPERIENCE}
+      tabType={TAB_TYPE.WORK_EXPERIENCE}
       status={status}
       workExperiences={workExperiences}
     />

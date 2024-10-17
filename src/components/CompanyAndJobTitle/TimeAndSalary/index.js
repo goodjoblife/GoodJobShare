@@ -43,7 +43,6 @@ const TimeAndSalary = ({
               pageName={pageName}
               tabType={tabType}
               salaryWorkTimes={salaryWorkTimes}
-              salaryWorkTimeStatistics={salaryWorkTimeStatistics}
               page={page}
               pageSize={pageSize}
               totalCount={totalCount}
@@ -57,12 +56,12 @@ const TimeAndSalary = ({
 
 TimeAndSalary.propTypes = {
   page: PropTypes.number.isRequired,
-  pageName: PropTypes.string,
+  pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
-  pageType: PropTypes.string,
+  pageType: PropTypes.string.isRequired,
   salaryWorkTimeStatistics: PropTypes.object.isRequired,
   salaryWorkTimes: PropTypes.array,
-  tabType: PropTypes.string,
+  tabType: PropTypes.string.isRequired,
   totalCount: PropTypes.number.isRequired,
 };
 

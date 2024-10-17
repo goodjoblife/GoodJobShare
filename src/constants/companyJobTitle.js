@@ -61,3 +61,5 @@ export const generateIndexURL = ({ pageType }) =>
   generatePath('/:pageTypeURL', {
     pageTypeURL: pageTypeURLMap[pageType],
   });
+
+export const PAGE_SIZE = 10;
