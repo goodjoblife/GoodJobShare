@@ -94,6 +94,12 @@ export const companiesCountSelector = state => {
   return isFetched(indexCountBox) ? indexCountBox.data : 0;
 };
 
+export const companyRatingStatisticsBoxSelectorByName = companyName => state => {
+  return (
+    state.companyIndex.ratingStatisticsByName[companyName] || getUnfetched()
+  );
+};
+
 export const companyOverviewBoxSelectorByName = companyName => state => {
   return state.companyIndex.overviewByName[companyName] || getUnfetched();
 };
