@@ -5,15 +5,11 @@ import WorkingHourTable from './WorkingHourTable';
 
 import styles from '../../TimeAndSalary/common/WorkingHourBlock.module.css';
 
-const WorkingHourBlock = ({ data, hideContent, pageType }) => {
+const WorkingHourBlock = ({ data, pageType }) => {
   return (
     <section className={styles.container}>
       <div className={cn(styles.content, styles.expanded)}>
-        <WorkingHourTable
-          data={data}
-          hideContent={hideContent}
-          pageType={pageType}
-        />
+        <WorkingHourTable data={data} pageType={pageType} />
       </div>
     </section>
   );
@@ -21,7 +17,6 @@ const WorkingHourBlock = ({ data, hideContent, pageType }) => {
 
 WorkingHourBlock.propTypes = {
   data: PropTypes.array,
-  hideContent: PropTypes.bool.isRequired,
   pageType: PropTypes.string,
 };
 

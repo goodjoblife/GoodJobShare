@@ -52,7 +52,7 @@ const CompanyOverviewProvider = () => {
     dispatch(queryCompanyOverview(pageName));
   }, [dispatch, pageName]);
 
-  const [, fetchPermission, canView] = usePermission();
+  const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [pageType, pageName, fetchPermission]);
@@ -66,7 +66,6 @@ const CompanyOverviewProvider = () => {
       tabType={tabType.OVERVIEW}
       overviewBox={overviewBox}
       page={page}
-      canView={canView}
     />
   );
 };

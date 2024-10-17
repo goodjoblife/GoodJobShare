@@ -51,7 +51,7 @@ const MoreExperiencesBlock = ({ experience }) => {
 
   const location = useLocation();
   const { state: { pageType = PAGE_TYPE.COMPANY } = {} } = location;
-  const [, , canView] = usePermission();
+  const [, , canViewPublishId] = usePermission();
   const handleLoadMore = useCallback(
     () => dispatch(loadMoreRelatedExperiences()),
     [dispatch],
@@ -83,7 +83,7 @@ const MoreExperiencesBlock = ({ experience }) => {
           key={e.id}
           pageType={pageType}
           data={e}
-          canView={canView}
+          canView={canViewPublishId(e.id)}
         />
       ))}
       {hasMore && <LoadMoreButton onClick={handleLoadMore} />}

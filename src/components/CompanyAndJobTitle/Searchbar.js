@@ -9,7 +9,6 @@ import { useQuery } from 'hooks/routing';
 import TextInput from 'common/form/TextInput';
 import Magnifiner from 'common/icons/Magnifiner';
 import styles from './Searchbar.module.css';
-import { useDebounce } from 'react-use';
 
 import {
   pageType as pageTypes,
@@ -42,31 +41,27 @@ const Searchbar = ({ className, label, placeholder, onSubmit, pageType }) => {
   const [searchText, setSearchText] = useState(searchTextFromQuery);
   const ref = useRef(null);
 
-  useDebounce(
-    () => {
-      onSubmit(searchText);
-      switch (pageType) {
-        case pageTypes.COMPANY:
-          ReactGA.event({
-            category: GA_CATEGORY.COMPANY_PAGE,
-            action: GA_ACTION.SEARCH_JOB_TITLE,
-            label: searchText,
-          });
-          break;
-        case pageTypes.JOB_TITLE:
-          ReactGA.event({
-            category: GA_CATEGORY.JOB_TITLE_PAGE,
-            action: GA_ACTION.SEARCH_COMPANY,
-            label: searchText,
-          });
-          break;
-        default:
-          break;
-      }
-    },
-    1500,
-    [searchText],
-  );
+  const onBlur = useCallback(() => {
+    onSubmit(searchText);
+    switch (pageType) {
+      case pageTypes.COMPANY:
+        ReactGA.event({
+          category: GA_CATEGORY.COMPANY_PAGE,
+          action: GA_ACTION.SEARCH_JOB_TITLE,
+          label: searchText,
+        });
+        break;
+      case pageTypes.JOB_TITLE:
+        ReactGA.event({
+          category: GA_CATEGORY.JOB_TITLE_PAGE,
+          action: GA_ACTION.SEARCH_COMPANY,
+          label: searchText,
+        });
+        break;
+      default:
+        break;
+    }
+  }, [searchText, onSubmit, pageType]);
 
   const handleFormSubmit = useCallback(
     e => {
@@ -89,6 +84,7 @@ const Searchbar = ({ className, label, placeholder, onSubmit, pageType }) => {
         placeholder={placeholder}
         value={searchText}
         onChange={e => setSearchText(e.target.value)}
+        onBlur={onBlur}
       />
       <button type="submit" className={styles.searchBtn}>
         <Magnifiner />
