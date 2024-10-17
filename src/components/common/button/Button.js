@@ -30,6 +30,9 @@ const Button = ({
     case 'gray':
       cnBtnStyle = 'buttonGray';
       break;
+    case 'lightGray':
+      cnBtnStyle = 'buttonLightGray';
+      break;
     case 'hoverYellow':
       cnBtnStyle = 'buttonHoverYellow';
       break;

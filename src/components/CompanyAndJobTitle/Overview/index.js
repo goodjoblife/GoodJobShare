@@ -5,7 +5,7 @@ import { BoxStatusRenderer } from '../StatusRenderer';
 import OverviewSection from './Overview';
 import Helmet from './Helmet';
 
-const Overview = ({ pageType, pageName, tabType, overviewBox, canView }) => (
+const Overview = ({ pageType, pageName, tabType, overviewBox }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
     pageName={pageName}
@@ -40,7 +40,6 @@ const Overview = ({ pageType, pageName, tabType, overviewBox, canView }) => (
               jobAverageSalaries={data.jobAverageSalaries}
               averageWeekWorkTime={data.averageWeekWorkTime}
               overtimeFrequencyCount={data.overtimeFrequencyCount}
-              canView={canView}
             />
           </Fragment>
         );
@@ -50,7 +49,6 @@ const Overview = ({ pageType, pageName, tabType, overviewBox, canView }) => (
 );
 
 Overview.propTypes = {
-  canView: PropTypes.bool.isRequired,
   overviewBox: PropTypes.shape({
     data: PropTypes.shape({
       averageWeekWorkTime: PropTypes.number.isRequired,

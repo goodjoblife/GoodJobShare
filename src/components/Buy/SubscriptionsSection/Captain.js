@@ -9,7 +9,7 @@ const Captain = ({ dataCount, endDateTime }) => (
   <Section className={styles.captain}>
     <P>
       解鎖範圍：全站 {formatCommaSeparatedNumber(dataCount || 0)}{' '}
-      筆面試經驗、工作心得、薪資工時資料，及期間內新增的資料
+      筆面試經驗、評價、薪資工時資料，及期間內新增的資料
     </P>
     <P>
       使用期間：現在 ~ {format(endDateTime || new Date(), 'yyyy-MM-dd hh:mm a')}

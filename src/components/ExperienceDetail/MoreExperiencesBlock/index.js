@@ -51,7 +51,7 @@ const MoreExperiencesBlock = ({ experience }) => {
 
   const location = useLocation();
   const { state: { pageType = PAGE_TYPE.COMPANY } = {} } = location;
-  const [, , canView] = usePermission();
+  const [, , canViewPublishId] = usePermission();
   const handleLoadMore = useCallback(
     () => dispatch(loadMoreRelatedExperiences()),
     [dispatch],
@@ -76,14 +76,14 @@ const MoreExperiencesBlock = ({ experience }) => {
     <div className={styles.container}>
       <div className={styles.title}>
         更多{experience.originalCompanyName}、{experience.job_title.name}
-        的面試及工作心得...
+        的面試及評價...
       </div>
       {experiences.map(e => (
         <ExperienceEntry
           key={e.id}
           pageType={pageType}
           data={e}
-          canView={canView}
+          canView={canViewPublishId(e.id)}
         />
       ))}
       {hasMore && <LoadMoreButton onClick={handleLoadMore} />}

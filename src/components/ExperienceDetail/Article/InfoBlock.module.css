@@ -1,8 +1,9 @@
-@value gray-dark from "../../common/variables.module.css";
+@value above-mobile, gray-dark from "../../common/variables.module.css";
 
 .block {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   &:not(:last-child) {
     margin-bottom: 20px;
   }
@@ -27,5 +28,11 @@
     > li {
       list-style-type: disc;
     }
+  }
+}
+
+.content.noMargin {
+  @media (max-width: above-mobile) {
+    margin-left: 0px;
   }
 }

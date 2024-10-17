@@ -49,7 +49,7 @@ const JobTitleOverviewProvider = () => {
     dispatch(queryJobTitleOverview(pageName));
   }, [dispatch, pageName]);
 
-  const [, fetchPermission, canView] = usePermission();
+  const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [pageType, pageName, fetchPermission]);
@@ -62,7 +62,6 @@ const JobTitleOverviewProvider = () => {
       pageName={pageName}
       tabType={TAB_TYPE.OVERVIEW}
       overviewBox={overviewBox}
-      canView={canView}
     />
   );
 };

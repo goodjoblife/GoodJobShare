@@ -3,6 +3,7 @@ import { tokenSelector } from 'selectors/authSelector';
 import { salaryWorkTimeCountBoxSelector } from 'selectors/countSelector';
 import { postWorkings as postWorkingsApi } from 'apis/timeAndSalaryApi';
 import { querySalaryWorkTimeCountApi } from 'apis/salaryWorkTimeApi';
+import { queryMyPublishIds } from './me';
 
 export const SET_COUNT = '@@SALARY_WORK_TIME/SET_COUNT';
 
@@ -30,12 +31,19 @@ export const querySalaryWorkTimeCountIfUnfetched = () => async (
   }
 };
 
-export const createSalaryWorkTime = ({ body }) => (dispatch, getState) => {
+export const createSalaryWorkTime = ({ body }) => async (
+  dispatch,
+  getState,
+) => {
   const state = getState();
   const token = tokenSelector(state);
 
-  return postWorkingsApi({
+  const result = await postWorkingsApi({
     body,
     token,
   });
+
+  await dispatch(queryMyPublishIds());
+
+  return result;
 };

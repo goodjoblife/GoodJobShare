@@ -9,6 +9,7 @@ import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import { tabType as TAB_TYPE, generateTabURL } from 'constants/companyJobTitle';
 import SummaryBlock from './SummaryBlock';
+import usePermission from 'hooks/usePermission';
 
 const Overview = ({
   pageType,
@@ -23,8 +24,9 @@ const Overview = ({
   jobAverageSalaries,
   averageWeekWorkTime,
   overtimeFrequencyCount,
-  canView,
 }) => {
+  const [, , canViewPublishId] = usePermission();
+
   return (
     <Section Tag="main" paddingBottom>
       <SnippetBlock
@@ -46,15 +48,11 @@ const Overview = ({
           averageWeekWorkTime={averageWeekWorkTime}
           overtimeFrequencyCount={overtimeFrequencyCount}
         />
-        <WorkingHourTable
-          data={salaryWorkTimes}
-          hideContent={!canView}
-          pageType={pageType}
-        />
+        <WorkingHourTable data={salaryWorkTimes} pageType={pageType} />
       </SnippetBlock>
       <SnippetBlock
-        title="工作心得"
-        linkText={`查看 ${workExperiencesCount} 篇完整的工作心得 >>`}
+        title="評價"
+        linkText={`查看 ${workExperiencesCount} 篇完整的評價 >>`}
         linkTo={generateTabURL({
           pageType,
           pageName,
@@ -70,7 +68,7 @@ const Overview = ({
             key={d.id}
             pageType={pageType}
             data={d}
-            canView={canView}
+            canView={canViewPublishId(d.id)}
           />
         ))}
       </SnippetBlock>
@@ -92,7 +90,7 @@ const Overview = ({
             key={d.id}
             pageType={pageType}
             data={d}
-            canView={canView}
+            canView={canViewPublishId(d.id)}
           />
         ))}
       </SnippetBlock>
@@ -102,7 +100,6 @@ const Overview = ({
 
 Overview.propTypes = {
   averageWeekWorkTime: PropTypes.number.isRequired,
-  canView: PropTypes.bool.isRequired,
   interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
   interviewExperiencesCount: PropTypes.number.isRequired,
   jobAverageSalaries: PropTypes.array,

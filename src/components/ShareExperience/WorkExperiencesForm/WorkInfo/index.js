@@ -69,7 +69,7 @@ class WorkInfo extends React.PureComponent {
             companyQuery={companyQuery}
             onChange={v => {
               handleState('companyQuery')(v);
-              handleState('title')(`${v} 工作經驗分享`);
+              handleState('title')(`${v} 評價分享`);
             }}
             onCompanyId={handleState('companyId')}
             validator={companyQueryValidator}

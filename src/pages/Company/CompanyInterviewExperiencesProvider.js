@@ -60,7 +60,7 @@ const CompanyInterviewExperiencesProvider = () => {
     );
   }, [dispatch, pageName, jobTitle, start, limit]);
 
-  const [, fetchPermission, canView] = usePermission();
+  const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [pageType, pageName, fetchPermission]);
@@ -78,7 +78,6 @@ const CompanyInterviewExperiencesProvider = () => {
       page={page}
       pageSize={PAGE_SIZE}
       totalCount={interviewExperiencesCount}
-      canView={canView}
       tabType={TAB_TYPE.INTERVIEW_EXPERIENCE}
       status={status}
       interviewExperiences={interviewExperiences}
