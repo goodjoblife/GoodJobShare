@@ -8,13 +8,15 @@ import {
   SET_INTERVIEW_EXPERIENCES,
   SET_WORK_EXPERIENCES,
   SET_TIME_AND_SALARY_STATISTICS,
+  SET_RATING_STATISTICS,
 } from 'actions/company';
 
 const preloadedState = {
   // page --> indexBox
   indexesByPage: {},
   indexCountBox: getUnfetched(),
-  // companyName --> overviewBox
+  // companyName --> box
+  ratingStatisticsByName: {},
   overviewByName: {},
   timeAndSalaryByName: {},
   timeAndSalaryStatisticsByName: {},
@@ -33,6 +35,15 @@ const reducer = createReducer(preloadedState, {
       indexesByPage: {
         ...state.indexesByPage,
         [page]: box,
+      },
+    };
+  },
+  [SET_RATING_STATISTICS]: (state, { companyName, box }) => {
+    return {
+      ...state,
+      ratingStatisticsByName: {
+        ...state.ratingStatisticsByName,
+        [companyName]: box,
       },
     };
   },
