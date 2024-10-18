@@ -20,6 +20,7 @@
   @media (min-width: above-small) {
     display: inline-flex;
     margin-left: 34px;
+    vertical-align: top;
   }
 
   .averageRating {
