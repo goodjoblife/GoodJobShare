@@ -4,7 +4,10 @@ import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
-import { queryCompanyWorkExperiences } from 'actions/company';
+import {
+  queryCompanyWorkExperiences,
+  queryRatingStatistics,
+} from 'actions/company';
 import {
   workExperiences as workExperiencesSelector,
   workExperiencesCount as workExperiencesCountSelector,
@@ -45,6 +48,10 @@ const CompanyWorkExperiencesProvider = () => {
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
+
+  useEffect(() => {
+    dispatch(queryRatingStatistics(pageName));
+  }, [dispatch, pageName]);
 
   useEffect(() => {
     dispatch(
@@ -93,14 +100,17 @@ CompanyWorkExperiencesProvider.fetchData = ({
   const jobTitle = searchTextFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
-  return dispatch(
-    queryCompanyWorkExperiences({
-      companyName: pageName,
-      jobTitle,
-      start,
-      limit,
-    }),
-  );
+  return Promise.all([
+    dispatch(
+      queryCompanyWorkExperiences({
+        companyName: pageName,
+        jobTitle,
+        start,
+        limit,
+      }),
+    ),
+    dispatch(queryRatingStatistics(pageName)),
+  ]);
 };
 
 export default CompanyWorkExperiencesProvider;
