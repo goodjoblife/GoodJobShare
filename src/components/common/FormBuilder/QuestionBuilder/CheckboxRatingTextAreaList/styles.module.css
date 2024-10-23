@@ -1,3 +1,5 @@
+@value main-yellow from '../../../variables.module.css';
+
 .root {
   position: absolute;
   top: 0;
@@ -53,6 +55,7 @@
 }
 
 .button {
+  border: 1px solid transparent;
   width: 160px;
   padding: 0;
 
@@ -68,6 +71,10 @@
       color: #fff !important;
       text-decoration: none;
     }
+  }
+
+  &:focus {
+    border-color: main-yellow;
   }
 }
 

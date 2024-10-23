@@ -29,7 +29,13 @@ const Radio = ({
       onChange={onChange}
     />
     <label className={styles.radioCircle} htmlFor={id || `radio-${value}`}>
-      <span className={styles.radioInput} />
+      <span
+        className={styles.radioInput}
+        tabIndex="0"
+        onKeyDown={e =>
+          [' ', 'enter'].includes(e.key.toLowerCase()) && onChange(e)
+        }
+      />
       <span className={styles.radioText}>{label}</span>
     </label>
   </div>

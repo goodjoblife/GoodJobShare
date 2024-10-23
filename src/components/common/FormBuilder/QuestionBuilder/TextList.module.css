@@ -1,4 +1,4 @@
-$warning-red: #d0021b;
+@value main-yellow from "../../variables.module.css";
 
 .container {
   display: flex;
@@ -57,7 +57,8 @@ $warning-red: #d0021b;
     text-decoration: underline;
     padding: 0 15px;
 
-    &:hover {
+    &:hover,
+    &:focus {
       text-decoration: none;
     }
   }
@@ -71,4 +72,8 @@ $warning-red: #d0021b;
   border-radius: 18.5px;
   border: solid 1px #555555;
   padding: 8px 30px;
+
+  &:focus {
+    border-color: main-yellow;
+  }
 }

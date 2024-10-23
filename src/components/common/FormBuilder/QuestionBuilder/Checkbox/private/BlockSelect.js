@@ -55,7 +55,15 @@ const BlockSelect = ({
         checked={isChecked(value)}
         onChange={() => handleChange(value)}
       />
-      <div className={styles.button}>{label}</div>
+      <div
+        className={styles.button}
+        tabIndex="0"
+        onKeyDown={e =>
+          [' ', 'enter'].includes(e.key.toLowerCase()) && handleChange(value)
+        }
+      >
+        {label}
+      </div>
     </label>
   ));
 };

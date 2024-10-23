@@ -12,6 +12,13 @@
 
 .ratingLabel {
   cursor: pointer;
+
+  &:focus {
+    .glikeContainer {
+      outline: 0;
+      fill: main-yellow;
+    }
+  }
 }
 
 .ratingInput {

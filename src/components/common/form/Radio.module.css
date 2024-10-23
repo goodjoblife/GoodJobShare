@@ -41,6 +41,11 @@
         transition: transform 0.3s;
         transform: scale(0);
       }
+
+      &:focus {
+        outline: 0;
+        border-color: main-yellow;
+      }
     }
     .radioText {
       display: inline-block;
@@ -55,8 +60,6 @@
 
   input[type='radio']:checked + .radioCircle {
     .radioInput {
-      border: 1px solid #000;
-
       &::before {
         transform: scale(1);
       }

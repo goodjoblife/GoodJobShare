@@ -40,27 +40,36 @@ const Rating = ({
   return (
     <div className={cn({ [commonStyles.hasWarning]: !!warning })}>
       <div className={cn(styles.flexContainer, commonStyles.warnableContainer)}>
-        {range(ratingLabels.length).map(i => (
-          <label
-            key={i}
-            className={styles.ratingLabel}
-            data-value={i + 1}
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-          >
-            <input
-              className={styles.ratingInput}
-              type="checkbox"
-              name={dataKey}
-              checked={hoveredValue ? i < hoveredValue : i < value}
-              onChange={() => {
-                onChange(i + 1);
-                debouncedConfirm();
-              }}
-            />
-            <Glike className={cn(styles.glikeContainer)} />
-          </label>
-        ))}
+        {range(ratingLabels.length).map(i => {
+          const handleChange = () => {
+            onChange(i + 1);
+            debouncedConfirm();
+          };
+          return (
+            <label
+              key={i}
+              className={styles.ratingLabel}
+              data-value={i + 1}
+              onMouseOver={handleMouseOver}
+              onMouseOut={handleMouseOut}
+              onFocus={handleMouseOver}
+              onBlur={handleMouseOut}
+              onKeyDown={e =>
+                [' ', 'enter'].includes(e.key.toLowerCase()) && handleChange()
+              }
+              tabIndex="0"
+            >
+              <input
+                className={styles.ratingInput}
+                type="checkbox"
+                name={dataKey}
+                checked={hoveredValue ? i < hoveredValue : i < value}
+                onChange={handleChange}
+              />
+              <Glike className={cn(styles.glikeContainer)} />
+            </label>
+          );
+        })}
         <div
           className={styles.noteContainer}
           data-label={ratingLabels[(hoveredValue || value) - 1]}

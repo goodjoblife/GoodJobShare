@@ -1,4 +1,4 @@
-@value INPUT_HEIGHT, main-gray from "../variables.module.css";
+@value INPUT_HEIGHT, main-yellow, main-gray from "../variables.module.css";
 
 .wrapper {
   position: relative;
@@ -27,4 +27,8 @@
   padding-right: 31.5px;
   height: INPUT_HEIGHT;
   line-height: INPUT_HEIGHT;
+
+  &:focus {
+    border-color: main-yellow;
+  }
 }
