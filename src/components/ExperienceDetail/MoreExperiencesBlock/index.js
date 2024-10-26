@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import InterviewExperienceEntry from '../../CompanyAndJobTitle/InterviewExperiences/ExperienceEntry';
 import WorkExperienceEntry from '../../CompanyAndJobTitle/WorkExperiences/ExperienceEntry';
 import { useLocation } from 'react-router';
+import ReactGA from 'react-ga4';
 import usePermission from 'hooks/usePermission';
 import {
   queryRelatedExperiencesOnExperience,
@@ -11,6 +12,7 @@ import {
 } from 'actions/experience';
 import { relatedExperiencesStateSelector } from 'selectors/experienceSelector';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import Button from 'common/button/Button';
 import styles from './MoreExperiencesBlock.module.css';
 
@@ -84,6 +86,12 @@ const MoreExperiencesBlock = ({ experience }) => {
           pageType={pageType}
           data={e}
           canView={canViewPublishId(e.id)}
+          onClick={() => {
+            ReactGA.event({
+              category: GA_CATEGORY.READ_MORE,
+              action: GA_ACTION.CLICK_READ_MORE_EXPERIENCE,
+            });
+          }}
         />
       ))}
       {hasMore && <LoadMoreButton onClick={handleLoadMore} />}
