@@ -31,7 +31,7 @@ const ExperienceEntry = ({
   },
   size,
   canView,
-  onClick = () => {},
+  onClick,
 }) => (
   <div className={cn(styles.container, styles[size])} onClick={onClick}>
     <Link to={createLinkTo({ id, pageType })}>
@@ -118,6 +118,7 @@ ExperienceEntry.propTypes = {
 
 ExperienceEntry.defaultProps = {
   size: 'm',
+  onClick: null,
 };
 
 export default ExperienceEntry;
