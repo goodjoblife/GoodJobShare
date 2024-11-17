@@ -1,0 +1,43 @@
+@value gray-dark, main-yellow from "../../common/variables.module.css";
+
+.dialogBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: white;
+  z-index: 1;
+  min-width: 25px;
+  width: fit-content;
+  font-size: 13px;
+  height: 20px;
+  padding: 3px 6px;
+  background-color: var(--dialog-color);
+}
+
+.dialogTriangle {
+  position: absolute;
+  bottom: -5px;
+  left: 2px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 10px solid var(--dialog-color);
+  z-index: 0;
+}
+
+.dialogWrapper {
+  --dialog-color: gray-dark;
+  position: relative;
+  width: fit-content;
+}
+
+.enabled {
+  --dialog-color: #333;
+}
+
+.enabled.highlighted:hover {
+  --dialog-color: main-yellow;
+}

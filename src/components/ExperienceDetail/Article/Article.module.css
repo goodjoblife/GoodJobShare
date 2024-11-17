@@ -1,4 +1,4 @@
-@value white-light, border-gray, main-yellow, yellow-light from "../../common/variables.module.css";
+@value white-light, border-gray, main-yellow, yellow-light, below-mobile from "../../common/variables.module.css";
 
 $padding: 40px;
 $paddingS: 16px;
@@ -87,4 +87,24 @@ $paddingS: 16px;
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
+}
+
+.reportDialogContainer {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 20px;
+}
+
+.reportText {
+  margin-left: 2.5px;
+}
+
+@media (max-width: below-mobile) {
+  .reportDialogContainer {
+    position: relative;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+    right: 0px;
+  }
 }
