@@ -82,6 +82,8 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
           like_count
           recommend_to_others
           averageSectionRating
+          # TODO: 應該是加 report_count 在這裡
+          report_count
         }
       }
       salaryWorkTimesResult(start: 0, limit: $salaryWorkTimesLimit) {
@@ -110,6 +112,7 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
             month
             year
           }
+          # TODO: 應該是加 report_count 在這裡
         }
       }
       salary_work_time_statistics {
@@ -165,6 +168,7 @@ export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
             month
             year
           }
+          # TODO: 應該是加 report_count 在這裡
         }
       }
     }
@@ -272,6 +276,8 @@ export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
           like_count
           recommend_to_others
           averageSectionRating
+          # TODO: 應該是加 report_count 在這裡
+          report_count
         }
       }
     }

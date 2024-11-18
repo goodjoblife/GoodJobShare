@@ -13,6 +13,9 @@ import Reason from './Reason';
 import styles from './ReportForm.module.css';
 import { handleToApiParams } from './helper';
 import { validReasomForm, validReason, isReasonLimit } from './formCheck';
+import { useLocation, useHistory, useParams } from 'react-router-dom';
+import { experienceReportReasons } from './constants';
+import { formatCreatedAt } from 'components/LandingPage/ExperienceBlock/helper';
 
 export const reasonCategoryOptions = [
   {
@@ -34,18 +37,18 @@ export const reasonCategoryOptions = [
 ];
 
 const ReportForm = ({ close, onApiError, onSuccess, id }) => {
+  const location = useLocation();
+  const history = useHistory();
+  const params = useParams();
+  const pathname = location.pathname;
+  console.log('pathname', pathname);
   const dispatch = useDispatch();
   const [isLoggedIn, login] = useLogin();
 
   const [reasonCategory, setReasonCategory] = useState(
-    reasonCategoryOptions[0].value,
+    experienceReportReasons[0].value,
   );
   const [reason, setReason] = useState('');
-  useEffect(() => {
-    if (reason !== '') {
-      setReasonCategory('其他');
-    }
-  }, [reason]);
 
   // to show the validation hint
   const [submitted, setSubmitted] = useState(false);
@@ -95,7 +98,7 @@ const ReportForm = ({ close, onApiError, onSuccess, id }) => {
         檢舉此篇文章
       </Heading>
       <ReasonCategory
-        reasonCategoryOptions={reasonCategoryOptions}
+        reasonCategoryOptions={experienceReportReasons}
         reasonCategory={reasonCategory}
         handleReasonCategory={setReasonCategory}
       />
@@ -112,8 +115,7 @@ const ReportForm = ({ close, onApiError, onSuccess, id }) => {
           marginBottom: '16px',
         }}
       >
-        請盡量詳細說明為何這則內容不妥或不實，以供我們評估，您也可以在被檢舉的內容下方留言，
-        讓其他使用者知道您的不同意見。
+        回報後，該篇文章將顯示標注，提醒其他求職者須注意正確性。我們也將進行評估，將顯然不合理之資訊移除。
       </P>
       <div className={isLoggedIn ? styles.buttons : styles.notLoginButtons}>
         {isLoggedIn ? (
