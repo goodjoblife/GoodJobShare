@@ -5,10 +5,7 @@ import {
 } from 'apis/auth';
 import { queryMeApi } from 'apis/me';
 import authStatus from 'constants/authStatus';
-import rollbar from 'utils/rollbar';
-import { NOTIFICATION_TYPE } from 'constants/toastNotification';
-import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
-import { pushNotification } from 'actions/toastNotification';
+import { pushErrorNotificationAndRollbarAndThrowError } from 'actions/toastNotification';
 import { GraphqlError } from 'utils/errors';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
@@ -42,40 +39,12 @@ const FBSDKLogin = FB => {
   });
 };
 
-const composeErrMsg = (code, message, error) => {
-  if (error) {
-    return `[${code}] ${message}: ${error}`;
-  } else {
-    return `[${code}] ${message}`;
-  }
-};
-const loginErrorToast = (code, message) =>
-  pushNotification(NOTIFICATION_TYPE.ALERT, composeErrMsg(code, message));
-
-const toastNotificationAndRollbarAndThrowError = (errorCode, error, extra) => (
-  dispatch,
-  getState,
-) => {
-  dispatch(loginErrorToast(errorCode, ERROR_CODE_MSG[errorCode].external));
-  const internalMsg = composeErrMsg(
-    errorCode,
-    ERROR_CODE_MSG[errorCode].internal,
-    error,
-  );
-  if (!extra) {
-    rollbar.error(internalMsg);
-  } else {
-    rollbar.error(internalMsg, extra);
-  }
-  throw new Error(internalMsg);
-};
-
 /**
  * Use `hooks/login/useFacebookLogin` as possible
  */
 export const loginWithFB = FBSDK => async (dispatch, getState) => {
   if (!FBSDK) {
-    dispatch(toastNotificationAndRollbarAndThrowError('ER0001'));
+    dispatch(pushErrorNotificationAndRollbarAndThrowError('ER0001'));
   }
 
   let fbLoginResponse = null;
@@ -83,11 +52,11 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
     // invoke FB SDK Login to get FB-issued access token
     fbLoginResponse = await FBSDKLogin(FBSDK);
   } catch (error) {
-    dispatch(toastNotificationAndRollbarAndThrowError('ER0002', error));
+    dispatch(pushErrorNotificationAndRollbarAndThrowError('ER0002', error));
   }
 
   if (!fbLoginResponse || !fbLoginResponse.status) {
-    dispatch(toastNotificationAndRollbarAndThrowError('ER0003'));
+    dispatch(pushErrorNotificationAndRollbarAndThrowError('ER0003'));
   }
 
   switch (fbLoginResponse.status) {
@@ -95,7 +64,7 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
       return;
     case authStatus.NOT_AUTHORIZED:
       dispatch(setLogin(authStatus.NOT_AUTHORIZED));
-      dispatch(toastNotificationAndRollbarAndThrowError('ER0004'));
+      dispatch(pushErrorNotificationAndRollbarAndThrowError('ER0004'));
       break;
     case authStatus.CONNECTED:
       try {
@@ -107,19 +76,19 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
       } catch (error) {
         if (error instanceof GraphqlError && error.codes) {
           if (error.codes[0] === 'UNAUTHENTICATED') {
-            dispatch(toastNotificationAndRollbarAndThrowError('ER0014'));
+            dispatch(pushErrorNotificationAndRollbarAndThrowError('ER0014'));
             break;
           } else if (error.codes[0] === 'FORBIDDEN') {
-            dispatch(toastNotificationAndRollbarAndThrowError('ER0015'));
+            dispatch(pushErrorNotificationAndRollbarAndThrowError('ER0015'));
             break;
           }
         }
-        dispatch(toastNotificationAndRollbarAndThrowError('ER0016', error));
+        dispatch(pushErrorNotificationAndRollbarAndThrowError('ER0016', error));
       }
       break;
     default:
       dispatch(
-        toastNotificationAndRollbarAndThrowError(
+        pushErrorNotificationAndRollbarAndThrowError(
           'ER0006',
           null,
           fbLoginResponse,
@@ -141,7 +110,7 @@ export const loginWithGoogle = credentialResponse => async (
 ) => {
   //  TODO: 當登入失敗
   if (!credentialResponse || !credentialResponse.credential) {
-    dispatch(toastNotificationAndRollbarAndThrowError('ER0009'));
+    dispatch(pushErrorNotificationAndRollbarAndThrowError('ER0009'));
   }
   const idToken = credentialResponse.credential;
   try {
@@ -149,19 +118,19 @@ export const loginWithGoogle = credentialResponse => async (
     if (response && response.token) {
       await dispatch(loginWithToken(response.token));
     } else {
-      dispatch(toastNotificationAndRollbarAndThrowError('ER0010'));
+      dispatch(pushErrorNotificationAndRollbarAndThrowError('ER0010'));
     }
   } catch (error) {
     if (error instanceof GraphqlError && error.codes) {
       if (error.codes[0] === 'UNAUTHENTICATED') {
-        dispatch(toastNotificationAndRollbarAndThrowError('ER0011'));
+        dispatch(pushErrorNotificationAndRollbarAndThrowError('ER0011'));
         return;
       } else if (error.codes[0] === 'FORBIDDEN') {
-        dispatch(toastNotificationAndRollbarAndThrowError('ER0012'));
+        dispatch(pushErrorNotificationAndRollbarAndThrowError('ER0012'));
         return;
       }
     }
-    dispatch(toastNotificationAndRollbarAndThrowError('ER0013', error));
+    dispatch(pushErrorNotificationAndRollbarAndThrowError('ER0013', error));
   }
 };
 

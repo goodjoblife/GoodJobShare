@@ -81,4 +81,7 @@ export const ERROR_CODE_MSG = {
   ER0020: {
     internal: 'Submit work experience failed',
   },
+  ER0021: {
+    internal: 'Warning without validation failure',
+  },
 };

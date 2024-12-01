@@ -25,6 +25,8 @@ import styles from './FormBuilder.module.css';
 import { OptionPropType } from './QuestionBuilder/Checkbox/PropTypes';
 import rollbar from 'utils/rollbar';
 import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+import { useDispatch } from 'react-redux';
+import { pushErrorNotificationAndRollbar } from 'actions/toastNotification';
 
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
@@ -110,6 +112,7 @@ const FormBuilder = ({
 
   const [isWarningShown, setWarningShown] = useState(false);
   const [showsNavigation, setShowsNavigation] = useState(true);
+  const dispatch = useDispatch();
 
   const isSubmittable = useMemo(
     () => findIfQuestionsAcceptDraft(draft)(questions),
@@ -120,6 +123,7 @@ const FormBuilder = ({
     if (warning) {
       if (onValidateFail)
         onValidateFail({ dataKey, value: draft[dataKey], warning });
+      else dispatch(pushErrorNotificationAndRollbar('ER0021'));
     } else if (isSubmittable) {
       onSubmit(draft);
     } else {
@@ -131,7 +135,15 @@ const FormBuilder = ({
       );
       console.error(`Not submittable`);
     }
-  }, [warning, isSubmittable, onValidateFail, dataKey, draft, onSubmit]);
+  }, [
+    warning,
+    isSubmittable,
+    onValidateFail,
+    dataKey,
+    draft,
+    onSubmit,
+    dispatch,
+  ]);
 
   useEffect(() => {
     if (open) {
