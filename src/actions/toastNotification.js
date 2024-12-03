@@ -38,11 +38,13 @@ export const pushErrorNotificationAndRollbar = (errorCode, error, extra) => (
   dispatch(
     pushErrorNotification(errorCode, ERROR_CODE_MSG[errorCode].external),
   );
+
   const internalMessage = composeErrorMessage(
     errorCode,
     ERROR_CODE_MSG[errorCode].internal,
     error,
   );
+
   if (!extra) {
     rollbar.error(internalMessage);
   } else {
@@ -62,5 +64,6 @@ export const pushErrorNotificationAndRollbarAndThrowError = (
     ERROR_CODE_MSG[errorCode].internal,
     error,
   );
+
   throw new Error(internalMessage);
 };
