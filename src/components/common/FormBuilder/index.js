@@ -146,10 +146,6 @@ const FormBuilder = ({
   ]);
 
   useEffect(() => {
-    dispatch(pushErrorNotificationAndRollbar('ER0021'));
-  }, [dispatch]);
-
-  useEffect(() => {
     if (open) {
       setPage(0);
       resetDraft();
