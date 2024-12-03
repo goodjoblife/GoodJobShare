@@ -55,7 +55,7 @@ export const pushErrorNotificationAndRollbarAndThrowError = (
   error,
   extra,
 ) => (dispatch, getState) => {
-  dispatch(pushErrorNotification(errorCode, error, extra));
+  dispatch(pushErrorNotificationAndRollbar(errorCode, error, extra));
 
   const internalMessage = composeErrorMessage(
     errorCode,
