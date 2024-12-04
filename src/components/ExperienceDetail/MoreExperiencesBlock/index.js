@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import InterviewExperienceEntry from '../../CompanyAndJobTitle/InterviewExperiences/ExperienceEntry';
 import WorkExperienceEntry from '../../CompanyAndJobTitle/WorkExperiences/ExperienceEntry';
 import { useLocation } from 'react-router';
+import ReactGA from 'react-ga4';
 import usePermission from 'hooks/usePermission';
 import {
   queryRelatedExperiencesOnExperience,
@@ -11,6 +12,7 @@ import {
 } from 'actions/experience';
 import { relatedExperiencesStateSelector } from 'selectors/experienceSelector';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import Button from 'common/button/Button';
 import styles from './MoreExperiencesBlock.module.css';
 
@@ -51,7 +53,7 @@ const MoreExperiencesBlock = ({ experience }) => {
 
   const location = useLocation();
   const { state: { pageType = PAGE_TYPE.COMPANY } = {} } = location;
-  const [, , canView] = usePermission();
+  const [, , canViewPublishId] = usePermission();
   const handleLoadMore = useCallback(
     () => dispatch(loadMoreRelatedExperiences()),
     [dispatch],
@@ -76,14 +78,20 @@ const MoreExperiencesBlock = ({ experience }) => {
     <div className={styles.container}>
       <div className={styles.title}>
         更多{experience.originalCompanyName}、{experience.job_title.name}
-        的面試及工作心得...
+        的面試及評價...
       </div>
       {experiences.map(e => (
         <ExperienceEntry
           key={e.id}
           pageType={pageType}
           data={e}
-          canView={canView}
+          canView={canViewPublishId(e.id)}
+          onClick={() => {
+            ReactGA.event({
+              category: GA_CATEGORY.READ_MORE,
+              action: GA_ACTION.CLICK_READ_MORE_EXPERIENCE,
+            });
+          }}
         />
       ))}
       {hasMore && <LoadMoreButton onClick={handleLoadMore} />}

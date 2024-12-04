@@ -1,11 +1,13 @@
 import graphqlClient from 'utils/graphqlClient';
-import { createWorkExperience as createWorkExperienceGql } from 'graphql/experience';
+import { createWorkExperienceWithRating as createWorkExperienceWithRatingGql } from 'graphql/experience';
 
-export const postWorkExperience = ({ body, token }) =>
+export const postWorkExperienceWithRating = ({ body, token }) =>
   graphqlClient({
-    query: createWorkExperienceGql,
+    query: createWorkExperienceWithRatingGql,
     token,
     variables: {
       input: body,
     },
-  });
+  }).then(
+    ({ createWorkExperienceWithRating }) => createWorkExperienceWithRating,
+  );

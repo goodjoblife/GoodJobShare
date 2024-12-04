@@ -3,6 +3,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import auth from './auth';
+import me from './me';
 import experience from './experience';
 import experiences from './experiences';
 import laborRights from './laborRights';
@@ -10,9 +11,7 @@ import timeAndSalary from './timeAndSalary';
 import timeAndSalarySearch from './timeAndSalarySearch';
 import popularCompanyAverageSalary from './popularCompanyAverageSalary';
 import popularJobTitleSalaryDistribution from './popularJobTitleSalaryDistribution';
-import company from './company';
 import companyIndex from './companyIndex';
-import jobTitle from './jobTitle';
 import jobTitleIndex from './jobTitleIndex';
 import payment from './payment';
 import paymentPersist from './paymentPersist';
@@ -28,6 +27,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth,
+  me,
   experience,
   experiences,
   laborRights,
@@ -35,9 +35,7 @@ const rootReducer = combineReducers({
   timeAndSalarySearch,
   popularCompanyAverageSalary,
   popularJobTitleSalaryDistribution,
-  company,
   companyIndex,
-  jobTitle,
   jobTitleIndex,
   payment,
   paymentPersist,

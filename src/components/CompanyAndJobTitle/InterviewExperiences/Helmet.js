@@ -9,16 +9,16 @@ import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
 const CompanyInterviewExperienceHelmet = ({
   companyName,
-  interviewExperiences,
   page,
+  totalCount,
 }) => {
   // title
   const title = `${companyName} 面試心得列表 - 第${page}頁`;
 
   // description
   let description = `目前還沒有${companyName}}的面試心得。分享你的面試心得，一起讓職場更透明！`;
-  if (interviewExperiences && interviewExperiences.length > 0) {
-    description = `查看${interviewExperiences.length}篇${companyName}面試心得`;
+  if (totalCount > 0) {
+    description = `查看${totalCount}篇${companyName}面試心得`;
   }
 
   // canonical url
@@ -49,22 +49,18 @@ const CompanyInterviewExperienceHelmet = ({
 
 CompanyInterviewExperienceHelmet.propTypes = {
   companyName: PropTypes.string.isRequired,
-  interviewExperiences: PropTypes.array,
   page: PropTypes.number.isRequired,
+  totalCount: PropTypes.number.isRequired,
 };
 
-const JobTitleInterviewExperienceHelmet = ({
-  jobTitle,
-  interviewExperiences,
-  page,
-}) => {
+const JobTitleInterviewExperienceHelmet = ({ jobTitle, page, totalCount }) => {
   // title
   const title = `${jobTitle} 面試心得列表 - 第${page}頁`;
 
   // description
   let description = `目前還沒有${jobTitle}的面試心得。分享你的面試心得，一起讓職場更透明！`;
-  if (interviewExperiences && interviewExperiences.length > 0) {
-    description = `查看${interviewExperiences.length}篇${jobTitle}面試心得`;
+  if (totalCount > 0) {
+    description = `查看${totalCount}篇${jobTitle}面試心得`;
   }
 
   // canonical url
@@ -94,9 +90,9 @@ const JobTitleInterviewExperienceHelmet = ({
 };
 
 JobTitleInterviewExperienceHelmet.propTypes = {
-  interviewExperiences: PropTypes.array,
   jobTitle: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
+  totalCount: PropTypes.number.isRequired,
 };
 
 const InterviewExperienceHelmet = props => {
@@ -119,6 +115,7 @@ const InterviewExperienceHelmet = props => {
 InterviewExperienceHelmet.propTypes = {
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
+  totalCount: PropTypes.number.isRequired,
 };
 
 export default InterviewExperienceHelmet;

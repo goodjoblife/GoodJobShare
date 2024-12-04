@@ -1,29 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { formatSalaryAmount, formatSalaryType } from 'common/formatter';
-import MagnifierPlus from 'common/icons/MagnifierPlus';
 import employmentType from 'constants/employmentType';
 import styles from './formatter.module.css';
-
-export const getCompany = item => (
-  <div>
-    <Link to={`/companies/${encodeURIComponent(item.company.name)}`}>
-      {item.company.name}
-    </Link>
-  </div>
-);
-
-export const getJobTitle = item => {
-  const { job_title: jobTitle, sector } = item;
-  return (
-    <div>
-      <Link to={`/job-titles/${encodeURIComponent(jobTitle.name)}`}>
-        {jobTitle.name}
-      </Link>{' '}
-      <span className={`pM ${styles.sector}`}>{sector}</span>
-    </div>
-  );
-};
 
 export const getNameAsCompanyName = (o, row) => (
   <Link to={`/companies/${encodeURIComponent(o.name)}`}>
@@ -131,15 +110,3 @@ export const formatWage = wage => {
 
 export const formatDate = ({ year, month }) =>
   `${year}.${month >= 10 ? '' : 0}${month}`;
-
-export const getAboutThisJobButton = toggleAboutThisJobModal => d => {
-  const aboutThisJob = d.about_this_job;
-  if (!aboutThisJob) return null;
-
-  const title = `${d.company.name} ${d.job_title.name}`;
-  return (
-    <div onClick={() => toggleAboutThisJobModal(aboutThisJob, title)}>
-      <MagnifierPlus style={{ width: 23, height: 23 }} />
-    </div>
-  );
-};

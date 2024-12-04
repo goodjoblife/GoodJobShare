@@ -1,6 +1,6 @@
-export const getSearchCompanyQuery = `
-  query($companyName:String!, $hasData:Boolean!) {
-    search_companies(query:$companyName, hasData:$hasData) {
+export const getSearchCompanyQuery = /* GraphQL */ `
+  query($companyName: String!, $hasData: Boolean!, $limit: Int) {
+    search_companies(query: $companyName, hasData: $hasData, limit: $limit) {
       name
       businessNumber
       dataCount
@@ -8,21 +8,21 @@ export const getSearchCompanyQuery = `
   }
 `;
 
-export const getSearchJobTitleQuery = `
-  query($jobTitle:String!) {
-    search_job_titles(query:$jobTitle) {
+export const getSearchJobTitleQuery = /* GraphQL */ `
+  query($jobTitle: String!) {
+    search_job_titles(query: $jobTitle) {
       name
       dataCount
     }
   }
 `;
 
-export const changeSalaryWorkTimeStatus = `
-mutation($input:ChangeSalaryWorkTimeStatusInput!) {
-  changeSalaryWorkTimeStatus(input: $input) {
-    salary_work_time {
-      id
+export const changeSalaryWorkTimeStatus = /* GraphQL */ `
+  mutation($input: ChangeSalaryWorkTimeStatusInput!) {
+    changeSalaryWorkTimeStatus(input: $input) {
+      salary_work_time {
+        id
+      }
     }
   }
-}
 `;

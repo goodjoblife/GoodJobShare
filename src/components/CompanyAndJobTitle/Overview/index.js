@@ -1,37 +1,22 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import StatusRenderer from '../StatusRenderer';
-import EmptyView from '../EmptyView';
+import { BoxStatusRenderer } from '../StatusRenderer';
 import OverviewSection from './Overview';
 import Helmet from './Helmet';
-import NotFoundStatus from 'common/routing/NotFound';
 
-const Overview = ({
-  pageType,
-  pageName,
-  tabType,
-  overviewBox,
-  page,
-  canView,
-}) => (
+const Overview = ({ pageType, pageName, tabType, overviewBox, page }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
     pageName={pageName}
     tabType={tabType}
   >
-    <StatusRenderer
-      status={overviewBox.status}
+    <BoxStatusRenderer
+      pageType={pageType}
+      pageName={pageName}
+      tabType={tabType}
       render={() => {
         const data = overviewBox.data;
-
-        if (data == null) {
-          return (
-            <NotFoundStatus status={404}>
-              <EmptyView pageName={pageName} />
-            </NotFoundStatus>
-          );
-        }
 
         return (
           <Fragment>
@@ -56,17 +41,15 @@ const Overview = ({
               averageWeekWorkTime={data.averageWeekWorkTime}
               overtimeFrequencyCount={data.overtimeFrequencyCount}
               page={page}
-              canView={canView}
             />
           </Fragment>
         );
       }}
-    ></StatusRenderer>
+    />
   </CompanyAndJobTitleWrapper>
 );
 
 Overview.propTypes = {
-  canView: PropTypes.bool.isRequired,
   overviewBox: PropTypes.shape({
     data: PropTypes.shape({
       averageWeekWorkTime: PropTypes.number.isRequired,

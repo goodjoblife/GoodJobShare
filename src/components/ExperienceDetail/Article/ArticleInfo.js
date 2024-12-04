@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 import { formatSalary, formatSalaryRange } from 'common/formatter';
-import Good from 'common/icons/Good';
-import Bad from 'common/icons/Bad';
 import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
 import RateButtons from './RateButtons';
@@ -13,6 +11,7 @@ import {
   generatePageURL,
 } from 'constants/companyJobTitle';
 import { originalCompanyNameSelector } from '../experienceSelector';
+import RatingInfo from './RatingInfo';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
@@ -31,9 +30,6 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
-      <div className={styles.date}>
-        {formatDate(new Date(experience.created_at))}
-      </div>
       <InfoBlock
         label="公司"
         to={generatePageURL({
@@ -54,7 +50,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
         {experience.job_title.name}
       </InfoBlock>
       {expInYearText !== null ? (
-        <InfoBlock label="相關職務工作經驗">{expInYearText}</InfoBlock>
+        <InfoBlock label="相關職務經驗">{expInYearText}</InfoBlock>
       ) : null}
       {experience.education ? (
         <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
@@ -62,6 +58,11 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
       {experience.interview_time ? (
         <InfoBlock label="面試時間">
           {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
+        </InfoBlock>
+      ) : null}
+      {experience.created_at ? (
+        <InfoBlock label="填寫時間">
+          {formatDate(new Date(experience.created_at))}
         </InfoBlock>
       ) : null}
       <InfoBlock label="面試結果">{experience.interview_result}</InfoBlock>
@@ -145,8 +146,13 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
       >
         {experience.job_title.name}
       </InfoBlock>
+      {experience.created_at ? (
+        <InfoBlock label="填寫時間">
+          {formatDate(new Date(experience.created_at))}
+        </InfoBlock>
+      ) : null}
       {expInYearText ? (
-        <InfoBlock label="自身相關職務工作經驗">{expInYearText}</InfoBlock>
+        <InfoBlock label="相關職務經驗">{expInYearText}</InfoBlock>
       ) : null}
       {experience.education ? (
         <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
@@ -166,28 +172,21 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
           )}
         </InfoBlock>
       ) : null}
-      {experience.recommend_to_others ? (
-        <InfoBlock label="是否推薦此工作">
-          {experience.recommend_to_others === 'yes' ? (
-            <div className={styles.recommendIcon}>
-              <Good />推
-            </div>
-          ) : (
-            <div className={styles.recommendIcon}>
-              <Bad /> 不推
-            </div>
-          )}
-        </InfoBlock>
-      ) : null}
+      <RatingInfo
+        rating={experience.averageSectionRating}
+        recommend={experience.recommend_to_others}
+      />
     </Fragment>
   );
 };
 
 WorkInfoBlocks.propTypes = {
   experience: PropTypes.shape({
+    averageSectionRating: PropTypes.number,
     company: PropTypes.shape({
       name: PropTypes.string,
     }),
+    created_at: PropTypes.string,
     education: PropTypes.string,
     experience_in_year: PropTypes.number,
     job_title: PropTypes.shape({

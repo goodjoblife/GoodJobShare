@@ -31,8 +31,9 @@ const ExperienceEntry = ({
   },
   size,
   canView,
+  onClick,
 }) => (
-  <div className={cn(styles.container, styles[size])}>
+  <div className={cn(styles.container, styles[size])} onClick={onClick}>
     <Link to={createLinkTo({ id, pageType })}>
       <section className={styles.contentWrapper}>
         <div className={styles.labels}>
@@ -106,16 +107,18 @@ ExperienceEntry.propTypes = {
     sections: PropTypes.arrayOf(
       PropTypes.shape({
         content: PropTypes.string.isRequired,
-        subtitle: PropTypes.string,
+        subtitle: PropTypes.string.isRequired,
       }),
     ).isRequired,
   }).isRequired,
+  onClick: PropTypes.func,
   pageType: PropTypes.string,
   size: PropTypes.oneOf(['s', 'm', 'l']),
 };
 
 ExperienceEntry.defaultProps = {
   size: 'm',
+  onClick: null,
 };
 
 export default ExperienceEntry;

@@ -4,14 +4,12 @@ import {
   getFetched,
   toFetching,
   isFetching,
-  isFetched,
   isUnfetched,
 } from 'utils/fetchBox';
 import { isGraphqlError, UiNotFoundError } from 'utils/errors';
 import { tokenSelector } from 'selectors/authSelector';
 import {
-  experienceCabinSelector,
-  experienceStateSelector,
+  experienceBoxSelectorAtId,
   relatedExperiencesCabinSelector,
   relatedExperiencesStateSelector,
   popularExperiencesBoxSelector,
@@ -27,32 +25,23 @@ export const SET_RELATED_EXPERIENCES = '@@EXPERIENCE/SET_RELATED_EXPERIENCES';
 export const SET_POPULAR_EXPERIENCES = '@@EXPERIENCE/SET_POPULAR_EXPERIENCES';
 
 // state is related to experienceId
-const setExperience = (experienceId, state) => ({
+const setExperience = (experienceId, box) => ({
   type: SET_EXPERIENCE,
-  experience: {
-    experienceId,
-    state,
-  },
+  experienceId,
+  box,
 });
 
 export const queryExperienceIfUnfetched = experienceId => async (
   dispatch,
   getState,
 ) => {
-  const cabin = experienceCabinSelector(getState());
-  const state = experienceStateSelector(getState());
-
-  if (experienceId === cabin.experienceId && isFetched(state)) {
-    return;
+  if (isUnfetched(experienceBoxSelectorAtId(experienceId)(getState()))) {
+    return dispatch(queryExperience(experienceId));
   }
-
-  dispatch(queryExperience(experienceId));
 };
 
 export const queryExperience = experienceId => async (dispatch, getState) => {
-  const state = getState();
-  const token = tokenSelector(state);
-
+  const token = tokenSelector(getState());
   dispatch(setExperience(experienceId, toFetching()));
 
   try {
@@ -61,26 +50,20 @@ export const queryExperience = experienceId => async (dispatch, getState) => {
       token,
     });
 
-    const prev = experienceCabinSelector(getState());
-    if (experienceId === prev.experienceId) {
-      if (experience === null) {
-        dispatch(setExperience(experienceId, getError(new UiNotFoundError())));
-        return;
-      }
-
-      return dispatch(setExperience(experienceId, getFetched(experience)));
+    if (experience === null) {
+      dispatch(setExperience(experienceId, getError(new UiNotFoundError())));
+      return;
     }
+
+    return dispatch(setExperience(experienceId, getFetched(experience)));
   } catch (error) {
-    const prev = experienceCabinSelector(getState());
-    if (experienceId === prev.experienceId) {
-      if (isGraphqlError(error)) {
-        dispatch(setExperience(experienceId, getError(error)));
-        return;
-      }
-
-      // Unexpected error
-      throw error;
+    if (isGraphqlError(error)) {
+      dispatch(setExperience(experienceId, getError(error)));
+      return;
     }
+
+    // Unexpected error
+    throw error;
   }
 };
 

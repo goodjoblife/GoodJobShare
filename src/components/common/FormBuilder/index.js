@@ -23,6 +23,8 @@ import SubmissionBlock from './SubmissionBlock';
 import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
 import { OptionPropType } from './QuestionBuilder/Checkbox/PropTypes';
+import rollbar from 'utils/rollbar';
+import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
@@ -107,6 +109,7 @@ const FormBuilder = ({
   } = useQuestion(questions[page], draft);
 
   const [isWarningShown, setWarningShown] = useState(false);
+  const [showsNavigation, setShowsNavigation] = useState(true);
 
   const isSubmittable = useMemo(
     () => findIfQuestionsAcceptDraft(draft)(questions),
@@ -120,6 +123,12 @@ const FormBuilder = ({
     } else if (isSubmittable) {
       onSubmit(draft);
     } else {
+      const errorCode = 'ER0019';
+      rollbar.error(
+        `[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal}`,
+        null,
+        draft,
+      );
       console.error(`Not submittable`);
     }
   }, [warning, isSubmittable, onValidateFail, dataKey, draft, onSubmit]);
@@ -154,21 +163,6 @@ const FormBuilder = ({
       if (onPageChange) onPageChange(page);
     }
   }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Prevent tabbing within the modal so we don't jump between pages
-  // -- which is NOT ideal, as it's not a11y friendly.
-  //
-  // We will need to revisit this later after we are able to not render
-  // all questions at once but the active one only.
-  useEffect(() => {
-    if (!open) return;
-
-    const handler = e => {
-      if (e.key.toLowerCase() === 'tab') e.preventDefault();
-    };
-    window.document.addEventListener('keydown', handler);
-    return () => window.document.removeEventListener('keydown', handler);
-  }, [open]);
 
   if (!shouldRenderQuestion) {
     return null;
@@ -209,11 +203,16 @@ const FormBuilder = ({
                   }
                 }}
                 warning={isWarningShown ? warning : null}
+                setShowsNavigation={setShowsNavigation}
               />
             </AnimatedPager.Page>
           ))}
         </AnimatedPager>
-        <div className={styles.navigationBar}>
+        <div
+          className={cn(styles.navigationBar, {
+            [styles.hidden]: !showsNavigation,
+          })}
+        >
           {hideProgressBar ? null : (
             <div>
               <ProgressBlock page={page} totalPages={questions.length} />
@@ -262,12 +261,11 @@ export const QuestionPropType = shape({
   validateOrWarn: func,
   onSelect: func,
   search: func,
-  placeholder: string,
+  placeholder: oneOfType([string, func]),
   footnote: oneOfType([string, node, func]),
   options: arrayOf(OptionPropType),
   elseOptions: arrayOf(OptionPropType),
   ratingLabels: arrayOf(string.isRequired),
-  renderCustomizedQuestion: func,
 });
 
 FormBuilder.propTypes = {

@@ -1,3 +1,5 @@
+@value below-small, above-small from '../common/variables.module.css';
+
 .fanPageBlock {
   margin-bottom: 60px;
 }
@@ -5,4 +7,33 @@
 .adBeforeFanPageBlock {
   margin-top: -30px;
   margin-bottom: 30px;
+}
+
+.ratingStatistics {
+  align-items: center;
+
+  @media (max-width: below-small) {
+    display: flex;
+    margin-top: 16px;
+  }
+
+  @media (min-width: above-small) {
+    display: inline-flex;
+    margin-left: 34px;
+    vertical-align: top;
+  }
+
+  .averageRating {
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .ratingCount {
+    font-size: 15px;
+  }
 }

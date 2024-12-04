@@ -40,11 +40,11 @@ export default {
     <Helmet defaultTitle={SITE_NAME} titleTemplate={`%s | ${SITE_NAME}`}>
       <meta
         name="description"
-        content="這裡是一個勞工互相分享資訊的網站，匿名分享你的薪水、加班狀況、面試心得、工作心得，就可以查詢超過萬筆由其他勞工分享的資訊。"
+        content="這裡是一個勞工互相分享資訊的網站，匿名分享你的薪水、加班狀況、面試心得、評價，就可以查詢超過萬筆由其他勞工分享的資訊。"
       />
       <meta
         name="keywords"
-        content="工作時間, 加班狀況, 薪資福利, 薪水, 面試心得, 面試問題, 面談薪資, 工作心得, 職場甘苦談, 實習心得, 工作評論, 職場資訊透明化"
+        content="工作時間, 加班狀況, 薪資福利, 薪水, 面試心得, 面試問題, 面談薪資, 評價, 職場甘苦談, 實習心得, 工作評論, 職場資訊透明化"
       />
       <meta property="og:title" content={SITE_NAME} />
       <meta property="og:url" content={formatCanonicalPath('')} />
@@ -55,7 +55,7 @@ export default {
       />
       <meta
         property="og:description"
-        content="這裡是一個勞工互相分享資訊的網站，匿名分享你的薪水、加班狀況、面試心得、工作心得，就可以查詢其他勞工分享的所有資訊。"
+        content="這裡是一個勞工互相分享資訊的網站，匿名分享你的薪水、加班狀況、面試心得、評價，就可以查詢其他勞工分享的所有資訊。"
       />
       <meta property="og:locale" content="zh_TW" />
       <meta property="og:site_name" content={SITE_NAME} />
@@ -83,26 +83,6 @@ export default {
       <meta property="og:url" content={formatCanonicalPath('/share')} />
       <meta property="og:image" content={`${IMG_HOST}/og/share-work.jpg`} />
       <link rel="canonical" href={formatCanonicalPath('/share')} />
-    </Helmet>
-  ),
-  ShareWork: () => (
-    <Helmet>
-      <title itemProp="name" lang="zh-TW">
-        工作心得分享
-      </title>
-      <meta
-        property="og:title"
-        content={formatTitle('工作心得分享', SITE_NAME)}
-      />
-      <meta
-        property="og:url"
-        content={formatCanonicalPath('/share/work-experiences')}
-      />
-      <meta property="og:image" content={`${IMG_HOST}/og/share-work.jpg`} />
-      <link
-        rel="canonical"
-        href={formatCanonicalPath('/share/work-experiences')}
-      />
     </Helmet>
   ),
   LaborRightsMenu: () => (

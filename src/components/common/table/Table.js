@@ -53,7 +53,7 @@ class Table extends Component {
       return <tr key={d[primaryKey] || i}>{record}</tr>;
     });
 
-    const postRecords = postProcessRows(records);
+    const postRecords = postProcessRows(records, data);
 
     return (
       <table className={cn([styles.rwdTable, className])}>

@@ -1,14 +1,14 @@
 import React from 'react';
+import { generatePath } from 'react-router';
 import LandingPage from './components/LandingPage';
 import LaborRightsMenu from './components/LaborRightsMenu';
 import LaborRightsSingle from './components/LaborRightsSingle';
 import TimeAndSalary from './components/TimeAndSalary';
 import SalaryWorkTimeSearchScreen from './components/TimeAndSalary/SearchScreen';
-import ExperienceDetail from './containers/ExperienceDetail';
+import ExperienceDetail from './components/ExperienceDetail';
 import NotFound from './components/common/NotFound';
 import ShareExperience from './components/ShareExperience';
 import ShareExperienceEntry from './components/ShareExperience/Entry';
-import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
 import Me from './components/Me';
 import Buy from './components/Buy';
 import About from './components/About';
@@ -21,18 +21,35 @@ import Redirect from 'common/routing/Redirect';
 import VerificationPage from './components/EmailVerification/VerificationPage';
 
 import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
-import CompanyPageProvider from './components/Company/CompanyPageProvider';
-import CompanyIndexProvider from './components/Company/CompanyIndexProvider';
-import CompanyOverviewProvider from 'components/Company/CompanyOverviewProvider';
-import JobTitlePageProvider from './components/JobTitle/JobTitlePageProvider';
-import JobTitleIndexProvider from './components/JobTitle/JobTitleIndexProvider';
-import JobTitleOverviewProvider from 'components/JobTitle/JobTitleOverviewProvider';
+import CompanyIndexProvider from 'pages/Company/CompanyIndexProvider';
+import CompanyOverviewProvider from 'pages/Company/CompanyOverviewProvider';
+import CompanyTimeAndSalaryProvider from 'pages/Company/CompanyTimeAndSalaryProvider';
+import CompanyInterviewExperiencesProvider from 'pages/Company/CompanyInterviewExperiencesProvider';
+import CompanyWorkExperiencesProvider from 'pages/Company/CompanyWorkExperiencesProvider';
+import JobTitleIndexProvider from 'pages/JobTitle/JobTitleIndexProvider';
+import JobTitleOverviewProvider from 'pages/JobTitle/JobTitleOverviewProvider';
+import JobTitleTimeAndSalaryProvider from 'pages/JobTitle/JobTitleTimeAndSalaryProvider';
+import JobTitleInterviewExperiencesProvider from 'pages/JobTitle/JobTitleInterviewExperiencesProvider';
+import JobTitleWorkExperiencesProvider from 'pages/JobTitle/JobTitleWorkExperiencesProvider';
 
 import PlanPage from './components/PlanPage';
 import BuyResultPage from './components/BuyResultPage';
 import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
 import SubscriptionsPage from './components/Me/SubscriptionsPage';
-import { jobTitleOverviewPath, companyOverviewPath } from 'constants/linkTo';
+import {
+  jobTitleOverviewPath,
+  jobTitleSalaryWorkTimesPath,
+  jobTitleInterviewExperiencesPath,
+  jobTitleWorkExperiencesPath,
+  companyOverviewPath,
+  companySalaryWorkTimesPath,
+  companyInterviewExperiencesPath,
+  companyWorkExperiencesPath,
+  companyOverviewLegacyPath,
+  jobTitleOverviewLegacyPath,
+} from 'constants/linkTo';
+import { pageNameSelector as companyPageNameSelector } from 'pages/Company/usePageName';
+import { pageNameSelector as jobTitlePageNameSelector } from 'pages/JobTitle/usePageName';
 
 const routes = [
   {
@@ -80,7 +97,7 @@ const routes = [
       {
         path: '/share/work-experiences',
         exact: true,
-        component: WorkExperiencesForm,
+        component: () => <Redirect to="/share" />,
       },
       {
         component: NotFound,
@@ -115,8 +132,28 @@ const routes = [
         exact: true,
       },
       {
-        path: '/companies/:companyName',
-        component: CompanyPageProvider,
+        path: companyOverviewLegacyPath, // 相容舊網址
+        exact: true,
+        render: ({ match: { params } }) => {
+          const companyName = companyPageNameSelector(params);
+          const path = generatePath(companyOverviewPath, { companyName });
+          return <Redirect to={path} />;
+        },
+      },
+      {
+        path: companySalaryWorkTimesPath,
+        component: CompanyTimeAndSalaryProvider,
+        exact: true,
+      },
+      {
+        path: companyInterviewExperiencesPath,
+        component: CompanyInterviewExperiencesProvider,
+        exact: true,
+      },
+      {
+        path: companyWorkExperiencesPath,
+        component: CompanyWorkExperiencesProvider,
+        exact: true,
       },
       {
         component: NotFound,
@@ -138,8 +175,28 @@ const routes = [
         exact: true,
       },
       {
-        path: '/job-titles/:jobTitle',
-        component: JobTitlePageProvider,
+        path: jobTitleOverviewLegacyPath, // 相容舊網址
+        exact: true,
+        render: ({ match: { params } }) => {
+          const jobTitle = jobTitlePageNameSelector(params);
+          const path = generatePath(jobTitleOverviewPath, { jobTitle });
+          return <Redirect to={path} />;
+        },
+      },
+      {
+        path: jobTitleSalaryWorkTimesPath,
+        component: JobTitleTimeAndSalaryProvider,
+        exact: true,
+      },
+      {
+        path: jobTitleInterviewExperiencesPath,
+        component: JobTitleInterviewExperiencesProvider,
+        exact: true,
+      },
+      {
+        path: jobTitleWorkExperiencesPath,
+        component: JobTitleWorkExperiencesProvider,
+        exact: true,
       },
       {
         component: NotFound,

@@ -40,13 +40,15 @@ export const queryExperienceGql = /* GraphQL */ `
         amount
       }
       title
-      sections {
-        subtitle
-        content
-      }
       created_at
 
+      __typename
+
       ... on InterviewExperience {
+        sections {
+          interview_subtitle: subtitle
+          content
+        }
         interview_time {
           year
           month
@@ -61,8 +63,15 @@ export const queryExperienceGql = /* GraphQL */ `
       }
 
       ... on WorkExperience {
+        sections {
+          work_subtitle: subtitle
+          content
+          aspect
+          rating
+        }
         week_work_time
         recommend_to_others
+        averageSectionRating
       }
     }
   }
@@ -76,19 +85,20 @@ export const queryExperienceLikeGql = /* GraphQL */ `
   }
 `;
 
-export const createInterviewExperience = `
-mutation CreateInterviewExperience($input: CreateInterviewExperienceInput!) {
-  createInterviewExperience(input: $input) {
-    success
-    experience {
-      id
+export const createInterviewExperience = /* GraphQL */ `
+  mutation CreateInterviewExperience($input: CreateInterviewExperienceInput!) {
+    createInterviewExperience(input: $input) {
+      success
+      experience {
+        id
+      }
     }
   }
-}`;
+`;
 
-export const createWorkExperience = `
-mutation CreateWorkExperience($input: CreateWorkExperienceInput!) {
-  createWorkExperience(input: $input) {
+export const createWorkExperienceWithRating = `
+mutation CreateWorkExperienceWithRating($input: CreateWorkExperienceWithRatingInput!) {
+  createWorkExperienceWithRating(input: $input) {
     success
     experience {
       id
@@ -115,18 +125,27 @@ export const queryRelatedExperiencesGql = /* GraphQL */ `
           type
           amount
         }
-        sections {
-          subtitle
-          content
-        }
+
+        __typename
 
         ... on InterviewExperience {
+          sections {
+            interview_subtitle: subtitle
+            content
+          }
           overall_rating
         }
 
         ... on WorkExperience {
+          sections {
+            work_subtitle: subtitle
+            content
+            aspect
+            rating
+          }
           week_work_time
           recommend_to_others
+          averageSectionRating
         }
       }
     }

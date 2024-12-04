@@ -45,6 +45,8 @@ import {
   DATA_KEY_OVERTIME_FREQUENCY,
   DATA_KEY_HAS_OVERTIME_SALARY,
   DATA_KEY_HAS_COMPENSATORY_DAYOFF,
+  DATA_KEY_SECTIONS,
+  SECTION_MIN_LENGTH,
 } from './constants';
 import {
   isArray,
@@ -65,6 +67,7 @@ import Emoji from '../common/icons/Emoji';
 import {
   pageType as PAGE_TYPE,
   tabTypeTranslation,
+  tabType,
 } from '../../constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
 import { salaryHint } from 'utils/formUtils';
@@ -87,7 +90,7 @@ export const createCompanyQuestion = ({ header }) => ({
   validateOrWarn: value => isEmpty(value) && '請填寫公司名稱',
   placeholder: 'ＯＯ 股份有限公司',
   search: value =>
-    fetchSearchCompany({ companyName: value, hasData: false }).then(
+    fetchSearchCompany({ companyName: value, hasData: false, limit: 10 }).then(
       map(({ name, businessNumber }) => ({
         label: (
           <AutoCompleteItem
@@ -197,6 +200,16 @@ export const createInterviewRegionQuestion = () => ({
   defaultValue: null,
   required: true,
   validateOrWarn: value => isNil(value) && '需填寫面試地區',
+  options: ['線上面試'].concat(REGION_OPTIONS),
+});
+
+export const createWorkRegionQuestion = () => ({
+  title: '工作地區',
+  type: QUESTION_TYPE.RADIO,
+  dataKey: DATA_KEY_REGION,
+  defaultValue: null,
+  required: true,
+  validateOrWarn: value => isNil(value) && '需填寫工作地區',
   options: REGION_OPTIONS,
 });
 
@@ -272,8 +285,8 @@ export const createJobTenureQuestion = () => ({
   options: JOB_TENURE_OPTIONS,
 });
 
-export const createRequiredSalaryQuestion = () => ({
-  title: '薪資',
+export const createRequiredSalaryQuestion = ({ type }) => ({
+  title: type === tabType.INTERVIEW_EXPERIENCE ? '面談薪資' : '薪資',
   type: QUESTION_TYPE.SELECT_TEXT,
   dataKey: DATA_KEY_SALARY,
   defaultValue: [null, ''],
@@ -298,15 +311,17 @@ export const createRequiredSalaryQuestion = () => ({
     else return hint;
   },
   footnote:
-    '薪資請以包含平常的薪資、分紅、年終、績效獎金等實質上獲得的價值去計算。',
+    type === tabType.INTERVIEW_EXPERIENCE
+      ? '若錄取，請以包含平常的薪資、分紅、年終、獎金等預期會獲得的價值計算'
+      : '薪資請以包含平常的薪資、分紅、年終、績效獎金等實質上獲得的價值去計算。',
 });
 
-export const createSalaryQuestion = () => {
+export const createSalaryQuestion = ({ type }) => {
   const {
     required,
     validateOrWarn,
     ...question
-  } = createRequiredSalaryQuestion();
+  } = createRequiredSalaryQuestion({ type });
   return {
     ...question,
     validateOrWarn: ([type, amount]) =>
@@ -327,28 +342,38 @@ export const createExperienceInYearQuestion = () => ({
   validateOrWarn: value => isNil(value) && '需填寫工作經歷',
 });
 
+const validateWorkingTime = (fieldName, min, max) => value => {
+  if (isNot(isNumber, value)) {
+    return `請填寫${fieldName}`;
+  }
+  if (value < min || value > max) {
+    return `${fieldName}必須在${min}~${max}之間`;
+  }
+};
+
 export const createDayPromisedWorkTimeQuestion = () => ({
-  title: '工作日表訂工時',
+  title: '工作日表訂工時(一日)',
   type: QUESTION_TYPE.TEXT,
   dataKey: DATA_KEY_DAY_PROMISED_WORK_TIME,
   required: true,
   defaultValue: '',
-  validateOrWarn: value => isNot(isNumber, value) && '請填寫表定工時',
+  validateOrWarn: validateWorkingTime('工作日表訂工時', 0, 24),
   placeholder: '8 或 8.5',
-  footnote: '工作日指與雇主約定的上班日，或是排班排定的日子。',
+  footnote:
+    '工作日指與雇主約定的上班日，或是排班排定的日子。一天表訂要工作多久。',
 });
 
 export const createDayRealWorkTimeQuestion = () => ({
-  title: '工作日實際平均工時',
+  title: '工作日實際平均工時(一日)',
   type: QUESTION_TYPE.TEXT,
   dataKey: DATA_KEY_DAY_REAL_WORK_TIME,
   required: true,
   defaultValue: '',
-  validateOrWarn: value => isNot(isNumber, value) && '請填寫實際工時',
+  validateOrWarn: validateWorkingTime('工作日實際平均工時', 0, 24),
   placeholder: '8 或 8.5',
   footnote: (
     <Fragment>
-      實際平均工時包含在家工作、待命的時間。
+      一天實際平均工時，包含在家工作、待命的時間。
       <WorkTimeExample>
         例如: 公司規定 9:00上班，18:00 下班，午休 1 小時。 那麼表訂工作時間為
         (18:00-9:00)-1=8 小時。 若實際上平均 20:00 才下班，則實際工作時間為
@@ -364,7 +389,7 @@ export const createWeekWorkTimeQuestion = () => ({
   dataKey: DATA_KEY_WEEK_WORK_TIME,
   required: true,
   defaultValue: '',
-  validateOrWarn: value => isNot(isNumber, value) && '請填寫週總工時',
+  validateOrWarn: validateWorkingTime('一週總工時', 0, 168),
   placeholder: '40 或 40.5',
   footnote: (
     <Fragment>
@@ -376,6 +401,68 @@ export const createWeekWorkTimeQuestion = () => ({
       </WorkTimeExample>
     </Fragment>
   ),
+});
+
+export const createSectionsQuestion = () => ({
+  title: '至少評價兩個面向',
+  type: QUESTION_TYPE.RADIO_RATING_TEXTAREA_LIST,
+  dataKey: DATA_KEY_SECTIONS,
+  required: true,
+  defaultValue: [],
+  validateOrWarn: (items, { validateOrWarnItem }) => {
+    if (items.length < 2) return '至少評價兩個面向';
+    for (const item of items) {
+      const warning = validateOrWarnItem(item);
+      if (warning) {
+        const [subject] = item;
+        return `${subject}：${warning}`;
+      }
+    }
+  },
+  validateOrWarnItem: ([subject, rating, text]) => {
+    if (rating === 0) return '需選取滿意程度';
+    if (wordCount(text) < SECTION_MIN_LENGTH) {
+      return `至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(text)} 字`;
+    }
+    return null;
+  },
+  options: [
+    '薪資福利',
+    '性別友善度',
+    '工作內容',
+    '工時狀況',
+    '公司/團隊文化',
+    '公司管理方式',
+    '獲得的成長',
+    '升遷制度',
+    '自訂面向',
+  ],
+  elseOptionValue: '自訂面向',
+  placeholder: ([subject, rating, text]) => {
+    switch (subject) {
+      case '薪資福利':
+        return '底薪、績效獎金、年終獎金、三節獎金、分紅、津貼補助...等。';
+      case '性別友善度':
+        return '公司對請生理假、產假或育嬰假的態度？ 職場上對非主流性別或性傾向友善度？是否遇過性別歧視或騷擾的狀況？';
+      case '工作內容':
+        return '實際工作內容是什麼呢？與當初面試時說明的有不同嗎？';
+      case '工時狀況':
+        return '上下班時間、加班頻率如何？下班要收訊息嗎？';
+      case '公司/團隊文化':
+        return '上司的領導與溝通能力如何？同事間相處融洽嗎？團隊的氣氛讓人安心愉快嗎？';
+      case '公司管理方式':
+        return '是否符合勞基法？公司制度完不完善？管理方式讓員工感到舒適自在嗎？';
+      case '獲得的成長':
+        return '專業技術、管理團隊的經驗、對市場的瞭解、對廠商的溝通的技能等等。';
+      case '升遷制度':
+        return '是否有明確升遷、加薪制度？考核的標準透明嗎？';
+      default:
+        return '請輸入自訂標題（例如：環境整潔度）';
+    }
+  },
+  ratingLabels: RATING_LABELS,
+  footnote: value =>
+    `至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
 });
 
 const OptionEmoji = ({ value, children }) => (
@@ -480,6 +567,6 @@ export const createSubmitQuestion = ({ type }) => ({
       <Count /> 萬多筆資料哦！
     </span>
   ),
-  type: QUESTION_TYPE.CUSTOMIZED,
+  type: QUESTION_TYPE.EMPTY,
   dataKey: '',
 });

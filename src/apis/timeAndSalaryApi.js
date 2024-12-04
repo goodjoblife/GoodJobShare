@@ -8,10 +8,10 @@ import {
 
 const endpoint = '/workings';
 
-export const fetchSearchCompany = ({ companyName, hasData }) =>
+export const fetchSearchCompany = ({ companyName, hasData, limit }) =>
   graphqlClient({
     query: getSearchCompanyQuery,
-    variables: { companyName, hasData },
+    variables: { companyName, hasData, limit },
   }).then(data => data.search_companies);
 
 export const fetchSearchJobTitle = ({ jobTitle }) =>

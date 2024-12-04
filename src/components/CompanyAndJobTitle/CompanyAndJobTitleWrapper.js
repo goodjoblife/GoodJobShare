@@ -1,84 +1,65 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { toPairs, compose, map, ifElse, always } from 'ramda';
+import { toPairs, compose, map } from 'ramda';
 
 import Heading from 'common/base/Heading';
 import FanPageBlock from 'common/FanPageBlock';
 import BreadCrumb from 'common/BreadCrumb';
-import Redirect from 'common/routing/Redirect';
 
+import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import {
   tabTypeTranslation,
   generateTabURL,
   pageType as PAGE_TYPE,
-  tabType as TAB_TYPE,
 } from 'constants/companyJobTitle';
+import { isFetched } from 'utils/fetchBox';
 import { generateBreadCrumbData } from './utils';
-
-import {
-  status as statusSelectorFromBox,
-  name as nameSelectorFromBox,
-  company as companyBoxSelectorByPageName,
-  jobTitle as jobTitleBoxSelectorByPageName,
-  companyOverviewBoxSelectorByName,
-  jobTitleOverviewBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
 
 import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
-import { isFetched } from 'constants/status';
+import Glike from 'common/icons/Glike';
+import Seo from 'common/Seo/SeoStructure';
 
-const useBoxSelector = ({ pageType, pageName, tabType }) => {
-  return useMemo(() => {
-    switch (pageType) {
-      case PAGE_TYPE.COMPANY:
-        if (tabType === TAB_TYPE.OVERVIEW) {
-          return companyOverviewBoxSelectorByName(pageName);
-        }
-        return companyBoxSelectorByPageName(pageName);
+const AverageRating = ({ pageType, pageName }) => {
+  const ratingStatistcsBox = useSelector(
+    companyRatingStatisticsBoxSelectorByName(pageName),
+  );
 
-      case PAGE_TYPE.JOB_TITLE:
-        if (tabType === TAB_TYPE.OVERVIEW) {
-          return jobTitleOverviewBoxSelectorByName(pageName);
-        }
-        return jobTitleBoxSelectorByPageName(pageName);
+  if (pageType !== PAGE_TYPE.COMPANY || !isFetched(ratingStatistcsBox)) {
+    return null;
+  }
 
-      default:
-        return null;
-    }
-  }, [pageType, pageName, tabType]);
-};
+  const data = ratingStatistcsBox.data;
+  if (!data) {
+    return null;
+  }
 
-const useNameSelector = ({ pageType, pageName, tabType }) => {
-  const boxSelector = useBoxSelector({ pageType, pageName, tabType });
-  return useMemo(
-    () =>
-      compose(
-        ifElse(
-          compose(
-            isFetched,
-            statusSelectorFromBox,
-          ),
-          nameSelectorFromBox,
-          always(null),
-        ),
-        boxSelector,
-      ),
-    [boxSelector],
+  const { averageRating, ratingCount } = data;
+  return (
+    <div className={styles.ratingStatistics}>
+      <Seo
+        data={{
+          '@context': 'https://schema.org/',
+          '@type': 'EmployerAggregateRating',
+          itemReviewed: {
+            '@type': 'Organization',
+            name: pageName,
+          },
+          ratingValue: averageRating,
+          ratingCount: ratingCount,
+        }}
+      />
+      <span className={styles.averageRating}>{averageRating.toFixed(1)}</span>
+      <Glike className={styles.icon} />
+      <span className={styles.ratingCount}>({ratingCount})</span>
+    </div>
   );
 };
 
-const useRedirectPath = ({ pageType, pageName, tabType }) => {
-  const nameSelector = useNameSelector({ pageType, pageName, tabType });
-  const name = useSelector(nameSelector);
-  if (!name) return null;
-
-  // No need to redirect if the name is the same as the pageName
-  if (name === pageName) return null;
-
-  // Redirect to the canonical path
-  return generateTabURL({ pageType, pageName: name, tabType });
+AverageRating.propTypes = {
+  pageName: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
 };
 
 const CompanyAndJobTitleWrapper = ({
@@ -103,11 +84,6 @@ const CompanyAndJobTitleWrapper = ({
     [pageType, pageName],
   );
 
-  const redirectPath = useRedirectPath({ pageType, pageName, tabType });
-  if (redirectPath) {
-    return <Redirect to={redirectPath} />;
-  }
-
   return (
     <div>
       <div style={{ marginBottom: '20px' }}>
@@ -117,6 +93,7 @@ const CompanyAndJobTitleWrapper = ({
       </div>
       <Heading style={{ color: '#000000', marginBottom: '30px' }}>
         {pageName}
+        <AverageRating pageType={pageType} pageName={pageName} />
       </Heading>
       <TabLinkGroup
         options={tabLinkOptions}

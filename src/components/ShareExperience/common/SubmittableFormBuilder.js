@@ -9,6 +9,8 @@ import FormBuilder, {
 import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
 import Footer from './TypeFormFooter';
 import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
+import rollbar from 'utils/rollbar';
+import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 
 const SubmittableTypeForm = ({
   open,
@@ -23,6 +25,7 @@ const SubmittableTypeForm = ({
   const history = useHistory();
   const [submitStatus, setSubmitStatus] = useState('unsubmitted');
   const [submittedDraft, setSubmittedDraft] = useState(null);
+  const [submitResult, setSubmitResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = useCallback(
     async draft => {
@@ -31,10 +34,15 @@ const SubmittableTypeForm = ({
           return;
         }
         setSubmitStatus('submitting');
-        await onSubmit(draft);
+        setSubmitResult(await onSubmit(draft));
         setSubmittedDraft(draft);
         setSubmitStatus('success');
       } catch (error) {
+        const errorCode = 'ER0018';
+        rollbar.error(
+          `[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal} ${error}`,
+          error,
+        );
         setErrorMessage(error.message);
         setSubmitStatus('error');
         await onSubmitError(error);
@@ -55,10 +63,11 @@ const SubmittableTypeForm = ({
     onClose();
     if (typeof window !== 'undefined' && redirectPathnameOnSuccess) {
       let pathname = redirectPathnameOnSuccess;
-      if (typeof pathname === 'function') pathname = pathname(submittedDraft);
+      if (typeof pathname === 'function')
+        pathname = pathname(submitResult, submittedDraft);
       window.location.replace(pathname);
     }
-  }, [onClose, redirectPathnameOnSuccess, submittedDraft]);
+  }, [onClose, redirectPathnameOnSuccess, submittedDraft, submitResult]);
 
   const onResume = useCallback(() => {
     setSubmitStatus('unsubmitted');
@@ -129,7 +138,7 @@ SubmittableTypeForm.propTypes = {
   redirectPathnameOnSuccess: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.func,
-  ]),
+  ]).isRequired,
 };
 
 export default SubmittableTypeForm;

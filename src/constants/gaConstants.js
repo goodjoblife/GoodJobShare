@@ -14,6 +14,9 @@ export const GA_CATEGORY = {
   LOGIN: 'login',
   HEADER: 'header',
   TEST_NEW_FEATURE: 'test_new_feature',
+  JOB_TITLE_PAGE: 'job_title_page',
+  COMPANY_PAGE: 'company_page',
+  READ_MORE: 'read_more',
 };
 
 export const GA_ACTION = {
@@ -31,4 +34,7 @@ export const GA_ACTION = {
   CLICK_LABOR_RIGHTS: 'click_labor_rights',
   CLICK_SHARE_DATA: 'click_share_data',
   CLICK_PRIVATE_MESSAGE_BUTTON: 'click_private_message_button',
+  SEARCH_COMPANY: 'search_company',
+  SEARCH_JOB_TITLE: 'search_job_title',
+  CLICK_READ_MORE_EXPERIENCE: 'click_read_more_experience',
 };

@@ -1,0 +1,58 @@
+@value below-mobile, main-yellow, yellow-light from "../../common/variables.module.css";
+
+.overallRating {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.ratingInfo {
+  display: flex;
+}
+
+.rating {
+  margin: 0 0.5rem 0 0;
+}
+
+.textYellow {
+  color: main-yellow;
+}
+
+.ratingLabel {
+  margin-left: 1.5rem;
+  display: inline-block;
+  padding: 4px 16px;
+  background-color: yellow-light;
+  border: 1px solid main-yellow;
+  border-radius: 5px;
+  position: relative;
+}
+
+.ratingLabel::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 8px solid transparent;
+  border-right-color: main-yellow;
+}
+
+.ratingLabel::after {
+  content: '';
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 8px solid transparent;
+  border-right-color: yellow-light;
+}
+
+@media (max-width: below-mobile) {
+  .overallRating {
+    flex-direction: row;
+  }
+  .ratingLabel {
+    margin-left: 0.5rem;
+  }
+}
