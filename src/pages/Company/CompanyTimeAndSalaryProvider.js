@@ -11,6 +11,7 @@ import {
 import {
   queryCompanyTimeAndSalary,
   queryCompanyTimeAndSalaryStatistics,
+  queryRatingStatistics,
 } from 'actions/company';
 import {
   salaryWorkTimes as salaryWorkTimesSelector,
@@ -63,6 +64,10 @@ const CompanyTimeAndSalaryProvider = () => {
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
+
+  useEffect(() => {
+    dispatch(queryRatingStatistics(pageName));
+  }, [dispatch, pageName]);
 
   useEffect(() => {
     dispatch(
@@ -133,7 +138,12 @@ CompanyTimeAndSalaryProvider.fetchData = ({
       limit,
     }),
   );
-  return Promise.all([dispatchTimeAndSalary, dispatchTimeAndSalaryStatistics]);
+  const dispatchRatingStatistics = dispatch(queryRatingStatistics(pageName));
+  return Promise.all([
+    dispatchTimeAndSalary,
+    dispatchTimeAndSalaryStatistics,
+    dispatchRatingStatistics,
+  ]);
 };
 
 export default CompanyTimeAndSalaryProvider;

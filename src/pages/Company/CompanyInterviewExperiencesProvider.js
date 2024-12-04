@@ -9,7 +9,10 @@ import {
   pageType as PAGE_TYPE,
   PAGE_SIZE,
 } from 'constants/companyJobTitle';
-import { queryCompanyInterviewExperiences } from 'actions/company';
+import {
+  queryCompanyInterviewExperiences,
+  queryRatingStatistics,
+} from 'actions/company';
 import {
   interviewExperiences as interviewExperiencesSelector,
   interviewExperiencesCount as interviewExperiencesCountSelector,
@@ -48,6 +51,10 @@ const CompanyInterviewExperiencesProvider = () => {
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
+
+  useEffect(() => {
+    dispatch(queryRatingStatistics(pageName));
+  }, [dispatch, pageName]);
 
   useEffect(() => {
     dispatch(
@@ -96,14 +103,17 @@ CompanyInterviewExperiencesProvider.fetchData = ({
   const jobTitle = searchTextFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
-  return dispatch(
-    queryCompanyInterviewExperiences({
-      companyName: pageName,
-      jobTitle,
-      start,
-      limit,
-    }),
-  );
+  return Promise.all([
+    dispatch(
+      queryCompanyInterviewExperiences({
+        companyName: pageName,
+        jobTitle,
+        start,
+        limit,
+      }),
+    ),
+    dispatch(queryRatingStatistics(pageName)),
+  ]);
 };
 
 export default CompanyInterviewExperiencesProvider;

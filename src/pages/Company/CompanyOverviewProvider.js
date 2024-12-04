@@ -6,7 +6,7 @@ import {
   tabType as TAB_TYPE,
   pageType as PAGE_TYPE,
 } from 'constants/companyJobTitle';
-import { queryCompanyOverview } from 'actions/company';
+import { queryCompanyOverview, queryRatingStatistics } from 'actions/company';
 import {
   jobAverageSalaries,
   averageWeekWorkTime,
@@ -46,6 +46,10 @@ const CompanyOverviewProvider = () => {
   const pageName = usePageName();
 
   useEffect(() => {
+    dispatch(queryRatingStatistics(pageName));
+  }, [dispatch, pageName]);
+
+  useEffect(() => {
     dispatch(queryCompanyOverview(pageName));
   }, [dispatch, pageName]);
 
@@ -69,7 +73,10 @@ const CompanyOverviewProvider = () => {
 CompanyOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
   const params = paramsSelector(props);
   const pageName = pageNameSelector(params);
-  return dispatch(queryCompanyOverview(pageName));
+  return Promise.all([
+    dispatch(queryCompanyOverview(pageName)),
+    dispatch(queryRatingStatistics(pageName)),
+  ]);
 };
 
 export default CompanyOverviewProvider;

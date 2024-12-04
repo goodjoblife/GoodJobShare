@@ -9,7 +9,6 @@ import ExperienceDetail from './components/ExperienceDetail';
 import NotFound from './components/common/NotFound';
 import ShareExperience from './components/ShareExperience';
 import ShareExperienceEntry from './components/ShareExperience/Entry';
-import WorkExperiencesForm from './containers/ShareExperience/WorkExperiencesFormContainer';
 import Me from './components/Me';
 import Buy from './components/Buy';
 import About from './components/About';
@@ -98,7 +97,7 @@ const routes = [
       {
         path: '/share/work-experiences',
         exact: true,
-        component: WorkExperiencesForm,
+        component: () => <Redirect to="/share" />,
       },
       {
         component: NotFound,
