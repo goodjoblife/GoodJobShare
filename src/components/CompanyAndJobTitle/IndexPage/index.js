@@ -9,13 +9,12 @@ import {
   pageTypeTranslation,
   generatePageURL,
   generateIndexURL,
+  PAGE_SIZE,
 } from 'constants/companyJobTitle';
 import styles from './CompanyAndJobTitleIndex.module.css';
 import { isFetched } from 'utils/fetchBox';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
-
-const PAGE_SIZE = 10;
 
 const IndexHelmet = ({ pageType, page }) => {
   const title = `所有${pageTypeTranslation[pageType]}資料 - 第${page}頁`;

@@ -4,14 +4,12 @@ import { querySelector } from 'common/routing/selectors';
 import { pageFromQuerySelector } from 'selectors/routing/page';
 import CompanyAndJobTitleIndexPage from 'components/CompanyAndJobTitle/IndexPage';
 import usePagination from 'components/CompanyAndJobTitle/IndexPage/usePagination';
-import { pageType } from 'constants/companyJobTitle';
+import { pageType as PAGE_TYPE, PAGE_SIZE } from 'constants/companyJobTitle';
 import { fetchJobTitles } from 'actions/jobTitle';
 import {
   jobTitleIndexesBoxSelectorAtPage,
   jobTitlesCountSelector,
 } from 'selectors/companyAndJobTitle';
-
-const PAGE_SIZE = 10;
 
 const JobTitleIndexProvider = () => {
   const [page, getPageLink] = usePagination();
@@ -29,8 +27,7 @@ const JobTitleIndexProvider = () => {
   return (
     <CompanyAndJobTitleIndexPage
       totalCount={totalCount}
-      pageType={pageType.JOB_TITLE}
-      status={jobTitleIndexesBox.status}
+      pageType={PAGE_TYPE.JOB_TITLE}
       indexesBox={jobTitleIndexesBox}
       page={page}
       getPageLink={getPageLink}

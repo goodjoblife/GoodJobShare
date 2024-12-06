@@ -3,7 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import TimeAndSalary from 'components/CompanyAndJobTitle/TimeAndSalary';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
-import { tabType, pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import {
+  tabType as TAB_TYPE,
+  pageType as PAGE_TYPE,
+  PAGE_SIZE,
+} from 'constants/companyJobTitle';
 import {
   queryCompanyTimeAndSalary,
   queryCompanyTimeAndSalaryStatistics,
@@ -51,8 +55,6 @@ const useTimeAndSalaryBox = pageName => {
 
   return useSelector(selector);
 };
-
-const PAGE_SIZE = 10;
 
 const CompanyTimeAndSalaryProvider = () => {
   const dispatch = useDispatch();
@@ -104,7 +106,7 @@ const CompanyTimeAndSalaryProvider = () => {
       page={page}
       pageSize={PAGE_SIZE}
       totalCount={salaryWorkTimesCount}
-      tabType={tabType.TIME_AND_SALARY}
+      tabType={TAB_TYPE.TIME_AND_SALARY}
       status={status}
       salaryWorkTimes={salaryWorkTimes}
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}

@@ -5,7 +5,7 @@ import { BoxStatusRenderer } from '../StatusRenderer';
 import OverviewSection from './Overview';
 import Helmet from './Helmet';
 
-const Overview = ({ pageType, pageName, tabType, overviewBox, page }) => (
+const Overview = ({ pageType, pageName, tabType, overviewBox }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
     pageName={pageName}
@@ -40,7 +40,6 @@ const Overview = ({ pageType, pageName, tabType, overviewBox, page }) => (
               jobAverageSalaries={data.jobAverageSalaries}
               averageWeekWorkTime={data.averageWeekWorkTime}
               overtimeFrequencyCount={data.overtimeFrequencyCount}
-              page={page}
             />
           </Fragment>
         );
@@ -66,7 +65,6 @@ Overview.propTypes = {
     error: PropTypes.any,
     status: PropTypes.string.isRequired,
   }).isRequired,
-  page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
