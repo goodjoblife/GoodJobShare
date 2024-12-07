@@ -53,6 +53,7 @@ import { getUserPseudoId } from 'utils/GAUtils';
 import rollbar from 'utils/rollbar';
 
 import { GA_MEASUREMENT_ID } from '../../../config';
+import * as ERROR_CODE from 'constants/errorCodeMsg';
 
 const header = <Header title="請輸入你的一份薪資工時" />;
 
@@ -167,7 +168,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
           : GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
         action: GA_ACTION.UPLOAD_FAIL,
       });
-      const errorCode = 'ER0007';
+      const errorCode = ERROR_CODE.ER0007;
       rollbar.error(
         `[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal} ${error.message}`,
         error,
