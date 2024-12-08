@@ -16,8 +16,10 @@ const Textarea = ({
   defaultValue,
   value,
   onChange,
+  onConfirm,
   footnote,
   warning,
+  setShowsNavigation,
   ...props
 }) => (
   <div className={className}>
@@ -58,8 +60,10 @@ Textarea.propTypes = {
     PropTypes.func,
   ]),
   onChange: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   required: PropTypes.bool,
+  setShowsNavigation: PropTypes.func.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   value: PropTypes.string.isRequired,
   warning: PropTypes.string,
