@@ -7,7 +7,7 @@ import { queryMeApi } from 'apis/me';
 import authStatus from 'constants/authStatus';
 import { pushErrorNotificationAndRollbarAndThrowError } from 'actions/toastNotification';
 import { GraphqlError } from 'utils/errors';
-import * as ERROR_CODE from 'constants/errorCodeMsg';
+import * as ERROR_CODE from 'constants/errorCode';
 
 export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';

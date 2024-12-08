@@ -10,7 +10,7 @@ import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
 import Footer from './TypeFormFooter';
 import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
 import rollbar from 'utils/rollbar';
-import * as ERROR_CODE from 'constants/errorCodeMsg';
+import * as ERROR_CODE from 'constants/errorCode';
 import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 
 const SubmittableTypeForm = ({

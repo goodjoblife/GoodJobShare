@@ -24,7 +24,7 @@ import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
 import { OptionPropType } from './QuestionBuilder/Checkbox/PropTypes';
 import rollbar from 'utils/rollbar';
-import * as ERROR_CODE from 'constants/errorCodeMsg';
+import * as ERROR_CODE from 'constants/errorCode';
 import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import { useDispatch } from 'react-redux';
 import { pushErrorNotificationAndRollbar } from 'actions/toastNotification';

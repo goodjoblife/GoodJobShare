@@ -53,7 +53,7 @@ import { getUserPseudoId } from 'utils/GAUtils';
 import rollbar from 'utils/rollbar';
 
 import { GA_MEASUREMENT_ID } from '../../../config';
-import * as ERROR_CODE from 'constants/errorCodeMsg';
+import * as ERROR_CODE from 'constants/errorCode';
 
 const header = <Header title="請輸入你的一份薪資工時" />;
 

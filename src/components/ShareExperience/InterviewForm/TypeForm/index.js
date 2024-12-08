@@ -9,7 +9,7 @@ import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
 import SubmittableFormBuilder from '../../common/SubmittableFormBuilder';
 import { createInterviewExperience } from 'actions/experiences';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import * as ERROR_CODE from 'constants/errorCodeMsg';
+import * as ERROR_CODE from 'constants/errorCode';
 import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import {
   DATA_KEY_COMPANY_NAME,
