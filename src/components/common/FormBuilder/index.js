@@ -24,8 +24,7 @@ import AnimatedPager from './AnimatedPager';
 import styles from './FormBuilder.module.css';
 import { OptionPropType } from './QuestionBuilder/Checkbox/PropTypes';
 import rollbar from 'utils/rollbar';
-import * as ERROR_CODE from 'constants/errorCode';
-import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+import { ER0019, ER0021, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import { useDispatch } from 'react-redux';
 import { pushErrorNotificationAndRollbar } from 'actions/toastNotification';
 
@@ -124,11 +123,11 @@ const FormBuilder = ({
     if (warning) {
       if (onValidateFail)
         onValidateFail({ dataKey, value: draft[dataKey], warning });
-      else dispatch(pushErrorNotificationAndRollbar(ERROR_CODE.ER0021));
+      else dispatch(pushErrorNotificationAndRollbar(ER0021));
     } else if (isSubmittable) {
       onSubmit(draft);
     } else {
-      const errorCode = ERROR_CODE.ER0019;
+      const errorCode = ER0019;
       rollbar.error(
         `[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal}`,
         null,
