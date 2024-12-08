@@ -9,7 +9,7 @@ import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
 import SubmittableFormBuilder from '../../common/SubmittableFormBuilder';
 import { createInterviewExperience } from 'actions/experiences';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+import { ER0008, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import {
   DATA_KEY_COMPANY_NAME,
   DATA_KEY_JOB_TITLE,
@@ -165,7 +165,7 @@ const TypeForm = ({ open, onClose }) => {
       category: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
       action: GA_ACTION.UPLOAD_FAIL,
     });
-    const errorCode = 'ER0008';
+    const errorCode = ER0008;
     rollbar.error(
       `[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal} ${error.message}`,
       error,

@@ -37,7 +37,7 @@ import { tabType } from '../../../constants/companyJobTitle';
 import { createWorkExperienceWithRating } from 'actions/experiences';
 import { transferKeyToSnakecase } from 'utils/objectUtil';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+import { ER0020, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 
 import { sendEvent } from 'utils/hotjarUtil';
 import rollbar from 'utils/rollbar';
@@ -139,7 +139,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
       category: GA_CATEGORY.SHARE_WORK,
       action: GA_ACTION.UPLOAD_FAIL,
     });
-    const errorCode = 'ER0020';
+    const errorCode = ER0020;
     rollbar.error(
       `[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal} ${error.message}`,
       error,
