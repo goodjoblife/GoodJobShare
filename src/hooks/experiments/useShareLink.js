@@ -13,11 +13,11 @@ const ACTIONS = [
     generateTo: generateShareTimeSalaryTypeForm,
   },
   {
-    prob: 0.45,
+    prob: 0.1,
     generateTo: generateShareInterviewTypeForm,
   },
   {
-    prob: 0.1,
+    prob: 0.45,
     generateTo: generateShareWork,
   },
 ];
