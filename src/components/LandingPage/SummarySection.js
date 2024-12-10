@@ -1,11 +1,16 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { zip } from 'ramda';
+import loadable from '@loadable/component';
 import Carousel, { CarouselPage } from 'common/Carousel';
 import ChartWrapper from './ChartWrapper';
-import SalaryDistributionChart from 'common/Charts/SalaryDistributionChart';
-import JobTitleDistributionChart from 'common/Charts/JobTitleDistrubitionChart';
 import styles from './SummarySection.module.css';
+const SalaryDistributionChart = loadable(() =>
+  import('common/Charts/SalaryDistributionChart'),
+);
+const JobTitleDistributionChart = loadable(() =>
+  import('common/Charts/JobTitleDistributionChart'),
+);
 
 const SummarySection = ({
   popularCompanyAverageSalary,
