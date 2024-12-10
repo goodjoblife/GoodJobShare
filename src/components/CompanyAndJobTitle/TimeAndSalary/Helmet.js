@@ -4,8 +4,9 @@ import ReactHelmet from 'react-helmet';
 import { generatePath } from 'react-router';
 import qs from 'qs';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
-import { IMG_HOST, SITE_NAME } from 'constants/helmetData';
+import { SITE_NAME } from 'constants/helmetData';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import SalaryWorkTimeOgImage from 'images/og/salary-work-time.jpg';
 
 const CompanySalaryWorkTimeHelmet = ({
   companyName,
@@ -49,10 +50,7 @@ const CompanySalaryWorkTimeHelmet = ({
         content={`${companyName}薪水, ${companyName}薪資, ${companyName}加班狀況, ${companyName}工時`}
       />
       <meta property="og:url" content={url} />
-      <meta
-        property="og:image"
-        content={`${IMG_HOST}/og/time-and-salary.jpg`}
-      />
+      <meta property="og:image" content={SalaryWorkTimeOgImage} />
       <link rel="canonical" href={url} />
     </ReactHelmet>
   );
@@ -100,10 +98,7 @@ const JobTitleSalaryWorkTimeHelmet = ({ jobTitle, page, totalCount }) => {
         content={`${jobTitle}薪水, ${jobTitle}薪資, ${jobTitle}加班狀況, ${jobTitle}工時`}
       />
       <meta property="og:url" content={url} />
-      <meta
-        property="og:image"
-        content={`${IMG_HOST}/og/time-and-salary.jpg`}
-      />
+      <meta property="og:image" content={SalaryWorkTimeOgImage} />
       <link rel="canonical" href={url} />
     </ReactHelmet>
   );

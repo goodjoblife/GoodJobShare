@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import Cross from '../images/x.svg';
+import Cross from 'images/x.svg';
 
 import styles from './Modal.module.css';
 

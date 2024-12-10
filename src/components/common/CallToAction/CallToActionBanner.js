@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { Section, Wrapper, Heading } from 'common/base';
+import CtaImage from './cta-01.jpg';
 import styles from './CallToActionBanner.module.css';
 
 const CallToActionBanner = ({
@@ -29,6 +30,7 @@ const CallToActionBanner = ({
     </Wrapper>
   </Section>
 );
+
 CallToActionBanner.propTypes = {
   bgColor: PropTypes.string,
   buttonText: PropTypes.string.isRequired,
@@ -37,11 +39,12 @@ CallToActionBanner.propTypes = {
   imgSrc: PropTypes.string.isRequired,
   marginTop: PropTypes.bool,
 };
+
 CallToActionBanner.defaultProps = {
   heading: '覺得小教室很有用嗎？快分享你的資訊吧！',
   headingSize: 'm',
   buttonText: '立即分享',
-  imgSrc: 'https://image.goodjob.life/cta-01.jpg',
+  imgSrc: CtaImage,
   bgColor: 'white',
 };
 

@@ -86,7 +86,7 @@
     content: '';
     width: 32px;
     height: 32px;
-    background: url('https://image.goodjob.life/checked.svg') 0 0 no-repeat;
+    background: url('./checked.svg') 0 0 no-repeat;
     background-size: 100%;
     position: absolute;
     top: -15px;

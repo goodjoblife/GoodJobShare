@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import Close from 'images/x.svg';
+
 import styles from './Alert.module.css';
-import Close from '../images/x.svg';
 
 class Alert extends Component {
   static propTypes = {

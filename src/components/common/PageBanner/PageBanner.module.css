@@ -7,7 +7,7 @@
 }
 
 .grayPattern {
-  background-image: url('https://image.goodjob.life/pattern-gray.svg');
+  background-image: url('./pattern-gray.svg');
   background-repeat: repeat;
 }
 

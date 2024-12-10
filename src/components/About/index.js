@@ -9,6 +9,11 @@ import editorStyles from 'common/Editor.module.css';
 import StaticHelmet from 'common/StaticHelmet';
 import styles from './About.module.css';
 import Timeline from './Timeline';
+import AboutCity from './about-city.png';
+import AboutPeople from './about-people.png';
+import About01 from './about-01.png';
+import About02 from './about-02.png';
+import About03 from './about-03.png';
 
 const data2016 = [
   {
@@ -99,19 +104,13 @@ const About = () => (
             <P Tag="h3" size="l" bold className={styles.heading}>
               好的工作、好的公司無法真正被看見
             </P>
-            <img
-              src="https://image.goodjob.life/about-01.png"
-              alt="好的工作、好的公司無法真正被看見"
-            />
+            <img src={About01} alt="好的工作、好的公司無法真正被看見" />
           </div>
           <div className={styles.item}>
             <P Tag="h3" size="l" bold className={styles.heading}>
               求職者更難找到適合自己的工作
             </P>
-            <img
-              src="https://image.goodjob.life/about-02.png"
-              alt="求職者更難找到適合自己的工作"
-            />
+            <img src={About02} alt="求職者更難找到適合自己的工作" />
           </div>
         </div>
       </Wrapper>
@@ -126,7 +125,7 @@ const About = () => (
           <strong>台灣的產業整體而言向上提升，進入正向循環。</strong>
         </P>
         <img
-          src="https://image.goodjob.life/about-03.png"
+          src={About03}
           alt="台灣整體而言向上提升，進入正向循環"
           className={styles.missionImg}
         />
@@ -145,16 +144,12 @@ const About = () => (
             <Timeline year="2017" data={data2017} />
           </div>
         </div>
-        <img
-          src="https://image.goodjob.life/about-city.png"
-          alt="大事紀"
-          className={styles.timelineImage}
-        />
+        <img src={AboutCity} alt="大事紀" className={styles.timelineImage} />
       </Wrapper>
     </Section>
     <CallToActionBanner
       bgColor="#fcd406"
-      imgSrc="https://image.goodjob.life/about-people.png"
+      imgSrc={AboutPeople}
       heading="促進職場資訊透明化，需要每一個「你」的參與！"
       headingSize="m"
       buttonText="現在就留下資料"
