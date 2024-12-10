@@ -39,7 +39,7 @@ import {
   DATA_KEY_HAS_OVERTIME_SALARY,
   DATA_KEY_HAS_COMPENSATORY_DAYOFF,
 } from '../constants';
-import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+import { ER0007, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 
 import { evolve } from '../utils';
 import { generateTabURL, pageType, tabType } from 'constants/companyJobTitle';
@@ -167,7 +167,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
           : GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
         action: GA_ACTION.UPLOAD_FAIL,
       });
-      const errorCode = 'ER0007';
+      const errorCode = ER0007;
       rollbar.error(
         `[${errorCode}] ${ERROR_CODE_MSG[errorCode].internal} ${error.message}`,
         error,
