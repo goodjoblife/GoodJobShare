@@ -7,6 +7,7 @@ import styles from './ReactionZone.module.css';
 import useQueryLike from '../hooks/useQueryLike';
 import useToggleLike from '../hooks/useToggleLike';
 import useLoginFlow from '../hooks/useLoginFlow';
+import ReportDialog from 'components/CompanyAndJobTitle/TimeAndSalary/ReportDialog';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
   <button
@@ -53,6 +54,8 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
     }
   }, [likeState.loading, likeState.value]);
 
+  const reportCount = 10; // TODO: 待拿 report count
+
   return (
     <div className={styles.reactionZone}>
       <ReactionButton
@@ -69,6 +72,13 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
         onClick={onClickMsgButton}
       >
         留言
+      </ReactionButton>
+      <ReactionButton className={styles.report} Icon={() => null}>
+        <ReportDialog
+          reportCount={reportCount}
+          isHighlighted={Boolean(reportCount)}
+        />
+        <div className={styles.reportText}>回報</div>
       </ReactionButton>
     </div>
   );

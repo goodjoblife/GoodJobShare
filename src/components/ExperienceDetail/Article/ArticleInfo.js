@@ -12,6 +12,7 @@ import {
 } from 'constants/companyJobTitle';
 import { originalCompanyNameSelector } from '../experienceSelector';
 import RatingInfo from './RatingInfo';
+import ReportDialog from 'components/CompanyAndJobTitle/TimeAndSalary/ReportDialog';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
@@ -123,10 +124,19 @@ InterviewInfoBlocks.propTypes = {
   hideContent: PropTypes.bool,
 };
 
+const reportCount = 90; // for temp
+
 const WorkInfoBlocks = ({ experience, hideContent }) => {
+  // TODO: 有 report count 後，要看 console.log({ experience });
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
+      <div className={styles.reportDialogContainer}>
+        <ReportDialog reportCount={reportCount} />
+        {Boolean(reportCount) && (
+          <div className={styles.reportText}>有使用者回報</div>
+        )}
+      </div>
       <InfoBlock
         label="公司"
         to={generatePageURL({
