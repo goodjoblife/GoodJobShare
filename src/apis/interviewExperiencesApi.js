@@ -1,5 +1,5 @@
 import graphqlClient from 'utils/graphqlClient';
-import { createInterviewExperience as createInterviewExperienceGql } from 'graphql/experience';
+import { createInterviewExperienceWithOptionalRating as createInterviewExperienceGql } from 'graphql/experience';
 
 export const postInterviewExperience = ({ body, token }) =>
   graphqlClient({

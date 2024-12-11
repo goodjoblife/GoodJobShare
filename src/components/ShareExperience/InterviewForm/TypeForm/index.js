@@ -16,15 +16,13 @@ import {
   DATA_KEY_DATE,
   DATA_KEY_REGION,
   DATA_KEY_RESULT,
-  DATA_KEY_COURSE,
-  DATA_KEY_SUGGESTIONS,
   DATA_KEY_JOB_TENURE,
   DATA_KEY_SALARY,
-  DATA_KEY_QUESTIONS,
   DATA_KEY_SENSITIVE_QUESTIONS,
   RESULT_OPTIONS,
   JOB_TENURE_OPTIONS,
   SENSITIVE_QUESTIONS_OPTIONS,
+  DATA_KEY_SECTIONS,
 } from '../../constants';
 import { parseSalaryAmount, evolve } from '../../utils';
 import {
@@ -33,11 +31,9 @@ import {
   createInterviewDateQuestion,
   createInterviewRegionQuestion,
   createInterviewResultQuestion,
-  createInterviewCourseQuestion,
-  createInterviewSuggestionsQuestion,
   createJobTenureQuestion,
   createSalaryQuestion,
-  createQuestionsQuestion,
+  createInterviewSectionsQuestion,
   createSensitiveQuestionsQuestion,
   createSubmitQuestion,
 } from '../../questionCreators';
@@ -63,11 +59,9 @@ const questions = [
   createInterviewDateQuestion(),
   createInterviewRegionQuestion(),
   createInterviewResultQuestion(),
-  createInterviewCourseQuestion(),
-  createInterviewSuggestionsQuestion(),
-  createJobTenureQuestion(),
   createSalaryQuestion({ type: tabType.INTERVIEW_EXPERIENCE }),
-  createQuestionsQuestion(),
+  createJobTenureQuestion(),
+  createInterviewSectionsQuestion(),
   createSensitiveQuestionsQuestion(),
   createSubmitQuestion({ type: tabType.INTERVIEW_EXPERIENCE }),
 ];
@@ -78,16 +72,12 @@ const bodyFromDraft = evolve({
   job_title: draft => draft[DATA_KEY_JOB_TITLE],
   title: draft =>
     `${draft[DATA_KEY_COMPANY_NAME]} ${draft[DATA_KEY_JOB_TITLE]} 面試經驗分享`,
-  sections: draft => [
-    {
-      subtitle: '面試過程',
-      content: draft[DATA_KEY_COURSE],
-    },
-    {
-      subtitle: '給其他面試者的中肯建議',
-      content: draft[DATA_KEY_SUGGESTIONS],
-    },
-  ],
+  sections: draft =>
+    draft[DATA_KEY_SECTIONS].map(([subtitle, rating, content]) => ({
+      subtitle,
+      content,
+      rating: rating === 0 ? null : rating,
+    })),
   experience_in_year: draft => {
     const value = draft[DATA_KEY_JOB_TENURE];
     return value === head(JOB_TENURE_OPTIONS) ? 0 : parseInt(value, 10);
@@ -105,11 +95,7 @@ const bodyFromDraft = evolve({
     const [selected, elseText] = draft[DATA_KEY_RESULT];
     return selected === last(RESULT_OPTIONS) ? elseText : selected;
   },
-  interview_qas: draft =>
-    draft[DATA_KEY_QUESTIONS].map(question => ({
-      question,
-      answer: '',
-    })),
+  interview_qas: [],
   interview_sensitive_questions: draft => {
     const [selected, elseText] = draft[DATA_KEY_SENSITIVE_QUESTIONS];
     const lastOption = last(SENSITIVE_QUESTIONS_OPTIONS);
@@ -127,7 +113,7 @@ const bodyFromDraft = evolve({
       amount: parseSalaryAmount(amount),
     };
   },
-  overall_rating: draft => 5,
+  overall_rating: 5,
 });
 
 const TypeForm = ({ open, onClose }) => {
