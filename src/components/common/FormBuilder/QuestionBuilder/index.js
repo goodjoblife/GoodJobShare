@@ -300,7 +300,7 @@ QuestionBuilder.propTypes = {
   options: arrayOf(OptionPropType),
   page: number.isRequired,
   placeholder: oneOfType([string, func]),
-  ratingLabels: arrayOf(string.isRequired),
+  ratingLabels: oneOfType([arrayOf(string.isRequired), func]),
   required: bool,
   search: func,
   setShowsNavigation: func.isRequired,

@@ -277,7 +277,7 @@ export const QuestionPropType = shape({
   footnote: oneOfType([string, node, func]),
   options: arrayOf(OptionPropType),
   elseOptions: arrayOf(OptionPropType),
-  ratingLabels: arrayOf(string.isRequired),
+  ratingLabels: oneOfType([arrayOf(string.isRequired), func]),
 });
 
 FormBuilder.propTypes = {

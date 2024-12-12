@@ -72,6 +72,11 @@ const ActiveItem = ({
       ? placeholder([subject, rating, text])
       : placeholder;
 
+  ratingLabels =
+    typeof ratingLabels === 'function'
+      ? ratingLabels([subject, rating, text])
+      : ratingLabels;
+
   return (
     <div
       className={cn(styles.root, commonStyles.warnableContainer, {
@@ -145,7 +150,10 @@ ActiveItem.propTypes = {
   option: OptionPropType.isRequired,
   page: PropTypes.number.isRequired,
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  ratingLabels: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.func,
+  ]).isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   validateOrWarnItem: PropTypes.func.isRequired,
 };
