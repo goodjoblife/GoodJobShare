@@ -111,6 +111,6 @@ export const formatWage = wage => {
 export const formatDate = ({ year, month }) =>
   `${year}.${month >= 10 ? '' : 0}${month}`;
 
-export const getReportCount = (salaryWorkTimeReports = 0) => {
+export const getReportCount = (salaryWorkTimeReports = []) => {
   return salaryWorkTimeReports.length;
 };
