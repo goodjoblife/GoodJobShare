@@ -73,7 +73,7 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
       >
         留言
       </ReactionButton>
-      <ReactionButton className={styles.report} Icon={() => null}>
+      <ReactionButton className={styles.report}>
         <ReportDialog
           reportCount={reportCount}
           isHighlighted={Boolean(reportCount)}
