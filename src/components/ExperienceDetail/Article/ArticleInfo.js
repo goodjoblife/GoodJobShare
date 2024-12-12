@@ -133,9 +133,7 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
     <Fragment>
       <div className={styles.reportDialogContainer}>
         <ReportDialog reportCount={reportCount} />
-        {Boolean(reportCount) && (
-          <div className={styles.reportText}>有使用者回報</div>
-        )}
+        {reportCount && <div className={styles.reportText}>有使用者回報</div>}
       </div>
       <InfoBlock
         label="公司"
