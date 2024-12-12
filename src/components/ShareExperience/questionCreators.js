@@ -20,7 +20,6 @@ import {
   DATA_KEY_DATE,
   DATA_KEY_REGION,
   DATA_KEY_RESULT,
-  DATA_KEY_RATING,
   DATA_KEY_COURSE,
   DATA_KEY_SUGGESTIONS,
   DATA_KEY_JOB_TENURE,
@@ -230,16 +229,6 @@ export const createInterviewResultQuestion = () => ({
   options: RESULT_OPTIONS,
   elseOptionValue: last(RESULT_OPTIONS),
   placeholder: '輸入面試結果',
-});
-
-export const createInterviewRatingQuestion = () => ({
-  title: '為這次的面試經驗評個分吧！',
-  type: QUESTION_TYPE.RATING,
-  dataKey: DATA_KEY_RATING,
-  defaultValue: 0,
-  required: true,
-  validateOrWarn: value => equals(0, value) && '需選取面試滿意程度',
-  ratingLabels: RATING_LABELS,
 });
 
 export const createInterviewCourseQuestion = () => ({

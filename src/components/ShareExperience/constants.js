@@ -9,7 +9,6 @@ export const DATA_KEY_GENDER = 'gender';
 export const DATA_KEY_DATE = 'interviewTime';
 export const DATA_KEY_REGION = 'region';
 export const DATA_KEY_RESULT = 'interviewResult';
-export const DATA_KEY_RATING = 'overallRating';
 export const DATA_KEY_COURSE = 'interviewContent';
 export const DATA_KEY_SUGGESTIONS = 'suggestions';
 export const DATA_KEY_JOB_TENURE = 'experienceInYear';
