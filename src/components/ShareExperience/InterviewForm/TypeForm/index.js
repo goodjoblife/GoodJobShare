@@ -16,7 +16,6 @@ import {
   DATA_KEY_DATE,
   DATA_KEY_REGION,
   DATA_KEY_RESULT,
-  DATA_KEY_RATING,
   DATA_KEY_COURSE,
   DATA_KEY_SUGGESTIONS,
   DATA_KEY_JOB_TENURE,
@@ -34,7 +33,6 @@ import {
   createInterviewDateQuestion,
   createInterviewRegionQuestion,
   createInterviewResultQuestion,
-  createInterviewRatingQuestion,
   createInterviewCourseQuestion,
   createInterviewSuggestionsQuestion,
   createJobTenureQuestion,
@@ -65,7 +63,6 @@ const questions = [
   createInterviewDateQuestion(),
   createInterviewRegionQuestion(),
   createInterviewResultQuestion(),
-  createInterviewRatingQuestion(),
   createInterviewCourseQuestion(),
   createInterviewSuggestionsQuestion(),
   createJobTenureQuestion(),
@@ -130,7 +127,7 @@ const bodyFromDraft = evolve({
       amount: parseSalaryAmount(amount),
     };
   },
-  overall_rating: draft => draft[DATA_KEY_RATING],
+  overall_rating: draft => 5,
 });
 
 const TypeForm = ({ open, onClose }) => {
