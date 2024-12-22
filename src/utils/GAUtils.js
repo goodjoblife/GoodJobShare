@@ -15,7 +15,7 @@ export const getUserPseudoId = ga_measurement_id => {
         /* 
           In Brave browser, window.gtag execution will be terminated without 
           throwing error, so this promise will not never being resolved or rejected.
-          To avoid this, we use setTimeout to reject the promise after 1s
+          To avoid this, we use setTimeout to resolve the promise after 500ms
         */
         setTimeout(() => {
           console.error('Unable to resolve GA User Pseudo Id');
