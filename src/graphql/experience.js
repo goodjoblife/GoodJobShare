@@ -85,8 +85,10 @@ export const queryExperienceLikeGql = /* GraphQL */ `
   }
 `;
 
-export const createInterviewExperience = /* GraphQL */ `
-  mutation CreateInterviewExperience($input: CreateInterviewExperienceInput!) {
+export const createInterviewExperienceWithOptionalRating = /* GraphQL */ `
+  mutation CreateInterviewExperience(
+    $input: CreateInterviewExperienceWithOptionalRatingInput!
+  ) {
     createInterviewExperience(input: $input) {
       success
       experience {

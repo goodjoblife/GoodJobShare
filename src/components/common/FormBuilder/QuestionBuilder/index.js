@@ -77,6 +77,7 @@ const useQuestionNode = ({
   options,
   elseOptionValue,
   elseOptions,
+  hasRating,
   ratingLabels,
 }) => {
   const commonProps = {
@@ -145,6 +146,7 @@ const useQuestionNode = ({
           options={options}
           elseOptionValue={elseOptionValue}
           placeholder={placeholder}
+          hasRating={hasRating}
           ratingLabels={ratingLabels}
           footnote={footnote}
           validateOrWarnItem={validateOrWarnItem}
@@ -228,6 +230,7 @@ const QuestionBuilder = ({
   options,
   elseOptionValue,
   elseOptions,
+  hasRating,
   ratingLabels,
 }) => {
   const shouldFillPage = useFillMode({ type });
@@ -254,6 +257,7 @@ const QuestionBuilder = ({
     options,
     elseOptionValue,
     elseOptions,
+    hasRating,
     ratingLabels,
   });
 
@@ -293,6 +297,7 @@ QuestionBuilder.propTypes = {
   elseOptionValue: string,
   elseOptions: arrayOf(OptionPropType),
   footnote: oneOfType([string, node, func]),
+  hasRating: oneOfType([bool, func]),
   hint: oneOfType([string, func]),
   onChange: func.isRequired,
   onConfirm: func.isRequired,
@@ -300,7 +305,7 @@ QuestionBuilder.propTypes = {
   options: arrayOf(OptionPropType),
   page: number.isRequired,
   placeholder: oneOfType([string, func]),
-  ratingLabels: arrayOf(string.isRequired),
+  ratingLabels: oneOfType([arrayOf(string.isRequired), func]),
   required: bool,
   search: func,
   setShowsNavigation: func.isRequired,

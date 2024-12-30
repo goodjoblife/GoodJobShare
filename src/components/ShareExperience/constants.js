@@ -9,8 +9,6 @@ export const DATA_KEY_GENDER = 'gender';
 export const DATA_KEY_DATE = 'interviewTime';
 export const DATA_KEY_REGION = 'region';
 export const DATA_KEY_RESULT = 'interviewResult';
-export const DATA_KEY_COURSE = 'interviewContent';
-export const DATA_KEY_SUGGESTIONS = 'suggestions';
 export const DATA_KEY_JOB_TENURE = 'experienceInYear';
 export const DATA_KEY_SALARY = 'salary';
 export const DATA_KEY_EXPERIENCE_IN_YEAR = 'experienceInYear';
@@ -20,7 +18,6 @@ export const DATA_KEY_WEEK_WORK_TIME = 'weekWorkTime';
 export const DATA_KEY_OVERTIME_FREQUENCY = 'overtimeFrequency';
 export const DATA_KEY_HAS_OVERTIME_SALARY = 'hasOvertimeSalary';
 export const DATA_KEY_HAS_COMPENSATORY_DAYOFF = 'hasCompensatoryDayoff';
-export const DATA_KEY_QUESTIONS = 'interviewQas';
 export const DATA_KEY_SENSITIVE_QUESTIONS = 'sensitiveQuestions';
 export const DATA_KEY_SECTIONS = 'sections';
 
@@ -51,11 +48,17 @@ export const REGION_OPTIONS = [
 
 export const RESULT_OPTIONS = ['錄取', '未錄取', '沒通知', '其他'];
 
+export const UNRATABLE_SUBJECTS = ['面試問題', '如何準備面試', '工作內容'];
+
 export const RATING_LABELS = ['差', '普通', '不錯啦～', '很好！', '大推！'];
 
-export const COURSE_MIN_LENGTH = 50;
-
-export const SUGGESTIONS_MIN_LENGTH = 50;
+export const RATING_COURSE_LABELS = [
+  '非常混亂',
+  '有些混亂',
+  '普通',
+  '大致順暢',
+  '非常順暢',
+];
 
 export const SECTION_MIN_LENGTH = 30;
 
