@@ -70,6 +70,10 @@
     }
 
     .rating {
+      .label {
+        margin-right: 1em;
+      }
+
       svg {
         cursor: auto;
         width: 24px;

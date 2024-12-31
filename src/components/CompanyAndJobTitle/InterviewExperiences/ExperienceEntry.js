@@ -61,6 +61,9 @@ const ExperienceEntry = ({
               </div>
             )}
             <div className={styles.rating}>
+              <div className={styles.label}>
+                評分：{overallRating.toFixed(1)} 分
+              </div>
               <Rating rate={overallRating} />
             </div>
           </div>
