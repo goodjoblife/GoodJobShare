@@ -49,6 +49,7 @@ export const queryExperienceGql = /* GraphQL */ `
           interview_subtitle: subtitle
           content
         }
+        averageSectionRating
         interview_time {
           year
           month

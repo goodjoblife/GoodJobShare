@@ -78,8 +78,8 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
           )}
         </InfoBlock>
       ) : null}
-      <InfoBlock label="整體面試滿意度">
-        <RateButtons rate={experience.overall_rating} />
+      <InfoBlock label="評分">
+        <RateButtons rate={experience.averageSectionRating} />
       </InfoBlock>
       {experience.interview_sensitive_questions &&
       experience.interview_sensitive_questions.length ? (
@@ -97,6 +97,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
 
 InterviewInfoBlocks.propTypes = {
   experience: PropTypes.shape({
+    averageSectionRating: PropTypes.number,
     company: PropTypes.shape({
       name: PropTypes.string,
     }),
@@ -113,7 +114,6 @@ InterviewInfoBlocks.propTypes = {
       name: PropTypes.string,
     }),
     originalCompanyName: PropTypes.string.isRequired,
-    overall_rating: PropTypes.number,
     region: PropTypes.string,
     salary: PropTypes.shape({
       amount: PropTypes.number,
@@ -293,33 +293,7 @@ const Aside = ({ experience, hideContent }) => {
 
 Aside.propTypes = {
   experience: PropTypes.shape({
-    company: PropTypes.shape({
-      name: PropTypes.string,
-    }),
-    created_at: PropTypes.string,
-    education: PropTypes.string,
-    experience_in_year: PropTypes.number,
-    interview_result: PropTypes.string,
-    interview_sensitive_questions: PropTypes.arrayOf(PropTypes.string),
-    interview_time: PropTypes.shape({
-      month: PropTypes.number,
-      year: PropTypes.number,
-    }),
-    job_title: PropTypes.shape({
-      name: PropTypes.string,
-    }),
-    originalCompanyName: PropTypes.string.isRequired,
-    overall_rating: PropTypes.number,
-    period: PropTypes.number,
-    recommend_to_others: PropTypes.string,
-    region: PropTypes.string,
-    salary: PropTypes.shape({
-      amount: PropTypes.number,
-      type: PropTypes.string,
-    }),
-    starting_year: PropTypes.number,
     type: PropTypes.string.isRequired,
-    week_work_time: PropTypes.number,
   }).isRequired,
   hideContent: PropTypes.bool,
 };
