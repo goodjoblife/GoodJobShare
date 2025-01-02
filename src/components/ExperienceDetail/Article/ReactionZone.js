@@ -18,12 +18,13 @@ const ReactionButton = ({ className, Icon, active, children, ...props }) => (
     )}
     {...props}
   >
-    <Icon className={cn(styles.icon)} /> {children}
+    {Icon && <Icon className={cn(styles.icon)} />}
+    {children}
   </button>
 );
 
 ReactionButton.propTypes = {
-  Icon: PropTypes.func.isRequired,
+  Icon: PropTypes.func,
   active: PropTypes.bool,
   children: PropTypes.node,
   className: PropTypes.string,
