@@ -51,7 +51,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
         {experience.job_title.name}
       </InfoBlock>
       {expInYearText !== null ? (
-        <InfoBlock label="相關職務評價">{expInYearText}</InfoBlock>
+        <InfoBlock label="相關職務經驗">{expInYearText}</InfoBlock>
       ) : null}
       {experience.education ? (
         <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
@@ -160,7 +160,7 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
         </InfoBlock>
       ) : null}
       {expInYearText ? (
-        <InfoBlock label="自身相關職務評價">{expInYearText}</InfoBlock>
+        <InfoBlock label="相關職務經驗">{expInYearText}</InfoBlock>
       ) : null}
       {experience.education ? (
         <InfoBlock label="最高學歷">{experience.education}</InfoBlock>

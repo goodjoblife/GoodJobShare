@@ -85,23 +85,6 @@ export default {
       <link rel="canonical" href={formatCanonicalPath('/share')} />
     </Helmet>
   ),
-  ShareWork: () => (
-    <Helmet>
-      <title itemProp="name" lang="zh-TW">
-        評價分享
-      </title>
-      <meta property="og:title" content={formatTitle('評價分享', SITE_NAME)} />
-      <meta
-        property="og:url"
-        content={formatCanonicalPath('/share/work-experiences')}
-      />
-      <meta property="og:image" content={`${IMG_HOST}/og/share-work.jpg`} />
-      <link
-        rel="canonical"
-        href={formatCanonicalPath('/share/work-experiences')}
-      />
-    </Helmet>
-  ),
   LaborRightsMenu: () => (
     <Helmet>
       <title itemProp="name" lang="zh-TW">

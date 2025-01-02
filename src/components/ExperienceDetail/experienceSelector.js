@@ -77,7 +77,7 @@ const interviewMetaDescriptionSelector = experience => {
       content += `面試地區：${region}。`;
     }
     if (experience.experience_in_year) {
-      content += `相關職務評價：${experience_in_year} 年。`;
+      content += `相關職務經驗：${experience_in_year} 年。`;
     }
     if (interviewYear && interviewMonth) {
       content += `面試時間：${interviewYear} 年 ${interviewMonth} 月。`;
@@ -113,7 +113,7 @@ const workMetaDescriptionSelector = experience => {
       content += `工作地區：${region}。`;
     }
     if (experience.experience_in_year) {
-      content += `相關職務評價：${experience_in_year} 年。`;
+      content += `相關職務經驗：${experience_in_year} 年。`;
     }
     if (experience.education) {
       content += `最高學歷：${experience.education}。`;

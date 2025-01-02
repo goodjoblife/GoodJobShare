@@ -96,17 +96,6 @@ export const createInterviewExperience = /* GraphQL */ `
   }
 `;
 
-export const createWorkExperience = /* GraphQL */ `
-  mutation CreateWorkExperience($input: CreateWorkExperienceInput!) {
-    createWorkExperience(input: $input) {
-      success
-      experience {
-        id
-      }
-    }
-  }
-`;
-
 export const createWorkExperienceWithRating = `
 mutation CreateWorkExperienceWithRating($input: CreateWorkExperienceWithRatingInput!) {
   createWorkExperienceWithRating(input: $input) {
