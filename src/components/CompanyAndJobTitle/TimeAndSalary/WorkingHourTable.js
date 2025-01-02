@@ -17,9 +17,11 @@ import {
   getWeekWorkTime,
   formatWage,
   formatDate,
+  getReportCount,
 } from '../../TimeAndSalary/common/formatter';
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
 import usePermission from 'hooks/usePermission';
+import ReportDialog from './ReportDialog';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
@@ -125,6 +127,17 @@ const columnProps = [
       R.prop('data_time'),
     ),
     Children: TimeHeader,
+  },
+  {
+    className: styles.colDataTime,
+    title: '回報',
+    dataField: R.compose(
+      reportCount => <ReportDialog reportCount={reportCount} />,
+      getReportCount,
+      // TODO: 暫時給 10 筆資料，屆時要換成 R.prop('salary_work_times'), or report_count
+      () => Array(10).fill(0),
+    ),
+    Children: () => '回報',
   },
 ];
 
