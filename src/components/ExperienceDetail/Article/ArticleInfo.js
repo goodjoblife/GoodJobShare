@@ -12,6 +12,7 @@ import {
 } from 'constants/companyJobTitle';
 import { originalCompanyNameSelector } from '../experienceSelector';
 import RatingInfo from './RatingInfo';
+import OverallRating from 'common/OverallRating';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
@@ -78,9 +79,20 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
           )}
         </InfoBlock>
       ) : null}
-      <InfoBlock label="評分">
-        <RateButtons rate={experience.averageSectionRating} />
-      </InfoBlock>
+      {typeof experience.averageSectionRating !== 'undefined' ? (
+        <InfoBlock label="評分">
+          <OverallRating
+            rating={experience.averageSectionRating}
+            hasRatingLabel
+            hasRatingNumber
+          />
+        </InfoBlock>
+      ) : (
+        /* backward compatibility - sunset if available */
+        <InfoBlock label="整體面試滿意度">
+          <RateButtons rate={experience.overall_rating} />
+        </InfoBlock>
+      )}
       {experience.interview_sensitive_questions &&
       experience.interview_sensitive_questions.length ? (
         <InfoBlock label="有以下特殊問題">
@@ -114,6 +126,7 @@ InterviewInfoBlocks.propTypes = {
       name: PropTypes.string,
     }),
     originalCompanyName: PropTypes.string.isRequired,
+    overall_rating: PropTypes.number,
     region: PropTypes.string,
     salary: PropTypes.shape({
       amount: PropTypes.number,
