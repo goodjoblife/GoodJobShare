@@ -65,6 +65,7 @@ const ExperienceEntry = ({
             {typeof averageSectionRating !== 'undefined' ? (
               <OverallRating rating={averageSectionRating} hasRatingNumber />
             ) : (
+              /* backward compatibility - sunset if available */
               <div className={styles.rating}>
                 <Rating rate={overallRating} />
               </div>
