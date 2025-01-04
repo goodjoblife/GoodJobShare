@@ -31,6 +31,12 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
+      <div className={styles.reportDialogContainer}>
+        <ReportDialog reportCount={experience.report_count} />
+        {experience.report_count && (
+          <div className={styles.reportText}>有使用者回報</div>
+        )}
+      </div>
       <InfoBlock
         label="公司"
         to={generatePageURL({
@@ -116,6 +122,7 @@ InterviewInfoBlocks.propTypes = {
     originalCompanyName: PropTypes.string.isRequired,
     overall_rating: PropTypes.number,
     region: PropTypes.string,
+    report_count: PropTypes.number,
     salary: PropTypes.shape({
       amount: PropTypes.number,
       type: PropTypes.string,
@@ -124,16 +131,15 @@ InterviewInfoBlocks.propTypes = {
   hideContent: PropTypes.bool,
 };
 
-const reportCount = 90; // for temp
-
 const WorkInfoBlocks = ({ experience, hideContent }) => {
-  // TODO: 有 report count 後，要看 console.log({ experience });
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
       <div className={styles.reportDialogContainer}>
-        <ReportDialog reportCount={reportCount} />
-        {reportCount && <div className={styles.reportText}>有使用者回報</div>}
+        <ReportDialog reportCount={experience.report_count} />
+        {experience.report_count && (
+          <div className={styles.reportText}>有使用者回報</div>
+        )}
       </div>
       <InfoBlock
         label="公司"
@@ -203,6 +209,7 @@ WorkInfoBlocks.propTypes = {
     originalCompanyName: PropTypes.string.isRequired,
     recommend_to_others: PropTypes.string,
     region: PropTypes.string,
+    report_count: PropTypes.number,
     salary: PropTypes.shape({
       amount: PropTypes.number,
       type: PropTypes.string,
