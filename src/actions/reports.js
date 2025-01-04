@@ -1,6 +1,6 @@
 import { tokenSelector } from 'selectors/authSelector';
 import { postExperiencesReports as postExperiencesReportsApi } from 'apis/reportsExperiencesApi';
-import { createExperienceReportApi } from 'apis/reportApi';
+import { createExperienceReportApi } from 'apis/reports';
 
 export const createReport = ({ experienceId, body }) => (
   dispatch,
