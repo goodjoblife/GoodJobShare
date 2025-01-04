@@ -134,8 +134,7 @@ const columnProps = [
     dataField: R.compose(
       reportCount => <ReportDialog reportCount={reportCount} />,
       getReportCount,
-      // TODO: 暫時給 10 筆資料，屆時要換成 R.prop('salary_work_times'), or report_count
-      () => Array(10).fill(0),
+      R.prop('reports'),
     ),
     Children: () => '回報',
   },
