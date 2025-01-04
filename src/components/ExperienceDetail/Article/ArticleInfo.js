@@ -33,7 +33,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
     <Fragment>
       <div className={styles.reportDialogContainer}>
         <ReportDialog reportCount={experience.report_count} />
-        {experience.report_count && (
+        {Boolean(experience.report_count) && (
           <div className={styles.reportText}>有使用者回報</div>
         )}
       </div>
@@ -137,7 +137,7 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
     <Fragment>
       <div className={styles.reportDialogContainer}>
         <ReportDialog reportCount={experience.report_count} />
-        {experience.report_count && (
+        {Boolean(experience.report_count) && (
           <div className={styles.reportText}>有使用者回報</div>
         )}
       </div>
