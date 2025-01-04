@@ -9,13 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 import { Element as ScrollElement, scroller } from 'react-scroll';
-import cn from 'classnames';
 import { useParams, useLocation } from 'react-router-dom';
 import Loader from 'common/Loader';
 import { Wrapper, Section } from 'common/base';
-import Modal from 'common/Modal';
 import NotFound from 'common/NotFound';
-import PopoverToggle from 'common/PopoverToggle';
 import BreadCrumb from 'common/BreadCrumb';
 import { isUiNotFoundError } from 'utils/errors';
 import { paramsSelector } from 'common/routing/selectors';
@@ -24,12 +21,8 @@ import useTrace from './hooks/useTrace';
 import Article from './Article';
 import MessageBoard from './MessageBoard';
 import Seo from './Seo';
-import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
-import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
 import ExperienceHeading from './Heading';
 import ReportInspectModal from './ReactionZone/ReportInspectModal';
-import ReactionZoneOtherOptions from './ReactionZone/ReactionZoneOtherOptions';
-import ReactionZoneStyles from './ReactionZone/ReactionZone.module.css';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
 import { isError, isFetched } from 'utils/fetchBox';
@@ -38,7 +31,6 @@ import {
   queryExperienceIfUnfetched,
   queryRelatedExperiencesOnExperience,
 } from 'actions/experience';
-import ReportForm from './ReportForm';
 import { COMMENT_ZONE } from 'constants/formElements';
 import {
   pageType as PAGE_TYPE,
@@ -47,13 +39,8 @@ import {
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
-import Button from 'common/button/Button';
-
-const MODAL_TYPE = {
-  REPORT_DETAIL: 'REPORT_TYPE',
-  REPORT_API_ERROR: 'REPORT_API_ERROR',
-  REPORT_SUCCESS: 'REPORT_SUCCESS',
-};
+import ReportModal from './reportModal';
+import { useReportModal } from './useReportModal';
 
 // from params
 const experienceIdSelector = R.prop('id');
@@ -97,28 +84,8 @@ const ExperienceDetail = ({ ...props }) => {
     fetchPermission();
   }, [experienceId, fetchPermission]);
 
-  const [{ isModalOpen, modalType, modalPayload = {} }, setModal] = useState({
-    isModalOpen: false,
-    modalType: '',
-  });
-
-  const handleIsModalOpen = useCallback(
-    (isModalOpen, modalType, modalPayload = {}) => {
-      setModal({
-        isModalOpen,
-        modalType,
-        modalPayload,
-      });
-    },
-    [],
-  );
-
   const [reportInspectModalIsOpen, setReportInspectModalIsOpen] = useState(
     false,
-  );
-
-  const [closableOnClickOutside, setModalClosableOnClickOutside] = useState(
-    true,
   );
 
   useTrace(experienceId);
@@ -130,84 +97,12 @@ const ExperienceDetail = ({ ...props }) => {
     scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
   }, []);
 
-  const renderModalChildren = useCallback(
-    modalType => {
-      switch (modalType) {
-        case MODAL_TYPE.REPORT_DETAIL:
-          return (
-            <ReportForm
-              close={() => handleIsModalOpen(false)}
-              id={experienceId}
-              onApiError={pload => {
-                setModalClosableOnClickOutside(false);
-                handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, pload);
-              }}
-              onSuccess={() => {
-                setModalClosableOnClickOutside(true);
-                handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS);
-              }}
-            />
-          );
-        case MODAL_TYPE.REPORT_API_ERROR:
-          return (
-            <ApiErrorFeedback
-              buttonClick={() => {
-                setModalClosableOnClickOutside(false);
-                handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
-              }}
-              message={modalPayload.message}
-            />
-          );
-        case MODAL_TYPE.REPORT_SUCCESS:
-          return (
-            <ReportSuccessFeedback
-              buttonClick={() => handleIsModalOpen(false)}
-            />
-          );
-        default:
-          return null;
-      }
-    },
-    [experienceId, handleIsModalOpen, modalPayload.message],
-  );
-
-  const reportZone = useMemo(() => {
-    return (
-      <React.Fragment>
-        <div className={styles.functionButtons}>
-          <Button
-            circleSize="md"
-            btnStyle="black"
-            onClick={() => {
-              setModalClosableOnClickOutside(false);
-              handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
-            }}
-            className={cn(
-              ReactionZoneStyles.reportButton,
-              ReactionZoneStyles.button,
-            )}
-          >
-            檢舉
-          </Button>
-          <PopoverToggle
-            className={ReactionZoneStyles.moreButton}
-            popoverClassName={ReactionZoneStyles.popover}
-            popoverContent={
-              <ReactionZoneOtherOptions
-                toggleReportInspectModal={() => {
-                  setReportInspectModalIsOpen(true);
-                }}
-              />
-            }
-          >
-            <div className={ReactionZoneStyles.popoverIcon}>
-              <span />
-            </div>
-          </PopoverToggle>
-        </div>
-      </React.Fragment>
-    );
-  }, [handleIsModalOpen]);
+  const {
+    modalState,
+    handleIsModalOpen,
+    closableOnClickOutside,
+    setModalClosableOnClickOutside,
+  } = useReportModal();
 
   if (isError(experienceBox)) {
     if (isUiNotFoundError(experienceBox.error)) {
@@ -240,7 +135,6 @@ const ExperienceDetail = ({ ...props }) => {
                   />
                 </div>
                 <ExperienceHeading experience={experienceBox.data} />
-                {reportZone}
                 <Article
                   experience={experienceBox.data}
                   hideContent={!canViewPublishId(experienceBox.data.id)}
@@ -265,14 +159,12 @@ const ExperienceDetail = ({ ...props }) => {
           <MessageBoard experienceId={experienceId} />
         </Wrapper>
       </Section>
-      <Modal
-        isOpen={isModalOpen}
-        close={() => handleIsModalOpen(false)}
+      <ReportModal
+        modalState={modalState}
+        handleIsModalOpen={handleIsModalOpen}
         closableOnClickOutside={closableOnClickOutside}
-        hasClose
-      >
-        {renderModalChildren(modalType, modalPayload)}
-      </Modal>
+        setModalClosableOnClickOutside={setModalClosableOnClickOutside}
+      />
       <ReportInspectModal
         experienceId={experienceId}
         isOpen={reportInspectModalIsOpen}

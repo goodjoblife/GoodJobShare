@@ -8,6 +8,9 @@ import useQueryLike from '../hooks/useQueryLike';
 import useToggleLike from '../hooks/useToggleLike';
 import useLoginFlow from '../hooks/useLoginFlow';
 import ReportDialog from 'components/CompanyAndJobTitle/TimeAndSalary/ReportDialog';
+import ReportModal from '../reportModal';
+import { useReportModal } from '../useReportModal';
+import { MODAL_TYPE } from '../ReportForm/constants';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
   <button
@@ -30,7 +33,7 @@ ReactionButton.propTypes = {
   className: PropTypes.string,
 };
 
-const ReactionZone = ({ experienceId, onClickMsgButton }) => {
+const ReactionZone = ({ experienceId, onClickMsgButton, reportCount }) => {
   // use state to quick response to toggle
   const [liked, setLiked] = useState(false);
 
@@ -44,6 +47,13 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
   }, [liked, queryLike, toggleLike]);
   const [handleLike] = useLoginFlow(handleLikeCallback);
 
+  const {
+    modalState,
+    handleIsModalOpen,
+    closableOnClickOutside,
+    setModalClosableOnClickOutside,
+  } = useReportModal();
+
   useEffect(() => {
     queryLike();
   }, [queryLike]);
@@ -54,8 +64,6 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
       setLiked(likeState.value ? true : false);
     }
   }, [likeState.loading, likeState.value]);
-
-  const reportCount = 10; // TODO: 待拿 report count
 
   return (
     <div className={styles.reactionZone}>
@@ -74,13 +82,25 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
       >
         留言
       </ReactionButton>
-      <ReactionButton className={styles.report}>
+      <ReactionButton
+        className={styles.report}
+        onClick={() => {
+          setModalClosableOnClickOutside(false);
+          handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
+        }}
+      >
         <ReportDialog
           reportCount={reportCount}
           isHighlighted={Boolean(reportCount)}
         />
         <div className={styles.reportText}>回報</div>
       </ReactionButton>
+      <ReportModal
+        modalState={modalState}
+        handleIsModalOpen={handleIsModalOpen}
+        closableOnClickOutside={closableOnClickOutside}
+        setModalClosableOnClickOutside={setModalClosableOnClickOutside}
+      />
     </div>
   );
 };
@@ -88,6 +108,7 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
 ReactionZone.propTypes = {
   experienceId: PropTypes.string.isRequired,
   onClickMsgButton: PropTypes.func.isRequired,
+  reportCount: PropTypes.number,
 };
 
 export default ReactionZone;
