@@ -1,9 +1,7 @@
 import R from 'ramda';
+import { experienceReportReasons, salaryReportReasons } from './constants';
 
-import { reasonCategoryOptions } from './ReportForm';
-
-export const isReasonLimit = reasonCategory =>
-  reasonCategory !== '這是廣告或垃圾訊息';
+export const isReasonLimit = reasonCategory => reasonCategory === '其他';
 
 export const validReason = isLimit =>
   R.anyPass([
@@ -15,7 +13,10 @@ export const validReason = isLimit =>
   ]);
 
 export const validReasonCategory = reasonCategory =>
-  R.contains(reasonCategory, reasonCategoryOptions.map(r => r.value));
+  R.any(options => R.contains(reasonCategory, options.map(r => r.value)), [
+    experienceReportReasons,
+    salaryReportReasons,
+  ]);
 
 export const validReasomForm = R.allPass([
   R.compose(
