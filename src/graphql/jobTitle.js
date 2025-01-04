@@ -79,6 +79,9 @@ export const queryJobTitleOverviewGql = /* GraphQL */ `
       salaryWorkTimesResult(start: 0, limit: $salaryWorkTimesLimit) {
         count
         salaryWorkTimes {
+          reports {
+            id
+          }
           id
           week_work_time
           salary {
@@ -139,6 +142,9 @@ export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
       ) {
         count
         salaryWorkTimes {
+          reports {
+            id
+          }
           id
           week_work_time
           salary {
