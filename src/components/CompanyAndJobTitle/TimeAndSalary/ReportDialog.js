@@ -4,14 +4,17 @@ import styles from './ReportDialog.module.css';
 import cn from 'classnames';
 
 const ReportDialog = ({ reportCount, isHighlighted }) => {
+  const isShowReportCount = reportCount > 0;
   return (
     <div
       className={cn(styles.dialogWrapper, {
         [styles.highlighted]: isHighlighted,
-        [styles.enabled]: reportCount,
+        [styles.enabled]: isShowReportCount,
       })}
     >
-      <div className={styles.dialogBox}>{reportCount ? reportCount : '!'}</div>
+      <div className={styles.dialogBox}>
+        {isShowReportCount ? reportCount : '!'}
+      </div>
       <div className={styles.dialogTriangle}></div>
     </div>
   );
