@@ -39,7 +39,7 @@ import {
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
-import ReportModal from './reportModal';
+import ReportModal from './ReportModal';
 import { useReportModal } from './useReportModal';
 
 // from params
