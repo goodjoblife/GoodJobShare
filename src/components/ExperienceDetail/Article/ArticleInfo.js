@@ -122,7 +122,7 @@ InterviewInfoBlocks.propTypes = {
     originalCompanyName: PropTypes.string.isRequired,
     overall_rating: PropTypes.number,
     region: PropTypes.string,
-    report_count: PropTypes.number,
+    report_count: PropTypes.number.isRequired,
     salary: PropTypes.shape({
       amount: PropTypes.number,
       type: PropTypes.string,
@@ -209,7 +209,7 @@ WorkInfoBlocks.propTypes = {
     originalCompanyName: PropTypes.string.isRequired,
     recommend_to_others: PropTypes.string,
     region: PropTypes.string,
-    report_count: PropTypes.number,
+    report_count: PropTypes.number.isRequired,
     salary: PropTypes.shape({
       amount: PropTypes.number,
       type: PropTypes.string,
