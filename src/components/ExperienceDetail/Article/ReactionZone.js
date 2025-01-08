@@ -8,7 +8,7 @@ import useQueryLike from '../hooks/useQueryLike';
 import useToggleLike from '../hooks/useToggleLike';
 import useLoginFlow from '../hooks/useLoginFlow';
 import ReportDialog from 'components/CompanyAndJobTitle/TimeAndSalary/ReportDialog';
-import ReportModal from '../reportModal';
+import ReportModal from '../ReportModal';
 import { useReportModal } from '../useReportModal';
 import { MODAL_TYPE } from '../ReportForm/constants';
 
