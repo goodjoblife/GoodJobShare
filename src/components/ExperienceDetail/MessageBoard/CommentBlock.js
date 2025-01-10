@@ -14,7 +14,7 @@ const formatDate = d => {
 
 const CommentBlock = ({ reply, toggleReplyLike }) => {
   return (
-    <section className={styles.container} id={`reply-${reply._id}`}>
+    <section className={styles.container} id={`reply-${reply.id}`}>
       <div className={styles.reaction}>
         <ThumbsUp
           count={reply.like_count}
@@ -36,7 +36,14 @@ const CommentBlock = ({ reply, toggleReplyLike }) => {
 };
 
 CommentBlock.propTypes = {
-  reply: PropTypes.object.isRequired,
+  reply: PropTypes.shape({
+    content: PropTypes.string.isRequired,
+    created_at: PropTypes.string.isRequired,
+    floor: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
+    like_count: PropTypes.number.isRequired,
+    liked: PropTypes.bool,
+  }).isRequired,
   toggleReplyLike: PropTypes.func.isRequired,
 };
 
