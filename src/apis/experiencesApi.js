@@ -3,39 +3,24 @@ import fetchUtil from 'utils/fetchUtil';
 
 import graphqlClient from 'utils/graphqlClient';
 import {
+  queryExperienceRepliesGql,
   deleteExpereinceLikeGql,
   createExperienceLikeGql,
   queryExperienceGql,
   queryExperienceLikeGql,
+  changeExperienceStatusGql,
   queryRelatedExperiencesGql,
   queryExperienceCountGql,
 } from 'graphql/experience';
 import { getPopularExperiencesQuery } from 'graphql/popularExperience';
 import { deleteReplyLike, createReplyLike } from 'graphql/reply';
 
-const getExperienceReplyOptions = {
-  start: 0,
-  limit: 100,
-};
-
-export const getExperienceReply = options => {
-  const finalOptions = {
-    ...getExperienceReplyOptions,
-    ...options,
-  };
-
-  const { experienceId, start, limit, token } = finalOptions;
-
-  const url = `/experiences/${experienceId}/replies`;
-
-  return fetchUtil(url).get({
-    query: {
-      start,
-      limit,
-    },
+export const queryExperienceReplies = async ({ id, token }) =>
+  graphqlClient({
+    query: queryExperienceRepliesGql,
+    variables: { id },
     token,
-  });
-};
+  }).then(data => data.experience.replies);
 
 export const postExperienceReply = ({ id, comment, token }) =>
   fetchUtil(`/experiences/${id}/replies`).post({
@@ -131,11 +116,10 @@ export const getPopularExperiences = () =>
     query: getPopularExperiencesQuery,
   }).then(data => data.popular_experiences);
 
-export const patchExperience = ({ id, status, token }) =>
-  fetchUtil(`/experiences/${id}`).patch({
-    body: {
-      status,
-    },
+export const changeExperienceStatus = ({ id, status, token }) =>
+  graphqlClient({
+    query: changeExperienceStatusGql,
+    variables: { input: { id, status } },
     token,
   });
 
