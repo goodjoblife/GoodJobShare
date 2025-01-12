@@ -1,5 +1,14 @@
 @value gray-dark, main-yellow from "../../common/variables.module.css";
 
+.reportDialogContainer {
+  display: flex;
+  align-items: center;
+}
+
+.reportText {
+  margin-left: 5px;
+}
+
 .dialogBox {
   display: flex;
   flex-direction: column;
@@ -36,6 +45,7 @@
 
 .enabled {
   --dialog-color: #333;
+  cursor: pointer;
 }
 
 .enabled.highlighted:hover {

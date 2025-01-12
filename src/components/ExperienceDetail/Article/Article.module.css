@@ -96,10 +96,6 @@ $paddingS: 16px;
   right: 20px;
 }
 
-.reportText {
-  margin-left: 2.5px;
-}
-
 @media (max-width: below-mobile) {
   .reportDialogContainer {
     position: relative;
