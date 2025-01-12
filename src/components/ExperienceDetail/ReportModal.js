@@ -7,6 +7,8 @@ import usePermission from 'hooks/usePermission';
 import { queryExperienceIfUnfetched } from 'actions/experience';
 import PropTypes from 'prop-types';
 import ModalContent from './MocalContent';
+import { useReportModal } from './useReportModal';
+import { MODAL_TYPE } from './ReportForm/constants';
 
 // from params
 const experienceIdSelector = R.prop('id');
@@ -16,17 +18,29 @@ const useExperienceId = () => {
 };
 
 const ReportModal = ({
-  modalState,
-  handleIsModalOpen,
-  closableOnClickOutside,
-  setModalClosableOnClickOutside,
+  children,
+  isModalClosableOnClickOutside = false,
+  reportCount = 0,
 }) => {
+  const {
+    modalState,
+    handleIsModalOpen,
+    closableOnClickOutside,
+    setModalClosableOnClickOutside,
+  } = useReportModal();
   const { isModalOpen, modalType, modalPayload } = modalState;
   const experienceId = useExperienceId();
   const [, fetchPermission] = usePermission({
     publishId: experienceId,
   });
   const dispatch = useDispatch();
+
+  const handleReportClick = () => {
+    if (reportCount === 0) return;
+
+    setModalClosableOnClickOutside(isModalClosableOnClickOutside);
+    handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
+  };
 
   useEffect(() => {
     dispatch(queryExperienceIfUnfetched(experienceId));
@@ -37,32 +51,35 @@ const ReportModal = ({
   }, [experienceId, fetchPermission]);
 
   return (
-    <Modal
-      isOpen={isModalOpen}
-      close={() => handleIsModalOpen(false)}
-      closableOnClickOutside={closableOnClickOutside}
-      hasClose
-    >
-      <ModalContent
-        modalType={modalType}
-        modalPayload={modalPayload}
-        experienceId={experienceId}
-        handleIsModalOpen={handleIsModalOpen}
-        setModalClosableOnClickOutside={setModalClosableOnClickOutside}
-      />
-    </Modal>
+    <>
+      <div onClick={handleReportClick}>{children}</div>
+      <Modal
+        isOpen={isModalOpen}
+        close={() => handleIsModalOpen(false)}
+        closableOnClickOutside={closableOnClickOutside}
+        hasClose
+      >
+        <ModalContent
+          modalType={modalType}
+          modalPayload={modalPayload}
+          experienceId={experienceId}
+          handleIsModalOpen={handleIsModalOpen}
+          setModalClosableOnClickOutside={setModalClosableOnClickOutside}
+        />
+      </Modal>
+    </>
   );
 };
 
-export default ReportModal;
-
 ReportModal.propTypes = {
-  closableOnClickOutside: PropTypes.bool.isRequired,
-  handleIsModalOpen: PropTypes.func.isRequired,
-  modalState: PropTypes.shape({
-    isModalOpen: PropTypes.bool.isRequired,
-    modalPayload: PropTypes.any,
-    modalType: PropTypes.string.isRequired,
-  }).isRequired,
-  setModalClosableOnClickOutside: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  isModalClosableOnClickOutside: PropTypes.bool,
+  reportCount: PropTypes.number,
 };
+
+ReportModal.defaultProps = {
+  isModalClosableOnClickOutside: false,
+  reportCount: 0,
+};
+
+export default ReportModal;
