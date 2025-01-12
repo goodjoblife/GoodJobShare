@@ -22,6 +22,7 @@ import {
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
 import usePermission from 'hooks/usePermission';
 import ReportDialog from './ReportDialog';
+import ReportModal from 'components/ExperienceDetail/ReportModal';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
@@ -132,7 +133,11 @@ const columnProps = [
     className: styles.colDataTime,
     title: '回報',
     dataField: R.compose(
-      reportCount => <ReportDialog reportCount={reportCount} />,
+      reportCount => (
+        <ReportModal reportCount={reportCount}>
+          <ReportDialog reportCount={reportCount} />
+        </ReportModal>
+      ),
       getReportCount,
       R.prop('reports'),
     ),

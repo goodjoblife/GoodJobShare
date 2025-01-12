@@ -9,8 +9,6 @@ import useToggleLike from '../hooks/useToggleLike';
 import useLoginFlow from '../hooks/useLoginFlow';
 import ReportDialog from 'components/CompanyAndJobTitle/TimeAndSalary/ReportDialog';
 import ReportModal from '../ReportModal';
-import { useReportModal } from '../useReportModal';
-import { MODAL_TYPE } from '../ReportForm/constants';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
   <button
@@ -47,13 +45,6 @@ const ReactionZone = ({ experienceId, onClickMsgButton, reportCount }) => {
   }, [liked, queryLike, toggleLike]);
   const [handleLike] = useLoginFlow(handleLikeCallback);
 
-  const {
-    modalState,
-    handleIsModalOpen,
-    closableOnClickOutside,
-    setModalClosableOnClickOutside,
-  } = useReportModal();
-
   useEffect(() => {
     queryLike();
   }, [queryLike]);
@@ -82,25 +73,16 @@ const ReactionZone = ({ experienceId, onClickMsgButton, reportCount }) => {
       >
         留言
       </ReactionButton>
-      <ReactionButton
-        className={styles.report}
-        onClick={() => {
-          setModalClosableOnClickOutside(false);
-          handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
-        }}
-      >
-        <ReportDialog
-          reportCount={reportCount}
-          isHighlighted={Boolean(reportCount)}
-        />
-        <div className={styles.reportText}>回報</div>
-      </ReactionButton>
-      <ReportModal
-        modalState={modalState}
-        handleIsModalOpen={handleIsModalOpen}
-        closableOnClickOutside={closableOnClickOutside}
-        setModalClosableOnClickOutside={setModalClosableOnClickOutside}
-      />
+      <ReportModal>
+        <ReactionButton className={styles.report}>
+          <ReportDialog
+            reportCount={reportCount}
+            isHighlighted={reportCount > 0}
+            isShowReportText
+            reportText="回報"
+          />
+        </ReactionButton>
+      </ReportModal>
     </div>
   );
 };

@@ -13,6 +13,7 @@ import {
 import { originalCompanyNameSelector } from '../experienceSelector';
 import RatingInfo from './RatingInfo';
 import ReportDialog from 'components/CompanyAndJobTitle/TimeAndSalary/ReportDialog';
+import ReportModal from '../ReportModal';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
@@ -31,12 +32,17 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
-      <div className={styles.reportDialogContainer}>
-        <ReportDialog reportCount={experience.report_count} />
-        {experience.report_count > 0 && (
-          <div className={styles.reportText}>有使用者回報</div>
-        )}
-      </div>
+      {experience.report_count > 0 && (
+        <div className={styles.reportDialogContainer}>
+          <ReportModal>
+            <ReportDialog
+              reportCount={experience.report_count}
+              isShowReportText
+              reportText="有使用者回報"
+            />
+          </ReportModal>
+        </div>
+      )}
       <InfoBlock
         label="公司"
         to={generatePageURL({
@@ -135,12 +141,17 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
-      <div className={styles.reportDialogContainer}>
-        <ReportDialog reportCount={experience.report_count} />
-        {experience.report_count > 0 && (
-          <div className={styles.reportText}>有使用者回報</div>
-        )}
-      </div>
+      {experience.report_count > 0 && (
+        <div className={styles.reportDialogContainer}>
+          <ReportModal>
+            <ReportDialog
+              reportCount={experience.report_count}
+              isShowReportText
+              reportText="有使用者回報"
+            />
+          </ReportModal>
+        </div>
+      )}
       <InfoBlock
         label="公司"
         to={generatePageURL({
