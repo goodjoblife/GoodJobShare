@@ -39,8 +39,6 @@ import {
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
-import ReportModal from './ReportModal';
-import { useReportModal } from './useReportModal';
 
 // from params
 const experienceIdSelector = R.prop('id');
@@ -97,13 +95,6 @@ const ExperienceDetail = ({ ...props }) => {
     scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
   }, []);
 
-  const {
-    modalState,
-    handleIsModalOpen,
-    closableOnClickOutside,
-    setModalClosableOnClickOutside,
-  } = useReportModal();
-
   if (isError(experienceBox)) {
     if (isUiNotFoundError(experienceBox.error)) {
       return <NotFound />;
@@ -159,12 +150,6 @@ const ExperienceDetail = ({ ...props }) => {
           <MessageBoard experienceId={experienceId} />
         </Wrapper>
       </Section>
-      <ReportModal
-        modalState={modalState}
-        handleIsModalOpen={handleIsModalOpen}
-        closableOnClickOutside={closableOnClickOutside}
-        setModalClosableOnClickOutside={setModalClosableOnClickOutside}
-      />
       <ReportInspectModal
         experienceId={experienceId}
         isOpen={reportInspectModalIsOpen}
