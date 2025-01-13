@@ -85,6 +85,21 @@ export const queryExperienceLikeGql = /* GraphQL */ `
   }
 `;
 
+export const queryExperienceRepliesGql = /* GraphQL */ `
+  query($id: ID!) {
+    experience(id: $id) {
+      replies {
+        id
+        content
+        like_count
+        floor
+        created_at
+        liked
+      }
+    }
+  }
+`;
+
 export const createInterviewExperienceWithRating = /* GraphQL */ `
   mutation($input: CreateInterviewExperienceWithRatingInput!) {
     createInterviewExperienceWithRating(input: $input) {
@@ -173,5 +188,15 @@ export const deleteExpereinceLikeGql = /* GraphQL */ `
 export const queryExperienceCountGql = /* GraphQL */ `
   query {
     experienceCount
+  }
+`;
+
+export const changeExperienceStatusGql = /* GraphQL */ `
+  mutation($input: ChangeExperienceStatusInput!) {
+    changeExperienceStatus(input: $input) {
+      experience {
+        id
+      }
+    }
   }
 `;

@@ -3,10 +3,10 @@ import { useAsyncFn } from 'react-use';
 import { useToken } from 'hooks/auth';
 import { queryMyPublishesApi } from 'apis/me';
 import {
-  patchExperience as patchExperienceApi,
   patchReply as patchReplyApi,
+  changeExperienceStatus,
 } from 'apis/experiencesApi';
-import { patchWorking as patchWorkingApi } from 'apis/timeAndSalaryApi';
+import { changeSalaryWorkTimeStatus } from 'apis/timeAndSalaryApi';
 
 export const useFetchMyPublishes = () => {
   const token = useToken();
@@ -22,7 +22,7 @@ export const useToggleExperienceStatus = () => {
   const token = useToken();
   return useCallback(
     o => {
-      return patchExperienceApi({
+      return changeExperienceStatus({
         id: o.id,
         status: o.status === 'published' ? 'hidden' : 'published',
         token,
@@ -36,7 +36,7 @@ export const useToggleSalaryWorkTimeStatus = () => {
   const token = useToken();
   return useCallback(
     o => {
-      return patchWorkingApi({
+      return changeSalaryWorkTimeStatus({
         id: o.id,
         status: o.status === 'published' ? 'hidden' : 'published',
         token,

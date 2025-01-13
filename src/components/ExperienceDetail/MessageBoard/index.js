@@ -83,7 +83,7 @@ const MessageBoard = ({ experienceId }) => {
             <hr />
             {repliesState.value.map(reply => (
               <CommentBlock
-                key={reply._id}
+                key={reply.id}
                 reply={reply}
                 toggleReplyLike={async () => {
                   await likeReply(reply);
