@@ -54,7 +54,7 @@ export const queryExperienceGql = /* GraphQL */ `
           month
         }
         interview_result
-        overall_rating
+        averageSectionRating
         interview_qas {
           question
           answer
@@ -133,7 +133,7 @@ export const queryRelatedExperiencesGql = /* GraphQL */ `
             interview_subtitle: subtitle
             content
           }
-          overall_rating
+          averageSectionRating
         }
 
         ... on WorkExperience {

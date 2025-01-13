@@ -9,7 +9,6 @@ import { Heading, P } from 'common/base';
 import Coin from 'common/icons/Coin';
 import styles from './InterviewExperiences.module.css';
 import { formatCreatedAt, formatSalary, formatSalaryRange } from './helper';
-import Rating from './Rating';
 import OverallRating from 'common/OverallRating';
 
 const createLinkTo = ({ id, pageType }) => ({
@@ -27,7 +26,6 @@ const ExperienceEntry = ({
     job_title: { name: jobTitle } = {},
     created_at: createdAt,
     salary,
-    overall_rating: overallRating,
     averageSectionRating,
     sections: [section],
   },
@@ -62,14 +60,7 @@ const ExperienceEntry = ({
                 )}
               </div>
             )}
-            {typeof averageSectionRating !== 'undefined' ? (
-              <OverallRating rating={averageSectionRating} hasRatingNumber />
-            ) : (
-              /* backward compatibility - sunset if available */
-              <div className={styles.rating}>
-                <Rating rate={overallRating} />
-              </div>
-            )}
+            <OverallRating rating={averageSectionRating} hasRatingNumber />
           </div>
         </div>
 
@@ -107,7 +98,6 @@ ExperienceEntry.propTypes = {
     job_title: PropTypes.shape({ name: PropTypes.string.isRequired })
       .isRequired,
     originalCompanyName: PropTypes.string,
-    overall_rating: PropTypes.number,
     salary: PropTypes.shape({
       amount: PropTypes.number.isRequired,
       type: PropTypes.string.isRequired,
