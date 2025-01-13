@@ -60,7 +60,9 @@ const ExperienceEntry = ({
                 )}
               </div>
             )}
-            <OverallRating rating={averageSectionRating} hasRatingNumber />
+            {averageSectionRating && (
+              <OverallRating rating={averageSectionRating} hasRatingNumber />
+            )}
           </div>
         </div>
 

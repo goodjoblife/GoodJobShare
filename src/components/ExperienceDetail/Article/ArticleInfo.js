@@ -79,18 +79,13 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
           )}
         </InfoBlock>
       ) : null}
-      {typeof experience.averageSectionRating !== 'undefined' ? (
+      {experience.averageSectionRating && (
         <InfoBlock label="評分">
           <OverallRating
             rating={experience.averageSectionRating}
             hasRatingLabel
             hasRatingNumber
           />
-        </InfoBlock>
-      ) : (
-        /* backward compatibility - sunset if available */
-        <InfoBlock label="整體面試滿意度">
-          <RateButtons rate={experience.overall_rating} />
         </InfoBlock>
       )}
       {experience.interview_sensitive_questions &&
