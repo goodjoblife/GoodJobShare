@@ -3,6 +3,7 @@
 .reportDialogContainer {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .reportText {
@@ -45,7 +46,6 @@
 
 .enabled {
   --dialog-color: #333;
-  cursor: pointer;
 }
 
 .enabled.highlighted:hover {
