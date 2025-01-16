@@ -31,7 +31,7 @@ const ReportDialog = ({
 ReportDialog.propTypes = {
   isHighlighted: PropTypes.bool,
   isShowReportText: PropTypes.bool,
-  reportCount: PropTypes.number,
+  reportCount: PropTypes.number.isRequired,
   reportText: PropTypes.string,
 };
 
