@@ -7,8 +7,8 @@ import Button from 'common/button/Button';
 import Loader from 'common/Loader';
 import { useLogin } from 'hooks/login';
 import {
-  postExperiencesReports,
-  postSalaryWorkTimeReports,
+  postExperienceReport,
+  postSalaryWorkTimeReport,
 } from 'actions/reports';
 import ReasonCategory from './ReasonCategory';
 import Reason from './Reason';
@@ -28,8 +28,8 @@ const getReasonCategoryOptions = reportType => {
 
 const submitReport = ({ id, reason, reasonCategory, reportType }) => {
   return reportType === REPORT_TYPE.SALARY
-    ? postSalaryWorkTimeReports({ id, reason, reasonCategory })
-    : postExperiencesReports({ id, reason, reasonCategory });
+    ? postSalaryWorkTimeReport({ id, reason, reasonCategory })
+    : postExperienceReport({ id, reason, reasonCategory });
 };
 
 const ReportForm = ({ close, onApiError, onSuccess, id, reportType }) => {

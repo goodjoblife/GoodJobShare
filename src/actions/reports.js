@@ -1,5 +1,5 @@
 import { tokenSelector } from 'selectors/authSelector';
-import { postExperiencesReports as postExperiencesReportsApi } from 'apis/reportsExperiencesApi';
+import { postExperienceReport as postExperienceReportApi } from 'apis/reportsExperiencesApi';
 import {
   createExperienceReportApi,
   createSalaryWorkTimeReportApi,
@@ -12,14 +12,14 @@ export const createReport = ({ experienceId, body }) => (
   const state = getState();
   const token = tokenSelector(state);
 
-  return postExperiencesReportsApi({
+  return postExperienceReportApi({
     id: experienceId,
     body,
     token,
   });
 };
 
-export const postExperiencesReports = ({ id, reason, reasonCategory }) => (
+export const postExperienceReport = ({ id, reason, reasonCategory }) => (
   _,
   getState,
 ) => {
@@ -36,7 +36,7 @@ export const postExperiencesReports = ({ id, reason, reasonCategory }) => (
   });
 };
 
-export const postSalaryWorkTimeReports = ({ id, reason, reasonCategory }) => (
+export const postSalaryWorkTimeReport = ({ id, reason, reasonCategory }) => (
   _,
   getState,
 ) => {
