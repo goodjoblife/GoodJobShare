@@ -7,7 +7,7 @@ import styles from './ReactionZone.module.css';
 import useQueryLike from '../hooks/useQueryLike';
 import useToggleLike from '../hooks/useToggleLike';
 import useLoginFlow from '../hooks/useLoginFlow';
-import ReportDialog from 'components/CompanyAndJobTitle/TimeAndSalary/ReportDialog';
+import ReportDialog from 'common/button/ReportDialog';
 import ReportModal from '../ReportModal';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (

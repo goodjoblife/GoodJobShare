@@ -12,7 +12,7 @@ import {
 } from 'constants/companyJobTitle';
 import { originalCompanyNameSelector } from '../experienceSelector';
 import RatingInfo from './RatingInfo';
-import ReportDialog from 'components/CompanyAndJobTitle/TimeAndSalary/ReportDialog';
+import ReportDialog from 'common/button/ReportDialog';
 import ReportModal from '../ReportModal';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
