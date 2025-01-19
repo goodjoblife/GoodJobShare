@@ -45,3 +45,8 @@ export const MODAL_TYPE = {
   REPORT_API_ERROR: 'REPORT_API_ERROR',
   REPORT_SUCCESS: 'REPORT_SUCCESS',
 };
+
+export const REPORT_TYPE = {
+  EXPERIENCE: 'experience',
+  SALARY: 'salary',
+};

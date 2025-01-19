@@ -11,16 +11,22 @@ import ReasonCategory from './ReasonCategory';
 import Reason from './Reason';
 import styles from './ReportForm.module.css';
 import { validReasomForm, validReason, isReasonLimit } from './formCheck';
-// TODO: 判斷是 公司/職稱頁面 (compony) 還是 面試/評價 (experience) 頁面, import salaryReportReasons
-import { experienceReportReasons } from './constants';
+import {
+  salaryReportReasons,
+  experienceReportReasons,
+  REPORT_TYPE,
+} from './constants';
 
-const ReportForm = ({ close, onApiError, onSuccess, id }) => {
+const ReportForm = ({ close, onApiError, onSuccess, id, reportType }) => {
   const dispatch = useDispatch();
   const [isLoggedIn, login] = useLogin();
+  const reasonCategoryOptions =
+    reportType === REPORT_TYPE.SALARY
+      ? salaryReportReasons
+      : experienceReportReasons;
 
-  // TODO: 判斷是 公司/職稱頁面 (compony) 還是 面試/評價 (experience) 頁面, by reportType
   const [reasonCategory, setReasonCategory] = useState(
-    experienceReportReasons[0].value,
+    reasonCategoryOptions[0].value,
   );
   const [reason, setReason] = useState('');
 
@@ -70,14 +76,10 @@ const ReportForm = ({ close, onApiError, onSuccess, id }) => {
   return (
     <section>
       <Heading Tag="h2" size="l" marginBottomS center>
-        {/*
-        // TODO: 判斷是 公司/職稱頁面 (compony) 還是 面試/評價 (experience) 頁面, by reportType
-        回報此筆薪資、工時
-        */}
         回報此篇文章
       </Heading>
       <ReasonCategory
-        reasonCategoryOptions={experienceReportReasons}
+        reasonCategoryOptions={reasonCategoryOptions}
         reasonCategory={reasonCategory}
         handleReasonCategory={setReasonCategory}
       />
@@ -126,6 +128,11 @@ ReportForm.propTypes = {
   id: PropTypes.string,
   onApiError: PropTypes.func,
   onSuccess: PropTypes.func,
+  reportType: PropTypes.string,
+};
+
+ReportForm.defaultProps = {
+  reportType: REPORT_TYPE.EXPERIENCE,
 };
 
 export default ReportForm;

@@ -17,12 +17,13 @@ import {
   getWeekWorkTime,
   formatWage,
   formatDate,
-  getReportCount,
+  getReportsInfo,
 } from '../../TimeAndSalary/common/formatter';
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
 import usePermission from 'hooks/usePermission';
 import ReportDialog from './ReportDialog';
 import ReportModal from 'components/ExperienceDetail/ReportModal';
+import { REPORT_TYPE } from 'components/ExperienceDetail/ReportForm/constants';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
@@ -133,13 +134,14 @@ const columnProps = [
     className: styles.colDataTime,
     title: '回報',
     dataField: R.compose(
-      reportCount => (
-        <ReportModal reportCount={reportCount}>
-          <ReportDialog reportCount={reportCount} />
-        </ReportModal>
-      ),
-      getReportCount,
-      R.prop('reports'),
+      ({ count, id }) => {
+        return (
+          <ReportModal reportType={REPORT_TYPE.SALARY} salaryWorkTimesId={id}>
+            <ReportDialog reportCount={count} />
+          </ReportModal>
+        );
+      },
+      getReportsInfo,
     ),
     Children: () => '回報',
   },

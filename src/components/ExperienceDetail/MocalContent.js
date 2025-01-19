@@ -3,21 +3,23 @@ import PropTypes from 'prop-types';
 import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
 import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
 import ReportForm from './ReportForm';
-import { MODAL_TYPE } from './ReportForm/constants';
+import { MODAL_TYPE, REPORT_TYPE } from './ReportForm/constants';
 
 const ModalContent = ({
   modalType,
-  experienceId,
   handleIsModalOpen,
   modalPayload,
   setModalClosableOnClickOutside,
+  reportType,
+  id,
 }) => {
   switch (modalType) {
     case MODAL_TYPE.REPORT_DETAIL:
       return (
         <ReportForm
+          reportType={reportType}
           close={() => handleIsModalOpen(false)}
-          id={experienceId}
+          id={id}
           onApiError={payload => {
             setModalClosableOnClickOutside(false);
             handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, payload);
@@ -49,12 +51,18 @@ const ModalContent = ({
       return null;
   }
 };
+
 ModalContent.propTypes = {
-  experienceId: PropTypes.string.isRequired,
   handleIsModalOpen: PropTypes.func.isRequired,
+  id: PropTypes.string,
   modalPayload: PropTypes.object,
   modalType: PropTypes.string.isRequired,
+  reportType: PropTypes.string,
   setModalClosableOnClickOutside: PropTypes.func.isRequired,
+};
+
+ModalContent.defaultProps = {
+  reportType: REPORT_TYPE.EXPERIENCE,
 };
 
 export default ModalContent;

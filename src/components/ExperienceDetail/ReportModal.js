@@ -8,7 +8,7 @@ import { queryExperienceIfUnfetched } from 'actions/experience';
 import PropTypes from 'prop-types';
 import ModalContent from './MocalContent';
 import { useReportModal } from './useReportModal';
-import { MODAL_TYPE } from './ReportForm/constants';
+import { MODAL_TYPE, REPORT_TYPE } from './ReportForm/constants';
 
 // from params
 const experienceIdSelector = R.prop('id');
@@ -20,7 +20,8 @@ const useExperienceId = () => {
 const ReportModal = ({
   children,
   isModalClosableOnClickOutside = false,
-  reportCount = 0,
+  reportType,
+  salaryWorkTimesId,
 }) => {
   const {
     modalState,
@@ -36,8 +37,6 @@ const ReportModal = ({
   const dispatch = useDispatch();
 
   const handleReportClick = () => {
-    if (reportCount === 0) return;
-
     setModalClosableOnClickOutside(isModalClosableOnClickOutside);
     handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
   };
@@ -62,9 +61,10 @@ const ReportModal = ({
         <ModalContent
           modalType={modalType}
           modalPayload={modalPayload}
-          experienceId={experienceId}
+          id={experienceId || salaryWorkTimesId}
           handleIsModalOpen={handleIsModalOpen}
           setModalClosableOnClickOutside={setModalClosableOnClickOutside}
+          reportType={reportType}
         />
       </Modal>
     </>
@@ -74,12 +74,13 @@ const ReportModal = ({
 ReportModal.propTypes = {
   children: PropTypes.node.isRequired,
   isModalClosableOnClickOutside: PropTypes.bool,
-  reportCount: PropTypes.number,
+  reportType: PropTypes.string,
+  salaryWorkTimesId: PropTypes.string,
 };
 
 ReportModal.defaultProps = {
   isModalClosableOnClickOutside: false,
-  reportCount: 0,
+  reportType: REPORT_TYPE.EXPERIENCE,
 };
 
 export default ReportModal;
