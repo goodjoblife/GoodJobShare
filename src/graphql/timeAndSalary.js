@@ -17,7 +17,7 @@ export const getSearchJobTitleQuery = /* GraphQL */ `
   }
 `;
 
-export const changeSalaryWorkTimeStatus = /* GraphQL */ `
+export const changeSalaryWorkTimeStatusGql = /* GraphQL */ `
   mutation($input: ChangeSalaryWorkTimeStatusInput!) {
     changeSalaryWorkTimeStatus(input: $input) {
       salary_work_time {
