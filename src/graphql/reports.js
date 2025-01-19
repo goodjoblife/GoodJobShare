@@ -8,3 +8,16 @@ export const createExperienceReportGql = /* GraphQL */ `
     }
   }
 `;
+
+export const createSalaryWorkTimeReportGql = /* GraphQL */ `
+  mutation CreateSalaryWorkTimeReportGql(
+    $input: CreateSalaryWorkTimeReportInput!
+  ) {
+    createSalaryWorkTimeReport(input: $input) {
+      id
+      reasonCategory
+      reason
+      createdAt
+    }
+  }
+`;
