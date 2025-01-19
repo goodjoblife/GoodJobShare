@@ -1,23 +1,8 @@
 import { tokenSelector } from 'selectors/authSelector';
-import { postExperienceReport as postExperienceReportApi } from 'apis/reportsExperiencesApi';
 import {
   createExperienceReportApi,
   createSalaryWorkTimeReportApi,
 } from 'apis/reports';
-
-export const createReport = ({ experienceId, body }) => (
-  dispatch,
-  getState,
-) => {
-  const state = getState();
-  const token = tokenSelector(state);
-
-  return postExperienceReportApi({
-    id: experienceId,
-    body,
-    token,
-  });
-};
 
 export const postExperienceReport = ({ id, reason, reasonCategory }) => (
   _,
