@@ -2,9 +2,23 @@
 
 .reactionZone {
   border-top: 1px solid border-gray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   .reactionButton {
     border-right: 1px solid border-gray;
+  }
+
+  .report {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    border-right: none;
+  }
+
+  .reportText {
+    margin-left: 0.5rem;
   }
 }
 

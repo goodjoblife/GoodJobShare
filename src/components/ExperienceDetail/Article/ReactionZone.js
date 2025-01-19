@@ -7,6 +7,8 @@ import styles from './ReactionZone.module.css';
 import useQueryLike from '../hooks/useQueryLike';
 import useToggleLike from '../hooks/useToggleLike';
 import useLoginFlow from '../hooks/useLoginFlow';
+import ReportDialog from 'common/button/ReportDialog';
+import ReportModal from '../ReportModal';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
   <button
@@ -17,18 +19,19 @@ const ReactionButton = ({ className, Icon, active, children, ...props }) => (
     )}
     {...props}
   >
-    <Icon className={cn(styles.icon)} /> {children}
+    {Icon && <Icon className={cn(styles.icon)} />}
+    {children}
   </button>
 );
 
 ReactionButton.propTypes = {
-  Icon: PropTypes.func.isRequired,
+  Icon: PropTypes.func,
   active: PropTypes.bool,
   children: PropTypes.node,
   className: PropTypes.string,
 };
 
-const ReactionZone = ({ experienceId, onClickMsgButton }) => {
+const ReactionZone = ({ experienceId, onClickMsgButton, reportCount }) => {
   // use state to quick response to toggle
   const [liked, setLiked] = useState(false);
 
@@ -70,6 +73,16 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
       >
         留言
       </ReactionButton>
+      <ReportModal>
+        <ReactionButton className={styles.report}>
+          <ReportDialog
+            reportCount={reportCount}
+            isHighlighted={reportCount > 0}
+            isShowReportText
+            reportText="回報"
+          />
+        </ReactionButton>
+      </ReportModal>
     </div>
   );
 };
@@ -77,6 +90,7 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
 ReactionZone.propTypes = {
   experienceId: PropTypes.string.isRequired,
   onClickMsgButton: PropTypes.func.isRequired,
+  reportCount: PropTypes.number,
 };
 
 export default ReactionZone;
