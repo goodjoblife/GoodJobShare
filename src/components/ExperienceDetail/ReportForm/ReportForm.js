@@ -6,7 +6,10 @@ import P from 'common/base/P';
 import Button from 'common/button/Button';
 import Loader from 'common/Loader';
 import { useLogin } from 'hooks/login';
-import { postExperiencesReports } from 'actions/reports';
+import {
+  postExperiencesReports,
+  postSalaryWorkTimeReports,
+} from 'actions/reports';
 import ReasonCategory from './ReasonCategory';
 import Reason from './Reason';
 import styles from './ReportForm.module.css';
@@ -17,13 +20,22 @@ import {
   REPORT_TYPE,
 } from './constants';
 
+const getReasonCategoryOptions = reportType => {
+  return reportType === REPORT_TYPE.SALARY
+    ? salaryReportReasons
+    : experienceReportReasons;
+};
+
+const submitReport = ({ id, reason, reasonCategory, reportType }) => {
+  return reportType === REPORT_TYPE.SALARY
+    ? postSalaryWorkTimeReports({ id, reason, reasonCategory })
+    : postExperiencesReports({ id, reason, reasonCategory });
+};
+
 const ReportForm = ({ close, onApiError, onSuccess, id, reportType }) => {
   const dispatch = useDispatch();
   const [isLoggedIn, login] = useLogin();
-  const reasonCategoryOptions =
-    reportType === REPORT_TYPE.SALARY
-      ? salaryReportReasons
-      : experienceReportReasons;
+  const reasonCategoryOptions = getReasonCategoryOptions(reportType);
 
   const [reasonCategory, setReasonCategory] = useState(
     reasonCategoryOptions[0].value,
@@ -44,11 +56,7 @@ const ReportForm = ({ close, onApiError, onSuccess, id, reportType }) => {
     if (valid) {
       try {
         await dispatch(
-          postExperiencesReports({
-            id,
-            reason,
-            reasonCategory,
-          }),
+          submitReport({ id, reason, reasonCategory, reportType }),
         );
         close();
         onSuccess();
