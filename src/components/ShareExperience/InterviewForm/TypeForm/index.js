@@ -83,7 +83,6 @@ const bodyFromDraft = evolve({
     return value === head(JOB_TENURE_OPTIONS) ? 0 : parseInt(value, 10);
   },
   education: '',
-  email: '',
   interview_time: draft => {
     const [year, month] = draft[DATA_KEY_DATE];
     return {
@@ -113,7 +112,6 @@ const bodyFromDraft = evolve({
       amount: parseSalaryAmount(amount),
     };
   },
-  overall_rating: 5,
 });
 
 const TypeForm = ({ open, onClose }) => {

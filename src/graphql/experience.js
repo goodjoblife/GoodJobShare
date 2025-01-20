@@ -54,7 +54,7 @@ export const queryExperienceGql = /* GraphQL */ `
           month
         }
         interview_result
-        overall_rating
+        averageSectionRating
         interview_qas {
           question
           answer
@@ -100,11 +100,9 @@ export const queryExperienceRepliesGql = /* GraphQL */ `
   }
 `;
 
-export const createInterviewExperienceWithOptionalRating = /* GraphQL */ `
-  mutation CreateInterviewExperience(
-    $input: CreateInterviewExperienceWithOptionalRatingInput!
-  ) {
-    createInterviewExperience(input: $input) {
+export const createInterviewExperienceWithRating = /* GraphQL */ `
+  mutation($input: CreateInterviewExperienceWithRatingInput!) {
+    createInterviewExperienceWithRating(input: $input) {
       success
       experience {
         id
@@ -150,7 +148,7 @@ export const queryRelatedExperiencesGql = /* GraphQL */ `
             interview_subtitle: subtitle
             content
           }
-          overall_rating
+          averageSectionRating
         }
 
         ... on WorkExperience {
