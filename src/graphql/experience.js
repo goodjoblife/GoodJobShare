@@ -48,6 +48,7 @@ export const queryExperienceGql = /* GraphQL */ `
         sections {
           interview_subtitle: subtitle
           content
+          rating
         }
         interview_time {
           year
