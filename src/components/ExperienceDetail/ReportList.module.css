@@ -1,0 +1,16 @@
+.reportList button {
+  display: flex;
+  align-self: center;
+  align-items: center;
+}
+
+.reportList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.reportItem {
+  padding: 16px 0;
+}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useAsyncFn } from 'react-use';
 import { getReports as getReportsApi } from 'apis/reportApi';
 import Loader from 'common/Loader';
-import styles from './ReactionZone/ReportInspectModal.module.css';
+import styles from './ReportList.module.css';
 import { P } from 'common/base';
 import Button from 'common/button/Button';
 
@@ -26,7 +26,7 @@ const ReportList = ({ id, onCloseReport }) => {
   const reports = reportsState.value || [];
 
   return (
-    <div>
+    <div className={styles.reportList}>
       {reports.length === 0 ? (
         <span>沒有檢舉記錄</span>
       ) : (
@@ -40,7 +40,9 @@ const ReportList = ({ id, onCloseReport }) => {
           <P size="m">{reason}</P>
         </div>
       ))}
-      <Button onClick={onCloseReport}>查看檢舉記錄</Button>
+      <Button circleSize="md" btnStyle="black" onClick={onCloseReport}>
+        我要回報
+      </Button>
     </div>
   );
 };
