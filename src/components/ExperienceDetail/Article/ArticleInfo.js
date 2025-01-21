@@ -12,6 +12,8 @@ import {
 } from 'constants/companyJobTitle';
 import { originalCompanyNameSelector } from '../experienceSelector';
 import RatingInfo from './RatingInfo';
+import ReportDialog from 'common/button/ReportDialog';
+import ReportModal from '../ReportModal';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
@@ -30,6 +32,17 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
+      {experience.report_count > 0 && (
+        <div className={styles.reportDialogContainer}>
+          <ReportModal>
+            <ReportDialog
+              reportCount={experience.report_count}
+              isShowReportText
+              reportText="有使用者回報"
+            />
+          </ReportModal>
+        </div>
+      )}
       <InfoBlock
         label="公司"
         to={generatePageURL({
@@ -115,6 +128,7 @@ InterviewInfoBlocks.propTypes = {
     originalCompanyName: PropTypes.string.isRequired,
     overall_rating: PropTypes.number,
     region: PropTypes.string,
+    report_count: PropTypes.number.isRequired,
     salary: PropTypes.shape({
       amount: PropTypes.number,
       type: PropTypes.string,
@@ -127,6 +141,17 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
+      {experience.report_count > 0 && (
+        <div className={styles.reportDialogContainer}>
+          <ReportModal>
+            <ReportDialog
+              reportCount={experience.report_count}
+              isShowReportText
+              reportText="有使用者回報"
+            />
+          </ReportModal>
+        </div>
+      )}
       <InfoBlock
         label="公司"
         to={generatePageURL({
@@ -195,6 +220,7 @@ WorkInfoBlocks.propTypes = {
     originalCompanyName: PropTypes.string.isRequired,
     recommend_to_others: PropTypes.string,
     region: PropTypes.string,
+    report_count: PropTypes.number.isRequired,
     salary: PropTypes.shape({
       amount: PropTypes.number,
       type: PropTypes.string,

@@ -4,6 +4,7 @@ export const queryExperienceGql = /* GraphQL */ `
       id
       type
       originalCompanyName
+      report_count
       company {
         name
         salary_work_time_statistics {
