@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
-import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
-import ReportForm from './ReportForm';
-import { MODAL_TYPE, REPORT_TYPE } from './ReportForm/constants';
+import { REPORT_TYPE } from './ReportForm/constants';
+
+import ReportFormProcess from './ReportFormProcess';
+import ReportList from './ReportList';
 
 const ModalContent = ({
   modalType,
@@ -13,43 +13,32 @@ const ModalContent = ({
   reportType,
   id,
 }) => {
-  switch (modalType) {
-    case MODAL_TYPE.REPORT_DETAIL:
-      return (
-        <ReportForm
-          reportType={reportType}
-          close={() => handleIsModalOpen(false)}
-          id={id}
-          onApiError={payload => {
-            setModalClosableOnClickOutside(false);
-            handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, payload);
-          }}
-          onSuccess={() => {
-            setModalClosableOnClickOutside(true);
-            handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS);
-          }}
-        />
-      );
+  const [isShowReport, setIsShowReport] = useState(true);
+  const handleCloseReport = () => setIsShowReport(false);
 
-    case MODAL_TYPE.REPORT_API_ERROR:
-      return (
-        <ApiErrorFeedback
-          buttonClick={() => {
-            setModalClosableOnClickOutside(false);
-            handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
-          }}
-          message={modalPayload?.message}
-        />
-      );
+  useEffect(() => {
+    setIsShowReport(prev => {
+      if (!prev) {
+        return true;
+      }
+      return prev;
+    });
+  }, [modalType]);
 
-    case MODAL_TYPE.REPORT_SUCCESS:
-      return (
-        <ReportSuccessFeedback buttonClick={() => handleIsModalOpen(false)} />
-      );
-
-    default:
-      return null;
+  if (isShowReport) {
+    return <ReportList id={id} onCloseReport={handleCloseReport} />;
   }
+
+  return (
+    <ReportFormProcess
+      modalType={modalType}
+      modalPayload={modalPayload}
+      id={id}
+      handleIsModalOpen={handleIsModalOpen}
+      setModalClosableOnClickOutside={setModalClosableOnClickOutside}
+      reportType={reportType}
+    />
+  );
 };
 
 ModalContent.propTypes = {
