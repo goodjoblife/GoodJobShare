@@ -1,0 +1,17 @@
+.caret {
+  display: inline-block;
+  vertical-align: middle;
+  width: 13px;
+  margin-left: 4px;
+}
+
+.items {
+  display: grid;
+  grid-template: auto / repeat(4, 1fr);
+  gap: 26px;
+  margin: 20px 0;
+}
+
+.item {
+  text-align: center;
+}
