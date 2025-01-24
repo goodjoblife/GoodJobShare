@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import loadable from '@loadable/component';
 
+import Card from 'common/Card';
 import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
 import styles from './SummaryBlock.module.css';
 
@@ -21,30 +22,30 @@ const SummaryBlock = ({
   <div className={styles.summaryBlock}>
     {salaryDistribution && (
       <React.Fragment>
-        <div className={styles.barChart}>
+        <Card className={styles.barChart}>
           <SalaryDistributionChart data={salaryDistribution} />
-        </div>
-        <div className={styles.barChartSm}>
+        </Card>
+        <Card className={styles.barChartSm}>
           <SalaryDistributionChart data={salaryDistribution} />
-        </div>
+        </Card>
       </React.Fragment>
     )}
     {jobAverageSalaries && (
       <React.Fragment>
-        <div className={styles.barChart}>
+        <Card className={styles.barChart}>
           <JobTitleDistributionChart data={jobAverageSalaries} />
-        </div>
-        <div className={styles.barChartSm}>
+        </Card>
+        <Card className={styles.barChartSm}>
           <JobTitleDistributionChart data={jobAverageSalaries} />
-        </div>
+        </Card>
       </React.Fragment>
     )}
-    <div className={styles.averageWeekWorkTime}>
+    <Card className={styles.averageWeekWorkTime}>
       <AverageWeekWorkTimeView
         averageWeekWorkTime={averageWeekWorkTime}
         overtimeFrequencyCount={overtimeFrequencyCount}
       />
-    </div>
+    </Card>
   </div>
 );
 
