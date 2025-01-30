@@ -62,11 +62,6 @@ export const salaryWorkTimeStatistics = R.pipe(
   R.defaultTo({}),
 );
 
-export const topNJobTitles = R.pipe(
-  data,
-  R.defaultTo({}),
-);
-
 export const jobAverageSalaries = R.pipe(
   salaryWorkTimeStatistics,
   R.prop('job_average_salaries'),
