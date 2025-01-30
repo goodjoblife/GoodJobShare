@@ -22,10 +22,10 @@ const CompanyInterviewExperienceHelmet = ({
   // description
   let description = `目前還沒有${companyName}}的面試心得。分享你的面試心得，一起讓職場更透明！`;
   if (totalCount > 0) {
-    const companyAndJobTitles = topNJobTitles
-      ? topNJobTitles.map(item => `${companyName}${item.name}`).join('、')
+    const jobTitles = topNJobTitles
+      ? topNJobTitles.map(item => item.name).join('、')
       : '';
-    description = `${companyName}面試怎麼準備？${companyName}面試問題會問什麼？${companyAndJobTitles}等面試心得都在這邊！`;
+    description = `${companyName}面試怎麼準備？${companyName}面試問題會問什麼？${companyName}${jobTitles}等面試心得都在這邊！`;
   }
 
   // canonical url
