@@ -48,7 +48,6 @@ const CompanyOverviewHelmet = ({
   const jobTitles = topNJobTitles
     ? topNJobTitles.map(item => item.name).join('、')
     : '';
-  console.log({ topNJobTitles, jobTitles });
   const description = `了解${companyName}嗎？由內部員工分享${jobTitles}等職位的${combinedStr}，幫助你更瞭解${companyName}！`;
 
   const path = generatePath('/companies/:companyName', { companyName });
