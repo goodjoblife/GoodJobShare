@@ -23,7 +23,9 @@ const preloadedState = {
   timeAndSalaryStatisticsByName: {},
   interviewExperiencesByName: {},
   workExperiencesByName: {},
-  topNJobTitles: {},
+  // companyName --> box
+  // box.data: null | {companyName, topNJobTitles: {all, interview, work, salary}}
+  topNJobTitlesByName: {},
 };
 
 const reducer = createReducer(preloadedState, {
@@ -97,8 +99,8 @@ const reducer = createReducer(preloadedState, {
   [SET_COMPANY_TOP_N_JOB_TITLES]: (state, { companyName, box }) => {
     return {
       ...state,
-      topNJobTitles: {
-        ...state.topNJobTitles,
+      topNJobTitlesByName: {
+        ...state.topNJobTitlesByName,
         [companyName]: box,
       },
     };
