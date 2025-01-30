@@ -9,6 +9,7 @@ import {
   SET_WORK_EXPERIENCES,
   SET_TIME_AND_SALARY_STATISTICS,
   SET_RATING_STATISTICS,
+  SET_COMPANY_TOP_N_JOB_TITLES,
 } from 'actions/company';
 
 const preloadedState = {
@@ -22,6 +23,9 @@ const preloadedState = {
   timeAndSalaryStatisticsByName: {},
   interviewExperiencesByName: {},
   workExperiencesByName: {},
+  // companyName --> box
+  // box.data: null | {all, interview, work, salary}
+  topNJobTitlesByName: {},
 };
 
 const reducer = createReducer(preloadedState, {
@@ -88,6 +92,15 @@ const reducer = createReducer(preloadedState, {
       ...state,
       workExperiencesByName: {
         ...state.workExperiencesByName,
+        [companyName]: box,
+      },
+    };
+  },
+  [SET_COMPANY_TOP_N_JOB_TITLES]: (state, { companyName, box }) => {
+    return {
+      ...state,
+      topNJobTitlesByName: {
+        ...state.topNJobTitlesByName,
         [companyName]: box,
       },
     };
