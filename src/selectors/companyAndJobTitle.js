@@ -62,6 +62,12 @@ export const salaryWorkTimeStatistics = R.pipe(
   R.defaultTo({}),
 );
 
+export const topNJobTitles = R.pipe(
+  data,
+  R.when(R.is(Object), R.prop('topNJobTitles')),
+  R.defaultTo({}),
+);
+
 export const jobAverageSalaries = R.pipe(
   salaryWorkTimeStatistics,
   R.prop('job_average_salaries'),
@@ -113,6 +119,10 @@ export const companyTimeAndSalaryStatisticsBoxSelectorByName = companyName => st
     state.companyIndex.timeAndSalaryStatisticsByName[companyName] ||
     getUnfetched()
   );
+};
+
+export const companyTopNJobTitlesBoxSelectorByName = companyName => state => {
+  return state.companyIndex.topNJobTitles[companyName] || getUnfetched();
 };
 
 export const companyInterviewExperiencesBoxSelectorByName = companyName => state => {
