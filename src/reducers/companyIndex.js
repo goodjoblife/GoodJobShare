@@ -24,7 +24,7 @@ const preloadedState = {
   interviewExperiencesByName: {},
   workExperiencesByName: {},
   // companyName --> box
-  // box.data: null | {companyName, topNJobTitles: {all, interview, work, salary}}
+  // box.data: null | {all, interview, work, salary}
   topNJobTitlesByName: {},
 };
 

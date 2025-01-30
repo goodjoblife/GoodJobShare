@@ -11,7 +11,7 @@ export const useTopNJobTitles = pageName => {
           all: [],
           work: [],
           interview: [],
-          work: [],
+          salary: [],
         };
       }
       return data.data;
