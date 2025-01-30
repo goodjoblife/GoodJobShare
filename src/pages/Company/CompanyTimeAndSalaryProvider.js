@@ -21,11 +21,10 @@ import {
   status as statusSelector,
   companyTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
   companyTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
-  companyTopNJobTitlesBoxSelectorByName,
-  topNJobTitles,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import { usePageName, pageNameSelector } from './usePageName';
+import { useTopNJobTitles } from './useTopNJobTitles';
 import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
   searchTextFromQuerySelector,
@@ -37,17 +36,6 @@ const useTimeAndSalaryStatisticsBox = pageName => {
     state => {
       const company = timeAndSalaryStatisticsBoxSelectorByName(pageName)(state);
       return salaryWorkTimeStatisticsSelector(company);
-    },
-    [pageName],
-  );
-  return useSelector(selector);
-};
-
-const useTopNJobTitles = pageName => {
-  const selector = useCallback(
-    state => {
-      const company = companyTopNJobTitlesBoxSelectorByName(pageName)(state);
-      return topNJobTitles(company);
     },
     [pageName],
   );
