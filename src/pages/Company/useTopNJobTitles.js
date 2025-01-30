@@ -6,6 +6,14 @@ export const useTopNJobTitles = pageName => {
   const selector = useCallback(
     state => {
       const data = companyTopNJobTitlesBoxSelectorByName(pageName)(state);
+      if (!data || !data.data) {
+        return {
+          all: [],
+          work: [],
+          interview: [],
+          work: [],
+        };
+      }
       return data.data;
     },
     [pageName],
