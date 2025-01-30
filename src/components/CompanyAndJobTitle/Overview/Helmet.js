@@ -24,19 +24,32 @@ const CompanyOverviewHelmet = ({
   salaryWorkTimesCount,
   interviewExperiencesCount,
   workExperiencesCount,
+  topNJobTitles,
 }) => {
   // title
-  const title = `${companyName} 總覽`;
+  const title = companyName;
 
   // description
-  const salaryWorkTimesStr = formatDataCount(salaryWorkTimesCount, '筆', '');
-  const interviewExperiencesStr = formatDataCount(
-    interviewExperiencesCount,
-    '篇',
-    '',
-  );
-  const workExperiencesStr = formatDataCount(workExperiencesCount, '篇', '');
-  const description = `查看由${companyName}內部員工分享的${salaryWorkTimesStr}薪水及加班數據、${workExperiencesStr}評價，以及由面試者分享的${interviewExperiencesStr}面試經驗。`;
+  const salaryWorkTimesStr =
+    salaryWorkTimesCount > 0 ? `${salaryWorkTimesCount}筆薪水、加班狀況` : '';
+  const interviewExperiencesStr =
+    interviewExperiencesCount > 0
+      ? `${interviewExperiencesCount}篇面試心得`
+      : '';
+  const workExperiencesStr =
+    workExperiencesCount > 0 ? `${workExperiencesCount}篇評價` : '';
+  const combinedStr = [
+    salaryWorkTimesStr,
+    interviewExperiencesStr,
+    workExperiencesStr,
+  ]
+    .filter(Boolean)
+    .join('、');
+  const jobTitles = topNJobTitles
+    ? topNJobTitles.map(item => item.name).join('、')
+    : '';
+  console.log({ topNJobTitles, jobTitles });
+  const description = `了解${companyName}嗎？由內部員工分享${jobTitles}等職位的${combinedStr}，幫助你更瞭解${companyName}！`;
 
   const path = generatePath('/companies/:companyName', { companyName });
   const url = formatCanonicalPath(path);
@@ -60,6 +73,11 @@ CompanyOverviewHelmet.propTypes = {
   companyName: PropTypes.string.isRequired,
   interviewExperiencesCount: PropTypes.number.isRequired,
   salaryWorkTimesCount: PropTypes.number.isRequired,
+  topNJobTitles: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   workExperiencesCount: PropTypes.number.isRequired,
 };
 

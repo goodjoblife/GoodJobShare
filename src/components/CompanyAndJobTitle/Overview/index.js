@@ -5,7 +5,13 @@ import { BoxStatusRenderer } from '../StatusRenderer';
 import OverviewSection from './Overview';
 import Helmet from './Helmet';
 
-const Overview = ({ pageType, pageName, tabType, overviewBox }) => (
+const Overview = ({
+  pageType,
+  pageName,
+  tabType,
+  overviewBox,
+  topNJobTitles,
+}) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
     pageName={pageName}
@@ -26,6 +32,7 @@ const Overview = ({ pageType, pageName, tabType, overviewBox }) => (
               interviewExperiencesCount={data.interviewExperiencesCount}
               workExperiencesCount={data.workExperiencesCount}
               salaryWorkTimesCount={data.salaryWorkTimesCount}
+              topNJobTitles={topNJobTitles}
             />
             <OverviewSection
               pageType={pageType}
@@ -68,6 +75,11 @@ Overview.propTypes = {
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
+  topNJobTitles: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default Overview;

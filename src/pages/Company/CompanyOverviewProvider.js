@@ -6,7 +6,11 @@ import {
   tabType as TAB_TYPE,
   pageType as PAGE_TYPE,
 } from 'constants/companyJobTitle';
-import { queryCompanyOverview, queryRatingStatistics } from 'actions/company';
+import {
+  queryCompanyOverview,
+  queryCompanyTopNJobTitles,
+  queryRatingStatistics,
+} from 'actions/company';
 import {
   jobAverageSalaries,
   averageWeekWorkTime,
@@ -15,6 +19,7 @@ import {
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
 import { usePageName, pageNameSelector } from './usePageName';
+import { useTopNJobTitles } from './useTopNJobTitles';
 
 const useOverviewBox = pageName => {
   const selector = useCallback(
@@ -50,6 +55,14 @@ const CompanyOverviewProvider = () => {
   }, [dispatch, pageName]);
 
   useEffect(() => {
+    dispatch(
+      queryCompanyTopNJobTitles({
+        companyName: pageName,
+      }),
+    );
+  }, [dispatch, pageName]);
+
+  useEffect(() => {
     dispatch(queryCompanyOverview(pageName));
   }, [dispatch, pageName]);
 
@@ -59,6 +72,7 @@ const CompanyOverviewProvider = () => {
   }, [pageType, pageName, fetchPermission]);
 
   const overviewBox = useOverviewBox(pageName);
+  const topNJobTitles = useTopNJobTitles(pageName);
 
   return (
     <Overview
@@ -66,6 +80,7 @@ const CompanyOverviewProvider = () => {
       pageName={pageName}
       tabType={TAB_TYPE.OVERVIEW}
       overviewBox={overviewBox}
+      topNJobTitles={topNJobTitles.all}
     />
   );
 };
@@ -76,6 +91,7 @@ CompanyOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
   return Promise.all([
     dispatch(queryCompanyOverview(pageName)),
     dispatch(queryRatingStatistics(pageName)),
+    dispatch(queryCompanyTopNJobTitles({ companyName: pageName })),
   ]);
 };
 
