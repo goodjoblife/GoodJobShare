@@ -284,7 +284,7 @@ export const queryCompanyTopNJobTitles = ({ companyName }) => async (
 ) => {
   const box = companyTopNJobTitlesBoxSelectorByName(companyName)(getState());
 
-  if (isFetching(box) || (isFetched(box) && box.data.name === companyName)) {
+  if (isFetching(box) || isFetched(box)) {
     return;
   }
 
@@ -296,17 +296,12 @@ export const queryCompanyTopNJobTitles = ({ companyName }) => async (
     });
 
     // Not found case
-    if (data == null) {
+    if (!data || !data.topNJobTitles) {
       return dispatch(setCompanyTopNJobTitles(companyName, getFetched(data)));
     }
 
-    const companyTopNJobTitles = {
-      name: data.name,
-      topNJobTitles: data.topNJobTitles,
-    };
-
     dispatch(
-      setCompanyTopNJobTitles(companyName, getFetched(companyTopNJobTitles)),
+      setCompanyTopNJobTitles(companyName, getFetched(data.topNJobTitles)),
     );
   } catch (error) {
     dispatch(setCompanyTopNJobTitles(companyName, getError(error)));

@@ -64,7 +64,6 @@ export const salaryWorkTimeStatistics = R.pipe(
 
 export const topNJobTitles = R.pipe(
   data,
-  R.when(R.is(Object), R.prop('topNJobTitles')),
   R.defaultTo({}),
 );
 
