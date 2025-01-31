@@ -11,14 +11,21 @@ const CompanyInterviewExperienceHelmet = ({
   companyName,
   page,
   totalCount,
+  topNJobTitles,
 }) => {
   // title
-  const title = `${companyName} 面試心得列表 - 第${page}頁`;
+  const title =
+    page === 1
+      ? `${companyName} 面試心得`
+      : `${companyName} 面試心得 - 第${page}頁`;
 
   // description
   let description = `目前還沒有${companyName}}的面試心得。分享你的面試心得，一起讓職場更透明！`;
   if (totalCount > 0) {
-    description = `查看${totalCount}篇${companyName}面試心得`;
+    const jobTitles = topNJobTitles
+      ? topNJobTitles.map(item => item.name).join('、')
+      : '';
+    description = `${companyName}面試怎麼準備？${companyName}面試問題會問什麼？${companyName}${jobTitles}等面試心得都在這邊！`;
   }
 
   // canonical url
@@ -50,6 +57,11 @@ const CompanyInterviewExperienceHelmet = ({
 CompanyInterviewExperienceHelmet.propTypes = {
   companyName: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
+  topNJobTitles: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   totalCount: PropTypes.number.isRequired,
 };
 

@@ -17,6 +17,7 @@ const TimeAndSalary = ({
   page,
   pageSize,
   totalCount,
+  topNJobTitles,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
@@ -37,6 +38,7 @@ const TimeAndSalary = ({
               pageName={pageName}
               totalCount={totalCount}
               page={page}
+              topNJobTitles={topNJobTitles}
             />
             <TimeAndSalarySection
               pageType={pageType}
@@ -62,6 +64,11 @@ TimeAndSalary.propTypes = {
   salaryWorkTimeStatistics: PropTypes.object.isRequired,
   salaryWorkTimes: PropTypes.array,
   tabType: PropTypes.string.isRequired,
+  topNJobTitles: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   totalCount: PropTypes.number.isRequired,
 };
 
