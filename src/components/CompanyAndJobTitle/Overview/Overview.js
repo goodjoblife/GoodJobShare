@@ -10,6 +10,7 @@ import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import { tabType as TAB_TYPE, generateTabURL } from 'constants/companyJobTitle';
 import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
+import EsgBlock from './EsgBlock';
 
 const Overview = ({
   pageType,
@@ -29,6 +30,9 @@ const Overview = ({
 
   return (
     <Section Tag="main" paddingBottom>
+      <SnippetBlock>
+        <EsgBlock />
+      </SnippetBlock>
       <SnippetBlock
         title="薪水&加班狀況"
         linkText={`查看 ${salaryWorkTimesCount} 筆完整的薪水、加班數據資料 >>`}
