@@ -1,4 +1,4 @@
-@value yellow-bar, warning-red from '../../common/variables.module.css';
+@value yellow-bar, warning-red, below-small from '../../common/variables.module.css';
 
 .root {
   margin-bottom: 68px;
@@ -30,6 +30,10 @@
   grid-template: auto / repeat(4, 1fr);
   gap: 26px;
   margin: 20px 0;
+
+  @media (max-width: below-small) {
+    grid-template: auto / repeat(1, 1fr);
+  }
 }
 
 .item {
