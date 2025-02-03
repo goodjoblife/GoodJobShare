@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import cn from 'classnames';
 
 import EmptyView from '../EmptyView';
 import styles from './Overview.module.css';
@@ -16,7 +17,7 @@ const SnippetBlock = ({
   tabType,
 }) => (
   <div className={styles.snippet}>
-    <div className={styles.title}>{title}</div>
+    <div className={cn(styles.title, styles.aboveCard)}>{title}</div>
     {isEmpty ? (
       <EmptyView tabType={tabType} pageName={pageName} pageType={pageType} />
     ) : (

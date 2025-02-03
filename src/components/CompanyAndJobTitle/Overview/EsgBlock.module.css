@@ -4,11 +4,25 @@
   margin-bottom: 68px;
 }
 
-.caret {
+.toggle {
   display: inline-block;
   vertical-align: middle;
-  width: 13px;
-  margin-left: 12px;
+  width: 30px;
+  padding: 8px;
+  transition: rotate 0.3s;
+  rotate: 180deg;
+
+  &.expanded {
+    rotate: 0deg;
+  }
+}
+
+.content {
+  display: none;
+
+  &.expanded {
+    display: block;
+  }
 }
 
 .items {
@@ -93,4 +107,6 @@
 .disclaimer {
   font-size: 14px;
   font-weight: 400;
+  color: #979797;
+  text-align: right;
 }

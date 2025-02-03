@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
+
 import Card from 'common/Card';
 import Caret from 'common/icons/Caret';
 import Info from 'common/icons/Info';
@@ -27,21 +29,35 @@ EsgItemBlock.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-const EsgBlock = () => (
-  <Card className={styles.root}>
-    <div className={overviewStyles.title}>
-      企業ESG公開薪資揭露 <Caret className={styles.caret} />
-    </div>
-    <div className={styles.items}>
-      <EsgItemBlock className={styles.item} title="員工薪資平均數" />
-      <EsgItemBlock className={styles.item} title="非主管全時員工薪資平均數" />
-      <EsgItemBlock className={styles.item} title="非主管全時員工薪資中位數" />
-      <EsgItemBlock className={styles.item} title="管理職女性主管佔比" />
-    </div>
-    <div className={styles.disclaimer}>
-      資料來源：臺灣證券交易所 公開資訊觀測站
-    </div>
-  </Card>
-);
+const EsgBlock = () => {
+  const [isExpanded, setExpanded] = useState(true);
+  const toggleExpanded = useCallback(() => setExpanded(!isExpanded), [
+    isExpanded,
+  ]);
+  return (
+    <Card className={styles.root}>
+      <div className={overviewStyles.title}>
+        企業ESG公開薪資揭露
+        <button
+          className={cn(styles.toggle, { [styles.expanded]: isExpanded })}
+          onClick={toggleExpanded}
+        >
+          <Caret />
+        </button>
+      </div>
+      <div className={cn(styles.content, { [styles.expanded]: isExpanded })}>
+        <div className={styles.items}>
+          <EsgItemBlock className={styles.item} title="員工薪資平均數" />
+          <EsgItemBlock className={styles.item} title="非主管全時員工薪資平均數" />
+          <EsgItemBlock className={styles.item} title="非主管全時員工薪資中位數" />
+          <EsgItemBlock className={styles.item} title="管理職女性主管佔比" />
+        </div>
+        <div className={styles.disclaimer}>
+          資料來源：臺灣證券交易所 公開資訊觀測站
+        </div>
+      </div>
+    </Card>
+  );
+};
 
 export default EsgBlock;
