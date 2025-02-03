@@ -67,6 +67,16 @@
   }
 }
 
+.preview {
+  .item:not(:first-child) {
+    display: none;
+  }
+
+  .disclaimer {
+    display: none;
+  }
+}
+
 .badge {
   background-color: yellow-bar;
   padding: 4px 12px;

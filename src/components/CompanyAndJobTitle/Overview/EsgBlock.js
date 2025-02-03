@@ -7,6 +7,8 @@ import Caret from 'common/icons/Caret';
 import Info from 'common/icons/Info';
 import styles from './EsgBlock.module.css';
 import overviewStyles from './Overview.module.css';
+import GradientMask from 'common/GradientMask';
+import Button from 'common/button/Button';
 
 const EsgItemBlock = ({ className, title }) => (
   <Card className={className}>
@@ -30,33 +32,64 @@ EsgItemBlock.propTypes = {
 };
 
 const EsgBlock = () => {
+  const [hasEverToggled, setEverToggled] = useState(false);
   const [isExpanded, setExpanded] = useState(true);
-  const toggleExpanded = useCallback(() => setExpanded(!isExpanded), [
-    isExpanded,
-  ]);
+  const toggleExpanded = useCallback(() => {
+    if (!hasEverToggled) {
+      setEverToggled(true);
+      return;
+    }
+    setExpanded(!isExpanded);
+  }, [isExpanded, hasEverToggled]);
   return (
-    <Card className={styles.root}>
-      <div className={overviewStyles.title}>
-        企業ESG公開薪資揭露
-        <button
-          className={cn(styles.toggle, { [styles.expanded]: isExpanded })}
+    <GradientMask
+      show={!hasEverToggled}
+      childrenOnMaskBottom={
+        <Button
+          className="buttonCircleLoginShare"
+          btnStyle="yellow"
+          circleSize="lg"
           onClick={toggleExpanded}
         >
-          <Caret />
-        </button>
-      </div>
-      <div className={cn(styles.content, { [styles.expanded]: isExpanded })}>
-        <div className={styles.items}>
-          <EsgItemBlock className={styles.item} title="員工薪資平均數" />
-          <EsgItemBlock className={styles.item} title="非主管全時員工薪資平均數" />
-          <EsgItemBlock className={styles.item} title="非主管全時員工薪資中位數" />
-          <EsgItemBlock className={styles.item} title="管理職女性主管佔比" />
+          展開
+        </Button>
+      }
+    >
+      <Card className={cn(styles.root, { [styles.preview]: !hasEverToggled })}>
+        <div className={overviewStyles.title}>
+          企業ESG公開薪資揭露
+          {hasEverToggled && (
+            <button
+              className={cn(styles.toggle, { [styles.expanded]: isExpanded })}
+              onClick={toggleExpanded}
+            >
+              <Caret />
+            </button>
+          )}
         </div>
-        <div className={styles.disclaimer}>
-          資料來源：臺灣證券交易所 公開資訊觀測站
+        <div
+          className={cn(styles.content, {
+            [styles.expanded]: isExpanded,
+          })}
+        >
+          <div className={styles.items}>
+            <EsgItemBlock className={styles.item} title="員工薪資平均數" />
+            <EsgItemBlock
+              className={styles.item}
+              title="非主管全時員工薪資平均數"
+            />
+            <EsgItemBlock
+              className={styles.item}
+              title="非主管全時員工薪資中位數"
+            />
+            <EsgItemBlock className={styles.item} title="管理職女性主管佔比" />
+          </div>
+          <div className={styles.disclaimer}>
+            資料來源：臺灣證券交易所 公開資訊觀測站
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </GradientMask>
   );
 };
 

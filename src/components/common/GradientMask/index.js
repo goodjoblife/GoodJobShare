@@ -11,9 +11,8 @@ const GradientMask = ({
   show = true,
 }) => (
   <div className={cn(styles.container, rootClassName)}>
-    {children}
-    <div className={cn({ [styles.mask]: show })} />
-    {childrenOnMaskBottom && (
+    <div className={cn({ [styles.mask]: show })}>{children}</div>
+    {childrenOnMaskBottom && show && (
       <div className={cn({ [styles.maskBottomContainer]: show })}>
         {childrenOnMaskBottom}
       </div>
