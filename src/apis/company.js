@@ -50,7 +50,7 @@ export const getCompanyTimeAndSalaryStatistics = ({ companyName }) =>
     variables: { companyName },
   }).then(R.prop('company'));
 
-export const getCompanyTopJobNTitles = ({ companyName }) =>
+export const getCompanyTopNJobTitles = ({ companyName }) =>
   graphqlClient({
     query: getCompanyTopNJobTitlesQuery,
     variables: { companyName },
