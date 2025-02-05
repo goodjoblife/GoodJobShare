@@ -22,6 +22,7 @@ const ActiveItem = ({
   option: { value: optionValue },
   isElseOption,
   placeholder,
+  hasRating,
   ratingLabels,
   footnote,
   validateOrWarnItem,
@@ -72,6 +73,11 @@ const ActiveItem = ({
       ? placeholder([subject, rating, text])
       : placeholder;
 
+  ratingLabels =
+    typeof ratingLabels === 'function'
+      ? ratingLabels([subject, rating, text])
+      : ratingLabels;
+
   return (
     <div
       className={cn(styles.root, commonStyles.warnableContainer, {
@@ -94,15 +100,17 @@ const ActiveItem = ({
             placeholder={isElseOption ? placeholder : null}
           />
         )}
-        <Rating
-          page={page}
-          title={title}
-          dataKey={dataKey}
-          defaultValue={defaultRating}
-          value={rating}
-          onChange={setRating}
-          ratingLabels={ratingLabels}
-        />
+        {hasRating([subject, rating, text]) && (
+          <Rating
+            page={page}
+            title={title}
+            dataKey={dataKey}
+            defaultValue={defaultRating}
+            value={rating}
+            onChange={setRating}
+            ratingLabels={ratingLabels}
+          />
+        )}
         <Textarea
           className={styles.textarea}
           page={page}
@@ -139,15 +147,23 @@ ActiveItem.propTypes = {
     PropTypes.node,
     PropTypes.func,
   ]),
+  hasRating: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]).isRequired,
   isElseOption: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   option: OptionPropType.isRequired,
   page: PropTypes.number.isRequired,
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  ratingLabels: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.func,
+  ]).isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   validateOrWarnItem: PropTypes.func.isRequired,
+};
+
+ActiveItem.defaultProps = {
+  hasRating: true,
 };
 
 export default ActiveItem;

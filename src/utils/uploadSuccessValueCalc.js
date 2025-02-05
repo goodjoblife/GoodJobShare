@@ -13,7 +13,6 @@ const calcInterviewExperienceValue = (experience, defaultTextLength = 0) => {
     experience_in_year: 10,
     interview_result: 5,
     salary: 10,
-    overall_rating: 5,
     interview_sensitive_questions: 5,
   };
   for (let key of Object.keys(valueMap)) {

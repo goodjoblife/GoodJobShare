@@ -24,7 +24,7 @@ import {
   queryCompaniesApi,
   getCompanyTimeAndSalaryStatistics,
   queryCompanyRatingStatisticsApi,
-  getCompanyTopJobNTitles,
+  getCompanyTopNJobTitles,
 } from 'apis/company';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
@@ -291,7 +291,7 @@ export const queryCompanyTopNJobTitles = ({ companyName }) => async (
   dispatch(setCompanyTopNJobTitles(companyName, toFetching()));
 
   try {
-    const data = await getCompanyTopJobNTitles({
+    const data = await getCompanyTopNJobTitles({
       companyName,
     });
 
