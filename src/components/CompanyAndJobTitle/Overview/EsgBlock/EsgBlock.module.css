@@ -1,18 +1,6 @@
-@value yellow-bar, warning-red, below-small, above-small from '../../../common/variables.module.css';
+@value yellow-bar, warning-red, below-small from '../../../common/variables.module.css';
 
 .root {
-  &.mobile {
-    @media (min-width: below-small) {
-      display: none;
-    }
-  }
-
-  &:not(.mobile) {
-    @media (max-width: above-small) {
-      display: none;
-    }
-  }
-
   margin-bottom: 68px;
 }
 
