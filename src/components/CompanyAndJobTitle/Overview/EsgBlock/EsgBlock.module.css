@@ -1,6 +1,20 @@
-@value yellow-bar, warning-red, below-small from '../../common/variables.module.css';
+@value yellow-bar, warning-red, below-small, above-small from '../../../common/variables.module.css';
 
 .root {
+  &.mobile {
+    @media (min-width: below-small) {
+      display: none;
+    }
+  }
+
+  &:not(.mobile) {
+    @media (max-width: above-small) {
+      display: none;
+    }
+  }
+}
+
+.card {
   margin-bottom: 68px;
 }
 
@@ -10,18 +24,17 @@
   width: 30px;
   padding: 8px;
   transition: rotate 0.3s;
-  rotate: 180deg;
 
-  &.expanded {
-    rotate: 0deg;
+  &.collapsed {
+    rotate: 180deg;
   }
 }
 
 .content {
-  display: none;
+  display: block;
 
-  &.expanded {
-    display: block;
+  &.collapsed {
+    display: none;
   }
 }
 
