@@ -61,6 +61,7 @@ const ReportModal = ({
         <ModalContent
           modalType={modalType}
           modalPayload={modalPayload}
+          // TODO: 下一個 PR 修正會避免以下寫法
           id={experienceId || salaryWorkTimesId}
           handleIsModalOpen={handleIsModalOpen}
           setModalClosableOnClickOutside={setModalClosableOnClickOutside}
