@@ -11,7 +11,7 @@ import styles from './EsgBlock.module.css';
 
 const EsgBlockMobile = ({ className }) => {
   const [hasEverToggled, setEverToggled] = useState(false);
-  const [isCollapsed, setCollapsed] = useState(false);
+  const [isCollapsed, setCollapsed] = useState(true);
   const toggleCollapsed = useCallback(() => {
     if (!hasEverToggled) {
       setEverToggled(true);
@@ -35,7 +35,7 @@ const EsgBlockMobile = ({ className }) => {
       <EsgBlock
         className={cn(styles.mobile, { [styles.preview]: !hasEverToggled })}
         contentClassName={cn({
-          [styles.collapsed]: isCollapsed,
+          [styles.collapsed]: hasEverToggled && isCollapsed,
         })}
         toggleElement={
           hasEverToggled && (
