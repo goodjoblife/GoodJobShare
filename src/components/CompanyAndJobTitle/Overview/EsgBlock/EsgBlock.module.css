@@ -19,8 +19,8 @@
 .toggle {
   display: inline-block;
   vertical-align: middle;
-  width: 30px;
-  padding: 8px;
+  height: 0.8em;
+  padding: 0.2em 0.4em;
   transition: rotate 0.3s;
 
   &.collapsed {
