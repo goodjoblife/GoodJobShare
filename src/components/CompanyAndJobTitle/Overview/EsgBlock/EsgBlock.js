@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
+import Caret from 'common/icons/Caret';
 import Card from 'common/Card';
 import Info from 'common/icons/Info';
 import styles from './EsgBlock.module.css';
@@ -28,14 +29,31 @@ EsgItemBlock.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-const EsgBlock = ({ className, contentClassName, toggleElement }) => {
+const EsgBlock = ({ className, showsToggle = true, hasPreviewed }) => {
+  const [isCollapsed, setCollapsed] = useState(hasPreviewed);
+
+  const toggleCollapsed = useCallback(() => {
+    setCollapsed(isCollapsed => !isCollapsed);
+  }, []);
+
   return (
     <Card className={cn(styles.card, className)}>
       <div className={overviewStyles.title}>
         企業ESG公開薪資揭露
-        {toggleElement}
+        {showsToggle && (
+          <button
+            className={cn(styles.toggle, { [styles.collapsed]: isCollapsed })}
+            onClick={toggleCollapsed}
+          >
+            <Caret />
+          </button>
+        )}
       </div>
-      <div className={cn(styles.content, contentClassName)}>
+      <div
+        className={cn(styles.content, {
+          [styles.collapsed]: isCollapsed,
+        })}
+      >
         <div className={styles.items}>
           <EsgItemBlock className={styles.item} title="員工薪資平均數" />
           <EsgItemBlock
@@ -58,8 +76,8 @@ const EsgBlock = ({ className, contentClassName, toggleElement }) => {
 
 EsgBlock.propTypes = {
   className: PropTypes.string,
-  contentClassName: PropTypes.string,
-  toggleElement: PropTypes.node,
+  hasPreviewed: PropTypes.bool,
+  showsToggle: PropTypes.bool,
 };
 
 export default EsgBlock;
