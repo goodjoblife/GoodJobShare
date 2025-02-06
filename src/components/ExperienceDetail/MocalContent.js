@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { REPORT_TYPE } from './ReportForm/constants';
-
 import ReportFormProcess from './ReportFormProcess';
-import ReportList from './ReportList';
 
 const ModalContent = ({
   modalType,
@@ -13,22 +11,6 @@ const ModalContent = ({
   reportType,
   id,
 }) => {
-  const [isShowReport, setIsShowReport] = useState(true);
-  const handleCloseReport = () => setIsShowReport(false);
-
-  useEffect(() => {
-    setIsShowReport(prev => {
-      if (!prev) {
-        return true;
-      }
-      return prev;
-    });
-  }, [modalType]);
-
-  if (isShowReport) {
-    return <ReportList id={id} onCloseReport={handleCloseReport} />;
-  }
-
   return (
     <ReportFormProcess
       modalType={modalType}
