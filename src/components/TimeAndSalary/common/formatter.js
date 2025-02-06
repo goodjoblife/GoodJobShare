@@ -111,7 +111,7 @@ export const formatWage = wage => {
 export const formatDate = ({ year, month }) =>
   `${year}.${month >= 10 ? '' : 0}${month}`;
 
-export const getReportsInfo = ({ reports, id }) => ({
-  count: reports.length,
+export const getReportsInfo = ({ id, reportCount }) => ({
   id,
+  reportCount,
 });
