@@ -27,12 +27,7 @@ const EsgBlockMobile = ({ className }) => {
       maskClassName={styles.maskFix}
       show={!hasEverToggled}
       childrenOnMaskBottom={
-        <Button
-          className="buttonCircleLoginShare"
-          btnStyle="yellow"
-          circleSize="lg"
-          onClick={toggleCollapsed}
-        >
+        <Button btnStyle="blackLine" circleSize="lg" onClick={toggleCollapsed}>
           展開
         </Button>
       }
