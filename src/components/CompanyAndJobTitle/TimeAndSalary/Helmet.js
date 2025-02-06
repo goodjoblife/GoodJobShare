@@ -7,14 +7,25 @@ import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { IMG_HOST, SITE_NAME } from 'constants/helmetData';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
-const CompanySalaryWorkTimeHelmet = ({ companyName, page, totalCount }) => {
+const CompanySalaryWorkTimeHelmet = ({
+  companyName,
+  page,
+  totalCount,
+  topNJobTitles,
+}) => {
   // title
-  const title = `${companyName} 薪水&加班狀況 - 第${page}頁`;
+  const title =
+    page === 1
+      ? `${companyName} 薪水&加班狀況`
+      : `${companyName} 薪水&加班狀況 - 第${page}頁`;
 
   // description
   let description = `目前還沒有${companyName}的薪水、加班狀況資料。分享你的薪水、加班狀況，一起讓職場更透明。`;
   if (totalCount > 0) {
-    description = `查看${totalCount}筆由${companyName}內部員工提供的薪水、加班狀況資料。`;
+    const jobTitles = topNJobTitles
+      ? topNJobTitles.map(item => item.name).join('、')
+      : '';
+    description = `${companyName}薪水如何？${companyName}的${jobTitles}薪水大概多少？立即查看${totalCount}筆由${companyName}內部員工提供的薪水、加班狀況資料。`;
   }
 
   // canonical url
@@ -50,6 +61,11 @@ const CompanySalaryWorkTimeHelmet = ({ companyName, page, totalCount }) => {
 CompanySalaryWorkTimeHelmet.propTypes = {
   companyName: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
+  topNJobTitles: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   totalCount: PropTypes.number.isRequired,
 };
 
@@ -117,6 +133,11 @@ Helmet.propTypes = {
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
+  topNJobTitles: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   totalCount: PropTypes.number.isRequired,
 };
 

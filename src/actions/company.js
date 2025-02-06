@@ -14,6 +14,7 @@ import {
   companyInterviewExperiencesBoxSelectorByName,
   companyWorkExperiencesBoxSelectorByName,
   companyRatingStatisticsBoxSelectorByName,
+  companyTopNJobTitlesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   queryCompanyOverview as queryCompanyOverviewApi,
@@ -23,6 +24,7 @@ import {
   queryCompaniesApi,
   getCompanyTimeAndSalaryStatistics,
   queryCompanyRatingStatisticsApi,
+  getCompanyTopNJobTitles,
 } from 'apis/company';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
@@ -34,6 +36,8 @@ export const SET_INTERVIEW_EXPERIENCES = '@@COMPANY/SET_INTERVIEW_EXPERIENCES';
 export const SET_WORK_EXPERIENCES = '@@COMPANY/SET_WORK_EXPERIENCES';
 export const SET_INDEX = '@@COMPANY/SET_INDEX';
 export const SET_INDEX_COUNT = '@@COMPANY/SET_INDEX_COUNT';
+export const SET_COMPANY_TOP_N_JOB_TITLES =
+  '@@COMPANY/SET_COMPANY_TOP_N_JOB_TITLES';
 
 const setIndex = (page, box) => ({
   type: SET_INDEX,
@@ -227,6 +231,12 @@ const setTimeAndSalaryStatistics = (companyName, box) => ({
   box,
 });
 
+const setCompanyTopNJobTitles = (companyName, box) => ({
+  type: SET_COMPANY_TOP_N_JOB_TITLES,
+  companyName,
+  box,
+});
+
 export const queryCompanyTimeAndSalaryStatistics = ({ companyName }) => async (
   dispatch,
   getState,
@@ -265,6 +275,36 @@ export const queryCompanyTimeAndSalaryStatistics = ({ companyName }) => async (
     );
   } catch (error) {
     dispatch(setTimeAndSalaryStatistics(companyName, getError(error)));
+  }
+};
+
+export const queryCompanyTopNJobTitles = ({ companyName }) => async (
+  dispatch,
+  getState,
+) => {
+  const box = companyTopNJobTitlesBoxSelectorByName(companyName)(getState());
+
+  if (isFetching(box) || isFetched(box)) {
+    return;
+  }
+
+  dispatch(setCompanyTopNJobTitles(companyName, toFetching()));
+
+  try {
+    const data = await getCompanyTopNJobTitles({
+      companyName,
+    });
+
+    // Not found case
+    if (!data || !data.topNJobTitles) {
+      return dispatch(setCompanyTopNJobTitles(companyName, getFetched(data)));
+    }
+
+    dispatch(
+      setCompanyTopNJobTitles(companyName, getFetched(data.topNJobTitles)),
+    );
+  } catch (error) {
+    dispatch(setCompanyTopNJobTitles(companyName, getError(error)));
   }
 };
 

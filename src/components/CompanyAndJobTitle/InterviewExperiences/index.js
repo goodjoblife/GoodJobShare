@@ -14,6 +14,7 @@ const InterviewExperiences = ({
   page,
   pageSize,
   totalCount,
+  topNJobTitles,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
@@ -33,6 +34,7 @@ const InterviewExperiences = ({
               pageName={pageName}
               totalCount={totalCount}
               page={page}
+              topNJobTitles={topNJobTitles}
             />
             <InterviewExperiencesSection
               pageType={pageType}
@@ -57,6 +59,11 @@ InterviewExperiences.propTypes = {
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
+  topNJobTitles: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   totalCount: PropTypes.number.isRequired,
 };
 

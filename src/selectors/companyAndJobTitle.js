@@ -115,6 +115,10 @@ export const companyTimeAndSalaryStatisticsBoxSelectorByName = companyName => st
   );
 };
 
+export const companyTopNJobTitlesBoxSelectorByName = companyName => state => {
+  return state.companyIndex.topNJobTitlesByName[companyName] || getUnfetched();
+};
+
 export const companyInterviewExperiencesBoxSelectorByName = companyName => state => {
   return (
     state.companyIndex.interviewExperiencesByName[companyName] || getUnfetched()

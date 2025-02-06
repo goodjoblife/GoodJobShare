@@ -11,6 +11,7 @@ import {
 } from 'constants/companyJobTitle';
 import {
   queryCompanyInterviewExperiences,
+  queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
 import {
@@ -20,6 +21,7 @@ import {
   companyInterviewExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { usePageName, pageNameSelector } from './usePageName';
+import { useTopNJobTitles } from './useTopNJobTitles';
 import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
@@ -57,6 +59,10 @@ const CompanyInterviewExperiencesProvider = () => {
   }, [dispatch, pageName]);
 
   useEffect(() => {
+    dispatch(queryCompanyTopNJobTitles({ companyName: pageName }));
+  }, [dispatch, pageName]);
+
+  useEffect(() => {
     dispatch(
       queryCompanyInterviewExperiences({
         companyName: pageName,
@@ -78,6 +84,8 @@ const CompanyInterviewExperiencesProvider = () => {
     interviewExperiencesCount,
   } = useInterviewExperiencesBox(pageName);
 
+  const topNJobTitles = useTopNJobTitles(pageName);
+
   return (
     <InterviewExperiences
       pageType={pageType}
@@ -88,6 +96,7 @@ const CompanyInterviewExperiencesProvider = () => {
       tabType={TAB_TYPE.INTERVIEW_EXPERIENCE}
       status={status}
       interviewExperiences={interviewExperiences}
+      topNJobTitles={topNJobTitles.interview}
     />
   );
 };
@@ -113,6 +122,11 @@ CompanyInterviewExperiencesProvider.fetchData = ({
       }),
     ),
     dispatch(queryRatingStatistics(pageName)),
+    dispatch(
+      queryCompanyTopNJobTitles({
+        companyName: pageName,
+      }),
+    ),
   ]);
 };
 

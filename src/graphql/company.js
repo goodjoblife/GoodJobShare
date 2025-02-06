@@ -197,6 +197,28 @@ export const getCompanyTimeAndSalaryStatisticsQuery = /* GraphQL */ `
   }
 `;
 
+export const getCompanyTopNJobTitlesQuery = /* GraphQL */ `
+  query($companyName: String!) {
+    company(name: $companyName) {
+      name
+      topNJobTitles {
+        work {
+          name
+        }
+        interview {
+          name
+        }
+        salary {
+          name
+        }
+        all {
+          name
+        }
+      }
+    }
+  }
+`;
+
 export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
   query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
     company(name: $companyName) {

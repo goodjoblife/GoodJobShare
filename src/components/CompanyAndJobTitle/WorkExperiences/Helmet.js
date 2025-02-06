@@ -9,12 +9,13 @@ import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
 const CompanyWorkExperienceHelmet = ({ companyName, page, totalCount }) => {
   // title
-  const title = `${companyName} 評價列表 - 第${page}頁`;
+  const title =
+    page === 1 ? `${companyName} 評價` : `${companyName} 評價 - 第${page}頁`;
 
   // description
   let description = `目前還沒有${companyName}的評價。分享你的評價，一起讓職場更透明！`;
   if (totalCount > 0) {
-    description = `查看${totalCount}篇${companyName}評價`;
+    description = `在${companyName}工作好嗎？由${companyName}員工分享工作心得與狀況，${companyName}工時、升遷、福利狀況一次看。`;
   }
 
   // canonical url
