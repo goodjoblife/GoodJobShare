@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useAsyncFn } from 'react-use';
-import { getReports as getReportsApi } from 'apis/reportApi';
 import Loader from 'common/Loader';
 import styles from './ReportList.module.css';
 import { P } from 'common/base';
 import Button from 'common/button/Button';
+import { getExperienceReportsApi } from 'apis/reports';
 
 const useGetReports = experienceId => {
   return useAsyncFn(async () => {
-    return await getReportsApi({ id: experienceId });
+    return await getExperienceReportsApi({ id: experienceId });
   }, [experienceId]);
 };
 

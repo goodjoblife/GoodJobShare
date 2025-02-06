@@ -5,11 +5,11 @@ import Modal from 'common/Modal';
 import Loader from 'common/Loader';
 import { Heading, P } from 'common/base';
 import styles from './ReportInspectModal.module.css';
-import { getReports as getReportsApi } from 'apis/reportApi';
+import { getExperienceReportsApi } from 'apis/reports';
 
 const useGetReports = experienceId => {
   return useAsyncFn(async () => {
-    return await getReportsApi({ id: experienceId });
+    return await getExperienceReportsApi({ id: experienceId });
   }, [experienceId]);
 };
 
