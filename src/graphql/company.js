@@ -87,9 +87,6 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
       salaryWorkTimesResult(start: 0, limit: $salaryWorkTimesLimit) {
         count
         salaryWorkTimes {
-          reports {
-            id
-          }
           id
           week_work_time
           salary {
@@ -112,6 +109,13 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
           data_time {
             month
             year
+          }
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
           }
         }
       }
@@ -168,7 +172,13 @@ export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
             month
             year
           }
-          report_count
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
         }
       }
     }
