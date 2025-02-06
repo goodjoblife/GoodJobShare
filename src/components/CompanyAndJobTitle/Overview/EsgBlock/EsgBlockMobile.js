@@ -15,7 +15,7 @@ const EsgBlockMobile = ({ className }) => {
 
   return (
     <GradientMask
-      className={className}
+      rootClassName={className}
       maskClassName={styles.maskFix}
       show={!hasPreviewed}
       childrenOnMaskBottom={

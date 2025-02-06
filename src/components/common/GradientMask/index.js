@@ -6,12 +6,12 @@ import styles from './GradientMask.module.css';
 
 const GradientMask = ({
   children,
-  className,
+  rootClassName,
   maskClassName,
   childrenOnMaskBottom,
   show = true,
 }) => (
-  <div className={cn(styles.container, className)}>
+  <div className={cn(styles.container, rootClassName)}>
     <div className={cn({ [styles.mask]: show, [maskClassName]: show })}>
       {children}
     </div>
@@ -26,14 +26,14 @@ const GradientMask = ({
 GradientMask.propTypes = {
   children: PropTypes.element,
   childrenOnMaskBottom: PropTypes.any,
-  className: PropTypes.string,
   maskClassName: PropTypes.string,
+  rootClassName: PropTypes.string,
   show: PropTypes.bool,
 };
 
 GradientMask.defaultProps = {
   children: null,
-  className: '',
+  rootClassName: '',
   show: true,
 };
 
