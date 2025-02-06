@@ -11,6 +11,7 @@ import {
 import {
   queryCompanyTimeAndSalary,
   queryCompanyTimeAndSalaryStatistics,
+  queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
 import {
@@ -23,6 +24,7 @@ import {
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import { usePageName, pageNameSelector } from './usePageName';
+import { useTopNJobTitles } from './useTopNJobTitles';
 import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
   searchTextFromQuerySelector,
@@ -79,6 +81,14 @@ const CompanyTimeAndSalaryProvider = () => {
 
   useEffect(() => {
     dispatch(
+      queryCompanyTopNJobTitles({
+        companyName: pageName,
+      }),
+    );
+  }, [dispatch, pageName]);
+
+  useEffect(() => {
+    dispatch(
       queryCompanyTimeAndSalary({
         companyName: pageName,
         jobTitle: jobTitle || undefined,
@@ -94,6 +104,7 @@ const CompanyTimeAndSalaryProvider = () => {
   }, [pageType, pageName, fetchPermission]);
 
   const salaryWorkTimeStatistics = useTimeAndSalaryStatisticsBox(pageName);
+  const topNJobTitles = useTopNJobTitles(pageName);
 
   const { status, salaryWorkTimes, salaryWorkTimesCount } = useTimeAndSalaryBox(
     pageName,
@@ -106,6 +117,7 @@ const CompanyTimeAndSalaryProvider = () => {
       page={page}
       pageSize={PAGE_SIZE}
       totalCount={salaryWorkTimesCount}
+      topNJobTitles={topNJobTitles.salary}
       tabType={TAB_TYPE.TIME_AND_SALARY}
       status={status}
       salaryWorkTimes={salaryWorkTimes}
@@ -139,10 +151,16 @@ CompanyTimeAndSalaryProvider.fetchData = ({
     }),
   );
   const dispatchRatingStatistics = dispatch(queryRatingStatistics(pageName));
+  const dispatchTopNJobTitles = dispatch(
+    queryCompanyTopNJobTitles({
+      companyName: pageName,
+    }),
+  );
   return Promise.all([
     dispatchTimeAndSalary,
     dispatchTimeAndSalaryStatistics,
     dispatchRatingStatistics,
+    dispatchTopNJobTitles,
   ]);
 };
 

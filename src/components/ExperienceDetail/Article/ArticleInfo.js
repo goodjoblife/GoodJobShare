@@ -12,6 +12,7 @@ import {
 } from 'constants/companyJobTitle';
 import { originalCompanyNameSelector } from '../experienceSelector';
 import RatingInfo from './RatingInfo';
+import OverallRating from 'common/OverallRating';
 import ReportDialog from 'common/button/ReportDialog';
 import ReportModal from '../ReportModal';
 
@@ -91,9 +92,15 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
           )}
         </InfoBlock>
       ) : null}
-      <InfoBlock label="整體面試滿意度">
-        <RateButtons rate={experience.overall_rating} />
-      </InfoBlock>
+      {experience.averageSectionRating && (
+        <InfoBlock label="評分">
+          <OverallRating
+            rating={experience.averageSectionRating}
+            hasRatingLabel
+            hasRatingNumber
+          />
+        </InfoBlock>
+      )}
       {experience.interview_sensitive_questions &&
       experience.interview_sensitive_questions.length ? (
         <InfoBlock label="有以下特殊問題">
@@ -110,6 +117,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
 
 InterviewInfoBlocks.propTypes = {
   experience: PropTypes.shape({
+    averageSectionRating: PropTypes.number,
     company: PropTypes.shape({
       name: PropTypes.string,
     }),
@@ -319,33 +327,7 @@ const Aside = ({ experience, hideContent }) => {
 
 Aside.propTypes = {
   experience: PropTypes.shape({
-    company: PropTypes.shape({
-      name: PropTypes.string,
-    }),
-    created_at: PropTypes.string,
-    education: PropTypes.string,
-    experience_in_year: PropTypes.number,
-    interview_result: PropTypes.string,
-    interview_sensitive_questions: PropTypes.arrayOf(PropTypes.string),
-    interview_time: PropTypes.shape({
-      month: PropTypes.number,
-      year: PropTypes.number,
-    }),
-    job_title: PropTypes.shape({
-      name: PropTypes.string,
-    }),
-    originalCompanyName: PropTypes.string.isRequired,
-    overall_rating: PropTypes.number,
-    period: PropTypes.number,
-    recommend_to_others: PropTypes.string,
-    region: PropTypes.string,
-    salary: PropTypes.shape({
-      amount: PropTypes.number,
-      type: PropTypes.string,
-    }),
-    starting_year: PropTypes.number,
     type: PropTypes.string.isRequired,
-    week_work_time: PropTypes.number,
   }).isRequired,
   hideContent: PropTypes.bool,
 };

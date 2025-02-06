@@ -77,6 +77,7 @@ const CheckboxRatingTextAreaList = ({
   options: baseOptions,
   elseOptionValue,
   placeholder,
+  hasRating,
   ratingLabels,
   footnote,
 }) => {
@@ -141,6 +142,7 @@ const CheckboxRatingTextAreaList = ({
         onCancel={resetActiveOptionIndex}
         validateOrWarnItem={validateOrWarnItem}
         placeholder={placeholder}
+        hasRating={hasRating}
         ratingLabels={ratingLabels}
         footnote={footnote}
       />
@@ -180,11 +182,15 @@ CheckboxRatingTextAreaList.propTypes = {
     PropTypes.node,
     PropTypes.func,
   ]),
+  hasRating: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   onChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
   page: PropTypes.number.isRequired,
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  ratingLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  ratingLabels: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.func,
+  ]).isRequired,
   required: PropTypes.bool,
   setShowsNavigation: PropTypes.func.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,

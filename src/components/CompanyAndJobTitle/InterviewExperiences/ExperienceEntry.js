@@ -9,7 +9,7 @@ import { Heading, P } from 'common/base';
 import Coin from 'common/icons/Coin';
 import styles from './InterviewExperiences.module.css';
 import { formatCreatedAt, formatSalary, formatSalaryRange } from './helper';
-import Rating from './Rating';
+import OverallRating from 'common/OverallRating';
 
 const createLinkTo = ({ id, pageType }) => ({
   pathname: `/experiences/${id}`,
@@ -26,7 +26,7 @@ const ExperienceEntry = ({
     job_title: { name: jobTitle } = {},
     created_at: createdAt,
     salary,
-    overall_rating: overallRating,
+    averageSectionRating,
     sections: [section],
   },
   size,
@@ -60,9 +60,9 @@ const ExperienceEntry = ({
                 )}
               </div>
             )}
-            <div className={styles.rating}>
-              <Rating rate={overallRating} />
-            </div>
+            {averageSectionRating && (
+              <OverallRating rating={averageSectionRating} hasRatingNumber />
+            )}
           </div>
         </div>
 
@@ -94,12 +94,12 @@ const ExperienceEntry = ({
 ExperienceEntry.propTypes = {
   canView: PropTypes.bool.isRequired,
   data: PropTypes.shape({
+    averageSectionRating: PropTypes.number,
     created_at: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     job_title: PropTypes.shape({ name: PropTypes.string.isRequired })
       .isRequired,
     originalCompanyName: PropTypes.string,
-    overall_rating: PropTypes.number.isRequired,
     salary: PropTypes.shape({
       amount: PropTypes.number.isRequired,
       type: PropTypes.string.isRequired,

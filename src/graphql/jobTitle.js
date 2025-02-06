@@ -42,7 +42,7 @@ export const queryJobTitleOverviewGql = /* GraphQL */ `
           created_at
           reply_count
           like_count
-          overall_rating
+          averageSectionRating
         }
       }
       workExperiencesResult(start: 0, limit: $workExperiencesLimit) {
@@ -236,7 +236,7 @@ export const getJobTitleInterviewExperiencesQuery = /* GraphQL */ `
           created_at
           reply_count
           like_count
-          overall_rating
+          averageSectionRating
         }
       }
     }
