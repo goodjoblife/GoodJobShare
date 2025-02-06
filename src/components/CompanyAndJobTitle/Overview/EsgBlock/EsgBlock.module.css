@@ -12,9 +12,7 @@
       display: none;
     }
   }
-}
 
-.card {
   margin-bottom: 68px;
 }
 
@@ -136,4 +134,12 @@
   font-weight: 400;
   color: #979797;
   text-align: right;
+}
+
+.maskFix {
+  width: calc(100% + 8px);
+  position: relative;
+  top: -4px;
+  left: -4px;
+  padding: 4px;
 }

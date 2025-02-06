@@ -23,7 +23,8 @@ const EsgBlockMobile = ({ className }) => {
 
   return (
     <GradientMask
-      rootClassName={className}
+      className={className}
+      maskClassName={styles.maskFix}
       show={!hasEverToggled}
       childrenOnMaskBottom={
         <Button
