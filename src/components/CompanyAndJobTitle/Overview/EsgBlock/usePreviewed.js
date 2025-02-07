@@ -4,41 +4,36 @@ import { usePageName } from 'pages/Company/usePageName';
 
 const useYear = () => useMemo(() => new Date().getFullYear(), []);
 
-const usePreviewedYearByCopmanyName = () =>
-  useLocalStorage('esgPreviewedYearByCopmanyName', {}, false);
+const usePreviewedYearByPageName = () =>
+  useLocalStorage('esgPreviewedYearByPageName', {}, false);
 
 const usePreviewed = () => {
-  const companyName = usePageName();
+  const pageName = usePageName();
   const year = useYear();
 
   const [
-    previewedYearByCompanyName,
-    setPreviewedYearByCompanyName,
-  ] = usePreviewedYearByCopmanyName();
+    previewedYearByPageName,
+    setPreviewedYearByPageName,
+  ] = usePreviewedYearByPageName();
 
   const hasPreviewed = useMemo(
-    () => previewedYearByCompanyName[companyName] === year,
-    [previewedYearByCompanyName, companyName, year],
+    () => previewedYearByPageName[pageName] === year,
+    [previewedYearByPageName, pageName, year],
   );
 
   const setPreviewed = useCallback(
     previewed => {
       const copy = {
-        ...previewedYearByCompanyName,
+        ...previewedYearByPageName,
       };
       if (previewed) {
-        copy[companyName] = year;
+        copy[pageName] = year;
       } else {
-        delete copy[companyName];
+        delete copy[pageName];
       }
-      setPreviewedYearByCompanyName(copy);
+      setPreviewedYearByPageName(copy);
     },
-    [
-      companyName,
-      previewedYearByCompanyName,
-      setPreviewedYearByCompanyName,
-      year,
-    ],
+    [pageName, previewedYearByPageName, setPreviewedYearByPageName, year],
   );
 
   return [hasPreviewed, setPreviewed];
