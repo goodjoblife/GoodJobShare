@@ -19,7 +19,7 @@ import {
   companyWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
-import { usePageName, pageNameSelector } from './usePageName';
+import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
   searchTextFromQuerySelector,
@@ -45,42 +45,42 @@ const useWorkExperiencesBox = pageName => {
 const CompanyWorkExperiencesProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.COMPANY;
-  const pageName = usePageName();
+  const companyName = useCompanyName();
   const [jobTitle] = useSearchTextFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
 
   useEffect(() => {
-    dispatch(queryRatingStatistics(pageName));
-  }, [dispatch, pageName]);
+    dispatch(queryRatingStatistics(companyName));
+  }, [dispatch, companyName]);
 
   useEffect(() => {
     dispatch(
       queryCompanyWorkExperiences({
-        companyName: pageName,
+        companyName,
         jobTitle: jobTitle || undefined,
         start,
         limit,
       }),
     );
-  }, [dispatch, pageName, jobTitle, start, limit]);
+  }, [dispatch, companyName, jobTitle, start, limit]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
-  }, [pageType, pageName, fetchPermission]);
+  }, [pageType, companyName, fetchPermission]);
 
   const {
     status,
     workExperiences,
     workExperiencesCount,
-  } = useWorkExperiencesBox(pageName);
+  } = useWorkExperiencesBox(companyName);
 
   return (
     <WorkExperiences
       pageType={pageType}
-      pageName={pageName}
+      pageName={companyName}
       page={page}
       pageSize={PAGE_SIZE}
       totalCount={workExperiencesCount}
@@ -96,7 +96,7 @@ CompanyWorkExperiencesProvider.fetchData = ({
   ...props
 }) => {
   const params = paramsSelector(props);
-  const pageName = pageNameSelector(params);
+  const companyName = companyNameSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
   const jobTitle = searchTextFromQuerySelector(query) || undefined;
@@ -105,13 +105,13 @@ CompanyWorkExperiencesProvider.fetchData = ({
   return Promise.all([
     dispatch(
       queryCompanyWorkExperiences({
-        companyName: pageName,
+        companyName,
         jobTitle,
         start,
         limit,
       }),
     ),
-    dispatch(queryRatingStatistics(pageName)),
+    dispatch(queryRatingStatistics(companyName)),
   ]);
 };
 

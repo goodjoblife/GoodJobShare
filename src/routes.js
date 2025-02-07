@@ -48,7 +48,7 @@ import {
   companyOverviewLegacyPath,
   jobTitleOverviewLegacyPath,
 } from 'constants/linkTo';
-import { pageNameSelector as companyPageNameSelector } from 'pages/Company/usePageName';
+import { companyNameSelector } from 'pages/Company/useCompanyName';
 import { pageNameSelector as jobTitlePageNameSelector } from 'pages/JobTitle/usePageName';
 
 const routes = [
@@ -135,7 +135,7 @@ const routes = [
         path: companyOverviewLegacyPath, // 相容舊網址
         exact: true,
         render: ({ match: { params } }) => {
-          const companyName = companyPageNameSelector(params);
+          const companyName = companyNameSelector(params);
           const path = generatePath(companyOverviewPath, { companyName });
           return <Redirect to={path} />;
         },

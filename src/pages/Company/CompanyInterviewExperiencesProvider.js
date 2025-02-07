@@ -20,7 +20,7 @@ import {
   status as statusSelector,
   companyInterviewExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
-import { usePageName, pageNameSelector } from './usePageName';
+import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 import {
   searchTextFromQuerySelector,
@@ -28,10 +28,10 @@ import {
 } from 'components/CompanyAndJobTitle/Searchbar';
 import { pageFromQuerySelector } from 'selectors/routing/page';
 
-const useInterviewExperiencesBox = pageName => {
+const useInterviewExperiencesBox = companyName => {
   const selector = useCallback(
     state => {
-      const company = companyInterviewExperiencesBoxSelectorByName(pageName)(
+      const company = companyInterviewExperiencesBoxSelectorByName(companyName)(
         state,
       );
       return {
@@ -40,7 +40,7 @@ const useInterviewExperiencesBox = pageName => {
         interviewExperiencesCount: interviewExperiencesCountSelector(company),
       };
     },
-    [pageName],
+    [companyName],
   );
   return useSelector(selector);
 };
@@ -48,48 +48,48 @@ const useInterviewExperiencesBox = pageName => {
 const CompanyInterviewExperiencesProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.COMPANY;
-  const pageName = usePageName();
+  const companyName = useCompanyName();
   const [jobTitle] = useSearchTextFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
 
   useEffect(() => {
-    dispatch(queryRatingStatistics(pageName));
-  }, [dispatch, pageName]);
+    dispatch(queryRatingStatistics(companyName));
+  }, [dispatch, companyName]);
 
   useEffect(() => {
-    dispatch(queryCompanyTopNJobTitles({ companyName: pageName }));
-  }, [dispatch, pageName]);
+    dispatch(queryCompanyTopNJobTitles({ companyName }));
+  }, [dispatch, companyName]);
 
   useEffect(() => {
     dispatch(
       queryCompanyInterviewExperiences({
-        companyName: pageName,
+        companyName,
         jobTitle: jobTitle || undefined,
         start,
         limit,
       }),
     );
-  }, [dispatch, pageName, jobTitle, start, limit]);
+  }, [dispatch, companyName, jobTitle, start, limit]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
-  }, [pageType, pageName, fetchPermission]);
+  }, [pageType, companyName, fetchPermission]);
 
   const {
     status,
     interviewExperiences,
     interviewExperiencesCount,
-  } = useInterviewExperiencesBox(pageName);
+  } = useInterviewExperiencesBox(companyName);
 
-  const topNJobTitles = useTopNJobTitles(pageName);
+  const topNJobTitles = useTopNJobTitles(companyName);
 
   return (
     <InterviewExperiences
       pageType={pageType}
-      pageName={pageName}
+      pageName={companyName}
       page={page}
       pageSize={PAGE_SIZE}
       totalCount={interviewExperiencesCount}
@@ -106,7 +106,7 @@ CompanyInterviewExperiencesProvider.fetchData = ({
   ...props
 }) => {
   const params = paramsSelector(props);
-  const pageName = pageNameSelector(params);
+  const companyName = companyNameSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
   const jobTitle = searchTextFromQuerySelector(query) || undefined;
@@ -115,16 +115,16 @@ CompanyInterviewExperiencesProvider.fetchData = ({
   return Promise.all([
     dispatch(
       queryCompanyInterviewExperiences({
-        companyName: pageName,
+        companyName,
         jobTitle,
         start,
         limit,
       }),
     ),
-    dispatch(queryRatingStatistics(pageName)),
+    dispatch(queryRatingStatistics(companyName)),
     dispatch(
       queryCompanyTopNJobTitles({
-        companyName: pageName,
+        companyName,
       }),
     ),
   ]);
