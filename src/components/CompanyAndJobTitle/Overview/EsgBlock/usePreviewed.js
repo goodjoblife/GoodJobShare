@@ -17,7 +17,7 @@ const usePreviewed = () => {
   ] = usePreviewedYearByCopmanyName();
 
   const hasPreviewed = useMemo(
-    () => (previewedYearByCompanyName[companyName] || false) === year,
+    () => previewedYearByCompanyName[companyName] === year,
     [previewedYearByCompanyName, companyName, year],
   );
 
