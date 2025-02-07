@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import R from 'ramda';
 import { useParams } from 'react-router-dom';
 import Loader from 'common/Loader';
 import { Section } from 'common/base';
@@ -9,10 +8,8 @@ import NotFound from 'common/NotFound';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import FanPageBlock from 'common/FanPageBlock';
 import { paramsSelector } from 'common/routing/selectors';
-import { isFetching, isUnfetched, isError, isFetched } from 'constants/status';
+import { isFetching, isUnfetched, isError, isFetched } from 'utils/fetchBox';
 import {
-  queryMenu,
-  queryEntry,
   queryMenuIfUnfetched,
   queryEntryIfUnfetched,
 } from 'actions/laborRights';
@@ -37,38 +34,37 @@ const LaborRightsSingle = () => {
     dispatch(queryEntryIfUnfetched(entryId));
   }, [dispatch, entryId]);
 
-  const [entryStatus, entryError, entry] = useEntry(entryId);
+  const entryBox = useEntry(entryId);
   const [prevEntry, nextEntry] = useNeighborEntry(entryId);
-
-  const { title, description, content, coverUrl, nPublicPages } = entry || {};
-  const { seoTitle = title || '', seoDescription, seoText } = entry || {};
 
   return (
     <Section>
-      <Helmet
-        entryId={entryId}
-        seoTitle={seoTitle}
-        seoDescription={seoDescription}
-        coverUrl={coverUrl}
-      />
-      {R.anyPass([isFetching, isUnfetched])(entryStatus) && <Loader />}
-      {isError(entryStatus) && isUiNotFoundError(entryError) && <NotFound />}
-      {isFetched(entryStatus) && (
-        <div>
-          <Body
-            title={title}
-            seoText={seoText}
-            description={description}
-            content={content}
+      {(isFetching(entryBox) || isUnfetched(entryBox)) && <Loader />}
+      {isError(entryBox) && isUiNotFoundError(entryBox.error) && <NotFound />}
+      {isFetched(entryBox) && (
+        <Fragment>
+          <Helmet
+            entryId={entryId}
+            seoTitle={entryBox.data.seoTitle}
+            seoDescription={entryBox.data.seoDescription}
+            coverUrl={entryBox.data.coverUrl}
           />
-          <FanPageBlock className={styles.fanPageBlock} />
-          {nPublicPages < 0 && (
-            <Section marginTop>
-              <CallToActionFolder />
-            </Section>
-          )}
-          <Footer id={entryId} prev={prevEntry} next={nextEntry} />
-        </div>
+          <div>
+            <Body
+              title={entryBox.data.title}
+              seoText={entryBox.data.seoText}
+              description={entryBox.data.description}
+              content={entryBox.data.content}
+            />
+            <FanPageBlock className={styles.fanPageBlock} />
+            {entryBox.data.nPublicPages < 0 && (
+              <Section marginTop>
+                <CallToActionFolder />
+              </Section>
+            )}
+            <Footer id={entryId} prev={prevEntry} next={nextEntry} />
+          </div>
+        </Fragment>
       )}
     </Section>
   );
@@ -77,7 +73,10 @@ const LaborRightsSingle = () => {
 LaborRightsSingle.fetchData = ({ store: { dispatch }, ...props }) => {
   const params = paramsSelector(props);
   const entryId = entryIdSelector(params);
-  return Promise.all([dispatch(queryMenu()), dispatch(queryEntry(entryId))]);
+  return Promise.all([
+    dispatch(queryMenuIfUnfetched()),
+    dispatch(queryEntryIfUnfetched(entryId)),
+  ]);
 };
 
 export default LaborRightsSingle;

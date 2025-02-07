@@ -1,41 +1,14 @@
 import graphqlClient from 'utils/graphqlClient';
+import { queryLaborRightsGql, queryLaborRightGql } from 'graphql/laborRight';
 
-const getMenuEntriesGql = /* GraphQL */ `
-  query {
-    labor_rights {
-      id
-      title
-      coverUrl
-    }
-  }
-`;
-
-export const getMenuEntries = () =>
+export const queryLaborRightMenu = () =>
   graphqlClient({
-    query: getMenuEntriesGql,
+    query: queryLaborRightsGql,
   }).then(data => data.labor_rights);
 
-const getEntryGql = /* GraphQL */ `
-  query($id: ID!) {
-    labor_right(id: $id) {
-      id
-      title
-      order
-      description
-      content
-      seoTitle
-      seoDescription
-      seoText
-      coverUrl
-      nPublicPages
-      descriptionInPermissionBlock
-    }
-  }
-`;
-
-export const getEntry = ({ entryId }) =>
+export const queryLaborRight = ({ entryId }) =>
   graphqlClient({
-    query: getEntryGql,
+    query: queryLaborRightGql,
     variables: {
       id: entryId,
     },
