@@ -1,35 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { usePageName } from 'pages/Company/usePageName';
-
-const usePreviewedYearByCopmanyName = () => {
-  const key = 'esgPreviewedYearByCopmanyName';
-
-  const getPersistedYearByCompanyName = useCallback(() => {
-    try {
-      let rawValue = localStorage.getItem(key);
-      const yearByCompanyName = JSON.parse(rawValue);
-      if (!yearByCompanyName) return {};
-      return yearByCompanyName;
-    } catch (error) {
-      return {};
-    }
-  }, []);
-
-  const setPersistedYearByCompanyName = useCallback(yearByCompanyName => {
-    const rawValue = JSON.stringify(yearByCompanyName);
-    localStorage.setItem(key, rawValue);
-  }, []);
-
-  const [yearByCompanyName, setYearByCompanyName] = useState(
-    getPersistedYearByCompanyName(),
-  );
-  useEffect(() => {
-    setPersistedYearByCompanyName(yearByCompanyName);
-  }, [yearByCompanyName, setPersistedYearByCompanyName]);
-  return [yearByCompanyName, setYearByCompanyName];
-};
+import { useLocalStorage } from 'react-use';
 
 const useYear = () => useMemo(() => new Date().getFullYear(), []);
+
+const usePreviewedYearByCopmanyName = () =>
+  useLocalStorage('esgPreviewedYearByCopmanyName', {}, false);
 
 const usePreviewed = () => {
   const companyName = usePageName();
