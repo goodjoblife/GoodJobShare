@@ -22,11 +22,11 @@ const usePreviewed = () => {
   );
 
   const setPreviewed = useCallback(
-    Previewed => {
+    previewed => {
       const copy = {
         ...previewedYearByCompanyName,
       };
-      if (Previewed) {
+      if (previewed) {
         copy[companyName] = year;
       } else {
         delete copy[companyName];
