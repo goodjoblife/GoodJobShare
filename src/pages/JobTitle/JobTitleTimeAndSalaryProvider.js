@@ -21,7 +21,7 @@ import {
   jobTitleTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
-import { usePageName, pageNameSelector } from './usePageName';
+import useJobTitle, { jobTitleSelector } from './useJobTitle';
 import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
   searchTextFromQuerySelector,
@@ -61,7 +61,7 @@ const useTimeAndSalaryBox = pageName => {
 const JobTitleTimeAndSalaryProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.JOB_TITLE;
-  const pageName = usePageName();
+  const jobTitle = useJobTitle();
   const [companyName] = useSearchTextFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
@@ -70,37 +70,37 @@ const JobTitleTimeAndSalaryProvider = () => {
   useEffect(() => {
     dispatch(
       queryJobTitleTimeAndSalaryStatistics({
-        jobTitle: pageName,
+        jobTitle,
       }),
     );
-  }, [dispatch, pageName]);
+  }, [dispatch, jobTitle]);
 
   useEffect(() => {
     dispatch(
       queryJobTitleTimeAndSalary({
-        jobTitle: pageName,
+        jobTitle,
         companyName: companyName || undefined,
         start,
         limit,
       }),
     );
-  }, [dispatch, pageName, companyName, start, limit]);
+  }, [dispatch, jobTitle, companyName, start, limit]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
-  }, [pageType, pageName, fetchPermission]);
+  }, [pageType, jobTitle, fetchPermission]);
 
   const { status, salaryWorkTimes, salaryWorkTimesCount } = useTimeAndSalaryBox(
-    pageName,
+    jobTitle,
   );
 
-  const salaryWorkTimeStatistics = useSalaryWorkTimeStatistics(pageName);
+  const salaryWorkTimeStatistics = useSalaryWorkTimeStatistics(jobTitle);
 
   return (
     <TimeAndSalary
       pageType={pageType}
-      pageName={pageName}
+      pageName={jobTitle}
       page={page}
       pageSize={PAGE_SIZE}
       totalCount={salaryWorkTimesCount}
@@ -117,7 +117,7 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   ...props
 }) => {
   const params = paramsSelector(props);
-  const pageName = pageNameSelector(params);
+  const jobTitle = jobTitleSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
   const companyName = searchTextFromQuerySelector(query) || undefined;
@@ -125,7 +125,7 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   const limit = PAGE_SIZE;
   return dispatch(
     queryJobTitleTimeAndSalary({
-      jobTitle: pageName,
+      jobTitle,
       companyName,
       start,
       limit,

@@ -14,7 +14,7 @@ import {
   jobTitleOverviewBoxSelectorByName as overviewBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
-import { usePageName, pageNameSelector } from './usePageName';
+import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
 const useOverviewBox = pageName => {
   const selector = useCallback(
@@ -43,23 +43,23 @@ const useOverviewBox = pageName => {
 const JobTitleOverviewProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.JOB_TITLE;
-  const pageName = usePageName();
+  const jobTitle = useJobTitle();
 
   useEffect(() => {
-    dispatch(queryJobTitleOverview(pageName));
-  }, [dispatch, pageName]);
+    dispatch(queryJobTitleOverview(jobTitle));
+  }, [dispatch, jobTitle]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
-  }, [pageType, pageName, fetchPermission]);
+  }, [pageType, jobTitle, fetchPermission]);
 
-  const overviewBox = useOverviewBox(pageName);
+  const overviewBox = useOverviewBox(jobTitle);
 
   return (
     <Overview
       pageType={pageType}
-      pageName={pageName}
+      pageName={jobTitle}
       tabType={TAB_TYPE.OVERVIEW}
       overviewBox={overviewBox}
     />
@@ -68,8 +68,8 @@ const JobTitleOverviewProvider = () => {
 
 JobTitleOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
   const params = paramsSelector(props);
-  const pageName = pageNameSelector(params);
-  return dispatch(queryJobTitleOverview(pageName));
+  const jobTitle = jobTitleSelector(params);
+  return dispatch(queryJobTitleOverview(jobTitle));
 };
 
 export default JobTitleOverviewProvider;
