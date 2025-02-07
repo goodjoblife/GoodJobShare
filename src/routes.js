@@ -49,7 +49,7 @@ import {
   jobTitleOverviewLegacyPath,
 } from 'constants/linkTo';
 import { companyNameSelector } from 'pages/Company/useCompanyName';
-import { pageNameSelector as jobTitlePageNameSelector } from 'pages/JobTitle/usePageName';
+import { jobTitleSelector } from 'pages/JobTitle/useJobTitle';
 
 const routes = [
   {
@@ -178,7 +178,7 @@ const routes = [
         path: jobTitleOverviewLegacyPath, // 相容舊網址
         exact: true,
         render: ({ match: { params } }) => {
-          const jobTitle = jobTitlePageNameSelector(params);
+          const jobTitle = jobTitleSelector(params);
           const path = generatePath(jobTitleOverviewPath, { jobTitle });
           return <Redirect to={path} />;
         },
