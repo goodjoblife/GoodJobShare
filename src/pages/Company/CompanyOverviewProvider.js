@@ -18,7 +18,7 @@ import {
   companyOverviewBoxSelectorByName as overviewBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
-import { usePageName, pageNameSelector } from './usePageName';
+import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 
 const useOverviewBox = pageName => {
@@ -48,36 +48,36 @@ const useOverviewBox = pageName => {
 const CompanyOverviewProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.COMPANY;
-  const pageName = usePageName();
+  const companyName = useCompanyName();
 
   useEffect(() => {
-    dispatch(queryRatingStatistics(pageName));
-  }, [dispatch, pageName]);
+    dispatch(queryRatingStatistics(companyName));
+  }, [dispatch, companyName]);
 
   useEffect(() => {
     dispatch(
       queryCompanyTopNJobTitles({
-        companyName: pageName,
+        companyName,
       }),
     );
-  }, [dispatch, pageName]);
+  }, [dispatch, companyName]);
 
   useEffect(() => {
-    dispatch(queryCompanyOverview(pageName));
-  }, [dispatch, pageName]);
+    dispatch(queryCompanyOverview(companyName));
+  }, [dispatch, companyName]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
-  }, [pageType, pageName, fetchPermission]);
+  }, [pageType, companyName, fetchPermission]);
 
-  const overviewBox = useOverviewBox(pageName);
-  const topNJobTitles = useTopNJobTitles(pageName);
+  const overviewBox = useOverviewBox(companyName);
+  const topNJobTitles = useTopNJobTitles(companyName);
 
   return (
     <Overview
       pageType={pageType}
-      pageName={pageName}
+      pageName={companyName}
       tabType={TAB_TYPE.OVERVIEW}
       overviewBox={overviewBox}
       topNJobTitles={topNJobTitles.all}
@@ -87,11 +87,11 @@ const CompanyOverviewProvider = () => {
 
 CompanyOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
   const params = paramsSelector(props);
-  const pageName = pageNameSelector(params);
+  const companyName = companyNameSelector(params);
   return Promise.all([
-    dispatch(queryCompanyOverview(pageName)),
-    dispatch(queryRatingStatistics(pageName)),
-    dispatch(queryCompanyTopNJobTitles({ companyName: pageName })),
+    dispatch(queryCompanyOverview(companyName)),
+    dispatch(queryRatingStatistics(companyName)),
+    dispatch(queryCompanyTopNJobTitles({ companyName })),
   ]);
 };
 

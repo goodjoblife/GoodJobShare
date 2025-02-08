@@ -48,8 +48,8 @@ import {
   companyOverviewLegacyPath,
   jobTitleOverviewLegacyPath,
 } from 'constants/linkTo';
-import { pageNameSelector as companyPageNameSelector } from 'pages/Company/usePageName';
-import { pageNameSelector as jobTitlePageNameSelector } from 'pages/JobTitle/usePageName';
+import { companyNameSelector } from 'pages/Company/useCompanyName';
+import { jobTitleSelector } from 'pages/JobTitle/useJobTitle';
 
 const routes = [
   {
@@ -135,7 +135,7 @@ const routes = [
         path: companyOverviewLegacyPath, // 相容舊網址
         exact: true,
         render: ({ match: { params } }) => {
-          const companyName = companyPageNameSelector(params);
+          const companyName = companyNameSelector(params);
           const path = generatePath(companyOverviewPath, { companyName });
           return <Redirect to={path} />;
         },
@@ -178,7 +178,7 @@ const routes = [
         path: jobTitleOverviewLegacyPath, // 相容舊網址
         exact: true,
         render: ({ match: { params } }) => {
-          const jobTitle = jobTitlePageNameSelector(params);
+          const jobTitle = jobTitleSelector(params);
           const path = generatePath(jobTitleOverviewPath, { jobTitle });
           return <Redirect to={path} />;
         },

@@ -16,7 +16,7 @@ import {
   jobTitleWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
-import { usePageName, pageNameSelector } from './usePageName';
+import useJobTitle, { jobTitleSelector } from './useJobTitle';
 import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
   searchTextFromQuerySelector,
@@ -42,7 +42,7 @@ const useWorkExperiencesBox = pageName => {
 const JobTitleWorkExperiencesProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.JOB_TITLE;
-  const pageName = usePageName();
+  const jobTitle = useJobTitle();
   const [companyName] = useSearchTextFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
@@ -51,29 +51,29 @@ const JobTitleWorkExperiencesProvider = () => {
   useEffect(() => {
     dispatch(
       queryJobTitleWorkExperiences({
-        jobTitle: pageName,
+        jobTitle,
         companyName: companyName || undefined,
         start,
         limit,
       }),
     );
-  }, [dispatch, pageName, companyName, start, limit]);
+  }, [dispatch, jobTitle, companyName, start, limit]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
-  }, [pageType, pageName, fetchPermission]);
+  }, [pageType, jobTitle, fetchPermission]);
 
   const {
     status,
     workExperiences,
     workExperiencesCount,
-  } = useWorkExperiencesBox(pageName);
+  } = useWorkExperiencesBox(jobTitle);
 
   return (
     <WorkExperiences
       pageType={pageType}
-      pageName={pageName}
+      pageName={jobTitle}
       page={page}
       pageSize={PAGE_SIZE}
       totalCount={workExperiencesCount}
@@ -89,7 +89,7 @@ JobTitleWorkExperiencesProvider.fetchData = ({
   ...props
 }) => {
   const params = paramsSelector(props);
-  const pageName = pageNameSelector(params);
+  const jobTitle = jobTitleSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
   const companyName = searchTextFromQuerySelector(query) || undefined;
@@ -97,7 +97,7 @@ JobTitleWorkExperiencesProvider.fetchData = ({
   const limit = PAGE_SIZE;
   return dispatch(
     queryJobTitleWorkExperiences({
-      jobTitle: pageName,
+      jobTitle,
       companyName,
       start,
       limit,

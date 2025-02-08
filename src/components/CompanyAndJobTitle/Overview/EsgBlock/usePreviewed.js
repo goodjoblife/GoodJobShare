@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { useLocalStorage } from 'react-use';
-import { usePageName } from 'pages/Company/usePageName';
+import useCompanyName from 'pages/Company/useCompanyName';
 
 const useYear = () => useMemo(() => new Date().getFullYear(), []);
 
@@ -8,7 +8,7 @@ const usePreviewedYearByPageName = () =>
   useLocalStorage('esgPreviewedYearByPageName', {}, false);
 
 const usePreviewed = () => {
-  const pageName = usePageName();
+  const companyName = useCompanyName();
   const year = useYear();
 
   const [
@@ -17,8 +17,8 @@ const usePreviewed = () => {
   ] = usePreviewedYearByPageName();
 
   const hasPreviewed = useMemo(
-    () => previewedYearByPageName[pageName] === year,
-    [previewedYearByPageName, pageName, year],
+    () => previewedYearByPageName[companyName] === year,
+    [previewedYearByPageName, companyName, year],
   );
 
   const setPreviewed = useCallback(
@@ -27,13 +27,13 @@ const usePreviewed = () => {
         ...previewedYearByPageName,
       };
       if (previewed) {
-        copy[pageName] = year;
+        copy[companyName] = year;
       } else {
-        delete copy[pageName];
+        delete copy[companyName];
       }
       setPreviewedYearByPageName(copy);
     },
-    [pageName, previewedYearByPageName, setPreviewedYearByPageName, year],
+    [companyName, previewedYearByPageName, setPreviewedYearByPageName, year],
   );
 
   return [hasPreviewed, setPreviewed];
