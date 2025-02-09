@@ -1,7 +1,7 @@
 @value yellow-bar, warning-red, below-small from '../../../common/variables.module.css';
 
 .root {
-  margin-bottom: 68px;
+  margin-bottom: 50px;
 }
 
 .toggle {

@@ -6,7 +6,7 @@ import Caret from 'common/icons/Caret';
 import Card from 'common/Card';
 import Info from 'common/icons/Info';
 import styles from './EsgBlock.module.css';
-import overviewStyles from '../Overview.module.css';
+import overviewStyles from '../../Overview/Overview.module.css';
 
 const EsgItemBlock = ({ className, title }) => (
   <Card className={className}>

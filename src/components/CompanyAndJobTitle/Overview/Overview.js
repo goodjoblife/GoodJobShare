@@ -7,14 +7,9 @@ import SnippetBlock from './SnippetBlock';
 import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
-import {
-  tabType as TAB_TYPE,
-  generateTabURL,
-  pageType as PAGE_TYPE,
-} from 'constants/companyJobTitle';
+import { tabType as TAB_TYPE, generateTabURL } from 'constants/companyJobTitle';
 import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
-import EsgBlock from './EsgBlock';
 
 const Overview = ({
   pageType,
@@ -34,7 +29,6 @@ const Overview = ({
 
   return (
     <Section Tag="main" paddingBottom>
-      {pageType === PAGE_TYPE.COMPANY && <EsgBlock />}
       <SnippetBlock
         title="本站使用者分享之薪資、加班資訊"
         linkText={`查看 ${salaryWorkTimesCount} 筆完整的薪水、加班數據資料 >>`}
