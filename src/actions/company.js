@@ -83,28 +83,31 @@ const setRatingStatistcs = (companyName, box) => ({
   box,
 });
 
-export const queryRatingStatistics = pageName => async (dispatch, getState) => {
-  const box = companyRatingStatisticsBoxSelectorByName(pageName)(getState());
+export const queryRatingStatistics = companyName => async (
+  dispatch,
+  getState,
+) => {
+  const box = companyRatingStatisticsBoxSelectorByName(companyName)(getState());
   if (isFetching(box) || isFetched(box)) {
     return;
   }
 
-  dispatch(setRatingStatistcs(pageName, toFetching()));
+  dispatch(setRatingStatistcs(companyName, toFetching()));
 
   try {
     const data = await queryCompanyRatingStatisticsApi({
-      companyName: pageName,
+      companyName,
     });
 
     // Not found case
     if (data == null) {
-      return dispatch(setRatingStatistcs(pageName, getFetched(data)));
+      return dispatch(setRatingStatistcs(companyName, getFetched(data)));
     }
 
-    dispatch(setRatingStatistcs(pageName, getFetched(data)));
+    dispatch(setRatingStatistcs(companyName, getFetched(data)));
   } catch (error) {
     if (isGraphqlError(error)) {
-      dispatch(setRatingStatistcs(pageName, getError(error)));
+      dispatch(setRatingStatistcs(companyName, getError(error)));
     }
     throw error;
   }

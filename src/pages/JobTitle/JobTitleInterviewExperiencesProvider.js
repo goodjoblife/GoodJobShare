@@ -16,26 +16,26 @@ import {
   jobTitleInterviewExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
-import { usePageName, pageNameSelector } from './usePageName';
+import useJobTitle, { jobTitleSelector } from './useJobTitle';
 import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
 
-const useInterviewExperiencesBox = pageName => {
+const useInterviewExperiencesBox = jobTitle => {
   const selector = useCallback(
     state => {
-      const jobTitle = jobTitleInterviewExperiencesBoxSelectorByName(pageName)(
+      const job = jobTitleInterviewExperiencesBoxSelectorByName(jobTitle)(
         state,
       );
       return {
-        status: statusSelector(jobTitle),
-        interviewExperiences: interviewExperiencesSelector(jobTitle),
-        interviewExperiencesCount: interviewExperiencesCountSelector(jobTitle),
+        status: statusSelector(job),
+        interviewExperiences: interviewExperiencesSelector(job),
+        interviewExperiencesCount: interviewExperiencesCountSelector(job),
       };
     },
-    [pageName],
+    [jobTitle],
   );
 
   return useSelector(selector);
@@ -44,7 +44,7 @@ const useInterviewExperiencesBox = pageName => {
 const JobTitleTimeAndSalaryProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.JOB_TITLE;
-  const pageName = usePageName();
+  const jobTitle = useJobTitle();
   const [companyName] = useSearchTextFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
@@ -53,29 +53,29 @@ const JobTitleTimeAndSalaryProvider = () => {
   useEffect(() => {
     dispatch(
       queryJobTitleInterviewExperiences({
-        jobTitle: pageName,
+        jobTitle,
         companyName: companyName || undefined,
         start,
         limit,
       }),
     );
-  }, [dispatch, pageName, companyName, start, limit]);
+  }, [dispatch, jobTitle, companyName, start, limit]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
-  }, [pageType, pageName, fetchPermission]);
+  }, [pageType, jobTitle, fetchPermission]);
 
   const {
     status,
     interviewExperiences,
     interviewExperiencesCount,
-  } = useInterviewExperiencesBox(pageName);
+  } = useInterviewExperiencesBox(jobTitle);
 
   return (
     <InterviewExperiences
       pageType={pageType}
-      pageName={pageName}
+      pageName={jobTitle}
       page={page}
       pageSize={PAGE_SIZE}
       totalCount={interviewExperiencesCount}
@@ -91,7 +91,7 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   ...props
 }) => {
   const params = paramsSelector(props);
-  const pageName = pageNameSelector(params);
+  const jobTitle = jobTitleSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
   const companyName = searchTextFromQuerySelector(query) || undefined;
@@ -99,7 +99,7 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   const limit = PAGE_SIZE;
   return dispatch(
     queryJobTitleInterviewExperiences({
-      jobTitle: pageName,
+      jobTitle,
       companyName,
       start,
       limit,
