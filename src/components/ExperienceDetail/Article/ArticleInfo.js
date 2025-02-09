@@ -15,6 +15,7 @@ import RatingInfo from './RatingInfo';
 import OverallRating from 'common/OverallRating';
 import ReportDialog from 'common/button/ReportDialog';
 import ReportModal from '../ReportModal';
+import { REPORT_TYPE } from '../ReportForm/constants';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
@@ -33,11 +34,15 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
-      {experience.report_count > 0 && (
+      {experience.reportCount > 0 && (
         <div className={styles.reportDialogContainer}>
-          <ReportModal>
+          <ReportModal
+            id={experience.id}
+            reportType={REPORT_TYPE.EXPERIENCE}
+            reports={experience.reports}
+          >
             <ReportDialog
-              reportCount={experience.report_count}
+              reportCount={experience.reportCount}
               isShowReportText
               reportText="有使用者回報"
             />
@@ -124,6 +129,7 @@ InterviewInfoBlocks.propTypes = {
     created_at: PropTypes.string,
     education: PropTypes.string,
     experience_in_year: PropTypes.number,
+    id: PropTypes.string.isRequired,
     interview_result: PropTypes.string,
     interview_sensitive_questions: PropTypes.arrayOf(PropTypes.string),
     interview_time: PropTypes.shape({
@@ -136,7 +142,8 @@ InterviewInfoBlocks.propTypes = {
     originalCompanyName: PropTypes.string.isRequired,
     overall_rating: PropTypes.number,
     region: PropTypes.string,
-    report_count: PropTypes.number.isRequired,
+    reportCount: PropTypes.number.isRequired,
+    reports: PropTypes.arrayOf(PropTypes.object),
     salary: PropTypes.shape({
       amount: PropTypes.number,
       type: PropTypes.string,
@@ -149,11 +156,15 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
-      {experience.report_count > 0 && (
+      {experience.reportCount > 0 && (
         <div className={styles.reportDialogContainer}>
-          <ReportModal>
+          <ReportModal
+            id={experience.id}
+            reportType={REPORT_TYPE.EXPERIENCE}
+            reports={experience.reports}
+          >
             <ReportDialog
-              reportCount={experience.report_count}
+              reportCount={experience.reportCount}
               isShowReportText
               reportText="有使用者回報"
             />
@@ -222,13 +233,15 @@ WorkInfoBlocks.propTypes = {
     created_at: PropTypes.string,
     education: PropTypes.string,
     experience_in_year: PropTypes.number,
+    id: PropTypes.string.isRequired,
     job_title: PropTypes.shape({
       name: PropTypes.string,
     }),
     originalCompanyName: PropTypes.string.isRequired,
     recommend_to_others: PropTypes.string,
     region: PropTypes.string,
-    report_count: PropTypes.number.isRequired,
+    reportCount: PropTypes.number.isRequired,
+    reports: PropTypes.arrayOf(PropTypes.object),
     salary: PropTypes.shape({
       amount: PropTypes.number,
       type: PropTypes.string,

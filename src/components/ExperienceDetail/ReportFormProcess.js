@@ -12,13 +12,17 @@ const ReportFormProcess = ({
   setModalClosableOnClickOutside,
   reportType,
   id,
+  setIsShowReportList,
 }) => {
   switch (modalType) {
     case MODAL_TYPE.REPORT_DETAIL:
       return (
         <ReportForm
           reportType={reportType}
-          close={() => handleIsModalOpen(false)}
+          close={() => {
+            setIsShowReportList(true);
+            handleIsModalOpen(false);
+          }}
           id={id}
           onApiError={payload => {
             setModalClosableOnClickOutside(false);
@@ -58,6 +62,7 @@ ReportFormProcess.propTypes = {
   modalPayload: PropTypes.object,
   modalType: PropTypes.string.isRequired,
   reportType: PropTypes.string,
+  setIsShowReportList: PropTypes.func.isRequired,
   setModalClosableOnClickOutside: PropTypes.func.isRequired,
 };
 

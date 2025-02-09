@@ -1,28 +1,12 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import R from 'ramda';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
 import Modal from 'common/Modal';
-import usePermission from 'hooks/usePermission';
-import { queryExperienceIfUnfetched } from 'actions/experience';
 import PropTypes from 'prop-types';
-import ModalContent from './MocalContent';
 import { useReportModal } from './useReportModal';
-import { MODAL_TYPE, REPORT_TYPE } from './ReportForm/constants';
+import { MODAL_TYPE } from './ReportForm/constants';
+import ReportFormProcess from './ReportFormProcess';
+import ReportList from './ReportList';
 
-// from params
-const experienceIdSelector = R.prop('id');
-const useExperienceId = () => {
-  const params = useParams();
-  return experienceIdSelector(params);
-};
-
-const ReportModal = ({
-  children,
-  isModalClosableOnClickOutside = false,
-  reportType,
-  salaryWorkTimesId,
-}) => {
+const ReportModal = ({ children, reportType, id, reports }) => {
   const {
     modalState,
     handleIsModalOpen,
@@ -30,43 +14,41 @@ const ReportModal = ({
     setModalClosableOnClickOutside,
   } = useReportModal();
   const { isModalOpen, modalType, modalPayload } = modalState;
-  const experienceId = useExperienceId();
-  const [, fetchPermission] = usePermission({
-    publishId: experienceId,
-  });
-  const dispatch = useDispatch();
+  const [isShowReportList, setIsShowReportList] = useState(true);
 
   const handleReportClick = () => {
-    setModalClosableOnClickOutside(isModalClosableOnClickOutside);
+    setModalClosableOnClickOutside(false);
     handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
   };
-
-  useEffect(() => {
-    dispatch(queryExperienceIfUnfetched(experienceId));
-  }, [dispatch, experienceId]);
-
-  useEffect(() => {
-    fetchPermission();
-  }, [experienceId, fetchPermission]);
 
   return (
     <>
       <div onClick={handleReportClick}>{children}</div>
       <Modal
         isOpen={isModalOpen}
-        close={() => handleIsModalOpen(false)}
+        close={() => {
+          handleIsModalOpen(false);
+          setIsShowReportList(true);
+        }}
         closableOnClickOutside={closableOnClickOutside}
         hasClose
       >
-        <ModalContent
-          modalType={modalType}
-          modalPayload={modalPayload}
-          // TODO: 下一個 PR 修正會避免以下寫法
-          id={experienceId || salaryWorkTimesId}
-          handleIsModalOpen={handleIsModalOpen}
-          setModalClosableOnClickOutside={setModalClosableOnClickOutside}
-          reportType={reportType}
-        />
+        {isShowReportList ? (
+          <ReportList
+            reports={reports}
+            onCloseReport={() => setIsShowReportList(false)}
+          />
+        ) : (
+          <ReportFormProcess
+            modalType={modalType}
+            modalPayload={modalPayload}
+            id={id}
+            handleIsModalOpen={handleIsModalOpen}
+            setModalClosableOnClickOutside={setModalClosableOnClickOutside}
+            reportType={reportType}
+            setIsShowReportList={setIsShowReportList}
+          />
+        )}
       </Modal>
     </>
   );
@@ -74,14 +56,9 @@ const ReportModal = ({
 
 ReportModal.propTypes = {
   children: PropTypes.node.isRequired,
-  isModalClosableOnClickOutside: PropTypes.bool,
+  id: PropTypes.string,
   reportType: PropTypes.string,
-  salaryWorkTimesId: PropTypes.string,
-};
-
-ReportModal.defaultProps = {
-  isModalClosableOnClickOutside: false,
-  reportType: REPORT_TYPE.EXPERIENCE,
+  reports: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default ReportModal;

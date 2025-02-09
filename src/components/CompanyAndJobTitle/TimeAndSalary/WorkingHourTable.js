@@ -134,9 +134,13 @@ const columnProps = [
     className: styles.colDataTime,
     title: '回報',
     dataField: R.compose(
-      ({ id, reportCount }) => {
+      ({ id, reportCount, reports }) => {
         return (
-          <ReportModal reportType={REPORT_TYPE.SALARY} salaryWorkTimesId={id}>
+          <ReportModal
+            reportType={REPORT_TYPE.SALARY}
+            id={id}
+            reports={reports}
+          >
             <ReportDialog reportCount={reportCount} />
           </ReportModal>
         );
