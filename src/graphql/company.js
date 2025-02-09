@@ -308,7 +308,13 @@ export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
           like_count
           recommend_to_others
           averageSectionRating
-          report_count
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
         }
       }
     }
