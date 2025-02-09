@@ -140,6 +140,7 @@ const columnProps = [
             reportType={REPORT_TYPE.SALARY}
             id={id}
             reports={reports}
+            reportCount={reportCount}
           >
             <ReportDialog reportCount={reportCount} />
           </ReportModal>

@@ -83,6 +83,7 @@ const ReactionZone = ({
         reportType={REPORT_TYPE.EXPERIENCE}
         id={experienceId}
         reports={reports}
+        reportCount={reportCount}
       >
         <ReactionButton className={styles.report}>
           <ReportDialog

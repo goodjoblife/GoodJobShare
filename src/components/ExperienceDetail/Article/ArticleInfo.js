@@ -40,6 +40,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
             id={experience.id}
             reportType={REPORT_TYPE.EXPERIENCE}
             reports={experience.reports}
+            reportCount={experience.reportCount}
           >
             <ReportDialog
               reportCount={experience.reportCount}
@@ -162,6 +163,7 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
             id={experience.id}
             reportType={REPORT_TYPE.EXPERIENCE}
             reports={experience.reports}
+            reportCount={experience.reportCount}
           >
             <ReportDialog
               reportCount={experience.reportCount}
