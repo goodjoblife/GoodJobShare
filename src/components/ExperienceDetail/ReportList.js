@@ -4,15 +4,15 @@ import styles from './ReportList.module.css';
 import { P } from 'common/base';
 import Button from 'common/button/Button';
 
-const ReportList = ({ onCloseReport, reports }) => {
+const ReportList = ({ onCloseReport, reports, reportCount }) => {
   return (
     <div className={styles.reportList}>
-      {reports?.length === 0 ? (
+      {reportCount === 0 ? (
         <span>沒有檢舉記錄</span>
       ) : (
-        <span>共 {reports?.length} 個檢舉：</span>
+        <span>共 {reportCount} 個檢舉：</span>
       )}
-      {reports?.map(({ reason_category, reason }, i) => (
+      {reports.map(({ reason_category, reason }, i) => (
         <div key={i} className={styles.reportItem}>
           <P size="m" bold>
             {reason_category}
@@ -29,6 +29,7 @@ const ReportList = ({ onCloseReport, reports }) => {
 
 ReportList.propTypes = {
   onCloseReport: PropTypes.func.isRequired,
+  reportCount: PropTypes.number,
   reports: PropTypes.arrayOf(PropTypes.object),
 };
 
