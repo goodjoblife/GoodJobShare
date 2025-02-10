@@ -1,6 +1,6 @@
 import {
-  queryLaborRightMenu as queryLaborRightMenuApi,
-  queryLaborRight as queryLaborRightApi,
+  queryLaborRightsMenu as queryMenuApi,
+  queryLaborRights as queryEntryApi,
 } from 'apis/laborRightsApi';
 import { getError, getFetched, toFetching, isUnfetched } from 'utils/fetchBox';
 import {
@@ -27,7 +27,7 @@ const queryMenu = () => async (dispatch, getState) => {
   dispatch(setMenu(toFetching()));
 
   try {
-    const entries = await queryLaborRightMenuApi();
+    const entries = await queryMenuApi();
     return dispatch(setMenu(getFetched(entries)));
   } catch (error) {
     dispatch(setMenu(getError(error)));
@@ -46,7 +46,7 @@ const queryEntry = entryId => async (dispatch, getState) => {
   dispatch(setEntry(entryId, toFetching()));
 
   try {
-    const entry = await queryLaborRightApi({ entryId });
+    const entry = await queryEntryApi({ entryId });
     return dispatch(setEntry(entryId, getFetched(entry)));
   } catch (error) {
     if (isGraphqlError(error)) {

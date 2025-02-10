@@ -1,4 +1,4 @@
-export const queryLaborRightsGql = /* GraphQL */ `
+export const queryLaborRightsMenuGql = /* GraphQL */ `
   query {
     labor_rights {
       id
@@ -8,7 +8,7 @@ export const queryLaborRightsGql = /* GraphQL */ `
   }
 `;
 
-export const queryLaborRightGql = /* GraphQL */ `
+export const queryLaborRightsGql = /* GraphQL */ `
   query($id: ID!) {
     labor_right(id: $id) {
       id

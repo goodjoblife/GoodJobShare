@@ -1,14 +1,17 @@
 import graphqlClient from 'utils/graphqlClient';
-import { queryLaborRightsGql, queryLaborRightGql } from 'graphql/laborRight';
+import {
+  queryLaborRightsMenuGql,
+  queryLaborRightsGql,
+} from 'graphql/laborRight';
 
-export const queryLaborRightMenu = () =>
+export const queryLaborRightsMenu = () =>
   graphqlClient({
-    query: queryLaborRightsGql,
+    query: queryLaborRightsMenuGql,
   }).then(data => data.labor_rights);
 
-export const queryLaborRight = ({ entryId }) =>
+export const queryLaborRights = ({ entryId }) =>
   graphqlClient({
-    query: queryLaborRightGql,
+    query: queryLaborRightsGql,
     variables: {
       id: entryId,
     },
