@@ -17,7 +17,6 @@ import {
   getWeekWorkTime,
   formatWage,
   formatDate,
-  getReportsInfo,
 } from '../../TimeAndSalary/common/formatter';
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
 import usePermission from 'hooks/usePermission';
@@ -133,21 +132,18 @@ const columnProps = [
   {
     className: styles.colDataTime,
     title: '回報',
-    dataField: R.compose(
-      ({ id, reportCount, reports }) => {
-        return (
-          <ReportModal
-            reportType={REPORT_TYPE.SALARY}
-            id={id}
-            reports={reports}
-            reportCount={reportCount}
-          >
-            <ReportDialog reportCount={reportCount} />
-          </ReportModal>
-        );
-      },
-      getReportsInfo,
-    ),
+    dataField: R.compose(({ id, reportCount, reports }) => {
+      return (
+        <ReportModal
+          reportType={REPORT_TYPE.SALARY}
+          id={id}
+          reports={reports}
+          reportCount={reportCount}
+        >
+          <ReportDialog reportCount={reportCount} />
+        </ReportModal>
+      );
+    }),
     Children: () => '回報',
   },
 ];
