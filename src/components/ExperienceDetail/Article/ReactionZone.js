@@ -79,21 +79,21 @@ const ReactionZone = ({
       >
         留言
       </ReactionButton>
-      <ReportModal
-        reportType={REPORT_TYPE.EXPERIENCE}
-        id={experienceId}
-        reports={reports}
-        reportCount={reportCount}
-      >
-        <ReactionButton className={styles.report}>
+      <ReactionButton className={styles.report}>
+        <ReportModal
+          reportType={REPORT_TYPE.EXPERIENCE}
+          id={experienceId}
+          reports={reports}
+          reportCount={reportCount}
+        >
           <ReportDialog
             reportCount={reportCount}
             isHighlighted={reportCount > 0}
             isShowReportText
             reportText="回報"
           />
-        </ReactionButton>
-      </ReportModal>
+        </ReportModal>
+      </ReactionButton>
     </div>
   );
 };
