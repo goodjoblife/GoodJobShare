@@ -4,7 +4,7 @@ import {
   createSalaryWorkTimeReportApi,
 } from 'apis/reports';
 
-export const postExperienceReport = ({ id, reason, reasonCategory }) => (
+export const createExperienceReport = ({ id, reason, reasonCategory }) => (
   _,
   getState,
 ) => {
@@ -21,7 +21,7 @@ export const postExperienceReport = ({ id, reason, reasonCategory }) => (
   });
 };
 
-export const postSalaryWorkTimeReport = ({ id, reason, reasonCategory }) => (
+export const createSalaryWorkTimeReport = ({ id, reason, reasonCategory }) => (
   _,
   getState,
 ) => {
