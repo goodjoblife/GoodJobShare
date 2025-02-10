@@ -3,7 +3,6 @@ import {
   createExperienceReportGql,
   createSalaryWorkTimeReportGql,
   getExperienceReportsGql,
-  getSalaryWorkTimeReportsGql,
 } from 'graphql/reports';
 
 export const createExperienceReportApi = async ({
@@ -51,20 +50,4 @@ export const getExperienceReportsApi = async ({ id, token }) => {
     token,
   });
   return data.experience.reports;
-};
-
-export const getSalaryWorkTimeReportsApi = async ({
-  token,
-  companyName,
-  salaryWorkTimesLimit = 10,
-}) => {
-  const data = await graphqlClient({
-    query: getSalaryWorkTimeReportsGql,
-    variables: {
-      companyName,
-      salaryWorkTimesLimit,
-    },
-    token,
-  });
-  return data.salaryWorkTimeReports;
 };
