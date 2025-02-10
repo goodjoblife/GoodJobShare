@@ -34,20 +34,3 @@ export const getExperienceReportsGql = /* GraphQL */ `
     }
   }
 `;
-
-export const getSalaryWorkTimeReportsGql = /* GraphQL */ `
-  query($companyName: String!, $salaryWorkTimesLimit: Int!) {
-    company(name: $companyName) {
-      salaryWorkTimesResult(start: 0, limit: $salaryWorkTimesLimit) {
-        salaryWorkTimes {
-          reports {
-            id
-            reasonCategory
-            reason
-            createdAt
-          }
-        }
-      }
-    }
-  }
-`;
