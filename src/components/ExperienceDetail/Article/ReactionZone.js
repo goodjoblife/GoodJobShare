@@ -70,7 +70,7 @@ const ReactionZone = ({
         active={liked}
         onClick={handleLike}
       >
-        覺得實用
+        實用
       </ReactionButton>
       <ReactionButton
         className={styles.reactionButton}
