@@ -12,7 +12,7 @@ import {
 } from 'actions/experience';
 import { queryPopularCompanyAverageSalary } from 'actions/popularCompanyAverageSalary';
 import { queryPopularJobTitleSalaryDistribution } from 'actions/popularJobTitleSalaryDistribution';
-import { queryMenu, queryMenuIfUnfetched } from 'actions/laborRights';
+import { queryMenuIfUnfetched } from 'actions/laborRights';
 import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 import Banner from './Banner';
 import StaticHelmet from 'common/StaticHelmet';
@@ -134,7 +134,7 @@ const LandingPage = () => {
 LandingPage.fetchData = ({ store: { dispatch } }) => {
   return Promise.all([
     dispatch(queryPopularExperiences()),
-    dispatch(queryMenu()),
+    dispatch(queryMenuIfUnfetched()),
   ]);
 };
 

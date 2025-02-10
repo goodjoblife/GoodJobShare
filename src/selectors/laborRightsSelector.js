@@ -1,19 +1,8 @@
-import R, { path } from 'ramda';
-
-import fetchingStatus from 'constants/status';
+import { path } from 'ramda';
+import { getUnfetched } from 'utils/fetchBox';
 
 export const menuBoxSelector = path(['laborRights', 'menu']);
 
-export const entryDataSelector = entryId =>
-  R.path(['laborRights', 'entries', entryId, 'data']);
-
-export const entryStatusSelector = entryId =>
-  R.pathOr(fetchingStatus.UNFETCHED, [
-    'laborRights',
-    'entries',
-    entryId,
-    'status',
-  ]);
-
-export const entryErrorSelector = entryId =>
-  R.path(['laborRights', 'entries', entryId, 'error']);
+export const entryBoxSelectorById = entryId => state => {
+  return state.laborRights.entryById[entryId] || getUnfetched();
+};
