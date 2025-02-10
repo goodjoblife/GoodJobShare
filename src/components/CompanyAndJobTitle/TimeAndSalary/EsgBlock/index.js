@@ -1,12 +1,12 @@
 import React from 'react';
-import { useMedia } from 'react-use';
 
 import EsgBlockDesktop from './EsgBlockDesktop';
 import EsgBlockMobile from './EsgBlockMobile';
 import styles from './EsgBlock.module.css';
+import useMobile from 'hooks/useMobile';
 
 const EsgBlockRoot = () => {
-  const isMobile = useMedia('(max-width: 849px)');
+  const isMobile = useMobile();
 
   if (isMobile) {
     return <EsgBlockMobile className={styles.root} />;
