@@ -124,6 +124,7 @@
   }
 
   .buttonBlackLine {
+    background-color: white;
     border: 1px solid main-black;
     color: main-black;
 
