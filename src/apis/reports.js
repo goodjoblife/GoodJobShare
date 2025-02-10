@@ -42,7 +42,6 @@ export const createSalaryWorkTimeReportApi = async ({
     token,
   });
 
-// TODO: 以下兩個 API 等下一個 PR 再使用並修正
 export const getExperienceReportsApi = async ({ id, token }) => {
   const data = await graphqlClient({
     query: getExperienceReportsGql,

@@ -21,7 +21,7 @@ export const createSalaryWorkTimeReportGql = /* GraphQL */ `
     }
   }
 `;
-// TODO: 以下兩個 graphql 等下一個 PR 再使用並修正
+
 export const getExperienceReportsGql = /* GraphQL */ `
   query($id: ID!) {
     experience(id: $id) {
