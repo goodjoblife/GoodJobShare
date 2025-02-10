@@ -9,7 +9,7 @@ import useToggleLike from '../hooks/useToggleLike';
 import useLoginFlow from '../hooks/useLoginFlow';
 import ReportDialog from 'common/button/ReportDialog';
 import ReportModal from '../ReportModal';
-import { REPORT_TYPE } from '../ReportForm/constants';
+import { REPORT_TYPE } from '../ReportModal/ReportForm/constants';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
   <button

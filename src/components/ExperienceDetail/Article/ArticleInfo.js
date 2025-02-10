@@ -15,7 +15,7 @@ import RatingInfo from './RatingInfo';
 import OverallRating from 'common/OverallRating';
 import ReportDialog from 'common/button/ReportDialog';
 import ReportModal from '../ReportModal';
-import { REPORT_TYPE } from '../ReportForm/constants';
+import { REPORT_TYPE } from '../ReportModal/ReportForm/constants';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
