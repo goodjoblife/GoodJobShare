@@ -9,6 +9,7 @@ import {
 import {
   companyIndexesBoxSelectorAtPage,
   companyOverviewBoxSelectorByName,
+  companyOverviewStatisticsBoxSelectorByName,
   companyTimeAndSalaryBoxSelectorByName,
   companyTimeAndSalaryStatisticsBoxSelectorByName,
   companyInterviewExperiencesBoxSelectorByName,
@@ -25,10 +26,12 @@ import {
   getCompanyTimeAndSalaryStatistics,
   queryCompanyRatingStatisticsApi,
   getCompanyTopNJobTitles,
+  queryCompanyOverviewStatistics,
 } from 'apis/company';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
+export const SET_OVERVIEW_STATISTICS = '@@COMPANY/SET_OVERVIEW_STATISTICS';
 export const SET_TIME_AND_SALARY = '@@COMPANY/SET_TIME_AND_SALARY';
 export const SET_TIME_AND_SALARY_STATISTICS =
   '@@COMPANY/SET_TIME_AND_SALARY_STATISTICS';
@@ -163,6 +166,44 @@ export const queryCompanyOverview = companyName => async (
   } catch (error) {
     if (isGraphqlError(error)) {
       dispatch(setOverview(companyName, getError(error)));
+    }
+    throw error;
+  }
+};
+
+const setOverviewStatistics = (companyName, box) => ({
+  type: SET_OVERVIEW_STATISTICS,
+  companyName,
+  box,
+});
+
+export const queryCompanyOverviewSatistics = companyName => async (
+  dispatch,
+  getState,
+) => {
+  const box = companyOverviewStatisticsBoxSelectorByName(companyName)(
+    getState(),
+  );
+  if (isFetching(box) || isFetched(box)) {
+    return;
+  }
+
+  dispatch(setOverviewStatistics(companyName, toFetching()));
+
+  try {
+    const data = await queryCompanyOverviewStatistics({
+      companyName,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setOverviewStatistics(companyName, getFetched(data)));
+    }
+
+    dispatch(setOverviewStatistics(companyName, getFetched(data)));
+  } catch (error) {
+    if (isGraphqlError(error)) {
+      dispatch(setOverviewStatistics(companyName, getError(error)));
     }
     throw error;
   }

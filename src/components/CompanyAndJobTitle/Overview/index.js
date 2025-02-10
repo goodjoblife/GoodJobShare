@@ -10,6 +10,9 @@ const Overview = ({
   pageName,
   tabType,
   overviewBox,
+  jobAverageSalaries,
+  averageWeekWorkTime,
+  overtimeFrequencyCount,
   topNJobTitles,
 }) => (
   <CompanyAndJobTitleWrapper
@@ -44,9 +47,9 @@ const Overview = ({
               salaryWorkTimes={data.salaryWorkTimes}
               salaryWorkTimesCount={data.salaryWorkTimesCount}
               salaryDistribution={data.salaryDistribution}
-              jobAverageSalaries={data.jobAverageSalaries}
-              averageWeekWorkTime={data.averageWeekWorkTime}
-              overtimeFrequencyCount={data.overtimeFrequencyCount}
+              jobAverageSalaries={jobAverageSalaries}
+              averageWeekWorkTime={averageWeekWorkTime}
+              overtimeFrequencyCount={overtimeFrequencyCount}
             />
           </Fragment>
         );
@@ -56,13 +59,13 @@ const Overview = ({
 );
 
 Overview.propTypes = {
+  averageWeekWorkTime: PropTypes.number,
+  jobAverageSalaries: PropTypes.array,
+  overtimeFrequencyCount: PropTypes.object,
   overviewBox: PropTypes.shape({
     data: PropTypes.shape({
-      averageWeekWorkTime: PropTypes.number.isRequired,
       interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
       interviewExperiencesCount: PropTypes.number.isRequired,
-      jobAverageSalaries: PropTypes.array,
-      overtimeFrequencyCount: PropTypes.object.isRequired,
       salaryDistribution: PropTypes.array,
       salaryWorkTimes: PropTypes.arrayOf(PropTypes.object).isRequired,
       salaryWorkTimesCount: PropTypes.number.isRequired,

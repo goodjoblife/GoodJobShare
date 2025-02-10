@@ -30,7 +30,7 @@ const Overview = ({
   return (
     <Section Tag="main" paddingBottom>
       <SnippetBlock
-        title="薪水&加班狀況"
+        title="本站使用者分享之薪資、加班資訊"
         linkText={`查看 ${salaryWorkTimesCount} 筆完整的薪水、加班數據資料 >>`}
         linkTo={generateTabURL({
           pageType,

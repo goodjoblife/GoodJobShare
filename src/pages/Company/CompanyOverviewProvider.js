@@ -8,6 +8,7 @@ import {
 } from 'constants/companyJobTitle';
 import {
   queryCompanyOverview,
+  queryCompanyOverviewSatistics,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
@@ -16,6 +17,7 @@ import {
   averageWeekWorkTime,
   overtimeFrequencyCount,
   companyOverviewBoxSelectorByName as overviewBoxSelectorByName,
+  companyOverviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
@@ -26,18 +28,21 @@ const useOverviewBox = pageName => {
     state => {
       const box = overviewBoxSelectorByName(pageName)(state);
       // the box.data may be null (company not found)
+      return box;
+    },
+    [pageName],
+  );
+  return useSelector(selector);
+};
+
+const useOverviewStatistics = pageName => {
+  const selector = useCallback(
+    state => {
+      const box = companyOverviewStatisticsBoxSelectorByName(pageName)(state);
       return {
-        status: box.status,
-        data: box.data
-          ? {
-              ...box.data,
-              // the Overview need some fileds derived from salary_work_time_statistics
-              jobAverageSalaries: jobAverageSalaries(box),
-              averageWeekWorkTime: averageWeekWorkTime(box),
-              overtimeFrequencyCount: overtimeFrequencyCount(box),
-            }
-          : null,
-        error: box.error,
+        jobAverageSalaries: jobAverageSalaries(box),
+        averageWeekWorkTime: averageWeekWorkTime(box),
+        overtimeFrequencyCount: overtimeFrequencyCount(box),
       };
     },
     [pageName],
@@ -66,10 +71,20 @@ const CompanyOverviewProvider = () => {
     dispatch(queryCompanyOverview(companyName));
   }, [dispatch, companyName]);
 
+  useEffect(() => {
+    dispatch(queryCompanyOverviewSatistics(companyName));
+  }, [dispatch, companyName]);
+
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [pageType, companyName, fetchPermission]);
+
+  const {
+    jobAverageSalaries,
+    averageWeekWorkTime,
+    overtimeFrequencyCount,
+  } = useOverviewStatistics(companyName);
 
   const overviewBox = useOverviewBox(companyName);
   const topNJobTitles = useTopNJobTitles(companyName);
@@ -80,6 +95,9 @@ const CompanyOverviewProvider = () => {
       pageName={companyName}
       tabType={TAB_TYPE.OVERVIEW}
       overviewBox={overviewBox}
+      jobAverageSalaries={jobAverageSalaries}
+      averageWeekWorkTime={averageWeekWorkTime}
+      overtimeFrequencyCount={overtimeFrequencyCount}
       topNJobTitles={topNJobTitles.all}
     />
   );

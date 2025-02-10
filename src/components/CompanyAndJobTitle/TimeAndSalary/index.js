@@ -7,6 +7,7 @@ import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
 import Searchbar from '../Searchbar';
+import SummarySection from './SummarySection';
 
 const TimeAndSalary = ({
   pageType,
@@ -14,6 +15,9 @@ const TimeAndSalary = ({
   tabType,
   salaryWorkTimes,
   salaryWorkTimeStatistics,
+  jobAverageSalaries,
+  averageWeekWorkTime,
+  overtimeFrequencyCount,
   page,
   pageSize,
   totalCount,
@@ -24,6 +28,11 @@ const TimeAndSalary = ({
     pageName={pageName}
     tabType={tabType}
   >
+    <SummarySection
+      jobAverageSalaries={jobAverageSalaries}
+      averageWeekWorkTime={averageWeekWorkTime}
+      overtimeFrequencyCount={overtimeFrequencyCount}
+    />
     <OvertimeSection statistics={salaryWorkTimeStatistics} />
     <Searchbar pageType={pageType} tabType={tabType} />
     <BoxStatusRenderer
@@ -57,6 +66,9 @@ const TimeAndSalary = ({
 );
 
 TimeAndSalary.propTypes = {
+  averageWeekWorkTime: PropTypes.number.isRequired,
+  jobAverageSalaries: PropTypes.arrayOf(PropTypes.object),
+  overtimeFrequencyCount: PropTypes.object.isRequired,
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,

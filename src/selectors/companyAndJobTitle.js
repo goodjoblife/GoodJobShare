@@ -104,6 +104,12 @@ export const companyOverviewBoxSelectorByName = companyName => state => {
   return state.companyIndex.overviewByName[companyName] || getUnfetched();
 };
 
+export const companyOverviewStatisticsBoxSelectorByName = companyName => state => {
+  return (
+    state.companyIndex.overviewStatisticsByName[companyName] || getUnfetched()
+  );
+};
+
 export const companyTimeAndSalaryBoxSelectorByName = companyName => state => {
   return state.companyIndex.timeAndSalaryByName[companyName] || getUnfetched();
 };

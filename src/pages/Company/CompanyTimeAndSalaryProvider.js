@@ -9,6 +9,7 @@ import {
   PAGE_SIZE,
 } from 'constants/companyJobTitle';
 import {
+  queryCompanyOverviewSatistics,
   queryCompanyTimeAndSalary,
   queryCompanyTimeAndSalaryStatistics,
   queryCompanyTopNJobTitles,
@@ -21,6 +22,10 @@ import {
   status as statusSelector,
   companyTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
   companyTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
+  jobAverageSalaries as jobAverageSalariesSelector,
+  averageWeekWorkTime as averageWeekWorkTimeSelector,
+  overtimeFrequencyCount as overtimeFrequencyCountSelector,
+  companyOverviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
@@ -30,6 +35,21 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
+
+const useOverviewStatistics = pageName => {
+  const selector = useCallback(
+    state => {
+      const box = companyOverviewStatisticsBoxSelectorByName(pageName)(state);
+      return {
+        jobAverageSalaries: jobAverageSalariesSelector(box),
+        averageWeekWorkTime: averageWeekWorkTimeSelector(box),
+        overtimeFrequencyCount: overtimeFrequencyCountSelector(box),
+      };
+    },
+    [pageName],
+  );
+  return useSelector(selector);
+};
 
 const useTimeAndSalaryStatisticsBox = pageName => {
   const selector = useCallback(
@@ -80,6 +100,10 @@ const CompanyTimeAndSalaryProvider = () => {
   }, [dispatch, companyName]);
 
   useEffect(() => {
+    dispatch(queryCompanyOverviewSatistics(companyName));
+  }, [dispatch, companyName]);
+
+  useEffect(() => {
     dispatch(
       queryCompanyTopNJobTitles({
         companyName,
@@ -103,6 +127,12 @@ const CompanyTimeAndSalaryProvider = () => {
     fetchPermission();
   }, [pageType, companyName, fetchPermission]);
 
+  const {
+    jobAverageSalaries,
+    averageWeekWorkTime,
+    overtimeFrequencyCount,
+  } = useOverviewStatistics(companyName);
+
   const salaryWorkTimeStatistics = useTimeAndSalaryStatisticsBox(companyName);
   const topNJobTitles = useTopNJobTitles(companyName);
 
@@ -122,6 +152,9 @@ const CompanyTimeAndSalaryProvider = () => {
       status={status}
       salaryWorkTimes={salaryWorkTimes}
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
+      jobAverageSalaries={jobAverageSalaries}
+      averageWeekWorkTime={averageWeekWorkTime}
+      overtimeFrequencyCount={overtimeFrequencyCount}
     />
   );
 };
