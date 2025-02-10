@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  useState,
-  useCallback,
-  useEffect,
-  useMemo,
-} from 'react';
+import React, { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import R from 'ramda';
@@ -22,7 +16,6 @@ import Article from './Article';
 import MessageBoard from './MessageBoard';
 import Seo from './Seo';
 import ExperienceHeading from './Heading';
-import ReportInspectModal from './ReactionZone/ReportInspectModal';
 import MoreExperiencesBlock from './MoreExperiencesBlock';
 import ChartsZone from './ChartsZone';
 import { isError, isFetched } from 'utils/fetchBox';
@@ -81,10 +74,6 @@ const ExperienceDetail = ({ ...props }) => {
   useEffect(() => {
     fetchPermission();
   }, [experienceId, fetchPermission]);
-
-  const [reportInspectModalIsOpen, setReportInspectModalIsOpen] = useState(
-    false,
-  );
 
   useTrace(experienceId);
 
@@ -150,11 +139,6 @@ const ExperienceDetail = ({ ...props }) => {
           <MessageBoard experienceId={experienceId} />
         </Wrapper>
       </Section>
-      <ReportInspectModal
-        experienceId={experienceId}
-        isOpen={reportInspectModalIsOpen}
-        setIsOpen={setReportInspectModalIsOpen}
-      />
     </main>
   );
 };
