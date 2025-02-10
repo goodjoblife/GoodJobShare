@@ -167,6 +167,25 @@ export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
           }
         }
       }
+      salary_work_time_statistics {
+        average_week_work_time
+        overtime_frequency_count {
+          seldom
+          sometimes
+          usually
+          almost_everyday
+        }
+        job_average_salaries {
+          job_title {
+            name
+          }
+          average_salary {
+            type
+            amount
+          }
+          data_count
+        }
+      }
     }
   }
 `;

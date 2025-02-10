@@ -21,6 +21,9 @@ import {
   status as statusSelector,
   companyTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
   companyTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
+  jobAverageSalaries as jobAverageSalariesSelector,
+  averageWeekWorkTime as averageWeekWorkTimeSelector,
+  overtimeFrequencyCount as overtimeFrequencyCountSelector,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
@@ -50,6 +53,9 @@ const useTimeAndSalaryBox = companyName => {
         status: statusSelector(company),
         salaryWorkTimes: salaryWorkTimesSelector(company),
         salaryWorkTimesCount: salaryWorkTimesCountSelector(company),
+        jobAverageSalaries: jobAverageSalariesSelector(company),
+        averageWeekWorkTime: averageWeekWorkTimeSelector(company),
+        overtimeFrequencyCount: overtimeFrequencyCountSelector(company),
       };
     },
     [companyName],
@@ -106,9 +112,14 @@ const CompanyTimeAndSalaryProvider = () => {
   const salaryWorkTimeStatistics = useTimeAndSalaryStatisticsBox(companyName);
   const topNJobTitles = useTopNJobTitles(companyName);
 
-  const { status, salaryWorkTimes, salaryWorkTimesCount } = useTimeAndSalaryBox(
-    companyName,
-  );
+  const {
+    status,
+    salaryWorkTimes,
+    salaryWorkTimesCount,
+    jobAverageSalaries,
+    averageWeekWorkTime,
+    overtimeFrequencyCount,
+  } = useTimeAndSalaryBox(companyName);
 
   return (
     <TimeAndSalary
@@ -122,6 +133,9 @@ const CompanyTimeAndSalaryProvider = () => {
       status={status}
       salaryWorkTimes={salaryWorkTimes}
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
+      jobAverageSalaries={jobAverageSalaries}
+      averageWeekWorkTime={averageWeekWorkTime}
+      overtimeFrequencyCount={overtimeFrequencyCount}
     />
   );
 };
