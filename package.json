@@ -90,7 +90,7 @@
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.1.0",
     "rollbar": "^2.26.1",
-    "serialize-javascript": "^3.1.0"
+    "serialize-javascript": "^6.0.2"
   },
   "engines": {
     "node": ">=14.x"
