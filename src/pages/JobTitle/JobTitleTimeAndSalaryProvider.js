@@ -9,6 +9,7 @@ import {
   PAGE_SIZE,
 } from 'constants/companyJobTitle';
 import {
+  queryJobTitleOverviewStatistics,
   queryJobTitleTimeAndSalary,
   queryJobTitleTimeAndSalaryStatistics,
 } from 'actions/jobTitle';
@@ -19,6 +20,10 @@ import {
   status as statusSelector,
   jobTitleTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
   jobTitleTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
+  jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
+  salaryDistribution,
+  averageWeekWorkTime,
+  overtimeFrequencyCount,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
@@ -27,6 +32,22 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
+
+const useOverviewStatistics = pageName => {
+  const selector = useCallback(
+    state => {
+      const box = overviewStatisticsBoxSelectorByName(pageName)(state);
+      // the box.data may be null (company not found)
+      return {
+        salaryDistribution: salaryDistribution(box),
+        averageWeekWorkTime: averageWeekWorkTime(box),
+        overtimeFrequencyCount: overtimeFrequencyCount(box),
+      };
+    },
+    [pageName],
+  );
+  return useSelector(selector);
+};
 
 const useSalaryWorkTimeStatistics = pageName => {
   const selector = useCallback(
@@ -68,6 +89,10 @@ const JobTitleTimeAndSalaryProvider = () => {
   const limit = PAGE_SIZE;
 
   useEffect(() => {
+    dispatch(queryJobTitleOverviewStatistics(jobTitle));
+  }, [dispatch, jobTitle]);
+
+  useEffect(() => {
     dispatch(
       queryJobTitleTimeAndSalaryStatistics({
         jobTitle,
@@ -95,6 +120,12 @@ const JobTitleTimeAndSalaryProvider = () => {
     jobTitle,
   );
 
+  const {
+    salaryDistribution,
+    averageWeekWorkTime,
+    overtimeFrequencyCount,
+  } = useOverviewStatistics(jobTitle);
+
   const salaryWorkTimeStatistics = useSalaryWorkTimeStatistics(jobTitle);
 
   return (
@@ -108,6 +139,9 @@ const JobTitleTimeAndSalaryProvider = () => {
       status={status}
       salaryWorkTimes={salaryWorkTimes}
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
+      salaryDistribution={salaryDistribution}
+      averageWeekWorkTime={averageWeekWorkTime}
+      overtimeFrequencyCount={overtimeFrequencyCount}
     />
   );
 };
@@ -123,14 +157,17 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   const companyName = searchTextFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
-  return dispatch(
-    queryJobTitleTimeAndSalary({
-      jobTitle,
-      companyName,
-      start,
-      limit,
-    }),
-  );
+  return Promise.all([
+    dispatch(queryJobTitleOverviewStatistics(jobTitle)),
+    dispatch(
+      queryJobTitleTimeAndSalary({
+        jobTitle,
+        companyName,
+        start,
+        limit,
+      }),
+    ),
+  ]);
 };
 
 export default JobTitleTimeAndSalaryProvider;

@@ -15,6 +15,7 @@ const TimeAndSalary = ({
   tabType,
   salaryWorkTimes,
   salaryWorkTimeStatistics,
+  salaryDistribution,
   jobAverageSalaries,
   averageWeekWorkTime,
   overtimeFrequencyCount,
@@ -29,6 +30,7 @@ const TimeAndSalary = ({
     tabType={tabType}
   >
     <SummarySection
+      salaryDistribution={salaryDistribution}
       jobAverageSalaries={jobAverageSalaries}
       averageWeekWorkTime={averageWeekWorkTime}
       overtimeFrequencyCount={overtimeFrequencyCount}
@@ -73,6 +75,7 @@ TimeAndSalary.propTypes = {
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
+  salaryDistribution: PropTypes.array,
   salaryWorkTimeStatistics: PropTypes.object.isRequired,
   salaryWorkTimes: PropTypes.array,
   tabType: PropTypes.string.isRequired,
@@ -80,7 +83,7 @@ TimeAndSalary.propTypes = {
     PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),
-  ).isRequired,
+  ),
   totalCount: PropTypes.number.isRequired,
 };
 

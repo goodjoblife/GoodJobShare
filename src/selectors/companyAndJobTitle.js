@@ -150,6 +150,12 @@ export const jobTitleOverviewBoxSelectorByName = jobTitle => state => {
   return state.jobTitleIndex.overviewByName[jobTitle] || getUnfetched();
 };
 
+export const jobTitleOverviewStatisticsBoxSelectorByName = jobTitle => state => {
+  return (
+    state.jobTitleIndex.overviewStatisticsByName[jobTitle] || getUnfetched()
+  );
+};
+
 export const jobTitleTimeAndSalaryBoxSelectorByName = jobTitle => state => {
   return state.jobTitleIndex.timeAndSalaryByName[jobTitle] || getUnfetched();
 };

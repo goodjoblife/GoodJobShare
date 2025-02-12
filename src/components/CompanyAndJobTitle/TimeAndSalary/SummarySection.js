@@ -5,6 +5,7 @@ import SummaryBlock from '../Overview/SummaryBlock';
 import styles from '../Overview/Overview.module.css';
 
 const SummarySection = ({
+  salaryDistribution,
   jobAverageSalaries,
   averageWeekWorkTime,
   overtimeFrequencyCount,
@@ -13,6 +14,7 @@ const SummarySection = ({
     <div className={styles.snippet}>
       <div className={styles.title}>本站使用者分享之薪資、加班資訊</div>
       <SummaryBlock
+        salaryDistribution={salaryDistribution}
         jobAverageSalaries={jobAverageSalaries}
         averageWeekWorkTime={averageWeekWorkTime}
         overtimeFrequencyCount={overtimeFrequencyCount}
@@ -25,6 +27,7 @@ SummarySection.propTypes = {
   averageWeekWorkTime: PropTypes.number.isRequired,
   jobAverageSalaries: PropTypes.array,
   overtimeFrequencyCount: PropTypes.object.isRequired,
+  salaryDistribution: PropTypes.array,
 };
 
 export default SummarySection;

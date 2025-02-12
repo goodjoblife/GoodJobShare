@@ -6,12 +6,16 @@ import {
   tabType as TAB_TYPE,
   pageType as PAGE_TYPE,
 } from 'constants/companyJobTitle';
-import { queryJobTitleOverview } from 'actions/jobTitle';
+import {
+  queryJobTitleOverview,
+  queryJobTitleOverviewStatistics,
+} from 'actions/jobTitle';
 import {
   salaryDistribution,
   averageWeekWorkTime,
   overtimeFrequencyCount,
   jobTitleOverviewBoxSelectorByName as overviewBoxSelectorByName,
+  jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
@@ -21,18 +25,22 @@ const useOverviewBox = pageName => {
     state => {
       const box = overviewBoxSelectorByName(pageName)(state);
       // the box.data may be null (company not found)
+      return box;
+    },
+    [pageName],
+  );
+  return useSelector(selector);
+};
+
+const useOverviewStatistics = pageName => {
+  const selector = useCallback(
+    state => {
+      const box = overviewStatisticsBoxSelectorByName(pageName)(state);
+      // the box.data may be null (company not found)
       return {
-        status: box.status,
-        data: box.data
-          ? {
-              ...box.data,
-              // the Overview need some fileds derived from salary_work_time_statistics
-              salaryDistribution: salaryDistribution(box),
-              averageWeekWorkTime: averageWeekWorkTime(box),
-              overtimeFrequencyCount: overtimeFrequencyCount(box),
-            }
-          : null,
-        error: box.error,
+        salaryDistribution: salaryDistribution(box),
+        averageWeekWorkTime: averageWeekWorkTime(box),
+        overtimeFrequencyCount: overtimeFrequencyCount(box),
       };
     },
     [pageName],
@@ -49,12 +57,21 @@ const JobTitleOverviewProvider = () => {
     dispatch(queryJobTitleOverview(jobTitle));
   }, [dispatch, jobTitle]);
 
+  useEffect(() => {
+    dispatch(queryJobTitleOverviewStatistics(jobTitle));
+  }, [dispatch, jobTitle]);
+
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [pageType, jobTitle, fetchPermission]);
 
   const overviewBox = useOverviewBox(jobTitle);
+  const {
+    salaryDistribution,
+    averageWeekWorkTime,
+    overtimeFrequencyCount,
+  } = useOverviewStatistics(jobTitle);
 
   return (
     <Overview
@@ -62,6 +79,9 @@ const JobTitleOverviewProvider = () => {
       pageName={jobTitle}
       tabType={TAB_TYPE.OVERVIEW}
       overviewBox={overviewBox}
+      salaryDistribution={salaryDistribution}
+      averageWeekWorkTime={averageWeekWorkTime}
+      overtimeFrequencyCount={overtimeFrequencyCount}
     />
   );
 };
@@ -69,7 +89,10 @@ const JobTitleOverviewProvider = () => {
 JobTitleOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
   const params = paramsSelector(props);
   const jobTitle = jobTitleSelector(params);
-  return dispatch(queryJobTitleOverview(jobTitle));
+  return Promise.all([
+    dispatch(queryJobTitleOverview(jobTitle)),
+    dispatch(queryJobTitleOverviewStatistics(jobTitle)),
+  ]);
 };
 
 export default JobTitleOverviewProvider;

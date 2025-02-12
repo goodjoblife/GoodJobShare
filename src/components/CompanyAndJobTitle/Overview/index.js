@@ -10,6 +10,7 @@ const Overview = ({
   pageName,
   tabType,
   overviewBox,
+  salaryDistribution,
   jobAverageSalaries,
   averageWeekWorkTime,
   overtimeFrequencyCount,
@@ -46,7 +47,7 @@ const Overview = ({
               workExperiencesCount={data.workExperiencesCount}
               salaryWorkTimes={data.salaryWorkTimes}
               salaryWorkTimesCount={data.salaryWorkTimesCount}
-              salaryDistribution={data.salaryDistribution}
+              salaryDistribution={salaryDistribution}
               jobAverageSalaries={jobAverageSalaries}
               averageWeekWorkTime={averageWeekWorkTime}
               overtimeFrequencyCount={overtimeFrequencyCount}
@@ -66,7 +67,6 @@ Overview.propTypes = {
     data: PropTypes.shape({
       interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
       interviewExperiencesCount: PropTypes.number.isRequired,
-      salaryDistribution: PropTypes.array,
       salaryWorkTimes: PropTypes.arrayOf(PropTypes.object).isRequired,
       salaryWorkTimesCount: PropTypes.number.isRequired,
       workExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -77,12 +77,13 @@ Overview.propTypes = {
   }).isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
+  salaryDistribution: PropTypes.array,
   tabType: PropTypes.string.isRequired,
   topNJobTitles: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),
-  ).isRequired,
+  ),
 };
 
 export default Overview;
