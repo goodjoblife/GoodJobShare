@@ -1,11 +1,14 @@
-.snippet {
-  .title {
-    font-size: 22px;
-    font-weight: 600;
-    color: #000000;
-    margin-bottom: 15px;
-  }
+.title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #000000;
+}
 
+.aboveCard {
+  margin-bottom: 15px;
+}
+
+.snippet {
   .link {
     font-size: 18px;
     font-weight: 600;

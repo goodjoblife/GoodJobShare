@@ -8,6 +8,8 @@ import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
 import Searchbar from '../Searchbar';
 import SummarySection from './SummarySection';
+import EsgBlock from '../TimeAndSalary/EsgBlock';
+import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
 const TimeAndSalary = ({
   pageType,
@@ -29,6 +31,7 @@ const TimeAndSalary = ({
     pageName={pageName}
     tabType={tabType}
   >
+    {pageType === PAGE_TYPE.COMPANY && <EsgBlock />}
     <SummarySection
       salaryDistribution={salaryDistribution}
       jobAverageSalaries={jobAverageSalaries}
