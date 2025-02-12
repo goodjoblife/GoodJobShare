@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { PageBoxRenderer } from '../BoxRenderer';
+import { PageBoxRenderer } from '../StatusRenderer';
 import InterviewExperiencesSection from './InterviewExperiences';
 import InterviewExperienceHelmet from './Helmet';
 import Searchbar from '../Searchbar';
