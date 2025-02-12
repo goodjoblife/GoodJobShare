@@ -12,7 +12,7 @@ const SummarySection = ({
 }) => {
   return (
     <div className={styles.snippet}>
-      <h2 className={styles.title}>本站使用者分享之薪資、加班資訊</h2>
+      <h2 className={styles.title}>薪水&加班狀況</h2>
       <SummaryBlock
         salaryDistribution={salaryDistribution}
         jobAverageSalaries={jobAverageSalaries}
