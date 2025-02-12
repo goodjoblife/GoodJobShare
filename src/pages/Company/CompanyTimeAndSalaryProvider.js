@@ -177,11 +177,17 @@ CompanyTimeAndSalaryProvider.fetchData = ({
       companyName,
     }),
   );
+  const dispatchEsgSalaryData = dispatch(
+    queryCompanyEsgSalaryData({
+      companyName,
+    }),
+  );
   return Promise.all([
     dispatchTimeAndSalary,
     dispatchTimeAndSalaryStatistics,
     dispatchRatingStatistics,
     dispatchTopNJobTitles,
+    dispatchEsgSalaryData,
   ]);
 };
 
