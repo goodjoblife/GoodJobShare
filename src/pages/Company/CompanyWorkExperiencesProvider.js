@@ -87,6 +87,7 @@ const CompanyWorkExperiencesProvider = () => {
       tabType={TAB_TYPE.WORK_EXPERIENCE}
       status={status}
       workExperiences={workExperiences}
+      boxSelector={workExperiencesBoxSelectorByName(companyName)}
     />
   );
 };

@@ -14,6 +14,7 @@ const TimeAndSalary = ({
   pageType,
   pageName,
   tabType,
+  boxSelector,
   salaryWorkTimes,
   salaryWorkTimeStatistics,
   page,
@@ -33,6 +34,7 @@ const TimeAndSalary = ({
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
+      boxSelector={boxSelector}
       render={() => {
         return (
           <Fragment>
@@ -60,6 +62,7 @@ const TimeAndSalary = ({
 );
 
 TimeAndSalary.propTypes = {
+  boxSelector: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,

@@ -9,6 +9,7 @@ const Overview = ({
   pageType,
   pageName,
   tabType,
+  boxSelector,
   overviewBox,
   topNJobTitles,
 }) => (
@@ -21,6 +22,7 @@ const Overview = ({
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
+      boxSelector={boxSelector}
       render={() => {
         const data = overviewBox.data;
 
@@ -56,6 +58,7 @@ const Overview = ({
 );
 
 Overview.propTypes = {
+  boxSelector: PropTypes.func.isRequired,
   overviewBox: PropTypes.shape({
     data: PropTypes.shape({
       averageWeekWorkTime: PropTypes.number.isRequired,

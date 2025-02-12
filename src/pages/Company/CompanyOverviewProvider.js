@@ -81,6 +81,7 @@ const CompanyOverviewProvider = () => {
       tabType={TAB_TYPE.OVERVIEW}
       overviewBox={overviewBox}
       topNJobTitles={topNJobTitles.all}
+      boxSelector={overviewBoxSelectorByName(companyName)}
     />
   );
 };

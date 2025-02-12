@@ -122,6 +122,7 @@ const CompanyTimeAndSalaryProvider = () => {
       status={status}
       salaryWorkTimes={salaryWorkTimes}
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
+      boxSelector={timeAndSalaryBoxSelectorByName(companyName)}
     />
   );
 };

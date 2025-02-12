@@ -10,6 +10,7 @@ const WorkExperiences = ({
   pageType,
   pageName,
   tabType,
+  boxSelector,
   workExperiences,
   page,
   pageSize,
@@ -25,6 +26,7 @@ const WorkExperiences = ({
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
+      boxSelector={boxSelector}
       render={() => {
         return (
           <Fragment>
@@ -51,6 +53,7 @@ const WorkExperiences = ({
 );
 
 WorkExperiences.propTypes = {
+  boxSelector: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,

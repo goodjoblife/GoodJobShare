@@ -82,6 +82,7 @@ const JobTitleTimeAndSalaryProvider = () => {
       tabType={TAB_TYPE.INTERVIEW_EXPERIENCE}
       status={status}
       interviewExperiences={interviewExperiences}
+      boxSelector={jobTitleInterviewExperiencesBoxSelectorByName(jobTitle)}
     />
   );
 };

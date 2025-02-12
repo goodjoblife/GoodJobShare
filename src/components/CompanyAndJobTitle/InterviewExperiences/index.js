@@ -10,6 +10,7 @@ const InterviewExperiences = ({
   pageType,
   pageName,
   tabType,
+  boxSelector,
   interviewExperiences,
   page,
   pageSize,
@@ -26,6 +27,7 @@ const InterviewExperiences = ({
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
+      boxSelector={boxSelector}
       render={() => {
         return (
           <Fragment>
@@ -53,6 +55,7 @@ const InterviewExperiences = ({
 );
 
 InterviewExperiences.propTypes = {
+  boxSelector: PropTypes.func.isRequired,
   interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,

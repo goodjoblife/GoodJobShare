@@ -97,6 +97,7 @@ const CompanyInterviewExperiencesProvider = () => {
       status={status}
       interviewExperiences={interviewExperiences}
       topNJobTitles={topNJobTitles.interview}
+      boxSelector={companyInterviewExperiencesBoxSelectorByName(companyName)}
     />
   );
 };

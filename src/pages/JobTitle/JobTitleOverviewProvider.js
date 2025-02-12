@@ -62,6 +62,7 @@ const JobTitleOverviewProvider = () => {
       pageName={jobTitle}
       tabType={TAB_TYPE.OVERVIEW}
       overviewBox={overviewBox}
+      boxSelector={overviewBoxSelectorByName(jobTitle)}
     />
   );
 };
