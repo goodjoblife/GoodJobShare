@@ -108,6 +108,7 @@ CompanyOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
   const companyName = companyNameSelector(params);
   return Promise.all([
     dispatch(queryCompanyOverview(companyName)),
+    dispatch(queryCompanyOverviewStatistics(companyName)),
     dispatch(queryRatingStatistics(companyName)),
     dispatch(queryCompanyTopNJobTitles({ companyName })),
   ]);

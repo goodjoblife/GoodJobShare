@@ -170,6 +170,9 @@ CompanyTimeAndSalaryProvider.fetchData = ({
   const jobTitle = searchTextFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
+  const dispatchOverviewStatistics = dispatch(
+    queryCompanyOverviewStatistics(companyName),
+  );
   const dispatchTimeAndSalaryStatistics = dispatch(
     queryCompanyTimeAndSalaryStatistics({
       companyName,
@@ -192,6 +195,7 @@ CompanyTimeAndSalaryProvider.fetchData = ({
   return Promise.all([
     dispatchTimeAndSalary,
     dispatchTimeAndSalaryStatistics,
+    dispatchOverviewStatistics,
     dispatchRatingStatistics,
     dispatchTopNJobTitles,
   ]);
