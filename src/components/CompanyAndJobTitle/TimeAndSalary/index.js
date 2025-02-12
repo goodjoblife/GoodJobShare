@@ -15,11 +15,9 @@ const TimeAndSalary = ({
   pageName,
   tabType,
   boxSelector,
-  salaryWorkTimes,
   salaryWorkTimeStatistics,
   page,
   pageSize,
-  totalCount,
   topNJobTitles,
 }) => (
   <CompanyAndJobTitleWrapper
@@ -35,7 +33,7 @@ const TimeAndSalary = ({
       pageName={pageName}
       tabType={tabType}
       boxSelector={boxSelector}
-      render={() => {
+      render={({ salaryWorkTimes, salaryWorkTimesCount: totalCount }) => {
         return (
           <Fragment>
             <Helmet
@@ -68,14 +66,12 @@ TimeAndSalary.propTypes = {
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
   salaryWorkTimeStatistics: PropTypes.object.isRequired,
-  salaryWorkTimes: PropTypes.array,
   tabType: PropTypes.string.isRequired,
   topNJobTitles: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  totalCount: PropTypes.number.isRequired,
 };
 
 export default TimeAndSalary;

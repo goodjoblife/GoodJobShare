@@ -66,3 +66,8 @@ export const toFetching = fetchBox => {
 
   return initFetchBox(data, fetchingStatus.FETCHING);
 };
+
+export const mapBoxData = (fetchBox, fn) => ({
+  ...fetchBox,
+  data: fn(fetchBox.data),
+});

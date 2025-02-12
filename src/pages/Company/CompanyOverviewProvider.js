@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Overview from 'components/CompanyAndJobTitle/Overview';
 import usePermission from 'hooks/usePermission';
 import {
@@ -20,15 +20,15 @@ import {
 import { paramsSelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
+import { mapBoxData } from 'utils/fetchBox';
 
-const useOverviewBox = pageName => {
-  const selector = useCallback(
+const useOverviewBoxSelector = pageName => {
+  return useCallback(
     state => {
       const box = overviewBoxSelectorByName(pageName)(state);
       // the box.data may be null (company not found)
-      return {
-        status: box.status,
-        data: box.data
+      return mapBoxData(box, data =>
+        data
           ? {
               ...box.data,
               // the Overview need some fileds derived from salary_work_time_statistics
@@ -37,12 +37,10 @@ const useOverviewBox = pageName => {
               overtimeFrequencyCount: overtimeFrequencyCount(box),
             }
           : null,
-        error: box.error,
-      };
+      );
     },
     [pageName],
   );
-  return useSelector(selector);
 };
 
 const CompanyOverviewProvider = () => {
@@ -71,7 +69,7 @@ const CompanyOverviewProvider = () => {
     fetchPermission();
   }, [pageType, companyName, fetchPermission]);
 
-  const overviewBox = useOverviewBox(companyName);
+  const boxSelector = useOverviewBoxSelector(companyName);
   const topNJobTitles = useTopNJobTitles(companyName);
 
   return (
@@ -79,9 +77,8 @@ const CompanyOverviewProvider = () => {
       pageType={pageType}
       pageName={companyName}
       tabType={TAB_TYPE.OVERVIEW}
-      overviewBox={overviewBox}
       topNJobTitles={topNJobTitles.all}
-      boxSelector={overviewBoxSelectorByName(companyName)}
+      boxSelector={boxSelector}
     />
   );
 };

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
@@ -12,7 +12,6 @@ import { queryJobTitleWorkExperiences } from 'actions/jobTitle';
 import {
   workExperiences as workExperiencesSelector,
   workExperiencesCount as workExperiencesCountSelector,
-  status as statusSelector,
   jobTitleWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
@@ -22,21 +21,20 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
+import { mapBoxData } from 'utils/fetchBox';
 
-const useWorkExperiencesBox = pageName => {
-  const selector = useCallback(
+const useWorkExperiencesBoxSelector = pageName => {
+  return useCallback(
     state => {
       const jobTitle = workExperiencesBoxSelectorByName(pageName)(state);
-      return {
-        status: statusSelector(jobTitle),
+      return mapBoxData(jobTitle, data => ({
+        ...data,
         workExperiences: workExperiencesSelector(jobTitle),
         workExperiencesCount: workExperiencesCountSelector(jobTitle),
-      };
+      }));
     },
     [pageName],
   );
-
-  return useSelector(selector);
 };
 
 const JobTitleWorkExperiencesProvider = () => {
@@ -64,11 +62,7 @@ const JobTitleWorkExperiencesProvider = () => {
     fetchPermission();
   }, [pageType, jobTitle, fetchPermission]);
 
-  const {
-    status,
-    workExperiences,
-    workExperiencesCount,
-  } = useWorkExperiencesBox(jobTitle);
+  const boxSelector = useWorkExperiencesBoxSelector(jobTitle);
 
   return (
     <WorkExperiences
@@ -76,11 +70,8 @@ const JobTitleWorkExperiencesProvider = () => {
       pageName={jobTitle}
       page={page}
       pageSize={PAGE_SIZE}
-      totalCount={workExperiencesCount}
       tabType={TAB_TYPE.WORK_EXPERIENCE}
-      status={status}
-      workExperiences={workExperiences}
-      boxSelector={workExperiencesBoxSelectorByName(jobTitle)}
+      boxSelector={boxSelector}
     />
   );
 };

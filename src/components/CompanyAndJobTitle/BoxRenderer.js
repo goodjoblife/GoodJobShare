@@ -18,7 +18,7 @@ const BoxRenderer = ({ box, render }) => {
   if (isError(box)) {
     return null;
   }
-  return render();
+  return render(box.data);
 };
 
 BoxRenderer.propTypes = {
@@ -50,9 +50,8 @@ export const PageBoxRenderer = ({
   return (
     <BoxRenderer
       box={box}
-      render={() => {
-        const data = box.data;
-        if (data === null) {
+      render={data => {
+        if (!data) {
           return (
             <NotFoundStatus status={404}>
               <EmptyView pageName={pageName} />
@@ -67,7 +66,7 @@ export const PageBoxRenderer = ({
           });
           return <Redirect to={path} />;
         }
-        return render();
+        return render(data);
       }}
     />
   );

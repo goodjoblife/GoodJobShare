@@ -16,7 +16,6 @@ import {
   salaryWorkTimes as salaryWorkTimesSelector,
   salaryWorkTimesCount as salaryWorkTimesCountSelector,
   salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
-  status as statusSelector,
   jobTitleTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
   jobTitleTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
@@ -27,6 +26,7 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
+import { mapBoxData } from 'utils/fetchBox';
 
 const useSalaryWorkTimeStatistics = pageName => {
   const selector = useCallback(
@@ -42,20 +42,18 @@ const useSalaryWorkTimeStatistics = pageName => {
   return useSelector(selector);
 };
 
-const useTimeAndSalaryBox = pageName => {
-  const selector = useCallback(
+const useTimeAndSalaryBoxSelector = pageName => {
+  return useCallback(
     state => {
       const jobTitle = timeAndSalaryBoxSelectorByName(pageName)(state);
-      return {
-        status: statusSelector(jobTitle),
+      return mapBoxData(jobTitle, data => ({
+        ...data,
         salaryWorkTimes: salaryWorkTimesSelector(jobTitle),
         salaryWorkTimesCount: salaryWorkTimesCountSelector(jobTitle),
-      };
+      }));
     },
     [pageName],
   );
-
-  return useSelector(selector);
 };
 
 const JobTitleTimeAndSalaryProvider = () => {
@@ -91,9 +89,7 @@ const JobTitleTimeAndSalaryProvider = () => {
     fetchPermission();
   }, [pageType, jobTitle, fetchPermission]);
 
-  const { status, salaryWorkTimes, salaryWorkTimesCount } = useTimeAndSalaryBox(
-    jobTitle,
-  );
+  const boxSelector = useTimeAndSalaryBoxSelector(jobTitle);
 
   const salaryWorkTimeStatistics = useSalaryWorkTimeStatistics(jobTitle);
 
@@ -103,12 +99,9 @@ const JobTitleTimeAndSalaryProvider = () => {
       pageName={jobTitle}
       page={page}
       pageSize={PAGE_SIZE}
-      totalCount={salaryWorkTimesCount}
       tabType={TAB_TYPE.TIME_AND_SALARY}
-      status={status}
-      salaryWorkTimes={salaryWorkTimes}
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
-      boxSelector={timeAndSalaryBoxSelectorByName(jobTitle)}
+      boxSelector={boxSelector}
     />
   );
 };

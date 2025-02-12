@@ -11,10 +11,8 @@ const InterviewExperiences = ({
   pageName,
   tabType,
   boxSelector,
-  interviewExperiences,
   page,
   pageSize,
-  totalCount,
   topNJobTitles,
 }) => (
   <CompanyAndJobTitleWrapper
@@ -28,7 +26,10 @@ const InterviewExperiences = ({
       pageName={pageName}
       tabType={tabType}
       boxSelector={boxSelector}
-      render={() => {
+      render={({
+        interviewExperiences,
+        interviewExperiencesCount: totalCount,
+      }) => {
         return (
           <Fragment>
             <InterviewExperienceHelmet
@@ -56,7 +57,6 @@ const InterviewExperiences = ({
 
 InterviewExperiences.propTypes = {
   boxSelector: PropTypes.func.isRequired,
-  interviewExperiences: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
@@ -67,7 +67,6 @@ InterviewExperiences.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  totalCount: PropTypes.number.isRequired,
 };
 
 export default InterviewExperiences;

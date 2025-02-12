@@ -11,10 +11,8 @@ const WorkExperiences = ({
   pageName,
   tabType,
   boxSelector,
-  workExperiences,
   page,
   pageSize,
-  totalCount,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
@@ -27,7 +25,7 @@ const WorkExperiences = ({
       pageName={pageName}
       tabType={tabType}
       boxSelector={boxSelector}
-      render={() => {
+      render={({ workExperiences, workExperiencesCount: totalCount }) => {
         return (
           <Fragment>
             <Helmet
@@ -59,8 +57,6 @@ WorkExperiences.propTypes = {
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
-  totalCount: PropTypes.number.isRequired,
-  workExperiences: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default WorkExperiences;

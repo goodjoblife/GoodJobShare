@@ -10,7 +10,6 @@ const Overview = ({
   pageName,
   tabType,
   boxSelector,
-  overviewBox,
   topNJobTitles,
 }) => (
   <CompanyAndJobTitleWrapper
@@ -23,9 +22,7 @@ const Overview = ({
       pageName={pageName}
       tabType={tabType}
       boxSelector={boxSelector}
-      render={() => {
-        const data = overviewBox.data;
-
+      render={data => {
         return (
           <Fragment>
             <Helmet
@@ -59,22 +56,6 @@ const Overview = ({
 
 Overview.propTypes = {
   boxSelector: PropTypes.func.isRequired,
-  overviewBox: PropTypes.shape({
-    data: PropTypes.shape({
-      averageWeekWorkTime: PropTypes.number.isRequired,
-      interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
-      interviewExperiencesCount: PropTypes.number.isRequired,
-      jobAverageSalaries: PropTypes.array,
-      overtimeFrequencyCount: PropTypes.object.isRequired,
-      salaryDistribution: PropTypes.array,
-      salaryWorkTimes: PropTypes.arrayOf(PropTypes.object).isRequired,
-      salaryWorkTimesCount: PropTypes.number.isRequired,
-      workExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
-      workExperiencesCount: PropTypes.number.isRequired,
-    }),
-    error: PropTypes.any,
-    status: PropTypes.string.isRequired,
-  }).isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
