@@ -62,7 +62,7 @@ const selectorMapping = {
   },
 };
 
-const useBox = ({ pageType, pageName, tabType }) => {
+const usePageBox = ({ pageType, pageName, tabType }) => {
   const boxSelector = useMemo(
     () => selectorMapping[pageType][tabType](pageName),
     [pageType, pageName, tabType],
@@ -79,7 +79,7 @@ export const PageBoxRenderer = ({ pageName, pageType, tabType, render }) => {
    * 4. 當 box.data.dataCount === 0   --> 應顯示 NotFoundStatus (後端無資料)
    * 5. 當 box.data.資料 === []       --> 應顯示 NotFoundStatus (通常是 pagination 超出範圍) (交給 render 處理)
    */
-  const box = useBox({ pageType, pageName, tabType });
+  const box = usePageBox({ pageType, pageName, tabType });
   return (
     <BoxRenderer
       box={box}
