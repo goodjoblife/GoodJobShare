@@ -30,21 +30,28 @@ const TimeAndSalary = ({
     {pageType === PAGE_TYPE.COMPANY && (
       <StatusRenderer
         box={esgSalaryDataBox}
-        render={({
-          avgSalaryStatistics,
-          nonManagerAvgSalaryStatistics,
-          nonManagerMedianSalaryStatistics,
-          femaleManagerStatistics,
-        }) => (
-          <EsgBlock
-            avgSalaryStatistics={avgSalaryStatistics[0]}
-            nonManagerAvgSalaryStatistics={nonManagerAvgSalaryStatistics[0]}
-            nonManagerMedianSalaryStatistics={
-              nonManagerMedianSalaryStatistics[0]
-            }
-            femaleManagerStatistics={femaleManagerStatistics[0]}
-          />
-        )}
+        render={data => {
+          if (!data) return null;
+
+          const {
+            avgSalaryStatistics: [avgSalaryStatistics],
+            nonManagerAvgSalaryStatistics: [nonManagerAvgSalaryStatistics],
+            nonManagerMedianSalaryStatistics: [
+              nonManagerMedianSalaryStatistics,
+            ],
+            femaleManagerStatistics: [femaleManagerStatistics],
+          } = data;
+          return (
+            <EsgBlock
+              avgSalaryStatistics={avgSalaryStatistics}
+              nonManagerAvgSalaryStatistics={nonManagerAvgSalaryStatistics}
+              nonManagerMedianSalaryStatistics={
+                nonManagerMedianSalaryStatistics
+              }
+              femaleManagerStatistics={femaleManagerStatistics}
+            />
+          );
+        }}
       />
     )}
     <OvertimeSection statistics={salaryWorkTimeStatistics} />
