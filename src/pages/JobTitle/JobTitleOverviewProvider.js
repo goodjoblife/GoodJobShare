@@ -36,7 +36,6 @@ const useOverviewStatistics = pageName => {
   const selector = useCallback(
     state => {
       const box = overviewStatisticsBoxSelectorByName(pageName)(state);
-      // the box.data may be null (company not found)
       return {
         salaryDistribution: salaryDistribution(box),
         averageWeekWorkTime: averageWeekWorkTime(box),
