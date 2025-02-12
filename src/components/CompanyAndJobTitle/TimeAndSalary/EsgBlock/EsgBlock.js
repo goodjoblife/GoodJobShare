@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
+import linkStyles from 'common/base/Link.module.css';
 import Caret from 'common/icons/Caret';
 import Card from 'common/Card';
 import Info from 'common/icons/Info';
@@ -67,7 +68,15 @@ const EsgBlock = ({ className, showsToggle = true, hasPreviewed }) => {
           <EsgItemBlock className={styles.item} title="管理職女性主管佔比" />
         </div>
         <div className={styles.disclaimer}>
-          資料來源：臺灣證券交易所 公開資訊觀測站
+          資料來源：
+          <a
+            className={linkStyles.link}
+            href="https://mops.twse.com.tw/mops/web/t214sb01"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            臺灣證券交易所 公開資訊觀測站
+          </a>
         </div>
       </div>
     </Card>
