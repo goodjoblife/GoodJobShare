@@ -110,6 +110,13 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
             month
             year
           }
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
         }
       }
       salary_work_time_statistics {
@@ -164,6 +171,13 @@ export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
           data_time {
             month
             year
+          }
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
           }
         }
       }
@@ -294,6 +308,13 @@ export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
           like_count
           recommend_to_others
           averageSectionRating
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
         }
       }
     }
