@@ -114,6 +114,8 @@ const Article = ({ experience, hideContent, onClickMsgButton }) => {
       <ReactionZone
         experienceId={experience.id}
         onClickMsgButton={onClickMsgButton}
+        reportCount={experience.reportCount}
+        reports={experience.reports}
       />
     </div>
   );
