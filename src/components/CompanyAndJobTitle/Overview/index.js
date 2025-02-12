@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { BoxStatusRenderer } from '../StatusRenderer';
+import { PageBoxRenderer } from '../BoxRenderer';
 import OverviewSection from './Overview';
 import Helmet from './Helmet';
 
@@ -17,7 +17,7 @@ const Overview = ({
     pageName={pageName}
     tabType={tabType}
   >
-    <BoxStatusRenderer
+    <PageBoxRenderer
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}

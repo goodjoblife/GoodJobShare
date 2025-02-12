@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { BoxStatusRenderer } from '../StatusRenderer';
+import { PageBoxRenderer } from '../BoxRenderer';
 import WorkExperiencesSection from './WorkExperiences';
 import Helmet from './Helmet';
 import Searchbar from '../Searchbar';
@@ -21,7 +21,7 @@ const WorkExperiences = ({
     tabType={tabType}
   >
     <Searchbar pageType={pageType} tabType={tabType} />
-    <BoxStatusRenderer
+    <PageBoxRenderer
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}

@@ -22,7 +22,7 @@ import {
 import { isUnfetched, isFetching, isError } from 'utils/fetchBox';
 import EmptyView from './EmptyView';
 
-const StatusRenderer = ({ box, render }) => {
+const BoxRenderer = ({ box, render }) => {
   if (isUnfetched(box)) {
     return null;
   }
@@ -35,7 +35,7 @@ const StatusRenderer = ({ box, render }) => {
   return render();
 };
 
-StatusRenderer.propTypes = {
+BoxRenderer.propTypes = {
   box: PropTypes.shape({
     data: PropTypes.any,
     error: PropTypes.any,
@@ -44,7 +44,7 @@ StatusRenderer.propTypes = {
   render: PropTypes.func.isRequired,
 };
 
-export default StatusRenderer;
+export default BoxRenderer;
 
 // TODO: 將 box 由外部帶入
 const selectorMapping = {
@@ -71,9 +71,9 @@ const useBox = ({ pageType, pageName, tabType }) => {
   return box;
 };
 
-export const BoxStatusRenderer = ({ pageName, pageType, tabType, render }) => {
+export const PageBoxRenderer = ({ pageName, pageType, tabType, render }) => {
   /* 處理
-   * 1. 當 fetching                   --> 應顯示 Loading (目前由 StatusRenderer 處理)
+   * 1. 當 fetching                   --> 應顯示 Loading (目前由 BoxRenderer 處理)
    * 2. 當 box.data === null          --> 應顯示 NotFoundStatus (後端無公司)
    * 3. 當 box.data.name !== pageName --> 應 Redirect (done)
    * 4. 當 box.data.dataCount === 0   --> 應顯示 NotFoundStatus (後端無資料)
@@ -81,7 +81,7 @@ export const BoxStatusRenderer = ({ pageName, pageType, tabType, render }) => {
    */
   const box = useBox({ pageType, pageName, tabType });
   return (
-    <StatusRenderer
+    <BoxRenderer
       box={box}
       render={() => {
         const data = box.data;
@@ -106,7 +106,7 @@ export const BoxStatusRenderer = ({ pageName, pageType, tabType, render }) => {
   );
 };
 
-BoxStatusRenderer.propTypes = {
+PageBoxRenderer.propTypes = {
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
   render: PropTypes.func.isRequired,
