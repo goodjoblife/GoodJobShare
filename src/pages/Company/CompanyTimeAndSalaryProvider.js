@@ -9,6 +9,7 @@ import {
   PAGE_SIZE,
 } from 'constants/companyJobTitle';
 import {
+  queryCompanyEsgSalaryData,
   queryCompanyTimeAndSalary,
   queryCompanyTimeAndSalaryStatistics,
   queryCompanyTopNJobTitles,
@@ -21,6 +22,7 @@ import {
   status as statusSelector,
   companyTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
   companyTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
+  companyEsgSalaryDataBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
@@ -58,6 +60,15 @@ const useTimeAndSalaryBox = companyName => {
   return useSelector(selector);
 };
 
+const useEsgSalaryDataBox = companyName => {
+  const selector = useCallback(
+    companyEsgSalaryDataBoxSelectorByName(companyName),
+    [companyName],
+  );
+
+  return useSelector(selector);
+};
+
 const CompanyTimeAndSalaryProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.COMPANY;
@@ -89,6 +100,14 @@ const CompanyTimeAndSalaryProvider = () => {
 
   useEffect(() => {
     dispatch(
+      queryCompanyEsgSalaryData({
+        companyName,
+      }),
+    );
+  }, [dispatch, companyName]);
+
+  useEffect(() => {
+    dispatch(
       queryCompanyTimeAndSalary({
         companyName,
         jobTitle: jobTitle || undefined,
@@ -105,6 +124,7 @@ const CompanyTimeAndSalaryProvider = () => {
 
   const salaryWorkTimeStatistics = useTimeAndSalaryStatisticsBox(companyName);
   const topNJobTitles = useTopNJobTitles(companyName);
+  const esgSalaryDataBox = useEsgSalaryDataBox(companyName);
 
   const { status, salaryWorkTimes, salaryWorkTimesCount } = useTimeAndSalaryBox(
     companyName,
@@ -118,6 +138,7 @@ const CompanyTimeAndSalaryProvider = () => {
       pageSize={PAGE_SIZE}
       totalCount={salaryWorkTimesCount}
       topNJobTitles={topNJobTitles.salary}
+      esgSalaryDataBox={esgSalaryDataBox}
       tabType={TAB_TYPE.TIME_AND_SALARY}
       status={status}
       salaryWorkTimes={salaryWorkTimes}

@@ -15,6 +15,7 @@ import {
   companyWorkExperiencesBoxSelectorByName,
   companyRatingStatisticsBoxSelectorByName,
   companyTopNJobTitlesBoxSelectorByName,
+  companyEsgSalaryDataBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   queryCompanyOverview as queryCompanyOverviewApi,
@@ -25,6 +26,7 @@ import {
   getCompanyTimeAndSalaryStatistics,
   queryCompanyRatingStatisticsApi,
   getCompanyTopNJobTitles,
+  getCompanyEsgSalaryData,
 } from 'apis/company';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
@@ -38,6 +40,8 @@ export const SET_INDEX = '@@COMPANY/SET_INDEX';
 export const SET_INDEX_COUNT = '@@COMPANY/SET_INDEX_COUNT';
 export const SET_COMPANY_TOP_N_JOB_TITLES =
   '@@COMPANY/SET_COMPANY_TOP_N_JOB_TITLES';
+export const SET_COMPANY_ESG_SALARY_DATA =
+  '@@COMPANY/SET_COMPANY_ESG_SALARY_DATA';
 
 const setIndex = (page, box) => ({
   type: SET_INDEX,
@@ -278,6 +282,40 @@ export const queryCompanyTimeAndSalaryStatistics = ({ companyName }) => async (
     );
   } catch (error) {
     dispatch(setTimeAndSalaryStatistics(companyName, getError(error)));
+  }
+};
+
+const setEsgSalaryData = (companyName, box) => ({
+  type: SET_COMPANY_ESG_SALARY_DATA,
+  companyName,
+  box,
+});
+
+export const queryCompanyEsgSalaryData = ({ companyName }) => async (
+  dispatch,
+  getState,
+) => {
+  const box = companyEsgSalaryDataBoxSelectorByName(companyName)(getState());
+
+  if (isFetching(box) || isFetched(box)) {
+    return;
+  }
+
+  dispatch(setEsgSalaryData(companyName, toFetching()));
+
+  try {
+    const data = await getCompanyEsgSalaryData({
+      companyName,
+    });
+
+    // Not found case
+    if (!data) {
+      return dispatch(setEsgSalaryData(companyName, getFetched()));
+    }
+
+    dispatch(setEsgSalaryData(companyName, getFetched(data)));
+  } catch (error) {
+    dispatch(setEsgSalaryData(companyName, getError(error)));
   }
 };
 

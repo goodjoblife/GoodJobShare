@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { BoxStatusRenderer } from '../StatusRenderer';
+import StatusRenderer, { BoxStatusRenderer } from '../StatusRenderer';
 import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
@@ -20,13 +20,33 @@ const TimeAndSalary = ({
   pageSize,
   totalCount,
   topNJobTitles,
+  esgSalaryDataBox,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
     pageName={pageName}
     tabType={tabType}
   >
-    {pageType === PAGE_TYPE.COMPANY && <EsgBlock />}
+    {pageType === PAGE_TYPE.COMPANY && (
+      <StatusRenderer
+        box={esgSalaryDataBox}
+        render={({
+          avgSalaryStatistics,
+          nonManagerAvgSalaryStatistics,
+          nonManagerMedianSalaryStatistics,
+          femaleManagerStatistics,
+        }) => (
+          <EsgBlock
+            avgSalaryStatistics={avgSalaryStatistics[0]}
+            nonManagerAvgSalaryStatistics={nonManagerAvgSalaryStatistics[0]}
+            nonManagerMedianSalaryStatistics={
+              nonManagerMedianSalaryStatistics[0]
+            }
+            femaleManagerStatistics={femaleManagerStatistics[0]}
+          />
+        )}
+      />
+    )}
     <OvertimeSection statistics={salaryWorkTimeStatistics} />
     <Searchbar pageType={pageType} tabType={tabType} />
     <BoxStatusRenderer
@@ -60,6 +80,7 @@ const TimeAndSalary = ({
 );
 
 TimeAndSalary.propTypes = {
+  esgSalaryDataBox: PropTypes.object.isRequired,
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,

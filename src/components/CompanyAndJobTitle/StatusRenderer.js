@@ -32,7 +32,7 @@ const StatusRenderer = ({ box, render }) => {
   if (isError(box)) {
     return null;
   }
-  return render();
+  return render(box.data);
 };
 
 StatusRenderer.propTypes = {
