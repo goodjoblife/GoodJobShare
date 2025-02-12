@@ -26,7 +26,7 @@ import {
   getCompanyTimeAndSalaryStatistics,
   queryCompanyRatingStatisticsApi,
   getCompanyTopNJobTitles,
-  queryCompanyOverviewStatistics,
+  queryCompanyOverviewStatistics as queryCompanyOverviewStatisticsApi,
 } from 'apis/company';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
@@ -177,9 +177,10 @@ const setOverviewStatistics = (companyName, box) => ({
   box,
 });
 
-export const queryCompanyOverviewSatistics = companyName => async (
+export const queryCompanyOverviewStatistics = companyName => async (
   dispatch,
   getState,
+  { api },
 ) => {
   const box = companyOverviewStatisticsBoxSelectorByName(companyName)(
     getState(),
@@ -191,7 +192,7 @@ export const queryCompanyOverviewSatistics = companyName => async (
   dispatch(setOverviewStatistics(companyName, toFetching()));
 
   try {
-    const data = await queryCompanyOverviewStatistics({
+    const data = await queryCompanyOverviewStatisticsApi({
       companyName,
     });
 

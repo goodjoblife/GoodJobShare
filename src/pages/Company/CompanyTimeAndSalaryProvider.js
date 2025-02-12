@@ -9,7 +9,7 @@ import {
   PAGE_SIZE,
 } from 'constants/companyJobTitle';
 import {
-  queryCompanyOverviewSatistics,
+  queryCompanyOverviewStatistics,
   queryCompanyTimeAndSalary,
   queryCompanyTimeAndSalaryStatistics,
   queryCompanyTopNJobTitles,
@@ -100,7 +100,7 @@ const CompanyTimeAndSalaryProvider = () => {
   }, [dispatch, companyName]);
 
   useEffect(() => {
-    dispatch(queryCompanyOverviewSatistics(companyName));
+    dispatch(queryCompanyOverviewStatistics(companyName));
   }, [dispatch, companyName]);
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import {
 } from 'constants/companyJobTitle';
 import {
   queryCompanyOverview,
-  queryCompanyOverviewSatistics,
+  queryCompanyOverviewStatistics,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
@@ -72,7 +72,7 @@ const CompanyOverviewProvider = () => {
   }, [dispatch, companyName]);
 
   useEffect(() => {
-    dispatch(queryCompanyOverviewSatistics(companyName));
+    dispatch(queryCompanyOverviewStatistics(companyName));
   }, [dispatch, companyName]);
 
   const [, fetchPermission] = usePermission();
