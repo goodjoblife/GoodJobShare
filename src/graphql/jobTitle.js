@@ -105,6 +105,13 @@ export const queryJobTitleOverviewGql = /* GraphQL */ `
           }
         }
       }
+    }
+  }
+`;
+
+export const queryJobTitleOverviewStatisticsGql = /* GraphQL */ `
+  query($jobTitle: String!) {
+    job_title(name: $jobTitle) {
       salary_work_time_statistics {
         average_week_work_time
         overtime_frequency_count {
