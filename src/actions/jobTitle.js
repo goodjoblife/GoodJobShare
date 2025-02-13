@@ -143,6 +143,7 @@ export const queryJobTitleTimeAndSalary = ({
   if (
     isFetching(box) ||
     (isFetched(box) &&
+      box.data &&
       box.data.name === jobTitle &&
       box.data.companyName === companyName &&
       box.data.start === start &&
@@ -194,7 +195,10 @@ export const queryJobTitleTimeAndSalaryStatistics = ({ jobTitle }) => async (
   const box = jobTitleTimeAndSalaryStatisticsBoxSelectorByName(jobTitle)(
     getState(),
   );
-  if (isFetching(box) || (isFetched(box) && box.data.name === jobTitle)) {
+  if (
+    isFetching(box) ||
+    (isFetched(box) && box.data && box.data.name === jobTitle)
+  ) {
     return;
   }
 
@@ -244,6 +248,7 @@ export const queryJobTitleInterviewExperiences = ({
   if (
     isFetching(box) ||
     (isFetched(box) &&
+      box.data &&
       box.data.companyName === companyName &&
       box.data.start === start &&
       box.data.limit === limit)
@@ -300,6 +305,7 @@ export const queryJobTitleWorkExperiences = ({
   if (
     isFetching(box) ||
     (isFetched(box) &&
+      box.data &&
       box.data.name === jobTitle &&
       box.data.companyName === companyName &&
       box.data.start === start &&
