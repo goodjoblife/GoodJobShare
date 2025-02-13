@@ -45,8 +45,10 @@ const LaborRightsSingle = () => {
         <Fragment>
           <Helmet
             entryId={entryId}
-            seoTitle={entryBox.data.seoTitle}
-            seoDescription={entryBox.data.seoDescription}
+            seoTitle={entryBox.data.seoTitle || entryBox.data.title}
+            seoDescription={
+              entryBox.data.seoDescription || entryBox.data.description
+            }
             coverUrl={entryBox.data.coverUrl}
           />
           <div>
