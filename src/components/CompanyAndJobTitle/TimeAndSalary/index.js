@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { PageBoxRenderer } from '../StatusRenderer';
+import BoxRenderer, { PageBoxRenderer } from '../StatusRenderer';
 import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
@@ -10,17 +10,15 @@ import Searchbar from '../Searchbar';
 import SummarySection from './SummarySection';
 import EsgBlock from '../TimeAndSalary/EsgBlock';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import { fetchBoxPropType } from 'utils/fetchBox';
 
 const TimeAndSalary = ({
   pageType,
   pageName,
   tabType,
   boxSelector,
+  statisticsBox,
   salaryWorkTimeStatistics,
-  salaryDistribution,
-  jobAverageSalaries,
-  averageWeekWorkTime,
-  overtimeFrequencyCount,
   page,
   pageSize,
   topNJobTitles,
@@ -31,11 +29,21 @@ const TimeAndSalary = ({
     tabType={tabType}
   >
     {pageType === PAGE_TYPE.COMPANY && <EsgBlock />}
-    <SummarySection
-      salaryDistribution={salaryDistribution}
-      jobAverageSalaries={jobAverageSalaries}
-      averageWeekWorkTime={averageWeekWorkTime}
-      overtimeFrequencyCount={overtimeFrequencyCount}
+    <BoxRenderer
+      box={statisticsBox}
+      render={({
+        salaryDistribution,
+        jobAverageSalaries,
+        averageWeekWorkTime,
+        overtimeFrequencyCount,
+      }) => (
+        <SummarySection
+          salaryDistribution={salaryDistribution}
+          jobAverageSalaries={jobAverageSalaries}
+          averageWeekWorkTime={averageWeekWorkTime}
+          overtimeFrequencyCount={overtimeFrequencyCount}
+        />
+      )}
     />
     <OvertimeSection statistics={salaryWorkTimeStatistics} />
     <Searchbar pageType={pageType} tabType={tabType} />
@@ -71,16 +79,13 @@ const TimeAndSalary = ({
 );
 
 TimeAndSalary.propTypes = {
-  averageWeekWorkTime: PropTypes.number.isRequired,
   boxSelector: PropTypes.func.isRequired,
-  jobAverageSalaries: PropTypes.arrayOf(PropTypes.object),
-  overtimeFrequencyCount: PropTypes.object.isRequired,
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
-  salaryDistribution: PropTypes.array,
   salaryWorkTimeStatistics: PropTypes.object.isRequired,
+  statisticsBox: fetchBoxPropType.isRequired,
   tabType: PropTypes.string.isRequired,
   topNJobTitles: PropTypes.arrayOf(
     PropTypes.shape({

@@ -202,11 +202,12 @@ export const queryCompanyOverviewStatistics = companyName => async (
 
     const model = {
       name: data.name,
-      jobAverageSalaries: data.salary_work_time_statistics.job_average_salaries,
+      jobAverageSalaries:
+        data.salary_work_time_statistics.job_average_salaries || [],
       averageWeekWorkTime:
-        data.salary_work_time_statistics.average_week_work_time,
+        data.salary_work_time_statistics.average_week_work_time || 0,
       overtimeFrequencyCount:
-        data.salary_work_time_statistics.overtime_frequency_count,
+        data.salary_work_time_statistics.overtime_frequency_count || 0,
     };
 
     dispatch(setOverviewStatistics(companyName, getFetched(model)));

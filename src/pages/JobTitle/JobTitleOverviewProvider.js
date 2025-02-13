@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Overview from 'components/CompanyAndJobTitle/Overview';
 import usePermission from 'hooks/usePermission';
@@ -27,17 +27,9 @@ const useOverviewBoxSelector = pageName => {
   );
 };
 
-const useOverviewStatistics = pageName => {
-  const selector = useCallback(
-    state => {
-      const box = overviewStatisticsBoxSelectorByName(pageName)(state);
-      return {
-        salaryDistribution: (box.data && box.data.salaryDistribution) || [],
-        averageWeekWorkTime: (box.data && box.data.averageWeekWorkTime) || 0,
-        overtimeFrequencyCount:
-          (box.data && box.data.overtimeFrequencyCount) || 0,
-      };
-    },
+const useOverviewStatisticsBox = pageName => {
+  const selector = useMemo(
+    () => overviewStatisticsBoxSelectorByName(pageName),
     [pageName],
   );
   return useSelector(selector);
@@ -62,21 +54,15 @@ const JobTitleOverviewProvider = () => {
   }, [pageType, jobTitle, fetchPermission]);
 
   const boxSelector = useOverviewBoxSelector(jobTitle);
-  const {
-    salaryDistribution,
-    averageWeekWorkTime,
-    overtimeFrequencyCount,
-  } = useOverviewStatistics(jobTitle);
+  const statisticsBox = useOverviewStatisticsBox(jobTitle);
 
   return (
     <Overview
       pageType={pageType}
       pageName={jobTitle}
       tabType={TAB_TYPE.OVERVIEW}
-      salaryDistribution={salaryDistribution}
-      averageWeekWorkTime={averageWeekWorkTime}
-      overtimeFrequencyCount={overtimeFrequencyCount}
       boxSelector={boxSelector}
+      statisticsBox={statisticsBox}
     />
   );
 };

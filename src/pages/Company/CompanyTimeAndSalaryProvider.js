@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import TimeAndSalary from 'components/CompanyAndJobTitle/TimeAndSalary';
 import usePermission from 'hooks/usePermission';
@@ -30,17 +30,9 @@ import {
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
 
-const useOverviewStatistics = pageName => {
-  const selector = useCallback(
-    state => {
-      const box = companyOverviewStatisticsBoxSelectorByName(pageName)(state);
-      return {
-        jobAverageSalaries: (box.data && box.data.jobAverageSalaries) || [],
-        averageWeekWorkTime: (box.data && box.data.averageWeekWorkTime) || 0,
-        overtimeFrequencyCount:
-          (box.data && box.data.overtimeFrequencyCount) || 0,
-      };
-    },
+const useOverviewStatisticsBox = pageName => {
+  const selector = useMemo(
+    () => companyOverviewStatisticsBoxSelectorByName(pageName),
     [pageName],
   );
   return useSelector(selector);
@@ -116,12 +108,7 @@ const CompanyTimeAndSalaryProvider = () => {
     fetchPermission();
   }, [pageType, companyName, fetchPermission]);
 
-  const {
-    jobAverageSalaries,
-    averageWeekWorkTime,
-    overtimeFrequencyCount,
-  } = useOverviewStatistics(companyName);
-
+  const statisticsBox = useOverviewStatisticsBox(companyName);
   const salaryWorkTimeStatistics = useTimeAndSalaryStatisticsBox(companyName);
   const topNJobTitles = useTopNJobTitles(companyName);
 
@@ -136,10 +123,8 @@ const CompanyTimeAndSalaryProvider = () => {
       topNJobTitles={topNJobTitles.salary}
       tabType={TAB_TYPE.TIME_AND_SALARY}
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
-      jobAverageSalaries={jobAverageSalaries}
-      averageWeekWorkTime={averageWeekWorkTime}
-      overtimeFrequencyCount={overtimeFrequencyCount}
       boxSelector={boxSelector}
+      statisticsBox={statisticsBox}
     />
   );
 };

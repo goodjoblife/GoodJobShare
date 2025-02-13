@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import TimeAndSalary from 'components/CompanyAndJobTitle/TimeAndSalary';
 import usePermission from 'hooks/usePermission';
@@ -14,6 +14,7 @@ import {
   queryJobTitleTimeAndSalaryStatistics,
 } from 'actions/jobTitle';
 import {
+  salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
   jobTitleTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
   jobTitleTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
   jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
@@ -26,17 +27,9 @@ import {
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
 
-const useOverviewStatistics = pageName => {
-  const selector = useCallback(
-    state => {
-      const box = overviewStatisticsBoxSelectorByName(pageName)(state);
-      return {
-        salaryDistribution: (box.data && box.data.salaryDistribution) || [],
-        averageWeekWorkTime: (box.data && box.data.averageWeekWorkTime) || 0,
-        overtimeFrequencyCount:
-          (box.data && box.data.overtimeFrequencyCount) || 0,
-      };
-    },
+const useOverviewStatisticsBox = pageName => {
+  const selector = useMemo(
+    () => overviewStatisticsBoxSelectorByName(pageName),
     [pageName],
   );
   return useSelector(selector);
@@ -48,12 +41,7 @@ const useSalaryWorkTimeStatistics = pageName => {
       const jobTitle = timeAndSalaryStatisticsBoxSelectorByName(pageName)(
         state,
       );
-      return {
-        salaryDistribution: jobTitle.data && jobTitle.data.salaryDistribution,
-        averageWeekWorkTime: jobTitle.data && jobTitle.data.averageWeekWorkTime,
-        overtimeFrequencyCount:
-          jobTitle.data && jobTitle.data.overtimeFrequencyCount,
-      };
+      return salaryWorkTimeStatisticsSelector(jobTitle);
     },
     [pageName],
   );
@@ -110,12 +98,7 @@ const JobTitleTimeAndSalaryProvider = () => {
 
   const boxSelector = useTimeAndSalaryBoxSelector(jobTitle);
 
-  const {
-    salaryDistribution,
-    averageWeekWorkTime,
-    overtimeFrequencyCount,
-  } = useOverviewStatistics(jobTitle);
-
+  const statisticsBox = useOverviewStatisticsBox(jobTitle);
   const salaryWorkTimeStatistics = useSalaryWorkTimeStatistics(jobTitle);
 
   return (
@@ -126,10 +109,8 @@ const JobTitleTimeAndSalaryProvider = () => {
       pageSize={PAGE_SIZE}
       tabType={TAB_TYPE.TIME_AND_SALARY}
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
-      salaryDistribution={salaryDistribution}
-      averageWeekWorkTime={averageWeekWorkTime}
-      overtimeFrequencyCount={overtimeFrequencyCount}
       boxSelector={boxSelector}
+      statisticsBox={statisticsBox}
     />
   );
 };
