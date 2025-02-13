@@ -31,7 +31,7 @@ const TimeAndSalary = ({
       tabType={tabType}
       boxSelector={boxSelector}
       render={({ salaryWorkTimes, salaryWorkTimesCount: totalCount }) => {
-        if (salaryWorkTimes.length === 0) {
+        if (salaryWorkTimeStatistics.count === 0) {
           return (
             <NotFoundStatus>
               <EmptyView pageName={pageName} tabType={tabType} />
