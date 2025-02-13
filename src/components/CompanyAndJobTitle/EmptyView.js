@@ -21,7 +21,7 @@ const EmptyView = ({ pageName, tabType }) => (
 
 EmptyView.propTypes = {
   pageName: PropTypes.string.isRequired,
-  tabType: PropTypes.string.isRequired,
+  tabType: PropTypes.string,
 };
 
 export default EmptyView;

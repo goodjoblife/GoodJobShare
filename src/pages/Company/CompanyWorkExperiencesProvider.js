@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
@@ -12,12 +12,7 @@ import {
   queryCompanyWorkExperiences,
   queryRatingStatistics,
 } from 'actions/company';
-import {
-  workExperiences as workExperiencesSelector,
-  workExperiencesCount as workExperiencesCountSelector,
-  status as statusSelector,
-  companyWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
+import { companyWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { pageFromQuerySelector } from 'selectors/routing/page';
@@ -26,20 +21,14 @@ import {
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
 
-const useWorkExperiencesBox = pageName => {
-  const selector = useCallback(
+const useWorkExperiencesBoxSelector = pageName => {
+  return useCallback(
     state => {
       const company = workExperiencesBoxSelectorByName(pageName)(state);
-      return {
-        status: statusSelector(company),
-        workExperiences: workExperiencesSelector(company),
-        workExperiencesCount: workExperiencesCountSelector(company),
-      };
+      return company;
     },
     [pageName],
   );
-
-  return useSelector(selector);
 };
 
 const CompanyWorkExperiencesProvider = () => {
@@ -71,11 +60,7 @@ const CompanyWorkExperiencesProvider = () => {
     fetchPermission();
   }, [pageType, companyName, fetchPermission]);
 
-  const {
-    status,
-    workExperiences,
-    workExperiencesCount,
-  } = useWorkExperiencesBox(companyName);
+  const boxSelector = useWorkExperiencesBoxSelector(companyName);
 
   return (
     <WorkExperiences
@@ -83,10 +68,8 @@ const CompanyWorkExperiencesProvider = () => {
       pageName={companyName}
       page={page}
       pageSize={PAGE_SIZE}
-      totalCount={workExperiencesCount}
       tabType={TAB_TYPE.WORK_EXPERIENCE}
-      status={status}
-      workExperiences={workExperiences}
+      boxSelector={boxSelector}
     />
   );
 };
