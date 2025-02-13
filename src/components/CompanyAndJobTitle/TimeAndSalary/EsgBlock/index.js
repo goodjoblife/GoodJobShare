@@ -5,13 +5,13 @@ import EsgBlockMobile from './EsgBlockMobile';
 import styles from './EsgBlock.module.css';
 import useMobile from 'hooks/useMobile';
 
-const EsgBlockRoot = () => {
+const EsgBlockRoot = props => {
   const isMobile = useMobile();
 
   if (isMobile) {
-    return <EsgBlockMobile className={styles.root} />;
+    return <EsgBlockMobile className={styles.root} {...props} />;
   } else {
-    return <EsgBlockDesktop className={styles.root} />;
+    return <EsgBlockDesktop className={styles.root} {...props} />;
   }
 };
 

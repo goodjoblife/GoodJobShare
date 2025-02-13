@@ -49,6 +49,10 @@ export const companyTopNJobTitlesBoxSelectorByName = companyName => state => {
   return state.companyIndex.topNJobTitlesByName[companyName] || getUnfetched();
 };
 
+export const companyEsgSalaryDataBoxSelectorByName = companyName => state => {
+  return state.companyIndex.esgSalaryData[companyName] || getUnfetched();
+};
+
 export const companyInterviewExperiencesBoxSelectorByName = companyName => state => {
   return (
     state.companyIndex.interviewExperiencesByName[companyName] || getUnfetched()
