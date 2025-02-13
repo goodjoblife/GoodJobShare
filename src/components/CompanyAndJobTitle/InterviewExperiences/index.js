@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { BoxStatusRenderer } from '../StatusRenderer';
+import { PageBoxRenderer } from '../StatusRenderer';
 import InterviewExperiencesSection from './InterviewExperiences';
 import InterviewExperienceHelmet from './Helmet';
 import Searchbar from '../Searchbar';
@@ -10,10 +10,9 @@ const InterviewExperiences = ({
   pageType,
   pageName,
   tabType,
-  interviewExperiences,
+  boxSelector,
   page,
   pageSize,
-  totalCount,
   topNJobTitles,
 }) => (
   <CompanyAndJobTitleWrapper
@@ -22,11 +21,15 @@ const InterviewExperiences = ({
     tabType={tabType}
   >
     <Searchbar pageType={pageType} tabType={tabType} />
-    <BoxStatusRenderer
+    <PageBoxRenderer
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
-      render={() => {
+      boxSelector={boxSelector}
+      render={({
+        interviewExperiences,
+        interviewExperiencesCount: totalCount,
+      }) => {
         return (
           <Fragment>
             <InterviewExperienceHelmet
@@ -53,7 +56,7 @@ const InterviewExperiences = ({
 );
 
 InterviewExperiences.propTypes = {
-  interviewExperiences: PropTypes.arrayOf(PropTypes.object),
+  boxSelector: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
@@ -64,7 +67,6 @@ InterviewExperiences.propTypes = {
       name: PropTypes.string.isRequired,
     }),
   ),
-  totalCount: PropTypes.number.isRequired,
 };
 
 export default InterviewExperiences;

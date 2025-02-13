@@ -14,16 +14,9 @@ import {
   queryJobTitleTimeAndSalaryStatistics,
 } from 'actions/jobTitle';
 import {
-  salaryWorkTimes as salaryWorkTimesSelector,
-  salaryWorkTimesCount as salaryWorkTimesCountSelector,
-  salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
-  status as statusSelector,
   jobTitleTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
   jobTitleTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
   jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
-  salaryDistribution,
-  averageWeekWorkTime,
-  overtimeFrequencyCount,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
@@ -38,9 +31,10 @@ const useOverviewStatistics = pageName => {
     state => {
       const box = overviewStatisticsBoxSelectorByName(pageName)(state);
       return {
-        salaryDistribution: salaryDistribution(box),
-        averageWeekWorkTime: averageWeekWorkTime(box),
-        overtimeFrequencyCount: overtimeFrequencyCount(box),
+        salaryDistribution: (box.data && box.data.salaryDistribution) || [],
+        averageWeekWorkTime: (box.data && box.data.averageWeekWorkTime) || 0,
+        overtimeFrequencyCount:
+          (box.data && box.data.overtimeFrequencyCount) || 0,
       };
     },
     [pageName],
@@ -54,7 +48,12 @@ const useSalaryWorkTimeStatistics = pageName => {
       const jobTitle = timeAndSalaryStatisticsBoxSelectorByName(pageName)(
         state,
       );
-      return salaryWorkTimeStatisticsSelector(jobTitle);
+      return {
+        salaryDistribution: jobTitle.data && jobTitle.data.salaryDistribution,
+        averageWeekWorkTime: jobTitle.data && jobTitle.data.averageWeekWorkTime,
+        overtimeFrequencyCount:
+          jobTitle.data && jobTitle.data.overtimeFrequencyCount,
+      };
     },
     [pageName],
   );
@@ -62,20 +61,14 @@ const useSalaryWorkTimeStatistics = pageName => {
   return useSelector(selector);
 };
 
-const useTimeAndSalaryBox = pageName => {
-  const selector = useCallback(
+const useTimeAndSalaryBoxSelector = pageName => {
+  return useCallback(
     state => {
       const jobTitle = timeAndSalaryBoxSelectorByName(pageName)(state);
-      return {
-        status: statusSelector(jobTitle),
-        salaryWorkTimes: salaryWorkTimesSelector(jobTitle),
-        salaryWorkTimesCount: salaryWorkTimesCountSelector(jobTitle),
-      };
+      return jobTitle;
     },
     [pageName],
   );
-
-  return useSelector(selector);
 };
 
 const JobTitleTimeAndSalaryProvider = () => {
@@ -115,9 +108,7 @@ const JobTitleTimeAndSalaryProvider = () => {
     fetchPermission();
   }, [pageType, jobTitle, fetchPermission]);
 
-  const { status, salaryWorkTimes, salaryWorkTimesCount } = useTimeAndSalaryBox(
-    jobTitle,
-  );
+  const boxSelector = useTimeAndSalaryBoxSelector(jobTitle);
 
   const {
     salaryDistribution,
@@ -133,14 +124,12 @@ const JobTitleTimeAndSalaryProvider = () => {
       pageName={jobTitle}
       page={page}
       pageSize={PAGE_SIZE}
-      totalCount={salaryWorkTimesCount}
       tabType={TAB_TYPE.TIME_AND_SALARY}
-      status={status}
-      salaryWorkTimes={salaryWorkTimes}
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
       salaryDistribution={salaryDistribution}
       averageWeekWorkTime={averageWeekWorkTime}
       overtimeFrequencyCount={overtimeFrequencyCount}
+      boxSelector={boxSelector}
     />
   );
 };

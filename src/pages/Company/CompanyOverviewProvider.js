@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Overview from 'components/CompanyAndJobTitle/Overview';
 import usePermission from 'hooks/usePermission';
 import {
@@ -13,9 +13,6 @@ import {
   queryRatingStatistics,
 } from 'actions/company';
 import {
-  jobAverageSalaries,
-  averageWeekWorkTime,
-  overtimeFrequencyCount,
   companyOverviewBoxSelectorByName as overviewBoxSelectorByName,
   companyOverviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
@@ -23,16 +20,14 @@ import { paramsSelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 
-const useOverviewBox = pageName => {
-  const selector = useCallback(
+const useOverviewBoxSelector = pageName => {
+  return useCallback(
     state => {
       const box = overviewBoxSelectorByName(pageName)(state);
-      // the box.data may be null (company not found)
       return box;
     },
     [pageName],
   );
-  return useSelector(selector);
 };
 
 const useOverviewStatistics = pageName => {
@@ -40,9 +35,10 @@ const useOverviewStatistics = pageName => {
     state => {
       const box = companyOverviewStatisticsBoxSelectorByName(pageName)(state);
       return {
-        jobAverageSalaries: jobAverageSalaries(box),
-        averageWeekWorkTime: averageWeekWorkTime(box),
-        overtimeFrequencyCount: overtimeFrequencyCount(box),
+        jobAverageSalaries: (box.data && box.data.jobAverageSalaries) || [],
+        averageWeekWorkTime: (box.data && box.data.averageWeekWorkTime) || 0,
+        overtimeFrequencyCount:
+          (box.data && box.data.overtimeFrequencyCount) || 0,
       };
     },
     [pageName],
@@ -86,7 +82,7 @@ const CompanyOverviewProvider = () => {
     overtimeFrequencyCount,
   } = useOverviewStatistics(companyName);
 
-  const overviewBox = useOverviewBox(companyName);
+  const boxSelector = useOverviewBoxSelector(companyName);
   const topNJobTitles = useTopNJobTitles(companyName);
 
   return (
@@ -94,11 +90,11 @@ const CompanyOverviewProvider = () => {
       pageType={pageType}
       pageName={companyName}
       tabType={TAB_TYPE.OVERVIEW}
-      overviewBox={overviewBox}
       jobAverageSalaries={jobAverageSalaries}
       averageWeekWorkTime={averageWeekWorkTime}
       overtimeFrequencyCount={overtimeFrequencyCount}
       topNJobTitles={topNJobTitles.all}
+      boxSelector={boxSelector}
     />
   );
 };

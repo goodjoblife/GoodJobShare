@@ -16,15 +16,9 @@ import {
   queryRatingStatistics,
 } from 'actions/company';
 import {
-  salaryWorkTimes as salaryWorkTimesSelector,
-  salaryWorkTimesCount as salaryWorkTimesCountSelector,
   salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
-  status as statusSelector,
   companyTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
   companyTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
-  jobAverageSalaries as jobAverageSalariesSelector,
-  averageWeekWorkTime as averageWeekWorkTimeSelector,
-  overtimeFrequencyCount as overtimeFrequencyCountSelector,
   companyOverviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
@@ -41,9 +35,10 @@ const useOverviewStatistics = pageName => {
     state => {
       const box = companyOverviewStatisticsBoxSelectorByName(pageName)(state);
       return {
-        jobAverageSalaries: jobAverageSalariesSelector(box),
-        averageWeekWorkTime: averageWeekWorkTimeSelector(box),
-        overtimeFrequencyCount: overtimeFrequencyCountSelector(box),
+        jobAverageSalaries: (box.data && box.data.jobAverageSalaries) || [],
+        averageWeekWorkTime: (box.data && box.data.averageWeekWorkTime) || 0,
+        overtimeFrequencyCount:
+          (box.data && box.data.overtimeFrequencyCount) || 0,
       };
     },
     [pageName],
@@ -62,20 +57,14 @@ const useTimeAndSalaryStatisticsBox = pageName => {
   return useSelector(selector);
 };
 
-const useTimeAndSalaryBox = companyName => {
-  const selector = useCallback(
+const useTimeAndSalaryBoxSelector = companyName => {
+  return useCallback(
     state => {
       const company = timeAndSalaryBoxSelectorByName(companyName)(state);
-      return {
-        status: statusSelector(company),
-        salaryWorkTimes: salaryWorkTimesSelector(company),
-        salaryWorkTimesCount: salaryWorkTimesCountSelector(company),
-      };
+      return company;
     },
     [companyName],
   );
-
-  return useSelector(selector);
 };
 
 const CompanyTimeAndSalaryProvider = () => {
@@ -136,9 +125,7 @@ const CompanyTimeAndSalaryProvider = () => {
   const salaryWorkTimeStatistics = useTimeAndSalaryStatisticsBox(companyName);
   const topNJobTitles = useTopNJobTitles(companyName);
 
-  const { status, salaryWorkTimes, salaryWorkTimesCount } = useTimeAndSalaryBox(
-    companyName,
-  );
+  const boxSelector = useTimeAndSalaryBoxSelector(companyName);
 
   return (
     <TimeAndSalary
@@ -146,15 +133,13 @@ const CompanyTimeAndSalaryProvider = () => {
       pageName={companyName}
       page={page}
       pageSize={PAGE_SIZE}
-      totalCount={salaryWorkTimesCount}
       topNJobTitles={topNJobTitles.salary}
       tabType={TAB_TYPE.TIME_AND_SALARY}
-      status={status}
-      salaryWorkTimes={salaryWorkTimes}
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
       jobAverageSalaries={jobAverageSalaries}
       averageWeekWorkTime={averageWeekWorkTime}
       overtimeFrequencyCount={overtimeFrequencyCount}
+      boxSelector={boxSelector}
     />
   );
 };

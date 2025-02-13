@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { BoxStatusRenderer } from '../StatusRenderer';
+import { PageBoxRenderer } from '../StatusRenderer';
 import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
@@ -15,7 +15,7 @@ const TimeAndSalary = ({
   pageType,
   pageName,
   tabType,
-  salaryWorkTimes,
+  boxSelector,
   salaryWorkTimeStatistics,
   salaryDistribution,
   jobAverageSalaries,
@@ -23,7 +23,6 @@ const TimeAndSalary = ({
   overtimeFrequencyCount,
   page,
   pageSize,
-  totalCount,
   topNJobTitles,
 }) => (
   <CompanyAndJobTitleWrapper
@@ -40,11 +39,12 @@ const TimeAndSalary = ({
     />
     <OvertimeSection statistics={salaryWorkTimeStatistics} />
     <Searchbar pageType={pageType} tabType={tabType} />
-    <BoxStatusRenderer
+    <PageBoxRenderer
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
-      render={() => {
+      boxSelector={boxSelector}
+      render={({ salaryWorkTimes, salaryWorkTimesCount: totalCount }) => {
         return (
           <Fragment>
             <Helmet
@@ -72,6 +72,7 @@ const TimeAndSalary = ({
 
 TimeAndSalary.propTypes = {
   averageWeekWorkTime: PropTypes.number.isRequired,
+  boxSelector: PropTypes.func.isRequired,
   jobAverageSalaries: PropTypes.arrayOf(PropTypes.object),
   overtimeFrequencyCount: PropTypes.object.isRequired,
   page: PropTypes.number.isRequired,
@@ -80,14 +81,12 @@ TimeAndSalary.propTypes = {
   pageType: PropTypes.string.isRequired,
   salaryDistribution: PropTypes.array,
   salaryWorkTimeStatistics: PropTypes.object.isRequired,
-  salaryWorkTimes: PropTypes.array,
   tabType: PropTypes.string.isRequired,
   topNJobTitles: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),
   ),
-  totalCount: PropTypes.number.isRequired,
 };
 
 export default TimeAndSalary;
