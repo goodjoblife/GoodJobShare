@@ -106,13 +106,16 @@ export const queryJobTitleOverview = jobTitle => async (dispatch, getState) => {
       name: data.name,
       salaryWorkTimes: data.salaryWorkTimesResult.salaryWorkTimes,
       salaryWorkTimesCount: data.salaryWorkTimesResult.count,
-      salary_distribution: data.salary_distribution,
-      salary_work_time_statistics: data.salary_work_time_statistics,
       interviewExperiences:
         data.interviewExperiencesResult.interviewExperiences,
       interviewExperiencesCount: data.interviewExperiencesResult.count,
       workExperiences: data.workExperiencesResult.workExperiences,
       workExperiencesCount: data.workExperiencesResult.count,
+      salaryDistribution: data.salary_distribution.bins,
+      averageWeekWorkTime:
+        data.salary_work_time_statistics.average_week_work_time,
+      overtimeFrequencyCount:
+        data.salary_work_time_statistics.overtime_frequency_count,
     };
 
     dispatch(setOverview(jobTitle, getFetched(overviewData)));
@@ -168,8 +171,8 @@ export const queryJobTitleTimeAndSalary = ({
       companyName,
       start,
       limit,
-      salary_work_times: data.salaryWorkTimesResult.salaryWorkTimes,
-      salary_work_times_count: data.salaryWorkTimesResult.count,
+      salaryWorkTimes: data.salaryWorkTimesResult.salaryWorkTimes,
+      salaryWorkTimesCount: data.salaryWorkTimesResult.count,
     };
 
     dispatch(setTimeAndSalary(jobTitle, getFetched(timeAndSalaryData)));
@@ -268,9 +271,9 @@ export const queryJobTitleInterviewExperiences = ({
       companyName,
       start,
       limit,
-      interview_experiences:
+      interviewExperiences:
         data.interviewExperiencesResult.interviewExperiences,
-      interview_experiences_count: data.interviewExperiencesResult.count,
+      interviewExperiencesCount: data.interviewExperiencesResult.count,
     };
 
     dispatch(
@@ -325,8 +328,8 @@ export const queryJobTitleWorkExperiences = ({
       companyName,
       start,
       limit,
-      work_experiences: data.workExperiencesResult.workExperiences,
-      work_experiences_count: data.workExperiencesResult.count,
+      workExperiences: data.workExperiencesResult.workExperiences,
+      workExperiencesCount: data.workExperiencesResult.count,
     };
 
     dispatch(setWorkExperiences(jobTitle, getFetched(workExperiencesData)));

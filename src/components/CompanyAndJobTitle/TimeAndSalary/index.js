@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import StatusRenderer, { BoxStatusRenderer } from '../StatusRenderer';
+import BoxRenderer, { PageBoxRenderer } from '../StatusRenderer';
 import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
@@ -14,11 +14,10 @@ const TimeAndSalary = ({
   pageType,
   pageName,
   tabType,
-  salaryWorkTimes,
+  boxSelector,
   salaryWorkTimeStatistics,
   page,
   pageSize,
-  totalCount,
   topNJobTitles,
   esgSalaryDataBox,
 }) => (
@@ -28,7 +27,7 @@ const TimeAndSalary = ({
     tabType={tabType}
   >
     {pageType === PAGE_TYPE.COMPANY && (
-      <StatusRenderer
+      <BoxRenderer
         box={esgSalaryDataBox}
         render={data => {
           if (!data) return null;
@@ -56,11 +55,12 @@ const TimeAndSalary = ({
     )}
     <OvertimeSection statistics={salaryWorkTimeStatistics} />
     <Searchbar pageType={pageType} tabType={tabType} />
-    <BoxStatusRenderer
+    <PageBoxRenderer
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
-      render={() => {
+      boxSelector={boxSelector}
+      render={({ salaryWorkTimes, salaryWorkTimesCount: totalCount }) => {
         return (
           <Fragment>
             <Helmet
@@ -87,20 +87,19 @@ const TimeAndSalary = ({
 );
 
 TimeAndSalary.propTypes = {
+  boxSelector: PropTypes.func.isRequired,
   esgSalaryDataBox: PropTypes.object.isRequired,
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
   salaryWorkTimeStatistics: PropTypes.object.isRequired,
-  salaryWorkTimes: PropTypes.array,
   tabType: PropTypes.string.isRequired,
   topNJobTitles: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  totalCount: PropTypes.number.isRequired,
 };
 
 export default TimeAndSalary;
