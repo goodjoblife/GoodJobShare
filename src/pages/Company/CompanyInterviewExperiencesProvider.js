@@ -14,11 +14,7 @@ import {
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
-import {
-  interviewExperiences as interviewExperiencesSelector,
-  interviewExperiencesCount as interviewExperiencesCountSelector,
-  companyInterviewExperiencesBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
+import { companyInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 import {
@@ -26,7 +22,6 @@ import {
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
 import { pageFromQuerySelector } from 'selectors/routing/page';
-import { mapBoxData } from 'utils/fetchBox';
 
 const useInterviewExperiencesBoxSelector = companyName => {
   return useCallback(
@@ -34,11 +29,7 @@ const useInterviewExperiencesBoxSelector = companyName => {
       const company = companyInterviewExperiencesBoxSelectorByName(companyName)(
         state,
       );
-      return mapBoxData(company, data => ({
-        ...data,
-        interviewExperiences: interviewExperiencesSelector(company),
-        interviewExperiencesCount: interviewExperiencesCountSelector(company),
-      }));
+      return company;
     },
     [companyName],
   );

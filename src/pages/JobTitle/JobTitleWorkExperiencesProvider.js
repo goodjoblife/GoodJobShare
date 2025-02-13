@@ -9,11 +9,7 @@ import {
   PAGE_SIZE,
 } from 'constants/companyJobTitle';
 import { queryJobTitleWorkExperiences } from 'actions/jobTitle';
-import {
-  workExperiences as workExperiencesSelector,
-  workExperiencesCount as workExperiencesCountSelector,
-  jobTitleWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
+import { jobTitleWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 import { pageFromQuerySelector } from 'selectors/routing/page';
@@ -21,17 +17,12 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
-import { mapBoxData } from 'utils/fetchBox';
 
 const useWorkExperiencesBoxSelector = pageName => {
   return useCallback(
     state => {
       const jobTitle = workExperiencesBoxSelectorByName(pageName)(state);
-      return mapBoxData(jobTitle, data => ({
-        ...data,
-        workExperiences: workExperiencesSelector(jobTitle),
-        workExperiencesCount: workExperiencesCountSelector(jobTitle),
-      }));
+      return jobTitle;
     },
     [pageName],
   );

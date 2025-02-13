@@ -12,11 +12,7 @@ import {
   queryCompanyWorkExperiences,
   queryRatingStatistics,
 } from 'actions/company';
-import {
-  workExperiences as workExperiencesSelector,
-  workExperiencesCount as workExperiencesCountSelector,
-  companyWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
+import { companyWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { pageFromQuerySelector } from 'selectors/routing/page';
@@ -24,17 +20,12 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
-import { mapBoxData } from 'utils/fetchBox';
 
 const useWorkExperiencesBoxSelector = pageName => {
   return useCallback(
     state => {
       const company = workExperiencesBoxSelectorByName(pageName)(state);
-      return mapBoxData(company, data => ({
-        ...data,
-        workExperiences: workExperiencesSelector(company),
-        workExperiencesCount: workExperiencesCountSelector(company),
-      }));
+      return company;
     },
     [pageName],
   );

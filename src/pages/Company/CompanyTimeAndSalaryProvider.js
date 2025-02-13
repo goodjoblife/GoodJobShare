@@ -15,8 +15,6 @@ import {
   queryRatingStatistics,
 } from 'actions/company';
 import {
-  salaryWorkTimes as salaryWorkTimesSelector,
-  salaryWorkTimesCount as salaryWorkTimesCountSelector,
   salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
   companyTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
   companyTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
@@ -29,7 +27,6 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
-import { mapBoxData } from 'utils/fetchBox';
 
 const useTimeAndSalaryStatisticsBox = pageName => {
   const selector = useCallback(
@@ -46,11 +43,7 @@ const useTimeAndSalaryBoxSelector = companyName => {
   return useCallback(
     state => {
       const company = timeAndSalaryBoxSelectorByName(companyName)(state);
-      return mapBoxData(company, data => ({
-        ...data,
-        salaryWorkTimes: salaryWorkTimesSelector(company),
-        salaryWorkTimesCount: salaryWorkTimesCountSelector(company),
-      }));
+      return company;
     },
     [companyName],
   );

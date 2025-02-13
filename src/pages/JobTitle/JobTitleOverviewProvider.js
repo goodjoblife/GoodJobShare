@@ -7,32 +7,15 @@ import {
   pageType as PAGE_TYPE,
 } from 'constants/companyJobTitle';
 import { queryJobTitleOverview } from 'actions/jobTitle';
-import {
-  salaryDistribution,
-  averageWeekWorkTime,
-  overtimeFrequencyCount,
-  jobTitleOverviewBoxSelectorByName as overviewBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
+import { jobTitleOverviewBoxSelectorByName as overviewBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
-import { mapBoxData } from 'utils/fetchBox';
 
 const useOverviewBoxSelector = pageName => {
   return useCallback(
     state => {
       const box = overviewBoxSelectorByName(pageName)(state);
-      // the box.data may be null (company not found)
-      return mapBoxData(box, data =>
-        data
-          ? {
-              ...box.data,
-              // the Overview need some fileds derived from salary_work_time_statistics
-              salaryDistribution: salaryDistribution(box),
-              averageWeekWorkTime: averageWeekWorkTime(box),
-              overtimeFrequencyCount: overtimeFrequencyCount(box),
-            }
-          : null,
-      );
+      return box;
     },
     [pageName],
   );

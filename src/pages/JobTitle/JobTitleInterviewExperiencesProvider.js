@@ -9,11 +9,7 @@ import {
   PAGE_SIZE,
 } from 'constants/companyJobTitle';
 import { queryJobTitleInterviewExperiences } from 'actions/jobTitle';
-import {
-  interviewExperiences as interviewExperiencesSelector,
-  interviewExperiencesCount as interviewExperiencesCountSelector,
-  jobTitleInterviewExperiencesBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
+import { jobTitleInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 import { pageFromQuerySelector } from 'selectors/routing/page';
@@ -21,7 +17,6 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
-import { mapBoxData } from 'utils/fetchBox';
 
 const useInterviewExperiencesBoxSelector = jobTitle => {
   return useCallback(
@@ -29,11 +24,7 @@ const useInterviewExperiencesBoxSelector = jobTitle => {
       const job = jobTitleInterviewExperiencesBoxSelectorByName(jobTitle)(
         state,
       );
-      return mapBoxData(job, data => ({
-        ...data,
-        interviewExperiences: interviewExperiencesSelector(job),
-        interviewExperiencesCount: interviewExperiencesCountSelector(job),
-      }));
+      return job;
     },
     [jobTitle],
   );

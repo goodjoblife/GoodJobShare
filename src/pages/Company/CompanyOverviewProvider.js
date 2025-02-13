@@ -11,33 +11,16 @@ import {
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
-import {
-  jobAverageSalaries,
-  averageWeekWorkTime,
-  overtimeFrequencyCount,
-  companyOverviewBoxSelectorByName as overviewBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
+import { companyOverviewBoxSelectorByName as overviewBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
-import { mapBoxData } from 'utils/fetchBox';
 
 const useOverviewBoxSelector = pageName => {
   return useCallback(
     state => {
       const box = overviewBoxSelectorByName(pageName)(state);
-      // the box.data may be null (company not found)
-      return mapBoxData(box, data =>
-        data
-          ? {
-              ...box.data,
-              // the Overview need some fileds derived from salary_work_time_statistics
-              jobAverageSalaries: jobAverageSalaries(box),
-              averageWeekWorkTime: averageWeekWorkTime(box),
-              overtimeFrequencyCount: overtimeFrequencyCount(box),
-            }
-          : null,
-      );
+      return box;
     },
     [pageName],
   );
