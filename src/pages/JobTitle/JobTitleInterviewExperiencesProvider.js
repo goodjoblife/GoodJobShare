@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
@@ -9,12 +9,7 @@ import {
   PAGE_SIZE,
 } from 'constants/companyJobTitle';
 import { queryJobTitleInterviewExperiences } from 'actions/jobTitle';
-import {
-  interviewExperiences as interviewExperiencesSelector,
-  interviewExperiencesCount as interviewExperiencesCountSelector,
-  status as statusSelector,
-  jobTitleInterviewExperiencesBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
+import { jobTitleInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 import { pageFromQuerySelector } from 'selectors/routing/page';
@@ -23,22 +18,16 @@ import {
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
 
-const useInterviewExperiencesBox = jobTitle => {
-  const selector = useCallback(
+const useInterviewExperiencesBoxSelector = jobTitle => {
+  return useCallback(
     state => {
       const job = jobTitleInterviewExperiencesBoxSelectorByName(jobTitle)(
         state,
       );
-      return {
-        status: statusSelector(job),
-        interviewExperiences: interviewExperiencesSelector(job),
-        interviewExperiencesCount: interviewExperiencesCountSelector(job),
-      };
+      return job;
     },
     [jobTitle],
   );
-
-  return useSelector(selector);
 };
 
 const JobTitleTimeAndSalaryProvider = () => {
@@ -66,11 +55,7 @@ const JobTitleTimeAndSalaryProvider = () => {
     fetchPermission();
   }, [pageType, jobTitle, fetchPermission]);
 
-  const {
-    status,
-    interviewExperiences,
-    interviewExperiencesCount,
-  } = useInterviewExperiencesBox(jobTitle);
+  const boxSelector = useInterviewExperiencesBoxSelector(jobTitle);
 
   return (
     <InterviewExperiences
@@ -78,10 +63,8 @@ const JobTitleTimeAndSalaryProvider = () => {
       pageName={jobTitle}
       page={page}
       pageSize={PAGE_SIZE}
-      totalCount={interviewExperiencesCount}
       tabType={TAB_TYPE.INTERVIEW_EXPERIENCE}
-      status={status}
-      interviewExperiences={interviewExperiences}
+      boxSelector={boxSelector}
     />
   );
 };
