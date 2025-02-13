@@ -112,6 +112,13 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
           }
         }
       }
+    }
+  }
+`;
+
+export const queryCompanyOverviewStatisticsQuery = /* GraphQL */ `
+  query($companyName: String!) {
+    company(name: $companyName) {
       salary_work_time_statistics {
         average_week_work_time
         overtime_frequency_count {

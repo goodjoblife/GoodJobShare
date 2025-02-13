@@ -6,7 +6,7 @@ import Columns from 'common/Columns';
 import { Section, Wrapper, Heading } from 'common/base';
 import FanPageBlock from 'common/FanPageBlock';
 import { useShareLink } from 'hooks/experiments';
-import { queryMenu, queryMenuIfUnfetched } from 'actions/laborRights';
+import { queryMenuIfUnfetched } from 'actions/laborRights';
 import { menuBoxSelector } from 'selectors/laborRightsSelector';
 import { isFetching, isError, isFetched } from 'utils/fetchBox';
 import LaborRightsEntry from './LaborRightsEntry';
@@ -70,7 +70,7 @@ const LaborRightsMenu = () => {
 };
 
 LaborRightsMenu.fetchData = ({ store: { dispatch } }) => {
-  return dispatch(queryMenu());
+  return dispatch(queryMenuIfUnfetched());
 };
 
 export default LaborRightsMenu;

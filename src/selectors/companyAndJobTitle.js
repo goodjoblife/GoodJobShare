@@ -28,6 +28,12 @@ export const companyOverviewBoxSelectorByName = companyName => state => {
   return state.companyIndex.overviewByName[companyName] || getUnfetched();
 };
 
+export const companyOverviewStatisticsBoxSelectorByName = companyName => state => {
+  return (
+    state.companyIndex.overviewStatisticsByName[companyName] || getUnfetched()
+  );
+};
+
 export const companyTimeAndSalaryBoxSelectorByName = companyName => state => {
   return state.companyIndex.timeAndSalaryByName[companyName] || getUnfetched();
 };
@@ -70,6 +76,12 @@ export const jobTitlesCountSelector = state => {
 
 export const jobTitleOverviewBoxSelectorByName = jobTitle => state => {
   return state.jobTitleIndex.overviewByName[jobTitle] || getUnfetched();
+};
+
+export const jobTitleOverviewStatisticsBoxSelectorByName = jobTitle => state => {
+  return (
+    state.jobTitleIndex.overviewStatisticsByName[jobTitle] || getUnfetched()
+  );
 };
 
 export const jobTitleTimeAndSalaryBoxSelectorByName = jobTitle => state => {
