@@ -4,6 +4,7 @@ import {
   SET_INDEX_COUNT,
   SET_INDEX,
   SET_OVERVIEW,
+  SET_OVERVIEW_STATISTICS,
   SET_TIME_AND_SALARY,
   SET_INTERVIEW_EXPERIENCES,
   SET_WORK_EXPERIENCES,
@@ -19,6 +20,7 @@ const preloadedState = {
   // companyName --> box
   ratingStatisticsByName: {},
   overviewByName: {},
+  overviewStatisticsByName: {},
   timeAndSalaryByName: {},
   timeAndSalaryStatisticsByName: {},
   interviewExperiencesByName: {},
@@ -56,6 +58,15 @@ const reducer = createReducer(preloadedState, {
       ...state,
       overviewByName: {
         ...state.overviewByName,
+        [companyName]: box,
+      },
+    };
+  },
+  [SET_OVERVIEW_STATISTICS]: (state, { companyName, box }) => {
+    return {
+      ...state,
+      overviewStatisticsByName: {
+        ...state.overviewStatisticsByName,
         [companyName]: box,
       },
     };

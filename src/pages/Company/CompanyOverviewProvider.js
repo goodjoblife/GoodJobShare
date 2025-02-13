@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Overview from 'components/CompanyAndJobTitle/Overview';
 import usePermission from 'hooks/usePermission';
 import {
@@ -8,10 +8,14 @@ import {
 } from 'constants/companyJobTitle';
 import {
   queryCompanyOverview,
+  queryCompanyOverviewStatistics,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
-import { companyOverviewBoxSelectorByName as overviewBoxSelectorByName } from 'selectors/companyAndJobTitle';
+import {
+  companyOverviewBoxSelectorByName as overviewBoxSelectorByName,
+  companyOverviewStatisticsBoxSelectorByName,
+} from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
@@ -24,6 +28,14 @@ const useOverviewBoxSelector = pageName => {
     },
     [pageName],
   );
+};
+
+const useOverviewStatisticsBox = pageName => {
+  const selector = useMemo(
+    () => companyOverviewStatisticsBoxSelectorByName(pageName),
+    [pageName],
+  );
+  return useSelector(selector);
 };
 
 const CompanyOverviewProvider = () => {
@@ -47,12 +59,18 @@ const CompanyOverviewProvider = () => {
     dispatch(queryCompanyOverview(companyName));
   }, [dispatch, companyName]);
 
+  useEffect(() => {
+    dispatch(queryCompanyOverviewStatistics(companyName));
+  }, [dispatch, companyName]);
+
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [pageType, companyName, fetchPermission]);
 
   const boxSelector = useOverviewBoxSelector(companyName);
+  const statisticsBox = useOverviewStatisticsBox(companyName);
+
   const topNJobTitles = useTopNJobTitles(companyName);
 
   return (
@@ -62,6 +80,7 @@ const CompanyOverviewProvider = () => {
       tabType={TAB_TYPE.OVERVIEW}
       topNJobTitles={topNJobTitles.all}
       boxSelector={boxSelector}
+      statisticsBox={statisticsBox}
     />
   );
 };
@@ -71,6 +90,7 @@ CompanyOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
   const companyName = companyNameSelector(params);
   return Promise.all([
     dispatch(queryCompanyOverview(companyName)),
+    dispatch(queryCompanyOverviewStatistics(companyName)),
     dispatch(queryRatingStatistics(companyName)),
     dispatch(queryCompanyTopNJobTitles({ companyName })),
   ]);

@@ -10,6 +10,8 @@ import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import { tabType as TAB_TYPE, generateTabURL } from 'constants/companyJobTitle';
 import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
+import BoxRenderer from '../StatusRenderer';
+import { fetchBoxPropType } from 'utils/fetchBox';
 
 const Overview = ({
   pageType,
@@ -20,17 +22,14 @@ const Overview = ({
   workExperiencesCount,
   salaryWorkTimes,
   salaryWorkTimesCount,
-  salaryDistribution,
-  jobAverageSalaries,
-  averageWeekWorkTime,
-  overtimeFrequencyCount,
+  statisticsBox,
 }) => {
   const [, , canViewPublishId] = usePermission();
 
   return (
     <Section Tag="main" paddingBottom>
       <SnippetBlock
-        title="本站使用者分享之薪資、加班資訊"
+        title="薪水&加班狀況"
         linkText={`查看 ${salaryWorkTimesCount} 筆完整的薪水、加班數據資料 >>`}
         linkTo={generateTabURL({
           pageType,
@@ -42,11 +41,21 @@ const Overview = ({
         pageName={pageName}
         tabType={TAB_TYPE.TIME_AND_SALARY}
       >
-        <SummaryBlock
-          salaryDistribution={salaryDistribution}
-          jobAverageSalaries={jobAverageSalaries}
-          averageWeekWorkTime={averageWeekWorkTime}
-          overtimeFrequencyCount={overtimeFrequencyCount}
+        <BoxRenderer
+          box={statisticsBox}
+          render={({
+            salaryDistribution,
+            jobAverageSalaries,
+            averageWeekWorkTime,
+            overtimeFrequencyCount,
+          }) => (
+            <SummaryBlock
+              salaryDistribution={salaryDistribution}
+              jobAverageSalaries={jobAverageSalaries}
+              averageWeekWorkTime={averageWeekWorkTime}
+              overtimeFrequencyCount={overtimeFrequencyCount}
+            />
+          )}
         />
         <WorkingHourTable data={salaryWorkTimes} pageType={pageType} />
       </SnippetBlock>
@@ -99,16 +108,13 @@ const Overview = ({
 };
 
 Overview.propTypes = {
-  averageWeekWorkTime: PropTypes.number.isRequired,
   interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
   interviewExperiencesCount: PropTypes.number.isRequired,
-  jobAverageSalaries: PropTypes.array,
-  overtimeFrequencyCount: PropTypes.object.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
-  salaryDistribution: PropTypes.array,
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object).isRequired,
   salaryWorkTimesCount: PropTypes.number.isRequired,
+  statisticsBox: fetchBoxPropType.isRequired,
   workExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
   workExperiencesCount: PropTypes.number.isRequired,
 };

@@ -2,19 +2,22 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { PageBoxRenderer } from '../StatusRenderer';
+import BoxRenderer, { PageBoxRenderer } from '../StatusRenderer';
 import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
 import Searchbar from '../Searchbar';
+import SummarySection from './SummarySection';
 import EsgBlock from '../TimeAndSalary/EsgBlock';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import { fetchBoxPropType } from 'utils/fetchBox';
 
 const TimeAndSalary = ({
   pageType,
   pageName,
   tabType,
   boxSelector,
+  statisticsBox,
   salaryWorkTimeStatistics,
   page,
   pageSize,
@@ -26,6 +29,22 @@ const TimeAndSalary = ({
     tabType={tabType}
   >
     {pageType === PAGE_TYPE.COMPANY && <EsgBlock />}
+    <BoxRenderer
+      box={statisticsBox}
+      render={({
+        salaryDistribution,
+        jobAverageSalaries,
+        averageWeekWorkTime,
+        overtimeFrequencyCount,
+      }) => (
+        <SummarySection
+          salaryDistribution={salaryDistribution}
+          jobAverageSalaries={jobAverageSalaries}
+          averageWeekWorkTime={averageWeekWorkTime}
+          overtimeFrequencyCount={overtimeFrequencyCount}
+        />
+      )}
+    />
     <OvertimeSection statistics={salaryWorkTimeStatistics} />
     <Searchbar pageType={pageType} tabType={tabType} />
     <PageBoxRenderer
@@ -66,12 +85,13 @@ TimeAndSalary.propTypes = {
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
   salaryWorkTimeStatistics: PropTypes.object.isRequired,
+  statisticsBox: fetchBoxPropType.isRequired,
   tabType: PropTypes.string.isRequired,
   topNJobTitles: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),
-  ).isRequired,
+  ),
 };
 
 export default TimeAndSalary;
