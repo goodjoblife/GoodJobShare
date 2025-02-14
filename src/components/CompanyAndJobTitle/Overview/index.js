@@ -4,12 +4,14 @@ import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import { PageBoxRenderer } from '../StatusRenderer';
 import OverviewSection from './Overview';
 import Helmet from './Helmet';
+import { fetchBoxPropType } from 'utils/fetchBox';
 
 const Overview = ({
   pageType,
   pageName,
   tabType,
   boxSelector,
+  statisticsBox,
   topNJobTitles,
 }) => (
   <CompanyAndJobTitleWrapper
@@ -42,10 +44,7 @@ const Overview = ({
               workExperiencesCount={data.workExperiencesCount}
               salaryWorkTimes={data.salaryWorkTimes}
               salaryWorkTimesCount={data.salaryWorkTimesCount}
-              salaryDistribution={data.salaryDistribution}
-              jobAverageSalaries={data.jobAverageSalaries}
-              averageWeekWorkTime={data.averageWeekWorkTime}
-              overtimeFrequencyCount={data.overtimeFrequencyCount}
+              statisticsBox={statisticsBox}
             />
           </Fragment>
         );
@@ -58,12 +57,13 @@ Overview.propTypes = {
   boxSelector: PropTypes.func.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
+  statisticsBox: fetchBoxPropType.isRequired,
   tabType: PropTypes.string.isRequired,
   topNJobTitles: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),
-  ).isRequired,
+  ),
 };
 
 export default Overview;

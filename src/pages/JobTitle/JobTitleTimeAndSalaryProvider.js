@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import TimeAndSalary from 'components/CompanyAndJobTitle/TimeAndSalary';
 import usePermission from 'hooks/usePermission';
@@ -9,6 +9,7 @@ import {
   PAGE_SIZE,
 } from 'constants/companyJobTitle';
 import {
+  queryJobTitleOverviewStatistics,
   queryJobTitleTimeAndSalary,
   queryJobTitleTimeAndSalaryStatistics,
 } from 'actions/jobTitle';
@@ -16,6 +17,7 @@ import {
   salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
   jobTitleTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
   jobTitleTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
+  jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
@@ -24,6 +26,14 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
+
+const useOverviewStatisticsBox = pageName => {
+  const selector = useMemo(
+    () => overviewStatisticsBoxSelectorByName(pageName),
+    [pageName],
+  );
+  return useSelector(selector);
+};
 
 const useSalaryWorkTimeStatistics = pageName => {
   const selector = useCallback(
@@ -59,6 +69,10 @@ const JobTitleTimeAndSalaryProvider = () => {
   const limit = PAGE_SIZE;
 
   useEffect(() => {
+    dispatch(queryJobTitleOverviewStatistics(jobTitle));
+  }, [dispatch, jobTitle]);
+
+  useEffect(() => {
     dispatch(
       queryJobTitleTimeAndSalaryStatistics({
         jobTitle,
@@ -84,6 +98,7 @@ const JobTitleTimeAndSalaryProvider = () => {
 
   const boxSelector = useTimeAndSalaryBoxSelector(jobTitle);
 
+  const statisticsBox = useOverviewStatisticsBox(jobTitle);
   const salaryWorkTimeStatistics = useSalaryWorkTimeStatistics(jobTitle);
 
   return (
@@ -95,6 +110,7 @@ const JobTitleTimeAndSalaryProvider = () => {
       tabType={TAB_TYPE.TIME_AND_SALARY}
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
       boxSelector={boxSelector}
+      statisticsBox={statisticsBox}
     />
   );
 };
@@ -110,14 +126,17 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   const companyName = searchTextFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
-  return dispatch(
-    queryJobTitleTimeAndSalary({
-      jobTitle,
-      companyName,
-      start,
-      limit,
-    }),
-  );
+  return Promise.all([
+    dispatch(queryJobTitleOverviewStatistics(jobTitle)),
+    dispatch(
+      queryJobTitleTimeAndSalary({
+        jobTitle,
+        companyName,
+        start,
+        limit,
+      }),
+    ),
+  ]);
 };
 
 export default JobTitleTimeAndSalaryProvider;

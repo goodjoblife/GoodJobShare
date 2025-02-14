@@ -9,6 +9,7 @@ import {
 import {
   companyIndexesBoxSelectorAtPage,
   companyOverviewBoxSelectorByName,
+  companyOverviewStatisticsBoxSelectorByName,
   companyTimeAndSalaryBoxSelectorByName,
   companyTimeAndSalaryStatisticsBoxSelectorByName,
   companyInterviewExperiencesBoxSelectorByName,
@@ -25,10 +26,12 @@ import {
   getCompanyTimeAndSalaryStatistics,
   queryCompanyRatingStatisticsApi,
   getCompanyTopNJobTitles,
+  queryCompanyOverviewStatistics as queryCompanyOverviewStatisticsApi,
 } from 'apis/company';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
+export const SET_OVERVIEW_STATISTICS = '@@COMPANY/SET_OVERVIEW_STATISTICS';
 export const SET_TIME_AND_SALARY = '@@COMPANY/SET_TIME_AND_SALARY';
 export const SET_TIME_AND_SALARY_STATISTICS =
   '@@COMPANY/SET_TIME_AND_SALARY_STATISTICS';
@@ -156,17 +159,61 @@ export const queryCompanyOverview = companyName => async (
       interviewExperiencesCount: data.interviewExperiencesResult.count,
       workExperiences: data.workExperiencesResult.workExperiences,
       workExperiencesCount: data.workExperiencesResult.count,
-      jobAverageSalaries: data.salary_work_time_statistics.job_average_salaries,
-      averageWeekWorkTime:
-        data.salary_work_time_statistics.average_week_work_time || 0,
-      overtimeFrequencyCount:
-        data.salary_work_time_statistics.overtime_frequency_count || 0,
     };
 
     dispatch(setOverview(companyName, getFetched(overviewData)));
   } catch (error) {
     if (isGraphqlError(error)) {
       dispatch(setOverview(companyName, getError(error)));
+    }
+    throw error;
+  }
+};
+
+const setOverviewStatistics = (companyName, box) => ({
+  type: SET_OVERVIEW_STATISTICS,
+  companyName,
+  box,
+});
+
+export const queryCompanyOverviewStatistics = companyName => async (
+  dispatch,
+  getState,
+  { api },
+) => {
+  const box = companyOverviewStatisticsBoxSelectorByName(companyName)(
+    getState(),
+  );
+  if (isFetching(box) || isFetched(box)) {
+    return;
+  }
+
+  dispatch(setOverviewStatistics(companyName, toFetching()));
+
+  try {
+    const data = await queryCompanyOverviewStatisticsApi({
+      companyName,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setOverviewStatistics(companyName, getFetched(data)));
+    }
+
+    const model = {
+      name: data.name,
+      jobAverageSalaries:
+        data.salary_work_time_statistics.job_average_salaries || [],
+      averageWeekWorkTime:
+        data.salary_work_time_statistics.average_week_work_time || 0,
+      overtimeFrequencyCount:
+        data.salary_work_time_statistics.overtime_frequency_count || 0,
+    };
+
+    dispatch(setOverviewStatistics(companyName, getFetched(model)));
+  } catch (error) {
+    if (isGraphqlError(error)) {
+      dispatch(setOverviewStatistics(companyName, getError(error)));
     }
     throw error;
   }

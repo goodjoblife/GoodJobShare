@@ -2,19 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { PageBoxRenderer } from '../StatusRenderer';
+import BoxRenderer, { PageBoxRenderer } from '../StatusRenderer';
 import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
 import Searchbar from '../Searchbar';
 import EmptyView from '../EmptyView';
 import NotFoundStatus from 'common/routing/NotFound';
+import SummarySection from './SummarySection';
+import { fetchBoxPropType } from 'utils/fetchBox';
 
 const TimeAndSalary = ({
   pageType,
   pageName,
   tabType,
   boxSelector,
+  statisticsBox,
   salaryWorkTimeStatistics,
   page,
   pageSize,
@@ -41,6 +44,22 @@ const TimeAndSalary = ({
 
         return (
           <>
+            <BoxRenderer
+              box={statisticsBox}
+              render={({
+                salaryDistribution,
+                jobAverageSalaries,
+                averageWeekWorkTime,
+                overtimeFrequencyCount,
+              }) => (
+                <SummarySection
+                  salaryDistribution={salaryDistribution}
+                  jobAverageSalaries={jobAverageSalaries}
+                  averageWeekWorkTime={averageWeekWorkTime}
+                  overtimeFrequencyCount={overtimeFrequencyCount}
+                />
+              )}
+            />
             <OvertimeSection statistics={salaryWorkTimeStatistics} />
             <Searchbar pageType={pageType} tabType={tabType} />
             <Helmet
@@ -73,12 +92,13 @@ TimeAndSalary.propTypes = {
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
   salaryWorkTimeStatistics: PropTypes.object.isRequired,
+  statisticsBox: fetchBoxPropType.isRequired,
   tabType: PropTypes.string.isRequired,
   topNJobTitles: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),
-  ).isRequired,
+  ),
 };
 
 export default TimeAndSalary;
