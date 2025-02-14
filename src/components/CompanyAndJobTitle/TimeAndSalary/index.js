@@ -7,6 +7,8 @@ import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
 import Searchbar from '../Searchbar';
+import EmptyView from '../EmptyView';
+import NotFoundStatus from 'common/routing/NotFound';
 import SummarySection from './SummarySection';
 import { fetchBoxPropType } from 'utils/fetchBox';
 
@@ -26,32 +28,40 @@ const TimeAndSalary = ({
     pageName={pageName}
     tabType={tabType}
   >
-    <BoxRenderer
-      box={statisticsBox}
-      render={({
-        salaryDistribution,
-        jobAverageSalaries,
-        averageWeekWorkTime,
-        overtimeFrequencyCount,
-      }) => (
-        <SummarySection
-          salaryDistribution={salaryDistribution}
-          jobAverageSalaries={jobAverageSalaries}
-          averageWeekWorkTime={averageWeekWorkTime}
-          overtimeFrequencyCount={overtimeFrequencyCount}
-        />
-      )}
-    />
-    <OvertimeSection statistics={salaryWorkTimeStatistics} />
-    <Searchbar pageType={pageType} tabType={tabType} />
     <PageBoxRenderer
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
       boxSelector={boxSelector}
       render={({ salaryWorkTimes, salaryWorkTimesCount: totalCount }) => {
+        if (salaryWorkTimeStatistics.count === 0) {
+          return (
+            <NotFoundStatus>
+              <EmptyView pageName={pageName} tabType={tabType} />
+            </NotFoundStatus>
+          );
+        }
+
         return (
           <Fragment>
+            <BoxRenderer
+              box={statisticsBox}
+              render={({
+                salaryDistribution,
+                jobAverageSalaries,
+                averageWeekWorkTime,
+                overtimeFrequencyCount,
+              }) => (
+                <SummarySection
+                  salaryDistribution={salaryDistribution}
+                  jobAverageSalaries={jobAverageSalaries}
+                  averageWeekWorkTime={averageWeekWorkTime}
+                  overtimeFrequencyCount={overtimeFrequencyCount}
+                />
+              )}
+            />
+            <OvertimeSection statistics={salaryWorkTimeStatistics} />
+            <Searchbar pageType={pageType} tabType={tabType} />
             <Helmet
               pageType={pageType}
               pageName={pageName}
