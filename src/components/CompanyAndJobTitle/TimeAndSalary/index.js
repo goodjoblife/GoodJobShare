@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
@@ -43,7 +43,7 @@ const TimeAndSalary = ({
         }
 
         return (
-          <>
+          <Fragment>
             <BoxRenderer
               box={statisticsBox}
               render={({
@@ -78,7 +78,7 @@ const TimeAndSalary = ({
               pageSize={pageSize}
               totalCount={totalCount}
             />
-          </>
+          </Fragment>
         );
       }}
     />
