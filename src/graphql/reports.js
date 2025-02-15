@@ -21,16 +21,3 @@ export const createSalaryWorkTimeReportGql = /* GraphQL */ `
     }
   }
 `;
-
-export const getExperienceReportsGql = /* GraphQL */ `
-  query($id: ID!) {
-    experience(id: $id) {
-      reports {
-        id
-        reasonCategory
-        reason
-        createdAt
-      }
-    }
-  }
-`;
