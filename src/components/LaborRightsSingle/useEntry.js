@@ -1,10 +1,9 @@
+import { useMemo } from 'react';
 import R from 'ramda';
 import { useSelector } from 'react-redux';
 import {
-  entryDataSelector,
-  entryStatusSelector,
-  entryErrorSelector,
   menuBoxSelector,
+  entryBoxSelectorById,
 } from 'selectors/laborRightsSelector';
 
 export const useNeighborEntry = entryId => {
@@ -20,11 +19,8 @@ export const useNeighborEntry = entryId => {
 };
 
 const useEntry = entryId => {
-  const entryStatus = useSelector(entryStatusSelector(entryId));
-  const entryError = useSelector(entryErrorSelector(entryId));
-  const entry = useSelector(entryDataSelector(entryId));
-
-  return [entryStatus, entryError, entry];
+  const selector = useMemo(() => entryBoxSelectorById(entryId), [entryId]);
+  return useSelector(selector);
 };
 
 export default useEntry;

@@ -2,21 +2,23 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { BoxStatusRenderer } from '../StatusRenderer';
+import BoxRenderer, { PageBoxRenderer } from '../StatusRenderer';
 import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
 import Searchbar from '../Searchbar';
+import SummarySection from './SummarySection';
+import { fetchBoxPropType } from 'utils/fetchBox';
 
 const TimeAndSalary = ({
   pageType,
   pageName,
   tabType,
-  salaryWorkTimes,
+  boxSelector,
+  statisticsBox,
   salaryWorkTimeStatistics,
   page,
   pageSize,
-  totalCount,
   topNJobTitles,
 }) => (
   <CompanyAndJobTitleWrapper
@@ -24,13 +26,30 @@ const TimeAndSalary = ({
     pageName={pageName}
     tabType={tabType}
   >
+    <BoxRenderer
+      box={statisticsBox}
+      render={({
+        salaryDistribution,
+        jobAverageSalaries,
+        averageWeekWorkTime,
+        overtimeFrequencyCount,
+      }) => (
+        <SummarySection
+          salaryDistribution={salaryDistribution}
+          jobAverageSalaries={jobAverageSalaries}
+          averageWeekWorkTime={averageWeekWorkTime}
+          overtimeFrequencyCount={overtimeFrequencyCount}
+        />
+      )}
+    />
     <OvertimeSection statistics={salaryWorkTimeStatistics} />
     <Searchbar pageType={pageType} tabType={tabType} />
-    <BoxStatusRenderer
+    <PageBoxRenderer
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
-      render={() => {
+      boxSelector={boxSelector}
+      render={({ salaryWorkTimes, salaryWorkTimesCount: totalCount }) => {
         return (
           <Fragment>
             <Helmet
@@ -57,19 +76,19 @@ const TimeAndSalary = ({
 );
 
 TimeAndSalary.propTypes = {
+  boxSelector: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
   salaryWorkTimeStatistics: PropTypes.object.isRequired,
-  salaryWorkTimes: PropTypes.array,
+  statisticsBox: fetchBoxPropType.isRequired,
   tabType: PropTypes.string.isRequired,
   topNJobTitles: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),
-  ).isRequired,
-  totalCount: PropTypes.number.isRequired,
+  ),
 };
 
 export default TimeAndSalary;

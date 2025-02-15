@@ -10,6 +10,8 @@ import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import { tabType as TAB_TYPE, generateTabURL } from 'constants/companyJobTitle';
 import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
+import BoxRenderer from '../StatusRenderer';
+import { fetchBoxPropType } from 'utils/fetchBox';
 
 const Overview = ({
   pageType,
@@ -20,10 +22,7 @@ const Overview = ({
   workExperiencesCount,
   salaryWorkTimes,
   salaryWorkTimesCount,
-  salaryDistribution,
-  jobAverageSalaries,
-  averageWeekWorkTime,
-  overtimeFrequencyCount,
+  statisticsBox,
 }) => {
   const [, , canViewPublishId] = usePermission();
 
@@ -42,11 +41,21 @@ const Overview = ({
         pageName={pageName}
         tabType={TAB_TYPE.TIME_AND_SALARY}
       >
-        <SummaryBlock
-          salaryDistribution={salaryDistribution}
-          jobAverageSalaries={jobAverageSalaries}
-          averageWeekWorkTime={averageWeekWorkTime}
-          overtimeFrequencyCount={overtimeFrequencyCount}
+        <BoxRenderer
+          box={statisticsBox}
+          render={({
+            salaryDistribution,
+            jobAverageSalaries,
+            averageWeekWorkTime,
+            overtimeFrequencyCount,
+          }) => (
+            <SummaryBlock
+              salaryDistribution={salaryDistribution}
+              jobAverageSalaries={jobAverageSalaries}
+              averageWeekWorkTime={averageWeekWorkTime}
+              overtimeFrequencyCount={overtimeFrequencyCount}
+            />
+          )}
         />
         <WorkingHourTable data={salaryWorkTimes} pageType={pageType} />
       </SnippetBlock>
@@ -99,16 +108,13 @@ const Overview = ({
 };
 
 Overview.propTypes = {
-  averageWeekWorkTime: PropTypes.number.isRequired,
   interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
   interviewExperiencesCount: PropTypes.number.isRequired,
-  jobAverageSalaries: PropTypes.array,
-  overtimeFrequencyCount: PropTypes.object.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
-  salaryDistribution: PropTypes.array,
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object).isRequired,
   salaryWorkTimesCount: PropTypes.number.isRequired,
+  statisticsBox: fetchBoxPropType.isRequired,
   workExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
   workExperiencesCount: PropTypes.number.isRequired,
 };

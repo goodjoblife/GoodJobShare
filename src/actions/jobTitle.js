@@ -13,9 +13,11 @@ import {
   jobTitleTimeAndSalaryStatisticsBoxSelectorByName,
   jobTitleInterviewExperiencesBoxSelectorByName,
   jobTitleWorkExperiencesBoxSelectorByName,
+  jobTitleOverviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   queryJobTitleOverview as queryJobTitleOverviewApi,
+  queryJobTitleOverviewStatistics as queryJobTitleOverviewStatisticsApi,
   getJobTitleTimeAndSalary,
   getJobTitleTimeAndSalaryStatistics,
   getJobTitleInterviewExperiences,
@@ -24,6 +26,7 @@ import {
 } from 'apis/jobTitle';
 
 export const SET_OVERVIEW = '@@JOB_TITLE/SET_OVERVIEW';
+export const SET_OVERVIEW_STATISTICS = '@@JOB_TITLE/SET_OVERVIEW_STATISTICS';
 export const SET_TIME_AND_SALARY = '@@JOB_TITLE/SET_TIME_AND_SALARY';
 export const SET_TIME_AND_SALARY_STATISTICS =
   '@@JOB_TITLE/SET_TIME_AND_SALARY_STATISTICS';
@@ -106,8 +109,6 @@ export const queryJobTitleOverview = jobTitle => async (dispatch, getState) => {
       name: data.name,
       salaryWorkTimes: data.salaryWorkTimesResult.salaryWorkTimes,
       salaryWorkTimesCount: data.salaryWorkTimesResult.count,
-      salary_distribution: data.salary_distribution,
-      salary_work_time_statistics: data.salary_work_time_statistics,
       interviewExperiences:
         data.interviewExperiencesResult.interviewExperiences,
       interviewExperiencesCount: data.interviewExperiencesResult.count,
@@ -119,6 +120,51 @@ export const queryJobTitleOverview = jobTitle => async (dispatch, getState) => {
   } catch (error) {
     if (isGraphqlError(error)) {
       dispatch(setOverview(jobTitle, getError(error)));
+    }
+    throw error;
+  }
+};
+
+const setOverviewStatistics = (jobTitle, box) => ({
+  type: SET_OVERVIEW_STATISTICS,
+  jobTitle,
+  box,
+});
+
+export const queryJobTitleOverviewStatistics = jobTitle => async (
+  dispatch,
+  getState,
+) => {
+  const box = jobTitleOverviewStatisticsBoxSelectorByName(jobTitle)(getState());
+  if (isFetching(box) || isFetched(box)) {
+    return;
+  }
+
+  dispatch(setOverviewStatistics(jobTitle, toFetching()));
+
+  try {
+    const data = await queryJobTitleOverviewStatisticsApi({
+      jobTitle,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setOverviewStatistics(jobTitle, getFetched(data)));
+    }
+
+    const model = {
+      name: data.name,
+      salaryDistribution: data.salary_distribution.bins || [],
+      averageWeekWorkTime:
+        data.salary_work_time_statistics.average_week_work_time || 0,
+      overtimeFrequencyCount:
+        data.salary_work_time_statistics.overtime_frequency_count || 0,
+    };
+
+    dispatch(setOverviewStatistics(jobTitle, getFetched(model)));
+  } catch (error) {
+    if (isGraphqlError(error)) {
+      dispatch(setOverviewStatistics(jobTitle, getError(error)));
     }
     throw error;
   }
@@ -168,8 +214,8 @@ export const queryJobTitleTimeAndSalary = ({
       companyName,
       start,
       limit,
-      salary_work_times: data.salaryWorkTimesResult.salaryWorkTimes,
-      salary_work_times_count: data.salaryWorkTimesResult.count,
+      salaryWorkTimes: data.salaryWorkTimesResult.salaryWorkTimes,
+      salaryWorkTimesCount: data.salaryWorkTimesResult.count,
     };
 
     dispatch(setTimeAndSalary(jobTitle, getFetched(timeAndSalaryData)));
@@ -268,9 +314,9 @@ export const queryJobTitleInterviewExperiences = ({
       companyName,
       start,
       limit,
-      interview_experiences:
+      interviewExperiences:
         data.interviewExperiencesResult.interviewExperiences,
-      interview_experiences_count: data.interviewExperiencesResult.count,
+      interviewExperiencesCount: data.interviewExperiencesResult.count,
     };
 
     dispatch(
@@ -325,8 +371,8 @@ export const queryJobTitleWorkExperiences = ({
       companyName,
       start,
       limit,
-      work_experiences: data.workExperiencesResult.workExperiences,
-      work_experiences_count: data.workExperiencesResult.count,
+      workExperiences: data.workExperiencesResult.workExperiences,
+      workExperiencesCount: data.workExperiencesResult.count,
     };
 
     dispatch(setWorkExperiences(jobTitle, getFetched(workExperiencesData)));
