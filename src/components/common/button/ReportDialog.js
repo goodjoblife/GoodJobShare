@@ -38,7 +38,6 @@ ReportDialog.propTypes = {
 ReportDialog.defaultProps = {
   isHighlighted: false,
   isShowReportText: false,
-  reportCount: 0,
   reportText: '回報',
 };
 
