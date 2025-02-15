@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Overview from 'components/CompanyAndJobTitle/Overview';
 import usePermission from 'hooks/usePermission';
 import {
@@ -8,38 +8,31 @@ import {
 } from 'constants/companyJobTitle';
 import {
   queryCompanyOverview,
+  queryCompanyOverviewStatistics,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
 import {
-  jobAverageSalaries,
-  averageWeekWorkTime,
-  overtimeFrequencyCount,
   companyOverviewBoxSelectorByName as overviewBoxSelectorByName,
+  companyOverviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 
-const useOverviewBox = pageName => {
-  const selector = useCallback(
+const useOverviewBoxSelector = pageName => {
+  return useCallback(
     state => {
       const box = overviewBoxSelectorByName(pageName)(state);
-      // the box.data may be null (company not found)
-      return {
-        status: box.status,
-        data: box.data
-          ? {
-              ...box.data,
-              // the Overview need some fileds derived from salary_work_time_statistics
-              jobAverageSalaries: jobAverageSalaries(box),
-              averageWeekWorkTime: averageWeekWorkTime(box),
-              overtimeFrequencyCount: overtimeFrequencyCount(box),
-            }
-          : null,
-        error: box.error,
-      };
+      return box;
     },
+    [pageName],
+  );
+};
+
+const useOverviewStatisticsBox = pageName => {
+  const selector = useMemo(
+    () => companyOverviewStatisticsBoxSelectorByName(pageName),
     [pageName],
   );
   return useSelector(selector);
@@ -66,12 +59,18 @@ const CompanyOverviewProvider = () => {
     dispatch(queryCompanyOverview(companyName));
   }, [dispatch, companyName]);
 
+  useEffect(() => {
+    dispatch(queryCompanyOverviewStatistics(companyName));
+  }, [dispatch, companyName]);
+
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [pageType, companyName, fetchPermission]);
 
-  const overviewBox = useOverviewBox(companyName);
+  const boxSelector = useOverviewBoxSelector(companyName);
+  const statisticsBox = useOverviewStatisticsBox(companyName);
+
   const topNJobTitles = useTopNJobTitles(companyName);
 
   return (
@@ -79,8 +78,9 @@ const CompanyOverviewProvider = () => {
       pageType={pageType}
       pageName={companyName}
       tabType={TAB_TYPE.OVERVIEW}
-      overviewBox={overviewBox}
       topNJobTitles={topNJobTitles.all}
+      boxSelector={boxSelector}
+      statisticsBox={statisticsBox}
     />
   );
 };
@@ -90,6 +90,7 @@ CompanyOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
   const companyName = companyNameSelector(params);
   return Promise.all([
     dispatch(queryCompanyOverview(companyName)),
+    dispatch(queryCompanyOverviewStatistics(companyName)),
     dispatch(queryRatingStatistics(companyName)),
     dispatch(queryCompanyTopNJobTitles({ companyName })),
   ]);
