@@ -51,10 +51,10 @@ const EsgBlock = ({
   className,
   showsToggle = true,
   hasPreviewed,
-  avgSalaryStatistics,
-  nonManagerAvgSalaryStatistics,
-  nonManagerMedianSalaryStatistics,
-  femaleManagerStatistics,
+  avgSalaryStatisticsItem,
+  nonManagerAvgSalaryStatisticsItem,
+  nonManagerMedianSalaryStatisticsItem,
+  femaleManagerStatisticsItem,
 }) => {
   const [isCollapsed, setCollapsed] = useState(hasPreviewed);
 
@@ -81,41 +81,43 @@ const EsgBlock = ({
         })}
       >
         <div className={styles.items}>
-          {avgSalaryStatistics && (
+          {avgSalaryStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
               title="員工薪資平均數"
-              year={avgSalaryStatistics.year}
-              value={avgSalaryStatistics.average / 10000}
-              valueCompared={avgSalaryStatistics.sameIndustryAverage}
+              year={avgSalaryStatisticsItem.year}
+              value={avgSalaryStatisticsItem.average / 10000}
+              valueCompared={avgSalaryStatisticsItem.sameIndustryAverage}
               unit="萬 / 年"
             />
           )}
-          {nonManagerAvgSalaryStatistics && (
+          {nonManagerAvgSalaryStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
               title="非主管全時員工薪資平均數"
-              year={nonManagerAvgSalaryStatistics.year}
-              value={nonManagerAvgSalaryStatistics.average / 10000}
-              valueCompared={nonManagerAvgSalaryStatistics.sameIndustryAverage}
+              year={nonManagerAvgSalaryStatisticsItem.year}
+              value={nonManagerAvgSalaryStatisticsItem.average / 10000}
+              valueCompared={
+                nonManagerAvgSalaryStatisticsItem.sameIndustryAverage
+              }
               unit="萬 / 年"
             />
           )}
-          {nonManagerMedianSalaryStatistics && (
+          {nonManagerMedianSalaryStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
               title="非主管全時員工薪資中位數"
-              year={nonManagerMedianSalaryStatistics.year}
-              value={nonManagerMedianSalaryStatistics.median / 10000}
+              year={nonManagerMedianSalaryStatisticsItem.year}
+              value={nonManagerMedianSalaryStatisticsItem.median / 10000}
               unit="萬 / 年"
             />
           )}
-          {femaleManagerStatistics && (
+          {femaleManagerStatisticsItem && (
             <EsgItemBlock
               className={styles.item}
               title="管理職女性主管佔比"
-              year={femaleManagerStatistics.year}
-              value={femaleManagerStatistics.percentage * 100}
+              year={femaleManagerStatisticsItem.year}
+              value={femaleManagerStatisticsItem.percentage * 100}
               unit="%"
             />
           )}
@@ -137,23 +139,23 @@ const EsgBlock = ({
 };
 
 EsgBlock.propTypes = {
-  avgSalaryStatistics: PropTypes.shape({
+  avgSalaryStatisticsItem: PropTypes.shape({
     average: PropTypes.number,
     sameIndustryAverage: PropTypes.number,
     year: PropTypes.number,
   }),
   className: PropTypes.string,
-  femaleManagerStatistics: PropTypes.shape({
+  femaleManagerStatisticsItem: PropTypes.shape({
     percentage: PropTypes.number,
     year: PropTypes.number,
   }),
   hasPreviewed: PropTypes.bool,
-  nonManagerAvgSalaryStatistics: PropTypes.shape({
+  nonManagerAvgSalaryStatisticsItem: PropTypes.shape({
     average: PropTypes.number,
     sameIndustryAverage: PropTypes.number,
     year: PropTypes.number,
   }),
-  nonManagerMedianSalaryStatistics: PropTypes.shape({
+  nonManagerMedianSalaryStatisticsItem: PropTypes.shape({
     median: PropTypes.number,
     year: PropTypes.number,
   }),

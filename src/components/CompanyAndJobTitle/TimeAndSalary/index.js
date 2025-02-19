@@ -36,21 +36,23 @@ const TimeAndSalary = ({
           if (!data) return null;
 
           const {
-            avgSalaryStatistics: [avgSalaryStatistics],
-            nonManagerAvgSalaryStatistics: [nonManagerAvgSalaryStatistics],
+            avgSalaryStatistics: [avgSalaryStatisticsItem],
+            nonManagerAvgSalaryStatistics: [nonManagerAvgSalaryStatisticsItem],
             nonManagerMedianSalaryStatistics: [
-              nonManagerMedianSalaryStatistics,
+              nonManagerMedianSalaryStatisticsItem,
             ],
-            femaleManagerStatistics: [femaleManagerStatistics],
+            femaleManagerStatistics: [femaleManagerStatisticsItem],
           } = data;
           return (
             <EsgBlock
-              avgSalaryStatistics={avgSalaryStatistics}
-              nonManagerAvgSalaryStatistics={nonManagerAvgSalaryStatistics}
-              nonManagerMedianSalaryStatistics={
-                nonManagerMedianSalaryStatistics
+              avgSalaryStatisticsItem={avgSalaryStatisticsItem}
+              nonManagerAvgSalaryStatisticsItem={
+                nonManagerAvgSalaryStatisticsItem
               }
-              femaleManagerStatistics={femaleManagerStatistics}
+              nonManagerMedianSalaryStatisticsItem={
+                nonManagerMedianSalaryStatisticsItem
+              }
+              femaleManagerStatisticsItem={femaleManagerStatisticsItem}
             />
           );
         }}

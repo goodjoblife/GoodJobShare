@@ -3,13 +3,7 @@ import PropTypes from 'prop-types';
 import EsgBlock from './EsgBlock';
 import usePreviewed from './usePreviewed';
 
-const EsgBlockDesktop = ({
-  className,
-  avgSalaryStatistics,
-  nonManagerAvgSalaryStatistics,
-  nonManagerMedianSalaryStatistics,
-  femaleManagerStatistics,
-}) => {
+const EsgBlockDesktop = ({ className, ...props }) => {
   const [hasPreviewed, setPreviewed] = usePreviewed();
 
   useEffect(() => {
@@ -17,23 +11,12 @@ const EsgBlockDesktop = ({
   }, [hasPreviewed, setPreviewed]);
 
   return (
-    <EsgBlock
-      className={className}
-      hasPreviewed={hasPreviewed}
-      avgSalaryStatistics={avgSalaryStatistics}
-      nonManagerAvgSalaryStatistics={nonManagerAvgSalaryStatistics}
-      nonManagerMedianSalaryStatistics={nonManagerMedianSalaryStatistics}
-      femaleManagerStatistics={femaleManagerStatistics}
-    />
+    <EsgBlock className={className} hasPreviewed={hasPreviewed} {...props} />
   );
 };
 
 EsgBlockDesktop.propTypes = {
-  avgSalaryStatistics: PropTypes.object.isRequired,
   className: PropTypes.string,
-  femaleManagerStatistics: PropTypes.object.isRequired,
-  nonManagerAvgSalaryStatistics: PropTypes.object.isRequired,
-  nonManagerMedianSalaryStatistics: PropTypes.object.isRequired,
 };
 
 export default EsgBlockDesktop;

@@ -9,13 +9,7 @@ import EsgBlock from './EsgBlock';
 import styles from './EsgBlock.module.css';
 import usePreviewed from './usePreviewed';
 
-const EsgBlockMobile = ({
-  className,
-  avgSalaryStatistics,
-  nonManagerAvgSalaryStatistics,
-  nonManagerMedianSalaryStatistics,
-  femaleManagerStatistics,
-}) => {
+const EsgBlockMobile = ({ className, ...props }) => {
   const [hasPreviewed, setPreviewed] = usePreviewed();
   const markPreviewed = useCallback(() => setPreviewed(true), [setPreviewed]);
 
@@ -34,21 +28,14 @@ const EsgBlockMobile = ({
         className={cn(styles.mobile, { [styles.preview]: !hasPreviewed })}
         showsToggle={hasPreviewed}
         hasPreviewed={hasPreviewed}
-        avgSalaryStatistics={avgSalaryStatistics}
-        nonManagerAvgSalaryStatistics={nonManagerAvgSalaryStatistics}
-        nonManagerMedianSalaryStatistics={nonManagerMedianSalaryStatistics}
-        femaleManagerStatistics={femaleManagerStatistics}
+        {...props}
       />
     </GradientMask>
   );
 };
 
 EsgBlockMobile.propTypes = {
-  avgSalaryStatistics: PropTypes.object.isRequired,
   className: PropTypes.string,
-  femaleManagerStatistics: PropTypes.object.isRequired,
-  nonManagerAvgSalaryStatistics: PropTypes.object.isRequired,
-  nonManagerMedianSalaryStatistics: PropTypes.object.isRequired,
 };
 
 export default EsgBlockMobile;
