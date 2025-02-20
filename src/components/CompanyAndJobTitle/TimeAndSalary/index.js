@@ -33,16 +33,23 @@ const TimeAndSalary = ({
         jobAverageSalaries,
         averageWeekWorkTime,
         overtimeFrequencyCount,
-      }) => (
-        <SummarySection
-          salaryDistribution={salaryDistribution}
-          jobAverageSalaries={jobAverageSalaries}
-          averageWeekWorkTime={averageWeekWorkTime}
-          overtimeFrequencyCount={overtimeFrequencyCount}
-        />
-      )}
+      }) => {
+        if (salaryWorkTimeStatistics.count === 0) {
+          return null;
+        }
+        return (
+          <Fragment>
+            <SummarySection
+              salaryDistribution={salaryDistribution}
+              jobAverageSalaries={jobAverageSalaries}
+              averageWeekWorkTime={averageWeekWorkTime}
+              overtimeFrequencyCount={overtimeFrequencyCount}
+            />
+            <OvertimeSection statistics={salaryWorkTimeStatistics} />
+          </Fragment>
+        );
+      }}
     />
-    <OvertimeSection statistics={salaryWorkTimeStatistics} />
     <Searchbar pageType={pageType} tabType={tabType} />
     <PageBoxRenderer
       pageType={pageType}
