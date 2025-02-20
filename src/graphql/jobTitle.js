@@ -103,6 +103,13 @@ export const queryJobTitleOverviewGql = /* GraphQL */ `
             month
             year
           }
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
         }
       }
     }
@@ -169,6 +176,13 @@ export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
           data_time {
             month
             year
+          }
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
           }
         }
       }

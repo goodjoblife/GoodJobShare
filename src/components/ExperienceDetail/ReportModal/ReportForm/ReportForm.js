@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Heading from 'common/base/Heading';
@@ -6,46 +6,41 @@ import P from 'common/base/P';
 import Button from 'common/button/Button';
 import Loader from 'common/Loader';
 import { useLogin } from 'hooks/login';
-import { createReport } from 'actions/reports';
-
+import {
+  createExperienceReport,
+  createSalaryWorkTimeReport,
+} from 'actions/reports';
 import ReasonCategory from './ReasonCategory';
 import Reason from './Reason';
 import styles from './ReportForm.module.css';
-import { handleToApiParams } from './helper';
 import { validReasomForm, validReason, isReasonLimit } from './formCheck';
+import {
+  salaryReportReasons,
+  experienceReportReasons,
+  REPORT_TYPE,
+} from './constants';
 
-export const reasonCategoryOptions = [
-  {
-    label: '這是廣告或垃圾訊息',
-    value: '這是廣告或垃圾訊息',
-  },
-  {
-    label: '我認為這篇文章涉及人身攻擊、誹謗',
-    value: '我認為這篇文章涉及人身攻擊、誹謗',
-  },
-  {
-    label: '我認為這篇文章內容不實',
-    value: '我認為這篇文章內容不實',
-  },
-  {
-    label: '其他',
-    value: '其他',
-  },
-];
+const getReasonCategoryOptions = reportType => {
+  return reportType === REPORT_TYPE.SALARY
+    ? salaryReportReasons
+    : experienceReportReasons;
+};
 
-const ReportForm = ({ close, onApiError, onSuccess, id }) => {
+const submitReport = ({ id, reason, reasonCategory, reportType }) => {
+  return reportType === REPORT_TYPE.SALARY
+    ? createSalaryWorkTimeReport({ id, reason, reasonCategory })
+    : createExperienceReport({ id, reason, reasonCategory });
+};
+
+const ReportForm = ({ close, onApiError, onSuccess, id, reportType }) => {
   const dispatch = useDispatch();
   const [isLoggedIn, login] = useLogin();
+  const reasonCategoryOptions = getReasonCategoryOptions(reportType);
 
   const [reasonCategory, setReasonCategory] = useState(
     reasonCategoryOptions[0].value,
   );
   const [reason, setReason] = useState('');
-  useEffect(() => {
-    if (reason !== '') {
-      setReasonCategory('其他');
-    }
-  }, [reason]);
 
   // to show the validation hint
   const [submitted, setSubmitted] = useState(false);
@@ -61,10 +56,7 @@ const ReportForm = ({ close, onApiError, onSuccess, id }) => {
     if (valid) {
       try {
         await dispatch(
-          createReport({
-            experienceId: id,
-            body: handleToApiParams({ reason, reasonCategory }),
-          }),
+          submitReport({ id, reason, reasonCategory, reportType }),
         );
         close();
         onSuccess();
@@ -92,7 +84,7 @@ const ReportForm = ({ close, onApiError, onSuccess, id }) => {
   return (
     <section>
       <Heading Tag="h2" size="l" marginBottomS center>
-        檢舉此篇文章
+        回報此篇文章
       </Heading>
       <ReasonCategory
         reasonCategoryOptions={reasonCategoryOptions}
@@ -112,8 +104,7 @@ const ReportForm = ({ close, onApiError, onSuccess, id }) => {
           marginBottom: '16px',
         }}
       >
-        請盡量詳細說明為何這則內容不妥或不實，以供我們評估，您也可以在被檢舉的內容下方留言，
-        讓其他使用者知道您的不同意見。
+        回報後，該篇文章將顯示標注，提醒其他求職者須注意正確性。我們也將進行評估，將顯然不合理之資訊移除。
       </P>
       <div className={isLoggedIn ? styles.buttons : styles.notLoginButtons}>
         {isLoggedIn ? (
@@ -145,6 +136,11 @@ ReportForm.propTypes = {
   id: PropTypes.string,
   onApiError: PropTypes.func,
   onSuccess: PropTypes.func,
+  reportType: PropTypes.string,
+};
+
+ReportForm.defaultProps = {
+  reportType: REPORT_TYPE.EXPERIENCE,
 };
 
 export default ReportForm;
