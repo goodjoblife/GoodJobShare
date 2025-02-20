@@ -50,7 +50,10 @@ export const companyTopNJobTitlesBoxSelectorByName = companyName => state => {
 };
 
 export const companyEsgSalaryDataBoxSelectorByName = companyName => state => {
-  return state.companyIndex.esgSalaryData[companyName] || getUnfetched();
+  return (
+    R.path(['companyIndex', 'esgSalaryData', companyName])(state) ||
+    getUnfetched()
+  );
 };
 
 export const companyInterviewExperiencesBoxSelectorByName = companyName => state => {
