@@ -12,10 +12,10 @@ const ReportList = ({ onCloseReport, reports, reportCount }) => {
       ) : (
         <span>共 {reportCount} 個檢舉：</span>
       )}
-      {reports.map(({ reason_category, reason }, i) => (
+      {reports.map(({ reasonCategory, reason }, i) => (
         <div key={i} className={styles.reportItem}>
           <P size="m" bold>
-            {reason_category}
+            {reasonCategory}
           </P>
           <P size="m">{reason}</P>
         </div>
