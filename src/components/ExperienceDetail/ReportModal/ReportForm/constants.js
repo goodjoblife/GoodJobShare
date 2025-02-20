@@ -41,7 +41,7 @@ export const experienceReportReasons = [
 ];
 
 export const MODAL_TYPE = {
-  REPORT_DETAIL: 'REPORT_TYPE',
+  REPORT_DETAIL: 'REPORT_DETAIL',
   REPORT_API_ERROR: 'REPORT_API_ERROR',
   REPORT_SUCCESS: 'REPORT_SUCCESS',
 };
