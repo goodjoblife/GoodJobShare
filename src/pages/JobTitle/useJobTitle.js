@@ -1,12 +1,14 @@
 import R from 'ramda';
 import { useParams } from 'react-router-dom';
 
-export const pageNameSelector = R.compose(
+export const jobTitleSelector = R.compose(
   decodeURIComponent,
   params => params.jobTitle,
 );
 
-export const usePageName = () => {
+const useJobTitle = () => {
   const params = useParams();
-  return pageNameSelector(params);
+  return jobTitleSelector(params);
 };
+
+export default useJobTitle;

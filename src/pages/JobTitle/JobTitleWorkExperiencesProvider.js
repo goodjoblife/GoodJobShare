@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
@@ -9,40 +9,29 @@ import {
   PAGE_SIZE,
 } from 'constants/companyJobTitle';
 import { queryJobTitleWorkExperiences } from 'actions/jobTitle';
-import {
-  workExperiences as workExperiencesSelector,
-  workExperiencesCount as workExperiencesCountSelector,
-  status as statusSelector,
-  jobTitleWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
+import { jobTitleWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
-import { usePageName, pageNameSelector } from './usePageName';
+import useJobTitle, { jobTitleSelector } from './useJobTitle';
 import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
 
-const useWorkExperiencesBox = pageName => {
-  const selector = useCallback(
+const useWorkExperiencesBoxSelector = pageName => {
+  return useCallback(
     state => {
       const jobTitle = workExperiencesBoxSelectorByName(pageName)(state);
-      return {
-        status: statusSelector(jobTitle),
-        workExperiences: workExperiencesSelector(jobTitle),
-        workExperiencesCount: workExperiencesCountSelector(jobTitle),
-      };
+      return jobTitle;
     },
     [pageName],
   );
-
-  return useSelector(selector);
 };
 
 const JobTitleWorkExperiencesProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.JOB_TITLE;
-  const pageName = usePageName();
+  const jobTitle = useJobTitle();
   const [companyName] = useSearchTextFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
@@ -51,35 +40,29 @@ const JobTitleWorkExperiencesProvider = () => {
   useEffect(() => {
     dispatch(
       queryJobTitleWorkExperiences({
-        jobTitle: pageName,
+        jobTitle,
         companyName: companyName || undefined,
         start,
         limit,
       }),
     );
-  }, [dispatch, pageName, companyName, start, limit]);
+  }, [dispatch, jobTitle, companyName, start, limit]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
-  }, [pageType, pageName, fetchPermission]);
+  }, [pageType, jobTitle, fetchPermission]);
 
-  const {
-    status,
-    workExperiences,
-    workExperiencesCount,
-  } = useWorkExperiencesBox(pageName);
+  const boxSelector = useWorkExperiencesBoxSelector(jobTitle);
 
   return (
     <WorkExperiences
       pageType={pageType}
-      pageName={pageName}
+      pageName={jobTitle}
       page={page}
       pageSize={PAGE_SIZE}
-      totalCount={workExperiencesCount}
       tabType={TAB_TYPE.WORK_EXPERIENCE}
-      status={status}
-      workExperiences={workExperiences}
+      boxSelector={boxSelector}
     />
   );
 };
@@ -89,7 +72,7 @@ JobTitleWorkExperiencesProvider.fetchData = ({
   ...props
 }) => {
   const params = paramsSelector(props);
-  const pageName = pageNameSelector(params);
+  const jobTitle = jobTitleSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
   const companyName = searchTextFromQuerySelector(query) || undefined;
@@ -97,7 +80,7 @@ JobTitleWorkExperiencesProvider.fetchData = ({
   const limit = PAGE_SIZE;
   return dispatch(
     queryJobTitleWorkExperiences({
-      jobTitle: pageName,
+      jobTitle,
       companyName,
       start,
       limit,

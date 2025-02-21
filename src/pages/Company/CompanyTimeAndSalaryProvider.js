@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import TimeAndSalary from 'components/CompanyAndJobTitle/TimeAndSalary';
 import usePermission from 'hooks/usePermission';
@@ -9,27 +9,34 @@ import {
   PAGE_SIZE,
 } from 'constants/companyJobTitle';
 import {
+  queryCompanyOverviewStatistics,
   queryCompanyTimeAndSalary,
   queryCompanyTimeAndSalaryStatistics,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
 import {
-  salaryWorkTimes as salaryWorkTimesSelector,
-  salaryWorkTimesCount as salaryWorkTimesCountSelector,
   salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
-  status as statusSelector,
   companyTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
   companyTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
+  companyOverviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
-import { usePageName, pageNameSelector } from './usePageName';
+import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
+
+const useOverviewStatisticsBox = pageName => {
+  const selector = useMemo(
+    () => companyOverviewStatisticsBoxSelectorByName(pageName),
+    [pageName],
+  );
+  return useSelector(selector);
+};
 
 const useTimeAndSalaryStatisticsBox = pageName => {
   const selector = useCallback(
@@ -42,86 +49,82 @@ const useTimeAndSalaryStatisticsBox = pageName => {
   return useSelector(selector);
 };
 
-const useTimeAndSalaryBox = pageName => {
-  const selector = useCallback(
+const useTimeAndSalaryBoxSelector = companyName => {
+  return useCallback(
     state => {
-      const company = timeAndSalaryBoxSelectorByName(pageName)(state);
-      return {
-        status: statusSelector(company),
-        salaryWorkTimes: salaryWorkTimesSelector(company),
-        salaryWorkTimesCount: salaryWorkTimesCountSelector(company),
-      };
+      const company = timeAndSalaryBoxSelectorByName(companyName)(state);
+      return company;
     },
-    [pageName],
+    [companyName],
   );
-
-  return useSelector(selector);
 };
 
 const CompanyTimeAndSalaryProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.COMPANY;
-  const pageName = usePageName();
+  const companyName = useCompanyName();
   const [jobTitle] = useSearchTextFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
 
   useEffect(() => {
-    dispatch(queryRatingStatistics(pageName));
-  }, [dispatch, pageName]);
+    dispatch(queryRatingStatistics(companyName));
+  }, [dispatch, companyName]);
 
   useEffect(() => {
     dispatch(
       queryCompanyTimeAndSalaryStatistics({
-        companyName: pageName,
+        companyName,
       }),
     );
-  }, [dispatch, pageName]);
+  }, [dispatch, companyName]);
+
+  useEffect(() => {
+    dispatch(queryCompanyOverviewStatistics(companyName));
+  }, [dispatch, companyName]);
 
   useEffect(() => {
     dispatch(
       queryCompanyTopNJobTitles({
-        companyName: pageName,
+        companyName,
       }),
     );
-  }, [dispatch, pageName]);
+  }, [dispatch, companyName]);
 
   useEffect(() => {
     dispatch(
       queryCompanyTimeAndSalary({
-        companyName: pageName,
+        companyName,
         jobTitle: jobTitle || undefined,
         start,
         limit,
       }),
     );
-  }, [dispatch, pageName, jobTitle, start, limit]);
+  }, [dispatch, companyName, jobTitle, start, limit]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
-  }, [pageType, pageName, fetchPermission]);
+  }, [pageType, companyName, fetchPermission]);
 
-  const salaryWorkTimeStatistics = useTimeAndSalaryStatisticsBox(pageName);
-  const topNJobTitles = useTopNJobTitles(pageName);
+  const statisticsBox = useOverviewStatisticsBox(companyName);
+  const salaryWorkTimeStatistics = useTimeAndSalaryStatisticsBox(companyName);
+  const topNJobTitles = useTopNJobTitles(companyName);
 
-  const { status, salaryWorkTimes, salaryWorkTimesCount } = useTimeAndSalaryBox(
-    pageName,
-  );
+  const boxSelector = useTimeAndSalaryBoxSelector(companyName);
 
   return (
     <TimeAndSalary
       pageType={pageType}
-      pageName={pageName}
+      pageName={companyName}
       page={page}
       pageSize={PAGE_SIZE}
-      totalCount={salaryWorkTimesCount}
       topNJobTitles={topNJobTitles.salary}
       tabType={TAB_TYPE.TIME_AND_SALARY}
-      status={status}
-      salaryWorkTimes={salaryWorkTimes}
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
+      boxSelector={boxSelector}
+      statisticsBox={statisticsBox}
     />
   );
 };
@@ -131,34 +134,38 @@ CompanyTimeAndSalaryProvider.fetchData = ({
   ...props
 }) => {
   const params = paramsSelector(props);
-  const pageName = pageNameSelector(params);
+  const companyName = companyNameSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
   const jobTitle = searchTextFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
+  const dispatchOverviewStatistics = dispatch(
+    queryCompanyOverviewStatistics(companyName),
+  );
   const dispatchTimeAndSalaryStatistics = dispatch(
     queryCompanyTimeAndSalaryStatistics({
-      companyName: pageName,
+      companyName,
     }),
   );
   const dispatchTimeAndSalary = dispatch(
     queryCompanyTimeAndSalary({
-      companyName: pageName,
+      companyName,
       jobTitle,
       start,
       limit,
     }),
   );
-  const dispatchRatingStatistics = dispatch(queryRatingStatistics(pageName));
+  const dispatchRatingStatistics = dispatch(queryRatingStatistics(companyName));
   const dispatchTopNJobTitles = dispatch(
     queryCompanyTopNJobTitles({
-      companyName: pageName,
+      companyName,
     }),
   );
   return Promise.all([
     dispatchTimeAndSalary,
     dispatchTimeAndSalaryStatistics,
+    dispatchOverviewStatistics,
     dispatchRatingStatistics,
     dispatchTopNJobTitles,
   ]);

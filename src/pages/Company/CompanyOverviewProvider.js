@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Overview from 'components/CompanyAndJobTitle/Overview';
 import usePermission from 'hooks/usePermission';
 import {
@@ -8,38 +8,31 @@ import {
 } from 'constants/companyJobTitle';
 import {
   queryCompanyOverview,
+  queryCompanyOverviewStatistics,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
 import {
-  jobAverageSalaries,
-  averageWeekWorkTime,
-  overtimeFrequencyCount,
   companyOverviewBoxSelectorByName as overviewBoxSelectorByName,
+  companyOverviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
-import { usePageName, pageNameSelector } from './usePageName';
+import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 
-const useOverviewBox = pageName => {
-  const selector = useCallback(
+const useOverviewBoxSelector = pageName => {
+  return useCallback(
     state => {
       const box = overviewBoxSelectorByName(pageName)(state);
-      // the box.data may be null (company not found)
-      return {
-        status: box.status,
-        data: box.data
-          ? {
-              ...box.data,
-              // the Overview need some fileds derived from salary_work_time_statistics
-              jobAverageSalaries: jobAverageSalaries(box),
-              averageWeekWorkTime: averageWeekWorkTime(box),
-              overtimeFrequencyCount: overtimeFrequencyCount(box),
-            }
-          : null,
-        error: box.error,
-      };
+      return box;
     },
+    [pageName],
+  );
+};
+
+const useOverviewStatisticsBox = pageName => {
+  const selector = useMemo(
+    () => companyOverviewStatisticsBoxSelectorByName(pageName),
     [pageName],
   );
   return useSelector(selector);
@@ -48,50 +41,58 @@ const useOverviewBox = pageName => {
 const CompanyOverviewProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.COMPANY;
-  const pageName = usePageName();
+  const companyName = useCompanyName();
 
   useEffect(() => {
-    dispatch(queryRatingStatistics(pageName));
-  }, [dispatch, pageName]);
+    dispatch(queryRatingStatistics(companyName));
+  }, [dispatch, companyName]);
 
   useEffect(() => {
     dispatch(
       queryCompanyTopNJobTitles({
-        companyName: pageName,
+        companyName,
       }),
     );
-  }, [dispatch, pageName]);
+  }, [dispatch, companyName]);
 
   useEffect(() => {
-    dispatch(queryCompanyOverview(pageName));
-  }, [dispatch, pageName]);
+    dispatch(queryCompanyOverview(companyName));
+  }, [dispatch, companyName]);
+
+  useEffect(() => {
+    dispatch(queryCompanyOverviewStatistics(companyName));
+  }, [dispatch, companyName]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
-  }, [pageType, pageName, fetchPermission]);
+  }, [pageType, companyName, fetchPermission]);
 
-  const overviewBox = useOverviewBox(pageName);
-  const topNJobTitles = useTopNJobTitles(pageName);
+  const boxSelector = useOverviewBoxSelector(companyName);
+  const statisticsBox = useOverviewStatisticsBox(companyName);
+
+  const topNJobTitles = useTopNJobTitles(companyName);
 
   return (
     <Overview
       pageType={pageType}
-      pageName={pageName}
+      pageName={companyName}
       tabType={TAB_TYPE.OVERVIEW}
-      overviewBox={overviewBox}
       topNJobTitles={topNJobTitles.all}
+      boxSelector={boxSelector}
+      statisticsBox={statisticsBox}
     />
   );
 };
 
 CompanyOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
   const params = paramsSelector(props);
-  const pageName = pageNameSelector(params);
+  const companyName = companyNameSelector(params);
   return Promise.all([
-    dispatch(queryCompanyOverview(pageName)),
-    dispatch(queryRatingStatistics(pageName)),
-    dispatch(queryCompanyTopNJobTitles({ companyName: pageName })),
+    dispatch(queryCompanyOverview(companyName)),
+    dispatch(queryCompanyOverviewStatistics(companyName)),
+    dispatch(queryRatingStatistics(companyName)),
+    dispatch(queryCompanyTopNJobTitles({ companyName })),
   ]);
 };
 

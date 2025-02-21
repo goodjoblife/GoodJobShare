@@ -9,6 +9,7 @@ import {
 import {
   companyIndexesBoxSelectorAtPage,
   companyOverviewBoxSelectorByName,
+  companyOverviewStatisticsBoxSelectorByName,
   companyTimeAndSalaryBoxSelectorByName,
   companyTimeAndSalaryStatisticsBoxSelectorByName,
   companyInterviewExperiencesBoxSelectorByName,
@@ -25,10 +26,12 @@ import {
   getCompanyTimeAndSalaryStatistics,
   queryCompanyRatingStatisticsApi,
   getCompanyTopNJobTitles,
+  queryCompanyOverviewStatistics as queryCompanyOverviewStatisticsApi,
 } from 'apis/company';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
+export const SET_OVERVIEW_STATISTICS = '@@COMPANY/SET_OVERVIEW_STATISTICS';
 export const SET_TIME_AND_SALARY = '@@COMPANY/SET_TIME_AND_SALARY';
 export const SET_TIME_AND_SALARY_STATISTICS =
   '@@COMPANY/SET_TIME_AND_SALARY_STATISTICS';
@@ -83,28 +86,31 @@ const setRatingStatistcs = (companyName, box) => ({
   box,
 });
 
-export const queryRatingStatistics = pageName => async (dispatch, getState) => {
-  const box = companyRatingStatisticsBoxSelectorByName(pageName)(getState());
+export const queryRatingStatistics = companyName => async (
+  dispatch,
+  getState,
+) => {
+  const box = companyRatingStatisticsBoxSelectorByName(companyName)(getState());
   if (isFetching(box) || isFetched(box)) {
     return;
   }
 
-  dispatch(setRatingStatistcs(pageName, toFetching()));
+  dispatch(setRatingStatistcs(companyName, toFetching()));
 
   try {
     const data = await queryCompanyRatingStatisticsApi({
-      companyName: pageName,
+      companyName,
     });
 
     // Not found case
     if (data == null) {
-      return dispatch(setRatingStatistcs(pageName, getFetched(data)));
+      return dispatch(setRatingStatistcs(companyName, getFetched(data)));
     }
 
-    dispatch(setRatingStatistcs(pageName, getFetched(data)));
+    dispatch(setRatingStatistcs(companyName, getFetched(data)));
   } catch (error) {
     if (isGraphqlError(error)) {
-      dispatch(setRatingStatistcs(pageName, getError(error)));
+      dispatch(setRatingStatistcs(companyName, getError(error)));
     }
     throw error;
   }
@@ -148,7 +154,6 @@ export const queryCompanyOverview = companyName => async (
       name: data.name,
       salaryWorkTimes: data.salaryWorkTimesResult.salaryWorkTimes,
       salaryWorkTimesCount: data.salaryWorkTimesResult.count,
-      salary_work_time_statistics: data.salary_work_time_statistics,
       interviewExperiences:
         data.interviewExperiencesResult.interviewExperiences,
       interviewExperiencesCount: data.interviewExperiencesResult.count,
@@ -160,6 +165,55 @@ export const queryCompanyOverview = companyName => async (
   } catch (error) {
     if (isGraphqlError(error)) {
       dispatch(setOverview(companyName, getError(error)));
+    }
+    throw error;
+  }
+};
+
+const setOverviewStatistics = (companyName, box) => ({
+  type: SET_OVERVIEW_STATISTICS,
+  companyName,
+  box,
+});
+
+export const queryCompanyOverviewStatistics = companyName => async (
+  dispatch,
+  getState,
+  { api },
+) => {
+  const box = companyOverviewStatisticsBoxSelectorByName(companyName)(
+    getState(),
+  );
+  if (isFetching(box) || isFetched(box)) {
+    return;
+  }
+
+  dispatch(setOverviewStatistics(companyName, toFetching()));
+
+  try {
+    const data = await queryCompanyOverviewStatisticsApi({
+      companyName,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setOverviewStatistics(companyName, getFetched(data)));
+    }
+
+    const model = {
+      name: data.name,
+      jobAverageSalaries:
+        data.salary_work_time_statistics.job_average_salaries || [],
+      averageWeekWorkTime:
+        data.salary_work_time_statistics.average_week_work_time || 0,
+      overtimeFrequencyCount:
+        data.salary_work_time_statistics.overtime_frequency_count || 0,
+    };
+
+    dispatch(setOverviewStatistics(companyName, getFetched(model)));
+  } catch (error) {
+    if (isGraphqlError(error)) {
+      dispatch(setOverviewStatistics(companyName, getError(error)));
     }
     throw error;
   }
@@ -215,8 +269,8 @@ export const queryCompanyTimeAndSalary = ({
       jobTitle,
       start,
       limit,
-      salary_work_times: data.salaryWorkTimesResult.salaryWorkTimes,
-      salary_work_times_count: data.salaryWorkTimesResult.count,
+      salaryWorkTimes: data.salaryWorkTimesResult.salaryWorkTimes,
+      salaryWorkTimesCount: data.salaryWorkTimesResult.count,
     };
 
     dispatch(setTimeAndSalary(companyName, getFetched(timeAndSalaryData)));
@@ -348,9 +402,9 @@ export const queryCompanyInterviewExperiences = ({
       jobTitle,
       start,
       limit,
-      interview_experiences:
+      interviewExperiences:
         data.interviewExperiencesResult.interviewExperiences,
-      interview_experiences_count: data.interviewExperiencesResult.count,
+      interviewExperiencesCount: data.interviewExperiencesResult.count,
     };
 
     dispatch(
@@ -409,8 +463,8 @@ export const queryCompanyWorkExperiences = ({
       jobTitle,
       start,
       limit,
-      work_experiences: data.workExperiencesResult.workExperiences,
-      work_experiences_count: data.workExperiencesResult.count,
+      workExperiences: data.workExperiencesResult.workExperiences,
+      workExperiencesCount: data.workExperiencesResult.count,
     };
 
     dispatch(setWorkExperiences(companyName, getFetched(workExperiencesData)));
