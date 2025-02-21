@@ -31,21 +31,29 @@ const TimeAndSalary = ({
     {pageType === PAGE_TYPE.COMPANY && <EsgBlock />}
     <BoxRenderer
       box={statisticsBox}
-      render={({
-        salaryDistribution,
-        jobAverageSalaries,
-        averageWeekWorkTime,
-        overtimeFrequencyCount,
-      }) => (
-        <SummarySection
-          salaryDistribution={salaryDistribution}
-          jobAverageSalaries={jobAverageSalaries}
-          averageWeekWorkTime={averageWeekWorkTime}
-          overtimeFrequencyCount={overtimeFrequencyCount}
-        />
-      )}
+      render={data => {
+        if (!data || salaryWorkTimeStatistics.count === 0) {
+          return null;
+        }
+        const {
+          salaryDistribution,
+          jobAverageSalaries,
+          averageWeekWorkTime,
+          overtimeFrequencyCount,
+        } = data;
+        return (
+          <Fragment>
+            <SummarySection
+              salaryDistribution={salaryDistribution}
+              jobAverageSalaries={jobAverageSalaries}
+              averageWeekWorkTime={averageWeekWorkTime}
+              overtimeFrequencyCount={overtimeFrequencyCount}
+            />
+            <OvertimeSection statistics={salaryWorkTimeStatistics} />
+          </Fragment>
+        );
+      }}
     />
-    <OvertimeSection statistics={salaryWorkTimeStatistics} />
     <Searchbar pageType={pageType} tabType={tabType} />
     <PageBoxRenderer
       pageType={pageType}
