@@ -9,7 +9,7 @@ import EsgBlock from './EsgBlock';
 import styles from './EsgBlock.module.css';
 import usePreviewed from './usePreviewed';
 
-const EsgBlockMobile = ({ className }) => {
+const EsgBlockMobile = ({ className, ...props }) => {
   const [hasPreviewed, setPreviewed] = usePreviewed();
   const markPreviewed = useCallback(() => setPreviewed(true), [setPreviewed]);
 
@@ -28,6 +28,7 @@ const EsgBlockMobile = ({ className }) => {
         className={cn(styles.mobile, { [styles.preview]: !hasPreviewed })}
         showsToggle={hasPreviewed}
         hasPreviewed={hasPreviewed}
+        {...props}
       />
     </GradientMask>
   );

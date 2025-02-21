@@ -9,6 +9,7 @@ import {
   PAGE_SIZE,
 } from 'constants/companyJobTitle';
 import {
+  queryCompanyEsgSalaryData,
   queryCompanyOverviewStatistics,
   queryCompanyTimeAndSalary,
   queryCompanyTimeAndSalaryStatistics,
@@ -19,6 +20,7 @@ import {
   salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
   companyTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
   companyTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
+  companyEsgSalaryDataBoxSelectorByName,
   companyOverviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
@@ -59,6 +61,15 @@ const useTimeAndSalaryBoxSelector = companyName => {
   );
 };
 
+const useEsgSalaryDataBox = companyName => {
+  const selector = useCallback(
+    companyEsgSalaryDataBoxSelectorByName(companyName),
+    [companyName],
+  );
+
+  return useSelector(selector);
+};
+
 const CompanyTimeAndSalaryProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.COMPANY;
@@ -94,6 +105,14 @@ const CompanyTimeAndSalaryProvider = () => {
 
   useEffect(() => {
     dispatch(
+      queryCompanyEsgSalaryData({
+        companyName,
+      }),
+    );
+  }, [dispatch, companyName]);
+
+  useEffect(() => {
+    dispatch(
       queryCompanyTimeAndSalary({
         companyName,
         jobTitle: jobTitle || undefined,
@@ -111,6 +130,7 @@ const CompanyTimeAndSalaryProvider = () => {
   const statisticsBox = useOverviewStatisticsBox(companyName);
   const salaryWorkTimeStatistics = useTimeAndSalaryStatisticsBox(companyName);
   const topNJobTitles = useTopNJobTitles(companyName);
+  const esgSalaryDataBox = useEsgSalaryDataBox(companyName);
 
   const boxSelector = useTimeAndSalaryBoxSelector(companyName);
 
@@ -121,6 +141,7 @@ const CompanyTimeAndSalaryProvider = () => {
       page={page}
       pageSize={PAGE_SIZE}
       topNJobTitles={topNJobTitles.salary}
+      esgSalaryDataBox={esgSalaryDataBox}
       tabType={TAB_TYPE.TIME_AND_SALARY}
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
       boxSelector={boxSelector}
@@ -162,12 +183,18 @@ CompanyTimeAndSalaryProvider.fetchData = ({
       companyName,
     }),
   );
+  const dispatchEsgSalaryData = dispatch(
+    queryCompanyEsgSalaryData({
+      companyName,
+    }),
+  );
   return Promise.all([
     dispatchTimeAndSalary,
     dispatchTimeAndSalaryStatistics,
     dispatchOverviewStatistics,
     dispatchRatingStatistics,
     dispatchTopNJobTitles,
+    dispatchEsgSalaryData,
   ]);
 };
 

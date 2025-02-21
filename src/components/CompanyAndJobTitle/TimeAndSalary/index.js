@@ -22,13 +22,42 @@ const TimeAndSalary = ({
   page,
   pageSize,
   topNJobTitles,
+  esgSalaryDataBox,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
     pageName={pageName}
     tabType={tabType}
   >
-    {pageType === PAGE_TYPE.COMPANY && <EsgBlock />}
+    {pageType === PAGE_TYPE.COMPANY && (
+      <BoxRenderer
+        box={esgSalaryDataBox}
+        render={data => {
+          if (!data) return null;
+
+          const {
+            avgSalaryStatistics: [avgSalaryStatisticsItem],
+            nonManagerAvgSalaryStatistics: [nonManagerAvgSalaryStatisticsItem],
+            nonManagerMedianSalaryStatistics: [
+              nonManagerMedianSalaryStatisticsItem,
+            ],
+            femaleManagerStatistics: [femaleManagerStatisticsItem],
+          } = data;
+          return (
+            <EsgBlock
+              avgSalaryStatisticsItem={avgSalaryStatisticsItem}
+              nonManagerAvgSalaryStatisticsItem={
+                nonManagerAvgSalaryStatisticsItem
+              }
+              nonManagerMedianSalaryStatisticsItem={
+                nonManagerMedianSalaryStatisticsItem
+              }
+              femaleManagerStatisticsItem={femaleManagerStatisticsItem}
+            />
+          );
+        }}
+      />
+    )}
     <BoxRenderer
       box={statisticsBox}
       render={data => {
@@ -88,6 +117,7 @@ const TimeAndSalary = ({
 
 TimeAndSalary.propTypes = {
   boxSelector: PropTypes.func.isRequired,
+  esgSalaryDataBox: PropTypes.object.isRequired,
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
