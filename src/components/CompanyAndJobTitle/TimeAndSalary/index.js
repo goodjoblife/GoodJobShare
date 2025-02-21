@@ -28,15 +28,16 @@ const TimeAndSalary = ({
   >
     <BoxRenderer
       box={statisticsBox}
-      render={({
-        salaryDistribution,
-        jobAverageSalaries,
-        averageWeekWorkTime,
-        overtimeFrequencyCount,
-      }) => {
-        if (salaryWorkTimeStatistics.count === 0) {
+      render={data => {
+        if (!data || salaryWorkTimeStatistics.count === 0) {
           return null;
         }
+        const {
+          salaryDistribution,
+          jobAverageSalaries,
+          averageWeekWorkTime,
+          overtimeFrequencyCount,
+        } = data;
         return (
           <Fragment>
             <SummarySection
