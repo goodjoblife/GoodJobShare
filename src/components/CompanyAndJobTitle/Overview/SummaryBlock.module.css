@@ -20,20 +20,12 @@
   flex: 1;
   max-width: 547px;
   height: 265px;
-
-  @media (max-width: below-tablet) {
-    display: none;
-  }
 }
 
 .barChartSm {
-  display: none;
-
-  @media (max-width: below-tablet) {
-    display: block;
-    width: 100%;
-    height: 265px;
-  }
+  display: block;
+  width: 100%;
+  height: 265px;
 }
 
 .averageWeekWorkTime {
