@@ -2,7 +2,6 @@ import graphqlClient from 'utils/graphqlClient';
 import {
   createExperienceReportGql,
   createSalaryWorkTimeReportGql,
-  getExperienceReportsGql,
 } from 'graphql/reports';
 
 export const createExperienceReportApi = async ({
@@ -40,14 +39,3 @@ export const createSalaryWorkTimeReportApi = async ({
     },
     token,
   });
-
-export const getExperienceReportsApi = async ({ id, token }) => {
-  const data = await graphqlClient({
-    query: getExperienceReportsGql,
-    variables: {
-      id,
-    },
-    token,
-  });
-  return data.experience.reports;
-};
