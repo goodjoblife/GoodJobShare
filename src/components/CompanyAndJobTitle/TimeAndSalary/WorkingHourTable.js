@@ -21,7 +21,7 @@ import {
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
 import usePermission from 'hooks/usePermission';
 import ReportDialog from 'common/button/ReportDialog';
-import ReportModal from 'components/ExperienceDetail/ReportModal';
+import ReportZone from 'components/ExperienceDetail/ReportModal';
 import { REPORT_TYPE } from 'components/ExperienceDetail/ReportModal/ReportForm/constants';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
@@ -128,14 +128,14 @@ const columnProps = [
     title: '回報',
     dataField: R.compose(({ id, reportCount, reports }) => {
       return (
-        <ReportModal
+        <ReportZone
           reportType={REPORT_TYPE.SALARY}
           id={id}
           reports={reports}
           reportCount={reportCount}
         >
           <ReportDialog reportCount={reportCount} />
-        </ReportModal>
+        </ReportZone>
       );
     }),
     Children: () => '回報',

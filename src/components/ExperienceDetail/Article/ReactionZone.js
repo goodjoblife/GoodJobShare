@@ -8,7 +8,7 @@ import useQueryLike from '../hooks/useQueryLike';
 import useToggleLike from '../hooks/useToggleLike';
 import useLoginFlow from '../hooks/useLoginFlow';
 import ReportDialog from 'common/button/ReportDialog';
-import ReportModal from '../ReportModal';
+import ReportZone from '../ReportModal';
 import { REPORT_TYPE } from '../ReportModal/ReportForm/constants';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
@@ -80,7 +80,7 @@ const ReactionZone = ({
         留言
       </ReactionButton>
       <ReactionButton className={styles.report}>
-        <ReportModal
+        <ReportZone
           reportType={REPORT_TYPE.EXPERIENCE}
           id={experienceId}
           reports={reports}
@@ -92,7 +92,7 @@ const ReactionZone = ({
             isShowReportText
             reportText="回報"
           />
-        </ReportModal>
+        </ReportZone>
       </ReactionButton>
     </div>
   );

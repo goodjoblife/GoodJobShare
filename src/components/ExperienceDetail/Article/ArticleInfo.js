@@ -14,7 +14,7 @@ import { originalCompanyNameSelector } from '../experienceSelector';
 import RatingInfo from './RatingInfo';
 import OverallRating from 'common/OverallRating';
 import ReportDialog from 'common/button/ReportDialog';
-import ReportModal from '../ReportModal';
+import ReportZone from '../ReportModal';
 import { REPORT_TYPE } from '../ReportModal/ReportForm/constants';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
@@ -36,7 +36,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
     <Fragment>
       {experience.reportCount > 0 && (
         <div className={styles.reportDialogContainer}>
-          <ReportModal
+          <ReportZone
             id={experience.id}
             reportType={REPORT_TYPE.EXPERIENCE}
             reports={experience.reports}
@@ -47,7 +47,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
               isShowReportText
               reportText="有使用者回報"
             />
-          </ReportModal>
+          </ReportZone>
         </div>
       )}
       <InfoBlock
@@ -159,7 +159,7 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
     <Fragment>
       {experience.reportCount > 0 && (
         <div className={styles.reportDialogContainer}>
-          <ReportModal
+          <ReportZone
             id={experience.id}
             reportType={REPORT_TYPE.EXPERIENCE}
             reports={experience.reports}
@@ -170,7 +170,7 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
               isShowReportText
               reportText="有使用者回報"
             />
-          </ReportModal>
+          </ReportZone>
         </div>
       )}
       <InfoBlock
