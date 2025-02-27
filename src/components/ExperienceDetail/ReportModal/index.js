@@ -23,7 +23,7 @@ const ReportModal = ({ children, reportType, id, reports, reportCount }) => {
 
   return (
     <>
-      <div onClick={handleReportClick}>{children}</div>
+      <button onClick={handleReportClick}>{children}</button>
       <Modal
         isOpen={isModalOpen}
         close={() => {
