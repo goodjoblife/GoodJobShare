@@ -4,7 +4,7 @@ import {
   createSalaryWorkTimeReportGql,
 } from 'graphql/reports';
 
-export const createExperienceReportApi = async ({
+export const createExperienceReportApi = ({
   id,
   reasonCategory,
   reason,
@@ -22,7 +22,7 @@ export const createExperienceReportApi = async ({
     token,
   });
 
-export const createSalaryWorkTimeReportApi = async ({
+export const createSalaryWorkTimeReportApi = ({
   id,
   reasonCategory,
   reason,
