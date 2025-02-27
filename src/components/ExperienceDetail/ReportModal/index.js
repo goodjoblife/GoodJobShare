@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Modal from 'common/Modal';
 import PropTypes from 'prop-types';
-import { useReportModal } from './useReportModal';
 import { MODAL_TYPE } from './ReportForm/constants';
 import ReportFormProcess from './ReportFormProcess';
 import ReportList from './ReportList';
 
 const ReportModal = ({ children, reportType, id, reports, reportCount }) => {
-  const {
-    modalState,
-    handleIsModalOpen,
-    closableOnClickOutside,
-    setModalClosableOnClickOutside,
-  } = useReportModal();
+  const [modalState, setModal] = useState({
+    isModalOpen: false,
+    modalType: '',
+    modalPayload: {},
+  });
   const { isModalOpen, modalType, modalPayload } = modalState;
+  const [closableOnClickOutside, setModalClosableOnClickOutside] = useState(
+    true,
+  );
   const [isShowReportList, setIsShowReportList] = useState(true);
+
+  const handleIsModalOpen = useCallback(
+    (isModalOpen, modalType = '', modalPayload = {}) => {
+      setModal({ isModalOpen, modalType, modalPayload });
+    },
+    [],
+  );
 
   const handleReportClick = () => {
     setModalClosableOnClickOutside(false);
