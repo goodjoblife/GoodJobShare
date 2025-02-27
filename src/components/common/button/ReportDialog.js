@@ -6,7 +6,6 @@ import cn from 'classnames';
 const ReportDialog = ({
   reportCount = 0,
   isHighlighted = false,
-  isShowReportText = false,
   reportText = '回報',
 }) => {
   const hasReport = reportCount > 0;
@@ -21,23 +20,19 @@ const ReportDialog = ({
         <div className={styles.dialogBox}>{hasReport ? reportCount : '!'}</div>
         <div className={styles.dialogTriangle}></div>
       </div>
-      {isShowReportText && (
-        <div className={styles.reportText}>{reportText}</div>
-      )}
+      {reportText && <div className={styles.reportText}>{reportText}</div>}
     </div>
   );
 };
 
 ReportDialog.propTypes = {
   isHighlighted: PropTypes.bool,
-  isShowReportText: PropTypes.bool,
   reportCount: PropTypes.number.isRequired,
   reportText: PropTypes.string,
 };
 
 ReportDialog.defaultProps = {
   isHighlighted: false,
-  isShowReportText: false,
   reportText: '回報',
 };
 
