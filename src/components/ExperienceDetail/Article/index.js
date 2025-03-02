@@ -27,67 +27,74 @@ const countSectionWords = sections =>
     sections,
   );
 
-const Article = ({ experience, hideContent, onClickMsgButton }) => {
-  // Get share link object according to Google Optimize parameters
-  const shareLink = useShareLink();
+const Sections = ({ experience, hideContent }) => {
+  let toHide = false;
+  let currentTotalWords = 0;
+  const totalWords = countSectionWords(experience.sections);
 
-  const renderSections = () => {
-    let toHide = false;
-    let currentTotalWords = 0;
-    const totalWords = countSectionWords(experience.sections);
-
-    if (hideContent) {
-      return (
-        <div>
-          {experience.sections &&
-            experience.sections.map(({ subtitle, content }, idx) => {
-              if (toHide) {
-                return null;
-              }
-              currentTotalWords += content.length + subtitle.length;
-              if (currentTotalWords > MAX_WORDS_IF_HIDDEN) {
-                toHide = true;
-                const showLength =
-                  content.length - (currentTotalWords - MAX_WORDS_IF_HIDDEN);
-                const newContent = `${content.substring(0, showLength)}...`;
-                return (
-                  <GradientMask
-                    key={idx}
-                    childrenOnMaskBottom={`總共 ${formatCommaSeparatedNumber(
-                      totalWords,
-                    )} 字`}
-                  >
-                    <SectionBlock subtitle={subtitle} content={newContent} />
-                  </GradientMask>
-                );
-              }
-              return (
-                <SectionBlock key={idx} subtitle={subtitle} content={content} />
-              );
-            })}
-        </div>
-      );
-    }
+  if (hideContent) {
     return (
       <div>
         {experience.sections &&
-          experience.sections.map(({ subtitle, content, rating }, idx) => (
-            <SectionBlock
-              key={idx}
-              subtitle={subtitle}
-              content={content}
-              rating={rating}
-            />
-          ))}
+          experience.sections.map(({ subtitle, content }, idx) => {
+            if (toHide) {
+              return null;
+            }
+            currentTotalWords += content.length + subtitle.length;
+            if (currentTotalWords > MAX_WORDS_IF_HIDDEN) {
+              toHide = true;
+              const showLength =
+                content.length - (currentTotalWords - MAX_WORDS_IF_HIDDEN);
+              const newContent = `${content.substring(0, showLength)}...`;
+              return (
+                <GradientMask
+                  key={idx}
+                  childrenOnMaskBottom={`總共 ${formatCommaSeparatedNumber(
+                    totalWords,
+                  )} 字`}
+                >
+                  <SectionBlock subtitle={subtitle} content={newContent} />
+                </GradientMask>
+              );
+            }
+            return (
+              <SectionBlock key={idx} subtitle={subtitle} content={content} />
+            );
+          })}
       </div>
     );
-  };
+  }
+  return (
+    <div>
+      {experience.sections &&
+        experience.sections.map(({ subtitle, content, rating }, idx) => (
+          <SectionBlock
+            key={idx}
+            subtitle={subtitle}
+            content={content}
+            rating={rating}
+          />
+        ))}
+    </div>
+  );
+};
+
+Sections.propTypes = {
+  experience: PropTypes.object.isRequired,
+  hideContent: PropTypes.bool.isRequired,
+};
+
+const Article = ({ experience, hideContent, onClickMsgButton }) => {
+  // Get share link object according to Google Optimize parameters
+  const shareLink = useShareLink();
 
   return (
     <div className={styles.container}>
       <ArticleInfo experience={experience} hideContent={hideContent} />
       <section className={styles.main}>
-        <div className={styles.article}>{renderSections()}</div>
+        <div className={styles.article}>
+          <Sections experience={experience} hideContent={hideContent} />
+        </div>
         <div>
           {experience.type === 'interview' &&
           experience.interview_qas &&
