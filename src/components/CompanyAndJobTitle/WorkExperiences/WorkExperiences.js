@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import ExperienceEntry from './ExperienceEntry';
 import EmptyView from '../EmptyView';
 
 import { Section } from 'common/base';
@@ -9,6 +8,7 @@ import Pagination from 'common/Pagination';
 import NotFoundStatus from 'common/routing/NotFound';
 import { useQuery } from 'hooks/routing';
 import usePermission from 'hooks/usePermission';
+import Article from 'components/ExperienceDetail/Article';
 
 const WorkExperiences = ({
   pageType,
@@ -34,11 +34,10 @@ const WorkExperiences = ({
   return (
     <Section Tag="main" paddingBottom>
       {data.map(d => (
-        <ExperienceEntry
+        <Article
           key={d.id}
-          pageType={pageType}
-          data={d}
-          canView={canViewPublishId(d.id)}
+          experience={d}
+          hideContent={!canViewPublishId(d.id)}
         />
       ))}
       <Pagination
