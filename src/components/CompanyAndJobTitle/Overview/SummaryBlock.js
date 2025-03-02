@@ -29,7 +29,11 @@ const ChartCard = ({ data, children }) => {
       })}
     >
       {isEmptyData ? (
-        <img className={styles.barCardImage} src={emptySalaryImage} />
+        <img
+          className={styles.barCardImage}
+          src={emptySalaryImage}
+          alt="無薪資資料"
+        />
       ) : (
         children
       )}
@@ -51,7 +55,11 @@ const WorkTimeCard = ({ data, children }) => {
       })}
     >
       {isEmptyData ? (
-        <img className={styles.barCardImage} src={emptyWorkTimeImage} />
+        <img
+          className={styles.barCardImage}
+          src={emptyWorkTimeImage}
+          alt="無工時資料"
+        />
       ) : (
         children
       )}
