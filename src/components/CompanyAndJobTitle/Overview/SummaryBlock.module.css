@@ -16,16 +16,18 @@
   display: flex;
 }
 
+.card {
+  height: 265px;
+}
+
 .barChart {
   flex: 1;
   max-width: 547px;
-  height: 265px;
 }
 
 .barChartSm {
   display: block;
   width: 100%;
-  height: 265px;
 }
 
 .emptyData {

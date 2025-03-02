@@ -23,7 +23,11 @@ const ChartCard = ({ data, children }) => {
   const barCardStyle = isMobile ? styles.barChartSm : styles.barChart;
   const isEmptyData = data.length === 0;
   return (
-    <Card className={cn(barCardStyle, { [styles.emptyData]: isEmptyData })}>
+    <Card
+      className={cn(styles.card, barCardStyle, {
+        [styles.emptyData]: isEmptyData,
+      })}
+    >
       {isEmptyData ? (
         <img className={styles.barCardImage} src={emptySalaryImage} />
       ) : (
@@ -42,7 +46,7 @@ const WorkTimeCard = ({ data, children }) => {
   const isEmptyData = !data;
   return (
     <Card
-      className={cn(styles.averageWeekWorkTime, {
+      className={cn(styles.card, styles.averageWeekWorkTime, {
         [styles.emptyData]: isEmptyData,
       })}
     >
