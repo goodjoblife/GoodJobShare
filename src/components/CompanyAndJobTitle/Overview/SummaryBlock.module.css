@@ -28,6 +28,17 @@
   height: 265px;
 }
 
+.emptyData {
+  display: flex;
+  justify-content: center;
+}
+
+.barCardImage {
+  margin: 58px 0;
+  width: auto;
+  height: 50%;
+}
+
 .averageWeekWorkTime {
   margin-left: 21px;
 

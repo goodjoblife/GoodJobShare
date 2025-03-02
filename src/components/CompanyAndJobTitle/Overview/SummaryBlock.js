@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import loadable from '@loadable/component';
 
 import Card from 'common/Card';
 import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
 import styles from './SummaryBlock.module.css';
 import useMobile from 'hooks/useMobile';
+
+import emptySalaryImage from './empty_data_salary.png';
+import emptyWorkTimeImage from './empty_data_working_time.png';
 
 const SalaryDistributionChart = loadable(() =>
   import('common/Charts/SalaryDistributionChart'),
@@ -14,14 +18,46 @@ const JobTitleDistributionChart = loadable(() =>
   import('common/Charts/JobTitleDistributionChart'),
 );
 
-const ChartCard = ({ children }) => {
+const ChartCard = ({ data, children }) => {
   const isMobile = useMobile();
   const barCardStyle = isMobile ? styles.barChartSm : styles.barChart;
-  return <Card className={barCardStyle}>{children}</Card>;
+  const isEmptyData = data.length === 0;
+  return (
+    <Card className={cn(barCardStyle, { [styles.emptyData]: isEmptyData })}>
+      {isEmptyData ? (
+        <img className={styles.barCardImage} src={emptySalaryImage} />
+      ) : (
+        children
+      )}
+    </Card>
+  );
 };
 
 ChartCard.propTypes = {
   children: PropTypes.node,
+  data: PropTypes.arrayOf(PropTypes.object),
+};
+
+const WorkTimeCard = ({ data, children }) => {
+  const isEmptyData = !data;
+  return (
+    <Card
+      className={cn(styles.averageWeekWorkTime, {
+        [styles.emptyData]: isEmptyData,
+      })}
+    >
+      {isEmptyData ? (
+        <img className={styles.barCardImage} src={emptyWorkTimeImage} />
+      ) : (
+        children
+      )}
+    </Card>
+  );
+};
+
+WorkTimeCard.propTypes = {
+  children: PropTypes.node,
+  data: PropTypes.object,
 };
 
 const SummaryBlock = ({
@@ -31,7 +67,7 @@ const SummaryBlock = ({
   overtimeFrequencyCount,
 }) => (
   <div className={styles.summaryBlock}>
-    <ChartCard>
+    <ChartCard data={salaryDistribution || jobAverageSalaries}>
       {salaryDistribution && (
         <SalaryDistributionChart data={salaryDistribution} />
       )}
@@ -39,12 +75,12 @@ const SummaryBlock = ({
         <JobTitleDistributionChart data={jobAverageSalaries} />
       )}
     </ChartCard>
-    <Card className={styles.averageWeekWorkTime}>
+    <WorkTimeCard data={overtimeFrequencyCount}>
       <AverageWeekWorkTimeView
         averageWeekWorkTime={averageWeekWorkTime}
         overtimeFrequencyCount={overtimeFrequencyCount}
       />
-    </Card>
+    </WorkTimeCard>
   </div>
 );
 
