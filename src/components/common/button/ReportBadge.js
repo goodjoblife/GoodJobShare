@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './ReportDialog.module.css';
+import styles from './ReportBadge.module.css';
 import cn from 'classnames';
 
 const ReportBadge = ({
   reportCount = 0,
   isHighlighted = false,
-  reportText = '回報',
+  reportText,
 }) => {
   const hasReport = reportCount > 0;
   return (
@@ -33,7 +33,6 @@ ReportBadge.propTypes = {
 
 ReportBadge.defaultProps = {
   isHighlighted: false,
-  reportText: '回報',
 };
 
 export default ReportBadge;
