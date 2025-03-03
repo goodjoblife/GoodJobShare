@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './ReportDialog.module.css';
 import cn from 'classnames';
 
-const ReportDialog = ({
+const ReportBadge = ({
   reportCount = 0,
   isHighlighted = false,
   reportText = '回報',
@@ -25,15 +25,15 @@ const ReportDialog = ({
   );
 };
 
-ReportDialog.propTypes = {
+ReportBadge.propTypes = {
   isHighlighted: PropTypes.bool,
   reportCount: PropTypes.number.isRequired,
   reportText: PropTypes.string,
 };
 
-ReportDialog.defaultProps = {
+ReportBadge.defaultProps = {
   isHighlighted: false,
   reportText: '回報',
 };
 
-export default ReportDialog;
+export default ReportBadge;

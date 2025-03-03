@@ -20,7 +20,7 @@ import {
 } from '../../TimeAndSalary/common/formatter';
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
 import usePermission from 'hooks/usePermission';
-import ReportDialog from 'common/button/ReportDialog';
+import ReportBadge from 'common/button/ReportDialog';
 import ReportZone from 'components/ExperienceDetail/ReportModal';
 import { REPORT_TYPE } from 'components/ExperienceDetail/ReportModal/ReportForm/constants';
 
@@ -134,7 +134,7 @@ const columnProps = [
           reports={reports}
           reportCount={reportCount}
         >
-          <ReportDialog reportCount={reportCount} />
+          <ReportBadge reportCount={reportCount} />
         </ReportZone>
       );
     }),

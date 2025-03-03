@@ -7,7 +7,7 @@ import styles from './ReactionZone.module.css';
 import useQueryLike from '../hooks/useQueryLike';
 import useToggleLike from '../hooks/useToggleLike';
 import useLoginFlow from '../hooks/useLoginFlow';
-import ReportDialog from 'common/button/ReportDialog';
+import ReportBadge from 'common/button/ReportDialog';
 import ReportZone from '../ReportModal';
 import { REPORT_TYPE } from '../ReportModal/ReportForm/constants';
 
@@ -86,7 +86,7 @@ const ReactionZone = ({
           reports={reports}
           reportCount={reportCount}
         >
-          <ReportDialog
+          <ReportBadge
             reportCount={reportCount}
             isHighlighted={reportCount > 0}
             isShowReportText
