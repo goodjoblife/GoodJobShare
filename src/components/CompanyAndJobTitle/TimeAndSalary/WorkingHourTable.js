@@ -20,7 +20,7 @@ import {
 } from '../../TimeAndSalary/common/formatter';
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
 import usePermission from 'hooks/usePermission';
-import ReportBadge from 'common/button/ReportDialog';
+import ReportBadge from 'common/button/ReportBadge';
 import ReportZone from 'components/ExperienceDetail/ReportModal';
 import { REPORT_TYPE } from 'components/ExperienceDetail/ReportModal/ReportForm/constants';
 

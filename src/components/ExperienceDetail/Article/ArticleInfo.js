@@ -13,7 +13,7 @@ import {
 import { originalCompanyNameSelector } from '../experienceSelector';
 import RatingInfo from './RatingInfo';
 import OverallRating from 'common/OverallRating';
-import ReportBadge from 'common/button/ReportDialog';
+import ReportBadge from 'common/button/ReportBadge';
 import ReportZone from '../ReportModal';
 import { REPORT_TYPE } from '../ReportModal/ReportForm/constants';
 
@@ -44,7 +44,6 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
           >
             <ReportBadge
               reportCount={experience.reportCount}
-              isShowReportText
               reportText="有使用者回報"
             />
           </ReportZone>
@@ -167,7 +166,6 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
           >
             <ReportBadge
               reportCount={experience.reportCount}
-              isShowReportText
               reportText="有使用者回報"
             />
           </ReportZone>
