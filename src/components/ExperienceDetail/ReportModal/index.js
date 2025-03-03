@@ -5,7 +5,7 @@ import { MODAL_TYPE } from './ReportForm/constants';
 import ReportFormProcess from './ReportFormProcess';
 import ReportList from './ReportList';
 
-const ReportModal = ({ children, reportType, id, reports, reportCount }) => {
+const ReportZone = ({ children, reportType, id, reports, reportCount }) => {
   const [modalState, setModal] = useState({
     isModalOpen: false,
     modalType: '',
@@ -63,7 +63,7 @@ const ReportModal = ({ children, reportType, id, reports, reportCount }) => {
   );
 };
 
-ReportModal.propTypes = {
+ReportZone.propTypes = {
   children: PropTypes.node.isRequired,
   id: PropTypes.string,
   reportCount: PropTypes.number,
@@ -71,4 +71,4 @@ ReportModal.propTypes = {
   reports: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default ReportModal;
+export default ReportZone;
