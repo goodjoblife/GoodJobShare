@@ -15,8 +15,6 @@ export const createExperienceReport = ({ id, reason, reasonCategory }) => (
     reason,
     reasonCategory,
     token,
-  }).catch(error => {
-    throw error;
   });
 };
 
@@ -31,7 +29,5 @@ export const createSalaryWorkTimeReport = ({ id, reason, reasonCategory }) => (
     reason,
     reasonCategory,
     token,
-  }).catch(error => {
-    throw error;
   });
 };
