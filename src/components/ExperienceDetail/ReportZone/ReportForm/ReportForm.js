@@ -24,8 +24,10 @@ const getReasonCategoryOptions = reportType => {
   switch (reportType) {
     case REPORT_TYPE.SALARY:
       return salaryReportReasons;
-    default:
+    case REPORT_TYPE.EXPERIENCE:
       return experienceReportReasons;
+    default:
+      return [];
   }
 };
 
@@ -33,8 +35,10 @@ const submitReport = ({ id, reason, reasonCategory, reportType }) => {
   switch (reportType) {
     case REPORT_TYPE.SALARY:
       return createSalaryWorkTimeReport({ id, reason, reasonCategory });
-    default:
+    case REPORT_TYPE.EXPERIENCE:
       return createExperienceReport({ id, reason, reasonCategory });
+    default:
+      return [];
   }
 };
 
