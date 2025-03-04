@@ -21,15 +21,21 @@ import {
 } from './constants';
 
 const getReasonCategoryOptions = reportType => {
-  return reportType === REPORT_TYPE.SALARY
-    ? salaryReportReasons
-    : experienceReportReasons;
+  switch (reportType) {
+    case REPORT_TYPE.SALARY:
+      return salaryReportReasons;
+    default:
+      return experienceReportReasons;
+  }
 };
 
 const submitReport = ({ id, reason, reasonCategory, reportType }) => {
-  return reportType === REPORT_TYPE.SALARY
-    ? createSalaryWorkTimeReport({ id, reason, reasonCategory })
-    : createExperienceReport({ id, reason, reasonCategory });
+  switch (reportType) {
+    case REPORT_TYPE.SALARY:
+      return createSalaryWorkTimeReport({ id, reason, reasonCategory });
+    default:
+      return createExperienceReport({ id, reason, reasonCategory });
+  }
 };
 
 const ReportForm = ({ close, onApiError, onSuccess, id, reportType }) => {
