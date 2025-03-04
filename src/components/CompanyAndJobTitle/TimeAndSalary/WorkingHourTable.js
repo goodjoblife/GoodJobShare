@@ -21,8 +21,8 @@ import {
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
 import usePermission from 'hooks/usePermission';
 import ReportBadge from 'common/button/ReportBadge';
-import ReportZone from 'components/ExperienceDetail/ReportModal';
-import { REPORT_TYPE } from 'components/ExperienceDetail/ReportModal/ReportForm/constants';
+import ReportZone from 'components/ExperienceDetail/ReportZone';
+import { REPORT_TYPE } from 'components/ExperienceDetail/ReportZone/ReportForm/constants';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>

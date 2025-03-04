@@ -14,8 +14,8 @@ import { originalCompanyNameSelector } from '../experienceSelector';
 import RatingInfo from './RatingInfo';
 import OverallRating from 'common/OverallRating';
 import ReportBadge from 'common/button/ReportBadge';
-import ReportZone from '../ReportModal';
-import { REPORT_TYPE } from '../ReportModal/ReportForm/constants';
+import ReportZone from '../ReportZone';
+import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {

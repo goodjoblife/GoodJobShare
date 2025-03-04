@@ -8,8 +8,8 @@ import useQueryLike from '../hooks/useQueryLike';
 import useToggleLike from '../hooks/useToggleLike';
 import useLoginFlow from '../hooks/useLoginFlow';
 import ReportBadge from 'common/button/ReportBadge';
-import ReportZone from '../ReportModal';
-import { REPORT_TYPE } from '../ReportModal/ReportForm/constants';
+import ReportZone from '../ReportZone';
+import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
   <button
