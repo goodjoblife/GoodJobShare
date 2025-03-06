@@ -27,6 +27,13 @@ $paddingS: 16px;
   @media (max-width: 550px) {
     padding: $paddingS;
   }
+
+  position: relative;
+  .originalLink {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+  }
 }
 
 .main {

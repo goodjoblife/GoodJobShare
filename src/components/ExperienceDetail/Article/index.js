@@ -84,13 +84,22 @@ Sections.propTypes = {
   hideContent: PropTypes.bool.isRequired,
 };
 
-const Article = ({ experience, hideContent, onClickMsgButton }) => {
+const Article = ({
+  experience,
+  hideContent,
+  onClickMsgButton,
+  originalLink,
+}) => {
   // Get share link object according to Google Optimize parameters
   const shareLink = useShareLink();
 
   return (
     <div className={styles.container}>
-      <ArticleInfo experience={experience} hideContent={hideContent} />
+      <ArticleInfo
+        experience={experience}
+        hideContent={hideContent}
+        originalLink={originalLink}
+      />
       <section className={styles.main}>
         <div className={styles.article}>
           <Sections experience={experience} hideContent={hideContent} />
@@ -130,6 +139,7 @@ Article.propTypes = {
   experience: PropTypes.object.isRequired,
   hideContent: PropTypes.bool.isRequired,
   onClickMsgButton: PropTypes.func.isRequired,
+  originalLink: PropTypes.string,
 };
 
 export default Article;

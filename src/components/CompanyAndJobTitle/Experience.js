@@ -15,6 +15,7 @@ const Experience = ({ experience }) => {
         experience={experience}
         hideContent={!canViewPublishId(experience.id)}
         onClickMsgButton={() => setMessageExpanded(expended => !expended)}
+        originalLink={`/experiences/${experience.id}`}
       />
       {messageExpanded && (
         <Wrapper size="s">
