@@ -211,7 +211,7 @@ export const queryCompanyOverviewStatistics = companyName => async (
       averageWeekWorkTime:
         data.salary_work_time_statistics.average_week_work_time || 0,
       overtimeFrequencyCount:
-        data.salary_work_time_statistics.overtime_frequency_count || 0,
+        data.salary_work_time_statistics.overtime_frequency_count,
     };
 
     dispatch(setOverviewStatistics(companyName, getFetched(model)));

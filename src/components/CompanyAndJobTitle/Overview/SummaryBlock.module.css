@@ -16,24 +16,29 @@
   display: flex;
 }
 
+.card {
+  height: 265px;
+}
+
 .barChart {
   flex: 1;
   max-width: 547px;
-  height: 265px;
-
-  @media (max-width: below-tablet) {
-    display: none;
-  }
 }
 
 .barChartSm {
-  display: none;
+  display: block;
+  width: 100%;
+}
 
-  @media (max-width: below-tablet) {
-    display: block;
-    width: 100%;
-    height: 265px;
-  }
+.emptyData {
+  display: flex;
+  justify-content: center;
+}
+
+.barCardImage {
+  margin: 58px 0;
+  width: auto;
+  height: 50%;
 }
 
 .averageWeekWorkTime {
