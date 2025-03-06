@@ -6,7 +6,7 @@ import ReportFormProcess from './ReportFormProcess';
 import ReportList from './ReportList';
 
 const ReportZone = ({ children, reportType, id, reports, reportCount }) => {
-  const [modalState, setModal] = useState({
+  const [modalState, setModalState] = useState({
     isModalOpen: false,
     modalType: '',
     modalPayload: {},
@@ -17,16 +17,16 @@ const ReportZone = ({ children, reportType, id, reports, reportCount }) => {
   );
   const [isShowReportList, setIsShowReportList] = useState(true);
 
-  const handleIsModalOpen = useCallback(
+  const setModalOpen = useCallback(
     (isModalOpen, modalType = '', modalPayload = {}) => {
-      setModal({ isModalOpen, modalType, modalPayload });
+      setModalState({ isModalOpen, modalType, modalPayload });
     },
     [],
   );
 
   const handleReportClick = () => {
     setModalClosableOnClickOutside(false);
-    handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
+    setModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
   };
 
   return (
@@ -35,7 +35,7 @@ const ReportZone = ({ children, reportType, id, reports, reportCount }) => {
       <Modal
         isOpen={isModalOpen}
         close={() => {
-          handleIsModalOpen(false);
+          setModalOpen(false);
           setIsShowReportList(true);
         }}
         closableOnClickOutside={closableOnClickOutside}
@@ -52,7 +52,7 @@ const ReportZone = ({ children, reportType, id, reports, reportCount }) => {
             modalType={modalType}
             modalPayload={modalPayload}
             id={id}
-            handleIsModalOpen={handleIsModalOpen}
+            handleIsModalOpen={setModalOpen}
             setModalClosableOnClickOutside={setModalClosableOnClickOutside}
             reportType={reportType}
             setIsShowReportList={setIsShowReportList}
