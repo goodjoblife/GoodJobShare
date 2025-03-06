@@ -66,6 +66,9 @@ const Button = ({
     case 'hollowRed':
       cnBtnStyle = 'buttonHollowRed';
       break;
+    case 'hollowBlack':
+      cnBtnStyle = 'buttonHollowBlack';
+      break;
     default:
       cnBtnStyle = '';
   }

@@ -4,6 +4,7 @@ import usePermission from 'hooks/usePermission';
 import Article from 'components/ExperienceDetail/Article';
 import { Wrapper } from 'common/base';
 import MessageBoard from '../ExperienceDetail/MessageBoard';
+import * as VISIBILITY from 'components/ExperienceDetail/Article/visibility';
 
 const Experience = ({ experience }) => {
   const [, , canViewPublishId] = usePermission();
@@ -13,7 +14,11 @@ const Experience = ({ experience }) => {
     <>
       <Article
         experience={experience}
-        hideContent={!canViewPublishId(experience.id)}
+        visibility={
+          canViewPublishId(experience.id)
+            ? VISIBILITY.COLLAPSED
+            : VISIBILITY.LOCKED
+        }
         onClickMsgButton={() => setMessageExpanded(expended => !expended)}
         originalLink={`/experiences/${experience.id}`}
       />

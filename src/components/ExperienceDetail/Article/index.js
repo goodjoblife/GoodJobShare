@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import R from 'ramda';
 
 import { P } from 'common/base';
@@ -13,6 +15,7 @@ import QABlock from './QABlock';
 import ReactionZone from './ReactionZone';
 import { BasicPermissionBlock } from 'common/PermissionBlock';
 import { MAX_WORDS_IF_HIDDEN } from 'constants/hideContent';
+import * as VISIBILITY from './visibility';
 
 const countSectionWords = sections =>
   R.reduce(
@@ -27,12 +30,35 @@ const countSectionWords = sections =>
     sections,
   );
 
-const Sections = ({ experience, hideContent }) => {
+const ChildrenOnMaskBottom = ({ visibility, totalWords, originalLink }) => {
+  switch (visibility) {
+    case VISIBILITY.LOCKED:
+      return `總共 ${formatCommaSeparatedNumber(totalWords)} 字`;
+
+    case VISIBILITY.COLLAPSED:
+      return (
+        <Link
+          className={cn('buttonCircleM', 'buttonHollowBlack')}
+          to={originalLink}
+        >
+          查看詳細
+        </Link>
+      );
+  }
+};
+
+ChildrenOnMaskBottom.propTypes = {
+  originalLink: PropTypes.string.isRequired,
+  totalWords: PropTypes.number.isRequired,
+  visibility: PropTypes.string.isRequired,
+};
+
+const Sections = ({ experience, visibility, originalLink }) => {
   let toHide = false;
   let currentTotalWords = 0;
   const totalWords = countSectionWords(experience.sections);
 
-  if (hideContent) {
+  if (visibility !== VISIBILITY.VISIBLE) {
     return (
       <div>
         {experience.sections &&
@@ -49,9 +75,13 @@ const Sections = ({ experience, hideContent }) => {
               return (
                 <GradientMask
                   key={idx}
-                  childrenOnMaskBottom={`總共 ${formatCommaSeparatedNumber(
-                    totalWords,
-                  )} 字`}
+                  childrenOnMaskBottom={
+                    <ChildrenOnMaskBottom
+                      visibility={visibility}
+                      totalWords={totalWords}
+                      originalLink={originalLink}
+                    />
+                  }
                 >
                   <SectionBlock subtitle={subtitle} content={newContent} />
                 </GradientMask>
@@ -81,12 +111,13 @@ const Sections = ({ experience, hideContent }) => {
 
 Sections.propTypes = {
   experience: PropTypes.object.isRequired,
-  hideContent: PropTypes.bool.isRequired,
+  originalLink: PropTypes.string.isRequired,
+  visibility: PropTypes.string.isRequired,
 };
 
 const Article = ({
   experience,
-  hideContent,
+  visibility,
   onClickMsgButton,
   originalLink,
 }) => {
@@ -97,18 +128,22 @@ const Article = ({
     <div className={styles.container}>
       <ArticleInfo
         experience={experience}
-        hideContent={hideContent}
+        visibility={visibility}
         originalLink={originalLink}
       />
       <section className={styles.main}>
         <div className={styles.article}>
-          <Sections experience={experience} hideContent={hideContent} />
+          <Sections
+            experience={experience}
+            visibility={visibility}
+            originalLink={originalLink}
+          />
         </div>
         <div>
           {experience.type === 'interview' &&
           experience.interview_qas &&
           experience.interview_qas.length &&
-          !hideContent ? (
+          visibility === VISIBILITY.VISIBLE ? (
             <div className={styles.qaWrapper}>
               <P size="l" bold>
                 面試問答
@@ -120,7 +155,7 @@ const Article = ({
           ) : null}
         </div>
 
-        {hideContent && (
+        {visibility === VISIBILITY.LOCKED && (
           <BasicPermissionBlock
             to={shareLink}
             rootClassName={styles.permissionBlockArticle}
@@ -137,9 +172,9 @@ const Article = ({
 
 Article.propTypes = {
   experience: PropTypes.object.isRequired,
-  hideContent: PropTypes.bool.isRequired,
   onClickMsgButton: PropTypes.func.isRequired,
   originalLink: PropTypes.string,
+  visibility: PropTypes.string.isRequired,
 };
 
 export default Article;
