@@ -24,7 +24,7 @@ const EsgItemBlock = ({
       <Info className={styles.icon} />
     </div>
     <div className={styles.data}>
-      <span className={styles.value}>{value}</span> {unit}
+      <span className={styles.value}>{value.toFixed(1)}</span> {unit}
     </div>
     <div
       className={styles.caption}
