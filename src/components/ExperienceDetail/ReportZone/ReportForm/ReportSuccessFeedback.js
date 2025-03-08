@@ -7,7 +7,7 @@ import Feedback from 'common/Feedback';
 const ReportSuccessFeedback = ({ buttonClick }) => (
   <Feedback
     buttonClick={buttonClick}
-    heading="檢舉成功"
+    heading="回報成功"
     buttonText="回到頁面"
     Icon={Checked}
   />
