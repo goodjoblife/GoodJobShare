@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import Modal from 'common/Modal';
 import PropTypes from 'prop-types';
 import { MODAL_TYPE } from './ReportForm/constants';
-import ReportFormProcess from './ReportFormProcess';
+import ReportModalContent from './ReportFormProcess';
 
 const ReportZone = ({
   children,
@@ -63,7 +63,7 @@ const ReportZone = ({
         closableOnClickOutside={closableOnClickOutside}
         hasClose
       >
-        <ReportFormProcess
+        <ReportModalContent
           modalType={modalType}
           modalPayload={modalPayload}
           id={id}

@@ -6,7 +6,7 @@ import ReportForm from './ReportForm';
 import { MODAL_TYPE } from './ReportForm/constants';
 import ReportList from './ReportList';
 
-const ReportFormProcess = ({
+const ReportModalContent = ({
   modalType,
   modalPayload,
   reportType,
@@ -55,7 +55,7 @@ const ReportFormProcess = ({
   }
 };
 
-ReportFormProcess.propTypes = {
+ReportModalContent.propTypes = {
   id: PropTypes.string,
   modalPayload: PropTypes.object,
   modalType: PropTypes.string.isRequired,
@@ -69,4 +69,4 @@ ReportFormProcess.propTypes = {
   reports: PropTypes.array,
 };
 
-export default ReportFormProcess;
+export default ReportModalContent;
