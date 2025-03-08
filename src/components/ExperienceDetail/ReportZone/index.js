@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import Modal from 'common/Modal';
 import PropTypes from 'prop-types';
 import { MODAL_TYPE } from './ReportForm/constants';
-import ReportModalContent from './ReportFormProcess';
+import ReportModalContent from './ReportModalContent';
 
 const ReportZone = ({
   children,
