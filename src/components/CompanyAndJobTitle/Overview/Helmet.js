@@ -2,7 +2,10 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { generatePath } from 'react-router';
+import { useSelector } from 'react-redux';
+import EmployerAggregateRating from './EmployerAggregateRating';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
+import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { SITE_NAME } from 'constants/helmetData';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
@@ -26,6 +29,10 @@ const CompanyOverviewHelmet = ({
   workExperiencesCount,
   topNJobTitles,
 }) => {
+  const ratingStatistcsBox = useSelector(
+    companyRatingStatisticsBoxSelectorByName(companyName),
+  );
+
   // title
   const title = companyName;
 
@@ -54,17 +61,28 @@ const CompanyOverviewHelmet = ({
   const url = formatCanonicalPath(path);
 
   return (
-    <Helmet>
-      <title itemProp="name" lang="zh-TW">
-        {title}
-      </title>
-      <meta name="description" content={description} />
-      <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
-      <meta property="og:description" content={description} />
-      <meta name="keywords" content={formatKeyword(companyName)} />
-      <meta property="og:url" content={url} />
-      <link rel="canonical" href={url} />
-    </Helmet>
+    <div>
+      <Helmet>
+        <title itemProp="name" lang="zh-TW">
+          {title}
+        </title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
+        <meta property="og:description" content={description} />
+        <meta name="keywords" content={formatKeyword(companyName)} />
+        <meta property="og:url" content={url} />
+        <link rel="canonical" href={url} />
+      </Helmet>
+      {ratingStatistcsBox && ratingStatistcsBox.data && (
+        <EmployerAggregateRating
+          title={formatTitle(title, SITE_NAME)}
+          description={description}
+          companyName={companyName}
+          averageRating={ratingStatistcsBox.data.averageRating}
+          ratingCount={ratingStatistcsBox.data.ratingCount}
+        />
+      )}
+    </div>
   );
 };
 
