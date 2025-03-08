@@ -2,10 +2,7 @@ import React, { useCallback, useState } from 'react';
 import Modal from 'common/Modal';
 import PropTypes from 'prop-types';
 import { MODAL_TYPE } from './ReportForm/constants';
-import ReportForm from './ReportForm';
-import ReportList from './ReportList';
-import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
-import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
+import ReportFormProcess from './ReportFormProcess';
 
 const ReportZone = ({
   children,
@@ -66,35 +63,19 @@ const ReportZone = ({
         closableOnClickOutside={closableOnClickOutside}
         hasClose
       >
-        {
-          {
-            [MODAL_TYPE.REPORT_LIST]: (
-              <ReportList
-                reports={reports}
-                reportCount={reportCount}
-                onShowReportForm={handleShowReportForm}
-              />
-            ),
-            [MODAL_TYPE.REPORT_FORM]: (
-              <ReportForm
-                reportType={reportType}
-                close={handleCloseReport}
-                id={id}
-                onApiError={payload => handleReportFormError(payload)}
-                onSuccess={payload => handleReportFormSuccess(payload)}
-              />
-            ),
-            [MODAL_TYPE.REPORT_API_ERROR]: (
-              <ApiErrorFeedback
-                buttonClick={handleShowReportList}
-                message={modalPayload?.message}
-              />
-            ),
-            [MODAL_TYPE.REPORT_SUCCESS]: (
-              <ReportSuccessFeedback buttonClick={handleCloseReport} />
-            ),
-          }[modalType]
-        }
+        <ReportFormProcess
+          modalType={modalType}
+          modalPayload={modalPayload}
+          id={id}
+          reportType={reportType}
+          reports={reports}
+          reportCount={reportCount}
+          onShowReportForm={handleShowReportForm}
+          onCloseReport={handleCloseReport}
+          onShowReportList={handleShowReportList}
+          onReportFormError={handleReportFormError}
+          onReportFormSuccess={handleReportFormSuccess}
+        />
       </Modal>
     </>
   );
