@@ -19,7 +19,9 @@ const ReportList = ({ reports, reportCount, onShowReportForm }) => {
       )}
       {reports.map(({ reasonCategory, reason }, i) => (
         <div key={i} className={styles.reportItem}>
-          <P size="m">{reasonCategory}</P>
+          <P size="m" bold>
+            {reasonCategory}
+          </P>
           <P size="m" className={styles.reason}>
             {reason}
           </P>
