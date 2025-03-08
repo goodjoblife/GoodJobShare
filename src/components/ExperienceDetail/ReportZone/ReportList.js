@@ -14,7 +14,7 @@ const ReportList = ({ onCloseReport, reports, reportCount }) => {
           <Heading size="l" className={styles.header}>
             查看其他人回報
           </Heading>
-          <P className={styles.totalReport}>共 {reportCount} 個檢舉</P>
+          <P className={styles.totalReport}>共 {reportCount} 個回報</P>
         </div>
       )}
       {reports.map(({ reasonCategory, reason }, i) => (
