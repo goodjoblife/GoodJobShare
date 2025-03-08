@@ -5,7 +5,14 @@ import { MODAL_TYPE } from './ReportForm/constants';
 import ReportFormProcess from './ReportFormProcess';
 import ReportList from './ReportList';
 
-const ReportZone = ({ children, reportType, id, reports, reportCount }) => {
+const ReportZone = ({
+  children,
+  reportType,
+  id,
+  reports,
+  reportCount,
+  renderButton: Button = 'button',
+}) => {
   const [modalState, setModalState] = useState({
     isModalOpen: false,
     modalType: '',
@@ -31,7 +38,7 @@ const ReportZone = ({ children, reportType, id, reports, reportCount }) => {
 
   return (
     <>
-      <button onClick={handleReportClick}>{children}</button>
+      <Button onClick={handleReportClick}>{children}</Button>
       <Modal
         isOpen={isModalOpen}
         close={() => {
@@ -66,6 +73,7 @@ const ReportZone = ({ children, reportType, id, reports, reportCount }) => {
 ReportZone.propTypes = {
   children: PropTypes.node.isRequired,
   id: PropTypes.string,
+  renderButton: PropTypes.func,
   reportCount: PropTypes.number,
   reportType: PropTypes.string,
   reports: PropTypes.arrayOf(PropTypes.object),

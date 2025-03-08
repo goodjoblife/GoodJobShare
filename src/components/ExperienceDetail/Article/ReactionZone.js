@@ -79,20 +79,21 @@ const ReactionZone = ({
       >
         留言
       </ReactionButton>
-      <ReactionButton className={styles.report}>
-        <ReportZone
-          reportType={REPORT_TYPE.EXPERIENCE}
-          id={experienceId}
-          reports={reports}
+      <ReportZone
+        reportType={REPORT_TYPE.EXPERIENCE}
+        id={experienceId}
+        reports={reports}
+        reportCount={reportCount}
+        renderButton={props => (
+          <ReactionButton className={styles.report} {...props} />
+        )}
+      >
+        <ReportBadge
           reportCount={reportCount}
-        >
-          <ReportBadge
-            reportCount={reportCount}
-            isHighlighted={reportCount > 0}
-            reportText="回報"
-          />
-        </ReportZone>
-      </ReactionButton>
+          isHighlighted={reportCount > 0}
+          reportText="回報"
+        />
+      </ReportZone>
     </div>
   );
 };
