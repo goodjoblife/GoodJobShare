@@ -13,4 +13,40 @@
 
 .reportItem {
   padding: 16px 0;
+  border-bottom: 1px solid #d8d8d8;
+  width: 100%;
+}
+
+.noReport {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.reportButton {
+  margin-top: 1.5rem;
+}
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+}
+
+.header {
+  padding: 0.5rem 0;
+}
+
+.totalReport {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.reason {
+  font-size: 15px;
 }

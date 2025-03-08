@@ -1,26 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ReportList.module.css';
-import { P } from 'common/base';
+import { Heading, P } from 'common/base';
 import Button from 'common/button/Button';
 
 const ReportList = ({ onCloseReport, reports, reportCount }) => {
   return (
     <div className={styles.reportList}>
       {reportCount === 0 ? (
-        <span>沒有檢舉記錄</span>
+        <span className={styles.noReport}>沒有回報記錄</span>
       ) : (
-        <span>共 {reportCount} 個檢舉：</span>
+        <div className={styles.headerContainer}>
+          <Heading size="l" className={styles.header}>
+            查看其他人回報
+          </Heading>
+          <P className={styles.totalReport}>共 {reportCount} 個檢舉</P>
+        </div>
       )}
       {reports.map(({ reasonCategory, reason }, i) => (
         <div key={i} className={styles.reportItem}>
-          <P size="m" bold>
-            {reasonCategory}
+          <P size="m">{reasonCategory}</P>
+          <P size="m" className={styles.reason}>
+            {reason}
           </P>
-          <P size="m">{reason}</P>
         </div>
       ))}
-      <Button circleSize="md" btnStyle="black" onClick={onCloseReport}>
+      <Button
+        className={styles.reportButton}
+        circleSize="md"
+        btnStyle="black"
+        onClick={onCloseReport}
+      >
         我要回報
       </Button>
     </div>
