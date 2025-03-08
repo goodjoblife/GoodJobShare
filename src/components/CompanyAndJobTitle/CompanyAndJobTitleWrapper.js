@@ -20,6 +20,7 @@ import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
 import Glike from 'common/icons/Glike';
 import Seo from 'common/Seo/SeoStructure';
+import { ORIGIN } from 'config';
 
 const AverageRating = ({ pageType, pageName }) => {
   const ratingStatistcsBox = useSelector(
@@ -42,12 +43,16 @@ const AverageRating = ({ pageType, pageName }) => {
         data={{
           '@context': 'https://schema.org/',
           '@type': 'EmployerAggregateRating',
+          name: pageName,
           itemReviewed: {
             '@type': 'Organization',
             name: pageName,
+            sameAs: ORIGIN,
           },
-          ratingValue: averageRating,
+          ratingValue: averageRating.toFixed(1),
           ratingCount: ratingCount,
+          bestRating: 5,
+          worstRating: 1,
         }}
       />
       <span className={styles.averageRating}>{averageRating.toFixed(1)}</span>
