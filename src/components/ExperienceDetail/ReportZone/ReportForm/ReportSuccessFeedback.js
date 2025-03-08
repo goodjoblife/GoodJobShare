@@ -8,7 +8,7 @@ const ReportSuccessFeedback = ({ buttonClick }) => (
   <Feedback
     buttonClick={buttonClick}
     heading="檢舉成功"
-    buttonText="回到經驗頁面"
+    buttonText="回到頁面"
     Icon={Checked}
   />
 );
