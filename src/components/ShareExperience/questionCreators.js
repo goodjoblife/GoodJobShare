@@ -472,6 +472,7 @@ export const createSectionsQuestion = () => ({
   ratingLabels: RATING_LABELS,
   footnote: value =>
     `至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
+  hasRating: () => true,
 });
 
 const OptionEmoji = ({ value, children }) => (
