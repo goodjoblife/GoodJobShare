@@ -13,7 +13,7 @@ import {
 import ReasonCategory from './ReasonCategory';
 import Reason from './Reason';
 import styles from './ReportForm.module.css';
-import { validReasomForm, validReason, isReasonLimit } from './formCheck';
+import { validReasomForm, validReason, isOtherCategory } from './formCheck';
 import {
   salaryReportReasons,
   experienceReportReasons,
@@ -105,7 +105,7 @@ const ReportForm = ({ close, onApiError, onSuccess, id, reportType }) => {
         reason={reason}
         onChange={e => setReason(e.target.value)}
         invalid={
-          submitted && !validReason(isReasonLimit(reasonCategory))(reason)
+          submitted && !validReason(isOtherCategory(reasonCategory))(reason)
         }
       />
       <P

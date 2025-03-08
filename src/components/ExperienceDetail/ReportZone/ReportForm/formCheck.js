@@ -1,7 +1,7 @@
 import R from 'ramda';
 import { experienceReportReasons, salaryReportReasons } from './constants';
 
-export const isReasonLimit = reasonCategory => reasonCategory === '其他';
+export const isOtherCategory = reasonCategory => reasonCategory === '其他';
 
 export const validReason = isLimit =>
   R.anyPass([
@@ -20,7 +20,7 @@ export const validReasonCategory = reasonCategory =>
 
 export const validReasomForm = R.allPass([
   R.compose(
-    n => validReason(isReasonLimit(n[1]))(n[0]),
+    n => validReason(isOtherCategory(n[1]))(n[0]),
     n => R.pair(R.prop('reason')(n), R.prop('reasonCategory')(n)),
   ),
   R.compose(
