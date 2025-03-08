@@ -31,7 +31,5 @@ export const formatCommaSeparatedNumber = num =>
 
 // 300.0 -> "+300.0"
 export const formatNumberWithSign = (number, decimals) => {
-  return number > 0
-    ? `+${number.toFixed(decimals)}`
-    : `${number.toFixed(decimals)}`;
+  return (number > 0 ? '+' : '') + number.toFixed(decimals);
 };

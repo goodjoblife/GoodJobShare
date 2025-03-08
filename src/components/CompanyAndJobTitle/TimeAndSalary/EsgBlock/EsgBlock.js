@@ -34,10 +34,8 @@ const EsgItemBlock = ({
       與同業相比
       <span
         className={cn(
-          styles.valie,
-          value >= valueCompared
-            ? styles.value_positive
-            : styles.value_negative,
+          styles.value,
+          value >= valueCompared ? styles.positive : styles.negative,
         )}
       >
         {formatNumberWithSign(
