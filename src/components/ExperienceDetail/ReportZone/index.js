@@ -3,7 +3,6 @@ import Modal from 'common/Modal';
 import PropTypes from 'prop-types';
 import { MODAL_TYPE } from './ReportForm/constants';
 import ReportFormProcess from './ReportFormProcess';
-import ReportList from './ReportList';
 
 const ReportZone = ({
   children,
@@ -15,14 +14,13 @@ const ReportZone = ({
 }) => {
   const [modalState, setModalState] = useState({
     isModalOpen: false,
-    modalType: '',
+    modalType: MODAL_TYPE.REPORT_LIST,
     modalPayload: {},
   });
   const { isModalOpen, modalType, modalPayload } = modalState;
   const [closableOnClickOutside, setModalClosableOnClickOutside] = useState(
     true,
   );
-  const [isShowReportList, setIsShowReportList] = useState(true);
 
   const setModalOpen = useCallback(
     (isModalOpen, modalType = '', modalPayload = {}) => {
@@ -31,40 +29,53 @@ const ReportZone = ({
     [],
   );
 
-  const handleReportClick = () => {
+  const handleShowReportList = () => {
+    setModalClosableOnClickOutside(true);
+    setModalOpen(true, MODAL_TYPE.REPORT_LIST);
+  };
+
+  const handleShowReportForm = () => {
     setModalClosableOnClickOutside(false);
-    setModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
+    setModalOpen(true, MODAL_TYPE.REPORT_FORM);
+  };
+
+  const handleReportFormError = payload => {
+    setModalClosableOnClickOutside(false);
+    setModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, payload);
+  };
+
+  const handleReportFormSuccess = payload => {
+    setModalClosableOnClickOutside(false);
+    setModalOpen(true, MODAL_TYPE.REPORT_SUCCESS, payload);
+  };
+
+  const handleCloseReport = () => {
+    setModalClosableOnClickOutside(true);
+    setModalOpen(false, MODAL_TYPE.REPORT_LIST);
   };
 
   return (
     <>
-      <Button onClick={handleReportClick}>{children}</Button>
+      <Button onClick={handleShowReportList}>{children}</Button>
       <Modal
         isOpen={isModalOpen}
-        close={() => {
-          setModalOpen(false);
-          setIsShowReportList(true);
-        }}
+        close={handleCloseReport}
         closableOnClickOutside={closableOnClickOutside}
         hasClose
       >
-        {isShowReportList ? (
-          <ReportList
-            reports={reports}
-            onCloseReport={() => setIsShowReportList(false)}
-            reportCount={reportCount}
-          />
-        ) : (
-          <ReportFormProcess
-            modalType={modalType}
-            modalPayload={modalPayload}
-            id={id}
-            handleIsModalOpen={setModalOpen}
-            setModalClosableOnClickOutside={setModalClosableOnClickOutside}
-            reportType={reportType}
-            setIsShowReportList={setIsShowReportList}
-          />
-        )}
+        <ReportFormProcess
+          modalType={modalType}
+          modalPayload={modalPayload}
+          id={id}
+          reportType={reportType}
+          reports={reports}
+          reportCount={reportCount}
+          onShowReportForm={handleShowReportForm}
+          onCloseReport={handleCloseReport}
+          onShowReportList={handleShowReportList}
+          onReportFormError={handleReportFormError}
+          onReportFormSuccess={handleReportFormSuccess}
+        />
       </Modal>
     </>
   );

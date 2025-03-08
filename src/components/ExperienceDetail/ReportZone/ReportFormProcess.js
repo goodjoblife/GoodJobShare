@@ -4,52 +4,51 @@ import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
 import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
 import ReportForm from './ReportForm';
 import { MODAL_TYPE } from './ReportForm/constants';
+import ReportList from './ReportList';
 
 const ReportFormProcess = ({
   modalType,
-  handleIsModalOpen,
   modalPayload,
-  setModalClosableOnClickOutside,
   reportType,
   id,
-  setIsShowReportList,
+  reports,
+  reportCount,
+  onCloseReport,
+  onShowReportForm,
+  onShowReportList,
+  onReportFormError,
+  onReportFormSuccess,
 }) => {
   switch (modalType) {
-    case MODAL_TYPE.REPORT_DETAIL:
+    case MODAL_TYPE.REPORT_LIST:
+      return (
+        <ReportList
+          reports={reports}
+          reportCount={reportCount}
+          onShowReportForm={onShowReportForm}
+        />
+      );
+    case MODAL_TYPE.REPORT_FORM:
       return (
         <ReportForm
           reportType={reportType}
-          close={() => {
-            setIsShowReportList(true);
-            handleIsModalOpen(false);
-          }}
+          close={onCloseReport}
           id={id}
-          onApiError={payload => {
-            setModalClosableOnClickOutside(false);
-            handleIsModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, payload);
-          }}
-          onSuccess={() => {
-            setModalClosableOnClickOutside(true);
-            handleIsModalOpen(true, MODAL_TYPE.REPORT_SUCCESS);
-          }}
+          onApiError={payload => onReportFormError(payload)}
+          onSuccess={payload => onReportFormSuccess(payload)}
         />
       );
 
     case MODAL_TYPE.REPORT_API_ERROR:
       return (
         <ApiErrorFeedback
-          buttonClick={() => {
-            setModalClosableOnClickOutside(false);
-            handleIsModalOpen(true, MODAL_TYPE.REPORT_DETAIL);
-          }}
+          buttonClick={onShowReportList}
           message={modalPayload?.message}
         />
       );
 
     case MODAL_TYPE.REPORT_SUCCESS:
-      return (
-        <ReportSuccessFeedback buttonClick={() => handleIsModalOpen(false)} />
-      );
+      return <ReportSuccessFeedback buttonClick={onCloseReport} />;
 
     default:
       return null;
@@ -57,13 +56,17 @@ const ReportFormProcess = ({
 };
 
 ReportFormProcess.propTypes = {
-  handleIsModalOpen: PropTypes.func.isRequired,
   id: PropTypes.string,
   modalPayload: PropTypes.object,
   modalType: PropTypes.string.isRequired,
+  onCloseReport: PropTypes.func,
+  onReportFormError: PropTypes.func,
+  onReportFormSuccess: PropTypes.func,
+  onShowReportForm: PropTypes.func,
+  onShowReportList: PropTypes.func,
+  reportCount: PropTypes.number,
   reportType: PropTypes.string,
-  setIsShowReportList: PropTypes.func.isRequired,
-  setModalClosableOnClickOutside: PropTypes.func.isRequired,
+  reports: PropTypes.array,
 };
 
 export default ReportFormProcess;

@@ -4,7 +4,7 @@ import styles from './ReportList.module.css';
 import { Heading, P } from 'common/base';
 import Button from 'common/button/Button';
 
-const ReportList = ({ onCloseReport, reports, reportCount }) => {
+const ReportList = ({ reports, reportCount, onShowReportForm }) => {
   return (
     <div className={styles.reportList}>
       {reportCount === 0 ? (
@@ -29,7 +29,7 @@ const ReportList = ({ onCloseReport, reports, reportCount }) => {
         className={styles.reportButton}
         circleSize="md"
         btnStyle="black"
-        onClick={onCloseReport}
+        onClick={onShowReportForm}
       >
         我要回報
       </Button>
@@ -38,7 +38,7 @@ const ReportList = ({ onCloseReport, reports, reportCount }) => {
 };
 
 ReportList.propTypes = {
-  onCloseReport: PropTypes.func.isRequired,
+  onShowReportForm: PropTypes.func.isRequired,
   reportCount: PropTypes.number,
   reports: PropTypes.arrayOf(PropTypes.object),
 };
