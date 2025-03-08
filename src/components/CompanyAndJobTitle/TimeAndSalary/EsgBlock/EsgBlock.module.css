@@ -60,7 +60,8 @@
   .caption {
     margin-top: 20px;
 
-    .value {
+    .value_positive,
+    .value_negative {
       margin-left: 8px;
     }
   }
@@ -110,10 +111,16 @@
   font-size: 12px;
   font-weight: 400;
 
-  .value {
+  .value_negative {
     font-size: 16px;
     font-weight: 700;
     color: warning-red;
+  }
+
+  .value_positive {
+    font-size: 16px;
+    font-weight: 700;
+    color: black;
   }
 }
 
