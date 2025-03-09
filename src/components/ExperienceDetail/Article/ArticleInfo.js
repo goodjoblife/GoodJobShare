@@ -13,9 +13,9 @@ import {
 import { originalCompanyNameSelector } from '../experienceSelector';
 import RatingInfo from './RatingInfo';
 import OverallRating from 'common/OverallRating';
-import ReportDialog from 'common/button/ReportDialog';
-import ReportModal from '../ReportModal';
-import { REPORT_TYPE } from '../ReportModal/ReportForm/constants';
+import ReportBadge from 'common/button/ReportBadge';
+import ReportZone from '../ReportZone';
+import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
@@ -36,18 +36,17 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
     <Fragment>
       {experience.reportCount > 0 && (
         <div className={styles.reportDialogContainer}>
-          <ReportModal
+          <ReportZone
             id={experience.id}
             reportType={REPORT_TYPE.EXPERIENCE}
             reports={experience.reports}
             reportCount={experience.reportCount}
           >
-            <ReportDialog
+            <ReportBadge
               reportCount={experience.reportCount}
-              isShowReportText
               reportText="有使用者回報"
             />
-          </ReportModal>
+          </ReportZone>
         </div>
       )}
       <InfoBlock
@@ -159,18 +158,17 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
     <Fragment>
       {experience.reportCount > 0 && (
         <div className={styles.reportDialogContainer}>
-          <ReportModal
+          <ReportZone
             id={experience.id}
             reportType={REPORT_TYPE.EXPERIENCE}
             reports={experience.reports}
             reportCount={experience.reportCount}
           >
-            <ReportDialog
+            <ReportBadge
               reportCount={experience.reportCount}
-              isShowReportText
               reportText="有使用者回報"
             />
-          </ReportModal>
+          </ReportZone>
         </div>
       )}
       <InfoBlock

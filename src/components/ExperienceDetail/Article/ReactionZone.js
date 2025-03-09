@@ -7,9 +7,9 @@ import styles from './ReactionZone.module.css';
 import useQueryLike from '../hooks/useQueryLike';
 import useToggleLike from '../hooks/useToggleLike';
 import useLoginFlow from '../hooks/useLoginFlow';
-import ReportDialog from 'common/button/ReportDialog';
-import ReportModal from '../ReportModal';
-import { REPORT_TYPE } from '../ReportModal/ReportForm/constants';
+import ReportBadge from 'common/button/ReportBadge';
+import ReportZone from '../ReportZone';
+import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
   <button
@@ -70,7 +70,7 @@ const ReactionZone = ({
         active={liked}
         onClick={handleLike}
       >
-        覺得實用
+        實用
       </ReactionButton>
       <ReactionButton
         className={styles.reactionButton}
@@ -79,21 +79,21 @@ const ReactionZone = ({
       >
         留言
       </ReactionButton>
-      <ReportModal
+      <ReportZone
         reportType={REPORT_TYPE.EXPERIENCE}
         id={experienceId}
         reports={reports}
         reportCount={reportCount}
+        renderButton={props => (
+          <ReactionButton className={styles.report} {...props} />
+        )}
       >
-        <ReactionButton className={styles.report}>
-          <ReportDialog
-            reportCount={reportCount}
-            isHighlighted={reportCount > 0}
-            isShowReportText
-            reportText="回報"
-          />
-        </ReactionButton>
-      </ReportModal>
+        <ReportBadge
+          reportCount={reportCount}
+          isHighlighted={reportCount > 0}
+          reportText="回報"
+        />
+      </ReportZone>
     </div>
   );
 };

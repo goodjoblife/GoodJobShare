@@ -1,4 +1,4 @@
-@value gray-dark, main-yellow from "../../common/variables.module.css";
+@value main-yellow from "../../common/variables.module.css";
 
 .reportDialogContainer {
   display: flex;
@@ -39,7 +39,7 @@
 }
 
 .dialogWrapper {
-  --dialog-color: gray-dark;
+  --dialog-color: #969696;
   position: relative;
   width: fit-content;
 }

@@ -20,9 +20,9 @@ import {
 } from '../../TimeAndSalary/common/formatter';
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
 import usePermission from 'hooks/usePermission';
-import ReportDialog from 'common/button/ReportDialog';
-import ReportModal from 'components/ExperienceDetail/ReportModal';
-import { REPORT_TYPE } from 'components/ExperienceDetail/ReportModal/ReportForm/constants';
+import ReportBadge from 'common/button/ReportBadge';
+import ReportZone from 'components/ExperienceDetail/ReportZone';
+import { REPORT_TYPE } from 'components/ExperienceDetail/ReportZone/ReportForm/constants';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
@@ -134,14 +134,14 @@ const columnProps = [
     title: '回報',
     dataField: R.compose(({ id, reportCount, reports }) => {
       return (
-        <ReportModal
+        <ReportZone
           reportType={REPORT_TYPE.SALARY}
           id={id}
           reports={reports}
           reportCount={reportCount}
         >
-          <ReportDialog reportCount={reportCount} />
-        </ReportModal>
+          <ReportBadge reportCount={reportCount} />
+        </ReportZone>
       );
     }),
     Children: () => '回報',

@@ -13,7 +13,7 @@ import {
 import ReasonCategory from './ReasonCategory';
 import Reason from './Reason';
 import styles from './ReportForm.module.css';
-import { validReasomForm, validReason, isReasonLimit } from './formCheck';
+import { validReasomForm, validReason, isOtherCategory } from './formCheck';
 import {
   salaryReportReasons,
   experienceReportReasons,
@@ -21,15 +21,25 @@ import {
 } from './constants';
 
 const getReasonCategoryOptions = reportType => {
-  return reportType === REPORT_TYPE.SALARY
-    ? salaryReportReasons
-    : experienceReportReasons;
+  switch (reportType) {
+    case REPORT_TYPE.SALARY:
+      return salaryReportReasons;
+    case REPORT_TYPE.EXPERIENCE:
+      return experienceReportReasons;
+    default:
+      return [];
+  }
 };
 
 const submitReport = ({ id, reason, reasonCategory, reportType }) => {
-  return reportType === REPORT_TYPE.SALARY
-    ? createSalaryWorkTimeReport({ id, reason, reasonCategory })
-    : createExperienceReport({ id, reason, reasonCategory });
+  switch (reportType) {
+    case REPORT_TYPE.SALARY:
+      return createSalaryWorkTimeReport({ id, reason, reasonCategory });
+    case REPORT_TYPE.EXPERIENCE:
+      return createExperienceReport({ id, reason, reasonCategory });
+    default:
+      return [];
+  }
 };
 
 const ReportForm = ({ close, onApiError, onSuccess, id, reportType }) => {
@@ -95,7 +105,7 @@ const ReportForm = ({ close, onApiError, onSuccess, id, reportType }) => {
         reason={reason}
         onChange={e => setReason(e.target.value)}
         invalid={
-          submitted && !validReason(isReasonLimit(reasonCategory))(reason)
+          submitted && !validReason(isOtherCategory(reasonCategory))(reason)
         }
       />
       <P
