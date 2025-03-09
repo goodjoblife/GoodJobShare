@@ -16,6 +16,8 @@ import OverallRating from 'common/OverallRating';
 import ReportBadge from 'common/button/ReportBadge';
 import ReportZone from '../ReportZone';
 import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
+import { useDispatch } from 'react-redux';
+import { queryExperience } from 'actions/experience';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
@@ -32,6 +34,7 @@ const formatExperienceInYear = year => {
 
 const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
+  const dispatch = useDispatch();
   return (
     <Fragment>
       {experience.reportCount > 0 && (
@@ -41,6 +44,9 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
             reportType={REPORT_TYPE.EXPERIENCE}
             reports={experience.reports}
             reportCount={experience.reportCount}
+            onCreateReport={() => {
+              dispatch(queryExperience(experience.id));
+            }}
           >
             <ReportBadge
               reportCount={experience.reportCount}
@@ -154,6 +160,7 @@ InterviewInfoBlocks.propTypes = {
 
 const WorkInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
+  const dispatch = useDispatch();
   return (
     <Fragment>
       {experience.reportCount > 0 && (
@@ -163,6 +170,9 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
             reportType={REPORT_TYPE.EXPERIENCE}
             reports={experience.reports}
             reportCount={experience.reportCount}
+            onCreateReport={() => {
+              dispatch(queryExperience(experience.id));
+            }}
           >
             <ReportBadge
               reportCount={experience.reportCount}
