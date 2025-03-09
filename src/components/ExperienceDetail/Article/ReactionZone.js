@@ -10,6 +10,8 @@ import useLoginFlow from '../hooks/useLoginFlow';
 import ReportBadge from 'common/button/ReportBadge';
 import ReportZone from '../ReportZone';
 import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
+import { useDispatch } from 'react-redux';
+import { queryExperience } from 'actions/experience';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
   <button
@@ -42,6 +44,7 @@ const ReactionZone = ({
   const [liked, setLiked] = useState(false);
 
   const [likeState, queryLike] = useQueryLike(experienceId);
+  const dispatch = useDispatch();
 
   const toggleLike = useToggleLike(experienceId);
   const handleLikeCallback = useCallback(async () => {
@@ -87,6 +90,9 @@ const ReactionZone = ({
         renderButton={props => (
           <ReactionButton className={styles.report} {...props} />
         )}
+        onCreateReport={() => {
+          dispatch(queryExperience(experienceId));
+        }}
       >
         <ReportBadge
           reportCount={reportCount}

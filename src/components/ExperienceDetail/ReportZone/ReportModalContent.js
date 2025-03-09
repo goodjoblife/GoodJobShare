@@ -48,7 +48,9 @@ const ReportModalContent = ({
       );
 
     case MODAL_TYPE.REPORT_SUCCESS:
-      return <ReportSuccessFeedback buttonClick={onCloseReport} />;
+      return (
+        <ReportSuccessFeedback buttonClick={() => onCloseReport(modalType)} />
+      );
 
     default:
       return null;

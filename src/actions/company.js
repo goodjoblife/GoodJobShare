@@ -131,7 +131,11 @@ export const queryCompanyOverview = companyName => async (
   getState,
 ) => {
   const box = companyOverviewBoxSelectorByName(companyName)(getState());
-  if (isFetching(box) || isFetched(box)) {
+  if (
+    isFetching(box)
+    // TODO: isFetched 與其他條件判斷會導致無法重整，先註解，要詢問如何將狀態改為 isUnfetched、修改條件判斷
+    // || isFetched(box)
+  ) {
     return;
   }
 
@@ -239,13 +243,15 @@ export const queryCompanyTimeAndSalary = ({
 }) => async (dispatch, getState) => {
   const box = companyTimeAndSalaryBoxSelectorByName(companyName)(getState());
   if (
-    isFetching(box) ||
-    (isFetched(box) &&
-      box.data &&
-      box.data.name === companyName &&
-      box.data.jobTitle === jobTitle &&
-      box.data.start === start &&
-      box.data.limit === limit)
+    isFetching(box)
+    // TODO: isFetched 與其他條件判斷會導致無法重整，先註解，要詢問如何將狀態改為 isUnfetched、修改條件判斷
+    // ||
+    // (isFetched(box) &&
+    //   box.data &&
+    //   box.data.name === companyName &&
+    //   box.data.jobTitle === jobTitle &&
+    //   box.data.start === start &&
+    //   box.data.limit === limit)
   ) {
     return;
   }
