@@ -1,5 +1,11 @@
 @value below-small, above-small from '../common/variables.module.css';
 
+.title {
+  color: black;
+  margin-bottom: 30px;
+  display: inline-block;
+}
+
 .fanPageBlock {
   margin-bottom: 60px;
 }
@@ -14,13 +20,14 @@
 
   @media (max-width: below-small) {
     display: flex;
-    margin-top: 16px;
+    margin-top: -16px;
+    margin-bottom: 40px;
   }
 
   @media (min-width: above-small) {
     display: inline-flex;
-    margin-left: 34px;
-    vertical-align: top;
+    margin-left: 25px;
+    vertical-align: text-top;
   }
 
   .averageRating {

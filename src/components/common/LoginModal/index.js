@@ -5,6 +5,7 @@ import Modal from 'common/Modal.js';
 import FacebookLoginButton from 'common/Login/FacebookLoginButton';
 import GoogleLoginButton from 'common/Login/GoogleLoginButton';
 import styles from './LoginModal.module.css';
+import { P } from 'common/base';
 
 const LoginModal = () => {
   const { isLoginModalDisplayed: isOpen, setLoginModalDisplayed } = useContext(
@@ -25,7 +26,7 @@ const LoginModal = () => {
   return (
     <Modal isOpen={isOpen} hasClose close={close} closableOnClickOutside>
       <div className={styles.container}>
-        <h2 style={{ fontSize: '1.4em', marginBottom: '34px' }}>登入</h2>
+        <P style={{ fontSize: '1.4em', marginBottom: '34px' }}>登入</P>
         <div className={styles.loginBtnContainer}>
           <FacebookLoginButton />
           <GoogleLoginButton />
