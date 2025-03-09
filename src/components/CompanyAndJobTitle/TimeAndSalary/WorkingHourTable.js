@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 import { InfoButton } from 'common/Modal';
 import Table from 'common/table/Table';
-import { pageType as pageTypeMapping } from 'constants/companyJobTitle';
+import {
+  PAGE_SIZE,
+  pageType as pageTypeMapping,
+} from 'constants/companyJobTitle';
 import { InfoSalaryModal, InfoTimeModal } from './InfoModal';
 import styles from './WorkingHourTable.module.css';
 import {
@@ -23,6 +26,19 @@ import usePermission from 'hooks/usePermission';
 import ReportBadge from 'common/button/ReportBadge';
 import ReportZone from 'components/ExperienceDetail/ReportZone';
 import { REPORT_TYPE } from 'components/ExperienceDetail/ReportZone/ReportForm/constants';
+import { useDispatch } from 'react-redux';
+import {
+  queryCompanyOverview,
+  queryCompanyTimeAndSalary,
+} from 'actions/company';
+import { usePage } from 'hooks/routing/page';
+import { useSearchTextFromQuery } from '../Searchbar';
+import useCompanyName from 'pages/Company/useCompanyName';
+import {
+  queryJobTitleOverview,
+  queryJobTitleTimeAndSalary,
+} from 'actions/jobTitle';
+import useJobTitle from 'pages/JobTitle/useJobTitle';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
@@ -132,13 +148,14 @@ const columnProps = [
   {
     className: styles.colDataTime,
     title: '回報',
-    dataField: R.compose(({ id, reportCount, reports }) => {
+    dataField: R.compose(({ id, reportCount, reports }, _, onCreateReport) => {
       return (
         <ReportZone
           reportType={REPORT_TYPE.SALARY}
           id={id}
           reports={reports}
           reportCount={reportCount}
+          onCreateReport={onCreateReport}
         >
           <ReportBadge reportCount={reportCount} />
         </ReportZone>
@@ -151,6 +168,13 @@ const columnProps = [
 const WorkingHourTable = ({ data, pageType }) => {
   const [isInfoSalaryModalOpen, setInfoSalaryModalOpen] = useState(false);
   const [isInfoTimeModalOpen, setInfoTiimeModalOpen] = useState(false);
+  const dispatch = useDispatch();
+  const companyName = useCompanyName();
+  const [searchText] = useSearchTextFromQuery();
+  const page = usePage();
+  const jobTitle = useJobTitle();
+  const start = (page - 1) * PAGE_SIZE;
+  const limit = PAGE_SIZE;
 
   const toggleInfoSalaryModal = useCallback(() => {
     setInfoSalaryModalOpen(!isInfoSalaryModalOpen);
@@ -194,12 +218,38 @@ const WorkingHourTable = ({ data, pageType }) => {
     [canViewPublishId, fromCol, toCol],
   );
 
+  // 想先解決 isFetched 的問題，再來重構 handleCreateReport
+  const handleCreateReport = () => {
+    // fetch company data
+    dispatch(queryCompanyOverview(companyName));
+    dispatch(
+      queryCompanyTimeAndSalary({
+        companyName,
+        jobTitle: searchText || undefined,
+        start,
+        limit,
+      }),
+    );
+
+    // fetch jobTitle data
+    dispatch(queryJobTitleOverview(jobTitle));
+    dispatch(
+      queryJobTitleTimeAndSalary({
+        jobTitle,
+        companyName: searchText || undefined,
+        start,
+        limit,
+      }),
+    );
+  };
+
   return (
     <Table
       className={styles.companyTable}
       data={data}
       primaryKey="created_at"
       postProcessRows={postProcessRows}
+      onCreateReport={handleCreateReport}
     >
       {columnProps
         .filter(({ isEnabled }) => (isEnabled ? isEnabled({ pageType }) : true))
