@@ -77,7 +77,7 @@ const MoreExperiencesBlock = ({ experience }) => {
 
   return (
     <div className={styles.container}>
-      <Heading className={styles.title} Tag={'h2'}>
+      <Heading className={styles.title} Tag="h2">
         更多{experience.originalCompanyName}、{experience.job_title.name}
         的面試及評價...
       </Heading>
