@@ -31,7 +31,7 @@ const ReportInspectModal = ({ experienceId, isOpen, setIsOpen }) => {
       hasClose
       closableOnClickOutside
     >
-      <Heading size="l" marginBottomS center>
+      <Heading size="l" Tag="div" marginBottomS center>
         查看檢舉
       </Heading>
       {reportsState.loading && <Loader size="s" />}
