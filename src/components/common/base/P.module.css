@@ -6,6 +6,15 @@
   text-align: center;
 }
 
+.xl {
+  font-size: 1.375em;
+  line-height: 1.4em;
+
+  strong {
+    font-weight: 700;
+  }
+}
+
 .l {
   font-size: 1.1em;
   line-height: 1.6em;

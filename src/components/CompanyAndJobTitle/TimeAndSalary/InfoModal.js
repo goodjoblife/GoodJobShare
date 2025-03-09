@@ -6,6 +6,7 @@ import Question from 'common/icons/Question';
 import editorStyles from 'common/Editor.module.css';
 import Button from 'common/button/Button';
 import styles from './InfoModal.module.css';
+import { P } from 'common/base';
 
 const InfoModal = ({ isOpen, close, title, children }) => (
   <Modal
@@ -25,14 +26,14 @@ const InfoModal = ({ isOpen, close, title, children }) => (
         }}
       />
     </div>
-    <h2
+    <P
       style={{
         fontSize: '2rem',
         marginBottom: '47px',
       }}
     >
       {title}
-    </h2>
+    </P>
     <div className={cn(editorStyles.editor, 'alignLeft')}>
       {children}
       <div

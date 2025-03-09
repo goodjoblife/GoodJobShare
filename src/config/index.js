@@ -18,4 +18,5 @@ module.exports = {
     process.env.RAZZLE_TAP_PAY_APP_KEY ||
     'app_WBWcR9mkiSMUQ3qZV5tUidkq7vfamUzmdWi5QR33ksT6ttbiZ9BJxbz5Fvma',
   TAP_PAY_SERVER_TYPE: process.env.RAZZLE_TAP_PAY_SERVER_TYPE || 'sandbox',
+  ORIGIN: process.env.RAZZLE_ORIGIN || 'http://localhost:3000',
 };

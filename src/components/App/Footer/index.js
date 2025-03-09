@@ -39,10 +39,10 @@ const Footer = () => (
     <section className={styles.header}>
       <Wrapper size="l" className={styles.inner}>
         <img src={GjLogo} className={styles.logo} alt="GoodJob" />
-        <h1 className={styles.heading}>職場透明化運動</h1>
-        <h5 className={styles.subheading}>
+        <div className={styles.heading}>職場透明化運動</div>
+        <div className={styles.subheading}>
           —— 共享薪水、面試情報，求職不再面議！
-        </h5>
+        </div>
         <span
           className={cn('fb-like', styles.fbLike)}
           data-href="https://www.facebook.com/goodjob.life/"
@@ -61,7 +61,7 @@ const Footer = () => (
         <LinkItem title="GoodJob" items={link3} />
       </section>
       <section className={styles.medias}>
-        <h4 className={styles.heading}>\ 感謝各大媒體採訪報導 /</h4>
+        <P className={styles.heading}>\ 感謝各大媒體採訪報導 /</P>
         <Link to="/about">
           <img src={MediasImg} alt="cheers yahoo 蘋果日報 數位時代" />
         </Link>

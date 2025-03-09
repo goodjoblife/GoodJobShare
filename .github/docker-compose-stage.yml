@@ -11,3 +11,4 @@ services:
         - RAZZLE_GTM_ID=GTM-KVZ7DZQ
         - RAZZLE_GOOGLE_APP_ID=879657963776-nb0kdpkb5sfdf0285ov9o353dnt0l5iq.apps.googleusercontent.com
         - RAZZLE_ENVIRONMENT=stage
+        - RAZZLE_ORIGIN=https://www-stage.goodjob.life

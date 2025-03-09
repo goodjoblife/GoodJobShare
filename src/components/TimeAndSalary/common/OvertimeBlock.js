@@ -14,9 +14,11 @@ const formatNum = num => {
 
 const OvertimeBlock = ({ type, heading, statistics }) => (
   <div className={styles.overtimeBlock}>
-    <P Tag="h4" size="m" bold className={styles.heading}>
+    <P className={styles.heading}>
       {type === 'salary' ? <Coin2 /> : <Clock />}
-      <span>{heading}</span>
+      <P Tag="h3" size="m" bold>
+        {heading}
+      </P>
     </P>
     {statistics.count >= 5 ? (
       <div className={styles.item}>

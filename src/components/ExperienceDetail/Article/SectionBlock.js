@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { P } from 'common/base';
+import { Heading, P } from 'common/base';
 import styles from './SectionBlock.module.css';
 import OverallRating from 'common/OverallRating';
 
 const SectionBlock = ({ subtitle, content, rating }) => (
   <section>
     {subtitle && (
-      <P size="l" bold className={styles.heading}>
-        <div>{subtitle}</div>
+      <Heading size="sm" bold Tag="h2" className={styles.heading}>
+        {subtitle}
         {rating ? <OverallRating rating={rating} /> : null}
-      </P>
+      </Heading>
     )}
     <P size="l" className={styles.content}>
       {content}

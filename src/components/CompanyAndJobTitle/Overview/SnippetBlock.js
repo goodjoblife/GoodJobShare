@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import EmptyView from '../EmptyView';
 import styles from './Overview.module.css';
+import { Heading } from 'common/base';
 
 const SnippetBlock = ({
   title,
@@ -16,7 +17,9 @@ const SnippetBlock = ({
   tabType,
 }) => (
   <div className={styles.snippet}>
-    <div className={styles.title}>{title}</div>
+    <Heading className={styles.title} Tag="h2">
+      {title}
+    </Heading>
     {isEmpty ? (
       <EmptyView tabType={tabType} pageName={pageName} pageType={pageType} />
     ) : (
