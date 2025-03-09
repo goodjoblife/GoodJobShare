@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styles from './Heading.module.css';
 
-const sizeOptions = ['l', 'm', 'sl', 'sm', 'sx'];
+const sizeOptions = ['l', 'm', 'sl', 'sm'];
 
 const Heading = ({
   Tag,
