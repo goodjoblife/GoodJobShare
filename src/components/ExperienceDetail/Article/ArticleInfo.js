@@ -13,6 +13,9 @@ import {
 import { originalCompanyNameSelector } from '../experienceSelector';
 import RatingInfo from './RatingInfo';
 import OverallRating from 'common/OverallRating';
+import ReportBadge from 'common/button/ReportBadge';
+import ReportZone from '../ReportZone';
+import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
@@ -31,6 +34,21 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
+      {experience.reportCount > 0 && (
+        <div className={styles.reportDialogContainer}>
+          <ReportZone
+            id={experience.id}
+            reportType={REPORT_TYPE.EXPERIENCE}
+            reports={experience.reports}
+            reportCount={experience.reportCount}
+          >
+            <ReportBadge
+              reportCount={experience.reportCount}
+              reportText="有使用者回報"
+            />
+          </ReportZone>
+        </div>
+      )}
       <InfoBlock
         label="公司"
         to={generatePageURL({
@@ -111,6 +129,7 @@ InterviewInfoBlocks.propTypes = {
     created_at: PropTypes.string,
     education: PropTypes.string,
     experience_in_year: PropTypes.number,
+    id: PropTypes.string.isRequired,
     interview_result: PropTypes.string,
     interview_sensitive_questions: PropTypes.arrayOf(PropTypes.string),
     interview_time: PropTypes.shape({
@@ -123,6 +142,8 @@ InterviewInfoBlocks.propTypes = {
     originalCompanyName: PropTypes.string.isRequired,
     overall_rating: PropTypes.number,
     region: PropTypes.string,
+    reportCount: PropTypes.number.isRequired,
+    reports: PropTypes.arrayOf(PropTypes.object),
     salary: PropTypes.shape({
       amount: PropTypes.number,
       type: PropTypes.string,
@@ -135,6 +156,21 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
+      {experience.reportCount > 0 && (
+        <div className={styles.reportDialogContainer}>
+          <ReportZone
+            id={experience.id}
+            reportType={REPORT_TYPE.EXPERIENCE}
+            reports={experience.reports}
+            reportCount={experience.reportCount}
+          >
+            <ReportBadge
+              reportCount={experience.reportCount}
+              reportText="有使用者回報"
+            />
+          </ReportZone>
+        </div>
+      )}
       <InfoBlock
         label="公司"
         to={generatePageURL({
@@ -197,12 +233,15 @@ WorkInfoBlocks.propTypes = {
     created_at: PropTypes.string,
     education: PropTypes.string,
     experience_in_year: PropTypes.number,
+    id: PropTypes.string.isRequired,
     job_title: PropTypes.shape({
       name: PropTypes.string,
     }),
     originalCompanyName: PropTypes.string.isRequired,
     recommend_to_others: PropTypes.string,
     region: PropTypes.string,
+    reportCount: PropTypes.number.isRequired,
+    reports: PropTypes.arrayOf(PropTypes.object),
     salary: PropTypes.shape({
       amount: PropTypes.number,
       type: PropTypes.string,

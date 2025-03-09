@@ -20,6 +20,9 @@ import {
 } from '../../TimeAndSalary/common/formatter';
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
 import usePermission from 'hooks/usePermission';
+import ReportBadge from 'common/button/ReportBadge';
+import ReportZone from 'components/ExperienceDetail/ReportZone';
+import { REPORT_TYPE } from 'components/ExperienceDetail/ReportZone/ReportForm/constants';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
@@ -125,6 +128,23 @@ const columnProps = [
       R.prop('data_time'),
     ),
     Children: TimeHeader,
+  },
+  {
+    className: styles.colDataTime,
+    title: '回報',
+    dataField: R.compose(({ id, reportCount, reports }) => {
+      return (
+        <ReportZone
+          reportType={REPORT_TYPE.SALARY}
+          id={id}
+          reports={reports}
+          reportCount={reportCount}
+        >
+          <ReportBadge reportCount={reportCount} />
+        </ReportZone>
+      );
+    }),
+    Children: () => '回報',
   },
 ];
 
