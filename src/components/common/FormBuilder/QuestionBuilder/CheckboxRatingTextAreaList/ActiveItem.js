@@ -147,7 +147,7 @@ ActiveItem.propTypes = {
     PropTypes.node,
     PropTypes.func,
   ]),
-  hasRating: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]).isRequired,
+  hasRating: PropTypes.func.isRequired,
   isElseOption: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -163,7 +163,7 @@ ActiveItem.propTypes = {
 };
 
 ActiveItem.defaultProps = {
-  hasRating: true,
+  hasRating: () => true,
 };
 
 export default ActiveItem;
