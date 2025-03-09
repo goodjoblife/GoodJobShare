@@ -15,6 +15,7 @@ import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import Button from 'common/button/Button';
 import styles from './MoreExperiencesBlock.module.css';
+import { Heading } from 'common/base';
 
 const ExperienceEntry = props => {
   switch (props.data.type) {
@@ -76,10 +77,10 @@ const MoreExperiencesBlock = ({ experience }) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>
+      <Heading className={styles.title} Tag={'h2'}>
         更多{experience.originalCompanyName}、{experience.job_title.name}
         的面試及評價...
-      </div>
+      </Heading>
       {experiences.map(e => (
         <ExperienceEntry
           key={e.id}

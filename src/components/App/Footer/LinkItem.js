@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styles from './LinkItem.module.css';
 import { useDispatch } from 'react-redux';
+import { P } from 'common/base';
 
 const LinkItem = ({ title, items }) => {
   const dispatch = useDispatch();
   return (
     <div className={styles.linkItem}>
-      <h4 size="l" className={styles.heading}>
+      <P size="l" className={styles.heading}>
         {title}
-      </h4>
+      </P>
       {items.map(({ to, text, anchor }, index) => {
         if (typeof to === 'function') {
           const onClick = () => to({ dispatch });
