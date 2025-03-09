@@ -1,5 +1,5 @@
 import React from 'react';
-import Seo from 'common/Seo/SeoStructure';
+import SeoStructure from 'common/Seo/SeoStructure';
 import PropTypes from 'prop-types';
 import { ORIGIN } from 'config';
 
@@ -11,7 +11,7 @@ const EmployerAggregateRating = ({
   ratingCount,
 }) => {
   return (
-    <Seo
+    <SeoStructure
       data={{
         '@context': 'https://schema.org/',
         '@type': 'EmployerAggregateRating',
@@ -22,7 +22,7 @@ const EmployerAggregateRating = ({
           name: companyName,
           sameAs: ORIGIN,
         },
-        ratingValue: averageRating.toFixed(1),
+        ratingValue: parseFloat(averageRating.toFixed(1)),
         ratingCount: ratingCount,
         bestRating: 5,
         worstRating: 1,

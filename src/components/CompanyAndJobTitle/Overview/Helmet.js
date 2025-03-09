@@ -61,7 +61,7 @@ const CompanyOverviewHelmet = ({
   const url = formatCanonicalPath(path);
 
   return (
-    <div>
+    <>
       <Helmet>
         <title itemProp="name" lang="zh-TW">
           {title}
@@ -82,7 +82,7 @@ const CompanyOverviewHelmet = ({
           ratingCount={ratingStatistcsBox.data.ratingCount}
         />
       )}
-    </div>
+    </>
   );
 };
 
