@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { generatePath } from 'react-router';
 import { useSelector } from 'react-redux';
-import EmployerAggregateRating from './EmployerAggregateRating';
+import EmployerAggregateRatingSeo from './EmployerAggregateRatingSeo';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { SITE_NAME } from 'constants/helmetData';
@@ -74,7 +74,7 @@ const CompanyOverviewHelmet = ({
         <link rel="canonical" href={url} />
       </Helmet>
       {ratingStatistcsBox && ratingStatistcsBox.data && (
-        <EmployerAggregateRating
+        <EmployerAggregateRatingSeo
           title={formatTitle(title, SITE_NAME)}
           description={description}
           companyName={companyName}

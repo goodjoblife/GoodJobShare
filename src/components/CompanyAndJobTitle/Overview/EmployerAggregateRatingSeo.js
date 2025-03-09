@@ -3,7 +3,7 @@ import SeoStructure from 'common/Seo/SeoStructure';
 import PropTypes from 'prop-types';
 import { ORIGIN } from 'config';
 
-const EmployerAggregateRating = ({
+const EmployerAggregateRatingSeo = ({
   title,
   description,
   companyName,
@@ -31,7 +31,7 @@ const EmployerAggregateRating = ({
   );
 };
 
-EmployerAggregateRating.propTypes = {
+EmployerAggregateRatingSeo.propTypes = {
   averageRating: PropTypes.number.isRequired,
   companyName: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -39,4 +39,4 @@ EmployerAggregateRating.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default EmployerAggregateRating;
+export default EmployerAggregateRatingSeo;
