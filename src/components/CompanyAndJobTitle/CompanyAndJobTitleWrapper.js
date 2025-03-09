@@ -78,10 +78,10 @@ const CompanyAndJobTitleWrapper = ({
           data={generateBreadCrumbData({ pageType, pageName, tabType })}
         />
       </div>
-      <Heading style={{ color: '#000000', marginBottom: '30px' }}>
-        {pageName}
+      <div>
+        <Heading className={styles.title}>{pageName}</Heading>
         <AverageRating pageType={pageType} pageName={pageName} />
-      </Heading>
+      </div>
       <TabLinkGroup
         options={tabLinkOptions}
         style={{

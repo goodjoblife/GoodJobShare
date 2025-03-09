@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styles from './P.module.css';
 
-const sizeOptions = ['l', 'm', 's'];
+const sizeOptions = ['xl', 'l', 'm', 's'];
 
 const P = ({
   Tag,
