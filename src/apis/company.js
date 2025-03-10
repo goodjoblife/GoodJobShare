@@ -9,6 +9,7 @@ import {
   queryCompaniesHavingDataGql,
   getCompanyTimeAndSalaryStatisticsQuery,
   getCompanyTopNJobTitlesQuery,
+  getCompanyEsgSalaryDataQuery,
   queryCompanyOverviewStatisticsQuery,
 } from 'graphql/company';
 
@@ -64,6 +65,12 @@ export const getCompanyTopNJobTitles = ({ companyName }) =>
     query: getCompanyTopNJobTitlesQuery,
     variables: { companyName },
   }).then(R.prop('company'));
+
+export const getCompanyEsgSalaryData = ({ companyName }) =>
+  graphqlClient({
+    query: getCompanyEsgSalaryDataQuery,
+    variables: { companyName },
+  }).then(R.path(['company', 'esgSalaryData']));
 
 export const getCompanyInterviewExperiences = ({
   companyName,
