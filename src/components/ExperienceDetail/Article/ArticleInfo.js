@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 import { formatSalary, formatSalaryRange } from 'common/formatter';
@@ -273,10 +274,15 @@ InternBlocks.propTypes = {
   hideContent: PropTypes.bool,
 };
 
-const Aside = ({ experience, hideContent }) => {
+const Aside = ({ experience, hideContent, originalLink }) => {
   const { type } = experience;
   return (
     <div className={styles.info}>
+      {originalLink && (
+        <Link className={styles.originalLink} to={originalLink}>
+          🔗
+        </Link>
+      )}
       {type === 'interview' && (
         <ul>
           <InterviewInfoBlocks
@@ -304,6 +310,7 @@ Aside.propTypes = {
     type: PropTypes.string.isRequired,
   }).isRequired,
   hideContent: PropTypes.bool,
+  originalLink: PropTypes.string,
 };
 
 export default Aside;

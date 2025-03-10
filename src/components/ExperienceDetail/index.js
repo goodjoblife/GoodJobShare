@@ -48,6 +48,7 @@ import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import Button from 'common/button/Button';
+import * as VISIBILITY from './Article/visibility';
 
 const MODAL_TYPE = {
   REPORT_DETAIL: 'REPORT_TYPE',
@@ -243,7 +244,11 @@ const ExperienceDetail = ({ ...props }) => {
                 {reportZone}
                 <Article
                   experience={experienceBox.data}
-                  hideContent={!canViewPublishId(experienceBox.data.id)}
+                  visibility={
+                    canViewPublishId(experienceBox.data.id)
+                      ? VISIBILITY.VISIBLE
+                      : VISIBILITY.LOCKED
+                  }
                   onClickMsgButton={scrollToCommentZone}
                 />
               </Fragment>

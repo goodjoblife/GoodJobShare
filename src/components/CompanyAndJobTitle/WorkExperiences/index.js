@@ -5,6 +5,8 @@ import { PageBoxRenderer } from '../StatusRenderer';
 import WorkExperiencesSection from './WorkExperiences';
 import Helmet from './Helmet';
 import Searchbar from '../Searchbar';
+import Sorter from '../Sorter';
+import styles from './WorkExperiences.module.css';
 
 const WorkExperiences = ({
   pageType,
@@ -19,7 +21,10 @@ const WorkExperiences = ({
     pageName={pageName}
     tabType={tabType}
   >
-    <Searchbar pageType={pageType} tabType={tabType} />
+    <div className={styles.interactive}>
+      <Searchbar pageType={pageType} tabType={tabType} />
+      <Sorter />
+    </div>
     <PageBoxRenderer
       pageType={pageType}
       pageName={pageName}
