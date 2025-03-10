@@ -44,6 +44,9 @@ const ChildrenOnMaskBottom = ({ visibility, totalWords, originalLink }) => {
           查看詳細
         </Link>
       );
+
+    default:
+      return null;
   }
 };
 
