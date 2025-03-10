@@ -1,8 +1,9 @@
 import R from 'ramda';
 
 const stateToApiParams = state => ({
-  reason_category: state.reasonCategory,
+  reasonCategory: state.reasonCategory,
   reason: state.reason,
+  createdAt: state.createdAt,
 });
 
 const omitByReasonCategory = state => {
