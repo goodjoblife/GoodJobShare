@@ -10,7 +10,6 @@ class Table extends Component {
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
     data: PropTypes.array.isRequired,
-    onCreateReport: PropTypes.func,
     postProcessRows: PropTypes.func,
     primaryKey: PropTypes.string.isRequired,
   };
@@ -28,13 +27,12 @@ class Table extends Component {
       children,
       className,
       postProcessRows,
-      onCreateReport,
     } = this.props;
     const records = data.map((d, i) => {
       const record = Children.map(children, (col, idx) => {
         let value;
         if (typeof col.props.dataField === 'function') {
-          value = col.props.dataField(d, i, onCreateReport);
+          value = col.props.dataField(d, i);
         } else {
           value = R.path(col.props.dataField.split('.'), d);
           if (col.props.dataFormatter) {

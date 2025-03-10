@@ -148,14 +148,14 @@ const columnProps = [
   {
     className: styles.colDataTime,
     title: '回報',
-    dataField: R.compose(({ id, reportCount, reports }, _, onCreateReport) => {
+    dataField: R.compose(({ id, reportCount, reports, handleCreateReport }) => {
       return (
         <ReportZone
           reportType={REPORT_TYPE.SALARY}
           id={id}
           reports={reports}
           reportCount={reportCount}
-          onCreateReport={onCreateReport}
+          onCreateReport={handleCreateReport}
         >
           <ReportBadge reportCount={reportCount} />
         </ReportZone>
@@ -246,10 +246,9 @@ const WorkingHourTable = ({ data, pageType }) => {
   return (
     <Table
       className={styles.companyTable}
-      data={data}
+      data={data.map(row => ({ ...row, handleCreateReport }))}
       primaryKey="created_at"
       postProcessRows={postProcessRows}
-      onCreateReport={handleCreateReport}
     >
       {columnProps
         .filter(({ isEnabled }) => (isEnabled ? isEnabled({ pageType }) : true))
