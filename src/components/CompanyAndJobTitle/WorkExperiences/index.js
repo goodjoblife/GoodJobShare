@@ -6,7 +6,7 @@ import WorkExperiencesSection from './WorkExperiences';
 import Helmet from './Helmet';
 import Searchbar from '../Searchbar';
 import Sorter from '../Sorter';
-import styles from './WorkExperiences.module.css';
+import styles from '../styles.module.css';
 
 const WorkExperiences = ({
   pageType,

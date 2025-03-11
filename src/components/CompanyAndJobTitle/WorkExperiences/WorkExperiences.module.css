@@ -161,9 +161,3 @@
 .overallRatingWrapper {
   margin: 0;
 }
-
-.interactive {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
