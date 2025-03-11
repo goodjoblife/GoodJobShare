@@ -280,7 +280,9 @@ const Aside = ({ experience, hideContent, originalLink }) => {
     <div className={styles.info}>
       {originalLink && (
         <Link className={styles.originalLink} to={originalLink}>
-          🔗
+          <span role="img" aria-label="link">
+            🔗
+          </span>
         </Link>
       )}
       {type === 'interview' && (
