@@ -1,7 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
 import R from 'ramda';
 
 import { P } from 'common/base';
@@ -16,6 +14,7 @@ import ReactionZone from './ReactionZone';
 import { BasicPermissionBlock } from 'common/PermissionBlock';
 import { MAX_WORDS_IF_HIDDEN } from 'constants/hideContent';
 import * as VISIBILITY from './visibility';
+import Button from 'common/button/Button';
 
 const countSectionWords = sections =>
   R.reduce(
@@ -30,19 +29,16 @@ const countSectionWords = sections =>
     sections,
   );
 
-const ChildrenOnMaskBottom = ({ visibility, totalWords, originalLink }) => {
+const ChildrenOnMaskBottom = ({ visibility, totalWords, onExpand }) => {
   switch (visibility) {
     case VISIBILITY.LOCKED:
       return `總共 ${formatCommaSeparatedNumber(totalWords)} 字`;
 
     case VISIBILITY.COLLAPSED:
       return (
-        <Link
-          className={cn('buttonCircleM', 'buttonHollowBlack')}
-          to={originalLink}
-        >
+        <Button circleSize="m" btnStyle="hollowBlack" onClick={onExpand}>
           查看詳細
-        </Link>
+        </Button>
       );
 
     default:
@@ -51,17 +47,21 @@ const ChildrenOnMaskBottom = ({ visibility, totalWords, originalLink }) => {
 };
 
 ChildrenOnMaskBottom.propTypes = {
-  originalLink: PropTypes.string.isRequired,
+  onExpand: PropTypes.func.isRequired,
   totalWords: PropTypes.number.isRequired,
   visibility: PropTypes.string.isRequired,
 };
 
-const Sections = ({ experience, visibility, originalLink }) => {
+const Sections = ({ experience, visibility }) => {
   let toHide = false;
   let currentTotalWords = 0;
   const totalWords = countSectionWords(experience.sections);
+  const [hasExpanded, setExpanded] = useState(false);
+  const handleExpand = useCallback(() => {
+    setExpanded(true);
+  }, []);
 
-  if (visibility !== VISIBILITY.VISIBLE) {
+  if (visibility !== VISIBILITY.VISIBLE && !hasExpanded) {
     return (
       <div>
         {experience.sections &&
@@ -82,7 +82,7 @@ const Sections = ({ experience, visibility, originalLink }) => {
                     <ChildrenOnMaskBottom
                       visibility={visibility}
                       totalWords={totalWords}
-                      originalLink={originalLink}
+                      onExpand={handleExpand}
                     />
                   }
                 >
@@ -114,7 +114,6 @@ const Sections = ({ experience, visibility, originalLink }) => {
 
 Sections.propTypes = {
   experience: PropTypes.object.isRequired,
-  originalLink: PropTypes.string.isRequired,
   visibility: PropTypes.string.isRequired,
 };
 
@@ -136,11 +135,7 @@ const Article = ({
       />
       <section className={styles.main}>
         <div className={styles.article}>
-          <Sections
-            experience={experience}
-            visibility={visibility}
-            originalLink={originalLink}
-          />
+          <Sections experience={experience} visibility={visibility} />
         </div>
         <div>
           {experience.type === 'interview' &&
