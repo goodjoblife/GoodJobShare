@@ -1,17 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import usePermission from 'hooks/usePermission';
 import Article from 'components/ExperienceDetail/Article';
 import { Wrapper } from 'common/base';
 import MessageBoard from '../ExperienceDetail/MessageBoard';
 import * as VISIBILITY from 'components/ExperienceDetail/Article/visibility';
+import { useTraceEvent } from 'hooks/viewLog';
+import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
+import { useWindowScroll, useWindowSize } from 'react-use';
 
 const Experience = ({ experience }) => {
   const [, , canViewPublishId] = usePermission();
   const [messageExpanded, setMessageExpanded] = useState(false);
 
+  const { height: windowHeight } = useWindowSize();
+  const { y: windowY } = useWindowScroll();
+  const ref = useRef(null);
+
+  const [hasTracedPreview, setTracedPreview] = useState(false);
+  const tracePreview = useTraceEvent({
+    contentId: experience.id,
+    contentType: CONTENT_TYPE.EXPERIENCE,
+    action: ACTION.PREVIEW_ACTION,
+  });
+
+  useEffect(() => {
+    if (hasTracedPreview) return;
+
+    const elementBottom = ref.current.offsetTop + ref.current.scrollHeight;
+    if (windowY > elementBottom - windowHeight) {
+      tracePreview();
+      setTracedPreview(true);
+    }
+  }, [windowY, windowHeight, experience.id, tracePreview, hasTracedPreview]);
+
   return (
-    <>
+    <div ref={ref}>
       <Article
         experience={experience}
         visibility={
@@ -27,7 +51,7 @@ const Experience = ({ experience }) => {
           <MessageBoard experienceId={experience.id} />
         </Wrapper>
       )}
-    </>
+    </div>
   );
 };
 
