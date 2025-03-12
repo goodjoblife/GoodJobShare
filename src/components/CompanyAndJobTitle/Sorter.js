@@ -7,7 +7,7 @@ import Select from 'common/form/Select';
 
 export const SORT_BY = {
   LATEST_FIRST: 'LATEST_FIRST',
-  FEATURED: 'FEATURED',
+  FEATURED_FIRST: 'FEATURED_FIRST',
 };
 
 export const sortByFromQuerySelector = query =>
@@ -31,7 +31,7 @@ export const useSortByFromQuery = () => {
 };
 
 const options = [
-  { label: '近期精選貼文', value: SORT_BY.FEATURED },
+  { label: '近期精選貼文', value: SORT_BY.FEATURED_FIRST },
   { label: '按照時間排序(新->舊)', value: SORT_BY.LATEST_FIRST },
 ];
 
