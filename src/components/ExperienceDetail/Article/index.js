@@ -52,14 +52,15 @@ ChildrenOnMaskBottom.propTypes = {
   visibility: PropTypes.string.isRequired,
 };
 
-const Sections = ({ experience, visibility }) => {
+const Sections = ({ experience, visibility, onExpand }) => {
   let toHide = false;
   let currentTotalWords = 0;
   const totalWords = countSectionWords(experience.sections);
   const [hasExpanded, setExpanded] = useState(false);
   const handleExpand = useCallback(() => {
     setExpanded(true);
-  }, []);
+    onExpand();
+  }, [onExpand]);
 
   if (visibility !== VISIBILITY.VISIBLE && !hasExpanded) {
     return (
@@ -114,6 +115,7 @@ const Sections = ({ experience, visibility }) => {
 
 Sections.propTypes = {
   experience: PropTypes.object.isRequired,
+  onExpand: PropTypes.func.isRequired,
   visibility: PropTypes.string.isRequired,
 };
 
@@ -121,6 +123,7 @@ const Article = ({
   experience,
   visibility,
   onClickMsgButton,
+  onExpand,
   originalLink,
 }) => {
   // Get share link object according to Google Optimize parameters
@@ -135,7 +138,11 @@ const Article = ({
       />
       <section className={styles.main}>
         <div className={styles.article}>
-          <Sections experience={experience} visibility={visibility} />
+          <Sections
+            experience={experience}
+            visibility={visibility}
+            onExpand={onExpand}
+          />
         </div>
         <div>
           {experience.type === 'interview' &&
@@ -171,6 +178,7 @@ const Article = ({
 Article.propTypes = {
   experience: PropTypes.object.isRequired,
   onClickMsgButton: PropTypes.func.isRequired,
+  onExpand: PropTypes.func.isRequired,
   originalLink: PropTypes.string,
   visibility: PropTypes.string.isRequired,
 };
