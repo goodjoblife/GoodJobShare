@@ -84,13 +84,12 @@ const setOverview = (jobTitle, box) => ({
   box,
 });
 
-export const queryJobTitleOverview = jobTitle => async (dispatch, getState) => {
+export const queryJobTitleOverview = (jobTitle, force = false) => async (
+  dispatch,
+  getState,
+) => {
   const box = jobTitleOverviewBoxSelectorByName(jobTitle)(getState());
-  if (
-    isFetching(box)
-    // TODO: isFetched 與其他條件判斷會導致無法重整，先註解，要詢問如何將狀態改為 isUnfetched、修改條件判斷
-    // || isFetched(box)
-  ) {
+  if (!force && (isFetching(box) || isFetched(box))) {
     return;
   }
 
@@ -180,23 +179,20 @@ const setTimeAndSalary = (jobTitle, box) => ({
   box,
 });
 
-export const queryJobTitleTimeAndSalary = ({
-  companyName,
-  jobTitle,
-  start,
-  limit,
-}) => async (dispatch, getState) => {
+export const queryJobTitleTimeAndSalary = (
+  { companyName, jobTitle, start, limit },
+  force = false,
+) => async (dispatch, getState) => {
   const box = jobTitleTimeAndSalaryBoxSelectorByName(jobTitle)(getState());
   if (
-    isFetching(box)
-    // TODO: isFetched 與其他條件判斷會導致無法重整，先註解，要詢問如何將狀態改為 isUnfetched、修改條件判斷
-    // ||
-    // isFetched(box) &&
-    // box.data &&
-    //   box.data.name === jobTitle &&
-    //   box.data.companyName === companyName &&
-    //   box.data.start === start &&
-    //   box.data.limit === limit,
+    !force &&
+    (isFetching(box) ||
+      (isFetched(box) &&
+        box.data &&
+        box.data.name === jobTitle &&
+        box.data.companyName === companyName &&
+        box.data.start === start &&
+        box.data.limit === limit))
   ) {
     return;
   }

@@ -39,6 +39,7 @@ import {
   queryJobTitleTimeAndSalary,
 } from 'actions/jobTitle';
 import useJobTitle from 'pages/JobTitle/useJobTitle';
+import { useParams, useLocation } from 'react-router-dom';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
@@ -173,6 +174,43 @@ const WorkingHourTable = ({ data, pageType }) => {
   const [searchText] = useSearchTextFromQuery();
   const page = usePage();
   const jobTitle = useJobTitle();
+  console.log('pageType', pageType);
+  // const location = useLocation();
+  // const isUrlHasSalaryWorkTimes = location.pathname.includes(
+  //   'salary-work-times',
+  // );
+  // const isUrlHasJobTitle = location.pathname.includes('job-title');
+  // const isUrlHasCompanies = location.pathname.includes('companies');
+  // const isJobTitleOverviewPage = isUrlHasJobTitle && !isUrlHasSalaryWorkTimes;
+  // const isJobTitleSalaryWorkTimesPage =
+  //   isUrlHasJobTitle && isUrlHasSalaryWorkTimes;
+  // const isCompanyOverviewPage = isUrlHasCompanies && !isUrlHasSalaryWorkTimes;
+  // const isCompanySalaryWorkTimesPage =
+  //   isUrlHasCompanies && isUrlHasSalaryWorkTimes;
+
+  // const location = useLocation();
+  // const { pathname } = location;
+
+  // const urlSegments = {
+  //   hasSalaryWorkTimes: pathname.includes('salary-work-times'),
+  //   hasJobTitle: pathname.includes('job-title'),
+  //   hasCompanies: pathname.includes('companies'),
+  // };
+
+  // const pageType = {
+  //   isJobTitleOverview: urlSegments.hasJobTitle && !urlSegments.hasSalaryWorkTimes,
+  //   isJobTitleSalaryWorkTimes: urlSegments.hasJobTitle && urlSegments.hasSalaryWorkTimes,
+  //   isCompanyOverview: urlSegments.hasCompanies && !urlSegments.hasSalaryWorkTimes,
+  //   isCompanySalaryWorkTimes: urlSegments.hasCompanies && urlSegments.hasSalaryWorkTimes,
+  // };
+
+  //       const {
+  //   isJobTitleOverview,
+  //   isJobTitleSalaryWorkTimes,
+  //   isCompanyOverview,
+  //   isCompanySalaryWorkTimes
+  // } = pageType;
+
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
 
@@ -218,29 +256,44 @@ const WorkingHourTable = ({ data, pageType }) => {
     [canViewPublishId, fromCol, toCol],
   );
 
-  // 想先解決 isFetched 的問題，再來重構 handleCreateReport
   const handleCreateReport = () => {
-    // fetch company data
-    dispatch(queryCompanyOverview(companyName));
-    dispatch(
-      queryCompanyTimeAndSalary({
-        companyName,
-        jobTitle: searchText || undefined,
-        start,
-        limit,
-      }),
-    );
+    const force = true;
 
-    // fetch jobTitle data
-    dispatch(queryJobTitleOverview(jobTitle));
-    dispatch(
-      queryJobTitleTimeAndSalary({
-        jobTitle,
-        companyName: searchText || undefined,
-        start,
-        limit,
-      }),
-    );
+    if (isCompanyOverviewPage) {
+      dispatch(queryCompanyOverview(companyName, force));
+    }
+
+    if (isCompanySalaryWorkTimesPage) {
+      dispatch(
+        queryCompanyTimeAndSalary(
+          {
+            companyName,
+            jobTitle: searchText || undefined,
+            start,
+            limit,
+          },
+          force,
+        ),
+      );
+    }
+
+    if (isJobTitleOverviewPage) {
+      dispatch(queryJobTitleOverview(jobTitle, force));
+    }
+
+    if (isJobTitleSalaryWorkTimesPage) {
+      dispatch(
+        queryJobTitleTimeAndSalary(
+          {
+            jobTitle,
+            companyName: searchText || undefined,
+            start,
+            limit,
+          },
+          force,
+        ),
+      );
+    }
   };
 
   return (
