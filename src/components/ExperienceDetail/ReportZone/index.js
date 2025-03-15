@@ -30,33 +30,42 @@ const ReportZone = ({
     [],
   );
 
-  const handleShowReportList = () => {
+  const handleShowReportList = useCallback(() => {
     setModalClosableOnClickOutside(true);
     setModalOpen(true, MODAL_TYPE.REPORT_LIST);
-  };
+  }, [setModalOpen]);
 
-  const handleShowReportForm = () => {
+  const handleShowReportForm = useCallback(() => {
     setModalClosableOnClickOutside(false);
     setModalOpen(true, MODAL_TYPE.REPORT_FORM);
-  };
+  }, [setModalOpen]);
 
-  const handleReportFormError = payload => {
-    setModalClosableOnClickOutside(false);
-    setModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, payload);
-  };
+  const handleReportFormError = useCallback(
+    payload => {
+      setModalClosableOnClickOutside(false);
+      setModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, payload);
+    },
+    [setModalOpen],
+  );
 
-  const handleReportFormSuccess = payload => {
-    setModalClosableOnClickOutside(false);
-    setModalOpen(true, MODAL_TYPE.REPORT_SUCCESS, payload);
-  };
+  const handleReportFormSuccess = useCallback(
+    payload => {
+      setModalClosableOnClickOutside(false);
+      setModalOpen(true, MODAL_TYPE.REPORT_SUCCESS, payload);
+    },
+    [setModalOpen],
+  );
 
-  const handleCloseReport = modalType => {
-    if (modalType === MODAL_TYPE.REPORT_SUCCESS) {
-      onCreateReport();
-    }
-    setModalClosableOnClickOutside(true);
-    setModalOpen(false, MODAL_TYPE.REPORT_LIST);
-  };
+  const handleCloseReport = useCallback(
+    modalType => {
+      if (modalType === MODAL_TYPE.REPORT_SUCCESS) {
+        onCreateReport();
+      }
+      setModalClosableOnClickOutside(true);
+      setModalOpen(false, MODAL_TYPE.REPORT_LIST);
+    },
+    [onCreateReport, setModalOpen],
+  );
 
   return (
     <>

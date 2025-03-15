@@ -214,7 +214,7 @@ const WorkingHourTable = ({ data, pageType, tabType }) => {
     [canViewPublishId, fromCol, toCol],
   );
 
-  const handleCreateReport = () => {
+  const handleCreateReport = useCallback(() => {
     const force = true;
     const isCompanyPage = pageType === pageTypeMapping.COMPANY;
     const isJobTitlePage = pageType === pageTypeMapping.JOB_TITLE;
@@ -255,12 +255,24 @@ const WorkingHourTable = ({ data, pageType, tabType }) => {
     if (isJobTitlePage) {
       return dispatch(queryJobTitleOverview(jobTitle, force));
     }
-  };
+  }, [
+    pageType,
+    tabType,
+    dispatch,
+    companyName,
+    searchText,
+    start,
+    limit,
+    jobTitle,
+  ]);
 
   return (
     <Table
       className={styles.companyTable}
-      data={data.map(row => ({ ...row, handleCreateReport }))}
+      data={useMemo(() => data.map(row => ({ ...row, handleCreateReport })), [
+        data,
+        handleCreateReport,
+      ])}
       primaryKey="created_at"
       postProcessRows={postProcessRows}
     >
