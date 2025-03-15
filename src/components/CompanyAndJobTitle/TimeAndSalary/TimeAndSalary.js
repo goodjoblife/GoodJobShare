@@ -5,6 +5,7 @@ import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
 import NotFoundStatus from 'common/routing/NotFound';
 import usePermission from 'hooks/usePermission';
+import { tabType as TAB_TYPE } from 'constants/companyJobTitle';
 
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
@@ -31,7 +32,11 @@ const TimeAndSalary = ({
     <Section Tag="main" paddingBottom>
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
-          <WorkingHourBlock data={salaryWorkTimes} pageType={pageType} />
+          <WorkingHourBlock
+            data={salaryWorkTimes}
+            pageType={pageType}
+            tabType={TAB_TYPE.TIME_AND_SALARY}
+          />
           <Pagination
             totalCount={totalCount}
             unit={pageSize}

@@ -39,7 +39,7 @@ import {
   queryJobTitleTimeAndSalary,
 } from 'actions/jobTitle';
 import useJobTitle from 'pages/JobTitle/useJobTitle';
-import { useParams, useLocation } from 'react-router-dom';
+import { tabType as TAB_TYPE } from 'constants/companyJobTitle';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
@@ -129,10 +129,7 @@ const columnProps = [
   {
     className: styles.colHourly,
     title: '估計時薪',
-    dataField: R.compose(
-      formatWage,
-      R.prop('estimated_hourly_wage'),
-    ),
+    dataField: R.compose(formatWage, R.prop('estimated_hourly_wage')),
     alignRight: true,
     Children: SalaryHeader,
     permissionRequiredEnd: true,
@@ -140,10 +137,7 @@ const columnProps = [
   {
     className: styles.colDataTime,
     title: '參考時間',
-    dataField: R.compose(
-      formatDate,
-      R.prop('data_time'),
-    ),
+    dataField: R.compose(formatDate, R.prop('data_time')),
     Children: TimeHeader,
   },
   {
@@ -166,7 +160,7 @@ const columnProps = [
   },
 ];
 
-const WorkingHourTable = ({ data, pageType }) => {
+const WorkingHourTable = ({ data, pageType, tabType }) => {
   const [isInfoSalaryModalOpen, setInfoSalaryModalOpen] = useState(false);
   const [isInfoTimeModalOpen, setInfoTiimeModalOpen] = useState(false);
   const dispatch = useDispatch();
@@ -174,42 +168,6 @@ const WorkingHourTable = ({ data, pageType }) => {
   const [searchText] = useSearchTextFromQuery();
   const page = usePage();
   const jobTitle = useJobTitle();
-  console.log('pageType', pageType);
-  // const location = useLocation();
-  // const isUrlHasSalaryWorkTimes = location.pathname.includes(
-  //   'salary-work-times',
-  // );
-  // const isUrlHasJobTitle = location.pathname.includes('job-title');
-  // const isUrlHasCompanies = location.pathname.includes('companies');
-  // const isJobTitleOverviewPage = isUrlHasJobTitle && !isUrlHasSalaryWorkTimes;
-  // const isJobTitleSalaryWorkTimesPage =
-  //   isUrlHasJobTitle && isUrlHasSalaryWorkTimes;
-  // const isCompanyOverviewPage = isUrlHasCompanies && !isUrlHasSalaryWorkTimes;
-  // const isCompanySalaryWorkTimesPage =
-  //   isUrlHasCompanies && isUrlHasSalaryWorkTimes;
-
-  // const location = useLocation();
-  // const { pathname } = location;
-
-  // const urlSegments = {
-  //   hasSalaryWorkTimes: pathname.includes('salary-work-times'),
-  //   hasJobTitle: pathname.includes('job-title'),
-  //   hasCompanies: pathname.includes('companies'),
-  // };
-
-  // const pageType = {
-  //   isJobTitleOverview: urlSegments.hasJobTitle && !urlSegments.hasSalaryWorkTimes,
-  //   isJobTitleSalaryWorkTimes: urlSegments.hasJobTitle && urlSegments.hasSalaryWorkTimes,
-  //   isCompanyOverview: urlSegments.hasCompanies && !urlSegments.hasSalaryWorkTimes,
-  //   isCompanySalaryWorkTimes: urlSegments.hasCompanies && urlSegments.hasSalaryWorkTimes,
-  // };
-
-  //       const {
-  //   isJobTitleOverview,
-  //   isJobTitleSalaryWorkTimes,
-  //   isCompanyOverview,
-  //   isCompanySalaryWorkTimes
-  // } = pageType;
 
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
@@ -258,13 +216,12 @@ const WorkingHourTable = ({ data, pageType }) => {
 
   const handleCreateReport = () => {
     const force = true;
+    const isCompanyPage = pageType === pageTypeMapping.COMPANY;
+    const isJobTitlePage = pageType === pageTypeMapping.JOB_TITLE;
+    const isTimeAndSalary = tabType === TAB_TYPE.TIME_AND_SALARY;
 
-    if (isCompanyOverviewPage) {
-      dispatch(queryCompanyOverview(companyName, force));
-    }
-
-    if (isCompanySalaryWorkTimesPage) {
-      dispatch(
+    if (isCompanyPage && isTimeAndSalary) {
+      return dispatch(
         queryCompanyTimeAndSalary(
           {
             companyName,
@@ -277,12 +234,12 @@ const WorkingHourTable = ({ data, pageType }) => {
       );
     }
 
-    if (isJobTitleOverviewPage) {
-      dispatch(queryJobTitleOverview(jobTitle, force));
+    if (isCompanyPage) {
+      return dispatch(queryCompanyOverview(companyName, force));
     }
 
-    if (isJobTitleSalaryWorkTimesPage) {
-      dispatch(
+    if (isJobTitlePage && isTimeAndSalary) {
+      return dispatch(
         queryJobTitleTimeAndSalary(
           {
             jobTitle,
@@ -293,6 +250,10 @@ const WorkingHourTable = ({ data, pageType }) => {
           force,
         ),
       );
+    }
+
+    if (isJobTitlePage) {
+      return dispatch(queryJobTitleOverview(jobTitle, force));
     }
   };
 
@@ -326,6 +287,7 @@ WorkingHourTable.propTypes = {
     pageTypeMapping.COMPANY,
     pageTypeMapping.JOB_TITLE,
   ]),
+  tabType: PropTypes.oneOf([TAB_TYPE.TIME_AND_SALARY]),
 };
 
 export default WorkingHourTable;
