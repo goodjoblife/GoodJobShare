@@ -38,12 +38,6 @@ const Experience = ({ experience }) => {
   const [, , canViewPublishId] = usePermission();
   const [messageExpanded, setMessageExpanded] = useState(false);
 
-  const traceDetailView = useTraceEvent({
-    contentId: experience.id,
-    contentType: CONTENT_TYPE.EXPERIENCE,
-    action: ACTION.DETAIL_VIEW_ACTION,
-  });
-
   const ref = useTracePreviewRef({ experience });
 
   return (
@@ -56,7 +50,6 @@ const Experience = ({ experience }) => {
             : VISIBILITY.LOCKED
         }
         onClickMsgButton={() => setMessageExpanded(expended => !expended)}
-        onExpand={traceDetailView}
         originalLink={`/experiences/${experience.id}`}
       />
       {messageExpanded && (

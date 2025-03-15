@@ -15,6 +15,8 @@ import { BasicPermissionBlock } from 'common/PermissionBlock';
 import { MAX_WORDS_IF_HIDDEN } from 'constants/hideContent';
 import * as VISIBILITY from './visibility';
 import Button from 'common/button/Button';
+import { useTraceEvent } from 'hooks/viewLog';
+import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
 
 const countSectionWords = sections =>
   R.reduce(
@@ -123,11 +125,16 @@ const Article = ({
   experience,
   visibility,
   onClickMsgButton,
-  onExpand,
   originalLink,
 }) => {
   // Get share link object according to Google Optimize parameters
   const shareLink = useShareLink();
+
+  const traceDetailView = useTraceEvent({
+    contentId: experience.id,
+    contentType: CONTENT_TYPE.EXPERIENCE,
+    action: ACTION.DETAIL_VIEW_ACTION,
+  });
 
   return (
     <div className={styles.container}>
@@ -141,7 +148,7 @@ const Article = ({
           <Sections
             experience={experience}
             visibility={visibility}
-            onExpand={onExpand}
+            onExpand={traceDetailView}
           />
         </div>
         <div>
@@ -178,7 +185,6 @@ const Article = ({
 Article.propTypes = {
   experience: PropTypes.object.isRequired,
   onClickMsgButton: PropTypes.func.isRequired,
-  onExpand: PropTypes.func.isRequired,
   originalLink: PropTypes.string,
   visibility: PropTypes.string.isRequired,
 };
