@@ -37,7 +37,6 @@ const useTracePreviewRef = ({ experience }) => {
 const Experience = ({ experience }) => {
   const [, , canViewPublishId] = usePermission();
   const [messageExpanded, setMessageExpanded] = useState(false);
-
   const ref = useTracePreviewRef({ experience });
 
   return (
