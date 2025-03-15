@@ -9,16 +9,7 @@ import { useTraceEvent } from 'hooks/viewLog';
 import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
 import { useWindowScroll, useWindowSize } from 'react-use';
 
-const Experience = ({ experience }) => {
-  const [, , canViewPublishId] = usePermission();
-  const [messageExpanded, setMessageExpanded] = useState(false);
-
-  const traceDetailView = useTraceEvent({
-    contentId: experience.id,
-    contentType: CONTENT_TYPE.EXPERIENCE,
-    action: ACTION.DETAIL_VIEW_ACTION,
-  });
-
+const useTracePreviewRef = ({ experience }) => {
   const { height: windowHeight } = useWindowSize();
   const { y: windowY } = useWindowScroll();
   const ref = useRef(null);
@@ -39,6 +30,21 @@ const Experience = ({ experience }) => {
       setTracedPreview(true);
     }
   }, [windowY, windowHeight, experience.id, tracePreview, hasTracedPreview]);
+
+  return ref;
+};
+
+const Experience = ({ experience }) => {
+  const [, , canViewPublishId] = usePermission();
+  const [messageExpanded, setMessageExpanded] = useState(false);
+
+  const traceDetailView = useTraceEvent({
+    contentId: experience.id,
+    contentType: CONTENT_TYPE.EXPERIENCE,
+    action: ACTION.DETAIL_VIEW_ACTION,
+  });
+
+  const ref = useTracePreviewRef({ experience });
 
   return (
     <div ref={ref}>
