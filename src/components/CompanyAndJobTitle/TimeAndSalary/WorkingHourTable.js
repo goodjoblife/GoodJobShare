@@ -234,13 +234,13 @@ const WorkingHourTable = ({ data, pageType, tabType }) => {
             start,
             limit,
           },
-          force,
+          { force },
         ),
       );
     }
 
     if (isCompanyPage) {
-      return dispatch(queryCompanyOverview(companyName, force));
+      return dispatch(queryCompanyOverview(companyName, { force }));
     }
 
     if (isJobTitlePage && isTimeAndSalary) {
@@ -252,13 +252,13 @@ const WorkingHourTable = ({ data, pageType, tabType }) => {
             start,
             limit,
           },
-          force,
+          { force },
         ),
       );
     }
 
     if (isJobTitlePage) {
-      return dispatch(queryJobTitleOverview(jobTitle, force));
+      return dispatch(queryJobTitleOverview(jobTitle, { force }));
     }
   }, [
     pageType,
@@ -271,13 +271,15 @@ const WorkingHourTable = ({ data, pageType, tabType }) => {
     jobTitle,
   ]);
 
+  data = useMemo(() => data.map(row => ({ ...row, handleCreateReport })), [
+    data,
+    handleCreateReport,
+  ]);
+
   return (
     <Table
       className={styles.companyTable}
-      data={useMemo(() => data.map(row => ({ ...row, handleCreateReport })), [
-        data,
-        handleCreateReport,
-      ])}
+      data={data}
       primaryKey="created_at"
       postProcessRows={postProcessRows}
     >

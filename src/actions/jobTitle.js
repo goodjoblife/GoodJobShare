@@ -84,10 +84,10 @@ const setOverview = (jobTitle, box) => ({
   box,
 });
 
-export const queryJobTitleOverview = (jobTitle, force = false) => async (
-  dispatch,
-  getState,
-) => {
+export const queryJobTitleOverview = (
+  jobTitle,
+  { force = false } = {},
+) => async (dispatch, getState) => {
   const box = jobTitleOverviewBoxSelectorByName(jobTitle)(getState());
   if (!force && (isFetching(box) || isFetched(box))) {
     return;
@@ -181,7 +181,7 @@ const setTimeAndSalary = (jobTitle, box) => ({
 
 export const queryJobTitleTimeAndSalary = (
   { companyName, jobTitle, start, limit },
-  force = false,
+  { force = false } = {},
 ) => async (dispatch, getState) => {
   const box = jobTitleTimeAndSalaryBoxSelectorByName(jobTitle)(getState());
   if (

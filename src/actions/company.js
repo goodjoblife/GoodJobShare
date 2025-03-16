@@ -126,10 +126,10 @@ const setOverview = (companyName, box) => ({
   box,
 });
 
-export const queryCompanyOverview = (companyName, force = false) => async (
-  dispatch,
-  getState,
-) => {
+export const queryCompanyOverview = (
+  companyName,
+  { force = false } = {},
+) => async (dispatch, getState) => {
   const box = companyOverviewBoxSelectorByName(companyName)(getState());
   if (!force && (isFetching(box) || isFetched(box))) {
     return;
@@ -233,7 +233,7 @@ const setInterviewExperiences = (companyName, box) => ({
 
 export const queryCompanyTimeAndSalary = (
   { companyName, jobTitle, start, limit },
-  force = false,
+  { force = false } = {},
 ) => async (dispatch, getState) => {
   const box = companyTimeAndSalaryBoxSelectorByName(companyName)(getState());
   if (
