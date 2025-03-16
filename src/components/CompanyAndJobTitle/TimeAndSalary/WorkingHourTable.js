@@ -221,44 +221,48 @@ const WorkingHourTable = ({ data, pageType, tabType }) => {
 
   const handleCreateReport = useCallback(() => {
     const force = true;
-    const isCompanyPage = pageType === pageTypeMapping.COMPANY;
-    const isJobTitlePage = pageType === pageTypeMapping.JOB_TITLE;
-    const isTimeAndSalary = tabType === TAB_TYPE.TIME_AND_SALARY;
 
-    if (isCompanyPage && isTimeAndSalary) {
-      return dispatch(
-        queryCompanyTimeAndSalary(
-          {
-            companyName,
-            jobTitle: searchText || undefined,
-            start,
-            limit,
-          },
-          { force },
-        ),
-      );
-    }
-
-    if (isCompanyPage) {
-      return dispatch(queryCompanyOverview(companyName, { force }));
-    }
-
-    if (isJobTitlePage && isTimeAndSalary) {
-      return dispatch(
-        queryJobTitleTimeAndSalary(
-          {
-            jobTitle,
-            companyName: searchText || undefined,
-            start,
-            limit,
-          },
-          { force },
-        ),
-      );
-    }
-
-    if (isJobTitlePage) {
-      return dispatch(queryJobTitleOverview(jobTitle, { force }));
+    switch (pageType) {
+      case pageTypeMapping.COMPANY:
+        switch (tabType) {
+          case TAB_TYPE.TIME_AND_SALARY:
+            return dispatch(
+              queryCompanyTimeAndSalary(
+                {
+                  companyName,
+                  jobTitle: searchText || undefined,
+                  start,
+                  limit,
+                },
+                { force },
+              ),
+            );
+          case TAB_TYPE.OVERVIEW:
+            return dispatch(queryCompanyOverview(companyName, { force }));
+          default:
+            return null;
+        }
+      case pageTypeMapping.JOB_TITLE:
+        switch (tabType) {
+          case TAB_TYPE.TIME_AND_SALARY:
+            return dispatch(
+              queryJobTitleTimeAndSalary(
+                {
+                  jobTitle,
+                  companyName: searchText || undefined,
+                  start,
+                  limit,
+                },
+                { force },
+              ),
+            );
+          case TAB_TYPE.OVERVIEW:
+            return dispatch(queryJobTitleOverview(jobTitle, { force }));
+          default:
+            return null;
+        }
+      default:
+        return null;
     }
   }, [
     pageType,
@@ -306,7 +310,7 @@ WorkingHourTable.propTypes = {
     pageTypeMapping.COMPANY,
     pageTypeMapping.JOB_TITLE,
   ]),
-  tabType: PropTypes.oneOf([TAB_TYPE.TIME_AND_SALARY]),
+  tabType: PropTypes.oneOf([TAB_TYPE.OVERVIEW, TAB_TYPE.TIME_AND_SALARY]),
 };
 
 export default WorkingHourTable;

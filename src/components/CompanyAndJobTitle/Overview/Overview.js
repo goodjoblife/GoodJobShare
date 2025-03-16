@@ -57,7 +57,11 @@ const Overview = ({
             />
           )}
         />
-        <WorkingHourTable data={salaryWorkTimes} pageType={pageType} />
+        <WorkingHourTable
+          data={salaryWorkTimes}
+          pageType={pageType}
+          tabType={TAB_TYPE.OVERVIEW}
+        />
       </SnippetBlock>
       <SnippetBlock
         title="評價"
