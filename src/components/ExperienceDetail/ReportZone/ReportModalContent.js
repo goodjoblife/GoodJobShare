@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ApiErrorFeedback from './ReportForm/ApiErrorFeedback';
 import ReportSuccessFeedback from './ReportForm/ReportSuccessFeedback';
@@ -19,11 +19,6 @@ const ReportModalContent = ({
   onReportFormError,
   onReportFormSuccess,
 }) => {
-  const handleCloseReport = useCallback(() => onCloseReport(modalType), [
-    onCloseReport,
-    modalType,
-  ]);
-
   switch (modalType) {
     case MODAL_TYPE.REPORT_LIST:
       return (
@@ -37,7 +32,7 @@ const ReportModalContent = ({
       return (
         <ReportForm
           reportType={reportType}
-          close={onCloseReport}
+          close={() => onCloseReport(modalType)}
           id={id}
           onApiError={payload => onReportFormError(payload)}
           onSuccess={payload => onReportFormSuccess(payload)}
@@ -53,7 +48,9 @@ const ReportModalContent = ({
       );
 
     case MODAL_TYPE.REPORT_SUCCESS:
-      return <ReportSuccessFeedback buttonClick={handleCloseReport} />;
+      return (
+        <ReportSuccessFeedback buttonClick={() => onCloseReport(modalType)} />
+      );
 
     default:
       return null;
