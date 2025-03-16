@@ -129,7 +129,10 @@ const columnProps = [
   {
     className: styles.colHourly,
     title: '估計時薪',
-    dataField: R.compose(formatWage, R.prop('estimated_hourly_wage')),
+    dataField: R.compose(
+      formatWage,
+      R.prop('estimated_hourly_wage'),
+    ),
     alignRight: true,
     Children: SalaryHeader,
     permissionRequiredEnd: true,
@@ -137,7 +140,10 @@ const columnProps = [
   {
     className: styles.colDataTime,
     title: '參考時間',
-    dataField: R.compose(formatDate, R.prop('data_time')),
+    dataField: R.compose(
+      formatDate,
+      R.prop('data_time'),
+    ),
     Children: TimeHeader,
   },
   {
