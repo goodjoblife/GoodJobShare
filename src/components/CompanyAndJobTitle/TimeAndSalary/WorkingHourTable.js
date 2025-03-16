@@ -171,10 +171,9 @@ const WorkingHourTable = ({ data, pageType, tabType }) => {
   const [isInfoTimeModalOpen, setInfoTiimeModalOpen] = useState(false);
   const dispatch = useDispatch();
   const companyName = useCompanyName();
+  const jobTitle = useJobTitle();
   const [searchText] = useSearchTextFromQuery();
   const page = usePage();
-  const jobTitle = useJobTitle();
-
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
 
