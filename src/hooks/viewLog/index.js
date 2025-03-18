@@ -37,7 +37,6 @@ export const useTraceEvent = ({ contentId, contentType, action }) => {
   return useCallback(async () => {
     const referrer = window.location.href;
     try {
-      console.log(`Trace ${action} ${contentId} ${contentType} ${referrer}`);
       await traceEvent({ action, contentId, contentType, referrer });
     } catch (err) {
       console.error(`Failed to trace ${action} ${contentId}: ${err}`);
