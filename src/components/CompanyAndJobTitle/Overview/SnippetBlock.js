@@ -5,6 +5,7 @@ import cn from 'classnames';
 
 import EmptyView from '../EmptyView';
 import styles from './Overview.module.css';
+import { Heading } from 'common/base';
 
 const SnippetBlock = ({
   title,
@@ -17,7 +18,9 @@ const SnippetBlock = ({
   tabType,
 }) => (
   <div className={styles.snippet}>
-    <div className={cn(styles.title, styles.aboveCard)}>{title}</div>
+    <Heading className={cn(styles.title, styles.aboveCard)} Tag="h2">
+      {title}
+    </Heading>
     {isEmpty ? (
       <EmptyView tabType={tabType} pageName={pageName} pageType={pageType} />
     ) : (

@@ -14,3 +14,4 @@ services:
         - RAZZLE_TAP_PAY_APP_ID=125271
         - RAZZLE_TAP_PAY_APP_KEY=app_WBWcR9mkiSMUQ3qZV5tUidkq7vfamUzmdWi5QR33ksT6ttbiZ9BJxbz5Fvma
         - RAZZLE_TAP_PAY_SERVER_TYPE=sandbox
+        - RAZZLE_ORIGIN=https://www-dev.goodjob.life

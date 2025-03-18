@@ -91,7 +91,7 @@ const ExperienceEntry = ({
         </div>
 
         <Heading
-          Tag="h2"
+          Tag="h3"
           size={size === 'l' ? 'sl' : 'sm'}
           className={styles.heading}
         >

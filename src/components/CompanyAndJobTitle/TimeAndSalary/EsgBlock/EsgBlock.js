@@ -8,6 +8,7 @@ import Card from 'common/Card';
 import Info from 'common/icons/Info';
 import styles from './EsgBlock.module.css';
 import overviewStyles from '../../Overview/Overview.module.css';
+import { formatNumberWithSign } from 'utils/stringUtil';
 
 const EsgItemBlock = ({
   className,
@@ -24,15 +25,24 @@ const EsgItemBlock = ({
       <Info className={styles.icon} />
     </div>
     <div className={styles.data}>
-      <span className={styles.value}>{value}</span> {unit}
+      <span className={styles.value}>{value.toFixed(1)}</span> {unit}
     </div>
     <div
       className={styles.caption}
       style={{ visibility: valueCompared ? 'visible' : 'hidden' }}
     >
       與同業相比
-      <span className={styles.value}>
-        {(((value - valueCompared) / valueCompared) * 100).toFixed(0)}%
+      <span
+        className={cn(
+          styles.value,
+          value >= valueCompared ? styles.positive : styles.negative,
+        )}
+      >
+        {formatNumberWithSign(
+          ((value - valueCompared) / valueCompared) * 100,
+          0,
+        )}
+        %
       </span>
     </div>
   </Card>
@@ -87,7 +97,9 @@ const EsgBlock = ({
               title="員工薪資平均數"
               year={avgSalaryStatisticsItem.year}
               value={avgSalaryStatisticsItem.average / 10000}
-              valueCompared={avgSalaryStatisticsItem.sameIndustryAverage}
+              valueCompared={
+                avgSalaryStatisticsItem.sameIndustryAverage / 10000
+              }
               unit="萬 / 年"
             />
           )}
@@ -98,7 +110,7 @@ const EsgBlock = ({
               year={nonManagerAvgSalaryStatisticsItem.year}
               value={nonManagerAvgSalaryStatisticsItem.average / 10000}
               valueCompared={
-                nonManagerAvgSalaryStatisticsItem.sameIndustryAverage
+                nonManagerAvgSalaryStatisticsItem.sameIndustryAverage / 10000
               }
               unit="萬 / 年"
             />
