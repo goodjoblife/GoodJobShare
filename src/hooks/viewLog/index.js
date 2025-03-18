@@ -28,18 +28,14 @@ export const useViewSalaryWorkTimes = () => {
 
 export const useTraceEvent = ({ contentId, contentType, action }) => {
   const token = useToken();
-  const traceEvent = useCallback(
-    ({ action, contentId, contentType, referrer }) =>
-      traceEventApi({ token, action, contentId, contentType, referrer }),
-    [token],
-  );
-
-  return useCallback(async () => {
+  const traceEvent = useCallback(async () => {
     const referrer = window.location.href;
     try {
-      await traceEvent({ action, contentId, contentType, referrer });
+      await traceEventApi({ token, action, contentId, contentType, referrer });
     } catch (err) {
       console.error(`Failed to trace ${action} ${contentId}: ${err}`);
     }
-  }, [traceEvent, action, contentId, contentType]);
+  }, [token, action, contentId, contentType]);
+
+  return traceEvent;
 };
