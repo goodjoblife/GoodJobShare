@@ -39,3 +39,9 @@
     display: none;
   }
 }
+
+.interactive {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

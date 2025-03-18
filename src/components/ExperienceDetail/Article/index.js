@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 
@@ -13,6 +13,8 @@ import QABlock from './QABlock';
 import ReactionZone from './ReactionZone';
 import { BasicPermissionBlock } from 'common/PermissionBlock';
 import { MAX_WORDS_IF_HIDDEN } from 'constants/hideContent';
+import * as VISIBILITY from './visibility';
+import Button from 'common/button/Button';
 
 const countSectionWords = sections =>
   R.reduce(
@@ -27,72 +29,119 @@ const countSectionWords = sections =>
     sections,
   );
 
-const Article = ({ experience, hideContent, onClickMsgButton }) => {
-  // Get share link object according to Google Optimize parameters
-  const shareLink = useShareLink();
+const ChildrenOnMaskBottom = ({ visibility, totalWords, onExpand }) => {
+  switch (visibility) {
+    case VISIBILITY.LOCKED:
+      return `總共 ${formatCommaSeparatedNumber(totalWords)} 字`;
 
-  const renderSections = () => {
-    let toHide = false;
-    let currentTotalWords = 0;
-    const totalWords = countSectionWords(experience.sections);
-
-    if (hideContent) {
+    case VISIBILITY.COLLAPSED:
       return (
-        <div>
-          {experience.sections &&
-            experience.sections.map(({ subtitle, content }, idx) => {
-              if (toHide) {
-                return null;
-              }
-              currentTotalWords += content.length + subtitle.length;
-              if (currentTotalWords > MAX_WORDS_IF_HIDDEN) {
-                toHide = true;
-                const showLength =
-                  content.length - (currentTotalWords - MAX_WORDS_IF_HIDDEN);
-                const newContent = `${content.substring(0, showLength)}...`;
-                return (
-                  <GradientMask
-                    key={idx}
-                    childrenOnMaskBottom={`總共 ${formatCommaSeparatedNumber(
-                      totalWords,
-                    )} 字`}
-                  >
-                    <SectionBlock subtitle={subtitle} content={newContent} />
-                  </GradientMask>
-                );
-              }
-              return (
-                <SectionBlock key={idx} subtitle={subtitle} content={content} />
-              );
-            })}
-        </div>
+        <Button circleSize="m" btnStyle="hollowBlack" onClick={onExpand}>
+          查看詳細
+        </Button>
       );
-    }
+
+    default:
+      return null;
+  }
+};
+
+ChildrenOnMaskBottom.propTypes = {
+  onExpand: PropTypes.func.isRequired,
+  totalWords: PropTypes.number.isRequired,
+  visibility: PropTypes.string.isRequired,
+};
+
+const Sections = ({ experience, visibility }) => {
+  let toHide = false;
+  let currentTotalWords = 0;
+  const totalWords = countSectionWords(experience.sections);
+  const [hasExpanded, setExpanded] = useState(false);
+  const handleExpand = useCallback(() => {
+    setExpanded(true);
+  }, []);
+
+  if (visibility !== VISIBILITY.VISIBLE && !hasExpanded) {
     return (
       <div>
         {experience.sections &&
-          experience.sections.map(({ subtitle, content, rating }, idx) => (
-            <SectionBlock
-              key={idx}
-              subtitle={subtitle}
-              content={content}
-              rating={rating}
-            />
-          ))}
+          experience.sections.map(({ subtitle, content }, idx) => {
+            if (toHide) {
+              return null;
+            }
+            currentTotalWords += content.length + subtitle.length;
+            if (currentTotalWords > MAX_WORDS_IF_HIDDEN) {
+              toHide = true;
+              const showLength =
+                content.length - (currentTotalWords - MAX_WORDS_IF_HIDDEN);
+              const newContent = `${content.substring(0, showLength)}...`;
+              return (
+                <GradientMask
+                  key={idx}
+                  childrenOnMaskBottom={
+                    <ChildrenOnMaskBottom
+                      visibility={visibility}
+                      totalWords={totalWords}
+                      onExpand={handleExpand}
+                    />
+                  }
+                >
+                  <SectionBlock subtitle={subtitle} content={newContent} />
+                </GradientMask>
+              );
+            }
+            return (
+              <SectionBlock key={idx} subtitle={subtitle} content={content} />
+            );
+          })}
       </div>
     );
-  };
+  }
+  return (
+    <div>
+      {experience.sections &&
+        experience.sections.map(({ subtitle, content, rating }, idx) => (
+          <SectionBlock
+            key={idx}
+            subtitle={subtitle}
+            content={content}
+            rating={rating}
+          />
+        ))}
+    </div>
+  );
+};
+
+Sections.propTypes = {
+  experience: PropTypes.object.isRequired,
+  visibility: PropTypes.string.isRequired,
+};
+
+const Article = ({
+  experience,
+  visibility,
+  onClickMsgButton,
+  originalLink,
+}) => {
+  // Get share link object according to Google Optimize parameters
+  const shareLink = useShareLink();
 
   return (
     <div className={styles.container}>
-      <ArticleInfo experience={experience} hideContent={hideContent} />
+      <ArticleInfo
+        experience={experience}
+        visibility={visibility}
+        originalLink={originalLink}
+      />
       <section className={styles.main}>
-        <div className={styles.article}>{renderSections()}</div>
+        <div className={styles.article}>
+          <Sections experience={experience} visibility={visibility} />
+        </div>
         <div>
           {experience.type === 'interview' &&
           experience.interview_qas &&
           experience.interview_qas.length &&
-          !hideContent ? (
+          visibility === VISIBILITY.VISIBLE ? (
             <div className={styles.qaWrapper}>
               <P size="l" bold>
                 面試問答
@@ -104,7 +153,7 @@ const Article = ({ experience, hideContent, onClickMsgButton }) => {
           ) : null}
         </div>
 
-        {hideContent && (
+        {visibility === VISIBILITY.LOCKED && (
           <BasicPermissionBlock
             to={shareLink}
             rootClassName={styles.permissionBlockArticle}
@@ -121,8 +170,9 @@ const Article = ({ experience, hideContent, onClickMsgButton }) => {
 
 Article.propTypes = {
   experience: PropTypes.object.isRequired,
-  hideContent: PropTypes.bool.isRequired,
   onClickMsgButton: PropTypes.func.isRequired,
+  originalLink: PropTypes.string,
+  visibility: PropTypes.string.isRequired,
 };
 
 export default Article;
