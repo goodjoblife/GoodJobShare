@@ -113,7 +113,12 @@
   .value {
     font-size: 16px;
     font-weight: 700;
-    color: warning-red;
+    &.negative {
+      color: warning-red;
+    }
+    &.positive {
+      color: black;
+    }
   }
 }
 

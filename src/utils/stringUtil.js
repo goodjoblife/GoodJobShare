@@ -28,3 +28,8 @@ export const nthIndexOf = (str, substr, n) => {
 // format: 3000 -> "3,000"
 export const formatCommaSeparatedNumber = num =>
   num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+// 300.0 -> "+300.0"
+export const formatNumberWithSign = (number, decimals) => {
+  return (number > 0 ? '+' : '') + number.toFixed(decimals);
+};

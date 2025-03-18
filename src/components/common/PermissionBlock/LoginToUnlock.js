@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
-import { Heading, P } from 'common/base';
+import { P } from 'common/base';
 import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
 import styles from './PermissionBlock.module.css';
 import linkStyles from 'common/base/Link.module.css';
@@ -18,9 +18,9 @@ const LoginToUnlock = ({ to, onAuthenticatedClick }) => {
   return (
     <React.Fragment>
       <div className={styles.headingContainer}>
-        <Heading size="sl" Tag="h3" center>
+        <P size="xl" center>
           留下一筆資料，馬上{unlockedDescription}
-        </Heading>
+        </P>
       </div>
       <P size="l" className={styles.ctaText}>
         解鎖全站共 {timeAndSalaryCount + experienceCount} 筆薪資、面試資料

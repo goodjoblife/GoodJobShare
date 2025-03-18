@@ -24,7 +24,7 @@ const formatType = type => {
 
 const ExperienceHeading = ({ experience, className }) => (
   <div className={cn(styles.heading, className)}>
-    <P Tag="h2" size="l" className={styles.badge}>
+    <P size="l" className={styles.badge}>
       {experience && formatType(experience.type)}
     </P>
     <Heading size="l">
