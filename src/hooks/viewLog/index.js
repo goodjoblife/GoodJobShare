@@ -1,6 +1,10 @@
 import { useCallback } from 'react';
 import { useToken } from 'hooks/auth';
-import { viewExperiencesApi, viewSalaryWorkTimesApi } from 'apis/viewLogApi';
+import {
+  traceEventApi,
+  viewExperiencesApi,
+  viewSalaryWorkTimesApi,
+} from 'apis/viewLogApi';
 
 export const useViewExperiences = () => {
   const token = useToken();
@@ -20,4 +24,18 @@ export const useViewSalaryWorkTimes = () => {
     },
     [token],
   );
+};
+
+export const useTraceEvent = ({ contentId, contentType, action }) => {
+  const token = useToken();
+  const traceEvent = useCallback(async () => {
+    const referrer = window.location.href;
+    try {
+      await traceEventApi({ token, action, contentId, contentType, referrer });
+    } catch (err) {
+      console.error(`Failed to trace ${action} ${contentId}: ${err}`);
+    }
+  }, [token, action, contentId, contentType]);
+
+  return traceEvent;
 };
