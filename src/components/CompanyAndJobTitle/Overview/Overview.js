@@ -61,7 +61,6 @@ const Overview = ({
         <WorkingHourTable
           data={salaryWorkTimes}
           pageType={pageType}
-          tabType={TAB_TYPE.OVERVIEW}
           onCreateReport={onCreateReport}
         />
       </SnippetBlock>

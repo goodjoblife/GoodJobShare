@@ -15,7 +15,6 @@ import styles from './CompanyAndJobTitleIndex.module.css';
 import { isFetched } from 'utils/fetchBox';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
-import { tabType as TAB_TYPE } from 'constants/companyJobTitle';
 
 const IndexHelmet = ({ pageType, page }) => {
   const title = `所有${pageTypeTranslation[pageType]}資料 - 第${page}頁`;
@@ -66,7 +65,6 @@ const CompanyAndJobTitleIndex = ({
             <WorkingHourBlock
               key={i}
               pageType={pageType}
-              tabType={TAB_TYPE.OVERVIEW}
               name={pageIndex.name}
               businessNumber={pageIndex.businessNumber}
               dataCount={pageIndex.dataCount}

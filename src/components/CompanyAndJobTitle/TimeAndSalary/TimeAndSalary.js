@@ -5,8 +5,6 @@ import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
 import NotFoundStatus from 'common/routing/NotFound';
 import usePermission from 'hooks/usePermission';
-import { tabType as TAB_TYPE } from 'constants/companyJobTitle';
-
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
@@ -36,7 +34,6 @@ const TimeAndSalary = ({
           <WorkingHourBlock
             data={salaryWorkTimes}
             pageType={pageType}
-            tabType={TAB_TYPE.TIME_AND_SALARY}
             onCreateReport={onCreateReport}
           />
           <Pagination
