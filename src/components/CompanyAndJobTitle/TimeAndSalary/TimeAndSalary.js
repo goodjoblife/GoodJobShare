@@ -20,6 +20,7 @@ const TimeAndSalary = ({
   page,
   pageSize,
   totalCount,
+  onCreateReport,
 }) => {
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -36,6 +37,7 @@ const TimeAndSalary = ({
             data={salaryWorkTimes}
             pageType={pageType}
             tabType={TAB_TYPE.TIME_AND_SALARY}
+            onCreateReport={onCreateReport}
           />
           <Pagination
             totalCount={totalCount}
@@ -64,6 +66,7 @@ const TimeAndSalary = ({
 };
 
 TimeAndSalary.propTypes = {
+  onCreateReport: PropTypes.func.isRequired,
   page: PropTypes.number,
   pageName: PropTypes.string,
   pageSize: PropTypes.number.isRequired,

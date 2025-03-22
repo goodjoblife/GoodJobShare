@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 import { InfoButton } from 'common/Modal';
 import Table from 'common/table/Table';
-import {
-  PAGE_SIZE,
-  pageType as pageTypeMapping,
-} from 'constants/companyJobTitle';
+import { pageType as pageTypeMapping } from 'constants/companyJobTitle';
 import { InfoSalaryModal, InfoTimeModal } from './InfoModal';
 import styles from './WorkingHourTable.module.css';
 import {
@@ -26,19 +23,6 @@ import usePermission from 'hooks/usePermission';
 import ReportBadge from 'common/button/ReportBadge';
 import ReportZone from 'components/ExperienceDetail/ReportZone';
 import { REPORT_TYPE } from 'components/ExperienceDetail/ReportZone/ReportForm/constants';
-import { useDispatch } from 'react-redux';
-import {
-  queryCompanyOverview,
-  queryCompanyTimeAndSalary,
-} from 'actions/company';
-import { usePage } from 'hooks/routing/page';
-import { useSearchTextFromQuery } from '../Searchbar';
-import useCompanyName from 'pages/Company/useCompanyName';
-import {
-  queryJobTitleOverview,
-  queryJobTitleTimeAndSalary,
-} from 'actions/jobTitle';
-import useJobTitle from 'pages/JobTitle/useJobTitle';
 import { tabType as TAB_TYPE } from 'constants/companyJobTitle';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
@@ -149,14 +133,14 @@ const columnProps = [
   {
     className: styles.colDataTime,
     title: '回報',
-    dataField: R.compose(({ id, reportCount, reports, handleCreateReport }) => {
+    dataField: R.compose(({ id, reportCount, reports, onCreateReport }) => {
       return (
         <ReportZone
           reportType={REPORT_TYPE.SALARY}
           id={id}
           reports={reports}
           reportCount={reportCount}
-          onCreateReport={handleCreateReport}
+          onCreateReport={onCreateReport}
         >
           <ReportBadge reportCount={reportCount} />
         </ReportZone>
@@ -166,16 +150,9 @@ const columnProps = [
   },
 ];
 
-const WorkingHourTable = ({ data, pageType, tabType }) => {
+const WorkingHourTable = ({ data, pageType, onCreateReport }) => {
   const [isInfoSalaryModalOpen, setInfoSalaryModalOpen] = useState(false);
   const [isInfoTimeModalOpen, setInfoTiimeModalOpen] = useState(false);
-  const dispatch = useDispatch();
-  const companyName = useCompanyName();
-  const jobTitle = useJobTitle();
-  const [searchText] = useSearchTextFromQuery();
-  const page = usePage();
-  const start = (page - 1) * PAGE_SIZE;
-  const limit = PAGE_SIZE;
 
   const toggleInfoSalaryModal = useCallback(() => {
     setInfoSalaryModalOpen(!isInfoSalaryModalOpen);
@@ -219,65 +196,9 @@ const WorkingHourTable = ({ data, pageType, tabType }) => {
     [canViewPublishId, fromCol, toCol],
   );
 
-  const handleCreateReport = useCallback(() => {
-    const force = true;
-
-    switch (pageType) {
-      case pageTypeMapping.COMPANY:
-        switch (tabType) {
-          case TAB_TYPE.TIME_AND_SALARY:
-            return dispatch(
-              queryCompanyTimeAndSalary(
-                {
-                  companyName,
-                  jobTitle: searchText || undefined,
-                  start,
-                  limit,
-                },
-                { force },
-              ),
-            );
-          case TAB_TYPE.OVERVIEW:
-            return dispatch(queryCompanyOverview(companyName, { force }));
-          default:
-            return null;
-        }
-      case pageTypeMapping.JOB_TITLE:
-        switch (tabType) {
-          case TAB_TYPE.TIME_AND_SALARY:
-            return dispatch(
-              queryJobTitleTimeAndSalary(
-                {
-                  jobTitle,
-                  companyName: searchText || undefined,
-                  start,
-                  limit,
-                },
-                { force },
-              ),
-            );
-          case TAB_TYPE.OVERVIEW:
-            return dispatch(queryJobTitleOverview(jobTitle, { force }));
-          default:
-            return null;
-        }
-      default:
-        return null;
-    }
-  }, [
-    pageType,
-    tabType,
-    dispatch,
-    companyName,
-    searchText,
-    start,
-    limit,
-    jobTitle,
-  ]);
-
-  data = useMemo(() => data.map(row => ({ ...row, handleCreateReport })), [
+  data = useMemo(() => data.map(row => ({ ...row, onCreateReport })), [
     data,
-    handleCreateReport,
+    onCreateReport,
   ]);
 
   return (
@@ -306,6 +227,7 @@ const WorkingHourTable = ({ data, pageType, tabType }) => {
 
 WorkingHourTable.propTypes = {
   data: PropTypes.array.isRequired,
+  onCreateReport: PropTypes.func.isRequired,
   pageType: PropTypes.oneOf([
     pageTypeMapping.COMPANY,
     pageTypeMapping.JOB_TITLE,

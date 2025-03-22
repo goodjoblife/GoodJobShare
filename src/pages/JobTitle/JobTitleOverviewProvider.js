@@ -40,9 +40,16 @@ const JobTitleOverviewProvider = () => {
   const pageType = PAGE_TYPE.JOB_TITLE;
   const jobTitle = useJobTitle();
 
+  const handleQueryJobTitleOverview = useCallback(
+    ({ force = false } = {}) => {
+      dispatch(queryJobTitleOverview(jobTitle, { force }));
+    },
+    [dispatch, jobTitle],
+  );
+
   useEffect(() => {
-    dispatch(queryJobTitleOverview(jobTitle));
-  }, [dispatch, jobTitle]);
+    handleQueryJobTitleOverview();
+  }, [dispatch, jobTitle, handleQueryJobTitleOverview]);
 
   useEffect(() => {
     dispatch(queryJobTitleOverviewStatistics(jobTitle));
@@ -63,6 +70,7 @@ const JobTitleOverviewProvider = () => {
       tabType={TAB_TYPE.OVERVIEW}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
+      onCreateReport={handleQueryJobTitleOverview}
     />
   );
 };

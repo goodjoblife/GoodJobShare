@@ -23,6 +23,7 @@ const Overview = ({
   salaryWorkTimes,
   salaryWorkTimesCount,
   statisticsBox,
+  onCreateReport,
 }) => {
   const [, , canViewPublishId] = usePermission();
 
@@ -61,6 +62,7 @@ const Overview = ({
           data={salaryWorkTimes}
           pageType={pageType}
           tabType={TAB_TYPE.OVERVIEW}
+          onCreateReport={onCreateReport}
         />
       </SnippetBlock>
       <SnippetBlock
@@ -114,6 +116,7 @@ const Overview = ({
 Overview.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
   interviewExperiencesCount: PropTypes.number.isRequired,
+  onCreateReport: PropTypes.func.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object).isRequired,

@@ -13,6 +13,7 @@ const Overview = ({
   boxSelector,
   statisticsBox,
   topNJobTitles,
+  onCreateReport,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
@@ -45,6 +46,7 @@ const Overview = ({
               salaryWorkTimes={data.salaryWorkTimes}
               salaryWorkTimesCount={data.salaryWorkTimesCount}
               statisticsBox={statisticsBox}
+              onCreateReport={onCreateReport}
             />
           </Fragment>
         );
@@ -55,6 +57,7 @@ const Overview = ({
 
 Overview.propTypes = {
   boxSelector: PropTypes.func.isRequired,
+  onCreateReport: PropTypes.func.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
   statisticsBox: fetchBoxPropType.isRequired,

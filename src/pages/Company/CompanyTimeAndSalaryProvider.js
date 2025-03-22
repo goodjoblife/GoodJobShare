@@ -68,6 +68,23 @@ const CompanyTimeAndSalaryProvider = () => {
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
 
+  const handleQueryCompanyTimeAndSalary = useCallback(
+    ({ force = false } = {}) => {
+      dispatch(
+        queryCompanyTimeAndSalary(
+          {
+            companyName,
+            jobTitle: jobTitle || undefined,
+            start,
+            limit,
+          },
+          { force },
+        ),
+      );
+    },
+    [dispatch, companyName, jobTitle, start, limit],
+  );
+
   useEffect(() => {
     dispatch(queryRatingStatistics(companyName));
   }, [dispatch, companyName]);
@@ -93,15 +110,15 @@ const CompanyTimeAndSalaryProvider = () => {
   }, [dispatch, companyName]);
 
   useEffect(() => {
-    dispatch(
-      queryCompanyTimeAndSalary({
-        companyName,
-        jobTitle: jobTitle || undefined,
-        start,
-        limit,
-      }),
-    );
-  }, [dispatch, companyName, jobTitle, start, limit]);
+    handleQueryCompanyTimeAndSalary();
+  }, [
+    dispatch,
+    companyName,
+    jobTitle,
+    start,
+    limit,
+    handleQueryCompanyTimeAndSalary,
+  ]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -125,6 +142,7 @@ const CompanyTimeAndSalaryProvider = () => {
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
+      onCreateReport={handleQueryCompanyTimeAndSalary}
     />
   );
 };

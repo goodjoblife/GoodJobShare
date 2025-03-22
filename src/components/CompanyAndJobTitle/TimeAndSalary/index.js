@@ -20,6 +20,7 @@ const TimeAndSalary = ({
   page,
   pageSize,
   topNJobTitles,
+  onCreateReport,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
@@ -75,6 +76,7 @@ const TimeAndSalary = ({
               page={page}
               pageSize={pageSize}
               totalCount={totalCount}
+              onCreateReport={onCreateReport}
             />
           </Fragment>
         );
@@ -85,6 +87,7 @@ const TimeAndSalary = ({
 
 TimeAndSalary.propTypes = {
   boxSelector: PropTypes.func.isRequired,
+  onCreateReport: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
