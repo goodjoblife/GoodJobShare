@@ -8,6 +8,8 @@ import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
 import Searchbar from '../Searchbar';
 import SummarySection from './SummarySection';
+import EsgBlock from '../TimeAndSalary/EsgBlock';
+import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import { fetchBoxPropType } from 'utils/fetchBox';
 
 const TimeAndSalary = ({
@@ -21,12 +23,42 @@ const TimeAndSalary = ({
   pageSize,
   topNJobTitles,
   onCreateReport,
+  esgSalaryDataBox,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
     pageName={pageName}
     tabType={tabType}
   >
+    {pageType === PAGE_TYPE.COMPANY && (
+      <BoxRenderer
+        box={esgSalaryDataBox}
+        render={data => {
+          if (!data) return null;
+
+          const {
+            avgSalaryStatistics: [avgSalaryStatisticsItem],
+            nonManagerAvgSalaryStatistics: [nonManagerAvgSalaryStatisticsItem],
+            nonManagerMedianSalaryStatistics: [
+              nonManagerMedianSalaryStatisticsItem,
+            ],
+            femaleManagerStatistics: [femaleManagerStatisticsItem],
+          } = data;
+          return (
+            <EsgBlock
+              avgSalaryStatisticsItem={avgSalaryStatisticsItem}
+              nonManagerAvgSalaryStatisticsItem={
+                nonManagerAvgSalaryStatisticsItem
+              }
+              nonManagerMedianSalaryStatisticsItem={
+                nonManagerMedianSalaryStatisticsItem
+              }
+              femaleManagerStatisticsItem={femaleManagerStatisticsItem}
+            />
+          );
+        }}
+      />
+    )}
     <BoxRenderer
       box={statisticsBox}
       render={data => {
@@ -87,6 +119,7 @@ const TimeAndSalary = ({
 
 TimeAndSalary.propTypes = {
   boxSelector: PropTypes.func.isRequired,
+  esgSalaryDataBox: PropTypes.object.isRequired,
   onCreateReport: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
