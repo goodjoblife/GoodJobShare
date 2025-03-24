@@ -195,15 +195,15 @@ const WorkingHourTable = ({ data, pageType, onCreateReport }) => {
     [canViewPublishId, fromCol, toCol],
   );
 
-  data = useMemo(() => data.map(row => ({ ...row, onCreateReport })), [
-    data,
-    onCreateReport,
-  ]);
+  const memoizedData = useMemo(
+    () => data.map(row => ({ ...row, onCreateReport })),
+    [data, onCreateReport],
+  );
 
   return (
     <Table
       className={styles.companyTable}
-      data={data}
+      data={memoizedData}
       primaryKey="created_at"
       postProcessRows={postProcessRows}
     >
