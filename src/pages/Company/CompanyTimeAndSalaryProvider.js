@@ -167,7 +167,7 @@ const CompanyTimeAndSalaryProvider = () => {
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
-      onCreateReport={handleQueryCompanyTimeAndSalary}
+      onCreateReport={() => handleQueryCompanyTimeAndSalary({ force: true })}
     />
   );
 };

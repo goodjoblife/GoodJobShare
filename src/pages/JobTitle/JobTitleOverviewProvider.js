@@ -70,7 +70,7 @@ const JobTitleOverviewProvider = () => {
       tabType={TAB_TYPE.OVERVIEW}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
-      onCreateReport={handleQueryJobTitleOverview}
+      onCreateReport={() => handleQueryJobTitleOverview({ force: true })}
     />
   );
 };

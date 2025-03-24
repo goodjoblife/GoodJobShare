@@ -59,7 +59,7 @@ const ReportZone = ({
   const handleCloseReport = useCallback(
     modalType => {
       if (modalType === MODAL_TYPE.REPORT_SUCCESS) {
-        onCreateReport({ force: true });
+        onCreateReport();
       }
       setModalClosableOnClickOutside(true);
       setModalOpen(false, MODAL_TYPE.REPORT_LIST);
