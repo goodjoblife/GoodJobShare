@@ -98,7 +98,7 @@ const JobTitleTimeAndSalaryProvider = () => {
   }, [dispatch, jobTitle]);
 
   useEffect(() => {
-    handleQueryJobTitleTimeAndSalary({ force: false });
+    handleQueryJobTitleTimeAndSalary();
   }, [handleQueryJobTitleTimeAndSalary]);
 
   const [, fetchPermission] = usePermission();
