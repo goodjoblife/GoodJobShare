@@ -122,14 +122,7 @@ const CompanyTimeAndSalaryProvider = () => {
 
   useEffect(() => {
     handleQueryCompanyTimeAndSalary();
-  }, [
-    dispatch,
-    companyName,
-    jobTitle,
-    start,
-    limit,
-    handleQueryCompanyTimeAndSalary,
-  ]);
+  }, [handleQueryCompanyTimeAndSalary]);
 
   useEffect(() => {
     dispatch(

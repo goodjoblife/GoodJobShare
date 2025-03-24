@@ -64,7 +64,7 @@ const CompanyOverviewProvider = () => {
 
   useEffect(() => {
     handleQueryCompanyOverview();
-  }, [dispatch, companyName, handleQueryCompanyOverview]);
+  }, [handleQueryCompanyOverview]);
 
   useEffect(() => {
     dispatch(queryCompanyOverviewStatistics(companyName));

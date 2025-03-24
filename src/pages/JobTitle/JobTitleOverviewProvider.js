@@ -49,7 +49,7 @@ const JobTitleOverviewProvider = () => {
 
   useEffect(() => {
     handleQueryJobTitleOverview();
-  }, [dispatch, jobTitle, handleQueryJobTitleOverview]);
+  }, [handleQueryJobTitleOverview]);
 
   useEffect(() => {
     dispatch(queryJobTitleOverviewStatistics(jobTitle));
