@@ -43,5 +43,22 @@
 .interactive {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 18px;
+
+  @media (max-width: below-mobile) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  > * + * {
+    @media (min-width: below-mobile) {
+      margin-left: 3em;
+    }
+
+    @media (max-width: below-mobile) {
+      margin-top: 1em;
+    }
+  }
 }
