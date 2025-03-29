@@ -132,17 +132,6 @@ const CompanyTimeAndSalaryProvider = () => {
     );
   }, [dispatch, companyName]);
 
-  useEffect(() => {
-    dispatch(
-      queryCompanyTimeAndSalary({
-        companyName,
-        jobTitle: jobTitle || undefined,
-        start,
-        limit,
-      }),
-    );
-  }, [dispatch, companyName, jobTitle, start, limit]);
-
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
