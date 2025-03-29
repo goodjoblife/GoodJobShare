@@ -56,15 +56,19 @@ const ReportZone = ({
     [setModalOpen],
   );
 
+  const handleCloseReport = useCallback(() => {
+    setModalClosableOnClickOutside(true);
+    setModalOpen(false, MODAL_TYPE.REPORT_LIST);
+  }, [setModalOpen]);
+
   const handleReportSuccessFeedbackClick = useCallback(
     modalType => {
       if (modalType === MODAL_TYPE.REPORT_SUCCESS) {
         onReportSuccessFeedbackClick && onReportSuccessFeedbackClick();
       }
-      setModalClosableOnClickOutside(true);
-      setModalOpen(false, MODAL_TYPE.REPORT_LIST);
+      handleCloseReport();
     },
-    [onReportSuccessFeedbackClick, setModalOpen],
+    [onReportSuccessFeedbackClick, handleCloseReport],
   );
 
   return (
@@ -88,6 +92,7 @@ const ReportZone = ({
           onShowReportList={handleShowReportList}
           onReportFormError={handleReportFormError}
           onReportFormSuccess={handleReportFormSuccess}
+          onCloseReport={handleCloseReport}
         />
       </Modal>
     </>

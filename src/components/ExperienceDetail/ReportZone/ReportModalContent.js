@@ -13,6 +13,7 @@ const ReportModalContent = ({
   id,
   reports,
   reportCount,
+  onCloseReport,
   onReportSuccessFeedbackClick,
   onShowReportForm,
   onShowReportList,
@@ -37,7 +38,7 @@ const ReportModalContent = ({
       return (
         <ReportForm
           reportType={reportType}
-          close={() => onReportSuccessFeedbackClick(modalType)}
+          close={onCloseReport}
           id={id}
           onApiError={payload => onReportFormError(payload)}
           onSuccess={payload => onReportFormSuccess(payload)}
@@ -66,6 +67,7 @@ ReportModalContent.propTypes = {
   id: PropTypes.string,
   modalPayload: PropTypes.object,
   modalType: PropTypes.string.isRequired,
+  onCloseReport: PropTypes.func,
   onReportFormError: PropTypes.func,
   onReportFormSuccess: PropTypes.func,
   onReportSuccessFeedbackClick: PropTypes.func,
