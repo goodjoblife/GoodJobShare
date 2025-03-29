@@ -56,26 +56,23 @@ const ReportZone = ({
     [setModalOpen],
   );
 
-  const handleCloseReport = useCallback(
-    modalType => {
-      if (modalType === MODAL_TYPE.REPORT_SUCCESS) {
-        // 這裡不在 ApiSuccess 時就 call onCreateReport
-        // 而是等待 modal 關閉才做處理
-        // TODO: 允許 report 更新但不導致 UI 重整
-        onCloseReport && onCloseReport();
-      }
-      setModalClosableOnClickOutside(true);
-      setModalOpen(false, MODAL_TYPE.REPORT_LIST);
-    },
-    [onCloseReport, setModalOpen],
-  );
+  const handleCloseReport = useCallback(() => {
+    if (modalState.modalType === MODAL_TYPE.REPORT_SUCCESS) {
+      // 這裡不在 ApiSuccess 時就 call onCreateReport
+      // 而是等待 modal 關閉才做處理
+      // TODO: 允許 report 更新但不導致 UI 重整
+      onCloseReport && onCloseReport();
+    }
+    setModalClosableOnClickOutside(true);
+    setModalOpen(false, MODAL_TYPE.REPORT_LIST);
+  }, [onCloseReport, setModalOpen, modalState]);
 
   return (
     <>
       <Button onClick={handleShowReportList}>{children}</Button>
       <Modal
         isOpen={isModalOpen}
-        close={() => handleCloseReport(modalType)}
+        close={handleCloseReport}
         closableOnClickOutside={closableOnClickOutside}
         hasClose
       >
