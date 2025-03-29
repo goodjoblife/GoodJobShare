@@ -77,10 +77,9 @@ const ReportForm = ({ close, onApiError, onSuccess, id, reportType }) => {
           message: e.message,
         });
       }
-      return;
+    } else {
+      setSubmitting(false);
     }
-
-    setSubmitting(false);
   };
 
   if (submitting) {
