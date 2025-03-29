@@ -5,14 +5,14 @@ import WorkingHourTable from './WorkingHourTable';
 
 import styles from '../../TimeAndSalary/common/WorkingHourBlock.module.css';
 
-const WorkingHourBlock = ({ data, pageType, onCreateReport }) => {
+const WorkingHourBlock = ({ data, pageType, onReportSuccessFeedbackClick }) => {
   return (
     <section className={styles.container}>
       <div className={cn(styles.content, styles.expanded)}>
         <WorkingHourTable
           data={data}
           pageType={pageType}
-          onCreateReport={onCreateReport}
+          onReportSuccessFeedbackClick={onReportSuccessFeedbackClick}
         />
       </div>
     </section>
@@ -21,7 +21,7 @@ const WorkingHourBlock = ({ data, pageType, onCreateReport }) => {
 
 WorkingHourBlock.propTypes = {
   data: PropTypes.array,
-  onCreateReport: PropTypes.func.isRequired,
+  onReportSuccessFeedbackClick: PropTypes.func.isRequired,
   pageType: PropTypes.string,
 };
 

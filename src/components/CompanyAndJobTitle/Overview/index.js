@@ -13,7 +13,7 @@ const Overview = ({
   boxSelector,
   statisticsBox,
   topNJobTitles,
-  onCreateReport,
+  onReportSuccessFeedbackClick,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
@@ -46,7 +46,7 @@ const Overview = ({
               salaryWorkTimes={data.salaryWorkTimes}
               salaryWorkTimesCount={data.salaryWorkTimesCount}
               statisticsBox={statisticsBox}
-              onCreateReport={onCreateReport}
+              onReportSuccessFeedbackClick={onReportSuccessFeedbackClick}
             />
           </Fragment>
         );
@@ -57,7 +57,7 @@ const Overview = ({
 
 Overview.propTypes = {
   boxSelector: PropTypes.func.isRequired,
-  onCreateReport: PropTypes.func.isRequired,
+  onReportSuccessFeedbackClick: PropTypes.func.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
   statisticsBox: fetchBoxPropType.isRequired,

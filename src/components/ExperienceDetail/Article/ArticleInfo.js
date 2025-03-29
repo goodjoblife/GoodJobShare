@@ -44,7 +44,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
             reportType={REPORT_TYPE.EXPERIENCE}
             reports={experience.reports}
             reportCount={experience.reportCount}
-            onCreateReport={() => {
+            onReportSuccessFeedbackClick={() => {
               dispatch(queryExperience(experience.id));
             }}
           >
@@ -170,7 +170,7 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
             reportType={REPORT_TYPE.EXPERIENCE}
             reports={experience.reports}
             reportCount={experience.reportCount}
-            onCreateReport={() => {
+            onReportSuccessFeedbackClick={() => {
               dispatch(queryExperience(experience.id));
             }}
           >

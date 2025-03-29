@@ -22,7 +22,7 @@ const TimeAndSalary = ({
   page,
   pageSize,
   topNJobTitles,
-  onCreateReport,
+  onReportSuccessFeedbackClick,
   esgSalaryDataBox,
 }) => (
   <CompanyAndJobTitleWrapper
@@ -108,7 +108,7 @@ const TimeAndSalary = ({
               page={page}
               pageSize={pageSize}
               totalCount={totalCount}
-              onCreateReport={onCreateReport}
+              onReportSuccessFeedbackClick={onReportSuccessFeedbackClick}
             />
           </Fragment>
         );
@@ -120,7 +120,7 @@ const TimeAndSalary = ({
 TimeAndSalary.propTypes = {
   boxSelector: PropTypes.func.isRequired,
   esgSalaryDataBox: PropTypes.object.isRequired,
-  onCreateReport: PropTypes.func.isRequired,
+  onReportSuccessFeedbackClick: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,

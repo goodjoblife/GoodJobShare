@@ -90,7 +90,7 @@ const ReactionZone = ({
         renderButton={props => (
           <ReactionButton className={styles.report} {...props} />
         )}
-        onCreateReport={() => {
+        onReportSuccessFeedbackClick={() => {
           dispatch(queryExperience(experienceId));
         }}
       >

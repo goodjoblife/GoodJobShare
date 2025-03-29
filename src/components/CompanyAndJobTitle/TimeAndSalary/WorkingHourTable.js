@@ -132,24 +132,26 @@ const columnProps = [
   {
     className: styles.colDataTime,
     title: '回報',
-    dataField: R.compose(({ id, reportCount, reports, onCreateReport }) => {
-      return (
-        <ReportZone
-          reportType={REPORT_TYPE.SALARY}
-          id={id}
-          reports={reports}
-          reportCount={reportCount}
-          onCreateReport={onCreateReport}
-        >
-          <ReportBadge reportCount={reportCount} />
-        </ReportZone>
-      );
-    }),
+    dataField: R.compose(
+      ({ id, reportCount, reports, onReportSuccessFeedbackClick }) => {
+        return (
+          <ReportZone
+            reportType={REPORT_TYPE.SALARY}
+            id={id}
+            reports={reports}
+            reportCount={reportCount}
+            onReportSuccessFeedbackClick={onReportSuccessFeedbackClick}
+          >
+            <ReportBadge reportCount={reportCount} />
+          </ReportZone>
+        );
+      },
+    ),
     Children: () => '回報',
   },
 ];
 
-const WorkingHourTable = ({ data, pageType, onCreateReport }) => {
+const WorkingHourTable = ({ data, pageType, onReportSuccessFeedbackClick }) => {
   const [isInfoSalaryModalOpen, setInfoSalaryModalOpen] = useState(false);
   const [isInfoTimeModalOpen, setInfoTiimeModalOpen] = useState(false);
 
@@ -196,8 +198,8 @@ const WorkingHourTable = ({ data, pageType, onCreateReport }) => {
   );
 
   const memoizedData = useMemo(
-    () => data.map(row => ({ ...row, onCreateReport })),
-    [data, onCreateReport],
+    () => data.map(row => ({ ...row, onReportSuccessFeedbackClick })),
+    [data, onReportSuccessFeedbackClick],
   );
 
   return (
@@ -226,7 +228,7 @@ const WorkingHourTable = ({ data, pageType, onCreateReport }) => {
 
 WorkingHourTable.propTypes = {
   data: PropTypes.array.isRequired,
-  onCreateReport: PropTypes.func.isRequired,
+  onReportSuccessFeedbackClick: PropTypes.func.isRequired,
   pageType: PropTypes.oneOf([
     pageTypeMapping.COMPANY,
     pageTypeMapping.JOB_TITLE,

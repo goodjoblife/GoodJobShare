@@ -11,7 +11,7 @@ const ReportZone = ({
   reports,
   reportCount,
   renderButton: Button = 'button',
-  onCreateReport,
+  onReportSuccessFeedbackClick,
 }) => {
   const [modalState, setModalState] = useState({
     isModalOpen: false,
@@ -56,15 +56,15 @@ const ReportZone = ({
     [setModalOpen],
   );
 
-  const handleCloseReport = useCallback(
+  const handleReportSuccessFeedbackClick = useCallback(
     modalType => {
       if (modalType === MODAL_TYPE.REPORT_SUCCESS) {
-        onCreateReport();
+        onReportSuccessFeedbackClick();
       }
       setModalClosableOnClickOutside(true);
       setModalOpen(false, MODAL_TYPE.REPORT_LIST);
     },
-    [onCreateReport, setModalOpen],
+    [onReportSuccessFeedbackClick, setModalOpen],
   );
 
   return (
@@ -72,7 +72,7 @@ const ReportZone = ({
       <Button onClick={handleShowReportList}>{children}</Button>
       <Modal
         isOpen={isModalOpen}
-        close={() => handleCloseReport(modalType)}
+        close={() => handleReportSuccessFeedbackClick(modalType)}
         closableOnClickOutside={closableOnClickOutside}
         hasClose
       >
@@ -84,7 +84,7 @@ const ReportZone = ({
           reports={reports}
           reportCount={reportCount}
           onShowReportForm={handleShowReportForm}
-          onCloseReport={handleCloseReport}
+          onReportSuccessFeedbackClick={handleReportSuccessFeedbackClick}
           onShowReportList={handleShowReportList}
           onReportFormError={handleReportFormError}
           onReportFormSuccess={handleReportFormSuccess}
@@ -97,7 +97,7 @@ const ReportZone = ({
 ReportZone.propTypes = {
   children: PropTypes.node.isRequired,
   id: PropTypes.string,
-  onCreateReport: PropTypes.func,
+  onReportSuccessFeedbackClick: PropTypes.func,
   renderButton: PropTypes.func,
   reportCount: PropTypes.number,
   reportType: PropTypes.string,

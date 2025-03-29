@@ -18,7 +18,7 @@ const TimeAndSalary = ({
   page,
   pageSize,
   totalCount,
-  onCreateReport,
+  onReportSuccessFeedbackClick,
 }) => {
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -34,7 +34,7 @@ const TimeAndSalary = ({
           <WorkingHourBlock
             data={salaryWorkTimes}
             pageType={pageType}
-            onCreateReport={onCreateReport}
+            onReportSuccessFeedbackClick={onReportSuccessFeedbackClick}
           />
           <Pagination
             totalCount={totalCount}
@@ -63,7 +63,7 @@ const TimeAndSalary = ({
 };
 
 TimeAndSalary.propTypes = {
-  onCreateReport: PropTypes.func.isRequired,
+  onReportSuccessFeedbackClick: PropTypes.func.isRequired,
   page: PropTypes.number,
   pageName: PropTypes.string,
   pageSize: PropTypes.number.isRequired,
