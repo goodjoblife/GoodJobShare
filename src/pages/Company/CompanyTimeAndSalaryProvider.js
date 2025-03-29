@@ -121,16 +121,16 @@ const CompanyTimeAndSalaryProvider = () => {
   }, [dispatch, companyName]);
 
   useEffect(() => {
-    handleQueryCompanyTimeAndSalary();
-  }, [handleQueryCompanyTimeAndSalary]);
-
-  useEffect(() => {
     dispatch(
       queryCompanyEsgSalaryData({
         companyName,
       }),
     );
   }, [dispatch, companyName]);
+
+  useEffect(() => {
+    handleQueryCompanyTimeAndSalary();
+  }, [handleQueryCompanyTimeAndSalary]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
