@@ -70,9 +70,7 @@ const JobTitleOverviewProvider = () => {
       tabType={TAB_TYPE.OVERVIEW}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
-      onReportSuccessFeedbackClick={() =>
-        handleQueryJobTitleOverview({ force: true })
-      }
+      onCloseReport={() => handleQueryJobTitleOverview({ force: true })}
     />
   );
 };

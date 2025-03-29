@@ -121,9 +121,7 @@ const JobTitleTimeAndSalaryProvider = () => {
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
-      onReportSuccessFeedbackClick={() =>
-        handleQueryJobTitleTimeAndSalary({ force: true })
-      }
+      onCloseReport={() => handleQueryJobTitleTimeAndSalary({ force: true })}
     />
   );
 };

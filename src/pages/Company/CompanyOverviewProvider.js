@@ -88,9 +88,7 @@ const CompanyOverviewProvider = () => {
       topNJobTitles={topNJobTitles.all}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
-      onReportSuccessFeedbackClick={() =>
-        handleQueryCompanyOverview({ force: true })
-      }
+      onCloseReport={() => handleQueryCompanyOverview({ force: true })}
     />
   );
 };

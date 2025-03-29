@@ -156,9 +156,7 @@ const CompanyTimeAndSalaryProvider = () => {
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
-      onReportSuccessFeedbackClick={() =>
-        handleQueryCompanyTimeAndSalary({ force: true })
-      }
+      onCloseReport={() => handleQueryCompanyTimeAndSalary({ force: true })}
     />
   );
 };

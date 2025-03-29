@@ -14,16 +14,15 @@ const ReportModalContent = ({
   reports,
   reportCount,
   onCloseReport,
-  onReportSuccessFeedbackClick,
   onShowReportForm,
   onShowReportList,
   onReportFormError,
   onReportFormSuccess,
 }) => {
-  const handleReportSuccessFeedbackClick = useCallback(
-    () => onReportSuccessFeedbackClick(modalType),
-    [onReportSuccessFeedbackClick, modalType],
-  );
+  const handleCloseReport = useCallback(() => onCloseReport(modalType), [
+    onCloseReport,
+    modalType,
+  ]);
 
   switch (modalType) {
     case MODAL_TYPE.REPORT_LIST:
@@ -54,9 +53,7 @@ const ReportModalContent = ({
       );
 
     case MODAL_TYPE.REPORT_SUCCESS:
-      return (
-        <ReportSuccessFeedback buttonClick={handleReportSuccessFeedbackClick} />
-      );
+      return <ReportSuccessFeedback buttonClick={handleCloseReport} />;
 
     default:
       return null;
@@ -68,9 +65,9 @@ ReportModalContent.propTypes = {
   modalPayload: PropTypes.object,
   modalType: PropTypes.string.isRequired,
   onCloseReport: PropTypes.func,
+  onCloseReport: PropTypes.func,
   onReportFormError: PropTypes.func,
   onReportFormSuccess: PropTypes.func,
-  onReportSuccessFeedbackClick: PropTypes.func,
   onShowReportForm: PropTypes.func,
   onShowReportList: PropTypes.func,
   reportCount: PropTypes.number,

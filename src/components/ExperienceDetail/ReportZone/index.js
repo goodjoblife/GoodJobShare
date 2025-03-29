@@ -11,7 +11,7 @@ const ReportZone = ({
   reports,
   reportCount,
   renderButton: Button = 'button',
-  onReportSuccessFeedbackClick,
+  onCloseReport,
 }) => {
   const [modalState, setModalState] = useState({
     isModalOpen: false,
@@ -56,19 +56,18 @@ const ReportZone = ({
     [setModalOpen],
   );
 
-  const handleCloseReport = useCallback(() => {
-    setModalClosableOnClickOutside(true);
-    setModalOpen(false, MODAL_TYPE.REPORT_LIST);
-  }, [setModalOpen]);
-
-  const handleReportSuccessFeedbackClick = useCallback(
+  const handleCloseReport = useCallback(
     modalType => {
       if (modalType === MODAL_TYPE.REPORT_SUCCESS) {
-        onReportSuccessFeedbackClick && onReportSuccessFeedbackClick();
+        // 這裡不在 ApiSuccess 時就 call onCreateReport
+        // 而是等待 modal 關閉才做處理
+        // TODO: 允許 report 更新但不導致 UI 重整
+        onCloseReport && onCloseReport();
       }
-      handleCloseReport();
+      setModalClosableOnClickOutside(true);
+      setModalOpen(false, MODAL_TYPE.REPORT_LIST);
     },
-    [onReportSuccessFeedbackClick, handleCloseReport],
+    [onCloseReport, setModalOpen],
   );
 
   return (
@@ -76,7 +75,7 @@ const ReportZone = ({
       <Button onClick={handleShowReportList}>{children}</Button>
       <Modal
         isOpen={isModalOpen}
-        close={() => handleReportSuccessFeedbackClick(modalType)}
+        close={() => handleCloseReport(modalType)}
         closableOnClickOutside={closableOnClickOutside}
         hasClose
       >
@@ -88,11 +87,10 @@ const ReportZone = ({
           reports={reports}
           reportCount={reportCount}
           onShowReportForm={handleShowReportForm}
-          onReportSuccessFeedbackClick={handleReportSuccessFeedbackClick}
+          onCloseReport={handleCloseReport}
           onShowReportList={handleShowReportList}
           onReportFormError={handleReportFormError}
           onReportFormSuccess={handleReportFormSuccess}
-          onCloseReport={handleCloseReport}
         />
       </Modal>
     </>
@@ -102,7 +100,7 @@ const ReportZone = ({
 ReportZone.propTypes = {
   children: PropTypes.node.isRequired,
   id: PropTypes.string,
-  onReportSuccessFeedbackClick: PropTypes.func,
+  onCloseReport: PropTypes.func,
   renderButton: PropTypes.func,
   reportCount: PropTypes.number,
   reportType: PropTypes.string,
