@@ -60,7 +60,6 @@ ReportModalContent.propTypes = {
   modalPayload: PropTypes.object,
   modalType: PropTypes.string.isRequired,
   onCloseReport: PropTypes.func,
-  onCloseReport: PropTypes.func,
   onReportFormError: PropTypes.func,
   onReportFormSuccess: PropTypes.func,
   onShowReportForm: PropTypes.func,
