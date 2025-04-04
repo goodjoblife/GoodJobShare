@@ -11,6 +11,7 @@ const ReportZone = ({
   reports,
   reportCount,
   renderButton: Button = 'button',
+  onCloseReport,
 }) => {
   const [modalState, setModalState] = useState({
     isModalOpen: false,
@@ -29,30 +30,42 @@ const ReportZone = ({
     [],
   );
 
-  const handleShowReportList = () => {
+  const handleShowReportList = useCallback(() => {
     setModalClosableOnClickOutside(true);
     setModalOpen(true, MODAL_TYPE.REPORT_LIST);
-  };
+  }, [setModalOpen]);
 
-  const handleShowReportForm = () => {
+  const handleShowReportForm = useCallback(() => {
     setModalClosableOnClickOutside(false);
     setModalOpen(true, MODAL_TYPE.REPORT_FORM);
-  };
+  }, [setModalOpen]);
 
-  const handleReportFormError = payload => {
-    setModalClosableOnClickOutside(false);
-    setModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, payload);
-  };
+  const handleReportFormError = useCallback(
+    payload => {
+      setModalClosableOnClickOutside(false);
+      setModalOpen(true, MODAL_TYPE.REPORT_API_ERROR, payload);
+    },
+    [setModalOpen],
+  );
 
-  const handleReportFormSuccess = payload => {
-    setModalClosableOnClickOutside(false);
-    setModalOpen(true, MODAL_TYPE.REPORT_SUCCESS, payload);
-  };
+  const handleReportFormSuccess = useCallback(
+    payload => {
+      setModalClosableOnClickOutside(false);
+      setModalOpen(true, MODAL_TYPE.REPORT_SUCCESS, payload);
+    },
+    [setModalOpen],
+  );
 
-  const handleCloseReport = () => {
+  const handleCloseReport = useCallback(() => {
+    if (modalState.modalType === MODAL_TYPE.REPORT_SUCCESS) {
+      // 這裡不在 ApiSuccess 時就 call onCreateReport
+      // 而是等待 modal 關閉才做處理
+      // TODO: 允許 report 更新但不導致 UI 重整
+      onCloseReport && onCloseReport();
+    }
     setModalClosableOnClickOutside(true);
     setModalOpen(false, MODAL_TYPE.REPORT_LIST);
-  };
+  }, [onCloseReport, setModalOpen, modalState]);
 
   return (
     <>
@@ -84,6 +97,7 @@ const ReportZone = ({
 ReportZone.propTypes = {
   children: PropTypes.node.isRequired,
   id: PropTypes.string,
+  onCloseReport: PropTypes.func,
   renderButton: PropTypes.func,
   reportCount: PropTypes.number,
   reportType: PropTypes.string,

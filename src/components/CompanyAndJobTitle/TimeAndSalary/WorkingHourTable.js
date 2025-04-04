@@ -132,13 +132,14 @@ const columnProps = [
   {
     className: styles.colDataTime,
     title: '回報',
-    dataField: R.compose(({ id, reportCount, reports }) => {
+    dataField: R.compose(({ id, reportCount, reports, onCloseReport }) => {
       return (
         <ReportZone
           reportType={REPORT_TYPE.SALARY}
           id={id}
           reports={reports}
           reportCount={reportCount}
+          onCloseReport={onCloseReport}
         >
           <ReportBadge reportCount={reportCount} />
         </ReportZone>
@@ -148,7 +149,7 @@ const columnProps = [
   },
 ];
 
-const WorkingHourTable = ({ data, pageType }) => {
+const WorkingHourTable = ({ data, pageType, onCloseReport }) => {
   const [isInfoSalaryModalOpen, setInfoSalaryModalOpen] = useState(false);
   const [isInfoTimeModalOpen, setInfoTiimeModalOpen] = useState(false);
 
@@ -194,10 +195,15 @@ const WorkingHourTable = ({ data, pageType }) => {
     [canViewPublishId, fromCol, toCol],
   );
 
+  const memoizedData = useMemo(
+    () => data.map(row => ({ ...row, onCloseReport })),
+    [data, onCloseReport],
+  );
+
   return (
     <Table
       className={styles.companyTable}
-      data={data}
+      data={memoizedData}
       primaryKey="created_at"
       postProcessRows={postProcessRows}
     >
@@ -220,6 +226,7 @@ const WorkingHourTable = ({ data, pageType }) => {
 
 WorkingHourTable.propTypes = {
   data: PropTypes.array.isRequired,
+  onCloseReport: PropTypes.func.isRequired,
   pageType: PropTypes.oneOf([
     pageTypeMapping.COMPANY,
     pageTypeMapping.JOB_TITLE,

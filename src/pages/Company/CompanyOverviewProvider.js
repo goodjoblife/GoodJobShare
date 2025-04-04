@@ -43,6 +43,13 @@ const CompanyOverviewProvider = () => {
   const pageType = PAGE_TYPE.COMPANY;
   const companyName = useCompanyName();
 
+  const handleQueryCompanyOverview = useCallback(
+    ({ force = false } = {}) => {
+      dispatch(queryCompanyOverview(companyName, { force }));
+    },
+    [dispatch, companyName],
+  );
+
   useEffect(() => {
     dispatch(queryRatingStatistics(companyName));
   }, [dispatch, companyName]);
@@ -56,8 +63,8 @@ const CompanyOverviewProvider = () => {
   }, [dispatch, companyName]);
 
   useEffect(() => {
-    dispatch(queryCompanyOverview(companyName));
-  }, [dispatch, companyName]);
+    handleQueryCompanyOverview();
+  }, [handleQueryCompanyOverview]);
 
   useEffect(() => {
     dispatch(queryCompanyOverviewStatistics(companyName));
@@ -81,6 +88,7 @@ const CompanyOverviewProvider = () => {
       topNJobTitles={topNJobTitles.all}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
+      onCloseReport={() => handleQueryCompanyOverview({ force: true })}
     />
   );
 };

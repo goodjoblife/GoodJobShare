@@ -68,16 +68,18 @@ const ReportForm = ({ close, onApiError, onSuccess, id, reportType }) => {
         await dispatch(
           submitReport({ id, reason, reasonCategory, reportType }),
         );
+        setSubmitting(false);
         close();
         onSuccess();
       } catch (e) {
+        setSubmitting(false);
         onApiError({
           message: e.message,
         });
       }
+    } else {
+      setSubmitting(false);
     }
-
-    setSubmitting(false);
   };
 
   if (submitting) {
