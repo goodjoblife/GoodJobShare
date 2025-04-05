@@ -4,6 +4,13 @@ export const queryExperienceGql = /* GraphQL */ `
       id
       type
       originalCompanyName
+      reportCount
+      reports {
+        id
+        reasonCategory
+        reason
+        createdAt
+      }
       company {
         name
         salary_work_time_statistics {

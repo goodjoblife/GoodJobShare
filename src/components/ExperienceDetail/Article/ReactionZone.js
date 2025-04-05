@@ -7,6 +7,11 @@ import styles from './ReactionZone.module.css';
 import useQueryLike from '../hooks/useQueryLike';
 import useToggleLike from '../hooks/useToggleLike';
 import useLoginFlow from '../hooks/useLoginFlow';
+import ReportBadge from 'common/button/ReportBadge';
+import ReportZone from '../ReportZone';
+import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
+import { useDispatch } from 'react-redux';
+import { queryExperience } from 'actions/experience';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
   <button
@@ -17,22 +22,29 @@ const ReactionButton = ({ className, Icon, active, children, ...props }) => (
     )}
     {...props}
   >
-    <Icon className={cn(styles.icon)} /> {children}
+    {Icon && <Icon className={cn(styles.icon)} />}
+    {children}
   </button>
 );
 
 ReactionButton.propTypes = {
-  Icon: PropTypes.func.isRequired,
+  Icon: PropTypes.func,
   active: PropTypes.bool,
   children: PropTypes.node,
   className: PropTypes.string,
 };
 
-const ReactionZone = ({ experienceId, onClickMsgButton }) => {
+const ReactionZone = ({
+  experienceId,
+  onClickMsgButton,
+  reportCount,
+  reports,
+}) => {
   // use state to quick response to toggle
   const [liked, setLiked] = useState(false);
 
   const [likeState, queryLike] = useQueryLike(experienceId);
+  const dispatch = useDispatch();
 
   const toggleLike = useToggleLike(experienceId);
   const handleLikeCallback = useCallback(async () => {
@@ -61,7 +73,7 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
         active={liked}
         onClick={handleLike}
       >
-        覺得實用
+        實用
       </ReactionButton>
       <ReactionButton
         className={styles.reactionButton}
@@ -70,6 +82,24 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
       >
         留言
       </ReactionButton>
+      <ReportZone
+        reportType={REPORT_TYPE.EXPERIENCE}
+        id={experienceId}
+        reports={reports}
+        reportCount={reportCount}
+        renderButton={props => (
+          <ReactionButton className={styles.report} {...props} />
+        )}
+        onCloseReport={() => {
+          dispatch(queryExperience(experienceId));
+        }}
+      >
+        <ReportBadge
+          reportCount={reportCount}
+          isHighlighted={reportCount > 0}
+          reportText="回報"
+        />
+      </ReportZone>
     </div>
   );
 };
@@ -77,6 +107,8 @@ const ReactionZone = ({ experienceId, onClickMsgButton }) => {
 ReactionZone.propTypes = {
   experienceId: PropTypes.string.isRequired,
   onClickMsgButton: PropTypes.func.isRequired,
+  reportCount: PropTypes.number,
+  reports: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default ReactionZone;
