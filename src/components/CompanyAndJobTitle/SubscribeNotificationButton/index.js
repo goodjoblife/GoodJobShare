@@ -2,13 +2,13 @@ import React from 'react';
 import BellWhiteImage from 'common/icons/bellWhite.svg';
 import BellBlackImage from 'common/icons/bellBlack.svg';
 import PropTypes from 'prop-types';
-import styles from './NotificationBell.module.css';
+import styles from './SubscribeNotificationButton.module.css';
 import cn from 'classnames';
 
-const SubscribeNotification = ({ hasSubscribed = false } = {}) => {
+const SubscribeNotificationButton = ({ hasSubscribed = false } = {}) => {
   return (
-    <div
-      className={cn(styles.subscribeNotificationContainer, {
+    <button
+      className={cn(styles.buttonContainer, {
         [styles.subscribed]: hasSubscribed,
       })}
     >
@@ -25,12 +25,12 @@ const SubscribeNotification = ({ hasSubscribed = false } = {}) => {
         />
       </div>
       <div>{hasSubscribed ? '已訂閱新資料通知' : '有新資料時通知我'}</div>
-    </div>
+    </button>
   );
 };
 
-SubscribeNotification.propTypes = {
+SubscribeNotificationButton.propTypes = {
   hasSubscribed: PropTypes.bool,
 };
 
-export default SubscribeNotification;
+export default SubscribeNotificationButton;

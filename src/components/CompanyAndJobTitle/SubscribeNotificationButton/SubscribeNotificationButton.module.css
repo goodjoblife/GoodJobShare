@@ -1,6 +1,6 @@
-@value main-yellow from '../common/variables.module.css';
+@value main-yellow from '../../common/variables.module.css';
 
-.subscribeNotificationContainer {
+.buttonContainer {
   display: flex;
   align-items: center;
   gap: 5px;
