@@ -110,6 +110,13 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
             month
             year
           }
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
         }
       }
     }
@@ -171,6 +178,13 @@ export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
           data_time {
             month
             year
+          }
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
           }
         }
       }
