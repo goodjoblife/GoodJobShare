@@ -1,0 +1,65 @@
+@value main-yellow from '../common/variables.module.css';
+
+.subscribeNotificationContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
+  font-size: 11px;
+  line-height: 29px;
+  border-radius: 5px;
+  border: 1px solid main-yellow;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  height: fit-content;
+
+  .bellWhite,
+  .bellBlack {
+    transition: all 0.2s ease;
+  }
+
+  &:not(.subscribed):hover {
+    background-color: #fceea7;
+    transform: scale(1.03);
+
+    .bellWhite {
+      opacity: 0;
+    }
+
+    .bellBlack {
+      opacity: 1;
+    }
+  }
+
+  &.subscribed {
+    background-color: #fceea7;
+    cursor: default;
+
+    .bellWhite {
+      opacity: 0;
+    }
+
+    .bellBlack {
+      opacity: 1;
+    }
+  }
+}
+
+.bellContainer {
+  position: relative;
+
+  img {
+    display: block;
+    width: 10px;
+    height: 13px;
+    transition: all var(--transition-timing);
+  }
+
+  .bellBlack {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+}
