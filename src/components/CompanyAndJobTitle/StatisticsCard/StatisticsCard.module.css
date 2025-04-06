@@ -1,6 +1,6 @@
 @value below-small, above-small from '../../common/variables.module.css';
 
-.ratingStatisticsCard {
+.statisticsCard {
   display: flex;
   width: fit-content;
   margin-bottom: 12px;

@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import { isFetched } from 'utils/fetchBox';
-import styles from './RatingStatisticsCard.module.css';
+import styles from './StatisticsCard.module.css';
 import ThumbImage from 'common/icons/thumb.svg';
 
-const RatingStatisticsCard = ({ pageType, pageName }) => {
+const StatisticsCard = ({ pageType, pageName }) => {
   const ratingStatistcsBox = useSelector(
     companyRatingStatisticsBoxSelectorByName(pageName),
   );
@@ -23,7 +23,7 @@ const RatingStatisticsCard = ({ pageType, pageName }) => {
 
   const { averageRating, ratingCount } = data;
   return (
-    <div className={styles.ratingStatisticsCard}>
+    <div className={styles.statisticsCard}>
       <div className={styles.statBlock}>
         <div className={styles.label}>評分</div>
         <div className={styles.value}>
@@ -47,9 +47,9 @@ const RatingStatisticsCard = ({ pageType, pageName }) => {
   );
 };
 
-export default RatingStatisticsCard;
+export default StatisticsCard;
 
-RatingStatisticsCard.propTypes = {
+StatisticsCard.propTypes = {
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
 };
