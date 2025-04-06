@@ -19,6 +19,7 @@ import { generateBreadCrumbData } from './utils';
 import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
 import Glike from 'common/icons/Glike';
+import SubscribeNotificationButton from 'components/CompanyAndJobTitle/SubscribeNotificationButton';
 
 const AverageRating = ({ pageType, pageName }) => {
   const ratingStatistcsBox = useSelector(
@@ -79,7 +80,10 @@ const CompanyAndJobTitleWrapper = ({
         />
       </div>
       <div>
-        <Heading className={styles.title}>{pageName}</Heading>
+        <div className={styles.titleContainer}>
+          <Heading className={styles.title}>{pageName}</Heading>
+          <SubscribeNotificationButton />
+        </div>
         <AverageRating pageType={pageType} pageName={pageName} />
       </div>
       <TabLinkGroup

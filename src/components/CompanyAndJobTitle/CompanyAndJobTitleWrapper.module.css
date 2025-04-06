@@ -2,7 +2,6 @@
 
 .title {
   color: black;
-  margin-bottom: 30px;
   display: inline-block;
 }
 
@@ -43,4 +42,12 @@
   .ratingCount {
     font-size: 15px;
   }
+}
+
+.titleContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  align-items: center;
+  margin-bottom: 25px;
 }
