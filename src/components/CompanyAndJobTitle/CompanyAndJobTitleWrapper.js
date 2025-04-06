@@ -1,54 +1,15 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { toPairs, compose, map } from 'ramda';
-
 import Heading from 'common/base/Heading';
 import FanPageBlock from 'common/FanPageBlock';
 import BreadCrumb from 'common/BreadCrumb';
-
-import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import {
-  tabTypeTranslation,
-  generateTabURL,
-  pageType as PAGE_TYPE,
-} from 'constants/companyJobTitle';
-import { isFetched } from 'utils/fetchBox';
+import { tabTypeTranslation, generateTabURL } from 'constants/companyJobTitle';
 import { generateBreadCrumbData } from './utils';
-
 import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
-import Glike from 'common/icons/Glike';
 import SubscribeNotificationButton from 'components/CompanyAndJobTitle/SubscribeNotificationButton';
-
-const AverageRating = ({ pageType, pageName }) => {
-  const ratingStatistcsBox = useSelector(
-    companyRatingStatisticsBoxSelectorByName(pageName),
-  );
-
-  if (pageType !== PAGE_TYPE.COMPANY || !isFetched(ratingStatistcsBox)) {
-    return null;
-  }
-
-  const data = ratingStatistcsBox.data;
-  if (!data) {
-    return null;
-  }
-
-  const { averageRating, ratingCount } = data;
-  return (
-    <div className={styles.ratingStatistics}>
-      <span className={styles.averageRating}>{averageRating.toFixed(1)}</span>
-      <Glike className={styles.icon} />
-      <span className={styles.ratingCount}>({ratingCount})</span>
-    </div>
-  );
-};
-
-AverageRating.propTypes = {
-  pageName: PropTypes.string.isRequired,
-  pageType: PropTypes.string.isRequired,
-};
+import RatingStatisticsCard from 'components/CompanyAndJobTitle/RatingStatisticsCard';
 
 const CompanyAndJobTitleWrapper = ({
   children,
@@ -84,7 +45,7 @@ const CompanyAndJobTitleWrapper = ({
           <Heading className={styles.title}>{pageName}</Heading>
           <SubscribeNotificationButton />
         </div>
-        <AverageRating pageType={pageType} pageName={pageName} />
+        <RatingStatisticsCard pageType={pageType} pageName={pageName} />
       </div>
       <TabLinkGroup
         options={tabLinkOptions}
