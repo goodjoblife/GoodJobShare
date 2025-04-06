@@ -23,7 +23,7 @@ const RatingStatisticsCard = ({ pageType, pageName }) => {
 
   const { averageRating, ratingCount } = data;
   return (
-    <div className={styles.ratingStatisticsCards}>
+    <div className={styles.ratingStatisticsCard}>
       <div className={styles.statBlock}>
         <div className={styles.label}>評分</div>
         <div className={styles.value}>
