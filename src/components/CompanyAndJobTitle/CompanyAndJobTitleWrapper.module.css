@@ -14,40 +14,10 @@
   margin-bottom: 30px;
 }
 
-.ratingStatistics {
-  align-items: center;
-
-  @media (max-width: below-small) {
-    display: flex;
-    margin-top: -16px;
-    margin-bottom: 40px;
-  }
-
-  @media (min-width: above-small) {
-    display: inline-flex;
-    margin-left: 25px;
-    vertical-align: text-top;
-  }
-
-  .averageRating {
-    font-size: 17px;
-    font-weight: 500;
-  }
-
-  .icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .ratingCount {
-    font-size: 15px;
-  }
-}
-
 .titleContainer {
   display: flex;
   flex-wrap: wrap;
   gap: 28px;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 18px;
 }
