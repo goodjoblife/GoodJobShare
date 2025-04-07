@@ -30,6 +30,7 @@ import {
   getCompanyEsgSalaryData,
   queryCompanyOverviewStatistics as queryCompanyOverviewStatisticsApi,
 } from 'apis/company';
+import { setExperience } from './experience';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
@@ -166,6 +167,14 @@ export const queryCompanyOverview = (
     };
 
     dispatch(setOverview(companyName, getFetched(overviewData)));
+
+    data.interviewExperiencesResult.interviewExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
+
+    data.workExperiencesResult.workExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
   } catch (error) {
     if (isGraphqlError(error)) {
       dispatch(setOverview(companyName, getError(error)));
@@ -455,6 +464,10 @@ export const queryCompanyInterviewExperiences = ({
         getFetched(interviewExperiencesData),
       ),
     );
+
+    data.interviewExperiencesResult.interviewExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
   } catch (error) {
     dispatch(setInterviewExperiences(companyName, getError(error)));
     throw error;
@@ -511,6 +524,10 @@ export const queryCompanyWorkExperiences = ({
     };
 
     dispatch(setWorkExperiences(companyName, getFetched(workExperiencesData)));
+
+    data.workExperiencesResult.workExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
   } catch (error) {
     dispatch(setWorkExperiences(companyName, getError(error)));
   }

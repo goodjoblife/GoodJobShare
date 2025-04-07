@@ -24,6 +24,7 @@ import {
   getJobTitleWorkExperiences,
   queryJobTitlesApi,
 } from 'apis/jobTitle';
+import { setExperience } from './experience';
 
 export const SET_OVERVIEW = '@@JOB_TITLE/SET_OVERVIEW';
 export const SET_OVERVIEW_STATISTICS = '@@JOB_TITLE/SET_OVERVIEW_STATISTICS';
@@ -120,6 +121,14 @@ export const queryJobTitleOverview = (
     };
 
     dispatch(setOverview(jobTitle, getFetched(overviewData)));
+
+    data.interviewExperiencesResult.interviewExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
+
+    data.workExperiencesResult.workExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
   } catch (error) {
     if (isGraphqlError(error)) {
       dispatch(setOverview(jobTitle, getError(error)));
@@ -329,6 +338,10 @@ export const queryJobTitleInterviewExperiences = ({
     dispatch(
       setInterviewExperiences(jobTitle, getFetched(interviewExperiencesyData)),
     );
+
+    data.interviewExperiencesResult.interviewExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
   } catch (error) {
     dispatch(setInterviewExperiences(jobTitle, getError(error)));
   }
@@ -384,6 +397,10 @@ export const queryJobTitleWorkExperiences = ({
     };
 
     dispatch(setWorkExperiences(jobTitle, getFetched(workExperiencesData)));
+
+    data.workExperiencesResult.workExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
   } catch (error) {
     dispatch(setWorkExperiences(jobTitle, getError(error)));
   }
