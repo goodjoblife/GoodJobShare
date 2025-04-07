@@ -17,7 +17,14 @@
 .titleContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 28px;
   align-items: center;
-  margin-bottom: 18px;
+  column-gap: 28px;
+  row-gap: 7px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: below-small) {
+  .titleContainer {
+    margin-bottom: 11px;
+  }
 }
