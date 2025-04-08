@@ -1,4 +1,4 @@
-@value below-small, above-small from '../../common/variables.module.css';
+@value below-small from '../../common/variables.module.css';
 
 .statisticsCard {
   display: flex;
@@ -16,7 +16,7 @@
   flex-direction: column;
   align-items: center;
   min-width: 55px;
-  padding: 8px 11px;
+  padding: 5.7px 7px 3.3px;
   gap: 2px;
 
   &::after {
@@ -34,7 +34,7 @@
   }
 
   .label {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 400;
   }
 
@@ -42,14 +42,21 @@
     display: flex;
     align-items: center;
     gap: 2px;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 500;
     min-height: 18px;
+    color: #000;
 
     .blackThumb {
-      width: 6px;
-      height: 9.4px;
+      width: 8.2px;
+      height: 12.5px;
       filter: brightness(0);
     }
+  }
+}
+
+@media (max-width: below-small) {
+  .statisticsCard {
+    margin-bottom: 10px;
   }
 }
