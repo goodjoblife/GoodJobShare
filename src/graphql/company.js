@@ -110,6 +110,13 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
             month
             year
           }
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
         }
       }
     }
@@ -172,6 +179,13 @@ export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
             month
             year
           }
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
         }
       }
     }
@@ -220,6 +234,33 @@ export const getCompanyTopNJobTitlesQuery = /* GraphQL */ `
         }
         all {
           name
+        }
+      }
+    }
+  }
+`;
+
+export const getCompanyEsgSalaryDataQuery = /* GraphQL */ `
+  query($companyName: String!) {
+    company(name: $companyName) {
+      esgSalaryData {
+        avgSalaryStatistics {
+          year
+          average
+          sameIndustryAverage
+        }
+        nonManagerAvgSalaryStatistics {
+          year
+          average
+          sameIndustryAverage
+        }
+        nonManagerMedianSalaryStatistics {
+          year
+          median
+        }
+        femaleManagerStatistics {
+          year
+          percentage
         }
       }
     }

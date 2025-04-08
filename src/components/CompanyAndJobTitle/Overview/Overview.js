@@ -23,6 +23,7 @@ const Overview = ({
   salaryWorkTimes,
   salaryWorkTimesCount,
   statisticsBox,
+  onCloseReport,
 }) => {
   const [, , canViewPublishId] = usePermission();
 
@@ -57,7 +58,11 @@ const Overview = ({
             />
           )}
         />
-        <WorkingHourTable data={salaryWorkTimes} pageType={pageType} />
+        <WorkingHourTable
+          data={salaryWorkTimes}
+          pageType={pageType}
+          onCloseReport={onCloseReport}
+        />
       </SnippetBlock>
       <SnippetBlock
         title="評價"
@@ -110,6 +115,7 @@ const Overview = ({
 Overview.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
   interviewExperiencesCount: PropTypes.number.isRequired,
+  onCloseReport: PropTypes.func.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
   salaryWorkTimes: PropTypes.arrayOf(PropTypes.object).isRequired,
