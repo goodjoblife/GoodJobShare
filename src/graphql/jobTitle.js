@@ -208,7 +208,7 @@ export const getJobTitleInterviewExperiencesQuery = /* GraphQL */ `
     $companyName: String
     $start: Int!
     $limit: Int!
-    $sortBy: SortOption
+    $sortBy: DataResultSortOption
   ) {
     job_title(name: $jobTitle) {
       name
@@ -257,7 +257,7 @@ export const getJobTitleWorkExperiencesQuery = /* GraphQL */ `
     $companyName: String
     $start: Int!
     $limit: Int!
-    $sortBy: SortOption
+    $sortBy: DataResultSortOption
   ) {
     job_title(name: $jobTitle) {
       name
