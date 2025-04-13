@@ -16,7 +16,7 @@
   flex-direction: column;
   align-items: center;
   min-width: 55px;
-  padding: 5.7px 7px 3.3px;
+  padding: 7px 8px;
   gap: 2px;
 
   &::after {
@@ -33,12 +33,12 @@
     display: none;
   }
 
-  .label {
+  .statLabel {
     font-size: 13px;
     font-weight: 400;
   }
 
-  .value {
+  .statContent {
     display: flex;
     align-items: center;
     gap: 2px;
