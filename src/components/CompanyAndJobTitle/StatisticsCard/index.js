@@ -6,6 +6,7 @@ import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import { isFetching } from 'utils/fetchBox';
 import styles from './StatisticsCard.module.css';
 import ThumbImage from 'common/icons/thumb.svg';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import Skeleton from 'react-loading-skeleton';
 
 const StatisticsCard = ({ pageType, pageName }) => {
