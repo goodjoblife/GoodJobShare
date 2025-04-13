@@ -17,9 +17,9 @@ const StatisticsCard = ({ pageType, pageName }) => {
   if (pageType !== PAGE_TYPE.COMPANY) {
     return null;
   }
-  const isLoading = isFetching(ratingStatistcsBox);
 
   const data = ratingStatistcsBox.data;
+  const isLoading = isFetching(ratingStatistcsBox);
   if (!data && !isLoading) {
     return null;
   }
