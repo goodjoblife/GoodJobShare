@@ -2,6 +2,7 @@
 
 .title {
   color: black;
+  margin-bottom: 30px;
   display: inline-block;
 }
 
@@ -12,19 +13,4 @@
 .adBeforeFanPageBlock {
   margin-top: -30px;
   margin-bottom: 30px;
-}
-
-.titleContainer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  column-gap: 28px;
-  row-gap: 7px;
-  margin-bottom: 20px;
-}
-
-@media (max-width: below-small) {
-  .titleContainer {
-    margin-bottom: 11px;
-  }
 }
