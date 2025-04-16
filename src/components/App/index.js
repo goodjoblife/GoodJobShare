@@ -17,8 +17,6 @@ import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 import ShareWorkExperienceModal from '../ShareExperience/WorkExperiencesForm/TypeForm';
 import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
 import routes from '../../routes';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import 'react-loading-skeleton/dist/skeleton.css';
 
 const useShare = () => {
   const location = useLocation();
