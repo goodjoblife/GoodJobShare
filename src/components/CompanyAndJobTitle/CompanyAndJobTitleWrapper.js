@@ -8,6 +8,7 @@ import { tabTypeTranslation, generateTabURL } from 'constants/companyJobTitle';
 import { generateBreadCrumbData } from './utils';
 import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
+import SubscribeNotificationButton from 'components/CompanyAndJobTitle/SubscribeNotificationButton';
 import StatisticsCard from 'components/CompanyAndJobTitle/StatisticsCard';
 
 const CompanyAndJobTitleWrapper = ({
@@ -40,7 +41,10 @@ const CompanyAndJobTitleWrapper = ({
         />
       </div>
       <div>
-        <Heading className={styles.title}>{pageName}</Heading>
+        <div className={styles.titleContainer}>
+          <Heading className={styles.title}>{pageName}</Heading>
+          <SubscribeNotificationButton />
+        </div>
         <StatisticsCard pageType={pageType} pageName={pageName} />
       </div>
       <TabLinkGroup

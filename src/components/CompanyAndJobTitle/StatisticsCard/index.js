@@ -3,46 +3,55 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
-import { isFetched } from 'utils/fetchBox';
+import { isFetching } from 'utils/fetchBox';
 import styles from './StatisticsCard.module.css';
 import ThumbImage from 'common/icons/thumb.svg';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import Skeleton from 'react-loading-skeleton';
 
 const StatisticsCard = ({ pageType, pageName }) => {
   const ratingStatistcsBox = useSelector(
     companyRatingStatisticsBoxSelectorByName(pageName),
   );
 
-  if (pageType !== PAGE_TYPE.COMPANY || !isFetched(ratingStatistcsBox)) {
+  if (pageType !== PAGE_TYPE.COMPANY) {
     return null;
   }
 
   const data = ratingStatistcsBox.data;
-  if (!data) {
+  const isLoading = isFetching(ratingStatistcsBox);
+  if (!data && !isLoading) {
     return null;
   }
 
-  const { averageRating, ratingCount } = data;
+  const { averageRating, ratingCount } = data || {};
+  const statBlocks = [
+    {
+      statLabel: '評分',
+      statItems: [
+        averageRating?.toFixed(1),
+        <img src={ThumbImage} className={styles.blackThumb} alt="blackThumb" />,
+      ],
+    },
+    { statLabel: '評分數', statItems: [ratingCount] },
+  ];
+
   return (
     <div className={styles.statisticsCard}>
-      <div className={styles.statBlock}>
-        <div className={styles.label}>評分</div>
-        <div className={styles.value}>
-          <span>{averageRating.toFixed(1)}</span>
-          <span>
-            <img
-              src={ThumbImage}
-              className={styles.blackThumb}
-              alt="blackThumb"
-            />
-          </span>
+      {statBlocks.map(({ statLabel, statItems }) => (
+        <div className={styles.statBlock} key={statLabel}>
+          <div className={styles.statLabel}>{statLabel}</div>
+          <div className={styles.statContent}>
+            {isLoading ? (
+              <Skeleton width={33} height={18} />
+            ) : (
+              statItems.map((statItem, index) => (
+                <span key={index}>{statItem}</span>
+              ))
+            )}
+          </div>
         </div>
-      </div>
-      <div className={styles.statBlock}>
-        <div className={styles.label}>評分數</div>
-        <div className={styles.value}>
-          <span>{ratingCount}</span>
-        </div>
-      </div>
+      ))}
     </div>
   );
 };
