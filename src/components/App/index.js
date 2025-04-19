@@ -1,6 +1,7 @@
 import React, { Fragment, useCallback } from 'react';
 import { Switch, useLocation, useHistory } from 'react-router-dom';
 import { omit } from 'ramda';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 import StaticHelmet from 'common/StaticHelmet';
 import LoginModal from 'common/LoginModal';
