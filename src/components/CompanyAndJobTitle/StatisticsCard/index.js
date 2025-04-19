@@ -1,13 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import Skeleton from 'react-loading-skeleton';
 import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import { isFetching } from 'utils/fetchBox';
 import styles from './StatisticsCard.module.css';
 import ThumbImage from 'common/icons/thumb.svg';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import Skeleton from 'react-loading-skeleton';
 
 const StatisticsCard = ({ pageType, pageName }) => {
   const ratingStatistcsBox = useSelector(
