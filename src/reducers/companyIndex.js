@@ -4,12 +4,14 @@ import {
   SET_INDEX_COUNT,
   SET_INDEX,
   SET_OVERVIEW,
+  SET_OVERVIEW_STATISTICS,
   SET_TIME_AND_SALARY,
   SET_INTERVIEW_EXPERIENCES,
   SET_WORK_EXPERIENCES,
   SET_TIME_AND_SALARY_STATISTICS,
   SET_RATING_STATISTICS,
   SET_COMPANY_TOP_N_JOB_TITLES,
+  SET_COMPANY_ESG_SALARY_DATA,
 } from 'actions/company';
 
 const preloadedState = {
@@ -19,6 +21,7 @@ const preloadedState = {
   // companyName --> box
   ratingStatisticsByName: {},
   overviewByName: {},
+  overviewStatisticsByName: {},
   timeAndSalaryByName: {},
   timeAndSalaryStatisticsByName: {},
   interviewExperiencesByName: {},
@@ -26,6 +29,7 @@ const preloadedState = {
   // companyName --> box
   // box.data: null | {all, interview, work, salary}
   topNJobTitlesByName: {},
+  esgSalaryData: {},
 };
 
 const reducer = createReducer(preloadedState, {
@@ -56,6 +60,15 @@ const reducer = createReducer(preloadedState, {
       ...state,
       overviewByName: {
         ...state.overviewByName,
+        [companyName]: box,
+      },
+    };
+  },
+  [SET_OVERVIEW_STATISTICS]: (state, { companyName, box }) => {
+    return {
+      ...state,
+      overviewStatisticsByName: {
+        ...state.overviewStatisticsByName,
         [companyName]: box,
       },
     };
@@ -101,6 +114,15 @@ const reducer = createReducer(preloadedState, {
       ...state,
       topNJobTitlesByName: {
         ...state.topNJobTitlesByName,
+        [companyName]: box,
+      },
+    };
+  },
+  [SET_COMPANY_ESG_SALARY_DATA]: (state, { companyName, box }) => {
+    return {
+      ...state,
+      esgSalaryData: {
+        ...state.esgSalaryData,
         [companyName]: box,
       },
     };

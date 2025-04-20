@@ -9,12 +9,14 @@ import {
 import {
   companyIndexesBoxSelectorAtPage,
   companyOverviewBoxSelectorByName,
+  companyOverviewStatisticsBoxSelectorByName,
   companyTimeAndSalaryBoxSelectorByName,
   companyTimeAndSalaryStatisticsBoxSelectorByName,
   companyInterviewExperiencesBoxSelectorByName,
   companyWorkExperiencesBoxSelectorByName,
   companyRatingStatisticsBoxSelectorByName,
   companyTopNJobTitlesBoxSelectorByName,
+  companyEsgSalaryDataBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   queryCompanyOverview as queryCompanyOverviewApi,
@@ -25,10 +27,13 @@ import {
   getCompanyTimeAndSalaryStatistics,
   queryCompanyRatingStatisticsApi,
   getCompanyTopNJobTitles,
+  getCompanyEsgSalaryData,
+  queryCompanyOverviewStatistics as queryCompanyOverviewStatisticsApi,
 } from 'apis/company';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
+export const SET_OVERVIEW_STATISTICS = '@@COMPANY/SET_OVERVIEW_STATISTICS';
 export const SET_TIME_AND_SALARY = '@@COMPANY/SET_TIME_AND_SALARY';
 export const SET_TIME_AND_SALARY_STATISTICS =
   '@@COMPANY/SET_TIME_AND_SALARY_STATISTICS';
@@ -38,6 +43,8 @@ export const SET_INDEX = '@@COMPANY/SET_INDEX';
 export const SET_INDEX_COUNT = '@@COMPANY/SET_INDEX_COUNT';
 export const SET_COMPANY_TOP_N_JOB_TITLES =
   '@@COMPANY/SET_COMPANY_TOP_N_JOB_TITLES';
+export const SET_COMPANY_ESG_SALARY_DATA =
+  '@@COMPANY/SET_COMPANY_ESG_SALARY_DATA';
 
 const setIndex = (page, box) => ({
   type: SET_INDEX,
@@ -123,12 +130,12 @@ const setOverview = (companyName, box) => ({
   box,
 });
 
-export const queryCompanyOverview = companyName => async (
-  dispatch,
-  getState,
-) => {
+export const queryCompanyOverview = (
+  companyName,
+  { force = false } = {},
+) => async (dispatch, getState) => {
   const box = companyOverviewBoxSelectorByName(companyName)(getState());
-  if (isFetching(box) || isFetched(box)) {
+  if (!force && (isFetching(box) || isFetched(box))) {
     return;
   }
 
@@ -151,7 +158,6 @@ export const queryCompanyOverview = companyName => async (
       name: data.name,
       salaryWorkTimes: data.salaryWorkTimesResult.salaryWorkTimes,
       salaryWorkTimesCount: data.salaryWorkTimesResult.count,
-      salary_work_time_statistics: data.salary_work_time_statistics,
       interviewExperiences:
         data.interviewExperiencesResult.interviewExperiences,
       interviewExperiencesCount: data.interviewExperiencesResult.count,
@@ -163,6 +169,55 @@ export const queryCompanyOverview = companyName => async (
   } catch (error) {
     if (isGraphqlError(error)) {
       dispatch(setOverview(companyName, getError(error)));
+    }
+    throw error;
+  }
+};
+
+const setOverviewStatistics = (companyName, box) => ({
+  type: SET_OVERVIEW_STATISTICS,
+  companyName,
+  box,
+});
+
+export const queryCompanyOverviewStatistics = companyName => async (
+  dispatch,
+  getState,
+  { api },
+) => {
+  const box = companyOverviewStatisticsBoxSelectorByName(companyName)(
+    getState(),
+  );
+  if (isFetching(box) || isFetched(box)) {
+    return;
+  }
+
+  dispatch(setOverviewStatistics(companyName, toFetching()));
+
+  try {
+    const data = await queryCompanyOverviewStatisticsApi({
+      companyName,
+    });
+
+    // Not found case
+    if (data == null) {
+      return dispatch(setOverviewStatistics(companyName, getFetched(data)));
+    }
+
+    const model = {
+      name: data.name,
+      jobAverageSalaries:
+        data.salary_work_time_statistics.job_average_salaries || [],
+      averageWeekWorkTime:
+        data.salary_work_time_statistics.average_week_work_time || 0,
+      overtimeFrequencyCount:
+        data.salary_work_time_statistics.overtime_frequency_count,
+    };
+
+    dispatch(setOverviewStatistics(companyName, getFetched(model)));
+  } catch (error) {
+    if (isGraphqlError(error)) {
+      dispatch(setOverviewStatistics(companyName, getError(error)));
     }
     throw error;
   }
@@ -180,20 +235,20 @@ const setInterviewExperiences = (companyName, box) => ({
   box,
 });
 
-export const queryCompanyTimeAndSalary = ({
-  companyName,
-  jobTitle,
-  start,
-  limit,
-}) => async (dispatch, getState) => {
+export const queryCompanyTimeAndSalary = (
+  { companyName, jobTitle, start, limit },
+  { force = false } = {},
+) => async (dispatch, getState) => {
   const box = companyTimeAndSalaryBoxSelectorByName(companyName)(getState());
   if (
-    isFetching(box) ||
-    (isFetched(box) &&
-      box.data.name === companyName &&
-      box.data.jobTitle === jobTitle &&
-      box.data.start === start &&
-      box.data.limit === limit)
+    !force &&
+    (isFetching(box) ||
+      (isFetched(box) &&
+        box.data &&
+        box.data.name === companyName &&
+        box.data.jobTitle === jobTitle &&
+        box.data.start === start &&
+        box.data.limit === limit))
   ) {
     return;
   }
@@ -218,8 +273,8 @@ export const queryCompanyTimeAndSalary = ({
       jobTitle,
       start,
       limit,
-      salary_work_times: data.salaryWorkTimesResult.salaryWorkTimes,
-      salary_work_times_count: data.salaryWorkTimesResult.count,
+      salaryWorkTimes: data.salaryWorkTimesResult.salaryWorkTimes,
+      salaryWorkTimesCount: data.salaryWorkTimesResult.count,
     };
 
     dispatch(setTimeAndSalary(companyName, getFetched(timeAndSalaryData)));
@@ -247,7 +302,10 @@ export const queryCompanyTimeAndSalaryStatistics = ({ companyName }) => async (
   const box = companyTimeAndSalaryStatisticsBoxSelectorByName(companyName)(
     getState(),
   );
-  if (isFetching(box) || (isFetched(box) && box.data.name === companyName)) {
+  if (
+    isFetching(box) ||
+    (isFetched(box) && box.data && box.data.name === companyName)
+  ) {
     return;
   }
 
@@ -278,6 +336,40 @@ export const queryCompanyTimeAndSalaryStatistics = ({ companyName }) => async (
     );
   } catch (error) {
     dispatch(setTimeAndSalaryStatistics(companyName, getError(error)));
+  }
+};
+
+const setEsgSalaryData = (companyName, box) => ({
+  type: SET_COMPANY_ESG_SALARY_DATA,
+  companyName,
+  box,
+});
+
+export const queryCompanyEsgSalaryData = ({ companyName }) => async (
+  dispatch,
+  getState,
+) => {
+  const box = companyEsgSalaryDataBoxSelectorByName(companyName)(getState());
+
+  if (isFetching(box) || isFetched(box)) {
+    return;
+  }
+
+  dispatch(setEsgSalaryData(companyName, toFetching()));
+
+  try {
+    const data = await getCompanyEsgSalaryData({
+      companyName,
+    });
+
+    // Not found case
+    if (!data) {
+      return dispatch(setEsgSalaryData(companyName, getFetched()));
+    }
+
+    dispatch(setEsgSalaryData(companyName, getFetched(data)));
+  } catch (error) {
+    dispatch(setEsgSalaryData(companyName, getError(error)));
   }
 };
 
@@ -323,6 +415,7 @@ export const queryCompanyInterviewExperiences = ({
   if (
     isFetching(box) ||
     (isFetched(box) &&
+      box.data &&
       box.data.name === companyName &&
       box.data.jobTitle === jobTitle &&
       box.data.start === start &&
@@ -351,9 +444,9 @@ export const queryCompanyInterviewExperiences = ({
       jobTitle,
       start,
       limit,
-      interview_experiences:
+      interviewExperiences:
         data.interviewExperiencesResult.interviewExperiences,
-      interview_experiences_count: data.interviewExperiencesResult.count,
+      interviewExperiencesCount: data.interviewExperiencesResult.count,
     };
 
     dispatch(
@@ -384,6 +477,7 @@ export const queryCompanyWorkExperiences = ({
   if (
     isFetching(box) ||
     (isFetched(box) &&
+      box.data &&
       box.data.name === companyName &&
       box.data.jobTitle === jobTitle &&
       box.data.start === start &&
@@ -412,8 +506,8 @@ export const queryCompanyWorkExperiences = ({
       jobTitle,
       start,
       limit,
-      work_experiences: data.workExperiencesResult.workExperiences,
-      work_experiences_count: data.workExperiencesResult.count,
+      workExperiences: data.workExperiencesResult.workExperiences,
+      workExperiencesCount: data.workExperiencesResult.count,
     };
 
     dispatch(setWorkExperiences(companyName, getFetched(workExperiencesData)));

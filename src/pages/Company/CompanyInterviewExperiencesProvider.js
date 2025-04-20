@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import usePermission from 'hooks/usePermission';
@@ -14,12 +14,7 @@ import {
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
-import {
-  interviewExperiences as interviewExperiencesSelector,
-  interviewExperiencesCount as interviewExperiencesCountSelector,
-  status as statusSelector,
-  companyInterviewExperiencesBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
+import { companyInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 import {
@@ -28,21 +23,16 @@ import {
 } from 'components/CompanyAndJobTitle/Searchbar';
 import { pageFromQuerySelector } from 'selectors/routing/page';
 
-const useInterviewExperiencesBox = companyName => {
-  const selector = useCallback(
+const useInterviewExperiencesBoxSelector = companyName => {
+  return useCallback(
     state => {
       const company = companyInterviewExperiencesBoxSelectorByName(companyName)(
         state,
       );
-      return {
-        status: statusSelector(company),
-        interviewExperiences: interviewExperiencesSelector(company),
-        interviewExperiencesCount: interviewExperiencesCountSelector(company),
-      };
+      return company;
     },
     [companyName],
   );
-  return useSelector(selector);
 };
 
 const CompanyInterviewExperiencesProvider = () => {
@@ -78,11 +68,7 @@ const CompanyInterviewExperiencesProvider = () => {
     fetchPermission();
   }, [pageType, companyName, fetchPermission]);
 
-  const {
-    status,
-    interviewExperiences,
-    interviewExperiencesCount,
-  } = useInterviewExperiencesBox(companyName);
+  const boxSelector = useInterviewExperiencesBoxSelector(companyName);
 
   const topNJobTitles = useTopNJobTitles(companyName);
 
@@ -92,11 +78,9 @@ const CompanyInterviewExperiencesProvider = () => {
       pageName={companyName}
       page={page}
       pageSize={PAGE_SIZE}
-      totalCount={interviewExperiencesCount}
       tabType={TAB_TYPE.INTERVIEW_EXPERIENCE}
-      status={status}
-      interviewExperiences={interviewExperiences}
       topNJobTitles={topNJobTitles.interview}
+      boxSelector={boxSelector}
     />
   );
 };

@@ -44,12 +44,10 @@ Body.propTypes = {
   description: PropTypes.string.isRequired,
   permissionBlock: PropTypes.element,
   seoText: PropTypes.string,
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
 };
+
 Body.defaultProps = {
-  title: '',
-  description: '',
-  content: '',
   permissionBlock: null,
 };
 

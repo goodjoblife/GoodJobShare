@@ -8,6 +8,7 @@ import {
   SET_INTERVIEW_EXPERIENCES,
   SET_WORK_EXPERIENCES,
   SET_TIME_AND_SALARY_STATISTICS,
+  SET_OVERVIEW_STATISTICS,
 } from 'actions/jobTitle';
 
 const preloadedState = {
@@ -16,6 +17,7 @@ const preloadedState = {
   indexCountBox: getUnfetched(),
   // jobTitle --> overviewBox
   overviewByName: {},
+  overviewStatisticsByName: {},
   timeAndSalaryByName: {},
   timeAndSalaryStatisticsByName: {},
   interviewExperiencesByName: {},
@@ -41,6 +43,15 @@ const reducer = createReducer(preloadedState, {
       ...state,
       overviewByName: {
         ...state.overviewByName,
+        [jobTitle]: box,
+      },
+    };
+  },
+  [SET_OVERVIEW_STATISTICS]: (state, { jobTitle, box }) => {
+    return {
+      ...state,
+      overviewStatisticsByName: {
+        ...state.overviewStatisticsByName,
         [jobTitle]: box,
       },
     };

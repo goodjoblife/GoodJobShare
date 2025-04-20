@@ -22,7 +22,10 @@
     ]
   },
   "jest": {
-    "moduleDirectories": ["node_modules", "src"],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
     "moduleNameMapper": {
       "^common(.*)": "<rootDir>/src/components/common$1",
       "^images(.*)": "<rootDir>/src/components/images$1"
@@ -77,6 +80,7 @@
     "react-dom": "^16.12.0",
     "react-ga4": "^2.1.0",
     "react-helmet": "^5.2.0",
+    "react-loading-skeleton": "^3.5.0",
     "react-redux": "^7.1.3",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
@@ -90,7 +94,7 @@
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.1.0",
     "rollbar": "^2.26.1",
-    "serialize-javascript": "^3.1.0"
+    "serialize-javascript": "^6.0.2"
   },
   "engines": {
     "node": ">=14.x"

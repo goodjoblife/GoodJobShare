@@ -132,7 +132,7 @@ Helmet.propTypes = {
     PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),
-  ).isRequired,
+  ),
   totalCount: PropTypes.number.isRequired,
 };
 

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { BoxStatusRenderer } from '../StatusRenderer';
+import { PageBoxRenderer } from '../StatusRenderer';
 import WorkExperiencesSection from './WorkExperiences';
 import Helmet from './Helmet';
 import Searchbar from '../Searchbar';
@@ -10,10 +10,9 @@ const WorkExperiences = ({
   pageType,
   pageName,
   tabType,
-  workExperiences,
+  boxSelector,
   page,
   pageSize,
-  totalCount,
 }) => (
   <CompanyAndJobTitleWrapper
     pageType={pageType}
@@ -21,11 +20,12 @@ const WorkExperiences = ({
     tabType={tabType}
   >
     <Searchbar pageType={pageType} tabType={tabType} />
-    <BoxStatusRenderer
+    <PageBoxRenderer
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
-      render={() => {
+      boxSelector={boxSelector}
+      render={({ workExperiences, workExperiencesCount: totalCount }) => {
         return (
           <Fragment>
             <Helmet
@@ -51,13 +51,12 @@ const WorkExperiences = ({
 );
 
 WorkExperiences.propTypes = {
+  boxSelector: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,
   pageSize: PropTypes.number.isRequired,
   pageType: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
-  totalCount: PropTypes.number.isRequired,
-  workExperiences: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default WorkExperiences;

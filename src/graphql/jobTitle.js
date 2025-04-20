@@ -103,8 +103,22 @@ export const queryJobTitleOverviewGql = /* GraphQL */ `
             month
             year
           }
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
         }
       }
+    }
+  }
+`;
+
+export const queryJobTitleOverviewStatisticsGql = /* GraphQL */ `
+  query($jobTitle: String!) {
+    job_title(name: $jobTitle) {
       salary_work_time_statistics {
         average_week_work_time
         overtime_frequency_count {
@@ -162,6 +176,13 @@ export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
           data_time {
             month
             year
+          }
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
           }
         }
       }

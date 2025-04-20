@@ -7,6 +7,7 @@ import {
   getJobTitleWorkExperiencesQuery,
   queryJobTitlesHavingDataGql,
   getJobTitleTimeAndSalaryStatisticsQuery,
+  queryJobTitleOverviewStatisticsGql,
 } from 'graphql/jobTitle';
 
 export const queryJobTitleOverview = ({
@@ -22,6 +23,14 @@ export const queryJobTitleOverview = ({
       interviewExperiencesLimit,
       workExperiencesLimit,
       salaryWorkTimesLimit,
+    },
+  }).then(R.prop('job_title'));
+
+export const queryJobTitleOverviewStatistics = ({ jobTitle }) =>
+  graphqlClient({
+    query: queryJobTitleOverviewStatisticsGql,
+    variables: {
+      jobTitle,
     },
   }).then(R.prop('job_title'));
 

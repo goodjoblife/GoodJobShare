@@ -1,40 +1,35 @@
-import React, { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Overview from 'components/CompanyAndJobTitle/Overview';
 import usePermission from 'hooks/usePermission';
 import {
   tabType as TAB_TYPE,
   pageType as PAGE_TYPE,
 } from 'constants/companyJobTitle';
-import { queryJobTitleOverview } from 'actions/jobTitle';
 import {
-  salaryDistribution,
-  averageWeekWorkTime,
-  overtimeFrequencyCount,
+  queryJobTitleOverview,
+  queryJobTitleOverviewStatistics,
+} from 'actions/jobTitle';
+import {
   jobTitleOverviewBoxSelectorByName as overviewBoxSelectorByName,
+  jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
-const useOverviewBox = pageName => {
-  const selector = useCallback(
+const useOverviewBoxSelector = pageName => {
+  return useCallback(
     state => {
       const box = overviewBoxSelectorByName(pageName)(state);
-      // the box.data may be null (company not found)
-      return {
-        status: box.status,
-        data: box.data
-          ? {
-              ...box.data,
-              // the Overview need some fileds derived from salary_work_time_statistics
-              salaryDistribution: salaryDistribution(box),
-              averageWeekWorkTime: averageWeekWorkTime(box),
-              overtimeFrequencyCount: overtimeFrequencyCount(box),
-            }
-          : null,
-        error: box.error,
-      };
+      return box;
     },
+    [pageName],
+  );
+};
+
+const useOverviewStatisticsBox = pageName => {
+  const selector = useMemo(
+    () => overviewStatisticsBoxSelectorByName(pageName),
     [pageName],
   );
   return useSelector(selector);
@@ -45,8 +40,19 @@ const JobTitleOverviewProvider = () => {
   const pageType = PAGE_TYPE.JOB_TITLE;
   const jobTitle = useJobTitle();
 
+  const handleQueryJobTitleOverview = useCallback(
+    ({ force = false } = {}) => {
+      dispatch(queryJobTitleOverview(jobTitle, { force }));
+    },
+    [dispatch, jobTitle],
+  );
+
   useEffect(() => {
-    dispatch(queryJobTitleOverview(jobTitle));
+    handleQueryJobTitleOverview();
+  }, [handleQueryJobTitleOverview]);
+
+  useEffect(() => {
+    dispatch(queryJobTitleOverviewStatistics(jobTitle));
   }, [dispatch, jobTitle]);
 
   const [, fetchPermission] = usePermission();
@@ -54,14 +60,17 @@ const JobTitleOverviewProvider = () => {
     fetchPermission();
   }, [pageType, jobTitle, fetchPermission]);
 
-  const overviewBox = useOverviewBox(jobTitle);
+  const boxSelector = useOverviewBoxSelector(jobTitle);
+  const statisticsBox = useOverviewStatisticsBox(jobTitle);
 
   return (
     <Overview
       pageType={pageType}
       pageName={jobTitle}
       tabType={TAB_TYPE.OVERVIEW}
-      overviewBox={overviewBox}
+      boxSelector={boxSelector}
+      statisticsBox={statisticsBox}
+      onCloseReport={() => handleQueryJobTitleOverview({ force: true })}
     />
   );
 };
@@ -69,7 +78,10 @@ const JobTitleOverviewProvider = () => {
 JobTitleOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
   const params = paramsSelector(props);
   const jobTitle = jobTitleSelector(params);
-  return dispatch(queryJobTitleOverview(jobTitle));
+  return Promise.all([
+    dispatch(queryJobTitleOverview(jobTitle)),
+    dispatch(queryJobTitleOverviewStatistics(jobTitle)),
+  ]);
 };
 
 export default JobTitleOverviewProvider;
