@@ -6,8 +6,8 @@ $paddingS: 16px;
 .container {
   position: relative;
   display: flex;
-  border: 1px solid border-gray;
   flex-direction: column;
+  padding: 0;
 }
 
 .date {
@@ -21,8 +21,15 @@ $paddingS: 16px;
 
 .info {
   width: 100%;
-  background-color: white-light;
   padding: 25px $padding;
+
+  &::after {
+    content: '';
+    display: block;
+    height: 0.5px;
+    background-color: #cecece;
+    margin-top: 33px;
+  }
 
   @media (max-width: 550px) {
     padding: $paddingS;
