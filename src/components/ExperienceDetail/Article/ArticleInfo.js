@@ -14,6 +14,7 @@ import {
 import { originalCompanyNameSelector } from '../experienceSelector';
 import RatingInfo from './RatingInfo';
 import OverallRating from 'common/OverallRating';
+import ExternalLink from 'common/icons/ExternalLink';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
@@ -281,7 +282,7 @@ const Aside = ({ experience, hideContent, originalLink }) => {
       {originalLink && (
         <Link className={styles.originalLink} to={originalLink}>
           <span role="img" aria-label="link">
-            🔗
+            <ExternalLink />
           </span>
         </Link>
       )}
