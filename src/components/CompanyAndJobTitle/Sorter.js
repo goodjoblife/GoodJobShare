@@ -11,7 +11,7 @@ export const SORT_BY = {
 };
 
 export const sortByFromQuerySelector = query =>
-  query.sort_by || SORT_BY.LATEST_FIRST;
+  query.sort_by || SORT_BY.FEATURED_FIRST;
 
 export const useSortByFromQuery = () => {
   const history = useHistory();
