@@ -1,3 +1,5 @@
+import { experiencePartialGql } from './experience';
+
 export const queryCompanyRatingStatisticsGql = /* GraphQL */ `
   query($companyName: String!) {
     company(name: $companyName) {
@@ -26,57 +28,11 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
       interviewExperiencesResult(start: 0, limit: $interviewExperiencesLimit) {
         count
         interviewExperiences {
-          id
-          type
-          originalCompanyName
-          reportCount
-          reports {
-            id
-            reasonCategory
-            reason
-            createdAt
-          }
-          company {
-            name
-            salary_work_time_statistics {
-              job_average_salaries {
-                job_title {
-                  name
-                }
-                average_salary {
-                  type
-                  amount
-                }
-                data_count
-              }
-            }
-          }
-          job_title {
-            name
-            salary_distribution {
-              bins {
-                data_count
-                range {
-                  type
-                  from
-                  to
-                }
-              }
-            }
-          }
-          region
-          experience_in_year
-          education
-          salary {
-            amount
-            type
-          }
-          title
+          ${experiencePartialGql}
           sections {
             subtitle
             content
           }
-          created_at
           reply_count
           like_count
           averageSectionRating
@@ -85,57 +41,11 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
       workExperiencesResult(start: 0, limit: $workExperiencesLimit) {
         count
         workExperiences {
-          id
-          type
-          originalCompanyName
-          reportCount
-          reports {
-            id
-            reasonCategory
-            reason
-            createdAt
-          }
-          company {
-            name
-            salary_work_time_statistics {
-              job_average_salaries {
-                job_title {
-                  name
-                }
-                average_salary {
-                  type
-                  amount
-                }
-                data_count
-              }
-            }
-          }
-          job_title {
-            name
-            salary_distribution {
-              bins {
-                data_count
-                range {
-                  type
-                  from
-                  to
-                }
-              }
-            }
-          }
-          region
-          experience_in_year
-          education
-          salary {
-            amount
-            type
-          }
-          title
+          ${experiencePartialGql}
           sections {
             subtitle
             content
           }
-          created_at
           reply_count
           like_count
           recommend_to_others
@@ -336,57 +246,11 @@ export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
       ) {
         count
         interviewExperiences {
-          id
-          type
-          originalCompanyName
-          reportCount
-          reports {
-            id
-            reasonCategory
-            reason
-            createdAt
-          }
-          company {
-            name
-            salary_work_time_statistics {
-              job_average_salaries {
-                job_title {
-                  name
-                }
-                average_salary {
-                  type
-                  amount
-                }
-                data_count
-              }
-            }
-          }
-          job_title {
-            name
-            salary_distribution {
-              bins {
-                data_count
-                range {
-                  type
-                  from
-                  to
-                }
-              }
-            }
-          }
-          region
-          experience_in_year
-          education
-          salary {
-            amount
-            type
-          }
-          title
+          ${experiencePartialGql}
           sections {
             subtitle
             content
           }
-          created_at
           reply_count
           like_count
           averageSectionRating
@@ -403,57 +267,11 @@ export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
       workExperiencesResult(jobTitle: $jobTitle, start: $start, limit: $limit) {
         count
         workExperiences {
-          id
-          type
-          originalCompanyName
-          reportCount
-          reports {
-            id
-            reasonCategory
-            reason
-            createdAt
-          }
-          company {
-            name
-            salary_work_time_statistics {
-              job_average_salaries {
-                job_title {
-                  name
-                }
-                average_salary {
-                  type
-                  amount
-                }
-                data_count
-              }
-            }
-          }
-          job_title {
-            name
-            salary_distribution {
-              bins {
-                data_count
-                range {
-                  type
-                  from
-                  to
-                }
-              }
-            }
-          }
-          region
-          experience_in_year
-          education
-          salary {
-            amount
-            type
-          }
-          title
+          ${experiencePartialGql}
           sections {
             subtitle
             content
           }
-          created_at
           reply_count
           like_count
           recommend_to_others
