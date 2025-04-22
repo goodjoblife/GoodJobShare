@@ -17,6 +17,10 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
+import {
+  sortByFromQuerySelector,
+  useSortByFromQuery,
+} from 'components/CompanyAndJobTitle/Sorter';
 
 const useInterviewExperiencesBoxSelector = jobTitle => {
   return useCallback(
@@ -35,6 +39,7 @@ const JobTitleTimeAndSalaryProvider = () => {
   const pageType = PAGE_TYPE.JOB_TITLE;
   const jobTitle = useJobTitle();
   const [companyName] = useSearchTextFromQuery();
+  const [sortBy] = useSortByFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
@@ -46,9 +51,10 @@ const JobTitleTimeAndSalaryProvider = () => {
         companyName: companyName || undefined,
         start,
         limit,
+        sortBy,
       }),
     );
-  }, [dispatch, jobTitle, companyName, start, limit]);
+  }, [dispatch, jobTitle, companyName, start, limit, sortBy]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -77,6 +83,7 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   const jobTitle = jobTitleSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
+  const sortBy = sortByFromQuerySelector(query);
   const companyName = searchTextFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
@@ -86,6 +93,7 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
       companyName,
       start,
       limit,
+      sortBy,
     }),
   );
 };
