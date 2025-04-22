@@ -29,11 +29,40 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
           id
           type
           originalCompanyName
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
           company {
             name
+            salary_work_time_statistics {
+              job_average_salaries {
+                job_title {
+                  name
+                }
+                average_salary {
+                  type
+                  amount
+                }
+                data_count
+              }
+            }
           }
           job_title {
             name
+            salary_distribution {
+              bins {
+                data_count
+                range {
+                  type
+                  from
+                  to
+                }
+              }
+            }
           }
           region
           experience_in_year
@@ -59,11 +88,40 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
           id
           type
           originalCompanyName
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
           company {
             name
+            salary_work_time_statistics {
+              job_average_salaries {
+                job_title {
+                  name
+                }
+                average_salary {
+                  type
+                  amount
+                }
+                data_count
+              }
+            }
           }
           job_title {
             name
+            salary_distribution {
+              bins {
+                data_count
+                range {
+                  type
+                  from
+                  to
+                }
+              }
+            }
           }
           region
           experience_in_year
@@ -281,11 +339,40 @@ export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
           id
           type
           originalCompanyName
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
           company {
             name
+            salary_work_time_statistics {
+              job_average_salaries {
+                job_title {
+                  name
+                }
+                average_salary {
+                  type
+                  amount
+                }
+                data_count
+              }
+            }
           }
           job_title {
             name
+            salary_distribution {
+              bins {
+                data_count
+                range {
+                  type
+                  from
+                  to
+                }
+              }
+            }
           }
           region
           experience_in_year
@@ -319,11 +406,40 @@ export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
           id
           type
           originalCompanyName
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
           company {
             name
+            salary_work_time_statistics {
+              job_average_salaries {
+                job_title {
+                  name
+                }
+                average_salary {
+                  type
+                  amount
+                }
+                data_count
+              }
+            }
           }
           job_title {
             name
+            salary_distribution {
+              bins {
+                data_count
+                range {
+                  type
+                  from
+                  to
+                }
+              }
+            }
           }
           region
           experience_in_year
