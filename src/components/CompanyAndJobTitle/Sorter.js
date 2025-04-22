@@ -10,8 +10,12 @@ export const SORT_BY = {
   FEATURED_FIRST: 'FEATURED_FIRST',
 };
 
-export const sortByFromQuerySelector = query =>
-  query.sort_by || SORT_BY.FEATURED_FIRST;
+export const sortByFromQuerySelector = query => {
+  const sortBy = query.sort_by;
+  const availableSortBy = Object.values(SORT_BY);
+  if (availableSortBy.includes(sortBy)) return sortBy;
+  return SORT_BY.FEATURED_FIRST;
+};
 
 export const useSortByFromQuery = () => {
   const history = useHistory();
