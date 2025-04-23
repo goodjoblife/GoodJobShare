@@ -103,6 +103,13 @@ export const queryJobTitleOverviewGql = /* GraphQL */ `
             month
             year
           }
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
         }
       }
     }
@@ -170,6 +177,13 @@ export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
             month
             year
           }
+          reportCount
+          reports {
+            id
+            reasonCategory
+            reason
+            createdAt
+          }
         }
       }
     }
@@ -203,13 +217,20 @@ export const getJobTitleTimeAndSalaryStatisticsQuery = /* GraphQL */ `
 `;
 
 export const getJobTitleInterviewExperiencesQuery = /* GraphQL */ `
-  query($jobTitle: String!, $companyName: String, $start: Int!, $limit: Int!) {
+  query(
+    $jobTitle: String!
+    $companyName: String
+    $start: Int!
+    $limit: Int!
+    $sortBy: DataResultSortOption
+  ) {
     job_title(name: $jobTitle) {
       name
       interviewExperiencesResult(
         companyQuery: $companyName
         start: $start
         limit: $limit
+        sortBy: $sortBy
       ) {
         count
         interviewExperiences {
@@ -245,13 +266,20 @@ export const getJobTitleInterviewExperiencesQuery = /* GraphQL */ `
 `;
 
 export const getJobTitleWorkExperiencesQuery = /* GraphQL */ `
-  query($jobTitle: String!, $companyName: String, $start: Int!, $limit: Int!) {
+  query(
+    $jobTitle: String!
+    $companyName: String
+    $start: Int!
+    $limit: Int!
+    $sortBy: DataResultSortOption
+  ) {
     job_title(name: $jobTitle) {
       name
       workExperiencesResult(
         companyQuery: $companyName
         start: $start
         limit: $limit
+        sortBy: $sortBy
       ) {
         count
         workExperiences {

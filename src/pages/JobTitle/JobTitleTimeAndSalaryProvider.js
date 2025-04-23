@@ -68,6 +68,23 @@ const JobTitleTimeAndSalaryProvider = () => {
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
 
+  const handleQueryJobTitleTimeAndSalary = useCallback(
+    ({ force = false } = {}) => {
+      dispatch(
+        queryJobTitleTimeAndSalary(
+          {
+            jobTitle,
+            companyName: companyName || undefined,
+            start,
+            limit,
+          },
+          { force },
+        ),
+      );
+    },
+    [dispatch, companyName, jobTitle, start, limit],
+  );
+
   useEffect(() => {
     dispatch(queryJobTitleOverviewStatistics(jobTitle));
   }, [dispatch, jobTitle]);
@@ -81,15 +98,8 @@ const JobTitleTimeAndSalaryProvider = () => {
   }, [dispatch, jobTitle]);
 
   useEffect(() => {
-    dispatch(
-      queryJobTitleTimeAndSalary({
-        jobTitle,
-        companyName: companyName || undefined,
-        start,
-        limit,
-      }),
-    );
-  }, [dispatch, jobTitle, companyName, start, limit]);
+    handleQueryJobTitleTimeAndSalary();
+  }, [handleQueryJobTitleTimeAndSalary]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -111,6 +121,7 @@ const JobTitleTimeAndSalaryProvider = () => {
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
+      onCloseReport={() => handleQueryJobTitleTimeAndSalary({ force: true })}
     />
   );
 };

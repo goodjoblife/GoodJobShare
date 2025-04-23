@@ -130,12 +130,12 @@ const setOverview = (companyName, box) => ({
   box,
 });
 
-export const queryCompanyOverview = companyName => async (
-  dispatch,
-  getState,
-) => {
+export const queryCompanyOverview = (
+  companyName,
+  { force = false } = {},
+) => async (dispatch, getState) => {
   const box = companyOverviewBoxSelectorByName(companyName)(getState());
-  if (isFetching(box) || isFetched(box)) {
+  if (!force && (isFetching(box) || isFetched(box))) {
     return;
   }
 
@@ -235,21 +235,20 @@ const setInterviewExperiences = (companyName, box) => ({
   box,
 });
 
-export const queryCompanyTimeAndSalary = ({
-  companyName,
-  jobTitle,
-  start,
-  limit,
-}) => async (dispatch, getState) => {
+export const queryCompanyTimeAndSalary = (
+  { companyName, jobTitle, start, limit },
+  { force = false } = {},
+) => async (dispatch, getState) => {
   const box = companyTimeAndSalaryBoxSelectorByName(companyName)(getState());
   if (
-    isFetching(box) ||
-    (isFetched(box) &&
-      box.data &&
-      box.data.name === companyName &&
-      box.data.jobTitle === jobTitle &&
-      box.data.start === start &&
-      box.data.limit === limit)
+    !force &&
+    (isFetching(box) ||
+      (isFetched(box) &&
+        box.data &&
+        box.data.name === companyName &&
+        box.data.jobTitle === jobTitle &&
+        box.data.start === start &&
+        box.data.limit === limit))
   ) {
     return;
   }
@@ -409,6 +408,7 @@ export const queryCompanyInterviewExperiences = ({
   jobTitle,
   start,
   limit,
+  sortBy,
 }) => async (dispatch, getState) => {
   const box = companyInterviewExperiencesBoxSelectorByName(companyName)(
     getState(),
@@ -420,7 +420,8 @@ export const queryCompanyInterviewExperiences = ({
       box.data.name === companyName &&
       box.data.jobTitle === jobTitle &&
       box.data.start === start &&
-      box.data.limit === limit)
+      box.data.limit === limit &&
+      box.data.sortBy === sortBy)
   ) {
     return;
   }
@@ -433,6 +434,7 @@ export const queryCompanyInterviewExperiences = ({
       jobTitle,
       start,
       limit,
+      sortBy,
     });
 
     // Not found case
@@ -445,6 +447,7 @@ export const queryCompanyInterviewExperiences = ({
       jobTitle,
       start,
       limit,
+      sortBy,
       interviewExperiences:
         data.interviewExperiencesResult.interviewExperiences,
       interviewExperiencesCount: data.interviewExperiencesResult.count,
@@ -473,6 +476,7 @@ export const queryCompanyWorkExperiences = ({
   jobTitle,
   start,
   limit,
+  sortBy,
 }) => async (dispatch, getState) => {
   const box = companyWorkExperiencesBoxSelectorByName(companyName)(getState());
   if (
@@ -482,7 +486,8 @@ export const queryCompanyWorkExperiences = ({
       box.data.name === companyName &&
       box.data.jobTitle === jobTitle &&
       box.data.start === start &&
-      box.data.limit === limit)
+      box.data.limit === limit &&
+      box.data.sortBy === sortBy)
   ) {
     return;
   }
@@ -495,6 +500,7 @@ export const queryCompanyWorkExperiences = ({
       jobTitle,
       start,
       limit,
+      sortBy,
     });
 
     // Not found case
@@ -507,6 +513,7 @@ export const queryCompanyWorkExperiences = ({
       jobTitle,
       start,
       limit,
+      sortBy,
       workExperiences: data.workExperiencesResult.workExperiences,
       workExperiencesCount: data.workExperiencesResult.count,
     };

@@ -20,6 +20,9 @@ import {
 } from '../../TimeAndSalary/common/formatter';
 import injectHideContentBlock from '../../TimeAndSalary/common/injectHideContentBlock';
 import usePermission from 'hooks/usePermission';
+import ReportBadge from 'common/button/ReportBadge';
+import ReportZone from 'components/ExperienceDetail/ReportZone';
+import { REPORT_TYPE } from 'components/ExperienceDetail/ReportZone/ReportForm/constants';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
@@ -126,9 +129,27 @@ const columnProps = [
     ),
     Children: TimeHeader,
   },
+  {
+    className: styles.colDataTime,
+    title: '回報',
+    dataField: R.compose(({ id, reportCount, reports, onCloseReport }) => {
+      return (
+        <ReportZone
+          reportType={REPORT_TYPE.SALARY}
+          id={id}
+          reports={reports}
+          reportCount={reportCount}
+          onCloseReport={onCloseReport}
+        >
+          <ReportBadge reportCount={reportCount} />
+        </ReportZone>
+      );
+    }),
+    Children: () => '回報',
+  },
 ];
 
-const WorkingHourTable = ({ data, pageType }) => {
+const WorkingHourTable = ({ data, pageType, onCloseReport }) => {
   const [isInfoSalaryModalOpen, setInfoSalaryModalOpen] = useState(false);
   const [isInfoTimeModalOpen, setInfoTiimeModalOpen] = useState(false);
 
@@ -174,10 +195,15 @@ const WorkingHourTable = ({ data, pageType }) => {
     [canViewPublishId, fromCol, toCol],
   );
 
+  const memoizedData = useMemo(
+    () => data.map(row => ({ ...row, onCloseReport })),
+    [data, onCloseReport],
+  );
+
   return (
     <Table
       className={styles.companyTable}
-      data={data}
+      data={memoizedData}
       primaryKey="created_at"
       postProcessRows={postProcessRows}
     >
@@ -200,6 +226,7 @@ const WorkingHourTable = ({ data, pageType }) => {
 
 WorkingHourTable.propTypes = {
   data: PropTypes.array.isRequired,
+  onCloseReport: PropTypes.func.isRequired,
   pageType: PropTypes.oneOf([
     pageTypeMapping.COMPANY,
     pageTypeMapping.JOB_TITLE,
