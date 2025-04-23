@@ -95,7 +95,7 @@ const ExperienceDetail = ({ ...props }) => {
   return (
     <main>
       {isFetched(experienceBox) && <Seo experience={experienceBox.data} />}
-      <Section bg="white" paddingBottom className={styles.section}>
+      <Section paddingBottom className={styles.section}>
         <Wrapper size="m">
           <div>
             {/* 文章區塊  */}
