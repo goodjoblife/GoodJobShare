@@ -17,14 +17,28 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
+import { isFetched, getFetched } from 'utils/fetchBox';
+import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 
 const useInterviewExperiencesBoxSelector = jobTitle => {
   return useCallback(
     state => {
-      const job = jobTitleInterviewExperiencesBoxSelectorByName(jobTitle)(
+      const box = jobTitleInterviewExperiencesBoxSelectorByName(jobTitle)(
         state,
       );
-      return job;
+      if (isFetched(box)) {
+        // Get full experience data from state.experiences if available
+        // This ensures we have the most up-to-date data, since state.experiences
+        // is the source of truth and may contain edits/updates made after the initial fetch
+        const data = {
+          ...box.data,
+          interviewExperiences: box.data.interviewExperiences.map(
+            e => experienceBoxSelectorAtId(e.id)(state).data || e,
+          ),
+        };
+        return getFetched(data);
+      }
+      return box;
     },
     [jobTitle],
   );
