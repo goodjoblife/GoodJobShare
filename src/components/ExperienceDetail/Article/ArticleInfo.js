@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
@@ -36,27 +36,8 @@ const formatExperienceInYear = year => {
 
 const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
-  const dispatch = useDispatch();
   return (
     <Fragment>
-      {experience.reportCount > 0 && (
-        <div className={styles.reportDialogContainer}>
-          <ReportZone
-            id={experience.id}
-            reportType={REPORT_TYPE.EXPERIENCE}
-            reports={experience.reports}
-            reportCount={experience.reportCount}
-            onCloseReport={() => {
-              dispatch(queryExperience(experience.id));
-            }}
-          >
-            <ReportBadge
-              reportCount={experience.reportCount}
-              reportText="有使用者回報"
-            />
-          </ReportZone>
-        </div>
-      )}
       <InfoBlock
         label="公司"
         to={generatePageURL({
@@ -162,27 +143,8 @@ InterviewInfoBlocks.propTypes = {
 
 const WorkInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
-  const dispatch = useDispatch();
   return (
     <Fragment>
-      {experience.reportCount > 0 && (
-        <div className={styles.reportDialogContainer}>
-          <ReportZone
-            id={experience.id}
-            reportType={REPORT_TYPE.EXPERIENCE}
-            reports={experience.reports}
-            reportCount={experience.reportCount}
-            onCloseReport={() => {
-              dispatch(queryExperience(experience.id));
-            }}
-          >
-            <ReportBadge
-              reportCount={experience.reportCount}
-              reportText="有使用者回報"
-            />
-          </ReportZone>
-        </div>
-      )}
       <InfoBlock
         label="公司"
         to={generatePageURL({
@@ -324,6 +286,40 @@ InternBlocks.propTypes = {
   hideContent: PropTypes.bool,
 };
 
+const HeadingReports = ({ experience }) => {
+  const dispatch = useDispatch();
+  const onCloseReport = useCallback(() => {
+    dispatch(queryExperience(experience.id));
+  }, [experience.id, dispatch]);
+
+  if (experience.reportCount === 0) return null;
+
+  return (
+    <div className={styles.reportDialogContainer}>
+      <ReportZone
+        id={experience.id}
+        reportType={REPORT_TYPE.EXPERIENCE}
+        reports={experience.reports}
+        reportCount={experience.reportCount}
+        onCloseReport={onCloseReport}
+      >
+        <ReportBadge
+          reportCount={experience.reportCount}
+          reportText="有使用者回報"
+        />
+      </ReportZone>
+    </div>
+  );
+};
+
+HeadingReports.propTypes = {
+  experience: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    reportCount: PropTypes.number.isRequired,
+    reports: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }).isRequired,
+};
+
 const Aside = ({ experience, hideContent, originalLink }) => {
   const { type } = experience;
   return (
@@ -335,6 +331,7 @@ const Aside = ({ experience, hideContent, originalLink }) => {
           </span>
         </Link>
       )}
+      <HeadingReports experience={experience} />{' '}
       {type === 'interview' && (
         <ul>
           <InterviewInfoBlocks
