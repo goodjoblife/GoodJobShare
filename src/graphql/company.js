@@ -32,15 +32,62 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
       interviewExperiencesResult(start: 0, limit: $interviewExperiencesLimit) {
         count
         interviewExperiences {
-          ${experiencePartialGql}
-          ${interviewExperiencePartialGql()}
+          id
+          type
+          originalCompanyName
+          company {
+            name
+          }
+          job_title {
+            name
+          }
+          region
+          experience_in_year
+          education
+          salary {
+            amount
+            type
+          }
+          title
+          sections {
+            subtitle
+            content
+          }
+          created_at
+          reply_count
+          like_count
+          averageSectionRating
         }
       }
       workExperiencesResult(start: 0, limit: $workExperiencesLimit) {
         count
         workExperiences {
-          ${experiencePartialGql}
-          ${workExperiencesPartialGql()}
+          id
+          type
+          originalCompanyName
+          company {
+            name
+          }
+          job_title {
+            name
+          }
+          region
+          experience_in_year
+          education
+          salary {
+            amount
+            type
+          }
+          title
+          sections {
+            subtitle
+            content
+          }
+          created_at
+          reply_count
+          like_count
+          recommend_to_others
+          averageSectionRating
         }
       }
       salaryWorkTimesResult(start: 0, limit: $salaryWorkTimesLimit) {

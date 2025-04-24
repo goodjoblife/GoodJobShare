@@ -121,14 +121,6 @@ export const queryJobTitleOverview = (
     };
 
     dispatch(setOverview(jobTitle, getFetched(overviewData)));
-
-    data.interviewExperiencesResult.interviewExperiences.forEach(e => {
-      dispatch(setExperience(e.id, getFetched(e)));
-    });
-
-    data.workExperiencesResult.workExperiences.forEach(e => {
-      dispatch(setExperience(e.id, getFetched(e)));
-    });
   } catch (error) {
     if (isGraphqlError(error)) {
       dispatch(setOverview(jobTitle, getError(error)));
