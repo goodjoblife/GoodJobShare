@@ -34,13 +34,6 @@ $paddingS: 16px;
   @media (max-width: 550px) {
     padding: $paddingS;
   }
-
-  position: relative;
-  .originalLink {
-    position: absolute;
-    top: 25px;
-    right: 25px;
-  }
 }
 
 .main {
@@ -103,9 +96,12 @@ $paddingS: 16px;
   margin-bottom: 30px;
 }
 
-.reportDialogContainer {
+.infoCorner {
   display: flex;
+  flex-direction: row;
   align-items: center;
+  gap: 20px;
+
   position: absolute;
   right: 20px;
 }

@@ -286,53 +286,45 @@ InternBlocks.propTypes = {
   hideContent: PropTypes.bool,
 };
 
-const HeadingReports = ({ experience }) => {
+const InfoCorner = ({ experience, originalLink }) => {
   const dispatch = useDispatch();
   const onCloseReport = useCallback(() => {
     dispatch(queryExperience(experience.id));
   }, [experience.id, dispatch]);
 
-  if (experience.reportCount === 0) return null;
-
   return (
-    <div className={styles.reportDialogContainer}>
-      <ReportZone
-        id={experience.id}
-        reportType={REPORT_TYPE.EXPERIENCE}
-        reports={experience.reports}
-        reportCount={experience.reportCount}
-        onCloseReport={onCloseReport}
-      >
-        <ReportBadge
+    <div className={styles.infoCorner}>
+      {experience.reportCount > 0 && (
+        <ReportZone
+          id={experience.id}
+          reportType={REPORT_TYPE.EXPERIENCE}
+          reports={experience.reports}
           reportCount={experience.reportCount}
-          reportText="有使用者回報"
-        />
-      </ReportZone>
+          onCloseReport={onCloseReport}
+        >
+          <ReportBadge
+            reportCount={experience.reportCount}
+            reportText="有使用者回報"
+          />
+        </ReportZone>
+      )}
+      {originalLink && (
+        <Link className={styles.originalLink} to={originalLink}>
+          <span role="img" aria-label="link">
+            <ExternalLinkIcon />
+          </span>
+        </Link>
+      )}
     </div>
   );
 };
 
-HeadingReports.propTypes = {
+InfoCorner.propTypes = {
   experience: PropTypes.shape({
     id: PropTypes.string.isRequired,
     reportCount: PropTypes.number.isRequired,
     reports: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,
-};
-
-const OriginalLink = ({ originalLink }) => {
-  if (!originalLink) return null;
-
-  return (
-    <Link className={styles.originalLink} to={originalLink}>
-      <span role="img" aria-label="link">
-        <ExternalLinkIcon />
-      </span>
-    </Link>
-  );
-};
-
-OriginalLink.propTypes = {
   originalLink: PropTypes.string,
 };
 
@@ -340,8 +332,7 @@ const Aside = ({ experience, hideContent, originalLink }) => {
   const { type } = experience;
   return (
     <div className={styles.info}>
-      <OriginalLink originalLink={originalLink} />
-      <HeadingReports experience={experience} />
+      <InfoCorner experience={experience} originalLink={originalLink} />
       {type === 'interview' && (
         <ul>
           <InterviewInfoBlocks
