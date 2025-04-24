@@ -22,6 +22,8 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
     $salaryWorkTimesLimit: Int!
   ) {
     company(name: $companyName) {
+      isSubscribed
+      id
       name
       interviewExperiencesResult(start: 0, limit: $interviewExperiencesLimit) {
         count
@@ -356,5 +358,18 @@ export const queryCompaniesHavingDataGql = /* GraphQL */ `
       dataCount
     }
     companiesHavingDataCount
+  }
+`;
+
+export const createCompanySubscriptionGql = /* GraphQL */ `
+  # 格式是這樣 mutation {
+  #    subscribeCompany(input: { companyId: "67f7970144d947cb9d6a517b" }) {
+  #      success
+  #    }
+  # }
+  mutation SubscribeCompany($input: SubscribeCompanyInput!) {
+    subscribeCompany(input: $input) {
+      success
+    }
   }
 `;

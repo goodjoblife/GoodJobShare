@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { toPairs, compose, map } from 'ramda';
 import Heading from 'common/base/Heading';
 import FanPageBlock from 'common/FanPageBlock';
 import BreadCrumb from 'common/BreadCrumb';
 import { tabTypeTranslation, generateTabURL } from 'constants/companyJobTitle';
+import { companyOverviewBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { generateBreadCrumbData } from './utils';
 import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
@@ -16,7 +18,14 @@ const CompanyAndJobTitleWrapper = ({
   pageType,
   pageName,
   tabType,
+  boxSelector,
 }) => {
+  // const [isSubscribed, setIsSubscribed] = useState(false);
+  // const overviewBoxSelector = useMemo(
+  //   () => companyOverviewBoxSelectorByName(pageName),
+  //   [pageName],
+  // );
+
   const tabLinkOptions = useMemo(
     () =>
       compose(
@@ -33,6 +42,15 @@ const CompanyAndJobTitleWrapper = ({
     [pageType, pageName],
   );
 
+  const box = useSelector(boxSelector || (state => null));
+  console.log('box isSubscribed', box?.data?.isSubscribed);
+
+  // useEffect(() => {
+  //   // if (box) {
+  //   setIsSubscribed(true);
+  //   // }
+  // }, []);
+
   return (
     <div>
       <div style={{ marginBottom: '20px' }}>
@@ -43,7 +61,9 @@ const CompanyAndJobTitleWrapper = ({
       <div>
         <div className={styles.titleContainer}>
           <Heading className={styles.title}>{pageName}</Heading>
-          <SubscribeNotificationButton />
+          <SubscribeNotificationButton
+            hasSubscribed={box?.data?.isSubscribed}
+          />
         </div>
         <StatisticsCard pageType={pageType} pageName={pageName} />
       </div>
@@ -60,6 +80,7 @@ const CompanyAndJobTitleWrapper = ({
 };
 
 CompanyAndJobTitleWrapper.propTypes = {
+  boxSelector: PropTypes.func,
   children: PropTypes.node,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,

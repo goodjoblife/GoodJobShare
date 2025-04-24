@@ -163,6 +163,8 @@ export const queryCompanyOverview = (
       interviewExperiencesCount: data.interviewExperiencesResult.count,
       workExperiences: data.workExperiencesResult.workExperiences,
       workExperiencesCount: data.workExperiencesResult.count,
+      isSubscribed: data.isSubscribed,
+      id: data.id,
     };
 
     dispatch(setOverview(companyName, getFetched(overviewData)));

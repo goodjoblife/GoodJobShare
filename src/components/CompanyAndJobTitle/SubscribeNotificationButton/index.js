@@ -11,6 +11,14 @@ const SubscribeNotificationButton = ({ hasSubscribed = false } = {}) => {
       className={cn(styles.buttonContainer, {
         [styles.subscribed]: hasSubscribed,
       })}
+      onClick={() => {
+        // 我要
+        // mutation {
+        //    subscribeCompany(input: { companyId: "67f7970144d947cb9d6a517b" }) {
+        //     success
+        //   }
+        // }
+      }}
     >
       <div className={styles.bellContainer}>
         <img

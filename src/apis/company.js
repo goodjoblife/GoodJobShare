@@ -99,3 +99,9 @@ export const queryCompaniesApi = ({ start, limit }) =>
     query: queryCompaniesHavingDataGql,
     variables: { start, limit },
   });
+
+// export const createCompanySubscriptionApi = ({ companyId }) =>
+//   graphqlClient({
+//     query: createCompanySubscriptionGql,
+//     variables: { companyId },
+//   });
