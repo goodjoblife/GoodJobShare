@@ -31,9 +31,8 @@ const useInterviewExperiencesBoxSelector = jobTitle => {
         state,
       );
       if (isFetched(box)) {
-        // Get full experience data from state.experiences if available
-        // This ensures we have the most up-to-date data, since state.experiences
-        // is the source of truth and may contain edits/updates made after the initial fetch
+        // Get experience data from state.experiences, which serves
+        // as the source of truth of experiences.
         const data = {
           ...box.data,
           interviewExperiences: box.data.interviewExperiences.map(
