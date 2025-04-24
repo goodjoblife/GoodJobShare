@@ -21,6 +21,10 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
+import {
+  sortByFromQuerySelector,
+  useSortByFromQuery,
+} from 'components/CompanyAndJobTitle/Sorter';
 import { pageFromQuerySelector } from 'selectors/routing/page';
 import { isFetched, getFetched } from 'utils/fetchBox';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
@@ -54,6 +58,7 @@ const CompanyInterviewExperiencesProvider = () => {
   const pageType = PAGE_TYPE.COMPANY;
   const companyName = useCompanyName();
   const [jobTitle] = useSearchTextFromQuery();
+  const [sortBy] = useSortByFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
@@ -73,9 +78,10 @@ const CompanyInterviewExperiencesProvider = () => {
         jobTitle: jobTitle || undefined,
         start,
         limit,
+        sortBy,
       }),
     );
-  }, [dispatch, companyName, jobTitle, start, limit]);
+  }, [dispatch, companyName, jobTitle, start, limit, sortBy]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -107,6 +113,7 @@ CompanyInterviewExperiencesProvider.fetchData = ({
   const companyName = companyNameSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
+  const sortBy = sortByFromQuerySelector(query);
   const jobTitle = searchTextFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
@@ -117,6 +124,7 @@ CompanyInterviewExperiencesProvider.fetchData = ({
         jobTitle,
         start,
         limit,
+        sortBy,
       }),
     ),
     dispatch(queryRatingStatistics(companyName)),

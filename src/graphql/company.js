@@ -227,13 +227,20 @@ export const getCompanyEsgSalaryDataQuery = /* GraphQL */ `
 `;
 
 export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
-  query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
+  query(
+    $companyName: String!
+    $jobTitle: String
+    $start: Int!
+    $limit: Int!
+    $sortBy: DataResultSortOption
+  ) {
     company(name: $companyName) {
       name
       interviewExperiencesResult(
         jobTitle: $jobTitle
         start: $start
         limit: $limit
+        sortBy: $sortBy
       ) {
         count
         interviewExperiences {
@@ -246,10 +253,21 @@ export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
 `;
 
 export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
-  query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
+  query(
+    $companyName: String!
+    $jobTitle: String
+    $start: Int!
+    $limit: Int!
+    $sortBy: DataResultSortOption
+  ) {
     company(name: $companyName) {
       name
-      workExperiencesResult(jobTitle: $jobTitle, start: $start, limit: $limit) {
+      workExperiencesResult(
+        jobTitle: $jobTitle
+        start: $start
+        limit: $limit
+        sortBy: $sortBy
+      ) {
         count
         workExperiences {
           ${experiencePartialGql}

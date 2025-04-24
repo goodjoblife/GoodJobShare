@@ -20,6 +20,10 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
+import {
+  sortByFromQuerySelector,
+  useSortByFromQuery,
+} from 'components/CompanyAndJobTitle/Sorter';
 import { isFetched, getFetched } from 'utils/fetchBox';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 
@@ -50,6 +54,7 @@ const CompanyWorkExperiencesProvider = () => {
   const pageType = PAGE_TYPE.COMPANY;
   const companyName = useCompanyName();
   const [jobTitle] = useSearchTextFromQuery();
+  const [sortBy] = useSortByFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
@@ -65,9 +70,10 @@ const CompanyWorkExperiencesProvider = () => {
         jobTitle: jobTitle || undefined,
         start,
         limit,
+        sortBy,
       }),
     );
-  }, [dispatch, companyName, jobTitle, start, limit]);
+  }, [dispatch, companyName, jobTitle, start, limit, sortBy]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -97,6 +103,7 @@ CompanyWorkExperiencesProvider.fetchData = ({
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
   const jobTitle = searchTextFromQuerySelector(query) || undefined;
+  const sortBy = sortByFromQuerySelector(query);
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   return Promise.all([
@@ -106,6 +113,7 @@ CompanyWorkExperiencesProvider.fetchData = ({
         jobTitle,
         start,
         limit,
+        sortBy,
       }),
     ),
     dispatch(queryRatingStatistics(companyName)),
