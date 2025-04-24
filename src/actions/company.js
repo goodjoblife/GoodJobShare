@@ -461,6 +461,7 @@ export const queryCompanyInterviewExperiences = ({
       ),
     );
 
+    // Update state.experiences which is the source of truth for all experiences
     data.interviewExperiencesResult.interviewExperiences.forEach(e => {
       dispatch(setExperience(e.id, getFetched(e)));
     });
@@ -525,6 +526,7 @@ export const queryCompanyWorkExperiences = ({
 
     dispatch(setWorkExperiences(companyName, getFetched(workExperiencesData)));
 
+    // Update state.experiences which is the source of truth for all experiences
     data.workExperiencesResult.workExperiences.forEach(e => {
       dispatch(setExperience(e.id, getFetched(e)));
     });
