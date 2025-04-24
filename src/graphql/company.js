@@ -1,4 +1,8 @@
-import { experiencePartialGql } from './experience';
+import {
+  experiencePartialGql,
+  interviewExperiencePartialGql,
+  workExperiencesPartialGql,
+} from './experience';
 
 export const queryCompanyRatingStatisticsGql = /* GraphQL */ `
   query($companyName: String!) {
@@ -29,27 +33,14 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
         count
         interviewExperiences {
           ${experiencePartialGql}
-          sections {
-            subtitle
-            content
-          }
-          reply_count
-          like_count
-          averageSectionRating
+          ${interviewExperiencePartialGql()}
         }
       }
       workExperiencesResult(start: 0, limit: $workExperiencesLimit) {
         count
         workExperiences {
           ${experiencePartialGql}
-          sections {
-            subtitle
-            content
-          }
-          reply_count
-          like_count
-          recommend_to_others
-          averageSectionRating
+          ${workExperiencesPartialGql()}
         }
       }
       salaryWorkTimesResult(start: 0, limit: $salaryWorkTimesLimit) {
@@ -247,13 +238,7 @@ export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
         count
         interviewExperiences {
           ${experiencePartialGql}
-          sections {
-            subtitle
-            content
-          }
-          reply_count
-          like_count
-          averageSectionRating
+          ${interviewExperiencePartialGql()}
         }
       }
     }
@@ -268,14 +253,7 @@ export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
         count
         workExperiences {
           ${experiencePartialGql}
-          sections {
-            subtitle
-            content
-          }
-          reply_count
-          like_count
-          recommend_to_others
-          averageSectionRating
+          ${workExperiencesPartialGql()}
         }
       }
     }
