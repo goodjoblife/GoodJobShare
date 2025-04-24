@@ -14,7 +14,7 @@ import {
 import { originalCompanyNameSelector } from '../experienceSelector';
 import RatingInfo from './RatingInfo';
 import OverallRating from 'common/OverallRating';
-import ExternalLink from 'common/icons/ExternalLink';
+import ExternalLinkIcon from 'common/icons/ExternalLink';
 import ReportBadge from 'common/button/ReportBadge';
 import ReportZone from '../ReportZone';
 import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
@@ -320,18 +320,28 @@ HeadingReports.propTypes = {
   }).isRequired,
 };
 
+const OriginalLink = ({ originalLink }) => {
+  if (!originalLink) return null;
+
+  return (
+    <Link className={styles.originalLink} to={originalLink}>
+      <span role="img" aria-label="link">
+        <ExternalLinkIcon />
+      </span>
+    </Link>
+  );
+};
+
+OriginalLink.propTypes = {
+  originalLink: PropTypes.string,
+};
+
 const Aside = ({ experience, hideContent, originalLink }) => {
   const { type } = experience;
   return (
     <div className={styles.info}>
-      {originalLink && (
-        <Link className={styles.originalLink} to={originalLink}>
-          <span role="img" aria-label="link">
-            <ExternalLink />
-          </span>
-        </Link>
-      )}
-      <HeadingReports experience={experience} />{' '}
+      <OriginalLink originalLink={originalLink} />
+      <HeadingReports experience={experience} />
       {type === 'interview' && (
         <ul>
           <InterviewInfoBlocks
