@@ -18,6 +18,7 @@ const WorkExperiences = ({
     pageType={pageType}
     pageName={pageName}
     tabType={tabType}
+    boxSelector={boxSelector}
   >
     <Searchbar pageType={pageType} tabType={tabType} />
     <PageBoxRenderer

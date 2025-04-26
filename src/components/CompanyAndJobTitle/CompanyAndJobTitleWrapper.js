@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { toPairs, compose, map } from 'ramda';
 import Heading from 'common/base/Heading';
@@ -16,6 +17,7 @@ const CompanyAndJobTitleWrapper = ({
   pageType,
   pageName,
   tabType,
+  boxSelector,
 }) => {
   const tabLinkOptions = useMemo(
     () =>
@@ -33,6 +35,11 @@ const CompanyAndJobTitleWrapper = ({
     [pageType, pageName],
   );
 
+  const box = useSelector(boxSelector || (state => null));
+  console.log('box isSubscribed', box?.data?.isSubscribed);
+  console.log('box data', box?.data);
+  console.log('box selector', boxSelector);
+
   return (
     <div>
       <div style={{ marginBottom: '20px' }}>
@@ -43,7 +50,10 @@ const CompanyAndJobTitleWrapper = ({
       <div>
         <div className={styles.titleContainer}>
           <Heading className={styles.title}>{pageName}</Heading>
-          <SubscribeNotificationButton />
+          <SubscribeNotificationButton
+            hasSubscribed={box?.data?.isSubscribed}
+            companyId={box?.data?.id}
+          />
         </div>
         <StatisticsCard pageType={pageType} pageName={pageName} />
       </div>
@@ -60,6 +70,7 @@ const CompanyAndJobTitleWrapper = ({
 };
 
 CompanyAndJobTitleWrapper.propTypes = {
+  boxSelector: PropTypes.func,
   children: PropTypes.node,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,

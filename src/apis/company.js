@@ -11,6 +11,7 @@ import {
   getCompanyTopNJobTitlesQuery,
   getCompanyEsgSalaryDataQuery,
   queryCompanyOverviewStatisticsQuery,
+  createCompanySubscriptionGql,
 } from 'graphql/company';
 
 export const queryCompanyRatingStatisticsApi = ({ companyName }) =>
@@ -98,4 +99,11 @@ export const queryCompaniesApi = ({ start, limit }) =>
   graphqlClient({
     query: queryCompaniesHavingDataGql,
     variables: { start, limit },
+  });
+
+export const createCompanySubscriptionApi = ({ companyId, token }) =>
+  graphqlClient({
+    query: createCompanySubscriptionGql,
+    token,
+    variables: { input: { companyId } },
   });

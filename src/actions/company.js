@@ -29,7 +29,9 @@ import {
   getCompanyTopNJobTitles,
   getCompanyEsgSalaryData,
   queryCompanyOverviewStatistics as queryCompanyOverviewStatisticsApi,
+  createCompanySubscriptionApi,
 } from 'apis/company';
+import { tokenSelector } from 'selectors/authSelector';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
@@ -149,6 +151,9 @@ export const queryCompanyOverview = (
       salaryWorkTimesLimit: SALARY_WORK_TIMES_LIMIT,
     });
 
+    console.log('API response data', data);
+    console.log('API isSubscribed', data?.isSubscribed);
+
     // Not found case
     if (data == null) {
       return dispatch(setOverview(companyName, getFetched(data)));
@@ -163,7 +168,12 @@ export const queryCompanyOverview = (
       interviewExperiencesCount: data.interviewExperiencesResult.count,
       workExperiences: data.workExperiencesResult.workExperiences,
       workExperiencesCount: data.workExperiencesResult.count,
+      isSubscribed: data.isSubscribed,
+      id: data.id,
     };
+
+    console.log('overviewData', overviewData);
+    console.log('overviewData isSubscribed', overviewData.isSubscribed);
 
     dispatch(setOverview(companyName, getFetched(overviewData)));
   } catch (error) {
@@ -514,4 +524,14 @@ export const queryCompanyWorkExperiences = ({
   } catch (error) {
     dispatch(setWorkExperiences(companyName, getError(error)));
   }
+};
+
+export const createCompanySubscription = ({ companyId }) => (_, getState) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
+  return createCompanySubscriptionApi({ companyId, token }).catch(error => {
+    console.error(error);
+    throw error;
+  });
 };

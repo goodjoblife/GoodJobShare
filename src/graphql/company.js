@@ -22,6 +22,8 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
     $salaryWorkTimesLimit: Int!
   ) {
     company(name: $companyName) {
+      isSubscribed
+      id
       name
       interviewExperiencesResult(start: 0, limit: $interviewExperiencesLimit) {
         count
@@ -152,6 +154,8 @@ export const queryCompanyOverviewStatisticsQuery = /* GraphQL */ `
 export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
   query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
     company(name: $companyName) {
+      isSubscribed
+      id
       name
       salaryWorkTimesResult(jobTitle: $jobTitle, start: $start, limit: $limit) {
         count
@@ -270,6 +274,8 @@ export const getCompanyEsgSalaryDataQuery = /* GraphQL */ `
 export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
   query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
     company(name: $companyName) {
+      isSubscribed
+      id
       name
       interviewExperiencesResult(
         jobTitle: $jobTitle
@@ -312,6 +318,8 @@ export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
 export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
   query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
     company(name: $companyName) {
+      isSubscribed
+      id
       name
       workExperiencesResult(jobTitle: $jobTitle, start: $start, limit: $limit) {
         count
@@ -356,5 +364,13 @@ export const queryCompaniesHavingDataGql = /* GraphQL */ `
       dataCount
     }
     companiesHavingDataCount
+  }
+`;
+
+export const createCompanySubscriptionGql = /* GraphQL */ `
+  mutation SubscribeCompany($input: SubscribeCompanyInput!) {
+    subscribeCompany(input: $input) {
+      success
+    }
   }
 `;

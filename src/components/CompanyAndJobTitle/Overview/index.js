@@ -19,6 +19,7 @@ const Overview = ({
     pageType={pageType}
     pageName={pageName}
     tabType={tabType}
+    boxSelector={boxSelector}
   >
     <PageBoxRenderer
       pageType={pageType}

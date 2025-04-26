@@ -29,6 +29,7 @@ const TimeAndSalary = ({
     pageType={pageType}
     pageName={pageName}
     tabType={tabType}
+    boxSelector={boxSelector}
   >
     {pageType === PAGE_TYPE.COMPANY && (
       <BoxRenderer
