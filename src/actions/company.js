@@ -152,9 +152,6 @@ export const queryCompanyOverview = (
       salaryWorkTimesLimit: SALARY_WORK_TIMES_LIMIT,
     });
 
-    console.log('API response data', data);
-    console.log('API isSubscribed', data?.isSubscribed);
-
     // Not found case
     if (data == null) {
       return dispatch(setOverview(companyName, getFetched(data)));
@@ -172,9 +169,6 @@ export const queryCompanyOverview = (
       isSubscribed: data.isSubscribed,
       id: data.id,
     };
-
-    console.log('overviewData', overviewData);
-    console.log('overviewData isSubscribed', overviewData.isSubscribed);
 
     dispatch(setOverview(companyName, getFetched(overviewData)));
   } catch (error) {
