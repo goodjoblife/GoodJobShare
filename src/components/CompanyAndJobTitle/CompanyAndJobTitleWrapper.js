@@ -11,6 +11,7 @@ import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
 import SubscribeNotificationButton from 'components/CompanyAndJobTitle/SubscribeNotificationButton';
 import StatisticsCard from 'components/CompanyAndJobTitle/StatisticsCard';
+import { isFetched } from 'utils/fetchBox';
 
 const CompanyAndJobTitleWrapper = ({
   children,
@@ -19,6 +20,8 @@ const CompanyAndJobTitleWrapper = ({
   tabType,
   boxSelector,
 }) => {
+  const box = useSelector(boxSelector);
+  const { id: companyId, name: companyName } = box.data || {};
   const tabLinkOptions = useMemo(
     () =>
       compose(
@@ -35,11 +38,6 @@ const CompanyAndJobTitleWrapper = ({
     [pageType, pageName],
   );
 
-  const box = useSelector(boxSelector || (state => null));
-  console.log('box isSubscribed', box?.data?.isSubscribed);
-  console.log('box data', box?.data);
-  console.log('box selector', boxSelector);
-
   return (
     <div>
       <div style={{ marginBottom: '20px' }}>
@@ -51,8 +49,9 @@ const CompanyAndJobTitleWrapper = ({
         <div className={styles.titleContainer}>
           <Heading className={styles.title}>{pageName}</Heading>
           <SubscribeNotificationButton
-            hasSubscribed={box?.data?.isSubscribed}
-            companyId={box?.data?.id}
+            companyName={companyName}
+            companyId={companyId}
+            isFetched={isFetched(box)}
           />
         </div>
         <StatisticsCard pageType={pageType} pageName={pageName} />
