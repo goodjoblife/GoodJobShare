@@ -29,7 +29,8 @@ import {
   getCompanyTopNJobTitles,
   getCompanyEsgSalaryData,
   queryCompanyOverviewStatistics as queryCompanyOverviewStatisticsApi,
-  createCompanySubscriptionApi,
+  subscribeCompanyApi,
+  unsubscribeCompanyApi,
 } from 'apis/company';
 import { tokenSelector } from 'selectors/authSelector';
 
@@ -526,11 +527,21 @@ export const queryCompanyWorkExperiences = ({
   }
 };
 
-export const createCompanySubscription = ({ companyId }) => (_, getState) => {
+export const subscribeCompany = ({ companyId }) => (_, getState) => {
   const state = getState();
   const token = tokenSelector(state);
 
-  return createCompanySubscriptionApi({ companyId, token }).catch(error => {
+  return subscribeCompanyApi({ companyId, token }).catch(error => {
+    console.error(error);
+    throw error;
+  });
+};
+
+export const unsubscribeCompany = ({ companyId }) => (_, getState) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
+  return unsubscribeCompanyApi({ companyId, token }).catch(error => {
     console.error(error);
     throw error;
   });

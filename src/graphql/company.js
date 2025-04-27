@@ -367,9 +367,25 @@ export const queryCompaniesHavingDataGql = /* GraphQL */ `
   }
 `;
 
-export const createCompanySubscriptionGql = /* GraphQL */ `
+export const queryCompanyIsSubscribedGql = /* GraphQL */ `
+  query($companyName: String!) {
+    company(name: $companyName) {
+      isSubscribed
+    }
+  }
+`;
+
+export const subscribeCompanyGql = /* GraphQL */ `
   mutation SubscribeCompany($input: SubscribeCompanyInput!) {
     subscribeCompany(input: $input) {
+      success
+    }
+  }
+`;
+
+export const unsubscribeCompanyGql = /* GraphQL */ `
+  mutation UnsubscribeCompany($input: UnsubscribeCompanyInput!) {
+    unsubscribeCompany(input: $input) {
       success
     }
   }
