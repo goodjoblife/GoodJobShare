@@ -281,6 +281,7 @@ export const queryCompanyTimeAndSalary = (
 
     const timeAndSalaryData = {
       name: data.name,
+      id: data.id,
       jobTitle,
       start,
       limit,
@@ -452,6 +453,7 @@ export const queryCompanyInterviewExperiences = ({
 
     const interviewExperiencesData = {
       name: data.name,
+      id: data.id,
       jobTitle,
       start,
       limit,
@@ -514,6 +516,7 @@ export const queryCompanyWorkExperiences = ({
 
     const workExperiencesData = {
       name: data.name,
+      id: data.id,
       jobTitle,
       start,
       limit,
