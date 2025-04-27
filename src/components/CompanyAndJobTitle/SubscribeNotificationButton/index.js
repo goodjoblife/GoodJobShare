@@ -74,8 +74,8 @@ const SubscribeNotificationButton = ({ isFetched, companyName, companyId }) => {
 };
 
 SubscribeNotificationButton.propTypes = {
-  companyId: PropTypes.string.isRequired,
-  companyName: PropTypes.string.isRequired,
+  companyId: PropTypes.string,
+  companyName: PropTypes.string,
   isFetched: PropTypes.bool.isRequired,
 };
 
