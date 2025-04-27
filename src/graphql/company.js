@@ -22,7 +22,6 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
     $salaryWorkTimesLimit: Int!
   ) {
     company(name: $companyName) {
-      isSubscribed
       id
       name
       interviewExperiencesResult(start: 0, limit: $interviewExperiencesLimit) {
@@ -154,7 +153,6 @@ export const queryCompanyOverviewStatisticsQuery = /* GraphQL */ `
 export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
   query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
     company(name: $companyName) {
-      isSubscribed
       id
       name
       salaryWorkTimesResult(jobTitle: $jobTitle, start: $start, limit: $limit) {
@@ -274,7 +272,6 @@ export const getCompanyEsgSalaryDataQuery = /* GraphQL */ `
 export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
   query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
     company(name: $companyName) {
-      isSubscribed
       id
       name
       interviewExperiencesResult(
@@ -318,7 +315,6 @@ export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
 export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
   query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
     company(name: $companyName) {
-      isSubscribed
       id
       name
       workExperiencesResult(jobTitle: $jobTitle, start: $start, limit: $limit) {
