@@ -100,10 +100,16 @@ $paddingS: 16px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-end;
   gap: 20px;
 
   position: absolute;
   right: 20px;
+
+  @media (max-width: 550px) {
+    position: static;
+    padding-bottom: 16px;
+  }
 }
 
 @media (max-width: below-mobile) {
