@@ -21,14 +21,27 @@ import {
   sortByFromQuerySelector,
   useSortByFromQuery,
 } from 'components/CompanyAndJobTitle/Sorter';
+import { isFetched, getFetched } from 'utils/fetchBox';
+import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 
 const useInterviewExperiencesBoxSelector = jobTitle => {
   return useCallback(
     state => {
-      const job = jobTitleInterviewExperiencesBoxSelectorByName(jobTitle)(
+      const box = jobTitleInterviewExperiencesBoxSelectorByName(jobTitle)(
         state,
       );
-      return job;
+      if (isFetched(box)) {
+        // Get experience data from state.experiences, which serves
+        // as the source of truth of experiences.
+        const data = {
+          ...box.data,
+          interviewExperiences: box.data.interviewExperiences.map(
+            e => experienceBoxSelectorAtId(e.id)(state).data || e,
+          ),
+        };
+        return getFetched(data);
+      }
+      return box;
     },
     [jobTitle],
   );

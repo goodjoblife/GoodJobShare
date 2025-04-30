@@ -1,3 +1,9 @@
+import {
+  experiencePartialGql,
+  interviewExperiencePartialGql,
+  workExperiencesPartialGql,
+} from './experience';
+
 export const queryJobTitles = /* GraphQL */ `
   query($key: String!) {
     job_titles(query: $key, page: 0) {
@@ -234,31 +240,8 @@ export const getJobTitleInterviewExperiencesQuery = /* GraphQL */ `
       ) {
         count
         interviewExperiences {
-          id
-          type
-          originalCompanyName
-          company {
-            name
-          }
-          job_title {
-            name
-          }
-          region
-          experience_in_year
-          education
-          salary {
-            amount
-            type
-          }
-          title
-          sections {
-            subtitle
-            content
-          }
-          created_at
-          reply_count
-          like_count
-          averageSectionRating
+          ${experiencePartialGql}
+          ${interviewExperiencePartialGql()}
         }
       }
     }
@@ -283,32 +266,8 @@ export const getJobTitleWorkExperiencesQuery = /* GraphQL */ `
       ) {
         count
         workExperiences {
-          id
-          type
-          originalCompanyName
-          company {
-            name
-          }
-          job_title {
-            name
-          }
-          region
-          experience_in_year
-          education
-          salary {
-            amount
-            type
-          }
-          title
-          sections {
-            subtitle
-            content
-          }
-          created_at
-          reply_count
-          like_count
-          recommend_to_others
-          averageSectionRating
+          ${experiencePartialGql}
+          ${workExperiencesPartialGql()}
         }
       }
     }

@@ -26,14 +26,27 @@ import {
   useSortByFromQuery,
 } from 'components/CompanyAndJobTitle/Sorter';
 import { pageFromQuerySelector } from 'selectors/routing/page';
+import { isFetched, getFetched } from 'utils/fetchBox';
+import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 
 const useInterviewExperiencesBoxSelector = companyName => {
   return useCallback(
     state => {
-      const company = companyInterviewExperiencesBoxSelectorByName(companyName)(
+      const box = companyInterviewExperiencesBoxSelectorByName(companyName)(
         state,
       );
-      return company;
+      if (isFetched(box) && box.data) {
+        // Get experience data from state.experiences, which serves
+        // as the source of truth of experiences.
+        const data = {
+          ...box.data,
+          interviewExperiences: box.data.interviewExperiences.map(
+            e => experienceBoxSelectorAtId(e.id)(state).data || e,
+          ),
+        };
+        return getFetched(data);
+      }
+      return box;
     },
     [companyName],
   );
