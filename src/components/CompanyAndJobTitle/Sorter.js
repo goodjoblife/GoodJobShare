@@ -71,13 +71,7 @@ Select.propTypes = {
 
 const Sorter = () => {
   const [sortBy, setSortBy] = useSortByFromQuery();
-  const handleChange = useCallback(
-    e => {
-      setSortBy(e.target.value);
-    },
-    [setSortBy],
-  );
-  return <Select value={sortBy} onChange={handleChange} />;
+  return <Select value={sortBy} onChange={setSortBy} />;
 };
 
 export default Sorter;
