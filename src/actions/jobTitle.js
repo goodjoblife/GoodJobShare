@@ -24,6 +24,7 @@ import {
   getJobTitleWorkExperiences,
   queryJobTitlesApi,
 } from 'apis/jobTitle';
+import { setExperience } from './experience';
 
 export const SET_OVERVIEW = '@@JOB_TITLE/SET_OVERVIEW';
 export const SET_OVERVIEW_STATISTICS = '@@JOB_TITLE/SET_OVERVIEW_STATISTICS';
@@ -333,6 +334,11 @@ export const queryJobTitleInterviewExperiences = ({
     dispatch(
       setInterviewExperiences(jobTitle, getFetched(interviewExperiencesyData)),
     );
+
+    // Update state.experiences which is the source of truth for all experiences
+    data.interviewExperiencesResult.interviewExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
   } catch (error) {
     dispatch(setInterviewExperiences(jobTitle, getError(error)));
   }
@@ -392,6 +398,11 @@ export const queryJobTitleWorkExperiences = ({
     };
 
     dispatch(setWorkExperiences(jobTitle, getFetched(workExperiencesData)));
+
+    // Update state.experiences which is the source of truth for all experiences
+    data.workExperiencesResult.workExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
   } catch (error) {
     dispatch(setWorkExperiences(jobTitle, getError(error)));
   }

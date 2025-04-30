@@ -30,6 +30,7 @@ import {
   getCompanyEsgSalaryData,
   queryCompanyOverviewStatistics as queryCompanyOverviewStatisticsApi,
 } from 'apis/company';
+import { setExperience } from './experience';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
@@ -459,6 +460,11 @@ export const queryCompanyInterviewExperiences = ({
         getFetched(interviewExperiencesData),
       ),
     );
+
+    // Update state.experiences which is the source of truth for all experiences
+    data.interviewExperiencesResult.interviewExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
   } catch (error) {
     dispatch(setInterviewExperiences(companyName, getError(error)));
     throw error;
@@ -519,6 +525,11 @@ export const queryCompanyWorkExperiences = ({
     };
 
     dispatch(setWorkExperiences(companyName, getFetched(workExperiencesData)));
+
+    // Update state.experiences which is the source of truth for all experiences
+    data.workExperiencesResult.workExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
   } catch (error) {
     dispatch(setWorkExperiences(companyName, getError(error)));
   }
