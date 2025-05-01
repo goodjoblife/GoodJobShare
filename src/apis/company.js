@@ -103,7 +103,7 @@ export const queryCompaniesApi = ({ start, limit }) =>
     variables: { start, limit },
   });
 
-export const queryCompanyIsSubscribed = async ({ companyName, token }) => {
+export const queryCompanyIsSubscribedApi = async ({ companyName, token }) => {
   const data = await graphqlClient({
     query: queryCompanyIsSubscribedGql,
     token,
