@@ -526,6 +526,23 @@ export const queryCompanyWorkExperiences = ({
   }
 };
 
+const updateSubscriptionState = (
+  dispatch,
+  companyName,
+  prevData,
+  isSubscribed,
+) => {
+  dispatch(
+    setIsSubscribed(
+      companyName,
+      getFetched({
+        ...prevData,
+        isSubscribed,
+      }),
+    ),
+  );
+};
+
 export const subscribeCompany = ({ companyId, companyName }) => async (
   dispatch,
   getState,
@@ -534,22 +551,19 @@ export const subscribeCompany = ({ companyId, companyName }) => async (
   const token = tokenSelector(state);
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
 
+  updateSubscriptionState(dispatch, companyName, box.data, true);
+
   try {
     const data = await subscribeCompanyApi({ companyId, token });
     const {
       subscribeCompany: { success },
     } = data;
 
-    await dispatch(
-      setIsSubscribed(
-        companyName,
-        getFetched({
-          ...(box.data || {}),
-          isSubscribed: success,
-        }),
-      ),
-    );
+    if (!success) {
+      updateSubscriptionState(dispatch, companyName, box.data, false);
+    }
   } catch (error) {
+    updateSubscriptionState(dispatch, companyName, box.data, false);
     throw error;
   }
 };
@@ -562,23 +576,18 @@ export const unsubscribeCompany = ({ companyId, companyName }) => async (
   const token = tokenSelector(state);
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
 
+  updateSubscriptionState(dispatch, companyName, box.data, false);
   try {
     const data = await unsubscribeCompanyApi({ companyId, token });
     const {
       unsubscribeCompany: { success },
     } = data;
 
-    await dispatch(
-      setIsSubscribed(
-        companyName,
-        getFetched({
-          ...(box.data || {}),
-          isSubscribed: !success,
-        }),
-      ),
-    );
+    if (!success) {
+      updateSubscriptionState(dispatch, companyName, box.data, true);
+    }
   } catch (error) {
-    console.error(error);
+    updateSubscriptionState(dispatch, companyName, box.data, true);
     throw error;
   }
 };
