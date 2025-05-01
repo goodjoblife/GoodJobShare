@@ -11,6 +11,7 @@ import {
 } from 'constants/companyJobTitle';
 import {
   queryCompanyInterviewExperiences,
+  queryCompanyIsSubscribed,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
@@ -62,6 +63,10 @@ const CompanyInterviewExperiencesProvider = () => {
       }),
     );
   }, [dispatch, companyName, jobTitle, start, limit]);
+
+  useEffect(() => {
+    dispatch(queryCompanyIsSubscribed(companyName));
+  }, [dispatch, companyName]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {

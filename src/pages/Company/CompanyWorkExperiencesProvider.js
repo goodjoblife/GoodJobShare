@@ -9,6 +9,7 @@ import {
   PAGE_SIZE,
 } from 'constants/companyJobTitle';
 import {
+  queryCompanyIsSubscribed,
   queryCompanyWorkExperiences,
   queryRatingStatistics,
 } from 'actions/company';
@@ -54,6 +55,10 @@ const CompanyWorkExperiencesProvider = () => {
       }),
     );
   }, [dispatch, companyName, jobTitle, start, limit]);
+
+  useEffect(() => {
+    dispatch(queryCompanyIsSubscribed(companyName));
+  }, [dispatch, companyName]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {

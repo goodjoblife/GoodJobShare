@@ -10,6 +10,7 @@ import {
 } from 'constants/companyJobTitle';
 import {
   queryCompanyEsgSalaryData,
+  queryCompanyIsSubscribed,
   queryCompanyOverviewStatistics,
   queryCompanyTimeAndSalary,
   queryCompanyTimeAndSalaryStatistics,
@@ -131,6 +132,10 @@ const CompanyTimeAndSalaryProvider = () => {
   useEffect(() => {
     handleQueryCompanyTimeAndSalary();
   }, [handleQueryCompanyTimeAndSalary]);
+
+  useEffect(() => {
+    dispatch(queryCompanyIsSubscribed(companyName));
+  }, [dispatch, companyName]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
