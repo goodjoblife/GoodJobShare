@@ -5,6 +5,7 @@ import R from 'ramda';
 import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
 import { useShareLink } from 'hooks/experiments';
+import { useTraceEvent } from 'hooks/viewLog';
 import { formatCommaSeparatedNumber } from 'utils/stringUtil';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
@@ -13,11 +14,10 @@ import QABlock from './QABlock';
 import ReactionZone from './ReactionZone';
 import { BasicPermissionBlock } from 'common/PermissionBlock';
 import { MAX_WORDS_IF_HIDDEN } from 'constants/hideContent';
+import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
 import * as VISIBILITY from './visibility';
 import Button from 'common/button/Button';
 import Card from 'common/Card';
-import { useTraceEvent } from 'hooks/viewLog';
-import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
 
 const countSectionWords = sections =>
   R.reduce(
