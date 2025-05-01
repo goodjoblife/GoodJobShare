@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { toPairs, compose, map } from 'ramda';
 import Heading from 'common/base/Heading';
@@ -11,17 +10,14 @@ import TabLinkGroup from 'common/TabLinkGroup';
 import styles from './CompanyAndJobTitleWrapper.module.css';
 import SubscribeNotificationButton from 'components/CompanyAndJobTitle/SubscribeNotificationButton';
 import StatisticsCard from 'components/CompanyAndJobTitle/StatisticsCard';
-import { isFetched } from 'utils/fetchBox';
+import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 
 const CompanyAndJobTitleWrapper = ({
   children,
   pageType,
   pageName,
   tabType,
-  boxSelector,
 }) => {
-  const box = useSelector(boxSelector);
-  const { id: companyId, name: companyName } = box.data || {};
   const tabLinkOptions = useMemo(
     () =>
       compose(
@@ -48,11 +44,9 @@ const CompanyAndJobTitleWrapper = ({
       <div>
         <div className={styles.titleContainer}>
           <Heading className={styles.title}>{pageName}</Heading>
-          <SubscribeNotificationButton
-            companyName={companyName}
-            companyId={companyId}
-            isFetched={isFetched(box)}
-          />
+          {pageType === PAGE_TYPE.COMPANY && (
+            <SubscribeNotificationButton companyName={pageName} />
+          )}
         </div>
         <StatisticsCard pageType={pageType} pageName={pageName} />
       </div>
@@ -69,7 +63,6 @@ const CompanyAndJobTitleWrapper = ({
 };
 
 CompanyAndJobTitleWrapper.propTypes = {
-  boxSelector: PropTypes.func,
   children: PropTypes.node,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
