@@ -15,6 +15,7 @@ import { BasicPermissionBlock } from 'common/PermissionBlock';
 import { MAX_WORDS_IF_HIDDEN } from 'constants/hideContent';
 import * as VISIBILITY from './visibility';
 import Button from 'common/button/Button';
+import Card from 'common/Card';
 import { useTraceEvent } from 'hooks/viewLog';
 import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
 
@@ -38,7 +39,7 @@ const ChildrenOnMaskBottom = ({ visibility, totalWords, onExpand }) => {
 
     case VISIBILITY.COLLAPSED:
       return (
-        <Button circleSize="m" btnStyle="hollowBlack" onClick={onExpand}>
+        <Button circleSize="md" btnStyle="black" onClick={onExpand}>
           查看詳細
         </Button>
       );
@@ -137,48 +138,52 @@ const Article = ({
   });
 
   return (
-    <div className={styles.container}>
-      <ArticleInfo
-        experience={experience}
-        visibility={visibility}
-        originalLink={originalLink}
-      />
-      <section className={styles.main}>
-        <div className={styles.article}>
-          <Sections
-            experience={experience}
-            visibility={visibility}
-            onExpand={traceDetailView}
-          />
-        </div>
-        <div>
-          {experience.type === 'interview' &&
-          experience.interview_qas &&
-          experience.interview_qas.length &&
-          visibility === VISIBILITY.VISIBLE ? (
-            <div className={styles.qaWrapper}>
-              <P size="l" bold>
-                面試問答
-              </P>
-              {experience.interview_qas.map(({ question, answer }, idx) => (
-                <QABlock key={idx} question={question} answer={answer} />
-              ))}
-            </div>
-          ) : null}
-        </div>
+    <>
+      <Card className={styles.container}>
+        <ArticleInfo
+          experience={experience}
+          visibility={visibility}
+          originalLink={originalLink}
+        />
+        <section className={styles.main}>
+          <div className={styles.article}>
+            <Sections
+              experience={experience}
+              visibility={visibility}
+              onExpand={traceDetailView}
+            />
+          </div>
+          <div>
+            {experience.type === 'interview' &&
+            experience.interview_qas &&
+            experience.interview_qas.length &&
+            visibility === VISIBILITY.VISIBLE ? (
+              <div className={styles.qaWrapper}>
+                <P size="l" bold>
+                  面試問答
+                </P>
+                {experience.interview_qas.map(({ question, answer }, idx) => (
+                  <QABlock key={idx} question={question} answer={answer} />
+                ))}
+              </div>
+            ) : null}
+          </div>
 
-        {visibility === VISIBILITY.LOCKED && (
-          <BasicPermissionBlock
-            to={shareLink}
-            rootClassName={styles.permissionBlockArticle}
-          />
-        )}
-      </section>
-      <ReactionZone
-        experienceId={experience.id}
-        onClickMsgButton={onClickMsgButton}
-      />
-    </div>
+          {visibility === VISIBILITY.LOCKED && (
+            <BasicPermissionBlock
+              to={shareLink}
+              rootClassName={styles.permissionBlockArticle}
+            />
+          )}
+        </section>
+        <ReactionZone
+          experienceId={experience.id}
+          onClickMsgButton={onClickMsgButton}
+          reportCount={experience.reportCount}
+          reports={experience.reports}
+        />
+      </Card>
+    </>
   );
 };
 

@@ -5,7 +5,6 @@ import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
 import NotFoundStatus from 'common/routing/NotFound';
 import usePermission from 'hooks/usePermission';
-
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
@@ -19,6 +18,7 @@ const TimeAndSalary = ({
   page,
   pageSize,
   totalCount,
+  onCloseReport,
 }) => {
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -31,7 +31,11 @@ const TimeAndSalary = ({
     <Section Tag="main" paddingBottom>
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
-          <WorkingHourBlock data={salaryWorkTimes} pageType={pageType} />
+          <WorkingHourBlock
+            data={salaryWorkTimes}
+            pageType={pageType}
+            onCloseReport={onCloseReport}
+          />
           <Pagination
             totalCount={totalCount}
             unit={pageSize}
@@ -59,6 +63,7 @@ const TimeAndSalary = ({
 };
 
 TimeAndSalary.propTypes = {
+  onCloseReport: PropTypes.func.isRequired,
   page: PropTypes.number,
   pageName: PropTypes.string,
   pageSize: PropTypes.number.isRequired,

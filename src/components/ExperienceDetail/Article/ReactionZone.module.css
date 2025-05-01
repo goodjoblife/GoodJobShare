@@ -1,15 +1,29 @@
-@value main-yellow, border-gray from "../../common/variables.module.css";
+@value main-yellow, border-gray, below-mobile from "../../common/variables.module.css";
 
 .reactionZone {
   border-top: 1px solid border-gray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   .reactionButton {
     border-right: 1px solid border-gray;
   }
+
+  .report {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    border-right: none;
+  }
+
+  .reportText {
+    margin-left: 0.5rem;
+  }
 }
 
 .reactionButton {
-  padding: 9px 21px;
+  padding: 8px 20px;
   font-size: 15px;
   font-weight: 600;
   color: #555555;
@@ -25,7 +39,15 @@
 .icon {
   width: 26px;
   height: 26px;
-  fill: #c1c1c1;
   transition: fill 0.3s;
   margin-right: 11px;
+}
+
+@media (max-width: below-mobile) {
+  .reactionZone .reactionButton {
+    flex: 1;
+    justify-content: center;
+    padding: 8px;
+    text-align: center;
+  }
 }

@@ -8,6 +8,7 @@ import NotFoundStatus from 'common/routing/NotFound';
 
 import EmptyView from '../EmptyView';
 import Experience from '../Experience';
+import styles from '../styles.module.css';
 
 import { useQuery } from 'hooks/routing';
 
@@ -34,7 +35,9 @@ const InterviewExperiences = ({
   return (
     <Section Tag="main" paddingBottom>
       {data.map(d => (
-        <Experience key={d.id} experience={d} />
+        <div className={styles.experience}>
+          <Experience key={d.id} experience={d} />
+        </div>
       ))}
       <Pagination
         totalCount={totalCount}

@@ -2,12 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import usePermission from 'hooks/usePermission';
 import Article from 'components/ExperienceDetail/Article';
-import { Wrapper } from 'common/base';
+import { Heading, Wrapper } from 'common/base';
 import MessageBoard from '../ExperienceDetail/MessageBoard';
 import * as VISIBILITY from 'components/ExperienceDetail/Article/visibility';
 import { useTraceEvent } from 'hooks/viewLog';
 import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
 import { useWindowScroll, useWindowSize } from 'react-use';
+import styles from './Experience.module.css';
+import { formatSimpleDate } from 'utils/dateUtil';
 
 const useTracePreviewRef = ({ experience }) => {
   const { height: windowHeight } = useWindowSize();
@@ -41,6 +43,12 @@ const Experience = ({ experience }) => {
 
   return (
     <div ref={ref}>
+      <Heading size="m" Tag="h2" bold className={styles.title}>
+        {experience.title}{' '}
+        <span className={styles.timestamp}>
+          {formatSimpleDate(new Date(experience.created_at))}
+        </span>
+      </Heading>
       <Article
         experience={experience}
         visibility={

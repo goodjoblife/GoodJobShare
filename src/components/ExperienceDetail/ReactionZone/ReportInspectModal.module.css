@@ -1,6 +1,0 @@
-@value border-gray from "../../common/variables.module.css";
-
-.reportItem {
-  padding: 16px 0;
-  border-bottom: 1px solid border-gray;
-}
