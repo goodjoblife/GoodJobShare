@@ -107,3 +107,7 @@ export const jobTitleInterviewExperiencesBoxSelectorByName = jobTitle => state =
 export const jobTitleWorkExperiencesBoxSelectorByName = jobTitle => state => {
   return state.jobTitleIndex.workExperiencesByName[jobTitle] || getUnfetched();
 };
+
+export const companyIsSubscribedBoxSelectorByName = companyName => state => {
+  return state.companyIndex.isSubscribedByName[companyName] || getUnfetched();
+};

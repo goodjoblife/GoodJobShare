@@ -1,49 +1,38 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import BellWhiteImage from 'common/icons/bellWhite.svg';
 import BellBlackImage from 'common/icons/bellBlack.svg';
 import PropTypes from 'prop-types';
 import styles from './SubscribeNotificationButton.module.css';
 import cn from 'classnames';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { subscribeCompany, unsubscribeCompany } from 'actions/company';
-import useQueryCompanyIsSubscribed from 'components/ExperienceDetail/hooks/useQueryCompanyIsSubscribed';
 import Skeleton from 'react-loading-skeleton';
+import { companyIsSubscribedBoxSelectorByName } from 'selectors/companyAndJobTitle';
+import { isFetching, isFetched } from 'utils/fetchBox';
 
-const SubscribeNotificationButton = ({ isFetched, companyName, companyId }) => {
+const SubscribeNotificationButton = ({ companyName }) => {
   const dispatch = useDispatch();
-  const [
-    { loading, value },
-    queryCompanyIsSubscribed,
-  ] = useQueryCompanyIsSubscribed(companyName);
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const box = useSelector(state =>
+    companyIsSubscribedBoxSelectorByName(companyName)(state),
+  );
+  const companyId = box.data?.companyId;
+  const initialSubscribed = Boolean(box.data?.isSubscribed);
+  const [isSubscribed, setIsSubscribed] = useState(initialSubscribed);
 
-  useEffect(() => {
-    if (!loading) {
-      setIsSubscribed(value);
-    }
-  }, [loading, value]);
-
-  const handleSubscribeCompany = useCallback(async () => {
-    setIsSubscribed(true);
-    await dispatch(subscribeCompany({ companyId }));
-  }, [dispatch, companyId]);
-
-  const handleUnsubscribeCompany = useCallback(async () => {
-    setIsSubscribed(false);
-    await dispatch(unsubscribeCompany({ companyId }));
-  }, [dispatch, companyId]);
+  const loading = isFetching(box);
+  const fetched = isFetched(box);
 
   const handleToggleSubscribeCompany = useCallback(async () => {
-    if (isSubscribed) {
-      await handleUnsubscribeCompany();
-    } else {
-      await handleSubscribeCompany();
+    if (!fetched || !companyId) {
+      return;
     }
-  }, [isSubscribed, handleSubscribeCompany, handleUnsubscribeCompany]);
-
-  useEffect(() => {
-    queryCompanyIsSubscribed();
-  }, [queryCompanyIsSubscribed]);
+    setIsSubscribed(prev => !prev);
+    if (isSubscribed) {
+      await dispatch(unsubscribeCompany({ companyId, companyName }));
+    } else {
+      await dispatch(subscribeCompany({ companyId, companyName }));
+    }
+  }, [dispatch, fetched, companyId, companyName, isSubscribed]);
 
   if (!isFetched || loading) {
     return <Skeleton width={144} height={30} borderRadius={5} />;
@@ -74,9 +63,7 @@ const SubscribeNotificationButton = ({ isFetched, companyName, companyId }) => {
 };
 
 SubscribeNotificationButton.propTypes = {
-  companyId: PropTypes.string,
   companyName: PropTypes.string,
-  isFetched: PropTypes.bool.isRequired,
 };
 
 export default SubscribeNotificationButton;

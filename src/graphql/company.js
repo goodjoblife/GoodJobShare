@@ -366,6 +366,7 @@ export const queryCompaniesHavingDataGql = /* GraphQL */ `
 export const queryCompanyIsSubscribedGql = /* GraphQL */ `
   query($companyName: String!) {
     company(name: $companyName) {
+      id
       isSubscribed
     }
   }

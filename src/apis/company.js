@@ -110,7 +110,10 @@ export const queryCompanyIsSubscribedApi = async ({ companyName, token }) => {
     variables: { companyName },
   });
 
-  return data.company.isSubscribed;
+  return {
+    isSubscribed: data.company.isSubscribed,
+    companyId: data.company.id,
+  };
 };
 
 export const subscribeCompanyApi = ({ companyId, token }) =>
