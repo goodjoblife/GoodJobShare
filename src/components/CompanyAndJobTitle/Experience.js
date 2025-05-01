@@ -6,14 +6,7 @@ import { Heading, Wrapper } from 'common/base';
 import MessageBoard from '../ExperienceDetail/MessageBoard';
 import * as VISIBILITY from 'components/ExperienceDetail/Article/visibility';
 import styles from './Experience.module.css';
-
-const formatDate = date => {
-  const d = new Date(date);
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${year}.${month}.${day}`;
-};
+import { formatSimpleDate } from 'utils/dateUtil';
 
 const Experience = ({ experience }) => {
   const [, , canViewPublishId] = usePermission();
@@ -24,7 +17,7 @@ const Experience = ({ experience }) => {
       <Heading size="m" Tag="h2" bold className={styles.title}>
         {experience.title}{' '}
         <span className={styles.timestamp}>
-          {formatDate(experience.created_at)}
+          {formatSimpleDate(new Date(experience.created_at))}
         </span>
       </Heading>
       <Article
