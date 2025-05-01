@@ -7,7 +7,6 @@ import {
   pageType as PAGE_TYPE,
 } from 'constants/companyJobTitle';
 import {
-  queryCompanyIsSubscribed,
   queryCompanyOverview,
   queryCompanyOverviewStatistics,
   queryCompanyTopNJobTitles,
@@ -69,10 +68,6 @@ const CompanyOverviewProvider = () => {
 
   useEffect(() => {
     dispatch(queryCompanyOverviewStatistics(companyName));
-  }, [dispatch, companyName]);
-
-  useEffect(() => {
-    dispatch(queryCompanyIsSubscribed(companyName));
   }, [dispatch, companyName]);
 
   const [, fetchPermission] = usePermission();
