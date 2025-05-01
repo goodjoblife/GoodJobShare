@@ -8,6 +8,7 @@ import Pagination from 'common/Pagination';
 import NotFoundStatus from 'common/routing/NotFound';
 import { useQuery } from 'hooks/routing';
 import Experience from '../Experience';
+import styles from '../styles.module.css';
 
 const WorkExperiences = ({
   pageType,
@@ -32,7 +33,9 @@ const WorkExperiences = ({
   return (
     <Section Tag="main" paddingBottom>
       {data.map(d => (
-        <Experience key={d.id} experience={d} />
+        <div className={styles.experience}>
+          <Experience key={d.id} experience={d} />
+        </div>
       ))}
       <Pagination
         totalCount={totalCount}

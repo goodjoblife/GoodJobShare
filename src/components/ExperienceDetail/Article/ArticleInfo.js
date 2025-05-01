@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
@@ -14,6 +14,7 @@ import {
 import { originalCompanyNameSelector } from '../experienceSelector';
 import RatingInfo from './RatingInfo';
 import OverallRating from 'common/OverallRating';
+import ExternalLinkIcon from 'common/icons/ExternalLink';
 import ReportBadge from 'common/button/ReportBadge';
 import ReportZone from '../ReportZone';
 import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
@@ -35,27 +36,8 @@ const formatExperienceInYear = year => {
 
 const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
-  const dispatch = useDispatch();
   return (
     <Fragment>
-      {experience.reportCount > 0 && (
-        <div className={styles.reportDialogContainer}>
-          <ReportZone
-            id={experience.id}
-            reportType={REPORT_TYPE.EXPERIENCE}
-            reports={experience.reports}
-            reportCount={experience.reportCount}
-            onCloseReport={() => {
-              dispatch(queryExperience(experience.id));
-            }}
-          >
-            <ReportBadge
-              reportCount={experience.reportCount}
-              reportText="有使用者回報"
-            />
-          </ReportZone>
-        </div>
-      )}
       <InfoBlock
         label="公司"
         to={generatePageURL({
@@ -161,27 +143,8 @@ InterviewInfoBlocks.propTypes = {
 
 const WorkInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
-  const dispatch = useDispatch();
   return (
     <Fragment>
-      {experience.reportCount > 0 && (
-        <div className={styles.reportDialogContainer}>
-          <ReportZone
-            id={experience.id}
-            reportType={REPORT_TYPE.EXPERIENCE}
-            reports={experience.reports}
-            reportCount={experience.reportCount}
-            onCloseReport={() => {
-              dispatch(queryExperience(experience.id));
-            }}
-          >
-            <ReportBadge
-              reportCount={experience.reportCount}
-              reportText="有使用者回報"
-            />
-          </ReportZone>
-        </div>
-      )}
       <InfoBlock
         label="公司"
         to={generatePageURL({
@@ -323,17 +286,53 @@ InternBlocks.propTypes = {
   hideContent: PropTypes.bool,
 };
 
+const InfoCorner = ({ experience, originalLink }) => {
+  const dispatch = useDispatch();
+  const onCloseReport = useCallback(() => {
+    dispatch(queryExperience(experience.id));
+  }, [experience.id, dispatch]);
+
+  return (
+    <div className={styles.infoCorner}>
+      {experience.reportCount > 0 && (
+        <ReportZone
+          id={experience.id}
+          reportType={REPORT_TYPE.EXPERIENCE}
+          reports={experience.reports}
+          reportCount={experience.reportCount}
+          onCloseReport={onCloseReport}
+        >
+          <ReportBadge
+            reportCount={experience.reportCount}
+            reportText="有使用者回報"
+          />
+        </ReportZone>
+      )}
+      {originalLink && (
+        <Link className={styles.originalLink} to={originalLink}>
+          <span role="img" aria-label="link">
+            <ExternalLinkIcon />
+          </span>
+        </Link>
+      )}
+    </div>
+  );
+};
+
+InfoCorner.propTypes = {
+  experience: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    reportCount: PropTypes.number.isRequired,
+    reports: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }).isRequired,
+  originalLink: PropTypes.string,
+};
+
 const Aside = ({ experience, hideContent, originalLink }) => {
   const { type } = experience;
   return (
     <div className={styles.info}>
-      {originalLink && (
-        <Link className={styles.originalLink} to={originalLink}>
-          <span role="img" aria-label="link">
-            🔗
-          </span>
-        </Link>
-      )}
+      <InfoCorner experience={experience} originalLink={originalLink} />
       {type === 'interview' && (
         <ul>
           <InterviewInfoBlocks

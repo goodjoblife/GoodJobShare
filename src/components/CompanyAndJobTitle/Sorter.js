@@ -1,9 +1,12 @@
 import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import { useQuery } from 'hooks/routing';
 import qs from 'qs';
 
-import Select from 'common/form/Select';
+import styles from './Sorter.module.css';
+import Caret from 'common/icons/Caret';
+import Sort from 'common/icons/Sort';
 
 export const SORT_BY = {
   LATEST_FIRST: 'LATEST_FIRST',
@@ -39,22 +42,36 @@ const options = [
   { label: '按照時間排序(新->舊)', value: SORT_BY.LATEST_FIRST },
 ];
 
-const Sorter = () => {
-  const [sortBy, setSortBy] = useSortByFromQuery();
+const Select = ({ value, onChange }) => {
   const handleChange = useCallback(
     e => {
-      setSortBy(e.target.value);
+      onChange(e.target.value);
     },
-    [setSortBy],
+    [onChange],
   );
   return (
-    <Select
-      options={options}
-      hasNullOption={false}
-      value={sortBy}
-      onChange={handleChange}
-    />
+    <div className={styles.sorter}>
+      <Sort className={styles.leadingIcon} />
+      <select onChange={handleChange} value={value}>
+        {options.map(({ value, label }) => (
+          <option key={value} value={value}>
+            {label}
+          </option>
+        ))}
+      </select>
+      <Caret className={styles.caret} />
+    </div>
   );
+};
+
+Select.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
+
+const Sorter = () => {
+  const [sortBy, setSortBy] = useSortByFromQuery();
+  return <Select value={sortBy} onChange={setSortBy} />;
 };
 
 export default Sorter;
