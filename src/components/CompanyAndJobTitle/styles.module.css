@@ -62,3 +62,7 @@
     }
   }
 }
+
+.experience + .experience {
+  margin-top: 75px;
+}
