@@ -592,7 +592,7 @@ export const unsubscribeCompany = ({ companyId, companyName }) => async (
   }
 };
 
-export const setIsSubscribed = (companyName, box) => ({
+const setIsSubscribed = (companyName, box) => ({
   type: SET_IS_SUBSCRIBED,
   companyName,
   box,
