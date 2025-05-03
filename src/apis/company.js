@@ -110,6 +110,13 @@ export const queryCompanyIsSubscribedApi = async ({ companyName, token }) => {
     variables: { companyName },
   });
 
+  if (!data.company) {
+    return {
+      isSubscribed: false,
+      companyId: null,
+    };
+  }
+
   return {
     isSubscribed: data.company.isSubscribed,
     companyId: data.company.id,
