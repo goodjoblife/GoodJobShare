@@ -27,9 +27,9 @@ const SubscribeNotificationButton = ({ companyName }) => {
       return;
     }
     if (isSubscribed) {
-      await dispatch(unsubscribeCompany({ companyId, companyName }));
+      await dispatch(unsubscribeCompany({ companyName }));
     } else {
-      await dispatch(subscribeCompany({ companyId, companyName }));
+      await dispatch(subscribeCompany({ companyName }));
     }
   }, [dispatch, fetched, companyId, companyName, isSubscribed]);
 

@@ -543,7 +543,7 @@ const updateSubscriptionState = (
   );
 };
 
-export const subscribeCompany = ({ companyId, companyName }) => async (
+export const subscribeCompany = ({ companyName }) => async (
   dispatch,
   getState,
 ) => {
@@ -556,7 +556,10 @@ export const subscribeCompany = ({ companyId, companyName }) => async (
 
   updateSubscriptionState(dispatch, companyName, box.data, true);
   try {
-    const data = await subscribeCompanyApi({ companyId, token });
+    const data = await subscribeCompanyApi({
+      companyId: box.data.companyId,
+      token,
+    });
     const {
       subscribeCompany: { success },
     } = data;
@@ -570,7 +573,7 @@ export const subscribeCompany = ({ companyId, companyName }) => async (
   }
 };
 
-export const unsubscribeCompany = ({ companyId, companyName }) => async (
+export const unsubscribeCompany = ({ companyName }) => async (
   dispatch,
   getState,
 ) => {
@@ -583,7 +586,10 @@ export const unsubscribeCompany = ({ companyId, companyName }) => async (
 
   updateSubscriptionState(dispatch, companyName, box.data, false);
   try {
-    const data = await unsubscribeCompanyApi({ companyId, token });
+    const data = await unsubscribeCompanyApi({
+      companyId: box.data.companyId,
+      token,
+    });
     const {
       unsubscribeCompany: { success },
     } = data;
