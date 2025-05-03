@@ -550,9 +550,11 @@ export const subscribeCompany = ({ companyId, companyName }) => async (
   const state = getState();
   const token = tokenSelector(state);
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
+  if (!isFetched(box) || !box.data) {
+    return;
+  }
 
   updateSubscriptionState(dispatch, companyName, box.data, true);
-
   try {
     const data = await subscribeCompanyApi({ companyId, token });
     const {
@@ -575,6 +577,9 @@ export const unsubscribeCompany = ({ companyId, companyName }) => async (
   const state = getState();
   const token = tokenSelector(state);
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
+  if (!isFetched(box) || !box.data) {
+    return;
+  }
 
   updateSubscriptionState(dispatch, companyName, box.data, false);
   try {
