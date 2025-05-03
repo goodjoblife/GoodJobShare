@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import BellWhiteImage from 'common/icons/bellWhite.svg';
 import BellBlackImage from 'common/icons/bellBlack.svg';
 import PropTypes from 'prop-types';
@@ -25,14 +25,12 @@ const SubscribeNotificationButton = ({ companyName }) => {
       fetched: isFetched(box),
     };
   });
-  const { companyId, isSubscribed: isSubscribedValue } = data || {};
-  const [isSubscribed, setIsSubscribed] = useState(isSubscribedValue);
+  const { companyId, isSubscribed } = data || {};
 
   const handleToggleSubscribeCompany = useCallback(async () => {
     if (!fetched || !companyId) {
       return;
     }
-    setIsSubscribed(prev => !prev);
     if (isSubscribed) {
       await dispatch(unsubscribeCompany({ companyId, companyName }));
     } else {
@@ -47,12 +45,6 @@ const SubscribeNotificationButton = ({ companyName }) => {
   useEffect(() => {
     dispatch(queryCompanyIsSubscribed(companyName));
   }, [dispatch, companyName]);
-
-  useEffect(() => {
-    if (fetched) {
-      setIsSubscribed(isSubscribedValue);
-    }
-  }, [fetched, isSubscribedValue]);
 
   if (!fetched || loading) {
     return <Skeleton width={144} height={30} borderRadius={5} />;
