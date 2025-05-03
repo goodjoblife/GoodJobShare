@@ -17,15 +17,10 @@ import useLoginFlow from 'components/ExperienceDetail/hooks/useLoginFlow';
 
 const SubscribeNotificationButton = ({ companyName }) => {
   const dispatch = useDispatch();
-  const { data, loading, fetched } = useSelector(state => {
-    const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
-    return {
-      data: box.data,
-      loading: isFetching(box),
-      fetched: isFetched(box),
-    };
-  });
-  const { companyId, isSubscribed } = data || {};
+  const box = useSelector(companyIsSubscribedBoxSelectorByName(companyName));
+  const loading = isFetching(box);
+  const fetched = isFetched(box);
+  const { companyId, isSubscribed } = box.data || {};
 
   const handleToggleSubscribeCompany = useCallback(async () => {
     if (!fetched || !companyId) {
