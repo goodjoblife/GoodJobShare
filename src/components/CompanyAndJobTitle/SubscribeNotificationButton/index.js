@@ -13,6 +13,7 @@ import {
 import Skeleton from 'react-loading-skeleton';
 import { companyIsSubscribedBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { isFetching, isFetched } from 'utils/fetchBox';
+import useLoginFlow from 'components/ExperienceDetail/hooks/useLoginFlow';
 
 const SubscribeNotificationButton = ({ companyName }) => {
   const dispatch = useDispatch();
@@ -39,6 +40,10 @@ const SubscribeNotificationButton = ({ companyName }) => {
     }
   }, [dispatch, fetched, companyId, companyName, isSubscribed]);
 
+  const [handleSubscribeWithLoginCheck] = useLoginFlow(
+    handleToggleSubscribeCompany,
+  );
+
   useEffect(() => {
     dispatch(queryCompanyIsSubscribed(companyName));
   }, [dispatch, companyName]);
@@ -58,7 +63,7 @@ const SubscribeNotificationButton = ({ companyName }) => {
       className={cn(styles.buttonContainer, {
         [styles.subscribed]: isSubscribed,
       })}
-      onClick={handleToggleSubscribeCompany}
+      onClick={handleSubscribeWithLoginCheck}
     >
       <div className={styles.bellContainer}>
         <img
