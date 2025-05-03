@@ -526,23 +526,6 @@ export const queryCompanyWorkExperiences = ({
   }
 };
 
-const updateSubscriptionState = (
-  dispatch,
-  companyName,
-  prevData,
-  isSubscribed,
-) => {
-  dispatch(
-    setIsSubscribed(
-      companyName,
-      getFetched({
-        ...prevData,
-        isSubscribed,
-      }),
-    ),
-  );
-};
-
 export const subscribeCompany = ({ companyName }) => async (
   dispatch,
   getState,
@@ -553,11 +536,20 @@ export const subscribeCompany = ({ companyName }) => async (
   if (!isFetched(box) || !box.data) {
     return;
   }
+  const { companyId } = box.data;
 
-  updateSubscriptionState(dispatch, companyName, box.data, true);
+  dispatch(
+    setIsSubscribed(
+      companyName,
+      getFetched({
+        isSubscribed: true,
+        companyId,
+      }),
+    ),
+  );
   try {
     const data = await subscribeCompanyApi({
-      companyId: box.data.companyId,
+      companyId,
       token,
     });
     const {
@@ -565,10 +557,26 @@ export const subscribeCompany = ({ companyName }) => async (
     } = data;
 
     if (!success) {
-      updateSubscriptionState(dispatch, companyName, box.data, false);
+      dispatch(
+        setIsSubscribed(
+          companyName,
+          getFetched({
+            isSubscribed: false,
+            companyId,
+          }),
+        ),
+      );
     }
   } catch (error) {
-    updateSubscriptionState(dispatch, companyName, box.data, false);
+    dispatch(
+      setIsSubscribed(
+        companyName,
+        getFetched({
+          isSubscribed: false,
+          companyId,
+        }),
+      ),
+    );
     throw error;
   }
 };
@@ -583,11 +591,20 @@ export const unsubscribeCompany = ({ companyName }) => async (
   if (!isFetched(box) || !box.data) {
     return;
   }
+  const { companyId } = box.data;
 
-  updateSubscriptionState(dispatch, companyName, box.data, false);
+  dispatch(
+    setIsSubscribed(
+      companyName,
+      getFetched({
+        isSubscribed: false,
+        companyId,
+      }),
+    ),
+  );
   try {
     const data = await unsubscribeCompanyApi({
-      companyId: box.data.companyId,
+      companyId,
       token,
     });
     const {
@@ -595,10 +612,26 @@ export const unsubscribeCompany = ({ companyName }) => async (
     } = data;
 
     if (!success) {
-      updateSubscriptionState(dispatch, companyName, box.data, true);
+      dispatch(
+        setIsSubscribed(
+          companyName,
+          getFetched({
+            isSubscribed: true,
+            companyId,
+          }),
+        ),
+      );
     }
   } catch (error) {
-    updateSubscriptionState(dispatch, companyName, box.data, true);
+    dispatch(
+      setIsSubscribed(
+        companyName,
+        getFetched({
+          isSubscribed: true,
+          companyId,
+        }),
+      ),
+    );
     throw error;
   }
 };
