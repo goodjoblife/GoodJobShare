@@ -660,7 +660,7 @@ const setIsSubscribed = (companyName, box) => ({
   box,
 });
 
-export const queryCompanyIsSubscribed = companyName => async (
+export const queryCompanyIsSubscribed = ({ companyName }) => async (
   dispatch,
   getState,
 ) => {

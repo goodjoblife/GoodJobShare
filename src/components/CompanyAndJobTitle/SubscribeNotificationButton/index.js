@@ -30,9 +30,14 @@ const SubscribeNotificationButton = ({ companyName }) => {
     handleToggleSubscribeCompany,
   );
 
+  const queryCompanyIsSubscribedCallback = useCallback(
+    () => dispatch(queryCompanyIsSubscribed({ companyName })),
+    [dispatch, companyName],
+  );
+
   useEffect(() => {
-    dispatch(queryCompanyIsSubscribed(companyName));
-  }, [dispatch, companyName]);
+    queryCompanyIsSubscribedCallback();
+  }, [queryCompanyIsSubscribedCallback]);
 
   if (!fetched || loading) {
     return <Skeleton width={144} height={30} borderRadius={5} />;
