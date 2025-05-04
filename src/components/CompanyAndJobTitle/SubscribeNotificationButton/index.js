@@ -70,7 +70,7 @@ const SubscribeNotificationButton = ({ companyName }) => {
 };
 
 SubscribeNotificationButton.propTypes = {
-  companyName: PropTypes.string,
+  companyName: PropTypes.string.isRequired,
 };
 
 export default SubscribeNotificationButton;
