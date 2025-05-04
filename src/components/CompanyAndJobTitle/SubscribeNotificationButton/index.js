@@ -7,8 +7,7 @@ import cn from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   queryCompanyIsSubscribed,
-  subscribeCompany,
-  unsubscribeCompany,
+  toggleSubscribeCompany,
 } from 'actions/company';
 import Skeleton from 'react-loading-skeleton';
 import { companyIsSubscribedBoxSelectorByName } from 'selectors/companyAndJobTitle';
@@ -20,18 +19,12 @@ const SubscribeNotificationButton = ({ companyName }) => {
   const box = useSelector(companyIsSubscribedBoxSelectorByName(companyName));
   const loading = isFetching(box);
   const fetched = isFetched(box);
-  const { companyId, isSubscribed } = box.data || {};
+  const { isSubscribed } = box.data || {};
 
-  const handleToggleSubscribeCompany = useCallback(async () => {
-    if (!fetched || !companyId) {
-      return;
-    }
-    if (isSubscribed) {
-      await dispatch(unsubscribeCompany({ companyName }));
-    } else {
-      await dispatch(subscribeCompany({ companyName }));
-    }
-  }, [dispatch, fetched, companyId, companyName, isSubscribed]);
+  const handleToggleSubscribeCompany = useCallback(
+    async () => dispatch(toggleSubscribeCompany({ companyName })),
+    [dispatch, companyName],
+  );
 
   const [handleSubscribeWithLoginCheck] = useLoginFlow(
     handleToggleSubscribeCompany,

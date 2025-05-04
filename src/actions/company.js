@@ -537,6 +537,9 @@ export const subscribeCompany = ({ companyName }) => async (
     return;
   }
   const { companyId } = box.data;
+  if (!companyId) {
+    return;
+  }
 
   dispatch(
     setIsSubscribed(
@@ -592,6 +595,9 @@ export const unsubscribeCompany = ({ companyName }) => async (
     return;
   }
   const { companyId } = box.data;
+  if (!companyId) {
+    return;
+  }
 
   dispatch(
     setIsSubscribed(
@@ -633,6 +639,24 @@ export const unsubscribeCompany = ({ companyName }) => async (
       ),
     );
     throw error;
+  }
+};
+
+export const toggleSubscribeCompany = ({ companyName }) => async (
+  dispatch,
+  getState,
+) => {
+  const state = getState();
+  const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
+  if (!isFetched(box) || !box.data) {
+    return;
+  }
+  const { isSubscribed } = box.data;
+
+  if (isSubscribed) {
+    await dispatch(unsubscribeCompany({ companyName }));
+  } else {
+    await dispatch(subscribeCompany({ companyName }));
   }
 };
 
