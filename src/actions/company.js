@@ -526,10 +526,7 @@ export const queryCompanyWorkExperiences = ({
   }
 };
 
-export const subscribeCompany = ({ companyName }) => async (
-  dispatch,
-  getState,
-) => {
+const subscribeCompany = ({ companyName }) => async (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
@@ -584,10 +581,7 @@ export const subscribeCompany = ({ companyName }) => async (
   }
 };
 
-export const unsubscribeCompany = ({ companyName }) => async (
-  dispatch,
-  getState,
-) => {
+const unsubscribeCompany = ({ companyName }) => async (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
   const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
