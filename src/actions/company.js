@@ -544,13 +544,10 @@ const subscribeCompany = ({ companyName }) => async (dispatch, getState) => {
     ),
   );
   try {
-    const data = await subscribeCompanyApi({
+    const success = await subscribeCompanyApi({
       companyId,
       token,
     });
-    const {
-      subscribeCompany: { success },
-    } = data;
 
     if (!success) {
       dispatch(
@@ -599,13 +596,10 @@ const unsubscribeCompany = ({ companyName }) => async (dispatch, getState) => {
     ),
   );
   try {
-    const data = await unsubscribeCompanyApi({
+    const success = await unsubscribeCompanyApi({
       companyId,
       token,
     });
-    const {
-      unsubscribeCompany: { success },
-    } = data;
 
     if (!success) {
       dispatch(

@@ -123,16 +123,22 @@ export const queryCompanyIsSubscribedApi = async ({ companyName, token }) => {
   };
 };
 
-export const subscribeCompanyApi = ({ companyId, token }) =>
-  graphqlClient({
+export const subscribeCompanyApi = async ({ companyId, token }) => {
+  const data = await graphqlClient({
     query: subscribeCompanyGql,
     token,
     variables: { input: { companyId } },
   });
 
-export const unsubscribeCompanyApi = ({ companyId, token }) =>
-  graphqlClient({
+  return data.subscribeCompany.success;
+};
+
+export const unsubscribeCompanyApi = async ({ companyId, token }) => {
+  const data = await graphqlClient({
     query: unsubscribeCompanyGql,
     token,
     variables: { input: { companyId } },
   });
+
+  return data.unsubscribeCompany.success;
+};
