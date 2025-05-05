@@ -22,7 +22,6 @@ export const queryCompanyOverviewGql = /* GraphQL */ `
     $salaryWorkTimesLimit: Int!
   ) {
     company(name: $companyName) {
-      id
       name
       interviewExperiencesResult(start: 0, limit: $interviewExperiencesLimit) {
         count
