@@ -11,13 +11,12 @@ import {
 } from 'actions/company';
 import Skeleton from 'react-loading-skeleton';
 import { companyIsSubscribedBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import { isFetching, isFetched } from 'utils/fetchBox';
+import { isFetched } from 'utils/fetchBox';
 import useLoginFlow from 'components/ExperienceDetail/hooks/useLoginFlow';
 
 const SubscribeNotificationButton = ({ companyName }) => {
   const dispatch = useDispatch();
   const box = useSelector(companyIsSubscribedBoxSelectorByName(companyName));
-  const loading = isFetching(box);
   const fetched = isFetched(box);
   const { isSubscribed } = box.data || {};
 
@@ -39,7 +38,7 @@ const SubscribeNotificationButton = ({ companyName }) => {
     queryCompanyIsSubscribedCallback();
   }, [queryCompanyIsSubscribedCallback]);
 
-  if (!fetched || loading) {
+  if (!fetched) {
     return <Skeleton width={144} height={30} borderRadius={5} />;
   }
 
