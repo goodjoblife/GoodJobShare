@@ -12,6 +12,7 @@ import {
   SET_RATING_STATISTICS,
   SET_COMPANY_TOP_N_JOB_TITLES,
   SET_COMPANY_ESG_SALARY_DATA,
+  SET_IS_SUBSCRIBED,
 } from 'actions/company';
 
 const preloadedState = {
@@ -26,6 +27,7 @@ const preloadedState = {
   timeAndSalaryStatisticsByName: {},
   interviewExperiencesByName: {},
   workExperiencesByName: {},
+  isSubscribedByName: {},
   // companyName --> box
   // box.data: null | {all, interview, work, salary}
   topNJobTitlesByName: {},
@@ -123,6 +125,15 @@ const reducer = createReducer(preloadedState, {
       ...state,
       esgSalaryData: {
         ...state.esgSalaryData,
+        [companyName]: box,
+      },
+    };
+  },
+  [SET_IS_SUBSCRIBED]: (state, { companyName, box }) => {
+    return {
+      ...state,
+      isSubscribedByName: {
+        ...state.isSubscribedByName,
         [companyName]: box,
       },
     };
