@@ -26,16 +26,25 @@ export const useViewSalaryWorkTimes = () => {
   );
 };
 
-export const useTraceEvent = ({ contentId, contentType, action }) => {
+export const useTraceEvent = () => {
   const token = useToken();
-  const traceEvent = useCallback(async () => {
-    const referrer = window.location.href;
-    try {
-      await traceEventApi({ token, action, contentId, contentType, referrer });
-    } catch (err) {
-      console.error(`Failed to trace ${action} ${contentId}: ${err}`);
-    }
-  }, [token, action, contentId, contentType]);
+  const traceEvent = useCallback(
+    async ({ contentId, contentType, action }) => {
+      const referrer = window.location.href;
+      try {
+        await traceEventApi({
+          token,
+          action,
+          contentId,
+          contentType,
+          referrer,
+        });
+      } catch (err) {
+        console.error(`Failed to trace ${action} ${contentId}: ${err}`);
+      }
+    },
+    [token],
+  );
 
   return traceEvent;
 };

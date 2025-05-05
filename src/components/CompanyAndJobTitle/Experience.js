@@ -17,18 +17,18 @@ const useTracePreviewRef = ({ experience }) => {
   const ref = useRef(null);
 
   const [hasTracedPreview, setTracedPreview] = useState(false);
-  const tracePreview = useTraceEvent({
-    contentId: experience.id,
-    contentType: CONTENT_TYPE.EXPERIENCE,
-    action: ACTION.PREVIEW_ACTION,
-  });
+  const tracePreview = useTraceEvent();
 
   useEffect(() => {
     if (hasTracedPreview) return;
 
     const elementBottom = ref.current.offsetTop + ref.current.scrollHeight;
     if (windowY > elementBottom - windowHeight) {
-      tracePreview();
+      tracePreview({
+        contentId: experience.id,
+        contentType: CONTENT_TYPE.EXPERIENCE,
+        action: ACTION.PREVIEW_ACTION,
+      });
       setTracedPreview(true);
     }
   }, [windowY, windowHeight, experience.id, tracePreview, hasTracedPreview]);

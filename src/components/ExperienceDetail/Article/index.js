@@ -131,11 +131,14 @@ const Article = ({
   // Get share link object according to Google Optimize parameters
   const shareLink = useShareLink();
 
-  const traceDetailView = useTraceEvent({
-    contentId: experience.id,
-    contentType: CONTENT_TYPE.EXPERIENCE,
-    action: ACTION.DETAIL_VIEW_ACTION,
-  });
+  const traceDetailView = useTraceEvent();
+  const handleExpand = useCallback(() => {
+    traceDetailView({
+      contentId: experience.id,
+      contentType: CONTENT_TYPE.EXPERIENCE,
+      action: ACTION.DETAIL_VIEW_ACTION,
+    });
+  }, [experience.id, traceDetailView]);
 
   return (
     <>
@@ -150,7 +153,7 @@ const Article = ({
             <Sections
               experience={experience}
               visibility={visibility}
-              onExpand={traceDetailView}
+              onExpand={handleExpand}
             />
           </div>
           <div>
