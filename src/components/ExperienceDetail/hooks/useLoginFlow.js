@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback, useMemo, useContext } from 'react';
+import { useMountedState } from 'react-use';
 import { useLogin } from 'hooks/login';
 import LoginModalContext from 'contexts/LoginModalContext';
 
 const useLoginFlow = callback => {
+  const isMounted = useMountedState();
   const [state, setState] = useState('init');
   const [isLoggedIn] = useLogin();
   const { isLoginModalDisplayed, setLoginModalDisplayed } = useContext(
@@ -23,10 +25,10 @@ const useLoginFlow = callback => {
     if (state === 'submitting') {
       setState('submitting_check_api');
       callback().then(() => {
-        setState('init');
+        isMounted() && setState('init');
       });
     }
-  }, [callback, state]);
+  }, [callback, state, isMounted]);
 
   useEffect(() => {
     if (state === 'submitting_open_modal' && !isLoginModalDisplayed) {
