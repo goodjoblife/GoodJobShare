@@ -38,4 +38,4 @@ export const trackEventApi = ({ token, name, itemId, itemType, referrer }) =>
     query: trackEventGql,
     token,
     variables: { input: { name, itemId, itemType, referrer } },
-  });
+  }).then(({ trackEvent: { status } }) => status);
