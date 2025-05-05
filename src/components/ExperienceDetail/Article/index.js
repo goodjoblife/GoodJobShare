@@ -5,7 +5,7 @@ import R from 'ramda';
 import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
 import { useShareLink } from 'hooks/experiments';
-import { useTraceEvent } from 'hooks/viewLog';
+import { useTrackEvent } from 'hooks/viewLog';
 import { formatCommaSeparatedNumber } from 'utils/stringUtil';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
@@ -131,14 +131,10 @@ const Article = ({
   // Get share link object according to Google Optimize parameters
   const shareLink = useShareLink();
 
-  const traceDetailView = useTraceEvent();
+  const trackDetailView = useTrackEvent();
   const handleExpand = useCallback(() => {
-    traceDetailView({
-      contentId: experience.id,
-      contentType: CONTENT_TYPE.EXPERIENCE,
-      action: ACTION.DETAIL_VIEW_ACTION,
-    });
-  }, [experience.id, traceDetailView]);
+    trackDetailView(ACTION.DETAIL_VIEW, experience.id, CONTENT_TYPE.EXPERIENCE);
+  }, [experience.id, trackDetailView]);
 
   return (
     <>

@@ -14,9 +14,9 @@ export const viewExperiencesGql = /* GraphQL */ `
   }
 `;
 
-export const traceEventGql = /* GraphQL */ `
-  mutation TraceEvent($input: TraceEventInput!) {
-    traceEvent(input: $input) {
+export const trackEventGql = /* GraphQL */ `
+  mutation TrackEvent($input: TrackEventInput!) {
+    trackEvent(input: $input) {
       status
     }
   }

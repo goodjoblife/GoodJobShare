@@ -2,7 +2,7 @@ import graphqlClient from 'utils/graphqlClient';
 import {
   viewSalaryWorkTimesGql,
   viewExperiencesGql,
-  traceEventGql,
+  trackEventGql,
 } from 'graphql/viewLog';
 
 export const viewSalaryWorkTimesApi = ({
@@ -33,15 +33,9 @@ export const viewExperiencesApi = ({ token, contentIds, referrer = null }) =>
     },
   });
 
-export const traceEventApi = ({
-  token,
-  action,
-  contentId,
-  contentType,
-  referrer,
-}) =>
+export const trackEventApi = ({ token, name, itemId, itemType, referrer }) =>
   graphqlClient({
-    query: traceEventGql,
+    query: trackEventGql,
     token,
-    variables: { input: { action, contentId, contentType, referrer } },
+    variables: { input: { name, itemId, itemType, referrer } },
   });

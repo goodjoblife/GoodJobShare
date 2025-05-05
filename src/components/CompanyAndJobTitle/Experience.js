@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useWindowScroll, useWindowSize } from 'react-use';
 import PropTypes from 'prop-types';
 import usePermission from 'hooks/usePermission';
-import { useTraceEvent } from 'hooks/viewLog';
+import { useTrackEvent } from 'hooks/viewLog';
 import Article from 'components/ExperienceDetail/Article';
 import { Heading, Wrapper } from 'common/base';
 import MessageBoard from '../ExperienceDetail/MessageBoard';
@@ -17,21 +17,17 @@ const useTracePreviewRef = ({ experience }) => {
   const ref = useRef(null);
 
   const [hasTracedPreview, setTracedPreview] = useState(false);
-  const tracePreview = useTraceEvent();
+  const trackPreview = useTrackEvent();
 
   useEffect(() => {
     if (hasTracedPreview) return;
 
     const elementBottom = ref.current.offsetTop + ref.current.scrollHeight;
     if (windowY > elementBottom - windowHeight) {
-      tracePreview({
-        contentId: experience.id,
-        contentType: CONTENT_TYPE.EXPERIENCE,
-        action: ACTION.PREVIEW_ACTION,
-      });
+      trackPreview(ACTION.PREVIEW, experience.id, CONTENT_TYPE.EXPERIENCE);
       setTracedPreview(true);
     }
-  }, [windowY, windowHeight, experience.id, tracePreview, hasTracedPreview]);
+  }, [windowY, windowHeight, experience.id, trackPreview, hasTracedPreview]);
 
   return ref;
 };
