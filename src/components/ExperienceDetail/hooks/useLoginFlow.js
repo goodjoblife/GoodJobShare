@@ -4,7 +4,7 @@ import { useLogin } from 'hooks/login';
 import LoginModalContext from 'contexts/LoginModalContext';
 
 const useLoginFlow = callback => {
-  const isMounted = useMountedState();
+  const getIsMounted = useMountedState();
   const [state, setState] = useState('init');
   const [isLoggedIn] = useLogin();
   const { isLoginModalDisplayed, setLoginModalDisplayed } = useContext(
@@ -25,10 +25,10 @@ const useLoginFlow = callback => {
     if (state === 'submitting') {
       setState('submitting_check_api');
       callback().then(() => {
-        isMounted() && setState('init');
+        getIsMounted() && setState('init');
       });
     }
-  }, [callback, state, isMounted]);
+  }, [callback, state, getIsMounted]);
 
   useEffect(() => {
     if (state === 'submitting_open_modal' && !isLoginModalDisplayed) {
