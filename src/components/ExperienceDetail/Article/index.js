@@ -5,6 +5,7 @@ import R from 'ramda';
 import { P } from 'common/base';
 import GradientMask from 'common/GradientMask';
 import { useShareLink } from 'hooks/experiments';
+import { useTrackEvent } from 'hooks/viewLog';
 import { formatCommaSeparatedNumber } from 'utils/stringUtil';
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
@@ -13,6 +14,7 @@ import QABlock from './QABlock';
 import ReactionZone from './ReactionZone';
 import { BasicPermissionBlock } from 'common/PermissionBlock';
 import { MAX_WORDS_IF_HIDDEN } from 'constants/hideContent';
+import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
 import * as VISIBILITY from './visibility';
 import Button from 'common/button/Button';
 import Card from 'common/Card';
@@ -53,14 +55,15 @@ ChildrenOnMaskBottom.propTypes = {
   visibility: PropTypes.string.isRequired,
 };
 
-const Sections = ({ experience, visibility }) => {
+const Sections = ({ experience, visibility, onExpand }) => {
   let toHide = false;
   let currentTotalWords = 0;
   const totalWords = countSectionWords(experience.sections);
   const [hasExpanded, setExpanded] = useState(false);
   const handleExpand = useCallback(() => {
     setExpanded(true);
-  }, []);
+    onExpand();
+  }, [onExpand]);
 
   if (visibility !== VISIBILITY.VISIBLE && !hasExpanded) {
     return (
@@ -115,6 +118,7 @@ const Sections = ({ experience, visibility }) => {
 
 Sections.propTypes = {
   experience: PropTypes.object.isRequired,
+  onExpand: PropTypes.func.isRequired,
   visibility: PropTypes.string.isRequired,
 };
 
@@ -127,6 +131,11 @@ const Article = ({
   // Get share link object according to Google Optimize parameters
   const shareLink = useShareLink();
 
+  const trackDetailView = useTrackEvent();
+  const handleExpand = useCallback(() => {
+    trackDetailView(ACTION.DETAIL_VIEW, experience.id, CONTENT_TYPE.EXPERIENCE);
+  }, [experience.id, trackDetailView]);
+
   return (
     <>
       <Card className={styles.container}>
@@ -137,7 +146,11 @@ const Article = ({
         />
         <section className={styles.main}>
           <div className={styles.article}>
-            <Sections experience={experience} visibility={visibility} />
+            <Sections
+              experience={experience}
+              visibility={visibility}
+              onExpand={handleExpand}
+            />
           </div>
           <div>
             {experience.type === 'interview' &&
