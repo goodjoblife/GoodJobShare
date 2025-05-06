@@ -1,3 +1,9 @@
+import {
+  experiencePartialGql,
+  interviewExperiencePartialGql,
+  workExperiencesPartialGql,
+} from './experience';
+
 export const queryCompanyRatingStatisticsGql = /* GraphQL */ `
   query($companyName: String!) {
     company(name: $companyName) {
@@ -268,41 +274,25 @@ export const getCompanyEsgSalaryDataQuery = /* GraphQL */ `
 `;
 
 export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
-  query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
+  query(
+    $companyName: String!
+    $jobTitle: String
+    $start: Int!
+    $limit: Int!
+    $sortBy: DataResultSortOption
+  ) {
     company(name: $companyName) {
       name
       interviewExperiencesResult(
         jobTitle: $jobTitle
         start: $start
         limit: $limit
+        sortBy: $sortBy
       ) {
         count
         interviewExperiences {
-          id
-          type
-          originalCompanyName
-          company {
-            name
-          }
-          job_title {
-            name
-          }
-          region
-          experience_in_year
-          education
-          salary {
-            amount
-            type
-          }
-          title
-          sections {
-            subtitle
-            content
-          }
-          created_at
-          reply_count
-          like_count
-          averageSectionRating
+          ${experiencePartialGql}
+          ${interviewExperiencePartialGql()}
         }
       }
     }
@@ -310,38 +300,25 @@ export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
 `;
 
 export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
-  query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
+  query(
+    $companyName: String!
+    $jobTitle: String
+    $start: Int!
+    $limit: Int!
+    $sortBy: DataResultSortOption
+  ) {
     company(name: $companyName) {
       name
-      workExperiencesResult(jobTitle: $jobTitle, start: $start, limit: $limit) {
+      workExperiencesResult(
+        jobTitle: $jobTitle
+        start: $start
+        limit: $limit
+        sortBy: $sortBy
+      ) {
         count
         workExperiences {
-          id
-          type
-          originalCompanyName
-          company {
-            name
-          }
-          job_title {
-            name
-          }
-          region
-          experience_in_year
-          education
-          salary {
-            amount
-            type
-          }
-          title
-          sections {
-            subtitle
-            content
-          }
-          created_at
-          reply_count
-          like_count
-          recommend_to_others
-          averageSectionRating
+          ${experiencePartialGql}
+          ${workExperiencesPartialGql()}
         }
       }
     }
