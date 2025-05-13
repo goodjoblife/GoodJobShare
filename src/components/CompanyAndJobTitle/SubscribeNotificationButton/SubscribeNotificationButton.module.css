@@ -32,22 +32,22 @@
     }
   }
 
-  &.subscribed,
-  &:not(.subscribed):hover {
+  &.subscribed {
     background-color: #fceea7;
-
-    .bellWhite {
-      opacity: 0;
-    }
-
-    .bellBlack {
-      opacity: 1;
-    }
-
-    transform: scale(1.03);
+    transform: none;
   }
 
-  &.subscribed {
-    transform: none;
+  @media (hover: hover) and (pointer: fine) {
+    &:not(.subscribed):hover {
+      background-color: #fceea7;
+      transform: scale(1.03);
+
+      .bellWhite {
+        opacity: 0;
+      }
+      .bellBlack {
+        opacity: 1;
+      }
+    }
   }
 }
