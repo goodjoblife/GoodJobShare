@@ -22,7 +22,7 @@ const TabLinkGroup = ({ className, options, style }) => (
         key={label}
         to={to}
       >
-        <P bold>{label}</P>
+        <P className={styles.text}>{label}</P>
       </NavLink>
     ))}
   </div>

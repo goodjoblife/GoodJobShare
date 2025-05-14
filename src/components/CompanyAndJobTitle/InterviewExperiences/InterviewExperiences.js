@@ -7,10 +7,10 @@ import { Section } from 'common/base';
 import NotFoundStatus from 'common/routing/NotFound';
 
 import EmptyView from '../EmptyView';
-import ExperienceEntry from './ExperienceEntry';
+import Experience from '../Experience';
+import styles from '../styles.module.css';
 
 import { useQuery } from 'hooks/routing';
-import usePermission from 'hooks/usePermission';
 
 const InterviewExperiences = ({
   pageType,
@@ -22,7 +22,6 @@ const InterviewExperiences = ({
   totalCount,
 }) => {
   const queryParams = useQuery();
-  const [, , canViewPublishId] = usePermission();
 
   if (data.length === 0) {
     return (
@@ -36,12 +35,9 @@ const InterviewExperiences = ({
   return (
     <Section Tag="main" paddingBottom>
       {data.map(d => (
-        <ExperienceEntry
-          key={d.id}
-          pageType={pageType}
-          data={d}
-          canView={canViewPublishId(d.id)}
-        />
+        <div key={d.id} className={styles.experience}>
+          <Experience experience={d} />
+        </div>
       ))}
       <Pagination
         totalCount={totalCount}

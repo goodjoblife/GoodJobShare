@@ -1,34 +1,37 @@
-@value main-yellow, above-desktop from "../variables.module.css";
+@value main-yellow, below-mobile from "../variables.module.css";
 
 .group {
-  display: inline-flex;
+  display: flex;
   border-radius: 5px;
-  border: 1px solid main-yellow;
-  background: white;
+  border: 0;
+  border-bottom: 0.7px solid #cecece;
   flex-direction: row;
   flex-wrap: wrap;
-}
+  justify-content: flex-start;
 
-.element {
-  display: flex;
-  flex: 0 50%;
-  justify-content: center;
-  align-items: center;
-  width: 170px;
-  height: 48px;
-
-  border-bottom: 1px solid main-yellow;
-  border-right: 1px solid main-yellow;
-
-  @media (min-width: above-desktop) {
-    flex: 0 1 auto;
-    border-bottom: 0;
-    &:last-child {
-      border-right: 0;
-    }
+  @media (max-width: below-mobile) {
+    position: relative;
+    left: -15px;
+    width: calc(100% + 30px);
   }
 }
 
-.active {
-  background: main-yellow;
+.element {
+  padding: 0 29px;
+
+  @media (max-width: below-mobile) {
+    padding: 0 13px;
+  }
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  border: 3px solid transparent;
+  border-radius: 4px;
+}
+
+.active .text {
+  border-bottom-color: main-yellow;
 }

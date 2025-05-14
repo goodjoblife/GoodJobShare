@@ -59,7 +59,8 @@
   }
 
   /* buttons start */
-  [class^='button'] {
+  [class^='button'],
+  [class*=' button'] {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -294,7 +295,7 @@
 
   .buttonCircleLoginShare {
     height: 36px;
-    border: 1px solid transparent;
+    border: 1px solid main-yellow;
     border-radius: 1.5em;
     padding-right: 20px;
     padding-left: 20px;
@@ -306,11 +307,11 @@
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.9);
-      border-color: main-yellow;
     }
   }
 
-  .buttonHollowRed {
+  .buttonHollowRed,
+  .buttonHollowBlack {
     background-color: white;
     height: 36px;
     border-radius: 1.5em;
@@ -322,13 +323,28 @@
     transition-property: background, color;
     transition-duration: 0.3s;
     border: 1px solid warning-red;
-    color: warning-red;
 
     &:hover {
       color: white;
+    }
+  }
+
+  .buttonHollowRed {
+    color: warning-red;
+
+    &:hover {
       background-color: warning-red;
     }
   }
+
+  .buttonHollowBlack {
+    border-color: main-black;
+
+    &:hover {
+      background-color: main-black;
+    }
+  }
+
   /* buttons end */
 
   .blueLink {

@@ -13,3 +13,11 @@ export const viewExperiencesGql = /* GraphQL */ `
     }
   }
 `;
+
+export const trackEventGql = /* GraphQL */ `
+  mutation TrackEvent($input: TrackEventInput!) {
+    trackEvent(input: $input) {
+      status
+    }
+  }
+`;

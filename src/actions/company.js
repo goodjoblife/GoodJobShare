@@ -30,6 +30,7 @@ import {
   getCompanyEsgSalaryData,
   queryCompanyOverviewStatistics as queryCompanyOverviewStatisticsApi,
 } from 'apis/company';
+import { setExperience } from './experience';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
@@ -408,6 +409,7 @@ export const queryCompanyInterviewExperiences = ({
   jobTitle,
   start,
   limit,
+  sortBy,
 }) => async (dispatch, getState) => {
   const box = companyInterviewExperiencesBoxSelectorByName(companyName)(
     getState(),
@@ -419,7 +421,8 @@ export const queryCompanyInterviewExperiences = ({
       box.data.name === companyName &&
       box.data.jobTitle === jobTitle &&
       box.data.start === start &&
-      box.data.limit === limit)
+      box.data.limit === limit &&
+      box.data.sortBy === sortBy)
   ) {
     return;
   }
@@ -432,6 +435,7 @@ export const queryCompanyInterviewExperiences = ({
       jobTitle,
       start,
       limit,
+      sortBy,
     });
 
     // Not found case
@@ -444,6 +448,7 @@ export const queryCompanyInterviewExperiences = ({
       jobTitle,
       start,
       limit,
+      sortBy,
       interviewExperiences:
         data.interviewExperiencesResult.interviewExperiences,
       interviewExperiencesCount: data.interviewExperiencesResult.count,
@@ -455,6 +460,11 @@ export const queryCompanyInterviewExperiences = ({
         getFetched(interviewExperiencesData),
       ),
     );
+
+    // Update state.experiences which is the source of truth for all experiences
+    data.interviewExperiencesResult.interviewExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
   } catch (error) {
     dispatch(setInterviewExperiences(companyName, getError(error)));
     throw error;
@@ -472,6 +482,7 @@ export const queryCompanyWorkExperiences = ({
   jobTitle,
   start,
   limit,
+  sortBy,
 }) => async (dispatch, getState) => {
   const box = companyWorkExperiencesBoxSelectorByName(companyName)(getState());
   if (
@@ -481,7 +492,8 @@ export const queryCompanyWorkExperiences = ({
       box.data.name === companyName &&
       box.data.jobTitle === jobTitle &&
       box.data.start === start &&
-      box.data.limit === limit)
+      box.data.limit === limit &&
+      box.data.sortBy === sortBy)
   ) {
     return;
   }
@@ -494,6 +506,7 @@ export const queryCompanyWorkExperiences = ({
       jobTitle,
       start,
       limit,
+      sortBy,
     });
 
     // Not found case
@@ -506,11 +519,17 @@ export const queryCompanyWorkExperiences = ({
       jobTitle,
       start,
       limit,
+      sortBy,
       workExperiences: data.workExperiencesResult.workExperiences,
       workExperiencesCount: data.workExperiencesResult.count,
     };
 
     dispatch(setWorkExperiences(companyName, getFetched(workExperiencesData)));
+
+    // Update state.experiences which is the source of truth for all experiences
+    data.workExperiencesResult.workExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
   } catch (error) {
     dispatch(setWorkExperiences(companyName, getError(error)));
   }
