@@ -35,6 +35,13 @@
   &.subscribed {
     background-color: #fceea7;
     transform: none;
+
+    .bellWhite {
+      opacity: 0;
+    }
+    .bellBlack {
+      opacity: 1;
+    }
   }
 
   @media (hover: hover) and (pointer: fine) {
