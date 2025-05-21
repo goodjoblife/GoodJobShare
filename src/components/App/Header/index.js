@@ -19,6 +19,7 @@ import ProgressTop from './Top/ProgressTop';
 import Searchbar from './Searchbar';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import emailStatusMap from 'constants/emailStatus';
+import Bell from 'common/icons/Bell';
 
 const onClickShareData = () => {
   ReactGA.event({
@@ -57,6 +58,14 @@ const HeaderTop = () => {
       </Top>
     );
   }, [emailStatus, isEmailVerified, isLoggedIn, location.pathname, shareLink]);
+};
+
+const MailboxButton = () => {
+  return (
+    <button className={styles.mailbox}>
+      <Bell />
+    </button>
+  );
 };
 
 const Header = () => {
@@ -127,6 +136,7 @@ const Header = () => {
               >
                 分享經驗
               </Link>
+              <MailboxButton />
               <div style={{ position: 'relative' }}>
                 {!isLoggedIn && (
                   <button className={styles.loginBtn} onClick={login}>
