@@ -61,10 +61,11 @@ const HeaderTop = () => {
 };
 
 const MailboxButton = () => {
-  const [count] = useState(1);
+  const [count, setCount] = useState(1);
+  const read = useCallback(() => setCount(0), []);
 
   return (
-    <button className={styles.mailbox} data-count={count}>
+    <button className={styles.mailbox} data-count={count} onClick={read}>
       <Bell />
     </button>
   );
