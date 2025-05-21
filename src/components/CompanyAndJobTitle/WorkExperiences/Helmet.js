@@ -1,11 +1,14 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
-import { generatePath } from 'react-router';
 import qs from 'qs';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
-import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import {
+  pageType as PAGE_TYPE,
+  tabType as TAB_TYPE,
+  generateTabURL,
+} from 'constants/companyJobTitle';
 
 const CompanyWorkExperienceHelmet = ({ companyName, page, totalCount }) => {
   // title
@@ -19,8 +22,10 @@ const CompanyWorkExperienceHelmet = ({ companyName, page, totalCount }) => {
   }
 
   // canonical url
-  const path = generatePath('/companies/:companyName/work-experiences', {
-    companyName,
+  const path = generateTabURL({
+    pageType: PAGE_TYPE.COMPANY,
+    pageName: companyName,
+    tabType: TAB_TYPE.WORK_EXPERIENCE,
   });
   const search =
     page > 1 ? qs.stringify({ p: page }, { addQueryPrefix: true }) : '';
@@ -61,8 +66,10 @@ const JobTitleWorkExperienceHelmet = ({ jobTitle, page, totalCount }) => {
   }
 
   // canonical url
-  const path = generatePath('/job-titles/:jobTitle/work-experiences', {
-    jobTitle,
+  const path = generateTabURL({
+    pageType: PAGE_TYPE.JOB_TITLE,
+    pageName: jobTitle,
+    tabType: TAB_TYPE.WORK_EXPERIENCE,
   });
   const search =
     page > 1 ? qs.stringify({ p: page }, { addQueryPrefix: true }) : '';

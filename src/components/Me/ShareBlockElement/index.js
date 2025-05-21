@@ -6,6 +6,11 @@ import { Link } from 'react-router-dom';
 import Bookmark from 'common/icons/Bookmark';
 import { Heading, P } from 'common/base';
 import Modal from 'common/Modal';
+import {
+  pageType as PAGE_TYPE,
+  tabType as TAB_TYPE,
+  generateTabURL,
+} from 'constants/companyJobTitle';
 import styles from './ShareBlockElement.module.css';
 
 const ShareBlock = ({
@@ -52,7 +57,11 @@ const ShareBlock = ({
         <Heading size="sl" Tag="h3">
           {type === '薪時' ? (
             <Link
-              to={`/companies/${encodeURIComponent(to)}/salary-work-times`}
+              to={generateTabURL({
+                pageType: PAGE_TYPE.COMPANY,
+                pageName: to,
+                tabType: TAB_TYPE.TIME_AND_SALARY,
+              })}
               title="檢視薪時"
               className="hoverBlue"
             >
