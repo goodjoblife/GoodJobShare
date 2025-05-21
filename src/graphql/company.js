@@ -335,3 +335,28 @@ export const queryCompaniesHavingDataGql = /* GraphQL */ `
     companiesHavingDataCount
   }
 `;
+
+export const queryCompanyIsSubscribedGql = /* GraphQL */ `
+  query($companyName: String!) {
+    company(name: $companyName) {
+      id
+      isSubscribed
+    }
+  }
+`;
+
+export const subscribeCompanyGql = /* GraphQL */ `
+  mutation SubscribeCompany($input: SubscribeCompanyInput!) {
+    subscribeCompany(input: $input) {
+      success
+    }
+  }
+`;
+
+export const unsubscribeCompanyGql = /* GraphQL */ `
+  mutation UnsubscribeCompany($input: UnsubscribeCompanyInput!) {
+    unsubscribeCompany(input: $input) {
+      success
+    }
+  }
+`;
