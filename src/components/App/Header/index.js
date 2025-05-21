@@ -61,8 +61,10 @@ const HeaderTop = () => {
 };
 
 const MailboxButton = () => {
+  const [count] = useState(1);
+
   return (
-    <button className={styles.mailbox}>
+    <button className={styles.mailbox} data-count={count}>
       <Bell />
     </button>
   );

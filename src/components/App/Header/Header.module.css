@@ -1,4 +1,4 @@
-@value main-yellow, main-black, border-gray, main-gray NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small from "../../common/variables.module.css";
+@value main-yellow, main-black, border-gray, main-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small from "../../common/variables.module.css";
 
 .root {
   @media (max-width: 850px) {
@@ -334,6 +334,7 @@
 }
 
 .mailbox {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -345,6 +346,29 @@
 
     path {
       fill: #fff;
+    }
+  }
+
+  &::after {
+    content: attr(data-count);
+    display: flex;
+    background-color: #ee3124;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 13px;
+    color: #fff;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid main-black;
+  }
+
+  &[data-count='0'] {
+    &::after {
+      display: none;
     }
   }
 }
