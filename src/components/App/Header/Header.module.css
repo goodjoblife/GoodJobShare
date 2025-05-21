@@ -346,6 +346,7 @@
 
     path {
       fill: #fff;
+      transition: fill 0.1s;
     }
   }
 
@@ -369,6 +370,14 @@
   &[data-count='0'] {
     &::after {
       display: none;
+    }
+  }
+
+  .activating {
+    svg {
+      path {
+        fill: #444;
+      }
     }
   }
 }
