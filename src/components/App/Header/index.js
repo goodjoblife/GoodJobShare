@@ -65,9 +65,25 @@ const MailboxButton = () => {
   const read = useCallback(() => setCount(0), []);
 
   return (
-    <button className={styles.mailbox} data-count={count} onClick={read}>
-      <Bell />
-    </button>
+    <PopoverToggle
+      className={styles.mailbox}
+      data-count={count}
+      popoverClassName={styles.popover}
+      popoverContent={
+        <ul className={styles.popoverItem}>
+          <li>
+            <Link to="/me/subscriptions/current">我的方案</Link>
+          </li>
+          <li>
+            <Link to="/me">管理我的資料</Link>
+          </li>
+        </ul>
+      }
+    >
+      <button onClick={read}>
+        <Bell />
+      </button>
+    </PopoverToggle>
   );
 };
 
