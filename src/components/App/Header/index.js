@@ -99,11 +99,18 @@ const formatMailboxDate = date => {
   return `${y}/${m}/${d}`;
 };
 
-const MailboxContent = ({ messages }) => {
+const MailboxContent = ({ messages: allMessages }) => {
   const [showsUnread, setShowsUnread] = useState(false);
+  const [count, setCount] = useState(5);
+
   const filteredMessages = useMemo(
-    () => messages.filter(message => (showsUnread ? !message.read : true)),
-    [messages, showsUnread],
+    () => allMessages.filter(message => (showsUnread ? !message.read : true)),
+    [allMessages, showsUnread],
+  );
+
+  const displayedFilteredMessages = useMemo(
+    () => filteredMessages.slice(0, count),
+    [filteredMessages, count],
   );
 
   return (
@@ -135,9 +142,13 @@ const MailboxContent = ({ messages }) => {
           </li>
         ))}
       </ul>
-      <div className={styles.loadMore}>
-        <MailboxContent.Button>載入更多</MailboxContent.Button>
-      </div>
+      {displayedFilteredMessages.length < filteredMessages.length && (
+        <div className={styles.loadMore}>
+          <MailboxContent.Button onClick={() => setCount(count => count + 5)}>
+            載入更多
+          </MailboxContent.Button>
+        </div>
+      )}
     </div>
   );
 };
@@ -175,6 +186,42 @@ const MailboxButton = () => {
       link: 'experiences/6810ccae07e773897e22812e',
       date: new Date(),
       read: false,
+    },
+    {
+      id: Math.random()
+        .toString()
+        .replace(/\D/g, ''),
+      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
+      link: 'experiences/6810ccae07e773897e22812e',
+      date: new Date(),
+      read: false,
+    },
+    {
+      id: Math.random()
+        .toString()
+        .replace(/\D/g, ''),
+      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
+      link: 'experiences/6810ccae07e773897e22812e',
+      date: new Date(),
+      read: true,
+    },
+    {
+      id: Math.random()
+        .toString()
+        .replace(/\D/g, ''),
+      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
+      link: 'experiences/6810ccae07e773897e22812e',
+      date: new Date(),
+      read: false,
+    },
+    {
+      id: Math.random()
+        .toString()
+        .replace(/\D/g, ''),
+      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
+      link: 'experiences/6810ccae07e773897e22812e',
+      date: new Date(),
+      read: true,
     },
     {
       id: Math.random()
