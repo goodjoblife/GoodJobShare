@@ -266,13 +266,37 @@ const MailboxButton = () => {
   );
 };
 
+const NameButton = () => {
+  const user = useAuthUser();
+  const logout = useLogout();
+
+  return (
+    <PopoverToggle
+      popoverClassName={cn(styles.popover, styles.nameContainer)}
+      popoverContent={
+        <ul className={styles.popoverItem}>
+          <li>
+            <Link to="/me/subscriptions/current">我的方案</Link>
+          </li>
+          <li>
+            <Link to="/me">管理我的資料</Link>
+          </li>
+          <li>
+            <button onClick={logout}>登出</button>
+          </li>
+        </ul>
+      }
+    >
+      <div className={styles.userNameBtn}>{user && user.name}</div>
+    </PopoverToggle>
+  );
+};
+
 const Header = () => {
   const history = useHistory();
   const [isNavOpen, setNavOpen] = useState(false);
   const [isLoggedIn, login] = useLogin();
   const [, fetchPermission] = usePermission();
-  const user = useAuthUser();
-  const logout = useLogout();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -334,7 +358,6 @@ const Header = () => {
               >
                 分享經驗
               </Link>
-              <MailboxButton />
               <div style={{ position: 'relative' }}>
                 {!isLoggedIn && (
                   <button className={styles.loginBtn} onClick={login}>
@@ -342,26 +365,10 @@ const Header = () => {
                   </button>
                 )}
                 {isLoggedIn && (
-                  <PopoverToggle
-                    popoverClassName={cn(styles.popover, styles.nameContainer)}
-                    popoverContent={
-                      <ul className={styles.popoverItem}>
-                        <li>
-                          <Link to="/me/subscriptions/current">我的方案</Link>
-                        </li>
-                        <li>
-                          <Link to="/me">管理我的資料</Link>
-                        </li>
-                        <li>
-                          <button onClick={logout}>登出</button>
-                        </li>
-                      </ul>
-                    }
-                  >
-                    <div className={styles.userNameBtn}>
-                      {user && user.name}
-                    </div>
-                  </PopoverToggle>
+                  <button className={styles.loggedInButton}>
+                    <MailboxButton />
+                    <NameButton />
+                  </button>
                 )}
               </div>
             </div>

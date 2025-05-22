@@ -194,6 +194,10 @@
   }
 }
 
+.loggedInButton {
+  display: flex;
+}
+
 .loginBtn,
 .userNameBtn {
   color: #fff;
@@ -209,6 +213,7 @@
 .loginBtn {
   border-radius: 1.5em;
   border: 1px solid #fff;
+  margin-left: 7px;
   padding-right: 20px;
   padding-left: 20px;
 
