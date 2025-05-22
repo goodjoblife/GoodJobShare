@@ -60,25 +60,93 @@ const HeaderTop = () => {
   }, [emailStatus, isEmailVerified, isLoggedIn, location.pathname, shareLink]);
 };
 
+const MailboxContent = ({ messages }) => {
+  return (
+    <div>
+      <div className={styles.popoverHeader}>
+        <div className={styles.title}>通知</div>
+        <div className={styles.buttons}>
+          <MailboxContent.Button>全部</MailboxContent.Button>
+          <MailboxContent.Button>未讀</MailboxContent.Button>
+        </div>
+      </div>
+      <ul className={styles.popoverItem}>
+        {messages.map(({ id, link, title, date, read }) => (
+          <li key={id}>
+            <Link to={link} className={cn({ [styles.unread]: !read })}>
+              <div>{title}</div>
+              <div>{date.toString()}</div>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <div className={styles.loadMore}>
+        <MailboxContent.Button>載入更多</MailboxContent.Button>
+      </div>
+    </div>
+  );
+};
+
+MailboxContent.propTypes = {
+  messages: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.instanceOf(Date).isRequired,
+      id: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired,
+      read: PropTypes.bool.isRequired,
+      title: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+};
+
+MailboxContent.Button = props => (
+  <button className={styles.button} {...props} />
+);
+
 const MailboxButton = () => {
-  const [count, setCount] = useState(1);
-  const read = useCallback(() => setCount(0), []);
+  const [messages, setMessages] = useState([
+    {
+      id: Math.random()
+        .toString()
+        .replace(/\D/g, ''),
+      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
+      link: 'experiences/6810ccae07e773897e22812e',
+      date: new Date(),
+      read: false,
+    },
+    {
+      id: Math.random()
+        .toString()
+        .replace(/\D/g, ''),
+      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
+      link: 'experiences/6810ccae07e773897e22812e',
+      date: new Date(),
+      read: false,
+    },
+  ]);
+
+  const count = useMemo(
+    () => messages.filter(message => !message.read).length,
+    [messages],
+  );
+
+  const read = useCallback(
+    () =>
+      setMessages(messages =>
+        messages.map(message => {
+          message.read = true;
+          return message;
+        }),
+      ),
+    [],
+  );
 
   return (
     <PopoverToggle
       className={styles.mailbox}
       data-count={count}
-      popoverClassName={styles.popover}
-      popoverContent={
-        <ul className={styles.popoverItem}>
-          <li>
-            <Link to="/me/subscriptions/current">我的方案</Link>
-          </li>
-          <li>
-            <Link to="/me">管理我的資料</Link>
-          </li>
-        </ul>
-      }
+      popoverClassName={cn(styles.popover, styles.mailboxContainer)}
+      popoverContent={<MailboxContent messages={messages} />}
     >
       {({ isOpen }) => (
         <button className={cn({ [styles.activating]: isOpen })} onClick={read}>
@@ -166,7 +234,7 @@ const Header = () => {
                 )}
                 {isLoggedIn && (
                   <PopoverToggle
-                    popoverClassName={styles.popover}
+                    popoverClassName={cn(styles.popover, styles.nameContainer)}
                     popoverContent={
                       <ul className={styles.popoverItem}>
                         <li>
