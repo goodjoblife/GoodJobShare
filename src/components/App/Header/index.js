@@ -61,17 +61,33 @@ const HeaderTop = () => {
 };
 
 const MailboxContent = ({ messages }) => {
+  const [showsUnread, setShowsUnread] = useState(false);
+  const filteredMessages = useMemo(
+    () => messages.filter(message => (showsUnread ? !message.read : true)),
+    [messages, showsUnread],
+  );
+
   return (
     <div>
       <div className={styles.popoverHeader}>
         <div className={styles.title}>通知</div>
         <div className={styles.buttons}>
-          <MailboxContent.Button>全部</MailboxContent.Button>
-          <MailboxContent.Button>未讀</MailboxContent.Button>
+          <MailboxContent.Button
+            active={!showsUnread}
+            onClick={() => setShowsUnread(false)}
+          >
+            全部
+          </MailboxContent.Button>
+          <MailboxContent.Button
+            active={showsUnread}
+            onClick={() => setShowsUnread(true)}
+          >
+            未讀
+          </MailboxContent.Button>
         </div>
       </div>
       <ul className={styles.popoverItem}>
-        {messages.map(({ id, link, title, date, read }) => (
+        {filteredMessages.map(({ id, link, title, date, read }) => (
           <li key={id}>
             <Link to={link} className={cn({ [styles.unread]: !read })}>
               <div>{title}</div>
@@ -99,9 +115,16 @@ MailboxContent.propTypes = {
   ).isRequired,
 };
 
-MailboxContent.Button = props => (
-  <button className={styles.button} {...props} />
+MailboxContent.Button = ({ active, ...props }) => (
+  <button
+    className={cn(styles.button, { [styles.active]: active })}
+    {...props}
+  />
 );
+
+MailboxContent.Button.propTypes = {
+  active: PropTypes.bool,
+};
 
 const MailboxButton = () => {
   const [messages, setMessages] = useState([

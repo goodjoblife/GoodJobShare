@@ -1,4 +1,4 @@
-@value main-yellow, main-black, border-gray, main-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small from "../../common/variables.module.css";
+@value main-yellow, main-black, border-gray, main-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small, yellow-bar from "../../common/variables.module.css";
 
 .root {
   @media (max-width: 850px) {
@@ -278,6 +278,13 @@
     line-height: 1.5;
     padding: 0 12px;
     color: #9a9a9a;
+
+    &.active {
+      background-color: yellow-bar;
+      border: 1px solid yellow-bar;
+      color: main-black;
+      font-weight: 500;
+    }
   }
 
   .loadMore {
