@@ -60,6 +60,45 @@ const HeaderTop = () => {
   }, [emailStatus, isEmailVerified, isLoggedIn, location.pathname, shareLink]);
 };
 
+const formatMailboxDate = date => {
+  const now = new Date();
+  const diff = now - date;
+  const minutes = Math.floor(diff / (1000 * 60));
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const months = Math.floor(days / 30);
+
+  if (minutes < 1) {
+    return '剛剛';
+  }
+
+  if (minutes < 60) {
+    return `${minutes} 分鐘前`;
+  }
+
+  if (hours < 24) {
+    return `${hours} 小時前`;
+  }
+
+  if (days < 30) {
+    return `${days} 天前`;
+  }
+
+  if (months < 12) {
+    return `${months} 個月前`;
+  }
+
+  const y = date.getFullYear();
+  const m = date.getMonth() + 1;
+  const d = date.getDate();
+
+  if (y === now.getFullYear()) {
+    return `${m}/${d}`;
+  }
+
+  return `${y}/${m}/${d}`;
+};
+
 const MailboxContent = ({ messages }) => {
   const [showsUnread, setShowsUnread] = useState(false);
   const filteredMessages = useMemo(
@@ -91,7 +130,7 @@ const MailboxContent = ({ messages }) => {
           <li key={id}>
             <Link to={link} className={cn({ [styles.unread]: !read })}>
               <div>{title}</div>
-              <div>{date.toString()}</div>
+              <div className={styles.date}>{formatMailboxDate(date)}</div>
             </Link>
           </li>
         ))}

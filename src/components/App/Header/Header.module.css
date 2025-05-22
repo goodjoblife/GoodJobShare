@@ -270,6 +270,11 @@
   width: 300px;
   line-height: 1.5;
 
+  .date {
+    font-size: 11px;
+    color: #9a9a9a;
+  }
+
   .button {
     border: 1px solid #9a9a9a;
     border-radius: 45px;
