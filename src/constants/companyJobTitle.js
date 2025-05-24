@@ -33,6 +33,13 @@ export const tabTypeTranslation = {
   [INTERVIEW_EXPERIENCE]: '面試',
 };
 
+export const tabTypeDetailTranslation = {
+  [OVERVIEW]: '總覽',
+  [TIME_AND_SALARY]: '薪水&加班狀況',
+  [WORK_EXPERIENCE]: '評價',
+  [INTERVIEW_EXPERIENCE]: '面試經驗',
+};
+
 const tabTypeURLMap = {
   [OVERVIEW]: 'overview',
   [TIME_AND_SALARY]: 'salary-work-times',

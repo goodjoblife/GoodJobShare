@@ -55,7 +55,7 @@ ChildrenOnMaskBottom.propTypes = {
   visibility: PropTypes.string.isRequired,
 };
 
-const Sections = ({ experience, visibility, onExpand }) => {
+const Sections = ({ experience, visibility, onExpand, subTitleTag }) => {
   let toHide = false;
   let currentTotalWords = 0;
   const totalWords = countSectionWords(experience.sections);
@@ -90,12 +90,21 @@ const Sections = ({ experience, visibility, onExpand }) => {
                     />
                   }
                 >
-                  <SectionBlock subtitle={subtitle} content={newContent} />
+                  <SectionBlock
+                    subtitle={subtitle}
+                    content={newContent}
+                    subTitleTag={subTitleTag}
+                  />
                 </GradientMask>
               );
             }
             return (
-              <SectionBlock key={idx} subtitle={subtitle} content={content} />
+              <SectionBlock
+                key={idx}
+                subtitle={subtitle}
+                content={content}
+                subTitleTag={subTitleTag}
+              />
             );
           })}
       </div>
@@ -110,6 +119,7 @@ const Sections = ({ experience, visibility, onExpand }) => {
             subtitle={subtitle}
             content={content}
             rating={rating}
+            subTitleTag={subTitleTag}
           />
         ))}
     </div>
@@ -119,6 +129,7 @@ const Sections = ({ experience, visibility, onExpand }) => {
 Sections.propTypes = {
   experience: PropTypes.object.isRequired,
   onExpand: PropTypes.func.isRequired,
+  subTitleTag: PropTypes.string,
   visibility: PropTypes.string.isRequired,
 };
 
@@ -127,6 +138,7 @@ const Article = ({
   visibility,
   onClickMsgButton,
   originalLink,
+  subTitleTag,
 }) => {
   // Get share link object according to Google Optimize parameters
   const shareLink = useShareLink();
@@ -150,6 +162,7 @@ const Article = ({
               experience={experience}
               visibility={visibility}
               onExpand={handleExpand}
+              subTitleTag={subTitleTag}
             />
           </div>
           <div>
@@ -190,6 +203,7 @@ Article.propTypes = {
   experience: PropTypes.object.isRequired,
   onClickMsgButton: PropTypes.func.isRequired,
   originalLink: PropTypes.string,
+  subTitleTag: PropTypes.string,
   visibility: PropTypes.string.isRequired,
 };
 
