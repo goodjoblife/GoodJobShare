@@ -32,6 +32,7 @@ import {
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
+import * as VISIBILITY from './Article/visibility';
 
 // from params
 const experienceIdSelector = R.prop('id');
@@ -94,7 +95,7 @@ const ExperienceDetail = ({ ...props }) => {
   return (
     <main>
       {isFetched(experienceBox) && <Seo experience={experienceBox.data} />}
-      <Section bg="white" paddingBottom className={styles.section}>
+      <Section paddingBottom className={styles.section}>
         <Wrapper size="m">
           <div>
             {/* 文章區塊  */}
@@ -117,7 +118,11 @@ const ExperienceDetail = ({ ...props }) => {
                 <ExperienceHeading experience={experienceBox.data} />
                 <Article
                   experience={experienceBox.data}
-                  hideContent={!canViewPublishId(experienceBox.data.id)}
+                  visibility={
+                    canViewPublishId(experienceBox.data.id)
+                      ? VISIBILITY.VISIBLE
+                      : VISIBILITY.LOCKED
+                  }
                   onClickMsgButton={scrollToCommentZone}
                 />
               </Fragment>
