@@ -37,7 +37,7 @@ const useTracePreviewRef = ({ experience }) => {
   return ref;
 };
 
-const Experience = ({ experience, pageType, tabType }) => {
+const Experience = ({ experience, pageType, tabType, subTitleTag }) => {
   const [, , canViewPublishId] = usePermission();
   const [messageExpanded, setMessageExpanded] = useState(false);
   const ref = useTracePreviewRef({ experience });
@@ -50,6 +50,7 @@ const Experience = ({ experience, pageType, tabType }) => {
    *  - For example, under 軟體工程師 面試經驗列表，title 僅會顯示 "台積電 面試經驗"
    */
   const title = useMemo(() => {
+    console.log({ experience, pageType, tabType });
     let str;
     if (
       pageType === PAGE_TYPE.COMPANY &&
@@ -94,6 +95,7 @@ const Experience = ({ experience, pageType, tabType }) => {
         }
         onClickMsgButton={() => setMessageExpanded(expended => !expended)}
         originalLink={`/experiences/${experience.id}`}
+        subTitleTag={subTitleTag}
       />
       {messageExpanded && (
         <Wrapper size="s">
@@ -107,6 +109,7 @@ const Experience = ({ experience, pageType, tabType }) => {
 Experience.propTypes = {
   experience: PropTypes.object.isRequired,
   pageType: PropTypes.string.isRequired,
+  subTitleTag: PropTypes.string,
   tabType: PropTypes.string.isRequired,
 };
 
