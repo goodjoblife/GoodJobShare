@@ -37,20 +37,15 @@ const useTracePreviewRef = ({ experience }) => {
   return ref;
 };
 
-const Experience = ({ experience, pageType, tabType, subTitleTag }) => {
-  const [, , canViewPublishId] = usePermission();
-  const [messageExpanded, setMessageExpanded] = useState(false);
-  const ref = useTracePreviewRef({ experience });
-
-  /**
-   * If in company's work/interview experience listing page, only show "${job title} ${data type}"
-   *  - For example, under 台積電 面試經驗列表，title 僅會顯示 "軟體工程師 面試經驗"
-   *
-   * If in job title's work/interview experience listing page, only show "${company name} ${data type}"
-   *  - For example, under 軟體工程師 面試經驗列表，title 僅會顯示 "台積電 面試經驗"
-   */
-  const title = useMemo(() => {
-    console.log({ experience, pageType, tabType });
+/**
+ * If in company's work/interview experience listing page, only show "${job title} ${data type}"
+ *  - For example, under 台積電 面試經驗列表，title 僅會顯示 "軟體工程師 面試經驗"
+ *
+ * If in job title's work/interview experience listing page, only show "${company name} ${data type}"
+ *  - For example, under 軟體工程師 面試經驗列表，title 僅會顯示 "台積電 面試經驗"
+ */
+const useExperienceTitle = ({ experience, pageType, tabType }) =>
+  useMemo(() => {
     let str;
     if (
       pageType === PAGE_TYPE.COMPANY &&
@@ -77,6 +72,13 @@ const Experience = ({ experience, pageType, tabType, subTitleTag }) => {
         return str;
     }
   }, [experience, pageType, tabType]);
+
+const Experience = ({ experience, pageType, tabType, subTitleTag }) => {
+  const [, , canViewPublishId] = usePermission();
+  const [messageExpanded, setMessageExpanded] = useState(false);
+  const ref = useTracePreviewRef({ experience });
+
+  const title = useExperienceTitle({ experience, pageType, tabType });
 
   return (
     <div ref={ref}>
