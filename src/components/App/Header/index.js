@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import ReactGA from 'react-ga4';
 import cn from 'classnames';
+import { formatDistance } from 'date-fns';
+import { zhTW } from 'date-fns/locale';
 import { Wrapper } from 'common/base';
 import GjLogo from 'common/icons/GjLogo.svg';
 import Glike from 'common/icons/Glike.svg';
@@ -60,45 +62,6 @@ const HeaderTop = () => {
   }, [emailStatus, isEmailVerified, isLoggedIn, location.pathname, shareLink]);
 };
 
-const formatMailboxDate = date => {
-  const now = new Date();
-  const diff = now - date;
-  const minutes = Math.floor(diff / (1000 * 60));
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const months = Math.floor(days / 30);
-
-  if (minutes < 1) {
-    return '剛剛';
-  }
-
-  if (minutes < 60) {
-    return `${minutes} 分鐘前`;
-  }
-
-  if (hours < 24) {
-    return `${hours} 小時前`;
-  }
-
-  if (days < 30) {
-    return `${days} 天前`;
-  }
-
-  if (months < 12) {
-    return `${months} 個月前`;
-  }
-
-  const y = date.getFullYear();
-  const m = date.getMonth() + 1;
-  const d = date.getDate();
-
-  if (y === now.getFullYear()) {
-    return `${m}/${d}`;
-  }
-
-  return `${y}/${m}/${d}`;
-};
-
 const MailboxContent = ({ messages: allMessages }) => {
   const [showsUnread, setShowsUnread] = useState(false);
   const [count, setCount] = useState(5);
@@ -137,7 +100,12 @@ const MailboxContent = ({ messages: allMessages }) => {
           <li key={id}>
             <Link to={link} className={cn({ [styles.unread]: !read })}>
               <div>{title}</div>
-              <div className={styles.date}>{formatMailboxDate(date)}</div>
+              <div className={styles.date}>
+                {formatDistance(date, new Date(), {
+                  locale: zhTW,
+                  addSuffix: true,
+                })}
+              </div>
             </Link>
           </li>
         ))}
