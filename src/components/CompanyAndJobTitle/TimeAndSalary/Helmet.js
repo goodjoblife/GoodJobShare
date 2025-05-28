@@ -4,7 +4,11 @@ import ReactHelmet from 'react-helmet';
 import { generatePath } from 'react-router';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { IMG_HOST, SITE_NAME } from 'constants/helmetData';
-import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import {
+  pageType as PAGE_TYPE,
+  tabType as TAB_TYPE,
+  tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
+} from 'constants/companyJobTitle';
 
 const CompanySalaryWorkTimeHelmet = ({
   companyName,
@@ -15,8 +19,12 @@ const CompanySalaryWorkTimeHelmet = ({
   // title
   const title =
     page === 1
-      ? `${companyName} 薪水&加班狀況`
-      : `${companyName} 薪水&加班狀況 - 第${page}頁`;
+      ? `${companyName} ${
+          TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.TIME_AND_SALARY]
+        }`
+      : `${companyName} ${
+          TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.TIME_AND_SALARY]
+        } - 第${page}頁`;
 
   // description
   let description = `目前還沒有${companyName}的薪水、加班狀況資料。分享你的薪水、加班狀況，一起讓職場更透明。`;
@@ -68,7 +76,9 @@ CompanySalaryWorkTimeHelmet.propTypes = {
 
 const JobTitleSalaryWorkTimeHelmet = ({ jobTitle, page, totalCount }) => {
   // title
-  const title = `${jobTitle} 薪水&加班狀況 - 第${page}頁`;
+  const title = `${jobTitle} ${
+    TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.TIME_AND_SALARY]
+  } - 第${page}頁`;
 
   // description
   let description = `目前還沒有${jobTitle}的薪水、加班狀況資料。分享你的薪水、加班狀況，一起讓職場更透明。`;

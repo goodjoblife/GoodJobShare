@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { useWindowScroll, useWindowSize } from 'react-use';
 import PropTypes from 'prop-types';
 import usePermission from 'hooks/usePermission';
@@ -10,6 +10,11 @@ import * as VISIBILITY from 'components/ExperienceDetail/Article/visibility';
 import styles from './Experience.module.css';
 import { formatSimpleDate } from 'utils/dateUtil';
 import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
+import {
+  pageType as PAGE_TYPE,
+  tabType as TAB_TYPE,
+  tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
+} from 'constants/companyJobTitle';
 
 const useTracePreviewRef = ({ experience }) => {
   const { height: windowHeight } = useWindowSize();
@@ -32,15 +37,53 @@ const useTracePreviewRef = ({ experience }) => {
   return ref;
 };
 
-const Experience = ({ experience }) => {
+/**
+ * If in company's work/interview experience listing page, only show "${job title} ${data type}"
+ *  - For example, under 台積電 面試經驗列表，title 僅會顯示 "軟體工程師 面試經驗"
+ *
+ * If in job title's work/interview experience listing page, only show "${company name} ${data type}"
+ *  - For example, under 軟體工程師 面試經驗列表，title 僅會顯示 "台積電 面試經驗"
+ */
+const useExperienceTitle = ({ experience, pageType, tabType }) =>
+  useMemo(() => {
+    let str;
+    if (
+      pageType === PAGE_TYPE.COMPANY &&
+      experience &&
+      experience.job_title &&
+      experience.job_title.name
+    ) {
+      str = experience.job_title.name;
+    } else if (
+      pageType === PAGE_TYPE.JOB_TITLE &&
+      experience &&
+      experience.company &&
+      experience.company.name
+    ) {
+      str = experience.company.name;
+    } else {
+      str = experience.title;
+    }
+    switch (tabType) {
+      case TAB_TYPE.INTERVIEW_EXPERIENCE:
+      case TAB_TYPE.WORK_EXPERIENCE:
+        return `${str} ${TAB_TYPE_DETAIL_TRANSLATION[tabType]}`;
+      default:
+        return str;
+    }
+  }, [experience, pageType, tabType]);
+
+const Experience = ({ experience, pageType, tabType, subTitleTag }) => {
   const [, , canViewPublishId] = usePermission();
   const [messageExpanded, setMessageExpanded] = useState(false);
   const ref = useTracePreviewRef({ experience });
 
+  const title = useExperienceTitle({ experience, pageType, tabType });
+
   return (
     <div ref={ref}>
       <Heading size="m" Tag="h2" bold className={styles.title}>
-        {experience.title}{' '}
+        {title}{' '}
         <span className={styles.timestamp}>
           {formatSimpleDate(new Date(experience.created_at))}
         </span>
@@ -54,6 +97,7 @@ const Experience = ({ experience }) => {
         }
         onClickMsgButton={() => setMessageExpanded(expended => !expended)}
         originalLink={`/experiences/${experience.id}`}
+        subTitleTag={subTitleTag}
       />
       {messageExpanded && (
         <Wrapper size="s">
@@ -66,6 +110,9 @@ const Experience = ({ experience }) => {
 
 Experience.propTypes = {
   experience: PropTypes.object.isRequired,
+  pageType: PropTypes.string.isRequired,
+  subTitleTag: PropTypes.string,
+  tabType: PropTypes.string.isRequired,
 };
 
 export default Experience;

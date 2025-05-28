@@ -36,7 +36,12 @@ const InterviewExperiences = ({
     <Section Tag="main" paddingBottom>
       {data.map(d => (
         <div key={d.id} className={styles.experience}>
-          <Experience experience={d} />
+          <Experience
+            experience={d}
+            pageType={pageType}
+            tabType={tabType}
+            subTitleTag={'h3'}
+          />
         </div>
       ))}
       <Pagination
