@@ -1,5 +1,9 @@
 import graphqlClient from 'utils/graphqlClient';
-import { viewSalaryWorkTimesGql, viewExperiencesGql } from 'graphql/viewLog';
+import {
+  viewSalaryWorkTimesGql,
+  viewExperiencesGql,
+  trackEventGql,
+} from 'graphql/viewLog';
 
 export const viewSalaryWorkTimesApi = ({
   token,
@@ -28,3 +32,10 @@ export const viewExperiencesApi = ({ token, contentIds, referrer = null }) =>
       },
     },
   });
+
+export const trackEventApi = ({ token, name, itemId, itemType, referrer }) =>
+  graphqlClient({
+    query: trackEventGql,
+    token,
+    variables: { input: { name, itemId, itemType, referrer } },
+  }).then(({ trackEvent: { status } }) => status);

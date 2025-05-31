@@ -11,6 +11,9 @@ import {
   getCompanyTopNJobTitlesQuery,
   getCompanyEsgSalaryDataQuery,
   queryCompanyOverviewStatisticsQuery,
+  queryCompanyIsSubscribedGql,
+  subscribeCompanyGql,
+  unsubscribeCompanyGql,
 } from 'graphql/company';
 
 export const queryCompanyRatingStatisticsApi = ({ companyName }) =>
@@ -77,10 +80,11 @@ export const getCompanyInterviewExperiences = ({
   jobTitle,
   start,
   limit,
+  sortBy,
 }) =>
   graphqlClient({
     query: getCompanyInterviewExperiencesQuery,
-    variables: { companyName, jobTitle, start, limit },
+    variables: { companyName, jobTitle, start, limit, sortBy },
   }).then(R.prop('company'));
 
 export const getCompanyWorkExperiences = ({
@@ -88,10 +92,11 @@ export const getCompanyWorkExperiences = ({
   jobTitle,
   start,
   limit,
+  sortBy,
 }) =>
   graphqlClient({
     query: getCompanyWorkExperiencesQuery,
-    variables: { companyName, jobTitle, start, limit },
+    variables: { companyName, jobTitle, start, limit, sortBy },
   }).then(R.prop('company'));
 
 export const queryCompaniesApi = ({ start, limit }) =>
@@ -99,3 +104,43 @@ export const queryCompaniesApi = ({ start, limit }) =>
     query: queryCompaniesHavingDataGql,
     variables: { start, limit },
   });
+
+export const queryCompanyIsSubscribedApi = async ({ companyName, token }) => {
+  const data = await graphqlClient({
+    query: queryCompanyIsSubscribedGql,
+    token,
+    variables: { companyName },
+  });
+
+  if (!data.company) {
+    return {
+      isSubscribed: false,
+      companyId: null,
+    };
+  }
+
+  return {
+    isSubscribed: data.company.isSubscribed,
+    companyId: data.company.id,
+  };
+};
+
+export const subscribeCompanyApi = async ({ companyId, token }) => {
+  const data = await graphqlClient({
+    query: subscribeCompanyGql,
+    token,
+    variables: { input: { companyId } },
+  });
+
+  return data.subscribeCompany.success;
+};
+
+export const unsubscribeCompanyApi = async ({ companyId, token }) => {
+  const data = await graphqlClient({
+    query: unsubscribeCompanyGql,
+    token,
+    variables: { input: { companyId } },
+  });
+
+  return data.unsubscribeCompany.success;
+};

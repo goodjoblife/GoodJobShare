@@ -17,6 +17,7 @@ import {
   companyRatingStatisticsBoxSelectorByName,
   companyTopNJobTitlesBoxSelectorByName,
   companyEsgSalaryDataBoxSelectorByName,
+  companyIsSubscribedBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   queryCompanyOverview as queryCompanyOverviewApi,
@@ -29,7 +30,12 @@ import {
   getCompanyTopNJobTitles,
   getCompanyEsgSalaryData,
   queryCompanyOverviewStatistics as queryCompanyOverviewStatisticsApi,
+  subscribeCompanyApi,
+  unsubscribeCompanyApi,
+  queryCompanyIsSubscribedApi,
 } from 'apis/company';
+import { tokenSelector } from 'selectors/authSelector';
+import { setExperience } from './experience';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
@@ -45,6 +51,7 @@ export const SET_COMPANY_TOP_N_JOB_TITLES =
   '@@COMPANY/SET_COMPANY_TOP_N_JOB_TITLES';
 export const SET_COMPANY_ESG_SALARY_DATA =
   '@@COMPANY/SET_COMPANY_ESG_SALARY_DATA';
+export const SET_IS_SUBSCRIBED = '@@COMPANY/SET_IS_SUBSCRIBED';
 
 const setIndex = (page, box) => ({
   type: SET_INDEX,
@@ -408,6 +415,7 @@ export const queryCompanyInterviewExperiences = ({
   jobTitle,
   start,
   limit,
+  sortBy,
 }) => async (dispatch, getState) => {
   const box = companyInterviewExperiencesBoxSelectorByName(companyName)(
     getState(),
@@ -419,7 +427,8 @@ export const queryCompanyInterviewExperiences = ({
       box.data.name === companyName &&
       box.data.jobTitle === jobTitle &&
       box.data.start === start &&
-      box.data.limit === limit)
+      box.data.limit === limit &&
+      box.data.sortBy === sortBy)
   ) {
     return;
   }
@@ -432,6 +441,7 @@ export const queryCompanyInterviewExperiences = ({
       jobTitle,
       start,
       limit,
+      sortBy,
     });
 
     // Not found case
@@ -444,6 +454,7 @@ export const queryCompanyInterviewExperiences = ({
       jobTitle,
       start,
       limit,
+      sortBy,
       interviewExperiences:
         data.interviewExperiencesResult.interviewExperiences,
       interviewExperiencesCount: data.interviewExperiencesResult.count,
@@ -455,6 +466,11 @@ export const queryCompanyInterviewExperiences = ({
         getFetched(interviewExperiencesData),
       ),
     );
+
+    // Update state.experiences which is the source of truth for all experiences
+    data.interviewExperiencesResult.interviewExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
   } catch (error) {
     dispatch(setInterviewExperiences(companyName, getError(error)));
     throw error;
@@ -472,6 +488,7 @@ export const queryCompanyWorkExperiences = ({
   jobTitle,
   start,
   limit,
+  sortBy,
 }) => async (dispatch, getState) => {
   const box = companyWorkExperiencesBoxSelectorByName(companyName)(getState());
   if (
@@ -481,7 +498,8 @@ export const queryCompanyWorkExperiences = ({
       box.data.name === companyName &&
       box.data.jobTitle === jobTitle &&
       box.data.start === start &&
-      box.data.limit === limit)
+      box.data.limit === limit &&
+      box.data.sortBy === sortBy)
   ) {
     return;
   }
@@ -494,6 +512,7 @@ export const queryCompanyWorkExperiences = ({
       jobTitle,
       start,
       limit,
+      sortBy,
     });
 
     // Not found case
@@ -506,12 +525,175 @@ export const queryCompanyWorkExperiences = ({
       jobTitle,
       start,
       limit,
+      sortBy,
       workExperiences: data.workExperiencesResult.workExperiences,
       workExperiencesCount: data.workExperiencesResult.count,
     };
 
     dispatch(setWorkExperiences(companyName, getFetched(workExperiencesData)));
+
+    // Update state.experiences which is the source of truth for all experiences
+    data.workExperiencesResult.workExperiences.forEach(e => {
+      dispatch(setExperience(e.id, getFetched(e)));
+    });
   } catch (error) {
     dispatch(setWorkExperiences(companyName, getError(error)));
+  }
+};
+
+const subscribeCompany = ({ companyName }) => async (dispatch, getState) => {
+  const state = getState();
+  const token = tokenSelector(state);
+  const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
+  if (!isFetched(box) || !box.data) {
+    return;
+  }
+  const { companyId } = box.data;
+  if (!companyId) {
+    return;
+  }
+
+  dispatch(
+    setIsSubscribed(
+      companyName,
+      getFetched({
+        isSubscribed: true,
+        companyId,
+      }),
+    ),
+  );
+  try {
+    const success = await subscribeCompanyApi({
+      companyId,
+      token,
+    });
+
+    if (!success) {
+      dispatch(
+        setIsSubscribed(
+          companyName,
+          getFetched({
+            isSubscribed: false,
+            companyId,
+          }),
+        ),
+      );
+    }
+  } catch (error) {
+    dispatch(
+      setIsSubscribed(
+        companyName,
+        getFetched({
+          isSubscribed: false,
+          companyId,
+        }),
+      ),
+    );
+    throw error;
+  }
+};
+
+const unsubscribeCompany = ({ companyName }) => async (dispatch, getState) => {
+  const state = getState();
+  const token = tokenSelector(state);
+  const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
+  if (!isFetched(box) || !box.data) {
+    return;
+  }
+  const { companyId } = box.data;
+  if (!companyId) {
+    return;
+  }
+
+  dispatch(
+    setIsSubscribed(
+      companyName,
+      getFetched({
+        isSubscribed: false,
+        companyId,
+      }),
+    ),
+  );
+  try {
+    const success = await unsubscribeCompanyApi({
+      companyId,
+      token,
+    });
+
+    if (!success) {
+      dispatch(
+        setIsSubscribed(
+          companyName,
+          getFetched({
+            isSubscribed: true,
+            companyId,
+          }),
+        ),
+      );
+    }
+  } catch (error) {
+    dispatch(
+      setIsSubscribed(
+        companyName,
+        getFetched({
+          isSubscribed: true,
+          companyId,
+        }),
+      ),
+    );
+    throw error;
+  }
+};
+
+export const toggleSubscribeCompany = ({ companyName }) => async (
+  dispatch,
+  getState,
+) => {
+  const state = getState();
+  const box = companyIsSubscribedBoxSelectorByName(companyName)(state);
+  if (!isFetched(box) || !box.data) {
+    return;
+  }
+  const { isSubscribed } = box.data;
+
+  if (isSubscribed) {
+    await dispatch(unsubscribeCompany({ companyName }));
+  } else {
+    await dispatch(subscribeCompany({ companyName }));
+  }
+};
+
+const setIsSubscribed = (companyName, box) => ({
+  type: SET_IS_SUBSCRIBED,
+  companyName,
+  box,
+});
+
+export const queryCompanyIsSubscribed = ({ companyName }) => async (
+  dispatch,
+  getState,
+) => {
+  const box = companyIsSubscribedBoxSelectorByName(companyName)(getState());
+  if (isFetching(box) || isFetched(box)) {
+    return;
+  }
+
+  dispatch(setIsSubscribed(companyName, toFetching()));
+
+  try {
+    const state = getState();
+    const token = tokenSelector(state);
+    const data = await queryCompanyIsSubscribedApi({ companyName, token });
+
+    if (data == null) {
+      return dispatch(setIsSubscribed(companyName, getFetched(data)));
+    }
+
+    dispatch(setIsSubscribed(companyName, getFetched(data)));
+  } catch (error) {
+    if (isGraphqlError(error)) {
+      dispatch(setIsSubscribed(companyName, getError(error)));
+    }
+    throw error;
   }
 };

@@ -20,12 +20,29 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
+import {
+  sortByFromQuerySelector,
+  useSortByFromQuery,
+} from 'components/CompanyAndJobTitle/Sorter';
+import { isFetched, getFetched } from 'utils/fetchBox';
+import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 
 const useWorkExperiencesBoxSelector = pageName => {
   return useCallback(
     state => {
-      const company = workExperiencesBoxSelectorByName(pageName)(state);
-      return company;
+      const box = workExperiencesBoxSelectorByName(pageName)(state);
+      if (isFetched(box)) {
+        // Get experience data from state.experiences, which serves
+        // as the source of truth of experiences.
+        const data = {
+          ...box.data,
+          workExperiences: box.data.workExperiences.map(
+            e => experienceBoxSelectorAtId(e.id)(state).data || e,
+          ),
+        };
+        return getFetched(data);
+      }
+      return box;
     },
     [pageName],
   );
@@ -36,6 +53,7 @@ const CompanyWorkExperiencesProvider = () => {
   const pageType = PAGE_TYPE.COMPANY;
   const companyName = useCompanyName();
   const [jobTitle] = useSearchTextFromQuery();
+  const [sortBy] = useSortByFromQuery();
   const page = usePage();
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
@@ -51,9 +69,10 @@ const CompanyWorkExperiencesProvider = () => {
         jobTitle: jobTitle || undefined,
         start,
         limit,
+        sortBy,
       }),
     );
-  }, [dispatch, companyName, jobTitle, start, limit]);
+  }, [dispatch, companyName, jobTitle, start, limit, sortBy]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -83,6 +102,7 @@ CompanyWorkExperiencesProvider.fetchData = ({
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
   const jobTitle = searchTextFromQuerySelector(query) || undefined;
+  const sortBy = sortByFromQuerySelector(query);
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   return Promise.all([
@@ -92,6 +112,7 @@ CompanyWorkExperiencesProvider.fetchData = ({
         jobTitle,
         start,
         limit,
+        sortBy,
       }),
     ),
     dispatch(queryRatingStatistics(companyName)),

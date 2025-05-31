@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import ExperienceEntry from './ExperienceEntry';
 import EmptyView from '../EmptyView';
 
 import { Section } from 'common/base';
 import Pagination from 'common/Pagination';
 import NotFoundStatus from 'common/routing/NotFound';
 import { useQuery } from 'hooks/routing';
-import usePermission from 'hooks/usePermission';
+import Experience from '../Experience';
+import styles from '../styles.module.css';
 
 const WorkExperiences = ({
   pageType,
@@ -20,7 +20,6 @@ const WorkExperiences = ({
   totalCount,
 }) => {
   const queryParams = useQuery();
-  const [, , canViewPublishId] = usePermission();
 
   if (data.length === 0) {
     return (
@@ -34,12 +33,14 @@ const WorkExperiences = ({
   return (
     <Section Tag="main" paddingBottom>
       {data.map(d => (
-        <ExperienceEntry
-          key={d.id}
-          pageType={pageType}
-          data={d}
-          canView={canViewPublishId(d.id)}
-        />
+        <div key={d.id} className={styles.experience}>
+          <Experience
+            experience={d}
+            pageType={pageType}
+            tabType={tabType}
+            subTitleTag={'h3'}
+          />
+        </div>
       ))}
       <Pagination
         totalCount={totalCount}

@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactHelmet from 'react-helmet';
 import { generatePath } from 'react-router';
-import qs from 'qs';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
-import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import {
+  pageType as PAGE_TYPE,
+  tabType as TAB_TYPE,
+  tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
+} from 'constants/companyJobTitle';
 import SalaryWorkTimeOgImage from 'images/og/salary-work-time.jpg';
 
 const CompanySalaryWorkTimeHelmet = ({
@@ -17,8 +20,12 @@ const CompanySalaryWorkTimeHelmet = ({
   // title
   const title =
     page === 1
-      ? `${companyName} 薪水&加班狀況`
-      : `${companyName} 薪水&加班狀況 - 第${page}頁`;
+      ? `${companyName} ${
+          TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.TIME_AND_SALARY]
+        }`
+      : `${companyName} ${
+          TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.TIME_AND_SALARY]
+        } - 第${page}頁`;
 
   // description
   let description = `目前還沒有${companyName}的薪水、加班狀況資料。分享你的薪水、加班狀況，一起讓職場更透明。`;
@@ -33,9 +40,7 @@ const CompanySalaryWorkTimeHelmet = ({
   const path = generatePath('/companies/:companyName/salary-work-times', {
     companyName,
   });
-  const search =
-    page > 1 ? qs.stringify({ p: page }, { addQueryPrefix: true }) : '';
-  const url = formatCanonicalPath(`${path}${search}`);
+  const url = formatCanonicalPath(path);
 
   return (
     <ReactHelmet>
@@ -69,7 +74,9 @@ CompanySalaryWorkTimeHelmet.propTypes = {
 
 const JobTitleSalaryWorkTimeHelmet = ({ jobTitle, page, totalCount }) => {
   // title
-  const title = `${jobTitle} 薪水&加班狀況 - 第${page}頁`;
+  const title = `${jobTitle} ${
+    TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.TIME_AND_SALARY]
+  } - 第${page}頁`;
 
   // description
   let description = `目前還沒有${jobTitle}的薪水、加班狀況資料。分享你的薪水、加班狀況，一起讓職場更透明。`;
@@ -81,9 +88,7 @@ const JobTitleSalaryWorkTimeHelmet = ({ jobTitle, page, totalCount }) => {
   const path = generatePath('/job-titles/:jobTitle/salary-work-times', {
     jobTitle,
   });
-  const search =
-    page > 1 ? qs.stringify({ p: page }, { addQueryPrefix: true }) : '';
-  const url = formatCanonicalPath(`${path}${search}`);
+  const url = formatCanonicalPath(path);
 
   return (
     <ReactHelmet>
