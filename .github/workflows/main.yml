@@ -6,6 +6,7 @@ on:
       - master
       - dev
       - dev2
+      - feat/trigger-base-e2e
   pull_request:
 
 jobs:
@@ -148,3 +149,15 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             -d '{"event_type": "goodjobshare-dev2-published"}' \
             https://api.github.com/repos/goodjoblife/goodjob-deploy-ci/dispatches
+
+  call-e2e:
+    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: trigger frontend-e2e integration-test
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -d '{"event_type": "goodjobshare-updated"}' \
+            https://api.github.com/repos/goodjoblife/frontend-e2e/dispatches
