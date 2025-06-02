@@ -25,7 +25,7 @@ const MailboxContent = ({ messages: allMessages }) => {
   );
 
   return (
-    <div>
+    <div className={styles.mailboxContainer}>
       <div className={styles.header}>
         <div className={styles.title}>通知</div>
         <div className={styles.buttons}>
@@ -168,9 +168,9 @@ const MailboxButton = () => {
 
   return (
     <PopoverToggle
-      className={styles.mailbox}
+      className={styles.mailboxButton}
       data-count={count}
-      popoverClassName={cn(popoverStyles.popover, styles.mailboxContainer)}
+      popoverClassName={popoverStyles.popover}
       popoverContent={<MailboxContent messages={messages} />}
     >
       {({ isOpen }) => (

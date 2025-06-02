@@ -2,6 +2,8 @@
 
 .mailboxContainer {
   width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
   line-height: 1.5;
 
   .header {
@@ -52,7 +54,7 @@
   }
 }
 
-.mailbox {
+.mailboxButton {
   position: relative;
   display: flex;
   align-items: center;
