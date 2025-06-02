@@ -1,0 +1,102 @@
+@value main-yellow, main-black, border-gray, main-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small, yellow-bar from "../../common/variables.module.css";
+
+.mailboxContainer {
+  width: 300px;
+  line-height: 1.5;
+
+  .header {
+    border-bottom: 1px solid border-gray;
+    padding: 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 8px;
+    }
+  }
+
+  .date {
+    font-size: 11px;
+    color: #9a9a9a;
+  }
+
+  .button {
+    border: 1px solid #9a9a9a;
+    border-radius: 45px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 0 12px;
+    color: #9a9a9a;
+
+    &.active {
+      background-color: yellow-bar;
+      border: 1px solid yellow-bar;
+      color: main-black;
+      font-weight: 500;
+    }
+  }
+
+  .loadMore {
+    display: flex;
+    justify-content: center;
+    padding: 0 12px 12px;
+  }
+}
+
+.mailbox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+
+  svg {
+    width: 24px;
+    height: 24px;
+
+    path {
+      fill: #fff;
+      transition: fill 0.1s;
+    }
+  }
+
+  &::after {
+    content: attr(data-count);
+    display: flex;
+    background-color: #ee3124;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 13px;
+    color: #fff;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid main-black;
+  }
+
+  &[data-count='0'] {
+    &::after {
+      display: none;
+    }
+  }
+
+  .activating {
+    svg {
+      path {
+        fill: #444;
+      }
+    }
+  }
+}
