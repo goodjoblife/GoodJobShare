@@ -31,6 +31,7 @@ const PopoverToggle = ({
   popoverClassName,
   popoverContent,
   children,
+  ...props
 }) => {
   const history = useHistory();
   const dropdown = useRef();
@@ -66,17 +67,18 @@ const PopoverToggle = ({
       ref={dropdown}
       className={cn(className, styles.popoverToggle)}
       onClick={() => setIsOpen(isOpen => !isOpen)}
+      {...props}
     >
       <Popover className={popoverClassName} active={isOpen}>
         {popoverContent}
       </Popover>
-      {children}
+      {typeof children === 'function' ? children({ isOpen }) : children}
     </div>
   );
 };
 
 PopoverToggle.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]).isRequired,
   className: PropTypes.string,
   popoverClassName: PropTypes.string,
   popoverContent: PropTypes.node,

@@ -1,4 +1,4 @@
-@value main-yellow, main-black, border-gray, main-gray NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small from "../../common/variables.module.css";
+@value main-yellow, main-black, border-gray, main-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small, yellow-bar from "../../common/variables.module.css";
 
 .root {
   @media (max-width: 850px) {
@@ -130,7 +130,7 @@
 
 .buttonsArea {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   margin-left: 16px;
 
@@ -194,6 +194,10 @@
   }
 }
 
+.loggedInButton {
+  display: flex;
+}
+
 .loginBtn,
 .userNameBtn {
   color: #fff;
@@ -202,16 +206,16 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  margin-left: 7px;
   transition-property: color;
   transition-duration: 0.3s;
-  padding-right: 20px;
-  padding-left: 20px;
 }
 
 .loginBtn {
   border-radius: 1.5em;
   border: 1px solid #fff;
+  margin-left: 7px;
+  padding-right: 20px;
+  padding-left: 20px;
 
   svg {
     width: 20px;
@@ -263,12 +267,14 @@
   }
 }
 
-.popover {
-  left: calc(50% - 60px);
+.nameContainer {
   width: 120px;
+}
+
+.popover {
   top: calc(100% + 4px);
 
-  .popoverItem {
+  ul.popoverItem {
     font-size: 14px;
     display: block;
     font-weight: 400;

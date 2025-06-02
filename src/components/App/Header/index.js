@@ -19,6 +19,7 @@ import ProgressTop from './Top/ProgressTop';
 import Searchbar from './Searchbar';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import emailStatusMap from 'constants/emailStatus';
+import MailboxButton from './MailboxButton';
 
 const onClickShareData = () => {
   ReactGA.event({
@@ -59,13 +60,37 @@ const HeaderTop = () => {
   }, [emailStatus, isEmailVerified, isLoggedIn, location.pathname, shareLink]);
 };
 
+const NameButton = () => {
+  const user = useAuthUser();
+  const logout = useLogout();
+
+  return (
+    <PopoverToggle
+      popoverClassName={cn(styles.popover, styles.nameContainer)}
+      popoverContent={
+        <ul className={styles.popoverItem}>
+          <li>
+            <Link to="/me/subscriptions/current">我的方案</Link>
+          </li>
+          <li>
+            <Link to="/me">管理我的資料</Link>
+          </li>
+          <li>
+            <button onClick={logout}>登出</button>
+          </li>
+        </ul>
+      }
+    >
+      <div className={styles.userNameBtn}>{user && user.name}</div>
+    </PopoverToggle>
+  );
+};
+
 const Header = () => {
   const history = useHistory();
   const [isNavOpen, setNavOpen] = useState(false);
   const [isLoggedIn, login] = useLogin();
   const [, fetchPermission] = usePermission();
-  const user = useAuthUser();
-  const logout = useLogout();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -134,26 +159,10 @@ const Header = () => {
                   </button>
                 )}
                 {isLoggedIn && (
-                  <PopoverToggle
-                    popoverClassName={styles.popover}
-                    popoverContent={
-                      <ul className={styles.popoverItem}>
-                        <li>
-                          <Link to="/me/subscriptions/current">我的方案</Link>
-                        </li>
-                        <li>
-                          <Link to="/me">管理我的資料</Link>
-                        </li>
-                        <li>
-                          <button onClick={logout}>登出</button>
-                        </li>
-                      </ul>
-                    }
-                  >
-                    <div className={styles.userNameBtn}>
-                      {user && user.name}
-                    </div>
-                  </PopoverToggle>
+                  <div className={styles.loggedInButton}>
+                    <MailboxButton />
+                    <NameButton />
+                  </div>
                 )}
               </div>
             </div>
