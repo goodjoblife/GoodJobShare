@@ -1,4 +1,4 @@
-@value main-yellow, main-black, border-gray, main-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small, yellow-bar from "../../common/variables.module.css";
+@value main-black, border-gray, yellow-bar from "../../common/variables.module.css";
 
 .mailboxContainer {
   width: 300px;

@@ -159,10 +159,10 @@ const Header = () => {
                   </button>
                 )}
                 {isLoggedIn && (
-                  <button className={styles.loggedInButton}>
+                  <div className={styles.loggedInButton}>
                     <MailboxButton />
                     <NameButton />
-                  </button>
+                  </div>
                 )}
               </div>
             </div>

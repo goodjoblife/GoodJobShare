@@ -5,7 +5,8 @@ import cn from 'classnames';
 import { formatDistance } from 'date-fns';
 import { zhTW } from 'date-fns/locale';
 import PopoverToggle from 'common/PopoverToggle';
-import popoverStyles from './MailboxButton.module.css';
+
+import popoverStyles from './Header.module.css';
 import styles from './MailboxButton.module.css';
 import Bell from 'common/icons/Bell';
 
@@ -169,7 +170,7 @@ const MailboxButton = () => {
     <PopoverToggle
       className={styles.mailbox}
       data-count={count}
-      popoverClassName={cn(styles.popover, styles.mailboxContainer)}
+      popoverClassName={cn(popoverStyles.popover, styles.mailboxContainer)}
       popoverContent={<MailboxContent messages={messages} />}
     >
       {({ isOpen }) => (
