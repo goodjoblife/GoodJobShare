@@ -5,9 +5,10 @@ import { Switch } from 'react-router';
 import Wrapper from 'common/base/Wrapper';
 import { pathnameSelector } from 'common/routing/selectors';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
+import SalaryWorkTimeOgImage from 'images/og/salary-work-time.jpg';
 import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
-import { IMG_HOST, SITE_NAME } from 'constants/helmetData';
+import { SITE_NAME } from 'constants/helmetData';
 
 class TimeAndSalary extends Component {
   static propTypes = {
@@ -38,10 +39,7 @@ class TimeAndSalary extends Component {
         <meta name="description" content={description} />
         <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
         <meta property="og:description" content={description} />
-        <meta
-          property="og:image"
-          content={`${IMG_HOST}/og/time-and-salary.jpg`}
-        />
+        <meta property="og:image" content={SalaryWorkTimeOgImage} />
         <meta property="og:url" content={url} />
         <link rel="canonical" href={url} />
       </Helmet>
