@@ -8,7 +8,7 @@ import { keywordFromQuerySelector } from 'selectors/routing/keyword';
 import { useQuery } from 'hooks/routing';
 import styles from './Searchbar.module.css';
 
-const Searchbar = ({ className, placeholder }) => {
+const Searchbar = ({ className, placeholder, inputRef }) => {
   const history = useHistory();
   const query = useQuery();
   const [searchText, setSearchText] = useState(keywordFromQuerySelector(query));
@@ -45,6 +45,7 @@ const Searchbar = ({ className, placeholder }) => {
       onBlur={handleFormBlur}
     >
       <SearchTextInput
+        ref={inputRef}
         className={styles.textInput}
         placeholder={placeholder}
         value={searchText}
@@ -60,6 +61,10 @@ const Searchbar = ({ className, placeholder }) => {
 
 Searchbar.propTypes = {
   className: PropTypes.string.isRequired,
+  inputRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.any }),
+  ]),
   placeholder: PropTypes.string,
 };
 

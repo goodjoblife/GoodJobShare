@@ -19,6 +19,8 @@ import ProgressTop from './Top/ProgressTop';
 import Searchbar from './Searchbar';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import emailStatusMap from 'constants/emailStatus';
+import MailboxButton from './MailboxButton';
+import useMobile from 'hooks/useMobile';
 
 const onClickShareData = () => {
   ReactGA.event({
@@ -59,13 +61,77 @@ const HeaderTop = () => {
   }, [emailStatus, isEmailVerified, isLoggedIn, location.pathname, shareLink]);
 };
 
-const Header = () => {
+const NameButton = () => {
+  const user = useAuthUser();
+  const logout = useLogout();
+
+  return (
+    <PopoverToggle
+      popoverClassName={cn(styles.popover, styles.nameContainer)}
+      popoverContent={
+        <ul className={styles.popoverItem}>
+          <li>
+            <Link to="/me/subscriptions/current">我的方案</Link>
+          </li>
+          <li>
+            <Link to="/me">管理我的資料</Link>
+          </li>
+          <li>
+            <button onClick={logout}>登出</button>
+          </li>
+        </ul>
+      }
+    >
+      <div className={styles.userNameBtn}>{user && user.name}</div>
+    </PopoverToggle>
+  );
+};
+
+const Logo = ({ className, forceDesktop }) => {
+  const isMobile = useMobile();
+  const shouldUseMobile = !forceDesktop && isMobile;
+
+  return (
+    <Link to="/" title="GoodJob 職場透明化運動" className={className}>
+      <img src={shouldUseMobile ? Glike : GjLogo} alt="Goodjob" />
+    </Link>
+  );
+};
+
+Logo.propTypes = {
+  className: PropTypes.string,
+  forceDesktop: PropTypes.bool,
+};
+
+const ResponsiveSearchbar = ({ className, inputRef }) => {
+  const isMobile = useMobile();
+  return (
+    <div
+      className={cn(
+        styles.searchbarWrapper,
+        { [styles.mobile]: isMobile },
+        className,
+      )}
+    >
+      <Searchbar
+        className={styles.searchbar}
+        placeholder="搜全站薪水/面試/評價"
+        inputRef={inputRef}
+      />
+    </div>
+  );
+};
+
+ResponsiveSearchbar.propTypes = {
+  className: PropTypes.string,
+  inputRef: PropTypes.any,
+};
+
+const Header = ({ searchInputRef }) => {
   const history = useHistory();
   const [isNavOpen, setNavOpen] = useState(false);
   const [isLoggedIn, login] = useLogin();
   const [, fetchPermission] = usePermission();
-  const user = useAuthUser();
-  const logout = useLogout();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -79,42 +145,22 @@ const Header = () => {
 
   useEffect(() => history.listen(closeNav), [closeNav, history]);
 
+  const isMobile = useMobile();
+
   return (
     <div className={styles.root}>
       <HeaderTop />
       <header className={styles.header}>
         <Wrapper size="l" className={styles.inner}>
           <HeaderButton isNavOpen={isNavOpen} toggle={toggleNav} />
-          <div className={styles.logo}>
-            <Link to="/" title="GoodJob 職場透明化運動">
-              <img src={GjLogo} alt="Goodjob" />
-            </Link>
-          </div>
-          <div className={styles.logoSm}>
-            <Link to="/" title="GoodJob 職場透明化運動">
-              <img src={Glike} alt="Goodjob" />
-            </Link>
-          </div>
-          <div className={styles.searchbarWrapper}>
-            <Searchbar
-              className={styles.searchbar}
-              placeholder="搜全站薪水/面試/評價"
-            />
-          </div>
-          <div className={cn(styles.searchbarWrapper, styles.mobile)}>
-            <Searchbar
-              className={styles.searchbar}
-              placeholder="搜全站薪水/面試/評價"
-            />
-          </div>
+          <Logo className={styles.logo} />
+          <ResponsiveSearchbar inputRef={searchInputRef} />
           <nav
             className={cn(styles.nav, {
               [styles.isNavOpen]: isNavOpen,
             })}
           >
-            <Link to="/" className={styles.logo} title="GoodJob 職場透明化運動">
-              <img src={GjLogo} alt="Goodjob" />
-            </Link>
+            <Logo className={styles.logo} forceDesktop />
             <SiteMenu isLogin={isLoggedIn} />
             <div className={styles.buttonsArea}>
               <Link to="/plans" className={styles.plansLink}>
@@ -134,26 +180,10 @@ const Header = () => {
                   </button>
                 )}
                 {isLoggedIn && (
-                  <PopoverToggle
-                    popoverClassName={styles.popover}
-                    popoverContent={
-                      <ul className={styles.popoverItem}>
-                        <li>
-                          <Link to="/me/subscriptions/current">我的方案</Link>
-                        </li>
-                        <li>
-                          <Link to="/me">管理我的資料</Link>
-                        </li>
-                        <li>
-                          <button onClick={logout}>登出</button>
-                        </li>
-                      </ul>
-                    }
-                  >
-                    <div className={styles.userNameBtn}>
-                      {user && user.name}
-                    </div>
-                  </PopoverToggle>
+                  <div className={styles.loggedInButton}>
+                    {!isMobile && <MailboxButton />}
+                    <NameButton />
+                  </div>
                 )}
               </div>
             </div>
@@ -175,6 +205,10 @@ const HeaderButton = ({ isNavOpen, toggle }) => (
 HeaderButton.propTypes = {
   isNavOpen: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
+};
+
+Header.propTypes = {
+  searchInputRef: PropTypes.any,
 };
 
 export default Header;
