@@ -87,6 +87,44 @@ const NameButton = () => {
   );
 };
 
+const Logo = ({ className, forceDesktop }) => {
+  const isMobile = useMobile();
+  const shouldUseMobile = !forceDesktop && isMobile;
+
+  return (
+    <Link to="/" title="GoodJob 職場透明化運動" className={className}>
+      <img src={shouldUseMobile ? Glike : GjLogo} alt="Goodjob" />
+    </Link>
+  );
+};
+
+Logo.propTypes = {
+  className: PropTypes.string,
+  forceDesktop: PropTypes.bool,
+};
+
+const ResponsiveSearchbar = ({ className }) => {
+  const isMobile = useMobile();
+  return (
+    <div
+      className={cn(
+        styles.searchbarWrapper,
+        { [styles.mobile]: isMobile },
+        className,
+      )}
+    >
+      <Searchbar
+        className={styles.searchbar}
+        placeholder="搜全站薪水/面試/評價"
+      />
+    </div>
+  );
+};
+
+ResponsiveSearchbar.propTypes = {
+  className: PropTypes.string,
+};
+
 const Header = () => {
   const history = useHistory();
   const [isNavOpen, setNavOpen] = useState(false);
@@ -113,36 +151,14 @@ const Header = () => {
       <header className={styles.header}>
         <Wrapper size="l" className={styles.inner}>
           <HeaderButton isNavOpen={isNavOpen} toggle={toggleNav} />
-          <div className={styles.logo}>
-            <Link to="/" title="GoodJob 職場透明化運動">
-              <img src={GjLogo} alt="Goodjob" />
-            </Link>
-          </div>
-          <div className={styles.logoSm}>
-            <Link to="/" title="GoodJob 職場透明化運動">
-              <img src={Glike} alt="Goodjob" />
-            </Link>
-          </div>
-          <div className={styles.searchbarWrapper}>
-            <Searchbar
-              className={styles.searchbar}
-              placeholder="搜全站薪水/面試/評價"
-            />
-          </div>
-          <div className={cn(styles.searchbarWrapper, styles.mobile)}>
-            <Searchbar
-              className={styles.searchbar}
-              placeholder="搜全站薪水/面試/評價"
-            />
-          </div>
+          <Logo className={styles.logo} />
+          <ResponsiveSearchbar />
           <nav
             className={cn(styles.nav, {
               [styles.isNavOpen]: isNavOpen,
             })}
           >
-            <Link to="/" className={styles.logo} title="GoodJob 職場透明化運動">
-              <img src={GjLogo} alt="Goodjob" />
-            </Link>
+            <Logo className={styles.logo} forceDesktop />
             <SiteMenu isLogin={isLoggedIn} />
             <div className={styles.buttonsArea}>
               <Link to="/plans" className={styles.plansLink}>
