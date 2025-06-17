@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback } from 'react';
+import React, { Fragment, useCallback, useRef } from 'react';
 import { Switch, useLocation, useHistory } from 'react-router-dom';
 import { omit } from 'ramda';
 import cn from 'classnames';
@@ -37,6 +37,13 @@ const useShare = () => {
 const App = () => {
   const [share, exitShare] = useShare();
   const isMobile = useMobile();
+  const searchInputRef = useRef(null);
+
+  const focusSearch = useCallback(() => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, []);
 
   useLocStateToastObserver();
   return (
@@ -51,7 +58,7 @@ const App = () => {
                 })}
               >
                 <ToastNotification />
-                {hasHeader ? <Header /> : null}
+                {hasHeader ? <Header searchInputRef={searchInputRef} /> : null}
                 <StaticHelmet.Default />
                 <div className={styles.content}>{children}</div>
                 {hasFooter ? <Footer /> : null}
@@ -60,7 +67,7 @@ const App = () => {
           </AppRouteWithSubRoutes>
         ))}
       </Switch>
-      {isMobile && <MobileTabBar />}
+      {isMobile && <MobileTabBar focusSearch={focusSearch} />}
       <ShareInterviewModal
         open={share === STATE_SHARE.INTERVIEW}
         onClose={exitShare}

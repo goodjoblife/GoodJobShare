@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 import styles from './MobileTabBar.module.css';
@@ -6,7 +7,7 @@ import Bell from 'common/icons/Bell';
 import Magnifiner from 'common/icons/Magnifiner';
 import PlusCircle from 'common/icons/PlusCircle';
 
-const MobileTabBar = () => {
+const MobileTabBar = ({ focusSearch }) => {
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -15,6 +16,16 @@ const MobileTabBar = () => {
     { path: '/share', label: '分享', Icon: PlusCircle },
     { path: '/search', label: '搜尋', Icon: Magnifiner },
   ];
+
+  const handleTabClick = useCallback(
+    path => e => {
+      if (path === '/search') {
+        e.preventDefault();
+        focusSearch();
+      }
+    },
+    [focusSearch],
+  );
 
   return (
     <nav className={styles.tabBar}>
@@ -25,6 +36,7 @@ const MobileTabBar = () => {
           className={cn(styles.tabItem, {
             [styles.active]: currentPath === path,
           })}
+          onClick={e => handleTabClick(path)(e)}
         >
           <Icon className={styles.icon} />
           <span className={styles.label}>{label}</span>
@@ -32,6 +44,10 @@ const MobileTabBar = () => {
       ))}
     </nav>
   );
+};
+
+MobileTabBar.propTypes = {
+  focusSearch: PropTypes.func.isRequired,
 };
 
 export default MobileTabBar;

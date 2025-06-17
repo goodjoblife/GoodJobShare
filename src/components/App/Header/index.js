@@ -103,7 +103,7 @@ Logo.propTypes = {
   forceDesktop: PropTypes.bool,
 };
 
-const ResponsiveSearchbar = ({ className }) => {
+const ResponsiveSearchbar = ({ className, inputRef }) => {
   const isMobile = useMobile();
   return (
     <div
@@ -116,6 +116,7 @@ const ResponsiveSearchbar = ({ className }) => {
       <Searchbar
         className={styles.searchbar}
         placeholder="搜全站薪水/面試/評價"
+        inputRef={inputRef}
       />
     </div>
   );
@@ -123,9 +124,10 @@ const ResponsiveSearchbar = ({ className }) => {
 
 ResponsiveSearchbar.propTypes = {
   className: PropTypes.string,
+  inputRef: PropTypes.any,
 };
 
-const Header = () => {
+const Header = ({ searchInputRef }) => {
   const history = useHistory();
   const [isNavOpen, setNavOpen] = useState(false);
   const [isLoggedIn, login] = useLogin();
@@ -152,7 +154,7 @@ const Header = () => {
         <Wrapper size="l" className={styles.inner}>
           <HeaderButton isNavOpen={isNavOpen} toggle={toggleNav} />
           <Logo className={styles.logo} />
-          <ResponsiveSearchbar />
+          <ResponsiveSearchbar inputRef={searchInputRef} />
           <nav
             className={cn(styles.nav, {
               [styles.isNavOpen]: isNavOpen,
@@ -203,6 +205,10 @@ const HeaderButton = ({ isNavOpen, toggle }) => (
 HeaderButton.propTypes = {
   isNavOpen: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
+};
+
+Header.propTypes = {
+  searchInputRef: PropTypes.any,
 };
 
 export default Header;

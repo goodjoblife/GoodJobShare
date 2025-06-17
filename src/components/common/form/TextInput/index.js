@@ -68,7 +68,14 @@ const TextInput = forwardRef(
     const handleRef = useCallback(
       node => {
         inputRef.current = node;
-        if (ref) ref.current = node;
+
+        if (ref) {
+          if (typeof ref === 'function') {
+            ref(node);
+          } else {
+            ref.current = node;
+          }
+        }
       },
       [ref],
     );
