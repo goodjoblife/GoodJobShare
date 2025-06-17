@@ -20,6 +20,7 @@ import Searchbar from './Searchbar';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import emailStatusMap from 'constants/emailStatus';
 import MailboxButton from './MailboxButton';
+import useMobile from 'hooks/useMobile';
 
 const onClickShareData = () => {
   ReactGA.event({
@@ -104,6 +105,8 @@ const Header = () => {
 
   useEffect(() => history.listen(closeNav), [closeNav, history]);
 
+  const isMobile = useMobile();
+
   return (
     <div className={styles.root}>
       <HeaderTop />
@@ -160,7 +163,7 @@ const Header = () => {
                 )}
                 {isLoggedIn && (
                   <div className={styles.loggedInButton}>
-                    <MailboxButton />
+                    {!isMobile && <MailboxButton />}
                     <NameButton />
                   </div>
                 )}
