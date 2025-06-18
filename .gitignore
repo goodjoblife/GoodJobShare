@@ -12,3 +12,4 @@ webpack-assets.json
 .env.test.local
 .env.production.local
 .vscode
+tsconfig.tsbuildinfo
