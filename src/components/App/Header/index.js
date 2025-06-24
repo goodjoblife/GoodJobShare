@@ -127,6 +127,53 @@ ResponsiveSearchbar.propTypes = {
   inputRef: PropTypes.any,
 };
 
+const Nav = ({ isNavOpen, isLoggedIn, login, onClickShareData }) => {
+  const isMobile = useMobile();
+
+  return (
+    <nav
+      className={cn(styles.nav, {
+        [styles.isNavOpen]: isNavOpen,
+      })}
+    >
+      <Logo className={styles.logo} forceDesktop />
+      <SiteMenu isLogin={isLoggedIn} />
+      <div className={styles.buttonsArea}>
+        <Link to="/plans" className={styles.plansLink}>
+          解鎖方式
+        </Link>
+        <Link
+          to="/share"
+          className={styles.leaveDataBtn}
+          onClick={onClickShareData}
+        >
+          分享經驗
+        </Link>
+        <div style={{ position: 'relative' }}>
+          {!isLoggedIn && (
+            <button className={styles.loginBtn} onClick={login}>
+              登入
+            </button>
+          )}
+          {isLoggedIn && (
+            <div className={styles.loggedInButton}>
+              {!isMobile && <MailboxButton />}
+              <NameButton />
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+Nav.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  isNavOpen: PropTypes.bool.isRequired,
+  login: PropTypes.func.isRequired,
+  onClickShareData: PropTypes.func.isRequired,
+};
+
 const Header = ({ searchInputRef }) => {
   const history = useHistory();
   const [isNavOpen, setNavOpen] = useState(false);
@@ -145,56 +192,27 @@ const Header = ({ searchInputRef }) => {
 
   useEffect(() => history.listen(closeNav), [closeNav, history]);
 
-  const isMobile = useMobile();
-
   return (
     <div className={styles.root}>
       <HeaderTop />
       <header className={styles.header}>
         <Wrapper size="l" className={styles.inner}>
-          <HeaderButton isNavOpen={isNavOpen} toggle={toggleNav} />
+          <HamburgerButton isNavOpen={isNavOpen} toggle={toggleNav} />
           <Logo className={styles.logo} />
           <ResponsiveSearchbar inputRef={searchInputRef} />
-          <nav
-            className={cn(styles.nav, {
-              [styles.isNavOpen]: isNavOpen,
-            })}
-          >
-            <Logo className={styles.logo} forceDesktop />
-            <SiteMenu isLogin={isLoggedIn} />
-            <div className={styles.buttonsArea}>
-              <Link to="/plans" className={styles.plansLink}>
-                解鎖方式
-              </Link>
-              <Link
-                to="/share"
-                className={styles.leaveDataBtn}
-                onClick={onClickShareData}
-              >
-                分享經驗
-              </Link>
-              <div style={{ position: 'relative' }}>
-                {!isLoggedIn && (
-                  <button className={styles.loginBtn} onClick={login}>
-                    登入
-                  </button>
-                )}
-                {isLoggedIn && (
-                  <div className={styles.loggedInButton}>
-                    {!isMobile && <MailboxButton />}
-                    <NameButton />
-                  </div>
-                )}
-              </div>
-            </div>
-          </nav>
+          <Nav
+            isNavOpen={isNavOpen}
+            isLoggedIn={isLoggedIn}
+            login={login}
+            onClickShareData={onClickShareData}
+          />
         </Wrapper>
       </header>
     </div>
   );
 };
 
-const HeaderButton = ({ isNavOpen, toggle }) => (
+const HamburgerButton = ({ isNavOpen, toggle }) => (
   <div
     className={cn(styles.mHeaderButton, { [styles.isNavOpen]: isNavOpen })}
     onClick={toggle}
@@ -202,7 +220,8 @@ const HeaderButton = ({ isNavOpen, toggle }) => (
     <span />
   </div>
 );
-HeaderButton.propTypes = {
+
+HamburgerButton.propTypes = {
   isNavOpen: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
 };
