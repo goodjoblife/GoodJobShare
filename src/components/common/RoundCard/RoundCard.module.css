@@ -22,7 +22,7 @@
     left: -16px;
     width: 40px;
     height: 40px;
-    background-image: url('../../images/checked.svg');
+    background-image: url('./checked.svg');
     content: ' ';
   }
 }
