@@ -21,6 +21,9 @@
     "*.ts": [
       "eslint --fix"
     ],
+    "*.tsx": [
+      "eslint --fix"
+    ],
     "*.css": [
       "stylelint --fix"
     ]
@@ -39,9 +42,11 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@types/qs": "^6.14.0",
+    "@types/ramda": "^0.30.2",
     "@types/react": "^16.12.0",
     "@types/react-dom": "^16.9.25",
     "@types/react-redux": "^7.1.34",
+    "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "2.34.0",
     "@typescript-eslint/parser": "2.34.0",
     "autoprefixer": "7.1.1",
@@ -75,7 +80,7 @@
     "@fortawesome/react-fontawesome": "^0.0.17",
     "@loadable/component": "^5.16.4",
     "airbnb-prop-types": "^2.15.0",
-    "classnames": "^2.2.5",
+    "classnames": "^2.5.1",
     "date-fns": "^2.30.0",
     "express": "^4.20.0",
     "history": "^4.7.2",

@@ -21,7 +21,7 @@ module.exports = {
     'react/jsx-filename-extension': [
       'error',
       {
-        extensions: ['.js', '.ts'],
+        extensions: ['.js', '.tsx'],
       },
     ],
     'jsx-a11y/no-static-element-interactions': 'off',
@@ -37,5 +37,8 @@ module.exports = {
     'react/no-unused-prop-types': 'error',
     'react/sort-prop-types': ['error', {'sortShapeProp': true}],
     '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/no-var-requires': 'warn',
+    '@typescript-eslint/no-empty-function': 'error',
+    '@typescript-eslint/ban-ts-ignore': 'warn',
   },
 };
