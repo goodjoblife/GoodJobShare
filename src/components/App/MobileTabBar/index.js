@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styles from './MobileTabBar.module.css';
@@ -7,31 +7,27 @@ import Magnifiner from 'common/icons/Magnifiner';
 import PlusCircle from 'common/icons/PlusCircle';
 
 const MobileTabBar = ({ focusSearch }) => {
-  const tabs = [
-    { path: '/notifications', label: '通知', Icon: Bell },
-    { path: '/share', label: '分享', Icon: PlusCircle },
-    { path: '/search', label: '搜尋', Icon: Magnifiner },
-  ];
-
-  const handleTabClick = useCallback(
-    path => e => {
-      if (path === '/search') {
-        e.preventDefault();
-        focusSearch();
-      }
-    },
+  const tabs = useMemo(
+    () => [
+      { path: '/notifications', label: '通知', Icon: Bell, onClick: null },
+      { path: '/share', label: '分享', Icon: PlusCircle, onClick: null },
+      {
+        path: '/search',
+        label: '搜尋',
+        Icon: Magnifiner,
+        onClick: e => {
+          e.preventDefault();
+          focusSearch();
+        },
+      },
+    ],
     [focusSearch],
   );
 
   return (
     <nav className={styles.tabBar}>
-      {tabs.map(({ path, label, Icon }) => (
-        <Link
-          key={path}
-          to={path}
-          className={styles.tabItem}
-          onClick={e => handleTabClick(path)(e)}
-        >
+      {tabs.map(({ path, label, Icon, onClick }) => (
+        <Link key={path} to={path} className={styles.tabItem} onClick={onClick}>
           <Icon className={styles.icon} />
           <span className={styles.label}>{label}</span>
         </Link>
