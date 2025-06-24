@@ -1,96 +1,11 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import cn from 'classnames';
-import { formatDistance } from 'date-fns';
-import { zhTW } from 'date-fns/locale';
 import PopoverToggle from 'common/PopoverToggle';
 
 import popoverStyles from './Header.module.css';
 import styles from './MailboxButton.module.css';
 import Bell from 'common/icons/Bell';
-
-const MailboxContent = ({ messages: allMessages }) => {
-  const [showsUnread, setShowsUnread] = useState(false);
-  const [count, setCount] = useState(5);
-
-  const filteredMessages = useMemo(
-    () => allMessages.filter(message => (showsUnread ? !message.read : true)),
-    [allMessages, showsUnread],
-  );
-
-  const displayedFilteredMessages = useMemo(
-    () => filteredMessages.slice(0, count),
-    [filteredMessages, count],
-  );
-
-  return (
-    <div className={styles.mailboxContainer}>
-      <div className={styles.header}>
-        <div className={styles.title}>通知</div>
-        <div className={styles.buttons}>
-          <MailboxContent.Button
-            active={!showsUnread}
-            onClick={() => setShowsUnread(false)}
-          >
-            全部
-          </MailboxContent.Button>
-          <MailboxContent.Button
-            active={showsUnread}
-            onClick={() => setShowsUnread(true)}
-          >
-            未讀
-          </MailboxContent.Button>
-        </div>
-      </div>
-      <ul className={popoverStyles.popoverItem}>
-        {filteredMessages.map(({ id, link, title, date, read }) => (
-          <li key={id}>
-            <Link to={link} className={cn({ [styles.unread]: !read })}>
-              <div>{title}</div>
-              <div className={styles.date}>
-                {formatDistance(date, new Date(), {
-                  locale: zhTW,
-                  addSuffix: true,
-                })}
-              </div>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      {displayedFilteredMessages.length < filteredMessages.length && (
-        <div className={styles.loadMore}>
-          <MailboxContent.Button onClick={() => setCount(count => count + 5)}>
-            載入更多
-          </MailboxContent.Button>
-        </div>
-      )}
-    </div>
-  );
-};
-
-MailboxContent.propTypes = {
-  messages: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.instanceOf(Date).isRequired,
-      id: PropTypes.string.isRequired,
-      link: PropTypes.string.isRequired,
-      read: PropTypes.bool.isRequired,
-      title: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-};
-
-MailboxContent.Button = ({ active, ...props }) => (
-  <button
-    className={cn(styles.button, { [styles.active]: active })}
-    {...props}
-  />
-);
-
-MailboxContent.Button.propTypes = {
-  active: PropTypes.bool,
-};
+import MailboxContent from './MailboxContent';
 
 const MailboxButton = () => {
   const [messages, setMessages] = useState([
@@ -171,7 +86,9 @@ const MailboxButton = () => {
       className={styles.mailboxButton}
       data-count={count}
       popoverClassName={popoverStyles.popover}
-      popoverContent={<MailboxContent messages={messages} />}
+      popoverContent={
+        <MailboxContent className={styles.mailboxContent} messages={messages} />
+      }
     >
       {({ isOpen }) => (
         <button className={cn({ [styles.activating]: isOpen })} onClick={read}>
