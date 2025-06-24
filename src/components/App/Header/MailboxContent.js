@@ -1,13 +1,18 @@
 import React, { useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { formatDistance } from 'date-fns';
 import { zhTW } from 'date-fns/locale';
+
 import popoverStyles from './Header.module.css';
 import styles from './MailboxContent.module.css';
+import { messagesSelector } from 'selectors/inbox';
 
-const MailboxContent = ({ className, messages: allMessages }) => {
+const MailboxContent = ({ className }) => {
+  const allMessages = useSelector(messagesSelector);
+
   const [showsUnread, setShowsUnread] = useState(false);
   const [count, setCount] = useState(5);
 
@@ -60,15 +65,6 @@ const MailboxContent = ({ className, messages: allMessages }) => {
 
 MailboxContent.propTypes = {
   className: PropTypes.string,
-  messages: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.instanceOf(Date).isRequired,
-      id: PropTypes.string.isRequired,
-      link: PropTypes.string.isRequired,
-      read: PropTypes.bool.isRequired,
-      title: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
 };
 
 const Button = ({ active, ...props }) => (

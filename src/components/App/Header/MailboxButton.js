@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 import PopoverToggle from 'common/PopoverToggle';
 
@@ -6,80 +7,17 @@ import popoverStyles from './Header.module.css';
 import styles from './MailboxButton.module.css';
 import Bell from 'common/icons/Bell';
 import MailboxContent from './MailboxContent';
+import { messagesSelector, unreadCountSelector } from 'selectors/inbox';
+import { readInbox } from 'actions/inbox';
 
 const MailboxButton = () => {
-  const [messages, setMessages] = useState([
-    {
-      id: Math.random()
-        .toString()
-        .replace(/\D/g, ''),
-      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
-      link: 'experiences/6810ccae07e773897e22812e',
-      date: new Date(),
-      read: false,
-    },
-    {
-      id: Math.random()
-        .toString()
-        .replace(/\D/g, ''),
-      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
-      link: 'experiences/6810ccae07e773897e22812e',
-      date: new Date(),
-      read: false,
-    },
-    {
-      id: Math.random()
-        .toString()
-        .replace(/\D/g, ''),
-      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
-      link: 'experiences/6810ccae07e773897e22812e',
-      date: new Date(),
-      read: true,
-    },
-    {
-      id: Math.random()
-        .toString()
-        .replace(/\D/g, ''),
-      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
-      link: 'experiences/6810ccae07e773897e22812e',
-      date: new Date(),
-      read: false,
-    },
-    {
-      id: Math.random()
-        .toString()
-        .replace(/\D/g, ''),
-      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
-      link: 'experiences/6810ccae07e773897e22812e',
-      date: new Date(),
-      read: true,
-    },
-    {
-      id: Math.random()
-        .toString()
-        .replace(/\D/g, ''),
-      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
-      link: 'experiences/6810ccae07e773897e22812e',
-      date: new Date(),
-      read: false,
-    },
-  ]);
+  const count = useSelector(unreadCountSelector);
+  const messages = useSelector(messagesSelector);
 
-  const count = useMemo(
-    () => messages.filter(message => !message.read).length,
-    [messages],
-  );
-
-  const read = useCallback(
-    () =>
-      setMessages(messages =>
-        messages.map(message => {
-          message.read = true;
-          return message;
-        }),
-      ),
-    [],
-  );
+  const dispatch = useDispatch();
+  const read = useCallback(() => {
+    dispatch(readInbox());
+  }, [dispatch]);
 
   return (
     <PopoverToggle
