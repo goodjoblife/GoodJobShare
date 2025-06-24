@@ -1,6 +1,8 @@
+@value TABBAR_HEIGHT from "../../common/variables.module.css";
+
 .aboveTabbar {
   @media (max-width: 850px) {
-    padding-bottom: 60px; /* tabbar */
+    padding-bottom: TABBAR_HEIGHT;
   }
 }
 
@@ -13,7 +15,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: TABBAR_HEIGHT;
   background-color: white;
   display: flex;
   justify-content: space-around;
