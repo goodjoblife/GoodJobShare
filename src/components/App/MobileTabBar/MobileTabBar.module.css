@@ -1,4 +1,14 @@
+.aboveTabbar {
+  @media (max-width: 850px) {
+    padding-bottom: 60px; /* tabbar */
+  }
+}
+
 .tabBar {
+  @media (min-width: 851px) {
+    display: none;
+  }
+
   position: fixed;
   bottom: 0;
   left: 0;

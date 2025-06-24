@@ -1,7 +1,6 @@
 import React, { Fragment, useCallback, useRef } from 'react';
 import { Switch, useLocation, useHistory } from 'react-router-dom';
 import { omit } from 'ramda';
-import cn from 'classnames';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 import StaticHelmet from 'common/StaticHelmet';
@@ -10,10 +9,10 @@ import useLocStateToastObserver from 'hooks/toastNotification/useLocStateToastOb
 import { STATE_SHARE } from 'common/ShareExpSection/shareLinkTo';
 import CollapsedDrawer from 'common/Questionnaire/CollapsedDrawer';
 import ExpandedModal from 'common/Questionnaire/ExpandedModal';
-import useMobile from 'hooks/useMobile';
 import ToastNotification from '../ToastNotification/ToastNotification';
 import { AppRouteWithSubRoutes } from '../route';
 import styles from './App.module.css';
+import mobileTabBarStyles from './MobileTabBar/MobileTabBar.module.css';
 import Header from './Header';
 import Footer from './Footer';
 import MobileTabBar from './MobileTabBar';
@@ -36,7 +35,6 @@ const useShare = () => {
 
 const App = () => {
   const [share, exitShare] = useShare();
-  const isMobile = useMobile();
   const searchInputRef = useRef(null);
 
   const focusSearch = useCallback(() => {
@@ -52,11 +50,7 @@ const App = () => {
         {routes.map((route, i) => (
           <AppRouteWithSubRoutes key={i} {...route}>
             {({ hasHeader, hasFooter, children }) => (
-              <div
-                className={cn(styles.App, {
-                  [styles.withTabBar]: isMobile,
-                })}
-              >
+              <div className={mobileTabBarStyles.aboveTabbar}>
                 <ToastNotification />
                 {hasHeader ? <Header searchInputRef={searchInputRef} /> : null}
                 <StaticHelmet.Default />
@@ -67,7 +61,7 @@ const App = () => {
           </AppRouteWithSubRoutes>
         ))}
       </Switch>
-      {isMobile && <MobileTabBar focusSearch={focusSearch} />}
+      <MobileTabBar focusSearch={focusSearch} />
       <ShareInterviewModal
         open={share === STATE_SHARE.INTERVIEW}
         onClose={exitShare}

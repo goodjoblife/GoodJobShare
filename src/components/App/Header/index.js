@@ -128,8 +128,6 @@ ResponsiveSearchbar.propTypes = {
 };
 
 const Nav = ({ isNavOpen, isLoggedIn, login, onClickShareData }) => {
-  const isMobile = useMobile();
-
   return (
     <nav
       className={cn(styles.nav, {
@@ -157,7 +155,7 @@ const Nav = ({ isNavOpen, isLoggedIn, login, onClickShareData }) => {
           )}
           {isLoggedIn && (
             <div className={styles.loggedInButton}>
-              {!isMobile && <MailboxButton />}
+              <MailboxButton />
               <NameButton />
             </div>
           )}

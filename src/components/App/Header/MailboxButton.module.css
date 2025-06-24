@@ -1,6 +1,10 @@
-@value main-black from "../../common/variables.module.css";
+@value main-black, below-mobile from "../../common/variables.module.css";
 
 .mailboxButton {
+  @media (max-width: below-mobile) {
+    display: none;
+  }
+
   position: relative;
   display: flex;
   align-items: center;
