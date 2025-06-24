@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import SeoStructure from 'common/Seo/SeoStructure';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
+import LogoForStructureData from './logo_for_structure_data_600x60.jpg';
 import {
   metaTitleSelector,
   metaDescriptionSelector,
@@ -59,7 +60,7 @@ const getStructureData = ({ experience }) => {
       name: 'GoodJob 職場透明化運動',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://image.goodjob.life/logo_for_structure_data_600x60.jpg',
+        url: LogoForStructureData,
       },
     },
     description,

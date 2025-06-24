@@ -46,22 +46,12 @@ const useTracePreviewRef = ({ experience }) => {
  */
 const useExperienceTitle = ({ experience, pageType, tabType }) =>
   useMemo(() => {
-    let str;
-    if (
-      pageType === PAGE_TYPE.COMPANY &&
-      experience &&
-      experience.job_title &&
-      experience.job_title.name
-    ) {
+    let str = '';
+    if (pageType === PAGE_TYPE.COMPANY && experience?.job_title?.name) {
       str = experience.job_title.name;
-    } else if (
-      pageType === PAGE_TYPE.JOB_TITLE &&
-      experience &&
-      experience.company &&
-      experience.company.name
-    ) {
+    } else if (pageType === PAGE_TYPE.JOB_TITLE && experience?.company?.name) {
       str = experience.company.name;
-    } else {
+    } else if (experience?.title) {
       str = experience.title;
     }
     switch (tabType) {
