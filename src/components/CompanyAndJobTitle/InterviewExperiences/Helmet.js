@@ -1,7 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
-import qs from 'qs';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
 import {
@@ -37,9 +36,7 @@ const CompanyInterviewExperienceHelmet = ({
     pageName: companyName,
     tabType: TAB_TYPE.INTERVIEW_EXPERIENCE,
   });
-  const search =
-    page > 1 ? qs.stringify({ p: page }, { addQueryPrefix: true }) : '';
-  const url = formatCanonicalPath(`${path}${search}`);
+  const url = formatCanonicalPath(path);
 
   return (
     <Helmet>
@@ -86,9 +83,7 @@ const JobTitleInterviewExperienceHelmet = ({ jobTitle, page, totalCount }) => {
     pageName: jobTitle,
     tabType: TAB_TYPE.INTERVIEW_EXPERIENCE,
   });
-  const search =
-    page > 1 ? qs.stringify({ p: page }, { addQueryPrefix: true }) : '';
-  const url = formatCanonicalPath(`${path}${search}`);
+  const url = formatCanonicalPath(path);
 
   return (
     <Helmet>

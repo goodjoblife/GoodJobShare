@@ -25,7 +25,7 @@ export const SET_RELATED_EXPERIENCES = '@@EXPERIENCE/SET_RELATED_EXPERIENCES';
 export const SET_POPULAR_EXPERIENCES = '@@EXPERIENCE/SET_POPULAR_EXPERIENCES';
 
 // state is related to experienceId
-const setExperience = (experienceId, box) => ({
+export const setExperience = (experienceId, box) => ({
   type: SET_EXPERIENCE,
   experienceId,
   box,

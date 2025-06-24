@@ -28,9 +28,16 @@ export const tabType = {
 
 export const tabTypeTranslation = {
   [OVERVIEW]: '總覽',
+  [TIME_AND_SALARY]: '薪水&加班',
+  [WORK_EXPERIENCE]: '評價',
+  [INTERVIEW_EXPERIENCE]: '面試',
+};
+
+export const tabTypeDetailTranslation = {
+  [OVERVIEW]: '總覽',
   [TIME_AND_SALARY]: '薪水&加班狀況',
   [WORK_EXPERIENCE]: '評價',
-  [INTERVIEW_EXPERIENCE]: '面試心得',
+  [INTERVIEW_EXPERIENCE]: '面試經驗',
 };
 
 const tabTypeURLMap = {
