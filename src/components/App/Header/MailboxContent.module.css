@@ -1,4 +1,4 @@
-@value main-black, border-gray, yellow-bar from "../../common/variables.module.css";
+@value main-black, border-gray, main-yellow, yellow-bar from "../../common/variables.module.css";
 
 .mailboxContainer {
   overflow-y: auto;
@@ -26,6 +26,23 @@
   .date {
     font-size: 11px;
     color: #9a9a9a;
+  }
+
+  .unread {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      display: block;
+      width: 8px;
+      height: 8px;
+      background-color: main-yellow;
+      border-radius: 50%;
+    }
   }
 
   .button {
