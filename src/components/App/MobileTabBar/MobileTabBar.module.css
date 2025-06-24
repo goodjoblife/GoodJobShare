@@ -36,10 +36,6 @@
   transition: color 0.2s ease;
 }
 
-.tabItem.active {
-  color: #2ecc71;
-}
-
 .icon {
   width: 26px;
   height: 26px;
