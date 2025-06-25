@@ -1,16 +1,26 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import cn from 'classnames';
+
 import styles from './MobileTabBar.module.css';
 import Bell from 'common/icons/Bell';
 import Magnifiner from 'common/icons/Magnifiner';
 import PlusCircle from 'common/icons/PlusCircle';
 
+const ShareButton = ({ className, ...props }) => {
+  return <PlusCircle className={cn(styles.share, className)} {...props} />;
+};
+
+ShareButton.propTypes = {
+  className: PropTypes.string,
+};
+
 const MobileTabBar = ({ focusSearch }) => {
   const tabs = useMemo(
     () => [
       { path: '/notifications', label: '通知', Icon: Bell, onClick: null },
-      { path: '/share', label: '分享', Icon: PlusCircle, onClick: null },
+      { path: '/share', label: '分享', Icon: ShareButton, onClick: null },
       {
         path: '/search',
         label: '搜尋',

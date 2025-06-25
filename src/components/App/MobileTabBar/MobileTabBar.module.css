@@ -1,4 +1,4 @@
-@value TABBAR_HEIGHT from "../../common/variables.module.css";
+@value TABBAR_HEIGHT, text-gray from "../../common/variables.module.css";
 
 .aboveTabbar {
   @media (max-width: 850px) {
@@ -40,6 +40,18 @@
   width: 26px;
   height: 26px;
   margin-bottom: 6px;
+}
+
+svg.icon {
+  path {
+    fill: text-gray;
+  }
+}
+
+.icon.share {
+  path {
+    fill: white;
+  }
 }
 
 .label {
