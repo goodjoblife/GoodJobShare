@@ -12,6 +12,7 @@ import usePermission from 'hooks/usePermission';
 import { useAuthUser, useAuthUserEmailStatus, useIsLoggedIn } from 'hooks/auth';
 import { useLogin, useLogout } from 'hooks/login';
 import styles from './Header.module.css';
+import inboxIconStyles from './InboxIcon.module.css';
 import SiteMenu from './SiteMenu';
 import Top from './Top';
 import EmailVerificationTop from './Top/EmailVerificationTop';
@@ -174,7 +175,7 @@ const Nav = ({ isNavOpen, isLoggedIn, login, onClickShareData }) => {
           {isLoggedIn && (
             <div className={styles.loggedInButton}>
               <InboxPopoverContainer>
-                <InboxButton />
+                <InboxButton className={inboxIconStyles.topNavIcon} />
               </InboxPopoverContainer>
 
               <NamePopoverContainer>

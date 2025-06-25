@@ -1,16 +1,16 @@
-@value main-black, below-tablet from "../../common/variables.module.css";
+@value main-black, below-tablet, text-gray from "../../common/variables.module.css";
 
 .inboxButtonContainer {
+  @media (max-width: below-tablet) {
+    display: none;
+  }
+
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .inboxButton {
-  @media (max-width: below-tablet) {
-    display: none;
-  }
-
   position: relative;
   display: flex;
   align-items: center;
@@ -22,7 +22,6 @@
     height: 24px;
 
     path {
-      fill: #fff;
       transition: fill 0.1s;
     }
   }
@@ -33,15 +32,15 @@
     background-color: #ee3124;
     border-radius: 50%;
     position: absolute;
-    top: -8px;
-    right: 6px;
+    top: -6px;
+    right: 12px;
     font-size: 13px;
     color: #fff;
     width: 18px;
     height: 18px;
     align-items: center;
     justify-content: center;
-    border: 2px solid main-black;
+    border: 2px solid;
   }
 
   &[data-count='0'] {
@@ -55,6 +54,30 @@
       path {
         fill: #444;
       }
+    }
+  }
+
+  &.topNavIcon {
+    svg {
+      path {
+        fill: #fff;
+      }
+    }
+
+    &::after {
+      border-color: main-black;
+    }
+  }
+
+  &.tabBarIcon {
+    svg {
+      path {
+        fill: text-gray;
+      }
+    }
+
+    &::after {
+      border-color: white;
     }
   }
 }

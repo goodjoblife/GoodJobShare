@@ -8,22 +8,37 @@ import Bell from 'common/icons/Bell';
 import { readInbox } from 'actions/inbox';
 import { unreadCountSelector } from 'selectors/inbox';
 
-const InboxButton = ({ isOpen }) => {
+export const InboxButtonIcon = ({ isActivating, className }) => {
   const count = useSelector(unreadCountSelector);
 
+  return (
+    <div
+      className={cn(
+        styles.inboxButton,
+        { [styles.activating]: isActivating },
+        className,
+      )}
+      data-count={count}
+    >
+      <Bell />
+    </div>
+  );
+};
+
+InboxButtonIcon.propTypes = {
+  className: PropTypes.string,
+  isActivating: PropTypes.bool,
+};
+
+const InboxButton = ({ isOpen }) => {
   const dispatch = useDispatch();
   const read = useCallback(() => {
     dispatch(readInbox());
   }, [dispatch]);
 
   return (
-    <button
-      className={cn(styles.inboxButton, { [styles.activating]: isOpen })}
-      data-count={count}
-      onClick={read}
-    >
-      <span className={styles.count}>{count}</span>
-      <Bell />
+    <button onClick={read}>
+      <InboxButtonIcon isActivating={isOpen} className={styles.topNavIcon} />
     </button>
   );
 };
