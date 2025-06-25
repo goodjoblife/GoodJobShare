@@ -19,7 +19,7 @@ import ProgressTop from './Top/ProgressTop';
 import Searchbar from './Searchbar';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import emailStatusMap from 'constants/emailStatus';
-import MailboxButton from './MailboxButton';
+import InboxButton from './InboxButton';
 import useMobile from 'hooks/useMobile';
 
 const onClickShareData = () => {
@@ -161,7 +161,7 @@ const Nav = ({ isNavOpen, isLoggedIn, login, onClickShareData }) => {
           )}
           {isLoggedIn && (
             <div className={styles.loggedInButton}>
-              <MailboxButton />
+              <InboxButton />
               <NameButton />
             </div>
           )}

@@ -4,13 +4,13 @@ import cn from 'classnames';
 import PopoverToggle from 'common/PopoverToggle';
 
 import popoverStyles from './Header.module.css';
-import styles from './MailboxButton.module.css';
+import styles from './InboxButton.module.css';
 import Bell from 'common/icons/Bell';
-import MailboxContent from './MailboxContent';
+import InboxContent from './InboxContent';
 import { messagesSelector, unreadCountSelector } from 'selectors/inbox';
 import { readInbox } from 'actions/inbox';
 
-const MailboxButton = () => {
+const InboxButton = () => {
   const count = useSelector(unreadCountSelector);
   const messages = useSelector(messagesSelector);
 
@@ -21,11 +21,11 @@ const MailboxButton = () => {
 
   return (
     <PopoverToggle
-      className={styles.mailboxButton}
+      className={styles.InboxButton}
       data-count={count}
       popoverClassName={popoverStyles.popover}
       popoverContent={
-        <MailboxContent className={styles.mailboxContent} messages={messages} />
+        <InboxContent className={styles.InboxContent} messages={messages} />
       }
     >
       {({ isOpen }) => (
@@ -37,4 +37,4 @@ const MailboxButton = () => {
   );
 };
 
-export default MailboxButton;
+export default InboxButton;

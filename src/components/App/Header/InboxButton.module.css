@@ -1,6 +1,6 @@
 @value main-black, below-mobile from "../../common/variables.module.css";
 
-.mailboxButton {
+.InboxButton {
   @media (max-width: below-mobile) {
     display: none;
   }
@@ -53,7 +53,7 @@
   }
 }
 
-.mailboxContent {
+.InboxContent {
   width: 300px;
   max-height: 400px;
 }

@@ -7,10 +7,10 @@ import { formatDistance } from 'date-fns';
 import { zhTW } from 'date-fns/locale';
 
 import popoverStyles from './Header.module.css';
-import styles from './MailboxContent.module.css';
+import styles from './InboxContent.module.css';
 import { messagesSelector } from 'selectors/inbox';
 
-const MailboxContent = ({ className }) => {
+const InboxContent = ({ className }) => {
   const allMessages = useSelector(messagesSelector);
 
   const [showsUnread, setShowsUnread] = useState(false);
@@ -27,7 +27,7 @@ const MailboxContent = ({ className }) => {
   );
 
   return (
-    <div className={cn(styles.mailboxContainer, className)}>
+    <div className={cn(styles.InboxContainer, className)}>
       <div className={styles.header}>
         <div className={styles.title}>通知</div>
         <div className={styles.buttons}>
@@ -68,7 +68,7 @@ const MailboxContent = ({ className }) => {
   );
 };
 
-MailboxContent.propTypes = {
+InboxContent.propTypes = {
   className: PropTypes.string,
 };
 
@@ -83,4 +83,4 @@ Button.propTypes = {
   active: PropTypes.bool,
 };
 
-export default MailboxContent;
+export default InboxContent;

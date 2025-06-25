@@ -1,6 +1,6 @@
 @value main-black, border-gray, main-yellow, yellow-bar from "../../common/variables.module.css";
 
-.mailboxContainer {
+.InboxContainer {
   overflow-y: auto;
   line-height: 1.5;
 
