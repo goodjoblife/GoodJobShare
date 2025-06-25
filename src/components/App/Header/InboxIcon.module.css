@@ -1,6 +1,6 @@
 @value main-black, below-tablet, text-gray from "../../common/variables.module.css";
 
-.inboxButtonContainer {
+.inboxIconContainer {
   @media (max-width: below-tablet) {
     display: none;
   }
@@ -10,7 +10,7 @@
   justify-content: center;
 }
 
-.inboxButton {
+.inboxIcon {
   position: relative;
   display: flex;
   align-items: center;

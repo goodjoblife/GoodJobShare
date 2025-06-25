@@ -20,7 +20,7 @@ import ProgressTop from './Top/ProgressTop';
 import Searchbar from './Searchbar';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import emailStatusMap from 'constants/emailStatus';
-import InboxButton from './InboxButton';
+import InboxIcon from './InboxIcon';
 import useMobile from 'hooks/useMobile';
 import InboxPopoverContainer from './InboxPopoverContainer';
 
@@ -175,7 +175,7 @@ const Nav = ({ isNavOpen, isLoggedIn, login, onClickShareData }) => {
           {isLoggedIn && (
             <div className={styles.loggedInButton}>
               <InboxPopoverContainer>
-                <InboxButton className={inboxIconStyles.topNavIcon} />
+                <InboxIcon className={inboxIconStyles.topNavIcon} />
               </InboxPopoverContainer>
 
               <NamePopoverContainer>

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import PopoverToggle from 'common/PopoverToggle';
 import { messagesSelector } from 'selectors/inbox';
 import popoverStyles from './Header.module.css';
-import styles from './InboxButton.module.css';
+import styles from './InboxIcon.module.css';
 import InboxContent from './InboxContent';
 
 const InboxPopoverContainer = ({ children }) => {
@@ -13,11 +13,15 @@ const InboxPopoverContainer = ({ children }) => {
 
   return (
     <PopoverToggle
-      className={styles.inboxButtonContainer}
+      className={styles.inboxIconContainer}
       popoverClassName={popoverStyles.popover}
-      popoverContent={
-        <InboxContent className={styles.InboxContent} messages={messages} />
-      }
+      popoverContent={({ isOpen }) => (
+        <InboxContent
+          className={styles.InboxContent}
+          messages={messages}
+          isOpen={isOpen}
+        />
+      )}
     >
       {children}
     </PopoverToggle>

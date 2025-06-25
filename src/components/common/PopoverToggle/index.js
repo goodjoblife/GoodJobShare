@@ -70,7 +70,9 @@ const PopoverToggle = ({
       {...props}
     >
       <Popover className={popoverClassName} active={isOpen}>
-        {popoverContent}
+        {typeof popoverContent === 'function'
+          ? popoverContent({ isOpen })
+          : popoverContent}
       </Popover>
       {typeof children === 'function' ? children({ isOpen }) : children}
     </div>

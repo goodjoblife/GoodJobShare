@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
@@ -9,8 +9,9 @@ import { zhTW } from 'date-fns/locale';
 import popoverStyles from './Header.module.css';
 import styles from './InboxContent.module.css';
 import { messagesSelector } from 'selectors/inbox';
+import { readInbox } from 'actions/inbox';
 
-const InboxContent = ({ className }) => {
+const InboxContent = ({ className, isOpen = true }) => {
   const allMessages = useSelector(messagesSelector);
 
   const [showsUnread, setShowsUnread] = useState(false);
@@ -25,6 +26,13 @@ const InboxContent = ({ className }) => {
     () => filteredMessages.slice(0, count),
     [filteredMessages, count],
   );
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (isOpen) {
+      dispatch(readInbox());
+    }
+  }, [dispatch, isOpen]);
 
   return (
     <div className={cn(styles.InboxContainer, className)}>
@@ -70,6 +78,7 @@ const InboxContent = ({ className }) => {
 
 InboxContent.propTypes = {
   className: PropTypes.string,
+  isOpen: PropTypes.bool,
 };
 
 const Button = ({ active, ...props }) => (
