@@ -21,6 +21,7 @@ import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import emailStatusMap from 'constants/emailStatus';
 import InboxButton from './InboxButton';
 import useMobile from 'hooks/useMobile';
+import InboxPopoverContainer from './InboxPopoverContainer';
 
 const onClickShareData = () => {
   ReactGA.event({
@@ -61,10 +62,8 @@ const HeaderTop = () => {
   }, [emailStatus, isEmailVerified, isLoggedIn, location.pathname, shareLink]);
 };
 
-const NameButton = () => {
-  const user = useAuthUser();
+const NamePopoverContainer = ({ children }) => {
   const logout = useLogout();
-
   return (
     <PopoverToggle
       popoverClassName={cn(styles.popover, styles.nameContainer)}
@@ -88,9 +87,19 @@ const NameButton = () => {
         </ul>
       }
     >
-      <div className={styles.userNameBtn}>{user && user.name}</div>
+      {children}
     </PopoverToggle>
   );
+};
+
+NamePopoverContainer.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+const NameButton = () => {
+  const user = useAuthUser();
+
+  return <div className={styles.userNameBtn}>{user && user.name}</div>;
 };
 
 const Logo = ({ forceDesktop }) => {
@@ -164,8 +173,13 @@ const Nav = ({ isNavOpen, isLoggedIn, login, onClickShareData }) => {
           )}
           {isLoggedIn && (
             <div className={styles.loggedInButton}>
-              <InboxButton />
-              <NameButton />
+              <InboxPopoverContainer>
+                <InboxButton />
+              </InboxPopoverContainer>
+
+              <NamePopoverContainer>
+                <NameButton />
+              </NamePopoverContainer>
             </div>
           )}
         </div>

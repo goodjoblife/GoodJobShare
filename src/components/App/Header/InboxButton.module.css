@@ -1,5 +1,11 @@
 @value main-black, below-tablet from "../../common/variables.module.css";
 
+.inboxButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .inboxButton {
   @media (max-width: below-tablet) {
     display: none;
@@ -27,8 +33,8 @@
     background-color: #ee3124;
     border-radius: 50%;
     position: absolute;
-    top: 0;
-    right: 10px;
+    top: -8px;
+    right: 6px;
     font-size: 13px;
     color: #fff;
     width: 18px;

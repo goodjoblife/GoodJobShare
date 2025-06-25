@@ -1,18 +1,15 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
-import PopoverToggle from 'common/PopoverToggle';
 
-import popoverStyles from './Header.module.css';
 import styles from './InboxButton.module.css';
 import Bell from 'common/icons/Bell';
-import InboxContent from './InboxContent';
-import { messagesSelector, unreadCountSelector } from 'selectors/inbox';
 import { readInbox } from 'actions/inbox';
+import { unreadCountSelector } from 'selectors/inbox';
 
-const InboxButton = () => {
+const InboxButton = ({ isOpen }) => {
   const count = useSelector(unreadCountSelector);
-  const messages = useSelector(messagesSelector);
 
   const dispatch = useDispatch();
   const read = useCallback(() => {
@@ -20,21 +17,19 @@ const InboxButton = () => {
   }, [dispatch]);
 
   return (
-    <PopoverToggle
-      className={styles.inboxButton}
+    <button
+      className={cn(styles.inboxButton, { [styles.activating]: isOpen })}
       data-count={count}
-      popoverClassName={popoverStyles.popover}
-      popoverContent={
-        <InboxContent className={styles.InboxContent} messages={messages} />
-      }
+      onClick={read}
     >
-      {({ isOpen }) => (
-        <button className={cn({ [styles.activating]: isOpen })} onClick={read}>
-          <Bell />
-        </button>
-      )}
-    </PopoverToggle>
+      <span className={styles.count}>{count}</span>
+      <Bell />
+    </button>
   );
+};
+
+InboxButton.propTypes = {
+  isOpen: PropTypes.bool,
 };
 
 export default InboxButton;
