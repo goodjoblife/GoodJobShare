@@ -1,4 +1,4 @@
-@value main-yellow, main-black, border-gray, main-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small, yellow-bar from "../../common/variables.module.css";
+@value main-yellow, main-black, border-gray, main-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small, yellow-bar, above-tablet, below-tablet from "../../common/variables.module.css";
 
 .root {
   @media (max-width: 850px) {
@@ -37,14 +37,14 @@
   display: flex;
   align-items: center;
 
-  @media (max-width: 850px) {
+  @media (max-width: below-tablet) {
     display: none;
   }
 
   &.mobile {
     display: none;
 
-    @media (max-width: 850px) {
+    @media (max-width: below-tablet) {
       display: flex;
     }
   }
@@ -57,8 +57,6 @@
   }
 
   img {
-    width: 160px;
-    height: 47px;
     transform: scale(0.8) translateY(6px);
     transform-origin: 0% 50%;
     filter: invert(1);
@@ -66,11 +64,17 @@
 }
 
 .logo {
-  flex: 0 0 170px;
+  flex: 0 0;
+  flex-basis: 170px;
   display: block;
 
   @media (max-width: 850px) {
-    display: none;
+    flex-basis: 50px;
+  }
+
+  img {
+    width: 160px;
+    height: 47px;
   }
 }
 
@@ -136,6 +140,7 @@
 
   @media (max-width: 850px) {
     flex-direction: column;
+    align-items: center;
     margin-left: 0;
 
     .leaveDataBtn {
@@ -274,20 +279,13 @@
 .popover {
   top: calc(100% + 4px);
 
-  ul.popoverItem {
+  ul.popoverItems {
     font-size: 14px;
     display: block;
     font-weight: 400;
     li {
       border-bottom: 1px solid border-gray;
       transition: color 0.3s;
-
-      a,
-      button {
-        display: block;
-        padding: 12px;
-        width: 100%;
-      }
 
       &:last-child {
         border-bottom: none;
@@ -300,8 +298,14 @@
   }
 }
 
+.popoverItem {
+  display: block;
+  padding: 12px;
+  width: 100%;
+}
+
 .mHeaderButton {
-  @media (min-width: 851px) {
+  @media (min-width: above-tablet) {
     display: none;
   }
 

@@ -70,7 +70,9 @@ const PopoverToggle = ({
       {...props}
     >
       <Popover className={popoverClassName} active={isOpen}>
-        {popoverContent}
+        {typeof popoverContent === 'function'
+          ? popoverContent({ isOpen })
+          : popoverContent}
       </Popover>
       {typeof children === 'function' ? children({ isOpen }) : children}
     </div>
@@ -81,7 +83,7 @@ PopoverToggle.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]).isRequired,
   className: PropTypes.string,
   popoverClassName: PropTypes.string,
-  popoverContent: PropTypes.node,
+  popoverContent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
 PopoverToggle.defaultProps = {
