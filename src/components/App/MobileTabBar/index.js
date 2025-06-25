@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
@@ -17,31 +17,24 @@ ShareButton.propTypes = {
 };
 
 const MobileTabBar = ({ focusSearch }) => {
-  const tabs = useMemo(
-    () => [
-      { path: '/notifications', label: '通知', Icon: Bell, onClick: null },
-      { path: '/share', label: '分享', Icon: ShareButton, onClick: null },
-      {
-        path: '/search',
-        label: '搜尋',
-        Icon: Magnifiner,
-        onClick: e => {
-          e.preventDefault();
-          focusSearch();
-        },
-      },
-    ],
-    [focusSearch],
-  );
+  const search = useCallback(() => {
+    focusSearch();
+  }, [focusSearch]);
 
   return (
     <nav className={styles.tabBar}>
-      {tabs.map(({ path, label, Icon, onClick }) => (
-        <Link key={path} to={path} className={styles.tabItem} onClick={onClick}>
-          <Icon className={styles.icon} />
-          <span className={styles.label}>{label}</span>
-        </Link>
-      ))}
+      <Link to="/notifications" className={styles.tabItem}>
+        <Bell className={styles.icon} />
+        <span className={styles.label}>通知</span>
+      </Link>
+      <Link to="/share" className={styles.tabItem}>
+        <ShareButton className={styles.icon} />
+        <span className={styles.label}>分享</span>
+      </Link>
+      <button to="/search" className={styles.tabItem} onClick={search}>
+        <Magnifiner className={styles.icon} />
+        <span className={styles.label}>搜尋</span>
+      </button>
     </nav>
   );
 };
