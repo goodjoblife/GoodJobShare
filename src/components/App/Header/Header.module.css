@@ -1,4 +1,4 @@
-@value main-yellow, main-black, border-gray, main-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small, yellow-bar, below-tablet from "../../common/variables.module.css";
+@value main-yellow, main-black, border-gray, main-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small, yellow-bar, above-tablet, below-tablet from "../../common/variables.module.css";
 
 .root {
   @media (max-width: 850px) {
