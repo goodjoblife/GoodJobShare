@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import styles from './MobileTabBar.module.css';
+import styles from './TabBar.module.css';
 import inboxIconStyles from '../Header/InboxIcon.module.css';
 import Magnifiner from 'common/icons/Magnifiner';
 import PlusCircle from 'common/icons/PlusCircle';
@@ -17,13 +17,13 @@ ShareButton.propTypes = {
   className: PropTypes.string,
 };
 
-const MobileTabBar = ({ focusSearch }) => {
+const TabBar = ({ focusSearch, className }) => {
   const search = useCallback(() => {
     focusSearch();
   }, [focusSearch]);
 
   return (
-    <nav className={styles.tabBar}>
+    <nav className={cn(styles.tabBar, className)}>
       <Link to="/notifications" className={styles.tabItem}>
         <InboxIcon className={inboxIconStyles.tabBarIcon} />
         <span className={styles.label}>通知</span>
@@ -40,8 +40,9 @@ const MobileTabBar = ({ focusSearch }) => {
   );
 };
 
-MobileTabBar.propTypes = {
+TabBar.propTypes = {
+  className: PropTypes.string,
   focusSearch: PropTypes.func.isRequired,
 };
 
-export default MobileTabBar;
+export default TabBar;

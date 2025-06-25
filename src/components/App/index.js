@@ -12,10 +12,10 @@ import ExpandedModal from 'common/Questionnaire/ExpandedModal';
 import ToastNotification from '../ToastNotification/ToastNotification';
 import { AppRouteWithSubRoutes } from '../route';
 import styles from './App.module.css';
-import mobileTabBarStyles from './MobileTabBar/MobileTabBar.module.css';
+import tabBarStyles from './TabBar/TabBar.module.css';
 import Header from './Header';
 import Footer from './Footer';
-import MobileTabBar from './MobileTabBar';
+import TabBar from './TabBar';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 import ShareWorkExperienceModal from '../ShareExperience/WorkExperiencesForm/TypeForm';
 import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
@@ -50,7 +50,7 @@ const App = () => {
         {routes.map((route, i) => (
           <AppRouteWithSubRoutes key={i} {...route}>
             {({ hasHeader, hasFooter, children }) => (
-              <div className={mobileTabBarStyles.aboveTabbar}>
+              <div className={tabBarStyles.aboveTabbar}>
                 <ToastNotification />
                 {hasHeader ? <Header searchInputRef={searchInputRef} /> : null}
                 <StaticHelmet.Default />
@@ -61,7 +61,7 @@ const App = () => {
           </AppRouteWithSubRoutes>
         ))}
       </Switch>
-      <MobileTabBar focusSearch={focusSearch} />
+      <TabBar className={styles.mobileOnly} focusSearch={focusSearch} />
       <ShareInterviewModal
         open={share === STATE_SHARE.INTERVIEW}
         onClose={exitShare}

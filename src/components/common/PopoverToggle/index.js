@@ -83,7 +83,7 @@ PopoverToggle.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]).isRequired,
   className: PropTypes.string,
   popoverClassName: PropTypes.string,
-  popoverContent: PropTypes.node,
+  popoverContent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
 PopoverToggle.defaultProps = {

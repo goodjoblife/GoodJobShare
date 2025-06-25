@@ -1,4 +1,4 @@
-@value main-yellow, main-black, border-gray, main-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small, yellow-bar from "../../common/variables.module.css";
+@value main-yellow, main-black, border-gray, main-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT, above-small, yellow-bar, below-tablet from "../../common/variables.module.css";
 
 .root {
   @media (max-width: 850px) {
@@ -37,14 +37,14 @@
   display: flex;
   align-items: center;
 
-  @media (max-width: 850px) {
+  @media (max-width: below-tablet) {
     display: none;
   }
 
   &.mobile {
     display: none;
 
-    @media (max-width: 850px) {
+    @media (max-width: below-tablet) {
       display: flex;
     }
   }
@@ -305,7 +305,7 @@
 }
 
 .mHeaderButton {
-  @media (min-width: 851px) {
+  @media (min-width: above-tablet) {
     display: none;
   }
 
