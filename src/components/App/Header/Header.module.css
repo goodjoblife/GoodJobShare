@@ -57,8 +57,6 @@
   }
 
   img {
-    width: 160px;
-    height: 47px;
     transform: scale(0.8) translateY(6px);
     transform-origin: 0% 50%;
     filter: invert(1);
@@ -66,11 +64,17 @@
 }
 
 .logo {
-  flex: 0 0 170px;
+  flex: 0 0;
+  flex-basis: 170px;
   display: block;
 
   @media (max-width: 850px) {
-    display: none;
+    flex-basis: 50px;
+  }
+
+  img {
+    width: 160px;
+    height: 47px;
   }
 }
 

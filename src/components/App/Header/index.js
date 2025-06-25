@@ -93,19 +93,22 @@ const NameButton = () => {
   );
 };
 
-const Logo = ({ className, forceDesktop }) => {
+const Logo = ({ forceDesktop }) => {
   const isMobile = useMobile();
   const shouldUseMobile = !forceDesktop && isMobile;
 
   return (
-    <Link to="/" title="GoodJob 職場透明化運動" className={className}>
+    <Link
+      to="/"
+      title="GoodJob 職場透明化運動"
+      className={shouldUseMobile ? styles.logoSm : styles.logo}
+    >
       <img src={shouldUseMobile ? Glike : GjLogo} alt="Goodjob" />
     </Link>
   );
 };
 
 Logo.propTypes = {
-  className: PropTypes.string,
   forceDesktop: PropTypes.bool,
 };
 
@@ -140,7 +143,7 @@ const Nav = ({ isNavOpen, isLoggedIn, login, onClickShareData }) => {
         [styles.isNavOpen]: isNavOpen,
       })}
     >
-      <Logo className={styles.logo} forceDesktop />
+      <Logo forceDesktop />
       <SiteMenu isLogin={isLoggedIn} />
       <div className={styles.buttonsArea}>
         <Link to="/plans" className={styles.plansLink}>
@@ -202,7 +205,7 @@ const Header = ({ searchInputRef }) => {
       <header className={styles.header}>
         <Wrapper size="l" className={styles.inner}>
           <HamburgerButton isNavOpen={isNavOpen} toggle={toggleNav} />
-          <Logo className={styles.logo} />
+          <Logo />
           <ResponsiveSearchbar inputRef={searchInputRef} />
           <Nav
             isNavOpen={isNavOpen}
