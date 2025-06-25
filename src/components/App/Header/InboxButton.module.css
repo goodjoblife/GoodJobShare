@@ -1,7 +1,7 @@
-@value main-black, below-mobile from "../../common/variables.module.css";
+@value main-black, below-tablet from "../../common/variables.module.css";
 
-.InboxButton {
-  @media (max-width: below-mobile) {
+.inboxButton {
+  @media (max-width: below-tablet) {
     display: none;
   }
 

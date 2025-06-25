@@ -21,7 +21,7 @@ const InboxButton = () => {
 
   return (
     <PopoverToggle
-      className={styles.InboxButton}
+      className={styles.inboxButton}
       data-count={count}
       popoverClassName={popoverStyles.popover}
       popoverContent={
