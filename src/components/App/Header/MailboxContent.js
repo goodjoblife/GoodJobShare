@@ -39,10 +39,15 @@ const MailboxContent = ({ className }) => {
           </Button>
         </div>
       </div>
-      <ul className={popoverStyles.popoverItem}>
+      <ul className={popoverStyles.popoverItems}>
         {filteredMessages.map(({ id, link, title, date, read }) => (
           <li key={id}>
-            <Link to={link} className={cn({ [styles.unread]: !read })}>
+            <Link
+              to={link}
+              className={cn(popoverStyles.popoverItem, {
+                [styles.unread]: !read,
+              })}
+            >
               <div>{title}</div>
               <div className={styles.date}>
                 {formatDistance(date, new Date(), {

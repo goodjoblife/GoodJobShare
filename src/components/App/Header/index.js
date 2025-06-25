@@ -69,15 +69,21 @@ const NameButton = () => {
     <PopoverToggle
       popoverClassName={cn(styles.popover, styles.nameContainer)}
       popoverContent={
-        <ul className={styles.popoverItem}>
+        <ul className={styles.popoverItems}>
           <li>
-            <Link to="/me/subscriptions/current">我的方案</Link>
+            <Link className={styles.popoverItem} to="/me/subscriptions/current">
+              我的方案
+            </Link>
           </li>
           <li>
-            <Link to="/me">管理我的資料</Link>
+            <Link className={styles.popoverItem} to="/me">
+              管理我的資料
+            </Link>
           </li>
           <li>
-            <button onClick={logout}>登出</button>
+            <button className={styles.popoverItem} onClick={logout}>
+              登出
+            </button>
           </li>
         </ul>
       }

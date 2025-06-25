@@ -275,20 +275,13 @@
 .popover {
   top: calc(100% + 4px);
 
-  ul.popoverItem {
+  ul.popoverItems {
     font-size: 14px;
     display: block;
     font-weight: 400;
     li {
       border-bottom: 1px solid border-gray;
       transition: color 0.3s;
-
-      a,
-      button {
-        display: block;
-        padding: 12px;
-        width: 100%;
-      }
 
       &:last-child {
         border-bottom: none;
@@ -299,6 +292,12 @@
       }
     }
   }
+}
+
+.popoverItem {
+  display: block;
+  padding: 12px;
+  width: 100%;
 }
 
 .mHeaderButton {
