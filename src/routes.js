@@ -36,7 +36,7 @@ import PlanPage from './components/PlanPage';
 import BuyResultPage from './components/BuyResultPage';
 import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
 import SubscriptionsPage from './components/Me/SubscriptionsPage';
-import InboxPage from './components/App/Header/InboxPage';
+import InboxContent from './components/App/Header/InboxContent';
 
 import {
   jobTitleOverviewPath,
@@ -275,7 +275,7 @@ const routes = [
   {
     path: '/notifications',
     exact: true,
-    component: InboxPage,
+    component: InboxContent,
     hasFooter: false,
   },
   {
