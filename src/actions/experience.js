@@ -31,15 +31,6 @@ export const setExperience = (experienceId, box) => ({
   box,
 });
 
-export const queryExperienceIfUnfetched = experienceId => async (
-  dispatch,
-  getState,
-) => {
-  if (isUnfetched(experienceBoxSelectorAtId(experienceId)(getState()))) {
-    return dispatch(queryExperience(experienceId));
-  }
-};
-
 export const queryExperience = experienceId => async (dispatch, getState) => {
   const token = tokenSelector(getState());
   dispatch(setExperience(experienceId, toFetching()));
@@ -64,6 +55,15 @@ export const queryExperience = experienceId => async (dispatch, getState) => {
 
     // Unexpected error
     throw error;
+  }
+};
+
+export const queryExperienceIfUnfetched = experienceId => async (
+  dispatch,
+  getState,
+) => {
+  if (isUnfetched(experienceBoxSelectorAtId(experienceId)(getState()))) {
+    return dispatch(queryExperience(experienceId));
   }
 };
 
