@@ -1,26 +1,7 @@
 import createReducer from 'utils/createReducer';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
 import { SET_MENU, SET_ENTRY } from 'actions/laborRights';
-
-export type LaborRightMenuEntry = {
-  id: string;
-  title: string;
-  coverUrl: string | null;
-};
-
-export type LaborRightEntry = {
-  id: string;
-  title: string;
-  order: number | null;
-  description: string;
-  content: string;
-  seoTitle: string | null;
-  seoDescription: string | null;
-  seoText: string | null;
-  coverUrl: string | null;
-  nPublicPages: number | null;
-  descriptionInPermissionBlock: string | null;
-};
+import { LaborRightEntry, LaborRightMenuEntry } from 'apis/laborRightsApi';
 
 const preloadedState: {
   entryById: Record<string, FetchBox<LaborRightEntry>>;

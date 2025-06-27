@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 import { Thunk } from 'reducers';
-import { LaborRightEntry, LaborRightMenuEntry } from 'reducers/laborRights';
+import { LaborRightMenuEntry, LaborRightEntry } from 'apis/laborRightsApi';
 import {
   queryLaborRightsMenu as queryMenuApi,
   queryLaborRights as queryEntryApi,
