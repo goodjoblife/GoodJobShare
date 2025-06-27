@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers, Action, AnyAction } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
@@ -7,7 +7,7 @@ import me from './me';
 import experience from './experience';
 import experiences from './experiences';
 import laborRights from './laborRights';
-import timeAndSalary from './timeAndSalary';
+import salaryWorkTime from './salaryWorkTime';
 import timeAndSalarySearch from './timeAndSalarySearch';
 import popularCompanyAverageSalary from './popularCompanyAverageSalary';
 import popularJobTitleSalaryDistribution from './popularJobTitleSalaryDistribution';
@@ -31,10 +31,10 @@ const rootReducer = combineReducers({
   experience,
   experiences,
   laborRights,
-  timeAndSalary,
   timeAndSalarySearch,
   popularCompanyAverageSalary,
   popularJobTitleSalaryDistribution,
+  salaryWorkTime,
   companyIndex,
   jobTitleIndex,
   payment,
@@ -44,3 +44,16 @@ const rootReducer = combineReducers({
 });
 
 export default persistReducer(persistConfig, rootReducer);
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+export interface Thunk<A extends Action = AnyAction> {
+  (dispatch: Dispatch<A>, getState: GetState): unknown;
+}
+
+export interface Dispatch<A extends Action = AnyAction> {
+  <T extends A>(action: T | Thunk<T>): T;
+}
+export interface GetState {
+  (): RootState;
+}
