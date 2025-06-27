@@ -3,7 +3,26 @@ import {
   queryLaborRightsMenuGql,
   queryLaborRightsGql,
 } from 'graphql/laborRight';
-// todo
+
+export type LaborRightMenuEntry = {
+  id: string;
+  title: string;
+  coverUrl: string | null;
+};
+
+export type LaborRightEntry = {
+  id: string;
+  title: string;
+  order: number | null;
+  description: string;
+  content: string;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoText: string | null;
+  coverUrl: string | null;
+  nPublicPages: number | null;
+  descriptionInPermissionBlock: string | null;
+};
 
 export const queryLaborRightsMenu = (): Promise<LaborRightMenuEntry[]> =>
   graphqlClient<{
@@ -27,21 +46,3 @@ export const queryLaborRights = ({
       id: entryId,
     },
   }).then(data => data.labor_right);
-export type LaborRightMenuEntry = {
-  id: string;
-  title: string;
-  coverUrl: string | null;
-};
-export type LaborRightEntry = {
-  id: string;
-  title: string;
-  order: number | null;
-  description: string;
-  content: string;
-  seoTitle: string | null;
-  seoDescription: string | null;
-  seoText: string | null;
-  coverUrl: string | null;
-  nPublicPages: number | null;
-  descriptionInPermissionBlock: string | null;
-};
