@@ -1,11 +1,9 @@
-import { isFetched } from 'utils/fetchBox';
+import FetchBox, { isFetched } from 'utils/fetchBox';
 import { RootState } from 'reducers';
-import { ExperienceCountBox } from 'reducers/experiences';
-import { SalaryWorkTimeCountBox } from 'reducers/salaryWorkTime';
 
 export const experienceCountBoxSelector = (
   state: RootState,
-): ExperienceCountBox => {
+): FetchBox<number> => {
   return state.experiences.countBox;
 };
 
@@ -19,7 +17,7 @@ export const experienceCountSelector = (state: RootState): number => {
 
 export const salaryWorkTimeCountBoxSelector = (
   state: RootState,
-): SalaryWorkTimeCountBox => {
+): FetchBox<number> => {
   return state.salaryWorkTime.countBox;
 };
 
