@@ -38,7 +38,6 @@ module.exports = {
     'react/sort-prop-types': ['error', {'sortShapeProp': true}],
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/no-var-requires': 'warn',
-    '@typescript-eslint/no-empty-function': 'error',
     '@typescript-eslint/ban-ts-ignore': 'warn',
   },
 };
