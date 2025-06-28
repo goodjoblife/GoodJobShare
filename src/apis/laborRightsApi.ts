@@ -2,27 +2,9 @@ import graphqlClient from 'utils/graphqlClient';
 import {
   queryLaborRightsMenuGql,
   queryLaborRightsGql,
+  LaborRightMenuEntry,
+  LaborRightEntry,
 } from 'graphql/laborRight';
-
-export type LaborRightMenuEntry = {
-  id: string;
-  title: string;
-  coverUrl: string | null;
-};
-
-export type LaborRightEntry = {
-  id: string;
-  title: string;
-  order: number | null;
-  description: string;
-  content: string;
-  seoTitle: string | null;
-  seoDescription: string | null;
-  seoText: string | null;
-  coverUrl: string | null;
-  nPublicPages: number | null;
-  descriptionInPermissionBlock: string | null;
-};
 
 export const queryLaborRightsMenu = (): Promise<LaborRightMenuEntry[]> =>
   graphqlClient<{

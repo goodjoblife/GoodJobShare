@@ -1,6 +1,6 @@
 import { RootState } from 'reducers';
-import { LaborRightMenuEntry, LaborRightEntry } from 'apis/laborRightsApi';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
+import { LaborRightMenuEntry, LaborRightEntry } from 'graphql/laborRight';
 
 export const menuBoxSelector = (
   state: RootState,
