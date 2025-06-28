@@ -1,13 +1,15 @@
 import createReducer from 'utils/createReducer';
-import { getUnfetched } from 'utils/fetchBox';
+import FetchBox, { getUnfetched } from 'utils/fetchBox';
 import { SET_COUNT } from 'actions/experiences';
 
-const preloadedState = {
+const preloadedState: {
+  countBox: FetchBox<number>;
+} = {
   countBox: getUnfetched(),
 };
 
 export default createReducer(preloadedState, {
-  [SET_COUNT]: (state, { countBox }) => ({
+  [SET_COUNT]: (state, { countBox }: { countBox: FetchBox<number> }) => ({
     ...state,
     countBox,
   }),
