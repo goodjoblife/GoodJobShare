@@ -9,13 +9,12 @@ import FanPageBlock from 'common/FanPageBlock';
 import { querySelector } from 'common/routing/selectors';
 import Pagination from 'common/Pagination';
 import { isFetching, isFetched, isUnfetched } from 'constants/status';
-import { pageType } from 'constants/companyJobTitle';
+import { generatePageURL } from 'constants/companyJobTitle';
 import { useQuery } from 'hooks/routing';
 import { usePage } from 'hooks/routing/page';
 import { queryKeyword, keywordMinLength } from 'actions/timeAndSalarySearch';
 import { keywordFromQuerySelector } from 'selectors/routing/keyword';
 import { dataSelector, statusSelector } from './selectors';
-import * as urlBuilder from './urlBuilder';
 import WorkingHourBlock from './WorkingHourBlock';
 import Helmet from './Helmet';
 import styles from './SearchScreen.module.css';
@@ -33,12 +32,12 @@ function getTitle(keyword) {
 }
 
 function getLinkForData(query, data) {
-  if (data.pageType === pageType.COMPANY) {
-    return urlBuilder.companyPageOverview(data.name, 1, query);
-  } else if (data.pageType === pageType.JOB_TITLE) {
-    return urlBuilder.jobTitlePageOverview(data.name, 1, query);
-  }
-  return '';
+  const path = generatePageURL({
+    pageType: data.pageType,
+    pageName: data.name,
+  });
+  const search = qs.stringify({ ...query, p: 1 }, { addQueryPrefix: true });
+  return `${path}${search}`;
 }
 
 const SearchScreen = () => {
