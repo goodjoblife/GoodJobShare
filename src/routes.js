@@ -3,8 +3,7 @@ import { generatePath } from 'react-router';
 import LandingPage from './components/LandingPage';
 import LaborRightsMenu from './components/LaborRightsMenu';
 import LaborRightsSingle from './components/LaborRightsSingle';
-import TimeAndSalary from './components/TimeAndSalary';
-import SalaryWorkTimeSearchScreen from './components/TimeAndSalary/SearchScreen';
+import SearchScreen from './components/TimeAndSalary/SearchScreen';
 import ExperienceDetail from './components/ExperienceDetail';
 import NotFound from './components/common/NotFound';
 import ShareExperience from './components/ShareExperience';
@@ -107,15 +106,7 @@ const routes = [
   {
     path: '/search',
     exact: true,
-    // TODO: remove TimeAndSalary
-    component: TimeAndSalary,
-    routes: [
-      {
-        path: '/search',
-        exact: true,
-        component: SalaryWorkTimeSearchScreen,
-      },
-    ],
+    component: SearchScreen,
   },
   {
     path: '/companies',

@@ -8,7 +8,7 @@ import experience from './experience';
 import experiences from './experiences';
 import laborRights from './laborRights';
 import timeAndSalary from './timeAndSalary';
-import timeAndSalarySearch from './timeAndSalarySearch';
+import search from './search';
 import popularCompanyAverageSalary from './popularCompanyAverageSalary';
 import popularJobTitleSalaryDistribution from './popularJobTitleSalaryDistribution';
 import companyIndex from './companyIndex';
@@ -31,8 +31,8 @@ const rootReducer = combineReducers({
   experience,
   experiences,
   laborRights,
+  search,
   timeAndSalary,
-  timeAndSalarySearch,
   popularCompanyAverageSalary,
   popularJobTitleSalaryDistribution,
   companyIndex,
