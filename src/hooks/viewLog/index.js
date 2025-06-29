@@ -9,8 +9,12 @@ import {
 export const useViewExperiences = () => {
   const token = useToken();
   return useCallback(
-    ({ contentIds, referrer }) => {
-      return viewExperiencesApi({ token, contentIds, referrer });
+    async ({ contentIds, referrer }) => {
+      try {
+        await viewExperiencesApi({ token, contentIds, referrer });
+      } catch (error) {
+        console.error(error);
+      }
     },
     [token],
   );
@@ -19,8 +23,12 @@ export const useViewExperiences = () => {
 export const useViewSalaryWorkTimes = () => {
   const token = useToken();
   return useCallback(
-    ({ contentIds, referrer }) => {
-      return viewSalaryWorkTimesApi({ token, contentIds, referrer });
+    async ({ contentIds, referrer }) => {
+      try {
+        await viewSalaryWorkTimesApi({ token, contentIds, referrer });
+      } catch (error) {
+        console.error(error);
+      }
     },
     [token],
   );
