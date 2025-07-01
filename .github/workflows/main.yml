@@ -156,8 +156,8 @@ jobs:
     steps:
       - name: trigger frontend-e2e integration-test
         run: |
-          curl -X POST \
+          curl --user "${{ secrets.FRONTEND_E2E_TOKEN }}" \
+            -X POST \
             -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: token ${{ secrets.FRONTEND_E2E_TOKEN }}" \
             -d '{"event_type": "goodjobshare-updated"}' \
             https://api.github.com/repos/goodjoblife/frontend-e2e/dispatches
