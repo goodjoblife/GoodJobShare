@@ -14,8 +14,6 @@ export const setSearchByKeyword = ({ keyword, box }) => ({
   box,
 });
 
-export const keywordMinLength = 2;
-
 export const queryKeyword = ({ keyword }) => async (dispatch, getState) => {
   const box = searchByKeywordSelector(keyword)(getState());
 

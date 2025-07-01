@@ -13,12 +13,14 @@ import { isFetched, isUnfetched, isFetching } from 'utils/fetchBox';
 import { generatePageURL } from 'constants/companyJobTitle';
 import { useQuery } from 'hooks/routing';
 import { usePage } from 'hooks/routing/page';
-import { queryKeyword, keywordMinLength } from 'actions/search';
+import { queryKeyword } from 'actions/search';
 import { keywordFromQuerySelector } from 'selectors/routing/keyword';
 import { searchByKeywordSelector } from 'selectors/search';
 import WorkingHourBlock from './WorkingHourBlock';
 import Helmet from './Helmet';
 import styles from './SearchScreen.module.css';
+
+const keywordMinLength = 2;
 
 function getTitle(keyword) {
   if (keyword) {
@@ -67,48 +69,43 @@ const SearchScreen = () => {
   }
 
   return (
-    <div>
-      <Wrapper size="l" className={styles.subRouteWrapper}>
-        <section className={styles.searchResult}>
-          <Helmet keyword={keyword} page={page} />
-          <h2 className={styles.heading}>{title}</h2>
-          {isFetching(box) && <Loading size="s" />}
-          {isFetched(box) && box.data.length === 0 && (
-            <P size="l" bold className={styles.searchNoResult}>
-              尚未有 「{keyword}」的資料
-            </P>
-          )}
-          {isFetched(box) && (
-            <>
-              {slice((page - 1) * pageSize, page * pageSize)(box.data).map(
-                (o, i) => (
-                  <WorkingHourBlock
-                    key={i}
-                    pageType={o.pageType}
-                    name={o.name}
-                    businessNumber={o.businessNumber}
-                    to={getLinkForData(query, o)}
-                    dataCount={o.dataCount}
-                  />
-                ),
-              )}
-              <Pagination
-                totalCount={box.data.length}
-                unit={pageSize}
-                currentPage={page}
-                createPageLinkTo={toPage =>
-                  qs.stringify(
-                    { ...query, p: toPage },
-                    { addQueryPrefix: true },
-                  )
-                }
-              />
-            </>
-          )}
-          <FanPageBlock className={styles.fanPageBlock} />
-        </section>
-      </Wrapper>
-    </div>
+    <Wrapper size="l" className={styles.subRouteWrapper}>
+      <section className={styles.searchResult}>
+        <Helmet keyword={keyword} page={page} />
+        <h2 className={styles.heading}>{title}</h2>
+        {isFetching(box) && <Loading size="s" />}
+        {isFetched(box) && box.data.length === 0 && (
+          <P size="l" bold className={styles.searchNoResult}>
+            尚未有 「{keyword}」的資料
+          </P>
+        )}
+        {isFetched(box) && (
+          <>
+            {slice((page - 1) * pageSize, page * pageSize)(box.data).map(
+              (o, i) => (
+                <WorkingHourBlock
+                  key={i}
+                  pageType={o.pageType}
+                  name={o.name}
+                  businessNumber={o.businessNumber}
+                  to={getLinkForData(query, o)}
+                  dataCount={o.dataCount}
+                />
+              ),
+            )}
+            <Pagination
+              totalCount={box.data.length}
+              unit={pageSize}
+              currentPage={page}
+              createPageLinkTo={toPage =>
+                qs.stringify({ ...query, p: toPage }, { addQueryPrefix: true })
+              }
+            />
+          </>
+        )}
+        <FanPageBlock className={styles.fanPageBlock} />
+      </section>
+    </Wrapper>
   );
 };
 
