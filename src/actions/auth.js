@@ -47,6 +47,36 @@ export const logout = () => (dispatch, getState, { history }) => {
   history.push('/');
 };
 
+const getMeInfo = token => (dispatch, getState) =>
+  queryMeApi({ token }).catch(error => {
+    dispatch(logOutAction());
+    throw error;
+  });
+
+/**
+ * Flow
+ *
+ * loginWithFB   ---\                      |
+ *          (token) +--> loginWithToken  --|
+ * loginWithXXX  ---/                      | Auth State
+ *                                         |   Update
+ *                               logout  --|
+ *                                         |
+ */
+export const loginWithToken = token => (dispatch, getState) => {
+  dispatch(getMeInfo(token))
+    .then(user => {
+      dispatch(setUser(user));
+      dispatch(setLogin(authStatus.CONNECTED, token));
+      // identify user for Google Analytics
+      ReactGA.set({ userId: user._id });
+    })
+    .catch(error => {
+      console.error(error);
+      dispatch(setLogin(authStatus.NOT_AUTHORIZED));
+    });
+};
+
 // Wrap FB SDK login as promise
 const FBSDKLogin = FB => {
   return new Promise(resolve => {
@@ -147,34 +177,4 @@ export const loginWithGoogle = credentialResponse => async (
     }
     dispatch(pushErrorNotificationAndRollbarAndThrowError(ER0013, error));
   }
-};
-
-const getMeInfo = token => (dispatch, getState) =>
-  queryMeApi({ token }).catch(error => {
-    dispatch(logOutAction());
-    throw error;
-  });
-
-/**
- * Flow
- *
- * loginWithFB   ---\                      |
- *          (token) +--> loginWithToken  --|
- * loginWithXXX  ---/                      | Auth State
- *                                         |   Update
- *                               logout  --|
- *                                         |
- */
-export const loginWithToken = token => (dispatch, getState) => {
-  dispatch(getMeInfo(token))
-    .then(user => {
-      dispatch(setUser(user));
-      dispatch(setLogin(authStatus.CONNECTED, token));
-      // identify user for Google Analytics
-      ReactGA.set({ userId: user._id });
-    })
-    .catch(error => {
-      console.error(error);
-      dispatch(setLogin(authStatus.NOT_AUTHORIZED));
-    });
 };

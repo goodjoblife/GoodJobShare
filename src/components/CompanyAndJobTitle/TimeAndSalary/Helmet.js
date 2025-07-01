@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactHelmet from 'react-helmet';
-import { generatePath } from 'react-router';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
 import {
   pageType as PAGE_TYPE,
   tabType as TAB_TYPE,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
+  generateTabURL,
 } from 'constants/companyJobTitle';
 import SalaryWorkTimeOgImage from 'images/og/salary-work-time.jpg';
 
@@ -37,8 +37,10 @@ const CompanySalaryWorkTimeHelmet = ({
   }
 
   // canonical url
-  const path = generatePath('/companies/:companyName/salary-work-times', {
-    companyName,
+  const path = generateTabURL({
+    pageType: PAGE_TYPE.COMPANY,
+    pageName: companyName,
+    tabType: TAB_TYPE.TIME_AND_SALARY,
   });
   const url = formatCanonicalPath(path);
 
@@ -85,8 +87,10 @@ const JobTitleSalaryWorkTimeHelmet = ({ jobTitle, page, totalCount }) => {
   }
 
   // canonical url
-  const path = generatePath('/job-titles/:jobTitle/salary-work-times', {
-    jobTitle,
+  const path = generateTabURL({
+    pageType: PAGE_TYPE.JOB_TITLE,
+    pageName: jobTitle,
+    tabType: TAB_TYPE.TIME_AND_SALARY,
   });
   const url = formatCanonicalPath(path);
 

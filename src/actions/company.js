@@ -541,6 +541,12 @@ export const queryCompanyWorkExperiences = ({
   }
 };
 
+const setIsSubscribed = (companyName, box) => ({
+  type: SET_IS_SUBSCRIBED,
+  companyName,
+  box,
+});
+
 const subscribeCompany = ({ companyName }) => async (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
@@ -662,12 +668,6 @@ export const toggleSubscribeCompany = ({ companyName }) => async (
     await dispatch(subscribeCompany({ companyName }));
   }
 };
-
-const setIsSubscribed = (companyName, box) => ({
-  type: SET_IS_SUBSCRIBED,
-  companyName,
-  box,
-});
 
 export const queryCompanyIsSubscribed = ({ companyName }) => async (
   dispatch,
