@@ -2,17 +2,31 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { formatSalaryAmount, formatSalaryType } from 'common/formatter';
 import employmentType from 'constants/employmentType';
+import {
+  pageType as PAGE_TYPE,
+  generatePageURL,
+} from 'constants/companyJobTitle';
 import styles from './formatter.module.css';
 
 export const getNameAsCompanyName = (o, row) => (
-  <Link to={`/companies/${encodeURIComponent(o.name)}`}>
+  <Link
+    to={generatePageURL({
+      pageType: PAGE_TYPE.COMPANY,
+      pageName: o.name,
+    })}
+  >
     {row.originalCompanyName}{' '}
     <span className={`pM ${styles.sector}`}>{row.sector}</span>
   </Link>
 );
 
 export const getNameAsJobTitle = (o, row) => (
-  <Link to={`/job-titles/${encodeURIComponent(o.name)}`}>
+  <Link
+    to={generatePageURL({
+      pageType: PAGE_TYPE.JOB_TITLE,
+      pageName: o.name,
+    })}
+  >
     {o.name} <span className={`pM ${styles.sector}`}>{row.sector}</span>
   </Link>
 );
