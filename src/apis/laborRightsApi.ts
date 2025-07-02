@@ -1,11 +1,11 @@
 import graphqlClient from 'utils/graphqlClient';
 import {
   queryLaborRightsMenuGql,
-  LaborRightMenuEntry,
   QueryLaborRightsMenuData,
+  LaborRightMenuEntry,
   queryLaborRightsGql,
-  LaborRightEntry,
   QueryLaborRightsData,
+  LaborRightEntry,
 } from 'graphql/laborRight';
 
 export const queryLaborRightsMenu = (): Promise<LaborRightMenuEntry[]> =>
