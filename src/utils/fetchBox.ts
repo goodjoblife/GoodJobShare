@@ -1,9 +1,5 @@
 import PropTypes from 'prop-types';
-import { compose, prop } from 'ramda';
-import FetchStatus, {
-  isUnfetched as constIsUnfetched,
-  isFetching as constIsFetching,
-} from 'constants/status';
+import FetchStatus from 'constants/fetchStatus';
 
 interface FetchBox<T> {
   data?: T;
@@ -20,8 +16,6 @@ export const fetchBoxPropType = PropTypes.shape({
   status: PropTypes.oneOf(Object.values(FetchStatus)),
 });
 
-const getStatus = prop('status');
-
 interface FetchBoxWithError<T> extends FetchBox<T> {
   error: unknown;
   status: FetchStatus.ERROR;
@@ -30,10 +24,8 @@ interface FetchBoxWithError<T> extends FetchBox<T> {
 export const isError = <T>(box: FetchBox<T>): box is FetchBoxWithError<T> =>
   box.status === FetchStatus.ERROR;
 
-export const isUnfetched = compose(
-  constIsUnfetched,
-  getStatus,
-);
+export const isUnfetched = <T>(box: FetchBox<T>): box is FetchBox<T> =>
+  box.status === FetchStatus.UNFETCHED;
 
 interface FetchBoxWithData<T> extends FetchBox<T> {
   data: T;
@@ -43,10 +35,8 @@ interface FetchBoxWithData<T> extends FetchBox<T> {
 export const isFetched = <T>(box: FetchBox<T>): box is FetchBoxWithData<T> =>
   box.status === FetchStatus.FETCHED;
 
-export const isFetching = compose(
-  constIsFetching,
-  getStatus,
-);
+export const isFetching = <T>(box: FetchBox<T>): box is FetchBox<T> =>
+  box.status === FetchStatus.FETCHING;
 
 // the FetchBox is always immutable
 
