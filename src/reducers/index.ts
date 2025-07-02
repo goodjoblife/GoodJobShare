@@ -1,23 +1,24 @@
 import { combineReducers, Action, AnyAction } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { PERSIST_KEY } from '../config';
 
+// sort by reducers a-z
 import auth from './auth';
-import me from './me';
+import companyIndex from './companyIndex';
 import experience from './experience';
 import experiences from './experiences';
-import laborRights from './laborRights';
-import salaryWorkTime from './salaryWorkTime';
-import search from './search';
-import popularCompanyAverageSalary from './popularCompanyAverageSalary';
-import popularJobTitleSalaryDistribution from './popularJobTitleSalaryDistribution';
-import companyIndex from './companyIndex';
 import jobTitleIndex from './jobTitleIndex';
+import laborRights from './laborRights';
+import me from './me';
 import payment from './payment';
 import paymentPersist from './paymentPersist';
-import toastNotification from './toastNotification';
-import { PERSIST_KEY } from '../config';
+import popularCompanyAverageSalary from './popularCompanyAverageSalary';
+import popularJobTitleSalaryDistribution from './popularJobTitleSalaryDistribution';
 import questionnaireExpandedModal from './questionnaireExpandedModal';
+import salaryWorkTime from './salaryWorkTime';
+import search from './search';
+import toastNotification from './toastNotification';
 
 const persistConfig = {
   key: PERSIST_KEY,
@@ -26,21 +27,22 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
+  // sort by a-z
   auth,
-  me,
+  companyIndex,
   experience,
   experiences,
-  laborRights,
-  search,
-  popularCompanyAverageSalary,
-  popularJobTitleSalaryDistribution,
-  salaryWorkTime,
-  companyIndex,
   jobTitleIndex,
+  laborRights,
+  me,
   payment,
   paymentPersist,
-  toastNotification,
+  popularCompanyAverageSalary,
+  popularJobTitleSalaryDistribution,
   questionnaireExpandedModal,
+  salaryWorkTime,
+  search,
+  toastNotification,
 });
 
 export default persistReducer(persistConfig, rootReducer);
