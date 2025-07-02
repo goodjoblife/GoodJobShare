@@ -1,17 +1,17 @@
-import { Reducer, Action, AnyAction } from 'redux';
+import { Reducer, AnyAction } from 'redux';
 
-type HandlersMap<S, A extends Action = AnyAction> = {
-  [key: string]: (state: S, action: A<unknown>) => S;
+type HandlersMap<S, T extends Record<string, unknown>> = {
+  [K in keyof T]: (state: S, action: T[K]) => S;
 };
 
-declare function createReducer<S, A extends Action = AnyAction>(
+declare function createReducer<S, T extends Record<string, unknown>>(
   initialState: S,
-  handlers: HandlersMap<S, A>,
+  handlers: HandlersMap<S, T>,
   {
     resetOnLogOut = true,
   }: {
     resetOnLogOut?: boolean;
   } = {},
-): Reducer<S, A>;
+): Reducer<S, AnyAction>;
 
 export = createReducer;
