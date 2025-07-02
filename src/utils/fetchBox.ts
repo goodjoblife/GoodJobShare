@@ -24,7 +24,7 @@ interface FetchBoxWithError<T> extends FetchBox<T> {
 export const isError = <T>(box: FetchBox<T>): box is FetchBoxWithError<T> =>
   box.status === FetchStatus.ERROR;
 
-export const isUnfetched = <T>(box: FetchBox<T>): box is FetchBox<T> =>
+export const isUnfetched = <T>(box: FetchBox<T>): boolean =>
   box.status === FetchStatus.UNFETCHED;
 
 interface FetchBoxWithData<T> extends FetchBox<T> {
@@ -35,7 +35,7 @@ interface FetchBoxWithData<T> extends FetchBox<T> {
 export const isFetched = <T>(box: FetchBox<T>): box is FetchBoxWithData<T> =>
   box.status === FetchStatus.FETCHED;
 
-export const isFetching = <T>(box: FetchBox<T>): box is FetchBox<T> =>
+export const isFetching = <T>(box: FetchBox<T>): boolean =>
   box.status === FetchStatus.FETCHING;
 
 // the FetchBox is always immutable
