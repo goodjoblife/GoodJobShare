@@ -1,10 +1,13 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
-import { generatePath } from 'react-router';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
-import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import {
+  pageType as PAGE_TYPE,
+  tabType as TAB_TYPE,
+  generateTabURL,
+} from 'constants/companyJobTitle';
 
 const CompanyInterviewExperienceHelmet = ({
   companyName,
@@ -28,8 +31,10 @@ const CompanyInterviewExperienceHelmet = ({
   }
 
   // canonical url
-  const path = generatePath('/companies/:companyName/interview-experiences', {
-    companyName,
+  const path = generateTabURL({
+    pageType: PAGE_TYPE.COMPANY,
+    pageName: companyName,
+    tabType: TAB_TYPE.INTERVIEW_EXPERIENCE,
   });
   const url = formatCanonicalPath(path);
 
@@ -73,8 +78,10 @@ const JobTitleInterviewExperienceHelmet = ({ jobTitle, page, totalCount }) => {
   }
 
   // canonical url
-  const path = generatePath('/job-titles/:jobTitle/interview-experiences', {
-    jobTitle,
+  const path = generateTabURL({
+    pageType: PAGE_TYPE.JOB_TITLE,
+    pageName: jobTitle,
+    tabType: TAB_TYPE.INTERVIEW_EXPERIENCE,
   });
   const url = formatCanonicalPath(path);
 
