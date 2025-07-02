@@ -16,6 +16,10 @@ export type LaborRightMenuEntry = {
   coverUrl: string | null;
 };
 
+export type QueryLaborRightsMenuData = {
+  labor_rights: LaborRightMenuEntry[];
+};
+
 export const queryLaborRightsGql = /* GraphQL */ `
   query($id: ID!) {
     labor_right(id: $id) {
@@ -48,4 +52,8 @@ export type LaborRightEntry = {
   coverUrl: string | null;
   nPublicPages: number | null;
   descriptionInPermissionBlock: string | null;
+};
+
+export type QueryLaborRightsData = {
+  labor_right: LaborRightEntry | null;
 };

@@ -4,7 +4,7 @@ import { SET_MENU, SET_ENTRY } from 'actions/laborRights';
 import { LaborRightEntry, LaborRightMenuEntry } from 'graphql/laborRight';
 
 const preloadedState: {
-  entryById: Record<string, FetchBox<LaborRightEntry>>;
+  entryById: Record<string, FetchBox<LaborRightEntry | null>>;
   menu: FetchBox<LaborRightMenuEntry[]>;
 } = {
   entryById: {},
@@ -23,7 +23,10 @@ export default createReducer(
     }),
     [SET_ENTRY]: (
       state,
-      { entryId, entry }: { entryId: string; entry: FetchBox<LaborRightEntry> },
+      {
+        entryId,
+        entry,
+      }: { entryId: string; entry: FetchBox<LaborRightEntry | null> },
     ) => {
       return {
         ...state,

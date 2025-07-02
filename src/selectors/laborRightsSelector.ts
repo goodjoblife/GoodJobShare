@@ -8,6 +8,6 @@ export const menuBoxSelector = (
 
 export const entryBoxSelectorById = (entryId: string) => (
   state: RootState,
-): FetchBox<LaborRightEntry> => {
+): FetchBox<LaborRightEntry | null> => {
   return state.laborRights.entryById[entryId] || getUnfetched();
 };

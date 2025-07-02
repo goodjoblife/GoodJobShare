@@ -27,7 +27,7 @@ const setMenu = (box: FetchBox<LaborRightMenuEntry[]>): AnyAction => ({
 
 const setEntry = (
   entryId: string,
-  box: FetchBox<LaborRightEntry>,
+  box: FetchBox<LaborRightEntry | null>,
 ): AnyAction => ({
   type: SET_ENTRY,
   entry: box,
