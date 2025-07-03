@@ -3,27 +3,26 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Loader from 'common/Loader';
 import { Section } from 'common/base';
-import { isUiNotFoundError } from 'utils/errors';
 import NotFound from 'common/NotFound';
 import CallToActionFolder from 'common/CallToAction/CallToActionFolder';
 import FanPageBlock from 'common/FanPageBlock';
-import { paramsSelector } from 'common/routing/selectors';
-import { isFetching, isUnfetched, isError, isFetched } from 'utils/fetchBox';
+import { isFetching, isUnfetched, isFetched } from 'utils/fetchBox';
 import {
   queryMenuIfUnfetched,
   queryEntryIfUnfetched,
 } from 'actions/laborRights';
+import { ServerSideRender } from 'types/serverSideRender';
 import useEntry, { useNeighborEntry } from './useEntry';
 import Body from './Body';
 import Footer from './Footer';
 import Helmet from './Helmet';
 import styles from './LaborRightsSingle.module.css';
 
-const entryIdSelector = params => params.id;
+type Params = { id: string };
 
-const LaborRightsSingle = () => {
-  const params = useParams();
-  const entryId = entryIdSelector(params);
+const LaborRightsSingle: React.FC & ServerSideRender<Params> = () => {
+  const params = useParams<Params>();
+  const entryId = params.id;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,22 +34,14 @@ const LaborRightsSingle = () => {
   }, [dispatch, entryId]);
 
   const entryBox = useEntry(entryId);
-  const [prevEntry, nextEntry] = useNeighborEntry(entryId);
+  const { prevEntry, nextEntry } = useNeighborEntry(entryId);
 
   return (
     <Section>
       {(isFetching(entryBox) || isUnfetched(entryBox)) && <Loader />}
-      {isError(entryBox) && isUiNotFoundError(entryBox.error) && <NotFound />}
-      {isFetched(entryBox) && (
+      {isFetched(entryBox) && entryBox.data ? (
         <Fragment>
-          <Helmet
-            entryId={entryId}
-            seoTitle={entryBox.data.seoTitle || entryBox.data.title}
-            seoDescription={
-              entryBox.data.seoDescription || entryBox.data.description
-            }
-            coverUrl={entryBox.data.coverUrl}
-          />
+          <Helmet entry={entryBox.data} />
           <div>
             <Body
               title={entryBox.data.title}
@@ -59,7 +50,7 @@ const LaborRightsSingle = () => {
               content={entryBox.data.content}
             />
             <FanPageBlock className={styles.fanPageBlock} />
-            {entryBox.data.nPublicPages < 0 && (
+            {entryBox.data.nPublicPages && entryBox.data.nPublicPages < 0 && (
               <Section marginTop>
                 <CallToActionFolder />
               </Section>
@@ -67,14 +58,18 @@ const LaborRightsSingle = () => {
             <Footer id={entryId} prev={prevEntry} next={nextEntry} />
           </div>
         </Fragment>
+      ) : (
+        <NotFound />
       )}
     </Section>
   );
 };
 
-LaborRightsSingle.fetchData = ({ store: { dispatch }, ...props }) => {
-  const params = paramsSelector(props);
-  const entryId = entryIdSelector(params);
+LaborRightsSingle.fetchData = ({
+  store: { dispatch },
+  match: { params },
+}): Promise<unknown> => {
+  const entryId = params.id;
   return Promise.all([
     dispatch(queryMenuIfUnfetched()),
     dispatch(queryEntryIfUnfetched(entryId)),
