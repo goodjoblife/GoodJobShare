@@ -6,7 +6,6 @@ on:
       - master
       - dev
       - dev2
-      - feat/trigger-base-e2e ## 想在該 branch 測試，驗證 OK 後刪除
   pull_request:
 
 jobs:
@@ -149,5 +148,3 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             -d '{"event_type": "goodjobshare-dev2-published"}' \
             https://api.github.com/repos/goodjoblife/goodjob-deploy-ci/dispatches
-
-
