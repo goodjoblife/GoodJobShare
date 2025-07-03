@@ -11,7 +11,6 @@ import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey'
 import { useLocalStorage } from 'react-use';
 
 const ExpandedModal = ({ handleToggleModalOpen }) => {
-  console.log('Test to trigger e2e 4');
   const [questionIndex, setQuestionIndex] = useState(0);
   const question = questionList[questionIndex] || {};
   const {
