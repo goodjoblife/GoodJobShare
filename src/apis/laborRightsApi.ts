@@ -13,8 +13,6 @@ export const queryLaborRightsMenu = (): Promise<LaborRightMenuEntry[]> =>
     query: queryLaborRightsMenuGql,
   }).then(data => data.labor_rights);
 
-export default queryLaborRightsMenu;
-
 export const queryLaborRights = ({
   entryId,
 }: {
