@@ -9,7 +9,11 @@ import {
 import { SITE_NAME } from 'constants/helmetData';
 import { LaborRightEntry } from 'graphql/laborRight';
 
-const EntryHelmet: React.FC<{ entry: LaborRightEntry }> = ({ entry }) => {
+type EntryHelmetProps = {
+  entry: LaborRightEntry;
+};
+
+const EntryHelmet: React.FC<EntryHelmetProps> = ({ entry }) => {
   const seoTitle = entry.seoTitle || entry.title;
   const seoDescription = entry.seoDescription || entry.description;
   const path = generatePath('/labor-rights/:entryId', { entryId: entry.id });
