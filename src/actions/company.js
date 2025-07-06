@@ -20,20 +20,20 @@ import {
   companyIsSubscribedBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
-  queryCompanyOverview as queryCompanyOverviewApi,
   getCompanyTimeAndSalary,
   getCompanyInterviewExperiences,
   getCompanyWorkExperiences,
   queryCompaniesApi,
   getCompanyTimeAndSalaryStatistics,
-  queryCompanyRatingStatisticsApi,
   getCompanyTopNJobTitles,
   getCompanyEsgSalaryData,
-  queryCompanyOverviewStatistics as queryCompanyOverviewStatisticsApi,
   subscribeCompanyApi,
   unsubscribeCompanyApi,
   queryCompanyIsSubscribedApi,
 } from 'apis/company';
+import queryCompanyOverviewApi from 'graphql/queryCompanyOverview';
+import queryCompanyRatingStatisticsApi from 'graphql/queryCompanyRatingStatistics';
+import queryCompanyOverviewStatisticsApi from 'graphql/queryCompanyOverviewStatistics';
 import { tokenSelector } from 'selectors/authSelector';
 import { setExperience } from './experience';
 

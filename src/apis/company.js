@@ -1,8 +1,6 @@
 import R from 'ramda';
 import graphqlClient from 'utils/graphqlClient';
 import {
-  queryCompanyRatingStatisticsGql,
-  queryCompanyOverviewGql,
   getCompanyTimeAndSalaryQuery,
   getCompanyInterviewExperiencesQuery,
   getCompanyWorkExperiencesQuery,
@@ -10,41 +8,10 @@ import {
   getCompanyTimeAndSalaryStatisticsQuery,
   getCompanyTopNJobTitlesQuery,
   getCompanyEsgSalaryDataQuery,
-  queryCompanyOverviewStatisticsQuery,
   queryCompanyIsSubscribedGql,
   subscribeCompanyGql,
   unsubscribeCompanyGql,
 } from 'graphql/company';
-
-export const queryCompanyRatingStatisticsApi = ({ companyName }) =>
-  graphqlClient({
-    query: queryCompanyRatingStatisticsGql,
-    variables: { companyName },
-  }).then(R.path(['company', 'companyRatingStatistics']));
-
-export const queryCompanyOverview = ({
-  companyName,
-  interviewExperiencesLimit,
-  workExperiencesLimit,
-  salaryWorkTimesLimit,
-}) =>
-  graphqlClient({
-    query: queryCompanyOverviewGql,
-    variables: {
-      companyName,
-      interviewExperiencesLimit,
-      workExperiencesLimit,
-      salaryWorkTimesLimit,
-    },
-  }).then(R.prop('company'));
-
-export const queryCompanyOverviewStatistics = ({ companyName }) =>
-  graphqlClient({
-    query: queryCompanyOverviewStatisticsQuery,
-    variables: {
-      companyName,
-    },
-  }).then(R.prop('company'));
 
 export const getCompanyTimeAndSalary = ({
   companyName,
