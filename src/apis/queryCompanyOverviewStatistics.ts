@@ -1,6 +1,6 @@
 import R from 'ramda';
 import graphqlClient from 'utils/graphqlClient';
-import { OvertimeFrequencyCount, JobAverageSalary } from './salaryWorkTime';
+import { OvertimeFrequencyCount, JobAverageSalary } from 'apis/salaryWorkTime';
 
 const queryCompanyOverviewStatisticsGql = /* GraphQL */ `
   query($companyName: String!) {

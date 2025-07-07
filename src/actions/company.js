@@ -31,9 +31,9 @@ import {
   unsubscribeCompanyApi,
   queryCompanyIsSubscribedApi,
 } from 'apis/company';
-import queryCompanyOverviewApi from 'graphql/queryCompanyOverview';
-import queryCompanyRatingStatisticsApi from 'graphql/queryCompanyRatingStatistics';
-import queryCompanyOverviewStatisticsApi from 'graphql/queryCompanyOverviewStatistics';
+import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
+import queryCompanyRatingStatisticsApi from 'apis/queryCompanyRatingStatistics';
+import queryCompanyOverviewStatisticsApi from 'apis/queryCompanyOverviewStatistics';
 import { tokenSelector } from 'selectors/authSelector';
 import { setExperience } from './experience';
 
