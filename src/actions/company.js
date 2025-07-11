@@ -32,8 +32,8 @@ import {
 } from 'apis/company';
 import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
 import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
-import queryCompanyRatingStatisticsApi from 'apis/queryCompanyRatingStatistics';
 import queryCompanyOverviewStatisticsApi from 'apis/queryCompanyOverviewStatistics';
+import queryCompanyRatingStatisticsApi from 'apis/queryCompanyRatingStatistics';
 import { tokenSelector } from 'selectors/authSelector';
 import { setExperience } from './experience';
 
