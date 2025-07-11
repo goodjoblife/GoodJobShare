@@ -7,9 +7,6 @@ import {
   queryCompaniesHavingDataGql,
   getCompanyTimeAndSalaryStatisticsQuery,
   getCompanyTopNJobTitlesQuery,
-  queryCompanyIsSubscribedGql,
-  subscribeCompanyGql,
-  unsubscribeCompanyGql,
 } from 'graphql/company';
 
 export const getCompanyTimeAndSalary = ({
@@ -64,43 +61,3 @@ export const queryCompaniesApi = ({ start, limit }) =>
     query: queryCompaniesHavingDataGql,
     variables: { start, limit },
   });
-
-export const queryCompanyIsSubscribedApi = async ({ companyName, token }) => {
-  const data = await graphqlClient({
-    query: queryCompanyIsSubscribedGql,
-    token,
-    variables: { companyName },
-  });
-
-  if (!data.company) {
-    return {
-      isSubscribed: false,
-      companyId: null,
-    };
-  }
-
-  return {
-    isSubscribed: data.company.isSubscribed,
-    companyId: data.company.id,
-  };
-};
-
-export const subscribeCompanyApi = async ({ companyId, token }) => {
-  const data = await graphqlClient({
-    query: subscribeCompanyGql,
-    token,
-    variables: { input: { companyId } },
-  });
-
-  return data.subscribeCompany.success;
-};
-
-export const unsubscribeCompanyApi = async ({ companyId, token }) => {
-  const data = await graphqlClient({
-    query: unsubscribeCompanyGql,
-    token,
-    variables: { input: { companyId } },
-  });
-
-  return data.unsubscribeCompany.success;
-};

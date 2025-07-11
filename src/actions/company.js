@@ -26,14 +26,14 @@ import {
   queryCompaniesApi,
   getCompanyTimeAndSalaryStatistics,
   getCompanyTopNJobTitles,
-  subscribeCompanyApi,
-  unsubscribeCompanyApi,
-  queryCompanyIsSubscribedApi,
 } from 'apis/company';
 import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
+import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
 import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
 import queryCompanyOverviewStatisticsApi from 'apis/queryCompanyOverviewStatistics';
 import queryCompanyRatingStatisticsApi from 'apis/queryCompanyRatingStatistics';
+import subscribeCompanyApi from 'apis/subscribeCompany';
+import unsubscribeCompanyApi from 'apis/unsubscribeCompany';
 import { tokenSelector } from 'selectors/authSelector';
 import { setExperience } from './experience';
 
