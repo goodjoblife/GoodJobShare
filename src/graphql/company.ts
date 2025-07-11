@@ -99,33 +99,6 @@ export const getCompanyTopNJobTitlesQuery = /* GraphQL */ `
   }
 `;
 
-export const getCompanyEsgSalaryDataQuery = /* GraphQL */ `
-  query($companyName: String!) {
-    company(name: $companyName) {
-      esgSalaryData {
-        avgSalaryStatistics {
-          year
-          average
-          sameIndustryAverage
-        }
-        nonManagerAvgSalaryStatistics {
-          year
-          average
-          sameIndustryAverage
-        }
-        nonManagerMedianSalaryStatistics {
-          year
-          median
-        }
-        femaleManagerStatistics {
-          year
-          percentage
-        }
-      }
-    }
-  }
-`;
-
 export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
   query(
     $companyName: String!
@@ -186,30 +159,5 @@ export const queryCompaniesHavingDataGql = /* GraphQL */ `
       dataCount
     }
     companiesHavingDataCount
-  }
-`;
-
-export const queryCompanyIsSubscribedGql = /* GraphQL */ `
-  query($companyName: String!) {
-    company(name: $companyName) {
-      id
-      isSubscribed
-    }
-  }
-`;
-
-export const subscribeCompanyGql = /* GraphQL */ `
-  mutation SubscribeCompany($input: SubscribeCompanyInput!) {
-    subscribeCompany(input: $input) {
-      success
-    }
-  }
-`;
-
-export const unsubscribeCompanyGql = /* GraphQL */ `
-  mutation UnsubscribeCompany($input: UnsubscribeCompanyInput!) {
-    unsubscribeCompany(input: $input) {
-      success
-    }
   }
 `;
