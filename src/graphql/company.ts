@@ -99,33 +99,6 @@ export const getCompanyTopNJobTitlesQuery = /* GraphQL */ `
   }
 `;
 
-export const getCompanyEsgSalaryDataQuery = /* GraphQL */ `
-  query($companyName: String!) {
-    company(name: $companyName) {
-      esgSalaryData {
-        avgSalaryStatistics {
-          year
-          average
-          sameIndustryAverage
-        }
-        nonManagerAvgSalaryStatistics {
-          year
-          average
-          sameIndustryAverage
-        }
-        nonManagerMedianSalaryStatistics {
-          year
-          median
-        }
-        femaleManagerStatistics {
-          year
-          percentage
-        }
-      }
-    }
-  }
-`;
-
 export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
   query(
     $companyName: String!

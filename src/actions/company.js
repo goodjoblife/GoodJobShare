@@ -26,11 +26,11 @@ import {
   queryCompaniesApi,
   getCompanyTimeAndSalaryStatistics,
   getCompanyTopNJobTitles,
-  getCompanyEsgSalaryData,
   subscribeCompanyApi,
   unsubscribeCompanyApi,
   queryCompanyIsSubscribedApi,
 } from 'apis/company';
+import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
 import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
 import queryCompanyRatingStatisticsApi from 'apis/queryCompanyRatingStatistics';
 import queryCompanyOverviewStatisticsApi from 'apis/queryCompanyOverviewStatistics';
@@ -365,7 +365,7 @@ export const queryCompanyEsgSalaryData = ({ companyName }) => async (
   dispatch(setEsgSalaryData(companyName, toFetching()));
 
   try {
-    const data = await getCompanyEsgSalaryData({
+    const data = await queryCompanyEsgSalaryDataApi({
       companyName,
     });
 
