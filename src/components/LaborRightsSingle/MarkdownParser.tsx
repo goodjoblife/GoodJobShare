@@ -1,9 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import marked from 'marked';
 import styles from './MarkdownParser.module.css';
 
-const MarkdownParser = ({ content }) => (
+type MarkdownParserProps = {
+  content?: string;
+};
+
+const MarkdownParser: React.FC<MarkdownParserProps> = ({ content = '' }) => (
   <div
     className={styles.md}
     // eslint-disable-next-line react/no-danger
@@ -12,12 +15,5 @@ const MarkdownParser = ({ content }) => (
     }}
   />
 );
-
-MarkdownParser.propTypes = {
-  content: PropTypes.string.isRequired,
-};
-MarkdownParser.defaultProps = {
-  content: '',
-};
 
 export default MarkdownParser;
