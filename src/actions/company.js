@@ -20,20 +20,20 @@ import {
   companyIsSubscribedBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
-  queryCompanyOverview as queryCompanyOverviewApi,
   getCompanyTimeAndSalary,
   getCompanyInterviewExperiences,
   getCompanyWorkExperiences,
   queryCompaniesApi,
   getCompanyTimeAndSalaryStatistics,
-  queryCompanyRatingStatisticsApi,
   getCompanyTopNJobTitles,
-  getCompanyEsgSalaryData,
-  queryCompanyOverviewStatistics as queryCompanyOverviewStatisticsApi,
-  subscribeCompanyApi,
-  unsubscribeCompanyApi,
-  queryCompanyIsSubscribedApi,
 } from 'apis/company';
+import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
+import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
+import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
+import queryCompanyOverviewStatisticsApi from 'apis/queryCompanyOverviewStatistics';
+import queryCompanyRatingStatisticsApi from 'apis/queryCompanyRatingStatistics';
+import subscribeCompanyApi from 'apis/subscribeCompany';
+import unsubscribeCompanyApi from 'apis/unsubscribeCompany';
 import { tokenSelector } from 'selectors/authSelector';
 import { setExperience } from './experience';
 
@@ -365,7 +365,7 @@ export const queryCompanyEsgSalaryData = ({ companyName }) => async (
   dispatch(setEsgSalaryData(companyName, toFetching()));
 
   try {
-    const data = await getCompanyEsgSalaryData({
+    const data = await queryCompanyEsgSalaryDataApi({
       companyName,
     });
 
@@ -541,6 +541,12 @@ export const queryCompanyWorkExperiences = ({
   }
 };
 
+const setIsSubscribed = (companyName, box) => ({
+  type: SET_IS_SUBSCRIBED,
+  companyName,
+  box,
+});
+
 const subscribeCompany = ({ companyName }) => async (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
@@ -662,12 +668,6 @@ export const toggleSubscribeCompany = ({ companyName }) => async (
     await dispatch(subscribeCompany({ companyName }));
   }
 };
-
-const setIsSubscribed = (companyName, box) => ({
-  type: SET_IS_SUBSCRIBED,
-  companyName,
-  box,
-});
 
 export const queryCompanyIsSubscribed = ({ companyName }) => async (
   dispatch,

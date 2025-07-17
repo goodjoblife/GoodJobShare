@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FolderUpper from '../../images/folder-upper.png';
+import FolderUpper from './folder-upper.png';
 import styles from './FolderBanner.module.css';
 
 const FolderBanner = ({ children, rootClassName }) => (

@@ -3,18 +3,25 @@
   "version": "0.1.0",
   "main": "lib/index.js",
   "scripts": {
-    "start": "razzle start",
+    "start:tsc": "tsc -b -w --preserveWatchOutput",
+    "start": "npm run start:tsc & razzle start",
     "start-production": "NODE_ENV=production node build/server.js",
-    "lint": "eslint src/ razzle.config.js",
+    "lint": "eslint src/**/*.js src/**/*.ts src/**/*.tsx razzle.config.js",
     "lint-staged": "lint-staged",
     "stylelint": "stylelint \"src/**/*.css\"",
     "testonly": "razzle test --env=jsdom",
     "test": "npm run lint && npm run stylelint && npm run testonly",
-    "build": "razzle build",
+    "build": "tsc -b && razzle build",
     "prepare": "husky install"
   },
   "lint-staged": {
     "*.js": [
+      "eslint --fix"
+    ],
+    "*.ts": [
+      "eslint --fix"
+    ],
+    "*.tsx": [
       "eslint --fix"
     ],
     "*.css": [
@@ -34,6 +41,16 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
+    "@types/prop-types": "^15.7.15",
+    "@types/qs": "^6.14.0",
+    "@types/ramda": "^0.30.2",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^16.9.25",
+    "@types/react-helmet": "^6.1.11",
+    "@types/react-redux": "^7.1.34",
+    "@types/react-router-dom": "^5.3.3",
+    "@typescript-eslint/eslint-plugin": "2.34.0",
+    "@typescript-eslint/parser": "2.34.0",
     "autoprefixer": "7.1.1",
     "babel-eslint": "^10.1.0",
     "eslint": "6.8.0",
@@ -56,7 +73,8 @@
     "redux-logger": "^2.7.4",
     "stylelint": "^9.10.1",
     "stylelint-config-prettier": "^4.0.0",
-    "stylelint-prettier": "^1.0.6"
+    "stylelint-prettier": "^1.0.6",
+    "typescript": "5.1.6"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.3",
@@ -64,7 +82,7 @@
     "@fortawesome/react-fontawesome": "^0.0.17",
     "@loadable/component": "^5.16.4",
     "airbnb-prop-types": "^2.15.0",
-    "classnames": "^2.2.5",
+    "classnames": "^2.5.1",
     "date-fns": "^2.30.0",
     "express": "^4.20.0",
     "history": "^4.7.2",
@@ -81,7 +99,7 @@
     "react-ga4": "^2.1.0",
     "react-helmet": "^5.2.0",
     "react-loading-skeleton": "^3.5.0",
-    "react-redux": "^7.1.3",
+    "react-redux": "^7.2.3",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-router-scroll-4": "^1.0.0-beta.1",
@@ -97,6 +115,6 @@
     "serialize-javascript": "^6.0.2"
   },
   "engines": {
-    "node": ">=14.x"
+    "node": ">=16.x"
   }
 }
