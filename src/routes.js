@@ -264,7 +264,7 @@ const routes = [
     component: BuyResultPage,
   },
   {
-    path: '/notifications',
+    path: '/inbox',
     exact: true,
     component: InboxPage,
     hasFooter: false,

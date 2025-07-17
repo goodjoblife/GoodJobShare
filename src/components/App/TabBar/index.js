@@ -24,7 +24,7 @@ const TabBar = ({ focusSearch, className }) => {
 
   return (
     <nav className={cn(styles.tabBar, className)}>
-      <Link to="/notifications" className={styles.tabItem}>
+      <Link to="/inbox" className={styles.tabItem}>
         <InboxIcon className={inboxIconStyles.tabBarIcon} />
         <span className={styles.label}>通知</span>
       </Link>
