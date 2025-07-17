@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -24,10 +24,16 @@ const TabBar = ({ focusSearch, className }) => {
 
   return (
     <nav className={cn(styles.tabBar, className)}>
-      <Link to="/inbox" className={styles.tabItem}>
-        <InboxIcon className={inboxIconStyles.tabBarIcon} />
+      <NavLink
+        to="/inbox"
+        className={styles.tabItem}
+        activeClassName={styles.active}
+      >
+        <InboxIcon
+          className={cn(inboxIconStyles.tabBarIcon, styles.tabBarIcon)}
+        />
         <span className={styles.label}>通知</span>
-      </Link>
+      </NavLink>
       <Link to="/share" className={styles.tabItem}>
         <ShareButton className={styles.icon} />
         <span className={styles.label}>分享</span>
