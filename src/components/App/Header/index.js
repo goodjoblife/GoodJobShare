@@ -212,7 +212,10 @@ const useShowsHeader = () => {
   );
 
   useEffect(() => {
-    if (!isMobile) return;
+    if (!isMobile) {
+      setShowsHeader(true);
+      return;
+    }
 
     if (scrollY <= 50 /* nav height */) {
       setShowsHeader(true);
