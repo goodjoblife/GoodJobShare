@@ -1,4 +1,4 @@
-@value above-small, below-small from "../../common/variables.module.css";
+@value above-small, below-small, text-gray from "../../common/variables.module.css";
 
 .title {
   padding-bottom: 24px;
@@ -42,7 +42,7 @@
 
   .note {
     padding-top: 16px;
-    color: #626262;
+    color: text-gray;
     font-size: 13px;
   }
 }
