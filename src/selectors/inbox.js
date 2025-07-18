@@ -1,8 +1,14 @@
 import { compose } from 'ramda';
 
-export const messagesSelector = state => state.inbox.messages.data || [];
+export const messagesBoxSelector = state => state.inbox.messages;
+
+export const messagesSelector = compose(
+  box => box.data || [],
+  messagesBoxSelector,
+);
 
 export const unreadCountSelector = compose(
   messages => messages.filter(message => !message.read).length,
-  messagesSelector,
+  box => box.data || [],
+  messagesBoxSelector,
 );

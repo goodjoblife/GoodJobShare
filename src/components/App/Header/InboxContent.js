@@ -28,6 +28,7 @@ const InboxContent = ({ className, isOpen = true }) => {
   );
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (isOpen) {
       dispatch(readInbox());
@@ -58,7 +59,7 @@ const InboxContent = ({ className, isOpen = true }) => {
             >
               <div>{title}</div>
               <div className={styles.date}>
-                {formatDistance(date, new Date(), {
+                {formatDistance(new Date(date), new Date(), {
                   locale: zhTW,
                   addSuffix: true,
                 })}
