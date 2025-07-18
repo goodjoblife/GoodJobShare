@@ -256,11 +256,6 @@ const Header = ({ searchInputRef }) => {
         className={cn(styles.header, {
           [styles.headerHidden]: !showsHeader,
         })}
-        style={{
-          transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)',
-          transform: showsHeader ? 'translateY(0)' : 'translateY(-100%)',
-          willChange: 'transform',
-        }}
       >
         <Wrapper size="l" className={styles.inner}>
           <HamburgerButton isNavOpen={isNavOpen} toggle={toggleNav} />

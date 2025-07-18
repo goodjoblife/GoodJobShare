@@ -21,6 +21,13 @@
     padding-top: 2px;
     padding-bottom: 0;
   }
+
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  transform: translateY(0);
+  &.headerHidden {
+    transform: translateY(-100%);
+  }
 }
 
 .inner {
