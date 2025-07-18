@@ -16,6 +16,7 @@ import Glike from 'common/icons/Glike.svg';
 import PopoverToggle from 'common/PopoverToggle';
 import useShareLink from 'hooks/experiments/useShareLink';
 import usePermission from 'hooks/usePermission';
+import useMobile from 'hooks/useMobile';
 import { useAuthUser, useAuthUserEmailStatus, useIsLoggedIn } from 'hooks/auth';
 import { useLogin, useLogout } from 'hooks/login';
 import styles from './Header.module.css';
@@ -28,7 +29,6 @@ import Searchbar from './Searchbar';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import emailStatusMap from 'constants/emailStatus';
 import InboxIcon from './InboxIcon';
-import useMobile from 'hooks/useMobile';
 import InboxPopoverContainer from './InboxPopoverContainer';
 
 const onClickShareData = () => {
