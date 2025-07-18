@@ -72,6 +72,7 @@ const HeaderTop = () => {
 
 const NamePopoverContainer = ({ children }) => {
   const logout = useLogout();
+
   return (
     <PopoverToggle
       popoverClassName={cn(styles.popover, styles.nameContainer)}
