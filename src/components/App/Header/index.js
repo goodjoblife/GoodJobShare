@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from 'react';
+import { useWindowScroll, useRafState } from 'react-use';
 import PropTypes from 'prop-types';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import cn from 'classnames';
@@ -196,11 +203,36 @@ Nav.propTypes = {
   onClickShareData: PropTypes.func.isRequired,
 };
 
+const useShowsHeader = () => {
+  const isMobile = useMobile();
+  const { y: scrollY } = useWindowScroll();
+  const [showsHeader, setShowsHeader] = useRafState(true);
+  const lastScrollY = useRef(
+    typeof window !== 'undefined' ? window.scrollY : 0,
+  );
+
+  useEffect(() => {
+    if (!isMobile) return;
+
+    if (scrollY <= 50 /* nav height */) {
+      setShowsHeader(true);
+    } else if (scrollY !== lastScrollY.current) {
+      setShowsHeader(scrollY < lastScrollY.current);
+    }
+
+    lastScrollY.current = scrollY;
+  }, [isMobile, scrollY, setShowsHeader]);
+
+  return showsHeader;
+};
+
 const Header = ({ searchInputRef }) => {
   const history = useHistory();
   const [isNavOpen, setNavOpen] = useState(false);
   const [isLoggedIn, login] = useLogin();
   const [, fetchPermission] = usePermission();
+
+  const showsHeader = useShowsHeader();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -217,7 +249,16 @@ const Header = ({ searchInputRef }) => {
   return (
     <div className={styles.root}>
       <HeaderTop />
-      <header className={styles.header}>
+      <header
+        className={cn(styles.header, {
+          [styles.headerHidden]: !showsHeader,
+        })}
+        style={{
+          transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)',
+          transform: showsHeader ? 'translateY(0)' : 'translateY(-100%)',
+          willChange: 'transform',
+        }}
+      >
         <Wrapper size="l" className={styles.inner}>
           <HamburgerButton isNavOpen={isNavOpen} toggle={toggleNav} />
           <Logo />
