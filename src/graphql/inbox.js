@@ -29,3 +29,11 @@ export const queryInboxGql = /* GraphQL */ `
     }
   }
 `;
+
+export const readInboxGql = /* GraphQL */ `
+  mutation($ids: [ID!]!) {
+    markNotificationAsRead(input: { notificationIds: $ids }) {
+      success
+    }
+  }
+`;

@@ -10,6 +10,7 @@ import popoverStyles from './Header.module.css';
 import styles from './InboxContent.module.css';
 import { messagesSelector } from 'selectors/inbox';
 import { readInbox } from 'actions/inbox';
+import { useIsLoggedIn } from 'hooks/auth';
 
 const InboxContent = ({ className, isOpen = true }) => {
   const allMessages = useSelector(messagesSelector);
@@ -28,12 +29,13 @@ const InboxContent = ({ className, isOpen = true }) => {
   );
 
   const dispatch = useDispatch();
+  const isLoggedIn = useIsLoggedIn();
 
   useEffect(() => {
-    if (isOpen) {
+    if (isLoggedIn && isOpen) {
       dispatch(readInbox());
     }
-  }, [dispatch, isOpen]);
+  }, [dispatch, isLoggedIn, isOpen]);
 
   return (
     <div className={cn(styles.InboxContainer, className)}>

@@ -1,5 +1,5 @@
 import graphqlClient from 'utils/graphqlClient';
-import { queryInboxGql } from 'graphql/inbox';
+import { queryInboxGql, readInboxGql } from 'graphql/inbox';
 
 const mapNotification = ({ __typename, id, createdAt, isRead, ...rest }) => {
   switch (__typename) {
@@ -55,4 +55,14 @@ export const queryInboxApi = async ({ token, start, limit }) => {
   });
 
   return userNotifications.map(mapNotification);
+};
+
+export const readInboxApi = async ({ token, ids }) => {
+  const { success } = await graphqlClient({
+    query: readInboxGql,
+    token,
+    variables: { ids },
+  });
+
+  return success;
 };
