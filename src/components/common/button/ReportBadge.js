@@ -25,7 +25,6 @@ const ReportBadge = ({
             <ReportIcon className={styles.reportIcon} />
           )}
         </div>
-        <div className={styles.dialogTriangle}></div>
       </div>
       {reportText && <div className={styles.reportText}>{reportText}</div>}
     </div>
