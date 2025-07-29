@@ -141,7 +141,7 @@
 
 .buttonsArea {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: center;
   margin-left: 16px;
 
