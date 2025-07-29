@@ -51,3 +51,8 @@
 .enabled.highlighted:hover {
   --dialog-color: main-yellow;
 }
+
+.reportIcon {
+  width: 10px;
+  height: 10px;
+}
