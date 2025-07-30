@@ -146,6 +146,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
           body,
         }),
       );
+
       ReactGA.event({
         category: hideProgressBar
           ? GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM_HIDE_PROGRESS_BAR
