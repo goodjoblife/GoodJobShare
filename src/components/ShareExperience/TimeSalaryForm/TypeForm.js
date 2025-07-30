@@ -146,13 +146,17 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
           body,
         }),
       );
-
       ReactGA.event({
         category: hideProgressBar
           ? GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM_HIDE_PROGRESS_BAR
           : GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
         action: GA_ACTION.UPLOAD_SUCCESS,
       });
+
+      // send hotjar event for recording
+      if (body && body.gender && body.gender === 'female') {
+        sendEvent('female_user_submitted_salary_form');
+      }
 
       return res;
     },
