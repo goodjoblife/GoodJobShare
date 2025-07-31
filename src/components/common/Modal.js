@@ -6,6 +6,44 @@ import Cross from 'images/x.svg';
 
 import styles from './Modal.module.css';
 
+export const ForegroundModal = ({
+  children,
+  hasClose = true,
+  close,
+  size = 's',
+  contentClassName,
+}) => {
+  return (
+    <div className={cn(styles.container, styles[size])}>
+      {hasClose ? (
+        <div className={styles.close}>
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+          <img
+            src={Cross}
+            className={styles.close__icon}
+            onClick={e => e.stopPropagation() || close()}
+            alt="close"
+          />
+        </div>
+      ) : null}
+      <div
+        className={cn(styles.content, contentClassName)}
+        onClick={e => e.stopPropagation()}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
+
+ForegroundModal.propTypes = {
+  children: PropTypes.node,
+  close: PropTypes.func.isRequired,
+  contentClassName: PropTypes.string,
+  hasClose: PropTypes.bool,
+  size: PropTypes.string,
+};
+
 const Modal = ({
   children,
   isOpen,
@@ -26,25 +64,13 @@ const Modal = ({
     }}
   >
     <div className={styles.inner}>
-      <div className={cn(styles.container, styles[size])}>
-        {hasClose ? (
-          <div className={styles.close}>
-            {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-            <img
-              src={Cross}
-              className={styles.close__icon}
-              onClick={e => e.stopPropagation() || close()}
-              alt="close"
-            />
-          </div>
-        ) : null}
-        <div
-          className={cn(styles.content, contentClassName)}
-          onClick={e => e.stopPropagation()}
-        >
-          {children}
-        </div>
-      </div>
+      <ForegroundModal
+        children={children}
+        hasClose={hasClose}
+        close={close}
+        size={size}
+        contentClassName={contentClassName}
+      />
     </div>
   </div>
 );
