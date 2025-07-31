@@ -11,6 +11,9 @@
 }
 
 .header {
+  position: relative;
+  z-index: 1; /* to allow dropdown inside the header hover the static content */
+
   background-color: main-black;
   height: NAV_HEIGHT;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.11);
