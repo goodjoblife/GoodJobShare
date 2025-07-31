@@ -1,14 +1,26 @@
 import createReducer from 'utils/createReducer';
-import { getFetched } from 'utils/fetchBox';
+import FetchBox, { getFetched } from 'utils/fetchBox';
 import { READ_INBOX } from 'actions/inbox';
 
-const preloadedState = {
+interface InboxMessage {
+  id: string;
+  title: string;
+  link: string;
+  date: Date;
+  read: boolean;
+}
+
+interface InboxState {
+  messages: FetchBox<InboxMessage[]>;
+}
+
+const preloadedState: InboxState = {
   messages: getFetched([
     {
       id: Math.random()
         .toString()
         .replace(/\D/g, ''),
-      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
+      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
       link: 'experiences/6810ccae07e773897e22812e',
       date: new Date(),
       read: false,
@@ -17,7 +29,7 @@ const preloadedState = {
       id: Math.random()
         .toString()
         .replace(/\D/g, ''),
-      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
+      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
       link: 'experiences/6810ccae07e773897e22812e',
       date: new Date(),
       read: false,
@@ -26,7 +38,7 @@ const preloadedState = {
       id: Math.random()
         .toString()
         .replace(/\D/g, ''),
-      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
+      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
       link: 'experiences/6810ccae07e773897e22812e',
       date: new Date(),
       read: true,
@@ -35,7 +47,7 @@ const preloadedState = {
       id: Math.random()
         .toString()
         .replace(/\D/g, ''),
-      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
+      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
       link: 'experiences/6810ccae07e773897e22812e',
       date: new Date(),
       read: false,
@@ -44,7 +56,7 @@ const preloadedState = {
       id: Math.random()
         .toString()
         .replace(/\D/g, ''),
-      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
+      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
       link: 'experiences/6810ccae07e773897e22812e',
       date: new Date(),
       read: true,
@@ -53,7 +65,7 @@ const preloadedState = {
       id: Math.random()
         .toString()
         .replace(/\D/g, ''),
-      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
+      title: '網友們分享了台積電股份有限公司軟體工程師的10 筆最薪資資料',
       link: 'experiences/6810ccae07e773897e22812e',
       date: new Date(),
       read: false,
@@ -61,12 +73,20 @@ const preloadedState = {
   ]),
 };
 
-const inbox = createReducer(preloadedState, {
-  [READ_INBOX]: state => ({
+const inbox = createReducer<
+  InboxState,
+  { [READ_INBOX]: { type: typeof READ_INBOX } }
+>(preloadedState, {
+  [READ_INBOX]: (state: InboxState) => ({
     ...state,
     messages: {
       ...state.messages,
-      data: state.messages.data?.map(message => ({ ...message, read: true })),
+      data:
+        state.messages.data &&
+        state.messages.data.map((message: InboxMessage) => ({
+          ...message,
+          read: true,
+        })),
     },
   }),
 });
