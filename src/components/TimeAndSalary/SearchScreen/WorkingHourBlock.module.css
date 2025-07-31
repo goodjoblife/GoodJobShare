@@ -1,4 +1,4 @@
-@value yellow-bar, main-yellow, border-gray, main-gray, gray-dark, gray-light, link-blue, page-gutter-s from "../../common/variables.module.css";
+@value yellow-bar, main-yellow, border-gray, main-gray, text-gray, gray-dark, gray-light, link-blue, page-gutter-s from "../../common/variables.module.css";
 
 .container {
   display: block;
@@ -79,7 +79,7 @@
     height: 29px;
     font-size: 14px;
     line-height: 2.07;
-    color: #626262;
+    color: text-gray;
     border-radius: 3px;
     border: solid 1px #bdbdbd;
     background-color: #ffffff;
