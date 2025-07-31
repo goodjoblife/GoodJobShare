@@ -1,5 +1,6 @@
 export const queryInboxGql = /* GraphQL */ `
   query($start: Int, $limit: Int) {
+    notificationCountSinceBellLastOpen
     userNotifications(start: $start, limit: $limit) {
       id
       isRead
@@ -31,8 +32,16 @@ export const queryInboxGql = /* GraphQL */ `
 `;
 
 export const readInboxGql = /* GraphQL */ `
-  mutation($ids: [ID!]!) {
-    markNotificationAsRead(input: { notificationIds: $ids }) {
+  mutation($id: ID!) {
+    openNotificationBell {
+      success
+    }
+  }
+`;
+
+export const readInboxMessageGql = /* GraphQL */ `
+  mutation($id: ID!) {
+    markNotificationAsRead(input: { notificationIds: [$id] }) {
       success
     }
   }

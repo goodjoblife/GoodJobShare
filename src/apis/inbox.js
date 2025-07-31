@@ -1,5 +1,9 @@
 import graphqlClient from 'utils/graphqlClient';
-import { queryInboxGql, readInboxGql } from 'graphql/inbox';
+import {
+  queryInboxGql,
+  readInboxGql,
+  readInboxMessageGql,
+} from 'graphql/inbox';
 
 const mapNotification = ({ __typename, id, createdAt, isRead, ...rest }) => {
   switch (__typename) {
@@ -48,20 +52,37 @@ const mapNotification = ({ __typename, id, createdAt, isRead, ...rest }) => {
 };
 
 export const queryInboxApi = async ({ token, start, limit }) => {
-  const { userNotifications } = await graphqlClient({
+  const {
+    notificationCountSinceBellLastOpen,
+    userNotifications,
+  } = await graphqlClient({
     variables: { start, limit },
     query: queryInboxGql,
     token,
   });
 
-  return userNotifications.map(mapNotification);
+  userNotifications = userNotifications.map(mapNotification);
+
+  return {
+    notificationCountSinceBellLastOpen,
+    userNotifications,
+  };
 };
 
-export const readInboxApi = async ({ token, ids }) => {
+export const readInboxApi = async ({ token }) => {
   const { success } = await graphqlClient({
     query: readInboxGql,
     token,
-    variables: { ids },
+  });
+
+  return success;
+};
+
+export const readInboxMessageApi = async ({ token, id }) => {
+  const { success } = await graphqlClient({
+    query: readInboxMessageGql,
+    token,
+    variables: { id },
   });
 
   return success;

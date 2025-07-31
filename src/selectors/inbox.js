@@ -7,8 +7,4 @@ export const messagesSelector = compose(
   messagesBoxSelector,
 );
 
-export const unreadCountSelector = compose(
-  messages => messages.filter(message => !message.read).length,
-  box => box.data || [],
-  messagesBoxSelector,
-);
+export const unreadCountSelector = state => state.inbox.unreadCount;

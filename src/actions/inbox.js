@@ -1,4 +1,4 @@
-import { queryInboxApi, readInboxApi } from 'apis/inbox';
+import { queryInboxApi, readInboxApi, readInboxMessageApi } from 'apis/inbox';
 import { tokenSelector } from 'selectors/authSelector';
 import { messagesBoxSelector } from 'selectors/inbox';
 import {
@@ -9,7 +9,25 @@ import {
   toFetching,
 } from 'utils/fetchBox';
 
+export const SET_INBOX_COUNT = '@@inbox/SET_INBOX_COUNT';
 export const SET_INBOX = '@@inbox/SET_INBOX';
+
+const setInboxCount = count => ({
+  type: SET_INBOX_COUNT,
+  count,
+});
+
+export const readInbox = () => async (dispatch, getState) => {
+  const state = getState();
+  const token = tokenSelector(state);
+
+  try {
+    await readInboxApi({ token });
+    dispatch(setInboxCount(0));
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const setInbox = box => ({
   type: SET_INBOX,
@@ -25,7 +43,13 @@ export const fetchInbox = ({ start, limit }) => async (dispatch, getState) => {
 
   try {
     dispatch(setInbox(toFetching()));
-    const userNotifications = await queryInboxApi({ token, start, limit });
+
+    const {
+      notificationCountSinceBellLastOpen,
+      userNotifications,
+    } = await queryInboxApi({ token, start, limit });
+
+    dispatch(setInboxCount(notificationCountSinceBellLastOpen));
     dispatch(setInbox(getFetched(userNotifications)));
   } catch (error) {
     console.error(error);
@@ -33,32 +57,21 @@ export const fetchInbox = ({ start, limit }) => async (dispatch, getState) => {
   }
 };
 
-export const readInbox = () => async (dispatch, getState) => {
+export const readInboxMessage = ({ id }) => async (dispatch, getState) => {
   const state = getState();
   const token = tokenSelector(state);
 
-  const box = messagesBoxSelector(getState());
-  if (isFetching(box) || isFetched(box)) return;
-
-  const unreadIds = box.data.filter(({ read }) => !read).map(({ id }) => id);
-
-  if (unreadIds.length === 0) return;
-
-  // Optimistically mark all unread messages as read in the local state
-  const prevBox = box;
+  const oldBox = messagesBoxSelector(getState());
   const newBox = {
-    ...box,
-    data: box.data.map(message => ({ ...message, read: true })),
+    ...oldBox,
+    data:
+      oldBox.data && oldBox.data.map(message => ({ ...message, read: true })),
   };
-  dispatch(setInbox(newBox));
 
   try {
-    await readInboxApi({ token, ids: unreadIds });
-    // Do nothing, local state already updated
+    await readInboxMessageApi({ token, id });
+    dispatch(setInbox(newBox));
   } catch (error) {
     console.error(error);
-
-    // Revert local state if API fails
-    dispatch(setInbox(prevBox));
   }
 };
