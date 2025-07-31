@@ -154,6 +154,11 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
         action: GA_ACTION.UPLOAD_SUCCESS,
       });
 
+      // send hotjar event for recording
+      if (body && body.gender && body.gender === 'female') {
+        sendEvent('female_user_submitted_salary_form');
+      }
+
       return res;
     },
     [dispatch, hideProgressBar],
