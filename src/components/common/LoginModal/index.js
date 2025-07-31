@@ -13,10 +13,12 @@ const LoginModal = ({ onClose, inline }) => {
   const { isLoginModalDisplayed: isOpen, setLoginModalDisplayed } = useContext(
     LoginModalContext,
   );
+
   const close = useCallback(() => {
     setLoginModalDisplayed(false);
     onClose && onClose();
   }, [setLoginModalDisplayed, onClose]);
+
   const isLoggedIn = useIsLoggedIn();
 
   // setLoginModalDisplayed is immutable
