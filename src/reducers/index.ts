@@ -33,6 +33,7 @@ const rootReducer = combineReducers({
   companyIndex,
   experience,
   experiences,
+  inbox,
   jobTitleIndex,
   laborRights,
   me,
@@ -44,7 +45,6 @@ const rootReducer = combineReducers({
   salaryWorkTime,
   search,
   toastNotification,
-  inbox,
 });
 
 export default persistReducer(persistConfig, rootReducer);
