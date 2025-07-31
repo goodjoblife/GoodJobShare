@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useIsLoggedIn } from 'hooks/auth';
 import LoginModalContext from 'contexts/LoginModalContext';
-import Modal, { ForegroundModal } from 'common/Modal.js';
+import Modal, { InlineModal } from 'common/Modal.js';
 import FacebookLoginButton from 'common/Login/FacebookLoginButton';
 import GoogleLoginButton from 'common/Login/GoogleLoginButton';
 import styles from './LoginModal.module.css';
@@ -26,7 +26,7 @@ const LoginModal = ({ onClose, inline }) => {
     }
   }, [close, isLoggedIn, isOpen]);
 
-  const ModalComponent = inline ? ForegroundModal : Modal;
+  const ModalComponent = inline ? InlineModal : Modal;
 
   return (
     <ModalComponent

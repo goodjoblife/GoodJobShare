@@ -6,7 +6,7 @@ import Cross from 'images/x.svg';
 
 import styles from './Modal.module.css';
 
-export const ForegroundModal = ({
+export const InlineModal = ({
   children,
   hasClose = true,
   close,
@@ -36,7 +36,7 @@ export const ForegroundModal = ({
   );
 };
 
-ForegroundModal.propTypes = {
+InlineModal.propTypes = {
   children: PropTypes.node,
   close: PropTypes.func.isRequired,
   contentClassName: PropTypes.string,
@@ -64,7 +64,7 @@ const Modal = ({
     }}
   >
     <div className={styles.inner}>
-      <ForegroundModal
+      <InlineModal
         children={children}
         hasClose={hasClose}
         close={close}
