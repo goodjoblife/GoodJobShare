@@ -23,22 +23,23 @@
   font-size: 13px;
   height: 20px;
   padding: 3px 6px;
-  background-color: var(--dialog-color);
-}
-
-.dialogTriangle {
-  position: absolute;
-  bottom: -5px;
-  left: 2px;
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 10px solid var(--dialog-color);
-  z-index: 0;
+  background-color: #969696;
 }
 
 .dialogWrapper {
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 2px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 10px solid #969696;
+    z-index: 0;
+  }
+
   --dialog-color: #333;
   position: relative;
   width: fit-content;
@@ -46,8 +47,21 @@
 
 .enabled {
   --dialog-color: #333;
+
+  .dialogBox {
+    background-color: var(--dialog-color);
+  }
+
+  &::after {
+    border-top-color: var(--dialog-color);
+  }
 }
 
 .enabled.highlighted:hover {
   --dialog-color: main-yellow;
+}
+
+.reportIcon {
+  width: 10px;
+  height: 10px;
 }
