@@ -22,11 +22,6 @@ export type SomeoneLikeMyReplyNotification = BaseNotification & {
   reply: { experience: { id: string } };
 };
 
-export type Notification =
-  | SomeoneReplyMyExperienceNotification
-  | SomeoneLikeMyExperienceNotification
-  | SomeoneLikeMyReplyNotification;
-
 export const queryInboxGql = /* GraphQL */ `
   query($start: Int, $limit: Int) {
     notificationCountSinceBellLastOpen
@@ -59,6 +54,11 @@ export const queryInboxGql = /* GraphQL */ `
     }
   }
 `;
+
+export type Notification =
+  | SomeoneReplyMyExperienceNotification
+  | SomeoneLikeMyExperienceNotification
+  | SomeoneLikeMyReplyNotification;
 
 export type QueryInboxResult = {
   notificationCountSinceBellLastOpen: number;
