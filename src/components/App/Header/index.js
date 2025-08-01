@@ -5,6 +5,7 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
+import { useDispatch } from 'react-redux';
 import { useWindowScroll, useRafState } from 'react-use';
 import PropTypes from 'prop-types';
 import { Link, useHistory, useLocation } from 'react-router-dom';
@@ -19,6 +20,8 @@ import usePermission from 'hooks/usePermission';
 import useMobile from 'hooks/useMobile';
 import { useAuthUser, useAuthUserEmailStatus, useIsLoggedIn } from 'hooks/auth';
 import { useLogin, useLogout } from 'hooks/login';
+import { fetchInbox } from 'actions/inbox';
+
 import styles from './Header.module.css';
 import inboxIconStyles from './InboxIcon.module.css';
 import SiteMenu from './SiteMenu';
@@ -154,7 +157,20 @@ ResponsiveSearchbar.propTypes = {
   inputRef: PropTypes.any,
 };
 
+// For unread count
+const useLoadInbox = ({ isLoggedIn }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(fetchInbox({ start: 0, limit: 10 }));
+    }
+  }, [dispatch, isLoggedIn]);
+};
+
 const Nav = ({ isNavOpen, isLoggedIn, login, onClickShareData }) => {
+  useLoadInbox({ isLoggedIn });
+
   return (
     <nav
       className={cn(styles.nav, {
