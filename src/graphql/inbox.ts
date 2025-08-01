@@ -1,27 +1,5 @@
 // QueryInbox
 
-type BaseNotification = {
-  __typename: string;
-  id: string;
-  isRead: boolean;
-  createdAt: string;
-};
-
-export type SomeoneReplyMyExperienceNotification = BaseNotification & {
-  __typename: 'SomeoneReplyMyExperienceNotification';
-  experience: { id: string };
-};
-
-export type SomeoneLikeMyExperienceNotification = BaseNotification & {
-  __typename: 'SomeoneLikeMyExperienceNotification';
-  experience: { id: string };
-};
-
-export type SomeoneLikeMyReplyNotification = BaseNotification & {
-  __typename: 'SomeoneLikeMyReplyNotification';
-  reply: { experience: { id: string } };
-};
-
 export const queryInboxGql = /* GraphQL */ `
   query($start: Int, $limit: Int) {
     notificationCountSinceBellLastOpen
@@ -54,6 +32,28 @@ export const queryInboxGql = /* GraphQL */ `
     }
   }
 `;
+
+type BaseNotification = {
+  __typename: string;
+  id: string;
+  isRead: boolean;
+  createdAt: string;
+};
+
+export type SomeoneReplyMyExperienceNotification = BaseNotification & {
+  __typename: 'SomeoneReplyMyExperienceNotification';
+  experience: { id: string };
+};
+
+export type SomeoneLikeMyExperienceNotification = BaseNotification & {
+  __typename: 'SomeoneLikeMyExperienceNotification';
+  experience: { id: string };
+};
+
+export type SomeoneLikeMyReplyNotification = BaseNotification & {
+  __typename: 'SomeoneLikeMyReplyNotification';
+  reply: { experience: { id: string } };
+};
 
 export type Notification =
   | SomeoneReplyMyExperienceNotification
