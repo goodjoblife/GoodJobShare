@@ -86,11 +86,6 @@ const mapNotification = (notification: Notification): InboxMessage | null => {
   }
 };
 
-interface QueryInboxResult {
-  notificationCountSinceBellLastOpen: number;
-  userNotifications: InboxMessage[];
-}
-
 export const queryInboxApi = async ({
   token,
   start,
@@ -99,7 +94,10 @@ export const queryInboxApi = async ({
   token?: string;
   start: number;
   limit: number;
-}): Promise<QueryInboxResult> => {
+}): Promise<{
+  notificationCountSinceBellLastOpen: number;
+  userNotifications: InboxMessage[];
+}> => {
   const {
     notificationCountSinceBellLastOpen,
     userNotifications,
