@@ -3,37 +3,17 @@ import {
   queryInboxGql,
   readInboxGql,
   readInboxMessageGql,
+  QueryInboxResult,
+  ReadInboxResult,
+  ReadInboxMessageResult,
+  Notification,
+  SomeoneReplyMyExperienceNotification,
+  SomeoneLikeMyExperienceNotification,
+  SomeoneLikeMyReplyNotification,
 } from 'graphql/inbox';
 import { InboxMessage } from 'constants/inbox';
 
 // queries
-
-interface BaseNotification {
-  __typename: string;
-  id: string;
-  createdAt: string;
-  isRead: boolean;
-}
-
-interface SomeoneReplyMyExperienceNotification extends BaseNotification {
-  __typename: 'SomeoneReplyMyExperienceNotification';
-  experience: { id: string };
-}
-
-interface SomeoneLikeMyExperienceNotification extends BaseNotification {
-  __typename: 'SomeoneLikeMyExperienceNotification';
-  experience: { id: string };
-}
-
-interface SomeoneLikeMyReplyNotification extends BaseNotification {
-  __typename: 'SomeoneLikeMyReplyNotification';
-  reply: { experience: { id: string } };
-}
-
-type Notification =
-  | SomeoneReplyMyExperienceNotification
-  | SomeoneLikeMyExperienceNotification
-  | SomeoneLikeMyReplyNotification;
 
 const mapToInboxMessage = (notification: Notification): InboxMessage | null => {
   const { __typename, id, createdAt, isRead, ...rest } = notification;
@@ -101,10 +81,7 @@ export const queryInboxApi = async ({
   const {
     notificationCountSinceBellLastOpen,
     userNotifications,
-  } = await graphqlClient<{
-    notificationCountSinceBellLastOpen: number;
-    userNotifications: Notification[];
-  }>({
+  } = await graphqlClient<QueryInboxResult>({
     variables: { start, limit },
     query: queryInboxGql,
     token,
@@ -124,17 +101,13 @@ export const queryInboxApi = async ({
 
 // mutations
 
-interface MutateInboxResponse {
-  success: boolean;
-}
-
 export const readInboxApi = async ({ token }: { token?: string }) => {
-  const { success } = await graphqlClient<MutateInboxResponse>({
+  const { openNotificationBell } = await graphqlClient<ReadInboxResult>({
     query: readInboxGql,
     token,
   });
 
-  return success;
+  return openNotificationBell.success;
 };
 
 export const readInboxMessageApi = async ({
@@ -144,11 +117,13 @@ export const readInboxMessageApi = async ({
   token?: string;
   id: string;
 }) => {
-  const { success } = await graphqlClient<MutateInboxResponse>({
+  const { markNotificationAsRead } = await graphqlClient<
+    ReadInboxMessageResult
+  >({
     query: readInboxMessageGql,
     token,
     variables: { id },
   });
 
-  return success;
+  return markNotificationAsRead.success;
 };
