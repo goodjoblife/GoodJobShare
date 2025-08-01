@@ -35,7 +35,7 @@ type Notification =
   | SomeoneLikeMyExperienceNotification
   | SomeoneLikeMyReplyNotification;
 
-const mapNotification = (notification: Notification): InboxMessage | null => {
+const mapToInboxMessage = (notification: Notification): InboxMessage | null => {
   const { __typename, id, createdAt, isRead, ...rest } = notification;
 
   switch (__typename) {
@@ -95,8 +95,8 @@ export const queryInboxApi = async ({
   start: number;
   limit: number;
 }): Promise<{
-  notificationCountSinceBellLastOpen: number;
-  userNotifications: InboxMessage[];
+  unreadCount: number;
+  messages: InboxMessage[];
 }> => {
   const {
     notificationCountSinceBellLastOpen,
@@ -110,15 +110,15 @@ export const queryInboxApi = async ({
     token,
   });
 
-  const mappedNotifications: InboxMessage[] = userNotifications
-    .map(mapNotification)
+  const messages: InboxMessage[] = userNotifications
+    .map(mapToInboxMessage)
     .filter(
       (notification): notification is InboxMessage => notification !== null,
     );
 
   return {
-    notificationCountSinceBellLastOpen,
-    userNotifications: mappedNotifications,
+    unreadCount: notificationCountSinceBellLastOpen,
+    messages,
   };
 };
 

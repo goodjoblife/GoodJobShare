@@ -76,13 +76,14 @@ export const fetchInbox = ({
   try {
     dispatch(setInbox(toFetching()));
 
-    const {
-      notificationCountSinceBellLastOpen,
-      userNotifications,
-    } = await queryInboxApi({ token, start, limit });
+    const { unreadCount, messages } = await queryInboxApi({
+      token,
+      start,
+      limit,
+    });
 
-    dispatch(setInboxCount(notificationCountSinceBellLastOpen));
-    dispatch(setInbox(getFetched(userNotifications)));
+    dispatch(setInboxCount(unreadCount));
+    dispatch(setInbox(getFetched(messages)));
   } catch (error) {
     console.error(error);
     dispatch(setInbox(getError(error)));
