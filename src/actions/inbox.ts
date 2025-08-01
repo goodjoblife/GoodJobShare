@@ -11,6 +11,7 @@ import {
   isFetching,
   toFetching,
 } from 'utils/fetchBox';
+import { InboxMessage } from 'constants/inbox';
 import FetchBox from 'utils/fetchBox';
 
 export const SET_INBOX_COUNT = '@@inbox/SET_INBOX_COUNT';
@@ -40,14 +41,6 @@ export const readInbox = () => async (
     console.error(error);
   }
 };
-
-export interface InboxMessage {
-  id: string;
-  title: string;
-  link: string;
-  date: Date;
-  read: boolean;
-}
 
 export interface SetInboxAction {
   type: typeof SET_INBOX;
