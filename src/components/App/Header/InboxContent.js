@@ -70,7 +70,7 @@ const InboxContent = ({ className, isOpen = true }) => {
             >
               <div>{title}</div>
               <div className={styles.date}>
-                {formatDistance(new Date(date), new Date(), {
+                {formatDistance(date, new Date(), {
                   locale: zhTW,
                   addSuffix: true,
                 })}
