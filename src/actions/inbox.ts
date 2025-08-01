@@ -17,6 +17,8 @@ import FetchBox from 'utils/fetchBox';
 export const SET_INBOX_COUNT = '@@inbox/SET_INBOX_COUNT';
 export const SET_INBOX = '@@inbox/SET_INBOX';
 
+// Set inbox count
+
 export interface SetInboxCountAction {
   type: typeof SET_INBOX_COUNT;
   count: number;
@@ -26,6 +28,8 @@ const setInboxCount = (count: number): SetInboxCountAction => ({
   type: SET_INBOX_COUNT,
   count,
 });
+
+// Read inbox
 
 export const readInbox = () => async (
   dispatch: Dispatch<Action>,
@@ -42,6 +46,8 @@ export const readInbox = () => async (
   }
 };
 
+// Set inbox
+
 export interface SetInboxAction {
   type: typeof SET_INBOX;
   box: FetchBox<InboxMessage[]>;
@@ -51,6 +57,8 @@ const setInbox = (box: FetchBox<InboxMessage[]>): SetInboxAction => ({
   type: SET_INBOX,
   box,
 });
+
+// Fetch inbox
 
 export const fetchInbox = ({
   start,
@@ -80,6 +88,8 @@ export const fetchInbox = ({
     dispatch(setInbox(getError(error)));
   }
 };
+
+// Read inbox message
 
 export const readInboxMessage = ({ id }: { id: string }) => async (
   dispatch: Dispatch<Action>,
