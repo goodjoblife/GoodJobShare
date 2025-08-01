@@ -157,6 +157,7 @@ ResponsiveSearchbar.propTypes = {
   inputRef: PropTypes.any,
 };
 
+// For unread count
 const useLoadInbox = ({ isLoggedIn }) => {
   const dispatch = useDispatch();
 
