@@ -1,3 +1,6 @@
+import { Action } from 'redux';
+import { Dispatch, GetState } from 'reducers';
+
 import { queryInboxApi, readInboxApi, readInboxMessageApi } from 'apis/inbox';
 import { tokenSelector } from 'selectors/authSelector';
 import { messagesBoxSelector } from 'selectors/inbox';
@@ -8,16 +11,25 @@ import {
   isFetching,
   toFetching,
 } from 'utils/fetchBox';
+import FetchBox from 'utils/fetchBox';
 
 export const SET_INBOX_COUNT = '@@inbox/SET_INBOX_COUNT';
 export const SET_INBOX = '@@inbox/SET_INBOX';
 
-const setInboxCount = count => ({
+export interface SetInboxCountAction {
+  type: typeof SET_INBOX_COUNT;
+  count: number;
+}
+
+const setInboxCount = (count: number): SetInboxCountAction => ({
   type: SET_INBOX_COUNT,
   count,
 });
 
-export const readInbox = () => async (dispatch, getState) => {
+export const readInbox = () => async (
+  dispatch: Dispatch<Action>,
+  getState: GetState,
+) => {
   const state = getState();
   const token = tokenSelector(state);
 
@@ -29,12 +41,31 @@ export const readInbox = () => async (dispatch, getState) => {
   }
 };
 
-const setInbox = box => ({
+export interface InboxMessage {
+  id: string;
+  title: string;
+  link: string;
+  date: Date;
+  read: boolean;
+}
+
+export interface SetInboxAction {
+  type: typeof SET_INBOX;
+  box: FetchBox<InboxMessage[]>;
+}
+
+const setInbox = (box: FetchBox<InboxMessage[]>): SetInboxAction => ({
   type: SET_INBOX,
   box,
 });
 
-export const fetchInbox = ({ start, limit }) => async (dispatch, getState) => {
+export const fetchInbox = ({
+  start,
+  limit,
+}: {
+  start: number;
+  limit: number;
+}) => async (dispatch: Dispatch<Action>, getState: GetState) => {
   const state = getState();
   const token = tokenSelector(state);
 
@@ -57,7 +88,10 @@ export const fetchInbox = ({ start, limit }) => async (dispatch, getState) => {
   }
 };
 
-export const readInboxMessage = ({ id }) => async (dispatch, getState) => {
+export const readInboxMessage = ({ id }: { id: string }) => async (
+  dispatch: Dispatch<Action>,
+  getState: GetState,
+) => {
   const state = getState();
   const token = tokenSelector(state);
 
@@ -65,7 +99,8 @@ export const readInboxMessage = ({ id }) => async (dispatch, getState) => {
   const newBox = {
     ...oldBox,
     data:
-      oldBox.data && oldBox.data.map(message => ({ ...message, read: true })),
+      oldBox.data &&
+      oldBox.data.map((message: InboxMessage) => ({ ...message, read: true })),
   };
 
   try {
