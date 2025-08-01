@@ -102,12 +102,14 @@ export const queryInboxApi = async ({
 // mutations
 
 export const readInboxApi = async ({ token }: { token?: string }) => {
-  const { openNotificationBell } = await graphqlClient<ReadInboxResult>({
+  const {
+    openNotificationBell: { success },
+  } = await graphqlClient<ReadInboxResult>({
     query: readInboxGql,
     token,
   });
 
-  return openNotificationBell.success;
+  return success;
 };
 
 export const readInboxMessageApi = async ({
@@ -117,13 +119,13 @@ export const readInboxMessageApi = async ({
   token?: string;
   id: string;
 }) => {
-  const { markNotificationAsRead } = await graphqlClient<
-    ReadInboxMessageResult
-  >({
+  const {
+    markNotificationAsRead: { success },
+  } = await graphqlClient<ReadInboxMessageResult>({
     query: readInboxMessageGql,
     token,
     variables: { id },
   });
 
-  return markNotificationAsRead.success;
+  return success;
 };
