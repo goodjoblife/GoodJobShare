@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ReportBadge.module.css';
 import cn from 'classnames';
+import ReportIcon from '../icons/Report';
 
 const ReportBadge = ({
   reportCount = 0,
@@ -17,8 +18,13 @@ const ReportBadge = ({
           [styles.enabled]: hasReport,
         })}
       >
-        <div className={styles.dialogBox}>{hasReport ? reportCount : '!'}</div>
-        <div className={styles.dialogTriangle}></div>
+        <div className={styles.dialogBox}>
+          {hasReport ? (
+            reportCount
+          ) : (
+            <ReportIcon className={styles.reportIcon} />
+          )}
+        </div>
       </div>
       {reportText && <div className={styles.reportText}>{reportText}</div>}
     </div>
