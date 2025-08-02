@@ -6,6 +6,7 @@ import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 import { formatSalary, formatSalaryRange } from 'common/formatter';
 import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
+import WorkInfoGrid from './WorkInfoGrid';
 import RateButtons from './RateButtons';
 import {
   pageType as PAGE_TYPE,
@@ -143,9 +144,10 @@ InterviewInfoBlocks.propTypes = {
 
 const WorkInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
+
   return (
-    <Fragment>
-      <InfoBlock
+    <WorkInfoGrid>
+      <WorkInfoGrid.Item
         label="公司"
         to={generatePageURL({
           pageType: PAGE_TYPE.COMPANY,
@@ -153,9 +155,13 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
         })}
       >
         {originalCompanyNameSelector(experience)}
-      </InfoBlock>
-      <InfoBlock label="工作地區">{experience.region}</InfoBlock>
-      <InfoBlock
+      </WorkInfoGrid.Item>
+
+      <WorkInfoGrid.Item label="工作地區">
+        {experience.region}
+      </WorkInfoGrid.Item>
+
+      <WorkInfoGrid.Item
         label="職稱"
         to={generatePageURL({
           pageType: PAGE_TYPE.JOB_TITLE,
@@ -163,23 +169,34 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
         })}
       >
         {experience.job_title.name}
-      </InfoBlock>
-      {experience.created_at ? (
-        <InfoBlock label="填寫時間">
+      </WorkInfoGrid.Item>
+
+      {experience.created_at && (
+        <WorkInfoGrid.Item label="填寫時間">
           {formatDate(new Date(experience.created_at))}
-        </InfoBlock>
-      ) : null}
-      {expInYearText ? (
-        <InfoBlock label="相關職務經驗">{expInYearText}</InfoBlock>
-      ) : null}
-      {experience.education ? (
-        <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
-      ) : null}
-      {experience.week_work_time ? (
-        <InfoBlock label="一週工時">{experience.week_work_time}</InfoBlock>
-      ) : null}
-      {experience.salary ? (
-        <InfoBlock label="待遇">
+        </WorkInfoGrid.Item>
+      )}
+
+      {expInYearText && (
+        <WorkInfoGrid.Item label="相關職務經驗">
+          {expInYearText}
+        </WorkInfoGrid.Item>
+      )}
+
+      {experience.education && (
+        <WorkInfoGrid.Item label="最高學歷">
+          {experience.education}
+        </WorkInfoGrid.Item>
+      )}
+
+      {experience.week_work_time && (
+        <WorkInfoGrid.Item label="一週工時">
+          {experience.week_work_time}
+        </WorkInfoGrid.Item>
+      )}
+
+      {experience.salary && (
+        <WorkInfoGrid.Item label="待遇">
           {hideContent ? (
             <React.Fragment>
               <FontAwesomeIcon icon={faLock} className={styles.lock} />
@@ -188,13 +205,16 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
           ) : (
             formatSalary(experience.salary)
           )}
-        </InfoBlock>
-      ) : null}
-      <RatingInfo
-        rating={experience.averageSectionRating}
-        recommend={experience.recommend_to_others}
-      />
-    </Fragment>
+        </WorkInfoGrid.Item>
+      )}
+
+      <WorkInfoGrid.Item label="評分" span={2}>
+        <RatingInfo
+          rating={experience.averageSectionRating}
+          recommend={experience.recommend_to_others}
+        />
+      </WorkInfoGrid.Item>
+    </WorkInfoGrid>
   );
 };
 
