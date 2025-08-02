@@ -12,8 +12,10 @@
   background-color: #f5f5f5;
   padding: 16px 20px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
   border-right: 1px solid #e0e0e0;
   border-bottom: 1px solid #e0e0e0;
 }
@@ -33,14 +35,17 @@
 .label {
   font-weight: 600;
   color: #333;
-  margin-right: 12px;
+  margin-bottom: 8px;
   white-space: nowrap;
+  font-size: 14px;
 }
 
 .value {
   color: #333;
-  text-align: right;
+  text-align: center;
   word-wrap: break-word;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .value a {
@@ -56,15 +61,20 @@
   .gridItem {
     border-right: none;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 8px;
+    text-align: center;
   }
 
   .gridItem.span2 {
     grid-column: span 1;
   }
 
+  .gridItem.span3 {
+    grid-column: span 1;
+  }
+
   .value {
-    text-align: left;
+    text-align: center;
   }
 }
