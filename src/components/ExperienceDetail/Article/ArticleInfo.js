@@ -147,35 +147,21 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
 
   return (
     <WorkInfoGrid>
-      <WorkInfoGrid.Item
-        label="公司"
-        to={generatePageURL({
-          pageType: PAGE_TYPE.COMPANY,
-          pageName: experience.company.name,
-        })}
-      >
-        {originalCompanyNameSelector(experience)}
+      <WorkInfoGrid.Item label="地點">
+        {experience.region || '未提供'}
       </WorkInfoGrid.Item>
 
-      <WorkInfoGrid.Item label="工作地區">
-        {experience.region}
-      </WorkInfoGrid.Item>
-
-      <WorkInfoGrid.Item
-        label="職稱"
-        to={generatePageURL({
-          pageType: PAGE_TYPE.JOB_TITLE,
-          pageName: experience.job_title.name,
-        })}
-      >
-        {experience.job_title.name}
-      </WorkInfoGrid.Item>
-
-      <WorkInfoGrid.Item label="相關職務經驗">
+      <WorkInfoGrid.Item label="職務經驗">
         {expInYearText || '未提供'}
       </WorkInfoGrid.Item>
 
-      <WorkInfoGrid.Item label="待遇">
+      <WorkInfoGrid.Item label="工時">
+        {experience.week_work_time
+          ? `${experience.week_work_time}小時/週`
+          : '未提供'}
+      </WorkInfoGrid.Item>
+
+      <WorkInfoGrid.Item label="薪水">
         {experience.salary ? (
           hideContent ? (
             <React.Fragment>
@@ -188,6 +174,10 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
         ) : (
           '未提供'
         )}
+      </WorkInfoGrid.Item>
+
+      <WorkInfoGrid.Item label="最高學歷">
+        {experience.education || '未提供'}
       </WorkInfoGrid.Item>
 
       <WorkInfoGrid.Item label="評分" span={3}>
