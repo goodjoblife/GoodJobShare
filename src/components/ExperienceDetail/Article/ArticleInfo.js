@@ -171,44 +171,26 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
         {experience.job_title.name}
       </WorkInfoGrid.Item>
 
-      {experience.created_at && (
-        <WorkInfoGrid.Item label="填寫時間">
-          {formatDate(new Date(experience.created_at))}
-        </WorkInfoGrid.Item>
-      )}
+      <WorkInfoGrid.Item label="相關職務經驗">
+        {expInYearText || '未提供'}
+      </WorkInfoGrid.Item>
 
-      {expInYearText && (
-        <WorkInfoGrid.Item label="相關職務經驗">
-          {expInYearText}
-        </WorkInfoGrid.Item>
-      )}
-
-      {experience.education && (
-        <WorkInfoGrid.Item label="最高學歷">
-          {experience.education}
-        </WorkInfoGrid.Item>
-      )}
-
-      {experience.week_work_time && (
-        <WorkInfoGrid.Item label="一週工時">
-          {experience.week_work_time}
-        </WorkInfoGrid.Item>
-      )}
-
-      {experience.salary && (
-        <WorkInfoGrid.Item label="待遇">
-          {hideContent ? (
+      <WorkInfoGrid.Item label="待遇">
+        {experience.salary ? (
+          hideContent ? (
             <React.Fragment>
               <FontAwesomeIcon icon={faLock} className={styles.lock} />
               {formatSalaryRange(experience.salary)}
             </React.Fragment>
           ) : (
             formatSalary(experience.salary)
-          )}
-        </WorkInfoGrid.Item>
-      )}
+          )
+        ) : (
+          '未提供'
+        )}
+      </WorkInfoGrid.Item>
 
-      <WorkInfoGrid.Item label="評分" span={2}>
+      <WorkInfoGrid.Item label="評分" span={3}>
         <RatingInfo
           rating={experience.averageSectionRating}
           recommend={experience.recommend_to_others}

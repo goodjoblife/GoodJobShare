@@ -1,6 +1,6 @@
 .workInfoGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1px;
   background-color: #f5f5f5;
   border: 1px solid #e0e0e0;
@@ -18,13 +18,16 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
-.gridItem:nth-child(2n) {
+.gridItem:nth-child(4n) {
   border-right: none;
 }
 
 .gridItem.span2 {
   grid-column: span 2;
-  border-right: none;
+}
+
+.gridItem.span3 {
+  grid-column: span 3;
 }
 
 .label {
