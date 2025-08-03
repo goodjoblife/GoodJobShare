@@ -120,3 +120,76 @@ $paddingS: 16px;
     right: 0px;
   }
 }
+
+.interviewBlocksContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.interviewBlocksRow {
+  display: flex;
+  align-items: stretch;
+  background-color: #f8f8f8;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.interviewBlockItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px;
+  gap: 4px;
+}
+
+.interviewBlockItem::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  right: 0;
+  width: 0.4px;
+  background-color: #cecece;
+}
+
+.interviewBlockItem:last-child::after {
+  display: none;
+}
+
+.interviewBlockLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333333;
+  line-height: 1.2;
+}
+
+.interviewBlockContent {
+  font-size: 15px;
+  font-weight: 400;
+  color: #333333;
+  line-height: 1.2;
+  word-wrap: break-word;
+}
+
+.interviewBlockContent a {
+  text-decoration: underline;
+}
+
+.sensitiveQuestions {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: #f8f8f8;
+  border-radius: 6px;
+}
+
+.sensitiveQuestions ul {
+  margin: 8px 0 0 1.3em;
+}
+
+.sensitiveQuestions li {
+  list-style-type: disc;
+}

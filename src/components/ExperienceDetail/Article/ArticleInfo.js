@@ -34,67 +34,120 @@ const formatExperienceInYear = year => {
   }
 };
 
+const InterviewBlockItem = ({ label, children, to }) => (
+  <div className={styles.interviewBlockItem}>
+    <div className={styles.interviewBlockLabel}>{label}</div>
+    <div className={styles.interviewBlockContent}>
+      {to ? <Link to={to}>{children}</Link> : children}
+    </div>
+  </div>
+);
+
+InterviewBlockItem.propTypes = {
+  children: PropTypes.node,
+  label: PropTypes.string.isRequired,
+  to: PropTypes.string,
+};
+
 const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
+  const firstRowItems = [];
+  const secondRowItems = [];
+
+  firstRowItems.push(
+    <InterviewBlockItem
+      label="公司"
+      key="company"
+      to={generatePageURL({
+        pageType: PAGE_TYPE.COMPANY,
+        pageName: experience.company.name,
+      })}
+    >
+      {originalCompanyNameSelector(experience)}
+    </InterviewBlockItem>,
+  );
+
+  firstRowItems.push(
+    <InterviewBlockItem key="region" label="面試地區">
+      {experience.region}
+    </InterviewBlockItem>,
+  );
+
+  firstRowItems.push(
+    <InterviewBlockItem
+      key="job_title"
+      label="應徵職稱"
+      to={generatePageURL({
+        pageType: PAGE_TYPE.JOB_TITLE,
+        pageName: experience.job_title.name,
+      })}
+    >
+      {experience.job_title.name}
+    </InterviewBlockItem>,
+  );
+
+  if (expInYearText !== null) {
+    firstRowItems.push(
+      <InterviewBlockItem key="experience" label="相關職務經驗">
+        {expInYearText}
+      </InterviewBlockItem>,
+    );
+  }
+
+  if (experience.interview_time) {
+    secondRowItems.push(
+      <InterviewBlockItem key="interview_time" label="面試時間">
+        {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
+      </InterviewBlockItem>,
+    );
+  }
+
+  if (experience.created_at) {
+    secondRowItems.push(
+      <InterviewBlockItem key="created_at" label="填寫時間">
+        {formatDate(new Date(experience.created_at))}
+      </InterviewBlockItem>,
+    );
+  }
+
+  secondRowItems.push(
+    <InterviewBlockItem key="result" label="面試結果">
+      {experience.interview_result}
+    </InterviewBlockItem>,
+  );
+
+  if (experience.salary) {
+    secondRowItems.push(
+      <InterviewBlockItem key="salary" label="待遇">
+        {hideContent ? (
+          <React.Fragment>
+            <FontAwesomeIcon icon={faLock} className={styles.lock} />
+            {formatSalaryRange(experience.salary)}
+          </React.Fragment>
+        ) : (
+          formatSalary(experience.salary)
+        )}
+      </InterviewBlockItem>,
+    );
+  }
+
+  if (experience.averageSectionRating) {
+    secondRowItems.push(
+      <InterviewBlockItem key="rating" label="評分">
+        <OverallRating
+          rating={experience.averageSectionRating}
+          hasRatingLabel
+          hasRatingNumber
+        />
+      </InterviewBlockItem>,
+    );
+  }
+
   return (
-    <Fragment>
-      <InfoBlock
-        label="公司"
-        to={generatePageURL({
-          pageType: PAGE_TYPE.COMPANY,
-          pageName: experience.company.name,
-        })}
-      >
-        {originalCompanyNameSelector(experience)}
-      </InfoBlock>
-      <InfoBlock label="面試地區">{experience.region}</InfoBlock>
-      <InfoBlock
-        label="應徵職稱"
-        to={generatePageURL({
-          pageType: PAGE_TYPE.JOB_TITLE,
-          pageName: experience.job_title.name,
-        })}
-      >
-        {experience.job_title.name}
-      </InfoBlock>
-      {expInYearText !== null ? (
-        <InfoBlock label="相關職務經驗">{expInYearText}</InfoBlock>
-      ) : null}
-      {experience.education ? (
-        <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
-      ) : null}
-      {experience.interview_time ? (
-        <InfoBlock label="面試時間">
-          {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
-        </InfoBlock>
-      ) : null}
-      {experience.created_at ? (
-        <InfoBlock label="填寫時間">
-          {formatDate(new Date(experience.created_at))}
-        </InfoBlock>
-      ) : null}
-      <InfoBlock label="面試結果">{experience.interview_result}</InfoBlock>
-      {experience.salary ? (
-        <InfoBlock label="待遇">
-          {hideContent ? (
-            <React.Fragment>
-              <FontAwesomeIcon icon={faLock} className={styles.lock} />
-              {formatSalaryRange(experience.salary)}
-            </React.Fragment>
-          ) : (
-            formatSalary(experience.salary)
-          )}
-        </InfoBlock>
-      ) : null}
-      {experience.averageSectionRating && (
-        <InfoBlock label="評分">
-          <OverallRating
-            rating={experience.averageSectionRating}
-            hasRatingLabel
-            hasRatingNumber
-          />
-        </InfoBlock>
-      )}
+    <div className={styles.interviewBlocksContainer}>
+      <div className={styles.interviewBlocksRow}>{firstRowItems}</div>
+      <div className={styles.interviewBlocksRow}>{secondRowItems}</div>
+
       {experience.interview_sensitive_questions &&
       experience.interview_sensitive_questions.length ? (
         <InfoBlock label="有以下特殊問題">
@@ -105,7 +158,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
           </ul>
         </InfoBlock>
       ) : null}
-    </Fragment>
+    </div>
   );
 };
 
@@ -332,9 +385,9 @@ const Aside = ({ experience, hideContent, originalLink }) => {
   const { type } = experience;
   return (
     <div className={styles.info}>
-      <InfoCorner experience={experience} originalLink={originalLink} />
       {type === 'interview' && (
         <ul>
+          <InfoCorner experience={experience} originalLink={originalLink} />
           <InterviewInfoBlocks
             experience={experience}
             hideContent={hideContent}
