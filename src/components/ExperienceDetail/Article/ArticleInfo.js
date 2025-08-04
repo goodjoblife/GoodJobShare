@@ -54,41 +54,63 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const firstRowItems = [];
   const secondRowItems = [];
 
+  // firstRowItems.push(
+  //   <InterviewBlockItem
+  //     label="公司"
+  //     key="company"
+  //     to={generatePageURL({
+  //       pageType: PAGE_TYPE.COMPANY,
+  //       pageName: experience.company.name,
+  //     })}
+  //   >
+  //     {originalCompanyNameSelector(experience)}
+  //   </InterviewBlockItem>,
+  // );
+
+  // firstRowItems.push(
+  //   <InterviewBlockItem key="region" label="地點">
+  //     {experience.region}
+  //   </InterviewBlockItem>,
+  // );
+
+  // firstRowItems.push(
+  //   <InterviewBlockItem
+  //     key="job_title"
+  //     label="應徵職稱"
+  //     to={generatePageURL({
+  //       pageType: PAGE_TYPE.JOB_TITLE,
+  //       pageName: experience.job_title.name,
+  //     })}
+  //   >
+  //     {experience.job_title.name}
+  //   </InterviewBlockItem>,
+  // );
+
+  if (experience.region) {
+    firstRowItems.push(
+      <InterviewBlockItem key="region" label="面試地點">
+        {experience.region}
+      </InterviewBlockItem>,
+    );
+  }
+
   firstRowItems.push(
-    <InterviewBlockItem
-      label="公司"
-      key="company"
-      to={generatePageURL({
-        pageType: PAGE_TYPE.COMPANY,
-        pageName: experience.company.name,
-      })}
-    >
-      {originalCompanyNameSelector(experience)}
+    <InterviewBlockItem key="result" label="結果">
+      {experience.interview_result}
     </InterviewBlockItem>,
   );
 
-  firstRowItems.push(
-    <InterviewBlockItem key="region" label="面試地區">
-      {experience.region}
-    </InterviewBlockItem>,
-  );
-
-  firstRowItems.push(
-    <InterviewBlockItem
-      key="job_title"
-      label="應徵職稱"
-      to={generatePageURL({
-        pageType: PAGE_TYPE.JOB_TITLE,
-        pageName: experience.job_title.name,
-      })}
-    >
-      {experience.job_title.name}
-    </InterviewBlockItem>,
-  );
+  if (experience.interview_qas.length > 0) {
+    firstRowItems.push(
+      <InterviewBlockItem key="interview_qas" label="面試問題">
+        {experience.interview_qas.map(qa => qa.question).join(', ')}
+      </InterviewBlockItem>,
+    );
+  }
 
   if (expInYearText !== null) {
     firstRowItems.push(
-      <InterviewBlockItem key="experience" label="相關職務經驗">
+      <InterviewBlockItem key="experience" label="職務經驗">
         {expInYearText}
       </InterviewBlockItem>,
     );
@@ -109,12 +131,6 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
       </InterviewBlockItem>,
     );
   }
-
-  secondRowItems.push(
-    <InterviewBlockItem key="result" label="面試結果">
-      {experience.interview_result}
-    </InterviewBlockItem>,
-  );
 
   if (experience.salary) {
     secondRowItems.push(
