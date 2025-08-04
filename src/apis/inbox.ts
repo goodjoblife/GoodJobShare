@@ -127,5 +127,5 @@ export const readInboxMessageApi = async ({
     variables: { id },
   });
 
-  if (!success) throw new Error('Failed to read inbox message.');
+  if (!success) throw new Error(`Failed to read inbox message with ID ${id}.`);
 };
