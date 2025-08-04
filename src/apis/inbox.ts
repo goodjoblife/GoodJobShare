@@ -7,9 +7,9 @@ import {
   ReadInboxResult,
   ReadInboxMessageResult,
   Notification,
-  SomeoneReplyMyExperienceNotification,
-  SomeoneLikeMyExperienceNotification,
-  SomeoneLikeMyReplyNotification,
+  UserReplyMyExperienceNotification,
+  UserLikeMyExperienceNotification,
+  UserLikeMyReplyNotification,
 } from 'graphql/inbox';
 import { InboxMessage } from 'constants/inbox';
 
@@ -19,10 +19,10 @@ const mapToInboxMessage = (notification: Notification): InboxMessage | null => {
   const { __typename, id, createdAt, isRead, ...rest } = notification;
 
   switch (__typename) {
-    case 'SomeoneReplyMyExperienceNotification': {
+    case 'UserReplyMyExperienceNotification': {
       const {
         experience: { id: experienceId },
-      } = rest as SomeoneReplyMyExperienceNotification;
+      } = rest as UserReplyMyExperienceNotification;
       return {
         id,
         link: `/experiences/${experienceId}`,
@@ -32,10 +32,10 @@ const mapToInboxMessage = (notification: Notification): InboxMessage | null => {
       };
     }
 
-    case 'SomeoneLikeMyExperienceNotification': {
+    case 'UserLikeMyExperienceNotification': {
       const {
         experience: { id: experienceId },
-      } = rest as SomeoneLikeMyExperienceNotification;
+      } = rest as UserLikeMyExperienceNotification;
       return {
         id,
         link: `/experiences/${experienceId}`,
@@ -45,12 +45,12 @@ const mapToInboxMessage = (notification: Notification): InboxMessage | null => {
       };
     }
 
-    case 'SomeoneLikeMyReplyNotification': {
+    case 'UserLikeMyReplyNotification': {
       const {
         reply: {
           experience: { id: experienceId },
         },
-      } = rest as SomeoneLikeMyReplyNotification;
+      } = rest as UserLikeMyReplyNotification;
       return {
         id,
         link: `/experiences/${experienceId}`,

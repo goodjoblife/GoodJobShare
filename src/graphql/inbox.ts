@@ -10,19 +10,19 @@ export const queryInboxGql = /* GraphQL */ `
 
       __typename
 
-      ... on SomeoneReplyMyExperienceNotification {
+      ... on UserReplyMyExperienceNotification {
         experience {
           id
         }
       }
 
-      ... on SomeoneLikeMyExperienceNotification {
+      ... on UserLikeMyExperienceNotification {
         experience {
           id
         }
       }
 
-      ... on SomeoneLikeMyReplyNotification {
+      ... on UserLikeMyReplyNotification {
         reply {
           experience {
             id
@@ -40,25 +40,25 @@ type BaseNotification = {
   createdAt: string;
 };
 
-export type SomeoneReplyMyExperienceNotification = BaseNotification & {
-  __typename: 'SomeoneReplyMyExperienceNotification';
+export type UserReplyMyExperienceNotification = BaseNotification & {
+  __typename: 'UserReplyMyExperienceNotification';
   experience: { id: string };
 };
 
-export type SomeoneLikeMyExperienceNotification = BaseNotification & {
-  __typename: 'SomeoneLikeMyExperienceNotification';
+export type UserLikeMyExperienceNotification = BaseNotification & {
+  __typename: 'UserLikeMyExperienceNotification';
   experience: { id: string };
 };
 
-export type SomeoneLikeMyReplyNotification = BaseNotification & {
-  __typename: 'SomeoneLikeMyReplyNotification';
+export type UserLikeMyReplyNotification = BaseNotification & {
+  __typename: 'UserLikeMyReplyNotification';
   reply: { experience: { id: string } };
 };
 
 export type Notification =
-  | SomeoneReplyMyExperienceNotification
-  | SomeoneLikeMyExperienceNotification
-  | SomeoneLikeMyReplyNotification;
+  | UserReplyMyExperienceNotification
+  | UserLikeMyExperienceNotification
+  | UserLikeMyReplyNotification;
 
 export type QueryInboxResult = {
   notificationCountSinceBellLastOpen: number;
