@@ -39,7 +39,8 @@ export const readInbox = () => async (
   const token = tokenSelector(state);
 
   try {
-    await readInboxApi({ token });
+    const success = await readInboxApi({ token });
+    if (!success) throw new Error('Failed to read inbox.');
     dispatch(setInboxCount(0));
   } catch (error) {
     console.error(error);
@@ -108,7 +109,8 @@ export const readInboxMessage = ({ id }: { id: string }) => async (
   };
 
   try {
-    await readInboxMessageApi({ token, id });
+    const success = await readInboxMessageApi({ token, id });
+    if (!success) throw new Error('Failed to read inbox message.');
     dispatch(setInbox(newBox));
   } catch (error) {
     console.error(error);
