@@ -109,7 +109,7 @@ export const readInboxApi = async ({ token }: { token: string }) => {
     token,
   });
 
-  return success;
+  if (!success) throw new Error('Failed to read inbox.');
 };
 
 export const readInboxMessageApi = async ({
@@ -127,5 +127,5 @@ export const readInboxMessageApi = async ({
     variables: { id },
   });
 
-  return success;
+  if (!success) throw new Error('Failed to read inbox message.');
 };
