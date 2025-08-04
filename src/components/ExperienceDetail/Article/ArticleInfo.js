@@ -20,6 +20,7 @@ import ReportZone from '../ReportZone';
 import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
 import { useDispatch } from 'react-redux';
 import { queryExperience } from 'actions/experience';
+import InterviewBlock from 'common/InterviewBlock';
 
 const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
@@ -34,72 +35,72 @@ const formatExperienceInYear = year => {
   }
 };
 
-const InterviewBlockItem = ({ label, children, to }) => (
-  <div className={styles.interviewBlockItem}>
-    <div className={styles.interviewBlockLabel}>{label}</div>
-    <div className={styles.interviewBlockContent}>
-      {to ? <Link to={to}>{children}</Link> : children}
-    </div>
-  </div>
-);
-
-InterviewBlockItem.propTypes = {
-  children: PropTypes.node,
-  label: PropTypes.string.isRequired,
-  to: PropTypes.string,
-};
-
-const InterviewBlock = ({ children }) => (
-  <div className={`${styles.interviewBlocksRow}`}>{children}</div>
-);
-
 const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
+
+  const firstRowItems = [
+    experience.region && {
+      key: 'region',
+      label: '面試地點',
+      content: experience.region,
+    },
+    {
+      key: 'result',
+      label: '結果',
+      content: experience.interview_result,
+    },
+    expInYearText && {
+      key: 'expInYearText',
+      label: '職務經驗',
+      content: expInYearText,
+    },
+  ].filter(Boolean);
+
+  const secondRowItems = [
+    experience.interview_time && {
+      key: 'interview_time',
+      label: '面試時間',
+      content: `${experience.interview_time.year} 年 ${experience.interview_time.month} 月`,
+    },
+    experience.created_at && {
+      key: 'created_at',
+      label: '填寫時間',
+      content: formatDate(new Date(experience.created_at)),
+    },
+    experience.salary && {
+      key: 'salary',
+      label: '待遇',
+      content: formatSalary(experience.salary),
+    },
+    experience.averageSectionRating && {
+      key: 'rating',
+      label: '評分',
+      content: (
+        <OverallRating
+          rating={experience.averageSectionRating}
+          hasRatingLabel
+          hasRatingNumber
+        />
+      ),
+    },
+  ].filter(Boolean);
 
   return (
     <div className={styles.interviewBlocksContainer}>
       <InterviewBlock>
-        {experience.region && (
-          <InterviewBlockItem label="面試地點">
-            {experience.region}
-          </InterviewBlockItem>
-        )}
-
-        <InterviewBlockItem key="result" label="結果">
-          {experience.interview_result}
-        </InterviewBlockItem>
-
-        {expInYearText && (
-          <InterviewBlockItem label="職務經驗">
-            {expInYearText}
-          </InterviewBlockItem>
-        )}
+        {firstRowItems.map(({ key, label, content }) => (
+          <InterviewBlock.Item key={key} label={label}>
+            {content}
+          </InterviewBlock.Item>
+        ))}
       </InterviewBlock>
+
       <InterviewBlock>
-        {experience.interview_time && (
-          <InterviewBlockItem label="面試時間">
-            {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
-          </InterviewBlockItem>
-        )}
-        {experience.created_at && (
-          <InterviewBlockItem label="填寫時間">
-            {formatDate(new Date(experience.created_at))}
-          </InterviewBlockItem>
-        )}
-        {experience.salary && (
-          <InterviewBlockItem label="待遇">
-            {formatSalary(experience.salary)}
-          </InterviewBlockItem>
-        )}
-        {experience.averageSectionRating && (
-          <InterviewBlockItem label="評分">
-            <OverallRating
-              rating={experience.averageSectionRating}
-              hasRatingLabel
-              hasRatingNumber
-            />
-          </InterviewBlockItem>
-        )}
+        {secondRowItems.map(({ key, label, content }) => (
+          <InterviewBlock.Item key={key} label={label}>
+            {content}
+          </InterviewBlock.Item>
+        ))}
       </InterviewBlock>
 
       {experience.interview_sensitive_questions &&

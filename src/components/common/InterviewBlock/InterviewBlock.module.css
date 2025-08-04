@@ -1,0 +1,196 @@
+@value white-light, border-gray, main-yellow, yellow-light, below-mobile from "../../common/variables.module.css";
+
+$padding: 40px;
+$paddingS: 16px;
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.date {
+  position: absolute;
+  top: 16px;
+  right: 21px;
+  font-size: 14px;
+  line-height: 1.64;
+  color: #969696;
+}
+
+.info {
+  width: 100%;
+  padding: 25px $padding;
+
+  &::after {
+    content: '';
+    display: block;
+    height: 0.5px;
+    background-color: #cecece;
+    margin-top: 33px;
+  }
+
+  @media (max-width: 550px) {
+    padding: $paddingS;
+  }
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.article {
+  padding: 25px $padding;
+
+  .heading {
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 550px) {
+    padding: $paddingS;
+  }
+}
+
+.qaWrapper {
+  border-top: 1px solid border-gray;
+  padding: $padding;
+
+  @media (max-width: 550px) {
+    padding: $paddingS;
+  }
+}
+
+.recommendIcon {
+  svg {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+  }
+}
+
+.permissionBlockArticle {
+  flex-grow: 1;
+  margin-top: -40px;
+  padding-bottom: 34px;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 550px) {
+    margin-top: -30px;
+    padding: 50px 25px;
+  }
+}
+
+.lock {
+  margin-right: 5px;
+  color: #ed0d5e;
+}
+
+.btmMsgBtnContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.infoCorner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+
+  position: absolute;
+  right: 20px;
+
+  @media (max-width: 550px) {
+    position: static;
+    padding-bottom: 16px;
+  }
+}
+
+@media (max-width: below-mobile) {
+  .reportDialogContainer {
+    position: relative;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+    right: 0px;
+  }
+}
+
+.interviewBlocksContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.interviewBlocksRow {
+  display: flex;
+  align-items: stretch;
+  background-color: #f8f8f8;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.interviewBlockItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px;
+  gap: 4px;
+}
+
+.interviewBlockItem::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  right: 0;
+  width: 0.4px;
+  background-color: #cecece;
+}
+
+.interviewBlockItem:last-child::after {
+  display: none;
+}
+
+.interviewBlockLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333333;
+  line-height: 1.2;
+}
+
+.interviewBlockContent {
+  font-size: 15px;
+  font-weight: 400;
+  color: #333333;
+  line-height: 1.2;
+  word-wrap: break-word;
+}
+
+.interviewBlockContent a {
+  text-decoration: underline;
+}
+
+.sensitiveQuestions {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: #f8f8f8;
+  border-radius: 6px;
+}
+
+.sensitiveQuestions ul {
+  margin: 8px 0 0 1.3em;
+}
+
+.sensitiveQuestions li {
+  list-style-type: disc;
+}
