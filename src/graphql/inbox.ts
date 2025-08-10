@@ -68,7 +68,7 @@ export type QueryInboxResult = {
 // ReadInbox
 
 export const readInboxGql = /* GraphQL */ `
-  mutation($id: ID!) {
+  mutation {
     openNotificationBell {
       success
     }
