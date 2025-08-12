@@ -26,7 +26,7 @@ const mapToInboxMessage = (notification: Notification): InboxMessage | null => {
       return {
         id,
         link: `/experiences/${experienceId}`,
-        title: '有人回覆你的面試經驗',
+        title: '有人回覆你的經驗',
         date: new Date(createdAt),
         read: isRead,
       };
