@@ -104,7 +104,9 @@ export const readInboxMessage = ({ id }: { id: string }) => async (
     ...oldBox,
     data:
       oldBox.data &&
-      oldBox.data.map((message: InboxMessage) => ({ ...message, read: true })),
+      oldBox.data.map((message: InboxMessage) =>
+        message.id === id ? { ...message, read: true } : message,
+      ),
   };
 
   try {
