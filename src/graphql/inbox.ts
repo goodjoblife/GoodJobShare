@@ -65,9 +65,9 @@ export type QueryInboxResult = {
   userNotifications: Notification[];
 };
 
-// ReadInbox
+// OpenInbox
 
-export const readInboxGql = /* GraphQL */ `
+export const openInboxGql = /* GraphQL */ `
   mutation {
     openNotificationBell {
       success
@@ -75,7 +75,7 @@ export const readInboxGql = /* GraphQL */ `
   }
 `;
 
-export type ReadInboxResult = {
+export type OpenInboxResult = {
   openNotificationBell: {
     success: boolean;
   };

@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 import { Dispatch, GetState } from 'reducers';
 
-import { queryInboxApi, readInboxApi, readInboxMessageApi } from 'apis/inbox';
+import { queryInboxApi, openInboxApi, readInboxMessageApi } from 'apis/inbox';
 import { tokenSelector } from 'selectors/authSelector';
 import { messagesBoxSelector } from 'selectors/inbox';
 import {
@@ -31,7 +31,7 @@ const setInboxCount = (count: number): SetInboxCountAction => ({
 
 // Read inbox
 
-export const readInbox = () => async (
+export const openInbox = () => async (
   dispatch: Dispatch<Action>,
   getState: GetState,
 ) => {
@@ -39,7 +39,7 @@ export const readInbox = () => async (
   const token = tokenSelector(state);
 
   try {
-    await readInboxApi({ token });
+    await openInboxApi({ token });
     dispatch(setInboxCount(0));
   } catch (error) {
     console.error(error);

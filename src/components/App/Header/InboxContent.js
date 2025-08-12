@@ -9,7 +9,7 @@ import { zhTW } from 'date-fns/locale';
 import popoverStyles from './Header.module.css';
 import styles from './InboxContent.module.css';
 import { messagesSelector } from 'selectors/inbox';
-import { readInbox, readInboxMessage } from 'actions/inbox';
+import { openInbox, readInboxMessage } from 'actions/inbox';
 import { useIsLoggedIn } from 'hooks/auth';
 
 const InboxContent = ({ className, isOpen = true }) => {
@@ -41,7 +41,7 @@ const InboxContent = ({ className, isOpen = true }) => {
 
   useEffect(() => {
     if (isLoggedIn && isOpen) {
-      dispatch(readInbox());
+      dispatch(openInbox());
     }
   }, [dispatch, isLoggedIn, isOpen]);
 
