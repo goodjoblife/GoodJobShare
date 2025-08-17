@@ -10,10 +10,16 @@ import {
   UserReplyMyExperienceNotification,
   UserLikeMyExperienceNotification,
   UserLikeMyReplyNotification,
+  ExperienceType,
 } from 'graphql/inbox';
 import { InboxMessage } from 'constants/inbox';
 
 // queries
+
+const typeToName: Record<ExperienceType, string> = {
+  InterviewExperience: '面試經驗',
+  WorkExperience: '評價',
+};
 
 const mapToInboxMessage = (notification: Notification): InboxMessage | null => {
   const { __typename, id, createdAt, isRead, ...rest } = notification;
@@ -21,12 +27,12 @@ const mapToInboxMessage = (notification: Notification): InboxMessage | null => {
   switch (__typename) {
     case 'UserReplyMyExperienceNotification': {
       const {
-        experience: { id: experienceId },
+        experience: { id: experienceId, __typename },
       } = rest as UserReplyMyExperienceNotification;
       return {
         id,
         link: `/experiences/${experienceId}`,
-        title: '有人回覆你的經驗',
+        title: `有人回覆你的${typeToName[__typename]}`,
         date: new Date(createdAt),
         read: isRead,
       };
@@ -34,12 +40,12 @@ const mapToInboxMessage = (notification: Notification): InboxMessage | null => {
 
     case 'UserLikeMyExperienceNotification': {
       const {
-        experience: { id: experienceId },
+        experience: { id: experienceId, __typename },
       } = rest as UserLikeMyExperienceNotification;
       return {
         id,
         link: `/experiences/${experienceId}`,
-        title: '有人按讚你的面試經驗',
+        title: `有人按讚你的${typeToName[__typename]}`,
         date: new Date(createdAt),
         read: isRead,
       };

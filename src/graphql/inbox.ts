@@ -1,5 +1,11 @@
 // QueryInbox
 
+// Enum for Experience __typename
+export enum ExperienceType {
+  InterviewExperience = 'InterviewExperience',
+  WorkExperience = 'WorkExperience',
+}
+
 export const queryInboxGql = /* GraphQL */ `
   query($start: Int, $limit: Int) {
     notificationCountSinceBellLastOpen
@@ -13,12 +19,14 @@ export const queryInboxGql = /* GraphQL */ `
       ... on UserReplyMyExperienceNotification {
         experience {
           id
+          __typename
         }
       }
 
       ... on UserLikeMyExperienceNotification {
         experience {
           id
+          __typename
         }
       }
 
@@ -26,6 +34,7 @@ export const queryInboxGql = /* GraphQL */ `
         reply {
           experience {
             id
+            __typename
           }
         }
       }
@@ -40,19 +49,24 @@ type BaseNotification = {
   createdAt: string;
 };
 
+export type Experience = {
+  id: string;
+  __typename: ExperienceType;
+};
+
 export type UserReplyMyExperienceNotification = BaseNotification & {
   __typename: 'UserReplyMyExperienceNotification';
-  experience: { id: string };
+  experience: Experience;
 };
 
 export type UserLikeMyExperienceNotification = BaseNotification & {
   __typename: 'UserLikeMyExperienceNotification';
-  experience: { id: string };
+  experience: Experience;
 };
 
 export type UserLikeMyReplyNotification = BaseNotification & {
   __typename: 'UserLikeMyReplyNotification';
-  reply: { experience: { id: string } };
+  reply: { experience: Experience };
 };
 
 export type Notification =
