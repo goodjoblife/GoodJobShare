@@ -6,9 +6,7 @@ export const InfoBlocks = ({ children }) => (
   <div className={styles.infoBlocks}>
     <table>
       <tr>
-        {React.Children.map(children, child => (
-          <td>{child}</td>
-        ))}
+        {React.Children.map(children, child => child && <td>{child}</td>)}
       </tr>
     </table>
   </div>
