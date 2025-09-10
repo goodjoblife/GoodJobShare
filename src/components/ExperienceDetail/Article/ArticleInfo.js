@@ -60,6 +60,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
         {experience.averageSectionRating && (
           <InfoBlock label="評分">
             <OverallRating
+              size="s"
               rating={experience.averageSectionRating}
               hasRatingLabel
               hasRatingNumber

@@ -32,7 +32,7 @@ const RatingInfo = ({ rating, recommend }) => {
           <InfoBlock label="評分" noMargin>
             {rating}分
           </InfoBlock>
-          <OverallRating rating={rating} hasRatingLabel />
+          <OverallRating size="s" rating={rating} hasRatingLabel />
         </div>
       </Fragment>
     );

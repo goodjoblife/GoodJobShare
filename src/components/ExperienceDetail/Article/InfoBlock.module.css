@@ -1,4 +1,4 @@
-@value below-mobile from '../../common/variables.module.css';
+@value below-tablet from '../../common/variables.module.css';
 
 .infoBlock {
   display: flex;
@@ -7,7 +7,7 @@
   font-weight: 400;
   padding: 0 38px;
 
-  @media (max-width: below-mobile) {
+  @media (max-width: below-tablet) {
     padding: 6px;
   }
 
@@ -31,7 +31,7 @@
   justify-content: center;
 
   table {
-    @media (max-width: below-mobile) {
+    @media (max-width: below-tablet) {
       flex: 1;
     }
 

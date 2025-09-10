@@ -4,28 +4,33 @@ import cn from 'classnames';
 import styles from './Thumbs.module.css';
 import PropTypes from 'prop-types';
 
-const GrayThumb = () => {
+const GrayThumb = ({ className }) => {
   return (
     <img
       src={ThumbImage}
       alt="grayThumb"
-      className={cn(styles.thumb, styles.grayThumb)}
+      className={cn(styles.thumb, styles.grayThumb, className)}
     />
   );
 };
 
-const YellowThumb = ({ style }) => {
+GrayThumb.propTypes = {
+  className: PropTypes.string,
+};
+
+const YellowThumb = ({ className, style }) => {
   return (
     <img
       src={ThumbImage}
       alt="yellowThumb"
       style={style}
-      className={cn(styles.thumb, styles.yellowThumb)}
+      className={cn(styles.thumb, styles.yellowThumb, className)}
     />
   );
 };
 
 YellowThumb.propTypes = {
+  className: PropTypes.string,
   style: PropTypes.object,
 };
 
@@ -36,37 +41,48 @@ const calculateClipX = ({ rating, order }) => {
   return 0;
 };
 
-const RatingThumb = ({ rating, order }) => {
+const RatingThumb = ({ className, rating, order }) => {
   const clipX = calculateClipX({ rating, order });
   return (
     <div className={styles.thumbContainer}>
-      <GrayThumb />
-      <YellowThumb style={{ '--clip-x': `${clipX}%` }} />
+      <GrayThumb className={className} />
+      <YellowThumb className={className} style={{ '--clip-x': `${clipX}%` }} />
     </div>
   );
 };
 
 RatingThumb.propTypes = {
+  className: PropTypes.string,
   order: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
 };
 
-const Thumbs = ({ rating, maxRating }) => {
+const Thumbs = ({ rating, maxRating, size, className }) => {
   const thumbs = Array.from({ length: maxRating }, (_, i) => i + 1);
   const renderThumbs = thumbs.map(order => (
-    <RatingThumb key={order} rating={rating} order={order} />
+    <RatingThumb
+      key={order}
+      className={styles[size]}
+      rating={rating}
+      order={order}
+    />
   ));
 
-  return <div className={styles.thumbsContainer}>{renderThumbs}</div>;
+  return (
+    <div className={cn(styles.thumbsContainer, className)}>{renderThumbs}</div>
+  );
 };
 
 Thumbs.propTypes = {
+  className: PropTypes.string,
   maxRating: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
+  size: PropTypes.oneOf(['s', 'm']).isRequired,
 };
 
 Thumbs.defaultProps = {
   maxRating: 5,
+  size: 'm',
 };
 
 export default Thumbs;
