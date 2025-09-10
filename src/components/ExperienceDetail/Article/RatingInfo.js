@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Good from 'common/icons/Good';
 import Bad from 'common/icons/Bad';
 import styles from './Article.module.css';
@@ -27,9 +27,14 @@ RecommendationIcon.propTypes = {
 const RatingInfo = ({ rating, recommend }) => {
   if (rating > 0) {
     return (
-      <InfoBlock label="整體評價" noMargin>
-        <OverallRating rating={rating} hasRatingLabel hasRatingNumber />
-      </InfoBlock>
+      <Fragment>
+        <div style={{ display: 'flex' }}>
+          <InfoBlock label="評分" noMargin>
+            {rating}分
+          </InfoBlock>
+          <OverallRating rating={rating} hasRatingLabel />
+        </div>
+      </Fragment>
     );
   }
 
