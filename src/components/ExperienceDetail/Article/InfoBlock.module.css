@@ -1,38 +1,51 @@
-@value above-mobile, gray-dark from "../../common/variables.module.css";
-
-.block {
+.infoBlock {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
-  &:not(:last-child) {
-    margin-bottom: 20px;
+  font-weight: 400;
+
+  .label {
+    color: #424242;
+    font-size: 12px;
+  }
+
+  .value {
+    color: #000;
+    font-size: 14px;
+    font-weight: 500;
   }
 }
 
-.label {
-  color: #333333;
-  font-weight: 600;
-}
+table.infoBlocks {
+  width: 100%;
+  background-color: #f2f2f2;
+  border-radius: 6px;
 
-.content {
-  margin-left: 5px;
-  word-wrap: break-word;
-  color: #333333;
+  tr {
+    border-left: 65px solid transparent;
+    border-right: 65px solid transparent;
 
-  a {
-    text-decoration: underline;
-  }
+    td {
+      position: relative;
+      padding: 8.5px 6px;
 
-  > ul {
-    margin-left: 1.3em;
-    > li {
-      list-style-type: disc;
+      + td::before {
+        content: '';
+        display: inline-block;
+        width: 0.4px;
+        height: 17px;
+        background-color: #000;
+        vertical-align: middle;
+
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
     }
   }
-}
 
-.content.noMargin {
-  @media (max-width: above-mobile) {
-    margin-left: 0px;
+  + table.infoBlocks {
+    margin: 5px 0;
   }
 }

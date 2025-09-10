@@ -5,13 +5,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
 import { formatSalary, formatSalaryRange } from 'common/formatter';
 import styles from './Article.module.css';
-import InfoBlock from './InfoBlock';
-import RateButtons from './RateButtons';
-import {
-  pageType as PAGE_TYPE,
-  generatePageURL,
-} from 'constants/companyJobTitle';
-import { originalCompanyNameSelector } from '../experienceSelector';
+import InfoBlock, { InfoBlocks } from './InfoBlock';
 import RatingInfo from './RatingInfo';
 import OverallRating from 'common/OverallRating';
 import ExternalLinkIcon from 'common/icons/ExternalLink';
@@ -38,73 +32,41 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
-      <InfoBlock
-        label="公司"
-        to={generatePageURL({
-          pageType: PAGE_TYPE.COMPANY,
-          pageName: experience.company.name,
-        })}
-      >
-        {originalCompanyNameSelector(experience)}
-      </InfoBlock>
-      <InfoBlock label="面試地區">{experience.region}</InfoBlock>
-      <InfoBlock
-        label="應徵職稱"
-        to={generatePageURL({
-          pageType: PAGE_TYPE.JOB_TITLE,
-          pageName: experience.job_title.name,
-        })}
-      >
-        {experience.job_title.name}
-      </InfoBlock>
-      {expInYearText !== null ? (
-        <InfoBlock label="相關職務經驗">{expInYearText}</InfoBlock>
-      ) : null}
-      {experience.education ? (
-        <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
-      ) : null}
-      {experience.interview_time ? (
-        <InfoBlock label="面試時間">
-          {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
-        </InfoBlock>
-      ) : null}
-      {experience.created_at ? (
-        <InfoBlock label="填寫時間">
-          {formatDate(new Date(experience.created_at))}
-        </InfoBlock>
-      ) : null}
-      <InfoBlock label="面試結果">{experience.interview_result}</InfoBlock>
-      {experience.salary ? (
-        <InfoBlock label="待遇">
-          {hideContent ? (
-            <React.Fragment>
-              <FontAwesomeIcon icon={faLock} className={styles.lock} />
-              {formatSalaryRange(experience.salary)}
-            </React.Fragment>
-          ) : (
-            formatSalary(experience.salary)
-          )}
-        </InfoBlock>
-      ) : null}
-      {experience.averageSectionRating && (
-        <InfoBlock label="評分">
-          <OverallRating
-            rating={experience.averageSectionRating}
-            hasRatingLabel
-            hasRatingNumber
-          />
-        </InfoBlock>
-      )}
-      {experience.interview_sensitive_questions &&
-      experience.interview_sensitive_questions.length ? (
-        <InfoBlock label="有以下特殊問題">
-          <ul>
-            {experience.interview_sensitive_questions.map((o, idx) => (
-              <li key={idx}>{o}</li>
-            ))}
-          </ul>
-        </InfoBlock>
-      ) : null}
+      <InfoBlocks>
+        <InfoBlock>{experience.region}</InfoBlock>
+        <InfoBlock>{experience.interview_result}</InfoBlock>
+        {experience.interview_time ? (
+          <InfoBlock label="面試時間">
+            {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
+          </InfoBlock>
+        ) : null}
+        {expInYearText !== null ? (
+          <InfoBlock label="職務經驗">{expInYearText}</InfoBlock>
+        ) : null}
+      </InfoBlocks>
+      <InfoBlocks>
+        {experience.salary ? (
+          <InfoBlock label="薪水">
+            {hideContent ? (
+              <React.Fragment>
+                <FontAwesomeIcon icon={faLock} className={styles.lock} />
+                {formatSalaryRange(experience.salary)}
+              </React.Fragment>
+            ) : (
+              formatSalary(experience.salary)
+            )}
+          </InfoBlock>
+        ) : null}
+        {experience.averageSectionRating && (
+          <InfoBlock label="評分">
+            <OverallRating
+              rating={experience.averageSectionRating}
+              hasRatingLabel
+              hasRatingNumber
+            />
+          </InfoBlock>
+        )}
+      </InfoBlocks>
     </Fragment>
   );
 };
@@ -145,55 +107,39 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
-      <InfoBlock
-        label="公司"
-        to={generatePageURL({
-          pageType: PAGE_TYPE.COMPANY,
-          pageName: experience.company.name,
-        })}
-      >
-        {originalCompanyNameSelector(experience)}
-      </InfoBlock>
-      <InfoBlock label="工作地區">{experience.region}</InfoBlock>
-      <InfoBlock
-        label="職稱"
-        to={generatePageURL({
-          pageType: PAGE_TYPE.JOB_TITLE,
-          pageName: experience.job_title.name,
-        })}
-      >
-        {experience.job_title.name}
-      </InfoBlock>
-      {experience.created_at ? (
-        <InfoBlock label="填寫時間">
-          {formatDate(new Date(experience.created_at))}
-        </InfoBlock>
-      ) : null}
-      {expInYearText ? (
-        <InfoBlock label="相關職務經驗">{expInYearText}</InfoBlock>
-      ) : null}
-      {experience.education ? (
-        <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
-      ) : null}
-      {experience.week_work_time ? (
-        <InfoBlock label="一週工時">{experience.week_work_time}</InfoBlock>
-      ) : null}
-      {experience.salary ? (
-        <InfoBlock label="待遇">
-          {hideContent ? (
-            <React.Fragment>
-              <FontAwesomeIcon icon={faLock} className={styles.lock} />
-              {formatSalaryRange(experience.salary)}
-            </React.Fragment>
-          ) : (
-            formatSalary(experience.salary)
-          )}
-        </InfoBlock>
-      ) : null}
-      <RatingInfo
-        rating={experience.averageSectionRating}
-        recommend={experience.recommend_to_others}
-      />
+      <InfoBlocks>
+        <InfoBlock label="地點">{experience.region}</InfoBlock>
+        {expInYearText ? (
+          <InfoBlock label="職務經驗">{expInYearText}</InfoBlock>
+        ) : null}
+        {experience.week_work_time ? (
+          <InfoBlock label="工時">{experience.week_work_time}</InfoBlock>
+        ) : null}
+        {experience.salary ? (
+          <InfoBlock label="薪水">
+            {hideContent ? (
+              <React.Fragment>
+                <FontAwesomeIcon icon={faLock} className={styles.lock} />
+                {formatSalaryRange(experience.salary)}
+              </React.Fragment>
+            ) : (
+              formatSalary(experience.salary)
+            )}
+          </InfoBlock>
+        ) : null}
+      </InfoBlocks>
+      <InfoBlocks>
+        {experience.created_at ? (
+          <InfoBlock label={formatDate(new Date(experience.created_at))}>
+            已離職？N/A
+          </InfoBlock>
+        ) : null}
+
+        <RatingInfo
+          rating={experience.averageSectionRating}
+          recommend={experience.recommend_to_others}
+        />
+      </InfoBlocks>
     </Fragment>
   );
 };
@@ -221,67 +167,6 @@ WorkInfoBlocks.propTypes = {
       type: PropTypes.string,
     }),
     week_work_time: PropTypes.number,
-  }).isRequired,
-  hideContent: PropTypes.bool,
-};
-
-const InternBlocks = ({ experience, hideContent }) => (
-  <Fragment>
-    {experience.region ? (
-      <InfoBlock label="實習地區">{experience.region}</InfoBlock>
-    ) : null}
-    {experience.job_title ? (
-      <InfoBlock label="職稱">{experience.job_title.name}</InfoBlock>
-    ) : null}
-    {experience.education ? (
-      <InfoBlock label="最高學歷">{experience.education}</InfoBlock>
-    ) : null}
-    {experience.starting_year ? (
-      <InfoBlock label="實習開始的年份">
-        {experience.starting_year} 年
-      </InfoBlock>
-    ) : null}
-    {experience.period ? (
-      <InfoBlock label="實習長度">{experience.period} 月</InfoBlock>
-    ) : null}
-    {experience.week_work_time ? (
-      <InfoBlock label="一週工時">{experience.week_work_time}</InfoBlock>
-    ) : null}
-    {experience.salary ? (
-      <InfoBlock label="實習薪資">
-        {hideContent ? (
-          <React.Fragment>
-            <FontAwesomeIcon icon={faLock} className={styles.lock} />
-            {formatSalaryRange(experience.salary)}
-          </React.Fragment>
-        ) : (
-          formatSalary(experience.salary)
-        )}
-      </InfoBlock>
-    ) : null}
-    {experience.overall_rating ? (
-      <InfoBlock label="實習整體滿意度">
-        <RateButtons rate={experience.overall_rating} />
-      </InfoBlock>
-    ) : null}
-  </Fragment>
-);
-
-InternBlocks.propTypes = {
-  experience: PropTypes.shape({
-    education: PropTypes.string,
-    job_title: PropTypes.shape({
-      name: PropTypes.string,
-    }),
-    overall_rating: PropTypes.number,
-    period: PropTypes.number,
-    region: PropTypes.string,
-    salary: PropTypes.shape({
-      amount: PropTypes.number,
-      type: PropTypes.string,
-    }),
-    starting_year: PropTypes.number,
-    week_work_time: PropTypes.string,
   }).isRequired,
   hideContent: PropTypes.bool,
 };
@@ -334,22 +219,13 @@ const Aside = ({ experience, hideContent, originalLink }) => {
     <div className={styles.info}>
       <InfoCorner experience={experience} originalLink={originalLink} />
       {type === 'interview' && (
-        <ul>
-          <InterviewInfoBlocks
-            experience={experience}
-            hideContent={hideContent}
-          />
-        </ul>
+        <InterviewInfoBlocks
+          experience={experience}
+          hideContent={hideContent}
+        />
       )}
       {type === 'work' && (
-        <ul>
-          <WorkInfoBlocks experience={experience} hideContent={hideContent} />
-        </ul>
-      )}
-      {type === 'intern' && (
-        <ul>
-          <InternBlocks experience={experience} hideContent={hideContent} />
-        </ul>
+        <WorkInfoBlocks experience={experience} hideContent={hideContent} />
       )}
     </div>
   );

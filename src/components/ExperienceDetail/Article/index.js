@@ -18,6 +18,7 @@ import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
 import * as VISIBILITY from './visibility';
 import Button from 'common/button/Button';
 import Card from 'common/Card';
+import InfoBlock from './InfoBlock';
 
 const countSectionWords = sections =>
   R.reduce(
@@ -122,6 +123,13 @@ const Sections = ({ experience, visibility, onExpand, subTitleTag }) => {
             subTitleTag={subTitleTag}
           />
         ))}
+      <InfoBlock label="面試過程曾問以下問題">
+        <ul>
+          {experience.interview_sensitive_questions.map((o, idx) => (
+            <li key={idx}>{o}</li>
+          ))}
+        </ul>
+      </InfoBlock>
     </div>
   );
 };
