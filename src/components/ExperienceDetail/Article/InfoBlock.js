@@ -5,9 +5,11 @@ import styles from './InfoBlock.module.css';
 export const InfoBlocks = ({ children }) => (
   <div className={styles.infoBlocks}>
     <table>
-      <tr>
-        {React.Children.map(children, child => child && <td>{child}</td>)}
-      </tr>
+      <tbody>
+        <tr>
+          {React.Children.map(children, child => child && <td>{child}</td>)}
+        </tr>
+      </tbody>
     </table>
   </div>
 );
