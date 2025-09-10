@@ -29,6 +29,7 @@
       td {
         position: relative;
         padding: 8.5px 6px;
+        vertical-align: middle;
 
         + td::before {
           content: '';
