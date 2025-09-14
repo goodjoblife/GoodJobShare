@@ -15,7 +15,6 @@ import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
 import { useDispatch } from 'react-redux';
 import { queryExperience } from 'actions/experience';
 
-const formatDate = date => `${date.getFullYear()} 年 ${date.getMonth() + 1} 月`;
 const formatExperienceInYear = year => {
   if (Number.isInteger(year)) {
     if (year === 0) {
@@ -116,6 +115,8 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
         {experience.week_work_time ? (
           <InfoBlock label="工時">{experience.week_work_time}</InfoBlock>
         ) : null}
+      </InfoBlocks>
+      <InfoBlocks>
         {experience.salary ? (
           <InfoBlock label="薪水">
             {hideContent ? (
@@ -128,14 +129,6 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
             )}
           </InfoBlock>
         ) : null}
-      </InfoBlocks>
-      <InfoBlocks>
-        {experience.created_at ? (
-          <InfoBlock label={formatDate(new Date(experience.created_at))}>
-            已離職？N/A
-          </InfoBlock>
-        ) : null}
-
         <RatingInfo
           rating={experience.averageSectionRating}
           recommend={experience.recommend_to_others}
