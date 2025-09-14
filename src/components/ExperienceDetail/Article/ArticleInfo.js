@@ -29,44 +29,75 @@ const formatExperienceInYear = year => {
 
 const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
+  const rows = [];
+
+  // First row columns
+  const firstRow = [];
+  if (experience.region) {
+    firstRow.push(<InfoBlock key="region">{experience.region}</InfoBlock>);
+  }
+  if (experience.interview_result) {
+    firstRow.push(
+      <InfoBlock key="interview_result">
+        {experience.interview_result}
+      </InfoBlock>,
+    );
+  }
+  if (experience.interview_time) {
+    firstRow.push(
+      <InfoBlock key="interview_time" label="面試時間">
+        {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
+      </InfoBlock>,
+    );
+  }
+  if (expInYearText !== null) {
+    firstRow.push(
+      <InfoBlock key="exp_in_year" label="職務經驗">
+        {expInYearText}
+      </InfoBlock>,
+    );
+  }
+  if (firstRow.length > 0) {
+    rows.push(firstRow);
+  }
+
+  // Second row columns
+  const secondRow = [];
+  if (experience.salary) {
+    secondRow.push(
+      <InfoBlock key="salary" label="薪水">
+        {hideContent ? (
+          <React.Fragment>
+            <FontAwesomeIcon icon={faLock} className={styles.lock} />
+            {formatSalaryRange(experience.salary)}
+          </React.Fragment>
+        ) : (
+          formatSalary(experience.salary)
+        )}
+      </InfoBlock>,
+    );
+  }
+  if (experience.averageSectionRating) {
+    secondRow.push(
+      <InfoBlock key="averageSectionRating" label="評分">
+        <OverallRating
+          size="s"
+          rating={experience.averageSectionRating}
+          hasRatingLabel
+          hasRatingNumber
+        />
+      </InfoBlock>,
+    );
+  }
+  if (secondRow.length > 0) {
+    rows.push(secondRow);
+  }
+
   return (
     <Fragment>
-      <InfoBlocks>
-        <InfoBlock>{experience.region}</InfoBlock>
-        <InfoBlock>{experience.interview_result}</InfoBlock>
-        {experience.interview_time ? (
-          <InfoBlock label="面試時間">
-            {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
-          </InfoBlock>
-        ) : null}
-        {expInYearText !== null ? (
-          <InfoBlock label="職務經驗">{expInYearText}</InfoBlock>
-        ) : null}
-      </InfoBlocks>
-      <InfoBlocks>
-        {experience.salary ? (
-          <InfoBlock label="薪水">
-            {hideContent ? (
-              <React.Fragment>
-                <FontAwesomeIcon icon={faLock} className={styles.lock} />
-                {formatSalaryRange(experience.salary)}
-              </React.Fragment>
-            ) : (
-              formatSalary(experience.salary)
-            )}
-          </InfoBlock>
-        ) : null}
-        {experience.averageSectionRating && (
-          <InfoBlock label="評分">
-            <OverallRating
-              size="s"
-              rating={experience.averageSectionRating}
-              hasRatingLabel
-              hasRatingNumber
-            />
-          </InfoBlock>
-        )}
-      </InfoBlocks>
+      {rows.map((cols, idx) => (
+        <InfoBlocks key={idx}>{cols}</InfoBlocks>
+      ))}
     </Fragment>
   );
 };
