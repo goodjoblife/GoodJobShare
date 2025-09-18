@@ -27,6 +27,17 @@ const formatExperienceInYear = year => {
   }
 };
 
+const getInterviewResultStyle = interviewResult => {
+  switch (interviewResult) {
+    case '錄取':
+      return styles.passed;
+    case '未錄取':
+      return styles.failed;
+    default:
+      return null;
+  }
+};
+
 const InterviewInfoBlocks = ({ experience, hideContent }) => {
   const expInYearText = formatExperienceInYear(experience.experience_in_year);
   const rows = [];
@@ -38,7 +49,10 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
   }
   if (experience.interview_result) {
     firstRow.push(
-      <InfoBlock key="interview_result">
+      <InfoBlock
+        className={getInterviewResultStyle(experience.interview_result)}
+        key="interview_result"
+      >
         {experience.interview_result}
       </InfoBlock>,
     );
@@ -46,7 +60,9 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
   if (experience.interview_time) {
     firstRow.push(
       <InfoBlock key="interview_time" label="面試時間">
-        {`${experience.interview_time.year} 年 ${experience.interview_time.month} 月`}
+        {`${experience.interview_time.year}.${String(
+          experience.interview_time.month,
+        ).padStart(2, '0')}`}
       </InfoBlock>,
     );
   }
@@ -144,7 +160,9 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
           <InfoBlock label="職務經驗">{expInYearText}</InfoBlock>
         ) : null}
         {experience.week_work_time ? (
-          <InfoBlock label="工時">{experience.week_work_time}</InfoBlock>
+          <InfoBlock label="工時">
+            {experience.week_work_time} 小時/週
+          </InfoBlock>
         ) : null}
       </InfoBlocks>
       <InfoBlocks>

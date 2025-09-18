@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import styles from './InfoBlock.module.css';
 
 export const InfoBlocks = ({ children }) => (
@@ -18,15 +19,16 @@ InfoBlocks.propTypes = {
   children: PropTypes.node,
 };
 
-const InfoBlock = ({ label, children }) => (
+const InfoBlock = ({ className, label, children }) => (
   <div className={styles.infoBlock}>
     <span className={styles.label}>{label}</span>
-    <span className={styles.value}>{children}</span>
+    <span className={cn(styles.value, className)}>{children}</span>
   </div>
 );
 
 InfoBlock.propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
   label: PropTypes.string,
 };
 

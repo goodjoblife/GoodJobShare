@@ -41,6 +41,7 @@ const RatingInfo = ({ rating, recommend }) => {
   if (recommend) {
     return (
       <InfoBlock>
+        是否推薦此工作：
         <RecommendationIcon recommend={recommend} />
       </InfoBlock>
     );

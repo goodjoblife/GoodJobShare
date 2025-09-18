@@ -1,4 +1,4 @@
-@value white-light, border-gray, main-yellow, yellow-light, below-mobile from "../../common/variables.module.css";
+@value link-blue, white-light, border-gray, main-yellow, yellow-light, below-mobile from "../../common/variables.module.css";
 
 $padding: 40px;
 $paddingS: 16px;
@@ -65,6 +65,8 @@ $paddingS: 16px;
 }
 
 .recommendIcon {
+  display: inline-block;
+
   svg {
     width: 32px;
     height: 32px;
@@ -112,4 +114,12 @@ $paddingS: 16px;
     margin-bottom: 8px;
     right: 0px;
   }
+}
+
+.passed {
+  color: link-blue !important;
+}
+
+.failed {
+  color: #d73a3a !important;
 }

@@ -1,4 +1,4 @@
-@value below-tablet from '../../common/variables.module.css';
+@value below-mobile, below-tablet from '../../common/variables.module.css';
 
 .infoBlock {
   display: flex;
@@ -14,6 +14,7 @@
   .label {
     color: #424242;
     font-size: 12px;
+    margin-bottom: 6px;
   }
 
   .value {
@@ -38,7 +39,7 @@
     tr {
       td {
         position: relative;
-        padding: 8.5px 6px;
+        padding: 8.5px 38px;
         vertical-align: middle;
 
         + td::before {
@@ -53,6 +54,14 @@
           left: 0;
           top: 50%;
           transform: translateY(-50%);
+        }
+      }
+    }
+
+    @media (max-width: below-mobile) {
+      tr {
+        td {
+          padding: 8.5px 6px;
         }
       }
     }
