@@ -21,15 +21,7 @@ $paddingS: 16px;
 
 .info {
   width: 100%;
-  padding: 25px $padding;
-
-  &::after {
-    content: '';
-    display: block;
-    height: 0.5px;
-    background-color: #cecece;
-    margin-top: 33px;
-  }
+  padding: 25px $padding 0 $padding;
 
   @media (max-width: 550px) {
     padding: $paddingS;
