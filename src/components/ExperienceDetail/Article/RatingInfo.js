@@ -3,7 +3,6 @@ import Good from 'common/icons/Good';
 import Bad from 'common/icons/Bad';
 import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
-import OverallRating from 'common/OverallRating';
 import PropTypes from 'prop-types';
 
 const RecommendationIcon = ({ recommend }) => (
@@ -30,9 +29,8 @@ const RatingInfo = ({ rating, recommend }) => {
       <Fragment>
         <div style={{ display: 'flex' }}>
           <InfoBlock label="評分" noMargin>
-            {rating}分
+            {rating.toFixed(1)}分
           </InfoBlock>
-          <OverallRating size="s" rating={rating} hasRatingLabel />
         </div>
       </Fragment>
     );
