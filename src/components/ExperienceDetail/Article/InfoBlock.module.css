@@ -13,13 +13,13 @@
 
   .label {
     color: #424242;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 6px;
   }
 
   .value {
     color: #000;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
   }
 }
