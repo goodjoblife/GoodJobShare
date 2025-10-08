@@ -1,7 +1,7 @@
 @value link-blue, white-light, border-gray, main-yellow, yellow-light, below-mobile from "../../common/variables.module.css";
 
 $padding: 40px;
-$paddingS: 16px;
+$paddingS: 12px;
 
 .container {
   position: relative;
