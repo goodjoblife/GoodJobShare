@@ -7,7 +7,6 @@ import { formatSalary, formatSalaryRange } from 'common/formatter';
 import styles from './Article.module.css';
 import InfoBlock, { InfoBlocks } from './InfoBlock';
 import RatingInfo from './RatingInfo';
-import OverallRating from 'common/OverallRating';
 import ExternalLinkIcon from 'common/icons/ExternalLink';
 import ReportBadge from 'common/button/ReportBadge';
 import ReportZone from '../ReportZone';
@@ -96,12 +95,7 @@ const InterviewInfoBlocks = ({ experience, hideContent }) => {
   if (experience.averageSectionRating) {
     secondRow.push(
       <InfoBlock key="averageSectionRating" label="評分">
-        <OverallRating
-          size="s"
-          rating={experience.averageSectionRating}
-          hasRatingLabel
-          hasRatingNumber
-        />
+        {experience.averageSectionRating.toFixed(1)}分
       </InfoBlock>,
     );
   }
