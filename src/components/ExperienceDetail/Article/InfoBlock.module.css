@@ -61,7 +61,7 @@
     @media (max-width: below-mobile) {
       tr {
         td {
-          padding: 8.5px 6px;
+          padding: 8.5px 2px;
         }
       }
     }
