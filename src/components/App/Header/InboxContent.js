@@ -9,7 +9,8 @@ import { zhTW } from 'date-fns/locale';
 import popoverStyles from './Header.module.css';
 import styles from './InboxContent.module.css';
 import { messagesSelector } from 'selectors/inbox';
-import { readInbox } from 'actions/inbox';
+import { openInbox, readInboxMessage } from 'actions/inbox';
+import { useIsLoggedIn } from 'hooks/auth';
 
 const InboxContent = ({ className, isOpen = true }) => {
   const allMessages = useSelector(messagesSelector);
@@ -17,9 +18,18 @@ const InboxContent = ({ className, isOpen = true }) => {
   const [showsUnread, setShowsUnread] = useState(false);
   const [count, setCount] = useState(5);
 
+  const dispatch = useDispatch();
   const filteredMessages = useMemo(
-    () => allMessages.filter(message => (showsUnread ? !message.read : true)),
-    [allMessages, showsUnread],
+    () =>
+      allMessages
+        .filter(({ read }) => (showsUnread ? !read : true))
+        .map(message => ({
+          ...message,
+          onClick: () => {
+            dispatch(readInboxMessage({ id: message.id }));
+          },
+        })),
+    [allMessages, showsUnread, dispatch],
   );
 
   const displayedFilteredMessages = useMemo(
@@ -27,12 +37,13 @@ const InboxContent = ({ className, isOpen = true }) => {
     [filteredMessages, count],
   );
 
-  const dispatch = useDispatch();
+  const isLoggedIn = useIsLoggedIn();
+
   useEffect(() => {
-    if (isOpen) {
-      dispatch(readInbox());
+    if (isLoggedIn && isOpen) {
+      dispatch(openInbox());
     }
-  }, [dispatch, isOpen]);
+  }, [dispatch, isLoggedIn, isOpen]);
 
   return (
     <div className={cn(styles.InboxContainer, className)}>
@@ -48,10 +59,11 @@ const InboxContent = ({ className, isOpen = true }) => {
         </div>
       </div>
       <ul className={popoverStyles.popoverItems}>
-        {filteredMessages.map(({ id, link, title, date, read }) => (
+        {filteredMessages.map(({ id, link, title, date, read, onClick }) => (
           <li key={id}>
             <Link
               to={link}
+              onClick={onClick}
               className={cn(popoverStyles.popoverItem, {
                 [styles.unread]: !read,
               })}
