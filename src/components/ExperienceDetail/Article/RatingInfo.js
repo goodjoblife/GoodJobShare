@@ -27,11 +27,9 @@ const RatingInfo = ({ rating, recommend }) => {
   if (rating > 0) {
     return (
       <Fragment>
-        <div style={{ display: 'flex' }}>
-          <InfoBlock label="評分" noMargin>
-            {rating.toFixed(1)}分
-          </InfoBlock>
-        </div>
+        <InfoBlock label="評分" noMargin>
+          {rating.toFixed(1)}分
+        </InfoBlock>
       </Fragment>
     );
   }
