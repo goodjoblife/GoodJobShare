@@ -1,4 +1,4 @@
-@value below-mobile, below-tablet from '../../common/variables.module.css';
+@value below-mobile, below-tablet, below-desktop from '../../common/variables.module.css';
 
 .infoBlock {
   display: flex;
@@ -58,7 +58,7 @@
       }
     }
 
-    @media (max-width: below-mobile) {
+    @media (max-width: below-desktop) {
       tr {
         td {
           padding: 8.5px 2px;
