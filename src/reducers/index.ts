@@ -19,6 +19,7 @@ import questionnaireExpandedModal from './questionnaireExpandedModal';
 import salaryWorkTime from './salaryWorkTime';
 import search from './search';
 import toastNotification from './toastNotification';
+import inbox from './inbox';
 
 const persistConfig = {
   key: PERSIST_KEY,
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   companyIndex,
   experience,
   experiences,
+  inbox,
   jobTitleIndex,
   laborRights,
   me,
