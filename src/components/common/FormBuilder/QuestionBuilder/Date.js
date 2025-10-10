@@ -7,10 +7,17 @@ import styles from './Date.module.css';
 import commonStyles from './styles.module.css';
 import { withShape } from 'airbnb-prop-types';
 
-const monthOptions = Array(12)
-  .fill(0)
-  .map((_, i) => i + 1)
-  .map(n => ({ value: n, label: n }));
+const getMonthOptions = selectedYear => {
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1;
+
+  const maxMonth = selectedYear === currentYear ? currentMonth : 12;
+
+  return Array(maxMonth)
+    .fill(0)
+    .map((_, i) => i + 1)
+    .map(n => ({ value: n, label: n }));
+};
 
 const yearOptions = Array(10)
   .fill(0)
@@ -36,12 +43,19 @@ const DatePicker = ({
           <Select
             options={yearOptions}
             value={year}
-            onChange={e =>
-              onChange([
-                e.target.value === '' ? null : Number(e.target.value),
-                month,
-              ])
-            }
+            onChange={e => {
+              const newYear =
+                e.target.value === '' ? null : Number(e.target.value);
+              const currentYear = new Date().getFullYear();
+              const currentMonth = new Date().getMonth() + 1;
+
+              let newMonth = month;
+              if (newYear === currentYear && month > currentMonth) {
+                newMonth = null;
+              }
+
+              onChange([newYear, newMonth]);
+            }}
           />
         </div>
         <div className={cn(styles.suffixLabel, 'pS')}>年</div>
@@ -49,7 +63,7 @@ const DatePicker = ({
       <div className={styles.inputGroup}>
         <div className={styles.inputWrapper}>
           <Select
-            options={monthOptions}
+            options={getMonthOptions(year)}
             value={month}
             onChange={e =>
               onChange([
