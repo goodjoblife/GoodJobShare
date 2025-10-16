@@ -33,6 +33,7 @@ import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import emailStatusMap from 'constants/emailStatus';
 import InboxIcon from './InboxIcon';
 import InboxPopoverContainer from './InboxPopoverContainer';
+import usePolling from 'hooks/usePolling';
 
 const onClickShareData = () => {
   ReactGA.event({
@@ -168,33 +169,9 @@ const useLoadInbox = () => {
   return loadInbox;
 };
 
-const useLoadInboxPolling = ({ isLoggedIn }) => {
-  const loadInbox = useLoadInbox();
-  const intervalRef = useRef(null);
-  const interval = 60000; // 1 minute
-
-  useEffect(() => {
-    if (!isLoggedIn) return;
-
-    // Immediately fetch inbox on mount
-    loadInbox();
-
-    // Set up interval for fetching inbox every minute
-    intervalRef.current = setInterval(() => {
-      loadInbox();
-    }, interval);
-
-    // Cleanup function to clear the interval on unmount
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [loadInbox, isLoggedIn]);
-};
-
 const Nav = ({ isNavOpen, isLoggedIn, login, onClickShareData }) => {
-  useLoadInboxPolling({ isLoggedIn });
+  const loadInbox = useLoadInbox();
+  usePolling(loadInbox, 60000, { enabled: isLoggedIn });
 
   return (
     <nav
