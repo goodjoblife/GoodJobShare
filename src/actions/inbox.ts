@@ -4,13 +4,7 @@ import { Dispatch, GetState } from 'reducers';
 import { queryInboxApi, openInboxApi, readInboxMessageApi } from 'apis/inbox';
 import { tokenSelector } from 'selectors/authSelector';
 import { messagesBoxSelector } from 'selectors/inbox';
-import {
-  getError,
-  getFetched,
-  isFetched,
-  isFetching,
-  toFetching,
-} from 'utils/fetchBox';
+import { getError, getFetched, isFetching, toFetching } from 'utils/fetchBox';
 import { InboxMessage } from 'constants/inbox';
 import FetchBox from 'utils/fetchBox';
 
@@ -71,7 +65,7 @@ export const fetchInbox = ({
   const token = tokenSelector(state);
 
   const box = messagesBoxSelector(getState());
-  if (isFetching(box) || isFetched(box)) return;
+  if (isFetching(box)) return;
 
   try {
     dispatch(setInbox(toFetching()));
