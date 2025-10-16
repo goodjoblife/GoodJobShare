@@ -45,7 +45,7 @@
         + td::before {
           content: '';
           display: inline-block;
-          width: 0.4px;
+          width: 0.5px;
           height: 17px;
           background-color: #000;
           vertical-align: middle;
