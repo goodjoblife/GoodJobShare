@@ -1,19 +1,24 @@
 import React, { useCallback, useContext, useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 import { useIsLoggedIn } from 'hooks/auth';
 import LoginModalContext from 'contexts/LoginModalContext';
-import Modal from 'common/Modal.js';
+import Modal, { InlineModal } from 'common/Modal.js';
 import FacebookLoginButton from 'common/Login/FacebookLoginButton';
 import GoogleLoginButton from 'common/Login/GoogleLoginButton';
 import styles from './LoginModal.module.css';
 import { P } from 'common/base';
 
-const LoginModal = () => {
+const LoginModal = ({ onClose, inline }) => {
   const { isLoginModalDisplayed: isOpen, setLoginModalDisplayed } = useContext(
     LoginModalContext,
   );
-  const close = useCallback(() => setLoginModalDisplayed(false), [
-    setLoginModalDisplayed,
-  ]);
+
+  const close = useCallback(() => {
+    setLoginModalDisplayed(false);
+    onClose && onClose();
+  }, [setLoginModalDisplayed, onClose]);
+
   const isLoggedIn = useIsLoggedIn();
 
   // setLoginModalDisplayed is immutable
@@ -23,8 +28,15 @@ const LoginModal = () => {
     }
   }, [close, isLoggedIn, isOpen]);
 
+  const ModalComponent = inline ? InlineModal : Modal;
+
   return (
-    <Modal isOpen={isOpen} hasClose close={close} closableOnClickOutside>
+    <ModalComponent
+      isOpen={isOpen}
+      hasClose
+      close={close}
+      closableOnClickOutside
+    >
       <div className={styles.container}>
         <P style={{ fontSize: '1.4em', marginBottom: '34px' }}>登入</P>
         <div className={styles.loginBtnContainer}>
@@ -35,8 +47,13 @@ const LoginModal = () => {
           為了避免使用者大量輸入假資訊，我們會以你的帳戶做驗證。但別擔心！您的帳戶資訊不會以任何形式被揭露、顯示。
         </p>
       </div>
-    </Modal>
+    </ModalComponent>
   );
+};
+
+LoginModal.propTypes = {
+  inline: PropTypes.bool,
+  onClose: PropTypes.func,
 };
 
 export default LoginModal;
