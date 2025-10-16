@@ -158,18 +158,43 @@ ResponsiveSearchbar.propTypes = {
 };
 
 // For unread count
-const useLoadInbox = ({ isLoggedIn }) => {
+const useLoadInbox = () => {
   const dispatch = useDispatch();
 
+  const loadInbox = useCallback(() => {
+    dispatch(fetchInbox({ start: 0, limit: 10 }));
+  }, [dispatch]);
+
+  return loadInbox;
+};
+
+const useLoadInboxPolling = ({ isLoggedIn }) => {
+  const loadInbox = useLoadInbox();
+  const intervalRef = useRef(null);
+  const interval = 60000; // 1 minute
+
   useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(fetchInbox({ start: 0, limit: 10 }));
-    }
-  }, [dispatch, isLoggedIn]);
+    if (!isLoggedIn) return;
+
+    // Immediately fetch inbox on mount
+    loadInbox();
+
+    // Set up interval for fetching inbox every minute
+    intervalRef.current = setInterval(() => {
+      loadInbox();
+    }, interval);
+
+    // Cleanup function to clear the interval on unmount
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [loadInbox, isLoggedIn]);
 };
 
 const Nav = ({ isNavOpen, isLoggedIn, login, onClickShareData }) => {
-  useLoadInbox({ isLoggedIn });
+  useLoadInboxPolling({ isLoggedIn });
 
   return (
     <nav
