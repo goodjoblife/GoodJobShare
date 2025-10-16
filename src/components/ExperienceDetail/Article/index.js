@@ -123,19 +123,31 @@ const Sections = ({ experience, visibility, onExpand, subTitleTag }) => {
             subTitleTag={subTitleTag}
           />
         ))}
-      <InfoBlock label="面試過程曾問以下問題">
-        <ul>
-          {experience.interview_sensitive_questions.map((o, idx) => (
-            <li key={idx}>{o}</li>
-          ))}
-        </ul>
-      </InfoBlock>
+      {experience.interview_sensitive_questions &&
+        experience.interview_sensitive_questions.length > 0 && (
+          <InfoBlock label="面試過程曾問以下問題">
+            <ul>
+              {experience.interview_sensitive_questions.map((o, idx) => (
+                <li key={idx}>{o}</li>
+              ))}
+            </ul>
+          </InfoBlock>
+        )}{' '}
     </div>
   );
 };
 
 Sections.propTypes = {
-  experience: PropTypes.object.isRequired,
+  experience: PropTypes.shape({
+    interview_sensitive_questions: PropTypes.arrayOf(PropTypes.string),
+    sections: PropTypes.arrayOf(
+      PropTypes.shape({
+        content: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+        rating: PropTypes.number,
+        subtitle: PropTypes.string,
+      }),
+    ),
+  }).isRequired,
   onExpand: PropTypes.func.isRequired,
   subTitleTag: PropTypes.string,
   visibility: PropTypes.string.isRequired,
