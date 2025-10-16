@@ -68,7 +68,7 @@ export const fetchInbox = ({
   if (isFetching(box)) return;
 
   try {
-    dispatch(setInbox(toFetching()));
+    dispatch(setInbox(toFetching(box)));
 
     const { unreadCount, messages } = await queryInboxApi({
       token,
