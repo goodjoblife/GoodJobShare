@@ -21,9 +21,7 @@ const usePolling = (
     // Immediately invoke the callback
     callback();
 
-    const id = setInterval(() => {
-      callback();
-    }, interval);
+    const id = setInterval(callback, interval);
 
     return () => clearInterval(id);
   }, [callback, interval, enabled]);
