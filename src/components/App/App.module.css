@@ -1,12 +1,20 @@
 @import '../common/reset.module.css';
 @import '../common/global.module.css';
 
-@value primary-font, white-light, border-gray, NAV_HEIGHT, NAV_MOBILE_HEIGHT from "../common/variables.module.css";
+@value primary-font, white-light, border-gray, above-tablet, NAV_HEIGHT, NAV_MOBILE_HEIGHT, TABBAR_HEIGHT from "../common/variables.module.css";
 
 .content {
   min-height: 100vh;
+
   @media (max-width: 850px) {
     margin-top: NAV_MOBILE_HEIGHT;
+    min-height: calc(100vh - NAV_MOBILE_HEIGHT - TABBAR_HEIGHT);
+  }
+}
+
+.mobileOnly {
+  @media (min-width: above-tablet) {
+    display: none !important;
   }
 }
 

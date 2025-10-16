@@ -1,0 +1,88 @@
+@value main-black, below-tablet, text-gray from "../../common/variables.module.css";
+
+.inboxIconContainer {
+  @media (max-width: below-tablet) {
+    display: none;
+  }
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inboxIcon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+
+  svg {
+    width: 24px;
+    height: 24px;
+
+    path {
+      transition: fill 0.1s;
+    }
+  }
+
+  &::after {
+    content: attr(data-count);
+    display: flex;
+    background-color: #ee3124;
+    border-radius: 50%;
+    position: absolute;
+    top: -6px;
+    right: 12px;
+    font-size: 13px;
+    color: #fff;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid;
+  }
+
+  &[data-count='0'] {
+    &::after {
+      display: none;
+    }
+  }
+
+  .activating {
+    svg {
+      path {
+        fill: #444;
+      }
+    }
+  }
+
+  &.topNavIcon {
+    svg {
+      path {
+        fill: #fff;
+      }
+    }
+
+    &::after {
+      border-color: main-black;
+    }
+  }
+
+  &.tabBarIcon {
+    svg {
+      path {
+        fill: text-gray;
+      }
+    }
+
+    &::after {
+      border-color: white;
+    }
+  }
+}
+
+.InboxContent {
+  width: 300px;
+  max-height: 400px;
+}

@@ -1,4 +1,4 @@
-@value main-yellow, white-light from "../../variables.module.css";
+@value main-yellow, white-light, text-gray from "../../variables.module.css";
 
 @keyframes slideIn {
   from {
@@ -48,7 +48,7 @@
 
 .titleExplanation {
   font-size: 10px;
-  color: #626262;
+  color: text-gray;
 }
 
 .requiredStar {
