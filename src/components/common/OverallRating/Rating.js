@@ -19,9 +19,9 @@ Rating.propTypes = {
   textYellow: PropTypes.bool,
 };
 
-const RatingLabel = ({ rating }) => {
+const RatingLabel = ({ size = 'm', rating }) => {
   return (
-    <div className={styles.ratingLabel}>
+    <div className={cn(styles.ratingLabel, styles[size])}>
       {overallRatingDialogMap[Math.floor(rating)]}
     </div>
   );
@@ -29,6 +29,7 @@ const RatingLabel = ({ rating }) => {
 
 RatingLabel.propTypes = {
   rating: PropTypes.number.isRequired,
+  size: PropTypes.oneOf(['s', 'm']).isRequired,
 };
 
 export { Rating, RatingLabel };

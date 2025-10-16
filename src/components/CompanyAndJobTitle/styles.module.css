@@ -3,7 +3,6 @@
 .container {
   display: flex;
   justify-content: center;
-  max-width: 1360px;
   margin: auto;
   margin-top: 40px;
 
@@ -21,7 +20,6 @@
 
 .leftContainer {
   flex-shrink: 1;
-  padding: 0 32px;
   width: 100%;
 
   @media (max-width: below-small) {

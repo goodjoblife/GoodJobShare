@@ -1,6 +1,7 @@
 @value below-mobile from "../../common/variables.module.css";
 
 .heading {
+  font-size: 19px;
   margin-bottom: 8px;
   display: flex;
   gap: 1rem;
