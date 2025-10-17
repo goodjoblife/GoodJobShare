@@ -1,19 +1,19 @@
 import { useEffect } from 'react';
 
 interface UsePollingOptions {
-  enabled: boolean;
+  enabled?: boolean;
 }
 
 /**
  * Custom hook for polling a callback function at a specified interval.
  * @param callback - Function to call at the specified interval.
  * @param interval - Polling interval in milliseconds.
- * @param options - Options object, must include `enabled`.
+ * @param options - Options object, can include `enabled`.
  */
 const usePolling = (
   callback: () => void,
   interval: number,
-  { enabled }: UsePollingOptions,
+  { enabled = true }: UsePollingOptions = {},
 ): void => {
   useEffect(() => {
     if (!enabled) return;
