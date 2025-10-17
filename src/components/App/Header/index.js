@@ -33,6 +33,7 @@ import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import emailStatusMap from 'constants/emailStatus';
 import InboxIcon from './InboxIcon';
 import InboxPopoverContainer from './InboxPopoverContainer';
+import usePolling from 'hooks/usePolling';
 
 const onClickShareData = () => {
   ReactGA.event({
@@ -158,18 +159,19 @@ ResponsiveSearchbar.propTypes = {
 };
 
 // For unread count
-const useLoadInbox = ({ isLoggedIn }) => {
+const useLoadInbox = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(fetchInbox({ start: 0, limit: 10 }));
-    }
-  }, [dispatch, isLoggedIn]);
+  const loadInbox = useCallback(() => {
+    dispatch(fetchInbox({ start: 0, limit: 10 }));
+  }, [dispatch]);
+
+  return loadInbox;
 };
 
 const Nav = ({ isNavOpen, isLoggedIn, login, onClickShareData }) => {
-  useLoadInbox({ isLoggedIn });
+  const loadInbox = useLoadInbox();
+  usePolling(loadInbox, 60000, { enabled: isLoggedIn });
 
   return (
     <nav
