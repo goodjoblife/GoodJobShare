@@ -11,12 +11,12 @@ const toNumberOrNull = v => (v === '' ? null : Number(v));
 
 const getNow = () => {
   const d = new Date();
-  return { currentYear: d.getFullYear(), currentMonth: d.getMonth() + 1 };
+  return [d.getFullYear(), d.getMonth() + 1];
 };
 
 const buildMonthOptions = (selectedYear, currentYear, currentMonth) => {
-  const maxMonth = selectedYear === currentYear ? currentMonth : 12;
-  return Array.from({ length: maxMonth }, (_, i) => {
+  const endMonth = selectedYear === currentYear ? currentMonth : 12;
+  return Array.from({ length: endMonth }, (_, i) => {
     const n = i + 1;
     return { value: n, label: n };
   });
@@ -40,7 +40,7 @@ const DatePicker = ({
   onChange,
   warning,
 }) => {
-  const { currentYear, currentMonth } = getNow();
+  const [currentYear, currentMonth] = getNow();
   const yearOptions = useMemo(() => buildYearOptions(currentYear, 10), [
     currentYear,
   ]);
@@ -52,7 +52,7 @@ const DatePicker = ({
     e => {
       const newYear = toNumberOrNull(e.target.value);
       const newMonth =
-        newYear === currentYear && month > currentMonth ? null : month;
+        newYear >= currentYear && month > currentMonth ? null : month;
       onChange([newYear, newMonth]);
     },
     [currentYear, currentMonth, month, onChange],
