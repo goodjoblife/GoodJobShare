@@ -1,4 +1,4 @@
-@value above-tablet from "../common/variables.module.css";
+@value above-tablet, text-gray from "../common/variables.module.css";
 
 .container {
   padding-top: 20px;
@@ -36,7 +36,7 @@
 
 .divider {
   display: none;
-  color: #626262;
+  color: text-gray;
 
   @media (min-width: above-tablet) {
     display: flex;

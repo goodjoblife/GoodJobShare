@@ -15,6 +15,7 @@
 @value TOP_HEIGHT: 32px;
 @value PAGE_TOP: 64px;
 @value PAGE_TOP_S: 30px;
+@value TABBAR_HEIGHT: 60px;
 
 @value INPUT_HEIGHT: 45px;
 
@@ -38,6 +39,7 @@
 @value border-gray: #ddd;
 @value card-border-gray: #d9d9d9;
 @value line-gray: #e0e0e0;
+@value text-gray: #626262;
 
 @value link-blue: #325bbd;
 
