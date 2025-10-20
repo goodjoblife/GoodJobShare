@@ -1,26 +1,35 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import cn from 'classnames';
 import PropTypes from 'prop-types';
-import { P } from 'common/base';
+import cn from 'classnames';
 import styles from './InfoBlock.module.css';
 
-const InfoBlock = ({ label, to, children, noMargin }) => (
-  <li className={`${styles.block}`}>
-    <P size="m" className={styles.label}>
-      {label}：
-    </P>
-    <P size="m" className={cn(styles.content, { [styles.noMargin]: noMargin })}>
-      {to ? <Link to={to}>{children}</Link> : children}
-    </P>
-  </li>
+export const InfoBlocks = ({ children }) => (
+  <div className={styles.infoBlocks}>
+    <table>
+      <tbody>
+        <tr>
+          {React.Children.map(children, child => child && <td>{child}</td>)}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+);
+
+InfoBlocks.propTypes = {
+  children: PropTypes.node,
+};
+
+const InfoBlock = ({ className, label, children }) => (
+  <div className={styles.infoBlock}>
+    <span className={styles.label}>{label}</span>
+    <span className={cn(styles.value, className)}>{children}</span>
+  </div>
 );
 
 InfoBlock.propTypes = {
-  children: PropTypes.node,
-  label: PropTypes.string.isRequired,
-  noMargin: PropTypes.bool,
-  to: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  label: PropTypes.string,
 };
 
 export default InfoBlock;

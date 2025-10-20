@@ -2,7 +2,7 @@
  * convert number to [xxxx億][xxxx萬][xxxx]元 format
  * @param {Integer} num the number to be converted
  */
-const numToChineseReadableString = num => {
+export const numToChineseReadableString = num => {
   if (num <= 0) {
     return null;
   }
@@ -19,7 +19,7 @@ const numToChineseReadableString = num => {
       str += `${c}${baseWord[i]}`;
     }
   }
-  return `${str}元`;
+  return str;
 };
 
 /**
@@ -56,7 +56,7 @@ export const salaryHint = (salaryType, salaryAmount) => {
   if (isNaN(amount)) {
     return { showWarning: false, hint: null };
   }
-  const readableStr = numToChineseReadableString(amount);
+  const readableStr = numToChineseReadableString(amount) + '元';
   const showWarning = shouldShowSalaryWarning(salaryType, amount);
   const salaryTypeWord = {
     hour: '時薪',

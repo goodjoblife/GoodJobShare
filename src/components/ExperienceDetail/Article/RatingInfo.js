@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Good from 'common/icons/Good';
 import Bad from 'common/icons/Bad';
 import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
-import OverallRating from 'common/OverallRating';
 import PropTypes from 'prop-types';
 
 const RecommendationIcon = ({ recommend }) => (
@@ -27,15 +26,18 @@ RecommendationIcon.propTypes = {
 const RatingInfo = ({ rating, recommend }) => {
   if (rating > 0) {
     return (
-      <InfoBlock label="整體評價" noMargin>
-        <OverallRating rating={rating} hasRatingLabel hasRatingNumber />
-      </InfoBlock>
+      <Fragment>
+        <InfoBlock label="評分" noMargin>
+          {rating.toFixed(1)}分
+        </InfoBlock>
+      </Fragment>
     );
   }
 
   if (recommend) {
     return (
-      <InfoBlock label="是否推薦此工作">
+      <InfoBlock>
+        是否推薦：
         <RecommendationIcon recommend={recommend} />
       </InfoBlock>
     );
