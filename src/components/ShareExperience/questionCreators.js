@@ -136,7 +136,7 @@ export const createCurrentlyEmployedQuestion = () => ({
 });
 
 export const createSectorQuestion = () => ({
-  title: '廠區/門市/分公司',
+  title: '廠區/門市/分公司/團隊',
   type: QUESTION_TYPE.TEXT,
   dataKey: DATA_KEY_SECTOR,
   defaultValue: '',
