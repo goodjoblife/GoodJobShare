@@ -27,7 +27,6 @@ import rollbar from 'utils/rollbar';
 import { ER0019, ER0021, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import { useDispatch } from 'react-redux';
 import { pushErrorNotificationAndRollbar } from 'actions/toastNotification';
-import { DATA_KEY_HAS_OVERTIME_SALARY } from '../../ShareExperience/constants';
 
 const findIfQuestionsAcceptDraft = draft =>
   R.all(
@@ -93,20 +92,8 @@ const FormBuilder = ({
   hideProgressBar,
 }) => {
   const [draft, setDraftValue, resetDraft] = useDraft(questions);
-  const handleOvertimeSalaryChange = value => {
-    if (value[0] === 'no') {
-      return ['no', null];
-    }
-    return value;
-  };
   const handleDraftChange = dataKey => value => {
     if (onChange) onChange({ dataKey, value });
-
-    if (dataKey === DATA_KEY_HAS_OVERTIME_SALARY) {
-      setDraftValue(dataKey)(handleOvertimeSalaryChange(value));
-      return;
-    }
-
     setDraftValue(dataKey)(value);
   };
 
