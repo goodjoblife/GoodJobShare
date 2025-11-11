@@ -41,7 +41,6 @@ import { parseSalaryAmount, evolve } from '../utils';
 import { tabType } from '../../../constants/companyJobTitle';
 
 import { createWorkExperienceWithRating } from 'actions/experiences';
-import { transferKeyToSnakecase } from 'utils/objectUtil';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import { ER0020, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 
@@ -131,7 +130,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
   const onSubmit = useCallback(
     async draft => {
       const body = {
-        ...transferKeyToSnakecase(bodyFromDraft(draft)),
+        ...bodyFromDraft(draft),
       };
       const res = await dispatch(
         createWorkExperienceWithRating({
