@@ -29,8 +29,9 @@ const BlockSelectElseRadio = ({
     }
   }, [elseOptionValue, multiple, selected]);
   const handleSelectChange = useCallback(
-    selected => onChange([selected, elseValue]),
-    [elseValue, onChange],
+    selected =>
+      onChange([selected, selected === elseOptionValue ? elseValue : null]),
+    [elseOptionValue, elseValue, onChange],
   );
 
   const debouncedConfirm = useDebouncedConfirm(onConfirm, 300);
