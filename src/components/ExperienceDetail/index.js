@@ -115,16 +115,18 @@ const ExperienceDetail = ({ ...props }) => {
                     })}
                   />
                 </div>
-                <ExperienceHeading experience={experienceBox.data} />
-                <Article
-                  experience={experienceBox.data}
-                  visibility={
-                    canViewPublishId(experienceBox.data.id)
-                      ? VISIBILITY.VISIBLE
-                      : VISIBILITY.LOCKED
-                  }
-                  onClickMsgButton={scrollToCommentZone}
-                />
+                <Wrapper size="m">
+                  <ExperienceHeading experience={experienceBox.data} />
+                  <Article
+                    experience={experienceBox.data}
+                    visibility={
+                      canViewPublishId(experienceBox.data.id)
+                        ? VISIBILITY.VISIBLE
+                        : VISIBILITY.LOCKED
+                    }
+                    onClickMsgButton={scrollToCommentZone}
+                  />
+                </Wrapper>
               </Fragment>
             )}
           </div>
