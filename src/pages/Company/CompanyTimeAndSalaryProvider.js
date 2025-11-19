@@ -31,6 +31,7 @@ import {
   searchTextFromQuerySelector,
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
+import { Wrapper } from 'common/base';
 
 const useOverviewStatisticsBox = pageName => {
   const selector = useMemo(
@@ -145,19 +146,21 @@ const CompanyTimeAndSalaryProvider = () => {
   const boxSelector = useTimeAndSalaryBoxSelector(companyName);
 
   return (
-    <TimeAndSalary
-      pageType={pageType}
-      pageName={companyName}
-      page={page}
-      pageSize={PAGE_SIZE}
-      topNJobTitles={topNJobTitles.salary}
-      esgSalaryDataBox={esgSalaryDataBox}
-      tabType={TAB_TYPE.TIME_AND_SALARY}
-      salaryWorkTimeStatistics={salaryWorkTimeStatistics}
-      boxSelector={boxSelector}
-      statisticsBox={statisticsBox}
-      onCloseReport={() => handleQueryCompanyTimeAndSalary({ force: true })}
-    />
+    <Wrapper size="l">
+      <TimeAndSalary
+        pageType={pageType}
+        pageName={companyName}
+        page={page}
+        pageSize={PAGE_SIZE}
+        topNJobTitles={topNJobTitles.salary}
+        esgSalaryDataBox={esgSalaryDataBox}
+        tabType={TAB_TYPE.TIME_AND_SALARY}
+        salaryWorkTimeStatistics={salaryWorkTimeStatistics}
+        boxSelector={boxSelector}
+        statisticsBox={statisticsBox}
+        onCloseReport={() => handleQueryCompanyTimeAndSalary({ force: true })}
+      />
+    </Wrapper>
   );
 };
 

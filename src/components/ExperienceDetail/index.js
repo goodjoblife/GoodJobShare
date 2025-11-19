@@ -96,13 +96,13 @@ const ExperienceDetail = ({ ...props }) => {
     <main>
       {isFetched(experienceBox) && <Seo experience={experienceBox.data} />}
       <Section paddingBottom className={styles.section}>
-        <Wrapper size="l">
-          <div>
-            {/* 文章區塊  */}
-            {!isFetched(experienceBox) ? (
-              <Loader />
-            ) : (
-              <Fragment>
+        <div>
+          {/* 文章區塊  */}
+          {!isFetched(experienceBox) ? (
+            <Loader />
+          ) : (
+            <Fragment>
+              <Wrapper size="l">
                 <div className={styles.breadCrumb}>
                   <BreadCrumb
                     data={generateBreadCrumbData({
@@ -115,6 +115,8 @@ const ExperienceDetail = ({ ...props }) => {
                     })}
                   />
                 </div>
+              </Wrapper>
+              <Wrapper size="m">
                 <ExperienceHeading experience={experienceBox.data} />
                 <Article
                   experience={experienceBox.data}
@@ -125,10 +127,10 @@ const ExperienceDetail = ({ ...props }) => {
                   }
                   onClickMsgButton={scrollToCommentZone}
                 />
-              </Fragment>
-            )}
-          </div>
-        </Wrapper>
+              </Wrapper>
+            </Fragment>
+          )}
+        </div>
         {isFetched(experienceBox) && (
           <React.Fragment>
             <Wrapper size="m">
