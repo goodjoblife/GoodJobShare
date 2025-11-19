@@ -10,6 +10,7 @@ import {
   companyIndexesBoxSelectorAtPage,
   companiesCountSelector,
 } from 'selectors/companyAndJobTitle';
+import { Wrapper } from 'common/base';
 
 const CompanyIndexProvider = () => {
   const [page, getPageLink] = usePagination();
@@ -23,13 +24,15 @@ const CompanyIndexProvider = () => {
   }, [dispatch, page]);
 
   return (
-    <CompanyAndJobTitleIndexPage
-      totalCount={totalCount}
-      pageType={PAGE_TYPE.COMPANY}
-      indexesBox={companyIndexesBox}
-      page={page}
-      getPageLink={getPageLink}
-    />
+    <Wrapper size="l">
+      <CompanyAndJobTitleIndexPage
+        totalCount={totalCount}
+        pageType={PAGE_TYPE.COMPANY}
+        indexesBox={companyIndexesBox}
+        page={page}
+        getPageLink={getPageLink}
+      />
+    </Wrapper>
   );
 };
 
