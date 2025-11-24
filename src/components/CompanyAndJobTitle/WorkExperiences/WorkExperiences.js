@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import EmptyView from '../EmptyView';
 
-import { Section } from 'common/base';
+import { Section, Wrapper } from 'common/base';
 import Pagination from 'common/Pagination';
 import NotFoundStatus from 'common/routing/NotFound';
 import { useQuery } from 'hooks/routing';
@@ -42,14 +42,16 @@ const WorkExperiences = ({
           />
         </div>
       ))}
-      <Pagination
-        totalCount={totalCount}
-        unit={pageSize}
-        currentPage={page}
-        createPageLinkTo={p =>
-          qs.stringify({ ...queryParams, p }, { addQueryPrefix: true })
-        }
-      />
+      <Wrapper size="m">
+        <Pagination
+          totalCount={totalCount}
+          unit={pageSize}
+          currentPage={page}
+          createPageLinkTo={p =>
+            qs.stringify({ ...queryParams, p }, { addQueryPrefix: true })
+          }
+        />
+      </Wrapper>
     </Section>
   );
 };
