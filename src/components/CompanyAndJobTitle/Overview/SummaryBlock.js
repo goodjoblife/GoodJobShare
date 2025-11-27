@@ -4,7 +4,9 @@ import cn from 'classnames';
 import loadable from '@loadable/component';
 
 import Card from 'common/Card';
-import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
+import AverageWeekWorkTimeView, {
+  AbstractView,
+} from './AverageWeekWorkTimeView';
 import styles from './SummaryBlock.module.css';
 import useMobile from 'hooks/useMobile';
 
@@ -72,6 +74,26 @@ WorkTimeCard.propTypes = {
   data: PropTypes.object,
 };
 
+const ScoreCard = ({ title, value, maxValue }) => (
+  <Card className={cn(styles.card, styles.averageWeekWorkTime)}>
+    <AbstractView
+      title={title}
+      value={value.toFixed(1)}
+      valueSuffix={`/ ${maxValue.toFixed(1)}`}
+    />
+  </Card>
+);
+
+ScoreCard.propTypes = {
+  maxValue: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+const WorkLifeBalanceCard = () => (
+  <ScoreCard title="工作與生活平衡" value={3.7} maxValue={5} />
+);
+
 const SummaryBlock = ({
   salaryDistribution,
   jobAverageSalaries,
@@ -93,6 +115,7 @@ const SummaryBlock = ({
         overtimeFrequencyCount={overtimeFrequencyCount}
       />
     </WorkTimeCard>
+    <WorkLifeBalanceCard />
   </div>
 );
 

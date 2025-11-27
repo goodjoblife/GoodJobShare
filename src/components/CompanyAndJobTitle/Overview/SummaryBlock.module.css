@@ -17,6 +17,7 @@
 }
 
 .card {
+  width: 300px;
   height: 265px;
 }
 
@@ -52,6 +53,7 @@
 }
 
 .averageWeekWorkTimeView {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -79,5 +81,13 @@
     font-size: 14px;
     line-height: 1.64;
     color: #969696;
+  }
+
+  .link {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 14px;
+    font-weight: 600;
   }
 }
