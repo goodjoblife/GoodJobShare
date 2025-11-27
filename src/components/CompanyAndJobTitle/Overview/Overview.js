@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Section } from 'common/base';
 
 import SnippetBlock from './SnippetBlock';
-import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import {
@@ -12,7 +11,7 @@ import {
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
   generateTabURL,
 } from 'constants/companyJobTitle';
-import SummaryBlock from './SummaryBlock';
+import SummaryBlock, { ScoreCard } from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
 import BoxRenderer from '../StatusRenderer';
 import { fetchBoxPropType } from 'utils/fetchBox';
@@ -62,11 +61,9 @@ const Overview = ({
             />
           )}
         />
-        <WorkingHourTable
-          data={salaryWorkTimes}
-          pageType={pageType}
-          onCloseReport={onCloseReport}
-        />
+      </SnippetBlock>
+      <SnippetBlock title="性別友善">
+        <ScoreCard title="性別友善度" value={3.7} maxValue={5} />
       </SnippetBlock>
       <SnippetBlock
         title={TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.WORK_EXPERIENCE]}
