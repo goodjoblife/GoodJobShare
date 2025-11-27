@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Section } from 'common/base';
 
 import SnippetBlock from './SnippetBlock';
-import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import {
@@ -61,11 +60,6 @@ const Overview = ({
               overtimeFrequencyCount={overtimeFrequencyCount}
             />
           )}
-        />
-        <WorkingHourTable
-          data={salaryWorkTimes}
-          pageType={pageType}
-          onCloseReport={onCloseReport}
         />
       </SnippetBlock>
       <SnippetBlock
