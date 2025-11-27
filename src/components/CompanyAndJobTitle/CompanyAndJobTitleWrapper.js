@@ -74,7 +74,7 @@ const CompanyAndJobTitleWrapper = ({
           }}
         />
       </Wrapper>
-      {children}
+      <Wrapper size="l">{children}</Wrapper>
       <Wrapper size="l">
         <FanPageBlock className={styles.fanPageBlock} />
       </Wrapper>
