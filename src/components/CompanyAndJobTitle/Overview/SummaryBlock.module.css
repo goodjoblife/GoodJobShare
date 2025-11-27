@@ -8,6 +8,10 @@
     flex-direction: column;
     align-items: flex-start;
   }
+
+  > * + * {
+    margin-left: 21px;
+  }
 }
 
 .barChart,
@@ -43,8 +47,6 @@
 }
 
 .averageWeekWorkTime {
-  margin-left: 21px;
-
   @media (max-width: below-tablet) {
     width: 100%;
     margin-left: 0;

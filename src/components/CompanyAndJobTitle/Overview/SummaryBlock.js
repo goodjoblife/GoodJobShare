@@ -74,7 +74,7 @@ WorkTimeCard.propTypes = {
   data: PropTypes.object,
 };
 
-const ScoreCard = ({ title, value, maxValue }) => (
+export const ScoreCard = ({ title, value, maxValue }) => (
   <Card className={cn(styles.card, styles.averageWeekWorkTime)}>
     <AbstractView
       title={title}
