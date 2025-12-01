@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 
 import Pagination from 'common/Pagination';
-import { Section } from 'common/base';
+import { Section, Wrapper } from 'common/base';
 import NotFoundStatus from 'common/routing/NotFound';
 
 import EmptyView from '../EmptyView';
@@ -44,14 +44,16 @@ const InterviewExperiences = ({
           />
         </div>
       ))}
-      <Pagination
-        totalCount={totalCount}
-        unit={pageSize}
-        currentPage={page}
-        createPageLinkTo={p =>
-          qs.stringify({ ...queryParams, p }, { addQueryPrefix: true })
-        }
-      />
+      <Wrapper size="m">
+        <Pagination
+          totalCount={totalCount}
+          unit={pageSize}
+          currentPage={page}
+          createPageLinkTo={p =>
+            qs.stringify({ ...queryParams, p }, { addQueryPrefix: true })
+          }
+        />
+      </Wrapper>
     </Section>
   );
 };

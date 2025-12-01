@@ -15,6 +15,7 @@ import {
   tabType as TAB_TYPE,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
 } from 'constants/companyJobTitle';
+import { Wrapper } from 'common/base';
 
 const CompanyAndJobTitleWrapper = ({
   children,
@@ -51,28 +52,32 @@ const CompanyAndJobTitleWrapper = ({
 
   return (
     <div>
-      <div style={{ marginBottom: '20px' }}>
-        <BreadCrumb
-          data={generateBreadCrumbData({ pageType, pageName, tabType })}
-        />
-      </div>
-      <div>
-        <div className={styles.titleContainer}>
-          <Heading className={styles.title}>{pageH1}</Heading>
-          {pageType === PAGE_TYPE.COMPANY && (
-            <SubscribeNotificationButton companyName={pageName} />
-          )}
+      <Wrapper size="l">
+        <div style={{ marginBottom: '20px' }}>
+          <BreadCrumb
+            data={generateBreadCrumbData({ pageType, pageName, tabType })}
+          />
         </div>
-        <StatisticsCard pageType={pageType} pageName={pageName} />
-      </div>
-      <TabLinkGroup
-        options={tabLinkOptions}
-        style={{
-          marginBottom: '24px',
-        }}
-      />
+        <div>
+          <div className={styles.titleContainer}>
+            <Heading className={styles.title}>{pageH1}</Heading>
+            {pageType === PAGE_TYPE.COMPANY && (
+              <SubscribeNotificationButton companyName={pageName} />
+            )}
+          </div>
+          <StatisticsCard pageType={pageType} pageName={pageName} />
+        </div>
+        <TabLinkGroup
+          options={tabLinkOptions}
+          style={{
+            marginBottom: '24px',
+          }}
+        />
+      </Wrapper>
       {children}
-      <FanPageBlock className={styles.fanPageBlock} />
+      <Wrapper size="l">
+        <FanPageBlock className={styles.fanPageBlock} />
+      </Wrapper>
     </div>
   );
 };

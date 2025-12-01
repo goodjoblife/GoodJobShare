@@ -7,6 +7,7 @@ import InterviewExperienceHelmet from './Helmet';
 import Searchbar from '../Searchbar';
 import Sorter from '../Sorter';
 import styles from '../styles.module.css';
+import { Wrapper } from 'common/base';
 
 const InterviewExperiences = ({
   pageType,
@@ -22,10 +23,12 @@ const InterviewExperiences = ({
     pageName={pageName}
     tabType={tabType}
   >
-    <div className={styles.interactive}>
-      <Searchbar pageType={pageType} tabType={tabType} />
-      <Sorter />
-    </div>
+    <Wrapper size="m">
+      <div className={styles.interactive}>
+        <Searchbar pageType={pageType} tabType={tabType} />
+        <Sorter />
+      </div>
+    </Wrapper>
     <PageBoxRenderer
       pageType={pageType}
       pageName={pageName}
