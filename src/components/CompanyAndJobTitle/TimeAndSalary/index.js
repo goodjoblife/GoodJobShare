@@ -87,7 +87,9 @@ const TimeAndSalary = ({
         );
       }}
     />
-    <Searchbar pageType={pageType} tabType={tabType} />
+    <Wrapper size="l">
+      <Searchbar pageType={pageType} tabType={tabType} />
+    </Wrapper>
     <PageBoxRenderer
       pageType={pageType}
       pageName={pageName}
