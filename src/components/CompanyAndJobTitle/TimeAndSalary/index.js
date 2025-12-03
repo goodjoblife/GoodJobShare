@@ -12,6 +12,7 @@ import EsgBlock from '../TimeAndSalary/EsgBlock';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import { fetchBoxPropType } from 'utils/fetchBox';
 import { Wrapper } from 'common/base';
+import styles from './TimeAndSalary.module.css';
 
 const TimeAndSalary = ({
   pageType,
@@ -87,7 +88,7 @@ const TimeAndSalary = ({
         );
       }}
     />
-    <Wrapper size="l">
+    <Wrapper size="l" className={styles.searchbar}>
       <Searchbar pageType={pageType} tabType={tabType} />
     </Wrapper>
     <PageBoxRenderer
