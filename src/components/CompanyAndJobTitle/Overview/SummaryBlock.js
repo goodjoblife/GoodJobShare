@@ -74,17 +74,21 @@ WorkTimeCard.propTypes = {
   data: PropTypes.object,
 };
 
-export const ScoreCard = ({ title, value, maxValue }) => (
+export const ScoreCard = ({ title, value, maxValue, linkTo, dataCount }) => (
   <Card className={cn(styles.card, styles.averageWeekWorkTime)}>
     <AbstractView
       title={title}
       value={value.toFixed(1)}
       valueSuffix={`/ ${maxValue.toFixed(1)}`}
+      linkTo={linkTo}
+      footer={`查看 ${dataCount} 筆資料>>`}
     />
   </Card>
 );
 
 ScoreCard.propTypes = {
+  dataCount: PropTypes.number.isRequired,
+  linkTo: PropTypes.string,
   maxValue: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,

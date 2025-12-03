@@ -61,7 +61,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 4px;
-  margin: 0 auto;
+  width: 100%;
 
   .title {
     font-size: 18px;
@@ -86,10 +86,9 @@
   }
 
   .link {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    font-size: 14px;
+    display: block;
+    width: 100%;
+    text-align: right;
     font-weight: 600;
   }
 }

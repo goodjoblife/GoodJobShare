@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
+import cn from 'classnames';
 
+import { Link } from 'common/base';
 import styles from './SummaryBlock.module.css';
 
 const ratioSelectorOfType = type =>
@@ -16,19 +18,28 @@ const ratioSelectorOfType = type =>
 const almostEverydayRatioSelector = ratioSelectorOfType('almost_everyday');
 const sometimesRatioSelector = ratioSelectorOfType('sometimes');
 
-export const AbstractView = ({ title, value, valueSuffix, footer }) => (
+export const AbstractView = ({ title, value, valueSuffix, footer, linkTo }) => (
   <div className={styles.averageWeekWorkTimeView}>
     <span className={styles.title}>{title}</span>
     <span className={styles.body}>
       <em>{value}</em>
       {valueSuffix}
     </span>
-    {<span className={styles.footer}>{footer || '　'}</span>}
+    <span className={cn(styles.footer, { [styles.link]: linkTo })}>
+      {linkTo ? (
+        <Link to={linkTo} className={styles.link}>
+          {footer}
+        </Link>
+      ) : (
+        footer || '　'
+      )}
+    </span>
   </div>
 );
 
 AbstractView.propTypes = {
   footer: PropTypes.string,
+  linkTo: PropTypes.string,
   title: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,
   valueSuffix: PropTypes.string.isRequired,

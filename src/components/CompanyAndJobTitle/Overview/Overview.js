@@ -1,4 +1,5 @@
 import React from 'react';
+import { generatePath, useParams } from 'react-router';
 import PropTypes from 'prop-types';
 
 import { Section } from 'common/base';
@@ -15,6 +16,23 @@ import SummaryBlock, { ScoreCard } from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
 import BoxRenderer from '../StatusRenderer';
 import { fetchBoxPropType } from 'utils/fetchBox';
+import { companyNameSelector } from 'pages/Company/useCompanyName';
+import { companyWorkExperiencesGenderPath } from 'constants/linkTo';
+
+const GenderScoreCard = () => {
+  const params = useParams();
+  const companyName = companyNameSelector(params);
+  const path = generatePath(companyWorkExperiencesGenderPath, { companyName });
+  return (
+    <ScoreCard
+      title="性別友善度"
+      value={3.7}
+      maxValue={5}
+      dataCount={100}
+      linkTo={path}
+    />
+  );
+};
 
 const Overview = ({
   pageType,
@@ -63,7 +81,7 @@ const Overview = ({
         />
       </SnippetBlock>
       <SnippetBlock title="性別友善">
-        <ScoreCard title="性別友善度" value={3.7} maxValue={5} />
+        <GenderScoreCard />
       </SnippetBlock>
       <SnippetBlock
         title={TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.WORK_EXPERIENCE]}
