@@ -32,6 +32,7 @@ const CompanyAndJobTitleWrapper = ({
             pageName,
             tabType: type,
           }),
+          exact: type === TAB_TYPE.OVERVIEW,
         })),
         toPairs,
       )(tabTypeTranslation),
