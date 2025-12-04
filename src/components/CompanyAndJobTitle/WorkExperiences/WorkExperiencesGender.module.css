@@ -1,0 +1,190 @@
+@value below-mobile, main-yellow, yellow-light, gray-400 from "../../common/variables.module.css";
+
+.genderSummary {
+  margin: 24px 0 32px;
+  padding: 24px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.06);
+}
+
+.genderSummaryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.scoreBlock {
+  min-width: 160px;
+}
+
+.scoreValue {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.scoreLabel {
+  margin-bottom: 4px;
+  color: gray-400;
+  font-size: 14px;
+}
+
+.scoreMeta {
+  font-size: 14px;
+  color: gray-400;
+}
+
+.thumbRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.thumbIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.distribution {
+  flex: 1;
+  width: 300px;
+  height: 300px;
+}
+
+.distributionRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.distributionLabel {
+  width: 32px;
+  text-align: right;
+}
+
+.distributionBarTrack {
+  position: relative;
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+.distributionBarFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: main-yellow;
+}
+
+.distributionCount {
+  width: 32px;
+  text-align: right;
+}
+
+.summaryText {
+  margin-top: 20px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.summaryNote {
+  margin-top: 8px;
+  font-size: 13px;
+  color: gray-400;
+}
+
+@media (max-width: below-mobile) {
+  .genderSummary {
+    padding: 16px;
+  }
+
+  .genderSummaryHeader {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .scoreBlock {
+    min-width: auto;
+  }
+}
+
+@value below-mobile, black, gray-200, gray-400, gray-600, white from "../../common/variables.module.css";
+
+.filterContainer {
+  display: flex;
+  align-items: center;
+  margin: 16px 0 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.label {
+  font-size: 14px;
+  color: gray-600;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.optionButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1px solid gray-200;
+  background-color: white;
+  cursor: pointer;
+  font-size: 14px;
+  color: gray-600;
+  transition: background-color 0.15s ease, color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.optionButtonActive {
+  background-color: black;
+  border-color: black;
+  color: white;
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  border-radius: 4px;
+  border: 1px solid gray-400;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.checkboxActive {
+  border-color: white;
+  background-color: white;
+}
+
+.checkboxCheck {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background-color: black;
+}
+
+@media (max-width: below-mobile) {
+  .filterContainer {
+    align-items: flex-start;
+  }
+}
