@@ -88,7 +88,7 @@ export const ScoreCard = ({ title, value, maxValue, linkTo, dataCount }) => (
 
 ScoreCard.propTypes = {
   dataCount: PropTypes.number.isRequired,
-  linkTo: PropTypes.string,
+  linkTo: PropTypes.string.isRequired,
   maxValue: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,
