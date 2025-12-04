@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
@@ -11,6 +11,8 @@ import SummarySection from './SummarySection';
 import EsgBlock from '../TimeAndSalary/EsgBlock';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import { fetchBoxPropType } from 'utils/fetchBox';
+import { Wrapper } from 'common/base';
+import styles from './TimeAndSalary.module.css';
 
 const TimeAndSalary = ({
   pageType,
@@ -45,16 +47,18 @@ const TimeAndSalary = ({
             femaleManagerStatistics: [femaleManagerStatisticsItem],
           } = data;
           return (
-            <EsgBlock
-              avgSalaryStatisticsItem={avgSalaryStatisticsItem}
-              nonManagerAvgSalaryStatisticsItem={
-                nonManagerAvgSalaryStatisticsItem
-              }
-              nonManagerMedianSalaryStatisticsItem={
-                nonManagerMedianSalaryStatisticsItem
-              }
-              femaleManagerStatisticsItem={femaleManagerStatisticsItem}
-            />
+            <Wrapper size="l">
+              <EsgBlock
+                avgSalaryStatisticsItem={avgSalaryStatisticsItem}
+                nonManagerAvgSalaryStatisticsItem={
+                  nonManagerAvgSalaryStatisticsItem
+                }
+                nonManagerMedianSalaryStatisticsItem={
+                  nonManagerMedianSalaryStatisticsItem
+                }
+                femaleManagerStatisticsItem={femaleManagerStatisticsItem}
+              />
+            </Wrapper>
           );
         }}
       />
@@ -72,7 +76,7 @@ const TimeAndSalary = ({
           overtimeFrequencyCount,
         } = data;
         return (
-          <Fragment>
+          <Wrapper size="l">
             <SummarySection
               salaryDistribution={salaryDistribution}
               jobAverageSalaries={jobAverageSalaries}
@@ -80,11 +84,13 @@ const TimeAndSalary = ({
               overtimeFrequencyCount={overtimeFrequencyCount}
             />
             <OvertimeSection statistics={salaryWorkTimeStatistics} />
-          </Fragment>
+          </Wrapper>
         );
       }}
     />
-    <Searchbar pageType={pageType} tabType={tabType} />
+    <Wrapper size="l" className={styles.searchbar}>
+      <Searchbar pageType={pageType} tabType={tabType} />
+    </Wrapper>
     <PageBoxRenderer
       pageType={pageType}
       pageName={pageName}
@@ -92,7 +98,7 @@ const TimeAndSalary = ({
       boxSelector={boxSelector}
       render={({ salaryWorkTimes, salaryWorkTimesCount: totalCount }) => {
         return (
-          <Fragment>
+          <Wrapper size="l">
             <Helmet
               pageType={pageType}
               pageName={pageName}
@@ -110,7 +116,7 @@ const TimeAndSalary = ({
               totalCount={totalCount}
               onCloseReport={onCloseReport}
             />
-          </Fragment>
+          </Wrapper>
         );
       }}
     />
