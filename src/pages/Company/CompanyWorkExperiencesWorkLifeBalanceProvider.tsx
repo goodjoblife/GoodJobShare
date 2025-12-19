@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import WorkExperiencesGender from 'components/CompanyAndJobTitle/WorkExperiences/WorkExperiencesGender';
+import WorkExperiencesWorkLifeBalance from 'components/CompanyAndJobTitle/WorkExperiences/WorkExperiencesWorkLifeBalance';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import {
@@ -49,7 +49,7 @@ const useWorkExperiencesBoxSelector = (pageName: string) => {
   );
 };
 
-const CompanyWorkExperiencesGenderProvider = () => {
+const CompanyWorkExperiencesWorkLifeBalanceProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.COMPANY;
   const companyName = useCompanyName();
@@ -83,7 +83,7 @@ const CompanyWorkExperiencesGenderProvider = () => {
   const boxSelector = useWorkExperiencesBoxSelector(companyName);
 
   return (
-    <WorkExperiencesGender
+    <WorkExperiencesWorkLifeBalance
       pageType={pageType}
       pageName={companyName}
       page={page as number}
@@ -94,7 +94,7 @@ const CompanyWorkExperiencesGenderProvider = () => {
   );
 };
 
-CompanyWorkExperiencesGenderProvider.fetchData = ({
+CompanyWorkExperiencesWorkLifeBalanceProvider.fetchData = ({
   store: { dispatch },
   ...props
 }: {
@@ -123,4 +123,4 @@ CompanyWorkExperiencesGenderProvider.fetchData = ({
   ]);
 };
 
-export default CompanyWorkExperiencesGenderProvider;
+export default CompanyWorkExperiencesWorkLifeBalanceProvider;

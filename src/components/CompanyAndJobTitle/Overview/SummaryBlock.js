@@ -1,7 +1,11 @@
 import React from 'react';
+import { generatePath, useParams } from 'react-router';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import loadable from '@loadable/component';
+
+import { companyNameSelector } from 'pages/Company/useCompanyName';
+import { companyWorkExperiencesWorkLifeBalancePath } from 'constants/linkTo';
 
 import Card from 'common/Card';
 import AverageWeekWorkTimeView, {
@@ -94,9 +98,22 @@ ScoreCard.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const WorkLifeBalanceCard = () => (
-  <ScoreCard title="工作與生活平衡" value={3.7} maxValue={5} />
-);
+const WorkLifeBalanceCard = () => {
+  const params = useParams();
+  const companyName = companyNameSelector(params);
+  const path = generatePath(companyWorkExperiencesWorkLifeBalancePath, {
+    companyName,
+  });
+  return (
+    <ScoreCard
+      title="工作與生活平衡"
+      value={3.7}
+      maxValue={5}
+      linkTo={path}
+      dataCount={100}
+    />
+  );
+};
 
 const SummaryBlock = ({
   salaryDistribution,

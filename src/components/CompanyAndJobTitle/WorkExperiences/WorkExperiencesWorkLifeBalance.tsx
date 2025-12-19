@@ -42,7 +42,7 @@ const WorkExperiencesGender: React.FC<WorkExperiencesGenderProps> = ({
 
   return (
     <WorkExperiencesAspect
-      title="性別友善度"
+      title="工作與生活平衡"
       summarySection={
         <Summary
           averageRating={genderSummaryData.averageRating}
