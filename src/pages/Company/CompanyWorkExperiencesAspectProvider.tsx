@@ -7,6 +7,7 @@ import {
   tabType as TAB_TYPE,
   pageType as PAGE_TYPE,
   PAGE_SIZE,
+  aspectTranslation,
 } from 'constants/companyJobTitle';
 import {
   queryCompanyWorkExperiences,
@@ -50,17 +51,6 @@ const useWorkExperiencesAspectExperiencesBoxSelector = (pageName: string) => {
   );
 };
 
-const getAspectTitle = (aspect: string): string | null => {
-  switch (aspect) {
-    case 'gender':
-      return '性別友善度';
-    case 'work-life-balance':
-      return '工作與生活平衡';
-    default:
-      return null;
-  }
-};
-
 const CompanyWorkExperiencesAspectProvider = () => {
   const dispatch = useDispatch();
   const pageType = PAGE_TYPE.COMPANY;
@@ -100,7 +90,7 @@ const CompanyWorkExperiencesAspectProvider = () => {
     companyName,
     aspect,
   );
-  const title = getAspectTitle(aspect);
+  const title = aspectTranslation[aspect];
 
   return (
     <WorkExperiencesAspect

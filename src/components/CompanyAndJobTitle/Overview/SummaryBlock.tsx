@@ -16,6 +16,7 @@ import useMobile from 'hooks/useMobile';
 
 import emptySalaryImage from './empty_data_salary.png';
 import emptyWorkTimeImage from './empty_data_working_time.png';
+import { Aspect } from 'constants/companyJobTitle';
 
 const SalaryDistributionChart = loadable(() =>
   import('common/Charts/SalaryDistributionChart'),
@@ -109,7 +110,7 @@ const WorkLifeBalanceCard = () => {
   const companyName = companyNameSelector(params);
   const path = generatePath(companyWorkExperiencesAspectPath, {
     companyName,
-    aspect: 'work-life-balance',
+    aspect: Aspect.WORK_LIFE_BALANCE,
   });
   return (
     <ScoreCard

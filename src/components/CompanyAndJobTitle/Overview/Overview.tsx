@@ -8,6 +8,7 @@ import SnippetBlock from './SnippetBlock';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import {
+  Aspect,
   tabType as TAB_TYPE,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
   generateTabURL,
@@ -24,7 +25,7 @@ const GenderScoreCard = () => {
   const companyName = companyNameSelector(params);
   const path = generatePath(companyWorkExperiencesAspectPath, {
     companyName,
-    aspect: 'gender',
+    aspect: Aspect.GENDER,
   });
   return (
     <ScoreCard
