@@ -17,12 +17,15 @@ import usePermission from 'hooks/usePermission';
 import BoxRenderer from '../StatusRenderer';
 import { fetchBoxPropType } from 'utils/fetchBox';
 import { companyNameSelector } from 'pages/Company/useCompanyName';
-import { companyWorkExperiencesGenderPath } from 'constants/linkTo';
+import { companyWorkExperiencesAspectPath } from 'constants/linkTo';
 
 const GenderScoreCard = () => {
   const params = useParams();
   const companyName = companyNameSelector(params);
-  const path = generatePath(companyWorkExperiencesGenderPath, { companyName });
+  const path = generatePath(companyWorkExperiencesAspectPath, {
+    companyName,
+    aspect: 'gender',
+  });
   return (
     <ScoreCard
       title="性別友善度"

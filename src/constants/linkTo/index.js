@@ -11,11 +11,8 @@ export const companyWorkExperiencesPath =
 export const companySalaryWorkTimesPath =
   '/companies/:companyName/salary-work-times';
 
-export const companyWorkExperiencesGenderPath =
-  '/companies/:companyName/work-experiences/gender';
-
-export const companyWorkExperiencesWorkLifeBalancePath =
-  '/companies/:companyName/work-experiences/work-life-balance';
+export const companyWorkExperiencesAspectPath =
+  '/companies/:companyName/work-experiences/:aspect';
 
 export const jobTitleOverviewPath = '/job-titles/:jobTitle';
 

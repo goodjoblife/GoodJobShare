@@ -5,7 +5,7 @@ import cn from 'classnames';
 import loadable from '@loadable/component';
 
 import { companyNameSelector } from 'pages/Company/useCompanyName';
-import { companyWorkExperiencesWorkLifeBalancePath } from 'constants/linkTo';
+import { companyWorkExperiencesAspectPath } from 'constants/linkTo';
 
 import Card from 'common/Card';
 import AverageWeekWorkTimeView, {
@@ -101,8 +101,9 @@ ScoreCard.propTypes = {
 const WorkLifeBalanceCard = () => {
   const params = useParams();
   const companyName = companyNameSelector(params);
-  const path = generatePath(companyWorkExperiencesWorkLifeBalancePath, {
+  const path = generatePath(companyWorkExperiencesAspectPath, {
     companyName,
+    aspect: 'work-life-balance',
   });
   return (
     <ScoreCard

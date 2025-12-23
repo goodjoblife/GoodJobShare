@@ -10,6 +10,7 @@ import Helmet from '../Helmet';
 import styles from './styles.module.css';
 import Filter from './Filter';
 import Summary from './Summary';
+import FetchBox from 'utils/fetchBox';
 
 export type AspectProps = {
   title: React.ReactNode;
@@ -17,26 +18,31 @@ export type AspectProps = {
   pageType: string;
   pageName: string;
   tabType: string;
-  boxSelector: (data: any) => any;
+  statisticsBoxSelector: (
+    companyName: string,
+    aspect: string,
+  ) => FetchBox<{
+    averageRating: number;
+    ratingDistribution: { rating: number; count: number }[];
+    ratingCount: number;
+    summary: string;
+  }>;
+  experiencesBoxSelector: (
+    companyName: string,
+    aspect: string,
+  ) => FetchBox<{ workExperiences: any[]; workExperiencesCount: number }>;
   page: number;
   pageSize: number;
-  averageRating: number;
-  ratingDistribution: { rating: number; count: number }[];
-  ratingCount: number;
-  summary: string;
 };
 
 const Aspect: React.FC<AspectProps> = ({
   title,
-  averageRating,
-  ratingDistribution,
-  ratingCount,
-  summary,
   filterSection,
   pageType,
   pageName,
   tabType,
-  boxSelector,
+  statisticsBoxSelector,
+  experiencesBoxSelector,
   page,
   pageSize,
 }) => {
@@ -56,7 +62,27 @@ const Aspect: React.FC<AspectProps> = ({
         pageType={pageType}
         pageName={pageName}
         tabType={tabType}
-        boxSelector={boxSelector}
+        boxSelector={statisticsBoxSelector}
+        render={({
+          averageRating,
+          ratingDistribution,
+          ratingCount,
+          summary,
+        }) => (
+          <Summary
+            averageRating={averageRating}
+            ratingDistribution={ratingDistribution}
+            ratingCount={ratingCount}
+            summary={summary}
+          />
+        )}
+      />
+      {filterSection || <Filter />}
+      <PageBoxRenderer
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        boxSelector={experiencesBoxSelector}
         render={({
           workExperiences,
           workExperiencesCount: totalCount,
@@ -71,13 +97,6 @@ const Aspect: React.FC<AspectProps> = ({
               totalCount={totalCount}
               page={page}
             />
-            <Summary
-              averageRating={averageRating}
-              ratingDistribution={ratingDistribution}
-              ratingCount={ratingCount}
-              summary={summary}
-            />
-            {filterSection || <Filter />}
             <WorkExperiencesSection
               pageType={pageType}
               pageName={pageName}

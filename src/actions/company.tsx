@@ -1,5 +1,8 @@
+import { ThunkAction } from 'redux-thunk';
+import { AnyAction } from 'redux';
+
 import { isGraphqlError } from 'utils/errors';
-import {
+import FetchBox, {
   isFetching,
   isFetched,
   toFetching,
@@ -18,6 +21,7 @@ import {
   companyTopNJobTitlesBoxSelectorByName,
   companyEsgSalaryDataBoxSelectorByName,
   companyIsSubscribedBoxSelectorByName,
+  companyWorkExperiencesAspectStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   getCompanyTimeAndSalary,
@@ -45,6 +49,8 @@ export const SET_TIME_AND_SALARY_STATISTICS =
   '@@COMPANY/SET_TIME_AND_SALARY_STATISTICS';
 export const SET_INTERVIEW_EXPERIENCES = '@@COMPANY/SET_INTERVIEW_EXPERIENCES';
 export const SET_WORK_EXPERIENCES = '@@COMPANY/SET_WORK_EXPERIENCES';
+export const SET_WORK_EXPERIENCES_ASPECT_STATISTICS =
+  '@@COMPANY/SET_WORK_EXPERIENCES_ASPECT_STATISTICS';
 export const SET_INDEX = '@@COMPANY/SET_INDEX';
 export const SET_INDEX_COUNT = '@@COMPANY/SET_INDEX_COUNT';
 export const SET_COMPANY_TOP_N_JOB_TITLES =
@@ -538,6 +544,119 @@ export const queryCompanyWorkExperiences = ({
     });
   } catch (error) {
     dispatch(setWorkExperiences(companyName, getError(error)));
+  }
+};
+
+const setWorkExperiencesAspectStatistics = (
+  companyName: string,
+  aspect: string,
+  box: any,
+) => ({
+  type: SET_WORK_EXPERIENCES_ASPECT_STATISTICS,
+  companyName,
+  aspect,
+  box,
+});
+
+type QueryCompanyWorkExperiencesAspectStatisticsParams = {
+  companyName: string;
+  aspect: string;
+};
+
+type RatingDistribution = {
+  rating: number;
+  count: number;
+};
+
+type WorkExperiencesAspectStatisticsData = {
+  name: string;
+  aspect: string;
+  averageRating: number;
+  ratingDistribution: RatingDistribution[];
+  ratingCount: number;
+  summary: string;
+};
+
+export const queryCompanyWorkExperiencesAspectStatistics = ({
+  companyName,
+  aspect,
+}: QueryCompanyWorkExperiencesAspectStatisticsParams): ThunkAction<
+  Promise<void>,
+  any,
+  unknown,
+  AnyAction
+> => async (
+  dispatch: (action: AnyAction) => void,
+  getState: () => any,
+): Promise<void> => {
+  const box = companyWorkExperiencesAspectStatisticsBoxSelectorByName(
+    companyName,
+    aspect,
+  )(getState()) as FetchBox<WorkExperiencesAspectStatisticsData>;
+
+  if (
+    isFetching(box) ||
+    (isFetched(box) &&
+      box.data &&
+      box.data.name === companyName &&
+      box.data.aspect == aspect)
+  ) {
+    return;
+  }
+
+  dispatch(
+    setWorkExperiencesAspectStatistics(companyName, aspect, toFetching()),
+  );
+
+  try {
+    // Simulating API response
+    const data: Omit<
+      WorkExperiencesAspectStatisticsData,
+      'name' | 'aspect'
+    > | null = {
+      averageRating: 3.5,
+      ratingDistribution: [
+        { rating: 5, count: 10 },
+        { rating: 4, count: 20 },
+        { rating: 3, count: 30 },
+        { rating: 2, count: 20 },
+        { rating: 1, count: 10 },
+      ],
+      ratingCount: 100,
+      summary: `整體來說，${companyName} 股份有限公司的 ${aspect} 相當高，生理假相對好請，不容易受到主管刁難。薪資分紅的部分，也是業界上非常好的。然而，不同部門加班情況不一，部分部門在旺季時每天平均需要加班2~3 小時。`,
+    };
+
+    // Not found case
+    if (data == null) {
+      return dispatch(
+        setWorkExperiencesAspectStatistics(
+          companyName,
+          aspect,
+          getFetched(data),
+        ),
+      );
+    }
+
+    const workExperiencesAspectStatisticsData: WorkExperiencesAspectStatisticsData = {
+      name: companyName,
+      aspect,
+      averageRating: data.averageRating,
+      ratingDistribution: data.ratingDistribution,
+      ratingCount: data.ratingCount,
+      summary: data.summary,
+    };
+
+    dispatch(
+      setWorkExperiencesAspectStatistics(
+        companyName,
+        aspect,
+        getFetched(workExperiencesAspectStatisticsData),
+      ),
+    );
+  } catch (error) {
+    dispatch(
+      setWorkExperiencesAspectStatistics(companyName, aspect, getError(error)),
+    );
   }
 };
 
