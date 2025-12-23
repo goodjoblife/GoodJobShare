@@ -9,10 +9,10 @@ import WorkExperiencesSection from '../WorkExperiences';
 import Helmet from '../Helmet';
 import styles from './styles.module.css';
 import Filter from './Filter';
+import Summary from './Summary';
 
 export type AspectProps = {
   title: React.ReactNode;
-  summarySection?: React.ReactNode;
   filterSection?: React.ReactNode;
   pageType: string;
   pageName: string;
@@ -20,11 +20,18 @@ export type AspectProps = {
   boxSelector: (data: any) => any;
   page: number;
   pageSize: number;
+  averageRating: number;
+  ratingDistribution: { rating: number; count: number }[];
+  ratingCount: number;
+  summary: string;
 };
 
 const Aspect: React.FC<AspectProps> = ({
   title,
-  summarySection,
+  averageRating,
+  ratingDistribution,
+  ratingCount,
+  summary,
   filterSection,
   pageType,
   pageName,
@@ -64,7 +71,12 @@ const Aspect: React.FC<AspectProps> = ({
               totalCount={totalCount}
               page={page}
             />
-            {summarySection}
+            <Summary
+              averageRating={averageRating}
+              ratingDistribution={ratingDistribution}
+              ratingCount={ratingCount}
+              summary={summary}
+            />
             {filterSection || <Filter />}
             <WorkExperiencesSection
               pageType={pageType}
