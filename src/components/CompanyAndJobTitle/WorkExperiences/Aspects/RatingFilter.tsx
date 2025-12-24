@@ -1,27 +1,30 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDebounce } from 'react-use';
 import cn from 'classnames';
 
-import {
-  FilterOption,
-  RATING_FILTER_OPTIONS,
-  useRatingsToggle,
-} from './useRatings';
+import useRatings, { FilterOption, RATING_FILTER_OPTIONS } from './useRatings';
 import styles from './styles.module.css';
+
+const useRatingsToggle = () => {
+  const [queryRatings, setQueryRatings] = useRatings();
+  const [ratings, setRatings] = useState<number[]>(queryRatings);
+  const toggleRating = useCallback((rating: number) => {
+    setRatings(prev => {
+      if (prev.includes(rating)) {
+        return prev.filter(r => r !== rating);
+      } else {
+        return [...prev, rating];
+      }
+    });
+  }, []);
+
+  useDebounce(() => setQueryRatings(ratings), 800, [ratings]);
+
+  return [ratings, toggleRating];
+};
 
 const RatingFilter: React.FC = () => {
   const [ratings, toggleRating] = useRatingsToggle();
-
-  // Create a debounced version of toggleRating (250ms default)
-  const [debouncedToggleRating] = useDebounce(
-    useCallback(
-      (rating: number) => {
-        toggleRating(rating);
-      },
-      [toggleRating],
-    ),
-    250,
-  );
 
   return (
     <div className={styles.filterContainer}>
@@ -36,7 +39,7 @@ const RatingFilter: React.FC = () => {
               className={cn(styles.optionButton, {
                 [styles.active]: isActive,
               })}
-              onClick={() => debouncedToggleRating(rating)}
+              onClick={() => toggleRating(rating)}
             >
               <input
                 type="checkbox"

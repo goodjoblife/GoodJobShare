@@ -17,7 +17,7 @@ export const RATING_FILTER_OPTIONS: FilterOption[] = [
   { value: 1, label: '非常不滿意' },
 ];
 
-export const useRatings = () => {
+const useRatings = () => {
   const history = useHistory();
   const query = useQuery();
 
@@ -47,21 +47,4 @@ export const useRatings = () => {
   return [ratings, setRatings];
 };
 
-// Clicking a filter updates the query string
-export const useRatingsToggle = () => {
-  const [ratings, setRatings] = useRatings();
-  const toggleRating = useCallback(
-    (rating: number) => {
-      let next: number[];
-      if ((ratings as number[]).includes(rating)) {
-        next = ratings.filter(r => r !== rating);
-      } else {
-        next = [...ratings, rating];
-      }
-      setRatings(next);
-    },
-    [ratings, setRatings],
-  );
-
-  return [ratings, toggleRating];
-};
+export default useRatings;

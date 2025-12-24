@@ -24,7 +24,7 @@ import { isFetched, getFetched } from 'utils/fetchBox';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import useAspect, { aspectSelector } from './useAspect';
 import { ratingsFromQuerySelector } from 'selectors/routing/ratings';
-import { useRatings } from 'components/CompanyAndJobTitle/WorkExperiences/Aspects/useRatings';
+import useRatings from 'components/CompanyAndJobTitle/WorkExperiences/Aspects/useRatings';
 
 const useWorkExperiencesAspectExperiencesBoxSelector = (
   pageName: string,
