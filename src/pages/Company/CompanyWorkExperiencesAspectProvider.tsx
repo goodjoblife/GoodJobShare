@@ -10,30 +10,32 @@ import {
   aspectTranslation,
 } from 'constants/companyJobTitle';
 import {
-  queryCompanyWorkExperiences,
   queryCompanyWorkExperiencesAspectStatistics,
-  queryRatingStatistics,
+  queryCompanyWorkExperiencesAspectExperiences,
 } from 'actions/company';
 import {
-  companyWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName,
   companyWorkExperiencesAspectStatisticsBoxSelectorByName as workExperiencesAspectStatisticsBoxSelectorByName,
+  companyWorkExperiencesAspectExperiencesBoxSelectorByName as workExperiencesAspectExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { pageFromQuerySelector } from 'selectors/routing/page';
-import { searchTextFromQuerySelector } from 'components/CompanyAndJobTitle/Searchbar';
-import {
-  sortByFromQuerySelector,
-  useSortByFromQuery,
-} from 'components/CompanyAndJobTitle/Sorter';
 import { isFetched, getFetched } from 'utils/fetchBox';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
-import useAspect from './useAspect';
+import useAspect, { aspectSelector } from './useAspect';
+import { ratingsFromQuerySelector } from 'selectors/routing/ratings';
+import { useRatings } from 'components/CompanyAndJobTitle/WorkExperiences/Aspects/useRatings';
 
-const useWorkExperiencesAspectExperiencesBoxSelector = (pageName: string) => {
+const useWorkExperiencesAspectExperiencesBoxSelector = (
+  pageName: string,
+  aspect: string,
+) => {
   return useCallback(
     (state: any) => {
-      const box = workExperiencesBoxSelectorByName(pageName)(state);
+      const box = workExperiencesAspectExperiencesBoxSelectorByName(
+        pageName,
+        aspect,
+      )(state);
       if (isFetched(box) && box.data) {
         // Get experience data from state.experiences, which serves
         // as the source of truth of experiences.
@@ -47,7 +49,7 @@ const useWorkExperiencesAspectExperiencesBoxSelector = (pageName: string) => {
       }
       return box;
     },
-    [pageName],
+    [pageName, aspect],
   );
 };
 
@@ -56,7 +58,7 @@ const CompanyWorkExperiencesAspectProvider = () => {
   const pageType = PAGE_TYPE.COMPANY;
   const companyName = useCompanyName();
   const aspect = useAspect();
-  const [sortBy] = useSortByFromQuery();
+  const [ratings] = useRatings();
   const page = usePage();
   const start = ((page as number) - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
@@ -69,14 +71,15 @@ const CompanyWorkExperiencesAspectProvider = () => {
 
   useEffect(() => {
     dispatch(
-      queryCompanyWorkExperiences({
+      queryCompanyWorkExperiencesAspectExperiences({
         companyName,
+        aspect,
+        ratings,
         start,
         limit,
-        sortBy,
       }),
     );
-  }, [dispatch, companyName, start, limit, sortBy]);
+  }, [dispatch, companyName, aspect, ratings, start, limit]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -85,6 +88,7 @@ const CompanyWorkExperiencesAspectProvider = () => {
 
   const experiencesBoxSelector = useWorkExperiencesAspectExperiencesBoxSelector(
     companyName,
+    aspect,
   );
   const statisticsBoxSelector = workExperiencesAspectStatisticsBoxSelectorByName(
     companyName,
@@ -115,24 +119,23 @@ CompanyWorkExperiencesAspectProvider.fetchData = ({
 }) => {
   const params = paramsSelector(props);
   const companyName = companyNameSelector(params);
+  const aspect = aspectSelector(params);
+
   const query = querySelector(props);
+  const ratings = ratingsFromQuerySelector(query);
   const page = pageFromQuerySelector(query) as number;
-  const jobTitle = searchTextFromQuerySelector(query) || undefined;
-  const sortBy = sortByFromQuerySelector(query);
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
-  return Promise.all([
-    dispatch(
-      queryCompanyWorkExperiences({
-        companyName,
-        jobTitle,
-        start,
-        limit,
-        sortBy,
-      }),
-    ),
-    dispatch(queryRatingStatistics(companyName)),
-  ]);
+
+  return dispatch(
+    queryCompanyWorkExperiencesAspectExperiences({
+      companyName,
+      aspect,
+      ratings,
+      start,
+      limit,
+    }),
+  );
 };
 
 export default CompanyWorkExperiencesAspectProvider;

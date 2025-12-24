@@ -8,13 +8,12 @@ import { PageBoxRenderer } from '../../StatusRenderer';
 import WorkExperiencesSection from '../WorkExperiences';
 import Helmet from '../Helmet';
 import styles from './styles.module.css';
-import Filter from './Filter';
+import RatingFilter from './RatingFilter';
 import Summary from './Summary';
 import FetchBox from 'utils/fetchBox';
 
 export type AspectProps = {
   title: React.ReactNode;
-  filterSection?: React.ReactNode;
   pageType: string;
   pageName: string;
   tabType: string;
@@ -37,7 +36,6 @@ export type AspectProps = {
 
 const Aspect: React.FC<AspectProps> = ({
   title,
-  filterSection,
   pageType,
   pageName,
   tabType,
@@ -78,7 +76,7 @@ const Aspect: React.FC<AspectProps> = ({
             />
           )}
         />
-        {filterSection || <Filter />}
+        <RatingFilter />
         <PageBoxRenderer
           pageType={pageType}
           pageName={pageName}

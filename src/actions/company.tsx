@@ -22,6 +22,7 @@ import {
   companyEsgSalaryDataBoxSelectorByName,
   companyIsSubscribedBoxSelectorByName,
   companyWorkExperiencesAspectStatisticsBoxSelectorByName,
+  companyWorkExperiencesAspectExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import {
   getCompanyTimeAndSalary,
@@ -51,6 +52,8 @@ export const SET_INTERVIEW_EXPERIENCES = '@@COMPANY/SET_INTERVIEW_EXPERIENCES';
 export const SET_WORK_EXPERIENCES = '@@COMPANY/SET_WORK_EXPERIENCES';
 export const SET_WORK_EXPERIENCES_ASPECT_STATISTICS =
   '@@COMPANY/SET_WORK_EXPERIENCES_ASPECT_STATISTICS';
+export const SET_WORK_EXPERIENCES_ASPECT_EXPERIENCES =
+  '@@COMPANY/SET_WORK_EXPERIENCES_ASPECT_EXPERIENCES';
 export const SET_INDEX = '@@COMPANY/SET_INDEX';
 export const SET_INDEX_COUNT = '@@COMPANY/SET_INDEX_COUNT';
 export const SET_COMPANY_TOP_N_JOB_TITLES =
@@ -656,6 +659,141 @@ export const queryCompanyWorkExperiencesAspectStatistics = ({
   } catch (error) {
     dispatch(
       setWorkExperiencesAspectStatistics(companyName, aspect, getError(error)),
+    );
+  }
+};
+
+const setWorkExperiencesAspectExperiences = (
+  companyName: string,
+  aspect: string,
+  ratings: number[],
+  start: number,
+  limit: number,
+  box: any,
+) => ({
+  type: SET_WORK_EXPERIENCES_ASPECT_EXPERIENCES,
+  companyName,
+  aspect,
+  ratings,
+  start,
+  limit,
+  box,
+});
+
+type QueryCompanyWorkExperiencesAspectExperiencesParams = {
+  companyName: string;
+  aspect: string;
+  ratings: number[];
+  start: number;
+  limit: number;
+};
+
+type WorkExperiencesAspectExperiencesData = {
+  name: string;
+  aspect: string;
+  ratings: number[];
+  start: number;
+  limit: number;
+  workExperiences: any[];
+  workExperiencesCount: number;
+};
+
+export const queryCompanyWorkExperiencesAspectExperiences = ({
+  companyName,
+  aspect,
+  ratings,
+  start,
+  limit,
+}: QueryCompanyWorkExperiencesAspectExperiencesParams): ThunkAction<
+  Promise<void>,
+  any,
+  unknown,
+  AnyAction
+> => async (
+  dispatch: (action: AnyAction) => void,
+  getState: () => any,
+): Promise<void> => {
+  const box = companyWorkExperiencesAspectExperiencesBoxSelectorByName(
+    companyName,
+    aspect,
+  )(getState()) as FetchBox<WorkExperiencesAspectExperiencesData>;
+
+  if (
+    isFetching(box) ||
+    (isFetched(box) &&
+      box.data &&
+      box.data.name === companyName &&
+      box.data.aspect == aspect &&
+      box.data.ratings == ratings &&
+      box.data.start == start &&
+      box.data.limit == limit)
+  ) {
+    return;
+  }
+
+  dispatch(
+    setWorkExperiencesAspectExperiences(
+      companyName,
+      aspect,
+      ratings,
+      start,
+      limit,
+      toFetching(),
+    ),
+  );
+
+  try {
+    // TODO: Substitute with real API call
+    const data = await getCompanyWorkExperiences({
+      companyName,
+      start,
+      limit,
+    });
+
+    // Not found case
+    if (data === null) {
+      return dispatch(
+        setWorkExperiencesAspectExperiences(
+          companyName,
+          aspect,
+          ratings,
+          start,
+          limit,
+          getFetched(data),
+        ),
+      );
+    }
+
+    const workExperiencesAspectExperiencesData: WorkExperiencesAspectExperiencesData = {
+      name: companyName,
+      aspect,
+      ratings,
+      start,
+      limit,
+      workExperiences: data.workExperiencesResult.workExperiences,
+      workExperiencesCount: data.workExperiencesResult.count,
+    };
+
+    dispatch(
+      setWorkExperiencesAspectExperiences(
+        companyName,
+        aspect,
+        ratings,
+        start,
+        limit,
+        getFetched(workExperiencesAspectExperiencesData),
+      ),
+    );
+  } catch (error) {
+    dispatch(
+      setWorkExperiencesAspectExperiences(
+        companyName,
+        aspect,
+        ratings,
+        start,
+        limit,
+        getError(error),
+      ),
     );
   }
 };

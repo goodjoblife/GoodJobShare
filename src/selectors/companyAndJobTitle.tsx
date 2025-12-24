@@ -80,6 +80,17 @@ export const companyWorkExperiencesAspectStatisticsBoxSelectorByName = (
   );
 };
 
+export const companyWorkExperiencesAspectExperiencesBoxSelectorByName = (
+  companyName: string,
+  aspect: string,
+) => (state: RootState) => {
+  return (
+    R.path([companyName, aspect])(
+      state.companyIndex.workExperiencesAspectExperiencesByName,
+    ) || getUnfetched()
+  );
+};
+
 export const jobTitleIndexesBoxSelectorAtPage = page => state => {
   return state.jobTitleIndex.indexesByPage[page] || getUnfetched();
 };

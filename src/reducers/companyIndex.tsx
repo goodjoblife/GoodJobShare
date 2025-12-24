@@ -14,6 +14,7 @@ import {
   SET_COMPANY_TOP_N_JOB_TITLES,
   SET_COMPANY_ESG_SALARY_DATA,
   SET_IS_SUBSCRIBED,
+  SET_WORK_EXPERIENCES_ASPECT_EXPERIENCES,
 } from 'actions/company';
 
 const preloadedState = {
@@ -29,6 +30,7 @@ const preloadedState = {
   interviewExperiencesByName: {},
   workExperiencesByName: {},
   workExperiencesAspectStatisticsByName: {},
+  workExperiencesAspectExperiencesByName: {},
   isSubscribedByName: {},
   // companyName --> box
   // box.data: null | {all, interview, work, salary}
@@ -122,7 +124,22 @@ const reducer = createReducer(preloadedState, {
       workExperiencesAspectStatisticsByName: {
         ...state.workExperiencesAspectStatisticsByName,
         [companyName]: {
-          ...state.workExperiencesAspectStatisticsByName[companyName],
+          ...(state.workExperiencesAspectStatisticsByName[companyName] || {}),
+          [aspect]: box,
+        },
+      },
+    };
+  },
+  [SET_WORK_EXPERIENCES_ASPECT_EXPERIENCES]: (
+    state,
+    { companyName, aspect, box },
+  ) => {
+    return {
+      ...state,
+      workExperiencesAspectExperiencesByName: {
+        ...state.workExperiencesAspectExperiencesByName,
+        [companyName]: {
+          ...(state.workExperiencesAspectExperiencesByName[companyName] || {}),
           [aspect]: box,
         },
       },
