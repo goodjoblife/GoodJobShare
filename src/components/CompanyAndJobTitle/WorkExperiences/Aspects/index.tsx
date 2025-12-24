@@ -9,27 +9,28 @@ import WorkExperiencesSection from '../WorkExperiences';
 import Helmet from '../Helmet';
 import styles from './styles.module.css';
 import RatingFilter from './RatingFilter';
-import Summary from './Summary';
+import Summary, { SummaryProps } from './Summary';
 import FetchBox from 'utils/fetchBox';
 
+export type AspectStatisticsData = {
+  averageRating: number;
+  ratingDistribution: { rating: number; count: number }[];
+  ratingCount: number;
+  summary: string;
+};
+
+export type AspectExperiencesData = {
+  workExperiences: any[];
+  workExperiencesCount: number;
+};
+
 export type AspectProps = {
-  title: React.ReactNode;
+  title: string;
   pageType: string;
   pageName: string;
   tabType: string;
-  statisticsBoxSelector: (
-    companyName: string,
-    aspect: string,
-  ) => FetchBox<{
-    averageRating: number;
-    ratingDistribution: { rating: number; count: number }[];
-    ratingCount: number;
-    summary: string;
-  }>;
-  experiencesBoxSelector: (
-    companyName: string,
-    aspect: string,
-  ) => FetchBox<{ workExperiences: any[]; workExperiencesCount: number }>;
+  statisticsBoxSelector: (state: any) => FetchBox<AspectStatisticsData>;
+  experiencesBoxSelector: (state: any) => FetchBox<AspectExperiencesData>;
   page: number;
   pageSize: number;
 };
@@ -67,7 +68,7 @@ const Aspect: React.FC<AspectProps> = ({
             ratingDistribution,
             ratingCount,
             summary,
-          }) => (
+          }: SummaryProps) => (
             <Summary
               averageRating={averageRating}
               ratingDistribution={ratingDistribution}

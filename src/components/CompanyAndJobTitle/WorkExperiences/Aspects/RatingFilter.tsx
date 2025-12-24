@@ -6,7 +6,10 @@ import useRatings, { FilterOption, RATING_FILTER_OPTIONS } from './useRatings';
 import styles from './styles.module.css';
 
 const useRatingsToggle = () => {
-  const [queryRatings, setQueryRatings] = useRatings();
+  const ratingsTuple = useRatings();
+  const queryRatings = ratingsTuple[0] as number[];
+  const setQueryRatings = ratingsTuple[1] as (ratings: number[]) => void;
+
   const [ratings, setRatings] = useState<number[]>(queryRatings);
   const toggleRating = useCallback((rating: number) => {
     setRatings(prev => {
@@ -24,7 +27,9 @@ const useRatingsToggle = () => {
 };
 
 const RatingFilter: React.FC = () => {
-  const [ratings, toggleRating] = useRatingsToggle();
+  const ratingsToggle = useRatingsToggle();
+  const ratings = ratingsToggle[0] as number[];
+  const toggleRating = ratingsToggle[1] as (rating: number) => void;
 
   return (
     <div className={styles.filterContainer}>

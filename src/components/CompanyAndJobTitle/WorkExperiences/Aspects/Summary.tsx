@@ -7,12 +7,12 @@ import Pen from 'common/icons/Pen';
 import styles from './styles.module.css';
 import ScoreDistributionChart from './ScoreDistributionChart';
 
-type RatingDistribution = {
+export type RatingDistribution = {
   rating: number;
   count: number;
 };
 
-type SummaryProps = {
+export type SummaryProps = {
   averageRating: number;
   ratingDistribution: RatingDistribution[];
   ratingCount?: number;

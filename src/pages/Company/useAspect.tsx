@@ -1,14 +1,13 @@
-import { useParams, Params } from 'react-router-dom';
+import { Aspect } from 'constants/companyJobTitle';
+import { useParams } from 'react-router-dom';
 
-export const aspectSelector = (
-  params: Record<string, string | undefined>,
-): string => {
+export const aspectSelector = (params: Record<string, string>): Aspect => {
   const aspect = params.aspect;
-  return aspect ? decodeURIComponent(aspect) : '';
+  return (aspect ? decodeURIComponent(aspect) : '') as Aspect;
 };
 
-const useAspect = (): string => {
-  const params = useParams<Params<string>>();
+const useAspect = (): Aspect => {
+  const params = useParams<Record<string, string>>();
   return aspectSelector(params);
 };
 

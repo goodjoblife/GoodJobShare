@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import WorkExperiencesAspect from 'components/CompanyAndJobTitle/WorkExperiences//Aspects';
+import WorkExperiencesAspect, {
+  AspectExperiencesData,
+  AspectStatisticsData,
+} from 'components/CompanyAndJobTitle/WorkExperiences//Aspects';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import {
@@ -20,26 +23,27 @@ import {
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { pageFromQuerySelector } from 'selectors/routing/page';
-import { isFetched, getFetched } from 'utils/fetchBox';
+import FetchBox, { isFetched, getFetched } from 'utils/fetchBox';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import useAspect, { aspectSelector } from './useAspect';
 import { ratingsFromQuerySelector } from 'selectors/routing/ratings';
 import useRatings from 'components/CompanyAndJobTitle/WorkExperiences/Aspects/useRatings';
+import { RootState } from 'reducers';
 
 const useWorkExperiencesAspectExperiencesBoxSelector = (
   pageName: string,
   aspect: string,
-) => {
+): ((state: RootState) => FetchBox<AspectExperiencesData>) => {
   return useCallback(
-    (state: any) => {
+    (state: RootState): FetchBox<AspectExperiencesData> => {
       const box = workExperiencesAspectExperiencesBoxSelectorByName(
         pageName,
         aspect,
-      )(state);
+      )(state) as FetchBox<AspectExperiencesData>;
       if (isFetched(box) && box.data) {
         // Get experience data from state.experiences, which serves
         // as the source of truth of experiences.
-        const data = {
+        const data: AspectExperiencesData = {
           ...box.data,
           workExperiences: box.data.workExperiences.map(
             (e: any) => experienceBoxSelectorAtId(e.id)(state).data || e,
@@ -83,17 +87,17 @@ const CompanyWorkExperiencesAspectProvider = () => {
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
-    fetchPermission();
+    (fetchPermission as () => Promise<void>)();
   }, [pageType, companyName, fetchPermission]);
 
   const experiencesBoxSelector = useWorkExperiencesAspectExperiencesBoxSelector(
     companyName,
     aspect,
-  );
+  ) as ((state: RootState) => FetchBox<AspectExperiencesData>);
   const statisticsBoxSelector = workExperiencesAspectStatisticsBoxSelectorByName(
     companyName,
     aspect,
-  );
+  ) as ((state: RootState) => FetchBox<AspectStatisticsData>);
   const title = aspectTranslation[aspect];
 
   return (
@@ -117,7 +121,7 @@ CompanyWorkExperiencesAspectProvider.fetchData = ({
   store: { dispatch: any };
   [key: string]: any;
 }) => {
-  const params = paramsSelector(props);
+  const params = paramsSelector(props) || {};
   const companyName = companyNameSelector(params);
   const aspect = aspectSelector(params);
 

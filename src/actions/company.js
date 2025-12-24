@@ -1,8 +1,5 @@
-import { ThunkAction } from 'redux-thunk';
-import { AnyAction } from 'redux';
-
 import { isGraphqlError } from 'utils/errors';
-import FetchBox, {
+import {
   isFetching,
   isFetched,
   toFetching,
@@ -550,52 +547,21 @@ export const queryCompanyWorkExperiences = ({
   }
 };
 
-const setWorkExperiencesAspectStatistics = (
-  companyName: string,
-  aspect: string,
-  box: any,
-) => ({
+const setWorkExperiencesAspectStatistics = (companyName, aspect, box) => ({
   type: SET_WORK_EXPERIENCES_ASPECT_STATISTICS,
   companyName,
   aspect,
   box,
 });
 
-type QueryCompanyWorkExperiencesAspectStatisticsParams = {
-  companyName: string;
-  aspect: string;
-};
-
-type RatingDistribution = {
-  rating: number;
-  count: number;
-};
-
-type WorkExperiencesAspectStatisticsData = {
-  name: string;
-  aspect: string;
-  averageRating: number;
-  ratingDistribution: RatingDistribution[];
-  ratingCount: number;
-  summary: string;
-};
-
 export const queryCompanyWorkExperiencesAspectStatistics = ({
   companyName,
   aspect,
-}: QueryCompanyWorkExperiencesAspectStatisticsParams): ThunkAction<
-  Promise<void>,
-  any,
-  unknown,
-  AnyAction
-> => async (
-  dispatch: (action: AnyAction) => void,
-  getState: () => any,
-): Promise<void> => {
+}) => async (dispatch, getState) => {
   const box = companyWorkExperiencesAspectStatisticsBoxSelectorByName(
     companyName,
     aspect,
-  )(getState()) as FetchBox<WorkExperiencesAspectStatisticsData>;
+  )(getState());
 
   if (
     isFetching(box) ||
@@ -613,10 +579,7 @@ export const queryCompanyWorkExperiencesAspectStatistics = ({
 
   try {
     // Simulating API response
-    const data: Omit<
-      WorkExperiencesAspectStatisticsData,
-      'name' | 'aspect'
-    > | null = {
+    const data = {
       averageRating: 3.5,
       ratingDistribution: [
         { rating: 5, count: 10 },
@@ -640,7 +603,7 @@ export const queryCompanyWorkExperiencesAspectStatistics = ({
       );
     }
 
-    const workExperiencesAspectStatisticsData: WorkExperiencesAspectStatisticsData = {
+    const workExperiencesAspectStatisticsData = {
       name: companyName,
       aspect,
       averageRating: data.averageRating,
@@ -664,12 +627,12 @@ export const queryCompanyWorkExperiencesAspectStatistics = ({
 };
 
 const setWorkExperiencesAspectExperiences = (
-  companyName: string,
-  aspect: string,
-  ratings: number[],
-  start: number,
-  limit: number,
-  box: any,
+  companyName,
+  aspect,
+  ratings,
+  start,
+  limit,
+  box,
 ) => ({
   type: SET_WORK_EXPERIENCES_ASPECT_EXPERIENCES,
   companyName,
@@ -680,43 +643,17 @@ const setWorkExperiencesAspectExperiences = (
   box,
 });
 
-type QueryCompanyWorkExperiencesAspectExperiencesParams = {
-  companyName: string;
-  aspect: string;
-  ratings: number[];
-  start: number;
-  limit: number;
-};
-
-type WorkExperiencesAspectExperiencesData = {
-  name: string;
-  aspect: string;
-  ratings: number[];
-  start: number;
-  limit: number;
-  workExperiences: any[];
-  workExperiencesCount: number;
-};
-
 export const queryCompanyWorkExperiencesAspectExperiences = ({
   companyName,
   aspect,
   ratings,
   start,
   limit,
-}: QueryCompanyWorkExperiencesAspectExperiencesParams): ThunkAction<
-  Promise<void>,
-  any,
-  unknown,
-  AnyAction
-> => async (
-  dispatch: (action: AnyAction) => void,
-  getState: () => any,
-): Promise<void> => {
+}) => async (dispatch, getState) => {
   const box = companyWorkExperiencesAspectExperiencesBoxSelectorByName(
     companyName,
     aspect,
-  )(getState()) as FetchBox<WorkExperiencesAspectExperiencesData>;
+  )(getState());
 
   if (
     isFetching(box) ||
@@ -764,7 +701,7 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
       );
     }
 
-    const workExperiencesAspectExperiencesData: WorkExperiencesAspectExperiencesData = {
+    const workExperiencesAspectExperiencesData = {
       name: companyName,
       aspect,
       ratings,

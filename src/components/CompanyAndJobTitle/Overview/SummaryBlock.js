@@ -79,21 +79,7 @@ WorkTimeCard.propTypes = {
   data: PropTypes.object,
 };
 
-interface ScoreCardProps {
-  title: string;
-  value: number;
-  maxValue: number;
-  linkTo: string;
-  dataCount: number;
-}
-
-export const ScoreCard: React.FC<ScoreCardProps> = ({
-  title,
-  value,
-  maxValue,
-  linkTo,
-  dataCount,
-}) => (
+export const ScoreCard = ({ title, value, maxValue, linkTo, dataCount }) => (
   <Card className={cn(styles.card, styles.averageWeekWorkTime)}>
     <AbstractView
       title={title}
@@ -104,6 +90,14 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({
     />
   </Card>
 );
+
+ScoreCard.propTypes = {
+  dataCount: PropTypes.number.isRequired,
+  linkTo: PropTypes.string.isRequired,
+  maxValue: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+};
 
 const WorkLifeBalanceCard = () => {
   const params = useParams();

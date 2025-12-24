@@ -1,5 +1,4 @@
 import R from 'ramda';
-import { RootState } from 'reducers';
 import { getUnfetched, isFetched } from 'utils/fetchBox';
 
 const data = state => state.data;
@@ -70,9 +69,9 @@ export const companyWorkExperiencesBoxSelectorByName = companyName => state => {
 };
 
 export const companyWorkExperiencesAspectStatisticsBoxSelectorByName = (
-  companyName: string,
-  aspect: string,
-) => (state: RootState) => {
+  companyName,
+  aspect,
+) => state => {
   return (
     R.path([companyName, aspect])(
       state.companyIndex.workExperiencesAspectStatisticsByName,
@@ -81,9 +80,9 @@ export const companyWorkExperiencesAspectStatisticsBoxSelectorByName = (
 };
 
 export const companyWorkExperiencesAspectExperiencesBoxSelectorByName = (
-  companyName: string,
-  aspect: string,
-) => (state: RootState) => {
+  companyName,
+  aspect,
+) => state => {
   return (
     R.path([companyName, aspect])(
       state.companyIndex.workExperiencesAspectExperiencesByName,

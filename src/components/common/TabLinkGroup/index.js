@@ -7,10 +7,7 @@ import P from 'common/base/P';
 
 import styles from './styles.module.css';
 
-const encodeFirstIsActive = (to: string, { exact }: { exact?: boolean }) => (
-  _: unknown,
-  location: { pathname: string },
-) => {
+const encodeFirstIsActive = (to, { exact }) => (_, location) => {
   const { pathname } = location;
   const encodedPathname = encodeURI(pathname);
   if (exact) {

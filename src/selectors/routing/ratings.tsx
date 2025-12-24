@@ -4,12 +4,12 @@ import { compose, always, is, ifElse } from 'ramda';
 export const ratingsFromQuerySelector = compose(
   ifElse(
     is(String),
-    value =>
+    (value: string): number[] =>
       value
         .split(',')
-        .map(s => parseInt(s, 10))
+        .map((s: string) => parseInt(s, 10))
         .filter(Number.isFinite),
-    always([]),
+    always([] as number[]),
   ),
-  query => query.rating,
+  (query: { rating?: string | undefined }): string | undefined => query.rating,
 );
