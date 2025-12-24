@@ -1,6 +1,6 @@
 import React from 'react';
 import { generatePath, useParams } from 'react-router';
-import { Heading, Link } from 'common/base';
+import { Heading, Link, Wrapper } from 'common/base';
 import { companyNameSelector } from 'pages/Company/useCompanyName';
 import { companyWorkExperiencesPath } from 'constants/linkTo';
 import CompanyAndJobTitleWrapper from '../../CompanyAndJobTitleWrapper';
@@ -56,59 +56,61 @@ const Aspect: React.FC<AspectProps> = ({
       pageName={pageName}
       tabType={tabType}
     >
-      <Link to={parentPath}>&lt;&lt;回到評價分頁</Link>
-      <Heading className={styles.title}>{title}</Heading>
-      <PageBoxRenderer
-        pageType={pageType}
-        pageName={pageName}
-        tabType={tabType}
-        boxSelector={statisticsBoxSelector}
-        render={({
-          averageRating,
-          ratingDistribution,
-          ratingCount,
-          summary,
-        }) => (
-          <Summary
-            averageRating={averageRating}
-            ratingDistribution={ratingDistribution}
-            ratingCount={ratingCount}
-            summary={summary}
-          />
-        )}
-      />
-      {filterSection || <Filter />}
-      <PageBoxRenderer
-        pageType={pageType}
-        pageName={pageName}
-        tabType={tabType}
-        boxSelector={experiencesBoxSelector}
-        render={({
-          workExperiences,
-          workExperiencesCount: totalCount,
-        }: {
-          workExperiences: any; // eslint-disable-line react/no-unused-prop-types
-          workExperiencesCount: number; // eslint-disable-line react/no-unused-prop-types
-        }) => (
-          <>
-            <Helmet
-              pageType={pageType}
-              pageName={pageName}
-              totalCount={totalCount}
-              page={page}
+      <Wrapper size="l">
+        <Link to={parentPath}>&lt;&lt;回到評價分頁</Link>
+        <Heading className={styles.title}>{title}</Heading>
+        <PageBoxRenderer
+          pageType={pageType}
+          pageName={pageName}
+          tabType={tabType}
+          boxSelector={statisticsBoxSelector}
+          render={({
+            averageRating,
+            ratingDistribution,
+            ratingCount,
+            summary,
+          }) => (
+            <Summary
+              averageRating={averageRating}
+              ratingDistribution={ratingDistribution}
+              ratingCount={ratingCount}
+              summary={summary}
             />
-            <WorkExperiencesSection
-              pageType={pageType}
-              pageName={pageName}
-              tabType={tabType}
-              data={workExperiences}
-              page={page}
-              pageSize={pageSize}
-              totalCount={totalCount}
-            />
-          </>
-        )}
-      />
+          )}
+        />
+        {filterSection || <Filter />}
+        <PageBoxRenderer
+          pageType={pageType}
+          pageName={pageName}
+          tabType={tabType}
+          boxSelector={experiencesBoxSelector}
+          render={({
+            workExperiences,
+            workExperiencesCount: totalCount,
+          }: {
+            workExperiences: any; // eslint-disable-line react/no-unused-prop-types
+            workExperiencesCount: number; // eslint-disable-line react/no-unused-prop-types
+          }) => (
+            <>
+              <Helmet
+                pageType={pageType}
+                pageName={pageName}
+                totalCount={totalCount}
+                page={page}
+              />
+              <WorkExperiencesSection
+                pageType={pageType}
+                pageName={pageName}
+                tabType={tabType}
+                data={workExperiences}
+                page={page}
+                pageSize={pageSize}
+                totalCount={totalCount}
+              />
+            </>
+          )}
+        />
+      </Wrapper>
     </CompanyAndJobTitleWrapper>
   );
 };
