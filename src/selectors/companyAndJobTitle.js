@@ -68,25 +68,17 @@ export const companyWorkExperiencesBoxSelectorByName = companyName => state => {
   );
 };
 
-export const companyWorkExperiencesAspectStatisticsBoxSelectorByName = (
-  companyName,
-  aspect,
-) => state => {
+export const companyWorkExperiencesAspectStatisticsBoxSelectorByName = companyName => state => {
   return (
-    R.path([companyName, aspect])(
-      state.companyIndex.workExperiencesAspectStatisticsByName,
-    ) || getUnfetched()
+    state.companyIndex.workExperiencesAspectStatisticsByName[companyName] ||
+    getUnfetched()
   );
 };
 
-export const companyWorkExperiencesAspectExperiencesBoxSelectorByName = (
-  companyName,
-  aspect,
-) => state => {
+export const companyWorkExperiencesAspectExperiencesBoxSelectorByName = companyName => state => {
   return (
-    R.path([companyName, aspect])(
-      state.companyIndex.workExperiencesAspectExperiencesByName,
-    ) || getUnfetched()
+    state.companyIndex.workExperiencesAspectExperiencesByName[companyName] ||
+    getUnfetched()
   );
 };
 

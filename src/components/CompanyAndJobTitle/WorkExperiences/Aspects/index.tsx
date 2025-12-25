@@ -9,14 +9,25 @@ import WorkExperiencesSection from '../WorkExperiences';
 import Helmet from '../Helmet';
 import styles from './styles.module.css';
 import RatingFilter from './RatingFilter';
-import Summary, { SummaryProps } from './Summary';
+import Summary from './Summary';
 import FetchBox from 'utils/fetchBox';
+import { Aspect, aspectTranslation } from 'constants/companyJobTitle';
 
-export type AspectStatisticsData = {
+export type RatingDistribution = {
+  rating: number;
+  count: number;
+};
+
+export type AspectStatistics = {
+  aspect: Aspect;
   averageRating: number;
-  ratingDistribution: { rating: number; count: number }[];
+  ratingDistribution: RatingDistribution[];
   ratingCount: number;
   summary: string;
+};
+
+export type AspectStatisticsData = {
+  companyAspectRatingStatistics: AspectStatistics[];
 };
 
 export type AspectExperiencesData = {
@@ -25,7 +36,7 @@ export type AspectExperiencesData = {
 };
 
 export type AspectProps = {
-  title: string;
+  aspect: Aspect;
   pageType: string;
   pageName: string;
   tabType: string;
@@ -35,8 +46,8 @@ export type AspectProps = {
   pageSize: number;
 };
 
-const Aspect: React.FC<AspectProps> = ({
-  title,
+const AspectSection: React.FC<AspectProps> = ({
+  aspect,
   pageType,
   pageName,
   tabType,
@@ -48,6 +59,7 @@ const Aspect: React.FC<AspectProps> = ({
   const params = useParams();
   const companyName = companyNameSelector(params);
   const parentPath = generatePath(companyWorkExperiencesPath, { companyName });
+  const title = aspectTranslation[aspect];
 
   return (
     <CompanyAndJobTitleWrapper
@@ -63,19 +75,27 @@ const Aspect: React.FC<AspectProps> = ({
           pageName={pageName}
           tabType={tabType}
           boxSelector={statisticsBoxSelector}
-          render={({
-            averageRating,
-            ratingDistribution,
-            ratingCount,
-            summary,
-          }: SummaryProps) => (
-            <Summary
-              averageRating={averageRating}
-              ratingDistribution={ratingDistribution}
-              ratingCount={ratingCount}
-              summary={summary}
-            />
-          )}
+          render={(data: AspectStatisticsData) => {
+            const items = data.companyAspectRatingStatistics;
+            const item = items.find(item => item.aspect === aspect);
+            if (!item) return null;
+
+            const {
+              averageRating,
+              ratingDistribution,
+              ratingCount,
+              summary,
+            } = item;
+
+            return (
+              <Summary
+                averageRating={averageRating}
+                ratingDistribution={ratingDistribution}
+                ratingCount={ratingCount}
+                summary={summary}
+              />
+            );
+          }}
         />
         <RatingFilter />
         <PageBoxRenderer
@@ -114,4 +134,4 @@ const Aspect: React.FC<AspectProps> = ({
   );
 };
 
-export default Aspect;
+export default AspectSection;

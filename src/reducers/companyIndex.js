@@ -115,33 +115,21 @@ const reducer = createReducer(preloadedState, {
       },
     };
   },
-  [SET_WORK_EXPERIENCES_ASPECT_STATISTICS]: (
-    state,
-    { companyName, aspect, box },
-  ) => {
+  [SET_WORK_EXPERIENCES_ASPECT_STATISTICS]: (state, { companyName, box }) => {
     return {
       ...state,
       workExperiencesAspectStatisticsByName: {
         ...state.workExperiencesAspectStatisticsByName,
-        [companyName]: {
-          ...(state.workExperiencesAspectStatisticsByName[companyName] || {}),
-          [aspect]: box,
-        },
+        [companyName]: box,
       },
     };
   },
-  [SET_WORK_EXPERIENCES_ASPECT_EXPERIENCES]: (
-    state,
-    { companyName, aspect, box },
-  ) => {
+  [SET_WORK_EXPERIENCES_ASPECT_EXPERIENCES]: (state, { companyName, box }) => {
     return {
       ...state,
       workExperiencesAspectExperiencesByName: {
         ...state.workExperiencesAspectExperiencesByName,
-        [companyName]: {
-          ...(state.workExperiencesAspectExperiencesByName[companyName] || {}),
-          [aspect]: box,
-        },
+        [companyName]: box,
       },
     };
   },

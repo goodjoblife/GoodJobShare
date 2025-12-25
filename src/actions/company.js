@@ -28,6 +28,7 @@ import {
   queryCompaniesApi,
   getCompanyTimeAndSalaryStatistics,
   getCompanyTopNJobTitles,
+  getCompanyWorkExperiencesAspectRatingStatistics,
 } from 'apis/company';
 import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
 import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
@@ -547,99 +548,59 @@ export const queryCompanyWorkExperiences = ({
   }
 };
 
-const setWorkExperiencesAspectStatistics = (companyName, aspect, box) => ({
+const setWorkExperiencesAspectStatistics = (companyName, box) => ({
   type: SET_WORK_EXPERIENCES_ASPECT_STATISTICS,
   companyName,
-  aspect,
   box,
 });
 
 export const queryCompanyWorkExperiencesAspectStatistics = ({
   companyName,
-  aspect,
 }) => async (dispatch, getState) => {
   const box = companyWorkExperiencesAspectStatisticsBoxSelectorByName(
     companyName,
-    aspect,
   )(getState());
 
   if (
     isFetching(box) ||
-    (isFetched(box) &&
-      box.data &&
-      box.data.name === companyName &&
-      box.data.aspect == aspect)
+    (isFetched(box) && box.data && box.data.name === companyName)
   ) {
     return;
   }
 
-  dispatch(
-    setWorkExperiencesAspectStatistics(companyName, aspect, toFetching()),
-  );
+  dispatch(setWorkExperiencesAspectStatistics(companyName, toFetching()));
 
   try {
-    // Simulating API response
-    const data = {
-      averageRating: 3.5,
-      ratingDistribution: [
-        { rating: 5, count: 10 },
-        { rating: 4, count: 20 },
-        { rating: 3, count: 30 },
-        { rating: 2, count: 20 },
-        { rating: 1, count: 10 },
-      ],
-      ratingCount: 100,
-      summary: `整體來說，${companyName} 股份有限公司的 ${aspect} 相當高，生理假相對好請，不容易受到主管刁難。薪資分紅的部分，也是業界上非常好的。然而，不同部門加班情況不一，部分部門在旺季時每天平均需要加班2~3 小時。`,
-    };
+    const data = await getCompanyWorkExperiencesAspectRatingStatistics({
+      companyName,
+    });
 
     // Not found case
     if (data == null) {
       return dispatch(
-        setWorkExperiencesAspectStatistics(
-          companyName,
-          aspect,
-          getFetched(data),
-        ),
+        setWorkExperiencesAspectStatistics(companyName, getFetched(data)),
       );
     }
 
     const workExperiencesAspectStatisticsData = {
       name: companyName,
-      aspect,
-      averageRating: data.averageRating,
-      ratingDistribution: data.ratingDistribution,
-      ratingCount: data.ratingCount,
-      summary: data.summary,
+      companyAspectRatingStatistics: data.companyAspectRatingStatistics,
     };
 
     dispatch(
       setWorkExperiencesAspectStatistics(
         companyName,
-        aspect,
         getFetched(workExperiencesAspectStatisticsData),
       ),
     );
   } catch (error) {
-    dispatch(
-      setWorkExperiencesAspectStatistics(companyName, aspect, getError(error)),
-    );
+    dispatch(setWorkExperiencesAspectStatistics(companyName, getError(error)));
   }
 };
 
-const setWorkExperiencesAspectExperiences = (
-  companyName,
-  aspect,
-  ratings,
-  start,
-  limit,
-  box,
-) => ({
+const setWorkExperiencesAspectExperiences = (companyName, box) => ({
   type: SET_WORK_EXPERIENCES_ASPECT_EXPERIENCES,
   companyName,
-  aspect,
-  ratings,
-  start,
-  limit,
   box,
 });
 
@@ -652,7 +613,6 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
 }) => async (dispatch, getState) => {
   const box = companyWorkExperiencesAspectExperiencesBoxSelectorByName(
     companyName,
-    aspect,
   )(getState());
 
   if (
@@ -660,7 +620,6 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
     (isFetched(box) &&
       box.data &&
       box.data.name === companyName &&
-      box.data.aspect == aspect &&
       box.data.ratings == ratings &&
       box.data.start == start &&
       box.data.limit == limit)
@@ -668,16 +627,7 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
     return;
   }
 
-  dispatch(
-    setWorkExperiencesAspectExperiences(
-      companyName,
-      aspect,
-      ratings,
-      start,
-      limit,
-      toFetching(),
-    ),
-  );
+  dispatch(setWorkExperiencesAspectExperiences(companyName, toFetching()));
 
   try {
     // TODO: Substitute with real API call
@@ -690,14 +640,7 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
     // Not found case
     if (data === null) {
       return dispatch(
-        setWorkExperiencesAspectExperiences(
-          companyName,
-          aspect,
-          ratings,
-          start,
-          limit,
-          getFetched(data),
-        ),
+        setWorkExperiencesAspectExperiences(companyName, getFetched(data)),
       );
     }
 
@@ -714,24 +657,11 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
     dispatch(
       setWorkExperiencesAspectExperiences(
         companyName,
-        aspect,
-        ratings,
-        start,
-        limit,
         getFetched(workExperiencesAspectExperiencesData),
       ),
     );
   } catch (error) {
-    dispatch(
-      setWorkExperiencesAspectExperiences(
-        companyName,
-        aspect,
-        ratings,
-        start,
-        limit,
-        getError(error),
-      ),
-    );
+    dispatch(setWorkExperiencesAspectExperiences(companyName, getError(error)));
   }
 };
 

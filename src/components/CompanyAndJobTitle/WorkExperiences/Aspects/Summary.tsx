@@ -6,16 +6,12 @@ import Pen from 'common/icons/Pen';
 
 import styles from './styles.module.css';
 import ScoreDistributionChart from './ScoreDistributionChart';
+import { RatingDistribution } from '.';
 
-export type RatingDistribution = {
-  rating: number;
-  count: number;
-};
-
-export type SummaryProps = {
+type SummaryProps = {
   averageRating: number;
   ratingDistribution: RatingDistribution[];
-  ratingCount?: number;
+  ratingCount: number;
   summary: string;
 };
 

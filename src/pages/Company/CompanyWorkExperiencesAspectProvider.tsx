@@ -10,7 +10,7 @@ import {
   tabType as TAB_TYPE,
   pageType as PAGE_TYPE,
   PAGE_SIZE,
-  aspectTranslation,
+  Aspect,
 } from 'constants/companyJobTitle';
 import {
   queryCompanyWorkExperiencesAspectStatistics,
@@ -32,14 +32,13 @@ import { RootState } from 'reducers';
 
 const useWorkExperiencesAspectExperiencesBoxSelector = (
   pageName: string,
-  aspect: string,
+  aspect: Aspect,
 ): ((state: RootState) => FetchBox<AspectExperiencesData>) => {
   return useCallback(
     (state: RootState): FetchBox<AspectExperiencesData> => {
-      const box = workExperiencesAspectExperiencesBoxSelectorByName(
-        pageName,
-        aspect,
-      )(state) as FetchBox<AspectExperiencesData>;
+      const box = workExperiencesAspectExperiencesBoxSelectorByName(pageName)(
+        state,
+      ) as FetchBox<AspectExperiencesData>;
       if (isFetched(box) && box.data) {
         // Get experience data from state.experiences, which serves
         // as the source of truth of experiences.
@@ -53,7 +52,7 @@ const useWorkExperiencesAspectExperiencesBoxSelector = (
       }
       return box;
     },
-    [pageName, aspect],
+    [pageName],
   );
 };
 
@@ -68,9 +67,7 @@ const CompanyWorkExperiencesAspectProvider = () => {
   const limit = PAGE_SIZE;
 
   useEffect(() => {
-    dispatch(
-      queryCompanyWorkExperiencesAspectStatistics({ companyName, aspect }),
-    );
+    dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName }));
   }, [dispatch, companyName, aspect]);
 
   useEffect(() => {
@@ -90,19 +87,18 @@ const CompanyWorkExperiencesAspectProvider = () => {
     (fetchPermission as () => Promise<void>)();
   }, [pageType, companyName, fetchPermission]);
 
+  const statisticsBoxSelector = workExperiencesAspectStatisticsBoxSelectorByName(
+    companyName,
+  ) as ((state: RootState) => FetchBox<AspectStatisticsData>);
+
   const experiencesBoxSelector = useWorkExperiencesAspectExperiencesBoxSelector(
     companyName,
     aspect,
   ) as ((state: RootState) => FetchBox<AspectExperiencesData>);
-  const statisticsBoxSelector = workExperiencesAspectStatisticsBoxSelectorByName(
-    companyName,
-    aspect,
-  ) as ((state: RootState) => FetchBox<AspectStatisticsData>);
-  const title = aspectTranslation[aspect];
 
   return (
     <WorkExperiencesAspect
-      title={title}
+      aspect={aspect}
       pageType={pageType}
       pageName={companyName}
       page={page as number}
