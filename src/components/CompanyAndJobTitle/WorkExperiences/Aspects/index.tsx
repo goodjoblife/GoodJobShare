@@ -77,7 +77,7 @@ const AspectSection: React.FC<AspectProps> = ({
           boxSelector={statisticsBoxSelector}
           render={(data: AspectStatisticsData) => {
             const items = data.companyAspectRatingStatistics;
-            const item = items.find(item => item.aspect === aspect);
+            const item = items.find(item => item.aspect === title);
             if (!item) return null;
 
             const {
