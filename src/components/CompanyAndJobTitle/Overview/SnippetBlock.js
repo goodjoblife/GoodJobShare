@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
 import EmptyView from '../EmptyView';
 import styles from './Overview.module.css';
-import { Heading, Link } from 'common/base';
+import { Heading } from 'common/base';
 
 const SnippetBlock = ({
   title,
@@ -26,7 +27,7 @@ const SnippetBlock = ({
       <React.Fragment>
         {children}
         {linkText && (
-          <Link to={linkTo} className={styles.link}>
+          <Link className={styles.link} to={linkTo}>
             {linkText}
           </Link>
         )}
