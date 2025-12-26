@@ -1,5 +1,5 @@
 import React from 'react';
-import { generatePath, useParams, Params } from 'react-router';
+import { generatePath, useParams } from 'react-router';
 import { Aspect } from 'constants/companyJobTitle';
 import { companyNameSelector } from 'pages/Company/useCompanyName';
 import { companyWorkExperiencesAspectPath } from 'constants/linkTo';
@@ -40,8 +40,8 @@ const ScoreCard: React.FC<ScoreCardProps> = ({
 export default ScoreCard;
 
 export const WorkLifeBalanceCard: React.FC = () => {
-  const params = useParams();
-  const companyName = companyNameSelector(params as Params<string>);
+  const params = useParams<string>();
+  const companyName = companyNameSelector(params);
   const path = generatePath(companyWorkExperiencesAspectPath, {
     companyName,
     aspect: Aspect.WORK_LIFE_BALANCE,
@@ -58,8 +58,8 @@ export const WorkLifeBalanceCard: React.FC = () => {
 };
 
 export const GenderScoreCard: React.FC = () => {
-  const params = useParams();
-  const companyName = companyNameSelector(params as Params<string>);
+  const params = useParams<string>();
+  const companyName = companyNameSelector(params);
   const path = generatePath(companyWorkExperiencesAspectPath, {
     companyName,
     aspect: Aspect.GENDER,
