@@ -117,7 +117,7 @@ CompanyWorkExperiencesAspectProvider.fetchData = ({
   store: { dispatch: any };
   [key: string]: any;
 }) => {
-  const params = paramsSelector(props) || {};
+  const params = (paramsSelector(props) || {}) as Record<string, string>;
   const companyName = companyNameSelector(params);
   const aspect = aspectSelector(params);
 
