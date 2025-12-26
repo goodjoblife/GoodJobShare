@@ -50,6 +50,12 @@
   }
 }
 
+.scoreCards {
+  display: flex;
+  gap: 21px;
+  margin-bottom: 50px;
+}
+
 .experience + .experience {
   margin-top: 75px;
 }

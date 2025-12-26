@@ -8,6 +8,7 @@ import Searchbar from '../Searchbar';
 import Sorter from '../Sorter';
 import styles from '../styles.module.css';
 import { Wrapper } from 'common/base';
+import { GenderScoreCard, WorkLifeBalanceCard } from '../Overview/ScoreCard';
 
 const WorkExperiences = ({
   pageType,
@@ -22,6 +23,12 @@ const WorkExperiences = ({
     pageName={pageName}
     tabType={tabType}
   >
+    <Wrapper size="l">
+      <div className={styles.scoreCards}>
+        <GenderScoreCard />
+        <WorkLifeBalanceCard />
+      </div>
+    </Wrapper>
     <Wrapper size="m">
       <div className={styles.interactive}>
         <Searchbar pageType={pageType} tabType={tabType} />
