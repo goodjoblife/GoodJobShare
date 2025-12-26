@@ -10,6 +10,7 @@ import {
   queryCompanyOverview,
   queryCompanyOverviewStatistics,
   queryCompanyTopNJobTitles,
+  queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
 import {
@@ -53,6 +54,10 @@ const CompanyOverviewProvider = () => {
 
   useEffect(() => {
     dispatch(queryRatingStatistics(companyName));
+  }, [dispatch, companyName]);
+
+  useEffect(() => {
+    dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName }));
   }, [dispatch, companyName]);
 
   useEffect(() => {
@@ -103,6 +108,7 @@ CompanyOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
     dispatch(queryCompanyOverview(companyName)),
     dispatch(queryCompanyOverviewStatistics(companyName)),
     dispatch(queryRatingStatistics(companyName)),
+    dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName })),
     dispatch(queryCompanyTopNJobTitles({ companyName })),
   ]);
 };
