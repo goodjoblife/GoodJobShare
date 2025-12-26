@@ -8,6 +8,10 @@
     flex-direction: column;
     align-items: flex-start;
   }
+
+  > * + * {
+    margin-left: 21px;
+  }
 }
 
 .barChart,
@@ -17,6 +21,7 @@
 }
 
 .card {
+  width: 300px;
   height: 265px;
 }
 
@@ -42,8 +47,6 @@
 }
 
 .averageWeekWorkTime {
-  margin-left: 21px;
-
   @media (max-width: below-tablet) {
     width: 100%;
     margin-left: 0;
@@ -52,12 +55,13 @@
 }
 
 .averageWeekWorkTimeView {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   padding: 4px;
-  margin: 0 auto;
+  width: 100%;
 
   .title {
     font-size: 18px;
@@ -79,5 +83,12 @@
     font-size: 14px;
     line-height: 1.64;
     color: #969696;
+  }
+
+  .link {
+    display: block;
+    width: 100%;
+    text-align: right;
+    font-weight: 600;
   }
 }

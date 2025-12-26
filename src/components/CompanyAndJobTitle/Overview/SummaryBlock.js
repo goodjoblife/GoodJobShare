@@ -1,15 +1,22 @@
 import React from 'react';
+import { generatePath, useParams } from 'react-router';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import loadable from '@loadable/component';
 
+import { companyNameSelector } from 'pages/Company/useCompanyName';
+import { companyWorkExperiencesAspectPath } from 'constants/linkTo';
+
 import Card from 'common/Card';
-import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
+import AverageWeekWorkTimeView, {
+  AbstractView,
+} from './AverageWeekWorkTimeView';
 import styles from './SummaryBlock.module.css';
 import useMobile from 'hooks/useMobile';
 
 import emptySalaryImage from './empty_data_salary.png';
 import emptyWorkTimeImage from './empty_data_working_time.png';
+import { Aspect } from 'constants/companyJobTitle';
 
 const SalaryDistributionChart = loadable(() =>
   import('common/Charts/SalaryDistributionChart'),
@@ -72,6 +79,44 @@ WorkTimeCard.propTypes = {
   data: PropTypes.object,
 };
 
+export const ScoreCard = ({ title, value, maxValue, linkTo, dataCount }) => (
+  <Card className={cn(styles.card, styles.averageWeekWorkTime)}>
+    <AbstractView
+      title={title}
+      value={value.toFixed(1)}
+      valueSuffix={`/ ${maxValue.toFixed(1)}`}
+      linkTo={linkTo}
+      footer={`查看 ${dataCount} 筆資料>>`}
+    />
+  </Card>
+);
+
+ScoreCard.propTypes = {
+  dataCount: PropTypes.number.isRequired,
+  linkTo: PropTypes.string.isRequired,
+  maxValue: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+const WorkLifeBalanceCard = () => {
+  const params = useParams();
+  const companyName = companyNameSelector(params);
+  const path = generatePath(companyWorkExperiencesAspectPath, {
+    companyName,
+    aspect: Aspect.WORK_LIFE_BALANCE,
+  });
+  return (
+    <ScoreCard
+      title="工作與生活平衡"
+      value={3.7}
+      maxValue={5}
+      linkTo={path}
+      dataCount={100}
+    />
+  );
+};
+
 const SummaryBlock = ({
   salaryDistribution,
   jobAverageSalaries,
@@ -93,6 +138,7 @@ const SummaryBlock = ({
         overtimeFrequencyCount={overtimeFrequencyCount}
       />
     </WorkTimeCard>
+    <WorkLifeBalanceCard />
   </div>
 );
 
