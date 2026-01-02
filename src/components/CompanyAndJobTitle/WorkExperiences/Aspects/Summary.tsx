@@ -50,10 +50,14 @@ const Summary: React.FC<SummaryProps> = ({
           <ScoreDistributionChart data={rows} />
         </div>
       </div>
-      <p className={styles.summaryText}>{summary}</p>
-      <p className={styles.summaryNote}>
-        <Pen /> 本段評論由 ChatGPT 總結共 {totalCount} 篇評論內容
-      </p>
+      {summary && (
+        <>
+          <p className={styles.summaryText}>{summary}</p>
+          <p className={styles.summaryNote}>
+            <Pen /> 本段評論由 ChatGPT 總結共 {totalCount} 篇評論內容
+          </p>
+        </>
+      )}
     </Card>
   );
 };
