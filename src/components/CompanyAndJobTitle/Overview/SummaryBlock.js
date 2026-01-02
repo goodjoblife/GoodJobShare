@@ -10,6 +10,7 @@ import useMobile from 'hooks/useMobile';
 
 import emptySalaryImage from './empty_data_salary.png';
 import emptyWorkTimeImage from './empty_data_working_time.png';
+import { WorkLifeBalanceCard } from './ScoreCard';
 
 const SalaryDistributionChart = loadable(() =>
   import('common/Charts/SalaryDistributionChart'),
@@ -93,6 +94,7 @@ const SummaryBlock = ({
         overtimeFrequencyCount={overtimeFrequencyCount}
       />
     </WorkTimeCard>
+    <WorkLifeBalanceCard />
   </div>
 );
 

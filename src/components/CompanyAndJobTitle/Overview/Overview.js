@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Section } from 'common/base';
 
 import SnippetBlock from './SnippetBlock';
-import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import {
@@ -15,6 +14,7 @@ import {
 import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
 import BoxRenderer from '../StatusRenderer';
+import { GenderScoreCard } from './ScoreCard';
 import { fetchBoxPropType } from 'utils/fetchBox';
 
 const Overview = ({
@@ -62,11 +62,9 @@ const Overview = ({
             />
           )}
         />
-        <WorkingHourTable
-          data={salaryWorkTimes}
-          pageType={pageType}
-          onCloseReport={onCloseReport}
-        />
+      </SnippetBlock>
+      <SnippetBlock title="性別友善">
+        <GenderScoreCard />
       </SnippetBlock>
       <SnippetBlock
         title={TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.WORK_EXPERIENCE]}
