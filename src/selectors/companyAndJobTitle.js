@@ -68,6 +68,20 @@ export const companyWorkExperiencesBoxSelectorByName = companyName => state => {
   );
 };
 
+export const companyWorkExperiencesAspectStatisticsBoxSelectorByName = companyName => state => {
+  return (
+    state.companyIndex.workExperiencesAspectStatisticsByName[companyName] ||
+    getUnfetched()
+  );
+};
+
+export const companyWorkExperiencesAspectExperiencesBoxSelectorByName = companyName => state => {
+  return (
+    state.companyIndex.workExperiencesAspectExperiencesByName[companyName] ||
+    getUnfetched()
+  );
+};
+
 export const jobTitleIndexesBoxSelectorAtPage = page => state => {
   return state.jobTitleIndex.indexesByPage[page] || getUnfetched();
 };

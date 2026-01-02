@@ -51,6 +51,16 @@ const tabTypeURLMap: Record<TabType, string> = {
   [TabType.INTERVIEW_EXPERIENCE]: 'interview-experiences',
 };
 
+export enum Aspect {
+  GENDER = 'gender',
+  WORK_LIFE_BALANCE = 'work-life-balance',
+}
+
+export const aspectTranslation = {
+  [Aspect.GENDER]: '性別友善度',
+  [Aspect.WORK_LIFE_BALANCE]: '工作與生活平衡',
+};
+
 export const generatePageURL = ({
   pageName,
   pageType,
