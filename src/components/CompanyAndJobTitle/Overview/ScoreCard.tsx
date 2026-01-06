@@ -46,6 +46,7 @@ export const WorkLifeBalanceCard: React.FC = () => {
     companyName,
     aspect: Aspect.WORK_LIFE_BALANCE,
   });
+  // TODO: Integrate with API
   return (
     <ScoreCard
       title="工作與生活平衡"
@@ -64,6 +65,7 @@ export const GenderScoreCard: React.FC = () => {
     companyName,
     aspect: Aspect.GENDER,
   });
+  // TODO: Integrate with API
   return (
     <ScoreCard
       title="性別友善度"
