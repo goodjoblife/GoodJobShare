@@ -47,7 +47,9 @@ const Summary: React.FC<SummaryProps> = ({
           <div className={styles.meta}>評分人數：{totalCount}</div>
         </div>
         <div className={styles.distribution}>
-          <ScoreDistributionChart data={rows} />
+          <div className={styles.scoreDistribution}>
+            <ScoreDistributionChart data={rows} />
+          </div>
         </div>
       </div>
       {summary && (

@@ -36,8 +36,10 @@
 
     .distribution {
       flex: 1;
-      width: 300px;
-      height: 100px;
+      .scoreDistribution {
+        width: 300px;
+        height: 100px;
+      }
     }
   }
 
