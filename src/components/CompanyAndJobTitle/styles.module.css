@@ -54,6 +54,11 @@
   display: flex;
   gap: 21px;
   margin-bottom: 50px;
+
+  @media (max-width: below-mobile) {
+    flex-direction: column;
+    gap: 14px;
+  }
 }
 
 .experience + .experience {
