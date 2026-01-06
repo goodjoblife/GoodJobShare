@@ -29,7 +29,14 @@ const ScoreDistributionChart: React.FC<ScoreDistributionChartProps> = ({
           dataKey="count"
           fill="#fcd406"
           barSize={8}
-          label={{ fill: '#333', fontSize: '12px' }}
+          minPointSize={1}
+          label={({ value, x, y, width, height }) =>
+            value && (
+              <text x={x + width} y={y + height} fill="#333" fontSize="12px">
+                {value}
+              </text>
+            )
+          }
         />
       </BarChart>
     </ResponsiveContainer>
