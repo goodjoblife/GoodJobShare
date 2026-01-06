@@ -25,17 +25,20 @@ const ScoreCard: React.FC<ScoreCardProps> = ({
   maxValue,
   linkTo,
   dataCount,
-}) => (
-  <Card className={cn(styles.card, styles.averageWeekWorkTime)}>
-    <AbstractView
-      title={title}
-      value={value.toFixed(1)}
-      valueSuffix={`/ ${maxValue.toFixed(1)}`}
-      linkTo={linkTo}
-      footer={`查看 ${dataCount} 筆資料>>`}
-    />
-  </Card>
-);
+}) => {
+  if (dataCount === 0) return null;
+  return (
+    <Card className={cn(styles.card, styles.averageWeekWorkTime)}>
+      <AbstractView
+        title={title}
+        value={value.toFixed(1)}
+        valueSuffix={`/ ${maxValue.toFixed(1)}`}
+        linkTo={linkTo}
+        footer={`查看 ${dataCount} 筆資料>>`}
+      />
+    </Card>
+  );
+};
 
 export default ScoreCard;
 
