@@ -7,15 +7,38 @@ import SnippetBlock from './SnippetBlock';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import {
+  Aspect,
   tabType as TAB_TYPE,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
   generateTabURL,
 } from 'constants/companyJobTitle';
 import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
+import useCompanyName from 'pages/Company/useCompanyName';
 import BoxRenderer from '../StatusRenderer';
-import { GenderScoreCard } from './ScoreCard';
 import { fetchBoxPropType } from 'utils/fetchBox';
+import AspectScoreCard from './AspectScoreCard';
+import useAspectData from './useAspectData';
+
+const GenderAspectSnippetBlock = () => {
+  const companyName = useCompanyName();
+
+  const aspect = Aspect.GENDER;
+  const data = useAspectData({ companyName, aspect });
+  if (!data) return null;
+
+  const { averageRating, ratingCount } = data;
+
+  return (
+    <SnippetBlock title="性別友善">
+      <AspectScoreCard
+        aspect={aspect}
+        averageRating={averageRating}
+        ratingCount={ratingCount}
+      />
+    </SnippetBlock>
+  );
+};
 
 const Overview = ({
   pageType,
@@ -63,9 +86,7 @@ const Overview = ({
           )}
         />
       </SnippetBlock>
-      <SnippetBlock title="性別友善">
-        <GenderScoreCard />
-      </SnippetBlock>
+      <GenderAspectSnippetBlock />
       <SnippetBlock
         title={TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.WORK_EXPERIENCE]}
         linkText={`查看 ${workExperiencesCount} 篇完整的 ${

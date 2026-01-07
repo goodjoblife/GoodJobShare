@@ -10,7 +10,10 @@ import useMobile from 'hooks/useMobile';
 
 import emptySalaryImage from './empty_data_salary.png';
 import emptyWorkTimeImage from './empty_data_working_time.png';
-import { WorkLifeBalanceCard } from './ScoreCard';
+import AspectScoreCard from './AspectScoreCard';
+import { Aspect } from 'constants/companyJobTitle';
+import useCompanyName from 'pages/Company/useCompanyName';
+import useAspectData from './useAspectData';
 
 const SalaryDistributionChart = loadable(() =>
   import('common/Charts/SalaryDistributionChart'),
@@ -73,6 +76,24 @@ WorkTimeCard.propTypes = {
   data: PropTypes.object,
 };
 
+const WorkLifeBalanceAspectScoreCard = () => {
+  const companyName = useCompanyName();
+
+  const aspect = Aspect.WORK_LIFE_BALANCE;
+  const data = useAspectData({ companyName, aspect });
+  if (!data) return null;
+
+  const { averageRating, ratingCount } = data;
+
+  return (
+    <AspectScoreCard
+      aspect={aspect}
+      averageRating={averageRating}
+      ratingCount={ratingCount}
+    />
+  );
+};
+
 const SummaryBlock = ({
   salaryDistribution,
   jobAverageSalaries,
@@ -94,7 +115,7 @@ const SummaryBlock = ({
         overtimeFrequencyCount={overtimeFrequencyCount}
       />
     </WorkTimeCard>
-    <WorkLifeBalanceCard />
+    <WorkLifeBalanceAspectScoreCard />
   </div>
 );
 
