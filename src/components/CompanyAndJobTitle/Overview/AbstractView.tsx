@@ -5,7 +5,7 @@ import styles from './SummaryBlock.module.css';
 
 type AbstractViewProps = {
   title: string;
-  value: number;
+  value: string;
   valueSuffix: string;
   footer?: string;
   linkTo?: string;

@@ -8,7 +8,7 @@ import { companyWorkExperiencesAspectPath } from 'constants/linkTo';
 import Card from 'common/Card';
 import styles from './SummaryBlock.module.css';
 import cn from 'classnames';
-import AbstractView from './AverageWeekWorkTimeView';
+import AbstractView from './AbstractView';
 
 // Props interface for ScoreCard
 export interface ScoreCardProps {
