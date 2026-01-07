@@ -10,7 +10,8 @@ import useMobile from 'hooks/useMobile';
 
 import emptySalaryImage from './empty_data_salary.png';
 import emptyWorkTimeImage from './empty_data_working_time.png';
-import { WorkLifeBalanceCard } from './ScoreCard';
+import AspectScoreCard from './AspectScoreCard';
+import { Aspect } from 'constants/companyJobTitle';
 
 const SalaryDistributionChart = loadable(() =>
   import('common/Charts/SalaryDistributionChart'),
@@ -94,7 +95,7 @@ const SummaryBlock = ({
         overtimeFrequencyCount={overtimeFrequencyCount}
       />
     </WorkTimeCard>
-    <WorkLifeBalanceCard />
+    <AspectScoreCard aspect={Aspect.WORK_LIFE_BALANCE} />
   </div>
 );
 

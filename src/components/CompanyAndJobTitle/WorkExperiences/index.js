@@ -8,7 +8,8 @@ import Searchbar from '../Searchbar';
 import Sorter from '../Sorter';
 import styles from '../styles.module.css';
 import { Wrapper } from 'common/base';
-import { GenderScoreCard, WorkLifeBalanceCard } from '../Overview/ScoreCard';
+import AspectScoreCard from '../Overview/AspectScoreCard';
+import { Aspect } from 'constants/companyJobTitle';
 
 const WorkExperiences = ({
   pageType,
@@ -25,8 +26,8 @@ const WorkExperiences = ({
   >
     <Wrapper size="l">
       <div className={styles.scoreCards}>
-        <GenderScoreCard />
-        <WorkLifeBalanceCard />
+        <AspectScoreCard aspect={Aspect.GENDER} />
+        <AspectScoreCard aspect={Aspect.WORK_LIFE_BALANCE} />
       </div>
     </Wrapper>
     <Wrapper size="m">
