@@ -6,23 +6,54 @@ import useCompanyName from 'pages/Company/useCompanyName';
 import { companyWorkExperiencesAspectPath } from 'constants/linkTo';
 import ScoreCard from './ScoreCard';
 
-interface AspectScoreCardProps {
-  aspect: Aspect;
+import { useSelector } from 'react-redux';
+import { companyWorkExperiencesAspectStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
+import FetchBox, { isFetched } from 'utils/fetchBox';
+
+interface CompanyAspectRatingStatistic {
+  aspect: string;
   averageRating: number;
   ratingCount: number;
 }
 
-const AspectScoreCard: React.FC<AspectScoreCardProps> = ({
+interface AspectStatisticsData {
+  companyAspectRatingStatistics: CompanyAspectRatingStatistic[];
+}
+
+const useAspectData = ({
+  companyName,
   aspect,
-  averageRating,
-  ratingCount,
+}: {
+  companyName: string;
+  aspect: Aspect;
 }) => {
+  const box = useSelector(
+    companyWorkExperiencesAspectStatisticsBoxSelectorByName(companyName),
+  ) as FetchBox<AspectStatisticsData>;
+
+  if (!isFetched(box) || !box.data) return null;
+
+  const stat = box.data.companyAspectRatingStatistics.find(
+    item => item.aspect === aspectTranslation[aspect],
+  );
+  return stat;
+};
+
+interface AspectScoreCardProps {
+  aspect: Aspect;
+}
+
+const AspectScoreCard: React.FC<AspectScoreCardProps> = ({ aspect }) => {
   const companyName = useCompanyName();
   const path = generatePath(companyWorkExperiencesAspectPath, {
     companyName,
     aspect,
   });
 
+  const data = useAspectData({ companyName, aspect });
+  if (!data) return null;
+
+  const { averageRating, ratingCount } = data;
   return (
     <ScoreCard
       title={aspectTranslation[aspect]}

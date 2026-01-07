@@ -14,30 +14,15 @@ import {
 } from 'constants/companyJobTitle';
 import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
-import useCompanyName from 'pages/Company/useCompanyName';
 import BoxRenderer from '../StatusRenderer';
 import { fetchBoxPropType } from 'utils/fetchBox';
 import AspectScoreCard from './AspectScoreCard';
-import useAspectData from './useAspectData';
 
 const GenderAspectSnippetBlock = () => {
-  const companyName = useCompanyName();
+  const scoreCards = [<AspectScoreCard aspect={Aspect.GENDER} />];
+  if (scoreCards.length === 0) return null;
 
-  const aspect = Aspect.GENDER;
-  const data = useAspectData({ companyName, aspect });
-  if (!data) return null;
-
-  const { averageRating, ratingCount } = data;
-
-  return (
-    <SnippetBlock title="性別友善">
-      <AspectScoreCard
-        aspect={aspect}
-        averageRating={averageRating}
-        ratingCount={ratingCount}
-      />
-    </SnippetBlock>
-  );
+  return <SnippetBlock title="性別友善">{scoreCards}</SnippetBlock>;
 };
 
 const Overview = ({
@@ -50,7 +35,7 @@ const Overview = ({
   salaryWorkTimes,
   salaryWorkTimesCount,
   statisticsBox,
-  onCloseReport,
+  onCloseReport, // eslint-disable-line no-unused-vars
 }) => {
   const [, , canViewPublishId] = usePermission();
 
