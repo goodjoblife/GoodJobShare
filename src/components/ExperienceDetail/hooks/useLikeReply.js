@@ -9,7 +9,7 @@ const useLikeReply = () => {
   const token = useToken();
   return useCallback(
     async reply => {
-      const { _id: replyId, liked } = reply;
+      const { id: replyId, liked } = reply;
       if (liked) {
         await deleteReplyLikesApi({ id: replyId, token });
       } else {
