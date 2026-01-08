@@ -1,50 +1,33 @@
-import React, { useCallback, useState } from 'react';
-import { useDebounce } from 'react-use';
+import React from 'react';
 import cn from 'classnames';
 
-import useRatings, { FilterOption, RATING_FILTER_OPTIONS } from './useRatings';
+import useRating from './useRating';
 import styles from './styles.module.css';
 
-const useRatingsToggle = () => {
-  const ratingsTuple = useRatings();
-  const queryRatings = ratingsTuple[0] as number[];
-  const setQueryRatings = ratingsTuple[1] as (ratings: number[]) => void;
-
-  const [ratings, setRatings] = useState<number[]>(queryRatings);
-  const toggleRating = useCallback((rating: number) => {
-    setRatings(prev => {
-      if (prev.includes(rating)) {
-        return prev.filter(r => r !== rating);
-      } else {
-        return [...prev, rating];
-      }
-    });
-  }, []);
-
-  useDebounce(() => setQueryRatings(ratings), 800, [ratings]);
-
-  return [ratings, toggleRating];
+const seq = (from: number, to: number): number[] => {
+  return Array.from({ length: to - from + 1 }, (_, i) => i + from);
 };
 
 const RatingFilter: React.FC = () => {
-  const ratingsToggle = useRatingsToggle();
-  const ratings = ratingsToggle[0] as number[];
-  const toggleRating = ratingsToggle[1] as (rating: number) => void;
+  const ratingToggle = useRating();
+  const rating = ratingToggle[0] as number | undefined;
+  const toggleRating = ratingToggle[1] as (value: number) => void;
 
   return (
     <div className={styles.filterContainer}>
       <span className={styles.label}>篩選：</span>
       <div className={styles.options}>
-        {RATING_FILTER_OPTIONS.map(({ value: rating, label }: FilterOption) => {
-          const isActive = ratings.includes(rating);
+        {seq(1, 5).map((value: number) => {
+          const label = `${value} 分`;
+          const isActive = rating === value;
           return (
             <button
-              key={rating}
+              key={value}
               type="button"
               className={cn(styles.optionButton, {
                 [styles.active]: isActive,
               })}
-              onClick={() => toggleRating(rating)}
+              onClick={() => toggleRating(value)}
             >
               <input
                 type="checkbox"
