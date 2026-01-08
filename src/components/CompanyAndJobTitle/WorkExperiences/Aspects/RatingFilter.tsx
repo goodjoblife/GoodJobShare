@@ -2,6 +2,7 @@ import React from 'react';
 
 import useRating from './useRating';
 import styles from './styles.module.css';
+import RoundedSelect from 'common/RoundedSelect';
 
 const seq = (from: number, to: number): number[] => {
   return Array.from({ length: to - from + 1 }, (_, i) => i + from);
@@ -12,10 +13,9 @@ const RatingFilter: React.FC = () => {
   const rating = ratingToggle[0] as number | undefined;
   const toggleRating = ratingToggle[1] as (value: number | undefined) => void;
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
+  const handleChange = (value: number) => {
     if (value) {
-      toggleRating(Number(value));
+      toggleRating(value);
     } else {
       toggleRating(undefined);
     }
@@ -24,8 +24,7 @@ const RatingFilter: React.FC = () => {
   return (
     <div className={styles.filterContainer}>
       <span className={styles.label}>篩選：</span>
-      <select
-        className={styles.select}
+      <RoundedSelect
         value={rating === undefined ? '' : rating}
         onChange={handleChange}
       >
@@ -35,7 +34,7 @@ const RatingFilter: React.FC = () => {
             {value} 分
           </option>
         ))}
-      </select>
+      </RoundedSelect>
     </div>
   );
 };
