@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { Section } from 'common/base';
 
 import SnippetBlock from './SnippetBlock';
-import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import {
+  Aspect,
   tabType as TAB_TYPE,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
   generateTabURL,
@@ -16,6 +16,17 @@ import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
 import BoxRenderer from '../StatusRenderer';
 import { fetchBoxPropType } from 'utils/fetchBox';
+import AspectScoreCard from './AspectScoreCard';
+
+const GenderAspectSnippetBlock = () => {
+  const aspects = [Aspect.GENDER];
+  const scoreCards = aspects.map(aspect => (
+    <AspectScoreCard key={aspect} aspect={aspect} />
+  ));
+  if (scoreCards.length === 0) return null;
+
+  return <SnippetBlock title="性別友善">{scoreCards}</SnippetBlock>;
+};
 
 const Overview = ({
   pageType,
@@ -27,7 +38,7 @@ const Overview = ({
   salaryWorkTimes,
   salaryWorkTimesCount,
   statisticsBox,
-  onCloseReport,
+  onCloseReport, // eslint-disable-line no-unused-vars
 }) => {
   const [, , canViewPublishId] = usePermission();
 
@@ -62,12 +73,8 @@ const Overview = ({
             />
           )}
         />
-        <WorkingHourTable
-          data={salaryWorkTimes}
-          pageType={pageType}
-          onCloseReport={onCloseReport}
-        />
       </SnippetBlock>
+      <GenderAspectSnippetBlock />
       <SnippetBlock
         title={TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.WORK_EXPERIENCE]}
         linkText={`查看 ${workExperiencesCount} 篇完整的 ${
