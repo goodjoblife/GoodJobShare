@@ -26,8 +26,13 @@ const WorkExperiences = ({
   >
     <Wrapper size="l">
       <div className={styles.scoreCards}>
-        <AspectScoreCard aspect={Aspect.GENDER} />
         <AspectScoreCard aspect={Aspect.WORK_LIFE_BALANCE} />
+        <AspectScoreCard aspect={Aspect.COMPENSATION} />
+        <AspectScoreCard aspect={Aspect.WORK_TIME} />
+        <AspectScoreCard aspect={Aspect.CULTURE} />
+        <AspectScoreCard aspect={Aspect.MANAGEMENT} />
+        <AspectScoreCard aspect={Aspect.PROMOTION} />
+        <AspectScoreCard aspect={Aspect.GROWTH} />
       </div>
     </Wrapper>
     <Wrapper size="m">
