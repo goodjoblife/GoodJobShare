@@ -13,9 +13,10 @@ const RatingFilter: React.FC = () => {
   const rating = ratingToggle[0] as number | undefined;
   const toggleRating = ratingToggle[1] as (value: number | undefined) => void;
 
-  const handleChange = (value: number) => {
-    if (value) {
-      toggleRating(value);
+  const handleChange = (value: string) => {
+    const number = Number(value);
+    if (value && !isNaN(number)) {
+      toggleRating(number);
     } else {
       toggleRating(undefined);
     }
@@ -25,7 +26,7 @@ const RatingFilter: React.FC = () => {
     <div className={styles.filterContainer}>
       <span className={styles.label}>篩選：</span>
       <RoundedSelect
-        value={rating === undefined ? '' : rating}
+        value={rating === undefined ? '' : rating.toString()}
         onChange={handleChange}
       >
         <option value="">全部評分</option>
