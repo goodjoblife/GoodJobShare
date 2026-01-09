@@ -51,11 +51,13 @@
 }
 
 .scoreCards {
-  display: flex;
-  gap: 21px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 21px 21px;
   margin-bottom: 50px;
 
   @media (max-width: below-mobile) {
+    display: flex;
     flex-direction: column;
     gap: 14px;
   }
