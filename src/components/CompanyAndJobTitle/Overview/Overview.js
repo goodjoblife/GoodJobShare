@@ -19,7 +19,10 @@ import { fetchBoxPropType } from 'utils/fetchBox';
 import AspectScoreCard from './AspectScoreCard';
 
 const GenderAspectSnippetBlock = () => {
-  const scoreCards = [<AspectScoreCard aspect={Aspect.GENDER} />];
+  const aspects = [Aspect.GENDER];
+  const scoreCards = aspects.map(aspect => (
+    <AspectScoreCard key={aspect} aspect={aspect} />
+  ));
   if (scoreCards.length === 0) return null;
 
   return <SnippetBlock title="性別友善">{scoreCards}</SnippetBlock>;
