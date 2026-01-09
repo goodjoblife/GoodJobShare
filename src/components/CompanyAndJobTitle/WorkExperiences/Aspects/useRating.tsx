@@ -11,9 +11,9 @@ const useRating = () => {
   const rating = ratingFromQuerySelector(query);
 
   const setRating = useCallback(
-    (next: number | undefined) => {
+    (next: number | null) => {
       const newQuery = { ...query };
-      if (next === undefined) {
+      if (next === null) {
         delete newQuery.rating;
       } else {
         newQuery.rating = String(next);
