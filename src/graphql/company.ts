@@ -131,7 +131,8 @@ export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
     $jobTitle: String
     $start: Int!
     $limit: Int!
-    $sortBy: DataResultSortOption
+    $sortBy: DataResultSortOption,
+    $aspectFilter: AspectFilter
   ) {
     company(name: $companyName) {
       name
@@ -139,7 +140,8 @@ export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
         jobTitle: $jobTitle
         start: $start
         limit: $limit
-        sortBy: $sortBy
+        sortBy: $sortBy,
+        aspectFilter: $aspectFilter
       ) {
         count
         workExperiences {

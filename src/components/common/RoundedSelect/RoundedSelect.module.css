@@ -4,10 +4,15 @@
   select {
     border: 1px solid #bdbdbd;
     border-radius: 18px;
-    padding: 5px 3em;
+    padding: 5px 2em;
+    padding-left: 1em;
     color: #424242;
     background-color: #fff;
     appearance: none;
+  }
+
+  &.hasLeadingIcon {
+    padding-left: 3em;
   }
 
   .leadingIcon {

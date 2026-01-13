@@ -607,7 +607,7 @@ const setWorkExperiencesAspectExperiences = (companyName, box) => ({
 export const queryCompanyWorkExperiencesAspectExperiences = ({
   companyName,
   aspect,
-  ratings,
+  rating,
   start,
   limit,
 }) => async (dispatch, getState) => {
@@ -620,9 +620,10 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
     (isFetched(box) &&
       box.data &&
       box.data.name === companyName &&
-      box.data.ratings == ratings &&
+      box.data.rating == rating &&
       box.data.start == start &&
-      box.data.limit == limit)
+      box.data.limit == limit &&
+      box.data.aspect == aspect)
   ) {
     return;
   }
@@ -630,11 +631,14 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
   dispatch(setWorkExperiencesAspectExperiences(companyName, toFetching()));
 
   try {
-    // TODO: Substitute with real API call
     const data = await getCompanyWorkExperiences({
       companyName,
       start,
       limit,
+      aspectFilter: {
+        aspect,
+        rating,
+      },
     });
 
     // Not found case
@@ -647,7 +651,7 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
     const workExperiencesAspectExperiencesData = {
       name: companyName,
       aspect,
-      ratings,
+      rating,
       start,
       limit,
       workExperiences: data.workExperiencesResult.workExperiences,
