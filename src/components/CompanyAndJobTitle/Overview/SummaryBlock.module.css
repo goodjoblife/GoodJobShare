@@ -1,4 +1,4 @@
-@value below-tablet, above-mobile from "../../common/variables.module.css";
+@value below-mobile, below-tablet, above-mobile from "../../common/variables.module.css";
 
 .summaryBlock {
   display: flex;
@@ -23,16 +23,22 @@
 .card {
   width: 300px;
   height: 265px;
+
+  @media (max-width: below-mobile) {
+    height: auto;
+  }
 }
 
 .barChart {
   flex: 1;
   max-width: 547px;
+  height: 265px;
 }
 
 .barChartSm {
   display: block;
   width: 100%;
+  height: 265px;
 }
 
 .emptyData {
@@ -76,6 +82,11 @@
 
     em {
       font-size: 71px;
+      font-weight: 700;
+    }
+
+    @media (max-width: below-mobile) {
+      margin-top: 8px;
     }
   }
 
@@ -83,6 +94,10 @@
     font-size: 14px;
     line-height: 1.64;
     color: #969696;
+
+    @media (max-width: below-mobile) {
+      margin-top: 16px;
+    }
   }
 
   .link {
