@@ -28,13 +28,13 @@ const ScoreDistributionChart: React.FC<ScoreDistributionChartProps> = ({
         <Bar
           dataKey="count"
           fill="#fcd406"
-          barSize={8}
+          barSize={10}
           minPointSize={1}
           label={({ value, x, y, width, height }) =>
             value && (
               <text
                 x={x + width + 4}
-                y={y + height}
+                y={y + height - 1}
                 fill="#333"
                 fontSize="12px"
               >
