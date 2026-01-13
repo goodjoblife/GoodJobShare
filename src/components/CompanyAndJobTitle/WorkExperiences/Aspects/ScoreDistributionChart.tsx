@@ -15,7 +15,7 @@ const ScoreDistributionChart: React.FC<ScoreDistributionChartProps> = ({
 }) => {
   return (
     <ResponsiveContainer>
-      <BarChart data={data} layout="vertical">
+      <BarChart data={data} layout="vertical" margin={{ right: 25 }}>
         <XAxis hide type="number" />
         <YAxis
           type="category"
@@ -32,7 +32,12 @@ const ScoreDistributionChart: React.FC<ScoreDistributionChartProps> = ({
           minPointSize={1}
           label={({ value, x, y, width, height }) =>
             value && (
-              <text x={x + width} y={y + height} fill="#333" fontSize="12px">
+              <text
+                x={x + width + 4}
+                y={y + height}
+                fill="#333"
+                fontSize="12px"
+              >
                 {value}
               </text>
             )
