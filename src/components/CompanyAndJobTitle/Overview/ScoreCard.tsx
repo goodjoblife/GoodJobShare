@@ -22,7 +22,7 @@ const ScoreCard: React.FC<ScoreCardProps> = ({
 }) => {
   if (dataCount === 0) return null;
   return (
-    <Card className={cn(styles.card, styles.averageWeekWorkTime)}>
+    <Card className={cn(styles.card, styles.scoreCard)}>
       <AbstractView
         title={title}
         value={value.toFixed(1)}

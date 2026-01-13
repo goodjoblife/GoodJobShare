@@ -18,7 +18,7 @@ const AbstractView: FC<AbstractViewProps> = ({
   footer,
   linkTo,
 }) => (
-  <div className={styles.averageWeekWorkTimeView}>
+  <div className={styles.abstractView}>
     <span className={styles.title}>{title}</span>
     <span className={styles.body}>
       <em>{value}</em>
