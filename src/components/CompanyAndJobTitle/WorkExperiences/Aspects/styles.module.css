@@ -75,10 +75,6 @@
   gap: 16px;
   flex-wrap: wrap;
 
-  @media (max-width: below-mobile) {
-    align-items: flex-start;
-  }
-
   .label {
     font-size: 14px;
   }

@@ -1,62 +1,41 @@
-import React, { useCallback, useState } from 'react';
-import { useDebounce } from 'react-use';
-import cn from 'classnames';
+import React from 'react';
 
-import useRatings, { FilterOption, RATING_FILTER_OPTIONS } from './useRatings';
+import useRating from './useRating';
 import styles from './styles.module.css';
+import RoundedSelect from 'common/RoundedSelect';
 
-const useRatingsToggle = () => {
-  const ratingsTuple = useRatings();
-  const queryRatings = ratingsTuple[0] as number[];
-  const setQueryRatings = ratingsTuple[1] as (ratings: number[]) => void;
-
-  const [ratings, setRatings] = useState<number[]>(queryRatings);
-  const toggleRating = useCallback((rating: number) => {
-    setRatings(prev => {
-      if (prev.includes(rating)) {
-        return prev.filter(r => r !== rating);
-      } else {
-        return [...prev, rating];
-      }
-    });
-  }, []);
-
-  useDebounce(() => setQueryRatings(ratings), 800, [ratings]);
-
-  return [ratings, toggleRating];
+const seq = (from: number, to: number): number[] => {
+  return Array.from({ length: to - from + 1 }, (_, i) => i + from);
 };
 
 const RatingFilter: React.FC = () => {
-  const ratingsToggle = useRatingsToggle();
-  const ratings = ratingsToggle[0] as number[];
-  const toggleRating = ratingsToggle[1] as (rating: number) => void;
+  const ratingToggle = useRating();
+  const rating = ratingToggle[0] as number | null;
+  const toggleRating = ratingToggle[1] as (value: number | null) => void;
+
+  const handleChange = (value: string) => {
+    const number = Number(value);
+    if (value && !isNaN(number)) {
+      toggleRating(number);
+    } else {
+      toggleRating(null);
+    }
+  };
 
   return (
     <div className={styles.filterContainer}>
       <span className={styles.label}>篩選：</span>
-      <div className={styles.options}>
-        {RATING_FILTER_OPTIONS.map(({ value: rating, label }: FilterOption) => {
-          const isActive = ratings.includes(rating);
-          return (
-            <button
-              key={rating}
-              type="button"
-              className={cn(styles.optionButton, {
-                [styles.active]: isActive,
-              })}
-              onClick={() => toggleRating(rating)}
-            >
-              <input
-                type="checkbox"
-                className={styles.checkbox}
-                checked={isActive}
-                readOnly
-              />
-              {label}
-            </button>
-          );
-        })}
-      </div>
+      <RoundedSelect
+        value={rating === null ? '' : rating.toString()}
+        onChange={handleChange}
+      >
+        <option value="">全部評分</option>
+        {seq(1, 5).map((value: number) => (
+          <option key={value} value={value}>
+            {value} 分
+          </option>
+        ))}
+      </RoundedSelect>
     </div>
   );
 };
