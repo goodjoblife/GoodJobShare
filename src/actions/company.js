@@ -607,7 +607,7 @@ const setWorkExperiencesAspectExperiences = (companyName, box) => ({
 export const queryCompanyWorkExperiencesAspectExperiences = ({
   companyName,
   aspect,
-  ratings,
+  rating,
   start,
   limit,
 }) => async (dispatch, getState) => {
@@ -620,9 +620,10 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
     (isFetched(box) &&
       box.data &&
       box.data.name === companyName &&
-      box.data.ratings == ratings &&
+      box.data.rating == rating &&
       box.data.start == start &&
-      box.data.limit == limit)
+      box.data.limit == limit &&
+      box.data.aspect == aspect)
   ) {
     return;
   }
@@ -647,7 +648,7 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
     const workExperiencesAspectExperiencesData = {
       name: companyName,
       aspect,
-      ratings,
+      rating,
       start,
       limit,
       workExperiences: data.workExperiencesResult.workExperiences,

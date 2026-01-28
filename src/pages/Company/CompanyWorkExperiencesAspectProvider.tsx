@@ -26,8 +26,8 @@ import { pageFromQuerySelector } from 'selectors/routing/page';
 import FetchBox, { isFetched, getFetched } from 'utils/fetchBox';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import useAspect, { aspectSelector } from './useAspect';
-import { ratingsFromQuerySelector } from 'selectors/routing/ratings';
-import useRatings from 'components/CompanyAndJobTitle/WorkExperiences/Aspects/useRatings';
+import { ratingFromQuerySelector } from 'selectors/routing/ratings';
+import useRating from 'components/CompanyAndJobTitle/WorkExperiences/Aspects/useRating';
 import { RootState } from 'reducers';
 
 const useWorkExperiencesAspectExperiencesBoxSelector = (
@@ -61,7 +61,7 @@ const CompanyWorkExperiencesAspectProvider = () => {
   const pageType = PAGE_TYPE.COMPANY;
   const companyName = useCompanyName();
   const aspect = useAspect();
-  const [ratings] = useRatings();
+  const [rating] = useRating();
   const page = usePage();
   const start = ((page as number) - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
@@ -75,12 +75,12 @@ const CompanyWorkExperiencesAspectProvider = () => {
       queryCompanyWorkExperiencesAspectExperiences({
         companyName,
         aspect,
-        ratings,
+        rating,
         start,
         limit,
       }),
     );
-  }, [dispatch, companyName, aspect, ratings, start, limit]);
+  }, [dispatch, companyName, aspect, rating, start, limit]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -122,7 +122,7 @@ CompanyWorkExperiencesAspectProvider.fetchData = ({
   const aspect = aspectSelector(params);
 
   const query = querySelector(props);
-  const ratings = ratingsFromQuerySelector(query);
+  const rating = ratingFromQuerySelector(query);
   const page = pageFromQuerySelector(query) as number;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
@@ -131,7 +131,7 @@ CompanyWorkExperiencesAspectProvider.fetchData = ({
     queryCompanyWorkExperiencesAspectExperiences({
       companyName,
       aspect,
-      ratings,
+      rating,
       start,
       limit,
     }),
