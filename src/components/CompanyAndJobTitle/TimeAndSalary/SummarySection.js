@@ -4,6 +4,7 @@ import cn from 'classnames';
 
 import SummaryBlock from '../Overview/SummaryBlock';
 import styles from '../Overview/Overview.module.css';
+import { Heading } from 'common/base';
 
 const SummarySection = ({
   salaryDistribution,
@@ -13,9 +14,9 @@ const SummarySection = ({
 }) => {
   return (
     <div className={styles.snippet}>
-      <h2 className={cn(styles.title, styles.aboveCard)}>
+      <Heading className={cn(styles.title, styles.aboveCard)} Tag="h2">
         本站使用者分享之薪資、加班資訊
-      </h2>
+      </Heading>
       <SummaryBlock
         salaryDistribution={salaryDistribution}
         jobAverageSalaries={jobAverageSalaries}

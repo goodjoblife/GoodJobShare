@@ -52,7 +52,7 @@ const WorkTimeCard = ({ data, children }) => {
   const isEmptyData = !data;
   return (
     <Card
-      className={cn(styles.card, styles.averageWeekWorkTime, {
+      className={cn(styles.card, styles.scoreCard, {
         [styles.emptyData]: isEmptyData,
       })}
     >
