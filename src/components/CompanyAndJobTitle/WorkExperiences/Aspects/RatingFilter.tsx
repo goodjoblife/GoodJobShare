@@ -21,7 +21,7 @@ const useRatingsToggle = () => {
     });
   }, []);
 
-  useDebounce(() => setQueryRatings(ratings), 800, [ratings]);
+  useDebounce(() => setQueryRatings(ratings), 500, [ratings]);
 
   return [ratings, toggleRating];
 };
