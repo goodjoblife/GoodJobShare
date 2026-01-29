@@ -44,16 +44,22 @@ const Summary: React.FC<SummaryProps> = ({
         <div className={styles.scoreBlock}>
           <div className={styles.value}>{averageRating.toFixed(1)}</div>
           <OverallRating rating={averageRating} size="m" />
-          <div className={styles.meta}>評分人數：{totalCount}</div>
+          <div className={styles.meta}>評分數：{totalCount}</div>
         </div>
         <div className={styles.distribution}>
-          <ScoreDistributionChart data={rows} />
+          <div className={styles.scoreDistribution}>
+            <ScoreDistributionChart data={rows} />
+          </div>
         </div>
       </div>
-      <p className={styles.summaryText}>{summary}</p>
-      <p className={styles.summaryNote}>
-        <Pen /> 本段評論由 ChatGPT 總結共 {totalCount} 篇評論內容
-      </p>
+      {summary && (
+        <>
+          <p className={styles.summaryText}>{summary}</p>
+          <p className={styles.summaryNote}>
+            <Pen /> 本段評論由 ChatGPT 總結共 {totalCount} 篇評論內容
+          </p>
+        </>
+      )}
     </Card>
   );
 };

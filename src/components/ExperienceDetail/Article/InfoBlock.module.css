@@ -5,11 +5,7 @@
   flex-direction: column;
   align-items: center;
   font-weight: 400;
-  padding: 0 38px;
-
-  @media (max-width: below-tablet) {
-    padding: 6px;
-  }
+  padding: 6px;
 
   .label {
     color: #424242;
