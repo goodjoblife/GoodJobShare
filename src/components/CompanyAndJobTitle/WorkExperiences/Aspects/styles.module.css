@@ -1,0 +1,123 @@
+@value below-mobile, main-yellow, yellow-light, background-color, link-blue from "../../../common/variables.module.css";
+
+.title {
+  font-weight: 600;
+  margin-top: 18px;
+  margin-bottom: 24px;
+}
+
+.summary {
+  padding: 40px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+
+    @media (max-width: below-mobile) {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .scoreBlock {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 160px;
+
+      .value {
+        font-size: 58px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .meta {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #5a5a5a;
+      }
+    }
+
+    .distribution {
+      flex: 1;
+      .scoreDistribution {
+        width: 300px;
+        height: 100px;
+      }
+    }
+  }
+
+  .summaryText {
+    margin-top: 30px;
+    font-size: 15px;
+  }
+
+  .summaryNote {
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    color: link-blue;
+    text-align: right;
+  }
+
+  @media (max-width: below-mobile) {
+    padding: 16px;
+
+    .header {
+      flex-direction: column;
+      gap: 16px;
+
+      .scoreBlock {
+        min-width: auto;
+      }
+    }
+  }
+}
+
+.filterContainer {
+  display: flex;
+  align-items: center;
+  margin: 16px 0 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  @media (max-width: below-mobile) {
+    align-items: flex-start;
+  }
+
+  .label {
+    font-size: 14px;
+  }
+
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    .optionButton {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 20px;
+      border-radius: 999px;
+      border: 1px solid #bdbdbd;
+      background-color: white;
+      cursor: pointer;
+      font-size: 14px;
+      color: background-color;
+      transition: background-color 0.15s ease, color 0.15s ease,
+        border-color 0.15s ease;
+
+      &.active {
+        background-color: black;
+        border-color: black;
+        color: white;
+      }
+
+      .checkbox {
+        accent-color: white;
+        margin-right: 10px;
+      }
+    }
+  }
+}
