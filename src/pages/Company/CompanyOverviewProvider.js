@@ -10,6 +10,7 @@ import {
   queryCompanyOverview,
   queryCompanyOverviewStatistics,
   queryCompanyTopNJobTitles,
+  queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
 import {
@@ -19,7 +20,6 @@ import {
 import { paramsSelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
-import { Wrapper } from 'common/base';
 
 const useOverviewBoxSelector = pageName => {
   return useCallback(
@@ -56,6 +56,10 @@ const CompanyOverviewProvider = () => {
   }, [dispatch, companyName]);
 
   useEffect(() => {
+    dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName }));
+  }, [dispatch, companyName]);
+
+  useEffect(() => {
     dispatch(
       queryCompanyTopNJobTitles({
         companyName,
@@ -82,17 +86,15 @@ const CompanyOverviewProvider = () => {
   const topNJobTitles = useTopNJobTitles(companyName);
 
   return (
-    <Wrapper size="l">
-      <Overview
-        pageType={pageType}
-        pageName={companyName}
-        tabType={TAB_TYPE.OVERVIEW}
-        topNJobTitles={topNJobTitles.all}
-        boxSelector={boxSelector}
-        statisticsBox={statisticsBox}
-        onCloseReport={() => handleQueryCompanyOverview({ force: true })}
-      />
-    </Wrapper>
+    <Overview
+      pageType={pageType}
+      pageName={companyName}
+      tabType={TAB_TYPE.OVERVIEW}
+      topNJobTitles={topNJobTitles.all}
+      boxSelector={boxSelector}
+      statisticsBox={statisticsBox}
+      onCloseReport={() => handleQueryCompanyOverview({ force: true })}
+    />
   );
 };
 
@@ -103,6 +105,7 @@ CompanyOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
     dispatch(queryCompanyOverview(companyName)),
     dispatch(queryCompanyOverviewStatistics(companyName)),
     dispatch(queryRatingStatistics(companyName)),
+    dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName })),
     dispatch(queryCompanyTopNJobTitles({ companyName })),
   ]);
 };

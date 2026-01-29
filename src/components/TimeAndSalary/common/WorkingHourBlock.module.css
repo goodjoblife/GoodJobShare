@@ -3,7 +3,6 @@
 .container {
   display: block;
   background-color: #fff;
-  margin-bottom: 24px;
   transition-property: background, box-shadow;
   transition-duration: 0.3s;
 
@@ -11,13 +10,7 @@
     margin-bottom: 0;
   }
 
-  @media (max-width: 1024px) {
-    margin-bottom: 24px;
-  }
-
   @media (max-width: 550px) {
-    margin-left: calc(page-gutter-s * -1);
-    margin-right: calc(page-gutter-s * -1);
     margin-bottom: 24px;
   }
 }

@@ -1,4 +1,4 @@
-@value below-tablet, above-mobile from "../../common/variables.module.css";
+@value below-mobile, below-tablet, above-mobile from "../../common/variables.module.css";
 
 .summaryBlock {
   display: flex;
@@ -8,26 +8,37 @@
     flex-direction: column;
     align-items: flex-start;
   }
+
+  > * + * {
+    margin-left: 21px;
+  }
 }
 
 .barChart,
 .barChartSm,
-.averageWeekWorkTime {
+.scoreCard {
   display: flex;
 }
 
 .card {
+  width: 300px;
   height: 265px;
+
+  @media (max-width: below-mobile) {
+    height: auto;
+  }
 }
 
 .barChart {
   flex: 1;
   max-width: 547px;
+  height: 265px;
 }
 
 .barChartSm {
   display: block;
   width: 100%;
+  height: 265px;
 }
 
 .emptyData {
@@ -41,9 +52,7 @@
   height: 50%;
 }
 
-.averageWeekWorkTime {
-  margin-left: 21px;
-
+.scoreCard {
   @media (max-width: below-tablet) {
     width: 100%;
     margin-left: 0;
@@ -51,13 +60,14 @@
   }
 }
 
-.averageWeekWorkTimeView {
+.abstractView {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   padding: 4px;
-  margin: 0 auto;
+  width: 100%;
 
   .title {
     font-size: 18px;
@@ -72,6 +82,11 @@
 
     em {
       font-size: 71px;
+      font-weight: 700;
+    }
+
+    @media (max-width: below-mobile) {
+      margin-top: 8px;
     }
   }
 
@@ -79,5 +94,23 @@
     font-size: 14px;
     line-height: 1.64;
     color: #969696;
+
+    @media (max-width: below-mobile) {
+      margin-top: 16px;
+    }
+  }
+
+  .link {
+    display: block;
+    width: 100%;
+    text-align: right;
+    font-weight: 600;
+  }
+
+  .link {
+    display: block;
+    width: 100%;
+    text-align: right;
+    font-weight: 600;
   }
 }

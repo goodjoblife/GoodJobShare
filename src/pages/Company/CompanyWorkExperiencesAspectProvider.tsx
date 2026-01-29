@@ -10,6 +10,7 @@ import {
   tabType as TAB_TYPE,
   pageType as PAGE_TYPE,
   PAGE_SIZE,
+  Aspect,
 } from 'constants/companyJobTitle';
 import {
   queryCompanyWorkExperiencesAspectStatistics,
@@ -31,6 +32,7 @@ import { RootState } from 'reducers';
 
 const useWorkExperiencesAspectExperiencesBoxSelector = (
   pageName: string,
+  aspect: Aspect,
 ): ((state: RootState) => FetchBox<AspectExperiencesData>) => {
   return useCallback(
     (state: RootState): FetchBox<AspectExperiencesData> => {
@@ -91,6 +93,7 @@ const CompanyWorkExperiencesAspectProvider = () => {
 
   const experiencesBoxSelector = useWorkExperiencesAspectExperiencesBoxSelector(
     companyName,
+    aspect,
   ) as ((state: RootState) => FetchBox<AspectExperiencesData>);
 
   return (

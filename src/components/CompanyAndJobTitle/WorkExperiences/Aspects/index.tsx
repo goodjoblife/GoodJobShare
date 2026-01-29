@@ -98,38 +98,38 @@ const AspectSection: React.FC<AspectProps> = ({
           }}
         />
         <RatingFilter />
-        <PageBoxRenderer
-          pageType={pageType}
-          pageName={pageName}
-          tabType={tabType}
-          boxSelector={experiencesBoxSelector}
-          render={({
-            workExperiences,
-            workExperiencesCount: totalCount,
-          }: {
-            workExperiences: any; // eslint-disable-line react/no-unused-prop-types
-            workExperiencesCount: number; // eslint-disable-line react/no-unused-prop-types
-          }) => (
-            <>
-              <Helmet
-                pageType={pageType}
-                pageName={pageName}
-                totalCount={totalCount}
-                page={page}
-              />
-              <WorkExperiencesSection
-                pageType={pageType}
-                pageName={pageName}
-                tabType={tabType}
-                data={workExperiences}
-                page={page}
-                pageSize={pageSize}
-                totalCount={totalCount}
-              />
-            </>
-          )}
-        />
       </Wrapper>
+      <PageBoxRenderer
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        boxSelector={experiencesBoxSelector}
+        render={({
+          workExperiences,
+          workExperiencesCount: totalCount,
+        }: {
+          workExperiences: any; // eslint-disable-line react/no-unused-prop-types
+          workExperiencesCount: number; // eslint-disable-line react/no-unused-prop-types
+        }) => (
+          <>
+            <Helmet
+              pageType={pageType}
+              pageName={pageName}
+              totalCount={totalCount}
+              page={page}
+            />
+            <WorkExperiencesSection
+              pageType={pageType}
+              pageName={pageName}
+              tabType={tabType}
+              data={workExperiences}
+              page={page}
+              pageSize={pageSize}
+              totalCount={totalCount}
+            />
+          </>
+        )}
+      />
     </CompanyAndJobTitleWrapper>
   );
 };
