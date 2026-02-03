@@ -27,7 +27,8 @@ const WorkExperiences = ({
   const handleSectionRef = useCallback(el => {
     if (el) {
       const rect = el.getBoundingClientRect();
-      setSectionY(rect.top);
+      const sectionY = rect.top + window.scrollY;
+      setSectionY(sectionY);
     }
   }, []);
 
