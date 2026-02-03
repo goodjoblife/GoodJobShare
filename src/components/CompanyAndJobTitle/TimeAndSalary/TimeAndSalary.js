@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import Pagination from 'common/Pagination';
@@ -27,8 +27,31 @@ const TimeAndSalary = ({
 
   const queryParams = useQuery();
 
+  const [sectionY, setSectionY] = useState(null);
+  const handleSectionRef = useCallback(el => {
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      const sectionY = rect.top + window.scrollY;
+      setSectionY(sectionY);
+    }
+  }, []);
+
+  const createPageLinkTo = useCallback(
+    page => {
+      const search = qs.stringify(
+        { ...queryParams, p: page },
+        { addQueryPrefix: true },
+      );
+      return {
+        search,
+        state: { y: sectionY - 50 /* nav height */ },
+      };
+    },
+    [sectionY, queryParams],
+  );
+
   return (
-    <Section Tag="main" paddingBottom>
+    <Section ref={handleSectionRef} Tag="main" paddingBottom>
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
           <WorkingHourBlock
@@ -40,12 +63,7 @@ const TimeAndSalary = ({
             totalCount={totalCount}
             unit={pageSize}
             currentPage={page}
-            createPageLinkTo={toPage =>
-              qs.stringify(
-                { ...queryParams, p: toPage },
-                { addQueryPrefix: true },
-              )
-            }
+            createPageLinkTo={createPageLinkTo}
           />
         </React.Fragment>
       )) || (
