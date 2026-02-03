@@ -42,7 +42,7 @@ const WorkExperiences = ({
         return {
           pathname: location.pathname,
           search,
-          state: { y: sectionY },
+          state: { y: sectionY - 50 /* nav height */ },
         };
       }
       return search;
