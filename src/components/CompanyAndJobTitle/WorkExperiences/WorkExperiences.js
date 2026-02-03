@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
+import { useLocation } from 'react-router';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import EmptyView from '../EmptyView';
@@ -20,10 +21,37 @@ const WorkExperiences = ({
   totalCount,
 }) => {
   const queryParams = useQuery();
+  const location = useLocation();
+  const [sectionY, setSectionY] = useState(null);
+
+  const handleSectionRef = useCallback(el => {
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      setSectionY(rect.top);
+    }
+  }, []);
+
+  const createLinkTo = useCallback(
+    page => {
+      const search = qs.stringify(
+        { ...queryParams, p: page },
+        { addQueryPrefix: true },
+      );
+      if (sectionY) {
+        return {
+          pathname: location.pathname,
+          search,
+          state: { y: sectionY },
+        };
+      }
+      return search;
+    },
+    [queryParams, sectionY, location.pathname],
+  );
 
   if (data.length === 0) {
     return (
-      <Section Tag="main" paddingBottom>
+      <Section ref={handleSectionRef} Tag="main" paddingBottom>
         <NotFoundStatus>
           <EmptyView pageName={pageName} tabType={tabType} />
         </NotFoundStatus>
@@ -31,7 +59,7 @@ const WorkExperiences = ({
     );
   }
   return (
-    <Section Tag="main" paddingBottom>
+    <Section ref={handleSectionRef} Tag="main" paddingBottom>
       {data.map(d => (
         <div key={d.id} className={styles.experience}>
           <Experience
@@ -47,9 +75,7 @@ const WorkExperiences = ({
           totalCount={totalCount}
           unit={pageSize}
           currentPage={page}
-          createPageLinkTo={p =>
-            qs.stringify({ ...queryParams, p }, { addQueryPrefix: true })
-          }
+          createPageLinkTo={createLinkTo}
         />
       </Wrapper>
     </Section>

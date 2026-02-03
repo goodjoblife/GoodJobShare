@@ -30,7 +30,20 @@ function shouldUpdateScroll(prevProps, props) {
       R.map(getSignature),
     ),
   );
-  return diffSignature(prevProps, props);
+
+  const shouldScroll = diffSignature(prevProps, props);
+
+  if (
+    shouldScroll &&
+    props &&
+    props.location &&
+    props.location.state &&
+    typeof props.location.state.y !== 'undefined'
+  ) {
+    return [0, props.location.state.y];
+  }
+
+  return shouldScroll;
 }
 
 function parseState(window) {
