@@ -10,6 +10,7 @@ import NotFoundStatus from 'common/routing/NotFound';
 import { useQuery } from 'hooks/routing';
 import Experience from '../Experience';
 import styles from '../styles.module.css';
+import useMobile from 'hooks/useMobile';
 
 const WorkExperiences = ({
   pageType,
@@ -22,15 +23,22 @@ const WorkExperiences = ({
 }) => {
   const queryParams = useQuery();
   const location = useLocation();
-  const [sectionY, setSectionY] = useState(null);
 
-  const handleSectionRef = useCallback(el => {
-    if (el) {
-      const rect = el.getBoundingClientRect();
-      const sectionY = rect.top + window.scrollY;
-      setSectionY(sectionY);
-    }
-  }, []);
+  const [sectionY, setSectionY] = useState(null);
+  const isMobile = useMobile();
+  const handleSectionRef = useCallback(
+    el => {
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        let sectionY = rect.top + window.scrollY;
+        if (isMobile) {
+          sectionY -= 50 /* nav height */;
+        }
+        setSectionY(sectionY);
+      }
+    },
+    [isMobile],
+  );
 
   const createLinkTo = useCallback(
     page => {
@@ -42,7 +50,7 @@ const WorkExperiences = ({
         return {
           pathname: location.pathname,
           search,
-          state: { y: sectionY - 50 /* nav height */ },
+          state: { y: sectionY },
         };
       }
       return search;

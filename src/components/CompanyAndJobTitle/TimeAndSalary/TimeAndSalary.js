@@ -9,6 +9,7 @@ import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
 import { useQuery } from 'hooks/routing';
+import useMobile from 'hooks/useMobile';
 
 const TimeAndSalary = ({
   salaryWorkTimes,
@@ -28,13 +29,20 @@ const TimeAndSalary = ({
   const queryParams = useQuery();
 
   const [sectionY, setSectionY] = useState(null);
-  const handleSectionRef = useCallback(el => {
-    if (el) {
-      const rect = el.getBoundingClientRect();
-      const sectionY = rect.top + window.scrollY;
-      setSectionY(sectionY);
-    }
-  }, []);
+  const isMobile = useMobile();
+  const handleSectionRef = useCallback(
+    el => {
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        let sectionY = rect.top + window.scrollY;
+        if (isMobile) {
+          sectionY -= 50; /* nav height */
+        }
+        setSectionY(sectionY);
+      }
+    },
+    [isMobile],
+  );
 
   const createPageLinkTo = useCallback(
     page => {
@@ -44,7 +52,7 @@ const TimeAndSalary = ({
       );
       return {
         search,
-        state: { y: sectionY - 50 /* nav height */ },
+        state: { y: sectionY },
       };
     },
     [sectionY, queryParams],
