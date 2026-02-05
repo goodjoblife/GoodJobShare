@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
 import EmptyView from '../EmptyView';
 
 import { Section, Wrapper } from 'common/base';
 import Pagination from 'common/Pagination';
 import NotFoundStatus from 'common/routing/NotFound';
-import { useQuery } from 'hooks/routing';
+import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
+
 import Experience from '../Experience';
 import styles from '../styles.module.css';
 
@@ -19,11 +19,11 @@ const WorkExperiences = ({
   pageSize,
   totalCount,
 }) => {
-  const queryParams = useQuery();
+  const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
 
   if (data.length === 0) {
     return (
-      <Section Tag="main" paddingBottom>
+      <Section ref={handleSectionRef} Tag="main" paddingBottom>
         <NotFoundStatus>
           <EmptyView pageName={pageName} tabType={tabType} />
         </NotFoundStatus>
@@ -31,7 +31,7 @@ const WorkExperiences = ({
     );
   }
   return (
-    <Section Tag="main" paddingBottom>
+    <Section ref={handleSectionRef} Tag="main" paddingBottom>
       {data.map(d => (
         <div key={d.id} className={styles.experience}>
           <Experience
@@ -47,9 +47,7 @@ const WorkExperiences = ({
           totalCount={totalCount}
           unit={pageSize}
           currentPage={page}
-          createPageLinkTo={p =>
-            qs.stringify({ ...queryParams, p }, { addQueryPrefix: true })
-          }
+          createPageLinkTo={createPageLinkTo}
         />
       </Wrapper>
     </Section>

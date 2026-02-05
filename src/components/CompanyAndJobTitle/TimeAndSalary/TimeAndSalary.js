@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
+
 import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
 import NotFoundStatus from 'common/routing/NotFound';
+import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import usePermission from 'hooks/usePermission';
+
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
-import { useQuery } from 'hooks/routing';
 
 const TimeAndSalary = ({
   salaryWorkTimes,
@@ -25,10 +26,10 @@ const TimeAndSalary = ({
     fetchPermission();
   }, [fetchPermission]);
 
-  const queryParams = useQuery();
+  const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
 
   return (
-    <Section Tag="main" paddingBottom>
+    <Section ref={handleSectionRef} Tag="main" paddingBottom>
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
           <WorkingHourBlock
@@ -40,12 +41,7 @@ const TimeAndSalary = ({
             totalCount={totalCount}
             unit={pageSize}
             currentPage={page}
-            createPageLinkTo={toPage =>
-              qs.stringify(
-                { ...queryParams, p: toPage },
-                { addQueryPrefix: true },
-              )
-            }
+            createPageLinkTo={createPageLinkTo}
           />
         </React.Fragment>
       )) || (
