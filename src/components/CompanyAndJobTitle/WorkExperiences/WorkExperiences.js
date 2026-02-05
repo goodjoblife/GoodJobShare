@@ -1,16 +1,14 @@
-import React, { useCallback, useState } from 'react';
-import { useLocation } from 'react-router';
+import React from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
 import EmptyView from '../EmptyView';
 
 import { Section, Wrapper } from 'common/base';
 import Pagination from 'common/Pagination';
 import NotFoundStatus from 'common/routing/NotFound';
-import { useQuery } from 'hooks/routing';
+import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
+
 import Experience from '../Experience';
 import styles from '../styles.module.css';
-import useMobile from 'hooks/useMobile';
 
 const WorkExperiences = ({
   pageType,
@@ -21,42 +19,7 @@ const WorkExperiences = ({
   pageSize,
   totalCount,
 }) => {
-  const queryParams = useQuery();
-  const location = useLocation();
-
-  const [sectionY, setSectionY] = useState(null);
-  const isMobile = useMobile();
-  const handleSectionRef = useCallback(
-    el => {
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        let sectionY = rect.top + window.scrollY;
-        if (isMobile) {
-          sectionY -= 50 /* nav height */;
-        }
-        setSectionY(sectionY);
-      }
-    },
-    [isMobile],
-  );
-
-  const createLinkTo = useCallback(
-    page => {
-      const search = qs.stringify(
-        { ...queryParams, p: page },
-        { addQueryPrefix: true },
-      );
-      if (sectionY) {
-        return {
-          pathname: location.pathname,
-          search,
-          state: { y: sectionY },
-        };
-      }
-      return search;
-    },
-    [queryParams, sectionY, location.pathname],
-  );
+  const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
 
   if (data.length === 0) {
     return (
@@ -84,7 +47,7 @@ const WorkExperiences = ({
           totalCount={totalCount}
           unit={pageSize}
           currentPage={page}
-          createPageLinkTo={createLinkTo}
+          createPageLinkTo={createPageLinkTo}
         />
       </Wrapper>
     </Section>

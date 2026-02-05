@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
+
 import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
 import NotFoundStatus from 'common/routing/NotFound';
+import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import usePermission from 'hooks/usePermission';
+
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
-import { useQuery } from 'hooks/routing';
-import useMobile from 'hooks/useMobile';
 
 const TimeAndSalary = ({
   salaryWorkTimes,
@@ -26,37 +26,7 @@ const TimeAndSalary = ({
     fetchPermission();
   }, [fetchPermission]);
 
-  const queryParams = useQuery();
-
-  const [sectionY, setSectionY] = useState(null);
-  const isMobile = useMobile();
-  const handleSectionRef = useCallback(
-    el => {
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        let sectionY = rect.top + window.scrollY;
-        if (isMobile) {
-          sectionY -= 50; /* nav height */
-        }
-        setSectionY(sectionY);
-      }
-    },
-    [isMobile],
-  );
-
-  const createPageLinkTo = useCallback(
-    page => {
-      const search = qs.stringify(
-        { ...queryParams, p: page },
-        { addQueryPrefix: true },
-      );
-      return {
-        search,
-        state: { y: sectionY },
-      };
-    },
-    [sectionY, queryParams],
-  );
+  const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
 
   return (
     <Section ref={handleSectionRef} Tag="main" paddingBottom>
