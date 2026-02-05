@@ -637,7 +637,7 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
       limit,
       aspectFilter: {
         aspect,
-        rating,
+        rating: rating === null ? undefined : rating,
       },
     });
 
