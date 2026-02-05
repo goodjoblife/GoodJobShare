@@ -150,18 +150,25 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
     <Fragment>
       <InfoBlocks>
         <InfoBlock label="地點">{experience.region}</InfoBlock>
-        {expInYearText ? (
-          <InfoBlock label="職務經驗">{expInYearText}</InfoBlock>
-        ) : null}
-        {experience.week_work_time ? (
+        {typeof experience.week_work_time === 'number' ? (
           <InfoBlock label="工時">
             {experience.week_work_time} 小時/週
           </InfoBlock>
         ) : null}
+        <RatingInfo
+          rating={experience.averageSectionRating}
+          recommend={experience.recommend_to_others}
+        />
       </InfoBlocks>
       <InfoBlocks>
+        {experience.jobLevel !== null ? (
+          <InfoBlock label="職等">{experience.jobLevel}</InfoBlock>
+        ) : null}
+        {expInYearText ? (
+          <InfoBlock label="職務經驗">{expInYearText}</InfoBlock>
+        ) : null}
         {experience.salary ? (
-          <InfoBlock label="薪水">
+          <InfoBlock label="薪資">
             {hideContent ? (
               <React.Fragment>
                 <FontAwesomeIcon icon={faLock} className={styles.lock} />
@@ -172,10 +179,16 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
             )}
           </InfoBlock>
         ) : null}
-        <RatingInfo
-          rating={experience.averageSectionRating}
-          recommend={experience.recommend_to_others}
-        />
+      </InfoBlocks>
+      <InfoBlocks>
+        {experience.sector !== null ? (
+          <InfoBlock label="廠區/門市/分公司/團隊">
+            {experience.sector}
+          </InfoBlock>
+        ) : null}
+        {experience.gender !== null ? (
+          <InfoBlock label="性別">{experience.gender}</InfoBlock>
+        ) : null}
       </InfoBlocks>
     </Fragment>
   );
@@ -190,7 +203,9 @@ WorkInfoBlocks.propTypes = {
     created_at: PropTypes.string,
     education: PropTypes.string,
     experience_in_year: PropTypes.number,
+    gender: PropTypes.string,
     id: PropTypes.string.isRequired,
+    jobLevel: PropTypes.string,
     job_title: PropTypes.shape({
       name: PropTypes.string,
     }),
@@ -203,6 +218,7 @@ WorkInfoBlocks.propTypes = {
       amount: PropTypes.number,
       type: PropTypes.string,
     }),
+    sector: PropTypes.string,
     week_work_time: PropTypes.number,
   }).isRequired,
   hideContent: PropTypes.bool,

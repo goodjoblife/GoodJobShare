@@ -3,17 +3,24 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styles from './InfoBlock.module.css';
 
-export const InfoBlocks = ({ children }) => (
-  <div className={styles.infoBlocks}>
-    <table>
-      <tbody>
-        <tr>
-          {React.Children.map(children, child => child && <td>{child}</td>)}
-        </tr>
-      </tbody>
-    </table>
-  </div>
-);
+export const InfoBlocks = ({ children }) => {
+  const tds = React.Children.map(
+    children,
+    child => child && <td>{child}</td>,
+  ).filter(Boolean);
+
+  if (tds.length === 0) return null;
+
+  return (
+    <div className={styles.infoBlocks}>
+      <table>
+        <tbody>
+          <tr>{tds}</tr>
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 InfoBlocks.propTypes = {
   children: PropTypes.node,
@@ -27,7 +34,7 @@ const InfoBlock = ({ className, label, children }) => (
 );
 
 InfoBlock.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   className: PropTypes.string,
   label: PropTypes.string,
 };
