@@ -39,7 +39,7 @@ Heading.propTypes = {
   light: PropTypes.bool,
   marginBottom: PropTypes.bool,
   marginBottomS: PropTypes.bool,
-  size: PropTypes.oneOf(sizeOptions).isRequired,
+  size: PropTypes.oneOf(sizeOptions),
   style: PropTypes.object,
 };
 
