@@ -13,6 +13,7 @@ import ReportZone from '../ReportZone';
 import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
 import { useDispatch } from 'react-redux';
 import { queryExperience } from 'actions/experience';
+import { GENDER_TRANSLATION } from 'components/ShareExperience/constants';
 
 const formatExperienceInYear = year => {
   if (Number.isInteger(year)) {
@@ -187,7 +188,9 @@ const WorkInfoBlocks = ({ experience, hideContent }) => {
           </InfoBlock>
         ) : null}
         {experience.gender !== null ? (
-          <InfoBlock label="性別">{experience.gender}</InfoBlock>
+          <InfoBlock label="性別">
+            {GENDER_TRANSLATION[experience.gender]}
+          </InfoBlock>
         ) : null}
       </InfoBlocks>
     </Fragment>

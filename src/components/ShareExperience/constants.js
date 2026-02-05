@@ -74,3 +74,9 @@ export const SENSITIVE_QUESTIONS_OPTIONS = [
   '曾要求繳交身分證、保證金',
   '其他',
 ];
+
+export const GENDER_TRANSLATION = {
+  male: '男',
+  female: '女',
+  other: '其他',
+};
