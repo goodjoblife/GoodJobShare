@@ -29,7 +29,7 @@ InfoBlocks.propTypes = {
 const InfoBlock = ({ className, label, children }) => (
   <div className={styles.infoBlock}>
     <span className={styles.label}>{label}</span>
-    <span className={cn(styles.value, className)}>{children}</span>
+    <span className={cn(styles.value, className)}>{children || '-'}</span>
   </div>
 );
 

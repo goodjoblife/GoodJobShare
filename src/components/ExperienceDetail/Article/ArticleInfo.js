@@ -39,76 +39,50 @@ const getInterviewResultStyle = interviewResult => {
 };
 
 const InterviewInfoBlocks = ({ experience, hideContent }) => {
-  const expInYearText = formatExperienceInYear(experience.experience_in_year);
-  const rows = [];
-
-  // First row columns
-  const firstRow = [];
-  if (experience.region) {
-    firstRow.push(<InfoBlock key="region">{experience.region}</InfoBlock>);
-  }
-  if (experience.interview_result) {
-    firstRow.push(
-      <InfoBlock
-        className={getInterviewResultStyle(experience.interview_result)}
-        key="interview_result"
-      >
-        {experience.interview_result}
-      </InfoBlock>,
-    );
-  }
-  if (experience.interview_time) {
-    firstRow.push(
-      <InfoBlock key="interview_time" label="面試時間">
-        {`${experience.interview_time.year}.${String(
-          experience.interview_time.month,
-        ).padStart(2, '0')}`}
-      </InfoBlock>,
-    );
-  }
-  if (expInYearText !== null) {
-    firstRow.push(
-      <InfoBlock key="exp_in_year" label="職務經驗">
-        {expInYearText}
-      </InfoBlock>,
-    );
-  }
-  if (firstRow.length > 0) {
-    rows.push(firstRow);
-  }
-
-  // Second row columns
-  const secondRow = [];
-  if (experience.salary) {
-    secondRow.push(
-      <InfoBlock key="salary" label="薪水">
-        {hideContent ? (
-          <React.Fragment>
-            <FontAwesomeIcon icon={faLock} className={styles.lock} />
-            {formatSalaryRange(experience.salary)}
-          </React.Fragment>
-        ) : (
-          formatSalary(experience.salary)
-        )}
-      </InfoBlock>,
-    );
-  }
-  if (experience.averageSectionRating) {
-    secondRow.push(
-      <InfoBlock key="averageSectionRating" label="評分">
-        {experience.averageSectionRating.toFixed(1)}分
-      </InfoBlock>,
-    );
-  }
-  if (secondRow.length > 0) {
-    rows.push(secondRow);
-  }
-
   return (
     <Fragment>
-      {rows.map((cols, idx) => (
-        <InfoBlocks key={idx}>{cols}</InfoBlocks>
-      ))}
+      <InfoBlocks>
+        <InfoBlock label="地區">{experience.region}</InfoBlock>
+        <InfoBlock
+          label="面試結果"
+          className={getInterviewResultStyle(experience.interview_result)}
+        >
+          {experience.interview_result}
+        </InfoBlock>
+        <InfoBlock label="面試時間">
+          {experience.interview_time &&
+          typeof experience.interview_time.year === 'number' &&
+          typeof experience.interview_time.month === 'number'
+            ? `${experience.interview_time.year}.${String(
+                experience.interview_time.month,
+              ).padStart(2, '0')}`
+            : '-'}
+        </InfoBlock>
+        <InfoBlock label="職務經驗">
+          {formatExperienceInYear(experience.experience_in_year)}
+        </InfoBlock>
+      </InfoBlocks>
+      <InfoBlocks>
+        <InfoBlock label="薪水">
+          {experience.salary ? (
+            hideContent ? (
+              <React.Fragment>
+                <FontAwesomeIcon icon={faLock} className={styles.lock} />
+                {formatSalaryRange(experience.salary)}
+              </React.Fragment>
+            ) : (
+              formatSalary(experience.salary)
+            )
+          ) : (
+            '-'
+          )}
+        </InfoBlock>
+        <InfoBlock label="評分">
+          {typeof experience.averageSectionRating === 'number'
+            ? `${experience.averageSectionRating.toFixed(1)}分`
+            : '-'}
+        </InfoBlock>
+      </InfoBlocks>
     </Fragment>
   );
 };
@@ -146,52 +120,45 @@ InterviewInfoBlocks.propTypes = {
 };
 
 const WorkInfoBlocks = ({ experience, hideContent }) => {
-  const expInYearText = formatExperienceInYear(experience.experience_in_year);
   return (
     <Fragment>
       <InfoBlocks>
         <InfoBlock label="地點">{experience.region}</InfoBlock>
-        {typeof experience.week_work_time === 'number' ? (
-          <InfoBlock label="工時">
-            {experience.week_work_time} 小時/週
-          </InfoBlock>
-        ) : null}
+        <InfoBlock label="工時">
+          {typeof experience.week_work_time === 'number'
+            ? `${experience.week_work_time} 小時/週`
+            : '-'}
+        </InfoBlock>
         <RatingInfo
           rating={experience.averageSectionRating}
           recommend={experience.recommend_to_others}
         />
       </InfoBlocks>
       <InfoBlocks>
-        {experience.jobLevel !== null ? (
-          <InfoBlock label="職等">{experience.jobLevel}</InfoBlock>
-        ) : null}
-        {expInYearText ? (
-          <InfoBlock label="職務經驗">{expInYearText}</InfoBlock>
-        ) : null}
-        {experience.salary ? (
-          <InfoBlock label="薪資">
-            {hideContent ? (
+        <InfoBlock label="職等">{experience.jobLevel}</InfoBlock>
+        <InfoBlock label="職務經驗">
+          {formatExperienceInYear(experience.experience_in_year)}
+        </InfoBlock>
+        <InfoBlock label="薪資">
+          {experience.salary ? (
+            hideContent ? (
               <React.Fragment>
                 <FontAwesomeIcon icon={faLock} className={styles.lock} />
                 {formatSalaryRange(experience.salary)}
               </React.Fragment>
             ) : (
               formatSalary(experience.salary)
-            )}
-          </InfoBlock>
-        ) : null}
+            )
+          ) : (
+            '-'
+          )}
+        </InfoBlock>
       </InfoBlocks>
       <InfoBlocks>
-        {experience.sector !== null ? (
-          <InfoBlock label="廠區/門市/分公司/團隊">
-            {experience.sector}
-          </InfoBlock>
-        ) : null}
-        {experience.gender !== null ? (
-          <InfoBlock label="性別">
-            {GENDER_TRANSLATION[experience.gender]}
-          </InfoBlock>
-        ) : null}
+        <InfoBlock label="廠區/門市/分公司/團隊">{experience.sector}</InfoBlock>
+        <InfoBlock label="性別">
+          {GENDER_TRANSLATION[experience.gender]}
+        </InfoBlock>
       </InfoBlocks>
     </Fragment>
   );
