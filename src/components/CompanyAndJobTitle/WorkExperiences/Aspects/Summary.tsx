@@ -44,7 +44,7 @@ const Summary: React.FC<SummaryProps> = ({
         <div className={styles.scoreBlock}>
           <div className={styles.value}>{averageRating.toFixed(1)}</div>
           <OverallRating rating={averageRating} size="m" />
-          <div className={styles.meta}>評分數：{totalCount}</div>
+          <div className={styles.meta}>評分人數：{totalCount}</div>
         </div>
         <div className={styles.distribution}>
           <div className={styles.scoreDistribution}>
