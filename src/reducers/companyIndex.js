@@ -8,11 +8,13 @@ import {
   SET_TIME_AND_SALARY,
   SET_INTERVIEW_EXPERIENCES,
   SET_WORK_EXPERIENCES,
+  SET_WORK_EXPERIENCES_ASPECT_STATISTICS,
   SET_TIME_AND_SALARY_STATISTICS,
   SET_RATING_STATISTICS,
   SET_COMPANY_TOP_N_JOB_TITLES,
   SET_COMPANY_ESG_SALARY_DATA,
   SET_IS_SUBSCRIBED,
+  SET_WORK_EXPERIENCES_ASPECT_EXPERIENCES,
 } from 'actions/company';
 
 const preloadedState = {
@@ -27,6 +29,8 @@ const preloadedState = {
   timeAndSalaryStatisticsByName: {},
   interviewExperiencesByName: {},
   workExperiencesByName: {},
+  workExperiencesAspectStatisticsByName: {},
+  workExperiencesAspectExperiencesByName: {},
   isSubscribedByName: {},
   // companyName --> box
   // box.data: null | {all, interview, work, salary}
@@ -107,6 +111,24 @@ const reducer = createReducer(preloadedState, {
       ...state,
       workExperiencesByName: {
         ...state.workExperiencesByName,
+        [companyName]: box,
+      },
+    };
+  },
+  [SET_WORK_EXPERIENCES_ASPECT_STATISTICS]: (state, { companyName, box }) => {
+    return {
+      ...state,
+      workExperiencesAspectStatisticsByName: {
+        ...state.workExperiencesAspectStatisticsByName,
+        [companyName]: box,
+      },
+    };
+  },
+  [SET_WORK_EXPERIENCES_ASPECT_EXPERIENCES]: (state, { companyName, box }) => {
+    return {
+      ...state,
+      workExperiencesAspectExperiencesByName: {
+        ...state.workExperiencesAspectExperiencesByName,
         [companyName]: box,
       },
     };

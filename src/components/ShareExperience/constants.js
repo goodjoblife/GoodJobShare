@@ -10,6 +10,7 @@ export const DATA_KEY_DATE = 'interviewTime';
 export const DATA_KEY_REGION = 'region';
 export const DATA_KEY_RESULT = 'interviewResult';
 export const DATA_KEY_JOB_TENURE = 'experienceInYear';
+export const DATA_KEY_JOB_LEVEL = 'jobLevel';
 export const DATA_KEY_SALARY = 'salary';
 export const DATA_KEY_EXPERIENCE_IN_YEAR = 'experienceInYear';
 export const DATA_KEY_DAY_PROMISED_WORK_TIME = 'dayPromisedWorkTime';

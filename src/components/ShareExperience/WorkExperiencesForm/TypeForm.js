@@ -18,6 +18,9 @@ import {
   createWeekWorkTimeQuestion,
   createSubmitQuestion,
   createSectionsQuestion,
+  createSectorQuestion,
+  createGenderQuestion,
+  createJobLevel,
 } from '../questionCreators';
 import {
   DATA_KEY_COMPANY_NAME,
@@ -29,13 +32,15 @@ import {
   DATA_KEY_REGION,
   JOB_TENURE_OPTIONS,
   DATA_KEY_SECTIONS,
+  DATA_KEY_JOB_LEVEL,
+  DATA_KEY_SECTOR,
+  DATA_KEY_GENDER,
 } from '../constants';
 
 import { parseSalaryAmount, evolve } from '../utils';
 import { tabType } from '../../../constants/companyJobTitle';
 
 import { createWorkExperienceWithRating } from 'actions/experiences';
-import { transferKeyToSnakecase } from 'utils/objectUtil';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import { ER0020, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 
@@ -58,8 +63,11 @@ const questions = [
   createCurrentlyEmployedQuestion(),
   createExperienceInYearQuestion(),
   createWorkRegionQuestion(),
+  createSectorQuestion(),
   createEmployTypeQuestion(),
+  createGenderQuestion(),
   createRequiredSalaryQuestion({ type: tabType.WORK_EXPERIENCE }),
+  createJobLevel(),
   createWeekWorkTimeQuestion(),
   createSectionsQuestion(),
   createSubmitQuestion({ type: tabType.WORK_EXPERIENCE }),
@@ -69,6 +77,9 @@ const bodyFromDraft = evolve({
   company: draft => ({ id: '', query: draft[DATA_KEY_COMPANY_NAME] }),
   region: draft => draft[DATA_KEY_REGION],
   job_title: draft => draft[DATA_KEY_JOB_TITLE],
+  sector: draft => draft[DATA_KEY_SECTOR],
+  gender: draft => draft[DATA_KEY_GENDER],
+  jobLevel: draft => draft[DATA_KEY_JOB_LEVEL],
   title: draft =>
     `${draft[DATA_KEY_COMPANY_NAME]} ${draft[DATA_KEY_JOB_TITLE]}`,
   sections: draft =>
@@ -119,7 +130,7 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
   const onSubmit = useCallback(
     async draft => {
       const body = {
-        ...transferKeyToSnakecase(bodyFromDraft(draft)),
+        ...bodyFromDraft(draft),
       };
       const res = await dispatch(
         createWorkExperienceWithRating({

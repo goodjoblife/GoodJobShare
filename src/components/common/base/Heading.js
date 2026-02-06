@@ -6,16 +6,16 @@ import styles from './Heading.module.css';
 const sizeOptions = ['l', 'm', 'sl', 'sm'];
 
 const Heading = ({
-  Tag,
-  size,
-  bold,
-  light,
-  center,
-  marginBottom,
-  marginBottomS,
-  children,
-  style,
-  className,
+  Tag = 'h1',
+  size = 'm',
+  bold = false,
+  light = false,
+  center = false,
+  marginBottom = false,
+  marginBottomS = false,
+  children = '',
+  style = {},
+  className = '',
 }) => (
   <Tag
     className={cn(styles[size], className, {
@@ -41,14 +41,6 @@ Heading.propTypes = {
   marginBottomS: PropTypes.bool,
   size: PropTypes.oneOf(sizeOptions).isRequired,
   style: PropTypes.object,
-};
-Heading.defaultProps = {
-  children: '',
-  size: 'm',
-  Tag: 'h1',
-  bold: false,
-  marginBottom: false,
-  marginBottomS: false,
 };
 
 export default Heading;
