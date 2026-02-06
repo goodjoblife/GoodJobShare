@@ -28,33 +28,35 @@ const WorkExperiences = ({
         <Sorter />
       </div>
     </Wrapper>
-    <PageBoxRenderer
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-      boxSelector={boxSelector}
-      render={({ workExperiences, workExperiencesCount: totalCount }) => {
-        return (
-          <Fragment>
-            <Helmet
-              pageType={pageType}
-              pageName={pageName}
-              totalCount={totalCount}
-              page={page}
-            />
-            <WorkExperiencesSection
-              pageType={pageType}
-              pageName={pageName}
-              tabType={tabType}
-              data={workExperiences}
-              page={page}
-              pageSize={pageSize}
-              totalCount={totalCount}
-            />
-          </Fragment>
-        );
-      }}
-    />
+    <Wrapper size="l">
+      <PageBoxRenderer
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        boxSelector={boxSelector}
+        render={({ workExperiences, workExperiencesCount: totalCount }) => {
+          return (
+            <Fragment>
+              <Helmet
+                pageType={pageType}
+                pageName={pageName}
+                totalCount={totalCount}
+                page={page}
+              />
+              <WorkExperiencesSection
+                pageType={pageType}
+                pageName={pageName}
+                tabType={tabType}
+                data={workExperiences}
+                page={page}
+                pageSize={pageSize}
+                totalCount={totalCount}
+              />
+            </Fragment>
+          );
+        }}
+      />
+    </Wrapper>
   </CompanyAndJobTitleWrapper>
 );
 

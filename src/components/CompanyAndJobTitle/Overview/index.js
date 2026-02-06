@@ -21,38 +21,40 @@ const Overview = ({
     pageName={pageName}
     tabType={tabType}
   >
-    <PageBoxRenderer
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-      boxSelector={boxSelector}
-      render={data => {
-        return (
-          <Wrapper size="l">
-            <Helmet
-              pageType={pageType}
-              pageName={pageName}
-              interviewExperiencesCount={data.interviewExperiencesCount}
-              workExperiencesCount={data.workExperiencesCount}
-              salaryWorkTimesCount={data.salaryWorkTimesCount}
-              topNJobTitles={topNJobTitles}
-            />
-            <OverviewSection
-              pageType={pageType}
-              pageName={pageName}
-              interviewExperiences={data.interviewExperiences}
-              interviewExperiencesCount={data.interviewExperiencesCount}
-              workExperiences={data.workExperiences}
-              workExperiencesCount={data.workExperiencesCount}
-              salaryWorkTimes={data.salaryWorkTimes}
-              salaryWorkTimesCount={data.salaryWorkTimesCount}
-              statisticsBox={statisticsBox}
-              onCloseReport={onCloseReport}
-            />
-          </Wrapper>
-        );
-      }}
-    />
+    <Wrapper size="l">
+      <PageBoxRenderer
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        boxSelector={boxSelector}
+        render={data => {
+          return (
+            <>
+              <Helmet
+                pageType={pageType}
+                pageName={pageName}
+                interviewExperiencesCount={data.interviewExperiencesCount}
+                workExperiencesCount={data.workExperiencesCount}
+                salaryWorkTimesCount={data.salaryWorkTimesCount}
+                topNJobTitles={topNJobTitles}
+              />
+              <OverviewSection
+                pageType={pageType}
+                pageName={pageName}
+                interviewExperiences={data.interviewExperiences}
+                interviewExperiencesCount={data.interviewExperiencesCount}
+                workExperiences={data.workExperiences}
+                workExperiencesCount={data.workExperiencesCount}
+                salaryWorkTimes={data.salaryWorkTimes}
+                salaryWorkTimesCount={data.salaryWorkTimesCount}
+                statisticsBox={statisticsBox}
+                onCloseReport={onCloseReport}
+              />
+            </>
+          );
+        }}
+      />
+    </Wrapper>
   </CompanyAndJobTitleWrapper>
 );
 

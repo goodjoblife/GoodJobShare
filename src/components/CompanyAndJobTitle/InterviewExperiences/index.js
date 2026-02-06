@@ -29,37 +29,39 @@ const InterviewExperiences = ({
         <Sorter />
       </div>
     </Wrapper>
-    <PageBoxRenderer
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-      boxSelector={boxSelector}
-      render={({
-        interviewExperiences,
-        interviewExperiencesCount: totalCount,
-      }) => {
-        return (
-          <Fragment>
-            <InterviewExperienceHelmet
-              pageType={pageType}
-              pageName={pageName}
-              totalCount={totalCount}
-              page={page}
-              topNJobTitles={topNJobTitles}
-            />
-            <InterviewExperiencesSection
-              pageType={pageType}
-              pageName={pageName}
-              tabType={tabType}
-              data={interviewExperiences}
-              page={page}
-              pageSize={pageSize}
-              totalCount={totalCount}
-            />
-          </Fragment>
-        );
-      }}
-    />
+    <Wrapper size="l">
+      <PageBoxRenderer
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        boxSelector={boxSelector}
+        render={({
+          interviewExperiences,
+          interviewExperiencesCount: totalCount,
+        }) => {
+          return (
+            <Fragment>
+              <InterviewExperienceHelmet
+                pageType={pageType}
+                pageName={pageName}
+                totalCount={totalCount}
+                page={page}
+                topNJobTitles={topNJobTitles}
+              />
+              <InterviewExperiencesSection
+                pageType={pageType}
+                pageName={pageName}
+                tabType={tabType}
+                data={interviewExperiences}
+                page={page}
+                pageSize={pageSize}
+                totalCount={totalCount}
+              />
+            </Fragment>
+          );
+        }}
+      />
+    </Wrapper>
   </CompanyAndJobTitleWrapper>
 );
 

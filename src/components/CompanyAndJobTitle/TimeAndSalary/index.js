@@ -91,35 +91,37 @@ const TimeAndSalary = ({
     <Wrapper size="l" className={styles.searchbar}>
       <Searchbar pageType={pageType} tabType={tabType} />
     </Wrapper>
-    <PageBoxRenderer
-      pageType={pageType}
-      pageName={pageName}
-      tabType={tabType}
-      boxSelector={boxSelector}
-      render={({ salaryWorkTimes, salaryWorkTimesCount: totalCount }) => {
-        return (
-          <Wrapper size="l">
-            <Helmet
-              pageType={pageType}
-              pageName={pageName}
-              totalCount={totalCount}
-              page={page}
-              topNJobTitles={topNJobTitles}
-            />
-            <TimeAndSalarySection
-              pageType={pageType}
-              pageName={pageName}
-              tabType={tabType}
-              salaryWorkTimes={salaryWorkTimes}
-              page={page}
-              pageSize={pageSize}
-              totalCount={totalCount}
-              onCloseReport={onCloseReport}
-            />
-          </Wrapper>
-        );
-      }}
-    />
+    <Wrapper size="l">
+      <PageBoxRenderer
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        boxSelector={boxSelector}
+        render={({ salaryWorkTimes, salaryWorkTimesCount: totalCount }) => {
+          return (
+            <>
+              <Helmet
+                pageType={pageType}
+                pageName={pageName}
+                totalCount={totalCount}
+                page={page}
+                topNJobTitles={topNJobTitles}
+              />
+              <TimeAndSalarySection
+                pageType={pageType}
+                pageName={pageName}
+                tabType={tabType}
+                salaryWorkTimes={salaryWorkTimes}
+                page={page}
+                pageSize={pageSize}
+                totalCount={totalCount}
+                onCloseReport={onCloseReport}
+              />
+            </>
+          );
+        }}
+      />
+    </Wrapper>
   </CompanyAndJobTitleWrapper>
 );
 
