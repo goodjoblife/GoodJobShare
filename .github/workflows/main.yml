@@ -56,14 +56,15 @@ jobs:
       packages: write
     env:
       REGISTRY: ghcr.io
+      REPO: goodjoblife/goodjobshare/web-server
       IMAGE: goodjobshare:production
     steps:
       - uses: actions/checkout@v4
       - name: Log in to Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${REGISTRY} -u ${{ github.actor }} --password-stdin
       - run: docker compose -f .github/docker-compose-production.yml build
-      - run: docker tag ${IMAGE} ${REGISTRY}/goodjoblife/goodjobshare:production-${GITHUB_SHA}
-      - run: docker push ${REGISTRY}/goodjoblife/goodjobshare:production-${GITHUB_SHA}
+      - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:production-${GITHUB_SHA}
+      - run: docker push ${REGISTRY}/${REPO}:production-${GITHUB_SHA}
   docker-stage:
     name: Deploy docker image
     if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/master'
@@ -75,14 +76,15 @@ jobs:
       packages: write
     env:
       REGISTRY: ghcr.io
+      REPO: goodjoblife/goodjobshare/web-server-dev
       IMAGE: goodjobshare:stage
     steps:
       - uses: actions/checkout@v4
       - name: Log in to Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${REGISTRY} -u ${{ github.actor }} --password-stdin
       - run: docker compose -f .github/docker-compose-stage.yml build
-      - run: docker tag ${IMAGE} ${REGISTRY}/goodjoblife/goodjobshare:stage
-      - run: docker push ${REGISTRY}/goodjoblife/goodjobshare:stage
+      - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:stage
+      - run: docker push ${REGISTRY}/${REPO}:stage
   docker-dev:
     name: Deploy docker image
     if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
@@ -94,14 +96,15 @@ jobs:
       packages: write
     env:
       REGISTRY: ghcr.io
+      REPO: goodjoblife/goodjobshare/web-server-dev
       IMAGE: goodjobshare:dev
     steps:
       - uses: actions/checkout@v4
       - name: Log in to Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${REGISTRY} -u ${{ github.actor }} --password-stdin
       - run: docker compose -f .github/docker-compose-dev.yml build
-      - run: docker tag ${IMAGE} ${REGISTRY}/goodjoblife/goodjobshare:dev
-      - run: docker push ${REGISTRY}/goodjoblife/goodjobshare:dev
+      - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:dev
+      - run: docker push ${REGISTRY}/${REPO}:dev
   docker-dev2:
     name: Deploy docker image
     if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/dev2'
@@ -113,14 +116,15 @@ jobs:
       packages: write
     env:
       REGISTRY: ghcr.io
+      REPO: goodjoblife/goodjobshare/web-server-dev
       IMAGE: goodjobshare:dev
     steps:
       - uses: actions/checkout@v4
       - name: Log in to Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${REGISTRY} -u ${{ github.actor }} --password-stdin
       - run: docker compose -f .github/docker-compose-dev.yml build
-      - run: docker tag ${IMAGE} ${REGISTRY}/goodjoblife/goodjobshare:dev2
-      - run: docker push ${REGISTRY}/goodjoblife/goodjobshare:dev2
+      - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:dev2
+      - run: docker push ${REGISTRY}/${REPO}:dev2
   deploy-stage:
     if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
