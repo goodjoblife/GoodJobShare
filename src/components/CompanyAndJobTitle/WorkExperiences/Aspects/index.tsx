@@ -11,7 +11,7 @@ import styles from './styles.module.css';
 import RatingFilter from './RatingFilter';
 import Summary from './Summary';
 import FetchBox from 'utils/fetchBox';
-import { Aspect, aspectTranslation } from 'constants/companyJobTitle';
+import { Aspect } from 'constants/companyJobTitle';
 
 export type RatingDistribution = {
   rating: number;
@@ -59,7 +59,6 @@ const AspectSection: React.FC<AspectProps> = ({
   const params = useParams();
   const companyName = companyNameSelector(params);
   const parentPath = generatePath(companyWorkExperiencesPath, { companyName });
-  const title = aspectTranslation[aspect];
 
   return (
     <CompanyAndJobTitleWrapper
@@ -69,7 +68,7 @@ const AspectSection: React.FC<AspectProps> = ({
     >
       <Wrapper size="l">
         <Link to={parentPath}>&lt;&lt;回到評價分頁</Link>
-        <Heading className={styles.title}>{title}</Heading>
+        <Heading className={styles.title}>{aspect}</Heading>
         <PageBoxRenderer
           pageType={pageType}
           pageName={pageName}
@@ -77,7 +76,7 @@ const AspectSection: React.FC<AspectProps> = ({
           boxSelector={statisticsBoxSelector}
           render={(data: AspectStatisticsData) => {
             const items = data.companyAspectRatingStatistics;
-            const item = items.find(item => item.aspect === title);
+            const item = items.find(item => item.aspect === aspect);
             if (!item) return null;
 
             const {
