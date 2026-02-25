@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import qs from 'qs';
 
 import { P } from 'common/base';
@@ -20,6 +20,7 @@ import {
 import styles from './Pagination.module.css';
 
 export const useCreatePageLinkTo = () => {
+  const location = useLocation();
   const queryParams = useQuery();
   const isMobile = useMobile();
   const [y, setY] = useState(null);
@@ -40,16 +41,18 @@ export const useCreatePageLinkTo = () => {
 
   const createPageLinkTo = useCallback(
     p => {
+      const pathname = location.pathname;
       const search = qs.stringify(
         { ...queryParams, p },
         { addQueryPrefix: true },
       );
       return {
+        pathname,
         search,
         state: { y },
       };
     },
-    [y, queryParams],
+    [y, queryParams, location.pathname],
   );
 
   return [createPageLinkTo, handleSectionRef];
