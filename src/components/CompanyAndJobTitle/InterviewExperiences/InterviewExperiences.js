@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Pagination from 'common/Pagination';
 import { Section, Wrapper } from 'common/base';
 import NotFoundStatus from 'common/routing/NotFound';
-import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 
 import EmptyView from '../EmptyView';
 import Experience from '../Experience';
@@ -18,12 +17,11 @@ const InterviewExperiences = ({
   page,
   pageSize,
   totalCount,
+  createPageLinkTo,
 }) => {
-  const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
-
   if (data.length === 0) {
     return (
-      <Section ref={handleSectionRef} Tag="main" paddingBottom>
+      <Section Tag="main" paddingBottom>
         <NotFoundStatus>
           <EmptyView pageName={pageName} tabType={tabType} />
         </NotFoundStatus>
@@ -31,7 +29,7 @@ const InterviewExperiences = ({
     );
   }
   return (
-    <Section ref={handleSectionRef} Tag="main" paddingBottom>
+    <Section Tag="main" paddingBottom>
       {data.map(d => (
         <div key={d.id} className={styles.experience}>
           <Experience
@@ -55,6 +53,7 @@ const InterviewExperiences = ({
 };
 
 InterviewExperiences.propTypes = {
+  createPageLinkTo: PropTypes.func.isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,

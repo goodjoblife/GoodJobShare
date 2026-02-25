@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
 import NotFoundStatus from 'common/routing/NotFound';
-import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import usePermission from 'hooks/usePermission';
 
 import EmptyView from '../EmptyView';
@@ -20,16 +19,15 @@ const TimeAndSalary = ({
   pageSize,
   totalCount,
   onCloseReport,
+  createPageLinkTo,
 }) => {
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [fetchPermission]);
 
-  const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
-
   return (
-    <Section ref={handleSectionRef} Tag="main" paddingBottom>
+    <Section Tag="main" paddingBottom>
       {(salaryWorkTimes.length > 0 && (
         <React.Fragment>
           <WorkingHourBlock
@@ -59,6 +57,7 @@ const TimeAndSalary = ({
 };
 
 TimeAndSalary.propTypes = {
+  createPageLinkTo: PropTypes.func.isRequired,
   onCloseReport: PropTypes.func.isRequired,
   page: PropTypes.number,
   pageName: PropTypes.string,
