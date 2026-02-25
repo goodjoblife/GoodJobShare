@@ -38,7 +38,7 @@ function shouldUpdateScroll(prevProps, props) {
     props &&
     props.location &&
     props.location.state &&
-    typeof props.location.state.y !== 'undefined'
+    props.location.state.y
   ) {
     return [0, props.location.state.y];
   }
