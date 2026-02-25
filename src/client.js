@@ -33,14 +33,13 @@ function shouldUpdateScroll(prevProps, props) {
 
   const shouldScroll = diffSignature(prevProps, props);
 
-  if (
-    shouldScroll &&
-    props &&
-    props.location &&
-    props.location.state &&
-    props.location.state.y
-  ) {
-    return [0, props.location.state.y];
+  const shouldScrollToY = !!prevProps; // when there is a previous page
+
+  const scrollY =
+    props && props.location && props.location.state && props.location.state.y;
+
+  if (shouldScroll && shouldScrollToY && scrollY) {
+    return [0, scrollY];
   }
 
   return shouldScroll;
