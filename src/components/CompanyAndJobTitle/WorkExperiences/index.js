@@ -9,7 +9,7 @@ import Sorter from '../Sorter';
 import styles from '../styles.module.css';
 import { Wrapper } from 'common/base';
 import AspectScoreCard from '../Overview/AspectScoreCard';
-import { Aspect } from 'constants/companyJobTitle';
+import { Aspects } from 'constants/companyJobTitle';
 
 const WorkExperiences = ({
   pageType,
@@ -26,13 +26,9 @@ const WorkExperiences = ({
   >
     <Wrapper size="l">
       <div className={styles.scoreCards}>
-        <AspectScoreCard aspect={Aspect.WORK_LIFE_BALANCE} />
-        <AspectScoreCard aspect={Aspect.COMPENSATION} />
-        <AspectScoreCard aspect={Aspect.WORK_TIME} />
-        <AspectScoreCard aspect={Aspect.CULTURE} />
-        <AspectScoreCard aspect={Aspect.MANAGEMENT} />
-        <AspectScoreCard aspect={Aspect.PROMOTION} />
-        <AspectScoreCard aspect={Aspect.GROWTH} />
+        {Aspects.map(aspect => (
+          <AspectScoreCard key={aspect} aspect={aspect} />
+        ))}
       </div>
     </Wrapper>
     <Wrapper size="m">

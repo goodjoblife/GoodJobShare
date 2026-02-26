@@ -1,7 +1,7 @@
 import React from 'react';
 import { generatePath } from 'react-router';
 
-import { Aspect, aspectTranslation } from 'constants/companyJobTitle';
+import { Aspect } from 'constants/companyJobTitle';
 import useCompanyName from 'pages/Company/useCompanyName';
 import { companyWorkExperiencesAspectPath } from 'constants/linkTo';
 import ScoreCard from './ScoreCard';
@@ -34,7 +34,7 @@ const useAspectData = ({
   if (!isFetched(box) || !box.data) return null;
 
   const stat = box.data.companyAspectRatingStatistics.find(
-    item => item.aspect === aspectTranslation[aspect],
+    item => item.aspect === aspect,
   );
   return stat;
 };
@@ -56,7 +56,7 @@ const AspectScoreCard: React.FC<AspectScoreCardProps> = ({ aspect }) => {
   const { averageRating, ratingCount } = data;
   return (
     <ScoreCard
-      title={aspectTranslation[aspect]}
+      title={aspect}
       value={averageRating}
       maxValue={5}
       linkTo={path}

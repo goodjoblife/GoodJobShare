@@ -52,28 +52,28 @@ const tabTypeURLMap: Record<TabType, string> = {
 };
 
 export enum Aspect {
-  GENDER = 'gender',
-  WORK_LIFE_BALANCE = 'work-life-balance',
-  COMPENSATION = 'compensation',
-  JOB_CONTENT = 'job-content',
-  WORK_TIME = 'work-time',
-  CULTURE = 'culture',
-  MANAGEMENT = 'management',
-  GROWTH = 'growth',
-  PROMOTION = 'promotion',
+  GENDER = '性別友善度',
+  WORK_LIFE_BALANCE = '工作與生活平衡',
+  COMPENSATION = '薪資福利',
+  JOB_CONTENT = '工作內容',
+  WORK_TIME = '工時狀況',
+  CULTURE = '公司/團隊文化',
+  MANAGEMENT = '公司管理方式',
+  GROWTH = '獲得的成長',
+  PROMOTION = '升遷制度',
 }
 
-export const aspectTranslation = {
-  [Aspect.GENDER]: '性別友善度',
-  [Aspect.WORK_LIFE_BALANCE]: '工作與生活平衡',
-  [Aspect.COMPENSATION]: '薪資福利',
-  [Aspect.JOB_CONTENT]: '工作內容',
-  [Aspect.WORK_TIME]: '工時狀況',
-  [Aspect.CULTURE]: '公司/團隊文化',
-  [Aspect.MANAGEMENT]: '公司管理方式',
-  [Aspect.GROWTH]: '獲得的成長',
-  [Aspect.PROMOTION]: '升遷制度',
-};
+export const Aspects = [
+  Aspect.GENDER,
+  Aspect.WORK_LIFE_BALANCE,
+  Aspect.COMPENSATION,
+  Aspect.JOB_CONTENT,
+  Aspect.WORK_TIME,
+  Aspect.CULTURE,
+  Aspect.MANAGEMENT,
+  Aspect.GROWTH,
+  Aspect.PROMOTION,
+];
 
 export const generatePageURL = ({
   pageName,

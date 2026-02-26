@@ -631,11 +631,14 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
   dispatch(setWorkExperiencesAspectExperiences(companyName, toFetching()));
 
   try {
-    // TODO: Substitute with real API call
     const data = await getCompanyWorkExperiences({
       companyName,
       start,
       limit,
+      aspectFilter: {
+        aspect,
+        rating: rating === null ? undefined : rating,
+      },
     });
 
     // Not found case
