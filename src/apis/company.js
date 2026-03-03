@@ -9,16 +9,35 @@ import {
   getCompanyTopNJobTitlesQuery,
 } from 'graphql/company';
 
-export const getCompanyTimeAndSalary = ({
+export const getCompanyTimeAndSalary = async ({
   companyName,
   jobTitle,
   start,
   limit,
-}) =>
-  graphqlClient({
+  dataTimeRange,
+  experienceInYearRange,
+  gender,
+  sortBy,
+}) => {
+  const response = await graphqlClient({
     query: getCompanyTimeAndSalaryQuery,
-    variables: { companyName, jobTitle, start, limit },
-  }).then(R.prop('company'));
+    variables: {
+      companyName,
+      jobTitle,
+      start,
+      limit,
+      dataTimeRange,
+      experienceInYearRange,
+      gender,
+      sortBy,
+    },
+  });
+
+  // 在這裡下中斷點，你可以看到完整的 response
+  const companyData = R.prop('company', response);
+
+  return companyData;
+};
 
 export const getCompanyTimeAndSalaryStatistics = ({ companyName }) =>
   graphqlClient({

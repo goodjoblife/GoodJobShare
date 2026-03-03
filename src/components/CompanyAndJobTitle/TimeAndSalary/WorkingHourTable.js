@@ -24,6 +24,17 @@ import ReportBadge from 'common/button/ReportBadge';
 import ReportZone from 'components/ExperienceDetail/ReportZone';
 import { REPORT_TYPE } from 'components/ExperienceDetail/ReportZone/ReportForm/constants';
 
+const formatGender = gender => {
+  switch (gender) {
+    case 'male':
+      return '男';
+    case 'female':
+      return '女';
+    default:
+      return '-';
+  }
+};
+
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>
     <InfoSalaryModal
@@ -100,6 +111,13 @@ const columnProps = [
     dataField: 'experience_in_year',
     dataFormatter: getYear,
     Children: () => '業界工作經歷',
+  },
+  {
+    className: styles.colGender,
+    title: '性別',
+    dataField: 'gender',
+    dataFormatter: formatGender,
+    Children: () => '性別',
   },
   {
     className: styles.colSalary,

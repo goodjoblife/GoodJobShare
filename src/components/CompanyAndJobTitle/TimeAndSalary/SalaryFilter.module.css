@@ -1,0 +1,62 @@
+@value below-small: 850px;
+@value below-mobile: 550px;
+
+.filterBar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+
+  @media (max-width: below-small) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  @media (max-width: below-small) {
+    flex-wrap: wrap;
+  }
+}
+
+.sortGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+
+  @media (max-width: below-small) {
+    margin-left: 0;
+    flex-wrap: wrap;
+  }
+}
+
+.label {
+  white-space: nowrap;
+  font-size: 14px;
+  color: #333;
+}
+
+.selectWrapper {
+  min-width: 120px;
+
+  @media (max-width: below-small) {
+    min-width: unset;
+    flex: 1;
+  }
+}
+
+.sortSelectWrapper {
+  min-width: 160px;
+
+  @media (max-width: below-small) {
+    min-width: unset;
+    flex: 1;
+  }
+}
