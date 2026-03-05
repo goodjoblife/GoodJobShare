@@ -17,51 +17,53 @@ const InterviewExperiences = ({
   page,
   pageSize,
   topNJobTitles,
-}) => (
-  <CompanyAndJobTitleWrapper
-    pageType={pageType}
-    pageName={pageName}
-    tabType={tabType}
-  >
-    <Wrapper size="m">
-      <div className={styles.interactive}>
-        <Searchbar pageType={pageType} tabType={tabType} />
-        <Sorter />
-      </div>
-    </Wrapper>
-    <PageBoxRenderer
+}) => {
+  return (
+    <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
-      boxSelector={boxSelector}
-      render={({
-        interviewExperiences,
-        interviewExperiencesCount: totalCount,
-      }) => {
-        return (
-          <Fragment>
-            <InterviewExperienceHelmet
-              pageType={pageType}
-              pageName={pageName}
-              totalCount={totalCount}
-              page={page}
-              topNJobTitles={topNJobTitles}
-            />
-            <InterviewExperiencesSection
-              pageType={pageType}
-              pageName={pageName}
-              tabType={tabType}
-              data={interviewExperiences}
-              page={page}
-              pageSize={pageSize}
-              totalCount={totalCount}
-            />
-          </Fragment>
-        );
-      }}
-    />
-  </CompanyAndJobTitleWrapper>
-);
+    >
+      <Wrapper size="m">
+        <div className={styles.interactive}>
+          <Searchbar pageType={pageType} tabType={tabType} />
+          <Sorter />
+        </div>
+      </Wrapper>
+      <PageBoxRenderer
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        boxSelector={boxSelector}
+        render={({
+          interviewExperiences,
+          interviewExperiencesCount: totalCount,
+        }) => {
+          return (
+            <Fragment>
+              <InterviewExperienceHelmet
+                pageType={pageType}
+                pageName={pageName}
+                totalCount={totalCount}
+                page={page}
+                topNJobTitles={topNJobTitles}
+              />
+              <InterviewExperiencesSection
+                pageType={pageType}
+                pageName={pageName}
+                tabType={tabType}
+                data={interviewExperiences}
+                page={page}
+                pageSize={pageSize}
+                totalCount={totalCount}
+              />
+            </Fragment>
+          );
+        }}
+      />
+    </CompanyAndJobTitleWrapper>
+  );
+};
 
 InterviewExperiences.propTypes = {
   boxSelector: PropTypes.func.isRequired,

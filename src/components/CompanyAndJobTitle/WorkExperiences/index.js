@@ -18,54 +18,56 @@ const WorkExperiences = ({
   boxSelector,
   page,
   pageSize,
-}) => (
-  <CompanyAndJobTitleWrapper
-    pageType={pageType}
-    pageName={pageName}
-    tabType={tabType}
-  >
-    <Wrapper size="l">
-      <div className={styles.scoreCards}>
-        {Aspects.map(aspect => (
-          <AspectScoreCard key={aspect} aspect={aspect} />
-        ))}
-      </div>
-    </Wrapper>
-    <Wrapper size="m">
-      <div className={styles.interactive}>
-        <Searchbar pageType={pageType} tabType={tabType} />
-        <Sorter />
-      </div>
-    </Wrapper>
-    <PageBoxRenderer
+}) => {
+  return (
+    <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
-      boxSelector={boxSelector}
-      render={({ workExperiences, workExperiencesCount: totalCount }) => {
-        return (
-          <Fragment>
-            <Helmet
-              pageType={pageType}
-              pageName={pageName}
-              totalCount={totalCount}
-              page={page}
-            />
-            <WorkExperiencesSection
-              pageType={pageType}
-              pageName={pageName}
-              tabType={tabType}
-              data={workExperiences}
-              page={page}
-              pageSize={pageSize}
-              totalCount={totalCount}
-            />
-          </Fragment>
-        );
-      }}
-    />
-  </CompanyAndJobTitleWrapper>
-);
+    >
+      <Wrapper size="l">
+        <div className={styles.scoreCards}>
+          {Aspects.map(aspect => (
+            <AspectScoreCard key={aspect} aspect={aspect} />
+          ))}
+        </div>
+      </Wrapper>
+      <Wrapper size="m">
+        <div className={styles.interactive}>
+          <Searchbar pageType={pageType} tabType={tabType} />
+          <Sorter />
+        </div>
+      </Wrapper>
+      <PageBoxRenderer
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        boxSelector={boxSelector}
+        render={({ workExperiences, workExperiencesCount: totalCount }) => {
+          return (
+            <Fragment>
+              <Helmet
+                pageType={pageType}
+                pageName={pageName}
+                totalCount={totalCount}
+                page={page}
+              />
+              <WorkExperiencesSection
+                pageType={pageType}
+                pageName={pageName}
+                tabType={tabType}
+                data={workExperiences}
+                page={page}
+                pageSize={pageSize}
+                totalCount={totalCount}
+              />
+            </Fragment>
+          );
+        }}
+      />
+    </CompanyAndJobTitleWrapper>
+  );
+};
 
 WorkExperiences.propTypes = {
   boxSelector: PropTypes.func.isRequired,
