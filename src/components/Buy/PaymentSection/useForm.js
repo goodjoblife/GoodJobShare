@@ -40,7 +40,7 @@ const useForm = ({ skuId }) => {
       setFormState(FORM_STATE.LOADING);
 
       const prime = await getPrime();
-      let [
+      const [
         errorMessage,
         paymentId,
         paymentUrl,
