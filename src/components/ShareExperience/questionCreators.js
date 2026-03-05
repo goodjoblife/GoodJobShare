@@ -351,61 +351,6 @@ export const createWeekWorkTimeQuestion = () => ({
   ),
 });
 
-export const createInterviewSectionsQuestion = () => {
-  const { validateOrWarnItem, ...rest } = createSectionsQuestion();
-  return {
-    ...rest,
-    validateOrWarnItem: ([subject, rating, text]) => {
-      if (UNRATABLE_SUBJECTS.includes(subject) === false && rating === 0)
-        return '需選取滿意程度';
-      if (wordCount(text) < SECTION_MIN_LENGTH) {
-        return `至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(text)} 字`;
-      }
-      return null;
-    },
-    options: [
-      '面試流程',
-      '面試問題',
-      '面試官專業度',
-      '如何準備面試',
-      '薪資福利',
-      '性別友善度',
-      '工作內容',
-      '工時狀況',
-      '工作環境',
-      '自訂面向',
-    ],
-    placeholder: ([subject, rating, text]) => {
-      switch (subject) {
-        case '面試流程':
-          return '整個面試的流程為何？有哪幾關面試、與誰面試？ 針對面試邀約的及時性、回饋的速度與詳細度，哪些方面讓您覺得面試流程良好或需要改善？';
-        case '面試問題':
-          return '面試的過程中具體問了哪一些問題？ 請列點詳述';
-        case '面試官專業度':
-          return '在面試的過程中，您認為面試官的專業度與態度為何？ 問題的深度，以及與問題工作的相關度為何？';
-        case '如何準備面試':
-          return '您是如何準備面試的？';
-        case '薪資福利':
-          return '底薪、績效獎金、年終獎金、三節獎金、分紅、津貼補助...等。';
-        case '性別友善度':
-          return '是否有詢問是否有小孩、生育計畫？ 公司對請生理假、產假或育嬰假的態度？';
-        case '工作內容':
-          return '面試時提到工作內容是什麼呢？';
-        case '工時狀況':
-          return '面試時提到的上下班時間、加班頻率如何？下班要收訊息嗎?';
-        case '工作環境':
-          return '在面試時看到的工作環境如何？ 是否乾淨、明亮、安全？';
-        default:
-          return '請輸入自訂標題（例如：環境整潔度）';
-      }
-    },
-    hasRating: ([subject, rating, text]) =>
-      UNRATABLE_SUBJECTS.includes(subject) === false,
-    ratingLabels: ([subject, rating, text]) =>
-      subject === '面試流程' ? RATING_COURSE_LABELS : RATING_LABELS,
-  };
-};
-
 export const createSectionsQuestion = () => ({
   title: '至少評價兩個面向',
   type: QUESTION_TYPE.RADIO_RATING_TEXTAREA_LIST,
@@ -474,6 +419,61 @@ export const createSectionsQuestion = () => ({
     `至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(value)} 字`,
   hasRating: () => true,
 });
+
+export const createInterviewSectionsQuestion = () => {
+  const { validateOrWarnItem, ...rest } = createSectionsQuestion();
+  return {
+    ...rest,
+    validateOrWarnItem: ([subject, rating, text]) => {
+      if (UNRATABLE_SUBJECTS.includes(subject) === false && rating === 0)
+        return '需選取滿意程度';
+      if (wordCount(text) < SECTION_MIN_LENGTH) {
+        return `至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(text)} 字`;
+      }
+      return null;
+    },
+    options: [
+      '面試流程',
+      '面試問題',
+      '面試官專業度',
+      '如何準備面試',
+      '薪資福利',
+      '性別友善度',
+      '工作內容',
+      '工時狀況',
+      '工作環境',
+      '自訂面向',
+    ],
+    placeholder: ([subject, rating, text]) => {
+      switch (subject) {
+        case '面試流程':
+          return '整個面試的流程為何？有哪幾關面試、與誰面試？ 針對面試邀約的及時性、回饋的速度與詳細度，哪些方面讓您覺得面試流程良好或需要改善？';
+        case '面試問題':
+          return '面試的過程中具體問了哪一些問題？ 請列點詳述';
+        case '面試官專業度':
+          return '在面試的過程中，您認為面試官的專業度與態度為何？ 問題的深度，以及與問題工作的相關度為何？';
+        case '如何準備面試':
+          return '您是如何準備面試的？';
+        case '薪資福利':
+          return '底薪、績效獎金、年終獎金、三節獎金、分紅、津貼補助...等。';
+        case '性別友善度':
+          return '是否有詢問是否有小孩、生育計畫？ 公司對請生理假、產假或育嬰假的態度？';
+        case '工作內容':
+          return '面試時提到工作內容是什麼呢？';
+        case '工時狀況':
+          return '面試時提到的上下班時間、加班頻率如何？下班要收訊息嗎?';
+        case '工作環境':
+          return '在面試時看到的工作環境如何？ 是否乾淨、明亮、安全？';
+        default:
+          return '請輸入自訂標題（例如：環境整潔度）';
+      }
+    },
+    hasRating: ([subject, rating, text]) =>
+      UNRATABLE_SUBJECTS.includes(subject) === false,
+    ratingLabels: ([subject, rating, text]) =>
+      subject === '面試流程' ? RATING_COURSE_LABELS : RATING_LABELS,
+  };
+};
 
 const OptionEmoji = ({ value, children }) => (
   <Fragment>

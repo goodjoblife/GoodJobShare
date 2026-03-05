@@ -6,7 +6,7 @@
     "start:tsc": "tsc -b -w --preserveWatchOutput",
     "start": "npm run start:tsc & razzle start",
     "start-production": "NODE_ENV=production node build/server.js",
-    "lint": "eslint src/**/*.js src/**/*.ts src/**/*.tsx razzle.config.js",
+    "lint": "eslint src/ razzle.config.js",
     "lint-staged": "lint-staged",
     "stylelint": "stylelint \"src/**/*.css\"",
     "testonly": "razzle test --env=jsdom",
