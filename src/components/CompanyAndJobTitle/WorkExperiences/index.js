@@ -8,6 +8,7 @@ import Searchbar from '../Searchbar';
 import Sorter from '../Sorter';
 import styles from '../styles.module.css';
 import { Wrapper } from 'common/base';
+import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import AspectScoreCard from '../Overview/AspectScoreCard';
 import { Aspects } from 'constants/companyJobTitle';
 
@@ -19,6 +20,8 @@ const WorkExperiences = ({
   page,
   pageSize,
 }) => {
+  const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
+
   return (
     <CompanyAndJobTitleWrapper
       pageType={pageType}
@@ -32,7 +35,7 @@ const WorkExperiences = ({
           ))}
         </div>
       </Wrapper>
-      <Wrapper size="m">
+      <Wrapper ref={handleSectionRef} size="m">
         <div className={styles.interactive}>
           <Searchbar pageType={pageType} tabType={tabType} />
           <Sorter />
@@ -60,6 +63,7 @@ const WorkExperiences = ({
                 page={page}
                 pageSize={pageSize}
                 totalCount={totalCount}
+                createPageLinkTo={createPageLinkTo}
               />
             </Fragment>
           );

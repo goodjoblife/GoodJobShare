@@ -5,17 +5,17 @@ import styles from './Wrapper.module.css';
 
 const sizeOptions = ['l', 'm', 's'];
 
-const Wrapper = ({
-  Tag = 'div',
-  size = 'l',
-  children,
-  className = '',
-  onClick = null,
-}) => (
-  <Tag onClick={onClick} className={cn(styles[size], className)}>
-    {children}
-  </Tag>
+const Wrapper = React.forwardRef(
+  (
+    { Tag = 'div', size = 'l', children, className = '', onClick = null },
+    ref,
+  ) => (
+    <Tag ref={ref} onClick={onClick} className={cn(styles[size], className)}>
+      {children}
+    </Tag>
+  ),
 );
+
 Wrapper.propTypes = {
   Tag: PropTypes.string,
   children: PropTypes.node,

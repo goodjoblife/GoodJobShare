@@ -8,6 +8,7 @@ import Searchbar from '../Searchbar';
 import Sorter from '../Sorter';
 import styles from '../styles.module.css';
 import { Wrapper } from 'common/base';
+import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 
 const InterviewExperiences = ({
   pageType,
@@ -18,13 +19,15 @@ const InterviewExperiences = ({
   pageSize,
   topNJobTitles,
 }) => {
+  const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
+
   return (
     <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
     >
-      <Wrapper size="m">
+      <Wrapper ref={handleSectionRef} size="m">
         <div className={styles.interactive}>
           <Searchbar pageType={pageType} tabType={tabType} />
           <Sorter />
@@ -56,6 +59,7 @@ const InterviewExperiences = ({
                 page={page}
                 pageSize={pageSize}
                 totalCount={totalCount}
+                createPageLinkTo={createPageLinkTo}
               />
             </Fragment>
           );

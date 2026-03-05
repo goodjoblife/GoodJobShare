@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
+
 import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
 import NotFoundStatus from 'common/routing/NotFound';
 import usePermission from 'hooks/usePermission';
+
 import EmptyView from '../EmptyView';
 import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
-import { useQuery } from 'hooks/routing';
 
 const TimeAndSalary = ({
   salaryWorkTimes,
@@ -19,13 +19,12 @@ const TimeAndSalary = ({
   pageSize,
   totalCount,
   onCloseReport,
+  createPageLinkTo,
 }) => {
   const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [fetchPermission]);
-
-  const queryParams = useQuery();
 
   return (
     <Section Tag="main" paddingBottom>
@@ -40,12 +39,7 @@ const TimeAndSalary = ({
             totalCount={totalCount}
             unit={pageSize}
             currentPage={page}
-            createPageLinkTo={toPage =>
-              qs.stringify(
-                { ...queryParams, p: toPage },
-                { addQueryPrefix: true },
-              )
-            }
+            createPageLinkTo={createPageLinkTo}
           />
         </React.Fragment>
       )) || (
@@ -63,6 +57,7 @@ const TimeAndSalary = ({
 };
 
 TimeAndSalary.propTypes = {
+  createPageLinkTo: PropTypes.func.isRequired,
   onCloseReport: PropTypes.func.isRequired,
   page: PropTypes.number,
   pageName: PropTypes.string,

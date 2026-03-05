@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import qs from 'qs';
 
 import { P } from 'common/base';
 import ArrowLeft from 'common/icons/ArrowLeft';
+import { useQuery } from 'hooks/routing';
+import useMobile from 'hooks/useMobile';
 
 import {
   getFromCount,
@@ -15,6 +18,45 @@ import {
 } from './helpers';
 
 import styles from './Pagination.module.css';
+
+export const useCreatePageLinkTo = () => {
+  const location = useLocation();
+  const queryParams = useQuery();
+  const isMobile = useMobile();
+  const [y, setY] = useState(null);
+
+  const handleSectionRef = useCallback(
+    el => {
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        let newY = rect.top + window.scrollY;
+        if (isMobile) {
+          newY -= 50; /* nav height */
+        }
+        setY(newY);
+      }
+    },
+    [isMobile],
+  );
+
+  const createPageLinkTo = useCallback(
+    p => {
+      const pathname = location.pathname;
+      const search = qs.stringify(
+        { ...queryParams, p },
+        { addQueryPrefix: true },
+      );
+      return {
+        pathname,
+        search,
+        state: { y },
+      };
+    },
+    [y, queryParams, location.pathname],
+  );
+
+  return [createPageLinkTo, handleSectionRef];
+};
 
 const Pagination = ({ totalCount, unit, currentPage, createPageLinkTo }) => {
   const totalPage = getTotalPage(totalCount, unit);
