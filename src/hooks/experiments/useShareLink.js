@@ -25,7 +25,7 @@ const ACTIONS = [
 const randomAction = actions => {
   const r = Math.random();
   let accuProb = 0.0;
-  for (let action of actions) {
+  for (const action of actions) {
     accuProb += action.prob;
     if (r <= accuProb) {
       return action;

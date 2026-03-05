@@ -47,19 +47,6 @@ export const metaTitleSelector = experience => {
   )} ${typeSelector(experience)} ${dateSelector(experience)}`;
 };
 
-export const metaDescriptionSelector = experience => {
-  if (experience) {
-    if (experience.type === 'interview') {
-      return interviewMetaDescriptionSelector(experience);
-    } else if (experience.type === 'work') {
-      return workMetaDescriptionSelector(experience);
-    } else if (experience.type === 'intern') {
-      return internMetaDescriptionSelector(experience);
-    }
-  }
-  return null;
-};
-
 const interviewMetaDescriptionSelector = experience => {
   if (experience) {
     let content = '';
@@ -91,7 +78,7 @@ const interviewMetaDescriptionSelector = experience => {
       )}新台幣 ${salaryAmount} 元。`;
     }
     if (sections) {
-      for (let section of sections) {
+      for (const section of sections) {
         content += `${section.subtitle}：${section.content.replace(
           /(\r\n|\n|\r)/gm,
           ' ',
@@ -127,7 +114,7 @@ const workMetaDescriptionSelector = experience => {
       )}新台幣 ${salaryAmount} 元。`;
     }
     if (sections) {
-      for (let section of sections) {
+      for (const section of sections) {
         content += `${section.subtitle}：${section.content.replace(
           /(\r\n|\n|\r)/gm,
           ' ',
@@ -157,7 +144,7 @@ const internMetaDescriptionSelector = experience => {
       )}新台幣 ${salaryAmount} 元。`;
     }
     if (sections) {
-      for (let section of sections) {
+      for (const section of sections) {
         content += `${section.subtitle}：${section.content.replace(
           /(\r\n|\n|\r)/gm,
           ' ',
@@ -165,6 +152,19 @@ const internMetaDescriptionSelector = experience => {
       }
     }
     return content;
+  }
+  return null;
+};
+
+export const metaDescriptionSelector = experience => {
+  if (experience) {
+    if (experience.type === 'interview') {
+      return interviewMetaDescriptionSelector(experience);
+    } else if (experience.type === 'work') {
+      return workMetaDescriptionSelector(experience);
+    } else if (experience.type === 'intern') {
+      return internMetaDescriptionSelector(experience);
+    }
   }
   return null;
 };
