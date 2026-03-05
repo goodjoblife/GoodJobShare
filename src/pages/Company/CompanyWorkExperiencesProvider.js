@@ -10,6 +10,7 @@ import {
 } from 'constants/companyJobTitle';
 import {
   queryCompanyWorkExperiences,
+  queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
 import { companyWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
@@ -60,6 +61,10 @@ const CompanyWorkExperiencesProvider = () => {
 
   useEffect(() => {
     dispatch(queryRatingStatistics(companyName));
+  }, [dispatch, companyName]);
+
+  useEffect(() => {
+    dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName }));
   }, [dispatch, companyName]);
 
   useEffect(() => {
@@ -116,6 +121,7 @@ CompanyWorkExperiencesProvider.fetchData = ({
       }),
     ),
     dispatch(queryRatingStatistics(companyName)),
+    dispatch(queryCompanyWorkExperiencesAspectStatistics({ companyName })),
   ]);
 };
 

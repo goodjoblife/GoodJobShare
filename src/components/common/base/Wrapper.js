@@ -6,7 +6,10 @@ import styles from './Wrapper.module.css';
 const sizeOptions = ['l', 'm', 's'];
 
 const Wrapper = React.forwardRef(
-  ({ Tag, size, children, className, onClick }, ref) => (
+  (
+    { Tag = 'div', size = 'l', children, className = '', onClick = null },
+    ref,
+  ) => (
     <Tag ref={ref} onClick={onClick} className={cn(styles[size], className)}>
       {children}
     </Tag>
@@ -19,10 +22,6 @@ Wrapper.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
   size: PropTypes.oneOf(sizeOptions).isRequired,
-};
-Wrapper.defaultProps = {
-  size: 'l',
-  Tag: 'div',
 };
 
 export default Wrapper;
