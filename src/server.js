@@ -1,4 +1,5 @@
 import Express from 'express';
+import promClient from 'prom-client';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import { matchPath } from 'react-router-dom';
@@ -9,6 +10,21 @@ import configureStore from './store/configureStore';
 import Html from './helpers/Html';
 import Root from './components/Root';
 import rootRoutes from './routes';
+
+const register = new promClient.Registry();
+
+register.setDefaultLabels({
+  app: 'www',
+  environment: process.env.RAZZLE_ENVIRONMENT,
+});
+
+const httpRequestCounter = new promClient.Counter({
+  name: 'http_request_status',
+  help: 'HTTP request and response code',
+  labelNames: ['path', 'statusCode'],
+});
+
+register.registerMetric(httpRequestCounter);
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST); // eslint-disable-line import/no-dynamic-require
 
@@ -26,12 +42,28 @@ const matchRoutes = (pathname, routes) => {
   return null;
 };
 
+const wrap = fn => (req, res, next) => fn(req, res).catch(err => next(err));
+
 const server = Express();
 server
   .disable('x-powered-by')
   .use(Express.static(process.env.RAZZLE_PUBLIC_DIR, { maxAge: '14d' }));
 
-const wrap = fn => (req, res, next) => fn(req, res).catch(err => next(err));
+server.get(
+  '/metrics',
+  wrap(async (req, res) => {
+    res.set('Content-Type', register.contentType);
+    res.end(await register.metrics());
+  }),
+);
+
+server.use((req, res, next) => {
+  res.on('finish', () => {
+    httpRequestCounter.labels(req.originalUrl, res.statusCode).inc();
+  });
+  next();
+});
+
 server.get(
   '/*',
   wrap(async (req, res) => {
