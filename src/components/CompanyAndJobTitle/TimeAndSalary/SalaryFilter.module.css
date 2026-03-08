@@ -3,15 +3,13 @@
 
 .filterBar {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   flex: 1;
 
   @media (max-width: below-small) {
     flex-direction: column;
-    align-items: stretch;
-    gap: 6px;
+    width: 100%;
+    padding-bottom: 12px;
   }
 }
 
@@ -21,7 +19,12 @@
   gap: 4px;
 
   @media (max-width: below-small) {
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
+
+    .label {
+      font-weight: bold;
+    }
   }
 }
 
@@ -33,30 +36,23 @@
 
   @media (max-width: below-small) {
     margin-left: 0;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
+
+    .label {
+      font-weight: bold;
+    }
   }
 }
 
-.label {
-  white-space: nowrap;
-  font-size: 14px;
-  color: #333;
-}
-
-.selectWrapper {
-  min-width: 120px;
-
-  @media (max-width: below-small) {
-    min-width: unset;
-    flex: 1;
-  }
-}
-
-.sortSelectWrapper {
-  min-width: 160px;
+.select {
+  height: 32px;
+  line-height: 32px;
+  border: solid 1px #bdbdbd;
+  background: #ffffff;
+  padding: 0 8px;
+  cursor: pointer;
 
   @media (max-width: below-small) {
-    min-width: unset;
-    flex: 1;
   }
 }

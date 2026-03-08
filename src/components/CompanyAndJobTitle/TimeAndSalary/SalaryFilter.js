@@ -3,7 +3,6 @@ import { useHistory } from 'react-router';
 import qs from 'qs';
 
 import { useQuery } from 'hooks/routing';
-import Select from 'common/form/Select';
 import styles from './SalaryFilter.module.css';
 
 // ── URL param values ──────────────────────────────────────────
@@ -142,45 +141,58 @@ const SalaryFilter = () => {
     <div className={styles.filterBar}>
       <div className={styles.group}>
         <span className={styles.label}>篩選：</span>
-        <div className={styles.selectWrapper}>
-          <Select
-            value={dataTime}
-            options={DATA_TIME_OPTIONS}
-            onChange={e => setDataTime(e.target.value || null)}
-            hasNullOption
-            nullOptionText="所有參考時間"
-          />
-        </div>
-        <div className={styles.selectWrapper}>
-          <Select
-            value={experience}
-            options={EXPERIENCE_OPTIONS}
-            onChange={e => setExperience(e.target.value || null)}
-            hasNullOption
-            nullOptionText="所有工作經歷"
-          />
-        </div>
-        <div className={styles.selectWrapper}>
-          <Select
-            value={gender}
-            options={GENDER_OPTIONS}
-            onChange={e => setGender(e.target.value || null)}
-            hasNullOption
-            nullOptionText="所有性別"
-          />
-        </div>
+        <select
+          className={styles.select}
+          value={dataTime ?? ''}
+          onChange={e => setDataTime(e.target.value || null)}
+        >
+          <option value="">所有參考時間</option>
+          {DATA_TIME_OPTIONS.map(o => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+        <select
+          className={styles.select}
+          value={experience ?? ''}
+          onChange={e => setExperience(e.target.value || null)}
+        >
+          <option value="">所有工作經歷</option>
+          {EXPERIENCE_OPTIONS.map(o => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+        <select
+          className={styles.select}
+          value={gender ?? ''}
+          onChange={e => setGender(e.target.value || null)}
+        >
+          <option value="">所有性別</option>
+          {GENDER_OPTIONS.map(o => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
       </div>
+
       <div className={styles.sortGroup}>
         <span className={styles.label}>排序：</span>
-        <div className={styles.sortSelectWrapper}>
-          <Select
-            value={sortBy}
-            options={SORT_OPTIONS}
-            onChange={e => setSortBy(e.target.value || null)}
-            hasNullOption
-            nullOptionText="參考時間（新→舊）"
-          />
-        </div>
+        <select
+          className={styles.select}
+          value={sortBy ?? ''}
+          onChange={e => setSortBy(e.target.value || null)}
+        >
+          <option value="">參考時間（新→舊）</option>
+          {SORT_OPTIONS.map(o => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
       </div>
     </div>
   );
