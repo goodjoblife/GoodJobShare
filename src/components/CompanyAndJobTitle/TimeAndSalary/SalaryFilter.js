@@ -4,7 +4,6 @@ import qs from 'qs';
 
 import { useQuery } from 'hooks/routing';
 import styles from './SalaryFilter.module.css';
-
 const DATA_TIME_OPTIONS = [
   { value: 'past_month', label: '過去一個月' },
   { value: 'past_year', label: '過去一年' },
@@ -24,7 +23,6 @@ const GENDER_OPTIONS = [
 ];
 
 const SORT_OPTIONS = [
-  { value: 'LATEST_FIRST', label: '參考時間（新→舊）' },
   { value: 'EARLIEST_FIRST', label: '參考時間（舊→新）' },
   { value: 'HIGH_HOUR_SALARY_FIRST', label: '估計時薪（高→低）' },
   { value: 'LOW_HOUR_SALARY_FIRST', label: '估計時薪（低→高）' },
