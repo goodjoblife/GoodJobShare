@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import qs from 'qs';
 
 import { useQuery } from 'hooks/routing';
@@ -76,6 +76,7 @@ export const getExperienceInYearRange = experience => {
 
 export const useSalaryFilterFromQuery = () => {
   const history = useHistory();
+  const location = useLocation();
   const query = useQuery();
   const {
     dataTime,
@@ -92,7 +93,11 @@ export const useSalaryFilterFromQuery = () => {
         delete nextQuery[key];
       }
     });
-    history.push(qs.stringify(nextQuery, { addQueryPrefix: true }));
+    history.push({
+      pathname: location.pathname,
+      search: qs.stringify(nextQuery, { addQueryPrefix: true }),
+      state: { y: window.scrollY },
+    });
   };
 
   return {
