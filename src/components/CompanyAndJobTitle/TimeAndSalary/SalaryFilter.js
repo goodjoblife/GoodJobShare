@@ -5,15 +5,6 @@ import qs from 'qs';
 import { useQuery } from 'hooks/routing';
 import styles from './SalaryFilter.module.css';
 
-// ── URL param values ──────────────────────────────────────────
-// data_time : 'past_month' | 'past_year' | 'past_two_years'
-// experience: '0_3' | '4_7' | '8_plus'
-// gender    : 'male' | 'female' | 'other'
-// sort_by   : 'LATEST_FIRST' | 'EARLIEST_FIRST' |
-//             'HIGH_HOUR_SALARY_FIRST' | 'LOW_HOUR_SALARY_FIRST' |
-//             'HIGH_WEEK_HOUR_FIRST'  | 'LOW_WEEK_HOUR_FIRST'
-// ─────────────────────────────────────────────────────────────
-
 const DATA_TIME_OPTIONS = [
   { value: 'past_month', label: '過去一個月' },
   { value: 'past_year', label: '過去一年' },
@@ -40,8 +31,6 @@ const SORT_OPTIONS = [
   { value: 'HIGH_WEEK_HOUR_FIRST', label: '一週總工時（高→低）' },
   { value: 'LOW_WEEK_HOUR_FIRST', label: '一週總工時（低→高）' },
 ];
-
-// ── Pure selector (used by SSR fetchData too) ─────────────────
 export const salaryFilterFromQuerySelector = query => ({
   dataTime: query.data_time || null,
   experience: query.experience || null,
@@ -49,7 +38,6 @@ export const salaryFilterFromQuerySelector = query => ({
   sortBy: query.sort_by || null,
 });
 
-// ── Convert URL preset → API DataTimeRange object ─────────────
 export const getDataTimeRange = dataTime => {
   if (!dataTime) return undefined;
   const now = new Date();
@@ -75,7 +63,6 @@ export const getDataTimeRange = dataTime => {
   }
 };
 
-// ── Convert URL preset → API ExperienceInYearRange object ─────
 export const getExperienceInYearRange = experience => {
   switch (experience) {
     case '0_3':
@@ -89,7 +76,6 @@ export const getExperienceInYearRange = experience => {
   }
 };
 
-// ── Hook ──────────────────────────────────────────────────────
 export const useSalaryFilterFromQuery = () => {
   const history = useHistory();
   const query = useQuery();
@@ -101,7 +87,6 @@ export const useSalaryFilterFromQuery = () => {
   } = salaryFilterFromQuerySelector(query);
 
   const updateQuery = updates => {
-    // eslint-disable-next-line no-unused-vars
     const { p, ...restQuery } = query;
     const nextQuery = { ...restQuery, ...updates };
     Object.keys(nextQuery).forEach(key => {
@@ -124,7 +109,6 @@ export const useSalaryFilterFromQuery = () => {
   };
 };
 
-// ── Component ─────────────────────────────────────────────────
 const SalaryFilter = () => {
   const {
     dataTime,
