@@ -36,11 +36,14 @@
 
   @media (max-width: below-small) {
     margin-left: 0;
-    flex-direction: column;
-    align-items: stretch;
 
     .label {
       font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .select {
+      flex: 1;
     }
   }
 }
