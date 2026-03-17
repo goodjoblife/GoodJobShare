@@ -19,20 +19,24 @@ import {
 
 import styles from './Pagination.module.css';
 
-export const useCreatePageLinkTo = () => {
+const useSectionY = () => {
   const sectionRef = useRef(null);
-  const location = useLocation();
-  const queryParams = useQuery();
   const isMobile = useMobile();
   const [y, setY] = useState(null);
 
-  const handleSectionRef = useCallback(el => {
-    if (el) {
-      sectionRef.current = el;
-    }
-  }, []);
+  const handleSectionRef = useCallback(
+    el => {
+      if (el) {
+        sectionRef.current = el;
+      }
+    },
+    [sectionRef],
+  );
 
   /* eslint-disable react-hooks/exhaustive-deps */
+  // DOM state changes don't notify React,
+  // so dependencies are omitted to always run the effect
+  // to ensure the latest scroll position is calculated.
   useEffect(() => {
     if (sectionRef.current) {
       const rect = sectionRef.current.getBoundingClientRect();
@@ -46,6 +50,15 @@ export const useCreatePageLinkTo = () => {
     }
   });
   /* eslint-enable react-hooks/exhaustive-deps */
+
+  return [y, handleSectionRef];
+};
+
+// Portal for generating the link and ref
+export const useCreatePageLinkTo = () => {
+  const location = useLocation();
+  const queryParams = useQuery();
+  const [y, handleSectionRef] = useSectionY();
 
   const createPageLinkTo = useCallback(
     p => {
