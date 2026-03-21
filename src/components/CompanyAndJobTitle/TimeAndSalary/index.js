@@ -33,7 +33,7 @@ const TimeAndSalary = ({
     pageName={pageName}
     tabType={tabType}
   >
-    {pageType === PAGE_TYPE.COMPANY && (
+    {pageType === PAGE_TYPE.COMPANY && page === 1 && (
       <BoxRenderer
         box={esgSalaryDataBox}
         render={data => {
