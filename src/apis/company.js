@@ -9,7 +9,7 @@ import {
   getCompanyTopNJobTitlesQuery,
 } from 'graphql/company';
 
-export const getCompanyTimeAndSalary = async ({
+export const getCompanyTimeAndSalary = ({
   companyName,
   jobTitle,
   start,
@@ -18,8 +18,8 @@ export const getCompanyTimeAndSalary = async ({
   experienceInYearRange,
   gender,
   sortBy,
-}) => {
-  const response = await graphqlClient({
+}) =>
+  graphqlClient({
     query: getCompanyTimeAndSalaryQuery,
     variables: {
       companyName,
@@ -31,13 +31,7 @@ export const getCompanyTimeAndSalary = async ({
       gender,
       sortBy,
     },
-  });
-
-  // 在這裡下中斷點，你可以看到完整的 response
-  const companyData = R.prop('company', response);
-
-  return companyData;
-};
+  }).then(R.prop('company'));
 
 export const getCompanyTimeAndSalaryStatistics = ({ companyName }) =>
   graphqlClient({
