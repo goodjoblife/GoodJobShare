@@ -1,5 +1,4 @@
-@value below-small: 850px;
-@value below-mobile: 550px;
+@value below-small, below-mobile from "../../common/variables.module.css";
 
 .filterBar {
   display: flex;
@@ -55,7 +54,4 @@
   background: #ffffff;
   padding: 0 8px;
   cursor: pointer;
-
-  @media (max-width: below-small) {
-  }
 }

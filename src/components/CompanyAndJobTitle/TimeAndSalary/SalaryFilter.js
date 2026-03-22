@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import qs from 'qs';
 
@@ -85,20 +85,23 @@ export const useSalaryFilterFromQuery = () => {
     sortBy,
   } = salaryFilterFromQuerySelector(query);
 
-  const updateQuery = updates => {
-    const { p, ...restQuery } = query;
-    const nextQuery = { ...restQuery, ...updates };
-    Object.keys(nextQuery).forEach(key => {
-      if (nextQuery[key] == null || nextQuery[key] === '') {
-        delete nextQuery[key];
-      }
-    });
-    history.push({
-      pathname: location.pathname,
-      search: qs.stringify(nextQuery, { addQueryPrefix: true }),
-      state: { y: window.scrollY },
-    });
-  };
+  const updateQuery = useCallback(
+    updates => {
+      const { p, ...restQuery } = query;
+      const nextQuery = { ...restQuery, ...updates };
+      Object.keys(nextQuery).forEach(key => {
+        if (nextQuery[key] == null || nextQuery[key] === '') {
+          delete nextQuery[key];
+        }
+      });
+      history.push({
+        pathname: location.pathname,
+        search: qs.stringify(nextQuery, { addQueryPrefix: true }),
+        state: { y: window.scrollY },
+      });
+    },
+    [query, history, location],
+  );
 
   return {
     dataTime,
