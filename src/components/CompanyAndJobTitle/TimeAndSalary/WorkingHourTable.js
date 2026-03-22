@@ -118,6 +118,7 @@ const columnProps = [
     dataField: 'gender',
     dataFormatter: formatGender,
     Children: () => '性別',
+    isEnabled: ({ showGender }) => showGender,
   },
   {
     className: styles.colSalary,
@@ -167,7 +168,7 @@ const columnProps = [
   },
 ];
 
-const WorkingHourTable = ({ data, pageType, onCloseReport }) => {
+const WorkingHourTable = ({ data, pageType, showGender, onCloseReport }) => {
   const [isInfoSalaryModalOpen, setInfoSalaryModalOpen] = useState(false);
   const [isInfoTimeModalOpen, setInfoTiimeModalOpen] = useState(false);
 
@@ -182,9 +183,9 @@ const WorkingHourTable = ({ data, pageType, onCloseReport }) => {
   const filteredColumnProps = useMemo(
     () =>
       columnProps.filter(({ isEnabled }) =>
-        isEnabled ? isEnabled({ pageType }) : true,
+        isEnabled ? isEnabled({ pageType, showGender }) : true,
       ),
-    [pageType],
+    [pageType, showGender],
   );
 
   const [fromCol, toCol] = useMemo(
@@ -226,7 +227,9 @@ const WorkingHourTable = ({ data, pageType, onCloseReport }) => {
       postProcessRows={postProcessRows}
     >
       {columnProps
-        .filter(({ isEnabled }) => (isEnabled ? isEnabled({ pageType }) : true))
+        .filter(({ isEnabled }) =>
+          isEnabled ? isEnabled({ pageType, showGender }) : true,
+        )
         .map(({ Children, ...props }) => (
           // eslint-disable-next-line react/prop-types
           <Table.Column key={props.title} {...props}>
@@ -249,6 +252,7 @@ WorkingHourTable.propTypes = {
     pageTypeMapping.COMPANY,
     pageTypeMapping.JOB_TITLE,
   ]),
+  showGender: PropTypes.bool,
 };
 
 export default WorkingHourTable;

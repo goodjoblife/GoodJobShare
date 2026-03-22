@@ -12,6 +12,7 @@ const WorkingHourBlock = ({ data, pageType, onCloseReport }) => {
         <WorkingHourTable
           data={data}
           pageType={pageType}
+          showGender
           onCloseReport={onCloseReport}
         />
       </div>

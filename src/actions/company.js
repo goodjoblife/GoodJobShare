@@ -1,3 +1,4 @@
+import R from 'ramda';
 import { isGraphqlError } from 'utils/errors';
 import {
   isFetching,
@@ -265,10 +266,8 @@ export const queryCompanyTimeAndSalary = (
         box.data.jobTitle === jobTitle &&
         box.data.start === start &&
         box.data.limit === limit &&
-        JSON.stringify(box.data.dataTimeRange) ===
-          JSON.stringify(dataTimeRange) &&
-        JSON.stringify(box.data.experienceInYearRange) ===
-          JSON.stringify(experienceInYearRange) &&
+        R.equals(box.data.dataTimeRange, dataTimeRange) &&
+        R.equals(box.data.experienceInYearRange, experienceInYearRange) &&
         box.data.gender === gender &&
         box.data.sortBy === sortBy))
   ) {
