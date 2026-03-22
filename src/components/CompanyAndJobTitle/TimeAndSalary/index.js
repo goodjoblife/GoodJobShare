@@ -13,6 +13,7 @@ import SalaryFilter from './SalaryFilter';
 import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
 import { fetchBoxPropType } from 'utils/fetchBox';
 import { Wrapper } from 'common/base';
+import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import styles from './TimeAndSalary.module.css';
 
 const TimeAndSalary = ({
@@ -27,105 +28,112 @@ const TimeAndSalary = ({
   topNJobTitles,
   onCloseReport,
   esgSalaryDataBox,
-}) => (
-  <CompanyAndJobTitleWrapper
-    pageType={pageType}
-    pageName={pageName}
-    tabType={tabType}
-  >
-    {pageType === PAGE_TYPE.COMPANY && page === 1 && (
-      <BoxRenderer
-        box={esgSalaryDataBox}
-        render={data => {
-          if (!data) return null;
+}) => {
+  const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
 
-          const {
-            avgSalaryStatistics: [avgSalaryStatisticsItem],
-            nonManagerAvgSalaryStatistics: [nonManagerAvgSalaryStatisticsItem],
-            nonManagerMedianSalaryStatistics: [
-              nonManagerMedianSalaryStatisticsItem,
-            ],
-            femaleManagerStatistics: [femaleManagerStatisticsItem],
-          } = data;
-          return (
-            <Wrapper size="l">
-              <EsgBlock
-                avgSalaryStatisticsItem={avgSalaryStatisticsItem}
-                nonManagerAvgSalaryStatisticsItem={
-                  nonManagerAvgSalaryStatisticsItem
-                }
-                nonManagerMedianSalaryStatisticsItem={
-                  nonManagerMedianSalaryStatisticsItem
-                }
-                femaleManagerStatisticsItem={femaleManagerStatisticsItem}
-              />
-            </Wrapper>
-          );
-        }}
-      />
-    )}
-    {page === 1 && (
-      <BoxRenderer
-        box={statisticsBox}
-        render={data => {
-          if (!data || salaryWorkTimeStatistics.count === 0) {
-            return null;
-          }
-          const {
-            salaryDistribution,
-            jobAverageSalaries,
-            averageWeekWorkTime,
-            overtimeFrequencyCount,
-          } = data;
-          return (
-            <Wrapper size="l">
-              <SummarySection
-                salaryDistribution={salaryDistribution}
-                jobAverageSalaries={jobAverageSalaries}
-                averageWeekWorkTime={averageWeekWorkTime}
-                overtimeFrequencyCount={overtimeFrequencyCount}
-              />
-              <OvertimeSection statistics={salaryWorkTimeStatistics} />
-            </Wrapper>
-          );
-        }}
-      />
-    )}
-    <Wrapper size="l" className={styles.searchbar}>
-      <Searchbar pageType={pageType} tabType={tabType} />
-      <SalaryFilter />
-    </Wrapper>
-    <PageBoxRenderer
+  return (
+    <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
-      boxSelector={boxSelector}
-      render={({ salaryWorkTimes, salaryWorkTimesCount: totalCount }) => {
-        return (
-          <Wrapper size="l">
-            <Helmet
-              pageType={pageType}
-              pageName={pageName}
-              totalCount={totalCount}
-              page={page}
-              topNJobTitles={topNJobTitles}
-            />
-            <TimeAndSalarySection
-              pageType={pageType}
-              pageName={pageName}
-              tabType={tabType}
-              salaryWorkTimes={salaryWorkTimes}
-              page={page}
-              pageSize={pageSize}
-              totalCount={totalCount}
-              onCloseReport={onCloseReport}
-            />
-          </Wrapper>
-        );
-      }}
-    />
-  </CompanyAndJobTitleWrapper>
-);
+    >
+      {pageType === PAGE_TYPE.COMPANY && page === 1 && (
+        <BoxRenderer
+          box={esgSalaryDataBox}
+          render={data => {
+            if (!data) return null;
+
+            const {
+              avgSalaryStatistics: [avgSalaryStatisticsItem],
+              nonManagerAvgSalaryStatistics: [
+                nonManagerAvgSalaryStatisticsItem,
+              ],
+              nonManagerMedianSalaryStatistics: [
+                nonManagerMedianSalaryStatisticsItem,
+              ],
+              femaleManagerStatistics: [femaleManagerStatisticsItem],
+            } = data;
+            return (
+              <Wrapper size="l">
+                <EsgBlock
+                  avgSalaryStatisticsItem={avgSalaryStatisticsItem}
+                  nonManagerAvgSalaryStatisticsItem={
+                    nonManagerAvgSalaryStatisticsItem
+                  }
+                  nonManagerMedianSalaryStatisticsItem={
+                    nonManagerMedianSalaryStatisticsItem
+                  }
+                  femaleManagerStatisticsItem={femaleManagerStatisticsItem}
+                />
+              </Wrapper>
+            );
+          }}
+        />
+      )}
+      {page === 1 && (
+        <BoxRenderer
+          box={statisticsBox}
+          render={data => {
+            if (!data || salaryWorkTimeStatistics.count === 0) {
+              return null;
+            }
+            const {
+              salaryDistribution,
+              jobAverageSalaries,
+              averageWeekWorkTime,
+              overtimeFrequencyCount,
+            } = data;
+            return (
+              <Wrapper size="l">
+                <SummarySection
+                  salaryDistribution={salaryDistribution}
+                  jobAverageSalaries={jobAverageSalaries}
+                  averageWeekWorkTime={averageWeekWorkTime}
+                  overtimeFrequencyCount={overtimeFrequencyCount}
+                />
+                <OvertimeSection statistics={salaryWorkTimeStatistics} />
+              </Wrapper>
+            );
+          }}
+        />
+      )}
+      <Wrapper ref={handleSectionRef} size="l" className={styles.searchbar}>
+        <Searchbar pageType={pageType} tabType={tabType} />
+        <SalaryFilter />
+      </Wrapper>
+      <PageBoxRenderer
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        boxSelector={boxSelector}
+        render={({ salaryWorkTimes, salaryWorkTimesCount: totalCount }) => {
+          return (
+            <Wrapper size="l">
+              <Helmet
+                pageType={pageType}
+                pageName={pageName}
+                totalCount={totalCount}
+                page={page}
+                topNJobTitles={topNJobTitles}
+              />
+              <TimeAndSalarySection
+                pageType={pageType}
+                pageName={pageName}
+                tabType={tabType}
+                salaryWorkTimes={salaryWorkTimes}
+                page={page}
+                pageSize={pageSize}
+                totalCount={totalCount}
+                onCloseReport={onCloseReport}
+                createPageLinkTo={createPageLinkTo}
+              />
+            </Wrapper>
+          );
+        }}
+      />
+    </CompanyAndJobTitleWrapper>
+  );
+};
 
 TimeAndSalary.propTypes = {
   boxSelector: PropTypes.func.isRequired,
