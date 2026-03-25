@@ -34,25 +34,32 @@ FadeInContent.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
+const boxShapePropType = PropTypes.shape({
+  data: PropTypes.any,
+  error: PropTypes.any,
+  status: PropTypes.string.isRequired,
+});
+
 const BoxRenderer = ({ box, render }) => {
-  if (isUnfetched(box)) {
+  const boxes = Array.isArray(box) ? box : [box];
+  if (boxes.every(isUnfetched)) {
     return null;
   }
-  if (isFetching(box)) {
+  if (boxes.some(isFetching)) {
     return <Loader size="s" />;
   }
-  if (isError(box)) {
+  if (boxes.some(isError)) {
     return null;
   }
-  return <FadeInContent>{render(box.data)}</FadeInContent>;
+  const data = Array.isArray(box) ? boxes.map(b => b.data) : boxes[0].data;
+  return <FadeInContent>{render(data)}</FadeInContent>;
 };
 
 BoxRenderer.propTypes = {
-  box: PropTypes.shape({
-    data: PropTypes.any,
-    error: PropTypes.any,
-    status: PropTypes.string.isRequired,
-  }).isRequired,
+  box: PropTypes.oneOfType([
+    boxShapePropType,
+    PropTypes.arrayOf(boxShapePropType),
+  ]),
   render: PropTypes.func.isRequired,
 };
 
