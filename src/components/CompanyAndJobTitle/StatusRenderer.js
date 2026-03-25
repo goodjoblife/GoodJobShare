@@ -42,6 +42,11 @@ const boxShapePropType = PropTypes.shape({
 
 const BoxRenderer = ({ box, render }) => {
   const boxes = Array.isArray(box) ? box : [box];
+  const wasFetchingRef = useRef(false);
+  if (boxes.some(isFetching)) {
+    wasFetchingRef.current = true;
+  }
+
   if (boxes.every(isUnfetched)) {
     return null;
   }
@@ -52,7 +57,12 @@ const BoxRenderer = ({ box, render }) => {
     return null;
   }
   const data = Array.isArray(box) ? boxes.map(b => b.data) : boxes[0].data;
-  return <FadeInContent>{render(data)}</FadeInContent>;
+  const content = render(data);
+
+  if (wasFetchingRef.current) {
+    return <FadeInContent>{content}</FadeInContent>;
+  }
+  return content;
 };
 
 BoxRenderer.propTypes = {
