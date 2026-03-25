@@ -69,7 +69,7 @@ BoxRenderer.propTypes = {
   box: PropTypes.oneOfType([
     boxShapePropType,
     PropTypes.arrayOf(boxShapePropType),
-  ]),
+  ]).isRequired,
   render: PropTypes.func.isRequired,
 };
 
