@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Redirect from 'common/routing/Redirect';
@@ -7,6 +7,32 @@ import NotFoundStatus from 'common/routing/NotFound';
 import { generateTabURL } from 'constants/companyJobTitle';
 import { isUnfetched, isFetching, isError } from 'utils/fetchBox';
 import EmptyView from './EmptyView';
+
+const FadeInContent = ({ children }) => {
+  const [visible, setVisible] = useState(false);
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    rafRef.current = requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
+
+  return (
+    <div
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(12px)',
+        transition: 'opacity 0.35s ease, transform 0.35s ease',
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
+FadeInContent.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 const BoxRenderer = ({ box, render }) => {
   if (isUnfetched(box)) {
@@ -18,7 +44,7 @@ const BoxRenderer = ({ box, render }) => {
   if (isError(box)) {
     return null;
   }
-  return render(box.data);
+  return <FadeInContent>{render(box.data)}</FadeInContent>;
 };
 
 BoxRenderer.propTypes = {
