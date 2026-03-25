@@ -24,15 +24,6 @@ const useSectionY = () => {
   const isMobile = useMobile();
   const [y, setY] = useState(null);
 
-  const handleSectionRef = useCallback(
-    el => {
-      if (el) {
-        sectionRef.current = el;
-      }
-    },
-    [sectionRef],
-  );
-
   /* eslint-disable react-hooks/exhaustive-deps */
   // DOM state changes don't notify React,
   // so dependencies are omitted to always run the effect
@@ -51,7 +42,7 @@ const useSectionY = () => {
   });
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  return [y, handleSectionRef];
+  return [y, sectionRef];
 };
 
 // Portal for generating the link and ref
