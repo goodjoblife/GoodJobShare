@@ -136,6 +136,14 @@ const TypeForm = ({ open, onClose }) => {
         label: experienceId,
       });
 
+      if (
+        body &&
+        body.sections &&
+        body.sections.find(e => e.subtitle === '性別友善度')
+      ) {
+        sendEvent('user_submitted_interview_form_with_gender_friendly_rating');
+      }
+
       return resBody;
     },
     [dispatch],

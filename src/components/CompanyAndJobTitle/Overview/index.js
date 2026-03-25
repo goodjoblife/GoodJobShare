@@ -1,10 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import { PageBoxRenderer } from '../StatusRenderer';
 import OverviewSection from './Overview';
 import Helmet from './Helmet';
 import { fetchBoxPropType } from 'utils/fetchBox';
+import { Wrapper } from 'common/base';
 
 const Overview = ({
   pageType,
@@ -27,7 +28,7 @@ const Overview = ({
       boxSelector={boxSelector}
       render={data => {
         return (
-          <Fragment>
+          <Wrapper size="l">
             <Helmet
               pageType={pageType}
               pageName={pageName}
@@ -48,7 +49,7 @@ const Overview = ({
               statisticsBox={statisticsBox}
               onCloseReport={onCloseReport}
             />
-          </Fragment>
+          </Wrapper>
         );
       }}
     />

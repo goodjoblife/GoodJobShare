@@ -50,7 +50,13 @@ export const RESULT_OPTIONS = ['錄取', '未錄取', '沒通知', '其他'];
 
 export const UNRATABLE_SUBJECTS = ['面試問題', '如何準備面試', '工作內容'];
 
-export const RATING_LABELS = ['差', '普通', '不錯啦～', '很好！', '大推！'];
+export const RATING_LABELS = [
+  '非常不滿意',
+  '不滿意',
+  '普通',
+  '滿意',
+  '非常滿意',
+];
 
 export const RATING_COURSE_LABELS = [
   '非常混亂',

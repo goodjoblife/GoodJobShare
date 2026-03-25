@@ -3,13 +3,27 @@
 .thumbsContainer {
   display: flex;
   align-items: center;
-  width: 120px;
   justify-content: space-between;
+
+  &.m {
+    width: 120px;
+  }
+
+  &.s {
+    width: 90px;
+  }
 }
 
 .thumb {
-  width: 24px;
-  height: 24px;
+  &.m {
+    width: 24px;
+    height: 24px;
+  }
+
+  &.s {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .thumbContainer {
@@ -31,7 +45,6 @@
 
 @media (max-width: below-mobile) {
   .thumbsContainer {
-    width: 8rem;
     margin-right: 0.5rem;
   }
 }

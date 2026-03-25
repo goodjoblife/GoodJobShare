@@ -1,16 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
 
 import Pagination from 'common/Pagination';
-import { Section } from 'common/base';
+import { Section, Wrapper } from 'common/base';
 import NotFoundStatus from 'common/routing/NotFound';
 
 import EmptyView from '../EmptyView';
 import Experience from '../Experience';
 import styles from '../styles.module.css';
-
-import { useQuery } from 'hooks/routing';
 
 const InterviewExperiences = ({
   pageType,
@@ -20,9 +17,8 @@ const InterviewExperiences = ({
   page,
   pageSize,
   totalCount,
+  createPageLinkTo,
 }) => {
-  const queryParams = useQuery();
-
   if (data.length === 0) {
     return (
       <Section Tag="main" paddingBottom>
@@ -44,19 +40,20 @@ const InterviewExperiences = ({
           />
         </div>
       ))}
-      <Pagination
-        totalCount={totalCount}
-        unit={pageSize}
-        currentPage={page}
-        createPageLinkTo={p =>
-          qs.stringify({ ...queryParams, p }, { addQueryPrefix: true })
-        }
-      />
+      <Wrapper size="m">
+        <Pagination
+          totalCount={totalCount}
+          unit={pageSize}
+          currentPage={page}
+          createPageLinkTo={createPageLinkTo}
+        />
+      </Wrapper>
     </Section>
   );
 };
 
 InterviewExperiences.propTypes = {
+  createPageLinkTo: PropTypes.func.isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,

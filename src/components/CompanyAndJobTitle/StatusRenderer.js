@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Redirect from 'common/routing/Redirect';
@@ -8,25 +8,68 @@ import { generateTabURL } from 'constants/companyJobTitle';
 import { isUnfetched, isFetching, isError } from 'utils/fetchBox';
 import EmptyView from './EmptyView';
 
+const FadeInContent = ({ children }) => {
+  const [visible, setVisible] = useState(false);
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    rafRef.current = requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
+
+  return (
+    <div
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(12px)',
+        transition: 'opacity 0.35s ease, transform 0.35s ease',
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
+FadeInContent.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+const boxShapePropType = PropTypes.shape({
+  data: PropTypes.any,
+  error: PropTypes.any,
+  status: PropTypes.string.isRequired,
+});
+
 const BoxRenderer = ({ box, render }) => {
-  if (isUnfetched(box)) {
+  const boxes = Array.isArray(box) ? box : [box];
+  const wasFetchingRef = useRef(false);
+  if (boxes.some(isFetching)) {
+    wasFetchingRef.current = true;
+  }
+
+  if (boxes.every(isUnfetched)) {
     return null;
   }
-  if (isFetching(box)) {
+  if (boxes.some(isFetching)) {
     return <Loader size="s" />;
   }
-  if (isError(box)) {
+  if (boxes.some(isError)) {
     return null;
   }
-  return render(box.data);
+  const data = Array.isArray(box) ? boxes.map(b => b.data) : boxes[0].data;
+  const content = render(data);
+
+  if (wasFetchingRef.current) {
+    return <FadeInContent>{content}</FadeInContent>;
+  }
+  return content;
 };
 
 BoxRenderer.propTypes = {
-  box: PropTypes.shape({
-    data: PropTypes.any,
-    error: PropTypes.any,
-    status: PropTypes.string.isRequired,
-  }).isRequired,
+  box: PropTypes.oneOfType([
+    boxShapePropType,
+    PropTypes.arrayOf(boxShapePropType),
+  ]).isRequired,
   render: PropTypes.func.isRequired,
 };
 

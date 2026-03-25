@@ -1,3 +1,5 @@
+import { numToChineseReadableString } from 'utils/formUtils';
+
 export const formatSalaryAmount = amount =>
   amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
@@ -24,14 +26,6 @@ const getSalaryAmountRange = salary => {
   ];
 };
 
-export const formatSalaryAmountRange = salary => {
-  if (!salary) {
-    return '-';
-  }
-  const [head, tail] = getSalaryAmountRange(salary);
-  return `${formatSalaryAmount(head)} ~ ${formatSalaryAmount(tail)}`;
-};
-
 export const formatSalaryType = type => {
   switch (type) {
     case 'year':
@@ -41,10 +35,20 @@ export const formatSalaryType = type => {
     case 'day':
       return '日';
     case 'hour':
-      return '小時';
+      return '時';
     default:
       return '月';
   }
+};
+
+export const formatSalaryAmountRange = salary => {
+  if (!salary) {
+    return '-';
+  }
+  const [head, tail] = getSalaryAmountRange(salary);
+  const headString = numToChineseReadableString(head);
+  const tailString = numToChineseReadableString(tail);
+  return `${headString} ~ ${tailString}`;
 };
 
 export const formatSalary = salary => {
@@ -53,8 +57,10 @@ export const formatSalary = salary => {
   }
 
   const { amount, type } = salary;
+  const typeStr = `${formatSalaryType(type)}薪`;
+  const numStr = numToChineseReadableString(amount);
 
-  return `${formatSalaryAmount(amount)} / ${formatSalaryType(type)}`;
+  return `${typeStr} ${numStr}`;
 };
 
 export const formatSalaryRange = salary => {
@@ -62,7 +68,6 @@ export const formatSalaryRange = salary => {
     return '';
   }
 
-  return `${formatSalaryAmountRange(salary)} / ${formatSalaryType(
-    salary.type,
-  )}`;
+  const typeStr = `${formatSalaryType(salary.type)}薪`;
+  return `${typeStr} ${formatSalaryAmountRange(salary)}`;
 };

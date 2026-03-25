@@ -1,50 +1,13 @@
 import R from 'ramda';
 import graphqlClient from 'utils/graphqlClient';
 import {
-  queryCompanyRatingStatisticsGql,
-  queryCompanyOverviewGql,
   getCompanyTimeAndSalaryQuery,
   getCompanyInterviewExperiencesQuery,
   getCompanyWorkExperiencesQuery,
   queryCompaniesHavingDataGql,
   getCompanyTimeAndSalaryStatisticsQuery,
   getCompanyTopNJobTitlesQuery,
-  getCompanyEsgSalaryDataQuery,
-  queryCompanyOverviewStatisticsQuery,
-  queryCompanyIsSubscribedGql,
-  subscribeCompanyGql,
-  unsubscribeCompanyGql,
 } from 'graphql/company';
-
-export const queryCompanyRatingStatisticsApi = ({ companyName }) =>
-  graphqlClient({
-    query: queryCompanyRatingStatisticsGql,
-    variables: { companyName },
-  }).then(R.path(['company', 'companyRatingStatistics']));
-
-export const queryCompanyOverview = ({
-  companyName,
-  interviewExperiencesLimit,
-  workExperiencesLimit,
-  salaryWorkTimesLimit,
-}) =>
-  graphqlClient({
-    query: queryCompanyOverviewGql,
-    variables: {
-      companyName,
-      interviewExperiencesLimit,
-      workExperiencesLimit,
-      salaryWorkTimesLimit,
-    },
-  }).then(R.prop('company'));
-
-export const queryCompanyOverviewStatistics = ({ companyName }) =>
-  graphqlClient({
-    query: queryCompanyOverviewStatisticsQuery,
-    variables: {
-      companyName,
-    },
-  }).then(R.prop('company'));
 
 export const getCompanyTimeAndSalary = ({
   companyName,
@@ -68,12 +31,6 @@ export const getCompanyTopNJobTitles = ({ companyName }) =>
     query: getCompanyTopNJobTitlesQuery,
     variables: { companyName },
   }).then(R.prop('company'));
-
-export const getCompanyEsgSalaryData = ({ companyName }) =>
-  graphqlClient({
-    query: getCompanyEsgSalaryDataQuery,
-    variables: { companyName },
-  }).then(R.path(['company', 'esgSalaryData']));
 
 export const getCompanyInterviewExperiences = ({
   companyName,
@@ -104,43 +61,3 @@ export const queryCompaniesApi = ({ start, limit }) =>
     query: queryCompaniesHavingDataGql,
     variables: { start, limit },
   });
-
-export const queryCompanyIsSubscribedApi = async ({ companyName, token }) => {
-  const data = await graphqlClient({
-    query: queryCompanyIsSubscribedGql,
-    token,
-    variables: { companyName },
-  });
-
-  if (!data.company) {
-    return {
-      isSubscribed: false,
-      companyId: null,
-    };
-  }
-
-  return {
-    isSubscribed: data.company.isSubscribed,
-    companyId: data.company.id,
-  };
-};
-
-export const subscribeCompanyApi = async ({ companyId, token }) => {
-  const data = await graphqlClient({
-    query: subscribeCompanyGql,
-    token,
-    variables: { input: { companyId } },
-  });
-
-  return data.subscribeCompany.success;
-};
-
-export const unsubscribeCompanyApi = async ({ companyId, token }) => {
-  const data = await graphqlClient({
-    query: unsubscribeCompanyGql,
-    token,
-    variables: { input: { companyId } },
-  });
-
-  return data.unsubscribeCompany.success;
-};
