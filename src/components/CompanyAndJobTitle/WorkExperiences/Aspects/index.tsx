@@ -3,6 +3,7 @@ import { generatePath, useParams } from 'react-router';
 import { Heading, Link, Wrapper } from 'common/base';
 import { companyNameSelector } from 'pages/Company/useCompanyName';
 import { companyWorkExperiencesPath } from 'constants/linkTo';
+import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import CompanyAndJobTitleWrapper from '../../CompanyAndJobTitleWrapper';
 import { PageBoxRenderer } from '../../StatusRenderer';
 import WorkExperiencesSection from '../WorkExperiences';
@@ -59,6 +60,7 @@ const AspectSection: React.FC<AspectProps> = ({
   const params = useParams();
   const companyName = companyNameSelector(params);
   const parentPath = generatePath(companyWorkExperiencesPath, { companyName });
+  const [createPageLinkTo] = useCreatePageLinkTo();
 
   return (
     <CompanyAndJobTitleWrapper
@@ -125,6 +127,7 @@ const AspectSection: React.FC<AspectProps> = ({
               page={page}
               pageSize={pageSize}
               totalCount={totalCount}
+              createPageLinkTo={createPageLinkTo}
             />
           </>
         )}
