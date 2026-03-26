@@ -49,7 +49,7 @@ jobs:
 
   build-deploy:
     name: Build & Deploy
-    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push'
+    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == format('refs/heads/{0}', matrix.branch)
     runs-on: ubuntu-latest
     needs:
       - test
@@ -78,7 +78,6 @@ jobs:
             compose_file: .github/docker-compose-dev.yml
             repo: web-server-dev
             event: goodjobshare-dev2-published
-    if: github.ref == format('refs/heads/{0}', matrix.branch)
     env:
       REGISTRY: ghcr.io
       REPO_PATH: goodjoblife/goodjobshare/${{ matrix.repo }}
