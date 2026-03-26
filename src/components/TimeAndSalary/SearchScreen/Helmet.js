@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import qs from 'qs';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
+import SalaryWorkTimeOgImage from 'images/og/salary-work-time.jpg';
 
 const SearchScreenHelmet = ({ keyword, page }) => {
   const title = `查詢${keyword}的結果 - 第${page}頁`;
@@ -23,6 +24,7 @@ const SearchScreenHelmet = ({ keyword, page }) => {
       <meta property="og:title" content={formatTitle(title, SITE_NAME)} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
+      <meta property="og:image" content={SalaryWorkTimeOgImage} />
       <link rel="canonical" href={url} />
     </Helmet>
   );

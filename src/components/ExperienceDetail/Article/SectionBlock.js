@@ -4,10 +4,10 @@ import { Heading, P } from 'common/base';
 import styles from './SectionBlock.module.css';
 import OverallRating from 'common/OverallRating';
 
-const SectionBlock = ({ subtitle, content, rating }) => (
+const SectionBlock = ({ subtitle, content, rating, subTitleTag = 'h2' }) => (
   <section>
     {subtitle && (
-      <Heading size="sm" bold Tag="h2" className={styles.heading}>
+      <Heading size="sm" bold Tag={subTitleTag} className={styles.heading}>
         {subtitle}
         {rating ? <OverallRating rating={rating} /> : null}
       </Heading>
@@ -21,6 +21,7 @@ const SectionBlock = ({ subtitle, content, rating }) => (
 SectionBlock.propTypes = {
   content: PropTypes.string.isRequired,
   rating: PropTypes.number,
+  subTitleTag: PropTypes.string,
   subtitle: PropTypes.string,
 };
 

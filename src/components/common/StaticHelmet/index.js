@@ -2,8 +2,14 @@ import React from 'react';
 import R from 'ramda';
 import Helmet from 'react-helmet';
 import { FACEBOOK_APP_ID } from '../../../config';
-import { SITE_NAME, IMG_HOST } from 'constants/helmetData';
+import { SITE_NAME } from 'constants/helmetData';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
+import DefaultOgImage from 'images/og/default-06-April.jpg';
+import AboutOgImage from 'images/og/about.jpg';
+import FaqOgImage from 'images/og/faq.jpg';
+import LaborRightsOgImage from 'images/og/labor-rights.jpg';
+import ShareWorkOgImage from 'images/og/share-work.jpg';
+
 /*
   This file will organize most of STATIC meta data information.
   For those DYNAMIC meta data information, will be generated in each component
@@ -49,10 +55,7 @@ export default {
       <meta property="og:title" content={SITE_NAME} />
       <meta property="og:url" content={formatCanonicalPath('')} />
       <meta property="og:type" content="website" />
-      <meta
-        property="og:image"
-        content={`${IMG_HOST}/og/default-06-April.jpg`}
-      />
+      <meta property="og:image" content={DefaultOgImage} />
       <meta
         property="og:description"
         content="這裡是一個勞工互相分享資訊的網站，匿名分享你的薪水、加班狀況、面試心得、評價，就可以查詢其他勞工分享的所有資訊。"
@@ -65,10 +68,7 @@ export default {
   ),
   LandingPage: () => (
     <Helmet>
-      <meta
-        property="og:image"
-        content={`${IMG_HOST}/og/default-06-April.jpg`}
-      />
+      <meta property="og:image" content={DefaultOgImage} />
     </Helmet>
   ),
   Share: () => (
@@ -81,7 +81,7 @@ export default {
         content={formatTitle('分享你的職場資訊', SITE_NAME)}
       />
       <meta property="og:url" content={formatCanonicalPath('/share')} />
-      <meta property="og:image" content={`${IMG_HOST}/og/share-work.jpg`} />
+      <meta property="og:image" content={ShareWorkOgImage} />
       <link rel="canonical" href={formatCanonicalPath('/share')} />
     </Helmet>
   ),
@@ -99,7 +99,7 @@ export default {
         content={formatTitle('勞動知識小教室', SITE_NAME)}
       />
       <meta property="og:url" content={formatCanonicalPath('/labor-rights')} />
-      <meta property="og:image" content={`${IMG_HOST}/og/labor-rights.jpg`} />
+      <meta property="og:image" content={LaborRightsOgImage} />
       <meta
         property="og:description"
         content="我們看見勞工們的需要，推出【勞動知識小教室】系列懶人包，將複雜的法律資訊轉換成易懂的圖文，內容涵蓋勞動基準法、性別工作平等法、就業服務法以及工會相關法令等勞工必備的權益資訊。讓勞工認識自己的權益，學會保護自己。"
@@ -118,7 +118,7 @@ export default {
       />
       <meta property="og:title" content={formatTitle('關於我們', SITE_NAME)} />
       <meta property="og:url" content={formatCanonicalPath('/about')} />
-      <meta property="og:image" content={`${IMG_HOST}/og/about.jpg`} />
+      <meta property="og:image" content={AboutOgImage} />
       <meta
         property="og:description"
         content="在過去求職的經驗中，我們發現台灣的求職資訊相當不透明。 薪資、工時的資訊經常不得而知，而實際工作內容也與當初求職網站說明的有所出入。 因此，我們決定採取行動，嘗試解決求職市場資訊不透明的問題，讓我們在找工作時，能夠做出更好的選擇。"
@@ -182,7 +182,7 @@ export default {
       <meta name="description" content="" />
       <meta property="og:title" content={formatTitle('常見問答', SITE_NAME)} />
       <meta property="og:url" content={formatCanonicalPath('/faq')} />
-      <meta property="og:image" content={`${IMG_HOST}/og/faq.jpg`} />
+      <meta property="og:image" content={FaqOgImage} />
       <link rel="canonical" href={formatCanonicalPath('/faq')} />
     </Helmet>
   ),

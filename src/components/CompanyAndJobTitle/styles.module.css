@@ -3,25 +3,12 @@
 .container {
   display: flex;
   justify-content: center;
-  max-width: 1360px;
   margin: auto;
   margin-top: 40px;
-
-  /* Overwriting padding between 1024px and 850px*/
-  @media (max-width: below-desktop) {
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-
-  @media (max-width: below-mobile) {
-    padding-left: page-gutter-s;
-    padding-right: page-gutter-s;
-  }
 }
 
 .leftContainer {
   flex-shrink: 1;
-  padding: 0 32px;
   width: 100%;
 
   @media (max-width: below-small) {
@@ -38,4 +25,31 @@
   @media (max-width: below-small) {
     display: none;
   }
+}
+
+.interactive {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 18px;
+
+  @media (max-width: below-mobile) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  > * + * {
+    @media (min-width: below-mobile) {
+      margin-left: 3em;
+    }
+
+    @media (max-width: below-mobile) {
+      margin-top: 1em;
+    }
+  }
+}
+
+.experience + .experience {
+  margin-top: 75px;
 }

@@ -1,4 +1,4 @@
-@value yellow-bar, gray-dark, main-gray, main-yellow, warning-red from "../../common/variables.module.css";
+@value yellow-bar, gray-dark, main-gray, main-yellow, warning-red, above-mobile from "../../common/variables.module.css";
 $below-mobile: 550px;
 $below-small: 850px;
 $above-desktop: 1025px;
@@ -13,6 +13,14 @@ $gray: #b4b4b4;
 $gray-dark: #777;
 $blue: #325bbd;
 $bold: 700;
+
+.subRouteWrapper {
+  padding-top: 18px;
+
+  @media (min-width: above-mobile) {
+    padding-top: 40px;
+  }
+}
 
 @define-mixin heading-style {
   font-size: 2.1em;

@@ -130,6 +130,14 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
         category: GA_CATEGORY.SHARE_WORK,
         action: GA_ACTION.UPLOAD_SUCCESS,
       });
+
+      if (
+        body &&
+        body.sections &&
+        body.sections.find(e => e.subtitle === '性別友善度')
+      ) {
+        sendEvent('user_submitted_work_form_with_gender_friendly_rating');
+      }
       return res;
     },
     [dispatch],

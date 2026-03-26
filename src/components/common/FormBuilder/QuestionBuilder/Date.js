@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -7,15 +7,26 @@ import styles from './Date.module.css';
 import commonStyles from './styles.module.css';
 import { withShape } from 'airbnb-prop-types';
 
-const monthOptions = Array(12)
-  .fill(0)
-  .map((_, i) => i + 1)
-  .map(n => ({ value: n, label: n }));
+const toNumberOrNull = v => (v === '' ? null : Number(v));
 
-const yearOptions = Array(10)
-  .fill(0)
-  .map((_, i) => new Date().getFullYear() - i)
-  .map(n => ({ value: n, label: n }));
+const getNow = () => {
+  const d = new Date();
+  return [d.getFullYear(), d.getMonth() + 1];
+};
+
+const buildMonthOptions = (selectedYear, currentYear, currentMonth) => {
+  const endMonth = selectedYear === currentYear ? currentMonth : 12;
+  return Array.from({ length: endMonth }, (_, i) => {
+    const n = i + 1;
+    return { value: n, label: n };
+  });
+};
+
+const buildYearOptions = (currentYear, span = 10) =>
+  Array.from({ length: span }, (_, i) => {
+    const y = currentYear - i;
+    return { value: y, label: y };
+  });
 
 const DatePicker = ({
   className,
@@ -28,45 +39,61 @@ const DatePicker = ({
   value: [year, month],
   onChange,
   warning,
-}) => (
-  <div className={cn({ [commonStyles.hasWarning]: !!warning }, className)}>
-    <div className={cn(styles.inputRow, commonStyles.warnableContainer)}>
-      <div className={styles.inputGroup}>
-        <div className={styles.inputWrapper}>
-          <Select
-            options={yearOptions}
-            value={year}
-            onChange={e =>
-              onChange([
-                e.target.value === '' ? null : Number(e.target.value),
-                month,
-              ])
-            }
-          />
+}) => {
+  const [currentYear, currentMonth] = getNow();
+  const yearOptions = useMemo(() => buildYearOptions(currentYear, 10), [
+    currentYear,
+  ]);
+  const monthOptions = useMemo(
+    () => buildMonthOptions(year, currentYear, currentMonth),
+    [year, currentYear, currentMonth],
+  );
+  const handleYearChange = useCallback(
+    e => {
+      const newYear = toNumberOrNull(e.target.value);
+      const newMonth =
+        newYear >= currentYear && month > currentMonth ? null : month;
+      onChange([newYear, newMonth]);
+    },
+    [currentYear, currentMonth, month, onChange],
+  );
+  const handleMonthChange = useCallback(
+    e => {
+      onChange([year, toNumberOrNull(e.target.value)]);
+    },
+    [year, onChange],
+  );
+
+  return (
+    <div className={cn({ [commonStyles.hasWarning]: !!warning }, className)}>
+      <div className={cn(styles.inputRow, commonStyles.warnableContainer)}>
+        <div className={styles.inputGroup}>
+          <div className={styles.inputWrapper}>
+            <Select
+              options={yearOptions}
+              value={year}
+              onChange={handleYearChange}
+            />
+          </div>
+          <div className={cn(styles.suffixLabel, 'pS')}>年</div>
         </div>
-        <div className={cn(styles.suffixLabel, 'pS')}>年</div>
-      </div>
-      <div className={styles.inputGroup}>
-        <div className={styles.inputWrapper}>
-          <Select
-            options={monthOptions}
-            value={month}
-            onChange={e =>
-              onChange([
-                year,
-                e.target.value === '' ? null : Number(e.target.value),
-              ])
-            }
-          />
+        <div className={styles.inputGroup}>
+          <div className={styles.inputWrapper}>
+            <Select
+              options={monthOptions}
+              value={month}
+              onChange={handleMonthChange}
+            />
+          </div>
+          <div className={cn(styles.suffixLabel, 'pS')}>月</div>
         </div>
-        <div className={cn(styles.suffixLabel, 'pS')}>月</div>
       </div>
+      <p className={cn(commonStyles.warning, commonStyles.inlineWarning, 'pS')}>
+        {warning}
+      </p>
     </div>
-    <p className={cn(commonStyles.warning, commonStyles.inlineWarning, 'pS')}>
-      {warning}
-    </p>
-  </div>
-);
+  );
+};
 
 export const DatePropType = withShape(PropTypes.array.isRequired, {
   0: PropTypes.number,

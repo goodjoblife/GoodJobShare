@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-router';
-import Wrapper from 'common/base/Wrapper';
 import RouteWithSubRoutes from '../route';
 import styles from './styles.module.css';
 
 const CompanyAndJobTitlePageContainer = ({ routes }) => {
   return (
     <div>
-      <Wrapper size="l" className={styles.container}>
+      <div className={styles.container}>
         <div className={styles.leftContainer}>
           <Switch>
             {routes.map((route, i) => (
@@ -16,7 +15,7 @@ const CompanyAndJobTitlePageContainer = ({ routes }) => {
             ))}
           </Switch>
         </div>
-      </Wrapper>
+      </div>
     </div>
   );
 };

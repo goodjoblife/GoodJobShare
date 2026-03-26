@@ -32,6 +32,7 @@ import {
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
+import * as VISIBILITY from './Article/visibility';
 
 // from params
 const experienceIdSelector = R.prop('id');
@@ -94,14 +95,14 @@ const ExperienceDetail = ({ ...props }) => {
   return (
     <main>
       {isFetched(experienceBox) && <Seo experience={experienceBox.data} />}
-      <Section bg="white" paddingBottom className={styles.section}>
-        <Wrapper size="m">
-          <div>
-            {/* 文章區塊  */}
-            {!isFetched(experienceBox) ? (
-              <Loader />
-            ) : (
-              <Fragment>
+      <Section paddingBottom className={styles.section}>
+        <div>
+          {/* 文章區塊  */}
+          {!isFetched(experienceBox) ? (
+            <Loader />
+          ) : (
+            <Fragment>
+              <Wrapper size="l">
                 <div className={styles.breadCrumb}>
                   <BreadCrumb
                     data={generateBreadCrumbData({
@@ -114,16 +115,22 @@ const ExperienceDetail = ({ ...props }) => {
                     })}
                   />
                 </div>
+              </Wrapper>
+              <Wrapper size="m">
                 <ExperienceHeading experience={experienceBox.data} />
                 <Article
                   experience={experienceBox.data}
-                  hideContent={!canViewPublishId(experienceBox.data.id)}
+                  visibility={
+                    canViewPublishId(experienceBox.data.id)
+                      ? VISIBILITY.VISIBLE
+                      : VISIBILITY.LOCKED
+                  }
                   onClickMsgButton={scrollToCommentZone}
                 />
-              </Fragment>
-            )}
-          </div>
-        </Wrapper>
+              </Wrapper>
+            </Fragment>
+          )}
+        </div>
         {isFetched(experienceBox) && (
           <React.Fragment>
             <Wrapper size="m">

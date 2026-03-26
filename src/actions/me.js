@@ -16,14 +16,6 @@ const setMyPublishIds = box => ({
   box,
 });
 
-export const queryMyPublishIdsIfNeeded = () => async (dispatch, getState) => {
-  const myPublishIdsBox = myPublishIdsSelector(getState());
-
-  if (isUnfetched(myPublishIdsBox) || isError(myPublishIdsBox)) {
-    dispatch(queryMyPublishIds());
-  }
-};
-
 export const queryMyPublishIds = () => async (dispatch, getState) => {
   const token = tokenSelector(getState());
 
@@ -39,5 +31,13 @@ export const queryMyPublishIds = () => async (dispatch, getState) => {
     dispatch(setMyPublishIds(getFetched(myPublishIds)));
   } catch (error) {
     dispatch(setMyPublishIds(getError(error)));
+  }
+};
+
+export const queryMyPublishIdsIfNeeded = () => async (dispatch, getState) => {
+  const myPublishIdsBox = myPublishIdsSelector(getState());
+
+  if (isUnfetched(myPublishIdsBox) || isError(myPublishIdsBox)) {
+    dispatch(queryMyPublishIds());
   }
 };

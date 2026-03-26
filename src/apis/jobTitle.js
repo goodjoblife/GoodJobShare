@@ -56,10 +56,11 @@ export const getJobTitleInterviewExperiences = ({
   companyName,
   start,
   limit,
+  sortBy,
 }) =>
   graphqlClient({
     query: getJobTitleInterviewExperiencesQuery,
-    variables: { jobTitle, companyName, start, limit },
+    variables: { jobTitle, companyName, start, limit, sortBy },
   }).then(R.prop('job_title'));
 
 export const getJobTitleWorkExperiences = ({
@@ -67,10 +68,11 @@ export const getJobTitleWorkExperiences = ({
   companyName,
   start,
   limit,
+  sortBy,
 }) =>
   graphqlClient({
     query: getJobTitleWorkExperiencesQuery,
-    variables: { jobTitle, companyName, start, limit },
+    variables: { jobTitle, companyName, start, limit, sortBy },
   }).then(R.prop('job_title'));
 
 export const queryJobTitlesApi = ({ start, limit }) =>

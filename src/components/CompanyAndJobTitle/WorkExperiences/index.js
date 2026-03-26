@@ -5,6 +5,10 @@ import { PageBoxRenderer } from '../StatusRenderer';
 import WorkExperiencesSection from './WorkExperiences';
 import Helmet from './Helmet';
 import Searchbar from '../Searchbar';
+import Sorter from '../Sorter';
+import styles from '../styles.module.css';
+import { Wrapper } from 'common/base';
+import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 
 const WorkExperiences = ({
   pageType,
@@ -13,42 +17,52 @@ const WorkExperiences = ({
   boxSelector,
   page,
   pageSize,
-}) => (
-  <CompanyAndJobTitleWrapper
-    pageType={pageType}
-    pageName={pageName}
-    tabType={tabType}
-  >
-    <Searchbar pageType={pageType} tabType={tabType} />
-    <PageBoxRenderer
+}) => {
+  const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
+
+  return (
+    <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
-      boxSelector={boxSelector}
-      render={({ workExperiences, workExperiencesCount: totalCount }) => {
-        return (
-          <Fragment>
-            <Helmet
-              pageType={pageType}
-              pageName={pageName}
-              totalCount={totalCount}
-              page={page}
-            />
-            <WorkExperiencesSection
-              pageType={pageType}
-              pageName={pageName}
-              tabType={tabType}
-              data={workExperiences}
-              page={page}
-              pageSize={pageSize}
-              totalCount={totalCount}
-            />
-          </Fragment>
-        );
-      }}
-    />
-  </CompanyAndJobTitleWrapper>
-);
+    >
+      <Wrapper ref={handleSectionRef} size="m">
+        <div className={styles.interactive}>
+          <Searchbar pageType={pageType} tabType={tabType} />
+          <Sorter />
+        </div>
+      </Wrapper>
+      <PageBoxRenderer
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        boxSelector={boxSelector}
+        render={({ workExperiences, workExperiencesCount: totalCount }) => {
+          return (
+            <Fragment>
+              <Helmet
+                pageType={pageType}
+                pageName={pageName}
+                totalCount={totalCount}
+                page={page}
+              />
+              <WorkExperiencesSection
+                pageType={pageType}
+                pageName={pageName}
+                tabType={tabType}
+                data={workExperiences}
+                page={page}
+                pageSize={pageSize}
+                totalCount={totalCount}
+                createPageLinkTo={createPageLinkTo}
+              />
+            </Fragment>
+          );
+        }}
+      />
+    </CompanyAndJobTitleWrapper>
+  );
+};
 
 WorkExperiences.propTypes = {
   boxSelector: PropTypes.func.isRequired,

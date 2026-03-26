@@ -4,16 +4,16 @@ import cn from 'classnames';
 import styles from './Section.module.css';
 
 const Section = ({
-  Tag,
-  pageTop,
-  bg,
-  padding,
-  paddingTop,
-  paddingBottom,
-  center,
+  Tag = 'section',
+  pageTop = false,
+  bg = false,
+  padding = false,
+  paddingTop = false,
+  paddingBottom = false,
+  center = false,
   children,
-  marginTop,
-  className,
+  marginTop = false,
+  className = null,
   ...props
 }) => (
   <Tag
@@ -31,6 +31,7 @@ const Section = ({
     {children}
   </Tag>
 );
+
 Section.propTypes = {
   Tag: PropTypes.string,
   bg: PropTypes.string,
@@ -42,9 +43,6 @@ Section.propTypes = {
   paddingBottom: PropTypes.bool,
   paddingTop: PropTypes.bool,
   pageTop: PropTypes.bool,
-};
-Section.defaultProps = {
-  Tag: 'section',
 };
 
 export default Section;

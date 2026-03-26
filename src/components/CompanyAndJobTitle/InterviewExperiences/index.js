@@ -5,6 +5,10 @@ import { PageBoxRenderer } from '../StatusRenderer';
 import InterviewExperiencesSection from './InterviewExperiences';
 import InterviewExperienceHelmet from './Helmet';
 import Searchbar from '../Searchbar';
+import Sorter from '../Sorter';
+import styles from '../styles.module.css';
+import { Wrapper } from 'common/base';
+import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 
 const InterviewExperiences = ({
   pageType,
@@ -14,46 +18,56 @@ const InterviewExperiences = ({
   page,
   pageSize,
   topNJobTitles,
-}) => (
-  <CompanyAndJobTitleWrapper
-    pageType={pageType}
-    pageName={pageName}
-    tabType={tabType}
-  >
-    <Searchbar pageType={pageType} tabType={tabType} />
-    <PageBoxRenderer
+}) => {
+  const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
+
+  return (
+    <CompanyAndJobTitleWrapper
       pageType={pageType}
       pageName={pageName}
       tabType={tabType}
-      boxSelector={boxSelector}
-      render={({
-        interviewExperiences,
-        interviewExperiencesCount: totalCount,
-      }) => {
-        return (
-          <Fragment>
-            <InterviewExperienceHelmet
-              pageType={pageType}
-              pageName={pageName}
-              totalCount={totalCount}
-              page={page}
-              topNJobTitles={topNJobTitles}
-            />
-            <InterviewExperiencesSection
-              pageType={pageType}
-              pageName={pageName}
-              tabType={tabType}
-              data={interviewExperiences}
-              page={page}
-              pageSize={pageSize}
-              totalCount={totalCount}
-            />
-          </Fragment>
-        );
-      }}
-    />
-  </CompanyAndJobTitleWrapper>
-);
+    >
+      <Wrapper ref={handleSectionRef} size="m">
+        <div className={styles.interactive}>
+          <Searchbar pageType={pageType} tabType={tabType} />
+          <Sorter />
+        </div>
+      </Wrapper>
+      <PageBoxRenderer
+        pageType={pageType}
+        pageName={pageName}
+        tabType={tabType}
+        boxSelector={boxSelector}
+        render={({
+          interviewExperiences,
+          interviewExperiencesCount: totalCount,
+        }) => {
+          return (
+            <Fragment>
+              <InterviewExperienceHelmet
+                pageType={pageType}
+                pageName={pageName}
+                totalCount={totalCount}
+                page={page}
+                topNJobTitles={topNJobTitles}
+              />
+              <InterviewExperiencesSection
+                pageType={pageType}
+                pageName={pageName}
+                tabType={tabType}
+                data={interviewExperiences}
+                page={page}
+                pageSize={pageSize}
+                totalCount={totalCount}
+                createPageLinkTo={createPageLinkTo}
+              />
+            </Fragment>
+          );
+        }}
+      />
+    </CompanyAndJobTitleWrapper>
+  );
+};
 
 InterviewExperiences.propTypes = {
   boxSelector: PropTypes.func.isRequired,

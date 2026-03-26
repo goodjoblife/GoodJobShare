@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
-import ExperienceEntry from './ExperienceEntry';
 import EmptyView from '../EmptyView';
 
-import { Section } from 'common/base';
+import { Section, Wrapper } from 'common/base';
 import Pagination from 'common/Pagination';
 import NotFoundStatus from 'common/routing/NotFound';
-import { useQuery } from 'hooks/routing';
-import usePermission from 'hooks/usePermission';
+
+import Experience from '../Experience';
+import styles from '../styles.module.css';
 
 const WorkExperiences = ({
   pageType,
@@ -18,10 +17,8 @@ const WorkExperiences = ({
   page,
   pageSize,
   totalCount,
+  createPageLinkTo,
 }) => {
-  const queryParams = useQuery();
-  const [, , canViewPublishId] = usePermission();
-
   if (data.length === 0) {
     return (
       <Section Tag="main" paddingBottom>
@@ -34,26 +31,29 @@ const WorkExperiences = ({
   return (
     <Section Tag="main" paddingBottom>
       {data.map(d => (
-        <ExperienceEntry
-          key={d.id}
-          pageType={pageType}
-          data={d}
-          canView={canViewPublishId(d.id)}
-        />
+        <div key={d.id} className={styles.experience}>
+          <Experience
+            experience={d}
+            pageType={pageType}
+            tabType={tabType}
+            subTitleTag={'h3'}
+          />
+        </div>
       ))}
-      <Pagination
-        totalCount={totalCount}
-        unit={pageSize}
-        currentPage={page}
-        createPageLinkTo={p =>
-          qs.stringify({ ...queryParams, p }, { addQueryPrefix: true })
-        }
-      />
+      <Wrapper size="m">
+        <Pagination
+          totalCount={totalCount}
+          unit={pageSize}
+          currentPage={page}
+          createPageLinkTo={createPageLinkTo}
+        />
+      </Wrapper>
     </Section>
   );
 };
 
 WorkExperiences.propTypes = {
+  createPageLinkTo: PropTypes.func.isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   page: PropTypes.number.isRequired,
   pageName: PropTypes.string.isRequired,

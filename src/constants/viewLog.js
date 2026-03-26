@@ -1,0 +1,9 @@
+export const ACTION = {
+  PREVIEW: 'PREVIEW',
+  DETAIL_VIEW: 'DETAIL_VIEW',
+};
+
+export const CONTENT_TYPE = {
+  SALARY_WORK_TIME: 'SALARY_WORK_TIME',
+  EXPERIENCE: 'EXPERIENCE',
+};

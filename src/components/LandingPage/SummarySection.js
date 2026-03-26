@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { zip } from 'ramda';
 import loadable from '@loadable/component';
 import Carousel, { CarouselPage } from 'common/Carousel';
+import {
+  pageType as PAGE_TYPE,
+  generatePageURL,
+} from 'constants/companyJobTitle';
 import ChartWrapper from './ChartWrapper';
 import styles from './SummarySection.module.css';
 const SalaryDistributionChart = loadable(() =>
@@ -40,7 +44,10 @@ const SummarySection = ({
                 <ChartWrapper
                   className={styles.chartWrapper}
                   title={`${companyAverageSalary.name}的薪水`}
-                  to={`/companies/${companyAverageSalary.name}`}
+                  to={generatePageURL({
+                    pageType: PAGE_TYPE.COMPANY,
+                    pageName: companyAverageSalary.name,
+                  })}
                 >
                   <React.Fragment>
                     <div className={styles.barChart}>
@@ -56,7 +63,10 @@ const SummarySection = ({
                 <ChartWrapper
                   className={styles.chartWrapper}
                   title={`${jobTitleSalaryDistribution.name}的薪水分佈`}
-                  to={`/job-titles/${jobTitleSalaryDistribution.name}`}
+                  to={generatePageURL({
+                    pageType: PAGE_TYPE.JOB_TITLE,
+                    pageName: jobTitleSalaryDistribution.name,
+                  })}
                 >
                   <React.Fragment>
                     <div className={styles.barChart}>

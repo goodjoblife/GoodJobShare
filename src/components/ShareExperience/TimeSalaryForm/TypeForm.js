@@ -41,7 +41,7 @@ import {
 } from '../constants';
 import { ER0007, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 
-import { evolve } from '../utils';
+import { parseSalaryAmount, evolve } from '../utils';
 import { generateTabURL, pageType, tabType } from 'constants/companyJobTitle';
 
 import { createSalaryWorkTime } from 'actions/timeAndSalary';
@@ -100,7 +100,8 @@ const bodyFromDraft = evolve({
   gender: draft => draft[DATA_KEY_GENDER],
   email: '',
   salaryType: draft => draft[DATA_KEY_SALARY][0],
-  salaryAmount: draft => draft[DATA_KEY_SALARY][1],
+  salaryAmount: draft =>
+    parseSalaryAmount(draft[DATA_KEY_SALARY][1]).toString(),
   experienceInYear: draft => draft[DATA_KEY_EXPERIENCE_IN_YEAR].toString(),
   dayPromisedWorkTime: draft => draft[DATA_KEY_DAY_PROMISED_WORK_TIME],
   dayRealWorkTime: draft => draft[DATA_KEY_DAY_REAL_WORK_TIME],
@@ -153,6 +154,11 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
           : GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
         action: GA_ACTION.UPLOAD_SUCCESS,
       });
+
+      // send hotjar event for recording
+      if (body && body.gender && body.gender === 'female') {
+        sendEvent('female_user_submitted_salary_form');
+      }
 
       return res;
     },

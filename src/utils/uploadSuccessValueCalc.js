@@ -15,7 +15,7 @@ const calcInterviewExperienceValue = (experience, defaultTextLength = 0) => {
     salary: 10,
     interview_sensitive_questions: 5,
   };
-  for (let key of Object.keys(valueMap)) {
+  for (const key of Object.keys(valueMap)) {
     if (experience.hasOwnProperty(key)) {
       if (
         (Array.isArray(experience[key]) && experience[key].length === 0) ||

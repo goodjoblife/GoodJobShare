@@ -3,8 +3,7 @@ import { generatePath } from 'react-router';
 import LandingPage from './components/LandingPage';
 import LaborRightsMenu from './components/LaborRightsMenu';
 import LaborRightsSingle from './components/LaborRightsSingle';
-import TimeAndSalary from './components/TimeAndSalary';
-import SalaryWorkTimeSearchScreen from './components/TimeAndSalary/SearchScreen';
+import SearchScreen from './components/TimeAndSalary/SearchScreen';
 import ExperienceDetail from './components/ExperienceDetail';
 import NotFound from './components/common/NotFound';
 import ShareExperience from './components/ShareExperience';
@@ -36,6 +35,8 @@ import PlanPage from './components/PlanPage';
 import BuyResultPage from './components/BuyResultPage';
 import CurrentSubscriptionPage from './components/Me/CurrentSubscriptionPage';
 import SubscriptionsPage from './components/Me/SubscriptionsPage';
+import InboxPage from './pages/InboxPage';
+
 import {
   jobTitleOverviewPath,
   jobTitleSalaryWorkTimesPath,
@@ -107,15 +108,7 @@ const routes = [
   {
     path: '/search',
     exact: true,
-    // TODO: remove TimeAndSalary
-    component: TimeAndSalary,
-    routes: [
-      {
-        path: '/search',
-        exact: true,
-        component: SalaryWorkTimeSearchScreen,
-      },
-    ],
+    component: SearchScreen,
   },
   {
     path: '/companies',
@@ -269,6 +262,12 @@ const routes = [
     path: '/buy/result/:paymentRecordId',
     exact: true,
     component: BuyResultPage,
+  },
+  {
+    path: '/inbox',
+    exact: true,
+    component: InboxPage,
+    hasFooter: false,
   },
   {
     component: NotFound,

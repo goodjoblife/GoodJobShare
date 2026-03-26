@@ -55,3 +55,15 @@ $bold: 700;
     margin-bottom: $block-gutter-s;
   }
 }
+
+.searchbar {
+  margin-top: 24px;
+
+  @media (max-width: 1024px) {
+    margin-top: 24px;
+  }
+
+  @media (max-width: 550px) {
+    margin-top: 24px;
+  }
+}

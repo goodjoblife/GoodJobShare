@@ -30,7 +30,19 @@ function shouldUpdateScroll(prevProps, props) {
       R.map(getSignature),
     ),
   );
-  return diffSignature(prevProps, props);
+
+  const shouldScroll = diffSignature(prevProps, props);
+
+  const shouldScrollToY = !!prevProps; // when there is a previous page
+
+  const scrollY =
+    props && props.location && props.location.state && props.location.state.y;
+
+  if (shouldScroll && shouldScrollToY && scrollY) {
+    return [0, scrollY];
+  }
+
+  return shouldScroll;
 }
 
 function parseState(window) {

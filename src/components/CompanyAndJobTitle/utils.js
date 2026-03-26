@@ -1,8 +1,8 @@
 import {
   pageTypeTranslation,
   tabTypeTranslation,
-  pageType as PAGE_TYPE,
   tabType as TAG_TYPE,
+  generateIndexURL,
   generatePageURL,
   generateTabURL,
 } from 'constants/companyJobTitle';
@@ -14,7 +14,7 @@ const generateRootLayer = () => ({
 
 const generatePageTypeLayer = ({ pageType }) => ({
   label: pageTypeTranslation[pageType],
-  to: pageType === PAGE_TYPE.COMPANY ? '/companies' : '/job-titles',
+  to: generateIndexURL({ pageType }),
 });
 
 const generatePageNameLayer = ({ pageType, pageName }) => ({

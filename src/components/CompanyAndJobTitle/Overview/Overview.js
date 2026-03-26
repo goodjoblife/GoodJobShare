@@ -7,7 +7,11 @@ import SnippetBlock from './SnippetBlock';
 import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
 import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
-import { tabType as TAB_TYPE, generateTabURL } from 'constants/companyJobTitle';
+import {
+  tabType as TAB_TYPE,
+  tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
+  generateTabURL,
+} from 'constants/companyJobTitle';
 import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
 import BoxRenderer from '../StatusRenderer';
@@ -30,7 +34,7 @@ const Overview = ({
   return (
     <Section Tag="main" paddingBottom>
       <SnippetBlock
-        title="薪水&加班狀況"
+        title={TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.TIME_AND_SALARY]}
         linkText={`查看 ${salaryWorkTimesCount} 筆完整的薪水、加班數據資料 >>`}
         linkTo={generateTabURL({
           pageType,
@@ -65,8 +69,10 @@ const Overview = ({
         />
       </SnippetBlock>
       <SnippetBlock
-        title="評價"
-        linkText={`查看 ${workExperiencesCount} 篇完整的評價 >>`}
+        title={TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.WORK_EXPERIENCE]}
+        linkText={`查看 ${workExperiencesCount} 篇完整的 ${
+          TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.WORK_EXPERIENCE]
+        } >>`}
         linkTo={generateTabURL({
           pageType,
           pageName,
@@ -87,8 +93,10 @@ const Overview = ({
         ))}
       </SnippetBlock>
       <SnippetBlock
-        title="面試心得"
-        linkText={`查看 ${interviewExperiencesCount} 篇完整的面試心得 >>`}
+        title={TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.INTERVIEW_EXPERIENCE]}
+        linkText={`查看 ${interviewExperiencesCount} 篇完整的${
+          TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.INTERVIEW_EXPERIENCE]
+        } >>`}
         linkTo={generateTabURL({
           pageType,
           pageName,

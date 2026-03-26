@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import P from 'common/base/P';
 import useTimer, { countingStatusMap } from 'hooks/useTimer';
 import useFetchPaymentRecord from 'hooks/payment/useFetchPaymentRecord';
-import fetchingStatusMap from 'constants/status';
+import fetchingStatusMap from 'constants/fetchStatus';
 
 import TransactionIcon from './transaction.svg';
 import styles from './PaymentResult.module.css';

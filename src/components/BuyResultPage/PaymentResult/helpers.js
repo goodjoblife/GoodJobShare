@@ -1,6 +1,6 @@
 import { isNil } from 'ramda';
 
-import fetchingStatusMap from 'constants/status';
+import fetchingStatusMap from 'constants/fetchStatus';
 import { buyStatus, recordStatusToBuyStatus } from 'constants/payment';
 
 export const paymentRecordToBuyStatus = paymentRecord => {
