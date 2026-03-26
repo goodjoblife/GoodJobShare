@@ -10,13 +10,30 @@ on:
 
 jobs:
   test:
-    name: Test Node ${{ matrix.node }}
+    name: test
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [16, 18, 20]
+        node: [16]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Lint and Unit test
+        run: CI=true npm run test
+      - name: Build js
+        run: CI=false npm run build
+
+  test-future:
+    name: test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20]
     env:
-      # 統一開啟，Node 17+ 會用到，舊版通常會忽略
       NODE_OPTIONS: '--openssl-legacy-provider'
     steps:
       - uses: actions/checkout@v4
