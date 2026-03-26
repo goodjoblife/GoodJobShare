@@ -10,41 +10,26 @@ on:
 
 jobs:
   test:
-    name: test
+    name: Test Node ${{ matrix.node }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [16]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node }}
-      - name: Install dependencies
-        run: yarn install
-      - name: Lint and Unit test
-        run: CI=true npm run test
-      - name: Build js
-        run: CI=false npm run build
-  test-future:
-    name: test future node
-    runs-on: ubuntu-latest
+        node: [16, 18, 20]
     env:
+      # 統一開啟，Node 17+ 會用到，舊版通常會忽略
       NODE_OPTIONS: '--openssl-legacy-provider'
-    strategy:
-      matrix:
-        node: [18, 20]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node }}
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: Lint and Unit test
         run: CI=true npm run test
       - name: Build js
         run: CI=false npm run build
+
   docker-production:
     name: Deploy docker image
     if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/master'
