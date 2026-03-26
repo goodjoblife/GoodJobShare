@@ -3,7 +3,7 @@ import cn from 'classnames';
 import styles from './Wrapper.module.css';
 
 interface WrapperBaseProps<T extends ElementType> {
-  tag?: T;
+  Tag?: T;
   size?: 's' | 'm' | 'l';
 }
 
@@ -12,16 +12,16 @@ type WrapperProps<T extends ElementType> = WrapperBaseProps<T> &
 
 const Wrapper = React.forwardRef(
   <T extends ElementType = 'div'>(
-    { tag, size = 'l', children, className = '', ...props }: WrapperProps<T>,
+    { Tag, size = 'l', children, className = '', ...props }: WrapperProps<T>,
     ref: ForwardedRef<any>,
   ) => {
-    // Default to 'div' if no 'tag' prop is provided
-    const Tag = tag || 'div';
+    // Default to 'div' if no 'Tag' prop is provided
+    const Cls = Tag || 'div';
 
     return (
-      <Tag ref={ref} className={cn(styles[size], className)} {...props}>
+      <Cls ref={ref} className={cn(styles[size], className)} {...props}>
         {children}
-      </Tag>
+      </Cls>
     );
   },
 );
