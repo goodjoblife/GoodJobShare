@@ -47,122 +47,61 @@ jobs:
       - name: Build js
         run: CI=false npm run build
 
-  docker-production:
-    name: Deploy docker image
-    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/master'
+  build-deploy:
+    name: Build & Deploy
+    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push'
     runs-on: ubuntu-latest
     needs:
       - test
     permissions:
       contents: read
       packages: write
+    strategy:
+      matrix:
+        include:
+          - branch: master
+            image_tag: production-${{ github.sha }}
+            compose_file: .github/docker-compose-production.yml
+            repo: web-server
+          - branch: master
+            image_tag: stage
+            compose_file: .github/docker-compose-stage.yml
+            repo: web-server
+            event: goodjobshare-master-published
+          - branch: dev
+            image_tag: dev
+            compose_file: .github/docker-compose-dev.yml
+            repo: web-server-dev
+            event: goodjobshare-dev-published
+          - branch: dev2
+            image_tag: dev2
+            compose_file: .github/docker-compose-dev.yml
+            repo: web-server-dev
+            event: goodjobshare-dev2-published
+    if: github.ref == format('refs/heads/{0}', matrix.branch)
     env:
       REGISTRY: ghcr.io
-      REPO: goodjoblife/goodjobshare/web-server
-      IMAGE: goodjobshare:production
+      REPO_PATH: goodjoblife/goodjobshare/${{ matrix.repo }}
     steps:
       - uses: actions/checkout@v4
-      - name: Log in to Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${REGISTRY} -u ${{ github.actor }} --password-stdin
-      - run: docker compose -f .github/docker-compose-production.yml build
-      - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:production-${GITHUB_SHA}
-      - run: docker push ${REGISTRY}/${REPO}:production-${GITHUB_SHA}
-  docker-stage:
-    name: Deploy docker image
-    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
-    needs:
-      - test
-    permissions:
-      contents: read
-      packages: write
-    env:
-      REGISTRY: ghcr.io
-      REPO: goodjoblife/goodjobshare/web-server-dev
-      IMAGE: goodjobshare:stage
-    steps:
-      - uses: actions/checkout@v4
-      - name: Log in to Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${REGISTRY} -u ${{ github.actor }} --password-stdin
-      - run: docker compose -f .github/docker-compose-stage.yml build
-      - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:stage
-      - run: docker push ${REGISTRY}/${REPO}:stage
-  docker-dev:
-    name: Deploy docker image
-    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
-    runs-on: ubuntu-latest
-    needs:
-      - test
-    permissions:
-      contents: read
-      packages: write
-    env:
-      REGISTRY: ghcr.io
-      REPO: goodjoblife/goodjobshare/web-server-dev
-      IMAGE: goodjobshare:dev
-    steps:
-      - uses: actions/checkout@v4
-      - name: Log in to Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${REGISTRY} -u ${{ github.actor }} --password-stdin
-      - run: docker compose -f .github/docker-compose-dev.yml build
-      - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:dev
-      - run: docker push ${REGISTRY}/${REPO}:dev
-  docker-dev2:
-    name: Deploy docker image
-    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/dev2'
-    runs-on: ubuntu-latest
-    needs:
-      - test
-    permissions:
-      contents: read
-      packages: write
-    env:
-      REGISTRY: ghcr.io
-      REPO: goodjoblife/goodjobshare/web-server-dev
-      IMAGE: goodjobshare:dev
-    steps:
-      - uses: actions/checkout@v4
-      - name: Log in to Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${REGISTRY} -u ${{ github.actor }} --password-stdin
-      - run: docker compose -f .github/docker-compose-dev.yml build
-      - run: docker tag ${IMAGE} ${REGISTRY}/${REPO}:dev2
-      - run: docker push ${REGISTRY}/${REPO}:dev2
-  deploy-stage:
-    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
-    needs:
-      - docker-stage
-    steps:
-      - name: Deploy stage
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Tag
         run: |
-          curl --user "${{ secrets.DEPLOY_CI_TOKEN }}" \
+          docker compose -f ${{ matrix.compose_file }} build
+          docker tag goodjobshare ${{ env.REGISTRY }}/${{ env.REPO_PATH }}:${{ matrix.image_tag }}
+      - name: Push Image
+        run: docker push ${{ env.REGISTRY }}/${{ env.REPO_PATH }}:${{ matrix.image_tag }}
+      - name: Repository Dispatch (Deploy)
+        # if event is not defined, skip
+        if: matrix.event != null
+        run: |
+          curl -u "${{ github.actor }}:${{ secrets.DEPLOY_CI_TOKEN }}" \
             -X POST \
             -H "Accept: application/vnd.github.v3+json" \
-            -d '{"event_type": "goodjobshare-master-published"}' \
-            https://api.github.com/repos/goodjoblife/goodjob-deploy-ci/dispatches
-  deploy-dev:
-    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
-    runs-on: ubuntu-latest
-    needs:
-      - docker-dev
-    steps:
-      - name: Deploy dev
-        run: |
-          curl --user "${{ secrets.DEPLOY_CI_TOKEN }}" \
-            -X POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            -d '{"event_type": "goodjobshare-dev-published"}' \
-            https://api.github.com/repos/goodjoblife/goodjob-deploy-ci/dispatches
-  deploy-dev2:
-    if: github.repository == 'goodjoblife/GoodJobShare' && github.event_name == 'push' && github.ref == 'refs/heads/dev2'
-    runs-on: ubuntu-latest
-    needs:
-      - docker-dev2
-    steps:
-      - name: Deploy dev
-        run: |
-          curl --user "${{ secrets.DEPLOY_CI_TOKEN }}" \
-            -X POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            -d '{"event_type": "goodjobshare-dev2-published"}' \
+            -d '{"event_type": "${{ matrix.event }}"}' \
             https://api.github.com/repos/goodjoblife/goodjob-deploy-ci/dispatches

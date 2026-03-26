@@ -1,6 +1,6 @@
 services:
   node:
-    image: goodjobshare:stage
+    image: goodjobshare
     build:
       context: ..
       dockerfile: docker/Dockerfile
