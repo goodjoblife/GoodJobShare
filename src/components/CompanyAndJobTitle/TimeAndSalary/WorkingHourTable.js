@@ -23,17 +23,9 @@ import usePermission from 'hooks/usePermission';
 import ReportBadge from 'common/button/ReportBadge';
 import ReportZone from 'components/ExperienceDetail/ReportZone';
 import { REPORT_TYPE } from 'components/ExperienceDetail/ReportZone/ReportForm/constants';
+import { GENDER_TRANSLATION } from 'constants/gender';
 
-const formatGender = gender => {
-  switch (gender) {
-    case 'male':
-      return '男';
-    case 'female':
-      return '女';
-    default:
-      return '-';
-  }
-};
+const formatGender = gender => GENDER_TRANSLATION[gender] ?? '-';
 
 const SalaryHeader = ({ isInfoSalaryModalOpen, toggleInfoSalaryModal }) => (
   <React.Fragment>

@@ -4,10 +4,10 @@
     width: 18%;
   }
   .colType {
-    width: 9%;
+    width: 8%;
   }
   .colDayTime {
-    width: 10%;
+    width: 12%;
   }
   .colWeekTime {
     width: 10%;
@@ -16,19 +16,19 @@
     width: 11%;
   }
   .colExperience {
-    width: 10%;
+    width: 7%;
   }
   .colGender {
-    width: 7%;
+    width: 5%;
   }
   .colSalary {
     width: 11%;
   }
   .colHourly {
-    width: 10%;
+    width: 8%;
   }
   .colDataTime {
-    width: 10%;
+    width: 7%;
   }
   &.rwdTable th {
     padding-top: 15px;

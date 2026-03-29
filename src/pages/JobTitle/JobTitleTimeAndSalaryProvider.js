@@ -28,7 +28,10 @@ import {
 } from 'components/CompanyAndJobTitle/Searchbar';
 import {
   salaryFilterFromQuerySelector,
-  useSalaryFilterFromQuery,
+  useDataTimeFromQuery,
+  useExperienceFromQuery,
+  useGenderFromQuery,
+  useSortByFromQuery,
   getDataTimeRange,
   getExperienceInYearRange,
 } from 'components/CompanyAndJobTitle/TimeAndSalary/SalaryFilter';
@@ -74,7 +77,10 @@ const JobTitleTimeAndSalaryProvider = () => {
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
 
-  const { sortBy, dataTime, experience, gender } = useSalaryFilterFromQuery();
+  const [dataTime] = useDataTimeFromQuery();
+  const [experience] = useExperienceFromQuery();
+  const [gender] = useGenderFromQuery();
+  const [sortBy] = useSortByFromQuery();
 
   const dataTimeRange = useMemo(() => getDataTimeRange(dataTime), [dataTime]);
   const experienceInYearRange = useMemo(

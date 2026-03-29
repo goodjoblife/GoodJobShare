@@ -1,9 +1,12 @@
 import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router';
+import { subMonths, subYears } from 'date-fns';
 import qs from 'qs';
 
 import { useQuery } from 'hooks/routing';
 import styles from './SalaryFilter.module.css';
+
 const DATA_TIME_OPTIONS = [
   { value: 'past_month', label: '過去一個月' },
   { value: 'past_year', label: '過去一年' },
@@ -29,6 +32,7 @@ const SORT_OPTIONS = [
   { value: 'HIGH_WEEK_HOUR_FIRST', label: '一週總工時（高→低）' },
   { value: 'LOW_WEEK_HOUR_FIRST', label: '一週總工時（低→高）' },
 ];
+
 export const salaryFilterFromQuerySelector = query => ({
   dataTime: query.data_time || null,
   experience: query.experience || null,
@@ -36,24 +40,20 @@ export const salaryFilterFromQuerySelector = query => ({
   sortBy: query.sort_by || null,
 });
 
-export const getDataTimeRange = dataTime => {
+export const getDataTimeRange = (dataTime, now = new Date()) => {
   if (!dataTime) return undefined;
-  const now = new Date();
   const end = { year: now.getFullYear(), month: now.getMonth() + 1 };
   switch (dataTime) {
     case 'past_month': {
-      const d = new Date(now);
-      d.setMonth(d.getMonth() - 1);
+      const d = subMonths(now, 1);
       return { start: { year: d.getFullYear(), month: d.getMonth() + 1 }, end };
     }
     case 'past_year': {
-      const d = new Date(now);
-      d.setFullYear(d.getFullYear() - 1);
+      const d = subYears(now, 1);
       return { start: { year: d.getFullYear(), month: d.getMonth() + 1 }, end };
     }
     case 'past_two_years': {
-      const d = new Date(now);
-      d.setFullYear(d.getFullYear() - 2);
+      const d = subYears(now, 2);
       return { start: { year: d.getFullYear(), month: d.getMonth() + 1 }, end };
     }
     default:
@@ -74,18 +74,11 @@ export const getExperienceInYearRange = experience => {
   }
 };
 
-export const useSalaryFilterFromQuery = () => {
+const useUpdateQuery = () => {
   const history = useHistory();
   const location = useLocation();
   const query = useQuery();
-  const {
-    dataTime,
-    experience,
-    gender,
-    sortBy,
-  } = salaryFilterFromQuerySelector(query);
-
-  const updateQuery = useCallback(
+  return useCallback(
     updates => {
       const { p, ...restQuery } = query;
       const nextQuery = { ...restQuery, ...updates };
@@ -102,87 +95,109 @@ export const useSalaryFilterFromQuery = () => {
     },
     [query, history, location],
   );
+};
 
-  return {
-    dataTime,
-    setDataTime: val => updateQuery({ data_time: val || undefined }),
-    experience,
-    setExperience: val => updateQuery({ experience: val || undefined }),
-    gender,
-    setGender: val => updateQuery({ gender: val || undefined }),
-    sortBy,
-    setSortBy: val => updateQuery({ sort_by: val || undefined }),
-  };
+export const useDataTimeFromQuery = () => {
+  const query = useQuery();
+  const updateQuery = useUpdateQuery();
+  return [
+    query.data_time || null,
+    val => updateQuery({ data_time: val || undefined }),
+  ];
+};
+
+export const useExperienceFromQuery = () => {
+  const query = useQuery();
+  const updateQuery = useUpdateQuery();
+  return [
+    query.experience || null,
+    val => updateQuery({ experience: val || undefined }),
+  ];
+};
+
+export const useGenderFromQuery = () => {
+  const query = useQuery();
+  const updateQuery = useUpdateQuery();
+  return [
+    query.gender || null,
+    val => updateQuery({ gender: val || undefined }),
+  ];
+};
+
+export const useSortByFromQuery = () => {
+  const query = useQuery();
+  const updateQuery = useUpdateQuery();
+  return [
+    query.sort_by || null,
+    val => updateQuery({ sort_by: val || undefined }),
+  ];
+};
+
+const SalaryFilterSelect = ({ options, defaultLabel, value, onChange }) => (
+  <select
+    className={styles.select}
+    value={value ?? ''}
+    onChange={e => onChange(e.target.value || null)}
+  >
+    <option value="">{defaultLabel}</option>
+    {options.map(o => (
+      <option key={o.value} value={o.value}>
+        {o.label}
+      </option>
+    ))}
+  </select>
+);
+
+SalaryFilterSelect.propTypes = {
+  defaultLabel: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  value: PropTypes.string,
 };
 
 const SalaryFilter = () => {
-  const {
-    dataTime,
-    setDataTime,
-    experience,
-    setExperience,
-    gender,
-    setGender,
-    sortBy,
-    setSortBy,
-  } = useSalaryFilterFromQuery();
+  const [dataTime, setDataTime] = useDataTimeFromQuery();
+  const [experience, setExperience] = useExperienceFromQuery();
+  const [gender, setGender] = useGenderFromQuery();
+  const [sortBy, setSortBy] = useSortByFromQuery();
 
   return (
     <div className={styles.filterBar}>
       <div className={styles.group}>
         <span className={styles.label}>篩選：</span>
-        <select
-          className={styles.select}
-          value={dataTime ?? ''}
-          onChange={e => setDataTime(e.target.value || null)}
-        >
-          <option value="">所有參考時間</option>
-          {DATA_TIME_OPTIONS.map(o => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
-        <select
-          className={styles.select}
-          value={experience ?? ''}
-          onChange={e => setExperience(e.target.value || null)}
-        >
-          <option value="">所有工作經歷</option>
-          {EXPERIENCE_OPTIONS.map(o => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
-        <select
-          className={styles.select}
-          value={gender ?? ''}
-          onChange={e => setGender(e.target.value || null)}
-        >
-          <option value="">所有性別</option>
-          {GENDER_OPTIONS.map(o => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
+        <SalaryFilterSelect
+          options={DATA_TIME_OPTIONS}
+          defaultLabel="所有參考時間"
+          value={dataTime}
+          onChange={setDataTime}
+        />
+        <SalaryFilterSelect
+          options={EXPERIENCE_OPTIONS}
+          defaultLabel="所有工作經歷"
+          value={experience}
+          onChange={setExperience}
+        />
+        <SalaryFilterSelect
+          options={GENDER_OPTIONS}
+          defaultLabel="所有性別"
+          value={gender}
+          onChange={setGender}
+        />
       </div>
 
       <div className={styles.sortGroup}>
         <span className={styles.label}>排序：</span>
-        <select
-          className={styles.select}
-          value={sortBy ?? ''}
-          onChange={e => setSortBy(e.target.value || null)}
-        >
-          <option value="">參考時間（新→舊）</option>
-          {SORT_OPTIONS.map(o => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
+        <SalaryFilterSelect
+          options={SORT_OPTIONS}
+          defaultLabel="參考時間（新→舊）"
+          value={sortBy}
+          onChange={setSortBy}
+        />
       </div>
     </div>
   );

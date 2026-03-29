@@ -57,51 +57,35 @@ describe('getDataTimeRange', () => {
   });
 
   test('past_month → end 為當月、start 為一個月前', () => {
-    const now = new Date();
-    const end = { year: now.getFullYear(), month: now.getMonth() + 1 };
-    const d = new Date(now);
-    d.setMonth(d.getMonth() - 1);
-    const start = { year: d.getFullYear(), month: d.getMonth() + 1 };
-
-    expect(getDataTimeRange('past_month')).toEqual({ start, end });
+    const now = new Date(2025, 5, 15); // June 15, 2025
+    expect(getDataTimeRange('past_month', now)).toEqual({
+      start: { year: 2025, month: 5 },
+      end: { year: 2025, month: 6 },
+    });
   });
 
   test('past_year → end 為當月、start 為一年前', () => {
-    const now = new Date();
-    const end = { year: now.getFullYear(), month: now.getMonth() + 1 };
-    const d = new Date(now);
-    d.setFullYear(d.getFullYear() - 1);
-    const start = { year: d.getFullYear(), month: d.getMonth() + 1 };
-
-    expect(getDataTimeRange('past_year')).toEqual({ start, end });
+    const now = new Date(2025, 5, 15); // June 15, 2025
+    expect(getDataTimeRange('past_year', now)).toEqual({
+      start: { year: 2024, month: 6 },
+      end: { year: 2025, month: 6 },
+    });
   });
 
   test('past_two_years → end 為當月、start 為兩年前', () => {
-    const now = new Date();
-    const end = { year: now.getFullYear(), month: now.getMonth() + 1 };
-    const d = new Date(now);
-    d.setFullYear(d.getFullYear() - 2);
-    const start = { year: d.getFullYear(), month: d.getMonth() + 1 };
-
-    expect(getDataTimeRange('past_two_years')).toEqual({ start, end });
+    const now = new Date(2025, 5, 15); // June 15, 2025
+    expect(getDataTimeRange('past_two_years', now)).toEqual({
+      start: { year: 2023, month: 6 },
+      end: { year: 2025, month: 6 },
+    });
   });
 
   test('跨年邊界：1 月往前一個月應得上一年 12 月', () => {
-    const OriginalDate = global.Date;
-    global.Date = function(arg) {
-      return arg === undefined
-        ? new OriginalDate('2025-01-10T00:00:00.000Z')
-        : new OriginalDate(arg);
-    };
-
-    try {
-      expect(getDataTimeRange('past_month')).toEqual({
-        start: { year: 2024, month: 12 },
-        end: { year: 2025, month: 1 },
-      });
-    } finally {
-      global.Date = OriginalDate;
-    }
+    const now = new Date(2025, 0, 10); // January 10, 2025
+    expect(getDataTimeRange('past_month', now)).toEqual({
+      start: { year: 2024, month: 12 },
+      end: { year: 2025, month: 1 },
+    });
   });
 });
 
