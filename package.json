@@ -90,7 +90,7 @@
     "marked": "^0.3.6",
     "path": "^0.12.7",
     "prop-types": "^15.6.0",
-    "qs": "^6.7.3",
+    "qs": "^6.14.2",
     "ramda": "^0.23.0",
     "razzle": "^3.4.5",
     "react": "^16.12.0",
@@ -111,7 +111,7 @@
     "redux": "^4.0.4",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.1.0",
-    "rollbar": "^2.26.1",
+    "rollbar": "^2.26.5",
     "serialize-javascript": "^6.0.2"
   },
   "engines": {
