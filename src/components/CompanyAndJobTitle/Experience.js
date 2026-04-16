@@ -72,25 +72,23 @@ const Experience = ({ experience, pageType, tabType, subTitleTag }) => {
 
   return (
     <div ref={ref}>
-      <Wrapper size="m">
-        <Heading size="m" Tag="h2" bold className={styles.title}>
-          {title}{' '}
-          <span className={styles.timestamp}>
-            {formatSimpleDate(new Date(experience.created_at))}
-          </span>
-        </Heading>
-        <Article
-          experience={experience}
-          visibility={
-            canViewPublishId(experience.id)
-              ? VISIBILITY.COLLAPSED
-              : VISIBILITY.LOCKED
-          }
-          onClickMsgButton={() => setMessageExpanded(expended => !expended)}
-          originalLink={`/experiences/${experience.id}`}
-          subTitleTag={subTitleTag}
-        />
-      </Wrapper>
+      <Heading size="m" Tag="h2" bold className={styles.title}>
+        {title}{' '}
+        <span className={styles.timestamp}>
+          {formatSimpleDate(new Date(experience.created_at))}
+        </span>
+      </Heading>
+      <Article
+        experience={experience}
+        visibility={
+          canViewPublishId(experience.id)
+            ? VISIBILITY.COLLAPSED
+            : VISIBILITY.LOCKED
+        }
+        onClickMsgButton={() => setMessageExpanded(expended => !expended)}
+        originalLink={`/experiences/${experience.id}`}
+        subTitleTag={subTitleTag}
+      />
 
       {messageExpanded && (
         <Wrapper size="s">
