@@ -105,7 +105,7 @@ const TimeAndSalary = ({
           boxSelector={boxSelector}
           render={({ salaryWorkTimes, salaryWorkTimesCount: totalCount }) => {
             return (
-              <Wrapper size="l">
+              <>
                 <Helmet
                   pageType={pageType}
                   pageName={pageName}
@@ -124,7 +124,7 @@ const TimeAndSalary = ({
                   onCloseReport={onCloseReport}
                   createPageLinkTo={createPageLinkTo}
                 />
-              </Wrapper>
+              </>
             );
           }}
         />
