@@ -33,7 +33,7 @@ const InterviewExperiences = ({
           <Sorter />
         </div>
       </Wrapper>
-      <Wrapper size="l">
+      <Wrapper size="m">
         <PageBoxRenderer
           pageType={pageType}
           pageName={pageName}
