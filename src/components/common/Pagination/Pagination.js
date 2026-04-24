@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
 import qs from 'qs';
@@ -19,25 +19,37 @@ import {
 
 import styles from './Pagination.module.css';
 
-export const useCreatePageLinkTo = () => {
-  const location = useLocation();
-  const queryParams = useQuery();
+const useSectionY = () => {
+  const sectionRef = useRef(null);
   const isMobile = useMobile();
   const [y, setY] = useState(null);
 
-  const handleSectionRef = useCallback(
-    el => {
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        let newY = rect.top + window.scrollY;
-        if (isMobile) {
-          newY -= 50; /* nav height */
-        }
+  /* eslint-disable react-hooks/exhaustive-deps */
+  // DOM state changes don't notify React,
+  // so dependencies are omitted to always run the effect
+  // to ensure the latest scroll position is calculated.
+  useEffect(() => {
+    if (sectionRef.current) {
+      const rect = sectionRef.current.getBoundingClientRect();
+      let newY = rect.top + window.scrollY;
+      if (isMobile) {
+        newY -= 50; /* nav height */
+      }
+      if (newY !== y) {
         setY(newY);
       }
-    },
-    [isMobile],
-  );
+    }
+  });
+  /* eslint-enable react-hooks/exhaustive-deps */
+
+  return [y, sectionRef];
+};
+
+// Portal for generating the link and ref
+export const useCreatePageLinkTo = () => {
+  const location = useLocation();
+  const queryParams = useQuery();
+  const [y, handleSectionRef] = useSectionY();
 
   const createPageLinkTo = useCallback(
     p => {
