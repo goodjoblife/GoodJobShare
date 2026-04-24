@@ -13,7 +13,7 @@ src/apis/queryCompanyOverviewStatistics.ts
 每個檔案包含三個部分（依序）：
 
 1. GraphQL query 字串（不 export，為 file-private）
-2. Response data type（不 export，為 file-private）
+2. Response data type（export optional，根據外部是否需要決定）
 3. API function（default export）
 
 ## 2. GraphQL 字串命名
@@ -65,7 +65,7 @@ const queryCompanyOverview = ({
 
 ## 6. Nullable 欄位
 
-可能為 null 的欄位用 `T | null` 標注（不用 `?:`），頂層 entity 不存在時，整個物件為 `null`：
+可能為 null 的欄位用 `T | null` 標注（因為 graphql，所以不是 `?:`），頂層 entity 不存在時，整個物件為 `null`：
 
 ```ts
 type QueryCompanyRatingStatisticsData = {
@@ -100,24 +100,3 @@ export type WorkExperienceInOverview = { ... };
 | 共用 type（`SalaryWorkTime` 等）| named export |
 | Fragment 字串 | named export |
 | Base entity type（如 `Company`）| named export |
-
-## 9. Base Type 的位置
-
-GraphQL schema 對應的基礎 entity type（非 query-specific）可放在對應的 domain 檔案（如 `src/graphql/company.ts`）：
-
-```ts
-// src/graphql/company.ts
-export interface Company {
-  name: string;
-}
-```
-
-API 檔案再 import 使用並用 intersection 擴充：
-
-```ts
-import { Company } from 'graphql/company';
-
-type QueryCompanyRatingStatisticsData = {
-  company: (Company & { companyRatingStatistics: ... }) | null;
-};
-```
