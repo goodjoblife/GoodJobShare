@@ -7,7 +7,7 @@ import {
   formatUrl,
 } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
-import { LaborRightEntry } from 'graphql/laborRight';
+import { LaborRightEntry } from 'apis/queryLaborRights';
 
 type EntryHelmetProps = {
   entry: LaborRightEntry;
