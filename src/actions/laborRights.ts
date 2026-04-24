@@ -1,9 +1,7 @@
 import { AnyAction } from 'redux';
 import { Thunk } from 'reducers';
-import { LaborRightEntry } from 'apis/queryLaborRights';
-import { LaborRightMenuEntry } from 'apis/queryLaborRightsMenu';
-import queryMenuApi from 'apis/queryLaborRightsMenu';
-import queryEntryApi from 'apis/queryLaborRights';
+import queryEntryApi, { LaborRightEntry } from 'apis/queryLaborRights';
+import queryMenuApi, { LaborRightMenuEntry } from 'apis/queryLaborRightsMenu';
 import FetchBox, {
   getError,
   getFetched,
