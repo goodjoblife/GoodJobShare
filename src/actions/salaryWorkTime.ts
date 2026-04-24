@@ -9,7 +9,7 @@ import FetchBox, {
 import { tokenSelector } from 'selectors/authSelector';
 import { salaryWorkTimeCountBoxSelector } from 'selectors/countSelector';
 import { postWorkings as postWorkingsApi } from 'apis/timeAndSalaryApi';
-import { querySalaryWorkTimeCountApi } from 'apis/salaryWorkTimeApi';
+import querySalaryWorkTimeCountApi from 'apis/querySalaryWorkTimeCount';
 import { queryMyPublishIds } from './me';
 
 export const SET_COUNT = '@@SALARY_WORK_TIME/SET_COUNT';
