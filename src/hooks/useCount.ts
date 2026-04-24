@@ -6,7 +6,7 @@ import {
   salaryWorkTimeCountSelector,
 } from 'selectors/countSelector';
 import { queryExperienceCountIfUnfetched } from 'actions/experiences';
-import { querySalaryWorkTimeCountIfUnfetched } from 'actions/timeAndSalary';
+import { querySalaryWorkTimeCountIfUnfetched } from 'actions/salaryWorkTime';
 
 export const useExperienceCount = (): number => {
   const dispatch = useDispatch();
