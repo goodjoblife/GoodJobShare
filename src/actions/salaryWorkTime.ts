@@ -1,18 +1,27 @@
-import { getError, getFetched, toFetching, isUnfetched } from 'utils/fetchBox';
+import { AnyAction } from 'redux';
+import { Thunk } from 'reducers';
+import FetchBox, {
+  getError,
+  getFetched,
+  toFetching,
+  isUnfetched,
+} from 'utils/fetchBox';
 import { tokenSelector } from 'selectors/authSelector';
 import { salaryWorkTimeCountBoxSelector } from 'selectors/countSelector';
 import { postWorkings as postWorkingsApi } from 'apis/timeAndSalaryApi';
-import { querySalaryWorkTimeCountApi } from 'apis/salaryWorkTimeApi';
+import querySalaryWorkTimeCountApi from 'apis/querySalaryWorkTimeCount';
 import { queryMyPublishIds } from './me';
 
 export const SET_COUNT = '@@SALARY_WORK_TIME/SET_COUNT';
 
-const setCount = countBox => ({
+const setCount = (countBox: FetchBox<number>): AnyAction => ({
   type: SET_COUNT,
   countBox,
 });
 
-export const querySalaryWorkTimeCount = () => async (dispatch, getState) => {
+export const querySalaryWorkTimeCount = (): Thunk => async (
+  dispatch,
+): Promise<void> => {
   dispatch(setCount(toFetching()));
   try {
     const count = await querySalaryWorkTimeCountApi();
@@ -22,19 +31,20 @@ export const querySalaryWorkTimeCount = () => async (dispatch, getState) => {
   }
 };
 
-export const querySalaryWorkTimeCountIfUnfetched = () => async (
+export const querySalaryWorkTimeCountIfUnfetched = (): Thunk => async (
   dispatch,
   getState,
-) => {
+): Promise<unknown> => {
   if (isUnfetched(salaryWorkTimeCountBoxSelector(getState()))) {
     return dispatch(querySalaryWorkTimeCount());
   }
 };
 
-export const createSalaryWorkTime = ({ body }) => async (
-  dispatch,
-  getState,
-) => {
+export const createSalaryWorkTime = ({
+  body,
+}: {
+  body: any; // TODO: fix me
+}): Thunk => async (dispatch, getState): Promise<unknown> => {
   const state = getState();
   const token = tokenSelector(state);
 

@@ -44,7 +44,7 @@ import { ER0007, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import { parseSalaryAmount, evolve } from '../utils';
 import { generateTabURL, pageType, tabType } from 'constants/companyJobTitle';
 
-import { createSalaryWorkTime } from 'actions/timeAndSalary';
+import { createSalaryWorkTime } from 'actions/salaryWorkTime';
 import { transferKeyToSnakecase } from 'utils/objectUtil';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 
