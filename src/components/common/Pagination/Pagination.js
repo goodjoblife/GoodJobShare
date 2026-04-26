@@ -19,7 +19,7 @@ import {
 
 import styles from './Pagination.module.css';
 
-const useSectionY = () => {
+export const useSectionY = () => {
   const sectionRef = useRef(null);
   const isMobile = useMobile();
   const [y, setY] = useState(null);
@@ -67,7 +67,7 @@ export const useCreatePageLinkTo = () => {
     [y, queryParams, location.pathname],
   );
 
-  return [createPageLinkTo, handleSectionRef];
+  return [createPageLinkTo, handleSectionRef, y];
 };
 
 const Pagination = ({ totalCount, unit, currentPage, createPageLinkTo }) => {

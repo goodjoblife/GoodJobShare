@@ -31,6 +31,19 @@ export {
   sortByFromQuerySelector,
 } from 'selectors/salaryFilter';
 
+type TScrollY = number | null;
+
+type TSalaryFilterSelectProps = {
+  options: { value: string; label: string }[];
+  defaultLabel: string;
+  value: string | null;
+  onChange: (value: string | null) => void;
+};
+
+type TSalaryFilterProps = {
+  y?: TScrollY;
+};
+
 const createYearMonth = (date: Date) => ({
   year: date.getFullYear(),
   month: date.getMonth() + 1,
@@ -69,7 +82,7 @@ export const getExperienceInYearRange = (
   }
 };
 
-const useUpdateQuery = (key: string) => {
+const useUpdateQuery = (key: string, y: TScrollY = null) => {
   const history = useHistory();
   const location = useLocation();
   const query = useQuery();
@@ -85,49 +98,43 @@ const useUpdateQuery = (key: string) => {
       history.push({
         pathname: location.pathname,
         search: qs.stringify(nextQuery, { addQueryPrefix: true }),
+        state: { y },
       });
     },
-    [key, query, history, location],
+    [key, y, query, history, location],
   );
 };
 
-export const useDataTimeFromQuery = () => {
+export const useDataTimeFromQuery = (y: TScrollY = null) => {
   const query = useQuery() as TQueryParams;
-  const setDataTime = useUpdateQuery('data_time');
+  const setDataTime = useUpdateQuery('data_time', y);
   return [dataTimeFromQuerySelector(query), setDataTime] as const;
 };
 
-export const useExperienceFromQuery = () => {
+export const useExperienceFromQuery = (y: TScrollY = null) => {
   const query = useQuery() as TQueryParams;
-  const setExperience = useUpdateQuery('experience');
+  const setExperience = useUpdateQuery('experience', y);
   return [experienceFromQuerySelector(query), setExperience] as const;
 };
 
-export const useGenderFromQuery = () => {
+export const useGenderFromQuery = (y: TScrollY = null) => {
   const query = useQuery() as TQueryParams;
-  const setGender = useUpdateQuery('gender');
+  const setGender = useUpdateQuery('gender', y);
   return [genderFromQuerySelector(query), setGender] as const;
 };
 
-export const useSortByFromQuery = () => {
+export const useSortByFromQuery = (y: TScrollY = null) => {
   const query = useQuery() as TQueryParams;
-  const setSortBy = useUpdateQuery('sort_by');
+  const setSortBy = useUpdateQuery('sort_by', y);
   return [sortByFromQuerySelector(query), setSortBy] as const;
 };
-
-interface SalaryFilterSelectProps {
-  options: { value: string; label: string }[];
-  defaultLabel: string;
-  value: string | null;
-  onChange: (value: string | null) => void;
-}
 
 const SalaryFilterSelect = ({
   options,
   defaultLabel,
   value,
   onChange,
-}: SalaryFilterSelectProps) => (
+}: TSalaryFilterSelectProps) => (
   <select
     className={styles.select}
     value={value || ''}
@@ -142,11 +149,11 @@ const SalaryFilterSelect = ({
   </select>
 );
 
-const SalaryFilter = () => {
-  const [dataTime, setDataTime] = useDataTimeFromQuery();
-  const [experience, setExperience] = useExperienceFromQuery();
-  const [gender, setGender] = useGenderFromQuery();
-  const [sortBy, setSortBy] = useSortByFromQuery();
+const SalaryFilter = ({ y = null }: TSalaryFilterProps) => {
+  const [dataTime, setDataTime] = useDataTimeFromQuery(y);
+  const [experience, setExperience] = useExperienceFromQuery(y);
+  const [gender, setGender] = useGenderFromQuery(y);
+  const [sortBy, setSortBy] = useSortByFromQuery(y);
 
   return (
     <div className={styles.filterBar}>

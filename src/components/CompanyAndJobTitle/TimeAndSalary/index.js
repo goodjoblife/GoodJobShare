@@ -29,7 +29,7 @@ const TimeAndSalary = ({
   onCloseReport,
   esgSalaryDataBox,
 }) => {
-  const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
+  const [createPageLinkTo, handleSectionRef, sectionY] = useCreatePageLinkTo();
 
   return (
     <CompanyAndJobTitleWrapper
@@ -97,7 +97,7 @@ const TimeAndSalary = ({
       />
       <Wrapper ref={handleSectionRef} size="l" className={styles.searchbar}>
         <Searchbar pageType={pageType} tabType={tabType} />
-        <SalaryFilter />
+        <SalaryFilter y={sectionY} />
       </Wrapper>
       <Wrapper size="l">
         <PageBoxRenderer
