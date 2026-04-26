@@ -37,7 +37,7 @@ const TimeAndSalary = ({
       pageName={pageName}
       tabType={tabType}
     >
-      {pageType === PAGE_TYPE.COMPANY && page === 1 && (
+      {pageType === PAGE_TYPE.COMPANY && (
         <BoxRenderer
           box={esgSalaryDataBox}
           render={data => {
@@ -70,33 +70,31 @@ const TimeAndSalary = ({
           }}
         />
       )}
-      {page === 1 && (
-        <BoxRenderer
-          box={statisticsBox}
-          render={data => {
-            if (!data || salaryWorkTimeStatistics.count === 0) {
-              return null;
-            }
-            const {
-              salaryDistribution,
-              jobAverageSalaries,
-              averageWeekWorkTime,
-              overtimeFrequencyCount,
-            } = data;
-            return (
-              <Wrapper size="l">
-                <SummarySection
-                  salaryDistribution={salaryDistribution}
-                  jobAverageSalaries={jobAverageSalaries}
-                  averageWeekWorkTime={averageWeekWorkTime}
-                  overtimeFrequencyCount={overtimeFrequencyCount}
-                />
-                <OvertimeSection statistics={salaryWorkTimeStatistics} />
-              </Wrapper>
-            );
-          }}
-        />
-      )}
+      <BoxRenderer
+        box={statisticsBox}
+        render={data => {
+          if (!data || salaryWorkTimeStatistics.count === 0) {
+            return null;
+          }
+          const {
+            salaryDistribution,
+            jobAverageSalaries,
+            averageWeekWorkTime,
+            overtimeFrequencyCount,
+          } = data;
+          return (
+            <Wrapper size="l">
+              <SummarySection
+                salaryDistribution={salaryDistribution}
+                jobAverageSalaries={jobAverageSalaries}
+                averageWeekWorkTime={averageWeekWorkTime}
+                overtimeFrequencyCount={overtimeFrequencyCount}
+              />
+              <OvertimeSection statistics={salaryWorkTimeStatistics} />
+            </Wrapper>
+          );
+        }}
+      />
       <Wrapper ref={handleSectionRef} size="l" className={styles.searchbar}>
         <Searchbar pageType={pageType} tabType={tabType} />
         <SalaryFilter />
