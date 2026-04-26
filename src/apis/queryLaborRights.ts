@@ -1,26 +1,6 @@
-export const queryLaborRightsMenuGql = /* GraphQL */ `
-  query {
-    labor_rights {
-      id
-      title
-      coverUrl
-    }
-  }
-`;
+import graphqlClient from 'utils/graphqlClient';
 
-// Must be the same as schema from graphql
-// TODO: auto generation
-export type LaborRightMenuEntry = {
-  id: string;
-  title: string;
-  coverUrl: string | null;
-};
-
-export type QueryLaborRightsMenuData = {
-  labor_rights: LaborRightMenuEntry[];
-};
-
-export const queryLaborRightsGql = /* GraphQL */ `
+const queryLaborRightsGql = /* GraphQL */ `
   query($id: ID!) {
     labor_right(id: $id) {
       id
@@ -38,8 +18,6 @@ export const queryLaborRightsGql = /* GraphQL */ `
   }
 `;
 
-// Must be the same as schema from graphql
-// TODO: auto generation
 export type LaborRightEntry = {
   id: string;
   title: string;
@@ -54,6 +32,22 @@ export type LaborRightEntry = {
   descriptionInPermissionBlock: string | null;
 };
 
-export type QueryLaborRightsData = {
+// Must be the same as schema from graphql
+// TODO: auto generation
+type QueryLaborRightsData = {
   labor_right: LaborRightEntry | null;
 };
+
+const queryLaborRights = ({
+  entryId,
+}: {
+  entryId: string;
+}): Promise<LaborRightEntry | null> =>
+  graphqlClient<QueryLaborRightsData>({
+    query: queryLaborRightsGql,
+    variables: {
+      id: entryId,
+    },
+  }).then(data => data.labor_right);
+
+export default queryLaborRights;
