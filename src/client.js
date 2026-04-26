@@ -12,10 +12,18 @@ import { persistStore } from 'redux-persist';
 import Root from './components/Root';
 import configureStore from './store/configureStore';
 
+const NON_SCROLL_RESETTING_KEYS = [
+  'q',
+  'data_time',
+  'experience',
+  'gender',
+  'sort_by',
+];
+
 function shouldUpdateScroll(prevProps, props) {
   const mapSearch = ({ search, ...rest }) => {
     let s = qs.parse(search, { ignoreQueryPrefix: true });
-    s = R.omit(['q'], s); // We don't reset scroll on search query change
+    s = R.omit(NON_SCROLL_RESETTING_KEYS, s);
     return { search: s, ...rest };
   };
   const getSignature = R.compose(
