@@ -42,27 +42,54 @@ const boxShapePropType = PropTypes.shape({
 
 const BoxRenderer = ({ box, render }) => {
   const boxes = Array.isArray(box) ? box : [box];
-  const wasFetchingRef = useRef(false);
-  if (boxes.some(isFetching)) {
-    wasFetchingRef.current = true;
+  const fetching = boxes.some(isFetching);
+  const hasData = boxes.every(b => b.data !== undefined);
+
+  // Only track loader-only loading phases; overlay phases don't need a fade-in on completion.
+  const wasFetchingWithoutDataRef = useRef(false);
+  if (fetching) {
+    wasFetchingWithoutDataRef.current = !hasData;
   }
 
   if (boxes.every(isUnfetched)) {
     return null;
   }
-  if (boxes.some(isFetching)) {
+  if (fetching && !hasData) {
     return <Loader size="s" />;
   }
-  if (boxes.some(isError)) {
+  if (!fetching && boxes.some(isError)) {
     return null;
   }
+
   const data = Array.isArray(box) ? boxes.map(b => b.data) : boxes[0].data;
   const content = render(data);
 
-  if (wasFetchingRef.current) {
-    return <FadeInContent>{content}</FadeInContent>;
+  const wrappedContent = wasFetchingWithoutDataRef.current ? (
+    <FadeInContent>{content}</FadeInContent>
+  ) : (
+    content
+  );
+
+  if (fetching && hasData) {
+    return (
+      <div style={{ position: 'relative' }}>
+        {wrappedContent}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Loader size="s" />
+        </div>
+      </div>
+    );
   }
-  return content;
+
+  return wrappedContent;
 };
 
 BoxRenderer.propTypes = {
