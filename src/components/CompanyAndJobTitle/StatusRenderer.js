@@ -81,6 +81,7 @@ const BoxRenderer = ({ box, render }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            background: 'rgba(255, 255, 255, 0.6)',
           }}
         >
           <Loader size="s" />
