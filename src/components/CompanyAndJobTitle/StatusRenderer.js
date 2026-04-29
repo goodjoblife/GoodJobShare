@@ -79,9 +79,10 @@ const BoxRenderer = ({ box, render }) => {
             position: 'absolute',
             inset: 0,
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             justifyContent: 'center',
             background: 'rgba(255, 255, 255, 0.6)',
+            paddingTop: '32px',
           }}
         >
           <Loader size="s" />
