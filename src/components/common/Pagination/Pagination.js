@@ -19,7 +19,7 @@ import {
 
 import styles from './Pagination.module.css';
 
-export const useSectionY = () => {
+const useSectionY = () => {
   const sectionRef = useRef(null);
   const isMobile = useMobile();
   const [y, setY] = useState(null);
