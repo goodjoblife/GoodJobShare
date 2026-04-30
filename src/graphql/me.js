@@ -14,7 +14,6 @@ export const queryMeGql = /* GraphQL */ `
       facebook_id
       name
       email
-      email_status
     }
   }
 `;
