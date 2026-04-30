@@ -17,7 +17,6 @@ import Privacy from './components/Privacy';
 import ProductAndRefundPolicy from './components/ProductAndRefundPolicy';
 import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
-import VerificationPage from './components/EmailVerification/VerificationPage';
 
 import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
 import CompanyIndexProvider from 'pages/Company/CompanyIndexProvider';
@@ -245,13 +244,6 @@ const routes = [
     path: '/user-terms',
     exact: true,
     component: Terms,
-  },
-  {
-    path: '/verify',
-    exact: true,
-    component: VerificationPage,
-    hasHeader: false,
-    hasFooter: false,
   },
   {
     path: '/plans',

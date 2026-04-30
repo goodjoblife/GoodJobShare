@@ -9,7 +9,6 @@ const preloadedState = {
   user: {
     name: null,
     _id: null,
-    email_status: null,
   },
 };
 
