@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -52,28 +53,43 @@ const Modal = ({
   closableOnClickOutside,
   size,
   contentClassName,
-}) => (
-  <div
-    className={cn(styles.modal, {
-      [styles.isOpen]: isOpen,
-    })}
-    onClick={e => {
-      if (closableOnClickOutside) {
-        close();
-      }
-    }}
-  >
-    <div className={styles.inner}>
-      <InlineModal
-        children={children}
-        hasClose={hasClose}
-        close={close}
-        size={size}
-        contentClassName={contentClassName}
-      />
+}) => {
+  // Render via a portal to document.body so the fixed-position overlay is
+  // not contained by ancestors that establish a new containing block via
+  // transform/filter/perspective/will-change.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const node = (
+    <div
+      className={cn(styles.modal, {
+        [styles.isOpen]: isOpen,
+      })}
+      onClick={() => {
+        if (closableOnClickOutside) {
+          close();
+        }
+      }}
+    >
+      <div className={styles.inner}>
+        <InlineModal
+          children={children}
+          hasClose={hasClose}
+          close={close}
+          size={size}
+          contentClassName={contentClassName}
+        />
+      </div>
     </div>
-  </div>
-);
+  );
+
+  if (!mounted || typeof document === 'undefined') {
+    return null;
+  }
+  return ReactDOM.createPortal(node, document.body);
+};
 
 Modal.propTypes = {
   children: PropTypes.node,
