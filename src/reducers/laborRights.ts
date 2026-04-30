@@ -1,7 +1,8 @@
 import createReducer from 'utils/createReducer';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
 import { SET_MENU, SET_ENTRY } from 'actions/laborRights';
-import { LaborRightEntry, LaborRightMenuEntry } from 'graphql/laborRight';
+import { LaborRightEntry } from 'apis/queryLaborRights';
+import { LaborRightMenuEntry } from 'apis/queryLaborRightsMenu';
 
 const preloadedState: {
   entryById: Record<string, FetchBox<LaborRightEntry | null>>;

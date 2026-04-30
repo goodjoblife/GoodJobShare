@@ -6,7 +6,8 @@ import {
   entryBoxSelectorById,
 } from 'selectors/laborRightsSelector';
 import FetchBox from 'utils/fetchBox';
-import { LaborRightEntry, LaborRightMenuEntry } from 'graphql/laborRight';
+import { LaborRightEntry } from 'apis/queryLaborRights';
+import { LaborRightMenuEntry } from 'apis/queryLaborRightsMenu';
 
 export const useNeighborEntry = (
   entryId: string,
