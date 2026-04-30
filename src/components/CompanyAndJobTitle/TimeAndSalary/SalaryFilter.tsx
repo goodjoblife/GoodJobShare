@@ -1,17 +1,17 @@
-import React, { useCallback } from 'react';
-import { useHistory, useLocation } from 'react-router';
+import React, { useCallback, useRef } from 'react';
+import { useHistory } from 'react-router';
 import { subMonths, subYears } from 'date-fns';
 import qs from 'qs';
+import { LocationState } from 'history';
 
 import { useQuery } from 'hooks/routing';
 import {
-  DATA_TIME,
   DATA_TIME_OPTIONS,
-  EXPERIENCE,
   EXPERIENCE_OPTIONS,
   SORT_OPTIONS,
   DataTime,
-  Experience,
+  ExperienceInYears,
+  SalaryFilterQueryKey,
 } from 'constants/salaryFilter';
 import { GENDER_OPTIONS } from 'constants/gender';
 import {
@@ -31,7 +31,22 @@ export {
   sortByFromQuerySelector,
 } from 'selectors/salaryFilter';
 
+type TYearMonth = { year: number; month: number };
+
+type TDataTimeRange = { start: TYearMonth; end: TYearMonth } | undefined;
+
+type TExperienceRange = { start: number; end: number } | undefined;
+
+type TUseUpdateQuery = (
+  key: string,
+  state?: LocationState,
+) => (value: string | null) => void;
+
 type TScrollY = number | null;
+
+type TSalaryFilterProps = {
+  y?: TScrollY;
+};
 
 type TSalaryFilterSelectProps = {
   options: { value: string; label: string }[];
@@ -40,11 +55,7 @@ type TSalaryFilterSelectProps = {
   onChange: (value: string | null) => void;
 };
 
-type TSalaryFilterProps = {
-  y?: TScrollY;
-};
-
-const createYearMonth = (date: Date) => ({
+const createYearMonth = (date: Date): TYearMonth => ({
   year: date.getFullYear(),
   month: date.getMonth() + 1,
 });
@@ -52,15 +63,15 @@ const createYearMonth = (date: Date) => ({
 export const getDataTimeRange = (
   dataTime: DataTime | null | undefined,
   now = new Date(),
-) => {
+): TDataTimeRange => {
   if (!dataTime) return undefined;
   const end = createYearMonth(now);
   switch (dataTime) {
-    case DATA_TIME.PAST_MONTH:
+    case DataTime.PAST_MONTH:
       return { start: createYearMonth(subMonths(now, 1)), end };
-    case DATA_TIME.PAST_YEAR:
+    case DataTime.PAST_YEAR:
       return { start: createYearMonth(subYears(now, 1)), end };
-    case DATA_TIME.PAST_TWO_YEARS:
+    case DataTime.PAST_TWO_YEARS:
       return { start: createYearMonth(subYears(now, 2)), end };
     default:
       return undefined;
@@ -68,24 +79,25 @@ export const getDataTimeRange = (
 };
 
 export const getExperienceInYearRange = (
-  experience: Experience | null | undefined,
-) => {
+  experience: ExperienceInYears | null | undefined,
+): TExperienceRange => {
   switch (experience) {
-    case EXPERIENCE.ZERO_THREE:
+    case ExperienceInYears.ZERO_THREE:
       return { start: 0, end: 3 };
-    case EXPERIENCE.FOUR_SEVEN:
+    case ExperienceInYears.FOUR_SEVEN:
       return { start: 4, end: 7 };
-    case EXPERIENCE.EIGHT_PLUS:
+    case ExperienceInYears.EIGHT_PLUS:
       return { start: 8, end: 100 };
     default:
       return undefined;
   }
 };
 
-const useUpdateQuery = (key: string, y: TScrollY = null) => {
+const useUpdateQuery: TUseUpdateQuery = (key, state) => {
   const history = useHistory();
-  const location = useLocation();
   const query = useQuery();
+  const stateRef = useRef(state);
+  stateRef.current = state;
   return useCallback(
     (value: string | null) => {
       const { p, ...restQuery } = query as Record<string, string>;
@@ -96,36 +108,35 @@ const useUpdateQuery = (key: string, y: TScrollY = null) => {
         delete nextQuery[key];
       }
       history.push({
-        pathname: location.pathname,
         search: qs.stringify(nextQuery, { addQueryPrefix: true }),
-        state: { y },
+        state: stateRef.current,
       });
     },
-    [key, y, query, history, location],
+    [key, query, history],
   );
 };
 
 export const useDataTimeFromQuery = (y: TScrollY = null) => {
   const query = useQuery() as TQueryParams;
-  const setDataTime = useUpdateQuery('data_time', y);
+  const setDataTime = useUpdateQuery(SalaryFilterQueryKey.DATA_TIME, { y });
   return [dataTimeFromQuerySelector(query), setDataTime] as const;
 };
 
 export const useExperienceFromQuery = (y: TScrollY = null) => {
   const query = useQuery() as TQueryParams;
-  const setExperience = useUpdateQuery('experience', y);
+  const setExperience = useUpdateQuery(SalaryFilterQueryKey.EXPERIENCE, { y });
   return [experienceFromQuerySelector(query), setExperience] as const;
 };
 
 export const useGenderFromQuery = (y: TScrollY = null) => {
   const query = useQuery() as TQueryParams;
-  const setGender = useUpdateQuery('gender', y);
+  const setGender = useUpdateQuery(SalaryFilterQueryKey.GENDER, { y });
   return [genderFromQuerySelector(query), setGender] as const;
 };
 
 export const useSortByFromQuery = (y: TScrollY = null) => {
   const query = useQuery() as TQueryParams;
-  const setSortBy = useUpdateQuery('sort_by', y);
+  const setSortBy = useUpdateQuery(SalaryFilterQueryKey.SORT_BY, { y });
   return [sortByFromQuerySelector(query), setSortBy] as const;
 };
 
@@ -134,11 +145,11 @@ const SalaryFilterSelect = ({
   defaultLabel,
   value,
   onChange,
-}: TSalaryFilterSelectProps) => (
+}: TSalaryFilterSelectProps): React.ReactElement => (
   <select
     className={styles.select}
     value={value || ''}
-    onChange={e => onChange(e.target.value || null)}
+    onChange={(e): void => onChange(e.target.value || null)}
   >
     <option value="">{defaultLabel}</option>
     {options.map(o => (
@@ -149,7 +160,7 @@ const SalaryFilterSelect = ({
   </select>
 );
 
-const SalaryFilter = ({ y = null }: TSalaryFilterProps) => {
+const SalaryFilter = ({ y = null }: TSalaryFilterProps): React.ReactElement => {
   const [dataTime, setDataTime] = useDataTimeFromQuery(y);
   const [experience, setExperience] = useExperienceFromQuery(y);
   const [gender, setGender] = useGenderFromQuery(y);

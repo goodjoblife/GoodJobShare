@@ -8,10 +8,7 @@ export const GENDER_TRANSLATION: Record<Gender, string> = {
   other: '其他',
 };
 
-export const GENDER_OPTIONS = GENDER_VALUES.map(value => {
-  const label = GENDER_TRANSLATION[value];
-  return {
-    value,
-    label: label === '其他' ? label : `${label}性`,
-  };
-});
+export const GENDER_OPTIONS = GENDER_VALUES.map(value => ({
+  value,
+  label: GENDER_TRANSLATION[value],
+}));
