@@ -6,7 +6,7 @@ import AuthStatus from 'constants/authStatus';
 export type User = {
   _id: string;
   name: string;
-  email: string;
+  email: string | null;
 };
 
 const preloadedState: {
