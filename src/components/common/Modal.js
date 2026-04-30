@@ -54,6 +54,9 @@ const Modal = ({
   size,
   contentClassName,
 }) => {
+  // Render via a portal to document.body so the fixed-position overlay is
+  // not contained by ancestors that establish a new containing block via
+  // transform/filter/perspective/will-change.
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
