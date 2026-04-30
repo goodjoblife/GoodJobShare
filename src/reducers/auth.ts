@@ -7,7 +7,7 @@ export type User = {
   _id: string;
   name: string;
   email: string;
-  email_status: unknown;
+  email_status: unknown; // deprecated
 };
 
 const preloadedState: {
@@ -25,7 +25,7 @@ const auth = createReducer(preloadedState, {
     state,
     { status, token }: { status: AuthStatus; token?: string },
   ) => ({ ...state, status, token }),
-  [SET_USER]: (state, { user }: { user: User | undefined }) => ({
+  [SET_USER]: (state, { user }: { user?: User }) => ({
     ...state,
     user,
   }),
