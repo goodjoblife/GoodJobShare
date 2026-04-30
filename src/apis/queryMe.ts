@@ -7,6 +7,7 @@ const queryMeGql = /* GraphQL */ `
       _id
       name
       email
+      email_status
     }
   }
 `;
