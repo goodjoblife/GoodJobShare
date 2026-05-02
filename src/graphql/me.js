@@ -7,17 +7,6 @@ export const queryMyPermissionGql = /* GraphQL */ `
     }
   }
 `;
-export const queryMeGql = /* GraphQL */ `
-  {
-    me {
-      _id
-      facebook_id
-      name
-      email
-      email_status
-    }
-  }
-`;
 
 export const queryMyPublishIdsGql = /* GraphQL */ `
   query MyPublishes {

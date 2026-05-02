@@ -1,29 +1,40 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import Redirect from 'common/routing/Redirect';
 import Loader from 'common/Loader';
 import NotFoundStatus from 'common/routing/NotFound';
 import { generateTabURL } from 'constants/companyJobTitle';
 import { isUnfetched, isFetching, isError } from 'utils/fetchBox';
 import EmptyView from './EmptyView';
+import styles from './StatusRenderer.module.css';
 
-const FadeInContent = ({ children }) => {
+const useFadeIn = () => {
   const [visible, setVisible] = useState(false);
-  const rafRef = useRef(null);
+  const [animating, setAnimating] = useState(true);
 
   useEffect(() => {
-    rafRef.current = requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(rafRef.current);
+    const id = requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(id);
   }, []);
 
+  const onTransitionEnd = e => {
+    if (e.propertyName === 'transform') setAnimating(false);
+  };
+
+  return { visible, animating, onTransitionEnd };
+};
+
+const FadeInContent = ({ children }) => {
+  const { visible, animating, onTransitionEnd } = useFadeIn();
   return (
     <div
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'opacity 0.35s ease, transform 0.35s ease',
-      }}
+      className={cn({
+        [styles['fade-in']]: animating,
+        [styles['fade-in--visible']]: animating && visible,
+      })}
+      onTransitionEnd={onTransitionEnd}
     >
       {children}
     </div>
