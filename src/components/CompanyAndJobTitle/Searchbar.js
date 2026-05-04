@@ -16,12 +16,12 @@ import {
   tabTypeTranslation,
 } from 'constants/companyJobTitle';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import { keywordFromQuerySelector } from 'selectors/routing/keyword';
+import { queryFromQuerySelector } from 'selectors/routing';
 
 export const useSearchTextFromQuery = () => {
   const history = useHistory();
   const query = useQuery();
-  const searchText = keywordFromQuerySelector(query);
+  const searchText = queryFromQuerySelector(query);
   const setSearchText = useCallback(
     nextSearchText => {
       if (searchText === nextSearchText) return;

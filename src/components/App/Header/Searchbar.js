@@ -4,14 +4,14 @@ import cn from 'classnames';
 import { useHistory } from 'react-router-dom';
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
-import { keywordFromQuerySelector } from 'selectors/routing/keyword';
+import { queryFromQuerySelector } from 'selectors/routing';
 import { useQuery } from 'hooks/routing';
 import styles from './Searchbar.module.css';
 
 const Searchbar = ({ className, placeholder, inputRef }) => {
   const history = useHistory();
   const query = useQuery();
-  const [searchText, setSearchText] = useState(keywordFromQuerySelector(query));
+  const [searchText, setSearchText] = useState(queryFromQuerySelector(query));
   const [isActive, setActive] = useState(false);
 
   const handleFormFocus = useCallback(() => {

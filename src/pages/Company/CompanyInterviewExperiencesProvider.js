@@ -18,12 +18,14 @@ import { companyInterviewExperiencesBoxSelectorByName } from 'selectors/companyA
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/Searchbar';
-import { keywordFromQuerySelector } from 'selectors/routing/keyword';
+import {
+  queryFromQuerySelector,
+  pageFromQuerySelector,
+} from 'selectors/routing';
 import {
   sortByFromQuerySelector,
   useSortByFromQuery,
 } from 'components/CompanyAndJobTitle/Sorter';
-import { pageFromQuerySelector } from 'selectors/routing/page';
 import { isFetched, getFetched } from 'utils/fetchBox';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 
@@ -111,7 +113,7 @@ CompanyInterviewExperiencesProvider.fetchData = ({
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
   const sortBy = sortByFromQuerySelector(query);
-  const jobTitle = keywordFromQuerySelector(query) || undefined;
+  const jobTitle = queryFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   return Promise.all([
