@@ -13,10 +13,8 @@ import { jobTitleInterviewExperiencesBoxSelectorByName } from 'selectors/company
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 import { pageFromQuerySelector } from 'selectors/routing/page';
-import {
-  searchTextFromQuerySelector,
-  useSearchTextFromQuery,
-} from 'components/CompanyAndJobTitle/Searchbar';
+import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/Searchbar';
+import { keywordFromQuerySelector } from 'selectors/routing/keyword';
 import {
   sortByFromQuerySelector,
   useSortByFromQuery,
@@ -97,7 +95,7 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
   const sortBy = sortByFromQuerySelector(query);
-  const companyName = searchTextFromQuerySelector(query) || undefined;
+  const companyName = keywordFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   return dispatch(
