@@ -6,7 +6,7 @@ import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
 import SalaryWorkTimeOgImage from 'images/og/salary-work-time.jpg';
 
-const SearchScreenHelmet = ({ keyword, page }) => {
+const SearchPageHelmet = ({ keyword, page }) => {
   const title = `查詢${keyword}的結果 - 第${page}頁`;
   const description = `查詢${keyword}的薪水、加班狀況、面試心得、評價資料的結果`;
 
@@ -30,9 +30,9 @@ const SearchScreenHelmet = ({ keyword, page }) => {
   );
 };
 
-SearchScreenHelmet.propTypes = {
+SearchPageHelmet.propTypes = {
   keyword: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
 };
 
-export default SearchScreenHelmet;
+export default SearchPageHelmet;
