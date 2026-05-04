@@ -260,7 +260,7 @@ export const queryCompanyTimeAndSalary = (
     return;
   }
 
-  dispatch(setTimeAndSalary(companyName, toFetching()));
+  dispatch(setTimeAndSalary(companyName, toFetching(box)));
 
   try {
     const data = await getCompanyTimeAndSalary({
@@ -316,7 +316,7 @@ export const queryCompanyTimeAndSalaryStatistics = ({ companyName }) => async (
     return;
   }
 
-  dispatch(setTimeAndSalaryStatistics(companyName, toFetching()));
+  dispatch(setTimeAndSalaryStatistics(companyName, toFetching(box)));
 
   try {
     const data = await getCompanyTimeAndSalaryStatistics({
@@ -433,7 +433,7 @@ export const queryCompanyInterviewExperiences = ({
     return;
   }
 
-  dispatch(setInterviewExperiences(companyName, toFetching()));
+  dispatch(setInterviewExperiences(companyName, toFetching(box)));
 
   try {
     const data = await getCompanyInterviewExperiences({
@@ -504,7 +504,7 @@ export const queryCompanyWorkExperiences = ({
     return;
   }
 
-  dispatch(setWorkExperiences(companyName, toFetching()));
+  dispatch(setWorkExperiences(companyName, toFetching(box)));
 
   try {
     const data = await getCompanyWorkExperiences({
