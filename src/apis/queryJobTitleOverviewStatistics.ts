@@ -38,7 +38,7 @@ type QueryJobTitleOverviewStatisticsData = {
       overtime_frequency_count: OvertimeFrequencyCount | null;
     };
     salary_distribution: {
-      bins: SalaryDistributionBin[];
+      bins: SalaryDistributionBin[] | null;
     };
   } | null;
 };
