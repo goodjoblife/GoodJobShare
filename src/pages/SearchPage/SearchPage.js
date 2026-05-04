@@ -16,9 +16,9 @@ import { usePage } from 'hooks/routing/page';
 import { queryKeyword } from 'actions/search';
 import { keywordFromQuerySelector } from 'selectors/routing/keyword';
 import { searchByKeywordSelector } from 'selectors/search';
-import WorkingHourBlock from './WorkingHourBlock';
+import CompanyJobTitleBlock from 'components/CompanyAndJobTitle/CompanyJobTitleBlock';
 import Helmet from './Helmet';
-import styles from './SearchScreen.module.css';
+import styles from './SearchPage.module.css';
 
 const keywordMinLength = 2;
 
@@ -43,7 +43,7 @@ function getLinkForData(query, data) {
   return `${path}${search}`;
 }
 
-const SearchScreen = () => {
+const SearchPage = () => {
   const dispath = useDispatch();
   const query = useQuery();
   const keyword = useMemo(() => keywordFromQuerySelector(query), [query]);
@@ -83,7 +83,7 @@ const SearchScreen = () => {
           <>
             {slice((page - 1) * pageSize, page * pageSize)(box.data).map(
               (o, i) => (
-                <WorkingHourBlock
+                <CompanyJobTitleBlock
                   key={i}
                   pageType={o.pageType}
                   name={o.name}
@@ -109,10 +109,10 @@ const SearchScreen = () => {
   );
 };
 
-SearchScreen.fetchData = ({ store: { dispatch }, ...props }) => {
+SearchPage.fetchData = ({ store: { dispatch }, ...props }) => {
   const query = querySelector(props);
   const keyword = keywordFromQuerySelector(query);
   return dispatch(queryKeyword({ keyword }));
 };
 
-export default SearchScreen;
+export default SearchPage;
