@@ -22,11 +22,13 @@ import {
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
-import { pageFromQuerySelector } from 'selectors/routing/page';
+import {
+  pageFromQuerySelector,
+  ratingFromQuerySelector,
+} from 'selectors/routing';
 import FetchBox, { isFetched, getFetched } from 'utils/fetchBox';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import useAspect, { aspectSelector } from './useAspect';
-import { ratingFromQuerySelector } from 'selectors/routing/ratings';
 import useRating from 'components/CompanyAndJobTitle/WorkExperiences/Aspects/useRating';
 import { RootState } from 'reducers';
 
