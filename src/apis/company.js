@@ -14,10 +14,23 @@ export const getCompanyTimeAndSalary = ({
   jobTitle,
   start,
   limit,
+  dataTimeRange,
+  experienceInYearRange,
+  gender,
+  sortBy,
 }) =>
   graphqlClient({
     query: getCompanyTimeAndSalaryQuery,
-    variables: { companyName, jobTitle, start, limit },
+    variables: {
+      companyName,
+      jobTitle,
+      start,
+      limit,
+      dataTimeRange,
+      experienceInYearRange,
+      gender,
+      sortBy,
+    },
   }).then(R.prop('company'));
 
 export const getCompanyTimeAndSalaryStatistics = ({ companyName }) =>

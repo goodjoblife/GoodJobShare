@@ -149,13 +149,26 @@ export const queryJobTitleOverviewStatisticsGql = /* GraphQL */ `
 `;
 
 export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
-  query($jobTitle: String!, $companyName: String, $start: Int!, $limit: Int!) {
+  query(
+    $jobTitle: String!
+    $companyName: String
+    $start: Int!
+    $limit: Int!
+    $dataTimeRange: DataTimeRange
+    $experienceInYearRange: ExperienceInYearRange
+    $gender: Gender
+    $sortBy: SalaryResultSortOption
+  ) {
     job_title(name: $jobTitle) {
       name
       salaryWorkTimesResult(
         companyQuery: $companyName
         start: $start
         limit: $limit
+        dataTimeRange: $dataTimeRange
+        experienceInYearRange: $experienceInYearRange
+        gender: $gender
+        sortBy: $sortBy
       ) {
         count
         salaryWorkTimes {
@@ -172,6 +185,7 @@ export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
           estimated_hourly_wage
           overtime_frequency
           employment_type
+          gender
           job_title {
             name
           }

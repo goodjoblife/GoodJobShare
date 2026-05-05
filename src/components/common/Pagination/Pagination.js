@@ -67,7 +67,7 @@ export const useCreatePageLinkTo = () => {
     [y, queryParams, location.pathname],
   );
 
-  return [createPageLinkTo, handleSectionRef];
+  return [createPageLinkTo, handleSectionRef, y];
 };
 
 const Pagination = ({ totalCount, unit, currentPage, createPageLinkTo }) => {
