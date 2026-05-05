@@ -1,11 +1,9 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import { useQuery } from 'hooks/routing';
 import qs from 'qs';
 
-import styles from './Sorter.module.css';
-import Caret from 'common/icons/Caret';
+import RoundedSelect from 'common/RoundedSelect';
 import Sort from 'common/icons/Sort';
 
 export const SORT_BY = {
@@ -37,41 +35,14 @@ export const useSortByFromQuery = () => {
   return [sortBy, setSortBy];
 };
 
-const options = [
-  { label: '近期精選貼文', value: SORT_BY.FEATURED_FIRST },
-  { label: '按照時間排序(新->舊)', value: SORT_BY.LATEST_FIRST },
-];
-
-const Select = ({ value, onChange }) => {
-  const handleChange = useCallback(
-    e => {
-      onChange(e.target.value);
-    },
-    [onChange],
-  );
-  return (
-    <div className={styles.sorter}>
-      <Sort className={styles.leadingIcon} />
-      <select onChange={handleChange} value={value}>
-        {options.map(({ value, label }) => (
-          <option key={value} value={value}>
-            {label}
-          </option>
-        ))}
-      </select>
-      <Caret className={styles.caret} />
-    </div>
-  );
-};
-
-Select.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
-};
-
 const Sorter = () => {
   const [sortBy, setSortBy] = useSortByFromQuery();
-  return <Select value={sortBy} onChange={setSortBy} />;
+  return (
+    <RoundedSelect Icon={Sort} value={sortBy} onChange={setSortBy}>
+      <option value={SORT_BY.FEATURED_FIRST}>近期精選貼文</option>
+      <option value={SORT_BY.LATEST_FIRST}>按照時間排序(新-&gt;舊)</option>
+    </RoundedSelect>
+  );
 };
 
 export default Sorter;

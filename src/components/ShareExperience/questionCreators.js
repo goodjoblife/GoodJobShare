@@ -41,6 +41,7 @@ import {
   DATA_KEY_SECTIONS,
   SECTION_MIN_LENGTH,
   UNRATABLE_SUBJECTS,
+  DATA_KEY_JOB_LEVEL,
 } from './constants';
 import {
   isArray,
@@ -135,7 +136,7 @@ export const createCurrentlyEmployedQuestion = () => ({
 });
 
 export const createSectorQuestion = () => ({
-  title: '廠區/門市/分公司',
+  title: '廠區/門市/分公司/團隊',
   type: QUESTION_TYPE.TEXT,
   dataKey: DATA_KEY_SECTOR,
   defaultValue: '',
@@ -231,6 +232,13 @@ export const createJobTenureQuestion = () => ({
   dataKey: DATA_KEY_JOB_TENURE,
   defaultValue: null,
   options: JOB_TENURE_OPTIONS,
+});
+
+export const createJobLevel = () => ({
+  title: '職等',
+  type: QUESTION_TYPE.TEXT,
+  dataKey: DATA_KEY_JOB_LEVEL,
+  defaultValue: '',
 });
 
 export const createRequiredSalaryQuestion = ({ type }) => ({
@@ -375,6 +383,8 @@ export const createSectionsQuestion = () => ({
     return null;
   },
   options: [
+    '生育福利',
+    '工作與生活平衡',
     '薪資福利',
     '性別友善度',
     '工作內容',
