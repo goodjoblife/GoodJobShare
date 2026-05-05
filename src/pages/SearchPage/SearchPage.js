@@ -14,7 +14,7 @@ import { generatePageURL } from 'constants/companyJobTitle';
 import { useQuery } from 'hooks/routing';
 import { usePage } from 'hooks/routing/page';
 import { queryKeyword } from 'actions/search';
-import { keywordFromQuerySelector } from 'selectors/routing/keyword';
+import { queryFromQuerySelector } from 'selectors/routing';
 import { searchByKeywordSelector } from 'selectors/search';
 import CompanyJobTitleBlock from 'components/CompanyAndJobTitle/CompanyJobTitleBlock';
 import Helmet from './Helmet';
@@ -46,7 +46,7 @@ function getLinkForData(query, data) {
 const SearchPage = () => {
   const dispath = useDispatch();
   const query = useQuery();
-  const keyword = useMemo(() => keywordFromQuerySelector(query), [query]);
+  const keyword = useMemo(() => queryFromQuerySelector(query), [query]);
   const page = usePage();
   const box = useSelector(searchByKeywordSelector(keyword));
 
@@ -111,7 +111,7 @@ const SearchPage = () => {
 
 SearchPage.fetchData = ({ store: { dispatch }, ...props }) => {
   const query = querySelector(props);
-  const keyword = keywordFromQuerySelector(query);
+  const keyword = queryFromQuerySelector(query);
   return dispatch(queryKeyword({ keyword }));
 };
 
