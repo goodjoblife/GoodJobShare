@@ -10,6 +10,7 @@ import {
   fragmentSalaryWorkTimeFields,
   SalaryWorkTime,
 } from 'apis/salaryWorkTime';
+import { JobTitle } from 'graphql/jobTitle';
 
 const queryJobTitleOverviewGql = /* GraphQL */ `
   query(
@@ -44,10 +45,6 @@ const queryJobTitleOverviewGql = /* GraphQL */ `
   ${fragmentWorkExperienceFields}
   ${fragmentSalaryWorkTimeFields}
 `;
-
-type JobTitle = {
-  name: string;
-};
 
 type QueryJobTitleOverviewData = {
   job_title:
