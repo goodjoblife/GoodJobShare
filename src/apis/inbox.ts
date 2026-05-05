@@ -107,7 +107,7 @@ export const queryInboxApi = async ({
 
 // mutations
 
-export const openInboxApi = async ({ token }: { token: string }) => {
+export const openInboxApi = async ({ token }: { token?: string }) => {
   const {
     openNotificationBell: { success },
   } = await graphqlClient<OpenInboxResult>({
@@ -122,7 +122,7 @@ export const readInboxMessageApi = async ({
   token,
   id,
 }: {
-  token: string;
+  token?: string;
   id: string;
 }) => {
   const {

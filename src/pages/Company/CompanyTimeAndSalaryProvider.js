@@ -26,11 +26,11 @@ import {
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
-import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
-  searchTextFromQuerySelector,
-  useSearchTextFromQuery,
-} from 'components/CompanyAndJobTitle/Searchbar';
+  queryFromQuerySelector,
+  pageFromQuerySelector,
+} from 'selectors/routing';
+import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/Searchbar';
 
 const useOverviewStatisticsBox = pageName => {
   const selector = useMemo(
@@ -169,7 +169,7 @@ CompanyTimeAndSalaryProvider.fetchData = ({
   const companyName = companyNameSelector(params);
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
-  const jobTitle = searchTextFromQuerySelector(query) || undefined;
+  const jobTitle = queryFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   const dispatchOverviewStatistics = dispatch(

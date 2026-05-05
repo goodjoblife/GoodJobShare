@@ -3,7 +3,7 @@ import { generatePath } from 'react-router';
 import LandingPage from './components/LandingPage';
 import LaborRightsMenu from './components/LaborRightsMenu';
 import LaborRightsSingle from './components/LaborRightsSingle';
-import SearchScreen from './components/TimeAndSalary/SearchScreen';
+import SearchPage from 'pages/SearchPage';
 import ExperienceDetail from './components/ExperienceDetail';
 import NotFound from './components/common/NotFound';
 import ShareExperience from './components/ShareExperience';
@@ -17,7 +17,6 @@ import Privacy from './components/Privacy';
 import ProductAndRefundPolicy from './components/ProductAndRefundPolicy';
 import Terms from './components/Terms';
 import Redirect from 'common/routing/Redirect';
-import VerificationPage from './components/EmailVerification/VerificationPage';
 
 import CompanyAndJobTitlePageContainer from './components/CompanyAndJobTitle';
 import CompanyIndexProvider from 'pages/Company/CompanyIndexProvider';
@@ -110,7 +109,7 @@ const routes = [
   {
     path: '/search',
     exact: true,
-    component: SearchScreen,
+    component: SearchPage,
   },
   {
     path: '/companies',
@@ -252,13 +251,6 @@ const routes = [
     path: '/user-terms',
     exact: true,
     component: Terms,
-  },
-  {
-    path: '/verify',
-    exact: true,
-    component: VerificationPage,
-    hasHeader: false,
-    hasFooter: false,
   },
   {
     path: '/plans',

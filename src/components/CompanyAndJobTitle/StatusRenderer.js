@@ -1,29 +1,40 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import Redirect from 'common/routing/Redirect';
 import Loader from 'common/Loader';
 import NotFoundStatus from 'common/routing/NotFound';
 import { generateTabURL } from 'constants/companyJobTitle';
 import { isUnfetched, isFetching, isError } from 'utils/fetchBox';
 import EmptyView from './EmptyView';
+import styles from './StatusRenderer.module.css';
 
-const FadeInContent = ({ children }) => {
+const useFadeIn = () => {
   const [visible, setVisible] = useState(false);
-  const rafRef = useRef(null);
+  const [animating, setAnimating] = useState(true);
 
   useEffect(() => {
-    rafRef.current = requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(rafRef.current);
+    const id = requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(id);
   }, []);
 
+  const onTransitionEnd = e => {
+    if (e.propertyName === 'transform') setAnimating(false);
+  };
+
+  return { visible, animating, onTransitionEnd };
+};
+
+const FadeInContent = ({ children }) => {
+  const { visible, animating, onTransitionEnd } = useFadeIn();
   return (
     <div
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'opacity 0.35s ease, transform 0.35s ease',
-      }}
+      className={cn({
+        [styles['fade-in']]: animating,
+        [styles['fade-in--visible']]: animating && visible,
+      })}
+      onTransitionEnd={onTransitionEnd}
     >
       {children}
     </div>
@@ -42,27 +53,56 @@ const boxShapePropType = PropTypes.shape({
 
 const BoxRenderer = ({ box, render }) => {
   const boxes = Array.isArray(box) ? box : [box];
-  const wasFetchingRef = useRef(false);
-  if (boxes.some(isFetching)) {
-    wasFetchingRef.current = true;
+  const fetching = boxes.some(isFetching);
+  const hasData = boxes.every(b => b.data !== undefined);
+
+  // Only track loader-only loading phases; overlay phases don't need a fade-in on completion.
+  const wasFetchingWithoutDataRef = useRef(false);
+  if (fetching) {
+    wasFetchingWithoutDataRef.current = !hasData;
   }
 
   if (boxes.every(isUnfetched)) {
     return null;
   }
-  if (boxes.some(isFetching)) {
+  if (fetching && !hasData) {
     return <Loader size="s" />;
   }
-  if (boxes.some(isError)) {
+  if (!fetching && boxes.some(isError)) {
     return null;
   }
+
   const data = Array.isArray(box) ? boxes.map(b => b.data) : boxes[0].data;
   const content = render(data);
 
-  if (wasFetchingRef.current) {
-    return <FadeInContent>{content}</FadeInContent>;
+  const wrappedContent = wasFetchingWithoutDataRef.current ? (
+    <FadeInContent>{content}</FadeInContent>
+  ) : (
+    content
+  );
+
+  if (fetching && hasData) {
+    return (
+      <div style={{ position: 'relative' }}>
+        {wrappedContent}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'flex-start',
+            justifyContent: 'center',
+            background: 'rgba(255, 255, 255, 0.6)',
+            paddingTop: '32px',
+          }}
+        >
+          <Loader size="s" />
+        </div>
+      </div>
+    );
   }
-  return content;
+
+  return wrappedContent;
 };
 
 BoxRenderer.propTypes = {
