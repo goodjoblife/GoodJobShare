@@ -24,7 +24,6 @@ import {
 import styles from './SalaryFilter.module.css';
 
 export {
-  salaryFilterFromQuerySelector,
   dataTimeFromQuerySelector,
   experienceFromQuerySelector,
   genderFromQuerySelector,
@@ -51,7 +50,7 @@ type TSalaryFilterProps = {
 type TSalaryFilterSelectProps = {
   options: { value: string; label: string }[];
   defaultLabel: string;
-  value: string | null;
+  value: string | null | undefined;
   onChange: (value: string | null) => void;
 };
 

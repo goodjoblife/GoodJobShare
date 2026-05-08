@@ -32,7 +32,10 @@ import {
   useSearchTextFromQuery,
 } from 'components/CompanyAndJobTitle/Searchbar';
 import {
-  salaryFilterFromQuerySelector,
+  dataTimeFromQuerySelector,
+  experienceFromQuerySelector,
+  genderFromQuerySelector,
+  sortByFromQuerySelector,
   useDataTimeFromQuery,
   useExperienceFromQuery,
   useGenderFromQuery,
@@ -206,12 +209,10 @@ CompanyTimeAndSalaryProvider.fetchData = ({
   const jobTitle = searchTextFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
-  const {
-    sortBy,
-    dataTime,
-    experience,
-    gender,
-  } = salaryFilterFromQuerySelector(query);
+  const dataTime = dataTimeFromQuerySelector(query);
+  const experience = experienceFromQuerySelector(query);
+  const gender = genderFromQuerySelector(query);
+  const sortBy = sortByFromQuerySelector(query);
   const dataTimeRange = getDataTimeRange(dataTime);
   const experienceInYearRange = getExperienceInYearRange(experience);
   const dispatchOverviewStatistics = dispatch(

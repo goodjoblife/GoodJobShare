@@ -1,45 +1,4 @@
-import {
-  salaryFilterFromQuerySelector,
-  getDataTimeRange,
-  getExperienceInYearRange,
-} from './SalaryFilter';
-
-// ─── salaryFilterFromQuerySelector ───────────────────────────────────────────
-
-describe('salaryFilterFromQuerySelector', () => {
-  test('空 query 時所有欄位為 undefined', () => {
-    expect(salaryFilterFromQuerySelector({})).toEqual({
-      dataTime: undefined,
-      experience: undefined,
-      gender: undefined,
-      sortBy: undefined,
-    });
-  });
-
-  test('完整 query 正確對應', () => {
-    const query = {
-      data_time: 'past_year',
-      experience: '0_3',
-      gender: 'female',
-      sort_by: 'HIGH_HOUR_SALARY_FIRST',
-    };
-    expect(salaryFilterFromQuerySelector(query)).toEqual({
-      dataTime: 'past_year',
-      experience: '0_3',
-      gender: 'female',
-      sortBy: 'HIGH_HOUR_SALARY_FIRST',
-    });
-  });
-
-  test('部分 query 缺漏的欄位為 undefined', () => {
-    expect(salaryFilterFromQuerySelector({ gender: 'male' })).toEqual({
-      dataTime: undefined,
-      experience: undefined,
-      gender: 'male',
-      sortBy: undefined,
-    });
-  });
-});
+import { getDataTimeRange, getExperienceInYearRange } from './SalaryFilter';
 
 // ─── getDataTimeRange ─────────────────────────────────────────────────────────
 
