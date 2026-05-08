@@ -7,12 +7,12 @@ import {
 // ─── salaryFilterFromQuerySelector ───────────────────────────────────────────
 
 describe('salaryFilterFromQuerySelector', () => {
-  test('空 query 時所有欄位為 null', () => {
+  test('空 query 時所有欄位為 undefined', () => {
     expect(salaryFilterFromQuerySelector({})).toEqual({
-      dataTime: null,
-      experience: null,
-      gender: null,
-      sortBy: null,
+      dataTime: undefined,
+      experience: undefined,
+      gender: undefined,
+      sortBy: undefined,
     });
   });
 
@@ -31,12 +31,12 @@ describe('salaryFilterFromQuerySelector', () => {
     });
   });
 
-  test('部分 query 缺漏的欄位為 null', () => {
+  test('部分 query 缺漏的欄位為 undefined', () => {
     expect(salaryFilterFromQuerySelector({ gender: 'male' })).toEqual({
-      dataTime: null,
-      experience: null,
+      dataTime: undefined,
+      experience: undefined,
       gender: 'male',
-      sortBy: null,
+      sortBy: undefined,
     });
   });
 });

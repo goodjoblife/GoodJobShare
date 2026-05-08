@@ -10,36 +10,23 @@ import { Gender } from 'constants/gender';
 
 export type TQueryParams = Record<string, string | undefined>;
 
-const selectFromQuery = <T extends string>(key: string) => (
-  query: TQueryParams,
-): T | null => {
-  const value = prop(key, query);
-  return value === undefined ? null : (value as T);
-};
+export const dataTimeFromQuerySelector = prop(SalaryFilterQueryKey.DATA_TIME);
 
-export const dataTimeFromQuerySelector = selectFromQuery<DataTime>(
-  SalaryFilterQueryKey.DATA_TIME,
-);
-
-export const experienceFromQuerySelector = selectFromQuery<ExperienceInYears>(
+export const experienceFromQuerySelector = prop(
   SalaryFilterQueryKey.EXPERIENCE,
 );
 
-export const genderFromQuerySelector = selectFromQuery<Gender>(
-  SalaryFilterQueryKey.GENDER,
-);
+export const genderFromQuerySelector = prop(SalaryFilterQueryKey.GENDER);
 
-export const sortByFromQuerySelector = selectFromQuery<SalarySortBy>(
-  SalaryFilterQueryKey.SORT_BY,
-);
+export const sortByFromQuerySelector = prop(SalaryFilterQueryKey.SORT_BY);
 
 export const salaryFilterFromQuerySelector: (
   query: TQueryParams,
 ) => {
-  dataTime: DataTime | null;
-  experience: ExperienceInYears | null;
-  gender: Gender | null;
-  sortBy: SalarySortBy | null;
+  dataTime: DataTime | undefined;
+  experience: ExperienceInYears | undefined;
+  gender: Gender | undefined;
+  sortBy: SalarySortBy | undefined;
 } = applySpec({
   dataTime: dataTimeFromQuerySelector,
   experience: experienceFromQuerySelector,
