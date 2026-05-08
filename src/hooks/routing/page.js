@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { pageFromQuerySelector } from 'selectors/routing/page';
+import { pageFromQuerySelector } from 'selectors/routing';
 import { useQuery } from 'hooks/routing';
 
 export const usePage = () => {

@@ -5,12 +5,12 @@ import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
 import { useQuery } from 'hooks/routing';
 import styles from './SearchBar.module.css';
-import { keywordFromQuerySelector } from 'selectors/routing/keyword';
+import { queryFromQuerySelector } from 'selectors/routing';
 
 const SearchBar = () => {
   const history = useHistory();
   const query = useQuery();
-  const [searchText, setSearchText] = useState(keywordFromQuerySelector(query));
+  const [searchText, setSearchText] = useState(queryFromQuerySelector(query));
 
   const gotoSearchResult = useCallback(
     searchText => {

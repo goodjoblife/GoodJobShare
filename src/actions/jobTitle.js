@@ -16,9 +16,9 @@ import {
   jobTitleWorkExperiencesBoxSelectorByName,
   jobTitleOverviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
+import queryJobTitleOverviewApi from 'apis/queryJobTitleOverview';
+import queryJobTitleOverviewStatisticsApi from 'apis/queryJobTitleOverviewStatistics';
 import {
-  queryJobTitleOverview as queryJobTitleOverviewApi,
-  queryJobTitleOverviewStatistics as queryJobTitleOverviewStatisticsApi,
   getJobTitleTimeAndSalary,
   getJobTitleTimeAndSalaryStatistics,
   getJobTitleInterviewExperiences,
@@ -212,7 +212,7 @@ export const queryJobTitleTimeAndSalary = (
     return;
   }
 
-  dispatch(setTimeAndSalary(jobTitle, toFetching()));
+  dispatch(setTimeAndSalary(jobTitle, toFetching(box)));
 
   try {
     const data = await getJobTitleTimeAndSalary({
@@ -270,7 +270,7 @@ export const queryJobTitleTimeAndSalaryStatistics = ({ jobTitle }) => async (
     return;
   }
 
-  dispatch(setTimeAndSalaryStatistics(jobTitle, toFetching()));
+  dispatch(setTimeAndSalaryStatistics(jobTitle, toFetching(box)));
 
   try {
     const data = await getJobTitleTimeAndSalaryStatistics({
@@ -326,7 +326,7 @@ export const queryJobTitleInterviewExperiences = ({
     return;
   }
 
-  dispatch(setInterviewExperiences(jobTitle, toFetching()));
+  dispatch(setInterviewExperiences(jobTitle, toFetching(box)));
 
   try {
     const data = await getJobTitleInterviewExperiences({
@@ -393,7 +393,7 @@ export const queryJobTitleWorkExperiences = ({
     return;
   }
 
-  dispatch(setWorkExperiences(jobTitle, toFetching()));
+  dispatch(setWorkExperiences(jobTitle, toFetching(box)));
 
   try {
     const data = await getJobTitleWorkExperiences({

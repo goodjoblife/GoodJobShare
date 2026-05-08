@@ -18,7 +18,7 @@ import PopoverToggle from 'common/PopoverToggle';
 import useShareLink from 'hooks/experiments/useShareLink';
 import usePermission from 'hooks/usePermission';
 import useMobile from 'hooks/useMobile';
-import { useAuthUser, useAuthUserEmailStatus, useIsLoggedIn } from 'hooks/auth';
+import { useAuthUser, useIsLoggedIn } from 'hooks/auth';
 import { useLogin, useLogout } from 'hooks/login';
 import { fetchInbox } from 'actions/inbox';
 
@@ -26,11 +26,9 @@ import styles from './Header.module.css';
 import inboxIconStyles from './InboxIcon.module.css';
 import SiteMenu from './SiteMenu';
 import Top from './Top';
-import EmailVerificationTop from './Top/EmailVerificationTop';
 import ProgressTop from './Top/ProgressTop';
 import Searchbar from './Searchbar';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import emailStatusMap from 'constants/emailStatus';
 import InboxIcon from './InboxIcon';
 import InboxPopoverContainer from './InboxPopoverContainer';
 import usePolling from 'hooks/usePolling';
@@ -44,8 +42,6 @@ const onClickShareData = () => {
 
 const HeaderTop = () => {
   const location = useLocation();
-  const emailStatus = useAuthUserEmailStatus();
-  const isEmailVerified = emailStatus === emailStatusMap.VERIFIED;
   const isLoggedIn = useIsLoggedIn();
   const shareLink = useShareLink();
 
@@ -54,24 +50,12 @@ const HeaderTop = () => {
       return null;
     }
 
-    if (isLoggedIn && !isEmailVerified) {
-      return (
-        <Top>
-          <EmailVerificationTop
-            isSentVerificationEmail={
-              emailStatus === emailStatusMap.SENT_VERIFICATION_LINK
-            }
-          />
-        </Top>
-      );
-    }
-
     return (
       <Top to={shareLink}>
         <ProgressTop />
       </Top>
     );
-  }, [emailStatus, isEmailVerified, isLoggedIn, location.pathname, shareLink]);
+  }, [isLoggedIn, location.pathname, shareLink]);
 };
 
 const NamePopoverContainer = ({ children }) => {

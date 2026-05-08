@@ -3,8 +3,8 @@ import {
   postAuthFacebook as postAuthFacebookApi,
   postAuthGoogle as postAuthGoogleApi,
 } from 'apis/auth';
-import { queryMeApi } from 'apis/me';
-import authStatus from 'constants/authStatus';
+import queryMeApi from 'apis/queryMe';
+import AuthStatus from 'constants/authStatus';
 import { pushErrorNotificationAndRollbarAndThrowError } from 'actions/toastNotification';
 import { GraphqlError } from 'utils/errors';
 import {
@@ -67,13 +67,13 @@ export const loginWithToken = token => (dispatch, getState) => {
   dispatch(getMeInfo(token))
     .then(user => {
       dispatch(setUser(user));
-      dispatch(setLogin(authStatus.CONNECTED, token));
+      dispatch(setLogin(AuthStatus.CONNECTED, token));
       // identify user for Google Analytics
       ReactGA.set({ userId: user._id });
     })
     .catch(error => {
       console.error(error);
-      dispatch(setLogin(authStatus.NOT_AUTHORIZED));
+      dispatch(setLogin(AuthStatus.NOT_AUTHORIZED));
     });
 };
 
@@ -105,13 +105,13 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
   }
 
   switch (fbLoginResponse.status) {
-    case authStatus.CANCELED:
+    case AuthStatus.CANCELED:
       return;
-    case authStatus.NOT_AUTHORIZED:
-      dispatch(setLogin(authStatus.NOT_AUTHORIZED));
+    case AuthStatus.NOT_AUTHORIZED:
+      dispatch(setLogin(AuthStatus.NOT_AUTHORIZED));
       dispatch(pushErrorNotificationAndRollbarAndThrowError(ER0004));
       break;
-    case authStatus.CONNECTED:
+    case AuthStatus.CONNECTED:
       try {
         // call GoodJob GraphQL API to get JWT token issued by GoodJob
         const { token } = await postAuthFacebookApi({
