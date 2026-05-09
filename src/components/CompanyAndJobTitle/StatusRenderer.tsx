@@ -41,7 +41,7 @@ const FadeInContent: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   );
 };
 
-type Props<T extends any[]> = {
+type StatusRendererProps<T extends any[]> = {
   boxes: {
     [K in keyof T]: FetchBox<T[K]>;
   };
@@ -54,7 +54,7 @@ interface WithData<T> extends FetchBox<T> {
 }
 
 // Checks data presence only (not status), matching the WithData contract above.
-const isHasData = <T extends any[]>(
+const boxesHasData = <T extends any[]>(
   boxes: { [K in keyof T]: FetchBox<T[K]> },
 ): boxes is { [K in keyof T]: WithData<T[K]> } => {
   return boxes.every(b => b.data !== undefined);
@@ -66,9 +66,9 @@ const isHasData = <T extends any[]>(
 function StatusRenderer<T extends any[]>({
   boxes,
   render,
-}: Props<T>): React.ReactNode {
+}: StatusRendererProps<T>): React.ReactNode {
   const fetching = boxes.some(isFetching);
-  const hasData = isHasData(boxes);
+  const hasData = boxesHasData(boxes);
 
   // Only track loader-only loading phases; overlay phases don't need a fade-in on completion.
   const wasFetchingWithoutDataRef = useRef(false);
