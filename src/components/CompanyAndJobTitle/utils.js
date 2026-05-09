@@ -1,4 +1,3 @@
-// TODO, to ts
 import {
   pageTypeTranslation,
   tabTypeTranslation,
