@@ -7,7 +7,7 @@ import TextInput from '.';
 
 import { fetchSearchCompany, fetchSearchJobTitle } from 'apis/timeAndSalaryApi';
 import AutoCompleteItem from 'components/ShareExperience/AutoCompleteItem';
-import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import { PageType } from 'constants/companyJobTitle';
 
 const take5 = R.take(5);
 
@@ -54,7 +54,7 @@ const SearchTextInput = forwardRef(
               ...take5(companies).map(({ name, businessNumber }) => ({
                 label: (
                   <AutoCompleteItem
-                    pageType={PAGE_TYPE.COMPANY}
+                    pageType={PageType.COMPANY}
                     name={name}
                     businessNumber={businessNumber}
                   />
@@ -63,10 +63,7 @@ const SearchTextInput = forwardRef(
               })),
               ...take5(jobTitles).map(name => ({
                 label: (
-                  <AutoCompleteItem
-                    pageType={PAGE_TYPE.JOB_TITLE}
-                    name={name}
-                  />
+                  <AutoCompleteItem pageType={PageType.JOB_TITLE} name={name} />
                 ),
                 value: name,
               })),

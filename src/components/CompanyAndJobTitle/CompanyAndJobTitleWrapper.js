@@ -11,8 +11,8 @@ import styles from './CompanyAndJobTitleWrapper.module.css';
 import SubscribeNotificationButton from 'components/CompanyAndJobTitle/SubscribeNotificationButton';
 import StatisticsCard from 'components/CompanyAndJobTitle/StatisticsCard';
 import {
-  pageType as PAGE_TYPE,
-  tabType as TAB_TYPE,
+  PageType,
+  TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
 } from 'constants/companyJobTitle';
 import { Wrapper } from 'common/base';
@@ -41,9 +41,9 @@ const CompanyAndJobTitleWrapper = ({
 
   const pageH1 = useMemo(() => {
     switch (tabType) {
-      case TAB_TYPE.WORK_EXPERIENCE:
-      case TAB_TYPE.INTERVIEW_EXPERIENCE:
-      case TAB_TYPE.TIME_AND_SALARY:
+      case TabType.WORK_EXPERIENCE:
+      case TabType.INTERVIEW_EXPERIENCE:
+      case TabType.TIME_AND_SALARY:
         return `${pageName} ${TAB_TYPE_DETAIL_TRANSLATION[tabType]}`;
       default:
         return pageName;
@@ -61,7 +61,7 @@ const CompanyAndJobTitleWrapper = ({
         <div>
           <div className={styles.titleContainer}>
             <Heading className={styles.title}>{pageH1}</Heading>
-            {pageType === PAGE_TYPE.COMPANY && (
+            {pageType === PageType.COMPANY && (
               <SubscribeNotificationButton companyName={pageName} />
             )}
           </div>
