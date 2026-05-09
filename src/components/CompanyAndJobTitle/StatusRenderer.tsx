@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, PropsWithChildren } from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { RootState } from 'reducers';
 import cn from 'classnames';
 import Redirect from 'common/routing/Redirect';
 import Loader from 'common/Loader';
 import NotFoundStatus from 'common/routing/NotFound';
-import { generateTabURL } from 'constants/companyJobTitle';
-import { isUnfetched, isFetching, isError } from 'utils/fetchBox';
+import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
+import FetchBox, { isUnfetched, isFetching, isError } from 'utils/fetchBox';
 import EmptyView from './EmptyView';
 import styles from './StatusRenderer.module.css';
 
@@ -19,14 +19,14 @@ const useFadeIn = () => {
     return () => cancelAnimationFrame(id);
   }, []);
 
-  const onTransitionEnd = e => {
+  const onTransitionEnd = (e: React.TransitionEvent) => {
     if (e.propertyName === 'transform') setAnimating(false);
   };
 
   return { visible, animating, onTransitionEnd };
 };
 
-const FadeInContent = ({ children }) => {
+const FadeInContent: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const { visible, animating, onTransitionEnd } = useFadeIn();
   return (
     <div
@@ -41,20 +41,34 @@ const FadeInContent = ({ children }) => {
   );
 };
 
-FadeInContent.propTypes = {
-  children: PropTypes.node.isRequired,
+type Props<T extends any[]> = {
+  boxes: {
+    [K in keyof T]: FetchBox<T[K]>;
+  };
+  render: (data: T) => React.ReactNode;
 };
 
-const boxShapePropType = PropTypes.shape({
-  data: PropTypes.any,
-  error: PropTypes.any,
-  status: PropTypes.string.isRequired,
-});
+// Not restricting status — covers both FETCHED and FETCHING-with-stale-data.
+interface WithData<T> extends FetchBox<T> {
+  data: T;
+}
 
-const BoxRenderer = ({ box, render }) => {
-  const boxes = Array.isArray(box) ? box : [box];
+// Checks data presence only (not status), matching the WithData contract above.
+const isHasData = <T extends any[]>(
+  boxes: { [K in keyof T]: FetchBox<T[K]> },
+): boxes is { [K in keyof T]: WithData<T[K]> } => {
+  return boxes.every(b => b.data !== undefined);
+};
+
+// boxes is typed as an array tuple; supporting a single FetchBox<T> (non-array) variant
+// was considered but too complex to type cleanly.
+// use a BoxRenderer component that wraps StatusRenderer with single box or box array.
+function StatusRenderer<T extends any[]>({
+  boxes,
+  render,
+}: Props<T>): React.ReactNode {
   const fetching = boxes.some(isFetching);
-  const hasData = boxes.every(b => b.data !== undefined);
+  const hasData = isHasData(boxes);
 
   // Only track loader-only loading phases; overlay phases don't need a fade-in on completion.
   const wasFetchingWithoutDataRef = useRef(false);
@@ -71,8 +85,12 @@ const BoxRenderer = ({ box, render }) => {
   if (!fetching && boxes.some(isError)) {
     return null;
   }
+  // Guards the mixed UNFETCHED+FETCHED case: not fetching, no error, but some boxes still have no data.
+  if (!hasData) {
+    return null;
+  }
 
-  const data = Array.isArray(box) ? boxes.map(b => b.data) : boxes[0].data;
+  const data = boxes.map(b => b.data) as { [K in keyof T]: T[K] };
   const content = render(data);
 
   const wrappedContent = wasFetchingWithoutDataRef.current ? (
@@ -103,25 +121,51 @@ const BoxRenderer = ({ box, render }) => {
   }
 
   return wrappedContent;
-};
+}
 
-BoxRenderer.propTypes = {
-  box: PropTypes.oneOfType([
-    boxShapePropType,
-    PropTypes.arrayOf(boxShapePropType),
-  ]).isRequired,
-  render: PropTypes.func.isRequired,
-};
+export function BoxRenderer<T>(props: {
+  box: FetchBox<T>;
+  render: (data: T) => React.ReactNode;
+}): React.ReactNode;
+export function BoxRenderer<T extends any[]>(props: {
+  box: { [K in keyof T]: FetchBox<T[K]> };
+  render: (data: T) => React.ReactNode;
+}): React.ReactNode;
+export function BoxRenderer({
+  box,
+  render,
+}: {
+  box: any;
+  render: (data: any) => React.ReactNode;
+}) {
+  if (Array.isArray(box)) {
+    return <StatusRenderer boxes={box} render={render} />;
+  }
+  return <StatusRenderer boxes={[box]} render={([data]) => render(data)} />;
+}
 
 export default BoxRenderer;
 
-export const PageBoxRenderer = ({
+interface PageData {
+  name: string;
+  [key: string]: unknown;
+}
+
+interface PageBoxRendererProps<T extends PageData> {
+  pageName: string;
+  pageType: PageType;
+  tabType: TabType;
+  boxSelector: (state: RootState) => FetchBox<T>;
+  render: (data: NonNullable<T>) => React.ReactNode;
+}
+
+export const PageBoxRenderer = <T extends PageData>({
   pageName,
   pageType,
   tabType,
   boxSelector,
   render,
-}) => {
+}: PageBoxRendererProps<T>) => {
   /* 處理
    * 1. 當 fetching                   --> 應顯示 Loading (目前由 BoxRenderer 處理)
    * 2. 當 box.data === null          --> 應顯示 NotFoundStatus (後端無公司)
@@ -131,13 +175,14 @@ export const PageBoxRenderer = ({
    */
   const box = useSelector(boxSelector);
   return (
-    <BoxRenderer
-      box={box}
-      render={data => {
+    <StatusRenderer
+      boxes={[box]}
+      render={rawData => {
+        const data = rawData[0];
         if (!data) {
           return (
             <NotFoundStatus status={404}>
-              <EmptyView pageName={pageName} />
+              <EmptyView pageName={pageName} tabType={tabType} />
             </NotFoundStatus>
           );
         }
@@ -153,12 +198,4 @@ export const PageBoxRenderer = ({
       }}
     />
   );
-};
-
-PageBoxRenderer.propTypes = {
-  boxSelector: PropTypes.func.isRequired,
-  pageName: PropTypes.string.isRequired,
-  pageType: PropTypes.string.isRequired,
-  render: PropTypes.func.isRequired,
-  tabType: PropTypes.string.isRequired,
 };
