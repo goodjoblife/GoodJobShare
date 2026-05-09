@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Heading } from 'common/base';
 import { Link } from 'react-router-dom';
 
-import styles from './WorkingHourBlock.module.css';
+import styles from './CompanyJobTitleBlock.module.css';
 import { pageTypeTranslation } from 'constants/companyJobTitle';
 
-const WorkingHourBlock = ({
+const CompanyJobTitleBlock = ({
   pageType,
   name,
   businessNumber,
@@ -39,7 +39,7 @@ const WorkingHourBlock = ({
   </section>
 );
 
-WorkingHourBlock.propTypes = {
+CompanyJobTitleBlock.propTypes = {
   businessNumber: PropTypes.string,
   dataCount: PropTypes.number,
   name: PropTypes.string.isRequired,
@@ -47,4 +47,4 @@ WorkingHourBlock.propTypes = {
   to: PropTypes.string.isRequired,
 };
 
-export default WorkingHourBlock;
+export default CompanyJobTitleBlock;

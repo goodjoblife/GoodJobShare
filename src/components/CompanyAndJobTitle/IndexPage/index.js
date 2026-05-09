@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import Pagination from 'common/Pagination';
 import Loader from 'common/Loader';
-import WorkingHourBlock from '../../TimeAndSalary/SearchScreen/WorkingHourBlock';
+import CompanyJobTitleBlock from '../CompanyJobTitleBlock';
 import {
   pageTypeTranslation,
   generatePageURL,
@@ -62,7 +62,7 @@ const CompanyAndJobTitleIndex = ({
         </div>
         <div className={styles.index}>
           {indexesBox.data.map((pageIndex, i) => (
-            <WorkingHourBlock
+            <CompanyJobTitleBlock
               key={i}
               pageType={pageType}
               name={pageIndex.name}

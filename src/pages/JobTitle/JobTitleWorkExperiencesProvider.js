@@ -12,11 +12,11 @@ import { queryJobTitleWorkExperiences } from 'actions/jobTitle';
 import { jobTitleWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
-import { pageFromQuerySelector } from 'selectors/routing/page';
 import {
-  searchTextFromQuerySelector,
-  useSearchTextFromQuery,
-} from 'components/CompanyAndJobTitle/Searchbar';
+  queryFromQuerySelector,
+  pageFromQuerySelector,
+} from 'selectors/routing';
+import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/Searchbar';
 import {
   sortByFromQuerySelector,
   useSortByFromQuery,
@@ -95,7 +95,7 @@ JobTitleWorkExperiencesProvider.fetchData = ({
   const query = querySelector(props);
   const page = pageFromQuerySelector(query);
   const sortBy = sortByFromQuerySelector(query);
-  const companyName = searchTextFromQuerySelector(query) || undefined;
+  const companyName = queryFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
   return dispatch(

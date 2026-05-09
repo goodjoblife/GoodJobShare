@@ -21,6 +21,8 @@ npm run testonly    # unit tests only
 
 ## Convention
 
-### API Layer
+### Directory Structure
 
+- **`src/pages/`** — route-level (page) components. If a component is directly mounted by a route in `src/routes.js`, it belongs here, not inside `src/components/`.
+- **`src/components/`** — reusable UI components, organized by domain (e.g. `CompanyAndJobTitle/`, `SalaryWorkTime/`). A component's location and name should reflect its actual domain, not where it was first created. Rename and move when reuse expands beyond the original context.
 `src/apis/` contains all API calls to the backend. When writing or modifying API-related code, follow the TypeScript typing guidelines in [src/apis/README.md](src/apis/README.md).
