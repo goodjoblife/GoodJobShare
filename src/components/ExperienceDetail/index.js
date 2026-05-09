@@ -32,7 +32,7 @@ import {
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
-import * as VISIBILITY from './Article/visibility';
+import VISIBILITY from './Article/visibility';
 
 // from params
 const experienceIdSelector = R.prop('id');
