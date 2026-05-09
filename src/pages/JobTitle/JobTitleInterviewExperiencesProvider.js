@@ -3,11 +3,7 @@ import { useDispatch } from 'react-redux';
 import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
-import {
-  tabType as TAB_TYPE,
-  pageType as PAGE_TYPE,
-  PAGE_SIZE,
-} from 'constants/companyJobTitle';
+import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
 import { queryJobTitleInterviewExperiences } from 'actions/jobTitle';
 import { jobTitleInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
@@ -49,7 +45,7 @@ const useInterviewExperiencesBoxSelector = jobTitle => {
 
 const JobTitleTimeAndSalaryProvider = () => {
   const dispatch = useDispatch();
-  const pageType = PAGE_TYPE.JOB_TITLE;
+  const pageType = PageType.JOB_TITLE;
   const jobTitle = useJobTitle();
   const [companyName] = useSearchTextFromQuery();
   const [sortBy] = useSortByFromQuery();
@@ -82,7 +78,7 @@ const JobTitleTimeAndSalaryProvider = () => {
       pageName={jobTitle}
       page={page}
       pageSize={PAGE_SIZE}
-      tabType={TAB_TYPE.INTERVIEW_EXPERIENCE}
+      tabType={TabType.INTERVIEW_EXPERIENCE}
       boxSelector={boxSelector}
     />
   );

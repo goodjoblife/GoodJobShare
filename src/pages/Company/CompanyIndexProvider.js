@@ -4,7 +4,7 @@ import { querySelector } from 'common/routing/selectors';
 import { pageFromQuerySelector } from 'selectors/routing';
 import CompanyAndJobTitleIndexPage from 'components/CompanyAndJobTitle/IndexPage';
 import usePagination from 'components/CompanyAndJobTitle/IndexPage/usePagination';
-import { pageType as PAGE_TYPE, PAGE_SIZE } from 'constants/companyJobTitle';
+import { PageType, PAGE_SIZE } from 'constants/companyJobTitle';
 import { fetchCompanyNames } from 'actions/company';
 import {
   companyIndexesBoxSelectorAtPage,
@@ -27,7 +27,7 @@ const CompanyIndexProvider = () => {
     <Wrapper size="l">
       <CompanyAndJobTitleIndexPage
         totalCount={totalCount}
-        pageType={PAGE_TYPE.COMPANY}
+        pageType={PageType.COMPANY}
         indexesBox={companyIndexesBox}
         page={page}
         getPageLink={getPageLink}

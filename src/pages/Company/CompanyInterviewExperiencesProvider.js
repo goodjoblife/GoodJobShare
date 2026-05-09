@@ -4,11 +4,7 @@ import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperie
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
-import {
-  tabType as TAB_TYPE,
-  pageType as PAGE_TYPE,
-  PAGE_SIZE,
-} from 'constants/companyJobTitle';
+import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
 import {
   queryCompanyInterviewExperiences,
   queryCompanyTopNJobTitles,
@@ -54,7 +50,7 @@ const useInterviewExperiencesBoxSelector = companyName => {
 
 const CompanyInterviewExperiencesProvider = () => {
   const dispatch = useDispatch();
-  const pageType = PAGE_TYPE.COMPANY;
+  const pageType = PageType.COMPANY;
   const companyName = useCompanyName();
   const [jobTitle] = useSearchTextFromQuery();
   const [sortBy] = useSortByFromQuery();
@@ -97,7 +93,7 @@ const CompanyInterviewExperiencesProvider = () => {
       pageName={companyName}
       page={page}
       pageSize={PAGE_SIZE}
-      tabType={TAB_TYPE.INTERVIEW_EXPERIENCE}
+      tabType={TabType.INTERVIEW_EXPERIENCE}
       topNJobTitles={topNJobTitles.interview}
       boxSelector={boxSelector}
     />

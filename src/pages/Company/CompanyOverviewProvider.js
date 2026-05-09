@@ -2,10 +2,7 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Overview from 'components/CompanyAndJobTitle/Overview';
 import usePermission from 'hooks/usePermission';
-import {
-  tabType as TAB_TYPE,
-  pageType as PAGE_TYPE,
-} from 'constants/companyJobTitle';
+import { TabType, PageType } from 'constants/companyJobTitle';
 import {
   queryCompanyOverview,
   queryCompanyOverviewStatistics,
@@ -40,7 +37,7 @@ const useOverviewStatisticsBox = pageName => {
 
 const CompanyOverviewProvider = () => {
   const dispatch = useDispatch();
-  const pageType = PAGE_TYPE.COMPANY;
+  const pageType = PageType.COMPANY;
   const companyName = useCompanyName();
 
   const handleQueryCompanyOverview = useCallback(
@@ -84,7 +81,7 @@ const CompanyOverviewProvider = () => {
     <Overview
       pageType={pageType}
       pageName={companyName}
-      tabType={TAB_TYPE.OVERVIEW}
+      tabType={TabType.OVERVIEW}
       topNJobTitles={topNJobTitles.all}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}

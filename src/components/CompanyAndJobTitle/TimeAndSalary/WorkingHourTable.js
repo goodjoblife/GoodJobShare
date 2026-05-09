@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 import { InfoButton } from 'common/Modal';
 import Table from 'common/table/Table';
-import { pageType as pageTypeMapping } from 'constants/companyJobTitle';
+import { PageType } from 'constants/companyJobTitle';
 import { InfoSalaryModal, InfoTimeModal } from './InfoModal';
 import styles from './WorkingHourTable.module.css';
 import {
@@ -58,7 +58,7 @@ const columnProps = [
     dataField: 'job_title',
     dataFormatter: getNameAsJobTitle,
     Children: () => '職稱',
-    isEnabled: ({ pageType }) => pageType === pageTypeMapping.COMPANY,
+    isEnabled: ({ pageType }) => pageType === PageType.COMPANY,
   },
   {
     className: styles.colPosition,
@@ -66,7 +66,7 @@ const columnProps = [
     dataField: 'company',
     dataFormatter: getNameAsCompanyName,
     Children: () => '公司名稱',
-    isEnabled: ({ pageType }) => pageType === pageTypeMapping.JOB_TITLE,
+    isEnabled: ({ pageType }) => pageType === PageType.JOB_TITLE,
   },
   {
     className: styles.colType,
@@ -227,10 +227,7 @@ const WorkingHourTable = ({ data, pageType, onCloseReport }) => {
 WorkingHourTable.propTypes = {
   data: PropTypes.array.isRequired,
   onCloseReport: PropTypes.func.isRequired,
-  pageType: PropTypes.oneOf([
-    pageTypeMapping.COMPANY,
-    pageTypeMapping.JOB_TITLE,
-  ]),
+  pageType: PropTypes.oneOf([PageType.COMPANY, PageType.JOB_TITLE]),
 };
 
 export default WorkingHourTable;
