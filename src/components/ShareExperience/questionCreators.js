@@ -58,10 +58,10 @@ import { employmentTypeOptions, salaryTypeOptions } from './common/optionMap';
 import WorkTimeExample from './WorkTimeExample';
 import Emoji from '../common/icons/Emoji';
 import {
-  pageType as PAGE_TYPE,
+  PageType,
   tabTypeTranslation,
-  tabType,
-} from '../../constants/companyJobTitle';
+  TabType,
+} from 'constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
 import { salaryHint } from 'utils/formUtils';
 import { useTotalCount } from 'hooks/useCount';
@@ -87,7 +87,7 @@ export const createCompanyQuestion = ({ header }) => ({
       map(({ name, businessNumber }) => ({
         label: (
           <AutoCompleteItem
-            pageType={PAGE_TYPE.COMPANY}
+            pageType={PageType.COMPANY}
             name={name}
             businessNumber={businessNumber}
           />
@@ -234,7 +234,7 @@ export const createJobTenureQuestion = () => ({
 });
 
 export const createRequiredSalaryQuestion = ({ type }) => ({
-  title: type === tabType.INTERVIEW_EXPERIENCE ? '面談薪資' : '薪資',
+  title: type === TabType.INTERVIEW_EXPERIENCE ? '面談薪資' : '薪資',
   type: QUESTION_TYPE.SELECT_TEXT,
   dataKey: DATA_KEY_SALARY,
   defaultValue: [null, ''],
@@ -259,7 +259,7 @@ export const createRequiredSalaryQuestion = ({ type }) => ({
     else return hint;
   },
   footnote:
-    type === tabType.INTERVIEW_EXPERIENCE
+    type === TabType.INTERVIEW_EXPERIENCE
       ? '若錄取，請以包含平常的薪資、分紅、年終、獎金等預期會獲得的價值計算'
       : '薪資請以包含平常的薪資、分紅、年終、績效獎金等實質上獲得的價值去計算。',
 });

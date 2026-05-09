@@ -42,7 +42,7 @@ import {
 import { ER0007, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 
 import { parseSalaryAmount, evolve } from '../utils';
-import { generateTabURL, pageType, tabType } from 'constants/companyJobTitle';
+import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 
 import { createSalaryWorkTime } from 'actions/salaryWorkTime';
 import { transferKeyToSnakecase } from 'utils/objectUtil';
@@ -71,7 +71,7 @@ const questions = [
   createSectorQuestion(),
   createEmployTypeQuestion(),
   createGenderQuestion(),
-  createRequiredSalaryQuestion({ type: tabType.TIME_AND_SALARY }),
+  createRequiredSalaryQuestion({ type: TabType.TIME_AND_SALARY }),
   createExperienceInYearQuestion(),
   createDayPromisedWorkTimeQuestion(),
   createDayRealWorkTimeQuestion(),
@@ -79,7 +79,7 @@ const questions = [
   createOvertimeFrequencyQuestion(),
   createOvertimeSalaryQuestion(),
   createCompensatoryDayOffQuestion(),
-  createSubmitQuestion({ type: tabType.TIME_AND_SALARY }),
+  createSubmitQuestion({ type: TabType.TIME_AND_SALARY }),
 ];
 
 const bodyFromDraft = evolve({
@@ -192,9 +192,9 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
       onClose={onClose}
       redirectPathnameOnSuccess={(_, draft) =>
         generateTabURL({
-          pageType: pageType.COMPANY,
+          pageType: PageType.COMPANY,
           pageName: draft[DATA_KEY_COMPANY_NAME],
-          tabType: tabType.TIME_AND_SALARY,
+          tabType: TabType.TIME_AND_SALARY,
         })
       }
       hideProgressBar={hideProgressBar}

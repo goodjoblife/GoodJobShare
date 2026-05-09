@@ -3,11 +3,7 @@ import { useDispatch } from 'react-redux';
 import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
-import {
-  tabType as TAB_TYPE,
-  pageType as PAGE_TYPE,
-  PAGE_SIZE,
-} from 'constants/companyJobTitle';
+import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
 import {
   queryCompanyWorkExperiences,
   queryRatingStatistics,
@@ -50,7 +46,7 @@ const useWorkExperiencesBoxSelector = pageName => {
 
 const CompanyWorkExperiencesProvider = () => {
   const dispatch = useDispatch();
-  const pageType = PAGE_TYPE.COMPANY;
+  const pageType = PageType.COMPANY;
   const companyName = useCompanyName();
   const [jobTitle] = useSearchTextFromQuery();
   const [sortBy] = useSortByFromQuery();
@@ -87,7 +83,7 @@ const CompanyWorkExperiencesProvider = () => {
       pageName={companyName}
       page={page}
       pageSize={PAGE_SIZE}
-      tabType={TAB_TYPE.WORK_EXPERIENCE}
+      tabType={TabType.WORK_EXPERIENCE}
       boxSelector={boxSelector}
     />
   );
