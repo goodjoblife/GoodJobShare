@@ -30,7 +30,7 @@ const useInterviewExperiencesBoxSelector = jobTitle => {
       const box = jobTitleInterviewExperiencesBoxSelectorByName(jobTitle)(
         state,
       );
-      if (isFetched(box)) {
+      if (isFetched(box) && box.data) {
         // Get experience data from state.experiences, which serves
         // as the source of truth of experiences.
         const data = {
