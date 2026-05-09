@@ -6,7 +6,7 @@ import { useTrackEvent } from 'hooks/viewLog';
 import Article from 'components/ExperienceDetail/Article';
 import { Heading, Wrapper } from 'common/base';
 import MessageBoard from '../ExperienceDetail/MessageBoard';
-import * as VISIBILITY from 'components/ExperienceDetail/Article/visibility';
+import VISIBILITY from 'components/ExperienceDetail/Article/visibility';
 import styles from './Experience.module.css';
 import { formatSimpleDate } from 'utils/dateUtil';
 import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
