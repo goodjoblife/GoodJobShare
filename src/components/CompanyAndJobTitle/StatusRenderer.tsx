@@ -177,8 +177,7 @@ export const PageBoxRenderer = <T extends PageData>({
   return (
     <StatusRenderer
       boxes={[box]}
-      render={rawData => {
-        const data = rawData[0];
+      render={([data]) => {
         if (!data) {
           return (
             <NotFoundStatus status={404}>
