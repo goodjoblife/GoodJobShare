@@ -32,7 +32,7 @@ import {
 } from '../constants';
 
 import { parseSalaryAmount, evolve } from '../utils';
-import { tabType } from '../../../constants/companyJobTitle';
+import { TabType } from 'constants/companyJobTitle';
 
 import { createWorkExperienceWithRating } from 'actions/experiences';
 import { transferKeyToSnakecase } from 'utils/objectUtil';
@@ -59,10 +59,10 @@ const questions = [
   createExperienceInYearQuestion(),
   createWorkRegionQuestion(),
   createEmployTypeQuestion(),
-  createRequiredSalaryQuestion({ type: tabType.WORK_EXPERIENCE }),
+  createRequiredSalaryQuestion({ type: TabType.WORK_EXPERIENCE }),
   createWeekWorkTimeQuestion(),
   createSectionsQuestion(),
-  createSubmitQuestion({ type: tabType.WORK_EXPERIENCE }),
+  createSubmitQuestion({ type: TabType.WORK_EXPERIENCE }),
 ];
 
 const bodyFromDraft = evolve({

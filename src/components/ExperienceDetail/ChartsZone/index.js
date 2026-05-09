@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import R from 'ramda';
-import {
-  pageType as PAGE_TYPE,
-  generatePageURL,
-} from 'constants/companyJobTitle';
+import { PageType, generatePageURL } from 'constants/companyJobTitle';
 import ChartWrapper from '../../LandingPage/ChartWrapper';
 import loadable from '@loadable/component';
 import styles from '../../LandingPage/SummarySection.module.css';
@@ -42,7 +39,7 @@ const ChartsZone = ({
           className={styles.chartWrapper}
           title={`${companyName}的薪水`}
           to={generatePageURL({
-            pageType: PAGE_TYPE.COMPANY,
+            pageType: PageType.COMPANY,
             pageName: companyName,
           })}
         >
@@ -58,7 +55,7 @@ const ChartsZone = ({
           className={styles.chartWrapper}
           title={`${jobTitle}的薪水分佈`}
           to={generatePageURL({
-            pageType: PAGE_TYPE.JOB_TITLE,
+            pageType: PageType.JOB_TITLE,
             pageName: jobTitle,
           })}
         >
