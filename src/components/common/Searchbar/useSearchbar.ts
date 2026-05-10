@@ -1,0 +1,37 @@
+import { useState, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
+import qs from 'qs';
+import { useQuery } from 'hooks/routing';
+import { queryFromQuerySelector } from 'selectors/routing';
+
+const useSearchbar = (): {
+  searchText: string;
+  setSearchText: React.Dispatch<React.SetStateAction<string>>;
+  gotoSearchResult: (text: string) => void;
+  handleFormSubmit: (e: React.FormEvent) => void;
+} => {
+  const history = useHistory();
+  const query = useQuery();
+  const [searchText, setSearchText] = useState(queryFromQuerySelector(query));
+
+  const gotoSearchResult = useCallback(
+    (text: string) =>
+      history.push({
+        pathname: '/search',
+        search: qs.stringify({ q: text }, { addQueryPrefix: true }),
+      }),
+    [history],
+  );
+
+  const handleFormSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      gotoSearchResult(searchText);
+    },
+    [gotoSearchResult, searchText],
+  );
+
+  return { searchText, setSearchText, gotoSearchResult, handleFormSubmit };
+};
+
+export default useSearchbar;

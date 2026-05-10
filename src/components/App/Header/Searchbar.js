@@ -1,41 +1,22 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { useHistory } from 'react-router-dom';
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
-import { queryFromQuerySelector } from 'selectors/routing';
-import { useQuery } from 'hooks/routing';
+import { useSearchbar } from 'common/Searchbar';
 import styles from './Searchbar.module.css';
 
 const Searchbar = ({ className, placeholder, inputRef }) => {
-  const history = useHistory();
-  const query = useQuery();
-  const [searchText, setSearchText] = useState(queryFromQuerySelector(query));
+  const {
+    searchText,
+    setSearchText,
+    gotoSearchResult,
+    handleFormSubmit,
+  } = useSearchbar();
   const [isActive, setActive] = useState(false);
 
-  const handleFormFocus = useCallback(() => {
-    setActive(true);
-  }, [setActive]);
-
-  const handleFormBlur = useCallback(() => {
-    setActive(false);
-  }, [setActive]);
-
-  const gotoSearchResult = useCallback(
-    searchText => {
-      history.push(`/search?q=${encodeURIComponent(searchText)}`);
-    },
-    [history],
-  );
-
-  const handleFormSubmit = useCallback(
-    e => {
-      e.preventDefault();
-      gotoSearchResult(searchText);
-    },
-    [gotoSearchResult, searchText],
-  );
+  const handleFormFocus = useCallback(() => setActive(true), []);
+  const handleFormBlur = useCallback(() => setActive(false), []);
 
   return (
     <form
