@@ -27,7 +27,8 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
     'react/require-default-props': 'off',
     'react/no-array-index-key': 'off',
-    'no-unused-vars': 'error',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
     'react/no-deprecated': 'error',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'error',
@@ -39,5 +40,15 @@ module.exports = {
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/no-var-requires': 'warn',
     '@typescript-eslint/ban-ts-ignore': 'warn',
+    '@typescript-eslint/explicit-function-return-type': 'off',
   },
+	"overrides": [
+    {
+      // enable the rule specifically for TypeScript files
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "error",
+      },
+    },
+  ],
 };
