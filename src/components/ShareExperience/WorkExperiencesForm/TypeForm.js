@@ -38,7 +38,7 @@ import {
 } from '../constants';
 
 import { parseSalaryAmount, evolve } from '../utils';
-import { tabType } from '../../../constants/companyJobTitle';
+import { TabType } from 'constants/companyJobTitle';
 
 import { createWorkExperienceWithRating } from 'actions/experiences';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
@@ -66,11 +66,11 @@ const questions = [
   createSectorQuestion(),
   createEmployTypeQuestion(),
   createGenderQuestion(),
-  createRequiredSalaryQuestion({ type: tabType.WORK_EXPERIENCE }),
+  createRequiredSalaryQuestion({ type: TabType.WORK_EXPERIENCE }),
   createJobLevel(),
   createWeekWorkTimeQuestion(),
   createSectionsQuestion(),
-  createSubmitQuestion({ type: tabType.WORK_EXPERIENCE }),
+  createSubmitQuestion({ type: TabType.WORK_EXPERIENCE }),
 ];
 
 const bodyFromDraft = evolve({

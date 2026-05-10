@@ -4,8 +4,8 @@ import ReactHelmet from 'react-helmet';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
 import {
-  pageType as PAGE_TYPE,
-  tabType as TAB_TYPE,
+  PageType,
+  TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
   generateTabURL,
 } from 'constants/companyJobTitle';
@@ -20,11 +20,9 @@ const CompanySalaryWorkTimeHelmet = ({
   // title
   const title =
     page === 1
-      ? `${companyName} ${
-          TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.TIME_AND_SALARY]
-        }`
+      ? `${companyName} ${TAB_TYPE_DETAIL_TRANSLATION[TabType.TIME_AND_SALARY]}`
       : `${companyName} ${
-          TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.TIME_AND_SALARY]
+          TAB_TYPE_DETAIL_TRANSLATION[TabType.TIME_AND_SALARY]
         } - 第${page}頁`;
 
   // description
@@ -38,9 +36,9 @@ const CompanySalaryWorkTimeHelmet = ({
 
   // canonical url
   const path = generateTabURL({
-    pageType: PAGE_TYPE.COMPANY,
+    pageType: PageType.COMPANY,
     pageName: companyName,
-    tabType: TAB_TYPE.TIME_AND_SALARY,
+    tabType: TabType.TIME_AND_SALARY,
   });
   const url = formatCanonicalPath(path);
 
@@ -77,7 +75,7 @@ CompanySalaryWorkTimeHelmet.propTypes = {
 const JobTitleSalaryWorkTimeHelmet = ({ jobTitle, page, totalCount }) => {
   // title
   const title = `${jobTitle} ${
-    TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.TIME_AND_SALARY]
+    TAB_TYPE_DETAIL_TRANSLATION[TabType.TIME_AND_SALARY]
   } - 第${page}頁`;
 
   // description
@@ -88,9 +86,9 @@ const JobTitleSalaryWorkTimeHelmet = ({ jobTitle, page, totalCount }) => {
 
   // canonical url
   const path = generateTabURL({
-    pageType: PAGE_TYPE.JOB_TITLE,
+    pageType: PageType.JOB_TITLE,
     pageName: jobTitle,
-    tabType: TAB_TYPE.TIME_AND_SALARY,
+    tabType: TabType.TIME_AND_SALARY,
   });
   const url = formatCanonicalPath(path);
 
@@ -120,11 +118,11 @@ JobTitleSalaryWorkTimeHelmet.propTypes = {
 };
 
 const Helmet = props => {
-  if (props.pageType === PAGE_TYPE.JOB_TITLE) {
+  if (props.pageType === PageType.JOB_TITLE) {
     return (
       <JobTitleSalaryWorkTimeHelmet {...props} jobTitle={props.pageName} />
     );
-  } else if (props.pageType === PAGE_TYPE.COMPANY) {
+  } else if (props.pageType === PageType.COMPANY) {
     return (
       <CompanySalaryWorkTimeHelmet {...props} companyName={props.pageName} />
     );

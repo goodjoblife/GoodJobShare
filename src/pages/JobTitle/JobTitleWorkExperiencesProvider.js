@@ -3,11 +3,7 @@ import { useDispatch } from 'react-redux';
 import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
-import {
-  tabType as TAB_TYPE,
-  pageType as PAGE_TYPE,
-  PAGE_SIZE,
-} from 'constants/companyJobTitle';
+import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
 import { queryJobTitleWorkExperiences } from 'actions/jobTitle';
 import { jobTitleWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
@@ -28,7 +24,7 @@ const useWorkExperiencesBoxSelector = pageName => {
   return useCallback(
     state => {
       const box = workExperiencesBoxSelectorByName(pageName)(state);
-      if (isFetched(box)) {
+      if (isFetched(box) && box.data) {
         // Get experience data from state.experiences, which serves
         // as the source of truth of experiences.
         const data = {
@@ -47,7 +43,7 @@ const useWorkExperiencesBoxSelector = pageName => {
 
 const JobTitleWorkExperiencesProvider = () => {
   const dispatch = useDispatch();
-  const pageType = PAGE_TYPE.JOB_TITLE;
+  const pageType = PageType.JOB_TITLE;
   const jobTitle = useJobTitle();
   const [companyName] = useSearchTextFromQuery();
   const [sortBy] = useSortByFromQuery();
@@ -80,7 +76,7 @@ const JobTitleWorkExperiencesProvider = () => {
       pageName={jobTitle}
       page={page}
       pageSize={PAGE_SIZE}
-      tabType={TAB_TYPE.WORK_EXPERIENCE}
+      tabType={TabType.WORK_EXPERIENCE}
       boxSelector={boxSelector}
     />
   );

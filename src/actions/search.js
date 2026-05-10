@@ -1,4 +1,4 @@
-import { pageType } from 'constants/companyJobTitle';
+import { PageType } from 'constants/companyJobTitle';
 import {
   fetchSearchCompany as fetchSearchCompanyApi,
   fetchSearchJobTitle as fetchSearchJobTitleApi,
@@ -28,13 +28,13 @@ export const queryKeyword = ({ keyword }) => async (dispatch, getState) => {
       companyName: keyword,
       hasData: true,
     }).then(items =>
-      items.map(item => ({ ...item, pageType: pageType.COMPANY })),
+      items.map(item => ({ ...item, pageType: PageType.COMPANY })),
     );
 
     const searchJobTitles = fetchSearchJobTitleApi({
       jobTitle: keyword,
     }).then(items =>
-      items.map(item => ({ ...item, pageType: pageType.JOB_TITLE })),
+      items.map(item => ({ ...item, pageType: PageType.JOB_TITLE })),
     );
 
     const [companyData, jobTitleData] = await Promise.all([

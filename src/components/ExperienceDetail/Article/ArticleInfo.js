@@ -116,7 +116,7 @@ InterviewInfoBlocks.propTypes = {
       type: PropTypes.string,
     }),
   }).isRequired,
-  hideContent: PropTypes.bool,
+  hideContent: PropTypes.bool.isRequired,
 };
 
 const WorkInfoBlocks = ({ experience, hideContent }) => {
@@ -191,7 +191,7 @@ WorkInfoBlocks.propTypes = {
     sector: PropTypes.string,
     week_work_time: PropTypes.number,
   }).isRequired,
-  hideContent: PropTypes.bool,
+  hideContent: PropTypes.bool.isRequired,
 };
 
 const InfoCorner = ({ experience, originalLink }) => {
@@ -258,7 +258,7 @@ Aside.propTypes = {
   experience: PropTypes.shape({
     type: PropTypes.string.isRequired,
   }).isRequired,
-  hideContent: PropTypes.bool,
+  hideContent: PropTypes.bool.isRequired,
   originalLink: PropTypes.string,
 };
 

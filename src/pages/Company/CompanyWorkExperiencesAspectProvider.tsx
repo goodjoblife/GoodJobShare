@@ -7,8 +7,8 @@ import WorkExperiencesAspect, {
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import {
-  tabType as TAB_TYPE,
-  pageType as PAGE_TYPE,
+  TabType,
+  PageType,
   PAGE_SIZE,
   Aspect,
 } from 'constants/companyJobTitle';
@@ -60,7 +60,7 @@ const useWorkExperiencesAspectExperiencesBoxSelector = (
 
 const CompanyWorkExperiencesAspectProvider = () => {
   const dispatch = useDispatch();
-  const pageType = PAGE_TYPE.COMPANY;
+  const pageType = PageType.COMPANY;
   const companyName = useCompanyName();
   const aspect = useAspect();
   const [rating] = useRating();
@@ -105,7 +105,7 @@ const CompanyWorkExperiencesAspectProvider = () => {
       pageName={companyName}
       page={page as number}
       pageSize={PAGE_SIZE}
-      tabType={TAB_TYPE.WORK_EXPERIENCE}
+      tabType={TabType.WORK_EXPERIENCE}
       statisticsBoxSelector={statisticsBoxSelector}
       experiencesBoxSelector={experiencesBoxSelector}
     />

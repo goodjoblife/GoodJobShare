@@ -8,7 +8,7 @@ import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import {
   Aspect,
-  tabType as TAB_TYPE,
+  TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
   generateTabURL,
 } from 'constants/companyJobTitle';
@@ -45,17 +45,17 @@ const Overview = ({
   return (
     <Section Tag="main" paddingBottom>
       <SnippetBlock
-        title={TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.TIME_AND_SALARY]}
+        title={TAB_TYPE_DETAIL_TRANSLATION[TabType.TIME_AND_SALARY]}
         linkText={`查看 ${salaryWorkTimesCount} 筆完整的薪水、加班數據資料 >>`}
         linkTo={generateTabURL({
           pageType,
           pageName,
-          tabType: TAB_TYPE.TIME_AND_SALARY,
+          tabType: TabType.TIME_AND_SALARY,
         })}
         isEmpty={salaryWorkTimesCount === 0}
         pageType={pageType}
         pageName={pageName}
-        tabType={TAB_TYPE.TIME_AND_SALARY}
+        tabType={TabType.TIME_AND_SALARY}
       >
         <BoxRenderer
           box={statisticsBox}
@@ -76,19 +76,19 @@ const Overview = ({
       </SnippetBlock>
       <GenderAspectSnippetBlock />
       <SnippetBlock
-        title={TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.WORK_EXPERIENCE]}
+        title={TAB_TYPE_DETAIL_TRANSLATION[TabType.WORK_EXPERIENCE]}
         linkText={`查看 ${workExperiencesCount} 篇完整的 ${
-          TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.WORK_EXPERIENCE]
+          TAB_TYPE_DETAIL_TRANSLATION[TabType.WORK_EXPERIENCE]
         } >>`}
         linkTo={generateTabURL({
           pageType,
           pageName,
-          tabType: TAB_TYPE.WORK_EXPERIENCE,
+          tabType: TabType.WORK_EXPERIENCE,
         })}
         isEmpty={workExperiencesCount === 0}
         pageType={pageType}
         pageName={pageName}
-        tabType={TAB_TYPE.WORK_EXPERIENCE}
+        tabType={TabType.WORK_EXPERIENCE}
       >
         {workExperiences.map(d => (
           <WorkExperienceEntry
@@ -100,19 +100,19 @@ const Overview = ({
         ))}
       </SnippetBlock>
       <SnippetBlock
-        title={TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.INTERVIEW_EXPERIENCE]}
+        title={TAB_TYPE_DETAIL_TRANSLATION[TabType.INTERVIEW_EXPERIENCE]}
         linkText={`查看 ${interviewExperiencesCount} 篇完整的${
-          TAB_TYPE_DETAIL_TRANSLATION[TAB_TYPE.INTERVIEW_EXPERIENCE]
+          TAB_TYPE_DETAIL_TRANSLATION[TabType.INTERVIEW_EXPERIENCE]
         } >>`}
         linkTo={generateTabURL({
           pageType,
           pageName,
-          tabType: TAB_TYPE.INTERVIEW_EXPERIENCE,
+          tabType: TabType.INTERVIEW_EXPERIENCE,
         })}
         isEmpty={interviewExperiencesCount === 0}
         pageType={pageType}
         pageName={pageName}
-        tabType={TAB_TYPE.INTERVIEW_EXPERIENCE}
+        tabType={TabType.INTERVIEW_EXPERIENCE}
       >
         {interviewExperiences.map(d => (
           <InterviewExperienceEntry
