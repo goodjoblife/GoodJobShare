@@ -1,10 +1,5 @@
 module.exports = {
-  extends: [
-    'react-app',
-    'plugin:@typescript-eslint/recommended',
-    'prettier',
-    'prettier/react',
-  ],
+  extends: ['react-app', 'plugin:@typescript-eslint/recommended', 'prettier'],
   plugins: ['prettier', '@typescript-eslint', 'react-hooks'],
   rules: {
     'arrow-parens': ['error', 'as-needed'],
@@ -31,7 +26,10 @@ module.exports = {
     'react/require-default-props': 'off',
     'react/no-array-index-key': 'off',
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      { ignoreRestSiblings: true },
+    ],
     'react/no-deprecated': 'error',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'error',
@@ -41,9 +39,8 @@ module.exports = {
     'react/prop-types': 'error',
     'react/no-unused-prop-types': 'error',
     'react/sort-prop-types': ['error', { sortShapeProp: true }],
-    '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/no-var-requires': 'warn',
-    '@typescript-eslint/ban-ts-ignore': 'warn',
+    '@typescript-eslint/ban-ts-comment': 'warn',
     '@typescript-eslint/explicit-function-return-type': 'off',
   },
   overrides: [
