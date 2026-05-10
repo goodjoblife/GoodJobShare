@@ -367,7 +367,7 @@ export const createSectionsQuestion = () => ({
       }
     }
   },
-  validateOrWarnItem: ([subject, rating, text]) => {
+  validateOrWarnItem: ([, rating, text]) => {
     if (rating === 0) return '需選取滿意程度';
     if (wordCount(text) < SECTION_MIN_LENGTH) {
       return `至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(text)} 字`;
@@ -388,7 +388,7 @@ export const createSectionsQuestion = () => ({
     '自訂面向',
   ],
   elseOptionValue: '自訂面向',
-  placeholder: ([subject, rating, text]) => {
+  placeholder: ([subject]) => {
     switch (subject) {
       case '薪資福利':
         return '底薪、績效獎金、年終獎金、三節獎金、分紅、津貼補助...等。';
@@ -444,7 +444,7 @@ export const createInterviewSectionsQuestion = () => {
       '工作環境',
       '自訂面向',
     ],
-    placeholder: ([subject, rating, text]) => {
+    placeholder: ([subject]) => {
       switch (subject) {
         case '面試流程':
           return '整個面試的流程為何？有哪幾關面試、與誰面試？ 針對面試邀約的及時性、回饋的速度與詳細度，哪些方面讓您覺得面試流程良好或需要改善？';
@@ -468,9 +468,8 @@ export const createInterviewSectionsQuestion = () => {
           return '請輸入自訂標題（例如：環境整潔度）';
       }
     },
-    hasRating: ([subject, rating, text]) =>
-      UNRATABLE_SUBJECTS.includes(subject) === false,
-    ratingLabels: ([subject, rating, text]) =>
+    hasRating: ([subject]) => UNRATABLE_SUBJECTS.includes(subject) === false,
+    ratingLabels: ([subject]) =>
       subject === '面試流程' ? RATING_COURSE_LABELS : RATING_LABELS,
   };
 };

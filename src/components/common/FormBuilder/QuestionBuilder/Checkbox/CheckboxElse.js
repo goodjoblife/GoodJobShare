@@ -7,12 +7,7 @@ import BlockSelectElse from './private/BlockSelectElse';
 import { OptionPropType, ValuePropType } from './PropTypes';
 
 const CheckboxElse = ({
-  page,
-  title,
-  description,
   dataKey,
-  required,
-  defaultValue,
   value,
   onChange,
   onConfirm,
@@ -37,21 +32,11 @@ const CheckboxElse = ({
 
 CheckboxElse.propTypes = {
   dataKey: PropTypes.string.isRequired,
-  defaultValue: withShape(PropTypes.array.isRequired, {
-    // option
-    0: PropTypes.arrayOf(ValuePropType.isRequired).isRequired,
-    // else
-    1: PropTypes.string.isRequired,
-  }),
-  description: PropTypes.string,
   elseOptionValue: ValuePropType.isRequired,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
-  page: PropTypes.number.isRequired,
   placeholder: PropTypes.string,
-  required: PropTypes.bool,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   value: withShape(PropTypes.array.isRequired, {
     // option
     0: PropTypes.arrayOf(ValuePropType.isRequired).isRequired,

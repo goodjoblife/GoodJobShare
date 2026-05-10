@@ -18,7 +18,7 @@ export const useNeighborEntry = (
   const menuBox = useSelector(menuBoxSelector);
   const menuEntries = menuBox.data || [];
 
-  const index = R.findIndex(menuEntry => menuEntry.id == entryId, menuEntries);
+  const index = R.findIndex(menuEntry => menuEntry.id === entryId, menuEntries);
   const prevEntry = index > 0 ? menuEntries[index - 1] : null;
   const nextEntry =
     index < menuEntries.length - 1 ? menuEntries[index + 1] : null;
