@@ -34,9 +34,8 @@ const useOverviewStatisticsBox = pageName => {
 const useSalaryWorkTimeStatistics = pageName => {
   const selector = useCallback(
     state => {
-      const jobTitle = timeAndSalaryStatisticsBoxSelectorByName(pageName)(
-        state,
-      );
+      const jobTitle =
+        timeAndSalaryStatisticsBoxSelectorByName(pageName)(state);
       return salaryWorkTimeStatisticsSelector(jobTitle);
     },
     [pageName],

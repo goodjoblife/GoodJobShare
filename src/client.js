@@ -24,11 +24,7 @@ function shouldUpdateScroll(prevProps, props) {
     R.path(['location']),
   );
   const diffSignature = R.unapply(
-    R.compose(
-      R.not,
-      R.apply(R.equals),
-      R.map(getSignature),
-    ),
+    R.compose(R.not, R.apply(R.equals), R.map(getSignature)),
   );
 
   const shouldScroll = diffSignature(prevProps, props);

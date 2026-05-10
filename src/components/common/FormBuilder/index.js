@@ -37,10 +37,7 @@ const findIfQuestionsAcceptDraft = draft =>
         R.not,
         R.converge(R.call, [
           R.prop('validateOrWarn'),
-          R.compose(
-            dataKey => draft[dataKey],
-            R.prop('dataKey'),
-          ),
+          R.compose(dataKey => draft[dataKey], R.prop('dataKey')),
           R.identity,
         ]),
       ),
@@ -50,14 +47,8 @@ const findIfQuestionsAcceptDraft = draft =>
 
 const useQuestion = (question, draft) => {
   if (question) {
-    const {
-      header,
-      footer,
-      dataKey,
-      defaultValue,
-      required,
-      validateOrWarn,
-    } = question;
+    const { header, footer, dataKey, defaultValue, required, validateOrWarn } =
+      question;
     return {
       shouldRenderQuestion: true,
       questionHeader: header,

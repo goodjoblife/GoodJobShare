@@ -6,7 +6,7 @@ import {
 } from 'apis/salaryWorkTime';
 
 const queryJobTitleOverviewStatisticsGql = /* GraphQL */ `
-  query($jobTitle: String!) {
+  query ($jobTitle: String!) {
     job_title(name: $jobTitle) {
       salary_work_time_statistics {
         average_week_work_time

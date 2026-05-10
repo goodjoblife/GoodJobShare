@@ -5,7 +5,7 @@ import qs from 'qs';
 // RouteProps is the parameter injected from server.js fetchData
 // It is used in SSR with static fetchData method
 type RouteProps<
-  Params extends Record<string, string> = Record<string, string>
+  Params extends Record<string, string> = Record<string, string>,
 > = {
   match?: match<Params>;
   location?: Location;
@@ -23,7 +23,7 @@ export const pathnameSelector = ({
 }: RouteProps): string | undefined => location && location.pathname;
 
 export const searchSelector = ({ location }: RouteProps): string | undefined =>
-  location && location.search;
+  location?.search;
 
 // props --> query object
 export const querySelector = (props: RouteProps): qs.ParsedQs =>

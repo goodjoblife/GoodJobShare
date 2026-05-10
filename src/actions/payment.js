@@ -48,34 +48,30 @@ const setMyCurrentSubscription = currentSubscription => ({
   currentSubscription,
 });
 
-export const navigateToBuy = (redirectUrl, actionUrl) => (
-  dispatch,
-  getState,
-  { history },
-) => {
-  history.push(actionUrl);
-  dispatch(setRedirectUrl(redirectUrl));
-};
+export const navigateToBuy =
+  (redirectUrl, actionUrl) =>
+  (dispatch, getState, { history }) => {
+    history.push(actionUrl);
+    dispatch(setRedirectUrl(redirectUrl));
+  };
 
-export const navigateToRedirectUrl = () => (
-  dispatch,
-  getState,
-  { history },
-) => {
-  const state = getState();
-  const redirectUrl = redirectUrlSelector(state) || '/';
+export const navigateToRedirectUrl =
+  () =>
+  (dispatch, getState, { history }) => {
+    const state = getState();
+    const redirectUrl = redirectUrlSelector(state) || '/';
 
-  history.push(
-    redirectUrl,
-    createToastLocationState(NOTIFICATION_TYPE.INFO, '成功解鎖'),
-  );
+    history.push(
+      redirectUrl,
+      createToastLocationState(NOTIFICATION_TYPE.INFO, '成功解鎖'),
+    );
 
-  dispatch(setRedirectUrl(null));
-  dispatch({
-    type: SET_PAYMENT_RECORD,
-    paymentRecord: getUnfetched(),
-  });
-};
+    dispatch(setRedirectUrl(null));
+    dispatch({
+      type: SET_PAYMENT_RECORD,
+      paymentRecord: getUnfetched(),
+    });
+  };
 
 export const fetchPaymentRecord = paymentRecordId => (dispatch, getState) => {
   const state = getState();

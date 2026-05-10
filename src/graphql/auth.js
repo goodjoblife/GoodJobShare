@@ -1,5 +1,5 @@
 export const facebookLogin = /* GraphQL */ `
-  mutation($input: FacebookLoginInput!) {
+  mutation ($input: FacebookLoginInput!) {
     facebookLogin(input: $input) {
       user {
         _id
@@ -11,7 +11,7 @@ export const facebookLogin = /* GraphQL */ `
 `;
 
 export const googleLogin = /* GraphQL */ `
-  mutation($input: GoogleLoginInput!) {
+  mutation ($input: GoogleLoginInput!) {
     googleLogin(input: $input) {
       user {
         _id

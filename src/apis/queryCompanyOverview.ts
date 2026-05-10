@@ -13,7 +13,7 @@ import {
 } from 'apis/salaryWorkTime';
 
 const queryCompanyOverviewGql = /* GraphQL */ `
-  query(
+  query (
     $companyName: String!
     $interviewExperiencesLimit: Int!
     $workExperiencesLimit: Int!

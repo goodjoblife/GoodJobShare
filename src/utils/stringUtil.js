@@ -5,9 +5,7 @@ export const toCamelcase = str =>
   str.replace(/(_[a-z])/g, $1 => $1.toUpperCase().replace('_', ''));
 
 export const makeId = (length = 5) =>
-  Math.random()
-    .toString(36)
-    .substring(2, length);
+  Math.random().toString(36).substring(2, length);
 
 // find the n-th occurrence of substr in str.
 // when n = 1, it will be equal to indexOf

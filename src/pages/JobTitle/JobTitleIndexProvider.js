@@ -13,9 +13,10 @@ import {
 
 const JobTitleIndexProvider = () => {
   const [page, getPageLink] = usePagination();
-  const selector = useMemo(() => jobTitleIndexesBoxSelectorAtPage(page), [
-    page,
-  ]);
+  const selector = useMemo(
+    () => jobTitleIndexesBoxSelectorAtPage(page),
+    [page],
+  );
   const jobTitleIndexesBox = useSelector(selector);
   const totalCount = useSelector(jobTitlesCountSelector);
 

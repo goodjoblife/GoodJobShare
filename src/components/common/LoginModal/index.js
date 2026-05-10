@@ -10,9 +10,8 @@ import styles from './LoginModal.module.css';
 import { P } from 'common/base';
 
 const LoginModal = ({ onClose, inline }) => {
-  const { isLoginModalDisplayed: isOpen, setLoginModalDisplayed } = useContext(
-    LoginModalContext,
-  );
+  const { isLoginModalDisplayed: isOpen, setLoginModalDisplayed } =
+    useContext(LoginModalContext);
 
   const close = useCallback(() => {
     setLoginModalDisplayed(false);

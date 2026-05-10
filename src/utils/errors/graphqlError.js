@@ -1,9 +1,6 @@
 import R from 'ramda';
 
-const mapErrorMessages = R.compose(
-  R.join(', '),
-  R.map(R.prop('message')),
-);
+const mapErrorMessages = R.compose(R.join(', '), R.map(R.prop('message')));
 
 const mapErrorCodes = R.map(R.path(['extensions', 'code']));
 const mapErrorPaths = R.map(R.prop('path'));

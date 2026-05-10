@@ -84,14 +84,12 @@ export const queryInboxApi = async ({
   unreadCount: number;
   messages: InboxMessage[];
 }> => {
-  const {
-    notificationCountSinceBellLastOpen,
-    userNotifications,
-  } = await graphqlClient<QueryInboxResult>({
-    variables: { start, limit },
-    query: queryInboxGql,
-    token,
-  });
+  const { notificationCountSinceBellLastOpen, userNotifications } =
+    await graphqlClient<QueryInboxResult>({
+      variables: { start, limit },
+      query: queryInboxGql,
+      token,
+    });
 
   const messages: InboxMessage[] = userNotifications
     .map(mapToInboxMessage)

@@ -1,7 +1,7 @@
 import graphqlClient from 'utils/graphqlClient';
 
 const queryLaborRightsGql = /* GraphQL */ `
-  query($id: ID!) {
+  query ($id: ID!) {
     labor_right(id: $id) {
       id
       title

@@ -1,5 +1,5 @@
 export const createReplyLike = /* GraphQL */ `
-  mutation($input: CreateReplyLikeInput!) {
+  mutation ($input: CreateReplyLikeInput!) {
     createReplyLike(input: $input) {
       replyLike {
         id
@@ -9,7 +9,7 @@ export const createReplyLike = /* GraphQL */ `
 `;
 
 export const deleteReplyLike = /* GraphQL */ `
-  mutation($input: DeleteReplyLikeInput!) {
+  mutation ($input: DeleteReplyLikeInput!) {
     deleteReplyLike(input: $input) {
       deletedReplyId
     }

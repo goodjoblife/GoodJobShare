@@ -18,10 +18,10 @@ const TextList = ({ value: values, onChange, warning, placeholder }) => {
     i => onChange([...values.slice(0, i), ...values.slice(i + 1)]),
     [onChange, values],
   );
-  const handleClickAdd = useCallback(() => onChange([...values, '']), [
-    onChange,
-    values,
-  ]);
+  const handleClickAdd = useCallback(
+    () => onChange([...values, '']),
+    [onChange, values],
+  );
 
   return (
     <div

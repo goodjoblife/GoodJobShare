@@ -37,7 +37,7 @@ The followings are some useful elements from Open Graph Protocol:
 
 // TODO: Helmet uses deep-equal and sometimes crashes on circular objects
 // workaround https://github.com/nfl/react-helmet/issues/441#issue-413952394
-Helmet.prototype.shouldComponentUpdate = function(nextProps) {
+Helmet.prototype.shouldComponentUpdate = function (nextProps) {
   return !R.equals(this.props, nextProps);
 };
 

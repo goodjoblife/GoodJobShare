@@ -7,7 +7,7 @@ export enum ExperienceType {
 }
 
 export const queryInboxGql = /* GraphQL */ `
-  query($start: Int, $limit: Int) {
+  query ($start: Int, $limit: Int) {
     notificationCountSinceBellLastOpen
     userNotifications(start: $start, limit: $limit) {
       id
@@ -98,7 +98,7 @@ export type OpenInboxResult = {
 // ReadInboxMessage
 
 export const readInboxMessageGql = /* GraphQL */ `
-  mutation($id: ID!) {
+  mutation ($id: ID!) {
     markNotificationAsRead(input: { notificationIds: [$id] }) {
       success
     }

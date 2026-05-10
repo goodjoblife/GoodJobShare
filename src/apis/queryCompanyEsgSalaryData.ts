@@ -1,7 +1,7 @@
 import graphqlClient from 'utils/graphqlClient';
 
 const queryCompanyEsgSalaryDataGql = /* GraphQL */ `
-  query($companyName: String!) {
+  query ($companyName: String!) {
     company(name: $companyName) {
       esgSalaryData {
         avgSalaryStatistics {

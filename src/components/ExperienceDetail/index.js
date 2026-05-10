@@ -49,9 +49,10 @@ const pageTypeToNameSelector = {
 };
 
 const useExperienceBox = experienceId => {
-  const selector = useMemo(() => experienceBoxSelectorAtId(experienceId), [
-    experienceId,
-  ]);
+  const selector = useMemo(
+    () => experienceBoxSelectorAtId(experienceId),
+    [experienceId],
+  );
   return useSelector(selector);
 };
 

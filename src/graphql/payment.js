@@ -1,5 +1,5 @@
 export const checkoutSubscriptionWithPrimeMutation = /* GraphQL */ `
-  mutation($input: CheckoutSubscriptionWithPrimeInput!) {
+  mutation ($input: CheckoutSubscriptionWithPrimeInput!) {
     checkoutSubscriptionWithPrime(input: $input) {
       paymentRecord {
         id
@@ -29,7 +29,7 @@ export const subscriptionPlans = /* GraphQL */ `
 `;
 
 export const paymentRecord = /* GraphQL */ `
-  query($id: ID!) {
+  query ($id: ID!) {
     paymentRecord(id: $id) {
       id
       userId

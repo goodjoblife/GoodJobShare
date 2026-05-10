@@ -2,7 +2,7 @@ import graphqlClient from 'utils/graphqlClient';
 import { Company } from 'graphql/company';
 
 const queryCompanyRatingStatisticsGql = /* GraphQL */ `
-  query($companyName: String!) {
+  query ($companyName: String!) {
     company(name: $companyName) {
       name
       companyRatingStatistics {

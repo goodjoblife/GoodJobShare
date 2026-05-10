@@ -50,14 +50,11 @@ const Options = ({
   lastSelectedOptionIndex,
   warning,
 }) => {
-  const [
-    selectedOptionIndex,
-    setSelectedOptionIndex,
-    { transitionDuration },
-  ] = useAnimatedSelectedOptionIndex({
-    lastSelectedOptionIndex,
-    onSelectOptionIndex,
-  });
+  const [selectedOptionIndex, setSelectedOptionIndex, { transitionDuration }] =
+    useAnimatedSelectedOptionIndex({
+      lastSelectedOptionIndex,
+      onSelectOptionIndex,
+    });
 
   return (
     <div className={cn(styles.root, { [commonStyles.hasWarning]: !!warning })}>

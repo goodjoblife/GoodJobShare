@@ -5,9 +5,10 @@ import LoginModalContext from 'contexts/LoginModalContext';
 const useLogin = () => {
   const isLoggedIn = useIsLoggedIn();
   const { setLoginModalDisplayed } = useContext(LoginModalContext);
-  const login = useCallback(() => setLoginModalDisplayed(true), [
-    setLoginModalDisplayed,
-  ]);
+  const login = useCallback(
+    () => setLoginModalDisplayed(true),
+    [setLoginModalDisplayed],
+  );
   return [isLoggedIn, login];
 };
 

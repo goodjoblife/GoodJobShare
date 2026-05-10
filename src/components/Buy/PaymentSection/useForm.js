@@ -40,16 +40,13 @@ const useForm = ({ skuId }) => {
       setFormState(FORM_STATE.LOADING);
 
       const prime = await getPrime();
-      const [
-        errorMessage,
-        paymentId,
-        paymentUrl,
-      ] = await checkoutSubscriptionWithPrime({
-        token,
-        prime,
-        skuId,
-        isPrimary: false,
-      });
+      const [errorMessage, paymentId, paymentUrl] =
+        await checkoutSubscriptionWithPrime({
+          token,
+          prime,
+          skuId,
+          isPrimary: false,
+        });
 
       if (errorMessage) {
         // Some error arises.
