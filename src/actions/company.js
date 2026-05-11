@@ -619,10 +619,10 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
     (isFetched(box) &&
       box.data &&
       box.data.name === companyName &&
-      box.data.rating == rating &&
-      box.data.start == start &&
-      box.data.limit == limit &&
-      box.data.aspect == aspect)
+      box.data.rating === rating &&
+      box.data.start === start &&
+      box.data.limit === limit &&
+      box.data.aspect === aspect)
   ) {
     return;
   }

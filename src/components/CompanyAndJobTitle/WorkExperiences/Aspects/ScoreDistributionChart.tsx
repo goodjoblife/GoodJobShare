@@ -30,8 +30,20 @@ const ScoreDistributionChart: React.FC<ScoreDistributionChartProps> = ({
           fill="#fcd406"
           barSize={10}
           minPointSize={1}
-          label={({ value, x, y, width, height }) =>
-            value && (
+          label={({
+            value = 0,
+            x = 0,
+            y = 0,
+            width = 0,
+            height = 0,
+          }: {
+            value?: number;
+            x?: number;
+            y?: number;
+            width?: number;
+            height?: number;
+          }): React.ReactElement<any> =>
+            (value && (
               <text
                 x={x + width + 4}
                 y={y + height - 1}
@@ -40,7 +52,7 @@ const ScoreDistributionChart: React.FC<ScoreDistributionChartProps> = ({
               >
                 {value}
               </text>
-            )
+            )) as React.ReactElement<any>
           }
         />
       </BarChart>
