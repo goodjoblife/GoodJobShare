@@ -35,7 +35,7 @@ LabelOnSmallDevice.defaultProps = {
   },
 };
 
-const XAxisOnSmallDevice = ({ x, y, stroke, payload }) => {
+const XAxisOnSmallDevice = ({ x, y, payload }) => {
   const [from, to] = payload.value.split('~');
   return (
     <g transform={`translate(${x},${y})`}>
@@ -55,7 +55,6 @@ XAxisOnSmallDevice.propTypes = {
   payload: PropTypes.shape({
     value: PropTypes.string.isRequired,
   }).isRequired,
-  stroke: PropTypes.string.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
 };
@@ -63,7 +62,6 @@ XAxisOnSmallDevice.propTypes = {
 XAxisOnSmallDevice.defaultProps = {
   x: 0,
   y: 0,
-  stroke: '#666',
   payload: {
     value: '',
   },

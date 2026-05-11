@@ -31,10 +31,11 @@ const composeErrorMessage = (code, message, error) => {
 const pushErrorNotification = (code, message) =>
   pushNotification(NOTIFICATION_TYPE.ALERT, composeErrorMessage(code, message));
 
-export const pushErrorNotificationAndRollbar = (errorCode, error, extra) => (
-  dispatch,
-  getState,
-) => {
+export const pushErrorNotificationAndRollbar = (
+  errorCode,
+  error,
+  extra,
+) => dispatch => {
   dispatch(
     pushErrorNotification(errorCode, ERROR_CODE_MSG[errorCode].external),
   );
@@ -56,7 +57,7 @@ export const pushErrorNotificationAndRollbarAndThrowError = (
   errorCode,
   error,
   extra,
-) => (dispatch, getState) => {
+) => dispatch => {
   dispatch(pushErrorNotificationAndRollbar(errorCode, error, extra));
 
   const internalMessage = composeErrorMessage(

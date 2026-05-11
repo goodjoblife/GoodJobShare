@@ -8,12 +8,6 @@ import styles from './SelectText.module.css';
 import commonStyles from './styles.module.css';
 
 const SelectText = ({
-  page,
-  title,
-  description,
-  dataKey,
-  required,
-  defaultValue,
   value: [selected, text],
   onChange,
   onConfirm,
@@ -61,19 +55,13 @@ export const OptionPropType = PropTypes.oneOfType([
 ]);
 
 SelectText.propTypes = {
-  dataKey: PropTypes.string.isRequired,
-  defaultValue: PropTypes.arrayOf(ValuePropType).isRequired,
-  description: PropTypes.string,
   footnote: PropTypes.string,
   hint: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
-  page: PropTypes.number.isRequired,
   placeholder: PropTypes.string,
-  required: PropTypes.bool,
   suffix: PropTypes.string,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   value: PropTypes.arrayOf(ValuePropType).isRequired,
   warning: PropTypes.string,
 };

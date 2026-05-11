@@ -10,6 +10,7 @@ type Props = PropsWithChildren<{ status: number }>;
 // Add http status code when SSR
 const Status: React.FC<Props> = ({ status, children }) => (
   <Route
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     render={({ staticContext }) => {
       if (staticContext) {
         (staticContext as AppStaticContext).status = status; // eslint-disable-line no-param-reassign
