@@ -10,16 +10,20 @@ import FetchBox, { isUnfetched, isFetching, isError } from 'utils/fetchBox';
 import EmptyView from './EmptyView';
 import styles from './StatusRenderer.module.css';
 
-const useFadeIn = () => {
+const useFadeIn = (): {
+  visible: boolean;
+  animating: boolean;
+  onTransitionEnd: (e: React.TransitionEvent) => void;
+} => {
   const [visible, setVisible] = useState(false);
   const [animating, setAnimating] = useState(true);
 
   useEffect(() => {
-    const id = requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(id);
+    const id = requestAnimationFrame((): void => setVisible(true));
+    return (): void => cancelAnimationFrame(id);
   }, []);
 
-  const onTransitionEnd = (e: React.TransitionEvent) => {
+  const onTransitionEnd = (e: React.TransitionEvent): void => {
     if (e.propertyName === 'transform') setAnimating(false);
   };
 
@@ -41,7 +45,7 @@ const FadeInContent: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   );
 };
 
-type StatusRendererProps<T extends any[]> = {
+type StatusRendererProps<T extends unknown[]> = {
   boxes: {
     [K in keyof T]: FetchBox<T[K]>;
   };
@@ -54,7 +58,7 @@ interface WithData<T> extends FetchBox<T> {
 }
 
 // Checks data presence only (not status), matching the WithData contract above.
-const boxesHasData = <T extends any[]>(
+const boxesHasData = <T extends unknown[]>(
   boxes: { [K in keyof T]: FetchBox<T[K]> },
 ): boxes is { [K in keyof T]: WithData<T[K]> } => {
   return boxes.every(b => b.data !== undefined);
@@ -63,7 +67,7 @@ const boxesHasData = <T extends any[]>(
 // boxes is typed as an array tuple; supporting a single FetchBox<T> (non-array) variant
 // was considered but too complex to type cleanly.
 // use a BoxRenderer component that wraps StatusRenderer with single box or box array.
-function StatusRenderer<T extends any[]>({
+function StatusRenderer<T extends unknown[]>({
   boxes,
   render,
 }: StatusRendererProps<T>): React.ReactNode {
@@ -127,7 +131,7 @@ export function BoxRenderer<T>(props: {
   box: FetchBox<T>;
   render: (data: T) => React.ReactNode;
 }): React.ReactNode;
-export function BoxRenderer<T extends any[]>(props: {
+export function BoxRenderer<T extends unknown[]>(props: {
   box: { [K in keyof T]: FetchBox<T[K]> };
   render: (data: T) => React.ReactNode;
 }): React.ReactNode;
@@ -135,13 +139,20 @@ export function BoxRenderer({
   box,
   render,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   box: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   render: (data: any) => React.ReactNode;
-}) {
+}): React.ReactNode {
   if (Array.isArray(box)) {
     return <StatusRenderer boxes={box} render={render} />;
   }
-  return <StatusRenderer boxes={[box]} render={([data]) => render(data)} />;
+  return (
+    <StatusRenderer
+      boxes={[box]}
+      render={([data]): React.ReactNode => render(data)}
+    />
+  );
 }
 
 export default BoxRenderer;
@@ -165,7 +176,7 @@ export const PageBoxRenderer = <T extends PageData>({
   tabType,
   boxSelector,
   render,
-}: PageBoxRendererProps<T>) => {
+}: PageBoxRendererProps<T>): React.ReactNode => {
   /* 處理
    * 1. 當 fetching                   --> 應顯示 Loading (目前由 BoxRenderer 處理)
    * 2. 當 box.data === null          --> 應顯示 NotFoundStatus (後端無公司)
@@ -177,7 +188,7 @@ export const PageBoxRenderer = <T extends PageData>({
   return (
     <StatusRenderer
       boxes={[box]}
-      render={([data]) => {
+      render={([data]): React.ReactNode => {
         if (!data) {
           return (
             <NotFoundStatus status={404}>
