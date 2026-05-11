@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import useExperimentParameters from 'hooks/useExperimentParameters';
 import { activateOptimize } from 'utils/gtm';
 
-export default () => {
+const usePrivateMessageButtonText = () => {
   useEffect(() => {
     activateOptimize('testPrivateMessageButtonText');
   }, []);
@@ -21,3 +21,5 @@ export default () => {
 
   return text;
 };
+
+export default usePrivateMessageButtonText;

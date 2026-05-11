@@ -18,7 +18,7 @@ const useScrollToItem = itemRef => {
   }, [itemRef]);
 };
 
-export default ({
+const useAutocomplete = ({
   value,
   onFocus,
   onBlur,
@@ -178,3 +178,5 @@ export default ({
     handleMouseClickItem,
   };
 };
+
+export default useAutocomplete;

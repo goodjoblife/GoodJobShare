@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import ReactGA from 'react-ga4';
 import { GA_MEASUREMENT_ID } from '../config';
 
-export default () => {
+const useGoogleAnalytics = () => {
   // initialize google analytics
   useEffect(() => {
     ReactGA.initialize(GA_MEASUREMENT_ID);
@@ -18,3 +18,5 @@ export default () => {
     });
   }, [location]);
 };
+
+export default useGoogleAnalytics;

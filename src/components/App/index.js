@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useRef } from 'react';
+import React, { Fragment, useCallback, useMemo, useRef } from 'react';
 import { Switch, useLocation, useHistory } from 'react-router-dom';
 import { omit } from 'ramda';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -23,7 +23,7 @@ import routes from '../../routes';
 
 const useShare = () => {
   const location = useLocation();
-  const state = location.state || {};
+  const state = useMemo(() => location.state || {}, [location.state]);
   const share = state.share;
   const history = useHistory();
   const exitShare = useCallback(

@@ -16,7 +16,8 @@ import useExperimentParameters from 'hooks/useExperimentParameters';
  * @param {string} elementId the id of element to observe
  */
 
-export default (attributesToObserve = [], elementId = 'root') =>
+const withExperimentParameters =
+  (attributesToObserve = [], elementId = 'root') =>
   WrappedComponent => {
     const WithExperimentParameters = props => {
       const parameters = useExperimentParameters(
@@ -31,3 +32,5 @@ export default (attributesToObserve = [], elementId = 'root') =>
     WithExperimentParameters.displayName = `WithExperimentParameters(${displayName})`;
     return WithExperimentParameters;
   };
+
+export default withExperimentParameters;

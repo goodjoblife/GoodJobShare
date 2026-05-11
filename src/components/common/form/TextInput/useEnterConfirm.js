@@ -1,7 +1,10 @@
 import { useCallback, useState } from 'react';
 import { useKey } from 'react-use';
 
-export default ({ onCompositionStart, onCompositionEnd, onEnter }, ref) => {
+const useEnterConfirm = (
+  { onCompositionStart, onCompositionEnd, onEnter },
+  ref,
+) => {
   const [isComposing, setComposing] = useState(false);
   const handleCompositionStart = useCallback(
     e => {
@@ -31,3 +34,5 @@ export default ({ onCompositionStart, onCompositionEnd, onEnter }, ref) => {
 
   return [handleCompositionStart, handleCompositionEnd];
 };
+
+export default useEnterConfirm;

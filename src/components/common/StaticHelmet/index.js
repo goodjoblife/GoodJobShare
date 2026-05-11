@@ -41,7 +41,7 @@ Helmet.prototype.shouldComponentUpdate = function (nextProps) {
   return !R.equals(this.props, nextProps);
 };
 
-export default {
+const StaticHelmet = {
   Default: () => (
     <Helmet defaultTitle={SITE_NAME} titleTemplate={`%s | ${SITE_NAME}`}>
       <meta
@@ -201,3 +201,5 @@ export default {
     </Helmet>
   ),
 };
+
+export default StaticHelmet;

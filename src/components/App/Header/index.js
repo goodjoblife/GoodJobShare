@@ -232,6 +232,20 @@ const useShowsHeader = () => {
   return showsHeader;
 };
 
+const HamburgerButton = ({ isNavOpen, toggle }) => (
+  <div
+    className={cn(styles.mHeaderButton, { [styles.isNavOpen]: isNavOpen })}
+    onClick={toggle}
+  >
+    <span />
+  </div>
+);
+
+HamburgerButton.propTypes = {
+  isNavOpen: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired,
+};
+
 const Header = ({ searchInputRef }) => {
   const history = useHistory();
   const [isNavOpen, setNavOpen] = useState(false);
@@ -274,20 +288,6 @@ const Header = ({ searchInputRef }) => {
       </header>
     </div>
   );
-};
-
-const HamburgerButton = ({ isNavOpen, toggle }) => (
-  <div
-    className={cn(styles.mHeaderButton, { [styles.isNavOpen]: isNavOpen })}
-    onClick={toggle}
-  >
-    <span />
-  </div>
-);
-
-HamburgerButton.propTypes = {
-  isNavOpen: PropTypes.bool.isRequired,
-  toggle: PropTypes.func.isRequired,
 };
 
 Header.propTypes = {

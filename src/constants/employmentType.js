@@ -1,4 +1,4 @@
-export default {
+const employmentType = {
   full_time: '全職',
   part_time: '兼職(含打工)',
   intern: '實習',
@@ -6,3 +6,5 @@ export default {
   contract: '約聘雇',
   dispatched_labor: '派遣',
 };
+
+export default employmentType;

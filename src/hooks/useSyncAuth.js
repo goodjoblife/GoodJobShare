@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useToken, useIsLoggedIn } from 'hooks/auth';
 import { loginWithToken as loginWithTokenAction } from 'actions/auth';
 
-export default () => {
+const useSyncAuth = () => {
   // Sync token at first glance
   const dispatch = useDispatch();
   const loginWithToken = useCallback(
@@ -21,3 +21,5 @@ export default () => {
     }
   });
 };
+
+export default useSyncAuth;
