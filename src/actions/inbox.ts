@@ -1,5 +1,4 @@
-import { Action } from 'redux';
-import { Dispatch, GetState } from 'reducers';
+import { Thunk } from 'reducers';
 
 import { queryInboxApi, openInboxApi, readInboxMessageApi } from 'apis/inbox';
 import { tokenSelector } from 'selectors/authSelector';
@@ -25,10 +24,10 @@ const setInboxCount = (count: number): SetInboxCountAction => ({
 
 // Read inbox
 
-export const openInbox = () => async (
-  dispatch: Dispatch<Action>,
-  getState: GetState,
-) => {
+export const openInbox = (): Thunk => async (
+  dispatch,
+  getState,
+): Promise<void> => {
   const state = getState();
   const token = tokenSelector(state);
 
@@ -60,7 +59,7 @@ export const fetchInbox = ({
 }: {
   start: number;
   limit: number;
-}) => async (dispatch: Dispatch<Action>, getState: GetState) => {
+}): Thunk => async (dispatch, getState): Promise<void> => {
   const state = getState();
   const token = tokenSelector(state);
 
@@ -86,10 +85,10 @@ export const fetchInbox = ({
 
 // Read inbox message
 
-export const readInboxMessage = ({ id }: { id: string }) => async (
-  dispatch: Dispatch<Action>,
-  getState: GetState,
-) => {
+export const readInboxMessage = ({ id }: { id: string }): Thunk => async (
+  dispatch,
+  getState,
+): Promise<void> => {
   const state = getState();
   const token = tokenSelector(state);
 

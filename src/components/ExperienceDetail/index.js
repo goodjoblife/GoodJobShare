@@ -55,7 +55,7 @@ const useExperienceBox = experienceId => {
   return useSelector(selector);
 };
 
-const ExperienceDetail = ({ ...props }) => {
+const ExperienceDetail = () => {
   const experienceId = useExperienceId();
   const experienceBox = useExperienceBox(experienceId);
 

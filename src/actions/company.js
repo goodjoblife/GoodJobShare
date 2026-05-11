@@ -197,7 +197,6 @@ const setOverviewStatistics = (companyName, box) => ({
 export const queryCompanyOverviewStatistics = companyName => async (
   dispatch,
   getState,
-  { api },
 ) => {
   const box = companyOverviewStatisticsBoxSelectorByName(companyName)(
     getState(),
