@@ -31,12 +31,7 @@ const generateTabTypeLayer = ({ pageType, pageName, tabType }) => ({
   }),
 });
 
-export const generateBreadCrumbData = ({
-  pageType,
-  pageName,
-  tabType,
-  experience,
-}) => {
+export const generateBreadCrumbData = ({ pageType, pageName, tabType }) => {
   const data = [
     generateRootLayer(),
     generatePageTypeLayer({ pageType }),

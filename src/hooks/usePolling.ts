@@ -22,7 +22,7 @@ const usePolling = (
     callback();
 
     const id = setInterval(callback, interval);
-    return () => clearInterval(id);
+    return (): void => clearInterval(id);
   }, [callback, interval, enabled]);
 };
 

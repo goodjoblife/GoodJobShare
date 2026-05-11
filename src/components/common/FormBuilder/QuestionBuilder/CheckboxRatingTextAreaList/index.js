@@ -65,10 +65,7 @@ const useActiveOptionIndex = ({ setShowsNavigation }) => {
 const CheckboxRatingTextAreaList = ({
   page,
   title,
-  description,
   dataKey,
-  required,
-  defaultValue,
   value: items,
   onChange,
   warning,
@@ -173,9 +170,6 @@ const CheckboxRatingTextAreaValuePropType = withShape(PropTypes.array, {
 
 CheckboxRatingTextAreaList.propTypes = {
   dataKey: PropTypes.string.isRequired,
-  defaultValue: PropTypes.arrayOf(CheckboxRatingTextAreaValuePropType)
-    .isRequired,
-  description: PropTypes.string,
   elseOptionValue: ValuePropType,
   footnote: PropTypes.oneOfType([
     PropTypes.string,
@@ -191,7 +185,6 @@ CheckboxRatingTextAreaList.propTypes = {
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.func,
   ]).isRequired,
-  required: PropTypes.bool,
   setShowsNavigation: PropTypes.func.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   validateOrWarnItem: PropTypes.func.isRequired,
