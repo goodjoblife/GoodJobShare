@@ -1,4 +1,5 @@
 import React from 'react';
+import { RootState } from 'reducers';
 import { generatePath, useParams } from 'react-router';
 import { Heading, Link, Wrapper } from 'common/base';
 import { companyNameSelector } from 'pages/Company/useCompanyName';
@@ -32,7 +33,7 @@ export type AspectStatisticsData = {
 };
 
 export type AspectExperiencesData = {
-  workExperiences: any[];
+  workExperiences: unknown[];
   workExperiencesCount: number;
 };
 
@@ -41,8 +42,8 @@ export type AspectProps = {
   pageType: string;
   pageName: string;
   tabType: string;
-  statisticsBoxSelector: (state: any) => FetchBox<AspectStatisticsData>;
-  experiencesBoxSelector: (state: any) => FetchBox<AspectExperiencesData>;
+  statisticsBoxSelector: (state: RootState) => FetchBox<AspectStatisticsData>;
+  experiencesBoxSelector: (state: RootState) => FetchBox<AspectExperiencesData>;
   page: number;
   pageSize: number;
 };

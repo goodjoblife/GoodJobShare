@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import WorkExperiencesAspect, {
   AspectExperiencesData,
   AspectStatisticsData,
-} from 'components/CompanyAndJobTitle/WorkExperiences//Aspects';
+} from 'components/CompanyAndJobTitle/WorkExperiences/Aspects';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
