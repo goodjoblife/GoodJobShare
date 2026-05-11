@@ -15,7 +15,8 @@ import {
   companyWorkExperiencesAspectStatisticsBoxSelectorByName as workExperiencesAspectStatisticsBoxSelectorByName,
   companyWorkExperiencesAspectExperiencesBoxSelectorByName as workExperiencesAspectExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
-import { paramsSelector, querySelector } from 'common/routing/selectors';
+import { querySelector } from 'common/routing/selectors';
+import { ServerSideRender } from 'types/serverSideRender';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import {
   pageFromQuerySelector,
@@ -52,7 +53,13 @@ const useWorkExperiencesAspectExperiencesBoxSelector = (
   );
 };
 
-const CompanyWorkExperiencesAspectProvider = (): React.ReactElement => {
+type Params = {
+  companyName: string;
+  aspect: string;
+};
+
+const CompanyWorkExperiencesAspectProvider: React.FC &
+  ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
   const companyName = useCompanyName();
@@ -105,18 +112,15 @@ const CompanyWorkExperiencesAspectProvider = (): React.ReactElement => {
   );
 };
 
-CompanyWorkExperiencesAspectProvider.fetchData = ({
+CompanyWorkExperiencesAspectProvider.fetchData = async ({
   store: { dispatch },
-  ...props
-}: {
-  store: { dispatch: any };
-  [key: string]: any;
-}): Promise<any> => {
-  const params = (paramsSelector(props) || {}) as Record<string, string>;
+  match: { params },
+  location,
+}): Promise<unknown> => {
   const companyName = companyNameSelector(params);
   const aspect = aspectSelector(params);
 
-  const query = querySelector(props);
+  const query = querySelector({ location });
   const rating = ratingFromQuerySelector(query);
   const page = pageFromQuerySelector(query) as number;
   const start = (page - 1) * PAGE_SIZE;
