@@ -24,7 +24,7 @@ import { popularCompanyAverageSalaryBoxSelector } from 'selectors/popularCompany
 import { popularJobTitleSalaryDistributionBoxSelector } from 'selectors/popularJobTitleSalaryDistribution';
 import { menuBoxSelector } from 'selectors/laborRightsSelector';
 import SearchBar from 'components/TimeAndSalary/SearchBar';
-import BoxRenderer from 'components/CompanyAndJobTitle/StatusRenderer';
+import { BoxesRenderer } from 'common/StatusRenderer';
 
 const entryToProps = ({ id, title, coverUrl }) => ({
   link: `/labor-rights/${id}`,
@@ -71,8 +71,8 @@ const LandingPage = () => {
       <Banner />
       <Section padding>
         <Wrapper size="l">
-          <BoxRenderer
-            box={[
+          <BoxesRenderer
+            boxes={[
               popularCompanyAverageSalaryBox,
               popularJobTitleSalaryDistributionBox,
             ]}
