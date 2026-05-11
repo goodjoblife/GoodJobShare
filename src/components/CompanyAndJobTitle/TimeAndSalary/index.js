@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { BoxRenderer } from 'common/StatusRenderer';
+import BoxRenderer from 'common/StatusRenderer';
 import PageBoxRenderer from '../PageBoxRenderer';
 import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';

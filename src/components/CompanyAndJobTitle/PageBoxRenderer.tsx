@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'reducers';
 import Redirect from 'common/routing/Redirect';
 import NotFoundStatus from 'common/routing/NotFound';
-import { BoxesRenderer } from 'common/StatusRenderer';
+import BoxRenderer from 'common/StatusRenderer';
 import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 import FetchBox from 'utils/fetchBox';
 import EmptyView from './EmptyView';
@@ -37,9 +37,9 @@ const PageBoxRenderer = <T extends PageData>({
    */
   const box = useSelector(boxSelector);
   return (
-    <BoxesRenderer
-      boxes={[box]}
-      render={([data]): React.ReactNode => {
+    <BoxRenderer
+      box={box}
+      render={(data): React.ReactNode => {
         if (!data) {
           return (
             <NotFoundStatus status={404}>
