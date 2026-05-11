@@ -4,6 +4,8 @@ import { useQuery } from 'hooks/routing';
 import qs from 'qs';
 import { ratingFromQuerySelector } from 'selectors/routing';
 
+// TODO: fix after prettier, parser upgrade
+// const useRating = (): [number | null, (next: number | null) => void] => {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const useRating = () => {
   const history = useHistory();
