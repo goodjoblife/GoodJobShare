@@ -2,8 +2,16 @@ import { match } from 'react-router-dom';
 import { Location } from 'history';
 import qs from 'qs';
 
-// RouteProps is the parameter injected from server.js fetchData
-// It is used in SSR with static fetchData method
+// RouteProps is the parameter injected from server.js fetchData.
+// It is used in SSR with the static fetchData method.
+//
+// IMPORTANT: Selectors in this file must ONLY be called inside fetchData.
+// They depend on `match` and `location` being injected by the SSR framework,
+// which only happens in that context.
+// In components, use React Router hooks instead:
+//   - useParams()    instead of paramsSelector
+//   - useLocation()  instead of pathnameSelector / searchSelector / querySelector
+//   - useRouteMatch() instead of pathSelector
 type RouteProps<
   Params extends Record<string, string> = Record<string, string>
 > = {
