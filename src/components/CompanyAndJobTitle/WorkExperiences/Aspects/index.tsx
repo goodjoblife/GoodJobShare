@@ -110,7 +110,7 @@ const AspectSection: React.FC<AspectProps> = ({
           workExperiences,
           workExperiencesCount: totalCount,
         }: {
-          workExperiences: any; // eslint-disable-line react/no-unused-prop-types
+          workExperiences: unknown[]; // eslint-disable-line react/no-unused-prop-types
           workExperiencesCount: number; // eslint-disable-line react/no-unused-prop-types
         }): React.ReactNode => (
           <>
