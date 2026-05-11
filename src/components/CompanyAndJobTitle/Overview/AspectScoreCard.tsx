@@ -26,7 +26,7 @@ const useAspectData = ({
 }: {
   companyName: string;
   aspect: Aspect;
-}) => {
+}): CompanyAspectRatingStatistic | null | undefined => {
   const box = useSelector(
     companyWorkExperiencesAspectStatisticsBoxSelectorByName(companyName),
   ) as FetchBox<AspectStatisticsData>;

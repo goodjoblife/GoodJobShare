@@ -35,10 +35,8 @@ const Overview = ({
   interviewExperiencesCount,
   workExperiences,
   workExperiencesCount,
-  salaryWorkTimes,
   salaryWorkTimesCount,
   statisticsBox,
-  onCloseReport, // eslint-disable-line no-unused-vars
 }) => {
   const [, , canViewPublishId] = usePermission();
 
@@ -130,10 +128,8 @@ const Overview = ({
 Overview.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
   interviewExperiencesCount: PropTypes.number.isRequired,
-  onCloseReport: PropTypes.func.isRequired,
   pageName: PropTypes.string.isRequired,
   pageType: PropTypes.string.isRequired,
-  salaryWorkTimes: PropTypes.arrayOf(PropTypes.object).isRequired,
   salaryWorkTimesCount: PropTypes.number.isRequired,
   statisticsBox: fetchBoxPropType.isRequired,
   workExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,

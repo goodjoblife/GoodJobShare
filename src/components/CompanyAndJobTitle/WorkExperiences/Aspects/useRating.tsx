@@ -4,6 +4,7 @@ import { useQuery } from 'hooks/routing';
 import qs from 'qs';
 import { ratingFromQuerySelector } from 'selectors/routing';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const useRating = () => {
   const history = useHistory();
   const query = useQuery();

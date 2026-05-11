@@ -76,7 +76,7 @@ const AspectSection: React.FC<AspectProps> = ({
           pageName={pageName}
           tabType={tabType}
           boxSelector={statisticsBoxSelector}
-          render={(data: AspectStatisticsData) => {
+          render={(data: AspectStatisticsData): React.ReactElement | null => {
             const items = data.companyAspectRatingStatistics;
             const item = items.find(item => item.aspect === aspect);
             if (!item) return null;
@@ -111,7 +111,7 @@ const AspectSection: React.FC<AspectProps> = ({
         }: {
           workExperiences: any; // eslint-disable-line react/no-unused-prop-types
           workExperiencesCount: number; // eslint-disable-line react/no-unused-prop-types
-        }) => (
+        }): React.ReactElement => (
           <>
             <Helmet
               pageType={pageType}

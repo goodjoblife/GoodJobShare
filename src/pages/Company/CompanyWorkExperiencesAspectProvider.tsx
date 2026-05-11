@@ -6,12 +6,7 @@ import WorkExperiencesAspect, {
 } from 'components/CompanyAndJobTitle/WorkExperiences//Aspects';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
-import {
-  TabType,
-  PageType,
-  PAGE_SIZE,
-  Aspect,
-} from 'constants/companyJobTitle';
+import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
 import {
   queryCompanyWorkExperiencesAspectStatistics,
   queryCompanyWorkExperiencesAspectExperiences,
@@ -34,7 +29,6 @@ import { RootState } from 'reducers';
 
 const useWorkExperiencesAspectExperiencesBoxSelector = (
   pageName: string,
-  aspect: Aspect,
 ): ((state: RootState) => FetchBox<AspectExperiencesData>) => {
   return useCallback(
     (state: RootState): FetchBox<AspectExperiencesData> => {
@@ -58,7 +52,7 @@ const useWorkExperiencesAspectExperiencesBoxSelector = (
   );
 };
 
-const CompanyWorkExperiencesAspectProvider = () => {
+const CompanyWorkExperiencesAspectProvider = (): React.ReactElement => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
   const companyName = useCompanyName();
@@ -95,7 +89,6 @@ const CompanyWorkExperiencesAspectProvider = () => {
 
   const experiencesBoxSelector = useWorkExperiencesAspectExperiencesBoxSelector(
     companyName,
-    aspect,
   ) as ((state: RootState) => FetchBox<AspectExperiencesData>);
 
   return (
@@ -118,7 +111,7 @@ CompanyWorkExperiencesAspectProvider.fetchData = ({
 }: {
   store: { dispatch: any };
   [key: string]: any;
-}) => {
+}): Promise<any> => {
   const params = (paramsSelector(props) || {}) as Record<string, string>;
   const companyName = companyNameSelector(params);
   const aspect = aspectSelector(params);

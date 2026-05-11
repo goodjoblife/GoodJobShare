@@ -13,7 +13,7 @@ const RatingFilter: React.FC = () => {
   const rating = ratingToggle[0] as number | null;
   const toggleRating = ratingToggle[1] as (value: number | null) => void;
 
-  const handleChange = (value: string) => {
+  const handleChange = (value: string): void => {
     const number = Number(value);
     if (value && !isNaN(number)) {
       toggleRating(number);
