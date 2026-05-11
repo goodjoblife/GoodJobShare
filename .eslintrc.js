@@ -4,13 +4,6 @@ module.exports = {
   rules: {
     'arrow-parens': ['error', 'as-needed'],
     'comma-dangle': ['error', 'always-multiline'],
-    'max-len': [
-      'error',
-      199,
-      {
-        ignorePattern: ' // eslint-disable-line ',
-      },
-    ],
     'react/prefer-stateless-function': 'off',
     'no-underscore-dangle': 'off',
     'no-console': 'off',
