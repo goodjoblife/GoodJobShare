@@ -17,6 +17,6 @@ export interface ServerSideRender<
   }: {
     store: Store;
     match: match<Params>;
-    location?: Location;
+    location: Location;
   }) => Promise<unknown>;
 }

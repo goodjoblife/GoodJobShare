@@ -15,7 +15,7 @@ import {
   companyWorkExperiencesAspectStatisticsBoxSelectorByName as workExperiencesAspectStatisticsBoxSelectorByName,
   companyWorkExperiencesAspectExperiencesBoxSelectorByName as workExperiencesAspectExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
-import { querySelector } from 'common/routing/selectors';
+import { paramsSelector, querySelector } from 'common/routing/selectors';
 import { ServerSideRender } from 'types/serverSideRender';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import {
@@ -114,13 +114,13 @@ const CompanyWorkExperiencesAspectProvider: React.FC &
 
 CompanyWorkExperiencesAspectProvider.fetchData = async ({
   store: { dispatch },
-  match: { params },
-  location,
+  ...props
 }): Promise<unknown> => {
+  const params = paramsSelector<Params>(props);
   const companyName = companyNameSelector(params);
   const aspect = aspectSelector(params);
 
-  const query = querySelector({ location });
+  const query = querySelector(props);
   const rating = ratingFromQuerySelector(query);
   const page = pageFromQuerySelector(query) as number;
   const start = (page - 1) * PAGE_SIZE;

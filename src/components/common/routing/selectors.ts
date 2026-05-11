@@ -7,8 +7,8 @@ import qs from 'qs';
 type RouteProps<
   Params extends Record<string, string> = Record<string, string>
 > = {
-  match?: match<Params>;
-  location?: Location;
+  match: match<Params>;
+  location: Location;
 };
 
 export const pathSelector = ({ match }: RouteProps): string | undefined =>
@@ -16,7 +16,7 @@ export const pathSelector = ({ match }: RouteProps): string | undefined =>
 
 export const paramsSelector = <Params extends Record<string, string>>({
   match,
-}: RouteProps<Params>): Params | undefined => match && match.params;
+}: RouteProps<Params>): Params => match && match.params;
 
 export const pathnameSelector = ({
   location,
