@@ -1,9 +1,6 @@
 import React from 'react';
 import { RootState } from 'reducers';
-import { generatePath, useParams } from 'react-router';
 import { Heading, Link, Wrapper } from 'common/base';
-import { companyNameSelector } from 'pages/Company/useCompanyName';
-import { companyWorkExperiencesPath } from 'constants/linkTo';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import CompanyAndJobTitleWrapper from '../../CompanyAndJobTitleWrapper';
 import { PageBoxRenderer } from '../../StatusRenderer';
@@ -13,7 +10,12 @@ import styles from './styles.module.css';
 import RatingFilter from './RatingFilter';
 import Summary from './Summary';
 import FetchBox from 'utils/fetchBox';
-import { Aspect } from 'constants/companyJobTitle';
+import {
+  Aspect,
+  PageType,
+  TabType,
+  generateTabURL,
+} from 'constants/companyJobTitle';
 
 export type RatingDistribution = {
   rating: number;
@@ -39,9 +41,9 @@ export type AspectExperiencesData = {
 
 export type AspectProps = {
   aspect: Aspect;
-  pageType: string;
+  pageType: PageType;
   pageName: string;
-  tabType: string;
+  tabType: TabType;
   statisticsBoxSelector: (state: RootState) => FetchBox<AspectStatisticsData>;
   experiencesBoxSelector: (state: RootState) => FetchBox<AspectExperiencesData>;
   page: number;
@@ -58,9 +60,7 @@ const AspectSection: React.FC<AspectProps> = ({
   page,
   pageSize,
 }) => {
-  const params = useParams();
-  const companyName = companyNameSelector(params);
-  const parentPath = generatePath(companyWorkExperiencesPath, { companyName });
+  const parentPath = generateTabURL({ pageType, pageName, tabType });
   const [createPageLinkTo] = useCreatePageLinkTo();
 
   return (
