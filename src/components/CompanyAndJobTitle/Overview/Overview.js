@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Section } from 'common/base';
+import BoxRenderer from 'common/StatusRenderer';
 
 import SnippetBlock from './SnippetBlock';
 import WorkingHourTable from '../TimeAndSalary/WorkingHourTable';
@@ -14,7 +15,6 @@ import {
 } from 'constants/companyJobTitle';
 import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
-import BoxRenderer from '../StatusRenderer';
 import { fetchBoxPropType } from 'utils/fetchBox';
 
 const Overview = ({
