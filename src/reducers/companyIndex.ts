@@ -22,6 +22,7 @@ import {
   InterviewExperienceInOverview,
   WorkExperienceInOverview,
 } from 'apis/overview';
+import { WorkExperience } from 'apis/experience';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import {
@@ -61,8 +62,15 @@ export type CompanyTimeAndSalaryStatistics = unknown;
 // TODO: replace with proper CompanyInterviewExperienceResult type
 export type CompanyInterviewExperienceResult = unknown;
 
-// TODO: replace with proper CompanyWorkExperienceResult type
-export type CompanyWorkExperienceResult = unknown;
+export type CompanyWorkExperienceResult = {
+  name: string;
+  jobTitle: string | undefined;
+  start: number;
+  limit: number;
+  sortBy: string | undefined;
+  workExperiences: WorkExperience[];
+  workExperiencesCount: number;
+};
 
 // Flattened from QueryCompanyWorkExperiencesData, so a type is defined here
 export type CompanyAspectExperienceResult = {

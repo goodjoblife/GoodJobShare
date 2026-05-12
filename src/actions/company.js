@@ -546,6 +546,7 @@ export const queryCompanyWorkExperiences = ({
       return dispatch(setWorkExperiences(companyName, getFetched(data)));
     }
 
+    /** @type {import('reducers/companyIndex').CompanyWorkExperienceResult} */
     const workExperiencesData = {
       name: data.name,
       jobTitle,
