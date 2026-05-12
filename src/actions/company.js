@@ -138,6 +138,16 @@ const SALARY_WORK_TIMES_LIMIT = 5;
 const WORK_EXPERIENCES_LIMIT = 3;
 const INTERVIEW_EXPERIENCES_LIMIT = 3;
 
+/**
+ * @type {(
+ *   companyName: string,
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverview | null>
+ * ) => {
+ *   type: string;
+ *   companyName: string;
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverview | null>
+ * }}
+ */
 const setOverview = (companyName, box) => ({
   type: SET_OVERVIEW,
   companyName,
@@ -188,6 +198,16 @@ export const queryCompanyOverview = (
   }
 };
 
+/**
+ * @type {(
+ *   companyName: string,
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverviewStatistics | null>
+ * ) => {
+ *   type: string;
+ *   companyName: string;
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverviewStatistics | null>
+ * }}
+ */
 const setOverviewStatistics = (companyName, box) => ({
   type: SET_OVERVIEW_STATISTICS,
   companyName,

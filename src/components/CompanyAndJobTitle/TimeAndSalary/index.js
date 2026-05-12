@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import BoxRenderer, { PageBoxRenderer } from '../StatusRenderer';
+import BoxRenderer from 'common/StatusRenderer';
+import PageBoxRenderer from '../PageBoxRenderer';
 import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';

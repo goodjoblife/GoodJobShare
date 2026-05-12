@@ -3,7 +3,7 @@ import { RootState } from 'reducers';
 import { Heading, Link, Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import CompanyAndJobTitleWrapper from '../../CompanyAndJobTitleWrapper';
-import { PageBoxRenderer } from '../../StatusRenderer';
+import PageBoxRenderer from '../../PageBoxRenderer';
 import WorkExperiencesSection from '../WorkExperiences';
 import Helmet from '../Helmet';
 import styles from './styles.module.css';

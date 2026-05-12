@@ -79,6 +79,16 @@ const SALARY_WORK_TIMES_LIMIT = 5;
 const WORK_EXPERIENCES_LIMIT = 3;
 const INTERVIEW_EXPERIENCES_LIMIT = 3;
 
+/**
+ * @type {(
+ *   jobTitle: string,
+ *   box: import('utils/fetchBox').default<import('reducers/jobTitleIndex').JobTitleOverview | null>
+ * ) => {
+ *   type: string;
+ *   jobTitle: string;
+ *   box: import('utils/fetchBox').default<import('reducers/jobTitleIndex').JobTitleOverview | null>
+ * }}
+ */
 const setOverview = (jobTitle, box) => ({
   type: SET_OVERVIEW,
   jobTitle,
@@ -129,6 +139,16 @@ export const queryJobTitleOverview = (
   }
 };
 
+/**
+ * @type {(
+ *   jobTitle: string,
+ *   box: import('utils/fetchBox').default<import('reducers/jobTitleIndex').JobTitleOverviewStatistics | null>
+ * ) => {
+ *   type: string;
+ *   jobTitle: string;
+ *   box: import('utils/fetchBox').default<import('reducers/jobTitleIndex').JobTitleOverviewStatistics | null>
+ * }}
+ */
 const setOverviewStatistics = (jobTitle, box) => ({
   type: SET_OVERVIEW_STATISTICS,
   jobTitle,
