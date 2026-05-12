@@ -16,36 +16,20 @@ import {
   TabType,
   generateTabURL,
 } from 'constants/companyJobTitle';
-
-export type RatingDistribution = {
-  rating: number;
-  count: number;
-};
-
-export type AspectStatistics = {
-  aspect: Aspect;
-  averageRating: number;
-  ratingDistribution: RatingDistribution[];
-  ratingCount: number;
-  summary: string;
-};
-
-export type AspectStatisticsData = {
-  companyAspectRatingStatistics: AspectStatistics[];
-};
-
-export type AspectExperiencesData = {
-  workExperiences: unknown[];
-  workExperiencesCount: number;
-};
+import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
+import { CompanyAspectExperienceResult } from 'reducers/companyIndex';
 
 export type AspectProps = {
   aspect: Aspect;
   pageType: PageType;
   pageName: string;
   tabType: TabType;
-  statisticsBoxSelector: (state: RootState) => FetchBox<AspectStatisticsData>;
-  experiencesBoxSelector: (state: RootState) => FetchBox<AspectExperiencesData>;
+  statisticsBoxSelector: (
+    state: RootState,
+  ) => FetchBox<AspectStatisticsData | null>;
+  experiencesBoxSelector: (
+    state: RootState,
+  ) => FetchBox<CompanyAspectExperienceResult | null>;
   page: number;
   pageSize: number;
 };
@@ -82,19 +66,13 @@ const AspectSection: React.FC<AspectProps> = ({
             const item = items.find(item => item.aspect === aspect);
             if (!item) return null;
 
-            const {
-              averageRating,
-              ratingDistribution,
-              ratingCount,
-              summary,
-            } = item;
+            const { averageRating, ratingDistribution, ratingCount } = item;
 
             return (
               <Summary
                 averageRating={averageRating}
                 ratingDistribution={ratingDistribution}
                 ratingCount={ratingCount}
-                summary={summary}
               />
             );
           }}
@@ -109,10 +87,7 @@ const AspectSection: React.FC<AspectProps> = ({
         render={({
           workExperiences,
           workExperiencesCount: totalCount,
-        }: {
-          workExperiences: unknown[]; // eslint-disable-line react/no-unused-prop-types
-          workExperiencesCount: number; // eslint-disable-line react/no-unused-prop-types
-        }): React.ReactNode => (
+        }: CompanyAspectExperienceResult): React.ReactNode => (
           <>
             <Helmet
               pageType={pageType}

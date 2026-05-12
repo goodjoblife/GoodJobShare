@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import WorkExperiencesAspect, {
-  AspectExperiencesData,
-  AspectStatisticsData,
-} from 'components/CompanyAndJobTitle/WorkExperiences/Aspects';
+import WorkExperiencesAspect from 'components/CompanyAndJobTitle/WorkExperiences/Aspects';
+import { CompanyAspectExperienceResult } from 'reducers/companyIndex';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
@@ -30,16 +28,16 @@ import { RootState } from 'reducers';
 
 const useWorkExperiencesAspectExperiencesBoxSelector = (
   pageName: string,
-): ((state: RootState) => FetchBox<AspectExperiencesData>) => {
+): ((state: RootState) => FetchBox<CompanyAspectExperienceResult | null>) => {
   return useCallback(
-    (state: RootState): FetchBox<AspectExperiencesData> => {
+    (state: RootState): FetchBox<CompanyAspectExperienceResult | null> => {
       const box = workExperiencesAspectExperiencesBoxSelectorByName(pageName)(
         state,
-      ) as FetchBox<AspectExperiencesData>;
+      );
       if (isFetched(box) && box.data) {
         // Get experience data from state.experiences, which serves
         // as the source of truth of experiences.
-        const data: AspectExperiencesData = {
+        const data: CompanyAspectExperienceResult = {
           ...box.data,
           workExperiences: box.data.workExperiences.map(
             (e: any) => experienceBoxSelectorAtId(e.id)(state).data || e,
@@ -92,11 +90,11 @@ const CompanyWorkExperiencesAspectProvider: React.FC &
 
   const statisticsBoxSelector = workExperiencesAspectStatisticsBoxSelectorByName(
     companyName,
-  ) as ((state: RootState) => FetchBox<AspectStatisticsData>);
+  );
 
   const experiencesBoxSelector = useWorkExperiencesAspectExperiencesBoxSelector(
     companyName,
-  ) as ((state: RootState) => FetchBox<AspectExperiencesData>);
+  );
 
   return (
     <WorkExperiencesAspect

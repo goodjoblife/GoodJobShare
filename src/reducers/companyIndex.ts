@@ -1,5 +1,6 @@
 import createReducer from 'utils/createReducer';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
+import { Aspect } from 'constants/companyJobTitle';
 import {
   SET_INDEX_COUNT,
   SET_INDEX,
@@ -28,6 +29,7 @@ import {
   OvertimeFrequencyCount,
   SalaryWorkTime,
 } from 'apis/salaryWorkTime';
+import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 
 // TODO: replace with proper CompanyInIndex type
 export type CompanyInIndex = unknown;
@@ -69,11 +71,16 @@ export type CompanyWorkExperienceResult = {
   workExperiencesCount: number;
 };
 
-// TODO: replace with proper CompanyWorkExperienceAspectStatistics type
-export type CompanyWorkExperienceAspectStatistics = unknown;
-
-// TODO: replace with proper CompanyWorkExperienceAspectExperienceResult type
-export type CompanyWorkExperienceAspectExperienceResult = unknown;
+// Flattened from QueryCompanyWorkExperiencesData, so a type is defined here
+export type CompanyAspectExperienceResult = {
+  name: string;
+  aspect: Aspect;
+  rating: number | null;
+  start: number;
+  limit: number;
+  workExperiences: WorkExperience[];
+  workExperiencesCount: number;
+};
 
 // TODO: replace with proper CompanyIsSubscribed type
 export type CompanyIsSubscribed = unknown;
@@ -108,11 +115,11 @@ type State = {
   >;
   workExperiencesAspectStatisticsByName: Record<
     string,
-    FetchBox<CompanyWorkExperienceAspectStatistics | null>
+    FetchBox<AspectStatisticsData | null>
   >;
   workExperiencesAspectExperiencesByName: Record<
     string,
-    FetchBox<CompanyWorkExperienceAspectExperienceResult | null>
+    FetchBox<CompanyAspectExperienceResult | null>
   >;
   isSubscribedByName: Record<string, FetchBox<CompanyIsSubscribed | null>>;
   topNJobTitlesByName: Record<string, FetchBox<TopNJobTitles | null>>;
@@ -281,7 +288,7 @@ const reducer = createReducer(preloadedState, {
       box,
     }: {
       companyName: string;
-      box: FetchBox<CompanyWorkExperienceAspectStatistics | null>;
+      box: FetchBox<AspectStatisticsData | null>;
     },
   ) => {
     return {
@@ -299,7 +306,7 @@ const reducer = createReducer(preloadedState, {
       box,
     }: {
       companyName: string;
-      box: FetchBox<CompanyWorkExperienceAspectExperienceResult | null>;
+      box: FetchBox<CompanyAspectExperienceResult | null>;
     },
   ) => {
     return {

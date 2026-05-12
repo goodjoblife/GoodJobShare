@@ -27,9 +27,9 @@ import {
   queryCompaniesApi,
   getCompanyTimeAndSalaryStatistics,
   getCompanyTopNJobTitles,
-  getCompanyWorkExperiencesAspectRatingStatistics,
 } from 'apis/company';
 import queryCompanyWorkExperiencesApi from 'apis/queryCompanyWorkExperiences';
+import queryCompanyAspectRatingStatisticsApi from 'apis/queryCompanyAspectRatingStatistics';
 import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
 import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
 import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
@@ -581,38 +581,17 @@ export const queryCompanyWorkExperiencesAspectStatistics = ({
     companyName,
   )(getState());
 
-  if (
-    isFetching(box) ||
-    (isFetched(box) && box.data && box.data.name === companyName)
-  ) {
+  if (isFetching(box) || isFetched(box)) {
     return;
   }
 
   dispatch(setWorkExperiencesAspectStatistics(companyName, toFetching()));
 
   try {
-    const data = await getCompanyWorkExperiencesAspectRatingStatistics({
+    const data = await queryCompanyAspectRatingStatisticsApi({
       companyName,
     });
-
-    // Not found case
-    if (data == null) {
-      return dispatch(
-        setWorkExperiencesAspectStatistics(companyName, getFetched(data)),
-      );
-    }
-
-    const workExperiencesAspectStatisticsData = {
-      name: companyName,
-      companyAspectRatingStatistics: data.companyAspectRatingStatistics,
-    };
-
-    dispatch(
-      setWorkExperiencesAspectStatistics(
-        companyName,
-        getFetched(workExperiencesAspectStatisticsData),
-      ),
-    );
+    dispatch(setWorkExperiencesAspectStatistics(companyName, getFetched(data)));
   } catch (error) {
     dispatch(setWorkExperiencesAspectStatistics(companyName, getError(error)));
   }
@@ -668,6 +647,7 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
       );
     }
 
+    /** @type {import('reducers/companyIndex').CompanyAspectExperienceResult} */
     const workExperiencesAspectExperiencesData = {
       name: companyName,
       aspect,

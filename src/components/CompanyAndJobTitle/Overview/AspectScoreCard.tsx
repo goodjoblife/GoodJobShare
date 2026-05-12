@@ -8,17 +8,8 @@ import ScoreCard from './ScoreCard';
 
 import { useSelector } from 'react-redux';
 import { companyWorkExperiencesAspectStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import FetchBox, { isFetched } from 'utils/fetchBox';
-
-interface CompanyAspectRatingStatistic {
-  aspect: string;
-  averageRating: number;
-  ratingCount: number;
-}
-
-interface AspectStatisticsData {
-  companyAspectRatingStatistics: CompanyAspectRatingStatistic[];
-}
+import { isFetched } from 'utils/fetchBox';
+import { AspectRatingStatistics } from 'apis/aspectRatingStatistics';
 
 const useAspectData = ({
   companyName,
@@ -26,10 +17,10 @@ const useAspectData = ({
 }: {
   companyName: string;
   aspect: Aspect;
-}): CompanyAspectRatingStatistic | null | undefined => {
+}): AspectRatingStatistics | null | undefined => {
   const box = useSelector(
     companyWorkExperiencesAspectStatisticsBoxSelectorByName(companyName),
-  ) as FetchBox<AspectStatisticsData>;
+  );
 
   if (!isFetched(box) || !box.data) return null;
 
