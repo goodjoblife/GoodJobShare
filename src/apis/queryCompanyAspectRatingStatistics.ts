@@ -1,23 +1,20 @@
 import R from 'ramda';
 import graphqlClient from 'utils/graphqlClient';
 import { Company } from 'graphql/company';
-import { AspectRatingStatistics } from './aspectRatingStatistics';
+import {
+  AspectRatingStatistics,
+  fragmentAspectRatingStatisticsFields,
+} from './aspectRatingStatistics';
 
 const queryCompanyAspectRatingStatisticsGql = /* GraphQL */ `
   query($companyName: String!) {
     company(name: $companyName) {
       companyAspectRatingStatistics {
-        aspect
-        averageRating
-        ratingCount
-        type
-        ratingDistribution {
-          count
-          rating
-        }
+        ...aspectRatingStatisticsFields
       }
     }
   }
+  ${fragmentAspectRatingStatisticsFields}
 `;
 
 type QueryCompanyAspectRatingStatisticsData = {

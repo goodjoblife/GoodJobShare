@@ -6,11 +6,11 @@ import Pen from 'common/icons/Pen';
 
 import styles from './styles.module.css';
 import ScoreDistributionChart from './ScoreDistributionChart';
-import { RatingDistribution } from 'apis/aspectRatingStatistics';
+import { RatingBin } from 'apis/aspectRatingStatistics';
 
 type SummaryProps = {
   averageRating: number;
-  ratingDistribution: RatingDistribution[];
+  ratingDistribution: RatingBin[];
   ratingCount: number;
   summary?: string;
 };
@@ -22,13 +22,10 @@ const Summary: React.FC<SummaryProps> = ({
   summary,
 }) => {
   const distributionMap = new Map<number, number>(
-    ratingDistribution.map((item: RatingDistribution) => [
-      item.rating,
-      item.count,
-    ]),
+    ratingDistribution.map((item: RatingBin) => [item.rating, item.count]),
   );
 
-  const rows: RatingDistribution[] = [5, 4, 3, 2, 1].map(rating => ({
+  const rows: RatingBin[] = [5, 4, 3, 2, 1].map(rating => ({
     rating,
     count: distributionMap.get(rating) || 0,
   }));
