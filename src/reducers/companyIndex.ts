@@ -27,6 +27,7 @@ import {
   OvertimeFrequencyCount,
   SalaryWorkTime,
 } from 'apis/salaryWorkTime';
+import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 
 // TODO: replace with proper CompanyInIndex type
 export type CompanyInIndex = unknown;
@@ -60,9 +61,6 @@ export type CompanyInterviewExperienceResult = unknown;
 
 // TODO: replace with proper CompanyWorkExperienceResult type
 export type CompanyWorkExperienceResult = unknown;
-
-// TODO: replace with proper CompanyWorkExperienceAspectStatistics type
-export type CompanyWorkExperienceAspectStatistics = unknown;
 
 // TODO: replace with proper CompanyWorkExperienceAspectExperienceResult type
 export type CompanyWorkExperienceAspectExperienceResult = unknown;
@@ -100,7 +98,7 @@ type State = {
   >;
   workExperiencesAspectStatisticsByName: Record<
     string,
-    FetchBox<CompanyWorkExperienceAspectStatistics | null>
+    FetchBox<AspectStatisticsData | null>
   >;
   workExperiencesAspectExperiencesByName: Record<
     string,
@@ -273,7 +271,7 @@ const reducer = createReducer(preloadedState, {
       box,
     }: {
       companyName: string;
-      box: FetchBox<CompanyWorkExperienceAspectStatistics | null>;
+      box: FetchBox<AspectStatisticsData | null>;
     },
   ) => {
     return {

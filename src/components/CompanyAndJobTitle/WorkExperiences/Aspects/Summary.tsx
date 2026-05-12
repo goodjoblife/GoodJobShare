@@ -6,13 +6,13 @@ import Pen from 'common/icons/Pen';
 
 import styles from './styles.module.css';
 import ScoreDistributionChart from './ScoreDistributionChart';
-import { RatingDistribution } from '.';
+import { RatingDistribution } from 'apis/aspectRatingStatistics';
 
 type SummaryProps = {
   averageRating: number;
   ratingDistribution: RatingDistribution[];
   ratingCount: number;
-  summary: string;
+  summary?: string;
 };
 
 const Summary: React.FC<SummaryProps> = ({

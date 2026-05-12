@@ -16,25 +16,14 @@ import {
   TabType,
   generateTabURL,
 } from 'constants/companyJobTitle';
-
-export type RatingDistribution = {
-  rating: number;
-  count: number;
-};
-
-export type AspectStatistics = {
-  aspect: Aspect;
-  averageRating: number;
-  ratingDistribution: RatingDistribution[];
-  ratingCount: number;
-  summary: string;
-};
-
-export type AspectStatisticsData = {
-  companyAspectRatingStatistics: AspectStatistics[];
-};
+import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 
 export type AspectExperiencesData = {
+  name: string;
+  aspect: Aspect;
+  rating: number | null;
+  start: number;
+  limit: number;
   workExperiences: unknown[];
   workExperiencesCount: number;
 };
@@ -44,7 +33,9 @@ export type AspectProps = {
   pageType: PageType;
   pageName: string;
   tabType: TabType;
-  statisticsBoxSelector: (state: RootState) => FetchBox<AspectStatisticsData>;
+  statisticsBoxSelector: (
+    state: RootState,
+  ) => FetchBox<AspectStatisticsData | null>;
   experiencesBoxSelector: (state: RootState) => FetchBox<AspectExperiencesData>;
   page: number;
   pageSize: number;
@@ -82,19 +73,13 @@ const AspectSection: React.FC<AspectProps> = ({
             const item = items.find(item => item.aspect === aspect);
             if (!item) return null;
 
-            const {
-              averageRating,
-              ratingDistribution,
-              ratingCount,
-              summary,
-            } = item;
+            const { averageRating, ratingDistribution, ratingCount } = item;
 
             return (
               <Summary
                 averageRating={averageRating}
                 ratingDistribution={ratingDistribution}
                 ratingCount={ratingCount}
-                summary={summary}
               />
             );
           }}

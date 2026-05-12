@@ -7,7 +7,6 @@ import {
   queryCompaniesHavingDataGql,
   getCompanyTimeAndSalaryStatisticsQuery,
   getCompanyTopNJobTitlesQuery,
-  getCompanyWorkExperiencesAspectRatingStatisticsQuery,
 } from 'graphql/company';
 
 export const getCompanyTimeAndSalary = ({
@@ -56,14 +55,6 @@ export const getCompanyWorkExperiences = ({
   graphqlClient({
     query: getCompanyWorkExperiencesQuery,
     variables: { companyName, jobTitle, start, limit, sortBy, aspectFilter },
-  }).then(R.prop('company'));
-
-export const getCompanyWorkExperiencesAspectRatingStatistics = ({
-  companyName,
-}) =>
-  graphqlClient({
-    query: getCompanyWorkExperiencesAspectRatingStatisticsQuery,
-    variables: { companyName },
   }).then(R.prop('company'));
 
 export const queryCompaniesApi = ({ start, limit }) =>

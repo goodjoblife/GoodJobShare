@@ -8,7 +8,6 @@ import {
   CompanyTimeAndSalaryStatistics,
   CompanyInterviewExperienceResult,
   CompanyWorkExperienceResult,
-  CompanyWorkExperienceAspectStatistics,
   CompanyWorkExperienceAspectExperienceResult,
   CompanyIsSubscribed,
   TopNJobTitles,
@@ -22,6 +21,7 @@ import {
   JobTitleInterviewExperienceResult,
   JobTitleWorkExperienceResult,
 } from 'reducers/jobTitleIndex';
+import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import FetchBox, { getUnfetched, isFetched } from 'utils/fetchBox';
@@ -92,27 +92,17 @@ export const companyWorkExperiencesBoxSelectorByName = (
 
 export const companyWorkExperiencesAspectStatisticsBoxSelectorByName = (
   companyName: string,
-) => (
-  state: RootState,
-): FetchBox<CompanyWorkExperienceAspectStatistics | null> => {
-  return (
-    (state.companyIndex.workExperiencesAspectStatisticsByName &&
-      state.companyIndex.workExperiencesAspectStatisticsByName[companyName]) ||
-    getUnfetched()
-  );
-};
+) => (state: RootState): FetchBox<AspectStatisticsData | null> =>
+  state.companyIndex.workExperiencesAspectStatisticsByName[companyName] ||
+  getUnfetched();
 
 export const companyWorkExperiencesAspectExperiencesBoxSelectorByName = (
   companyName: string,
 ) => (
   state: RootState,
-): FetchBox<CompanyWorkExperienceAspectExperienceResult | null> => {
-  return (
-    (state.companyIndex.workExperiencesAspectExperiencesByName &&
-      state.companyIndex.workExperiencesAspectExperiencesByName[companyName]) ||
-    getUnfetched()
-  );
-};
+): FetchBox<CompanyWorkExperienceAspectExperienceResult | null> =>
+  state.companyIndex.workExperiencesAspectExperiencesByName[companyName] ||
+  getUnfetched();
 
 export const companyIsSubscribedBoxSelectorByName = (companyName: string) => (
   state: RootState,

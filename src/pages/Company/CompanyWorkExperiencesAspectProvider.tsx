@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import WorkExperiencesAspect, {
   AspectExperiencesData,
-  AspectStatisticsData,
 } from 'components/CompanyAndJobTitle/WorkExperiences/Aspects';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
@@ -92,7 +91,7 @@ const CompanyWorkExperiencesAspectProvider: React.FC &
 
   const statisticsBoxSelector = workExperiencesAspectStatisticsBoxSelectorByName(
     companyName,
-  ) as ((state: RootState) => FetchBox<AspectStatisticsData>);
+  );
 
   const experiencesBoxSelector = useWorkExperiencesAspectExperiencesBoxSelector(
     companyName,
