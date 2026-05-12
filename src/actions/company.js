@@ -24,11 +24,11 @@ import {
 import {
   getCompanyTimeAndSalary,
   getCompanyInterviewExperiences,
-  getCompanyWorkExperiences,
   queryCompaniesApi,
   getCompanyTimeAndSalaryStatistics,
   getCompanyTopNJobTitles,
 } from 'apis/company';
+import queryCompanyWorkExperiencesApi from 'apis/queryCompanyWorkExperiences';
 import queryCompanyAspectRatingStatisticsApi from 'apis/queryCompanyAspectRatingStatistics';
 import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
 import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
@@ -533,7 +533,7 @@ export const queryCompanyWorkExperiences = ({
   dispatch(setWorkExperiences(companyName, toFetching(box)));
 
   try {
-    const data = await getCompanyWorkExperiences({
+    const data = await queryCompanyWorkExperiencesApi({
       companyName,
       jobTitle,
       start,
@@ -629,7 +629,7 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
   dispatch(setWorkExperiencesAspectExperiences(companyName, toFetching()));
 
   try {
-    const data = await getCompanyWorkExperiences({
+    const data = await queryCompanyWorkExperiencesApi({
       companyName,
       start,
       limit,
@@ -646,7 +646,7 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
       );
     }
 
-    /** @type {import('components/CompanyAndJobTitle/WorkExperiences/Aspects').AspectExperiencesData} */
+    /** @type {import('reducers/companyIndex').CompanyAspectExperienceResult} */
     const workExperiencesAspectExperiencesData = {
       name: companyName,
       aspect,

@@ -8,7 +8,7 @@ import {
   CompanyTimeAndSalaryStatistics,
   CompanyInterviewExperienceResult,
   CompanyWorkExperienceResult,
-  CompanyWorkExperienceAspectExperienceResult,
+  CompanyAspectExperienceResult,
   CompanyIsSubscribed,
   TopNJobTitles,
 } from 'reducers/companyIndex';
@@ -98,9 +98,7 @@ export const companyWorkExperiencesAspectStatisticsBoxSelectorByName = (
 
 export const companyWorkExperiencesAspectExperiencesBoxSelectorByName = (
   companyName: string,
-) => (
-  state: RootState,
-): FetchBox<CompanyWorkExperienceAspectExperienceResult | null> =>
+) => (state: RootState): FetchBox<CompanyAspectExperienceResult | null> =>
   state.companyIndex.workExperiencesAspectExperiencesByName[companyName] ||
   getUnfetched();
 

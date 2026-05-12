@@ -17,16 +17,7 @@ import {
   generateTabURL,
 } from 'constants/companyJobTitle';
 import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
-
-export type AspectExperiencesData = {
-  name: string;
-  aspect: Aspect;
-  rating: number | null;
-  start: number;
-  limit: number;
-  workExperiences: unknown[];
-  workExperiencesCount: number;
-};
+import { CompanyAspectExperienceResult } from 'reducers/companyIndex';
 
 export type AspectProps = {
   aspect: Aspect;
@@ -36,7 +27,9 @@ export type AspectProps = {
   statisticsBoxSelector: (
     state: RootState,
   ) => FetchBox<AspectStatisticsData | null>;
-  experiencesBoxSelector: (state: RootState) => FetchBox<AspectExperiencesData>;
+  experiencesBoxSelector: (
+    state: RootState,
+  ) => FetchBox<CompanyAspectExperienceResult | null>;
   page: number;
   pageSize: number;
 };
@@ -91,32 +84,30 @@ const AspectSection: React.FC<AspectProps> = ({
         pageName={pageName}
         tabType={tabType}
         boxSelector={experiencesBoxSelector}
-        render={({
-          workExperiences,
-          workExperiencesCount: totalCount,
-        }: {
-          workExperiences: unknown[]; // eslint-disable-line react/no-unused-prop-types
-          workExperiencesCount: number; // eslint-disable-line react/no-unused-prop-types
-        }): React.ReactNode => (
-          <>
-            <Helmet
-              pageType={pageType}
-              pageName={pageName}
-              totalCount={totalCount}
-              page={page}
-            />
-            <WorkExperiencesSection
-              pageType={pageType}
-              pageName={pageName}
-              tabType={tabType}
-              data={workExperiences}
-              page={page}
-              pageSize={pageSize}
-              totalCount={totalCount}
-              createPageLinkTo={createPageLinkTo}
-            />
-          </>
-        )}
+        render={(data: CompanyAspectExperienceResult): React.ReactNode => {
+          const { workExperiences, workExperiencesCount: totalCount } = data;
+
+          return (
+            <>
+              <Helmet
+                pageType={pageType}
+                pageName={pageName}
+                totalCount={totalCount}
+                page={page}
+              />
+              <WorkExperiencesSection
+                pageType={pageType}
+                pageName={pageName}
+                tabType={tabType}
+                data={workExperiences}
+                page={page}
+                pageSize={pageSize}
+                totalCount={totalCount}
+                createPageLinkTo={createPageLinkTo}
+              />
+            </>
+          );
+        }}
       />
     </CompanyAndJobTitleWrapper>
   );
