@@ -64,6 +64,7 @@ export type CompanyInterviewExperienceResult = unknown;
 // TODO: replace with proper CompanyWorkExperienceResult type
 export type CompanyWorkExperienceResult = unknown;
 
+// Flattened from QueryCompanyWorkExperiencesData, so a type is defined here
 export type CompanyAspectExperienceResult = {
   name: string;
   aspect: Aspect;
