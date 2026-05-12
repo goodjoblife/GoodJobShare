@@ -1,7 +1,7 @@
 import createReducer from 'utils/createReducer';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
 import { Aspect } from 'constants/companyJobTitle';
-import { WorkExperience } from 'apis/queryCompanyWorkExperiences';
+import { WorkExperience } from 'apis/experience';
 import {
   SET_INDEX_COUNT,
   SET_INDEX,
