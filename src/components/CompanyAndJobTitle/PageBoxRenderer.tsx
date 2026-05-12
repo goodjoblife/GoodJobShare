@@ -17,8 +17,8 @@ interface PageBoxRendererProps<T extends PageData> {
   pageName: string;
   pageType: PageType;
   tabType: TabType;
-  boxSelector: (state: RootState) => FetchBox<T>;
-  render: (data: NonNullable<T>) => React.ReactNode;
+  boxSelector: (state: RootState) => FetchBox<T | null>;
+  render: (data: T) => React.ReactNode;
 }
 
 const PageBoxRenderer = <T extends PageData>({

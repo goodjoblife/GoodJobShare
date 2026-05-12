@@ -1,7 +1,6 @@
 import {
   experiencePartialGql,
   interviewExperiencePartialGql,
-  workExperiencesPartialGql,
 } from './experience';
 
 // TODO: 暫時放在這裡，之後搬回 api/
@@ -111,32 +110,6 @@ export const getJobTitleInterviewExperiencesQuery = /* GraphQL */ `
         interviewExperiences {
           ${experiencePartialGql}
           ${interviewExperiencePartialGql()}
-        }
-      }
-    }
-  }
-`;
-
-export const getJobTitleWorkExperiencesQuery = /* GraphQL */ `
-  query(
-    $jobTitle: String!
-    $companyName: String
-    $start: Int!
-    $limit: Int!
-    $sortBy: DataResultSortOption
-  ) {
-    job_title(name: $jobTitle) {
-      name
-      workExperiencesResult(
-        companyQuery: $companyName
-        start: $start
-        limit: $limit
-        sortBy: $sortBy
-      ) {
-        count
-        workExperiences {
-          ${experiencePartialGql}
-          ${workExperiencesPartialGql()}
         }
       }
     }
