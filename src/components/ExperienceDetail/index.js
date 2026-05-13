@@ -24,6 +24,12 @@ import {
   queryExperienceIfUnfetched,
   queryRelatedExperiencesOnExperience,
 } from 'actions/experience';
+import { queryCompanyOverviewStatistics } from 'actions/company';
+import { queryJobTitleOverviewStatistics } from 'actions/jobTitle';
+import {
+  companyOverviewStatisticsBoxSelectorByName,
+  jobTitleOverviewStatisticsBoxSelectorByName,
+} from 'selectors/companyAndJobTitle';
 import { COMMENT_ZONE } from 'constants/formElements';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
@@ -64,6 +70,50 @@ const ExperienceDetail = () => {
   useEffect(() => {
     dispatch(queryExperienceIfUnfetched(experienceId));
   }, [dispatch, experienceId]);
+
+  const companyName = isFetched(experienceBox)
+    ? experienceBox.data.company.name
+    : '';
+
+  useEffect(() => {
+    if (companyName) {
+      dispatch(queryCompanyOverviewStatistics(companyName));
+    }
+  }, [dispatch, companyName]);
+
+  const jobAverageSalaries = useSelector(
+    useMemo(
+      () => state => {
+        const box = companyOverviewStatisticsBoxSelectorByName(companyName)(
+          state,
+        );
+        return isFetched(box) && box.data ? box.data.jobAverageSalaries : [];
+      },
+      [companyName],
+    ),
+  );
+
+  const jobTitle = isFetched(experienceBox)
+    ? experienceBox.data.job_title.name
+    : '';
+
+  useEffect(() => {
+    if (jobTitle) {
+      dispatch(queryJobTitleOverviewStatistics(jobTitle));
+    }
+  }, [dispatch, jobTitle]);
+
+  const salaryDistributionBins = useSelector(
+    useMemo(
+      () => state => {
+        const box = jobTitleOverviewStatisticsBoxSelectorByName(jobTitle)(
+          state,
+        );
+        return isFetched(box) && box.data ? box.data.salaryDistribution : [];
+      },
+      [jobTitle],
+    ),
+  );
 
   const [, fetchPermission, canViewPublishId] = usePermission({
     publishId: experienceId,
@@ -134,7 +184,11 @@ const ExperienceDetail = () => {
               <MoreExperiencesBlock experience={experienceBox.data} />
             </Wrapper>
             <Wrapper size="l">
-              <ChartsZone experience={experienceBox.data} />
+              <ChartsZone
+                experience={experienceBox.data}
+                jobAverageSalaries={jobAverageSalaries}
+                salaryDistributionBins={salaryDistributionBins}
+              />
             </Wrapper>
           </React.Fragment>
         )}

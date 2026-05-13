@@ -19,22 +19,21 @@ const JobTitleDistributionChart = loadable(() =>
 
 const ChartsZone = ({
   experience: {
-    company: {
-      name: companyName,
-      salary_work_time_statistics: { job_average_salaries },
-    },
-    job_title: {
-      name: jobTitle,
-      salary_distribution: { bins },
-    },
+    company: { name: companyName },
+    job_title: { name: jobTitle },
   },
+  jobAverageSalaries,
+  salaryDistributionBins,
 }) => {
-  if (isEmptyOrNull(job_average_salaries) && isEmptyOrNull(bins)) {
+  if (
+    isEmptyOrNull(jobAverageSalaries) &&
+    isEmptyOrNull(salaryDistributionBins)
+  ) {
     return null;
   }
   return (
     <div className={cn(styles.page, moduleStyles.container)}>
-      {isEmptyOrNull(job_average_salaries) ? null : (
+      {isEmptyOrNull(jobAverageSalaries) ? null : (
         <ChartWrapper
           className={styles.chartWrapper}
           title={`${companyName}的薪水`}
@@ -45,12 +44,12 @@ const ChartsZone = ({
         >
           <React.Fragment>
             <div className={styles.barChart}>
-              <JobTitleDistributionChart data={job_average_salaries} />
+              <JobTitleDistributionChart data={jobAverageSalaries} />
             </div>
           </React.Fragment>
         </ChartWrapper>
       )}
-      {isEmptyOrNull(bins) ? null : (
+      {isEmptyOrNull(salaryDistributionBins) ? null : (
         <ChartWrapper
           className={styles.chartWrapper}
           title={`${jobTitle}的薪水分佈`}
@@ -61,7 +60,7 @@ const ChartsZone = ({
         >
           <React.Fragment>
             <div className={styles.barChart}>
-              <SalaryDistributionChart data={bins} />
+              <SalaryDistributionChart data={salaryDistributionBins} />
             </div>
           </React.Fragment>
         </ChartWrapper>
@@ -72,6 +71,8 @@ const ChartsZone = ({
 
 ChartsZone.propTypes = {
   experience: PropTypes.object.isRequired,
+  jobAverageSalaries: PropTypes.array.isRequired,
+  salaryDistributionBins: PropTypes.array.isRequired,
 };
 
 export default ChartsZone;
