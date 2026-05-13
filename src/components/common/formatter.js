@@ -46,8 +46,8 @@ export const formatSalaryAmountRange = salary => {
     return '-';
   }
   const [head, tail] = getSalaryAmountRange(salary);
-  const headString = numToChineseReadableString(head) ?? '0';
-  const tailString = numToChineseReadableString(tail) ?? '0';
+  const headString = numToChineseReadableString(head);
+  const tailString = numToChineseReadableString(tail);
   return `${headString} ~ ${tailString}`;
 };
 
