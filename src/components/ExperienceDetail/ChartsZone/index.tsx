@@ -1,7 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import cn from 'classnames';
-import R from 'ramda';
 import { useDispatch, useSelector } from 'react-redux';
 import { PageType, generatePageURL } from 'constants/companyJobTitle';
 import ChartWrapper from '../../LandingPage/ChartWrapper';
@@ -16,8 +14,6 @@ import {
 } from 'selectors/companyAndJobTitle';
 import { isFetched } from 'utils/fetchBox';
 
-const isEmptyOrNull = R.either(R.isEmpty, R.isNil);
-
 const SalaryDistributionChart = loadable(() =>
   import('common/Charts/SalaryDistributionChart'),
 );
@@ -25,7 +21,12 @@ const JobTitleDistributionChart = loadable(() =>
   import('common/Charts/JobTitleDistributionChart'),
 );
 
-const ChartsZone = ({ companyName, jobTitle }) => {
+type Props = {
+  companyName: string;
+  jobTitle: string;
+};
+
+const ChartsZone: React.FC<Props> = ({ companyName, jobTitle }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,39 +37,31 @@ const ChartsZone = ({ companyName, jobTitle }) => {
     dispatch(queryJobTitleOverviewStatistics(jobTitle));
   }, [dispatch, jobTitle]);
 
-  const jobAverageSalaries = useSelector(
-    useMemo(
-      () => state => {
-        const box = companyOverviewStatisticsBoxSelectorByName(companyName)(
-          state,
-        );
-        return isFetched(box) && box.data ? box.data.jobAverageSalaries : [];
-      },
-      [companyName],
-    ),
+  const companyOverviewBox = useSelector(
+    companyOverviewStatisticsBoxSelectorByName(companyName),
+  );
+  const jobTitleOverviewBox = useSelector(
+    jobTitleOverviewStatisticsBoxSelectorByName(jobTitle),
   );
 
-  const salaryDistributionBins = useSelector(
-    useMemo(
-      () => state => {
-        const box = jobTitleOverviewStatisticsBoxSelectorByName(jobTitle)(
-          state,
-        );
-        return isFetched(box) && box.data ? box.data.salaryDistribution : [];
-      },
-      [jobTitle],
-    ),
-  );
+  if (!isFetched(companyOverviewBox) || !isFetched(jobTitleOverviewBox)) {
+    return null;
+  }
 
-  if (
-    isEmptyOrNull(jobAverageSalaries) &&
-    isEmptyOrNull(salaryDistributionBins)
-  ) {
+  // data is null when the company or job title does not exist
+  if (!companyOverviewBox.data || !jobTitleOverviewBox.data) {
+    return null;
+  }
+
+  const jobAverageSalaries = companyOverviewBox.data.jobAverageSalaries;
+  const salaryDistributionBins = jobTitleOverviewBox.data.salaryDistribution;
+
+  if (jobAverageSalaries.length === 0 && salaryDistributionBins.length === 0) {
     return null;
   }
   return (
     <div className={cn(styles.page, moduleStyles.container)}>
-      {isEmptyOrNull(jobAverageSalaries) ? null : (
+      {jobAverageSalaries.length > 0 && (
         <ChartWrapper
           className={styles.chartWrapper}
           title={`${companyName}的薪水`}
@@ -84,7 +77,7 @@ const ChartsZone = ({ companyName, jobTitle }) => {
           </React.Fragment>
         </ChartWrapper>
       )}
-      {isEmptyOrNull(salaryDistributionBins) ? null : (
+      {salaryDistributionBins.length > 0 && (
         <ChartWrapper
           className={styles.chartWrapper}
           title={`${jobTitle}的薪水分佈`}
@@ -102,11 +95,6 @@ const ChartsZone = ({ companyName, jobTitle }) => {
       )}
     </div>
   );
-};
-
-ChartsZone.propTypes = {
-  companyName: PropTypes.string.isRequired,
-  jobTitle: PropTypes.string.isRequired,
 };
 
 export default ChartsZone;
