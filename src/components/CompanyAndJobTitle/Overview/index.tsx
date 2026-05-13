@@ -2,7 +2,7 @@ import React from 'react';
 import { RootState } from 'reducers';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import PageBoxRenderer from '../PageBoxRenderer';
-import OverviewSection from './Overview';
+import OverviewSection from './OverviewSection';
 import Helmet from './Helmet';
 import FetchBox from 'utils/fetchBox';
 import { Wrapper } from 'common/base';

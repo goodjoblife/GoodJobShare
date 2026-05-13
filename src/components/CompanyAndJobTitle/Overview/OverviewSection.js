@@ -17,7 +17,7 @@ import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
 import { fetchBoxPropType } from 'utils/fetchBox';
 
-const Overview = ({
+const OverviewSection = ({
   pageType,
   pageName,
   interviewExperiences,
@@ -120,7 +120,7 @@ const Overview = ({
   );
 };
 
-Overview.propTypes = {
+OverviewSection.propTypes = {
   interviewExperiences: PropTypes.arrayOf(PropTypes.object).isRequired,
   interviewExperiencesCount: PropTypes.number.isRequired,
   onCloseReport: PropTypes.func.isRequired,
@@ -133,4 +133,4 @@ Overview.propTypes = {
   workExperiencesCount: PropTypes.number.isRequired,
 };
 
-export default Overview;
+export default OverviewSection;
