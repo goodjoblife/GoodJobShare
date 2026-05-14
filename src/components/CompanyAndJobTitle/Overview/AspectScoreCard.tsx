@@ -30,6 +30,26 @@ const useAspectData = ({
   return stat;
 };
 
+export const useAspectsData = (aspects: Aspect[]): AspectRatingStatistics[] => {
+  const companyName = useCompanyName();
+  const box = useSelector(
+    companyWorkExperiencesAspectStatisticsBoxSelectorByName(companyName),
+  );
+
+  if (!isFetched(box) || !box.data) return [];
+
+  return aspects
+    .map(aspect =>
+      box.data!.companyAspectRatingStatistics.find(
+        item => item.aspect === aspect,
+      ),
+    )
+    .filter(
+      (stat): stat is AspectRatingStatistics =>
+        stat != null && stat.ratingCount > 0,
+    );
+};
+
 interface AspectScoreCardProps {
   aspect: Aspect;
 }
