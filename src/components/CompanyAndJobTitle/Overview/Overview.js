@@ -21,12 +21,12 @@ import useCompanyName from 'pages/Company/useCompanyName';
 
 const GenderAspectSnippetBlock = () => {
   const companyName = useCompanyName();
-  const models = useAspectsData(companyName, [Aspect.GENDER]);
-  if (models.length === 0) return null;
+  const aspectModels = useAspectsData(companyName, [Aspect.GENDER]);
+  if (aspectModels.length === 0) return null;
 
   return (
     <SnippetBlock title="性別友善">
-      {models.map(model => (
+      {aspectModels.map(model => (
         <AspectScoreCard key={model.aspect} aspect={model.aspect} />
       ))}
     </SnippetBlock>
