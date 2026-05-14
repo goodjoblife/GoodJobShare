@@ -69,6 +69,7 @@ export type SalaryWorkTime = {
   }[];
 };
 
+// Must be the same as graphql schema
 export type OvertimeFrequencyCount = {
   seldom: number;
   sometimes: number;
@@ -76,6 +77,7 @@ export type OvertimeFrequencyCount = {
   almost_everyday: number;
 };
 
+// Must be the same as graphql schema
 export type JobAverageSalary = {
   job_title: {
     name: string;
@@ -87,6 +89,7 @@ export type JobAverageSalary = {
   data_count: number;
 };
 
+// Must be the same as graphql schema
 export type SalaryDistributionBin = {
   data_count: number;
   range: {
@@ -96,15 +99,21 @@ export type SalaryDistributionBin = {
   };
 };
 
-type YesNoOrUnknownCount = {
+// Must be the same as graphql schema
+export type YesNoOrUnknownCount = {
   yes: number;
   no: number;
   unknown: number;
 };
 
+// Must be the same as graphql schema
 export type SalaryWorkTimeStatistics = {
   count: number;
-  is_overtime_salary_legal_count: YesNoOrUnknownCount | null;
+  average_week_work_time: number | null;
+  average_estimated_hourly_wage: number | null;
   has_compensatory_dayoff_count: YesNoOrUnknownCount | null;
   has_overtime_salary_count: YesNoOrUnknownCount | null;
+  is_overtime_salary_legal_count: YesNoOrUnknownCount | null;
+  overtime_frequency_count: OvertimeFrequencyCount | null;
+  job_average_salaries: JobAverageSalary[];
 };

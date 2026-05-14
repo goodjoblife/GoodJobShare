@@ -8,7 +8,7 @@ interface Store {
 }
 
 export interface ServerSideRender<
-  Params extends { [K in keyof Params]?: string } = object,
+  Params extends { [K in keyof Params]?: string } = Record<string, never>,
 > {
   fetchData: ({
     store,

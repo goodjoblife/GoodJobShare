@@ -27,7 +27,7 @@ export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
 export const LOG_OUT = '@@auth/LOG_OUT';
 
-const setLogin = (status, token = null) => ({
+const setLogin = (status, token = undefined) => ({
   type: SET_LOGIN,
   status,
   token,

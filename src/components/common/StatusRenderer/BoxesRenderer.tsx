@@ -4,9 +4,15 @@ import FetchBox, { isUnfetched, isFetching, isError } from 'utils/fetchBox';
 import FadeInContent from './FadeInContent';
 
 type BoxesRendererProps<T extends unknown[]> = {
-  boxes: {
-    [K in keyof T]: FetchBox<T[K]>;
-  };
+  // Tuple spread converts the mapped type into a variadic tuple, so TypeScript
+  // preserves per-index types (boxes[0]: FetchBox<T[0]>, boxes[1]: FetchBox<T[1]>, …).
+  // A plain array (FetchBox<T[number]>[]) would collapse all positions to a union
+  // and break the element-wise correlation with `render`'s `data: T` parameter.
+  boxes: [
+    ...{
+      [K in keyof T]: FetchBox<T[K]>;
+    },
+  ];
   render: (data: T) => React.ReactNode;
 };
 

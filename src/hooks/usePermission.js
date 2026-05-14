@@ -6,7 +6,7 @@ import useIsMyPublishId from './useIsMyPublishId';
 
 const useGetSearchPermission = ({ token }) => {
   return useCallback(async () => {
-    if (token === null) return false;
+    if (!token) return false;
     // Get permission only when token available
     return await queryHasSearchPermissionApi({ token });
   }, [token]);
