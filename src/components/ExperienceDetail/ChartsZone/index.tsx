@@ -21,12 +21,12 @@ const JobTitleDistributionChart = loadable(() =>
   import('common/Charts/JobTitleDistributionChart'),
 );
 
-type Props = {
+type ChartsZoneProps = {
   companyName: string;
   jobTitle: string;
 };
 
-const ChartsZone: React.FC<Props> = ({ companyName, jobTitle }) => {
+const ChartsZone: React.FC<ChartsZoneProps> = ({ companyName, jobTitle }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,24 +37,24 @@ const ChartsZone: React.FC<Props> = ({ companyName, jobTitle }) => {
     dispatch(queryJobTitleOverviewStatistics(jobTitle));
   }, [dispatch, jobTitle]);
 
-  const companyOverviewBox = useSelector(
+  const companyStatisticsBox = useSelector(
     companyOverviewStatisticsBoxSelectorByName(companyName),
   );
-  const jobTitleOverviewBox = useSelector(
+  const jobTitleStatisticsBox = useSelector(
     jobTitleOverviewStatisticsBoxSelectorByName(jobTitle),
   );
 
   return (
     <BoxesRenderer
-      boxes={[companyOverviewBox, jobTitleOverviewBox]}
-      render={([companyData, jobTitleData]): React.ReactNode => {
+      boxes={[companyStatisticsBox, jobTitleStatisticsBox]}
+      render={([companyStatistics, jobTitleStatistics]): React.ReactNode => {
         // data is null when the company or job title does not exist
-        if (!companyData || !jobTitleData) {
+        if (!companyStatistics || !jobTitleStatistics) {
           return null;
         }
 
-        const jobAverageSalaries = companyData.jobAverageSalaries;
-        const salaryDistributionBins = jobTitleData.salaryDistribution;
+        const jobAverageSalaries = companyStatistics.jobAverageSalaries;
+        const salaryDistributionBins = jobTitleStatistics.salaryDistribution;
 
         if (
           jobAverageSalaries.length === 0 &&
