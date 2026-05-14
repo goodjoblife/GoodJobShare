@@ -47,7 +47,7 @@ const ChartsZone: React.FC<Props> = ({ companyName, jobTitle }) => {
   return (
     <BoxesRenderer
       boxes={[companyOverviewBox, jobTitleOverviewBox]}
-      render={([companyData, jobTitleData]) => {
+      render={([companyData, jobTitleData]): React.ReactNode => {
         // data is null when the company or job title does not exist
         if (!companyData || !jobTitleData) {
           return null;
