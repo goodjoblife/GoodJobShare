@@ -35,8 +35,11 @@ const InterviewExperiences = ({
       {aspectModels.length > 0 && (
         <Wrapper size="l">
           <div className={styles.scoreCards}>
-            {aspectModels.map(model => (
-              <AspectScoreCard key={model.aspect} aspect={model.aspect} />
+            {aspectModels.map(aspectModel => (
+              <AspectScoreCard
+                key={aspectModel.aspect}
+                aspect={aspectModel.aspect}
+              />
             ))}
           </div>
         </Wrapper>

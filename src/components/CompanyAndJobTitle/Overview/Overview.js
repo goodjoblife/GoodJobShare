@@ -26,8 +26,8 @@ const GenderAspectSnippetBlock = () => {
 
   return (
     <SnippetBlock title="性別友善">
-      {aspectModels.map(model => (
-        <AspectScoreCard key={model.aspect} aspect={model.aspect} />
+      {aspectModels.map(aspectModel => (
+        <AspectScoreCard key={aspectModel.aspect} aspect={aspectModel.aspect} />
       ))}
     </SnippetBlock>
   );
