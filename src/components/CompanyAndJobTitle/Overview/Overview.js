@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { generatePath } from 'react-router';
 
 import { Section } from 'common/base';
 import BoxRenderer from 'common/StatusRenderer';
@@ -17,34 +16,19 @@ import {
 import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
 import { fetchBoxPropType } from 'utils/fetchBox';
-import { useAspectsData } from './AspectScoreCard';
-import ScoreCard from './ScoreCard';
-import useCompanyName from 'pages/Company/useCompanyName';
-import { companyWorkExperiencesAspectPath } from 'constants/linkTo';
+import AspectScoreCard, { useAspectsData } from './AspectScoreCard';
 
 const GenderAspectSnippetBlock = () => {
-  const companyName = useCompanyName();
   const models = useAspectsData([Aspect.GENDER]);
   if (models.length === 0) return null;
 
-  const scoreCards = models.map(model => {
-    const path = generatePath(companyWorkExperiencesAspectPath, {
-      companyName,
-      aspect: model.aspect,
-    });
-    return (
-      <ScoreCard
-        key={model.aspect}
-        title={model.aspect}
-        value={model.averageRating}
-        maxValue={5}
-        linkTo={path}
-        dataCount={model.ratingCount}
-      />
-    );
-  });
-
-  return <SnippetBlock title="性別友善">{scoreCards}</SnippetBlock>;
+  return (
+    <SnippetBlock title="性別友善">
+      {models.map(model => (
+        <AspectScoreCard key={model.aspect} aspect={model.aspect} />
+      ))}
+    </SnippetBlock>
+  );
 };
 
 const Overview = ({
