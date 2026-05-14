@@ -11,43 +11,33 @@ import { companyWorkExperiencesAspectStatisticsBoxSelectorByName } from 'selecto
 import { isFetched } from 'utils/fetchBox';
 import { AspectRatingStatistics } from 'apis/aspectRatingStatistics';
 
+const useAllAspectRatingStatistics = (
+  companyName: string,
+): AspectRatingStatistics[] => {
+  const box = useSelector(
+    companyWorkExperiencesAspectStatisticsBoxSelectorByName(companyName),
+  );
+  if (!isFetched(box) || !box.data) return [];
+  return box.data.companyAspectRatingStatistics;
+};
+
 const useAspectData = ({
   companyName,
   aspect,
 }: {
   companyName: string;
   aspect: Aspect;
-}): AspectRatingStatistics | null | undefined => {
-  const box = useSelector(
-    companyWorkExperiencesAspectStatisticsBoxSelectorByName(companyName),
-  );
-
-  if (!isFetched(box) || !box.data) return null;
-
-  const stat = box.data.companyAspectRatingStatistics.find(
-    item => item.aspect === aspect,
-  );
-  return stat;
+}): AspectRatingStatistics | undefined => {
+  const stats = useAllAspectRatingStatistics(companyName);
+  return stats.find(item => item.aspect === aspect);
 };
 
 export const useAspectsData = (aspects: Aspect[]): AspectRatingStatistics[] => {
   const companyName = useCompanyName();
-  const box = useSelector(
-    companyWorkExperiencesAspectStatisticsBoxSelectorByName(companyName),
+  const stats = useAllAspectRatingStatistics(companyName);
+  return stats.filter(
+    stat => aspects.includes(stat.aspect as Aspect) && stat.ratingCount > 0,
   );
-
-  if (!isFetched(box) || !box.data) return [];
-
-  return aspects
-    .map(aspect =>
-      box.data!.companyAspectRatingStatistics.find(
-        item => item.aspect === aspect,
-      ),
-    )
-    .filter(
-      (stat): stat is AspectRatingStatistics =>
-        stat != null && stat.ratingCount > 0,
-    );
 };
 
 interface AspectScoreCardProps {
