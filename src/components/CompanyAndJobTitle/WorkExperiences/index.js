@@ -11,6 +11,7 @@ import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import AspectScoreCard, { useAspectsData } from '../Overview/AspectScoreCard';
 import { Aspects } from 'constants/companyJobTitle';
+import useCompanyName from 'pages/Company/useCompanyName';
 
 const WorkExperiences = ({
   pageType,
@@ -21,7 +22,8 @@ const WorkExperiences = ({
   pageSize,
 }) => {
   const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
-  const aspectModels = useAspectsData(Aspects);
+  const companyName = useCompanyName();
+  const aspectModels = useAspectsData(companyName, Aspects);
 
   return (
     <CompanyAndJobTitleWrapper

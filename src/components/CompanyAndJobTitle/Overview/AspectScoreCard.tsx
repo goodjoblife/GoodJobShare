@@ -32,8 +32,10 @@ const useAspectData = ({
   return stats.find(item => item.aspect === aspect);
 };
 
-export const useAspectsData = (aspects: Aspect[]): AspectRatingStatistics[] => {
-  const companyName = useCompanyName();
+export const useAspectsData = (
+  companyName: string,
+  aspects: Aspect[],
+): AspectRatingStatistics[] => {
   const stats = useAllAspectRatingStatistics(companyName);
   return stats.filter(
     stat => aspects.includes(stat.aspect as Aspect) && stat.ratingCount > 0,

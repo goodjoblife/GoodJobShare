@@ -17,9 +17,11 @@ import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
 import { fetchBoxPropType } from 'utils/fetchBox';
 import AspectScoreCard, { useAspectsData } from './AspectScoreCard';
+import useCompanyName from 'pages/Company/useCompanyName';
 
 const GenderAspectSnippetBlock = () => {
-  const models = useAspectsData([Aspect.GENDER]);
+  const companyName = useCompanyName();
+  const models = useAspectsData(companyName, [Aspect.GENDER]);
   if (models.length === 0) return null;
 
   return (
