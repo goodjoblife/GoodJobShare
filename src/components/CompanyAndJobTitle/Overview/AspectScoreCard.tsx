@@ -11,23 +11,35 @@ import { companyWorkExperiencesAspectStatisticsBoxSelectorByName } from 'selecto
 import { isFetched } from 'utils/fetchBox';
 import { AspectRatingStatistics } from 'apis/aspectRatingStatistics';
 
+const useAllAspectRatingStatistics = (
+  companyName: string,
+): AspectRatingStatistics[] => {
+  const box = useSelector(
+    companyWorkExperiencesAspectStatisticsBoxSelectorByName(companyName),
+  );
+  if (!isFetched(box) || !box.data) return [];
+  return box.data.companyAspectRatingStatistics;
+};
+
 const useAspectData = ({
   companyName,
   aspect,
 }: {
   companyName: string;
   aspect: Aspect;
-}): AspectRatingStatistics | null | undefined => {
-  const box = useSelector(
-    companyWorkExperiencesAspectStatisticsBoxSelectorByName(companyName),
-  );
+}): AspectRatingStatistics | undefined => {
+  const stats = useAllAspectRatingStatistics(companyName);
+  return stats.find(item => item.aspect === aspect);
+};
 
-  if (!isFetched(box) || !box.data) return null;
-
-  const stat = box.data.companyAspectRatingStatistics.find(
-    item => item.aspect === aspect,
+export const useAspectsData = (
+  companyName: string,
+  aspects: Aspect[],
+): AspectRatingStatistics[] => {
+  const stats = useAllAspectRatingStatistics(companyName);
+  return stats.filter(
+    stat => aspects.includes(stat.aspect as Aspect) && stat.ratingCount > 0,
   );
-  return stat;
 };
 
 interface AspectScoreCardProps {

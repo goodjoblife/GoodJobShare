@@ -16,16 +16,21 @@ import {
 import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
 import { fetchBoxPropType } from 'utils/fetchBox';
-import AspectScoreCard from './AspectScoreCard';
+import AspectScoreCard, { useAspectsData } from './AspectScoreCard';
+import useCompanyName from 'pages/Company/useCompanyName';
 
 const GenderAspectSnippetBlock = () => {
-  const aspects = [Aspect.GENDER];
-  const scoreCards = aspects.map(aspect => (
-    <AspectScoreCard key={aspect} aspect={aspect} />
-  ));
-  if (scoreCards.length === 0) return null;
+  const companyName = useCompanyName();
+  const aspectModels = useAspectsData(companyName, [Aspect.GENDER]);
+  if (aspectModels.length === 0) return null;
 
-  return <SnippetBlock title="性別友善">{scoreCards}</SnippetBlock>;
+  return (
+    <SnippetBlock title="性別友善">
+      {aspectModels.map(aspectModel => (
+        <AspectScoreCard key={aspectModel.aspect} aspect={aspectModel.aspect} />
+      ))}
+    </SnippetBlock>
+  );
 };
 
 const Overview = ({

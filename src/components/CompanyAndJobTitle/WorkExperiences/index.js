@@ -9,8 +9,9 @@ import Sorter from '../Sorter';
 import styles from '../styles.module.css';
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
-import AspectScoreCard from '../Overview/AspectScoreCard';
+import AspectScoreCard, { useAspectsData } from '../Overview/AspectScoreCard';
 import { Aspects } from 'constants/companyJobTitle';
+import useCompanyName from 'pages/Company/useCompanyName';
 
 const WorkExperiences = ({
   pageType,
@@ -21,6 +22,8 @@ const WorkExperiences = ({
   pageSize,
 }) => {
   const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
+  const companyName = useCompanyName();
+  const aspectModels = useAspectsData(companyName, Aspects);
 
   return (
     <CompanyAndJobTitleWrapper
@@ -28,13 +31,18 @@ const WorkExperiences = ({
       pageName={pageName}
       tabType={tabType}
     >
-      <Wrapper size="l">
-        <div className={styles.scoreCards}>
-          {Aspects.map(aspect => (
-            <AspectScoreCard key={aspect} aspect={aspect} />
-          ))}
-        </div>
-      </Wrapper>
+      {aspectModels.length > 0 && (
+        <Wrapper size="l">
+          <div className={styles.scoreCards}>
+            {aspectModels.map(aspectModel => (
+              <AspectScoreCard
+                key={aspectModel.aspect}
+                aspect={aspectModel.aspect}
+              />
+            ))}
+          </div>
+        </Wrapper>
+      )}
       <Wrapper ref={handleSectionRef} size="m">
         <div className={styles.interactive}>
           <Searchbar pageType={pageType} tabType={tabType} />
