@@ -42,7 +42,7 @@ const ScoreDistributionChart: React.FC<ScoreDistributionChartProps> = ({
             y?: number;
             width?: number;
             height?: number;
-          }): React.ReactElement<any> =>
+          }): React.ReactElement<SVGElement> =>
             (value && (
               <text
                 x={x + width + 4}
@@ -52,7 +52,7 @@ const ScoreDistributionChart: React.FC<ScoreDistributionChartProps> = ({
               >
                 {value}
               </text>
-            )) as React.ReactElement<any>
+            )) as React.ReactElement<SVGElement>
           }
         />
       </BarChart>

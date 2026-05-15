@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import WorkExperiencesAspect from 'components/CompanyAndJobTitle/WorkExperiences/Aspects';
 import { CompanyAspectExperienceResult } from 'reducers/companyIndex';
+import { WorkExperience } from 'apis/experience';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
 import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
@@ -40,7 +41,8 @@ const useWorkExperiencesAspectExperiencesBoxSelector = (
         const data: CompanyAspectExperienceResult = {
           ...box.data,
           workExperiences: box.data.workExperiences.map(
-            (e: any) => experienceBoxSelectorAtId(e.id)(state).data || e,
+            (e: WorkExperience) =>
+              experienceBoxSelectorAtId(e.id)(state).data || e,
           ),
         };
         return getFetched(data);
