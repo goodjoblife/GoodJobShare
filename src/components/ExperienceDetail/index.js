@@ -134,7 +134,10 @@ const ExperienceDetail = () => {
               <MoreExperiencesBlock experience={experienceBox.data} />
             </Wrapper>
             <Wrapper size="l">
-              <ChartsZone experience={experienceBox.data} />
+              <ChartsZone
+                companyName={experienceBox.data.company.name}
+                jobTitle={experienceBox.data.job_title.name}
+              />
             </Wrapper>
           </React.Fragment>
         )}
