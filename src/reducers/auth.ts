@@ -11,7 +11,9 @@ export type User = {
 
 const preloadedState: {
   status: AuthStatus;
-  token?: string;
+  // null is possible when redux-persist restores state from JSON (undefined is serialized as null)
+  // always access via tokenSelector to normalize null to undefined
+  token?: string | null;
   user?: User;
 } = {
   status: AuthStatus.UNKNOWN,

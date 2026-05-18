@@ -22,7 +22,7 @@ const useFadeIn = (): {
   return { visible, animating, onTransitionEnd };
 };
 
-const FadeInContent: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+const FadeInContent: React.FC<PropsWithChildren> = ({ children }) => {
   const { visible, animating, onTransitionEnd } = useFadeIn();
   return (
     <div
