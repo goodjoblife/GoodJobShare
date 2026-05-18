@@ -30,14 +30,16 @@ const CompanyAndJobTitleWrapper: React.FC<CompanyAndJobTitleWrapperProps> = ({
 }) => {
   const tabLinkOptions = useMemo(
     () =>
-      (Object.keys(tabTypeTranslation) as TabType[]).map(type => ({
-        label: tabTypeTranslation[type],
-        to: generateTabURL({
-          pageType,
-          pageName,
-          tabType: type,
+      (Object.entries(tabTypeTranslation) as [TabType, string][]).map(
+        ([type, label]) => ({
+          label,
+          to: generateTabURL({
+            pageType,
+            pageName,
+            tabType: type,
+          }),
         }),
-      })),
+      ),
     [pageType, pageName],
   );
 
