@@ -23,7 +23,7 @@ Listed by priority — prefer the first location that fits:
 3. **`src/constants/`** — enums and their associated lookup maps
 4. **`src/types/`** — cross-cutting types (e.g. `ServerSideRender`)
 
-For API-specific rules see [src/apis/README.md](../src/apis/README.md).
+For API-specific rules see [apis.md](apis.md).
 
 ## Enums
 
