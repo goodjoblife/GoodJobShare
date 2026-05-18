@@ -3,7 +3,10 @@ import Helmet from 'react-helmet';
 import { useSelector } from 'react-redux';
 import EmployerAggregateRatingSeo from './EmployerAggregateRatingSeo';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
-import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
+import {
+  companyRatingStatisticsBoxSelectorByName,
+  companyTopNJobTitlesBoxSelectorByName,
+} from 'selectors/companyAndJobTitle';
 import { isFetched } from 'utils/fetchBox';
 import { SITE_NAME } from 'constants/helmetData';
 import { PageType, generatePageURL } from 'constants/companyJobTitle';
@@ -30,7 +33,6 @@ type CompanyOverviewHelmetProps = {
   salaryWorkTimesCount: number;
   interviewExperiencesCount: number;
   workExperiencesCount: number;
-  topNJobTitles: { name: string }[];
 };
 
 export const CompanyOverviewHelmet: React.FC<CompanyOverviewHelmetProps> = ({
@@ -38,11 +40,14 @@ export const CompanyOverviewHelmet: React.FC<CompanyOverviewHelmetProps> = ({
   salaryWorkTimesCount,
   interviewExperiencesCount,
   workExperiencesCount,
-  topNJobTitles,
 }) => {
   const ratingStatistcsBox = useSelector(
     companyRatingStatisticsBoxSelectorByName(companyName),
   );
+  const topNJobTitlesBox = useSelector(
+    companyTopNJobTitlesBoxSelectorByName(companyName),
+  );
+  const topNJobTitles = topNJobTitlesBox.data ? topNJobTitlesBox.data.all : [];
 
   const title = companyName;
 
@@ -61,9 +66,7 @@ export const CompanyOverviewHelmet: React.FC<CompanyOverviewHelmetProps> = ({
   ]
     .filter(Boolean)
     .join('、');
-  const jobTitles = topNJobTitles
-    ? topNJobTitles.map(item => item.name).join('、')
-    : '';
+  const jobTitles = topNJobTitles.map(item => item.name).join('、');
   const description = `想了解${companyName}嗎？由內部員工分享${jobTitles}等職位的${combinedStr}，幫助你更瞭解${companyName}！`;
 
   const path = generatePageURL({

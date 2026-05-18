@@ -70,8 +70,12 @@ export type CompanyWorkExperienceResult = {
 // TODO: replace with proper CompanyIsSubscribed type
 export type CompanyIsSubscribed = unknown;
 
-// TODO: replace with proper TopNJobTitles type
-export type TopNJobTitles = unknown;
+export type TopNJobTitles = {
+  work: { name: string }[];
+  interview: { name: string }[];
+  salary: { name: string }[];
+  all: { name: string }[];
+};
 
 type State = {
   indexesByPage: Record<number, FetchBox<CompanyInIndex[]>>;

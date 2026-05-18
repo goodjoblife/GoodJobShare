@@ -15,7 +15,6 @@ import {
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
-import { useTopNJobTitles } from './useTopNJobTitles';
 
 const useOverviewBoxSelector = pageName => {
   return useCallback(
@@ -75,14 +74,11 @@ const CompanyOverviewProvider = () => {
   const boxSelector = useOverviewBoxSelector(companyName);
   const statisticsBox = useOverviewStatisticsBox(companyName);
 
-  const topNJobTitles = useTopNJobTitles(companyName);
-
   return (
     <Overview
       pageType={pageType}
       pageName={companyName}
       tabType={TabType.OVERVIEW}
-      topNJobTitles={topNJobTitles.all}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
       onCloseReport={() => handleQueryCompanyOverview({ force: true })}
