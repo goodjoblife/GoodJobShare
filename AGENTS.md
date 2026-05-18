@@ -30,6 +30,10 @@ npm run testonly    # unit tests only
 - **`src/pages/Company/`**, **`src/pages/JobTitle/`** and **`src/components/CompanyAndJobTitle/`** 
 See [docs/company-and-job-title.md](docs/company-and-job-title.md) for the full architecture convention of these three directories.
 
+### React Components
+
+For component naming, file naming, and `index.ts` usage conventions, see [docs/component-conventions.md](docs/component-conventions.md).
+
 ### TypeScript Types
 
 For type definition conventions (`type` vs `interface`, where types live, nullable fields, enums, `unknown` placeholders), see [docs/typescript-types.md](docs/typescript-types.md).
