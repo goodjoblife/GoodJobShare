@@ -3,7 +3,7 @@ import { RootState } from 'reducers';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import PageBoxRenderer from '../PageBoxRenderer';
 import OverviewSection from './OverviewSection';
-import Helmet from './Helmet';
+import { CompanyOverviewHelmet, JobTitleOverviewHelmet } from './Helmet';
 import FetchBox from 'utils/fetchBox';
 import { Wrapper } from 'common/base';
 import { PageType, TabType } from 'constants/companyJobTitle';
@@ -44,14 +44,22 @@ const Overview: React.FC<OverviewProps> = ({
         boxSelector={boxSelector}
         render={(data): React.ReactNode => (
           <>
-            <Helmet
-              pageType={pageType}
-              pageName={pageName}
-              interviewExperiencesCount={data.interviewExperiencesCount}
-              workExperiencesCount={data.workExperiencesCount}
-              salaryWorkTimesCount={data.salaryWorkTimesCount}
-              topNJobTitles={topNJobTitles}
-            />
+            {pageType === PageType.COMPANY ? (
+              <CompanyOverviewHelmet
+                companyName={pageName}
+                interviewExperiencesCount={data.interviewExperiencesCount}
+                workExperiencesCount={data.workExperiencesCount}
+                salaryWorkTimesCount={data.salaryWorkTimesCount}
+                topNJobTitles={topNJobTitles || []}
+              />
+            ) : pageType === PageType.JOB_TITLE ? (
+              <JobTitleOverviewHelmet
+                jobTitle={pageName}
+                interviewExperiencesCount={data.interviewExperiencesCount}
+                workExperiencesCount={data.workExperiencesCount}
+                salaryWorkTimesCount={data.salaryWorkTimesCount}
+              />
+            ) : null}
             <OverviewSection
               pageType={pageType}
               pageName={pageName}

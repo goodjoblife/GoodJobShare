@@ -1,16 +1,20 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import EmployerAggregateRatingSeo from './EmployerAggregateRatingSeo';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
+import { isFetched } from 'utils/fetchBox';
 import { SITE_NAME } from 'constants/helmetData';
 import { PageType, generatePageURL } from 'constants/companyJobTitle';
 
 // if length of given array > 0, return `${array length}${unit}`
 // otherwise return defaultStr
-const formatDataCount = (dataCount, unit, defaultStr) => {
+const formatDataCount = (
+  dataCount: number,
+  unit: string,
+  defaultStr: string,
+): string => {
   if (dataCount > 0) {
     return `${dataCount}${unit}`;
   } else {
@@ -18,10 +22,18 @@ const formatDataCount = (dataCount, unit, defaultStr) => {
   }
 };
 
-const formatKeyword = name =>
+const formatKeyword = (name: string): string =>
   `${name}薪水, ${name}加班情況, ${name}工時, ${name}評價, ${name}面試心得`;
 
-const CompanyOverviewHelmet = ({
+type CompanyOverviewHelmetProps = {
+  companyName: string;
+  salaryWorkTimesCount: number;
+  interviewExperiencesCount: number;
+  workExperiencesCount: number;
+  topNJobTitles: { name: string }[];
+};
+
+export const CompanyOverviewHelmet: React.FC<CompanyOverviewHelmetProps> = ({
   companyName,
   salaryWorkTimesCount,
   interviewExperiencesCount,
@@ -32,10 +44,8 @@ const CompanyOverviewHelmet = ({
     companyRatingStatisticsBoxSelectorByName(companyName),
   );
 
-  // title
   const title = companyName;
 
-  // description
   const salaryWorkTimesStr =
     salaryWorkTimesCount > 0 ? `${salaryWorkTimesCount}筆薪水、加班狀況` : '';
   const interviewExperiencesStr =
@@ -75,7 +85,7 @@ const CompanyOverviewHelmet = ({
         <meta property="og:url" content={url} />
         <link rel="canonical" href={url} />
       </Helmet>
-      {ratingStatistcsBox && ratingStatistcsBox.data && (
+      {isFetched(ratingStatistcsBox) && ratingStatistcsBox.data && (
         <EmployerAggregateRatingSeo
           title={formatTitle(title, SITE_NAME)}
           description={description}
@@ -88,28 +98,21 @@ const CompanyOverviewHelmet = ({
   );
 };
 
-CompanyOverviewHelmet.propTypes = {
-  companyName: PropTypes.string.isRequired,
-  interviewExperiencesCount: PropTypes.number.isRequired,
-  salaryWorkTimesCount: PropTypes.number.isRequired,
-  topNJobTitles: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  workExperiencesCount: PropTypes.number.isRequired,
+type JobTitleOverviewHelmetProps = {
+  jobTitle: string;
+  salaryWorkTimesCount: number;
+  interviewExperiencesCount: number;
+  workExperiencesCount: number;
 };
 
-const JobTitleOverviewHelmet = ({
+export const JobTitleOverviewHelmet: React.FC<JobTitleOverviewHelmetProps> = ({
   jobTitle,
   salaryWorkTimesCount,
   interviewExperiencesCount,
   workExperiencesCount,
 }) => {
-  // title
   const title = `${jobTitle} 總覽`;
 
-  // description
   const salaryWorkTimesStr = formatDataCount(salaryWorkTimesCount, '筆', '');
   const interviewExperiencesStr = formatDataCount(
     interviewExperiencesCount,
@@ -139,27 +142,3 @@ const JobTitleOverviewHelmet = ({
     </Helmet>
   );
 };
-
-JobTitleOverviewHelmet.propTypes = {
-  interviewExperiencesCount: PropTypes.number.isRequired,
-  jobTitle: PropTypes.string.isRequired,
-  salaryWorkTimesCount: PropTypes.number.isRequired,
-  workExperiencesCount: PropTypes.number.isRequired,
-};
-
-const OverviewHelmet = props => {
-  if (props.pageType === PageType.JOB_TITLE) {
-    return <JobTitleOverviewHelmet {...props} jobTitle={props.pageName} />;
-  } else if (props.pageType === PageType.COMPANY) {
-    return <CompanyOverviewHelmet {...props} companyName={props.pageName} />;
-  } else {
-    return null;
-  }
-};
-
-OverviewHelmet.propTypes = {
-  pageName: PropTypes.string.isRequired,
-  pageType: PropTypes.string.isRequired,
-};
-
-export default OverviewHelmet;
