@@ -3,11 +3,7 @@ import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
-import {
-  pageType as PAGE_TYPE,
-  tabType as TAB_TYPE,
-  generateTabURL,
-} from 'constants/companyJobTitle';
+import { PageType, TabType, generateTabURL } from 'constants/companyJobTitle';
 
 const CompanyInterviewExperienceHelmet = ({
   companyName,
@@ -32,9 +28,9 @@ const CompanyInterviewExperienceHelmet = ({
 
   // canonical url
   const path = generateTabURL({
-    pageType: PAGE_TYPE.COMPANY,
+    pageType: PageType.COMPANY,
     pageName: companyName,
-    tabType: TAB_TYPE.INTERVIEW_EXPERIENCE,
+    tabType: TabType.INTERVIEW_EXPERIENCE,
   });
   const url = formatCanonicalPath(path);
 
@@ -79,9 +75,9 @@ const JobTitleInterviewExperienceHelmet = ({ jobTitle, page, totalCount }) => {
 
   // canonical url
   const path = generateTabURL({
-    pageType: PAGE_TYPE.JOB_TITLE,
+    pageType: PageType.JOB_TITLE,
     pageName: jobTitle,
-    tabType: TAB_TYPE.INTERVIEW_EXPERIENCE,
+    tabType: TabType.INTERVIEW_EXPERIENCE,
   });
   const url = formatCanonicalPath(path);
 
@@ -110,11 +106,11 @@ JobTitleInterviewExperienceHelmet.propTypes = {
 };
 
 const InterviewExperienceHelmet = props => {
-  if (props.pageType === PAGE_TYPE.JOB_TITLE) {
+  if (props.pageType === PageType.JOB_TITLE) {
     return (
       <JobTitleInterviewExperienceHelmet {...props} jobTitle={props.pageName} />
     );
-  } else if (props.pageType === PAGE_TYPE.COMPANY) {
+  } else if (props.pageType === PageType.COMPANY) {
     return (
       <CompanyInterviewExperienceHelmet
         {...props}

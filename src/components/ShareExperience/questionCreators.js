@@ -59,10 +59,10 @@ import { employmentTypeOptions, salaryTypeOptions } from './common/optionMap';
 import WorkTimeExample from './WorkTimeExample';
 import Emoji from '../common/icons/Emoji';
 import {
-  pageType as PAGE_TYPE,
+  PageType,
   tabTypeTranslation,
-  tabType,
-} from '../../constants/companyJobTitle';
+  TabType,
+} from 'constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
 import { salaryHint } from 'utils/formUtils';
 import { useTotalCount } from 'hooks/useCount';
@@ -88,7 +88,7 @@ export const createCompanyQuestion = ({ header }) => ({
       map(({ name, businessNumber }) => ({
         label: (
           <AutoCompleteItem
-            pageType={PAGE_TYPE.COMPANY}
+            pageType={PageType.COMPANY}
             name={name}
             businessNumber={businessNumber}
           />
@@ -242,7 +242,7 @@ export const createJobLevel = () => ({
 });
 
 export const createRequiredSalaryQuestion = ({ type }) => ({
-  title: type === tabType.INTERVIEW_EXPERIENCE ? '面談薪資' : '薪資',
+  title: type === TabType.INTERVIEW_EXPERIENCE ? '面談薪資' : '薪資',
   type: QUESTION_TYPE.SELECT_TEXT,
   dataKey: DATA_KEY_SALARY,
   defaultValue: [null, ''],
@@ -267,7 +267,7 @@ export const createRequiredSalaryQuestion = ({ type }) => ({
     else return hint;
   },
   footnote:
-    type === tabType.INTERVIEW_EXPERIENCE
+    type === TabType.INTERVIEW_EXPERIENCE
       ? '若錄取，請以包含平常的薪資、分紅、年終、獎金等預期會獲得的價值計算'
       : '薪資請以包含平常的薪資、分紅、年終、績效獎金等實質上獲得的價值去計算。',
 });
@@ -375,7 +375,7 @@ export const createSectionsQuestion = () => ({
       }
     }
   },
-  validateOrWarnItem: ([subject, rating, text]) => {
+  validateOrWarnItem: ([, rating, text]) => {
     if (rating === 0) return '需選取滿意程度';
     if (wordCount(text) < SECTION_MIN_LENGTH) {
       return `至少 ${SECTION_MIN_LENGTH} 字，現在 ${wordCount(text)} 字`;
@@ -398,7 +398,7 @@ export const createSectionsQuestion = () => ({
     '自訂面向',
   ],
   elseOptionValue: '自訂面向',
-  placeholder: ([subject, rating, text]) => {
+  placeholder: ([subject]) => {
     switch (subject) {
       case '薪資福利':
         return '底薪、績效獎金、年終獎金、三節獎金、分紅、津貼補助...等。';
@@ -454,7 +454,7 @@ export const createInterviewSectionsQuestion = () => {
       '工作環境',
       '自訂面向',
     ],
-    placeholder: ([subject, rating, text]) => {
+    placeholder: ([subject]) => {
       switch (subject) {
         case '面試流程':
           return '整個面試的流程為何？有哪幾關面試、與誰面試？ 針對面試邀約的及時性、回饋的速度與詳細度，哪些方面讓您覺得面試流程良好或需要改善？';
@@ -478,9 +478,8 @@ export const createInterviewSectionsQuestion = () => {
           return '請輸入自訂標題（例如：環境整潔度）';
       }
     },
-    hasRating: ([subject, rating, text]) =>
-      UNRATABLE_SUBJECTS.includes(subject) === false,
-    ratingLabels: ([subject, rating, text]) =>
+    hasRating: ([subject]) => UNRATABLE_SUBJECTS.includes(subject) === false,
+    ratingLabels: ([subject]) =>
       subject === '面試流程' ? RATING_COURSE_LABELS : RATING_LABELS,
   };
 };

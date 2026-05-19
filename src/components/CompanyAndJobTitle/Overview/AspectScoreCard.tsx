@@ -8,17 +8,18 @@ import ScoreCard from './ScoreCard';
 
 import { useSelector } from 'react-redux';
 import { companyWorkExperiencesAspectStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import FetchBox, { isFetched } from 'utils/fetchBox';
+import { isFetched } from 'utils/fetchBox';
+import { AspectRatingStatistics } from 'apis/aspectRatingStatistics';
 
-interface CompanyAspectRatingStatistic {
-  aspect: string;
-  averageRating: number;
-  ratingCount: number;
-}
-
-interface AspectStatisticsData {
-  companyAspectRatingStatistics: CompanyAspectRatingStatistic[];
-}
+const useAllAspectRatingStatistics = (
+  companyName: string,
+): AspectRatingStatistics[] => {
+  const box = useSelector(
+    companyWorkExperiencesAspectStatisticsBoxSelectorByName(companyName),
+  );
+  if (!isFetched(box) || !box.data) return [];
+  return box.data.companyAspectRatingStatistics;
+};
 
 const useAspectData = ({
   companyName,
@@ -26,17 +27,19 @@ const useAspectData = ({
 }: {
   companyName: string;
   aspect: Aspect;
-}) => {
-  const box = useSelector(
-    companyWorkExperiencesAspectStatisticsBoxSelectorByName(companyName),
-  ) as FetchBox<AspectStatisticsData>;
+}): AspectRatingStatistics | undefined => {
+  const stats = useAllAspectRatingStatistics(companyName);
+  return stats.find(item => item.aspect === aspect);
+};
 
-  if (!isFetched(box) || !box.data) return null;
-
-  const stat = box.data.companyAspectRatingStatistics.find(
-    item => item.aspect === aspect,
+export const useAspectsData = (
+  companyName: string,
+  aspects: Aspect[],
+): AspectRatingStatistics[] => {
+  const stats = useAllAspectRatingStatistics(companyName);
+  return stats.filter(
+    stat => aspects.includes(stat.aspect as Aspect) && stat.ratingCount > 0,
   );
-  return stat;
 };
 
 interface AspectScoreCardProps {

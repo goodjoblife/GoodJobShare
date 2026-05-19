@@ -12,6 +12,17 @@ import { messagesSelector } from 'selectors/inbox';
 import { openInbox, readInboxMessage } from 'actions/inbox';
 import { useIsLoggedIn } from 'hooks/auth';
 
+const Button = ({ active, ...props }) => (
+  <button
+    className={cn(styles.button, { [styles.active]: active })}
+    {...props}
+  />
+);
+
+Button.propTypes = {
+  active: PropTypes.bool,
+};
+
 const InboxContent = ({ className, isOpen = true }) => {
   const allMessages = useSelector(messagesSelector);
 
@@ -91,17 +102,6 @@ const InboxContent = ({ className, isOpen = true }) => {
 InboxContent.propTypes = {
   className: PropTypes.string,
   isOpen: PropTypes.bool,
-};
-
-const Button = ({ active, ...props }) => (
-  <button
-    className={cn(styles.button, { [styles.active]: active })}
-    {...props}
-  />
-);
-
-Button.propTypes = {
-  active: PropTypes.bool,
 };
 
 export default InboxContent;

@@ -6,10 +6,7 @@ import EmployerAggregateRatingSeo from './EmployerAggregateRatingSeo';
 import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { SITE_NAME } from 'constants/helmetData';
-import {
-  pageType as PAGE_TYPE,
-  generatePageURL,
-} from 'constants/companyJobTitle';
+import { PageType, generatePageURL } from 'constants/companyJobTitle';
 
 // if length of given array > 0, return `${array length}${unit}`
 // otherwise return defaultStr
@@ -60,7 +57,7 @@ const CompanyOverviewHelmet = ({
   const description = `想了解${companyName}嗎？由內部員工分享${jobTitles}等職位的${combinedStr}，幫助你更瞭解${companyName}！`;
 
   const path = generatePageURL({
-    pageType: PAGE_TYPE.COMPANY,
+    pageType: PageType.COMPANY,
     pageName: companyName,
   });
   const url = formatCanonicalPath(path);
@@ -123,7 +120,7 @@ const JobTitleOverviewHelmet = ({
   const description = `查看由${jobTitle}分享的${salaryWorkTimesStr}薪水及加班數據、${workExperiencesStr}評價，以及由面試者分享的${interviewExperiencesStr}面試經驗。`;
 
   const path = generatePageURL({
-    pageType: PAGE_TYPE.JOB_TITLE,
+    pageType: PageType.JOB_TITLE,
     pageName: jobTitle,
   });
   const url = formatCanonicalPath(path);
@@ -151,9 +148,9 @@ JobTitleOverviewHelmet.propTypes = {
 };
 
 const OverviewHelmet = props => {
-  if (props.pageType === PAGE_TYPE.JOB_TITLE) {
+  if (props.pageType === PageType.JOB_TITLE) {
     return <JobTitleOverviewHelmet {...props} jobTitle={props.pageName} />;
-  } else if (props.pageType === PAGE_TYPE.COMPANY) {
+  } else if (props.pageType === PageType.COMPANY) {
     return <CompanyOverviewHelmet {...props} companyName={props.pageName} />;
   } else {
     return null;

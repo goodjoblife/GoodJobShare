@@ -1,48 +1,35 @@
 import React from 'react';
-import { generatePath, useParams } from 'react-router';
+import { RootState } from 'reducers';
 import { Heading, Link, Wrapper } from 'common/base';
-import { companyNameSelector } from 'pages/Company/useCompanyName';
-import { companyWorkExperiencesPath } from 'constants/linkTo';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
 import CompanyAndJobTitleWrapper from '../../CompanyAndJobTitleWrapper';
-import { PageBoxRenderer } from '../../StatusRenderer';
+import PageBoxRenderer from '../../PageBoxRenderer';
 import WorkExperiencesSection from '../WorkExperiences';
 import Helmet from '../Helmet';
 import styles from './styles.module.css';
 import RatingFilter from './RatingFilter';
 import Summary from './Summary';
 import FetchBox from 'utils/fetchBox';
-import { Aspect } from 'constants/companyJobTitle';
-
-export type RatingDistribution = {
-  rating: number;
-  count: number;
-};
-
-export type AspectStatistics = {
-  aspect: Aspect;
-  averageRating: number;
-  ratingDistribution: RatingDistribution[];
-  ratingCount: number;
-  summary: string;
-};
-
-export type AspectStatisticsData = {
-  companyAspectRatingStatistics: AspectStatistics[];
-};
-
-export type AspectExperiencesData = {
-  workExperiences: any[];
-  workExperiencesCount: number;
-};
+import {
+  Aspect,
+  PageType,
+  TabType,
+  generateTabURL,
+} from 'constants/companyJobTitle';
+import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
+import { CompanyAspectExperienceResult } from 'reducers/companyIndex';
 
 export type AspectProps = {
   aspect: Aspect;
-  pageType: string;
+  pageType: PageType;
   pageName: string;
-  tabType: string;
-  statisticsBoxSelector: (state: any) => FetchBox<AspectStatisticsData>;
-  experiencesBoxSelector: (state: any) => FetchBox<AspectExperiencesData>;
+  tabType: TabType;
+  statisticsBoxSelector: (
+    state: RootState,
+  ) => FetchBox<AspectStatisticsData | null>;
+  experiencesBoxSelector: (
+    state: RootState,
+  ) => FetchBox<CompanyAspectExperienceResult | null>;
   page: number;
   pageSize: number;
 };
@@ -57,9 +44,7 @@ const AspectSection: React.FC<AspectProps> = ({
   page,
   pageSize,
 }) => {
-  const params = useParams();
-  const companyName = companyNameSelector(params);
-  const parentPath = generatePath(companyWorkExperiencesPath, { companyName });
+  const parentPath = generateTabURL({ pageType, pageName, tabType });
   const [createPageLinkTo] = useCreatePageLinkTo();
 
   return (
@@ -76,24 +61,18 @@ const AspectSection: React.FC<AspectProps> = ({
           pageName={pageName}
           tabType={tabType}
           boxSelector={statisticsBoxSelector}
-          render={(data: AspectStatisticsData) => {
+          render={(data: AspectStatisticsData): React.ReactNode => {
             const items = data.companyAspectRatingStatistics;
             const item = items.find(item => item.aspect === aspect);
             if (!item) return null;
 
-            const {
-              averageRating,
-              ratingDistribution,
-              ratingCount,
-              summary,
-            } = item;
+            const { averageRating, ratingDistribution, ratingCount } = item;
 
             return (
               <Summary
                 averageRating={averageRating}
                 ratingDistribution={ratingDistribution}
                 ratingCount={ratingCount}
-                summary={summary}
               />
             );
           }}
@@ -108,10 +87,7 @@ const AspectSection: React.FC<AspectProps> = ({
         render={({
           workExperiences,
           workExperiencesCount: totalCount,
-        }: {
-          workExperiences: any; // eslint-disable-line react/no-unused-prop-types
-          workExperiencesCount: number; // eslint-disable-line react/no-unused-prop-types
-        }) => (
+        }: CompanyAspectExperienceResult): React.ReactNode => (
           <>
             <Helmet
               pageType={pageType}

@@ -57,7 +57,7 @@ const Modal = ({
     className={cn(styles.modal, {
       [styles.isOpen]: isOpen,
     })}
-    onClick={e => {
+    onClick={() => {
       if (closableOnClickOutside) {
         close();
       }

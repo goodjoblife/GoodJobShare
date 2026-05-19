@@ -24,12 +24,12 @@ import {
 import {
   getCompanyTimeAndSalary,
   getCompanyInterviewExperiences,
-  getCompanyWorkExperiences,
   queryCompaniesApi,
   getCompanyTimeAndSalaryStatistics,
   getCompanyTopNJobTitles,
-  getCompanyWorkExperiencesAspectRatingStatistics,
 } from 'apis/company';
+import queryCompanyWorkExperiencesApi from 'apis/queryCompanyWorkExperiences';
+import queryCompanyAspectRatingStatisticsApi from 'apis/queryCompanyAspectRatingStatistics';
 import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
 import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
 import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
@@ -138,6 +138,16 @@ const SALARY_WORK_TIMES_LIMIT = 5;
 const WORK_EXPERIENCES_LIMIT = 3;
 const INTERVIEW_EXPERIENCES_LIMIT = 3;
 
+/**
+ * @type {(
+ *   companyName: string,
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverview | null>
+ * ) => {
+ *   type: string;
+ *   companyName: string;
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverview | null>
+ * }}
+ */
 const setOverview = (companyName, box) => ({
   type: SET_OVERVIEW,
   companyName,
@@ -188,6 +198,16 @@ export const queryCompanyOverview = (
   }
 };
 
+/**
+ * @type {(
+ *   companyName: string,
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverviewStatistics | null>
+ * ) => {
+ *   type: string;
+ *   companyName: string;
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverviewStatistics | null>
+ * }}
+ */
 const setOverviewStatistics = (companyName, box) => ({
   type: SET_OVERVIEW_STATISTICS,
   companyName,
@@ -197,7 +217,6 @@ const setOverviewStatistics = (companyName, box) => ({
 export const queryCompanyOverviewStatistics = companyName => async (
   dispatch,
   getState,
-  { api },
 ) => {
   const box = companyOverviewStatisticsBoxSelectorByName(companyName)(
     getState(),
@@ -514,7 +533,7 @@ export const queryCompanyWorkExperiences = ({
   dispatch(setWorkExperiences(companyName, toFetching(box)));
 
   try {
-    const data = await getCompanyWorkExperiences({
+    const data = await queryCompanyWorkExperiencesApi({
       companyName,
       jobTitle,
       start,
@@ -527,6 +546,7 @@ export const queryCompanyWorkExperiences = ({
       return dispatch(setWorkExperiences(companyName, getFetched(data)));
     }
 
+    /** @type {import('reducers/companyIndex').CompanyWorkExperienceResult} */
     const workExperiencesData = {
       name: data.name,
       jobTitle,
@@ -561,38 +581,17 @@ export const queryCompanyWorkExperiencesAspectStatistics = ({
     companyName,
   )(getState());
 
-  if (
-    isFetching(box) ||
-    (isFetched(box) && box.data && box.data.name === companyName)
-  ) {
+  if (isFetching(box) || isFetched(box)) {
     return;
   }
 
   dispatch(setWorkExperiencesAspectStatistics(companyName, toFetching()));
 
   try {
-    const data = await getCompanyWorkExperiencesAspectRatingStatistics({
+    const data = await queryCompanyAspectRatingStatisticsApi({
       companyName,
     });
-
-    // Not found case
-    if (data == null) {
-      return dispatch(
-        setWorkExperiencesAspectStatistics(companyName, getFetched(data)),
-      );
-    }
-
-    const workExperiencesAspectStatisticsData = {
-      name: companyName,
-      companyAspectRatingStatistics: data.companyAspectRatingStatistics,
-    };
-
-    dispatch(
-      setWorkExperiencesAspectStatistics(
-        companyName,
-        getFetched(workExperiencesAspectStatisticsData),
-      ),
-    );
+    dispatch(setWorkExperiencesAspectStatistics(companyName, getFetched(data)));
   } catch (error) {
     dispatch(setWorkExperiencesAspectStatistics(companyName, getError(error)));
   }
@@ -620,10 +619,10 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
     (isFetched(box) &&
       box.data &&
       box.data.name === companyName &&
-      box.data.rating == rating &&
-      box.data.start == start &&
-      box.data.limit == limit &&
-      box.data.aspect == aspect)
+      box.data.rating === rating &&
+      box.data.start === start &&
+      box.data.limit === limit &&
+      box.data.aspect === aspect)
   ) {
     return;
   }
@@ -631,7 +630,7 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
   dispatch(setWorkExperiencesAspectExperiences(companyName, toFetching()));
 
   try {
-    const data = await getCompanyWorkExperiences({
+    const data = await queryCompanyWorkExperiencesApi({
       companyName,
       start,
       limit,
@@ -648,6 +647,7 @@ export const queryCompanyWorkExperiencesAspectExperiences = ({
       );
     }
 
+    /** @type {import('reducers/companyIndex').CompanyAspectExperienceResult} */
     const workExperiencesAspectExperiencesData = {
       name: companyName,
       aspect,

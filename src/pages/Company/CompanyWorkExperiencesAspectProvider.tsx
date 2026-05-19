@@ -1,17 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import WorkExperiencesAspect, {
-  AspectExperiencesData,
-  AspectStatisticsData,
-} from 'components/CompanyAndJobTitle/WorkExperiences//Aspects';
+import WorkExperiencesAspect from 'components/CompanyAndJobTitle/WorkExperiences/Aspects';
+import { CompanyAspectExperienceResult } from 'reducers/companyIndex';
+import { WorkExperience } from 'apis/experience';
 import usePermission from 'hooks/usePermission';
 import { usePage } from 'hooks/routing/page';
-import {
-  tabType as TAB_TYPE,
-  pageType as PAGE_TYPE,
-  PAGE_SIZE,
-  Aspect,
-} from 'constants/companyJobTitle';
+import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
 import {
   queryCompanyWorkExperiencesAspectStatistics,
   queryCompanyWorkExperiencesAspectExperiences,
@@ -21,6 +15,7 @@ import {
   companyWorkExperiencesAspectExperiencesBoxSelectorByName as workExperiencesAspectExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
+import { ServerSideRender } from 'types/serverSideRender';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import {
   pageFromQuerySelector,
@@ -34,20 +29,20 @@ import { RootState } from 'reducers';
 
 const useWorkExperiencesAspectExperiencesBoxSelector = (
   pageName: string,
-  aspect: Aspect,
-): ((state: RootState) => FetchBox<AspectExperiencesData>) => {
+): ((state: RootState) => FetchBox<CompanyAspectExperienceResult | null>) => {
   return useCallback(
-    (state: RootState): FetchBox<AspectExperiencesData> => {
+    (state: RootState): FetchBox<CompanyAspectExperienceResult | null> => {
       const box = workExperiencesAspectExperiencesBoxSelectorByName(pageName)(
         state,
-      ) as FetchBox<AspectExperiencesData>;
+      );
       if (isFetched(box) && box.data) {
         // Get experience data from state.experiences, which serves
         // as the source of truth of experiences.
-        const data: AspectExperiencesData = {
+        const data: CompanyAspectExperienceResult = {
           ...box.data,
           workExperiences: box.data.workExperiences.map(
-            (e: any) => experienceBoxSelectorAtId(e.id)(state).data || e,
+            (e: WorkExperience) =>
+              experienceBoxSelectorAtId(e.id)(state).data || e,
           ),
         };
         return getFetched(data);
@@ -58,9 +53,15 @@ const useWorkExperiencesAspectExperiencesBoxSelector = (
   );
 };
 
-const CompanyWorkExperiencesAspectProvider = () => {
+type Params = {
+  companyName: string;
+  aspect: string;
+};
+
+const CompanyWorkExperiencesAspectProvider: React.FC &
+  ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
-  const pageType = PAGE_TYPE.COMPANY;
+  const pageType = PageType.COMPANY;
   const companyName = useCompanyName();
   const aspect = useAspect();
   const [rating] = useRating();
@@ -91,12 +92,11 @@ const CompanyWorkExperiencesAspectProvider = () => {
 
   const statisticsBoxSelector = workExperiencesAspectStatisticsBoxSelectorByName(
     companyName,
-  ) as ((state: RootState) => FetchBox<AspectStatisticsData>);
+  );
 
   const experiencesBoxSelector = useWorkExperiencesAspectExperiencesBoxSelector(
     companyName,
-    aspect,
-  ) as ((state: RootState) => FetchBox<AspectExperiencesData>);
+  );
 
   return (
     <WorkExperiencesAspect
@@ -105,21 +105,18 @@ const CompanyWorkExperiencesAspectProvider = () => {
       pageName={companyName}
       page={page as number}
       pageSize={PAGE_SIZE}
-      tabType={TAB_TYPE.WORK_EXPERIENCE}
+      tabType={TabType.WORK_EXPERIENCE}
       statisticsBoxSelector={statisticsBoxSelector}
       experiencesBoxSelector={experiencesBoxSelector}
     />
   );
 };
 
-CompanyWorkExperiencesAspectProvider.fetchData = ({
+CompanyWorkExperiencesAspectProvider.fetchData = async ({
   store: { dispatch },
   ...props
-}: {
-  store: { dispatch: any };
-  [key: string]: any;
-}) => {
-  const params = (paramsSelector(props) || {}) as Record<string, string>;
+}): Promise<unknown> => {
+  const params = paramsSelector<Params>(props);
   const companyName = companyNameSelector(params);
   const aspect = aspectSelector(params);
 

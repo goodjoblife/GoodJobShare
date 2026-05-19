@@ -4,7 +4,7 @@ import { useQuery } from 'hooks/routing';
 import qs from 'qs';
 import { ratingFromQuerySelector } from 'selectors/routing';
 
-const useRating = () => {
+const useRating = (): [number | null, (next: number | null) => void] => {
   const history = useHistory();
   const query = useQuery();
 

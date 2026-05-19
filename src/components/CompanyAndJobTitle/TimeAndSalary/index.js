@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import BoxRenderer, { PageBoxRenderer } from '../StatusRenderer';
+import BoxRenderer from 'common/StatusRenderer';
+import PageBoxRenderer from '../PageBoxRenderer';
 import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
 import Searchbar from '../Searchbar';
 import SummarySection from './SummarySection';
 import EsgBlock from '../TimeAndSalary/EsgBlock';
-import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import { PageType } from 'constants/companyJobTitle';
 import { fetchBoxPropType } from 'utils/fetchBox';
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
@@ -36,7 +37,7 @@ const TimeAndSalary = ({
       pageName={pageName}
       tabType={tabType}
     >
-      {pageType === PAGE_TYPE.COMPANY && (
+      {pageType === PageType.COMPANY && (
         <BoxRenderer
           box={esgSalaryDataBox}
           render={data => {

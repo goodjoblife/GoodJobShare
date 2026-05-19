@@ -5,9 +5,7 @@ enum PageType {
   COMPANY = 'COMPANY',
 }
 
-const pageType = PageType;
-
-export { pageType, PageType };
+export { PageType };
 
 export const pageTypeTranslation: Record<PageType, string> = {
   [PageType.JOB_TITLE]: '職稱',
@@ -26,9 +24,7 @@ enum TabType {
   INTERVIEW_EXPERIENCE = 'INTERVIEW_EXPERIENCE',
 }
 
-const tabType = TabType;
-
-export { tabType, TabType };
+export { TabType };
 
 export const tabTypeTranslation: Record<TabType, string> = {
   [TabType.OVERVIEW]: '總覽',

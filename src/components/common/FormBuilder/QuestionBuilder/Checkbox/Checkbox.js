@@ -5,18 +5,7 @@ import Wrapper from './private/Wrapper';
 import BlockSelect from './private/BlockSelect';
 import { OptionPropType, ValuePropType } from './PropTypes';
 
-const Checkbox = ({
-  page,
-  title,
-  description,
-  dataKey,
-  required,
-  defaultValue,
-  value,
-  onChange,
-  warning,
-  options,
-}) => (
+const Checkbox = ({ dataKey, value, onChange, warning, options }) => (
   <Wrapper warning={warning}>
     <BlockSelect
       dataKey={dataKey}
@@ -30,13 +19,8 @@ const Checkbox = ({
 
 Checkbox.propTypes = {
   dataKey: PropTypes.string.isRequired,
-  defaultValue: PropTypes.arrayOf(ValuePropType).isRequired,
-  description: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(OptionPropType).isRequired,
-  page: PropTypes.number.isRequired,
-  required: PropTypes.bool,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   value: PropTypes.arrayOf(ValuePropType).isRequired,
   warning: PropTypes.string,
 };

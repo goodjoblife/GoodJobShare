@@ -26,17 +26,7 @@ const getLabelText = (filename, error) => {
   }
 };
 
-const File = ({
-  page,
-  title,
-  description,
-  dataKey,
-  required,
-  defaultValue,
-  value,
-  onChange,
-  warning,
-}) => {
+const File = ({ value, onChange }) => {
   const [filename, setFilename] = useState(null);
   const [error, setError] = useState(null);
 
@@ -78,15 +68,8 @@ const File = ({
 };
 
 File.propTypes = {
-  dataKey: PropTypes.string.isRequired,
-  defaultValue: PropTypes.string.isRequired,
-  description: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  required: PropTypes.bool,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   value: PropTypes.string.isRequired,
-  warning: PropTypes.string,
 };
 
 export default File;

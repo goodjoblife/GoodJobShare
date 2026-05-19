@@ -15,7 +15,7 @@ const BlockSelectElseDate = ({
   title,
   dataKey,
   required,
-  defaultValue: [defaultSelected, defaultElseValue],
+  defaultValue: [, defaultElseValue],
   value: [selected, elseValue],
   onChange,
   onConfirm,

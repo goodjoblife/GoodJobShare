@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import { PageBoxRenderer } from '../StatusRenderer';
+import PageBoxRenderer from '../PageBoxRenderer';
 import OverviewSection from './Overview';
 import Helmet from './Helmet';
 import { fetchBoxPropType } from 'utils/fetchBox';
