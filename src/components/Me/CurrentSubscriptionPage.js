@@ -11,11 +11,12 @@ import SubscriptionWrapper from './SubscriptionWrapper';
 import EmptySubscription from './EmptySubscription';
 import CurrentSubscription from './CurrentSubscription';
 
-const withSubscriptionWrapper = Component => props => (
-  <SubscriptionWrapper>
-    <Component {...props} />
-  </SubscriptionWrapper>
-);
+const withSubscriptionWrapper = Component => props =>
+  (
+    <SubscriptionWrapper>
+      <Component {...props} />
+    </SubscriptionWrapper>
+  );
 
 const CurrentSubscriptionPage = () => {
   const dispatch = useDispatch();

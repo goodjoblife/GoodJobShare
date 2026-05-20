@@ -20,41 +20,19 @@ import {
   always,
 } from 'ramda';
 
-export const isArray = compose(
-  equals('Array'),
-  type,
-);
+export const isArray = compose(equals('Array'), type);
 
-export const isNot = curry((fn, value) =>
-  compose(
-    not,
-    fn,
-  )(value),
-);
+export const isNot = curry((fn, value) => compose(not, fn)(value));
 
-export const wordCount = compose(
-  length,
-  replace(/\n/g, ''),
-);
+export const wordCount = compose(length, replace(/\n/g, ''));
 
-export const parseSalaryAmount = compose(
-  Number,
-  replace(/,/g, ''),
-);
-export const isSalaryAmount = compose(
-  not,
-  isNaN,
-  parseSalaryAmount,
-);
+export const parseSalaryAmount = compose(Number, replace(/,/g, ''));
+export const isSalaryAmount = compose(not, isNaN, parseSalaryAmount);
 
 export const isNumber = ifElse(
   isEmpty,
   always(false),
-  compose(
-    not,
-    isNaN,
-    Number,
-  ),
+  compose(not, isNaN, Number),
 );
 
 export const greaterThan = lt;
@@ -65,12 +43,7 @@ export const lessThanOrEqualTo = gte;
 export const compact = filter(Boolean);
 
 export const joinCompact = connector =>
-  unapply(
-    compose(
-      join(connector),
-      compact,
-    ),
-  );
+  unapply(compose(join(connector), compact));
 
 export const evolve = curry((evolvers, value) =>
   map(

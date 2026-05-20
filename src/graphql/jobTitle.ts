@@ -9,7 +9,7 @@ export interface JobTitle {
 }
 
 export const queryJobTitles = /* GraphQL */ `
-  query($key: String!) {
+  query ($key: String!) {
     job_titles(query: $key, page: 0) {
       name
     }
@@ -17,7 +17,7 @@ export const queryJobTitles = /* GraphQL */ `
 `;
 
 export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
-  query($jobTitle: String!, $companyName: String, $start: Int!, $limit: Int!) {
+  query ($jobTitle: String!, $companyName: String, $start: Int!, $limit: Int!) {
     job_title(name: $jobTitle) {
       name
       salaryWorkTimesResult(
@@ -65,7 +65,7 @@ export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
 `;
 
 export const getJobTitleTimeAndSalaryStatisticsQuery = /* GraphQL */ `
-  query($jobTitle: String!) {
+  query ($jobTitle: String!) {
     job_title(name: $jobTitle) {
       name
       salary_work_time_statistics {
@@ -117,7 +117,7 @@ export const getJobTitleInterviewExperiencesQuery = /* GraphQL */ `
 `;
 
 export const queryJobTitlesHavingDataGql = /* GraphQL */ `
-  query($start: Int!, $limit: Int!) {
+  query ($start: Int!, $limit: Int!) {
     jobTitlesHavingData(start: $start, limit: $limit) {
       name
     }

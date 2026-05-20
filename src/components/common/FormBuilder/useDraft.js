@@ -2,23 +2,12 @@ import { useState, useCallback } from 'react';
 import R from 'ramda';
 
 const keyByProp = prop =>
-  R.compose(
-    R.fromPairs,
-    R.map(R.converge(R.pair, [R.prop(prop), R.identity])),
-  );
+  R.compose(R.fromPairs, R.map(R.converge(R.pair, [R.prop(prop), R.identity])));
 
-const isFunction = R.compose(
-  R.equals('Function'),
-  R.type,
-);
+const isFunction = R.compose(R.equals('Function'), R.type);
 
 const toDraft = R.compose(
-  R.map(
-    R.compose(
-      R.when(isFunction, R.call),
-      R.prop('defaultValue'),
-    ),
-  ),
+  R.map(R.compose(R.when(isFunction, R.call), R.prop('defaultValue'))),
   keyByProp('dataKey'),
 );
 

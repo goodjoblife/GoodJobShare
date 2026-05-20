@@ -1,7 +1,7 @@
 import graphqlClient from 'utils/graphqlClient';
 
 const queryCompanyIsSubscribedGql = /* GraphQL */ `
-  query($companyName: String!) {
+  query ($companyName: String!) {
     company(name: $companyName) {
       id
       isSubscribed

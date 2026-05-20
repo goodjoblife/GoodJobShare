@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useRef, forwardRef } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+  forwardRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 
@@ -42,8 +48,8 @@ const SearchTextInput = forwardRef(
       [],
     );
 
-    const performSearch = useCallback(
-      debounce(async value => {
+    const doSearch = useCallback(
+      async value => {
         if (value) {
           try {
             const [companies, jobTitles] = await Promise.all([
@@ -81,9 +87,11 @@ const SearchTextInput = forwardRef(
             setCandidates([]);
           }
         }
-      }, 500),
-      [setCandidates],
+      },
+      [searchCompanyNames, searchJobTitles, setCandidates],
     );
+
+    const performSearch = useMemo(() => debounce(doSearch, 500), [doSearch]);
 
     const handleValueChange = useCallback(
       e => {

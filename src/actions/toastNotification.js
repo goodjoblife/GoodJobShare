@@ -31,40 +31,34 @@ const composeErrorMessage = (code, message, error) => {
 const pushErrorNotification = (code, message) =>
   pushNotification(NOTIFICATION_TYPE.ALERT, composeErrorMessage(code, message));
 
-export const pushErrorNotificationAndRollbar = (
-  errorCode,
-  error,
-  extra,
-) => dispatch => {
-  dispatch(
-    pushErrorNotification(errorCode, ERROR_CODE_MSG[errorCode].external),
-  );
+export const pushErrorNotificationAndRollbar =
+  (errorCode, error, extra) => dispatch => {
+    dispatch(
+      pushErrorNotification(errorCode, ERROR_CODE_MSG[errorCode].external),
+    );
 
-  const internalMessage = composeErrorMessage(
-    errorCode,
-    ERROR_CODE_MSG[errorCode].internal,
-    error,
-  );
+    const internalMessage = composeErrorMessage(
+      errorCode,
+      ERROR_CODE_MSG[errorCode].internal,
+      error,
+    );
 
-  if (!extra) {
-    rollbar.error(internalMessage);
-  } else {
-    rollbar.error(internalMessage, extra);
-  }
-};
+    if (!extra) {
+      rollbar.error(internalMessage);
+    } else {
+      rollbar.error(internalMessage, extra);
+    }
+  };
 
-export const pushErrorNotificationAndRollbarAndThrowError = (
-  errorCode,
-  error,
-  extra,
-) => dispatch => {
-  dispatch(pushErrorNotificationAndRollbar(errorCode, error, extra));
+export const pushErrorNotificationAndRollbarAndThrowError =
+  (errorCode, error, extra) => dispatch => {
+    dispatch(pushErrorNotificationAndRollbar(errorCode, error, extra));
 
-  const internalMessage = composeErrorMessage(
-    errorCode,
-    ERROR_CODE_MSG[errorCode].internal,
-    error,
-  );
+    const internalMessage = composeErrorMessage(
+      errorCode,
+      ERROR_CODE_MSG[errorCode].internal,
+      error,
+    );
 
-  throw new Error(internalMessage);
-};
+    throw new Error(internalMessage);
+  };

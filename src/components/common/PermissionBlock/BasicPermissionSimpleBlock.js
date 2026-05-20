@@ -11,9 +11,10 @@ import { useShareLinkChange } from 'hooks/experiments/useShareLink';
 
 const BasicPermissionSimpleBlock = ({ rootClassName, to }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const toggleModal = useCallback(() => setModalOpen(!isModalOpen), [
-    isModalOpen,
-  ]);
+  const toggleModal = useCallback(
+    () => setModalOpen(!isModalOpen),
+    [isModalOpen],
+  );
 
   useShareLinkChange(() => {
     if (isModalOpen) setModalOpen(false);

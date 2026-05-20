@@ -31,7 +31,10 @@ const getObservedAttributes = (element, attributesToObserve) => {
  * @param {string} elementId the id of element to observe
  */
 
-export default (attributesToObserve = [], elementId = 'root') => {
+const useExperimentParameters = (
+  attributesToObserve = [],
+  elementId = 'root',
+) => {
   const ref = useRef(null);
   if (typeof document !== 'undefined' && ref.current === null) {
     ref.current = document.getElementById(elementId);
@@ -81,3 +84,5 @@ export default (attributesToObserve = [], elementId = 'root') => {
 
   return parameters;
 };
+
+export default useExperimentParameters;

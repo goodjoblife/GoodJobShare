@@ -22,9 +22,9 @@ interface WithData<T> extends FetchBox<T> {
 }
 
 // Checks data presence only (not status), matching the WithData contract above.
-const boxesHasData = <T extends unknown[]>(
-  boxes: { [K in keyof T]: FetchBox<T[K]> },
-): boxes is { [K in keyof T]: WithData<T[K]> } => {
+const boxesHasData = <T extends unknown[]>(boxes: {
+  [K in keyof T]: FetchBox<T[K]>;
+}): boxes is { [K in keyof T]: WithData<T[K]> } => {
   return boxes.every(b => b.data !== undefined);
 };
 

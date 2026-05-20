@@ -19,9 +19,8 @@ const ReportZone = ({
     modalPayload: {},
   });
   const { isModalOpen, modalType, modalPayload } = modalState;
-  const [closableOnClickOutside, setModalClosableOnClickOutside] = useState(
-    true,
-  );
+  const [closableOnClickOutside, setModalClosableOnClickOutside] =
+    useState(true);
 
   const setModalOpen = useCallback(
     (isModalOpen, modalType = '', modalPayload = {}) => {

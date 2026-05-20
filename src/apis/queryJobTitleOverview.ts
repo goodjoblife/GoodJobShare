@@ -13,7 +13,7 @@ import {
 import { JobTitle } from 'graphql/jobTitle';
 
 const queryJobTitleOverviewGql = /* GraphQL */ `
-  query(
+  query (
     $jobTitle: String!
     $interviewExperiencesLimit: Int!
     $workExperiencesLimit: Int!

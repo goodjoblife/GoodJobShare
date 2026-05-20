@@ -81,18 +81,19 @@ const SearchPage = () => {
         )}
         {isFetched(box) && (
           <>
-            {slice((page - 1) * pageSize, page * pageSize)(box.data).map(
-              (o, i) => (
-                <CompanyJobTitleBlock
-                  key={i}
-                  pageType={o.pageType}
-                  name={o.name}
-                  businessNumber={o.businessNumber}
-                  to={getLinkForData(query, o)}
-                  dataCount={o.dataCount}
-                />
-              ),
-            )}
+            {slice(
+              (page - 1) * pageSize,
+              page * pageSize,
+            )(box.data).map((o, i) => (
+              <CompanyJobTitleBlock
+                key={i}
+                pageType={o.pageType}
+                name={o.name}
+                businessNumber={o.businessNumber}
+                to={getLinkForData(query, o)}
+                dataCount={o.dataCount}
+              />
+            ))}
             <Pagination
               totalCount={box.data.length}
               unit={pageSize}

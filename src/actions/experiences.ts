@@ -20,59 +20,62 @@ const setCount = (countBox: FetchBox<number>): AnyAction => ({
   countBox,
 });
 
-export const queryExperienceCount = (): Thunk => async (
-  dispatch,
-): Promise<void> => {
-  dispatch(setCount(toFetching()));
-  try {
-    const count = await queryExperienceCountApi();
-    dispatch(setCount(getFetched(count)));
-  } catch (error) {
-    dispatch(setCount(getError(error)));
-  }
-};
+export const queryExperienceCount =
+  (): Thunk =>
+  async (dispatch): Promise<void> => {
+    dispatch(setCount(toFetching()));
+    try {
+      const count = await queryExperienceCountApi();
+      dispatch(setCount(getFetched(count)));
+    } catch (error) {
+      dispatch(setCount(getError(error)));
+    }
+  };
 
-export const queryExperienceCountIfUnfetched = (): Thunk => async (
-  dispatch,
-  getState,
-): Promise<unknown> => {
-  if (isUnfetched(experienceCountBoxSelector(getState()))) {
-    return dispatch(queryExperienceCount());
-  }
-};
+export const queryExperienceCountIfUnfetched =
+  (): Thunk =>
+  async (dispatch, getState): Promise<unknown> => {
+    if (isUnfetched(experienceCountBoxSelector(getState()))) {
+      return dispatch(queryExperienceCount());
+    }
+  };
 
-export const createInterviewExperience = ({
-  body,
-}: {
-  body: any; // TODO: fix me
-}): Thunk => async (dispatch, getState): Promise<unknown> => {
-  const state = getState();
-  const token = tokenSelector(state);
-
-  const result = await postInterviewExperienceApi({
+export const createInterviewExperience =
+  ({
     body,
-    token,
-  });
+  }: {
+    body: any; // TODO: fix me
+  }): Thunk =>
+  async (dispatch, getState): Promise<unknown> => {
+    const state = getState();
+    const token = tokenSelector(state);
 
-  await dispatch(queryMyPublishIds());
+    const result = await postInterviewExperienceApi({
+      body,
+      token,
+    });
 
-  return result;
-};
+    await dispatch(queryMyPublishIds());
 
-export const createWorkExperienceWithRating = ({
-  body,
-}: {
-  body: any; // TODO: fix me
-}): Thunk => async (dispatch, getState): Promise<unknown> => {
-  const state = getState();
-  const token = tokenSelector(state);
+    return result;
+  };
 
-  const result = await postWorkExperienceWithRatingApi({
+export const createWorkExperienceWithRating =
+  ({
     body,
-    token,
-  });
+  }: {
+    body: any; // TODO: fix me
+  }): Thunk =>
+  async (dispatch, getState): Promise<unknown> => {
+    const state = getState();
+    const token = tokenSelector(state);
 
-  await dispatch(queryMyPublishIds());
+    const result = await postWorkExperienceWithRatingApi({
+      body,
+      token,
+    });
 
-  return result;
-};
+    await dispatch(queryMyPublishIds());
+
+    return result;
+  };

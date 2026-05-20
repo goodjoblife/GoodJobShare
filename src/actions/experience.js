@@ -58,14 +58,12 @@ export const queryExperience = experienceId => async (dispatch, getState) => {
   }
 };
 
-export const queryExperienceIfUnfetched = experienceId => async (
-  dispatch,
-  getState,
-) => {
-  if (isUnfetched(experienceBoxSelectorAtId(experienceId)(getState()))) {
-    return dispatch(queryExperience(experienceId));
-  }
-};
+export const queryExperienceIfUnfetched =
+  experienceId => async (dispatch, getState) => {
+    if (isUnfetched(experienceBoxSelectorAtId(experienceId)(getState()))) {
+      return dispatch(queryExperience(experienceId));
+    }
+  };
 
 const setRelatedExperiences = (experienceId, page, state) => ({
   type: SET_RELATED_EXPERIENCES,
@@ -76,35 +74,33 @@ const setRelatedExperiences = (experienceId, page, state) => ({
   },
 });
 
-export const queryRelatedExperiencesOnExperience = experienceId => async (
-  dispatch,
-  getState,
-) => {
-  const page = 0;
-  dispatch(setRelatedExperiences(experienceId, page, toFetching()));
+export const queryRelatedExperiencesOnExperience =
+  experienceId => async (dispatch, getState) => {
+    const page = 0;
+    dispatch(setRelatedExperiences(experienceId, page, toFetching()));
 
-  try {
-    const relatedExperiences = await queryRelatedExperiencesApi({
-      id: experienceId,
-      start: page * 5,
-      limit: 5,
-    });
+    try {
+      const relatedExperiences = await queryRelatedExperiencesApi({
+        id: experienceId,
+        start: page * 5,
+        limit: 5,
+      });
 
-    const prev = relatedExperiencesCabinSelector(getState());
+      const prev = relatedExperiencesCabinSelector(getState());
 
-    if (experienceId === prev.experienceId && page === prev.page) {
-      const hasMore = relatedExperiences.length < 5 ? false : true;
-      const data = {
-        relatedExperiences,
-        hasMore,
-      };
+      if (experienceId === prev.experienceId && page === prev.page) {
+        const hasMore = relatedExperiences.length < 5 ? false : true;
+        const data = {
+          relatedExperiences,
+          hasMore,
+        };
 
-      dispatch(setRelatedExperiences(experienceId, page, getFetched(data)));
+        dispatch(setRelatedExperiences(experienceId, page, getFetched(data)));
+      }
+    } catch (error) {
+      dispatch(setRelatedExperiences(experienceId, page, getError(error)));
     }
-  } catch (error) {
-    dispatch(setRelatedExperiences(experienceId, page, getError(error)));
-  }
-};
+  };
 
 export const loadMoreRelatedExperiences = () => async (dispatch, getState) => {
   const cabin = relatedExperiencesCabinSelector(getState());
@@ -167,13 +163,11 @@ export const queryPopularExperiences = () => async dispatch => {
   }
 };
 
-export const queryPopularExperiencesIfUnfetched = experienceId => async (
-  dispatch,
-  getState,
-) => {
-  const box = popularExperiencesBoxSelector(getState());
+export const queryPopularExperiencesIfUnfetched =
+  experienceId => async (dispatch, getState) => {
+    const box = popularExperiencesBoxSelector(getState());
 
-  if (isUnfetched(box)) {
-    return dispatch(queryPopularExperiences(experienceId));
-  }
-};
+    if (isUnfetched(box)) {
+      return dispatch(queryPopularExperiences(experienceId));
+    }
+  };

@@ -4,10 +4,10 @@ import { queryExperienceLike } from 'apis/experiencesApi';
 
 const useQueryLike = experienceId => {
   const token = useToken();
-  return useAsyncFn(() => queryExperienceLike({ id: experienceId, token }), [
-    experienceId,
-    token,
-  ]);
+  return useAsyncFn(
+    () => queryExperienceLike({ id: experienceId, token }),
+    [experienceId, token],
+  );
 };
 
 export default useQueryLike;

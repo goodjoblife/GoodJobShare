@@ -117,7 +117,10 @@ export const createCurrentlyEmployedQuestion = () => ({
   dataKey: DATA_KEY_CURRENTLY_EMPLOYED,
   required: true,
   defaultValue: [null, [null, null]],
-  options: [{ label: '在職', value: 'yes' }, { label: '已離職', value: 'no' }],
+  options: [
+    { label: '在職', value: 'yes' },
+    { label: '已離職', value: 'no' },
+  ],
   elseOptionValue: 'no',
   validateOrWarn: ([value, [year, month]], { elseOptionValue }) => {
     if (isNil(value)) return '請填寫是否在職';
@@ -265,11 +268,8 @@ export const createRequiredSalaryQuestion = ({ type }) => ({
 });
 
 export const createSalaryQuestion = ({ type }) => {
-  const {
-    required,
-    validateOrWarn,
-    ...question
-  } = createRequiredSalaryQuestion({ type });
+  const { required, validateOrWarn, ...question } =
+    createRequiredSalaryQuestion({ type });
   return {
     ...question,
     validateOrWarn: ([type, amount]) =>
@@ -561,12 +561,13 @@ const Count = () => {
 };
 
 export const createSubmitQuestion = ({ type }) => ({
-  title: () => () => (
-    <span>
-      感謝你分享{tabTypeTranslation[type]}，按下「送出」，馬上就可以解鎖全站{' '}
-      <Count /> 萬多筆資料哦！
-    </span>
-  ),
+  title: () => () =>
+    (
+      <span>
+        感謝你分享{tabTypeTranslation[type]}，按下「送出」，馬上就可以解鎖全站{' '}
+        <Count /> 萬多筆資料哦！
+      </span>
+    ),
   type: QUESTION_TYPE.EMPTY,
   dataKey: '',
 });

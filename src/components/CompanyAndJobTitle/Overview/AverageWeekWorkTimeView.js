@@ -5,13 +5,7 @@ import R from 'ramda';
 import styles from './SummaryBlock.module.css';
 
 const ratioSelectorOfType = type =>
-  R.converge(R.divide, [
-    R.prop(type),
-    R.compose(
-      R.sum,
-      R.values,
-    ),
-  ]);
+  R.converge(R.divide, [R.prop(type), R.compose(R.sum, R.values)]);
 
 const almostEverydayRatioSelector = ratioSelectorOfType('almost_everyday');
 const sometimesRatioSelector = ratioSelectorOfType('sometimes');

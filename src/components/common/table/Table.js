@@ -21,13 +21,8 @@ class Table extends Component {
   static Column = Column;
 
   render() {
-    const {
-      data,
-      primaryKey,
-      children,
-      className,
-      postProcessRows,
-    } = this.props;
+    const { data, primaryKey, children, className, postProcessRows } =
+      this.props;
     const records = data.map((d, i) => {
       const record = Children.map(children, (col, idx) => {
         let value;

@@ -4,7 +4,13 @@ import styles from './injectHideContentBlock.module.css';
 import cn from 'classnames';
 import { useShareLink } from 'hooks/experiments';
 
-export default ({ rows, data, fromCol, toCol, canViewPublishId }) => {
+const useInjectHideContentBlock = ({
+  rows,
+  data,
+  fromCol,
+  toCol,
+  canViewPublishId,
+}) => {
   const nHides = toCol - fromCol + 1;
   const shareLink = useShareLink();
 
@@ -55,3 +61,5 @@ export default ({ rows, data, fromCol, toCol, canViewPublishId }) => {
     }
   }
 };
+
+export default useInjectHideContentBlock;

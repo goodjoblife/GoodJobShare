@@ -104,10 +104,7 @@ TemplateSection.propTypes = {
   title: PropTypes.string,
 };
 
-const isSubscriptionStatusOK = compose(
-  equals('OK'),
-  path(['data', 'status']),
-);
+const isSubscriptionStatusOK = compose(equals('OK'), path(['data', 'status']));
 
 const PaymentSection = ({ skuId, ...props }) => {
   const isLoggedIn = useIsLoggedIn();

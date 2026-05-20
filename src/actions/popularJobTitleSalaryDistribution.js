@@ -12,7 +12,8 @@ const setPopularJobTitleSalaryDistribution = box => ({
 export const queryPopularJobTitleSalaryDistribution = () => async dispatch => {
   dispatch(setPopularJobTitleSalaryDistribution(toFetching()));
 
-  const popularJobTitleSalaryDistribution = await getPopularJobTitleSalaryDistributionApi();
+  const popularJobTitleSalaryDistribution =
+    await getPopularJobTitleSalaryDistributionApi();
 
   try {
     dispatch(

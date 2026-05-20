@@ -31,53 +31,53 @@ const setEntry = (
   entryId,
 });
 
-const queryMenu = (): Thunk => async (dispatch): Promise<AnyAction> => {
-  dispatch(setMenu(toFetching()));
+const queryMenu =
+  (): Thunk =>
+  async (dispatch): Promise<AnyAction> => {
+    dispatch(setMenu(toFetching()));
 
-  try {
-    const entries = await queryMenuApi();
-    return dispatch(setMenu(getFetched(entries)));
-  } catch (error) {
-    dispatch(setMenu(getError(error)));
-    throw error;
-  }
-};
-
-export const queryMenuIfUnfetched = (): Thunk => async (
-  dispatch,
-  getState,
-): Promise<unknown> => {
-  const box = menuBoxSelector(getState());
-  if (isUnfetched(box)) {
-    return dispatch(queryMenu());
-  }
-};
-
-const queryEntry = (entryId: string): Thunk => async (
-  dispatch,
-): Promise<unknown> => {
-  dispatch(setEntry(entryId, toFetching()));
-
-  try {
-    const entry = await queryEntryApi({ entryId });
-    return dispatch(setEntry(entryId, getFetched(entry)));
-  } catch (error) {
-    // @ts-ignore
-    if (isGraphqlError('GraphqlError')) {
-      return dispatch(setEntry(entryId, getError(new UiNotFoundError())));
+    try {
+      const entries = await queryMenuApi();
+      return dispatch(setMenu(getFetched(entries)));
+    } catch (error) {
+      dispatch(setMenu(getError(error)));
+      throw error;
     }
+  };
 
-    // unexpected error
-    throw error;
-  }
-};
+export const queryMenuIfUnfetched =
+  (): Thunk =>
+  async (dispatch, getState): Promise<unknown> => {
+    const box = menuBoxSelector(getState());
+    if (isUnfetched(box)) {
+      return dispatch(queryMenu());
+    }
+  };
 
-export const queryEntryIfUnfetched = (entryId: string): Thunk => async (
-  dispatch,
-  getState,
-): Promise<unknown> => {
-  const box = entryBoxSelectorById(entryId)(getState());
-  if (isUnfetched(box)) {
-    return dispatch(queryEntry(entryId));
-  }
-};
+const queryEntry =
+  (entryId: string): Thunk =>
+  async (dispatch): Promise<unknown> => {
+    dispatch(setEntry(entryId, toFetching()));
+
+    try {
+      const entry = await queryEntryApi({ entryId });
+      return dispatch(setEntry(entryId, getFetched(entry)));
+    } catch (error) {
+      // @ts-ignore
+      if (isGraphqlError('GraphqlError')) {
+        return dispatch(setEntry(entryId, getError(new UiNotFoundError())));
+      }
+
+      // unexpected error
+      throw error;
+    }
+  };
+
+export const queryEntryIfUnfetched =
+  (entryId: string): Thunk =>
+  async (dispatch, getState): Promise<unknown> => {
+    const box = entryBoxSelectorById(entryId)(getState());
+    if (isUnfetched(box)) {
+      return dispatch(queryEntry(entryId));
+    }
+  };

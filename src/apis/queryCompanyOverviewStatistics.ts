@@ -3,7 +3,7 @@ import graphqlClient from 'utils/graphqlClient';
 import { SalaryWorkTimeStatistics } from 'apis/salaryWorkTime';
 
 const queryCompanyOverviewStatisticsGql = /* GraphQL */ `
-  query($companyName: String!) {
+  query ($companyName: String!) {
     company(name: $companyName) {
       salary_work_time_statistics {
         average_week_work_time

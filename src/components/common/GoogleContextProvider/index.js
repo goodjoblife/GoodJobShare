@@ -13,7 +13,7 @@ const GoogleContextProvider = ({ children }) => {
 
   useEffect(() => {
     // do it once
-    window.addEventListener('load', function() {
+    window.addEventListener('load', function () {
       window.google.accounts.id.initialize({
         client_id: GOOGLE_APP_ID,
         callback: async response => {

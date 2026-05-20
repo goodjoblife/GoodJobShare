@@ -23,7 +23,10 @@ const Scrollable = ({ children, className }) => {
     [handleMeasureRef],
   );
 
-  useEffect(calcRemainOffsetByElement, [frameHeight]);
+  useEffect(calcRemainOffsetByElement, [
+    frameHeight,
+    calcRemainOffsetByElement,
+  ]);
 
   return (
     <div

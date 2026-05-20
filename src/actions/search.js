@@ -14,38 +14,40 @@ export const setSearchByKeyword = ({ keyword, box }) => ({
   box,
 });
 
-export const queryKeyword = ({ keyword }) => async (dispatch, getState) => {
-  const box = searchByKeywordSelector(keyword)(getState());
+export const queryKeyword =
+  ({ keyword }) =>
+  async (dispatch, getState) => {
+    const box = searchByKeywordSelector(keyword)(getState());
 
-  if (isFetching(box)) {
-    return;
-  }
+    if (isFetching(box)) {
+      return;
+    }
 
-  dispatch(setSearchByKeyword({ keyword, box: toFetching() }));
+    dispatch(setSearchByKeyword({ keyword, box: toFetching() }));
 
-  try {
-    const searchCompanies = fetchSearchCompanyApi({
-      companyName: keyword,
-      hasData: true,
-    }).then(items =>
-      items.map(item => ({ ...item, pageType: PageType.COMPANY })),
-    );
+    try {
+      const searchCompanies = fetchSearchCompanyApi({
+        companyName: keyword,
+        hasData: true,
+      }).then(items =>
+        items.map(item => ({ ...item, pageType: PageType.COMPANY })),
+      );
 
-    const searchJobTitles = fetchSearchJobTitleApi({
-      jobTitle: keyword,
-    }).then(items =>
-      items.map(item => ({ ...item, pageType: PageType.JOB_TITLE })),
-    );
+      const searchJobTitles = fetchSearchJobTitleApi({
+        jobTitle: keyword,
+      }).then(items =>
+        items.map(item => ({ ...item, pageType: PageType.JOB_TITLE })),
+      );
 
-    const [companyData, jobTitleData] = await Promise.all([
-      searchCompanies,
-      searchJobTitles,
-    ]);
-    const data = [...companyData, ...jobTitleData];
-    data.sort((a, b) => (b.dataCount || 0) - (a.dataCount || 0));
+      const [companyData, jobTitleData] = await Promise.all([
+        searchCompanies,
+        searchJobTitles,
+      ]);
+      const data = [...companyData, ...jobTitleData];
+      data.sort((a, b) => (b.dataCount || 0) - (a.dataCount || 0));
 
-    dispatch(setSearchByKeyword({ keyword, box: getFetched(data) }));
-  } catch (e) {
-    dispatch(setSearchByKeyword({ keyword, box: getError(e) }));
-  }
-};
+      dispatch(setSearchByKeyword({ keyword, box: getFetched(data) }));
+    } catch (e) {
+      dispatch(setSearchByKeyword({ keyword, box: getError(e) }));
+    }
+  };

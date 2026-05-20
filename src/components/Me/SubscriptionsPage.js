@@ -110,8 +110,10 @@ const Subscriptions = () => {
   );
 };
 
-export default () => (
+const SubscriptionsPage = () => (
   <SubscriptionWrapper>
     <Subscriptions />
   </SubscriptionWrapper>
 );
+
+export default SubscriptionsPage;

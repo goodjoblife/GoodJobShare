@@ -14,9 +14,8 @@ const useGetSearchPermission = ({ token }) => {
 
 const usePermission = () => {
   const token = useToken();
-  const { canView, permissionFetched, setPermissionState } = useContext(
-    PermissionContext,
-  );
+  const { canView, permissionFetched, setPermissionState } =
+    useContext(PermissionContext);
   const getSearchPermission = useGetSearchPermission({ token });
   const fetchPermission = useCallback(async () => {
     const hasPermission = await getSearchPermission();

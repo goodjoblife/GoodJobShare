@@ -16,17 +16,21 @@ import useExperimentParameters from 'hooks/useExperimentParameters';
  * @param {string} elementId the id of element to observe
  */
 
-export default (
-  attributesToObserve = [],
-  elementId = 'root',
-) => WrappedComponent => {
-  const WithExperimentParameters = props => {
-    const parameters = useExperimentParameters(attributesToObserve, elementId);
-    return <WrappedComponent {...props} experimentParameters={parameters} />;
+const withExperimentParameters =
+  (attributesToObserve = [], elementId = 'root') =>
+  WrappedComponent => {
+    const WithExperimentParameters = props => {
+      const parameters = useExperimentParameters(
+        attributesToObserve,
+        elementId,
+      );
+      return <WrappedComponent {...props} experimentParameters={parameters} />;
+    };
+
+    const displayName =
+      WrappedComponent.displayName || WrappedComponent.name || 'Component';
+    WithExperimentParameters.displayName = `WithExperimentParameters(${displayName})`;
+    return WithExperimentParameters;
   };
 
-  const displayName =
-    WrappedComponent.displayName || WrappedComponent.name || 'Component';
-  WithExperimentParameters.displayName = `WithExperimentParameters(${displayName})`;
-  return WithExperimentParameters;
-};
+export default withExperimentParameters;

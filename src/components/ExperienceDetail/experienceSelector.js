@@ -50,12 +50,8 @@ export const metaTitleSelector = experience => {
 const interviewMetaDescriptionSelector = experience => {
   if (experience) {
     let content = '';
-    const {
-      region,
-      experience_in_year,
-      interview_result,
-      sections,
-    } = experience;
+    const { region, experience_in_year, interview_result, sections } =
+      experience;
     const interviewYear = interviewYearSelector(experience);
     const interviewMonth = interviewMonthSelector(experience);
     const salaryAmount = salaryAmountSelector(experience);

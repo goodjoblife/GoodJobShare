@@ -78,20 +78,18 @@ const CheckboxRatingTextAreaList = ({
   ratingLabels,
   footnote,
 }) => {
-  const {
-    extendedOptions,
-    itemIndices,
-    elseOptionIndex,
-  } = useExtendedOptionsAndItemIndices({ items, baseOptions, elseOptionValue });
+  const { extendedOptions, itemIndices, elseOptionIndex } =
+    useExtendedOptionsAndItemIndices({ items, baseOptions, elseOptionValue });
 
   const [activeOptionIndex, setActiveOptionIndex] = useActiveOptionIndex({
     setShowsNavigation,
   });
   const lastActiveOptionIndex = usePrevious(activeOptionIndex);
   const activeOption = extendedOptions[activeOptionIndex];
-  const resetActiveOptionIndex = useCallback(() => setActiveOptionIndex(null), [
-    setActiveOptionIndex,
-  ]);
+  const resetActiveOptionIndex = useCallback(
+    () => setActiveOptionIndex(null),
+    [setActiveOptionIndex],
+  );
 
   const activeItemIndex = itemIndices[activeOptionIndex];
   const setActiveItem = useCallback(

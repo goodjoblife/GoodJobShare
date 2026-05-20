@@ -59,7 +59,7 @@ const useTimeAndSalaryBoxSelector = companyName => {
 
 const useEsgSalaryDataBox = companyName => {
   const selector = useCallback(
-    companyEsgSalaryDataBoxSelectorByName(companyName),
+    state => companyEsgSalaryDataBoxSelectorByName(companyName)(state),
     [companyName],
   );
 

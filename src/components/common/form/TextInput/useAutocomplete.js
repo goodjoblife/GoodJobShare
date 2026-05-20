@@ -18,7 +18,7 @@ const useScrollToItem = itemRef => {
   }, [itemRef]);
 };
 
-export default ({
+const useAutocomplete = ({
   value,
   onFocus,
   onBlur,
@@ -29,15 +29,11 @@ export default ({
   const [isFocused, setFocused] = useState(false);
   const [shouldMenuOpen, setMenuOpen] = useState(false);
   const [shouldIgnoreBlur, setIgnoreBlur] = useState(false);
-  const [
-    highlightedIndex,
-    setHighlightedIndex,
-    resetHighlightedIndex,
-  ] = useBoundedIndex(autocompleteItems.length + 1, autocompleteItems.length);
+  const [highlightedIndex, setHighlightedIndex, resetHighlightedIndex] =
+    useBoundedIndex(autocompleteItems.length + 1, autocompleteItems.length);
   const hasHighlight = highlightedIndex < autocompleteItems.length;
-  const [isHightlightedItemSelected, setHightlightedItemSelected] = useState(
-    false,
-  );
+  const [isHightlightedItemSelected, setHightlightedItemSelected] =
+    useState(false);
 
   useEffect(() => {
     setMenuOpen(isFocused);
@@ -182,3 +178,5 @@ export default ({
     handleMouseClickItem,
   };
 };
+
+export default useAutocomplete;

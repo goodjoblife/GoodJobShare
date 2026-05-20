@@ -1,6 +1,6 @@
 // copy from variables.module.css
 // TO FIX: follow bootstrap or common css framework
-export default {
+const breakpoints = {
   xl: 1280,
   lg: 1024,
   md: 850,
@@ -8,3 +8,5 @@ export default {
   xs: 550,
   xxs: 330,
 };
+
+export default breakpoints;

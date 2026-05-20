@@ -1,4 +1,6 @@
 import React from 'react';
-import Sort from './Sort.svg';
+import SortSvg from './Sort.svg';
 
-export default props => <img src={Sort} alt="sort" {...props} />;
+const Sort = props => <img src={SortSvg} alt="sort" {...props} />;
+
+export default Sort;

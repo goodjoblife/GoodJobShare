@@ -7,9 +7,8 @@ const useLoginFlow = callback => {
   const getIsMounted = useMountedState();
   const [state, setState] = useState('init');
   const [isLoggedIn] = useLogin();
-  const { isLoginModalDisplayed, setLoginModalDisplayed } = useContext(
-    LoginModalContext,
-  );
+  const { isLoginModalDisplayed, setLoginModalDisplayed } =
+    useContext(LoginModalContext);
 
   useEffect(() => {
     if (state === 'submitting_check_logged_in') {

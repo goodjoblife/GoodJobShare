@@ -6,12 +6,7 @@ import { useWindowSize } from 'react-use';
 import breakpoints from 'constants/breakpoints';
 
 const maxNameLength = R.pipe(
-  R.map(
-    R.pipe(
-      R.path(['job_title', 'name']),
-      R.length,
-    ),
-  ),
+  R.map(R.pipe(R.path(['job_title', 'name']), R.length)),
   R.reduce(R.max, -Infinity),
 );
 

@@ -42,10 +42,12 @@ const logOutAction = () => ({
   type: LOG_OUT,
 });
 
-export const logout = () => (dispatch, getState, { history }) => {
-  dispatch(logOutAction());
-  history.push('/');
-};
+export const logout =
+  () =>
+  (dispatch, getState, { history }) => {
+    dispatch(logOutAction());
+    history.push('/');
+  };
 
 const getMeInfo = token => dispatch =>
   queryMeApi({ token }).catch(error => {

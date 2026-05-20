@@ -11,10 +11,8 @@ const usePreviewed = () => {
   const companyName = useCompanyName();
   const year = useYear();
 
-  const [
-    previewedYearByPageName,
-    setPreviewedYearByPageName,
-  ] = usePreviewedYearByPageName();
+  const [previewedYearByPageName, setPreviewedYearByPageName] =
+    usePreviewedYearByPageName();
 
   const hasPreviewed = useMemo(
     () => previewedYearByPageName[companyName] === year,

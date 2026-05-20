@@ -24,20 +24,19 @@ const setInboxCount = (count: number): SetInboxCountAction => ({
 
 // Read inbox
 
-export const openInbox = (): Thunk => async (
-  dispatch,
-  getState,
-): Promise<void> => {
-  const state = getState();
-  const token = tokenSelector(state);
+export const openInbox =
+  (): Thunk =>
+  async (dispatch, getState): Promise<void> => {
+    const state = getState();
+    const token = tokenSelector(state);
 
-  try {
-    await openInboxApi({ token });
-    dispatch(setInboxCount(0));
-  } catch (error) {
-    console.error(error);
-  }
-};
+    try {
+      await openInboxApi({ token });
+      dispatch(setInboxCount(0));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 // Set inbox
 
@@ -53,59 +52,54 @@ const setInbox = (box: FetchBox<InboxMessage[]>): SetInboxAction => ({
 
 // Fetch inbox
 
-export const fetchInbox = ({
-  start,
-  limit,
-}: {
-  start: number;
-  limit: number;
-}): Thunk => async (dispatch, getState): Promise<void> => {
-  const state = getState();
-  const token = tokenSelector(state);
+export const fetchInbox =
+  ({ start, limit }: { start: number; limit: number }): Thunk =>
+  async (dispatch, getState): Promise<void> => {
+    const state = getState();
+    const token = tokenSelector(state);
 
-  const box = messagesBoxSelector(getState());
-  if (isFetching(box)) return;
+    const box = messagesBoxSelector(getState());
+    if (isFetching(box)) return;
 
-  try {
-    dispatch(setInbox(toFetching(box)));
+    try {
+      dispatch(setInbox(toFetching(box)));
 
-    const { unreadCount, messages } = await queryInboxApi({
-      token,
-      start,
-      limit,
-    });
+      const { unreadCount, messages } = await queryInboxApi({
+        token,
+        start,
+        limit,
+      });
 
-    dispatch(setInboxCount(unreadCount));
-    dispatch(setInbox(getFetched(messages)));
-  } catch (error) {
-    console.error(error);
-    dispatch(setInbox(getError(error)));
-  }
-};
+      dispatch(setInboxCount(unreadCount));
+      dispatch(setInbox(getFetched(messages)));
+    } catch (error) {
+      console.error(error);
+      dispatch(setInbox(getError(error)));
+    }
+  };
 
 // Read inbox message
 
-export const readInboxMessage = ({ id }: { id: string }): Thunk => async (
-  dispatch,
-  getState,
-): Promise<void> => {
-  const state = getState();
-  const token = tokenSelector(state);
+export const readInboxMessage =
+  ({ id }: { id: string }): Thunk =>
+  async (dispatch, getState): Promise<void> => {
+    const state = getState();
+    const token = tokenSelector(state);
 
-  const oldBox = messagesBoxSelector(getState());
-  const newBox = {
-    ...oldBox,
-    data:
-      oldBox.data &&
-      oldBox.data.map((message: InboxMessage) =>
-        message.id === id ? { ...message, read: true } : message,
-      ),
+    const oldBox = messagesBoxSelector(getState());
+    const newBox = {
+      ...oldBox,
+      data:
+        oldBox.data &&
+        oldBox.data.map((message: InboxMessage) =>
+          message.id === id ? { ...message, read: true } : message,
+        ),
+    };
+
+    try {
+      await readInboxMessageApi({ token, id });
+      dispatch(setInbox(newBox));
+    } catch (error) {
+      console.error(error);
+    }
   };
-
-  try {
-    await readInboxMessageApi({ token, id });
-    dispatch(setInbox(newBox));
-  } catch (error) {
-    console.error(error);
-  }
-};

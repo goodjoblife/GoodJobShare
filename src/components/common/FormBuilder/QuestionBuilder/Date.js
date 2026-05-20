@@ -30,9 +30,10 @@ const buildYearOptions = (currentYear, span = 10) =>
 
 const DatePicker = ({ className, value: [year, month], onChange, warning }) => {
   const [currentYear, currentMonth] = getNow();
-  const yearOptions = useMemo(() => buildYearOptions(currentYear, 10), [
-    currentYear,
-  ]);
+  const yearOptions = useMemo(
+    () => buildYearOptions(currentYear, 10),
+    [currentYear],
+  );
   const monthOptions = useMemo(
     () => buildMonthOptions(year, currentYear, currentMonth),
     [year, currentYear, currentMonth],

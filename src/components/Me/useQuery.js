@@ -11,9 +11,10 @@ import { changeSalaryWorkTimeStatus } from 'apis/timeAndSalaryApi';
 export const useFetchMyPublishes = () => {
   const token = useToken();
 
-  const [state, callback] = useAsyncFn(() => queryMyPublishesApi({ token }), [
-    token,
-  ]);
+  const [state, callback] = useAsyncFn(
+    () => queryMyPublishesApi({ token }),
+    [token],
+  );
 
   return [state, callback];
 };

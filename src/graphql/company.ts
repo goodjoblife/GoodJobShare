@@ -9,7 +9,7 @@ export interface Company {
 }
 
 export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
-  query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
+  query ($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
     company(name: $companyName) {
       name
       salaryWorkTimesResult(jobTitle: $jobTitle, start: $start, limit: $limit) {
@@ -52,7 +52,7 @@ export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
 `;
 
 export const getCompanyTimeAndSalaryStatisticsQuery = /* GraphQL */ `
-  query($companyName: String!) {
+  query ($companyName: String!) {
     company(name: $companyName) {
       name
       salary_work_time_statistics {
@@ -78,7 +78,7 @@ export const getCompanyTimeAndSalaryStatisticsQuery = /* GraphQL */ `
 `;
 
 export const getCompanyTopNJobTitlesQuery = /* GraphQL */ `
-  query($companyName: String!) {
+  query ($companyName: String!) {
     company(name: $companyName) {
       name
       topNJobTitles {
@@ -126,7 +126,7 @@ export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
 `;
 
 export const queryCompaniesHavingDataGql = /* GraphQL */ `
-  query($start: Int!, $limit: Int!) {
+  query ($start: Int!, $limit: Int!) {
     companiesHavingData(start: $start, limit: $limit) {
       name
       businessNumber

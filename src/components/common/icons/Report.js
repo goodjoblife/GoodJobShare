@@ -1,4 +1,6 @@
 import React from 'react';
-import Report from './Report.svg';
+import ReportSvg from './Report.svg';
 
-export default props => <img src={Report} alt="report" {...props} />;
+const Report = props => <img src={ReportSvg} alt="report" {...props} />;
+
+export default Report;

@@ -86,7 +86,7 @@ export const queryExperienceGql = /* GraphQL */ `
 `;
 
 export const queryExperienceLikeGql = /* GraphQL */ `
-  query($id: ID!) {
+  query ($id: ID!) {
     experience(id: $id) {
       liked
     }
@@ -94,7 +94,7 @@ export const queryExperienceLikeGql = /* GraphQL */ `
 `;
 
 export const queryExperienceRepliesGql = /* GraphQL */ `
-  query($id: ID!) {
+  query ($id: ID!) {
     experience(id: $id) {
       replies {
         id
@@ -109,7 +109,7 @@ export const queryExperienceRepliesGql = /* GraphQL */ `
 `;
 
 export const createInterviewExperienceWithRating = /* GraphQL */ `
-  mutation($input: CreateInterviewExperienceWithRatingInput!) {
+  mutation ($input: CreateInterviewExperienceWithRatingInput!) {
     createInterviewExperienceWithRating(input: $input) {
       success
       experience {
@@ -130,7 +130,7 @@ mutation CreateWorkExperienceWithRating($input: CreateWorkExperienceWithRatingIn
 }`;
 
 export const queryRelatedExperiencesGql = /* GraphQL */ `
-  query($id: ID!, $start: Int!, $limit: Int!) {
+  query ($id: ID!, $start: Int!, $limit: Int!) {
     experience(id: $id) {
       id
       relatedExperiences(start: $start, limit: $limit) {
@@ -176,7 +176,7 @@ export const queryRelatedExperiencesGql = /* GraphQL */ `
 `;
 
 export const createExperienceLikeGql = /* GraphQL */ `
-  mutation($input: CreateExperienceLikeInput!) {
+  mutation ($input: CreateExperienceLikeInput!) {
     createExperienceLike(input: $input) {
       experienceLike {
         id
@@ -186,7 +186,7 @@ export const createExperienceLikeGql = /* GraphQL */ `
 `;
 
 export const deleteExpereinceLikeGql = /* GraphQL */ `
-  mutation($input: DeleteExperienceLikeInput!) {
+  mutation ($input: DeleteExperienceLikeInput!) {
     deleteExperienceLike(input: $input) {
       deletedExperienceId
     }
@@ -200,7 +200,7 @@ export const queryExperienceCountGql = /* GraphQL */ `
 `;
 
 export const changeExperienceStatusGql = /* GraphQL */ `
-  mutation($input: ChangeExperienceStatusInput!) {
+  mutation ($input: ChangeExperienceStatusInput!) {
     changeExperienceStatus(input: $input) {
       experience {
         id

@@ -34,15 +34,17 @@ const randomAction = actions => {
   return actions[0];
 };
 
-export default () => {
+const useShareLink = () => {
   const action = randomAction(ACTIONS);
   const { generateTo } = action;
   return generateTo();
 };
 
+export default useShareLink;
+
 export const useShareLinkChange = onChange => {
   const location = useLocation();
   const share = path(['state', 'share'])(location.state);
 
-  useEffect(onChange, [share]);
+  useEffect(onChange, [share, onChange]);
 };
