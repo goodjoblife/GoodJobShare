@@ -54,6 +54,11 @@ type TSalaryFilterSelectProps = {
   onChange: (value: string | null) => void;
 };
 
+type TQueryHookResult = readonly [
+  TQueryParams[string],
+  ReturnType<TUseUpdateQuery>,
+];
+
 const createYearMonth = (date: Date): TYearMonth => ({
   year: date.getFullYear(),
   month: date.getMonth() + 1,
@@ -112,11 +117,6 @@ const useUpdateQuery: TUseUpdateQuery = (key, state) => {
     [key, query, history, state],
   );
 };
-
-type TQueryHookResult = readonly [
-  string | undefined,
-  (value: string | null) => void,
-];
 
 export const useDataTimeFromQuery = (y: TScrollY = null): TQueryHookResult => {
   const query = useQuery() as TQueryParams;
