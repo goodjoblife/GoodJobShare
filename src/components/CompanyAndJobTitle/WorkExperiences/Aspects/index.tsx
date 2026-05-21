@@ -77,37 +77,39 @@ const AspectSection: React.FC<AspectProps> = ({
             );
           }}
         />
-        <RatingFilter />
       </Wrapper>
-      <PageBoxRenderer
-        pageType={pageType}
-        pageName={pageName}
-        tabType={tabType}
-        boxSelector={experiencesBoxSelector}
-        render={({
-          workExperiences,
-          workExperiencesCount: totalCount,
-        }: CompanyAspectExperienceResult): React.ReactNode => (
-          <>
-            <Helmet
-              pageType={pageType}
-              pageName={pageName}
-              totalCount={totalCount}
-              page={page}
-            />
-            <WorkExperiencesSection
-              pageType={pageType}
-              pageName={pageName}
-              tabType={tabType}
-              data={workExperiences}
-              page={page}
-              pageSize={pageSize}
-              totalCount={totalCount}
-              createPageLinkTo={createPageLinkTo}
-            />
-          </>
-        )}
-      />
+      <Wrapper size="m">
+        <RatingFilter />
+        <PageBoxRenderer
+          pageType={pageType}
+          pageName={pageName}
+          tabType={tabType}
+          boxSelector={experiencesBoxSelector}
+          render={({
+            workExperiences,
+            workExperiencesCount: totalCount,
+          }: CompanyAspectExperienceResult): React.ReactNode => (
+            <>
+              <Helmet
+                pageType={pageType}
+                pageName={pageName}
+                totalCount={totalCount}
+                page={page}
+              />
+              <WorkExperiencesSection
+                pageType={pageType}
+                pageName={pageName}
+                tabType={tabType}
+                data={workExperiences}
+                page={page}
+                pageSize={pageSize}
+                totalCount={totalCount}
+                createPageLinkTo={createPageLinkTo}
+              />
+            </>
+          )}
+        />
+      </Wrapper>
     </CompanyAndJobTitleWrapper>
   );
 };
