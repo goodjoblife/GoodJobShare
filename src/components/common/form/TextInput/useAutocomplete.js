@@ -102,14 +102,11 @@ export default ({
     [onBlur, shouldIgnoreBlur],
   );
 
-  const handleEnter = useCallback(
-    e => {
-      if (isMenuOpen && hasHighlight) {
-        selectHighlightedItem();
-      }
-    },
-    [hasHighlight, isMenuOpen, selectHighlightedItem],
-  );
+  const handleEnter = useCallback(() => {
+    if (isMenuOpen && hasHighlight) {
+      selectHighlightedItem();
+    }
+  }, [hasHighlight, isMenuOpen, selectHighlightedItem]);
 
   const handleArrowUp = useCallback(
     e => {
@@ -157,13 +154,10 @@ export default ({
     [setHighlightedIndex],
   );
 
-  const handleMouseLeaveItem = useCallback(
-    i => {
-      setIgnoreBlur(false);
-      resetHighlightedIndex();
-    },
-    [resetHighlightedIndex],
-  );
+  const handleMouseLeaveItem = useCallback(() => {
+    setIgnoreBlur(false);
+    resetHighlightedIndex();
+  }, [resetHighlightedIndex]);
 
   const handleMouseClickItem = useCallback(
     i => {

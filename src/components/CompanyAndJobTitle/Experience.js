@@ -6,13 +6,13 @@ import { useTrackEvent } from 'hooks/viewLog';
 import Article from 'components/ExperienceDetail/Article';
 import { Heading, Wrapper } from 'common/base';
 import MessageBoard from '../ExperienceDetail/MessageBoard';
-import * as VISIBILITY from 'components/ExperienceDetail/Article/visibility';
+import VISIBILITY from 'components/ExperienceDetail/Article/visibility';
 import styles from './Experience.module.css';
 import { formatSimpleDate } from 'utils/dateUtil';
 import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
 import {
-  pageType as PAGE_TYPE,
-  tabType as TAB_TYPE,
+  PageType,
+  TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
 } from 'constants/companyJobTitle';
 
@@ -47,16 +47,16 @@ const useTracePreviewRef = ({ experience }) => {
 const useExperienceTitle = ({ experience, pageType, tabType }) =>
   useMemo(() => {
     let str = '';
-    if (pageType === PAGE_TYPE.COMPANY && experience?.job_title?.name) {
+    if (pageType === PageType.COMPANY && experience?.job_title?.name) {
       str = experience.job_title.name;
-    } else if (pageType === PAGE_TYPE.JOB_TITLE && experience?.company?.name) {
+    } else if (pageType === PageType.JOB_TITLE && experience?.company?.name) {
       str = experience.company.name;
     } else if (experience?.title) {
       str = experience.title;
     }
     switch (tabType) {
-      case TAB_TYPE.INTERVIEW_EXPERIENCE:
-      case TAB_TYPE.WORK_EXPERIENCE:
+      case TabType.INTERVIEW_EXPERIENCE:
+      case TabType.WORK_EXPERIENCE:
         return `${str} ${TAB_TYPE_DETAIL_TRANSLATION[tabType]}`;
       default:
         return str;

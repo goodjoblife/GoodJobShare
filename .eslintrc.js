@@ -1,7 +1,10 @@
-const path = require('path');
-
 module.exports = {
-  extends: ['react-app', 'plugin:@typescript-eslint/recommended', 'prettier', 'prettier/react'],
+  extends: [
+    'react-app',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'prettier/react',
+  ],
   plugins: ['prettier', '@typescript-eslint', 'react-hooks'],
   rules: {
     'arrow-parens': ['error', 'as-needed'],
@@ -27,17 +30,32 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
     'react/require-default-props': 'off',
     'react/no-array-index-key': 'off',
-    'no-unused-vars': 'error',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
     'react/no-deprecated': 'error',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'error',
     'prettier/prettier': 'error',
-    'no-use-before-define': 'error',
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': 'error',
     'react/prop-types': 'error',
     'react/no-unused-prop-types': 'error',
-    'react/sort-prop-types': ['error', {'sortShapeProp': true}],
-    '@typescript-eslint/camelcase': 'off',
+    'react/sort-prop-types': ['error', { sortShapeProp: true }],
+    // requires ESLint 7.1.0+, disabled until ESLint is upgraded
+    '@typescript-eslint/no-loss-of-precision': 'off',
     '@typescript-eslint/no-var-requires': 'warn',
-    '@typescript-eslint/ban-ts-ignore': 'warn',
+    '@typescript-eslint/ban-ts-comment': 'warn',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
+  overrides: [
+    {
+      // enable the rule specifically for TypeScript files
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'error',
+        '@typescript-eslint/explicit-module-boundary-types': 'error',
+      },
+    },
+  ],
 };

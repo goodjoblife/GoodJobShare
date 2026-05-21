@@ -23,11 +23,11 @@ import {
 import {
   getCompanyTimeAndSalary,
   getCompanyInterviewExperiences,
-  getCompanyWorkExperiences,
   queryCompaniesApi,
   getCompanyTimeAndSalaryStatistics,
   getCompanyTopNJobTitles,
 } from 'apis/company';
+import queryCompanyWorkExperiencesApi from 'apis/queryCompanyWorkExperiences';
 import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
 import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
 import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
@@ -132,6 +132,16 @@ const SALARY_WORK_TIMES_LIMIT = 5;
 const WORK_EXPERIENCES_LIMIT = 3;
 const INTERVIEW_EXPERIENCES_LIMIT = 3;
 
+/**
+ * @type {(
+ *   companyName: string,
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverview | null>
+ * ) => {
+ *   type: string;
+ *   companyName: string;
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverview | null>
+ * }}
+ */
 const setOverview = (companyName, box) => ({
   type: SET_OVERVIEW,
   companyName,
@@ -182,6 +192,16 @@ export const queryCompanyOverview = (
   }
 };
 
+/**
+ * @type {(
+ *   companyName: string,
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverviewStatistics | null>
+ * ) => {
+ *   type: string;
+ *   companyName: string;
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverviewStatistics | null>
+ * }}
+ */
 const setOverviewStatistics = (companyName, box) => ({
   type: SET_OVERVIEW_STATISTICS,
   companyName,
@@ -191,7 +211,6 @@ const setOverviewStatistics = (companyName, box) => ({
 export const queryCompanyOverviewStatistics = companyName => async (
   dispatch,
   getState,
-  { api },
 ) => {
   const box = companyOverviewStatisticsBoxSelectorByName(companyName)(
     getState(),
@@ -529,7 +548,7 @@ export const queryCompanyWorkExperiences = ({
   dispatch(setWorkExperiences(companyName, toFetching(box)));
 
   try {
-    const data = await getCompanyWorkExperiences({
+    const data = await queryCompanyWorkExperiencesApi({
       companyName,
       jobTitle,
       start,
@@ -542,6 +561,7 @@ export const queryCompanyWorkExperiences = ({
       return dispatch(setWorkExperiences(companyName, getFetched(data)));
     }
 
+    /** @type {import('reducers/companyIndex').CompanyWorkExperienceResult} */
     const workExperiencesData = {
       name: data.name,
       jobTitle,

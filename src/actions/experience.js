@@ -156,7 +156,7 @@ const setPopularExperiences = box => ({
   popularExperiences: box,
 });
 
-export const queryPopularExperiences = () => async (dispatch, getState) => {
+export const queryPopularExperiences = () => async dispatch => {
   dispatch(setPopularExperiences(toFetching()));
 
   try {
