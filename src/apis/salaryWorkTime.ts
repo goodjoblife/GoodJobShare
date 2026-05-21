@@ -13,6 +13,7 @@ export const fragmentSalaryWorkTimeFields = /* GraphQL */ `
     estimated_hourly_wage
     overtime_frequency
     employment_type
+    gender
     job_title {
       name
     }
@@ -49,6 +50,7 @@ export type SalaryWorkTime = {
   estimated_hourly_wage: number | null;
   overtime_frequency: number | null;
   employment_type: string | null;
+  gender: string | null;
   job_title: {
     name: string;
   };
