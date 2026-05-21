@@ -18,6 +18,18 @@ import {
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 import {
+  dataTimeFromQuerySelector,
+  experienceFromQuerySelector,
+  genderFromQuerySelector,
+  sortByFromQuerySelector,
+  useDataTimeFromQuery,
+  useExperienceFromQuery,
+  useGenderFromQuery,
+  useSortByFromQuery,
+  getDataTimeRange,
+  getExperienceInYearRange,
+} from 'components/CompanyAndJobTitle/TimeAndSalary/SalaryFilter';
+import {
   queryFromQuerySelector,
   pageFromQuerySelector,
 } from 'selectors/routing';
@@ -64,6 +76,17 @@ const JobTitleTimeAndSalaryProvider = () => {
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
 
+  const [dataTime] = useDataTimeFromQuery();
+  const [experience] = useExperienceFromQuery();
+  const [gender] = useGenderFromQuery();
+  const [sortBy] = useSortByFromQuery();
+
+  const dataTimeRange = useMemo(() => getDataTimeRange(dataTime), [dataTime]);
+  const experienceInYearRange = useMemo(
+    () => getExperienceInYearRange(experience),
+    [experience],
+  );
+
   const handleQueryJobTitleTimeAndSalary = useCallback(
     ({ force = false } = {}) => {
       dispatch(
@@ -73,12 +96,26 @@ const JobTitleTimeAndSalaryProvider = () => {
             companyName: companyName || undefined,
             start,
             limit,
+            dataTimeRange,
+            experienceInYearRange,
+            gender: gender || undefined,
+            sortBy: sortBy || undefined,
           },
           { force },
         ),
       );
     },
-    [dispatch, companyName, jobTitle, start, limit],
+    [
+      dispatch,
+      companyName,
+      jobTitle,
+      start,
+      limit,
+      dataTimeRange,
+      experienceInYearRange,
+      gender,
+      sortBy,
+    ],
   );
 
   useEffect(() => {
@@ -133,6 +170,12 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   const companyName = queryFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
+  const dataTime = dataTimeFromQuerySelector(query);
+  const experience = experienceFromQuerySelector(query);
+  const gender = genderFromQuerySelector(query);
+  const sortBy = sortByFromQuerySelector(query);
+  const dataTimeRange = getDataTimeRange(dataTime);
+  const experienceInYearRange = getExperienceInYearRange(experience);
   return Promise.all([
     dispatch(queryJobTitleOverviewStatistics(jobTitle)),
     dispatch(
@@ -141,6 +184,10 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
         companyName,
         start,
         limit,
+        dataTimeRange,
+        experienceInYearRange,
+        gender: gender || undefined,
+        sortBy: sortBy || undefined,
       }),
     ),
   ]);
