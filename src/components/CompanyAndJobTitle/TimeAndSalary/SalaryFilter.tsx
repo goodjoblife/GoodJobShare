@@ -113,28 +113,35 @@ const useUpdateQuery: TUseUpdateQuery = (key, state) => {
   );
 };
 
-export const useDataTimeFromQuery = (y: TScrollY = null) => {
+type TQueryHookResult = readonly [
+  string | undefined,
+  (value: string | null) => void,
+];
+
+export const useDataTimeFromQuery = (y: TScrollY = null): TQueryHookResult => {
   const query = useQuery() as TQueryParams;
   const state = useMemo(() => ({ y }), [y]);
   const setDataTime = useUpdateQuery(SalaryFilterQueryKey.DATA_TIME, state);
   return [dataTimeFromQuerySelector(query), setDataTime] as const;
 };
 
-export const useExperienceFromQuery = (y: TScrollY = null) => {
+export const useExperienceFromQuery = (
+  y: TScrollY = null,
+): TQueryHookResult => {
   const query = useQuery() as TQueryParams;
   const state = useMemo(() => ({ y }), [y]);
   const setExperience = useUpdateQuery(SalaryFilterQueryKey.EXPERIENCE, state);
   return [experienceFromQuerySelector(query), setExperience] as const;
 };
 
-export const useGenderFromQuery = (y: TScrollY = null) => {
+export const useGenderFromQuery = (y: TScrollY = null): TQueryHookResult => {
   const query = useQuery() as TQueryParams;
   const state = useMemo(() => ({ y }), [y]);
   const setGender = useUpdateQuery(SalaryFilterQueryKey.GENDER, state);
   return [genderFromQuerySelector(query), setGender] as const;
 };
 
-export const useSortByFromQuery = (y: TScrollY = null) => {
+export const useSortByFromQuery = (y: TScrollY = null): TQueryHookResult => {
   const query = useQuery() as TQueryParams;
   const state = useMemo(() => ({ y }), [y]);
   const setSortBy = useUpdateQuery(SalaryFilterQueryKey.SORT_BY, state);
