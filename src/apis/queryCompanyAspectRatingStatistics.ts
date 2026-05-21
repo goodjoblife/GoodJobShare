@@ -9,6 +9,7 @@ import {
 const queryCompanyAspectRatingStatisticsGql = /* GraphQL */ `
   query($companyName: String!) {
     company(name: $companyName) {
+      name
       companyAspectRatingStatistics {
         ...aspectRatingStatisticsFields
       }
