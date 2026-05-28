@@ -98,8 +98,7 @@ const useQuestionNode = ({
     setShowsNavigation,
   };
 
-  if (options && type !== QUESTION_TYPE.CHECKBOX_RADIO_ELSE_RADIO_TEXTAREA_LIST)
-    options = normalizeOptions(options);
+  if (options) options = normalizeOptions(options);
 
   switch (type) {
     case QUESTION_TYPE.TEXT:
