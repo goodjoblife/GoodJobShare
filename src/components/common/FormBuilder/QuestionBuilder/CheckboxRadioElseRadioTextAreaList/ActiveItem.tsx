@@ -106,76 +106,81 @@ const ActiveItem = ({
     [onChange, optionValue, radioValue, elseRadioValue, textValue],
   );
 
-  if (subPage === SubPage.Text) {
-    return (
-      <div className={styles.root}>
-        <div className={styles.textTitle}>{textTitle}</div>
-        <div className={styles.textAreaContainer}>
-          <textarea
-            className={styles.textarea}
-            value={textValue}
-            onChange={(e): void => setTextValue(e.target.value)}
-            placeholder={textPlaceholder}
-          />
+  switch (subPage) {
+    case SubPage.Text:
+      return (
+        <div className={styles.root}>
+          <div className={styles.textTitle}>{textTitle}</div>
+          <div className={styles.textAreaContainer}>
+            <textarea
+              className={styles.textarea}
+              value={textValue}
+              onChange={(e): void => setTextValue(e.target.value)}
+              placeholder={textPlaceholder}
+            />
+          </div>
+          <div className={cn(formStyles.navigationBar, styles.ctaButtons)}>
+            <NavigatorButton onClick={onBack}>上一步</NavigatorButton>
+            <NavigatorButton onClick={onCancel}>取消</NavigatorButton>
+            <NavigatorButton onClick={onSave}>完成</NavigatorButton>
+          </div>
         </div>
-        <div className={cn(formStyles.navigationBar, styles.ctaButtons)}>
-          <NavigatorButton onClick={onBack}>上一步</NavigatorButton>
-          <NavigatorButton onClick={onCancel}>取消</NavigatorButton>
-          <NavigatorButton onClick={onSave}>完成</NavigatorButton>
+      );
+
+    case SubPage.Radio: {
+      const goesToText = hasText(currentItem);
+
+      return (
+        <div className={styles.root}>
+          <div className={styles.radioArea} ref={radioAreaRef}>
+            <div className={styles.optionCell}>
+              <Option selected>{optionValue}</Option>
+            </div>
+            <div className={styles.radioTitle}>{radioTitle}</div>
+            {elseOptionValue ? (
+              <BlockSelectElseRadio
+                dataKey={dataKey}
+                required
+                value={[radioValue, elseRadioValue]}
+                onChange={handleRadioElseChange}
+                onConfirm={handleConfirm}
+                options={radioOptions}
+                elseOptionValue={elseOptionValue}
+                elseOptions={elseOptions}
+              />
+            ) : (
+              <BlockSelect
+                dataKey={dataKey}
+                required
+                value={radioValue}
+                onChange={setRadioValue}
+                onConfirm={handleConfirm}
+                options={radioOptions}
+              />
+            )}
+          </div>
+          {radioFooter && (
+            <div className={styles.radioFooter}>{radioFooter}</div>
+          )}
+          <div className={cn(formStyles.navigationBar, styles.ctaButtons)}>
+            <NavigatorButton
+              style={{ visibility: isEditing ? 'visible' : 'hidden' }}
+              onClick={onClear}
+            >
+              清除
+            </NavigatorButton>
+            <NavigatorButton onClick={onCancel}>取消</NavigatorButton>
+            <NavigatorButton
+              style={{ visibility: radioValue !== null ? 'visible' : 'hidden' }}
+              onClick={handleConfirm}
+            >
+              {goesToText ? '繼續' : '儲存'}
+            </NavigatorButton>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
-
-  const goesToText = hasText(currentItem);
-
-  return (
-    <div className={styles.root}>
-      <div className={styles.radioArea} ref={radioAreaRef}>
-        <div className={styles.optionCell}>
-          <Option selected>{optionValue}</Option>
-        </div>
-        <div className={styles.radioTitle}>{radioTitle}</div>
-        {elseOptionValue ? (
-          <BlockSelectElseRadio
-            dataKey={dataKey}
-            required
-            value={[radioValue, elseRadioValue]}
-            onChange={handleRadioElseChange}
-            onConfirm={handleConfirm}
-            options={radioOptions}
-            elseOptionValue={elseOptionValue}
-            elseOptions={elseOptions}
-          />
-        ) : (
-          <BlockSelect
-            dataKey={dataKey}
-            required
-            value={radioValue}
-            onChange={setRadioValue}
-            onConfirm={handleConfirm}
-            options={radioOptions}
-          />
-        )}
-      </div>
-      {radioFooter && <div className={styles.radioFooter}>{radioFooter}</div>}
-      <div className={cn(formStyles.navigationBar, styles.ctaButtons)}>
-        <NavigatorButton
-          style={{ visibility: isEditing ? 'visible' : 'hidden' }}
-          onClick={onClear}
-        >
-          清除
-        </NavigatorButton>
-        <NavigatorButton onClick={onCancel}>取消</NavigatorButton>
-        <NavigatorButton
-          style={{ visibility: radioValue !== null ? 'visible' : 'hidden' }}
-          onClick={handleConfirm}
-        >
-          {goesToText ? '繼續' : '儲存'}
-        </NavigatorButton>
-      </div>
-    </div>
-  );
 };
 
 export default ActiveItem;
