@@ -11,6 +11,11 @@ import Option from './Option';
 import styles from './styles.module.css';
 import formStyles from '../../FormBuilder.module.css';
 
+enum SubPage {
+  Radio = 'radio',
+  Text = 'text',
+}
+
 const ActiveItem = ({
   dataKey,
   option: {
@@ -38,7 +43,7 @@ const ActiveItem = ({
     defaultTextValue,
   ] = defaultValue || [optionValue, null, null, ''];
 
-  const [subPage, setSubPage] = useState('radio');
+  const [subPage, setSubPage] = useState(SubPage.Radio);
   const [radioValue, setRadioValue] = useState(defaultRadioValue);
   const [elseRadioValue, setElseRadioValue] = useState(defaultElseRadioValue);
   const [textValue, setTextValue] = useState(defaultTextValue);
@@ -66,20 +71,20 @@ const ActiveItem = ({
   const handleConfirm = useCallback(() => {
     const item = currentItemRef.current;
     if (hasText(item)) {
-      setSubPage('text');
+      setSubPage(SubPage.Text);
     } else {
       onChange(item);
     }
   }, [hasText, onChange]);
 
-  const onBack = useCallback(() => setSubPage('radio'), []);
+  const onBack = useCallback(() => setSubPage(SubPage.Radio), []);
   const onClear = useCallback(() => onChange(null), [onChange]);
   const onSave = useCallback(
     () => onChange([optionValue, radioValue, elseRadioValue, textValue]),
     [onChange, optionValue, radioValue, elseRadioValue, textValue],
   );
 
-  if (subPage === 'text') {
+  if (subPage === SubPage.Text) {
     return (
       <div className={styles.root}>
         <div className={styles.textTitle}>{textTitle}</div>
