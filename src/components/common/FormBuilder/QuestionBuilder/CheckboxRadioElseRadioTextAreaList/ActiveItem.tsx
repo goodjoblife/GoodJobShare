@@ -39,7 +39,8 @@ const ActiveItem = ({
     elseOptionValue,
     elseOptions: rawElseOptions,
     radioFooter,
-    textTitle,
+    textTitle: rawTextTitle,
+    textRequired,
     textPlaceholder,
     hasText,
   },
@@ -49,6 +50,7 @@ const ActiveItem = ({
 }: Props): React.ReactElement => {
   const radioOptions = normalizeOptions(rawRadioOptions);
   const elseOptions = rawElseOptions ? normalizeOptions(rawElseOptions) : [];
+  const textTitle = textRequired ? rawTextTitle : `${rawTextTitle}（選填）`;
 
   const [
     ,

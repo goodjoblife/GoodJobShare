@@ -18,6 +18,7 @@ export type RadioElseRadioOption = {
   elseOptions?: OptionShape[];
   radioFooter?: React.ReactNode;
   textTitle: string;
+  textRequired?: boolean;
   textPlaceholder?: string;
   hasText: (item: unknown[]) => boolean;
 };
