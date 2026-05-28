@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -10,9 +10,6 @@ import { OptionPropType, ValuePropType } from '../Checkbox/PropTypes';
 import Option from './Option';
 import styles from './styles.module.css';
 import formStyles from '../../FormBuilder.module.css';
-
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const noop = () => {};
 
 const ActiveItem = ({
   dataKey,
@@ -48,13 +45,23 @@ const ActiveItem = ({
 
   const isEditing = !!defaultValue;
   const currentItem = [optionValue, radioValue, elseRadioValue, textValue];
+  const currentItemRef = useRef(currentItem);
+  currentItemRef.current = currentItem;
 
   const handleRadioElseChange = useCallback(([main, elseVal]) => {
     setRadioValue(main);
     setElseRadioValue(elseVal);
   }, []);
 
-  const onContinue = useCallback(() => setSubPage('text'), []);
+  const handleConfirm = useCallback(() => {
+    const item = currentItemRef.current;
+    if (hasText(item)) {
+      setSubPage('text');
+    } else {
+      onChange(item);
+    }
+  }, [hasText, onChange]);
+
   const onBack = useCallback(() => setSubPage('radio'), []);
   const onClear = useCallback(() => onChange(null), [onChange]);
   const onSave = useCallback(
@@ -98,7 +105,7 @@ const ActiveItem = ({
             required
             value={[radioValue, elseRadioValue]}
             onChange={handleRadioElseChange}
-            onConfirm={noop}
+            onConfirm={handleConfirm}
             options={radioOptions}
             elseOptionValue={elseOptionValue}
             elseOptions={elseOptions}
@@ -109,7 +116,7 @@ const ActiveItem = ({
             required
             value={radioValue}
             onChange={setRadioValue}
-            onConfirm={noop}
+            onConfirm={handleConfirm}
             options={radioOptions}
           />
         )}
@@ -125,7 +132,7 @@ const ActiveItem = ({
         <NavigatorButton onClick={onCancel}>取消</NavigatorButton>
         <NavigatorButton
           style={{ visibility: radioValue !== null ? 'visible' : 'hidden' }}
-          onClick={goesToText ? onContinue : onSave}
+          onClick={handleConfirm}
         >
           {goesToText ? '繼續' : '儲存'}
         </NavigatorButton>
