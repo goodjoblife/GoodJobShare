@@ -1,0 +1,58 @@
+import React from 'react';
+import { Section, Heading } from 'common/base';
+import { Aspect } from 'constants/companyJobTitle';
+import AspectScoreCard from '../Overview/AspectScoreCard';
+import LeaveSectionBlock, { LeaveSection } from '../LeaveSectionBlock';
+import FemaleManagerCard from './FemaleManagerCard';
+import GenderPayComparisonBlock, {
+  GenderPayComparisonData,
+} from './GenderPayComparisonBlock';
+import styles from './GenderFriendly.module.css';
+
+export type GenderFriendlyData = {
+  menstrualLeave: LeaveSection;
+  genderPayComparison: GenderPayComparisonData;
+};
+
+type FemaleManagerItem = {
+  year: number;
+  percentage: number;
+};
+
+type GenderFriendlyProps = {
+  data: GenderFriendlyData;
+  femaleManagerStatisticsItem: FemaleManagerItem | null;
+};
+
+const GenderFriendly: React.FC<GenderFriendlyProps> = ({
+  data,
+  femaleManagerStatisticsItem,
+}) => (
+  <Section Tag="main" paddingBottom>
+    <div className={styles.section}>
+      <Heading className={styles.sectionTitle} Tag="h2">
+        性別友善
+      </Heading>
+      <div className={styles.scoreRow}>
+        <AspectScoreCard aspect={Aspect.GENDER} />
+        {femaleManagerStatisticsItem && (
+          <FemaleManagerCard item={femaleManagerStatisticsItem} />
+        )}
+      </div>
+    </div>
+    <div className={styles.section}>
+      <Heading className={styles.sectionTitle} Tag="h2">
+        {data.menstrualLeave.title}
+      </Heading>
+      <LeaveSectionBlock section={data.menstrualLeave} />
+    </div>
+    <div className={styles.section}>
+      <Heading className={styles.sectionTitle} Tag="h2">
+        同職位男女薪資比較
+      </Heading>
+      <GenderPayComparisonBlock data={data.genderPayComparison} />
+    </div>
+  </Section>
+);
+
+export default GenderFriendly;
