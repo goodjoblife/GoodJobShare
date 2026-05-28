@@ -113,8 +113,8 @@ const ActiveItem = ({
             options={radioOptions}
           />
         )}
-        {radioFooter && <div className={styles.radioFooter}>{radioFooter}</div>}
       </div>
+      {radioFooter && <div className={styles.radioFooter}>{radioFooter}</div>}
       <div className={cn(formStyles.navigationBar, styles.ctaButtons)}>
         <NavigatorButton
           style={{ visibility: isEditing ? 'visible' : 'hidden' }}
