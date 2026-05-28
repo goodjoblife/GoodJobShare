@@ -19,7 +19,7 @@ import TabBar from './TabBar';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 import ShareWorkExperienceModal from '../ShareExperience/WorkExperiencesForm/TypeForm';
 import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
-import ShareWorkplaceAspectsModal from '../ShareExperience/WorkplaceAspectsForm/TypeForm';
+import ShareWorkplaceAspectsModal from '../ShareExperience/PolicyForm/TypeForm';
 import routes from '../../routes';
 
 const useShare = () => {
