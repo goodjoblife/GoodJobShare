@@ -46,6 +46,7 @@ const ActiveItem = ({
   const [elseRadioValue, setElseRadioValue] = useState(defaultElseRadioValue);
   const [textValue, setTextValue] = useState(defaultTextValue);
 
+  const isEditing = !!defaultValue;
   const currentItem = [optionValue, radioValue, elseRadioValue, textValue];
 
   const handleRadioElseChange = useCallback(([main, elseVal]) => {
@@ -115,14 +116,19 @@ const ActiveItem = ({
         {radioFooter && <div className={styles.radioFooter}>{radioFooter}</div>}
       </div>
       <div className={cn(formStyles.navigationBar, styles.ctaButtons)}>
-        <NavigatorButton onClick={onClear}>清除</NavigatorButton>
+        <NavigatorButton
+          style={{ visibility: isEditing ? 'visible' : 'hidden' }}
+          onClick={onClear}
+        >
+          清除
+        </NavigatorButton>
         <NavigatorButton onClick={onCancel}>取消</NavigatorButton>
-        {radioValue !== null &&
-          (goesToText ? (
-            <NavigatorButton onClick={onContinue}>繼續</NavigatorButton>
-          ) : (
-            <NavigatorButton onClick={onSave}>儲存</NavigatorButton>
-          ))}
+        <NavigatorButton
+          style={{ visibility: radioValue !== null ? 'visible' : 'hidden' }}
+          onClick={goesToText ? onContinue : onSave}
+        >
+          {goesToText ? '繼續' : '儲存'}
+        </NavigatorButton>
       </div>
     </div>
   );
