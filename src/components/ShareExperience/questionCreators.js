@@ -60,11 +60,7 @@ import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
 import { employmentTypeOptions, salaryTypeOptions } from './common/optionMap';
 import WorkTimeExample from './WorkTimeExample';
 import Emoji from '../common/icons/Emoji';
-import {
-  PageType,
-  tabTypeTranslation,
-  TabType,
-} from 'constants/companyJobTitle';
+import { PageType, TabType } from 'constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
 import { salaryHint } from 'utils/formUtils';
 import { useTotalCount } from 'hooks/useCount';
@@ -675,11 +671,11 @@ const Count = () => {
   return <span>{Math.floor(count / 10000)}</span>;
 };
 
-export const createSubmitQuestion = ({ type, label }) => ({
+export const createSubmitQuestion = ({ label }) => ({
   title: () => () => (
     <span>
-      感謝你分享{label != null ? label : tabTypeTranslation[type]}
-      ，按下「送出」，馬上就可以解鎖全站 <Count /> 萬多筆資料哦！
+      感謝你分享{label}，按下「送出」，馬上就可以解鎖全站 <Count />{' '}
+      萬多筆資料哦！
     </span>
   ),
   type: QUESTION_TYPE.EMPTY,
