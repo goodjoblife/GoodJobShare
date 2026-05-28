@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -48,6 +48,16 @@ const ActiveItem = ({
   const currentItemRef = useRef(currentItem);
   currentItemRef.current = currentItem;
 
+  const radioAreaRef = useRef(null);
+  useEffect(() => {
+    if (radioValue === elseOptionValue && radioAreaRef.current) {
+      radioAreaRef.current.scrollTo({
+        top: radioAreaRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [radioValue, elseOptionValue]);
+
   const handleRadioElseChange = useCallback(([main, elseVal]) => {
     setRadioValue(main);
     setElseRadioValue(elseVal);
@@ -94,7 +104,7 @@ const ActiveItem = ({
 
   return (
     <div className={styles.root}>
-      <div className={styles.radioArea}>
+      <div className={styles.radioArea} ref={radioAreaRef}>
         <div className={styles.optionCell}>
           <Option selected>{optionValue}</Option>
         </div>
