@@ -21,6 +21,7 @@ export const DATA_KEY_HAS_OVERTIME_SALARY = 'hasOvertimeSalary';
 export const DATA_KEY_HAS_COMPENSATORY_DAYOFF = 'hasCompensatoryDayoff';
 export const DATA_KEY_SENSITIVE_QUESTIONS = 'sensitiveQuestions';
 export const DATA_KEY_SECTIONS = 'sections';
+export const DATA_KEY_POLICIES = 'policies';
 
 export const REGION_OPTIONS = [
   '基隆市',
