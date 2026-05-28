@@ -10,7 +10,6 @@ import {
   createPoliciesQuestion,
   createSubmitQuestion,
 } from '../questionCreators';
-import { TabType } from 'constants/companyJobTitle';
 import {
   DATA_KEY_COMPANY_NAME,
   DATA_KEY_JOB_TITLE,
@@ -39,7 +38,7 @@ const questions = [
   createJobTitleQuestion({ header }),
   createSectorQuestion(),
   createPoliciesQuestion(),
-  createSubmitQuestion({ type: TabType.POLICY }),
+  createSubmitQuestion({ label: '制度' }),
 ];
 
 const jobTitleKey = 'job_title';

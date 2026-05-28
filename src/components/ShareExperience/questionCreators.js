@@ -675,11 +675,11 @@ const Count = () => {
   return <span>{Math.floor(count / 10000)}</span>;
 };
 
-export const createSubmitQuestion = ({ type }) => ({
+export const createSubmitQuestion = ({ type, label }) => ({
   title: () => () => (
     <span>
-      感謝你分享{tabTypeTranslation[type]}，按下「送出」，馬上就可以解鎖全站{' '}
-      <Count /> 萬多筆資料哦！
+      感謝你分享{label != null ? label : tabTypeTranslation[type]}
+      ，按下「送出」，馬上就可以解鎖全站 <Count /> 萬多筆資料哦！
     </span>
   ),
   type: QUESTION_TYPE.EMPTY,

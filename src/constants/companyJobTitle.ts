@@ -22,7 +22,6 @@ enum TabType {
   TIME_AND_SALARY = 'TIME_AND_SALARY',
   WORK_EXPERIENCE = 'WORK_EXPERIENCE',
   INTERVIEW_EXPERIENCE = 'INTERVIEW_EXPERIENCE',
-  POLICY = 'POLICY',
 }
 
 export { TabType };
@@ -32,7 +31,6 @@ export const tabTypeTranslation: Record<TabType, string> = {
   [TabType.TIME_AND_SALARY]: '薪水&加班',
   [TabType.WORK_EXPERIENCE]: '評價',
   [TabType.INTERVIEW_EXPERIENCE]: '面試',
-  [TabType.POLICY]: '制度',
 };
 
 export const tabTypeDetailTranslation: Record<TabType, string> = {
@@ -40,7 +38,6 @@ export const tabTypeDetailTranslation: Record<TabType, string> = {
   [TabType.TIME_AND_SALARY]: '薪水&加班狀況',
   [TabType.WORK_EXPERIENCE]: '評價',
   [TabType.INTERVIEW_EXPERIENCE]: '面試經驗',
-  [TabType.POLICY]: '制度',
 };
 
 const tabTypeURLMap: Record<TabType, string> = {
@@ -48,7 +45,6 @@ const tabTypeURLMap: Record<TabType, string> = {
   [TabType.TIME_AND_SALARY]: 'salary-work-times',
   [TabType.WORK_EXPERIENCE]: 'work-experiences',
   [TabType.INTERVIEW_EXPERIENCE]: 'interview-experiences',
-  [TabType.POLICY]: 'policies',
 };
 
 export enum Aspect {
