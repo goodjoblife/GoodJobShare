@@ -3,7 +3,7 @@ export const STATE_SHARE = {
   WORK_EXPERIENCE: 'work-experience',
   SALARY_WORK_TIME: 'salary-work-times',
   SALARY_WORK_TIME_NO_PROGRESS_BAR: 'salary-work-times-no-progress-bar',
-  WORKPLACE_ASPECTS: 'workplace-aspects',
+  POLICY: 'policy',
 };
 
 // please follow the convention: () => To (react-router)
@@ -22,6 +22,6 @@ export const generateShareTimeSalaryTypeFormHideProgressBar = () => ({
 export const generateShareWork = () => ({
   state: { share: STATE_SHARE.WORK_EXPERIENCE },
 });
-export const generateShareWorkplaceAspectsForm = () => ({
-  state: { share: STATE_SHARE.WORKPLACE_ASPECTS },
+export const generateSharePolicyForm = () => ({
+  state: { share: STATE_SHARE.POLICY },
 });

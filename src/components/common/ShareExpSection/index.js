@@ -10,7 +10,7 @@ import {
   generateShareInterviewTypeForm,
   generateShareTimeSalaryTypeForm,
   generateShareWork,
-  generateShareWorkplaceAspectsForm,
+  generateSharePolicyForm,
 } from './shareLinkTo';
 
 const DefaultSubheading = () => (
@@ -72,10 +72,7 @@ const ShareExpSection = ({ heading, Subheading }) => {
               常加班、薪水又少嗎？快分享避免他人踩雷！
             </P>
           </Link>
-          <Link
-            to={generateShareWorkplaceAspectsForm()}
-            className={styles.item}
-          >
+          <Link to={generateSharePolicyForm()} className={styles.item}>
             <img
               src={SalaryWorkTimeImg}
               alt="分享公司制度"

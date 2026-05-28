@@ -19,7 +19,7 @@ import TabBar from './TabBar';
 import ShareInterviewModal from '../ShareExperience/InterviewForm/TypeForm';
 import ShareWorkExperienceModal from '../ShareExperience/WorkExperiencesForm/TypeForm';
 import ShareSalaryWorkTimesModal from '../ShareExperience/TimeSalaryForm/TypeForm';
-import ShareWorkplaceAspectsModal from '../ShareExperience/PolicyForm/TypeForm';
+import SharePolicyModal from '../ShareExperience/PolicyForm/TypeForm';
 import routes from '../../routes';
 
 const useShare = () => {
@@ -79,8 +79,8 @@ const App = () => {
         onClose={exitShare}
         hideProgressBar={share === STATE_SHARE.SALARY_WORK_TIME_NO_PROGRESS_BAR}
       />
-      <ShareWorkplaceAspectsModal
-        open={share === STATE_SHARE.WORKPLACE_ASPECTS}
+      <SharePolicyModal
+        open={share === STATE_SHARE.POLICY}
         onClose={exitShare}
       />
       <LoginModal />
