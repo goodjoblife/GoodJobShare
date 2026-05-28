@@ -1,6 +1,6 @@
 import React from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faFile from '@fortawesome/fontawesome-free-solid/faFile';
+import faBook from '@fortawesome/fontawesome-free-solid/faBook';
 import styles from './PolicyLawNote.module.css';
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 const PolicyLawNote = ({ lawName, children }: Props): React.ReactElement => (
   <div className={styles.container}>
     <div className={styles.leftCol}>
-      <FontAwesomeIcon icon={faFile} />
+      <FontAwesomeIcon icon={faBook} />
       <span className={styles.lawName}>{lawName}</span>
     </div>
     <div className={styles.description}>{children}</div>
