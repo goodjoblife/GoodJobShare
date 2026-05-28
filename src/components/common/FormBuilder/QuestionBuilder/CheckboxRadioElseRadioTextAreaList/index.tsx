@@ -1,21 +1,44 @@
 import React, { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
 import { usePrevious } from 'react-use';
 
-import { OptionPropType, ValuePropType } from '../Checkbox/PropTypes';
 import Options from './Options';
 import ActiveItem from './ActiveItem';
 
+type OptionShape =
+  | string
+  | number
+  | { label: React.ReactNode; value: string | number };
+
+export type RadioElseRadioOption = {
+  label: React.ReactNode;
+  value: string | number;
+  radioTitle: string;
+  radioOptions: OptionShape[];
+  elseOptionValue?: string | number;
+  elseOptions?: OptionShape[];
+  radioFooter?: React.ReactNode;
+  textTitle: string;
+  textPlaceholder?: string;
+  hasText: (item: unknown[]) => boolean;
+};
+
+type Props = {
+  dataKey: string;
+  onChange: (items: unknown[][]) => void;
+  options: RadioElseRadioOption[];
+  setShowsNavigation: (shows: boolean) => void;
+  value: unknown[][];
+  warning?: string;
+};
+
 const CheckboxRadioElseRadioTextAreaList = ({
-  page,
-  title,
   dataKey,
   value: items,
   onChange,
   warning,
   setShowsNavigation,
   options,
-}): React.ReactElement => {
+}: Props): React.ReactElement => {
   const [activeOptionIndex, setActiveOptionIndex] = useState(null);
   const lastActiveOptionIndex = usePrevious(activeOptionIndex);
 
@@ -55,8 +78,6 @@ const CheckboxRadioElseRadioTextAreaList = ({
 
     return (
       <ActiveItem
-        page={page}
-        title={title}
         dataKey={dataKey}
         option={activeOption}
         defaultValue={activeItem}
@@ -81,30 +102,6 @@ const CheckboxRadioElseRadioTextAreaList = ({
       warning={warning}
     />
   );
-};
-
-CheckboxRadioElseRadioTextAreaList.propTypes = {
-  dataKey: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      elseOptionValue: ValuePropType,
-      elseOptions: PropTypes.arrayOf(OptionPropType),
-      hasText: PropTypes.func.isRequired,
-      label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-      radioFooter: PropTypes.node,
-      radioOptions: PropTypes.arrayOf(OptionPropType).isRequired,
-      radioTitle: PropTypes.string.isRequired,
-      textPlaceholder: PropTypes.string,
-      textTitle: PropTypes.string.isRequired,
-      value: ValuePropType.isRequired,
-    }),
-  ).isRequired,
-  page: PropTypes.number.isRequired,
-  setShowsNavigation: PropTypes.func.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
-  value: PropTypes.arrayOf(PropTypes.array).isRequired,
-  warning: PropTypes.string,
 };
 
 export default CheckboxRadioElseRadioTextAreaList;

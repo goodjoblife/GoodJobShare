@@ -1,17 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 import Button from 'common/button/Button';
 import Checked2 from 'common/icons/Checked2';
-import { ValuePropType } from '../Checkbox/PropTypes';
 import styles from './styles.module.css';
+
+type Props = {
+  children: React.ReactNode;
+  isElse?: boolean;
+  onClick?: () => void;
+  selected?: boolean;
+};
 
 const Option = ({
   children,
   onClick,
   selected,
   isElse,
-}): React.ReactElement => {
+}: Props): React.ReactElement => {
   return (
     <Button
       className={cn(styles.button, { [styles.link]: isElse })}
@@ -22,13 +27,6 @@ const Option = ({
       {selected && <Checked2 />} {children}
     </Button>
   );
-};
-
-Option.propTypes = {
-  children: ValuePropType.isRequired,
-  isElse: PropTypes.bool,
-  onClick: PropTypes.func,
-  selected: PropTypes.bool,
 };
 
 export default Option;

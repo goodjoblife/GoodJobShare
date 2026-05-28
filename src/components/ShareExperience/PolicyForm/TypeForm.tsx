@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
@@ -24,6 +23,9 @@ const header = <Header title="請分享你的公司制度實況" />;
 const renderCompanyJobTitleHeader = ({
   companyName,
   jobTitle,
+}: {
+  companyName: string;
+  jobTitle: string;
 }): React.ReactElement => (
   <CompanyJobTitleHeader
     label="制度"
@@ -40,26 +42,32 @@ const questions = [
   createSubmitQuestion({ type: TabType.POLICY }),
 ];
 
-// eslint-disable-next-line @typescript-eslint/camelcase
+const jobTitleKey = 'job_title';
+const lawComplianceKey = 'law_compliance';
+
 const bodyFromDraft = (
   draft: Record<string, unknown>,
 ): Record<string, unknown> => ({
   company: { id: '', query: draft[DATA_KEY_COMPANY_NAME] },
-  // eslint-disable-next-line @typescript-eslint/camelcase
-  job_title: draft[DATA_KEY_JOB_TITLE],
+  [jobTitleKey]: draft[DATA_KEY_JOB_TITLE],
   sector: draft[DATA_KEY_SECTOR],
-  policies: draft[DATA_KEY_POLICIES].map(
+  policies: (draft[DATA_KEY_POLICIES] as unknown[][]).map(
     ([policy, answer, lawCompliance, experience]) => ({
       policy,
       answer,
-      // eslint-disable-next-line @typescript-eslint/camelcase
-      law_compliance: lawCompliance,
+      [lawComplianceKey]: lawCompliance,
       experience,
     }),
   ),
 });
 
-const TypeForm = ({ open, onClose }): React.ReactElement => {
+const TypeForm = ({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}): React.ReactElement => {
   const onSubmit = useCallback(async draft => {
     // TODO: wire up to backend API once endpoint is ready
     const body = bodyFromDraft(draft);
@@ -80,11 +88,6 @@ const TypeForm = ({ open, onClose }): React.ReactElement => {
       redirectPathnameOnSuccess={(): string => '/'}
     />
   );
-};
-
-TypeForm.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
 };
 
 export default TypeForm;

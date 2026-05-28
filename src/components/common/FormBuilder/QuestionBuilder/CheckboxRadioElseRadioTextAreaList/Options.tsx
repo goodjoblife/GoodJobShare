@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 import Option from './Option';
-import { OptionPropType } from '../Checkbox/PropTypes';
 import styles from './styles.module.css';
 import commonStyles from '../styles.module.css';
 import Scrollable from 'common/FormBuilder/Scrollable';
@@ -39,6 +37,15 @@ const useAnimatedSelectedOptionIndex = ({
   return [selectedOptionIndex, onConfirm, { transitionDuration }];
 };
 
+type Props = {
+  elseOptionIndex?: number;
+  lastSelectedOptionIndex?: number;
+  onSelectOptionIndex: (index: number) => void;
+  options: Array<{ label: React.ReactNode; value: string | number }>;
+  selectedOptionIndices: number[];
+  warning?: string;
+};
+
 const Options = ({
   options,
   selectedOptionIndices,
@@ -46,7 +53,7 @@ const Options = ({
   elseOptionIndex,
   lastSelectedOptionIndex,
   warning,
-}): React.ReactElement => {
+}: Props): React.ReactElement => {
   const [
     selectedOptionIndex,
     setSelectedOptionIndex,
@@ -89,15 +96,6 @@ const Options = ({
       <div className={commonStyles.warning}>{warning}</div>
     </div>
   );
-};
-
-Options.propTypes = {
-  elseOptionIndex: PropTypes.number,
-  lastSelectedOptionIndex: PropTypes.number,
-  onSelectOptionIndex: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(OptionPropType).isRequired,
-  selectedOptionIndices: PropTypes.arrayOf(PropTypes.number).isRequired,
-  warning: PropTypes.string,
 };
 
 export default Options;

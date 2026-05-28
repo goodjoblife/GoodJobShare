@@ -1,20 +1,34 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
+import { NavigatorButton as NavigatorButtonImpl } from 'common/FormBuilder/NavigatorBlock';
 import BlockSelect from '../Checkbox/private/BlockSelect';
 import BlockSelectElseRadio from '../Checkbox/private/BlockSelectElseRadio';
 import { normalizeOptions } from '../utils';
-import { OptionPropType, ValuePropType } from '../Checkbox/PropTypes';
+import { RadioElseRadioOption } from './index';
 import Option from './Option';
 import styles from './styles.module.css';
 import formStyles from '../../FormBuilder.module.css';
+
+type NavButtonProps = {
+  children?: React.ReactNode;
+  onClick?: () => void;
+  style?: React.CSSProperties;
+};
+const NavigatorButton = NavigatorButtonImpl as React.FC<NavButtonProps>;
 
 enum SubPage {
   Radio = 'radio',
   Text = 'text',
 }
+
+type Props = {
+  dataKey: string;
+  defaultValue?: unknown[];
+  onCancel: () => void;
+  onChange: (item: unknown[] | null) => void;
+  option: RadioElseRadioOption;
+};
 
 const ActiveItem = ({
   dataKey,
@@ -32,7 +46,7 @@ const ActiveItem = ({
   defaultValue,
   onChange,
   onCancel,
-}): React.ReactElement => {
+}: Props): React.ReactElement => {
   const radioOptions = normalizeOptions(rawRadioOptions);
   const elseOptions = rawElseOptions ? normalizeOptions(rawElseOptions) : [];
 
@@ -44,16 +58,22 @@ const ActiveItem = ({
   ] = defaultValue || [optionValue, null, null, ''];
 
   const [subPage, setSubPage] = useState(SubPage.Radio);
-  const [radioValue, setRadioValue] = useState(defaultRadioValue);
-  const [elseRadioValue, setElseRadioValue] = useState(defaultElseRadioValue);
-  const [textValue, setTextValue] = useState(defaultTextValue);
+  const [radioValue, setRadioValue] = useState<string | number | null>(
+    defaultRadioValue as string | number | null,
+  );
+  const [elseRadioValue, setElseRadioValue] = useState<string | number | null>(
+    defaultElseRadioValue as string | number | null,
+  );
+  const [textValue, setTextValue] = useState<string>(
+    (defaultTextValue as string) || '',
+  );
 
   const isEditing = !!defaultValue;
   const currentItem = [optionValue, radioValue, elseRadioValue, textValue];
   const currentItemRef = useRef(currentItem);
   currentItemRef.current = currentItem;
 
-  const radioAreaRef = useRef(null);
+  const radioAreaRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (radioValue === elseOptionValue && radioAreaRef.current) {
       radioAreaRef.current.scrollTo({
@@ -63,9 +83,9 @@ const ActiveItem = ({
     }
   }, [radioValue, elseOptionValue]);
 
-  const handleRadioElseChange = useCallback(([main, elseVal]) => {
-    setRadioValue(main);
-    setElseRadioValue(elseVal);
+  const handleRadioElseChange = useCallback((pair: unknown[]): void => {
+    setRadioValue(pair[0] as string | number | null);
+    setElseRadioValue(pair[1] as string | number | null);
   }, []);
 
   const handleConfirm = useCallback(() => {
@@ -154,24 +174,6 @@ const ActiveItem = ({
       </div>
     </div>
   );
-};
-
-ActiveItem.propTypes = {
-  dataKey: PropTypes.string.isRequired,
-  defaultValue: PropTypes.array,
-  onCancel: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  option: PropTypes.shape({
-    elseOptionValue: ValuePropType,
-    elseOptions: PropTypes.arrayOf(OptionPropType),
-    hasText: PropTypes.func.isRequired,
-    radioFooter: PropTypes.node,
-    radioOptions: PropTypes.arrayOf(OptionPropType).isRequired,
-    radioTitle: PropTypes.string.isRequired,
-    textPlaceholder: PropTypes.string,
-    textTitle: PropTypes.string.isRequired,
-    value: ValuePropType.isRequired,
-  }).isRequired,
 };
 
 export default ActiveItem;
