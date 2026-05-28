@@ -592,7 +592,7 @@ export const createPoliciesQuestion = () => ({
       textTitle: '請分享自身或同事請生理假的實際狀況（選填）',
       textPlaceholder:
         '請生理假是否曾經遇到什麼困難？生理假薪資有正常給嗎（減半），或是有更好的福利？',
-      showsText: ([, v]) => v === '是' || v === '否',
+      hasText: ([, v]) => v === '是' || v === '否',
     },
     {
       label: '育嬰假',
@@ -611,7 +611,7 @@ export const createPoliciesQuestion = () => ({
       textTitle: '請分享自身或同事請育嬰假/育嬰留職停薪的實際狀況（選填）',
       textPlaceholder:
         '自身、或有看過同事請育嬰假嗎？育嬰假是否曾經遇到什麼困難？公司有額外的育嬰福利嗎？（例如：多給幾天給薪育嬰假）',
-      showsText: ([, v]) => v === '是' || v === '否',
+      hasText: ([, v]) => v === '是' || v === '否',
     },
     {
       label: '家庭照顧假',
@@ -630,7 +630,7 @@ export const createPoliciesQuestion = () => ({
       textTitle: '請分享自身或同事家庭照顧假的實際狀況（選填）',
       textPlaceholder:
         '自身、或有看過同事請家庭照顧假嗎？請家庭照顧假是否曾經遇到什麼困難？公司有額外的家庭照顧假福利嗎？（例如：多給幾天給薪家庭照顧假）',
-      showsText: ([, v]) => v === '是' || v === '否',
+      hasText: ([, v]) => v === '是' || v === '否',
     },
     {
       label: '彈性上下班時間',
@@ -640,7 +640,7 @@ export const createPoliciesQuestion = () => ({
       textTitle: '請分享彈性上下班時間制度、實際狀況（選填）',
       textPlaceholder:
         '彈性上班的時間範圍？彈性下班的時間範圍？實際上來說，是否有同事或自身真的可以運用到彈性上下班？',
-      showsText: ([, v]) => v === '有',
+      hasText: ([, v]) => v === '有',
     },
     {
       label: '遠端工作',
@@ -652,7 +652,7 @@ export const createPoliciesQuestion = () => ({
       textTitle: '請分享遠端工作的實際狀況（選填）',
       textPlaceholder:
         '一週可以遠端工作幾天？需要先申請或報備嗎？若公司以遠端工作為主，是否有額外的方式讓團隊成員更加認識彼此？',
-      showsText: ([, v]) => v === '是',
+      hasText: ([, v]) => v === '是',
     },
   ],
 });

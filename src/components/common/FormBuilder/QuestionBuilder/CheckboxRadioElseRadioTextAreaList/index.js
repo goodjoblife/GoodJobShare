@@ -90,11 +90,11 @@ CheckboxRadioElseRadioTextAreaList.propTypes = {
     PropTypes.shape({
       elseOptionValue: ValuePropType,
       elseOptions: PropTypes.arrayOf(OptionPropType),
+      hasText: PropTypes.func.isRequired,
       label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
       radioFooter: PropTypes.node,
       radioOptions: PropTypes.arrayOf(OptionPropType).isRequired,
       radioTitle: PropTypes.string.isRequired,
-      showsText: PropTypes.func.isRequired,
       textPlaceholder: PropTypes.string,
       textTitle: PropTypes.string.isRequired,
       value: ValuePropType.isRequired,

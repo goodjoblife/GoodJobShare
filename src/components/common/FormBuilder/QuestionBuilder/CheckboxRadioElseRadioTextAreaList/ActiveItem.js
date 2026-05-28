@@ -25,7 +25,7 @@ const ActiveItem = ({
     radioFooter,
     textTitle,
     textPlaceholder,
-    showsText,
+    hasText,
   },
   defaultValue,
   onChange,
@@ -83,7 +83,7 @@ const ActiveItem = ({
     );
   }
 
-  const goesToText = showsText(currentItem);
+  const goesToText = hasText(currentItem);
 
   return (
     <div className={styles.root}>
@@ -142,10 +142,10 @@ ActiveItem.propTypes = {
   option: PropTypes.shape({
     elseOptionValue: ValuePropType,
     elseOptions: PropTypes.arrayOf(OptionPropType),
+    hasText: PropTypes.func.isRequired,
     radioFooter: PropTypes.node,
     radioOptions: PropTypes.arrayOf(OptionPropType).isRequired,
     radioTitle: PropTypes.string.isRequired,
-    showsText: PropTypes.func.isRequired,
     textPlaceholder: PropTypes.string,
     textTitle: PropTypes.string.isRequired,
     value: ValuePropType.isRequired,
