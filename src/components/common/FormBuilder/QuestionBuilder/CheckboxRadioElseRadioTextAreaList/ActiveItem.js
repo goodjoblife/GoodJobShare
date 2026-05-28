@@ -75,6 +75,7 @@ const ActiveItem = ({
         </div>
         <div className={cn(formStyles.navigationBar, styles.ctaButtons)}>
           <NavigatorButton onClick={onBack}>上一步</NavigatorButton>
+          <NavigatorButton onClick={onCancel}>取消</NavigatorButton>
           <NavigatorButton onClick={onSave}>完成</NavigatorButton>
         </div>
       </div>
