@@ -39,11 +39,13 @@ const CheckboxRadioElseRadioTextAreaList = ({
   setShowsNavigation,
   options,
 }: Props): React.ReactElement => {
-  const [activeOptionIndex, setActiveOptionIndex] = useState(null);
+  const [activeOptionIndex, setActiveOptionIndex] = useState<number | null>(
+    null,
+  );
   const lastActiveOptionIndex = usePrevious(activeOptionIndex);
 
   const handleSelectOptionIndex = useCallback(
-    index => {
+    (index: number | null): void => {
       setActiveOptionIndex(index);
       setShowsNavigation(index === null);
     },
@@ -65,9 +67,9 @@ const CheckboxRadioElseRadioTextAreaList = ({
       const updatedItems = [...items];
       if (updatedItem) {
         if (activeItemIndex >= 0) {
-          updatedItems[activeItemIndex] = updatedItem;
+          updatedItems[activeItemIndex] = updatedItem as unknown[];
         } else {
-          updatedItems.push(updatedItem);
+          updatedItems.push(updatedItem as unknown[]);
         }
       } else if (activeItemIndex >= 0) {
         updatedItems.splice(activeItemIndex, 1);
@@ -91,14 +93,16 @@ const CheckboxRadioElseRadioTextAreaList = ({
     .map((option, index) =>
       items.findIndex(([v]) => v === option.value) >= 0 ? index : null,
     )
-    .filter(index => index !== null);
+    .filter((index): index is number => index !== null);
 
   return (
     <Options
       options={options}
       selectedOptionIndices={selectedOptionIndices}
       onSelectOptionIndex={handleSelectOptionIndex}
-      lastSelectedOptionIndex={lastActiveOptionIndex}
+      lastSelectedOptionIndex={
+        lastActiveOptionIndex !== null ? lastActiveOptionIndex : undefined
+      }
       warning={warning}
     />
   );

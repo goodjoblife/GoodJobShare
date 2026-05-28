@@ -9,11 +9,14 @@ import Scrollable from 'common/FormBuilder/Scrollable';
 const useAnimatedSelectedOptionIndex = ({
   lastSelectedOptionIndex,
   onSelectOptionIndex,
+}: {
+  lastSelectedOptionIndex: number | null | undefined;
+  onSelectOptionIndex: (index: number) => void;
 }) => {
   const transitionDuration = 0.3;
 
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState(
-    lastSelectedOptionIndex,
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(
+    lastSelectedOptionIndex != null ? lastSelectedOptionIndex : null,
   );
 
   useEffect(() => {
@@ -23,7 +26,7 @@ const useAnimatedSelectedOptionIndex = ({
   }, [lastSelectedOptionIndex]);
 
   const onConfirm = useCallback(
-    index => {
+    (index: number) => {
       if (selectedOptionIndex !== null) return;
 
       setSelectedOptionIndex(index);
@@ -54,14 +57,15 @@ const Options = ({
   lastSelectedOptionIndex,
   warning,
 }: Props): React.ReactElement => {
-  const [
-    selectedOptionIndex,
-    setSelectedOptionIndex,
-    { transitionDuration },
-  ] = useAnimatedSelectedOptionIndex({
+  const animResult = useAnimatedSelectedOptionIndex({
     lastSelectedOptionIndex,
     onSelectOptionIndex,
   });
+  const selectedOptionIndex = animResult[0] as number | null;
+  const setSelectedOptionIndex = animResult[1] as (index: number) => void;
+  const { transitionDuration } = animResult[2] as {
+    transitionDuration: number;
+  };
 
   return (
     <div className={cn(styles.root, { [commonStyles.hasWarning]: !!warning })}>

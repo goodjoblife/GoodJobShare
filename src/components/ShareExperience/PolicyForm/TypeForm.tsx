@@ -68,7 +68,7 @@ const TypeForm = ({
   open: boolean;
   onClose: () => void;
 }): React.ReactElement => {
-  const onSubmit = useCallback(async draft => {
+  const onSubmit = useCallback(async (draft: Record<string, unknown>) => {
     // TODO: wire up to backend API once endpoint is ready
     const body = bodyFromDraft(draft);
     return body;
@@ -85,6 +85,7 @@ const TypeForm = ({
       onSubmit={onSubmit}
       onSubmitError={onSubmitError}
       onClose={onClose}
+      hideProgressBar={false}
       redirectPathnameOnSuccess={(): string => '/'}
     />
   );
