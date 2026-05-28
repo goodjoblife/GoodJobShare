@@ -1,0 +1,148 @@
+import React, { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
+import cn from 'classnames';
+
+import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
+import BlockSelect from '../Checkbox/private/BlockSelect';
+import BlockSelectElseRadio from '../Checkbox/private/BlockSelectElseRadio';
+import { normalizeOptions } from '../utils';
+import { OptionPropType, ValuePropType } from '../Checkbox/PropTypes';
+import Option from './Option';
+import styles from './styles.module.css';
+import formStyles from '../../FormBuilder.module.css';
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+const noop = () => {};
+
+const ActiveItem = ({
+  dataKey,
+  option: {
+    value: optionValue,
+    radioTitle,
+    radioOptions: rawRadioOptions,
+    elseOptionValue,
+    elseOptions: rawElseOptions,
+    radioFooter,
+    textTitle,
+    textPlaceholder,
+    showsText,
+  },
+  defaultValue,
+  onChange,
+  onCancel,
+}) => {
+  const radioOptions = normalizeOptions(rawRadioOptions);
+  const elseOptions = rawElseOptions ? normalizeOptions(rawElseOptions) : [];
+
+  const [
+    ,
+    defaultRadioValue,
+    defaultElseRadioValue,
+    defaultTextValue,
+  ] = defaultValue || [optionValue, null, null, ''];
+
+  const [subPage, setSubPage] = useState('radio');
+  const [radioValue, setRadioValue] = useState(defaultRadioValue);
+  const [elseRadioValue, setElseRadioValue] = useState(defaultElseRadioValue);
+  const [textValue, setTextValue] = useState(defaultTextValue);
+
+  const currentItem = [optionValue, radioValue, elseRadioValue, textValue];
+
+  const handleRadioElseChange = useCallback(([main, elseVal]) => {
+    setRadioValue(main);
+    setElseRadioValue(elseVal);
+  }, []);
+
+  const onContinue = useCallback(() => setSubPage('text'), []);
+  const onBack = useCallback(() => setSubPage('radio'), []);
+  const onClear = useCallback(() => onChange(null), [onChange]);
+  const onSave = useCallback(
+    () => onChange([optionValue, radioValue, elseRadioValue, textValue]),
+    [onChange, optionValue, radioValue, elseRadioValue, textValue],
+  );
+
+  if (subPage === 'text') {
+    return (
+      <div className={styles.root}>
+        <div className={styles.textTitle}>{textTitle}</div>
+        <div className={styles.textAreaContainer}>
+          <textarea
+            className={styles.textarea}
+            value={textValue}
+            onChange={e => setTextValue(e.target.value)}
+            placeholder={textPlaceholder}
+          />
+        </div>
+        <div className={cn(formStyles.navigationBar, styles.ctaButtons)}>
+          <NavigatorButton onClick={onBack}>上一步</NavigatorButton>
+          <NavigatorButton onClick={onSave}>完成</NavigatorButton>
+        </div>
+      </div>
+    );
+  }
+
+  const goesToText = showsText(currentItem);
+
+  return (
+    <div className={styles.root}>
+      <div className={styles.radioArea}>
+        <div className={styles.optionCell}>
+          <Option selected>{optionValue}</Option>
+        </div>
+        <div className={styles.radioTitle}>{radioTitle}</div>
+        {elseOptionValue ? (
+          <BlockSelectElseRadio
+            dataKey={dataKey}
+            required
+            value={[radioValue, elseRadioValue]}
+            onChange={handleRadioElseChange}
+            onConfirm={noop}
+            options={radioOptions}
+            elseOptionValue={elseOptionValue}
+            elseOptions={elseOptions}
+          />
+        ) : (
+          <BlockSelect
+            dataKey={dataKey}
+            required
+            value={radioValue}
+            onChange={setRadioValue}
+            onConfirm={noop}
+            options={radioOptions}
+          />
+        )}
+        {radioFooter && <div className={styles.radioFooter}>{radioFooter}</div>}
+      </div>
+      <div className={cn(formStyles.navigationBar, styles.ctaButtons)}>
+        <NavigatorButton onClick={onClear}>清除</NavigatorButton>
+        <NavigatorButton onClick={onCancel}>取消</NavigatorButton>
+        {radioValue !== null &&
+          (goesToText ? (
+            <NavigatorButton onClick={onContinue}>繼續</NavigatorButton>
+          ) : (
+            <NavigatorButton onClick={onSave}>儲存</NavigatorButton>
+          ))}
+      </div>
+    </div>
+  );
+};
+
+ActiveItem.propTypes = {
+  dataKey: PropTypes.string.isRequired,
+  defaultValue: PropTypes.array,
+  onCancel: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  option: PropTypes.shape({
+    elseOptionValue: ValuePropType,
+    elseOptions: PropTypes.arrayOf(OptionPropType),
+    radioFooter: PropTypes.node,
+    radioOptions: PropTypes.arrayOf(OptionPropType).isRequired,
+    radioTitle: PropTypes.string.isRequired,
+    showsText: PropTypes.func.isRequired,
+    textPlaceholder: PropTypes.string,
+    textTitle: PropTypes.string.isRequired,
+    value: ValuePropType.isRequired,
+  }).isRequired,
+};
+
+export default ActiveItem;
