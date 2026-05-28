@@ -9,7 +9,9 @@ import {
   createJobTitleQuestion,
   createSectorQuestion,
   createPoliciesQuestion,
+  createSubmitQuestion,
 } from '../questionCreators';
+import { TabType } from 'constants/companyJobTitle';
 import {
   DATA_KEY_COMPANY_NAME,
   DATA_KEY_JOB_TITLE,
@@ -32,6 +34,7 @@ const questions = [
   createJobTitleQuestion({ header }),
   createSectorQuestion(),
   createPoliciesQuestion(),
+  createSubmitQuestion({ type: TabType.POLICY }),
 ];
 
 // eslint-disable-next-line @typescript-eslint/camelcase
