@@ -4,7 +4,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faFile from '@fortawesome/fontawesome-free-solid/faFile';
 import styles from './PolicyLawNote.module.css';
 
-const PolicyLawNote = ({ lawName, children }) => (
+const PolicyLawNote = ({ lawName, children }): React.ReactElement => (
   <div className={styles.container}>
     <div className={styles.leftCol}>
       <FontAwesomeIcon icon={faFile} />

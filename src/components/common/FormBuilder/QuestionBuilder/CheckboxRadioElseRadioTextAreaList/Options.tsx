@@ -7,6 +7,7 @@ import styles from './styles.module.css';
 import commonStyles from '../styles.module.css';
 import Scrollable from 'common/FormBuilder/Scrollable';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const useAnimatedSelectedOptionIndex = ({
   lastSelectedOptionIndex,
   onSelectOptionIndex,
@@ -45,7 +46,7 @@ const Options = ({
   elseOptionIndex,
   lastSelectedOptionIndex,
   warning,
-}) => {
+}): React.ReactElement => {
   const [
     selectedOptionIndex,
     setSelectedOptionIndex,
@@ -60,28 +61,30 @@ const Options = ({
       <Scrollable
         className={cn(styles.container, commonStyles.warnableContainer)}
       >
-        {options.map(({ label }, index) => {
-          const shouldHide =
-            selectedOptionIndex !== null && index !== selectedOptionIndex;
-          return (
-            <div
-              key={index}
-              className={cn(styles.cell, { [styles.hidden]: shouldHide })}
-              style={{ transitionDuration: `${transitionDuration}s` }}
-            >
-              <Option
-                onClick={() => setSelectedOptionIndex(index)}
-                selected={
-                  selectedOptionIndices.includes(index) ||
-                  selectedOptionIndex === index
-                }
-                isElse={index === elseOptionIndex}
+        {options.map(
+          ({ label }, index): React.ReactElement => {
+            const shouldHide =
+              selectedOptionIndex !== null && index !== selectedOptionIndex;
+            return (
+              <div
+                key={index}
+                className={cn(styles.cell, { [styles.hidden]: shouldHide })}
+                style={{ transitionDuration: `${transitionDuration}s` }}
               >
-                {label}
-              </Option>
-            </div>
-          );
-        })}
+                <Option
+                  onClick={(): void => setSelectedOptionIndex(index)}
+                  selected={
+                    selectedOptionIndices.includes(index) ||
+                    selectedOptionIndex === index
+                  }
+                  isElse={index === elseOptionIndex}
+                >
+                  {label}
+                </Option>
+              </div>
+            );
+          },
+        )}
       </Scrollable>
       <div className={commonStyles.warning}>{warning}</div>
     </div>

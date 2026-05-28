@@ -27,7 +27,7 @@ const ActiveItem = ({
   defaultValue,
   onChange,
   onCancel,
-}) => {
+}): React.ReactElement => {
   const radioOptions = normalizeOptions(rawRadioOptions);
   const elseOptions = rawElseOptions ? normalizeOptions(rawElseOptions) : [];
 
@@ -87,7 +87,7 @@ const ActiveItem = ({
           <textarea
             className={styles.textarea}
             value={textValue}
-            onChange={e => setTextValue(e.target.value)}
+            onChange={(e): void => setTextValue(e.target.value)}
             placeholder={textPlaceholder}
           />
         </div>

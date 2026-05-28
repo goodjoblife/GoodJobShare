@@ -6,7 +6,12 @@ import Checked2 from 'common/icons/Checked2';
 import { ValuePropType } from '../Checkbox/PropTypes';
 import styles from './styles.module.css';
 
-const Option = ({ children, onClick, selected, isElse }) => {
+const Option = ({
+  children,
+  onClick,
+  selected,
+  isElse,
+}): React.ReactElement => {
   return (
     <Button
       className={cn(styles.button, { [styles.link]: isElse })}

@@ -15,7 +15,7 @@ const CheckboxRadioElseRadioTextAreaList = ({
   warning,
   setShowsNavigation,
   options,
-}) => {
+}): React.ReactElement => {
   const [activeOptionIndex, setActiveOptionIndex] = useState(null);
   const lastActiveOptionIndex = usePrevious(activeOptionIndex);
 
@@ -38,7 +38,7 @@ const CheckboxRadioElseRadioTextAreaList = ({
     const activeItem =
       activeItemIndex >= 0 ? items[activeItemIndex] : undefined;
 
-    const setActiveItem = updatedItem => {
+    const setActiveItem = (updatedItem: unknown): void => {
       const updatedItems = [...items];
       if (updatedItem) {
         if (activeItemIndex >= 0) {

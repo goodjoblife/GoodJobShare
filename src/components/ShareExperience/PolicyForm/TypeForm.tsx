@@ -21,7 +21,10 @@ import {
 
 const header = <Header title="請分享你的公司制度實況" />;
 
-const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
+const renderCompanyJobTitleHeader = ({
+  companyName,
+  jobTitle,
+}): React.ReactElement => (
   <CompanyJobTitleHeader
     label="制度"
     companyName={companyName}
@@ -38,7 +41,9 @@ const questions = [
 ];
 
 // eslint-disable-next-line @typescript-eslint/camelcase
-const bodyFromDraft = draft => ({
+const bodyFromDraft = (
+  draft: Record<string, unknown>,
+): Record<string, unknown> => ({
   company: { id: '', query: draft[DATA_KEY_COMPANY_NAME] },
   // eslint-disable-next-line @typescript-eslint/camelcase
   job_title: draft[DATA_KEY_JOB_TITLE],
@@ -54,7 +59,7 @@ const bodyFromDraft = draft => ({
   ),
 });
 
-const TypeForm = ({ open, onClose }) => {
+const TypeForm = ({ open, onClose }): React.ReactElement => {
   const onSubmit = useCallback(async draft => {
     // TODO: wire up to backend API once endpoint is ready
     const body = bodyFromDraft(draft);
@@ -72,7 +77,7 @@ const TypeForm = ({ open, onClose }) => {
       onSubmit={onSubmit}
       onSubmitError={onSubmitError}
       onClose={onClose}
-      redirectPathnameOnSuccess={() => '/'}
+      redirectPathnameOnSuccess={(): string => '/'}
     />
   );
 };
