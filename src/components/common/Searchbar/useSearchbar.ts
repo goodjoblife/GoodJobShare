@@ -8,7 +8,6 @@ const useSearchbar = (): {
   searchText: string;
   setSearchText: React.Dispatch<React.SetStateAction<string>>;
   gotoSearchResult: (text: string) => void;
-  handleFormSubmit: (e: React.FormEvent) => void;
 } => {
   const history = useHistory();
   const query = useQuery();
@@ -23,15 +22,7 @@ const useSearchbar = (): {
     [history],
   );
 
-  const handleFormSubmit = useCallback(
-    (e: React.FormEvent) => {
-      e.preventDefault();
-      gotoSearchResult(searchText);
-    },
-    [gotoSearchResult, searchText],
-  );
-
-  return { searchText, setSearchText, gotoSearchResult, handleFormSubmit };
+  return { searchText, setSearchText, gotoSearchResult };
 };
 
 export default useSearchbar;

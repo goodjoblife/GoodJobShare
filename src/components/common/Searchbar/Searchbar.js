@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import cn from 'classnames';
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
@@ -6,17 +6,20 @@ import useSearchbar from './useSearchbar';
 import styles from './Searchbar.module.css';
 
 const Searchbar = () => {
-  const {
-    searchText,
-    setSearchText,
-    gotoSearchResult,
-    handleFormSubmit,
-  } = useSearchbar();
+  const { searchText, setSearchText, gotoSearchResult } = useSearchbar();
+
+  const handleSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      gotoSearchResult(searchText);
+    },
+    [gotoSearchResult, searchText],
+  );
 
   return (
     <form
       className={cn(styles.section, styles.searchbar)}
-      onSubmit={handleFormSubmit}
+      onSubmit={handleSubmit}
     >
       <SearchTextInput
         wrapperClassName={styles.textInputWrapper}

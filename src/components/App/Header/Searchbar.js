@@ -7,21 +7,23 @@ import { useSearchbar } from 'common/Searchbar';
 import styles from './Searchbar.module.css';
 
 const Searchbar = ({ className, placeholder, inputRef }) => {
-  const {
-    searchText,
-    setSearchText,
-    gotoSearchResult,
-    handleFormSubmit,
-  } = useSearchbar();
+  const { searchText, setSearchText, gotoSearchResult } = useSearchbar();
   const [isActive, setActive] = useState(false);
 
+  const handleSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      gotoSearchResult(searchText);
+    },
+    [gotoSearchResult, searchText],
+  );
   const handleFormFocus = useCallback(() => setActive(true), []);
   const handleFormBlur = useCallback(() => setActive(false), []);
 
   return (
     <form
       className={cn(className, styles.searchbar, { [styles.active]: isActive })}
-      onSubmit={handleFormSubmit}
+      onSubmit={handleSubmit}
       onFocus={handleFormFocus}
       onBlur={handleFormBlur}
     >
