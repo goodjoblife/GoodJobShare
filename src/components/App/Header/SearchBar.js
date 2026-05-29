@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
-import { useSearchbar } from 'common/Searchbar';
-import styles from './Searchbar.module.css';
+import { useSearchBar } from 'common/SearchBar';
+import styles from './SearchBar.module.css';
 
-const Searchbar = ({ className, placeholder, inputRef }) => {
-  const { searchText, setSearchText, gotoSearchResult } = useSearchbar();
+const SearchBar = ({ className, placeholder, inputRef }) => {
+  const { searchText, setSearchText, gotoSearchResult } = useSearchBar();
   const [isActive, setActive] = useState(false);
 
   const handleFormFocus = useCallback(() => setActive(true), []);
@@ -43,7 +43,7 @@ const Searchbar = ({ className, placeholder, inputRef }) => {
   );
 };
 
-Searchbar.propTypes = {
+SearchBar.propTypes = {
   className: PropTypes.string.isRequired,
   inputRef: PropTypes.oneOfType([
     PropTypes.func,
@@ -52,4 +52,4 @@ Searchbar.propTypes = {
   placeholder: PropTypes.string,
 };
 
-export default Searchbar;
+export default SearchBar;

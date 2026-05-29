@@ -13,7 +13,7 @@ import {
 import { companyInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
-import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/Searchbar';
+import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
 import {
   queryFromQuerySelector,
   pageFromQuerySelector,

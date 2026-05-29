@@ -2,11 +2,11 @@ import React, { useCallback } from 'react';
 import cn from 'classnames';
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
-import useSearchbar from './useSearchbar';
-import styles from './Searchbar.module.css';
+import useSearchBar from './useSearchBar';
+import styles from './SearchBar.module.css';
 
-const Searchbar = () => {
-  const { searchText, setSearchText, gotoSearchResult } = useSearchbar();
+const SearchBar = () => {
+  const { searchText, setSearchText, gotoSearchResult } = useSearchBar();
 
   const handleSubmit = useCallback(
     e => {
@@ -37,4 +37,4 @@ const Searchbar = () => {
   );
 };
 
-export default Searchbar;
+export default SearchBar;
