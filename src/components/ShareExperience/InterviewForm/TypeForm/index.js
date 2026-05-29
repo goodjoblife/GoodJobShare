@@ -63,9 +63,12 @@ const questions = [
   createJobTenureQuestion(),
   createInterviewSectionsQuestion(),
   createSensitiveQuestionsQuestion(),
-  createSubmitQuestion({ label: tabTypeTranslation[TabType.INTERVIEW_EXPERIENCE] }),
+  createSubmitQuestion({
+    label: tabTypeTranslation[TabType.INTERVIEW_EXPERIENCE],
+  }),
 ];
 
+/* eslint-disable @typescript-eslint/camelcase */
 const bodyFromDraft = evolve({
   company: draft => ({ id: '', query: draft[DATA_KEY_COMPANY_NAME] }),
   region: draft => draft[DATA_KEY_REGION],
@@ -113,17 +116,20 @@ const bodyFromDraft = evolve({
     };
   },
 });
+/* eslint-enable @typescript-eslint/camelcase */
 
 const TypeForm = ({ open, onClose }) => {
   const dispatch = useDispatch();
   const onSubmit = useCallback(
     async draft => {
       const body = bodyFromDraft(draft);
+      /* eslint-disable @typescript-eslint/camelcase */
       const ga_user_pseudo_id = await getUserPseudoId(GA_MEASUREMENT_ID);
       body.extra = {
         form_type: GA_CATEGORY.SHARE_INTERVIEW_TYPE_FORM,
         ga_user_pseudo_id,
       };
+      /* eslint-enable @typescript-eslint/camelcase */
       // section 的標題與預設文字 = 4 + 11 + 19 + 25 個字
       const goalValue = calcInterviewExperienceValue(body, 59);
 
