@@ -11,7 +11,7 @@ import {
   loadMoreRelatedExperiences,
 } from 'actions/experience';
 import { relatedExperiencesStateSelector } from 'selectors/experienceSelector';
-import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import { PageType } from 'constants/companyJobTitle';
 import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
 import Button from 'common/button/Button';
 import styles from './MoreExperiencesBlock.module.css';
@@ -53,7 +53,7 @@ const MoreExperiencesBlock = ({ experience }) => {
   const relatedExperiencesState = useSelector(relatedExperiencesStateSelector);
 
   const location = useLocation();
-  const { state: { pageType = PAGE_TYPE.COMPANY } = {} } = location;
+  const { state: { pageType = PageType.COMPANY } = {} } = location;
   const [, , canViewPublishId] = usePermission();
   const handleLoadMore = useCallback(
     () => dispatch(loadMoreRelatedExperiences()),

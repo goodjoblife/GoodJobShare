@@ -28,18 +28,7 @@ const buildYearOptions = (currentYear, span = 10) =>
     return { value: y, label: y };
   });
 
-const DatePicker = ({
-  className,
-  page,
-  title,
-  description,
-  dataKey,
-  required,
-  defaultValue,
-  value: [year, month],
-  onChange,
-  warning,
-}) => {
+const DatePicker = ({ className, value: [year, month], onChange, warning }) => {
   const [currentYear, currentMonth] = getNow();
   const yearOptions = useMemo(() => buildYearOptions(currentYear, 10), [
     currentYear,
@@ -102,13 +91,7 @@ export const DatePropType = withShape(PropTypes.array.isRequired, {
 
 DatePicker.propTypes = {
   className: PropTypes.string,
-  dataKey: PropTypes.string.isRequired,
-  defaultValue: PropTypes.array.isRequired,
-  description: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  required: PropTypes.bool,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   value: DatePropType,
   warning: PropTypes.string,
 };

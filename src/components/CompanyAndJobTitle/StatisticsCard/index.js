@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton';
 import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import { pageType as PAGE_TYPE } from 'constants/companyJobTitle';
+import { PageType } from 'constants/companyJobTitle';
 import { isFetching } from 'utils/fetchBox';
 import styles from './StatisticsCard.module.css';
 import ThumbImage from 'common/icons/thumb.svg';
@@ -13,7 +13,7 @@ const StatisticsCard = ({ pageType, pageName }) => {
     companyRatingStatisticsBoxSelectorByName(pageName),
   );
 
-  if (pageType !== PAGE_TYPE.COMPANY) {
+  if (pageType !== PageType.COMPANY) {
     return null;
   }
 

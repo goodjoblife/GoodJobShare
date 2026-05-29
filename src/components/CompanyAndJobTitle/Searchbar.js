@@ -11,7 +11,7 @@ import Magnifiner from 'common/icons/Magnifiner';
 import styles from './Searchbar.module.css';
 
 import {
-  pageType as pageTypes,
+  PageType,
   pageTypeTranslation,
   tabTypeTranslation,
 } from 'constants/companyJobTitle';
@@ -43,14 +43,14 @@ const Searchbar = ({ className, label, placeholder, onSubmit, pageType }) => {
   const onBlur = useCallback(() => {
     onSubmit(searchText);
     switch (pageType) {
-      case pageTypes.COMPANY:
+      case PageType.COMPANY:
         ReactGA.event({
           category: GA_CATEGORY.COMPANY_PAGE,
           action: GA_ACTION.SEARCH_JOB_TITLE,
           label: searchText,
         });
         break;
-      case pageTypes.JOB_TITLE:
+      case PageType.JOB_TITLE:
         ReactGA.event({
           category: GA_CATEGORY.JOB_TITLE_PAGE,
           action: GA_ACTION.SEARCH_COMPANY,
@@ -108,10 +108,10 @@ const WrappedSearchbar = ({ pageType, tabType }) => {
 
   const searchingPageType = (() => {
     switch (pageType) {
-      case pageTypes.COMPANY:
-        return pageTypes.JOB_TITLE;
-      case pageTypes.JOB_TITLE:
-        return pageTypes.COMPANY;
+      case PageType.COMPANY:
+        return PageType.JOB_TITLE;
+      case PageType.JOB_TITLE:
+        return PageType.COMPANY;
       default:
         return null;
     }

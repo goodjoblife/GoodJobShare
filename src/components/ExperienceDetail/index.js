@@ -25,14 +25,11 @@ import {
   queryRelatedExperiencesOnExperience,
 } from 'actions/experience';
 import { COMMENT_ZONE } from 'constants/formElements';
-import {
-  pageType as PAGE_TYPE,
-  tabType as TAB_TYPE,
-} from 'constants/companyJobTitle';
+import { PageType, TabType } from 'constants/companyJobTitle';
 import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 import styles from './ExperienceDetail.module.css';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
-import * as VISIBILITY from './Article/visibility';
+import VISIBILITY from './Article/visibility';
 
 // from params
 const experienceIdSelector = R.prop('id');
@@ -42,13 +39,13 @@ const useExperienceId = () => {
 };
 
 const experienceTypeToTabType = {
-  work: TAB_TYPE.WORK_EXPERIENCE,
-  interview: TAB_TYPE.INTERVIEW_EXPERIENCE,
+  work: TabType.WORK_EXPERIENCE,
+  interview: TabType.INTERVIEW_EXPERIENCE,
 };
 
 const pageTypeToNameSelector = {
-  [PAGE_TYPE.COMPANY]: R.path(['company', 'name']),
-  [PAGE_TYPE.JOB_TITLE]: R.path(['job_title', 'name']),
+  [PageType.COMPANY]: R.path(['company', 'name']),
+  [PageType.JOB_TITLE]: R.path(['job_title', 'name']),
 };
 
 const useExperienceBox = experienceId => {
@@ -58,7 +55,7 @@ const useExperienceBox = experienceId => {
   return useSelector(selector);
 };
 
-const ExperienceDetail = ({ ...props }) => {
+const ExperienceDetail = () => {
   const experienceId = useExperienceId();
   const experienceBox = useExperienceBox(experienceId);
 
@@ -79,7 +76,7 @@ const ExperienceDetail = ({ ...props }) => {
   useTrace(experienceId);
 
   const location = useLocation();
-  const pageType = R.pathOr(PAGE_TYPE.COMPANY, ['state', 'pageType'], location);
+  const pageType = R.pathOr(PageType.COMPANY, ['state', 'pageType'], location);
 
   const scrollToCommentZone = useCallback(() => {
     scroller.scrollTo(COMMENT_ZONE, { smooth: true, offset: -75 });
@@ -137,7 +134,10 @@ const ExperienceDetail = ({ ...props }) => {
               <MoreExperiencesBlock experience={experienceBox.data} />
             </Wrapper>
             <Wrapper size="l">
-              <ChartsZone experience={experienceBox.data} />
+              <ChartsZone
+                companyName={experienceBox.data.company.name}
+                jobTitle={experienceBox.data.job_title.name}
+              />
             </Wrapper>
           </React.Fragment>
         )}

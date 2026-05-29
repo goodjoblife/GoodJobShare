@@ -3,7 +3,6 @@ import graphqlClient from 'utils/graphqlClient';
 import {
   getCompanyTimeAndSalaryQuery,
   getCompanyInterviewExperiencesQuery,
-  getCompanyWorkExperiencesQuery,
   queryCompaniesHavingDataGql,
   getCompanyTimeAndSalaryStatisticsQuery,
   getCompanyTopNJobTitlesQuery,
@@ -14,10 +13,23 @@ export const getCompanyTimeAndSalary = ({
   jobTitle,
   start,
   limit,
+  dataTimeRange,
+  experienceInYearRange,
+  gender,
+  sortBy,
 }) =>
   graphqlClient({
     query: getCompanyTimeAndSalaryQuery,
-    variables: { companyName, jobTitle, start, limit },
+    variables: {
+      companyName,
+      jobTitle,
+      start,
+      limit,
+      dataTimeRange,
+      experienceInYearRange,
+      gender,
+      sortBy,
+    },
   }).then(R.prop('company'));
 
 export const getCompanyTimeAndSalaryStatistics = ({ companyName }) =>
@@ -41,18 +53,6 @@ export const getCompanyInterviewExperiences = ({
 }) =>
   graphqlClient({
     query: getCompanyInterviewExperiencesQuery,
-    variables: { companyName, jobTitle, start, limit, sortBy },
-  }).then(R.prop('company'));
-
-export const getCompanyWorkExperiences = ({
-  companyName,
-  jobTitle,
-  start,
-  limit,
-  sortBy,
-}) =>
-  graphqlClient({
-    query: getCompanyWorkExperiencesQuery,
     variables: { companyName, jobTitle, start, limit, sortBy },
   }).then(R.prop('company'));
 

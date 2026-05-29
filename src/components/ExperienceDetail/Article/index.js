@@ -15,7 +15,7 @@ import ReactionZone from './ReactionZone';
 import { BasicPermissionBlock } from 'common/PermissionBlock';
 import { MAX_WORDS_IF_HIDDEN } from 'constants/hideContent';
 import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
-import * as VISIBILITY from './visibility';
+import VISIBILITY, { VisibilityPropTypes } from './visibility';
 import Button from 'common/button/Button';
 import Card from 'common/Card';
 import InfoBlock from './InfoBlock';
@@ -53,7 +53,7 @@ const ChildrenOnMaskBottom = ({ visibility, totalWords, onExpand }) => {
 ChildrenOnMaskBottom.propTypes = {
   onExpand: PropTypes.func.isRequired,
   totalWords: PropTypes.number.isRequired,
-  visibility: PropTypes.string.isRequired,
+  visibility: VisibilityPropTypes.isRequired,
 };
 
 const Sections = ({ experience, visibility, onExpand, subTitleTag }) => {
@@ -150,7 +150,7 @@ Sections.propTypes = {
   }).isRequired,
   onExpand: PropTypes.func.isRequired,
   subTitleTag: PropTypes.string,
-  visibility: PropTypes.string.isRequired,
+  visibility: VisibilityPropTypes.isRequired,
 };
 
 const Article = ({
@@ -175,6 +175,7 @@ const Article = ({
           experience={experience}
           visibility={visibility}
           originalLink={originalLink}
+          hideContent={visibility === VISIBILITY.LOCKED}
         />
         <section className={styles.main}>
           <div className={styles.article}>
@@ -224,7 +225,7 @@ Article.propTypes = {
   onClickMsgButton: PropTypes.func.isRequired,
   originalLink: PropTypes.string,
   subTitleTag: PropTypes.string,
-  visibility: PropTypes.string.isRequired,
+  visibility: VisibilityPropTypes.isRequired,
 };
 
 export default Article;

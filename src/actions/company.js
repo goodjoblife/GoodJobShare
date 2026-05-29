@@ -1,3 +1,4 @@
+import R from 'ramda';
 import { isGraphqlError } from 'utils/errors';
 import {
   isFetching,
@@ -22,11 +23,11 @@ import {
 import {
   getCompanyTimeAndSalary,
   getCompanyInterviewExperiences,
-  getCompanyWorkExperiences,
   queryCompaniesApi,
   getCompanyTimeAndSalaryStatistics,
   getCompanyTopNJobTitles,
 } from 'apis/company';
+import queryCompanyWorkExperiencesApi from 'apis/queryCompanyWorkExperiences';
 import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
 import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
 import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
@@ -131,6 +132,16 @@ const SALARY_WORK_TIMES_LIMIT = 5;
 const WORK_EXPERIENCES_LIMIT = 3;
 const INTERVIEW_EXPERIENCES_LIMIT = 3;
 
+/**
+ * @type {(
+ *   companyName: string,
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverview | null>
+ * ) => {
+ *   type: string;
+ *   companyName: string;
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverview | null>
+ * }}
+ */
 const setOverview = (companyName, box) => ({
   type: SET_OVERVIEW,
   companyName,
@@ -181,6 +192,16 @@ export const queryCompanyOverview = (
   }
 };
 
+/**
+ * @type {(
+ *   companyName: string,
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverviewStatistics | null>
+ * ) => {
+ *   type: string;
+ *   companyName: string;
+ *   box: import('utils/fetchBox').default<import('reducers/companyIndex').CompanyOverviewStatistics | null>
+ * }}
+ */
 const setOverviewStatistics = (companyName, box) => ({
   type: SET_OVERVIEW_STATISTICS,
   companyName,
@@ -190,7 +211,6 @@ const setOverviewStatistics = (companyName, box) => ({
 export const queryCompanyOverviewStatistics = companyName => async (
   dispatch,
   getState,
-  { api },
 ) => {
   const box = companyOverviewStatisticsBoxSelectorByName(companyName)(
     getState(),
@@ -243,7 +263,16 @@ const setInterviewExperiences = (companyName, box) => ({
 });
 
 export const queryCompanyTimeAndSalary = (
-  { companyName, jobTitle, start, limit },
+  {
+    companyName,
+    jobTitle,
+    start,
+    limit,
+    dataTimeRange,
+    experienceInYearRange,
+    gender,
+    sortBy,
+  },
   { force = false } = {},
 ) => async (dispatch, getState) => {
   const box = companyTimeAndSalaryBoxSelectorByName(companyName)(getState());
@@ -255,7 +284,11 @@ export const queryCompanyTimeAndSalary = (
         box.data.name === companyName &&
         box.data.jobTitle === jobTitle &&
         box.data.start === start &&
-        box.data.limit === limit))
+        box.data.limit === limit &&
+        R.equals(box.data.dataTimeRange, dataTimeRange) &&
+        R.equals(box.data.experienceInYearRange, experienceInYearRange) &&
+        box.data.gender === gender &&
+        box.data.sortBy === sortBy))
   ) {
     return;
   }
@@ -268,6 +301,10 @@ export const queryCompanyTimeAndSalary = (
       jobTitle,
       start,
       limit,
+      dataTimeRange,
+      experienceInYearRange,
+      gender,
+      sortBy,
     });
 
     // Not found case
@@ -280,6 +317,10 @@ export const queryCompanyTimeAndSalary = (
       jobTitle,
       start,
       limit,
+      dataTimeRange,
+      experienceInYearRange,
+      gender,
+      sortBy,
       salaryWorkTimes: data.salaryWorkTimesResult.salaryWorkTimes,
       salaryWorkTimesCount: data.salaryWorkTimesResult.count,
     };
@@ -507,7 +548,7 @@ export const queryCompanyWorkExperiences = ({
   dispatch(setWorkExperiences(companyName, toFetching(box)));
 
   try {
-    const data = await getCompanyWorkExperiences({
+    const data = await queryCompanyWorkExperiencesApi({
       companyName,
       jobTitle,
       start,
@@ -520,6 +561,7 @@ export const queryCompanyWorkExperiences = ({
       return dispatch(setWorkExperiences(companyName, getFetched(data)));
     }
 
+    /** @type {import('reducers/companyIndex').CompanyWorkExperienceResult} */
     const workExperiencesData = {
       name: data.name,
       jobTitle,

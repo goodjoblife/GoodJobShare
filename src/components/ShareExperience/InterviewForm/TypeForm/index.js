@@ -42,7 +42,7 @@ import { getUserPseudoId } from 'utils/GAUtils';
 import rollbar from 'utils/rollbar';
 
 import { GA_MEASUREMENT_ID } from '../../../../config';
-import { tabType } from '../../../../constants/companyJobTitle';
+import { TabType } from 'constants/companyJobTitle';
 
 const header = <Header title="請輸入你的一份面試經驗" />;
 const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (
@@ -59,11 +59,11 @@ const questions = [
   createInterviewDateQuestion(),
   createInterviewRegionQuestion(),
   createInterviewResultQuestion(),
-  createSalaryQuestion({ type: tabType.INTERVIEW_EXPERIENCE }),
+  createSalaryQuestion({ type: TabType.INTERVIEW_EXPERIENCE }),
   createJobTenureQuestion(),
   createInterviewSectionsQuestion(),
   createSensitiveQuestionsQuestion(),
-  createSubmitQuestion({ type: tabType.INTERVIEW_EXPERIENCE }),
+  createSubmitQuestion({ type: TabType.INTERVIEW_EXPERIENCE }),
 ];
 
 const bodyFromDraft = evolve({

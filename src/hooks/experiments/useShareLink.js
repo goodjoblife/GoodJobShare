@@ -34,7 +34,7 @@ const randomAction = actions => {
   return actions[0];
 };
 
-export default companyName => {
+export default () => {
   const action = randomAction(ACTIONS);
   const { generateTo } = action;
   return generateTo();

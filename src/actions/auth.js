@@ -27,7 +27,7 @@ export const SET_LOGIN = '@@auth/SET_LOGIN';
 export const SET_USER = '@@auth/SET_USER';
 export const LOG_OUT = '@@auth/LOG_OUT';
 
-const setLogin = (status, token = null) => ({
+const setLogin = (status, token = undefined) => ({
   type: SET_LOGIN,
   status,
   token,
@@ -47,7 +47,7 @@ export const logout = () => (dispatch, getState, { history }) => {
   history.push('/');
 };
 
-const getMeInfo = token => (dispatch, getState) =>
+const getMeInfo = token => dispatch =>
   queryMeApi({ token }).catch(error => {
     dispatch(logOutAction());
     throw error;
@@ -63,7 +63,7 @@ const getMeInfo = token => (dispatch, getState) =>
  *                               logout  --|
  *                                         |
  */
-export const loginWithToken = token => (dispatch, getState) => {
+export const loginWithToken = token => dispatch => {
   dispatch(getMeInfo(token))
     .then(user => {
       dispatch(setUser(user));
@@ -87,7 +87,7 @@ const FBSDKLogin = FB => {
 /**
  * Use `hooks/login/useFacebookLogin` as possible
  */
-export const loginWithFB = FBSDK => async (dispatch, getState) => {
+export const loginWithFB = FBSDK => async dispatch => {
   if (!FBSDK) {
     dispatch(pushErrorNotificationAndRollbarAndThrowError(ER0001));
   }
@@ -149,10 +149,7 @@ export const loginWithFB = FBSDK => async (dispatch, getState) => {
  * "Sign in with Google" buttons
  * https://developers.google.com/identity/gsi/web/guides/integrate#button_customization
  */
-export const loginWithGoogle = credentialResponse => async (
-  dispatch,
-  getState,
-) => {
+export const loginWithGoogle = credentialResponse => async dispatch => {
   //  TODO: 當登入失敗
   if (!credentialResponse || !credentialResponse.credential) {
     dispatch(pushErrorNotificationAndRollbarAndThrowError(ER0009));

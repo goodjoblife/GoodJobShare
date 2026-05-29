@@ -10,7 +10,6 @@ import { DatePropType } from '../Date';
 const RadioElseDate = ({
   page,
   title,
-  description,
   dataKey,
   required,
   defaultValue,
@@ -45,7 +44,6 @@ RadioElseDate.propTypes = {
     // else
     1: DatePropType,
   }),
-  description: PropTypes.string,
   elseOptionValue: ValuePropType.isRequired,
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,

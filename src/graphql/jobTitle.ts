@@ -1,7 +1,6 @@
 import {
   experiencePartialGql,
   interviewExperiencePartialGql,
-  workExperiencesPartialGql,
 } from './experience';
 
 // TODO: 暫時放在這裡，之後搬回 api/
@@ -18,13 +17,26 @@ export const queryJobTitles = /* GraphQL */ `
 `;
 
 export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
-  query($jobTitle: String!, $companyName: String, $start: Int!, $limit: Int!) {
+  query(
+    $jobTitle: String!
+    $companyName: String
+    $start: Int!
+    $limit: Int!
+    $dataTimeRange: DataTimeRange
+    $experienceInYearRange: ExperienceInYearRange
+    $gender: Gender
+    $sortBy: SalaryResultSortOption
+  ) {
     job_title(name: $jobTitle) {
       name
       salaryWorkTimesResult(
         companyQuery: $companyName
         start: $start
         limit: $limit
+        dataTimeRange: $dataTimeRange
+        experienceInYearRange: $experienceInYearRange
+        gender: $gender
+        sortBy: $sortBy
       ) {
         count
         salaryWorkTimes {
@@ -41,6 +53,7 @@ export const getJobTitleTimeAndSalaryQuery = /* GraphQL */ `
           estimated_hourly_wage
           overtime_frequency
           employment_type
+          gender
           job_title {
             name
           }
@@ -111,32 +124,6 @@ export const getJobTitleInterviewExperiencesQuery = /* GraphQL */ `
         interviewExperiences {
           ${experiencePartialGql}
           ${interviewExperiencePartialGql()}
-        }
-      }
-    }
-  }
-`;
-
-export const getJobTitleWorkExperiencesQuery = /* GraphQL */ `
-  query(
-    $jobTitle: String!
-    $companyName: String
-    $start: Int!
-    $limit: Int!
-    $sortBy: DataResultSortOption
-  ) {
-    job_title(name: $jobTitle) {
-      name
-      workExperiencesResult(
-        companyQuery: $companyName
-        start: $start
-        limit: $limit
-        sortBy: $sortBy
-      ) {
-        count
-        workExperiences {
-          ${experiencePartialGql}
-          ${workExperiencesPartialGql()}
         }
       }
     }

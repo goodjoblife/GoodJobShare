@@ -1,7 +1,6 @@
 import {
   experiencePartialGql,
   interviewExperiencePartialGql,
-  workExperiencesPartialGql,
 } from './experience';
 
 // TODO: 暫時放在這裡，之後搬回 api/
@@ -10,10 +9,27 @@ export interface Company {
 }
 
 export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
-  query($companyName: String!, $jobTitle: String, $start: Int!, $limit: Int!) {
+  query(
+    $companyName: String!
+    $jobTitle: String
+    $start: Int!
+    $limit: Int!
+    $dataTimeRange: DataTimeRange
+    $experienceInYearRange: ExperienceInYearRange
+    $gender: Gender
+    $sortBy: SalaryResultSortOption
+  ) {
     company(name: $companyName) {
       name
-      salaryWorkTimesResult(jobTitle: $jobTitle, start: $start, limit: $limit) {
+      salaryWorkTimesResult(
+        jobTitle: $jobTitle
+        start: $start
+        limit: $limit
+        dataTimeRange: $dataTimeRange
+        experienceInYearRange: $experienceInYearRange
+        gender: $gender
+        sortBy: $sortBy
+      ) {
         count
         salaryWorkTimes {
           id
@@ -29,6 +45,7 @@ export const getCompanyTimeAndSalaryQuery = /* GraphQL */ `
           estimated_hourly_wage
           overtime_frequency
           employment_type
+          gender
           job_title {
             name
           }
@@ -120,32 +137,6 @@ export const getCompanyInterviewExperiencesQuery = /* GraphQL */ `
         interviewExperiences {
           ${experiencePartialGql}
           ${interviewExperiencePartialGql()}
-        }
-      }
-    }
-  }
-`;
-
-export const getCompanyWorkExperiencesQuery = /* GraphQL */ `
-  query(
-    $companyName: String!
-    $jobTitle: String
-    $start: Int!
-    $limit: Int!
-    $sortBy: DataResultSortOption
-  ) {
-    company(name: $companyName) {
-      name
-      workExperiencesResult(
-        jobTitle: $jobTitle
-        start: $start
-        limit: $limit
-        sortBy: $sortBy
-      ) {
-        count
-        workExperiences {
-          ${experiencePartialGql}
-          ${workExperiencesPartialGql()}
         }
       }
     }
