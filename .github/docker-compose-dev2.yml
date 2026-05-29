@@ -1,0 +1,17 @@
+services:
+  node:
+    image: goodjobshare:dev
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        - RAZZLE_API_HOST=https://api-dev2.goodjob.life
+        - RAZZLE_FACEBOOK_APP_ID=1844389232511081
+        - RAZZLE_GA_MEASUREMENT_ID=G-CYK1FN5G9P
+        - RAZZLE_GTM_ID=GTM-KVZ7DZQ
+        - RAZZLE_GOOGLE_APP_ID=879657963776-d8j1hq8dk38alp456ncvnq6mqh4f6bua.apps.googleusercontent.com
+        - RAZZLE_ENVIRONMENT=dev
+        - RAZZLE_TAP_PAY_APP_ID=125271
+        - RAZZLE_TAP_PAY_APP_KEY=app_WBWcR9mkiSMUQ3qZV5tUidkq7vfamUzmdWi5QR33ksT6ttbiZ9BJxbz5Fvma
+        - RAZZLE_TAP_PAY_SERVER_TYPE=sandbox
+        - RAZZLE_ORIGIN=https://www-dev2.goodjob.life

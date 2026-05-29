@@ -1,3 +1,4 @@
+import R from 'ramda';
 import { isGraphqlError } from 'utils/errors';
 import {
   isFetching,
@@ -201,7 +202,16 @@ const setTimeAndSalary = (jobTitle, box) => ({
 });
 
 export const queryJobTitleTimeAndSalary = (
-  { companyName, jobTitle, start, limit },
+  {
+    companyName,
+    jobTitle,
+    start,
+    limit,
+    dataTimeRange,
+    experienceInYearRange,
+    gender,
+    sortBy,
+  },
   { force = false } = {},
 ) => async (dispatch, getState) => {
   const box = jobTitleTimeAndSalaryBoxSelectorByName(jobTitle)(getState());
@@ -213,7 +223,11 @@ export const queryJobTitleTimeAndSalary = (
         box.data.name === jobTitle &&
         box.data.companyName === companyName &&
         box.data.start === start &&
-        box.data.limit === limit))
+        box.data.limit === limit &&
+        R.equals(box.data.dataTimeRange, dataTimeRange) &&
+        R.equals(box.data.experienceInYearRange, experienceInYearRange) &&
+        box.data.gender === gender &&
+        box.data.sortBy === sortBy))
   ) {
     return;
   }
@@ -226,6 +240,10 @@ export const queryJobTitleTimeAndSalary = (
       companyName,
       start,
       limit,
+      dataTimeRange,
+      experienceInYearRange,
+      gender,
+      sortBy,
     });
 
     // Not found case
@@ -238,6 +256,10 @@ export const queryJobTitleTimeAndSalary = (
       companyName,
       start,
       limit,
+      dataTimeRange,
+      experienceInYearRange,
+      gender,
+      sortBy,
       salaryWorkTimes: data.salaryWorkTimesResult.salaryWorkTimes,
       salaryWorkTimesCount: data.salaryWorkTimesResult.count,
     };
