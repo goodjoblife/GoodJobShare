@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
-import { useSearchBar } from 'common/SearchBar';
+import { useSearchQuery } from 'common/SearchBar';
 import styles from './SearchBar.module.css';
 
 const SearchBar = ({ className, placeholder, inputRef }) => {
-  const [searchText, setSearchText, gotoSearchResult] = useSearchBar();
+  const [searchText, setSearchText, gotoSearchResult] = useSearchQuery();
   const [isActive, setActive] = useState(false);
 
   const handleFormFocus = useCallback(() => setActive(true), []);

@@ -2,11 +2,11 @@ import React, { useCallback } from 'react';
 import cn from 'classnames';
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
-import useSearchBar from './useSearchBar';
+import useSearchQuery from './useSearchQuery';
 import styles from './SearchBar.module.css';
 
 const SearchBar = () => {
-  const [searchText, setSearchText, gotoSearchResult] = useSearchBar();
+  const [searchText, setSearchText, gotoSearchResult] = useSearchQuery();
 
   const handleSubmit = useCallback(
     e => {

@@ -1,2 +1,2 @@
-export { default as useSearchBar } from './useSearchBar';
+export { default as useSearchQuery } from './useSearchQuery';
 export { default } from './SearchBar';

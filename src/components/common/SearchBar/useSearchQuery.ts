@@ -4,7 +4,7 @@ import qs from 'qs';
 import { useQuery } from 'hooks/routing';
 import { queryFromQuerySelector } from 'selectors/routing';
 
-const useSearchBar = (): [
+const useSearchQuery = (): [
   string,
   React.Dispatch<React.SetStateAction<string>>,
   (text: string) => void,
@@ -25,4 +25,4 @@ const useSearchBar = (): [
   return [searchText, setSearchText, gotoSearchResult];
 };
 
-export default useSearchBar;
+export default useSearchQuery;
