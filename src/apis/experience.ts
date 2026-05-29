@@ -1,5 +1,3 @@
-import { JobAverageSalary, SalaryDistributionBin } from 'apis/salaryWorkTime';
-
 export enum ExperienceType {
   WORK = 'work',
   INTERVIEW = 'interview',
@@ -36,15 +34,9 @@ export type WorkExperience = {
   reports: ExperienceReport[];
   company: {
     name: string;
-    salary_work_time_statistics: {
-      job_average_salaries: JobAverageSalary[];
-    };
   };
   job_title: {
     name: string;
-    salary_distribution: {
-      bins: SalaryDistributionBin[] | null;
-    };
   };
   region: string;
   experience_in_year: number | null;

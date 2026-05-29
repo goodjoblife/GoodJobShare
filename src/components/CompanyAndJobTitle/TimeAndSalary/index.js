@@ -11,6 +11,7 @@ import Searchbar from '../Searchbar';
 import SummarySection from './SummarySection';
 import EsgBlock from '../TimeAndSalary/EsgBlock';
 import { PageType } from 'constants/companyJobTitle';
+import SalaryFilter from './SalaryFilter';
 import { fetchBoxPropType } from 'utils/fetchBox';
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
@@ -29,7 +30,7 @@ const TimeAndSalary = ({
   onCloseReport,
   esgSalaryDataBox,
 }) => {
-  const [createPageLinkTo, handleSectionRef] = useCreatePageLinkTo();
+  const [createPageLinkTo, handleSectionRef, sectionY] = useCreatePageLinkTo();
 
   return (
     <CompanyAndJobTitleWrapper
@@ -97,6 +98,7 @@ const TimeAndSalary = ({
       />
       <Wrapper ref={handleSectionRef} size="l" className={styles.searchbar}>
         <Searchbar pageType={pageType} tabType={tabType} />
+        <SalaryFilter y={sectionY} />
       </Wrapper>
       <Wrapper size="l">
         <PageBoxRenderer

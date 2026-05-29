@@ -23,6 +23,18 @@ import { paramsSelector, querySelector } from 'common/routing/selectors';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 import {
+  dataTimeFromQuerySelector,
+  experienceFromQuerySelector,
+  genderFromQuerySelector,
+  sortByFromQuerySelector,
+  useDataTimeFromQuery,
+  useExperienceFromQuery,
+  useGenderFromQuery,
+  useSortByFromQuery,
+  getDataTimeRange,
+  getExperienceInYearRange,
+} from 'components/CompanyAndJobTitle/TimeAndSalary/SalaryFilter';
+import {
   queryFromQuerySelector,
   pageFromQuerySelector,
 } from 'selectors/routing';
@@ -75,6 +87,17 @@ const CompanyTimeAndSalaryProvider = () => {
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
 
+  const [dataTime] = useDataTimeFromQuery();
+  const [experience] = useExperienceFromQuery();
+  const [gender] = useGenderFromQuery();
+  const [sortBy] = useSortByFromQuery();
+
+  const dataTimeRange = useMemo(() => getDataTimeRange(dataTime), [dataTime]);
+  const experienceInYearRange = useMemo(
+    () => getExperienceInYearRange(experience),
+    [experience],
+  );
+
   const handleQueryCompanyTimeAndSalary = useCallback(
     ({ force = false } = {}) => {
       dispatch(
@@ -84,12 +107,26 @@ const CompanyTimeAndSalaryProvider = () => {
             jobTitle: jobTitle || undefined,
             start,
             limit,
+            dataTimeRange,
+            experienceInYearRange,
+            gender: gender || undefined,
+            sortBy: sortBy || undefined,
           },
           { force },
         ),
       );
     },
-    [dispatch, companyName, jobTitle, start, limit],
+    [
+      dispatch,
+      companyName,
+      jobTitle,
+      start,
+      limit,
+      dataTimeRange,
+      experienceInYearRange,
+      gender,
+      sortBy,
+    ],
   );
 
   useEffect(() => {
@@ -168,6 +205,12 @@ CompanyTimeAndSalaryProvider.fetchData = ({
   const jobTitle = queryFromQuerySelector(query) || undefined;
   const start = (page - 1) * PAGE_SIZE;
   const limit = PAGE_SIZE;
+  const dataTime = dataTimeFromQuerySelector(query);
+  const experience = experienceFromQuerySelector(query);
+  const gender = genderFromQuerySelector(query);
+  const sortBy = sortByFromQuerySelector(query);
+  const dataTimeRange = getDataTimeRange(dataTime);
+  const experienceInYearRange = getExperienceInYearRange(experience);
   const dispatchOverviewStatistics = dispatch(
     queryCompanyOverviewStatistics(companyName),
   );
@@ -182,6 +225,10 @@ CompanyTimeAndSalaryProvider.fetchData = ({
       jobTitle,
       start,
       limit,
+      dataTimeRange,
+      experienceInYearRange,
+      gender: gender || undefined,
+      sortBy: sortBy || undefined,
     }),
   );
   const dispatchRatingStatistics = dispatch(queryRatingStatistics(companyName));
