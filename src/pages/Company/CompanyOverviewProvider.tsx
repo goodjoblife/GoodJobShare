@@ -26,12 +26,8 @@ type Params = { companyName: string };
 
 const useOverviewBoxSelector = (
   pageName: string,
-): ((state: RootState) => FetchBox<CompanyOverview | null>) => {
-  return useCallback(
-    (state: RootState) => overviewBoxSelectorByName(pageName)(state),
-    [pageName],
-  );
-};
+): ((state: RootState) => FetchBox<CompanyOverview | null>) =>
+  useMemo(() => overviewBoxSelectorByName(pageName), [pageName]);
 
 const useOverviewStatisticsBox = (
   pageName: string,
