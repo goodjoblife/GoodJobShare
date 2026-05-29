@@ -75,11 +75,7 @@ const CompanyOverviewProvider: React.FC & ServerSideRender<Params> = () => {
     dispatch(queryCompanyOverviewStatistics(companyName));
   }, [dispatch, companyName]);
 
-  const [, fetchPermission] = usePermission() as [
-    boolean,
-    () => Promise<void>,
-    (publishId: unknown) => boolean,
-  ];
+  const [, fetchPermission] = usePermission();
   useEffect(() => {
     fetchPermission();
   }, [pageType, companyName, fetchPermission]);
