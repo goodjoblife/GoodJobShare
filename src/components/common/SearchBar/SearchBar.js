@@ -6,7 +6,7 @@ import useSearchBar from './useSearchBar';
 import styles from './SearchBar.module.css';
 
 const SearchBar = () => {
-  const { searchText, setSearchText, gotoSearchResult } = useSearchBar();
+  const [searchText, setSearchText, gotoSearchResult] = useSearchBar();
 
   const handleSubmit = useCallback(
     e => {

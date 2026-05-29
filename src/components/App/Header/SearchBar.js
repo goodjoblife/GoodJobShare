@@ -7,7 +7,7 @@ import { useSearchBar } from 'common/SearchBar';
 import styles from './SearchBar.module.css';
 
 const SearchBar = ({ className, placeholder, inputRef }) => {
-  const { searchText, setSearchText, gotoSearchResult } = useSearchBar();
+  const [searchText, setSearchText, gotoSearchResult] = useSearchBar();
   const [isActive, setActive] = useState(false);
 
   const handleFormFocus = useCallback(() => setActive(true), []);

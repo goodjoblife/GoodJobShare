@@ -4,11 +4,11 @@ import qs from 'qs';
 import { useQuery } from 'hooks/routing';
 import { queryFromQuerySelector } from 'selectors/routing';
 
-const useSearchBar = (): {
-  searchText: string;
-  setSearchText: React.Dispatch<React.SetStateAction<string>>;
-  gotoSearchResult: (text: string) => void;
-} => {
+const useSearchBar = (): [
+  string,
+  React.Dispatch<React.SetStateAction<string>>,
+  (text: string) => void,
+] => {
   const history = useHistory();
   const query = useQuery();
   const [searchText, setSearchText] = useState(queryFromQuerySelector(query));
@@ -22,7 +22,7 @@ const useSearchBar = (): {
     [history],
   );
 
-  return { searchText, setSearchText, gotoSearchResult };
+  return [searchText, setSearchText, gotoSearchResult];
 };
 
 export default useSearchBar;
