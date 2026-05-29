@@ -4,21 +4,37 @@ import { useToken } from 'hooks/auth';
 import { queryHasSearchPermissionApi } from 'apis/me';
 import useIsMyPublishId from './useIsMyPublishId';
 
-const useGetSearchPermission = ({ token }) => {
-  return useCallback(async () => {
+type PermissionState = { canView: boolean; permissionFetched: boolean };
+type PermissionContextValue = {
+  canView: boolean;
+  permissionFetched: boolean;
+  setPermissionState: (state: PermissionState) => void;
+};
+
+const useGetSearchPermission = ({
+  token,
+}: {
+  token: string | undefined;
+}): (() => Promise<boolean>) => {
+  return useCallback(async (): Promise<boolean> => {
     if (!token) return false;
     // Get permission only when token available
     return await queryHasSearchPermissionApi({ token });
   }, [token]);
 };
 
-const usePermission = () => {
+const usePermission = (): [
+  boolean,
+  () => Promise<void>,
+  (publishId: unknown) => boolean,
+] => {
   const token = useToken();
   const { canView, permissionFetched, setPermissionState } = useContext(
     PermissionContext,
-  );
+  ) as PermissionContextValue;
   const getSearchPermission = useGetSearchPermission({ token });
-  const fetchPermission = useCallback(async () => {
+
+  const fetchPermission = useCallback(async (): Promise<void> => {
     const hasPermission = await getSearchPermission();
 
     if (typeof Storage !== 'undefined') {
@@ -26,7 +42,7 @@ const usePermission = () => {
 
       if (visitedWebsite === null) {
         // 該裝置第一次進到我們網站，那就給權限
-        localStorage.setItem('visitedWebsite', true);
+        localStorage.setItem('visitedWebsite', 'true');
         setPermissionState({ canView: true, permissionFetched: true });
       } else {
         // 該裝置第二次以上進到我們網站，那就根據 api 結果設定權限
@@ -41,7 +57,8 @@ const usePermission = () => {
   const isMyPublishId = useIsMyPublishId();
 
   const canViewPublishId = useCallback(
-    publishId => isMyPublishId(publishId) || canView,
+    (publishId: unknown): boolean =>
+      Boolean(isMyPublishId(publishId)) || canView,
     [canView, isMyPublishId],
   );
 
