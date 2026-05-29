@@ -10,6 +10,9 @@ const Searchbar = ({ className, placeholder, inputRef }) => {
   const { searchText, setSearchText, gotoSearchResult } = useSearchbar();
   const [isActive, setActive] = useState(false);
 
+  const handleFormFocus = useCallback(() => setActive(true), []);
+  const handleFormBlur = useCallback(() => setActive(false), []);
+
   const handleSubmit = useCallback(
     e => {
       e.preventDefault();
@@ -17,8 +20,6 @@ const Searchbar = ({ className, placeholder, inputRef }) => {
     },
     [gotoSearchResult, searchText],
   );
-  const handleFormFocus = useCallback(() => setActive(true), []);
-  const handleFormBlur = useCallback(() => setActive(false), []);
 
   return (
     <form
