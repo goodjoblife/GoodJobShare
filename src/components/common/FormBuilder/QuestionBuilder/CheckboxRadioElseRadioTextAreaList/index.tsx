@@ -1,16 +1,14 @@
 import React, { useCallback, useState } from 'react';
 import { usePrevious } from 'react-use';
 
-import { Option } from '../Checkbox';
+import { Option, OptionValue } from '../Checkbox';
 import Options from './Options';
 import ActiveItem from './ActiveItem';
 
-export type RadioElseRadioOption = {
-  label: React.ReactNode;
-  value: string | number;
+export type RadioElseRadioOption = Extract<Option, object> & {
   radioTitle: string;
   radioOptions: Option[];
-  radioElseOptionValue?: string | number;
+  radioElseOptionValue?: OptionValue;
   radioElseOptions?: Option[];
   radioFooter?: React.ReactNode;
   textTitle: string;

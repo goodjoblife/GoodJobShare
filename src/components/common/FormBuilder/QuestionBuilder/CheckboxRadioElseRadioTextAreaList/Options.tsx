@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import cn from 'classnames';
+import { OptionValue } from '../Checkbox';
 import Option from './Option';
 import styles from './styles.module.css';
 import commonStyles from '../styles.module.css';
@@ -44,7 +45,7 @@ type Props = {
   elseOptionIndex?: number;
   lastSelectedOptionIndex?: number;
   onSelectOptionIndex: (index: number) => void;
-  options: Array<{ label: React.ReactNode; value: string | number }>;
+  options: Array<{ label: React.ReactNode; value: OptionValue }>;
   selectedOptionIndices: number[];
   warning?: string;
 };
