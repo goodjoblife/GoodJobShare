@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import cn from 'classnames';
 
 import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
@@ -9,6 +9,22 @@ import styles from './styles.module.css';
 import { RadioValue } from './types';
 import commonStyles from '../styles.module.css';
 import formStyles from '../../FormBuilder.module.css';
+
+const useRefToScrollToElseOptions = (
+  radioValue: RadioValue,
+  elseOptionValue: string | number | undefined,
+): React.RefObject<HTMLDivElement | null> => {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (radioValue === elseOptionValue && ref.current) {
+      ref.current.scrollTo({
+        top: ref.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [radioValue, elseOptionValue]);
+  return ref;
+};
 
 export type RadioSubPageProps = {
   dataKey: string;
@@ -22,7 +38,6 @@ export type RadioSubPageProps = {
   onCancel: () => void;
   onClear: () => void;
   optionValue: string | number;
-  radioAreaRef: React.RefObject<HTMLDivElement | null>;
   radioFooter?: React.ReactNode;
   radioOptions: unknown[];
   radioTitle: string;
@@ -42,13 +57,13 @@ const RadioSubPage = ({
   radioFooter,
   isEditing,
   goesToText,
-  radioAreaRef,
   handleRadioElseChange,
   handleConfirm,
   setRadioValue,
   onClear,
   onCancel,
 }: RadioSubPageProps): React.ReactElement => {
+  const radioAreaRef = useRefToScrollToElseOptions(radioValue, elseOptionValue);
   const canProceed =
     radioValue !== null &&
     (radioValue !== elseOptionValue || elseRadioValue !== null);
