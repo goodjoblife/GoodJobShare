@@ -15,13 +15,17 @@ const useRefToScrollToElseOptions = (
   elseOptionValue: string | number | undefined,
 ): React.RefObject<HTMLDivElement | null> => {
   const ref = useRef<HTMLDivElement>(null);
+  const prevRadioValue = useRef<RadioValue>(radioValue);
+
   useEffect(() => {
     if (radioValue === elseOptionValue && ref.current) {
       ref.current.scrollTo({
         top: ref.current.scrollHeight,
-        behavior: 'smooth',
+        behavior:
+          prevRadioValue.current === elseOptionValue ? 'instant' : 'smooth',
       });
     }
+    prevRadioValue.current = radioValue;
   }, [radioValue, elseOptionValue]);
   return ref;
 };
