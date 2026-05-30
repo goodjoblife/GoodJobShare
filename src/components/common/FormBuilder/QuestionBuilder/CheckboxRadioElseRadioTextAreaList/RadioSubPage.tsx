@@ -38,7 +38,7 @@ export type RadioSubPageProps = {
   hasNext: boolean;
   handleConfirm: () => void;
   handleElseChange: (pair: unknown[]) => void;
-  canDelete: boolean;
+  hasDelete: boolean;
   onCancel: () => void;
   onClear: () => void;
   optionValue: OptionValue;
@@ -59,7 +59,7 @@ const RadioSubPage = ({
   value,
   elseValue,
   footer,
-  canDelete,
+  hasDelete,
   hasNext,
   handleElseChange,
   handleConfirm,
@@ -106,7 +106,7 @@ const RadioSubPage = ({
       {footer && <div className={styles.radioFooter}>{footer}</div>}
       <div className={cn(formStyles.navigationBar, styles.ctaButtons)}>
         <NavigatorButton
-          style={{ visibility: canDelete ? 'visible' : 'hidden' }}
+          style={{ visibility: hasDelete ? 'visible' : 'hidden' }}
           onClick={onClear}
         >
           清除
