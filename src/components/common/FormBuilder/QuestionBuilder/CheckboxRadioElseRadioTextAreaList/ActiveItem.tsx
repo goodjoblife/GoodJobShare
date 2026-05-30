@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 
 import { normalizeOptions } from '../utils';
 import { RadioElseRadioOption } from './index';
-import { OptionValue } from '../Checkbox/types';
+import { OptionValue } from '../Checkbox';
 import TextSubPage from './TextSubPage';
 import RadioSubPage from './RadioSubPage';
 

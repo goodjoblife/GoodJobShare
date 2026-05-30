@@ -6,7 +6,7 @@ import BlockSelect from '../Checkbox/private/BlockSelect';
 import BlockSelectElseRadio from '../Checkbox/private/BlockSelectElseRadio';
 import Option from './Option';
 import styles from './styles.module.css';
-import { OptionValue } from '../Checkbox/types';
+import { OptionValue } from '../Checkbox';
 import commonStyles from '../styles.module.css';
 import formStyles from '../../FormBuilder.module.css';
 
