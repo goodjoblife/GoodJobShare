@@ -36,8 +36,8 @@ export type RadioSubPageProps = {
   elseOptionValue?: OptionValue;
   elseValue: OptionValue;
   hasNext: boolean;
-  handleConfirm: () => void;
-  handleElseChange: (pair: unknown[]) => void;
+  onConfirm: () => void;
+  onElseChange: (pair: unknown[]) => void;
   hasDelete: boolean;
   onCancel: () => void;
   onClear: () => void;
@@ -61,8 +61,8 @@ const RadioSubPage = ({
   footer,
   hasDelete,
   hasNext,
-  handleElseChange,
-  handleConfirm,
+  onElseChange,
+  onConfirm,
   setValue,
   onClear,
   onCancel,
@@ -86,8 +86,8 @@ const RadioSubPage = ({
             dataKey={dataKey}
             required
             value={[value, elseValue]}
-            onChange={handleElseChange}
-            onConfirm={handleConfirm}
+            onChange={onElseChange}
+            onConfirm={onConfirm}
             options={options}
             elseOptionValue={elseOptionValue}
             elseOptions={elseOptions}
@@ -98,7 +98,7 @@ const RadioSubPage = ({
             required
             value={value}
             onChange={setValue}
-            onConfirm={handleConfirm}
+            onConfirm={onConfirm}
             options={options}
           />
         )}
@@ -114,7 +114,7 @@ const RadioSubPage = ({
         <NavigatorButton onClick={onCancel}>取消</NavigatorButton>
         <NavigatorButton
           style={{ visibility: canProceed ? 'visible' : 'hidden' }}
-          onClick={handleConfirm}
+          onClick={onConfirm}
         >
           {hasNext ? '繼續' : '儲存'}
         </NavigatorButton>
