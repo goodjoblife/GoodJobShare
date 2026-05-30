@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import cn from 'classnames';
 
 import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
-import BlockSelect from '../Checkbox/private/BlockSelect';
 import BlockSelectElseRadio from '../Checkbox/private/BlockSelectElseRadio';
 import OptionPill from './OptionPill';
 import styles from './styles.module.css';
@@ -12,7 +11,7 @@ import formStyles from '../../FormBuilder.module.css';
 
 const useRefToScrollToElseOptions = (
   radioValue: OptionValue,
-  elseOptionValue?: OptionValue,
+  elseOptionValue: OptionValue,
 ): React.RefObject<HTMLDivElement | null> => {
   const ref = useRef<HTMLDivElement>(null);
   const prevOptionValue = useRef<OptionValue>(radioValue);
@@ -32,21 +31,20 @@ const useRefToScrollToElseOptions = (
 
 export type RadioSubPageProps = {
   dataKey: string;
-  elseOptions: Option[];
-  elseOptionValue?: OptionValue;
-  elseValue: OptionValue;
-  hasNext: boolean;
-  onConfirm: () => void;
-  onElseChange: (pair: unknown[]) => void;
-  hasDelete: boolean;
-  onCancel: () => void;
-  onClear: () => void;
   optionValue: OptionValue;
+  title: string;
   footer?: React.ReactNode;
   options: Option[];
-  title: string;
+  elseOptions: Option[];
+  elseOptionValue: OptionValue;
   value: OptionValue;
-  setValue: (value: OptionValue) => void;
+  elseValue: OptionValue;
+  hasDelete: boolean;
+  hasNext: boolean;
+  onConfirm: () => void;
+  onChange: (pair: unknown[]) => void;
+  onCancel: () => void;
+  onClear: () => void;
 };
 
 const RadioSubPage = ({
@@ -61,9 +59,8 @@ const RadioSubPage = ({
   footer,
   hasDelete,
   hasNext,
-  onElseChange,
+  onChange,
   onConfirm,
-  setValue,
   onClear,
   onCancel,
 }: RadioSubPageProps): React.ReactElement => {
@@ -81,27 +78,16 @@ const RadioSubPage = ({
           <OptionPill selected>{optionValue}</OptionPill>
         </div>
         <div className={styles.radioTitle}>{title}</div>
-        {elseOptionValue ? (
-          <BlockSelectElseRadio
-            dataKey={dataKey}
-            required
-            value={[value, elseValue]}
-            onChange={onElseChange}
-            onConfirm={onConfirm}
-            options={options}
-            elseOptionValue={elseOptionValue}
-            elseOptions={elseOptions}
-          />
-        ) : (
-          <BlockSelect
-            dataKey={dataKey}
-            required
-            value={value}
-            onChange={setValue}
-            onConfirm={onConfirm}
-            options={options}
-          />
-        )}
+        <BlockSelectElseRadio
+          dataKey={dataKey}
+          required
+          value={[value, elseValue]}
+          onChange={onChange}
+          onConfirm={onConfirm}
+          options={options}
+          elseOptionValue={elseOptionValue}
+          elseOptions={elseOptions}
+        />
       </div>
       {footer && <div className={styles.radioFooter}>{footer}</div>}
       <div className={cn(formStyles.navigationBar, styles.ctaButtons)}>

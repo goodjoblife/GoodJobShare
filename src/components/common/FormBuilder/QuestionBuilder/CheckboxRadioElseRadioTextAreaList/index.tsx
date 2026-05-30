@@ -8,8 +8,8 @@ import ActiveItem from './ActiveItem';
 export type RadioElseRadioOption = Extract<Option, object> & {
   radioTitle: string;
   radioOptions: Option[];
-  radioElseOptionValue?: OptionValue;
-  radioElseOptions?: Option[];
+  radioElseOptionValue: OptionValue;
+  radioElseOptions: Option[];
   radioFooter?: React.ReactNode;
   textTitle: string;
   textRequired?: boolean;

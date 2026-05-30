@@ -100,9 +100,8 @@ const ActiveItem = ({
           footer={radioFooter}
           hasDelete={isEditing}
           hasNext={hasText(currentItem)}
-          onElseChange={handleRadioElseChange}
+          onChange={handleRadioElseChange}
           onConfirm={handleConfirmRadio}
-          setValue={setOptionValue}
           onClear={onClear}
           onCancel={onCancel}
         />
