@@ -6,6 +6,7 @@ import BlockSelect from '../Checkbox/private/BlockSelect';
 import BlockSelectElseRadio from '../Checkbox/private/BlockSelectElseRadio';
 import Option from './Option';
 import styles from './styles.module.css';
+import commonStyles from '../styles.module.css';
 import formStyles from '../../FormBuilder.module.css';
 
 type NavButtonProps = {
@@ -55,7 +56,10 @@ const RadioSubPage = ({
   onCancel,
 }: RadioSubPageProps): React.ReactElement => (
   <div className={styles.root}>
-    <div className={styles.radioArea} ref={radioAreaRef}>
+    <div
+      className={cn(styles.radioArea, commonStyles.warnableContainer)}
+      ref={radioAreaRef}
+    >
       <div className={styles.optionCell}>
         <Option selected>{optionValue}</Option>
       </div>
