@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import cn from 'classnames';
-import { OptionValue } from '../Checkbox';
-import Option from './Option';
+import { Option } from '../Checkbox';
+import OptionPill from './OptionPill';
 import styles from './styles.module.css';
 import commonStyles from '../styles.module.css';
 import Scrollable from 'common/FormBuilder/Scrollable';
@@ -45,7 +45,7 @@ type Props = {
   elseOptionIndex?: number;
   lastSelectedOptionIndex?: number;
   onSelectOptionIndex: (index: number) => void;
-  options: Array<{ label: React.ReactNode; value: OptionValue }>;
+  options: Option[];
   selectedOptionIndices: number[];
   warning?: string;
 };
@@ -83,7 +83,7 @@ const Options = ({
                 className={cn(styles.cell, { [styles.hidden]: shouldHide })}
                 style={{ transitionDuration: `${transitionDuration}s` }}
               >
-                <Option
+                <OptionPill
                   onClick={(): void => setSelectedOptionIndex(index)}
                   selected={
                     selectedOptionIndices.includes(index) ||
@@ -92,7 +92,7 @@ const Options = ({
                   isElse={index === elseOptionIndex}
                 >
                   {label}
-                </Option>
+                </OptionPill>
               </div>
             );
           },

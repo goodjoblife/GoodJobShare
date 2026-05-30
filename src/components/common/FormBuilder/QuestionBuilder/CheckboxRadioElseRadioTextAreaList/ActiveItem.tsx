@@ -26,7 +26,7 @@ const ActiveItem = ({
     radioTitle,
     radioOptions: rawRadioOptions,
     radioElseOptionValue,
-    radioElseOptions: rawElseOptions,
+    radioElseOptions: rawRadioElseOptions,
     radioFooter,
     textTitle: rawTextTitle,
     textRequired,
@@ -38,7 +38,9 @@ const ActiveItem = ({
   onCancel,
 }: Props): React.ReactElement => {
   const radioOptions = normalizeOptions(rawRadioOptions);
-  const elseOptions = rawElseOptions ? normalizeOptions(rawElseOptions) : [];
+  const radioElseOptions = rawRadioElseOptions
+    ? normalizeOptions(rawRadioElseOptions)
+    : [];
   const textTitle = textRequired ? rawTextTitle : `${rawTextTitle}（選填）`;
 
   const [
@@ -92,7 +94,7 @@ const ActiveItem = ({
           title={radioTitle}
           options={radioOptions}
           elseOptionValue={radioElseOptionValue}
-          elseOptions={elseOptions}
+          elseOptions={radioElseOptions}
           value={radioValue}
           elseValue={elseOptionValue}
           footer={radioFooter}

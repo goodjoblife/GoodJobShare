@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { usePrevious } from 'react-use';
 
 import { Option, OptionValue } from '../Checkbox';
-import Options from './Options';
+import OptionPills from './OptionPills';
 import ActiveItem from './ActiveItem';
 
 export type RadioElseRadioOption = Extract<Option, object> & {
@@ -91,7 +91,7 @@ const CheckboxRadioElseRadioTextAreaList = ({
     .filter((index): index is number => index !== null);
 
   return (
-    <Options
+    <OptionPills
       options={options}
       selectedOptionIndices={selectedOptionIndices}
       onSelectOptionIndex={handleSelectOptionIndex}

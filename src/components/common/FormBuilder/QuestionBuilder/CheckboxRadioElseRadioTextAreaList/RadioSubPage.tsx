@@ -4,15 +4,15 @@ import cn from 'classnames';
 import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
 import BlockSelect from '../Checkbox/private/BlockSelect';
 import BlockSelectElseRadio from '../Checkbox/private/BlockSelectElseRadio';
-import Option from './Option';
+import OptionPill from './OptionPill';
 import styles from './styles.module.css';
-import { OptionValue } from '../Checkbox';
+import { Option, OptionValue } from '../Checkbox';
 import commonStyles from '../styles.module.css';
 import formStyles from '../../FormBuilder.module.css';
 
 const useRefToScrollToElseOptions = (
   radioValue: OptionValue,
-  elseOptionValue: string | number | undefined,
+  elseOptionValue?: OptionValue,
 ): React.RefObject<HTMLDivElement | null> => {
   const ref = useRef<HTMLDivElement>(null);
   const prevOptionValue = useRef<OptionValue>(radioValue);
@@ -32,8 +32,8 @@ const useRefToScrollToElseOptions = (
 
 export type RadioSubPageProps = {
   dataKey: string;
-  elseOptions: unknown[];
-  elseOptionValue?: string | number;
+  elseOptions: Option[];
+  elseOptionValue?: OptionValue;
   elseValue: OptionValue;
   hasNext: boolean;
   handleConfirm: () => void;
@@ -41,9 +41,9 @@ export type RadioSubPageProps = {
   canDelete: boolean;
   onCancel: () => void;
   onClear: () => void;
-  optionValue: string | number;
+  optionValue: OptionValue;
   footer?: React.ReactNode;
-  options: unknown[];
+  options: Option[];
   title: string;
   value: OptionValue;
   setValue: (value: OptionValue) => void;
@@ -78,7 +78,7 @@ const RadioSubPage = ({
         ref={radioAreaRef}
       >
         <div className={styles.optionCell}>
-          <Option selected>{optionValue}</Option>
+          <OptionPill selected>{optionValue}</OptionPill>
         </div>
         <div className={styles.radioTitle}>{title}</div>
         {elseOptionValue ? (
