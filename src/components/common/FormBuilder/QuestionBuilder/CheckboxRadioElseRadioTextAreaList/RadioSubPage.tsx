@@ -30,43 +30,42 @@ export type RadioSubPageProps = {
   dataKey: string;
   elseOptions: unknown[];
   elseOptionValue?: string | number;
-  elseRadioValue: RadioValue;
-  goesToText: boolean;
+  elseValue: RadioValue;
+  hasNext: boolean;
   handleConfirm: () => void;
-  handleRadioElseChange: (pair: unknown[]) => void;
-  isEditing: boolean;
+  handleElseChange: (pair: unknown[]) => void;
+  canDelete: boolean;
   onCancel: () => void;
   onClear: () => void;
   optionValue: string | number;
-  radioFooter?: React.ReactNode;
-  radioOptions: unknown[];
-  radioTitle: string;
-  radioValue: RadioValue;
-  setRadioValue: (value: RadioValue) => void;
+  footer?: React.ReactNode;
+  options: unknown[];
+  title: string;
+  value: RadioValue;
+  setValue: (value: RadioValue) => void;
 };
 
 const RadioSubPage = ({
   dataKey,
   optionValue,
-  radioTitle,
-  radioOptions,
+  title,
+  options,
   elseOptionValue,
   elseOptions,
-  radioValue,
-  elseRadioValue,
-  radioFooter,
-  isEditing,
-  goesToText,
-  handleRadioElseChange,
+  value,
+  elseValue,
+  footer,
+  canDelete,
+  hasNext,
+  handleElseChange,
   handleConfirm,
-  setRadioValue,
+  setValue,
   onClear,
   onCancel,
 }: RadioSubPageProps): React.ReactElement => {
-  const radioAreaRef = useRefToScrollToElseOptions(radioValue, elseOptionValue);
+  const radioAreaRef = useRefToScrollToElseOptions(value, elseOptionValue);
   const canProceed =
-    radioValue !== null &&
-    (radioValue !== elseOptionValue || elseRadioValue !== null);
+    value !== null && (value !== elseOptionValue || elseValue !== null);
 
   return (
     <div className={styles.root}>
@@ -77,15 +76,15 @@ const RadioSubPage = ({
         <div className={styles.optionCell}>
           <Option selected>{optionValue}</Option>
         </div>
-        <div className={styles.radioTitle}>{radioTitle}</div>
+        <div className={styles.radioTitle}>{title}</div>
         {elseOptionValue ? (
           <BlockSelectElseRadio
             dataKey={dataKey}
             required
-            value={[radioValue, elseRadioValue]}
-            onChange={handleRadioElseChange}
+            value={[value, elseValue]}
+            onChange={handleElseChange}
             onConfirm={handleConfirm}
-            options={radioOptions}
+            options={options}
             elseOptionValue={elseOptionValue}
             elseOptions={elseOptions}
           />
@@ -93,17 +92,17 @@ const RadioSubPage = ({
           <BlockSelect
             dataKey={dataKey}
             required
-            value={radioValue}
-            onChange={setRadioValue}
+            value={value}
+            onChange={setValue}
             onConfirm={handleConfirm}
-            options={radioOptions}
+            options={options}
           />
         )}
       </div>
-      {radioFooter && <div className={styles.radioFooter}>{radioFooter}</div>}
+      {footer && <div className={styles.radioFooter}>{footer}</div>}
       <div className={cn(formStyles.navigationBar, styles.ctaButtons)}>
         <NavigatorButton
-          style={{ visibility: isEditing ? 'visible' : 'hidden' }}
+          style={{ visibility: canDelete ? 'visible' : 'hidden' }}
           onClick={onClear}
         >
           清除
@@ -113,7 +112,7 @@ const RadioSubPage = ({
           style={{ visibility: canProceed ? 'visible' : 'hidden' }}
           onClick={handleConfirm}
         >
-          {goesToText ? '繼續' : '儲存'}
+          {hasNext ? '繼續' : '儲存'}
         </NavigatorButton>
       </div>
     </div>

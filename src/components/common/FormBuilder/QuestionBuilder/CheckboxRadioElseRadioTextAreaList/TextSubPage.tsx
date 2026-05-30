@@ -9,29 +9,29 @@ export type TextSubPageProps = {
   onBack: () => void;
   onCancel: () => void;
   onSave: () => void;
-  onTextChange: (value: string) => void;
-  textPlaceholder?: string;
-  textTitle: string;
-  textValue: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  title: string;
+  value: string;
 };
 
 const TextSubPage = ({
-  textTitle,
-  textValue,
-  onTextChange,
-  textPlaceholder,
+  title,
+  value,
+  onChange,
+  placeholder,
   onBack,
   onCancel,
   onSave,
 }: TextSubPageProps): React.ReactElement => (
   <div className={styles.root}>
-    <div className={styles.textTitle}>{textTitle}</div>
+    <div className={styles.textTitle}>{title}</div>
     <div className={styles.textAreaContainer}>
       <textarea
         className={styles.textarea}
-        value={textValue}
-        onChange={(e): void => onTextChange(e.target.value)}
-        placeholder={textPlaceholder}
+        value={value}
+        onChange={(e): void => onChange(e.target.value)}
+        placeholder={placeholder}
       />
     </div>
     <div className={cn(formStyles.navigationBar, styles.ctaButtons)}>
