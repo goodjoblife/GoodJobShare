@@ -76,8 +76,6 @@ const ActiveItem = ({
 
   const isEditing = !!defaultValue;
   const currentItem = [optionValue, radioValue, elseRadioValue, textValue];
-  const currentItemRef = useRef(currentItem);
-  currentItemRef.current = currentItem;
 
   const radioAreaRef = useRefToScrollToElseOptions(radioValue, elseOptionValue);
 
@@ -87,13 +85,13 @@ const ActiveItem = ({
   }, []);
 
   const handleConfirm = useCallback(() => {
-    const item = currentItemRef.current;
+    const item = [optionValue, radioValue, elseRadioValue, textValue];
     if (hasText(item)) {
       setSubPage(SubPage.Text);
     } else {
       onChange(item);
     }
-  }, [hasText, onChange]);
+  }, [hasText, onChange, optionValue, radioValue, elseRadioValue, textValue]);
 
   const onBack = useCallback(() => setSubPage(SubPage.Radio), []);
   const onClear = useCallback(() => onChange(null), [onChange]);
