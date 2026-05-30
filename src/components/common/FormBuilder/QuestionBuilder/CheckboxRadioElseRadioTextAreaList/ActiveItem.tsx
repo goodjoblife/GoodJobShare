@@ -5,6 +5,22 @@ import { RadioElseRadioOption } from './index';
 import TextSubPage from './TextSubPage';
 import RadioSubPage from './RadioSubPage';
 
+const useRefToScrollToElseOptions = (
+  radioValue: string | number | null,
+  elseOptionValue: string | number | undefined,
+): React.RefObject<HTMLDivElement | null> => {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (radioValue === elseOptionValue && ref.current) {
+      ref.current.scrollTo({
+        top: ref.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [radioValue, elseOptionValue]);
+  return ref;
+};
+
 enum SubPage {
   Radio = 'radio',
   Text = 'text',
@@ -63,15 +79,7 @@ const ActiveItem = ({
   const currentItemRef = useRef(currentItem);
   currentItemRef.current = currentItem;
 
-  const radioAreaRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (radioValue === elseOptionValue && radioAreaRef.current) {
-      radioAreaRef.current.scrollTo({
-        top: radioAreaRef.current.scrollHeight,
-        behavior: 'smooth',
-      });
-    }
-  }, [radioValue, elseOptionValue]);
+  const radioAreaRef = useRefToScrollToElseOptions(radioValue, elseOptionValue);
 
   const handleRadioElseChange = useCallback((pair: unknown[]): void => {
     setRadioValue(pair[0] as string | number | null);
