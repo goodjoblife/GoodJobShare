@@ -1,15 +1,9 @@
 import React from 'react';
 import cn from 'classnames';
 
-import { NavigatorButton as NavigatorButtonImpl } from 'common/FormBuilder/NavigatorBlock';
+import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
 import styles from './styles.module.css';
 import formStyles from '../../FormBuilder.module.css';
-
-type NavButtonProps = {
-  children?: React.ReactNode;
-  onClick?: () => void;
-};
-const NavigatorButton = NavigatorButtonImpl as React.FC<NavButtonProps>;
 
 export type TextSubPageProps = {
   onBack: () => void;
