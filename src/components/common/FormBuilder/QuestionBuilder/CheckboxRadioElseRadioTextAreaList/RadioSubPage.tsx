@@ -6,26 +6,26 @@ import BlockSelect from '../Checkbox/private/BlockSelect';
 import BlockSelectElseRadio from '../Checkbox/private/BlockSelectElseRadio';
 import Option from './Option';
 import styles from './styles.module.css';
-import { RadioValue } from '../Checkbox/types';
+import { OptionValue } from '../Checkbox/types';
 import commonStyles from '../styles.module.css';
 import formStyles from '../../FormBuilder.module.css';
 
 const useRefToScrollToElseOptions = (
-  radioValue: RadioValue,
+  radioValue: OptionValue,
   elseOptionValue: string | number | undefined,
 ): React.RefObject<HTMLDivElement | null> => {
   const ref = useRef<HTMLDivElement>(null);
-  const prevRadioValue = useRef<RadioValue>(radioValue);
+  const prevOptionValue = useRef<OptionValue>(radioValue);
 
   useEffect(() => {
     if (radioValue === elseOptionValue && ref.current) {
       ref.current.scrollTo({
         top: ref.current.scrollHeight,
         behavior:
-          prevRadioValue.current === elseOptionValue ? 'instant' : 'smooth',
+          prevOptionValue.current === elseOptionValue ? 'instant' : 'smooth',
       });
     }
-    prevRadioValue.current = radioValue;
+    prevOptionValue.current = radioValue;
   }, [radioValue, elseOptionValue]);
   return ref;
 };
@@ -34,7 +34,7 @@ export type RadioSubPageProps = {
   dataKey: string;
   elseOptions: unknown[];
   elseOptionValue?: string | number;
-  elseValue: RadioValue;
+  elseValue: OptionValue;
   hasNext: boolean;
   handleConfirm: () => void;
   handleElseChange: (pair: unknown[]) => void;
@@ -45,8 +45,8 @@ export type RadioSubPageProps = {
   footer?: React.ReactNode;
   options: unknown[];
   title: string;
-  value: RadioValue;
-  setValue: (value: RadioValue) => void;
+  value: OptionValue;
+  setValue: (value: OptionValue) => void;
 };
 
 const RadioSubPage = ({

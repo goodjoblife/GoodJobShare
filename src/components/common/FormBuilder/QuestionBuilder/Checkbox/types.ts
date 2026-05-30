@@ -1,1 +1,1 @@
-export type RadioValue = string | number | null;
+export type OptionValue = string | number | null;

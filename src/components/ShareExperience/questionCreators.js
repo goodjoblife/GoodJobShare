@@ -577,8 +577,8 @@ export const createPoliciesQuestion = () => ({
       value: '生理假',
       radioTitle: '自己或同事是否請得到生理假？',
       radioOptions: ['是', '否', '不知道'],
-      elseOptionValue: '是',
-      elseOptions: [
+      radioElseOptionValue: '是',
+      radioElseOptions: [
         '有，優於性別平等工作法',
         '有，符合性別平等工作法',
         '有，不符合性別平等工作法',
@@ -599,8 +599,8 @@ export const createPoliciesQuestion = () => ({
       value: '育嬰假',
       radioTitle: '自己或同事是否請得到育嬰假？',
       radioOptions: ['是', '否', '不知道'],
-      elseOptionValue: '是',
-      elseOptions: [
+      radioElseOptionValue: '是',
+      radioElseOptions: [
         '有，優於性別平等工作法',
         '有，符合性別平等工作法',
         '有，不符合性別平等工作法',
@@ -623,8 +623,8 @@ export const createPoliciesQuestion = () => ({
       value: '家庭照顧假',
       radioTitle: '自己或同事是否請得到家庭照顧假？',
       radioOptions: ['是', '否', '不知道'],
-      elseOptionValue: '是',
-      elseOptions: [
+      radioElseOptionValue: '是',
+      radioElseOptions: [
         '有，優於性別平等工作法',
         '有，符合性別平等工作法',
         '有，不符合性別平等工作法',
@@ -656,8 +656,14 @@ export const createPoliciesQuestion = () => ({
       value: '遠端工作',
       radioTitle: '是否可以遠端工作？',
       radioOptions: ['是', '否', '不知道'],
-      elseOptionValue: '是',
-      elseOptions: ['每週一天', '每週兩天', '每週三天', '每週四天', '不限天數'],
+      radioElseOptionValue: '是',
+      radioElseOptions: [
+        '每週一天',
+        '每週兩天',
+        '每週三天',
+        '每週四天',
+        '不限天數',
+      ],
       textTitle: '請分享遠端工作的實際狀況',
       textPlaceholder:
         '一週可以遠端工作幾天？需要先申請或報備嗎？若公司以遠端工作為主，是否有額外的方式讓團隊成員更加認識彼此？',

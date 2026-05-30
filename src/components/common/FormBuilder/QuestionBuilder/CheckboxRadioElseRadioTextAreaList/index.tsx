@@ -14,8 +14,8 @@ export type RadioElseRadioOption = {
   value: string | number;
   radioTitle: string;
   radioOptions: OptionShape[];
-  elseOptionValue?: string | number;
-  elseOptions?: OptionShape[];
+  radioElseOptionValue?: string | number;
+  radioElseOptions?: OptionShape[];
   radioFooter?: React.ReactNode;
   textTitle: string;
   textRequired?: boolean;

@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 
 import { normalizeOptions } from '../utils';
 import { RadioElseRadioOption } from './index';
-import { RadioValue } from '../Checkbox/types';
+import { OptionValue } from '../Checkbox/types';
 import TextSubPage from './TextSubPage';
 import RadioSubPage from './RadioSubPage';
 
@@ -25,8 +25,8 @@ const ActiveItem = ({
     value: optionValue,
     radioTitle,
     radioOptions: rawRadioOptions,
-    elseOptionValue,
-    elseOptions: rawElseOptions,
+    radioElseOptionValue,
+    radioElseOptions: rawElseOptions,
     radioFooter,
     textTitle: rawTextTitle,
     textRequired,
@@ -43,44 +43,44 @@ const ActiveItem = ({
 
   const [
     ,
-    defaultRadioValue,
-    defaultElseRadioValue,
+    defaultOptionValue,
+    defaultElseOptionValue,
     defaultTextValue,
   ] = defaultValue || [optionValue, null, null, ''];
 
   const [subPage, setSubPage] = useState(SubPage.Radio);
-  const [radioValue, setRadioValue] = useState<RadioValue>(
-    defaultRadioValue as RadioValue,
+  const [radioValue, setOptionValue] = useState<OptionValue>(
+    defaultOptionValue as OptionValue,
   );
-  const [elseRadioValue, setElseRadioValue] = useState<RadioValue>(
-    defaultElseRadioValue as RadioValue,
+  const [elseOptionValue, setElseOptionValue] = useState<OptionValue>(
+    defaultElseOptionValue as OptionValue,
   );
   const [textValue, setTextValue] = useState<string>(
     (defaultTextValue as string) || '',
   );
 
   const isEditing = !!defaultValue;
-  const currentItem = [optionValue, radioValue, elseRadioValue, textValue];
+  const currentItem = [optionValue, radioValue, elseOptionValue, textValue];
 
   const handleRadioElseChange = useCallback((pair: unknown[]): void => {
-    setRadioValue(pair[0] as RadioValue);
-    setElseRadioValue(pair[1] as RadioValue);
+    setOptionValue(pair[0] as OptionValue);
+    setElseOptionValue(pair[1] as OptionValue);
   }, []);
 
   const handleConfirmRadio = useCallback(() => {
-    const item = [optionValue, radioValue, elseRadioValue, textValue];
+    const item = [optionValue, radioValue, elseOptionValue, textValue];
     if (hasText(item)) {
       setSubPage(SubPage.Text);
     } else {
       onChange(item);
     }
-  }, [hasText, onChange, optionValue, radioValue, elseRadioValue, textValue]);
+  }, [hasText, onChange, optionValue, radioValue, elseOptionValue, textValue]);
 
   const onBackToRadio = useCallback(() => setSubPage(SubPage.Radio), []);
   const onClear = useCallback(() => onChange(null), [onChange]);
   const onSave = useCallback(
-    () => onChange([optionValue, radioValue, elseRadioValue, textValue]),
-    [onChange, optionValue, radioValue, elseRadioValue, textValue],
+    () => onChange([optionValue, radioValue, elseOptionValue, textValue]),
+    [onChange, optionValue, radioValue, elseOptionValue, textValue],
   );
 
   switch (subPage) {
@@ -91,16 +91,16 @@ const ActiveItem = ({
           optionValue={optionValue}
           title={radioTitle}
           options={radioOptions}
-          elseOptionValue={elseOptionValue}
+          elseOptionValue={radioElseOptionValue}
           elseOptions={elseOptions}
           value={radioValue}
-          elseValue={elseRadioValue}
+          elseValue={elseOptionValue}
           footer={radioFooter}
           canDelete={isEditing}
           hasNext={hasText(currentItem)}
           handleElseChange={handleRadioElseChange}
           handleConfirm={handleConfirmRadio}
-          setValue={setRadioValue}
+          setValue={setOptionValue}
           onClear={onClear}
           onCancel={onCancel}
         />
