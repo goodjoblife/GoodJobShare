@@ -63,6 +63,7 @@ const ActiveItem = ({
 
   const isEditing = !!defaultValue;
   const currentItem = [optionValue, radioValue, elseOptionValue, textValue];
+  const hasNext = hasText(currentItem);
 
   const handleRadioElseChange = useCallback((pair: unknown[]): void => {
     setOptionValue(pair[0] as OptionValue);
@@ -70,13 +71,12 @@ const ActiveItem = ({
   }, []);
 
   const handleConfirmRadio = useCallback(() => {
-    const item = [optionValue, radioValue, elseOptionValue, textValue];
-    if (hasText(item)) {
+    if (hasNext) {
       setSubPage(SubPage.Text);
     } else {
-      onChange(item);
+      onChange(currentItem);
     }
-  }, [hasText, onChange, optionValue, radioValue, elseOptionValue, textValue]);
+  }, [onChange, hasNext, currentItem]);
 
   const onBackToRadio = useCallback(() => setSubPage(SubPage.Radio), []);
   const onClear = useCallback(() => onChange(null), [onChange]);
@@ -99,7 +99,7 @@ const ActiveItem = ({
           elseValue={elseOptionValue}
           footer={radioFooter}
           hasClear={isEditing}
-          hasNext={hasText(currentItem)}
+          hasNext={hasNext}
           onChange={handleRadioElseChange}
           onConfirm={handleConfirmRadio}
           onClear={onClear}
