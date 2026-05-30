@@ -136,7 +136,6 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
   const dispatch = useDispatch();
   const onSubmit = useCallback(
     async draft => {
-      /* eslint-disable @typescript-eslint/camelcase */
       const ga_user_pseudo_id = await getUserPseudoId(GA_MEASUREMENT_ID);
       const extra = {
         form_type: hideProgressBar
@@ -144,7 +143,6 @@ const TypeForm = ({ open, onClose, hideProgressBar = false }) => {
           : GA_CATEGORY.SHARE_TIME_SALARY_TYPE_FORM,
         ga_user_pseudo_id,
       };
-      /* eslint-enable @typescript-eslint/camelcase */
       const body = {
         ...transferKeyToSnakecase(bodyFromDraft(draft)),
         extra,
