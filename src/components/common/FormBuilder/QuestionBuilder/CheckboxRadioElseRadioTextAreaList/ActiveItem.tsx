@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { normalizeOptions } from '../utils';
 import { RadioElseRadioOption } from './index';
+import { RadioValue } from './types';
 import TextSubPage from './TextSubPage';
 import RadioSubPage from './RadioSubPage';
 
 const useRefToScrollToElseOptions = (
-  radioValue: string | number | null,
+  radioValue: RadioValue,
   elseOptionValue: string | number | undefined,
 ): React.RefObject<HTMLDivElement | null> => {
   const ref = useRef<HTMLDivElement>(null);
@@ -64,11 +65,11 @@ const ActiveItem = ({
   ] = defaultValue || [optionValue, null, null, ''];
 
   const [subPage, setSubPage] = useState(SubPage.Radio);
-  const [radioValue, setRadioValue] = useState<string | number | null>(
-    defaultRadioValue as string | number | null,
+  const [radioValue, setRadioValue] = useState<RadioValue>(
+    defaultRadioValue as RadioValue,
   );
-  const [elseRadioValue, setElseRadioValue] = useState<string | number | null>(
-    defaultElseRadioValue as string | number | null,
+  const [elseRadioValue, setElseRadioValue] = useState<RadioValue>(
+    defaultElseRadioValue as RadioValue,
   );
   const [textValue, setTextValue] = useState<string>(
     (defaultTextValue as string) || '',
@@ -80,8 +81,8 @@ const ActiveItem = ({
   const radioAreaRef = useRefToScrollToElseOptions(radioValue, elseOptionValue);
 
   const handleRadioElseChange = useCallback((pair: unknown[]): void => {
-    setRadioValue(pair[0] as string | number | null);
-    setElseRadioValue(pair[1] as string | number | null);
+    setRadioValue(pair[0] as RadioValue);
+    setElseRadioValue(pair[1] as RadioValue);
   }, []);
 
   const handleConfirm = useCallback(() => {

@@ -6,6 +6,7 @@ import BlockSelect from '../Checkbox/private/BlockSelect';
 import BlockSelectElseRadio from '../Checkbox/private/BlockSelectElseRadio';
 import Option from './Option';
 import styles from './styles.module.css';
+import { RadioValue } from './types';
 import commonStyles from '../styles.module.css';
 import formStyles from '../../FormBuilder.module.css';
 
@@ -20,7 +21,7 @@ export type RadioSubPageProps = {
   dataKey: string;
   elseOptions: unknown[];
   elseOptionValue?: string | number;
-  elseRadioValue: string | number | null;
+  elseRadioValue: RadioValue;
   goesToText: boolean;
   handleConfirm: () => void;
   handleRadioElseChange: (pair: unknown[]) => void;
@@ -32,8 +33,8 @@ export type RadioSubPageProps = {
   radioFooter?: React.ReactNode;
   radioOptions: unknown[];
   radioTitle: string;
-  radioValue: string | number | null;
-  setRadioValue: (value: string | number | null) => void;
+  radioValue: RadioValue;
+  setRadioValue: (value: RadioValue) => void;
 };
 
 const RadioSubPage = ({
