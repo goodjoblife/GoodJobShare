@@ -4,7 +4,7 @@ import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import PageBoxRenderer from '../PageBoxRenderer';
 import InterviewExperiencesSection from './InterviewExperiences';
 import InterviewExperienceHelmet from './Helmet';
-import Searchbar from '../Searchbar';
+import SearchBar from '../SearchBar';
 import Sorter from '../Sorter';
 import styles from '../styles.module.css';
 import { Wrapper } from 'common/base';
@@ -29,7 +29,7 @@ const InterviewExperiences = ({
     >
       <Wrapper ref={handleSectionRef} size="m">
         <div className={styles.interactive}>
-          <Searchbar pageType={pageType} tabType={tabType} />
+          <SearchBar pageType={pageType} tabType={tabType} />
           <Sorter />
         </div>
       </Wrapper>
