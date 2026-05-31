@@ -1,32 +1,14 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import cn from 'classnames';
-import { useHistory } from 'react-router-dom';
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
-import { useQuery } from 'hooks/routing';
+import useSearchQuery from './useSearchQuery';
 import styles from './SearchBar.module.css';
-import { queryFromQuerySelector } from 'selectors/routing';
 
 const SearchBar = () => {
-  const history = useHistory();
-  const query = useQuery();
-  const [searchText, setSearchText] = useState(queryFromQuerySelector(query));
+  const [searchText, setSearchText, gotoSearchResult] = useSearchQuery();
 
-  const gotoSearchResult = useCallback(
-    searchText => {
-      history.push(`/search?q=${encodeURIComponent(searchText)}`);
-    },
-    [history],
-  );
-
-  const handleAutocompleteItemSelected = useCallback(
-    e => {
-      gotoSearchResult(e);
-    },
-    [gotoSearchResult],
-  );
-
-  const handleFormSubmit = useCallback(
+  const handleSubmit = useCallback(
     e => {
       e.preventDefault();
       gotoSearchResult(searchText);
@@ -37,7 +19,7 @@ const SearchBar = () => {
   return (
     <form
       className={cn(styles.section, styles.searchbar)}
-      onSubmit={handleFormSubmit}
+      onSubmit={handleSubmit}
     >
       <SearchTextInput
         wrapperClassName={styles.textInputWrapper}
@@ -45,7 +27,7 @@ const SearchBar = () => {
         value={searchText}
         onChange={setSearchText}
         placeholder="搜全站薪水/面試/評價"
-        onSelected={handleAutocompleteItemSelected}
+        onSelected={gotoSearchResult}
       />
       <button type="submit" className={styles.searchBtn}>
         <Magnifiner />
