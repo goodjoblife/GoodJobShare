@@ -87,7 +87,7 @@
     "express": "^4.20.0",
     "history": "^4.7.2",
     "isomorphic-fetch": "^2.2.1",
-    "marked": "^0.3.6",
+    "marked": "^18.0.0",
     "path": "^0.12.7",
     "prop-types": "^15.6.0",
     "qs": "^6.15.2",
