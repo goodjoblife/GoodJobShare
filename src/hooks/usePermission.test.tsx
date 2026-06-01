@@ -18,12 +18,6 @@ const wrapper: React.FC<React.PropsWithChildren> = ({ children }) => (
   <PermissionContextProvider>{children}</PermissionContextProvider>
 );
 
-type UsePermissionReturn = [
-  boolean,
-  () => Promise<void>,
-  (publishId: string) => boolean,
-];
-
 describe('usePermission', () => {
   beforeEach(() => {
     localStorage.clear();
@@ -35,15 +29,10 @@ describe('usePermission', () => {
       mockQueryHasSearchPermissionApi.mockResolvedValue(false);
 
       const { result } = renderHook(() => usePermission(), { wrapper });
-      const [, fetchPermission] = result.current as UsePermissionReturn;
-      await act(() => fetchPermission());
+      await act(() => result.current[1]());
 
       expect(localStorage.getItem('visitedWebsite')).toBe('true');
-      const [
-        permissionFetched,
-        ,
-        canViewPublishId,
-      ] = result.current as UsePermissionReturn;
+      const [permissionFetched, , canViewPublishId] = result.current;
       expect(permissionFetched).toBe(true);
       expect(canViewPublishId('any-id')).toBe(true);
     });
@@ -53,14 +42,9 @@ describe('usePermission', () => {
       mockQueryHasSearchPermissionApi.mockResolvedValue(true);
 
       const { result } = renderHook(() => usePermission(), { wrapper });
-      const [, fetchPermission] = result.current as UsePermissionReturn;
-      await act(() => fetchPermission());
+      await act(() => result.current[1]());
 
-      const [
-        permissionFetched,
-        ,
-        canViewPublishId,
-      ] = result.current as UsePermissionReturn;
+      const [permissionFetched, , canViewPublishId] = result.current;
       expect(permissionFetched).toBe(true);
       expect(canViewPublishId('any-id')).toBe(true);
     });
@@ -70,14 +54,9 @@ describe('usePermission', () => {
       mockQueryHasSearchPermissionApi.mockResolvedValue(false);
 
       const { result } = renderHook(() => usePermission(), { wrapper });
-      const [, fetchPermission] = result.current as UsePermissionReturn;
-      await act(() => fetchPermission());
+      await act(() => result.current[1]());
 
-      const [
-        permissionFetched,
-        ,
-        canViewPublishId,
-      ] = result.current as UsePermissionReturn;
+      const [permissionFetched, , canViewPublishId] = result.current;
       expect(permissionFetched).toBe(true);
       expect(canViewPublishId('any-id')).toBe(false);
     });
@@ -90,10 +69,9 @@ describe('usePermission', () => {
       mockUseIsMyPublishId.mockReturnValue((id: string) => id === 'my-id');
 
       const { result } = renderHook(() => usePermission(), { wrapper });
-      const [, fetchPermission] = result.current as UsePermissionReturn;
-      await act(() => fetchPermission());
+      await act(() => result.current[1]());
 
-      const [, , canViewPublishId] = result.current as UsePermissionReturn;
+      const [, , canViewPublishId] = result.current;
       expect(canViewPublishId('my-id')).toBe(true);
       expect(canViewPublishId('other-id')).toBe(false);
     });
