@@ -1,35 +1,19 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { useHistory } from 'react-router-dom';
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
-import { queryFromQuerySelector } from 'selectors/routing';
-import { useQuery } from 'hooks/routing';
-import styles from './Searchbar.module.css';
+import { useSearchQuery } from 'common/SearchBar';
+import styles from './SearchBar.module.css';
 
-const Searchbar = ({ className, placeholder, inputRef }) => {
-  const history = useHistory();
-  const query = useQuery();
-  const [searchText, setSearchText] = useState(queryFromQuerySelector(query));
+const SearchBar = ({ className, placeholder, inputRef }) => {
+  const [searchText, setSearchText, gotoSearchResult] = useSearchQuery();
   const [isActive, setActive] = useState(false);
 
-  const handleFormFocus = useCallback(() => {
-    setActive(true);
-  }, [setActive]);
+  const handleFormFocus = useCallback(() => setActive(true), []);
+  const handleFormBlur = useCallback(() => setActive(false), []);
 
-  const handleFormBlur = useCallback(() => {
-    setActive(false);
-  }, [setActive]);
-
-  const gotoSearchResult = useCallback(
-    searchText => {
-      history.push(`/search?q=${encodeURIComponent(searchText)}`);
-    },
-    [history],
-  );
-
-  const handleFormSubmit = useCallback(
+  const handleSubmit = useCallback(
     e => {
       e.preventDefault();
       gotoSearchResult(searchText);
@@ -40,7 +24,7 @@ const Searchbar = ({ className, placeholder, inputRef }) => {
   return (
     <form
       className={cn(className, styles.searchbar, { [styles.active]: isActive })}
-      onSubmit={handleFormSubmit}
+      onSubmit={handleSubmit}
       onFocus={handleFormFocus}
       onBlur={handleFormBlur}
     >
@@ -59,7 +43,7 @@ const Searchbar = ({ className, placeholder, inputRef }) => {
   );
 };
 
-Searchbar.propTypes = {
+SearchBar.propTypes = {
   className: PropTypes.string.isRequired,
   inputRef: PropTypes.oneOfType([
     PropTypes.func,
@@ -68,4 +52,4 @@ Searchbar.propTypes = {
   placeholder: PropTypes.string,
 };
 
-export default Searchbar;
+export default SearchBar;

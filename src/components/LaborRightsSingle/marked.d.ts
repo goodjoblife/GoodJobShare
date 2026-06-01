@@ -1,4 +1,6 @@
 declare module 'marked' {
-  declare function marked(arg0: string): string;
-  export = marked;
+  export function marked(src: string): string;
+  export namespace marked {
+    function parse(src: string): string;
+  }
 }
