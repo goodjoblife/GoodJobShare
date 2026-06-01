@@ -25,7 +25,7 @@ describe('usePermission', () => {
   });
 
   describe('fetchPermission', () => {
-    it('第一次造訪時給予 canView = true，並寫入 localStorage', async () => {
+    it('sets canView = true and writes to localStorage on first visit', async () => {
       mockQueryHasSearchPermissionApi.mockResolvedValue(false);
 
       const { result } = renderHook(() => usePermission(), { wrapper });
@@ -37,7 +37,7 @@ describe('usePermission', () => {
       expect(canViewPublishId('any-id')).toBe(true);
     });
 
-    it('再次造訪時依 API 結果給予 canView = true', async () => {
+    it('sets canView = true based on API result on subsequent visits', async () => {
       localStorage.setItem('visitedWebsite', 'true');
       mockQueryHasSearchPermissionApi.mockResolvedValue(true);
 
@@ -49,7 +49,7 @@ describe('usePermission', () => {
       expect(canViewPublishId('any-id')).toBe(true);
     });
 
-    it('再次造訪時依 API 結果給予 canView = false', async () => {
+    it('sets canView = false based on API result on subsequent visits', async () => {
       localStorage.setItem('visitedWebsite', 'true');
       mockQueryHasSearchPermissionApi.mockResolvedValue(false);
 
@@ -63,7 +63,7 @@ describe('usePermission', () => {
   });
 
   describe('canViewPublishId', () => {
-    it('自己的 publishId 無論 canView 為何皆回傳 true', async () => {
+    it("returns true for the user's own publishId regardless of canView", async () => {
       localStorage.setItem('visitedWebsite', 'true');
       mockQueryHasSearchPermissionApi.mockResolvedValue(false);
       mockUseIsMyPublishId.mockReturnValue((id: string) => id === 'my-id');
