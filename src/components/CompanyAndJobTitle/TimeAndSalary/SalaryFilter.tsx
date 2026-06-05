@@ -15,7 +15,6 @@ import {
 } from 'constants/salaryFilter';
 import { GENDER_OPTIONS } from 'constants/gender';
 import {
-  TQueryParams,
   dataTimeFromQuerySelector,
   experienceFromQuerySelector,
   genderFromQuerySelector,
@@ -55,7 +54,7 @@ type TSalaryFilterSelectProps = {
 };
 
 type TQueryHookResult = readonly [
-  TQueryParams[string],
+  string | undefined,
   ReturnType<TUseUpdateQuery>,
 ];
 

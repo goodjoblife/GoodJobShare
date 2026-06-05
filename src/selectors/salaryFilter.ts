@@ -2,8 +2,6 @@ import { ParsedQs } from 'qs';
 
 import { SalaryFilterQueryKey } from 'constants/salaryFilter';
 
-export type TQueryParams = Record<string, string | undefined>;
-
 const stringFromQuery = (query: ParsedQs, key: string): string | undefined => {
   const val = query[key];
   return typeof val === 'string' ? val : undefined;
