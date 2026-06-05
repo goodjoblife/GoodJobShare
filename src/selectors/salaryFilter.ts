@@ -1,15 +1,25 @@
-import { prop } from 'ramda';
+import { ParsedQs } from 'qs';
 
 import { SalaryFilterQueryKey } from 'constants/salaryFilter';
 
 export type TQueryParams = Record<string, string | undefined>;
 
-export const dataTimeFromQuerySelector = prop(SalaryFilterQueryKey.DATA_TIME);
+const stringFromQuery = (query: ParsedQs, key: string): string | undefined => {
+  const val = query[key];
+  return typeof val === 'string' ? val : undefined;
+};
 
-export const experienceFromQuerySelector = prop(
-  SalaryFilterQueryKey.EXPERIENCE,
-);
+export const dataTimeFromQuerySelector = (
+  query: ParsedQs,
+): string | undefined => stringFromQuery(query, SalaryFilterQueryKey.DATA_TIME);
 
-export const genderFromQuerySelector = prop(SalaryFilterQueryKey.GENDER);
+export const experienceFromQuerySelector = (
+  query: ParsedQs,
+): string | undefined =>
+  stringFromQuery(query, SalaryFilterQueryKey.EXPERIENCE);
 
-export const sortByFromQuerySelector = prop(SalaryFilterQueryKey.SORT_BY);
+export const genderFromQuerySelector = (query: ParsedQs): string | undefined =>
+  stringFromQuery(query, SalaryFilterQueryKey.GENDER);
+
+export const sortByFromQuerySelector = (query: ParsedQs): string | undefined =>
+  stringFromQuery(query, SalaryFilterQueryKey.SORT_BY);
