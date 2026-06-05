@@ -5,7 +5,6 @@ import {
   getCompanyInterviewExperiencesQuery,
   queryCompaniesHavingDataGql,
   getCompanyTimeAndSalaryStatisticsQuery,
-  getCompanyTopNJobTitlesQuery,
 } from 'graphql/company';
 
 export const getCompanyTimeAndSalary = ({
@@ -35,12 +34,6 @@ export const getCompanyTimeAndSalary = ({
 export const getCompanyTimeAndSalaryStatistics = ({ companyName }) =>
   graphqlClient({
     query: getCompanyTimeAndSalaryStatisticsQuery,
-    variables: { companyName },
-  }).then(R.prop('company'));
-
-export const getCompanyTopNJobTitles = ({ companyName }) =>
-  graphqlClient({
-    query: getCompanyTopNJobTitlesQuery,
     variables: { companyName },
   }).then(R.prop('company'));
 

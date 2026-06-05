@@ -25,8 +25,8 @@ import {
   getCompanyInterviewExperiences,
   queryCompaniesApi,
   getCompanyTimeAndSalaryStatistics,
-  getCompanyTopNJobTitles,
 } from 'apis/company';
+import queryCompanyTopNJobTitlesApi from 'apis/queryCompanyTopNJobTitles';
 import queryCompanyWorkExperiencesApi from 'apis/queryCompanyWorkExperiences';
 import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
 import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
@@ -434,7 +434,7 @@ export const queryCompanyTopNJobTitles = ({ companyName }) => async (
   dispatch(setCompanyTopNJobTitles(companyName, toFetching()));
 
   try {
-    const data = await getCompanyTopNJobTitles({
+    const data = await queryCompanyTopNJobTitlesApi({
       companyName,
     });
 

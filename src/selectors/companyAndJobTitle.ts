@@ -9,8 +9,8 @@ import {
   CompanyInterviewExperienceResult,
   CompanyWorkExperienceResult,
   CompanyIsSubscribed,
-  TopNJobTitles,
 } from 'reducers/companyIndex';
+import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import {
   JobTitleInIndex,
   JobTitleOverview,
