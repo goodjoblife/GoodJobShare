@@ -22,6 +22,7 @@ import FetchBox from 'utils/fetchBox';
 import { ServerSideRender } from 'types/serverSideRender';
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 
+// Matches the React Router route params for Company pages
 type Params = { companyName: string };
 
 const useOverviewBoxSelector = (

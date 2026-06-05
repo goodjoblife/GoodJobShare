@@ -20,6 +20,7 @@ import FetchBox from 'utils/fetchBox';
 import { ServerSideRender } from 'types/serverSideRender';
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
+// Matches the React Router route params for JobTitle pages
 type Params = { jobTitle: string };
 
 const useOverviewBoxSelector = (

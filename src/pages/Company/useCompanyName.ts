@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 
+// Matches the React Router route params for Company pages
 type Params = { companyName: string };
 
 export const companyNameSelector = (params: Params): string =>
