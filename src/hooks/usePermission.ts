@@ -1,15 +1,9 @@
 import { useContext, useCallback } from 'react';
+import { useLocalStorage } from 'react-use';
 import PermissionContext from 'contexts/PermissionContext';
 import { useToken } from 'hooks/auth';
-import { queryHasSearchPermissionApi } from 'apis/me';
+import queryPermission from 'apis/queryPermission';
 import useIsMyPublishId from './useIsMyPublishId';
-
-type PermissionState = { canView: boolean; permissionFetched: boolean };
-type PermissionContextValue = {
-  canView: boolean;
-  permissionFetched: boolean;
-  setPermissionState: (state: PermissionState) => void;
-};
 
 const useGetSearchPermission = ({
   token,
@@ -18,47 +12,51 @@ const useGetSearchPermission = ({
 }): (() => Promise<boolean>) => {
   return useCallback(async (): Promise<boolean> => {
     if (!token) return false;
-    // Get permission only when token available
-    return await queryHasSearchPermissionApi({ token });
+    return await queryPermission({ token });
   }, [token]);
 };
 
 const usePermission = (): [
   boolean,
   () => Promise<void>,
-  (publishId: unknown) => boolean,
+  (publishId: string) => boolean,
 ] => {
   const token = useToken();
   const { canView, permissionFetched, setPermissionState } = useContext(
     PermissionContext,
-  ) as PermissionContextValue;
+  );
   const getSearchPermission = useGetSearchPermission({ token });
+  const [visitedWebsite, setVisitedWebsite] = useLocalStorage<string>(
+    'visitedWebsite',
+    undefined,
+    true,
+  );
 
   const fetchPermission = useCallback(async (): Promise<void> => {
     const hasPermission = await getSearchPermission();
 
-    if (typeof Storage !== 'undefined') {
-      const visitedWebsite = localStorage.getItem('visitedWebsite');
-
-      if (visitedWebsite === null) {
-        // 該裝置第一次進到我們網站，那就給權限
-        localStorage.setItem('visitedWebsite', 'true');
-        setPermissionState({ canView: true, permissionFetched: true });
-      } else {
-        // 該裝置第二次以上進到我們網站，那就根據 api 結果設定權限
-        setPermissionState({
-          canView: hasPermission,
-          permissionFetched: true,
-        });
-      }
+    if (visitedWebsite === undefined) {
+      // 該裝置第一次進到我們網站，那就給權限
+      setVisitedWebsite('true');
+      setPermissionState({ canView: true, permissionFetched: true });
+    } else {
+      // 該裝置第二次以上進到我們網站，那就根據 api 結果設定權限
+      setPermissionState({
+        canView: hasPermission,
+        permissionFetched: true,
+      });
     }
-  }, [getSearchPermission, setPermissionState]);
+  }, [
+    getSearchPermission,
+    setPermissionState,
+    visitedWebsite,
+    setVisitedWebsite,
+  ]);
 
   const isMyPublishId = useIsMyPublishId();
 
   const canViewPublishId = useCallback(
-    (publishId: unknown): boolean =>
-      Boolean(isMyPublishId(publishId)) || canView,
+    (publishId: string) => isMyPublishId(publishId) || canView,
     [canView, isMyPublishId],
   );
 
