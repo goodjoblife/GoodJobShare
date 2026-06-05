@@ -14,11 +14,11 @@ const emptyTopNJobTitles: TopNJobTitles = {
 export const useTopNJobTitles = (pageName: string): TopNJobTitles => {
   const selector = useCallback(
     (state: RootState) => {
-      const data = companyTopNJobTitlesBoxSelectorByName(pageName)(state);
-      if (!data || !data.data) {
+      const box = companyTopNJobTitlesBoxSelectorByName(pageName)(state);
+      if (!box.data) {
         return emptyTopNJobTitles;
       }
-      return data.data;
+      return box.data;
     },
     [pageName],
   );
