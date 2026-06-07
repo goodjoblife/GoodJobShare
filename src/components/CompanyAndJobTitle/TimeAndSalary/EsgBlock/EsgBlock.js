@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -71,6 +71,9 @@ const EsgBlock = ({
     esgSalaryData,
   ]);
   const [selectedYear, setSelectedYear] = useState(() => availableYears[0]);
+  useEffect(() => {
+    setSelectedYear(availableYears[0]);
+  }, [availableYears]);
 
   const {
     avgSalaryStatisticsItem,
