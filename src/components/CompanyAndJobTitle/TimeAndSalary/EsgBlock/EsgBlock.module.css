@@ -136,3 +136,15 @@
   left: -4px;
   padding: 4px;
 }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.yearSelect {
+  width: 110px;
+  flex: none;
+  margin-left: 16px;
+}
