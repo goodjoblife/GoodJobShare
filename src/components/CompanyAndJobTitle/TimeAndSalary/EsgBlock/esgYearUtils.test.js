@@ -31,6 +31,11 @@ describe('getAvailableYears', () => {
   test('欄位為 undefined 也不爆', () => {
     expect(getAvailableYears({})).toEqual([]);
   });
+
+  test('null / undefined 也不爆', () => {
+    expect(getAvailableYears(null)).toEqual([]);
+    expect(getAvailableYears(undefined)).toEqual([]);
+  });
 });
 
 describe('getStatisticsByYear', () => {
@@ -55,5 +60,14 @@ describe('getStatisticsByYear', () => {
     const r = getStatisticsByYear(sample, 2023);
     expect(r.nonManagerAvgSalaryStatisticsItem).toBeUndefined();
     expect(r.avgSalaryStatisticsItem.year).toBe(2023);
+  });
+
+  test('null 輸入 → 四個 item 皆 undefined', () => {
+    expect(getStatisticsByYear(null, 2024)).toEqual({
+      avgSalaryStatisticsItem: undefined,
+      nonManagerAvgSalaryStatisticsItem: undefined,
+      nonManagerMedianSalaryStatisticsItem: undefined,
+      femaleManagerStatisticsItem: undefined,
+    });
   });
 });

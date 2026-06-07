@@ -6,6 +6,7 @@ const STAT_KEYS = [
 ];
 
 export const getAvailableYears = esgSalaryData => {
+  if (!esgSalaryData) return [];
   const years = new Set();
   STAT_KEYS.forEach(key => {
     (esgSalaryData[key] || []).forEach(item => years.add(item.year));
@@ -13,17 +14,20 @@ export const getAvailableYears = esgSalaryData => {
   return [...years].sort((a, b) => b - a);
 };
 
-export const getStatisticsByYear = (esgSalaryData, year) => ({
-  avgSalaryStatisticsItem: (esgSalaryData.avgSalaryStatistics || []).find(
-    item => item.year === year,
-  ),
-  nonManagerAvgSalaryStatisticsItem: (
-    esgSalaryData.nonManagerAvgSalaryStatistics || []
-  ).find(item => item.year === year),
-  nonManagerMedianSalaryStatisticsItem: (
-    esgSalaryData.nonManagerMedianSalaryStatistics || []
-  ).find(item => item.year === year),
-  femaleManagerStatisticsItem: (
-    esgSalaryData.femaleManagerStatistics || []
-  ).find(item => item.year === year),
-});
+export const getStatisticsByYear = (esgSalaryData, year) => {
+  const data = esgSalaryData || {};
+  return {
+    avgSalaryStatisticsItem: (data.avgSalaryStatistics || []).find(
+      item => item.year === year,
+    ),
+    nonManagerAvgSalaryStatisticsItem: (
+      data.nonManagerAvgSalaryStatistics || []
+    ).find(item => item.year === year),
+    nonManagerMedianSalaryStatisticsItem: (
+      data.nonManagerMedianSalaryStatistics || []
+    ).find(item => item.year === year),
+    femaleManagerStatisticsItem: (data.femaleManagerStatistics || []).find(
+      item => item.year === year,
+    ),
+  };
+};
