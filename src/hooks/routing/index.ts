@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import qs from 'qs';
+import qs, { ParsedQs } from 'qs';
 
-export const useSearch = () => {
+export const useSearch = (): string => {
   const location = useLocation();
   return location.search;
 };
 
-export const useQuery = () => {
+export const useQuery = (): ParsedQs => {
   const search = useSearch();
   return useMemo(() => qs.parse(search, { ignoreQueryPrefix: true }), [search]);
 };
