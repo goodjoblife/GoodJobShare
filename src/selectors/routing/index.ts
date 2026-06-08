@@ -8,6 +8,6 @@ export const queryFromQuerySelector = (query: ParsedQs): string => {
 
 // page from ?p=xxx
 export const pageFromQuerySelector = (query: ParsedQs): number => {
-  const p = parseInt(query.p as string, 10);
+  const p = parseInt(typeof query.p === 'string' ? query.p : '', 10);
   return Number.isNaN(p) ? 1 : p;
 };
