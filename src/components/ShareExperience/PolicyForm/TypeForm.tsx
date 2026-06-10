@@ -125,7 +125,7 @@ const TypeForm = ({
         createPolicyReviewGroup({
           company: { query: draft[DATA_KEY_COMPANY_NAME] as string },
           jobTitle: draft[DATA_KEY_JOB_TITLE] as string,
-          sector: (draft[DATA_KEY_SECTOR] as string) || null,
+          sector: (draft[DATA_KEY_SECTOR] as string) || undefined,
           policyReviews: (draft[DATA_KEY_POLICIES] as unknown[][]).map(
             toPolicyReviewInput,
           ),

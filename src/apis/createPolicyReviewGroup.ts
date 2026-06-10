@@ -43,7 +43,7 @@ const createPolicyReviewGroup = ({
 }: {
   company: { query: string };
   jobTitle: string;
-  sector?: string | null;
+  sector?: string;
   policyReviews: PolicyReviewInput[];
   token?: string;
 }): Promise<CreatePolicyReviewGroupData['createPolicyReviewGroup']> =>

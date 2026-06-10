@@ -14,7 +14,7 @@ export const createPolicyReviewGroup = ({
 }: {
   company: { query: string };
   jobTitle: string;
-  sector?: string | null;
+  sector?: string;
   policyReviews: PolicyReviewInput[];
 }): Thunk => async (
   dispatch: Dispatch,
