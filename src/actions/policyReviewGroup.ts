@@ -12,7 +12,7 @@ export const createPolicyReviewGroup = ({
   sector,
   policyReviews,
 }: {
-  company: { id: string; query: string };
+  company: { query: string };
   jobTitle: string;
   sector?: string | null;
   policyReviews: PolicyReviewInput[];

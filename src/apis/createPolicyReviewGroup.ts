@@ -41,7 +41,7 @@ const createPolicyReviewGroup = ({
   policyReviews,
   token,
 }: {
-  company: { id: string; query: string };
+  company: { query: string };
   jobTitle: string;
   sector?: string | null;
   policyReviews: PolicyReviewInput[];

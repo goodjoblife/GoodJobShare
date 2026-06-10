@@ -123,7 +123,7 @@ const TypeForm = ({
     async (draft: Record<string, unknown>) => {
       const result = await dispatch(
         createPolicyReviewGroup({
-          company: { id: '', query: draft[DATA_KEY_COMPANY_NAME] as string },
+          company: { query: draft[DATA_KEY_COMPANY_NAME] as string },
           jobTitle: draft[DATA_KEY_JOB_TITLE] as string,
           sector: (draft[DATA_KEY_SECTOR] as string) || null,
           policyReviews: (draft[DATA_KEY_POLICIES] as unknown[][]).map(
