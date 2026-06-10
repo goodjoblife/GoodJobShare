@@ -3,7 +3,6 @@ import { tokenSelector } from 'selectors/authSelector';
 import createPolicyReviewGroupApi, {
   PolicyReviewInput,
 } from 'apis/createPolicyReviewGroup';
-import changePolicyReviewGroupStatusApi from 'apis/changePolicyReviewGroupStatus';
 import { queryMyPublishIds } from './me';
 
 export const createPolicyReviewGroup = ({
@@ -33,15 +32,4 @@ export const createPolicyReviewGroup = ({
   await dispatch(queryMyPublishIds());
 
   return result;
-};
-
-export const changePolicyReviewGroupStatus = ({
-  groupId,
-  status,
-}: {
-  groupId: string;
-  status: string;
-}): Thunk => async (_: Dispatch, getState: GetState): Promise<boolean> => {
-  const token = tokenSelector(getState());
-  return changePolicyReviewGroupStatusApi({ groupId, status, token });
 };
