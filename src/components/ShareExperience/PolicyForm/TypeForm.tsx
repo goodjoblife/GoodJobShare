@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
@@ -16,6 +17,8 @@ import {
   DATA_KEY_SECTOR,
   DATA_KEY_POLICIES,
 } from '../constants';
+import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
+import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
 
 const header = <Header title="請分享你的公司制度實況" />;
 
@@ -41,24 +44,71 @@ const questions = [
   createSubmitQuestion({ label: '制度' }),
 ];
 
-const jobTitleKey = 'job_title';
-const lawComplianceKey = 'law_compliance';
+const policyEnumMap: Record<string, string> = {
+  生理假: 'MENSTRUAL_LEAVE',
+  育嬰假: 'PARENTAL_LEAVE',
+  家庭照顧假: 'FAMILY_CARE_LEAVE',
+  彈性上下班時間: 'FLEXIBLE_WORKING_HOUR',
+  遠端工作: 'REMOTE_WORK',
+};
 
-const bodyFromDraft = (
-  draft: Record<string, unknown>,
-): Record<string, unknown> => ({
-  company: { id: '', query: draft[DATA_KEY_COMPANY_NAME] },
-  [jobTitleKey]: draft[DATA_KEY_JOB_TITLE],
-  sector: draft[DATA_KEY_SECTOR],
-  policies: (draft[DATA_KEY_POLICIES] as unknown[][]).map(
-    ([policy, answer, lawCompliance, experience]) => ({
+const hasPolicyMap: Record<string, string> = {
+  是: 'yes',
+  有: 'yes',
+  否: 'no',
+  沒有: 'no',
+  不知道: 'unknown',
+};
+
+const complianceMap: Record<string, string> = {
+  '有，優於性別平等工作法': 'yes',
+  '有，符合性別平等工作法': 'yes',
+  '有，不符合性別平等工作法': 'no',
+  '有，不清楚是否符合性別平等工作法': 'unknown',
+};
+
+const remoteWorkPolicyMap: Record<string, string> = {
+  每週一天: 'ONE_DAY_PER_WEEK',
+  每週兩天: 'TWO_DAYS_PER_WEEK',
+  每週三天: 'THREE_DAYS_PER_WEEK',
+  每週四天: 'FOUR_DAYS_PER_WEEK',
+  不限天數: 'NO_LIMIT',
+};
+
+const toPolicyReviewInput = ([
+  optionValue,
+  radioValue,
+  elseOptionValue,
+  textValue,
+]: unknown[]): PolicyReviewInput => {
+  const policy = policyEnumMap[optionValue as string];
+  const hasPolicy = hasPolicyMap[radioValue as string];
+  const review = (textValue as string) || undefined;
+
+  if (policy === 'REMOTE_WORK') {
+    return {
       policy,
-      answer,
-      [lawComplianceKey]: lawCompliance,
-      experience,
-    }),
-  ),
-});
+      hasPolicy,
+      review,
+      remoteWorkPolicy: elseOptionValue
+        ? remoteWorkPolicyMap[elseOptionValue as string]
+        : null,
+    };
+  }
+
+  if (policy === 'FLEXIBLE_WORKING_HOUR') {
+    return { policy, hasPolicy, review };
+  }
+
+  return {
+    policy,
+    hasPolicy,
+    review,
+    compliance: elseOptionValue
+      ? complianceMap[elseOptionValue as string]
+      : null,
+  };
+};
 
 const TypeForm = ({
   open,
@@ -67,11 +117,24 @@ const TypeForm = ({
   open: boolean;
   onClose: () => void;
 }): React.ReactElement => {
-  const onSubmit = useCallback(async (draft: Record<string, unknown>) => {
-    // TODO: wire up to backend API once endpoint is ready
-    const body = bodyFromDraft(draft);
-    return body;
-  }, []);
+  const dispatch = useDispatch();
+
+  const onSubmit = useCallback(
+    async (draft: Record<string, unknown>) => {
+      const result = await dispatch(
+        createPolicyReviewGroup({
+          company: { id: '', query: draft[DATA_KEY_COMPANY_NAME] as string },
+          jobTitle: draft[DATA_KEY_JOB_TITLE] as string,
+          sector: (draft[DATA_KEY_SECTOR] as string) || null,
+          policyReviews: (draft[DATA_KEY_POLICIES] as unknown[][]).map(
+            toPolicyReviewInput,
+          ),
+        }),
+      );
+      return result;
+    },
+    [dispatch],
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const onSubmitError = useCallback(() => {}, []);
