@@ -92,7 +92,7 @@ const toPolicyReviewInput = ([
       review,
       remoteWorkPolicy: elseOptionValue
         ? remoteWorkPolicyMap[elseOptionValue as string]
-        : null,
+        : undefined,
     };
   }
 
@@ -106,7 +106,7 @@ const toPolicyReviewInput = ([
     review,
     compliance: elseOptionValue
       ? complianceMap[elseOptionValue as string]
-      : null,
+      : undefined,
   };
 };
 

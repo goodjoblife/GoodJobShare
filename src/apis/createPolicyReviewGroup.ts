@@ -30,8 +30,8 @@ export type PolicyReviewInput = {
   policy: string;
   review?: string;
   hasPolicy: string;
-  compliance?: string | null;
-  remoteWorkPolicy?: string | null;
+  compliance?: string;
+  remoteWorkPolicy?: string;
 };
 
 const createPolicyReviewGroup = ({
