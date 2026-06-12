@@ -51,7 +51,7 @@ export type CompanyOverviewStatistics = {
 // TODO: replace with proper CompanySalaryWorkTimeResult type
 export type CompanySalaryWorkTimeResult = unknown;
 
-// TODO: replace with proper CompanyTimeAndSalaryStatistics type
+// TODO: replace with proper CompanySalaryWorkTimeStatistics type
 export type CompanySalaryWorkTimeStatistics = unknown;
 
 // TODO: replace with proper CompanyInterviewExperienceResult type

@@ -25,9 +25,9 @@ import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
 import { usePage } from 'hooks/routing/page';
 import usePermission from 'hooks/usePermission';
 import {
-  jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
-  jobTitleSalaryWorktimeBoxSelectorByName as timeAndSalaryBoxSelectorByName,
-  jobTitleSalaryWorkTimeStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
+  jobTitleOverviewStatisticsBoxSelectorByName,
+  jobTitleSalaryWorktimeBoxSelectorByName,
+  jobTitleSalaryWorkTimeStatisticsBoxSelectorByName,
   salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
 } from 'selectors/companyAndJobTitle';
 import {
@@ -39,7 +39,7 @@ import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
 const useOverviewStatisticsBox = pageName => {
   const selector = useMemo(
-    () => overviewStatisticsBoxSelectorByName(pageName),
+    () => jobTitleOverviewStatisticsBoxSelectorByName(pageName),
     [pageName],
   );
   return useSelector(selector);
@@ -48,9 +48,9 @@ const useOverviewStatisticsBox = pageName => {
 const useSalaryWorkTimeStatistics = pageName => {
   const selector = useCallback(
     state => {
-      const jobTitle = timeAndSalaryStatisticsBoxSelectorByName(pageName)(
-        state,
-      );
+      const jobTitle = jobTitleSalaryWorkTimeStatisticsBoxSelectorByName(
+        pageName,
+      )(state);
       return salaryWorkTimeStatisticsSelector(jobTitle);
     },
     [pageName],
@@ -59,10 +59,10 @@ const useSalaryWorkTimeStatistics = pageName => {
   return useSelector(selector);
 };
 
-const useTimeAndSalaryBoxSelector = pageName => {
+const useSalaryWorkTimeBoxSelector = pageName => {
   return useCallback(
     state => {
-      const jobTitle = timeAndSalaryBoxSelectorByName(pageName)(state);
+      const jobTitle = jobTitleSalaryWorktimeBoxSelectorByName(pageName)(state);
       return jobTitle;
     },
     [pageName],
@@ -141,7 +141,7 @@ const JobTitleSalaryWorkTimeProvider = () => {
     fetchPermission();
   }, [pageType, jobTitle, fetchPermission]);
 
-  const boxSelector = useTimeAndSalaryBoxSelector(jobTitle);
+  const boxSelector = useSalaryWorkTimeBoxSelector(jobTitle);
 
   const statisticsBox = useOverviewStatisticsBox(jobTitle);
   const salaryWorkTimeStatistics = useSalaryWorkTimeStatistics(jobTitle);
