@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   queryCompanyEsgSalaryData,
   queryCompanyOverviewStatistics,
-  queryCompanyTimeAndSalary,
-  queryCompanyTimeAndSalaryStatistics,
+  queryCompanySalaryWorkTime,
+  queryCompanySalaryWorkTimeStatistics,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
@@ -30,8 +30,8 @@ import usePermission from 'hooks/usePermission';
 import {
   companyEsgSalaryDataBoxSelectorByName,
   companyOverviewStatisticsBoxSelectorByName,
-  companyTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
-  companyTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
+  companySalaryWorkTimeBoxSelectorByName as timeAndSalaryBoxSelectorByName,
+  companySalaryWorkTimeStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
   salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
 } from 'selectors/companyAndJobTitle';
 import {
@@ -80,7 +80,7 @@ const useEsgSalaryDataBox = companyName => {
   return useSelector(selector);
 };
 
-const CompanyTimeAndSalaryProvider = () => {
+const CompanySalaryWorkTimeProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
   const companyName = useCompanyName();
@@ -100,10 +100,10 @@ const CompanyTimeAndSalaryProvider = () => {
     [experience],
   );
 
-  const handleQueryCompanyTimeAndSalary = useCallback(
+  const handleQueryCompanySalaryWorkTime = useCallback(
     ({ force = false } = {}) => {
       dispatch(
-        queryCompanyTimeAndSalary(
+        queryCompanySalaryWorkTime(
           {
             companyName,
             jobTitle: jobTitle || undefined,
@@ -137,7 +137,7 @@ const CompanyTimeAndSalaryProvider = () => {
 
   useEffect(() => {
     dispatch(
-      queryCompanyTimeAndSalaryStatistics({
+      queryCompanySalaryWorkTimeStatistics({
         companyName,
       }),
     );
@@ -164,8 +164,8 @@ const CompanyTimeAndSalaryProvider = () => {
   }, [dispatch, companyName]);
 
   useEffect(() => {
-    handleQueryCompanyTimeAndSalary();
-  }, [handleQueryCompanyTimeAndSalary]);
+    handleQueryCompanySalaryWorkTime();
+  }, [handleQueryCompanySalaryWorkTime]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -191,12 +191,12 @@ const CompanyTimeAndSalaryProvider = () => {
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
-      onCloseReport={() => handleQueryCompanyTimeAndSalary({ force: true })}
+      onCloseReport={() => handleQueryCompanySalaryWorkTime({ force: true })}
     />
   );
 };
 
-CompanyTimeAndSalaryProvider.fetchData = ({
+CompanySalaryWorkTimeProvider.fetchData = ({
   store: { dispatch },
   ...props
 }) => {
@@ -217,12 +217,12 @@ CompanyTimeAndSalaryProvider.fetchData = ({
     queryCompanyOverviewStatistics(companyName),
   );
   const dispatchTimeAndSalaryStatistics = dispatch(
-    queryCompanyTimeAndSalaryStatistics({
+    queryCompanySalaryWorkTimeStatistics({
       companyName,
     }),
   );
   const dispatchTimeAndSalary = dispatch(
-    queryCompanyTimeAndSalary({
+    queryCompanySalaryWorkTime({
       companyName,
       jobTitle,
       start,
@@ -254,4 +254,4 @@ CompanyTimeAndSalaryProvider.fetchData = ({
   ]);
 };
 
-export default CompanyTimeAndSalaryProvider;
+export default CompanySalaryWorkTimeProvider;

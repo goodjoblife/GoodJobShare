@@ -24,8 +24,8 @@ import {
   companyOverviewBoxSelectorByName,
   companyOverviewStatisticsBoxSelectorByName,
   companyRatingStatisticsBoxSelectorByName,
-  companyTimeAndSalaryBoxSelectorByName,
-  companyTimeAndSalaryStatisticsBoxSelectorByName,
+  companySalaryWorkTimeBoxSelectorByName,
+  companySalaryWorkTimeStatisticsBoxSelectorByName,
   companyTopNJobTitlesBoxSelectorByName,
   companyWorkExperiencesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
@@ -264,7 +264,7 @@ const setInterviewExperiences = (companyName, box) => ({
   box,
 });
 
-export const queryCompanyTimeAndSalary = (
+export const queryCompanySalaryWorkTime = (
   {
     companyName,
     jobTitle,
@@ -277,7 +277,7 @@ export const queryCompanyTimeAndSalary = (
   },
   { force = false } = {},
 ) => async (dispatch, getState) => {
-  const box = companyTimeAndSalaryBoxSelectorByName(companyName)(getState());
+  const box = companySalaryWorkTimeBoxSelectorByName(companyName)(getState());
   if (
     !force &&
     (isFetching(box) ||
@@ -345,11 +345,11 @@ const setCompanyTopNJobTitles = (companyName, box) => ({
   box,
 });
 
-export const queryCompanyTimeAndSalaryStatistics = ({ companyName }) => async (
+export const queryCompanySalaryWorkTimeStatistics = ({ companyName }) => async (
   dispatch,
   getState,
 ) => {
-  const box = companyTimeAndSalaryStatisticsBoxSelectorByName(companyName)(
+  const box = companySalaryWorkTimeStatisticsBoxSelectorByName(companyName)(
     getState(),
   );
   if (

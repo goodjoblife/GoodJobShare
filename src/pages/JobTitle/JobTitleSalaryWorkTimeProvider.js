@@ -26,8 +26,8 @@ import { usePage } from 'hooks/routing/page';
 import usePermission from 'hooks/usePermission';
 import {
   jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
-  jobTitleTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
-  jobTitleTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
+  jobTitleSalaryWorktimeBoxSelectorByName as timeAndSalaryBoxSelectorByName,
+  jobTitleSalaryWorkTimeStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
   salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
 } from 'selectors/companyAndJobTitle';
 import {
@@ -69,7 +69,7 @@ const useTimeAndSalaryBoxSelector = pageName => {
   );
 };
 
-const JobTitleTimeAndSalaryProvider = () => {
+const JobTitleSalaryWorkTimeProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.JOB_TITLE;
   const jobTitle = useJobTitle();
@@ -161,7 +161,7 @@ const JobTitleTimeAndSalaryProvider = () => {
   );
 };
 
-JobTitleTimeAndSalaryProvider.fetchData = ({
+JobTitleSalaryWorkTimeProvider.fetchData = ({
   store: { dispatch },
   ...props
 }) => {
@@ -195,4 +195,4 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   ]);
 };
 
-export default JobTitleTimeAndSalaryProvider;
+export default JobTitleSalaryWorkTimeProvider;
