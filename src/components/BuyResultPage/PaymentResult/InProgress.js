@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import P from 'common/base/P';
-import useTimer, { countingStatusMap } from 'hooks/useTimer';
-import useFetchPaymentRecord from 'hooks/payment/useFetchPaymentRecord';
 import fetchingStatusMap from 'constants/fetchStatus';
+import useFetchPaymentRecord from 'hooks/payment/useFetchPaymentRecord';
+import useTimer, { countingStatusMap } from 'hooks/useTimer';
 
-import TransactionIcon from './transaction.svg';
-import styles from './PaymentResult.module.css';
 import { renderCountdown } from './helpers';
+import styles from './PaymentResult.module.css';
+import TransactionIcon from './transaction.svg';
 
 const waitingTime = 3000;
 const timeLimit = 30000;

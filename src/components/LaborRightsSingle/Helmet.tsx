@@ -1,13 +1,14 @@
 import React from 'react';
-import { generatePath } from 'react-router';
 import Helmet from 'react-helmet';
+import { generatePath } from 'react-router';
+
+import { LaborRightEntry } from 'apis/queryLaborRights';
+import { SITE_NAME } from 'constants/helmetData';
 import {
-  formatTitle,
   formatCanonicalPath,
+  formatTitle,
   formatUrl,
 } from 'utils/helmetHelper';
-import { SITE_NAME } from 'constants/helmetData';
-import { LaborRightEntry } from 'apis/queryLaborRights';
 
 type EntryHelmetProps = {
   entry: LaborRightEntry;

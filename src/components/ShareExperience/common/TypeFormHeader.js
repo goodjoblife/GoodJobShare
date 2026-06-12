@@ -1,8 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import cn from 'classnames';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faShieldAlt from '@fortawesome/fontawesome-free-solid/faShieldAlt';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import styles from './TypeFormHeader.module.css';
 
 const Header = ({ title }) => (

@@ -1,15 +1,15 @@
-import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useCallback, useState } from 'react';
 
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
 import Button from 'common/button/Button';
-import useTimer, { countingStatusMap } from 'hooks/useTimer';
 import useToRedirectUrl from 'hooks/payment/useToRedirectUrl';
+import useTimer, { countingStatusMap } from 'hooks/useTimer';
 
 import CheckedIcon from './checked.svg';
-import styles from './PaymentResult.module.css';
 import { renderCountdown } from './helpers';
+import styles from './PaymentResult.module.css';
 
 const waitingTime = 3000;
 

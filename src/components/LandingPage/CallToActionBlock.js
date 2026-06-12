@@ -1,11 +1,13 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+
 import { Heading } from 'common/base';
-import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Button from 'common/button/ButtonRect';
-import { useShareLink } from 'hooks/experiments';
-import styles from './CallToActionBlock.module.css';
+import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import textInputStyle from 'common/form/TextInput/TextInput.module.css';
+import { useShareLink } from 'hooks/experiments';
+
+import styles from './CallToActionBlock.module.css';
 
 const CallToActionBlock = () => {
   const history = useHistory();

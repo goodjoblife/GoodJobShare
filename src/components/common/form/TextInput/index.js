@@ -1,11 +1,11 @@
-import React, { forwardRef, useRef, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { forwardRef, useCallback, useRef } from 'react';
 
-import useEnterConfirm from './useEnterConfirm';
-import useAutocomplete from './useAutocomplete';
-import useKeyNavigation from './useKeyNavigation';
 import styles from './TextInput.module.css';
+import useAutocomplete from './useAutocomplete';
+import useEnterConfirm from './useEnterConfirm';
+import useKeyNavigation from './useKeyNavigation';
 
 const AutoCompleteMenu = ({ className, open, ...props }) => (
   <div

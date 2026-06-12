@@ -1,27 +1,28 @@
 import R from 'ramda';
+
+import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
+import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import { RootState } from 'reducers';
 import {
   CompanyInIndex,
+  CompanyInterviewExperienceResult,
+  CompanyIsSubscribed,
   CompanyOverview,
   CompanyOverviewStatistics,
   CompanyTimeAndSalaryResult,
   CompanyTimeAndSalaryStatistics,
-  CompanyInterviewExperienceResult,
   CompanyWorkExperienceResult,
-  CompanyIsSubscribed,
   TopNJobTitles,
 } from 'reducers/companyIndex';
 import {
   JobTitleInIndex,
+  JobTitleInterviewExperienceResult,
   JobTitleOverview,
   JobTitleOverviewStatistics,
   JobTitleTimeAndSalaryResult,
   JobTitleTimeAndSalaryStatistics,
-  JobTitleInterviewExperienceResult,
   JobTitleWorkExperienceResult,
 } from 'reducers/jobTitleIndex';
-import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
-import { RatingStatistics } from 'apis/queryCompanyRatingStatistics';
 import FetchBox, { getUnfetched, isFetched } from 'utils/fetchBox';
 
 export const salaryWorkTimeStatistics: (

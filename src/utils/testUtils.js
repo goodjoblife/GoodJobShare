@@ -8,15 +8,16 @@
  *     有實作 window 的 scroll 功能，引入會導致測試跳大量警告訊息
  */
 
-import React from 'react';
+import { render } from '@testing-library/react';
 import { createMemoryHistory as createHistory } from 'history';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
-import { render } from '@testing-library/react';
+import { PersistGate } from 'redux-persist/integration/react';
+
 import configureStore from '../store/configureStore';
-import PropTypes from 'prop-types';
 
 const history = createHistory();
 const store = configureStore({}, history);

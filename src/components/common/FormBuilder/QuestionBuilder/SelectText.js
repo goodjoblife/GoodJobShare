@@ -1,9 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import TextInput from 'common/form/TextInput';
 import Select from 'common/form/Select';
+import TextInput from 'common/form/TextInput';
+
 import styles from './SelectText.module.css';
 import commonStyles from './styles.module.css';
 

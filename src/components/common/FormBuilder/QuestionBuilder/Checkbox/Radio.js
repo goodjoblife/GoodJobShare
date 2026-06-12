@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-import Wrapper from './private/Wrapper';
 import BlockSelect from './private/BlockSelect';
+import Wrapper from './private/Wrapper';
 import { OptionPropType, ValuePropType } from './PropTypes';
 
 const Radio = ({

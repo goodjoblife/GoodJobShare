@@ -1,18 +1,19 @@
 import { AnyAction } from 'redux';
-import { Thunk } from 'reducers';
+
 import queryEntryApi, { LaborRightEntry } from 'apis/queryLaborRights';
 import queryMenuApi, { LaborRightMenuEntry } from 'apis/queryLaborRightsMenu';
+import { Thunk } from 'reducers';
+import {
+  entryBoxSelectorById,
+  menuBoxSelector,
+} from 'selectors/laborRightsSelector';
+import { isGraphqlError, UiNotFoundError } from 'utils/errors';
 import FetchBox, {
   getError,
   getFetched,
-  toFetching,
   isUnfetched,
+  toFetching,
 } from 'utils/fetchBox';
-import {
-  menuBoxSelector,
-  entryBoxSelectorById,
-} from 'selectors/laborRightsSelector';
-import { isGraphqlError, UiNotFoundError } from 'utils/errors';
 
 export const SET_MENU = '@@LABOR_RIGHTS/SET_MENU';
 export const SET_ENTRY = '@@LABOR_RIGHTS/SET_ENTRY';

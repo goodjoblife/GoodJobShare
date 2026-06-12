@@ -1,12 +1,13 @@
-import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router';
-import { useQuery } from 'hooks/routing';
 import qs from 'qs';
+import React, { useCallback } from 'react';
+import { useHistory } from 'react-router';
 
-import styles from './Sorter.module.css';
 import Caret from 'common/icons/Caret';
 import Sort from 'common/icons/Sort';
+import { useQuery } from 'hooks/routing';
+
+import styles from './Sorter.module.css';
 
 export const SORT_BY = {
   LATEST_FIRST: 'LATEST_FIRST',

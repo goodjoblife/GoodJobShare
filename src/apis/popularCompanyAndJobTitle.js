@@ -1,9 +1,10 @@
 import R from 'ramda';
-import graphqlClient from 'utils/graphqlClient';
+
 import {
   getPopularCompanyAverageSalaryQuery,
   getPopularJobTitleSalaryDistributionQuery,
 } from 'graphql/popularCompanyAndJobTitle';
+import graphqlClient from 'utils/graphqlClient';
 
 export const getPopularCompanyAverageSalary = () =>
   graphqlClient({

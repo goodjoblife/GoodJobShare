@@ -1,8 +1,8 @@
-import createReducer from 'utils/createReducer';
-import FetchBox, { getUnfetched } from 'utils/fetchBox';
-import { SET_MENU, SET_ENTRY } from 'actions/laborRights';
+import { SET_ENTRY, SET_MENU } from 'actions/laborRights';
 import { LaborRightEntry } from 'apis/queryLaborRights';
 import { LaborRightMenuEntry } from 'apis/queryLaborRightsMenu';
+import createReducer from 'utils/createReducer';
+import FetchBox, { getUnfetched } from 'utils/fetchBox';
 
 const preloadedState: {
   entryById: Record<string, FetchBox<LaborRightEntry | null>>;

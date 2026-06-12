@@ -1,71 +1,73 @@
-import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {
-  isNil,
-  isEmpty,
-  map,
   always,
-  when,
-  last,
   contains,
   equals,
+  isEmpty,
+  isNil,
+  last,
+  map,
   path,
   range,
+  when,
 } from 'ramda';
+import React, { Fragment } from 'react';
+
+import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
+import { fetchSearchCompany } from 'apis/timeAndSalaryApi';
+import {
+  PageType,
+  TabType,
+  tabTypeTranslation,
+} from 'constants/companyJobTitle';
+import { useTotalCount } from 'hooks/useCount';
+import { salaryHint } from 'utils/formUtils';
+
+import AutoCompleteItem from './AutoCompleteItem';
+import { employmentTypeOptions, salaryTypeOptions } from './common/optionMap';
 import {
   DATA_KEY_COMPANY_NAME,
-  DATA_KEY_JOB_TITLE,
-  DATA_KEY_DATE,
-  DATA_KEY_REGION,
-  DATA_KEY_RESULT,
-  DATA_KEY_JOB_TENURE,
-  DATA_KEY_SALARY,
-  DATA_KEY_SENSITIVE_QUESTIONS,
-  REGION_OPTIONS,
-  RESULT_OPTIONS,
-  RATING_LABELS,
-  RATING_COURSE_LABELS,
-  JOB_TENURE_OPTIONS,
-  SENSITIVE_QUESTIONS_OPTIONS,
   DATA_KEY_CURRENTLY_EMPLOYED,
-  DATA_KEY_SECTOR,
-  DATA_KEY_EMPLOY_TYPE,
-  DATA_KEY_GENDER,
-  DATA_KEY_EXPERIENCE_IN_YEAR,
+  DATA_KEY_DATE,
   DATA_KEY_DAY_PROMISED_WORK_TIME,
   DATA_KEY_DAY_REAL_WORK_TIME,
-  DATA_KEY_WEEK_WORK_TIME,
-  DATA_KEY_OVERTIME_FREQUENCY,
-  DATA_KEY_HAS_OVERTIME_SALARY,
+  DATA_KEY_EMPLOY_TYPE,
+  DATA_KEY_EXPERIENCE_IN_YEAR,
+  DATA_KEY_GENDER,
   DATA_KEY_HAS_COMPENSATORY_DAYOFF,
+  DATA_KEY_HAS_OVERTIME_SALARY,
+  DATA_KEY_JOB_TENURE,
+  DATA_KEY_JOB_TITLE,
+  DATA_KEY_OVERTIME_FREQUENCY,
+  DATA_KEY_REGION,
+  DATA_KEY_RESULT,
+  DATA_KEY_SALARY,
   DATA_KEY_SECTIONS,
+  DATA_KEY_SECTOR,
+  DATA_KEY_SENSITIVE_QUESTIONS,
+  DATA_KEY_WEEK_WORK_TIME,
+  JOB_TENURE_OPTIONS,
+  RATING_COURSE_LABELS,
+  RATING_LABELS,
+  REGION_OPTIONS,
+  RESULT_OPTIONS,
   SECTION_MIN_LENGTH,
+  SENSITIVE_QUESTIONS_OPTIONS,
   UNRATABLE_SUBJECTS,
 } from './constants';
 import {
   isArray,
-  wordCount,
-  isSalaryAmount,
-  joinCompact,
   isNot,
-  within,
-  isValidSalary,
   isNumber,
+  isSalaryAmount,
+  isValidSalary,
+  joinCompact,
+  within,
+  wordCount,
 } from './utils';
-import { fetchSearchCompany } from 'apis/timeAndSalaryApi';
-import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
-import { employmentTypeOptions, salaryTypeOptions } from './common/optionMap';
 import WorkTimeExample from './WorkTimeExample';
-import Emoji from '../common/icons/Emoji';
-import {
-  PageType,
-  tabTypeTranslation,
-  TabType,
-} from 'constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
-import { salaryHint } from 'utils/formUtils';
-import { useTotalCount } from 'hooks/useCount';
-import AutoCompleteItem from './AutoCompleteItem';
+import Emoji from '../common/icons/Emoji';
 
 export const createCompanyQuestion = ({ header }) => ({
   title: '公司名稱',

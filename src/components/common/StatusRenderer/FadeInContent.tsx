@@ -1,5 +1,6 @@
-import React, { useEffect, useState, PropsWithChildren } from 'react';
 import cn from 'classnames';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
+
 import styles from './BoxesRenderer.module.css';
 
 const useFadeIn = (): {

@@ -1,39 +1,38 @@
-import React from 'react';
+import cn from 'classnames';
 import {
-  string,
   any,
+  arrayOf,
   bool,
-  number,
   func,
+  node,
+  number,
   oneOf,
   oneOfType,
-  arrayOf,
-  node,
+  string,
 } from 'prop-types';
-import cn from 'classnames';
 import { values } from 'ramda';
+import React from 'react';
 
-import Text from './Text';
-import TextArea from './TextArea';
 import {
-  Radio,
-  RadioElse,
-  RadioElseRadio,
-  RadioElseDate,
   Checkbox,
   CheckboxElse,
+  Radio,
+  RadioElse,
+  RadioElseDate,
+  RadioElseRadio,
 } from './Checkbox';
-import Rating from './Rating';
-import File from './File';
-import Date from './Date';
-import SelectText from './SelectText';
-import TextList from './TextList';
-import CheckboxRatingTextAreaList from './CheckboxRatingTextAreaList';
-
-import TitleBlock from '../TitleBlock';
-import Scrollable from '../Scrollable';
-import styles from './styles.module.css';
 import { OptionPropType } from './Checkbox/PropTypes';
+import CheckboxRatingTextAreaList from './CheckboxRatingTextAreaList';
+import Date from './Date';
+import File from './File';
+import Rating from './Rating';
+import SelectText from './SelectText';
+import Text from './Text';
+import TextArea from './TextArea';
+import TextList from './TextList';
+import Scrollable from '../Scrollable';
+import TitleBlock from '../TitleBlock';
+import styles from './styles.module.css';
 import { normalizeOptions } from './utils';
 
 export const QUESTION_TYPE = {

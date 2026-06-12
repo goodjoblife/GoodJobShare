@@ -1,25 +1,25 @@
-import createReducer from 'utils/createReducer';
-import FetchBox, { getUnfetched } from 'utils/fetchBox';
 import {
-  SET_INDEX_COUNT,
   SET_INDEX,
-  SET_OVERVIEW,
-  SET_TIME_AND_SALARY,
+  SET_INDEX_COUNT,
   SET_INTERVIEW_EXPERIENCES,
-  SET_WORK_EXPERIENCES,
-  SET_TIME_AND_SALARY_STATISTICS,
+  SET_OVERVIEW,
   SET_OVERVIEW_STATISTICS,
+  SET_TIME_AND_SALARY,
+  SET_TIME_AND_SALARY_STATISTICS,
+  SET_WORK_EXPERIENCES,
 } from 'actions/jobTitle';
+import { WorkExperience } from 'apis/experience';
 import {
   InterviewExperienceInOverview,
   WorkExperienceInOverview,
 } from 'apis/overview';
 import {
-  SalaryDistributionBin,
   OvertimeFrequencyCount,
+  SalaryDistributionBin,
   SalaryWorkTime,
 } from 'apis/salaryWorkTime';
-import { WorkExperience } from 'apis/experience';
+import createReducer from 'utils/createReducer';
+import FetchBox, { getUnfetched } from 'utils/fetchBox';
 
 // TODO: replace with proper JobTitleInIndex type
 export type JobTitleInIndex = unknown;

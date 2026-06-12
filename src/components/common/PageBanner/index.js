@@ -1,7 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { Section, Wrapper, Heading } from 'common/base';
+import PropTypes from 'prop-types';
+import React from 'react';
+
+import { Heading, Section, Wrapper } from 'common/base';
+
 import styles from './PageBanner.module.css';
 
 const PageBanner = ({ heading }) => (

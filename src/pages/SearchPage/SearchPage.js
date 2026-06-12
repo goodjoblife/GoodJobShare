@@ -1,22 +1,24 @@
-import React, { useEffect, useMemo } from 'react';
-import { slice, head } from 'ramda';
-import { useDispatch, useSelector } from 'react-redux';
 import qs from 'qs';
-import Loading from 'common/Loader';
+import { head, slice } from 'ramda';
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { queryKeyword } from 'actions/search';
 import { P } from 'common/base';
-import FanPageBlock from 'common/FanPageBlock';
-import { querySelector } from 'common/routing/selectors';
-import Pagination from 'common/Pagination';
 import Wrapper from 'common/base/Wrapper';
+import FanPageBlock from 'common/FanPageBlock';
+import Loading from 'common/Loader';
+import Pagination from 'common/Pagination';
 import Redirect from 'common/routing/Redirect';
-import { isFetched, isUnfetched, isFetching } from 'utils/fetchBox';
+import { querySelector } from 'common/routing/selectors';
+import CompanyJobTitleBlock from 'components/CompanyAndJobTitle/CompanyJobTitleBlock';
 import { generatePageURL } from 'constants/companyJobTitle';
 import { useQuery } from 'hooks/routing';
 import { usePage } from 'hooks/routing/page';
-import { queryKeyword } from 'actions/search';
 import { queryFromQuerySelector } from 'selectors/routing';
 import { searchByKeywordSelector } from 'selectors/search';
-import CompanyJobTitleBlock from 'components/CompanyAndJobTitle/CompanyJobTitleBlock';
+import { isFetched, isFetching, isUnfetched } from 'utils/fetchBox';
+
 import Helmet from './Helmet';
 import styles from './SearchPage.module.css';
 

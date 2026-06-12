@@ -1,8 +1,10 @@
-import React from 'react';
-import styles from './Rating.module.css';
 import cn from 'classnames';
-import { overallRatingDialogMap } from 'components/ShareExperience/common/optionMap';
 import PropTypes from 'prop-types';
+import React from 'react';
+
+import { overallRatingDialogMap } from 'components/ShareExperience/common/optionMap';
+
+import styles from './Rating.module.css';
 
 const Rating = ({ rating, textYellow }) => (
   <div

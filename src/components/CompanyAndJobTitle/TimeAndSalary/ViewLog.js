@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
+
 import { useViewSalaryWorkTimes } from 'hooks/viewLog';
 
 const ViewLog = ({ pageName, page, contentIds }) => {

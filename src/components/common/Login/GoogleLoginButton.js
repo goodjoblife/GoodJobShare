@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import { useContext } from 'react';
 import cn from 'classnames';
+import React, { useContext, useEffect, useRef } from 'react';
+
 import GoogleContext from 'contexts/GoogleContext';
+
 import styles from './LoginButton.module.css';
 
 const GoogleLoginButton = () => {

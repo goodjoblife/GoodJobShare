@@ -1,18 +1,20 @@
-import React, { useCallback, useEffect } from 'react';
-import BellWhiteImage from 'common/icons/bellWhite.svg';
-import BellBlackImage from 'common/icons/bellBlack.svg';
-import PropTypes from 'prop-types';
-import styles from './SubscribeNotificationButton.module.css';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback, useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
   queryCompanyIsSubscribed,
   toggleSubscribeCompany,
 } from 'actions/company';
-import Skeleton from 'react-loading-skeleton';
+import BellBlackImage from 'common/icons/bellBlack.svg';
+import BellWhiteImage from 'common/icons/bellWhite.svg';
+import useLoginFlow from 'components/ExperienceDetail/hooks/useLoginFlow';
 import { companyIsSubscribedBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { isFetched } from 'utils/fetchBox';
-import useLoginFlow from 'components/ExperienceDetail/hooks/useLoginFlow';
+
+import styles from './SubscribeNotificationButton.module.css';
 
 const SubscribeNotificationButton = ({ companyName }) => {
   const dispatch = useDispatch();

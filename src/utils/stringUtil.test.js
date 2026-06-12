@@ -1,4 +1,4 @@
-import { toSnakecase, toCamelcase, formatNumberWithSign } from './stringUtil';
+import { formatNumberWithSign, toCamelcase, toSnakecase } from './stringUtil';
 
 describe('toSnakecase tests', () => {
   test('toSnakecase', () => {

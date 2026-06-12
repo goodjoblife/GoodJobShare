@@ -1,24 +1,25 @@
-import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
+import React, { useCallback, useState } from 'react';
 
 import { P } from 'common/base';
+import Button from 'common/button/Button';
+import Card from 'common/Card';
 import GradientMask from 'common/GradientMask';
+import { BasicPermissionBlock } from 'common/PermissionBlock';
+import { MAX_WORDS_IF_HIDDEN } from 'constants/hideContent';
+import { ACTION, CONTENT_TYPE } from 'constants/viewLog';
 import { useShareLink } from 'hooks/experiments';
 import { useTrackEvent } from 'hooks/viewLog';
 import { formatCommaSeparatedNumber } from 'utils/stringUtil';
+
 import styles from './Article.module.css';
 import ArticleInfo from './ArticleInfo';
-import SectionBlock from './SectionBlock';
+import InfoBlock from './InfoBlock';
 import QABlock from './QABlock';
 import ReactionZone from './ReactionZone';
-import { BasicPermissionBlock } from 'common/PermissionBlock';
-import { MAX_WORDS_IF_HIDDEN } from 'constants/hideContent';
-import { CONTENT_TYPE, ACTION } from 'constants/viewLog';
+import SectionBlock from './SectionBlock';
 import VISIBILITY, { VisibilityPropTypes } from './visibility';
-import Button from 'common/button/Button';
-import Card from 'common/Card';
-import InfoBlock from './InfoBlock';
 
 const countSectionWords = sections =>
   R.reduce(

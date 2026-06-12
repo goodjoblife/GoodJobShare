@@ -1,30 +1,32 @@
 import R from 'ramda';
-import { isGraphqlError } from 'utils/errors';
+
 import {
-  isFetching,
-  isFetched,
-  toFetching,
-  getFetched,
-  getError,
-} from 'utils/fetchBox';
-import {
-  jobTitleIndexesBoxSelectorAtPage,
-  jobTitleOverviewBoxSelectorByName,
-  jobTitleTimeAndSalaryBoxSelectorByName,
-  jobTitleTimeAndSalaryStatisticsBoxSelectorByName,
-  jobTitleInterviewExperiencesBoxSelectorByName,
-  jobTitleWorkExperiencesBoxSelectorByName,
-  jobTitleOverviewStatisticsBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
-import queryJobTitleOverviewApi from 'apis/queryJobTitleOverview';
-import queryJobTitleOverviewStatisticsApi from 'apis/queryJobTitleOverviewStatistics';
-import {
+  getJobTitleInterviewExperiences,
   getJobTitleTimeAndSalary,
   getJobTitleTimeAndSalaryStatistics,
-  getJobTitleInterviewExperiences,
   queryJobTitlesApi,
 } from 'apis/jobTitle';
+import queryJobTitleOverviewApi from 'apis/queryJobTitleOverview';
+import queryJobTitleOverviewStatisticsApi from 'apis/queryJobTitleOverviewStatistics';
 import queryJobTitleWorkExperiencesApi from 'apis/queryJobTitleWorkExperiences';
+import {
+  jobTitleIndexesBoxSelectorAtPage,
+  jobTitleInterviewExperiencesBoxSelectorByName,
+  jobTitleOverviewBoxSelectorByName,
+  jobTitleOverviewStatisticsBoxSelectorByName,
+  jobTitleTimeAndSalaryBoxSelectorByName,
+  jobTitleTimeAndSalaryStatisticsBoxSelectorByName,
+  jobTitleWorkExperiencesBoxSelectorByName,
+} from 'selectors/companyAndJobTitle';
+import { isGraphqlError } from 'utils/errors';
+import {
+  getError,
+  getFetched,
+  isFetched,
+  isFetching,
+  toFetching,
+} from 'utils/fetchBox';
+
 import { setExperience } from './experience';
 
 export const SET_OVERVIEW = '@@JOB_TITLE/SET_OVERVIEW';

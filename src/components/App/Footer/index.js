@@ -1,14 +1,16 @@
+import cn from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import cn from 'classnames';
-import GjLogo from 'common/icons/GjLogo.svg';
-import { Wrapper, P } from 'common/base';
-import LinkItem from './LinkItem';
-import styles from './Footer.module.css';
-import MediasImg from './medias.jpg';
-import LogoG0vImg from './logo-g0v-white.svg';
+
 import { openModal } from 'actions/questionnaireExpandedModal';
+import { P, Wrapper } from 'common/base';
+import GjLogo from 'common/icons/GjLogo.svg';
 import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey';
+
+import styles from './Footer.module.css';
+import LinkItem from './LinkItem';
+import LogoG0vImg from './logo-g0v-white.svg';
+import MediasImg from './medias.jpg';
 
 const link1 = [
   { to: '/labor-rights', text: '勞工法令懶人包' },

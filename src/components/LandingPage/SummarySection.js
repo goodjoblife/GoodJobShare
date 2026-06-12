@@ -1,11 +1,14 @@
-import React, { useState, useMemo } from 'react';
+import loadable from '@loadable/component';
 import PropTypes from 'prop-types';
 import { zip } from 'ramda';
-import loadable from '@loadable/component';
+import React, { useMemo, useState } from 'react';
+
 import Carousel, { CarouselPage } from 'common/Carousel';
-import { PageType, generatePageURL } from 'constants/companyJobTitle';
+import { generatePageURL, PageType } from 'constants/companyJobTitle';
+
 import ChartWrapper from './ChartWrapper';
 import styles from './SummarySection.module.css';
+
 const SalaryDistributionChart = loadable(() =>
   import('common/Charts/SalaryDistributionChart'),
 );

@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import styles from './PermissionBlock.module.css';
 import LoginToUnlock from './LoginToUnlock';
+import styles from './PermissionBlock.module.css';
 
 const BasicPermissionBlock = ({ rootClassName, to }) => {
   return (

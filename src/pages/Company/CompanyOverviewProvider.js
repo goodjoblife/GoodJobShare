@@ -1,19 +1,21 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Overview from 'components/CompanyAndJobTitle/Overview';
-import usePermission from 'hooks/usePermission';
-import { TabType, PageType } from 'constants/companyJobTitle';
+
 import {
   queryCompanyOverview,
   queryCompanyOverviewStatistics,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
+import { paramsSelector } from 'common/routing/selectors';
+import Overview from 'components/CompanyAndJobTitle/Overview';
+import { PageType, TabType } from 'constants/companyJobTitle';
+import usePermission from 'hooks/usePermission';
 import {
   companyOverviewBoxSelectorByName as overviewBoxSelectorByName,
   companyOverviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
-import { paramsSelector } from 'common/routing/selectors';
+
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 import { useTopNJobTitles } from './useTopNJobTitles';
 

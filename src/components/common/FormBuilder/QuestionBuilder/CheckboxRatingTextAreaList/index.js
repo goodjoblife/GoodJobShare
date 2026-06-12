@@ -1,10 +1,11 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
-import { OptionPropType, ValuePropType } from '../Checkbox/PropTypes';
-import Options from './Options';
-import ActiveItem from './ActiveItem';
+import PropTypes from 'prop-types';
+import React, { useCallback, useMemo, useState } from 'react';
 import { usePrevious } from 'react-use';
+
+import ActiveItem from './ActiveItem';
+import Options from './Options';
+import { OptionPropType, ValuePropType } from '../Checkbox/PropTypes';
 
 // This hook extends the options with the subjects that are not in the options
 // and returns the indices of the items that correspond to the options

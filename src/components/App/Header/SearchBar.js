@@ -1,9 +1,11 @@
-import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback, useState } from 'react';
+
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
 import { useSearchQuery } from 'common/SearchBar';
+
 import styles from './SearchBar.module.css';
 
 const SearchBar = ({ className, placeholder, inputRef }) => {

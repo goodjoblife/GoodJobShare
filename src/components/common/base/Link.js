@@ -1,7 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
+
 import styles from './Link.module.css';
 
 const Link = ({ className, ...props }) => (

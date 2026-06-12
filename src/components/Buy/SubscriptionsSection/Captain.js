@@ -1,9 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { format } from 'date-fns';
-import { Section, P, Link } from 'common/base';
-import styles from './SubscriptionsSection.module.css';
+import PropTypes from 'prop-types';
+import React from 'react';
+
+import { Link, P, Section } from 'common/base';
 import { formatCommaSeparatedNumber } from 'utils/stringUtil';
+
+import styles from './SubscriptionsSection.module.css';
 
 const Captain = ({ dataCount, endDateTime }) => (
   <Section className={styles.captain}>

@@ -1,11 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import EmptyView from '../EmptyView';
+import React from 'react';
 
 import { Section, Wrapper } from 'common/base';
 import Pagination from 'common/Pagination';
 import NotFoundStatus from 'common/routing/NotFound';
 
+import EmptyView from '../EmptyView';
 import Experience from '../Experience';
 import styles from '../styles.module.css';
 
