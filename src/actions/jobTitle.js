@@ -197,13 +197,13 @@ export const queryJobTitleOverviewStatistics = jobTitle => async (
   }
 };
 
-const setTimeAndSalary = (jobTitle, box) => ({
+const setSalaryWorkTime = (jobTitle, box) => ({
   type: SET_SALARY_WORK_TIME,
   jobTitle,
   box,
 });
 
-export const queryJobTitleTimeAndSalary = (
+export const queryJobTitleSalaryWorkTime = (
   {
     companyName,
     jobTitle,
@@ -234,7 +234,7 @@ export const queryJobTitleTimeAndSalary = (
     return;
   }
 
-  dispatch(setTimeAndSalary(jobTitle, toFetching(box)));
+  dispatch(setSalaryWorkTime(jobTitle, toFetching(box)));
 
   try {
     const data = await getJobTitleTimeAndSalary({
@@ -250,10 +250,10 @@ export const queryJobTitleTimeAndSalary = (
 
     // Not found case
     if (data == null) {
-      return dispatch(setTimeAndSalary(jobTitle, getFetched(data)));
+      return dispatch(setSalaryWorkTime(jobTitle, getFetched(data)));
     }
 
-    const timeAndSalaryData = {
+    const salaryWorkTimeData = {
       name: data.name,
       companyName,
       start,
@@ -266,19 +266,19 @@ export const queryJobTitleTimeAndSalary = (
       salaryWorkTimesCount: data.salaryWorkTimesResult.count,
     };
 
-    dispatch(setTimeAndSalary(jobTitle, getFetched(timeAndSalaryData)));
+    dispatch(setSalaryWorkTime(jobTitle, getFetched(salaryWorkTimeData)));
   } catch (error) {
-    dispatch(setTimeAndSalary(jobTitle, getError(error)));
+    dispatch(setSalaryWorkTime(jobTitle, getError(error)));
   }
 };
 
-const setTimeAndSalaryStatistics = (jobTitle, box) => ({
+const setSalaryWorkTimeStatistics = (jobTitle, box) => ({
   type: SET_SALARY_WORK_TIME_STATISTICS,
   jobTitle,
   box,
 });
 
-export const queryJobTitleTimeAndSalaryStatistics = ({ jobTitle }) => async (
+export const queryJobTitleSalaryWorkTimeStatistics = ({ jobTitle }) => async (
   dispatch,
   getState,
 ) => {
@@ -292,7 +292,7 @@ export const queryJobTitleTimeAndSalaryStatistics = ({ jobTitle }) => async (
     return;
   }
 
-  dispatch(setTimeAndSalaryStatistics(jobTitle, toFetching(box)));
+  dispatch(setSalaryWorkTimeStatistics(jobTitle, toFetching(box)));
 
   try {
     const data = await getJobTitleTimeAndSalaryStatistics({
@@ -301,22 +301,22 @@ export const queryJobTitleTimeAndSalaryStatistics = ({ jobTitle }) => async (
 
     // Not found case
     if (data == null) {
-      return dispatch(setTimeAndSalaryStatistics(jobTitle, getFetched(data)));
+      return dispatch(setSalaryWorkTimeStatistics(jobTitle, getFetched(data)));
     }
 
-    const timeAndSalaryStatisticsData = {
+    const salaryWorkTimeStatisticsData = {
       name: data.name,
       salary_work_time_statistics: data.salary_work_time_statistics,
     };
 
     dispatch(
-      setTimeAndSalaryStatistics(
+      setSalaryWorkTimeStatistics(
         jobTitle,
-        getFetched(timeAndSalaryStatisticsData),
+        getFetched(salaryWorkTimeStatisticsData),
       ),
     );
   } catch (error) {
-    dispatch(setTimeAndSalaryStatistics(jobTitle, getError(error)));
+    dispatch(setSalaryWorkTimeStatistics(jobTitle, getError(error)));
   }
 };
 

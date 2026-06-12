@@ -252,7 +252,7 @@ export const queryCompanyOverviewStatistics = companyName => async (
   }
 };
 
-const setTimeAndSalary = (companyName, box) => ({
+const setSalaryWorkTime = (companyName, box) => ({
   type: SET_SALARY_WORK_TIME,
   companyName,
   box,
@@ -295,7 +295,7 @@ export const queryCompanySalaryWorkTime = (
     return;
   }
 
-  dispatch(setTimeAndSalary(companyName, toFetching(box)));
+  dispatch(setSalaryWorkTime(companyName, toFetching(box)));
 
   try {
     const data = await getCompanyTimeAndSalary({
@@ -311,10 +311,10 @@ export const queryCompanySalaryWorkTime = (
 
     // Not found case
     if (data == null) {
-      return dispatch(setTimeAndSalary(companyName, getFetched(data)));
+      return dispatch(setSalaryWorkTime(companyName, getFetched(data)));
     }
 
-    const timeAndSalaryData = {
+    const salaryWorkTimeData = {
       name: data.name,
       jobTitle,
       start,
@@ -327,13 +327,13 @@ export const queryCompanySalaryWorkTime = (
       salaryWorkTimesCount: data.salaryWorkTimesResult.count,
     };
 
-    dispatch(setTimeAndSalary(companyName, getFetched(timeAndSalaryData)));
+    dispatch(setSalaryWorkTime(companyName, getFetched(salaryWorkTimeData)));
   } catch (error) {
-    dispatch(setTimeAndSalary(companyName, getError(error)));
+    dispatch(setSalaryWorkTime(companyName, getError(error)));
   }
 };
 
-const setTimeAndSalaryStatistics = (companyName, box) => ({
+const setSalaryWorkTimeStatistics = (companyName, box) => ({
   type: SET_SALARY_WORK_TIME_STATISTICS,
   companyName,
   box,
@@ -359,7 +359,7 @@ export const queryCompanySalaryWorkTimeStatistics = ({ companyName }) => async (
     return;
   }
 
-  dispatch(setTimeAndSalaryStatistics(companyName, toFetching(box)));
+  dispatch(setSalaryWorkTimeStatistics(companyName, toFetching(box)));
 
   try {
     const data = await getCompanyTimeAndSalaryStatistics({
@@ -369,23 +369,23 @@ export const queryCompanySalaryWorkTimeStatistics = ({ companyName }) => async (
     // Not found case
     if (data == null) {
       return dispatch(
-        setTimeAndSalaryStatistics(companyName, getFetched(data)),
+        setSalaryWorkTimeStatistics(companyName, getFetched(data)),
       );
     }
 
-    const timeAndSalaryStatisticsData = {
+    const salaryWorkTimeStatisticsData = {
       name: data.name,
       salary_work_time_statistics: data.salary_work_time_statistics,
     };
 
     dispatch(
-      setTimeAndSalaryStatistics(
+      setSalaryWorkTimeStatistics(
         companyName,
-        getFetched(timeAndSalaryStatisticsData),
+        getFetched(salaryWorkTimeStatisticsData),
       ),
     );
   } catch (error) {
-    dispatch(setTimeAndSalaryStatistics(companyName, getError(error)));
+    dispatch(setSalaryWorkTimeStatistics(companyName, getError(error)));
   }
 };
 

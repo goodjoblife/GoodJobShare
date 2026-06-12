@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   queryJobTitleOverviewStatistics,
-  queryJobTitleTimeAndSalary,
-  queryJobTitleTimeAndSalaryStatistics,
+  queryJobTitleSalaryWorkTime,
+  queryJobTitleSalaryWorkTimeStatistics,
 } from 'actions/jobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
@@ -89,10 +89,10 @@ const JobTitleSalaryWorkTimeProvider = () => {
     [experience],
   );
 
-  const handleQueryJobTitleTimeAndSalary = useCallback(
+  const handleQueryJobTitleSalaryWorkTime = useCallback(
     ({ force = false } = {}) => {
       dispatch(
-        queryJobTitleTimeAndSalary(
+        queryJobTitleSalaryWorkTime(
           {
             jobTitle,
             companyName: companyName || undefined,
@@ -126,15 +126,15 @@ const JobTitleSalaryWorkTimeProvider = () => {
 
   useEffect(() => {
     dispatch(
-      queryJobTitleTimeAndSalaryStatistics({
+      queryJobTitleSalaryWorkTimeStatistics({
         jobTitle,
       }),
     );
   }, [dispatch, jobTitle]);
 
   useEffect(() => {
-    handleQueryJobTitleTimeAndSalary();
-  }, [handleQueryJobTitleTimeAndSalary]);
+    handleQueryJobTitleSalaryWorkTime();
+  }, [handleQueryJobTitleSalaryWorkTime]);
 
   const [, fetchPermission] = usePermission();
   useEffect(() => {
@@ -156,7 +156,7 @@ const JobTitleSalaryWorkTimeProvider = () => {
       salaryWorkTimeStatistics={salaryWorkTimeStatistics}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
-      onCloseReport={() => handleQueryJobTitleTimeAndSalary({ force: true })}
+      onCloseReport={() => handleQueryJobTitleSalaryWorkTime({ force: true })}
     />
   );
 };
@@ -181,7 +181,7 @@ JobTitleSalaryWorkTimeProvider.fetchData = ({
   return Promise.all([
     dispatch(queryJobTitleOverviewStatistics(jobTitle)),
     dispatch(
-      queryJobTitleTimeAndSalary({
+      queryJobTitleSalaryWorkTime({
         jobTitle,
         companyName,
         start,
