@@ -38,7 +38,7 @@ import {
   queryFromQuerySelector,
   pageFromQuerySelector,
 } from 'selectors/routing';
-import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/Searchbar';
+import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
 
 const useOverviewStatisticsBox = pageName => {
   const selector = useMemo(

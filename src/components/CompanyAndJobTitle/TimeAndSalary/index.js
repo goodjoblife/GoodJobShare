@@ -7,7 +7,7 @@ import PageBoxRenderer from '../PageBoxRenderer';
 import TimeAndSalarySection from './TimeAndSalary';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
-import Searchbar from '../Searchbar';
+import SearchBar from '../SearchBar';
 import SummarySection from './SummarySection';
 import EsgBlock from '../TimeAndSalary/EsgBlock';
 import { PageType } from 'constants/companyJobTitle';
@@ -97,7 +97,7 @@ const TimeAndSalary = ({
         }}
       />
       <Wrapper ref={handleSectionRef} size="l" className={styles.searchbar}>
-        <Searchbar pageType={pageType} tabType={tabType} />
+        <SearchBar pageType={pageType} tabType={tabType} />
         <SalaryFilter y={sectionY} />
       </Wrapper>
       <Wrapper size="l">
