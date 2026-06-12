@@ -9,8 +9,8 @@ import {
   CompanyIsSubscribed,
   CompanyOverview,
   CompanyOverviewStatistics,
-  CompanyTimeAndSalaryResult,
-  CompanyTimeAndSalaryStatistics,
+  CompanySalaryWorkTimeResult,
+  CompanySalaryWorkTimeStatistics,
   CompanyWorkExperienceResult,
   TopNJobTitles,
 } from 'reducers/companyIndex';
@@ -19,8 +19,8 @@ import {
   JobTitleInterviewExperienceResult,
   JobTitleOverview,
   JobTitleOverviewStatistics,
-  JobTitleTimeAndSalaryResult,
-  JobTitleTimeAndSalaryStatistics,
+  JobTitleSalaryWorkTimeResult,
+  JobTitleSalaryWorkTimeStatistics,
   JobTitleWorkExperienceResult,
 } from 'reducers/jobTitleIndex';
 import FetchBox, { getUnfetched, isFetched } from 'utils/fetchBox';
@@ -60,12 +60,12 @@ export const companyOverviewStatisticsBoxSelectorByName = (
 
 export const companySalaryWorkTimeBoxSelectorByName = (companyName: string) => (
   state: RootState,
-): FetchBox<CompanyTimeAndSalaryResult | null> =>
+): FetchBox<CompanySalaryWorkTimeResult | null> =>
   state.companyIndex.timeAndSalaryByName[companyName] || getUnfetched();
 
 export const companySalaryWorkTimeStatisticsBoxSelectorByName = (
   companyName: string,
-) => (state: RootState): FetchBox<CompanyTimeAndSalaryStatistics | null> =>
+) => (state: RootState): FetchBox<CompanySalaryWorkTimeStatistics | null> =>
   state.companyIndex.timeAndSalaryStatisticsByName[companyName] ||
   getUnfetched();
 
@@ -116,12 +116,12 @@ export const jobTitleOverviewStatisticsBoxSelectorByName = (
 
 export const jobTitleSalaryWorktimeBoxSelectorByName = (jobTitle: string) => (
   state: RootState,
-): FetchBox<JobTitleTimeAndSalaryResult | null> =>
+): FetchBox<JobTitleSalaryWorkTimeResult | null> =>
   state.jobTitleIndex.timeAndSalaryByName[jobTitle] || getUnfetched();
 
 export const jobTitleSalaryWorkTimeStatisticsBoxSelectorByName = (
   jobTitle: string,
-) => (state: RootState): FetchBox<JobTitleTimeAndSalaryStatistics | null> =>
+) => (state: RootState): FetchBox<JobTitleSalaryWorkTimeStatistics | null> =>
   state.jobTitleIndex.timeAndSalaryStatisticsByName[jobTitle] || getUnfetched();
 
 export const jobTitleInterviewExperiencesBoxSelectorByName = (
