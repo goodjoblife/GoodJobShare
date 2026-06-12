@@ -69,7 +69,7 @@ const useTimeAndSalaryBoxSelector = pageName => {
   );
 };
 
-const JobTitleTimeAndSalaryProvider = () => {
+const JobTitleSalaryWorkTimeProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.JOB_TITLE;
   const jobTitle = useJobTitle();
@@ -161,7 +161,7 @@ const JobTitleTimeAndSalaryProvider = () => {
   );
 };
 
-JobTitleTimeAndSalaryProvider.fetchData = ({
+JobTitleSalaryWorkTimeProvider.fetchData = ({
   store: { dispatch },
   ...props
 }) => {
@@ -195,4 +195,4 @@ JobTitleTimeAndSalaryProvider.fetchData = ({
   ]);
 };
 
-export default JobTitleTimeAndSalaryProvider;
+export default JobTitleSalaryWorkTimeProvider;

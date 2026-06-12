@@ -80,7 +80,7 @@ const useEsgSalaryDataBox = companyName => {
   return useSelector(selector);
 };
 
-const CompanyTimeAndSalaryProvider = () => {
+const CompanySalaryWorkTimeProvider = () => {
   const dispatch = useDispatch();
   const pageType = PageType.COMPANY;
   const companyName = useCompanyName();
@@ -196,7 +196,7 @@ const CompanyTimeAndSalaryProvider = () => {
   );
 };
 
-CompanyTimeAndSalaryProvider.fetchData = ({
+CompanySalaryWorkTimeProvider.fetchData = ({
   store: { dispatch },
   ...props
 }) => {
@@ -254,4 +254,4 @@ CompanyTimeAndSalaryProvider.fetchData = ({
   ]);
 };
 
-export default CompanyTimeAndSalaryProvider;
+export default CompanySalaryWorkTimeProvider;
