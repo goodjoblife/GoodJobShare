@@ -12,7 +12,7 @@ import PageBoxRenderer from '../PageBoxRenderer';
 import Helmet from './Helmet';
 import OvertimeSection from './OvertimeSection';
 import SalaryFilter from './SalaryFilter';
-import TimeAndSalarySection from './TimeAndSalary';
+import SalaryWorkTimeSection from './SalaryWorkTimeSection';
 import SearchBar from '../SearchBar';
 import SummarySection from './SummarySection';
 import styles from './TimeAndSalary.module.css';
@@ -117,7 +117,7 @@ const TimeAndSalary = ({
                   page={page}
                   topNJobTitles={topNJobTitles}
                 />
-                <TimeAndSalarySection
+                <SalaryWorkTimeSection
                   pageType={pageType}
                   pageName={pageName}
                   tabType={tabType}
