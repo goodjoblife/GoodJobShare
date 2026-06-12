@@ -1,9 +1,10 @@
-import React, { useState, useRef, useCallback } from 'react';
-import { useDebounce } from 'react-use';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback, useRef, useState } from 'react';
+import { useDebounce } from 'react-use';
 
 import TextInput from 'common/form/TextInput';
+
 import commonStyles from './styles.module.css';
 
 const Text = ({

@@ -1,39 +1,41 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import TimeAndSalary from 'components/CompanyAndJobTitle/TimeAndSalary';
-import usePermission from 'hooks/usePermission';
-import { usePage } from 'hooks/routing/page';
-import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   queryJobTitleOverviewStatistics,
   queryJobTitleTimeAndSalary,
   queryJobTitleTimeAndSalaryStatistics,
 } from 'actions/jobTitle';
-import {
-  salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
-  jobTitleTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
-  jobTitleTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
-  jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
-import useJobTitle, { jobTitleSelector } from './useJobTitle';
+import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
+import TimeAndSalary from 'components/CompanyAndJobTitle/TimeAndSalary';
 import {
   dataTimeFromQuerySelector,
   experienceFromQuerySelector,
   genderFromQuerySelector,
+  getDataTimeRange,
+  getExperienceInYearRange,
   sortByFromQuerySelector,
   useDataTimeFromQuery,
   useExperienceFromQuery,
   useGenderFromQuery,
   useSortByFromQuery,
-  getDataTimeRange,
-  getExperienceInYearRange,
 } from 'components/CompanyAndJobTitle/TimeAndSalary/SalaryFilter';
+import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
+import { usePage } from 'hooks/routing/page';
+import usePermission from 'hooks/usePermission';
 import {
-  queryFromQuerySelector,
+  jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
+  jobTitleTimeAndSalaryBoxSelectorByName as timeAndSalaryBoxSelectorByName,
+  jobTitleTimeAndSalaryStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
+  salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
+} from 'selectors/companyAndJobTitle';
+import {
   pageFromQuerySelector,
+  queryFromQuerySelector,
 } from 'selectors/routing';
-import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
+
+import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
 const useOverviewStatisticsBox = pageName => {
   const selector = useMemo(

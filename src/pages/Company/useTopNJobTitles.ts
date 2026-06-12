@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { companyTopNJobTitlesBoxSelectorByName } from 'selectors/companyAndJobTitle';
+
 import { TopNJobTitles } from 'apis/queryCompanyTopNJobTitles';
 import { RootState } from 'reducers';
+import { companyTopNJobTitlesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 
 const emptyTopNJobTitles: TopNJobTitles = {
   all: [],

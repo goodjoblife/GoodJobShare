@@ -1,10 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import qs from 'qs';
-import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
+import React from 'react';
+import Helmet from 'react-helmet';
+
 import { SITE_NAME } from 'constants/helmetData';
 import SalaryWorkTimeOgImage from 'images/og/salary-work-time.jpg';
+import { formatCanonicalPath, formatTitle } from 'utils/helmetHelper';
 
 const SearchPageHelmet = ({ keyword, page }) => {
   const title = `查詢${keyword}的結果 - 第${page}頁`;

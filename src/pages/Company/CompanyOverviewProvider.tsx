@@ -1,25 +1,27 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Overview from 'components/CompanyAndJobTitle/Overview';
-import usePermission from 'hooks/usePermission';
-import { TabType, PageType } from 'constants/companyJobTitle';
+
 import {
   queryCompanyOverview,
   queryCompanyOverviewStatistics,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
-import {
-  companyOverviewBoxSelectorByName as overviewBoxSelectorByName,
-  companyOverviewStatisticsBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
+import Overview from 'components/CompanyAndJobTitle/Overview';
+import { PageType, TabType } from 'constants/companyJobTitle';
+import usePermission from 'hooks/usePermission';
 import { RootState } from 'reducers';
 import {
   CompanyOverview,
   CompanyOverviewStatistics,
 } from 'reducers/companyIndex';
-import FetchBox from 'utils/fetchBox';
+import {
+  companyOverviewBoxSelectorByName as overviewBoxSelectorByName,
+  companyOverviewStatisticsBoxSelectorByName,
+} from 'selectors/companyAndJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
+import FetchBox from 'utils/fetchBox';
+
 import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 // Matches the React Router route params for Company pages

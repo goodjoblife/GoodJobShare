@@ -1,15 +1,17 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { useSelector } from 'react-redux';
-import EmployerAggregateRatingSeo from './EmployerAggregateRatingSeo';
-import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
+
+import { generatePageURL, PageType } from 'constants/companyJobTitle';
+import { SITE_NAME } from 'constants/helmetData';
 import {
   companyRatingStatisticsBoxSelectorByName,
   companyTopNJobTitlesBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
 import { isFetched } from 'utils/fetchBox';
-import { SITE_NAME } from 'constants/helmetData';
-import { PageType, generatePageURL } from 'constants/companyJobTitle';
+import { formatCanonicalPath, formatTitle } from 'utils/helmetHelper';
+
+import EmployerAggregateRatingSeo from './EmployerAggregateRatingSeo';
 
 // if length of given array > 0, return `${array length}${unit}`
 // otherwise return defaultStr

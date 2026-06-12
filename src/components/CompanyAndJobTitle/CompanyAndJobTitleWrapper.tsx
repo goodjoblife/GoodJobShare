@@ -1,19 +1,22 @@
 import React, { useMemo } from 'react';
+
+import { Wrapper } from 'common/base';
 import Heading from 'common/base/Heading';
-import FanPageBlock from 'common/FanPageBlock';
 import BreadCrumb from 'common/BreadCrumb';
-import { tabTypeTranslation, generateTabURL } from 'constants/companyJobTitle';
-import { generateBreadCrumbData } from './utils';
+import FanPageBlock from 'common/FanPageBlock';
 import TabLinkGroup from 'common/TabLinkGroup';
-import styles from './CompanyAndJobTitleWrapper.module.css';
-import SubscribeNotificationButton from 'components/CompanyAndJobTitle/SubscribeNotificationButton';
 import StatisticsCard from 'components/CompanyAndJobTitle/StatisticsCard';
+import SubscribeNotificationButton from 'components/CompanyAndJobTitle/SubscribeNotificationButton';
 import {
+  generateTabURL,
   PageType,
   TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
+  tabTypeTranslation,
 } from 'constants/companyJobTitle';
-import { Wrapper } from 'common/base';
+
+import styles from './CompanyAndJobTitleWrapper.module.css';
+import { generateBreadCrumbData } from './utils';
 
 type CompanyAndJobTitleWrapperProps = React.PropsWithChildren<{
   pageName: string;

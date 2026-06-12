@@ -1,5 +1,6 @@
-import React from 'react';
 import cn from 'classnames';
+import React from 'react';
+
 import styles from './P.module.css';
 
 type PSize = 'xl' | 'l' | 'm' | 's';

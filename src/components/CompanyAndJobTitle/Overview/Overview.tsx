@@ -1,14 +1,16 @@
 import React from 'react';
-import { RootState } from 'reducers';
-import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import PageBoxRenderer from '../PageBoxRenderer';
-import OverviewSection from './OverviewSection';
-import { CompanyOverviewHelmet, JobTitleOverviewHelmet } from './Helmet';
-import FetchBox from 'utils/fetchBox';
+
 import { Wrapper } from 'common/base';
 import { PageType, TabType } from 'constants/companyJobTitle';
+import { RootState } from 'reducers';
 import { CompanyOverview } from 'reducers/companyIndex';
 import { JobTitleOverview } from 'reducers/jobTitleIndex';
+import FetchBox from 'utils/fetchBox';
+
+import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
+import PageBoxRenderer from '../PageBoxRenderer';
+import { CompanyOverviewHelmet, JobTitleOverviewHelmet } from './Helmet';
+import OverviewSection from './OverviewSection';
 
 type OverviewProps = {
   pageType: PageType;

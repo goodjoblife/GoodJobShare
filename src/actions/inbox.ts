@@ -1,11 +1,14 @@
+import { openInboxApi, queryInboxApi, readInboxMessageApi } from 'apis/inbox';
+import { InboxMessage } from 'constants/inbox';
 import { Thunk } from 'reducers';
-
-import { queryInboxApi, openInboxApi, readInboxMessageApi } from 'apis/inbox';
 import { tokenSelector } from 'selectors/authSelector';
 import { messagesBoxSelector } from 'selectors/inbox';
-import { getError, getFetched, isFetching, toFetching } from 'utils/fetchBox';
-import { InboxMessage } from 'constants/inbox';
-import FetchBox from 'utils/fetchBox';
+import FetchBox, {
+  getError,
+  getFetched,
+  isFetching,
+  toFetching,
+} from 'utils/fetchBox';
 
 export const SET_INBOX_COUNT = '@@inbox/SET_INBOX_COUNT';
 export const SET_INBOX = '@@inbox/SET_INBOX';

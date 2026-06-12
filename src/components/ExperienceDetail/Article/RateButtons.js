@@ -1,8 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
-import Glike from 'common/icons/Glike';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import rateButtonStyles from 'common/button/RateButtonElement.module.css';
+import Glike from 'common/icons/Glike';
+
 import styles from './RateButtons.module.css';
 import { overallRatingDialogMap } from '../../ShareExperience/common/optionMap';
 

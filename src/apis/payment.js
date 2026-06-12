@@ -1,11 +1,11 @@
-import graphqlClient from 'utils/graphqlClient';
 import {
-  subscriptionPlans,
   checkoutSubscriptionWithPrimeMutation,
   paymentRecord,
   queryMyCurrentSubscriptionGql,
   queryMySubscriptionsGql,
+  subscriptionPlans,
 } from 'graphql/payment';
+import graphqlClient from 'utils/graphqlClient';
 
 export const getSubscriptionPlans = () =>
   graphqlClient({

@@ -1,23 +1,25 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Overview from 'components/CompanyAndJobTitle/Overview';
-import usePermission from 'hooks/usePermission';
-import { TabType, PageType } from 'constants/companyJobTitle';
+
 import {
   queryJobTitleOverview,
   queryJobTitleOverviewStatistics,
 } from 'actions/jobTitle';
-import {
-  jobTitleOverviewBoxSelectorByName as overviewBoxSelectorByName,
-  jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
+import Overview from 'components/CompanyAndJobTitle/Overview';
+import { PageType, TabType } from 'constants/companyJobTitle';
+import usePermission from 'hooks/usePermission';
 import { RootState } from 'reducers';
 import {
   JobTitleOverview,
   JobTitleOverviewStatistics,
 } from 'reducers/jobTitleIndex';
-import FetchBox from 'utils/fetchBox';
+import {
+  jobTitleOverviewBoxSelectorByName as overviewBoxSelectorByName,
+  jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
+} from 'selectors/companyAndJobTitle';
 import { ServerSideRender } from 'types/serverSideRender';
+import FetchBox from 'utils/fetchBox';
+
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
 // Matches the React Router route params for JobTitle pages

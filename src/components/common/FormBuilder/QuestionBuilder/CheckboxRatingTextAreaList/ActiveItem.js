@@ -1,15 +1,17 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
 import cn from 'classnames';
-import { OptionPropType } from '../Checkbox/PropTypes';
+import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useState } from 'react';
+
+import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
+
 import Option from './Option';
+import formStyles from '../../FormBuilder.module.css';
+import { OptionPropType } from '../Checkbox/PropTypes';
 import Rating from '../Rating';
 import Textarea from '../TextArea';
 import styles from './styles.module.css';
 import commonStyles from '../styles.module.css';
-import formStyles from '../../FormBuilder.module.css';
-import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
 import Text from '../Text';
 
 const ActiveItem = ({

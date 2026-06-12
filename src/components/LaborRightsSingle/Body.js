@@ -1,12 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { StickyContainer, Sticky } from 'react-sticky';
 import cn from 'classnames';
-import { Section, Wrapper, Heading } from 'common/base';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Sticky, StickyContainer } from 'react-sticky';
+
+import { Heading, Section, Wrapper } from 'common/base';
 import GradientMask from 'common/GradientMask';
-import MarkdownParser from './MarkdownParser';
-import styles from './Body.module.css';
+
 import LeftBanner from './Banners/Banner1';
+import styles from './Body.module.css';
+import MarkdownParser from './MarkdownParser';
 
 const Body = ({ title, seoText, description, content, permissionBlock }) => (
   <Section Tag="main" pageTop>

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import FetchBox from 'utils/fetchBox';
+
 import BoxesRenderer from './BoxesRenderer';
 
 export default function BoxRenderer<T>({

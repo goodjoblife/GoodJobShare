@@ -1,5 +1,6 @@
-import React from 'react';
 import cn from 'classnames';
+import React from 'react';
+
 import styles from './Heading.module.css';
 
 type HeadingSize = 'l' | 'm' | 'sl' | 'sm';

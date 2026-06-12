@@ -1,25 +1,26 @@
+import { subMonths, subYears } from 'date-fns';
+import { LocationState } from 'history';
+import qs from 'qs';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router';
-import { subMonths, subYears } from 'date-fns';
-import qs from 'qs';
-import { LocationState } from 'history';
 
-import { useQuery } from 'hooks/routing';
+import { GENDER_OPTIONS } from 'constants/gender';
 import {
   DATA_TIME_OPTIONS,
-  EXPERIENCE_OPTIONS,
-  SORT_OPTIONS,
   DataTime,
+  EXPERIENCE_OPTIONS,
   ExperienceInYears,
   SalaryFilterQueryKey,
+  SORT_OPTIONS,
 } from 'constants/salaryFilter';
-import { GENDER_OPTIONS } from 'constants/gender';
+import { useQuery } from 'hooks/routing';
 import {
   dataTimeFromQuerySelector,
   experienceFromQuerySelector,
   genderFromQuerySelector,
   sortByFromQuerySelector,
 } from 'selectors/salaryFilter';
+
 import styles from './SalaryFilter.module.css';
 
 export {

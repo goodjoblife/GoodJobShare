@@ -1,10 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Heading } from 'common/base';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-import styles from './CompanyJobTitleBlock.module.css';
+import { Heading } from 'common/base';
 import { pageTypeTranslation } from 'constants/companyJobTitle';
+
+import styles from './CompanyJobTitleBlock.module.css';
 
 const CompanyJobTitleBlock = ({
   pageType,

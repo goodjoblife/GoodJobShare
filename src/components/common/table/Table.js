@@ -1,9 +1,10 @@
-import React, { Component, Children } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
 import R from 'ramda';
-import styles from './Table.module.css';
+import React, { Children, Component } from 'react';
+
 import Column from './Column';
+import styles from './Table.module.css';
 
 class Table extends Component {
   static propTypes = {

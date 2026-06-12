@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback, useState } from 'react';
+
 import Glike from 'common/icons/Glike';
 
 import useDebouncedConfirm from '../useDebouncedConfirm';

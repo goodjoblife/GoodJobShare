@@ -1,9 +1,9 @@
-import graphqlClient from 'utils/graphqlClient';
 import {
-  viewSalaryWorkTimesGql,
-  viewExperiencesGql,
   trackEventGql,
+  viewExperiencesGql,
+  viewSalaryWorkTimesGql,
 } from 'graphql/viewLog';
+import graphqlClient from 'utils/graphqlClient';
 
 export const viewSalaryWorkTimesApi = ({
   token,

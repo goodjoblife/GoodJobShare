@@ -1,7 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import CommentIcon from 'common/icons/Comment';
+
 import Base from './Base';
 
 const Comment = ({ onClick, ...restProps }) => (

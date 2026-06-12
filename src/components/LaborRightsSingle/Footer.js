@@ -1,12 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
+
 import { Wrapper } from 'common/base';
+import { FacebookWrapper } from 'common/facebook';
 import ArrowLeft from 'common/icons/ArrowLeft';
 import Thumbnails from 'common/icons/Thumbnails';
-import { FacebookWrapper } from 'common/facebook';
 import { formatCanonicalPath } from 'utils/helmetHelper';
+
 import styles from './Footer.module.css';
 import { FACEBOOK_APP_ID } from '../../config';
 

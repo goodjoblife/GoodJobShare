@@ -1,12 +1,14 @@
-import React from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import { P } from 'common/base';
-import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
-import styles from './PermissionBlock.module.css';
 import linkStyles from 'common/base/Link.module.css';
-import CallToLoginShareButton from './CallToLoginShareButton';
 import { useLogin } from 'hooks/login';
+import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
+
+import CallToLoginShareButton from './CallToLoginShareButton';
+import styles from './PermissionBlock.module.css';
 import useUnlockedDescriptionBySubmission from './useUnlockedDescriptionBySubmission';
 
 const LoginToUnlock = ({ to, onAuthenticatedClick }) => {

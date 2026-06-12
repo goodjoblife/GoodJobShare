@@ -1,5 +1,5 @@
+import { OPEN, TOGGLE } from 'actions/questionnaireExpandedModal';
 import createReducer from 'utils/createReducer';
-import { TOGGLE, OPEN } from 'actions/questionnaireExpandedModal';
 
 const preloadedState = {
   isOpen: false,

@@ -1,9 +1,11 @@
-import React, { useCallback } from 'react';
 import cn from 'classnames';
+import React, { useCallback } from 'react';
+
 import SearchTextInput from 'common/form/TextInput/SearchTextInput';
 import Magnifiner from 'common/icons/Magnifiner';
-import useSearchQuery from './useSearchQuery';
+
 import styles from './SearchBar.module.css';
+import useSearchQuery from './useSearchQuery';
 
 const SearchBar = () => {
   const [searchText, setSearchText, gotoSearchResult] = useSearchQuery();

@@ -1,24 +1,25 @@
 import { concat } from 'ramda';
+
 import {
-  getError,
-  getFetched,
-  toFetching,
-  isFetching,
-  isUnfetched,
-} from 'utils/fetchBox';
-import { isGraphqlError, UiNotFoundError } from 'utils/errors';
+  getPopularExperiences as queryPopularExperiencesApi,
+  queryExperience as queryExperienceApi,
+  queryRelatedExperiences as queryRelatedExperiencesApi,
+} from 'apis/experiencesApi';
 import { tokenSelector } from 'selectors/authSelector';
 import {
   experienceBoxSelectorAtId,
+  popularExperiencesBoxSelector,
   relatedExperiencesCabinSelector,
   relatedExperiencesStateSelector,
-  popularExperiencesBoxSelector,
 } from 'selectors/experienceSelector';
+import { isGraphqlError, UiNotFoundError } from 'utils/errors';
 import {
-  queryExperience as queryExperienceApi,
-  queryRelatedExperiences as queryRelatedExperiencesApi,
-  getPopularExperiences as queryPopularExperiencesApi,
-} from 'apis/experiencesApi';
+  getError,
+  getFetched,
+  isFetching,
+  isUnfetched,
+  toFetching,
+} from 'utils/fetchBox';
 
 export const SET_EXPERIENCE = '@@EXPERIENCE/SET_EXPERIENCE';
 export const SET_RELATED_EXPERIENCES = '@@EXPERIENCE/SET_RELATED_EXPERIENCES';

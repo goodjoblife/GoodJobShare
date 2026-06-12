@@ -1,13 +1,14 @@
+import cn from 'classnames';
+import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import cn from 'classnames';
 
-import styles from './TabBar.module.css';
-import inboxIconStyles from '../Header/InboxIcon.module.css';
 import Magnifiner from 'common/icons/Magnifiner';
 import PlusCircle from 'common/icons/PlusCircle';
+
+import styles from './TabBar.module.css';
 import InboxIcon from '../Header/InboxIcon';
+import inboxIconStyles from '../Header/InboxIcon.module.css';
 
 const ShareButton = ({ className, ...props }) => {
   return <PlusCircle className={cn(styles.share, className)} {...props} />;

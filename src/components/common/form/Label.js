@@ -1,7 +1,8 @@
-import React from 'react';
 import cn from 'classnames';
-import styles from './Label.module.css';
 import PropTypes from 'prop-types';
+import React from 'react';
+
+import styles from './Label.module.css';
 
 const Label = ({ className, isRequired, ...props }) => (
   <label

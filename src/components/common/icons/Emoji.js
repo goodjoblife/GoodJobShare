@@ -1,6 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import styles from './Emoji.module.css';
 
 const Emoji = ({ className, emoji, style }) => (

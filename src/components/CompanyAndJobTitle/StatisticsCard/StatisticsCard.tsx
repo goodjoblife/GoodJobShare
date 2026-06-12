@@ -1,11 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Skeleton from 'react-loading-skeleton';
-import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import { PageType } from 'constants/companyJobTitle';
-import { isFetching } from 'utils/fetchBox';
-import styles from './StatisticsCard.module.css';
+import { useSelector } from 'react-redux';
+
 import ThumbImage from 'common/icons/thumb.svg';
+import { PageType } from 'constants/companyJobTitle';
+import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
+import { isFetching } from 'utils/fetchBox';
+
+import styles from './StatisticsCard.module.css';
 
 type StatisticsCardProps = {
   pageName: string;

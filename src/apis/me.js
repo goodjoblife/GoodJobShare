@@ -1,6 +1,5 @@
+import { queryMyPublishesGql, queryMyPublishIdsGql } from 'graphql/me';
 import graphqlClient from 'utils/graphqlClient';
-
-import { queryMyPublishIdsGql, queryMyPublishesGql } from 'graphql/me';
 
 export const queryMyPublishIdsApi = ({ token }) =>
   graphqlClient({ query: queryMyPublishIdsGql, token }).then(data => [

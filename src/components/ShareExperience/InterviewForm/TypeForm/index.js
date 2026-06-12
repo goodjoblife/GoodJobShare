@@ -1,48 +1,48 @@
-import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { last, contains, head, equals, reject } from 'ramda';
-import { useDispatch } from 'react-redux';
+import { contains, equals, head, last, reject } from 'ramda';
+import React, { useCallback, useEffect } from 'react';
 import ReactGA from 'react-ga4';
+import { useDispatch } from 'react-redux';
 
-import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
-import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
-import SubmittableFormBuilder from '../../common/SubmittableFormBuilder';
 import { createInterviewExperience } from 'actions/experiences';
-import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
+import { TabType } from 'constants/companyJobTitle';
 import { ER0008, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+import { GA_ACTION, GA_CATEGORY } from 'constants/gaConstants';
+import { getUserPseudoId } from 'utils/GAUtils';
+import { sendEvent } from 'utils/hotjarUtil';
+import rollbar from 'utils/rollbar';
+import { calcInterviewExperienceValue } from 'utils/uploadSuccessValueCalc';
+
+import { GA_MEASUREMENT_ID } from '../../../../config';
+import SubmittableFormBuilder from '../../common/SubmittableFormBuilder';
+import Header, { CompanyJobTitleHeader } from '../../common/TypeFormHeader';
 import {
   DATA_KEY_COMPANY_NAME,
-  DATA_KEY_JOB_TITLE,
   DATA_KEY_DATE,
+  DATA_KEY_JOB_TENURE,
+  DATA_KEY_JOB_TITLE,
   DATA_KEY_REGION,
   DATA_KEY_RESULT,
-  DATA_KEY_JOB_TENURE,
   DATA_KEY_SALARY,
-  DATA_KEY_SENSITIVE_QUESTIONS,
-  RESULT_OPTIONS,
-  JOB_TENURE_OPTIONS,
-  SENSITIVE_QUESTIONS_OPTIONS,
   DATA_KEY_SECTIONS,
+  DATA_KEY_SENSITIVE_QUESTIONS,
+  JOB_TENURE_OPTIONS,
+  RESULT_OPTIONS,
+  SENSITIVE_QUESTIONS_OPTIONS,
 } from '../../constants';
-import { parseSalaryAmount, evolve } from '../../utils';
 import {
   createCompanyQuestion,
-  createJobTitleQuestion,
   createInterviewDateQuestion,
   createInterviewRegionQuestion,
   createInterviewResultQuestion,
-  createJobTenureQuestion,
-  createSalaryQuestion,
   createInterviewSectionsQuestion,
+  createJobTenureQuestion,
+  createJobTitleQuestion,
+  createSalaryQuestion,
   createSensitiveQuestionsQuestion,
   createSubmitQuestion,
 } from '../../questionCreators';
-import { sendEvent } from 'utils/hotjarUtil';
-import { getUserPseudoId } from 'utils/GAUtils';
-import rollbar from 'utils/rollbar';
-
-import { GA_MEASUREMENT_ID } from '../../../../config';
-import { TabType } from 'constants/companyJobTitle';
+import { evolve, parseSalaryAmount } from '../../utils';
 
 const header = <Header title="請輸入你的一份面試經驗" />;
 const renderCompanyJobTitleHeader = ({ companyName, jobTitle }) => (

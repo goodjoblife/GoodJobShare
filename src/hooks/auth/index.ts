@@ -1,11 +1,12 @@
 import { useSelector } from 'react-redux';
-import {
-  statusSelector,
-  userSelector,
-  tokenSelector,
-} from 'selectors/authSelector';
+
 import AuthStatus from 'constants/authStatus';
 import { User } from 'reducers/auth';
+import {
+  statusSelector,
+  tokenSelector,
+  userSelector,
+} from 'selectors/authSelector';
 
 export const useIsLoggedIn = (): boolean => {
   const status = useSelector(statusSelector);

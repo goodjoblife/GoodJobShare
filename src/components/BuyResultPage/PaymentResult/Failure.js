@@ -1,13 +1,13 @@
+import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
+import Button from 'common/button/Button';
 
 import styles from './PaymentResult.module.css';
 import WarningIcon from './warning.svg';
-import Button from 'common/button/Button';
 
 const Failure = ({ publicId }) => {
   const history = useHistory();

@@ -1,13 +1,13 @@
-import React, { useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
-import R from 'ramda';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import R from 'ramda';
+import React, { useCallback, useMemo } from 'react';
 
-import styles from './private.module.css';
-import commonStyles from '../../styles.module.css';
 import BlockSelect from './BlockSelect';
+import styles from './private.module.css';
 import DatePicker, { DatePropType } from '../../Date';
+import commonStyles from '../../styles.module.css';
 import { OptionPropType, ValuePropType } from '../PropTypes';
 
 const BlockSelectElseDate = ({

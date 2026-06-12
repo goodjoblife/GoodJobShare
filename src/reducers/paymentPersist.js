@@ -1,6 +1,5 @@
-import createReducer from 'utils/createReducer';
-
 import { SET_REDIRECT_URL } from 'actions/payment';
+import createReducer from 'utils/createReducer';
 
 const persistPreloadedState = {
   redirectUrl: null,
