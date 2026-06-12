@@ -43,9 +43,9 @@ import { setExperience } from './experience';
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
 export const SET_OVERVIEW_STATISTICS = '@@COMPANY/SET_OVERVIEW_STATISTICS';
-export const SET_TIME_AND_SALARY = '@@COMPANY/SET_TIME_AND_SALARY';
-export const SET_TIME_AND_SALARY_STATISTICS =
-  '@@COMPANY/SET_TIME_AND_SALARY_STATISTICS';
+export const SET_SALARY_WORK_TIME = '@@COMPANY/SET_SALARY_WORK_TIME';
+export const SET_SALARY_WORK_TIME_STATISTICS =
+  '@@COMPANY/SET_SALARY_WORK_TIME_STATISTICS';
 export const SET_INTERVIEW_EXPERIENCES = '@@COMPANY/SET_INTERVIEW_EXPERIENCES';
 export const SET_WORK_EXPERIENCES = '@@COMPANY/SET_WORK_EXPERIENCES';
 export const SET_INDEX = '@@COMPANY/SET_INDEX';
@@ -253,7 +253,7 @@ export const queryCompanyOverviewStatistics = companyName => async (
 };
 
 const setTimeAndSalary = (companyName, box) => ({
-  type: SET_TIME_AND_SALARY,
+  type: SET_SALARY_WORK_TIME,
   companyName,
   box,
 });
@@ -334,7 +334,7 @@ export const queryCompanySalaryWorkTime = (
 };
 
 const setTimeAndSalaryStatistics = (companyName, box) => ({
-  type: SET_TIME_AND_SALARY_STATISTICS,
+  type: SET_SALARY_WORK_TIME_STATISTICS,
   companyName,
   box,
 });

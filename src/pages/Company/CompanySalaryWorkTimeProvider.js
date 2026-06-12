@@ -11,7 +11,7 @@ import {
 } from 'actions/company';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
-import TimeAndSalary from 'components/CompanyAndJobTitle/TimeAndSalary';
+import SalaryWorkTime from 'components/CompanyAndJobTitle/TimeAndSalary';
 import {
   dataTimeFromQuerySelector,
   experienceFromQuerySelector,
@@ -180,7 +180,7 @@ const CompanySalaryWorkTimeProvider = () => {
   const boxSelector = useTimeAndSalaryBoxSelector(companyName);
 
   return (
-    <TimeAndSalary
+    <SalaryWorkTime
       pageType={pageType}
       pageName={companyName}
       page={page}

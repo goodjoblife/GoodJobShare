@@ -8,7 +8,7 @@ import {
 } from 'actions/jobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
-import TimeAndSalary from 'components/CompanyAndJobTitle/TimeAndSalary';
+import SalaryWorkTime from 'components/CompanyAndJobTitle/TimeAndSalary';
 import {
   dataTimeFromQuerySelector,
   experienceFromQuerySelector,
@@ -147,7 +147,7 @@ const JobTitleSalaryWorkTimeProvider = () => {
   const salaryWorkTimeStatistics = useSalaryWorkTimeStatistics(jobTitle);
 
   return (
-    <TimeAndSalary
+    <SalaryWorkTime
       pageType={pageType}
       pageName={jobTitle}
       page={page}
