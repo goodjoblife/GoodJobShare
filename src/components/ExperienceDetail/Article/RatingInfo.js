@@ -1,9 +1,11 @@
+import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
-import Good from 'common/icons/Good';
+
 import Bad from 'common/icons/Bad';
+import Good from 'common/icons/Good';
+
 import styles from './Article.module.css';
 import InfoBlock from './InfoBlock';
-import PropTypes from 'prop-types';
 
 const RecommendationIcon = ({ recommend }) => (
   <div className={styles.recommendIcon}>

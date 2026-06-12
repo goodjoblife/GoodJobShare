@@ -1,31 +1,33 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import WorkExperiencesAspect from 'components/CompanyAndJobTitle/WorkExperiences/Aspects';
-import { CompanyAspectExperienceResult } from 'reducers/companyIndex';
-import { WorkExperience } from 'apis/experience';
-import usePermission from 'hooks/usePermission';
-import { usePage } from 'hooks/routing/page';
-import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
+
 import {
-  queryCompanyWorkExperiencesAspectStatistics,
   queryCompanyWorkExperiencesAspectExperiences,
+  queryCompanyWorkExperiencesAspectStatistics,
 } from 'actions/company';
-import {
-  companyWorkExperiencesAspectStatisticsBoxSelectorByName as workExperiencesAspectStatisticsBoxSelectorByName,
-  companyWorkExperiencesAspectExperiencesBoxSelectorByName as workExperiencesAspectExperiencesBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
+import { WorkExperience } from 'apis/experience';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
-import { ServerSideRender } from 'types/serverSideRender';
-import useCompanyName, { companyNameSelector } from './useCompanyName';
+import WorkExperiencesAspect from 'components/CompanyAndJobTitle/WorkExperiences/Aspects';
+import useRating from 'components/CompanyAndJobTitle/WorkExperiences/Aspects/useRating';
+import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
+import { usePage } from 'hooks/routing/page';
+import usePermission from 'hooks/usePermission';
+import { RootState } from 'reducers';
+import { CompanyAspectExperienceResult } from 'reducers/companyIndex';
+import {
+  companyWorkExperiencesAspectExperiencesBoxSelectorByName as workExperiencesAspectExperiencesBoxSelectorByName,
+  companyWorkExperiencesAspectStatisticsBoxSelectorByName as workExperiencesAspectStatisticsBoxSelectorByName,
+} from 'selectors/companyAndJobTitle';
+import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
 import {
   pageFromQuerySelector,
   ratingFromQuerySelector,
 } from 'selectors/routing';
-import FetchBox, { isFetched, getFetched } from 'utils/fetchBox';
-import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
+import { ServerSideRender } from 'types/serverSideRender';
+import FetchBox, { getFetched, isFetched } from 'utils/fetchBox';
+
 import useAspect, { aspectSelector } from './useAspect';
-import useRating from 'components/CompanyAndJobTitle/WorkExperiences/Aspects/useRating';
-import { RootState } from 'reducers';
+import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 const useWorkExperiencesAspectExperiencesBoxSelector = (
   pageName: string,

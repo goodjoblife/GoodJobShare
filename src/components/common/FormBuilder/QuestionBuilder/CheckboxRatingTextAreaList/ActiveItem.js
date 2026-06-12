@@ -1,15 +1,17 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
 import cn from 'classnames';
-import { OptionPropType } from '../Checkbox/PropTypes';
+import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useState } from 'react';
+
+import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
+
 import Option from './Option';
+import formStyles from '../../FormBuilder.module.css';
+import { OptionPropType } from '../Checkbox/PropTypes';
 import Rating from '../Rating';
 import Textarea from '../TextArea';
 import styles from './styles.module.css';
 import commonStyles from '../styles.module.css';
-import formStyles from '../../FormBuilder.module.css';
-import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
 import Text from '../Text';
 
 const ActiveItem = ({
@@ -126,7 +128,12 @@ const ActiveItem = ({
         <div
           className={cn(formStyles.navigationBar, styles.activeCtaButtonGroup)}
         >
-          <NavigatorButton onClick={onClear}>清除</NavigatorButton>
+          <NavigatorButton
+            style={{ visibility: defaultValue ? 'visible' : 'hidden' }}
+            onClick={onClear}
+          >
+            清除
+          </NavigatorButton>
           <NavigatorButton onClick={onCancel}>取消</NavigatorButton>
           <NavigatorButton onClick={onConfirm}>儲存</NavigatorButton>
         </div>

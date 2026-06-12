@@ -1,72 +1,72 @@
-import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {
-  isNil,
-  isEmpty,
-  map,
   always,
-  when,
-  last,
   contains,
   equals,
+  isEmpty,
+  isNil,
+  last,
+  map,
   path,
   range,
+  when,
 } from 'ramda';
+import React, { Fragment } from 'react';
+
+import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
+import { fetchSearchCompany } from 'apis/timeAndSalaryApi';
+import { PageType, TabType } from 'constants/companyJobTitle';
+import { useTotalCount } from 'hooks/useCount';
+import { salaryHint } from 'utils/formUtils';
+
+import AutoCompleteItem from './AutoCompleteItem';
+import { employmentTypeOptions, salaryTypeOptions } from './common/optionMap';
 import {
   DATA_KEY_COMPANY_NAME,
-  DATA_KEY_JOB_TITLE,
-  DATA_KEY_DATE,
-  DATA_KEY_REGION,
-  DATA_KEY_RESULT,
-  DATA_KEY_JOB_TENURE,
-  DATA_KEY_SALARY,
-  DATA_KEY_SENSITIVE_QUESTIONS,
-  REGION_OPTIONS,
-  RESULT_OPTIONS,
-  RATING_LABELS,
-  RATING_COURSE_LABELS,
-  JOB_TENURE_OPTIONS,
-  SENSITIVE_QUESTIONS_OPTIONS,
   DATA_KEY_CURRENTLY_EMPLOYED,
-  DATA_KEY_SECTOR,
-  DATA_KEY_EMPLOY_TYPE,
-  DATA_KEY_GENDER,
-  DATA_KEY_EXPERIENCE_IN_YEAR,
+  DATA_KEY_DATE,
   DATA_KEY_DAY_PROMISED_WORK_TIME,
   DATA_KEY_DAY_REAL_WORK_TIME,
-  DATA_KEY_WEEK_WORK_TIME,
-  DATA_KEY_OVERTIME_FREQUENCY,
-  DATA_KEY_HAS_OVERTIME_SALARY,
+  DATA_KEY_EMPLOY_TYPE,
+  DATA_KEY_EXPERIENCE_IN_YEAR,
+  DATA_KEY_GENDER,
   DATA_KEY_HAS_COMPENSATORY_DAYOFF,
-  DATA_KEY_SECTIONS,
-  SECTION_MIN_LENGTH,
-  UNRATABLE_SUBJECTS,
+  DATA_KEY_HAS_OVERTIME_SALARY,
   DATA_KEY_JOB_LEVEL,
+  DATA_KEY_JOB_TENURE,
+  DATA_KEY_JOB_TITLE,
+  DATA_KEY_OVERTIME_FREQUENCY,
+  DATA_KEY_POLICIES,
+  DATA_KEY_REGION,
+  DATA_KEY_RESULT,
+  DATA_KEY_SALARY,
+  DATA_KEY_SECTIONS,
+  DATA_KEY_SECTOR,
+  DATA_KEY_SENSITIVE_QUESTIONS,
+  DATA_KEY_WEEK_WORK_TIME,
+  JOB_TENURE_OPTIONS,
+  RATING_COURSE_LABELS,
+  RATING_LABELS,
+  REGION_OPTIONS,
+  RESULT_OPTIONS,
+  SECTION_MIN_LENGTH,
+  SENSITIVE_QUESTIONS_OPTIONS,
+  UNRATABLE_SUBJECTS,
 } from './constants';
+import PolicyLawNote from './PolicyLawNote';
 import {
   isArray,
-  wordCount,
-  isSalaryAmount,
-  joinCompact,
   isNot,
-  within,
-  isValidSalary,
   isNumber,
+  isSalaryAmount,
+  isValidSalary,
+  joinCompact,
+  within,
+  wordCount,
 } from './utils';
-import { fetchSearchCompany } from 'apis/timeAndSalaryApi';
-import { getJobTitlesSearch } from 'apis/jobTitleSearchApi';
-import { employmentTypeOptions, salaryTypeOptions } from './common/optionMap';
 import WorkTimeExample from './WorkTimeExample';
-import Emoji from '../common/icons/Emoji';
-import {
-  PageType,
-  tabTypeTranslation,
-  TabType,
-} from 'constants/companyJobTitle';
 import { QUESTION_TYPE } from '../common/FormBuilder/QuestionBuilder';
-import { salaryHint } from 'utils/formUtils';
-import { useTotalCount } from 'hooks/useCount';
-import AutoCompleteItem from './AutoCompleteItem';
+import Emoji from '../common/icons/Emoji';
 
 export const createCompanyQuestion = ({ header }) => ({
   title: '公司名稱',
@@ -565,16 +565,125 @@ export const createSensitiveQuestionsQuestion = () => ({
   placeholder: '輸入其他特殊問題內容',
 });
 
+export const createPoliciesQuestion = () => ({
+  title: '至少分享三種制度的實際狀況',
+  type: QUESTION_TYPE.CHECKBOX_RADIO_ELSE_RADIO_TEXTAREA_LIST,
+  dataKey: DATA_KEY_POLICIES,
+  required: true,
+  defaultValue: [],
+  validateOrWarn: items =>
+    items.length < 3 ? '至少填寫三種制度的實際狀況' : null,
+  options: [
+    {
+      label: '生理假',
+      value: '生理假',
+      radioTitle: '自己或同事是否請得到生理假？',
+      radioOptions: ['是', '否', '不知道'],
+      radioElseOptionValue: '是',
+      radioElseOptions: [
+        '有，優於性別平等工作法',
+        '有，符合性別平等工作法',
+        '有，不符合性別平等工作法',
+        '有，不清楚是否符合性別平等工作法',
+      ],
+      radioFooter: (
+        <PolicyLawNote lawName="性別平等工作法">
+          女性受僱者因生理日致工作有困難者，每月得請生理假一日。生理假薪資，減半發給。
+        </PolicyLawNote>
+      ),
+      textTitle: '請分享自身或同事請生理假的實際狀況',
+      textPlaceholder:
+        '請生理假是否曾經遇到什麼困難？生理假薪資有正常給嗎（減半），或是有更好的福利？',
+      hasText: ([, v]) => v === '是' || v === '否',
+    },
+    {
+      label: '育嬰假',
+      value: '育嬰假',
+      radioTitle: '自己或同事是否請得到育嬰假？',
+      radioOptions: ['是', '否', '不知道'],
+      radioElseOptionValue: '是',
+      radioElseOptions: [
+        '有，優於性別平等工作法',
+        '有，符合性別平等工作法',
+        '有，不符合性別平等工作法',
+        '有，不清楚是否符合性別平等工作法',
+      ],
+      radioFooter: (
+        <PolicyLawNote lawName="性別平等工作法">
+          工作年資 6 個月以上，子女未滿 3
+          歲的雙親，可分別申請育嬰假（育嬰留職停薪），最長 2 年。2026
+          年起可以「日」為單位請育嬰假。
+        </PolicyLawNote>
+      ),
+      textTitle: '請分享自身或同事請育嬰假/育嬰留職停薪的實際狀況',
+      textPlaceholder:
+        '自身、或有看過同事請育嬰假嗎？育嬰假是否曾經遇到什麼困難？公司有額外的育嬰福利嗎？（例如：多給幾天給薪育嬰假）',
+      hasText: ([, v]) => v === '是' || v === '否',
+    },
+    {
+      label: '家庭照顧假',
+      value: '家庭照顧假',
+      radioTitle: '自己或同事是否請得到家庭照顧假？',
+      radioOptions: ['是', '否', '不知道'],
+      radioElseOptionValue: '是',
+      radioElseOptions: [
+        '有，優於性別平等工作法',
+        '有，符合性別平等工作法',
+        '有，不符合性別平等工作法',
+        '有，不清楚是否符合性別平等工作法',
+      ],
+      radioFooter: (
+        <PolicyLawNote lawName="性別平等工作法">
+          家庭照顧假一年至多 7
+          天，不得扣全勤獎金、影響考績或其他不利行為，屬主不得拒絕。
+        </PolicyLawNote>
+      ),
+      textTitle: '請分享自身或同事家庭照顧假的實際狀況',
+      textPlaceholder:
+        '自身、或有看過同事請家庭照顧假嗎？請家庭照顧假是否曾經遇到什麼困難？公司有額外的家庭照顧假福利嗎？（例如：多給幾天給薪家庭照顧假）',
+      hasText: ([, v]) => v === '是' || v === '否',
+    },
+    {
+      label: '彈性上下班時間',
+      value: '彈性上下班時間',
+      radioTitle: '是否有彈性上下班時間制度？',
+      radioOptions: ['有', '沒有', '不知道'],
+      textTitle: '請分享彈性上下班時間制度、實際狀況',
+      textPlaceholder:
+        '彈性上班的時間範圍？彈性下班的時間範圍？實際上來說，是否有同事或自身真的可以運用到彈性上下班？',
+      hasText: ([, v]) => v === '有',
+    },
+    {
+      label: '遠端工作',
+      value: '遠端工作',
+      radioTitle: '是否可以遠端工作？',
+      radioOptions: ['是', '否', '不知道'],
+      radioElseOptionValue: '是',
+      radioElseOptions: [
+        '每週一天',
+        '每週兩天',
+        '每週三天',
+        '每週四天',
+        '不限天數',
+      ],
+      textTitle: '請分享遠端工作的實際狀況',
+      textPlaceholder:
+        '一週可以遠端工作幾天？需要先申請或報備嗎？若公司以遠端工作為主，是否有額外的方式讓團隊成員更加認識彼此？',
+      hasText: ([, v]) => v === '是',
+    },
+  ],
+});
+
 const Count = () => {
   const count = useTotalCount();
   return <span>{Math.floor(count / 10000)}</span>;
 };
 
-export const createSubmitQuestion = ({ type }) => ({
+export const createSubmitQuestion = ({ label }) => ({
   title: () => () => (
     <span>
-      感謝你分享{tabTypeTranslation[type]}，按下「送出」，馬上就可以解鎖全站{' '}
-      <Count /> 萬多筆資料哦！
+      感謝你分享{label}，按下「送出」，馬上就可以解鎖全站 <Count />{' '}
+      萬多筆資料哦！
     </span>
   ),
   type: QUESTION_TYPE.EMPTY,

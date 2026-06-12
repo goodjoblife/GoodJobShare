@@ -1,9 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-import PlanCard from './PlanCard';
 import styles from './CardSection.module.css';
 import { getColumns } from './helpers';
+import PlanCard from './PlanCard';
 
 const CardSection = ({ plans }) => {
   return (

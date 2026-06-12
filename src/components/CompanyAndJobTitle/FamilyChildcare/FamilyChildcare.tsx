@@ -1,8 +1,10 @@
 import React from 'react';
-import { Section, Heading } from 'common/base';
+
+import { Heading, Section } from 'common/base';
 import { Aspect } from 'constants/companyJobTitle';
-import AspectScoreCard from '../Overview/AspectScoreCard';
+
 import LeaveSectionBlock, { LeaveSection } from '../LeaveSectionBlock';
+import AspectScoreCard from '../Overview/AspectScoreCard';
 import PolicyBarChart, { PolicyDistribution } from '../PolicyBarChart';
 import styles from './FamilyChildcare.module.css';
 

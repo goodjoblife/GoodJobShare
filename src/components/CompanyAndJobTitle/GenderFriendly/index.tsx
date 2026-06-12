@@ -1,7 +1,9 @@
 import React from 'react';
-import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
+
 import { Wrapper } from 'common/base';
 import { PageType, TabType } from 'constants/companyJobTitle';
+
+import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import GenderFriendlySection, { GenderFriendlyData } from './GenderFriendly';
 
 type FemaleManagerItem = {

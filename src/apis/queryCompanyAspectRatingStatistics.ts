@@ -1,6 +1,8 @@
 import R from 'ramda';
-import graphqlClient from 'utils/graphqlClient';
+
 import { Company } from 'graphql/company';
+import graphqlClient from 'utils/graphqlClient';
+
 import {
   AspectRatingStatistics,
   fragmentAspectRatingStatisticsFields,

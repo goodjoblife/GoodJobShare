@@ -1,13 +1,13 @@
-import React, { useState, useCallback, useRef, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
-
-import { debounce } from 'utils/streamUtils';
-import TextInput from '.';
+import React, { forwardRef, useCallback, useRef, useState } from 'react';
 
 import { fetchSearchCompany, fetchSearchJobTitle } from 'apis/timeAndSalaryApi';
 import AutoCompleteItem from 'components/ShareExperience/AutoCompleteItem';
 import { PageType } from 'constants/companyJobTitle';
+import { debounce } from 'utils/streamUtils';
+
+import TextInput from '.';
 
 const take5 = R.take(5);
 

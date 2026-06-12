@@ -1,4 +1,4 @@
-import { Reducer, AnyAction } from 'redux';
+import { AnyAction, Reducer } from 'redux';
 
 type HandlersMap<S, T extends Record<string, unknown>> = {
   [K in keyof T]: (state: S, action: T[K]) => S;

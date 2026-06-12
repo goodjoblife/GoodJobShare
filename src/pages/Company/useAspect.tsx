@@ -1,5 +1,6 @@
-import { Aspect } from 'constants/companyJobTitle';
 import { useParams } from 'react-router-dom';
+
+import { Aspect } from 'constants/companyJobTitle';
 
 export const aspectSelector = (params: Record<string, string>): Aspect => {
   const aspect = params.aspect;

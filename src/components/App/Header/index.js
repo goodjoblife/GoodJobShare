@@ -1,37 +1,38 @@
+import cn from 'classnames';
+import PropTypes from 'prop-types';
 import React, {
-  useState,
-  useEffect,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
+  useState,
 } from 'react';
-import { useDispatch } from 'react-redux';
-import { useWindowScroll, useRafState } from 'react-use';
-import PropTypes from 'prop-types';
-import { Link, useHistory, useLocation } from 'react-router-dom';
-import cn from 'classnames';
 import ReactGA from 'react-ga4';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useRafState, useWindowScroll } from 'react-use';
+
+import { fetchInbox } from 'actions/inbox';
 import { Wrapper } from 'common/base';
 import GjLogo from 'common/icons/GjLogo.svg';
 import Glike from 'common/icons/Glike.svg';
 import PopoverToggle from 'common/PopoverToggle';
-import useShareLink from 'hooks/experiments/useShareLink';
-import usePermission from 'hooks/usePermission';
-import useMobile from 'hooks/useMobile';
+import { GA_ACTION, GA_CATEGORY } from 'constants/gaConstants';
 import { useAuthUser, useIsLoggedIn } from 'hooks/auth';
+import useShareLink from 'hooks/experiments/useShareLink';
 import { useLogin, useLogout } from 'hooks/login';
-import { fetchInbox } from 'actions/inbox';
+import useMobile from 'hooks/useMobile';
+import usePermission from 'hooks/usePermission';
+import usePolling from 'hooks/usePolling';
 
 import styles from './Header.module.css';
+import InboxIcon from './InboxIcon';
 import inboxIconStyles from './InboxIcon.module.css';
+import InboxPopoverContainer from './InboxPopoverContainer';
+import SearchBar from './SearchBar';
 import SiteMenu from './SiteMenu';
 import Top from './Top';
 import ProgressTop from './Top/ProgressTop';
-import Searchbar from './Searchbar';
-import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import InboxIcon from './InboxIcon';
-import InboxPopoverContainer from './InboxPopoverContainer';
-import usePolling from 'hooks/usePolling';
 
 const onClickShareData = () => {
   ReactGA.event({
@@ -118,7 +119,7 @@ Logo.propTypes = {
   forceDesktop: PropTypes.bool,
 };
 
-const ResponsiveSearchbar = ({ className, inputRef }) => {
+const ResponsiveSearchBar = ({ className, inputRef }) => {
   const isMobile = useMobile();
   return (
     <div
@@ -128,7 +129,7 @@ const ResponsiveSearchbar = ({ className, inputRef }) => {
         className,
       )}
     >
-      <Searchbar
+      <SearchBar
         className={styles.searchbar}
         placeholder="搜全站薪水/面試/評價"
         inputRef={inputRef}
@@ -137,7 +138,7 @@ const ResponsiveSearchbar = ({ className, inputRef }) => {
   );
 };
 
-ResponsiveSearchbar.propTypes = {
+ResponsiveSearchBar.propTypes = {
   className: PropTypes.string,
   inputRef: PropTypes.any,
 };
@@ -277,7 +278,7 @@ const Header = ({ searchInputRef }) => {
         <Wrapper size="l" className={styles.inner}>
           <HamburgerButton isNavOpen={isNavOpen} toggle={toggleNav} />
           <Logo />
-          <ResponsiveSearchbar inputRef={searchInputRef} />
+          <ResponsiveSearchBar inputRef={searchInputRef} />
           <Nav
             isNavOpen={isNavOpen}
             isLoggedIn={isLoggedIn}

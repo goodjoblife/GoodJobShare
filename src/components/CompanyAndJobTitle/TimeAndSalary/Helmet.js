@@ -1,15 +1,16 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import ReactHelmet from 'react-helmet';
-import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
-import { SITE_NAME } from 'constants/helmetData';
+
 import {
+  generateTabURL,
   PageType,
   TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
-  generateTabURL,
 } from 'constants/companyJobTitle';
+import { SITE_NAME } from 'constants/helmetData';
 import SalaryWorkTimeOgImage from 'images/og/salary-work-time.jpg';
+import { formatCanonicalPath, formatTitle } from 'utils/helmetHelper';
 
 const CompanySalaryWorkTimeHelmet = ({
   companyName,

@@ -1,14 +1,16 @@
-import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import PageBoxRenderer from '../PageBoxRenderer';
-import InterviewExperiencesSection from './InterviewExperiences';
-import InterviewExperienceHelmet from './Helmet';
-import Searchbar from '../Searchbar';
-import Sorter from '../Sorter';
-import styles from '../styles.module.css';
+import React, { Fragment } from 'react';
+
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
+
+import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
+import PageBoxRenderer from '../PageBoxRenderer';
+import InterviewExperienceHelmet from './Helmet';
+import InterviewExperiencesSection from './InterviewExperiences';
+import SearchBar from '../SearchBar';
+import Sorter from '../Sorter';
+import styles from '../styles.module.css';
 
 const InterviewExperiences = ({
   pageType,
@@ -29,7 +31,7 @@ const InterviewExperiences = ({
     >
       <Wrapper ref={handleSectionRef} size="m">
         <div className={styles.interactive}>
-          <Searchbar pageType={pageType} tabType={tabType} />
+          <SearchBar pageType={pageType} tabType={tabType} />
           <Sorter />
         </div>
       </Wrapper>

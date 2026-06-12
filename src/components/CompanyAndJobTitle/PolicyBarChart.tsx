@@ -2,12 +2,14 @@ import React from 'react';
 import {
   Bar,
   BarChart,
+  LabelList,
   ResponsiveContainer,
   XAxis,
   YAxis,
-  LabelList,
 } from 'recharts';
+
 import Card from 'common/Card';
+
 import styles from './PolicyBarChart.module.css';
 
 export type PolicyItem = {

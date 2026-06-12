@@ -1,16 +1,17 @@
-import React, { useEffect, Fragment } from 'react';
-import { Wrapper, Section, Heading } from 'common/base';
+import React, { Fragment, useEffect } from 'react';
+
+import { Heading, Section, Wrapper } from 'common/base';
 import IconHeadingBlock from 'common/IconHeadingBlock';
-import Loader from 'common/Loader';
 import Comment2 from 'common/icons/Comment2';
+import Loader from 'common/Loader';
 
 import AuthMask from './AuthMask';
 import ShareBlockElement from './ShareBlockElement';
 import {
   useFetchMyPublishes,
   useToggleExperienceStatus,
-  useToggleSalaryWorkTimeStatus,
   useToggleReplyStatus,
+  useToggleSalaryWorkTimeStatus,
 } from './useQuery';
 
 const Me = () => {

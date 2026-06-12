@@ -1,13 +1,13 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import { buyStatus as buyStatusMap } from 'constants/payment';
 import { fetchBoxPropType } from 'utils/fetchBox';
 
-import { paymentRecordToBuyStatus } from './helpers';
-import Success from './Success';
 import Failure from './Failure';
+import { paymentRecordToBuyStatus } from './helpers';
 import InProgress from './InProgress';
+import Success from './Success';
 
 const PaymentResult = ({ paymentRecordBox, paymentRecordId }) => {
   const buyStatus = paymentRecordToBuyStatus(paymentRecordBox);

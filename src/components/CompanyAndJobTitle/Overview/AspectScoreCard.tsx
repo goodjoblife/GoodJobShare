@@ -1,15 +1,15 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { generatePath } from 'react-router';
 
+import { AspectRatingStatistics } from 'apis/aspectRatingStatistics';
 import { Aspect } from 'constants/companyJobTitle';
-import useCompanyName from 'pages/Company/useCompanyName';
 import { companyWorkExperiencesAspectPath } from 'constants/linkTo';
-import ScoreCard from './ScoreCard';
-
-import { useSelector } from 'react-redux';
+import useCompanyName from 'pages/Company/useCompanyName';
 import { companyWorkExperiencesAspectStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { isFetched } from 'utils/fetchBox';
-import { AspectRatingStatistics } from 'apis/aspectRatingStatistics';
+
+import ScoreCard from './ScoreCard';
 
 const useAllAspectRatingStatistics = (
   companyName: string,

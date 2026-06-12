@@ -1,6 +1,6 @@
-import { match } from 'react-router-dom';
 import { Location } from 'history';
 import qs from 'qs';
+import { match } from 'react-router-dom';
 
 // RouteProps is the parameter injected from server.js fetchData.
 // It is used in SSR with the static fetchData method.

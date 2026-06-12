@@ -1,17 +1,19 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
-import Like from 'common/icons/Like';
+import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { queryExperience } from 'actions/experience';
+import ReportBadge from 'common/button/ReportBadge';
 import Comment from 'common/icons/Comment';
+import Like from 'common/icons/Like';
+
 import styles from './ReactionZone.module.css';
+import useLoginFlow from '../hooks/useLoginFlow';
 import useQueryLike from '../hooks/useQueryLike';
 import useToggleLike from '../hooks/useToggleLike';
-import useLoginFlow from '../hooks/useLoginFlow';
-import ReportBadge from 'common/button/ReportBadge';
 import ReportZone from '../ReportZone';
 import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
-import { useDispatch } from 'react-redux';
-import { queryExperience } from 'actions/experience';
 
 const ReactionButton = ({ className, Icon, active, children, ...props }) => (
   <button

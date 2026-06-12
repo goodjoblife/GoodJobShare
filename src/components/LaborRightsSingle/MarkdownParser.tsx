@@ -1,5 +1,6 @@
+import { marked } from 'marked';
 import React from 'react';
-import marked from 'marked';
+
 import styles from './MarkdownParser.module.css';
 
 type MarkdownParserProps = {
@@ -11,7 +12,7 @@ const MarkdownParser: React.FC<MarkdownParserProps> = ({ content = '' }) => (
     className={styles.md}
     // eslint-disable-next-line react/no-danger
     dangerouslySetInnerHTML={{
-      __html: marked(content),
+      __html: marked.parse(content) as string,
     }}
   />
 );

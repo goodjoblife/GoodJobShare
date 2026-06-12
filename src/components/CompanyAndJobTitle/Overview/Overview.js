@@ -1,23 +1,23 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import { Section } from 'common/base';
 import BoxRenderer from 'common/StatusRenderer';
-
-import SnippetBlock from './SnippetBlock';
-import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
-import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
 import {
   Aspect,
+  generateTabURL,
   TabType,
   tabTypeDetailTranslation as TAB_TYPE_DETAIL_TRANSLATION,
-  generateTabURL,
 } from 'constants/companyJobTitle';
-import SummaryBlock from './SummaryBlock';
 import usePermission from 'hooks/usePermission';
-import { fetchBoxPropType } from 'utils/fetchBox';
-import AspectScoreCard, { useAspectsData } from './AspectScoreCard';
 import useCompanyName from 'pages/Company/useCompanyName';
+import { fetchBoxPropType } from 'utils/fetchBox';
+
+import AspectScoreCard, { useAspectsData } from './AspectScoreCard';
+import SnippetBlock from './SnippetBlock';
+import SummaryBlock from './SummaryBlock';
+import InterviewExperienceEntry from '../InterviewExperiences/ExperienceEntry';
+import WorkExperienceEntry from '../WorkExperiences/ExperienceEntry';
 
 const GenderAspectSnippetBlock = () => {
   const companyName = useCompanyName();

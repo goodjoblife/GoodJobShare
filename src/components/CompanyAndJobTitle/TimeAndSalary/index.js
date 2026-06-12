@@ -1,21 +1,22 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
-import BoxRenderer from 'common/StatusRenderer';
-import PageBoxRenderer from '../PageBoxRenderer';
-import TimeAndSalarySection from './TimeAndSalary';
-import Helmet from './Helmet';
-import OvertimeSection from './OvertimeSection';
-import Searchbar from '../Searchbar';
-import SummarySection from './SummarySection';
-import EsgBlock from '../TimeAndSalary/EsgBlock';
-import { PageType } from 'constants/companyJobTitle';
-import SalaryFilter from './SalaryFilter';
-import { fetchBoxPropType } from 'utils/fetchBox';
 import { Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
+import BoxRenderer from 'common/StatusRenderer';
+import { PageType } from 'constants/companyJobTitle';
+import { fetchBoxPropType } from 'utils/fetchBox';
+
+import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
+import PageBoxRenderer from '../PageBoxRenderer';
+import Helmet from './Helmet';
+import OvertimeSection from './OvertimeSection';
+import SalaryFilter from './SalaryFilter';
+import TimeAndSalarySection from './TimeAndSalary';
+import SearchBar from '../SearchBar';
+import SummarySection from './SummarySection';
 import styles from './TimeAndSalary.module.css';
+import EsgBlock from '../TimeAndSalary/EsgBlock';
 
 const TimeAndSalary = ({
   pageType,
@@ -97,7 +98,7 @@ const TimeAndSalary = ({
         }}
       />
       <Wrapper ref={handleSectionRef} size="l" className={styles.searchbar}>
-        <Searchbar pageType={pageType} tabType={tabType} />
+        <SearchBar pageType={pageType} tabType={tabType} />
         <SalaryFilter y={sectionY} />
       </Wrapper>
       <Wrapper size="l">

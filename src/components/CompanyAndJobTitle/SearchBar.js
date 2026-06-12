@@ -1,22 +1,22 @@
-import React, { useState, useCallback, useRef } from 'react';
-import { useHistory } from 'react-router';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
 import qs from 'qs';
+import React, { useCallback, useRef, useState } from 'react';
 import ReactGA from 'react-ga4';
+import { useHistory } from 'react-router';
 
-import { useQuery } from 'hooks/routing';
 import TextInput from 'common/form/TextInput';
 import Magnifiner from 'common/icons/Magnifiner';
-import styles from './Searchbar.module.css';
-
 import {
   PageType,
   pageTypeTranslation,
   tabTypeTranslation,
 } from 'constants/companyJobTitle';
-import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
+import { GA_ACTION, GA_CATEGORY } from 'constants/gaConstants';
+import { useQuery } from 'hooks/routing';
 import { queryFromQuerySelector } from 'selectors/routing';
+
+import styles from './SearchBar.module.css';
 
 export const useSearchTextFromQuery = () => {
   const history = useHistory();
@@ -35,7 +35,7 @@ export const useSearchTextFromQuery = () => {
   return [searchText, setSearchText];
 };
 
-const Searchbar = ({ className, label, placeholder, onSubmit, pageType }) => {
+const SearchBar = ({ className, label, placeholder, onSubmit, pageType }) => {
   const [searchTextFromQuery] = useSearchTextFromQuery();
   const [searchText, setSearchText] = useState(searchTextFromQuery);
   const ref = useRef(null);
@@ -92,7 +92,7 @@ const Searchbar = ({ className, label, placeholder, onSubmit, pageType }) => {
   );
 };
 
-Searchbar.propTypes = {
+SearchBar.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
@@ -100,7 +100,7 @@ Searchbar.propTypes = {
   placeholder: PropTypes.string,
 };
 
-const WrappedSearchbar = ({ pageType, tabType }) => {
+const WrappedSearchBar = ({ pageType, tabType }) => {
   const [, setFilter] = useSearchTextFromQuery();
 
   const translatedPageType = pageTypeTranslation[pageType];
@@ -122,7 +122,7 @@ const WrappedSearchbar = ({ pageType, tabType }) => {
   const placeholder = `搜該${translatedPageType}指定${translatedSearchingPageType}${translatedTabType}`;
 
   return (
-    <Searchbar
+    <SearchBar
       label={label}
       placeholder={placeholder}
       onSubmit={setFilter}
@@ -131,9 +131,9 @@ const WrappedSearchbar = ({ pageType, tabType }) => {
   );
 };
 
-WrappedSearchbar.propTypes = {
+WrappedSearchBar.propTypes = {
   pageType: PropTypes.string.isRequired,
   tabType: PropTypes.string.isRequired,
 };
 
-export default WrappedSearchbar;
+export default WrappedSearchBar;

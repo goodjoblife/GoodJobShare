@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { TabType, PageType } from 'constants/companyJobTitle';
+
 import {
   queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
 import { paramsSelector } from 'common/routing/selectors';
-import { ServerSideRender } from 'types/serverSideRender';
-import useCompanyName, { companyNameSelector } from './useCompanyName';
 import FamilyChildcare from 'components/CompanyAndJobTitle/FamilyChildcare';
 import { FamilyChildcareData } from 'components/CompanyAndJobTitle/FamilyChildcare/FamilyChildcare';
+import { PageType, TabType } from 'constants/companyJobTitle';
+import { ServerSideRender } from 'types/serverSideRender';
+
+import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 const HARDCODED_DATA: FamilyChildcareData = {
   parentalLeave: {

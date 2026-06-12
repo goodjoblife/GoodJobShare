@@ -1,9 +1,10 @@
+import { path } from 'ramda';
 import { useEffect } from 'react';
 import { useLocation } from 'react-use';
-import { path } from 'ramda';
+
 import {
-  generateShareTimeSalaryTypeForm,
   generateShareInterviewTypeForm,
+  generateShareTimeSalaryTypeForm,
   generateShareWork,
 } from 'common/ShareExpSection/shareLinkTo';
 

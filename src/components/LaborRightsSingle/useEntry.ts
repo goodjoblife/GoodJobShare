@@ -1,13 +1,14 @@
-import { useMemo } from 'react';
 import R from 'ramda';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  menuBoxSelector,
-  entryBoxSelectorById,
-} from 'selectors/laborRightsSelector';
-import FetchBox from 'utils/fetchBox';
+
 import { LaborRightEntry } from 'apis/queryLaborRights';
 import { LaborRightMenuEntry } from 'apis/queryLaborRightsMenu';
+import {
+  entryBoxSelectorById,
+  menuBoxSelector,
+} from 'selectors/laborRightsSelector';
+import FetchBox from 'utils/fetchBox';
 
 export const useNeighborEntry = (
   entryId: string,

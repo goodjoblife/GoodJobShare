@@ -1,19 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Section, Wrapper, Heading, P } from 'common/base';
+
+import { Heading, P, Section, Wrapper } from 'common/base';
 import CallToActionBanner from 'common/CallToAction/CallToActionBanner';
-import Facebook from 'common/icons/Facebook';
-import Email from 'common/icons/Email';
-import Github from 'common/icons/Github';
 import editorStyles from 'common/Editor.module.css';
+import Email from 'common/icons/Email';
+import Facebook from 'common/icons/Facebook';
+import Github from 'common/icons/Github';
 import StaticHelmet from 'common/StaticHelmet';
-import styles from './About.module.css';
-import Timeline from './Timeline';
-import AboutCity from './about-city.png';
-import AboutPeople from './about-people.png';
+
 import About01 from './about-01.png';
 import About02 from './about-02.png';
 import About03 from './about-03.png';
+import AboutCity from './about-city.png';
+import AboutPeople from './about-people.png';
+import styles from './About.module.css';
+import Timeline from './Timeline';
 
 const data2016 = [
   {

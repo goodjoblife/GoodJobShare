@@ -1,8 +1,10 @@
 import React from 'react';
-import Card from 'common/Card';
+
 import { Link } from 'common/base';
-import PolicyBarChart, { PolicyDistribution } from './PolicyBarChart';
+import Card from 'common/Card';
+
 import styles from './LeaveSectionBlock.module.css';
+import PolicyBarChart, { PolicyDistribution } from './PolicyBarChart';
 
 export type LeaveSection = {
   title: string;

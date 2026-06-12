@@ -1,6 +1,7 @@
-import { Dispatch, GetState } from 'reducers';
-import { match } from 'react-router-dom';
 import { Location } from 'history';
+import { match } from 'react-router-dom';
+
+import { Dispatch, GetState } from 'reducers';
 
 interface Store {
   dispatch: Dispatch;

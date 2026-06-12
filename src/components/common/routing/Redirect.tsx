@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect as RouterRedirect, RedirectProps } from 'react-router-dom';
+
 import Status from './Status';
 
 type Props = RedirectProps & {

@@ -1,13 +1,15 @@
 import React from 'react';
 import {
-  BarChart,
   Bar,
-  XAxis,
-  YAxis,
+  BarChart,
   Legend,
   ResponsiveContainer,
+  XAxis,
+  YAxis,
 } from 'recharts';
+
 import Card from 'common/Card';
+
 import styles from './GenderPayComparisonBlock.module.css';
 
 export type GenderPayItem = {

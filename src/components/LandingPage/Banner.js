@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { Wrapper } from 'common/base';
+import SearchBar from 'common/SearchBar';
+
 import styles from './Banner.module.css';
-import SearchBar from '../TimeAndSalary/SearchBar';
 
 const Banner = () => (
   <section className={styles.banner}>

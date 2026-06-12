@@ -1,19 +1,21 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TabType, PageType } from 'constants/companyJobTitle';
+
 import {
-  queryCompanyWorkExperiencesAspectStatistics,
   queryCompanyEsgSalaryData,
+  queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
-import { companyEsgSalaryDataBoxSelectorByName } from 'selectors/companyAndJobTitle';
+import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
 import { paramsSelector } from 'common/routing/selectors';
-import { ServerSideRender } from 'types/serverSideRender';
-import useCompanyName, { companyNameSelector } from './useCompanyName';
 import GenderFriendly from 'components/CompanyAndJobTitle/GenderFriendly';
 import { GenderFriendlyData } from 'components/CompanyAndJobTitle/GenderFriendly/GenderFriendly';
+import { PageType, TabType } from 'constants/companyJobTitle';
+import { companyEsgSalaryDataBoxSelectorByName } from 'selectors/companyAndJobTitle';
+import { ServerSideRender } from 'types/serverSideRender';
 import { isFetched } from 'utils/fetchBox';
-import { ESGSalaryData } from 'apis/queryCompanyEsgSalaryData';
+
+import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 const HARDCODED_DATA: GenderFriendlyData = {
   menstrualLeave: {

@@ -1,39 +1,39 @@
-import React from 'react';
+import cn from 'classnames';
 import {
-  string,
   any,
+  arrayOf,
   bool,
-  number,
   func,
+  node,
+  number,
   oneOf,
   oneOfType,
-  arrayOf,
-  node,
+  string,
 } from 'prop-types';
-import cn from 'classnames';
 import { values } from 'ramda';
+import React from 'react';
 
-import Text from './Text';
-import TextArea from './TextArea';
 import {
-  Radio,
-  RadioElse,
-  RadioElseRadio,
-  RadioElseDate,
   Checkbox,
   CheckboxElse,
+  Radio,
+  RadioElse,
+  RadioElseDate,
+  RadioElseRadio,
 } from './Checkbox';
-import Rating from './Rating';
-import File from './File';
-import Date from './Date';
-import SelectText from './SelectText';
-import TextList from './TextList';
-import CheckboxRatingTextAreaList from './CheckboxRatingTextAreaList';
-
-import TitleBlock from '../TitleBlock';
-import Scrollable from '../Scrollable';
-import styles from './styles.module.css';
 import { OptionPropType } from './Checkbox/PropTypes';
+import CheckboxRadioElseRadioTextAreaList from './CheckboxRadioElseRadioTextAreaList';
+import CheckboxRatingTextAreaList from './CheckboxRatingTextAreaList';
+import Date from './Date';
+import File from './File';
+import Rating from './Rating';
+import SelectText from './SelectText';
+import Text from './Text';
+import TextArea from './TextArea';
+import TextList from './TextList';
+import Scrollable from '../Scrollable';
+import TitleBlock from '../TitleBlock';
+import styles from './styles.module.css';
 import { normalizeOptions } from './utils';
 
 export const QUESTION_TYPE = {
@@ -44,6 +44,8 @@ export const QUESTION_TYPE = {
   RADIO_ELSE_RADIO: 'RADIO_ELSE_RADIO',
   RADIO_ELSE_DATE: 'RADIO_ELSE_DATE',
   RADIO_RATING_TEXTAREA_LIST: 'RADIO_RATING_TEXTAREA_LIST',
+  CHECKBOX_RADIO_ELSE_RADIO_TEXTAREA_LIST:
+    'CHECKBOX_RADIO_ELSE_RADIO_TEXTAREA_LIST',
   CHECKBOX: 'CHECKBOX',
   CHECKBOX_ELSE: 'CHECKBOX_ELSE',
   RATING: 'RATING',
@@ -152,6 +154,13 @@ const useQuestionNode = ({
           validateOrWarnItem={validateOrWarnItem}
         />
       );
+    case QUESTION_TYPE.CHECKBOX_RADIO_ELSE_RADIO_TEXTAREA_LIST:
+      return (
+        <CheckboxRadioElseRadioTextAreaList
+          {...commonProps}
+          options={options}
+        />
+      );
     case QUESTION_TYPE.CHECKBOX:
       return <Checkbox {...commonProps} options={options} />;
     case QUESTION_TYPE.CHECKBOX_ELSE:
@@ -198,6 +207,7 @@ const useFillMode = ({ type }) => {
     case QUESTION_TYPE.RADIO_ELSE_RADIO:
     case QUESTION_TYPE.RADIO_ELSE_DATE:
     case QUESTION_TYPE.RADIO_RATING_TEXTAREA_LIST:
+    case QUESTION_TYPE.CHECKBOX_RADIO_ELSE_RADIO_TEXTAREA_LIST:
     case QUESTION_TYPE.CHECKBOX:
     case QUESTION_TYPE.CHECKBOX_ELSE:
     case QUESTION_TYPE.TEXT_LIST:

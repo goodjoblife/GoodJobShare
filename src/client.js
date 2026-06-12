@@ -1,13 +1,13 @@
+import { createBrowserHistory as createHistory } from 'history';
+import qs from 'qs';
+import R from 'ramda';
 import React from 'react';
 import { hydrate } from 'react-dom';
-import { createBrowserHistory as createHistory } from 'history';
-import R from 'ramda';
-import qs from 'qs';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { ScrollContext } from 'react-router-scroll-4';
-import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import Root from './components/Root';
 import configureStore from './store/configureStore';

@@ -1,12 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Bookmark from 'common/icons/Bookmark';
 import { Heading, P } from 'common/base';
+import Bookmark from 'common/icons/Bookmark';
 import Modal from 'common/Modal';
-import { PageType, TabType, generateTabURL } from 'constants/companyJobTitle';
+import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
+
 import styles from './ShareBlockElement.module.css';
 
 const ShareBlock = ({

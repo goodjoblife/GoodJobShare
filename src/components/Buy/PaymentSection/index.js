@@ -1,25 +1,24 @@
+import cn from 'classnames';
+import PropTypes from 'prop-types';
+import { compose, equals, path } from 'ramda';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { equals, path, compose } from 'ramda';
-import cn from 'classnames';
 
-import { Section, Subheading, P } from 'common/base';
+import { fetchMyCurrentSubscription } from 'actions/payment';
+import { P, Section, Subheading } from 'common/base';
 import Button from 'common/button/ButtonRect';
 import Card from 'common/Card';
 import Label from 'common/form/Label';
 import Loading from 'common/Loader';
-
 import { useIsLoggedIn } from 'hooks/auth';
 import { useMyCurrentSubscription } from 'hooks/payment/usePayment';
-import { fetchMyCurrentSubscription } from 'actions/payment';
-import { isUnfetched, isFetched } from 'utils/fetchBox';
+import { isFetched, isUnfetched } from 'utils/fetchBox';
 
-import { CardCCV, CardExpirationDate, CardNumber } from './TappayElement';
-import Row from './Row';
 import CreditCards from './CreditCards';
 import styles from './PaymentSection.module.css';
+import Row from './Row';
+import { CardCCV, CardExpirationDate, CardNumber } from './TappayElement';
 import useForm, { FORM_STATE } from './useForm';
 import LoginSection from '../LoginSection';
 
