@@ -5,28 +5,34 @@ import {
   queryJobTitleOverview,
   queryJobTitleOverviewStatistics,
 } from 'actions/jobTitle';
-import { paramsSelector } from 'common/routing/selectors';
 import Overview from 'components/CompanyAndJobTitle/Overview';
 import { PageType, TabType } from 'constants/companyJobTitle';
 import usePermission from 'hooks/usePermission';
+import { RootState } from 'reducers';
+import {
+  JobTitleOverview,
+  JobTitleOverviewStatistics,
+} from 'reducers/jobTitleIndex';
 import {
   jobTitleOverviewBoxSelectorByName as overviewBoxSelectorByName,
   jobTitleOverviewStatisticsBoxSelectorByName as overviewStatisticsBoxSelectorByName,
 } from 'selectors/companyAndJobTitle';
+import { ServerSideRender } from 'types/serverSideRender';
+import FetchBox from 'utils/fetchBox';
 
 import useJobTitle, { jobTitleSelector } from './useJobTitle';
 
-const useOverviewBoxSelector = pageName => {
-  return useCallback(
-    state => {
-      const box = overviewBoxSelectorByName(pageName)(state);
-      return box;
-    },
-    [pageName],
-  );
-};
+// Matches the React Router route params for JobTitle pages
+type Params = { jobTitle: string };
 
-const useOverviewStatisticsBox = pageName => {
+const useOverviewBoxSelector = (
+  pageName: string,
+): ((state: RootState) => FetchBox<JobTitleOverview | null>) =>
+  useMemo(() => overviewBoxSelectorByName(pageName), [pageName]);
+
+const useOverviewStatisticsBox = (
+  pageName: string,
+): FetchBox<JobTitleOverviewStatistics | null> => {
   const selector = useMemo(
     () => overviewStatisticsBoxSelectorByName(pageName),
     [pageName],
@@ -34,13 +40,13 @@ const useOverviewStatisticsBox = pageName => {
   return useSelector(selector);
 };
 
-const JobTitleOverviewProvider = () => {
+const JobTitleOverviewProvider: React.FC & ServerSideRender<Params> = () => {
   const dispatch = useDispatch();
   const pageType = PageType.JOB_TITLE;
   const jobTitle = useJobTitle();
 
   const handleQueryJobTitleOverview = useCallback(
-    ({ force = false } = {}) => {
+    ({ force = false }: { force?: boolean } = {}) => {
       dispatch(queryJobTitleOverview(jobTitle, { force }));
     },
     [dispatch, jobTitle],
@@ -69,13 +75,15 @@ const JobTitleOverviewProvider = () => {
       tabType={TabType.OVERVIEW}
       boxSelector={boxSelector}
       statisticsBox={statisticsBox}
-      onCloseReport={() => handleQueryJobTitleOverview({ force: true })}
+      onCloseReport={(): void => handleQueryJobTitleOverview({ force: true })}
     />
   );
 };
 
-JobTitleOverviewProvider.fetchData = ({ store: { dispatch }, ...props }) => {
-  const params = paramsSelector(props);
+JobTitleOverviewProvider.fetchData = ({
+  store: { dispatch },
+  match: { params },
+}): Promise<unknown> => {
   const jobTitle = jobTitleSelector(params);
   return Promise.all([
     dispatch(queryJobTitleOverview(jobTitle)),

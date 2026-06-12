@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-import { compose, map, toPairs } from 'ramda';
 import React, { useMemo } from 'react';
 
 import { Wrapper } from 'common/base';
@@ -20,7 +18,13 @@ import {
 import styles from './CompanyAndJobTitleWrapper.module.css';
 import { generateBreadCrumbData } from './utils';
 
-const CompanyAndJobTitleWrapper = ({
+type CompanyAndJobTitleWrapperProps = React.PropsWithChildren<{
+  pageName: string;
+  pageType: PageType;
+  tabType: TabType;
+}>;
+
+const CompanyAndJobTitleWrapper: React.FC<CompanyAndJobTitleWrapperProps> = ({
   children,
   pageType,
   pageName,
@@ -28,17 +32,16 @@ const CompanyAndJobTitleWrapper = ({
 }) => {
   const tabLinkOptions = useMemo(
     () =>
-      compose(
-        map(([type, label]) => ({
+      (Object.entries(tabTypeTranslation) as [TabType, string][]).map(
+        ([type, label]) => ({
           label,
           to: generateTabURL({
             pageType,
             pageName,
             tabType: type,
           }),
-        })),
-        toPairs,
-      )(tabTypeTranslation),
+        }),
+      ),
     [pageType, pageName],
   );
 
@@ -71,6 +74,7 @@ const CompanyAndJobTitleWrapper = ({
           <StatisticsCard pageType={pageType} pageName={pageName} />
         </div>
         <TabLinkGroup
+          className=""
           options={tabLinkOptions}
           style={{
             marginBottom: '24px',
@@ -83,13 +87,6 @@ const CompanyAndJobTitleWrapper = ({
       </Wrapper>
     </div>
   );
-};
-
-CompanyAndJobTitleWrapper.propTypes = {
-  children: PropTypes.node,
-  pageName: PropTypes.string.isRequired,
-  pageType: PropTypes.string.isRequired,
-  tabType: PropTypes.string.isRequired,
 };
 
 export default CompanyAndJobTitleWrapper;

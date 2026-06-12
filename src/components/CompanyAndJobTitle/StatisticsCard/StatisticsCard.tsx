@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useSelector } from 'react-redux';
@@ -10,7 +9,15 @@ import { isFetching } from 'utils/fetchBox';
 
 import styles from './StatisticsCard.module.css';
 
-const StatisticsCard = ({ pageType, pageName }) => {
+type StatisticsCardProps = {
+  pageName: string;
+  pageType: PageType;
+};
+
+const StatisticsCard: React.FC<StatisticsCardProps> = ({
+  pageType,
+  pageName,
+}) => {
   const ratingStatistcsBox = useSelector(
     companyRatingStatisticsBoxSelectorByName(pageName),
   );
@@ -30,7 +37,7 @@ const StatisticsCard = ({ pageType, pageName }) => {
     {
       statLabel: '評分',
       statItems: [
-        averageRating?.toFixed(1),
+        averageRating ? averageRating.toFixed(1) : null,
         <img src={ThumbImage} className={styles.blackThumb} alt="blackThumb" />,
       ],
     },
@@ -58,8 +65,3 @@ const StatisticsCard = ({ pageType, pageName }) => {
 };
 
 export default StatisticsCard;
-
-StatisticsCard.propTypes = {
-  pageName: PropTypes.string.isRequired,
-  pageType: PropTypes.string.isRequired,
-};
