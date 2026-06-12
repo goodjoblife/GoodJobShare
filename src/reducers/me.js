@@ -1,7 +1,7 @@
-import createReducer from 'utils/createReducer';
-import { SET_MY_PUBLISH_IDS } from 'actions/me';
-import { getUnfetched } from 'utils/fetchBox';
 import { SET_LOGIN } from 'actions/auth';
+import { SET_MY_PUBLISH_IDS } from 'actions/me';
+import createReducer from 'utils/createReducer';
+import { getUnfetched } from 'utils/fetchBox';
 
 const preloadedState = {
   myPublishIds: getUnfetched(),

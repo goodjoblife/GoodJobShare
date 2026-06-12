@@ -54,7 +54,7 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'warn',
     '@typescript-eslint/ban-ts-comment': 'warn',
     'import/order': [
-      'warn',
+      'error',
       {
         groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index'], 'type'],
         'newlines-between': 'always',
@@ -67,9 +67,9 @@ module.exports = {
         pathGroupsExcludedImportTypes: ['builtin'],
       },
     ],
-    'import/first': 'warn',
-    'import/newline-after-import': 'warn',
-    'import/no-duplicates': 'warn',
+    'import/first': 'error',
+    'import/newline-after-import': 'error',
+    'import/no-duplicates': 'error',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
   },

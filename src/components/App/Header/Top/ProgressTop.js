@@ -3,8 +3,8 @@ import React from 'react';
 import { Wrapper } from 'common/base';
 import ProgressBarWithDataCount from 'common/ProgressBarWithDataCount';
 
-import topStyles from './Top.module.css';
 import styles from './ProgressTop.module.css';
+import topStyles from './Top.module.css';
 
 const ProgressTop = () => (
   <Wrapper size="l" className={topStyles.inner}>

@@ -1,8 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Section, P } from 'common/base';
-import styles from './EmptyView.module.css';
+import React from 'react';
+
+import { P, Section } from 'common/base';
 import { tabTypeTranslation } from 'constants/companyJobTitle';
+
+import styles from './EmptyView.module.css';
 
 const formatTabName = tabType => tabTypeTranslation[tabType] || '資料';
 

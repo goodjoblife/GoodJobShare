@@ -1,9 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { withShape } from 'airbnb-prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import Modal from 'common/Modal';
+
 import styles from './styles.module.css';
 
 const ConfirmModal = ({ title, subtitle, description, actions, ...props }) => (

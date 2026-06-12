@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 
-import Pagination from 'common/Pagination';
 import { Section } from 'common/base';
+import Pagination from 'common/Pagination';
 import NotFoundStatus from 'common/routing/NotFound';
 import usePermission from 'hooks/usePermission';
 
 import EmptyView from '../EmptyView';
-import WorkingHourBlock from './WorkingHourBlock';
 import ViewLog from './ViewLog';
+import WorkingHourBlock from './WorkingHourBlock';
 
 const TimeAndSalary = ({
   salaryWorkTimes,

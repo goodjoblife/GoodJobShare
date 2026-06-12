@@ -1,7 +1,7 @@
-import { RootState } from 'reducers';
-import FetchBox, { getUnfetched } from 'utils/fetchBox';
 import { LaborRightEntry } from 'apis/queryLaborRights';
 import { LaborRightMenuEntry } from 'apis/queryLaborRightsMenu';
+import { RootState } from 'reducers';
+import FetchBox, { getUnfetched } from 'utils/fetchBox';
 
 export const menuBoxSelector = (
   state: RootState,

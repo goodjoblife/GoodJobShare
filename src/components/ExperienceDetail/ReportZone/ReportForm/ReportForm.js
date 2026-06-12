@@ -1,24 +1,26 @@
+import PropTypes from 'prop-types';
 import React, { Fragment, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+
+import {
+  createExperienceReport,
+  createSalaryWorkTimeReport,
+} from 'actions/reports';
 import Heading from 'common/base/Heading';
 import P from 'common/base/P';
 import Button from 'common/button/Button';
 import Loader from 'common/Loader';
 import { useLogin } from 'hooks/login';
+
 import {
-  createExperienceReport,
-  createSalaryWorkTimeReport,
-} from 'actions/reports';
-import ReasonCategory from './ReasonCategory';
-import Reason from './Reason';
-import styles from './ReportForm.module.css';
-import { validReasomForm, validReason, isOtherCategory } from './formCheck';
-import {
-  salaryReportReasons,
   experienceReportReasons,
   REPORT_TYPE,
+  salaryReportReasons,
 } from './constants';
+import { isOtherCategory, validReasomForm, validReason } from './formCheck';
+import Reason from './Reason';
+import ReasonCategory from './ReasonCategory';
+import styles from './ReportForm.module.css';
 
 const getReasonCategoryOptions = reportType => {
   switch (reportType) {

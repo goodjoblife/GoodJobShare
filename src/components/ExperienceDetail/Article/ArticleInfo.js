@@ -1,18 +1,20 @@
-import React, { Fragment, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
+import React, { Fragment, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import { queryExperience } from 'actions/experience';
+import ReportBadge from 'common/button/ReportBadge';
 import { formatSalary, formatSalaryRange } from 'common/formatter';
+import ExternalLinkIcon from 'common/icons/ExternalLink';
+
 import styles from './Article.module.css';
 import InfoBlock, { InfoBlocks } from './InfoBlock';
 import RatingInfo from './RatingInfo';
-import ExternalLinkIcon from 'common/icons/ExternalLink';
-import ReportBadge from 'common/button/ReportBadge';
 import ReportZone from '../ReportZone';
 import { REPORT_TYPE } from '../ReportZone/ReportForm/constants';
-import { useDispatch } from 'react-redux';
-import { queryExperience } from 'actions/experience';
 
 const formatExperienceInYear = year => {
   if (Number.isInteger(year)) {

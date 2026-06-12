@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+
 import EsgBlock from './EsgBlock';
 import usePreviewed from './usePreviewed';
 

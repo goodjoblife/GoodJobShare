@@ -1,11 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+import { Heading } from 'common/base';
 
 import EmptyView from '../EmptyView';
 import styles from './Overview.module.css';
-import { Heading } from 'common/base';
 
 const SnippetBlock = ({
   title,

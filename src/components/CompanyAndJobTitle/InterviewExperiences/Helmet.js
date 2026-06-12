@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Helmet from 'react-helmet';
-import PropTypes from 'prop-types';
-import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
+
+import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
 import { SITE_NAME } from 'constants/helmetData';
-import { PageType, TabType, generateTabURL } from 'constants/companyJobTitle';
+import { formatCanonicalPath, formatTitle } from 'utils/helmetHelper';
 
 const CompanyInterviewExperienceHelmet = ({
   companyName,

@@ -1,6 +1,8 @@
-import React, { useCallback, useState } from 'react';
-import Modal from 'common/Modal';
 import PropTypes from 'prop-types';
+import React, { useCallback, useState } from 'react';
+
+import Modal from 'common/Modal';
+
 import { MODAL_TYPE } from './ReportForm/constants';
 import ReportModalContent from './ReportModalContent';
 

@@ -1,29 +1,31 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
-import { paramsSelector, querySelector } from 'common/routing/selectors';
-import usePermission from 'hooks/usePermission';
-import { usePage } from 'hooks/routing/page';
-import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
+
 import {
   queryCompanyInterviewExperiences,
   queryCompanyTopNJobTitles,
   queryRatingStatistics,
 } from 'actions/company';
-import { companyInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
-import useCompanyName, { companyNameSelector } from './useCompanyName';
-import { useTopNJobTitles } from './useTopNJobTitles';
+import { paramsSelector, querySelector } from 'common/routing/selectors';
+import InterviewExperiences from 'components/CompanyAndJobTitle/InterviewExperiences';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
-import {
-  queryFromQuerySelector,
-  pageFromQuerySelector,
-} from 'selectors/routing';
 import {
   sortByFromQuerySelector,
   useSortByFromQuery,
 } from 'components/CompanyAndJobTitle/Sorter';
-import { isFetched, getFetched } from 'utils/fetchBox';
+import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
+import { usePage } from 'hooks/routing/page';
+import usePermission from 'hooks/usePermission';
+import { companyInterviewExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
+import {
+  pageFromQuerySelector,
+  queryFromQuerySelector,
+} from 'selectors/routing';
+import { getFetched, isFetched } from 'utils/fetchBox';
+
+import useCompanyName, { companyNameSelector } from './useCompanyName';
+import { useTopNJobTitles } from './useTopNJobTitles';
 
 const useInterviewExperiencesBoxSelector = companyName => {
   return useCallback(

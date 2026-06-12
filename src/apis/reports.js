@@ -1,8 +1,8 @@
-import graphqlClient from 'utils/graphqlClient';
 import {
   createExperienceReportGql,
   createSalaryWorkTimeReportGql,
 } from 'graphql/reports';
+import graphqlClient from 'utils/graphqlClient';
 
 export const createExperienceReportApi = ({
   id,

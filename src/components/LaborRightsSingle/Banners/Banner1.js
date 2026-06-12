@@ -1,8 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
+
 import ProgressBarWithDataCount from 'common/ProgressBarWithDataCount';
 import { useShareLink } from 'hooks/experiments';
+
 import Banner1Img from './banner2_2x.jpg';
 import styles from './Banners.module.css';
 

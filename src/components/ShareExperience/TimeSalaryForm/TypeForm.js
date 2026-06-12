@@ -1,58 +1,54 @@
-import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useEffect } from 'react';
 import ReactGA from 'react-ga4';
-
-import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
-import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
-
-import {
-  createCompanyQuestion,
-  createJobTitleQuestion,
-  createCurrentlyEmployedQuestion,
-  createEmployTypeQuestion,
-  createSectorQuestion,
-  createGenderQuestion,
-  createRequiredSalaryQuestion,
-  createExperienceInYearQuestion,
-  createDayPromisedWorkTimeQuestion,
-  createDayRealWorkTimeQuestion,
-  createWeekWorkTimeQuestion,
-  createOvertimeFrequencyQuestion,
-  createOvertimeSalaryQuestion,
-  createCompensatoryDayOffQuestion,
-  createSubmitQuestion,
-} from '../questionCreators';
-import {
-  DATA_KEY_COMPANY_NAME,
-  DATA_KEY_CURRENTLY_EMPLOYED,
-  DATA_KEY_JOB_TITLE,
-  DATA_KEY_SECTOR,
-  DATA_KEY_EMPLOY_TYPE,
-  DATA_KEY_GENDER,
-  DATA_KEY_SALARY,
-  DATA_KEY_EXPERIENCE_IN_YEAR,
-  DATA_KEY_DAY_PROMISED_WORK_TIME,
-  DATA_KEY_DAY_REAL_WORK_TIME,
-  DATA_KEY_WEEK_WORK_TIME,
-  DATA_KEY_OVERTIME_FREQUENCY,
-  DATA_KEY_HAS_OVERTIME_SALARY,
-  DATA_KEY_HAS_COMPENSATORY_DAYOFF,
-} from '../constants';
-import { ER0007, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
-
-import { parseSalaryAmount, evolve } from '../utils';
-import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
+import { useDispatch } from 'react-redux';
 
 import { createSalaryWorkTime } from 'actions/salaryWorkTime';
-import { transferKeyToSnakecase } from 'utils/objectUtil';
-import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-
-import { sendEvent } from 'utils/hotjarUtil';
+import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
+import { ER0007, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+import { GA_ACTION, GA_CATEGORY } from 'constants/gaConstants';
 import { getUserPseudoId } from 'utils/GAUtils';
+import { sendEvent } from 'utils/hotjarUtil';
+import { transferKeyToSnakecase } from 'utils/objectUtil';
 import rollbar from 'utils/rollbar';
 
 import { GA_MEASUREMENT_ID } from '../../../config';
+import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
+import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
+import {
+  DATA_KEY_COMPANY_NAME,
+  DATA_KEY_CURRENTLY_EMPLOYED,
+  DATA_KEY_DAY_PROMISED_WORK_TIME,
+  DATA_KEY_DAY_REAL_WORK_TIME,
+  DATA_KEY_EMPLOY_TYPE,
+  DATA_KEY_EXPERIENCE_IN_YEAR,
+  DATA_KEY_GENDER,
+  DATA_KEY_HAS_COMPENSATORY_DAYOFF,
+  DATA_KEY_HAS_OVERTIME_SALARY,
+  DATA_KEY_JOB_TITLE,
+  DATA_KEY_OVERTIME_FREQUENCY,
+  DATA_KEY_SALARY,
+  DATA_KEY_SECTOR,
+  DATA_KEY_WEEK_WORK_TIME,
+} from '../constants';
+import {
+  createCompanyQuestion,
+  createCompensatoryDayOffQuestion,
+  createCurrentlyEmployedQuestion,
+  createDayPromisedWorkTimeQuestion,
+  createDayRealWorkTimeQuestion,
+  createEmployTypeQuestion,
+  createExperienceInYearQuestion,
+  createGenderQuestion,
+  createJobTitleQuestion,
+  createOvertimeFrequencyQuestion,
+  createOvertimeSalaryQuestion,
+  createRequiredSalaryQuestion,
+  createSectorQuestion,
+  createSubmitQuestion,
+  createWeekWorkTimeQuestion,
+} from '../questionCreators';
+import { evolve, parseSalaryAmount } from '../utils';
 
 const header = <Header title="請輸入你的一份薪資工時" />;
 

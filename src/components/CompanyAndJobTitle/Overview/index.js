@@ -1,11 +1,13 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
+import { Wrapper } from 'common/base';
+import { fetchBoxPropType } from 'utils/fetchBox';
+
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import PageBoxRenderer from '../PageBoxRenderer';
-import OverviewSection from './Overview';
 import Helmet from './Helmet';
-import { fetchBoxPropType } from 'utils/fetchBox';
-import { Wrapper } from 'common/base';
+import OverviewSection from './Overview';
 
 const Overview = ({
   pageType,

@@ -1,12 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
-import Modal from 'common/Modal';
-import Question from 'common/icons/Question';
-import editorStyles from 'common/Editor.module.css';
-import Button from 'common/button/Button';
-import styles from './InfoModal.module.css';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import { P } from 'common/base';
+import Button from 'common/button/Button';
+import editorStyles from 'common/Editor.module.css';
+import Question from 'common/icons/Question';
+import Modal from 'common/Modal';
+
+import styles from './InfoModal.module.css';
 
 const InfoModal = ({ isOpen, close, title, children }) => (
   <Modal

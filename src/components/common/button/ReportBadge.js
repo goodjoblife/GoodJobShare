@@ -1,7 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './ReportBadge.module.css';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+
+import styles from './ReportBadge.module.css';
 import ReportIcon from '../icons/Report';
 
 const ReportBadge = ({

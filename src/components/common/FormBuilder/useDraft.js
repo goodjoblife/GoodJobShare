@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
 import R from 'ramda';
+import { useCallback, useState } from 'react';
 
 const keyByProp = prop =>
   R.compose(

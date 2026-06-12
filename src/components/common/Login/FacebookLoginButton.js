@@ -1,6 +1,8 @@
-import React from 'react';
 import cn from 'classnames';
+import React from 'react';
+
 import { useFacebookLogin } from 'hooks/login';
+
 import styles from './LoginButton.module.css';
 
 const FacebookLoginButton = () => {

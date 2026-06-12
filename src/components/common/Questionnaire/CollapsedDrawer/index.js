@@ -1,9 +1,11 @@
-import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import styles from './CollapsedDrawer.module.css';
-import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey';
-import { toggleModalOpen } from 'actions/questionnaireExpandedModal';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { toggleModalOpen } from 'actions/questionnaireExpandedModal';
+import { LS_USER_FEEDBACK_SUBMISSION_TIME_KEY } from 'constants/localStorageKey';
+
+import styles from './CollapsedDrawer.module.css';
 
 const MILLISECONDS_OF_TWO_SUBMISSION_SPAN = 1000 * 60 * 60 * 24 * 30;
 

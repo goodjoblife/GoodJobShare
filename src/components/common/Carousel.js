@@ -1,7 +1,7 @@
-import React, { Children } from 'react';
-import PropTypes from 'prop-types';
 import { childrenOfType } from 'airbnb-prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { Children } from 'react';
 
 import styles from './Carousel.module.css';
 

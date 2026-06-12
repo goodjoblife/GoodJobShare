@@ -1,7 +1,6 @@
+import AuthStatus from 'constants/authStatus';
 import { RootState } from 'reducers';
 import { User } from 'reducers/auth';
-
-import AuthStatus from 'constants/authStatus';
 
 export const statusSelector = (state: RootState): AuthStatus =>
   state.auth.status;

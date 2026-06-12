@@ -1,11 +1,12 @@
-import React, { useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import { withShape } from 'airbnb-prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback, useMemo } from 'react';
 
 import Select from 'common/form/Select';
+
 import styles from './Date.module.css';
 import commonStyles from './styles.module.css';
-import { withShape } from 'airbnb-prop-types';
 
 const toNumberOrNull = v => (v === '' ? null : Number(v));
 

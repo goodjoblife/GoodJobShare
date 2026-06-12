@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
+
 import Loader from 'common/Loader';
-import FetchBox, { isUnfetched, isFetching, isError } from 'utils/fetchBox';
+import FetchBox, { isError, isFetching, isUnfetched } from 'utils/fetchBox';
+
 import FadeInContent from './FadeInContent';
 
 type BoxesRendererProps<T extends unknown[]> = {

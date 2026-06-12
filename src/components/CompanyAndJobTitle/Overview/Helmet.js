@@ -1,12 +1,14 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Helmet from 'react-helmet';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import EmployerAggregateRatingSeo from './EmployerAggregateRatingSeo';
-import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
-import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
+
+import { generatePageURL, PageType } from 'constants/companyJobTitle';
 import { SITE_NAME } from 'constants/helmetData';
-import { PageType, generatePageURL } from 'constants/companyJobTitle';
+import { companyRatingStatisticsBoxSelectorByName } from 'selectors/companyAndJobTitle';
+import { formatCanonicalPath, formatTitle } from 'utils/helmetHelper';
+
+import EmployerAggregateRatingSeo from './EmployerAggregateRatingSeo';
 
 // if length of given array > 0, return `${array length}${unit}`
 // otherwise return defaultStr

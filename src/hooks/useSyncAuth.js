@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
-import { useEffectOnce } from 'react-use';
 import { useDispatch } from 'react-redux';
-import { useToken, useIsLoggedIn } from 'hooks/auth';
+import { useEffectOnce } from 'react-use';
+
 import { loginWithToken as loginWithTokenAction } from 'actions/auth';
+import { useIsLoggedIn, useToken } from 'hooks/auth';
 
 export default () => {
   // Sync token at first glance

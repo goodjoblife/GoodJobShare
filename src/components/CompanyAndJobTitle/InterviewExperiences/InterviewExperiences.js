@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-import Pagination from 'common/Pagination';
 import { Section, Wrapper } from 'common/base';
+import Pagination from 'common/Pagination';
 import NotFoundStatus from 'common/routing/NotFound';
 
 import EmptyView from '../EmptyView';
