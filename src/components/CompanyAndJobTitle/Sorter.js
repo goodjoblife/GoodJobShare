@@ -1,10 +1,10 @@
+import qs from 'qs';
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router';
-import { useQuery } from 'hooks/routing';
-import qs from 'qs';
 
-import RoundedSelect from 'common/RoundedSelect';
 import Sort from 'common/icons/Sort';
+import RoundedSelect from 'common/RoundedSelect';
+import { useQuery } from 'hooks/routing';
 
 export const SORT_BY = {
   LATEST_FIRST: 'LATEST_FIRST',

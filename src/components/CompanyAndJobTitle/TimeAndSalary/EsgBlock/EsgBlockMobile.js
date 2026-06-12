@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useCallback } from 'react';
 
-import GradientMask from 'common/GradientMask';
 import Button from 'common/button/Button';
+import GradientMask from 'common/GradientMask';
 
 import EsgBlock from './EsgBlock';
 import styles from './EsgBlock.module.css';

@@ -1,5 +1,6 @@
-import React from 'react';
 import { marked } from 'marked';
+import React from 'react';
+
 import styles from './MarkdownParser.module.css';
 
 type MarkdownParserProps = {

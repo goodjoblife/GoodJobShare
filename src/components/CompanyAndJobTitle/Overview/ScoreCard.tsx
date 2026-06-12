@@ -1,9 +1,10 @@
-import React from 'react';
 import cn from 'classnames';
+import React from 'react';
 
 import Card from 'common/Card';
-import styles from './SummaryBlock.module.css';
+
 import AbstractView from './AbstractView';
+import styles from './SummaryBlock.module.css';
 
 export interface ScoreCardProps {
   title: string;

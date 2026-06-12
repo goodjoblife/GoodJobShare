@@ -1,5 +1,5 @@
-import { tokenSelector } from 'selectors/authSelector';
 import { postExperienceReply as createExperienceReplyApi } from 'apis/experiencesApi';
+import { tokenSelector } from 'selectors/authSelector';
 
 export const createReply = (experienceId, comment) => (dispatch, getState) => {
   const state = getState();

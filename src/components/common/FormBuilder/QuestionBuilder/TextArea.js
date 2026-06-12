@@ -1,10 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import TextAreaInput from 'common/form/TextArea';
-import styles from './TextArea.module.css';
+
 import commonStyles from './styles.module.css';
+import styles from './TextArea.module.css';
 
 const Textarea = ({
   className,

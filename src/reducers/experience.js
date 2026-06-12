@@ -1,10 +1,10 @@
-import createReducer from 'utils/createReducer';
-import { getUnfetched } from 'utils/fetchBox';
 import {
   SET_EXPERIENCE,
-  SET_RELATED_EXPERIENCES,
   SET_POPULAR_EXPERIENCES,
+  SET_RELATED_EXPERIENCES,
 } from 'actions/experience';
+import createReducer from 'utils/createReducer';
+import { getUnfetched } from 'utils/fetchBox';
 
 const preloadedState = {
   // id --> box

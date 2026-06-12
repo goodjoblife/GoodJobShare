@@ -1,7 +1,8 @@
-import React from 'react';
 import cn from 'classnames';
+import React from 'react';
 
 import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
+
 import styles from './styles.module.css';
 import formStyles from '../../FormBuilder.module.css';
 

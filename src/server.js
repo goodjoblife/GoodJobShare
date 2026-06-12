@@ -1,14 +1,15 @@
 import Express from 'express';
+import { createMemoryHistory as createHistory } from 'history';
+import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { matchPath } from 'react-router-dom';
-import { createMemoryHistory as createHistory } from 'history';
-import { Provider } from 'react-redux';
-import React from 'react';
-import configureStore from './store/configureStore';
-import Html from './helpers/Html';
+
 import Root from './components/Root';
+import Html from './helpers/Html';
 import rootRoutes from './routes';
+import configureStore from './store/configureStore';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST); // eslint-disable-line @typescript-eslint/no-var-requires
 

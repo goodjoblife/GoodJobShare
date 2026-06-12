@@ -1,6 +1,7 @@
-import { useState, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
 import qs from 'qs';
+import { useCallback, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import { useQuery } from 'hooks/routing';
 import { queryFromQuerySelector } from 'selectors/routing';
 

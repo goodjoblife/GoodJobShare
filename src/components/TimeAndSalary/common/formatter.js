@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import { formatSalaryAmount, formatSalaryType } from 'common/formatter';
+import { generatePageURL, PageType } from 'constants/companyJobTitle';
 import employmentType from 'constants/employmentType';
-import { PageType, generatePageURL } from 'constants/companyJobTitle';
+
 import styles from './formatter.module.css';
 
 export const getNameAsCompanyName = (o, row) => (

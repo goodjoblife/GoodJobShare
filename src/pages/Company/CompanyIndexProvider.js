@@ -1,16 +1,17 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { fetchCompanyNames } from 'actions/company';
+import { Wrapper } from 'common/base';
 import { querySelector } from 'common/routing/selectors';
-import { pageFromQuerySelector } from 'selectors/routing';
 import CompanyAndJobTitleIndexPage from 'components/CompanyAndJobTitle/IndexPage';
 import usePagination from 'components/CompanyAndJobTitle/IndexPage/usePagination';
-import { PageType, PAGE_SIZE } from 'constants/companyJobTitle';
-import { fetchCompanyNames } from 'actions/company';
+import { PAGE_SIZE, PageType } from 'constants/companyJobTitle';
 import {
-  companyIndexesBoxSelectorAtPage,
   companiesCountSelector,
+  companyIndexesBoxSelectorAtPage,
 } from 'selectors/companyAndJobTitle';
-import { Wrapper } from 'common/base';
+import { pageFromQuerySelector } from 'selectors/routing';
 
 const CompanyIndexProvider = () => {
   const [page, getPageLink] = usePagination();

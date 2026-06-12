@@ -1,15 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import cn from 'classnames';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { Heading, P } from 'common/base';
 import Coin from 'common/icons/Coin';
-import styles from './InterviewExperiences.module.css';
-import { formatCreatedAt, formatSalary, formatSalaryRange } from './helper';
 import OverallRating from 'common/OverallRating';
+
+import { formatCreatedAt, formatSalary, formatSalaryRange } from './helper';
+import styles from './InterviewExperiences.module.css';
 
 const createLinkTo = ({ id, pageType }) => ({
   pathname: `/experiences/${id}`,

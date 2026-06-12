@@ -1,7 +1,8 @@
 import React from 'react';
+
 import { Section, Wrapper } from 'common/base';
-import PageBanner from 'common/PageBanner';
 import editorStyles from 'common/Editor.module.css';
+import PageBanner from 'common/PageBanner';
 import StaticHelmet from 'common/StaticHelmet';
 
 const Privacy = () => (

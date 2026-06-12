@@ -1,5 +1,5 @@
-import graphqlClient from 'utils/graphqlClient';
 import { User } from 'reducers/auth';
+import graphqlClient from 'utils/graphqlClient';
 
 const queryMeGql = /* GraphQL */ `
   {

@@ -1,6 +1,7 @@
-import React from 'react';
-import SeoStructure from 'common/Seo/SeoStructure';
 import PropTypes from 'prop-types';
+import React from 'react';
+
+import SeoStructure from 'common/Seo/SeoStructure';
 import { ORIGIN } from 'config';
 
 const EmployerAggregateRatingSeo = ({

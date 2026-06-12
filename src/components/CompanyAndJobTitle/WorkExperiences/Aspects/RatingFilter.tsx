@@ -1,8 +1,9 @@
 import React from 'react';
 
-import useRating from './useRating';
-import styles from './styles.module.css';
 import RoundedSelect from 'common/RoundedSelect';
+
+import styles from './styles.module.css';
+import useRating from './useRating';
 
 const seq = (from: number, to: number): number[] => {
   return Array.from({ length: to - from + 1 }, (_, i) => i + from);

@@ -1,12 +1,12 @@
 import React from 'react';
 
-import OverallRating from 'common/OverallRating';
+import { RatingBin } from 'apis/aspectRatingStatistics';
 import Card from 'common/Card';
 import Pen from 'common/icons/Pen';
+import OverallRating from 'common/OverallRating';
 
-import styles from './styles.module.css';
 import ScoreDistributionChart from './ScoreDistributionChart';
-import { RatingBin } from 'apis/aspectRatingStatistics';
+import styles from './styles.module.css';
 
 type SummaryProps = {
   averageRating: number;

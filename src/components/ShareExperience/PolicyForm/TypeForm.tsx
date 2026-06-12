@@ -1,24 +1,24 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
+import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
+
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
-
-import {
-  createCompanyQuestion,
-  createJobTitleQuestion,
-  createSectorQuestion,
-  createPoliciesQuestion,
-  createSubmitQuestion,
-} from '../questionCreators';
 import {
   DATA_KEY_COMPANY_NAME,
   DATA_KEY_JOB_TITLE,
-  DATA_KEY_SECTOR,
   DATA_KEY_POLICIES,
+  DATA_KEY_SECTOR,
 } from '../constants';
-import { createPolicyReviewGroup } from 'actions/policyReviewGroup';
-import { PolicyReviewInput } from 'apis/createPolicyReviewGroup';
+import {
+  createCompanyQuestion,
+  createJobTitleQuestion,
+  createPoliciesQuestion,
+  createSectorQuestion,
+  createSubmitQuestion,
+} from '../questionCreators';
 
 const header = <Header title="請分享你的公司制度實況" />;
 

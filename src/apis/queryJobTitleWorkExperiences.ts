@@ -1,11 +1,12 @@
 import R from 'ramda';
-import graphqlClient from 'utils/graphqlClient';
-import { JobTitle } from 'graphql/jobTitle';
+
+import { WorkExperience } from 'apis/experience';
 import {
   experiencePartialGql,
   workExperiencesPartialGql,
 } from 'graphql/experience';
-import { WorkExperience } from 'apis/experience';
+import { JobTitle } from 'graphql/jobTitle';
+import graphqlClient from 'utils/graphqlClient';
 
 const queryJobTitleWorkExperiencesGql = /* GraphQL */ `
   query(

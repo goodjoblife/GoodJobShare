@@ -1,6 +1,6 @@
-import rollbar from 'utils/rollbar';
-import { NOTIFICATION_TYPE } from 'constants/toastNotification';
 import { ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+import { NOTIFICATION_TYPE } from 'constants/toastNotification';
+import rollbar from 'utils/rollbar';
 import { generateNotification } from 'utils/toastNotification';
 
 export const PUSH = '@@TOAST_NOTIFICATION/PUSH';

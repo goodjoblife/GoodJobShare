@@ -1,11 +1,19 @@
 module.exports = {
+  settings: {
+    'import/resolver': {
+      node: {
+        moduleDirectory: ['node_modules', 'src'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
+  },
   extends: [
     'react-app',
     'plugin:@typescript-eslint/recommended',
     'prettier',
     'prettier/react',
   ],
-  plugins: ['prettier', '@typescript-eslint', 'react-hooks'],
+  plugins: ['prettier', '@typescript-eslint', 'react-hooks', 'import'],
   rules: {
     'arrow-parens': ['error', 'as-needed'],
     'comma-dangle': ['error', 'always-multiline'],
@@ -45,6 +53,23 @@ module.exports = {
     '@typescript-eslint/no-loss-of-precision': 'off',
     '@typescript-eslint/no-var-requires': 'warn',
     '@typescript-eslint/ban-ts-comment': 'warn',
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index'], 'type'],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true },
+        named: { enabled: true, import: true, export: true },
+        pathGroups: [
+          { pattern: 'common/**', group: 'internal' },
+          { pattern: 'images/**', group: 'internal' },
+        ],
+        pathGroupsExcludedImportTypes: ['builtin'],
+      },
+    ],
+    'import/first': 'error',
+    'import/newline-after-import': 'error',
+    'import/no-duplicates': 'error',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
   },

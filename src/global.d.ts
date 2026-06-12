@@ -20,6 +20,7 @@ declare module '@fortawesome/fontawesome-free-solid/*' {
 
 declare module '@loadable/component' {
   import { ComponentType } from 'react';
+
   function loadable<T>(
     fn: () => Promise<{ default: ComponentType<T> }>,
   ): ComponentType<T>;

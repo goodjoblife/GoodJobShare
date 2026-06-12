@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from 'reducers';
-import Redirect from 'common/routing/Redirect';
+
 import NotFoundStatus from 'common/routing/NotFound';
+import Redirect from 'common/routing/Redirect';
 import BoxRenderer from 'common/StatusRenderer';
 import { generateTabURL, PageType, TabType } from 'constants/companyJobTitle';
+import { RootState } from 'reducers';
 import FetchBox from 'utils/fetchBox';
+
 import EmptyView from './EmptyView';
 
 interface PageData {

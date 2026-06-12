@@ -1,8 +1,9 @@
-import React, { useCallback, ReactNode, ChangeEvent, ElementType } from 'react';
 import cn from 'classnames';
+import React, { ChangeEvent, ElementType, ReactNode, useCallback } from 'react';
+
+import Caret from 'common/icons/Caret';
 
 import styles from './RoundedSelect.module.css';
-import Caret from 'common/icons/Caret';
 
 type RoundedSelectProps = {
   value: string;

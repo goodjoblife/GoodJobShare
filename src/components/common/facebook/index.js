@@ -1,4 +1,5 @@
 import FacebookContext from 'contexts/FacebookContext';
+
 import FacebookWrapper from './FacebookWrapper';
 
 const FacebookContextConsumer = FacebookContext.Consumer;

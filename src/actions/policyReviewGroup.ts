@@ -1,8 +1,9 @@
-import { Thunk, Dispatch, GetState } from 'reducers';
-import { tokenSelector } from 'selectors/authSelector';
 import createPolicyReviewGroupApi, {
   PolicyReviewInput,
 } from 'apis/createPolicyReviewGroup';
+import { Dispatch, GetState, Thunk } from 'reducers';
+import { tokenSelector } from 'selectors/authSelector';
+
 import { queryMyPublishIds } from './me';
 
 export const createPolicyReviewGroup = ({

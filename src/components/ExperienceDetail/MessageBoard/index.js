@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useCallback, Fragment } from 'react';
-import { Element as ScrollElement, scroller } from 'react-scroll';
 import PropTypes from 'prop-types';
-import Button from 'common/button/Button';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import { Element as ScrollElement, scroller } from 'react-scroll';
+
 import { P } from 'common/base';
+import Button from 'common/button/Button';
 import ButtonGroup from 'common/button/ButtonGroup';
 import Loader from 'common/Loader';
-import useQueryReplies from '../hooks/useQueryReplies';
-import useLikeReply from '../hooks/useLikeReply';
-import useCreateReply from '../hooks/useCreateReply';
+
 import CommentBlock from './CommentBlock';
 import styles from './MessageBoard.module.css';
+import useCreateReply from '../hooks/useCreateReply';
+import useLikeReply from '../hooks/useLikeReply';
 import useLoginFlow from '../hooks/useLoginFlow';
+import useQueryReplies from '../hooks/useQueryReplies';
 
 const recommendedSentences = [
   '詳細給推',

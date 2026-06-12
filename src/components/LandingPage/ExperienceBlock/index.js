@@ -1,13 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { Heading, P } from 'common/base';
-import ThumbsUp from 'common/reaction/ThumbsUp';
 import Comment from 'common/reaction/Comment';
+import ThumbsUp from 'common/reaction/ThumbsUp';
+
 import styles from './ExperienceBlock.module.css';
-import { formatType, formatCreatedAt } from './helper';
+import { formatCreatedAt, formatType } from './helper';
 
 const ExperienceBlock = ({ data, size, backable }) => {
   const {

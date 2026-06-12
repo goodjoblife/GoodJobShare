@@ -1,51 +1,48 @@
-import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { head } from 'ramda';
+import React, { useCallback, useEffect } from 'react';
 import ReactGA from 'react-ga4';
+import { useDispatch } from 'react-redux';
+
+import { createWorkExperienceWithRating } from 'actions/experiences';
+import { TabType, tabTypeTranslation } from 'constants/companyJobTitle';
+import { ER0020, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+import { GA_ACTION, GA_CATEGORY } from 'constants/gaConstants';
+import { sendEvent } from 'utils/hotjarUtil';
+import rollbar from 'utils/rollbar';
 
 import SubmittableFormBuilder from '../common/SubmittableFormBuilder';
 import Header, { CompanyJobTitleHeader } from '../common/TypeFormHeader';
-
-import {
-  createCompanyQuestion,
-  createJobTitleQuestion,
-  createCurrentlyEmployedQuestion,
-  createExperienceInYearQuestion,
-  createWorkRegionQuestion,
-  createEmployTypeQuestion,
-  createRequiredSalaryQuestion,
-  createWeekWorkTimeQuestion,
-  createSubmitQuestion,
-  createSectionsQuestion,
-  createSectorQuestion,
-  createGenderQuestion,
-  createJobLevel,
-} from '../questionCreators';
 import {
   DATA_KEY_COMPANY_NAME,
   DATA_KEY_CURRENTLY_EMPLOYED,
-  DATA_KEY_JOB_TITLE,
-  DATA_KEY_SALARY,
   DATA_KEY_EXPERIENCE_IN_YEAR,
-  DATA_KEY_WEEK_WORK_TIME,
-  DATA_KEY_REGION,
-  JOB_TENURE_OPTIONS,
-  DATA_KEY_SECTIONS,
-  DATA_KEY_JOB_LEVEL,
-  DATA_KEY_SECTOR,
   DATA_KEY_GENDER,
+  DATA_KEY_JOB_LEVEL,
+  DATA_KEY_JOB_TITLE,
+  DATA_KEY_REGION,
+  DATA_KEY_SALARY,
+  DATA_KEY_SECTIONS,
+  DATA_KEY_SECTOR,
+  DATA_KEY_WEEK_WORK_TIME,
+  JOB_TENURE_OPTIONS,
 } from '../constants';
-
-import { parseSalaryAmount, evolve } from '../utils';
-import { TabType, tabTypeTranslation } from 'constants/companyJobTitle';
-
-import { createWorkExperienceWithRating } from 'actions/experiences';
-import { GA_CATEGORY, GA_ACTION } from 'constants/gaConstants';
-import { ER0020, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
-
-import { sendEvent } from 'utils/hotjarUtil';
-import rollbar from 'utils/rollbar';
+import {
+  createCompanyQuestion,
+  createCurrentlyEmployedQuestion,
+  createEmployTypeQuestion,
+  createExperienceInYearQuestion,
+  createGenderQuestion,
+  createJobLevel,
+  createJobTitleQuestion,
+  createRequiredSalaryQuestion,
+  createSectionsQuestion,
+  createSectorQuestion,
+  createSubmitQuestion,
+  createWeekWorkTimeQuestion,
+  createWorkRegionQuestion,
+} from '../questionCreators';
+import { evolve, parseSalaryAmount } from '../utils';
 
 const header = <Header title="分享你的工作心得(評價)" />;
 
