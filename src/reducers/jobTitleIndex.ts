@@ -4,8 +4,8 @@ import {
   SET_INTERVIEW_EXPERIENCES,
   SET_OVERVIEW,
   SET_OVERVIEW_STATISTICS,
-  SET_TIME_AND_SALARY,
-  SET_TIME_AND_SALARY_STATISTICS,
+  SET_SALARY_WORK_TIME,
+  SET_SALARY_WORK_TIME_STATISTICS,
   SET_WORK_EXPERIENCES,
 } from 'actions/jobTitle';
 import { WorkExperience } from 'apis/experience';
@@ -150,7 +150,7 @@ const reducer = createReducer(preloadedState, {
       },
     };
   },
-  [SET_TIME_AND_SALARY]: (
+  [SET_SALARY_WORK_TIME]: (
     state,
     {
       jobTitle,
@@ -168,7 +168,7 @@ const reducer = createReducer(preloadedState, {
       },
     };
   },
-  [SET_TIME_AND_SALARY_STATISTICS]: (
+  [SET_SALARY_WORK_TIME_STATISTICS]: (
     state,
     {
       jobTitle,

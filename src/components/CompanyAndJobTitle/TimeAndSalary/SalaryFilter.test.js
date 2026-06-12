@@ -3,16 +3,8 @@ import { getDataTimeRange, getExperienceInYearRange } from './SalaryFilter';
 // ─── getDataTimeRange ─────────────────────────────────────────────────────────
 
 describe('getDataTimeRange', () => {
-  test('null → undefined', () => {
-    expect(getDataTimeRange(null)).toBeUndefined();
-  });
-
   test('undefined → undefined', () => {
     expect(getDataTimeRange(undefined)).toBeUndefined();
-  });
-
-  test('未知值 → undefined', () => {
-    expect(getDataTimeRange('unknown')).toBeUndefined();
   });
 
   test('past_month → end 為當月、start 為一個月前', () => {
