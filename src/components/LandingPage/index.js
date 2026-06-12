@@ -1,30 +1,32 @@
+import cn from 'classnames';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import cn from 'classnames';
-import { Section, Wrapper, Heading } from 'common/base';
-import Columns from 'common/Columns';
-import Loader from 'common/Loader';
-import ExperienceBlock from './ExperienceBlock';
+
 import {
   queryPopularExperiences,
   queryPopularExperiencesIfUnfetched,
 } from 'actions/experience';
+import { queryMenuIfUnfetched } from 'actions/laborRights';
 import { queryPopularCompanyAverageSalary } from 'actions/popularCompanyAverageSalary';
 import { queryPopularJobTitleSalaryDistribution } from 'actions/popularJobTitleSalaryDistribution';
-import { queryMenuIfUnfetched } from 'actions/laborRights';
-import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
-import Banner from './Banner';
+import { Heading, Section, Wrapper } from 'common/base';
+import Columns from 'common/Columns';
+import Loader from 'common/Loader';
+import SearchBar from 'common/SearchBar';
 import StaticHelmet from 'common/StaticHelmet';
-import CallToActionBlock from './CallToActionBlock';
-import SummarySection from './SummarySection';
-import { isFetching, isFetched, isUnfetched } from 'utils/fetchBox';
+import { BoxesRenderer } from 'common/StatusRenderer';
 import { popularExperiencesBoxSelector } from 'selectors/experienceSelector';
+import { menuBoxSelector } from 'selectors/laborRightsSelector';
 import { popularCompanyAverageSalaryBoxSelector } from 'selectors/popularCompanyAverageSalary';
 import { popularJobTitleSalaryDistributionBoxSelector } from 'selectors/popularJobTitleSalaryDistribution';
-import { menuBoxSelector } from 'selectors/laborRightsSelector';
-import SearchBar from 'common/SearchBar';
-import { BoxesRenderer } from 'common/StatusRenderer';
+import { isFetched, isFetching, isUnfetched } from 'utils/fetchBox';
+
+import Banner from './Banner';
+import CallToActionBlock from './CallToActionBlock';
+import ExperienceBlock from './ExperienceBlock';
+import SummarySection from './SummarySection';
+import LaborRightsEntry from '../LaborRightsMenu/LaborRightsEntry';
 
 const entryToProps = ({ id, title, coverUrl }) => ({
   link: `/labor-rights/${id}`,

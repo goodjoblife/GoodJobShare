@@ -1,6 +1,6 @@
+import { SET_COUNT } from 'actions/experiences';
 import createReducer from 'utils/createReducer';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
-import { SET_COUNT } from 'actions/experiences';
 
 const preloadedState: {
   countBox: FetchBox<number>;

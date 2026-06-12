@@ -1,23 +1,25 @@
 import React from 'react';
-import { RootState } from 'reducers';
+
+import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
 import { Heading, Link, Wrapper } from 'common/base';
 import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
-import CompanyAndJobTitleWrapper from '../../CompanyAndJobTitleWrapper';
-import PageBoxRenderer from '../../PageBoxRenderer';
-import WorkExperiencesSection from '../WorkExperiences';
-import Helmet from '../Helmet';
-import styles from './styles.module.css';
-import RatingFilter from './RatingFilter';
-import Summary from './Summary';
-import FetchBox from 'utils/fetchBox';
 import {
   Aspect,
+  generateTabURL,
   PageType,
   TabType,
-  generateTabURL,
 } from 'constants/companyJobTitle';
-import { AspectStatisticsData } from 'apis/aspectRatingStatistics';
+import { RootState } from 'reducers';
 import { CompanyAspectExperienceResult } from 'reducers/companyIndex';
+import FetchBox from 'utils/fetchBox';
+
+import CompanyAndJobTitleWrapper from '../../CompanyAndJobTitleWrapper';
+import PageBoxRenderer from '../../PageBoxRenderer';
+import Helmet from '../Helmet';
+import WorkExperiencesSection from '../WorkExperiences';
+import RatingFilter from './RatingFilter';
+import styles from './styles.module.css';
+import Summary from './Summary';
 
 export type AspectProps = {
   aspect: Aspect;

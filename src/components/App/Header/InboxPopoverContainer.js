@@ -1,12 +1,13 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import PopoverToggle from 'common/PopoverToggle';
 import { messagesSelector } from 'selectors/inbox';
+
 import popoverStyles from './Header.module.css';
-import styles from './InboxIcon.module.css';
 import InboxContent from './InboxContent';
+import styles from './InboxIcon.module.css';
 
 const InboxPopoverContainer = ({ children }) => {
   const messages = useSelector(messagesSelector);

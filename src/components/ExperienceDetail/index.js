@@ -1,35 +1,37 @@
-import React, { Fragment, useCallback, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import R from 'ramda';
+import React, { Fragment, useCallback, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useParams } from 'react-router-dom';
 import { Element as ScrollElement, scroller } from 'react-scroll';
-import { useParams, useLocation } from 'react-router-dom';
-import Loader from 'common/Loader';
-import { Wrapper, Section } from 'common/base';
-import NotFound from 'common/NotFound';
-import BreadCrumb from 'common/BreadCrumb';
-import { isUiNotFoundError } from 'utils/errors';
-import { paramsSelector } from 'common/routing/selectors';
-import usePermission from 'hooks/usePermission';
-import useTrace from './hooks/useTrace';
-import Article from './Article';
-import MessageBoard from './MessageBoard';
-import Seo from './Seo';
-import ExperienceHeading from './Heading';
-import MoreExperiencesBlock from './MoreExperiencesBlock';
-import ChartsZone from './ChartsZone';
-import { isError, isFetched } from 'utils/fetchBox';
+
 import {
   queryExperience,
   queryExperienceIfUnfetched,
   queryRelatedExperiencesOnExperience,
 } from 'actions/experience';
-import { COMMENT_ZONE } from 'constants/formElements';
+import { Section, Wrapper } from 'common/base';
+import BreadCrumb from 'common/BreadCrumb';
+import Loader from 'common/Loader';
+import NotFound from 'common/NotFound';
+import { paramsSelector } from 'common/routing/selectors';
 import { PageType, TabType } from 'constants/companyJobTitle';
-import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
-import styles from './ExperienceDetail.module.css';
+import { COMMENT_ZONE } from 'constants/formElements';
+import usePermission from 'hooks/usePermission';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
+import { isUiNotFoundError } from 'utils/errors';
+import { isError, isFetched } from 'utils/fetchBox';
+
+import Article from './Article';
 import VISIBILITY from './Article/visibility';
+import ChartsZone from './ChartsZone';
+import styles from './ExperienceDetail.module.css';
+import ExperienceHeading from './Heading';
+import useTrace from './hooks/useTrace';
+import MessageBoard from './MessageBoard';
+import MoreExperiencesBlock from './MoreExperiencesBlock';
+import Seo from './Seo';
+import { generateBreadCrumbData } from '../CompanyAndJobTitle/utils';
 
 // from params
 const experienceIdSelector = R.prop('id');

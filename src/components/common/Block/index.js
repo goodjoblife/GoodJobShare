@@ -1,7 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import { P } from 'common/base';
+
 import styles from './Block.module.css';
 
 const Block = ({ heading, requiredText, children, className, style }) => (

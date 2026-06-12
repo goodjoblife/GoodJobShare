@@ -1,9 +1,10 @@
 import React from 'react';
 
+import useMobile from 'hooks/useMobile';
+
+import styles from './EsgBlock.module.css';
 import EsgBlockDesktop from './EsgBlockDesktop';
 import EsgBlockMobile from './EsgBlockMobile';
-import styles from './EsgBlock.module.css';
-import useMobile from 'hooks/useMobile';
 
 const EsgBlockRoot = props => {
   const isMobile = useMobile();

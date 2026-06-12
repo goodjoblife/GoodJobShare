@@ -1,5 +1,5 @@
-import { tokenSelector } from 'selectors/authSelector';
 import { postUserFeedback as postUserFeedbackApi } from 'apis/userFeedbackApi';
+import { tokenSelector } from 'selectors/authSelector';
 
 export const postUserFeedback = ({ content, npsScore }) => (_, getState) => {
   const state = getState();

@@ -1,4 +1,5 @@
 import R from 'ramda';
+
 import { formatSalaryType } from 'common/formatter';
 
 const typeMapping = {

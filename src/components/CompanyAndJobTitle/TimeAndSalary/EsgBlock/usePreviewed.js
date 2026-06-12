@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { useLocalStorage } from 'react-use';
+
 import useCompanyName from 'pages/Company/useCompanyName';
 
 const useYear = () => useMemo(() => new Date().getFullYear(), []);

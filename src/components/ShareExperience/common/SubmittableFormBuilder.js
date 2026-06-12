@@ -1,5 +1,5 @@
-import React, { useCallback, Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { Fragment, useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
 
 import FormBuilder, {
@@ -7,10 +7,11 @@ import FormBuilder, {
   QuestionPropType,
 } from 'common/FormBuilder';
 import ConfirmModal from 'common/FormBuilder/Modals/ConfirmModal';
-import Footer from './TypeFormFooter';
+import { ER0018, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
 import { useExperienceCount, useSalaryWorkTimeCount } from 'hooks/useCount';
 import rollbar from 'utils/rollbar';
-import { ER0018, ERROR_CODE_MSG } from 'constants/errorCodeMsg';
+
+import Footer from './TypeFormFooter';
 
 const SubmittableTypeForm = ({
   open,

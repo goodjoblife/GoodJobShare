@@ -1,8 +1,12 @@
+import {
+  SET_INBOX,
+  SET_INBOX_COUNT,
+  SetInboxAction,
+  SetInboxCountAction,
+} from 'actions/inbox';
+import { InboxMessage } from 'constants/inbox';
 import createReducer from 'utils/createReducer';
 import FetchBox, { getUnfetched } from 'utils/fetchBox';
-import { SET_INBOX, SET_INBOX_COUNT } from 'actions/inbox';
-import { InboxMessage } from 'constants/inbox';
-import { SetInboxAction, SetInboxCountAction } from 'actions/inbox';
 
 interface InboxState {
   unreadCount: number;

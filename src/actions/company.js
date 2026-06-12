@@ -1,44 +1,46 @@
 import R from 'ramda';
-import { isGraphqlError } from 'utils/errors';
+
 import {
-  isFetching,
-  isFetched,
-  toFetching,
-  getFetched,
-  getError,
-} from 'utils/fetchBox';
-import {
-  companyIndexesBoxSelectorAtPage,
-  companyOverviewBoxSelectorByName,
-  companyOverviewStatisticsBoxSelectorByName,
-  companyTimeAndSalaryBoxSelectorByName,
-  companyTimeAndSalaryStatisticsBoxSelectorByName,
-  companyInterviewExperiencesBoxSelectorByName,
-  companyWorkExperiencesBoxSelectorByName,
-  companyRatingStatisticsBoxSelectorByName,
-  companyTopNJobTitlesBoxSelectorByName,
-  companyEsgSalaryDataBoxSelectorByName,
-  companyIsSubscribedBoxSelectorByName,
-  companyWorkExperiencesAspectStatisticsBoxSelectorByName,
-  companyWorkExperiencesAspectExperiencesBoxSelectorByName,
-} from 'selectors/companyAndJobTitle';
-import {
-  getCompanyTimeAndSalary,
   getCompanyInterviewExperiences,
-  queryCompaniesApi,
+  getCompanyTimeAndSalary,
   getCompanyTimeAndSalaryStatistics,
   getCompanyTopNJobTitles,
+  queryCompaniesApi,
 } from 'apis/company';
-import queryCompanyWorkExperiencesApi from 'apis/queryCompanyWorkExperiences';
 import queryCompanyAspectRatingStatisticsApi from 'apis/queryCompanyAspectRatingStatistics';
 import queryCompanyEsgSalaryDataApi from 'apis/queryCompanyEsgSalaryData';
 import queryCompanyIsSubscribedApi from 'apis/queryCompanyIsSubscribed';
 import queryCompanyOverviewApi from 'apis/queryCompanyOverview';
 import queryCompanyOverviewStatisticsApi from 'apis/queryCompanyOverviewStatistics';
 import queryCompanyRatingStatisticsApi from 'apis/queryCompanyRatingStatistics';
+import queryCompanyWorkExperiencesApi from 'apis/queryCompanyWorkExperiences';
 import subscribeCompanyApi from 'apis/subscribeCompany';
 import unsubscribeCompanyApi from 'apis/unsubscribeCompany';
 import { tokenSelector } from 'selectors/authSelector';
+import {
+  companyEsgSalaryDataBoxSelectorByName,
+  companyIndexesBoxSelectorAtPage,
+  companyInterviewExperiencesBoxSelectorByName,
+  companyIsSubscribedBoxSelectorByName,
+  companyOverviewBoxSelectorByName,
+  companyOverviewStatisticsBoxSelectorByName,
+  companyRatingStatisticsBoxSelectorByName,
+  companyTimeAndSalaryBoxSelectorByName,
+  companyTimeAndSalaryStatisticsBoxSelectorByName,
+  companyTopNJobTitlesBoxSelectorByName,
+  companyWorkExperiencesAspectExperiencesBoxSelectorByName,
+  companyWorkExperiencesAspectStatisticsBoxSelectorByName,
+  companyWorkExperiencesBoxSelectorByName,
+} from 'selectors/companyAndJobTitle';
+import { isGraphqlError } from 'utils/errors';
+import {
+  getError,
+  getFetched,
+  isFetched,
+  isFetching,
+  toFetching,
+} from 'utils/fetchBox';
+
 import { setExperience } from './experience';
 
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';

@@ -1,6 +1,6 @@
+import { isNil } from 'ramda';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { isNil } from 'ramda';
 
 import usePushToast from 'hooks/toastNotification/usePushToast';
 

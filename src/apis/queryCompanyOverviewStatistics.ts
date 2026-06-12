@@ -1,6 +1,7 @@
 import R from 'ramda';
-import graphqlClient from 'utils/graphqlClient';
+
 import { SalaryWorkTimeStatistics } from 'apis/salaryWorkTime';
+import graphqlClient from 'utils/graphqlClient';
 
 const queryCompanyOverviewStatisticsGql = /* GraphQL */ `
   query($companyName: String!) {

@@ -1,12 +1,12 @@
 import {
+  eqLength,
   gteLength,
   gtLength,
   lteLength,
   ltLength,
-  eqLength,
-  notStrEmpty,
   notArrayEmpty,
   notNullOrUndefined,
+  notStrEmpty,
 } from './dataCheckUtil';
 
 describe('gteLength tests', () => {

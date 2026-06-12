@@ -1,13 +1,14 @@
-import React, { useEffect, useRef } from 'react';
 import cn from 'classnames';
+import React, { useEffect, useRef } from 'react';
 
 import { NavigatorButton } from 'common/FormBuilder/NavigatorBlock';
-import BlockSelectElseRadio from '../Checkbox/private/BlockSelectElseRadio';
+
 import OptionPill from './OptionPill';
 import styles from './styles.module.css';
-import { Option, OptionValue } from '../Checkbox';
-import commonStyles from '../styles.module.css';
 import formStyles from '../../FormBuilder.module.css';
+import { Option, OptionValue } from '../Checkbox';
+import BlockSelectElseRadio from '../Checkbox/private/BlockSelectElseRadio';
+import commonStyles from '../styles.module.css';
 
 const useRefToScrollToElseOptions = (
   radioValue: OptionValue,

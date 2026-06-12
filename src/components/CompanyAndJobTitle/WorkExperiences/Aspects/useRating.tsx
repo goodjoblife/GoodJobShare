@@ -1,7 +1,8 @@
+import qs from 'qs';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router';
+
 import { useQuery } from 'hooks/routing';
-import qs from 'qs';
 import { ratingFromQuerySelector } from 'selectors/routing';
 
 const useRating = (): [number | null, (next: number | null) => void] => {

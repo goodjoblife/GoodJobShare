@@ -1,16 +1,17 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { formatDistance } from 'date-fns';
 import { zhTW } from 'date-fns/locale';
+import PropTypes from 'prop-types';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import { openInbox, readInboxMessage } from 'actions/inbox';
+import { useIsLoggedIn } from 'hooks/auth';
+import { messagesSelector } from 'selectors/inbox';
 
 import popoverStyles from './Header.module.css';
 import styles from './InboxContent.module.css';
-import { messagesSelector } from 'selectors/inbox';
-import { openInbox, readInboxMessage } from 'actions/inbox';
-import { useIsLoggedIn } from 'hooks/auth';
 
 const Button = ({ active, ...props }) => (
   <button

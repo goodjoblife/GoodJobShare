@@ -1,17 +1,19 @@
-import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
+
+import { Wrapper } from 'common/base';
+import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
+import { Aspects } from 'constants/companyJobTitle';
+import useCompanyName from 'pages/Company/useCompanyName';
+
 import CompanyAndJobTitleWrapper from '../CompanyAndJobTitleWrapper';
 import PageBoxRenderer from '../PageBoxRenderer';
-import WorkExperiencesSection from './WorkExperiences';
 import Helmet from './Helmet';
+import WorkExperiencesSection from './WorkExperiences';
+import AspectScoreCard, { useAspectsData } from '../Overview/AspectScoreCard';
 import SearchBar from '../SearchBar';
 import Sorter from '../Sorter';
 import styles from '../styles.module.css';
-import { Wrapper } from 'common/base';
-import { useCreatePageLinkTo } from 'common/Pagination/Pagination';
-import AspectScoreCard, { useAspectsData } from '../Overview/AspectScoreCard';
-import { Aspects } from 'constants/companyJobTitle';
-import useCompanyName from 'pages/Company/useCompanyName';
 
 const WorkExperiences = ({
   pageType,

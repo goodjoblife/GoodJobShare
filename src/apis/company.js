@@ -1,12 +1,13 @@
 import R from 'ramda';
-import graphqlClient from 'utils/graphqlClient';
+
 import {
-  getCompanyTimeAndSalaryQuery,
   getCompanyInterviewExperiencesQuery,
-  queryCompaniesHavingDataGql,
+  getCompanyTimeAndSalaryQuery,
   getCompanyTimeAndSalaryStatisticsQuery,
   getCompanyTopNJobTitlesQuery,
+  queryCompaniesHavingDataGql,
 } from 'graphql/company';
+import graphqlClient from 'utils/graphqlClient';
 
 export const getCompanyTimeAndSalary = ({
   companyName,

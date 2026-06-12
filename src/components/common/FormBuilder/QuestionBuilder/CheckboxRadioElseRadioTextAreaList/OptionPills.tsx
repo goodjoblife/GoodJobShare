@@ -1,10 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import cn from 'classnames';
+import React, { useCallback, useEffect, useState } from 'react';
+
+import Scrollable from 'common/FormBuilder/Scrollable';
+
 import { Option } from '../Checkbox';
 import OptionPill from './OptionPill';
 import styles from './styles.module.css';
 import commonStyles from '../styles.module.css';
-import Scrollable from 'common/FormBuilder/Scrollable';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const useAnimatedSelectedOptionIndex = ({

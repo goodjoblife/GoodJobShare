@@ -1,7 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import Like from 'common/icons/Like';
+
 import Base from './Base';
 import styles from './Base.module.css';
 

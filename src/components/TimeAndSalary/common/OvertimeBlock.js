@@ -1,8 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
+import { P } from 'common/base';
 import Clock from 'common/icons/Clock';
 import Coin2 from 'common/icons/Coin2';
-import { P } from 'common/base';
+
 import styles from './OvertimeBlock.module.css';
 
 const formatNum = num => {

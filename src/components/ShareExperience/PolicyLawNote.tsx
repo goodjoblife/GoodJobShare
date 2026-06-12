@@ -1,6 +1,7 @@
-import React from 'react';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faBook from '@fortawesome/fontawesome-free-solid/faBook';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import React from 'react';
+
 import styles from './PolicyLawNote.module.css';
 
 type Props = {

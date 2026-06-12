@@ -1,20 +1,22 @@
-import React, { Fragment } from 'react';
-import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import Pagination from 'common/Pagination';
+import React, { Fragment } from 'react';
+import Helmet from 'react-helmet';
+
 import Loader from 'common/Loader';
-import CompanyJobTitleBlock from '../CompanyJobTitleBlock';
+import Pagination from 'common/Pagination';
 import {
-  pageTypeTranslation,
-  generatePageURL,
   generateIndexURL,
+  generatePageURL,
   PAGE_SIZE,
+  pageTypeTranslation,
 } from 'constants/companyJobTitle';
-import styles from './CompanyAndJobTitleIndex.module.css';
-import { isFetched } from 'utils/fetchBox';
-import { formatTitle, formatCanonicalPath } from 'utils/helmetHelper';
 import { SITE_NAME } from 'constants/helmetData';
+import { isFetched } from 'utils/fetchBox';
+import { formatCanonicalPath, formatTitle } from 'utils/helmetHelper';
+
+import CompanyJobTitleBlock from '../CompanyJobTitleBlock';
+import styles from './CompanyAndJobTitleIndex.module.css';
 
 const IndexHelmet = ({ pageType, page }) => {
   const title = `所有${pageTypeTranslation[pageType]}資料 - 第${page}頁`;

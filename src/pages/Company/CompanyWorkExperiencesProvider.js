@@ -1,28 +1,30 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
-import usePermission from 'hooks/usePermission';
-import { usePage } from 'hooks/routing/page';
-import { TabType, PageType, PAGE_SIZE } from 'constants/companyJobTitle';
+
 import {
   queryCompanyWorkExperiences,
   queryCompanyWorkExperiencesAspectStatistics,
   queryRatingStatistics,
 } from 'actions/company';
-import { companyWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
-import useCompanyName, { companyNameSelector } from './useCompanyName';
-import {
-  queryFromQuerySelector,
-  pageFromQuerySelector,
-} from 'selectors/routing';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
 import {
   sortByFromQuerySelector,
   useSortByFromQuery,
 } from 'components/CompanyAndJobTitle/Sorter';
-import { isFetched, getFetched } from 'utils/fetchBox';
+import WorkExperiences from 'components/CompanyAndJobTitle/WorkExperiences';
+import { PAGE_SIZE, PageType, TabType } from 'constants/companyJobTitle';
+import { usePage } from 'hooks/routing/page';
+import usePermission from 'hooks/usePermission';
+import { companyWorkExperiencesBoxSelectorByName as workExperiencesBoxSelectorByName } from 'selectors/companyAndJobTitle';
 import { experienceBoxSelectorAtId } from 'selectors/experienceSelector';
+import {
+  pageFromQuerySelector,
+  queryFromQuerySelector,
+} from 'selectors/routing';
+import { getFetched, isFetched } from 'utils/fetchBox';
+
+import useCompanyName, { companyNameSelector } from './useCompanyName';
 
 const useWorkExperiencesBoxSelector = pageName => {
   return useCallback(

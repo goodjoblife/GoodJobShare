@@ -1,8 +1,10 @@
-import React from 'react';
-import { BasicPermissionSimpleBlock } from 'common/PermissionBlock';
-import styles from './injectHideContentBlock.module.css';
 import cn from 'classnames';
+import React from 'react';
+
+import { BasicPermissionSimpleBlock } from 'common/PermissionBlock';
 import { useShareLink } from 'hooks/experiments';
+
+import styles from './injectHideContentBlock.module.css';
 
 export default ({ rows, data, fromCol, toCol, canViewPublishId }) => {
   const nHides = toCol - fromCol + 1;

@@ -1,6 +1,8 @@
-import React, { FC } from 'react';
 import cn from 'classnames';
+import React, { FC } from 'react';
+
 import { Link } from 'common/base';
+
 import styles from './SummaryBlock.module.css';
 
 type AbstractViewProps = {

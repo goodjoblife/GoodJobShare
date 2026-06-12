@@ -1,17 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import cn from 'classnames';
 import loadable from '@loadable/component';
+import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import Card from 'common/Card';
-import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
-import styles from './SummaryBlock.module.css';
+import { Aspect } from 'constants/companyJobTitle';
 import useMobile from 'hooks/useMobile';
 
+import AspectScoreCard from './AspectScoreCard';
+import AverageWeekWorkTimeView from './AverageWeekWorkTimeView';
 import emptySalaryImage from './empty_data_salary.png';
 import emptyWorkTimeImage from './empty_data_working_time.png';
-import AspectScoreCard from './AspectScoreCard';
-import { Aspect } from 'constants/companyJobTitle';
+import styles from './SummaryBlock.module.css';
 
 const SalaryDistributionChart = loadable(() =>
   import('common/Charts/SalaryDistributionChart'),

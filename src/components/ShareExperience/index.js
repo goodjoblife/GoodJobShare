@@ -1,6 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Switch } from 'react-router-dom';
+
 import { Section, Wrapper } from 'common/base';
 
 import RouteWithSubRoutes from '../route';

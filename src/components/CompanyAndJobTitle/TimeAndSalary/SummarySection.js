@@ -1,10 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import SummaryBlock from '../Overview/SummaryBlock';
-import styles from '../Overview/Overview.module.css';
 import { Heading } from 'common/base';
+
+import styles from '../Overview/Overview.module.css';
+import SummaryBlock from '../Overview/SummaryBlock';
 
 const SummarySection = ({
   salaryDistribution,

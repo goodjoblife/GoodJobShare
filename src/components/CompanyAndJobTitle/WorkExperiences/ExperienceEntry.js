@@ -1,18 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import cn from 'classnames';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faLock from '@fortawesome/fontawesome-free-solid/faLock';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import cn from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 import { Heading, P } from 'common/base';
+import { formatSalary, formatSalaryRange } from 'common/formatter';
+import Bad from 'common/icons/Bad';
 import Clock from 'common/icons/Clock';
 import Coin from 'common/icons/Coin';
 import Good from 'common/icons/Good';
-import Bad from 'common/icons/Bad';
-import styles from './WorkExperiences.module.css';
-import { formatSalary, formatSalaryRange } from 'common/formatter';
-import { formatCreatedAt, formatWeekWorkTime } from './helper';
 import OverallRating from 'common/OverallRating';
+
+import { formatCreatedAt, formatWeekWorkTime } from './helper';
+import styles from './WorkExperiences.module.css';
 
 const createLinkTo = ({ pageType, id }) => ({
   pathname: `/experiences/${id}`,
