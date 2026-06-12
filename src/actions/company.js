@@ -46,9 +46,9 @@ import { setExperience } from './experience';
 export const SET_RATING_STATISTICS = '@@COMPANY/SET_RATING_STATISTICS';
 export const SET_OVERVIEW = '@@COMPANY/SET_OVERVIEW';
 export const SET_OVERVIEW_STATISTICS = '@@COMPANY/SET_OVERVIEW_STATISTICS';
-export const SET_TIME_AND_SALARY = '@@COMPANY/SET_TIME_AND_SALARY';
-export const SET_TIME_AND_SALARY_STATISTICS =
-  '@@COMPANY/SET_TIME_AND_SALARY_STATISTICS';
+export const SET_SALARY_WORK_TIME = '@@COMPANY/SET_SALARY_WORK_TIME';
+export const SET_SALARY_WORK_TIME_STATISTICS =
+  '@@COMPANY/SET_SALARY_WORK_TIME_STATISTICS';
 export const SET_INTERVIEW_EXPERIENCES = '@@COMPANY/SET_INTERVIEW_EXPERIENCES';
 export const SET_WORK_EXPERIENCES = '@@COMPANY/SET_WORK_EXPERIENCES';
 export const SET_WORK_EXPERIENCES_ASPECT_STATISTICS =
@@ -259,8 +259,8 @@ export const queryCompanyOverviewStatistics = companyName => async (
   }
 };
 
-const setTimeAndSalary = (companyName, box) => ({
-  type: SET_TIME_AND_SALARY,
+const setSalaryWorkTime = (companyName, box) => ({
+  type: SET_SALARY_WORK_TIME,
   companyName,
   box,
 });
@@ -271,6 +271,21 @@ const setInterviewExperiences = (companyName, box) => ({
   box,
 });
 
+/**
+ * @type {(
+ *   params: {
+ *     companyName: string;
+ *     jobTitle?: string;
+ *     start: number;
+ *     limit: number;
+ *     dataTimeRange?: import('apis/salaryWorkTime').DataTimeRange;
+ *     experienceInYearRange?: import('apis/salaryWorkTime').ExperienceInYearRange;
+ *     gender?: string;
+ *     sortBy?: string;
+ *   },
+ *   options?: { force?: boolean }
+ * ) => (dispatch: any, getState: any) => Promise<void>}
+ */
 export const queryCompanySalaryWorkTime = (
   {
     companyName,
@@ -302,7 +317,7 @@ export const queryCompanySalaryWorkTime = (
     return;
   }
 
-  dispatch(setTimeAndSalary(companyName, toFetching(box)));
+  dispatch(setSalaryWorkTime(companyName, toFetching(box)));
 
   try {
     const data = await getCompanyTimeAndSalary({
@@ -318,10 +333,10 @@ export const queryCompanySalaryWorkTime = (
 
     // Not found case
     if (data == null) {
-      return dispatch(setTimeAndSalary(companyName, getFetched(data)));
+      return dispatch(setSalaryWorkTime(companyName, getFetched(data)));
     }
 
-    const timeAndSalaryData = {
+    const salaryWorkTimeData = {
       name: data.name,
       jobTitle,
       start,
@@ -334,14 +349,14 @@ export const queryCompanySalaryWorkTime = (
       salaryWorkTimesCount: data.salaryWorkTimesResult.count,
     };
 
-    dispatch(setTimeAndSalary(companyName, getFetched(timeAndSalaryData)));
+    dispatch(setSalaryWorkTime(companyName, getFetched(salaryWorkTimeData)));
   } catch (error) {
-    dispatch(setTimeAndSalary(companyName, getError(error)));
+    dispatch(setSalaryWorkTime(companyName, getError(error)));
   }
 };
 
-const setTimeAndSalaryStatistics = (companyName, box) => ({
-  type: SET_TIME_AND_SALARY_STATISTICS,
+const setSalaryWorkTimeStatistics = (companyName, box) => ({
+  type: SET_SALARY_WORK_TIME_STATISTICS,
   companyName,
   box,
 });
@@ -366,7 +381,7 @@ export const queryCompanySalaryWorkTimeStatistics = ({ companyName }) => async (
     return;
   }
 
-  dispatch(setTimeAndSalaryStatistics(companyName, toFetching(box)));
+  dispatch(setSalaryWorkTimeStatistics(companyName, toFetching(box)));
 
   try {
     const data = await getCompanyTimeAndSalaryStatistics({
@@ -376,23 +391,23 @@ export const queryCompanySalaryWorkTimeStatistics = ({ companyName }) => async (
     // Not found case
     if (data == null) {
       return dispatch(
-        setTimeAndSalaryStatistics(companyName, getFetched(data)),
+        setSalaryWorkTimeStatistics(companyName, getFetched(data)),
       );
     }
 
-    const timeAndSalaryStatisticsData = {
+    const salaryWorkTimeStatisticsData = {
       name: data.name,
       salary_work_time_statistics: data.salary_work_time_statistics,
     };
 
     dispatch(
-      setTimeAndSalaryStatistics(
+      setSalaryWorkTimeStatistics(
         companyName,
-        getFetched(timeAndSalaryStatisticsData),
+        getFetched(salaryWorkTimeStatisticsData),
       ),
     );
   } catch (error) {
-    dispatch(setTimeAndSalaryStatistics(companyName, getError(error)));
+    dispatch(setSalaryWorkTimeStatistics(companyName, getError(error)));
   }
 };
 

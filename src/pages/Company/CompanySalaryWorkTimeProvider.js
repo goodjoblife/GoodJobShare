@@ -11,7 +11,7 @@ import {
 } from 'actions/company';
 import { paramsSelector, querySelector } from 'common/routing/selectors';
 import { useSearchTextFromQuery } from 'components/CompanyAndJobTitle/SearchBar';
-import TimeAndSalary from 'components/CompanyAndJobTitle/TimeAndSalary';
+import SalaryWorkTime from 'components/CompanyAndJobTitle/TimeAndSalary';
 import {
   dataTimeFromQuerySelector,
   experienceFromQuerySelector,
@@ -30,8 +30,8 @@ import usePermission from 'hooks/usePermission';
 import {
   companyEsgSalaryDataBoxSelectorByName,
   companyOverviewStatisticsBoxSelectorByName,
-  companySalaryWorkTimeBoxSelectorByName as timeAndSalaryBoxSelectorByName,
-  companySalaryWorkTimeStatisticsBoxSelectorByName as timeAndSalaryStatisticsBoxSelectorByName,
+  companySalaryWorkTimeBoxSelectorByName,
+  companySalaryWorkTimeStatisticsBoxSelectorByName,
   salaryWorkTimeStatistics as salaryWorkTimeStatisticsSelector,
 } from 'selectors/companyAndJobTitle';
 import {
@@ -50,10 +50,12 @@ const useOverviewStatisticsBox = pageName => {
   return useSelector(selector);
 };
 
-const useTimeAndSalaryStatisticsBox = pageName => {
+const useSalaryWorkTimeStatisticsBox = pageName => {
   const selector = useCallback(
     state => {
-      const company = timeAndSalaryStatisticsBoxSelectorByName(pageName)(state);
+      const company = companySalaryWorkTimeStatisticsBoxSelectorByName(
+        pageName,
+      )(state);
       return salaryWorkTimeStatisticsSelector(company);
     },
     [pageName],
@@ -61,10 +63,12 @@ const useTimeAndSalaryStatisticsBox = pageName => {
   return useSelector(selector);
 };
 
-const useTimeAndSalaryBoxSelector = companyName => {
+const useSalaryWorkTimeBoxSelector = companyName => {
   return useCallback(
     state => {
-      const company = timeAndSalaryBoxSelectorByName(companyName)(state);
+      const company = companySalaryWorkTimeBoxSelectorByName(companyName)(
+        state,
+      );
       return company;
     },
     [companyName],
@@ -173,14 +177,14 @@ const CompanySalaryWorkTimeProvider = () => {
   }, [pageType, companyName, fetchPermission]);
 
   const statisticsBox = useOverviewStatisticsBox(companyName);
-  const salaryWorkTimeStatistics = useTimeAndSalaryStatisticsBox(companyName);
+  const salaryWorkTimeStatistics = useSalaryWorkTimeStatisticsBox(companyName);
   const topNJobTitles = useTopNJobTitles(companyName);
   const esgSalaryDataBox = useEsgSalaryDataBox(companyName);
 
-  const boxSelector = useTimeAndSalaryBoxSelector(companyName);
+  const boxSelector = useSalaryWorkTimeBoxSelector(companyName);
 
   return (
-    <TimeAndSalary
+    <SalaryWorkTime
       pageType={pageType}
       pageName={companyName}
       page={page}
@@ -213,44 +217,36 @@ CompanySalaryWorkTimeProvider.fetchData = ({
   const sortBy = sortByFromQuerySelector(query);
   const dataTimeRange = getDataTimeRange(dataTime);
   const experienceInYearRange = getExperienceInYearRange(experience);
-  const dispatchOverviewStatistics = dispatch(
-    queryCompanyOverviewStatistics(companyName),
-  );
-  const dispatchTimeAndSalaryStatistics = dispatch(
-    queryCompanySalaryWorkTimeStatistics({
-      companyName,
-    }),
-  );
-  const dispatchTimeAndSalary = dispatch(
-    queryCompanySalaryWorkTime({
-      companyName,
-      jobTitle,
-      start,
-      limit,
-      dataTimeRange,
-      experienceInYearRange,
-      gender: gender || undefined,
-      sortBy: sortBy || undefined,
-    }),
-  );
-  const dispatchRatingStatistics = dispatch(queryRatingStatistics(companyName));
-  const dispatchTopNJobTitles = dispatch(
-    queryCompanyTopNJobTitles({
-      companyName,
-    }),
-  );
-  const dispatchEsgSalaryData = dispatch(
-    queryCompanyEsgSalaryData({
-      companyName,
-    }),
-  );
   return Promise.all([
-    dispatchTimeAndSalary,
-    dispatchTimeAndSalaryStatistics,
-    dispatchOverviewStatistics,
-    dispatchRatingStatistics,
-    dispatchTopNJobTitles,
-    dispatchEsgSalaryData,
+    dispatch(
+      queryCompanySalaryWorkTime({
+        companyName,
+        jobTitle,
+        start,
+        limit,
+        dataTimeRange,
+        experienceInYearRange,
+        gender: gender || undefined,
+        sortBy: sortBy || undefined,
+      }),
+    ),
+    dispatch(
+      queryCompanySalaryWorkTimeStatistics({
+        companyName,
+      }),
+    ),
+    dispatch(queryCompanyOverviewStatistics(companyName)),
+    dispatch(queryRatingStatistics(companyName)),
+    dispatch(
+      queryCompanyTopNJobTitles({
+        companyName,
+      }),
+    ),
+    dispatch(
+      queryCompanyEsgSalaryData({
+        companyName,
+      }),
+    ),
   ]);
 };
 
